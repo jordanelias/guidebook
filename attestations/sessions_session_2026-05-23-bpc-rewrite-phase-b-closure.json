@@ -34,7 +34,7 @@
     "citation-mining": {
       "status": "FIRED",
       "evidence_path": "scripts/migrations/data_20260524011500_b11_room_acoustic_mining_batch1.sql",
-      "reason": "B.11 closed 5 slugs: room-acoustic-performance (19+2+1 excl), mental-health-built-environment (16+4 grey-lit), cognitive-wayfinding-design (11+4 grey-lit), mobility-built-environment (6+9 grey-lit), school-environment-autism (15 T1-3 full; 2 T4 preserved DEFER as out-of-scope). 3,778 NEW candidate refs across 12 artifact files. Patterns validated: CrossRef+OpenAlex, DOI-only-ref inclusion, OpenAlex pmid:/title-search no-DOI recovery, full-DEFER for grey-lit, and the SEA-pattern re-mining of prior FORWARD-DEFERRED + DEPTH-1-DISCOVERY DEFERRED rows (13 rows from 2026-05-11g lifted to B=1/F=1 this turn). Per-row INSERT to evidence_sources still deferred per PI rule #10. T4 sources remain out-of-scope per workplan \u00a7B.11 tier definition; SEA-bw-712 (Bates 2016) + SEA-bw-718 (Deochand 2015) preserve T4 DEFER."
+      "reason": "B.11 closed 6 slugs: room-acoustic-performance, mental-health-built-environment, cognitive-wayfinding-design, mobility-built-environment, school-environment-autism, stair-ramp-threshold-biomechanics-accessibility. 4,821 NEW candidate refs across 14 artifact files. Turn-11 lessons: OpenAlex rate-limit (~3 req/s exhausts 10k/$1/day) hit on SRB batch; recovered after 71s retry-after; future batches pace at \u22651.5s/req. /tmp cache durability is unreliable between subprocess calls; aggregate JSONs should be persisted to the repo earlier. Per-row INSERT to evidence_sources still deferred per PI rule #10."
     },
     "adversarial-research-protocol": {
       "status": "NOT-FIRED",

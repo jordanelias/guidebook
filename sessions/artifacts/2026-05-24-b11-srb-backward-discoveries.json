@@ -1,0 +1,2073 @@
+{
+  "SRB-02": {
+    "doi": "10.1093/geronj/46.6.m188",
+    "total_refs": 0,
+    "doi_only_refs": 0,
+    "relevant_n": 0,
+    "already_in_es_n": 0,
+    "new_discovery_n": 0,
+    "discoveries": []
+  },
+  "SRB-03": {
+    "doi": "10.1002/jor.1100060208",
+    "total_refs": 18,
+    "doi_only_refs": 6,
+    "relevant_n": 14,
+    "already_in_es_n": 0,
+    "new_discovery_n": 14,
+    "discoveries": [
+      {
+        "doi": "10.1152/jappl.1960.15.6.1015",
+        "year": "1961",
+        "author": "Bobbert AC",
+        "title_short": "Energy expenditure in level and grade walking",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1113/jphysiol.1957.sp005844",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1970",
+        "author": "Corcoran PJ",
+        "title_short": "Oxygen uptake in normal and handicapped subjects in relation to the speed of walking beside a velocity\u2010controlled cart",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/00140136008930473",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1957",
+        "author": "Dill DB",
+        "title_short": "Oxygen used in horizontal and grade walking and running on the treadmill",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1152/ajplegacy.1946.145.3.391",
+        "year": "1946",
+        "author": "Erickson L",
+        "title_short": "The energy cost of horizontal and grade walking on the motor driven treadmill",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1249/00005768-197621000-00014",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1113/jphysiol.1953.sp004943",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1967",
+        "author": "Molen NH",
+        "title_short": "Energy expenditure in normal test subjects walking on a motor driven treadmill",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1152/jappl.1960.15.6.1156",
+        "year": "1960",
+        "author": "Ralston HJ",
+        "title_short": "Comparison of energy expenditure during treadmill walking and floor walking",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1981",
+        "author": "Ralston HJ",
+        "title_short": "Energy\u2010speed relation and optimal speed during level walking",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/jor.1100010110",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1469-8749.1983.tb13742.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2106/00004623-197658010-00007",
+        "year": "1976",
+        "author": "Waters RL",
+        "title_short": "The energy cost of walking of amputees\u2014Influence of level of amputation",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SRB-04": {
+    "doi": "10.1016/j.ergon.2014.07.001",
+    "total_refs": 52,
+    "doi_only_refs": 0,
+    "relevant_n": 30,
+    "already_in_es_n": 0,
+    "new_discovery_n": 30,
+    "discoveries": [
+      {
+        "doi": null,
+        "year": "1976",
+        "author": "Andr\u00e9n",
+        "title_short": "Ramper f\u00f6r r\u00f6relsehindrade (Ramp for the disabled), Department of Handicap Research, University of G\u00f6teborg (in Swedish)",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/10400430902945587",
+        "year": "2009",
+        "author": "Arva",
+        "title_short": "RESNA position on the application of seat-elevating devices for wheelchair users",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/17483100802542603",
+        "year": "2009",
+        "author": "Bennett",
+        "title_short": "Wheelchair accessibility: descriptive survey of curb ramps in an urban area",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/bf00839155",
+        "year": "1990",
+        "author": "Brown",
+        "title_short": "Physiological and biomechanical differences between wheelchair-dependent and able-bodied subjects during wheelchair ergo",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1038/sc.1991.65",
+        "year": "1991",
+        "author": "Canale",
+        "title_short": "Ramp length/grade prescriptions for wheelchair dependent individuals",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1038/sc.1991.64",
+        "year": "1991",
+        "author": "Cappozzo",
+        "title_short": "Prediction of ramp traversability for wheelchair dependent individuals",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0021-9290(99)00211-0",
+        "year": "2000",
+        "author": "Chow",
+        "title_short": "Effect of resistance load on biomechanical characteristics of racing wheelchair propulsion over a roller system",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/00005768-200103000-00022",
+        "year": "2001",
+        "author": "Chow",
+        "title_short": "Biomechanical comparison of two racing wheelchair propulsion techniques",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2008.07.019",
+        "year": "2009",
+        "author": "Chow",
+        "title_short": "Kinematic and electromyographic analysis of wheelchair propulsion on ramps of different slopes for young men with parapl",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2007",
+        "author": "Ding",
+        "title_short": "Design considerations for a personalized wheelchair navigation system",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1115/1.2900726",
+        "year": "2009",
+        "author": "Dubowsky",
+        "title_short": "Comparison of kinematics, kinetics, and EMG throughout wheelchair propulsion in able-bodied and persons with paraplegia:",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ergon.2013.11.014",
+        "year": "2014",
+        "author": "Horiuchi",
+        "title_short": "Energy cost of pushing a wheelchair on various gradients in young men",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.clinbiomech.2009.10.004",
+        "year": "2010",
+        "author": "Howarth",
+        "title_short": "Use of a geared wheelchair wheel to reduce propulsive muscular demand during ramp ascent: analysis of muscle activation ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2004",
+        "author": "Imamura",
+        "title_short": "Outdoor waypoint navigation for an intelligent wheelchair using differential GPS and INS",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1191/0269215503cr633oa",
+        "year": "2003",
+        "author": "Kilkens",
+        "title_short": "Wheelchair skills test, a systematic review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1974",
+        "author": "Lehmann",
+        "title_short": "Wheelchair propulsion in the quadriplegic patient",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2010.07.215",
+        "year": "2010",
+        "author": "Lemaire",
+        "title_short": "Wheelchair ramp navigation in snow and ice-grit conditions",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1046/j.1525-1446.2000.00178.x",
+        "year": "2000",
+        "author": "McClain",
+        "title_short": "Shopping center wheelchair accessibility: ongoing advocacy to implement the Americans with Disabilities Act of 1990",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.47.7.619",
+        "year": "1993",
+        "author": "McClain",
+        "title_short": "Restaurant wheelchair accessibility",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0277-9536(01)00269-6",
+        "year": "2002",
+        "author": "Meyers",
+        "title_short": "Barriers, facilitators, and access for wheelchair users: substantive and methodologic lessons from a pilot study of envi",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2003.08.090",
+        "year": "2004",
+        "author": "Mulroy",
+        "title_short": "Effects of spinal cord injury level on the activity of shoulder muscles during wheelchair propulsion: an electromyograph",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apergo.2014.01.002",
+        "year": "2014",
+        "author": "Pierret",
+        "title_short": "Cardio-respiratory and subjective strains sustained by paraplegic subjects, when travelling on a cross slope in a manual",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/096382804100017214843",
+        "year": "2004",
+        "author": "Rivano-Fischer",
+        "title_short": "Wheelchair accessibility of public buildings in Al Ain, United Arab Emirates (UAE)",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0277-9536(01)00126-5",
+        "year": "2002",
+        "author": "Roelands",
+        "title_short": "Awareness among community-dwelling elderly of assistive devices for mobility and self-care and attitudes towards their u",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/10400435.1997.10132293",
+        "year": "1997",
+        "author": "Sanford",
+        "title_short": "An analysis of the effects of ramp slope on people with mobility impairments",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/0309364612448807",
+        "year": "2012",
+        "author": "Starrs",
+        "title_short": "Biomechanical differences between experienced and inexperienced wheelchair users during sport",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1017/s0714980800002075",
+        "year": "2002",
+        "author": "Sutton",
+        "title_short": "Medical and everyday assistive device use among older adults with arthritis",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/09638280010008924",
+        "year": "2001",
+        "author": "Useh",
+        "title_short": "Wheelchair accessibility of public buildings in the central business district of Harare, Zimbabwe",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2340/1650197701101106",
+        "year": "1969",
+        "author": "Voigt",
+        "title_short": "Metabolism and pulse rate in physically handicapped when propelling a wheelchair up an incline",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/ip.2005.010033",
+        "year": "2006",
+        "author": "Xiang",
+        "title_short": "Wheelchair related injuries treated in US emergency departments",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SRB-05": {
+    "doi": "10.1046/j.1532-5415.2002.50056.x",
+    "total_refs": 28,
+    "doi_only_refs": 20,
+    "relevant_n": 26,
+    "already_in_es_n": 0,
+    "new_discovery_n": 26,
+    "discoveries": [
+      {
+        "doi": "10.1093/ageing/17.6.365",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geronj/44.4.m112",
+        "year": "1989",
+        "author": "Campbell AJ",
+        "title_short": "Risk factors for falls in a community\u2010based prospective study of people 70 years and older.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1056/nejm198812293192604",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/mus.880090702",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1152/jappl.1979.46.3.451",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1152/jappl.1986.61.1.361",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/gerona/51a.3.b202",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/bf00626612",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/gerona/51a.5.m226",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1990",
+        "author": "Gehlsen GM",
+        "title_short": "Falls in the elderly: Part II, balance, strength, and flexibility.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1001/archinte.1989.00390070138022",
+        "year": "1989",
+        "author": "Robbins AS",
+        "title_short": "Predictors of falls among elderly people: Results of two population\u2010based studies.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1532-5415.1991.tb01642.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1532-5415.1987.tb01313.x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1001/jama.1995.03520410035023",
+        "year": "1995",
+        "author": "Province MA",
+        "title_short": "The effects of exercise on falls in elderly patients: A preplanned meta\u2010analysis of the FICSIT trials.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/gerona/54.2.m103",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/gerona/56.7.m428",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0021-9290(97)84507-1",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1152/jn.2000.83.4.2093",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0021-9290(00)00152-4",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1995",
+        "author": "Schultz AB",
+        "title_short": "Muscle function and mobility biomechanics in the elderly: An overview of some recent research.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1999",
+        "author": "Pavol MJ",
+        "title_short": "Biomechanical Determinants of the Outcome of an Induced Trip in Healthy Older Adults [dissertation]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1055/s-2007-1021203",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s002239900621",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/ageing/18.5.327",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/gerona/51a.6.m303",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/ageing/25.4.292",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SRB-06": {
+    "doi": "10.1016/j.apmr.2017.04.023",
+    "total_refs": 26,
+    "doi_only_refs": 0,
+    "relevant_n": 20,
+    "already_in_es_n": 1,
+    "new_discovery_n": 19,
+    "discoveries": [
+      {
+        "doi": "10.3109/17483107.2015.1063015",
+        "year": "2015",
+        "author": "Morgan",
+        "title_short": "Important wheelchair skills for new manual wheelchair users: health care professional and wheelchair user perspectives",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/1745-6215-14-350",
+        "year": "2013",
+        "author": "Giesbrecht",
+        "title_short": "Feasibility of the Enhancing Participation in the Community by Improving Wheelchair Skills (EPIC Wheels) program: study ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2013.01.016",
+        "year": "2013",
+        "author": "Sakakibara",
+        "title_short": "Wheelchair skills training to improve confidence with using a manual wheelchair among older adults: a pilot study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.7326/0003-4819-156-2-201201170-00010",
+        "year": "2012",
+        "author": "Greer",
+        "title_short": "Wheeled mobility (wheelchair) service delivery: scope of the evidence",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12913-016-1268-y",
+        "year": "2016",
+        "author": "Toro",
+        "title_short": "The impact of the World Health Organization 8-steps in wheelchair service provision in wheelchair users in a less resour",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2016",
+        "author": "Keeler",
+        "title_short": "The effectiveness of the Wheelchair Skills Training Program (WSTP) compared to other training on wheelchair-related skil",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/phm.0000000000000203",
+        "year": "2015",
+        "author": "Sawatzky",
+        "title_short": "The need for updated clinical practice guidelines for preservation of upper extremities in manual wheelchair users: a po",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1016/j.apmr.2008.04.028",
+        "year": "2008",
+        "author": "Kirby",
+        "title_short": "Wheelchair curb climbing: randomized controlled comparison of highly structured and conventional training methods",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/09638280500167605",
+        "year": "2006",
+        "author": "Kirby",
+        "title_short": "The manual wheelchair wheelie: a review of our current understanding of an important motor skill",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2003.07.007",
+        "year": "2004",
+        "author": "Kirby",
+        "title_short": "The Wheelchair Skills Test (version 2.4): measurement properties",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0003-9993(03)00364-2",
+        "year": "2004",
+        "author": "MacPhee",
+        "title_short": "Wheelchair Skills Training Program: a randomized clinical trial of wheelchair users undergoing initial rehabilitation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2005.07.300",
+        "year": "2005",
+        "author": "Best",
+        "title_short": "Wheelchair skills training for community-based manual wheelchair users: a randomized controlled trial",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2012.01.017",
+        "year": "2012",
+        "author": "Routhier",
+        "title_short": "Efficacy and retention of the French Canadian version of the Wheelchair Skills Training Program for manual wheelchair us",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2012.06.007",
+        "year": "2012",
+        "author": "Rushton",
+        "title_short": "Manual wheelchair skills: objective testing versus subjective questionnaire",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2013.03.001",
+        "year": "2013",
+        "author": "Charbonneau",
+        "title_short": "Manual wheelchair propulsion by people with hemiplegia: within-participant comparisons of forward versus backward techni",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2012.05.021",
+        "year": "2012",
+        "author": "Hosseini",
+        "title_short": "Manual wheelchair skills capacity predicts quality of life and community integration in persons with spinal cord injury",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2016.05.015",
+        "year": "2016",
+        "author": "Kirby",
+        "title_short": "Wheelchair skills capacity and performance of manual wheelchair users with spinal cord injury",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2003.10.019",
+        "year": "2004",
+        "author": "Coolen",
+        "title_short": "Wheelchair skills training program for clinicians: a randomized controlled trial with occupational therapy students",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/phm.0b013e318206398a",
+        "year": "2011",
+        "author": "Kirby",
+        "title_short": "A wheelchair workshop for medical students improves knowledge and skills: a randomized controlled trial",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2014.10.002",
+        "year": "2015",
+        "author": "Giesbrecht",
+        "title_short": "Preliminary evidence to support a \u201cboot camp\u201d approach to wheelchair\u00a0skills training for clinicians",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SRB-07": {
+    "doi": "10.1016/j.apmr.2011.10.023",
+    "total_refs": 30,
+    "doi_only_refs": 0,
+    "relevant_n": 26,
+    "already_in_es_n": 0,
+    "new_discovery_n": 26,
+    "discoveries": [
+      {
+        "doi": "10.1038/sc.2008.72",
+        "year": "2009",
+        "author": "Yang",
+        "title_short": "Remote monitoring of sitting behaviors for community-dwelling manual wheelchair users with spinal cord injury",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/00002060-200202000-00004",
+        "year": "2002",
+        "author": "Aissaoui",
+        "title_short": "Biomechanics of manual wheelchair propulsion in elderly: system tilt and back recline angles",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0031-9406(10)62219-5",
+        "year": "1990",
+        "author": "Harms",
+        "title_short": "Effect of wheelchair design on posture and comfort of users",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1682/jrrd.2003.01.0008",
+        "year": "2004",
+        "author": "Kotajarvi",
+        "title_short": "The effect of seat position on wheelchair propulsion biomechanics",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1682/jrrd.1992.07.0012",
+        "year": "1992",
+        "author": "Masse",
+        "title_short": "Biomechanical analysis of wheelchair propulsion for various seating positions",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1989",
+        "author": "van der Woude",
+        "title_short": "Seat height in handrim wheelchair propulsion",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0003-9993(00)90043-1",
+        "year": "2000",
+        "author": "Boninger",
+        "title_short": "Manual wheelchair pushrim biomechanics and axle position",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/10790268.2005.11753816",
+        "year": "2005",
+        "author": "Gutierrez",
+        "title_short": "Effect of fore-aft seat position on shoulder demands during wheelchair propulsion: part 2",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/10790268.2005.11753815",
+        "year": "2005",
+        "author": "Mulroy",
+        "title_short": "Effect of fore-aft seat position on shoulder demands during wheelchair propulsion: part 1",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1682/jrrd.2005.12.0178",
+        "year": "2006",
+        "author": "Desroches",
+        "title_short": "Effect of system tilt and seat-to-backrest angles on load sustained by shoulder during wheelchair propulsion",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0003-9993(99)90082-5",
+        "year": "1999",
+        "author": "Boninger",
+        "title_short": "Wheelchair pushrim kinetics: body weight and median nerve function",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2007.09.052",
+        "year": "2008",
+        "author": "Collinger",
+        "title_short": "Shoulder biomechanics during the push phase of wheelchair propulsion: a multisite study of persons with paraplegia",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1109/10.250587",
+        "year": "1993",
+        "author": "Asato",
+        "title_short": "SMARTWheels: development and testing of a system for measuring manual wheelchair propulsion dynamics",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1997",
+        "author": "Cooper",
+        "title_short": "Methods for determining three-dimensional wheelchair pushrim forces and moments: a technical note",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1053/apmr.2002.32455",
+        "year": "2002",
+        "author": "Boninger",
+        "title_short": "Propulsion patterns and pushrim biomechanics in manual wheelchair propulsion",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2002",
+        "author": "Koontz",
+        "title_short": "Shoulder kinematics and kinetics during two speeds of wheelchair propulsion",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2009.05.022",
+        "year": "2009",
+        "author": "Koontz",
+        "title_short": "Manual wheelchair propulsion patterns on natural surfaces during start-up propulsion",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1998",
+        "author": "Cooper",
+        "title_short": "Frequency analysis of 3-dimensional pushrim forces and moments for manual wheelchair propulsion",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/00002060-199709000-00013",
+        "year": "1997",
+        "author": "Boninger",
+        "title_short": "Three-dimensional pushrim forces during two speeds of wheelchair propulsion",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2165/00007256-200131050-00005",
+        "year": "2001",
+        "author": "Vanlandewijck",
+        "title_short": "Wheelchair propulsion biomechanics: implications for wheelchair sports",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/00002060-199909000-00006",
+        "year": "1999",
+        "author": "Cooper",
+        "title_short": "Glenohumeral joint kinematics and kinetics for three coordinate system representations during wheelchair propulsion",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2008.07.019",
+        "year": "2009",
+        "author": "Chow",
+        "title_short": "Kinematic and electromyographic analysis of wheelchair propulsion on ramps of different slopes for young men with parapl",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.clinbiomech.2007.11.001",
+        "year": "2008",
+        "author": "de Groot",
+        "title_short": "Mechanical efficiency and propulsion technique after 7 weeks of low-intensity wheelchair training",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2005.12.033",
+        "year": "2006",
+        "author": "Kotajarvi",
+        "title_short": "The effect of visual biofeedback on the propulsion effectiveness of experienced wheelchair users",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2010",
+        "author": "Yang",
+        "title_short": "The biomechanical analysis of effect of rigid backrest on wheelchair propulsion among people with spinal cord injury",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apmr.2006.09.017",
+        "year": "2007",
+        "author": "Richter",
+        "title_short": "Stroke pattern and handrim biomechanics for level and uphill wheelchair propulsion at self-selected speeds",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SRB-08": {
+    "doi": "10.1002/jor.1100070215",
+    "total_refs": 20,
+    "doi_only_refs": 11,
+    "relevant_n": 14,
+    "already_in_es_n": 0,
+    "new_discovery_n": 14,
+    "discoveries": [
+      {
+        "doi": "10.1097/00007632-197901000-00009",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2106/00004623-198062050-00008",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2106/00004623-198264090-00008",
+        "year": "1982",
+        "author": "Andriacchi TP",
+        "title_short": "The influence of total knee\u2010replacement design on walking and stair climbing",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1115/1.3426258",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/00140136908931055",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1950",
+        "author": "Bresler B",
+        "title_short": "The forces and moments in the leg during level walking",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "British Standards Institution.Anatomical physiological and anthropometric principles in the design of office chairs and ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/aja.1001200104",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/0003-6870(82)90006-0",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1243/emed_jour_1979_008_009_02",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/0141-5425(84)90053-0",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/0021-9290(80)90038-x",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1243/emed_jour_1982_011_032_02",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/00140136908931042",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SRB-09": {
+    "doi": "10.1016/s0004-9514(14)60454-2",
+    "total_refs": 23,
+    "doi_only_refs": 0,
+    "relevant_n": 10,
+    "already_in_es_n": 0,
+    "new_discovery_n": 10,
+    "discoveries": [
+      {
+        "doi": "10.1146/annurev.pu.13.050192.002345",
+        "year": "1992",
+        "author": "Buchner",
+        "title_short": "Effects of physical activity on health status in older adults II: Intervention studies",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3109/09593989109106962",
+        "year": "1991",
+        "author": "Johansson",
+        "title_short": "Balance training in 70 year old women",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1989",
+        "author": "Lichtenstein",
+        "title_short": "Exercise and balance in aged women: A pilot controlled clinical trial",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/0003-9993(93)90010-8",
+        "year": "1993",
+        "author": "Lord",
+        "title_short": "Balance, reaction time and muscle strength in exercising and non-exercising women: A pilot study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1532-5415.1991.tb03574.x",
+        "year": "1991",
+        "author": "Lord",
+        "title_short": "Physiological factors associated with falls in an elderly population",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geronj/46.3.m69",
+        "year": "1991",
+        "author": "Lord",
+        "title_short": "Postural stability and associated physiological factors in a population of aged persons",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1753-6405.1993.tb00143.x",
+        "year": "1993",
+        "author": "Lord",
+        "title_short": "An epidemiological study of falls in older community-dwelling women: the Randwick falls and fractures study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1249/00005768-199205001-00125",
+        "year": "1992",
+        "author": "Parsons",
+        "title_short": "Balance and strength changes in elderly subjects after heavy-resistance strength training",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "1992",
+        "author": "Rudisill",
+        "title_short": "The effects of a physical activity program on reaction time and movement time for the older adult",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1532-5415.1987.tb01313.x",
+        "year": "1987",
+        "author": "Whipple",
+        "title_short": "The relationship between knee and ankle weakness to falls in nursing home residents: an isokinetic study",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SRB-10": {
+    "doi": "10.2196/69442",
+    "total_refs": 38,
+    "doi_only_refs": 0,
+    "relevant_n": 26,
+    "already_in_es_n": 2,
+    "new_discovery_n": 24,
+    "discoveries": [
+      {
+        "doi": "10.1177/00187208211059860",
+        "year": null,
+        "author": "Levine",
+        "title_short": "Grab bar use influences fall hazard during bathtub exit",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.1016/j.clinbiomech.2017.05.005",
+        "year": null,
+        "author": "Sekiguchi",
+        "title_short": "Effects of grab bar on utilized friction and dynamic stability when elderly people enter the bathtub",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/10400435.2011.614674",
+        "year": null,
+        "author": "Guitard",
+        "title_short": "Use of different bath grab bar configurations following a balance perturbation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.5014/ajot.2017.027136",
+        "year": null,
+        "author": "King",
+        "title_short": "Effect of bathroom aids and age on balance control during bathing transfers",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.clinbiomech.2020.105109",
+        "year": null,
+        "author": "Guay",
+        "title_short": "Force applied to a grab bar during bathtub transfers",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jbiomech.2020.109822",
+        "year": null,
+        "author": "Sekiguchi",
+        "title_short": "Effects of shelf bar assistance on kinetic control during sit-to-stand in healthy young and elderly subjects",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "CSA Group, CSA B651-18 Accessible Design for the Built Environment. Standards Council of Canada/Conseil canadien des nor",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.2196/16175",
+        "year": null,
+        "author": "Guay",
+        "title_short": "Self-selection of bathroom-assistive technology: development of an electronic decision support system (hygiene 2.0)",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": "10.3233/tad-2006-18201",
+        "year": null,
+        "author": "Sveistrup",
+        "title_short": "Evaluation of bath grab bar placement for older adults",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/1541931213601385",
+        "year": null,
+        "author": null,
+        "title_short": "Batista NA Bertani L Young JG . Handhold location and utilization during bathtub ingress/egress and sit-to-stand tasks. ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Sveistrup H . Evaluation of optimal bath grab bar placement for seniors. Canada Mortgage Housing Corporation\u2019s External ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/md.0000000000031633",
+        "year": null,
+        "author": "Han",
+        "title_short": "Influence of handrail height and knee joint support on sit-to-stand movement",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/10400435.2015.1030514",
+        "year": null,
+        "author": "Vena",
+        "title_short": "The evaluation of vertical pole configuration and location on assisting the sit-to-stand movement in older adults with m",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jelekin.2007.06.009",
+        "year": null,
+        "author": "Grabiner",
+        "title_short": "Trunk kinematics and fall risk of older adults: translating biomechanical results to the clinic",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1371/journal.pone.0133747",
+        "year": null,
+        "author": "Kinoshita",
+        "title_short": "Effect of handrail height on sit-to-stand movement",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.humov.2010.07.005",
+        "year": null,
+        "author": "King",
+        "title_short": "Does the \u201ceyes lead the hand\u201d principle apply to reach-to-grasp movements evoked by unexpected balance perturbations?",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.gaitpost.2017.12.009",
+        "year": null,
+        "author": "Komisar",
+        "title_short": "Influence of handrail height and fall direction on center of mass control and the physical demands of reach-to-grasp bal",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apergo.2018.11.006",
+        "year": null,
+        "author": "Komisar",
+        "title_short": "Use of handrails for balance and stability: characterizing loading profiles in younger adults",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/ageing/afl078",
+        "year": null,
+        "author": "Maki",
+        "title_short": "Control of rapid limb movements for balance recovery: age-related changes and implications for fall prevention",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jbiomech.2015.07.008",
+        "year": null,
+        "author": "Cheng",
+        "title_short": "Role of arm motion in feet-in-place balance recovery",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/00187208211013631",
+        "year": null,
+        "author": "Komisar",
+        "title_short": "Effect of handrail height and age on trunk and shoulder kinematics following perturbation-evoked grasping reactions duri",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "2010 ADA standards for accessible design. United States Department of Justice Civil Rights Division; 2010. URL: https://",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.gaitpost.2013.04.004",
+        "year": null,
+        "author": "Huang",
+        "title_short": "Age differences in the control of postural stability during reaching tasks",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s00221-004-1855-8",
+        "year": null,
+        "author": "Ghafouri",
+        "title_short": "Initiation of rapid reach-and-grasp balance reactions: is a pre-formed visuospatial map used in controlling the initial ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1177/23337214241237119",
+        "year": null,
+        "author": "Rand",
+        "title_short": "Efficacy of installation of temporary bathing transfer aids by older adults",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1108/jet-03-2017-0012",
+        "year": null,
+        "author": "Morales",
+        "title_short": "Which grab bar do you prefer in the bathroom?",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SRB-11": {
+    "doi": "10.1097/00006324-200105000-00019",
+    "total_refs": 36,
+    "doi_only_refs": 28,
+    "relevant_n": 28,
+    "already_in_es_n": 0,
+    "new_discovery_n": 28,
+    "discoveries": [
+      {
+        "doi": "10.1300/j052v14n01_05",
+        "year": "1994",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geronj/37.1.91",
+        "year": "1982",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/00005650-199206000-00002",
+        "year": "1992",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1532-5415.1993.tb06948.x",
+        "year": "1993",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1001/jama.257.8.1064",
+        "year": "1987",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1001/archopht.1994.01090170074026",
+        "year": "1994",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/00005650-199212000-00004",
+        "year": "1992",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1001/archopht.116.11.1496",
+        "year": "1998",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1076/opep.5.4.185.4191",
+        "year": "1998",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/bjo.84.3.244",
+        "year": "2000",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/38.4.422",
+        "year": "1998",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geronj/39.6.686",
+        "year": "1984",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geront/34.3.324",
+        "year": "1994",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/1097-4679(197601)32:1<95::aid-jclp2270320129>3.0.co;2-j",
+        "year": "1976",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1037/0882-7974.10.3.478",
+        "year": "1995",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/geronj/44.4.p114",
+        "year": "1989",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1532-5415.1986.tb05480.x",
+        "year": "1986",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/0042-6989(94)00294-v",
+        "year": "1995",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1001/archopht.1986.01050190067041",
+        "year": "1986",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1001/archopht.1988.01060140711040",
+        "year": "1988",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3109/09286589409071441",
+        "year": "1994",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/gerona/54.4.m203",
+        "year": "1999",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/0002-9394(82)90197-0",
+        "year": "1982",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/0002-9394(82)90198-2",
+        "year": "1982",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1037/0882-7974.6.3.403",
+        "year": "1991",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/00006324-198205000-00009",
+        "year": "1982",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/00006324-199412000-00005",
+        "year": "1994",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1001/jama.279.14.1083",
+        "year": "1998",
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SRB-12": {
+    "doi": "10.3233/wor-210997",
+    "total_refs": 28,
+    "doi_only_refs": 0,
+    "relevant_n": 20,
+    "already_in_es_n": 0,
+    "new_discovery_n": 20,
+    "discoveries": [
+      {
+        "doi": "10.1016/j.ajo.2010.01.011",
+        "year": "2010",
+        "author": "Almog",
+        "title_short": "The correlation between visual acuity and color vision as an indicator of the cause of visual loss",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/bjo.2003.033480",
+        "year": "2004",
+        "author": "Arden",
+        "title_short": "Colour vision testing as an aid to diagnosis and management of age related maculopathy",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2004",
+        "author": "Arditi",
+        "title_short": "Improving letter contrast sensitivity testing",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1167/17.5.8",
+        "year": "2017",
+        "author": "Arditi",
+        "title_short": "Rethinking ADA signage standards for low-vision accessibility",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.visres.2013.05.004",
+        "year": "2013",
+        "author": "Bailey",
+        "title_short": "Visual acuity testing. From the laboratory to the clinic",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1167/iovs.12-10461",
+        "year": "2013",
+        "author": "Bochsler",
+        "title_short": "Recognition of ramps and steps by people with low vision",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1136/bjo.82.11.1236",
+        "year": "1998",
+        "author": "Crabb",
+        "title_short": "Simulating binocular visual field status in glaucoma",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3233/wor-205158",
+        "year": null,
+        "author": null,
+        "title_short": "Dain SJ , Bridge C , Relf M , Lukman AL , Manandhar S , Boon M-Y . Issues in specifying contrast in building elements fo",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1097/01.opx.0000187844.27025.ea",
+        "year": "2005",
+        "author": "Dougherty",
+        "title_short": "An evaluation of the MARS letter contrast sensitivity test",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1167/4.12.5",
+        "year": "2004",
+        "author": "Hansen",
+        "title_short": "A horizontal bias in human visual processing of orientation and its correspondence to the structural components of natur",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2010",
+        "author": "Haun",
+        "title_short": "Contrast sensitivity for oriented patterns in 1/f noise: contrast response and the horizontal effect",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2002",
+        "author": "Haymes",
+        "title_short": "Relationship between vision impairment and ability to perform activities of daily living",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2009",
+        "author": "Kaiser",
+        "title_short": "Prospective evaluation of visual acuity assessment: A comparison of Snellen versus ETDRS charts in clinical practice (An",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/0042-6989(87)90028-9",
+        "year": "1987",
+        "author": "Legge",
+        "title_short": "Psychophysics of reading-V. The role of contrast in normal vision",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2010",
+        "author": "Legge",
+        "title_short": "Visual accessibility of ramps and steps",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2020",
+        "author": "Lukman",
+        "title_short": "Luminance contrast of accessible tactile indicators for people with visual impairment",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "MARS perceptrix, The Mars Letter Contrast Sensitivity Test: User manual, in, MARS Perceptrix Corporation, Cappaqua, New ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/0042-6989(89)90175-2",
+        "year": "1989",
+        "author": "Rubin",
+        "title_short": "Psychophysics of reading VI- The role of contrast in low vision",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3233/wor-131769",
+        "year": "2014",
+        "author": "Tan",
+        "title_short": "The visibility of controls and labels on electronic devices and their suitability for people with impaired vision",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "World Health Organization, 9D90 Vision impairment including blindness, in: ICD-11 for mortality and morbidity statistics",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SRB-13": {
+    "doi": "10.3390/s24020526",
+    "total_refs": 28,
+    "doi_only_refs": 0,
+    "relevant_n": 22,
+    "already_in_es_n": 0,
+    "new_discovery_n": 22,
+    "discoveries": [
+      {
+        "doi": "10.1016/s0003-6870(00)00049-1",
+        "year": "2001",
+        "author": "Roys",
+        "title_short": "Serious stair injuries can be prevented by improved stair design",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1111/j.1532-5415.2000.tb05006.x",
+        "year": "2000",
+        "author": "Startzell",
+        "title_short": "Stair negotiation in older people: A review",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apergo.2015.07.021",
+        "year": "2016",
+        "author": "Nemire",
+        "title_short": "The science behind codes and standards for safe walkways: Changes in level, stairways, stair handrails and slip resistan",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Scott, A. (2005). Falls on Stairways: Literature Review, YUMPU. Report Number: HSL/2005/10.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Roys, M., and Wright, M. (2005, January 5\u20137). Minor variations in gait and their effect on stair safety. Proceedings of ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.gaitpost.2003.11.003",
+        "year": "2005",
+        "author": "Stacoff",
+        "title_short": "Ground reaction forces on stairs: Effects of stair inclination and age",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apergo.2015.07.027",
+        "year": "2016",
+        "author": "Novak",
+        "title_short": "Age-related differences in dynamic balance control during stair descent and effect of varying step geometry",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.gaitpost.2011.05.005",
+        "year": "2011",
+        "author": "Samuel",
+        "title_short": "The biomechanical functional demand placed on knee and hip muscles of older adults during stair ascent and descent",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.gaitpost.2011.05.017",
+        "year": "2011",
+        "author": "Zietz",
+        "title_short": "Stepping characteristics and Centre of Mass control during stair descent: Effects of age, fall risk and visual factors",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.gaitpost.2004.01.006",
+        "year": "2005",
+        "author": "Hamel",
+        "title_short": "Foot clearance during stair descent: Effects of age and illumination",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.gaitpost.2005.12.014",
+        "year": "2007",
+        "author": "Mian",
+        "title_short": "Kinematics of stair descent in young and older adults and the impact of exercise training",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.3390/s23249638",
+        "year": null,
+        "author": null,
+        "title_short": "Ram, M., Baltzopoulos, V., Shaw, A., Maganaris, C.N., Cullen, J., O\u2019Brien, T., and Kot, P. (2023). A Novel Smart Shoe In",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apergo.2020.103131",
+        "year": "2020",
+        "author": "Francksen",
+        "title_short": "Negotiating stairs with an inconsistent riser: Implications for stepping safety",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.exger.2019.110646",
+        "year": "2019",
+        "author": "Ackermans",
+        "title_short": "A novel multivariate approach for biomechanical profiling of stair negotiation",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1152/jappl.1999.86.3.1040",
+        "year": "1999",
+        "author": "Hausdorff",
+        "title_short": "Maturation of gait dynamics: Stride-to-stride variability and its temporal organization in children",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.7551/mitpress/6433.001.0001",
+        "year": null,
+        "author": null,
+        "title_short": "Templer, J. (1995). The Staircase: History and Theories, Mit Press.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/s0966-6362(01)00164-3",
+        "year": "2002",
+        "author": "Christina",
+        "title_short": "Ground reaction forces and frictional demands during stair descent: Effects of age and illumination",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "Roys, M. (2013). Refurbishing Stairs in Dwellings to Reduce the Risk of Falls and Injuries, IHS BRE Press.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.gaitpost.2019.08.004",
+        "year": "2019",
+        "author": "Foster",
+        "title_short": "Centre of mass control is reduced in older people when descending stairs at an increased riser height",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/0022-4375(85)90005-2",
+        "year": "1985",
+        "author": "Templer",
+        "title_short": "Study of factors associated with risk of work-related stairway falls",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.7551/mitpress/6434.001.0001",
+        "year": null,
+        "author": null,
+        "title_short": "Templer, J. (1995). The Staircase: Studies of Hazards, Falls, and Safer Design, MIT Press.",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/ptj/77.8.812",
+        "year": "1997",
+        "author": "Baldwin",
+        "title_short": "Predicting the probability for falls in community-dwelling older adults",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SRB-14": {
+    "doi": "10.2196/60622",
+    "total_refs": 28,
+    "doi_only_refs": 21,
+    "relevant_n": 23,
+    "already_in_es_n": 1,
+    "new_discovery_n": 22,
+    "discoveries": [
+      {
+        "doi": "10.6028/nbs.bss.120",
+        "year": null,
+        "author": null,
+        "title_short": "ArcheaJCollinsBLStahlFIGuidelines for stair safety, Building Science Series, National Institute of Standards and Technol",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apergo.2015.07.021",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1371/journal.pone.0004577",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.35248/2165-7556-22.12.303",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.ics.2005.05.165",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.exger.2014.04.009",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.humov.2021.102774",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.gaitpost.2011.05.017",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1167/iovs.14-16018",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.exger.2021.111309",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.visres.2022.108101",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1371/journal.pone.0257159",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/00140139.2022.2141347",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": true
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": null,
+        "title_short": "MillerJAEsmayMLNature and causes of stairway fall19612024-12-03https://elibrary.asabe.org/abstract.asp?aid=41024&t=2&red",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1137/141000671",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1002/wics.1314",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.22237/jmasm/1304222580",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.apergo.2020.103131",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.gaitpost.2022.08.019",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1371/journal.pone.0050599",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1371/journal.pbio.1002128",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jamda.2014.12.003",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.jsr.2022.06.007",
+        "year": null,
+        "author": null,
+        "title_short": "[DOI-only \u2014 no title in CrossRef metadata]",
+        "in_evidence_sources": false
+      }
+    ]
+  },
+  "SRB-15": {
+    "doi": "10.1371/journal.pone.0326850",
+    "total_refs": 38,
+    "doi_only_refs": 0,
+    "relevant_n": 17,
+    "already_in_es_n": 0,
+    "new_discovery_n": 17,
+    "discoveries": [
+      {
+        "doi": null,
+        "year": "2000",
+        "author": "LD Hill",
+        "title_short": "Safety of older people on stairs: behavioural factors",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12877-018-0958-1",
+        "year": "2018",
+        "author": "R Blanchet",
+        "title_short": "A need to improve the assessment of environmental hazards for falls on stairs and in bathrooms: results of a scoping rev",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1186/s12877-017-0602-5",
+        "year": "2017",
+        "author": "A Hajek",
+        "title_short": "The association of falls with loneliness and social exclusion: evidence from the DEAS German Ageing Survey",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2022",
+        "author": "JCT Close",
+        "title_short": "Fall prevention in older people: past, present and future",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1038/s41598-020-77104-z",
+        "year": "2020",
+        "author": "F Bu",
+        "title_short": "A longitudinal analysis of loneliness, social isolation and falls amongst older people in England",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": "W Wilson",
+        "title_short": "The Housing Health and Safety Rating System (HHSRS)",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": null,
+        "author": "M  Roys",
+        "title_short": "Refurbishing stairs in dwellings to reduce the risk of falls and injuries",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": null,
+        "year": "2014",
+        "author": "RJ Foster",
+        "title_short": "Safety on stairs: influence of a tread edge highlighter and its position",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.humov.2021.102774",
+        "year": "2021",
+        "author": "NM Thomas",
+        "title_short": "Influence of step-surface visual properties on confidence, anxiety, dynamic stability, and gaze behaviour in young and o",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/ageing/afac205",
+        "year": "2022",
+        "author": "M Montero-Odasso",
+        "title_short": "World guidelines for falls prevention and management for older adults: a global initiative",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.gaitpost.2005.09.013",
+        "year": "2006",
+        "author": "LA Brown",
+        "title_short": "Anxiety-mediated gait adaptations reduce errors of obstacle negotiation among younger and older adults: Implications for",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1371/journal.pone.0049765",
+        "year": "2012",
+        "author": "WR Young",
+        "title_short": "Newly acquired fear of falling leads to altered eye movement patterns and reduced stepping safety: a case study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1093/gerona/glaa130",
+        "year": "2021",
+        "author": "T Ackermans",
+        "title_short": "Prediction of balance perturbations and falls on stairs in older people using a biomechanical profiling approach: A 12-m",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1016/j.exger.2020.110839",
+        "year": "2020",
+        "author": "NM Thomas",
+        "title_short": "Optimal lighting levels for stair safety: Influence of lightbulb type and brightness on confidence, dynamic balance and ",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1519/jpt.0000000000000031",
+        "year": "2015",
+        "author": "T Roman de Mettelinge",
+        "title_short": "Understanding the relationship between walking aids and falls in older adults: a prospective cohort study",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1007/s10433-016-0369-0",
+        "year": "2016",
+        "author": "B Kn\u00e4uper",
+        "title_short": "How aging affects self-reports",
+        "in_evidence_sources": false
+      },
+      {
+        "doi": "10.1080/09658210802261124",
+        "year": "2008",
+        "author": "AL Gilchrist",
+        "title_short": "Working memory capacity for spoken sentences decreases with adult ageing: recall of fewer but not smaller chunks in olde",
+        "in_evidence_sources": false
+      }
+    ]
+  }
+}

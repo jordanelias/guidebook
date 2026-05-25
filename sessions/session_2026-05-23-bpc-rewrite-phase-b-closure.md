@@ -16,17 +16,17 @@
 | Active workplan §B.0 status | OPEN, target ~30 BPCs | CLOSED, applied to 70 files / 68 slugs | closed |
 | co1 rows with `synthesis_attribution_required = 1` (B.10) | 29/30 | 30/30 | +1 |
 | Co-1 six-field set (B.8) | 29/30 | 30/30 | +1 |
-| citation_mining backward=1 rows (B.11) | 2 (school-environment-autism partial) | 67 (RAP 19 + MHB 16 + CWD 11 + MOB 6 + SEA 15) | +65 |
-| citation_mining forward=1 rows (B.11) | 0 | 68 (RAP 20 + MHB 16 + CWD 11 + MOB 6 + SEA 15) | +68 |
-| Slugs with `citation_mining_complete = 1` | 0 | 5 | +5 |
-| `school-environment-autism` | 2 partial (B=1/F=0; +13 depth-1 DEFER) | 15 T1-3 full + 2 T4 preserved DEFER; CLOSED | done |
-| Backward discovery surface (NEW candidate refs) | n/a | 1,561 (RAP 316 + MHB 264 + CWD 520 + MOB 101 + SEA 360) | new |
-| Forward discovery surface (NEW candidate refs) | n/a | 2,217 (RAP 538 + MHB 359 + CWD 567 + MOB 209 + SEA 544) | new |
-| Combined B.11 discoveries surfaced | n/a | 3,778 | new |
-| Phase B substantive items remaining | 3 (B.0, B.11, B.9) + 2 trivial (B.8, B.10) | B.11 (83 slugs remain), B.9 | -3 |
+| citation_mining backward=1 rows (B.11) | 2 (school-environment-autism partial) | 81 (RAP 19 + MHB 16 + CWD 11 + MOB 6 + SEA 15 + SRB 14) | +79 |
+| citation_mining forward=1 rows (B.11) | 0 | 82 (RAP 20 + MHB 16 + CWD 11 + MOB 6 + SEA 15 + SRB 14) | +82 |
+| Slugs with `citation_mining_complete = 1` | 0 | 6 | +6 |
+| `stair-ramp-threshold-biomechanics-accessibility` | 0 of 14 mined | 14 full mined; CLOSED | done |
+| Backward discovery surface (NEW candidate refs) | n/a | 1,833 (+272 SRB) | new |
+| Forward discovery surface (NEW candidate refs) | n/a | 2,988 (+771 SRB) | new |
+| Combined B.11 discoveries surfaced | n/a | 4,821 | new |
+| Phase B substantive items remaining | 3 (B.0, B.11, B.9) + 2 trivial (B.8, B.10) | B.11 (82 slugs remain), B.9 | -3 |
 | Eligible evidence pool (rule #10) | 638/638 (100%) | 638/638 (100%) | unchanged |
 | pre_rehab_banner_audit invariants | n/a (script didn't exist) | 4/4 PASS | new audit |
-| Pending data migrations on b0a4a25 | 114 (pre-existing drift) | 127 | +13 |
+| Pending data migrations on b0a4a25 | 114 (pre-existing drift) | 128 | +14 |
 
 ---
 
@@ -80,7 +80,9 @@ A narrower interpretation (e.g., A) would re-bound the cohort to ~65 files (only
 | `sessions/artifacts/2026-05-24-b11-mobility-backward-discoveries.json` | NEW | MOB BACKWARD discovery surface (101 NEW refs) |
 | `scripts/migrations/data_20260524223000_b11_school_environment_autism.sql` | NEW | B.11 slug closure: school-environment-autism (15 T1-3 fully mined; replaces 2026-05-11g FORWARD-DEFERRED + DEPTH-1-DISCOVERY DEFERRED state; 2 T4 rows preserve their DEFER as out-of-scope for B.11) |
 | `sessions/artifacts/2026-05-24-b11-sea-backward-discoveries.json` | NEW | SEA BACKWARD discovery surface (360 NEW refs) |
-| `sessions/artifacts/2026-05-24-b11-sea-forward-discoveries.json` | NEW | SEA FORWARD discovery surface (544 NEW refs) |
+| `scripts/migrations/data_20260525001500_b11_stair_ramp_threshold.sql` | NEW | B.11 slug closure: stair-ramp-threshold-biomechanics-accessibility (14/14 full) |
+| `sessions/artifacts/2026-05-24-b11-srb-backward-discoveries.json` | NEW | SRB BACKWARD discovery surface (272 NEW refs) |
+| `sessions/artifacts/2026-05-24-b11-srb-forward-discoveries.json` | NEW | SRB FORWARD discovery surface (771 NEW refs) |
 
 ---
 
@@ -101,16 +103,14 @@ A narrower interpretation (e.g., A) would re-bound the cohort to ~65 files (only
 
 **Phase B continuation:**
 
-- **B.11 citation mining.** **5 slugs closed**; 83 active slugs remain. Pattern: CrossRef (backward) + OpenAlex `cites:` (forward) + DOI-only-ref inclusion + OpenAlex `pmid:`/title-search for no-DOI recovery + full-DEFER for grey-lit + **re-mine prior FORWARD-DEFERRED/DEPTH-1-DISCOVERY rows** (SEA pattern from turn 10).
-  - **Yield this turn:** SEA returned 904 discoveries (360 backward + 544 forward), the highest yield per slug yet. Academic-dense autism+design literature.
-  - **Tier 4 sources remain DEFERRED** as out-of-scope for B.11 phase (per workplan §B.11 tier scope). SEA-bw-712 (Bates 2016) + SEA-bw-718 (Deochand 2015) preserve their 2026-05-11g DEPTH-1-DISCOVERY DEFER.
-  - **Discovery triage queue:** 3,778 candidate refs across 12 artifact files. Heavy arm of skill §4 still deferred. Worth designing a sub-protocol before queue exceeds 5,000.
-  - **Next slug candidates** (refreshed): stair-ramp-threshold-biomechanics-accessibility (14), upper-limb-impairment-built-environment (14), sensory-room-user-control (12, partial), accessibility-feature-market-value-uplift-framing (10), accessible-bathroom-and-grab-bar (10), accessible-design-economics-cost-premium (9).
+- **B.11 citation mining.** **6 slugs closed**; 82 active slugs remain. Pattern stable: CrossRef (backward) + OpenAlex `cites:` (forward, **pace at ≥1.5s/req to avoid 429**) + DOI-only-ref inclusion + OpenAlex `pmid:`/title-search for no-DOI recovery + full-DEFER for grey-lit + re-mine prior DEFERs.
+  - **Rate-limit lesson from SRB batch:** OpenAlex's daily 10,000-credit ($1 USD) limit can be exhausted at ~3 req/s pacing on a 14-source slug. HTTP 429 returns `retry-after: 71` for the limit reset. Future batches should default to 1.5s/req pacing. The `curl -fsSL` flag swallows 429s as empty — switch to `-sS -w "%{http_code}"` for HTTP-code-aware handling.
+  - **`/tmp` cache durability:** the sandbox `/tmp` directory was wiped twice during this turn between code blocks. Aggregate JSON files (backward.json, forward.json) need to be persisted to a more durable path or regenerable from per-source caches. SRB rebuild from per-cache files worked.
+  - **Discovery triage queue:** 4,821 candidate refs across 14 artifact files. Heavy arm of skill §4 still deferred.
+  - **Next slug candidates:** upper-limb-impairment-built-environment (14), sensory-room-user-control (12, partial), accessibility-feature-market-value-uplift-framing (10), accessible-bathroom-and-grab-bar (10), accessible-design-economics-cost-premium (9).
 - **B.9 derivation_chain.** 14/638 populated; ~186 cited sources remaining at ~10 min each.
 - ~~B.8 / B.10~~ **CLOSED**.
 - **B.12 Tier 2 jurisdictional instruments.** Partial across rehab batches; needs inventory.
-
-**Minor housekeeping for next session:** Two migration files share the `20260524223000` timestamp prefix (`b11_mobility_built_environment.sql` and `b11_school_environment_autism.sql`). Apply order is preserved by alphabetical suffix sort, but the convention's intent is unique timestamps. Mobility migration is stamped slightly earlier in spec but written first by the session; SEA migration was written second and could have been stamped `223100` or later. Not a CI-blocking issue; cosmetic.
 
 **After all of Phase B closure:**
 
