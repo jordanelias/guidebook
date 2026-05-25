@@ -48,7 +48,16 @@ A separate canonical clarification, surfaced 2026-05-25 during reverification sc
 
 When a BPC cites a T4–T6 source, the citation must additionally confirm that the cited edition is the **current legally-in-force edition** — not a superseded edition. Pre-existing supersession_check rows surface this for the supersession protocol; the same check applies inline to any new T4–T6 citation.
 
-Worked example surfaced 2026-05-25: `accessible-circulation-geometry.md` cites DIN 18040-1:2010-10. The 2010 edition is still legally in force in Germany (referenced in MVV TB 2024/1 published August 2024), but draft revision E DIN 18040-1:2023-02 exists and DIN EN 17210:2021 has been published as the European harmonised accessibility standard. A reverification of the BPC must consider whether the 2010 citation should be retained, supplemented, or replaced.
+**Enforcement (Level 2 audit script, added 2026-05-25):** `scripts/audit/code_currency_audit.py` is the mechanical check. Per architecture v2.3 `<enforcement_spectrum>`, this rule is promoted from text rule (Level 1) to audit script (Level 2) because (a) it is mechanically checkable from `evidence_sources.tier` + `pub_year` + the new `code_currency_*` columns, and (b) drift was observably costly during the 2026-05-25 reverification scoping (DIN 18040-1:2010 and NZS 4121:2001 both surfaced as cases where edition currency required direct jurisdiction-source checks that no inline rule had previously required).
+
+The audit fires per-tier age thresholds (T4: 7 years; T5/T6: 5 years) and lists rows for jurisdiction-tracker review. Suppression criteria documented in the audit script header:
+- `code_currency_status IN ('VERIFIED-CURRENT','PERMANENT-FRAMEWORK')` with `code_currency_verified_at` within 365 days;
+- OR `supersession_check` row with outcome in `{current_best, co1_addition_logged, refined_by}` within 365 days (any slug);
+- OR `pub_year` within tier-specific freshness threshold.
+
+`code_currency_status` enum: `VERIFIED-CURRENT`, `PERMANENT-FRAMEWORK` (foundational references like CRPD, ICF, WHO Child Growth Standards that do not revise on the same cadence), `SUPERSEDED-PENDING-REPLACEMENT`, `UNVERIFIED-CHECK-DEFERRED` (e.g., T6 codes flagged in MOB Pass-2 supersession audit as out-of-scope per DR-2026-05-24).
+
+Worked example surfaced 2026-05-25: `accessible-circulation-geometry.md` cites DIN 18040-1:2010-10. The 2010 edition is still legally in force in Germany (referenced in MVV TB 2024/1 published August 2024), but draft revision E DIN 18040-1:2023-02 exists and DIN EN 17210:2021 has been published as the European harmonised accessibility standard. A reverification of the BPC must consider whether the 2010 citation should be retained, supplemented, or replaced. Counter-example same day: NZS 4121:2001 is 24 years old but remains the NZ Building Act §119 / D1/AS1 Acceptable Solution per NZ Ministry of Education March 2025 guidance; age does NOT predict supersession.
 
 ## 5. evidence_quality marker mapping (unchanged)
 
