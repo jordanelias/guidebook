@@ -116,26 +116,31 @@ CHD · LPA · EXH — Supp. Parts 1–3 only
 ## 4. Evidence and Citation Formatting
 
 ### 4.1 Evidence Tier Markers
+
+The canonical tier ladder is defined at `governance/tier-system.md`. The SKILL summary below mirrors it; on any disagreement the canonical document wins.
+
 Every prescriptive claim must carry one of:
-- `[Tier 1]` — OT clinical research, intervention-tested
-- `[Co-1]` — Lived experience / participatory design (CRPD Art. 4.3)
-- `[Tier 2]` — Disability-led NGO/DPO/advocacy guidelines
-- `[Tier 3 — CPG]` — OT professional body clinical practice guidelines (CAOT, AOTA, RCOT, COTEC, WFOT, and national equivalents)
-- `[Tier 4]` — Systematic review or meta-analysis
-- `[Tier 5]` — International standard with evidence basis
-- `[Tier 6]` — National beyond-code framework
-- `[Tier 7]` — Statutory code (reference baseline only)
+- `[Tier 1]` — Primary research with intervention-level or biomechanical control on the parameter; OT clinical research, RCTs, biomechanical primary
+- `[Co-1]` — Disability-led lived experience / participatory design / DPO publications (CRPD Art. 4.3)
+- `[Tier 2]` — Community-consensus synthesis above primary studies: systematic reviews / meta-analyses, disability-led NGO/DPO/advocacy guidelines, professional-body evidence-based standards
+- `[Co-2]` — OT professional body clinical practice guidelines (CAOT, AOTA, RCOT, COTEC, WFOT, and national equivalents)
+- `[Tier 3]` — Clinical primary research at lower control level (cross-sectional, observational, qualitative, single-centre); grey-literature primary research
+- `[Tier 4]` — International standard (ISO, IEC, CEN, BSI PAS, EN 81-70, EN 17210)
+- `[Tier 5]` — National beyond-code framework (BS 8300, DIN 18040 advisories, Boverket BBR, etc.)
+- `[Tier 6]` — Statutory code — legally enforceable national/sub-national accessibility code (reference baseline only; per `governance/tier-system.md` §3, convergence of T6 codes does NOT anchor best-practice claims)
 - `[UNSUPPORTED — citation required]` — no source available
 - `[UNVERIFIED — DOI/URL required before publication]` — source not confirmed
 - `[EXPERT CONSENSUS — March 2026]` — PAIN/OFS/DBL/IntD provisions without built-environment evidence base
 - `[THIN BASE — <3 studies]` — insufficient evidence
 - `[SYSTEMIC GAP — {description}]` — gap across all jurisdictions searched
 
+**Important — convergence ≠ best practice.** Per `governance/tier-system.md` §3, a claim of the form "BS 8300, DIN 18040-1, Part M, and AS 1428.1 all specify X" is convergence across Tier 4–6 sources — informative for code-baseline citations and jurisdiction tracking, but NOT best-practice evidence. Best-practice claims must rest on T1, Co-1, T2, or Co-2 evidence appropriate to the claim type. T4–T6 citations also require code-currency check (the cited edition is the current legally-in-force edition).
+
 ### 4.2 Evidence Quality Markers
-Inline markers appended to prescriptive claims to indicate evidence quality at a glance:
-- `●` — confirmed evidence base (Tiers 1–4, Co-1, Co-2/CPG)
-- `◐` — policy or standards basis only, not primary evidence (Tiers 5–6)
-- `○` — grey literature, expert consensus only, thin base, or unconfirmed (Tier 7, `[EXPERT CONSENSUS]`, `[THIN BASE]`, `[UNSUPPORTED]`)
+Inline markers appended to prescriptive claims to indicate evidence quality at a glance (mapping per `governance/tier-system.md` §5):
+- `●` — confirmed evidence base: T1, T2 (sr_meta + standard_eb + co2), Co-1, Co-2
+- `◐` — policy or standards basis only, not primary evidence: T4, T5
+- `○` — grey literature, expert consensus only, thin base, or unconfirmed: T3 grey, `[EXPERT CONSENSUS]`, `[THIN BASE]`, `[UNSUPPORTED]`, T6 (code-floor)
 
 Usage: append after the closing punctuation of the claim — e.g. `The corridor to be 1200 mm minimum.●`
 
