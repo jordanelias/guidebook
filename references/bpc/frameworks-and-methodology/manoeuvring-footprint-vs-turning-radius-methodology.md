@@ -4,6 +4,11 @@
 **Status:** OPERATIVE — methodology BPC; cited by dimension-specifying BPCs across the corpus
 **Owner directive:** "yes, but you have to include a discussion about why turning radius is disingenuous compared to swept path/turning maneouvres" (2026-05-25)
 **Closes:** GAP-272 (geometry framing failure)
+
+**AUTHORSHIP CORRECTION (2026-05-25):** This BPC was first authored citing the primary biomechanical study as "Chaikhot et al. 2023". That was an error introduced by a misread of the PMC full-text snippet during initial authoring. The correct authors per PubMed PMID 37383064 are **Chaikhot D, Taylor MJD, de Vries WHK, Hettinga FJ 2023**. All other content (97% spin-turn dominance, 15.3× braking force, n=10 sample, etc.) is from the same paper at DOI 10.3389/fspor.2023.1127514 and is unchanged. Citations throughout this BPC corrected at this same revision.
+
+---
+
 **Evidence tier range:** Tier 1–Tier 5
 **Population:** MOB (primary); ALL (any BPC specifying turning / manoeuvring / clear-floor dimensions)
 
@@ -23,11 +28,11 @@ The parameter-name implies a geometric idealisation: the wheelchair user pivots 
 
 The pivot-in-place model assumes a single fixed rotation axis at the occupant's centre. Real-world wheelchair turning behaves nothing like this.
 
-According to PubMed, the only published biomechanical study of corridor-entry 90° turns ([Vergara et al. 2023, DOI 10.3389/fspor.2023.1127514](https://doi.org/10.3389/fspor.2023.1127514)) found that 97% of able-bodied novice users on a standardised ultra-light wheelchair executed a **spin turn** — the inner hand brakes on the rim while the outer hand makes two spinning pushes. The resulting rotation axis is not at the occupant's centre. It is at the inner wheel. The footprint is asymmetric: the outer wheel sweeps a ~1.4 m arc while the inner wheel pivots on a much smaller arc. The outer-hand push requires reach to the rim, which adds elbow swing and torso lean to the swept envelope.
+According to PubMed, the only published biomechanical study of corridor-entry 90° turns ([Chaikhot et al. 2023, DOI 10.3389/fspor.2023.1127514](https://doi.org/10.3389/fspor.2023.1127514)) found that 97% of able-bodied novice users on a standardised ultra-light wheelchair executed a **spin turn** — the inner hand brakes on the rim while the outer hand makes two spinning pushes. The resulting rotation axis is not at the occupant's centre. It is at the inner wheel. The footprint is asymmetric: the outer wheel sweeps a ~1.4 m arc while the inner wheel pivots on a much smaller arc. The outer-hand push requires reach to the rim, which adds elbow swing and torso lean to the swept envelope.
 
 The remaining 3% used a **roll turn** — both hands propelling synchronously in the new direction. The roll turn requires additional forward space because the chair continues to translate as it rotates. The footprint becomes an arc-with-translation rather than a circle.
 
-Neither manoeuvre is captured by "diameter through occupant centre." (Tier 1: [Vergara et al. 2023](https://doi.org/10.3389/fspor.2023.1127514) — 10 participants, 240 Hz instrumented wheel, kinematic markers on both upper extremities, 100 trials each direction.)
+Neither manoeuvre is captured by "diameter through occupant centre." (Tier 1: [Chaikhot et al. 2023](https://doi.org/10.3389/fspor.2023.1127514) — 10 participants, 240 Hz instrumented wheel, kinematic markers on both upper extremities, 100 trials each direction.)
 
 #### 2.2 Footrests, feet, and forward-swept geometry are excluded
 
@@ -55,7 +60,7 @@ The "turning circle" parameter conflates at least five empirically distinct mano
 
 | Manoeuvre | Real-world frequency | Idealised circle workable? |
 |---|---|---|
-| 90° turn entering a room or corridor | High — most common daily turn (median angle in daily-living = 39°, IQR 24-67° per [Sonenblum et al. 2012, PMID 22377684](https://pubmed.ncbi.nlm.nih.gov/22377684/), referenced in [Vergara et al. 2023](https://doi.org/10.3389/fspor.2023.1127514)) | No — spin turn footprint is asymmetric |
+| 90° turn entering a room or corridor | High — most common daily turn (median angle in daily-living = 39°, IQR 24-67° per [Sonenblum et al. 2012, PMID 22377684](https://pubmed.ncbi.nlm.nih.gov/22377684/), referenced in [Chaikhot et al. 2023](https://doi.org/10.3389/fspor.2023.1127514)) | No — spin turn footprint is asymmetric |
 | 180° turn within a bay (toilet, lift, kitchen, accessible bedroom) | High — every U-turn within an enclosed space | No — Steinfeld 2006 RESNA empirical envelope is 2400 mm clear floor, not 1500 mm circle |
 | 180° turn at open-ended bay or corridor end | Moderate | Smaller envelope possible; ~1925 mm UDI sub-sample (Steinfeld 2006) |
 | 360° rotation for orientation reversal | Low — but common in fitting rooms, accessible toilets, narrow vestibules | No — same as 180° within bay, executed twice |
@@ -98,7 +103,7 @@ Inline citations to specific codes (ADA, BS 8300, DIN 18040, AS 1428.1, NZS 4121
 
 Beyond the geometric inadequacy, undersized manoeuvring footprints exact a biomechanical price that the codes do not surface.
 
-According to PubMed, [Vergara et al. 2023](https://doi.org/10.3389/fspor.2023.1127514) found that during the turning phase of a 90° spin turn, peak braking force on the inner hand was **15.3 ± 15.7 times** the peak negative force of straight-line propulsion, and force impulse was **4.5 ± 1.7 times** the straight-line value. Wheelchair users execute approximately **900 turns per day** (median, per Sonenblum data referenced in Vergara). Manual-wheelchair-user upper-limb-injury prevalence is **55-72%** across the literature ([Boninger et al. 2003-2004 citations](https://pubmed.ncbi.nlm.nih.gov/?term=Boninger+wheelchair+propulsion+upper+limb)).
+According to PubMed, [Chaikhot et al. 2023](https://doi.org/10.3389/fspor.2023.1127514) found that during the turning phase of a 90° spin turn, peak braking force on the inner hand was **15.3 ± 15.7 times** the peak negative force of straight-line propulsion, and force impulse was **4.5 ± 1.7 times** the straight-line value. Wheelchair users execute approximately **900 turns per day** (median, per Sonenblum data referenced in Chaikhot et al.). Manual-wheelchair-user upper-limb-injury prevalence is **55-72%** across the literature ([Boninger et al. 2003-2004 citations](https://pubmed.ncbi.nlm.nih.gov/?term=Boninger+wheelchair+propulsion+upper+limb)).
 
 A 1500 mm circle that requires a tight spin-turn produces higher braking forces than a 1800 mm or 2400 mm footprint that allows a wider-arc roll turn or that doesn't require turning at all (because the corridor is wide enough for two-WC passage without manoeuvre). Specifying "the minimum that fits" externalises the cost: users absorb it in shoulder, elbow, and wrist injury rates accumulated over decades.
 
@@ -106,16 +111,7 @@ This is the deeper sense in which "5 feet wide sucks." A 1525 mm corridor isn't 
 
 ### 7. Key sources
 
-| REF / Identifier | Authors | Year | Title | Tier | Use |
-|---|---|---|---|---|---|
-| REF-00059 / REF-00060 / REF-00192 | Steinfeld E, Maisel J, Feathers D, D'Souza C | 2010 | IDeA Center AWM Project (Anthropometry of Wheeled Mobility) — Final Report | T1 | Foundational empirical anthropometry; ADA-derived-from-1970s diagnosis; drive-system-dependent envelope variation |
-| [DOI 10.1080/10400430903520280](https://doi.org/10.1080/10400430903520280) | Steinfeld E, Maisel J, Feathers D, D'Souza C | 2010 | Anthropometry and standards for wheeled mobility: an international comparison. *Assist Technol* 22(1):51-67 | T1 | Four-country comparison; convergence-not-evidence diagnosis explicit in abstract and conclusions |
-| (not yet in DB — to be added) | Steinfeld E | 2006 | RESNA Annual Conference proceedings — IDEA + BS8300 entire-sample 180° turn envelope, n=275 + BS8300 sample | T3 | 2400 mm entire-sample envelope; 1925 mm UDI sub-sample |
-| [DOI 10.3389/fspor.2023.1127514](https://doi.org/10.3389/fspor.2023.1127514) | Vergara M, van der Slikke RMA, et al. | 2023 | Biomechanics of wheelchair turning manoeuvres: novel insights into wheelchair propulsion. *Front Sports Active Living* | T1 | Spin-turn dominance (97%); 15.3× braking force; 4.5× force impulse; 900 turns/day; corridor-entry 90° turn biomechanics |
-| BS 8300-2:2018 | BSI | 2018 | Design of an accessible and inclusive built environment — Part 2: Buildings | T5 | UK best-practice framework; drive-system-dependent envelope annex |
-| Trefler & Sawatzky | Trefler E, Sawatzky B et al. | 2008 | Design Features That Affect the Maneuverability of Wheelchairs and Scooters | T2 (sr_meta) | Five distinct manoeuvring tests (180° turn / pavement gap / swept path / allocated space / narrow access path); validates that "turning radius" is one task among many |
-| Habinteg Inclusive Housing Design Guide | Runnalls J, RCOTSS-Housing | 2024 | Habinteg Housing Association inclusive housing design guide | T1 Co-1 | Room-by-room residential manoeuvring footprint targets differentiated by device type |
-| DSDG | Bauman H W | 2010 | DeafSpace Design Guidelines (Gallaudet) | T1 Co-1 | 2440 mm primary corridor convergence with IDeA 2400 mm — independent evidence streams |
+See `## Key sources` table below (mandatory CO-0006 format).
 
 ### 8. Population mapping
 
@@ -127,7 +123,7 @@ This is the deeper sense in which "5 feet wide sucks." A 1525 mm corridor isn't 
 
 ### 9. Bibliographic placeholders
 
-Steinfeld 2006 RESNA and Trefler 2008 are not yet rows in `evidence_sources`. To be added via a follow-up data migration when this methodology BPC is anchored. Vergara et al. 2023 is not yet a row in `evidence_sources` either; same.
+Steinfeld 2006 RESNA and Trefler 2008 are not yet rows in `evidence_sources`. To be added via a follow-up data migration when this methodology BPC is anchored. Chaikhot et al. 2023 is not yet a row in `evidence_sources` either; same.
 
 ### 10. Cross-references
 
@@ -140,6 +136,19 @@ The following BPCs cite or should cite this methodology BPC as the canonical ref
 - `kitchens-and-workspaces/residential-kitchen-and-task-surfaces.md`
 - `entrances-and-circulation/threshold-and-level-access.md`
 - any other BPC specifying turning, manoeuvring, or clear-floor dimensions
+
+## Key sources
+
+| REF-ID | local_ref | Authors | Year | Title | Tier | Evidence type | Use in this BPC |
+|---|---|---|---|---|---|---|---|
+| REF-00736 | MFM-01 | Chaikhot D, Taylor MJD, de Vries WHK, Hettinga FJ | 2023 | Biomechanics of wheelchair turning manoeuvres: novel insights into wheelchair propulsion. *Front Sports Active Living* | 1 | clinical | Spin-turn dominance (97%); 15.3× braking force; 4.5× force impulse; 900 turns/day; corridor-entry 90° turn biomechanics. doi:10.3389/fspor.2023.1127514 |
+| REF-00737 | MFM-02 | Steinfeld E, Maisel J, Feathers D, D'Souza C | 2006 | Anthropometry of Wheeled Mobility — IDeA Center / RESNA Annual Conference proceedings | 3 | clinical | 2400 mm entire-sample 180° turn envelope; 1925 mm UDI sub-sample. AUTHOR-TITLE-ONLY metadata pending RESNA proceedings retrieval |
+| REF-00060 | MFM-03 | Steinfeld E, Maisel J, Feathers D, D'Souza C | 2010 | Anthropometry and standards for wheeled mobility: an international comparison. *Assist Technol* 22(1):51-67 | 1 | clinical | Four-country convergence-not-evidence diagnosis; ADA-1970s-derivation explicit. doi:10.1080/10400430903520280 |
+| REF-00192 | MFM-04 | Steinfeld E, Maisel J, Feathers D, D'Souza C | 2010 | Anthropometry and Standards for Wheeled Mobility: An International Comparison (companion T4 standard_eb record) | 4 | standard_eb | Same study; T4 classification reflects its incorporation into standards-development context |
+| REF-00059 | MFM-05 | Steinfeld E, Maisel J, Feathers D, D'Souza C | 2010 | Anthropometry of Wheeled Mobility Project — Final Report | 1 | clinical | IDeA Center AWM Project Final Report; n≈500; drive-system-dependent envelope variation |
+| REF-00338 | MFM-06 | Bauman H W | 2010 | DeafSpace Design Guidelines (DSDG), Gallaudet University | 1 | co1 | 2440 mm primary corridor; independent-evidence-stream convergence with IDeA 2400 mm |
+| REF-00342 | MFM-07 | Vaughn HC | 2018 | DeafScape | 1 | co1 | Co-1 corroboration of DSDG 2440 mm corridor specification |
+| REF-00341 | MFM-08 | Cloete N, Rout S | 2025 | Cross-cultural scoping review of DeafSpace principles. *Acta Structilia* 32(2):238-263 | 3 | clinical | Cross-cultural validation of DeafSpace design principles |
 
 ## Metadata
 
