@@ -9,7 +9,8 @@
     "evidence-verification-gate-for-synthesis",
     "adherence-logging-and-attestation",
     "citation-mining",
-    "adversarial-research-protocol"
+    "adversarial-research-protocol",
+    "best-practice-supersession"
   ],
   "per_rule_status": {
     "source-discipline": {
@@ -34,11 +35,16 @@
     "citation-mining": {
       "status": "FIRED",
       "evidence_path": "scripts/migrations/data_20260524011500_b11_room_acoustic_mining_batch1.sql",
-      "reason": "B.11 closed 6 slugs: room-acoustic-performance, mental-health-built-environment, cognitive-wayfinding-design, mobility-built-environment, school-environment-autism, stair-ramp-threshold-biomechanics-accessibility. 4,821 NEW candidate refs across 14 artifact files. Turn-11 lessons: OpenAlex rate-limit (~3 req/s exhausts 10k/$1/day) hit on SRB batch; recovered after 71s retry-after; future batches pace at \u22651.5s/req. /tmp cache durability is unreliable between subprocess calls; aggregate JSONs should be persisted to the repo earlier. Per-row INSERT to evidence_sources still deferred per PI rule #10."
+      "reason": "B.11 closed 6 slugs at the v1 bar (citation_mining_complete=1): room-acoustic-performance, mental-health-built-environment, cognitive-wayfinding-design, mobility-built-environment, school-environment-autism, stair-ramp-threshold-biomechanics-accessibility. 4,821 NEW candidate refs across 14 artifact files. DR-2026-05-24 (this session, later turn) establishes v2 closure bar adding supersession_check_complete=1; the 6 v1-closed slugs are queued for retroactive supersession audits per owner directive (option 1: retroactive on all). Citation mining itself unchanged; the supersession protocol is a separate gating mechanism added downstream."
     },
     "adversarial-research-protocol": {
       "status": "NOT-FIRED",
       "reason": "B.11 batch is mining only \u2014 no synthesis claims authored, no gap closures requiring CI/shift-conditions/dissenter/falsification fields. The adversarial-research protocol fires AFTER mining when discoveries are evaluated for synthesis support; that step is deferred to follow-up triage of the discovery-surface artifact."
+    },
+    "best-practice-supersession": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-05-24-best-practice-supersession-protocol.md",
+      "reason": "DR-2026-05-24 establishes the per-slug + semiannual supersession-check protocol to address the doctrinal commitment 2 failure mode where slugs closed under citation_mining_complete=1 can still rest on superseded Tier 3+ anchors. Schema migration 015 adds the supersession_check table + bpc_metadata.supersession_check_complete flag + closure_definition_version stamp. Data-correction migration NULLs the closure-definition-version on unclosed slugs and confirms v1 on the 6 currently-closed. Skill file at skills/supersession-audit_SKILL.md codifies the search-strategy matrix per evidence type and the 5-outcome enum. Co-1 supersession treatment ships as [ASSUMPTION: accumulation, not replacement] pending owner confirmation; schema supports both treatments. The retroactive audits on 6 closed slugs are queued for next turn \u2014 Pass 1 of the long-deliverable protocol completes here at protocol infrastructure; Pass 2 will run the actual audits."
     }
   },
   "deviations": [],

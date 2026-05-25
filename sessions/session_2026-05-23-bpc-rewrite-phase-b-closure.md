@@ -19,14 +19,16 @@
 | citation_mining backward=1 rows (B.11) | 2 (school-environment-autism partial) | 81 (RAP 19 + MHB 16 + CWD 11 + MOB 6 + SEA 15 + SRB 14) | +79 |
 | citation_mining forward=1 rows (B.11) | 0 | 82 (RAP 20 + MHB 16 + CWD 11 + MOB 6 + SEA 15 + SRB 14) | +82 |
 | Slugs with `citation_mining_complete = 1` | 0 | 6 | +6 |
-| `stair-ramp-threshold-biomechanics-accessibility` | 0 of 14 mined | 14 full mined; CLOSED | done |
-| Backward discovery surface (NEW candidate refs) | n/a | 1,833 (+272 SRB) | new |
-| Forward discovery surface (NEW candidate refs) | n/a | 2,988 (+771 SRB) | new |
-| Combined B.11 discoveries surfaced | n/a | 4,821 | new |
-| Phase B substantive items remaining | 3 (B.0, B.11, B.9) + 2 trivial (B.8, B.10) | B.11 (82 slugs remain), B.9 | -3 |
+| **Slugs at v2 closure (DR-2026-05-24)** | n/a (DR didn't exist) | **0 (audits pending)** | new bar |
+| Slugs stamped `closure_definition_version = 'v1'` | n/a | 6 | new |
+| Schema version | 14 | 15 (migration 015 + supersession_check table) | +1 |
+| `supersession_check` rows | n/a | 0 (audits pending) | new table |
+| Backward discovery surface (NEW candidate refs) | n/a | 1,833 | unchanged this turn |
+| Forward discovery surface (NEW candidate refs) | n/a | 2,988 | unchanged this turn |
+| Combined B.11 discoveries surfaced | n/a | 4,821 | unchanged this turn |
+| Phase B substantive items remaining | 3 + 2 trivial | B.11 (82 slugs, plus v2 supersession audits on 6 closed), B.9, B.12 | unchanged this turn |
 | Eligible evidence pool (rule #10) | 638/638 (100%) | 638/638 (100%) | unchanged |
-| pre_rehab_banner_audit invariants | n/a (script didn't exist) | 4/4 PASS | new audit |
-| Pending data migrations on b0a4a25 | 114 (pre-existing drift) | 128 | +14 |
+| Pending data migrations on b0a4a25 | 114 | 129 | +15 |
 
 ---
 
@@ -82,7 +84,11 @@ A narrower interpretation (e.g., A) would re-bound the cohort to ~65 files (only
 | `sessions/artifacts/2026-05-24-b11-sea-backward-discoveries.json` | NEW | SEA BACKWARD discovery surface (360 NEW refs) |
 | `scripts/migrations/data_20260525001500_b11_stair_ramp_threshold.sql` | NEW | B.11 slug closure: stair-ramp-threshold-biomechanics-accessibility (14/14 full) |
 | `sessions/artifacts/2026-05-24-b11-srb-backward-discoveries.json` | NEW | SRB BACKWARD discovery surface (272 NEW refs) |
-| `sessions/artifacts/2026-05-24-b11-srb-forward-discoveries.json` | NEW | SRB FORWARD discovery surface (771 NEW refs) |
+| `decisions/DR-2026-05-24-best-practice-supersession-protocol.md` | NEW | DR establishing the supersession-check requirement for v2 slug closure + semiannual sweep cadence; cites mission doctrinal commitments 2, 3, 5 |
+| `scripts/migrations/015_supersession_check.sql` | NEW | Schema migration: supersession_check table + bpc_metadata.supersession_check_complete + closure_definition_version; schema 14→15 |
+| `scripts/migrations/data_20260525013000_supersession_v1_stamp_correction.sql` | NEW | Correction: relax closure_definition_version CHECK to allow NULL; NULL out for unclosed slugs; stamp v1 only on the 6 actually-closed slugs |
+| `skills/supersession-audit_SKILL.md` | NEW | Skill codifying per-slug + semiannual sweep protocol; search strategy matrix per evidence type; 5-outcome enum |
+| `scripts/db.py` | MODIFIED | Added `add-supersession-check` subcommand + 2 new `update-bpc` flags + `add_supersession_check()` function + 2 new bpc_metadata cols in `_BPC_META_COLS` allowlist |
 
 ---
 
@@ -103,14 +109,13 @@ A narrower interpretation (e.g., A) would re-bound the cohort to ~65 files (only
 
 **Phase B continuation:**
 
-- **B.11 citation mining.** **6 slugs closed**; 82 active slugs remain. Pattern stable: CrossRef (backward) + OpenAlex `cites:` (forward, **pace at ≥1.5s/req to avoid 429**) + DOI-only-ref inclusion + OpenAlex `pmid:`/title-search for no-DOI recovery + full-DEFER for grey-lit + re-mine prior DEFERs.
-  - **Rate-limit lesson from SRB batch:** OpenAlex's daily 10,000-credit ($1 USD) limit can be exhausted at ~3 req/s pacing on a 14-source slug. HTTP 429 returns `retry-after: 71` for the limit reset. Future batches should default to 1.5s/req pacing. The `curl -fsSL` flag swallows 429s as empty — switch to `-sS -w "%{http_code}"` for HTTP-code-aware handling.
-  - **`/tmp` cache durability:** the sandbox `/tmp` directory was wiped twice during this turn between code blocks. Aggregate JSON files (backward.json, forward.json) need to be persisted to a more durable path or regenerable from per-source caches. SRB rebuild from per-cache files worked.
-  - **Discovery triage queue:** 4,821 candidate refs across 14 artifact files. Heavy arm of skill §4 still deferred.
-  - **Next slug candidates:** upper-limb-impairment-built-environment (14), sensory-room-user-control (12, partial), accessibility-feature-market-value-uplift-framing (10), accessible-bathroom-and-grab-bar (10), accessible-design-economics-cost-premium (9).
-- **B.9 derivation_chain.** 14/638 populated; ~186 cited sources remaining at ~10 min each.
-- ~~B.8 / B.10~~ **CLOSED**.
-- **B.12 Tier 2 jurisdictional instruments.** Partial across rehab batches; needs inventory.
+- **B.11 supersession audits** (NEW per DR-2026-05-24, queued for next turn). 6 closed slugs need retroactive supersession audits per the new v2 closure bar. Owner directive (2026-05-25): option 1 — retroactive on all 6. Order: room-acoustic-performance first (specific supersession concern: ANSI/ASA S12.60 revision status), then by anchor-source count: SRB (14), MHB (16), CWD (11), SEA (15), MOB (6 mineable; 9 grey-lit Tier-6-equivalent so out of supersession scope per DR §Out-of-scope).
+  - Per-slug estimated effort: ~10 min per anchor source for PubMed/Scholar Gateway search + abstract reading + outcome judgment. ~22 hours total for the 6 closures across all in-scope anchor sources, parallelizable with citation mining on remaining slugs.
+  - The skill file at `skills/supersession-audit_SKILL.md` codifies the search-strategy matrix per evidence type.
+- **B.11 citation mining** (continues). 82 active slugs remain at the v1 (citation_mining_complete) bar. Owner has not directed whether to keep mining these or pivot to gap-driven mining first (the broader B.11 reshape discussion remains open).
+- **B.9 derivation_chain.** 14/638 populated; ~186 cited sources remaining.
+- **B.12 Tier 2 jurisdictional instruments.** Partial; needs inventory.
+- **Decision pending — Co-1 supersession treatment.** DR-2026-05-24 ships with `[ASSUMPTION:]` that Co-1 accumulates rather than supersedes. Owner confirmation needed before the first retroactive audit that touches a Co-1 anchor. Schema already supports both treatments (the `co1_addition_logged` outcome is removable in one line if owner directs Co-1 supersession parallel to Tier 1).
 
 **After all of Phase B closure:**
 

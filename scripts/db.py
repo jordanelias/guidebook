@@ -48,7 +48,9 @@ _LANGUAGE_COLS = frozenset({"status", "results_count", "notes"})
 _BPC_META_COLS = frozenset({
     "population", "last_updated", "jurisdictions_searched", "co1_pass_count",
     "evidence_state", "pico_complete", "search_complete", "bpc_complete",
-    "citation_mining_complete"
+    "citation_mining_complete",
+    # DR-2026-05-24: best-practice supersession protocol (migration 015)
+    "supersession_check_complete", "closure_definition_version",
 })
 
 
@@ -734,6 +736,11 @@ def main():
     p_ubpc.add_argument("--search-complete", type=int, choices=[0, 1])
     p_ubpc.add_argument("--pico-complete", type=int, choices=[0, 1])
     p_ubpc.add_argument("--evidence-state")
+    # DR-2026-05-24 supersession protocol
+    p_ubpc.add_argument("--supersession-check-complete", type=int, choices=[0, 1],
+                        help="DR-2026-05-24: set when all cited anchor sources have terminal supersession outcomes")
+    p_ubpc.add_argument("--closure-definition-version", choices=["v1", "v2"],
+                        help="DR-2026-05-24: v2 requires citation_mining_complete=1 AND supersession_check_complete=1")
     p_ubpc.add_argument("--dry-run", action="store_true")
 
     # add-source
@@ -839,6 +846,36 @@ def main():
     p_ar = sub.add_parser("audit-runs", help="Query item_audit_runs")
     p_ar.add_argument("--item")
     p_ar.add_argument("--status")
+
+    # ── DR-2026-05-24: best-practice supersession protocol (migration 015) ─────
+    # add-supersession-check
+    p_asc = sub.add_parser("add-supersession-check",
+                            help="Record a per-anchor-source supersession outcome (DR-2026-05-24)")
+    p_asc.add_argument("--slug", required=True)
+    p_asc.add_argument("--local-ref", required=True, help="Local ref id, e.g. RAP-23")
+    p_asc.add_argument("--ref", required=True, help="Global ref_id, e.g. REF-00064")
+    p_asc.add_argument("--tier", required=True, type=int, choices=[1,2,3,4,5,6])
+    p_asc.add_argument("--evidence-type", required=True,
+                       choices=["clinical","co1","co2","sr_meta","standard_eb","national_fw","code","grey"])
+    p_asc.add_argument("--outcome", required=True, choices=[
+        "current_best","superseded_by","refined_by","divergent_no_supersession",
+        "co1_addition_logged","pending"])
+    p_asc.add_argument("--superseding-refs", default="[]",
+                       help="JSON array of FK ref_ids (for already-verified candidates)")
+    p_asc.add_argument("--superseding-dois", default="[]",
+                       help="JSON array of DOIs (for not-yet-INSERTed candidates per PI rule #10)")
+    p_asc.add_argument("--refinement-dimension",
+                       help="Required when outcome=refined_by; names the dimension refined")
+    p_asc.add_argument("--divergence-notes",
+                       help="Required when outcome=divergent_no_supersession; summarizes divergence")
+    p_asc.add_argument("--search-strategy", required=True,
+                       help="JSON object: {tool, query, date_filter, candidates_returned, candidates_reviewed}")
+    p_asc.add_argument("--check-method", required=True, choices=[
+        "pubmed_search","scholar_gateway","cochrane_direct","standards_body_direct",
+        "multilingual_research","composite"])
+    p_asc.add_argument("--notes")
+    p_asc.add_argument("--session", required=True)
+    p_asc.add_argument("--dry-run", action="store_true")
 
     args = parser.parse_args()
 
@@ -977,6 +1014,11 @@ def main():
             data["pico_complete"] = args.pico_complete
         if args.evidence_state is not None:
             data["evidence_state"] = args.evidence_state
+        # DR-2026-05-24
+        if args.supersession_check_complete is not None:
+            data["supersession_check_complete"] = args.supersession_check_complete
+        if args.closure_definition_version is not None:
+            data["closure_definition_version"] = args.closure_definition_version
         if not data:
             print(json.dumps({"error": "No fields to update"}))
             sys.exit(1)
@@ -1095,6 +1137,45 @@ def main():
     elif args.command == "audit-runs":
         _emit(get_audit_runs(item_code=args.item, status=args.status))
 
+    elif args.command == "add-supersession-check":
+        # DR-2026-05-24 — per-anchor-source supersession outcome
+        sup_refs = json.loads(args.superseding_refs) if args.superseding_refs else []
+        sup_dois = json.loads(args.superseding_dois) if args.superseding_dois else []
+        # Validate strategy is parseable JSON
+        try:
+            strategy = json.loads(args.search_strategy)
+        except json.JSONDecodeError as e:
+            print(json.dumps({"error": f"--search-strategy is not valid JSON: {e}"}))
+            sys.exit(2)
+        # Validate outcome-specific required args (mirrors SQL CHECK)
+        if args.outcome == "refined_by" and not args.refinement_dimension:
+            print(json.dumps({"error": "outcome=refined_by requires --refinement-dimension"}))
+            sys.exit(2)
+        if args.outcome == "divergent_no_supersession" and not args.divergence_notes:
+            print(json.dumps({"error": "outcome=divergent_no_supersession requires --divergence-notes"}))
+            sys.exit(2)
+        if args.outcome in ("superseded_by", "refined_by", "divergent_no_supersession") and not (sup_refs or sup_dois):
+            print(json.dumps({"error": f"outcome={args.outcome} requires --superseding-refs or --superseding-dois"}))
+            sys.exit(2)
+        if args.outcome == "co1_addition_logged" and args.evidence_type != "co1":
+            print(json.dumps({"error": "outcome=co1_addition_logged only valid for evidence_type=co1"}))
+            sys.exit(2)
+        check_id = add_supersession_check(
+            slug=args.slug, local_ref_id=args.local_ref, ref_id=args.ref,
+            anchor_tier=args.tier, anchor_evidence_type=args.evidence_type,
+            outcome=args.outcome,
+            superseding_ref_ids=sup_refs, superseding_dois=sup_dois,
+            refinement_dimension=args.refinement_dimension,
+            divergence_notes=args.divergence_notes,
+            search_strategy_record=json.dumps(strategy),
+            candidates_returned=int(strategy.get("candidates_returned", 0)),
+            candidates_reviewed=int(strategy.get("candidates_reviewed", 0)),
+            check_method=args.check_method,
+            notes=args.notes,
+            session=args.session, dry_run=args.dry_run,
+        )
+        _emit({"check_id": check_id, "dry_run": args.dry_run})
+
 
 
 # --- Additional Python functions ---
@@ -1177,6 +1258,50 @@ def get_unmined_for_all_slugs(tier_max: int = 3) -> list[dict]:
             ORDER BY es.tier ASC, ssl.slug, ssl.local_ref_id
         """, [tier_max]).fetchall()
     return [dict(r) for r in rows]
+
+
+def add_supersession_check(*, slug: str, local_ref_id: str, ref_id: str,
+                           anchor_tier: int, anchor_evidence_type: str,
+                           outcome: str,
+                           superseding_ref_ids: list, superseding_dois: list,
+                           refinement_dimension: str | None,
+                           divergence_notes: str | None,
+                           search_strategy_record: str,
+                           candidates_returned: int, candidates_reviewed: int,
+                           check_method: str,
+                           notes: str | None,
+                           session: str, dry_run: bool = False) -> str:
+    """Insert a supersession_check row (DR-2026-05-24, migration 015).
+
+    Returns the generated check_id. Uses a deterministic id based on
+    (slug, local_ref_id, checked_at) so repeat calls in the same session don't collide.
+    """
+    import hashlib
+    from datetime import datetime, timezone
+    checked_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    seed = f"{slug}|{local_ref_id}|{checked_at}|{session}"
+    check_id = "SUPCHK-" + hashlib.sha256(seed.encode()).hexdigest()[:12]
+    with connect(dry_run) as conn:
+        conn.execute("""
+            INSERT INTO supersession_check (
+                check_id, slug, local_ref_id, ref_id,
+                anchor_tier, anchor_evidence_type,
+                outcome, superseding_ref_ids, superseding_dois,
+                refinement_dimension, divergence_notes,
+                search_strategy_record, candidates_returned, candidates_reviewed,
+                checked_at, checked_by_session, check_method, notes
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, [
+            check_id, slug, local_ref_id, ref_id,
+            anchor_tier, anchor_evidence_type,
+            outcome,
+            json.dumps(superseding_ref_ids) if superseding_ref_ids else None,
+            json.dumps(superseding_dois) if superseding_dois else None,
+            refinement_dimension, divergence_notes,
+            search_strategy_record, candidates_returned, candidates_reviewed,
+            checked_at, session, check_method, notes,
+        ])
+    return check_id
 
 
 if __name__ == "__main__":
