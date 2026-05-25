@@ -19,9 +19,9 @@
 | citation_mining backward=1 rows (B.11) | 2 (school-environment-autism partial) | 81 (RAP 19 + MHB 16 + CWD 11 + MOB 6 + SEA 15 + SRB 14) | +79 |
 | citation_mining forward=1 rows (B.11) | 0 | 82 (RAP 20 + MHB 16 + CWD 11 + MOB 6 + SEA 15 + SRB 14) | +82 |
 | Slugs with `citation_mining_complete = 1` | 0 | 6 | +6 |
-| **Slugs at v2 closure (DR-2026-05-24)** | n/a (DR didn't exist) | **1 (room-acoustic-performance)** | +1 |
-| `supersession_check` rows | n/a | 33 (all RAP anchors) | +33 |
-| RAP supersession outcomes (current_best / refined_by / superseded / divergent / pending) | n/a | 26 / 7 / 0 / 0 / 0 | new |
+| **Slugs at v2 closure (DR-2026-05-24)** | n/a (DR didn't exist) | **2 (RAP + SRB)** | +2 |
+| `supersession_check` rows | n/a | 48 (33 RAP + 15 SRB) | +48 |
+| RAP supersession outcomes (current_best / refined_by / superseded / divergent / pending) | n/a | RAP: 26/7/0/0/0; SRB: 12/3/0/0/0 | new |
 | Backward discovery surface (NEW candidate refs) | n/a | 1,833 | unchanged this turn |
 | Forward discovery surface (NEW candidate refs) | n/a | 2,988 | unchanged this turn |
 | Combined B.11 discoveries surfaced | n/a | 4,821 | unchanged this turn |
@@ -87,6 +87,7 @@ A narrower interpretation (e.g., A) would re-bound the cohort to ~65 files (only
 | `scripts/migrations/015_supersession_check.sql` | NEW | Schema migration: supersession_check table + bpc_metadata.supersession_check_complete + closure_definition_version; schema 14→15 |
 | `scripts/migrations/data_20260525013000_supersession_v1_stamp_correction.sql` | NEW | Correction: relax closure_definition_version CHECK to allow NULL; NULL out for unclosed slugs; stamp v1 only on the 6 actually-closed slugs |
 | `scripts/migrations/data_20260525021000_b11_rap_supersession_audit.sql` | NEW | Pass 2 RAP retroactive supersession audit: 33 supersession_check rows + v2 closure of room-acoustic-performance. 26 current_best + 7 refined_by. Key finding: RAP-12 Murgia 2022 SR refined_by Mercugliano 2025 SR via PubMed parameter+population search (citation mining would have missed it — Mercugliano does not cite Murgia). |
+| `scripts/migrations/data_20260525021500_b11_srb_supersession_audit.sql` | NEW | Pass 2 SRB retroactive supersession audit: 15 supersession_check rows + v2 closure of stair-ramp-threshold-biomechanics-accessibility. 12 current_best + 3 refined_by. Key finding: Tanaka 2025 stair-descent phenotype clustering (doi 10.1007/s40520-025-02929-5) refines SRB-02 Simoneau 1991, SRB-05 Pavol 2001, SRB-13 Ram 2024 on kinematic + strength dimensions. Templer 1992 (foundational T4 stair-design reference) confirmed current best — accumulated refinements but no replacement. No Co-1 anchors so owner Co-1 decision not required. |
 | `skills/supersession-audit_SKILL.md` | NEW | Skill codifying per-slug + semiannual sweep protocol; search strategy matrix per evidence type; 5-outcome enum |
 | `scripts/db.py` | MODIFIED | Added `add-supersession-check` subcommand + 2 new `update-bpc` flags + `add_supersession_check()` function + 2 new bpc_metadata cols in `_BPC_META_COLS` allowlist |
 
@@ -109,14 +110,13 @@ A narrower interpretation (e.g., A) would re-bound the cohort to ~65 files (only
 
 **Phase B continuation:**
 
-- **B.11 supersession audits** (DR-2026-05-24 Pass 2 in progress). **RAP complete at v2** (33 anchors audited, 26 current_best + 7 refined_by; key Mercugliano 2025 finding documented). 5 closed slugs remain queued for retroactive audit:
-  - **SRB** (14 anchors, all T3 biomechanics, no Co-1) — recommended next; simplest because no Co-1 decision blocker.
-  - **MHB** (16 anchors, has Co-1) — requires owner Co-1-supersession-treatment confirmation before Co-1 anchors can be audited; Tier-1-5 anchors auditable now.
-  - **CWD** (11 anchors, has Co-1) — same Co-1 dependency as MHB.
+- **B.11 supersession audits** (DR-2026-05-24 Pass 2 in progress). **RAP and SRB complete at v2.** 4 closed slugs remain queued:
+  - **MHB** (16 anchors, has Co-1) — blocked on owner Co-1-supersession-treatment confirmation for Co-1 anchors; Tier 1-5 anchors auditable now.
+  - **CWD** (11 anchors, has Co-1) — same Co-1 dependency.
   - **SEA** (15 anchors, has Co-1) — same Co-1 dependency.
-  - **MOB** (6 in-scope anchors; 9 grey-lit DEFERs out of supersession scope per DR §Out-of-scope) — smallest in-scope.
-  - Per-slug estimated effort: ~10 min per anchor source for parameter+population search + abstract reading + outcome judgment, with cluster searches batching where parameter × population overlaps across anchors (as done for RAP T1).
-- **Decision pending — Co-1 supersession treatment.** DR-2026-05-24 ships with `[ASSUMPTION:]` that Co-1 accumulates rather than supersedes. Owner confirmation still needed before the first retroactive audit that touches a Co-1 anchor. Schema reversibly supports both treatments. SRB has no Co-1 so can proceed before this decision.
+  - **MOB** (6 in-scope anchors; 9 grey-lit DEFERs out of supersession scope per DR §Out-of-scope) — smallest in-scope; could be done before MHB/CWD/SEA if Co-1 decision delays. Need to verify MOB Co-1 status before assuming unblocked.
+- **Decision pending — Co-1 supersession treatment.** Schema reversibly supports `co1_addition_logged` (accumulation, current default) or parallel-to-Tier-1 treatment (would require dropping co1_addition_logged outcome). RAP+SRB had no Co-1 anchors so audits proceeded; the next 3 slugs (MHB+CWD+SEA) all have Co-1.
+- **Audit pattern observation (per attestation deviation):** SRB audit used composite cluster searches rather than per-anchor individual searches. 5 cluster queries covered all 15 anchors efficiently when parameter×population overlap was dense. Skill file §4 should be updated to formalize this pattern; currently it implies per-anchor.
 
 **After all of Phase B closure:**
 
