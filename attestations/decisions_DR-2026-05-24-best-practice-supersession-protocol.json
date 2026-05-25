@@ -1,50 +1,49 @@
 {
-    "schema_version": "1.0",
-    "session": "session_2026-05-23-bpc-rewrite-phase-b-closure",
-    "artifact": "decisions/DR-2026-05-24-best-practice-supersession-protocol.md",
-    "doctrine_sha": "61c7f95",
-    "rules_in_scope": [
-        "source-discipline",
-        "canonical-workplan",
-        "evidence-verification-gate-for-synthesis",
-        "adherence-logging-and-attestation",
-        "best-practice-supersession"
-    ],
-    "per_rule_status": {
-        "source-discipline": {
-            "status": "FIRED",
-            "evidence_path": "decisions/DR-2026-05-24-best-practice-supersession-protocol.md#decision-rationale-per-mission-test",
-            "reason": "DR is grounded in three specific failure modes named from the conversation prior to its authorship: (a) anchor sources whose original tier is correct but whose evidence has been superseded since publication, (b) Co-1 evidence treatment ambiguity where the mission says co-primary but supersession semantics differ from Tier 1, (c) the temporal dimension of doctrinal commitment 2 — best practice is determined by the operative evidence hierarchy, which has a recency component the prior protocol did not check. No invented failure modes; each cited to either mission text or prior-turn discussion."
-        },
-        "canonical-workplan": {
-            "status": "FIRED",
-            "evidence_path": "decisions/DR-2026-05-24-best-practice-supersession-protocol.md#implementation-deliverables-this-session",
-            "reason": "DR refines what 'citation_mining_complete' means without altering the workplan structure (per PI rule #6). The v2 closure bar adds a precondition to slug closure; it does not change the workplan §B.11 scope or phase ordering. Phase B work continues; no Phase E synthesis authored as part of this DR."
-        },
-        "evidence-verification-gate-for-synthesis": {
-            "status": "FIRED",
-            "evidence_path": "decisions/DR-2026-05-24-best-practice-supersession-protocol.md#section-4-recording-the-outcome",
-            "reason": "Supersession candidates are recorded by DOI in superseding_dois (not auto-INSERTed to evidence_sources) until verified per PI rule #10. The skill file §4 makes this explicit: 'rule #10 forbids INSERTing candidates as evidence_sources rows without verification.' The DR complements rule #10 with a temporal-and-tier dimension (current-best) but does not weaken the existence-and-content gate."
-        },
-        "adherence-logging-and-attestation": {
-            "status": "FIRED",
-            "evidence_path": "skills/supersession-audit_SKILL.md#section-7-spot-check-requirement-per-pi-rule-11-attestation",
-            "reason": "Skill file §7 explicitly requires [READ: DR-2026-05-24] tag + per-slug [STAGE:] boundaries; the skill cannot be invoked without contributing to the audit trail. Semiannual sweeps additionally require enumerating skipped records as [GAP:] tags."
-        },
-        "best-practice-supersession": {
-            "status": "FIRED",
-            "evidence_path": "decisions/DR-2026-05-24-best-practice-supersession-protocol.md",
-            "reason": "This DR introduces the rule. It is in-scope for itself by definition — the DR is the authorizing instrument."
-        }
+  "schema_version": "1.0",
+  "session": "session_2026-05-23-bpc-rewrite-phase-b-closure",
+  "artifact": "decisions/DR-2026-05-24-best-practice-supersession-protocol.md",
+  "doctrine_sha": "61c7f95",
+  "rules_in_scope": [
+    "source-discipline",
+    "canonical-workplan",
+    "evidence-verification-gate-for-synthesis",
+    "adherence-logging-and-attestation",
+    "best-practice-supersession"
+  ],
+  "per_rule_status": {
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-05-24-best-practice-supersession-protocol.md#decision-rationale-per-mission-test",
+      "reason": "DR is grounded in three specific failure modes named from the conversation prior to its authorship: (a) anchor sources whose original tier is correct but whose evidence has been superseded since publication, (b) Co-1 evidence treatment ambiguity where the mission says co-primary but supersession semantics differ from Tier 1, (c) the temporal dimension of doctrinal commitment 2 \u2014 best practice is determined by the operative evidence hierarchy, which has a recency component the prior protocol did not check. No invented failure modes; each cited to either mission text or prior-turn discussion."
     },
-    "deviations": [
-        {
-            "type": "ASSUMPTION",
-            "description": "Co-1 supersession treated as accumulation rather than replacement (co1_addition_logged outcome). Owner confirmation pending. Schema reversibly supports parallel-to-Tier-1 treatment if directed.",
-            "evidence_path": "decisions/DR-2026-05-24-best-practice-supersession-protocol.md#co-1-supersession-treatment"
-        }
-    ],
-    "bias_direction": "I authored this DR after the owner named the failure mode (anchors going stale without recency check). My natural pull is toward protocol-design completeness — adding the semiannual sweep cadence + the closure-definition-version stamp + the 5-outcome enum + the search-strategy matrix is more infrastructure than the minimum the failure mode required. A more parsimonious DR would have just added supersession_check_complete=1 as a v2 closure requirement and deferred the semiannual cadence + schema versioning to a follow-up. The bias direction is over-engineering the first pass at protocol infrastructure; the counter-argument is that under-engineering would have left obvious gaps that a follow-up DR would just fill in.",
-    "independent_reviewer_counterclaim": "An outside reviewer would observe: (a) the Co-1 supersession decision is an [ASSUMPTION], not an owner-confirmed decision, so the DR is technically incomplete on a substantive doctrinal point until that's confirmed; (b) the search strategy matrix names connectors (PubMed, Scholar Gateway, Cochrane) without empirically validating that they each return useful supersession candidates on a real anchor source — the matrix is theoretical; (c) the closure_definition_version stamp adds complexity to the schema that wouldn't be needed if all slugs were just re-audited to v2 directly. Counter: (a) the [ASSUMPTION] is named explicitly and the schema reversibly supports both treatments; (b) Pass 2 (the 6 retroactive audits) is the empirical validation — if PubMed/Scholar Gateway return nothing useful, the protocol fails the validation test and gets revised; (c) closure_definition_version is the audit-trail mechanism that lets us answer 'when did this slug last meet the current best-practice bar' — without the stamp, we lose the version history of the closure semantic itself.",
-    "verdict": "CLEAN"
+    "canonical-workplan": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-05-24-best-practice-supersession-protocol.md#implementation-deliverables-this-session",
+      "reason": "DR refines what 'citation_mining_complete' means without altering the workplan structure (per PI rule #6). The v2 closure bar adds a precondition to slug closure; it does not change the workplan \u00a7B.11 scope or phase ordering. Phase B work continues; no Phase E synthesis authored as part of this DR."
+    },
+    "evidence-verification-gate-for-synthesis": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-05-24-best-practice-supersession-protocol.md#section-4-recording-the-outcome",
+      "reason": "Supersession candidates are recorded by DOI in superseding_dois (not auto-INSERTed to evidence_sources) until verified per PI rule #10. The skill file \u00a74 makes this explicit: 'rule #10 forbids INSERTing candidates as evidence_sources rows without verification.' The DR complements rule #10 with a temporal-and-tier dimension (current-best) but does not weaken the existence-and-content gate."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "skills/supersession-audit_SKILL.md#section-7-spot-check-requirement-per-pi-rule-11-attestation",
+      "reason": "Skill file \u00a77 explicitly requires [READ: DR-2026-05-24] tag + per-slug [STAGE:] boundaries; the skill cannot be invoked without contributing to the audit trail. Semiannual sweeps additionally require enumerating skipped records as [GAP:] tags."
+    },
+    "best-practice-supersession": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-05-24-best-practice-supersession-protocol.md",
+      "reason": "This DR introduces the rule. It is in-scope for itself by definition \u2014 the DR is the authorizing instrument."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "best-practice-supersession",
+      "reason": "Co-1 supersession treated as accumulation rather than replacement (co1_addition_logged outcome). Owner confirmation pending. Schema reversibly supports parallel-to-Tier-1 treatment if directed. Evidence: decisions/DR-2026-05-24-best-practice-supersession-protocol.md#co-1-supersession-treatment"
+    }
+  ],
+  "bias_direction": "I authored this DR after the owner named the failure mode (anchors going stale without recency check). My natural pull is toward protocol-design completeness \u2014 adding the semiannual sweep cadence + the closure-definition-version stamp + the 5-outcome enum + the search-strategy matrix is more infrastructure than the minimum the failure mode required. A more parsimonious DR would have just added supersession_check_complete=1 as a v2 closure requirement and deferred the semiannual cadence + schema versioning to a follow-up. The bias direction is over-engineering the first pass at protocol infrastructure; the counter-argument is that under-engineering would have left obvious gaps that a follow-up DR would just fill in.",
+  "independent_reviewer_counterclaim": "An outside reviewer would observe: (a) the Co-1 supersession decision is an [ASSUMPTION], not an owner-confirmed decision, so the DR is technically incomplete on a substantive doctrinal point until that's confirmed; (b) the search strategy matrix names connectors (PubMed, Scholar Gateway, Cochrane) without empirically validating that they each return useful supersession candidates on a real anchor source \u2014 the matrix is theoretical; (c) the closure_definition_version stamp adds complexity to the schema that wouldn't be needed if all slugs were just re-audited to v2 directly. Counter: (a) the [ASSUMPTION] is named explicitly and the schema reversibly supports both treatments; (b) Pass 2 (the 6 retroactive audits) is the empirical validation \u2014 if PubMed/Scholar Gateway return nothing useful, the protocol fails the validation test and gets revised; (c) closure_definition_version is the audit-trail mechanism that lets us answer 'when did this slug last meet the current best-practice bar' \u2014 without the stamp, we lose the version history of the closure semantic itself.",
+  "verdict": "CLEAN"
 }
