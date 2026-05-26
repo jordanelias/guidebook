@@ -131,8 +131,8 @@ The following BPCs cite or should cite this methodology BPC as the canonical ref
 
 - `population-general/mobility-built-environment.md`
 - `entrances-and-circulation/accessible-circulation-geometry.md`
-- `population-general/bariatric-turning-radius-built-environment.md` (if present)
-- `bathrooms-and-grab-bars/accessible-bathroom-and-grab-bar.md`
+- `seating-and-rest/bariatric-turning-radius-built-environment.md`
+- `bathrooms-and-wet-areas/accessible-bathroom-and-grab-bar.md`
 - `kitchens-and-workspaces/residential-kitchen-and-task-surfaces.md`
 - `entrances-and-circulation/threshold-and-level-access.md`
 - any other BPC specifying turning, manoeuvring, or clear-floor dimensions
