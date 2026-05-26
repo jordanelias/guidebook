@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-05-26-gap-driven-mining-protocol-design",
+  "artifact": "decisions/DR-2026-05-26-gap-driven-mining-protocol.md",
+  "doctrine_sha": "61c7f95",
+  "rules_in_scope": [
+    "source-discipline",
+    "canonical-workplan",
+    "evidence-verification-gate",
+    "best-practice-supersession",
+    "adherence-logging-and-attestation",
+    "gap-driven-mining"
+  ],
+  "per_rule_status": {
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-05-26-gap-driven-mining-protocol.md",
+      "reason": "Every example gap cited in the Context section (GAP-069, GAP-074, GAP-076, GAP-267, GAP-275, GAP-012, GAP-027, GAP-040, GAP-284, GAP-283) was looked up directly in the current OPEN gap set during Pass 1 read of the gaps table. Cited owner directives ('owner pivot turn 14, 2026-05-23') trace to session_2026-05-23-bpc-rewrite-phase-b-closure.md remaining-open-work section. No invented gap IDs, no invented sessions, no invented directives. Doctrinal commitments 2/3/5 cited by number rather than fabricated paraphrase."
+    },
+    "canonical-workplan": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-05-26-gap-driven-mining-protocol.md",
+      "reason": "DR refines what 'B.11 citation mining' means for the gap-driven track without altering workplan structure. PI rule #6 holds the workplan as canonical; this DR cites workplan §B.11 as the host phase, owner's 2026-05-23 turn-14 pivot as the policy trigger, and does not propose phase reordering or new phase introduction."
+    },
+    "evidence-verification-gate": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-05-26-gap-driven-mining-protocol.md",
+      "reason": "DR §Decision/Output writes #2 enforces rule #10: candidates returned by mining are recorded as DOIs in gap_mining.candidate_dois and are NOT INSERTed to evidence_sources without verification. Mirrors the supersession_check.superseding_dois pattern (DR-2026-05-24). Rule #10's existence-and-content gate is preserved; this DR adds an evidence-discovery dimension without weakening verification."
+    },
+    "best-practice-supersession": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-05-26-gap-driven-mining-protocol.md",
+      "reason": "Design pattern explicitly inherited from DR-2026-05-24: append-only per-attempt rows, MAX(attempt_at) as operative outcome, semiannual sweep cadence, DOI-only candidates not auto-promoted. DR §Interlocks bullet 4 names the join: discoveries that supersede existing anchors create joint gap_mining + supersession_check rows describing orthogonal dimensions."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/decisions_DR-2026-05-26-gap-driven-mining-protocol.json",
+      "reason": "This attestation IS the rule firing. The DR's commit carries [DOCTRINE: 61c7f95] before the timestamp per v10.14 canonical form. The skill file deliverable in the next session will additionally require attestation; the DR commits to that in §Implementation deliverables."
+    },
+    "gap-driven-mining": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-05-26-gap-driven-mining-protocol.md",
+      "reason": "This DR introduces the rule. It is in-scope for itself by definition — the DR is the authorizing instrument. Per DR-2026-05-24's same self-reference pattern."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "gap-driven-mining",
+      "reason": "DR is silent on BATCH-mode citation-miner interaction: if a slug-level citation-miner pass discovers a source that closes a previously-mining-addressable gap, the gap-closure handshake is not specified. Mitigation: the skill file deliverable in Pass 2b (next session) addresses this as part of the BATCH/INLINE mode mechanics; the DR ships with this gap acknowledged. Evidence: decisions/DR-2026-05-26-gap-driven-mining-protocol.md §Triggers and §Implementation-deliverables next-session item 4."
+    }
+  ],
+  "bias_direction": "I authored this DR after the owner delegated workstream choice with the criterion 'long-term integrity.' My natural pull is toward making the protocol look like it interlocks cleanly with every existing rule (#7, #8, #10, DR-2026-05-24) — the interlock framing is rhetorically protective: it makes the protocol harder to challenge because challenges have to navigate the rule mesh. The bias direction is over-claiming interlock cleanliness; the empirical test (whether the interlocks actually fire on real gaps in pilot) is deferred to Pass 2b's worked example. A more parsimonious DR would have left the interlock claims softer ('relates to' rather than 'enforces') until empirical validation.",
+  "independent_reviewer_counterclaim": "An outside reviewer would observe: (a) the 'default class derived from gaps.skill' claim is theoretical — no empirical test that, e.g., functional-deficit-auditor gaps are 100% ADDRESSABLE, so the default class may produce wrong defaults at scale; (b) the search matrix is borrowed from supersession-audit's structure without empirical validation that the same tool prioritization works for the different evidence-discovery problem gap-driven mining poses (anchor-less search is shape-different from anchor-traversal search); (c) the 6-month re-eligibility cadence is parameter-cloned from DR-2026-05-24 with no evidence-based reason it's the right cadence for null gap-mining attempts; (d) deferring the triage pass means this DR ships without the queue-size data needed to test whether the protocol is operationally tractable. Counter: (a) the triage data migration logs per-gap rationale and surfaces default-mismatches empirically; (b) Pass 2b's worked-example pilot tests the matrix on a real gap and revises if it returns nulls; (c) 6 months is the project's existing maintenance rhythm and using a different cadence here would introduce inconsistency without offsetting benefit; (d) the queue-size question is part of pilot validation and the DR explicitly defers operational scaling to that pilot per §Status's adoption criteria.",
+  "verdict": "DEVIATION-LOGGED"
+}
