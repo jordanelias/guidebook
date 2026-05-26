@@ -47,8 +47,9 @@ citation-verifier                 evidence-metadata-rehabilitation prose-style-c
 connection-auditor                find-and-replace                 question-author                  toc-editor
 connection-discovery              functional-deficit-auditor       reasoning-doc-citations          version-diff
 content-gap-analyzer              functional-deficit-researcher    relational-integrity-checker     voice-style
-critique-report-writer            github-filing                                                     workplan-orchestrator
-cross-population-conflict-mapper  github-io
+critique-report-writer            gap-driven-mining                                                 workplan-orchestrator
+cross-population-conflict-mapper  github-filing
+                                  github-io
                                   guidebook-auditor
                                   item-audit-pipeline
                                   item-consolidation-analyzer

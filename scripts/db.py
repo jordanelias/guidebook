@@ -877,6 +877,49 @@ def main():
     p_asc.add_argument("--session", required=True)
     p_asc.add_argument("--dry-run", action="store_true")
 
+    # ── DR-2026-05-26: gap-driven mining protocol (migration 017) ─────
+    # add-gap-mining
+    p_agm = sub.add_parser("add-gap-mining",
+                            help="Record a gap-driven mining attempt (DR-2026-05-26)")
+    p_agm.add_argument("--gap-id", required=True, help="Gap ID, e.g. GAP-069")
+    p_agm.add_argument("--search-strategy", required=True,
+                       help="JSON object: {\"strategies\":[{\"tool\":...,\"query\":...,\"candidates_returned\":N},...]}")
+    p_agm.add_argument("--candidates-returned", required=True, type=int)
+    p_agm.add_argument("--candidates-reviewed", required=True, type=int)
+    p_agm.add_argument("--outcome", required=True, choices=[
+        "closure_evidence_found","partial_evidence_found","null_result",
+        "gap_recategorized","deferred"])
+    p_agm.add_argument("--discoveries", default="[]",
+                       help="JSON array of FK ref_ids INSERTed this attempt")
+    p_agm.add_argument("--candidate-dois", default="[]",
+                       help="JSON array of DOIs of unverified candidates (PI rule #10 gate)")
+    p_agm.add_argument("--check-method", required=True, choices=[
+        "pubmed_cluster","scholar_gateway_lived_experience","cochrane_direct",
+        "standards_body_direct","multilingual_research","composite"])
+    p_agm.add_argument("--notes")
+    p_agm.add_argument("--session", required=True)
+    p_agm.add_argument("--dry-run", action="store_true")
+
+    # update-gap-addressability
+    p_uga = sub.add_parser("update-gap-addressability",
+                            help="Set gaps.mining_addressability per DR-2026-05-26")
+    p_uga.add_argument("--gap-id", required=True)
+    p_uga.add_argument("--addressability", required=True, choices=[
+        "ADDRESSABLE","NOT-ADDRESSABLE","TRIAGE-NEEDED"])
+    p_uga.add_argument("--session", required=True)
+    p_uga.add_argument("--dry-run", action="store_true")
+
+    # unmined-gaps
+    p_ung = sub.add_parser("unmined-gaps",
+                            help="Query gaps eligible for gap-driven mining")
+    p_ung.add_argument("--gap-id", help="Filter to a specific gap_id (returns its state)")
+    p_ung.add_argument("--priority", choices=["P1","P2","P3"],
+                       help="Filter to priority")
+    p_ung.add_argument("--include-not-addressable", action="store_true",
+                       help="Include NOT-ADDRESSABLE gaps in results (default: ADDRESSABLE only)")
+    p_ung.add_argument("--include-recent", action="store_true",
+                       help="Include gaps with attempt_at within last 6 months (default: skip)")
+
     args = parser.parse_args()
 
     if not args.command:
@@ -1176,6 +1219,73 @@ def main():
         )
         _emit({"check_id": check_id, "dry_run": args.dry_run})
 
+    elif args.command == "add-gap-mining":
+        # DR-2026-05-26 — per-gap mining attempt (migration 017)
+        # Validate JSON fields up-front
+        try:
+            strategy = json.loads(args.search_strategy)
+        except json.JSONDecodeError as e:
+            print(json.dumps({"error": f"--search-strategy is not valid JSON: {e}"}))
+            sys.exit(2)
+        try:
+            discoveries = json.loads(args.discoveries) if args.discoveries else []
+            if not isinstance(discoveries, list):
+                raise ValueError("--discoveries must be a JSON array")
+        except (json.JSONDecodeError, ValueError) as e:
+            print(json.dumps({"error": f"--discoveries: {e}"}))
+            sys.exit(2)
+        try:
+            cand_dois = json.loads(args.candidate_dois) if args.candidate_dois else []
+            if not isinstance(cand_dois, list):
+                raise ValueError("--candidate-dois must be a JSON array")
+        except (json.JSONDecodeError, ValueError) as e:
+            print(json.dumps({"error": f"--candidate-dois: {e}"}))
+            sys.exit(2)
+        # Validate outcome-specific required args (mirrors SQL CHECK)
+        if args.outcome == "closure_evidence_found" and not discoveries:
+            print(json.dumps({"error": "outcome=closure_evidence_found requires at least one entry in --discoveries"}))
+            sys.exit(2)
+        if args.outcome == "gap_recategorized" and (not args.notes or len(args.notes) < 20):
+            print(json.dumps({"error": "outcome=gap_recategorized requires --notes (>=20 chars)"}))
+            sys.exit(2)
+        if args.outcome == "deferred" and (not args.notes or len(args.notes) < 10):
+            print(json.dumps({"error": "outcome=deferred requires --notes (>=10 chars)"}))
+            sys.exit(2)
+        gap_mining_id = add_gap_mining(
+            gap_id=args.gap_id,
+            search_strategy_record=json.dumps(strategy),
+            candidates_returned=args.candidates_returned,
+            candidates_reviewed=args.candidates_reviewed,
+            outcome=args.outcome,
+            discoveries_logged=discoveries,
+            candidate_dois=cand_dois,
+            check_method=args.check_method,
+            notes=args.notes,
+            session=args.session, dry_run=args.dry_run,
+        )
+        _emit({"gap_mining_id": gap_mining_id, "dry_run": args.dry_run})
+
+    elif args.command == "update-gap-addressability":
+        # DR-2026-05-26 — set gaps.mining_addressability
+        update_gap_addressability(
+            gap_id=args.gap_id,
+            addressability=args.addressability,
+            session=args.session,
+            dry_run=args.dry_run,
+        )
+        _emit({"gap_id": args.gap_id, "mining_addressability": args.addressability,
+               "dry_run": args.dry_run})
+
+    elif args.command == "unmined-gaps":
+        # DR-2026-05-26 — query mining-eligible gaps
+        rows = get_unmined_gaps(
+            gap_id=args.gap_id,
+            priority=args.priority,
+            include_not_addressable=args.include_not_addressable,
+            include_recent=args.include_recent,
+        )
+        _emit(rows)
+
 
 
 # --- Additional Python functions ---
@@ -1302,6 +1412,134 @@ def add_supersession_check(*, slug: str, local_ref_id: str, ref_id: str,
             checked_at, session, check_method, notes,
         ])
     return check_id
+
+
+# ── DR-2026-05-26 helpers (migration 017) ─────────────────────────────────
+
+def add_gap_mining(*, gap_id: str,
+                   search_strategy_record: str,
+                   candidates_returned: int, candidates_reviewed: int,
+                   outcome: str,
+                   discoveries_logged: list,
+                   candidate_dois: list,
+                   check_method: str,
+                   notes: str | None,
+                   session: str, dry_run: bool = False) -> int:
+    """Insert a gap_mining row (DR-2026-05-26, migration 017).
+
+    Returns the autoincrement gap_mining_id. Append-only: multiple attempts per
+    gap_id are allowed; the most recent row (MAX(attempt_at)) is the operative
+    outcome.
+    """
+    from datetime import datetime, timezone
+    attempt_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    with connect(dry_run) as conn:
+        cur = conn.execute("""
+            INSERT INTO gap_mining (
+                gap_id, attempt_at, attempted_by_session,
+                search_strategy_record, candidates_returned, candidates_reviewed,
+                outcome, discoveries_logged, candidate_dois,
+                check_method, notes
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, [
+            gap_id, attempt_at, session,
+            search_strategy_record, candidates_returned, candidates_reviewed,
+            outcome,
+            json.dumps(discoveries_logged) if discoveries_logged else None,
+            json.dumps(candidate_dois) if candidate_dois else None,
+            check_method, notes,
+        ])
+        return cur.lastrowid
+
+
+def update_gap_addressability(*, gap_id: str, addressability: str,
+                              session: str, dry_run: bool = False):
+    """Set gaps.mining_addressability (DR-2026-05-26, migration 017).
+
+    Per-gap classification of resolution path. Defaults from gaps.skill at
+    triage time per DR §Addressability classification.
+    """
+    if addressability not in ("ADDRESSABLE", "NOT-ADDRESSABLE", "TRIAGE-NEEDED"):
+        raise ValueError(f"Invalid addressability: {addressability}")
+    u = _upd(session)
+    with connect(dry_run) as conn:
+        conn.execute(
+            "UPDATE gaps SET mining_addressability=?, "
+            "updated_at=?, updated_by_session=? "
+            "WHERE gap_id=?",
+            [addressability, u["updated_at"], u["updated_by_session"], gap_id]
+        )
+
+
+def get_unmined_gaps(*, gap_id: str | None = None,
+                     priority: str | None = None,
+                     include_not_addressable: bool = False,
+                     include_recent: bool = False) -> list[dict]:
+    """Query mining-eligible gaps (DR-2026-05-26).
+
+    Returns OPEN gaps with mining_addressability=ADDRESSABLE (or all if
+    include_not_addressable) that either have no gap_mining row OR whose most
+    recent attempt_at is older than 6 months (per re-eligibility rules in
+    DR §5). include_recent overrides the 6-month filter.
+
+    Each result row includes: gap_id, priority, status, skill, section,
+    description (truncated), mining_addressability, latest_attempt_at,
+    latest_outcome (NULL if never mined).
+    """
+    from datetime import datetime, timezone, timedelta
+    horizon_iso = (datetime.now(timezone.utc) - timedelta(days=183)).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    where = ["g.status LIKE 'OPEN%'"]
+    params: list = []
+    if gap_id:
+        where.append("g.gap_id = ?")
+        params.append(gap_id)
+    if priority:
+        where.append("g.priority = ?")
+        params.append(priority)
+    if not include_not_addressable:
+        # ADDRESSABLE or NULL (NULL treated as TRIAGE-NEEDED per DR);
+        # exclude NOT-ADDRESSABLE explicitly
+        where.append("(g.mining_addressability IN ('ADDRESSABLE', 'TRIAGE-NEEDED') "
+                     "OR g.mining_addressability IS NULL)")
+    where_sql = " AND ".join(where)
+
+    sql = f"""
+        SELECT g.gap_id, g.priority, g.status, g.skill, g.section,
+               substr(g.description, 1, 180) AS description_snippet,
+               g.mining_addressability,
+               latest.attempt_at AS latest_attempt_at,
+               latest.outcome    AS latest_outcome
+          FROM gaps g
+          LEFT JOIN (
+              SELECT gm.gap_id, gm.attempt_at, gm.outcome
+                FROM gap_mining gm
+                JOIN (
+                    SELECT gap_id, MAX(attempt_at) AS max_at
+                      FROM gap_mining
+                     GROUP BY gap_id
+                ) m ON m.gap_id = gm.gap_id AND m.max_at = gm.attempt_at
+          ) latest ON latest.gap_id = g.gap_id
+         WHERE {where_sql}
+    """
+    rows = []
+    with connect() as conn:
+        conn.row_factory = sqlite3.Row
+        for r in conn.execute(sql, params):
+            d = dict(r)
+            if not include_recent and d.get("latest_attempt_at"):
+                # Skip if attempted within last 6 months UNLESS outcome was
+                # partial_evidence_found or deferred (those re-eligible
+                # immediately per DR §5).
+                if d["latest_attempt_at"] >= horizon_iso and d["latest_outcome"] in (
+                    "null_result", "closure_evidence_found", "gap_recategorized"
+                ):
+                    continue
+            rows.append(d)
+    # Sort: P1 first, then by gap_id
+    priority_order = {"P1": 1, "P2": 2, "P3": 3}
+    rows.sort(key=lambda r: (priority_order.get(r["priority"], 9), r["gap_id"]))
+    return rows
 
 
 if __name__ == "__main__":

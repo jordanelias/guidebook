@@ -64,6 +64,7 @@ Per-skill effort overrides for the `/effort` parameter. `/effort` sets Claude's 
 | supplemental-integrator | Cross-volume taxonomy coordination; code relocation decisions |
 | citation-miner | Forward/backward citation network traversal; tier classification |
 | citation-verifier | Tool-dependent lookup and classify; tier-1 sources require judgment |
+| gap-driven-mining | Gap-keyed search-matrix execution with outcome judgment; depth-1 constraint; rule #7/#8/#10 interlocks (DR-2026-05-26) |
 | guidebook-auditor | Multi-mode audit; Modes B and D require Sonnet judgment |
 | workplan-orchestrator | Multi-skill workflow coordination; risk escalation decisions |
 | structure-auditor | Structural integrity judgment; orphan detection |

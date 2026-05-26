@@ -76,6 +76,27 @@ The PI becomes the rule layer it was supposed to be; mechanics live in the repo 
 
 ---
 
+## v10.16 — queued (2026-05-26)
+
+**Status:** queued — repo-side snapshot pending.
+**Source:** DR-2026-05-26 gap-driven mining protocol; Pass 2b session 2026-05-26.
+
+Single-line change to `<skills_assigned>`: add `gap-driven-mining` to the skills PI itself invokes by name. Skill file ships in this session at `skills/gap-driven-mining_SKILL.md`; the skill registry is updated by the same commit; PI text changes are deferred to the next bump per architecture v2.3 `<scope_assumptions>` (skill-assignment-only changes do not require an out-of-band PI bump).
+
+Proposed line addition (under `<skills_assigned>` near the existing per-skill entries):
+
+```markdown
+- `gap-driven-mining` — per DR-2026-05-26 for mining-addressable gaps (companion to citation-miner; gap-keyed rather than anchor-source-keyed)
+```
+
+The skill name belongs alongside `citation-miner`, `adversarial-research`, and `progressive-measurement` in the existing PI list — each is invoked per a specific standing rule or DR. No new standing rule is added; the protocol is governed by the DR, and the skill file declares its rule interlocks (#7, #8, #10, DR-2026-05-24).
+
+**Hold reason.** Bundling with the next legitimate PI bump per the v10.15-rejected rationale ("no PI bump unless critical armature"). Skill assignments are not critical armature; the skill is invocable via its trigger keywords whether or not PI text names it. The PI line addition is documentation, not gate. When the next PI version ships for an unrelated reason, this line gets folded in.
+
+**Bootstrap impact.** None. The skill counts in `_GH_SKILLS()` (per v10.12 fix) which counts `skills/*_SKILL.md` files via the GitHub contents API — the new file is auto-counted.
+
+---
+
 ## v10.15 — considered and rejected (2026-05-23)
 
 A v10.15 entry was briefly queued in this file on 2026-05-23 (commit `be146a2`) to amend standing rule #10 final-paragraph cohort wording (broaden "from the 2026-03-30 round" to "any positive `[OPUS-SYNTHESIS*]` tag pre-dating the 2026-05-23 rehab closure"). Withdrawn the same session per owner directive: no PI bump unless critical armature.
