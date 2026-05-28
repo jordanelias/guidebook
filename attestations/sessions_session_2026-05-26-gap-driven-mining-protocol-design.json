@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-05-26-gap-driven-mining-protocol-design",
+  "artifact": "sessions/session_2026-05-26-gap-driven-mining-protocol-design.md",
+  "doctrine_sha": "61c7f95",
+  "rules_in_scope": [
+    "source-discipline",
+    "adherence-logging-and-attestation",
+    "canonical-workplan"
+  ],
+  "per_rule_status": {
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "sessions/session_2026-05-26-gap-driven-mining-protocol-design.md#what-landed-per-commit",
+      "reason": "This is a retroactive reconstruction. Every metric and claim is traceable to a git primitive (commit 9a120e9 or c914840, the DR, the skill file, migration 017) or a live data/guidebook.db query at HEAD c914840 (PRAGMA user_version=17, gap_mining 0 rows, GAP-283 status=OPEN, 296 gaps with mining_addressability unset). No conversation/turn narrative is invented; the provenance banner explicitly flags the absence of a transcript and limits the record to git/DB-derived facts."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/sessions_session_2026-05-26-gap-driven-mining-protocol-design.json",
+      "reason": "This attestation plus the [DOCTRINE: 61c7f95] token on the consolidation commit satisfy rule #11(a)/(b) for the new sessions/ artifact. doctrine_sha matches HEAD:governance/mission-and-epistemics.md."
+    },
+    "canonical-workplan": {
+      "status": "FIRED",
+      "evidence_path": "sessions/session_2026-05-26-gap-driven-mining-protocol-design.md#next-action-handoff",
+      "reason": "The record places the gap-driven-mining infrastructure correctly relative to Phase B (companion to citation-miner, closes GAP-283 structurally), preserves phase ordering (no Phase E content authored), and corrects the stale 2026-05-23 handoff which listed gap-driven mining as a blocked owner-decision item."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "RETROACTIVE consolidation. The session-consolidator protocol expects the session that performed the work to consolidate at its own close from conversation history. Here a later session (2026-05-28) reconstructs the unconsolidated 2026-05-26 work from git + DB primitives because LATEST was stale and no record existed. The reconstruction is faithful but provenance-flagged; it is not a substitute for the live close that did not happen."
+    }
+  ],
+  "bias_direction": "Reconstructing a session I did not run, three days later, with no transcript. The risk is over-smoothing: presenting diff-derived facts with more apparent process certainty than a lived record would, or implying GAP-283 is fully resolved when the DB shows the gap row still OPEN and the protocol unexercised (0 gap_mining rows). Mitigated by stating status precisely (PROPOSED DR, structural-only closure, deferred triage/pilot) and by the provenance banner.",
+  "independent_reviewer_counterclaim": "An outside reviewer would object that any retroactive session record risks laundering reconstruction-from-diffs into the continuity chain as if it were lived session memory, and that authoring records for other sessions could normalize backfilling. Counter: (a) the provenance banner makes the reconstruction explicit and dates it; (b) every claim cites a SHA, file, or DB query, so the record is independently verifiable; (c) leaving the continuity break unrepaired already caused concrete harm (this turn nearly proceeded on a 3-day-stale plan), so a flagged reconstruction is strictly better than a silent gap.",
+  "verdict": "DEVIATION-LOGGED"
+}
