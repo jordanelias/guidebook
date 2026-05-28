@@ -150,9 +150,10 @@ def fetch_backbone(db_path: Path) -> dict:
     bb = {}
     for slug in slugs:
         linked = q(
-            """SELECT e.ref_id, e.author_display, e.pub_year, e.tier, e.jurisdiction,
-                      e.doi, e.pmid, e.metadata_quality, e.verification_status,
-                      e.doi_resolution_outcome
+            """SELECT e.ref_id, e.author_display, e.pub_year, e.tier, e.evidence_type,
+                      e.jurisdiction, e.doi, e.pmid, e.metadata_quality,
+                      e.verification_status, e.doi_resolution_outcome,
+                      sl.relevance_note
                FROM source_slug_links sl
                JOIN evidence_sources e ON e.ref_id = sl.ref_id
                WHERE sl.slug = ?
@@ -308,6 +309,22 @@ td{padding:6px 8px 6px 0;border-bottom:1px solid var(--line);vertical-align:top}
 .layer-walk{background:#dde9d4;color:var(--strong)}
 .layer-extraction{background:#dbe2ec;color:var(--syn)}
 .no-vals{font-size:10px;color:var(--muted);font-style:italic}
+table.spread{table-layout:fixed}
+table.spread col.c-ref{width:72px}
+table.spread col.c-auth{width:18%}
+table.spread col.c-rel{width:18%}
+table.spread col.c-tier{width:42px}
+table.spread col.c-jur{width:58px}
+table.spread col.c-id{width:13%}
+table.spread col.c-bib{width:88px}
+table.spread col.c-vals{width:auto}
+table.spread td,table.spread th{word-wrap:break-word;overflow-wrap:break-word}
+table.spread td.c-auth,table.spread td.c-rel{font-size:11px;line-height:1.35}
+.tier-row td{background:linear-gradient(to right,var(--ink) 0,var(--ink) 4px,var(--hl) 4px,var(--hl) 100%);
+  padding:8px 10px 7px 14px;border-bottom:1px solid var(--ink);border-top:1px solid var(--line)}
+.tier-name{font-family:var(--serif);font-weight:700;font-size:13px;color:var(--ink);margin-right:10px}
+.tier-disc{font-size:10.5px;color:var(--muted);font-family:var(--serif);font-style:italic}
+.no-rel{font-style:italic;color:var(--muted);font-size:10px}
 </style></head><body>
 <header>
  <h1>Spec Curation Vetting Surface</h1>
@@ -415,21 +432,67 @@ function renderDetail(slug){
    h+='</div>';});
   h+='</div>';}
  h+='<div class="sec"><div class="sec-h">Evidence spread <em>all sources at disposal &middot; '+ls.length+'</em></div>';
- if(ls.length){h+='<table><tr><th>ref</th><th>author (year)</th><th>tier</th><th>jurisdiction</th><th>identifier</th><th>bibliography</th><th>values cited from this source</th></tr>';
-  ls.forEach(s=>{const v=s._v.verdict;const vc=s.values_cited||[];
-   const valsHtml = vc.length ? '<div class="values">' + vc.map(x=>{
-     const meta=[x.jurisdiction,x.population].filter(Boolean).join(' &middot; ');
-     const lay=x.layer||'extraction';
-     return '<div class="vrow"><span class="layer-pill layer-'+lay+'">'+lay+'</span>'+
-       '<span class="vval">'+esc(x.value||'&mdash;')+' '+esc(x.unit||'')+'</span>'+
-       '<span class="vmeta">'+esc(x.parameter||'')+(meta?' &middot; '+esc(meta):'')+'</span></div>';
-   }).join('') + '</div>' : '<span class="no-vals">no values extracted from this source yet</span>';
-   h+='<tr><td class="ref">'+esc(s.ref_id)+'</td>'+
-    '<td>'+esc(s.author_display||'&mdash;')+' '+(s.pub_year?'('+esc(s.pub_year)+')':'')+'</td>'+
-    '<td class="tier">T'+esc(s.tier)+'</td><td>'+esc(s.jurisdiction||'&mdash;')+'</td>'+
-    '<td>'+idCell(s)+'</td>'+
-    '<td><span class="badge b-'+v+'">'+v+'</span> <span class="note">'+esc(s.metadata_quality||'')+'</span></td>'+
-    '<td>'+valsHtml+'</td></tr>';});
+ if(ls.length){
+  // Tier-group definition: order T1, Co-1, T2, Co-2, T3, T4, T5, T6 per governance/tier-system.md
+  const TIER_GROUPS = [
+   {key:'T1', name:'Tier 1', test:s=>s.tier===1 && s.evidence_type!=='co1',
+    disc:'Primary research with intervention-level or biomechanical control. Anchors claims that turn on physiological, behavioural, or biomechanical mechanism.'},
+   {key:'Co-1', name:'Co-1', test:s=>s.evidence_type==='co1',
+    disc:'Disability-led lived-experience publications (DPOs, named-org outputs, CRPD Art. 4.3 consultation). Anchors claims that turn on user preference, dignity, autonomy. Ranks alongside T1 on non-substitutable claim types.'},
+   {key:'T2', name:'Tier 2', test:s=>s.tier===2 && s.evidence_type!=='co2',
+    disc:'Community-consensus synthesis: systematic reviews / meta-analyses and named-organisation evidence-based standards. Anchors claims that turn on synthesised evidence across multiple primary studies.'},
+   {key:'Co-2', name:'Co-2', test:s=>s.evidence_type==='co2',
+    disc:'OT / professional-body clinical practice guidelines (CAOT, AOTA, RCOT, COTEC, WFOT, national equivalents). Anchors claims that turn on clinical-professional consensus on rehabilitation or ADL adaptation.'},
+   {key:'T3', name:'Tier 3', test:s=>s.tier===3,
+    disc:'Lower-control primary research (cross-sectional, observational, qualitative, single-centre) plus grey-literature primary research. Supporting evidence; rarely the sole basis for a claim.'},
+   {key:'T4', name:'Tier 4', test:s=>s.tier===4,
+    disc:'International standards (ISO, IEC, CEN, BSI PAS, EN 81-70, EN 17210). Code-baseline citations of international harmonisation; supports claims if the standard itself rests on T1/T2 evidence.'},
+   {key:'T5', name:'Tier 5', test:s=>s.tier===5 && s.evidence_type!=='co1',
+    disc:'National beyond-code frameworks (BS 8300, DIN 18040 draft, Boverket BBR advisories, national CPGs scoped to BE). Best-practice tier at national level; supports claims if framework rests on T1/T2.'},
+   {key:'T6', name:'Tier 6', test:s=>s.tier===6,
+    disc:'Statutory code &mdash; legally enforceable national / sub-national accessibility codes (ADA, AS 1428.1, Approved Document M, NZ Building Code D1/AS1, GB 50763, etc.). Code-baseline citations only.'},
+  ];
+  h+='<table class="spread">'+
+   '<colgroup><col class="c-ref"><col class="c-auth"><col class="c-rel"><col class="c-tier"><col class="c-jur"><col class="c-id"><col class="c-bib"><col class="c-vals"></colgroup>'+
+   '<tr><th>ref</th><th>author (year)</th><th>relevance to this topic</th><th>tier</th><th>juris.</th><th>identifier</th><th>biblio.</th><th>values cited from this source</th></tr>';
+  let unBucketed=ls.slice();
+  TIER_GROUPS.forEach(g=>{
+   const inGroup = ls.filter(g.test);
+   if (!inGroup.length) return;
+   unBucketed = unBucketed.filter(s=>!g.test(s));
+   h+='<tr class="tier-row"><td colspan="8"><span class="tier-name">'+g.name+'</span><span class="tier-disc">'+g.disc+' &nbsp;&middot;&nbsp; '+inGroup.length+' source'+(inGroup.length===1?'':'s')+'</span></td></tr>';
+   inGroup.forEach(s=>{const v=s._v.verdict;const vc=s.values_cited||[];
+    const valsHtml = vc.length ? '<div class="values">' + vc.map(x=>{
+      const meta=[x.jurisdiction,x.population].filter(Boolean).join(' &middot; ');
+      const lay=x.layer||'extraction';
+      return '<div class="vrow"><span class="layer-pill layer-'+lay+'">'+lay+'</span>'+
+        '<span class="vval">'+esc(x.value||'&mdash;')+' '+esc(x.unit||'')+'</span>'+
+        '<span class="vmeta">'+esc(x.parameter||'')+(meta?' &middot; '+esc(meta):'')+'</span></div>';
+    }).join('') + '</div>' : '<span class="no-vals">no values extracted from this source yet</span>';
+    const relHtml = s.relevance_note
+      ? esc(s.relevance_note)
+      : '<span class="no-rel">no relevance note recorded</span>';
+    h+='<tr><td class="ref">'+esc(s.ref_id)+'</td>'+
+     '<td class="c-auth">'+esc(s.author_display||'&mdash;')+' '+(s.pub_year?'('+esc(s.pub_year)+')':'')+'</td>'+
+     '<td class="c-rel">'+relHtml+'</td>'+
+     '<td class="tier">T'+esc(s.tier)+'</td><td>'+esc(s.jurisdiction||'&mdash;')+'</td>'+
+     '<td>'+idCell(s)+'</td>'+
+     '<td><span class="badge b-'+v+'">'+v+'</span></td>'+
+     '<td>'+valsHtml+'</td></tr>';});
+  });
+  // Catch any sources that didn't match any group (shouldn't happen given T1-T6 coverage)
+  if (unBucketed.length) {
+   h+='<tr class="tier-row"><td colspan="8"><span class="tier-name">Other</span><span class="tier-disc">Sources outside the T1&ndash;T6 / Co-1 / Co-2 ladder. Investigate.</span></td></tr>';
+   unBucketed.forEach(s=>{const v=s._v.verdict;
+     h+='<tr><td class="ref">'+esc(s.ref_id)+'</td>'+
+      '<td class="c-auth">'+esc(s.author_display||'&mdash;')+' '+(s.pub_year?'('+esc(s.pub_year)+')':'')+'</td>'+
+      '<td class="c-rel"><span class="no-rel">no relevance note recorded</span></td>'+
+      '<td class="tier">T'+esc(s.tier)+'</td><td>'+esc(s.jurisdiction||'&mdash;')+'</td>'+
+      '<td>'+idCell(s)+'</td>'+
+      '<td><span class="badge b-'+v+'">'+v+'</span></td>'+
+      '<td><span class="no-vals">no values extracted from this source yet</span></td></tr>';
+   });
+  }
   h+='</table>';}else h+='<div class="empty">No sources linked.</div>';
  h+='</div>';
  detail.innerHTML=h;
