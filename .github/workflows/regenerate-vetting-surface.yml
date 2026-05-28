@@ -1,0 +1,79 @@
+name: Regenerate vetting surface
+
+# Auto-rebuilds tools/spec-curation-vetting-surface.html whenever a push to
+# main modifies data/guidebook.db. The regenerated HTML is committed back
+# to main by github-actions[bot]. GitHub Pages then serves the updated file
+# at the stable bookmark URL.
+#
+# Loop safety: this workflow's own commits only modify the HTML — never
+# data/guidebook.db — so they cannot retrigger it. Belt-and-braces: the
+# job also exits silently if the regenerated HTML is byte-identical to
+# the committed copy.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/guidebook.db'
+      - 'tools/regenerate_vetting_surface.py'
+      - '.github/workflows/regenerate-vetting-surface.yml'
+  workflow_dispatch:
+
+# Prevent overlapping runs racing on tools/spec-curation-vetting-surface.html.
+concurrency:
+  group: regenerate-vetting-surface
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Regenerate surface
+        run: python3 tools/regenerate_vetting_surface.py
+
+      - name: Commit if changed
+        id: commit
+        run: |
+          set -e
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add tools/spec-curation-vetting-surface.html
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit (HTML byte-identical to committed copy)."
+            echo "committed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          TS=$(date -u '+%Y-%m-%d %H:%M')
+          git commit -m "vetting-surface-regen: rebuild after data change [${TS}]"
+          echo "committed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Push with race-aware retry
+        if: steps.commit.outputs.committed == 'true'
+        run: |
+          set -e
+          for i in 1 2 3; do
+            if git push origin main; then
+              echo "Push succeeded on attempt $i"
+              exit 0
+            fi
+            echo "Push attempt $i failed; pulling --rebase and retrying"
+            git pull --rebase origin main || true
+            sleep $((i * 5))
+          done
+          echo "All push attempts failed"
+          exit 1
