@@ -63,6 +63,17 @@ def fetch_backbone(db_path: Path) -> dict:
         ]
     )
 
+    # Canonical populations taxonomy (for UI to label codes + flag drift)
+    populations_taxonomy = {
+        r["population_code"]: {
+            "display_name": r["display_name"],
+            "category": r["category"],
+        }
+        for r in q(
+            "SELECT population_code, display_name, category FROM populations"
+        )
+    }
+
     # Item → slug + populations
     item_slug = {
         r["item_code"]: r["bpc_source_slug"]
@@ -80,7 +91,7 @@ def fetch_backbone(db_path: Path) -> dict:
     for r in q(
         """SELECT reasoning_doc_slug AS slug, source_ref_id AS ref_id,
                   parameter, claimed_value, claimed_unit,
-                  jurisdiction, population, value_match, source_section
+                  jurisdiction, population, setting, value_match, source_section
            FROM reasoning_doc_citations"""
     ):
         if r["ref_id"]:
@@ -92,6 +103,7 @@ def fetch_backbone(db_path: Path) -> dict:
                     "unit": r["claimed_unit"],
                     "jurisdiction": r["jurisdiction"],
                     "population": r["population"],
+                    "setting": r["setting"],
                     "verdict": r["value_match"],
                     "section": r["source_section"],
                 }
@@ -99,7 +111,7 @@ def fetch_backbone(db_path: Path) -> dict:
 
     probe_by = defaultdict(list)
     for r in q(
-        """SELECT slug, ref_id, step_value, step_value_unit, population,
+        """SELECT slug, ref_id, step_value, step_value_unit, population, setting,
                   item_code, walk_id, phase
            FROM spec_value_probes
            WHERE ref_id IS NOT NULL AND passes_strict=1"""
@@ -112,6 +124,7 @@ def fetch_backbone(db_path: Path) -> dict:
                 "unit": r["step_value_unit"],
                 "jurisdiction": None,
                 "population": r["population"],
+                "setting": r["setting"],
                 "verdict": "pass",
                 "section": r["walk_id"],
             }
@@ -120,7 +133,7 @@ def fetch_backbone(db_path: Path) -> dict:
     sve_by = defaultdict(list)
     for r in q(
         """SELECT slug, ref_id, parameter, claimed_value, claimed_unit,
-                  jurisdiction, population_code, population_label,
+                  jurisdiction, population_code, population_label, setting,
                   extraction_status, source_section
            FROM source_value_extractions"""
     ):
@@ -131,7 +144,9 @@ def fetch_backbone(db_path: Path) -> dict:
                 "value": r["claimed_value"],
                 "unit": r["claimed_unit"],
                 "jurisdiction": r["jurisdiction"],
-                "population": r["population_code"] or r["population_label"],
+                "population": r["population_code"],
+                "population_label": r["population_label"],
+                "setting": r["setting"],
                 "verdict": r["extraction_status"],
                 "section": r["source_section"],
             }
@@ -181,7 +196,8 @@ def fetch_backbone(db_path: Path) -> dict:
             s["_v"] = {"verdict": v}
 
         rdc = q(
-            """SELECT parameter, jurisdiction, population, claimed_value, claimed_unit,
+            """SELECT parameter, jurisdiction, population, setting,
+                      claimed_value, claimed_unit,
                       source_ref_id, source_section, value_match, claim_match, notes
                FROM reasoning_doc_citations
                WHERE reasoning_doc_slug = ?""",
@@ -189,7 +205,7 @@ def fetch_backbone(db_path: Path) -> dict:
         )
         probes = q(
             """SELECT walk_id, item_code, step_index, phase, step_value,
-                      step_value_unit, population, passes_strict, ref_id
+                      step_value_unit, population, setting, passes_strict, ref_id
                FROM spec_value_probes
                WHERE slug = ?
                ORDER BY walk_id, step_index""",
@@ -197,8 +213,8 @@ def fetch_backbone(db_path: Path) -> dict:
         )
         sve = q(
             """SELECT extraction_id, ref_id, parameter, population_code,
-                      population_label, jurisdiction, claim_type, claimed_value,
-                      claimed_unit, source_section, extraction_method,
+                      population_label, setting, jurisdiction, claim_type,
+                      claimed_value, claimed_unit, source_section, extraction_method,
                       extraction_status, promoted_to_rdc_id, notes
                FROM source_value_extractions
                WHERE slug = ?""",
@@ -233,7 +249,7 @@ def fetch_backbone(db_path: Path) -> dict:
             1 for d in bb.values() for s in d["linked_sources"] if s.get("values_cited")
         ),
     }
-    return {"backbone": bb, "totals": totals}
+    return {"backbone": bb, "totals": totals, "populations": populations_taxonomy}
 
 
 # HTML template — separate from the data so changes to UI don't reflow data code.
@@ -325,6 +341,18 @@ table.spread td.c-auth,table.spread td.c-rel{font-size:11px;line-height:1.35}
 .tier-name{font-family:var(--serif);font-weight:700;font-size:13px;color:var(--ink);margin-right:10px}
 .tier-disc{font-size:10.5px;color:var(--muted);font-family:var(--serif);font-style:italic}
 .no-rel{font-style:italic;color:var(--muted);font-size:10px}
+.pop-cell{display:flex;flex-direction:column;gap:2px}
+.pop-codes{display:flex;flex-wrap:wrap;gap:3px}
+.pop-code{font-family:var(--mono);font-size:10px;font-weight:600;padding:1px 5px;border-radius:2px;
+  background:var(--ink);color:var(--paper);letter-spacing:.3px;cursor:help}
+.pop-code.all{background:#7a3b12;color:#fff}
+.pop-code.drift{background:var(--weak);color:#fff;text-decoration:line-through wavy}
+.pop-code.drift::after{content:" ⚠"}
+.pop-setting{font-size:10px;color:var(--muted);font-style:italic;line-height:1.3}
+.pop-empty{font-size:10px;color:var(--muted);font-style:italic}
+.vrow .vpop{display:flex;gap:3px;flex-wrap:wrap;align-items:center}
+.vrow .vpop .pop-code{font-size:9px;padding:0 4px}
+.vrow .vsetting{font-size:9.5px;color:var(--muted);font-style:italic}
 </style></head><body>
 <header>
  <h1>Spec Curation Vetting Surface</h1>
@@ -354,6 +382,39 @@ table.spread td.c-auth,table.spread td.c-rel{font-size:11px;line-height:1.35}
 <script>
 const DATA=JSON.parse(document.getElementById('vetting-data').textContent);
 const BB=DATA.backbone,T=DATA.totals;
+const POPS=DATA.populations||{};
+function popCell(popStr, setting, settingLabelFallback){
+  // popStr: comma-separated codes like 'DEAF' or 'NDV,AUT' or 'ALL' (or null)
+  // setting: free-text setting/context (or null)
+  let codesHtml='';
+  if (popStr) {
+    const codes = popStr.split(',').map(x=>x.trim()).filter(Boolean);
+    codesHtml = '<div class="pop-codes">' + codes.map(code=>{
+      const known = POPS[code];
+      if (known) {
+        const cls = code==='ALL' ? 'pop-code all' : 'pop-code';
+        return '<span class="'+cls+'" title="'+esc(known.display_name)+'">'+esc(code)+'</span>';
+      } else {
+        return '<span class="pop-code drift" title="not in canonical populations taxonomy">'+esc(code)+'</span>';
+      }
+    }).join('') + '</div>';
+  }
+  const settingShow = setting || settingLabelFallback;
+  const settingHtml = settingShow ? '<div class="pop-setting">'+esc(settingShow)+'</div>' : '';
+  if (!codesHtml && !settingHtml) return '<span class="pop-empty">&mdash;</span>';
+  return '<div class="pop-cell">' + codesHtml + settingHtml + '</div>';
+}
+function popInline(popStr){
+  // compact inline rendering for value-pills
+  if (!popStr) return '';
+  const codes = popStr.split(',').map(x=>x.trim()).filter(Boolean);
+  return '<span class="vpop">' + codes.map(code=>{
+    const known = POPS[code];
+    const cls = !known ? 'pop-code drift' : (code==='ALL' ? 'pop-code all' : 'pop-code');
+    const title = known ? known.display_name : 'not in canonical populations taxonomy';
+    return '<span class="'+cls+'" title="'+esc(title)+'">'+esc(code)+'</span>';
+  }).join('') + '</span>';
+}
 const $=id=>document.getElementById(id);
 $('t-topics').textContent=T.topics;
 $('t-src').textContent=T.sources;
@@ -398,9 +459,9 @@ function renderDetail(slug){
  let h='<h2>'+esc(slug)+'</h2><div class="slug">'+ls.length+' linked sources &middot; '+sx.length+' per-source extractions &middot; '+ve.length+' synthesis verifications &middot; '+steps[3].n+' walk(s)</div>';
  h+='<div class="chain">'+steps.map(s=>'<span'+(s.n?' class="here"':' class="empty-step"')+'>'+s.l+': '+s.n+'</span>').join(' &rarr; ')+'</div>';
  h+='<div class="sec"><div class="sec-h">Per-source extractions <em>what each source asserts &middot; per population &middot; pre-synthesis</em></div>';
- if(sx.length){h+='<table><tr><th>source</th><th>parameter</th><th>pop</th><th>juris.</th><th>value</th><th>section</th><th>status</th><th>&rarr; rdc</th></tr>';
+ if(sx.length){h+='<table><tr><th>source</th><th>parameter</th><th>population &middot; setting</th><th>juris.</th><th>value</th><th>section</th><th>status</th><th>&rarr; rdc</th></tr>';
   sx.forEach(r=>{h+='<tr><td class="ref">'+esc(r.ref_id)+'</td><td>'+esc(r.parameter)+'</td>'+
-   '<td>'+esc(r.population_code||'')+(r.population_label?' <span class="note">('+esc(r.population_label)+')</span>':'')+'</td>'+
+   '<td>'+popCell(r.population_code, r.setting, r.population_label)+'</td>'+
    '<td>'+esc(r.jurisdiction||'')+'</td>'+
    '<td><span class="val">'+esc(r.claimed_value||'&mdash;')+' '+esc(r.claimed_unit||'')+'</span></td>'+
    '<td><span class="note">'+esc(r.source_section||'')+'</span></td>'+
@@ -410,8 +471,9 @@ function renderDetail(slug){
  }else{h+='<div class="empty info"><b>No per-source extractions yet.</b> '+ls.length+' source-links are present but no values have been pulled from them into the structured layer. Mining this topic creates rows in <span class="ref">source_value_extractions</span> (schema layer added in migration 018).</div>';}
  h+='</div>';
  h+='<div class="sec"><div class="sec-h">Synthesis-verified values <em>re-read &middot; value_match per rule #10</em></div>';
- if(ve.length){h+='<table><tr><th>parameter</th><th>jurisd.</th><th>population</th><th>value</th><th>source &middot; section</th><th>match</th><th>discussion</th></tr>';
-  ve.forEach(r=>{h+='<tr><td>'+esc(r.parameter)+'</td><td>'+esc(r.jurisdiction)+'</td><td>'+esc(r.population)+'</td>'+
+ if(ve.length){h+='<table><tr><th>parameter</th><th>jurisd.</th><th>population &middot; setting</th><th>value</th><th>source &middot; section</th><th>match</th><th>discussion</th></tr>';
+  ve.forEach(r=>{h+='<tr><td>'+esc(r.parameter)+'</td><td>'+esc(r.jurisdiction)+'</td>'+
+   '<td>'+popCell(r.population, r.setting)+'</td>'+
    '<td><span class="val">'+esc(r.claimed_value)+' '+esc(r.claimed_unit||'')+'</span></td>'+
    '<td><span class="ref">'+esc(r.source_ref_id)+'</span><br><span class="note">'+esc(r.source_section||'')+'</span></td>'+
    '<td>'+(r.value_match?'<span class="badge '+matchClass(r.value_match)+'">'+esc(r.value_match)+'</span>':'')+'</td>'+
@@ -463,11 +525,13 @@ function renderDetail(slug){
    h+='<tr class="tier-row"><td colspan="8"><span class="tier-name">'+g.name+'</span><span class="tier-disc">'+g.disc+' &nbsp;&middot;&nbsp; '+inGroup.length+' source'+(inGroup.length===1?'':'s')+'</span></td></tr>';
    inGroup.forEach(s=>{const v=s._v.verdict;const vc=s.values_cited||[];
     const valsHtml = vc.length ? '<div class="values">' + vc.map(x=>{
-      const meta=[x.jurisdiction,x.population].filter(Boolean).join(' &middot; ');
       const lay=x.layer||'extraction';
+      const popH = popInline(x.population);
+      const setH = x.setting ? '<span class="vsetting">'+esc(x.setting)+'</span>' : '';
+      const jurH = x.jurisdiction ? '<span class="vmeta">'+esc(x.jurisdiction)+'</span>' : '';
       return '<div class="vrow"><span class="layer-pill layer-'+lay+'">'+lay+'</span>'+
         '<span class="vval">'+esc(x.value||'&mdash;')+' '+esc(x.unit||'')+'</span>'+
-        '<span class="vmeta">'+esc(x.parameter||'')+(meta?' &middot; '+esc(meta):'')+'</span></div>';
+        '<span class="vmeta">'+esc(x.parameter||'')+'</span>'+jurH+popH+setH+'</div>';
     }).join('') + '</div>' : '<span class="no-vals">no values extracted from this source yet</span>';
     const relHtml = s.relevance_note
       ? esc(s.relevance_note)
