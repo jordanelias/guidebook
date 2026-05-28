@@ -63,6 +63,18 @@ def fetch_backbone(db_path: Path) -> dict:
         ]
     )
 
+    # Population membership from the authoritative junction tables (migration 021).
+    # Keyed by parent id -> sorted list of canonical codes.
+    cpl_by = defaultdict(list)
+    for r in q("SELECT citation_id, population_code FROM citation_population_links ORDER BY population_code"):
+        cpl_by[r["citation_id"]].append(r["population_code"])
+    ppl_by = defaultdict(list)
+    for r in q("SELECT probe_id, population_code FROM probe_population_links ORDER BY population_code"):
+        ppl_by[r["probe_id"]].append(r["population_code"])
+    epl_by = defaultdict(list)
+    for r in q("SELECT extraction_id, population_code FROM extraction_population_links ORDER BY population_code"):
+        epl_by[r["extraction_id"]].append(r["population_code"])
+
     # Canonical populations taxonomy (for UI to label codes + flag drift)
     populations_taxonomy = {
         r["population_code"]: {
@@ -89,12 +101,13 @@ def fetch_backbone(db_path: Path) -> dict:
     # Pre-index per-source values from all three layers, keyed by (slug, ref_id)
     rdc_by = defaultdict(list)
     for r in q(
-        """SELECT reasoning_doc_slug AS slug, source_ref_id AS ref_id,
+        """SELECT citation_id, reasoning_doc_slug AS slug, source_ref_id AS ref_id,
                   parameter, claimed_value, claimed_unit,
                   jurisdiction, population, setting, value_match, source_section
            FROM reasoning_doc_citations"""
     ):
         if r["ref_id"]:
+            junc = cpl_by.get(r["citation_id"], [])
             rdc_by[(r["slug"], r["ref_id"])].append(
                 {
                     "layer": "synthesis",
@@ -102,7 +115,7 @@ def fetch_backbone(db_path: Path) -> dict:
                     "value": r["claimed_value"],
                     "unit": r["claimed_unit"],
                     "jurisdiction": r["jurisdiction"],
-                    "population": r["population"],
+                    "population": ",".join(junc) if junc else r["population"],
                     "setting": r["setting"],
                     "verdict": r["value_match"],
                     "section": r["source_section"],
@@ -111,11 +124,12 @@ def fetch_backbone(db_path: Path) -> dict:
 
     probe_by = defaultdict(list)
     for r in q(
-        """SELECT slug, ref_id, step_value, step_value_unit, population, setting,
+        """SELECT probe_id, slug, ref_id, step_value, step_value_unit, population, setting,
                   item_code, walk_id, phase
            FROM spec_value_probes
            WHERE ref_id IS NOT NULL AND passes_strict=1"""
     ):
+        junc = ppl_by.get(r["probe_id"], [])
         probe_by[(r["slug"], r["ref_id"])].append(
             {
                 "layer": "walk",
@@ -123,7 +137,7 @@ def fetch_backbone(db_path: Path) -> dict:
                 "value": r["step_value"],
                 "unit": r["step_value_unit"],
                 "jurisdiction": None,
-                "population": r["population"],
+                "population": ",".join(junc) if junc else r["population"],
                 "setting": r["setting"],
                 "verdict": "pass",
                 "section": r["walk_id"],
@@ -132,11 +146,12 @@ def fetch_backbone(db_path: Path) -> dict:
 
     sve_by = defaultdict(list)
     for r in q(
-        """SELECT slug, ref_id, parameter, claimed_value, claimed_unit,
+        """SELECT extraction_id, slug, ref_id, parameter, claimed_value, claimed_unit,
                   jurisdiction, population_code, population_label, setting,
                   extraction_status, source_section
            FROM source_value_extractions"""
     ):
+        junc = epl_by.get(r["extraction_id"], [])
         sve_by[(r["slug"], r["ref_id"])].append(
             {
                 "layer": "extraction",
@@ -144,7 +159,7 @@ def fetch_backbone(db_path: Path) -> dict:
                 "value": r["claimed_value"],
                 "unit": r["claimed_unit"],
                 "jurisdiction": r["jurisdiction"],
-                "population": r["population_code"],
+                "population": ",".join(junc) if junc else r["population_code"],
                 "population_label": r["population_label"],
                 "setting": r["setting"],
                 "verdict": r["extraction_status"],
@@ -196,21 +211,27 @@ def fetch_backbone(db_path: Path) -> dict:
             s["_v"] = {"verdict": v}
 
         rdc = q(
-            """SELECT parameter, jurisdiction, population, setting,
+            """SELECT citation_id, parameter, jurisdiction, population, setting,
                       claimed_value, claimed_unit,
                       source_ref_id, source_section, value_match, claim_match, notes
                FROM reasoning_doc_citations
                WHERE reasoning_doc_slug = ?""",
             slug,
         )
+        for row in rdc:
+            j = cpl_by.get(row["citation_id"], [])
+            row["population"] = ",".join(j) if j else row["population"]
         probes = q(
-            """SELECT walk_id, item_code, step_index, phase, step_value,
+            """SELECT probe_id, walk_id, item_code, step_index, phase, step_value,
                       step_value_unit, population, setting, passes_strict, ref_id
                FROM spec_value_probes
                WHERE slug = ?
                ORDER BY walk_id, step_index""",
             slug,
         )
+        for row in probes:
+            j = ppl_by.get(row["probe_id"], [])
+            row["population"] = ",".join(j) if j else row["population"]
         sve = q(
             """SELECT extraction_id, ref_id, parameter, population_code,
                       population_label, setting, jurisdiction, claim_type,
@@ -220,6 +241,9 @@ def fetch_backbone(db_path: Path) -> dict:
                WHERE slug = ?""",
             slug,
         )
+        for row in sve:
+            j = epl_by.get(row["extraction_id"], [])
+            row["population_code"] = ",".join(j) if j else row["population_code"]
         items_here = [ic for ic, sg in item_slug.items() if sg == slug]
         bb[slug] = {
             "linked_sources": linked,
