@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-05-28-migration-ledger-diagnosis",
+  "artifact": "decisions/DR-2026-05-28-migration-ledger-and-reproducibility-reconciliation.md",
+  "doctrine_sha": "61c7f95",
+  "rules_in_scope": [
+    "source-discipline",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-05-28-migration-ledger-and-reproducibility-reconciliation.md#context",
+      "reason": "Every figure in the DR is measured at HEAD by a non-destructive procedure replayable by any reviewer: file counts via ls on scripts/migrations; ledger row count via SELECT COUNT(*) FROM data_migrations; 113 pending via migrate_db.py --dry-run; the 165/2 entity divergences via migrate_db.py --rebuild to /tmp and per-table COUNT(*) comparison; root cause via git log matching pipeline_runs timestamps to source-verification commit 5007ede; CI invariant set quoted directly from .github/workflows/audit.yml. No estimated or invented numbers."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/decisions_DR-2026-05-28-migration-ledger-and-reproducibility-reconciliation.json",
+      "reason": "This attestation plus the [DOCTRINE: 61c7f95] token on the commit satisfy rule #11(a)/(b) for the new decisions/ artifact; doctrine_sha matches HEAD:governance/mission-and-epistemics.md."
+    }
+  },
+  "deviations": [],
+  "bias_direction": "Risk of overstating severity to justify the diagnostic work, or of treating Finding 2 (source-verification direct writes) as a bug when it is plausibly intended behavior. Mitigated by stating Finding 2 neutrally as 'real, correct data that is simply not reproducible from migration history,' offering exempt-by-ownership (3a) as the low-friction recommended resolution rather than asserting a defect, and by ranking the three findings by actual operational severity (Finding 1 is the only live footgun).",
+  "independent_reviewer_counterclaim": "A reviewer could argue a PROPOSED DR that executes nothing is low-value and could have been a chat report. Counter: (a) it durably captures, in the canonical decisions/ location, a latent landmine that had been flagged-but-uncaptured across multiple sessions; (b) it prevents the data-losing 'obvious fix' (rebuild-and-replace deletes 167 correct rows) that a less careful pass would likely have run; (c) per architecture migration_and_growth, a DR is the prescribed first artifact for a discovered structural issue requiring an owner decision.",
+  "verdict": "CLEAN"
+}
