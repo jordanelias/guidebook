@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-05-28-vetting-surface-and-extraction-layer",
+  "artifact": "decisions/DR-2026-05-28-b-source-value-extractions-schema.md",
+  "doctrine_sha": "61c7f95",
+  "rules_in_scope": [
+    "source-discipline",
+    "adherence-logging-and-attestation",
+    "evidence-verification-gate-for-synthesis"
+  ],
+  "per_rule_status": {
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-05-28-b-source-value-extractions-schema.md#context",
+      "reason": "The DR's premise is grounded in measured DB state: 689 source_slug_links rows, 7 reasoning_doc_citations rows in 1 topic, 0 rows in the gap between them — all directly queried, none asserted. The decision adds armature for a chain layer that demonstrably did not exist; the table shape mirrors existing append-friendly peers (supersession_check DR-2026-05-24, gap_mining DR-2026-05-26) rather than inventing a novel pattern. Migration was applied via the documented runner (--schema-only path); entity row counts were verified unchanged at evidence_sources=640, source_slug_links=689, reasoning_doc_citations=7, spec_value_probes=21, items=92, populations=22."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/decisions_DR-2026-05-28-b-source-value-extractions-schema.json",
+      "reason": "Commit will carry [DOCTRINE: 61c7f95] before the timestamp per rule #11(a); attestation file is co-committed per rule #11(b). doctrine_sha matches HEAD:governance/mission-and-epistemics.md."
+    },
+    "evidence-verification-gate-for-synthesis": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-05-28-b-source-value-extractions-schema.md#interlocks-with-existing-rules",
+      "reason": "The new table is explicitly NOT a synthesis-gate row. The DR documents that rule #10 sub-rules 2/3 are unchanged: synthesis claims still require a reasoning_doc_citations row with value_match ∈ {EXACT, WITHIN-TOLERANCE}. A source_value_extractions row with extraction_status='verified' is not a substitute — it must promote into reasoning_doc_citations via the promoted_to_rdc_id FK. The gate is preserved; the new layer sits below it."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "evidence-verification-gate-for-synthesis",
+      "reason": "Migration was applied to data/guidebook.db this session (user_version 17→18; new empty table). Per the workflow the migration runner accepted the schema migration cleanly via --schema-only. The committed DB therefore reflects the new schema in addition to the migration file. This is the standard pattern for schema migrations (cf. migration 017 in commit 9a120e9), but worth noting explicitly given DR-2026-05-28 (this session, earlier) catalogued reproducibility concerns. The change is pure-additive: zero entity-row deltas; the new table is empty; all existing FK relationships unaffected; PRAGMA foreign_keys=ON enforced."
+    }
+  ],
+  "bias_direction": "Risk of overbuilding — a schema-level deliverable in response to a user spec, before any mining attempt has shown that the existing layers actually fail in practice. Mitigated by (a) keeping the table minimal (12 substantive columns; no premature audit script, no CLI helpers, no data migrations); (b) preserving rule #10 unchanged so the new layer earns its keep only when extractions actually graduate; (c) explicit DR §What this does not do section listing deferred work, so the scope creep is policed.",
+  "independent_reviewer_counterclaim": "A reviewer could argue: the table is speculative — no extraction work was performed this session, so the schema is built before there's evidence the existing layers fall short for real mining work. Counter: (a) the surface generated this session demonstrated the gap empirically (67/68 topics show 0 extractions because there is no slot to record them in); (b) the user's vetting spec explicitly named 'what values you are taking from sources' as a required view dimension that the prior schema could not support without overloading reasoning_doc_citations (which is the synthesis-gate layer and would lose its gate semantics if it also held preliminary extractions); (c) the migration is reversible by writing a 019_drop_source_value_extractions.sql if the layer is judged unnecessary after a pilot — the cost of trying it is low.",
+  "verdict": "CLEAN"
+}
