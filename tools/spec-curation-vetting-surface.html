@@ -99,8 +99,15 @@ td{padding:6px 8px 6px 0;border-bottom:1px solid var(--line);vertical-align:top}
 <script>
 const DATA=JSON.parse(document.getElementById('vetting-data').textContent);
 const BB=DATA.backbone,T=DATA.totals;
-t_topics.textContent=T.topics;t_src.textContent=T.sources;t_sext.textContent=T.extractions_source;
-t_ext.textContent=T.extractions_synthesis;t_walk.textContent=T.walks;sv.textContent=T.schema_version;oi.textContent=T.orphan_links;
+const $=id=>document.getElementById(id);
+$('t-topics').textContent=T.topics;
+$('t-src').textContent=T.sources;
+$('t-sext').textContent=T.extractions_source;
+$('t-ext').textContent=T.extractions_synthesis;
+$('t-walk').textContent=T.walks;
+$('sv').textContent=T.schema_version;
+$('oi').textContent=T.orphan_links;
+const list=$('list'),detail=$('detail');
 function depth(d){if(d.value_extractions.length)return['full','d-full'];
  if((d.source_extractions||[]).length)return['source','d-src'];
  if(d.selection_walks.length)return['walk','d-walk'];return['none','d-none'];}
