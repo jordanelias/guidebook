@@ -103,7 +103,12 @@ def validate_bpc_doc(path: Path) -> dict:
         if not re.search(rf"^\*\*{re.escape(field)}:\*\*", content, re.M):
             errors.append(f"Missing required header field: **{field}**")
 
-    # Status value check
+    # Status value check. status_val is captured at function scope so the B-section
+    # step validation below can be status-aware (workplan §5 Stage 1.2 / R5): an
+    # OPUS-PENDING doc carries facts (steps 1–4) but not yet Opus judgment (steps
+    # 5–9), so missing 5–9 must warn, not error — all-nine-error is reserved for
+    # COMPLETE.
+    status_val = None
     status_m = re.search(r"^\*\*Status:\*\*\s*(\S+)", content, re.M)
     if status_m:
         status_val = status_m.group(1).strip()
@@ -139,12 +144,34 @@ def validate_bpc_doc(path: Path) -> dict:
                 continue
             param_name_m = re.search(r"^### (B\.\d+ Parameter:[^\n]+)", block, re.M)
             param_label = param_name_m.group(1) if param_name_m else f"block #{i}"
-            for step in NINE_STEPS:
+            for idx, step in enumerate(NINE_STEPS):
                 # Allow the step text to be on a bold-formatted line or in a header
                 step_pat = re.compile(re.escape(step), re.I)
-                if not step_pat.search(block):
-                    errors.append(
-                        f"{param_label}: missing step `{step}`"
+                if step_pat.search(block):
+                    continue
+                # Status-aware severity (workplan §5 Stage 1.2 / R5).
+                # NINE_STEPS[0:4] = facts (Sonnet: direction, worst-case user,
+                # jurisdiction comparison, lowest-barrier code). NINE_STEPS[4:9] =
+                # synthesis judgment (Opus: evidence tiers, chosen value, rationale,
+                # trade-offs, cross-population flag — see standing rule #2).
+                #   COMPLETE     → every missing step errors.
+                #   OPUS-PENDING → missing facts (1–4) error; missing judgment (5–9) warn.
+                #   DRAFT        → any missing step warns (doc is explicitly in progress).
+                #   unknown/absent status → strict (treat as COMPLETE) so a doc cannot
+                #                           dodge scrutiny by omitting/garbling Status.
+                is_judgment_step = idx >= 4
+                if status_val == "OPUS-PENDING":
+                    severity = "warn" if is_judgment_step else "error"
+                elif status_val == "DRAFT":
+                    severity = "warn"
+                else:  # COMPLETE or unrecognized → strict
+                    severity = "error"
+                if severity == "error":
+                    errors.append(f"{param_label}: missing step `{step}`")
+                else:
+                    warnings.append(
+                        f"{param_label}: missing step `{step}` "
+                        f"(status={status_val or 'UNSET'}; required before COMPLETE)"
                     )
 
     # E section adversarial fields
