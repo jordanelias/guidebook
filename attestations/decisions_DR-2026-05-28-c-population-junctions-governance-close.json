@@ -1,0 +1,23 @@
+{
+    "schema_version": "1.0",
+    "session": "session_2026-06-09-stage-1-5-governance-hygiene",
+    "artifact": "decisions/DR-2026-05-28-c-population-junctions-governance-close.md",
+    "doctrine_sha": "3da73bd",
+    "rules_in_scope": ["source-discipline", "adherence-logging-and-attestation"],
+    "per_rule_status": {
+        "source-discipline": {
+            "status": "FIRED",
+            "evidence_path": "decisions/DR-2026-05-28-c-population-junctions-governance-close.md#verification",
+            "reason": "Every structural claim is verified at HEAD against the DB and migration 021: all four junction tables present with row counts (item_population_links 361, citation_population_links 7, probe_population_links 36, extraction_population_links 0); populations taxonomy = 22 codes; the retained-but-deprecated scalar columns and the companion Level-2 audit population_integrity_audit.py confirmed present (and confirmed NOT yet CI-wired). Rationale text is quoted from the migration 021 header, not invented."
+        },
+        "adherence-logging-and-attestation": {
+            "status": "FIRED",
+            "evidence_path": "attestations/decisions_DR-2026-05-28-c.json",
+            "reason": "This attestation plus the [DOCTRINE: 3da73bd] token on the decisions/ commit satisfy rule #11(a)/(b) for the new DR; doctrine_sha 3da73bd matches HEAD:governance/mission-and-epistemics.md after the Stage 1.1 doctrine commit (which 1.5 follows)."
+        }
+    },
+    "deviations": [],
+    "bias_direction": "Risk of overstating the close by implying the population-junction model is fully operational when extraction_population_links is still empty (0 rows) and the scalar columns it supersedes are retained. Mitigated by stating the 0-row count plainly, marking the scalar columns retained-but-deprecated with the drop deferred to a caller-sweep, and noting the Level-2 audit is not yet promoted to a blocking CI job.",
+    "independent_reviewer_counterclaim": "A reviewer could argue a retrospective DR for an already-applied migration is ceremony with no effect. Counter: migration 021 changed the schema with no governance record, leaving the deprecation of the scalar columns, the FK-taxonomy constraint, and the scalar-junction consistency obligation undocumented; per architecture migration_and_growth a DR is the prescribed durable record for such a structural decision, and it is the locus the deferred caller-sweep (scalar-column drop) will cite.",
+    "verdict": "CLEAN"
+}

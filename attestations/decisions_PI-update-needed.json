@@ -1,32 +1,23 @@
 {
-  "schema_version": "1.0",
-  "session": "session_2026-05-26-gap-driven-mining-protocol-design",
-  "artifact": "decisions/PI-update-needed.md",
-  "doctrine_sha": "61c7f95",
-  "rules_in_scope": [
-    "source-discipline",
-    "canonical-workplan",
-    "adherence-logging-and-attestation"
-  ],
-  "per_rule_status": {
-    "source-discipline": {
-      "status": "FIRED",
-      "evidence_path": "decisions/PI-update-needed.md",
-      "reason": "v10.16 queue entry added with cited grounding: DR-2026-05-26 (this session's Pass 2a authored artifact), v10.15-rejected rationale (no PI bump unless critical armature) referenced by section anchor, and architecture v2.3 scope_assumptions (skill-assignment-only changes not requiring out-of-band PI bumps). v10.15-rejected section content is preserved unchanged."
+    "schema_version": "1.0",
+    "session": "session_2026-06-09-stage-1-5-governance-hygiene",
+    "artifact": "decisions/PI-update-needed.md",
+    "doctrine_sha": "3da73bd",
+    "rules_in_scope": ["source-discipline", "adherence-logging-and-attestation"],
+    "per_rule_status": {
+        "source-discipline": {
+            "status": "FIRED",
+            "evidence_path": "decisions/PI-update-needed.md",
+            "reason": "The deployment-state correction (v10.14 LIVE, not pending) is verified against the operative session PI, whose header reads 'V10.14 - Revised 2026-05-20' - direct evidence v10.14 is deployed. The DR-2026-05-28-c hooks_status queue entry is grounded in migration 021 + the confirmed-present population_integrity_audit.py. v10.16 and v10.15-rejected sections preserved unchanged."
+        },
+        "adherence-logging-and-attestation": {
+            "status": "FIRED",
+            "evidence_path": "attestations/decisions_PI-update-needed.json",
+            "reason": "Updates the prior attestation for the touched file (decisions/ path). Commit carries [DOCTRINE: 3da73bd] before the timestamp per the v10.14 canonical form; doctrine_sha bumped 61c7f95 -> 3da73bd to match HEAD:governance/mission-and-epistemics.md after the Stage 1.1 doctrine commit."
+        }
     },
-    "canonical-workplan": {
-      "status": "FIRED",
-      "evidence_path": "decisions/PI-update-needed.md",
-      "reason": "v10.16 entry adds a skills_assigned line for a new skill governed by an adopted-in-progress DR (DR-2026-05-26 PROPOSED, adopts upon pilot completion). The entry does not propose a standing-rule change; skill assignments are documentation, not gate."
-    },
-    "adherence-logging-and-attestation": {
-      "status": "FIRED",
-      "evidence_path": "attestations/decisions_PI-update-needed.json",
-      "reason": "This attestation IS the rule firing for the PI-update-needed.md edit. Commit carries [DOCTRINE: 61c7f95] before timestamp per v10.14 canonical form."
-    }
-  },
-  "deviations": [],
-  "bias_direction": "The v10.16 entry is named explicitly so the queue inventory does not silently grow. The bias risk is treating documentation-style PI changes as deserving the same level of bump-ceremony as standing-rule changes; the v10.15-rejected precedent argues both directions, and this entry sides with 'queue it; ship with next legitimate bump' rather than 'ship a v10.16 today.' The interpretation is owner-served by the rejected precedent; an alternative reading is that even skill-assignment changes warrant an owner paste so the live PI reflects current invocation vocabulary.",
-  "independent_reviewer_counterclaim": "An outside reviewer would observe that DRs proliferate across consecutive sessions (DR-2026-05-23, DR-2026-05-24, DR-2026-05-26), each adding queue entries that may not all ship under the same PI bump. The risk is queue drift - a stack of v10.16/v10.17/v10.18 entries each marked 'queued' but never actually deployed. Counter: each queue entry is structurally minimal (single skill line for v10.16); the v10.14 architecture-supplied bootstrap-decoupling removed the historical PI-bump pressure for mechanics changes; the queue can defensibly hold N entries until owner pastes them in a batch. Mitigation: this attestation explicitly cites the bundling rationale so the owner sees the intended deployment cadence.",
-  "verdict": "CLEAN"
+    "deviations": [],
+    "bias_direction": "Risk of prematurely declaring the queue empty when two documentation-only items (v10.16 skill line, DR-28-c hooks_status line) remain queued. Mitigated by keeping both queued entries explicit in the header and their own sections rather than silently dropping them, and by distinguishing the closed rule/bootstrap-track paste from the still-open documentation-only bundle.",
+    "independent_reviewer_counterclaim": "A reviewer could argue that marking v10.14 'deployed' from the session header alone is circumstantial. Counter: the operative PI loaded for this session is the authoritative signal of what is live in project settings - the same evidence basis the file itself used previously ('the most recent session prompt loaded v10.13, confirming deployment') - and the repo snapshot governance/project-instructions-v10_14.md exists; the correction merely advances the same inference one version forward.",
+    "verdict": "CLEAN"
 }

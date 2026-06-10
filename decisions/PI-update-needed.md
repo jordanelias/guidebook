@@ -1,21 +1,21 @@
 # PI Deployment Queue
 
-**Live in claude.ai project settings:** v10.13 (deployed by owner; the most recent session prompt loaded v10.13, confirming deployment).
-**Repo-side snapshot:** `governance/project-instructions-v10_13.md` (commit `29ea3bf`, 2026-05-19).
-**Pending deployment:** **v10.14** — `governance/project-instructions-v10_14.md` (rewritten 2026-05-20).
+**Live in claude.ai project settings:** v10.14 (deployed by owner; the operative session prompt loads v10.14 — header reads "V10.14 · Revised 2026-05-20" — confirming deployment).
+**Repo-side snapshot:** `governance/project-instructions-v10_14.md` (rewritten 2026-05-20).
+**Pending deployment:** none on the bootstrap/rule track. Queued for the next legitimate PI bump (documentation-only, per "no PI bump unless critical armature"): the v10.16 `gap-driven-mining` skill-assignment line, and the DR-2026-05-28-c `<hooks_status>` addition (`scripts/audit/population_integrity_audit.py`).
 
 ---
 
-## State as of 2026-05-20
+## State as of 2026-06-09
 
-One pending entry: v10.14. Owner action: paste contents of `governance/project-instructions-v10_14.md` into claude.ai → Project Settings.
+v10.14 is **DEPLOYED** — it is the operative PI loaded this session, closing the prior pending-paste entry. No rule/bootstrap-track paste is pending. Documentation-only additions are queued for the next legitimate PI bump (see header): the v10.16 skill-assignment line and the DR-2026-05-28-c `<hooks_status>` audit entry.
 
 | Version | Live in claude.ai | Repo snapshot | Notes |
 |---|---|---|---|
 | v10.11 | Yes (since ≤2026-05-15) | `governance/project-instructions-v10_11.md` | `reasoning-doc-citations` skill promotion. |
 | v10.12 | Yes (deployed before 2026-05-17 amend) | `governance/project-instructions-v10_12.md` | Bootstrap `_GH_SKILLS()` fix + standing rule #11 amend (adherence logging). |
 | v10.13 | Yes (loads this session) | `governance/project-instructions-v10_13.md` (commit `29ea3bf`) | DR-2026-05-18: `COMPLETE-STATUTORY` peer value in rule #10. |
-| **v10.14** | **No — paste needed** | `governance/project-instructions-v10_14.md` (commit on 2026-05-20) | (1) Rule #11(a) explicit token placement clarification. (2) Bootstrap extracted to `scripts/bootstrap.sh` — future bootstrap drift no longer requires PI bumps. |
+| **v10.14** | **Yes — deployed (loads this session)** | `governance/project-instructions-v10_14.md` (commit on 2026-05-20) | (1) Rule #11(a) explicit token placement clarification. (2) Bootstrap extracted to `scripts/bootstrap.sh` — future bootstrap drift no longer requires PI bumps. |
 
 ---
 
@@ -94,6 +94,23 @@ The skill name belongs alongside `citation-miner`, `adversarial-research`, and `
 **Hold reason.** Bundling with the next legitimate PI bump per the v10.15-rejected rationale ("no PI bump unless critical armature"). Skill assignments are not critical armature; the skill is invocable via its trigger keywords whether or not PI text names it. The PI line addition is documentation, not gate. When the next PI version ships for an unrelated reason, this line gets folded in.
 
 **Bootstrap impact.** None. The skill counts in `_GH_SKILLS()` (per v10.12 fix) which counts `skills/*_SKILL.md` files via the GitHub contents API — the new file is auto-counted.
+
+---
+
+## DR-2026-05-28-c `<hooks_status>` addition — queued (2026-06-09)
+
+**Status:** queued — bundle with the next legitimate PI bump.
+**Source:** DR-2026-05-28-c (population-junctions governance close); migration 021.
+
+Single addition to PI `<hooks_status>` Level-2 list:
+
+```markdown
+- `scripts/audit/population_integrity_audit.py` — scalar↔junction population consistency (DR-2026-05-28-c)
+```
+
+**Hold reason.** Same as v10.16 — adding an audit-script line to `<hooks_status>` is documentation, not gate. The audit runs whether or not the PI names it; CI `db_integrity` already enforces the junction FKs via `PRAGMA foreign_key_check` at the blocking level. Folds into the next PI bump shipped for an unrelated reason.
+
+**Bootstrap impact.** None.
 
 ---
 
