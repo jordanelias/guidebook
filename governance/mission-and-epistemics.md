@@ -41,7 +41,9 @@ Every parameter exposes its within-population variability. Population codes are 
 
 ### 2. Best practice is determined by the evidence hierarchy, not by code consensus
 
-Tier 1 OT-intervention clinical research, Co-1 lived experience, Co-2 OT CPGs, and Tier 3 systematic reviews establish best practice. Tier 6 codes are the compliance floor, not the aspiration. **A best-practice claim derived solely from code consensus is in error.**
+Best practice is anchored by Tier 1 primary research (OT-prioritized but **not** OT-exclusive — directly-relevant high-control non-OT primary research is admitted at Tier 1, per decision D-E), Co-1 lived experience, Tier 2 synthesis (systematic reviews / meta-analyses and named-organisation evidence-based standards), and Co-2 OT CPGs. Tier 3 lower-control primary clinical evidence is supporting, rarely the sole basis.
+
+Tiers 4–6 are a regulatory-baseline stratum, walled off from best-practice anchoring: Tier 6 codes are the compliance floor, not the aspiration. **A best-practice claim derived solely from code consensus — convergence across Tier 4–6 sources — is in error.** Convergence is informative (it tells us multiple jurisdictions adopted a value) but is not itself best-practice evidence: the jurisdictions may be wrong together, or reading from a shared pre-evidence floor that none has updated.
 
 The seven-tier hierarchy is operative throughout the guidebook; full schema is specified under §Epistemic commitments §Evidence hierarchy below.
 
@@ -85,16 +87,24 @@ The guidebook's epistemic commitments specify *how the project knows what it cla
 
 | Position | Type | Source examples |
 |---|---|---|
-| Tier 1 | OT intervention-tested clinical research | RCTs, intervention trials |
+| Tier 1 | Primary research with intervention-level or biomechanical control on the parameter under design — OT-prioritized but **not** OT-exclusive (per decision D-E): directly-relevant high-control non-OT primary research (biomechanical / sensory studies on gradients, clearances, acoustic / luminance thresholds) is admitted at Tier 1, not demoted to Tier 3 | OT intervention trials, RCTs; directly-relevant biomechanical / sensory primary studies |
 | **Co-1** | **Lived experience / participatory design (CRPD Art. 4.3)** — co-primary with Tier 1 | DPO research, peer-reviewed lived-experience literature, named advocacy organizational positions, Co-1-authored academic narratives |
-| Tier 2 | NGO / DPO / advocacy guidelines | LPA, RNID, HLAA, IDA, Habinteg |
+| Tier 2 | Community-consensus synthesis above primary studies and below international standards. Two streams: (a) systematic reviews / meta-analyses; (b) named-organisation evidence-based standards (DPO guidelines, professional-body standards) | Cochrane, JBI, narrative SRs; LPA, RNID, HLAA, IDA, Habinteg evidence-based standards |
 | **Co-2** | **OT professional body CPGs** — parallel to Tier 2 | CAOT, AOTA, RCOT, COTEC, WFOT |
-| Tier 3 | Systematic reviews and meta-analyses | Cochrane, JBI, narrative SRs |
+| Tier 3 | Lower-control primary clinical research (cross-sectional, observational, qualitative, single-centre) and grey-literature primary research — supporting evidence, rarely the sole basis | Observational / qualitative / single-centre clinical studies; primary grey literature |
 | Tier 4 | International standards (evidence-based) | ISO 21542, ISO 23599, IEC 60118-4, EN 17210 |
 | Tier 5 | National beyond-code frameworks | BS 8300-2 Annex G, NL WMO-keuken, RCOTSS-Housing OT |
 | Tier 6 | Statutory codes | Reference baseline only |
 
 Schema encodes both `tier` (1–6) and `evidence_type` (`clinical`, `co1`, `co2`, `sr_meta`, `standard_evidence_based`, `national_framework`, `code`) per Stage 0.5 Decision T-03. Co-primary Co-1 records carry `tier: 1, evidence_type: co1`; Co-2 records carry `tier: 2, evidence_type: co2`. The encoding preserves co-primary parallelism without flattening it into a single tier.
+
+### Two orthogonal axes of coverage; directness as a conditioning layer
+
+Evidence is located on two orthogonal axes of *coverage*, both always consulted: the **evidence tier** (what kind and strength of evidence) and the **design scale** (Universal / Population / Person). Neither axis determines the other; a Population-scale specification may draw on any evidence tier.
+
+**Directness is a conditioning layer over a single population-anchored ladder, not a separate hierarchy per scale.** Evidence is weighted by how well its *grain* matches the *grain of the claim* — bidirectionally, per GRADE's directness principle. An aggregate systematic review is strongest for a population-level claim and down-weighted for a person-specific functional claim; a directly-relevant intervention study is the reverse. The project explicitly rejects a "most-specific-to-least-specific" gradient: directness is grain-matching, not specificity-ranking.
+
+**The Design Modes weight the hierarchy asymmetrically by scale.** Universal Mode is a code-floor raised by population-level evidence wherever evidence supports a value above the floor. **The Population scale is where source-ranking does its substantive work** — the evidence hierarchy adjudicates the best-practice value and range there. The Person scale is occupational-therapy process-resolution *within* the established range — assessment and clinical-reasoning evidence, not parameter-value-ranking. The evidence and design axes therefore remain orthogonal, but under *scale-conditioned weighting*: the axes stay independent, while which evidence carries the most weight is conditioned by the design scale in play. Operational detail is in `governance/evidence-methodology.md` §§1.4, 1.6, 1.7.
 
 ### Evidence-state machine for best-practice claims
 

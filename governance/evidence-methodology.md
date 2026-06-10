@@ -15,11 +15,11 @@ The guidebook draws on seven tiers of evidence, with two co-primary parallel tie
 
 | Position | Tier value | Evidence type | Source examples |
 |---|---|---|---|
-| Tier 1 | `tier: 1` | `evidence_type: clinical` | OT intervention-tested clinical research; RCTs; intervention trials |
+| Tier 1 | `tier: 1` | `evidence_type: clinical` | Primary research with intervention-level or biomechanical control on the parameter — OT-prioritized but not OT-exclusive (per D-E): OT intervention trials, RCTs, **and** directly-relevant high-control non-OT primary research (biomechanical / sensory studies on gradients, clearances, acoustic / luminance thresholds) |
 | Co-1 | `tier: 1` | `evidence_type: co1` | Lived experience / participatory design (CRPD Art. 4.3); DPO research; peer-reviewed lived-experience literature; named advocacy organizational positions; Co-1-authored academic narratives |
-| Tier 2 | `tier: 2` | `evidence_type: standard_eb` or context-dependent | NGO / DPO / advocacy guidelines |
+| Tier 2 | `tier: 2` | `evidence_type: sr_meta` or `standard_eb` | Community-consensus synthesis above primary studies, below international standards. Two streams: (a) systematic reviews / meta-analyses (`sr_meta`); (b) named-organisation evidence-based standards — DPO guidelines, professional-body standards (`standard_eb`) |
 | Co-2 | `tier: 2` | `evidence_type: co2` | OT professional body CPGs (CAOT, AOTA, RCOT, COTEC, WFOT) |
-| Tier 3 | `tier: 3` | `evidence_type: sr_meta` | Systematic reviews; meta-analyses; narrative SRs |
+| Tier 3 | `tier: 3` | `evidence_type: clinical` (lower-control) or `grey` | Lower-control primary clinical research (cross-sectional, observational, qualitative, single-centre) and grey-literature primary research — supporting evidence, rarely the sole basis |
 | Tier 4 | `tier: 4` | `evidence_type: standard_eb` | International standards with evidence basis (ISO 21542, ISO 23599, IEC 60118-4, EN 17210) |
 | Tier 5 | `tier: 5` | `evidence_type: national_fw` | National beyond-code frameworks (BS 8300-2 Annex G, NL WMO-keuken, RCOTSS-Housing OT) |
 | Tier 6 | `tier: 6` | `evidence_type: code` | Statutory codes (reference baseline only) |
@@ -50,25 +50,46 @@ Per A5 (`governance/co1-operational.md`, CANONICAL), every Co-1 citation carries
 
 Co-2 records carry `tier: 2, evidence_type: co2`. They do not require the Co-1-specific fields (`co1_provenance`, `co1_source_type`, `synthesis_attribution_required`). Co-2 records do require `verification_status`.
 
-### 1.4 Relationship to the Design Modes
+### 1.4 Relationship to the Design Modes — orthogonality of coverage, scale-conditioned weighting
 
-The Seven-Tier Evidence Hierarchy and the Design Modes are orthogonal axes (per A5 §3.5). They co-locate authority for any specification:
+The Seven-Tier Evidence Hierarchy and the Design Modes are orthogonal **axes of coverage** (amending A5 §3.5 per decision D-D): both are always consulted, and neither determines the other. They co-locate authority for any specification:
 
-- **Design Hierarchy** locates the *kind of design decision*: Universal Mode (universal, code-compliant); Tier 1 (population-informed, ranges with median); Tier 2 (person-specific, OT-resolved).
+- **Design Hierarchy** locates the *kind of design decision* and its *scale*: Universal Mode (universal, code-compliant); Population scale (population-informed, ranges with median); Person scale (person-specific, OT-resolved).
 - **Evidence Hierarchy** locates *what evidence supports the value*: what tier, what type, how strong.
 
-Every cell in the specification matrix sits at an intersection of both axes. A Design Tier 1 specification (population-informed range) may be supported by evidence at any Evidence Tier — clinical, Co-1, Co-2, standards, or a combination. The evidence tier does not determine the design tier; the design tier does not constrain which evidence tiers are consulted.
+Every cell in the specification matrix sits at an intersection of both axes. A population-informed specification may be supported by evidence at any Evidence Tier — clinical, Co-1, Co-2, standards, or a combination. The evidence tier does not determine the design scale; the design scale does not constrain which evidence tiers are consulted.
 
-### 1.5 Tier 2 NGO/DPO/advocacy evidence vs. Co-1
+**What D-D amends.** The axes are not merely orthogonal; they are orthogonal *under scale-conditioned weighting*. Orthogonality of coverage is retained — both axes always apply — but which evidence carries the most weight is conditioned by the design scale (§1.6) and by directness grain-matching (§1.7). Orthogonality is refined, not abandoned: the independence of the axes stands; the flat reading under which any tier weighs equally at any scale does not.
 
-Tier 2 in the evidence hierarchy ("NGO / DPO / advocacy guidelines") and Co-1 are distinct. They share organizational provenance (both may come from DPOs) but differ in what they encode:
+### 1.5 Tier 2 named-organisation evidence-based standards vs. Co-1
 
-- **Tier 2** encodes organizational *guidelines* — recommendations an organization publishes for how accessible design should be done. The organization's authority is institutional (its reputation, its constituency, its mandate).
+Tier 2 has two streams (§1.1): (a) systematic reviews / meta-analyses, and (b) named-organisation evidence-based standards (DPO guidelines, professional-body standards). This section concerns the second stream — the standards/guidelines published by named organisations — and how it is distinct from Co-1. The two share organizational provenance (both may come from DPOs) but differ in what they encode:
+
+- **Tier 2 (named-organisation standards stream)** encodes organizational *guidelines / standards* — recommendations an organization publishes for how accessible design should be done. The organization's authority is institutional (its reputation, its constituency, its mandate).
 - **Co-1** encodes lived-experience *evidence* — findings produced by, with, or under methodological authority of disabled people. The evidence's authority is methodological (peer review, organizational accountability, or scholarly authorship per A5 §1.2).
 
-A DPO may produce both: a design guideline (Tier 2) and a lived-experience research output (Co-1). The same organization, different epistemic products. Encoding matters because best-practice synthesis treats Co-1 as co-primary with Tier 1 clinical evidence — a stronger epistemic claim than Tier 2 guidelines carry.
+A DPO may produce both: a design guideline (Tier 2 standards stream) and a lived-experience research output (Co-1). The same organization, different epistemic products. Encoding matters because best-practice synthesis treats Co-1 as co-primary with Tier 1 — a stronger epistemic claim than Tier 2 organizational guidelines carry. (The SR / meta-analysis stream of Tier 2 is synthesis evidence, a separate case; it is not what this section contrasts with Co-1.)
 
-The validator (Session 2) enforces this: a source classified as both `co1` and `standard_eb` (or `national_fw` or `code`) is an error. A source may have one `evidence_type`; its tier follows from that type. Tier 2 DPO guidelines carry `evidence_type: standard_eb` (if evidence-based) or `national_fw`, not `co1`.
+The validator (Session 2) enforces this: a source classified as both `co1` and `standard_eb` (or `national_fw` or `code`) is an error. A source may have one `evidence_type`; its tier follows from that type. Tier 2 organizational guidelines carry `evidence_type: standard_eb` (if evidence-based) or `national_fw`, not `co1`.
+
+### 1.6 Mode-asymmetry — where source-ranking does its work
+
+The three design scales weight the evidence hierarchy asymmetrically (per decision D-D):
+
+- **Universal Mode** is the code-floor (Tier 6) raised by population-level evidence wherever higher-tier evidence supports a value above the floor. Source-ranking enters only to justify exceeding the floor.
+- **Population scale** is where source-ranking does its substantive work. The evidence hierarchy adjudicates the best-practice value and range here: Tier 1 / Co-1 / Tier 2 / Co-2 evidence anchors the claim; Tier 3 supports; Tier 4–6 do not anchor (convergence-not-evidence — §3 here and `governance/tier-system.md` §3).
+- **Person scale** is OT process-resolution *within* the Population-scale range. The governing evidence is assessment and clinical-reasoning evidence — how to resolve an individual's position — not parameter-value-ranking. The hierarchy that ranks parameter values does not re-run at the Person scale; a different evidence question applies.
+
+This asymmetry is why §1.4's orthogonality is scale-conditioned: the same evidence hierarchy is consulted at every scale, but its adjudicating force concentrates at the Population scale.
+
+### 1.7 Directness as a conditioning layer — grain-matching, not specificity-ranking
+
+Directness conditions the weight a source carries for a given claim, as a layer over the single population-anchored ladder (per decision D-D) — not as a separate hierarchy per scale. Per GRADE's directness principle, a source is weighted by how well its *grain* matches the *grain of the claim*, bidirectionally:
+
+- An aggregate systematic review (Tier 2) is strongest for a population-level claim and is *down-weighted* for a person-specific functional claim, because its grain is the population, not the individual.
+- A directly-relevant intervention or biomechanical study (Tier 1) is the reverse: strongest where the claim's grain matches the study's parameter and population, down-weighted where the claim generalizes beyond what the study measured.
+
+The project **rejects a "most-specific-to-least-specific" gradient.** Specificity is not the axis; grain-match is. A more specific source is not automatically stronger — it is stronger only where the claim's grain matches its grain. The scattered directness primitives currently recorded across the schema (`match_grade`, `value_match`, `passes_strict`, relevance notes) are consolidated into one rule-based directness model at Stage 2.2; this section is the doctrinal basis that build implements.
 
 ---
 
@@ -347,7 +368,7 @@ Q6 asks: how do these citations operate in the evidence base? What tier are they
 
 These three sources are **meta-methodological citations**. They provide evidence for the guidebook's pedagogical approach — how the guidebook teaches — not evidence for any design parameter. The seven-tier evidence hierarchy governs evidence about built environment design. Pedagogy literature addresses a different question: *does questions-led resource design improve outcomes for the people who use the resource?*
 
-**Classification:** meta-methodological citations sit outside the seven-tier hierarchy. They are not Tier 3 (they are not systematic reviews of design evidence), not Tier 5 (they are not national beyond-code frameworks for accessible design), and not any other tier. Forcing them into the hierarchy conflates two distinct evidence questions — "what should the design parameter be?" and "how should the guidebook present design parameters?"
+**Classification:** meta-methodological citations sit outside the seven-tier hierarchy. They are not Tier 2 (they are not systematic reviews or evidence-based standards of design evidence), not Tier 5 (they are not national beyond-code frameworks for accessible design), and not any other tier. Forcing them into the hierarchy conflates two distinct evidence questions — "what should the design parameter be?" and "how should the guidebook present design parameters?"
 
 ### 5.3 Operational treatment
 
@@ -412,7 +433,7 @@ The response voice follows §8.1 (tier-appropriate specification voice) and §8 
 
 - **Never claim the guidebook "proves" or "establishes" a design parameter.** The guidebook synthesizes evidence and recommends. The evidence establishes; the guidebook presents.
 - **Never dismiss a challenge as uninformed.** Explain the basis. If the challenger's understanding of the hierarchy differs from the guidebook's, present the guidebook's framework transparently.
-- **Always name the evidence tier when defending a claim.** "This specification is based on Tier 3 evidence (Sanford 2010 SR)" — not "research supports this."
+- **Always name the evidence tier when defending a claim.** "This specification is based on Tier 2 evidence (Sanford 2010 SR)" — not "research supports this."
 - **Acknowledge gaps immediately when they exist.** The guidebook's credibility rests on honesty about what it does and does not know. A defended gap is worse than a disclosed one.
 
 ### 6.5 Skill build specification (forward to C2)

@@ -80,7 +80,7 @@ Six additional vectors fall out cleanly from prior phase work. They are catalogu
 
 ### 2.3 Evidence-tier laundering (V-06)
 
-**Mechanism.** Claiming Tier 4–5 (international standards / national framework) status for what is properly Tier 6 (statutory code), or claiming Tier 3 (systematic review) for a non-systematic narrative review. The intent: dodge code-floor accountability by relabeling the source.
+**Mechanism.** Claiming Tier 4–5 (international standards / national framework) status for what is properly Tier 6 (statutory code), or claiming Tier 2 (systematic review) for a non-systematic narrative review. The intent: dodge code-floor accountability by relabeling the source.
 
 **Mitigation.** A6 §1: tier and evidence_type are mechanically validated against the source. EvidenceSource.tier is bounded 1–6; EvidenceSource.evidence_type uses the canonical enum. A6 validators check tier-type consistency. Project-standards L20: a Tier 6 source cannot underpin a best_practice_synthesis.
 

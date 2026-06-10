@@ -59,12 +59,14 @@ The audit fires per-tier age thresholds (T4: 7 years; T5/T6: 5 years) and lists 
 
 Worked example surfaced 2026-05-25: `accessible-circulation-geometry.md` cites DIN 18040-1:2010-10. The 2010 edition is still legally in force in Germany (referenced in MVV TB 2024/1 published August 2024), but draft revision E DIN 18040-1:2023-02 exists and DIN EN 17210:2021 has been published as the European harmonised accessibility standard. A reverification of the BPC must consider whether the 2010 citation should be retained, supplemented, or replaced. Counter-example same day: NZS 4121:2001 is 24 years old but remains the NZ Building Act §119 / D1/AS1 Acceptable Solution per NZ Ministry of Education March 2025 guidance; age does NOT predict supersession.
 
-## 5. evidence_quality marker mapping (unchanged)
+## 5. evidence_quality marker mapping
 
 `skills/guidebook-auditor_SKILL.md` §4.2 inline quality markers map to the canonical ladder:
-- `●` confirmed evidence base: T1, T2 (sr_meta + standard_eb + co2), Co-1, Co-2
+- `●` confirmed evidence base: T1, T2 (sr_meta + standard_eb + co2), **T3 clinical** (lower-control primary clinical research — confirmed primary evidence, lower control level), Co-1, Co-2
 - `◐` policy or standards basis only, not primary evidence: T4, T5
 - `○` grey literature, expert consensus, thin base, unconfirmed: T3 grey, `[EXPERT CONSENSUS]`, `[THIN BASE]`, `[UNSUPPORTED]`, T6 (code-floor)
+
+The T3 split is deliberate: T3 holds two species (per §1) — lower-control *primary clinical* research and *grey-literature* primary research. The clinical species is confirmed primary evidence (just lower control) and maps to `●`; the grey species maps to `○`. The earlier version of this map listed only "T3 grey → ○" and left T3-clinical unplaced (R9-c).
 
 ## 6. Mapping back to legacy guidebook-auditor SKILL §4.1
 

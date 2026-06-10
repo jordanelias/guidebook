@@ -37,7 +37,7 @@ A statement by a single disabled person speaking only for themselves is not Co-1
 
 ### 1.3 Co-1 vs. Co-2
 
-Co-1 is paired in the hierarchy with **Co-2 (OT professional body Clinical Practice Guidelines** — CAOT, AOTA, RCOT, COTEC, WFOT). The two are parallel co-primary tiers at different levels: Co-1 sits beside Tier 1 (clinical research); Co-2 sits beside Tier 2 (NGO/DPO/advocacy guidelines). Both encode professional or community methodological authority that clinical research alone does not capture.
+Co-1 is paired in the hierarchy with **Co-2 (OT professional body Clinical Practice Guidelines** — CAOT, AOTA, RCOT, COTEC, WFOT). The two are parallel co-primary tiers at different levels: Co-1 sits beside Tier 1 (primary research); Co-2 sits beside Tier 2 (community-consensus synthesis: systematic reviews / meta-analyses and named-organisation evidence-based standards). Both encode professional or community methodological authority that clinical research alone does not capture.
 
 In schema terms: Co-1 records carry `tier: 1, evidence_type: co1`; Co-2 records carry `tier: 2, evidence_type: co2`. The two are not interchangeable. Co-2 is OT professional consensus; Co-1 is disabled-person methodological authority. A specification may cite both; they do not substitute for each other.
 
@@ -226,7 +226,7 @@ But the link is operational, not definitional. Audience-priority is about who re
 
 **The Design Modes** locates *the kind of design decision*: Universal Mode (universal, code-compliant); Tier 1 (population-informed); Tier 2 (person-specific, OT-resolved). It answers: *what kind of design problem is this?*
 
-**The Seven-Tier Evidence Hierarchy** locates *what evidence supports the value*: Tier 1 OT clinical research, Co-1 lived experience, Co-2 OT CPGs, Tier 3 systematic reviews, Tier 4 international standards, Tier 5 national frameworks, Tier 6 codes. It answers: *what is the basis for this number/range/specification?*
+**The Seven-Tier Evidence Hierarchy** locates *what evidence supports the value*: Tier 1 primary research (OT-prioritized but not OT-exclusive, per D-E), Co-1 lived experience, Tier 2 synthesis (systematic reviews / meta-analyses and named-organisation evidence-based standards), Co-2 OT CPGs, Tier 3 lower-control primary clinical and grey-literature primary research, Tier 4 international standards, Tier 5 national frameworks, Tier 6 codes. It answers: *what is the basis for this number/range/specification?*
 
 **The two interact at every cell** in the guidebook's specification matrix. A Tier 1 design specification (population-informed range) may be supported by:
 
