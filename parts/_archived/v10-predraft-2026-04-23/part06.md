@@ -1,0 +1,688 @@
+## Part 6: Residential Application Matrices
+
+<!-- evidence_density: Moderate (varies by room) -->
+> **Evidence density: ▓ Moderate (varies by room)** — ■ Rich: R-BA (bathroom) — strongest evidence in project (grab bars Tier 1 SR Crosby 2026 PMID:41525145, fall prevention Clemson 2023 Cochrane, turning circles IDeA Center Tier 1). ▓ Moderate: R-KIT (kitchen), R-ENT (entry) — OT home modification evidence + standards convergence. ░ Thin: R-BED (bedroom), R-HAL (hallway), R-LAU (laundry), R-STA (staircase) — standards-derived with limited RCT evidence. · Absent: R-LIV (living room), R-GAR (garage) — zero dedicated built-environment research.
+
+
+<!-- v10.0 scaffold — CO-0004: was Part 5. CO-0004/D2 changes PENDING:
+     - D2-12: absorb §7.0a into §6.0
+     - D2-13: delete all Supp.Vol columns from matrices; add footnote
+     - D2-16: fix 4 cross-reference code errors in Universal Residential table
+     - D2-45: remove ~~R-STA-02~~ <!-- D2-45: removed from Universal Residential table --> from Universal Residential table
+     - D2-10: citation sub-tables eliminated (data absorbed into Part 4 items)
+     - CO-0004: inline room-level conflict notes to be added per CO-0004 format
+     - cross-reference-resolver pass required against 85-item Part 4 inventory
+     - D2-41 PAIN/OFS audit on all population columns
+     - Section numbering: §6.x confirmed (no change needed — already §6.x in source) -->
+
+
+** Neufert Residential and Non-Residential OT Analysis dimensional data is not yet integrated into Part II room matrices. Dimensional specifications from Neufert sources should be added to relevant room matrices when the source file is confirmed readable. This does not affect item specifications or population guidance — only dimensional annotations marked [NEUFERT: pending] in the working draft. See Part 7 for status.
+
+### §6.0 How to Read the Residential Matrices
+<!-- D2-12: §7.0a (Universal Residential Provisions from v9.0 old §7.0a) absorbed into this §6.0. Content merged below. -->
+
+Each room matrix is structured as: 1.
+
+**Room criticality note** — why this room is significant and which populations face the greatest barriers
+
+**Item application table** — all applicable Part 7 items, coded by population and design stage 3.
+
+**DAR provisions** — Design-for-Adaptability-and-Repair provisions: what must be built in now to enable future adaptation without structural intervention 4.
+
+**Conflict register** — known specification conflicts within this room, with resolutions 5.
+
+**Citation additions** — citations recommended in the residential analysis but not yet in the item specifications 6.
+
+**Schematic checklist** — binary checklist for this room at end of schematic design stage
+
+**Population code key for tables:** MOB=mobility, VIS=visual (vis=low vision), DEAF=deaf/hearing, DEM=dementia, NDV=neurodivergent, NEU=neurological/PCS, PAIN=chronic pain=large body size (→ Supp Vol IV), OFS=environmental sensitivity, DBL=DeafBlind, UPL=upper limb, DEM/NDV[IntD-proxy]=intellectual disability [THIN BASE — interim provisions; Tier 4–5 only; March 2026] **Design stage codes:** SD=schematic design
+
+| DD=developed design | CD=construction documents | SPEC=specification | COMM=commissioning | OPS=operation — |
+
+### §6.0a Universal Residential Provisions
+*^BAR (large body size) provisions: see Supplementary Volume Part 4. These provisions have been removed from all residential matrices per CO-0002.*
+
+<!-- D2-13: All Supp.Vol columns deleted from this and all room matrices below. Supp.Vol population relocated to Supplementary Volume Part 4. Where Supp.Vol previously appeared as a population column, the column has been removed. A footnote has been added: "Large body size provisions: see Supplementary Volume Part 4." -->
+
+The following provisions apply to ALL new and substantially refurbished dwellings, regardless of size or occupancy. They are non-negotiable and must appear on the stated drawing at the indicated stage. This list provides symmetry with the Universal Non-Residential Provisions in Part III §I5.0.
+
+| Item | Title | Design Stage | Must appear on |
+| --- | --- | --- | --- |
+| E-06 | Zero-step threshold at all accessible entries | SD | Site plan; floor plan |
+| E-01 / E-02 | Accessible level change (lift provision or platform lift) if >1 storey | SD | Floor plans; structural drawings |
+| E-08 | Corridor clear width ≥900 mm on all circulation routes | SD | Floor plan |
+| I-04 | Accessible bathroom (zero-threshold shower drainage provision) | SD | Section; structural drawings |
+| I-03 | Grab bar structural blocking in all bathrooms | CD | Structural/blocking drawings |
+| K-01 | Lever hardware on all doors | CD | Door hardware schedule |
+| H-01 | All controls 400–1100 mm AFF | CD | Electrical drawings |
+| ~~R-STA-02~~ <!-- D2-45: removed from Universal Residential table --> | Stair structural channel for future stairlift | CD | Structural drawings |
+| A-01 | Acoustic buffer zone (bedroom adjacency from noise sources) | SD | Floor plan |
+| B-05 | Gradual lighting transition (entry to interior) | DD | Lighting design |
+| G-04 | MERV 13 air filtration provision | SD | MEP brief |  |
+
+*Note on DEM/NDV[IntD-proxy] (intellectual disability) in residential matrices:* All DEM/NDV[IntD-proxy] provisions in the tables below carry the standing project disclosure: [TIER 4–5; no quantified architectural standard in any jurisdiction; March 2026. Provisions are interim, calibrated to DEM wayfinding and NDV sensory evidence as the strongest available proxies. Full DEM/NDV[IntD-proxy]-specific evidence review deferred to v10.0.] DEM/NDV[IntD-proxy] cells marked ● indicate provisions with direct cross-population applicability confirmed at Tier 4–5; cells marked ○ indicate the provision benefits DEM/NDV[IntD-proxy] users but is not a primary design driver.
+
+---
+
+### §6.1 R-ENT: Entry
+
+**Room criticality:** The entry is the most consequential zone in the residence. It is the point of access and return, the location of the primary security system, the threshold between external and internal environments, and the first sensory transition zone. Failure here blocks all other provisions. Primary populations: MOB (step-free) (wide clear opening — → Supp Vol IV), VIS/vis (approach wayfinding), DEAF (visual intercom), DBL (tactile approach), OFS/POTS (automatic door, canopy weather protection).
+
+**Note on H-04 (intercom) placement:** Per the residential analysis, H-04 is an interior control (R-ENT-02 provision). Remove H-04 from R-ENT-01 technique index. External keypad height specification is an R-ENT-01 annotation only.
+
+**Item application table — R-ENT:**
+
+| Item | Title | MOB | VIS | DEAF | DEM | NDV | OFS | DBL | DEM/NDV[IntD-proxy] | Design Stage |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| E-06 | Step-free threshold | ● | ○ | — | ● | — | ● | ● | ○ | SD |
+| E-11 | Automatic door | ● | — | ○ | ● | — | ● | ● | — | DD |
+| I-01 | Lever hardware (inner door) | ● | — | — | ● | — | — | — | — | CD |
+| B-05 | Gradual lighting transition | ○ | ● | — | ● | ● | — | — | — | DD |
+| B-10 | Visual fire alarm | — | — | ● | — | — | — | ● | — | CD |
+| A-10 | Hearing loop at entry | — | — | ● | — | — | — | ● | — | DD |
+| H-04 | Visual intercom (interior unit) | ● | — | ● | ● | — | — | ● | — | CD |
+| C-04 | LRV ≥30 at threshold | — | ● | — | ● | — | — | ● | ○ | CD |
+| D-04 | Landmark at entry door | — | — | — | ● | — | — | — | ○ | DD |
+| D-08 | Pictogram + word signage at entry | — | ○ | — | ● | ○ | — | ● | ● | CD |
+| F-01 | Sensory transition buffer (lobby) | — | — | — | ● | ● | ● | — | ○ | SD |
+| K-02 | Tactile building map station at entrance | — | ● | — | — | — | — | ● | — | DD |
+| K-04 | Vibrotactile alert (BMS relay + pager infrastructure) | — | — | ● | — | — | — | ● | — | CD |
+| *● Primary \| ○ Secondary \| — Not applicable* | | | | | | | | | | |
+
+**DAR provisions — R-ENT:**
+
+| Provision | What to install now | What it enables later | Timing |
+| --- | --- | --- | --- |
+| Smart lock conduit | 20 mm conduit from external entry to consumer unit | Future smart lock/video entry upgrade | Construction |
+| Visual alarm provision | Electrical provision (conduit + junction box) for strobe at entry | Future visual fire alarm installation | Construction |
+| Vibrotactile BMS relay | Dry-contact relay output from fire alarm panel at entry electrical intake | Future personal pager base-station integration for DBL occupants; K-04 | Construction |
+| Canopy structure | Full-width canopy structure over door entry with side weather protection | Weather protection for OFS/POTS users; prevents assisted standing in rain | Schematic |
+| Entry door width | Minimum 950 mm clear opening framed at construction | large body size-accessible entry ; future power-chair width | Framing stage |
+| Lobby acoustic buffer | ≥1.5 m depth lobby with STC ≥30 inner door | Sensory transition for NDV users; decompression before interior | Schematic |
+
+**Conflict register — R-ENT:**
+
+| Conflict | Populations | Resolution |
+| --- | --- | --- |
+| Automatic door vs. acoustic privacy | NDV (lobby buffer) vs. all | Automatic door required; acoustic vestibule achieves both. Specify A-03 acoustic door at inner lobby boundary |
+| Level threshold vs. water ingress | E-06 (zero threshold) vs. waterproofing | Specify recessed drainage channel ≥50 mm wide at zero-threshold point; confirm with structural engineer |
+| External keypad height vs. reach | MOB (400–1100 mm AFF) vs. (max 1050 mm reach forward) | Specify 400–1050 mm AFF for any external keypad serving large body size-identified users |
+
+**Citation additions per residential analysis:**
+
+- Lifetime Homes Criterion 1 (step-free entrance) — add to E-06 R-ENT entry
+- NS 11001-2:2018 Clause 5.2.1 — mandatory step-free threshold in Norwegian accessible dwellings
+- BFS 2024:12 (Boverket, Sweden) — zero-step access requirement
+- ISO 21542:2021 Clause 7 — principal international entry standard
+- DeafSpace Design Guidelines (2010) — lobby sightline and illuminance for signing users
+
+
+- DEM: consistent entry layout; no furniture rearrangement; visible toilet from entry (D-03)
+- DBL: vibrotactile doorbell indicator inside dwelling
+- DBL: tactile/visual contrast (≥50 LRV) on all exterior-interior transitions
+- DBL: tactile route from parking position to interior door
+- DBL: tactile approach route from street/site boundary to entry door (Norges Blindeforbund requirement)
+**DBL/IntD provisions — R-ENT [EXPERT CONSENSUS; GAP-S4-R01/R02]:**
+
+- Entry door hardware: tactile identification of lock (raised dot at keyhole); lever handle per I-01.
+- Tactile/high-contrast transitions at all threshold changes (mat edges, level changes, surface material changes) per E-09/C-04 ≥50 LRV.
+- Vibrotactile doorbell: door entry system with vibrotactile indoor unit (wrist pager or room-mounted vibration panel). Standard audio/visual doorbell is not perceptible to DBL users.
+- Tactile approach route from site boundary/parking to entry door: continuous tactile guide line (contrasting strip or raised rail) along primary approach path. Norges Blindeforbund guidance.
+**DBL provisions — R-ENT [EXPERT CONSENSUS — GAP-S4-R01/R02]:**
+
+**Schematic checklist — R-ENT:**
+
+- [ ] Step-free approach from street/parking to entry door confirmed on site plan
+- [ ] Entry door clear opening ≥950 mm ( ≥1000 mm) on floor plan
+- [ ] Automatic door with ≥3 m motion detection approach shown on floor plan and electrical drawings
+- [ ] Canopy with side weather protection shown on site plan and section
+- [ ] Lobby depth ≥1.5 m confirmed on floor plan
+- [ ] External keypad position (if applicable) at 400–1050 mm AFF on building elevation
+- [ ] Smart lock conduit noted on electrical drawings
+- [ ] Visual fire alarm provision noted on electrical drawings —
+
+### §6.2 R-GAR: Garage and Vehicle Space
+
+**Room criticality:** The garage is the primary access point for adapted vehicle users (modified vehicles, hand controls, tail lifts). It is also the primary internal entry point in many dwellings — the path from garage to interior must be step-free and lever-operated. Primary populations: MOB (vehicle transfer space, step-free to interior) (larger vehicle space — → Supp Vol IV), UPL (lever hardware on all garage doors and interior connections).
+
+**Item application table — R-GAR:**
+
+| Item | Title | MOB | UPL | VIS | DEM/NDV[IntD-proxy] | Design Stage |
+| --- | --- | --- | --- | --- | --- | --- |
+| E-06 | Step-free from garage to interior | ● | ○ | — | — | SD |
+| E-11 | Automatic garage door | ● | ● | — | — | DD |
+| I-01 | Lever hardware (interior door from garage) | ● | ● | — | — | CD |
+| H-04 | Controls at accessible height (garage opener) | ● | ● | — | — | CD |
+| B-05 | Gradual lighting transition (exterior to garage) | ○ | — | ● | — | DD |
+
+**DAR provisions — R-GAR:**
+
+| Provision | What to install now | What it enables later |
+| --- | --- | --- |
+| EV charger conduit | 20 mm conduit + 32 A circuit to accessible vehicle bay | Future EV charger at 400–1100 mm AFF (standard EV charge point height inaccessible from wheelchair) |
+| Wider bay marking | Bay width ≥3600 mm + 1200 mm transfer zone marked at construction | No future re-lining needed |
+| Step-free door frame | Interior garage-to-dwelling door framed at ≥900 mm clear; no step, no sill | Direct accessible entry; future automatic door installation |
+
+**Citation additions per residential analysis:**
+
+- AS 2890.6:2009 — accessible parking dimensional standard (most detailed internationally)
+- BS 8300:2018 Clause 5.4 — accessible bay dimensions (3600 mm + 1200 mm transfer zone)
+- Lifetime Homes Criterion 1 note (garage-to-home connection step-free)
+- CAN/CSA B651-12 Section 6 — accessible parking
+- NS 11001-2:2018 — accessible garage dimensions exceeding BS 8300
+
+**Schematic checklist — R-GAR:**
+
+- [ ] Accessible bay dimensions (3600 mm + 1200 mm, or 4500 mm ) on site plan
+- [ ] Step-free path from accessible bay to interior entry confirmed on floor plan and section
+- [ ] Interior garage door: ≥900 mm clear, lever hardware, no step/sill on floor plan
+- [ ] EV conduit provision on electrical drawings
+- [ ] Automatic garage door shown on floor plan and electrical drawings —
+
+### §6.3 R-LAU: Laundry
+
+**Room criticality:** The laundry is the most poorly specified residential room in the current Part 7 library — zero citations existed in an earlier edition. It is disproportionately significant for UPL users (overhead reach to top-loader); MOB users (front-loader access, turning circle); PAIN users (bending, sustained posture). The laundry is also the primary source of fragrant detergent exposure for OFS users. A laundry with a top-loading washing machine, high shelf storage, and narrow doorway is inaccessible to a majority of disabled users.
+
+**Item application table — R-LAU:**
+
+| Item | Title | MOB | UPL | PAIN | OFS | DEM/NDV[IntD-proxy] | Design Stage |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| I-02 | Lever taps (if laundry sink) | ● | ● | ○ | — | — | CD |
+| G-05 | Height-adjustable surface (if laundry bench) | ● | ● | ● | — | — | DD |
+| E-07 | Slip resistance (PTV ≥36) | ● | — | ● | — | — | CD |
+| F-04 | Air quality filtration (extract ventilation) | — | — | — | ● | — | DD |
+| F-02 | Fragrance-free zone (detergent policy) | — | — | — | ● | — | OPS |
+| E-08 | Clear width ≥900 mm (laundry door) | ● | — | — | — | — | DD |
+| D-08 | Pictogram + word instructions on appliances | — | — | — | — | ● | SPEC |
+
+**DAR provisions — R-LAU:**
+
+- Structural blocking at 750–900 mm AFF for future wall-mounted appliance support
+- Extract ventilation provision (100 mm duct stub) for future mechanical extract if not installed at construction
+- Front-loading appliance recess at 430–500 mm AFF pedestal height — specify recess depth and electrical/plumbing connections at construction regardless of whether pedestal is installed initially
+
+**Conflict register — R-LAU:** Extract ventilation rate (OFS provision: F-04 requires MERV 13 filtration) may conflict with fragrant detergent use by other household members. Resolution: specify the extract rate at ≥10 ACH in the laundry room and include in FM brief that fragrance-free detergents are recommended for OFS households.
+
+**Citation additions — P1 gap per residential analysis (zero citations previously):**
+
+- CAOT (2018) — OT laundry assessment methodology
+- BS 8300:2018 Clause 11 — utility room dimensions
+- Which? (2023) — accessible appliance review (front-loading washer/dryer specification)
+- Lifetime Homes — utility space provisions
+- ⚠ **UNVERIFIED:** No dedicated accessible laundry standard identified. Flag for citation pass.
+
+**Appliance specification notes [GAP-LAU-01]:**
+
+- **Drum opening height:** 380–915 mm AFF (front-loading drum door opening range). ● [Tier 6 — ADA Standards for Accessible Design S611 (2010); only jurisdiction providing a quantified appliance height spec — all other jurisdictions silent on washer/dryer drum opening height. ○ Single-jurisdiction spec — apply with caution outside US context; Mode S OT assessment governs optimal height for individual.]
+- **Clear floor zone at appliances:** 762 mm × 1219 mm parallel or perpendicular approach. ● [Tier 6 — ADA S611; only jurisdiction specifying clear floor dimensions at laundry appliances. All other jurisdictions silent.] Where MOB/UPL turning circle governs, the 1500 mm turning circle supersedes the 762×1219 mm approach floor as the binding constraint.
+- **Pedestal height:** 430–500 mm AFF pedestal raises drum opening to optimal transfer height for seated users. ○ [Tier 5 — CAOT OT home modification guidance; no standard specifies pedestal height range. Single-OT-body source — Mode S OT assessment determines individual optimum.]
+
+> **[GAP-LAU-01] Research status:** Drum opening height and clear floor dimensions are US-only specifications (ADA S611). All 23 remaining canonical jurisdictions are silent on accessible laundry appliance specifications. These three specifications are guidebook-original for non-US jurisdictions. Multilingual research pass (full 24-jurisdiction search) required before Part 11 publication to confirm or expand the evidence base. ○ [PROVISIONAL — ADA single-jurisdiction basis]
+
+
+- PAIN/OFS: laundry at same level as bedroom (no stair carry). Where multi-level: laundry chute or designated laundry area on bedroom floor.
+- Tactile identification of all appliance controls (washer programme dial, dryer settings).
+- Consistent laundry layout: appliance positions identical across units.
+**DBL provisions — R-LAU [EXPERT CONSENSUS — GAP-S4-R09]:**
+
+
+**DBL/IntD provisions — R-LAU [EXPERT CONSENSUS; GAP-S4-R09]:**
+- DBL: consistent laundry layout; tactile identification of appliance controls (raised dot labels)
+- IntD: familiar layout; intuitive single-action controls; front-loading appliances at accessible height
+- PAIN/OFS: front-loading appliances eliminate overhead reach; perch stool provision at folding surface
+
+&#x20; **\*\*Schematic checklist — R-LAU:\*\***
+
+- [ ] Laundry door clear width ≥900 mm on floor plan
+- [ ] Front-loading appliance position confirmed on floor plan with service connections at accessible height
+- [ ] Turning circle ≥1500 mm confirmed on furniture layout plan
+- [ ] Extract ventilation provision (≥10 ACH) on M\&E drawings
+- [ ] Lever taps on plumbing drawings (if laundry sink) —
+
+
+**Room-level conflict notes — R-BED (Bedroom):**
+- B-10 (visual fire alarm strobe) and NDV photosensitivity: Resolution — vibrotactile alerting device in sleeping areas where DEAF/DBL/NEU-photosensitive occupants. Strategy: TS (CON-0014/CON-0042).
+- Ambient temperature conflicts (NEU/MS vs PAIN): individual apartment thermostat governs. See F-07, F-08.
+- Ceiling hoist structural provision: mandatory at construction stage in specialist residential where MOB/NEU are primary. See I-04.
+
+### §6.4 R-BED: Bedroom
+
+**Room criticality:** The bedroom is an ALL-population room — it is relevant to every disability code. It is the primary circadian environment (B-01), the sleeping and rest environment (acoustic, thermal), and the location of the highest-consequence adaptation (hoist installation). The bedroom is also the primary space for smart technology integration (H-04 bedside control of all building services). The bedroom ceiling is the only location for hoist tracking provision that cannot be retrofitted without structural demolition.
+
+**Item application table — R-BED:**
+
+| Item | Title | MOB | VIS | DEAF | DEM | NDV | NEU | PAIN | OFS | DBL | DEM/NDV[IntD-proxy] | Design Stage |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| B-01 | Circadian lighting (tunable white) | ● | — | — | ● | ● | ● | ○ | ○ | — | — | DD |
+| B-06 | Individual dimming control | ● | — | — | ● | ● | ● | ● | ● | — | — | CD |
+| B-10 | Visual fire alarm / vibrating alert | — | — | ● | — | — | — | — | — | ● | — | CD |
+| B-11 | Warm CCT ≤2700 K (evening) | — | — | — | ● | ● | ● | ● | ● | — | — | CD |
+| A-02 | Acoustic ceiling treatment | ○ | — | — | ● | ● | ● | ● | ● | — | ○ | CD |
+| A-03 | Acoustic door (STC ≥35) | — | — | — | ● | ● | ● | ● | ● | — | — | CD |
+| TC-01 | Temperature maximum ≤24°C | — | — | — | ● | ● | ● | ● | ● | — | — | SD |
+| TC-02 | Individual thermostat | — | — | — | — | ● | ● | ● | ● | — | — | CD |
+| H-04 | Bedside control panel (smart) | ● | ● | ● | ● | — | ● | ● | — | ● | — | CD |
+| K-04 | Vibrotactile bedside alert (pager charging station) | — | — | — | — | — | — | — | — | ● | — | CD |
+| G-01 | Turning circle ≥1500 mm (bedside) | ● | — | — | — | — | — | — | — | — | — | DD |
+| C-04 | LRV ≥30 at door frame | — | ● | — | ● | — | — | — | — | ● | ○ | CD |
+| D-08 | Pictogram + word room identification | — | ○ | — | ● | ○ | — | — | — | ● | ● | CD |
+| F-01 | Sensory gradient (bedroom as quiet zone terminus) | — | — | — | ● | ● | ● | — | — | — | ○ | SD |
+
+**DAR provisions — R-BED — CONSTRUCTION-CRITICAL:**
+
+| Provision | What to install now | Why critical | Cost multiplier if missed |
+| --- | --- | --- | --- |
+| Ceiling hoist tracking blocking | Structural blocking in ceiling (continuous run, 3600 mm minimum, centred on bed zone + transfer zones) | Enables ceiling hoist installation without ceiling demolition | ×20–40 retrofit cost |
+| Bedside control conduit | 20 mm conduit from bedside position to consumer unit | Smart bedside control, nurse-call, assisted technology future-proofing | ×8 retrofit |
+| Bedroom door ≥900 mm clear | Framed at ≥900 mm clear opening | Future power chair access | ×5–15 retrofit |
+| Structural wall provision (future through-floor lift) | In multi-storey dwellings: structural zone ≥900×1200 mm on each floor at same position | Future through-floor lift installation | ×50+ retrofit without pre-planning |
+| **Ground-floor bedroom designation** [GAP-NEW-12] | **In multi-storey dwellings: designate one principal habitable room on the ground floor as a future-capable bedroom — minimum 10 m², 900 mm clear door, accessible WC within 5 m on same floor, turning circle ≥1500 mm. Structural blocking at bedhead wall for future hoist.** | **Enables aging-in-place and care-need support without stair access. Ground-floor sleep is the most frequently required adaptation at disability onset. Absence makes the dwelling non-liveable for wheelchair users and those with mobility onset.** | **×30–80 retrofit if spatial reorganisation required; impossible in many existing plans** |
+
+**Conflict register — R-BED:**
+
+- B-01 (circadian lighting, bright daytime, warm evening) vs. NDV users sensitive to any light change: Resolution: specify full dimming range 0–100% with individual control; circadian schedule must be user-configurable, not fixed-schedule.
+- TC-01 (temperature maximum ≤24°C) vs. PAIN/fibromyalgia users who require warmer environments: Resolution: individual thermostat per TC-02 with range up to 26°C for PAIN users; the ≤24°C ceiling is a maximum for MS/OFS users but an individual control is the resolution for PAIN users.
+
+**Additional provisions [CON-0208]:**
+
+- IntD: personalised bedroom identification (memory box D-06 or colour-coded door); consistent layout
+- DBL: vibrotactile bedside alert (K-04) for fire alarm, door entry, wake alarm
+- DBL: tactile landmark at bedroom door (distinct from other room doors — texture or profile)
+- DBL: consistent furniture layout (D-09 critical for tactile navigation); bed position consistent across visits
+**DBL/IntD provisions — R-BED [EXPERT CONSENSUS; GAP-S4-R03]:**
+- DEM: WC/bathroom door visible from primary sleeping position (D-03 equivalent for residential). Straight sightline from bed to bathroom entrance reduces nocturnal disorientation falls.
+- NDV: full blackout blinds (B-07) + individual dimming to 0 lux (B-06) at bedside control. NDV hypersensitivity to any light during sleep is clinically documented.
+- OFS: bed height adjustability 400-600mm AFF recommended (450mm minimum for STS transfer); tilt/recline capability for daytime rest in symptom management. Electric profiling bed blocking (dedicated power outlet at bedhead + structural floor for bed weight).
+- OFS/PEM: bedroom-to-accessible-bathroom door distance ≤5 m measured along the walking route. No standard specifies a maximum distance. OT energy conservation evidence: each additional metre of post-exertional travel increases PEM crash probability; ≤5 m keeps the bedroom-bathroom journey within the OFS energy envelope for nighttime use. DAR: bathroom must be on the same floor as the primary bedroom with no stairs in the route. [GAP-FDR-02 — Tier 2 OT CPG; no RCT on specific distance]
+- OFS: bed head elevation capability: bed frame or mattress platform must support ≥15° head-up tilt (adjustable). OFS/POTS users require head-up sleeping position (10–30°) to manage nocturnal blood pooling and morning orthostatic symptoms. No residential standard specifies bed head elevation. DAR: structural floor provision for hospital-style profiling bed (≥250 kg dynamic load at bed position). [GAP-FDR-06 — Tier 2 OT CPG + Raj 2013 POTS management protocol; no built-environment RCT]
+- OFS/PEM: bedroom-bathroom adjacency ≤5 m (door-to-door, measured on plan). PEM onset after exertion means the return trip from bathroom to bed is the critical failure point — distances >5 m increase crash risk. No residential standard specifies this distance; OT energy conservation evidence supports ≤5 m as the maximum tolerable distance for severe PEM. [GAP-FDR-02]
+- OFS/POTS: adjustable bed head elevation ≥30° from horizontal (motorised or manual ratchet). Head-up tilt sleeping (15–30°) is a clinical management strategy for POTS orthostatic symptoms. Bed frame must support powered or manual inclination; fixed-headboard beds are not suitable. No residential standard specifies this. [GAP-FDR-06]
+
+**Citation additions per residential analysis:**
+
+- Lifetime Homes Criteria 9+10 (hoist provision, bedroom dimensions)
+- Habinteg (2022) — Wheelchair User Housing
+
+
+- Vibrotactile alert (K-04) at bedside: fire alarm, door alert, and communication alert via pillow/mattress vibration unit.
+- Tactile landmark at bedroom door: raised tactile symbol or personal object display (D-06 memory box equivalent) at door frame, identifiable by touch alone.
+- Consistent furniture layout (D-09): bed, bedside table, wardrobe positions to be identical across all units. Tactile spatial memory is the primary navigation mechanism.
+**DBL provisions — R-BED [EXPERT CONSENSUS — GAP-S4-R03]:**
+
+**Schematic checklist — R-BED:**
+
+- [ ] Ceiling hoist blocking zone (≥3600 mm continuous) on structural drawings
+- [ ] Turning circle ≥1500 mm at bedside (both sides of bed) confirmed on furniture layout plan
+- [ ] Bedroom door ≥900 mm clear on floor plan
+- [ ] Individual thermostat at 900–1100 mm AFF on electrical drawings
+- [ ] Bedside control conduit on electrical drawings
+- [ ] Acoustic door to bedroom (STC ≥35) on door schedule
+- [ ] Circadian lighting on reflected ceiling plan —
+
+
+**Room-level conflict notes — R-BA (Bathroom):**
+- C-04 (LRV ≥30) and C-05 (low LRV differential) conflict for VIS+DEM: Resolution — contrast at door frames and skirting (≥30 LRV); plain floor (DEM fall prevention governs). See Part 5 §5.2 COLOUR-CONT. Strategy: PP.
+- Thermostatic shower (OFS/PAIN/DEM/NEU): mandatory where any of these populations are primary or secondary. See I-03, CON-0057.
+- Ambient temperature: inter-room differential ≤5°C entry from corridor. See F-07, CON-0041.
+
+### §6.5 R-BA-05 → R-BA-01: Bathroom (Turning Circle First, then Full Spec)
+
+**NOTE on sequence:** Per the residential analysis, R-BA-05 (turning circle) is a prerequisite for all other bathroom provisions. It is therefore presented first in the sequence.
+
+**Room criticality:** The bathroom is the highest-risk room in the residence for falls, scalding, and mobility-related injury. DEM/NDV[IntD-proxy] users may require visual prompts and simplified controls; standard accessible provisions generally serve DEM/NDV[IntD-proxy] users without separate specification. It is the room with the highest-leverage DAR provisions (grab bar blocking) and the highest cost multiplier for retrofitting missed provisions (75× for grab bar blocking). Primary populations: MOB (turning circle, wet room, grab bars), DEM (fall prevention, grab bar colour contrast, heated floor), MS/NEU (anti-scald, thermal stability), ALL populations encounter the bathroom daily.
+
+**Item application table — R-BA:**
+
+| Item | Title | MOB | DEM | NEU | PAIN | VIS | DEAF | DBL | Design Stage |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+**| \*\*R-BA-05\*\* G-01 | Turning circle ≥1500 mm | ● | ● | — | — | — | — | — | — | \*\*SD\*\* |**
+**| \*\*R-BA-01\*\* G-04 | Wet room / zero-threshold shower | ● | ● | ● | ● | ● | — | — | — | DD |** 
+**| \*\*R-BA-02\*\* G-03 | Grab bar blocking (bilateral, all positions) | ● | ● | ● | ● | ● | — | — | — | \*\*CD-CRITICAL\*\* |** 
+**| \*\*R-BA-03\*\* I-03 | Anti-scald TMV3 (≤43°C; ≤38°C DEM/MS) | ● | — | ● | ● | ● | — | — | — | CD |** 
+**| \*\*R-BA-04a\*\* B-02/B-06 | Bathroom lighting (200 lux face; dimmable) | — | — | ● | ● | ● | ● | — | — | CD |** 
+| **R-BA-04b** F-04/TC-05 | Bathroom ventilation + heated floor | ● | — | ● | ● | ● | — | — | — | CD |
+| I-02 | Lever taps (all outlets) | ● | — | ● | ● | ● | — | — | — | CD |
+| B-10 | Visual fire alarm in bathroom | — | — | — | — | — | — | ● | ● | CD |
+| C-04 | LRV ≥30 grab bar contrast | — | — | ● | — | — | ● | — | ● | CD |
+| K-04 | Vibrotactile alert / BMS relay provision | — | — | — | — | — | — | — | ● | CD |
+| TC-05 | Heated bathroom floor (26–28°C surface) | ● | — | ● | ● | ● | — | — | — | CD |
+| G-07 | Mirror lower edge ≤1000 mm AFF | ● | — | — | — | — | — | — | — | CD |
+
+**DAR provisions — R-BA — CONSTRUCTION-CRITICAL:**
+
+| Provision | Cost if missed | Action at construction |
+| --- | --- | --- |
+| Grab bar blocking all positions | 75× per grab bar position | 18 mm plywood blocking 600–1200 mm AFF at all toilet, shower, bath positions |
+| Floor recess for future wet room conversion | ×20–40 structural intervention | Recess depth ≥100 mm below slab at shower zone confirmed on section drawing |
+| Large body size structural floor provision | Structural intervention cost | Structural engineer review: 300 kg point loading at drain and grab bar positions |
+
+**Conflict register — R-BA:**
+
+| Conflict | Resolution |
+| --- | --- |
+| NDV acoustic (RT60 ≤0.5 s) vs. tiled wet room (RT60 0.8–1.4 s default) | Specify Class A-rated perforated tile or acoustic plasterboard on non-wet walls; non-wet ceiling treatment NRC ≥0.75 |
+| TMV35°C (MS) vs. TMV38°C (general) | Label TMV setting in O\&M manual with named clinical requirement; OT records set temperature target |
+| Heated floor (TC-05) vs. OFS temperature sensitivity | Heated floor is floor-surface temperature (26–28°C), not air temperature; does not raise ambient above TC-01 ceiling if ventilation adequate. Note in O\&M. |
+
+- IntD: consistent bathroom layout; intuitive single-action controls; high-contrast grab bars (C-04 ≥50 LRV)
+- DBL: tactile identification of all controls (shower, basin, flush — raised dot or Braille label)
+- DBL: matte fixtures throughout (no chrome/polished finishes — specular reflection disables residual vision)
+- DBL: consistent bathroom layout across all bathrooms in the dwelling (tactile memory navigation)
+**DBL/IntD provisions — R-BA [EXPERT CONSENSUS; GAP-S4-R04]:**
+| ● **Heat shock prevention** (CON-0041, P1 SAFETY) | Inter-room thermal differential ≤5°C between bathroom and adjacent corridor/bedroom. Bathroom pre-heating: timer or PIR sensor activates ≥30 min before scheduled bathing; bathroom ≥20°C before occupant entry. Evidence: MHLW Japan 2023 (6,073 bathtub deaths/year from heat shock); Nakayama 1981 (foundational); Baquero 2023 (TCO-01, DOI:10.1155/2023/9185216) — older adult neutral temp 24.9°C. BMS programming item. |
+
+**Bathroom-specific citation additions per residential analysis (apply to G-03, G-04, I-03 items):**
+
+- PSSRU (2012) — bathroom falls and wet room modification cost-effectiveness
+- WHO (2018) Falls Prevention — grab bars as primary physical intervention
+- NICE (2013) Falls — bilateral toilet grab bars Grade A recommendation
+- NICE NG220 (2022) — MS thermal management
+- MSIF (2021) — MS heat sensitivity
+- NS 11001-2:2018 Clause 8.4.3 — mandatory bilateral grab bars (Norwegian standard)
+- AS 1428.1:2021 Clause 8 — Australian accessible bathroom spatial requirements
+- Lifetime Homes Criterion 12 — accessible bathroom turning space
+
+**R-BA-04 SPLIT EXECUTED:** Per residential analysis recommendation, R-BA-04 is split into:
+
+-**R-BA-04a — Bathroom Lighting:** dimmable warm CCT (2700–3000 K); flicker-free LED (B-03/04); face illuminance ≥200 lux at mirror plane (B-02); UGR <16 to prevent glare reflection from wet surfaces. Source add: CIBSE SLL LG2.
+
+- **R-BA-04b — Bathroom Ventilation and Thermal Environment:** mechanical extract ≥15 ACH at shower zone; individual thermostat (TC-02) at 900–1100 mm AFF; MS integrated thermal spec (TMV 35°C + extract ≥15 ACH + ambient ≤18°C confirmed as three-consultant package). ● Inter-room thermal differential ≤5°C [CON-0041 P1 SAFETY — Japan heat shock evidence]. Pre-heating: timer/PIR ≥30 min before bathing. Source add: DIN 18041:2016; Finnish SFS 5907; MHLW Japan 2023; Baquero 2023 DOI:10.1155/2023/9185216.
+
+
+- Vibrotactile alert receiver position within reach of shower area and WC (K-04 charging station in bathroom).
+- Tactile identification of all controls: raised dot on hot tap; tactile shower temperature indicator; raised/recessed flush button identification.
+- All fixtures matte finish (≤30 gloss units): taps, grab bars, towel rails. Specular chrome eliminates residual-vision contrast.
+- Consistent bathroom layout: identical fixture positions across all units in multi-unit settings. Tactile spatial memory governs independent bathroom use for DBL users.
+**DBL provisions — R-BA [EXPERT CONSENSUS — GAP-S4-R04]:**
+
+**Schematic checklist — R-BA:**
+
+- [ ] Turning circle ≥1500 mm ( ≥1800 mm) confirmed on furniture layout plan (not floor plan alone)
+- [ ] Grab bar blocking zones shown on structural/blocking drawings — NOT deferred to specification only
+- [ ] Zero-threshold shower (or floor recess for future conversion) confirmed on bathroom section
+- [ ] TMV3 on M\&E drawings at all outlets (shower, bath, basin)
+- [ ] Heated floor zone on M\&E drawings (electric UFH)
+- [ ] Bathroom pre-heating timer/PIR specified in BMS schedule (≤5°C differential, ≥30 min pre-heat) [CON-0041]
+- [ ] Extract ventilation ≥15 ACH on M\&E drawings
+- [ ] Lever taps on plumbing drawings —
+
+### §6.6 R-LIV: Living Room
+
+**Room criticality:** The living room is the primary social and quality-of-life space. It is ALL-population, with particular significance for DEM (cognitive orientation and social engagement), NDV (sensory environment for sustained occupation), OFS (air quality and thermal comfort), and MOB (furniture layout and turning circle). It is also the location of the primary natural light and biophilic provisions.
+
+**R-LIV-03 MERGE EXECUTED:** Per residential analysis, R-LIV-03 (nature view and biophilic element) is merged into R-LIV-02 as a sub-section. R-LIV-03 had zero direct citations and was too thin to stand as an independent item.
+
+**Item application table — R-LIV:**
+
+| Item | Title | MOB | DEM | NDV | OFS | PAIN | VIS | DEAF | DBL | DEM/NDV[IntD-proxy] | Design Stage |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| G-01 | Furniture layout + turning circle | ● | ● | — | — | — | ● | — | ○ | — | DD |
+| G-02 | Seating specification (ergonomic + acoustic) | ● | ● | ● | — | ● | — | — | — | — | DD |
+| A-11 | Hearing loop in living room | — | — | — | — | — | — | ● | ● | — | DD |
+| K-03 | Haptic communication clear floor zone | — | — | — | — | — | — | — | ● | — | DD |
+| K-04 | Vibrotactile alert (pager charging station) | — | — | — | — | — | — | — | ● | — | CD |
+| D-09 | Consistent furniture layout | — | ● | ● | — | — | — | — | ● | ○ | OPS |
+| A-02 | Acoustic ceiling treatment | — | ● | ● | — | ● | — | — | — | ○ | CD |
+| A-05 | Carpet / soft floor covering | — | ● | ● | ● | ● | — | — | — | — | CD |
+| B-01 | Circadian lighting | — | ● | ● | ● | ● | — | — | — | — | DD |
+| B-10 | Visual fire alarm / vibrating alert | — | — | — | — | — | — | ● | ● | — | CD |
+| B-11 | Warm CCT ≤2700 K (evening) | — | ● | ● | ● | ● | — | — | — | — | CD |
+| C-01 | Low-saturation colour palette | — | ● | ● | — | — | — | — | — | ○ | CD |
+| C-05 | Plain floor (no pattern) | — | ● | ● | — | — | — | — | — | — | CD |
+| D-08 | Pictogram + word signage (shared spaces) | — | ● | ○ | — | — | — | — | ● | ● | CD |
+| F-01 | Sensory gradient (living room as variable zone) | — | ● | ● | ● | — | — | — | — | ○ | SD |
+| F-04 | MERV 13 air filtration | — | — | ○ | ● | ● | — | — | — | — | DD |
+| TC-01 | Temperature ≤24°C | — | — | ● | ● | ● | — | — | — | — | SD |
+| B-09 | Natural light (sDA) | ● | ● | ● | ● | ● | ● | — | — | — | SD |
+| BIO-04 | View to nature (windowsill ≤900 mm AFF) | — | ● | ● | ● | ● | — | — | — | — | SD |
+| BIO-01 | Interior planting | — | ● | ● | ● | ● | — | — | — | — | OPS |
+
+**R-LIV-02 consolidated biophilic sub-section (formerly R-LIV-03):**
+
+
+- IntD: familiar domestic furniture scale; consistent room layout
+- DBL: matte surfaces throughout; no specular reflection on TV screen, table, or window surfaces during daytime
+- DBL: haptic communication clear floor zone ≥2400×2400 mm for DeafBlind person + intervenor (K-03 residential equivalent)
+- DBL: consistent furniture layout (D-09 applies); no rearrangement without tactile reorientation
+**DBL/IntD provisions — R-LIV [EXPERT CONSENSUS; GAP-S4-R05]:**
+- Window sill height ≤750 mm AFF for seated natural view access (MOB, ; preferred ≤600 mm AFF in residential care settings for bed-users
+- Interior planting: low-pollen species (pothos, ferns, spider plant); not latex-producing (no ficus); in OFS dwellings: no flowering or fragrant plants (F-06 plant selection)
+- Citations added: Kaplan \& Kaplan (1989) ART; Ulrich (1984, 1991); DSDC (2020); van den Berg (2010)
+- **Sensory gradient coordination [CON-0238]:** BIO-01 interior planting and BIO-04 nature views are complementary to the F-01 sensory gradient — biophilic elements provide restorative intermediate stimulus (Kaplan ART) and are appropriate in Zone 2 (social/active) and Zone 3 (calm/quiet) spaces. Do not specify fragrant, high-movement, or visually complex plantings in Zone 3 or A-16 sensory rooms. Low-texture, low-fragrance species (succulents, ferns) are the correct Zone 3 biophilic element.
+
+**DAR provisions — R-LIV:**
+
+- Window sill height: framed at ≤750 mm AFF at construction; cannot be changed without structural intervention
+- Electrical provision for future blackout blind motor at all primary windows (20 mm conduit; 5 V DC supply position)
+- Scatter rug prohibition noted in O\&M manual: living room specification must include statement "no loose floor coverings" in handover and occupant guide
+
+**Conflict register — R-LIV:**
+
+| Conflict | Resolution |
+| --- | --- |
+| Carpet (NDV acoustic) vs. MOB (carpet friction) | Specify low-pile carpet ≤6 mm pile depth (firm underlay ≥95% Proctor density equivalent); or hard floor with acoustic ceiling treatment compensating; confirm with OT assessment for named MOB user |
+| Plain floor (DEM C-05) vs. VIS/vis (contrast needed) | Plain floor is correct for both; contrast at room perimeter (skirting board LRV ≥30 against floor) serves VIS without pattern at floor field |
+| Biophilic planting (OFS vs. DEM) | In shared residential care: use low-fragrance high-texture species (succulents, ornamental grass, snake plant) for both populations; avoid flowering plants |
+
+**Citation additions:**
+
+- Sherrington et al. (2019) — scatter rug falls: add directly to specification text (currently only in Synthesis Synopsis)
+- Lifetime Homes Criterion 5 — living room turning space provision
+- BS 8300:2018 Clause 10 — living room spatial requirements
+- EN 14501 — blackout blind light transmission standard (Class 5: ≤1% light transmission)
+
+
+- Matte table surface (≤30 gloss units) for residual-vision contrast at communication position.
+- Haptic communication clear floor zone: ≥2400×2400 mm unobstructed floor space for DeafBlind person + intervenor tactile signing. Adjacent to primary seating, not in traffic path.
+- Consistent furniture layout (D-09): critical for tactile spatial memory. No rearrangement without DBL user consent and orientation walk-through.
+**DBL provisions — R-LIV [EXPERT CONSENSUS — GAP-S4-R05]:**
+
+**Schematic checklist — R-LIV:**
+
+- [ ] Turning circle ≥1500 mm confirmed on furniture layout plan
+- [ ] Window sill height ≤750 mm AFF confirmed on elevation drawings
+- [ ] Natural light strategy (sDA simulation or daylight factor) confirmed on architectural drawings
+- [ ] Acoustic ceiling treatment on reflected ceiling plan
+- [ ] Circadian lighting on reflected ceiling plan and electrical drawings
+- [ ] Temperature maximum (TC-01) in HVAC brief —
+
+### §6.7 R-KIT: Kitchen
+
+**R-KIT-03 MERGE EXECUTED:** Per residential analysis, R-KIT-03 (storage) is merged into R-KIT-01 as a Storage Configuration sub-section. R-KIT-03 had zero citations and was a sub-set of the cabinetry specification package.
+
+**Item application table — R-KIT:**
+
+| Item | Title | MOB | UPL | PAIN | DEM | NDV | DEAF | DEM/NDV[IntD-proxy] | Design Stage |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| R-KIT-01 G-05/G-06 | Multi-level countertops + knee clearance | ● | ● | ● | ○ | — | — | — | DD |
+| R-KIT-01 storage | Pull-out drawers; D-pull hardware; visual storage | ● | ● | ● | ● | ● | — | ○ | CD |
+| R-KIT-02 I-02 | Appliances: front-loading; lever controls | ● | ● | ● | ● | — | — | — | DD |
+| R-KIT-04 A-08 | Range hood NC-30 (not NC-40 default) | — | — | — | ● | ● | — | — | DD |
+| I-01 | Lever hardware (all cabinets) | ● | ● | ● | ● | — | — | — | CD |
+| I-02 | Lever tap; single-lever mixer | ● | ● | ● | ● | — | — | — | CD |
+
+- IntD: familiar domestic kitchen scale (not institutional); intuitive single-action controls; consistent colour coding
+- DBL: tactile identification on all appliance controls (raised dot or Braille label)
+- DBL: all work surfaces matte finish (no specular reflection — residual vision optimisation)
+- DBL: consistent kitchen layout; no rearrangement of appliance positions without tactile reorientation
+**DBL/IntD provisions — R-KIT [EXPERT CONSENSUS; GAP-S4-R06]:**
+| E-07 | Slip resistance PTV ≥36 (wet areas) | ● | — | ● | ● | — | — | — | CD |
+| C-04 | LRV ≥30 at worktop edge, step edge | — | — | — | ● | — | — | ○ | CD |
+| D-08 | Pictogram + word appliance labels | — | — | — | ● | — | — | ● | SPEC |
+| F-04 | Air quality / extract ventilation | — | — | — | — | ● | — | — | DD |
+| BIO-01 | Window view from sink position | — | — | ● | ● | ● | — | — | SD |
+
+**R-KIT-01 Storage sub-section (merged from R-KIT-03):**
+
+- Full-extension pull-out drawers (500 mm min extension, soft-close, 30 kg rated) in all lower cabinet zones
+- Pull-out carousel at all corner cabinets; no dead-corner storage
+- Hardware: D-ring pulls ≥30 mm inside dimension or continuous bar handles; no round knobs
+- Transparent or glazed upper cabinet fronts (DEM visual inventory access, D-09 principle)
+- UPL specification: lever-action latch hardware (not magnetic push-catch) for all upper cabinets
+- Citations added: CAOT (2018); DSDC (2020)
+
+**R-KIT-02 expansion (appliance additions per analysis):**
+
+- Dishwasher: drawer-style preferred; front-opening with controls ≤1100 mm AFF; lower rack ≤900 mm AFF when open. Note: standard front-opening dishwashers require reaching to 300–400 mm AFF for lower rack — inaccessible from wheelchair.
+- Refrigerator: French door with lower freezer drawer (accessible from seated position). Exclude top-mount freezer from specification.
+- Oven: side-hinged door; pull-out shelf at ≤1000 mm AFF; route services at rear of knee clearance zone, not below cabinet base.
+- Induction cooktop: front-mounted controls ≤1100 mm AFF; auto-shutoff ≥30 min no-movement (DEM safety); flat surface.
+
+**DAR provisions — R-KIT:**
+
+- Adjustable base unit recess: specify floor void space ≥70 mm below base units for future motorised height-adjustable module
+- Electrical provision for future induction cooktop at accessible height (if gas currently specified)
+- Perch stool position: counter section at 760–860 mm AFF with knee clearance ≥690H × 760W × 480D mm + floor clear space ≥600 mm depth for stool legs
+
+**Conflict register — R-KIT:**
+
+- Open-plan kitchen/living (NDV range hood noise) vs. kitchen as social space: where open-plan is unavoidable, specify acoustic partition with STC ≥35 door (A-03) between kitchen and living zone, closeable during cooking. Door shown on floor plan as named element.
+
+
+- Tactile identification on all appliance controls: raised dots or tactile labels (Braille or Moon) on cooktop, oven, dishwasher, microwave controls.
+- All surfaces matte (≤30 gloss units). Specular reflections from countertops eliminate residual-vision contrast for DBL users with residual sight.
+- Consistent kitchen layout: appliance positions and work surface layout to be identical across all units in multi-unit residential settings. DBL users build tactile spatial memory; rearrangement eliminates navigability.
+**DBL provisions — R-KIT [EXPERT CONSENSUS — GAP-S4-R06]:**
+
+**Schematic checklist — R-KIT:**
+
+- [ ] Multi-level counter (760 mm + 900 mm sections) confirmed on cabinetry drawings
+- [ ] Knee clearance at cooktop and sink confirmed on section drawing
+- [ ] Perch stool counter position shown on floor plan
+
+- IntD: plain wall surfaces (C-03); ≥30 LRV door frames (C-04); pictogram + word room identification (D-08)
+- DBL: consistent corridor layout — no furniture repositioning without notification
+- DBL: tactile guide line (raised profile 5mm, 30mm wide) from entry door to all primary room doors
+- DBL: corridor width ≥1500 mm on all primary internal routes for intervenor accompaniment (DIN 18040-1)
+**DBL/IntD provisions — R-HAL [EXPERT CONSENSUS; GAP-S4-R07]:**
+- [ ] Front-loading appliance positions with accessible service connections on M\&E drawings
+- [ ] Range hood noise specification (NC-30) in MEP brief
+- [ ] Turning circle ≥1500 mm confirmed on furniture layout plan
+- [ ] All kitchen controls (hob, oven, extract fan, lighting, tap) within H-01 reach range 400-1200mm AFF [CON-0209]
+- [ ] Single-lever mixer tap ≤50mm handle throw [CON-0198]
+- [ ] Individual thermostat in kitchen (TC-02) coordinated with R-BED thermal specification [CON-0199]
+
+### §6.8 R-HAL: Hallway and Internal Circulation
+
+**Room criticality:** The hallway is the continuous accessibility spine of the dwelling. Failure in the hallway (narrow width, threshold steps, dark night routes, door hardware failures) fragments access to every other room. It is particularly significant for DEM (night navigation, consistent layout), VIS/vis (contrast wayfinding), and MOB (clear width, turning circles at door junctions). The hallway is also the first place that DEM disorientation becomes dangerous.
+
+**Item application table — R-HAL:**
+
+| Item | Title | MOB | VIS | DEAF | DEM | NDV | DBL | DEM/NDV[IntD-proxy] | Design Stage |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| E-08 | Corridor clear width ≥1000 mm | ● | — | — | ○ | — | ● | — | **SD** |
+| E-10 | Rest seating at ≤20 m | ● | — | — | ○ | — | — | — | DD |
+| A-15 | Noise-absorbing floor (carpet/acoustic) | — | — | — | ● | ● | — | — | CD |
+| B-10 | Visual fire alarm / vibrating alert | — | — | ● | — | — | ● | — | CD |
+| C-04 | LRV ≥30 at door frames, skirting | — | ● | — | ● | — | ● | ○ | CD |
+| D-04 | Landmark at key junctions | — | — | — | ● | — | — | ○ | DD |
+| D-08 | Pictogram + word signage at room entries | — | ○ | — | ● | ○ | ● | ● | CD |
+| D-07 | Wayfinding signage consistency | — | ● | — | ● | — | ● | ● | CD |
+| B-05 | Motion-activated night lighting (≤600 mm AFF) | ● | ● | — | ● | — | — | — | CD |
+| I-01 | Lever hardware on all internal doors | ● | — | — | ● | — | — | — | CD |
+
+**DAR provisions — R-HAL:**
+
+- Night-light path circuit: isolated circuit from main hallway lighting; motion sensor at 600 mm AFF; warm amber LED ≤10 lux output (enough to navigate, not enough to disrupt sleep)
+- All internal door frames: framed at ≥900 mm clear opening at construction
+
+**Citation additions:**
+
+- Lifetime Homes Criterion 3 — internal corridor width (900 mm min)
+- BS 8300:2018 Clause 11 — corridor width and passing bays
+- CAN/ASC 2.8:2025 Clause 7.4 — Canadian accessible dwelling corridor
+- Alzheimer Society UK (2022) — night navigation provisions for DEM
+
+
+- Pictogram + tactile room identification at all internal doors (D-08 standard + raised tactile symbol).
+- Tactile guide line (contrasting tactile strip, ≥25 mm wide, floor-mounted or wall-rail) from entry door to all primary rooms (bedroom, bathroom, living room, kitchen).
+- Corridor clear width ≥1500 mm on all primary routes (intervenor accompaniment width). Standard E-08 ≥1200 mm is insufficient for DBL user + intervenor side-by-side. DIN 18040-1 evidence.
+**DBL provisions — R-HAL [EXPERT CONSENSUS — GAP-S4-R07]:**
+
+**Schematic checklist — R-HAL:**
+
+- [ ] Corridor clear width ≥1000 mm (≥1200 mm preferred; ≥1500 mm ) confirmed on floor plan
+- [ ] All internal door frames ≥900 mm clear on floor plan
+- [ ] Night-light path (motion sensor + low-level LED) on electrical drawings
+- [ ] LRV ≥30 door frame contrast confirmed on finish schedule —
+
+- IntD: high-contrast step nosing + consistent tread/riser dimensions throughout (no tapered treads)
+- DBL: high-contrast nosing ≥50 LRV (C-04 best practice) on all treads
+- DBL: handrail tactile return at each landing (90° return minimum; identifiable by touch as "end of run")
+- DBL: tactile warning dome field (ISO 23599) at top and bottom of each stair run
+**DBL/IntD provisions — R-STA [EXPERT CONSENSUS; GAP-S4-R08]:**
+
+### §6.9 R-STA: Staircase
+
+**Room criticality:** The staircase is the primary vertical access barrier and the highest fall-risk zone in multi-storey dwellings. It is most significant for VIS/vis (nosing contrast), MOB (handrail bilaterality), and DEM (handrail continuity, tread lighting). The staircase is also the primary DAR location for future stairlift or home lift provisions — a DAR failure here cannot be corrected without major structural intervention.
+
+**Item application table — R-STA:**
+
+| Item | Title | MOB | VIS | DEAF | DEM | NEU | DEM/NDV[IntD-proxy] | Design Stage |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| E-02 | Handrail both sides, continuous | ● | ● | — | ● | ● | ○ | CD |
+| E-03 | Handrail dimensions (40–50 mm diameter) | ● | ● | — | ● | ● | — | CD |
+| C-04 | Nosing contrast strip (full-width, LRV ≥30) | — | ● | — | ● | — | ● | CD |
+| A-15 | Stair acoustic treatment (reduce impact noise) | — | — | — | ● | ● | — | CD |
+| B-05 | Motion-activated tread-level lighting | — | ● | — | ● | — | — | CD |
+| B-10 | Visual fire alarm at stair head | — | — | ● | — | — | — | CD |
+| D-08 | Pictogram + word floor level signage | — | ○ | — | ● | — | ● | CD |
+| I-01 | Lever or loop handrail brackets (not wall-recessed) | ● | — | — | — | ● | — | CD |
+
+**DAR provisions — R-STA — CONSTRUCTION-CRITICAL:**
+
+| Provision | Specification | Why critical |
+| --- | --- | --- |
+| No winder at top or bottom tread | Straight stair geometry at top and bottom | Winder at top/bottom makes straight stairlift installation impossible |
+| Structural channel in wall (stairlift rail) | 100 mm × 75 mm channel section in wall at stair stringer height, full stair length | Provides structural fixing for future stairlift installation |
+| Electrical supply conduit to stair | 20 mm conduit from consumer unit to stair base and top | Future stairlift power supply; tread lighting circuit |
+| Through-floor lift zone (multi-storey) | Structural zone ≥900 × 1200 mm on each floor at same position; no structural element in zone | Future home/through-floor lift; requires structural engineer confirmation at schematic |
+
+**Handrail specification additions per residential analysis:**
+
+- Continuity note: handrail continues at same height across landings; no restart after landing
+- Nosing contrast: full tread width (not edge studs ≤100 mm); 55–75 mm depth; LRV ≥30; flush ≤3 mm
+- Motion-activated stair lighting at each tread level (not only top and bottom) — DEM specific; specified on electrical drawings
+
+**Citation additions:**
+
+- BS 8300:2018 Clause 9 — stair handrail dimensions and height
+- AS 1428.1:2021 Clause 9 — accessible stair design
+- ISO 21542:2021 Clause 14 — stair accessibility requirements
+- NIOSH (2021) — stair fall prevention; bilateral handrail evidence
+- Lifetime Homes Criterion 7 — stairlift DAR provision
+- Habinteg (2022) — Wheelchair User Housing, stair provisions
+- STANNAH (2024) — Stairlift Installation Constraints [industry reference, not standard]
+- CAN/ASC 2.8:2025 — stairlift provisions in Canadian accessible dwelling standard
+
+
+- High-contrast nosing per C-04 ≥50 LRV on all stair nosings (also serves VIS, DEM).
+- Handrail: tactile return at each landing (handrail extends ≥300 mm past last riser and returns to wall). DBL users use handrail return as landing arrival indicator.
+- Tactile warning dome field (TWSI per E-09/ISO 23599) at top and bottom of each stair run — both intermediate landings and terminal landings.
+**DBL provisions — R-STA [EXPERT CONSENSUS — GAP-S4-R08]:**
+
+**Schematic checklist — R-STA:**
+
+- [ ] Straight stair geometry (no winder at top/bottom) confirmed on floor plan and section
+- [ ] Structural channel in stair wall on structural drawings
+- [ ] Electrical conduit provision to stair base and top on electrical drawings
+- [ ] Through-floor lift structural zone confirmed with structural engineer (multi-storey only)
+- [ ] Handrail both sides, continuous, shown on stair section drawing
+- [ ] Nosing contrast (full-width) on stair detail drawing —
+
+### §6.10 Residential Matrix: Consolidated DAR Priority Register
+
+The following table summarises all DAR provisions across the residential matrix, ordered by cost-of-inaction severity. All provisions marked CRITICAL must appear on a named drawing at construction documentation stage — a verbal specification is insufficient.
+
+| Provision | Room | Cost multiplier (retrofit) | Must appear on | Stage |
+| --- | --- | --- | --- | --- |
+| Grab bar blocking (all positions) | R-BA | ×75 | Structural/blocking drawings | CD |
+| Ceiling hoist tracking blocking | R-BED | ×20–40 | Structural drawings | CD |
+| Stair structural channel (stairlift) | R-STA | ×15–30 | Structural drawings | CD |
+| Zero-threshold floor recess (wet room) | R-BA | ×20–40 | Section drawings | CD |
+| Through-floor lift structural zone | R-STA | ×50+ | Structural drawings (SE confirmation) | SD |
+| Smart lock conduit | R-ENT | ×8 | Electrical drawings | CD |
+| Bedside control conduit | R-BED | ×8 | Electrical drawings | CD |
+| EV charger conduit | R-GAR | ×5 | Electrical drawings | CD |
+| Accessible entry door framing (≥950 mm) | R-ENT | ×5–15 | Floor plan / door schedule | SD |
+| large body size structural floor provision | R-BA | Structural cost | Structural drawings (SE) | SD | — |
