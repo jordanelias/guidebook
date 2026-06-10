@@ -2,19 +2,31 @@
 """
 scripts/validate_evidence_state.py — Validate evidence state records.
 
-Per governance/evidence-methodology.md (A6):
-- pending cells must reference gap_register.md
-- provisional cells must carry confidence flag with named dimensions
-- not_applicable cells must carry rationale
-- stated cells must cite ≥1 source at Tier 1–3 OR Co-1 OR Co-2
-- Verification-status downgrade logic per §2.8
-- Convergence assessment completeness for multi-axis cells
+Per governance/evidence-methodology.md (A6), §2 (cell states), §3 (convergence),
+and §1.4/§1.6/§1.7 (scale + directness); decision D-D. Stage 2.4 wires this to
+the real DB tables built in Stage 2.3 (evidence_cell_state +
+convergence_assessment) — the canonical source under DB-as-truth — in addition
+to the original YAML-file path.
 
-Also validates EvidenceSource records for A5 Co-1 field requirements.
+DB validation (default; the cell-state machine):
+- pending cells must reference a gap that exists in the `gaps` table
+  (DB-as-truth; supersedes the gap_register.md scrape)
+- provisional cells must carry the confidence flag (dimensions present/absent +
+  synthesis basis)
+- not_applicable cells must carry a rationale
+- stated/provisional cells must have a convergence assessment
+- scale-aware: design_scale ∈ {universal, population, person}
+- directness-aware (§1.7): a discounted source cannot also anchor the claim;
+  convergent needs ≥2 evidence axes, single_axis ≤1; divergent needs
+  rationale + synthesis_approach
+
+YAML validation (when explicit files are given, or for Co-1 source fields):
+- EvidenceStateRecord / EvidenceSource Pydantic validation
+- A5 Co-1 verification-status rules
 
 Usage:
-    python3 scripts/validate_evidence_state.py                  # validate all
-    python3 scripts/validate_evidence_state.py --quick           # sample 5
+    python3 scripts/validate_evidence_state.py                  # validate DB cell-state + YAML sources
+    python3 scripts/validate_evidence_state.py --db path/to.db  # explicit DB
     python3 scripts/validate_evidence_state.py --sources-only    # Co-1 fields only
     python3 scripts/validate_evidence_state.py data/evidence-states/es-0001.yaml
 
@@ -26,7 +38,9 @@ Exit codes:
 
 import argparse
 import glob
+import json
 import os
+import sqlite3
 import sys
 
 import yaml
@@ -36,6 +50,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from schemas.evidence_state import EvidenceStateRecord
 from schemas.evidence_source import EvidenceSource
 from schemas.enums import EvidenceType, VerificationStatus
+from schemas.directness import ALL_SCALES
 
 
 def validate_file(path: str, model_class) -> list:
@@ -137,6 +152,124 @@ def load_gap_ids(repo_root: str) -> set:
     return ids
 
 
+def load_gap_ids_db(conn) -> set:
+    """Valid gap ids from the DB gaps table (DB-as-truth; supersedes gap_register.md)."""
+    return {r[0] for r in conn.execute("SELECT gap_id FROM gaps")}
+
+
+def _jlist(val):
+    """Parse a JSON-array text column to a list. [] for NULL/empty; a '<...>'
+    sentinel element when the column is present but not a JSON array."""
+    if val is None or val == "":
+        return []
+    try:
+        v = json.loads(val)
+    except (json.JSONDecodeError, TypeError):
+        return ["<malformed-json>"]
+    return v if isinstance(v, list) else ["<not-a-json-array>"]
+
+
+def _bad_json(lst) -> bool:
+    return any(isinstance(x, str) and x.startswith("<") and x.endswith(">") for x in lst)
+
+
+def validate_cell_states_db(conn, gap_ids: set):
+    """Validate evidence_cell_state rows against the §2 state machine, scale-aware.
+    Mirrors schemas.evidence_state.EvidenceStateRecord's state-field rules at the
+    data layer, plus pending⇒gap-link against the gaps table. Returns (errors, n)."""
+    errors = []
+    cols = ("cell_id,item_code,population_code,state,design_scale,convergence_id,"
+            "confidence_dimensions_present,confidence_dimensions_absent,"
+            "confidence_synthesis_basis,gap_register_id,not_applicable_rationale")
+    n = 0
+    for (cell_id, item_code, pop, state, design_scale, conv_id,
+         cdp, cda, csb, gap_id, na_rat) in conn.execute(f"SELECT {cols} FROM evidence_cell_state"):
+        n += 1
+        tag = f"cell {cell_id} ({item_code}×{pop})"
+        # scale-aware: design_scale vocabulary (§1.4/§1.6)
+        if design_scale is not None and design_scale not in ALL_SCALES:
+            errors.append(f"{tag}: design_scale {design_scale!r} not in {sorted(ALL_SCALES)}")
+        # state-dependent required fields
+        if state == "pending":
+            if not gap_id:
+                errors.append(f"{tag}: state 'pending' requires gap_register_id (§2.4)")
+            elif gap_ids and gap_id not in gap_ids:
+                errors.append(f"{tag}: gap_register_id {gap_id!r} not in gaps table")
+        elif state == "provisional":
+            if not csb or not _jlist(cdp) or not _jlist(cda):
+                errors.append(f"{tag}: state 'provisional' requires confidence flag — "
+                              f"dimensions_present, dimensions_absent, synthesis_basis (§2.3)")
+            if conv_id is None:
+                errors.append(f"{tag}: state 'provisional' requires a convergence assessment")
+        elif state == "not_applicable":
+            if not na_rat:
+                errors.append(f"{tag}: state 'not_applicable' requires not_applicable_rationale (§2.5)")
+        elif state == "stated":
+            if conv_id is None:
+                errors.append(f"{tag}: state 'stated' requires a convergence assessment (≥1 source axis, §2.2)")
+    return errors, n
+
+
+def validate_convergence_db(conn):
+    """Validate convergence_assessment rows against §3.2 + the §1.7 directness
+    conditioning. Returns (errors, n)."""
+    errors = []
+    cols = ("convergence_id,status,clinical_sources,co1_sources,co2_sources,"
+            "down_weighted_sources,discounted_sources,rationale,synthesis_approach")
+    n = 0
+    for (cid, status, clinical, co1, co2, downw, disc, rationale, synth) in \
+            conn.execute(f"SELECT {cols} FROM convergence_assessment"):
+        n += 1
+        tag = f"convergence {cid}"
+        clinical, co1, co2 = _jlist(clinical), _jlist(co1), _jlist(co2)
+        downw, disc = _jlist(downw), _jlist(disc)
+        anchoring = set(clinical) | set(co1) | set(co2)
+        axes = sum(1 for lst in (clinical, co1, co2) if lst and not _bad_json(lst))
+        # rationale / axis requirements (§3.2)
+        if status == "divergent":
+            if not rationale:
+                errors.append(f"{tag}: status 'divergent' requires rationale")
+            if not synth:
+                errors.append(f"{tag}: status 'divergent' requires synthesis_approach")
+        elif status == "single_axis":
+            if not rationale:
+                errors.append(f"{tag}: status 'single_axis' requires rationale (name the axis)")
+            if axes > 1:
+                errors.append(f"{tag}: status 'single_axis' but {axes} evidence axes present")
+        elif status == "convergent":
+            if axes < 2:
+                errors.append(f"{tag}: status 'convergent' requires ≥2 evidence axes, found {axes}")
+        # directness consistency (§1.7): a discounted source cannot also anchor the claim
+        overlap = set(disc) & anchoring
+        if overlap:
+            errors.append(f"{tag}: discounted_sources also listed as anchoring: {sorted(overlap)}")
+        # malformed JSON columns
+        for name, lst in [("clinical_sources", clinical), ("co1_sources", co1),
+                          ("co2_sources", co2), ("down_weighted_sources", downw),
+                          ("discounted_sources", disc)]:
+            if _bad_json(lst):
+                errors.append(f"{tag}: {name} is not a valid JSON array")
+    return errors, n
+
+
+def validate_db(db_path: str):
+    """Validate the cell-state machine in the DB. Returns (errors, n_cells, n_conv)."""
+    if not os.path.exists(db_path):
+        return [f"DB not found: {db_path}"], 0, 0
+    conn = sqlite3.connect(db_path)
+    try:
+        tabs = {r[0] for r in conn.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+        missing = {"evidence_cell_state", "convergence_assessment"} - tabs
+        if missing:
+            return [f"tables absent (run migration 024): {sorted(missing)}"], 0, 0
+        gap_ids = load_gap_ids_db(conn)
+        cell_errors, n_cells = validate_cell_states_db(conn, gap_ids)
+        conv_errors, n_conv = validate_convergence_db(conn)
+        return cell_errors + conv_errors, n_cells, n_conv
+    finally:
+        conn.close()
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Validate evidence state and source records"
@@ -161,6 +294,13 @@ def main():
         action="store_true",
         help="Only validate EvidenceStateRecord files",
     )
+    parser.add_argument(
+        "--db",
+        default=None,
+        help="Path to guidebook.db (default: $GUIDEBOOK_DB_PATH or data/guidebook.db). "
+             "The cell-state machine (evidence_cell_state + convergence_assessment) is "
+             "validated from the DB — the canonical source — unless explicit files are given.",
+    )
     args = parser.parse_args()
 
     repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -169,6 +309,7 @@ def main():
     total_errors = 0
     total_files = 0
     total_warnings = 0
+    db_validated = False
 
     # Determine what to validate
     validate_sources = not args.states_only
@@ -199,6 +340,24 @@ def main():
                 for e in errors:
                     print(f"  {e}")
     else:
+        # DB cell-state machine is the canonical source (DB-as-truth). Validate it
+        # first; the YAML scans below remain for any materialized file artifacts.
+        if validate_states:
+            db_path = (args.db or os.environ.get("GUIDEBOOK_DB_PATH")
+                       or os.path.join(repo_root, "data", "guidebook.db"))
+            db_errors, n_cells, n_conv = validate_db(db_path)
+            db_validated = not (db_errors and (db_errors[0].startswith("DB not found")
+                                               or db_errors[0].startswith("tables absent")))
+            total_files += n_cells + n_conv
+            if db_errors:
+                total_errors += len(db_errors)
+                print(f"FAIL evidence_cell_state machine ({os.path.basename(db_path)}):")
+                for e in db_errors:
+                    print(f"  {e}")
+            else:
+                print(f"OK cell-state machine: {n_cells} cells, {n_conv} convergence rows "
+                      f"validated from {os.path.basename(db_path)}", file=sys.stderr)
+
         # Scan data directories
         source_dir = os.path.join(repo_root, "data", "sources")
         state_dir = os.path.join(repo_root, "data", "evidence-states")
@@ -238,7 +397,7 @@ def main():
                         print(f"  {e}")
 
     # Summary
-    if total_files == 0:
+    if total_files == 0 and not db_validated:
         print(
             "No data files found. "
             "data/sources/ and data/evidence-states/ directories do not exist yet.",
@@ -248,7 +407,7 @@ def main():
 
     status = "PASS" if total_errors == 0 else "FAIL"
     print(
-        f"\n{status}: {total_files} files checked, "
+        f"\n{status}: {total_files} records checked, "
         f"{total_errors} errors, {total_warnings} warnings",
         file=sys.stderr,
     )
