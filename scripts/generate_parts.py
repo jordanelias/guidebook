@@ -1,0 +1,460 @@
+#!/usr/bin/env python3
+"""scripts/generate_parts.py — A.12 guidebook reassembly engine (Stage 4.2 / closes R3-b).
+
+Reassembles the guidebook markdown document (`parts/v10/`) from the canonical
+SQLite DB + per-slug reasoning docs. Two modes (BPC-rewrite workplan A.12):
+
+  stub  (default) — renders whatever content currently exists in the DB and
+                    emits clearly-marked STUB blocks for everything not yet
+                    synthesised. Always produces a non-empty parts/v10/.
+  full            — requires every ACTIVE BPC at COMPLETE before it will write.
+                    Refuses (exit 3) with a reason list until that gate is met.
+
+Idempotent: output is a pure function of DB state. The provenance line carries a
+deterministic DB *fingerprint* (a hash of table counts), never wall-clock time,
+so re-running against an unchanged DB yields byte-identical files.
+
+SCOPE NOTE (surfaced, not hidden). The A.12 spec says "emit per
+architecture/page-templates.md". As of this build that file specifies the 4.4
+*webpage* (14 URL-routed templates) against a webpage schema — `specification`,
+`measurement`, `jurisdictional_value`, `room`, `conflict`, `doctrine`,
+`economics_entry`, `case_study`, `throughline`, `specialist` — that does NOT
+exist in the canonical DB (which has `items`, `bpc_metadata`, `connections`,
+`populations`, …). page-templates.md even sources engineering content *from*
+`parts/v10/part08.md`, i.e. these parts are an INPUT to that webpage. So this
+engine emits the markdown DOCUMENT per the file manifest (part00–part13 +
+appendices) from the live schema; the webpage and its schema are Stage 4.4.
+Template *semantics* that do map are honoured: ● stated / ◐ provisional /
+○ pending markers (C-01); no population ranking (D-NAV-006); Co-1 surfaced
+(D-NAV-011).
+
+Usage:
+    python3 scripts/generate_parts.py                      # stub mode, data/guidebook.db -> parts/v10/
+    python3 scripts/generate_parts.py --db /tmp/work.db --out /tmp/parts
+    python3 scripts/generate_parts.py --mode full          # gated; refuses until COMPLETE
+
+Exit codes: 0 ok · 2 config error · 3 full-mode gate not met.
+"""
+import argparse
+import hashlib
+import os
+import sqlite3
+import sys
+
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Document structure (file manifest). (key, filename, part label, title).
+PARTS = [
+    ("part00", "part00.md", "Front Matter", "Title, About, Section Map, Abbreviations"),
+    ("part01", "part01.md", "Part 1", "Foundations of Accessible Design"),
+    ("part02", "part02.md", "Part 2", "Disability Categories"),
+    ("part03", "part03.md", "Part 3", "Synthesis + Co-Occurrence Framework"),
+    ("part04", "part04.md", "Part 4", "Item Specification Library"),
+    ("part05", "part05.md", "Part 5", "Building-Level Co-Occurrence Resolution"),
+    ("part06", "part06.md", "Part 6", "Residential Application Matrices"),
+    ("part07", "part07.md", "Part 7", "Non-Residential Application Matrices"),
+    ("part08", "part08.md", "Part 8", "Engineering and Coordination"),
+    ("part09", "part09.md", "Part 9", "Working with Specialist Consultants"),
+    ("part10", "part10.md", "Part 10", "Design for Adaptable Readiness"),
+    ("part11", "part11.md", "Part 11", "The Economics of Accessible Construction"),
+    ("part12", "part12.md", "Part 12", "Case Studies"),
+    ("part13", "part13.md", "Appendices", "Bibliography, Glossary, Appendices A & B"),
+]
+
+# Tables whose counts form the deterministic fingerprint (existence-guarded).
+FP_TABLES = ["items", "populations", "bpc_metadata", "slugs", "connections",
+             "conflicts", "evidence_sources", "gaps", "evidence_cell_state",
+             "convergence_assessment", "terms"]
+
+
+# ----------------------------------------------------------------------------- helpers
+def table_exists(conn, name):
+    return conn.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name=?", (name,)
+    ).fetchone() is not None
+
+
+def count(conn, name):
+    if not table_exists(conn, name):
+        return None
+    return conn.execute(f"SELECT COUNT(*) FROM {name}").fetchone()[0]
+
+
+def fingerprint(conn):
+    """Deterministic short hash of table counts — stable per DB state."""
+    parts = []
+    for t in FP_TABLES:
+        c = count(conn, t)
+        parts.append(f"{t}={c if c is not None else 'NA'}")
+    uv = conn.execute("PRAGMA user_version").fetchone()[0]
+    parts.append(f"user_version={uv}")
+    blob = ";".join(parts)
+    return hashlib.sha256(blob.encode()).hexdigest()[:12], blob
+
+
+def stub(label, detail):
+    return f"> **STUB — {label}.** {detail}\n"
+
+
+def reasoning_doc(slug):
+    """Return path of a per-slug reasoning doc if it exists, else None."""
+    p = os.path.join(REPO, "references", "bpc-reasoning", f"{slug}.md")
+    return p if os.path.exists(p) else None
+
+
+def header(title, part_label, fp):
+    return (f"# {title}\n\n"
+            f"**Part:** {part_label}  \n"
+            f"**Generated by:** `scripts/generate_parts.py` (A.12 reassembly, stub-capable)  \n"
+            f"**Source DB fingerprint:** `{fp}`\n\n---\n\n")
+
+
+# ----------------------------------------------------------------------------- full-mode gate
+def full_mode_ready(conn):
+    """All ACTIVE BPCs must be at COMPLETE. Returns (ok, reasons[])."""
+    reasons = []
+    if not table_exists(conn, "bpc_metadata"):
+        return False, ["bpc_metadata table absent"]
+    rows = conn.execute(
+        "SELECT slug, evidence_state, bpc_complete FROM bpc_metadata"
+    ).fetchall()
+    incomplete = [r[0] for r in rows if (r[1] in (None, "RETRACTED-PRE-REHAB")
+                                         or not r[2])]
+    if incomplete:
+        reasons.append(
+            f"{len(incomplete)}/{len(rows)} BPCs not COMPLETE "
+            f"(evidence_state NULL/RETRACTED-PRE-REHAB or bpc_complete=0)")
+    cells = count(conn, "evidence_cell_state") or 0
+    if cells == 0:
+        reasons.append("evidence_cell_state is empty (no synthesised cells; Phase E / 4.3)")
+    return (not reasons), reasons
+
+
+# ----------------------------------------------------------------------------- part builders
+def build_manifest(conn, mode, fp, blob):
+    n_bpc = count(conn, "bpc_metadata") or 0
+    n_rehab = 0
+    if table_exists(conn, "bpc_metadata"):
+        n_rehab = conn.execute(
+            "SELECT COUNT(*) FROM bpc_metadata WHERE bpc_complete=1 "
+            "AND evidence_state NOT IN ('RETRACTED-PRE-REHAB') "
+            "AND evidence_state IS NOT NULL").fetchone()[0]
+    out = [f"# Guidebook for Accessible Design — File Manifest\n",
+           f"**Generated by:** `scripts/generate_parts.py` (A.12 reassembly engine)  ",
+           f"**Mode:** `{mode}`  ",
+           f"**Source DB fingerprint:** `{fp}`  ",
+           f"**BPCs rehabilitated (COMPLETE):** {n_rehab} / {n_bpc}\n",
+           "## Assembly Order\n",
+           "| Order | File | Part | Title |",
+           "|---|---|---|---|"]
+    for i, (_k, fn, label, title) in enumerate(PARTS, 1):
+        out.append(f"| {i} | parts/v10/{fn} | {label} | {title} |")
+    out += ["",
+            "## Provenance",
+            "",
+            "This manifest and all part files are regenerated from the canonical "
+            "SQLite DB by the A.12 reassembly engine. The fingerprint above is a "
+            "hash of table counts; identical fingerprint ⇒ identical output "
+            "(idempotent). Do not hand-edit generated parts — edit the DB / "
+            "reasoning docs and regenerate.",
+            "",
+            f"Fingerprint inputs: `{blob}`",
+            ""]
+    return "\n".join(out) + "\n"
+
+
+def build_part00(conn, fp):
+    md = [header("Guidebook for Accessible Design", "Front Matter", fp)]
+    md.append("## About\n")
+    md.append("A reference on architecture, accessibility, and the built "
+              "environment, organised around designing with dignity for "
+              "disabled people. Accessibility throughout refers to inclusion of "
+              "persons with disabilities.\n")
+    md.append("## Section Map\n")
+    md.append("| Part | Title |\n|---|---|")
+    for _k, _fn, label, title in PARTS[1:]:
+        md.append(f"| {label} | {title} |")
+    md.append("\n## Abbreviations\n")
+    md.append("DD — Design Development · RFO — Ready for Occupancy · "
+              "BPC — Best Practice Compendium · Co-1 — co-primary (lived-experience) "
+              "evidence · DAR — Design for Adaptable Readiness.\n")
+    md.append(stub("Front-matter prose pending",
+                   "Title page, foreword, and how-to-use sections render at Phase E (4.3)."))
+    return "\n".join(md)
+
+
+def build_part02(conn, fp):
+    """Disability Categories — populations (real DB content)."""
+    md = [header("Disability Categories", "Part 2", fp)]
+    if not table_exists(conn, "populations"):
+        md.append(stub("populations table absent", "Cannot render disability categories."))
+        return "\n".join(md)
+    rows = conn.execute(
+        "SELECT population_code, display_name, category, description, "
+        "is_compound, parent_code FROM populations WHERE status IS NULL "
+        "OR status NOT IN ('DELETED') ORDER BY category, population_code"
+    ).fetchall()
+    md.append(f"{len(rows)} populations are represented. Categories group related "
+              "functional profiles; no category or population is ranked above "
+              "another (D-NAV-006).\n")
+    cur = None
+    for code, name, cat, desc, compound, parent in rows:
+        if cat != cur:
+            cur = cat
+            md.append(f"\n## Category: {cat or 'uncategorised'}\n")
+        comp = " · *compound*" if compound else ""
+        par = f" · parent `{parent}`" if parent else ""
+        md.append(f"### `{code}` — {name}{comp}{par}")
+        md.append(f"{desc or '_No profile recorded._'}\n")
+    return "\n".join(md)
+
+
+def build_part04(conn, fp):
+    """Item Specification Library — the 92 items (real), synthesis stubbed."""
+    md = [header("Item Specification Library", "Part 4", fp)]
+    if not table_exists(conn, "items"):
+        md.append(stub("items table absent", "Cannot render the specification library."))
+        return "\n".join(md)
+    rows = conn.execute(
+        "SELECT item_code, category, name, status, bpc_source_slug "
+        "FROM items ORDER BY item_code").fetchall()
+    md.append(f"{len(rows)} items, grouped by category. Each item links to its "
+              "source BPC; measured specification values, jurisdiction tables, "
+              "and evidence cells render once Phase E synthesis (4.3) populates "
+              "the cell-state machine.\n")
+    cur = None
+    for code, cat, name, status, slug in rows:
+        if cat != cur:
+            cur = cat
+            md.append(f"\n## Category {cat}\n")
+            md.append("| Item | Name | Status | Source BPC |")
+            md.append("|---|---|---|---|")
+        md.append(f"| `{code}` | {name} | {status or '—'} | "
+                  f"{('`'+slug+'`') if slug else '—'} |")
+    # synthesis state
+    md.append("\n### Specification detail\n")
+    cells = count(conn, "evidence_cell_state") or 0
+    md.append(stub("Per-item specification values pending",
+                   f"The cell-state machine holds {cells} cells. Each item's "
+                   "Universal / population / person-specific value rows, "
+                   "jurisdiction matrix, and ●◐○ evidence markers render here "
+                   "once 4.3 populates evidence_cell_state + convergence_assessment."))
+    return "\n".join(md)
+
+
+def build_part05(conn, fp):
+    """Building-Level Co-Occurrence Resolution — connections (real) + conflicts."""
+    md = [header("Building-Level Co-Occurrence Resolution", "Part 5", fp)]
+    if table_exists(conn, "connections"):
+        rows = conn.execute(
+            "SELECT con_id, connection_type, status, description FROM connections "
+            "ORDER BY con_id").fetchall()
+        applied = [r for r in rows if r[2] in ("CONSUMED", "CONSUMED-DEFERRED", "CLOSED")]
+        pending = [r for r in rows if r[2] == "PENDING"]
+        md.append(f"{len(rows)} connections recorded "
+                  f"({len(applied)} applied/consumed, {len(pending)} pending).\n")
+        md.append("## Pending connections (open co-occurrence questions)\n")
+        if pending:
+            md.append("| Connection | Type | Description |")
+            md.append("|---|---|---|")
+            for cid, ctype, _st, desc in pending:
+                md.append(f"| `{cid}` | {ctype or '—'} | {(desc or '—')[:160]} |")
+        else:
+            md.append("_None pending._")
+        md.append("\n## Applied connections\n")
+        md.append(f"{len(applied)} connections have been consumed into item specs "
+                  "or deferred; full provenance renders with the specification "
+                  "detail in Part 4 once 4.3 completes.\n")
+    else:
+        md.append(stub("connections table absent", "Cannot render co-occurrence."))
+    # conflicts
+    nconf = count(conn, "conflicts") or 0
+    md.append("## Conflict register\n")
+    if nconf == 0:
+        md.append(stub("No conflicts populated",
+                       "Population-vs-population conflict cards (equal-weight "
+                       "parties per D-NAV-008) render once the conflict register "
+                       "is populated in Phase E."))
+    else:
+        for cid, dom, pa, pb, st, res in conn.execute(
+                "SELECT conflict_id, domain, pop_a, pop_b, status, resolution "
+                "FROM conflicts ORDER BY conflict_id"):
+            md.append(f"### {cid} — {dom}\n- Parties: `{pa}` vs `{pb}`\n"
+                      f"- Status: {st}\n- Resolution: {res or '_pending_'}\n")
+    return "\n".join(md)
+
+
+def build_bpc_index(conn, fp):
+    """BPC rehabilitation status index — reflects the live evidence_state."""
+    md = [header("Best Practice Compendium — Rehabilitation Index", "Part 3 (annex)", fp)]
+    if not table_exists(conn, "bpc_metadata"):
+        md.append(stub("bpc_metadata absent", "No BPC index."))
+        return "\n".join(md)
+    rows = conn.execute(
+        "SELECT slug, population, evidence_state, bpc_complete FROM bpc_metadata "
+        "ORDER BY slug").fetchall()
+    from collections import Counter
+    dist = Counter((r[2] or "NULL") for r in rows)
+    md.append(f"{len(rows)} BPCs. Evidence-state distribution: "
+              + ", ".join(f"{k} {v}" for k, v in sorted(dist.items())) + ".\n")
+    md.append("BPCs marked `RETRACTED-PRE-REHAB` carry the pre-rehabilitation "
+              "retraction (standing rule #10); their synthesis is withheld until "
+              "Phase E.2g re-verifies. This index is the honest current state.\n")
+    md.append("| BPC slug | Population | Evidence state | Complete | Reasoning doc |")
+    md.append("|---|---|---|---|---|")
+    for slug, pop, state, complete in rows:
+        rd = "yes" if reasoning_doc(slug) else "—"
+        md.append(f"| `{slug}` | {pop or '—'} | {state or 'NULL'} | "
+                  f"{'✓' if complete else '—'} | {rd} |")
+    return "\n".join(md)
+
+
+def build_part13(conn, fp):
+    """Appendices — bibliography summary, glossary, jurisdiction comparison."""
+    md = [header("Appendices", "Appendices", fp)]
+    # Bibliography summary (evidence_sources by tier)
+    md.append("## Appendix — Bibliography (evidence base summary)\n")
+    if table_exists(conn, "evidence_sources"):
+        total = count(conn, "evidence_sources")
+        md.append(f"{total} sources in the evidence base. Distribution by tier "
+                  "and evidence type:\n")
+        md.append("| Tier | Sources |\n|---|---|")
+        for tier, c in conn.execute(
+                "SELECT tier, COUNT(*) FROM evidence_sources GROUP BY tier ORDER BY tier"):
+            md.append(f"| T{tier} | {c} |")
+        md.append("\n| Evidence type | Sources |\n|---|---|")
+        for et, c in conn.execute(
+                "SELECT evidence_type, COUNT(*) FROM evidence_sources "
+                "GROUP BY evidence_type ORDER BY evidence_type"):
+            md.append(f"| {et} | {c} |")
+        md.append(stub("\nPer-source bibliography entries pending",
+                       "Full author/year/title/DOI entries with Co-1 badges "
+                       "(D-NAV-011) render at Phase E."))
+    else:
+        md.append(stub("evidence_sources absent", "No bibliography."))
+    # Glossary
+    md.append("\n## Appendix — Glossary\n")
+    if table_exists(conn, "terms"):
+        nterms = count(conn, "terms")
+        md.append(f"{nterms} glossary terms recorded.\n")
+        sample = conn.execute(
+            "SELECT * FROM terms LIMIT 0").description
+        cols = [d[0] for d in sample]
+        tcol = "term" if "term" in cols else cols[0]
+        dcol = next((c for c in ("definition", "description", "gloss") if c in cols), None)
+        md.append("| Term | Definition |\n|---|---|")
+        for r in conn.execute(f"SELECT {tcol}{(',' + dcol) if dcol else ''} FROM terms "
+                              f"ORDER BY {tcol} LIMIT 40"):
+            md.append(f"| {r[0]} | {(r[1] if dcol and len(r) > 1 else '') or '—'} |")
+    else:
+        md.append(stub("terms table absent", "Glossary renders once terms are loaded."))
+    # Jurisdiction comparison (standards in evidence_sources)
+    md.append("\n## Appendix A — Jurisdiction Comparison (standards index)\n")
+    if table_exists(conn, "evidence_sources"):
+        rows = conn.execute(
+            "SELECT jurisdiction, standard_number, pub_title FROM evidence_sources "
+            "WHERE evidence_type IN ('standard_eb','national_fw','code') "
+            "AND standard_number IS NOT NULL ORDER BY jurisdiction, standard_number"
+        ).fetchall()
+        if rows:
+            md.append(f"{len(rows)} indexed standards/codes by jurisdiction.\n")
+            md.append("| Jurisdiction | Standard | Title |\n|---|---|---|")
+            for jur, std, title in rows[:120]:
+                md.append(f"| {jur or '—'} | {std} | {(title or '—')[:70]} |")
+        else:
+            md.append(stub("No standards indexed", "Jurisdiction tables render at Phase E."))
+    md.append(stub("\nFull jurisdiction value tables pending",
+                   "The per-parameter cross-jurisdiction value comparison (9-step "
+                   "rule, standing rule #9) renders once reasoning documents are authored."))
+    return "\n".join(md)
+
+
+def build_generic_stub(label, title, fp, detail):
+    md = [header(title, label, fp)]
+    md.append(stub(f"{title} pending", detail))
+    return "\n".join(md)
+
+
+# ----------------------------------------------------------------------------- orchestration
+def generate(conn, mode, out_dir):
+    fp, blob = fingerprint(conn)
+    files = {}
+    files["manifest.md"] = build_manifest(conn, mode, fp, blob)
+    files["part00.md"] = build_part00(conn, fp)
+    files["part01.md"] = build_generic_stub(
+        "Part 1", "Foundations of Accessible Design", fp,
+        "Doctrine-derived foundations render from governance/*.md at Phase E.")
+    files["part02.md"] = build_part02(conn, fp)
+    files["part03.md"] = build_bpc_index(conn, fp)  # synthesis framework annex = live BPC index
+    files["part04.md"] = build_part04(conn, fp)
+    files["part05.md"] = build_part05(conn, fp)
+    files["part13.md"] = build_part13(conn, fp)
+    for key, fn, label, title in PARTS:
+        if fn in files:
+            continue
+        detail = {
+            "part06.md": "Residential room×item×population matrices render from item_population links at Phase E.",
+            "part07.md": "Non-residential matrices render from item_population links at Phase E.",
+            "part08.md": "Engineering coordination register + briefs render at Phase E.",
+            "part09.md": "Specialist-consultant scope tables render at Phase E.",
+            "part10.md": "Design for Adaptable Readiness register renders at Phase E.",
+            "part11.md": "Economics entries render from the economics evidence at Phase E.",
+            "part12.md": "Verified case studies render at Phase E.",
+        }.get(fn, "Renders at Phase E synthesis (4.3).")
+        files[fn] = build_generic_stub(label, title, fp, detail)
+    # write
+    os.makedirs(out_dir, exist_ok=True)
+    written = []
+    for fn, content in sorted(files.items()):
+        path = os.path.join(out_dir, fn)
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(content if content.endswith("\n") else content + "\n")
+        written.append((fn, len(content)))
+    return fp, written
+
+
+def main():
+    ap = argparse.ArgumentParser(description="A.12 guidebook reassembly engine (Stage 4.2)")
+    ap.add_argument("--db", default=None,
+                    help="DB path (default $GUIDEBOOK_DB_PATH or data/guidebook.db)")
+    ap.add_argument("--mode", choices=["stub", "full"], default="stub")
+    ap.add_argument("--out", default=os.path.join(REPO, "parts", "v10"),
+                    help="Output directory (default parts/v10)")
+    ap.add_argument("--clean", action="store_true",
+                    help="Remove stale *.md in --out before writing (retire prior build)")
+    args = ap.parse_args()
+
+    db_path = args.db or os.environ.get("GUIDEBOOK_DB_PATH") or \
+        os.path.join(REPO, "data", "guidebook.db")
+    if not os.path.exists(db_path):
+        print(f"DB not found: {db_path}", file=sys.stderr)
+        return 2
+    conn = sqlite3.connect(db_path)
+    try:
+        if args.mode == "full":
+            ok, reasons = full_mode_ready(conn)
+            if not ok:
+                print("full mode refused — gate not met:", file=sys.stderr)
+                for r in reasons:
+                    print(f"  - {r}", file=sys.stderr)
+                print("Use --mode stub to render current state.", file=sys.stderr)
+                return 3
+        if args.clean and os.path.isdir(args.out):
+            for fn in os.listdir(args.out):
+                if fn.endswith(".md"):
+                    os.remove(os.path.join(args.out, fn))
+        fp, written = generate(conn, args.mode, args.out)
+    finally:
+        conn.close()
+
+    total = sum(n for _f, n in written)
+    print(f"Generated {len(written)} files ({total} bytes) -> {args.out}",
+          file=sys.stderr)
+    print(f"DB fingerprint: {fp} (mode={args.mode})", file=sys.stderr)
+    for fn, n in written:
+        print(f"  {fn:16s} {n:>8d} B", file=sys.stderr)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
