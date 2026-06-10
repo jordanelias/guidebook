@@ -6,10 +6,24 @@ each cell in the guidebook's specification matrix holds one of four states
 (stated, provisional, pending, not_applicable) with an associated
 convergence assessment.
 
+DIRECTNESS-AWARE (Stage 2.3, decision D-D; doctrine SHA 3da73bd). These models
+back the `evidence_cell_state` + `convergence_assessment` tables (migration 024,
+closing R2) and carry the scale × directness conditioning of §1.4/§1.6/§1.7:
+- the cell records its `design_scale` (universal/population/person), the axis from
+  which each source's directness is computed (schemas/directness.scale_directness);
+- the convergence assessment records the §1.7 directness conditioning via
+  `down_weighted_sources` / `discounted_sources` (grain-mismatched sources that
+  count less, or cannot anchor).
+
+CELL IDENTITY. The parameter is the canonical live key `items.item_code`
+(e.g. A-02), not the spec-layer SPEC-NNNN: the `specification` table is not in the
+migration-built DB (defined only in the legacy scripts/migrate/ path). The cell
+can be refined to spec_id × population if/when that layer is built canonically.
+
 Cross-entity relationships:
-- Attaches to Specification records (one EvidenceStateRecord per spec)
-- References EvidenceSource records via source lists
-- Cross-links to gap_register.md for pending cells
+- One EvidenceStateRecord per (item_code × population) cell
+- References EvidenceSource records via the convergence source lists
+- Cross-links to the gaps table (gap_id) for pending cells
 """
 
 import re
@@ -17,6 +31,7 @@ from typing import Optional
 
 from pydantic import ConfigDict, BaseModel, field_validator, model_validator
 
+from schemas.directness import ALL_SCALES
 from schemas.enums import (
     ConvergenceStatus,
     EvidenceCellState,
@@ -51,6 +66,10 @@ class ConvergenceAssessment(BaseModel):
     clinical_sources: list[str] = []  # REF-IDs of Tier 1–3 sources
     co1_sources: list[str] = []  # REF-IDs of Co-1 sources
     co2_sources: list[str] = []  # REF-IDs of Co-2 sources
+    # Directness conditioning (§1.7): how grain-matching conditioned the source set
+    # for this cell's design_scale. Anchoring set = (clinical ∪ co1 ∪ co2) − discounted.
+    down_weighted_sources: list[str] = []  # REF-IDs DOWN-WEIGHTED (grain-mismatch; count less)
+    discounted_sources: list[str] = []  # REF-IDs DISCOUNTED / NON-ANCHORING (cannot anchor)
     rationale: Optional[str] = None  # Required for divergent and single_axis
     synthesis_approach: Optional[str] = None  # Required for divergent
 
@@ -90,13 +109,19 @@ class EvidenceStateRecord(BaseModel):
     - provisional: Tier 4–6 only, meets richness threshold
     - pending: too sparse; gap-register link required
     - not_applicable: parameter irrelevant for population; rationale required
+
+    Directness-aware (§1.4/§1.6/§1.7): the cell carries its `design_scale`, the
+    axis from which each source's directness conditioning is computed.
     """
 
     model_config = ConfigDict(extra="forbid")
 
-    # Cell identity
-    spec_id: str  # Links to Specification.spec_id
+    # Cell identity — canonical parameter key (items.item_code), e.g. A-02
+    item_code: str
     population: str  # PopulationCode value
+
+    # Design scale (§1.4/§1.6) — universal | population | person
+    design_scale: Optional[str] = None
 
     # State
     state: EvidenceCellState
@@ -119,11 +144,18 @@ class EvidenceStateRecord(BaseModel):
 
     # --- Validators ---
 
-    @field_validator("spec_id")
+    @field_validator("item_code")
     @classmethod
-    def valid_spec_id(cls, v: str) -> str:
-        if not re.match(r"^SPEC-\d{4}$", v):
-            raise ValueError(f"spec_id must match SPEC-NNNN, got: {v}")
+    def valid_item_code(cls, v: str) -> str:
+        if not re.match(r"^[A-K]-\d{2}[a-z]?$", v):
+            raise ValueError(f"item_code must match [A-K]-NN[opt letter], got: {v}")
+        return v
+
+    @field_validator("design_scale")
+    @classmethod
+    def valid_design_scale(cls, v: Optional[str]) -> Optional[str]:
+        if v is not None and v not in ALL_SCALES:
+            raise ValueError(f"design_scale must be one of {sorted(ALL_SCALES)}, got: {v}")
         return v
 
     @field_validator("gap_register_id")
