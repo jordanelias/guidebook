@@ -56,6 +56,14 @@ jobs:
           # Rebuild a fresh DB from the migration history alone.
           # Compare key invariants vs the committed data/guidebook.db.
           # If they diverge, someone wrote directly to the DB and bypassed migrations.
+          #
+          # SCOPE (DR-2026-05-28 / D-4.3-H option 3a, ratified 2026-06-11): this gate enforces the
+          # 7 CORE INVARIANTS below — they cover all synthesis-bearing content and must reproduce
+          # from migration history. The job-owned tables `evidence_source_authors` and
+          # `pipeline_runs` are DELIBERATELY EXEMPT: the `source-verification` scheduled job
+          # (resolve-dois.yml / verify-urls.yml) is their authoritative writer and writes them
+          # outside the migration framework by design. Do NOT add them to the invariant list below.
+          # Adding any new exempt table requires a new DR.
           python3 scripts/migrate_db.py --rebuild /tmp/rebuilt.db
 
           python3 - <<'PY'

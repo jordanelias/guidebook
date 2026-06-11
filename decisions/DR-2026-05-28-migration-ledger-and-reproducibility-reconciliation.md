@@ -1,6 +1,6 @@
 # DR-2026-05-28 — Migration-Ledger Drift & DB Reproducibility Reconciliation
 
-**Status:** PROPOSED — pending owner ratification of the design choice in §Decision. **No DB mutation performed this session.**
+**Status:** ACCEPTED — option **3a** ratified by owner 2026-06-11 (see §Ratification). Step 2 (ledger backfill) was already executed in a prior session: `migrate_db.py --dry-run` reports 0 pending / 187 applied. **No further DB mutation required.**
 **Authored:** 2026-05-28 (`session_2026-05-28-migration-ledger-diagnosis`)
 **Doctrine SHA at authorship:** `61c7f95` (`governance/mission-and-epistemics.md`)
 **Relates to:** the long-standing "Known broken #1 — data_migrations tracking drift" carried in session handoffs since 2026-05-23; GAP-290 (migration-reproducibility CI enforcement).
@@ -68,3 +68,20 @@ Verifiable (test 7): every figure is reproducible by re-running `--dry-run` + `-
 
 **This session (diagnosis + DR):** this DR + its attestation. No code, no DB write.
 **Follow-up (post-ratification):** ledger backfill script for the 113 rows (step 2); the chosen step-3 formalization; optional step-4 cleanup.
+
+---
+
+## Ratification (2026-06-11)
+
+**Doctrine SHA at ratification:** `3da73bd` (was `61c7f95` at authorship).
+**Decided by owner:** option **3a — Exempt by ownership** (session `session_2026-06-11-stage-4.3-gate-closure`, Stage 4.3 gate G1).
+
+**1. Step 2 (ledger backfill) — already executed.** A prior session ran `scripts/reconcile_ledger_dr_2026_05_28.py` against the authoritative DB. Re-measured at current HEAD: `migrate_db.py --dry-run` → **0 pending, 187 applied**; `data_migrations` ledger = 187 rows. The re-application footgun is closed. No further backfill needed.
+
+**2. Step 3a (formalization) — adopted.** `evidence_source_authors` and `pipeline_runs` are hereby declared **job-owned tables**, deliberately outside the migration-reproducibility contract. The migration-reproducibility invariant covers exactly the **7 core invariants** enforced by `.github/workflows/audit.yml` (GAP-290): `PRAGMA user_version` + `COUNT(*)` of `evidence_sources`, `citation_mining`, `source_slug_links`, `gaps`, `connections`, `items`. These 7 cover all synthesis-bearing content and reproduce fully from migration history.
+
+**3. Write-contract for job-owned tables.** The `source-verification` scheduled job (`.github/workflows/resolve-dois.yml`, `verify-urls.yml`, and the V1.x source-verification runs) is the **authoritative writer** for `evidence_source_authors` (PubMed author enrichment) and `pipeline_runs` (run log). These jobs MAY write these two tables directly, outside the migration framework, and commit the result; such writes are NOT a reproducibility-contract violation. Any OTHER table written outside migrations remains a violation. Adding a table to the job-owned exemption requires a new DR.
+
+**4. Architecture alignment — OWNER ACTION REQUIRED.** `architecture/…/<data_layer_pattern>` still states the committed DB "must be reproducible from its migration history… any direct DB write that bypasses migrations fails this check." Per 3a this should be amended to scope the invariant to the 7 core invariants and name the two job-owned exemptions. Exact suggested wording is provided in the session report. This layer is owner-paste (project-knowledge copy); it is not changed by this commit.
+
+**Code formalization landed this commit:** the `.github/workflows/audit.yml` reproducibility job is annotated with the explicit job-owned exemption list + rationale (behavior unchanged — the job already checked only the 7 invariants).
