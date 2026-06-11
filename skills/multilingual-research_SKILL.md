@@ -1,7 +1,7 @@
 ---
 name: multilingual-research
 description: >
-  Conduct accessibility research across 14 languages AND 24 jurisdictions using native-language
+  Conduct accessibility research across 19 languages AND 46 jurisdictions using native-language
   conceptual vocabulary, Co-1/Tier 2 sources first, and companion network retrieval. Synthesises
   findings in English with best-practice judgment for each population. ALWAYS use when: researching
   accessibility topics, finding international evidence, conducting literature reviews, gathering
@@ -14,7 +14,7 @@ description: >
 
 <!-- Updated: CO-0006 2026-04-08 — metadata capture mandate at research time; disposition field in LOG -->
 
-**Model:** Sonnet 4.6 (search, extraction, Steps 1–4) · Opus 4.6 (best_practice_synthesis)
+**Model:** Sonnet 4.6 (search, extraction, Steps 1–4) · Opus-class or above (best_practice_synthesis, per rule #2 capability floor — DR-2026-06-10-A; "Opus" was the authoring-time ceiling, not a brand pin)
 **Opus routing:** Sonnet completes search → checkpoints to GitHub → flags synthesis for Opus session. Sonnet NEVER writes best_practice_synthesis.  
 
 **GitHub backend:** `jordanelias/guidebook` · `main` · Protocol → Project Instructions §GitHub API  
@@ -43,19 +43,19 @@ A completed language pass does not satisfy jurisdiction coverage. EN covers USA,
 
 1\. **`research-log-manager CHECK`** — normalise slug; if COMPLETE <90 days: load BPC inline and stop. If PARTIAL: identify unsearched languages AND unsearched jurisdictions; run both. If STALE/NOT FOUND: proceed.
 
-2\. **Load native terms** — `view` the Keyword Compendium (multilingual keyword reference document in project files), Part 3, for the target slug's concept group. Extract terms for all 14 languages. Do not generate translated terms from memory.
+2\. **Load native terms** — `view` the Keyword Compendium (multilingual keyword reference document in project files), Part 3, for the target slug's concept group. Extract terms for all 14 compendium-backed languages (AR/HI/ID/SW/BN have no validated compendium yet — flag their terms `[UNVERIFIED-TERMS]` per A.11). Do not generate translated terms from memory.
 
 3\. **Load companion networks** — `view` the Multilingual Research Protocol v4, §COMPANION NETWORKS, for the slug's population code(s). Identify organisation and scholar nodes as direct retrieval targets.
 
 4\. **Load concept boundary warnings** — from the slug's existing search-log entry or Keyword Compendium. Deviations are mandatory.
 
-5\. **Build jurisdiction work list** — list all 24 jurisdictions. For each, note: primary language, Co-1 organisations to target (Step 1), Tier 5 beyond-code sources to target (Step 2b), statutory standard to target (Step 2a). This list governs Steps 1–3 — not the language list alone.
+5\. **Build jurisdiction work list** — list all 46 jurisdictions. For each, note: primary language, Co-1 organisations to target (Step 1), Tier 5 beyond-code sources to target (Step 2b), statutory standard to target (Step 2a). This list governs Steps 1–3 — not the language list alone.
 
 > Steps 2–5 are `view` calls or internal planning within this skill. No separate skill call required.
 
 ---
 
-## Search Sequence (all 14 languages AND all 24 jurisdictions must complete)
+## Search Sequence (19 languages × 46 jurisdictions in scope; priority cells searched genuinely, remainder marked PROVISIONAL-NOT-SEARCHED per D-4.3-G — not blocking)
 
 **Step 1 — Co-1 / Tier 2 / Co-2 pass (first; no exceptions)**
 
@@ -333,15 +333,15 @@ Set `disposition` field in search-log entry:
 
 `research-log-manager LOG` must verify all of the following before writing to GitHub. Any failure is a named BLOCKER — do not write; surface the specific failing condition; user must resolve or explicitly accept the gap.
 
-1\. **Jurisdiction coverage complete** — all 24 jurisdictions present in `jurisdiction_coverage` block with a recorded status (SEARCHED · THIN · NO-DATA · NOT-RUN). Missing jurisdiction = BLOCKER.
+1\. **Jurisdiction coverage complete** — all 46 jurisdictions present in `jurisdiction_coverage` block with a recorded status (SEARCHED · THIN · NO-DATA · NOT-RUN · PROVISIONAL-NOT-SEARCHED). A jurisdiction with no recorded status = BLOCKER; PROVISIONAL-NOT-SEARCHED is acceptable for non-priority cells (D-4.3-G).
 
-2\. **Co-1 attempted** — `co1_attempted: true` for at least 12 of 24 jurisdictions. Fewer than 12 = BLOCKER. The 12 minimum is a floor; full coverage is the target.
+2\. **Co-1 attempted** — `co1_attempted: true` for at least 23 of 46 jurisdictions. Fewer than 23 = BLOCKER. The 23 minimum is a floor; full coverage is the target.
 
-3\. **Tier 5 attempted** — `tier5_attempted: true` for at least 16 of 24 jurisdictions. Fewer than 16 = BLOCKER.
+3\. **Tier 5 attempted** — `tier5_attempted: true` for at least 31 of 46 jurisdictions. Fewer than 31 = BLOCKER.
 
 4\. **`best_practice_synthesis` populated** — non-empty `best_practice_synthesis` field in BPC entry. Empty = BLOCKER.
 
-5\. **`native_aliases` populated** — all 14 languages present. Any missing = BLOCKER.
+5\. **`native_aliases` populated** — all 14 compendium-backed languages present; AR/HI/ID/SW/BN carry `[UNVERIFIED-TERMS]` pending A.11 compendiums (flagged, not a blocker). A missing compendium-backed language = BLOCKER.
 
 6\. **`citation_mining` recorded** — backward and forward counts present. May be 0 if no Tier 1/2 sources found, but the field must be present with an explanation if 0.
 
@@ -349,7 +349,7 @@ Set `disposition` field in search-log entry:
 
 If all checks pass → write LOG entry with status determined by coverage:
 
-\- All 24 jurisdictions SEARCHED + all blockers clear → COMPLETE
+\- All 46 priority jurisdiction cells SEARCHED + all blockers clear → COMPLETE. Any PROVISIONAL-NOT-SEARCHED cell present → PARTIAL (cells named), per D-4.3-G — provisional coverage never reads as COMPLETE.
 
 \- Any jurisdiction NOT-RUN or any blocker accepted by user → PARTIAL (with specific gaps named)
 
@@ -411,7 +411,7 @@ Group findings by concept cluster, not by language or jurisdiction. For each clu
 
 ## Evidence Hierarchy
 
-Per §1.5 (Volume 1) — canonical; governs all skills and documents.
+**Canonical tier source: `schemas/tier_derivation.py` (derives tier from evidence_type × scope; doctrine SHA `3da73bd`) + `governance/tier-system.md`.** The inline table below is illustrative and SUPERSEDED where it conflicts with canonical — it predates DR-2026-05-29 (Stage 1.1), which places **systematic reviews / meta-analyses at Tier 2** (the row below still shows Tier 3). Defer to the canonical source; do not re-embed tier definitions here.
 
 | Tier | Type |
 
