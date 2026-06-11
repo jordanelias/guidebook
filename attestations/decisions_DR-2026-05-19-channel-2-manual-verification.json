@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "session": "session_2026-05-19-deployment-state-reconciliation",
   "artifact": "decisions/DR-2026-05-19-channel-2-manual-verification.md",
-  "doctrine_sha": "61c7f95",
+  "doctrine_sha": "3da73bd",
   "rules_in_scope": [
     "source-discipline",
     "best-practice-synthesis-routing",
@@ -16,8 +16,14 @@
       "evidence_path": "decisions/DR-2026-05-19-channel-2-manual-verification.md#pilot-batch-6-amendment-jurisdiction-pattern-routing-mechanic",
       "reason": "Pattern routing is grounded in actual probe results: at least 3 distinct CN/JP probes across batches 2/3/5 established the non-EN-free-URL-discovery-fails pattern. No new claims about source existence are made; pattern routing is a procedural shortcut that respects the conservative non-VERIFIED-only constraint."
     },
-    "best-practice-synthesis-routing": {"status": "NOT-FIRED", "reason": "Methodology amendment."},
-    "adversarial-research-protocol": {"status": "NOT-FIRED", "reason": "No gap writes."},
+    "best-practice-synthesis-routing": {
+      "status": "NOT-FIRED",
+      "reason": "Methodology amendment."
+    },
+    "adversarial-research-protocol": {
+      "status": "NOT-FIRED",
+      "reason": "No gap writes."
+    },
     "evidence-verification-gate-for-synthesis": {
       "status": "FIRED",
       "evidence_path": "decisions/DR-2026-05-19-channel-2-manual-verification.md#pilot-batch-6-application",
@@ -29,7 +35,7 @@
     }
   },
   "deviations": [],
-  "bias_direction": "Pattern routing is a yield-acceleration mechanic introduced after 5 batches of incremental yield (236 eligible vs original 221). The bias risk is toward closing out the V2-manual NULL queue with pattern-routing to artificially zero out the backlog without genuine resolution of the underlying rows. The constraint (non-VERIFIED states only) addresses the worst version of this risk — pattern routing cannot fabricate gate-clears — but it does push 6 rows into DEFERRED-V2-AUTOMATED that might (low-probability) be VERIFIABLE via portals I haven't tried. The conservative posture: future probes can upgrade pattern-routed rows; pattern routing is not a terminal state.",
+  "bias_direction": "Pattern routing is a yield-acceleration mechanic introduced after 5 batches of incremental yield (236 eligible vs original 221). The bias risk is toward closing out the V2-manual NULL queue with pattern-routing to artificially zero out the backlog without genuine resolution of the underlying rows. The constraint (non-VERIFIED states only) addresses the worst version of this risk — pattern routing cannot fabricate gate-clears — but it does push 6 rows into DEFERRED-V2-AUTOMATED that might (low-probability) be VERIFIABLE via portals I haven't tried. The conservative posture: future probes can upgrade pattern-routed rows; pattern routing is not a terminal state. [RE-ATTESTATION 2026-06-11 per PI rule #11a: originally attested by session_2026-05-19-deployment-state-reconciliation at doctrine 61c7f95; re-checked and re-attested at 3da73bd by session_2026-06-11-stage-4.3-gate-closure after doctrine delta 3fb2882 (Stage-1.1 tier-hierarchy revision: SR/meta T3->T2, Tier 1 expanded to admit directly-relevant high-control non-OT primary research, Tier 3 redefined as lower-control primary, Tiers 4-6 walled off). Assessment: No tier-rank-dependent claims; the manual-verification protocol is hierarchy-agnostic. Compliance under 3da73bd unchanged.]",
   "independent_reviewer_counterclaim": "An outside reviewer would object that pattern routing is exactly the kind of methodological shortcut that erodes manual verification's value. If the answer for each new CN/JP row is 'route by pattern', the manual track is functionally identical to a bulk SQL UPDATE on jurisdiction class. Counter: pattern routing is explicit and audit-trailed — every pattern-routed row's verification_note names the establishing canonicals and the routing-matrix branch. A future contributor (or me in a later session) can re-probe any pattern-routed row at any time; the routing is not destructive. By contrast, leaving rows NULL hides the routing decision entirely.",
   "verdict": "DEVIATION-LOGGED"
 }

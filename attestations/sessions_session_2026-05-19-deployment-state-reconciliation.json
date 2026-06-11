@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "session": "session_2026-05-19-deployment-state-reconciliation",
   "artifact": "sessions/session_2026-05-19-deployment-state-reconciliation.md",
-  "doctrine_sha": "61c7f95",
+  "doctrine_sha": "3da73bd",
   "rules_in_scope": [
     "source-discipline",
     "research-log-manager",
@@ -13,7 +13,7 @@
     "source-discipline": {
       "status": "FIRED",
       "evidence_path": "sessions/session_2026-05-19-deployment-state-reconciliation.md#headline-outcomes",
-      "reason": "Record is constructed from primary primitives: actual commits in git (19 SHAs verifiable), actual probe outcomes (HTTP codes and byte sizes recorded in each batch's verification_note), actual DB-state queries (eligibility counts, queue distributions) reproducible by re-running the audit scripts. Honest accounting includes the Bettarello dedup absorption (-1 from eligible pool) and the 6 governance commits that silently failed commit-msg format check \u2014 surfaced rather than hidden."
+      "reason": "Record is constructed from primary primitives: actual commits in git (19 SHAs verifiable), actual probe outcomes (HTTP codes and byte sizes recorded in each batch's verification_note), actual DB-state queries (eligibility counts, queue distributions) reproducible by re-running the audit scripts. Honest accounting includes the Bettarello dedup absorption (-1 from eligible pool) and the 6 governance commits that silently failed commit-msg format check — surfaced rather than hidden."
     },
     "research-log-manager": {
       "status": "FIRED",
@@ -23,7 +23,7 @@
     "evidence-verification-gate-for-synthesis": {
       "status": "FIRED",
       "evidence_path": "sessions/session_2026-05-19-deployment-state-reconciliation.md#pilot-yield-analysis",
-      "reason": "Session purpose was rule #10 existence-gate drainage. +15 to eligible pool (221 \u2192 236). All writes are existence-axis only; no synthesis claims made on the new VERIFIED rows during this session. Per-row probe outcomes recorded with sufficient detail (URL, HTTP code, body-token match counts) for independent re-verification."
+      "reason": "Session purpose was rule #10 existence-gate drainage. +15 to eligible pool (221 → 236). All writes are existence-axis only; no synthesis claims made on the new VERIFIED rows during this session. Per-row probe outcomes recorded with sufficient detail (URL, HTTP code, body-token match counts) for independent re-verification."
     },
     "adherence-logging-and-attestation": {
       "status": "FIRED",
@@ -36,7 +36,7 @@
       "reason": "Six governance commits this session placed [DOCTRINE: SHA] after [timestamp], failing the CI commit-msg format check (which requires [YYYY-MM-DD HH:MM] as the last bracket on the line). Affected SHAs: 9e2b986, d641e42, 1290f2d, 662af85, 478683f, 2a9fad3. Documented forward in the drift section of the session record; next governance commit will place token before timestamp."
     }
   ],
-  "bias_direction": "The session record is self-authored within the same session it documents \u2014 self-review compounds bias. The yield numbers and CI-restoration claims are objectively verifiable from git history and the audit scripts, mitigating direct self-favoring. The risk concentrates in the 'pre-session debt resolved' framing, which credits the session for fixes to bugs that predated the session \u2014 true on a literal-credit-assignment basis but rhetorically self-flattering. The independent_reviewer_counterclaim addresses this directly.",
+  "bias_direction": "The session record is self-authored within the same session it documents — self-review compounds bias. The yield numbers and CI-restoration claims are objectively verifiable from git history and the audit scripts, mitigating direct self-favoring. The risk concentrates in the 'pre-session debt resolved' framing, which credits the session for fixes to bugs that predated the session — true on a literal-credit-assignment basis but rhetorically self-flattering. The independent_reviewer_counterclaim addresses this directly. [RE-ATTESTATION 2026-06-11 per PI rule #11a: originally attested by session_2026-05-19-deployment-state-reconciliation at doctrine 61c7f95; re-checked and re-attested at 3da73bd by session_2026-06-11-stage-4.3-gate-closure after doctrine delta 3fb2882 (Stage-1.1 tier-hierarchy revision: SR/meta T3->T2, Tier 1 expanded to admit directly-relevant high-control non-OT primary research, Tier 3 redefined as lower-control primary, Tiers 4-6 walled off). Assessment: Activity log; no tier-dependent doctrinal claims. Compliance unchanged.]",
   "independent_reviewer_counterclaim": "An outside reviewer would object that this session conflates two distinct accomplishments: (1) draining the V2-manual NULL queue, which is genuine forward progress, and (2) fixing long-standing CI breakage, which is restoring a baseline that the session ITSELF didn't establish. The CI fixes were necessary because the session's own work (B01 enum additions) tripped the silent failure into visibility; without those additions, the CI would have remained quietly broken without the session noticing. Crediting the session for 'restoring' CI elides that the session was the proximate trigger of the visibility. The substantive contribution is the V2-manual track (DR-2026-05-19 + 6 batches + 3 routing mechanics), which is genuine; the CI work is housekeeping that should have happened earlier and is mostly other people's deferred work.",
   "verdict": "DEVIATION-LOGGED"
 }

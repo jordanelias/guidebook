@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "session": "session_2026-05-26-gap-driven-mining-protocol-design",
   "artifact": "sessions/session_2026-05-26-gap-driven-mining-protocol-design.md",
-  "doctrine_sha": "61c7f95",
+  "doctrine_sha": "3da73bd",
   "rules_in_scope": [
     "source-discipline",
     "adherence-logging-and-attestation",
@@ -31,7 +31,7 @@
       "reason": "RETROACTIVE consolidation. The session-consolidator protocol expects the session that performed the work to consolidate at its own close from conversation history. Here a later session (2026-05-28) reconstructs the unconsolidated 2026-05-26 work from git + DB primitives because LATEST was stale and no record existed. The reconstruction is faithful but provenance-flagged; it is not a substitute for the live close that did not happen."
     }
   ],
-  "bias_direction": "Reconstructing a session I did not run, three days later, with no transcript. The risk is over-smoothing: presenting diff-derived facts with more apparent process certainty than a lived record would, or implying GAP-283 is fully resolved when the DB shows the gap row still OPEN and the protocol unexercised (0 gap_mining rows). Mitigated by stating status precisely (PROPOSED DR, structural-only closure, deferred triage/pilot) and by the provenance banner.",
+  "bias_direction": "Reconstructing a session I did not run, three days later, with no transcript. The risk is over-smoothing: presenting diff-derived facts with more apparent process certainty than a lived record would, or implying GAP-283 is fully resolved when the DB shows the gap row still OPEN and the protocol unexercised (0 gap_mining rows). Mitigated by stating status precisely (PROPOSED DR, structural-only closure, deferred triage/pilot) and by the provenance banner. [RE-ATTESTATION 2026-06-11 per PI rule #11a: originally attested by session_2026-05-26-gap-driven-mining-protocol-design at doctrine 61c7f95; re-checked and re-attested at 3da73bd by session_2026-06-11-stage-4.3-gate-closure after doctrine delta 3fb2882 (Stage-1.1 tier-hierarchy revision: SR/meta T3->T2, Tier 1 expanded to admit directly-relevant high-control non-OT primary research, Tier 3 redefined as lower-control primary, Tiers 4-6 walled off). Assessment: Activity log; no tier-dependent doctrinal claims. Compliance unchanged.]",
   "independent_reviewer_counterclaim": "An outside reviewer would object that any retroactive session record risks laundering reconstruction-from-diffs into the continuity chain as if it were lived session memory, and that authoring records for other sessions could normalize backfilling. Counter: (a) the provenance banner makes the reconstruction explicit and dates it; (b) every claim cites a SHA, file, or DB query, so the record is independently verifiable; (c) leaving the continuity break unrepaired already caused concrete harm (this turn nearly proceeded on a 3-day-stale plan), so a flagged reconstruction is strictly better than a silent gap.",
   "verdict": "DEVIATION-LOGGED"
 }

@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "session": "session_2026-05-23-bpc-rewrite-phase-b-closure",
   "artifact": "decisions/DR-2026-05-23-pre-rehab-banner-cohort-definition.md",
-  "doctrine_sha": "61c7f95",
+  "doctrine_sha": "3da73bd",
   "rules_in_scope": [
     "source-discipline",
     "canonical-workplan",
@@ -18,12 +18,12 @@
     "canonical-workplan": {
       "status": "FIRED",
       "evidence_path": "decisions/DR-2026-05-23-pre-rehab-banner-cohort-definition.md#related",
-      "reason": "DR closes workplan \u00a7B.0 (Retraction banners on pre-rehabilitation opus-synthesis BPCs). Phase ordering respected \u2014 Phase B work continues; no Phase E synthesis content authored; no synthesis claim made on any of the 70 cohort BPCs."
+      "reason": "DR closes workplan §B.0 (Retraction banners on pre-rehabilitation opus-synthesis BPCs). Phase ordering respected — Phase B work continues; no Phase E synthesis content authored; no synthesis claim made on any of the 70 cohort BPCs."
     },
     "evidence-verification-gate-for-synthesis": {
       "status": "FIRED",
       "evidence_path": "decisions/DR-2026-05-23-pre-rehab-banner-cohort-definition.md#phase-e2g-overwrite",
-      "reason": "DR sharpens rule #10's final-paragraph cohort wording for the retraction banner. Existence gate unchanged (still {COMPLETE, COMPLETE-STATUTORY} \u00d7 {VERIFIED, UNVERIFIED-1}); sub-rules 1/2/3 unchanged. The change is scope of who carries the banner, not what clears it. Banner-removal predicate explicitly restated to anchor against drift."
+      "reason": "DR sharpens rule #10's final-paragraph cohort wording for the retraction banner. Existence gate unchanged (still {COMPLETE, COMPLETE-STATUTORY} × {VERIFIED, UNVERIFIED-1}); sub-rules 1/2/3 unchanged. The change is scope of who carries the banner, not what clears it. Banner-removal predicate explicitly restated to anchor against drift."
     },
     "adherence-logging-and-attestation": {
       "status": "FIRED",
@@ -31,7 +31,7 @@
     }
   },
   "deviations": [],
-  "bias_direction": "Self-authored DR bias: the cohort definition was widened from the PI rule's literal text ('2026-03-30 round') to ~70 files based on the same session's scan of [OPUS-SYNTHESIS*] tag variants. There is a natural pull toward maximalist banner application when uncertain. The handoff's ~30 estimate was honored as a data point but ultimately overridden by file-level evidence; this could over-correct if the owner's ~30 estimate reflected a deliberate scope narrowing (e.g., 'only the formally-published opus-synthesis round, not provisional or annotated tags'). Per owner correction (2026-05-23): no PI text amendment is needed \u2014 the DR + audit script + DB state are sufficient armature. Mitigation: cohort manifest committed; audit script ships; if Phase E.2g reverification narrows the cohort, transitions out of RETRACTED-PRE-REHAB are forward-reversible at the DB and markdown level without DR retraction.",
-  "independent_reviewer_counterclaim": "An independent reviewer would object that the DR is being authored mid-session from a single Claude's evidence sweep, in the same turn that applies the changes it ratifies. The proper sequence under DR-2026-05-19's pilot-first norm would be: (1) author the DR PROPOSED, (2) wait for owner ratification, (3) apply. The reviewer would also push back on widening the cohort 2.3\u00d7 from the handoff's stated target without first asking 'is ~30 a deliberate subset?' (the user answered 'proceed' to the catalog, which the session interpreted as approving the recommended Option B \u2014 defensible but not the only reading). Counter: the DR status is PROPOSED, not ratified; the changes are forward-reversible at the DB and markdown level; the cohort manifest is frozen at HEAD b0a4a25 so replay is deterministic; the audit script makes ongoing drift detectable. The same-session companion 'queue v10.15 PI amendment' step was withdrawn per owner correction the same session, tightening the deliberation footprint to DR + audit + DB only.",
+  "bias_direction": "Self-authored DR bias: the cohort definition was widened from the PI rule's literal text ('2026-03-30 round') to ~70 files based on the same session's scan of [OPUS-SYNTHESIS*] tag variants. There is a natural pull toward maximalist banner application when uncertain. The handoff's ~30 estimate was honored as a data point but ultimately overridden by file-level evidence; this could over-correct if the owner's ~30 estimate reflected a deliberate scope narrowing (e.g., 'only the formally-published opus-synthesis round, not provisional or annotated tags'). Per owner correction (2026-05-23): no PI text amendment is needed — the DR + audit script + DB state are sufficient armature. Mitigation: cohort manifest committed; audit script ships; if Phase E.2g reverification narrows the cohort, transitions out of RETRACTED-PRE-REHAB are forward-reversible at the DB and markdown level without DR retraction. [RE-ATTESTATION 2026-06-11 per PI rule #11a: originally attested by session_2026-05-23-bpc-rewrite-phase-b-closure at doctrine 61c7f95; re-checked and re-attested at 3da73bd by session_2026-06-11-stage-4.3-gate-closure after doctrine delta 3fb2882 (Stage-1.1 tier-hierarchy revision: SR/meta T3->T2, Tier 1 expanded to admit directly-relevant high-control non-OT primary research, Tier 3 redefined as lower-control primary, Tiers 4-6 walled off). Assessment: No tier-dependent claims; banner cohort is defined by metadata/verification state. Compliance unchanged.]",
+  "independent_reviewer_counterclaim": "An independent reviewer would object that the DR is being authored mid-session from a single Claude's evidence sweep, in the same turn that applies the changes it ratifies. The proper sequence under DR-2026-05-19's pilot-first norm would be: (1) author the DR PROPOSED, (2) wait for owner ratification, (3) apply. The reviewer would also push back on widening the cohort 2.3× from the handoff's stated target without first asking 'is ~30 a deliberate subset?' (the user answered 'proceed' to the catalog, which the session interpreted as approving the recommended Option B — defensible but not the only reading). Counter: the DR status is PROPOSED, not ratified; the changes are forward-reversible at the DB and markdown level; the cohort manifest is frozen at HEAD b0a4a25 so replay is deterministic; the audit script makes ongoing drift detectable. The same-session companion 'queue v10.15 PI amendment' step was withdrawn per owner correction the same session, tightening the deliberation footprint to DR + audit + DB only.",
   "verdict": "DEVIATION-LOGGED"
 }
