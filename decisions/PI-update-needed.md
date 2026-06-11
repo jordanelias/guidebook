@@ -133,3 +133,14 @@ The cohort decision is captured durably without touching PI. Future Phase E.2g o
 Per architecture v2.3 `<migration_and_growth>`: PI bumps go live only when the owner manually pastes the new content into claude.ai → Project Settings. Repo-side snapshot files in `governance/` are the audit-trail counterpart and are committed directly. The repo-side commit does not change the live PI.
 
 Per standing rule #11 (per v10.13 still live; v10.14 adds the explicit ordering): commits modifying this file (`decisions/PI-update-needed.md`) require a `[DOCTRINE: <sha>]` token AND a corresponding `attestations/decisions_PI-update-needed.json` entry. Going forward (per v10.14): token placement is BEFORE the timestamp.
+
+---
+
+## v10.15 — QUEUED (2026-06-10): rule #2 capability-floor clarification
+
+Per `decisions/DR-2026-06-10-synthesis-model-floor.md` (RATIFIED 2026-06-10). Amend standing rule #2's first sentence to express the synthesis restriction as a **capability floor**, not a brand pin:
+
+> Current: "Sonnet does NOT write `best_practice_synthesis` — only Opus."
+> Proposed: "`best_practice_synthesis` is written only by an Opus-class-or-above model (the project's top capability tier); lower-tier models produce evidence inventories, reasoning-document drafts, and per-population logging, and queue for synthesis per Phase E.2f."
+
+Rationale: the rule protects judgment quality at the top tier; the literal string "Opus" was the capability ceiling at authoring time and now under-specifies it (Stage 4.3 runs under Fable 5, a Mythos-class model above Opus). State/skill model-pins are swept separately (Stage 4.3 plan G4c). Goes live only on owner paste into claude.ai → Project Settings; this file and the DR are the repo-side audit-trail counterpart.

@@ -1,23 +1,21 @@
 {
-    "schema_version": "1.0",
-    "session": "session_2026-06-09-stage-1-5-governance-hygiene",
-    "artifact": "decisions/PI-update-needed.md",
-    "doctrine_sha": "3da73bd",
-    "rules_in_scope": ["source-discipline", "adherence-logging-and-attestation"],
-    "per_rule_status": {
-        "source-discipline": {
-            "status": "FIRED",
-            "evidence_path": "decisions/PI-update-needed.md",
-            "reason": "The deployment-state correction (v10.14 LIVE, not pending) is verified against the operative session PI, whose header reads 'V10.14 - Revised 2026-05-20' - direct evidence v10.14 is deployed. The DR-2026-05-28-c hooks_status queue entry is grounded in migration 021 + the confirmed-present population_integrity_audit.py. v10.16 and v10.15-rejected sections preserved unchanged."
-        },
-        "adherence-logging-and-attestation": {
-            "status": "FIRED",
-            "evidence_path": "attestations/decisions_PI-update-needed.json",
-            "reason": "Updates the prior attestation for the touched file (decisions/ path). Commit carries [DOCTRINE: 3da73bd] before the timestamp per the v10.14 canonical form; doctrine_sha bumped 61c7f95 -> 3da73bd to match HEAD:governance/mission-and-epistemics.md after the Stage 1.1 doctrine commit."
-        }
+  "schema_version": "1.0",
+  "session": "session_2026-06-10-stage4-3-ratification",
+  "artifact": "decisions/PI-update-needed.md",
+  "doctrine_sha": "3da73bd",
+  "rules_in_scope": ["best-practice-synthesis-routing", "adherence-logging-and-attestation"],
+  "per_rule_status": {
+    "best-practice-synthesis-routing": {
+      "status": "NOT-FIRED",
+      "reason": "Queues a v10.15 clarification of rule #2 for owner paste; the live PI is unchanged and no synthesis is written. The clarification expresses the existing rule as a capability floor per the ratified DR."
     },
-    "deviations": [],
-    "bias_direction": "Risk of prematurely declaring the queue empty when two documentation-only items (v10.16 skill line, DR-28-c hooks_status line) remain queued. Mitigated by keeping both queued entries explicit in the header and their own sections rather than silently dropping them, and by distinguishing the closed rule/bootstrap-track paste from the still-open documentation-only bundle.",
-    "independent_reviewer_counterclaim": "A reviewer could argue that marking v10.14 'deployed' from the session header alone is circumstantial. Counter: the operative PI loaded for this session is the authoritative signal of what is live in project settings - the same evidence basis the file itself used previously ('the most recent session prompt loaded v10.13, confirming deployment') - and the repo snapshot governance/project-instructions-v10_14.md exists; the correction merely advances the same inference one version forward.",
-    "verdict": "CLEAN"
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/decisions_PI-update-needed.json"
+    }
+  },
+  "deviations": [],
+  "bias_direction": "Same self-serving exposure as the DR it implements: queuing a PI clarification that authorizes the current model class for synthesis. The queue entry is non-binding (owner-paste required), which bounds the risk — nothing in the live PI changes from this commit, so the bias cannot take effect without an explicit owner action.",
+  "independent_reviewer_counterclaim": "A reviewer might note that queuing the clarification pre-commits the owner toward accepting it by framing it as already-ratified. Counter: the entry explicitly states it goes live only on owner paste and records the DR as its basis; the owner retains a veto at paste time, and the rationale is auditable against the DR.",
+  "verdict": "CLEAN"
 }

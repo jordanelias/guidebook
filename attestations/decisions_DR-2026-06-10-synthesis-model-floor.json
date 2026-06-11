@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-06-10-stage4-3-ratification",
+  "artifact": "decisions/DR-2026-06-10-synthesis-model-floor.md",
+  "doctrine_sha": "3da73bd",
+  "rules_in_scope": ["best-practice-synthesis-routing", "adherence-logging-and-attestation"],
+  "per_rule_status": {
+    "best-practice-synthesis-routing": {
+      "status": "NOT-FIRED",
+      "reason": "This DR clarifies the scope of rule #2 (capability floor vs brand pin) but writes no best_practice_synthesis. No synthesis content is authored; the facts/judgment split is preserved verbatim."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/decisions_DR-2026-06-10-synthesis-model-floor.json"
+    }
+  },
+  "deviations": [],
+  "bias_direction": "Acute self-serving risk: this is an AI ratifying that a model of its own class is authorized to perform the project's highest-judgment work. The bias runs toward expansively reading the capability floor so the current model qualifies, and toward downplaying that a brand-pin reading would have blocked synthesis until an owner ruling. The mitigation is that the ruling is the owner's, not mine, and the capability-floor logic holds independently of which model is current — it would equally authorize a future non-Anthropic-named top-tier model and equally restrict a future weaker one.",
+  "independent_reviewer_counterclaim": "An independent reviewer would object that 'capability floor' is unfalsifiable as stated — no benchmark defines 'Opus-class', so the floor collapses to 'whatever model is running'. Counter: the rule's real safeguard was never the model string but the downstream verification gates (#7/#8/#10), which bind every synthesis claim regardless of model and are the dominant cost; the model floor is a coarse backstop, and the reviewer's objection argues for strengthening the gates, not for pinning a superseded brand name that forbids the more capable model.",
+  "verdict": "CLEAN"
+}
