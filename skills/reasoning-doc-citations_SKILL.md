@@ -63,7 +63,8 @@ FROM evidence_sources
 WHERE ref_id = :source_ref_id;
 ```
 
-Required: `metadata_quality = 'COMPLETE'` AND `verification_status IN ('VERIFIED', 'UNVERIFIED-1')`.
+Required: `metadata_quality IN ('COMPLETE', 'COMPLETE-STATUTORY')` AND `verification_status IN ('VERIFIED', 'UNVERIFIED-1')`.
+(`COMPLETE-STATUTORY` admitted per PI rule #10 / DR-2026-05-18: statutory documents are complete via issuing-body / edition-year / jurisdiction / standard-number, not academic fields. `AUTHOR-TITLE-ONLY` and NULL/`UNVERIFIED-CLOSED`/`CLOSED-DELETED` `verification_status` remain ineligible.)
 
 If the source fails the gate:
 - Do NOT create a `reasoning_doc_citations` row.
