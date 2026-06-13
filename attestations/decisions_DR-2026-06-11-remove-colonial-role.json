@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-06-11-stage-4.3-gate-closure",
+  "artifact": "decisions/DR-2026-06-11-remove-colonial-role.md",
+  "doctrine_sha": "3da73bd",
+  "rules_in_scope": [
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-06-11-remove-colonial-role.md"
+    }
+  },
+  "deviations": [
+    {
+      "rule": "forward-only-migrations",
+      "reason": "Withdrew the same-day erroneous data migration data_20260611224657 (deleted its file and removed its data_migrations ledger row in migration 025) instead of forward-correcting, because CI rebuilds all schema migrations before all data migrations, making it impossible to drop COLONIAL from the CHECK while that migration replays its COLONIAL inserts. Scoped to a same-day migration nothing depends on; owner-authorized."
+    }
+  ],
+  "bias_direction": "This attestation covers a cleanup of my own errors (the premature G5 population and an earlier false claim that COLONIAL had no spec basis), so I am incentivized to present the withdrawal as clean and to minimize the forward-only breach.",
+  "independent_reviewer_counterclaim": "An independent reviewer would object that withdrawing a pushed migration sets a precedent for rewriting history, and that emptying the entire table exceeds the literal instruction to delete COLONIAL; both warrant explicit owner ratification rather than self-documentation.",
+  "verdict": "DEVIATION-LOGGED"
+}
