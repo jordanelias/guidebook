@@ -118,10 +118,16 @@ When citation-miner is invoked directly:
 
 ## 4. SQLite Schema Reference
 
-### evidence_sources columns (Phase 1 schema)
-`ref_id, authors, year, title, doi, doi_less_key, pmid, tier, evidence_type, jurisdiction, metadata_quality, verification_status, notes`
+### evidence_sources — `add-source` logical fields (current schema)
+The `db.py add-source` CLI takes **logical** fields that map to the real columns:
+`--authors → author_display`, `--year → pub_year`, `--title → pub_title`, plus
+`--doi, --pmid, --tier, --evidence-type, --jurisdiction, --slug, --local-ref-id`.
 
-**Note:** `authors` (not `surname`), `tier` (not `evidence_tier`), no `language` or `journal` columns.
+**Note:** the live `evidence_sources` table has **no** `authors`/`year`/`title`/`doi_less_key`
+columns (it uses `author_display`, `pub_year`, `pub_title`, …; structured authors live in
+the separate `evidence_source_authors` table). Run `.schema evidence_sources` for the full
+layout. The CLI mapping was restored 2026-06-22 (audit F-17) — earlier it crashed with
+"table evidence_sources has no column named authors".
 
 ### source_slug_links columns
 `ref_id, slug, local_ref_id`

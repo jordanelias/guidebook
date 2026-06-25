@@ -1079,8 +1079,6 @@ def main():
         }
         if args.doi:
             data["doi"] = args.doi
-            doi_key = "_".join(args.authors.split()[:1] + [str(args.year)] + args.title.split()[:3]).lower()
-            data["doi_less_key"] = doi_key
         if args.pmid:
             data["pmid"] = args.pmid
         if args.jurisdiction:
@@ -1320,8 +1318,13 @@ def update_bpc_metadata(slug: str, data: dict, session: str,
 def insert_evidence_source(data: dict, session: str,
                            dry_run: bool = False) -> str:
     """Insert a new evidence source. Returns ref_id."""
+    # Map legacy logical field names to the real evidence_sources columns and drop
+    # doi_less_key (no such column in the current schema). Without this the CLI crashed
+    # with "table evidence_sources has no column named authors" (audit F-17, 2026-06-22).
+    _LEGACY = {"authors": "author_display", "year": "pub_year", "title": "pub_title"}
+    data = {_LEGACY.get(k, k): v for k, v in data.items() if k != "doi_less_key"}
     _ES_COLS = frozenset({
-        "ref_id", "authors", "year", "title", "doi", "doi_less_key",
+        "ref_id", "author_display", "pub_year", "pub_title", "doi",
         "pmid", "tier", "evidence_type", "jurisdiction", "metadata_quality",
         "verification_status", "co1_provenance", "co1_source_type",
         "synthesis_attribution_required", "notes"

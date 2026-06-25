@@ -130,7 +130,7 @@ def apply_schema_migrations(conn, current_version: int, dry_run: bool) -> int:
         return current_version
     print(f"  Pending schema migrations: {len(pending)}")
     for version, mig in pending:
-        sql = mig.read_text()
+        sql = mig.read_text(encoding="utf-8")
         print(f"    Applying {mig.name} (→ version {version})...")
         if not dry_run:
             conn.executescript(sql)
@@ -228,7 +228,7 @@ def rebuild_from_migrations(target_db_path: str, dry_run: bool = False):
     schema_migs = discover_schema_migrations()
     print(f"  Applying {len(schema_migs)} schema migration(s)")
     for version, path in schema_migs:
-        sql = path.read_text()
+        sql = path.read_text(encoding="utf-8")
         if not dry_run:
             conn.executescript(sql)
             # Baselines set their own PRAGMA user_version inside the script;
