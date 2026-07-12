@@ -1,0 +1,1194 @@
+[
+ {
+  "item_code": "E-08",
+  "population": "DEAF",
+  "slug": "deaf-spatial-design",
+  "note": "Co-1-anchored corridor width; canonical tier-system.md \u00a73 case",
+  "state": "stated",
+  "design_scale": "population",
+  "tier_basis": "CO1+T2+T3",
+  "governing_refs": [
+   "REF-00338",
+   "REF-00339",
+   "REF-00342",
+   "REF-00343",
+   "REF-00344",
+   "REF-00345",
+   "REF-00347"
+  ],
+  "code_floor_only": 0,
+  "regulatory_stratum_only": 0,
+  "derivation_sha": "b630f0b950f4842ac02b81ff14964790a6aa46cb6984266a2483669f55562b2d",
+  "n_sources": 10,
+  "needs_population_assessment": [
+   "REF-00338",
+   "REF-00339",
+   "REF-00340",
+   "REF-00341",
+   "REF-00342",
+   "REF-00343",
+   "REF-00344",
+   "REF-00345",
+   "REF-00346",
+   "REF-00347"
+  ],
+  "tier_inconsistent": [],
+  "falsification": "Overturned if the anchoring sources are retracted/superseded, or if value-level extraction shows the axes diverge (then divergence protocol \u00a73.3 applies and a synthesis approach is owed).",
+  "convergence": {
+   "status": "pending_assessment",
+   "clinical": [
+    "REF-00343",
+    "REF-00344",
+    "REF-00347",
+    "REF-00340",
+    "REF-00341"
+   ],
+   "co1": [
+    "REF-00338",
+    "REF-00339",
+    "REF-00342",
+    "REF-00345"
+   ],
+   "co2": [],
+   "downw": [
+    "REF-00338",
+    "REF-00339",
+    "REF-00340",
+    "REF-00341",
+    "REF-00342",
+    "REF-00343",
+    "REF-00344",
+    "REF-00345",
+    "REF-00347"
+   ],
+   "disc": [
+    "REF-00346"
+   ],
+   "rationale": "2 evidence axes present (clinical/co1/co2). Value-level convergence not yet assessable: source_value_extractions has no rows for these sources; assessment queued, not assumed.",
+   "synth": null
+  },
+  "confidence": null,
+  "gap_register_id": null,
+  "cell_id": 9001,
+  "convergence_id": 9001,
+  "source_records": [
+   {
+    "ref_id": "REF-00338",
+    "tier": 1,
+    "evidence_type": "co1",
+    "grain": "specific",
+    "grain_why": "G3:individual-grain co1",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00339",
+    "tier": 1,
+    "evidence_type": "co1",
+    "grain": "specific",
+    "grain_why": "G3:individual-grain co1",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00340",
+    "tier": 3,
+    "evidence_type": "clinical",
+    "grain": "specific",
+    "grain_why": "default map",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00341",
+    "tier": 3,
+    "evidence_type": "clinical",
+    "grain": "specific",
+    "grain_why": "default map",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00342",
+    "tier": 1,
+    "evidence_type": "co1",
+    "grain": "specific",
+    "grain_why": "G3:individual-grain co1",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00343",
+    "tier": 2,
+    "evidence_type": "standard_eb",
+    "grain": "aggregate",
+    "grain_why": "G6:standard_eb@T2=synthesis-tier",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00344",
+    "tier": 2,
+    "evidence_type": "standard_eb",
+    "grain": "aggregate",
+    "grain_why": "G6:standard_eb@T2=synthesis-tier",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00345",
+    "tier": 1,
+    "evidence_type": "co1",
+    "grain": "specific",
+    "grain_why": "G3:individual-grain co1",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00346",
+    "tier": 5,
+    "evidence_type": "national_fw",
+    "grain": "code",
+    "grain_why": "default map",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   },
+   {
+    "ref_id": "REF-00347",
+    "tier": 2,
+    "evidence_type": "standard_eb",
+    "grain": "aggregate",
+    "grain_why": "G6:standard_eb@T2=synthesis-tier",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   }
+  ]
+ },
+ {
+  "item_code": "E-12",
+  "population": "MOB",
+  "slug": "mobility-built-environment",
+  "note": "full-mix; convergence assessed from real data",
+  "state": "stated",
+  "design_scale": "population",
+  "tier_basis": "T1+CO1+T2+T3",
+  "governing_refs": [
+   "REF-00059",
+   "REF-00060",
+   "REF-00062",
+   "REF-00063",
+   "REF-00064",
+   "REF-00066",
+   "REF-00070",
+   "REF-00072",
+   "REF-00073",
+   "REF-00075",
+   "REF-00076",
+   "REF-00080",
+   "REF-00082"
+  ],
+  "code_floor_only": 0,
+  "regulatory_stratum_only": 0,
+  "derivation_sha": "921ff29adbf3df6b8edc2d7df496ea55cedc480b3b0d80f2e79022c73ac51f9d",
+  "n_sources": 24,
+  "needs_population_assessment": [
+   "REF-00059",
+   "REF-00060",
+   "REF-00061",
+   "REF-00062",
+   "REF-00063",
+   "REF-00064",
+   "REF-00065",
+   "REF-00066",
+   "REF-00067",
+   "REF-00068",
+   "REF-00069",
+   "REF-00070",
+   "REF-00071",
+   "REF-00072",
+   "REF-00073",
+   "REF-00074",
+   "REF-00075",
+   "REF-00076",
+   "REF-00077",
+   "REF-00078",
+   "REF-00079",
+   "REF-00080",
+   "REF-00081",
+   "REF-00082"
+  ],
+  "tier_inconsistent": [],
+  "falsification": "Overturned if the anchoring sources are retracted/superseded, or if value-level extraction shows the axes diverge (then divergence protocol \u00a73.3 applies and a synthesis approach is owed).",
+  "convergence": {
+   "status": "pending_assessment",
+   "clinical": [
+    "REF-00059",
+    "REF-00060",
+    "REF-00070",
+    "REF-00073",
+    "REF-00075",
+    "REF-00076",
+    "REF-00064",
+    "REF-00082",
+    "REF-00068",
+    "REF-00069"
+   ],
+   "co1": [
+    "REF-00062",
+    "REF-00063",
+    "REF-00066",
+    "REF-00072",
+    "REF-00080"
+   ],
+   "co2": [],
+   "downw": [
+    "REF-00059",
+    "REF-00060",
+    "REF-00062",
+    "REF-00063",
+    "REF-00064",
+    "REF-00066",
+    "REF-00068",
+    "REF-00069",
+    "REF-00070",
+    "REF-00072",
+    "REF-00073",
+    "REF-00075",
+    "REF-00076",
+    "REF-00080",
+    "REF-00082"
+   ],
+   "disc": [
+    "REF-00061",
+    "REF-00065",
+    "REF-00067",
+    "REF-00071",
+    "REF-00074",
+    "REF-00077",
+    "REF-00078",
+    "REF-00079",
+    "REF-00081"
+   ],
+   "rationale": "2 evidence axes present (clinical/co1/co2). Value-level convergence not yet assessable: source_value_extractions has no rows for these sources; assessment queued, not assumed.",
+   "synth": null
+  },
+  "confidence": null,
+  "gap_register_id": null,
+  "cell_id": 9002,
+  "convergence_id": 9002,
+  "source_records": [
+   {
+    "ref_id": "REF-00059",
+    "tier": 1,
+    "evidence_type": "clinical",
+    "grain": "specific",
+    "grain_why": "default map",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00060",
+    "tier": 1,
+    "evidence_type": "clinical",
+    "grain": "specific",
+    "grain_why": "default map",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00061",
+    "tier": 5,
+    "evidence_type": "national_fw",
+    "grain": "code",
+    "grain_why": "default map",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   },
+   {
+    "ref_id": "REF-00062",
+    "tier": 1,
+    "evidence_type": "co1",
+    "grain": "aggregate",
+    "grain_why": "G3:population-grain co1",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00063",
+    "tier": 1,
+    "evidence_type": "co1",
+    "grain": "specific",
+    "grain_why": "G3:individual-grain co1",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00064",
+    "tier": 2,
+    "evidence_type": "standard_eb",
+    "grain": "aggregate",
+    "grain_why": "G6:standard_eb@T2=synthesis-tier",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00065",
+    "tier": 6,
+    "evidence_type": "code",
+    "grain": "code",
+    "grain_why": "default map",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   },
+   {
+    "ref_id": "REF-00066",
+    "tier": 1,
+    "evidence_type": "co1",
+    "grain": "specific",
+    "grain_why": "G3:individual-grain co1",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00067",
+    "tier": 6,
+    "evidence_type": "code",
+    "grain": "code",
+    "grain_why": "default map",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   },
+   {
+    "ref_id": "REF-00068",
+    "tier": 3,
+    "evidence_type": "clinical",
+    "grain": "specific",
+    "grain_why": "default map",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00069",
+    "tier": 3,
+    "evidence_type": "clinical",
+    "grain": "specific",
+    "grain_why": "default map",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00070",
+    "tier": 1,
+    "evidence_type": "clinical",
+    "grain": "specific",
+    "grain_why": "default map",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00071",
+    "tier": 5,
+    "evidence_type": "national_fw",
+    "grain": "code",
+    "grain_why": "default map",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   },
+   {
+    "ref_id": "REF-00072",
+    "tier": 1,
+    "evidence_type": "co1",
+    "grain": "aggregate",
+    "grain_why": "G3:population-grain co1",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00073",
+    "tier": 1,
+    "evidence_type": "clinical",
+    "grain": "specific",
+    "grain_why": "default map",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00074",
+    "tier": 6,
+    "evidence_type": "code",
+    "grain": "code",
+    "grain_why": "default map",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   },
+   {
+    "ref_id": "REF-00075",
+    "tier": 1,
+    "evidence_type": "clinical",
+    "grain": "specific",
+    "grain_why": "default map",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00076",
+    "tier": 1,
+    "evidence_type": "clinical",
+    "grain": "specific",
+    "grain_why": "default map",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00077",
+    "tier": 6,
+    "evidence_type": "code",
+    "grain": "code",
+    "grain_why": "default map",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   },
+   {
+    "ref_id": "REF-00078",
+    "tier": 5,
+    "evidence_type": "national_fw",
+    "grain": "code",
+    "grain_why": "default map",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   },
+   {
+    "ref_id": "REF-00079",
+    "tier": 5,
+    "evidence_type": "national_fw",
+    "grain": "code",
+    "grain_why": "default map",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   },
+   {
+    "ref_id": "REF-00080",
+    "tier": 1,
+    "evidence_type": "co1",
+    "grain": "specific",
+    "grain_why": "G3:individual-grain co1",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00081",
+    "tier": 6,
+    "evidence_type": "code",
+    "grain": "code",
+    "grain_why": "default map",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   },
+   {
+    "ref_id": "REF-00082",
+    "tier": 2,
+    "evidence_type": "standard_eb",
+    "grain": "aggregate",
+    "grain_why": "G6:standard_eb@T2=synthesis-tier",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   }
+  ]
+ },
+ {
+  "item_code": "G-03",
+  "population": "MOB",
+  "slug": "ot-cpg-built-environment",
+  "note": "Co-2 + T2 anchoring (\u00a72.2 cond. 3)",
+  "state": "stated",
+  "design_scale": "population",
+  "tier_basis": "T2+CO2",
+  "governing_refs": [
+   "REF-00053",
+   "REF-00054",
+   "REF-00055",
+   "REF-00056",
+   "REF-00057",
+   "REF-00058"
+  ],
+  "code_floor_only": 0,
+  "regulatory_stratum_only": 0,
+  "derivation_sha": "8dd17996e9e0e129238e7aa0dc2df7802d5a071cbf3ca06c21bec3c79ccc285f",
+  "n_sources": 6,
+  "needs_population_assessment": [
+   "REF-00053",
+   "REF-00054",
+   "REF-00055",
+   "REF-00056",
+   "REF-00057",
+   "REF-00058"
+  ],
+  "tier_inconsistent": [],
+  "falsification": "Overturned if the anchoring sources are retracted/superseded, or if value-level extraction shows the axes diverge (then divergence protocol \u00a73.3 applies and a synthesis approach is owed).",
+  "convergence": {
+   "status": "pending_assessment",
+   "clinical": [
+    "REF-00053",
+    "REF-00054",
+    "REF-00055",
+    "REF-00057"
+   ],
+   "co1": [],
+   "co2": [
+    "REF-00056",
+    "REF-00058"
+   ],
+   "downw": [
+    "REF-00053",
+    "REF-00054",
+    "REF-00055",
+    "REF-00056",
+    "REF-00057",
+    "REF-00058"
+   ],
+   "disc": [],
+   "rationale": "2 evidence axes present (clinical/co1/co2). Value-level convergence not yet assessable: source_value_extractions has no rows for these sources; assessment queued, not assumed.",
+   "synth": null
+  },
+  "confidence": null,
+  "gap_register_id": null,
+  "cell_id": 9003,
+  "convergence_id": 9003,
+  "source_records": [
+   {
+    "ref_id": "REF-00053",
+    "tier": 2,
+    "evidence_type": "standard_eb",
+    "grain": "aggregate",
+    "grain_why": "G6:standard_eb@T2=synthesis-tier",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00054",
+    "tier": 2,
+    "evidence_type": "standard_eb",
+    "grain": "aggregate",
+    "grain_why": "G6:standard_eb@T2=synthesis-tier",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00055",
+    "tier": 2,
+    "evidence_type": "standard_eb",
+    "grain": "aggregate",
+    "grain_why": "G6:standard_eb@T2=synthesis-tier",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00056",
+    "tier": 2,
+    "evidence_type": "co2",
+    "grain": "aggregate",
+    "grain_why": "default map",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00057",
+    "tier": 2,
+    "evidence_type": "standard_eb",
+    "grain": "aggregate",
+    "grain_why": "G6:standard_eb@T2=synthesis-tier",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00058",
+    "tier": 2,
+    "evidence_type": "co2",
+    "grain": "aggregate",
+    "grain_why": "default map",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   }
+  ]
+ },
+ {
+  "item_code": "C-02",
+  "population": "DEM",
+  "slug": "wayfinding-cognitive-science-spatial-design",
+  "note": "T3-alone; exercises DR-2026-07-12-tier3-stated-threshold",
+  "state": "provisional",
+  "design_scale": "population",
+  "tier_basis": "T3-only",
+  "governing_refs": [
+   "REF-00478",
+   "REF-00479",
+   "REF-00480",
+   "REF-00481",
+   "REF-00482",
+   "REF-00484",
+   "REF-00485"
+  ],
+  "code_floor_only": 0,
+  "regulatory_stratum_only": 0,
+  "derivation_sha": "46f05fa8a0a9c810c1f4dc67708a8057b7e71d3ef24d79bffd5945b3abf85590",
+  "n_sources": 7,
+  "needs_population_assessment": [
+   "REF-00478",
+   "REF-00479",
+   "REF-00480",
+   "REF-00481",
+   "REF-00482",
+   "REF-00484",
+   "REF-00485"
+  ],
+  "tier_inconsistent": [],
+  "falsification": "Overturned if T1/Co-1/T2/Co-2 evidence emerges (cell upgrades to stated per \u00a72.7) or the T3 sources are retracted (cell downgrades to pending).",
+  "convergence": {
+   "status": "single_axis",
+   "clinical": [
+    "REF-00478",
+    "REF-00479",
+    "REF-00480",
+    "REF-00481",
+    "REF-00482",
+    "REF-00484",
+    "REF-00485"
+   ],
+   "co1": [],
+   "co2": [],
+   "downw": [
+    "REF-00478",
+    "REF-00479",
+    "REF-00480",
+    "REF-00481",
+    "REF-00482",
+    "REF-00484",
+    "REF-00485"
+   ],
+   "disc": [],
+   "rationale": "single evidence axis: T3-clinical alone \u2014 'rarely the sole basis' (tier-system.md \u00a71); provisional per tier3-stated-threshold DR",
+   "synth": null
+  },
+  "confidence": {
+   "present": [
+    "Tier 3 lower-control primary clinical research"
+   ],
+   "absent": [
+    "No Tier 1 clinical",
+    "No Co-1",
+    "No Tier 2 synthesis",
+    "No Co-2 CPG"
+   ],
+   "basis": "Qualified synthesis from 7 T3-clinical sources on wayfinding-cognitive-science-spatial-design"
+  },
+  "gap_register_id": null,
+  "cell_id": 9004,
+  "convergence_id": 9004,
+  "source_records": [
+   {
+    "ref_id": "REF-00478",
+    "tier": 3,
+    "evidence_type": "clinical",
+    "grain": "specific",
+    "grain_why": "default map",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00479",
+    "tier": 3,
+    "evidence_type": "clinical",
+    "grain": "specific",
+    "grain_why": "default map",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00480",
+    "tier": 3,
+    "evidence_type": "clinical",
+    "grain": "specific",
+    "grain_why": "default map",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00481",
+    "tier": 3,
+    "evidence_type": "clinical",
+    "grain": "specific",
+    "grain_why": "default map",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00482",
+    "tier": 3,
+    "evidence_type": "clinical",
+    "grain": "specific",
+    "grain_why": "default map",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00484",
+    "tier": 3,
+    "evidence_type": "clinical",
+    "grain": "specific",
+    "grain_why": "default map",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00485",
+    "tier": 3,
+    "evidence_type": "clinical",
+    "grain": "specific",
+    "grain_why": "default map",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   }
+  ]
+ },
+ {
+  "item_code": "E-06",
+  "population": "MOB",
+  "slug": "threshold-and-level-access",
+  "note": "T4-6 only; decisive G1 regulatory-stratum test",
+  "state": "provisional",
+  "design_scale": "universal",
+  "tier_basis": "T4-6-only(regulatory_stratum_only)",
+  "governing_refs": [
+   "REF-00410",
+   "REF-00429",
+   "REF-00430",
+   "REF-00431",
+   "REF-00432",
+   "REF-00433",
+   "REF-00434",
+   "REF-00435",
+   "REF-00436",
+   "REF-00437",
+   "REF-00438",
+   "REF-00439",
+   "REF-00440",
+   "REF-00441",
+   "REF-00442"
+  ],
+  "code_floor_only": 0,
+  "regulatory_stratum_only": 1,
+  "derivation_sha": "65a32bb2b9df7a00ea6d9af3b575294b59822951350df47d4fff7950a97ebc4d",
+  "n_sources": 15,
+  "needs_population_assessment": [
+   "REF-00410",
+   "REF-00429",
+   "REF-00430",
+   "REF-00431",
+   "REF-00432",
+   "REF-00433",
+   "REF-00434",
+   "REF-00435",
+   "REF-00436",
+   "REF-00437",
+   "REF-00438",
+   "REF-00439",
+   "REF-00440",
+   "REF-00441",
+   "REF-00442"
+  ],
+  "tier_inconsistent": [],
+  "falsification": "This is a floor claim: overturned if the cited editions are superseded. It never becomes a best-practice claim by more codes agreeing; only T1/Co-1/T2/Co-2 evidence can do that (\u00a72.7).",
+  "convergence": {
+   "status": "single_axis",
+   "clinical": [],
+   "co1": [],
+   "co2": [],
+   "downw": [],
+   "disc": [
+    "REF-00410",
+    "REF-00429",
+    "REF-00430",
+    "REF-00431",
+    "REF-00432",
+    "REF-00433",
+    "REF-00434",
+    "REF-00435",
+    "REF-00436",
+    "REF-00437",
+    "REF-00438",
+    "REF-00439",
+    "REF-00440",
+    "REF-00441",
+    "REF-00442"
+   ],
+   "rationale": "regulatory stratum only (T4-6): convergence-not-evidence (tier-system.md \u00a73). Universal-Mode regulatory determination; richness: >=1 T4 international standard (\u00a72.3)",
+   "synth": null
+  },
+  "confidence": {
+   "present": [
+    "Tier 4-5 standards (5)",
+    "Tier 6 statutory codes (10)"
+   ],
+   "absent": [
+    "No Tier 1 clinical",
+    "No Co-1",
+    "No Tier 2 synthesis",
+    "No Co-2 CPG",
+    "No Tier 3 clinical"
+   ],
+   "basis": "Regulatory-stratum floor synthesis (>=1 T4 international standard (\u00a72.3)). NOT an evidence-anchored best practice: no anchoring dimension exists."
+  },
+  "gap_register_id": null,
+  "cell_id": 9005,
+  "convergence_id": 9005,
+  "source_records": [
+   {
+    "ref_id": "REF-00410",
+    "tier": 5,
+    "evidence_type": "national_fw",
+    "grain": "code",
+    "grain_why": "default map",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   },
+   {
+    "ref_id": "REF-00429",
+    "tier": 6,
+    "evidence_type": "code",
+    "grain": "code",
+    "grain_why": "default map",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   },
+   {
+    "ref_id": "REF-00430",
+    "tier": 5,
+    "evidence_type": "national_fw",
+    "grain": "code",
+    "grain_why": "default map",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   },
+   {
+    "ref_id": "REF-00431",
+    "tier": 6,
+    "evidence_type": "code",
+    "grain": "code",
+    "grain_why": "default map",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   },
+   {
+    "ref_id": "REF-00432",
+    "tier": 6,
+    "evidence_type": "code",
+    "grain": "code",
+    "grain_why": "default map",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   },
+   {
+    "ref_id": "REF-00433",
+    "tier": 5,
+    "evidence_type": "national_fw",
+    "grain": "code",
+    "grain_why": "default map",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   },
+   {
+    "ref_id": "REF-00434",
+    "tier": 6,
+    "evidence_type": "code",
+    "grain": "code",
+    "grain_why": "default map",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   },
+   {
+    "ref_id": "REF-00435",
+    "tier": 6,
+    "evidence_type": "code",
+    "grain": "code",
+    "grain_why": "default map",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   },
+   {
+    "ref_id": "REF-00436",
+    "tier": 6,
+    "evidence_type": "code",
+    "grain": "code",
+    "grain_why": "default map",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   },
+   {
+    "ref_id": "REF-00437",
+    "tier": 5,
+    "evidence_type": "national_fw",
+    "grain": "code",
+    "grain_why": "default map",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   },
+   {
+    "ref_id": "REF-00438",
+    "tier": 6,
+    "evidence_type": "code",
+    "grain": "code",
+    "grain_why": "default map",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   },
+   {
+    "ref_id": "REF-00439",
+    "tier": 6,
+    "evidence_type": "code",
+    "grain": "code",
+    "grain_why": "default map",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   },
+   {
+    "ref_id": "REF-00440",
+    "tier": 6,
+    "evidence_type": "code",
+    "grain": "code",
+    "grain_why": "default map",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   },
+   {
+    "ref_id": "REF-00441",
+    "tier": 4,
+    "evidence_type": "standard_eb",
+    "grain": "code",
+    "grain_why": "G6:standard_eb@T4/5=regulatory (no re-graining claimed: G1)",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   },
+   {
+    "ref_id": "REF-00442",
+    "tier": 6,
+    "evidence_type": "code",
+    "grain": "code",
+    "grain_why": "default map",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   }
+  ]
+ },
+ {
+  "item_code": "G-03",
+  "population": "SCI",
+  "slug": "fold-down-grab-bar-specification",
+  "note": "zero evidence; pending + gap",
+  "state": "pending",
+  "design_scale": "population",
+  "tier_basis": null,
+  "governing_refs": [],
+  "code_floor_only": 0,
+  "regulatory_stratum_only": 0,
+  "derivation_sha": "7458363a0e30339a63c7b4cc0c075a4869c9c255ff5e1c73e313fbd25b1389bf",
+  "n_sources": 0,
+  "needs_population_assessment": [],
+  "tier_inconsistent": [],
+  "falsification": null,
+  "convergence": null,
+  "confidence": null,
+  "gap_register_id": "GAP-297",
+  "cell_id": 9006,
+  "convergence_id": null,
+  "source_records": []
+ },
+ {
+  "item_code": "B-10",
+  "population": "NEU",
+  "slug": "visual-fire-alarm-seizure-safety",
+  "note": "mixed with one T2 anchor lifting cell out of regulatory stratum",
+  "state": "stated",
+  "design_scale": "population",
+  "tier_basis": "T2+T3",
+  "governing_refs": [
+   "REF-00537"
+  ],
+  "code_floor_only": 0,
+  "regulatory_stratum_only": 0,
+  "derivation_sha": "c6ef561b37d26001a0cef834711badcbef95b4cdc26b8a9dd059c34cf395a748",
+  "n_sources": 7,
+  "needs_population_assessment": [
+   "REF-00472",
+   "REF-00535",
+   "REF-00536",
+   "REF-00537",
+   "REF-00538",
+   "REF-00539",
+   "REF-00540"
+  ],
+  "tier_inconsistent": [],
+  "falsification": "Overturned if the anchoring sources are retracted/superseded, or if value-level extraction shows the axes diverge (then divergence protocol \u00a73.3 applies and a synthesis approach is owed).",
+  "convergence": {
+   "status": "single_axis",
+   "clinical": [
+    "REF-00537",
+    "REF-00535",
+    "REF-00538",
+    "REF-00539"
+   ],
+   "co1": [],
+   "co2": [],
+   "downw": [
+    "REF-00535",
+    "REF-00537",
+    "REF-00538",
+    "REF-00539"
+   ],
+   "disc": [
+    "REF-00472",
+    "REF-00536",
+    "REF-00540"
+   ],
+   "rationale": "single evidence axis: clinical",
+   "synth": null
+  },
+  "confidence": null,
+  "gap_register_id": null,
+  "cell_id": 9007,
+  "convergence_id": 9006,
+  "source_records": [
+   {
+    "ref_id": "REF-00472",
+    "tier": 4,
+    "evidence_type": "standard_eb",
+    "grain": "code",
+    "grain_why": "G6:standard_eb@T4/5=regulatory (no re-graining claimed: G1)",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   },
+   {
+    "ref_id": "REF-00535",
+    "tier": 3,
+    "evidence_type": "clinical",
+    "grain": "specific",
+    "grain_why": "default map",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00536",
+    "tier": 6,
+    "evidence_type": "code",
+    "grain": "code",
+    "grain_why": "default map",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   },
+   {
+    "ref_id": "REF-00537",
+    "tier": 2,
+    "evidence_type": "standard_eb",
+    "grain": "aggregate",
+    "grain_why": "G6:standard_eb@T2=synthesis-tier",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00538",
+    "tier": 3,
+    "evidence_type": "clinical",
+    "grain": "specific",
+    "grain_why": "default map",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00539",
+    "tier": 3,
+    "evidence_type": "clinical",
+    "grain": "specific",
+    "grain_why": "default map",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED"
+   },
+   {
+    "ref_id": "REF-00540",
+    "tier": 4,
+    "evidence_type": "standard_eb",
+    "grain": "code",
+    "grain_why": "G6:standard_eb@T4/5=regulatory (no re-graining claimed: G1)",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "NON-ANCHORING"
+   }
+  ]
+ }
+]
