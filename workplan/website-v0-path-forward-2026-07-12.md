@@ -1,0 +1,48 @@
+# Website v0 — path forward (2026-07-12)
+
+**Status: proposed plan, companion to three PROPOSED (not yet owner-ratified) Decision Records.** This document is the concrete, phased path referenced by `decisions/DR-2026-07-12-website-architecture-lock.md` item 4 — it exists (the first draft of that DR cited this document before it was written, which independent adversarial review correctly flagged as a problem; this is the fix).
+
+## What this reconciles
+
+Three conflicts identified in `audits/project-inventory-and-state-2026-07-12.md` and worked through in this session:
+
+1. **Three incompatible website designs, no formal reconciliation.** Resolved (as a proposal) in `decisions/DR-2026-07-12-website-architecture-lock.md`: no Postgres/Directus/Meilisearch/Vercel; no new frontend framework; extend the project's own already-working `tools/regenerate_vetting_surface.py` pattern; defer `armature_v4`'s axis model to v2.
+2. **`evidence_cell_state` schema conflict** (two incompatible designs for the empty core "best-practice determination" table). Resolved (as a proposal) in `decisions/DR-2026-07-12-evidence-cell-state-schema-reconciliation.md`, implemented in `scripts/migrations/026_reconcile_evidence_cell_state.sql`.
+3. **The Tier-3-alone `stated`-threshold question** DR-2026-05-29 explicitly left open. Resolved (as a proposal) in `decisions/DR-2026-07-12-tier3-stated-threshold.md`, implemented as new checks in `scripts/validate_evidence_state.py`.
+
+**All three DRs are PROPOSED, not owner-ratified.** Everything below describes what becomes possible *if* they are ratified; none of it is a claim that it has already happened.
+
+## What has already been built and tested (against throwaway copies only — the committed `data/guidebook.db` is untouched)
+
+- Migration 026 (schema: reconciled `evidence_cell_state`, new `jurisdictional_values` and `weighting_profile` tables, four derived views) — dry-run and applied twice against local test copies, verified against a full `--rebuild` reproducibility check, verified `scripts/validate_evidence_state.py --states-only` passes.
+- `scripts/migrations/data_20260712150000_jurisdictional-values-backfill.sql` — loads all 109 records from `data/jurisdictional_values/*.yaml` (previously not in the DB at all) into the new table. Verified row count matches (109) after applying.
+- Three new validator checks in `scripts/validate_evidence_state.py` (anti-hallucination gate on `governing_refs`; `code_floor_only` cells cannot be `stated`; Tier-3-alone cells cannot be `stated`) — each smoke-tested against synthetic rows confirming they fire on bad data and pass on good data.
+- `scripts/generate/population_page.py` and `scripts/generate/spec_page.py` — fully rewritten against the real live schema (the previous versions queried a `population`/`specification`/`room` schema that was never migrated and failed on every invocation; see `audits/project-inventory-and-state-2026-07-12.md` §2/§6). Each tested end-to-end against a throwaway copy of the reconciled schema, producing valid, parseable HTML with an honest "best-practice determination: not yet computed" banner where `evidence_cell_state` has no rows for that page.
+
+## What is explicitly NOT done, and why
+
+- **`scripts/generate/room_page.py` is not rewritten.** Unlike population/spec pages, there is no "room" concept anywhere in the live database schema — not even as an unloaded YAML corpus (which is what `jurisdictional_values` turned out to be). Building a real `room_page.py` would require inventing an entire new data model (which items belong to which room types) from scratch, under time pressure, as a side effect of a page-generator rewrite. That is exactly the kind of hasty, unscoped schema invention this whole reconciliation effort has been trying to eliminate elsewhere (see the jurisdiction-in-key correction in the schema DR). **This is a named, open gap requiring its own scoped design decision — not a silent omission and not something to fake with placeholder data.**
+- **The migration has not been applied to the committed `data/guidebook.db`.** Applying an unratified schema change to the canonical, shared database is a materially different and bigger action than analyzing and proposing one — this was correctly stopped twice during this session. Applying it (once the owner ratifies the schema DR) is a fast, low-risk, already-tested action — see "Next steps" below.
+- **No attestation JSON files have been created for the three new DRs**, and the two currently-failing PR checks (`Attestation schema + presence`, `Audits... migration-reproducibility`) are expected to stay red until the owner decides how to proceed (see "Two things needing your decision" below) — they are not silently ignored, they are blocked on exactly the decisions this document surfaces.
+- **The full 14-page-template/URL-routing schema from `page-templates.md` is not built.** Only the two page types with real, joinable live data (population, item/spec) have working generators. The remaining templates (`/conflicts`, `/jurisdictions`, `/bibliography`, `/economics`, etc.) each need the same treatment population/spec pages just got: check what real tables exist, design against those, do not assume `page-templates.md`'s literal SQL works.
+- **`/search`** has a proposed approach (client-side, build-time JSON index — see `decisions/DR-2026-07-12-website-architecture-lock.md` item 3) but no implementation yet. At this project's scale (92 items, 640 evidence sources, 82 BPCs) this is a small task once the page generators it would index are further along.
+
+## Two things needing your decision (not analysis — genuine judgment calls)
+
+1. **Do you want to ratify the three PROPOSED DRs** (`DR-2026-07-12-website-architecture-lock.md`, `DR-2026-07-12-evidence-cell-state-schema-reconciliation.md`, `DR-2026-07-12-tier3-stated-threshold.md`), as drafted or with amendments? Each DR's "What would make this ACCEPTED" section says exactly what that requires.
+2. **If ratified, do you want the migration applied to the real database now?** It has been tested twice on throwaway copies and is low-risk (0 rows either way, purely additive schema plus a clean YAML backfill), but applying it to canonical shared state is your call, not a default action.
+
+Separately, two blockers already identified in `audits/project-inventory-and-state-2026-07-12.md` remain genuinely owner-only and outside what any session (Claude Code or claude.ai) can resolve from the repo alone:
+
+- **Scholarly-connector approval** (GAP-286 / D-4.3-C) — needs to be approved in claude.ai project settings; has been outstanding since 2026-05-11.
+- **`lang_jur_map` PRIMARY/SECONDARY criteria** — `decisions/DR-2026-06-11-remove-colonial-role.md` left this undefined, leaving 5 jurisdictions (NG, GH, ZA, PH, SG) unmapped. A ready-to-ratify proposal, to minimize the work this needs from you: **PRIMARY = the language a jurisdiction's official building-code/standards documents are actually published in as the primary legal text; SECONDARY = any other language with substantial official or de facto use in that jurisdiction, including colonial-legacy official languages** (consistent with `workplan/A.3`'s own pre-existing examples, which already treat colonial-legacy English as SECONDARY, not PRIMARY — this is the same logic DR-2026-06-11 already applied when removing the undefined COLONIAL value). Adopting this criterion resolves the *definition* immediately and consistently with precedent, but does not by itself supply what IS primary for NG/GH/ZA/PH/SG — that still needs either a short research pass or your direct knowledge (e.g., Hausa/Igbo/Yoruba for Nigeria, Twi/Akan for Ghana, and so on) to actually populate those five rows.
+
+## Sequenced next steps (once the above are decided)
+
+1. Owner ratifies (or amends) the three DRs.
+2. Apply `scripts/migrations/026_*.sql` and the jurisdictional-values data migration to the real `data/guidebook.db` — already tested, would resolve the migration-reproducibility CI failure.
+3. Author attestation JSON files for the three DRs per `schemas/attestation.schema.json` and the commit-message `[DOCTRINE: <sha>]` convention `scripts/audit/adherence_log_audit.py` enforces — would resolve the attestation-presence CI failure. Note for whoever does this: the attestation schema's `session` field expects a `session_YYYY-MM-DD...` identifier, matching the claude.ai project-session convention this repo's governance ritual was designed around; this work was done in a Claude Code session instead, which has no corresponding `sessions/*.md` log file. Using a descriptive, honestly-labeled session-like string (rather than fabricating a fake claude.ai-style session log) is the recommended approach, but this is itself a small instance of the broader Claude-Code-migration gap `audits/project-inventory-and-state-2026-07-12.md` §6 already flagged.
+4. Regenerate `site/populations/*.html` and `site/specs/*.html` from the rewritten generators (replacing the dead, broken snapshot currently committed) and, separately, decide whether to also regenerate `site/rooms/*.html` or explicitly retire it pending a real room-data-model decision.
+5. Scope the remaining page templates (`/conflicts`, `/jurisdictions`, `/bibliography`, `/economics`, `/case-studies`, etc.) one at a time, each starting from "what real tables exist" rather than `page-templates.md`'s literal SQL.
+6. Build the client-side `/search` index once enough page types exist to be worth searching.
+7. Only after the above, revisit whether `armature_v4`'s richer axis model is worth building as a v2 layer — gated on its own Tier B/C (clinical/PWLE-DPO) validation actually happening, per that model's own resolutions document.
