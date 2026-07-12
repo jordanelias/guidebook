@@ -23,13 +23,33 @@ Two checks:
      historical migration/seed scripts that legitimately reference an older
      schema shape the live DB no longer has — see
      audits/project-inventory-and-state-2026-07-12.md finding 3 on DB
-     non-reproducibility from migration history), and scripts/test(s)/
-     (fixtures, not runtime code).
+     non-reproducibility from migration history). scripts/tests/ (plural)
+     is EXCLUDED FOR A DIFFERENT REASON than the docstring originally
+     (wrongly) claimed: it is NOT dead/fixture-only code —
+     .github/workflows/ci.yml runs scripts/tests/test_db_integrity.py as a
+     blocking check on every push. It is excluded because that file
+     references a known-legacy table (evidence_sources_v1_legacy) behind an
+     explicit existence guard this lexical scanner cannot see, which would
+     otherwise be a guaranteed false positive; scripts/test/ (singular) is
+     excluded as an actual one-time/legacy directory, same rationale as
+     scripts/db/migrate/probes/.
   2. Unreferenced tables: tables that exist in the live database but are
      never referenced by any scanned (live-surface) script. Not a failure —
      some tables are legitimately populated only by migrations or read only
      via ad hoc/legacy tooling excluded from check 1 — surfaced as INFO for
-     the owner to sanity-check.
+     the owner to sanity-check. Tables only ever referenced through dynamic
+     (f-string-interpolated) table names are reported separately (see check 3)
+     rather than folded into this INFO list, since this scanner cannot
+     resolve an interpolated variable to a table name and would otherwise
+     misreport those tables as fully unreferenced.
+  3. Dynamic references: FROM/JOIN/etc. followed by an f-string
+     `{variable}` instead of a literal identifier. These cannot be resolved
+     to a table name by a lexical scan, so they are listed as INFO
+     (file + line count) rather than silently dropped or silently folded
+     into check 2's "unreferenced" count — an earlier version of this
+     script did the latter, which produced an incorrect INFO list (tables
+     actually referenced via scripts/audit/population_integrity_audit.py's
+     `f"...FROM {jt}"` pattern showed up as "unreferenced").
 
 Known limitations (stated explicitly rather than silently over-claimed):
   - Only matches UPPERCASE SQL keywords (FROM/JOIN/INTO/UPDATE), matching
@@ -40,10 +60,14 @@ Known limitations (stated explicitly rather than silently over-claimed):
     introduced by a `WITH alias AS (...)` clause in the same query — such
     aliases can surface as false-positive "missing table" hits and need a
     human read of the flagged line, not blind trust in the FAIL count.
-  - Excluding scripts/db/, scripts/migrate/, scripts/probes/ trades recall
-    for precision: if one of those directories starts holding live,
-    routinely-run code rather than one-time historical scripts, it should
-    move out of EXCLUDE_DIRS.
+  - Excluding scripts/db/, scripts/migrate/, scripts/probes/, scripts/test/
+    trades recall for precision: if one of those directories starts holding
+    live, routinely-run code rather than one-time historical scripts, it
+    should move out of EXCLUDE_DIRS. This exclusion is directory-based, not
+    semantic — a one-time/legacy script sitting as a loose file directly in
+    scripts/ (e.g. scripts/migrate_evidence_sources_v2.py) is NOT excluded
+    just because its purpose matches the excluded directories', and can
+    still surface as a real (if low-priority) check-1 hit.
   - Does not parse schemas/*.py Pydantic models against column definitions;
     Pydantic models here are hand-structured (nested objects, computed
     fields) and do not map 1:1 to SQL columns, so a field-level diff would
@@ -73,6 +97,7 @@ EXCLUDE_DIRS = {"migrations", "db", "migrate", "probes", "test", "tests"}
 THIS_FILE = Path(__file__).resolve()
 
 TABLE_REF_RE = re.compile(r'\b(?:FROM|JOIN|INTO|UPDATE)\s+["\'`]?([A-Za-z_][A-Za-z0-9_]*)')
+DYNAMIC_REF_RE = re.compile(r'\b(?:FROM|JOIN|INTO|UPDATE)\s+\{(\w+)\}')
 
 SQLITE_INTERNAL_PREFIXES = ("sqlite_",)
 
@@ -85,8 +110,15 @@ def live_tables(conn):
 
 
 def scan_references():
-    """Return {table_name: set of relative file paths that reference it}."""
+    """Return (refs, dynamic_refs).
+
+    refs: {table_name: set of relative file paths that reference it via a
+    literal identifier}.
+    dynamic_refs: {relative file path: count of FROM/JOIN/etc. followed by
+    an f-string {variable} this scanner cannot resolve to a table name}.
+    """
     refs = {}
+    dynamic_refs = {}
     for path in SCRIPTS_DIR.rglob("*.py"):
         if path.resolve() == THIS_FILE:
             continue
@@ -96,10 +128,14 @@ def scan_references():
             text = path.read_text(encoding="utf-8", errors="ignore")
         except OSError:
             continue
+        rel = str(path.relative_to(REPO_ROOT))
         for m in TABLE_REF_RE.finditer(text):
             table = m.group(1)
-            refs.setdefault(table, set()).add(str(path.relative_to(REPO_ROOT)))
-    return refs
+            refs.setdefault(table, set()).add(rel)
+        n_dynamic = len(DYNAMIC_REF_RE.findall(text))
+        if n_dynamic:
+            dynamic_refs[rel] = n_dynamic
+    return refs, dynamic_refs
 
 
 def audit():
@@ -107,9 +143,14 @@ def audit():
         print(f"ERROR: DB not found at {DB_PATH}", file=sys.stderr)
         return 1
 
-    conn = sqlite3.connect(DB_PATH)
-    tables = live_tables(conn)
-    refs = scan_references()
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        tables = live_tables(conn)
+    except sqlite3.DatabaseError as e:
+        print(f"ERROR: {DB_PATH} is not a readable SQLite database: {e}", file=sys.stderr)
+        return 1
+
+    refs, dynamic_refs = scan_references()
 
     print("=" * 70)
     print("schema_reference_drift_audit.py")
@@ -149,6 +190,19 @@ def audit():
             print(f"      {t}")
         if len(unreferenced) > 20:
             print(f"      ... ({len(unreferenced) - 20} more)")
+
+    # Check 3: dynamic (f-string) table references this scanner can't resolve.
+    print()
+    if dynamic_refs:
+        total_dynamic = sum(dynamic_refs.values())
+        print(f"[3] INFO: {total_dynamic} dynamic (f-string-interpolated) table reference(s) "
+              f"in {len(dynamic_refs)} file(s) — not resolvable to a table name")
+        print("    (a table only reached this way may appear in check [2]'s 'unreferenced'")
+        print("     list even though it IS referenced — verify manually)")
+        for f, n in sorted(dynamic_refs.items()):
+            print(f"      {f}: {n}")
+    else:
+        print("[3] INFO: no dynamic (f-string) table references found")
 
     print()
     print("=" * 70)

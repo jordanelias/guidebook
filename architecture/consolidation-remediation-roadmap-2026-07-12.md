@@ -4,6 +4,8 @@
 **Prepared by:** Claude Code, at the owner's request, following `audits/consolidation-sweep-2026-07-12.md`.
 **Status:** Proposal / reference — not itself a Decision Record. The two policy questions in this roadmap that require owner ratification are filed separately as `decisions/DR-2026-07-12-decision-tracking-naming-and-schema-doc-currency.md` and `decisions/DR-2026-07-12-versioning-and-archive-consolidation.md`.
 
+**Revision note (post-adversarial-review):** An independent fresh-context reviewer found that the original Principle 1 below ("edit-in-place for governance documents") was itself wrong — `project-architecture-guidebook-v2.3.md`'s `<migration_and_growth>` section already prescribes the new-file-per-PI-revision pattern that produced the 8-file `v10_7`–`v10_14` chain, for a real reason (the PI is not API-writable; the owner manually pastes a full replacement into claude.ai project settings, so a stable single file wouldn't give them a complete document to paste). Treating that as an unrecognized gap would have meant proposing to reverse an already-ratified rule while calling it "new." Principle 1 below is corrected accordingly, and both DRs now carry a self-review caveat this revision didn't originally include.
+
 This document does not restate `architecture/project-architecture-guidebook-v2.3.md`. That document already establishes the governing principles for most of what this roadmap addresses — a single canonical data layer, one archive convention, an enforcement spectrum for promoting text rules to code-checked rules. Where the sweep found a **gap in the existing architecture**, this document proposes new principles. Where it found **non-compliance with an already-stated rule**, this document proposes a remediation, not a new rule.
 
 ---
@@ -16,8 +18,8 @@ This document does not restate `architecture/project-architecture-guidebook-v2.3
 
 ## New principles (genuine gaps in the existing architecture)
 
-**1. Edit-in-place for governance documents; git history is the version log.**
-v2.3 doesn't currently say anything about *how a governance document gets revised* — only how project data is versioned (migrations). The PI's 8-file version chain (`v10_7`–`v10_14`) and the armature 4-document design chain both show the same gap: nothing says "the current version lives at one stable path; prior text is `git log`, not a new file." Proposed rule: any document whose job is "state the current policy" (PI, architecture specs, tier system, mission) lives at one un-suffixed filename; revisions are commits, not new files. Documents whose job is "record a point-in-time decision or analysis" (DRs, audits, session logs) are correctly named with a date and should *not* be edited in place after the fact — the distinction is what the document is *for*, not a blanket rule.
+**1. Archive superseded PI files promptly; don't change how new ones are created.**
+*(Corrected from the original draft, which wrongly claimed this was an unaddressed gap — see revision note above.)* v2.3 already prescribes drafting each PI bump as a new `governance/project-instructions-v<next>.md` file, for a real, unchanged reason: the PI is not API-writable, so the owner needs a complete standalone document to paste into claude.ai project settings, not a diff. That mechanism is not being reversed here. The actual gap is narrower and doesn't touch it: v2.3 says how to *create* the next version but not when to *retire* the previous one, so 8 files (`v10_7`–`v10_14`) now sit side-by-side in `governance/` instead of the superseded 7 moving to `_archived/` the way `<migration_and_growth>` already requires for retired content generally. Proposed rule: once a PI version is confirmed pasted-live (or superseded by a newer draft the owner has adopted), the previous version moves to `_archived/governance/` within the same session — applying the existing archive rule to PI specifically, not adding a new versioning mechanism. This principle does not apply to the armature four-document chain (`v3_review`/`v4`/`v4_integration`/`v4_resolutions`) — per the sweep's correction C, that's a design-review sequence, not version-forking, and its fix is consolidation into one canonical output document (P2 below), not archival-on-supersession.
 
 **2. No dated snapshot files for registers; query git history instead.**
 The gap register (3 dated snapshots) and tier-verification reports (5 dated snapshots, one pair a day apart) exist because "what did this register say on date X" was answered by copying the file instead of `git show`. Proposed rule: a register (gap register, connection register, decision register) has exactly one live path. If a point-in-time comparison is genuinely needed for a report, the report cites a commit SHA and/or embeds a git-diff excerpt, rather than committing a full copy of the register.
@@ -45,11 +47,11 @@ Ten handoff files scattered across four directories. Proposed rule: `sessions/ha
 - `evidence_cell_state` dual schema — `decisions/DR-2026-07-12-evidence-cell-state-schema-reconciliation.md`
 - Tier-3 `stated` threshold — `decisions/DR-2026-07-12-tier3-stated-threshold.md`
 - `data/guidebook.db` vs `jurisdictional_values/*.yaml` split
-- **`scripts/generate/room_page.py` is currently broken** — references 6 tables absent from the live schema, found by the new drift-check script (see `audits/consolidation-sweep-2026-07-12.md` finding 8b). Unlike the other P0 items this one has no draft DR because it's a mechanical fix, not a judgment call: apply the same table-name correction already made in `spec_page.py`/`population_page.py`.
+- **`scripts/generate/room_page.py` is broken against the live schema** — references 6 tables absent from the live schema, found by the new drift-check script (see `audits/consolidation-sweep-2026-07-12.md` finding 8b). Currently dormant (not invoked by CI or any other script, so the existing static `site/rooms/*.html` output is unaffected today) but would fail the moment anyone next tries to regenerate room pages. Unlike the other P0 items this one has no draft DR because it's a mechanical fix, not a judgment call: apply the same table-name correction already made in `spec_page.py`/`population_page.py`.
 
 **P1 — active drift risk, moderate file counts, addressed by new principles above:**
 - DOI/CrossRef helper duplication → shared module (Principle 3)
-- PI 8-file version chain → edit-in-place (Principle 1)
+- PI 8-file version chain → archive superseded versions promptly (Principle 1); the vN-per-revision mechanism itself is unchanged and stays ratified
 - bpc/search-log parity check (Principle 7)
 - Decision-tracking naming disambiguation (Principle 4)
 - Schema-doc currency markers (Principle 5)
@@ -60,12 +62,15 @@ Ten handoff files scattered across four directories. Proposed rule: `sessions/ha
 - Bibliography file consolidation
 - Handoff-document relocation (Principle 6)
 - Armature v3/v4 chain → a single consolidated "current armature" doc, with the four source documents moved to `_archived/`
+- `scripts/migrate_evidence_sources_v2.py` (references a dropped table; sweep finding 9) → relocate to `scripts/migrate/` or remove if its one-time job is done
+- 5 session-specific scripts misfiled in `scripts/migrations/` (sweep finding 10) → relocate to a session-artifacts location
 
 ## Executed this session
 
 - This roadmap and the companion sweep audit.
 - `decisions/DR-2026-07-12-decision-tracking-naming-and-schema-doc-currency.md` and `decisions/DR-2026-07-12-versioning-and-archive-consolidation.md` (both **PROPOSED**, pending owner ratification — Principles 1, 2, 4, 5, 6 above).
 - `scripts/audit/schema_reference_drift_audit.py` — a level-2 audit script (additive, non-destructive; not wired into CI) that checks for table names referenced in `scripts/` source but absent from the live database, the specific failure mode behind the phantom-table bug already caught once in the website generators.
+- An adversarial verification pass (3 independent fresh-context reviewers, each tasked with refuting rather than confirming) against all of the above, which found and this revision corrects: the Principle 1 error described in the revision note; four off-by-one counts and one broken file-path citation in the sweep audit; a missing self-review disclosure in both DRs (now added); and two real bugs in the drift-check script (an f-string false-negative silently mislabeling three referenced tables as unreferenced, and an unhandled crash on a malformed DB file — both fixed).
 
 ## Explicitly not executed this session
 
