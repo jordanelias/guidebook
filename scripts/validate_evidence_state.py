@@ -173,17 +173,45 @@ def _bad_json(lst) -> bool:
     return any(isinstance(x, str) and x.startswith("<") and x.endswith(">") for x in lst)
 
 
+def _ref_tiers(conn, ref_ids):
+    """Look up evidence_sources.tier for a list of ref_ids. Returns {ref_id: tier}."""
+    if not ref_ids:
+        return {}
+    placeholders = ",".join("?" for _ in ref_ids)
+    rows = conn.execute(
+        f"SELECT ref_id, tier FROM evidence_sources WHERE ref_id IN ({placeholders})",
+        list(ref_ids),
+    )
+    return {r[0]: r[1] for r in rows}
+
+
 def validate_cell_states_db(conn, gap_ids: set):
     """Validate evidence_cell_state rows against the §2 state machine, scale-aware.
     Mirrors schemas.evidence_state.EvidenceStateRecord's state-field rules at the
-    data layer, plus pending⇒gap-link against the gaps table. Returns (errors, n)."""
+    data layer, plus pending⇒gap-link against the gaps table. Returns (errors, n).
+
+    Also enforces (per decisions/DR-2026-07-12-evidence-cell-state-schema-reconciliation.md
+    and decisions/DR-2026-07-12-tier3-stated-threshold.md, both PROPOSED pending owner
+    ratification -- this validator implements what ratification would require, it does
+    not itself constitute ratification):
+    - anti-hallucination: stated/provisional cells must cite governing_refs (non-empty,
+      well-formed JSON array) -- a determination cannot exist without the sources that
+      establish it.
+    - code_floor_only cells (Tier-6-only evidence, best-practices-assessment-system.md
+      §3's hard rule) can never be 'stated'.
+    - Tier-3-alone (single_axis convergence, all clinical_sources resolve to tier=3)
+      cannot be 'stated' -- tier-system.md's "rarely the sole basis" characterization
+      of Tier 3.
+    """
     errors = []
     cols = ("cell_id,item_code,population_code,state,design_scale,convergence_id,"
             "confidence_dimensions_present,confidence_dimensions_absent,"
-            "confidence_synthesis_basis,gap_register_id,not_applicable_rationale")
+            "confidence_synthesis_basis,gap_register_id,not_applicable_rationale,"
+            "governing_refs,code_floor_only")
     n = 0
     for (cell_id, item_code, pop, state, design_scale, conv_id,
-         cdp, cda, csb, gap_id, na_rat) in conn.execute(f"SELECT {cols} FROM evidence_cell_state"):
+         cdp, cda, csb, gap_id, na_rat,
+         governing_refs, code_floor_only) in conn.execute(f"SELECT {cols} FROM evidence_cell_state"):
         n += 1
         tag = f"cell {cell_id} ({item_code}×{pop})"
         # scale-aware: design_scale vocabulary (§1.4/§1.6)
@@ -207,6 +235,38 @@ def validate_cell_states_db(conn, gap_ids: set):
         elif state == "stated":
             if conv_id is None:
                 errors.append(f"{tag}: state 'stated' requires a convergence assessment (≥1 source axis, §2.2)")
+            if code_floor_only:
+                errors.append(f"{tag}: state 'stated' but code_floor_only=1 — a Tier-6-only "
+                               f"cell can never be 'stated' (best-practices-assessment-system.md §3)")
+
+        # anti-hallucination gate (DR-2026-07-12-evidence-cell-state-schema-reconciliation.md):
+        # stated/provisional cells must cite the sources that establish them
+        if state in ("stated", "provisional"):
+            refs = _jlist(governing_refs)
+            if not refs or _bad_json(refs):
+                errors.append(f"{tag}: state {state!r} requires non-empty governing_refs "
+                               f"(anti-hallucination gate)")
+
+        # Tier-3-alone stated threshold (DR-2026-07-12-tier3-stated-threshold.md)
+        if state == "stated" and conv_id is not None:
+            conv_row = conn.execute(
+                "SELECT status, clinical_sources, co1_sources, co2_sources "
+                "FROM convergence_assessment WHERE convergence_id = ?",
+                (conv_id,),
+            ).fetchone()
+            if conv_row:
+                status, clinical, co1, co2 = conv_row
+                if status == "single_axis":
+                    clinical_refs = _jlist(clinical)
+                    co1_refs, co2_refs = _jlist(co1), _jlist(co2)
+                    if clinical_refs and not co1_refs and not co2_refs and not _bad_json(clinical_refs):
+                        tiers = _ref_tiers(conn, clinical_refs)
+                        if tiers and all(t == 3 for t in tiers.values()):
+                            errors.append(
+                                f"{tag}: state 'stated' but single-axis convergence is "
+                                f"Tier-3-alone ({sorted(tiers)}) — Tier 3 is 'rarely the "
+                                f"sole basis' (tier-system.md); must be 'provisional'"
+                            )
     return errors, n
 
 

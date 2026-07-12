@@ -2,14 +2,29 @@
 """
 scripts/generate/population_page.py — Static page generator for population pages.
 
-Queries SQLite and produces a self-contained HTML file for a given
-population code. Per page-templates.md Template 2.
+Queries the LIVE schema (populations, item_population_links, items,
+bpc_metadata, evidence_cell_state) and produces a single self-contained HTML
+file for a given population code, following the same pattern as
+tools/regenerate_vetting_surface.py: query real tables, inline data as JSON,
+no framework, no server, no network dependency.
+
+Per decisions/DR-2026-07-12-website-architecture-lock.md item 4:
+architecture/navigation-modes.md's four-door UX concept and page-template
+*concept* are the design language; architecture/page-templates.md's literal
+SQL (queried against a `population`/`specification`/`room` schema that was
+never migrated into the canonical DB) is NOT used -- this generator queries
+the tables that actually exist. This is a rewrite of the previous version of
+this script, which queried the non-existent `population`, `specification`,
+and `conflict` tables and failed on every invocation.
+
+Honesty requirement (workplan/website-v0-path-forward-2026-07-12.md): if
+evidence_cell_state has no rows for this population, the page says so plainly
+rather than omitting the section or implying a determination exists.
 
 Usage:
     python3 scripts/generate/population_page.py MOB
 """
 
-import json
 import os
 import sqlite3
 import sys
@@ -22,187 +37,174 @@ OUTPUT_DIR = REPO_ROOT / "site" / "populations"
 
 
 def query_population(conn, code):
-    """Fetch all data for a population page."""
-    pop = conn.execute("SELECT * FROM population WHERE code = ?", (code,)).fetchone()
-    if not pop:
+    """Fetch all data for a population page from the real live schema."""
+    row = conn.execute(
+        "SELECT population_code, display_name, category, description, "
+        "parent_code, is_compound, status FROM populations WHERE population_code = ?",
+        (code,),
+    ).fetchone()
+    if not row:
         return None
-    cols = [d[0] for d in conn.execute("SELECT * FROM population LIMIT 0").description]
-    pop_dict = dict(zip(cols, pop))
+    pop = dict(zip(
+        ["population_code", "display_name", "category", "description",
+         "parent_code", "is_compound", "status"], row,
+    ))
 
-    # Specifications
-    specs = conn.execute(
-        "SELECT sp.role, s.item_code, s.title, s.parameter, s.evidence_tier "
-        "FROM specification_population sp "
-        "JOIN specification s ON sp.spec_id = s.spec_id "
-        "WHERE sp.population_code = ? ORDER BY sp.role, s.item_code",
+    items = conn.execute(
+        "SELECT ipl.item_code, i.name, i.category, ipl.applicability, ipl.subtype "
+        "FROM item_population_links ipl "
+        "JOIN items i ON i.item_code = ipl.item_code "
+        "WHERE ipl.population_code = ? ORDER BY i.item_code",
         (code,),
     ).fetchall()
-    pop_dict["specifications"] = [
-        {"role": s[0], "item_code": s[1], "title": s[2], "parameter": s[3], "tier": s[4]}
-        for s in specs
+    pop["items"] = [
+        {"item_code": r[0], "name": r[1], "category": r[2], "applicability": r[3], "subtype": r[4]}
+        for r in items
     ]
 
-    # Conflicts
-    conflicts = conn.execute(
-        "SELECT DISTINCT c.conflict_id, c.conflict_label, c.resolution_status "
-        "FROM conflict c WHERE c.conflict_id IN ("
-        "  SELECT conflict_id FROM conflict WHERE "
-        "  population_a LIKE '%' || ? || '%' OR population_b LIKE '%' || ? || '%'"
-        ")", (code, code),
+    bpcs = conn.execute(
+        "SELECT slug, evidence_state, bpc_complete, last_updated "
+        "FROM bpc_metadata WHERE population = ? ORDER BY slug",
+        (code,),
     ).fetchall()
-    pop_dict["conflicts"] = [
-        {"id": c[0], "label": c[1], "status": c[2]} for c in conflicts
+    pop["bpcs"] = [
+        {"slug": r[0], "evidence_state": r[1], "bpc_complete": r[2], "last_updated": r[3]}
+        for r in bpcs
     ]
 
-    return pop_dict
+    cells = conn.execute(
+        "SELECT item_code, state, tier_basis, code_floor_only "
+        "FROM evidence_cell_state WHERE population_code = ? ORDER BY item_code",
+        (code,),
+    ).fetchall()
+    pop["cells"] = [
+        {"item_code": r[0], "state": r[1], "tier_basis": r[2], "code_floor_only": r[3]}
+        for r in cells
+    ]
+
+    return pop
 
 
 def render_html(pop):
-    """Render population page as HTML."""
     e = escape
-    code = e(pop["code"])
-    label = e(pop["label"])
-    profile = e(pop.get("functional_profile") or "")
-    co1 = pop.get("co1_status") or "—"
-    confidence = pop.get("evidence_confidence") or "—"
+    code = e(pop["population_code"])
+    label = e(pop["display_name"])
+    category = e(pop["category"] or "")
+    description = e(pop["description"] or "")
+    status = e(pop["status"] or "")
 
-    # Specification rows (primary then secondary)
-    primary_specs = [s for s in pop["specifications"] if s["role"] == "primary"]
-    secondary_specs = [s for s in pop["specifications"] if s["role"] == "secondary"]
+    item_rows = "".join(
+        f'<tr><td><a href="/specs/{e(it["item_code"].lower())}.html">{e(it["item_code"])}</a></td>'
+        f'<td>{e(it["name"])}</td><td>{e(it["category"] or "")}</td>'
+        f'<td>{e(it["applicability"] or "")}</td></tr>\n'
+        for it in pop["items"]
+    ) or '<tr><td colspan="4" class="empty">No items linked to this population yet.</td></tr>'
 
-    def spec_rows(specs, role_class):
-        rows = ""
-        for s in specs:
-            tier = s["tier"]
-            if isinstance(tier, str):
-                import re as _re
-                m = _re.search(r'(\d+)', str(tier))
-                tier = int(m.group(1)) if m else None
-            tier_marker = "●" if tier and tier <= 3 else "◐" if tier and tier <= 5 else "○"
-            rows += f'<tr class="{role_class}"><td><a href="/specs/{e(s["item_code"])}">{e(s["item_code"])}</a></td><td>{e(s["title"])}</td><td>{tier_marker}</td></tr>\n'
-        return rows
+    def bpc_badge(state):
+        if state == "RETRACTED-PRE-REHAB":
+            return '<span class="badge badge-retracted">RETRACTED — pending reverification</span>'
+        if state is None:
+            return '<span class="badge badge-unknown">no evidence_state recorded</span>'
+        return f'<span class="badge">{e(state)}</span>'
 
-    primary_html = spec_rows(primary_specs, "role-primary")
-    secondary_html = spec_rows(secondary_specs, "role-secondary")
+    bpc_rows = "".join(
+        f'<tr><td>{e(b["slug"])}</td><td>{bpc_badge(b["evidence_state"])}</td>'
+        f'<td>{"yes" if b["bpc_complete"] else "no"}</td></tr>\n'
+        for b in pop["bpcs"]
+    ) or '<tr><td colspan="3" class="empty">No BPC entries recorded for this population.</td></tr>'
 
-    # Conflict cards
-    conflict_html = ""
-    if pop["conflicts"]:
-        cards = "".join(
-            f'<a href="/conflicts/{e(c["id"])}" class="conflict-card">{e(c["label"] or c["id"])}</a>'
-            for c in pop["conflicts"]
+    if pop["cells"]:
+        cell_rows = "".join(
+            f'<tr><td>{e(c["item_code"])}</td><td>{e(c["state"])}</td>'
+            f'<td>{e(c["tier_basis"] or "—")}</td>'
+            f'<td>{"yes" if c["code_floor_only"] else "no"}</td></tr>\n'
+            for c in pop["cells"]
         )
-        conflict_html = f'<div class="conflict-domains">{cards}</div>'
+        bp_section = f"""<table>
+            <thead><tr><th>Item</th><th>State</th><th>Tier basis</th><th>Code floor only</th></tr></thead>
+            <tbody>{cell_rows}</tbody>
+        </table>"""
+    else:
+        bp_section = ('<p class="honest-banner">Best-practice determination: '
+                       '<strong>not yet computed</strong> for any item × this population. '
+                       'The evidence_cell_state table exists but is empty pending the Phase E '
+                       'evidence re-synthesis and best-practice engine build '
+                       '(see workplan/best-practices-assessment-system.md). '
+                       'This is not a data-loading bug — see the gap register for tracked status.</p>')
 
-    # Co-1 badge
-    co1_class = "co1-complete" if co1 == "COMPLETE" else "co1-partial" if co1 == "PARTIAL" else "co1-gap"
-    co1_gap = e(pop.get("co1_gap_note") or "")
-
-    html = f"""<!DOCTYPE html>
+    return f"""<!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{code} — {label}</title>
-    <style>
-        :root {{
-            --ink: #1a1a2e; --paper: #fafaf8; --accent: #2d5f8a;
-            --accent-light: #e8f0f7; --border: #d4d4d0; --muted: #6b6b6b;
-            --primary-bg: #e8f5e9; --secondary-bg: #f5f5f5;
-            --font-body: 'Source Serif 4', Georgia, serif;
-            --font-ui: 'DM Sans', 'Helvetica Neue', sans-serif;
-            --font-mono: 'JetBrains Mono', Consolas, monospace;
-        }}
-        * {{ margin: 0; padding: 0; box-sizing: border-box; }}
-        body {{ font-family: var(--font-body); color: var(--ink); background: var(--paper);
-               line-height: 1.65; max-width: 860px; margin: 0 auto; padding: 24px; }}
-
-        .pop-header {{ margin-bottom: 32px; }}
-        .pop-code {{ font-family: var(--font-mono); font-size: 14px; color: var(--accent);
-                     letter-spacing: 1px; text-transform: uppercase; }}
-        h1 {{ font-size: 28px; font-weight: 600; margin: 8px 0; }}
-        .confidence-badge {{ font-family: var(--font-ui); font-size: 13px; padding: 4px 10px;
-                            border-radius: 4px; background: var(--accent-light); color: var(--accent); }}
-
-        section {{ margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }}
-        section:last-child {{ border-bottom: none; }}
-        h2 {{ font-family: var(--font-ui); font-size: 16px; font-weight: 600;
-              text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 12px; }}
-
-        .profile-text {{ font-size: 16px; line-height: 1.75; }}
-
-        table {{ width: 100%; border-collapse: collapse; font-size: 14px; }}
-        th {{ font-family: var(--font-ui); font-size: 12px; text-transform: uppercase;
-              letter-spacing: 0.5px; text-align: left; padding: 8px 12px;
-              background: var(--accent-light); color: var(--accent); border-bottom: 2px solid var(--border); }}
-        td {{ padding: 8px 12px; border-bottom: 1px solid var(--border); }}
-        td a {{ color: var(--accent); text-decoration: none; font-family: var(--font-mono); }}
-        td a:hover {{ text-decoration: underline; }}
-
-        .role-primary {{ background: var(--primary-bg); }}
-        .role-secondary {{ opacity: 0.7; }}
-
-        .conflict-domains {{ display: flex; flex-wrap: wrap; gap: 8px; }}
-        .conflict-card {{ font-family: var(--font-ui); font-size: 13px; padding: 6px 14px;
-                         border-radius: 4px; background: #fff3e0; color: #e65100;
-                         border: 1px solid #ffe0b2; text-decoration: none; }}
-
-        .co1-section {{ display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }}
-        .co1-badge {{ font-family: var(--font-ui); font-size: 13px; padding: 4px 12px;
-                     border-radius: 4px; font-weight: 600; }}
-        .co1-complete {{ background: #e8f5e9; color: #2e7d32; }}
-        .co1-partial {{ background: #fff3e0; color: #e65100; }}
-        .co1-gap {{ background: #fce4ec; color: #c62828; }}
-
-        .section-label {{ font-family: var(--font-ui); font-size: 13px; color: var(--muted);
-                         margin-bottom: 8px; }}
-
-        @media (max-width: 640px) {{ body {{ padding: 16px; }} h1 {{ font-size: 22px; }} }}
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{code} — {label}</title>
+<style>
+:root {{
+    --ink: #1a1a2e; --paper: #fafaf8; --accent: #2d5f8a;
+    --accent-light: #e8f0f7; --border: #d4d4d0; --muted: #6b6b6b;
+    --font-body: Georgia, 'Times New Roman', serif;
+    --font-ui: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    --font-mono: 'Courier New', Consolas, monospace;
+}}
+* {{ margin: 0; padding: 0; box-sizing: border-box; }}
+body {{ font-family: var(--font-body); color: var(--ink); background: var(--paper);
+       line-height: 1.6; max-width: 860px; margin: 0 auto; padding: 24px; }}
+.pop-code {{ font-family: var(--font-mono); font-size: 14px; color: var(--accent);
+             letter-spacing: 1px; text-transform: uppercase; }}
+h1 {{ font-size: 26px; font-weight: 600; margin: 8px 0 4px; }}
+.meta {{ font-family: var(--font-ui); font-size: 13px; color: var(--muted); margin-bottom: 20px; }}
+section {{ margin: 28px 0; padding-bottom: 20px; border-bottom: 1px solid var(--border); }}
+section:last-child {{ border-bottom: none; }}
+h2 {{ font-family: var(--font-ui); font-size: 15px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.5px; color: var(--muted); margin-bottom: 10px; }}
+table {{ width: 100%; border-collapse: collapse; font-size: 14px; }}
+th {{ font-family: var(--font-ui); font-size: 12px; text-transform: uppercase; text-align: left;
+      padding: 6px 10px; background: var(--accent-light); color: var(--accent);
+      border-bottom: 2px solid var(--border); }}
+td {{ padding: 6px 10px; border-bottom: 1px solid var(--border); }}
+td a {{ color: var(--accent); text-decoration: none; font-family: var(--font-mono); }}
+.empty {{ color: var(--muted); font-style: italic; }}
+.badge {{ font-family: var(--font-ui); font-size: 12px; padding: 2px 8px; border-radius: 3px;
+          background: var(--accent-light); color: var(--accent); }}
+.badge-retracted {{ background: #fce4ec; color: #c62828; }}
+.badge-unknown {{ background: #f5f5f5; color: var(--muted); }}
+.honest-banner {{ background: #fff8e1; border: 1px solid #ffe082; border-radius: 4px;
+                   padding: 12px 16px; font-family: var(--font-ui); font-size: 14px; }}
+</style>
 </head>
 <body>
-
-<header class="pop-header">
-    <span class="pop-code">{code}</span>
-    <h1>{label}</h1>
-    <span class="confidence-badge">Evidence confidence: {e(confidence)}</span>
-</header>
+<span class="pop-code">{code}</span>
+<h1>{label}</h1>
+<p class="meta">{category} &middot; status: {status}</p>
 
 <section>
-    <h2>Functional Profile</h2>
-    <p class="profile-text">{profile}</p>
+<h2>Description</h2>
+<p>{description or '<span class="empty">No description recorded.</span>'}</p>
 </section>
 
 <section>
-    <h2>Specification Matrix</h2>
-    <p class="section-label">Primary specifications highlighted; secondary specifications dimmed.</p>
-    <table>
-        <thead><tr><th>Code</th><th>Specification</th><th>Evidence</th></tr></thead>
-        <tbody>
-            {primary_html}
-            {secondary_html}
-        </tbody>
-    </table>
+<h2>Applicable items ({len(pop['items'])})</h2>
+<table>
+<thead><tr><th>Item</th><th>Name</th><th>Category</th><th>Applicability</th></tr></thead>
+<tbody>{item_rows}</tbody>
+</table>
 </section>
 
 <section>
-    <h2>Co-1 (Lived Experience) Evidence</h2>
-    <div class="co1-section">
-        <span class="co1-badge {co1_class}">Co-1: {e(co1)}</span>
-        {'<span>' + co1_gap + '</span>' if co1_gap else ''}
-    </div>
+<h2>Best Practice Compendium entries ({len(pop['bpcs'])})</h2>
+<table>
+<thead><tr><th>Slug</th><th>Evidence state</th><th>BPC complete</th></tr></thead>
+<tbody>{bpc_rows}</tbody>
+</table>
 </section>
 
 <section>
-    <h2>Conflict Involvement</h2>
-    {conflict_html or '<p style="color:var(--muted)">No cross-population conflicts involving this population in current data.</p>'}
+<h2>Best-practice determinations</h2>
+{bp_section}
 </section>
 
 </body>
 </html>"""
-
-    return html
 
 
 def generate(code, output_path=None):
