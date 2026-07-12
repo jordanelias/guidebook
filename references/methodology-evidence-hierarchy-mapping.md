@@ -1,295 +1,198 @@
-# Methodology: Evidence Hierarchy Mapping and Recommendation Strength Protocol
+# Methodology: Evidence Hierarchy Mapping and Recommendation Strength Protocol (v2)
 
-**Created:** 2026-04-08 23:05 UTC
-**Model:** Opus 4.6 (CO-0006 Phase 1A — Opus-assigned)
-**Status:** DRAFT — pending project lead review
-**Governs:** All evidence classification, marker assignment, and recommendation strength determinations in the Accessible Built Environments Guidebook
+**Created:** 2026-04-08 23:05 UTC (v1, Opus 4.6, CO-0006 Phase 1A)
+**Revised:** 2026-07-12 (v2 — reconciliation to the canonical ladder)
+**Status:** v2 executes the owner directive of 2026-05-25 ("t2>t3 this is enshrined", closing GAP-273/GAP-296) and `decisions/DR-2026-05-29-evidence-hierarchy-reconciliation.md`. Both DR-2026-05-29 and `decisions/DR-2026-07-12-tier3-stated-threshold.md` flagged v1 of this file as the HIGH-priority unreconciled caller still arguing the superseded ladder; v2 is that reconciliation.
+**Governs:** the external-framework correspondence (GRADE / JBI / SIGN) and the Co-1 co-primacy justification. The ladder itself is governed by `governance/tier-system.md`; the state machine by `governance/evidence-methodology.md` §2; the directness layer by `governance/evidence-methodology.md` §1.7 + `schemas/directness.py`; the unified statement is `governance/evidence-architecture.md` (PROPOSED).
+
+## Supersession notice (v1 → v2)
+
+v1 (2026-04-08, DRAFT, never lead-reviewed) placed systematic reviews/meta-analyses at Tier 3 — below Tier 1/Co-1 — and argued the hierarchy "inverts the conventional placement." That placement and argument are **superseded**: the owner directive of 2026-05-25 enshrined synthesis above lower-control primary work (sr_meta at Tier 2), formalized in `governance/tier-system.md` §2 and DR-2026-05-29, with the four affected rows migrated by `scripts/migrations/data_20260525070000_sr_meta_t2_canonicalization.sql`. v1's indirectness argument survives in corrected form: what it tried to do with tier *placement* (account for domain-transfer indirectness) is now done by the **directness conditioning layer** — grain-matching per source per claim (`evidence-methodology.md` §1.7) — which is the methodologically correct home for GRADE's indirectness principle. Tier placement answers "what kind of claim can this source anchor"; directness answers "how well does this particular source's grain match this particular claim." v1 conflated the two.
 
 ---
 
 ## 1. Purpose
 
-This document establishes the formal relationship between the project's seven-tier evidence hierarchy and three established health-evidence grading frameworks: GRADE (Grades of Recommendation, Assessment, Development and Evaluation), JBI (Joanna Briggs Institute), and SIGN (Scottish Intercollegiate Guidelines Network). It serves three functions:
+This document establishes the formal relationship between the project's seven-tier evidence hierarchy and three established health-evidence grading frameworks: GRADE, JBI, and SIGN. It serves three functions:
 
-1. **Transparency.** External reviewers can see how the project's evidence tiers correspond to — and depart from — frameworks they already know.
-2. **Justification.** The placement of lived experience (Co-1) as co-primary with clinical research (Tier 1) is a deliberate methodological decision. This document presents the argument.
-3. **Operational protocol.** The recommendation strength protocol defines how evidence tiers translate into the specification markers (● and ○) that appear on every specification sentence in Parts 1–12.
+1. **Transparency.** External reviewers can see how the project's evidence tiers correspond to — and deliberately depart from — frameworks they already know.
+2. **Justification.** The placement of lived experience (Co-1) as co-primary with primary research (Tier 1) is a deliberate, argued methodological decision (§6), not an oversight.
+3. **Operational protocol.** How evidence tiers translate into the specification markers (● / ◐ / ○) and the four-state determination machine (§7).
 
----
-
-## 2. The Project Evidence Hierarchy
-
-The hierarchy below is restated from `references/project-standards.md` (D-18 extension). It governs all BPC entries, item specifications, and synthesis passes.
+## 2. The project evidence hierarchy (canonical, per `governance/tier-system.md`)
 
 | Tier | Label | Description |
 |---|---|---|
-| Tier 1 | OT-tested clinical research | Intervention studies where an occupational therapist tested a built environment modification and measured functional outcomes |
-| **Co-1** | **Lived experience / participatory design** | Accounts from disabled people about built environment barriers and enablers; participatory action research; DPO testimony; CRPD shadow reports. **Co-primary with Tier 1** (CRPD Art. 4.3) |
-| Tier 2 | NGO/DPO/advocacy guidelines | Design guidance published by disability advocacy organisations or NGOs with established stakeholder consultation processes |
-| Co-2 | OT professional body CPGs | Clinical practice guidelines from CAOT, AOTA, RCOT, COTEC, WFOT, OT Australia. Marked as [Tier 3 — CPG] in BPC entries |
-| Tier 3 | Systematic reviews and meta-analyses | SR/MA of quantitative or qualitative studies relevant to built environment design |
-| Tier 4 | International standards with evidence basis | ISO standards, WHO guidelines, and comparable instruments with documented evidence review processes |
-| Tier 5 | National beyond-code frameworks | National design guidance exceeding minimum statutory code requirements (e.g., BS 8300, Lifetime Homes) |
-| Tier 6 | Statutory codes | Building codes and accessibility legislation as enacted. Reference baseline only — the floor, not the aspiration |
+| Tier 1 | Primary research, high control | Intervention-level or biomechanical control on the parameter under design; OT-prioritized, not OT-exclusive (decision D-E) |
+| **Co-1** | **Lived experience / participatory design** | Disability-led lived-experience publications; DPO research; CRPD Art. 4.3 consultation outputs. **Co-primary with Tier 1** — non-substitutable on different claim types |
+| Tier 2 | Synthesis | Two streams: (a) systematic reviews / meta-analyses (`sr_meta`); (b) named-organisation evidence-based standards — DPO and professional-body guidance (`standard_eb`) |
+| Co-2 | OT professional body CPGs | CAOT, AOTA, RCOT, COTEC, WFOT and national equivalents. Co-primary with Tier 2 |
+| Tier 3 | Primary research, lower control | Cross-sectional, observational, qualitative, single-centre clinical research; grey-literature primary research. Supporting evidence — "rarely the sole basis" |
+| Tier 4 | International standards | ISO, IEC, CEN, EN — evidence-based international instruments |
+| Tier 5 | National beyond-code frameworks | BS 8300, DIN 18040 guidance strata, national CPGs scoped to the built environment |
+| Tier 6 | Statutory codes | Legally enforceable accessibility codes. **Code-baseline citations only** — the regulatory floor, never a best-practice anchor |
 
-**Key structural features:**
-- The hierarchy inverts the conventional placement of systematic reviews. Tier 3 (SR/MA) sits below Tier 1 and Co-1 because SRs of built environment interventions overwhelmingly synthesise clinical/laboratory evidence, not in-situ built environment studies. The SR aggregates evidence that is already indirect with respect to the specification domain.
-- Co-1 and Co-2 are intercalated tiers, not appendices. They occupy defined positions in the hierarchy and carry the same citation and disclosure obligations as numbered tiers.
-- Standards and codes (Tiers 4–6) are placed lowest because they codify consensus from prior evidence cycles. They tell the designer what was considered acceptable at the time of publication, not what current evidence supports.
+**Key structural features (v2):**
 
----
+- **Synthesis sits above lower-control primary work.** When a claim cites both an SR and a primary study the SR weighed, the SR is the warrant-source and must rank above its inputs (`tier-system.md` §2). This matches GRADE's synthesis-above-primary principle rather than inverting it.
+- **Co-1 and Co-2 are intercalated co-primary tracks,** not appendices — encoded as `tier: 1, evidence_type: co1` and `tier: 2, evidence_type: co2` (T-03 two-field encoding).
+- **Tiers 4–6 are the regulatory stratum,** walled off from best-practice anchoring: convergence of standards/codes is convergence-not-evidence (`tier-system.md` §3). A T4/T5 source can support a best-practice claim only where its own evidence basis is documented as traceable to T1/T2 (re-graining rule, `governance/evidence-architecture.md` §4 G1, PROPOSED).
+- **Indirectness is handled per-source, per-claim** by the directness conditioning layer (grain-matching, bidirectional, categorical: DIRECT / DOWN-WEIGHTED / DISCOUNTED / NON-ANCHORING) — not by tier placement and not by a blanket downgrade.
 
 ## 3. Mapping to GRADE
 
 ### 3.1 GRADE overview
 
-GRADE assesses the quality of a body of evidence for a specific clinical question and classifies recommendation strength. It was designed for clinical interventions (drug efficacy, surgical outcomes, diagnostic accuracy) and rates evidence quality on a four-level scale: High, Moderate, Low, Very Low. Recommendations are either Strong or Conditional (weak).
+GRADE assesses the quality of a body of evidence for a specific question, rating quality High/Moderate/Low/Very Low from study design plus five downgrading factors (risk of bias, inconsistency, **indirectness**, imprecision, publication bias) and three upgrading factors, and classifies recommendations Strong/Conditional.
 
-GRADE begins with study design (RCTs start High; observational starts Low) and applies five downgrading factors (risk of bias, inconsistency, indirectness, imprecision, publication bias) and three upgrading factors (large effect, dose-response, plausible confounding).
+### 3.2 Correspondence table (v2 placements)
 
-### 3.2 Correspondence table
-
-| Project tier | GRADE starting quality | Typical GRADE outcome after adjustment | Notes |
+| Project tier | GRADE starting quality | Typical GRADE outcome | Notes |
 |---|---|---|---|
-| Tier 1 | High (if RCT) or Low (if quasi-experimental) | Moderate to Low | Almost all Tier 1 evidence is downgraded for **indirectness** — clinical/lab settings, not actual built environments. Small sample sizes trigger **imprecision** downgrade. |
-| Co-1 | Not classifiable | Not classifiable | GRADE does not have a category for qualitative or experiential evidence. GRADE-CERQual (below) is the nearest extension. |
-| Tier 2 | Very Low | Very Low | GRADE treats advocacy guidelines as expert opinion — its lowest category. |
-| Co-2 | Low | Low | CPGs without SR backing start Low in GRADE. |
-| Tier 3 (SR of RCTs, high quality) | High | Moderate to Low | SRs of built environment studies typically synthesise observational evidence (starting Low) or clinical evidence applied to a different domain (indirectness downgrade). |
-| Tier 3 (SR of observational) | Low | Low to Very Low | Observational SR with heterogeneous populations and outcomes. |
-| Tier 4 | Not classifiable | Not classifiable | GRADE does not rate consensus standards. |
-| Tier 5 | Not classifiable | Not classifiable | Same. |
-| Tier 6 | Not classifiable | Not classifiable | Same. |
+| Tier 1 (RCT / high-control) | High (RCT) or Low (quasi-experimental) | Moderate to Low | Domain-transfer indirectness and small samples downgrade most entries; the project records this per source via the directness layer instead |
+| Co-1 | Not classifiable | Not classifiable | GRADE has no category for experiential evidence; GRADE-CERQual (§3.3) is the nearest extension |
+| Tier 2 — sr_meta | High (SR of RCTs) to Low (SR of observational) | Moderate to Very Low | Direct correspondence at the top of GRADE's own ladder — consistent with the v2 placement of synthesis at Tier 2 |
+| Tier 2 — standard_eb (named-org evidence-based standards) | Very Low (expert opinion) | Very Low | The sharpest deliberate departure: GRADE reads organisational guidance as opinion; the project reads *evidence-based* DPO/professional-body standards as synthesis (§2 homology argument) with the evidence-basis requirement doing the quality-gating |
+| Co-2 | Low | Low | CPGs without SR backing start Low in GRADE |
+| Tier 3 (lower-control clinical / grey) | Low | Low to Very Low | Matches GRADE's placement of observational designs |
+| Tiers 4–6 | Not classifiable | Not classifiable | GRADE does not rate consensus standards; the project classifies them explicitly — as a regulatory stratum, not as best-practice evidence |
 
 ### 3.3 GRADE-CERQual and Co-1
 
-GRADE-CERQual (Confidence in the Evidence from Reviews of Qualitative research) extends GRADE to qualitative evidence synthesis. CERQual assesses confidence in qualitative review findings on four components: methodological limitations, coherence, adequacy, and relevance.
+CERQual extends GRADE to qualitative evidence synthesis (methodological limitations, coherence, adequacy, relevance). It is the closest established framework to Co-1 appraisal but applies to qualitative *reviews*; most Co-1 evidence is individual-level. CERQual therefore supplies appraisal principles (§6.3) without directly classifying Co-1.
 
-CERQual is the closest established framework to the project's Co-1 tier. However, CERQual applies to qualitative systematic reviews, not to individual qualitative studies. Most Co-1 evidence in the project is individual-level (a single participatory design study, a DPO report, a CRPD shadow report), not a synthesised body of qualitative findings. CERQual therefore provides appraisal principles applicable to Co-1 but does not directly classify it.
+### 3.4 Why GRADE is insufficient for this project — and what is adopted from it
 
-### 3.4 Why GRADE is insufficient for this project
+1. **Indirectness.** Nearly all clinical evidence for built-environment specification involves domain transfer; applied as GRADE's blanket downgrade it would flatten the whole evidence base to Low/Very Low, erasing real quality distinctions. **v2 position:** GRADE's indirectness *principle* is adopted, but implemented as bidirectional grain-matching per source per claim (`evidence-methodology.md` §1.7, `schemas/directness.py`) — an aggregate SR is strongest for a population-grain claim and down-weighted for a person-grain claim, and vice versa for direct intervention studies — rather than as a hierarchy-level penalty. This is the corrected form of v1's motivation for inverting the ladder.
+2. **Qualitative exclusion.** GRADE's core framework excludes qualitative evidence. In a domain where the person using the space is a primary authority on whether it works, excluding their testimony is methodologically incoherent (§6).
+3. **Standards gap.** GRADE has no mechanism for standards/codes, which form a large fraction of the operative corpus here. The project classifies them explicitly — and then *restricts* them (regulatory stratum), which GRADE cannot express.
 
-Three structural limitations prevent GRADE from governing evidence classification in a built environment specification context:
-
-1. **Indirectness penalty.** GRADE systematically downgrades evidence applied to a population, setting, or outcome different from the one studied. Nearly all clinical evidence for built environment specifications was generated in clinical or laboratory settings and applied to architectural specifications — a domain transfer that GRADE would penalise on every entry. If applied strictly, GRADE would rate the entire evidence base as Low or Very Low, erasing meaningful quality distinctions between robust and weak evidence.
-
-2. **Qualitative exclusion.** GRADE's core framework excludes qualitative evidence entirely. CERQual extends it to qualitative synthesis but not to individual lived-experience accounts. In a domain where the person using the space is the primary authority on whether it works, excluding their testimony from the evidence hierarchy is methodologically incoherent.
-
-3. **Standards gap.** GRADE has no mechanism for classifying consensus standards (ISO, national codes). In clinical practice this is a minor gap; in built environment design, standards and codes constitute a large proportion of the operative evidence base. Leaving them unclassified renders the hierarchy incomplete.
-
-**Project position:** GRADE's downgrading and upgrading factors inform the project's quality appraisal of individual sources (particularly risk-of-bias and imprecision assessments within Tier 1 and Tier 3 sources). GRADE's hierarchy of evidence levels and recommendation strength classifications do not govern project evidence classification.
-
----
+**Adopted from GRADE:** risk-of-bias and imprecision appraisal within Tiers 1–3; the synthesis-above-primary principle; the directness principle (as a conditioning layer). **Not adopted:** GRADE's level labels and Strong/Conditional grades as governing classifications.
 
 ## 4. Mapping to JBI
 
-### 4.1 JBI overview
+### 4.1 Overview
 
-The Joanna Briggs Institute maintains separate evidence hierarchies for different question types: effectiveness, diagnosis, prognosis, economic evaluation, meaningfulness (qualitative), and text/expert opinion. This multi-hierarchy structure is more compatible with the project's evidence base than GRADE's single quantitative hierarchy.
+JBI maintains separate hierarchies per question type (effectiveness, meaningfulness/qualitative, etc.) — structurally the closest framework to the project's parallel-stream model.
 
-### 4.2 Correspondence table — JBI Effectiveness
+### 4.2 Correspondence — JBI Effectiveness (v2 placements)
 
 | Project tier | JBI effectiveness level | Notes |
 |---|---|---|
-| Tier 1 (RCT, low bias) | Level 1.c (pseudo-randomised) or Level 1.d (pre-test/post-test) | True RCTs of built environment interventions are rare. Most Tier 1 studies are pre-post with OT-measured outcomes. |
-| Tier 1 (quasi-experimental) | Level 2.d (pre-test/post-test without control) | Single-group designs typical of home modification studies. |
-| Tier 3 (SR of RCTs) | Level 1.a | Direct correspondence. |
-| Tier 3 (SR of other designs) | Level 1.b–1.c | Depends on component study designs. |
-| Co-2 | Level 5 (expert opinion) | JBI classifies CPGs without systematic evidence review as expert opinion. |
-| Tiers 4–6 | Not classified | JBI effectiveness does not rate standards or codes. |
+| Tier 2 — sr_meta (SR of RCTs) | Level 1.a | Direct correspondence — synthesis at the top of both ladders |
+| Tier 2 — sr_meta (SR of other designs) | Level 1.b–1.c | Depends on component designs |
+| Tier 1 (RCT / pseudo-randomised) | Level 1.c–1.d | True RCTs of built-environment interventions are rare |
+| Tier 1 (quasi-experimental) | Level 2.d | Pre/post single-group designs typical of home-modification studies |
+| Tier 3 (lower-control clinical) | Level 3–4 | Observational/descriptive designs |
+| Co-2 | Level 5 (expert opinion) | JBI classifies CPGs without systematic evidence review as expert opinion |
+| Tiers 4–6 | Not classified | JBI does not rate standards or codes |
 
-### 4.3 Correspondence table — JBI Meaningfulness (Qualitative)
+### 4.3 Correspondence — JBI Meaningfulness (qualitative)
 
-| Project tier | JBI meaningfulness level | Notes |
+| Project stratum | JBI meaningfulness level | Notes |
 |---|---|---|
-| Co-1 (qualitative SR) | Level 1 (SR of qualitative studies) | When Co-1 evidence is a meta-synthesis of lived experience. Rare in current BPC entries. |
-| Co-1 (individual study — phenomenology, grounded theory, ethnography, action research) | Level 2 | Most Co-1 evidence in BPC entries is individual participatory design studies or DPO reports. |
-| Co-1 (testimony/report) | Level 3 (single qualitative study, descriptive) | CRPD shadow reports, DPO policy submissions. |
-| Tier 2 | Level 4 (expert opinion from recognised authority) | NGO guidelines without primary research basis. |
+| Co-1 (qualitative meta-synthesis) | Level 1 | Rare in the current corpus |
+| Co-1 (individual participatory/phenomenological study; `co1_source_type: peer_reviewed_literature`, `dpo_research`) | Level 2 | The modal Co-1 entry |
+| Co-1 (testimony/report; `academic_narrative`, `advocacy_position`) | Level 3 | CRPD shadow reports, DPO submissions — note these carry different *grain* (G3, `evidence-architecture.md` §4): organisational positions are population-grain, narratives individual-grain |
+| Tier 2 — standard_eb without primary basis | Level 4 | Named-org guidance whose evidence basis is not documented |
 
 ### 4.4 Why JBI is the closest framework
 
-JBI's multi-hierarchy model accommodates the project's evidence base better than GRADE or SIGN because:
-
-1. **Qualitative evidence has its own hierarchy.** Co-1 evidence is classifiable within JBI's meaningfulness hierarchy without being subordinated to quantitative study designs.
-2. **Action research is explicitly included.** JBI Level 2 meaningfulness includes participatory action research — the methodology that generates Co-1 evidence in the built environment domain.
-3. **ConQual appraisal.** JBI's ConQual (Confidence in Qualitative findings) provides a structured method for assessing the dependability and credibility of qualitative evidence — applicable to Co-1 quality appraisal.
-
-**Project position:** JBI's meaningfulness hierarchy is adopted as the appraisal framework for Co-1 evidence. JBI's effectiveness hierarchy informs Tier 1 and Tier 3 classification. The project does not adopt JBI's recommendation grading (A/B) because it does not capture the standards-to-lived-experience spectrum that the project requires.
-
----
+Qualitative evidence has its own hierarchy; participatory action research is explicitly included (Level 2 meaningfulness); ConQual provides structured appraisal applicable to Co-1. **Adopted:** JBI meaningfulness as the Co-1 appraisal frame; JBI effectiveness levels to inform Tier 1/2/3 classification. **Not adopted:** JBI A/B recommendation grading.
 
 ## 5. Mapping to SIGN
 
-### 5.1 SIGN overview
+### 5.1 Correspondence table (v2 placements)
 
-SIGN uses eight evidence levels (1++ through 4) and four recommendation grades (A through D), supplemented by Good Practice Points (GPP) where evidence is insufficient but clinical experience supports a recommendation.
-
-### 5.2 Correspondence table
-
-| Project tier | SIGN level | SIGN recommendation grade (if sole evidence) |
+| Project tier | SIGN level | SIGN grade (if sole evidence) |
 |---|---|---|
+| Tier 2 — sr_meta (SR of RCTs, high quality) | 1++ | A |
+| Tier 2 — sr_meta (SR of observational) | 2++ | B |
 | Tier 1 (RCT, low bias) | 1+ | B |
 | Tier 1 (quasi-experimental) | 2+ | C |
-| Co-1 | 3 (non-analytic study) or 4 (expert opinion) | D or GPP |
-| Tier 2 | 4 | D |
-| Co-2 | 4 | D |
-| Tier 3 (SR of RCTs, high quality) | 1++ | A |
-| Tier 3 (SR of observational) | 2++ | B |
-| Tier 4 | Not classified | — |
-| Tier 5 | Not classified | — |
-| Tier 6 | Not classified | — |
+| Co-1 | 3–4 | D or GPP |
+| Tier 2 — standard_eb / Co-2 | 4 | D |
+| Tier 3 | 2− to 3 | C–D |
+| Tiers 4–6 | Not classified | — |
 
-### 5.3 SIGN Good Practice Points and the ○ marker
+### 5.2 SIGN Good Practice Points and the ○ marker
 
-SIGN's GPP concept maps directly to the project's ○ (empty circle) marker. Both denote recommendations where formal evidence is insufficient but clinical or professional reasoning supports the specification. The project's ○ carries a mandatory gap disclosure — this exceeds SIGN's GPP transparency requirement.
+SIGN's GPP maps to the project's ○ stratum (thin base / expert consensus / unconfirmed). The project's gap-disclosure obligation on ○ exceeds SIGN's GPP transparency requirement.
 
-### 5.4 Why SIGN is insufficient for this project
+### 5.3 Why SIGN is insufficient
 
-SIGN's hierarchy places lived experience at Level 3–4, generating Grade D recommendations. In the project's framework, a specification supported exclusively by robust Co-1 evidence (e.g., multiple independent participatory design studies reporting consistent findings) carries higher confidence than a SIGN Grade D implies. SIGN's linear hierarchy does not accommodate the parallel-stream model where qualitative and quantitative evidence are appraised independently and then integrated.
+SIGN places lived experience at Level 3–4 → Grade D. A specification supported by robust, convergent Co-1 evidence carries higher confidence in this domain than Grade D implies; SIGN's linear hierarchy cannot express the parallel-stream model. **Adopted:** GPP → ○ correspondence; SIGN levels as secondary discrimination within Tiers 1–3. **Not adopted:** SIGN recommendation grades.
 
-**Project position:** SIGN's GPP concept informs the ○ marker protocol. SIGN's evidence levels are used as a secondary classification for Tier 1 and Tier 3 sources where detailed quality discrimination is needed. SIGN's recommendation grades do not govern project specification markers.
-
----
-
-## 6. Co-1 Justification
+## 6. Co-1 justification
 
 ### 6.1 Statement
 
-Lived experience evidence (Co-1) is co-primary with OT-tested clinical research (Tier 1) in the project evidence hierarchy. This means that a specification supported by robust Co-1 evidence alone carries the ● (filled circle) marker — the same marker as a specification supported by Tier 1 evidence alone.
+Lived-experience evidence (Co-1) is co-primary with Tier 1 primary research. A determination grounded solely in strong, verified Co-1 evidence is a legitimate evidence-based claim (`stated`), not a provisional one (`evidence-methodology.md` §2.2).
 
 ### 6.2 Argument
 
-**6.2.1 Treaty obligation.** CRPD Article 4.3 requires States Parties to "closely consult with and actively involve persons with disabilities" in decision-making processes concerning them. Article 9 (Accessibility) and Article 19 (Living independently) apply this obligation directly to built environment design. A methodology that subordinates disabled people's testimony about their own built environment to clinical studies conducted on their behalf violates the participatory principle that the treaty embeds.
+**6.2.1 Treaty obligation.** CRPD Art. 4.3 requires close consultation with and active involvement of persons with disabilities; Arts. 9 and 19 apply this to the built environment. A methodology that subordinates disabled people's testimony about their own environments to clinical studies conducted on their behalf violates the participatory principle the treaty embeds.
 
-**6.2.2 Epistemic authority.** The person who uses a space daily has knowledge about its functional adequacy that no clinical study conducted in a laboratory can replicate. A clinical study can measure reach range in a controlled setting; only the person living in the dwelling can report whether the kitchen layout permits meal preparation across a full week accounting for fatigue variation, pain fluctuation, and the cumulative effect of environmental stressors. The lived experience account captures ecological validity that laboratory evidence structurally lacks.
+**6.2.2 Epistemic authority.** The person who uses a space daily has knowledge of its functional adequacy that laboratory study structurally cannot replicate — ecological validity across fatigue variation, pain fluctuation, cumulative environmental stressors.
 
-**6.2.3 Feasibility constraint.** Randomised controlled trials of built environment interventions face four barriers that are not methodological weaknesses but structural features of the domain: buildings cannot be randomised; occupants cannot be blinded to their environment; meaningful outcome periods span years; and ethical constraints prohibit assigning people to environments known to create barriers. These constraints mean that the highest tier of the GRADE/SIGN hierarchy (SR of large RCTs) will never be populated for most built environment specifications. A hierarchy that treats RCTs as the gold standard for this domain is not aspirational — it is structurally empty at the top.
+**6.2.3 Feasibility constraint.** RCTs of built environments face structural (not methodological) barriers: buildings cannot be randomised, occupants cannot be blinded, meaningful outcomes span years, and ethics forbids assigning people to barrier-creating environments. A hierarchy treating SR-of-large-RCTs as the gold standard is structurally empty at the top for this domain.
 
-**6.2.4 JBI precedent.** JBI's meaningfulness hierarchy recognises qualitative evidence as a separate stream with its own levels. The project extends this principle by placing the qualitative stream (Co-1) alongside the quantitative stream (Tier 1) rather than below it. This is a position statement about the domain, not a generic claim that qualitative evidence always equals quantitative evidence.
+**6.2.4 JBI precedent.** JBI recognises qualitative evidence as a separate stream with its own levels; the project extends the principle by placing the streams side by side. This is a position statement about *this domain*, not a generic claim that qualitative always equals quantitative.
 
-**6.2.5 Social model alignment.** The social model of disability locates the disabling factor in the environment, not the person. If the barrier is environmental, the person experiencing the barrier is the primary witness. Clinical evidence identifies physiological parameters (range of motion, visual acuity, cognitive processing speed) that inform specification values. Lived experience identifies whether those specification values actually remove the barrier in practice. Both evidence streams are necessary; neither is sufficient alone. Co-primary status reflects this.
+**6.2.5 Social model alignment.** If the disabling factor is environmental, the person experiencing the barrier is the primary witness. Clinical evidence identifies physiological parameters; lived experience identifies whether specification values actually remove the barrier. Both necessary; neither sufficient; co-primacy reflects it.
 
 ### 6.3 Quality appraisal for Co-1
 
-Co-1 evidence is not exempt from quality appraisal. The following criteria, adapted from JBI ConQual and CERQual, apply:
-
-| Criterion | Assessment question |
-|---|---|
-| Credibility | Is the account from a person with direct experience of the built environment condition described? |
-| Dependability | Was the account collected through a documented methodology (interview, focus group, participatory design workshop, structured survey)? |
-| Confirmability | Do independent accounts from different sources converge on the same finding? |
-| Transferability | Does the finding describe a barrier or enabler that is attributable to physical features of the built environment (not to service delivery, personal assistance, or social attitudes)? |
-| Adequacy | Is there sufficient data to support the finding — not a single anecdote but a pattern across multiple accounts or a sustained participatory process? |
-
-Co-1 evidence that fails credibility or transferability does not qualify for the ● marker. It may still be cited with ○ and gap disclosure.
+Co-1 is not exempt from appraisal. Criteria adapted from ConQual/CERQual: credibility (direct experience), dependability (documented methodology), confirmability (independent convergence), transferability (barrier attributable to physical features), adequacy (pattern, not anecdote). Operationally enforced via `governance/co1-operational.md` required fields (`co1_provenance`, `co1_source_type`, `verification_status`); Co-1 counts toward `stated` only when VERIFIED (`evidence-methodology.md` §2.2).
 
 ### 6.4 Boundary conditions
 
-Co-1 is co-primary for specification direction (what to specify) and barrier identification (what fails). Co-1 is not co-primary for specification values (dimensional parameters, performance thresholds). A lived-experience account that "the corridor is too narrow" supports specifying a minimum corridor width (direction). The minimum width value (1200mm, 1500mm, 1800mm) requires Tier 1 or Tier 3 evidence for the dimensional parameter or Tier 4–6 evidence for the code-compliant minimum. Where no quantitative evidence exists for a value, the specification uses ○ with the gap disclosed, regardless of how robust the Co-1 evidence for the direction is.
+Co-1 is co-primary for specification *direction* and *barrier identification*; it is not co-primary for dimensional *values*, which require T1/T2/T3 evidence (or regulatory citation for the code minimum). This boundary is now mechanically expressed twice: by value-directness (a Co-1 source without value-level content grades NOT-FOUND on the value dimension) and by grain (G3: population-grain Co-1 — DPO positions — anchors Population-Mode claims and never overrides an individual's assessed position at Person Mode; `governance/co1-operational.md`).
 
----
+## 7. Recommendation strength protocol (v2)
 
-## 7. Recommendation Strength Protocol
+### 7.1 Markers — the ●/◐/○ system (canonical per `tier-system.md` §5)
 
-### 7.1 The two-marker system
-
-The project uses two specification markers, not a multi-grade scale:
-
-| Marker | Meaning | Minimum evidence |
+| Marker | Meaning | Strata |
 |---|---|---|
-| ● (filled circle) | Evidence-based specification | At least one source at Tier 1, Co-1, Tier 2, Co-2, Tier 3, Tier 4, Tier 5, or Tier 6. Source quality appraised. |
-| ○ (empty circle) | Inferred specification | No direct evidence. Based on clinical reasoning, analogical extension from adjacent specifications, or expert consensus. Gap disclosed. |
+| ● | Confirmed evidence base | T1, T2 (sr_meta + standard_eb + co2 streams), T3-clinical, Co-1, Co-2 |
+| ◐ | Policy/standards basis only — not primary evidence | T4, T5 |
+| ○ | Grey, expert consensus, thin base, unconfirmed | T3-grey, `[EXPERT CONSENSUS]`, `[THIN BASE]`, `[UNSUPPORTED]`, T6 |
 
-**Why two markers, not four or five:**
+v1's two-marker system is superseded: it allowed "Tier 4–6 only → ●" with the rationale that "code compliance is inherently evidence-based (the evidence being the code itself)." That rationale is the convergence-laundering failure mode `tier-system.md` §3 names, in its oldest recorded form. Under v2, a T4–6-only basis renders ◐/○, is flagged `regulatory_stratum_only` in the determination table, and carries the regulatory-stratum register language in every audience rendering — never best-practice language (invariant I3, `governance/evidence-architecture.md` §6).
 
-Multi-grade recommendation systems (GRADE's Strong/Conditional, SIGN's A–D) are designed for clinical decision-making where the practitioner must weigh benefit against harm for an individual patient. Built environment specifications operate differently:
+### 7.2 The four-state determination machine
 
-1. A building element is either specified or not specified. There is no "conditional specification" — a door either has a minimum clear width or it does not.
-2. The consequence of a specification is borne by the population, not an individual patient. A weak recommendation in clinical practice means "consider on a case-by-case basis." In built environment design, a specification either applies to the building or it does not; case-by-case decisions occur at Tier 2 (co-design), not at Tier 1 (population-level specification).
-3. The project's three-tier design hierarchy (Universal Mode Universal/Code, Tier 1 Population-Informed, Tier 2 Person-Specific) already captures the strong-to-conditional spectrum. Universal Mode specifications are mandatory (analogous to Strong recommendation). Tier 1 specifications use median values with ranges (analogous to Conditional — apply with adjustment). Tier 2 specifications defer to OT co-design (analogous to "insufficient evidence for population-level recommendation").
+Markers annotate sources; determinations live in `evidence_cell_state` (`stated` / `provisional` / `pending` / `not_applicable`, `evidence-methodology.md` §2), produced by a pure, versioned assessment function with mandatory `governing_refs` (anti-hallucination) and a falsification condition per determination. Tier-3-alone does not reach `stated` (`decisions/DR-2026-07-12-tier3-stated-threshold.md`, PROPOSED): T3-clinical-alone ⇒ `provisional`; T3-grey-alone ⇒ `pending`.
 
-The ●/○ system therefore captures the one distinction that matters at the specification level: whether a specification has an evidence basis or is inferred from reasoning.
+### 7.3 Recommendation strength ↔ design mode
 
-### 7.2 Marker assignment rules
+The RecommendationStrength enum reconciles with the design scales (`schemas/directness.py` SCALE_FROM_RECOMMENDATION): STRONG_UNIVERSAL ↔ Universal Mode (code floor; mandatory), CONDITIONAL_POPULATION ↔ Population Mode (median + range), CONDITIONAL ↔ Person Mode (OT co-design resolves within the range). This triplet — not a Strong/Conditional grade on each specification — carries the gradation work in this project, because a building element is either specified or not, and case-by-case weighing happens at Person Mode, not in the population specification.
 
-1. A specification receives ● if at least one source at any tier directly supports the specification direction AND, for quantitative specifications, at least one source provides or permits derivation of the stated value.
-2. A specification receives ○ if no source directly supports the specification, but clinical reasoning or analogical extension from a related specification provides a rational basis. The gap must be disclosed in the specification text.
-3. A specification with ● may carry a reduced-confidence warning if the supporting evidence is exclusively from a single study, a single jurisdiction, or lacks Opus synthesis review (`opus_synthesis: false`).
-4. An unmarked specification is an error. Every specification sentence carries either ● or ○.
-
-### 7.3 Tier interaction with markers
-
-| Evidence scenario | Marker | Confidence note |
-|---|---|---|
-| Tier 1 + Co-1 convergence | ● | Highest confidence — clinical and experiential evidence agree |
-| Tier 1 alone | ● | Standard confidence |
-| Co-1 alone (robust, per §6.3 criteria) | ● | Specification direction from lived experience; value requires additional evidence or carries ○ |
-| Tier 3 alone (SR/MA directly applicable) | ● | Standard confidence |
-| Tier 3 alone (indirect — clinical domain) | ● | Reduced confidence — indirectness disclosed |
-| Tier 4–6 only | ● | Code-derived; evidence basis of the cited standard not independently verified unless Tier 4 |
-| Co-2 alone | ● | Reduced confidence — CPG without primary research |
-| Tier 2 alone | ● | Reduced confidence — advocacy guidance without primary research |
-| No tier — clinical reasoning only | ○ | Gap disclosed |
-| Tier 1 and Co-1 conflict | ● | Both findings cited; conflict noted; resolution per Part 3 §3.8 |
-
-### 7.4 Relationship to the three-tier design hierarchy
-
-| Design hierarchy tier | Typical evidence pattern | Marker |
-|---|---|---|
-| Universal Mode (Universal / Code) | Tier 6 (statutory) + usually Tier 4/5 (international/national standards) | ● — code compliance is inherently evidence-based (the evidence being the code itself) |
-| Tier 1 (Population-Informed) | Tier 1 + Co-1 + Tier 3 + Co-2 (the specification is derived from population-level evidence) | ● or ○ depending on evidence availability per population |
-| Tier 2 (Person-Specific) | Co-1 + OT assessment (the specification is resolved through co-design for an individual) | Not marked — Tier 2 specifications are process descriptions, not fixed values |
-
----
-
-## 8. Cross-Framework Summary
+## 8. Cross-framework summary
 
 | Feature | GRADE | JBI | SIGN | This project |
 |---|---|---|---|---|
-| Qualitative evidence stream | CERQual (extension — synthesis only) | Meaningfulness hierarchy (integrated) | Not addressed | Co-1 (co-primary — integrated) |
-| Standards/codes classification | Not addressed | Not addressed | Not addressed | Tiers 4–6 (explicit hierarchy) |
-| Recommendation grades | Strong / Conditional | A / B | A / B / C / D / GPP | ● / ○ (two-marker; design hierarchy captures gradation) |
-| Indirectness handling | Downgrading factor | Implicit in level assignment | Implicit in level assignment | Disclosed per specification; not a systematic downgrade |
-| Lived experience placement | Patient values (separate from evidence quality) | Level 2–3 meaningfulness | Level 3–4 | Co-primary with Tier 1 |
-| Domain | Clinical intervention efficacy | Multiple question types | Clinical guidelines | Built environment specification |
+| Qualitative stream | CERQual (synthesis only) | Meaningfulness hierarchy | Not addressed | Co-1, co-primary, integrated |
+| Standards/codes | Not addressed | Not addressed | Not addressed | Explicit regulatory stratum (T4–6), walled off from best-practice anchoring |
+| Synthesis placement | Top | Top (Level 1) | Top (1++) | Top of the non-co-primary ladder (Tier 2) — v2 alignment |
+| Recommendation grades | Strong/Conditional | A/B | A–D/GPP | ●/◐/○ + four-state machine + design-mode triplet |
+| Indirectness | Blanket downgrading factor | Implicit | Implicit | Bidirectional grain-matching per source per claim (categorical conditioning layer) |
+| Lived experience | Patient values (outside evidence quality) | Meaningfulness Level 2–3 | Level 3–4 | Co-primary with Tier 1 |
 
----
+## 9. Operational implications
 
-## 9. Operational Implications
+- **multilingual-research / research-log-manager:** record the project tier AND nearest JBI equivalent (`Tier 2 [JBI Eff. 1.a]`, `Co-1 [JBI Mean. 2]`) so external reviewers can locate each source in a recognised framework.
+- **item-specification-writer / evidence-auditor:** marker assignment per §7.1; flag any ● resting only on T4–6 (that combination is no longer expressible — it is ◐/○ + `regulatory_stratum_only`).
+- **Synthesis passes:** classify confidence via the determination tuple; where T1 and Co-1 both anchor, record axis co-presence and treat value-level convergence as an assessment output (never an assumption; cf. `pending_assessment` status).
 
-### 9.1 For multilingual-research and research-log-manager
+## 10. Limitations and future development
 
-When logging a source, record the project tier AND the nearest JBI equivalent in the `Tier` field of the BPC Key sources table (CO-0006 §1 schema). Format: `Tier 1 [JBI Eff. 1.d]` or `Co-1 [JBI Mean. 2]`. This enables external reviewers to locate each source within a recognised framework.
+Carried forward from v1 (still true): §6.3 criteria are adapted principles, not a validated instrument; ●/◐/○ inter-rater reliability untested; T4 evidence-basis verification varies by standards body (the G1 re-graining rule now gives this a mechanical home: GRAIN_AGGREGATE only with documented T1/T2 traceability). New in v2: the `evidence_population_match` (27/640) and `source_value_extractions` (0 rows) coverage gaps mean the directness layer currently runs mostly on NOT_ASSESSED inputs, capped conservatively (G2) — the honest posture until assessment coverage grows.
 
-### 9.2 For item-specification-writer
-
-When assigning ● or ○, cite this document's §7.2 rules. Where Co-1 is the sole evidence basis, apply §6.4 boundary conditions: ● for specification direction, ○ for value if no quantitative evidence supports it.
-
-### 9.3 For evidence-auditor
-
-When auditing ● assignments, verify against §7.3 tier interaction table. Flag any ● specification supported only by Tier 4–6 evidence where the cited standard's own evidence basis has not been independently verified.
-
-### 9.4 For Opus synthesis passes
-
-When writing `best_practice_synthesis`, classify the synthesis confidence using the §7.3 scenarios. Where Tier 1 and Co-1 converge, state this explicitly as the highest-confidence finding. Where they conflict, escalate per Part 3 §3.8.
-
----
-
-## 10. Limitations and Future Development
-
-1. **CERQual/ConQual application to individual studies.** Both CERQual and ConQual were designed for qualitative synthesis, not individual studies. The §6.3 criteria adapt their principles but are not a validated instrument. Development of a project-specific Co-1 appraisal checklist is a future deliverable.
-
-2. **Inter-rater reliability.** The ●/○ assignment has not been tested for inter-rater reliability. The two-marker system was chosen partly to reduce classification ambiguity, but borderline cases (particularly Co-1 adequacy and Tier 3 indirectness) remain judgment calls. A calibration exercise across multiple Opus synthesis sessions would establish consistency.
-
-3. **Evidence of absence vs. absence of evidence.** The ○ marker covers both "no one has studied this" and "studies have been conducted but are inconclusive." These are different epistemic states. A future revision may split ○ into ○ (not studied) and ◌ (studied, inconclusive).
-
-4. **Tier 4 evidence basis verification.** ISO and WHO standards vary widely in the rigour of their evidence review processes. Tier 4 is currently a single category. A future revision may split Tier 4 into 4a (evidence review process documented and accessible) and 4b (evidence basis claimed but not independently verifiable).
-
----
-
-## Amendment Register
+## Amendment register
 
 | Date | Amendment | Author |
 |---|---|---|
-| 2026-04-08 | Initial draft | Opus 4.6 — CO-0006 Phase 1A |
+| 2026-04-08 | Initial draft (v1) | Opus 4.6 — CO-0006 Phase 1A |
+| 2026-07-12 | v2: reconciled to the canonical ladder per owner directive 2026-05-25 + DR-2026-05-29 (sr_meta → T2; T3 = lower-control primary; regulatory stratum walled off); two-marker system → ●/◐/○ + four-state machine; v1 §7.3 "Tier 4–6 only → ●" corrected (convergence-laundering); indirectness moved from tier placement to the directness conditioning layer; GRADE/JBI/SIGN tables re-derived for the new placements; Co-1 justification retained and strengthened with operational enforcement pointers | Claude — evidence-architecture unification session |
