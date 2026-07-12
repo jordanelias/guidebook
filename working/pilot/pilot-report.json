@@ -6,7 +6,7 @@
   "note": "Co-1-anchored corridor width; canonical tier-system.md \u00a73 case",
   "state": "stated",
   "design_scale": "population",
-  "tier_basis": "CO1+T2+T3",
+  "tier_basis": "CO1+T2",
   "governing_refs": [
    "REF-00338",
    "REF-00339",
@@ -16,9 +16,15 @@
    "REF-00345",
    "REF-00347"
   ],
+  "supporting_refs": [
+   "REF-00340",
+   "REF-00341"
+  ],
   "code_floor_only": 0,
   "regulatory_stratum_only": 0,
-  "derivation_sha": "b630f0b950f4842ac02b81ff14964790a6aa46cb6984266a2483669f55562b2d",
+  "has_unverified_sources": 0,
+  "all_sources_disqualified": 0,
+  "derivation_sha": "d370488f43d03d4af574d6216c6cc6c4707d122d11683e8bbd8aa979bb668353",
   "n_sources": 10,
   "needs_population_assessment": [
    "REF-00338",
@@ -64,7 +70,7 @@
    "disc": [
     "REF-00346"
    ],
-   "rationale": "2 evidence axes present (clinical/co1/co2). Value-level convergence not yet assessable: source_value_extractions has no rows for these sources; assessment queued, not assumed.",
+   "rationale": "2 evidence axes present (clinical/co1). Value-level convergence not yet assessable: source_value_extractions has no rows for these sources; assessment queued, not assumed. Supporting (non-governing) T3: REF-00340, REF-00341.",
    "synth": null
   },
   "confidence": null,
@@ -181,7 +187,7 @@
   "note": "full-mix; convergence assessed from real data",
   "state": "stated",
   "design_scale": "population",
-  "tier_basis": "T1+CO1+T2+T3",
+  "tier_basis": "T1+CO1+T2",
   "governing_refs": [
    "REF-00059",
    "REF-00060",
@@ -197,9 +203,15 @@
    "REF-00080",
    "REF-00082"
   ],
+  "supporting_refs": [
+   "REF-00068",
+   "REF-00069"
+  ],
   "code_floor_only": 0,
   "regulatory_stratum_only": 0,
-  "derivation_sha": "921ff29adbf3df6b8edc2d7df496ea55cedc480b3b0d80f2e79022c73ac51f9d",
+  "has_unverified_sources": 1,
+  "all_sources_disqualified": 0,
+  "derivation_sha": "5ea4a1b3cfb2e37e66e023be27873fe2ca4b577e2824b33d082f0502fedb9e11",
   "n_sources": 24,
   "needs_population_assessment": [
    "REF-00059",
@@ -279,7 +291,7 @@
     "REF-00079",
     "REF-00081"
    ],
-   "rationale": "2 evidence axes present (clinical/co1/co2). Value-level convergence not yet assessable: source_value_extractions has no rows for these sources; assessment queued, not assumed.",
+   "rationale": "2 evidence axes present (clinical/co1). Value-level convergence not yet assessable: source_value_extractions has no rows for these sources; assessment queued, not assumed. Supporting (non-governing) T3: REF-00068, REF-00069.",
    "synth": null
   },
   "confidence": null,
@@ -545,9 +557,12 @@
    "REF-00057",
    "REF-00058"
   ],
+  "supporting_refs": [],
   "code_floor_only": 0,
   "regulatory_stratum_only": 0,
-  "derivation_sha": "8dd17996e9e0e129238e7aa0dc2df7802d5a071cbf3ca06c21bec3c79ccc285f",
+  "has_unverified_sources": 0,
+  "all_sources_disqualified": 0,
+  "derivation_sha": "ca3b869fcd1bd344c0fb9b49dc38c09055e63582095fbe850adee41ebe360b53",
   "n_sources": 6,
   "needs_population_assessment": [
    "REF-00053",
@@ -581,7 +596,7 @@
     "REF-00058"
    ],
    "disc": [],
-   "rationale": "2 evidence axes present (clinical/co1/co2). Value-level convergence not yet assessable: source_value_extractions has no rows for these sources; assessment queued, not assumed.",
+   "rationale": "2 evidence axes present (clinical/co2). Value-level convergence not yet assessable: source_value_extractions has no rows for these sources; assessment queued, not assumed.",
    "synth": null
   },
   "confidence": null,
@@ -668,9 +683,12 @@
    "REF-00484",
    "REF-00485"
   ],
+  "supporting_refs": [],
   "code_floor_only": 0,
   "regulatory_stratum_only": 0,
-  "derivation_sha": "46f05fa8a0a9c810c1f4dc67708a8057b7e71d3ef24d79bffd5945b3abf85590",
+  "has_unverified_sources": 0,
+  "all_sources_disqualified": 0,
+  "derivation_sha": "ac040583ecb394e172005f8525156092e480a8241fa0254cfdae434d6543b383",
   "n_sources": 7,
   "needs_population_assessment": [
    "REF-00478",
@@ -822,9 +840,12 @@
    "REF-00441",
    "REF-00442"
   ],
+  "supporting_refs": [],
   "code_floor_only": 0,
   "regulatory_stratum_only": 1,
-  "derivation_sha": "65a32bb2b9df7a00ea6d9af3b575294b59822951350df47d4fff7950a97ebc4d",
+  "has_unverified_sources": 0,
+  "all_sources_disqualified": 0,
+  "derivation_sha": "e117350e5cf90a6346d837e862aced60360bceae921b898988383d10f99dd683",
   "n_sources": 15,
   "needs_population_assessment": [
    "REF-00410",
@@ -868,7 +889,7 @@
     "REF-00441",
     "REF-00442"
    ],
-   "rationale": "regulatory stratum only (T4-6): convergence-not-evidence (tier-system.md \u00a73). Universal-Mode regulatory determination; richness: >=1 T4 international standard (\u00a72.3)",
+   "rationale": "regulatory stratum only (T4-6): convergence-not-evidence (tier-system.md \u00a73). Universal-Mode regulatory determination; richness: >=1 T4 international standard present (\u00a72.3; the clause's 'value directly addressing the parameter' is unverified \u2014 value extraction pending)",
    "synth": null
   },
   "confidence": {
@@ -883,7 +904,7 @@
     "No Co-2 CPG",
     "No Tier 3 clinical"
    ],
-   "basis": "Regulatory-stratum floor synthesis (>=1 T4 international standard (\u00a72.3)). NOT an evidence-anchored best practice: no anchoring dimension exists."
+   "basis": "Regulatory-stratum floor synthesis (>=1 T4 international standard present (\u00a72.3; the clause's 'value directly addressing the parameter' is unverified \u2014 value extraction pending)). NOT an evidence-anchored best practice: no anchoring dimension exists."
   },
   "gap_register_id": null,
   "cell_id": 9005,
@@ -1050,9 +1071,12 @@
   "design_scale": "population",
   "tier_basis": null,
   "governing_refs": [],
+  "supporting_refs": [],
   "code_floor_only": 0,
   "regulatory_stratum_only": 0,
-  "derivation_sha": "7458363a0e30339a63c7b4cc0c075a4869c9c255ff5e1c73e313fbd25b1389bf",
+  "has_unverified_sources": 0,
+  "all_sources_disqualified": 0,
+  "derivation_sha": "d57fb855ee58f6b58bc6e4ee6f171c8ac026266e368aad6b2b1df28fd9c2bc47",
   "n_sources": 0,
   "needs_population_assessment": [],
   "tier_inconsistent": [],
@@ -1071,13 +1095,20 @@
   "note": "mixed with one T2 anchor lifting cell out of regulatory stratum",
   "state": "stated",
   "design_scale": "population",
-  "tier_basis": "T2+T3",
+  "tier_basis": "T2",
   "governing_refs": [
    "REF-00537"
   ],
+  "supporting_refs": [
+   "REF-00535",
+   "REF-00538",
+   "REF-00539"
+  ],
   "code_floor_only": 0,
   "regulatory_stratum_only": 0,
-  "derivation_sha": "c6ef561b37d26001a0cef834711badcbef95b4cdc26b8a9dd059c34cf395a748",
+  "has_unverified_sources": 0,
+  "all_sources_disqualified": 0,
+  "derivation_sha": "b1a9c222c38a83058538163d92f325f282744400f32ce1acee46f32d99015c36",
   "n_sources": 7,
   "needs_population_assessment": [
    "REF-00472",
@@ -1111,7 +1142,7 @@
     "REF-00536",
     "REF-00540"
    ],
-   "rationale": "single evidence axis: clinical",
+   "rationale": "single evidence axis: clinical; supporting (non-governing) T3: REF-00535, REF-00538, REF-00539",
    "synth": null
   },
   "confidence": null,

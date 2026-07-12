@@ -59,15 +59,18 @@ REGISTER_MAP = {
                     "({basis}). Value-level convergence assessment pending extraction.",
         "ot": "Best practice [●]: multi-axis anchor ({basis}). Population-Mode range "
               "for Person-Mode resolution; value extraction pending.",
-        "policymaker": "Evidence-anchored best practice ({basis}) exceeds the statutory floor. "
-                       "Multiple independent evidence axes; convergence assessment pending.",
+        "policymaker": "Evidence-anchored best practice exists ({basis}); multiple independent "
+                       "evidence axes. Its relation to the recorded code minimums is pending "
+                       "value extraction — no delta is asserted before the values are.",
         "disabled_person": "Research and disabled people's own published experience both "
                            "address this. This is an evidence-based recommendation, not just "
                            "a building rule.",
         "carer": "Research and disabled people's published experience both support attention "
                  "to this feature. It is an evidence-based recommendation, not just a rule.",
         "advocacy_brief": "You can cite independent research AND community evidence for this "
-                          "({basis}). The law's minimum is not the evidence-based standard.",
+                          "({basis}). How the evidence-based value compares to the legal "
+                          "minimum is pending extraction — cite the evidence itself; "
+                          "accuracy protects credibility.",
     },
     "stated_single_axis": {
         "designer": "Best practice [●]: anchored by a single evidence axis ({basis}); "
@@ -158,16 +161,24 @@ def fetch_cells(conn):
     return cells
 
 
+FLOOR_STATUS_CAVEAT = ("Instrument status varies: jurisdictional_values stores statutory codes "
+                       "and referenced/voluntary standards together (e.g. BS 8300-2 is voluntary "
+                       "guidance, not GB law) — verify legal status per jurisdiction before "
+                       "citing any of these as a legal requirement.")
+
+
 def role_body(c, role):
     """Role-specific EMPHASIS content (what is foregrounded) — never claim strength."""
     parts = []
     floors = c["floors"]
-    floor_line = "; ".join(f"{j}: {v:g} {u} ({s})" for j, s, v, u in floors[:4])
+    # ALL floors rendered — silent truncation misleads (adversarial finding 7).
+    floor_line = "; ".join(f"{j}: {v:g} {u} ({s})" for j, s, v, u in floors)
     if role == "designer":
         parts.append(f"Evidence basis: {c['tier_basis'] or 'none'} · governing refs: "
                      f"{len(c['refs'])} · scale: {c['design_scale']}")
         if floors:
-            parts.append(f"Regulatory floor (code minimum, per jurisdiction): {floor_line}")
+            parts.append(f"Recorded code minimums, per jurisdiction: {floor_line}. "
+                         + FLOOR_STATUS_CAVEAT)
         parts.append("Evidence-anchored value range: not yet extracted "
                      "(source_value_extractions empty) — no number is invented here.")
     elif role == "ot":
@@ -176,7 +187,8 @@ def role_body(c, role):
                      "evidence conditions the assessment process, never the assessed answer.")
     elif role == "policymaker":
         if floors:
-            parts.append(f"FLOOR (statutory/harmonised minimum): {floor_line}")
+            parts.append(f"FLOOR (recorded code minimums; instrument status varies — see note): "
+                         f"{floor_line}. " + FLOOR_STATUS_CAVEAT)
             anchor_txt = ("ANCHOR: evidence-anchored best practice exists "
                           f"({c['tier_basis']}); extracted delta pending value extraction."
                           if c["state"] == "stated" and not c["rso"] else
@@ -191,7 +203,6 @@ def role_body(c, role):
             parts.append("Disabled people's own published research and positions are part of "
                          "the evidence base here — cited as evidence, alongside (not beneath) "
                          "clinical research.")
-            parts.append(CO1_LIMIT)
         parts.append("Questions to raise with your architect or OT are generated from the "
                      "Person-Mode handoff for this item.")
     elif role == "carer":
@@ -200,12 +211,20 @@ def role_body(c, role):
                      "(CRPD Art. 12, supported not substituted).")
     elif role == "advocacy_brief":
         if floors:
-            parts.append(f"The legal minimum today: {floor_line}.")
+            parts.append(f"Recorded minimums today: {floor_line}. Before citing any of these "
+                         "as 'the law', check which are statutory codes and which are "
+                         "voluntary standards in your jurisdiction — a wrongly-cited "
+                         "'legal minimum' hands the other side an easy rebuttal.")
         if c["state"] == "stated" and not c["rso"]:
             parts.append(f"The evidence base to cite: {c['tier_basis']} "
                          f"({len(c['refs'])} sources, listed in the citation chain).")
         if c["gap_id"]:
             parts.append(f"Tracked gap: {c['gap_id']} — citable as an unmet research need.")
+    # The solo-authorship Co-1 limit is declared in EVERY register of a
+    # Co-1-governed determination (evidence-architecture §9: "limits are
+    # rendered"), not only the disabled-person view (adversarial finding 18e).
+    if c["has_co1"]:
+        parts.append(CO1_LIMIT)
     return parts
 
 

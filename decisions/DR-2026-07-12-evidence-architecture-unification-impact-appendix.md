@@ -8,7 +8,7 @@
 - `scripts/validate_evidence_state.py` (CI-wired at `ci.yml:141`) and `scripts/generate/{spec,population}_page.py` already SELECT post-026 columns (`governing_refs`, `tier_basis`, `code_floor_only`) — **they crash against the committed DB until 026 is applied**. Every scenario-(a) change stacks on an unratified, unapplied migration: sequencing risk #1.
 - Two tier ladders are live in prose: NEW (sr_meta@T2, per `tier-system.md`/DR-2026-05-29) and OLD (T2=NGO, T3=SR) — the OLD ladder survives in `references/project-standards.md` (as standing RULES, L17/L26/L35), `references/methodology-evidence-hierarchy-mapping.md`, `skills/literature-review-planner_SKILL.md`, `skills/supersession-audit_SKILL.md`, `schemas/enums.py` docstring, `decisions/DR-2026-05-24-*` search table.
 - Evidence distribution (640 sources): T1=64 clinical + 29 Co-1; T2=9 sr_meta + 55 standard_eb + 3 Co-2; T3=181 clinical + 25 grey; T4=66; T5=119; T6=89. All 29 Co-1 rows carry `co1_source_type` (academic_narrative 11, advocacy_position 8, peer_reviewed 5, validated_tool 3, dpo_research 2) — **G3's input data is complete**.
-- `evidence_population_match`: 27/640 (G2's target); `source_value_extractions`: 0 rows.
+- `evidence_population_match`: 27 rows covering 26 of 640 sources (G2's target); `source_value_extractions`: 0 rows.
 
 ## Direction summaries
 

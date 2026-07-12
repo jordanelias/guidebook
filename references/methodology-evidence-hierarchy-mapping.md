@@ -53,7 +53,7 @@ GRADE assesses the quality of a body of evidence for a specific question, rating
 | Co-1 | Not classifiable | Not classifiable | GRADE has no category for experiential evidence; GRADE-CERQual (§3.3) is the nearest extension |
 | Tier 2 — sr_meta | High (SR of RCTs) to Low (SR of observational) | Moderate to Very Low | Direct correspondence at the top of GRADE's own ladder — consistent with the v2 placement of synthesis at Tier 2 |
 | Tier 2 — standard_eb (named-org evidence-based standards) | Very Low (expert opinion) | Very Low | The sharpest deliberate departure: GRADE reads organisational guidance as opinion; the project reads *evidence-based* DPO/professional-body standards as synthesis (§2 homology argument) with the evidence-basis requirement doing the quality-gating |
-| Co-2 | Low | Low | CPGs without SR backing start Low in GRADE |
+| Co-2 | Not classifiable (consensus guidance = expert opinion; ≈ Very Low) | ≈ Very Low | GRADE does not grade CPGs as an evidence class; consensus guidance without a systematic evidence review is expert opinion — the same reading GRADE gives the standard_eb row above (v1's "starts Low" overstated it, and disagreed with the standard_eb row for the same epistemic move) |
 | Tier 3 (lower-control clinical / grey) | Low | Low to Very Low | Matches GRADE's placement of observational designs |
 | Tiers 4–6 | Not classifiable | Not classifiable | GRADE does not rate consensus standards; the project classifies them explicitly — as a regulatory stratum, not as best-practice evidence |
 
@@ -80,7 +80,7 @@ JBI maintains separate hierarchies per question type (effectiveness, meaningfuln
 | Project tier | JBI effectiveness level | Notes |
 |---|---|---|
 | Tier 2 — sr_meta (SR of RCTs) | Level 1.a | Direct correspondence — synthesis at the top of both ladders |
-| Tier 2 — sr_meta (SR of other designs) | Level 1.b–1.c | Depends on component designs |
+| Tier 2 — sr_meta (SR of other designs) | Level 1.b (SR of quasi-experimental/other) | An SR stays a Level-1 synthesis entry; 1.c is an individual RCT, not an SR level |
 | Tier 1 (RCT / pseudo-randomised) | Level 1.c–1.d | True RCTs of built-environment interventions are rare |
 | Tier 1 (quasi-experimental) | Level 2.d | Pre/post single-group designs typical of home-modification studies |
 | Tier 3 (lower-control clinical) | Level 3–4 | Observational/descriptive designs |
@@ -91,9 +91,10 @@ JBI maintains separate hierarchies per question type (effectiveness, meaningfuln
 
 | Project stratum | JBI meaningfulness level | Notes |
 |---|---|---|
-| Co-1 (qualitative meta-synthesis) | Level 1 | Rare in the current corpus |
-| Co-1 (individual participatory/phenomenological study; `co1_source_type: peer_reviewed_literature`, `dpo_research`) | Level 2 | The modal Co-1 entry |
-| Co-1 (testimony/report; `academic_narrative`, `advocacy_position`) | Level 3 | CRPD shadow reports, DPO submissions — note these carry different *grain* (G3, `evidence-architecture.md` §4): organisational positions are population-grain, narratives individual-grain |
+| Co-1 (qualitative meta-synthesis) | Level 1 (SR of qualitative studies) | Rare in the current corpus |
+| Co-1 (mixed-methods/qualitative synthesis short of full SR) | Level 2 (synthesis of qualitative findings) | JBI Level 2 is a *synthesis* level, not a single-study level |
+| Co-1 (individual participatory/phenomenological study; `co1_source_type: peer_reviewed_literature`, `dpo_research`) | Level 3 (single qualitative study) | The modal Co-1 entry — corrected from v1, which placed single studies at Level 2 |
+| Co-1 (testimony/report; `academic_narrative`, `advocacy_position`) | Level 3–4 (single descriptive study / expert opinion) | CRPD shadow reports, DPO submissions — note these carry different *grain* (G3, `evidence-architecture.md` §4): organisational positions are population-grain, narratives individual-grain |
 | Tier 2 — standard_eb without primary basis | Level 4 | Named-org guidance whose evidence basis is not documented |
 
 ### 4.4 Why JBI is the closest framework
@@ -112,7 +113,7 @@ Qualitative evidence has its own hierarchy; participatory action research is exp
 | Tier 1 (quasi-experimental) | 2+ | C |
 | Co-1 | 3–4 | D or GPP |
 | Tier 2 — standard_eb / Co-2 | 4 | D |
-| Tier 3 | 2− to 3 | C–D |
+| Tier 3 | 2− to 3 | D (2− evidence cannot ground Grade C; 2+ would) |
 | Tiers 4–6 | Not classified | — |
 
 ### 5.2 SIGN Good Practice Points and the ○ marker
@@ -159,7 +160,9 @@ Co-1 is co-primary for specification *direction* and *barrier identification*; i
 | ◐ | Policy/standards basis only — not primary evidence | T4, T5 |
 | ○ | Grey, expert consensus, thin base, unconfirmed | T3-grey, `[EXPERT CONSENSUS]`, `[THIN BASE]`, `[UNSUPPORTED]`, T6 |
 
-v1's two-marker system is superseded: it allowed "Tier 4–6 only → ●" with the rationale that "code compliance is inherently evidence-based (the evidence being the code itself)." That rationale is the convergence-laundering failure mode `tier-system.md` §3 names, in its oldest recorded form. Under v2, a T4–6-only basis renders ◐/○, is flagged `regulatory_stratum_only` in the determination table, and carries the regulatory-stratum register language in every audience rendering — never best-practice language (invariant I3, `governance/evidence-architecture.md` §6).
+v1's two-marker system is superseded: it allowed "Tier 4–6 only → ●" with the rationale that "code compliance is inherently evidence-based (the evidence being the code itself)." That rationale is the convergence-laundering failure mode `tier-system.md` §3 names, in its oldest recorded form. Under v2, a T4–6-only basis renders ◐/○ and — per the PROPOSED `governance/evidence-architecture.md` G1 (pending owner ratification) — would be flagged `regulatory_stratum_only` in the determination table and carry the regulatory-stratum register language in every audience rendering, never best-practice language (invariant I3).
+
+Two v1 rules survive unchanged and are restated so they are not lost in the marker-system supersession: **an unmarked specification is an error** — every specification sentence carries a marker; and for quantitative specifications, a confirmed marker requires at least one source that provides or permits derivation of the stated **value**, not only the specification direction (v1 §7.2; the direction/value boundary is §6.4).
 
 ### 7.2 The four-state determination machine
 
@@ -188,7 +191,7 @@ The RecommendationStrength enum reconciles with the design scales (`schemas/dire
 
 ## 10. Limitations and future development
 
-Carried forward from v1 (still true): §6.3 criteria are adapted principles, not a validated instrument; ●/◐/○ inter-rater reliability untested; T4 evidence-basis verification varies by standards body (the G1 re-graining rule now gives this a mechanical home: GRAIN_AGGREGATE only with documented T1/T2 traceability). New in v2: the `evidence_population_match` (27/640) and `source_value_extractions` (0 rows) coverage gaps mean the directness layer currently runs mostly on NOT_ASSESSED inputs, capped conservatively (G2) — the honest posture until assessment coverage grows.
+Carried forward from v1 (still true): §6.3 criteria are adapted principles, not a validated instrument; ●/◐/○ inter-rater reliability untested; T4 evidence-basis verification varies by standards body (the G1 re-graining rule now gives this a mechanical home: GRAIN_AGGREGATE only with documented T1/T2 traceability); and v1's proposed **○/◌ split** — distinguishing "not studied" from "studied, inconclusive" — remains a live, unresolved idea aligned with the Altman & Bland doctrine (the four-state machine's `pending` covers the first case; the second currently has no distinct surface and deserves one — carried forward as an open item, not silently dropped). New in v2: the `evidence_population_match` (27 rows / 26 of 640 sources) and `source_value_extractions` (0 rows) coverage gaps mean the directness layer currently runs mostly on NOT_ASSESSED inputs, capped conservatively (G2) — the honest posture until assessment coverage grows.
 
 ## Amendment register
 

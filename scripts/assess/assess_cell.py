@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-scripts/assess/assess_cell.py — pilot determination engine (rule_version "pilot-1").
+scripts/assess/assess_cell.py — pilot determination engine (rule_version "pilot-2").
 
 Implements the pure determination function of workplan/best-practices-assessment-system.md
 §3 for the pilot cells in working/pilot/PILOT-MANIFEST.md §3, under the doctrine of
@@ -65,7 +65,15 @@ from schemas.evidence_state import (  # noqa: E402
     ConvergenceAssessment, EvidenceStateRecord, ProvisionalConfidenceFlag,
 )
 
-RULE_VERSION = "pilot-1"
+RULE_VERSION = "pilot-2"  # pilot-1 + adversarial-review corrections (see PILOT-MANIFEST §7):
+#   tier_basis now describes the GOVERNING set only (supporting strata listed separately);
+#   derivation_sha includes cell identity (pending cells no longer share one constant sha);
+#   has_unverified_sources / all_sources_disqualified implemented per §2.8;
+#   population-match rows attributed to the cell's population or treated NOT_ASSESSED;
+#   §2.3 richness checks T6 jurisdiction distinctness and names its unchecked clause;
+#   gap descriptions are slug-scoped (absence of a slug-link is not corpus-level absence);
+#   the SQL artifact amends v_best_practice to exclude regulatory-stratum-only rows
+#   (interim, marker-based; migration 027 adds the real column).
 SESSION = "session_2026-07-12-evidence-architecture-pilot"
 STAMP = "2026-07-12 00:00:00"  # fixed, not wall-clock: determinism (see docstring)
 
@@ -126,18 +134,28 @@ def gather_sources(conn, slug):
             for r in conn.execute(q, (slug,))]
 
 
-def population_match(conn, ref_id):
-    row = conn.execute(
-        "SELECT match_grade FROM evidence_population_match WHERE ref_id = ?",
-        (ref_id,)).fetchone()
-    return row[0] if row else None
+def population_match(conn, ref_id, population):
+    """Return a match_grade ONLY when a row is attributable to THIS population.
+    target_population is free text, so attribution is conservative: the row must
+    name the population code as a word (case-insensitive). Rows that exist but
+    cannot be attributed to this population are NOT evidence of directness for
+    it — the dimension stays NOT_ASSESSED (G2; a grade assessed against another
+    population must never condition this cell)."""
+    rows = conn.execute(
+        "SELECT match_grade, target_population FROM evidence_population_match "
+        "WHERE ref_id = ? ORDER BY match_id", (ref_id,)).fetchall()
+    import re as _re
+    for grade, target in rows:
+        if target and _re.search(rf"\b{_re.escape(population)}\b", target, _re.I):
+            return grade
+    return None
 
 
-def assess_source(conn, src, claim_scale):
-    """Per-source directness record under pilot-1 (G2/G3/G6 active)."""
+def assess_source(conn, src, claim_scale, population):
+    """Per-source directness record under pilot rules (G2/G3/G6 active)."""
     grain, grain_why = source_grain(src["evidence_type"], src["tier"], src["co1_source_type"])
     sd = scale_directness(grain, claim_scale)
-    mg = population_match(conn, src["ref_id"])
+    mg = population_match(conn, src["ref_id"], population)
     if mg is not None:
         pop = population_directness_from_match_grade(mg)
     else:
@@ -154,6 +172,7 @@ def assess_source(conn, src, claim_scale):
         "needs_population_assessment": pop == NOT_ASSESSED,
         "tier_consistent": tier_ok,
         "verification_status": src["verification_status"],
+        "jurisdiction": src["jurisdiction"],  # richness §2.3 jurisdiction distinctness
     }
 
 
@@ -194,26 +213,44 @@ def anchoring(recs):
 
 
 def regulatory_richness(t45, t6):
-    """§2.3 richness for a T4–6-only provisional (else pending)."""
+    """§2.3 richness for a T4–6-only provisional (else pending).
+
+    Honestly-partial implementation, named as such in the rationale it emits:
+    §2.3's T4 clause requires "an evidence-based value directly addressing the
+    parameter" — not mechanically checkable while source_value_extractions is
+    empty, so the T4 branch checks presence only and SAYS SO. The T6 clause
+    requires convergence "on the same value or range" — likewise unverifiable;
+    jurisdiction distinctness IS checkable and is enforced."""
     jur45 = {r.get("jurisdiction") for r in t45}
     if len([r for r in t45 if r["tier"] == 4]) >= 1:
-        return True, ">=1 T4 international standard (§2.3)"
+        return True, (">=1 T4 international standard present (§2.3; the clause's "
+                      "'value directly addressing the parameter' is unverified — "
+                      "value extraction pending)")
     if len(t45) >= 2 and len(jur45) >= 2:
         return True, ">=2 T4-5 sources, distinct jurisdictions (§2.3)"
-    if len(t6) >= 3:
-        return True, ">=3 T6 codes (§2.3)"
+    jur6 = {r.get("jurisdiction") for r in t6}
+    if len(t6) >= 3 and len(jur6) >= 3:
+        return True, (f">=3 T6 codes from {len(jur6)} distinct jurisdictions (§2.3; "
+                      "value-level convergence unverified — extraction pending)")
     return False, "below §2.3 richness"
 
 
-def sha(refs):
-    return hashlib.sha256(("|".join(sorted(refs)) + "::" + RULE_VERSION).encode()).hexdigest()
+def sha(item_code, population, refs):
+    """Cell-scoped derivation sha: identity + governing set + rule version, so
+    pending cells do not all share one constant hash (staleness stays checkable)."""
+    payload = f"{item_code}|{population}|" + "|".join(sorted(refs)) + "::" + RULE_VERSION
+    return hashlib.sha256(payload.encode()).hexdigest()
 
 
 def determine(conn, item_code, population, slug, note):
     """The pure determination function. Returns (record dicts for insert, log)."""
     sources = gather_sources(conn, slug)
-    recs = [assess_source(conn, s, SCALE_POPULATION) for s in sources]
+    recs = [assess_source(conn, s, SCALE_POPULATION, population) for s in sources]
     b = classify(recs)
+    # §2.8 verification-status machinery
+    live = [r for r in recs if (r["verification_status"] or "") not in DISQUALIFIED]
+    has_unverified = any((r["verification_status"] or "") == "UNVERIFIED-1" for r in live)
+    all_disqualified = bool(recs) and not live
     anchors = anchoring(b["t1"]) + anchoring(b["co1"]) + anchoring(b["t2"]) + anchoring(b["co2"])
     t3c = anchoring(b["t3c"])
     regulatory = b["t45"] + b["t6"]
@@ -232,24 +269,38 @@ def determine(conn, item_code, population, slug, note):
     code_floor_only, regulatory_stratum_only = 0, 0
     falsification = None
 
+    supporting = []
     if anchors:
         state = "stated"
         governing = sorted(r["ref_id"] for r in anchors)
+        # tier_basis describes the GOVERNING set only (adversarial finding 8);
+        # supporting strata (e.g. T3 when anchors exist) are listed separately.
         parts = [p for p, k in (("T1", b["t1"]), ("CO1", b["co1"]), ("T2", b["t2"]),
-                                ("CO2", b["co2"]), ("T3", t3c)) if anchoring(k)]
+                                ("CO2", b["co2"])) if anchoring(k)]
         tier_basis = "+".join(parts)
+        if t3c:
+            supporting = sorted(r["ref_id"] for r in t3c)
+        axes_named = [n for n, a in (("clinical", axes_clinical), ("co1", axes_co1),
+                                     ("co2", axes_co2)) if a]
         if n_axes >= 2:
             # Axis co-presence is real; value-level convergence is NOT assessable
             # (source_value_extractions empty). pending_assessment is the honest
             # status — never claim 'convergent' on unextracted values (G2 spirit).
+            # Rendering a pending_assessment cell deviates from §3.4's no-render
+            # rule and is DR-gated as item G8 (mandatory disclosure in rendering).
             conv_status = "pending_assessment"
-            rationale = (f"{n_axes} evidence axes present (clinical/co1/co2). Value-level "
-                         f"convergence not yet assessable: source_value_extractions has no "
-                         f"rows for these sources; assessment queued, not assumed.")
+            rationale = (f"{n_axes} evidence axes present ({'/'.join(axes_named)}). "
+                         f"Value-level convergence not yet assessable: "
+                         f"source_value_extractions has no rows for these sources; "
+                         f"assessment queued, not assumed."
+                         + (f" Supporting (non-governing) T3: {', '.join(supporting)}."
+                            if supporting else ""))
         else:
             conv_status = "single_axis"
-            axis = "clinical" if axes_clinical else ("co1" if axes_co1 else "co2")
-            rationale = f"single evidence axis: {axis}"
+            axis = axes_named[0] if axes_named else "clinical"
+            rationale = (f"single evidence axis: {axis}"
+                         + (f"; supporting (non-governing) T3: {', '.join(supporting)}"
+                            if supporting else ""))
         conv = dict(status=conv_status, clinical=axes_clinical, co1=axes_co1, co2=axes_co2,
                     downw=down_weighted, disc=discounted, rationale=rationale, synth=None)
         falsification = ("Overturned if the anchoring sources are retracted/superseded, or if "
@@ -310,11 +361,14 @@ def determine(conn, item_code, population, slug, note):
     return {
         "item_code": item_code, "population": population, "slug": slug, "note": note,
         "state": state, "design_scale": design_scale, "tier_basis": tier_basis,
-        "governing_refs": governing, "convergence": conv, "confidence": conf,
+        "governing_refs": governing, "supporting_refs": supporting,
+        "convergence": conv, "confidence": conf,
         "gap_needed": gap_needed, "code_floor_only": code_floor_only,
         "regulatory_stratum_only": regulatory_stratum_only,
+        "has_unverified_sources": 1 if has_unverified else 0,
+        "all_sources_disqualified": 1 if all_disqualified else 0,
         "falsification": falsification,
-        "derivation_sha": sha(governing),
+        "derivation_sha": sha(item_code, population, governing),
         "n_sources": len(sources),
         "needs_population_assessment": sorted(r["ref_id"] for r in recs
                                               if r["needs_population_assessment"]),
@@ -397,6 +451,9 @@ def main():
         f"-- rule_version {RULE_VERSION}; deterministic (fixed STAMP; explicit ids)",
         "-- Replayable onto the canonical DB ONLY after owner ratification",
         "-- (DR-2026-07-12-evidence-architecture-unification + ratification package).",
+        "-- REPLAY CAVEAT: gap ids (GAP-NNN) are assigned from the generating DB's",
+        "-- gaps table; REGENERATE this artifact against the canonical DB immediately",
+        "-- before replay — a stale copy can collide with gap ids created since.",
         "BEGIN;",
     ]
     report = []
@@ -408,9 +465,12 @@ def main():
         gap_id = None
         if det["gap_needed"]:
             gap_id = next_gap_id(conn)
-            desc = (f"Evidence gap: no admissible evidence for cell {item_code}×{population} "
-                    f"(slug {slug}). Determination pending per §2.4; search history: "
-                    f"source_slug_links empty or below richness for this slug.")
+            desc = (f"Evidence gap (slug-scoped): no evidence is linked via slug '{slug}' "
+                    f"for cell {item_code}×{population}, and no linked evidence met the "
+                    f"determination thresholds. This records absence of a slug-link, NOT "
+                    f"corpus-level absence: item-relevant evidence may exist under sibling "
+                    f"slugs and is unreachable until the item_bpc_links bridge (1/92 "
+                    f"populated) is backfilled. Determination pending per §2.4.")
             gcols = ("gap_id, category, priority, status, description, created_at, "
                      "created_by_session, updated_at, updated_by_session")
             gvals = (gap_id, "EG", "P2", "OPEN", desc, STAMP, SESSION, STAMP, SESSION)
@@ -452,22 +512,25 @@ def main():
                 RULE_VERSION, det["derivation_sha"], det["code_floor_only"],
                 None, None, None,
                 det["falsification"],
+                det["has_unverified_sources"], det["all_sources_disqualified"],
                 STAMP, SESSION, STAMP, SESSION)
         cols = ("cell_id, item_code, population_code, state, design_scale, convergence_id, "
                 "confidence_dimensions_present, confidence_dimensions_absent, "
                 "confidence_synthesis_basis, gap_register_id, not_applicable_rationale, "
                 "tier_basis, governing_refs, rule_version, derivation_sha, code_floor_only, "
                 "value_min, value_max, value_unit, falsification_condition, "
+                "has_unverified_sources, all_sources_disqualified, "
                 "created_at, created_by_session, updated_at, updated_by_session")
         conn.execute(f"INSERT INTO evidence_cell_state ({cols}) VALUES ("
-                     + ",".join("?" * 24) + ")", vals)
+                     + ",".join("?" * 26) + ")", vals)
         sql_lines.append(f"INSERT INTO evidence_cell_state ({cols}) VALUES (" +
                          ", ".join(q(v) for v in vals) + ");")
 
         report.append({k: det[k] for k in
                        ("item_code", "population", "slug", "note", "state", "design_scale",
-                        "tier_basis", "governing_refs", "code_floor_only",
-                        "regulatory_stratum_only", "derivation_sha", "n_sources",
+                        "tier_basis", "governing_refs", "supporting_refs", "code_floor_only",
+                        "regulatory_stratum_only", "has_unverified_sources",
+                        "all_sources_disqualified", "derivation_sha", "n_sources",
                         "needs_population_assessment", "tier_inconsistent", "falsification")}
                       | {"convergence": det["convergence"], "confidence": det["confidence"],
                          "gap_register_id": gap_id, "cell_id": cell_id,
@@ -478,6 +541,20 @@ def main():
                                               "population_directness", "conditioning")}
                                             for r in det["source_records"]]})
 
+    # Interim v_best_practice amendment (adversarial finding 1): migration 026's
+    # view excludes only code_floor_only=1, so a T4/T5-anchored regulatory-stratum
+    # cell would surface as best practice — the exact laundering channel G1 closes.
+    # Until migration 027 adds a real regulatory_stratum_only column, exclude by
+    # the tier_basis marker. This amendment ships IN the replayable artifact so
+    # the property holds wherever the rows land.
+    view_sql = (
+        "DROP VIEW IF EXISTS v_best_practice;\n"
+        "CREATE VIEW v_best_practice AS\n"
+        "    SELECT * FROM evidence_cell_state\n"
+        "    WHERE state IN ('stated', 'provisional') AND code_floor_only = 0\n"
+        "      AND (tier_basis IS NULL OR tier_basis NOT LIKE '%(regulatory_stratum_only)');")
+    sql_lines.append(view_sql)
+    conn.executescript(view_sql)
     sql_lines.append("COMMIT;")
     conn.commit()
     with open(args.emit_sql, "w") as f:
