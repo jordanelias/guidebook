@@ -1,124 +1,90 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>NEU — Neurological and Acquired Brain Injury</title>
-    <style>
-        :root {
-            --ink: #1a1a2e; --paper: #fafaf8; --accent: #2d5f8a;
-            --accent-light: #e8f0f7; --border: #d4d4d0; --muted: #6b6b6b;
-            --primary-bg: #e8f5e9; --secondary-bg: #f5f5f5;
-            --font-body: 'Source Serif 4', Georgia, serif;
-            --font-ui: 'DM Sans', 'Helvetica Neue', sans-serif;
-            --font-mono: 'JetBrains Mono', Consolas, monospace;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: var(--font-body); color: var(--ink); background: var(--paper);
-               line-height: 1.65; max-width: 860px; margin: 0 auto; padding: 24px; }
-
-        .pop-header { margin-bottom: 32px; }
-        .pop-code { font-family: var(--font-mono); font-size: 14px; color: var(--accent);
-                     letter-spacing: 1px; text-transform: uppercase; }
-        h1 { font-size: 28px; font-weight: 600; margin: 8px 0; }
-        .confidence-badge { font-family: var(--font-ui); font-size: 13px; padding: 4px 10px;
-                            border-radius: 4px; background: var(--accent-light); color: var(--accent); }
-
-        section { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
-        section:last-child { border-bottom: none; }
-        h2 { font-family: var(--font-ui); font-size: 16px; font-weight: 600;
-              text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 12px; }
-
-        .profile-text { font-size: 16px; line-height: 1.75; }
-
-        table { width: 100%; border-collapse: collapse; font-size: 14px; }
-        th { font-family: var(--font-ui); font-size: 12px; text-transform: uppercase;
-              letter-spacing: 0.5px; text-align: left; padding: 8px 12px;
-              background: var(--accent-light); color: var(--accent); border-bottom: 2px solid var(--border); }
-        td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
-        td a { color: var(--accent); text-decoration: none; font-family: var(--font-mono); }
-        td a:hover { text-decoration: underline; }
-
-        .role-primary { background: var(--primary-bg); }
-        .role-secondary { opacity: 0.7; }
-
-        .conflict-domains { display: flex; flex-wrap: wrap; gap: 8px; }
-        .conflict-card { font-family: var(--font-ui); font-size: 13px; padding: 6px 14px;
-                         border-radius: 4px; background: #fff3e0; color: #e65100;
-                         border: 1px solid #ffe0b2; text-decoration: none; }
-
-        .co1-section { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-        .co1-badge { font-family: var(--font-ui); font-size: 13px; padding: 4px 12px;
-                     border-radius: 4px; font-weight: 600; }
-        .co1-complete { background: #e8f5e9; color: #2e7d32; }
-        .co1-partial { background: #fff3e0; color: #e65100; }
-        .co1-gap { background: #fce4ec; color: #c62828; }
-
-        .section-label { font-family: var(--font-ui); font-size: 13px; color: var(--muted);
-                         margin-bottom: 8px; }
-
-        @media (max-width: 640px) { body { padding: 16px; } h1 { font-size: 22px; } }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NEU — neurological (general)</title>
+<style>
+:root {
+    --ink: #1a1a2e; --paper: #fafaf8; --accent: #2d5f8a;
+    --accent-light: #e8f0f7; --border: #d4d4d0; --muted: #6b6b6b;
+    --font-body: Georgia, 'Times New Roman', serif;
+    --font-ui: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    --font-mono: 'Courier New', Consolas, monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--font-body); color: var(--ink); background: var(--paper);
+       line-height: 1.6; max-width: 860px; margin: 0 auto; padding: 24px; }
+.pop-code { font-family: var(--font-mono); font-size: 14px; color: var(--accent);
+             letter-spacing: 1px; text-transform: uppercase; }
+h1 { font-size: 26px; font-weight: 600; margin: 8px 0 4px; }
+.meta { font-family: var(--font-ui); font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+section { margin: 28px 0; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+section:last-child { border-bottom: none; }
+h2 { font-family: var(--font-ui); font-size: 15px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.5px; color: var(--muted); margin-bottom: 10px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { font-family: var(--font-ui); font-size: 12px; text-transform: uppercase; text-align: left;
+      padding: 6px 10px; background: var(--accent-light); color: var(--accent);
+      border-bottom: 2px solid var(--border); }
+td { padding: 6px 10px; border-bottom: 1px solid var(--border); }
+td a { color: var(--accent); text-decoration: none; font-family: var(--font-mono); }
+.empty { color: var(--muted); font-style: italic; }
+.badge { font-family: var(--font-ui); font-size: 12px; padding: 2px 8px; border-radius: 3px;
+          background: var(--accent-light); color: var(--accent); }
+.badge-retracted { background: #fce4ec; color: #c62828; }
+.badge-unknown { background: #f5f5f5; color: var(--muted); }
+.honest-banner { background: #fff8e1; border: 1px solid #ffe082; border-radius: 4px;
+                   padding: 12px 16px; font-family: var(--font-ui); font-size: 14px; }
+</style>
 </head>
 <body>
-
-<header class="pop-header">
-    <span class="pop-code">NEU</span>
-    <h1>Neurological and Acquired Brain Injury</h1>
-    <span class="confidence-badge">Evidence confidence: MODERATE</span>
-</header>
+<span class="pop-code">NEU</span>
+<h1>neurological (general)</h1>
+<p class="meta">neurological &middot; status: active</p>
 
 <section>
-    <h2>Functional Profile</h2>
-    <p class="profile-text">ABI; stroke sequelae (unilateral neglect, navigation impairment, aphasia, hemiplegia); MS; Parkinson&#x27;s; epilepsy; PCS. Most heterogeneous category. 25% of stroke survivors retain navigation impairment at 12 months.</p>
+<h2>Description</h2>
+<p>General neurological category; includes MS, epilepsy, Parkinson, stroke sequelae</p>
 </section>
 
 <section>
-    <h2>Specification Matrix</h2>
-    <p class="section-label">Primary specifications highlighted; secondary specifications dimmed.</p>
-    <table>
-        <thead><tr><th>Code</th><th>Specification</th><th>Evidence</th></tr></thead>
-        <tbody>
-            <tr class="role-primary"><td><a href="/specs/A-03">A-03</a></td><td>Acoustic Door (STC ≥35) at All Sensitive Space Boundaries</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/A-12">A-12</a></td><td>Auracast Infrastructure Readiness</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/B-02">B-02</a></td><td>Diffuse Lighting for Lip Reading and Sign Language (Shadow-F</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/B-06">B-06</a></td><td>Individual Dimming Control (≥300 Lux Range)</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/B-09">B-09</a></td><td>Maximisation of Natural Light (Clerestory, Light Wells, Roof</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/C-01">C-01</a></td><td>NEU</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/C-02">C-02</a></td><td>Colour-Coded Wayfinding Zones (Distinct Warm Colour Per Wing</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/D-03">D-03</a></td><td>Toilet Visibility from Primary Occupied Spaces (No Navigatio</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/D-06">D-06</a></td><td>Memory Boxes at Private Office and Residential Room Entrance</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/E-08">E-08</a></td><td>Corridor Clear Width (≥1200 mm Minimum on All Primary Routes</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/E-10">E-10</a></td><td>Rest Seating on Circulation Routes</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/E-11">E-11</a></td><td>Automatic Sliding Entry and Internal Doors</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/E-13">E-13</a></td><td>Entrance Cognitive Legibility Provisions</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/G-02">G-02</a></td><td>Variety of Seating Types (Three Heights at Every Seating Are</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/G-03">G-03</a></td><td>accessible-bathroom-and-grab-bar</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/G-03">G-03</a></td><td>accessible-bathroom-and-grab-bar</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/G-03">G-03</a></td><td>accessible-bathroom-and-grab-bar</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/G-03">G-03</a></td><td>NEU</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/G-06">G-06</a></td><td>Reception Counter (Accessible Height Section — 760--860 mm A</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/G-08">G-08</a></td><td>Bedroom Wardrobe and Storage Reach Configuration</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/G-09">G-09</a></td><td>Bedroom Emergency Call Provision and Overnight Lighting</td><td>○</td></tr>
-<tr class="role-primary"><td><a href="/specs/H-02">H-02</a></td><td>Individual Environmental Control — Universal Mode Universal Provisio</td><td>●</td></tr>
-
-            
-        </tbody>
-    </table>
+<h2>Applicable items (9)</h2>
+<table>
+<thead><tr><th>Item</th><th>Name</th><th>Category</th><th>Applicability</th></tr></thead>
+<tbody><tr><td><a href="/specs/a-09.html">A-09</a></td><td>HVAC Vibration Isolation (Floating Plant Room)</td><td>A</td><td>applies</td></tr>
+<tr><td><a href="/specs/a-13.html">A-13</a></td><td>No Sound Masking in Neurological Population Environments</td><td>A</td><td>applies</td></tr>
+<tr><td><a href="/specs/b-11.html">B-11</a></td><td>Warm Colour Temperature for Evening (≤2700 K After 19:00)</td><td>B</td><td>applies</td></tr>
+<tr><td><a href="/specs/b-12.html">B-12</a></td><td>Sensor-Activated Overnight Pathway Lighting</td><td>B</td><td>applies</td></tr>
+<tr><td><a href="/specs/d-05.html">D-05</a></td><td>Enclosed Low-Stimulation Spaces (Focus Rooms, Breakout Alcoves, and Compartmentalisation)</td><td>D</td><td>applies</td></tr>
+<tr><td><a href="/specs/e-11.html">E-11</a></td><td>Automatic Sliding Entry and Internal Doors</td><td>E</td><td>applies</td></tr>
+<tr><td><a href="/specs/e-13.html">E-13</a></td><td>Entrance Cognitive Legibility Provisions</td><td>E</td><td>applies</td></tr>
+<tr><td><a href="/specs/g-08.html">G-08</a></td><td>Bedroom Wardrobe and Storage Reach Configuration</td><td>G</td><td>applies</td></tr>
+<tr><td><a href="/specs/g-09.html">G-09</a></td><td>Bedroom Emergency Call Provision and Overnight Lighting</td><td>G</td><td>applies</td></tr>
+</tbody>
+</table>
 </section>
 
 <section>
-    <h2>Co-1 (Lived Experience) Evidence</h2>
-    <div class="co1-section">
-        <span class="co1-badge co1-gap">Co-1: EN only</span>
-        <span>13 other language communities not yet searched</span>
-    </div>
+<h2>Best Practice Compendium entries (2)</h2>
+<table>
+<thead><tr><th>Slug</th><th>Evidence state</th><th>BPC complete</th></tr></thead>
+<tbody><tr><td>accessible-bathroom-and-grab-bar</td><td><span class="badge badge-retracted">RETRACTED — pending reverification</span></td><td>yes</td></tr>
+<tr><td>visual-fire-alarm-seizure-safety</td><td><span class="badge badge-retracted">RETRACTED — pending reverification</span></td><td>yes</td></tr>
+</tbody>
+</table>
 </section>
 
 <section>
-    <h2>Conflict Involvement</h2>
-    <div class="conflict-domains"><a href="/conflicts/ACOUSTIC-LVL" class="conflict-card">Amplification and background noise</a><a href="/conflicts/FLOOR-SPEC-SYS" class="conflict-card">Floor Specification System</a><a href="/conflicts/LIGHT-INT" class="conflict-card">Illuminance (lux and melanopic EDI)</a><a href="/conflicts/TEMP-RANGE" class="conflict-card">Ambient temperature</a></div>
+<h2>Best-practice determinations</h2>
+<table>
+            <thead><tr><th>Item</th><th>State</th><th>Tier basis</th>
+            <th>Code floor only</th><th>Regulatory stratum only</th>
+            <th>Source caveats</th><th>Confidence basis</th>
+            <th>Falsification condition</th></tr></thead>
+            <tbody><tr><td><a href="/specs/b-10.html">B-10</a></td><td>stated</td><td>T2</td><td>no</td><td>no</td><td>—</td><td>—</td><td>Overturned if the anchoring sources are retracted/superseded, or if value-level extraction shows the axes diverge (then divergence protocol §3.3 applies and a synthesis approach is owed).</td></tr>
+</tbody>
+        </table>
 </section>
 
 </body>

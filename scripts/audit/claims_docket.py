@@ -80,6 +80,13 @@ def scan(lines):
         classes = [name for name, rx in TRIGGERS if rx.search(stripped)]
         if classes:
             excerpt = re.sub(r"\s+", " ", stripped)[:140]
+            # Docket lines are themselves pipe-delimited (file:line | class | excerpt |
+            # annotation); a source line that's a markdown table row carries its own "|"
+            # characters, which would shift cmd_check's parts[3] lookup and misreport a
+            # real annotation as missing (or, in principle, mis-parse a bogus one as
+            # valid). Substitute a lookalike so the docket format's own delimiter stays
+            # unambiguous regardless of what the scanned source line contains.
+            excerpt = excerpt.replace("|", "¦")
             yield fname, lineno, "+".join(classes), excerpt
 
 
@@ -176,6 +183,29 @@ def selftest():
     print(f"{'PASS' if pass_ok else '**FAIL**'}: check passes on annotated docket")
     os.unlink(p)
     ok &= fail_fired and pass_ok
+
+    # Regression test for the table-row pipe-parsing bug: a scanned source line
+    # that is itself a markdown table row carries its own "|" characters, which
+    # (pre-fix) shifted cmd_check's pipe-delimited parts[3] lookup and made a
+    # correctly-annotated claim misreport as unannotated. Adversarial-pass
+    # finding, C2 execution register: the original selftest never exercised
+    # this path, so a regression here would have shipped silently.
+    table_row_source = [("workplan/t.md", 5, "| Q1 | some verified claim with all details | note |")]
+    table_hits = list(scan(table_row_source))
+    excerpt_clean = bool(table_hits) and "|" not in table_hits[0][3]
+    print(f"{'FIRED' if excerpt_clean else '**MISSED**'}: table-row source line "
+          f"produces a pipe-free docket excerpt")
+    ok &= excerpt_clean
+    if table_hits:
+        with tempfile.NamedTemporaryFile("w", suffix=".md", delete=False) as f:
+            f.write(f"# docket\nworkplan/t.md:5 | absolute | {table_hits[0][3]} | N/A: table row test\n")
+            p2 = f.name
+        table_row_annotated_ok = cmd_check(p2) == 0
+        print(f"{'PASS' if table_row_annotated_ok else '**FAIL**'}: check correctly reads "
+              f"the annotation on a table-row-sourced docket line")
+        os.unlink(p2)
+        ok &= table_row_annotated_ok
+
     print("SELFTEST:", "ALL FIRED" if ok else "FAILURE")
     return 0 if ok else 1
 

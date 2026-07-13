@@ -1,142 +1,118 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MOB — Mobility and Strength</title>
-    <style>
-        :root {
-            --ink: #1a1a2e; --paper: #fafaf8; --accent: #2d5f8a;
-            --accent-light: #e8f0f7; --border: #d4d4d0; --muted: #6b6b6b;
-            --primary-bg: #e8f5e9; --secondary-bg: #f5f5f5;
-            --font-body: 'Source Serif 4', Georgia, serif;
-            --font-ui: 'DM Sans', 'Helvetica Neue', sans-serif;
-            --font-mono: 'JetBrains Mono', Consolas, monospace;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: var(--font-body); color: var(--ink); background: var(--paper);
-               line-height: 1.65; max-width: 860px; margin: 0 auto; padding: 24px; }
-
-        .pop-header { margin-bottom: 32px; }
-        .pop-code { font-family: var(--font-mono); font-size: 14px; color: var(--accent);
-                     letter-spacing: 1px; text-transform: uppercase; }
-        h1 { font-size: 28px; font-weight: 600; margin: 8px 0; }
-        .confidence-badge { font-family: var(--font-ui); font-size: 13px; padding: 4px 10px;
-                            border-radius: 4px; background: var(--accent-light); color: var(--accent); }
-
-        section { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
-        section:last-child { border-bottom: none; }
-        h2 { font-family: var(--font-ui); font-size: 16px; font-weight: 600;
-              text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 12px; }
-
-        .profile-text { font-size: 16px; line-height: 1.75; }
-
-        table { width: 100%; border-collapse: collapse; font-size: 14px; }
-        th { font-family: var(--font-ui); font-size: 12px; text-transform: uppercase;
-              letter-spacing: 0.5px; text-align: left; padding: 8px 12px;
-              background: var(--accent-light); color: var(--accent); border-bottom: 2px solid var(--border); }
-        td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
-        td a { color: var(--accent); text-decoration: none; font-family: var(--font-mono); }
-        td a:hover { text-decoration: underline; }
-
-        .role-primary { background: var(--primary-bg); }
-        .role-secondary { opacity: 0.7; }
-
-        .conflict-domains { display: flex; flex-wrap: wrap; gap: 8px; }
-        .conflict-card { font-family: var(--font-ui); font-size: 13px; padding: 6px 14px;
-                         border-radius: 4px; background: #fff3e0; color: #e65100;
-                         border: 1px solid #ffe0b2; text-decoration: none; }
-
-        .co1-section { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-        .co1-badge { font-family: var(--font-ui); font-size: 13px; padding: 4px 12px;
-                     border-radius: 4px; font-weight: 600; }
-        .co1-complete { background: #e8f5e9; color: #2e7d32; }
-        .co1-partial { background: #fff3e0; color: #e65100; }
-        .co1-gap { background: #fce4ec; color: #c62828; }
-
-        .section-label { font-family: var(--font-ui); font-size: 13px; color: var(--muted);
-                         margin-bottom: 8px; }
-
-        @media (max-width: 640px) { body { padding: 16px; } h1 { font-size: 22px; } }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MOB — mobility impairment (general)</title>
+<style>
+:root {
+    --ink: #1a1a2e; --paper: #fafaf8; --accent: #2d5f8a;
+    --accent-light: #e8f0f7; --border: #d4d4d0; --muted: #6b6b6b;
+    --font-body: Georgia, 'Times New Roman', serif;
+    --font-ui: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    --font-mono: 'Courier New', Consolas, monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--font-body); color: var(--ink); background: var(--paper);
+       line-height: 1.6; max-width: 860px; margin: 0 auto; padding: 24px; }
+.pop-code { font-family: var(--font-mono); font-size: 14px; color: var(--accent);
+             letter-spacing: 1px; text-transform: uppercase; }
+h1 { font-size: 26px; font-weight: 600; margin: 8px 0 4px; }
+.meta { font-family: var(--font-ui); font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+section { margin: 28px 0; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+section:last-child { border-bottom: none; }
+h2 { font-family: var(--font-ui); font-size: 15px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.5px; color: var(--muted); margin-bottom: 10px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { font-family: var(--font-ui); font-size: 12px; text-transform: uppercase; text-align: left;
+      padding: 6px 10px; background: var(--accent-light); color: var(--accent);
+      border-bottom: 2px solid var(--border); }
+td { padding: 6px 10px; border-bottom: 1px solid var(--border); }
+td a { color: var(--accent); text-decoration: none; font-family: var(--font-mono); }
+.empty { color: var(--muted); font-style: italic; }
+.badge { font-family: var(--font-ui); font-size: 12px; padding: 2px 8px; border-radius: 3px;
+          background: var(--accent-light); color: var(--accent); }
+.badge-retracted { background: #fce4ec; color: #c62828; }
+.badge-unknown { background: #f5f5f5; color: var(--muted); }
+.honest-banner { background: #fff8e1; border: 1px solid #ffe082; border-radius: 4px;
+                   padding: 12px 16px; font-family: var(--font-ui); font-size: 14px; }
+</style>
 </head>
 <body>
-
-<header class="pop-header">
-    <span class="pop-code">MOB</span>
-    <h1>Mobility and Strength</h1>
-    <span class="confidence-badge">Evidence confidence: HIGH</span>
-</header>
+<span class="pop-code">MOB</span>
+<h1>mobility impairment (general)</h1>
+<p class="meta">mobility &middot; status: active</p>
 
 <section>
-    <h2>Functional Profile</h2>
-    <p class="profile-text">Wheelchair users (manual and power), scooter users, ambulant users with walking aids (sticks, crutches, frames, rollators), users with lower limb weakness, balance impairment, or reduced walking endurance.</p>
+<h2>Description</h2>
+<p>General mobility limitation including walking, balance, or wheeled mobility</p>
 </section>
 
 <section>
-    <h2>Specification Matrix</h2>
-    <p class="section-label">Primary specifications highlighted; secondary specifications dimmed.</p>
-    <table>
-        <thead><tr><th>Code</th><th>Specification</th><th>Evidence</th></tr></thead>
-        <tbody>
-            <tr class="role-primary"><td><a href="/specs/A-01">A-01</a></td><td>threshold-door-hardware</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/A-01">A-01</a></td><td>threshold-door-hardware</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/A-01">A-01</a></td><td>threshold-door-hardware</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/A-01">A-01</a></td><td>threshold-door-hardware</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/A-01">A-01</a></td><td>threshold-door-hardware</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/A-01">A-01</a></td><td>threshold-door-hardware</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/A-01">A-01</a></td><td>MOB</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/A-14">A-14</a></td><td>Double-Leaf Partition (STC ≥50) for Sensitive Adjacencies</td><td>○</td></tr>
-<tr class="role-primary"><td><a href="/specs/C-01">C-01</a></td><td>accessible-circulation-geometry</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/C-01">C-01</a></td><td>accessible-circulation-geometry</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/C-01">C-01</a></td><td>accessible-circulation-geometry</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/C-01">C-01</a></td><td>accessible-circulation-geometry</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/C-01">C-01</a></td><td>accessible-circulation-geometry</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/C-01">C-01</a></td><td>MOB</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/C-01">C-01</a></td><td>MOB</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/E-07">E-07</a></td><td>Slip Resistance (PTV ≥36 Wet Throughout All Circulation and</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/E-10">E-10</a></td><td>Rest Seating on Circulation Routes</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/E-12">E-12</a></td><td>Entrance Landing and Manoeuvring Space for Power Wheelchair</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/E-13">E-13</a></td><td>Entrance Cognitive Legibility Provisions</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/F-02">F-02</a></td><td>Olfactory Control (Fragrance-Free Zones in Sensitive Areas)</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/F-03">F-03</a></td><td>Graduated Stimulation Re-entry (Sensory Room to General Spac</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/F-04">F-04</a></td><td>Air Quality (MERV 13+ Filtration, Low-VOC Specification, The</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/F-05">F-05</a></td><td>Seated-Task Design [CONTENT MOVED TO G-08 per CO-0003/D2-48]</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/F-06">F-06</a></td><td>Fragrance-Free Policy (Whole-Building Operational Standard)</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/F-08">F-08</a></td><td>Thermal Transition — Heating and Cooling System Response</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/G-01">G-01</a></td><td>bathroom-typology-global-south</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/G-01">G-01</a></td><td>bathroom-typology-global-south</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/G-02">G-02</a></td><td>Variety of Seating Types (Three Heights at Every Seating Are</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/G-03">G-03</a></td><td>accessible-bathroom-and-grab-bar</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/G-03">G-03</a></td><td>accessible-bathroom-and-grab-bar</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/G-03">G-03</a></td><td>accessible-bathroom-and-grab-bar</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/G-03">G-03</a></td><td>MOB</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/G-03">G-03</a></td><td>fold-down-grab-bar-specification</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/G-03">G-03</a></td><td>fold-down-grab-bar-specification</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/G-03">G-03</a></td><td>fold-down-grab-bar-specification</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/G-04">G-04</a></td><td>Accessible Bathroom (Wet Room Configuration — Zero Threshold</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/H-01">H-01</a></td><td>MOB</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/H-02">H-02</a></td><td>Individual Environmental Control — Universal Mode Universal Provisio</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/I-01">I-01</a></td><td>MOB</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/I-04">I-04</a></td><td>Ceiling Hoist Provision</td><td>◐</td></tr>
-
-            
-        </tbody>
-    </table>
+<h2>Applicable items (31)</h2>
+<table>
+<thead><tr><th>Item</th><th>Name</th><th>Category</th><th>Applicability</th></tr></thead>
+<tbody><tr><td><a href="/specs/a-10b.html">A-10b</a></td><td>RT60 for Hydrotherapy and Pool Environments</td><td>A</td><td>applies</td></tr>
+<tr><td><a href="/specs/b-12.html">B-12</a></td><td>Sensor-Activated Overnight Pathway Lighting</td><td>B</td><td>applies</td></tr>
+<tr><td><a href="/specs/c-04.html">C-04</a></td><td>LRV Contrast (≥30 at All Critical Junctions)</td><td>C</td><td>applies</td></tr>
+<tr><td><a href="/specs/d-03.html">D-03</a></td><td>Toilet Visibility from Primary Occupied Spaces (No Navigation Required)</td><td>D</td><td>applies</td></tr>
+<tr><td><a href="/specs/d-11.html">D-11</a></td><td>Safe Accessible Garden (Loop Path, Secured Perimeter, Seating Every 20 m)</td><td>D</td><td>applies</td></tr>
+<tr><td><a href="/specs/e-01.html">E-01</a></td><td>Accessible Lift (1400×1100 mm Car, All Floors Served)</td><td>E</td><td>applies</td></tr>
+<tr><td><a href="/specs/e-02.html">E-02</a></td><td>Platform Lift (Where Full Passenger Lift Not Achievable)</td><td>E</td><td>applies</td></tr>
+<tr><td><a href="/specs/e-03.html">E-03</a></td><td>Ramp Gradient (≤1:20 — MS Fatigue and Temporal Accessibility)</td><td>E</td><td>applies</td></tr>
+<tr><td><a href="/specs/e-04.html">E-04</a></td><td>Accessible Parking (3600 mm Width, Covered, Closest to Entry)</td><td>E</td><td>applies</td></tr>
+<tr><td><a href="/specs/e-05.html">E-05</a></td><td>Weather Protection at Entry (Covered Canopy Minimum 3000×2000 mm)</td><td>E</td><td>applies</td></tr>
+<tr><td><a href="/specs/e-06.html">E-06</a></td><td>Level Entry (Zero Step at All Accessible Entrances)</td><td>E</td><td>applies</td></tr>
+<tr><td><a href="/specs/e-07.html">E-07</a></td><td>Slip Resistance (PTV ≥36 Wet Throughout All Circulation and Entry)</td><td>E</td><td>applies</td></tr>
+<tr><td><a href="/specs/e-08.html">E-08</a></td><td>Corridor Clear Width (≥1200 mm Minimum on All Primary Routes)</td><td>E</td><td>applies</td></tr>
+<tr><td><a href="/specs/e-12.html">E-12</a></td><td>Entrance Landing and Manoeuvring Space for Power Wheelchair Users</td><td>E</td><td>applies</td></tr>
+<tr><td><a href="/specs/e-12.html">E-12</a></td><td>Entrance Landing and Manoeuvring Space for Power Wheelchair Users</td><td>E</td><td>applies</td></tr>
+<tr><td><a href="/specs/f-05.html">F-05</a></td><td>Seated-Task Design (All Primary Occupational Tasks Achievable Without Sustained Standing)</td><td>F</td><td>applies</td></tr>
+<tr><td><a href="/specs/f-06.html">F-06</a></td><td>Fragrance-Free Policy (Whole-Building Operational Standard)</td><td>F</td><td>applies</td></tr>
+<tr><td><a href="/specs/f-08.html">F-08</a></td><td>Thermal Transition — Heating and Cooling System Response</td><td>F</td><td>applies</td></tr>
+<tr><td><a href="/specs/g-03.html">G-03</a></td><td>Grab Bars in All Accessible Bathrooms (Clinical Positioning and Bilateral)</td><td>G</td><td>applies</td></tr>
+<tr><td><a href="/specs/g-04.html">G-04</a></td><td>Accessible Bathroom (Wet Room Configuration — Zero Threshold)</td><td>G</td><td>applies</td></tr>
+<tr><td><a href="/specs/g-05.html">G-05</a></td><td>Adjustable-Height Work Surfaces and Desks (650--870 mm AFF Range)</td><td>G</td><td>applies</td></tr>
+<tr><td><a href="/specs/g-06.html">G-06</a></td><td>Reception Counter (Accessible Height Section — 760--860 mm AFF)</td><td>G</td><td>applies</td></tr>
+<tr><td><a href="/specs/g-07.html">G-07</a></td><td>Waiting Area Seating (Accessible Configuration — Adjacent to Service Points)</td><td>G</td><td>applies</td></tr>
+<tr><td><a href="/specs/g-08.html">G-08</a></td><td>Bedroom Wardrobe and Storage Reach Configuration</td><td>G</td><td>applies</td></tr>
+<tr><td><a href="/specs/g-08.html">G-08</a></td><td>Bedroom Wardrobe and Storage Reach Configuration</td><td>G</td><td>applies</td></tr>
+<tr><td><a href="/specs/g-09.html">G-09</a></td><td>Bedroom Emergency Call Provision and Overnight Lighting</td><td>G</td><td>applies</td></tr>
+<tr><td><a href="/specs/g-09.html">G-09</a></td><td>Bedroom Emergency Call Provision and Overnight Lighting</td><td>G</td><td>applies</td></tr>
+<tr><td><a href="/specs/h-01.html">H-01</a></td><td>All Controls at Accessible Height (400--1100 mm AFF, One-Fist Operable)</td><td>H</td><td>applies</td></tr>
+<tr><td><a href="/specs/h-04.html">H-04</a></td><td>Accessible Intercom and Video Door Entry with Visual and Tactile Feedback</td><td>H</td><td>applies</td></tr>
+<tr><td><a href="/specs/i-01.html">I-01</a></td><td>Hardware Throughout (Lever, D-Pull, One-Hand Operable, ≤22 N)</td><td>I</td><td>applies</td></tr>
+<tr><td><a href="/specs/i-04.html">I-04</a></td><td>Ceiling Hoist Provision</td><td>I</td><td>applies</td></tr>
+</tbody>
+</table>
 </section>
 
 <section>
-    <h2>Co-1 (Lived Experience) Evidence</h2>
-    <div class="co1-section">
-        <span class="co1-badge co1-gap">Co-1: Partial</span>
-        <span>KR and BR Co-1 sources not retrieved</span>
-    </div>
+<h2>Best Practice Compendium entries (6)</h2>
+<table>
+<thead><tr><th>Slug</th><th>Evidence state</th><th>BPC complete</th></tr></thead>
+<tbody><tr><td>accessible-laundry-room-design</td><td><span class="badge badge-retracted">RETRACTED — pending reverification</span></td><td>yes</td></tr>
+<tr><td>cross-population-case-studies</td><td><span class="badge badge-unknown">no evidence_state recorded</span></td><td>no</td></tr>
+<tr><td>manoeuvring-footprint-vs-turning-radius-methodology</td><td><span class="badge">METHODOLOGY-AUTHORED</span></td><td>no</td></tr>
+<tr><td>mobility-built-environment</td><td><span class="badge badge-retracted">RETRACTED — pending reverification</span></td><td>yes</td></tr>
+<tr><td>reach-range-and-accessible-controls</td><td><span class="badge badge-retracted">RETRACTED — pending reverification</span></td><td>yes</td></tr>
+<tr><td>residential-dar-provisions-priority-register</td><td><span class="badge badge-retracted">RETRACTED — pending reverification</span></td><td>yes</td></tr>
+</tbody>
+</table>
 </section>
 
 <section>
-    <h2>Conflict Involvement</h2>
-    <div class="conflict-domains"><a href="/conflicts/DOOR-OPERATION" class="conflict-card">Automatic vs manual door actuation</a><a href="/conflicts/GRAB-BAR-DIA" class="conflict-card">Grip profile — grab bar diameter</a><a href="/conflicts/MOVE-FREE" class="conflict-card">Circulation freedom vs supervised pathways</a><a href="/conflicts/SURFACE-TEXT" class="conflict-card">Tactile floor indicators</a></div>
+<h2>Best-practice determinations</h2>
+<table>
+            <thead><tr><th>Item</th><th>State</th><th>Tier basis</th>
+            <th>Code floor only</th><th>Regulatory stratum only</th>
+            <th>Source caveats</th><th>Confidence basis</th>
+            <th>Falsification condition</th></tr></thead>
+            <tbody><tr><td><a href="/specs/e-06.html">E-06</a></td><td>provisional</td><td>T4-6-only(regulatory_stratum_only)</td><td>no</td><td>yes</td><td>—</td><td>Regulatory-stratum floor synthesis (&gt;=1 T4 international standard present (§2.3; the clause&#x27;s &#x27;value directly addressing the parameter&#x27; is unverified — value extraction pending)). NOT an evidence-anchored best practice: no anchoring dimension exists.</td><td>This is a floor claim: overturned if the cited editions are superseded. It never becomes a best-practice claim by more codes agreeing; only T1/Co-1/T2/Co-2 evidence can do that (§2.7).</td></tr>
+<tr><td><a href="/specs/e-12.html">E-12</a></td><td>stated</td><td>T1+CO1+T2</td><td>no</td><td>no</td><td>UNVERIFIED-1</td><td>—</td><td>Overturned if the anchoring sources are retracted/superseded, or if value-level extraction shows the axes diverge (then divergence protocol §3.3 applies and a synthesis approach is owed).</td></tr>
+<tr><td><a href="/specs/g-03.html">G-03</a></td><td>stated</td><td>T2+CO2</td><td>no</td><td>no</td><td>—</td><td>—</td><td>Overturned if the anchoring sources are retracted/superseded, or if value-level extraction shows the axes diverge (then divergence protocol §3.3 applies and a synthesis approach is owed).</td></tr>
+</tbody>
+        </table>
 </section>
 
 </body>
