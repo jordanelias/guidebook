@@ -1,0 +1,21 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-07-12-evidence-architecture-unification",
+ "artifact": "sessions/session_2026-07-13-value-genealogy-mining-dossier.md",
+ "doctrine_sha": "3fb2882",
+ "rules_in_scope": [
+  "source-discipline"
+ ],
+ "per_rule_status": {
+  "source-discipline": {
+   "status": "FIRED",
+   "evidence_path": "sessions/session_2026-07-13-value-genealogy-mining-dossier.md",
+   "reason": "This artifact is a verbatim preservation of a corpus-mining agent's output, committed specifically so the distillation in references/methodology/value-genealogy-worked-example-corridor-width.md is auditable against its source (adversarial-review finding: an unpreserved dossier behind an attested 'preserved'). It is a session record, not a synthesis: its header names the four defects the independent adversarial review found in it (De Hogeweyk UNVERIFIED-QUANT figures; n=275+50 cohort mis-pairing; modal-vs-median; FDR-BAB-04 anchor file) and states they are corrected in the worked example, NOT silently edited here — preserving the dossier's errors alongside its content is the point of preserving it.",
+   "notes": "The same review verified ~60 of the dossier's quotes/REF-IDs/values accurate against the corpus with no fabricated anchors found."
+  }
+ },
+ "deviations": [],
+ "bias_direction": "A preserved-source artifact attested by the session that commissioned the source risks laundering agent output into the record with an authority it has not earned. Bounded by: the header carries the known-defect list on its face; the document claims only to be what an agent returned, never to be verified truth; and every load-bearing claim distilled from it into governance-adjacent documents was independently re-verified by the adversarial review before this file was committed.",
+ "independent_reviewer_counterclaim": "A reviewer might argue session artifacts should not enter the repo at all, only their verified distillations. Response: the adversarial review itself demanded this preservation (auditability of the distillation), and the alternative - an unpreserved dossier behind 'preserved' claims - was the defect being corrected.",
+ "verdict": "CLEAN"
+}
