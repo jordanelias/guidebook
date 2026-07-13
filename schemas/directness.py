@@ -3,7 +3,7 @@ schemas/directness.py — consolidated rule-based directness model (Stage 2.2).
 
 Per governance/evidence-methodology.md §1.4 (scale-conditioned weighting),
 §1.6 (mode-asymmetry), and §1.7 (directness as a conditioning layer —
-grain-matching); doctrine SHA 3da73bd; decision D-D. §1.7 names this build:
+grain-matching); doctrine SHA 8a5a717; decision D-D. §1.7 names this build:
 "The scattered directness primitives currently recorded across the schema
 (match_grade, value_match, passes_strict, relevance notes) are consolidated
 into one rule-based directness model at Stage 2.2."
