@@ -38,7 +38,7 @@ class CrossStageGate(BaseModel):
 class PipelineContract(BaseModel):
     model_config = ConfigDict(extra="forbid")
     version: int
-    status: str
+    status: Literal["PROPOSED", "ACCEPTED", "SUPERSEDED", "WITHDRAWN"]
     ratified: bool
     authored_by: str
     dr: str

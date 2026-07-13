@@ -3,17 +3,23 @@ scripts/audit/graph/extract_code.py — code layer (Tier 0, code).
 
 AST-parses the repo's Python scripts and records, as graph edges, every SQL table
 reference (FROM / JOIN / INTO / UPDATE <table>) found inside string literals.
-Resolved against the db_table nodes from extract_db, a reference to a table that
-does not exist in guidebook.db surfaces as a dangling `table_ref` edge — i.e. a
-phantom-table reference (e.g. scripts/generate/room_page.py querying `room`,
-`room_item`, ... which were never migrated). This generalises
-scripts/audit/schema_reference_drift_audit.py from whole-file regex to AST string
-constants (no comments / prose false positives).
+Resolved against the db_table nodes from extract_db (tables AND views), a reference
+to a relation that does not exist in guidebook.db surfaces as a dangling `table_ref`
+edge — i.e. a phantom-table reference (e.g. scripts/generate/room_page.py querying
+`room`, `room_item`, ... which were never migrated).
 
-Deliberately EXCLUDED from the scan (they address a different schema or are noise):
-  - scripts/audit/graph/** and scripts/audit/graph_audit.py (operate on audit_graph.db)
-  - scripts/migrations/** (tables are created within migration history)
-  - **/__pycache__/**, scripts/test(s)/**
+This complements scripts/audit/schema_reference_drift_audit.py, lifting it from
+whole-file regex to AST string constants. Noise controls REDUCE (not eliminate)
+false positives: uppercase SQL-keyword gating, AST-string-only scanning (skips
+comments), a stopword set, and subtraction of locally-defined CTE / CREATE VIEW /
+CREATE TABLE names. Known limitations (shared with the predecessor): lowercase SQL
+and dynamically-named tables (FROM {var}) are not detected.
+
+Deliberately EXCLUDED from the scan (one-time / legacy / different-schema code),
+matching the predecessor's EXCLUDE_DIRS plus the audit graph package:
+  scripts/{migrations,db,migrate,probes,test,tests}/**, scripts/audit/graph/**,
+  scripts/audit/graph_audit.py, scripts/audit/schema_reference_drift_audit.py,
+  **/__pycache__/**
 """
 import ast
 import re
@@ -36,7 +42,18 @@ STOP = {"the", "this", "that", "these", "those", "them", "where", "set", "values
 _SQL_VERB = re.compile(r"\b(SELECT|INSERT|UPDATE|DELETE|CREATE|REPLACE)\b")
 _TABLE_REF = re.compile(r"\b(?:FROM|JOIN|INTO|UPDATE)\s+[\"'`]?([a-z_][a-z0-9_]{2,})")
 
-EXCLUDE_SUBSTR = ("/audit/graph/", "/migrations/", "/__pycache__/", "/tests/", "/test/")
+# Locally-defined query targets that must NOT be flagged phantom: CTE names
+# (WITH x AS / , x AS (...)) and CREATE VIEW/TABLE names within the same SQL string.
+_LOCAL_DEF = re.compile(
+    r"\bCREATE(?:\s+TEMP(?:ORARY)?)?\s+(?:VIEW|TABLE)(?:\s+IF\s+NOT\s+EXISTS)?\s+[\"'`]?([a-z_]\w*)"
+    r"|\bWITH(?:\s+RECURSIVE)?\s+([a-z_]\w*)\s+AS"
+    r"|,\s*([a-z_]\w*)\s+AS\s*\(", re.I)
+
+# Directory parts excluded from the scan — one-time / legacy / different-schema code.
+# Mirrors scripts/audit/schema_reference_drift_audit.py's EXCLUDE_DIRS, plus the audit
+# graph package itself (operates on audit_graph.db) and __pycache__.
+EXCLUDE_PARTS = {"migrations", "db", "migrate", "probes", "test", "tests",
+                 "__pycache__", "graph"}
 EXCLUDE_NAMES = {"graph_audit.py", "schema_reference_drift_audit.py"}
 
 
@@ -48,6 +65,16 @@ def iter_table_refs(text):
         tok = m.group(1)
         if tok not in STOP:
             yield tok
+
+
+def local_defs(text):
+    """CTE + CREATE VIEW/TABLE names defined within a SQL string (never phantom)."""
+    out = set()
+    for m in _LOCAL_DEF.finditer(text):
+        name = next((g for g in m.groups() if g), None)
+        if name:
+            out.add(name.lower())
+    return out
 
 
 def _iter_string_constants(tree):
@@ -68,8 +95,8 @@ def _scan_files(repo_root):
         if not root.exists():
             continue
         for p in sorted(root.rglob("*.py")):
-            rel = "/" + str(p.relative_to(repo_root)).replace("\\", "/")
-            if any(s in rel for s in EXCLUDE_SUBSTR) or p.name in EXCLUDE_NAMES:
+            parts = set(p.relative_to(repo_root).parts)
+            if parts & EXCLUDE_PARTS or p.name in EXCLUDE_NAMES:
                 continue
             yield p
 
@@ -82,10 +109,15 @@ def extract(store, repo_root):
             tree = ast.parse(p.read_text(encoding="utf-8", errors="replace"))
         except (SyntaxError, ValueError):
             continue
+        strings = list(_iter_string_constants(tree))
+        # first pass: collect this file's locally-defined CTE/view/table names
+        defs = set()
+        for text, _ in strings:
+            defs |= local_defs(text)
         file_added = False
-        for text, lineno in _iter_string_constants(tree):
+        for text, lineno in strings:
             for tok in iter_table_refs(text):
-                if tok in AUDIT_TABLES or tok in NON_TABLE:
+                if tok in AUDIT_TABLES or tok in NON_TABLE or tok in defs:
                     continue
                 if (rel, tok) in seen:
                     continue

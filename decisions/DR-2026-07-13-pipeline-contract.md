@@ -29,16 +29,16 @@ Adopt `governance/pipeline-contract.yaml` as the canonical, machine-checkable de
 
 The rule this DR proposes — *"every declared gate must resolve to a real enforcer, and unenforced criteria must be marked as such"* — is applied to the contract itself: `pipeline_contract_audit.py` runs over `pipeline-contract.yaml` and reports 0 BROKEN and 4 explicitly-labelled INCOMPLETE criteria; and the audit **ships its own `--selftest`** (a malformed contract is rejected; a phantom check path is classed BROKEN) — the same "a verifier that has only ever passed is unverified" rule the contract's own `definition-of-done` criterion cites. The flagship example (the corridor determination) is not re-adjudicated here; the contract only routes it through the existing judgment/render gates.
 
-## Adversarial review (author's Mode-3 pass; an independent pass is owed before ratification)
+## Adversarial review (author's Mode-3 pass + an independent red-team, 2026-07-13 — see revision history v2)
 
 Strongest objections considered, with responses:
 
 - **"It re-fragments governance by adding new vocabulary."** — It adds one YAML + one script, not a doctrine document; P-3 binds every term to an existing primitive and cedes authority to cited sources. If anything it *de*-fragments, by indexing the scattered gates in one queryable place.
-- **"It gives false assurance that stages are gated."** — The opposite: the audit's check 3 reports that **10 of 15 named enforcers ship no `--selftest`** (VERIFIED-BY the audit run), so the *assurance gap* is surfaced, not hidden; and 4 criteria are printed as INCOMPLETE every run.
+- **"It gives false assurance that stages are gated."** — The opposite: the audit's check 3 reports that **only 2 of 12 unique enforcers ship a `--selftest`** (10 do not; VERIFIED-BY the audit run), so the *assurance gap* is surfaced, not hidden; and 4 criteria are printed as INCOMPLETE every run.
 - **"The stage ids are invented and may contradict the deployed `<audit_trail>`."** — Conceded and made a ratification precondition (P-1); the ids are labelled a reconstruction, not the canonical list.
 - **"`pipeline_contract_audit.py` imports pydantic — inconsistent with the stdlib-only audit spine."** — The graph *spine* stays stdlib+PyYAML (`extract_contract.py` parses YAML directly, never pydantic); only the contract *validator* uses pydantic, consistent with the repo's existing `schema` CI job.
 
-**Correction this pass produced:** check 3's selftest-presence heuristic greps for the literal `--selftest` and therefore *undercounts* — an enforcer whose mutation harness lives in a separate `scripts/tests/test_*.py` is reported as "no selftest" though it is in fact verified. The INFO is therefore a **lower bound on self-verified enforcers**, not a claim that the other 10 are unverified; the audit's wording and this DR say so rather than overstating. (No BROKEN or schema findings were produced by the pass.)
+**Correction this pass produced:** check 3's selftest-presence heuristic greps for the literal `--selftest`, so it is a **lower bound** — an enforcer whose mutation harness lives in a separate `scripts/tests/test_*.py` reads as "no selftest" though it is in fact verified. The count is over the **12 unique** enforcers (not the 15 criteria, several of which reuse one enforcer). (No BROKEN or schema findings were produced by this author pass; the *independent* red-team subsequently found a counting bug in this very figure and other defects — all recorded in revision history v2.)
 
 ## Consequences if ratified
 
@@ -50,4 +50,11 @@ Owner review of P-1–P-3, and specifically: (a) confirmation (or correction) of
 
 ## Revision history
 
-- v1 (2026-07-13): initial proposal. Author's adversarial pass applied inline (one correction: the selftest-presence INFO is a lower bound, not a coverage claim). Figures (15/4/0; 10-of-15) are RECOUNTED from `pipeline_contract_audit.py` output on this branch, not recalled.
+- v1 (2026-07-13): initial proposal. Author's adversarial pass applied inline (one correction: the selftest-presence INFO is a lower bound, not a coverage claim). Primary figures (15/4/0) RECOUNTED from `pipeline_contract_audit.py` output.
+- v2 (2026-07-13): independent adversarial red-team (fresh context, brief to break; 9 findings, each reproduced). Corrections applied to the branch:
+  1. **Counting bug (integrity):** `pipeline_contract_audit.py` printed "5 of 15" enforcers-with-selftest by subtracting a deduped path set from a non-deduped criterion count. Fixed to count over unique enforcers — the true figure is **2 of 12 unique enforcers ship a `--selftest` (10 do not)**. This DR (v1 said "10 of 15") and the attestation `reason` are corrected accordingly.
+  2. **doctrine_sha kind:** the attestation/token used `dbd26e4`, the git *blob* hash of `mission-and-epistemics.md`; the repo convention and all prior attestations use the doctrine-defining *commit* sha `3fb2882`. Corrected to `3fb2882` (also clears the shallow-clone CHECK-2 evidence artifact). **Flagged for owner:** `ci.yml`'s doctrine gate computes the *blob* hash (`git rev-parse HEAD:governance/mission-and-epistemics.md`), disagreeing with the *commit*-sha convention every attestation uses — a genuine gate-vs-convention inconsistency to reconcile.
+  3. **`code.phantom_table` precision:** 84 findings (76 legacy-dir noise + CTE/view false positives) → **6 genuine** (the `room_page.py` dormant bug), by excluding `db`/`migrate`/`probes` dirs (matching the predecessor), subtracting CTE/`CREATE VIEW` names, and registering DB views as resolvable.
+  4. **known-debt soundness:** a broken/absent warrant is now refused (never silently suppresses forever), and an ERROR finding is never suppressed without explicit `allow_error_suppression`.
+  5. **`jurisdictional_divergence`:** order-of-magnitude same-unit spreads reclassified as candidate data-conflation/error rather than legitimate jurisdictional variation.
+  6. Determinism (`ORDER BY` on finding queries), selftest phantom-item branch (`A-99`), per-build slug-cache reset, and contract `status` `Literal`. The 15/4/0 primary figures re-verified correct.

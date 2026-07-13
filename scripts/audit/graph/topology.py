@@ -57,7 +57,8 @@ def orphan_sources(store):
     rows = cur.execute(
         "SELECT n.node_id, n.key FROM nodes n WHERE n.kind='source' "
         "AND NOT EXISTS (SELECT 1 FROM edges e WHERE e.dst=n.node_id "
-        "                AND e.etype='citation' AND e.resolved=1)"
+        "                AND e.etype='citation' AND e.resolved=1) "
+        "ORDER BY n.key"
     ).fetchall()
     for nid, key in rows:
         store.add_finding("orphan.uncited_source", "WARN",
@@ -70,7 +71,7 @@ def orphan_sources(store):
 def dangling_citations(store):
     cur = store.conn.cursor()
     rows = cur.execute(
-        "SELECT dst, attrs FROM edges WHERE etype='citation' AND resolved=0"
+        "SELECT dst, attrs FROM edges WHERE etype='citation' AND resolved=0 ORDER BY dst"
     ).fetchall()
     for dst, attrs in rows:
         store.add_finding("orphan.dangling_citation", "ERROR",
@@ -84,7 +85,8 @@ def dangling_citations(store):
 def unresolved_connection_targets(store):
     cur = store.conn.cursor()
     rows = cur.execute(
-        "SELECT src, dst FROM edges WHERE etype='junction' AND resolved=0 AND src LIKE 'connection:%'"
+        "SELECT src, dst FROM edges WHERE etype='junction' AND resolved=0 "
+        "AND src LIKE 'connection:%' ORDER BY src, dst"
     ).fetchall()
     phantom_items, unresolved = 0, 0
     for src, dst in rows:
@@ -196,7 +198,7 @@ def state_distribution(store, gdb):
         if col not in cols:
             continue
         dist = {str(v): n for v, n in gc.execute(
-            f"SELECT {col}, COUNT(*) FROM {table} GROUP BY {col}").fetchall()}
+            f"SELECT {col}, COUNT(*) FROM {table} GROUP BY {col} ORDER BY {col}").fetchall()}
         store.add_finding("state.distribution", "INFO",
                           f"{table}.{col}: {dist}", attrs={"table": table, "column": col, "dist": dist})
 

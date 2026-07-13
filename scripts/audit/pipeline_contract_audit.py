@@ -68,7 +68,7 @@ def audit():
     print(f"[1] PASS: contract validates (status={contract.status}, "
           f"ratified={contract.ratified}, level={contract.enforcement_level})")
 
-    broken, incomplete, verifiable, no_selftest = [], [], [], []
+    broken, incomplete, verifiable = [], [], []
     for loc, cid, check in contract.all_checks():
         klass = classify_check(check)
         if klass == "BROKEN":
@@ -77,10 +77,8 @@ def audit():
             incomplete.append((loc, cid))
         else:
             verifiable.append((loc, cid, check))
-            if check.startswith("scripts/") and not _has_selftest(check):
-                no_selftest.append(check)
 
-    print(f"[2] referential integrity: {len(verifiable)} VERIFIABLE, "
+    print(f"[2] referential integrity: {len(verifiable)} VERIFIABLE criteria, "
           f"{len(incomplete)} INCOMPLETE, {len(broken)} BROKEN")
     for loc, cid, check in broken:
         print(f"    BROKEN: {loc}/{cid} -> {check} (phantom enforcement — path missing)")
@@ -89,10 +87,17 @@ def audit():
         for loc, cid in incomplete:
             print(f"      - {loc}/{cid}")
 
-    print(f"[3] INFO: {len(verifiable) - len(set(no_selftest))} of {len(verifiable)} "
-          f"enforcers ship a --selftest; {len(set(no_selftest))} do not "
-          f"(pass counts only after demonstrated firing — evidence-architecture §10):")
-    for c in sorted(set(no_selftest)):
+    # Self-verification is a property of an ENFORCER (a path), not of a criterion:
+    # count over the UNIQUE verifiable enforcer paths, not the criteria list (several
+    # criteria reuse the same enforcer, e.g. validate_evidence_state.py x3).
+    enforcers = sorted({check for _, _, check in verifiable})
+    with_selftest = [p for p in enforcers if _has_selftest(p)]
+    without_selftest = [p for p in enforcers if not _has_selftest(p)]
+    print(f"[3] INFO: {len(with_selftest)} of {len(enforcers)} UNIQUE enforcers ship a "
+          f"--selftest; {len(without_selftest)} do not (a check's passes count only "
+          f"after demonstrated firing — evidence-architecture §10). NOTE: a lower bound "
+          f"— an enforcer whose mutation harness lives in scripts/tests/ reads as 'no':")
+    for c in without_selftest:
         print(f"      - {c}")
 
     # per-stage coverage

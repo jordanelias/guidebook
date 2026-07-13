@@ -5,9 +5,10 @@ Scans repository markdown for references in the project's identifier scheme
 (item A-01..K-NN, source REF-NNNNN / CoN-NN, connection CON-NNNN, gap GAP-NNN,
 term TERM-NNNN) and resolves each against the entity nodes built by extract_db.
 A reference that does not resolve to a real entity surfaces as a dangling `ref`
-edge — a phantom / stale identifier reference (e.g. the historical phantom item
-codes I-04, J-01..J-05). This is the prose<->data seam a single-corpus tool
-can't see.
+edge — a phantom / stale identifier reference (e.g. item codes referenced in prose
+that are absent from the 92-row items table, such as F-07). This is the prose<->data
+seam a single-corpus tool can't see. (Archived/deprecated trees are excluded, so
+retired identifiers kept only for git history are not flagged.)
 
 Careful/lean policy for this increment: only PHANTOM (dangling) references are
 materialised as edges; resolved references are counted per file (content-node

@@ -74,29 +74,54 @@ def _lift_count(gdb, entry):
 
 
 def apply_known_debt(store, gdb, entries):
-    """Suppress matching findings; flag any suppression whose warrant is satisfied."""
+    """Suppress matching findings, but only soundly. A suppression must not outlive
+    its warrant and must never silently swallow a regression, so:
+      - an entry with no warrant is refused (known_debt.unsound);
+      - an unverifiable warrant (lift_when_sql errors, or lift_when_ge missing) is
+        refused, NOT applied — a broken warrant can never suppress forever;
+      - a satisfied warrant (count >= lift_when_ge) surfaces as stale, not suppressed;
+      - an ERROR finding is never suppressed without an explicit allow_error_suppression.
+    Returns the list of stale suppressions."""
     cur = store.conn.cursor()
     stale = []
     for e in entries:
+        eid = e.get("id", "?")
+        if not str(e.get("warrant", "")).strip():
+            store.add_finding("known_debt.unsound", "WARN",
+                              f"Known-debt entry '{eid}' has no warrant — not applied.",
+                              attrs={"entry": eid})
+            continue
         count = _lift_count(gdb, e)
         ge = e.get("lift_when_ge")
-        if count is not None and ge is not None and count >= ge:
-            # Debt resolved — do NOT suppress; surface the stale suppression instead.
-            stale.append((e["id"], count, ge))
-            store.add_finding("known_debt.stale", "WARN",
-                              f"Known-debt suppression '{e['id']}' is stale: warrant satisfied "
-                              f"({count} >= {ge}) — remove it from known_debt.yaml.",
-                              attrs={"entry": e["id"], "count": count})
+        if count is None or ge is None:
+            store.add_finding("known_debt.unsound", "WARN",
+                              f"Known-debt entry '{eid}': warrant unverifiable "
+                              f"(lift_when_sql errored or lift_when_ge missing) — not applied, "
+                              f"so it cannot suppress a regression forever.",
+                              attrs={"entry": eid})
             continue
-        # Apply suppression to matching findings.
-        rows = cur.execute("SELECT finding_id, attrs FROM findings WHERE check_id=? AND known_debt IS NULL",
-                           (e["check_id"],)).fetchall()
-        for fid, attrs in rows:
+        if count >= ge:
+            stale.append((eid, count, ge))
+            store.add_finding("known_debt.stale", "WARN",
+                              f"Known-debt suppression '{eid}' is stale: warrant satisfied "
+                              f"({count} >= {ge}) — remove it from known_debt.yaml.",
+                              attrs={"entry": eid, "count": count})
+            continue
+        allow_error = bool(e.get("allow_error_suppression", False))
+        rows = cur.execute("SELECT finding_id, severity, attrs FROM findings "
+                           "WHERE check_id=? AND known_debt IS NULL", (e["check_id"],)).fetchall()
+        for fid, sev, attrs in rows:
             if "table" in e:
                 a = json.loads(attrs) if attrs else {}
                 if a.get("table") != e["table"]:
                     continue
-            cur.execute("UPDATE findings SET known_debt=? WHERE finding_id=?", (e["id"], fid))
+            if sev == "ERROR" and not allow_error:
+                store.add_finding("known_debt.unsound", "WARN",
+                                  f"Known-debt entry '{eid}' would suppress an ERROR finding "
+                                  f"without allow_error_suppression — refused.",
+                                  attrs={"entry": eid})
+                continue
+            cur.execute("UPDATE findings SET known_debt=? WHERE finding_id=?", (eid, fid))
     store.commit()
     return stale
 
@@ -242,12 +267,16 @@ def selftest():
         shutil.copy(canonical, copy)
         con = sqlite3.connect(copy)
         cid = con.execute("SELECT con_id FROM connections LIMIT 1").fetchone()[0]
-        _insert_row(con, "connection_targets", {"con_id": cid, "target": "item:Z-99"})
+        # A-99 is in category [A-K] so it exercises the phantom-ITEM branch (Z-99 would
+        # only ever hit the unresolved-identifier branch).
+        _insert_row(con, "connection_targets", {"con_id": cid, "target": "item:A-99"})
         con.commit()
         con.close()
         s = gbuild.build(audit_db=os.path.join(tmpd, "a3.db"), guidebook_db=copy)
-        results.append(("phantom connection target fires",
-                        _count_check(s, "ref.unresolved_conn_target", "WARN") > 0))
+        phantom_item = s.conn.execute(
+            "SELECT COUNT(*) FROM findings WHERE check_id='ref.unresolved_conn_target' "
+            "AND message LIKE '%phantom item%' AND known_debt IS NULL").fetchone()[0]
+        results.append(("phantom-item connection target fires", phantom_item > 0))
         s.close()
 
         # 4. self-ref cycle ERROR fires on an injected population parent loop
@@ -266,15 +295,38 @@ def selftest():
                         _count_check(s, "cycle.population_parent", "ERROR") > 0))
         s.close()
 
-        # 5. known-debt staleness is detected when a warrant is satisfied
+        # 5. known-debt soundness: (a) satisfied warrant surfaces as stale (not suppressed)
         shutil.copy(canonical, copy)
         s = gbuild.build(audit_db=os.path.join(tmpd, "a5.db"), guidebook_db=copy)
         gdb = sqlite3.connect(f"file:{copy}?mode=ro", uri=True)
-        fake = [{"id": "selftest-stale", "check_id": "table.empty_mission_critical",
-                 "table": "slugs", "lift_when_sql": "SELECT COUNT(*) FROM slugs", "lift_when_ge": 1}]
-        stale = apply_known_debt(s, gdb, fake)
+        stale = apply_known_debt(s, gdb, [{"id": "selftest-stale", "warrant": "selftest",
+            "check_id": "table.empty_mission_critical", "table": "slugs",
+            "lift_when_sql": "SELECT COUNT(*) FROM slugs", "lift_when_ge": 1}])
+        results.append(("satisfied warrant surfaces as stale (not suppressed)", len(stale) == 1))
+        # (b) a broken lift_when_sql is refused as unsound — it can never suppress forever
+        before = _count_check(s, "known_debt.unsound")
+        apply_known_debt(s, gdb, [{"id": "selftest-broken", "warrant": "selftest",
+            "check_id": "table.empty_mission_critical", "table": "conflicts",
+            "lift_when_sql": "SELECT COUNT(*) FROM no_such_table", "lift_when_ge": 1}])
+        results.append(("broken warrant refused as unsound",
+                        _count_check(s, "known_debt.unsound") > before))
         gdb.close()
-        results.append(("stale known-debt suppression is detected", len(stale) == 1))
+        s.close()
+        # (c) an ERROR finding is never suppressed without allow_error_suppression
+        shutil.copy(canonical, copy)
+        con = sqlite3.connect(copy)
+        con.execute("PRAGMA foreign_keys=OFF")
+        slug = con.execute("SELECT slug FROM slugs LIMIT 1").fetchone()[0]
+        _insert_row(con, "source_slug_links", {"ref_id": "REF-88888", "slug": slug, "local_ref_id": "ST"})
+        con.commit()
+        con.close()
+        s = gbuild.build(audit_db=os.path.join(tmpd, "a5c.db"), guidebook_db=copy)
+        gdb = sqlite3.connect(f"file:{copy}?mode=ro", uri=True)
+        apply_known_debt(s, gdb, [{"id": "selftest-error", "warrant": "selftest",
+            "check_id": "orphan.dangling_citation", "lift_when_sql": "SELECT 0", "lift_when_ge": 1}])
+        gdb.close()
+        results.append(("ERROR finding not suppressed without allow_error_suppression",
+                        _live_errors(s) > 0))
         s.close()
 
         # 6. code table-ref detector fires on injected SQL, ignores non-SQL prose

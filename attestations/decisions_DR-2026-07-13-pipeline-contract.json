@@ -2,7 +2,7 @@
  "schema_version": "1.0",
  "session": "session_2026-07-13-vectorized-audit-tool",
  "artifact": "decisions/DR-2026-07-13-pipeline-contract.md",
- "doctrine_sha": "dbd26e4",
+ "doctrine_sha": "3fb2882",
  "rules_in_scope": [
   "source-discipline"
  ],
@@ -10,7 +10,7 @@
   "source-discipline": {
    "status": "FIRED",
    "evidence_path": "scripts/audit/pipeline_contract_audit.py",
-   "reason": "Every checkable claim in the DR is grounded in an artifact read this session, not recalled: the referenced gates come from a full read of governance/, decisions/, schemas/ and scripts/audit/, and each named enforcer path was verified to exist by pipeline_contract_audit.py (0 BROKEN). The 15-verifiable/4-incomplete/0-broken and 10-of-15-without-selftest figures are recounted from that audit's actual output on this branch."
+   "reason": "Every checkable claim in the DR is grounded in an artifact read this session, not recalled: the referenced gates come from a full read of governance/, decisions/, schemas/ and scripts/audit/, and each named enforcer path was verified to exist by pipeline_contract_audit.py (0 BROKEN). The 15-verifiable/4-incomplete/0-broken figures are recounted from that audit's actual output; the selftest-coverage figure was corrected during an independent adversarial pass (a counting bug printed '5 of 15'; the true value is 2 of 12 unique enforcers ship a --selftest, 10 do not) — see the DR revision history v2."
   }
  },
  "deviations": [],

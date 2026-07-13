@@ -22,13 +22,19 @@ Doctrine framing (read-only, flags-only — proposes nothing):
     different values for the same item+unit) is the stronger signal — closer to a
     genuine contradiction than legitimate cross-jurisdiction variation.
 
-Only values sharing the SAME unit are ever compared (never 43 °C vs 900 mm).
+Only values sharing the SAME unit are ever compared (never 43 °C vs 900 mm). But
+same-unit is necessary, NOT sufficient: the same (item, unit) can still mix
+different measured QUANTITIES (e.g. a wheelchair clear-area vs a building floor-area,
+both m²), so an order-of-magnitude spread is reclassified as a candidate
+data-conflation/error rather than reported as legitimate jurisdictional variation.
 
 Checks:
   1. within_jurisdiction_divergence   (WARN) same item+unit+jurisdiction, >1 value
-  2. cross_jurisdiction_divergence    (INFO) same item+unit, values differ across jurisdictions
-  3. convergence_not_evidence         (INFO) same item+unit, >=3 jurisdictions agree — not best practice
-  4. unadjudicated_divergence         (WARN) a divergent item with no evidence_cell_state determination
+  2. cross_jurisdiction_divergence    (INFO) same item+unit, values differ (<10x) across jurisdictions
+  3. candidate_conflation_or_error    (WARN) same item+unit spanning >=10x — likely different
+                                      quantities sharing a unit, or a data error
+  4. convergence_not_evidence         (INFO) same item+unit, >=3 jurisdictions agree — not best practice
+  5. unadjudicated_divergence         (WARN) a divergent item with no evidence_cell_state determination
 
 This is a DESCRIPTIVE / surfacing tool: everything it finds is a CANDIDATE for
 human adjudication (a within-jurisdiction divergence may be a genuine contradiction,
@@ -117,19 +123,34 @@ def analyze(conn):
                 ))
             continue
 
-        # (2) cross-jurisdiction divergence
+        # (2) cross-jurisdiction divergence. NOTE: same (item, unit) does NOT guarantee
+        # the same measured QUANTITY — e.g. G-04 in m² mixes a wheelchair clear-area with
+        # a building floor-area threshold. An order-of-magnitude spread almost never means
+        # legitimate jurisdictional variation; treat it as a candidate data-conflation/error.
         spread = vmax - vmin
         rel = spread / vmax if vmax else 0.0
+        ratio = (vmax / vmin) if vmin > 0 else float("inf")
+        mixed_cm = len({cm for _, _, cm, _, _ in vals}) > 1
         extremes = []
         for jur, jvals in by_jur.items():
             for v, _ in jvals:
                 if _equalish(v, vmin) or _equalish(v, vmax):
                     extremes.append(f"{jur}={v}{unit}")
-        findings.append((
-            "cross_jurisdiction_divergence", "INFO",
-            f"{item}: values span {vmin}-{vmax}{unit} across {len(by_jur)} jurisdictions "
-            f"(spread {spread:g}{unit}, {rel*100:.0f}%); {', '.join(sorted(set(extremes)))}.",
-        ))
+        cm_note = "; mixes code-minimum and non-minimum values" if mixed_cm else ""
+        if ratio >= 10:
+            findings.append((
+                "candidate_conflation_or_error", "WARN",
+                f"{item}: values span {vmin}-{vmax}{unit} across {len(by_jur)} jurisdictions "
+                f"(x{ratio:.0f} range) — too wide for one parameter; likely different quantities "
+                f"sharing unit '{unit}' or a data error, NOT jurisdictional variation{cm_note}. "
+                f"{', '.join(sorted(set(extremes)))}.",
+            ))
+        else:
+            findings.append((
+                "cross_jurisdiction_divergence", "INFO",
+                f"{item}: values span {vmin}-{vmax}{unit} across {len(by_jur)} jurisdictions "
+                f"(spread {spread:g}{unit}, {rel*100:.0f}%{cm_note}); {', '.join(sorted(set(extremes)))}.",
+            ))
         # (4) divergence with no best-practice determination to adjudicate it
         if item not in adjudicated:
             findings.append((
@@ -153,14 +174,17 @@ def audit():
     print(SEP)
     print("jurisdictional_divergence.py — value matrix over jurisdictional_values")
     print(SEP)
-    order = ["within_jurisdiction_divergence", "cross_jurisdiction_divergence",
-             "unadjudicated_divergence", "convergence_not_evidence"]
+    order = ["within_jurisdiction_divergence", "candidate_conflation_or_error",
+             "cross_jurisdiction_divergence", "unadjudicated_divergence",
+             "convergence_not_evidence"]
+    warn_checks = ("within_jurisdiction_divergence", "candidate_conflation_or_error",
+                   "unadjudicated_divergence")
     by_check = defaultdict(list)
     for check, sev, msg in findings:
         by_check[check].append((sev, msg))
     for check in order:
         items = by_check.get(check, [])
-        sev = "WARN" if check in ("within_jurisdiction_divergence", "unadjudicated_divergence") else "INFO"
+        sev = "WARN" if check in warn_checks else "INFO"
         print(f"\n[{check}] {len(items)} ({sev})")
         for _, msg in items[:40]:
             print(f"    {msg}")
@@ -168,12 +192,14 @@ def audit():
             print(f"    ... ({len(items) - 40} more)")
 
     within = len(by_check.get("within_jurisdiction_divergence", []))
+    conflation = len(by_check.get("candidate_conflation_or_error", []))
     cross = len(by_check.get("cross_jurisdiction_divergence", []))
     unadj = len(by_check.get("unadjudicated_divergence", []))
     print()
     print(SEP)
     print(f"SURFACED: {within} within-jurisdiction candidate contradiction(s), "
-          f"{cross} cross-jurisdiction divergence(s), {unadj} unadjudicated "
+          f"{conflation} candidate conflation/error(s), {cross} cross-jurisdiction "
+          f"divergence(s), {unadj} unadjudicated "
           f"(all advisory — flags for human adjudication, not defects).")
     print(SEP)
     return 0  # descriptive tool: always exits 0; it flags, it does not rule
@@ -238,6 +264,14 @@ def selftest():
     ids = {f[0] for f in analyze(c)}
     results.append(("adjudicated divergence is not flagged unadjudicated",
                     "cross_jurisdiction_divergence" in ids and "unadjudicated_divergence" not in ids))
+
+    # order-of-magnitude spread -> candidate conflation/error, NOT plain divergence
+    c = _mem_db()
+    _ins(c, "M-01", "US", "m2", 5); _ins(c, "M-01", "UK", "m2", 5000)
+    ids = {f[0] for f in analyze(c)}
+    results.append(("order-of-magnitude spread flagged as conflation, not divergence",
+                    "candidate_conflation_or_error" in ids
+                    and "cross_jurisdiction_divergence" not in ids))
 
     ok = True
     for name, passed in results:

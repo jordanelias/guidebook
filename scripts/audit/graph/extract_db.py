@@ -62,6 +62,8 @@ def _fk_list(cur, table):
 
 def extract(gdb, store):
     """gdb: read-only sqlite3.Connection on guidebook.db. store: GraphStore."""
+    global _SLUGS
+    _SLUGS = None  # reset the per-build slug memo (never carry it across DBs)
     cur = gdb.cursor()
     tables = _tables(cur)
 
@@ -71,6 +73,11 @@ def extract(gdb, store):
         n = cur.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0]
         row_counts[t] = n
         store.add_node("db_table", t, subtype="table", label=t, attrs={"row_count": n})
+    # Views are legitimate query targets too — register them so code that reads
+    # v_best_practice / v_divergence / ... resolves instead of looking phantom.
+    for (v,) in cur.execute(
+            "SELECT name FROM sqlite_master WHERE type='view' ORDER BY name").fetchall():
+        store.add_node("db_table", v, subtype="view", label=v)
 
     # 2. primary entity nodes (with state attrs)
     for table, (kind, pk) in PRIMARY.items():
