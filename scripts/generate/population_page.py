@@ -73,16 +73,31 @@ def query_population(conn, code):
     ]
 
     cells = conn.execute(
-        "SELECT item_code, state, tier_basis, code_floor_only "
+        "SELECT item_code, state, tier_basis, code_floor_only, falsification_condition, "
+        "regulatory_stratum_only, confidence_synthesis_basis, has_unverified_sources, "
+        "all_sources_disqualified "
         "FROM evidence_cell_state WHERE population_code = ? ORDER BY item_code",
         (code,),
     ).fetchall()
     pop["cells"] = [
-        {"item_code": r[0], "state": r[1], "tier_basis": r[2], "code_floor_only": r[3]}
+        {"item_code": r[0], "state": r[1], "tier_basis": r[2], "code_floor_only": r[3],
+         "falsification_condition": r[4], "regulatory_stratum_only": r[5],
+         "confidence_synthesis_basis": r[6], "has_unverified_sources": r[7],
+         "all_sources_disqualified": r[8]}
         for r in cells
     ]
 
     return pop
+
+
+def source_caveats(cell):
+    """§2.8 source-quality flags, rendered plainly rather than silently dropped."""
+    flags = []
+    if cell["has_unverified_sources"]:
+        flags.append("UNVERIFIED-1")
+    if cell["all_sources_disqualified"]:
+        flags.append("ALL-DISQUALIFIED")
+    return ", ".join(flags) if flags else "—"
 
 
 def render_html(pop):
@@ -115,13 +130,21 @@ def render_html(pop):
 
     if pop["cells"]:
         cell_rows = "".join(
-            f'<tr><td>{e(c["item_code"])}</td><td>{e(c["state"])}</td>'
+            f'<tr><td><a href="/specs/{e(c["item_code"].lower())}.html">{e(c["item_code"])}</a></td>'
+            f'<td>{e(c["state"])}</td>'
             f'<td>{e(c["tier_basis"] or "—")}</td>'
-            f'<td>{"yes" if c["code_floor_only"] else "no"}</td></tr>\n'
+            f'<td>{"yes" if c["code_floor_only"] else "no"}</td>'
+            f'<td>{"yes" if c["regulatory_stratum_only"] else "no"}</td>'
+            f'<td>{e(source_caveats(c))}</td>'
+            f'<td>{e(c["confidence_synthesis_basis"] or "—")}</td>'
+            f'<td>{e(c["falsification_condition"] or "—")}</td></tr>\n'
             for c in pop["cells"]
         )
         bp_section = f"""<table>
-            <thead><tr><th>Item</th><th>State</th><th>Tier basis</th><th>Code floor only</th></tr></thead>
+            <thead><tr><th>Item</th><th>State</th><th>Tier basis</th>
+            <th>Code floor only</th><th>Regulatory stratum only</th>
+            <th>Source caveats</th><th>Confidence basis</th>
+            <th>Falsification condition</th></tr></thead>
             <tbody>{cell_rows}</tbody>
         </table>"""
     else:

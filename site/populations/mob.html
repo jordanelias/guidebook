@@ -104,10 +104,13 @@ td a { color: var(--accent); text-decoration: none; font-family: var(--font-mono
 <section>
 <h2>Best-practice determinations</h2>
 <table>
-            <thead><tr><th>Item</th><th>State</th><th>Tier basis</th><th>Code floor only</th></tr></thead>
-            <tbody><tr><td>E-06</td><td>provisional</td><td>T4-6-only(regulatory_stratum_only)</td><td>no</td></tr>
-<tr><td>E-12</td><td>stated</td><td>T1+CO1+T2</td><td>no</td></tr>
-<tr><td>G-03</td><td>stated</td><td>T2+CO2</td><td>no</td></tr>
+            <thead><tr><th>Item</th><th>State</th><th>Tier basis</th>
+            <th>Code floor only</th><th>Regulatory stratum only</th>
+            <th>Source caveats</th><th>Confidence basis</th>
+            <th>Falsification condition</th></tr></thead>
+            <tbody><tr><td><a href="/specs/e-06.html">E-06</a></td><td>provisional</td><td>T4-6-only(regulatory_stratum_only)</td><td>no</td><td>yes</td><td>—</td><td>Regulatory-stratum floor synthesis (&gt;=1 T4 international standard present (§2.3; the clause&#x27;s &#x27;value directly addressing the parameter&#x27; is unverified — value extraction pending)). NOT an evidence-anchored best practice: no anchoring dimension exists.</td><td>This is a floor claim: overturned if the cited editions are superseded. It never becomes a best-practice claim by more codes agreeing; only T1/Co-1/T2/Co-2 evidence can do that (§2.7).</td></tr>
+<tr><td><a href="/specs/e-12.html">E-12</a></td><td>stated</td><td>T1+CO1+T2</td><td>no</td><td>no</td><td>UNVERIFIED-1</td><td>—</td><td>Overturned if the anchoring sources are retracted/superseded, or if value-level extraction shows the axes diverge (then divergence protocol §3.3 applies and a synthesis approach is owed).</td></tr>
+<tr><td><a href="/specs/g-03.html">G-03</a></td><td>stated</td><td>T2+CO2</td><td>no</td><td>no</td><td>—</td><td>—</td><td>Overturned if the anchoring sources are retracted/superseded, or if value-level extraction shows the axes diverge (then divergence protocol §3.3 applies and a synthesis approach is owed).</td></tr>
 </tbody>
         </table>
 </section>
