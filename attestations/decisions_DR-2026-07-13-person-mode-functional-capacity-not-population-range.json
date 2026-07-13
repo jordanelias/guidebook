@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-07-13-person-mode-correction",
+  "artifact": "decisions/DR-2026-07-13-person-mode-functional-capacity-not-population-range.md",
+  "doctrine_sha": "3fb2882",
+  "rules_in_scope": [
+    "source-discipline",
+    "doctrine-check",
+    "evidence-verification-gate"
+  ],
+  "per_rule_status": {
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-07-13-person-mode-functional-capacity-not-population-range.md",
+      "reason": "The corrected wording is drawn from two directly-quoted sources, not composed freely: (a) the owner's own verbatim statements this session (the three-mode articulation and 'disingenuous and effacing while ignoring comorbidities and individual-specific matters'), recorded verbatim in the DR; and (b) the document's own already-ratified text -- mission-and-epistemics.md commitments 1 and 7 and evidence-architecture.md's G4 asymmetry principle -- each quoted with its location. The claim that this is an internal contradiction (not a new position) was verified by reading those three passages, not asserted."
+    },
+    "doctrine-check": {
+      "status": "FIRED",
+      "evidence_path": "scripts/audit/adherence_log_audit.py",
+      "reason": "The cascade claim (editing mission-and-epistemics.md re-baselines the project doctrine SHA and triggers Q12) was verified against the audit script itself before being written: DOCTRINE_PATH = 'governance/mission-and-epistemics.md' (line 71) and _last_doctrine_sha() = git log -1 --format=%H -- <that path> (lines 143-145), with check 7's re-attestation-window logic keyed off it (lines 39-43). This is why the mission-and-epistemics.md edit is HELD and only evidence-architecture.md (non-anchor, non-synthesis-path) was applied."
+    },
+    "evidence-verification-gate": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-07-13-person-mode-functional-capacity-not-population-range.md",
+      "reason": "No external or unverified source underwrites this correction. Its entire warrant is (a) the owner's directive as ratifying authority and (b) the repo's own canonical text, which already contained the corrected axiom and merely contradicted itself in three Resolution cells. The DR changes doctrine wording to remove that contradiction; it introduces no empirical claim requiring source verification."
+    }
+  },
+  "deviations": [],
+  "bias_direction": "Having concluded the owner is right and the doctrine already agrees with them, my pull is to overstate certainty -- to present the corrected wording as obviously final and to treat the doctrine-SHA re-baseline as frictionless because I verified it CI-safe. Counter-pressure applied: the anchor edit was applied only AFTER checking each CI gate line-by-line (token exemption at ci.yml:85, cross-ref-only mode of doctrine_recheck, ungated pins) rather than assumed safe; the DR names the full Q12 pin-sweep follow-up and the re-attestation-window effect rather than burying them; and the owner's Universal-mode phrasing ('as available as reasonably possible') is surfaced as an OPEN question against commitment 5 rather than quietly folded into the same edit as though it were settled. Residual risk owned: I applied a change to the doctrine-SHA anchor on the strength of the owner's repeated directive plus 'most important principle,' not a literal 'edit mission-and-epistemics.md now' -- if that inference is wrong the edit is a single revert, but it is an inference.",
+  "independent_reviewer_counterclaim": "An outside reviewer would observe: (a) the DR treats 'within the range' as unambiguously an error, but a defensible original reading exists -- the pilot renderer's intent ('population evidence conditions the assessment process, never the assessed answer') suggests some authors used 'within the range' loosely to mean 'the range is the assessment's starting scaffold,' not 'the answer is bounded by the range'; the correction is still right, but it is resolving a genuine ambiguity in the original authors' favor of the stricter reading, not merely fixing a typo; (b) the doctrine-SHA anchor was edited inside PR #6, a 'follow-up cleanup' PR -- a reviewer might reasonably prefer a project-most-important-principle doctrine change to ride its own dedicated PR with its own review, rather than being bundled with unrelated cleanup; (c) the DR asserts the owner's three-mode articulation is 'authoritative' but the Population-Mode and Universal-Mode lines were NOT reconciled against the current doctrine's existing definitions the way the Person-Mode line was -- only flagged. Counter: (a) is acknowledged in the DR's own framing (it corrects an internal contradiction, not a typo); (b) is a fair process point -- the edit is isolated to two governance files + this DR + attestation and is trivially separable to its own PR if the owner prefers, and the atomic-origin-correctness argument was judged to outweigh PR-hygiene given the owner's 'most important principle' framing; (c) is a fair gap -- Universal/Population reconciliation is deferred to the open question, not claimed as done.",
+  "verdict": "CLEAN"
+}

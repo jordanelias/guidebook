@@ -59,7 +59,7 @@ This is a commitment about evidence types, not about operations. The project's p
 |---|---|---|
 | Universal Mode | Universal Design / Code Compliance | Population-agnostic; fixed values |
 | Population Mode | Population-Informed Inclusive Design | Ranges; median as default |
-| Person Mode | Person-Specific Co-Design | OT assessment resolves position within the Population-Mode range |
+| Person Mode | Person-Specific Co-Design | The individual's own specific functional needs — their circumstances, capabilities, impairments, and comorbidities. OT co-design resolves the individual case; the design answers may be informed by a related disability population, but that population neither bounds nor defines the person |
 
 DAR (Design for Adaptable Readiness) provisions are mandatory at all modes — the structural and electrical infrastructure that allows Person Mode individual adaptation post-construction without major retrofit cost.
 
