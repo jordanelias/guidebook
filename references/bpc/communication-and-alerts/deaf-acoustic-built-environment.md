@@ -5,6 +5,8 @@
 **SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
 (See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
 
+**KNOWN CONFLICT (Q24, `workplan/ratification-execution-register-2026-07-13.md`):** this file's "STI ≥0.50 minimum; ≥0.60 best practice" framing conflicts with `room-acoustic-performance.md`'s "STI ≥0.60 general / ≥0.75 DEAF-CI" and `acoustics-speech-intelligibility-disability.md`'s flat "STI ≥0.5". Do not resolve by inspection or point-fix ahead of reverification — all three are in the same PRE-REHABILITATION cohort above; flagged for Phase E.2g to adjudicate together.
+
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
 |---|---|---|---|
