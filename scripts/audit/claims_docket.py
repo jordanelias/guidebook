@@ -45,6 +45,17 @@ TRIGGERS = [
         r"\b(verified|demonstrated|confirmed|preserved|proven|validated|"
         r"tested|re-?run|byte-identical|reproduc\w+|checks? pass\w*)\b", re.I)),
     ("quantity", re.compile(r"\b\d+(?:\.\d+)?\s*(?:mm|m|lux|dB|Hz|%|°C?|N(?:·m)?)\b")),
+    # Bare integer counts with no unit and no "N of M" framing (e.g. "59 changed
+    # files") escape all four prior classes -- the exact gap the C1 adversarial
+    # pass (2026-07-13) caught: a count claim with no recorded base/command,
+    # unreproducible, and invisible to this scanner. Curated noun list, not a
+    # bare \d+\s+\w+ (would fire on nearly every sentence containing a number);
+    # add nouns here as new escapes are found, per this docstring's own rule.
+    ("count", re.compile(
+        r"\b\d+\s+(?:\w+\s+){0,2}(?:file|attestation|claim|record|source|item|"
+        r"population|page|migration|test|check|line|row|error|warning|finding|"
+        r"commit|invocation|cell|profile|reference|violation|duplicate|table)s?\b",
+        re.I)),
 ]
 ANNOT_RE = re.compile(
     r"^(VERIFIED-BY:.+|RECOUNTED:.+|PREDICTED\b.*|REPORTED-BY:.+|N/A:.+)$")
@@ -159,12 +170,17 @@ def selftest():
         ("governance/y.md", 2, "The exclusion was verified by query and preserved."),
         ("references/z.md", 3, "Corridors of 2440 mm serve signing pairs."),
         ("references/z.md", 4, "A neutral sentence with no trigger words here."),
+        ("workplan/w.md", 5, "This touched 59 changed files across the repo."),
     ]
     hits = list(scan(synthetic))
     fired = {h[0] for h in hits}
     ok &= ("decisions/x.md" in fired)  # absolute + total
     ok &= ("governance/y.md" in fired)  # verification verbs
     ok &= any(h[0] == "references/z.md" and h[1] == 3 for h in hits)  # quantity
+    # bare-integer-count class (the C1 adversarial pass's finding 1: "59 changed
+    # files" carried no unit and no "N of M" framing, so it escaped every prior
+    # class -- confirm the new "count" class actually catches it).
+    ok &= any(h[0] == "workplan/w.md" and h[1] == 5 and "count" in h[2] for h in hits)
     ok &= not any(h[1] == 4 for h in hits)  # clean line stays quiet
     print(f"{'FIRED' if ok else '**MISSED**'}: scanner on synthetic triggers "
           f"({len(hits)} hits; clean line quiet)")
