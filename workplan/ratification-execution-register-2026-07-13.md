@@ -7,16 +7,47 @@
 2. **Migrations authored and committed:** `027_regulatory_stratum_only.sql` (column + final `v_best_practice`), `data_20260713000000_pilot-cell-backfill.sql` (the 7 pilot determinations + GAP-297 + flag backfill; GAP-297 verified unallocated in canonical gaps), `data_20260713000100_weighting-profile-seed.sql` (5 audience profiles incl. advocacy-brief).
 3. **Validator extended** (`scripts/validate_evidence_state.py`): G1b `stated`-never-regulatory-stratum-only check, column-aware with marker fallback for pre-027 DBs.
 4. **Core doctrine edits (unification-DR execution items 1–3, 9–10; tier3 DR follow-up):** `evidence-methodology.md` §2.2 (G7 T2 anchors; T3-alone thresholds), §2.3 (G1b scale-tagging + `regulatory_stratum_only`), §3.2/§3.4 (G8 render rule; mandatory regulatory-stratum disclaimer on the convergence voice line), §4 vocabulary; `mission-and-epistemics.md` commitments 4/7 (Universal/Population/Person Mode); `audience-priority.md` (G5 advocacy-brief use-pattern row; Population-/Person-Mode wording); `armature_v4.md` §4.5/§4.6 (vocabulary; advocacy-brief cross-ref); `references/project-standards.md` (superseded-ladder RULE reconciled to canonical; two-marker RULE → ●/◐/○ with the G1b bar and the value-support requirement; Co-1 "co-primary at Tier 3–4" contradiction fixed; all Mode P/S removed); `schemas/evidence_state.py` L108 docstring; `governance/pre-stage-a-decisions.md` stated-threshold phrases (×2).
+5. **C1 executed** (owner-run command, this session, direct owner authorization given in-conversation): `python3 scripts/migrate_db.py --session "session_2026-07-13-ratification-execution-C1"` — VERIFIED-BY: command run against `data/guidebook.db`, transcript below. A pre-migration copy of the DB was taken before running (rollback path, not needed).
 
-## STAGED — one command for the owner (C1)
+   ```
+   Current schema version: 25
+   --- Schema migrations ---
+     Applying 026_reconcile_evidence_cell_state.sql (→ version 26)...
+     Applying 027_regulatory_stratum_only.sql (→ version 27)...
+   --- Data migrations ---
+     Applying data_20260712150000_jurisdictional-values-backfill.sql...
+     Applying data_20260713000000_pilot-cell-backfill.sql...
+     Applying data_20260713000100_weighting-profile-seed.sql...
+   Done. Schema at version 27; 3 data migration(s) applied.
+   ```
 
-The permission layer (correctly) requires the canonical-DB mutation to be run under direct owner review; "[No preference]" on the explicit prompt was not sufficient authorization. Everything is built, committed, and CI-shaped; to complete C1 run:
+   Post-migration state — VERIFIED-BY: direct query against `data/guidebook.db`: `user_version=27`; `jurisdictional_values`=109 rows; `weighting_profile`=5 rows; `evidence_cell_state`=7 rows; `PRAGMA foreign_key_check`=0 rows; `regulatory_stratum_only=1` count=1 (E-06×MOB, the decisive G1 cell, matching the pilot manifest's prediction — RECOUNTED: exactly 1 of 7 cells).
 
-```
-python3 scripts/migrate_db.py --session "session_2026-07-13-ratification-execution-C1"
-```
+   Mechanical battery — VERIFIED-BY, all run against the post-migration `data/guidebook.db` this session:
+   - `validate_evidence_state.py --states-only --db data/guidebook.db` → PASS, 13 records checked, 0 errors, 0 warnings (7 cells, 6 convergence rows).
+   - `register_integrity_check.py --selftest --db data/guidebook.db working/pilot/pilot-renderings.html` → 7/7 mutation invariants FIRED, clean pass on the real document, PASS I1–I5 across 7 cells × 6 registers with the DB cross-check on.
+   - `scripts/audit/matrix_consistency.py` → PASS 10/10.
+   - `scripts/tests/test_assess_cell_pilot.py` → PASS, 14/14 checks (run directly; `pytest` is not installed in this environment).
+   - `scripts/doctrine_recheck.py` → 3 WARNINGS (`evidence-architecture.md` → `tier-system.md`/`armature_v4.md`; `migration-survival.md` → `repo-strategy.md`, all not CANONICAL-inventoried) — RECOUNTED: identical output confirmed via `git stash` against the pre-C1 tree, i.e. pre-existing drift, not introduced by C1.
+   - `scripts/audit/schema_reference_drift_audit.py` → VERDICT: FAIL, 7 unresolved references, all pre-existing by-design (`room_page.py` ×6, `migrate_evidence_sources_v2.py` ×1) per `PILOT-MANIFEST.md` §v2 run log; the previously-expected `pilot_renderings.py`→`jurisdictional_values` line is now resolved (absent from the FAIL list), confirming migration 026 landed the referenced table.
+   - `scripts/audit/source_slug_links_duplicates.py` → 0 duplicate sets, 0 excess rows.
+   - `scripts/migrate_db.py --rebuild` (fresh DB from migration history alone) cross-checked against the committed DB on the 7 CI-invariant tables plus `evidence_cell_state`/`jurisdictional_values`/`weighting_profile` → PASS, all 10 counts match (migration-reproducibility gate, GAP-290).
+   - `scripts/audit/adherence_log_audit.py --check presence` and `--check schema` → No issues (59 changed files, 12 attestations, 20 synthesis files in the branch to date).
+   - `claims_docket.py check` → no docket present for this update at check time (nothing to check); see below for the run against this update's own diff.
 
-This applies, in order: 026 (evidence_cell_state rebuild + jurisdictional_values), 027 (regulatory_stratum_only + final view), then the data migrations (109 jurisdictional rows; 7 pilot determinations + GAP-297 + flag backfill; 5 weighting profiles), stamps user_version 27, and records the ledger. Then verify: `python3 scripts/validate_evidence_state.py --states-only --db data/guidebook.db` (expect PASS, 7 cells) and the CI reproducibility invariants go green on the next push. **C2 follows C1:** `python3 scripts/generate/population_page.py && python3 scripts/generate/spec_page.py` (+ vetting surface regeneration).
+   C2 (site regeneration) is explicitly **not** run as part of C1 — it remains a separate owner-authorized step per the ratification record, queued below as it always was.
+
+## C1 — COMPLETE (was: STAGED)
+
+Executed this session under direct owner authorization (chat instruction, this session, from the owner's registered account). See item 5 above for the full run log. The register's original staging note is preserved below for the record.
+
+> The permission layer (correctly) requires the canonical-DB mutation to be run under direct owner review; "[No preference]" on the explicit prompt was not sufficient authorization. Everything is built, committed, and CI-shaped; to complete C1 run:
+>
+> ```
+> python3 scripts/migrate_db.py --session "session_2026-07-13-ratification-execution-C1"
+> ```
+>
+> This applies, in order: 026 (evidence_cell_state rebuild + jurisdictional_values), 027 (regulatory_stratum_only + final view), then the data migrations (109 jurisdictional rows; 7 pilot determinations + GAP-297 + flag backfill; 5 weighting profiles), stamps user_version 27, and records the ledger. Then verify: `python3 scripts/validate_evidence_state.py --states-only --db data/guidebook.db` (expect PASS, 7 cells) and the CI reproducibility invariants go green on the next push. **C2 follows C1:** `python3 scripts/generate/population_page.py && python3 scripts/generate/spec_page.py` (+ vetting surface regeneration).
 
 ## QUEUED (tracked, sequenced; nothing lost)
 
