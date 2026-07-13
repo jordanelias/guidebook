@@ -10,3 +10,9 @@ working/pilot/*.db
 # the canonical DB is committed as a single binary)
 data/guidebook.db-shm
 data/guidebook.db-wal
+
+# derived structural-audit graph (throwaway build artifact; rebuilt each run by
+# scripts/audit/graph_audit.py; never migration-tracked, never canonical)
+data/audit_graph.db
+data/audit_graph.db-shm
+data/audit_graph.db-wal

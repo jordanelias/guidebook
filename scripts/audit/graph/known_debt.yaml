@@ -1,0 +1,53 @@
+# known_debt.yaml — ratified-but-unexecuted debt suppressions for the structural audit.
+#
+# Rationale: the repo carries debt that is already ratified (2026-07-13) but not yet
+# executed (e.g. the C1 determination/value backfill). Surfacing it as a *fresh*
+# finding every run would drown real signal. Each entry below suppresses one such
+# finding — BUT a suppression must not outlive its warrant: graph_audit.py re-evaluates
+# `lift_when_sql` against the live DB every run and, once the debt is resolved
+# (count >= lift_when_ge), reports the suppression itself as STALE rather than silently
+# hiding what is now a real regression.
+#
+# entry fields:
+#   id           stable suppression id
+#   check_id     finding check_id to suppress
+#   table        (for table.* checks) the specific table the entry covers
+#   warrant      the ratified DR / execution-register item that authorises the debt
+#   lift_when_sql a SQL count over guidebook.db
+#   lift_when_ge  suppression lifts (and is flagged stale) once the count reaches this
+version: 1
+entries:
+  - id: c1-source-value-extractions-empty
+    check_id: table.empty_mission_critical
+    table: source_value_extractions
+    warrant: "DR-2026-05-28-b (B6) + C1 value backfill pending (ratification-execution-register-2026-07-13)"
+    lift_when_sql: "SELECT COUNT(*) FROM source_value_extractions"
+    lift_when_ge: 1
+
+  - id: c1-evidence-cell-state-pilot-only
+    check_id: table.empty_mission_critical
+    table: evidence_cell_state
+    warrant: "DR-2026-07-12 A2 + C1 determination backfill pending (7 pilot rows today)"
+    lift_when_sql: "SELECT COUNT(*) FROM evidence_cell_state"
+    lift_when_ge: 20
+
+  - id: conflicts-empty-awaiting-migration
+    check_id: table.empty_mission_critical
+    table: conflicts
+    warrant: "DR-2026-07-12 A5 Item V — conflicts.status CHECK migration pending"
+    lift_when_sql: "SELECT COUNT(*) FROM conflicts"
+    lift_when_ge: 1
+
+  - id: extraction-population-links-empty
+    check_id: table.empty_mission_critical
+    table: extraction_population_links
+    warrant: "downstream of empty source_value_extractions (B6 backfill pending)"
+    lift_when_sql: "SELECT COUNT(*) FROM extraction_population_links"
+    lift_when_ge: 1
+
+  - id: lang-jur-map-deferred
+    check_id: table.empty_mission_critical
+    table: lang_jur_map
+    warrant: "DR C4 — lang_jur_map PRIMARY/SECONDARY criteria deferred (by design, migration 023)"
+    lift_when_sql: "SELECT COUNT(*) FROM lang_jur_map"
+    lift_when_ge: 1
