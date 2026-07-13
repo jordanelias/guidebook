@@ -46,7 +46,7 @@ This is the cleanest data structure that preserves the transparent methodology t
 ### Affected downstream artifacts
 
 - **B1 schema design** — entity records carry both `tier` and `evidence_type` fields
-- **B2 evidence-tier-validator (Co-1-aware)** — reads both fields; enforces "best-practice claims must cite ≥Tier 3 OR Co-1 OR Co-2"
+- **B2 evidence-tier-validator (Co-1-aware)** — reads both fields; enforces "best-practice claims must cite ≥Tier 2 anchoring OR Co-1 OR Co-2 (T3-alone → provisional/pending per tier3-stated-threshold DR, ACCEPTED 2026-07-13)"
 - **A6 evidence methodology** — specifies `evidence_type` taxonomy and authoring rules per type
 - **C2 builds** — validators, renderers, authoring skills consult both fields
 
@@ -78,7 +78,7 @@ A best-practice cell at any (parameter × population) intersection holds one of:
 
 | State | Display | Meaning | Validator behavior |
 |---|---|---|---|
-| `stated` | normal | Best practice derived from ≥Tier 3 OR Co-1 OR Co-2 evidence | Schema-validated; passes evidence-tier-validator |
+| `stated` | normal | Best practice derived from ≥Tier 2 anchoring OR Co-1 OR Co-2 (T3-alone → provisional/pending per tier3-stated-threshold DR, ACCEPTED 2026-07-13) evidence | Schema-validated; passes evidence-tier-validator |
 | `provisional` | flagged with confidence | Synthesis based on partial evidence dimension; rich in at least one dimension | Schema-validated; renders with confidence flag |
 | `pending` | `[BEST-PRACTICE-PENDING]` + gap link | Evidence sparse across all dimensions | Validator requires gap-register entry |
 | `not_applicable` | "Not applicable" | Parameter has no design implication for this population | Validator requires explicit rationale |

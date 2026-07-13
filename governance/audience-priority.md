@@ -54,6 +54,7 @@ Disabled people use environments. Their lived experience tests whether what gets
 |---|---|---|
 | Information-finding | What should I expect / ask for / advocate for in a built environment shaped around my needs? What does my condition imply for specific design parameters? | Accessible specs in plain language; cross-references to advocacy use; precise enough to cite when asking for change |
 | Representation-checking | Is my experience acknowledged? Is within-population variability honored, or am I subsumed under a generic label? | Narrative framing surfacing variability; explicit acknowledgment that population codes are organizing scaffolding, not descriptions of any individual; visible Co-1 evidence basis |
+| Advocacy-brief *(added per unification-DR item G5, ACCEPTED 2026-07-13; available by extension to carers and DPO staff)* | What can I cite when asking for better than the legal minimum? | The code-vs-evidence delta rendered honestly (no delta asserted before value extraction supports it); rights framing (CRPD-linked); citable evidence strength with instrument-status caveats — a wrongly-cited "legal minimum" hands the other side a rebuttal |
 
 Representation-checking is unusual among reading modes: the reader is **testing** the document, not just reading it. The document must hold up under that test. A document that fails representation-checking is failing in its core commitment, not merely in style.
 
@@ -71,7 +72,7 @@ OTs operate at the individual side of the built environment — assessing how a 
 
 | Pattern | Reader state | Content need |
 |---|---|---|
-| Clinical-collaboration | Co-designing a built-environment intervention with a client; bringing population-level specifications into individual-specific assessment | Tier 1 ranges legible alongside the median, with the Tier-2-resolution path identified |
+| Clinical-collaboration | Co-designing a built-environment intervention with a client; bringing population-level specifications into individual-specific assessment | Population-Mode ranges legible alongside the median, with the Person-Mode resolution path identified |
 | Specialist-handoff | Communicating an OT assessment finding to a non-OT designer or builder; using the guidebook as common-ground language | Population codes and parameter labels stable enough to cite; cross-references to the matching item specification |
 
 ### Policymakers

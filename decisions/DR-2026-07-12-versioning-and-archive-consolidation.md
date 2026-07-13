@@ -1,6 +1,6 @@
 # DR-2026-07-12: PI archival hygiene, register-snapshot ban, archive consolidation, and handoff convention
 
-- Status: **PROPOSED — pending owner ratification**
+- Status: **ACCEPTED — ratified by owner directive 2026-07-13 ("resolve all accept ratify all commit all"); see decisions/RATIFICATION-RECORD-2026-07-13.md** *(was: **PROPOSED — pending owner ratification**)*
 - Date: 2026-07-12 (revised same day after adversarial review — see item 1's correction note)
 - Prepared by: Claude, following `audits/consolidation-sweep-2026-07-12.md`. This DR proposes policy only; it does not itself move, merge, or delete any file. Execution is explicitly deferred to a follow-up pass once ratified (see "Consequences" below).
 - **Self-review caveat:** This DR was authored in the same session that ran the sweep it responds to. `[SELF-AUTHORED — bias risk]` applies, in two directions: (a) toward finding more things worth codifying than the evidence supports, and (b) concretely, the original draft of item 1 proposed reversing an already-ratified architecture rule (new-file-per-PI-revision) while describing it as filling a gap — an independent adversarial reviewer caught this by reading `project-architecture-guidebook-v2.3.md`'s actual text before accepting the "gap" framing; this draft would not have caught it unassisted. Item 1 is corrected below; treat the correction, not the original framing, as the operative proposal.

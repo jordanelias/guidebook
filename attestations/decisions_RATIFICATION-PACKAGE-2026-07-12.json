@@ -1,0 +1,20 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-07-12-evidence-architecture-unification",
+ "artifact": "decisions/RATIFICATION-PACKAGE-2026-07-12.md",
+ "doctrine_sha": "3fb2882",
+ "rules_in_scope": [
+  "source-discipline"
+ ],
+ "per_rule_status": {
+  "source-discipline": {
+   "status": "FIRED",
+   "evidence_path": "decisions/RATIFICATION-PACKAGE-2026-07-12.md",
+   "reason": "The 11-DR roster was established by grep over decisions/ for PROPOSED status markers (not from memory or prior summaries); each Group-B summary paragraph was written after reading the DR's own header and problem statement this session; Group-C items C1-C4 restate owner-blockers already recorded in workplan/website-v0-path-forward-2026-07-12.md and the 2026-07-12 inventory audit, cited rather than re-derived; the drift findings (PopulationCode enum vs populations table, bpc_metadata NDV-for-deaf, 27/640 and 0/640 substrate coverage) were each verified by direct DB query this session."
+  }
+ },
+ "deviations": [],
+ "bias_direction": "The package recommends 'ratify' for 10 of 11 items, and its author authored or executed several of them - a systematic pressure toward ratification framing. Bounded by: every recommendation is one owner reply from being overridden; the package explicitly offers 'deferred' as a first-class outcome (B5 is recommended either way); Group B items are proposals that have been operating de-facto since May, so ratify-or-defer genuinely is the decision space, and the one item with an unverified precondition (B4, migration 015 state) says so instead of smoothing it over.",
+ "independent_reviewer_counterclaim": "A reviewer might argue that bundling 11 decisions into one sitting pressures wholesale approval and that the 'demonstration to look at first' framing primes acceptance. Response: each item is separately answerable by design, the A5 sub-items are individually addressable, and the pilot demonstration pointed to is the one artifact whose checks an owner can re-run mechanically rather than take on trust.",
+ "verdict": "CLEAN"
+}

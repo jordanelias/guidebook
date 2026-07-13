@@ -105,7 +105,9 @@ class EvidenceStateRecord(BaseModel):
     """T-04 evidence state for a single (parameter × population) cell.
 
     Per governance/evidence-methodology.md §2 (A6):
-    - stated: ≥1 source at Tier 1–3, Co-1, or Co-2
+    - stated: ≥1 anchoring source at Tier 1, Tier 2 (either stream), Co-1, or Co-2
+      (T3-alone never suffices: T3-clinical-alone => provisional, T3-grey-alone =>
+      pending — DR-2026-07-12-tier3-stated-threshold + unification-DR G7, ACCEPTED)
     - provisional: Tier 4–6 only, meets richness threshold
     - pending: too sparse; gap-register link required
     - not_applicable: parameter irrelevant for population; rationale required

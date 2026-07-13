@@ -1,6 +1,6 @@
 # DR-2026-05-23: Pre-rehabilitation banner — cohort definition
 
-**Status:** PROPOSED (pending owner ratification)
+**Status:** **ACCEPTED — ratified by owner directive 2026-07-13 ("resolve all accept ratify all commit all"); see decisions/RATIFICATION-RECORD-2026-07-13.md** *(was: PROPOSED (pending owner ratification))*
 **Adopted by:** session_2026-05-23-bpc-rewrite-phase-b-closure (B.0 banner application)
 **Sharpens:** PI v10.14 standing rule #10 final paragraph (cohort definition) — operational scope only; no PI text amendment required.
 

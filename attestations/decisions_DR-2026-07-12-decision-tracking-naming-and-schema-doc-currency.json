@@ -1,0 +1,21 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-07-12-evidence-architecture-unification",
+ "doctrine_sha": "3fb2882",
+ "rules_in_scope": [
+  "source-discipline"
+ ],
+ "deviations": [],
+ "verdict": "CLEAN",
+ "artifact": "decisions/DR-2026-07-12-decision-tracking-naming-and-schema-doc-currency.md",
+ "per_rule_status": {
+  "source-discipline": {
+   "status": "FIRED",
+   "evidence_path": "decisions/RATIFICATION-RECORD-2026-07-13.md",
+   "reason": "This attestation covers THIS session's change to the artifact: the status flip from PROPOSED to ACCEPTED under the owner's verbatim 2026-07-13 ratification directive, with the prior status preserved inline. The DR's substance originates from PR #3 (authored by the consolidation-sweep session; its own adversarial review corrected a pre-filled header value); independent grounding this session: this session verified the schema-spec.md drift it addresses (wrong co1_source_type enum, L78-98) by direct read.",
+   "notes": "Authored at ratification time because the originating PR merged with the attestation-presence check red (a known C3 gap, disclosed in the ratification package); this closes that gap for the ratified artifact."
+  }
+ },
+ "bias_direction": "An attestation authored by the ratifying session for another session's DR risks rubber-stamping content it did not produce. Bounded by: it attests only to the status flip and to the specific independent grounding named above; the DR's own revision history carries its authoring session's adversarial-review record.",
+ "independent_reviewer_counterclaim": "A reviewer might argue the originating session should author its own attestation retroactively. Response: that session is closed; the ratification record is the operative event changing the artifact, and this attestation is scoped to exactly that event."
+}

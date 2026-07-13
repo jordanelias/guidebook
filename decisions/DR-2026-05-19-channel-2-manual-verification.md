@@ -1,6 +1,6 @@
 # Decision Record: Channel-2 Manual Verification Protocol (V2-manual)
 **Date:** 2026-05-19
-**Status:** PROPOSED — not yet adopted. Awaiting owner ratification.
+**Status:** **ACCEPTED — ratified by owner directive 2026-07-13 ("resolve all accept ratify all commit all"); see decisions/RATIFICATION-RECORD-2026-07-13.md** *(was: PROPOSED — not yet adopted. Awaiting owner ratification.)*
 **Supersedes:** None. Operationalizes the Channel-2 gap explicitly named in `references/audits/verification-pipeline-proposal-2026-05-12-v2.md` §1 ("Where the gaps are") and §9 V2 rollout. Does not pre-empt the V2-automated track; this DR specifies the parallel manual track that becomes available now and recedes as V2-automated resolvers ship per body / jurisdiction.
 **Author:** Claude (session 2026-05-19-deployment-state-reconciliation)
 **Self-review caveat:** This DR was authored in the same session that surfaced two scope-discipline failures (paste-deference on a normal commit; promising a 55-row "verification sweep" without checking V1 pipeline scope or container egress). `[SELF-AUTHORED — bias risk]` applies. The bias direction is toward designing a protocol that makes the failed sweep retroactively feasible. Independent-reviewer counterclaim addressed head-on in §Limitations.

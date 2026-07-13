@@ -1,0 +1,21 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-07-12-evidence-architecture-unification",
+ "artifact": "decisions/RATIFICATION-RECORD-2026-07-13.md",
+ "doctrine_sha": "3fb2882",
+ "rules_in_scope": [
+  "source-discipline"
+ ],
+ "per_rule_status": {
+  "source-discipline": {
+   "status": "FIRED",
+   "evidence_path": "workplan/ratification-execution-register-2026-07-13.md",
+   "reason": "The record quotes the owner directive verbatim from the same session turn; the ratified roster restates the package's grep-recounted 16 (verified twice this session, incl. once by status-header-scoped grep after a loose grep disagreed); every execution claim in the companion register is classed EXECUTED (with the session's actual edits), STAGED (with the exact command and the reason it is owner-run: two permission-layer denials, quoted in-session), or QUEUED - no ratified item is silently dropped.",
+   "notes": "The record documents that C1 was NOT executed by the agent: the permission classifier twice declined the canonical-DB mutation and '[No preference]' on the explicit prompt was treated as insufficient authorization. The DB remains at user_version 25 until the owner runs the staged command."
+  }
+ },
+ "deviations": [],
+ "bias_direction": "A ratification record authored by the party whose work is being ratified risks reading breadth into the directive ('resolve all') that the owner did not intend - especially on B5 (previously recommended either-way) and B8's currency-header fill. Bounded by: the record names both interpretive calls explicitly rather than burying them; the one irreversible action was NOT taken under the broad directive when the permission layer required specific authorization; and every interpretation is one owner correction away from reversal, with the register giving each item a place to be countermanded.",
+ "independent_reviewer_counterclaim": "A reviewer might argue 'resolve all accept ratify all commit all' is too terse to ratify 16 decision records with sub-items, and a per-item confirmation should have been demanded. Response: the package was explicitly designed for one-sitting ratification with per-item replies OFFERED; the owner chose the blanket form against that exact menu after seven days of incremental review in the same thread; and the two genuinely irreversible or externally-visible acts (canonical DB mutation, CI enforcement) were still handled separately - one blocked pending direct owner execution, one left as an explicit open owner action.",
+ "verdict": "CLEAN"
+}

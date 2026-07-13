@@ -1,0 +1,20 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-07-12-evidence-architecture-unification",
+ "artifact": "decisions/DR-2026-07-12-evidence-architecture-unification-impact-appendix.md",
+ "doctrine_sha": "3fb2882",
+ "rules_in_scope": [
+  "source-discipline"
+ ],
+ "per_rule_status": {
+  "source-discipline": {
+   "status": "FIRED",
+   "evidence_path": "decisions/DR-2026-07-12-evidence-architecture-unification-impact-appendix.md",
+   "reason": "The appendix condenses a same-session full-repo sweep in which all 66 hierarchy-touching code files were individually opened and classified (none marked UNPROCESSED), the DB was inspected read-only (user_version, row counts, CHECK constraints quoted from sqlite_master), and every file:line citation (e.g. project-standards.md L17/L26/L35, schemas/evidence_state.py L108, conflicts.status CHECK) was read from the file, not recalled. The committed canonical DB was verified byte-identical to HEAD (sha256 compare) after the sweep."
+  }
+ },
+ "deviations": [],
+ "bias_direction": "Coverage overstatement is the main exposure: an impact map's value claim is completeness, and the sweep was performed by one agent lineage. Bounded by: the file-by-file classification lists every file with its verdict (so omissions are auditable by diffing against a directory listing), the five highest-risk touchpoints are stated with checkable line numbers, and the census figures (96 Mode-P/S files, 22 Tier-as-design-mode files) are grep-reproducible.",
+ "independent_reviewer_counterclaim": "A reviewer might contend the risk ranking is judgment presented as fact - e.g. ranking project-standards.md above the stated-threshold triangle. Response: the ranking's factual substrate (which files restate the old ladder as RULEs, which checks crash on the committed DB) is verified; the ordering is explicitly a prioritization for the owner and each entry carries the evidence needed to re-rank it.",
+ "verdict": "CLEAN"
+}

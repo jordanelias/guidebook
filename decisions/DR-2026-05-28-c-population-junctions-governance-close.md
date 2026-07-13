@@ -1,6 +1,6 @@
 # DR-2026-05-28-c — Population-Junctions Governance Close (value-claim tables)
 
-**Status:** PROPOSED — governance close for migration 021, already applied to the DB; pending owner commit. Part of the Stage 1.5 governance-hygiene set.
+**Status:** **ACCEPTED — ratified by owner directive 2026-07-13 ("resolve all accept ratify all commit all"); see decisions/RATIFICATION-RECORD-2026-07-13.md** *(was: PROPOSED — governance close for migration 021, already applied to the DB; pending owner commit. Part of the Stage 1.5 governance-hygiene set.)*
 **Authored:** 2026-06-09 (`session_2026-06-09-stage-1-5-governance-hygiene`).
 **Doctrine SHA:** `3da73bd` (after the Stage 1.1 doctrine commit; if 1.5 is committed before 1.1, use `61c7f95`).
 **Relates to:** DR-2026-05-28-b (`source_value_extractions` schema — the value-directness substrate these junctions attach populations to); migration `021_value_claim_population_junctions.sql`; companion data migration `data_20260528211500_populate_population_junctions.sql`; the pre-existing `item_population_links` pattern; master workplan R10(b).

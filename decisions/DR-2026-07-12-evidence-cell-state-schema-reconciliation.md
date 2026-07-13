@@ -1,6 +1,6 @@
 # DR-2026-07-12: `evidence_cell_state` schema reconciliation — proposed resolution (v2)
 
-- Status: **PROPOSED — pending owner ratification**
+- Status: **ACCEPTED — ratified by owner directive 2026-07-13 ("resolve all accept ratify all commit all"); see decisions/RATIFICATION-RECORD-2026-07-13.md** *(was: **PROPOSED — pending owner ratification**)*
 - Date: 2026-07-12 (revised same day after independent adversarial review — see "Revision history")
 - Prepared by: Claude, at the owner's request to reconcile identified conflicts and propose a path forward. **Not owner-ratified.** The merge decision below is a technical recommendation for the owner to review, not a settled fact.
 - Affects (if ratified): `scripts/migrations/026_reconcile_evidence_cell_state.sql`, `scripts/migrations/data_20260712150000_jurisdictional-values-backfill.sql`, `scripts/validate_evidence_state.py`, `workplan/best-practices-assessment-system.md`

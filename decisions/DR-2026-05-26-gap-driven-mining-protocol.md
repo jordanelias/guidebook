@@ -1,6 +1,6 @@
 # DR-2026-05-26 — Gap-Driven Mining Protocol
 
-**Status:** PROPOSED — pending owner adoption and worked-example pilot
+**Status:** **ACCEPTED — ratified by owner directive 2026-07-13 ("resolve all accept ratify all commit all"); see decisions/RATIFICATION-RECORD-2026-07-13.md** *(was: PROPOSED — pending owner adoption and worked-example pilot)*
 **Authored:** 2026-05-26 (session_2026-05-26-gap-driven-mining-protocol-design)
 **Doctrine SHA at authorship:** `61c7f95` (governance/mission-and-epistemics.md)
 **Closes:** GAP-283 (citation-miner skill never invoked inline; structural pivot to gap-driven mining per owner direction 2026-05-23, session turn 14)

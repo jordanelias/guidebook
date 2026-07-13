@@ -1,6 +1,6 @@
 # DR-2026-05-24 — Best-Practice Supersession Protocol
 
-**Status:** PROPOSED — pending owner adoption and migration 015 application
+**Status:** **ACCEPTED — ratified by owner directive 2026-07-13 ("resolve all accept ratify all commit all"); see decisions/RATIFICATION-RECORD-2026-07-13.md** *(was: PROPOSED — pending owner adoption and migration 015 application)*
 **Authored:** 2026-05-25 (session_2026-05-23-bpc-rewrite-phase-b-closure)
 **Doctrine SHA at authorship:** `61c7f95` (governance/mission-and-epistemics.md)
 **Supersedes:** sets a new bar for `bpc_metadata.citation_mining_complete = 1` slug closure (previously meant "every Tier 1-3 source has a mining row"; under this DR, that is necessary but no longer sufficient for slug closure)

@@ -2,3 +2,11 @@ __pycache__/
 
 # DB dry-run copies (used by handoff doc commands)
 data/.test-copy.db
+
+# working-copy pilot DBs (throwaway; canonical DB is data/guidebook.db)
+working/pilot/*.db
+
+# transient SQLite sidecars from read-only WAL-mode connections (never work product;
+# the canonical DB is committed as a single binary)
+data/guidebook.db-shm
+data/guidebook.db-wal

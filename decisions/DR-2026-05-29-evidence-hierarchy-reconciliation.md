@@ -1,6 +1,6 @@
 # DR-2026-05-29 — Evidence-Hierarchy Reconciliation (sr_meta@T2, tier=anchor-type, T1 composition, de-OT correction)
 
-**Status:** PROPOSED — completes the uncommitted draft begun in `session_2026-05-29`; pending owner commit alongside the Stage 1.1 doctrine bundle.
+**Status:** **ACCEPTED — ratified by owner directive 2026-07-13 ("resolve all accept ratify all commit all"); see decisions/RATIFICATION-RECORD-2026-07-13.md** *(was: PROPOSED — completes the uncommitted draft begun in `session_2026-05-29`; pending owner commit alongside the Stage 1.1 doctrine bundle.)*
 **Authored:** 2026-05-29 (draft); completed 2026-06-09 (`session_2026-06-09` — required reads done: `evidence-methodology.md` §§2–5, `conceptual-model.md`).
 **Doctrine SHA at authorship:** `61c7f95`. **Doctrine SHA this DR ratifies into being:** `3da73bd` (revised `governance/mission-and-epistemics.md`).
 **Gate:** decisions D-A (α), D-D, D-E (β) — all RULED in `MASTER-WORKPLAN-consolidated-2026-06-05` §1.

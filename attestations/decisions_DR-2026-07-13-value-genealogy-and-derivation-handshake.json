@@ -1,0 +1,26 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-07-12-evidence-architecture-unification",
+ "artifact": "decisions/DR-2026-07-13-value-genealogy-and-derivation-handshake.md",
+ "doctrine_sha": "3fb2882",
+ "rules_in_scope": [
+  "source-discipline"
+ ],
+ "per_rule_status": {
+  "source-discipline": {
+   "status": "FIRED",
+   "evidence_path": "references/methodology/value-genealogy-worked-example-corridor-width.md",
+   "reason": "Every empirical claim in this DR traces to one of two dedicated same-session research sweeps whose outputs are preserved: the E-08 mining dossier (REF-IDs, tiers, values, and file anchors verified against evidence_sources, source_slug_links, jurisdictional_values YAML, the tier*/co*-verified-sources.json registries, and the BPC/FDR markdown) and the bottom-up/top-down structural audit (every cited artifact checked for built/proposed/abandoned status by direct read plus grep-for-implementation, e.g. Q2/Q4/Q12 'decided on paper, zero code hits'). The corridor genealogy claims (1970s root for 1500mm; no in-corpus root for 1800mm; three independent roots for 2440/2400mm) each carry their corpus anchors in the companion worked example rather than being asserted from memory.",
+   "notes": "Pre-1980 root documents (Nugent, ANSI A117.1-1961, Goldsmith, ISO 7176-5) are asserted ABSENT from the corpus, not characterized — their content is queued as external mining, not claimed."
+  }
+ },
+ "deviations": [
+  {
+   "rule": "source-discipline",
+   "reason": "v1 of this attestation claimed the research sweeps' outputs were preserved while the mining dossier existed nowhere in the repo, and claimed every empirical claim was verified while one corpus-retracted figure (De Hogeweyk 94%/34%, UNVERIFIED-QUANT per the economics BPC) had propagated caveat-free into the worked example. Independent adversarial review (2026-07-13, 23 findings) caught both. Corrections: the dossier is committed verbatim at sessions/session_2026-07-13-value-genealogy-mining-dossier.md; the retracted figure is marked UNVERIFIED-QUANT in the worked example; the DR and worked example carry full revision histories. The same review verified ~60 other quotes/REF-IDs/values accurate with no fabricated anchors."
+  }
+ ],
+ "bias_direction": "This DR was authored by the same session that designed the evidence-architecture it extends, and it recommends building schema the session itself specified - systematic pressure toward 'the answer is more of my own architecture.' Bounded by: every schema element is traced to an already-Opus-ratified paper decision (Q2/Q4/Q12, FDA D-0147, doctrine #3) rather than invented; the two research sweeps were run by separate agent contexts against the corpus, not summarized from this session's beliefs; the H2 cultural-claim protection cuts AGAINST the mechanization bias the rest of the DR could be accused of; and the corridor worked example includes findings embarrassing to the project's own artifacts (specs/e-08.html unregistered anchor; four coexisting E-08 values), which a purely self-confirming synthesis would have omitted.",
+ "independent_reviewer_counterclaim": "A reviewer might argue the handshake adds schema complexity before the base system (026, extraction, engine) has even run once, and that genealogy classification is judgment-laden (root vs echo can be contested). Response: the columns-now-vs-retrofit cost asymmetry is real (0 rows today), H4's gates bind only where checks actually ran, and genealogy judgments are recorded as falsifiable per-row classifications with file anchors - contestable by design, which is the point.",
+ "verdict": "DEVIATION-LOGGED"
+}
