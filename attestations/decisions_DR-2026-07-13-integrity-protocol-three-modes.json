@@ -1,0 +1,21 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-07-12-evidence-architecture-unification",
+ "artifact": "decisions/DR-2026-07-13-integrity-protocol-three-modes.md",
+ "doctrine_sha": "3fb2882",
+ "rules_in_scope": [
+  "source-discipline"
+ ],
+ "per_rule_status": {
+  "source-discipline": {
+   "status": "FIRED",
+   "evidence_path": "scripts/audit/claims_docket.py",
+   "reason": "The DR's empirical basis (41 findings, defect-class clustering) is drawn from the two adversarial-review artifacts recorded this session in the unification and genealogy DRs' revision histories, not from memory. Its self-application section reports only executed checks: the claims_docket selftest was run before the DR was written (3/3 synthetic triggers fired, unannotated docket failed, annotated docket passed), the 228-claim demo run was executed against this branch's actual diff, and the 16-DR roster figure was recounted by grep in the same session turn it was written.",
+   "notes": "The DR practices Mode 1 on itself: its one absolute (roster total) carries RECOUNTED, and its adoption-cost claim is marked PREDICTED with a falsification condition."
+  }
+ },
+ "deviations": [],
+ "bias_direction": "A session codifying its own review experience as standing doctrine is grading its own methodology as worth institutionalizing - and P3's hard gate makes future sessions dependent on the exact review pattern this session pioneered. Bounded by: the empirical base is two reviews that found 41 defects in THIS session's own work (the doctrine institutionalizes the mechanism that embarrassed its author, not one that flattered it); each mode is separately ratifiable; and P2's design explicitly names its own failure mode (ritual annotation) as a revisable finding rather than claiming permanence.",
+ "independent_reviewer_counterclaim": "A reviewer might argue the protocol adds friction that will be skipped under time pressure, making it worse than nothing (false assurance from a stale docket). Response: the check command gates mechanically (a stale docket fails, it does not silently pass), the skill states the protocol makes bias visible rather than the model rigorous, and the owner can weigh friction directly because the demo run's real number (228 triggered claims on this branch) is disclosed rather than smoothed.",
+ "verdict": "CLEAN"
+}
