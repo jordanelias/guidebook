@@ -50,10 +50,12 @@ The function is **pure**: same evidence + same `rule_version` ⇒ same state. Th
 
 ## 4. The data model — fill `evidence_cell_state` (clean data, S4)
 
+**SUPERSEDED (2026-07-13):** the sketch below is superseded by the actual migration, per `decisions/DR-2026-07-12-evidence-cell-state-schema-reconciliation.md`'s own "Consequences if ratified" section: *"`workplan/best-practices-assessment-system.md` §4's SQL sketch is superseded by the actual migration; its phasing plan (§8) is otherwise unaffected."* The live schema (`scripts/migrations/026_reconcile_evidence_cell_state.sql`, `027_regulatory_stratum_only.sql`) keeps `evidence_cell_state`'s identity as `(item_code, population_code)` — not `(slug, population, jurisdiction)` as sketched below — and structures the within-population range as `value_min`/`value_max`/`value_unit` rather than a free-text `value_range`. Jurisdiction-specific values live in the separate `jurisdictional_values` table, deliberately not folded into this one (conflating a jurisdiction-agnostic best-practice determination with a jurisdiction-specific code floor is exactly the failure mode this schema exists to prevent — see `governance/tier-system.md` §3). The sketch is left below for the phasing-plan context (§8, unaffected); do not implement against it — implement against the live migrations.
+
 Replace the empty table with a STRICT, CHECK-constrained, **derived** table (written by the assessment function, never by hand):
 
 ```sql
--- sketch; finalize as migration 026
+-- sketch; finalize as migration 026 -- SUPERSEDED, see note above; kept for phasing-plan context only
 CREATE TABLE evidence_cell_state (
   slug            TEXT NOT NULL,
   population      TEXT NOT NULL,
