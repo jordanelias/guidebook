@@ -208,10 +208,18 @@ def validate_cell_states_db(conn, gap_ids: set):
             "confidence_dimensions_present,confidence_dimensions_absent,"
             "confidence_synthesis_basis,gap_register_id,not_applicable_rationale,"
             "governing_refs,code_floor_only")
+    # G1b (unification DR, ACCEPTED 2026-07-13): the T4-6-only flag is
+    # migration-027 schema; select it where present, marker-check `tier_basis`
+    # everywhere (pre-027 DBs stay validatable).
+    have_rso = any(r[1] == "regulatory_stratum_only"
+                   for r in conn.execute("PRAGMA table_info(evidence_cell_state)"))
+    cols += ",tier_basis" + (",regulatory_stratum_only" if have_rso else "")
     n = 0
-    for (cell_id, item_code, pop, state, design_scale, conv_id,
+    for row in conn.execute(f"SELECT {cols} FROM evidence_cell_state"):
+        (cell_id, item_code, pop, state, design_scale, conv_id,
          cdp, cda, csb, gap_id, na_rat,
-         governing_refs, code_floor_only) in conn.execute(f"SELECT {cols} FROM evidence_cell_state"):
+         governing_refs, code_floor_only, tier_basis) = row[:14]
+        rso = row[14] if have_rso else 0
         n += 1
         tag = f"cell {cell_id} ({item_code}×{pop})"
         # scale-aware: design_scale vocabulary (§1.4/§1.6)
@@ -238,6 +246,9 @@ def validate_cell_states_db(conn, gap_ids: set):
             if code_floor_only:
                 errors.append(f"{tag}: state 'stated' but code_floor_only=1 — a Tier-6-only "
                                f"cell can never be 'stated' (best-practices-assessment-system.md §3)")
+            if rso == 1 or (tier_basis or "").endswith("(regulatory_stratum_only)"):
+                errors.append(f"{tag}: state 'stated' but the cell is regulatory-stratum-only "
+                               f"(T4-6 basis) — never 'stated' (G1b, unification DR ACCEPTED)")
 
         # anti-hallucination gate (DR-2026-07-12-evidence-cell-state-schema-reconciliation.md):
         # stated/provisional cells must cite the sources that establish them

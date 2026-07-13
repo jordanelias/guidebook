@@ -1,6 +1,6 @@
 # DR-2026-05-28-b — `source_value_extractions` schema layer
 
-**Status:** PROPOSED — adopted-in-effect by application of migration 018 this session; ratification by owner via review of this DR + surface confirmation.
+**Status:** **ACCEPTED — ratified by owner directive 2026-07-13 ("resolve all accept ratify all commit all"); see decisions/RATIFICATION-RECORD-2026-07-13.md** *(was: PROPOSED — adopted-in-effect by application of migration 018 this session; ratification by owner via review of this DR + surface confirmation.)*
 **Authored:** 2026-05-28 (`session_2026-05-28-vetting-surface-and-extraction-layer`)
 **Doctrine SHA at authorship:** `61c7f95`
 **Companion to:** the spec-curation vetting surface (`spec-curation-vetting-surface.html`, this session).

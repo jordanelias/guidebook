@@ -1,6 +1,6 @@
 # DR-2026-07-13: Integrity protocol — three-mode implementation of the adversarial-review lessons
 
-- Status: **PROPOSED — pending owner ratification**
+- Status: **ACCEPTED — ratified by owner directive 2026-07-13 ("resolve all accept ratify all commit all"); see decisions/RATIFICATION-RECORD-2026-07-13.md** *(was: **PROPOSED — pending owner ratification**)*
 - Date: 2026-07-13
 - Prepared by: Claude, on the owner's directive to implement the adversarial-pass lessons "as a preventative prior structuring, a live rules processing docket and a post processing integrity check."
 - Creates: `skills/integrity-protocol_SKILL.md` (the three modes as operational session doctrine), `scripts/audit/claims_docket.py` (Mode-2 tooling; ships with its own mutation selftest per its own rule)

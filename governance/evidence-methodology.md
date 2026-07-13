@@ -108,13 +108,14 @@ Per Stage 0.5 Decision T-04 (DECIDED, locked): each (parameter × population) ce
 
 ### 2.2 The `stated` threshold
 
-A cell reaches `stated` when it has **at least one source meeting any of the following conditions:**
+A cell reaches `stated` when it has **at least one anchoring source meeting any of the following conditions** (amended per DR-2026-07-12-tier3-stated-threshold and unification-DR item G7, both ACCEPTED 2026-07-13):
 
-1. **Tier 1–3 clinical evidence** with direct parameter relevance — a clinical research finding, systematic review, or meta-analysis that addresses the design parameter for the target population.
-2. **Co-1 evidence** with direct parameter relevance — a Co-1 source (per §1.3 requirements, with `verification_status ∈ {VERIFIED, VERIFIED-WITH-CORRECTION}`) that addresses the design parameter for the target population.
-3. **Co-2 evidence** with direct parameter guidance — an OT professional body CPG that addresses the design parameter.
+1. **Tier 1 clinical evidence** with direct parameter relevance — primary research with intervention-level or biomechanical control addressing the design parameter for the target population.
+2. **Tier 2 synthesis evidence** with direct parameter relevance — either stream: a systematic review / meta-analysis (`sr_meta`), or a named-organisation evidence-based standard (`standard_eb` at Tier 2) addressing the parameter (G7: this stream anchored under §1.6 but was unreachable under this section's previous literal wording).
+3. **Co-1 evidence** with direct parameter relevance — a Co-1 source (per §1.3 requirements, with `verification_status ∈ {VERIFIED, VERIFIED-WITH-CORRECTION}`) that addresses the design parameter for the target population.
+4. **Co-2 evidence** with direct parameter guidance — an OT professional body CPG that addresses the design parameter.
 
-The OR clause is deliberate: Co-1 alone is sufficient for `stated`, as is Co-2 alone, as is Tier 3 alone. This follows from the doctrinal commitment that Co-1 is co-primary with Tier 1 — a best-practice claim grounded solely in strong Co-1 evidence is a legitimate evidence-based claim, not a provisional one.
+The OR clause is deliberate: Co-1 alone is sufficient for `stated`, as is Co-2 alone, as is Tier 2 alone. **Tier 3 alone is not** (tier3-stated-threshold DR): T3-clinical-alone yields `provisional`; T3-grey-alone yields `pending`; Tier 3 contributes to `stated` only through convergence (≥2 evidence axes, one of which may be T3-clinical). This follows from the doctrinal commitments that Co-1 is co-primary with Tier 1 — a best-practice claim grounded solely in strong Co-1 evidence is a legitimate evidence-based claim, not a provisional one — and that Tier 3 is "rarely the sole basis" (`tier-system.md` §1).
 
 **What `stated` does not mean:** `stated` does not mean the claim is beyond dispute. It means the evidence basis is sufficient to make a defensible best-practice claim at the tier cited. A `stated` cell may still be revised when new evidence emerges, when higher-tier evidence replaces lower-tier, or when cross-tier divergence is resolved through new research.
 
@@ -124,7 +125,7 @@ The OR clause is deliberate: Co-1 alone is sufficient for `stated`, as is Co-2 a
 
 **Resolution:** A cell is `provisional` when it has evidence that is **rich enough to synthesize** but does not meet the `stated` threshold — meaning it has no source at Tier 1–3, no Co-1 source, and no Co-2 source with direct parameter relevance.
 
-Concretely, `provisional` applies when the evidence basis is **Tier 4–6 only** (international standards, national frameworks, or statutory codes) and the evidence is rich enough to produce a qualified synthesis. "Rich enough" means:
+Concretely, `provisional` applies in two cases (per the tier3-stated-threshold DR and unification-DR item G1b, ACCEPTED 2026-07-13): (a) **T3-clinical-alone** — lower-control primary clinical evidence with direct relevance but no anchoring corroboration; and (b) the evidence basis is **Tier 4–6 only** (international standards, national frameworks, or statutory codes) rich enough to produce a qualified synthesis. **Scale-tagging (G1b):** a T4–6-only determination is a *Universal-Mode regulatory determination* — `design_scale='universal'`, flagged `regulatory_stratum_only` (extending `code_floor_only` from the T6-only case), excluded from `v_best_practice`, and never rendered with best-practice language in any register (invariant I3, `governance/evidence-architecture.md` §6). For the T4–6 case, "rich enough" means:
 
 - **≥2 Tier 4–5 sources** from different jurisdictions with convergent findings on the parameter, OR
 - **≥1 Tier 4 international standard** (ISO, IEC, EN) with an evidence-based value directly addressing the parameter, OR
@@ -242,9 +243,9 @@ This section specifies how convergence is encoded, assessed, and rendered.
 - **`convergent`**: Tier 1–3 clinical evidence and Co-1 evidence agree on the parameter value or range. The converged claim carries higher confidence than either dimension alone. Rendered per voice pattern Co-1-C (A5 §5.1).
 - **`divergent`**: Tier 1–3 clinical evidence and Co-1 evidence bear on the same parameter but arrive at different values or ranges. Both are presented; synthesis approach is specified. Rendered per voice pattern Co-1-D (A5 §5.1).
 - **`single_axis`**: Evidence exists in only one dimension (clinical only, or Co-1 only, or Co-2 only, or Tier 4–6 only). No convergence or divergence assessment is possible. Rendered per voice pattern Co-1-A or Co-1-B as appropriate.
-- **`pending_assessment`**: Evidence exists in multiple dimensions but the convergence assessment has not yet been performed (transitional state during migration).
+- **`pending_assessment`**: Evidence exists in multiple dimensions but the value-level convergence assessment has not yet been performed. Per unification-DR item G8 (ACCEPTED 2026-07-13) this is no longer only a transitional migration state: while `source_value_extractions` coverage lags, honestly-assessed multi-axis cells hold this status durably rather than claiming unassessed convergence.
 
-**The convergence assessment is not a confidence score.** It does not produce a number. It produces a categorical status with documented sources and rationale. The reason: confidence scores imply a false precision about the probability of correctness. The convergence assessment says what the evidence profile is and how the sources relate — the reader (and the Mode S OT) applies judgment.
+**The convergence assessment is not a confidence score.** It does not produce a number. It produces a categorical status with documented sources and rationale. The reason: confidence scores imply a false precision about the probability of correctness. The convergence assessment says what the evidence profile is and how the sources relate — the reader (and the Person-Mode OT) applies judgment.
 
 ### 3.3 Divergence within `stated` — resolves Q3
 
@@ -283,8 +284,8 @@ The convergence assessment determines which voice pattern governs the specificat
 | `single_axis` (Co-1 only) | Co-1-A or Co-1-B | "[Source] documents [finding]." or "Co-1 sources document [claim]; sources: [list]." |
 | `single_axis` (clinical only) | §8.1 Tier 1 construction | "[Evidence tier] evidence supports [value]." |
 | `single_axis` (Co-2 only) | §8.1 adapted | "OT professional body guidance ([CPG]) recommends [value]." |
-| `single_axis` (Tier 4–6 only) | §8.1 Universal Mode/1 construction | "Code requires [value] per [standard]." or "[N] jurisdictions' standards converge on [value]." |
-| `pending_assessment` | Not rendered | Cell is flagged for assessment before publication |
+| `single_axis` (Tier 4–6 only) | §8.1 Universal Mode construction | "Code requires [value] per [standard]." or "[N] jurisdictions' standards converge on [value] — convergence is not evidence: no anchoring (T1/Co-1/T2/Co-2) basis exists; treat as floor, not target" (mandatory disclaimer per G1b; invariant I3 bars best-practice language on these cells in every register) |
+| `pending_assessment` | Rendered ONLY with the value-level-convergence-pending disclosure in every register (G8; the register map's `stated_multi_axis` rows carry it) | Axis co-presence is real; value-level convergence is queued, never assumed |
 
 ### 3.5 Cross-entity integration
 
@@ -306,7 +307,7 @@ Two populations may have evidence-supported preferences that conflict on the sam
 
 Example: residential primary entrance threshold. The visitability framework (Concrete Change 1987; Co-1) specifies zero-step (0 mm) to ensure any person can enter. Some PAIN-population evidence supports textured threshold landings (≤6 mm, with slip-resistant tactile surface) for proprioceptive feedback at the entrance transition. Both positions have evidence. Neither is harmful. They conflict on the same physical parameter.
 
-Mode S OT co-design resolves this at the individual scale — the OT and the occupant determine what is right for this person. But at Tier 1 (population-informed), the guidebook must specify a default and a range. The values-criteria mechanism governs how that default is set.
+Person-Mode OT co-design resolves this at the individual scale — the OT and the occupant determine what is right for this person. But at Population Mode, the guidebook must specify a default and a range. The values-criteria mechanism governs how that default is set.
 
 ### 4.2 Resolution: three-step values-criteria assessment
 
@@ -324,7 +325,7 @@ If a conflict is function-based, the harm-asymmetry rule governs and this sectio
 
 **Step 2 — Broadest-benefit assessment.**
 
-For values-based conflicts, the Mode P default is set by asking: *which default serves the broadest population or the most constrained use case?*
+For values-based conflicts, the Population-Mode default is set by asking: *which default serves the broadest population or the most constrained use case?*
 
 Criteria, applied in order:
 
@@ -340,16 +341,16 @@ If all three criteria point the same direction, the default is clear. If they co
 
 The specification carries:
 
-- The Mode P default with rationale ("Broadest-benefit: zero-step serves [N] populations; proprioceptive feedback achievable via supplementary surface treatment")
+- The Population-Mode default with rationale ("Broadest-benefit: zero-step serves [N] populations; proprioceptive feedback achievable via supplementary surface treatment")
 - The alternative preference with its evidence basis
-- The Mode S handoff: "OT assessment may specify [alternative] based on individual proprioceptive needs"
+- The Person-Mode handoff: "OT assessment may specify [alternative] based on individual proprioceptive needs"
 - The convergence assessment (§3.2): `divergent` with synthesis_approach documenting the broadest-benefit reasoning
 
 ### 4.3 What the values-criteria mechanism does not do
 
 - **Does not override harm-asymmetry.** If one population faces genuine harm (neurological deterioration, fall risk, entrapment), that is function-based, not values-based. Harm-asymmetry governs.
 - **Does not claim one population's values are more legitimate.** Both preferences are evidence-grounded. The mechanism selects a structural default, not a correct value.
-- **Does not eliminate Tier 2 resolution.** The default is a starting point. Mode S OT co-design may override it for an individual whose needs are better served by the alternative.
+- **Does not eliminate Person-Mode resolution.** The default is a starting point. Person-Mode OT co-design may override it for an individual whose needs are better served by the alternative.
 - **Does not apply to Universal Mode.** Universal Mode (universal design / code compliance) is set by code. Values-criteria applies at Tier 1 only.
 
 ## 5. Design-pedagogy literature engagement — resolves Q6
@@ -457,7 +458,7 @@ The skill is prose-only (no Python validator). Its quality depends on the author
 | Q2 — Cross-tier convergence encoding | Convergence assessment is a structured property of the synthesis cell (not of individual sources); four statuses: convergent, divergent, single_axis, pending_assessment | high — follows from mission §3 convergence-as-evidence principle | §3.2 |
 | Q3 — Fifth state for divergent evidence? | No. Cell is `stated`; divergence is synthesis metadata via convergence assessment, not a state-machine state. Four states preserved per T-04. | high — separates evidence sufficiency from evidence agreement; T-04 unchanged | §3.3 |
 | Q4 — Co-2 alone as "rich" for `stated` | Yes. Co-2 alone satisfies `stated` per T-04 OR clause. OT professional body CPGs carry sufficient epistemic weight. | high — literal application of T-04 definition | §2.6 |
-| Q5 — Values-criteria mechanism | Three-step assessment: classify conflict type (function/values/conflation) → broadest-benefit assessment (population breadth, irreversibility, supplementary feasibility) → documentation with Mode S handoff. Applies at Tier 1 only. | high — extends existing harm-asymmetry framework to values-based conflicts without overriding it | §4 |
+| Q5 — Values-criteria mechanism | Three-step assessment: classify conflict type (function/values/conflation) → broadest-benefit assessment (population breadth, irreversibility, supplementary feasibility) → documentation with Person-Mode handoff. Applies at Population Mode only. | high — extends existing harm-asymmetry framework to values-based conflicts without overriding it | §4 |
 | Q6 — Design-pedagogy tier classification | Meta-methodological: outside the seven-tier hierarchy. Pedagogy literature supports the guidebook's method, not design parameters. Cited in Part 1 / mission, not in specification cells. No evidence marker. | high — clean separation of "what should the parameter be?" from "how should the guidebook present parameters?" | §5 |
 | Q7 — Epistemic-defense skill specification | Seven challenge categories with response patterns; five-step decision sequence; voice conventions; C2 skill build forward spec. Requirements only — C2 builds implementation. | high — direct application of advocacy identity + evidence hierarchy + framing standards | §6 |
 | Q8 — Verification status interaction (partial) | `UNVERIFIED-1`: flag but don't downgrade. `UNVERIFIED-CLOSED`/`CLOSED-DELETED` as sole qualifying sources: downgrade to `pending`. Full implementation deferred to Session 2. | high — extends A5 §6.3 rule to state-machine level | §2.8 |

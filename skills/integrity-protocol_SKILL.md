@@ -1,5 +1,5 @@
 # SKILL: integrity-protocol — three-mode implementation of the adversarial-review lessons
-**Status:** PROPOSED — pending owner ratification via `decisions/DR-2026-07-13-integrity-protocol-three-modes.md`
+**Status:** ACTIVE — ratified by owner directive 2026-07-13 (`decisions/RATIFICATION-RECORD-2026-07-13.md`; DR ACCEPTED)
 **Derived from:** the two adversarial passes of 2026-07-12/13 (41 findings across work that had passed its authors' own checks; fix-by-fix records in the unification and genealogy DRs' revision histories). The empirical base: defects clustered at the seam between claims and artifacts, never in the artifacts themselves.
 **Applies to:** every session producing synthesis-path artifacts (decisions/, governance/, references/ methodology or BPC content, workplan commitments) and every session requesting owner ratification.
 

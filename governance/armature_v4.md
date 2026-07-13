@@ -120,10 +120,10 @@ Role determines how query results are presented. Same specifications, different 
 
 | Role | Emphasis | Register |
 |---|---|---|
-| Designer / architect | Specifications, conflict notes, code references, Universal Mode/1 values, detail-level guidance | Technical |
-| OT / healthcare professional | Functional ranges, Tier 2 resolution parameters, assessment frameworks | Clinical |
+| Designer / architect | Specifications, conflict notes, code references, Universal-/Population-Mode values, detail-level guidance | Technical |
+| OT / healthcare professional | Functional ranges, Person-Mode resolution parameters, assessment frameworks | Clinical |
 | Policymaker / regulator | Code compliance mapping, jurisdiction comparison, evidence grading, economic evidence | Policy |
-| Disabled person / advocate | Plain-language specifications, rights framework, what to ask for, evidence strength disclosure | Plain-language |
+| Disabled person / advocate | Plain-language specifications, rights framework, what to ask for, evidence strength disclosure; the advocacy-brief use-pattern (audience-priority.md, G5) carries the code-vs-evidence delta | Plain-language |
 | Carer / family / support worker | Plain-language, care-context framing, what environmental changes help, how to support environmental decisions | Plain-language (care-context) |
 
 **Carer as distinct role.** The carer is not a proxy for the disabled person. A carer navigating environmental decisions (home modifications for a parent with dementia, bedroom design for an autistic child, workplace adjustments for a partner with EDS) has their own information needs and decision context. See §8 item 14.
@@ -135,7 +135,7 @@ Role determines how query results are presented. Same specifications, different 
 The armature returns evidence-graded specifications. Each specification surfaced carries:
 
 **Visible in the specification matrix:**
-- Design hierarchy tier (Universal Mode / 1 / 2)
+- Design mode (Universal / Population / Person)
 - Evidence marker (● / ○)
 - Specification value or range
 - Jurisdiction scope (which code frameworks address this element)
@@ -154,7 +154,7 @@ The armature returns evidence-graded specifications. Each specification surfaced
 **Cross-specification features:**
 - Compound functioning flag (§3.8 Step 0) where multiple non-baseline axes interact non-additively
 - Variable conflation check applied before surfacing apparent conflicts
-- Mode S handoff with the functional parameter driving assessment named and the resolution range specified
+- Person-Mode handoff with the functional parameter driving assessment named and the resolution range specified
 - "Adjustable" provisions carrying population operability notes per project-standards rule
 
 **Export:** specification matrix exportable as PDF, plain text, and accessible HTML. Shareable query URLs preserving query state.
@@ -169,7 +169,7 @@ Each entry shows the specification value/range, design tier, evidence marker, an
 
 Drill-down on any specification shows: evidence sources, synthesis method, BPC entry, last-review date. Link to CP population page for CP-specific design considerations (fatigue management in bathroom design, fall-risk considerations specific to CP gait patterns).
 
-**Same profile, disabled-person output:** same specifications, plain-language register. "For a bathroom designed for someone who walks with crutches or a walker and has reduced hand control: the door needs to be wide enough to walk through with your mobility aid, the toilet needs grab rails positioned for how you transfer, taps need to work without gripping, and lighting should be adjustable if you're sensitive to bright light." Evidence markers translated: "This recommendation is supported by direct research evidence" (●) or "This recommendation is based on clinical reasoning — research evidence is not yet available for this specific point" (○). Specifications as ranges with context rather than bare values. "Questions to raise with your architect" and "questions to raise with your OT" lists generated from Mode S handoff flags.
+**Same profile, disabled-person output:** same specifications, plain-language register. "For a bathroom designed for someone who walks with crutches or a walker and has reduced hand control: the door needs to be wide enough to walk through with your mobility aid, the toilet needs grab rails positioned for how you transfer, taps need to work without gripping, and lighting should be adjustable if you're sensitive to bright light." Evidence markers translated: "This recommendation is supported by direct research evidence" (●) or "This recommendation is based on clinical reasoning — research evidence is not yet available for this specific point" (○). Specifications as ranges with context rather than bare values. "Questions to raise with your architect" and "questions to raise with your OT" lists generated from Person-Mode handoff flags.
 
 ---
 

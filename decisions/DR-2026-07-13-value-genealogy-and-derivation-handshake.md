@@ -1,6 +1,6 @@
 # DR-2026-07-13: Value genealogy + the function↔population derivation handshake — proposed resolution
 
-- Status: **PROPOSED — pending owner ratification**
+- Status: **ACCEPTED — ratified by owner directive 2026-07-13 ("resolve all accept ratify all commit all"); see decisions/RATIFICATION-RECORD-2026-07-13.md** *(was: **PROPOSED — pending owner ratification**)*
 - Date: 2026-07-13 (authored in the evidence-architecture unification session, on the owner's directives: adjudicate best-practice-vs-consensus per mode; handle swept-path vs turning-radius, device-class heterogeneity, and multimodal width; fan out per population; decide whether a bottom-up/top-down handshake is required; harness the scattered md/yaml/json evidence body)
 - Prepared by: Claude. **Not owner-ratified.** Grounded in two dedicated research sweeps this session: the E-08 value-genealogy mining dossier (distilled into `references/methodology/value-genealogy-worked-example-corridor-width.md`) and a structural audit of every bottom-up/top-down artifact in the repo.
 - Affects (if ratified): `scripts/migrations/` (one follow-on migration), `workplan/best-practices-assessment-system.md` Phase 1 (extraction pass gains genealogy fields), `scripts/assess/assess_cell.py` (post-ratification: derivation-path gates), `references/fdr/` (naming + merge path), `governance/evidence-architecture.md` (gains §4.5 genealogy + §5.5 handshake on ratification)

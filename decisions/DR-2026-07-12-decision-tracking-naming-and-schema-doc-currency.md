@@ -1,6 +1,6 @@
 # DR-2026-07-12: Decision-tracking naming disambiguation + schema-doc currency markers
 
-- Status: **PROPOSED — pending owner ratification**
+- Status: **ACCEPTED — ratified by owner directive 2026-07-13 ("resolve all accept ratify all commit all"); see decisions/RATIFICATION-RECORD-2026-07-13.md** *(was: **PROPOSED — pending owner ratification**)*
 - Date: 2026-07-12
 - Prepared by: Claude, following `audits/consolidation-sweep-2026-07-12.md`. Both changes below are additive documentation clarifications, not reinterpretations of existing rules — flagged as a DR anyway because they touch `architecture/project-architecture-guidebook-v2.3.md`, which is itself a ratified governing document.
 - Affects (if ratified): `architecture/project-architecture-guidebook-v2.3.md` (`<reference_files_pattern>`), `architecture/schema-spec.md`, `architecture/schema-reconciliation.md`

@@ -1,6 +1,6 @@
 # DR-2026-07-12: Tier-3-alone `stated` threshold — proposed resolution
 
-- Status: **PROPOSED — pending owner ratification**
+- Status: **ACCEPTED — ratified by owner directive 2026-07-13 ("resolve all accept ratify all commit all"); see decisions/RATIFICATION-RECORD-2026-07-13.md** *(was: **PROPOSED — pending owner ratification**)*
 - Date: 2026-07-12
 - Prepared by: Claude, at the owner's request to reconcile identified conflicts and propose a path forward. **Not owner-ratified.** This is the specific threshold question `decisions/DR-2026-05-29-evidence-hierarchy-reconciliation.md` explicitly flagged and declined to resolve — resolving it now is a genuine evidence-methodology judgment call for the owner to review, not a fact Claude can establish unilaterally.
 - Affects (if ratified): `governance/evidence-methodology.md` §2.2/§2.7, `scripts/validate_evidence_state.py`

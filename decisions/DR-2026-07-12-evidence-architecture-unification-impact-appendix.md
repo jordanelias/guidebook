@@ -1,5 +1,5 @@
 # Impact appendix — DR-2026-07-12 evidence-architecture unification
-**Status:** appendix to `decisions/DR-2026-07-12-evidence-architecture-unification.md` (PROPOSED)
+**Status:** **ACCEPTED — ratified by owner directive 2026-07-13 ("resolve all accept ratify all commit all"); see decisions/RATIFICATION-RECORD-2026-07-13.md** *(was: appendix to `decisions/DR-2026-07-12-evidence-architecture-unification.md` (PROPOSED))*
 **Method:** full-repo sweep, 2026-07-12 — 66 code files individually classified; DB inspected read-only; book/site/skills/governance censused. Scenario keys: **(a)** scale-tagging + `regulatory_stratum_only` (G1/G1b); **(b)** vocabulary normalization (Item V); **(c)** grain from co1_source_type / (type × tier) (G3/G6).
 
 ## Load-bearing state facts

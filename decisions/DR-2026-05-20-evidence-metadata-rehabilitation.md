@@ -1,6 +1,6 @@
 # DR-2026-05-20: Evidence metadata rehabilitation — type-routed protocol with mandatory cross-check
 
-**Status:** PROPOSED (pending owner ratification)
+**Status:** **ACCEPTED — ratified by owner directive 2026-07-13 ("resolve all accept ratify all commit all"); see decisions/RATIFICATION-RECORD-2026-07-13.md** *(was: PROPOSED (pending owner ratification))*
 **Adopted by:** session_2026-05-20-ato-rehab (pilot evidence from 3 cohorts)
 **Supersedes:** ad-hoc author-title-only resolution in workplan §5 B.2
 

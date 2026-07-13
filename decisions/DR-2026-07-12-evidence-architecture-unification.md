@@ -1,6 +1,6 @@
 # DR-2026-07-12: Evidence-architecture unification — proposed resolution
 
-- Status: **PROPOSED — pending owner ratification**
+- Status: **ACCEPTED — ratified by owner directive 2026-07-13 ("resolve all accept ratify all commit all"); see decisions/RATIFICATION-RECORD-2026-07-13.md** *(was: **PROPOSED — pending owner ratification**)*
 - Date: 2026-07-12
 - Prepared by: Claude, at the owner's request to resolve the recurring evidence-hierarchy × design-mode × audience question with maximum effort. **Not owner-ratified.** Every item below is a recommendation for owner review; items are separately ratifiable.
 - Creates: `governance/evidence-architecture.md` (PROPOSED → CANONICAL on ratification)

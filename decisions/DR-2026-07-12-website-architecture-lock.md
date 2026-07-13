@@ -1,6 +1,6 @@
 # DR-2026-07-12: Website architecture lock — proposed resolution (v2)
 
-- Status: **PROPOSED — pending owner ratification**
+- Status: **ACCEPTED — ratified by owner directive 2026-07-13 ("resolve all accept ratify all commit all"); see decisions/RATIFICATION-RECORD-2026-07-13.md** *(was: **PROPOSED — pending owner ratification**)*
 - Date: 2026-07-12 (revised same day after independent adversarial review — see "Revision history")
 - Prepared by: Claude, at the owner's (jordanelias) request in this session to "reconcile all issues identified and find a path forward" for the website workstream. **This is a drafted recommendation, not an owner-ratified decision.** No one has reviewed or approved the specific technical calls below; they are Claude's analysis for the owner to accept, amend, or reject. Per the project's own decision-protocol conventions, this DR should not be treated as binding doctrine — and no downstream document should cite it as such — until the owner explicitly ratifies it.
 - Affects (if ratified): `workplan/roadmap-2026-04-27.md` §8, `workplan/website-preparation.md`, `governance/armature_v4.md` + `_resolutions.md` + `_integration.md`, `architecture/navigation-modes.md`, `architecture/page-templates.md`, `scripts/generate/*.py`

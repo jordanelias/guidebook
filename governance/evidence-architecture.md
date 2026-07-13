@@ -1,5 +1,5 @@
 # Evidence Architecture — the unified statement
-**Status:** PROPOSED — pending owner ratification via `decisions/DR-2026-07-12-evidence-architecture-unification.md`. On ratification this document becomes CANONICAL as the single entry point to the evidence architecture; until then every already-decided element it restates remains governed by its cited source document.
+**Status:** CANONICAL — ratified by owner directive 2026-07-13 (see `decisions/RATIFICATION-RECORD-2026-07-13.md`); the single entry point to the evidence architecture per `decisions/DR-2026-07-12-evidence-architecture-unification.md` (ACCEPTED).
 **Created:** 2026-07-12
 **Character:** Index-and-synthesis. This document states each already-decided element **once**, with a citation to its canonical home; it introduces new doctrine **only** in passages flagged `[NEW — DR-gated]`, each of which is a separately ratifiable item (G1–G6) in the unification DR. It is deliberately not a seventh scattered restatement: where this document and a cited source ever diverge, the cited source governs until the divergence is reconciled by DR.
 **Doctrinal basis:** `governance/mission-and-epistemics.md` · `governance/tier-system.md` · `governance/evidence-methodology.md` · `governance/audience-priority.md` · `governance/armature_v4.md` §4.5 · `governance/co1-operational.md` · `decisions/DR-2026-05-29-evidence-hierarchy-reconciliation.md` · `decisions/DR-2026-07-12-*.md` · `schemas/directness.py` · `schemas/tier_derivation.py`
@@ -196,7 +196,7 @@ for grain in sorted(ALL_GRAINS):
 | Field | Value |
 |---|---|
 | Created | 2026-07-12 |
-| Status | PROPOSED — pending owner ratification (`decisions/DR-2026-07-12-evidence-architecture-unification.md`) |
+| Status | CANONICAL — ratified 2026-07-13 (`decisions/RATIFICATION-RECORD-2026-07-13.md`) |
 | New-doctrine items | G1 (re-graining + `regulatory_stratum_only` + scale-tagging), G2 (NOT_ASSESSED), G3 (Co-1 grain by source type), G4 (asymmetry principle, declarative), G5 (advocacy-brief use-pattern), G6 (grain from type × tier), G7 (`stated` threshold admits T2 anchors explicitly), G8 (`pending_assessment` renders with mandatory disclosure), register map + invariants I1–I5, vocabulary normalization |
 | Everything else | Restatement with citation; source documents govern |
 | Author | Claude, at owner request; adversarially reviewed pre-proposal (see DR revision history) |
