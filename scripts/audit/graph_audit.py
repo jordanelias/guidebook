@@ -7,18 +7,22 @@ topology checks over it, unifying orphan / dangling-reference / empty-table /
 state-distribution checks that today are scattered across skills and audit scripts.
 It NEVER writes guidebook.db; the audit graph is a throwaway artifact.
 
-Checks (increment 1 — data layer):
+Checks (data + code + content layers):
   1. orphan.dangling_citation     (ERROR) value-layer ref with no evidence_sources row
                                   — the vetting-surface `orphan_links` invariant; must be 0
   2. cycle.population_parent      (ERROR) populations.parent_code forms a cycle
   3. orphan.uncited_source        (WARN)  evidence source cited by nothing
   4. ref.unresolved_conn_target   (WARN)  connection_target not resolving to item/slug
                                   (phantom-item vs unresolved-identifier)
-  5. table.empty_mission_critical (INFO)  mission-critical table at/near 0 rows
+  5. code.phantom_table           (WARN)  script SQL references a table absent from
+                                  guidebook.db (dormant/stale/legacy query)
+  6. ref.phantom_identifier       (WARN)  prose references an item/source/... identifier
+                                  that resolves to no entity (candidate phantom ref)
+  7. table.empty_mission_critical (INFO)  mission-critical table at/near 0 rows
                                   (suppressed against known_debt.yaml, warrant-checked)
-  6. connection.empty_description (INFO)  connections with empty description
-  7. state.distribution           (INFO)  lifecycle CHECK-enum distributions
-  8. graph.components             (INFO)  connected-component / island count
+  8. connection.empty_description (INFO)  connections with empty description
+  9. state.distribution           (INFO)  lifecycle CHECK-enum distributions
+ 10. graph.components             (INFO)  connected-component / island count
 
 Every check ships with the `--selftest` mutation harness below (a verifier that has
 only ever passed is unverified — integrity-protocol Mode 1 §3).
@@ -111,7 +115,7 @@ def report(store):
     counts = store.counts()
     uv = cur.execute("SELECT value FROM build_meta WHERE key='guidebook_user_version'").fetchone()
     print(SEP)
-    print("graph_audit.py — vectorized structural audit (data layer, increment 1)")
+    print("graph_audit.py — vectorized structural audit (data + code + content layers)")
     print(SEP)
     print(f"guidebook.db user_version={uv[0] if uv else '?'}  |  "
           f"nodes={counts['nodes']}  edges={counts['edges']}  "
@@ -119,9 +123,9 @@ def report(store):
     print()
     # per-check summary (the INFO summary rows carry the headline counts)
     order = ["orphan.dangling_citation", "cycle.population_parent", "orphan.uncited_source",
-             "ref.unresolved_conn_target", "table.empty_mission_critical",
-             "connection.empty_description", "state.distribution", "graph.components",
-             "known_debt.stale"]
+             "ref.unresolved_conn_target", "code.phantom_table", "ref.phantom_identifier",
+             "table.empty_mission_critical", "connection.empty_description",
+             "state.distribution", "graph.components", "known_debt.stale"]
     seen = set()
     for check in order:
         rows = cur.execute(
@@ -271,6 +275,29 @@ def selftest():
         stale = apply_known_debt(s, gdb, fake)
         gdb.close()
         results.append(("stale known-debt suppression is detected", len(stale) == 1))
+        s.close()
+
+        # 6. code table-ref detector fires on injected SQL, ignores non-SQL prose
+        import extract_code
+        refs = set(extract_code.iter_table_refs("SELECT x FROM zzz_phantom JOIN items ON 1"))
+        no_sql = list(extract_code.iter_table_refs("plain prose from here to there"))
+        results.append(("code table-ref detector: phantom+real found, prose ignored",
+                        "zzz_phantom" in refs and "items" in refs and no_sql == []))
+
+        # 7. content identifier detector fires on scheme refs, rejects coincidental matches
+        import extract_content
+        ids = set(extract_content.iter_identifier_refs("see K-99, REF-00157 and CON-0247"))
+        fp = set(extract_content.iter_identifier_refs("COVID-19 ISO-9001 x-A-01"))
+        results.append(("content ref detector: scheme found, false positives rejected",
+                        {("item", "K-99"), ("source", "REF-00157"), ("connection", "CON-0247")} <= ids
+                        and not any(k == "item" for k, _ in fp)))
+
+        # 8. code + content checks execute and emit on the real repo build
+        s = gbuild.build(audit_db=os.path.join(tmpd, "a6.db"), guidebook_db=copy)
+        c = s.conn.execute
+        has_code = c("SELECT COUNT(*) FROM findings WHERE check_id='code.phantom_table'").fetchone()[0] > 0
+        has_ref = c("SELECT COUNT(*) FROM findings WHERE check_id='ref.phantom_identifier'").fetchone()[0] > 0
+        results.append(("code+content checks execute on real repo", has_code and has_ref))
         s.close()
     finally:
         shutil.rmtree(tmpd, ignore_errors=True)

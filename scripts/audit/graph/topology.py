@@ -43,6 +43,8 @@ def check_all(store, gdb):
     orphan_sources(store)
     dangling_citations(store)
     unresolved_connection_targets(store)
+    code_phantom_tables(store)
+    content_phantom_identifiers(store)
     empty_mission_critical(store)
     empty_description_connections(store)
     population_parent_cycles(store)
@@ -100,6 +102,44 @@ def unresolved_connection_targets(store):
                       f"{len(rows)} unresolved connection target(s): "
                       f"{phantom_items} phantom-item, {unresolved} unresolved.",
                       attrs={"total": len(rows), "phantom_items": phantom_items, "unresolved": unresolved})
+
+
+def code_phantom_tables(store):
+    """table_ref edges from code to a table that does not exist in guidebook.db."""
+    cur = store.conn.cursor()
+    rows = cur.execute(
+        "SELECT src_path, dst, src_line FROM edges "
+        "WHERE etype='table_ref' AND resolved=0 ORDER BY src_path, dst"
+    ).fetchall()
+    for src_path, dst, line in rows:
+        tok = dst.split(":", 1)[-1]
+        store.add_finding("code.phantom_table", "WARN",
+                          f"{src_path}:{line} references table '{tok}' which does not exist "
+                          f"in guidebook.db (dormant / stale query).",
+                          node_id=f"file:{src_path}", attrs={"table": tok, "line": line})
+    files = len({r[0] for r in rows})
+    store.add_finding("code.phantom_table", "INFO",
+                      f"{len(rows)} phantom-table reference(s) across {files} script(s).",
+                      attrs={"count": len(rows), "files": files})
+
+
+def content_phantom_identifiers(store):
+    """ref edges from prose to an identifier that resolves to no entity node."""
+    cur = store.conn.cursor()
+    rows = cur.execute(
+        "SELECT src_path, dst FROM edges WHERE etype='ref' AND resolved=0 ORDER BY dst, src_path"
+    ).fetchall()
+    by_kind = {}
+    for src_path, dst in rows:
+        kind, ident = dst.split(":", 1)
+        by_kind[kind] = by_kind.get(kind, 0) + 1
+        store.add_finding("ref.phantom_identifier", "WARN",
+                          f"{src_path} references {kind} '{ident}' which resolves to no entity "
+                          f"(candidate phantom/stale reference).",
+                          node_id=dst, attrs={"kind": kind, "id": ident, "file": src_path})
+    store.add_finding("ref.phantom_identifier", "INFO",
+                      f"{len(rows)} candidate phantom identifier reference(s): {by_kind}.",
+                      attrs={"count": len(rows), "by_kind": by_kind})
 
 
 def empty_mission_critical(store):

@@ -13,6 +13,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from model import GraphStore   # noqa: E402
 import extract_db              # noqa: E402
+import extract_code            # noqa: E402
+import extract_content         # noqa: E402
 import topology                # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -30,7 +32,9 @@ def build(audit_db=None, guidebook_db=None) -> GraphStore:
     gdb = sqlite3.connect(f"file:{guidebook_db}?mode=ro", uri=True)
     gdb.row_factory = sqlite3.Row
     try:
-        extract_db.extract(gdb, store)
+        extract_db.extract(gdb, store)          # data layer
+        extract_code.extract(store, REPO_ROOT)  # code layer (AST table refs)
+        extract_content.extract(store, REPO_ROOT)  # content layer (identifier refs)
         store.resolve_edges()
         topology.check_all(store, gdb)
         store.set_meta("guidebook_db", guidebook_db)
