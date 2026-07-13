@@ -23,11 +23,19 @@
 -- are drawn directly from the existing drafted source (v9.0 spec text,
 -- 2026-03-20), not authored fresh by this migration.
 --
--- item_bpc_links: two rows, both link_type='primary' -- F-07's drafted text
--- names two co-governing BPCs addressing distinct clinical mechanisms
--- (MS/Uhthoff-phenomenon cold sensitivity vs. DEM/older-adult heat-shock
--- prevention), neither subordinate to the other; item_bpc_links is the
--- documented multi-BPC bridge for exactly this case (migration 013).
+-- item_bpc_links: two rows. CORRECTED (self-caught via the CI
+-- migration-reproducibility gate, which rebuilds from migration history and
+-- caught this before it ever reached the canonical DB): migration 013's
+-- schema enforces AT MOST ONE link_type='primary' row per item_code
+-- (idx_ibl_primary_per_item, a partial unique index) -- the original version
+-- of this migration set both rows to 'primary' and would have failed on
+-- apply. ms-thermal-temperature-conflict-resolution is 'primary' (the
+-- item's namesake mechanism -- Uhthoff-phenomenon zoning is literally what
+-- "Thermal Zoning" names, and it is listed first in the drafted source's own
+-- BPC note); thermal-comfort-older-adults-care-settings is 'secondary' (a
+-- related but distinct heat-shock-prevention concern per the same source
+-- text). Both remain flagged RETRACTED-PRE-REHAB; the link_type choice is
+-- about schema-required primacy ordering, not evidence weight.
 --
 -- item_population_links: parent-level population codes, matching the
 -- existing convention used for F-08's own links (NEU not MS, OFS not its
@@ -48,10 +56,10 @@ INSERT INTO items (
 
 INSERT INTO item_bpc_links (item_code, slug, link_type, rationale, created_at, created_by_session) VALUES
     ('F-07', 'ms-thermal-temperature-conflict-resolution', 'primary',
-     'Uhthoff-phenomenon cold-sensitivity mechanism (MS): ambient <=22C target. Co-governing with thermal-comfort-older-adults-care-settings, not subordinate -- distinct mechanism, distinct population. BPC currently RETRACTED-PRE-REHAB; link records the governing relationship, not an evidence-state determination.',
+     'Uhthoff-phenomenon cold-sensitivity mechanism (MS): ambient <=22C target -- the item namesake mechanism ("Thermal Zoning"), listed first in the drafted source''s own BPC note. BPC currently RETRACTED-PRE-REHAB; link records the governing relationship, not an evidence-state determination.',
      '2026-07-13T20:00:00+00:00', 'session_2026-07-13-contradiction-sweep-f07-recovery'),
-    ('F-07', 'thermal-comfort-older-adults-care-settings', 'primary',
-     'Heat-shock-mortality mechanism (DEM/older-adult): inter-room differential <=5C, bathroom pre-heating. Co-governing with ms-thermal-temperature-conflict-resolution, not subordinate -- distinct mechanism, distinct population. BPC currently RETRACTED-PRE-REHAB; link records the governing relationship, not an evidence-state determination.',
+    ('F-07', 'thermal-comfort-older-adults-care-settings', 'secondary',
+     'Heat-shock-mortality mechanism (DEM/older-adult): inter-room differential <=5C, bathroom pre-heating -- a related but distinct concern per the drafted source; schema (migration 013) permits only one primary link per item, so this is secondary by necessity, not by an evidence-weight judgment. BPC currently RETRACTED-PRE-REHAB; link records the governing relationship, not an evidence-state determination.',
      '2026-07-13T20:00:00+00:00', 'session_2026-07-13-contradiction-sweep-f07-recovery');
 
 INSERT INTO item_population_links (item_code, population_code, subtype, applicability, rationale_ref, created_at, created_by_session) VALUES
