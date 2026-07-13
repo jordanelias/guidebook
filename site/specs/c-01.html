@@ -1,242 +1,76 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>C-01 — accessible-circulation-geometry</title>
-    <style>
-        :root {
-            --ink: #1a1a2e;
-            --paper: #fafaf8;
-            --accent: #2d5f8a;
-            --accent-light: #e8f0f7;
-            --border: #d4d4d0;
-            --muted: #6b6b6b;
-            --universal: #2e7d32;
-            --population: #1565c0;
-            --person: #6a1b9a;
-            --warn: #e65100;
-            --success: #2e7d32;
-            --neutral: #9e9e9e;
-            --font-body: 'Source Serif 4', 'Georgia', serif;
-            --font-ui: 'DM Sans', 'Helvetica Neue', sans-serif;
-            --font-mono: 'JetBrains Mono', 'Consolas', monospace;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: var(--font-body);
-            color: var(--ink);
-            background: var(--paper);
-            line-height: 1.65;
-            max-width: 860px;
-            margin: 0 auto;
-            padding: 24px;
-        }
-
-        /* Mode toggle */
-        .mode-toggle { display: flex; gap: 4px; background: var(--border); border-radius: 6px; padding: 3px; width: fit-content; margin-bottom: 24px; }
-        .mode-toggle button { font-family: var(--font-ui); font-size: 13px; padding: 6px 16px; border: none; border-radius: 4px; cursor: pointer; background: transparent; color: var(--muted); transition: all 0.2s; }
-        .mode-toggle button.active { background: white; color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-
-        /* Section ordering */
-        .spec-content { display: flex; flex-direction: column; }
-        .spec-content > section { order: var(--spec-order); }
-        body.mode-question .spec-content > section { order: var(--question-order); }
-
-        /* Header */
-        .spec-header { margin-bottom: 32px; }
-        .item-code { font-family: var(--font-mono); font-size: 14px; color: var(--accent); letter-spacing: 0.5px; text-transform: uppercase; }
-        h1.spec-title { font-size: 28px; font-weight: 600; margin: 8px 0; line-height: 1.3; }
-        h1.question-title { font-size: 32px; font-weight: 700; margin: 8px 0; line-height: 1.25; color: var(--accent); display: none; }
-        body.mode-question h1.spec-title { display: none; }
-        body.mode-question h1.question-title { display: block; }
-        .evidence-badge { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-ui); font-size: 13px; color: var(--muted); padding: 4px 10px; background: var(--accent-light); border-radius: 4px; }
-
-        /* Sections */
-        section { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
-        section:last-child { border-bottom: none; }
-        h2 { font-family: var(--font-ui); font-size: 16px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 12px; }
-
-        /* Tables */
-        table { width: 100%; border-collapse: collapse; font-size: 14px; }
-        th { font-family: var(--font-ui); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; text-align: left; padding: 8px 12px; background: var(--accent-light); color: var(--accent); border-bottom: 2px solid var(--border); }
-        td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
-        .mode-universal td:first-child { color: var(--universal); font-weight: 600; }
-        .mode-population td:first-child { color: var(--population); font-weight: 600; }
-        .mode-person td:first-child { color: var(--person); font-weight: 600; }
-
-        /* Population badges */
-        .pop-badges { display: flex; flex-wrap: wrap; gap: 8px; }
-        .pop-badge { font-family: var(--font-mono); font-size: 13px; padding: 4px 12px; border-radius: 4px; background: var(--accent-light); color: var(--accent); border: 1px solid var(--border); }
-
-        /* Conflict cards */
-        .conflict-domains { display: flex; flex-wrap: wrap; gap: 8px; }
-        .conflict-card { font-family: var(--font-ui); font-size: 13px; padding: 6px 14px; border-radius: 4px; background: #fff3e0; color: var(--warn); border: 1px solid #ffe0b2; text-decoration: none; }
-        .conflict-card:hover { background: #ffe0b2; }
-
-        /* DAR + structural flags */
-        .dar-flag { font-family: var(--font-ui); font-size: 14px; padding: 8px 14px; background: #e8f5e9; border-left: 4px solid var(--success); margin-bottom: 12px; }
-        .struct-flag { font-family: var(--font-ui); font-size: 14px; padding: 8px 14px; background: #fff3e0; border-left: 4px solid var(--warn); margin-bottom: 12px; }
-
-        /* Cross-references */
-        .xref-links { display: flex; flex-wrap: wrap; gap: 8px; }
-        .xref-link { font-family: var(--font-mono); font-size: 14px; padding: 4px 12px; border-radius: 4px; background: var(--accent-light); color: var(--accent); text-decoration: none; border: 1px solid var(--border); }
-        .xref-link:hover { background: var(--accent); color: white; }
-
-        /* Schedule block */
-        .schedule-block { font-family: var(--font-mono); font-size: 13px; background: #f5f5f5; padding: 16px; border-radius: 6px; border: 1px solid var(--border); white-space: pre-wrap; position: relative; }
-        .copy-btn { position: absolute; top: 8px; right: 8px; font-family: var(--font-ui); font-size: 11px; padding: 4px 8px; border: 1px solid var(--border); border-radius: 3px; background: white; cursor: pointer; }
-
-        /* Why prose */
-        .why-prose { font-size: 16px; line-height: 1.75; color: #333; }
-
-        /* Metadata footer */
-        .meta-footer { font-family: var(--font-ui); font-size: 12px; color: var(--muted); display: flex; gap: 16px; flex-wrap: wrap; }
-        .meta-footer span { padding: 2px 8px; background: #f0f0f0; border-radius: 3px; }
-
-        /* Responsive */
-        @media (max-width: 640px) {
-            body { padding: 16px; }
-            h1.spec-title { font-size: 22px; }
-            h1.question-title { font-size: 26px; }
-            table { font-size: 13px; }
-            th, td { padding: 6px 8px; }
-        }
-    </style>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C-01 — Colour Palette (Muted, Low-Chroma, Non-Institutional)</title>
+<style>
+:root {
+    --ink: #1a1a2e; --paper: #fafaf8; --accent: #2d5f8a;
+    --accent-light: #e8f0f7; --border: #d4d4d0; --muted: #6b6b6b;
+    --font-body: Georgia, 'Times New Roman', serif;
+    --font-ui: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    --font-mono: 'Courier New', Consolas, monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--font-body); color: var(--ink); background: var(--paper);
+       line-height: 1.6; max-width: 860px; margin: 0 auto; padding: 24px; }
+.item-code { font-family: var(--font-mono); font-size: 14px; color: var(--accent);
+              letter-spacing: 1px; text-transform: uppercase; }
+h1 { font-size: 26px; font-weight: 600; margin: 8px 0 4px; }
+.meta { font-family: var(--font-ui); font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+section { margin: 28px 0; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+section:last-child { border-bottom: none; }
+h2 { font-family: var(--font-ui); font-size: 15px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.5px; color: var(--muted); margin-bottom: 10px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { font-family: var(--font-ui); font-size: 12px; text-transform: uppercase; text-align: left;
+      padding: 6px 10px; background: var(--accent-light); color: var(--accent);
+      border-bottom: 2px solid var(--border); }
+td { padding: 6px 10px; border-bottom: 1px solid var(--border); }
+td a { color: var(--accent); text-decoration: none; font-family: var(--font-mono); }
+.empty { color: var(--muted); font-style: italic; }
+.honest-banner { background: #fff8e1; border: 1px solid #ffe082; border-radius: 4px;
+                   padding: 12px 16px; font-family: var(--font-ui); font-size: 14px; }
+</style>
 </head>
-<body class="mode-spec">
+<body>
+<span class="item-code">C-01</span>
+<h1>Colour Palette (Muted, Low-Chroma, Non-Institutional)</h1>
+<p class="meta">category: C &middot; status: active</p>
 
-<nav class="mode-toggle">
-    <button id="btn-spec" class="active" onclick="setMode('spec')">Spec Mode</button>
-    <button id="btn-question" onclick="setMode('question')">Question Mode</button>
-</nav>
-
-<header class="spec-header">
-    <span class="item-code">C-01</span>
-    <h1 class="spec-title">accessible-circulation-geometry</h1>
-    <h1 class="question-title">Is the colour scheme calm enough for someone with sensory sensitivity to occupy the space without distress?</h1>
-    <span class="evidence-badge">◐ Evidence Tier Tier 5</span>
-</header>
-
-<div class="spec-content">
-
-    <section id="why" style="--spec-order: 10; --question-order: 2">
-        <h2>Why It Matters</h2>
-        <p class="why-prose">No fluorescent luminaires (T8, T5, compact fluorescent) installed anywhere in the building. Replaced with flicker-free LED throughout (B-04). Applies to all spaces.</p>
-    </section>
-
-    <section id="values" style="--spec-order: 2; --question-order: 3">
-        <h2>Values</h2>
-        <table>
-            <thead><tr><th>Mode</th><th>Population</th><th>Value</th><th>Notes</th></tr></thead>
-            <tbody><tr class="mode-population"><td>Mode P</td><td>ALL</td><td>1400.0–1400.0 mm</td><td></td></tr>
+<section>
+<h2>Applicable populations (7)</h2>
+<table>
+<thead><tr><th>Code</th><th>Name</th><th>Applicability</th></tr></thead>
+<tbody><tr><td><a href="/populations/aut.html">AUT</a></td><td>autism</td><td>applies</td></tr>
+<tr><td><a href="/populations/dem.html">DEM</a></td><td>dementia</td><td>applies</td></tr>
+<tr><td><a href="/populations/mh.html">MH</a></td><td>mental health condition</td><td>applies</td></tr>
+<tr><td><a href="/populations/ndv.html">NDV</a></td><td>neurodivergence (broad)</td><td>applies</td></tr>
+<tr><td><a href="/populations/ofs.html">OFS</a></td><td>orthostatic/fatigue spectrum</td><td>applies</td></tr>
+<tr><td><a href="/populations/pcs.html">PCS</a></td><td>post-concussion syndrome</td><td>applies</td></tr>
+<tr><td><a href="/populations/vis.html">VIS</a></td><td>vision impairment</td><td>applies</td></tr>
 </tbody>
-        </table>
-    </section>
+</table>
+</section>
 
-    <section id="evidence" style="--spec-order: 3; --question-order: 4">
-        <h2>Evidence</h2>
-        <p>Canadian Association of Occupational Therapists. (2018). Practice guidelines for acquired brain injury. CAOT. AOTA. (2023). OT practice guidelines for adults with TBI. AJOT, 77(4).</p>
-        <table>
-            <thead><tr><th></th><th>Authors</th><th>Year</th><th>Title</th><th>Tier</th></tr></thead>
-            <tbody></tbody>
-        </table>
-    </section>
+<section>
+<h2>Governing Best Practice Compendium entries</h2>
+<table>
+<thead><tr><th>Slug</th><th>Link type</th><th>Rationale</th></tr></thead>
+<tbody><tr><td>wayfinding-dementia-spatial-design</td><td>legacy bpc_source_slug</td><td class="empty">item_bpc_links (the intended many-to-many bridge, migration 013) has no row for this item yet — see decisions/DR-2026-07-12-evidence-cell-state-schema-reconciliation.md.</td></tr></tbody>
+</table>
+</section>
 
-    <section id="populations" style="--spec-order: 4; --question-order: 5">
-        <h2>Population Applicability</h2>
-        <div class="pop-badges"><span class="pop-badge" style="opacity:1.0" title="Primary">DEM</span>
-<span class="pop-badge" style="opacity:1.0" title="Primary">MOB</span>
-<span class="pop-badge" style="opacity:1.0" title="Primary">VIS</span>
-</div>
-    </section>
+<section>
+<h2>Progressive Measurement Probe</h2>
+<p class="empty">No Progressive Measurement Probe walk recorded for this item.</p>
+</section>
 
-    <section id="jurisdictions" style="--spec-order: 5; --question-order: 6">
-        <h2>Jurisdiction Comparison</h2>
-        <table>
-            <thead><tr><th>Jurisdiction</th><th>Standard</th><th>Clause</th><th>Value</th><th>Notes</th></tr></thead>
-            <tbody><tr><td>AU</td><td></td><td></td><td></td><td>supporting</td></tr>
-<tr><td>DE</td><td></td><td></td><td></td><td>supporting</td></tr>
-<tr><td>EU</td><td></td><td></td><td></td><td>supporting</td></tr>
-<tr><td>UK</td><td></td><td></td><td></td><td>supporting</td></tr>
-<tr><td>US</td><td></td><td></td><td></td><td>divergent</td></tr>
-</tbody>
-        </table>
-    </section>
-
-    <section id="conflicts" style="--spec-order: 6; --question-order: 7">
-        <h2>Conflict Domains</h2>
-        <p style="color:var(--muted)">No cross-population conflicts for this specification.</p>
-    </section>
-
-    <section id="dar" style="--spec-order: 7; --question-order: 8" class="dar-section id="dar" style="--spec-order: 7; --question-order: 8"" id="dar">
-            <h2>Design for Adaptable Readiness (DAR)</h2>
-            <div class="dar-flag">⚑ DAR Priority</div>
-            <p>dard) defines flicker-free threshold. NDV/NEU seizure and photosensitivity evidence: Harding et al. 2005 Epilepsia (Tier 3 SR). ≥10 jurisdictions moving to LED — mandatory IEEE compliance is VE-protected per Part 8. HIGH on fluorescent elimination; MODERATE on IEEE 1789 threshold specifically. --&gt;</p>
-        </section id="dar" style="--spec-order: 7; --question-order: 8">
-
-    
-
-    <section id="schedule" style="--spec-order: 9; --question-order: 10">
-        <h2>Schedule Language</h2>
-        <div class="schedule-block">
-            <button class="copy-btn" onclick="copySchedule()">Copy</button>
-Zero fluorescent luminaires anywhere in the building
-
-All luminaires: LED driver with high frequency switching (not mains-frequency ripple)
-
-Verified per B-04: IEEE 1789-2015 compliance required
-
-Heritage buildings: LED retrofit of T8 tubes may not achieve IEEE 1789 compliance; specify new luminaires
-        </div>
-    </section>
-
-    <section id="criteria" style="--spec-order: 11; --question-order: 11">
-        <h2>Performance Criteria</h2>
-        <table>
-            <thead><tr><th>Criterion</th><th>Test Method</th><th>Pass Threshold</th></tr></thead>
-            <tbody></tbody>
-        </table>
-    </section>
-
-    <section id="crossrefs" style="--spec-order: 12; --question-order: 12">
-        <h2>Cross-References</h2>
-        <div class="xref-links"></div>
-    </section>
-
-    <section id="meta" style="--spec-order: 13; --question-order: 13">
-        <div class="meta-footer">
-            <span>Curation: automated</span>
-            <span>OT basis: EHP Framework (prevent strategy); Dunn&#x27;s Sensory Processing Model. Fluorescent luminaires (magnetic ballast 100Hz flicker; electronic 20--50kHz flicker at visible amplitudes) are documented triggers for migraine, photosensitive epilepsy, and PCS symptom exacerbation; this item implements a categorical prevent intervention by removing the trigger source entirely rather than attempting to mitigate it.</span>
-            <span>Retrofit: LOW</span>
-        </div>
-    </section>
-
-</div>
-
-<script>
-function setMode(mode) {
-    document.body.className = 'mode-' + mode;
-    document.getElementById('btn-spec').className = mode === 'spec' ? 'active' : '';
-    document.getElementById('btn-question').className = mode === 'question' ? 'active' : '';
-    try { localStorage.setItem('guidebook-mode', mode); } catch(e) {}
-}
-function copySchedule() {
-    const text = document.querySelector('.schedule-block').innerText.replace('Copy\n', '');
-    navigator.clipboard.writeText(text).then(() => {
-        const btn = document.querySelector('.copy-btn');
-        btn.textContent = 'Copied!';
-        setTimeout(() => btn.textContent = 'Copy', 2000);
-    });
-}
-// Restore mode
-try {
-    const saved = localStorage.getItem('guidebook-mode');
-    if (saved) setMode(saved);
-} catch(e) {}
-</script>
+<section>
+<h2>Best-practice determinations</h2>
+<p class="honest-banner">Best-practice determination: <strong>not yet computed</strong> for this item, for any population. See workplan/best-practices-assessment-system.md.</p>
+</section>
 
 </body>
 </html>

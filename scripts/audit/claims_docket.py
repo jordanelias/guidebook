@@ -80,6 +80,13 @@ def scan(lines):
         classes = [name for name, rx in TRIGGERS if rx.search(stripped)]
         if classes:
             excerpt = re.sub(r"\s+", " ", stripped)[:140]
+            # Docket lines are themselves pipe-delimited (file:line | class | excerpt |
+            # annotation); a source line that's a markdown table row carries its own "|"
+            # characters, which would shift cmd_check's parts[3] lookup and misreport a
+            # real annotation as missing (or, in principle, mis-parse a bogus one as
+            # valid). Substitute a lookalike so the docket format's own delimiter stays
+            # unambiguous regardless of what the scanned source line contains.
+            excerpt = excerpt.replace("|", "¦")
             yield fname, lineno, "+".join(classes), excerpt
 
 

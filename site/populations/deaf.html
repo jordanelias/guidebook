@@ -1,122 +1,93 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>DEAF — Deaf and Hard of Hearing</title>
-    <style>
-        :root {
-            --ink: #1a1a2e; --paper: #fafaf8; --accent: #2d5f8a;
-            --accent-light: #e8f0f7; --border: #d4d4d0; --muted: #6b6b6b;
-            --primary-bg: #e8f5e9; --secondary-bg: #f5f5f5;
-            --font-body: 'Source Serif 4', Georgia, serif;
-            --font-ui: 'DM Sans', 'Helvetica Neue', sans-serif;
-            --font-mono: 'JetBrains Mono', Consolas, monospace;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: var(--font-body); color: var(--ink); background: var(--paper);
-               line-height: 1.65; max-width: 860px; margin: 0 auto; padding: 24px; }
-
-        .pop-header { margin-bottom: 32px; }
-        .pop-code { font-family: var(--font-mono); font-size: 14px; color: var(--accent);
-                     letter-spacing: 1px; text-transform: uppercase; }
-        h1 { font-size: 28px; font-weight: 600; margin: 8px 0; }
-        .confidence-badge { font-family: var(--font-ui); font-size: 13px; padding: 4px 10px;
-                            border-radius: 4px; background: var(--accent-light); color: var(--accent); }
-
-        section { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
-        section:last-child { border-bottom: none; }
-        h2 { font-family: var(--font-ui); font-size: 16px; font-weight: 600;
-              text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 12px; }
-
-        .profile-text { font-size: 16px; line-height: 1.75; }
-
-        table { width: 100%; border-collapse: collapse; font-size: 14px; }
-        th { font-family: var(--font-ui); font-size: 12px; text-transform: uppercase;
-              letter-spacing: 0.5px; text-align: left; padding: 8px 12px;
-              background: var(--accent-light); color: var(--accent); border-bottom: 2px solid var(--border); }
-        td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
-        td a { color: var(--accent); text-decoration: none; font-family: var(--font-mono); }
-        td a:hover { text-decoration: underline; }
-
-        .role-primary { background: var(--primary-bg); }
-        .role-secondary { opacity: 0.7; }
-
-        .conflict-domains { display: flex; flex-wrap: wrap; gap: 8px; }
-        .conflict-card { font-family: var(--font-ui); font-size: 13px; padding: 6px 14px;
-                         border-radius: 4px; background: #fff3e0; color: #e65100;
-                         border: 1px solid #ffe0b2; text-decoration: none; }
-
-        .co1-section { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-        .co1-badge { font-family: var(--font-ui); font-size: 13px; padding: 4px 12px;
-                     border-radius: 4px; font-weight: 600; }
-        .co1-complete { background: #e8f5e9; color: #2e7d32; }
-        .co1-partial { background: #fff3e0; color: #e65100; }
-        .co1-gap { background: #fce4ec; color: #c62828; }
-
-        .section-label { font-family: var(--font-ui); font-size: 13px; color: var(--muted);
-                         margin-bottom: 8px; }
-
-        @media (max-width: 640px) { body { padding: 16px; } h1 { font-size: 22px; } }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DEAF — hearing impairment / Deaf</title>
+<style>
+:root {
+    --ink: #1a1a2e; --paper: #fafaf8; --accent: #2d5f8a;
+    --accent-light: #e8f0f7; --border: #d4d4d0; --muted: #6b6b6b;
+    --font-body: Georgia, 'Times New Roman', serif;
+    --font-ui: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    --font-mono: 'Courier New', Consolas, monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--font-body); color: var(--ink); background: var(--paper);
+       line-height: 1.6; max-width: 860px; margin: 0 auto; padding: 24px; }
+.pop-code { font-family: var(--font-mono); font-size: 14px; color: var(--accent);
+             letter-spacing: 1px; text-transform: uppercase; }
+h1 { font-size: 26px; font-weight: 600; margin: 8px 0 4px; }
+.meta { font-family: var(--font-ui); font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+section { margin: 28px 0; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+section:last-child { border-bottom: none; }
+h2 { font-family: var(--font-ui); font-size: 15px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.5px; color: var(--muted); margin-bottom: 10px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { font-family: var(--font-ui); font-size: 12px; text-transform: uppercase; text-align: left;
+      padding: 6px 10px; background: var(--accent-light); color: var(--accent);
+      border-bottom: 2px solid var(--border); }
+td { padding: 6px 10px; border-bottom: 1px solid var(--border); }
+td a { color: var(--accent); text-decoration: none; font-family: var(--font-mono); }
+.empty { color: var(--muted); font-style: italic; }
+.badge { font-family: var(--font-ui); font-size: 12px; padding: 2px 8px; border-radius: 3px;
+          background: var(--accent-light); color: var(--accent); }
+.badge-retracted { background: #fce4ec; color: #c62828; }
+.badge-unknown { background: #f5f5f5; color: var(--muted); }
+.honest-banner { background: #fff8e1; border: 1px solid #ffe082; border-radius: 4px;
+                   padding: 12px 16px; font-family: var(--font-ui); font-size: 14px; }
+</style>
 </head>
 <body>
-
-<header class="pop-header">
-    <span class="pop-code">DEAF</span>
-    <h1>Deaf and Hard of Hearing</h1>
-    <span class="confidence-badge">Evidence confidence: HIGH (IEC 60118-4, RT60 — Tier 4-5 across 12+ jurisdictions + Tier 1 CI support); MODERATE (Auracast — transition technology)</span>
-</header>
+<span class="pop-code">DEAF</span>
+<h1>hearing impairment / Deaf</h1>
+<p class="meta">sensory &middot; status: active</p>
 
 <section>
-    <h2>Functional Profile</h2>
-    <p class="profile-text">Profoundly deaf; hard of hearing (typically aided); cochlear implant users; hearing loop/assistive listening system users. CI users have distinct acoustic requirements.</p>
+<h2>Description</h2>
+<p>Hard of hearing, Deaf, or late-deafened</p>
 </section>
 
 <section>
-    <h2>Specification Matrix</h2>
-    <p class="section-label">Primary specifications highlighted; secondary specifications dimmed.</p>
-    <table>
-        <thead><tr><th>Code</th><th>Specification</th><th>Evidence</th></tr></thead>
-        <tbody>
-            <tr class="role-primary"><td><a href="/specs/A-03">A-03</a></td><td>Acoustic Door (STC ≥35) at All Sensitive Space Boundaries</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/A-13">A-13</a></td><td>No Sound Masking in Neurological Population Environments</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/A-15">A-15</a></td><td>Acoustic Differentiation Between Spaces (Navigation Aid for</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/B-10">B-10</a></td><td>Visual and Vibrotactile Fire Alarm (Multi-Channel Throughout</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/C-01">C-01</a></td><td>deaf-spatial-design</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/C-01">C-01</a></td><td>deaf-spatial-design</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/F-01">F-01</a></td><td>DEAF</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/F-01">F-01</a></td><td>DEAF</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/F-01">F-01</a></td><td>assistive-listening-systems</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/F-01">F-01</a></td><td>assistive-listening-systems</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/F-07">F-07</a></td><td>DEAF</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/F-07">F-07</a></td><td>DEAF</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/G-04">G-04</a></td><td>Accessible Bathroom (Wet Room Configuration — Zero Threshold</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/G-09">G-09</a></td><td>Bedroom Emergency Call Provision and Overnight Lighting</td><td>○</td></tr>
-<tr class="role-primary"><td><a href="/specs/K-01">K-01</a></td><td>deaf-spatial-design</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/K-02">K-02</a></td><td>deaf-acoustic-built-environment</td><td>◐</td></tr>
-<tr class="role-primary"><td><a href="/specs/K-03">K-03</a></td><td>DEAF</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/K-03">K-03</a></td><td>deaf-acoustic-built-environment</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/K-03">K-03</a></td><td>deaf-classroom-reverberation-time</td><td>●</td></tr>
-<tr class="role-primary"><td><a href="/specs/K-03">K-03</a></td><td>deaf-classroom-reverberation-time</td><td>◐</td></tr>
-
-            
-        </tbody>
-    </table>
+<h2>Applicable items (15)</h2>
+<table>
+<thead><tr><th>Item</th><th>Name</th><th>Category</th><th>Applicability</th></tr></thead>
+<tbody><tr><td><a href="/specs/a-10.html">A-10</a></td><td>Counter Hearing Loop (Induction Loop at Reception/Service Counter)</td><td>A</td><td>applies</td></tr>
+<tr><td><a href="/specs/a-11.html">A-11</a></td><td>Room Perimeter Hearing Loop (Assembly and Meeting Spaces)</td><td>A</td><td>applies</td></tr>
+<tr><td><a href="/specs/a-12.html">A-12</a></td><td>Auracast Infrastructure Readiness</td><td>A</td><td>applies</td></tr>
+<tr><td><a href="/specs/b-02.html">B-02</a></td><td>Diffuse Lighting for Lip Reading and Sign Language (Shadow-Free Face Illumination)</td><td>B</td><td>applies</td></tr>
+<tr><td><a href="/specs/b-10.html">B-10</a></td><td>Visual Fire Alarm (Strobe VAD Throughout Building)</td><td>B</td><td>applies</td></tr>
+<tr><td><a href="/specs/d-05.html">D-05</a></td><td>Enclosed Low-Stimulation Spaces (Focus Rooms, Breakout Alcoves, and Compartmentalisation)</td><td>D</td><td>applies</td></tr>
+<tr><td><a href="/specs/d-10.html">D-10</a></td><td>Transparent Glazed Panels in Internal Partitions</td><td>D</td><td>applies</td></tr>
+<tr><td><a href="/specs/g-01.html">G-01</a></td><td>Defensible Seating (Back-to-Wall, Entry Sightline Configuration)</td><td>G</td><td>applies</td></tr>
+<tr><td><a href="/specs/g-06.html">G-06</a></td><td>Reception Counter (Accessible Height Section — 760--860 mm AFF)</td><td>G</td><td>applies</td></tr>
+<tr><td><a href="/specs/h-02.html">H-02</a></td><td>Individual Environmental Control (Lighting and Temperature Per Space)</td><td>H</td><td>applies</td></tr>
+<tr><td><a href="/specs/h-03.html">H-03</a></td><td>Visual Paging and Real-Time Captioning in Assembly Spaces</td><td>H</td><td>applies</td></tr>
+<tr><td><a href="/specs/h-04.html">H-04</a></td><td>Accessible Intercom and Video Door Entry with Visual and Tactile Feedback</td><td>H</td><td>applies</td></tr>
+<tr><td><a href="/specs/k-02.html">K-02</a></td><td>Tactile Building Map Station at Principal Entrance</td><td>K</td><td>applies</td></tr>
+<tr><td><a href="/specs/k-04.html">K-04</a></td><td>Vibrotactile Alert Provision</td><td>K</td><td>applies</td></tr>
+<tr><td><a href="/specs/k-05.html">K-05</a></td><td>Thermal Comfort Assessment for Thermoregulation-Impaired Populations</td><td>K</td><td>applies</td></tr>
+</tbody>
+</table>
 </section>
 
 <section>
-    <h2>Co-1 (Lived Experience) Evidence</h2>
-    <div class="co1-section">
-        <span class="co1-badge co1-gap">Co-1: Not reported</span>
-        
-    </div>
+<h2>Best Practice Compendium entries (2)</h2>
+<table>
+<thead><tr><th>Slug</th><th>Evidence state</th><th>BPC complete</th></tr></thead>
+<tbody><tr><td>deaf-acoustic-built-environment</td><td><span class="badge badge-retracted">RETRACTED — pending reverification</span></td><td>yes</td></tr>
+<tr><td>deaf-classroom-reverberation-time</td><td><span class="badge badge-retracted">RETRACTED — pending reverification</span></td><td>yes</td></tr>
+</tbody>
+</table>
 </section>
 
 <section>
-    <h2>Conflict Involvement</h2>
-    <div class="conflict-domains"><a href="/conflicts/ACOUSTIC-LVL" class="conflict-card">Amplification and background noise</a><a href="/conflicts/FLOOR-SPEC-SYS" class="conflict-card">Floor Specification System</a><a href="/conflicts/SPATIAL-OPEN" class="conflict-card">Visual transparency and spatial enclosure</a></div>
+<h2>Best-practice determinations</h2>
+<table>
+            <thead><tr><th>Item</th><th>State</th><th>Tier basis</th><th>Code floor only</th></tr></thead>
+            <tbody><tr><td>E-08</td><td>stated</td><td>CO1+T2</td><td>no</td></tr>
+</tbody>
+        </table>
 </section>
 
 </body>
