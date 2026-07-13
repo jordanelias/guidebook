@@ -123,7 +123,7 @@ The OR clause is deliberate: Co-1 alone is sufficient for `stated`, as is Co-2 a
 
 **Q1 from A6 handoff:** *What constitutes "rich evidence in at least one dimension" for `provisional` state?*
 
-**Resolution:** A cell is `provisional` when it has evidence that is **rich enough to synthesize** but does not meet the `stated` threshold — meaning it has no source at Tier 1–3, no Co-1 source, and no Co-2 source with direct parameter relevance.
+**Resolution:** A cell is `provisional` when it has evidence that is **rich enough to synthesize** but does not meet the `stated` threshold — meaning it has no Tier 1 or Tier 2 source, no Co-1 source, and no Co-2 source with direct parameter relevance (amended per the tier3-stated-threshold DR, ACCEPTED 2026-07-13: a Tier 3-clinical source alone does not raise a cell to `stated`, but its presence is what keeps the cell at `provisional` rather than `pending` — see case (a) below).
 
 Concretely, `provisional` applies in two cases (per the tier3-stated-threshold DR and unification-DR item G1b, ACCEPTED 2026-07-13): (a) **T3-clinical-alone** — lower-control primary clinical evidence with direct relevance but no anchoring corroboration; and (b) the evidence basis is **Tier 4–6 only** (international standards, national frameworks, or statutory codes) rich enough to produce a qualified synthesis. **Scale-tagging (G1b):** a T4–6-only determination is a *Universal-Mode regulatory determination* — `design_scale='universal'`, flagged `regulatory_stratum_only` (extending `code_floor_only` from the T6-only case), excluded from `v_best_practice`, and never rendered with best-practice language in any register (invariant I3, `governance/evidence-architecture.md` §6). For the T4–6 case, "rich enough" means:
 
@@ -180,9 +180,9 @@ States are not permanent. A cell may transition as evidence accumulates or is re
 
 | From | To | Trigger |
 |---|---|---|
-| `pending` | `provisional` | Evidence at Tier 4–6 meets the §2.3 richness threshold |
-| `pending` | `stated` | Evidence at Tier 1–3, Co-1, or Co-2 is found |
-| `provisional` | `stated` | Evidence at Tier 1–3, Co-1, or Co-2 is found |
+| `pending` | `provisional` | Evidence at Tier 4–6 meets the §2.3 richness threshold, or a single T3-clinical source with direct parameter relevance is found (amended per tier3-stated-threshold DR) |
+| `pending` | `stated` | Evidence at Tier 1, Tier 2, Co-1, or Co-2 is found, with direct parameter relevance (amended per tier3-stated-threshold DR: Tier 3 alone no longer qualifies) |
+| `provisional` | `stated` | Evidence at Tier 1, Tier 2, Co-1, or Co-2 is found, or existing T3-clinical evidence converges with a second axis per §2.2's convergence path (amended per tier3-stated-threshold DR) |
 | `provisional` | `pending` | Previously cited Tier 4–5 sources are invalidated (e.g., standard superseded without replacement) |
 | `stated` | `provisional` | All Tier 1–3, Co-1, and Co-2 sources are invalidated or retracted; Tier 4–6 evidence remains |
 | `stated` | `pending` | All sources invalidated; no evidence remains |
@@ -454,7 +454,7 @@ The skill is prose-only (no Python validator). Its quality depends on the author
 
 | Question | Resolution | Confidence | Section |
 |---|---|---|---|
-| Q1 — "Rich in one dimension" threshold for `provisional` | `provisional` applies to Tier 4–6-only cells meeting richness criteria (≥2 T4–5 convergent, or ≥1 T4 international standard, or ≥3 T6 convergent). Tier 1–3 / Co-1 / Co-2 → `stated`. | high — direct operationalization of T-04 OR clause | §2.3 |
+| Q1 — "Rich in one dimension" threshold for `provisional` | `provisional` applies to (a) Tier 4–6-only cells meeting richness criteria (≥2 T4–5 convergent, or ≥1 T4 international standard, or ≥3 T6 convergent), and (b) T3-clinical-alone cells (amended per tier3-stated-threshold DR, ACCEPTED 2026-07-13). Tier 1 / Tier 2 / Co-1 / Co-2 → `stated`; Tier 3 alone does not. | high — direct operationalization of T-04 OR clause, amended for the ratified Tier-3 threshold | §2.2/§2.3 |
 | Q2 — Cross-tier convergence encoding | Convergence assessment is a structured property of the synthesis cell (not of individual sources); four statuses: convergent, divergent, single_axis, pending_assessment | high — follows from mission §3 convergence-as-evidence principle | §3.2 |
 | Q3 — Fifth state for divergent evidence? | No. Cell is `stated`; divergence is synthesis metadata via convergence assessment, not a state-machine state. Four states preserved per T-04. | high — separates evidence sufficiency from evidence agreement; T-04 unchanged | §3.3 |
 | Q4 — Co-2 alone as "rich" for `stated` | Yes. Co-2 alone satisfies `stated` per T-04 OR clause. OT professional body CPGs carry sufficient epistemic weight. | high — literal application of T-04 definition | §2.6 |

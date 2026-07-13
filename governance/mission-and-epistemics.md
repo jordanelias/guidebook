@@ -61,7 +61,7 @@ This is a commitment about evidence types, not about operations. The project's p
 | Population Mode | Population-Informed Inclusive Design | Ranges; median as default |
 | Person Mode | Person-Specific Co-Design | OT assessment resolves position within the Population-Mode range |
 
-DAR (Design for Adaptable Readiness) provisions are mandatory at all modes — the structural and electrical infrastructure that allows Tier 2 individual adaptation post-construction without major retrofit cost.
+DAR (Design for Adaptable Readiness) provisions are mandatory at all modes — the structural and electrical infrastructure that allows Person Mode individual adaptation post-construction without major retrofit cost.
 
 ### 5. Universal design is co-extensive with code compliance — the floor, not an aspiration
 

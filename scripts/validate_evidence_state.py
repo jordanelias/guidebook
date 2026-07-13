@@ -191,9 +191,8 @@ def validate_cell_states_db(conn, gap_ids: set):
     data layer, plus pending⇒gap-link against the gaps table. Returns (errors, n).
 
     Also enforces (per decisions/DR-2026-07-12-evidence-cell-state-schema-reconciliation.md
-    and decisions/DR-2026-07-12-tier3-stated-threshold.md, both PROPOSED pending owner
-    ratification -- this validator implements what ratification would require, it does
-    not itself constitute ratification):
+    and decisions/DR-2026-07-12-tier3-stated-threshold.md, both ACCEPTED 2026-07-13
+    per decisions/RATIFICATION-RECORD-2026-07-13.md):
     - anti-hallucination: stated/provisional cells must cite governing_refs (non-empty,
       well-formed JSON array) -- a determination cannot exist without the sources that
       establish it.

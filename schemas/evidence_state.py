@@ -108,7 +108,8 @@ class EvidenceStateRecord(BaseModel):
     - stated: ≥1 anchoring source at Tier 1, Tier 2 (either stream), Co-1, or Co-2
       (T3-alone never suffices: T3-clinical-alone => provisional, T3-grey-alone =>
       pending — DR-2026-07-12-tier3-stated-threshold + unification-DR G7, ACCEPTED)
-    - provisional: Tier 4–6 only, meets richness threshold
+    - provisional: T3-clinical-alone (no anchoring corroboration), or Tier 4–6 only
+      meeting the §2.3 richness threshold
     - pending: too sparse; gap-register link required
     - not_applicable: parameter irrelevant for population; rationale required
 
