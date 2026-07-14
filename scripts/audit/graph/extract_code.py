@@ -12,8 +12,12 @@ This complements scripts/audit/schema_reference_drift_audit.py, lifting it from
 whole-file regex to AST string constants. Noise controls REDUCE (not eliminate)
 false positives: uppercase SQL-keyword gating, AST-string-only scanning (skips
 comments), a stopword set, and subtraction of locally-defined CTE / CREATE VIEW /
-CREATE TABLE names. Known limitations (shared with the predecessor): lowercase SQL
-and dynamically-named tables (FROM {var}) are not detected.
+CREATE TABLE names. For f-strings the uppercase-verb gate is evaluated over the
+concatenated literal parts (so a real table named in a part AFTER an interpolation is
+still detected), while table tokens are extracted per part so an interpolation is never
+bridged into a fabricated reference. Known limitations (shared with the predecessor):
+lowercase SQL and dynamically-named tables (the table itself being FROM {var}) are not
+detected.
 
 Deliberately EXCLUDED from the scan (one-time / legacy / different-schema code),
 matching the predecessor's EXCLUDE_DIRS plus the audit graph package:
@@ -57,14 +61,32 @@ EXCLUDE_PARTS = {"migrations", "db", "migrate", "probes", "test", "tests",
 EXCLUDE_NAMES = {"graph_audit.py", "schema_reference_drift_audit.py"}
 
 
-def iter_table_refs(text):
-    """Yield lower-cased table tokens referenced in a SQL-bearing string. Pure/testable."""
-    if not _SQL_VERB.search(text):
-        return
+def _table_tokens(text):
+    """Yield lower-cased FROM/JOIN/INTO/UPDATE table tokens, WITHOUT the verb gate."""
     for m in _TABLE_REF.finditer(text):
         tok = m.group(1)
         if tok not in STOP:
             yield tok
+
+
+def iter_table_refs(text):
+    """Yield lower-cased table tokens in a SQL-bearing string. Pure/testable.
+    Verb-gated: only a string that itself contains an uppercase SQL verb is scanned."""
+    if not _SQL_VERB.search(text):
+        return
+    yield from _table_tokens(text)
+
+
+def iter_fstring_table_refs(parts):
+    """Table tokens across an f-string's constant parts. The uppercase-verb gate is
+    evaluated over the JOIN of the parts (a verb in one part gates a table token in a
+    later part — e.g. f"SELECT a FROM {t} JOIN real_table"), but tokens are extracted
+    per part so a dropped {interpolation} never bridges into a fabricated
+    "FROM <next-part>" reference. Pure/testable."""
+    if not _SQL_VERB.search("".join(parts)):
+        return
+    for text in parts:
+        yield from _table_tokens(text)
 
 
 def local_defs(text):
@@ -78,15 +100,20 @@ def local_defs(text):
 
 
 def _iter_string_constants(tree):
+    """Yield (text, lineno, verb_in_scope). For a plain string the verb gate is the
+    string itself; for an f-string it is the JOIN of the constant parts (a verb in one
+    part gates the others), while each part's text is still scanned separately, so a
+    dropped {interpolation} never bridges tokens across it."""
     for node in ast.walk(tree):
         if isinstance(node, ast.Constant) and isinstance(node.value, str):
-            yield node.value, getattr(node, "lineno", None)
+            yield node.value, getattr(node, "lineno", None), bool(_SQL_VERB.search(node.value))
         elif isinstance(node, ast.JoinedStr):
-            # f-string: scan each literal part SEPARATELY. Never bridge across a
-            # dropped {interpolation} (that would fabricate "FROM  WHERE" -> "where").
-            for v in node.values:
-                if isinstance(v, ast.Constant) and isinstance(v.value, str):
-                    yield v.value, getattr(node, "lineno", None)
+            parts = [v.value for v in node.values
+                     if isinstance(v, ast.Constant) and isinstance(v.value, str)]
+            verb = bool(_SQL_VERB.search("".join(parts)))
+            ln = getattr(node, "lineno", None)
+            for text in parts:
+                yield text, ln, verb
 
 
 def _scan_files(repo_root):
@@ -112,11 +139,13 @@ def extract(store, repo_root):
         strings = list(_iter_string_constants(tree))
         # first pass: collect this file's locally-defined CTE/view/table names
         defs = set()
-        for text, _ in strings:
+        for text, _, _ in strings:
             defs |= local_defs(text)
         file_added = False
-        for text, lineno in strings:
-            for tok in iter_table_refs(text):
+        for text, lineno, verb in strings:
+            if not verb:            # verb gate (per-string, or per-f-string over joined parts)
+                continue
+            for tok in _table_tokens(text):
                 if tok in AUDIT_TABLES or tok in NON_TABLE or tok in defs:
                     continue
                 if (rel, tok) in seen:

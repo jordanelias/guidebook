@@ -125,9 +125,9 @@ def extract(gdb, store):
                 token = str(raw).split(":", 1)[-1].strip()  # strip "item:"/"section:" prefix
                 if ITEM_CODE_RE.match(token):
                     dst = node_id("item", token)
-                elif token in _slug_cache(cur):
-                    dst = node_id("slug", token)
-                else:
+                elif "slugs" in tables and token in _slug_cache(cur):
+                    dst = node_id("slug", token)   # guarded: a DB without a slugs table
+                else:                              # must not crash the whole build
                     dst = node_id("identifier", token)   # unresolved target
                 store.add_edge(node_id("connection", str(con_id)), dst, "junction",
                                attrs={"raw": str(raw)})
