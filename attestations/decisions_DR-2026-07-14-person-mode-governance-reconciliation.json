@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-07-14-person-mode-reconciliation",
+  "artifact": "decisions/DR-2026-07-14-person-mode-governance-reconciliation.md",
+  "doctrine_sha": "373255e",
+  "rules_in_scope": [
+    "source-discipline",
+    "doctrine-check",
+    "evidence-verification-gate"
+  ],
+  "per_rule_status": {
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-07-14-person-mode-governance-reconciliation.md",
+      "reason": "Every survival location fixed here was found by an independent adversarial audit and re-verified by direct grep/read this session, not recalled: the six edits map to grep hits in governance/mission-and-epistemics.md:107, evidence-methodology.md:81/272, evidence-architecture.md:157/163, co1-operational.md:140. The SHA-identity investigation's every claim (3fb2882 is a commit; blob chain 61c7f95->3da73bd->dbd26e4->e508657->8a5a717->373255e) was reproduced with git cat-file/rev-parse this session, not taken from the audit on trust."
+    },
+    "doctrine-check": {
+      "status": "FIRED",
+      "evidence_path": "governance/mission-and-epistemics.md",
+      "reason": "This commit's doctrine token is the NEW blob hash 373255e (git hash-object of the edited mission-and-epistemics.md), following the ci.yml/Stage-1.1 blob convention -- correcting the mistake the prior Person Mode commit made (it stamped the old commit-sha-era value 3fb2882). The Q12 pins were re-swept 8a5a717 -> 373255e in the same commit. The doctrine-token gate exemption for doctrine-self-modification commits (ci.yml:85) and the fetch-depth:0 fix (now on main) were both confirmed before relying on them."
+    },
+    "evidence-verification-gate": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-07-14-person-mode-governance-reconciliation.md",
+      "reason": "No claim rests on unverified evidence. The correctness of the reconciliation is checked against the repo's own already-ratified foundations (mission commitments 1/7; the G4 asymmetry principle), which the fixes make the cited sources (§1.6, co1-operational) finally agree with. The scope split (governance now, skills/RULEs/armature deferred) and the SHA-identity proposal are surfaced as owner decisions, not enacted, so nothing is asserted as settled that the owner has not settled."
+    }
+  },
+  "deviations": [],
+  "bias_direction": "Having just been caught over-claiming completeness on this exact principle, my pull now is the opposite over-correction: to declare this pass 'complete' to compensate. Counter-pressure applied: the DR's Deferred section enumerates every known remaining survival (skills, locked RULEs, armature, pilot artifacts) by file:line rather than implying the job is done; the completeness claim is explicitly scoped to 'canonical governance, this pass'; and I re-ran the grep across the four files to prove CLEAN rather than asserting it. Residual honesty risk owned: I have NOT re-audited whether these six edits themselves introduced a new contradiction elsewhere (e.g. whether any other file cites the exact sentences I changed) -- that check is the job of the next adversarial pass, not claimed as done here.",
+  "independent_reviewer_counterclaim": "An outside reviewer would object: (a) this is the SECOND doctrine-SHA re-baseline in two days on the most-important principle, and bundling a canonical-governance doctrine change with a mechanical pin sweep in a follow-up branch (rather than isolating the doctrine edit) repeats a process pattern a reviewer already flagged; (b) editing evidence-methodology.md §1.6 -- the canonical home of decision D-D -- is arguably a change to a ratified decision's content that should carry D-D's own re-ratification, not ride a reconciliation DR; (c) the SHA-identity issue is 'investigated but not enacted,' leaving main in a state where PR#6/#7-era commits and attestations still carry the wrong token value, so the trust machinery remains inconsistent pending a decision that may not come. Counter: (a) the owner explicitly chose 'governance-only first' and the atomic-origin-consistency argument outweighs isolation for a principle currently self-contradictory across four files; (b) the edit restores §1.6 to what D-D's downstream restatements (G4) already assert, so it is reconciliation toward the ratified position, not a new decision -- though flagging it for D-D re-ratification is a fair ask; (c) correct, and deliberate: the owner directed 'investigate further first,' so enacting a convention change now would overstep.",
+  "verdict": "CLEAN"
+}

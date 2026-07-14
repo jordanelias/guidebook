@@ -2,7 +2,7 @@
 schemas/tier_derivation.py — derive evidence tier from (evidence_type, scope).
 
 Per the ratified evidence hierarchy (governance/tier-system.md, doctrine SHA
-8a5a717; decisions D-A, D-D, D-E) and governance/evidence-methodology.md §1.1.
+373255e; decisions D-A, D-D, D-E) and governance/evidence-methodology.md §1.1.
 
 Closes R6 ("tier hand-set, not derivable"): tier becomes a function of
 evidence_type and a `scope` discriminator rather than a free integer.

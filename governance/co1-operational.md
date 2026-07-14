@@ -137,7 +137,7 @@ The handoff document `workplan/a5-handoff.md` §4 surfaced five substantive judg
 
 The voice convention for convergence: "Co-1 and Tier 1 evidence converge on [value]: Tier 1 ([source]) shows [Tier 1 finding]; Co-1 ([source/list]) document [Co-1 finding]; the converged best-practice value is [value]."
 
-The voice convention for divergence: "Co-1 and Tier 1 evidence diverge on [parameter]. Tier 1 ([source]) shows [Tier 1 finding]. Co-1 ([source/list]) document [Co-1 finding]. The Tier 1 range encompasses both findings: [range]. Per Part 1 §1.5, both are presented; OT assessment at Tier 2 resolves position within range based on individual functional and lived-experience profile."
+The voice convention for divergence: "Co-1 and Tier 1 evidence diverge on [parameter]. Tier 1 ([source]) shows [Tier 1 finding]. Co-1 ([source/list]) document [Co-1 finding]. The Tier 1 range encompasses both findings: [range]. Per Part 1 §1.5, both are presented; OT assessment resolves the individual's own functional needs — informed by, but not bounded by, that range — based on individual functional and lived-experience profile."
 
 [CONFIDENCE: high — Part A is the schematic correlate of D-03 revised, directly entailed; Part B follows from voice-style §8.1 pattern; Part C is direct application of mission §3.]
 
