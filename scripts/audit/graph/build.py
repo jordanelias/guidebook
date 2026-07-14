@@ -23,9 +23,27 @@ GUIDEBOOK_DB = Path(os.environ.get("GUIDEBOOK_DB_PATH", REPO_ROOT / "data" / "gu
 DEFAULT_AUDIT_DB = Path(os.environ.get("AUDIT_GRAPH_DB_PATH", REPO_ROOT / "data" / "audit_graph.db"))
 
 
+def _assert_distinct_from_canonical(audit_db, guidebook_db):
+    """The audit graph DB is unlinked and rebuilt every run, so refuse to point it at
+    the canonical guidebook DB (or anything named guidebook.db): an AUDIT_GRAPH_DB_PATH
+    typo/swap must never be able to destroy the source of truth. Read-only discipline is
+    the tool's core promise — this makes the destructive path unreachable, not merely
+    unused. Raises SystemExit on violation."""
+    if audit_db == ":memory:":
+        return
+    ap = Path(audit_db).resolve()
+    if ap == Path(guidebook_db).resolve() or ap.name == "guidebook.db":
+        raise SystemExit(
+            f"refusing to build the audit graph at {audit_db!r}: that is (or is named "
+            f"like) the canonical guidebook DB, which build() unlinks and recreates. "
+            f"Point AUDIT_GRAPH_DB_PATH at a derived path (default data/audit_graph.db)."
+        )
+
+
 def build(audit_db=None, guidebook_db=None) -> GraphStore:
     audit_db = str(audit_db or DEFAULT_AUDIT_DB)
     guidebook_db = str(guidebook_db or GUIDEBOOK_DB)
+    _assert_distinct_from_canonical(audit_db, guidebook_db)
     if audit_db != ":memory:" and Path(audit_db).exists():
         Path(audit_db).unlink()
     store = GraphStore(audit_db)

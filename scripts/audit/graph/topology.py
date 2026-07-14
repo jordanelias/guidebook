@@ -9,7 +9,12 @@ Checks (data layer, increment 1):
   orphan.dangling_citation     value-layer ref with no evidence_sources row (ERROR)
   ref.unresolved_conn_target   connection_target not resolving to item/slug (WARN),
                                split into phantom-item vs unresolved-identifier
+  ref.dangling_structural      fk / self_ref / item-population junction edge pointing at
+                               a missing node (ERROR) — referential corruption in
+                               items.bpc_source_slug, populations.parent_code,
+                               item_population_links that no other check covered
   table.empty_mission_critical curated mission-critical table at/near 0 rows (INFO)
+  table.missing_mission_critical curated mission-critical table ABSENT from the DB (WARN)
   connection.empty_description connection rows with empty description (INFO)
   cycle.population_parent      populations.parent_code cycle (ERROR)
   state.distribution           lifecycle state distributions (INFO)
@@ -43,6 +48,7 @@ def check_all(store, gdb):
     orphan_sources(store)
     dangling_citations(store)
     unresolved_connection_targets(store)
+    dangling_structural_refs(store)
     code_phantom_tables(store)
     content_phantom_identifiers(store)
     empty_mission_critical(store)
@@ -106,6 +112,36 @@ def unresolved_connection_targets(store):
                       attrs={"total": len(rows), "phantom_items": phantom_items, "unresolved": unresolved})
 
 
+def dangling_structural_refs(store):
+    """Structural edges resolving to a missing node: fk (items.bpc_source_slug -> slug),
+    self_ref (populations.parent_code -> parent), and item->population junctions.
+    Referential corruption in these three relationships would otherwise pass silently —
+    dangling value-layer citations and connection-target junctions each have their own
+    check; these did not. ERROR (must be 0 on a healthy DB)."""
+    import json
+    cur = store.conn.cursor()
+    rows = cur.execute(
+        "SELECT src, dst, etype, attrs FROM edges WHERE resolved=0 AND ("
+        "etype IN ('fk','self_ref') OR (etype='junction' AND src LIKE 'item:%')"
+        ") ORDER BY etype, src, dst"
+    ).fetchall()
+    for src, dst, etype, attrs in rows:
+        via = ""
+        if attrs:
+            try:
+                via = json.loads(attrs).get("via", "")
+            except (ValueError, TypeError):
+                via = ""
+        store.add_finding("ref.dangling_structural", "ERROR",
+                          f"{src.split(':', 1)[-1]} ({etype}{' via ' + via if via else ''}) "
+                          f"references non-existent {dst.split(':', 1)[-1]}.",
+                          node_id=src, attrs={"etype": etype, "dst": dst, "via": via})
+    store.add_finding("ref.dangling_structural", "INFO",
+                      f"{len(rows)} dangling structural reference(s) "
+                      f"(fk / self_ref / item-population junction).",
+                      attrs={"count": len(rows)})
+
+
 def code_phantom_tables(store):
     """table_ref edges from code to a table that does not exist in guidebook.db."""
     cur = store.conn.cursor()
@@ -151,6 +187,13 @@ def empty_mission_critical(store):
         row = cur.execute("SELECT attrs FROM nodes WHERE node_id=?",
                           (f"db_table:{table}",)).fetchone()
         if not row or not row[0]:
+            # No db_table node => the table is ABSENT (dropped / never created), which is
+            # strictly worse than empty. Fail loud instead of skipping (was: continue).
+            store.add_finding("table.missing_mission_critical", "WARN",
+                              f"Mission-critical table {table} is ABSENT from the DB "
+                              f"(dropped / never created) — worse than empty.",
+                              node_id=f"db_table:{table}",
+                              attrs={"table": table, "row_count": None, "floor": floor, "missing": 1})
             continue
         n = json.loads(row[0]).get("row_count", 0)
         if n < floor:

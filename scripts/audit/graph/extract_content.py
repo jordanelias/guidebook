@@ -2,8 +2,8 @@
 scripts/audit/graph/extract_content.py — content layer (Tier 0, prose).
 
 Scans repository markdown for references in the project's identifier scheme
-(item A-01..K-NN, source REF-NNNNN / CoN-NN, connection CON-NNNN, gap GAP-NNN,
-term TERM-NNNN) and resolves each against the entity nodes built by extract_db.
+(item A-01..K-NN, source REF-NNNNN / REF-VERIFIED-NNN / CoN-NN, connection CON-NNNN,
+gap GAP-NNN, term TERM-NNN) and resolves each against the entity nodes built by extract_db.
 A reference that does not resolve to a real entity surfaces as a dangling `ref`
 edge — a phantom / stale identifier reference (e.g. item codes referenced in prose
 that are absent from the 92-row items table, such as F-07). This is the prose<->data
@@ -32,11 +32,12 @@ EXCLUDE_SUBSTR = ("/_archived/", "/deprecated/", "/_superseded/", "/versions/",
 # and hyphens on both sides, so "COVID-19" / "ISO-9001" / "x-A-01" do not match.
 PATTERNS = (
     ("item", re.compile(r"(?<![A-Za-z0-9/\-])[A-K]-\d{2}(?![0-9A-Za-z])")),
+    ("source", re.compile(r"\bREF-VERIFIED-\d{3}\b")),   # tried before REF-\d{5} (disjoint anyway)
     ("source", re.compile(r"\bREF-\d{5}\b")),
     ("source", re.compile(r"\bCo[12]-\d{2,}\b")),
     ("connection", re.compile(r"\bCON-\d{4}\b")),
     ("gap", re.compile(r"\bGAP-\d{3,4}\b")),
-    ("term", re.compile(r"\bTERM-\d{4}\b")),
+    ("term", re.compile(r"\bTERM-\d{3,4}\b")),   # term_ids are 3-digit (TERM-001..TERM-030); \d{4} matched none
 )
 
 REGISTRY_KINDS = ("item", "source", "connection", "gap", "term")

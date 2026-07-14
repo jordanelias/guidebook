@@ -11,18 +11,22 @@ Checks (data + code + content layers):
   1. orphan.dangling_citation     (ERROR) value-layer ref with no evidence_sources row
                                   — the vetting-surface `orphan_links` invariant; must be 0
   2. cycle.population_parent      (ERROR) populations.parent_code forms a cycle
-  3. orphan.uncited_source        (WARN)  evidence source cited by nothing
-  4. ref.unresolved_conn_target   (WARN)  connection_target not resolving to item/slug
+  3. ref.dangling_structural      (ERROR) fk / self_ref / item-population junction edge to
+                                  a missing node (items.bpc_source_slug, populations.parent_code,
+                                  item_population_links) — corruption no other check covered
+  4. orphan.uncited_source        (WARN)  evidence source cited by nothing
+  5. ref.unresolved_conn_target   (WARN)  connection_target not resolving to item/slug
                                   (phantom-item vs unresolved-identifier)
-  5. code.phantom_table           (WARN)  script SQL references a table absent from
+  6. code.phantom_table           (WARN)  script SQL references a table absent from
                                   guidebook.db (dormant/stale/legacy query)
-  6. ref.phantom_identifier       (WARN)  prose references an item/source/... identifier
+  7. ref.phantom_identifier       (WARN)  prose references an item/source/... identifier
                                   that resolves to no entity (candidate phantom ref)
-  7. table.empty_mission_critical (INFO)  mission-critical table at/near 0 rows
+  8. table.empty_mission_critical (INFO)  mission-critical table at/near 0 rows
                                   (suppressed against known_debt.yaml, warrant-checked)
-  8. connection.empty_description (INFO)  connections with empty description
-  9. state.distribution           (INFO)  lifecycle CHECK-enum distributions
- 10. graph.components             (INFO)  connected-component / island count
+  9. table.missing_mission_critical (WARN) mission-critical table ABSENT from the DB (dropped)
+ 10. connection.empty_description (INFO)  connections with empty description
+ 11. state.distribution           (INFO)  lifecycle CHECK-enum distributions
+ 12. graph.components             (INFO)  connected-component / island count
 
 Every check ships with the `--selftest` mutation harness below (a verifier that has
 only ever passed is unverified — integrity-protocol Mode 1 §3).
@@ -147,18 +151,22 @@ def report(store):
           f"dangling_edges={counts['dangling_edges']}")
     print()
     # per-check summary (the INFO summary rows carry the headline counts)
-    order = ["orphan.dangling_citation", "cycle.population_parent", "orphan.uncited_source",
-             "ref.unresolved_conn_target", "code.phantom_table", "ref.phantom_identifier",
-             "table.empty_mission_critical", "connection.empty_description",
-             "state.distribution", "graph.components", "known_debt.stale"]
-    seen = set()
-    for check in order:
+    order = ["orphan.dangling_citation", "cycle.population_parent", "ref.dangling_structural",
+             "orphan.uncited_source", "ref.unresolved_conn_target", "code.phantom_table",
+             "ref.phantom_identifier", "table.empty_mission_critical",
+             "table.missing_mission_critical", "connection.empty_description",
+             "state.distribution", "graph.components", "known_debt.stale", "known_debt.unsound"]
+    # Any check_id present in findings but absent from `order` is appended, so a new check
+    # (or an alarm like known_debt.unsound) can never be silently dropped from the operator's
+    # view — the failure the report previously had for known_debt.unsound.
+    present = [r[0] for r in cur.execute(
+        "SELECT DISTINCT check_id FROM findings ORDER BY check_id").fetchall()]
+    for check in order + [c for c in present if c not in order]:
         rows = cur.execute(
             "SELECT severity, message, known_debt FROM findings WHERE check_id=? ORDER BY severity",
             (check,)).fetchall()
         if not rows:
             continue
-        seen.add(check)
         live_err = sum(1 for s, _, kd in rows if s == "ERROR" and kd is None)
         supp = sum(1 for _, _, kd in rows if kd is not None)
         info = [m for s, m, _ in rows if s == "INFO"]
@@ -336,12 +344,22 @@ def selftest():
         results.append(("code table-ref detector: phantom+real found, prose ignored",
                         "zzz_phantom" in refs and "items" in refs and no_sql == []))
 
-        # 7. content identifier detector fires on scheme refs, rejects coincidental matches
+        # 6b. f-string verb-scoping: a verb in one constant part gates a table token in a
+        #     LATER part (the per-part-gate blind spot); a part with no verb anywhere stays inert.
+        frag = set(extract_code.iter_fstring_table_refs(["SELECT a FROM ", " JOIN zzz_phantom ON 1"]))
+        noverb = list(extract_code.iter_fstring_table_refs(["log line ", " JOIN party ON 1"]))
+        results.append(("f-string table-ref: cross-part verb gate finds later-part table",
+                        "zzz_phantom" in frag and noverb == []))
+
+        # 7. content identifier detector fires on scheme refs (incl. 3-digit TERM and
+        #    REF-VERIFIED, which the old TERM-\d{4}/REF-\d{5} patterns missed), rejects FPs
         import extract_content
-        ids = set(extract_content.iter_identifier_refs("see K-99, REF-00157 and CON-0247"))
+        ids = set(extract_content.iter_identifier_refs(
+            "see K-99, REF-00157, REF-VERIFIED-003, TERM-001 and CON-0247"))
         fp = set(extract_content.iter_identifier_refs("COVID-19 ISO-9001 x-A-01"))
-        results.append(("content ref detector: scheme found, false positives rejected",
-                        {("item", "K-99"), ("source", "REF-00157"), ("connection", "CON-0247")} <= ids
+        results.append(("content ref detector: scheme found (incl 3-digit TERM, REF-VERIFIED), FPs rejected",
+                        {("item", "K-99"), ("source", "REF-00157"), ("source", "REF-VERIFIED-003"),
+                         ("term", "TERM-001"), ("connection", "CON-0247")} <= ids
                         and not any(k == "item" for k, _ in fp)))
 
         # 8. code + content checks execute and emit on the real repo build
@@ -351,6 +369,86 @@ def selftest():
         has_ref = c("SELECT COUNT(*) FROM findings WHERE check_id='ref.phantom_identifier'").fetchone()[0] > 0
         results.append(("code+content checks execute on real repo", has_code and has_ref))
         s.close()
+
+        # 9. dangling structural refs (fk / self_ref / item-population junction) all fire —
+        #    the three relationships no topology check previously covered.
+        shutil.copy(canonical, copy)
+        con = sqlite3.connect(copy)
+        con.execute("PRAGMA foreign_keys=OFF")
+        it = con.execute("SELECT item_code FROM items LIMIT 1").fetchone()[0]
+        con.execute("UPDATE items SET bpc_source_slug='zz-phantom-slug' WHERE item_code=?", (it,))
+        pop = con.execute("SELECT population_code FROM populations LIMIT 1").fetchone()[0]
+        con.execute("UPDATE populations SET parent_code='ZZ-PHANTOM-POP' WHERE population_code=?", (pop,))
+        _insert_row(con, "item_population_links", {"item_code": it, "population_code": "ZZ-PHANTOM-POP2"})
+        con.commit()
+        con.close()
+        s = gbuild.build(audit_db=os.path.join(tmpd, "a9.db"), guidebook_db=copy)
+        results.append(("dangling fk/self_ref/item-junction all fire (ERROR)",
+                        _count_check(s, "ref.dangling_structural", "ERROR") >= 3))
+        s.close()
+
+        # 10. a DROPPED mission-critical table is flagged (fail-loud), not silently skipped
+        shutil.copy(canonical, copy)
+        con = sqlite3.connect(copy)
+        con.execute("DROP TABLE IF EXISTS gap_mining")
+        con.commit()
+        con.close()
+        s = gbuild.build(audit_db=os.path.join(tmpd, "a10.db"), guidebook_db=copy)
+        results.append(("dropped mission-critical table flagged (missing, not skipped)",
+                        _count_check(s, "table.missing_mission_critical") > 0))
+        s.close()
+
+        # 11. an unsound (no-warrant) known-debt entry is reported on STDOUT, not just recorded
+        #     in the findings DB — the alarm half of the H1 refusal must reach the operator.
+        import contextlib
+        import io
+        shutil.copy(canonical, copy)
+        s = gbuild.build(audit_db=os.path.join(tmpd, "a11.db"), guidebook_db=copy)
+        gdb = sqlite3.connect(f"file:{copy}?mode=ro", uri=True)
+        apply_known_debt(s, gdb, [{"id": "selftest-nowarrant", "warrant": "",
+                                   "check_id": "orphan.uncited_source"}])
+        gdb.close()
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            report(s)
+        out = buf.getvalue()
+        results.append(("unsound suppression reported on stdout (not just in DB)",
+                        "known_debt.unsound" in out and "selftest-nowarrant" in out))
+        s.close()
+
+        # 12. build tolerates a DB that lacks a slugs table (guarded slug resolution) rather
+        #     than crashing the whole build with an uncaught OperationalError.
+        mini = os.path.join(tmpd, "mini.db")
+        mcon = sqlite3.connect(mini)
+        mcon.executescript(
+            "CREATE TABLE connections(con_id TEXT PRIMARY KEY, status TEXT, description TEXT);"
+            "CREATE TABLE connection_targets(con_id TEXT, target TEXT);"
+            "INSERT INTO connections VALUES('CON-0001','active','x');"
+            "INSERT INTO connection_targets VALUES('CON-0001','section:foo');")
+        mcon.commit()
+        mcon.close()
+        no_crash = True
+        try:
+            s = gbuild.build(audit_db=os.path.join(tmpd, "a12.db"), guidebook_db=mini)
+            s.close()
+        except Exception:
+            no_crash = False
+        results.append(("build tolerates a DB with no slugs table", no_crash))
+
+        # 13. build() refuses to use the canonical DB path (or a guidebook.db basename) as the
+        #     unlinked audit graph — the destructive AUDIT_GRAPH_DB_PATH swap is unreachable.
+        refused_same = False
+        try:
+            gbuild.build(audit_db=copy, guidebook_db=copy)
+        except SystemExit:
+            refused_same = True
+        refused_name = False
+        try:
+            gbuild.build(audit_db=os.path.join(tmpd, "guidebook.db"), guidebook_db=copy)
+        except SystemExit:
+            refused_name = True
+        results.append(("build refuses audit_db == canonical path / guidebook.db basename",
+                        refused_same and refused_name))
     finally:
         shutil.rmtree(tmpd, ignore_errors=True)
 

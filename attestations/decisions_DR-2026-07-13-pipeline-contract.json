@@ -14,7 +14,7 @@
   }
  },
  "deviations": [],
- "bias_direction": "A build session proposing its own audit script as standing governance is grading its own tooling as worth institutionalizing, and the contract's authority rests partly on the same session's reading of what the gates are. Bounded by: it is PROPOSED (the owner ratifies, not the author); it references only already-ratified gates and cedes to them on divergence; and its own audit surfaces the 4 INCOMPLETE coverage gaps and the 10-of-15 enforcers that ship no selftest rather than smoothing them over.",
+ "bias_direction": "A build session proposing its own audit script as standing governance is grading its own tooling as worth institutionalizing, and the contract's authority rests partly on the same session's reading of what the gates are. Bounded by: it is PROPOSED (the owner ratifies, not the author); it references only already-ratified gates and cedes to them on divergence; and its own audit surfaces the 4 INCOMPLETE coverage gaps and the 10 of 12 unique enforcers that ship no selftest rather than smoothing them over.",
  "independent_reviewer_counterclaim": "A reviewer might argue a stage-gate index adds a maintenance surface that will silently drift from the real gates and then misreport coverage. Response: the referential-integrity check fails on any named enforcer that does not exist (0 BROKEN today, re-checked mechanically every run), unenforced criteria are printed as INCOMPLETE rather than hidden, and the stage ids are explicitly flagged as requiring reconciliation against the deployed audit_trail list before ratification.",
  "verdict": "CLEAN"
 }
