@@ -1,0 +1,156 @@
+# pipeline-contract.yaml — the machine-checkable stage contract for evidence work.
+#
+# STATUS: PROPOSED (see decisions/DR-2026-07-13-pipeline-contract.md). ADVISORY /
+# Level-2 (self-run) until owner ratification; promotes toward Level-4 only if/when
+# owner action C3 restores blocking CI.
+#
+# WHAT THIS IS (and is not): a single place that DECLARES, per pipeline stage, the
+# integrity + completeness criteria a stage's output must meet before it hands off to
+# the next, and NAMES the already-ratified gate that enforces each. It introduces NO
+# new doctrine. "handshake" is not doctrinal vocabulary in this repo; here it denotes
+# the EXISTING stack — a gate + an `[ADHERENCE-LOG — stage N]` block + an attestation +
+# integrity-protocol Mode 3 — made explicit and referentially checkable in one file.
+#
+# The numbered `[ADHERENCE-LOG — stage N: <name>]` list lives only in the DEPLOYED
+# claude.ai user-preferences `<audit_trail>` section, which is not in git. The stage
+# ids below are the repo-side reconstruction of that spine; they MUST be reconciled
+# against the deployed list (owner action) before ratification.
+#
+# check: a repo-relative path to the ratified enforcer, or null when the criterion is
+# DECLARED-BUT-UNENFORCED (an honest coverage gap the contract surfaces, not hides).
+# scripts/audit/pipeline_contract_audit.py validates this file and reports, per
+# criterion: VERIFIABLE (check exists) / INCOMPLETE (check null) / BROKEN (check path
+# does not exist — phantom enforcement).
+
+version: 1
+status: PROPOSED
+ratified: false
+authored_by: Claude
+dr: decisions/DR-2026-07-13-pipeline-contract.md
+enforcement_level: 2
+
+# Canonical entity spine (governance/conceptual-model.md §2.1):
+spine: "EvidenceSource (E-02) -> BPC entry (E-03) -> Specification (E-01) -> Item (E-08) -> render"
+
+stages:
+  - id: research
+    anchor: "PI rule #7 (adversarial-research); rule #8 (PMP); workplan phase B"
+    entry:
+      - "an OPEN gap or an item/parameter lacking sufficient evidence"
+    criteria:
+      - id: adversarial-fields-complete
+        kind: integrity
+        criterion: "Every research gap-closure carries the mandatory falsifiable fields (falsification_condition, confidence_interval, shift_conditions, named_dissenter) before status CLOSED."
+        references: "PI rule #7; DR-2026-05-09 adversarial-research-protocol"
+        check: scripts/audit/research_protocol_audit.py
+      - id: pmp-strict-termination
+        kind: integrity
+        criterion: "Progressive-Measurement-Probe walks terminate strictly: no pass rows without a phase='final' step."
+        references: "PI rule #8; DR-2026-05-10 (PMP); pmp_audit.py C2"
+        check: scripts/audit/pmp_audit.py
+
+  - id: collection
+    anchor: "EvidenceSource corpus (E-02); PI rule #2 (Sonnet evidence inventories)"
+    entry:
+      - "sources discovered for the topic/slug under research"
+    criteria:
+      - id: evidence-verification-gate
+        kind: integrity
+        criterion: "No BPC synthesis claim cites a source with metadata_quality=AUTHOR-TITLE-ONLY or verification_status NULL (rule #10 existence gate)."
+        references: "PI rule #10; DR-2026-05-13; DR-2026-05-20 (metadata_integrity_status)"
+        check: scripts/audit/metadata_integrity_audit.py
+      - id: discovery-provenance
+        kind: completeness
+        criterion: "Each carried-forward source records how it was discovered (derivation_chain) — currently sparse (16/640); no committed enforcer."
+        references: "project-shape-audit F-06; evidence-architecture G1 provenance"
+        check: null
+
+  - id: judgment
+    anchor: "the 4-state determination machine + convergence + directness (evidence-architecture.md §5)"
+    entry:
+      - "verified sources linked to an (item x population) cell"
+    criteria:
+      - id: governing-refs-nonempty
+        kind: integrity
+        criterion: "No `stated` or `provisional` determination without non-empty governing_refs (anti-hallucination)."
+        references: "evidence-architecture.md §5; DR-2026-07-12 A2 item 10"
+        check: scripts/validate_evidence_state.py
+      - id: no-regulatory-stratum-stated
+        kind: integrity
+        criterion: "A cell flagged code_floor_only or regulatory_stratum_only is never `stated` (convergence-not-evidence; invariant I3)."
+        references: "evidence-architecture.md §5/§6 I3; tier-system.md §3; migration 027"
+        check: scripts/validate_evidence_state.py
+      - id: tier3-alone-threshold
+        kind: integrity
+        criterion: "A single-axis cell whose clinical sources are all Tier 3 is `provisional`, not `stated`."
+        references: "DR-2026-07-12-tier3-stated-threshold (A3)"
+        check: scripts/validate_evidence_state.py
+      - id: derivation-handshake
+        kind: integrity
+        criterion: "Determinations record derivation_paths (dual/population_only/function_only); a single-path assertion carries a named-path rationale; advisory CONTRADICTS/UNLINKED checks force `provisional` (never `stated`) until resolved."
+        references: "DR-2026-07-13-value-genealogy-and-derivation-handshake (A6) H2/H4"
+        check: scripts/assess/assess_cell.py
+      - id: convergence-independence
+        kind: completeness
+        criterion: "Convergence counts INDEPENDENT evidence axes (and, once genealogy lands, independent roots excluding committee_assertion), never document/citation count. Root-count layer is proposed/unbuilt (source_value_extractions=0)."
+        references: "evidence-methodology.md §3; DR-2026-07-13 H1 (v_value_independence)"
+        check: null
+
+  - id: synthesis
+    anchor: "best_practice_synthesis / ISW; PI rule #9 (9-step); Opus-only (rule #2)"
+    entry:
+      - "a determination with a resolved value, ready for cross-jurisdictional synthesis"
+    criteria:
+      - id: nine-step-synthesis
+        kind: integrity
+        criterion: "Cross-jurisdictional synthesis follows the ratified 9-step procedure and validates."
+        references: "PI rule #9; validate_reasoning.py"
+        check: scripts/validate_reasoning.py
+      - id: opus-routing
+        kind: completeness
+        criterion: "best_practice_synthesis is authored at the ratified capability floor (Opus-class), never by a lower tier (rule #2)."
+        references: "PI rule #2; DR-2026-06-10-synthesis-model-floor"
+        check: null
+
+  - id: render
+    anchor: "renderers + the claim-strength register map (evidence-architecture.md §6)"
+    entry:
+      - "determinations tagged with design_scale, ready to present per audience"
+    criteria:
+      - id: register-invariants
+        kind: integrity
+        criterion: "Every rendering of a cell carries the identical determination tuple across registers; no best-practice language on regulatory-stratum cells under any weighting profile; no register exceeds its map row (I1-I5)."
+        references: "evidence-architecture.md §6 I1-I5"
+        check: scripts/audit/register_integrity_check.py
+      - id: mode-stratum-matrix-consistency
+        kind: integrity
+        criterion: "The grain x design-scale directness matrix regenerated from schemas/directness.py matches evidence-architecture.md §3."
+        references: "evidence-architecture.md §3/§10 sweep"
+        check: scripts/audit/matrix_consistency.py
+      - id: render-freshness
+        kind: completeness
+        criterion: "Rendered artifacts (parts/, site/) are not stale vs the DB state that produced them. Only the vetting surface auto-regenerates; parts/ has no committed fingerprint gate."
+        references: "project-shape-audit F-13 (parts staleness)"
+        check: null
+
+cross_stage:
+  - id: adherence-log
+    criterion: "Each stage boundary emits `[ADHERENCE-LOG — stage N: <name>]` with per-rule FIRED/NOT-FIRED/SKIPPED, a bias_direction, and an independent_reviewer_counterclaim."
+    references: "PI rule #11; userPreferences-v6.2-deltas.md <adherence_logging>"
+    check: scripts/audit/adherence_log_audit.py
+  - id: attestation-doctrine-binding
+    criterion: "Commits touching synthesis paths carry a `[DOCTRINE:<7-sha>]` token and a schema-valid attestations/<slug>.json."
+    references: "PI rule #11; schemas/attestation.schema.json; ci.yml doctrine gate"
+    check: scripts/audit/adherence_log_audit.py
+  - id: definition-of-done
+    criterion: "No ratification request / 'done' / ready-for-review PR while the integrity-protocol Mode-3 mechanical battery is unrun OR an independent adversarial pass is unrun/unapplied."
+    references: "DR-2026-07-13-integrity-protocol-three-modes (A7) P2/P3; integrity-protocol_SKILL.md"
+    check: scripts/audit/claims_docket.py
+  - id: reproducibility-invariant
+    criterion: "The committed DB reproduces the 7 core invariants from migration history; job-owned tables (evidence_source_authors, pipeline_runs) are the only exemptions."
+    references: "DR-2026-05-28 migration-ledger; audit.yml GAP-290 gate"
+    check: scripts/migrate_db.py
+  - id: doctrine-recheck
+    criterion: "A doctrine recheck fires at every stage transition and every 25 sessions; work-product must not contradict canonical doctrine."
+    references: "governance/doctrine-recheck.md §1; RecheckTrigger STAGE_TRANSITION"
+    check: scripts/doctrine_recheck.py
