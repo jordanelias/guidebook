@@ -78,7 +78,7 @@ The three design scales weight the evidence hierarchy asymmetrically (per decisi
 
 - **Universal Mode** is the code-floor (Tier 6) raised by population-level evidence wherever higher-tier evidence supports a value above the floor. Source-ranking enters only to justify exceeding the floor.
 - **Population scale** is where source-ranking does its substantive work. The evidence hierarchy adjudicates the best-practice value and range here: Tier 1 / Co-1 / Tier 2 / Co-2 evidence anchors the claim; Tier 3 supports; Tier 4–6 do not anchor (convergence-not-evidence — §3 here and `governance/tier-system.md` §3).
-- **Person scale** is OT process-resolution *within* the Population-scale range. The governing evidence is assessment and clinical-reasoning evidence — how to resolve an individual's position — not parameter-value-ranking. The hierarchy that ranks parameter values does not re-run at the Person scale; a different evidence question applies.
+- **Person scale** is OT resolution of the individual's own functional needs — their circumstances, capabilities, impairments, and comorbidities. The governing evidence is assessment and clinical-reasoning evidence — how to resolve the individual case — not parameter-value-ranking. The Population-scale range informs the assessment but does not bound the answer, which may fall outside it; the hierarchy that ranks parameter values does not re-run at the Person scale; a different evidence question applies.
 
 This asymmetry is why §1.4's orthogonality is scale-conditioned: the same evidence hierarchy is consulted at every scale, but its adjudicating force concentrates at the Population scale.
 
@@ -269,7 +269,7 @@ Adding a fifth state (`stated_divergent`) would conflate the two questions, maki
 3. The Tier 1 design range encompasses both findings (per A5 §3.5, Pattern Co-1-D).
 4. The synthesis approach specifies which dimension governs the default and why (typically per harm-asymmetry — see project-standards harm-asymmetry rule).
 5. Voice pattern Co-1-D renders the divergence in prose.
-6. At Tier 2, OT assessment resolves the individual's position within the range — the divergence at Tier 1 becomes input to person-specific co-design.
+6. At the Person scale, OT assessment resolves the individual's own functional needs — informed by, but not bounded by, the range — and the divergence at Tier 1 becomes input to person-specific co-design.
 
 **What this resolution preserves:** T-04 is not revised. The four states remain exactly as specified. The convergence assessment is a separate metadata layer that operates alongside the state machine, not within it.
 
