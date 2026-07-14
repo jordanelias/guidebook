@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MH — mental health condition</title>
+<style>
+:root {
+    --ink: #1a1a2e; --paper: #fafaf8; --accent: #2d5f8a;
+    --accent-light: #e8f0f7; --border: #d4d4d0; --muted: #6b6b6b;
+    --font-body: Georgia, 'Times New Roman', serif;
+    --font-ui: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    --font-mono: 'Courier New', Consolas, monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--font-body); color: var(--ink); background: var(--paper);
+       line-height: 1.6; max-width: 860px; margin: 0 auto; padding: 24px; }
+.pop-code { font-family: var(--font-mono); font-size: 14px; color: var(--accent);
+             letter-spacing: 1px; text-transform: uppercase; }
+h1 { font-size: 26px; font-weight: 600; margin: 8px 0 4px; }
+.meta { font-family: var(--font-ui); font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+section { margin: 28px 0; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+section:last-child { border-bottom: none; }
+h2 { font-family: var(--font-ui); font-size: 15px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.5px; color: var(--muted); margin-bottom: 10px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { font-family: var(--font-ui); font-size: 12px; text-transform: uppercase; text-align: left;
+      padding: 6px 10px; background: var(--accent-light); color: var(--accent);
+      border-bottom: 2px solid var(--border); }
+td { padding: 6px 10px; border-bottom: 1px solid var(--border); }
+td a { color: var(--accent); text-decoration: none; font-family: var(--font-mono); }
+.empty { color: var(--muted); font-style: italic; }
+.badge { font-family: var(--font-ui); font-size: 12px; padding: 2px 8px; border-radius: 3px;
+          background: var(--accent-light); color: var(--accent); }
+.badge-retracted { background: #fce4ec; color: #c62828; }
+.badge-unknown { background: #f5f5f5; color: var(--muted); }
+.honest-banner { background: #fff8e1; border: 1px solid #ffe082; border-radius: 4px;
+                   padding: 12px 16px; font-family: var(--font-ui); font-size: 14px; }
+</style>
+</head>
+<body>
+<span class="pop-code">MH</span>
+<h1>mental health condition</h1>
+<p class="meta">mental_health &middot; status: active</p>
+
+<section>
+<h2>Description</h2>
+<p>Mood, anxiety, trauma, psychotic disorders affecting environmental tolerance</p>
+</section>
+
+<section>
+<h2>Applicable items (15)</h2>
+<table>
+<thead><tr><th>Item</th><th>Name</th><th>Category</th><th>Applicability</th></tr></thead>
+<tbody><tr><td><a href="/specs/a-03.html">A-03</a></td><td>Acoustic Door (STC ≥35) at All Sensitive Space Boundaries</td><td>A</td><td>applies</td></tr>
+<tr><td><a href="/specs/a-05.html">A-05</a></td><td>Carpet in Corridors and Occupied Spaces (Where VIS Navigation Maintained)</td><td>A</td><td>applies</td></tr>
+<tr><td><a href="/specs/a-06.html">A-06</a></td><td>Fabric Wall Panels (NRC ≥0.70) at Acoustic Reflection Points</td><td>A</td><td>applies</td></tr>
+<tr><td><a href="/specs/a-08.html">A-08</a></td><td>HVAC Noise Control (NC-25 Maximum in Sensitive Spaces)</td><td>A</td><td>applies</td></tr>
+<tr><td><a href="/specs/a-14.html">A-14</a></td><td>Double-Leaf Partition (STC ≥50) for Sensitive Adjacencies</td><td>A</td><td>applies</td></tr>
+<tr><td><a href="/specs/a-16.html">A-16</a></td><td>Sensory Room / Quiet Room Provision (≥8 m², one per floor or per 500 m² GFA)</td><td>A</td><td>applies</td></tr>
+<tr><td><a href="/specs/b-06.html">B-06</a></td><td>Individual Dimming Control (≥300 Lux Range)</td><td>B</td><td>applies</td></tr>
+<tr><td><a href="/specs/c-01.html">C-01</a></td><td>Colour Palette (Muted, Low-Chroma, Non-Institutional)</td><td>C</td><td>applies</td></tr>
+<tr><td><a href="/specs/d-07.html">D-07</a></td><td>No Blind Corners (Curved or Mirrored at All Hidden Junctions)</td><td>D</td><td>applies</td></tr>
+<tr><td><a href="/specs/d-10.html">D-10</a></td><td>Transparent Glazed Panels in Internal Partitions</td><td>D</td><td>applies</td></tr>
+<tr><td><a href="/specs/d-11.html">D-11</a></td><td>Safe Accessible Garden (Loop Path, Secured Perimeter, Seating Every 20 m)</td><td>D</td><td>applies</td></tr>
+<tr><td><a href="/specs/f-01.html">F-01</a></td><td>Sensory Gradient (High to Low Stimulation from Entry to Occupation)</td><td>F</td><td>applies</td></tr>
+<tr><td><a href="/specs/f-02.html">F-02</a></td><td>Olfactory Control (Fragrance-Free Zones in Sensitive Areas)</td><td>F</td><td>applies</td></tr>
+<tr><td><a href="/specs/g-01.html">G-01</a></td><td>Defensible Seating (Back-to-Wall, Entry Sightline Configuration)</td><td>G</td><td>applies</td></tr>
+<tr><td><a href="/specs/h-02.html">H-02</a></td><td>Individual Environmental Control (Lighting and Temperature Per Space)</td><td>H</td><td>applies</td></tr>
+</tbody>
+</table>
+</section>
+
+<section>
+<h2>Best Practice Compendium entries (0)</h2>
+<table>
+<thead><tr><th>Slug</th><th>Evidence state</th><th>BPC complete</th></tr></thead>
+<tbody><tr><td colspan="3" class="empty">No BPC entries recorded for this population.</td></tr></tbody>
+</table>
+</section>
+
+<section>
+<h2>Best-practice determinations</h2>
+<p class="honest-banner">Best-practice determination: <strong>not yet computed</strong> for any item × this population. The evidence_cell_state table exists but is empty pending the Phase E evidence re-synthesis and best-practice engine build (see workplan/best-practices-assessment-system.md). This is not a data-loading bug — see the gap register for tracked status.</p>
+</section>
+
+</body>
+</html>

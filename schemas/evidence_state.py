@@ -6,7 +6,7 @@ each cell in the guidebook's specification matrix holds one of four states
 (stated, provisional, pending, not_applicable) with an associated
 convergence assessment.
 
-DIRECTNESS-AWARE (Stage 2.3, decision D-D; doctrine SHA 3da73bd). These models
+DIRECTNESS-AWARE (Stage 2.3, decision D-D; doctrine SHA 8a5a717). These models
 back the `evidence_cell_state` + `convergence_assessment` tables (migration 024,
 closing R2) and carry the scale × directness conditioning of §1.4/§1.6/§1.7:
 - the cell records its `design_scale` (universal/population/person), the axis from
@@ -108,7 +108,8 @@ class EvidenceStateRecord(BaseModel):
     - stated: ≥1 anchoring source at Tier 1, Tier 2 (either stream), Co-1, or Co-2
       (T3-alone never suffices: T3-clinical-alone => provisional, T3-grey-alone =>
       pending — DR-2026-07-12-tier3-stated-threshold + unification-DR G7, ACCEPTED)
-    - provisional: Tier 4–6 only, meets richness threshold
+    - provisional: T3-clinical-alone (no anchoring corroboration), or Tier 4–6 only
+      meeting the §2.3 richness threshold
     - pending: too sparse; gap-register link required
     - not_applicable: parameter irrelevant for population; rationale required
 

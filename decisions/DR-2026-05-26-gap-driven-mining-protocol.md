@@ -156,9 +156,9 @@ This makes the protocol semiannual-sweep-ready: re-run the BATCH query filtered 
 
 ## Status
 
-PROPOSED 2026-05-26.
+**ACCEPTED 2026-07-13** (see the header line above — ratified rather than deferred per the owner's "ratify all" directive; `decisions/RATIFICATION-RECORD-2026-07-13.md`). **This DR's own adoption gate below is NOT met** — the ratification overrides the gate rather than satisfying it; this is disclosed here, not silently absorbed (Q14 adversarial pass B-scope finding 1; tracked as queue item Q21).
 
-**Adopts upon:** migration 017 applied + skill file committed + worked-example pilot completed + at least one `gap_mining` row with each non-error outcome (`closure_evidence_found`, `partial_evidence_found`, `null_result`) demonstrated.
+**Adopts-upon conditions (original gate, still evaluated honestly post-ratification):** migration 017 applied (VERIFIED-BY: `scripts/migrations/017_gap_driven_mining.sql` exists, schema at `user_version=27`) + skill file committed (VERIFIED-BY: `skills/gap-driven-mining_SKILL.md` exists) — **both met** — + worked-example pilot completed + at least one `gap_mining` row with each non-error outcome (`closure_evidence_found`, `partial_evidence_found`, `null_result`) demonstrated — **neither met**: `gap_mining` has 0 rows and all 297 `gaps` rows have `mining_addressability IS NULL` (VERIFIED-BY: direct query against `data/guidebook.db`, this session). The protocol is doctrine with an unexercised engine.
 
 **Reversible by:** a follow-up DR that downgrades or replaces the protocol. The schema additions are forward-compatible — `gap_mining` rows are read-only audit history and `mining_addressability` is nullable.
 

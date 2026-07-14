@@ -6,6 +6,8 @@
 **SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
 (See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
 
+**KNOWN CONFLICT (Q24, `workplan/ratification-execution-register-2026-07-13.md`):** this file's flat "STI ≥0.5" figure conflicts with `room-acoustic-performance.md`'s two-tier "STI ≥0.60 general / ≥0.75 DEAF-CI" (that file's own audit trail marks the 0.75 figure Tier-1-confirmed). Do not resolve by inspection or point-fix ahead of reverification — both files are in the same PRE-REHABILITATION cohort above; flagged for Phase E.2g to adjudicate together.
+
 **Consensus finding:** Reverberation above 0.6 sec prevents 100% speech perception even at high SNR. Hearing-impaired listeners are significantly more affected than normal-hearing listeners by both reduced SNR and reverberation. RT differentiation between hearing-impaired and general population is well-evidenced and should be explicit in all specification items.
 **Key evidence:**
   - Classroom acoustics: reverberation >0.6 sec prevents 100% speech perception; ANSI/ASA S12.60-2010 standard: ≤35 dBA unoccupied noise; 0.3 sec RT for hearing-impaired children (vs 0.6–0.7 sec general population) (Murgia et al. 2023, Tier 1 systematic review)

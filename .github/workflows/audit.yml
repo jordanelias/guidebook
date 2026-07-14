@@ -144,7 +144,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          # Full history required: check_2_doctrine_sha resolves each attestation's
+          # actual last-modifying commit via `git log -1 -- <file>`, which can be
+          # arbitrarily far back. A shallow checkout misattributes the file to the
+          # PR-head commit, producing spurious doctrine_sha mismatches whenever the
+          # PR-head token differs from the attestation's (e.g. after a doctrine edit).
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5

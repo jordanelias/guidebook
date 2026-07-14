@@ -53,7 +53,7 @@ The three design modes (`mission-and-epistemics.md` commitment 4, names normaliz
 |---|---|---|
 | **Universal Mode** | Universal design / code compliance — the floor, not an aspiration | Population-agnostic; fixed values |
 | **Population Mode** | Population-informed inclusive design | Ranges; median as default |
-| **Person Mode** | Person-specific co-design | OT assessment resolves position within the Population-Mode range |
+| **Person Mode** | Person-specific co-design | OT co-design resolves the individual's own specific functional needs — their circumstances, capabilities, impairments, and comorbidities; the design answers may be informed by a related disability population, but that population does not bound the answer, which may fall outside any population range |
 
 Evidence tier and design mode are **orthogonal axes of coverage** — both always consulted, neither determining the other (`evidence-methodology.md` §1.4). But orthogonality is *scale-conditioned* (decision D-D, §1.6): the ladder is consulted at every scale while its adjudicating force is asymmetric.
 
@@ -101,7 +101,7 @@ Each (item × population) cell holds one of four states (`evidence-methodology.m
 
 - A determination anchored in T1/Co-1/T2/Co-2 (with T3 per its threshold DR) is a **Population-Mode best-practice determination** — the only kind entitled to the phrase "best practice."
 - A determination whose entire basis is the regulatory stratum (T4–6) is a **Universal-Mode regulatory determination**. It answers "what does the harmonised/statutory floor specify?" — a legitimate, useful claim — and is flagged `regulatory_stratum_only` (extending migration 026's `code_floor_only`, which covers only the T6-only case, to the full T4–6-only case). It is never rendered as best practice, in any register, for any audience. `v_best_practice` excludes it; the `provisional` confidence flag names the absent anchoring dimensions (§2.3's flag, now with teeth at T4/T5, not just T6).
-- Person Mode produces no stored determinations at all: it is process-resolution within the Population range (§3). What the guidebook stores for Person Mode is the *handoff* — the functional parameter driving assessment and the resolution range (`armature_v4.md` §4.6 "Mode S handoff" — vocabulary normalized to "Person-Mode handoff" per §7).
+- Person Mode produces no stored determinations at all: the assessed answer addresses the individual's own specific functional needs — their circumstances, capabilities, impairments, and comorbidities — and may be *informed by* a related disability population without being *bounded by* it (§3); a resolved value may fall outside any population range, and comorbid or hard-to-classify presentations routinely require exactly that. What the guidebook stores for Person Mode is the *handoff* — the functional parameter driving assessment and the population-range scaffold the assessment starts from (`armature_v4.md` §4.6 "Mode S handoff" — vocabulary normalized to "Person-Mode handoff" per §7).
 
 This closes the one channel through which the convergence-not-evidence trap could re-enter: previously, `evidence-methodology.md` §2.3 let T4–6 convergence produce a `provisional` synthesis that §3.4's voice line could render as "[N] jurisdictions' standards converge on [value]" without a mandatory scale disclaimer, and the policymaker profile up-weights exactly that stratum. Scale-tagging makes the laundering path mechanically impossible rather than editorially discouraged.
 

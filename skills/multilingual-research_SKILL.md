@@ -411,7 +411,7 @@ Group findings by concept cluster, not by language or jurisdiction. For each clu
 
 ## Evidence Hierarchy
 
-**Canonical tier source: `schemas/tier_derivation.py` (derives tier from evidence_type × scope; doctrine SHA `3da73bd`) + `governance/tier-system.md`.** The inline table below is illustrative and SUPERSEDED where it conflicts with canonical — it predates DR-2026-05-29 (Stage 1.1), which places **systematic reviews / meta-analyses at Tier 2** (the row below still shows Tier 3). Defer to the canonical source; do not re-embed tier definitions here.
+**Canonical tier source: `schemas/tier_derivation.py` (derives tier from evidence_type × scope; doctrine SHA `8a5a717`) + `governance/tier-system.md`.** The inline table below is illustrative and SUPERSEDED where it conflicts with canonical — it predates DR-2026-05-29 (Stage 1.1), which places **systematic reviews / meta-analyses at Tier 2** (the row below still shows Tier 3). Defer to the canonical source; do not re-embed tier definitions here.
 
 | Tier | Type |
 

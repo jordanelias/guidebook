@@ -68,12 +68,18 @@ class EvidenceTier(int, Enum):
     is the other. Co-1 and Co-2 are evidence_types, not tiers.
     Co-1 sources carry tier=1 (co-primary). Co-2 sources carry tier=2 (parallel to Tier 2, per T-03).
 
-    Tier 1 = OT intervention-tested clinical research (highest).
-    Tier 2 = NGO/DPO/advocacy guidelines.
-    Tier 3 = Systematic reviews and meta-analyses (Co-2 CPGs also here).
-    Tier 4 = International standards with evidence basis.
+    Ladder per governance/tier-system.md (OPERATIVE 2026-05-25; T2/T3 reordering
+    from the pre-2026-05-25 draft — sr_meta sits at T2, not T3):
+    Tier 1 = Primary research with intervention-level or biomechanical control.
+    Tier 2 = Systematic reviews / meta-analyses (sr_meta), or named-organisation
+      evidence-based standards (standard_eb) -- community-consensus synthesis
+      above primary studies but below international standards.
+    Tier 3 = Lower-control primary clinical research (cross-sectional,
+      observational, qualitative, single-centre) plus grey-literature primary
+      research; "rarely the sole basis" (tier-system.md §1).
+    Tier 4 = International standards with evidence basis (ISO, IEC, CEN, etc.).
     Tier 5 = National beyond-code frameworks.
-    Tier 6 = Statutory codes (reference baseline only).
+    Tier 6 = Statutory codes (reference baseline only; convergence-not-evidence).
     """
 
     TIER_1 = 1
@@ -174,7 +180,8 @@ class EvidenceType(str, Enum):
     evidence_type encodes the kind of evidence.
 
     Co-1 records: tier=1, evidence_type=CO1 (co-primary with clinical Tier 1).
-    Co-2 records: tier=2, evidence_type=CO2 (OT body CPGs, rated Tier 3 with marker).
+    Co-2 records: tier=2, evidence_type=CO2 (OT body CPGs, parallel to Tier 2 —
+    not Tier 3; see governance/tier-system.md's Co-2 row).
     """
     CLINICAL = "clinical"        # OT intervention-tested research
     CO1 = "co1"                  # Lived experience / participatory design
@@ -190,10 +197,13 @@ class EvidenceType(str, Enum):
 class EvidenceCellState(str, Enum):
     """T-04 evidence-state machine for (parameter × population) cells.
 
-    Per governance/evidence-methodology.md §2 (A6):
-    - stated: sufficient evidence (≥Tier 3 OR Co-1 OR Co-2)
-    - provisional: Tier 4–6 only, meets richness threshold
-    - pending: too sparse to synthesize
+    Per governance/evidence-methodology.md §2 (A6, amended by the
+    tier3-stated-threshold DR, ACCEPTED 2026-07-13):
+    - stated: ≥1 anchoring source at Tier 1, Tier 2, Co-1, or Co-2 (Tier 3
+      alone never suffices)
+    - provisional: T3-clinical-alone, or Tier 4–6 only meeting the richness
+      threshold
+    - pending: too sparse to synthesize (includes T3-grey-alone)
     - not_applicable: parameter irrelevant for this population
     """
     STATED = "stated"

@@ -104,9 +104,9 @@ PI bump deferred per architecture v2.3 `<migration_and_growth>`: this DR + the s
 
 ## Status
 
-PROPOSED 2026-05-25.
+**ACCEPTED 2026-07-13** (see the header line above; this section was left un-synced at the ratification flip — corrected here, Q14 adversarial pass B-scope finding 2).
 
-Adopts upon: migration 015 applied + skill file committed + this DR's retroactive-audit deliverables completed.
+Adoption conditions, all now met: migration 015 applied (`user_version=27`) + `skills/supersession-audit_SKILL.md` committed + this DR's retroactive-audit deliverables completed (6/6 slugs at `closure_definition_version='v2'`: cognitive-wayfinding-design, mental-health-built-environment, mobility-built-environment, room-acoustic-performance, school-environment-autism, stair-ramp-threshold-biomechanics-accessibility — VERIFIED-BY: direct query against `data/guidebook.db`, this session).
 
 Reversible by: a follow-up DR that downgrades the supersession-check requirement (would need to specify what failure mode the downgrade addresses, since this DR was authored specifically to address a doctrinal commitment 2 failure mode).
 

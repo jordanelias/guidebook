@@ -5,6 +5,8 @@
 **SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
 (See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
 
+**KNOWN CONFLICT (Q24, `workplan/ratification-execution-register-2026-07-13.md`):** this file's two-tier "STI ≥0.60 general / ≥0.75 DEAF-CI" (RAP-C3, marked Tier-1-confirmed in this file's own audit trail below) conflicts with `acoustics-speech-intelligibility-disability.md`'s flat "STI ≥0.5". Do not treat the "confirmed" marking here as settling the conflict ahead of reverification — both files are in the same PRE-REHABILITATION cohort above; flagged for Phase E.2g to adjudicate together.
+
 ### Concept boundary notes
 | Language | Alias | Map quality | Warning |
 |---|---|---|---|
