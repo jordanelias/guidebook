@@ -21,11 +21,12 @@ bottleneck*, and the corpus's English skew is *manufactured in the ingestion fun
 | 4 | Processing — citation-mine / supersession | **~7–9%** | high where done | `citation_mining` 107/7 slugs; `supersession_check` 134/6 slugs |
 | 5 | Extraction / value-derivation | **~1–4%** | **very high** where done | `source_value_extractions` **1 slug**; `spec_value_probes` **3 slugs** (PMP walks, strict-termination) |
 | 6 | Grading — cell-state | **7/93 items (7.5%)** | very high | `evidence_cell_state` 11 cells; `convergence_assessment` 10; falsification conditions, `echo_of` |
-| 7 | Modes — Universal/Population/**Person** | Univ/Pop partial; **Person ~0** | doctrine clear (DR-2026-07-13) | design_scale {pop 9, univ 2, **person 0**}; `items.pmp_delta` **2/93** |
-| 8 | Lenses — multimodal presentation | **spec 100%, applied ~7%** | high (encodes anti-laundering) | `weighting_profile` 5 rows/4 audiences; applied only where cells exist |
-| 9 | Website / render | **shell ~93%, evidence-backed ~7%** | render is non-canonical (S4) | `site/specs/*.html` **87**; only 7 items graded behind them |
-| 10 | Connections / gaps / terms | active | systematic gap taxonomy | gaps 297 (**37 OPEN**); connections 273; terms 30 / aliases 880 |
+| 7 | **Connections** — relate graded provisions | **273 links, but over ungraded items** | candidates from citation-mining; **confirmation owed post-grading** | `connections` 273 / `connection_targets` 507 made while only 7 items graded |
+| 8 | Modes — Universal/Population/**Person** | Univ/Pop partial; **Person ~0** | doctrine clear (DR-2026-07-13) | design_scale {pop 9, univ 2, **person 0**}; `items.pmp_delta` **2/93** |
+| 9 | Lenses — multimodal presentation | **spec 100%, applied ~7%** | high (encodes anti-laundering) | `weighting_profile` 5 rows/4 audiences; applied only where cells exist |
+| 10 | Website / render | **shell ~93%, evidence-backed ~7%** | render is non-canonical (S4) | `site/specs/*.html` **87**; only 7 items graded behind them |
 | 11 | Governance / integrity | high; one stale | **the most rigorous link** | `data_migrations` 196; attestation CI stale (35-commit, non-blocking) |
+| — | *cross-cutting:* gaps · terms | active | systematic gap taxonomy | gaps 297 (**37 OPEN**); terms 30 / aliases 880 (used from query-time on) |
 
 ---
 
@@ -71,26 +72,46 @@ E-08, E-12, G-03), with tier_basis, falsification conditions, `code_floor_only`,
 assessments. Rigorous, tiny. *Forward starvation begins here:* modes, lenses, and render all depend on
 graded cells, and there are seven.
 
-**Link 7 · Modes — Person mode is absent.** design_scale = {population 9, universal 2, **person 0**};
+**Link 7 · Connections — a generative feedback junction, currently built on sand.** A connection asserts a
+relationship between provisions (A-18 RT60 ↔ A-02 ceiling panels / A-06 wall panels as *techniques*), so it
+**depends on grading** — you can only reliably relate provisions that are evidence-backed. But it is not a
+terminal layer; it is where the chain **loops**:
+- *Candidates in (backward):* `citation_mining.connections_produced` seeds connection candidates during
+  processing (Link 4), pre-grading.
+- *Informs subsequent steps (forward):* confirmed connections feed Modes, Lenses, and the render's "related"
+  facet — presentation consumes the relational graph.
+- *Surfaces its own spec (loops back):* a connection can **reveal a missing provision** — e.g., A-18 ↔
+  A-02/A-06 surfacing an "acoustic-treatment package" spec — which re-enters the pipeline at gathering →
+  grading. Connections are generative, not just descriptive.
+
+*Current state:* `connections` 273 / `connection_targets` 507 already exist — **but while only 7 items are
+graded.** So today's connections were built from pre-grading candidates, **over ungraded foundations** (the
+same premature-foundation pattern as the flags and the render). They owe **re-validation** once cells are
+graded — some will dissolve, and grading will surface new ones. Practically: **grading and
+connection-confirmation should be interleaved**, and connection-surfaced specs should feed the next batch.
+
+**Link 8 · Modes — Person mode is absent.** design_scale = {population 9, universal 2, **person 0**};
 `items.pmp_delta` set on **2/93**. The doctrine (Person = OT resolving position *within* the Population
 range, DR-2026-07-13) is clear; the data isn't there. *Backward:* the OT lens (`weighting_profile` ot row)
 is specified and waiting; *forward:* Person-Mode handoff cannot render.
 
-**Link 8 · Lenses — the spec is complete and excellent; application waits on grading.** `weighting_profile`
+**Link 9 · Lenses — the spec is complete and excellent; application waits on grading.** `weighting_profile`
 (5 rows, 4 audiences) encodes the doctrine precisely: designer (aspiration-above-floor, DAR surfaced),
 disabled_person ×2 (Co-1 visibility + solo-authorship limit always rendered; advocacy-brief with
 instrument-status caveat), policymaker (floor-vs-anchor, **anti-laundering, convergence-is-not-evidence**),
 ot (population range legible for person-mode resolution). This is a well-formed lens engine with **only 7
 items to drive through it.**
 
-**Link 9 · Website / render — wide shell, shallow fill.** 87 `site/specs/*.html` + `populations/` +
+**Link 10 · Website / render — wide shell, shallow fill.** 87 `site/specs/*.html` + `populations/` +
 `rooms/`. The E-08 exemplar shows the target 12-facet, 4-door shape. But ~80 of 87 pages sit over ungraded
 evidence. The render is declared non-canonical (S4), so this is not a rigour defect — it is a *fill* defect
 inherited from Link 6.
 
-**Link 10 · Connections / gaps / terms — active cross-cutting layer.** gaps 297 (**37 OPEN**; closed split
-across SYSTEMIC 90 / SYNC 87 / FIXED 52 / FALSE-POSITIVE 26 / RESOLVED 5); connections 273 / targets 507; a
-terminology layer (terms 30, term_item_links 50, aliases 880). Healthy and systematic.
+**Cross-cutting · gaps + terms — active, span every stage.** gaps 297 (**37 OPEN**; closed split across
+SYSTEMIC 90 / SYNC 87 / FIXED 52 / FALSE-POSITIVE 26 / RESOLVED 5) — gaps are surfaced at *every* link
+(gathering gaps, grading gaps, render gaps), so this is genuinely cross-cutting; a terminology layer (terms
+30, term_item_links 50, aliases 880) used from query-construction onward. Healthy and systematic.
+(Connections are **not** here — they moved to Link 7, because they depend on grading and feed forward.)
 
 **Link 11 · Governance / integrity — the most rigorous link, one stale check.** `data_migrations` 196
 (migration-based writes enforced), a deep DR/attestation regime. The only defect is operational: the
@@ -101,10 +122,15 @@ re-attestation window (non-blocking; unrelated to content).
 
 ## Tracing the logic both directions — the two dominant forces
 
-- **Forward starvation (top → bottom):** the grading throat (Link 5–6, ~7 items) starves Modes (Link 7),
-  Lenses (Link 8), and Render (Link 9). The website *promises* a shape (E-08's 12 facets, 4 doors, 3 modes,
-  5 lenses) that the evidence base can fill for 7.5% of items. **Nothing downstream can improve until the
-  grading throat widens.**
+- **Forward starvation (top → bottom):** the grading throat (Link 5–6, ~7 items) starves Connections
+  (Link 7), Modes (Link 8), Lenses (Link 9), and Render (Link 10). The website *promises* a shape (E-08's 12
+  facets, 4 doors, 3 modes, 5 lenses) that the evidence base can fill for 7.5% of items. **Nothing
+  downstream can improve until the grading throat widens.**
+- **The cycle at Link 7 (connections close the loop):** connections are not a straight-through layer — a
+  confirmed connection *informs* modes/lenses/render *and* can *surface its own spec* (a missing provision),
+  re-entering the pipeline at gathering→grading. So the chain is really a **spiral**: each grading batch
+  should confirm connections, which surface new specs and inform presentation, which feed the next batch.
+  Today's 273 connections predate grading, so they are candidates awaiting that loop, not yet its product.
 - **Backward specification (bottom → top):** the render + lens layer is *fully specified* (E-08 exemplar,
   `weighting_profile`) and therefore acts as a precise **target that pulls** the midstream — we know exactly
   what a finished cell must produce. This is a strength: the bottleneck is not "we don't know what to build,"

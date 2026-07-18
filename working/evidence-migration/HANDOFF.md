@@ -31,6 +31,7 @@ items. The English skew is manufactured in **ingestion**, not search.
 | **ingestion (bias funnel)** | **the leak** | 14 langs returned hits; corpus still **551 EN : 89 non-EN** |
 | citation-mine / supersession | ~7% | 7 / 6 slugs |
 | **extraction / grading** | **the throat** | extractions **1 slug**; cells **7 / 93 items** |
+| connections (post-grading) | 273 over ungraded items | generative loop; owe re-validation once graded |
 | modes | Person ~0 | design_scale person **0**; `pmp_delta` 2/93 |
 | lenses | spec 100%, applied ~7% | `weighting_profile` 5 rows / 4 audiences |
 | website | shell 93%, backed 7% | `site/specs` **87** pages |
@@ -85,7 +86,8 @@ ledger `data_migrations`, 196 rows) — never ad-hoc UPDATE.
 | **gathering** | `search_languages` (1539), `search_coverage` (3807; 3152 NOT-RUN), `citation_mining` (107/7 slugs), `supersession_check` (134/6) | wide (lang), partial (juris) |
 | **grading** | `source_value_extractions` (8/1 slug), `spec_value_probes` (31/3 slugs), `convergence_assessment` (10), `evidence_cell_state` (11/7 items), `jurisdictional_values` (109/20 items), `evidence_population_match` (28) | **pilot-only** |
 | presentation | `weighting_profile` (5/4 audiences) | spec complete |
-| cross-cutting | `gaps` (297; 37 OPEN), `connections` (273)/`connection_targets` (507), `terms` (30)/`term_aliases` (880)/`term_item_links` (50) | active |
+| connections (post-grading, generative) | `connections` (273), `connection_targets` (507) | built pre-grading — re-validate + let them surface new specs |
+| cross-cutting | `gaps` (297; 37 OPEN), `terms` (30)/`term_aliases` (880)/`term_item_links` (50) | active, all stages |
 | provenance | `data_migrations` (196), `pipeline_runs` (15), `item_audit_runs` (87), `url_verification_runs` (9) | rigorous |
 
 **Key joins:** slug→items via `items.bpc_source_slug`; item→grading via `evidence_cell_state.item_code`;
