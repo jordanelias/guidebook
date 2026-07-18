@@ -39,10 +39,19 @@ quality control. Every value carries its genealogy and a **provenance-strength**
 - `db/migrations/` — proposed canonical writes (migration-based, reviewable; nothing promoted to `stated`
   without verifier confirmation).
 
-## The headline finding so far
+## The headline finding so far (corrected after adversarial verification)
 
-**Grading ≠ rehabilitation.** A-18's *value derivation* is already excellent (four evidence-graded
-cell-state rows, ● Tier-1), yet its slug is still `RETRACTED-PRE-REHAB` because the **rehabilitation layers
-are missing**: no Person/OT mode, no Co-1 lived experience, no walled-off code-floor, no DAR layer, null
-`population_code`s, and no recorded jurisdiction/language coverage. The migration debt is concentrated in
-*those* layers, not in the value itself. See `pilot-A18-rt60/`.
+**The substrate is deeper than the flags admit; the debt is flags, Co-1, and flagged errors.** A-18's
+`bpc_metadata` flags read "barely started" (`RETRACTED-PRE-REHAB`, co1/pico/juris = 0), but underneath, the
+July 2026 sessions built a rigorous rehabilitation substrate: 4 population-coded evidence-graded cell-states,
+8 jurisdiction-tagged code-threshold extractions with `echo_of` provenance (converge≠evidence handled
+*correctly* — incl. ANSI Footnote-e 0.3 s for HI children marked as an echo of the evidence), 13 PMP
+derivation walks, and convergence assessments. So the migration debt is **not** the value or the code-floor
+— it is (1) recording flags that don't reflect the substrate, (2) **Co-1 lived experience genuinely absent**
+(all cells single-axis clinical), and (3) real DB-flagged data errors (a Devos-2019/REF-00571 mislink; four
+duplicate ANSI records).
+
+An independent verifier refuted three claims in the first draft of this pilot (code values "un-migrated",
+`population_code` "null", a "2× ANSI floor / V-01 instance"); all are corrected in `pilot-A18-rt60/` and
+recorded in `verifier-verdict.md`. **The correction is the point** — it is why the pipeline runs a separate
+guilty-until-proven verifier, and why the plan now opens with a substrate inventory (below).
