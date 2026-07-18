@@ -112,9 +112,10 @@ DEAF/ALL/DEM/AUT.
 4. **Ingestion funnel repair (bias).** Reconcile `search_languages` non-EN hits (1153) against
    `evidence_sources` non-EN (89); ingest the gap; investigate the 5 zero-result Global-South languages;
    correct `lang_detected` mislabels.
-5. **Fix flagged data errors.** REF-00571 (Kotloski 2020) is mis-cited as Devos 2019 in
-   `item_population_elaborations` elab_id=6 (real Devos = REF-00735, unlinked); dedup the four ANSI-2010
-   records (REF-00326/335/563/604); apply `db/migrations/0001-jurisdiction-hygiene.sql`.
+5. **Fix flagged data errors.** ✅ **DONE** (migration `data_20260718071505_…evidence-migration-issue-resolution.sql`):
+   the Devos/REF-00571 mislink is re-pointed to REF-00735; the ANSI-2010 dups (REF-00326/335/604) are
+   consolidated onto canonical REF-00563 (FKs re-pointed, dups marked `DUPLICATE-OF`, reversible — not
+   deleted). Remaining: apply the proposed `db/migrations/0001-jurisdiction-hygiene.sql` (still un-applied).
 
 ## 7. Open loose ends
 

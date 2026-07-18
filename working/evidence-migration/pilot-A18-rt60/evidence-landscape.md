@@ -43,7 +43,7 @@ school-acoustics exemplars are the likely home).
 | Non-English standards' **content** | `inadequate` | catalogued/extracted via English metadata; original-language content may be missed |
 | Co-1 lived experience | `absent` | all cells `single_axis` clinical, `co1_sources=[]`, `co1_pass_count=0` — the modality most owed |
 | Built precedents | `absent` | none linked |
-| Devos 2019 dementia source | **mislinked** | elab cites REF-00571 (actually *Kotloski 2020, genetics*); real Devos = REF-00735, unlinked |
+| Devos 2019 dementia source | ✅ **fixed** (2026-07-18) | elab_id=6 mis-cited REF-00571 (*Kotloski 2020, genetics*) → re-pointed to real Devos **REF-00735** via migration |
 
 ## Why this matters
 

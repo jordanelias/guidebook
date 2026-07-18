@@ -34,7 +34,7 @@ handles *convergence ≠ evidence* correctly (next section). The genuine remaini
 |---|---|
 | **Recording flags don't reflect the substrate** | `co1/pico/jurisdictions_searched = 0`, `evidence_state=RETRACTED-PRE-REHAB` despite extensive extraction/PMP/cell-state work — surface/flag debt |
 | **Co-1 lived experience genuinely absent** | all 4 `convergence_assessment` rows `single_axis`, `co1_sources=[]`; `co1_pass_count=0` |
-| **DB-flagged data errors** | elab_id=6 mis-cites Devos 2019 as **REF-00571** (actually *Kotloski 2020, a genetics paper*); real Devos = **REF-00735** (unlinked). **Four duplicate ANSI-2010 records**: REF-00326/335/563/604 — need dedup |
+| **DB-flagged data errors** — ✅ **RESOLVED** (migration `data_20260718071505`) | elab_id=6 mis-cited Devos 2019 as **REF-00571** (*Kotloski 2020, a genetics paper*) → re-pointed to real Devos **REF-00735**. **Four ANSI-2010 records** REF-00326/335/**563**/604 → consolidated onto canonical **REF-00563** (FKs re-pointed, dups marked `DUPLICATE-OF`, reversible) |
 | **Person/OT cell + DAR layer** | no `person`-scale cell (though `items.pmp_delta_min=0.05 down` encodes the person adjustment); no DAR provisioning recorded |
 
 ## Convergence ≠ evidence — the DB does this correctly (my first draft did not)
