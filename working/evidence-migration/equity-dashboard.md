@@ -9,16 +9,27 @@ in `non-english-coverage-matrix.json`; the recovery pipeline and discipline are 
 `scripts/migrations/data_20260719052009_2026-07-19-non-english-research-recovery-batch2.sql` (batch 2),
 `scripts/migrations/data_20260719053052_2026-07-19-non-english-research-recovery-batch3.sql` (batch 3).*
 
-## Headline numbers (cumulative, all three batches)
+## Headline numbers (cumulative, all four batches)
 
-| metric | pre-session baseline | after batch 1 | after batch 2 | after batch 3 | cumulative delta |
-|---|---|---|---|---|---|
-| `evidence_sources` total | 640 | 650 | 661 | **662** | +22 (new ingests) |
-| non-English (`lang_detected` != en/eng) | 87 | 136 | 147 | **150** | **+63** |
-| `lang_detected` rows corrected (mislabel fix) | — | 59 | 59 | **61** | 59 (batch 1) + 2 (batch 3) |
-| `jurisdiction` = INTL (seam, should be INT) | 5 | 0 | 0 | 0 | fixed |
-| `verification_status` = VERIFIED-2 (search-corroborated, primary fetch blocked) | 0 | 10 | 21 | **22** | new category, honestly disclosed |
-| `data_migrations` ledger rows | 199 | 200 | 201 | **202** | 3 migrations this session |
+| metric | pre-session baseline | after batch 1 | after batch 2 | after batch 3 | after batch 4 | cumulative delta |
+|---|---|---|---|---|---|---|
+| `evidence_sources` total | 640 | 650 | 661 | 662 | **670** | +30 (new ingests) |
+| non-English (`lang_detected` != en/eng) | 87 | 136 | 147 | 150 | **158** | **+71** |
+| `lang_detected` rows corrected (mislabel fix) | — | 59 | 59 | 61 | 61 | 59 (batch 1) + 2 (batch 3) |
+| `jurisdiction` = INTL (seam, should be INT) | 5 | 0 | 0 | 0 | 0 | fixed |
+| `verification_status` = VERIFIED-2 (search-corroborated, primary fetch blocked) | 0 | 10 | 21 | 22 | **30** | new category, honestly disclosed |
+| `data_migrations` ledger rows | 199 | 200 | 201 | 202 | **203** | 4 migrations this session |
+
+**Batch 4:** see `slug-language-tracking-matrix.md` for full detail. Closed `luminance-contrast-and-pattern`
+(a slug with rich search notes but **zero** `source_slug_links` at all, discovered this session) to
+**100% non-English coverage (13/13)** — mostly relinks of already-verified rows, plus 2 new contrast-
+specific standards (DIN 32975 Germany, NS 11001 Norway). Also discovered that 4 "Tier-2" slugs
+(`mental-health-built-environment`, `deaf-spatial-design`, `cognitive-wayfinding-design`,
+`accessible-circulation-geometry`) have **PRE-REMEDIATION stub search notes with zero named
+instruments** — a different, harder problem than the other slugs, since there's nothing to extract-and-
+verify. Did genuine fresh primary research (not notes-extraction) for 2 of the 4, 2 jurisdictions each,
+finding real citable sources for both — including one **Co-1** addition (a Deaf-led Japanese research
+project), a track this corpus has documented as thin and US/UK-skewed.
 
 **Batch 3 (small follow-on):** widening batch 1's `lang_detected` fix beyond `standard_number`-bearing
 rows found 2 more mislabeled rows — including **`REF-00572`, the ORIGINAL motivating example the handoff
