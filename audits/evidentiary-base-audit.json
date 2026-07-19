@@ -1,23 +1,23 @@
 {
   "as_of": "2026-07-19",
   "n_slices": 82,
-  "total_source_instances": 749,
+  "total_source_instances": 753,
   "unique_sources": 651,
   "grade_distribution": {
     "A": 8,
     "B": 19,
     "C": 20,
-    "D": 13,
-    "E": 9,
+    "D": 14,
+    "E": 8,
     "F": 13
   },
   "tier_totals": {
     "1": 100,
-    "2": 75,
+    "2": 76,
     "3": 218,
     "4": 76,
-    "5": 146,
-    "6": 134
+    "5": 147,
+    "6": 136
   },
   "english_instances": 553,
   "zero_yield_search_languages": [
@@ -32,29 +32,32 @@
       "slug": "cognitive-wayfinding-design",
       "topic": "wayfinding-and-signage",
       "state": "RETRACTED-PRE-REHAB",
-      "n": 22,
-      "bp": 15,
-      "code_only": 7,
+      "n": 24,
+      "bp": 16,
+      "code_only": 8,
       "convergence_only": false,
       "tiers": {
         "1": 1,
-        "2": 4,
+        "2": 5,
         "3": 10,
-        "5": 7
+        "5": 7,
+        "6": 1
       },
       "etypes": {
         "clinical": 10,
         "national_fw": 7,
-        "standard_eb": 3,
+        "standard_eb": 4,
         "co1": 1,
-        "sr_meta": 1
+        "sr_meta": 1,
+        "code": 1
       },
       "markers": {
-        "●": 15,
-        "◐": 7
+        "●": 16,
+        "◐": 7,
+        "○": 1
       },
-      "n_jur": 11,
-      "n_true_jur": 11,
+      "n_jur": 13,
+      "n_true_jur": 13,
       "n_null_jur": 0,
       "polluted_jur": {},
       "jurs": {
@@ -68,9 +71,11 @@
         "DE": 1,
         "AU": 1,
         "CN": 1,
-        "IT": 1
+        "IT": 1,
+        "DK": 1,
+        "SE": 1
       },
-      "n_lang": 7,
+      "n_lang": 9,
       "langs": {
         "en": 14,
         "de": 2,
@@ -78,25 +83,27 @@
         "no": 1,
         "fr": 1,
         "ko": 1,
-        "ja": 1
+        "zh": 1,
+        "da": 1,
+        "sv": 1
       },
       "n_en": 14,
-      "n_nonen": 8,
-      "pct_en": 63.6,
+      "n_nonen": 10,
+      "pct_en": 58.3,
       "anglo_core": 2,
       "supra": 8,
-      "non_anglo": 12,
-      "pct_anglo_core": 9.1,
+      "non_anglo": 14,
+      "pct_anglo_core": 8.3,
       "sl_searched": 19,
       "sl_hit": 14,
       "search_jurs": 47,
-      "score": 88.1,
+      "score": 88.3,
       "components": {
         "A": 20,
-        "B": 23.6,
+        "B": 23.3,
         "C": 20,
         "D": 15,
-        "E": 9.5
+        "E": 10.0
       },
       "grade": "A"
     },
@@ -902,6 +909,77 @@
       "grade": "B"
     },
     {
+      "slug": "accessible-circulation-geometry",
+      "topic": "entrances-and-circulation",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 14,
+      "bp": 3,
+      "code_only": 11,
+      "convergence_only": false,
+      "tiers": {
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 3,
+        "6": 7
+      },
+      "etypes": {
+        "standard_eb": 2,
+        "code": 7,
+        "national_fw": 3,
+        "clinical": 2
+      },
+      "markers": {
+        "●": 3,
+        "◐": 4,
+        "○": 7
+      },
+      "n_jur": 9,
+      "n_true_jur": 9,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "UK": 5,
+        "INT": 2,
+        "JP": 1,
+        "NL": 1,
+        "US": 1,
+        "AU": 1,
+        "DE": 1,
+        "SE": 1,
+        "FI": 1
+      },
+      "n_lang": 6,
+      "langs": {
+        "en": 9,
+        "ja": 1,
+        "nl": 1,
+        "de": 1,
+        "sv": 1,
+        "fi": 1
+      },
+      "n_en": 9,
+      "n_nonen": 5,
+      "pct_en": 64.3,
+      "anglo_core": 7,
+      "supra": 2,
+      "non_anglo": 5,
+      "pct_anglo_core": 50.0,
+      "sl_searched": 19,
+      "sl_hit": 14,
+      "search_jurs": 47,
+      "score": 75.7,
+      "components": {
+        "A": 20,
+        "B": 14.3,
+        "C": 20,
+        "D": 15,
+        "E": 6.4
+      },
+      "grade": "B"
+    },
+    {
       "slug": "accessible-design-economics-cost-premium",
       "topic": "economics",
       "state": "RETRACTED-PRE-REHAB",
@@ -1629,73 +1707,6 @@
         "C": 13,
         "D": 0,
         "E": 7.5
-      },
-      "grade": "B"
-    },
-    {
-      "slug": "accessible-circulation-geometry",
-      "topic": "entrances-and-circulation",
-      "state": "RETRACTED-PRE-REHAB",
-      "n": 12,
-      "bp": 3,
-      "code_only": 9,
-      "convergence_only": false,
-      "tiers": {
-        "1": 1,
-        "2": 1,
-        "3": 1,
-        "4": 1,
-        "5": 2,
-        "6": 6
-      },
-      "etypes": {
-        "standard_eb": 2,
-        "code": 6,
-        "national_fw": 2,
-        "clinical": 2
-      },
-      "markers": {
-        "●": 3,
-        "◐": 3,
-        "○": 6
-      },
-      "n_jur": 7,
-      "n_true_jur": 7,
-      "n_null_jur": 0,
-      "polluted_jur": {},
-      "jurs": {
-        "UK": 5,
-        "INT": 2,
-        "US": 1,
-        "AU": 1,
-        "DE": 1,
-        "SE": 1,
-        "FI": 1
-      },
-      "n_lang": 4,
-      "langs": {
-        "en": 9,
-        "de": 1,
-        "sv": 1,
-        "fi": 1
-      },
-      "n_en": 9,
-      "n_nonen": 3,
-      "pct_en": 75.0,
-      "anglo_core": 7,
-      "supra": 2,
-      "non_anglo": 3,
-      "pct_anglo_core": 58.3,
-      "sl_searched": 19,
-      "sl_hit": 14,
-      "search_jurs": 47,
-      "score": 69.0,
-      "components": {
-        "A": 20,
-        "B": 15.0,
-        "C": 17,
-        "D": 12,
-        "E": 5.0
       },
       "grade": "B"
     },
@@ -3804,23 +3815,23 @@
         "○": 2
       },
       "n_jur": 5,
-      "n_true_jur": 3,
+      "n_true_jur": 4,
       "n_null_jur": 0,
       "polluted_jur": {
-        "ZH": 3,
-        "JA": 1
+        "ZH": 3
       },
       "jurs": {
         "US": 3,
         "INT": 3,
         "ZH": 3,
         "UK": 1,
-        "JA": 1
+        "JP": 1
       },
-      "n_lang": 2,
+      "n_lang": 3,
       "langs": {
         "en": 8,
-        "ja": 3
+        "zh": 2,
+        "ja": 1
       },
       "n_en": 8,
       "n_nonen": 3,
@@ -3832,15 +3843,15 @@
       "sl_searched": 19,
       "sl_hit": 4,
       "search_jurs": 47,
-      "score": 33.8,
+      "score": 35.8,
       "components": {
         "A": 16,
         "B": 0.0,
         "C": 8.5,
-        "D": 2.5,
+        "D": 4.5,
         "E": 6.8
       },
-      "grade": "E"
+      "grade": "D"
     },
     {
       "slug": "cross-population-conflict-resolutions",
