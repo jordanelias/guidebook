@@ -1355,11 +1355,16 @@ def insert_source_slug_link(ref_id: str, slug: str, local_ref_id: str,
 
 
 def get_unmined_for_all_slugs(tier_max: int = 3) -> list[dict]:
-    """Return all unmined Tier 1–N sources across all slugs."""
+    """Return all unmined Tier 1–N sources across all slugs.
+
+    Non-English sources (lang_detected/language not in {'en', NULL}) sort first
+    within each tier, per the citation-mining non-English priority ordering.
+    """
     with connect() as conn:
         rows = conn.execute("""
             SELECT ssl.local_ref_id, ssl.slug,
-                   es.doi, es.tier, es.title,
+                   es.doi, es.tier, es.pub_title AS title,
+                   COALESCE(es.lang_detected, es.language) AS lang,
                    COALESCE(cm.backward, 0) AS backward,
                    COALESCE(cm.forward, 0) AS forward
             FROM source_slug_links ssl
@@ -1368,7 +1373,9 @@ def get_unmined_for_all_slugs(tier_max: int = 3) -> list[dict]:
                 ON cm.slug = ssl.slug AND cm.local_ref_id = ssl.local_ref_id
             WHERE es.tier <= ?
             AND (cm.local_ref_id IS NULL OR cm.backward = 0 OR cm.forward = 0)
-            ORDER BY es.tier ASC, ssl.slug, ssl.local_ref_id
+            ORDER BY es.tier ASC,
+                     CASE WHEN COALESCE(es.lang_detected, es.language, 'en') = 'en' THEN 1 ELSE 0 END,
+                     ssl.slug, ssl.local_ref_id
         """, [tier_max]).fetchall()
     return [dict(r) for r in rows]
 
