@@ -2,10 +2,11 @@
 
 **Status:** pilot in progress · **Branch:** `claude/project-status-next-steps-wgatjq` (restarted off `main` @ fcc366e) · **Started:** 2026-07-18
 
-**2026-07-19 update:** `research-handoff-non-english.md`'s recovery pipeline was run as a first pass —
-see `HANDOFF.md` §0, `equity-dashboard.md`, `non-english-coverage-matrix.json`, `global-south-finding.md`.
-Non-English sources by `lang_detected`: 87 → 136 (migration
-`scripts/migrations/data_20260719034512_2026-07-19-non-english-research-recovery.sql`).
+**2026-07-19 update (2 batches):** `research-handoff-non-english.md`'s recovery pipeline was run — see
+`HANDOFF.md` §0, `equity-dashboard.md`, `non-english-coverage-matrix.json`, `global-south-finding.md`.
+Non-English sources by `lang_detected`: 87 → 136 (batch 1) → **147** (batch 2, which completed
+wayfinding-dementia-spatial-design and fixed the stair-ramp NL/ES gaps). Migrations:
+`data_20260719034512_...recovery.sql`, `data_20260719052009_...recovery-batch2.sql`.
 
 This directory is the working deliverable for finishing the evidence migration — taking each provision
 from a retracted stub to a rehabilitated, multimodally-sourced, equity-searched, ethically-screened,

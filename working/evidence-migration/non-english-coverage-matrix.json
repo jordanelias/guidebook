@@ -1,95 +1,653 @@
 {
   "_meta": {
     "generated": "2026-07-19",
-    "session": "session_2026-07-19-non-english-research-recovery",
-    "method": "Per research-handoff-non-english.md recovery pipeline: extract named instruments from search_languages.notes -> verify via real WebSearch/WebFetch -> dedup against evidence_sources -> ingest via migration data_20260719034512_2026-07-19-non-english-research-recovery.sql. Empties/negative findings recorded, not dropped (S6).",
-    "scope_disclosure": "First pass only, per handoff S7 honest-limit clause. Covers: Tier-0 registry backlog (6 refs), Tier-1 richest 2 slugs by non-EN yield (deaf-classroom-reverberation-time, stair-ramp-threshold-biomechanics-accessibility) + a partial pass on wayfinding-dementia-spatial-design (3 of ~15 named instruments), plus the 5-language Global-South investigation. The other Tier-1/Tier-2 slugs (luminance-contrast-and-pattern 74 non-EN hits, sensory-room-user-control 42, cognitive-wayfinding-design/deaf-spatial-design/mental-health-built-environment/accessible-circulation-geometry 19-23 each, and the full 14-language x 24-jurisdiction sweep) remain a running fraction, not claimed complete."
+    "sessions": [
+      "session_2026-07-19-non-english-research-recovery (batch 1)",
+      "session_2026-07-19-non-english-research-recovery-batch2 (batch 2)"
+    ],
+    "method": "Per research-handoff-non-english.md recovery pipeline: extract named instruments from search_languages.notes -> verify via real WebSearch/WebFetch -> dedup against evidence_sources -> ingest via migration. Empties/negative findings recorded, not dropped (S6).",
+    "migrations": [
+      "scripts/migrations/data_20260719034512_2026-07-19-non-english-research-recovery.sql",
+      "scripts/migrations/data_20260719052009_2026-07-19-non-english-research-recovery-batch2.sql"
+    ],
+    "scope_disclosure": "Two passes, per handoff S7 honest-limit clause. Batch 1: Tier-0 registry backlog (6 refs), Tier-1 richest 2 slugs by non-EN yield (deaf-classroom-reverberation-time, stair-ramp-threshold-biomechanics-accessibility) + a partial pass on wayfinding-dementia-spatial-design (3 of ~15 named instruments), plus the 5-language Global-South investigation. Batch 2: completed wayfinding-dementia-spatial-design (10 more instruments, Portugal re-confirmed as genuine absence), filled the NL ramp gap and corrected the ES ramp-gradient citation for stair-ramp-threshold-biomechanics-accessibility, and re-attempted (unsuccessfully, tooling-blocked) direct-read verification of the 9 Global-South leads. The remaining Tier-1/Tier-2 slugs (luminance-contrast-and-pattern 74 non-EN hits, sensory-room-user-control 42, cognitive-wayfinding-design/deaf-spatial-design/mental-health-built-environment/accessible-circulation-geometry 19-23 each) and the full 14-language x 24-jurisdiction sweep remain a running fraction, not claimed complete."
   },
   "tier0_registry_backlog": [
-    {"ref_id": "REF-00221", "jurisdiction": "JP", "language": "ja", "disposition": "INGESTED", "note": "Deafblind communication modalities guide (DINF, 1998). Real-retrieval verified via WebSearch (primary URL 403'd to direct fetch). Linked to deafblind-built-environment-design (DBL-09)."},
-    {"ref_id": "REF-00139", "jurisdiction": "SG", "language": "en", "disposition": "INGESTED", "note": "BCA Code on Accessibility in the Built Environment 2025, Ch.8 Signage and Wayfinding. English-language (Singapore official language) -- adds JURISDICTIONAL not LANGUAGE diversity. Linked to wayfinding-global-south (WGS-11)."},
-    {"ref_id": "REF-00218", "jurisdiction": "DE", "language": "de", "disposition": "DUPLICATE-CONFIRMED", "note": "DIN 18041:2016 -- registry entry is stale; already migrated as REF-00329. No new row created."},
-    {"ref_id": "REF-00243", "jurisdiction": "FI", "language": "fi", "disposition": "DUPLICATE-CONFIRMED", "note": "Decree 241/2017 -- registry entry is stale; already migrated as REF-00424 and REF-00459 (door provisions). Relinked REF-00424 to stair-ramp-threshold-biomechanics-accessibility (SRB-19) this session."},
-    {"ref_id": "REF-00372", "jurisdiction": "FR", "language": "fr", "disposition": "DUPLICATE-CONFIRMED", "note": "Arrete du 20 avril 2017 + CEREMA BIM guidance -- registry entry is stale; already migrated as REF-00350."},
-    {"ref_id": "REF-00382", "jurisdiction": "CN", "language": "zh", "disposition": "DUPLICATE-CONFIRMED", "note": "GB 50763-2012 (accessible entrances) -- registry entry is stale; already migrated as REF-00462 (exact title match: \"无障碍出入口\"). Relinked REF-00462 to stair-ramp-threshold-biomechanics-accessibility (SRB-16) this session."}
+    {
+      "ref_id": "REF-00221",
+      "jurisdiction": "JP",
+      "language": "ja",
+      "disposition": "INGESTED",
+      "note": "Deafblind communication modalities guide (DINF, 1998). Real-retrieval verified via WebSearch (primary URL 403'd to direct fetch). Linked to deafblind-built-environment-design (DBL-09)."
+    },
+    {
+      "ref_id": "REF-00139",
+      "jurisdiction": "SG",
+      "language": "en",
+      "disposition": "INGESTED",
+      "note": "BCA Code on Accessibility in the Built Environment 2025, Ch.8 Signage and Wayfinding. English-language (Singapore official language) -- adds JURISDICTIONAL not LANGUAGE diversity. Linked to wayfinding-global-south (WGS-11)."
+    },
+    {
+      "ref_id": "REF-00218",
+      "jurisdiction": "DE",
+      "language": "de",
+      "disposition": "DUPLICATE-CONFIRMED",
+      "note": "DIN 18041:2016 -- registry entry is stale; already migrated as REF-00329. No new row created."
+    },
+    {
+      "ref_id": "REF-00243",
+      "jurisdiction": "FI",
+      "language": "fi",
+      "disposition": "DUPLICATE-CONFIRMED",
+      "note": "Decree 241/2017 -- registry entry is stale; already migrated as REF-00424 and REF-00459 (door provisions). Relinked REF-00424 to stair-ramp-threshold-biomechanics-accessibility (SRB-19) this session."
+    },
+    {
+      "ref_id": "REF-00372",
+      "jurisdiction": "FR",
+      "language": "fr",
+      "disposition": "DUPLICATE-CONFIRMED",
+      "note": "Arrete du 20 avril 2017 + CEREMA BIM guidance -- registry entry is stale; already migrated as REF-00350."
+    },
+    {
+      "ref_id": "REF-00382",
+      "jurisdiction": "CN",
+      "language": "zh",
+      "disposition": "DUPLICATE-CONFIRMED",
+      "note": "GB 50763-2012 (accessible entrances) -- registry entry is stale; already migrated as REF-00462 (exact title match: \"无障碍出入口\"). Relinked REF-00462 to stair-ramp-threshold-biomechanics-accessibility (SRB-16) this session."
+    }
   ],
   "lang_detected_hygiene_fix": {
     "rows_corrected": 59,
     "criterion": "standard_number-bearing rows in a single-official-language jurisdiction, whose lang_detected disagreed with that jurisdiction's language and whose pub_title/standard_number carries unambiguous native-language text or a national-standard identifier pattern (DIN/TEK17/BFS/GB/NS/SFS/JIS/UNI/Loi/Arrete/Decree/DL/DM).",
-    "jurisdictions_affected": {"DE": 13, "CH": 2, "CN": 7, "SE": 6, "NO": 11, "DK": 3, "NL": 5, "FR": 2, "FI": 2, "IT": 2, "ES": 2, "JP": 4},
+    "jurisdictions_affected": {
+      "DE": 13,
+      "CH": 2,
+      "CN": 7,
+      "SE": 6,
+      "NO": 11,
+      "DK": 3,
+      "NL": 5,
+      "FR": 2,
+      "FI": 2,
+      "IT": 2,
+      "ES": 2,
+      "JP": 4
+    },
     "deliberately_not_corrected": [
-      {"ref_id": "REF-00085", "reason": "Publisher is Dutch, but content reads as an English-language post-occupancy-evaluation report; no native-language text in title itself. Left as lang_detected=en pending direct verification."},
-      {"ref_id": "REF-00239", "reason": "Registry note itself hedges \"likely BAGSO... brochure\"; no native-language text in title. Left uncorrected."},
-      {"ref_id": "REF-00287", "reason": "iGlobenews international news article -- genuinely English-language reporting on a Dutch facility, not a Dutch source."},
-      {"ref_id": "REF-00461", "reason": "Seoul municipal guideline commonly issued bilingually; no native-language text in title. Left uncorrected."},
-      {"ref_id": "REF-00599", "reason": "Danish institution but title reads as English gloss with only one embedded Danish word (institution context); insufficient evidence to override."}
+      {
+        "ref_id": "REF-00085",
+        "reason": "Publisher is Dutch, but content reads as an English-language post-occupancy-evaluation report; no native-language text in title itself. Left as lang_detected=en pending direct verification."
+      },
+      {
+        "ref_id": "REF-00239",
+        "reason": "Registry note itself hedges \"likely BAGSO... brochure\"; no native-language text in title. Left uncorrected."
+      },
+      {
+        "ref_id": "REF-00287",
+        "reason": "iGlobenews international news article -- genuinely English-language reporting on a Dutch facility, not a Dutch source."
+      },
+      {
+        "ref_id": "REF-00461",
+        "reason": "Seoul municipal guideline commonly issued bilingually; no native-language text in title. Left uncorrected."
+      },
+      {
+        "ref_id": "REF-00599",
+        "reason": "Danish institution but title reads as English gloss with only one embedded Danish word (institution context); insufficient evidence to override."
+      }
     ],
     "jurisdiction_hygiene_applied": "INTL -> INT normalization (5 rows), per db/migrations/0001-jurisdiction-hygiene.sql item 1. Item 3 (19 null jurisdictions) intentionally left untouched -- would require guessing (forbidden by S3)."
   },
   "tier1_slugs": {
     "deaf-classroom-reverberation-time": {
-      "before": {"total_links": 3, "non_en_links": 0},
-      "after": {"total_links": 12, "non_en_links": 9},
+      "before": {
+        "total_links": 3,
+        "non_en_links": 0
+      },
+      "after_batch1": {
+        "total_links": 12,
+        "non_en_links": 9
+      },
+      "after_batch2": {
+        "total_links": 12,
+        "non_en_links": 9,
+        "note": "untouched in batch 2"
+      },
       "additions": [
-        {"ref_id": "REF-00565", "jurisdiction": "NO", "language": "no", "type": "relink (already-verified source)", "standard": "NS 8175:2019"},
-        {"ref_id": "REF-00566", "jurisdiction": "CN", "language": "zh", "type": "relink (already-verified source)", "standard": "GB 50118-2010 §5.3.4"},
-        {"ref_id": "REF-00564", "jurisdiction": "IT", "language": "it", "type": "relink (already-verified source)", "standard": "UNI 11532-2:2020"},
-        {"ref_id": "REF-00329", "jurisdiction": "DE", "language": "de", "type": "relink (already-verified source)", "standard": "DIN 18041:2016"},
-        {"ref_id": "REF-00738", "jurisdiction": "FI", "language": "fi", "type": "new ingest", "standard": "SFS 5907:2004"},
-        {"ref_id": "REF-00739", "jurisdiction": "FR", "language": "fr", "type": "new ingest (substituted -- see note)", "standard": "Arrete du 25 avril 2003", "note": "Search-notes candidate NF S31-080:2006 was verified NOT to cover classrooms (offices/tertiary only); dropped and replaced with the correct citation."},
-        {"ref_id": "REF-00740", "jurisdiction": "IT", "language": "it", "type": "new ingest", "standard": "Circolare Ministero LL.PP. n. 3150/1967"},
-        {"ref_id": "REF-00741", "jurisdiction": "SE", "language": "sv", "type": "new ingest", "standard": "SS 25268:2023"},
-        {"ref_id": "REF-00742", "jurisdiction": "NL", "language": "nl", "type": "new ingest", "standard": "PvE Frisse Scholen 2015 v3"}
+        {
+          "ref_id": "REF-00565",
+          "jurisdiction": "NO",
+          "language": "no",
+          "type": "relink (already-verified source)",
+          "standard": "NS 8175:2019"
+        },
+        {
+          "ref_id": "REF-00566",
+          "jurisdiction": "CN",
+          "language": "zh",
+          "type": "relink (already-verified source)",
+          "standard": "GB 50118-2010 §5.3.4"
+        },
+        {
+          "ref_id": "REF-00564",
+          "jurisdiction": "IT",
+          "language": "it",
+          "type": "relink (already-verified source)",
+          "standard": "UNI 11532-2:2020"
+        },
+        {
+          "ref_id": "REF-00329",
+          "jurisdiction": "DE",
+          "language": "de",
+          "type": "relink (already-verified source)",
+          "standard": "DIN 18041:2016"
+        },
+        {
+          "ref_id": "REF-00738",
+          "jurisdiction": "FI",
+          "language": "fi",
+          "type": "new ingest",
+          "standard": "SFS 5907:2004"
+        },
+        {
+          "ref_id": "REF-00739",
+          "jurisdiction": "FR",
+          "language": "fr",
+          "type": "new ingest (substituted -- see note)",
+          "standard": "Arrete du 25 avril 2003",
+          "note": "Search-notes candidate NF S31-080:2006 was verified NOT to cover classrooms (offices/tertiary only); dropped and replaced with the correct citation."
+        },
+        {
+          "ref_id": "REF-00740",
+          "jurisdiction": "IT",
+          "language": "it",
+          "type": "new ingest",
+          "standard": "Circolare Ministero LL.PP. n. 3150/1967"
+        },
+        {
+          "ref_id": "REF-00741",
+          "jurisdiction": "SE",
+          "language": "sv",
+          "type": "new ingest",
+          "standard": "SS 25268:2023"
+        },
+        {
+          "ref_id": "REF-00742",
+          "jurisdiction": "NL",
+          "language": "nl",
+          "type": "new ingest",
+          "standard": "PvE Frisse Scholen 2015 v3"
+        }
       ],
-      "still_unresolved": ["JA (no legally-binding national classroom-RT standard -- genuine absence, not a gap in search)", "DA (no single clean classroom-RT standard identified; Arbejdstilsynet + BR18 + DCUM cluster, needs a dedicated pass)", "KO/PT (search_languages notes explicitly mark these as NOT SEARCHED for this slug)"]
+      "still_unresolved": [
+        "JA (no legally-binding national classroom-RT standard -- genuine absence, not a gap in search)",
+        "DA (no single clean classroom-RT standard identified; Arbejdstilsynet + BR18 + DCUM cluster, needs a dedicated pass)",
+        "KO/PT (search_languages notes explicitly mark these as NOT SEARCHED for this slug)"
+      ]
     },
     "stair-ramp-threshold-biomechanics-accessibility": {
-      "before": {"total_links": 15, "non_en_links": 0},
-      "after": {"total_links": 24, "non_en_links": 9},
-      "additions": [
-        {"ref_id": "REF-00462", "jurisdiction": "CN", "language": "zh", "type": "relink", "standard": "GB 50763-2012"},
-        {"ref_id": "REF-00422", "jurisdiction": "DE", "language": "de", "type": "relink", "standard": "DIN 18040-1:2010"},
-        {"ref_id": "REF-00415", "jurisdiction": "FR", "language": "fr", "type": "relink", "standard": "Arrete du 8 decembre 2014"},
-        {"ref_id": "REF-00424", "jurisdiction": "FI", "language": "fi", "type": "relink", "standard": "Government Decree 241/2017"},
-        {"ref_id": "REF-00458", "jurisdiction": "DK", "language": "da", "type": "relink", "standard": "BR18"},
-        {"ref_id": "REF-00365", "jurisdiction": "PT", "language": "pt", "type": "relink", "standard": "Decreto-Lei 163/2006"},
-        {"ref_id": "REF-00364", "jurisdiction": "IT", "language": "it", "type": "relink", "standard": "DM 236/1989 + DPR 503/96"},
-        {"ref_id": "REF-00322", "jurisdiction": "SE", "language": "sv", "type": "relink", "standard": "BFS 2011:6 / BBR"},
-        {"ref_id": "REF-00411", "jurisdiction": "NO", "language": "no", "type": "relink", "standard": "TEK17 §12-16 Rampe"}
+      "before": {
+        "total_links": 15,
+        "non_en_links": 0
+      },
+      "after_batch1": {
+        "total_links": 24,
+        "non_en_links": 9
+      },
+      "after_batch2": {
+        "total_links": 26,
+        "non_en_links": 11
+      },
+      "additions_batch1": [
+        {
+          "ref_id": "REF-00462",
+          "jurisdiction": "CN",
+          "language": "zh",
+          "type": "relink",
+          "standard": "GB 50763-2012"
+        },
+        {
+          "ref_id": "REF-00422",
+          "jurisdiction": "DE",
+          "language": "de",
+          "type": "relink",
+          "standard": "DIN 18040-1:2010"
+        },
+        {
+          "ref_id": "REF-00415",
+          "jurisdiction": "FR",
+          "language": "fr",
+          "type": "relink",
+          "standard": "Arrete du 8 decembre 2014"
+        },
+        {
+          "ref_id": "REF-00424",
+          "jurisdiction": "FI",
+          "language": "fi",
+          "type": "relink",
+          "standard": "Government Decree 241/2017"
+        },
+        {
+          "ref_id": "REF-00458",
+          "jurisdiction": "DK",
+          "language": "da",
+          "type": "relink",
+          "standard": "BR18"
+        },
+        {
+          "ref_id": "REF-00365",
+          "jurisdiction": "PT",
+          "language": "pt",
+          "type": "relink",
+          "standard": "Decreto-Lei 163/2006"
+        },
+        {
+          "ref_id": "REF-00364",
+          "jurisdiction": "IT",
+          "language": "it",
+          "type": "relink",
+          "standard": "DM 236/1989 + DPR 503/96"
+        },
+        {
+          "ref_id": "REF-00322",
+          "jurisdiction": "SE",
+          "language": "sv",
+          "type": "relink",
+          "standard": "BFS 2011:6 / BBR"
+        },
+        {
+          "ref_id": "REF-00411",
+          "jurisdiction": "NO",
+          "language": "no",
+          "type": "relink",
+          "standard": "TEK17 §12-16 Rampe"
+        }
       ],
-      "still_unresolved": ["NL (Bouwbesluit/Bbl ramp provisions named in search notes but no matching evidence_sources row found -- genuinely un-ingested, flagged for next batch)", "ES (CTE DB SUA ramp table named but REF-00464 covers doors, not the ramp-gradient table specifically -- needs its own verification pass)", "KO (장애인 편의증진법 ramp provisions named but not cross-checked this session)"]
+      "additions_batch2": [
+        {
+          "ref_id": "REF-00756",
+          "jurisdiction": "NL",
+          "language": "nl",
+          "type": "new ingest",
+          "standard": "Bbl Artikel 4.30 (hellingbaan)",
+          "note": "Height-tiered ramp table (1:12/1:16/1:20 by 0.25m/0.5m breakpoints), confirmed accurate, HIGH confidence."
+        },
+        {
+          "ref_id": "REF-00464",
+          "jurisdiction": "ES",
+          "language": "es",
+          "type": "relink + CITATION CORRECTED",
+          "standard": "DB-SUA Seccion SUA 1 sec.4.3 Tabla 4.1 (not SUA 9 as originally claimed)",
+          "note": "The search-notes-claimed ramp table (12%/8%/6%/4%) was WRONG -- it conflated the real new-construction table (10%/8%/6% + 2% cross-fall, SUA 1 sec.4.3) with a different document's existing-building tolerances (DA DB-SUA/2: 12%/10%/8%/6%). Relinked with corrected figures; the wrong table is not cited anywhere."
+        }
+      ],
+      "still_unresolved": [
+        "KO (장애인 편의증진법 ramp provisions named but not cross-checked)",
+        "DA DB-SUA/2 (Spain existing-building ramp tolerance table, distinct from the corrected DB-SUA new-construction table above -- identified but not verified/ingested)"
+      ]
     },
     "wayfinding-dementia-spatial-design": {
-      "before": {"total_links": 9, "non_en_links": 0},
-      "after": {"total_links": 12, "non_en_links": 3},
-      "additions": [
-        {"ref_id": "REF-00743", "jurisdiction": "NO", "language": "no", "type": "new ingest", "standard": "Helsedirektoratet Nasjonal faglig retningslinje for demens"},
-        {"ref_id": "REF-00744", "jurisdiction": "CN", "language": "zh", "type": "new ingest", "standard": "GB/T 46401-2025"},
-        {"ref_id": "REF-00745", "jurisdiction": "FI", "language": "fi", "type": "new ingest", "standard": "Ympäristöopas 2018"}
+      "before": {
+        "total_links": 9,
+        "non_en_links": 0
+      },
+      "after_batch1": {
+        "total_links": 12,
+        "non_en_links": 3
+      },
+      "after_batch2": {
+        "total_links": 22,
+        "non_en_links": 13
+      },
+      "additions_batch1": [
+        {
+          "ref_id": "REF-00743",
+          "jurisdiction": "NO",
+          "language": "no",
+          "type": "new ingest",
+          "standard": "Helsedirektoratet Nasjonal faglig retningslinje for demens"
+        },
+        {
+          "ref_id": "REF-00744",
+          "jurisdiction": "CN",
+          "language": "zh",
+          "type": "new ingest",
+          "standard": "GB/T 46401-2025"
+        },
+        {
+          "ref_id": "REF-00745",
+          "jurisdiction": "FI",
+          "language": "fi",
+          "type": "new ingest",
+          "standard": "Ympäristöopas 2018"
+        }
       ],
-      "still_unresolved": "PARTIAL PASS ONLY -- 3 of ~15 named instruments actioned this session (DE Wegweiser Demenz, IT DPCM 22/12/1989 + Linee guida RSA, DA SBi-anvisning 259/263, ES Guia de Practica Clinica, FR EHPAD/UHR/PASA framework, JA MHLW Ordinance 34, KO 4th National Dementia Plan + Seoul manual, NL De Hogeweyk cluster, PT AFID Senior, SV Socialstyrelsen guidelines remain un-actioned). This slug had the highest non-EN yield (108 hits, 11 languages) and needs a dedicated follow-up batch."
+      "additions_batch2": [
+        {
+          "ref_id": "REF-00746",
+          "jurisdiction": "IT",
+          "language": "it",
+          "type": "new ingest",
+          "standard": "DPCM 22/12/1989",
+          "confidence": "high"
+        },
+        {
+          "ref_id": "REF-00747",
+          "jurisdiction": "DK",
+          "language": "da",
+          "type": "new ingest",
+          "standard": "Bekendtgorelse om maerkning af demensegnede plejeboliger (BEK 2243/2020)",
+          "confidence": "medium-high"
+        },
+        {
+          "ref_id": "REF-00748",
+          "jurisdiction": "DK",
+          "language": "da",
+          "type": "new ingest",
+          "standard": "SBi-anvisning 259 (2nd ed. 2019, year corrected from claimed 2014)",
+          "confidence": "medium"
+        },
+        {
+          "ref_id": "REF-00749",
+          "jurisdiction": "ES",
+          "language": "es",
+          "type": "new ingest, reduced honest scope",
+          "standard": "Guia de Practica Clinica sobre Alzheimer (GPC 484, 2010)",
+          "note": "Granular color-therapy content originally attributed to this guide actually belongs to a different Spanish publication (Fundacion Pilares/AFAD) -- ingested for confirmed general environmental-modification content only.",
+          "confidence": "medium"
+        },
+        {
+          "ref_id": "REF-00750",
+          "jurisdiction": "FR",
+          "language": "fr",
+          "type": "new ingest",
+          "standard": "Decret n 2016-1164 (UHR/PASA framework)",
+          "confidence": "high"
+        },
+        {
+          "ref_id": "REF-00751",
+          "jurisdiction": "JP",
+          "language": "ja",
+          "type": "new ingest",
+          "standard": "MHLW Ordinance No. 34 (2006)",
+          "confidence": "high"
+        },
+        {
+          "ref_id": "REF-00752",
+          "jurisdiction": "KR",
+          "language": "ko",
+          "type": "new ingest",
+          "standard": "Seoul 2021 Cognitive Health Design Manual (apartment-type)",
+          "note": "Chosen over the alternative candidate (4th National Dementia Plan), which was confirmed real but policy-level only with no design content.",
+          "confidence": "medium"
+        },
+        {
+          "ref_id": "REF-00753",
+          "jurisdiction": "NL",
+          "language": "nl",
+          "type": "new ingest",
+          "standard": "Toolkit Dementievriendelijk Woongebouw (2024)",
+          "confidence": "medium-high"
+        },
+        {
+          "ref_id": "REF-00754",
+          "jurisdiction": "SE",
+          "language": "sv",
+          "type": "new ingest",
+          "standard": "Socialstyrelsen Nationella riktlinjer (2017-12-2)",
+          "confidence": "high"
+        },
+        {
+          "ref_id": "REF-00755",
+          "jurisdiction": "DE",
+          "language": "de",
+          "type": "new ingest, reduced honest scope",
+          "standard": "Wegweiser Demenz",
+          "note": "Verified to be primarily a directory/referral portal, not a technical design standard -- ingested at tier 3 (grey), cited only for confirmed home-safety-checklist and resident-group-size content, not the more granular corridor-geometry/mirror-avoidance claims in the original search notes.",
+          "confidence": "medium"
+        }
+      ],
+      "still_unresolved": "COMPLETE for clearly-named instruments (batch 1 + batch 2 = 13 of ~15 originally named). Portugal (PT) independently re-checked with 5 additional search queries this session -- GENUINE ABSENCE CONFIRMED, not ingested; one unconfirmed lead flagged (IGAS 2023 ERPI Referencial de Boas Praticas, content unread, 403-blocked). One companion document flagged but not chased: the Italian 'Linee guida del Ministero della Sanita n. 1' (~1994, exact date uncertain across sources) alongside REF-00746."
     }
   },
   "global_south_zero_result_investigation": {
-    "SW": {"verdict": "mixed, primarily (c) genuine absence -- secondary (b)", "reasoning": "Tooling reachability ruled out (Swahili content is reachable for other topics). Kenya and Tanzania both have real, current accessibility-standards regimes (Tanzania Persons with Disabilities Act 2010; Kenya Persons with Disabilities Act + National Building Code 2024 referencing KS ISO 21542:2011) but BOTH are published only in English -- no Swahili-original or Swahili-translated accessibility building standard was found despite deliberately-localized queries.", "recovered_not_ingested": []},
-    "ID": {"verdict": "(a)/(b) tooling reachability / query construction -- (c) genuine absence definitively ruled out", "reasoning": "A mature, decades-deep Indonesian-language body of formal standards exists (SNI 03-1735-2000 since 2000; Kepmen PU 468/KPTS/1998; Permen PUPR 14/2017) plus current academic literature including a wayfinding-for-visually-disabled-students paper that matches a corpus topic slug almost verbatim -- all surfaced on the first reasonably-phrased Indonesian query.", "recovered_not_ingested": [
-      {"title": "SNI 03-1735-2000 -- Tata Cara Perencanaan Akses Bangunan dan Akses Lingkungan", "url": "https://www.endlessafe.com/sni-03-1735-2000/", "status": "found via WebSearch; primary text not directly read (403 on fetch); flagged for a follow-up verify+ingest pass"},
-      {"title": "Kepmen PU No. 468/KPTS/1998", "url": "https://pelayanan.jakarta.go.id/download/regulasi/keputusan-menteri-pekerjan-umum-repubuk-indonesia-nomor-468-kpts-1998-tentang-persyaratan-teknis-aksesibilitas-pada-bangunan-umum-dan-lingkungan.pdf", "status": "found via WebSearch; not directly read; flagged"},
-      {"title": "Permen PUPR No. 14/2017 -- Persyaratan Kemudahan Bangunan Gedung", "url": null, "status": "found via WebSearch; not directly read; flagged"}
-    ]},
-    "HI": {"verdict": "(b) query construction -- (a) tooling reachability ruled out", "reasoning": "Native-Devanagari-script queries immediately surfaced India's Harmonised Guidelines and Space Standards for Barrier-Free Built Environment (MoHUA), including what appears to be an official Hindi translation. Romanized/naive-transliterated queries returned only English content -- a clean demonstration of the failure mode.", "recovered_not_ingested": [
-      {"title": "Hindi translation of the Harmonised Guidelines and Space Standards for Barrier-Free Built Environment", "url": "https://mohua.gov.in/upload/uploadfiles/files/92%20Hindi_Corrected.pdf", "status": "found via WebSearch (filename/title only); PDF not directly opened (403); needs independent verification before ingest"}
-    ]},
-    "BN": {"verdict": "mixed, leaning (b) query construction (subtler -- wrong terminology, not just wrong script)", "reasoning": "The naive-term native-script query underperformed; switching to the Bangladesh-specific technical term \"সার্বজনীনগম্য\" (universal-accessibility) surfaced real content: BNBC 2020 Part 3 Appendix D (Universal Accessibility), the 2013 Rights and Protection of Persons with Disabilities Act's accessibility clause, and a dedicated Bengali-language guideline site (BUAG).", "recovered_not_ingested": [
-      {"title": "BUAG -- Bengali-language accessible-building guideline site", "url": "https://www.buag.info/accessible-building", "status": "found via WebSearch; not directly read (proxy-blocked); publishing org not confirmed; flagged"},
-      {"title": "Rights and Protection of Persons with Disabilities Act, 2013 (accessibility clause, ~Sec. 34)", "url": "http://bdlaws.minlaw.gov.bd/act-1126.html", "status": "found via WebSearch; not directly read; flagged"}
-    ]},
-    "AR": {"verdict": "(b) query construction -- (c) genuine absence firmly ruled out", "reasoning": "Properly-phrased Modern Standard Arabic queries on niche sub-topics (wayfinding for the blind, classroom acoustics, dementia sensory design) all returned substantive relevant results immediately; a naive/garbled-transliteration query on the identical topic returned nothing useful -- a clean side-by-side demonstration. Real, current, binding national codes exist: Saudi SBC 201/901, Dubai Universal Design Code, Egyptian Code 601 (under Law 10/2018).", "recovered_not_ingested": [
-      {"title": "Saudi Building Code -- General, SBC 201 (accessibility provisions, references ICC/ANSI A117.1)", "url": "https://sbc.gov.sa/En/BC/Pages/BuildingCode/BCDetails.aspx?codeId=201&year=2024", "status": "found via WebSearch; not directly read; flagged"},
-      {"title": "Dubai Universal Design Code", "url": "https://www.dm.gov.ae/municipality-business/dubai-universal-design-code/", "status": "found via WebSearch; not directly read; flagged"},
-      {"title": "Egyptian Code for Accessibility (Code 601), under Law No. 10 of 2018", "url": "https://ncw.gov.eg/Images/PdfRelease/Law%20No%2010%20of%202018%20For%20Rights%20o-122020403910677.pdf", "status": "found via WebSearch; not directly read; flagged"},
-      {"title": "IDA compilation of CRPD Committee Concluding Observations, Article 9 (Accessibility)", "url": "https://www.internationaldisabilityalliance.org/sites/default/files/article_9_crpd_.pdf", "status": "found via WebSearch; not directly read; flagged"}
-    ]},
-    "tooling_caveat": "Multiple independent investigating agents this session reported that direct WebFetch was blocked (HTTP 403) on a broad, seemingly unrelated set of government/NGO/standards-body domains across ALL FIVE languages' investigations (India, Bangladesh, China, Finland, Norway, Italy, Sweden, Saudi Arabia, etc.), confirmed via the environment's own proxy-status endpoint as a shared infrastructure issue this session, not source-specific unavailability. This is flagged as a separate corpus-wide risk: if the ORIGINAL 81x19 multilingual sweep also depended on WebFetch (not just search) for a similar domain set, some fraction of ALL 'zero hits' (not just the 5 flagged languages) could be a tooling artifact rather than a genuine absence. Worth a dedicated audit."
+    "SW": {
+      "verdict": "mixed, primarily (c) genuine absence -- secondary (b)",
+      "reasoning": "Tooling reachability ruled out (Swahili content is reachable for other topics). Kenya and Tanzania both have real, current accessibility-standards regimes (Tanzania Persons with Disabilities Act 2010; Kenya Persons with Disabilities Act + National Building Code 2024 referencing KS ISO 21542:2011) but BOTH are published only in English -- no Swahili-original or Swahili-translated accessibility building standard was found despite deliberately-localized queries.",
+      "recovered_not_ingested": []
+    },
+    "ID": {
+      "verdict": "(a)/(b) tooling reachability / query construction -- (c) genuine absence definitively ruled out",
+      "reasoning": "A mature, decades-deep Indonesian-language body of formal standards exists (SNI 03-1735-2000 since 2000; Kepmen PU 468/KPTS/1998; Permen PUPR 14/2017) plus current academic literature including a wayfinding-for-visually-disabled-students paper that matches a corpus topic slug almost verbatim -- all surfaced on the first reasonably-phrased Indonesian query.",
+      "recovered_not_ingested": [
+        {
+          "title": "SNI 03-1735-2000 -- Tata Cara Perencanaan Akses Bangunan dan Akses Lingkungan",
+          "url": "https://www.endlessafe.com/sni-03-1735-2000/",
+          "status": "found via WebSearch; primary text not directly read (403 on fetch); flagged for a follow-up verify+ingest pass"
+        },
+        {
+          "title": "Kepmen PU No. 468/KPTS/1998",
+          "url": "https://pelayanan.jakarta.go.id/download/regulasi/keputusan-menteri-pekerjan-umum-repubuk-indonesia-nomor-468-kpts-1998-tentang-persyaratan-teknis-aksesibilitas-pada-bangunan-umum-dan-lingkungan.pdf",
+          "status": "found via WebSearch; not directly read; flagged"
+        },
+        {
+          "title": "Permen PUPR No. 14/2017 -- Persyaratan Kemudahan Bangunan Gedung",
+          "url": null,
+          "status": "found via WebSearch; not directly read; flagged"
+        }
+      ]
+    },
+    "HI": {
+      "verdict": "(b) query construction -- (a) tooling reachability ruled out",
+      "reasoning": "Native-Devanagari-script queries immediately surfaced India's Harmonised Guidelines and Space Standards for Barrier-Free Built Environment (MoHUA), including what appears to be an official Hindi translation. Romanized/naive-transliterated queries returned only English content -- a clean demonstration of the failure mode.",
+      "recovered_not_ingested": [
+        {
+          "title": "Hindi translation of the Harmonised Guidelines and Space Standards for Barrier-Free Built Environment",
+          "url": "https://mohua.gov.in/upload/uploadfiles/files/92%20Hindi_Corrected.pdf",
+          "status": "found via WebSearch (filename/title only); PDF not directly opened (403); needs independent verification before ingest"
+        }
+      ]
+    },
+    "BN": {
+      "verdict": "mixed, leaning (b) query construction (subtler -- wrong terminology, not just wrong script)",
+      "reasoning": "The naive-term native-script query underperformed; switching to the Bangladesh-specific technical term \"সার্বজনীনগম্য\" (universal-accessibility) surfaced real content: BNBC 2020 Part 3 Appendix D (Universal Accessibility), the 2013 Rights and Protection of Persons with Disabilities Act's accessibility clause, and a dedicated Bengali-language guideline site (BUAG).",
+      "recovered_not_ingested": [
+        {
+          "title": "BUAG -- Bengali-language accessible-building guideline site",
+          "url": "https://www.buag.info/accessible-building",
+          "status": "found via WebSearch; not directly read (proxy-blocked); publishing org not confirmed; flagged"
+        },
+        {
+          "title": "Rights and Protection of Persons with Disabilities Act, 2013 (accessibility clause, ~Sec. 34)",
+          "url": "http://bdlaws.minlaw.gov.bd/act-1126.html",
+          "status": "found via WebSearch; not directly read; flagged"
+        }
+      ]
+    },
+    "AR": {
+      "verdict": "(b) query construction -- (c) genuine absence firmly ruled out",
+      "reasoning": "Properly-phrased Modern Standard Arabic queries on niche sub-topics (wayfinding for the blind, classroom acoustics, dementia sensory design) all returned substantive relevant results immediately; a naive/garbled-transliteration query on the identical topic returned nothing useful -- a clean side-by-side demonstration. Real, current, binding national codes exist: Saudi SBC 201/901, Dubai Universal Design Code, Egyptian Code 601 (under Law 10/2018).",
+      "recovered_not_ingested": [
+        {
+          "title": "Saudi Building Code -- General, SBC 201 (accessibility provisions, references ICC/ANSI A117.1)",
+          "url": "https://sbc.gov.sa/En/BC/Pages/BuildingCode/BCDetails.aspx?codeId=201&year=2024",
+          "status": "found via WebSearch; not directly read; flagged"
+        },
+        {
+          "title": "Dubai Universal Design Code",
+          "url": "https://www.dm.gov.ae/municipality-business/dubai-universal-design-code/",
+          "status": "found via WebSearch; not directly read; flagged"
+        },
+        {
+          "title": "Egyptian Code for Accessibility (Code 601), under Law No. 10 of 2018",
+          "url": "https://ncw.gov.eg/Images/PdfRelease/Law%20No%2010%20of%202018%20For%20Rights%20o-122020403910677.pdf",
+          "status": "found via WebSearch; not directly read; flagged"
+        },
+        {
+          "title": "IDA compilation of CRPD Committee Concluding Observations, Article 9 (Accessibility)",
+          "url": "https://www.internationaldisabilityalliance.org/sites/default/files/article_9_crpd_.pdf",
+          "status": "found via WebSearch; not directly read; flagged"
+        }
+      ]
+    },
+    "tooling_caveat": "Multiple independent investigating agents in batch 1 reported that direct WebFetch was blocked (HTTP 403) on a broad, seemingly unrelated set of government/NGO/standards-body domains across ALL FIVE languages' investigations, confirmed via the environment's own proxy-status endpoint as a shared infrastructure issue that session, not source-specific unavailability. This is flagged as a separate corpus-wide risk: if the ORIGINAL 81x19 multilingual sweep also depended on WebFetch (not just search) for a similar domain set, some fraction of ALL 'zero hits' (not just the 5 flagged languages) could be a tooling artifact rather than a genuine absence. Worth a dedicated audit.",
+    "batch2_direct_read_reattempt": {
+      "summary": "Batch 2 made a SECOND, independent attempt to directly open and read (not just WebSearch-corroborate) all 9 recovered-not-ingested candidates from batch 1 (3 Indonesian, 1 Hindi, 3 Bangladeshi, 2 of the 4 Arabic-region items -- Saudi SBC201 and Egyptian Code 601 re-attempted; Dubai/IDA not re-attempted). Result: 0/9 achieved a genuine direct read.",
+      "root_cause_now_precisely_diagnosed": "Unlike batch 1's framing (a plausible shared-proxy issue), batch 2's investigating agents ran CONTROL-URL TESTS (fetching https://example.com, https://en.wikipedia.org, https://www.anthropic.com) and found these ALSO returned HTTP 403, and Bash curl's CONNECT tunnel was rejected for nearly every host tried. This confirms a SESSION-WIDE WebFetch tooling outage this session, not target-site blocking, not a domain-allowlist issue, and not evidence about whether the underlying sources are real (WebSearch, which uses a different retrieval path, continued to work and is the sole basis for the corroboration below).",
+      "one_new_finding": "The Indonesian-search agent flagged a real discrepancy needing resolution before citing: SNI 03-1735-2000's actual title per fresh search snippets appears to include a fire-hazard-prevention qualifier ('...untuk Pencegahan Bahaya Kebakaran Pada Bangunan Gedung') not present in the original candidate description -- this may mean the standard's primary scope is fire-egress access, not general disability accessibility. Needs a direct read to resolve, not assumed either way.",
+      "recommendation": "Do not attempt a third WebSearch-only verification pass on these 9 candidates -- the blocker is tooling (WebFetch outage), not insufficient searching. Retry only from a session with confirmed-functional WebFetch (verify against a trivial control URL first)."
+    }
+  },
+  "batch3_small_followon": {
+    "lang_detected_widened_sweep": {
+      "method": "Batch 1's fix was deliberately narrow (standard_number-bearing rows only). Batch 3 widened the sweep to non-standard_number rows in single-official-language jurisdictions, checking for native-language function words in pub_title.",
+      "found": [
+        {
+          "ref_id": "REF-00572",
+          "note": "THE ORIGINAL handoff example ('Guide acoustique pour personnes malentendantes') -- missed by batch 1 because it has no standard_number. Fixed en->fr."
+        },
+        {
+          "ref_id": "REF-00700",
+          "note": "'Les espaces Snoezelen' (Cairn.info) -- fixed en->fr."
+        }
+      ],
+      "not_exhaustive": "Only 2 candidates surfaced from a crude word-boundary heuristic checked against 28 non-standard_number rows in 8 jurisdictions -- a fuller audit of ALL non-standard_number rows (journal articles, reports, grey literature) across all non-English jurisdictions is still owed."
+    },
+    "sensory_room_user_control": {
+      "before": {
+        "total_links": 12,
+        "non_en_links": 1
+      },
+      "after": {
+        "total_links": 13,
+        "non_en_links": 3,
+        "note": "CORRECTED 2026-07-19 (batch5 adversarial doc-accuracy check): originally documented as 2; actual is 3 because the batch-3 lang_detected fix on REF-00700 ('Les espaces Snoezelen', already linked to this slug pre-session) also flipped that row to non-English (fr), a cross-effect the original count missed. Breakdown: REF-00702 (ko, pre-existing) + REF-00700 (fr, corrected in-place) + REF-00757 (es, new ingest)."
+      },
+      "domain_character": "Unlike the acoustic/ramp/dementia slugs, most jurisdictions searched here explicitly have NO formal sensory-room design standard (an honest absence already recorded in the original search notes for JA/DA/NL/PT/FI/FR/KO/SV/ZH/DE/IT/NO) -- this domain is mostly international clinical research literature (often English-language regardless of the population studied), not national codes.",
+      "additions": [
+        {
+          "ref_id": "REF-00757",
+          "jurisdiction": "CL",
+          "language": "es",
+          "type": "new ingest, honest scope correction",
+          "standard": "Ley N 21.545 (Chile)",
+          "note": "Search notes implied this law mandates sensory rooms; verification found it creates a general procedural/dysregulation-handling duty (Art. 18), operationalized only via non-binding 2025 MINEDUC guidance, with a stricter mandate still pending as an unpassed amendment bill. Ingested for the actual statutory basis, not overclaimed as a sensory-room standard."
+        }
+      ],
+      "investigated_not_ingested": [
+        {
+          "candidate": "Brazil PL 3098/24 (\"3 types\" of sensory rooms)",
+          "reason": "CONFIRMED to be a pending bill (Projeto de Lei), not enacted law -- cleared one legislative committee as of the most recent verifiable reporting, still needs full Chamber + Senate approval. Citing an unpassed bill as a standard would be an overclaim; deliberately not ingested. Flagged for future recheck if/when it passes."
+        }
+      ]
+    },
+    "luminance_contrast_and_pattern_finding": "This slug (74 non-EN search hits per the original handoff) was found to have ZERO source_slug_links total -- not a language gap but a slug with no evidence substrate ingested yet at all (English or otherwise). This is a different, larger problem than non-English recovery (which assumes existing EN substrate with a non-EN gap) and was NOT actioned this session -- flagged for the extraction/grading pipeline (see HANDOFF.md 'widen the grading throat'), not the equity-recovery pipeline."
+  },
+  "batch4_tier2_slugs": {
+    "luminance-contrast-and-pattern": {
+      "discovery": "This slug had rich TIER2 NATIVE SEARCH notes (14 languages, real named instruments) but ZERO source_slug_links at all before batch 4 -- not even English. A different failure mode than the other slugs (which had some EN coverage but zero non-EN).",
+      "before": {
+        "total_links": 0,
+        "non_en_links": 0
+      },
+      "after": {
+        "total_links": 13,
+        "non_en_links": 13,
+        "note": "100% non-English -- every link added this batch is non-English (11 relinks of already-verified rows from earlier batches, 2 new ingests: DIN 32975 Germany, NS 11001 Norway)."
+      }
+    },
+    "mental-health-built-environment": {
+      "discovery": "search_languages.notes for this slug are PRE-REMEDIATION stub rows ('Extracted from BPC REF-ID table'), zero named instruments -- the notes-extraction recovery pipeline does not apply. Required fresh primary research instead, scoped to 2 jurisdictions (DE, NL).",
+      "before": {
+        "total_links": 22,
+        "non_en_links": 1
+      },
+      "after": {
+        "total_links": 25,
+        "non_en_links": 4,
+        "note": "3 new ingests: DE EPH Planungshandbuch Psychiatrie + DGUV Information 207-027, NL Werkboek HIC. A 3rd DE lead (Niedersachsen Planungshilfe, state- not federal-level) and a 2nd NL lead (College bouw zorginstellingen, historical/defunct since ~2009) were investigated and NOT ingested."
+      }
+    },
+    "deaf-spatial-design": {
+      "discovery": "Same PRE-REMEDIATION-stub situation as mental-health-built-environment. Fresh research scoped to 2 jurisdictions (DE, JA). Neither has a binding national standard for Deaf-specific spatial design (as distinct from general accessibility/acoustic codes) -- that absence is recorded honestly, not papered over.",
+      "before": {
+        "total_links": 10,
+        "non_en_links": 2,
+        "note": "2 pre-existing non-EN links (REF-00346 sv, REF-00347 it) predate this session's fresh-research work -- initially undercounted in this session's own documentation as 0; corrected here per the batch-5 adversarial doc-accuracy check."
+      },
+      "after": {
+        "total_links": 13,
+        "non_en_links": 5,
+        "note": "3 new ingests: DE Deutsches Architektenblatt DeafSpace checklist article, JA Tsukuba University of Technology campus description (grey/national), JA Metote Lab (Co-1, Deaf-led, Tokyo-regional -- deliberately sought as a non-English/non-US-UK Co-1 counterweight per README.md's documented Co-1 thinness/US-UK skew)."
+      }
+    }
+  },
+  "batch5_adversarial_review": {
+    "method": "4 parallel agents, blind to the ingesting agent's own reasoning, explicitly instructed to try to REFUTE rather than confirm: (1) DB-integrity + migration SQL logic audit, (2)+(3) fresh WebSearch re-verification of 8 sampled new ingests (2 batches of 4), (4) independent re-derivation of every quantitative claim in the documentation directly from the live DB.",
+    "structural_integrity": "Clean throughout all 4 migrations: PRAGMA foreign_key_check and integrity_check both pass, zero duplicate (slug, local_ref_id) pairs, zero orphan links, INTL->INT normalization complete.",
+    "source_reverification": "7 of 8 sampled sources (REF-00757, 765, 758, 746, 754, 760, 764) CONFIRMED-ACCURATE on independent re-verification, including detailed fact-checks of specific numeric claims. 1 (REF-00751) CONFIRMED-PROBLEM -- see corrections below.",
+    "corrections_applied_migration": "scripts/migrations/data_20260719060557_2026-07-19-non-english-research-recovery-batch5.sql",
+    "corrections": [
+      {
+        "ref_id": "REF-00751",
+        "issue": "Factual error: notes claimed 'max 2 units/18 residents' for Japan's MHLW dementia group-home ordinance; the current standard (post-2021-04-01 revision) actually allows up to 3 units/27 residents.",
+        "fix": "notes and derivation_chain corrected; the 'strictest small-scale mandate' cross-jurisdiction superlative withdrawn (rested partly on the wrong figure)."
+      },
+      {
+        "ref_id": "REF-00744",
+        "issue": "Tier doctrine violation: tiered T6 (statutory) despite being a non-mandatory GB/T recommended standard -- the row's own notes already admitted this.",
+        "fix": "tier corrected 6->5 per governance/tier-system.md."
+      },
+      {
+        "ref_id": "REF-00743,REF-00749,REF-00754",
+        "issue": "evidence_type doctrine violation: formal national clinical-guideline-catalogue documents tagged evidence_type='clinical' (reserved for primary research per tier-system.md), a pairing with zero precedent among the DB's ~245 other T2/clinical-adjacent rows.",
+        "fix": "evidence_type corrected to 'standard_eb' (T2's 'named-organisation evidence-based standards' category); tier=2 unchanged, it is the correct rank."
+      },
+      {
+        "ref_id": "REF-00745",
+        "issue": "Tier + evidence_type doctrine violation: a Ministry-of-Environment housing design guide (not a clinical document) was tiered T2/clinical, granting undeserved best-practice-anchoring status.",
+        "fix": "tier corrected 2->5, evidence_type corrected clinical->national_fw."
+      },
+      {
+        "ref_id": "REF-00221",
+        "issue": "Tier + evidence_type doctrine violation: the row's OWN notes already said this is welfare/communication-modality documentation, not a design standard -- yet it was tiered T2/clinical.",
+        "fix": "tier corrected 2->3, evidence_type corrected clinical->grey, matching how this session tiered directly-comparable institutional sources elsewhere (REF-00755, REF-00763, REF-00764)."
+      },
+      {
+        "ref_id": "REF-00765",
+        "issue": "Co-1 encoding violation: deliberately ingested AS Co-1 lived-experience evidence (co1_provenance/co1_source_type set) but placed at tier=3/evidence_type=grey instead of this DB's established Co-1 convention (tier=1/evidence_type=co1, used by 29 of 30 pre-existing co1 rows) -- silently defeating the batch's own stated purpose (a non-English, non-US/UK Co-1 counterweight), since nothing querying evidence_type='co1' would have found it.",
+        "fix": "tier corrected 3->1, evidence_type corrected grey->co1."
+      },
+      {
+        "ref_id": "REF-00310",
+        "issue": "Likely lang_detected over-correction (batch 1): flipped en->sv, but Lund University's own LUP publications catalogue lists this dissertation under an English title, and Nordic medical-faculty dissertations are commonly English despite a Swedish subtitle in secondary citations -- the same ambiguous-case pattern batch 1 correctly left uncorrected for 5 other rows.",
+        "fix": "REVERTED sv->en."
+      },
+      {
+        "ref_id": "REF-00299",
+        "issue": "verification_note honesty defect (data value NOT wrong): stated justification claimed 'verified from native-language text' but both pub_title and standard_number fields are entirely English -- the actual basis was jurisdiction-inference, not text in the row itself. The language VALUE (no) was independently re-confirmed correct.",
+        "fix": "verification_note corrected for audit-trail honesty; lang_detected value unchanged."
+      }
+    ],
+    "flagged_not_fixed": [
+      {
+        "ref_id": "REF-00462 -> luminance-contrast-and-pattern link",
+        "issue": "Relink cites a stair/tactile-contrast provision of GB 50763 that lives in a different section than this row's own excerpt (accessible entrances). Same real standard, section-level imprecision, not a topical mismatch or fabrication.",
+        "action": "Annotated in source_slug_links.relevance_note; not further corrected -- would need a section-specific GB 50763 row that may not exist in the DB yet."
+      }
+    ],
+    "documentation_corrections": [
+      {
+        "item": "sensory-room-user-control non-EN count",
+        "was": 2,
+        "now": 3,
+        "reason": "missed cross-effect: a batch-3 lang_detected fix on an already-linked row (REF-00700) also raised this slug's non-EN tally."
+      },
+      {
+        "item": "deaf-spatial-design non-EN count",
+        "was": 4,
+        "now": 5,
+        "reason": "undercounted 2 pre-existing non-EN relinks (REF-00346 sv, REF-00347 it) that predated this session's fresh-research additions."
+      }
+    ]
   }
 }
