@@ -1,0 +1,115 @@
+name: Regenerate evidentiary audit
+
+# Auto-rebuilds the per-slice evidentiary audit whenever a push to main changes
+# the evidence data or the generator. Four deliverables are regenerated from
+# data/guidebook.db and committed back to main by github-actions[bot]:
+#
+#   audits/evidentiary-base-audit.md      — narrative report
+#   audits/evidentiary-base-audit.csv     — flat per-slice table
+#   audits/evidentiary-base-audit.json    — full per-slice record + aggregates
+#   tools/evidentiary-audit-dashboard.html — interactive filter view
+#
+# Determinism / loop safety: tools/evidentiary_audit.py derives its "as-of" date
+# from the DB's own max(updated_at), never wall-clock, so identical DB content
+# produces byte-identical output. This workflow's own commits only touch the four
+# generated files — never data/guidebook.db — so they cannot retrigger it. Belt
+# and braces: the job exits silently when the regenerated files are byte-identical
+# to the committed copies.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/guidebook.db'
+      - 'tools/evidentiary_audit.py'
+      - '.github/workflows/regenerate-evidentiary-audit.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'data/guidebook.db'
+      - 'tools/evidentiary_audit.py'
+      - 'audits/evidentiary-base-audit.*'
+      - 'tools/evidentiary-audit-dashboard.html'
+      - '.github/workflows/regenerate-evidentiary-audit.yml'
+  workflow_dispatch:
+
+# Prevent overlapping runs racing on the generated files.
+concurrency:
+  group: regenerate-evidentiary-audit-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  # On PRs: fail if the committed audit outputs are stale versus the DB, so a
+  # data change can't merge with an out-of-date audit. No writes.
+  check:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check audit outputs are current
+        run: python3 tools/evidentiary_audit.py --check
+
+  # On push to main / manual dispatch: regenerate and commit any changes.
+  regenerate:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Regenerate audit (md + csv + json + dashboard)
+        run: python3 tools/evidentiary_audit.py
+
+      - name: Commit if changed
+        id: commit
+        run: |
+          set -e
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add audits/evidentiary-base-audit.md \
+                  audits/evidentiary-base-audit.csv \
+                  audits/evidentiary-base-audit.json \
+                  tools/evidentiary-audit-dashboard.html
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit (audit outputs byte-identical to committed copies)."
+            echo "committed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          TS=$(date -u '+%Y-%m-%d %H:%M')
+          git commit -m "evidentiary-audit-regen: rebuild after data change [${TS}]"
+          echo "committed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Push with race-aware retry
+        if: steps.commit.outputs.committed == 'true'
+        run: |
+          set -e
+          for i in 1 2 3; do
+            if git push origin main; then
+              echo "Push succeeded on attempt $i"
+              exit 0
+            fi
+            echo "Push attempt $i failed; pulling --rebase and retrying"
+            git pull --rebase origin main || true
+            sleep $((i * 5))
+          done
+          echo "All push attempts failed"
+          exit 1

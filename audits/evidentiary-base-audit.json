@@ -1,0 +1,4761 @@
+{
+  "as_of": "2026-07-19",
+  "n_slices": 82,
+  "total_source_instances": 749,
+  "unique_sources": 651,
+  "grade_distribution": {
+    "A": 8,
+    "B": 19,
+    "C": 20,
+    "D": 13,
+    "E": 9,
+    "F": 13
+  },
+  "tier_totals": {
+    "1": 100,
+    "2": 75,
+    "3": 218,
+    "4": 76,
+    "5": 146,
+    "6": 134
+  },
+  "english_instances": 553,
+  "zero_yield_search_languages": [
+    "AR",
+    "BN",
+    "HI",
+    "ID",
+    "SW"
+  ],
+  "slices": [
+    {
+      "slug": "cognitive-wayfinding-design",
+      "topic": "wayfinding-and-signage",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 22,
+      "bp": 15,
+      "code_only": 7,
+      "convergence_only": false,
+      "tiers": {
+        "1": 1,
+        "2": 4,
+        "3": 10,
+        "5": 7
+      },
+      "etypes": {
+        "clinical": 10,
+        "national_fw": 7,
+        "standard_eb": 3,
+        "co1": 1,
+        "sr_meta": 1
+      },
+      "markers": {
+        "●": 15,
+        "◐": 7
+      },
+      "n_jur": 11,
+      "n_true_jur": 11,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 8,
+        "NL": 3,
+        "SG": 2,
+        "KR": 2,
+        "NO": 1,
+        "UK": 1,
+        "FR": 1,
+        "DE": 1,
+        "AU": 1,
+        "CN": 1,
+        "IT": 1
+      },
+      "n_lang": 7,
+      "langs": {
+        "en": 14,
+        "de": 2,
+        "nl": 2,
+        "no": 1,
+        "fr": 1,
+        "ko": 1,
+        "ja": 1
+      },
+      "n_en": 14,
+      "n_nonen": 8,
+      "pct_en": 63.6,
+      "anglo_core": 2,
+      "supra": 8,
+      "non_anglo": 12,
+      "pct_anglo_core": 9.1,
+      "sl_searched": 19,
+      "sl_hit": 14,
+      "search_jurs": 47,
+      "score": 88.1,
+      "components": {
+        "A": 20,
+        "B": 23.6,
+        "C": 20,
+        "D": 15,
+        "E": 9.5
+      },
+      "grade": "A"
+    },
+    {
+      "slug": "sensory-room-user-control",
+      "topic": "sensory-environment",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 13,
+      "bp": 12,
+      "code_only": 1,
+      "convergence_only": false,
+      "tiers": {
+        "2": 4,
+        "3": 8,
+        "6": 1
+      },
+      "etypes": {
+        "clinical": 8,
+        "sr_meta": 4,
+        "code": 1
+      },
+      "markers": {
+        "●": 12,
+        "○": 1
+      },
+      "n_jur": 9,
+      "n_true_jur": 9,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "UK": 3,
+        "INT": 3,
+        "AU": 1,
+        "IT": 1,
+        "US": 1,
+        "FR": 1,
+        "CN/INT": 1,
+        "KR": 1,
+        "CL": 1
+      },
+      "n_lang": 4,
+      "langs": {
+        "en": 10,
+        "fr": 1,
+        "ko": 1,
+        "es": 1
+      },
+      "n_en": 10,
+      "n_nonen": 3,
+      "pct_en": 76.9,
+      "anglo_core": 5,
+      "supra": 4,
+      "non_anglo": 4,
+      "pct_anglo_core": 38.5,
+      "sl_searched": 19,
+      "sl_hit": 14,
+      "search_jurs": 47,
+      "score": 86.8,
+      "components": {
+        "A": 20,
+        "B": 28.5,
+        "C": 20,
+        "D": 12,
+        "E": 6.3
+      },
+      "grade": "A"
+    },
+    {
+      "slug": "wayfinding-dementia-spatial-design",
+      "topic": "wayfinding-and-signage",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 22,
+      "bp": 12,
+      "code_only": 10,
+      "convergence_only": false,
+      "tiers": {
+        "1": 1,
+        "2": 3,
+        "3": 9,
+        "5": 5,
+        "6": 4
+      },
+      "etypes": {
+        "clinical": 8,
+        "co1": 1,
+        "standard_eb": 3,
+        "code": 5,
+        "national_fw": 4,
+        "grey": 1
+      },
+      "markers": {
+        "●": 12,
+        "◐": 5,
+        "○": 5
+      },
+      "n_jur": 16,
+      "n_true_jur": 16,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 3,
+        "US": 2,
+        "NL": 2,
+        "UK": 2,
+        "DK": 2,
+        "HK": 1,
+        "NO": 1,
+        "CN": 1,
+        "FI": 1,
+        "IT": 1,
+        "ES": 1,
+        "FR": 1,
+        "JP": 1,
+        "KR": 1,
+        "SE": 1,
+        "DE": 1
+      },
+      "n_lang": 13,
+      "langs": {
+        "en": 9,
+        "da": 2,
+        "no": 1,
+        "zh": 1,
+        "fi": 1,
+        "it": 1,
+        "es": 1,
+        "fr": 1,
+        "ja": 1,
+        "ko": 1,
+        "nl": 1,
+        "sv": 1,
+        "de": 1
+      },
+      "n_en": 9,
+      "n_nonen": 13,
+      "pct_en": 40.9,
+      "anglo_core": 4,
+      "supra": 3,
+      "non_anglo": 15,
+      "pct_anglo_core": 18.2,
+      "sl_searched": 19,
+      "sl_hit": 14,
+      "search_jurs": 47,
+      "score": 86.5,
+      "components": {
+        "A": 20,
+        "B": 20.9,
+        "C": 20,
+        "D": 15,
+        "E": 10.6
+      },
+      "grade": "A"
+    },
+    {
+      "slug": "deaf-spatial-design",
+      "topic": "communication-and-alerts",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 13,
+      "bp": 10,
+      "code_only": 3,
+      "convergence_only": false,
+      "tiers": {
+        "1": 5,
+        "2": 3,
+        "3": 4,
+        "5": 1
+      },
+      "etypes": {
+        "co1": 5,
+        "clinical": 2,
+        "standard_eb": 3,
+        "national_fw": 1,
+        "grey": 2
+      },
+      "markers": {
+        "●": 10,
+        "◐": 1,
+        "○": 2
+      },
+      "n_jur": 8,
+      "n_true_jur": 8,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "US": 5,
+        "JP": 2,
+        "INT": 1,
+        "INT/ZA": 1,
+        "GH": 1,
+        "SE": 1,
+        "IT": 1,
+        "DE": 1
+      },
+      "n_lang": 5,
+      "langs": {
+        "en": 8,
+        "ja": 2,
+        "sv": 1,
+        "it": 1,
+        "de": 1
+      },
+      "n_en": 8,
+      "n_nonen": 5,
+      "pct_en": 61.5,
+      "anglo_core": 5,
+      "supra": 2,
+      "non_anglo": 6,
+      "pct_anglo_core": 38.5,
+      "sl_searched": 19,
+      "sl_hit": 14,
+      "search_jurs": 47,
+      "score": 84.9,
+      "components": {
+        "A": 20,
+        "B": 25.4,
+        "C": 20,
+        "D": 12,
+        "E": 7.5
+      },
+      "grade": "A"
+    },
+    {
+      "slug": "mobility-built-environment",
+      "topic": "population-general",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 24,
+      "bp": 15,
+      "code_only": 9,
+      "convergence_only": false,
+      "tiers": {
+        "1": 11,
+        "2": 2,
+        "3": 2,
+        "5": 4,
+        "6": 5
+      },
+      "etypes": {
+        "clinical": 8,
+        "national_fw": 4,
+        "co1": 5,
+        "standard_eb": 2,
+        "code": 5
+      },
+      "markers": {
+        "●": 15,
+        "◐": 4,
+        "○": 5
+      },
+      "n_jur": 17,
+      "n_true_jur": 17,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "US": 4,
+        "AU": 3,
+        "JP": 2,
+        "NZ": 2,
+        "UK": 1,
+        "NO": 1,
+        "SE": 1,
+        "INT": 1,
+        "NL": 1,
+        "FR": 1,
+        "CA": 1,
+        "SG": 1,
+        "BR": 1,
+        "CH": 1,
+        "IE": 1,
+        "FI": 1,
+        "DE": 1
+      },
+      "n_lang": 9,
+      "langs": {
+        "en": 14,
+        "ja": 2,
+        "fr": 2,
+        "no": 1,
+        "sv": 1,
+        "nl": 1,
+        "pt": 1,
+        "fi": 1,
+        "de": 1
+      },
+      "n_en": 14,
+      "n_nonen": 10,
+      "pct_en": 58.3,
+      "anglo_core": 12,
+      "supra": 1,
+      "non_anglo": 11,
+      "pct_anglo_core": 50.0,
+      "sl_searched": 19,
+      "sl_hit": 12,
+      "search_jurs": 47,
+      "score": 84.4,
+      "components": {
+        "A": 20,
+        "B": 22.5,
+        "C": 20,
+        "D": 15,
+        "E": 6.9
+      },
+      "grade": "A"
+    },
+    {
+      "slug": "room-acoustic-performance",
+      "topic": "sensory-environment",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 32,
+      "bp": 20,
+      "code_only": 12,
+      "convergence_only": false,
+      "tiers": {
+        "1": 16,
+        "2": 1,
+        "3": 4,
+        "4": 2,
+        "5": 8,
+        "6": 1
+      },
+      "etypes": {
+        "clinical": 19,
+        "national_fw": 8,
+        "standard_eb": 3,
+        "code": 1,
+        "grey": 1
+      },
+      "markers": {
+        "●": 20,
+        "◐": 10,
+        "○": 2
+      },
+      "n_jur": 13,
+      "n_true_jur": 12,
+      "n_null_jur": 0,
+      "polluted_jur": {
+        "DA": 1
+      },
+      "jurs": {
+        "US": 11,
+        "INT": 7,
+        "UK": 3,
+        "IT": 2,
+        "DE": 1,
+        "NO": 1,
+        "CN": 1,
+        "JP": 1,
+        "CA": 1,
+        "FR": 1,
+        "AU/NZ": 1,
+        "DA": 1,
+        "IN": 1
+      },
+      "n_lang": 7,
+      "langs": {
+        "en": 26,
+        "de": 1,
+        "it": 1,
+        "no": 1,
+        "zh": 1,
+        "ja": 1,
+        "fr": 1
+      },
+      "n_en": 26,
+      "n_nonen": 6,
+      "pct_en": 81.2,
+      "anglo_core": 16,
+      "supra": 7,
+      "non_anglo": 9,
+      "pct_anglo_core": 50.0,
+      "sl_searched": 19,
+      "sl_hit": 10,
+      "search_jurs": 47,
+      "score": 82.7,
+      "components": {
+        "A": 20,
+        "B": 22.5,
+        "C": 20,
+        "D": 15,
+        "E": 5.2
+      },
+      "grade": "A"
+    },
+    {
+      "slug": "mental-health-built-environment",
+      "topic": "population-general",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 25,
+      "bp": 16,
+      "code_only": 9,
+      "convergence_only": false,
+      "tiers": {
+        "1": 3,
+        "2": 2,
+        "3": 17,
+        "4": 1,
+        "5": 2
+      },
+      "etypes": {
+        "standard_eb": 3,
+        "clinical": 11,
+        "grey": 6,
+        "co1": 3,
+        "national_fw": 2
+      },
+      "markers": {
+        "●": 16,
+        "◐": 3,
+        "○": 6
+      },
+      "n_jur": 8,
+      "n_true_jur": 8,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 8,
+        "US": 4,
+        "NL": 4,
+        "DE": 3,
+        "UK": 2,
+        "AU": 2,
+        "NO": 1,
+        "CA": 1
+      },
+      "n_lang": 4,
+      "langs": {
+        "en": 21,
+        "de": 2,
+        "fr": 1,
+        "nl": 1
+      },
+      "n_en": 21,
+      "n_nonen": 4,
+      "pct_en": 84.0,
+      "anglo_core": 9,
+      "supra": 8,
+      "non_anglo": 8,
+      "pct_anglo_core": 36.0,
+      "sl_searched": 19,
+      "sl_hit": 10,
+      "search_jurs": 47,
+      "score": 80.8,
+      "components": {
+        "A": 20,
+        "B": 22.8,
+        "C": 20,
+        "D": 12,
+        "E": 6.0
+      },
+      "grade": "A"
+    },
+    {
+      "slug": "accessible-bathroom-and-grab-bar",
+      "topic": "bathrooms-and-wet-areas",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 19,
+      "bp": 9,
+      "code_only": 10,
+      "convergence_only": false,
+      "tiers": {
+        "1": 5,
+        "2": 4,
+        "3": 1,
+        "4": 1,
+        "5": 4,
+        "6": 4
+      },
+      "etypes": {
+        "standard_eb": 4,
+        "national_fw": 4,
+        "code": 4,
+        "clinical": 5,
+        "grey": 1,
+        "co2": 1
+      },
+      "markers": {
+        "●": 9,
+        "◐": 5,
+        "○": 5
+      },
+      "n_jur": 12,
+      "n_true_jur": 12,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "CA": 3,
+        "UK": 3,
+        "US": 2,
+        "IE": 2,
+        "AU": 2,
+        "DE": 1,
+        "BE": 1,
+        "IT": 1,
+        "PT": 1,
+        "KR": 1,
+        "NZ": 1,
+        "CN": 1
+      },
+      "n_lang": 8,
+      "langs": {
+        "en": 11,
+        "fr": 2,
+        "de": 1,
+        "it": 1,
+        "pt": 1,
+        "ko": 1,
+        "nl": 1,
+        "zh": 1
+      },
+      "n_en": 11,
+      "n_nonen": 8,
+      "pct_en": 57.9,
+      "anglo_core": 13,
+      "supra": 0,
+      "non_anglo": 6,
+      "pct_anglo_core": 68.4,
+      "sl_searched": 19,
+      "sl_hit": 8,
+      "search_jurs": 47,
+      "score": 80.0,
+      "components": {
+        "A": 20,
+        "B": 19.5,
+        "C": 20,
+        "D": 15,
+        "E": 5.5
+      },
+      "grade": "A"
+    },
+    {
+      "slug": "deaf-classroom-reverberation-time",
+      "topic": "communication-and-alerts",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 12,
+      "bp": 2,
+      "code_only": 10,
+      "convergence_only": false,
+      "tiers": {
+        "1": 2,
+        "4": 1,
+        "5": 6,
+        "6": 3
+      },
+      "etypes": {
+        "clinical": 2,
+        "national_fw": 6,
+        "standard_eb": 1,
+        "code": 3
+      },
+      "markers": {
+        "●": 2,
+        "◐": 7,
+        "○": 3
+      },
+      "n_jur": 9,
+      "n_true_jur": 9,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "US": 3,
+        "IT": 2,
+        "DE": 1,
+        "NO": 1,
+        "CN": 1,
+        "FI": 1,
+        "FR": 1,
+        "SE": 1,
+        "NL": 1
+      },
+      "n_lang": 9,
+      "langs": {
+        "en": 3,
+        "it": 2,
+        "de": 1,
+        "no": 1,
+        "zh": 1,
+        "fi": 1,
+        "fr": 1,
+        "sv": 1,
+        "nl": 1
+      },
+      "n_en": 3,
+      "n_nonen": 9,
+      "pct_en": 25.0,
+      "anglo_core": 3,
+      "supra": 0,
+      "non_anglo": 9,
+      "pct_anglo_core": 25.0,
+      "sl_searched": 19,
+      "sl_hit": 14,
+      "search_jurs": 47,
+      "score": 79.5,
+      "components": {
+        "A": 20,
+        "B": 13.3,
+        "C": 20,
+        "D": 15,
+        "E": 11.2
+      },
+      "grade": "B"
+    },
+    {
+      "slug": "residential-kitchen-and-task-surfaces",
+      "topic": "kitchens-and-workspaces",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 13,
+      "bp": 3,
+      "code_only": 10,
+      "convergence_only": false,
+      "tiers": {
+        "1": 3,
+        "4": 2,
+        "5": 3,
+        "6": 5
+      },
+      "etypes": {
+        "code": 5,
+        "standard_eb": 2,
+        "clinical": 3,
+        "national_fw": 3
+      },
+      "markers": {
+        "●": 3,
+        "◐": 5,
+        "○": 5
+      },
+      "n_jur": 10,
+      "n_true_jur": 10,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "US": 3,
+        "UK": 2,
+        "DE": 1,
+        "CN": 1,
+        "BE": 1,
+        "ISO": 1,
+        "AU": 1,
+        "IT": 1,
+        "PT": 1,
+        "KR": 1
+      },
+      "n_lang": 8,
+      "langs": {
+        "en": 5,
+        "fr": 2,
+        "de": 1,
+        "no": 1,
+        "zh": 1,
+        "it": 1,
+        "pt": 1,
+        "ko": 1
+      },
+      "n_en": 5,
+      "n_nonen": 8,
+      "pct_en": 38.5,
+      "anglo_core": 6,
+      "supra": 1,
+      "non_anglo": 6,
+      "pct_anglo_core": 46.2,
+      "sl_searched": 19,
+      "sl_hit": 12,
+      "search_jurs": 47,
+      "score": 78.2,
+      "components": {
+        "A": 20,
+        "B": 14.6,
+        "C": 20,
+        "D": 15,
+        "E": 8.6
+      },
+      "grade": "B"
+    },
+    {
+      "slug": "wayfinding-global-south",
+      "topic": "wayfinding-and-signage",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 15,
+      "bp": 1,
+      "code_only": 14,
+      "convergence_only": false,
+      "tiers": {
+        "1": 1,
+        "4": 4,
+        "6": 10
+      },
+      "etypes": {
+        "code": 10,
+        "standard_eb": 4,
+        "clinical": 1
+      },
+      "markers": {
+        "●": 1,
+        "◐": 4,
+        "○": 10
+      },
+      "n_jur": 13,
+      "n_true_jur": 13,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "SG": 2,
+        "INT": 2,
+        "NG": 1,
+        "ASEAN": 1,
+        "IN": 1,
+        "CN": 1,
+        "KR": 1,
+        "JP": 1,
+        "SA": 1,
+        "EG": 1,
+        "AE": 1,
+        "BD": 1,
+        "ID": 1
+      },
+      "n_lang": 7,
+      "langs": {
+        "en": 8,
+        "ar": 2,
+        "zh": 1,
+        "ko": 1,
+        "ja": 1,
+        "bn": 1,
+        "id": 1
+      },
+      "n_en": 8,
+      "n_nonen": 7,
+      "pct_en": 53.3,
+      "anglo_core": 0,
+      "supra": 3,
+      "non_anglo": 12,
+      "pct_anglo_core": 0.0,
+      "sl_searched": 19,
+      "sl_hit": 0,
+      "search_jurs": 47,
+      "score": 77.3,
+      "components": {
+        "A": 20,
+        "B": 11.3,
+        "C": 20,
+        "D": 15,
+        "E": 11.0
+      },
+      "grade": "B"
+    },
+    {
+      "slug": "dementia-built-environment",
+      "topic": "population-general",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 8,
+      "bp": 5,
+      "code_only": 3,
+      "convergence_only": false,
+      "tiers": {
+        "1": 1,
+        "3": 4,
+        "5": 3
+      },
+      "etypes": {
+        "clinical": 4,
+        "national_fw": 3,
+        "co1": 1
+      },
+      "markers": {
+        "●": 5,
+        "◐": 3
+      },
+      "n_jur": 5,
+      "n_true_jur": 5,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 3,
+        "NL": 2,
+        "UK": 1,
+        "DE": 1,
+        "NO": 1
+      },
+      "n_lang": 4,
+      "langs": {
+        "en": 5,
+        "nl": 1,
+        "de": 1,
+        "no": 1
+      },
+      "n_en": 5,
+      "n_nonen": 3,
+      "pct_en": 62.5,
+      "anglo_core": 1,
+      "supra": 3,
+      "non_anglo": 4,
+      "pct_anglo_core": 12.5,
+      "sl_searched": 19,
+      "sl_hit": 13,
+      "search_jurs": 47,
+      "score": 76.9,
+      "components": {
+        "A": 16,
+        "B": 22.5,
+        "C": 17,
+        "D": 12,
+        "E": 9.4
+      },
+      "grade": "B"
+    },
+    {
+      "slug": "accessible-design-economics-cost-premium",
+      "topic": "economics",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 11,
+      "bp": 9,
+      "code_only": 2,
+      "convergence_only": false,
+      "tiers": {
+        "1": 1,
+        "2": 2,
+        "3": 6,
+        "6": 2
+      },
+      "etypes": {
+        "clinical": 7,
+        "standard_eb": 2,
+        "code": 2
+      },
+      "markers": {
+        "●": 9,
+        "○": 2
+      },
+      "n_jur": 7,
+      "n_true_jur": 7,
+      "n_null_jur": 1,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 2,
+        "DE": 2,
+        "US": 2,
+        "BE": 1,
+        "NO": 1,
+        "CA": 1,
+        "NL": 1
+      },
+      "n_lang": 3,
+      "langs": {
+        "en": 8,
+        "de": 2,
+        "no": 1
+      },
+      "n_en": 8,
+      "n_nonen": 3,
+      "pct_en": 72.7,
+      "anglo_core": 3,
+      "supra": 2,
+      "non_anglo": 5,
+      "pct_anglo_core": 30.0,
+      "sl_searched": 19,
+      "sl_hit": 4,
+      "search_jurs": 47,
+      "score": 75.7,
+      "components": {
+        "A": 16,
+        "B": 26.4,
+        "C": 17,
+        "D": 9,
+        "E": 7.3
+      },
+      "grade": "B"
+    },
+    {
+      "slug": "threshold-door-hardware",
+      "topic": "entrances-and-circulation",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 32,
+      "bp": 2,
+      "code_only": 30,
+      "convergence_only": false,
+      "tiers": {
+        "1": 1,
+        "3": 1,
+        "4": 1,
+        "5": 9,
+        "6": 20
+      },
+      "etypes": {
+        "code": 20,
+        "clinical": 2,
+        "national_fw": 9,
+        "standard_eb": 1
+      },
+      "markers": {
+        "●": 2,
+        "◐": 10,
+        "○": 20
+      },
+      "n_jur": 26,
+      "n_true_jur": 26,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "US": 3,
+        "AU": 2,
+        "NO": 2,
+        "CA": 2,
+        "DK": 2,
+        "EU": 1,
+        "IE": 1,
+        "FR": 1,
+        "UK": 1,
+        "DE": 1,
+        "SE": 1,
+        "NZ": 1,
+        "SG": 1,
+        "INT": 1,
+        "TH/AU": 1,
+        "BR": 1,
+        "CH": 1,
+        "FI": 1,
+        "IT": 1,
+        "KR": 1,
+        "CN": 1,
+        "JP": 1,
+        "ES": 1,
+        "PT": 1,
+        "NL": 1,
+        "BE": 1
+      },
+      "n_lang": 13,
+      "langs": {
+        "en": 15,
+        "de": 2,
+        "no": 2,
+        "pt": 2,
+        "da": 2,
+        "nl": 2,
+        "fr": 1,
+        "sv": 1,
+        "fi": 1,
+        "it": 1,
+        "zh": 1,
+        "ja": 1,
+        "es": 1
+      },
+      "n_en": 15,
+      "n_nonen": 17,
+      "pct_en": 46.9,
+      "anglo_core": 11,
+      "supra": 2,
+      "non_anglo": 19,
+      "pct_anglo_core": 34.4,
+      "sl_searched": 19,
+      "sl_hit": 11,
+      "search_jurs": 47,
+      "score": 75.2,
+      "components": {
+        "A": 20,
+        "B": 11.2,
+        "C": 20,
+        "D": 15,
+        "E": 8.9
+      },
+      "grade": "B"
+    },
+    {
+      "slug": "visual-impairment-built-environment",
+      "topic": "population-general",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 8,
+      "bp": 2,
+      "code_only": 6,
+      "convergence_only": false,
+      "tiers": {
+        "2": 2,
+        "4": 2,
+        "5": 1,
+        "6": 3
+      },
+      "etypes": {
+        "standard_eb": 4,
+        "code": 3,
+        "national_fw": 1
+      },
+      "markers": {
+        "●": 2,
+        "◐": 3,
+        "○": 3
+      },
+      "n_jur": 7,
+      "n_true_jur": 7,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "KR": 2,
+        "INT": 1,
+        "CN": 1,
+        "JP": 1,
+        "DE": 1,
+        "BR": 1,
+        "UK": 1
+      },
+      "n_lang": 6,
+      "langs": {
+        "en": 2,
+        "ko": 2,
+        "zh": 1,
+        "ja": 1,
+        "de": 1,
+        "pt": 1
+      },
+      "n_en": 2,
+      "n_nonen": 6,
+      "pct_en": 25.0,
+      "anglo_core": 1,
+      "supra": 1,
+      "non_anglo": 6,
+      "pct_anglo_core": 12.5,
+      "sl_searched": 19,
+      "sl_hit": 3,
+      "search_jurs": 47,
+      "score": 75.2,
+      "components": {
+        "A": 16,
+        "B": 15.0,
+        "C": 17,
+        "D": 15,
+        "E": 12.2
+      },
+      "grade": "B"
+    },
+    {
+      "slug": "residential-entry-and-threshold",
+      "topic": "entrances-and-circulation",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 20,
+      "bp": 4,
+      "code_only": 16,
+      "convergence_only": false,
+      "tiers": {
+        "1": 1,
+        "2": 3,
+        "4": 1,
+        "5": 6,
+        "6": 9
+      },
+      "etypes": {
+        "standard_eb": 4,
+        "national_fw": 6,
+        "clinical": 1,
+        "code": 9
+      },
+      "markers": {
+        "●": 4,
+        "◐": 7,
+        "○": 9
+      },
+      "n_jur": 13,
+      "n_true_jur": 13,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "UK": 5,
+        "AU": 3,
+        "NL": 2,
+        "TH/AU": 1,
+        "US": 1,
+        "CA": 1,
+        "NO": 1,
+        "DE": 1,
+        "SE": 1,
+        "BR": 1,
+        "FR": 1,
+        "JP": 1,
+        "INT": 1
+      },
+      "n_lang": 7,
+      "langs": {
+        "en": 13,
+        "nl": 2,
+        "no": 1,
+        "de": 1,
+        "sv": 1,
+        "fr": 1,
+        "ja": 1
+      },
+      "n_en": 13,
+      "n_nonen": 7,
+      "pct_en": 65.0,
+      "anglo_core": 11,
+      "supra": 1,
+      "non_anglo": 8,
+      "pct_anglo_core": 55.0,
+      "sl_searched": 19,
+      "sl_hit": 12,
+      "search_jurs": 47,
+      "score": 75.0,
+      "components": {
+        "A": 20,
+        "B": 14.0,
+        "C": 20,
+        "D": 15,
+        "E": 6.0
+      },
+      "grade": "B"
+    },
+    {
+      "slug": "stair-ramp-threshold-biomechanics-accessibility",
+      "topic": "entrances-and-circulation",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 26,
+      "bp": 13,
+      "code_only": 13,
+      "convergence_only": false,
+      "tiers": {
+        "3": 14,
+        "4": 1,
+        "5": 1,
+        "6": 10
+      },
+      "etypes": {
+        "clinical": 13,
+        "national_fw": 1,
+        "code": 10,
+        "standard_eb": 1,
+        "grey": 1
+      },
+      "markers": {
+        "●": 13,
+        "◐": 2,
+        "○": 11
+      },
+      "n_jur": 15,
+      "n_true_jur": 15,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 11,
+        "UK": 2,
+        "SE": 1,
+        "IT": 1,
+        "PT": 1,
+        "CA": 1,
+        "US": 1,
+        "NO": 1,
+        "FR": 1,
+        "DE": 1,
+        "FI": 1,
+        "DK": 1,
+        "CN": 1,
+        "ES": 1,
+        "NL": 1
+      },
+      "n_lang": 12,
+      "langs": {
+        "en": 15,
+        "sv": 1,
+        "it": 1,
+        "pt": 1,
+        "no": 1,
+        "fr": 1,
+        "de": 1,
+        "fi": 1,
+        "da": 1,
+        "zh": 1,
+        "es": 1,
+        "nl": 1
+      },
+      "n_en": 15,
+      "n_nonen": 11,
+      "pct_en": 57.7,
+      "anglo_core": 4,
+      "supra": 11,
+      "non_anglo": 11,
+      "pct_anglo_core": 15.4,
+      "sl_searched": 19,
+      "sl_hit": 14,
+      "search_jurs": 47,
+      "score": 74.5,
+      "components": {
+        "A": 20,
+        "B": 10.0,
+        "C": 20,
+        "D": 15,
+        "E": 9.5
+      },
+      "grade": "B"
+    },
+    {
+      "slug": "assistive-listening-systems",
+      "topic": "communication-and-alerts",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 8,
+      "bp": 4,
+      "code_only": 4,
+      "convergence_only": false,
+      "tiers": {
+        "2": 4,
+        "4": 1,
+        "5": 1,
+        "6": 2
+      },
+      "etypes": {
+        "standard_eb": 5,
+        "code": 2,
+        "national_fw": 1
+      },
+      "markers": {
+        "●": 4,
+        "◐": 2,
+        "○": 2
+      },
+      "n_jur": 7,
+      "n_true_jur": 7,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 2,
+        "NO": 1,
+        "FR": 1,
+        "DE": 1,
+        "UK": 1,
+        "AU": 1,
+        "JP": 1
+      },
+      "n_lang": 5,
+      "langs": {
+        "en": 4,
+        "no": 1,
+        "fr": 1,
+        "de": 1,
+        "ja": 1
+      },
+      "n_en": 4,
+      "n_nonen": 4,
+      "pct_en": 50.0,
+      "anglo_core": 2,
+      "supra": 2,
+      "non_anglo": 4,
+      "pct_anglo_core": 25.0,
+      "sl_searched": 19,
+      "sl_hit": 4,
+      "search_jurs": 47,
+      "score": 74.4,
+      "components": {
+        "A": 16,
+        "B": 20.0,
+        "C": 17,
+        "D": 12,
+        "E": 9.4
+      },
+      "grade": "B"
+    },
+    {
+      "slug": "deafblind-built-environment-design",
+      "topic": "population-general",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 9,
+      "bp": 7,
+      "code_only": 2,
+      "convergence_only": false,
+      "tiers": {
+        "1": 3,
+        "2": 4,
+        "3": 1,
+        "6": 1
+      },
+      "etypes": {
+        "code": 1,
+        "standard_eb": 4,
+        "co1": 3,
+        "grey": 1
+      },
+      "markers": {
+        "●": 7,
+        "○": 2
+      },
+      "n_jur": 5,
+      "n_true_jur": 5,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "US": 3,
+        "INT": 2,
+        "JP": 2,
+        "BR": 1,
+        "AU": 1
+      },
+      "n_lang": 3,
+      "langs": {
+        "en": 6,
+        "ja": 2,
+        "pt": 1
+      },
+      "n_en": 6,
+      "n_nonen": 3,
+      "pct_en": 66.7,
+      "anglo_core": 4,
+      "supra": 2,
+      "non_anglo": 3,
+      "pct_anglo_core": 44.4,
+      "sl_searched": 19,
+      "sl_hit": 14,
+      "search_jurs": 47,
+      "score": 74.3,
+      "components": {
+        "A": 16,
+        "B": 25.6,
+        "C": 17,
+        "D": 9,
+        "E": 6.7
+      },
+      "grade": "B"
+    },
+    {
+      "slug": "construction-cost-data",
+      "topic": "economics",
+      "state": null,
+      "n": 10,
+      "bp": 8,
+      "code_only": 2,
+      "convergence_only": false,
+      "tiers": {
+        "1": 2,
+        "2": 4,
+        "3": 2,
+        "6": 2
+      },
+      "etypes": {
+        "code": 2,
+        "standard_eb": 4,
+        "clinical": 4
+      },
+      "markers": {
+        "●": 8,
+        "○": 2
+      },
+      "n_jur": 8,
+      "n_true_jur": 8,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "DE": 2,
+        "US": 2,
+        "CA": 1,
+        "BE": 1,
+        "SE": 1,
+        "INT": 1,
+        "UK": 1,
+        "AU": 1
+      },
+      "n_lang": 2,
+      "langs": {
+        "en": 8,
+        "de": 2
+      },
+      "n_en": 8,
+      "n_nonen": 2,
+      "pct_en": 80.0,
+      "anglo_core": 5,
+      "supra": 1,
+      "non_anglo": 4,
+      "pct_anglo_core": 50.0,
+      "sl_searched": 19,
+      "sl_hit": 1,
+      "search_jurs": 47,
+      "score": 72.2,
+      "components": {
+        "A": 16,
+        "B": 26.0,
+        "C": 20,
+        "D": 5,
+        "E": 5.2
+      },
+      "grade": "B"
+    },
+    {
+      "slug": "upper-limb-impairment-built-environment",
+      "topic": "population-general",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 14,
+      "bp": 13,
+      "code_only": 1,
+      "convergence_only": false,
+      "tiers": {
+        "1": 2,
+        "3": 12
+      },
+      "etypes": {
+        "clinical": 12,
+        "grey": 1,
+        "co1": 1
+      },
+      "markers": {
+        "●": 13,
+        "○": 1
+      },
+      "n_jur": 3,
+      "n_true_jur": 3,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 7,
+        "US": 6,
+        "CA": 1
+      },
+      "n_lang": 2,
+      "langs": {
+        "en": 13,
+        "sv": 1
+      },
+      "n_en": 13,
+      "n_nonen": 1,
+      "pct_en": 92.9,
+      "anglo_core": 7,
+      "supra": 7,
+      "non_anglo": 0,
+      "pct_anglo_core": 50.0,
+      "sl_searched": 19,
+      "sl_hit": 0,
+      "search_jurs": 47,
+      "score": 70.9,
+      "components": {
+        "A": 20,
+        "B": 28.6,
+        "C": 13,
+        "D": 5,
+        "E": 4.3
+      },
+      "grade": "B"
+    },
+    {
+      "slug": "neurological-built-environment",
+      "topic": "population-general",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 8,
+      "bp": 8,
+      "code_only": 0,
+      "convergence_only": false,
+      "tiers": {
+        "1": 2,
+        "3": 6
+      },
+      "etypes": {
+        "clinical": 7,
+        "co1": 1
+      },
+      "markers": {
+        "●": 8
+      },
+      "n_jur": 5,
+      "n_true_jur": 5,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 3,
+        "NL": 2,
+        "US": 1,
+        "NO": 1,
+        "SE": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 8
+      },
+      "n_en": 8,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 1,
+      "supra": 3,
+      "non_anglo": 4,
+      "pct_anglo_core": 12.5,
+      "sl_searched": 19,
+      "sl_hit": 13,
+      "search_jurs": 47,
+      "score": 69.6,
+      "components": {
+        "A": 16,
+        "B": 30,
+        "C": 17,
+        "D": 0,
+        "E": 6.6
+      },
+      "grade": "B"
+    },
+    {
+      "slug": "school-environment-autism",
+      "topic": "sensory-environment",
+      "state": null,
+      "n": 17,
+      "bp": 16,
+      "code_only": 1,
+      "convergence_only": false,
+      "tiers": {
+        "1": 2,
+        "2": 2,
+        "3": 13
+      },
+      "etypes": {
+        "grey": 1,
+        "sr_meta": 2,
+        "clinical": 14
+      },
+      "markers": {
+        "●": 16,
+        "○": 1
+      },
+      "n_jur": 3,
+      "n_true_jur": 3,
+      "n_null_jur": 14,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 1,
+        "IT": 1,
+        "FR": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 17
+      },
+      "n_en": 17,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 0,
+      "supra": 1,
+      "non_anglo": 2,
+      "pct_anglo_core": 0.0,
+      "sl_searched": 19,
+      "sl_hit": 13,
+      "search_jurs": 47,
+      "score": 69.3,
+      "components": {
+        "A": 20,
+        "B": 28.8,
+        "C": 13,
+        "D": 0,
+        "E": 7.5
+      },
+      "grade": "B"
+    },
+    {
+      "slug": "accessible-circulation-geometry",
+      "topic": "entrances-and-circulation",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 12,
+      "bp": 3,
+      "code_only": 9,
+      "convergence_only": false,
+      "tiers": {
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 2,
+        "6": 6
+      },
+      "etypes": {
+        "standard_eb": 2,
+        "code": 6,
+        "national_fw": 2,
+        "clinical": 2
+      },
+      "markers": {
+        "●": 3,
+        "◐": 3,
+        "○": 6
+      },
+      "n_jur": 7,
+      "n_true_jur": 7,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "UK": 5,
+        "INT": 2,
+        "US": 1,
+        "AU": 1,
+        "DE": 1,
+        "SE": 1,
+        "FI": 1
+      },
+      "n_lang": 4,
+      "langs": {
+        "en": 9,
+        "de": 1,
+        "sv": 1,
+        "fi": 1
+      },
+      "n_en": 9,
+      "n_nonen": 3,
+      "pct_en": 75.0,
+      "anglo_core": 7,
+      "supra": 2,
+      "non_anglo": 3,
+      "pct_anglo_core": 58.3,
+      "sl_searched": 19,
+      "sl_hit": 14,
+      "search_jurs": 47,
+      "score": 69.0,
+      "components": {
+        "A": 20,
+        "B": 15.0,
+        "C": 17,
+        "D": 12,
+        "E": 5.0
+      },
+      "grade": "B"
+    },
+    {
+      "slug": "pain-ofs-built-environment-design",
+      "topic": "health-and-symptom-management",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 12,
+      "bp": 5,
+      "code_only": 7,
+      "convergence_only": false,
+      "tiers": {
+        "1": 2,
+        "2": 3,
+        "3": 3,
+        "5": 3,
+        "6": 1
+      },
+      "etypes": {
+        "standard_eb": 3,
+        "co1": 2,
+        "grey": 3,
+        "national_fw": 3,
+        "code": 1
+      },
+      "markers": {
+        "●": 5,
+        "◐": 3,
+        "○": 4
+      },
+      "n_jur": 6,
+      "n_true_jur": 6,
+      "n_null_jur": 2,
+      "polluted_jur": {},
+      "jurs": {
+        "US": 4,
+        "UK": 2,
+        "SE": 1,
+        "FR": 1,
+        "DE": 1,
+        "INT": 1
+      },
+      "n_lang": 3,
+      "langs": {
+        "en": 10,
+        "sv": 1,
+        "fr": 1
+      },
+      "n_en": 10,
+      "n_nonen": 2,
+      "pct_en": 83.3,
+      "anglo_core": 6,
+      "supra": 1,
+      "non_anglo": 3,
+      "pct_anglo_core": 60.0,
+      "sl_searched": 19,
+      "sl_hit": 4,
+      "search_jurs": 47,
+      "score": 68.6,
+      "components": {
+        "A": 20,
+        "B": 18.3,
+        "C": 17,
+        "D": 9,
+        "E": 4.3
+      },
+      "grade": "B"
+    },
+    {
+      "slug": "accessibility-feature-market-value-uplift-framing",
+      "topic": "economics",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 33,
+      "bp": 10,
+      "code_only": 23,
+      "convergence_only": false,
+      "tiers": {
+        "1": 2,
+        "3": 8,
+        "4": 4,
+        "5": 15,
+        "6": 4
+      },
+      "etypes": {
+        "clinical": 10,
+        "code": 4,
+        "national_fw": 15,
+        "standard_eb": 4
+      },
+      "markers": {
+        "●": 10,
+        "◐": 19,
+        "○": 4
+      },
+      "n_jur": 11,
+      "n_true_jur": 11,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "US": 16,
+        "UK": 5,
+        "NO": 2,
+        "AU": 2,
+        "EU": 2,
+        "CA / INT": 1,
+        "DE": 1,
+        "NL": 1,
+        "CA": 1,
+        "US/AU/INT": 1,
+        "INT": 1
+      },
+      "n_lang": 3,
+      "langs": {
+        "en": 30,
+        "no": 2,
+        "de": 1
+      },
+      "n_en": 30,
+      "n_nonen": 3,
+      "pct_en": 90.9,
+      "anglo_core": 26,
+      "supra": 3,
+      "non_anglo": 4,
+      "pct_anglo_core": 78.8,
+      "sl_searched": 19,
+      "sl_hit": 6,
+      "search_jurs": 47,
+      "score": 67.4,
+      "components": {
+        "A": 20,
+        "B": 16.1,
+        "C": 20,
+        "D": 9,
+        "E": 2.3
+      },
+      "grade": "B"
+    },
+    {
+      "slug": "sensory-space-global-south",
+      "topic": "sensory-environment",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 8,
+      "bp": 4,
+      "code_only": 4,
+      "convergence_only": false,
+      "tiers": {
+        "1": 2,
+        "2": 1,
+        "3": 3,
+        "5": 1,
+        "6": 1
+      },
+      "etypes": {
+        "clinical": 3,
+        "national_fw": 1,
+        "grey": 2,
+        "code": 1,
+        "standard_eb": 1
+      },
+      "markers": {
+        "●": 4,
+        "◐": 1,
+        "○": 3
+      },
+      "n_jur": 5,
+      "n_true_jur": 5,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 3,
+        "JP": 2,
+        "MY": 1,
+        "CL": 1,
+        "IN": 1
+      },
+      "n_lang": 2,
+      "langs": {
+        "en": 6,
+        "ja": 2
+      },
+      "n_en": 6,
+      "n_nonen": 2,
+      "pct_en": 75.0,
+      "anglo_core": 0,
+      "supra": 3,
+      "non_anglo": 5,
+      "pct_anglo_core": 0.0,
+      "sl_searched": 19,
+      "sl_hit": 0,
+      "search_jurs": 47,
+      "score": 67.4,
+      "components": {
+        "A": 16,
+        "B": 20.0,
+        "C": 17,
+        "D": 5,
+        "E": 9.4
+      },
+      "grade": "B"
+    },
+    {
+      "slug": "air-quality-voc-chemical-sensitivity-built-environment",
+      "topic": "sensory-environment",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 12,
+      "bp": 7,
+      "code_only": 5,
+      "convergence_only": false,
+      "tiers": {
+        "2": 1,
+        "3": 6,
+        "4": 4,
+        "5": 1
+      },
+      "etypes": {
+        "standard_eb": 5,
+        "clinical": 6,
+        "national_fw": 1
+      },
+      "markers": {
+        "●": 7,
+        "◐": 5
+      },
+      "n_jur": 7,
+      "n_true_jur": 7,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 4,
+        "UK": 3,
+        "US": 1,
+        "AU": 1,
+        "US/AU/SE/UK": 1,
+        "DE": 1,
+        "IT": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 12
+      },
+      "n_en": 12,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 6,
+      "supra": 4,
+      "non_anglo": 2,
+      "pct_anglo_core": 50.0,
+      "sl_searched": 19,
+      "sl_hit": 4,
+      "search_jurs": 47,
+      "score": 62.5,
+      "components": {
+        "A": 20,
+        "B": 21.7,
+        "C": 17,
+        "D": 0,
+        "E": 3.8
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "thermal-comfort-older-adults-care-settings",
+      "topic": "health-and-symptom-management",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 6,
+      "bp": 4,
+      "code_only": 2,
+      "convergence_only": false,
+      "tiers": {
+        "2": 1,
+        "3": 4,
+        "5": 1
+      },
+      "etypes": {
+        "clinical": 3,
+        "grey": 1,
+        "national_fw": 1,
+        "standard_eb": 1
+      },
+      "markers": {
+        "●": 4,
+        "◐": 1,
+        "○": 1
+      },
+      "n_jur": 4,
+      "n_true_jur": 4,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "ES": 2,
+        "INT": 2,
+        "JP": 1,
+        "UK": 1
+      },
+      "n_lang": 2,
+      "langs": {
+        "en": 5,
+        "ja": 1
+      },
+      "n_en": 5,
+      "n_nonen": 1,
+      "pct_en": 83.3,
+      "anglo_core": 1,
+      "supra": 2,
+      "non_anglo": 3,
+      "pct_anglo_core": 16.7,
+      "sl_searched": 19,
+      "sl_hit": 4,
+      "search_jurs": 47,
+      "score": 60.8,
+      "components": {
+        "A": 12,
+        "B": 23.3,
+        "C": 13,
+        "D": 5,
+        "E": 7.5
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "deaf-acoustic-built-environment",
+      "topic": "communication-and-alerts",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 10,
+      "bp": 5,
+      "code_only": 5,
+      "convergence_only": false,
+      "tiers": {
+        "1": 2,
+        "2": 3,
+        "4": 3,
+        "5": 2
+      },
+      "etypes": {
+        "standard_eb": 6,
+        "national_fw": 2,
+        "clinical": 2
+      },
+      "markers": {
+        "●": 5,
+        "◐": 5
+      },
+      "n_jur": 4,
+      "n_true_jur": 4,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 7,
+        "DE": 1,
+        "UK": 1,
+        "US": 1
+      },
+      "n_lang": 2,
+      "langs": {
+        "en": 9,
+        "de": 1
+      },
+      "n_en": 9,
+      "n_nonen": 1,
+      "pct_en": 90.0,
+      "anglo_core": 2,
+      "supra": 7,
+      "non_anglo": 1,
+      "pct_anglo_core": 20.0,
+      "sl_searched": 19,
+      "sl_hit": 14,
+      "search_jurs": 47,
+      "score": 60.7,
+      "components": {
+        "A": 16,
+        "B": 20.0,
+        "C": 13,
+        "D": 5,
+        "E": 6.7
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "sensory-relief-space-design",
+      "topic": "sensory-environment",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 10,
+      "bp": 8,
+      "code_only": 2,
+      "convergence_only": false,
+      "tiers": {
+        "1": 1,
+        "2": 3,
+        "3": 4,
+        "4": 1,
+        "6": 1
+      },
+      "etypes": {
+        "standard_eb": 2,
+        "clinical": 5,
+        "sr_meta": 2,
+        "code": 1
+      },
+      "markers": {
+        "●": 8,
+        "◐": 1,
+        "○": 1
+      },
+      "n_jur": 6,
+      "n_true_jur": 6,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "UK": 4,
+        "AU": 2,
+        "IE": 1,
+        "INT": 1,
+        "US": 1,
+        "IT": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 10
+      },
+      "n_en": 10,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 8,
+      "supra": 1,
+      "non_anglo": 1,
+      "pct_anglo_core": 80.0,
+      "sl_searched": 19,
+      "sl_hit": 0,
+      "search_jurs": 47,
+      "score": 60.5,
+      "components": {
+        "A": 16,
+        "B": 26.0,
+        "C": 17,
+        "D": 0,
+        "E": 1.5
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "residential-accessible-home-case-studies",
+      "topic": "frameworks-and-methodology",
+      "state": null,
+      "n": 8,
+      "bp": 8,
+      "code_only": 0,
+      "convergence_only": false,
+      "tiers": {
+        "1": 4,
+        "2": 2,
+        "3": 2
+      },
+      "etypes": {
+        "clinical": 5,
+        "co1": 1,
+        "standard_eb": 2
+      },
+      "markers": {
+        "●": 8
+      },
+      "n_jur": 4,
+      "n_true_jur": 4,
+      "n_null_jur": 1,
+      "polluted_jur": {},
+      "jurs": {
+        "UK": 3,
+        "AU": 2,
+        "INT": 1,
+        "NZ": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 8
+      },
+      "n_en": 8,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 6,
+      "supra": 1,
+      "non_anglo": 0,
+      "pct_anglo_core": 85.7,
+      "sl_searched": 19,
+      "sl_hit": 0,
+      "search_jurs": 47,
+      "score": 60.1,
+      "components": {
+        "A": 16,
+        "B": 30,
+        "C": 13,
+        "D": 0,
+        "E": 1.1
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "biophilic-design-healthcare-workplace",
+      "topic": "sensory-environment",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 6,
+      "bp": 6,
+      "code_only": 0,
+      "convergence_only": false,
+      "tiers": {
+        "1": 1,
+        "3": 5
+      },
+      "etypes": {
+        "clinical": 5,
+        "co1": 1
+      },
+      "markers": {
+        "●": 6
+      },
+      "n_jur": 3,
+      "n_true_jur": 3,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 4,
+        "US": 1,
+        "AU": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 6
+      },
+      "n_en": 6,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 2,
+      "supra": 4,
+      "non_anglo": 0,
+      "pct_anglo_core": 33.3,
+      "sl_searched": 19,
+      "sl_hit": 14,
+      "search_jurs": 47,
+      "score": 60.0,
+      "components": {
+        "A": 12,
+        "B": 30,
+        "C": 13,
+        "D": 0,
+        "E": 5.0
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "manoeuvring-footprint-vs-turning-radius-methodology",
+      "topic": "frameworks-and-methodology",
+      "state": "METHODOLOGY-AUTHORED",
+      "n": 8,
+      "bp": 7,
+      "code_only": 1,
+      "convergence_only": false,
+      "tiers": {
+        "1": 5,
+        "3": 2,
+        "4": 1
+      },
+      "etypes": {
+        "clinical": 5,
+        "standard_eb": 1,
+        "co1": 2
+      },
+      "markers": {
+        "●": 7,
+        "◐": 1
+      },
+      "n_jur": 3,
+      "n_true_jur": 3,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "US": 5,
+        "INT": 2,
+        "INT/ZA": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 8
+      },
+      "n_en": 8,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 5,
+      "supra": 3,
+      "non_anglo": 0,
+      "pct_anglo_core": 62.5,
+      "sl_searched": 0,
+      "sl_hit": 0,
+      "search_jurs": 0,
+      "score": 59.3,
+      "components": {
+        "A": 16,
+        "B": 27.5,
+        "C": 13,
+        "D": 0,
+        "E": 2.8
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "ms-thermal-temperature-conflict-resolution",
+      "topic": "health-and-symptom-management",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 10,
+      "bp": 7,
+      "code_only": 3,
+      "convergence_only": false,
+      "tiers": {
+        "1": 1,
+        "3": 6,
+        "4": 2,
+        "5": 1
+      },
+      "etypes": {
+        "clinical": 6,
+        "co1": 1,
+        "standard_eb": 2,
+        "national_fw": 1
+      },
+      "markers": {
+        "●": 7,
+        "◐": 3
+      },
+      "n_jur": 4,
+      "n_true_jur": 4,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 7,
+        "ES": 1,
+        "US": 1,
+        "UK": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 10
+      },
+      "n_en": 10,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 2,
+      "supra": 7,
+      "non_anglo": 1,
+      "pct_anglo_core": 20.0,
+      "sl_searched": 19,
+      "sl_hit": 4,
+      "search_jurs": 47,
+      "score": 59.0,
+      "components": {
+        "A": 16,
+        "B": 24.0,
+        "C": 13,
+        "D": 0,
+        "E": 6.0
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "acoustics-speech-intelligibility-disability",
+      "topic": "sensory-environment",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 8,
+      "bp": 5,
+      "code_only": 3,
+      "convergence_only": false,
+      "tiers": {
+        "1": 1,
+        "2": 1,
+        "3": 3,
+        "4": 3
+      },
+      "etypes": {
+        "standard_eb": 4,
+        "clinical": 4
+      },
+      "markers": {
+        "●": 5,
+        "◐": 3
+      },
+      "n_jur": 4,
+      "n_true_jur": 4,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 5,
+        "US": 1,
+        "FR": 1,
+        "KR": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 8
+      },
+      "n_en": 8,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 1,
+      "supra": 5,
+      "non_anglo": 2,
+      "pct_anglo_core": 12.5,
+      "sl_searched": 19,
+      "sl_hit": 1,
+      "search_jurs": 47,
+      "score": 58.1,
+      "components": {
+        "A": 16,
+        "B": 22.5,
+        "C": 13,
+        "D": 0,
+        "E": 6.6
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "ot-cpg-built-environment",
+      "topic": "population-general",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 6,
+      "bp": 6,
+      "code_only": 0,
+      "convergence_only": false,
+      "tiers": {
+        "2": 6
+      },
+      "etypes": {
+        "standard_eb": 4,
+        "co2": 2
+      },
+      "markers": {
+        "●": 6
+      },
+      "n_jur": 4,
+      "n_true_jur": 4,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "UK": 3,
+        "US": 1,
+        "CA": 1,
+        "INT": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 6
+      },
+      "n_en": 6,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 5,
+      "supra": 1,
+      "non_anglo": 0,
+      "pct_anglo_core": 83.3,
+      "sl_searched": 19,
+      "sl_hit": 0,
+      "search_jurs": 47,
+      "score": 56.3,
+      "components": {
+        "A": 12,
+        "B": 30,
+        "C": 13,
+        "D": 0,
+        "E": 1.3
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "visitability-residential-accessibility-minimum-standards",
+      "topic": "frameworks-and-methodology",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 7,
+      "bp": 1,
+      "code_only": 6,
+      "convergence_only": false,
+      "tiers": {
+        "1": 1,
+        "5": 1,
+        "6": 5
+      },
+      "etypes": {
+        "co1": 1,
+        "national_fw": 1,
+        "code": 5
+      },
+      "markers": {
+        "●": 1,
+        "◐": 1,
+        "○": 5
+      },
+      "n_jur": 5,
+      "n_true_jur": 5,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "US": 3,
+        "CA": 1,
+        "DE": 1,
+        "NO": 1,
+        "AU": 1
+      },
+      "n_lang": 3,
+      "langs": {
+        "en": 5,
+        "de": 1,
+        "no": 1
+      },
+      "n_en": 5,
+      "n_nonen": 2,
+      "pct_en": 71.4,
+      "anglo_core": 5,
+      "supra": 0,
+      "non_anglo": 2,
+      "pct_anglo_core": 71.4,
+      "sl_searched": 19,
+      "sl_hit": 3,
+      "search_jurs": 47,
+      "score": 55.2,
+      "components": {
+        "A": 12,
+        "B": 12.9,
+        "C": 17,
+        "D": 9,
+        "E": 4.3
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "ot-frameworks-built-environment",
+      "topic": "frameworks-and-methodology",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 4,
+      "bp": 4,
+      "code_only": 0,
+      "convergence_only": false,
+      "tiers": {
+        "1": 4
+      },
+      "etypes": {
+        "clinical": 4
+      },
+      "markers": {
+        "●": 4
+      },
+      "n_jur": 3,
+      "n_true_jur": 3,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 2,
+        "CA": 1,
+        "US": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 4
+      },
+      "n_en": 4,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 2,
+      "supra": 2,
+      "non_anglo": 0,
+      "pct_anglo_core": 50.0,
+      "sl_searched": 19,
+      "sl_hit": 2,
+      "search_jurs": 47,
+      "score": 54.8,
+      "components": {
+        "A": 8,
+        "B": 30,
+        "C": 13,
+        "D": 0,
+        "E": 3.8
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "ndv-aut-built-environment-quantified-thresholds",
+      "topic": "population-general",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 6,
+      "bp": 4,
+      "code_only": 2,
+      "convergence_only": false,
+      "tiers": {
+        "2": 2,
+        "3": 3,
+        "4": 1
+      },
+      "etypes": {
+        "clinical": 2,
+        "grey": 1,
+        "standard_eb": 2,
+        "sr_meta": 1
+      },
+      "markers": {
+        "●": 4,
+        "◐": 1,
+        "○": 1
+      },
+      "n_jur": 3,
+      "n_true_jur": 3,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 4,
+        "UK": 1,
+        "IT": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 6
+      },
+      "n_en": 6,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 1,
+      "supra": 4,
+      "non_anglo": 1,
+      "pct_anglo_core": 16.7,
+      "sl_searched": 19,
+      "sl_hit": 0,
+      "search_jurs": 47,
+      "score": 54.5,
+      "components": {
+        "A": 12,
+        "B": 23.3,
+        "C": 13,
+        "D": 0,
+        "E": 6.2
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "detectable-gradient-protocol-sensory-zones",
+      "topic": "wayfinding-and-signage",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 6,
+      "bp": 4,
+      "code_only": 2,
+      "convergence_only": false,
+      "tiers": {
+        "1": 1,
+        "2": 1,
+        "3": 2,
+        "4": 2
+      },
+      "etypes": {
+        "clinical": 3,
+        "standard_eb": 3
+      },
+      "markers": {
+        "●": 4,
+        "◐": 2
+      },
+      "n_jur": 3,
+      "n_true_jur": 3,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 4,
+        "US": 1,
+        "UK": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 6
+      },
+      "n_en": 6,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 2,
+      "supra": 4,
+      "non_anglo": 0,
+      "pct_anglo_core": 33.3,
+      "sl_searched": 19,
+      "sl_hit": 1,
+      "search_jurs": 47,
+      "score": 53.3,
+      "components": {
+        "A": 12,
+        "B": 23.3,
+        "C": 13,
+        "D": 0,
+        "E": 5.0
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "design-framework-evidence-audit",
+      "topic": "frameworks-and-methodology",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 9,
+      "bp": 4,
+      "code_only": 5,
+      "convergence_only": false,
+      "tiers": {
+        "2": 1,
+        "3": 5,
+        "4": 2,
+        "5": 1
+      },
+      "etypes": {
+        "national_fw": 1,
+        "standard_eb": 3,
+        "clinical": 3,
+        "grey": 2
+      },
+      "markers": {
+        "●": 4,
+        "◐": 3,
+        "○": 2
+      },
+      "n_jur": 4,
+      "n_true_jur": 4,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 5,
+        "UK": 2,
+        "US": 1,
+        "SE": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 9
+      },
+      "n_en": 9,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 3,
+      "supra": 5,
+      "non_anglo": 1,
+      "pct_anglo_core": 33.3,
+      "sl_searched": 19,
+      "sl_hit": 1,
+      "search_jurs": 47,
+      "score": 52.9,
+      "components": {
+        "A": 16,
+        "B": 18.9,
+        "C": 13,
+        "D": 0,
+        "E": 5.0
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "luminance-contrast-and-pattern",
+      "topic": "wayfinding-and-signage",
+      "state": null,
+      "n": 13,
+      "bp": 0,
+      "code_only": 13,
+      "convergence_only": true,
+      "tiers": {
+        "5": 4,
+        "6": 9
+      },
+      "etypes": {
+        "code": 9,
+        "national_fw": 4
+      },
+      "markers": {
+        "◐": 4,
+        "○": 9
+      },
+      "n_jur": 13,
+      "n_true_jur": 13,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "JP": 1,
+        "NL": 1,
+        "SE": 1,
+        "IT": 1,
+        "PT": 1,
+        "FR": 1,
+        "FI": 1,
+        "DK": 1,
+        "CN": 1,
+        "ES": 1,
+        "KR": 1,
+        "DE": 1,
+        "NO": 1
+      },
+      "n_lang": 13,
+      "langs": {
+        "ja": 1,
+        "nl": 1,
+        "sv": 1,
+        "it": 1,
+        "pt": 1,
+        "fr": 1,
+        "fi": 1,
+        "da": 1,
+        "zh": 1,
+        "es": 1,
+        "ko": 1,
+        "de": 1,
+        "no": 1
+      },
+      "n_en": 0,
+      "n_nonen": 13,
+      "pct_en": 0.0,
+      "anglo_core": 0,
+      "supra": 0,
+      "non_anglo": 13,
+      "pct_anglo_core": 0.0,
+      "sl_searched": 19,
+      "sl_hit": 14,
+      "search_jurs": 47,
+      "score": 52.5,
+      "components": {
+        "A": 20,
+        "B": 0.0,
+        "C": 10.0,
+        "D": 7.5,
+        "E": 15.0
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "sensory-processing-model-design-application",
+      "topic": "sensory-environment",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 6,
+      "bp": 4,
+      "code_only": 2,
+      "convergence_only": false,
+      "tiers": {
+        "1": 2,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 1
+      },
+      "etypes": {
+        "standard_eb": 2,
+        "national_fw": 1,
+        "clinical": 3
+      },
+      "markers": {
+        "●": 4,
+        "◐": 2
+      },
+      "n_jur": 4,
+      "n_true_jur": 4,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 3,
+        "UK": 1,
+        "CA": 1,
+        "US": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 6
+      },
+      "n_en": 6,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 3,
+      "supra": 3,
+      "non_anglo": 0,
+      "pct_anglo_core": 50.0,
+      "sl_searched": 19,
+      "sl_hit": 0,
+      "search_jurs": 47,
+      "score": 52.1,
+      "components": {
+        "A": 12,
+        "B": 23.3,
+        "C": 13,
+        "D": 0,
+        "E": 3.8
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "ot-built-environment-interface",
+      "topic": "frameworks-and-methodology",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 5,
+      "bp": 2,
+      "code_only": 3,
+      "convergence_only": false,
+      "tiers": {
+        "1": 1,
+        "3": 4
+      },
+      "etypes": {
+        "clinical": 2,
+        "grey": 3
+      },
+      "markers": {
+        "●": 2,
+        "○": 3
+      },
+      "n_jur": 3,
+      "n_true_jur": 3,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "AU": 2,
+        "UK": 2,
+        "INT": 1
+      },
+      "n_lang": 2,
+      "langs": {
+        "en": 4,
+        "fi": 1
+      },
+      "n_en": 4,
+      "n_nonen": 1,
+      "pct_en": 80.0,
+      "anglo_core": 4,
+      "supra": 1,
+      "non_anglo": 0,
+      "pct_anglo_core": 80.0,
+      "sl_searched": 19,
+      "sl_hit": 3,
+      "search_jurs": 47,
+      "score": 51.0,
+      "components": {
+        "A": 12,
+        "B": 18.0,
+        "C": 13,
+        "D": 5,
+        "E": 3.0
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "circadian-lighting-melanopic-edi",
+      "topic": "sensory-environment",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 10,
+      "bp": 5,
+      "code_only": 5,
+      "convergence_only": false,
+      "tiers": {
+        "3": 5,
+        "4": 2,
+        "5": 3
+      },
+      "etypes": {
+        "clinical": 5,
+        "standard_eb": 2,
+        "national_fw": 3
+      },
+      "markers": {
+        "●": 5,
+        "◐": 5
+      },
+      "n_jur": 4,
+      "n_true_jur": 4,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 6,
+        "US": 2,
+        "DE": 1,
+        "NO": 1
+      },
+      "n_lang": 2,
+      "langs": {
+        "en": 9,
+        "de": 1
+      },
+      "n_en": 9,
+      "n_nonen": 1,
+      "pct_en": 90.0,
+      "anglo_core": 2,
+      "supra": 6,
+      "non_anglo": 2,
+      "pct_anglo_core": 20.0,
+      "sl_searched": 19,
+      "sl_hit": 3,
+      "search_jurs": 47,
+      "score": 50.7,
+      "components": {
+        "A": 16,
+        "B": 10.0,
+        "C": 13,
+        "D": 5,
+        "E": 6.7
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "visual-fire-alarm-seizure-safety",
+      "topic": "sensory-environment",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 7,
+      "bp": 4,
+      "code_only": 3,
+      "convergence_only": false,
+      "tiers": {
+        "2": 1,
+        "3": 3,
+        "4": 2,
+        "6": 1
+      },
+      "etypes": {
+        "standard_eb": 3,
+        "clinical": 3,
+        "code": 1
+      },
+      "markers": {
+        "●": 4,
+        "◐": 2,
+        "○": 1
+      },
+      "n_jur": 3,
+      "n_true_jur": 3,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 4,
+        "US": 2,
+        "EU/UK": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 7
+      },
+      "n_en": 7,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 3,
+      "supra": 4,
+      "non_anglo": 0,
+      "pct_anglo_core": 42.9,
+      "sl_searched": 19,
+      "sl_hit": 2,
+      "search_jurs": 47,
+      "score": 50.7,
+      "components": {
+        "A": 12,
+        "B": 21.4,
+        "C": 13,
+        "D": 0,
+        "E": 4.3
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "luminance-contrast-lrv-evidence-base",
+      "topic": "wayfinding-and-signage",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 7,
+      "bp": 5,
+      "code_only": 2,
+      "convergence_only": false,
+      "tiers": {
+        "2": 1,
+        "3": 4,
+        "5": 1,
+        "6": 1
+      },
+      "etypes": {
+        "clinical": 4,
+        "standard_eb": 1,
+        "code": 1,
+        "national_fw": 1
+      },
+      "markers": {
+        "●": 5,
+        "◐": 1,
+        "○": 1
+      },
+      "n_jur": 4,
+      "n_true_jur": 4,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "AU": 3,
+        "US": 2,
+        "CA": 1,
+        "UK": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 7
+      },
+      "n_en": 7,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 7,
+      "supra": 0,
+      "non_anglo": 0,
+      "pct_anglo_core": 100.0,
+      "sl_searched": 19,
+      "sl_hit": 9,
+      "search_jurs": 47,
+      "score": 49.3,
+      "components": {
+        "A": 12,
+        "B": 24.3,
+        "C": 13,
+        "D": 0,
+        "E": 0.0
+      },
+      "grade": "D"
+    },
+    {
+      "slug": "ofs-built-environment",
+      "topic": "health-and-symptom-management",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 7,
+      "bp": 4,
+      "code_only": 3,
+      "convergence_only": false,
+      "tiers": {
+        "1": 3,
+        "3": 1,
+        "5": 2,
+        "6": 1
+      },
+      "etypes": {
+        "clinical": 2,
+        "co1": 2,
+        "national_fw": 2,
+        "code": 1
+      },
+      "markers": {
+        "●": 4,
+        "◐": 2,
+        "○": 1
+      },
+      "n_jur": 3,
+      "n_true_jur": 3,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "US": 3,
+        "UK": 3,
+        "INT": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 7
+      },
+      "n_en": 7,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 6,
+      "supra": 1,
+      "non_anglo": 0,
+      "pct_anglo_core": 85.7,
+      "sl_searched": 19,
+      "sl_hit": 13,
+      "search_jurs": 47,
+      "score": 47.5,
+      "components": {
+        "A": 12,
+        "B": 21.4,
+        "C": 13,
+        "D": 0,
+        "E": 1.1
+      },
+      "grade": "D"
+    },
+    {
+      "slug": "cross-population-case-studies",
+      "topic": "frameworks-and-methodology",
+      "state": null,
+      "n": 3,
+      "bp": 3,
+      "code_only": 0,
+      "convergence_only": false,
+      "tiers": {
+        "1": 2,
+        "3": 1
+      },
+      "etypes": {
+        "clinical": 2,
+        "co1": 1
+      },
+      "markers": {
+        "●": 3
+      },
+      "n_jur": 2,
+      "n_true_jur": 2,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "UK": 2,
+        "US": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 3
+      },
+      "n_en": 3,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 3,
+      "supra": 0,
+      "non_anglo": 0,
+      "pct_anglo_core": 100.0,
+      "sl_searched": 19,
+      "sl_hit": 0,
+      "search_jurs": 47,
+      "score": 47.0,
+      "components": {
+        "A": 8,
+        "B": 30,
+        "C": 9,
+        "D": 0,
+        "E": 0.0
+      },
+      "grade": "D"
+    },
+    {
+      "slug": "ecological-psychology-haptic-affordances-built-environment",
+      "topic": "frameworks-and-methodology",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 5,
+      "bp": 5,
+      "code_only": 0,
+      "convergence_only": false,
+      "tiers": {
+        "3": 5
+      },
+      "etypes": {
+        "clinical": 5
+      },
+      "markers": {
+        "●": 5
+      },
+      "n_jur": 2,
+      "n_true_jur": 2,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 4,
+        "US": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 5
+      },
+      "n_en": 5,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 1,
+      "supra": 4,
+      "non_anglo": 0,
+      "pct_anglo_core": 20.0,
+      "sl_searched": 19,
+      "sl_hit": 1,
+      "search_jurs": 47,
+      "score": 47.0,
+      "components": {
+        "A": 12,
+        "B": 20.0,
+        "C": 9,
+        "D": 0,
+        "E": 6.0
+      },
+      "grade": "D"
+    },
+    {
+      "slug": "reach-range-and-accessible-controls",
+      "topic": "controls-and-hardware",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 11,
+      "bp": 1,
+      "code_only": 10,
+      "convergence_only": false,
+      "tiers": {
+        "3": 1,
+        "5": 5,
+        "6": 5
+      },
+      "etypes": {
+        "code": 5,
+        "clinical": 1,
+        "national_fw": 5
+      },
+      "markers": {
+        "●": 1,
+        "◐": 5,
+        "○": 5
+      },
+      "n_jur": 6,
+      "n_true_jur": 6,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "US": 4,
+        "CA": 3,
+        "DE": 1,
+        "BR": 1,
+        "UK": 1,
+        "AU": 1
+      },
+      "n_lang": 3,
+      "langs": {
+        "en": 9,
+        "de": 1,
+        "pt": 1
+      },
+      "n_en": 9,
+      "n_nonen": 2,
+      "pct_en": 81.8,
+      "anglo_core": 9,
+      "supra": 0,
+      "non_anglo": 2,
+      "pct_anglo_core": 81.8,
+      "sl_searched": 19,
+      "sl_hit": 12,
+      "search_jurs": 47,
+      "score": 46.5,
+      "components": {
+        "A": 16,
+        "B": 1.8,
+        "C": 17,
+        "D": 9,
+        "E": 2.7
+      },
+      "grade": "D"
+    },
+    {
+      "slug": "threshold-and-level-access",
+      "topic": "entrances-and-circulation",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 15,
+      "bp": 0,
+      "code_only": 15,
+      "convergence_only": true,
+      "tiers": {
+        "4": 1,
+        "5": 4,
+        "6": 10
+      },
+      "etypes": {
+        "national_fw": 4,
+        "code": 10,
+        "standard_eb": 1
+      },
+      "markers": {
+        "◐": 5,
+        "○": 10
+      },
+      "n_jur": 12,
+      "n_true_jur": 12,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "US": 2,
+        "UK": 2,
+        "DE": 2,
+        "CA": 1,
+        "NO": 1,
+        "NL": 1,
+        "FR": 1,
+        "BR": 1,
+        "AU": 1,
+        "SE": 1,
+        "JP": 1,
+        "INT": 1
+      },
+      "n_lang": 8,
+      "langs": {
+        "en": 7,
+        "de": 2,
+        "no": 1,
+        "nl": 1,
+        "fr": 1,
+        "pt": 1,
+        "sv": 1,
+        "ja": 1
+      },
+      "n_en": 7,
+      "n_nonen": 8,
+      "pct_en": 46.7,
+      "anglo_core": 6,
+      "supra": 1,
+      "non_anglo": 8,
+      "pct_anglo_core": 40.0,
+      "sl_searched": 19,
+      "sl_hit": 7,
+      "search_jurs": 47,
+      "score": 46.0,
+      "components": {
+        "A": 20,
+        "B": 0.0,
+        "C": 10.0,
+        "D": 7.5,
+        "E": 8.5
+      },
+      "grade": "D"
+    },
+    {
+      "slug": "wayfinding-cognitive-science-spatial-design",
+      "topic": "wayfinding-and-signage",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 7,
+      "bp": 7,
+      "code_only": 0,
+      "convergence_only": false,
+      "tiers": {
+        "3": 7
+      },
+      "etypes": {
+        "clinical": 7
+      },
+      "markers": {
+        "●": 7
+      },
+      "n_jur": 2,
+      "n_true_jur": 2,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 4,
+        "US": 3
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 7
+      },
+      "n_en": 7,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 3,
+      "supra": 4,
+      "non_anglo": 0,
+      "pct_anglo_core": 42.9,
+      "sl_searched": 19,
+      "sl_hit": 3,
+      "search_jurs": 47,
+      "score": 45.3,
+      "components": {
+        "A": 12,
+        "B": 20.0,
+        "C": 9,
+        "D": 0,
+        "E": 4.3
+      },
+      "grade": "D"
+    },
+    {
+      "slug": "jurisdiction-grant-programmes-comprehensive",
+      "topic": "frameworks-and-methodology",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 9,
+      "bp": 0,
+      "code_only": 9,
+      "convergence_only": true,
+      "tiers": {
+        "5": 9
+      },
+      "etypes": {
+        "national_fw": 9
+      },
+      "markers": {
+        "◐": 9
+      },
+      "n_jur": 9,
+      "n_true_jur": 9,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "CA": 1,
+        "US": 1,
+        "UK": 1,
+        "FR": 1,
+        "SG": 1,
+        "DE": 1,
+        "NO": 1,
+        "SE": 1,
+        "DK": 1
+      },
+      "n_lang": 6,
+      "langs": {
+        "en": 4,
+        "fr": 1,
+        "de": 1,
+        "no": 1,
+        "sv": 1,
+        "da": 1
+      },
+      "n_en": 4,
+      "n_nonen": 5,
+      "pct_en": 44.4,
+      "anglo_core": 3,
+      "supra": 0,
+      "non_anglo": 6,
+      "pct_anglo_core": 33.3,
+      "sl_searched": 19,
+      "sl_hit": 6,
+      "search_jurs": 47,
+      "score": 42.7,
+      "components": {
+        "A": 16,
+        "B": 0.0,
+        "C": 10.0,
+        "D": 7.5,
+        "E": 9.2
+      },
+      "grade": "D"
+    },
+    {
+      "slug": "case-study-economics-financial-data",
+      "topic": "economics",
+      "state": null,
+      "n": 4,
+      "bp": 3,
+      "code_only": 1,
+      "convergence_only": false,
+      "tiers": {
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "5": 1
+      },
+      "etypes": {
+        "clinical": 2,
+        "national_fw": 1,
+        "standard_eb": 1
+      },
+      "markers": {
+        "●": 3,
+        "◐": 1
+      },
+      "n_jur": 2,
+      "n_true_jur": 2,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "UK": 2,
+        "US": 2
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 4
+      },
+      "n_en": 4,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 4,
+      "supra": 0,
+      "non_anglo": 0,
+      "pct_anglo_core": 100.0,
+      "sl_searched": 19,
+      "sl_hit": 1,
+      "search_jurs": 47,
+      "score": 42.0,
+      "components": {
+        "A": 8,
+        "B": 25.0,
+        "C": 9,
+        "D": 0,
+        "E": 0.0
+      },
+      "grade": "D"
+    },
+    {
+      "slug": "residential-dar-provisions-priority-register",
+      "topic": "frameworks-and-methodology",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 6,
+      "bp": 1,
+      "code_only": 5,
+      "convergence_only": false,
+      "tiers": {
+        "2": 1,
+        "4": 1,
+        "5": 4
+      },
+      "etypes": {
+        "national_fw": 4,
+        "standard_eb": 2
+      },
+      "markers": {
+        "●": 1,
+        "◐": 5
+      },
+      "n_jur": 3,
+      "n_true_jur": 3,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "UK": 3,
+        "CA": 2,
+        "INT": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 6
+      },
+      "n_en": 6,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 5,
+      "supra": 1,
+      "non_anglo": 0,
+      "pct_anglo_core": 83.3,
+      "sl_searched": 19,
+      "sl_hit": 3,
+      "search_jurs": 47,
+      "score": 39.6,
+      "components": {
+        "A": 12,
+        "B": 13.3,
+        "C": 13,
+        "D": 0,
+        "E": 1.3
+      },
+      "grade": "D"
+    },
+    {
+      "slug": "floor-vibration-wheelchair-disability",
+      "topic": "entrances-and-circulation",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 7,
+      "bp": 4,
+      "code_only": 3,
+      "convergence_only": false,
+      "tiers": {
+        "3": 4,
+        "4": 3
+      },
+      "etypes": {
+        "clinical": 4,
+        "standard_eb": 3
+      },
+      "markers": {
+        "●": 4,
+        "◐": 3
+      },
+      "n_jur": 2,
+      "n_true_jur": 2,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 6,
+        "UK": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 7
+      },
+      "n_en": 7,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 1,
+      "supra": 6,
+      "non_anglo": 0,
+      "pct_anglo_core": 14.3,
+      "sl_searched": 19,
+      "sl_hit": 14,
+      "search_jurs": 47,
+      "score": 38.8,
+      "components": {
+        "A": 12,
+        "B": 11.4,
+        "C": 9,
+        "D": 0,
+        "E": 6.4
+      },
+      "grade": "D"
+    },
+    {
+      "slug": "intellectual-disability-built-environment-design",
+      "topic": "population-general",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 5,
+      "bp": 2,
+      "code_only": 3,
+      "convergence_only": false,
+      "tiers": {
+        "3": 2,
+        "4": 3
+      },
+      "etypes": {
+        "clinical": 2,
+        "standard_eb": 3
+      },
+      "markers": {
+        "●": 2,
+        "◐": 3
+      },
+      "n_jur": 3,
+      "n_true_jur": 3,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 3,
+        "AU": 1,
+        "CA": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 5
+      },
+      "n_en": 5,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 2,
+      "supra": 3,
+      "non_anglo": 0,
+      "pct_anglo_core": 40.0,
+      "sl_searched": 19,
+      "sl_hit": 14,
+      "search_jurs": 47,
+      "score": 37.5,
+      "components": {
+        "A": 12,
+        "B": 8.0,
+        "C": 13,
+        "D": 0,
+        "E": 4.5
+      },
+      "grade": "D"
+    },
+    {
+      "slug": "visual-alerting-and-wayfinding-light",
+      "topic": "wayfinding-and-signage",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 7,
+      "bp": 0,
+      "code_only": 7,
+      "convergence_only": true,
+      "tiers": {
+        "4": 2,
+        "5": 2,
+        "6": 3
+      },
+      "etypes": {
+        "standard_eb": 2,
+        "code": 3,
+        "national_fw": 2
+      },
+      "markers": {
+        "◐": 4,
+        "○": 3
+      },
+      "n_jur": 7,
+      "n_true_jur": 7,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 1,
+        "EU/UK": 1,
+        "US": 1,
+        "JP": 1,
+        "CN": 1,
+        "FR": 1,
+        "NO": 1
+      },
+      "n_lang": 5,
+      "langs": {
+        "en": 3,
+        "ja": 1,
+        "zh": 1,
+        "fr": 1,
+        "no": 1
+      },
+      "n_en": 3,
+      "n_nonen": 4,
+      "pct_en": 42.9,
+      "anglo_core": 2,
+      "supra": 1,
+      "non_anglo": 4,
+      "pct_anglo_core": 28.6,
+      "sl_searched": 19,
+      "sl_hit": 2,
+      "search_jurs": 47,
+      "score": 36.1,
+      "components": {
+        "A": 12,
+        "B": 0.0,
+        "C": 8.5,
+        "D": 6.0,
+        "E": 9.6
+      },
+      "grade": "D"
+    },
+    {
+      "slug": "body-sizes-supplementary-populations",
+      "topic": "frameworks-and-methodology",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 11,
+      "bp": 0,
+      "code_only": 11,
+      "convergence_only": true,
+      "tiers": {
+        "3": 2,
+        "4": 4,
+        "5": 5
+      },
+      "etypes": {
+        "national_fw": 5,
+        "grey": 2,
+        "standard_eb": 4
+      },
+      "markers": {
+        "◐": 9,
+        "○": 2
+      },
+      "n_jur": 5,
+      "n_true_jur": 3,
+      "n_null_jur": 0,
+      "polluted_jur": {
+        "ZH": 3,
+        "JA": 1
+      },
+      "jurs": {
+        "US": 3,
+        "INT": 3,
+        "ZH": 3,
+        "UK": 1,
+        "JA": 1
+      },
+      "n_lang": 2,
+      "langs": {
+        "en": 8,
+        "ja": 3
+      },
+      "n_en": 8,
+      "n_nonen": 3,
+      "pct_en": 72.7,
+      "anglo_core": 4,
+      "supra": 3,
+      "non_anglo": 4,
+      "pct_anglo_core": 36.4,
+      "sl_searched": 19,
+      "sl_hit": 4,
+      "search_jurs": 47,
+      "score": 33.8,
+      "components": {
+        "A": 16,
+        "B": 0.0,
+        "C": 8.5,
+        "D": 2.5,
+        "E": 6.8
+      },
+      "grade": "E"
+    },
+    {
+      "slug": "cross-population-conflict-resolutions",
+      "topic": "frameworks-and-methodology",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 6,
+      "bp": 2,
+      "code_only": 4,
+      "convergence_only": false,
+      "tiers": {
+        "3": 2,
+        "4": 3,
+        "5": 1
+      },
+      "etypes": {
+        "standard_eb": 3,
+        "national_fw": 1,
+        "clinical": 2
+      },
+      "markers": {
+        "●": 2,
+        "◐": 4
+      },
+      "n_jur": 2,
+      "n_true_jur": 2,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 4,
+        "UK": 2
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 6
+      },
+      "n_en": 6,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 2,
+      "supra": 4,
+      "non_anglo": 0,
+      "pct_anglo_core": 33.3,
+      "sl_searched": 19,
+      "sl_hit": 0,
+      "search_jurs": 47,
+      "score": 32.7,
+      "components": {
+        "A": 12,
+        "B": 6.7,
+        "C": 9,
+        "D": 0,
+        "E": 5.0
+      },
+      "grade": "E"
+    },
+    {
+      "slug": "thermoregulation-built-environment",
+      "topic": "health-and-symptom-management",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 5,
+      "bp": 2,
+      "code_only": 3,
+      "convergence_only": false,
+      "tiers": {
+        "3": 4,
+        "4": 1
+      },
+      "etypes": {
+        "clinical": 2,
+        "standard_eb": 1,
+        "grey": 2
+      },
+      "markers": {
+        "●": 2,
+        "◐": 1,
+        "○": 2
+      },
+      "n_jur": 1,
+      "n_true_jur": 1,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 5
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 5
+      },
+      "n_en": 5,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 0,
+      "supra": 5,
+      "non_anglo": 0,
+      "pct_anglo_core": 0.0,
+      "sl_searched": 19,
+      "sl_hit": 2,
+      "search_jurs": 47,
+      "score": 32.5,
+      "components": {
+        "A": 12,
+        "B": 8.0,
+        "C": 5,
+        "D": 0,
+        "E": 7.5
+      },
+      "grade": "E"
+    },
+    {
+      "slug": "european-accessibility-act-scope-clarification",
+      "topic": "frameworks-and-methodology",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 6,
+      "bp": 0,
+      "code_only": 6,
+      "convergence_only": true,
+      "tiers": {
+        "5": 2,
+        "6": 4
+      },
+      "etypes": {
+        "code": 4,
+        "national_fw": 2
+      },
+      "markers": {
+        "◐": 2,
+        "○": 4
+      },
+      "n_jur": 4,
+      "n_true_jur": 4,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "EU": 3,
+        "NZ": 1,
+        "NL": 1,
+        "ES": 1
+      },
+      "n_lang": 3,
+      "langs": {
+        "en": 4,
+        "nl": 1,
+        "es": 1
+      },
+      "n_en": 4,
+      "n_nonen": 2,
+      "pct_en": 66.7,
+      "anglo_core": 1,
+      "supra": 3,
+      "non_anglo": 2,
+      "pct_anglo_core": 16.7,
+      "sl_searched": 19,
+      "sl_hit": 4,
+      "search_jurs": 47,
+      "score": 31.7,
+      "components": {
+        "A": 12,
+        "B": 0.0,
+        "C": 6.5,
+        "D": 4.5,
+        "E": 8.7
+      },
+      "grade": "E"
+    },
+    {
+      "slug": "accessible-laundry-room-design",
+      "topic": "room-types",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 6,
+      "bp": 0,
+      "code_only": 6,
+      "convergence_only": true,
+      "tiers": {
+        "4": 3,
+        "5": 3
+      },
+      "etypes": {
+        "standard_eb": 3,
+        "national_fw": 3
+      },
+      "markers": {
+        "◐": 6
+      },
+      "n_jur": 4,
+      "n_true_jur": 4,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "US": 3,
+        "AU": 1,
+        "SE": 1,
+        "DE": 1
+      },
+      "n_lang": 3,
+      "langs": {
+        "en": 4,
+        "sv": 1,
+        "de": 1
+      },
+      "n_en": 4,
+      "n_nonen": 2,
+      "pct_en": 66.7,
+      "anglo_core": 4,
+      "supra": 0,
+      "non_anglo": 2,
+      "pct_anglo_core": 66.7,
+      "sl_searched": 19,
+      "sl_hit": 14,
+      "search_jurs": 47,
+      "score": 28.0,
+      "components": {
+        "A": 12,
+        "B": 0.0,
+        "C": 6.5,
+        "D": 4.5,
+        "E": 5.0
+      },
+      "grade": "E"
+    },
+    {
+      "slug": "government-grant-programmes-home-adaptation",
+      "topic": "economics",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 7,
+      "bp": 0,
+      "code_only": 7,
+      "convergence_only": true,
+      "tiers": {
+        "5": 7
+      },
+      "etypes": {
+        "national_fw": 7
+      },
+      "markers": {
+        "◐": 7
+      },
+      "n_jur": 6,
+      "n_true_jur": 6,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "US": 2,
+        "CA": 1,
+        "UK": 1,
+        "AU": 1,
+        "DE": 1,
+        "CH": 1
+      },
+      "n_lang": 2,
+      "langs": {
+        "en": 5,
+        "de": 2
+      },
+      "n_en": 5,
+      "n_nonen": 2,
+      "pct_en": 71.4,
+      "anglo_core": 5,
+      "supra": 0,
+      "non_anglo": 2,
+      "pct_anglo_core": 71.4,
+      "sl_searched": 19,
+      "sl_hit": 3,
+      "search_jurs": 47,
+      "score": 27.3,
+      "components": {
+        "A": 12,
+        "B": 0.0,
+        "C": 8.5,
+        "D": 2.5,
+        "E": 4.3
+      },
+      "grade": "E"
+    },
+    {
+      "slug": "therapeutic-lighting-design",
+      "topic": "sensory-environment",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 4,
+      "bp": 0,
+      "code_only": 4,
+      "convergence_only": true,
+      "tiers": {
+        "4": 1,
+        "5": 3
+      },
+      "etypes": {
+        "national_fw": 3,
+        "standard_eb": 1
+      },
+      "markers": {
+        "◐": 4
+      },
+      "n_jur": 3,
+      "n_true_jur": 3,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 2,
+        "SE": 1,
+        "DK": 1
+      },
+      "n_lang": 2,
+      "langs": {
+        "en": 3,
+        "sv": 1
+      },
+      "n_en": 3,
+      "n_nonen": 1,
+      "pct_en": 75.0,
+      "anglo_core": 0,
+      "supra": 2,
+      "non_anglo": 2,
+      "pct_anglo_core": 0.0,
+      "sl_searched": 19,
+      "sl_hit": 1,
+      "search_jurs": 47,
+      "score": 26.4,
+      "components": {
+        "A": 8,
+        "B": 0.0,
+        "C": 6.5,
+        "D": 2.5,
+        "E": 9.4
+      },
+      "grade": "E"
+    },
+    {
+      "slug": "crpd-implementation-built-environment",
+      "topic": "frameworks-and-methodology",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 5,
+      "bp": 0,
+      "code_only": 5,
+      "convergence_only": true,
+      "tiers": {
+        "4": 5
+      },
+      "etypes": {
+        "standard_eb": 5
+      },
+      "markers": {
+        "◐": 5
+      },
+      "n_jur": 1,
+      "n_true_jur": 1,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 5
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 5
+      },
+      "n_en": 5,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 0,
+      "supra": 5,
+      "non_anglo": 0,
+      "pct_anglo_core": 0.0,
+      "sl_searched": 19,
+      "sl_hit": 0,
+      "search_jurs": 47,
+      "score": 22.0,
+      "components": {
+        "A": 12,
+        "B": 0.0,
+        "C": 2.5,
+        "D": 0.0,
+        "E": 7.5
+      },
+      "grade": "E"
+    },
+    {
+      "slug": "co1-housing-research-global-south",
+      "topic": "frameworks-and-methodology",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 3,
+      "bp": 0,
+      "code_only": 3,
+      "convergence_only": true,
+      "tiers": {
+        "4": 3
+      },
+      "etypes": {
+        "standard_eb": 3
+      },
+      "markers": {
+        "◐": 3
+      },
+      "n_jur": 1,
+      "n_true_jur": 1,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 3
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 3
+      },
+      "n_en": 3,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 0,
+      "supra": 3,
+      "non_anglo": 0,
+      "pct_anglo_core": 0.0,
+      "sl_searched": 19,
+      "sl_hit": 0,
+      "search_jurs": 47,
+      "score": 18.0,
+      "components": {
+        "A": 8,
+        "B": 0.0,
+        "C": 2.5,
+        "D": 0.0,
+        "E": 7.5
+      },
+      "grade": "E"
+    },
+    {
+      "slug": "accessible-design-failures-poor-performance",
+      "topic": "frameworks-and-methodology",
+      "state": null,
+      "n": 0,
+      "bp": 0,
+      "code_only": 0,
+      "convergence_only": false,
+      "tiers": {},
+      "etypes": {},
+      "markers": {},
+      "n_jur": 0,
+      "n_true_jur": 0,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {},
+      "n_lang": 0,
+      "langs": {},
+      "n_en": 0,
+      "n_nonen": 0,
+      "pct_en": null,
+      "anglo_core": 0,
+      "supra": 0,
+      "non_anglo": 0,
+      "pct_anglo_core": null,
+      "sl_searched": 19,
+      "sl_hit": 3,
+      "search_jurs": 47,
+      "score": 0,
+      "components": {
+        "A": 0,
+        "B": 0,
+        "C": 0,
+        "D": 0,
+        "E": 0
+      },
+      "grade": "F"
+    },
+    {
+      "slug": "bariatric-turning-radius-built-environment",
+      "topic": "seating-and-rest",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 0,
+      "bp": 0,
+      "code_only": 0,
+      "convergence_only": false,
+      "tiers": {},
+      "etypes": {},
+      "markers": {},
+      "n_jur": 0,
+      "n_true_jur": 0,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {},
+      "n_lang": 0,
+      "langs": {},
+      "n_en": 0,
+      "n_nonen": 0,
+      "pct_en": null,
+      "anglo_core": 0,
+      "supra": 0,
+      "non_anglo": 0,
+      "pct_anglo_core": null,
+      "sl_searched": 19,
+      "sl_hit": 0,
+      "search_jurs": 47,
+      "score": 0,
+      "components": {
+        "A": 0,
+        "B": 0,
+        "C": 0,
+        "D": 0,
+        "E": 0
+      },
+      "grade": "F"
+    },
+    {
+      "slug": "bathroom-typology-global-south",
+      "topic": "bathrooms-and-wet-areas",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 0,
+      "bp": 0,
+      "code_only": 0,
+      "convergence_only": false,
+      "tiers": {},
+      "etypes": {},
+      "markers": {},
+      "n_jur": 0,
+      "n_true_jur": 0,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {},
+      "n_lang": 0,
+      "langs": {},
+      "n_en": 0,
+      "n_nonen": 0,
+      "pct_en": null,
+      "anglo_core": 0,
+      "supra": 0,
+      "non_anglo": 0,
+      "pct_anglo_core": null,
+      "sl_searched": 19,
+      "sl_hit": 0,
+      "search_jurs": 47,
+      "score": 0,
+      "components": {
+        "A": 0,
+        "B": 0,
+        "C": 0,
+        "D": 0,
+        "E": 0
+      },
+      "grade": "F"
+    },
+    {
+      "slug": "chronic-pain-built-environment",
+      "topic": "health-and-symptom-management",
+      "state": null,
+      "n": 0,
+      "bp": 0,
+      "code_only": 0,
+      "convergence_only": false,
+      "tiers": {},
+      "etypes": {},
+      "markers": {},
+      "n_jur": 0,
+      "n_true_jur": 0,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {},
+      "n_lang": 0,
+      "langs": {},
+      "n_en": 0,
+      "n_nonen": 0,
+      "pct_en": null,
+      "anglo_core": 0,
+      "supra": 0,
+      "non_anglo": 0,
+      "pct_anglo_core": null,
+      "sl_searched": 19,
+      "sl_hit": 0,
+      "search_jurs": 47,
+      "score": 0,
+      "components": {
+        "A": 0,
+        "B": 0,
+        "C": 0,
+        "D": 0,
+        "E": 0
+      },
+      "grade": "F"
+    },
+    {
+      "slug": "economics-sources",
+      "topic": "economics",
+      "state": null,
+      "n": 0,
+      "bp": 0,
+      "code_only": 0,
+      "convergence_only": false,
+      "tiers": {},
+      "etypes": {},
+      "markers": {},
+      "n_jur": 0,
+      "n_true_jur": 0,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {},
+      "n_lang": 0,
+      "langs": {},
+      "n_en": 0,
+      "n_nonen": 0,
+      "pct_en": null,
+      "anglo_core": 0,
+      "supra": 0,
+      "non_anglo": 0,
+      "pct_anglo_core": null,
+      "sl_searched": 19,
+      "sl_hit": 0,
+      "search_jurs": 47,
+      "score": 0,
+      "components": {
+        "A": 0,
+        "B": 0,
+        "C": 0,
+        "D": 0,
+        "E": 0
+      },
+      "grade": "F"
+    },
+    {
+      "slug": "fatigue-spectrum-built-environment",
+      "topic": "health-and-symptom-management",
+      "state": null,
+      "n": 0,
+      "bp": 0,
+      "code_only": 0,
+      "convergence_only": false,
+      "tiers": {},
+      "etypes": {},
+      "markers": {},
+      "n_jur": 0,
+      "n_true_jur": 0,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {},
+      "n_lang": 0,
+      "langs": {},
+      "n_en": 0,
+      "n_nonen": 0,
+      "pct_en": null,
+      "anglo_core": 0,
+      "supra": 0,
+      "non_anglo": 0,
+      "pct_anglo_core": null,
+      "sl_searched": 19,
+      "sl_hit": 0,
+      "search_jurs": 47,
+      "score": 0,
+      "components": {
+        "A": 0,
+        "B": 0,
+        "C": 0,
+        "D": 0,
+        "E": 0
+      },
+      "grade": "F"
+    },
+    {
+      "slug": "fold-down-grab-bar-specification",
+      "topic": "bathrooms-and-wet-areas",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 0,
+      "bp": 0,
+      "code_only": 0,
+      "convergence_only": false,
+      "tiers": {},
+      "etypes": {},
+      "markers": {},
+      "n_jur": 0,
+      "n_true_jur": 0,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {},
+      "n_lang": 0,
+      "langs": {},
+      "n_en": 0,
+      "n_nonen": 0,
+      "pct_en": null,
+      "anglo_core": 0,
+      "supra": 0,
+      "non_anglo": 0,
+      "pct_anglo_core": null,
+      "sl_searched": 19,
+      "sl_hit": 0,
+      "search_jurs": 47,
+      "score": 0,
+      "components": {
+        "A": 0,
+        "B": 0,
+        "C": 0,
+        "D": 0,
+        "E": 0
+      },
+      "grade": "F"
+    },
+    {
+      "slug": "government-grant-programmes",
+      "topic": "economics",
+      "state": null,
+      "n": 0,
+      "bp": 0,
+      "code_only": 0,
+      "convergence_only": false,
+      "tiers": {},
+      "etypes": {},
+      "markers": {},
+      "n_jur": 0,
+      "n_true_jur": 0,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {},
+      "n_lang": 0,
+      "langs": {},
+      "n_en": 0,
+      "n_nonen": 0,
+      "pct_en": null,
+      "anglo_core": 0,
+      "supra": 0,
+      "non_anglo": 0,
+      "pct_anglo_core": null,
+      "sl_searched": 19,
+      "sl_hit": 0,
+      "search_jurs": 47,
+      "score": 0,
+      "components": {
+        "A": 0,
+        "B": 0,
+        "C": 0,
+        "D": 0,
+        "E": 0
+      },
+      "grade": "F"
+    },
+    {
+      "slug": "hearing-impairment-built-environment",
+      "topic": "population-general",
+      "state": null,
+      "n": 0,
+      "bp": 0,
+      "code_only": 0,
+      "convergence_only": false,
+      "tiers": {},
+      "etypes": {},
+      "markers": {},
+      "n_jur": 0,
+      "n_true_jur": 0,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {},
+      "n_lang": 0,
+      "langs": {},
+      "n_en": 0,
+      "n_nonen": 0,
+      "pct_en": null,
+      "anglo_core": 0,
+      "supra": 0,
+      "non_anglo": 0,
+      "pct_anglo_core": null,
+      "sl_searched": 19,
+      "sl_hit": 0,
+      "search_jurs": 47,
+      "score": 0,
+      "components": {
+        "A": 0,
+        "B": 0,
+        "C": 0,
+        "D": 0,
+        "E": 0
+      },
+      "grade": "F"
+    },
+    {
+      "slug": "jurisdiction-matrix-accessibility-standards",
+      "topic": "frameworks-and-methodology",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 0,
+      "bp": 0,
+      "code_only": 0,
+      "convergence_only": false,
+      "tiers": {},
+      "etypes": {},
+      "markers": {},
+      "n_jur": 0,
+      "n_true_jur": 0,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {},
+      "n_lang": 0,
+      "langs": {},
+      "n_en": 0,
+      "n_nonen": 0,
+      "pct_en": null,
+      "anglo_core": 0,
+      "supra": 0,
+      "non_anglo": 0,
+      "pct_anglo_core": null,
+      "sl_searched": 19,
+      "sl_hit": 4,
+      "search_jurs": 47,
+      "score": 0,
+      "components": {
+        "A": 0,
+        "B": 0,
+        "C": 0,
+        "D": 0,
+        "E": 0
+      },
+      "grade": "F"
+    },
+    {
+      "slug": "multilingual-evidence-convergence-non-english",
+      "topic": "frameworks-and-methodology",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 0,
+      "bp": 0,
+      "code_only": 0,
+      "convergence_only": false,
+      "tiers": {},
+      "etypes": {},
+      "markers": {},
+      "n_jur": 0,
+      "n_true_jur": 0,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {},
+      "n_lang": 0,
+      "langs": {},
+      "n_en": 0,
+      "n_nonen": 0,
+      "pct_en": null,
+      "anglo_core": 0,
+      "supra": 0,
+      "non_anglo": 0,
+      "pct_anglo_core": null,
+      "sl_searched": 19,
+      "sl_hit": 2,
+      "search_jurs": 47,
+      "score": 0,
+      "components": {
+        "A": 0,
+        "B": 0,
+        "C": 0,
+        "D": 0,
+        "E": 0
+      },
+      "grade": "F"
+    },
+    {
+      "slug": "neurodivergent-built-environment",
+      "topic": "population-general",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 0,
+      "bp": 0,
+      "code_only": 0,
+      "convergence_only": false,
+      "tiers": {},
+      "etypes": {},
+      "markers": {},
+      "n_jur": 0,
+      "n_true_jur": 0,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {},
+      "n_lang": 0,
+      "langs": {},
+      "n_en": 0,
+      "n_nonen": 0,
+      "pct_en": null,
+      "anglo_core": 0,
+      "supra": 0,
+      "non_anglo": 0,
+      "pct_anglo_core": null,
+      "sl_searched": 19,
+      "sl_hit": 14,
+      "search_jurs": 47,
+      "score": 0,
+      "components": {
+        "A": 0,
+        "B": 0,
+        "C": 0,
+        "D": 0,
+        "E": 0
+      },
+      "grade": "F"
+    },
+    {
+      "slug": "post-occupancy-evaluation-global",
+      "topic": "frameworks-and-methodology",
+      "state": null,
+      "n": 0,
+      "bp": 0,
+      "code_only": 0,
+      "convergence_only": false,
+      "tiers": {},
+      "etypes": {},
+      "markers": {},
+      "n_jur": 0,
+      "n_true_jur": 0,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {},
+      "n_lang": 0,
+      "langs": {},
+      "n_en": 0,
+      "n_nonen": 0,
+      "pct_en": null,
+      "anglo_core": 0,
+      "supra": 0,
+      "non_anglo": 0,
+      "pct_anglo_core": null,
+      "sl_searched": 19,
+      "sl_hit": 0,
+      "search_jurs": 47,
+      "score": 0,
+      "components": {
+        "A": 0,
+        "B": 0,
+        "C": 0,
+        "D": 0,
+        "E": 0
+      },
+      "grade": "F"
+    }
+  ]
+}
