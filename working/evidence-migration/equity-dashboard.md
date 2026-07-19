@@ -1,23 +1,51 @@
 # Equity dashboard — before/after, 2026-07-19 non-English research recovery
 
-*Sessions: `session_2026-07-19-non-english-research-recovery` (batch 1),
-`session_2026-07-19-non-english-research-recovery-batch2` (batch 2), and
-`session_2026-07-19-non-english-research-recovery-batch3` (batch 3, a small follow-on fix). Full detail
-in `non-english-coverage-matrix.json`; the recovery pipeline and discipline are in
-`research-handoff-non-english.md`. Migrations:
-`scripts/migrations/data_20260719034512_2026-07-19-non-english-research-recovery.sql` (batch 1),
-`scripts/migrations/data_20260719052009_2026-07-19-non-english-research-recovery-batch2.sql` (batch 2),
-`scripts/migrations/data_20260719053052_2026-07-19-non-english-research-recovery-batch3.sql` (batch 3).*
+*Sessions: `session_2026-07-19-non-english-research-recovery` (batch 1) through
+`session_2026-07-19-non-english-research-recovery-batch6` (batch 6), across two calendar sessions (PR
+#18 merged batch 1; PR #19 merged batches 2-5; batch 6 is a follow-on after #19 merged). Full detail in
+`non-english-coverage-matrix.json`; the recovery pipeline and discipline are in
+`research-handoff-non-english.md`. Migrations: `data_20260719034512` (batch 1) through
+`data_20260719175641` (batch 6), all under `scripts/migrations/`.*
 
-## Headline numbers (cumulative, all five batches)
+## Headline numbers (cumulative, all six batches)
 
-| metric | pre-session baseline | after batch 1 | after batch 2 | after batch 3 | after batch 4 | after batch 5 | cumulative delta |
-|---|---|---|---|---|---|---|---|
-| `evidence_sources` total | 640 | 650 | 661 | 662 | 670 | 670 | +30 (new ingests; batch 5 corrected existing rows, added none) |
-| non-English (`lang_detected` != en/eng) | 87 | 136 | 147 | 150 | 158 | **157** | **+70** (batch 5 reverted 1 over-correction, REF-00310) |
-| `lang_detected` rows corrected (mislabel fix) | — | 59 | 59 | 61 | 61 | 61 (net; +1 correction, -1 reversion) | 59 (batch 1) + 2 (batch 3) − 1 reverted (batch 5) + 1 honesty-fixed (batch 5, value unchanged) |
-| `jurisdiction` = INTL (seam, should be INT) | 5 | 0 | 0 | 0 | 0 | 0 | fixed |
-| `verification_status` = VERIFIED-2 (search-corroborated, primary fetch blocked) | 0 | 10 | 21 | 22 | 30 | 30 | new category, honestly disclosed |
+| metric | baseline | b1 | b2 | b3 | b4 | b5 | b6 | cumulative delta |
+|---|---|---|---|---|---|---|---|---|
+| `evidence_sources` total | 640 | 650 | 661 | 662 | 670 | 670 | **674** | +34 (new ingests; batch 5 corrected existing rows, added none) |
+| non-English (`lang_detected` != en/eng) | 87 | 136 | 147 | 150 | 158 | 157 | **160** | **+73** |
+| `lang_detected` rows corrected (mislabel fix) | — | 59 | 59 | 61 | 61 | 61 (net) | 61 | 59 (b1) + 2 (b3) − 1 reverted (b5) + 1 honesty-fixed (b5, value unchanged) |
+| `jurisdiction` = INTL (seam, should be INT) | 5 | 0 | 0 | 0 | 0 | 0 | 0 | fixed |
+| `verification_status` = VERIFIED-2 (search-corroborated, primary fetch blocked) | 0 | 10 | 21 | 22 | 30 | 30 | **34** | new category, honestly disclosed |
+| `data_migrations` ledger rows | 199 | 200 | 201 | 202 | 203 | 204 | **205** | 6 migrations across the effort |
+
+### Batch 6 — 4 new Global-South jurisdictions, careful re-verification catches 3 real problems
+
+Follow-on after PR #19 merged (branch restarted from `main`, per this repo's own rule). `WebFetch`
+confirmed non-functional for a **3rd consecutive session** (control-URL test against `example.com` still
+403's) — rather than keep waiting on a tool fix that hasn't materialized, this batch applied the same
+`WebSearch`-corroboration + `VERIFIED-2` methodology the batch-5 adversarial review already validated as
+reliable (7/8 sampled sources confirmed accurate) to the 9 Global-South leads flagged since batch 1.
+
+**4 new sources ingested, all genuinely new jurisdictions for this corpus:** Saudi Arabia (SBC 201,
+mandatory building code, Royal Decree-backed), Egypt (Code 601, mandatory via ministerial decree), UAE/
+Dubai (Universal Design Code, mandatory via building-permit linkage, "Wosool" certification), and
+Bangladesh (2013 Disability Rights Act, Section 34 — ingested **with an explicit honest caveat**: multiple
+independent sources describe its enforcement mechanism as weak/aspirational, not a hard mandate; tiered
+T6 anyway because it is genuinely statute, not guidance, but the caveat travels with the citation).
+
+**3 leads investigated and NOT ingested — the careful re-checking earning its keep again:**
+- **Indonesia's SNI 03-1735-2000** resolved to a **fire-safety egress standard**, not a disability-
+  accessibility standard — its full official title ("...untuk Pencegahan Bahaya Kebakaran Pada Bangunan
+  Gedung" / "...for Fire Hazard Prevention") was never fully retrieved in earlier passes. Out of scope,
+  correctly excluded rather than ingested on the strength of a truncated search snippet.
+- **The Hindi "92 Hindi_Corrected.pdf" lead** — this batch could not even re-locate the file via
+  `WebSearch` (four distinct queries, including exact-filename search, came up empty), and its
+  relationship to the DB's existing `REF-00509` (India's 2021 Harmonised Guidelines) remains genuinely
+  undetermined. Not ingested — would risk double-counting an already-present document under a different
+  row, or citing a file that may not be independently retrievable at all.
+- **BUAG (buag.info, Bangladesh)** — confirmed to be a derivative/secondary Bengali-language explainer of
+  BNBC 2020 Part 3 Appendix D, not an independent primary standard; its operating organization remains
+  unconfirmed after two separate investigation rounds. Not citable as a primary source.
 | `data_migrations` ledger rows | 199 | 200 | 201 | 202 | 203 | **204** | 5 migrations this session |
 
 ### Batch 5 — adversarial review, run at the user's request
@@ -206,23 +234,27 @@ as claimed (see the batch 2 section above).
   precisely diagnosed as a session-wide `WebFetch` outage (control-URL tests against `example.com` also
   403'd). None of the 9 are ingested; they remain flagged leads for a session with working `WebFetch`.
 
-## Next batch (not done this session)
+## Next batch (not done through batch 6)
 
-1. Tier-2: luminance-contrast-and-pattern (74), sensory-room-user-control (42), and the four ~20-hit slugs
-   (cognitive-wayfinding-design, deaf-spatial-design, mental-health-built-environment,
-   accessible-circulation-geometry).
-2. The 9 Global-South recoveries flagged in `non-english-coverage-matrix.json`
-   (`global_south_zero_result_investigation.*.recovered_not_ingested`) — Indonesian SNI 03-1735-2000 /
-   Kepmen PU 468/1998 / Permen PUPR 14/2017, the Hindi translation of India's Harmonised Guidelines,
-   Bangladesh's BUAG site / 2013 disability act / BNBC Appendix D, and the Saudi SBC 201 / Dubai Universal
-   Design Code / Egyptian Code 601 — need a session with functional `WebFetch` before any can be upgraded
-   past search-snippet corroboration. **Do not retry this with WebSearch-only verification again** — two
-   independent attempts have already hit the same ceiling; the blocker is tooling, not more searching.
+1. Tier-2: 2 of 4 stub-notes slugs remain untouched (`cognitive-wayfinding-design`,
+   `accessible-circulation-geometry`) — both lower priority since they already carry partial non-English
+   coverage from relinks (8/22 and 3/12 respectively), unlike the 2 batch-4 addressed (which started at
+   1/22 and 0/10).
+2. Of the original 9 Global-South leads, batch 6 resolved 7 (4 ingested, 3 correctly excluded after
+   careful re-checking). **2 remain genuinely open**: Indonesia's Kepmen PU 468/1998 and Permen PUPR
+   14/2017 (the third Indonesian lead, SNI 03-1735-2000, is now confirmed out-of-scope — fire safety, not
+   accessibility — these other two were not re-investigated this batch and their status is unchanged from
+   the original finding). The Hindi translation lead and BUAG remain correctly un-ingested (see batch 6
+   summary above) — don't keep re-investigating those two without new information; the blockers are
+   structural (file unlocatable / not a primary source), not a searching gap.
 3. Two unconfirmed leads surfaced during batch 2, not yet chased down: the Italian "Linee guida del
    Ministero della Sanità n. 1" companion to DPCM 22/12/1989 (exact date uncertain — 31 gennaio vs 31
    marzo 1994 across sources) and Portugal's IGAS 2023 "ERPI Referencial de Boas Práticas" (content
    unread, may or may not contain dementia-specific design provisions).
-4. A corpus-wide audit of whether the *original* 81×19 multilingual sweep's zero-results (beyond the 5
+4. **`WebFetch` has now failed control-URL tests in 3 consecutive sessions** (batches 1-2, batch 4, batch
+   6) — worth escalating to the project owner as a likely persistent environment/infrastructure issue,
+   not something a future session should keep re-testing hoping it resolves itself.
+5. A corpus-wide audit of whether the *original* 81×19 multilingual sweep's zero-results (beyond the 5
    flagged Global-South languages) are partly a WebFetch-domain-blocking artifact — every investigating
-   agent across both batches hit the same blocking pattern independently across unrelated domains/
-   languages/sessions, which is now a 2-for-2 pattern worth a dedicated look.
+   agent across every batch has hit the same blocking pattern independently across unrelated domains/
+   languages/sessions.
