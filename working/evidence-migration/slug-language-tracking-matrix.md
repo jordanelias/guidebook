@@ -12,6 +12,16 @@ detail in `equity-dashboard.md`'s "Batch 5" section and `non-english-coverage-ma
 `batch5_adversarial_review`. Structural DB integrity was clean throughout; 7 of 8 independently
 re-verified sources were confirmed accurate.
 
+**Batch 7 note (closing out the Global-South leads + 2 small loose ends):** Permen PUPR 14/2017
+(Indonesia) ingested as REF-00770 — the last unresolved Global-South lead, now all 9 original leads
+resolved. Kepmen PU 468/1998 confirmed superseded (revoked by Permen PU 30/PRT/M/2006), correctly not
+ingested. The Italian companion "Linee guida n. 1" date on REF-00746 was corrected/confirmed to 31 marzo
+1994 (not 31 gennaio), with the Legge 724/1994 art. 3 cross-reference now confirmed rather than
+suspected. Portugal's IGAS 2023 ERPI referencial was checked for dementia-specific design content and
+found to contain none (clinical/organizational care guidance only) — this **corroborates**, not
+overturns, Portugal's existing genuine-absence finding for wayfinding-dementia-spatial-design. No DB
+change needed for the Portugal item. Full detail in `equity-dashboard.md`'s "Batch 7" section.
+
 ## Legend
 
 - ✅**R** = relinked an already-verified DB row (zero new fabrication surface)
@@ -53,15 +63,16 @@ re-verified sources were confirmed accurate.
 | language | verdict | resolution (batch 6) |
 |---|---|---|
 | Swahili (SW) | 🚫A genuine absence (underlying KE/TZ law is real but English-only) | n/a — nothing to ingest |
-| Indonesian (ID) | 🔎F — query-construction failure, NOT absence; 3 candidates found | ⛔B SNI 03-1735-2000 confirmed OUT OF SCOPE (fire-safety egress standard, not accessibility — full title resolved batch 6). 🔎F Kepmen PU 468/1998 + Permen PUPR 14/2017 not re-investigated batch 6, still open. |
+| Indonesian (ID) | 🔎F — query-construction failure, NOT absence; 3 candidates found | ⛔B SNI 03-1735-2000 confirmed OUT OF SCOPE (fire-safety egress standard, not accessibility — full title resolved batch 6). ✅N Permen PUPR 14/2017 ingested batch 7 (REF-00770, "Berlaku"/in force, first Indonesian jurisdiction in corpus). ⛔B Kepmen PU 468/1998 confirmed genuinely accessibility-scoped but formally revoked by Permen PU 30/PRT/M/2006 (explicit repeal language on the JDIH BPK RI record) — not ingested. |
 | Hindi (HI) | 🔎F — query-construction failure, NOT absence; 1 candidate found | ⛔B could not re-locate the file via WebSearch batch 6 (4 queries, empty); relationship to REF-00509 (already-ingested India HGS-2021) undetermined — not ingested to avoid double-count risk. |
 | Bengali (BN) | 🔎F — query-construction failure (subtler), NOT absence; 2 candidates found | ✅N Bangladesh 2013 Disability Rights Act ingested (REF-00769, honest enforcement-weakness caveat). ⛔B BUAG confirmed a secondary BNBC explainer, not a primary standard, publisher still unconfirmed — not ingested. |
 | Arabic (AR) | 🔎F — query-construction failure, NOT absence; 4 candidates found | ✅N×3 Saudi SBC 201 (REF-00766), Egyptian Code 601 (REF-00767), Dubai Universal Design Code (REF-00768) all ingested, all confirmed mandatory/enforceable. |
 
-**7 of 9 original leads resolved in batch 6** (4 ingested, 3 correctly excluded) via careful WebSearch-only
-re-verification — `WebFetch` failed its control-URL test for a 3rd consecutive session, so batch 6 stopped
-waiting for it and applied the batch-5-validated verification standard instead. 2 leads (the Indonesian
-Kepmen/Permen pair) remain genuinely open, simply not revisited this batch.
+**All 9 original leads now resolved (batches 6-7)** — 5 ingested, 4 correctly excluded — via careful
+WebSearch-only re-verification. `WebFetch` failed its control-URL test for a 4th consecutive session in
+batch 7, so the batch-5-validated verification standard was applied again rather than waiting for the tool.
+The final 2 leads (the Indonesian Kepmen/Permen pair) were resolved batch 7: Permen PUPR 14/2017 ingested
+(REF-00770, in force), Kepmen 468/1998 confirmed superseded and excluded.
 
 ## `lang_detected` hygiene fix (cross-cutting, not slug-specific)
 

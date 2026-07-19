@@ -1,22 +1,22 @@
 # Equity dashboard — before/after, 2026-07-19 non-English research recovery
 
 *Sessions: `session_2026-07-19-non-english-research-recovery` (batch 1) through
-`session_2026-07-19-non-english-research-recovery-batch6` (batch 6), across two calendar sessions (PR
-#18 merged batch 1; PR #19 merged batches 2-5; batch 6 is a follow-on after #19 merged). Full detail in
-`non-english-coverage-matrix.json`; the recovery pipeline and discipline are in
+`session_2026-07-19-non-english-research-recovery-batch7` (batch 7), across two calendar sessions (PR
+#18 merged batch 1; PR #19 merged batches 2-5; PR #20 merged batch 6; batch 7 is a follow-on after #20
+merged). Full detail in `non-english-coverage-matrix.json`; the recovery pipeline and discipline are in
 `research-handoff-non-english.md`. Migrations: `data_20260719034512` (batch 1) through
-`data_20260719175641` (batch 6), all under `scripts/migrations/`.*
+`data_20260719190934` (batch 7), all under `scripts/migrations/`.*
 
-## Headline numbers (cumulative, all six batches)
+## Headline numbers (cumulative, all seven batches)
 
-| metric | baseline | b1 | b2 | b3 | b4 | b5 | b6 | cumulative delta |
-|---|---|---|---|---|---|---|---|---|
-| `evidence_sources` total | 640 | 650 | 661 | 662 | 670 | 670 | **674** | +34 (new ingests; batch 5 corrected existing rows, added none) |
-| non-English (`lang_detected` != en/eng) | 87 | 136 | 147 | 150 | 158 | 157 | **160** | **+73** |
-| `lang_detected` rows corrected (mislabel fix) | — | 59 | 59 | 61 | 61 | 61 (net) | 61 | 59 (b1) + 2 (b3) − 1 reverted (b5) + 1 honesty-fixed (b5, value unchanged) |
-| `jurisdiction` = INTL (seam, should be INT) | 5 | 0 | 0 | 0 | 0 | 0 | 0 | fixed |
-| `verification_status` = VERIFIED-2 (search-corroborated, primary fetch blocked) | 0 | 10 | 21 | 22 | 30 | 30 | **34** | new category, honestly disclosed |
-| `data_migrations` ledger rows | 199 | 200 | 201 | 202 | 203 | 204 | **205** | 6 migrations across the effort |
+| metric | baseline | b1 | b2 | b3 | b4 | b5 | b6 | b7 | cumulative delta |
+|---|---|---|---|---|---|---|---|---|---|
+| `evidence_sources` total | 640 | 650 | 661 | 662 | 670 | 670 | 674 | **675** | +35 (new ingests; batch 5 corrected existing rows, added none) |
+| non-English (`lang_detected` != en/eng) | 87 | 136 | 147 | 150 | 158 | 157 | 160 | **161** | **+74** |
+| `lang_detected` rows corrected (mislabel fix) | — | 59 | 59 | 61 | 61 | 61 (net) | 61 | 61 | 59 (b1) + 2 (b3) − 1 reverted (b5) + 1 honesty-fixed (b5, value unchanged) |
+| `jurisdiction` = INTL (seam, should be INT) | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | fixed |
+| `verification_status` = VERIFIED-2 (search-corroborated, primary fetch blocked) | 0 | 10 | 21 | 22 | 30 | 30 | 34 | **35** | new category, honestly disclosed |
+| `data_migrations` ledger rows | 199 | 200 | 201 | 202 | 203 | 204 | 205 | **206** | 7 migrations across the effort |
 
 ### Batch 6 — 4 new Global-South jurisdictions, careful re-verification catches 3 real problems
 
@@ -234,27 +234,49 @@ as claimed (see the batch 2 section above).
   precisely diagnosed as a session-wide `WebFetch` outage (control-URL tests against `example.com` also
   403'd). None of the 9 are ingested; they remain flagged leads for a session with working `WebFetch`.
 
-## Next batch (not done through batch 6)
+## Batch 7 — the final 2 Global-South leads + 2 small loose ends closed out
+
+Batch 7 closed every item batch 6 had left open:
+
+- **Permen PUPR No. 14/PRT/M/2017 (Indonesia) ingested as REF-00770**, tier 6 / `code`. Complete official
+  title, publisher, and disability-accessibility scope confirmed across 3 independent official sources
+  (Kementerian PUPR Cipta Karya, peraturan.go.id, JDIH BPK RI); legal status "Berlaku" (in force)
+  confirmed via a WebSearch snippet of the JDIH BPK RI record (medium confidence on this specific point,
+  since the status page itself could not be opened directly — `WebFetch` failed its control-URL test a
+  **4th consecutive session**). Linked to `wayfinding-global-south` as WGS-16 — Indonesia's first
+  jurisdiction in this corpus.
+- **Kepmen PU No. 468/KPTS/1998 confirmed superseded, correctly not ingested.** Genuinely
+  accessibility-scoped (no SNI-03-1735-2000-style scope trap), but explicitly revoked by Permen PU No.
+  30/PRT/M/2006 per that regulation's own JDIH BPK RI text ("dicabut dan dinyatakan tidak berlaku").
+- **All 9 original Global-South leads are now resolved**: 5 ingested (Saudi Arabia, Egypt, UAE,
+  Bangladesh, Indonesia), 4 correctly excluded (Indonesia ×2 — SNI wrong-scope, Kepmen superseded;
+  Bangladesh's BUAG — secondary/unconfirmed; India's Hindi MoHUA PDF — unlocatable, relationship to
+  existing REF-00509 undetermined).
+- **Italian date corrected**: REF-00746's companion "Linee guida del Ministero della Sanità n. 1" is now
+  recorded as dated **31 marzo 1994** (not the previously-uncertain "31 gennaio"), confirmed via multiple
+  convergent WebSearch sources; the Legge 23 dicembre 1994, n. 724 art. 3 cross-reference is now confirmed
+  rather than suspected. The companion document itself remains un-ingested (organizational/managerial
+  content, not structural — wouldn't anchor built-environment claims regardless).
+- **Portugal's IGAS 2023 ERPI referencial checked for dementia-specific content: none found.** This
+  **corroborates** (does not overturn) the existing genuine-absence finding for
+  `wayfinding-dementia-spatial-design` — clinical/organizational health-care guidance only, co-authored
+  with medical/nursing/pharmacy bodies and no architectural involvement; the physical/spatial
+  specifications that surfaced in early searches trace to a different document (Portaria n.º 349/2023, the
+  ERPI licensing regulation), not the IGAS referencial. No DB change needed.
+
+Full detail in `global-south-finding.md`'s "Batch 7 update" section and
+`non-english-coverage-matrix.json` → `batch7_global_south_closeout`.
+
+## Next batch (not done through batch 7)
 
 1. Tier-2: 2 of 4 stub-notes slugs remain untouched (`cognitive-wayfinding-design`,
    `accessible-circulation-geometry`) — both lower priority since they already carry partial non-English
    coverage from relinks (8/22 and 3/12 respectively), unlike the 2 batch-4 addressed (which started at
    1/22 and 0/10).
-2. Of the original 9 Global-South leads, batch 6 resolved 7 (4 ingested, 3 correctly excluded after
-   careful re-checking). **2 remain genuinely open**: Indonesia's Kepmen PU 468/1998 and Permen PUPR
-   14/2017 (the third Indonesian lead, SNI 03-1735-2000, is now confirmed out-of-scope — fire safety, not
-   accessibility — these other two were not re-investigated this batch and their status is unchanged from
-   the original finding). The Hindi translation lead and BUAG remain correctly un-ingested (see batch 6
-   summary above) — don't keep re-investigating those two without new information; the blockers are
-   structural (file unlocatable / not a primary source), not a searching gap.
-3. Two unconfirmed leads surfaced during batch 2, not yet chased down: the Italian "Linee guida del
-   Ministero della Sanità n. 1" companion to DPCM 22/12/1989 (exact date uncertain — 31 gennaio vs 31
-   marzo 1994 across sources) and Portugal's IGAS 2023 "ERPI Referencial de Boas Práticas" (content
-   unread, may or may not contain dementia-specific design provisions).
-4. **`WebFetch` has now failed control-URL tests in 3 consecutive sessions** (batches 1-2, batch 4, batch
-   6) — worth escalating to the project owner as a likely persistent environment/infrastructure issue,
-   not something a future session should keep re-testing hoping it resolves itself.
-5. A corpus-wide audit of whether the *original* 81×19 multilingual sweep's zero-results (beyond the 5
+2. **`WebFetch` has now failed control-URL tests in 4 consecutive sessions** (batches 1-2, batch 4, batch
+   6, batch 7) — worth escalating to the project owner as a likely persistent environment/infrastructure
+   issue, not something a future session should keep re-testing hoping it resolves itself.
+3. A corpus-wide audit of whether the *original* 81×19 multilingual sweep's zero-results (beyond the 5
    flagged Global-South languages) are partly a WebFetch-domain-blocking artifact — every investigating
    agent across every batch has hit the same blocking pattern independently across unrelated domains/
    languages/sessions.

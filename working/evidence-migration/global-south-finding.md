@@ -136,9 +136,9 @@ for 7 of the 9 leads:
   its relationship to the DB's already-present `REF-00509` (India's 2021 Harmonised Guidelines) is
   genuinely undetermined — ingesting it now would risk either double-counting an existing document or
   citing a file that may not be independently retrievable at all. Not ingested.
-- **Not re-investigated (2):** Indonesia's Kepmen PU 468/1998 and Permen PUPR 14/2017 — these two were
-  simply not revisited this batch (effort went to the higher-confidence Arabic-region and Bangladesh
-  leads); their status is unchanged from the original finding.
+- **Not re-investigated in batch 6 (2):** Indonesia's Kepmen PU 468/1998 and Permen PUPR 14/2017 — these
+  two were simply not revisited that batch (effort went to the higher-confidence Arabic-region and
+  Bangladesh leads); resolved in batch 7 (below).
 
 The honest lesson here is not "WebSearch-only verification is fine, ignore the earlier warning" — it's
 that **the standard of care matters more than the tool**. The earlier "do not retry with WebSearch-only
@@ -146,3 +146,50 @@ verification" warning was really about not repeating the *same shallow pass* exp
 result. Batch 6 didn't repeat the pass — it insisted on complete titles, explicit enforceability findings,
 and honest "could not confirm" outcomes where the evidence ran out, and that additional rigor is what
 actually moved 7 of 9 leads to a resolved state.
+
+## Batch 7 update — the final 2 leads resolved; all 9 original leads now closed
+
+`WebFetch` failed its control-URL test a **4th consecutive session**. Batch 7 applied the same
+batch-5/batch-6-validated WebSearch-only standard to the two Indonesian leads batch 6 left untouched,
+explicitly re-applying the SNI 03-1735-2000 lesson (get the COMPLETE official title before concluding
+scope):
+
+- **Kepmen PU No. 468/KPTS/1998** — complete official title confirmed genuinely disability-accessibility
+  ("Persyaratan Teknis Aksesibilitas pada Bangunan Umum dan Lingkungan," no hidden qualifier like the SNI
+  fire-safety trap). However, its legal status resolved to **superseded**: the JDIH BPK RI record for its
+  successor, Permen PU No. 30/PRT/M/2006, explicitly states "[Kepmen 468/KPTS/1998] dicabut dan dinyatakan
+  tidak berlaku" (revoked and declared no longer in effect), effective 1 December 2006. Per this project's
+  code-currency discipline, a revoked regulation is not ingested as an active citation. **Not ingested.**
+- **Permen PUPR No. 14/PRT/M/2017** — complete official title confirmed genuinely disability-accessibility
+  ("Persyaratan Kemudahan Bangunan Gedung"), publisher and scope confirmed across 3 independent official/
+  government sources (Kementerian PUPR Cipta Karya, peraturan.go.id, JDIH BPK RI). Legal status: "Berlaku"
+  (in force) per the JDIH BPK RI status field (confirmed via WebSearch snippet, not a direct page read —
+  disclosed as a medium-confidence caveat on this specific point). No source found PP 16/2021 (the later
+  Cipta Kerja-era implementing regulation) explicitly revoking it; it appears to remain the operative
+  ministerial technical regulation. **Ingested as REF-00770**, tier 6 / `code` (statutory, legally
+  enforceable, matching `governance/tier-system.md`'s T6 definition) — Indonesia's first jurisdiction in
+  this corpus.
+
+**All 9 original Global-South leads are now resolved: 5 ingested (Saudi Arabia, Egypt, UAE, Bangladesh,
+Indonesia), 4 correctly excluded** (Indonesia's SNI 03-1735-2000 — wrong scope; Bangladesh's BUAG —
+secondary source, unconfirmed publisher; India's Hindi MoHUA PDF — could not be re-located, relationship
+to existing REF-00509 undetermined; Indonesia's Kepmen 468/1998 — superseded). Swahili's genuine-absence
+finding stands unchanged (no Swahili-language accessibility standard exists to ingest).
+
+### A small companion loose end resolved the same batch (not a Global-South item)
+
+Two unrelated small items were resolved alongside the Indonesian leads, using the same WebSearch-only
+standard: the exact date of Italy's companion "Linee guida del Ministero della Sanità n. 1" document
+(REF-00746's `notes` previously recorded this as uncertain, "31 gennaio vs 31 marzo 1994") was confirmed
+via multiple convergent independent sources to be **31 marzo 1994** — the "31 gennaio" variant appears to
+be a corruption; a separate, genuine **31 maggio 1994** date is when the guidelines were transmitted to
+the Regions, which likely fed the original date confusion. The Legge 23 dicembre 1994, n. 724 art. 3
+cross-reference is now confirmed (not just suspected). Separately, Portugal's IGAS 2023 ERPI referencial
+was checked for dementia-specific built-environment content and found to contain none — it is
+clinical/organizational health-care guidance (co-produced with Portugal's medical/nursing/pharmacy
+professional orders, no architectural body involved), with the physical/spatial specifications that
+surfaced in early searches actually tracing to a *different* document (Portaria n.º 349/2023, the ERPI
+licensing regulation) and an ArchDaily neuroarchitecture article, neither of which is dementia-specific
+building-design regulation either. This **corroborates, not overturns**, Portugal's existing
+genuine-absence finding for `wayfinding-dementia-spatial-design` — a valid, honest research result, not a
+gap needing a fix. No DB change was needed for this item.

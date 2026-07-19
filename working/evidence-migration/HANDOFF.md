@@ -3,22 +3,33 @@
 *Written 2026-07-18 for a fresh context. Self-contained: a cold session should be able to resume from this
 document + the two it points to (`pipeline-audit.md`, `/root/.claude/plans/delegated-pondering-pine.md`).*
 
-*Updated 2026-07-19, six batches across three sessions (batches 1-3 in the original session; batches 4-5
-in a follow-on merged as PR #19; batch 6 in a further follow-on after #19 merged) — see §0 below for what
-changed. Sections 1-9 are the 2026-07-18 state as originally written; treat §0 as the current addendum.*
+*Updated 2026-07-19, seven batches across four sessions (batches 1-3 in the original session; batches 4-5
+in a follow-on merged as PR #19; batch 6 in a further follow-on merged as PR #20; batch 7 in a further
+follow-on after #20 merged) — see §0 below for what changed. Sections 1-9 are the 2026-07-18 state as
+originally written; treat §0 as the current addendum.*
 
 ---
 
-## 0. 2026-07-19 addendum — non-English research recovery (batches 1-6)
+## 0. 2026-07-19 addendum — non-English research recovery (batches 1-7)
 
-Picked up `research-handoff-non-english.md` and ran its recovery pipeline across six batches; batch 5 was
-a dedicated **adversarial review** of the first four, batch 6 a further follow-on after PR #19 merged.
-Full detail: `equity-dashboard.md`, `non-english-coverage-matrix.json`, `global-south-finding.md`,
-`slug-language-tracking-matrix.md` (a live slug×language tracking table — check this first before
-spending more research effort on any given slug/language). Six migrations applied (`data_20260719034512`
-through `data_20260719175641`, suffixed `...recovery.sql` / `...recovery-batch{2..6}.sql`) —
-`data_migrations` now 205 rows; `PRAGMA foreign_key_check`/`integrity_check` clean after all six.
+Picked up `research-handoff-non-english.md` and ran its recovery pipeline across seven batches; batch 5
+was a dedicated **adversarial review** of the first four, batch 6 and batch 7 further follow-ons after
+each prior PR merged. Full detail: `equity-dashboard.md`, `non-english-coverage-matrix.json`,
+`global-south-finding.md`, `slug-language-tracking-matrix.md` (a live slug×language tracking table —
+check this first before spending more research effort on any given slug/language). Seven migrations
+applied (`data_20260719034512` through `data_20260719190934`, suffixed `...recovery.sql` /
+`...recovery-batch{2..7}.sql`) — `data_migrations` now 206 rows; `PRAGMA foreign_key_check`/
+`integrity_check` clean after all seven.
 
+- **Batch 7**: closed out the 2 Indonesian leads batch 6 left untouched, plus 2 small unrelated loose
+  ends. `WebFetch` failed its control-URL test a **4th consecutive session** — same WebSearch-only
+  standard applied again. Permen PUPR 14/2017 ingested (REF-00770, tier 6/`code`, "Berlaku"/in force) —
+  Indonesia's first jurisdiction in this corpus. Kepmen PU 468/1998 confirmed genuinely
+  accessibility-scoped but formally revoked by Permen PU 30/PRT/M/2006 — correctly excluded. **All 9
+  original Global-South leads are now resolved** (5 ingested, 4 correctly excluded). Separately: the
+  Italian companion "Linee guida n. 1" date on REF-00746 corrected to 31 marzo 1994 (Legge 724/1994 art. 3
+  cross-ref now confirmed); Portugal's IGAS 2023 ERPI referencial checked and found to contain no
+  dementia-specific design content, corroborating (not overturning) the existing genuine-absence finding.
 - **Batch 6**: `WebFetch` failed its control-URL test a 3rd consecutive session — rather than keep
   waiting, applied batch 5's validated `WebSearch`-corroboration standard to the 9 flagged Global-South
   leads. **Resolved 7 of 9**: 4 new jurisdictions ingested (Saudi Arabia's SBC 201, Egypt's Code 601,
@@ -27,7 +38,7 @@ through `data_20260719175641`, suffixed `...recovery.sql` / `...recovery-batch{2
   out to be a fire-safety standard, not accessibility — a real scope-matching catch; BUAG confirmed a
   secondary explainer, not a primary source; a Hindi PDF lead couldn't be re-located and its relationship
   to an already-ingested source is unresolved, so it stayed un-ingested rather than risk a double-count).
-  2 leads (Indonesian Kepmen/Permen) remain open, simply not revisited this batch.
+  2 leads (Indonesian Kepmen/Permen) were left open batch 6, resolved batch 7 above.
 
 **Batches 3-5, briefly (batches 1-2 detailed below unchanged):**
 - **Batch 3**: fixed 2 more `lang_detected` mislabels missed by batch 1's narrower filter — including
@@ -126,7 +137,7 @@ items. The English skew is manufactured in **ingestion**, not search.
 |---|---|---|
 | doctrine | complete, highest rigour | 25+ DR records; S1–S8 added this session |
 | language search | done | `search_languages` 1539 = 19 langs × 81 slugs |
-| **ingestion (bias funnel)** | **narrowing** | 14 langs returned hits + 4 new Global-South jurisdictions (SA/EG/AE/BD); corpus now **514 EN : 160 non-EN** (2026-07-19, 6 batches: +73 non-EN net, partly a lang_detected hygiene fix, partly new real-retrieval ingests — see §0) |
+| **ingestion (bias funnel)** | **narrowing** | 14 langs returned hits + 5 new Global-South jurisdictions (SA/EG/AE/BD/ID); corpus now **514 EN : 161 non-EN** (2026-07-19, 7 batches: +74 non-EN net, partly a lang_detected hygiene fix, partly new real-retrieval ingests — see §0) |
 | citation-mine / supersession | ~7% | 7 / 6 slugs |
 | **extraction / grading** | **the throat** | extractions **1 slug**; cells **7 / 93 items** |
 | connections (post-grading) | 273 over ungraded items | generative loop; owe re-validation once graded |

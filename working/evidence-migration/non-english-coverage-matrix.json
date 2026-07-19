@@ -7,7 +7,8 @@
       "session_2026-07-19-non-english-research-recovery-batch3 (batch 3)",
       "session_2026-07-19-non-english-research-recovery-batch4 (batch 4)",
       "session_2026-07-19-non-english-research-recovery-batch5 (batch 5, adversarial review)",
-      "session_2026-07-19-non-english-research-recovery-batch6 (batch 6, Global-South resolution)"
+      "session_2026-07-19-non-english-research-recovery-batch6 (batch 6, Global-South resolution)",
+      "session_2026-07-19-non-english-research-recovery-batch7 (batch 7, final Global-South leads + 2 small loose ends)"
     ],
     "method": "Per research-handoff-non-english.md recovery pipeline: extract named instruments from search_languages.notes -> verify via real WebSearch/WebFetch -> dedup against evidence_sources -> ingest via migration. Empties/negative findings recorded, not dropped (S6).",
     "migrations": [
@@ -16,7 +17,8 @@
       "scripts/migrations/data_20260719053052_2026-07-19-non-english-research-recovery-batch3.sql",
       "scripts/migrations/data_20260719055205_2026-07-19-non-english-research-recovery-batch4.sql",
       "scripts/migrations/data_20260719060557_2026-07-19-non-english-research-recovery-batch5.sql",
-      "scripts/migrations/data_20260719175641_2026-07-19-non-english-research-recovery-batch6.sql"
+      "scripts/migrations/data_20260719175641_2026-07-19-non-english-research-recovery-batch6.sql",
+      "scripts/migrations/data_20260719190934_2026-07-19-non-english-research-recovery-batch7.sql"
     ],
     "scope_disclosure": "Two passes, per handoff S7 honest-limit clause. Batch 1: Tier-0 registry backlog (6 refs), Tier-1 richest 2 slugs by non-EN yield (deaf-classroom-reverberation-time, stair-ramp-threshold-biomechanics-accessibility) + a partial pass on wayfinding-dementia-spatial-design (3 of ~15 named instruments), plus the 5-language Global-South investigation. Batch 2: completed wayfinding-dementia-spatial-design (10 more instruments, Portugal re-confirmed as genuine absence), filled the NL ramp gap and corrected the ES ramp-gradient citation for stair-ramp-threshold-biomechanics-accessibility, and re-attempted (unsuccessfully, tooling-blocked) direct-read verification of the 9 Global-South leads. The remaining Tier-1/Tier-2 slugs (luminance-contrast-and-pattern 74 non-EN hits, sensory-room-user-control 42, cognitive-wayfinding-design/deaf-spatial-design/mental-health-built-environment/accessible-circulation-geometry 19-23 each) and the full 14-language x 24-jurisdiction sweep remain a running fraction, not claimed complete."
   },
@@ -708,10 +710,38 @@
         "reason": "Confirmed to be a derivative/secondary Bengali-language explainer of BNBC 2020 Part 3 Appendix D, not an independent primary standard. Operating/publishing organization remains unconfirmed after 2 separate investigation rounds (batch 1 and batch 6). Not citable as a primary source."
       }
     ],
-    "still_unresolved_not_reinvestigated_this_batch": [
-      "Indonesia Kepmen PU No. 468/KPTS/1998",
-      "Indonesia Permen PUPR No. 14/2017"
-    ],
+    "still_unresolved_not_reinvestigated_this_batch": "RESOLVED in batch 7 -- see batch7_global_south_closeout below.",
     "webfetch_status": "Confirmed non-functional via control-URL test (example.com returned HTTP 403) for the 3rd consecutive session (batches 1-2, batch 4, batch 6). Recommend escalating to the project owner as a likely persistent environment/infrastructure issue rather than continuing to re-test it each session."
+  },
+  "batch7_global_south_closeout": {
+    "summary": "Follow-on session after PR #20 (batch 6) merged. WebFetch confirmed non-functional for a 4th consecutive session (control-URL test). Closed out the 2 Indonesian leads batch 6 left untouched, plus 2 small unrelated loose ends (Italian date, Portugal IGAS content), all via the batch-5/6-validated WebSearch-corroboration + VERIFIED-2 methodology.",
+    "ingested": [
+      {
+        "ref_id": "REF-00770",
+        "jurisdiction": "ID",
+        "candidate": "Permen PUPR No. 14/PRT/M/2017 (Persyaratan Kemudahan Bangunan Gedung)",
+        "tier": 6,
+        "confidence": "high on identity/title/scope; medium on current-force status (JDIH BPK RI 'Berlaku' status confirmed via WebSearch snippet, not a direct page read)",
+        "note": "Complete official title checked against the SNI 03-1735-2000 scope-trap lesson from batch 6 -- no hidden qualifier found, genuinely about building accessibility. Linked to wayfinding-global-south as WGS-16. First Indonesian jurisdiction in this corpus."
+      }
+    ],
+    "excluded_after_careful_recheck": [
+      {
+        "candidate": "Indonesia Kepmen PU No. 468/KPTS/1998",
+        "reason": "Complete official title confirmed genuinely disability-accessibility (no scope trap), but explicitly revoked by Permen PU No. 30/PRT/M/2006 per that regulation's own JDIH BPK RI text ('dicabut dan dinyatakan tidak berlaku', effective 1 December 2006). Superseded regulations are not ingested as active citations per this project's code-currency discipline."
+      }
+    ],
+    "small_loose_ends_resolved": [
+      {
+        "item": "Italian companion document date on REF-00746 ('Linee guida del Ministero della Sanita n. 1')",
+        "resolution": "Confirmed 31 marzo 1994 (not '31 gennaio 1994' as previously uncertain), via multiple convergent independent WebSearch sources. A separate, genuine 31 maggio 1994 date is the transmission date to the Regions, likely the source of the original date-confusion. Legge 23 dicembre 1994, n. 724 art. 3 cross-reference now confirmed, not just suspected. REF-00746's notes/derivation_chain updated; the companion document itself remains un-ingested (organizational/managerial content, not structural)."
+      },
+      {
+        "item": "Portugal IGAS 2023 ERPI 'Referencial de Boas Praticas' -- dementia-specific content check",
+        "resolution": "No dementia-specific built-environment/design content found. Confirms (does not overturn) Portugal's existing genuine-absence finding for wayfinding-dementia-spatial-design. The document is clinical/organizational health-care guidance co-authored with medical/nursing/pharmacy professional orders, no architectural body involved. Physical/spatial specifications surfaced in early searches traced to a different document (Portaria n. 349/2023, the ERPI licensing regulation), not this referencial. No DB change made."
+      }
+    ],
+    "outcome": "All 9 original Global-South leads (batches 1-7) now resolved: 5 ingested (Saudi Arabia, Egypt, UAE, Bangladesh, Indonesia), 4 correctly excluded (Indonesia x2 -- SNI wrong-scope + Kepmen superseded; Bangladesh's BUAG -- secondary/unconfirmed; India's Hindi MoHUA PDF -- unlocatable). Swahili's genuine-absence finding stands unchanged.",
+    "webfetch_status": "Confirmed non-functional (WebSearch-only used throughout) for a 4th consecutive session (batches 1-2, batch 4, batch 6, batch 7). Recommend escalating to the project owner as a likely persistent environment/infrastructure issue."
   }
 }
