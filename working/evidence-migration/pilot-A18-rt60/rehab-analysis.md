@@ -1,100 +1,79 @@
 # Pilot — A-18 (RT60 in Occupied Learning and Listening Spaces)
 
-*Slug: `room-acoustic-performance` · population tag: NDV · `evidence_state`: RETRACTED-PRE-REHAB ·
-citation-mining ✓ · supersession ✓ · co1 ✗ · pico ✗ · jurisdictions-searched ✗.*
+*Slug: `room-acoustic-performance` · `evidence_state`: RETRACTED-PRE-REHAB · citation-mining ✓ ·
+supersession ✓ · co1 ✗ · pico ✗ · jurisdictions-searched ✗.*
 
-Chosen as first pilot because it is the **furthest-along** slug (citation-mining + supersession already
-done), has a **strong Tier-1 base** (16 clinical studies), a **physics-based parameter** (RT60 — the clean
-case for the Kawa universal-transfer rule), and a **richly multi-jurisdictional code-floor**
-(ANSI/BB93/DIN/NS/UNI/AS-NZS/GB/AIJES/SBi) — the ideal stress-test for *convergence ≠ evidence*.
-
-All figures below are read from `data/guidebook.db` (grounded) or retrieved with a cited URL. A **separate
-guilty-until-proven verifier agent** independently re-checked the load-bearing claims; its verdict is in
-`verifier-verdict.md` (§ Verifier).
+> **This artifact was corrected after an independent adversarial verifier refuted parts of the first
+> draft** (see `verifier-verdict.md`). The corrections *strengthened* the finding — the DB is more
+> rehabilitated, and more correct, than the first pass claimed. Every figure below is read from
+> `data/guidebook.db` (grounded) or retrieved with a cited URL.
 
 ---
 
-## The headline: grading ≠ rehabilitation
+## The headline (corrected): the substrate is deep — the debt is flags, Co-1, and flagged errors
 
-A-18's **value derivation is already excellent** — four `evidence_cell_state` rows, evidence-graded,
-`code_floor_only=0` (i.e., ● evidence-derived, not ◐ code-derived):
+A-18's `bpc_metadata` flags say `RETRACTED-PRE-REHAB`, co1 0, pico 0, jurisdictions-searched 0 — which reads
+like "barely started." **That is misleading.** Underneath, the July 2026 pilot sessions built a deep,
+rigorous rehabilitation substrate:
 
-| # | design_scale | state | value (s) | tier_basis | governing_refs | condition (population) |
-|---|---|---|---|---|---|---|
-| 1 | population | **stated** | **0.3** | T1 | REF-00325, 00577, 00576, 00578 | pediatric hearing-aid/CI (HI children), ≤283 m³ |
-| 2 | universal | **stated** | **0.55–0.57** | T1 | REF-00581, 00577 | typical-hearing classroom |
-| 3 | population | provisional | 0.5 | T2 | REF-00569 | dementia care |
-| 4 | population | provisional | 0.4 | T3 | REF-00561 | autism |
+- **4 population-coded, evidence-graded cell-states** (`evidence_cell_state`): DEAF 0.3 s (stated, T1),
+  ALL 0.55–0.57 s (stated, T1), DEM 0.5 s (provisional, T2), AUT 0.4 s (provisional, T3) — all
+  `code_floor_only=0` (● evidence-derived).
+- **8 jurisdiction-tagged code-threshold extractions** (`source_value_extractions`) with echo-provenance:
+  ANSI 0.6 s (ALL) / **0.3 s (DEAF, Footnote e)**, BB93 0.6–0.8 s (UK), DIN 0.4–0.8 s (DE), UNI 0.5 s (IT),
+  AS/NZS 0.4–0.6 s (AU/NZ) — each marked `echo_of` a committee/evidence root, **not** counted as
+  independent evidence.
+- **13 PMP derivation walks** (`spec_value_probes`) with strict-termination logic, per population, recording
+  exactly where a value passes (DEAF 0.3 s, ALL 0.55 s) and where it fails by design (DEM, AUT conjectures).
+- **Convergence assessments** per cell (`convergence_assessment`), all correctly `single_axis` (clinical).
 
-Yet the slug is still `RETRACTED-PRE-REHAB`. **The migration debt is not the value — it is the layers
-around it:**
+So the migration debt for A-18 is **not the value derivation** — that is rigorous and, importantly, already
+handles *convergence ≠ evidence* correctly (next section). The genuine remaining debt is narrower:
 
-| rehabilitation layer | A-18 today | gap |
-|---|---|---|
-| Person / OT mode | absent from `evidence_cell_state` (0 person rows anywhere in the DB) | but `items.pmp_delta_min=0.05, direction=down` **is** a real Person-mode signal — un-migrated into a cell |
-| Co-1 lived experience | `co1_pass_count=0`; no lived-experience row | HI people's lived experience of reverberant space absent |
-| Walled-off code-floor (◐) | none | 10 linked standards, no cell recording "codes = floor, distinct from evidence" |
-| DAR (Design for Adaptable Readiness) | none | acoustic treatment is highly retrofittable — a real DAR story is missing |
-| `population_code` on the population rows | **NULL** on all | the 0.3s value is *for HI children* but the structured field is empty |
-| `item_population_links` | **0 for A-18** | no bottom-up capacity linkage, despite population-specific values |
-| jurisdiction/language coverage record | `jurisdictions_searched=0` | 13 jurisdictions of standards linked but never recorded as a searched matrix |
+| real gap | evidence |
+|---|---|
+| **Recording flags don't reflect the substrate** | `co1/pico/jurisdictions_searched = 0`, `evidence_state=RETRACTED-PRE-REHAB` despite extensive extraction/PMP/cell-state work — surface/flag debt |
+| **Co-1 lived experience genuinely absent** | all 4 `convergence_assessment` rows `single_axis`, `co1_sources=[]`; `co1_pass_count=0` |
+| **DB-flagged data errors** — ✅ **RESOLVED** (migration `data_20260718071505`) | elab_id=6 mis-cited Devos 2019 as **REF-00571** (*Kotloski 2020, a genetics paper*) → re-pointed to real Devos **REF-00735**. **Four ANSI-2010 records** REF-00326/335/**563**/604 → consolidated onto canonical **REF-00563** (FKs re-pointed, dups marked `DUPLICATE-OF`, reversible) |
+| **Person/OT cell + DAR layer** | no `person`-scale cell (though `items.pmp_delta_min=0.05 down` encodes the person adjustment); no DAR provisioning recorded |
 
-This is the whole thesis in one cell: the corpus migrated the **number** and even graded it well, but the
-**rehabilitation** (person mode, lived experience, the floor/evidence separation, adaptability, the
-coverage record) never happened.
+## Convergence ≠ evidence — the DB does this correctly (my first draft did not)
 
----
+The first draft claimed: *"the ANSI 0.6 s code-floor is ~2× laxer than the 0.3 s T1 evidence for
+hearing-impaired children — build to code and you fail them (V-01)."* **The verifier refuted this, and it
+is wrong**, because:
 
-## Value derivation — three modes, two directions, DAR (S8)
+- **ANSI/ASA S12.60 Footnote e itself specifies RT60 ≤ 0.3 s for children with hearing impairment** (≤283 m³).
+  The DB records this (`source_value_extractions` REF-00563, pop=DEAF, 0.3 s) with `echo_of` = *"ANSI Footnote
+  e adopts 0.3 s from the Iglehart working-group research … a standards echo, not an independent root."*
+  So for HI children the code **converges with** the evidence — it does not floor them at 0.6 s.
+- The 0.6 s figure is ANSI's **general (typical-hearing) minimum**, and it is **unoccupied/furnished**; A-18
+  is an **occupied** target, and the DB's general value (0.55 s, Prodi 2022 occupied dose-response) is
+  already on the correct basis.
 
-**TARGET layer (performance value):**
+**The correct, grounded reading:** the DB keeps the strata separate exactly as doctrine requires — the
+committee/code values are tagged `echo_of` and never counted as independent evidence; the ● best-practice
+values rest on the T1 studies. The residual *ethics* point is a **susceptibility, not an instance** (see
+`ethics-screen.md`): if a designer applied the code's **general** 0.6 s minimum to an HI space while ignoring
+ANSI's own Footnote-e 0.3 s provision, that would be minimum-compliance misuse — but the code's own
+population provision already guards against it.
 
-- **Universal (top-down floor)** — RT60 ≤ **0.55–0.57 s** for typical-hearing occupants (● T1, DB row 2).
-  This is the design-for-all floor: population-agnostic, fixed.
-- **Population (evidence range)** — RT60 ≤ **0.3 s** for hearing-impaired children (● T1, DB row 1);
-  ≤ 0.5 s dementia (◑ T2, provisional); ≤ 0.4 s autism (◑ T3, provisional). Median-of-range logic applies
-  *within* a population, not across them — these are distinct populations, not a single range (do **not**
-  average 0.3/0.4/0.5).
-- **Person (bottom-up, OT within range)** — the DB does not hold a person row, but `items.pmp_delta_min =
-  0.05 (down)` encodes it: an OT resolves the person's point by tightening the population value by up to
-  **0.05 s** for greater individual need. Provenance-strength: **`direct` (from `items` PMP field)** but
-  **un-migrated into a cell** — a determination is owed.
+## Value derivation — three modes, both directions, DAR (S8), as it actually stands
 
-**TECHNIQUE layer (how to hit it):** porous absorption (ceiling NRC ≥0.85 per A-02; fabric wall panels NRC
-≥0.70 per A-06), avoiding parallel hard surfaces (flutter echo, A-07). *Graded separately* — the technique
-items exist but their own cell-states are a separate rehabilitation.
+- **Universal (top-down floor):** RT60 ≤ **0.55–0.57 s**, typical-hearing, ● T1 (Prodi 2022, Neuman 2010).
+  Provenance-strength: `direct`.
+- **Population (evidence range):** DEAF ≤ **0.3 s** ● T1 (`direct`, strict-termination PASS on Iglehart);
+  DEM ≤ 0.5 s ◑ T2 and AUT ≤ 0.4 s ◑ T3 — both **`inadequate`/conjecture** (PMP strict-termination FAIL,
+  recorded as designed; no Tier-1 dementia dose-response, no autism-distinct quantified target).
+- **Person (bottom-up, OT within range):** `items.pmp_delta_min=0.05 (down)` — OT tightens the population
+  value by up to 0.05 s for greater individual need. `extrapolated-from(population range + PMP delta)`; not
+  yet a `person`-scale cell — a determination is owed.
+- **DAR:** acoustic absorption is highly retrofittable; provision ceiling grid + wall blocking now. Not
+  recorded — venture as an approach.
+- **Code-floor (◐, walled off):** ANSI 0.6 s / DIN 0.4–0.8 s / BB93 0.6–0.8 s / UNI 0.5 s / AS-NZS 0.4–0.6 s
+  — present in `source_value_extractions`, correctly `echo_of`, shown as a floor beside the evidence, never
+  as the anchor. (Note: the range reaches 0.8 s, so "codes converge on 0.4–0.6 s" would understate — the
+  DB's own phrasing is "agree near 0.6 s.")
 
-**DAR layer:** acoustic absorption is largely **retrofittable without structural change** (demountable
-ceiling tiles, applied wall panels) — a strong DAR story (low deferral penalty). Provision it: ceiling grid
-+ wall blocking that *accepts* future higher-NRC treatment. Absent from the current record; venture as an
-approach.
-
-### Convergence ≠ evidence (the S4/S8 demonstration — grounded)
-
-- **Evidence-based best practice (●, T1):** RT60 ≤ **0.3 s** for HI children, ≤283 m³ (DB row 1, governing
-  refs present).
-- **Code-floor (◐, T4):** ANSI/ASA S12.60-2010 Part 1 requires RT60 ≤ **0.6 s** (unoccupied) for core
-  learning spaces ≤283 m³ — *retrieved*, not asserted
-  ([ANSI Blog](https://blog.ansi.org/ansi/ansi-asa-s12-60-part-1-2010-r2020-school-acoustics/),
-  [Armstrong](https://www.armstrongceilings.com/commercial/en/articles/classroom-acoustics-ansi-standard.html)).
-
-The code-floor is **~2× laxer** than the T1 evidence-based target for the same space size. **Building only
-to the ANSI floor would leave hearing-impaired children in roughly double the reverberation the Tier-1
-evidence indicates they need.** That is *convergence ≠ evidence* made concrete: the ANSI value is a
-compliance **floor** (◐), never the best-practice **anchor** (●).
-
-> **Caveat, flagged honestly (S3) — pending verifier:** the 0.3 s figure's condition and the ANSI 0.6 s
-> figure may differ on **occupied vs unoccupied** RT (ANSI 0.6 s is *unoccupied*; occupied RT is lower as
-> bodies add absorption). If so, the raw "2×" understates or overstates the true gap and needs an
-> occupied-basis restatement. The direction of the finding (evidence target is materially tighter than the
-> code floor) is robust; the exact multiple is caveated until the bases are reconciled. **The separate
-> verifier was specifically tasked to test this** — see § Verifier.
-
-### Un-migrated code-floor VALUES (a real gap, admitted)
-
-The DB catalogues the 10 acoustic standards as source rows but records **none of their numeric RT60
-thresholds** in any structured field (`bpc_note`/`notes`/`derivation_chain` hold only provenance text). So
-a statement like "the codes converge on 0.4–0.6 s" is **not grounded in the DB** and is not asserted here —
-only the single ANSI value, which was retrieved. Extracting each standard's threshold (in its home
-language) is a named work item, and where a threshold is not yet retrieved the code-floor cell reads
-`absent`, not a guessed number.
+**TECHNIQUE layer:** porous absorption (ceiling NRC ≥0.85 A-02; fabric panels NRC ≥0.70 A-06), avoid
+parallel hard surfaces (A-07) — graded under their own items.

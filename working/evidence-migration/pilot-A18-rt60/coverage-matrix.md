@@ -52,8 +52,10 @@ Not executed here (that is the batch work); named honestly so the empties are vi
 - **Un-migrated non-English acoustic sources already registered** (from L0): REF-00221 (JP, deafblind
   communication), REF-00218 (DE, DIN 18041 — likely renumber of REF-00329), REF-00001/REF-00031 (room
   acoustics / noise+reverberation SNR-50 at RT 0.3/0.6/0.8 s).
-- **Home-language retrieval** of the FR/JP/DA/IT/NO standards' actual RT60 thresholds (the un-migrated
-  code-floor values), each re-retrievable to a real record (anti-fabrication gate).
+- **Home-language verification** of the FR/JP/DA/IT/NO standards' RT60 thresholds — the values **are**
+  extracted (`source_value_extractions`, with `echo_of` provenance), but via English metadata; confirming
+  them against original-language source text is what is owed (anti-fabrication gate). *(Corrected: the first
+  draft wrongly implied the values were un-migrated.)*
 - **Non-Anglophone lived experience** of reverberant environments (DPO position papers, first-person
   accounts) — the corpus's most-skewed modality.
 - **Under-represented jurisdictions** with strong barrier-free traditions absent here (e.g., KR, SE, NL
