@@ -49,16 +49,21 @@ HVAC noise control is **hard to retrofit** (duct silencers, plant isolation, ove
 mechanical/structural) — **high deferral penalty**. Provision at design stage; do not defer behind "we'll
 quiet it later" (V-07). This is the *opposite* of A-02/ceiling panels (easily retrofitted).
 
-## Proposed cell-state (HELD — verifier must confirm before write)
+## Cell-state — ✅ verifier-CONFIRMED and WRITTEN (cell 9013, migration `data_20260719023539`)
+
+The separate verifier confirmed the ◐ grade and **resolved the metric flag** (see `A-08-verifier-verdict.md`):
+ANSI/ASA S12.60 specifies **≤35 dBA (~NC-30)**, not NC-25 — "NC-25" is an **ASHRAE HVAC-component**
+convention via a dBA→NC extrapolation, and **no ASHRAE acoustic ref is migrated (owed)**. Refinements folded
+in and written to canonical `evidence_cell_state`:
 
 ```
-item_code=A-08, population_code=ALL, design_scale=universal, state=provisional,
+cell_id=9013, item_code=A-08, population_code=ALL, design_scale=universal, state=provisional,
 tier_basis='T4-6-only(regulatory_stratum_only)', regulatory_stratum_only=1, code_floor_only=0,
-value_min=25, value_max=25, value_unit='NC', governing_refs=['REF-00563'],
-falsification_condition='Floor claim: NC-25 max, code-anchored to ANSI/ASA S12.60 background-noise criterion
-  (metric mapping dBA→NC owed verification). Applies as a maximum in sensitive-occupancy spaces for
-  AUT/PCS/DEM/MH/PAIN/OFS. Never becomes ● by more codes agreeing; only a T1/T2 study establishing an
-  NC/dBA threshold for these populations can. Quieter targets (NC-20/24) tested and unsupported by any
-  standard.'
+value_min=25, value_max=25, value_unit='NC', governing_refs=['REF-00563'], convergence_id=9013,
+falsification_condition='NC-25 = ASHRAE HVAC-component convention [extrapolated-from(dBA→NC)]; ANSI S12.60
+  (REF-00563) floor is ≤35 dBA (~NC-30, laxer, room-total); ASHRAE NC-25 ref unmigrated (owed). Never ●
+  by more codes agreeing; only a T1/T2 NC/dBA study (or Co-1/Co-2) can. NC-20/24 tested, unsupported.'
 ```
-Honest, non-inflated: a code floor at NC-25, held provisional pending the metric-mapping check.
+The PMP walk row's "matches ANSI S12.60 exactly (gap=0)" is **metrically false** (ANSI=35 dBA≈NC-30) — caught
+by this derivation, flagged for a walk-note correction on the hygiene track. Honest, non-inflated: a code
+floor at NC-25, `extrapolated-from(dBA→NC)`, state=provisional. Grading throat now **9/93 items**.
