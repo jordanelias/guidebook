@@ -2,6 +2,11 @@
 
 **Status:** pilot in progress · **Branch:** `claude/project-status-next-steps-wgatjq` (restarted off `main` @ fcc366e) · **Started:** 2026-07-18
 
+**2026-07-19 update:** `research-handoff-non-english.md`'s recovery pipeline was run as a first pass —
+see `HANDOFF.md` §0, `equity-dashboard.md`, `non-english-coverage-matrix.json`, `global-south-finding.md`.
+Non-English sources by `lang_detected`: 87 → 136 (migration
+`scripts/migrations/data_20260719034512_2026-07-19-non-english-research-recovery.sql`).
+
 This directory is the working deliverable for finishing the evidence migration — taking each provision
 from a retracted stub to a rehabilitated, multimodally-sourced, equity-searched, ethically-screened,
 honestly-graded provision. The full plan (constraints S1–S8, the per-slug pipeline, the equity/multimodal/
@@ -32,6 +37,10 @@ quality control. Every value carries its genealogy and a **provenance-strength**
 
 - `registry-reconciliation.md` — L0: the 46 well-formed registry/audit-only refs classified (un-migrated
   evidence vs cruft), the REF-00181 live hole, jurisdiction hygiene.
+- `research-handoff-non-english.md` — the recovery pipeline for the non-English search-to-ingestion gap.
+- `equity-dashboard.md` / `non-english-coverage-matrix.json` / `global-south-finding.md` — 2026-07-19
+  first-pass results: lang_detected hygiene fix (59 rows), Tier-0/Tier-1 recovery (10 new ingests, 13
+  relinks), and the SW/ID/HI/BN/AR zero-result investigation.
 - `pilot-A18-rt60/` — the first pilot cell (A-18, RT60) walked through the pipeline with a **separate
   adversarial verifier**. Demonstrates value-derivation across three modes, *converge ≠ evidence*, the
   coverage matrix, and the ethics screen — on real canonical data.
