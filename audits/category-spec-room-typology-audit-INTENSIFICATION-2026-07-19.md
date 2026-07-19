@@ -1,3 +1,5 @@
+> **Status: directional working papers (retained for per-claim file:line grounding).** The headline record is `audits/category-spec-room-typology-audit-2026-07-19.md` (comprehensive rewrite), which synthesizes and reconciles everything below into throughlines, one consolidated register, a target model, and takeaways. Read that first; use this for the granular per-direction evidence.
+
 # Intensification — Six-Direction Interrogation & Challenge
 
 **Date:** 2026-07-19
