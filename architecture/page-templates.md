@@ -43,6 +43,11 @@ Renders in page header. Active on specification pages; inert elsewhere. Controls
 ### C-09: DAR Flag
 Renders `specification.dar_relevant` as a flag icon with `dar_note` tooltip. Links to `/dar-register`.
 
+### C-10: Audience Lens Menu
+Masthead "Reading as…" menu (`role="menuitemradio"`) — Designer / Clinician-OT / Lived-experience /
+Policymaker. Sets which facets are expanded on load and the headline framing (D-TMPL-015). CSS +
+`localStorage` only; never forks the record. Pairs with C-08 (the coarse Spec ↔ Question toggle).
+
 ---
 
 ## Template 1: Specification Page
@@ -85,30 +90,59 @@ ORDER BY jv.jurisdiction;
 SELECT * FROM performance_criterion WHERE spec_id = :spec_id;
 ```
 
-### Section sequence
+### Facet sequence (v10.5 — the E-08 exemplar; `site/specs/e-08.html`)
 
-| Order (spec) | Order (question) | Section | Fields | Component |
+The record is **one canonical set of facets in a fixed order**. Reading modes and audience lenses change
+which facets are *expanded by default* and the framing headline — **never** the facet set or the underlying
+data (D-TMPL-001, D-TMPL-015). Every facet is always present and keyboard-reachable; a facet with no data
+renders its honest-absence state (e.g., "0 Co-1 accounts on file"), never an empty box.
+
+| # | Facet · heading (designer/spec framing) | Question-mode headline | Content · fields | Component |
 |---|---|---|---|---|
-| 1 | — | Title bar | `s.title`, `s.item_code`, `s.parameter` | C-01 badge |
-| — | 1 | Question heading | `s.question_heading` | Large accessible heading |
-| — | 2 | Why it matters | `s.why_md` | Prose block |
-| 2 | 3 | Value block | `measurement.*` grouped by design_mode | Three-row table (Universal / Mode P / Mode S) |
-| 3 | 4 | Evidence summary | `s.evidence_summary`, `s.evidence_tier` | C-01, C-06 |
-| 4 | 5 | Population applicability | `specification_population` join | C-02 badges (primary/secondary) |
-| 5 | 6 | Jurisdiction matrix | `jurisdictional_value` rows | C-03 cells in grid |
-| 6 | 7 | Conflict domains | `s.conflict_domains` JSON | C-05 cards |
-| 7 | 8 | DAR note | `s.dar_relevant`, `s.dar_note` | C-09 flag + prose |
-| 8 | 9 | Engineering | `s.structural_backing_required` | Flag + Part 8 link |
-| 9 | 10 | Schedule language | `s.schedule_md` | Copyable text block |
-| 10 | — | Why it matters | `s.why_md` | Prose block (end position in spec mode) |
-| 11 | 11 | Cross-references | `connection_endpoint` join | C-04 links |
-| 12 | 12 | Diagram | `s.diagram_svg`, `s.diagram_type` | Inline SVG |
-| 13 | 13 | Metadata footer | `s.curation_status`, `s.modified_at` | C-07 |
+| 0 | **What's on this page** | same | auto facet index / on-page TOC | facet-nav |
+| 1 | **What this specification says** | "The short answer" | plain-language summary · `s.plain_language_md` | prose (plain-language) |
+| 2 | **[Parameter] as a participation factor** | "Why it matters" | why · `s.why_md` | prose |
+| 3 | **The dimension, by design mode** | "The number for you" | `measurement.*` — Universal / Population (range+median) / Person (OT within range) | value block (3 modes) |
+| 4 | **Plan, section, elevation — and the failure case** | "What it looks like" | `s.diagram_svg` + the at-parity failure case (what breaks between the floor and the target) | inline SVG + dimensional alt-text |
+| 5 | **What the literature *and lived experience* say** | "The evidence" | Co-1 **above** the tier list (C-06); honest count incl. "0 Co-1 accounts on file"; then tiered sources (C-01) | C-06 + C-01 |
+| 6 | **Who this provision serves** | "Does this work for me?" | `specification_population` — capacity language, no ranking | C-02 badges |
+| 7 | **Where standards differ — side by side** | "What the codes say" | `jurisdictional_value` — jurisdictions at parity, neutral states | C-03 cells |
+| 8 | **Where this provision is contested** | "Where people disagree" | conflicts, both parties at equal weight | C-05 cards |
+| 9 | **What changes for the user** | "What this changes for you" | lived impact · `s.lived_impact_md` (**new in v10.5** — distinct from Why) | prose (lived impact) |
+| 10 | **Drop into a contract document** | "Put it in the spec" | `s.schedule_md` | copyable block |
+| 11 | **How this connects** | same | `connection_endpoint` join — related items | C-04 links |
+| 12 | **How this record was assembled** | "Where this came from" | provenance · tier basis · `s.curation_status` · DAR flag (C-09) · engineering flags · `s.modified_at` | C-07 + provenance |
+
+### Audience lenses (supersede the 2-mode toggle — D-TMPL-015)
+
+The masthead "Reading as…" menu selects a **lens**; it sets which facets are expanded on load and the
+headline framing. It does not fork the record.
+
+| Lens | Default-expanded facets |
+|---|---|
+| **Designer / architect** (default) | 4 Drawing · 3 Values |
+| **Clinician / OT** | 6 Populations · 9 Lived impact |
+| **Lived experience** | 9 Lived impact · 8 Conflicts |
+| **Policymaker / code official** | 7 Jurisdictions · 12 Provenance |
+
+The legacy **Spec ↔ Question** toggle remains as the coarse framing switch (headline wording + facet
+order-of-emphasis); lenses are the finer control layered on top. Both are CSS/`localStorage` only.
 
 ### Rendering rules
-- Value block: Universal row always visible. Mode P row shows range + median with unit_display formatting. Mode S row shows `person_specific_note` text. If no measurement exists for a mode, row is omitted (not shown as empty).
-- Mode S framed as "resolves to the person's own needs" not "requires specialist" (D-NAV-012).
-- Jurisdiction matrix: max 14 columns visible; horizontal scroll for more. Sort by ISO code.
+- **Value block (facet 3):** Universal row always visible. Population row shows range + median with
+  unit_display. Person row is framed "resolves to the person's own needs" (OT within the population range),
+  not "requires specialist" (D-NAV-012). A mode with no measurement is **omitted**, not shown empty.
+- **Convergence wall:** a value whose only basis is the regulatory stratum (T4–6) renders ◐/○ and carries
+  the "convergence is not evidence" line; it never takes best-practice (●) framing in facet 5 or 3
+  (D-NAV-009, tier-system §2.7).
+- **Co-1 first (facet 5):** lived-experience evidence is shown *above* the academic tier list whenever
+  present, and its absence is stated explicitly — never omitted (D-NAV-011, C-06).
+- **Failure case (facet 4):** the drawing shows not just the target but what fails between the code floor
+  and the target, at parity — the participation cost is drawn, not just asserted.
+- **Jurisdiction matrix (facet 7):** neutral states (● present · ○ no requirement · ◌ not searched);
+  absent ≠ inferior. Horizontal scroll beyond the visible column budget; sort by ISO code.
+- **Honest-absence everywhere:** any facet lacking data renders its stated-absence form (per S1/S3), never a
+  blank or a fabricated fill.
 
 ---
 
@@ -496,6 +530,7 @@ WHERE ssp.specialist_id = :id;
 | D-TMPL-012 | Specialist scope by design stage table | DG-AUTO |
 | D-TMPL-013 | Homepage four-door cards with statistics | DG-REVIEW |
 | D-TMPL-014 | Shared component library (C-01 through C-09) | DG-REVIEW |
+| D-TMPL-015 | Specification page adopts the v10.5 13-facet exemplar + 4 audience lenses (E-08) | DG-REVIEW |
 
 ---
 
@@ -504,3 +539,4 @@ WHERE ssp.specialist_id = :id;
 | Date | Change |
 |---|---|
 | 2026-05-04 | Document created. 14 templates + 9 shared components + 14 D-TMPL decisions. |
+| 2026-07-19 | Template 1 (Specification Page) reconciled to the v10.5 exemplar `site/specs/e-08.html`: fixed 13-facet order with humanized headings; added the **lived-impact** facet (9), the facet TOC (0), and the provenance facet (12); Co-1 integrated *above* tiers in the evidence facet; failure-case added to the drawing; 4 audience lenses (C-10, D-TMPL-015) layered over the Spec↔Question toggle. This is the organization every specification page migrates to as it is reviewed/graded. |

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Guidebook — Disability-Inclusive Design</title>
+  <meta name="description" content="A reference guidebook for disability-inclusive built-environment design. One canonical record per provision; multiple navigation lenses; jurisdictional positions surfaced rather than reconciled.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/guidebook.css">
+</head>
+<body class="mode-spec">
+
+<a href="#main" class="skip">Skip to main content</a>
+
+<header class="masthead" role="banner">
+  <div class="masthead-inner">
+    <a href="index.html" class="brand" aria-label="Guidebook home">
+      Guidebook<span class="brand-sub">v10 · disability-inclusive design</span>
+    </a>
+    <nav aria-label="Primary">
+      <a href="specs/e-08.html" aria-current="page">Specifications</a>
+      <a href="#populations">Populations</a>
+      <a href="#rooms">Rooms</a>
+      <a href="#conflicts">Conflicts</a>
+      <a href="#jurisdictions">Jurisdictions</a>
+      <a href="#bibliography">Bibliography</a>
+      <a href="#about">About</a>
+    </nav>
+  </div>
+</header>
+
+<div class="subbar" aria-label="Context bar">
+  <div class="subbar-inner">
+    <span class="crumb-sep">Home</span>
+    <span class="mode-toggle" role="group" aria-label="Reading mode">
+      <button type="button" data-mode="spec" aria-pressed="true">Spec mode</button>
+      <button type="button" data-mode="question" aria-pressed="false">Question mode</button>
+    </span>
+  </div>
+</div>
+
+<main id="main" class="page">
+
+  <header class="article-header">
+    <div class="kicker">
+      <span class="item-code">GB</span>
+      <span>v10.5 · 2026-05</span>
+      <span>Source: parts/v10/manifest.md</span>
+    </div>
+    <h1 class="title-spec">A reference for disability-inclusive built-environment design.</h1>
+    <h1 class="title-question">What does this building need to work for the people who use it?</h1>
+    <p class="tagline">One canonical record per provision. Different audiences arrive through different doors and reach the same evidence — measured, cited, and disagreement intact.</p>
+  </header>
+
+  <div class="layout">
+    <article class="spec-content">
+
+      <section style="--order-spec:1; --order-q:1">
+        <span class="h2-num">§ 1 · Entry</span>
+        <h2>Four doors to the same record</h2>
+        <p class="lede">No door is privileged. The guidebook holds one specification record per provision — values, evidence, populations, jurisdictions, conflicts, lived impact — and renders the same data with different section orders and headings depending on which door you came through. Mode is remembered locally; switch any time from the bar above.</p>
+
+        <nav class="doors" aria-label="Audience entry points">
+          <a class="door" href="specs/e-08.html">
+            <span class="door-num">Door 1 / spec mode</span>
+            <span class="door-title">Design professional</span>
+            <p class="door-prompt">"Show me the number and the evidence behind it."</p>
+            <span class="door-cta">Specifications →</span>
+          </a>
+          <a class="door" href="specs/e-08.html?mode=question">
+            <span class="door-num">Door 2 / question mode</span>
+            <span class="door-title">Disabled user · advocate</span>
+            <p class="door-prompt">"Does this building work for me?"</p>
+            <span class="door-cta">Questions →</span>
+          </a>
+          <a class="door" href="#populations">
+            <span class="door-num">Door 3 / population view</span>
+            <span class="door-title">OT · allied health</span>
+            <p class="door-prompt">"What does my client's population need?"</p>
+            <span class="door-cta">Populations →</span>
+          </a>
+          <a class="door" href="#economics">
+            <span class="door-num">Door 4 / economics</span>
+            <span class="door-title">Policymaker · procurer</span>
+            <p class="door-prompt">"What does this cost and what does it save?"</p>
+            <span class="door-cta">Economics →</span>
+          </a>
+        </nav>
+
+        <p style="font-size:var(--fs-sm); color:var(--muted); margin-top:6px;">
+          Switching between Door 1 and Door 2 is a CSS reordering of the same record — no separate forks. See <a class="xref" href="#about"><span class="xref-code">D-NAV-002</span> mode toggle decision</a>.
+        </p>
+      </section>
+
+      <section style="--order-spec:2; --order-q:2">
+        <span class="h2-num">§ 2 · At a glance</span>
+        <h2>Scale of the record</h2>
+        <p>Every count is a SQL <code style="font-family:var(--font-mono); font-size:0.92em;">COUNT()</code> against <a class="xref" href="#"><span class="xref-code">data/guidebook.db</span></a>. Numbers move when the database is rebuilt; nothing is hand-entered.</p>
+
+        <div class="stats" role="list">
+          <div class="stat" role="listitem">
+            <span class="stat-n">87</span>
+            <span class="stat-l">Specifications · status=active</span>
+          </div>
+          <div class="stat" role="listitem">
+            <span class="stat-n">10</span>
+            <span class="stat-l">Populations · ICF-derived</span>
+          </div>
+          <div class="stat" role="listitem">
+            <span class="stat-n">14</span>
+            <span class="stat-l">Jurisdictions · matrixed</span>
+          </div>
+          <div class="stat" role="listitem">
+            <span class="stat-n">487</span>
+            <span class="stat-l">References · evidence tiered</span>
+          </div>
+        </div>
+
+        <p style="font-size:var(--fs-sm); color:var(--muted); margin-top:8px;">
+          A specification's <code style="font-family:var(--font-mono);">curation_status</code> can be <em>automated</em>, <em>reviewed</em>, or <em>opus_synthesized</em>. Synthesised records carry a visible flag on the page so readers can tell primary evidence from downstream synthesis. See <a class="xref" href="#"><span class="xref-code">D-TMPL-014</span> shared component C-07</a>.
+        </p>
+      </section>
+
+      <section style="--order-spec:3; --order-q:3" id="exemplar">
+        <span class="h2-num">§ 3 · Exemplar provision</span>
+        <h2>Read one record end-to-end</h2>
+        <p>One provision built across every facet — drawing, evidence, populations, jurisdictional comparison, conflicts, schedule language, lived impact, related items. The pattern is reusable; the page is the reference template.</p>
+
+        <ul class="recent" style="list-style:none;">
+          <li style="grid-template-columns: 90px 1fr auto;">
+            <span class="r-code">E-08</span>
+            <a class="r-title" href="specs/e-08.html"><strong>Corridor clear width</strong> — <em style="color:var(--muted);">"Can two power wheelchairs pass each other?"</em></a>
+            <span class="r-meta">≥1200 mm · primary routes</span>
+          </li>
+        </ul>
+
+        <p style="margin-top:12px;">
+          E-08 is built end-to-end in this release. The remaining 86 specifications carry the same schema but render against the existing automated layout until each one is reviewed. <a class="xref" href="specs/e-08.html"><span class="xref-code">→</span> Open the exemplar</a>.
+        </p>
+      </section>
+
+      <section style="--order-spec:4; --order-q:4" id="recent">
+        <span class="h2-num">§ 4 · Recent updates</span>
+        <h2>Specifications · last modified</h2>
+        <p style="font-size:var(--fs-sm); color:var(--muted);">From <code style="font-family:var(--font-mono);">SELECT * FROM specification ORDER BY modified_at DESC LIMIT 5</code>. Recency is informational only; it implies neither priority nor completeness.</p>
+        <ul class="recent" aria-label="Recently modified specifications">
+          <li>
+            <span class="r-code">E-08</span>
+            <a class="r-title" href="specs/e-08.html">Corridor clear width — primary routes ≥1200 mm</a>
+            <span class="r-meta">2026-05-04 · reviewed</span>
+          </li>
+          <li>
+            <span class="r-code">D-04</span>
+            <a class="r-title" href="#">Landmarks at every decision point</a>
+            <span class="r-meta">2026-05-03 · automated</span>
+          </li>
+          <li>
+            <span class="r-code">G-03</span>
+            <a class="r-title" href="#">Grab bars in accessible bathrooms</a>
+            <span class="r-meta">2026-05-02 · opus_synthesized</span>
+          </li>
+          <li>
+            <span class="r-code">B-08</span>
+            <a class="r-title" href="#">Matte floor finishes — ≤30 GU</a>
+            <span class="r-meta">2026-05-01 · automated</span>
+          </li>
+          <li>
+            <span class="r-code">A-10b</span>
+            <a class="r-title" href="#">RT60 in hydrotherapy and pool environments</a>
+            <span class="r-meta">2026-04-30 · reviewed</span>
+          </li>
+        </ul>
+      </section>
+
+      <section style="--order-spec:5; --order-q:5" id="about">
+        <span class="h2-num">§ 5 · About the record</span>
+        <h2>One record, many lenses</h2>
+        <p>The website is generated from a SQLite database. The schema is canonical; the prose is layered on top.</p>
+        <table>
+          <caption>Primary tables · <code style="font-family:var(--font-mono);">data/guidebook.db</code></caption>
+          <thead><tr><th>Table</th><th>Purpose</th><th>Joins</th></tr></thead>
+          <tbody>
+            <tr><th>specification</th><td>One row per provision (item_code · parameter)</td><td class="num">measurement · jurisdictional_value · specification_population · evidence_source</td></tr>
+            <tr><th>measurement</th><td>Values per design mode (universal · population_based · person_specific)</td><td class="num">specification</td></tr>
+            <tr><th>jurisdictional_value</th><td>One row per jurisdiction × specification</td><td class="num">specification · jurisdiction</td></tr>
+            <tr><th>population</th><td>10 ICF-derived population codes</td><td class="num">specification_population · conflict</td></tr>
+            <tr><th>conflict</th><td>Cross-population disagreement on a specific provision</td><td class="num">specification · population</td></tr>
+            <tr><th>evidence_source</th><td>Reference register (tiered; co-1 flag preserved)</td><td class="num">specification (cite join)</td></tr>
+            <tr><th>doctrine</th><td>Foundational positions (core · evidence · ethics · frameworks)</td><td class="num">specification (doctrine_specification)</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:14px; font-size:var(--fs-sm); color:var(--muted);">
+          Architecture: <a class="xref" href="#"><span class="xref-code">architecture/</span> navigation-modes.md</a> · <a class="xref" href="#"><span class="xref-code">architecture/</span> page-templates.md</a> · <a class="xref" href="#"><span class="xref-code">architecture/</span> sqlite-data-layer.md</a>.
+        </p>
+      </section>
+
+      <section style="--order-spec:6; --order-q:6">
+        <span class="h2-num">§ 6 · Conventions</span>
+        <h2>How to read this site</h2>
+        <h3>Evidence markers are descriptive, not evaluative</h3>
+        <p>● stated &nbsp; ◐ provisional &nbsp; ○ pending. No "strong/weak" language. Co-1 (lived experience) evidence is never subordinated to academic tiers; where present it is shown above the tier list.</p>
+        <h3>Jurisdiction matrix uses neutral states</h3>
+        <p>● value present &nbsp; ○ no requirement &nbsp; ◌ not searched. Absent does not mean inferior; it means the standard is silent on this provision.</p>
+        <h3>Population pages do not rank</h3>
+        <p>Populations are not sorted by specification count, evidence confidence, or any metric implying a hierarchy of disability. Functional profiles use capacity language ("uses powered wheelchair"), not deficit language.</p>
+        <h3>Conflicts show both parties at parity</h3>
+        <p>Where two populations need different things from the same provision, the page shows both side-by-side. Resolution comes after both parties, not as a verdict over one.</p>
+        <h3>The site is the proof of concept</h3>
+        <p>A guidebook on accessibility must itself meet WCAG 2.2 AA — every drawing carries dimensional alt-text, every facet is keyboard-reachable, meaning is preserved without colour or interactivity, and animations respect reduced-motion preferences. The site is the demonstration; review reports are public.</p>
+      </section>
+
+    </article>
+
+    <aside class="infobox" aria-label="Quick reference">
+      <div class="infobox-head">Guidebook · v10.5</div>
+      <dl>
+        <dt>Status</dt>
+        <dd>Active · drafting</dd>
+
+        <dt>Last build</dt>
+        <dd>2026-05-04 · automated</dd>
+
+        <dt>Specifications</dt>
+        <dd class="value-big">87 <small>active</small></dd>
+
+        <dt>Reading modes</dt>
+        <dd>Spec · Question</dd>
+
+        <dt>Doors</dt>
+        <dd>
+          <ul class="iblist">
+            <li>Design professional</li>
+            <li>Disabled user · advocate</li>
+            <li>OT · allied health</li>
+            <li>Policymaker · procurer</li>
+          </ul>
+        </dd>
+
+        <dt>Source of truth</dt>
+        <dd><a href="#">data/guidebook.db</a></dd>
+
+        <dt>Conformance target</dt>
+        <dd>WCAG 2.2 AA · audited 2026-05</dd>
+
+        <dt>Languages</dt>
+        <dd>English (no privileged status)</dd>
+
+        <dt>Licence</dt>
+        <dd>CC BY-SA 4.0</dd>
+      </dl>
+    </aside>
+  </div>
+</main>
+
+<footer class="colophon" role="contentinfo">
+  <div>
+    <h4>Guidebook</h4>
+    <p>A reference for disability-inclusive built-environment design. The website is generated from a SQLite database; the prose is layered on top. One canonical record per provision.</p>
+  </div>
+  <div>
+    <h4>Repository</h4>
+    <p><a href="https://github.com/jordanelias/guidebook">github.com/jordanelias/guidebook</a><br>v10.5 · main</p>
+  </div>
+  <div>
+    <h4>Audit</h4>
+    <p>WCAG 2.2 AA · 2026-05<br>Screen-reader regression: passing<br>Keyboard regression: passing</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Mode toggle — CSS class on body, persisted in localStorage.
+  // Spec/question only changes section ORDER; the data is one record.
+  var btns = document.querySelectorAll('.mode-toggle button');
+  function setMode(mode) {
+    document.body.classList.toggle('mode-question', mode === 'question');
+    document.body.classList.toggle('mode-spec', mode !== 'question');
+    btns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.mode === mode)); });
+    try { localStorage.setItem('guidebook-mode', mode); } catch (e) {}
+  }
+  btns.forEach(function (b) { b.addEventListener('click', function () { setMode(b.dataset.mode); }); });
+  try {
+    var saved = localStorage.getItem('guidebook-mode');
+    if (saved === 'question') setMode('question');
+  } catch (e) {}
+})();
+</script>
+
+</body>
+</html>

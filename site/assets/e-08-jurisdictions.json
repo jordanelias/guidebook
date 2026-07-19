@@ -1,0 +1,76 @@
+{
+  "item_code": "E-08",
+  "section": "A.3",
+  "title": "Corridor & Circulation Widths",
+  "records": [
+    {
+      "jurisdiction": "US",
+      "standard_name": "ADA 2010 §403",
+      "value_text": "Min 915mm; Passing 1524mm; Turning 1524mm (ADA) / 1702mm (A117.1)",
+      "min_mm": 915,
+      "passing_mm": 1524,
+      "turning_mm": 1524,
+      "evidence_tier": 6
+    },
+    {
+      "jurisdiction": "GB",
+      "standard_name": "BS 8300-2:2018",
+      "value_text": "Min 1200mm; Passing 1800mm; Turning 1500mm",
+      "min_mm": 1200,
+      "passing_mm": 1800,
+      "turning_mm": 1500,
+      "evidence_tier": 6
+    },
+    {
+      "jurisdiction": "DE",
+      "standard_name": "DIN 18040-1",
+      "value_text": "Min 1500mm; Passing 1800mm; Turning 1500mm",
+      "min_mm": 1500,
+      "passing_mm": 1800,
+      "turning_mm": 1500,
+      "evidence_tier": 6
+    },
+    {
+      "jurisdiction": "AU",
+      "standard_name": "AS 1428.1:2021",
+      "value_text": "Min 1000mm; Passing 1800mm; Turning 1540mm / 2070mm (powered)",
+      "min_mm": 1000,
+      "passing_mm": 1800,
+      "turning_mm": 1540,
+      "evidence_tier": 6
+    },
+    {
+      "jurisdiction": "NO",
+      "standard_name": "TEK17 §12-6",
+      "value_text": "Min 1500mm; Turning 1500mm",
+      "min_mm": 1500,
+      "passing_mm": null,
+      "turning_mm": 1500,
+      "evidence_tier": 6
+    },
+    {
+      "jurisdiction": "CA",
+      "standard_name": "CSA B651:2023",
+      "value_text": "—",
+      "min_mm": null,
+      "passing_mm": null,
+      "turning_mm": 1700,
+      "evidence_tier": 6
+    },
+    {
+      "jurisdiction": "ISO",
+      "standard_name": "ISO 21542:2021",
+      "value_text": "Min 1200mm; Passing 1800mm; Turning 1524mm",
+      "min_mm": 1200,
+      "passing_mm": 1800,
+      "turning_mm": 1524,
+      "evidence_tier": 6
+    }
+  ],
+  "guidebook_target": {
+    "min_mm": 1200,
+    "passing_mm": 1800,
+    "turning_mm": "by device type"
+  },
+  "source": "data/jurisdictional_values/a-3_e08.yaml @ jordanelias/guidebook"
+}
