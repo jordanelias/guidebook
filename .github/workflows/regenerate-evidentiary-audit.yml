@@ -1,13 +1,14 @@
 name: Regenerate evidentiary audit
 
 # Auto-rebuilds the per-slice evidentiary audit whenever a push to main changes
-# the evidence data or the generator. Four deliverables are regenerated from
+# the evidence data or the generator. Five deliverables are regenerated from
 # data/guidebook.db and committed back to main by github-actions[bot]:
 #
-#   audits/evidentiary-base-audit.md      — narrative report
-#   audits/evidentiary-base-audit.csv     — flat per-slice table
-#   audits/evidentiary-base-audit.json    — full per-slice record + aggregates
-#   tools/evidentiary-audit-dashboard.html — interactive filter view
+#   audits/evidentiary-base-audit.md         — narrative report (slices + specs)
+#   audits/evidentiary-base-audit.csv        — flat per-slice table
+#   audits/evidentiary-base-audit-items.csv  — flat per-specification table
+#   audits/evidentiary-base-audit.json       — full per-slice + per-item record
+#   tools/evidentiary-audit-dashboard.html   — interactive filter view
 #
 # Determinism / loop safety: tools/evidentiary_audit.py derives its "as-of" date
 # from the DB's own max(updated_at), never wall-clock, so identical DB content
@@ -28,7 +29,7 @@ on:
     paths:
       - 'data/guidebook.db'
       - 'tools/evidentiary_audit.py'
-      - 'audits/evidentiary-base-audit.*'
+      - 'audits/evidentiary-base-audit*'
       - 'tools/evidentiary-audit-dashboard.html'
       - '.github/workflows/regenerate-evidentiary-audit.yml'
   workflow_dispatch:
@@ -85,6 +86,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add audits/evidentiary-base-audit.md \
                   audits/evidentiary-base-audit.csv \
+                  audits/evidentiary-base-audit-items.csv \
                   audits/evidentiary-base-audit.json \
                   tools/evidentiary-audit-dashboard.html
 

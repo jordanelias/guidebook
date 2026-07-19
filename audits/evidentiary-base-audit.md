@@ -260,5 +260,66 @@ Several name high-salience topics where an empty base is a material coverage gap
 - **Jurisdiction shares rest on recorded jurisdictions only.** NULL-jurisdiction instances are excluded from %ANG denominators, so a low %ANG can mean *genuinely non-Anglophone* or *unrecorded* — the master table’s JUR count exposes the denominator.
 - **Compound jurisdictions classify by their strongest Anglophone member** (e.g. `US/AU/INT` counts as native-Anglophone). Magnitude ≈1% of instances.
 
+## 8. Per-specification (item) adjudication — inheritance view
+
+The Guidebook’s **93 design specifications** (the `items` table, categories A–K) do **not** carry their own evidence links — each *inherits* the evidentiary base of the research slug it draws on (`items.bpc_source_slug`). This section adjudicates every specification by that inherited base, so a spec built on a thin or unanchored slug is visible as such. (A spec with no source slug cannot inherit and is a coverage gap.)
+
+| Basis health | Specs | Meaning |
+|---|---|---|
+| ok | 66 | inherits a graded base |
+| no-anchor | 13 | base has no best-practice anchor |
+| code-floor | 8 | base is code-floor / convergence-only |
+| no-source | 6 | no source slug — cannot inherit |
+
+**66 of 93 specs inherit a fully-graded, anchored base; 27 rest on a weak or missing base** and are the priority remediation set.
+
+### By category
+| Cat | Specifications | Specs | On weak/missing base |
+|---|---|---|---|
+| A | Acoustics | 19 | 2 |
+| B | Lighting | 12 | 9 |
+| C | Colour and Contrast | 6 | 0 |
+| D | Wayfinding and Cognition | 11 | 1 |
+| E | Circulation and Access | 14 | 4 |
+| F | Sensory Environment | 8 | 2 |
+| G | Furniture, Fixtures and Spatial Layout | 9 | 5 |
+| H | Controls and Technology | 5 | 3 |
+| I | Hardware and Fixtures | 4 | 0 |
+| K | DeafBlind Provisions | 5 | 1 |
+
+### Specifications resting on a weak or missing base
+
+| Item | Category | Specification | Source slug | Basis | Inh. grade |
+|---|---|---|---|---|---|
+| `A-13` | A | No Sound Masking in Neurological Population Environm | — | no-source | — |
+| `A-15` | A | Acoustic Differentiation Between Spaces (Navigation  | — | no-source | — |
+| `B-01` | B | Circadian Lighting (≥150 EML Minimum at Eye Level in | `circadian-lighting-melanopic-edi` | no-anchor | D |
+| `B-03` | B | Elimination of Fluorescent Overhead Lighting | `therapeutic-lighting-design` | code-floor | E |
+| `B-04` | B | Flicker-Free LED Luminaires (IEEE 1789-2015 Complian | `therapeutic-lighting-design` | code-floor | E |
+| `B-05` | B | Gradual Lighting Transition Zones (≥5 m at All Major | `therapeutic-lighting-design` | code-floor | E |
+| `B-06` | B | Individual Dimming Control (≥300 Lux Range) | `therapeutic-lighting-design` | code-floor | E |
+| `B-07` | B | Indirect and Cove Lighting in Sensitive Spaces | `therapeutic-lighting-design` | code-floor | E |
+| `B-08` | B | Matte, Low-Reflectance Floor Finishes (≤30 Gloss Uni | — | no-source | — |
+| `B-11` | B | Warm Colour Temperature for Evening (≤2700 K After 1 | `circadian-lighting-melanopic-edi` | no-anchor | D |
+| `B-12` | B | Sensor-Activated Overnight Pathway Lighting | `visual-alerting-and-wayfinding-light` | code-floor | D |
+| `D-04` | D | Landmarks at Every Decision Point | `wayfinding-cognitive-science-spatial-design` | no-anchor | E |
+| `E-03` | E | Ramp Gradient (≤1:20 — MS Fatigue and Temporal Acces | `stair-ramp-threshold-biomechanics-accessibility` | no-anchor | B |
+| `E-05` | E | Weather Protection at Entry (Covered Canopy Minimum  | `threshold-and-level-access` | code-floor | D |
+| `E-06` | E | Level Entry (Zero Step at All Accessible Entrances) | `threshold-and-level-access` | code-floor | D |
+| `E-07` | E | Slip Resistance (PTV ≥36 Wet Throughout All Circulat | `stair-ramp-threshold-biomechanics-accessibility` | no-anchor | B |
+| `F-07` | F | Thermal Zoning — Building-Wide Temperature Managemen | — | no-source | — |
+| `F-08` | F | Thermal Transition — Heating and Cooling System Resp | `thermoregulation-built-environment` | no-anchor | E |
+| `G-02` | G | Variety of Seating Types (Three Heights at Every Sea | — | no-source | — |
+| `G-06` | G | Reception Counter (Accessible Height Section — 760-- | `reach-range-and-accessible-controls` | no-anchor | D |
+| `G-07` | G | Waiting Area Seating (Accessible Configuration — Adj | — | no-source | — |
+| `G-08` | G | Bedroom Wardrobe and Storage Reach Configuration | `reach-range-and-accessible-controls` | no-anchor | D |
+| `G-09` | G | Bedroom Emergency Call Provision and Overnight Light | `reach-range-and-accessible-controls` | no-anchor | D |
+| `H-01` | H | All Controls at Accessible Height (400--1100 mm AFF, | `reach-range-and-accessible-controls` | no-anchor | D |
+| `H-02` | H | Individual Environmental Control (Lighting and Tempe | `reach-range-and-accessible-controls` | no-anchor | D |
+| `H-05` | H | Emergency Call — Multi-Position Reach Envelope | `reach-range-and-accessible-controls` | no-anchor | D |
+| `K-05` | K | Thermal Comfort Assessment for Thermoregulation-Impa | `thermoregulation-built-environment` | no-anchor | E |
+
+The full per-specification table (all 93 items with inherited grade and dimension snapshot) is in `evidentiary-base-audit-items.csv` and the `items` array of the JSON; the dashboard’s **Specifications** view filters them by corpus / category / term.
+
 ---
 *Data as of 2026-07-19 · read-only over `data/guidebook.db` · generated by `tools/evidentiary_audit.py`. Independently red-teamed; raw counts reproduce through a second code path. Aligned to `governance/tier-system.md`.*
