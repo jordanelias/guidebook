@@ -52,15 +52,19 @@ tiles later** (low deferral penalty). Provision now; do not defer the acoustic f
   ceiling (0.935) and the RT60 outcome the panels serve.
 - No V-03/V-05/V-09 surface (physical material spec; no per-person data; population not proxied).
 
-## Proposed cell-state (HELD — verifier must confirm before write)
+## Cell-state — ✅ verifier-CONFIRMED and WRITTEN (cell 9012, migration `data_20260719003303`)
+
+The separate verifier confirmed all six claims (see `A-02-verifier-verdict.md`), citing the live E-06/MOB
+precedent for a `regulatory_stratum_only` cell. Written to canonical `evidence_cell_state`:
 
 ```
-item_code=A-02, population_code=ALL, design_scale=universal, state=provisional,
-tier_basis='T4-6-only(code-floor)', value_min=0.90, value_max=0.935, value_unit='NRC',
-code_floor_only=1, regulatory_stratum_only=1, governing_refs=['REF-00563'],
-falsification_condition='A Tier-1/2 study establishing an NRC panel threshold (which would move this
-  off code-floor-only and permit a ● grade), or evidence that NRC ≥0.90 raises listening effort net-negative
-  (Amlani direction) in occupied learning spaces.'
+cell_id=9012, item_code=A-02, population_code=ALL, design_scale=universal, state=provisional,
+tier_basis='T4-6-only(regulatory_stratum_only)', regulatory_stratum_only=1, code_floor_only=0,
+value_min=0.90, value_max=0.935, value_unit='NRC', governing_refs=['REF-00563'], convergence_id=9012,
+falsification_condition='Floor claim: NRC ≥0.90 per ANSI S12.60 S5.3; overturned if the code edition is
+  superseded; never becomes ● by more codes agreeing — only a T1/T2 NRC-threshold study (or Co-1/Co-2) can.
+  Note: item spec "NRC ≥0.85" sits below this 0.90 floor.'
 ```
-Note: `state=provisional` and `code_floor_only=1` — this cell is **honestly a code floor**, not a graded
-best-practice value. That is the correct, non-inflated outcome.
+(Flag aligned to the E-06 precedent: `regulatory_stratum_only=1`, `code_floor_only=0`.) This cell is
+**honestly a code floor, state=provisional** — not a graded best-practice value. The correct, non-inflated
+outcome, and the grading throat is now 8/93 items.
