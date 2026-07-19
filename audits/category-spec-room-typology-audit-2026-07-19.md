@@ -8,6 +8,8 @@
 
 **Confidence key:** **[C]** CONFIRMED (verified against source this session) · **[H]** HYPOTHESIS (reasoned from evidence, needs owner judgment).
 
+**Follow-up:** `audits/category-spec-room-typology-audit-INTENSIFICATION-2026-07-19.md` interrogates this same model from six cross-cutting directions (population, jurisdiction, evidence, lifecycle, network, functional-deficit/ICF), challenges the findings below, and adds CR-9…CR-20. Its master result: the "multi-store drift" found here for specs recurs on **every** axis, the evidentiary substrate is **retracted corpus-wide (68/82 BPCs)**, and the model **lacks the activity, lifecycle, and conflict axes** its own doctrine needs. Corrections it forces are marked inline below.
+
 ---
 
 ## Executive summary
@@ -133,7 +135,7 @@ Best-evidenced item absent from the JSON: **A-18 RT60** (Tier 1, Iglehart 2020 `
 Internal duplicates inside the JSON: turning-circle 1500 mm ×4 (SPEC-0001/0024/0030/0053), corridor width 1200 mm ×3, grab-bar height ×2, illuminance 200–500 lux ×2. Garbage: SPEC-0018 `8,725,382 N`, 8 `parameter="unclassified"`, SPEC-0015 `illuminance = 30%`, 7 `[UNASSIGNED]` + 4 `[CROSS-CUTTING]` never mapped. **Recommendation:** harvest the few not-yet-migrated numeric values into the DB, then archive the JSON; regenerating it as-is would re-import the broken taxonomy. **Caveat [C — added in adversarial review]:** the JSON is *not* consumer-free — `scripts/db/migrate_all.py:54,1149`, `scripts/convert/convert_spec_db.py`, and `scripts/migrate/phase_01_slugs.py`/`phase_jv_appendix_a.py` read it as a DB-migration *input*. It cannot simply be deleted; retirement means updating or retiring those one-time migration scripts too (all appear to be historical, but that must be confirmed, not assumed — the target `specification` table they imply does not exist in the live DB, which is itself evidence the spec-migration path is broken/incomplete). Also **[C]**: `specification-database-schema.md` documents 21 fields / "143 records / batch 1"; the JSON carries 44 fields / 73 records / "batch 2" — the schema doc is badly out of date and `schemas/specification.py`'s pydantic rules would reject the live JSON.
 
 ### 2.5 Conflict data is a fourth fragmentation axis **[C]**
-The DB `conflicts` table is **empty (0 rows)**, yet `references/conflict-matrices/` holds **13 populated markdown matrices** (ACOUSTIC-LVL, COLOUR-CONT, TEMP-RANGE…) and the JSON references 7 `conflict_domains`. Conflict resolution — which is where much of the *consolidation logic across overlapping specs* actually lives (e.g. ACOUSTIC-LVL resolves the RT60/masking/SFA overlaps across A-02/A-08/A-13/A-18) — is stranded in prose, not queryable. Template 4 (Conflict Page) has nothing to render.
+The DB `conflicts` table is **empty (0 rows)**, yet `references/conflict-matrices/` holds **12 conflict domains + 1 synthesis roll-up** (ACOUSTIC-LVL, COLOUR-CONT, TEMP-RANGE…; *intensification correction: "13 matrices" is 12 domains, 2 of them reclassified as non-conflicts — CORRIDOR-W retired, FRAGRANCE minimal*) and the JSON references 7 `conflict_domains`. *Deeper (intensification, network direction): the item model **structurally cannot express these conflicts** — `connection_targets` holds **zero population codes**, and a conflict needs a `(pop_A, pop_B, parameter, resolution)` tuple that exists nowhere.* Conflict resolution — which is where much of the *consolidation logic across overlapping specs* actually lives (e.g. ACOUSTIC-LVL resolves the RT60/masking/SFA overlaps across A-02/A-08/A-13/A-18) — is stranded in prose, not queryable. Template 4 (Conflict Page) has nothing to render.
 
 ---
 
@@ -202,7 +204,7 @@ These are design provisions our research supports that **no item covers** — th
 - **A-09** HVAC vibration "0.1 m/s RMS" — *not in ISO*; "UNVERIFIED flag must appear before publication" (`spec-db-part4-reconciliation §C1`); no disability-specific floor-vibration standard exists. Strongest flag candidate.
 - **A-02** NRC ≥0.85 — criterion contradicted (Amlani & Russo 2016: NRC-compliant panels can *reduce* STI); STI ≥0.60 should be the performance criterion, NRC a procurement proxy.
 - **B-01** circadian ≥150 EML — *under*-calibrated; research supports ≥250 melanopic EDI (Brown 2022). A strengthening fix, not weak-basis.
-(No item is evidence-free — 100% have ≥1 BPC mapping — so these are threshold problems, not empty items.)
+(*Correction — intensification, evidence direction:* the claim here that "100% have ≥1 BPC mapping" is **REFUTED against the DB** — 5 active items have **no evidence slug and no `item_bpc_links`**: **A-13, A-15, B-08, G-02, G-07** (F-07 also NULL-slug). These are *demotion* candidates, not merely threshold problems. Deeper still, `bpc_metadata` shows **68/82 slices are `RETRACTED-PRE-REHAB` and `co1_pass_count=0` corpus-wide** — every item's evidence basis is currently retracted. See `audits/category-spec-room-typology-audit-INTENSIFICATION-2026-07-19.md` §III.)
 
 ---
 
@@ -214,7 +216,7 @@ These are design provisions our research supports that **no item covers** — th
 | CR-2 | **Retire `specification-database.json`** — wrong item_codes, garbage, superseded by DB tables | Specs | Harvest residual values → DB; archive JSON; update schema doc | **[C]** |
 | CR-3 | **Adopt part-file/TOC category names as canonical**; correct/delete `part04-item-index.md` Category Summary; add K to TOC; delete stale `part05-j` duplicate | Categories | One reconciling naming pass | **[C]** |
 | CR-4 | **Fold thermal into one category** (F-04, F-07, F-08, K-05, Appendix-C TC-items) | Categories | New Thermal/Env-Comfort category (§1.4) | **[C]** |
-| CR-5 | **I-03 ↔ G-03 grab-bar duplication**; A-16 vs D-05 vs (new MH room) sensory-space family | Specs/Categories | De-dup grab bars; clarify the three distinct "quiet space" types | **[C]** |
+| CR-5 | **I-03 ↔ G-03 grab-bar naming/scope overlap** (*intensification, network dir: NOT a clean duplicate — Jaccard 0.09, disjoint neighborhoods, different network roles; do not merge by name*); A-16 vs D-05 vs (new MH room) sensory-space family | Specs/Categories | Clarify grab-bar scope (don't blind-merge); clarify the three distinct "quiet space" types | **[C]** |
 | CR-6 | **R-HAL/R-COR** and **R-BA/R-WC** are res↔non-res duplications of one space | Rooms | Collapse under the two-axis model (§0) | **[C]** |
 | CR-7 | **Split NR-HOS**; promote leisure/aquatic to a sub-block | Typologies | Re-home hotel→residential, restaurant→NR-RET, conference→assembly | **[C]** |
 | CR-8 | **Consolidate the four spec/conflict stores** onto the DB (`jurisdictional_values` + a real `specification` + `conflicts` table); populate `conflicts` from the 13 markdown matrices | Specs | Build the missing DB tables the site templates already assume | **[H]** |
