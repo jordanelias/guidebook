@@ -3,18 +3,47 @@
 *Written 2026-07-18 for a fresh context. Self-contained: a cold session should be able to resume from this
 document + the two it points to (`pipeline-audit.md`, `/root/.claude/plans/delegated-pondering-pine.md`).*
 
-*Updated 2026-07-19, two sessions (`session_2026-07-19-non-english-research-recovery`, batch 1;
-`session_2026-07-19-non-english-research-recovery-batch2`, batch 2) — see §0 below for what changed.
-Sections 1-9 are the 2026-07-18 state as originally written; treat §0 as the current addendum.*
+*Updated 2026-07-19, five batches across two sessions (`session_2026-07-19-non-english-research-recovery`,
+batches 1-3; `session_2026-07-19-non-english-research-recovery-batch4`/`-batch5` continuing in a follow-on
+session) — see §0 below for what changed. Sections 1-9 are the 2026-07-18 state as originally written;
+treat §0 as the current addendum.*
 
 ---
 
-## 0. 2026-07-19 addendum — non-English research recovery (batches 1 + 2)
+## 0. 2026-07-19 addendum — non-English research recovery (batches 1-5)
 
-Picked up `research-handoff-non-english.md` and ran its recovery pipeline across two batches. Full detail:
-`equity-dashboard.md`, `non-english-coverage-matrix.json`, `global-south-finding.md`. Two migrations
-applied: `data_20260719034512_...recovery.sql` (batch 1) and `data_20260719052009_...recovery-batch2.sql`
-(batch 2) — `data_migrations` now 201 rows; `PRAGMA foreign_key_check`/`integrity_check` clean after both.
+Picked up `research-handoff-non-english.md` and ran its recovery pipeline across five batches, the last of
+which was a dedicated **adversarial review** of the first four. Full detail: `equity-dashboard.md`,
+`non-english-coverage-matrix.json`, `global-south-finding.md`, `slug-language-tracking-matrix.md` (a live
+slug×language tracking table — check this first before spending more research effort on any given
+slug/language). Five migrations applied (`data_20260719034512` through `data_20260719060557`, suffixed
+`...recovery.sql` / `...recovery-batch{2,3,4,5}.sql`) — `data_migrations` now 204 rows;
+`PRAGMA foreign_key_check`/`integrity_check` clean after all five.
+
+**Batches 3-5, briefly (batches 1-2 detailed below unchanged):**
+- **Batch 3**: fixed 2 more `lang_detected` mislabels missed by batch 1's narrower filter — including
+  `REF-00572`, the *exact* example the original handoff cited as its motivating case. Added 1 new source
+  (Chile's Ley 21.545 for sensory-room-user-control, honestly scoped — it's a general procedural duty, not
+  an explicit sensory-room mandate as a naive read might suggest); investigated and rejected a Brazilian
+  bill (PL 3098/24) as not-yet-enacted law.
+- **Batch 4**: closed `luminance-contrast-and-pattern` (discovered to have rich search notes but **zero**
+  `source_slug_links` at all — 0/0 → 13/13, 100% non-English) and discovered 4 "Tier-2" slugs
+  (`mental-health-built-environment`, `deaf-spatial-design`, `cognitive-wayfinding-design`,
+  `accessible-circulation-geometry`) have PRE-REMEDIATION-stub search notes with **zero named
+  instruments** — a fundamentally different, harder problem than notes-extraction recovery. Did genuine
+  fresh primary research for 2 of the 4 (2 jurisdictions each), including one **Co-1** addition (a
+  Deaf-led Japanese research lab) as a deliberate counterweight to this corpus's documented Co-1
+  thinness/US-UK skew.
+- **Batch 5 — adversarial review, run at the user's explicit request.** 4 independent agents, blind to the
+  ingesting agent's reasoning and instructed to try to REFUTE rather than confirm, checked DB integrity,
+  re-verified a sample of 8 new sources via fresh WebSearch, and re-derived every documentation number
+  from the live DB. **Found and fixed**: 1 factual error (Japan's MHLW ordinance unit-count cap was wrong),
+  6 tier/`evidence_type` doctrine violations against `governance/tier-system.md` (including one that
+  silently defeated the batch's own Co-1 goal), 1 `lang_detected` over-correction (reverted), 1 misleading
+  audit-trail note (data value unchanged), and 2 documentation undercounts. **Structural integrity was
+  clean throughout**, and 7 of 8 sampled sources were confirmed accurate — the review earned its keep by
+  finding real, fixable problems without discrediting the underlying work. This is the same discipline
+  §8 lesson 2 below describes, now applied reflexively to this session's own output.
 
 **What happened, in priority order of what it changes about §2/§5 below:**
 

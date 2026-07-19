@@ -3,6 +3,15 @@
 *Live tracking document, updated as work proceeds across sessions/batches. Legend below. This is the
 single place to check "have we touched X language for Y slug yet" before spending more research effort.*
 
+**Batch 5 note (adversarial review, run at the user's request):** an independent review found and
+corrected 1 factual error, 6 tier/`evidence_type` doctrine violations, 1 `lang_detected`
+over-correction (reverted), and 1 misleading audit-trail note (data value unchanged) — via migration
+`data_20260719060557_..._batch5.sql`. It also caught 2 undercounts in this document's own non-English
+totals (sensory-room-user-control 2→3, deaf-spatial-design 4→5, both already corrected below). Full
+detail in `equity-dashboard.md`'s "Batch 5" section and `non-english-coverage-matrix.json` →
+`batch5_adversarial_review`. Structural DB integrity was clean throughout; 7 of 8 independently
+re-verified sources were confirmed accurate.
+
 ## Legend
 
 - ✅**R** = relinked an already-verified DB row (zero new fabrication surface)
@@ -32,10 +41,10 @@ single place to check "have we touched X language for Y slug yet" before spendin
 | **deaf-classroom-reverberation-time** | ✅R (DIN18041) | ✅N (Arrêté 2003, corrected) | ✅R+✅N (UNI11532 + Circolare 3150/1967) | ⬜ | ✅N (PvE Frisse Scholen) | ✅N (SS25268) | ✅R (NS8175) | 🚫A (no clean single std) | ✅N (SFS5907) | ⬜ (not searched by orig. sweep) | 🚫A (no binding std) | ⬜ (not searched by orig. sweep) | ✅R (GB50118) | — |
 | **stair-ramp-threshold-biomechanics-accessibility** | ✅R (DIN18040-1) | ✅R (Arrêté 2014) | ✅R (DM236/DPR503) | ✅R+B (CTE-DB-SUA, citation corrected) | ✅N (Bbl Art.4.30) | ✅R (BFS/BBR) | ✅R (TEK17 §12-16) | ✅R (BR18) | ✅R (Decree241/2017) | ✅R (DL163/2006) | ⬜ | ⬜ (not cross-checked) | ✅R (GB50763) | — |
 | **wayfinding-dementia-spatial-design** | ✅N(rs) (Wegweiser Demenz) | ✅N (Décret 2016-1164 UHR/PASA) | ✅N (DPCM 22/12/1989) | ✅N(rs) (GuíaSalud GPC484) | ✅N (Toolkit Dementievr. Woongebouw) | ✅N (Socialstyrelsen 2017-12-2) | ✅N (Helsedirektoratet) | ✅N×2 (Mærkningsordning + SBi-259) | ✅N (Ympäristöopas 2018) | 🚫A (re-confirmed 2×, 5+ queries) | ✅N (MHLW Ord. 34) | ✅N (Seoul Cog. Health Design Manual) | ✅N (GB/T 46401-2025) | — |
-| **sensory-room-user-control** | 🚫A (no DIN std, already recorded) | 🚫A | 🚫A | 🚫A | 🚫A | 🚫A | 🚫A | 🚫A | ⬜ | 🚫A | 🚫A | ⬜ (existing SI-clinical link, not std) | 🚫A | ✅N Chile Ley 21.545 (rs); ⛔B Brazil PL3098/24 (pending bill, not ingested) |
+| **sensory-room-user-control** | 🚫A (no DIN std, already recorded) | pre-existing non-EN (REF-00700, "Les espaces Snoezelen" — corrected en→fr in batch 3, a cross-effect on this slug's count not originally noticed) | 🚫A | 🚫A | 🚫A | 🚫A | 🚫A | 🚫A | ⬜ | 🚫A | 🚫A | ⬜ (existing SI-clinical link REF-00702 ko, not std) | 🚫A | ✅N Chile Ley 21.545 (rs); ⛔B Brazil PL3098/24 (pending bill, not ingested) — total non-EN 3/13 (corrected 2026-07-19 batch5, see note at top) |
 | **luminance-contrast-and-pattern** | ✅N (DIN 32975) | ✅R (Arrêté 2014, LCP-03) | ✅R (DM236/DPR503, LCP-04) | ✅R (CTE-DB-SUA §SUA1 4.3, LCP-05) | ✅R (NEN9120 REF-00071, LCP-06) | ✅R (BFS/BBR, LCP-07) | ✅N (NS11001-1/2) | ✅R (BR18, LCP-08) | ✅R (Decree241/2017, LCP-09) | ✅R (DL163/2006, LCP-10) | ✅R (バリアフリー法, general only — specific Road Mobility Guideline unconfirmed, LCP-11) | ✅R (편의증진법 REF-00511, LCP-12) | ✅R (GB50763, LCP-13) | — **100% non-EN (13/13) — 0/0 → 13/13** |
 | **mental-health-built-environment** | ✅N ×2 (EPH Planungshandbuch Psychiatrie; DGUV Info 207-027) | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ✅N (Werkboek HIC); ⛔B (College bouw zorginstellingen — historical/defunct, not ingested) | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | — | ⬜ `stub` | — | ⬜ `stub` | 🔎F Niedersachsen Planungshilfe (state- not federal-level, not ingested) |
-| **deaf-spatial-design** | ✅N (DAB DeafSpace article); 🔎F TU Darmstadt research group + Elbschule Hamburg (context only, not separately ingested) | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ✅N ×2 (Tsukuba Univ. of Technology campus — grey/national; Metote Lab — **Co-1**, Deaf-led, Tokyo-regional); 🔎F Nikken Sekkei (corporate research, not ingested) | ⬜ `stub` | ⬜ `stub` | — |
+| **deaf-spatial-design** | ✅N (DAB DeafSpace article); 🔎F TU Darmstadt research group + Elbschule Hamburg (context only, not separately ingested) | ⬜ `stub` | pre-existing non-EN (REF-00347, LIS decree — predates this session, not counted as a batch-4 addition) | ⬜ `stub` | ⬜ `stub` | pre-existing non-EN (REF-00346, Stockholm accessibility — predates this session, not counted as a batch-4 addition) | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ✅N ×2 (Tsukuba Univ. of Technology campus — grey/national; Metote Lab — **Co-1**, Deaf-led, Tokyo-regional); 🔎F Nikken Sekkei (corporate research, not ingested) | ⬜ `stub` | ⬜ `stub` | — total non-EN 5/13 (2 pre-existing + 3 new; corrected 2026-07-19 batch5, see note at top) |
 | **cognitive-wayfinding-design** | ⬜ `stub`, not yet attempted | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | — already 22 links/8 non-EN from prior work; lowest-priority remaining slug |
 | **accessible-circulation-geometry** | ⬜ `stub` (already has 2 relinked refs from batch-1 lang-fix, not a fresh recovery pass) | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | — |
 

@@ -9,16 +9,60 @@ in `non-english-coverage-matrix.json`; the recovery pipeline and discipline are 
 `scripts/migrations/data_20260719052009_2026-07-19-non-english-research-recovery-batch2.sql` (batch 2),
 `scripts/migrations/data_20260719053052_2026-07-19-non-english-research-recovery-batch3.sql` (batch 3).*
 
-## Headline numbers (cumulative, all four batches)
+## Headline numbers (cumulative, all five batches)
 
-| metric | pre-session baseline | after batch 1 | after batch 2 | after batch 3 | after batch 4 | cumulative delta |
-|---|---|---|---|---|---|---|
-| `evidence_sources` total | 640 | 650 | 661 | 662 | **670** | +30 (new ingests) |
-| non-English (`lang_detected` != en/eng) | 87 | 136 | 147 | 150 | **158** | **+71** |
-| `lang_detected` rows corrected (mislabel fix) | — | 59 | 59 | 61 | 61 | 59 (batch 1) + 2 (batch 3) |
-| `jurisdiction` = INTL (seam, should be INT) | 5 | 0 | 0 | 0 | 0 | fixed |
-| `verification_status` = VERIFIED-2 (search-corroborated, primary fetch blocked) | 0 | 10 | 21 | 22 | **30** | new category, honestly disclosed |
-| `data_migrations` ledger rows | 199 | 200 | 201 | 202 | **203** | 4 migrations this session |
+| metric | pre-session baseline | after batch 1 | after batch 2 | after batch 3 | after batch 4 | after batch 5 | cumulative delta |
+|---|---|---|---|---|---|---|---|
+| `evidence_sources` total | 640 | 650 | 661 | 662 | 670 | 670 | +30 (new ingests; batch 5 corrected existing rows, added none) |
+| non-English (`lang_detected` != en/eng) | 87 | 136 | 147 | 150 | 158 | **157** | **+70** (batch 5 reverted 1 over-correction, REF-00310) |
+| `lang_detected` rows corrected (mislabel fix) | — | 59 | 59 | 61 | 61 | 61 (net; +1 correction, -1 reversion) | 59 (batch 1) + 2 (batch 3) − 1 reverted (batch 5) + 1 honesty-fixed (batch 5, value unchanged) |
+| `jurisdiction` = INTL (seam, should be INT) | 5 | 0 | 0 | 0 | 0 | 0 | fixed |
+| `verification_status` = VERIFIED-2 (search-corroborated, primary fetch blocked) | 0 | 10 | 21 | 22 | 30 | 30 | new category, honestly disclosed |
+| `data_migrations` ledger rows | 199 | 200 | 201 | 202 | 203 | **204** | 5 migrations this session |
+
+### Batch 5 — adversarial review, run at the user's request
+
+A genuinely independent review (4 parallel agents, blind to the ingesting agent's own reasoning, tasked
+with trying to REFUTE rather than confirm) checked: (a) DB integrity + migration SQL logic, (b) a sample of
+8 new ingests via fresh WebSearch re-verification, (c) every quantitative claim in this documentation
+re-derived directly from the live DB. **Structural integrity was clean throughout** (FK/PRAGMA checks, no
+duplicate local_ref_ids) and 7 of 8 sampled sources were confirmed accurate on re-verification. Real issues
+found and corrected via a compensating migration (this repo's migrations are forward-only/immutable —
+corrections land as new migrations, never edits):
+
+1. **One factual error**: `REF-00751` (Japan's MHLW dementia group-home ordinance) claimed "max 2
+   units/18 residents" — the current standard (post-2021 revision) actually allows up to 3 units/27
+   residents. Corrected; the "strictest small-scale mandate" superlative that partly rested on the wrong
+   figure is withdrawn.
+2. **Six tier/`evidence_type` doctrine violations** against `governance/tier-system.md`: `REF-00744`
+   (GB/T, non-mandatory) was wrongly tiered T6 (statutory) — corrected to T5. Three formal national
+   clinical-guideline-catalogue documents (`REF-00743`, `REF-00749`, `REF-00754`) used `evidence_type=
+   clinical` (reserved for primary research) instead of `standard_eb` — corrected. `REF-00745` (a housing
+   design guide, not a clinical document at all) and `REF-00221` (its own notes already said it wasn't a
+   design standard) were both wrongly at T2/clinical, granting undeserved best-practice-anchoring status
+   — corrected to T5/national_fw and T3/grey respectively. `REF-00765` (the Metote Lab Co-1 addition) was
+   miscoded T3/grey instead of this DB's established Co-1 convention (T1/`co1`) — **this one silently
+   defeated the batch's own stated purpose**, since nothing querying by `evidence_type='co1'` would have
+   found it. Corrected.
+3. **One likely `lang_detected` over-correction reverted**: `REF-00310` (a Lund University PhD
+   dissertation) was flipped `en`→`sv` in batch 1, but Lund's own publications catalogue lists an English
+   title for it. Reverted to `en` — this was exactly the kind of ambiguous case batch 1 correctly left
+   alone for 5 *other* rows on the same reasoning; it should have been left alone here too.
+4. **One verification_note honesty fix (data value unchanged)**: `REF-00299`'s stated justification
+   ("verified from native-language text") was false — both title fields are entirely English; the real
+   basis was jurisdiction-inference. The *value* (`no`) was independently re-confirmed correct; only the
+   audit-trail's stated reasoning was corrected.
+5. **Two documentation undercounts** (found by the doc-accuracy check, corrected below): this document
+   previously claimed sensory-room-user-control at 2 non-English links (actual: 3 — missed that a batch-3
+   `lang_detected` fix on an already-linked row also raised this slug's count) and deaf-spatial-design at 4
+   (actual: 5 — undercounted 2 pre-existing non-EN relinks that predated this session's fresh-research
+   additions). Both fixed below.
+
+**One soft, non-fabrication issue left as a flagged note, not a fix**: a `luminance-contrast-and-pattern`
+relink (`REF-00462`, GB 50763) cites a stair/tactile-contrast provision that lives in a different section
+of the standard than this row's own excerpt (accessible entrances) — same real standard, imprecise section
+targeting. Annotated in `source_slug_links.relevance_note`, not corrected further (would need a
+section-specific GB 50763 row that may not exist in the DB yet).
 
 **Batch 4:** see `slug-language-tracking-matrix.md` for full detail. Closed `luminance-contrast-and-pattern`
 (a slug with rich search notes but **zero** `source_slug_links` at all, discovered this session) to
