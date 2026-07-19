@@ -117,5 +117,27 @@
       "one_new_finding": "The Indonesian-search agent flagged a real discrepancy needing resolution before citing: SNI 03-1735-2000's actual title per fresh search snippets appears to include a fire-hazard-prevention qualifier ('...untuk Pencegahan Bahaya Kebakaran Pada Bangunan Gedung') not present in the original candidate description -- this may mean the standard's primary scope is fire-egress access, not general disability accessibility. Needs a direct read to resolve, not assumed either way.",
       "recommendation": "Do not attempt a third WebSearch-only verification pass on these 9 candidates -- the blocker is tooling (WebFetch outage), not insufficient searching. Retry only from a session with confirmed-functional WebFetch (verify against a trivial control URL first)."
     }
+  },
+  "batch3_small_followon": {
+    "lang_detected_widened_sweep": {
+      "method": "Batch 1's fix was deliberately narrow (standard_number-bearing rows only). Batch 3 widened the sweep to non-standard_number rows in single-official-language jurisdictions, checking for native-language function words in pub_title.",
+      "found": [
+        {"ref_id": "REF-00572", "note": "THE ORIGINAL handoff example ('Guide acoustique pour personnes malentendantes') -- missed by batch 1 because it has no standard_number. Fixed en->fr."},
+        {"ref_id": "REF-00700", "note": "'Les espaces Snoezelen' (Cairn.info) -- fixed en->fr."}
+      ],
+      "not_exhaustive": "Only 2 candidates surfaced from a crude word-boundary heuristic checked against 28 non-standard_number rows in 8 jurisdictions -- a fuller audit of ALL non-standard_number rows (journal articles, reports, grey literature) across all non-English jurisdictions is still owed."
+    },
+    "sensory_room_user_control": {
+      "before": {"total_links": 12, "non_en_links": 1},
+      "after": {"total_links": 13, "non_en_links": 2},
+      "domain_character": "Unlike the acoustic/ramp/dementia slugs, most jurisdictions searched here explicitly have NO formal sensory-room design standard (an honest absence already recorded in the original search notes for JA/DA/NL/PT/FI/FR/KO/SV/ZH/DE/IT/NO) -- this domain is mostly international clinical research literature (often English-language regardless of the population studied), not national codes.",
+      "additions": [
+        {"ref_id": "REF-00757", "jurisdiction": "CL", "language": "es", "type": "new ingest, honest scope correction", "standard": "Ley N 21.545 (Chile)", "note": "Search notes implied this law mandates sensory rooms; verification found it creates a general procedural/dysregulation-handling duty (Art. 18), operationalized only via non-binding 2025 MINEDUC guidance, with a stricter mandate still pending as an unpassed amendment bill. Ingested for the actual statutory basis, not overclaimed as a sensory-room standard."}
+      ],
+      "investigated_not_ingested": [
+        {"candidate": "Brazil PL 3098/24 (\"3 types\" of sensory rooms)", "reason": "CONFIRMED to be a pending bill (Projeto de Lei), not enacted law -- cleared one legislative committee as of the most recent verifiable reporting, still needs full Chamber + Senate approval. Citing an unpassed bill as a standard would be an overclaim; deliberately not ingested. Flagged for future recheck if/when it passes."}
+      ]
+    },
+    "luminance_contrast_and_pattern_finding": "This slug (74 non-EN search hits per the original handoff) was found to have ZERO source_slug_links total -- not a language gap but a slug with no evidence substrate ingested yet at all (English or otherwise). This is a different, larger problem than non-English recovery (which assumes existing EN substrate with a non-EN gap) and was NOT actioned this session -- flagged for the extraction/grading pipeline (see HANDOFF.md 'widen the grading throat'), not the equity-recovery pipeline."
   }
 }

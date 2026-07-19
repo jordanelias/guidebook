@@ -1,22 +1,34 @@
 # Equity dashboard — before/after, 2026-07-19 non-English research recovery
 
-*Sessions: `session_2026-07-19-non-english-research-recovery` (batch 1) and
-`session_2026-07-19-non-english-research-recovery-batch2` (batch 2). Full detail in
-`non-english-coverage-matrix.json`; the recovery pipeline and discipline are in
+*Sessions: `session_2026-07-19-non-english-research-recovery` (batch 1),
+`session_2026-07-19-non-english-research-recovery-batch2` (batch 2), and
+`session_2026-07-19-non-english-research-recovery-batch3` (batch 3, a small follow-on fix). Full detail
+in `non-english-coverage-matrix.json`; the recovery pipeline and discipline are in
 `research-handoff-non-english.md`. Migrations:
 `scripts/migrations/data_20260719034512_2026-07-19-non-english-research-recovery.sql` (batch 1),
-`scripts/migrations/data_20260719052009_2026-07-19-non-english-research-recovery-batch2.sql` (batch 2).*
+`scripts/migrations/data_20260719052009_2026-07-19-non-english-research-recovery-batch2.sql` (batch 2),
+`scripts/migrations/data_20260719053052_2026-07-19-non-english-research-recovery-batch3.sql` (batch 3).*
 
-## Headline numbers (cumulative, both batches)
+## Headline numbers (cumulative, all three batches)
 
-| metric | pre-session baseline | after batch 1 | after batch 2 | cumulative delta |
-|---|---|---|---|---|
-| `evidence_sources` total | 640 | 650 | **661** | +21 (new ingests) |
-| non-English (`lang_detected` != en/eng) | 87 | 136 | **147** | **+60** |
-| `lang_detected` rows corrected (mislabel fix) | — | 59 | 59 | one-time finding, batch 1 |
-| `jurisdiction` = INTL (seam, should be INT) | 5 | 0 | 0 | fixed |
-| `verification_status` = VERIFIED-2 (search-corroborated, primary fetch blocked) | 0 | 10 | **21** | new category, honestly disclosed |
-| `data_migrations` ledger rows | 199 | 200 | **201** | 2 migrations this session |
+| metric | pre-session baseline | after batch 1 | after batch 2 | after batch 3 | cumulative delta |
+|---|---|---|---|---|---|
+| `evidence_sources` total | 640 | 650 | 661 | **662** | +22 (new ingests) |
+| non-English (`lang_detected` != en/eng) | 87 | 136 | 147 | **150** | **+63** |
+| `lang_detected` rows corrected (mislabel fix) | — | 59 | 59 | **61** | 59 (batch 1) + 2 (batch 3) |
+| `jurisdiction` = INTL (seam, should be INT) | 5 | 0 | 0 | 0 | fixed |
+| `verification_status` = VERIFIED-2 (search-corroborated, primary fetch blocked) | 0 | 10 | 21 | **22** | new category, honestly disclosed |
+| `data_migrations` ledger rows | 199 | 200 | 201 | **202** | 3 migrations this session |
+
+**Batch 3 (small follow-on):** widening batch 1's `lang_detected` fix beyond `standard_number`-bearing
+rows found 2 more mislabeled rows — including **`REF-00572`, the ORIGINAL motivating example the handoff
+itself cited** ("Guide acoustique pour personnes malentendantes," tagged `en`), which batch 1 missed
+because it lacks a `standard_number` and so fell outside that batch's narrower filter. Also added one new
+sensory-room-user-control source (Chile's Ley N° 21.545), ingested with an **honest scope correction**:
+verification found the law creates a general procedural duty, not an explicit "sensory room" mandate as
+the search notes implied — the stricter infrastructure requirement is a still-pending amendment bill, not
+cited. A companion Brazilian bill (PL 3098/24) was investigated and found to be a **pending bill, not
+enacted law** — deliberately NOT ingested (citing an unpassed bill as a "standard" would be an overclaim).
 
 The **+49 non-English delta is not just 10 new sources** — it is mostly a **data-hygiene correction**,
 not new gathering. A systematic audit (triggered while investigating the handoff's single cited example,
