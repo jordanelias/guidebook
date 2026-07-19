@@ -1,19 +1,22 @@
 # Equity dashboard — before/after, 2026-07-19 non-English research recovery
 
-*Session: `session_2026-07-19-non-english-research-recovery`. Full detail in
+*Sessions: `session_2026-07-19-non-english-research-recovery` (batch 1) and
+`session_2026-07-19-non-english-research-recovery-batch2` (batch 2). Full detail in
 `non-english-coverage-matrix.json`; the recovery pipeline and discipline are in
-`research-handoff-non-english.md`. Migration:
-`scripts/migrations/data_20260719034512_2026-07-19-non-english-research-recovery.sql`.*
+`research-handoff-non-english.md`. Migrations:
+`scripts/migrations/data_20260719034512_2026-07-19-non-english-research-recovery.sql` (batch 1),
+`scripts/migrations/data_20260719052009_2026-07-19-non-english-research-recovery-batch2.sql` (batch 2).*
 
-## Headline numbers
+## Headline numbers (cumulative, both batches)
 
-| metric | before | after | delta |
-|---|---|---|---|
-| `evidence_sources` total | 640 | 650 | +10 (new ingests) |
-| non-English (`lang_detected` != en/eng) | 87 | **136** | **+49** |
-| `lang_detected` rows corrected (mislabel fix) | — | 59 | new finding this session |
-| `jurisdiction` = INTL (seam, should be INT) | 5 | 0 | fixed |
-| `verification_status` = VERIFIED-2 (search-corroborated, primary fetch blocked) | 0 | 10 | new category, honestly disclosed |
+| metric | pre-session baseline | after batch 1 | after batch 2 | cumulative delta |
+|---|---|---|---|---|
+| `evidence_sources` total | 640 | 650 | **661** | +21 (new ingests) |
+| non-English (`lang_detected` != en/eng) | 87 | 136 | **147** | **+60** |
+| `lang_detected` rows corrected (mislabel fix) | — | 59 | 59 | one-time finding, batch 1 |
+| `jurisdiction` = INTL (seam, should be INT) | 5 | 0 | 0 | fixed |
+| `verification_status` = VERIFIED-2 (search-corroborated, primary fetch blocked) | 0 | 10 | **21** | new category, honestly disclosed |
+| `data_migrations` ledger rows | 199 | 200 | **201** | 2 migrations this session |
 
 The **+49 non-English delta is not just 10 new sources** — it is mostly a **data-hygiene correction**,
 not new gathering. A systematic audit (triggered while investigating the handoff's single cited example,
@@ -30,24 +33,24 @@ per-language distribution table in `HANDOFF.md` §2/§5) was undercounting non-E
 fix, in some cases significantly (e.g., every national-code jurisdiction's language axis was silently wrong
 for a subset of its own rows).
 
-## Language distribution, before → after
+## Language distribution, before → after batch 1 → after batch 2
 
-| lang | before (per handoff §1) | after |
-|---|---|---|
-| en/eng | ~553 | 514 |
-| de | 11 | 25 |
-| ja | 19 | 19 |
-| no | 7 | 16 |
-| fr | 11 | 14 |
-| sv | 7 | 13 |
-| nl | 9 | 11 |
-| zh | — (not itemized; folded into "other") | 8 |
-| pt | 7 | 7 |
-| ko | 6 | 6 |
-| it | 4 | 6 |
-| fi | 2 | 6 |
-| da | 2 | 3 |
-| es | — | 2 |
+| lang | before (per handoff §1) | after batch 1 | after batch 2 |
+|---|---|---|---|
+| en/eng | ~553 | 514 | 514 |
+| de | 11 | 25 | 26 |
+| ja | 19 | 19 | 20 |
+| no | 7 | 16 | 16 |
+| fr | 11 | 14 | 15 |
+| sv | 7 | 13 | 14 |
+| nl | 9 | 11 | 13 |
+| zh | — (not itemized; folded into "other") | 8 | 8 |
+| pt | 7 | 7 | 7 |
+| ko | 6 | 6 | 7 |
+| it | 4 | 6 | 7 |
+| fi | 2 | 6 | 6 |
+| da | 2 | 3 | 5 |
+| es | — | 2 | 3 |
 
 (Before-column reproduces the handoff's §1 per-language ingested counts where itemized; some pre-session
 per-language figures were not separately reported and are marked "—".)
@@ -58,59 +61,101 @@ Three slugs were checked for non-English coverage at the `source_slug_links` lev
 actually determines what a reader sees on a rendered page. **All three had ZERO non-English sources linked
 despite the multilingual search having named specific instruments for 11-14 languages each:**
 
-| slug | non-EN search hits (per `search_languages`) | links before | non-EN links before | links after | non-EN links after |
-|---|---|---|---|---|---|
-| deaf-classroom-reverberation-time | 79 | 3 | **0** | 12 | **9** |
-| stair-ramp-threshold-biomechanics-accessibility | 102 | 15 | **0** | 24 | **9** |
-| wayfinding-dementia-spatial-design | 108 | 9 | **0** | 12 | **3** (partial pass — highest-yield slug, only 3 of ~15 named instruments actioned) |
+| slug | non-EN search hits (per `search_languages`) | links before | non-EN before | links after batch 1 | non-EN after batch 1 | links after batch 2 | non-EN after batch 2 |
+|---|---|---|---|---|---|---|---|
+| deaf-classroom-reverberation-time | 79 | 3 | **0** | 12 | **9** | 12 | 9 (untouched in batch 2) |
+| stair-ramp-threshold-biomechanics-accessibility | 102 | 15 | **0** | 24 | **9** | 26 | **11** (+1 new NL ingest, +1 ES citation correction/relink) |
+| wayfinding-dementia-spatial-design | 108 | 9 | **0** | 12 | **3** (partial) | 22 | **13** (batch 2 completed the pass — 59% non-EN) |
 
-Of the 22 new/relinked sources across these three slugs: **13 were relinks of ALREADY-VERIFIED rows**
-(zero new fabrication surface — the standard was already in the DB, correctly cited elsewhere, just never
-connected to the slug the original search actually named it for), and **10 were genuinely new ingests**,
-each real-retrieval verified this session (see `verification_status = VERIFIED-2` disclosure below).
+Of the 22 batch-1 new/relinked sources across the three Tier-1 slugs: **13 were relinks of ALREADY-VERIFIED
+rows** (zero new fabrication surface — the standard was already in the DB, correctly cited elsewhere, just
+never connected to the slug the original search actually named it for), and **10 were genuinely new
+ingests**. Batch 2 added **11 more items** to wayfinding-dementia-spatial-design and stair-ramp (10 new
+ingests + 1 corrected relink), all real-retrieval verified this session (see `verification_status =
+VERIFIED-2` disclosure below).
+
+### Batch 2 — completing wayfinding-dementia-spatial-design, filling the NL/ES ramp gaps
+
+wayfinding-dementia-spatial-design (108 non-EN search hits, the corpus's single richest non-English-search
+slug) went from a batch-1 partial pass (3/~15 named instruments) to **10 of the remaining instruments
+actioned**, taking it to **13 non-English sources / 22 total links (59% non-English)** — the highest
+non-English share of any slug touched so far. Portugal was independently re-checked with 5 additional
+search queries and the genuine-absence finding **held** (no formal Portuguese dementia-design regulation
+found); one unconfirmed lead (IGAS 2023 ERPI Referencial de Boas Práticas) is flagged for a future pass,
+not ingested.
+
+Two sources were ingested at **deliberately reduced, honestly-scoped citations** rather than overclaimed:
+- **DE — Wegweiser Demenz**: verified to be primarily a directory/referral portal, not a technical design
+  standard. Ingested at tier 3 (grey), cited only for its confirmed content (a home-safety checklist and
+  institutional resident-group-size norms), not the more granular corridor-geometry/mirror-avoidance claims
+  in the original search notes, which could not be confirmed as native to this source.
+- **ES — Guía de Práctica Clínica sobre Alzheimer**: verified to address environmental modification only at
+  a general level; the granular color-therapy/signage content originally attributed to it actually belongs
+  to a different Spanish publication (Fundación Pilares/AFAD). Ingested for the confirmed general content
+  only.
+
+**A second anti-fabrication catch, this time on a ramp-gradient table.** Verifying the CTE DB SUA (Spain)
+ramp-gradient table for stair-ramp-threshold-biomechanics-accessibility found the search-notes-claimed
+table (12%/8%/6%/4%, attributed to "SUA 9") was **wrong** — it conflated two different documents: the real
+new-construction table (DB-SUA §SUA-1 4.3, Tabla 4.1: 10%/8%/6% + 2% cross-fall) with a separate
+existing-building tolerance table (DA DB-SUA/2: 12%/10%/8%/6%). The existing DB row (`REF-00464`) was
+relinked to the slug with the **corrected** figures and section citation, not the original wrong one.
+Separately, the Netherlands' Bbl Article 4.30 (a height-tiered ramp table, unique in structure among the 14
+jurisdictions searched) was verified and newly ingested, closing that gap.
 
 ## The VERIFIED-2 disclosure
 
-All 10 new ingests carry `verification_status = 'VERIFIED-2'`, not the corpus-standard `VERIFIED`. This
-records honestly that verification rested on **convergent WebSearch retrieval across multiple independent
-pages**, not a first-hand primary-document render — direct `WebFetch` was blocked (HTTP 403) on nearly
-every primary source domain attempted this session (government/standards-body sites in Japan, Singapore,
-Finland, France, Italy, Sweden, Netherlands, Norway, China), confirmed via the environment's proxy-status
-endpoint as a **shared infrastructure issue this session** (many unrelated hosts affected simultaneously),
-not evidence the sources don't exist. This mirrors an existing DB convention (`REF-00462`'s
-`DEFERRED-V2-FLIP-VERIFIED` pattern) rather than inventing a new one. **Anti-fabrication gate held**: one
-candidate (NF S31-080:2006, France) was dropped after verification showed it doesn't actually cover
-classrooms (its real scope is offices/tertiary spaces) — the search-notes framing was wrong, and rather
-than ingest a mis-scoped citation, it was replaced with the correct one (arrêté du 25 avril 2003).
+All 21 new ingests (10 batch 1 + 11 batch 2) carry `verification_status = 'VERIFIED-2'`, not the
+corpus-standard `VERIFIED`. This records honestly that verification rested on **convergent WebSearch
+retrieval across multiple independent pages**, not a first-hand primary-document render — direct
+`WebFetch` was blocked on nearly every primary source domain attempted across both batches. Batch 2
+diagnosed this more precisely than batch 1's "shared proxy issue" framing: multiple independent
+investigating agents ran **control-URL tests** (`example.com`, `en.wikipedia.org`, `anthropic.com`) and
+found those also returned HTTP 403 — confirming a **session-wide `WebFetch` tooling outage**, not
+target-site blocking or a proxy-domain-allowlist issue. This mirrors an existing DB convention
+(`REF-00462`'s `DEFERRED-V2-FLIP-VERIFIED` pattern) rather than inventing a new one.
+
+**Anti-fabrication gate held, twice.** Batch 1: one candidate (NF S31-080:2006, France) was dropped after
+verification showed it doesn't actually cover classrooms (its real scope is offices/tertiary spaces) — the
+search-notes framing was wrong, and rather than ingest a mis-scoped citation, it was replaced with the
+correct one (arrêté du 25 avril 2003). Batch 2: the CTE DB SUA (Spain) ramp-gradient table named in the
+search notes was verified to be a conflation of two different documents — corrected rather than ingested
+as claimed (see the batch 2 section above).
 
 ## What this pass does NOT claim
 
-- **Not comprehensive.** This is a first pass over Tier-0 (the registry backlog) + the two richest Tier-1
-  slugs by non-EN yield + a partial pass on a third. wayfinding-dementia-spatial-design alone had 108
-  non-EN hits across 14 languages; only 3 instruments (NO, CN, FI) were actioned. The remaining Tier-1
-  slugs (luminance-contrast-and-pattern, sensory-room-user-control, and four ~20-hit slugs) and the full
-  14-language × 24-jurisdiction sweep are untouched.
+- **Not comprehensive, even after 2 batches.** Tier-0 (the registry backlog), the 2 richest Tier-1 slugs,
+  and wayfinding-dementia-spatial-design (now complete for its clearly-named instruments; Portugal is a
+  confirmed genuine absence) are done. The remaining Tier-1/2 slugs (luminance-contrast-and-pattern 74
+  hits, sensory-room-user-control 42, and four ~20-hit slugs) and the full 14-language × 24-jurisdiction
+  sweep are untouched.
 - **Jurisdiction ≠ language.** REF-00139 (Singapore) adds jurisdictional/Global-South diversity, not
   language diversity — its source document is in English. Recorded honestly, not folded into the
   non-English count.
-- **The Global-South zero-result languages are diagnosed, not fixed.** See `global-south-finding.md`.
-  Several real candidate sources were found during that investigation but are **not yet ingested** —
-  flagged for a follow-up verify-and-ingest batch, consistent with the "recover, don't fabricate"
-  discipline (a diagnosis is not itself a citation).
+- **The Global-South zero-result languages are diagnosed, not fixed — attempted twice, both times
+  blocked by tooling, not by the sources' non-existence.** See `global-south-finding.md`. A second
+  independent attempt this session to directly read the 9 flagged candidate sources (Indonesian, Hindi,
+  Bangladeshi, Arabic-region) again failed to achieve a genuine primary-document read — this time
+  precisely diagnosed as a session-wide `WebFetch` outage (control-URL tests against `example.com` also
+  403'd). None of the 9 are ingested; they remain flagged leads for a session with working `WebFetch`.
 
 ## Next batch (not done this session)
 
-1. wayfinding-dementia-spatial-design's remaining ~12 named instruments (DE, IT, DA, ES, FR, JA, KO, NL,
-   PT, SV clusters).
-2. Tier-2: luminance-contrast-and-pattern (74), sensory-room-user-control (42), and the four ~20-hit slugs.
-3. The 4 Global-South recoveries flagged in `non-english-coverage-matrix.json`
-   (`global_south_zero_result_investigation.*.recovered_not_ingested`) — Indonesian SNI 03-1735-2000, the
-   Hindi translation of India's Harmonised Guidelines, Bangladesh's BUAG site + 2013 disability act, and
-   the Saudi/Dubai/Egyptian Arabic-region codes — each needs an independent direct-read verification pass
-   before ingest (this session only got WebSearch corroboration, not a primary-document render, on any of
-   them).
-4. NL (Bouwbesluit/Bbl ramp provisions) and ES (CTE DB SUA ramp table) for
-   stair-ramp-threshold-biomechanics-accessibility — named in search notes, not yet matched to a DB row.
-5. A corpus-wide audit of whether the *original* 81×19 multilingual sweep's zero-results (beyond the 5
+1. Tier-2: luminance-contrast-and-pattern (74), sensory-room-user-control (42), and the four ~20-hit slugs
+   (cognitive-wayfinding-design, deaf-spatial-design, mental-health-built-environment,
+   accessible-circulation-geometry).
+2. The 9 Global-South recoveries flagged in `non-english-coverage-matrix.json`
+   (`global_south_zero_result_investigation.*.recovered_not_ingested`) — Indonesian SNI 03-1735-2000 /
+   Kepmen PU 468/1998 / Permen PUPR 14/2017, the Hindi translation of India's Harmonised Guidelines,
+   Bangladesh's BUAG site / 2013 disability act / BNBC Appendix D, and the Saudi SBC 201 / Dubai Universal
+   Design Code / Egyptian Code 601 — need a session with functional `WebFetch` before any can be upgraded
+   past search-snippet corroboration. **Do not retry this with WebSearch-only verification again** — two
+   independent attempts have already hit the same ceiling; the blocker is tooling, not more searching.
+3. Two unconfirmed leads surfaced during batch 2, not yet chased down: the Italian "Linee guida del
+   Ministero della Sanità n. 1" companion to DPCM 22/12/1989 (exact date uncertain — 31 gennaio vs 31
+   marzo 1994 across sources) and Portugal's IGAS 2023 "ERPI Referencial de Boas Práticas" (content
+   unread, may or may not contain dementia-specific design provisions).
+4. A corpus-wide audit of whether the *original* 81×19 multilingual sweep's zero-results (beyond the 5
    flagged Global-South languages) are partly a WebFetch-domain-blocking artifact — every investigating
-   agent this session hit the same blocking pattern independently across unrelated domains/languages.
+   agent across both batches hit the same blocking pattern independently across unrelated domains/
+   languages/sessions, which is now a 2-for-2 pattern worth a dedicated look.

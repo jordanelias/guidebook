@@ -3,56 +3,65 @@
 *Written 2026-07-18 for a fresh context. Self-contained: a cold session should be able to resume from this
 document + the two it points to (`pipeline-audit.md`, `/root/.claude/plans/delegated-pondering-pine.md`).*
 
-*Updated 2026-07-19 (session `session_2026-07-19-non-english-research-recovery`) — see §0 below for what
-changed. Sections 1-9 are the 2026-07-18 state as originally written; treat §0 as the current addendum.*
+*Updated 2026-07-19, two sessions (`session_2026-07-19-non-english-research-recovery`, batch 1;
+`session_2026-07-19-non-english-research-recovery-batch2`, batch 2) — see §0 below for what changed.
+Sections 1-9 are the 2026-07-18 state as originally written; treat §0 as the current addendum.*
 
 ---
 
-## 0. 2026-07-19 addendum — non-English research recovery (this session)
+## 0. 2026-07-19 addendum — non-English research recovery (batches 1 + 2)
 
-Picked up `research-handoff-non-english.md` and ran its recovery pipeline as a first pass. Full detail:
-`equity-dashboard.md`, `non-english-coverage-matrix.json`, `global-south-finding.md`. One migration applied:
-`scripts/migrations/data_20260719034512_2026-07-19-non-english-research-recovery.sql` (`data_migrations`
-now 200 rows; `PRAGMA foreign_key_check` clean).
+Picked up `research-handoff-non-english.md` and ran its recovery pipeline across two batches. Full detail:
+`equity-dashboard.md`, `non-english-coverage-matrix.json`, `global-south-finding.md`. Two migrations
+applied: `data_20260719034512_...recovery.sql` (batch 1) and `data_20260719052009_...recovery-batch2.sql`
+(batch 2) — `data_migrations` now 201 rows; `PRAGMA foreign_key_check`/`integrity_check` clean after both.
 
 **What happened, in priority order of what it changes about §2/§5 below:**
 
-1. **A systematic `lang_detected` mislabel bug, much bigger than the one example the prior handoff cited.**
-   59 rows corrected (not the 1 the handoff flagged) — national standards tagged `en` (English-gloss-
-   derived) or cross-contaminated between non-English languages (Chinese hanzi misread as Japanese by
-   `unicode_block` detection; short-string `langdetect` noise). Non-English count by `lang_detected`:
-   **87 → 136**, and most of that delta is *visibility*, not new gathering — the sources were already
-   there, mistagged. 5 borderline cases deliberately left uncorrected (see coverage-matrix).
-2. **Tier-0 registry backlog (6 refs) mostly resolved as stale-duplicate, not a real hole.** Only 2 of 6
-   were genuinely missing (REF-00221 JP deafblind, REF-00139 SG wayfinding code — both ingested). The
-   other 4 (REF-00218 DE, REF-00243 FI, REF-00372 FR, REF-00382 CN) are registry entries for standards
-   already migrated under different `ref_id`s — confirmed by title/standard-number match, not guessed.
-3. **The Tier-1 ingestion-funnel bias is now directly demonstrated at the slug level, not just corpus-
-   wide.** Checked `source_slug_links` for the 3 richest non-EN-search slugs: all three had **0/27 non-
-   English links** despite the search having named 11-14 languages of instruments per slug. After this
-   session: deaf-classroom-reverberation-time 9/12 non-EN, stair-ramp-threshold-biomechanics-accessibility
-   9/24, wayfinding-dementia-spatial-design 3/12 (partial pass). 13 of the 22 additions were relinks of
-   ALREADY-VERIFIED rows that simply weren't connected to the slug the search named them for; 10 were new
-   real-retrieval-verified ingests.
-4. **Anti-fabrication gate held under pressure.** One search-notes-named candidate (NF S31-080:2006,
-   France) was verified to NOT actually cover classrooms (its real scope is offices/tertiary spaces) and
-   was dropped, substituted with the correct citation (arrêté du 25 avril 2003) rather than ingested on
-   the strength of the original notes.
-5. **The Global-South zero-result question is now answered, per-language, with evidence** — not assumed.
-   4 of 5 (Indonesian, Hindi, Bengali, Arabic) are query-construction failures (the literature exists and
-   is reachable once the query is right); only Swahili is genuine absence (the underlying Kenya/Tanzania
-   accessibility laws are real but exist only in English, not Swahili). Real candidate sources were found
-   for 4/5 languages but are NOT ingested — flagged as leads for a follow-up verify pass, since this
-   session's verification rested on `WebSearch` corroboration only (direct `WebFetch` was blocked, a
-   shared infrastructure condition this session — see `global-south-finding.md`'s corpus-wide caveat).
-6. **Applied jurisdiction-hygiene item 1** (the previously-proposed, unapplied `0001-jurisdiction-hygiene.
-   sql`): INTL → INT normalized (5 rows). Item 3 (19 null jurisdictions) intentionally still untouched.
+1. **A systematic `lang_detected` mislabel bug, much bigger than the one example the prior handoff cited**
+   (batch 1). 59 rows corrected — national standards tagged `en` (English-gloss-derived) or
+   cross-contaminated between non-English languages (Chinese hanzi misread as Japanese by `unicode_block`
+   detection; short-string `langdetect` noise). 5 borderline cases deliberately left uncorrected (see
+   coverage-matrix). Most of the resulting non-English-count jump is *visibility*, not new gathering — the
+   sources were already there, mistagged.
+2. **Tier-0 registry backlog (6 refs) mostly resolved as stale-duplicate, not a real hole** (batch 1). Only
+   2 of 6 were genuinely missing (REF-00221 JP deafblind, REF-00139 SG wayfinding code — both ingested).
+   The other 4 are registry entries for standards already migrated under different `ref_id`s — confirmed by
+   title/standard-number match, not guessed.
+3. **The Tier-1 ingestion-funnel bias is now directly demonstrated at the slug level, not just
+   corpus-wide, and mostly fixed for the 3 richest slugs.** Checked `source_slug_links` for
+   deaf-classroom-reverberation-time, stair-ramp-threshold-biomechanics-accessibility, and
+   wayfinding-dementia-spatial-design: all three had **0/27 non-English links** despite the search having
+   named 11-14 languages of instruments per slug. Current state: deaf-classroom-reverberation-time 9/12
+   non-EN (batch 1, untouched in batch 2), stair-ramp-threshold-biomechanics-accessibility 11/26 non-EN
+   (batch 1 + batch 2's NL ingest + ES citation correction), **wayfinding-dementia-spatial-design 13/22
+   non-EN (batch 1's partial pass completed in batch 2 — the highest non-English share of any slug
+   touched)**. Portugal was independently re-checked in batch 2 (5 more search queries) and its genuine
+   absence held.
+4. **Anti-fabrication gate held under pressure, twice.** Batch 1: NF S31-080:2006 (France) was verified to
+   NOT actually cover classrooms (real scope is offices/tertiary) and was substituted with the correct
+   citation (arrêté du 25 avril 2003). Batch 2: the CTE DB SUA (Spain) ramp-gradient table named in search
+   notes turned out to conflate two different documents (a new-construction table and a separate
+   existing-building tolerance table) — the existing DB row was relinked with the *corrected* figures and
+   section citation rather than the wrong one.
+5. **The Global-South zero-result question is answered per-language with evidence, and the "why can't we
+   verify the recoveries" question is now precisely diagnosed rather than just repeated.** 4 of 5 languages
+   (Indonesian, Hindi, Bengali, Arabic) are query-construction failures; only Swahili is genuine absence.
+   Batch 2 made a **second, independent** attempt to directly read (not just WebSearch-corroborate) the 9
+   flagged candidate sources — again 0/9 succeeded, but this time control-URL tests (`example.com`,
+   `en.wikipedia.org`) confirmed the cause is a **session-wide `WebFetch` tooling outage**, not target-site
+   blocking. None of the 9 are ingested. **Do not attempt a third WebSearch-only pass** — see
+   `global-south-finding.md`'s batch 2 update.
+6. **Applied jurisdiction-hygiene item 1** (batch 1; the previously-proposed, unapplied
+   `0001-jurisdiction-hygiene.sql`): INTL → INT normalized (5 rows). Item 3 (19 null jurisdictions)
+   intentionally still untouched.
 
-**Honest limit (S3, restated):** this is a first pass over Tier-0 + the 2 richest Tier-1 slugs + a partial
-3rd. wayfinding-dementia-spatial-design alone has ~12 more named instruments un-actioned; Tier-2 (4 slugs
-at 19-23 non-EN hits each) and luminance-contrast-and-pattern (74)/sensory-room-user-control (42) are
-untouched; the 4 Global-South recoveries need independent direct-read verification before ingest. Next
-steps are enumerated in `equity-dashboard.md` §"Next batch."
+**Honest limit (S3, restated):** two batches cover Tier-0 + the 3 richest Tier-1 slugs (2 fully, 1 now
+complete after batch 2). Tier-2 (luminance-contrast-and-pattern 74 hits, sensory-room-user-control 42, and
+4 more ~20-hit slugs) is untouched; the 9 Global-South recoveries need a session with functional `WebFetch`
+before they can be ingested; two loose ends from batch 2 (the Italian "Linee guida" companion document's
+exact date, and Portugal's unread IGAS 2023 ERPI reference) are flagged, not chased. Next steps are
+enumerated in `equity-dashboard.md` §"Next batch."
 
 ---
 
@@ -79,7 +88,7 @@ items. The English skew is manufactured in **ingestion**, not search.
 |---|---|---|
 | doctrine | complete, highest rigour | 25+ DR records; S1–S8 added this session |
 | language search | done | `search_languages` 1539 = 19 langs × 81 slugs |
-| **ingestion (bias funnel)** | **narrowing** | 14 langs returned hits; corpus now **514 EN : 136 non-EN** (2026-07-19: +49 non-EN, mostly a lang_detected hygiene fix — see §0) |
+| **ingestion (bias funnel)** | **narrowing** | 14 langs returned hits; corpus now **514 EN : 147 non-EN** (2026-07-19, 2 batches: +60 non-EN, partly a lang_detected hygiene fix, partly new real-retrieval ingests — see §0) |
 | citation-mine / supersession | ~7% | 7 / 6 slugs |
 | **extraction / grading** | **the throat** | extractions **1 slug**; cells **7 / 93 items** |
 | connections (post-grading) | 273 over ungraded items | generative loop; owe re-validation once graded |

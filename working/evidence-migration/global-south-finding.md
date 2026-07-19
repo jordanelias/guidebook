@@ -1,6 +1,8 @@
 # The Global-South zero-result finding — Swahili, Indonesian, Hindi, Bengali, Arabic
 
-*Session: `session_2026-07-19-non-english-research-recovery`. Companion to `equity-dashboard.md` and
+*Sessions: `session_2026-07-19-non-english-research-recovery` (batch 1, the diagnosis below) and
+`session_2026-07-19-non-english-research-recovery-batch2` (batch 2, a re-attempted direct-read
+verification — see "Batch 2 update" at the end). Companion to `equity-dashboard.md` and
 `non-english-coverage-matrix.json`. Per `research-handoff-non-english.md` §4, this is "the sharpest equity
 signal in the corpus" — five of nineteen searched languages returned **zero hits across all 81 slugs**, and
 the handoff required determining *which* of three causes explains it, honestly, per-language, not assumed.*
@@ -82,3 +84,28 @@ verify-and-ingest pass**, not citations:
 
 Full URLs and per-source status are in `non-english-coverage-matrix.json` →
 `global_south_zero_result_investigation`.
+
+## Batch 2 update — a second attempt, still blocked, now precisely diagnosed
+
+Batch 2 dispatched two independent agents to make a **fresh, second attempt** at directly opening and
+reading (not just WebSearch-corroborating) all 9 recovered-not-ingested candidates above. **Result: 0/9
+achieved a genuine direct read** — the same outcome as batch 1, but this time the cause was pinned down
+precisely. Both agents ran **control-URL tests** — fetching `https://example.com`,
+`https://en.wikipedia.org`, `https://www.anthropic.com` — and found these trivial, unrelated targets
+*also* returned HTTP 403, with `curl`'s CONNECT tunnel rejected for nearly every host attempted. This
+confirms a **session-wide `WebFetch` tooling outage**, not target-site blocking, not a domain-allowlist
+policy, and — importantly — **not evidence about whether the underlying sources are real**. `WebSearch`
+(a different retrieval path) continued to work throughout and remains the sole basis for every finding in
+this document.
+
+One genuinely new thing surfaced during the re-attempt: the Indonesian-search agent found search snippets
+suggesting SNI 03-1735-2000's actual title may include a fire-hazard-prevention qualifier
+("...untuk Pencegahan Bahaya Kebakaran Pada Bangunan Gedung") not present in the original candidate
+description — which would mean its primary scope is fire-egress access, not general disability
+accessibility. This needs a direct read to resolve one way or the other; it is **not** assumed to be either
+scope on the strength of a search snippet.
+
+**Recommendation for whoever picks this up next: do not attempt a third `WebSearch`-only verification
+pass.** Two independent attempts have already hit the same ceiling for the same reason — the blocker is
+tooling, not insufficient searching. Retry only from a session with confirmed-functional `WebFetch`
+(verify against a trivial control URL first, before spending effort on the actual targets).

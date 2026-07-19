@@ -1,9 +1,10 @@
 {
   "_meta": {
     "generated": "2026-07-19",
-    "session": "session_2026-07-19-non-english-research-recovery",
-    "method": "Per research-handoff-non-english.md recovery pipeline: extract named instruments from search_languages.notes -> verify via real WebSearch/WebFetch -> dedup against evidence_sources -> ingest via migration data_20260719034512_2026-07-19-non-english-research-recovery.sql. Empties/negative findings recorded, not dropped (S6).",
-    "scope_disclosure": "First pass only, per handoff S7 honest-limit clause. Covers: Tier-0 registry backlog (6 refs), Tier-1 richest 2 slugs by non-EN yield (deaf-classroom-reverberation-time, stair-ramp-threshold-biomechanics-accessibility) + a partial pass on wayfinding-dementia-spatial-design (3 of ~15 named instruments), plus the 5-language Global-South investigation. The other Tier-1/Tier-2 slugs (luminance-contrast-and-pattern 74 non-EN hits, sensory-room-user-control 42, cognitive-wayfinding-design/deaf-spatial-design/mental-health-built-environment/accessible-circulation-geometry 19-23 each, and the full 14-language x 24-jurisdiction sweep) remain a running fraction, not claimed complete."
+    "sessions": ["session_2026-07-19-non-english-research-recovery (batch 1)", "session_2026-07-19-non-english-research-recovery-batch2 (batch 2)"],
+    "method": "Per research-handoff-non-english.md recovery pipeline: extract named instruments from search_languages.notes -> verify via real WebSearch/WebFetch -> dedup against evidence_sources -> ingest via migration. Empties/negative findings recorded, not dropped (S6).",
+    "migrations": ["scripts/migrations/data_20260719034512_2026-07-19-non-english-research-recovery.sql", "scripts/migrations/data_20260719052009_2026-07-19-non-english-research-recovery-batch2.sql"],
+    "scope_disclosure": "Two passes, per handoff S7 honest-limit clause. Batch 1: Tier-0 registry backlog (6 refs), Tier-1 richest 2 slugs by non-EN yield (deaf-classroom-reverberation-time, stair-ramp-threshold-biomechanics-accessibility) + a partial pass on wayfinding-dementia-spatial-design (3 of ~15 named instruments), plus the 5-language Global-South investigation. Batch 2: completed wayfinding-dementia-spatial-design (10 more instruments, Portugal re-confirmed as genuine absence), filled the NL ramp gap and corrected the ES ramp-gradient citation for stair-ramp-threshold-biomechanics-accessibility, and re-attempted (unsuccessfully, tooling-blocked) direct-read verification of the 9 Global-South leads. The remaining Tier-1/Tier-2 slugs (luminance-contrast-and-pattern 74 non-EN hits, sensory-room-user-control 42, cognitive-wayfinding-design/deaf-spatial-design/mental-health-built-environment/accessible-circulation-geometry 19-23 each) and the full 14-language x 24-jurisdiction sweep remain a running fraction, not claimed complete."
   },
   "tier0_registry_backlog": [
     {"ref_id": "REF-00221", "jurisdiction": "JP", "language": "ja", "disposition": "INGESTED", "note": "Deafblind communication modalities guide (DINF, 1998). Real-retrieval verified via WebSearch (primary URL 403'd to direct fetch). Linked to deafblind-built-environment-design (DBL-09)."},
@@ -29,7 +30,8 @@
   "tier1_slugs": {
     "deaf-classroom-reverberation-time": {
       "before": {"total_links": 3, "non_en_links": 0},
-      "after": {"total_links": 12, "non_en_links": 9},
+      "after_batch1": {"total_links": 12, "non_en_links": 9},
+      "after_batch2": {"total_links": 12, "non_en_links": 9, "note": "untouched in batch 2"},
       "additions": [
         {"ref_id": "REF-00565", "jurisdiction": "NO", "language": "no", "type": "relink (already-verified source)", "standard": "NS 8175:2019"},
         {"ref_id": "REF-00566", "jurisdiction": "CN", "language": "zh", "type": "relink (already-verified source)", "standard": "GB 50118-2010 §5.3.4"},
@@ -45,8 +47,9 @@
     },
     "stair-ramp-threshold-biomechanics-accessibility": {
       "before": {"total_links": 15, "non_en_links": 0},
-      "after": {"total_links": 24, "non_en_links": 9},
-      "additions": [
+      "after_batch1": {"total_links": 24, "non_en_links": 9},
+      "after_batch2": {"total_links": 26, "non_en_links": 11},
+      "additions_batch1": [
         {"ref_id": "REF-00462", "jurisdiction": "CN", "language": "zh", "type": "relink", "standard": "GB 50763-2012"},
         {"ref_id": "REF-00422", "jurisdiction": "DE", "language": "de", "type": "relink", "standard": "DIN 18040-1:2010"},
         {"ref_id": "REF-00415", "jurisdiction": "FR", "language": "fr", "type": "relink", "standard": "Arrete du 8 decembre 2014"},
@@ -57,17 +60,34 @@
         {"ref_id": "REF-00322", "jurisdiction": "SE", "language": "sv", "type": "relink", "standard": "BFS 2011:6 / BBR"},
         {"ref_id": "REF-00411", "jurisdiction": "NO", "language": "no", "type": "relink", "standard": "TEK17 §12-16 Rampe"}
       ],
-      "still_unresolved": ["NL (Bouwbesluit/Bbl ramp provisions named in search notes but no matching evidence_sources row found -- genuinely un-ingested, flagged for next batch)", "ES (CTE DB SUA ramp table named but REF-00464 covers doors, not the ramp-gradient table specifically -- needs its own verification pass)", "KO (장애인 편의증진법 ramp provisions named but not cross-checked this session)"]
+      "additions_batch2": [
+        {"ref_id": "REF-00756", "jurisdiction": "NL", "language": "nl", "type": "new ingest", "standard": "Bbl Artikel 4.30 (hellingbaan)", "note": "Height-tiered ramp table (1:12/1:16/1:20 by 0.25m/0.5m breakpoints), confirmed accurate, HIGH confidence."},
+        {"ref_id": "REF-00464", "jurisdiction": "ES", "language": "es", "type": "relink + CITATION CORRECTED", "standard": "DB-SUA Seccion SUA 1 sec.4.3 Tabla 4.1 (not SUA 9 as originally claimed)", "note": "The search-notes-claimed ramp table (12%/8%/6%/4%) was WRONG -- it conflated the real new-construction table (10%/8%/6% + 2% cross-fall, SUA 1 sec.4.3) with a different document's existing-building tolerances (DA DB-SUA/2: 12%/10%/8%/6%). Relinked with corrected figures; the wrong table is not cited anywhere."}
+      ],
+      "still_unresolved": ["KO (장애인 편의증진법 ramp provisions named but not cross-checked)", "DA DB-SUA/2 (Spain existing-building ramp tolerance table, distinct from the corrected DB-SUA new-construction table above -- identified but not verified/ingested)"]
     },
     "wayfinding-dementia-spatial-design": {
       "before": {"total_links": 9, "non_en_links": 0},
-      "after": {"total_links": 12, "non_en_links": 3},
-      "additions": [
+      "after_batch1": {"total_links": 12, "non_en_links": 3},
+      "after_batch2": {"total_links": 22, "non_en_links": 13},
+      "additions_batch1": [
         {"ref_id": "REF-00743", "jurisdiction": "NO", "language": "no", "type": "new ingest", "standard": "Helsedirektoratet Nasjonal faglig retningslinje for demens"},
         {"ref_id": "REF-00744", "jurisdiction": "CN", "language": "zh", "type": "new ingest", "standard": "GB/T 46401-2025"},
         {"ref_id": "REF-00745", "jurisdiction": "FI", "language": "fi", "type": "new ingest", "standard": "Ympäristöopas 2018"}
       ],
-      "still_unresolved": "PARTIAL PASS ONLY -- 3 of ~15 named instruments actioned this session (DE Wegweiser Demenz, IT DPCM 22/12/1989 + Linee guida RSA, DA SBi-anvisning 259/263, ES Guia de Practica Clinica, FR EHPAD/UHR/PASA framework, JA MHLW Ordinance 34, KO 4th National Dementia Plan + Seoul manual, NL De Hogeweyk cluster, PT AFID Senior, SV Socialstyrelsen guidelines remain un-actioned). This slug had the highest non-EN yield (108 hits, 11 languages) and needs a dedicated follow-up batch."
+      "additions_batch2": [
+        {"ref_id": "REF-00746", "jurisdiction": "IT", "language": "it", "type": "new ingest", "standard": "DPCM 22/12/1989", "confidence": "high"},
+        {"ref_id": "REF-00747", "jurisdiction": "DK", "language": "da", "type": "new ingest", "standard": "Bekendtgorelse om maerkning af demensegnede plejeboliger (BEK 2243/2020)", "confidence": "medium-high"},
+        {"ref_id": "REF-00748", "jurisdiction": "DK", "language": "da", "type": "new ingest", "standard": "SBi-anvisning 259 (2nd ed. 2019, year corrected from claimed 2014)", "confidence": "medium"},
+        {"ref_id": "REF-00749", "jurisdiction": "ES", "language": "es", "type": "new ingest, reduced honest scope", "standard": "Guia de Practica Clinica sobre Alzheimer (GPC 484, 2010)", "note": "Granular color-therapy content originally attributed to this guide actually belongs to a different Spanish publication (Fundacion Pilares/AFAD) -- ingested for confirmed general environmental-modification content only.", "confidence": "medium"},
+        {"ref_id": "REF-00750", "jurisdiction": "FR", "language": "fr", "type": "new ingest", "standard": "Decret n 2016-1164 (UHR/PASA framework)", "confidence": "high"},
+        {"ref_id": "REF-00751", "jurisdiction": "JP", "language": "ja", "type": "new ingest", "standard": "MHLW Ordinance No. 34 (2006)", "confidence": "high"},
+        {"ref_id": "REF-00752", "jurisdiction": "KR", "language": "ko", "type": "new ingest", "standard": "Seoul 2021 Cognitive Health Design Manual (apartment-type)", "note": "Chosen over the alternative candidate (4th National Dementia Plan), which was confirmed real but policy-level only with no design content.", "confidence": "medium"},
+        {"ref_id": "REF-00753", "jurisdiction": "NL", "language": "nl", "type": "new ingest", "standard": "Toolkit Dementievriendelijk Woongebouw (2024)", "confidence": "medium-high"},
+        {"ref_id": "REF-00754", "jurisdiction": "SE", "language": "sv", "type": "new ingest", "standard": "Socialstyrelsen Nationella riktlinjer (2017-12-2)", "confidence": "high"},
+        {"ref_id": "REF-00755", "jurisdiction": "DE", "language": "de", "type": "new ingest, reduced honest scope", "standard": "Wegweiser Demenz", "note": "Verified to be primarily a directory/referral portal, not a technical design standard -- ingested at tier 3 (grey), cited only for confirmed home-safety-checklist and resident-group-size content, not the more granular corridor-geometry/mirror-avoidance claims in the original search notes.", "confidence": "medium"}
+      ],
+      "still_unresolved": "COMPLETE for clearly-named instruments (batch 1 + batch 2 = 13 of ~15 originally named). Portugal (PT) independently re-checked with 5 additional search queries this session -- GENUINE ABSENCE CONFIRMED, not ingested; one unconfirmed lead flagged (IGAS 2023 ERPI Referencial de Boas Praticas, content unread, 403-blocked). One companion document flagged but not chased: the Italian 'Linee guida del Ministero della Sanita n. 1' (~1994, exact date uncertain across sources) alongside REF-00746."
     }
   },
   "global_south_zero_result_investigation": {
@@ -90,6 +110,12 @@
       {"title": "Egyptian Code for Accessibility (Code 601), under Law No. 10 of 2018", "url": "https://ncw.gov.eg/Images/PdfRelease/Law%20No%2010%20of%202018%20For%20Rights%20o-122020403910677.pdf", "status": "found via WebSearch; not directly read; flagged"},
       {"title": "IDA compilation of CRPD Committee Concluding Observations, Article 9 (Accessibility)", "url": "https://www.internationaldisabilityalliance.org/sites/default/files/article_9_crpd_.pdf", "status": "found via WebSearch; not directly read; flagged"}
     ]},
-    "tooling_caveat": "Multiple independent investigating agents this session reported that direct WebFetch was blocked (HTTP 403) on a broad, seemingly unrelated set of government/NGO/standards-body domains across ALL FIVE languages' investigations (India, Bangladesh, China, Finland, Norway, Italy, Sweden, Saudi Arabia, etc.), confirmed via the environment's own proxy-status endpoint as a shared infrastructure issue this session, not source-specific unavailability. This is flagged as a separate corpus-wide risk: if the ORIGINAL 81x19 multilingual sweep also depended on WebFetch (not just search) for a similar domain set, some fraction of ALL 'zero hits' (not just the 5 flagged languages) could be a tooling artifact rather than a genuine absence. Worth a dedicated audit."
+    "tooling_caveat": "Multiple independent investigating agents in batch 1 reported that direct WebFetch was blocked (HTTP 403) on a broad, seemingly unrelated set of government/NGO/standards-body domains across ALL FIVE languages' investigations, confirmed via the environment's own proxy-status endpoint as a shared infrastructure issue that session, not source-specific unavailability. This is flagged as a separate corpus-wide risk: if the ORIGINAL 81x19 multilingual sweep also depended on WebFetch (not just search) for a similar domain set, some fraction of ALL 'zero hits' (not just the 5 flagged languages) could be a tooling artifact rather than a genuine absence. Worth a dedicated audit.",
+    "batch2_direct_read_reattempt": {
+      "summary": "Batch 2 made a SECOND, independent attempt to directly open and read (not just WebSearch-corroborate) all 9 recovered-not-ingested candidates from batch 1 (3 Indonesian, 1 Hindi, 3 Bangladeshi, 2 of the 4 Arabic-region items -- Saudi SBC201 and Egyptian Code 601 re-attempted; Dubai/IDA not re-attempted). Result: 0/9 achieved a genuine direct read.",
+      "root_cause_now_precisely_diagnosed": "Unlike batch 1's framing (a plausible shared-proxy issue), batch 2's investigating agents ran CONTROL-URL TESTS (fetching https://example.com, https://en.wikipedia.org, https://www.anthropic.com) and found these ALSO returned HTTP 403, and Bash curl's CONNECT tunnel was rejected for nearly every host tried. This confirms a SESSION-WIDE WebFetch tooling outage this session, not target-site blocking, not a domain-allowlist issue, and not evidence about whether the underlying sources are real (WebSearch, which uses a different retrieval path, continued to work and is the sole basis for the corroboration below).",
+      "one_new_finding": "The Indonesian-search agent flagged a real discrepancy needing resolution before citing: SNI 03-1735-2000's actual title per fresh search snippets appears to include a fire-hazard-prevention qualifier ('...untuk Pencegahan Bahaya Kebakaran Pada Bangunan Gedung') not present in the original candidate description -- this may mean the standard's primary scope is fire-egress access, not general disability accessibility. Needs a direct read to resolve, not assumed either way.",
+      "recommendation": "Do not attempt a third WebSearch-only verification pass on these 9 candidates -- the blocker is tooling (WebFetch outage), not insufficient searching. Retry only from a session with confirmed-functional WebFetch (verify against a trivial control URL first)."
+    }
   }
 }
