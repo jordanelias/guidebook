@@ -16,7 +16,7 @@ The evidence corpus is mature; the **content model that renders it is not reconc
 
 | Axis | Headline "missing" | Headline "consolidate" | Website-blocking? |
 |---|---|---|---|
-| **Categories (A–K)** | A **Thermal / Environmental-Comfort** category — F-04, F-07, F-08, K-05 and the Appendix-C TC-items are homeless or misfiled **[C]** | Two conflicting A–K naming schemes; **two dead consolidation manifests** (88→65 and CO-0003/D2) whose strikes the DB never applied **[C]** | Yes — `/specs` category filter + Master Index need one canonical name per letter |
+| **Categories (A–K)** | Thermal is **fragmented** across Appendix C (decided home), Category F, and a K-05 misfile — reconcile, not "add a category" **[C]** | Two conflicting A–K naming schemes; **two dead consolidation manifests** (88→65 and CO-0003/D2) whose strikes the DB never applied **[C]** | Yes — `/specs` category filter + Master Index need one canonical name per letter |
 | **Specifications** | 69 of 93 items have **no structured value in any queryable store** (prose-only); genuine qualitative-gaps at F-02, A-13, D-09 **[C]** | Retire `specification-database.json` — its `item_code`s silently point at the **wrong items**; duplicate specs (turning-circle ×4) and garbage records inside it **[C]** | Yes — Template 1 (Spec Page) queries a `specification` table that does not exist |
 | **Rooms** | The **sensory / quiet room** — the most-mandated non-residential space (A-16) — is absent from all 17 site rooms **[C]** | R-HAL/R-COR and R-BA/R-WC are residential↔non-residential duplications of one space **[C]** | **Yes — this is the named open v0 gap**: no room table exists; seed matrices are *wrong*, not just thin |
 | **Typologies (7 NR)** | **NR-CARE** (residential-institutional / dementia-village care) — the project's deepest evidence base has no Part-7 home **[C]** | Split the incoherent **NR-HOS** bundle; NR-RET/CUL/HOS/TRP are headings with **zero case studies** behind them **[C]** | Indirect — `/rooms/non-residential/` needs a resolved model |
@@ -37,12 +37,14 @@ The evidence corpus is mature; the **content model that renders it is not reconc
 
 The two sides answer different questions (residential users think in rooms; non-residential designers think in building types), and the flat-17 site model is the worst of both — it neither preserves typology context nor completely covers the rooms.
 
-**Recommendation [H]:** adopt a **building-type × space** model.
+**This is not a new recommendation — it is the project's own already-designed model, which the site contradicts. [C — corrected in adversarial review]** `governance/armature_v4.md:111` defines the Spatial axis as *"Room type, building type, indoor/outdoor … residential, workplace, educational, healthcare, cultural/recreational, transport, public realm"* — i.e. building-type × room, already enumerated; `armature_v4_resolutions.md:475` requires the "spatial scope category list [to] cover all CRPD-relevant building types"; and `architecture/page-templates.md:209` already queries `room … WHERE building_type = :type`. The two-axis model was **deferred to website v2** by `DR-2026-07-12-website-architecture-lock` (per `website-v0-path-forward` §"What this reconciles" item 1). So the finding is not "invent a two-axis model" but: **the flat-17 site model contradicts the project's own armature_v4 spatial axis; the fix is to implement (or explicitly stage toward) that existing design, not a new one.**
+
+Its shape (restating armature_v4 for this axis):
 - **Space** (reception, WC, corridor, sensory room, bedroom…) is the reusable unit, built from the shared A–K item library.
 - **Building type / typology** is the entry axis; it selects which spaces appear and overrides item values per space (e.g. corridor width steps to ≥1800 mm specifically for Healthcare/Transport — `part07_v9:11`; reception A-10/G-06 treatment differs HLT `:70` vs TRP `:239`).
-- **Residential becomes the 8th typology**, not a separate room-only Part 6 — it already behaves as one (NR-HOS imports "Part 5 residential spec" for hotel rooms, `part07_v9:209,218`).
+- **Residential behaves as one more typology**, not a separate room-only Part 6 (NR-HOS imports "Part 5 residential spec" for hotel rooms, `part07_v9:209,218`); armature_v4 already lists residential among the spatial building types.
 
-For the website: `/rooms` should become (or be paralleled by) a typology entry that resolves `/[typology]/[space]`, rather than a flat 17-room list. This is the scoped room-data-model decision `website-v0-path-forward` §"What is explicitly NOT done" is waiting on.
+For the website: `/rooms` should become (or be paralleled by) a typology entry that resolves `/[typology]/[space]`, rather than a flat 17-room list. This is the scoped room-data-model decision `website-v0-path-forward` §"What is explicitly NOT done" is waiting on — and armature_v4 is the design it should draw from, gated on that model's own validation per DR-2026-07-12.
 
 ---
 
@@ -76,14 +78,13 @@ Secondary: **TOC omits Category K entirely** (ends at I) and is stale on members
 
 So **A–K-minus-J is intentional**, not an accidental gap. **Cleanup debt:** the stale `part05-j_v9-0…` duplicate should be deleted, and K should be added to `references/toc.md`.
 
-### 1.4 MISSING category — Thermal / Environmental-Comfort **[C, HIGH]**
-Thermal specification is scattered with **no coherent home**:
-- **F-04, F-07, F-08** (air quality/thermal stability, thermal zoning, thermal transition) sit under Category **F = "Sensory Zoning"** — a poor fit.
-- **K-05 "Thermal Comfort Assessment for Thermoregulation-Impaired Populations"** sits under **K = Deafblind** — an outright misfile (verified: DB K-05 name confirmed; DB F-07 = "Thermal Zoning").
-- **TC-01…TC-05** are exiled to Appendix C (`toc.md:424–430`).
-- The research corpus has a *dedicated* domain (`references/bpc/.../thermoregulation-built-environment`), so thermal is a first-class evidence area with no first-class category.
+### 1.4 Thermal is FRAGMENTED across three homes, one of them decided **[C — downgraded from "missing category" in adversarial review]**
+*Original draft called this a "genuine missing category [C, HIGH]." Adversarial review corrected it:* thermal comfort **already has a decided home** — `data/decisions/decision_register.yaml:292–293` records that *"Thermal Comfort (TC-01–TC-05) [is] in Appendix C"* (with Biophilic BIO-01–05 in Appendix B). So the problem is not "no home"; it is **inconsistent placement across three homes**:
+- **TC-01…TC-05** in **Appendix C** — the *decided* thermal home (`toc.md:424–430`). **[C]**
+- **F-04, F-07, F-08** (air-quality/thermal-stability, thermal zoning, thermal transition) sit in main-library Category **F = "Sensory Zoning"** — a poor fit, and *not* in Appendix C with their thermal siblings. **[C]**
+- **K-05 "Thermal Comfort Assessment for Thermoregulation-Impaired Populations"** sits under **K = Deafblind** — an outright misfile (verified: DB K-05 + F-07 names confirmed). **[C]**
 
-**Candidate ruling:** create a Thermal / Environmental-Comfort category, re-homing F-04, F-07, F-08, K-05 and the Appendix-C TC-items. (This is the only *genuine* missing category — safety, outdoor, digital, and operational were each evaluated and found adequately housed or too thin; see the category pass for the negative cases.)
+The research corpus has a *dedicated* domain (`references/bpc/.../thermoregulation-built-environment`), so thermal is a first-class evidence area — but the taxonomic issue is **reconciliation, not a missing category.** **Candidate rulings (competing, [H]):** (a) move F-04/F-07/F-08 and K-05 *into* the existing Appendix C thermal group (minimal, respects the standing decision); or (b) promote Appendix C thermal into a main A–K category and pull the scattered items in (larger, reopens the decision). Either resolves the fragmentation; only K-05's misfile is unambiguous regardless. *(No new main category is clearly warranted — safety, outdoor, digital, operational were each evaluated and found adequately housed or too thin.)*
 
 ### 1.5 Misfiled items **[C/H]**
 - **K-05** (thermal) under K=Deafblind — **[C] HIGH**, unambiguous.
@@ -129,7 +130,7 @@ Genuine **qualitative-only items where research would support a number [C]:**
 Best-evidenced item absent from the JSON: **A-18 RT60** (Tier 1, Iglehart 2020 `REF-00325`, PMP strict-termination PASS) exists only in the DB substrate + prose.
 
 ### 2.4 CONSOLIDATION — retire the JSON, do not regenerate in place **[C, HIGH]**
-Internal duplicates inside the JSON: turning-circle 1500 mm ×4 (SPEC-0001/0024/0030/0053), corridor width 1200 mm ×3, grab-bar height ×2, illuminance 200–500 lux ×2. Garbage: SPEC-0018 `8,725,382 N`, 8 `parameter="unclassified"`, SPEC-0015 `illuminance = 30%`, 7 `[UNASSIGNED]` + 4 `[CROSS-CUTTING]` never mapped. **Recommendation:** harvest the few not-yet-migrated numeric values into the DB, then archive the JSON; regenerating it as-is would re-import the broken taxonomy. Also **[C]**: `specification-database-schema.md` documents 21 fields / "143 records / batch 1"; the JSON carries 44 fields / 73 records / "batch 2" — the schema doc is badly out of date and `schemas/specification.py`'s pydantic rules would reject the live JSON.
+Internal duplicates inside the JSON: turning-circle 1500 mm ×4 (SPEC-0001/0024/0030/0053), corridor width 1200 mm ×3, grab-bar height ×2, illuminance 200–500 lux ×2. Garbage: SPEC-0018 `8,725,382 N`, 8 `parameter="unclassified"`, SPEC-0015 `illuminance = 30%`, 7 `[UNASSIGNED]` + 4 `[CROSS-CUTTING]` never mapped. **Recommendation:** harvest the few not-yet-migrated numeric values into the DB, then archive the JSON; regenerating it as-is would re-import the broken taxonomy. **Caveat [C — added in adversarial review]:** the JSON is *not* consumer-free — `scripts/db/migrate_all.py:54,1149`, `scripts/convert/convert_spec_db.py`, and `scripts/migrate/phase_01_slugs.py`/`phase_jv_appendix_a.py` read it as a DB-migration *input*. It cannot simply be deleted; retirement means updating or retiring those one-time migration scripts too (all appear to be historical, but that must be confirmed, not assumed — the target `specification` table they imply does not exist in the live DB, which is itself evidence the spec-migration path is broken/incomplete). Also **[C]**: `specification-database-schema.md` documents 21 fields / "143 records / batch 1"; the JSON carries 44 fields / 73 records / "batch 2" — the schema doc is badly out of date and `schemas/specification.py`'s pydantic rules would reject the live JSON.
 
 ### 2.5 Conflict data is a fourth fragmentation axis **[C]**
 The DB `conflicts` table is **empty (0 rows)**, yet `references/conflict-matrices/` holds **13 populated markdown matrices** (ACOUSTIC-LVL, COLOUR-CONT, TEMP-RANGE…) and the JSON references 7 `conflict_domains`. Conflict resolution — which is where much of the *consolidation logic across overlapping specs* actually lives (e.g. ACOUSTIC-LVL resolves the RT60/masking/SFA overlaps across A-02/A-08/A-13/A-18) — is stranded in prose, not queryable. Template 4 (Conflict Page) has nothing to render.
@@ -143,8 +144,8 @@ The DB `conflicts` table is **empty (0 rows)**, yet `references/conflict-matrice
 
 **The serious finding [C]:** the seed matrices do **not match Part 6 prose** — they are *wrong*, not merely thin. R-BA: Part 6 prose lists turning-circle-first (G-01), anti-scald (I-03), lever taps (I-02), heated floor (TC-05), mirror (G-07), visual alarm (B-10); the seed (`seed_room_items.py:18–29`) shares **only G-03/G-04/C-04** and is polluted with **bedroom items** (G-09 emergency call, H-05 nurse-call). Same pattern at R-BED. Downstream, `site/rooms/r_ba.html` shows an empty criticality note and **titles corrupted with population codes** ("A-09 → PAIN", "F-07 → DEAF"). Reader (Part 6) and site are two different documents. Prose also uses `TC-01/02/05` codes the schema rejects (`schemas/room.py:33` enforces `^[A-K]-\d{2}$`), so the seed silently dropped every thermal item. And per `consolidation-sweep-2026-07-12.md` finding 8b, the `room`/`room_item` tables the seed writes **don't exist in the live DB** — so this matrix likely never lands anyway.
 
-### 3.2 MISSING room — the sensory / quiet room **[C, HIGH]**
-The single strongest room gap: **A-16 "Sensory Room / Quiet Room Provision (≥8 m²)"** is the most-mandated non-residential accessible space (required across NR-EDU/HLT/WRK/CUL — `part07_v9:35,44,74,85,112,121,180`; dedicated research `sensory-room-user-control` BPC), yet there is **no `r_sen`/quiet-room slug** in the 17. Secondary **[H]**: outdoor/garden/balcony/terrace (secure dementia loop is "normative best practice", `ALL-ROOMS.md:463`) has no room home either.
+### 3.2 MISSING room — the sensory / quiet room **[absence C; "should be a room" H]**
+*Calibration: that A-16 appears in **none of the 17 site rooms** is CONFIRMED; whether the sensory room should be a distinct **room/space entry** vs. remain an item that surfaces within other rooms is a modeling judgment [H] — though the two-axis model (§0) treats it as a space, which favors a room entry.* The single strongest room gap: **A-16 "Sensory Room / Quiet Room Provision (≥8 m²)"** is the most-mandated non-residential accessible space (required across NR-EDU/HLT/WRK/CUL — `part07_v9:35,44,74,85,112,121,180`; dedicated research `sensory-room-user-control` BPC), yet there is **no `r_sen`/quiet-room slug** in the 17. Secondary **[H]**: outdoor/garden/balcony/terrace (secure dementia loop is "normative best practice", `ALL-ROOMS.md:463`) has no room home either.
 
 ### 3.3 Matrix completeness — thin *and* wrong **[C]**
 R-BA (wrong, per 3.1); R-BED (missing hoist — a Part-6 DAR ceiling-blocking provision — plus thermal/acoustic/visual-alarm); R-STA, R-GAR (3 items), R-LAU, R-CAN all suspiciously thin. **No room seeds any DAR provision, conflict register, criticality note, or schematic checklist** (the seed only writes `room_item`), so those `schemas/room.py` fields render empty on the site. Data-quality bug: bathroom item **I-03 is mis-assigned to corridors** R-HAL/R-COR (`seed:89,127`).
@@ -160,8 +161,8 @@ R-BA (wrong, per 3.1); R-BED (missing hoist — a Part-6 DAR ceiling-blocking pr
 ### 4.1 Scope and status
 **[C]** The live Part 7 (`parts/v10/part07.md:10`) is a **STUB** ("renders from item_population links at Phase E"); the authored 7-typology prose survives only in `parts/88_to_90/part07_v9-0…`. So the model is documented but **currently unbuilt in shipping data.** The 7: NR-EDU, NR-HLT, NR-WRK, NR-RET, NR-CUL, NR-HOS, NR-TRP.
 
-### 4.2 MISSING typology — NR-CARE (residential-institutional / dementia-village care) **[C, HIGH]**
-The largest evidence-vs-taxonomy mismatch in the whole model. The project's **deepest** evidence base points here: 5 dedicated dementia *care-facility* case studies (De Hogeweyk, Village Landais, Carpe Diem, Il Paese Ritrovato, Verbeek — all tagged `building_type | Residential (care facility)` in `case-study-compendium.md`), the single most-covered population (DEM), and dedicated care-thermal/wayfinding-dementia research. Yet these institutional care buildings are filed under **"Residential"** in the compendium while Part 7 routes dementia through **NR-HLT (clinical/acute)** — neither home is right (a 152-resident village is not a dwelling; long-stay domestic-scale care is not acute healthcare). Worked Example 5 ("Supported Housing — Mixed Needs") confirms the project treats this as first-class elsewhere with no Part-7 home. **Candidate: create NR-CARE**, sitting on the residential↔healthcare boundary — which the two-axis model (§0) accommodates naturally.
+### 4.2 MISSING typology — NR-CARE (residential-institutional / dementia-village care) **[observation C; remedy H]**
+*Confidence split (adversarial review): that care buildings are **split across "Residential" and NR-HLT with neither home fitting** is CONFIRMED; that the remedy is a **new NR-CARE typology** (vs. deepening NR-HLT's care sub-type, or extending residential) is a judgment [H].* The largest evidence-vs-taxonomy mismatch in the whole model. The project's **deepest** evidence base points here: 5 dedicated dementia *care-facility* case studies (De Hogeweyk, Village Landais, Carpe Diem, Il Paese Ritrovato, Verbeek — all tagged `building_type | Residential (care facility)` in `case-study-compendium.md`), the single most-covered population (DEM), and dedicated care-thermal/wayfinding-dementia research. Yet these institutional care buildings are filed under **"Residential"** in the compendium while Part 7 routes dementia through **NR-HLT (clinical/acute)** — neither home is right (a 152-resident village is not a dwelling; long-stay domestic-scale care is not acute healthcare). Worked Example 5 ("Supported Housing — Mixed Needs") confirms the project treats this as first-class elsewhere with no Part-7 home. **Candidate: create NR-CARE**, sitting on the residential↔healthcare boundary — which the two-axis model (§0) accommodates naturally.
 
 Negative cases (evaluated, **not** missing) **[C]**: civic/justice (0 research files; folds into retail/transport per the project's own LPA-BT-01/BAR-BT-02 "Public Buildings" bundle); faith/worship (a coherent NR-CUL sub-type row, no independent evidence); childcare (already a distinct matrix CHD-BT-03, but in the Supplementary volume). **Partial [H]:** sport/leisure/aquatic is real but thin (item A-10b hydrotherapy exists; no dedicated research or case study) — best as an explicit **leisure/aquatic sub-block promoted out of NR-HOS**, not a standalone typology.
 
@@ -171,7 +172,7 @@ Negative cases (evaluated, **not** missing) **[C]**: civic/justice (0 research f
 - **No merges among EDU/HLT/WRK/RET/TRP** — each has a distinct primary-population profile and signature items.
 
 ### 4.4 Coverage inversion — the taxonomy's evidence weight is inverted at both ends **[C]**
-**NR-RET, NR-CUL, NR-HOS, NR-TRP have ZERO case studies and no setting-specific research** — headings with universal-item cross-references but no independent evidence base. Meanwhile the project's *deepest* evidence (5 dementia-care case studies + dominant DEM research) supports **NR-CARE, which doesn't exist**. For a website that surfaces evidence confidence per page, this inversion means four typology landing pages would render as confident headings with nothing behind them.
+**NR-RET, NR-CUL, NR-HOS, NR-TRP have no *dedicated* case studies and no setting-specific research** — headings with universal-item cross-references but no independent evidence base. *(Adversarial-review calibration: "zero" was slightly too absolute — one mixed-use case study lists retail among its components (`case-study-compendium.md` building_type "Mixed-use (…retail)"), so NR-RET has an incidental touch, not a dedicated study; NR-CUL/HOS/TRP have none.)* Meanwhile the project's *deepest* evidence (5 dementia-care case studies + dominant DEM research) supports **NR-CARE, which doesn't exist**. For a website that surfaces evidence confidence per page, this inversion means four typology landing pages would render as confident headings with nothing behind them.
 
 ---
 
@@ -235,6 +236,32 @@ The four axes are the site's navigation spine, and three of them cannot currentl
 - **P2 (new content, needs research/synthesis + external review per project posture):** the §5 missing items — starting with the **safety-critical refuge area (#1)** and the two self-flagged, evidence-backed OFS/MH items (#2, #5/#6) · NR-CARE typology (§4.2) · CR-7 (split NR-HOS) · CR-8 (conflict-store consolidation).
 
 **Standing caveat:** every §5 new item and every re-spec in the INVERSE list is a *solo-adjudicated determination* until external review returns — hold behind the PROVISIONAL banner per `workplan/next-steps-synthesis-2026-07-14.md`. This audit surfaces the gaps and consolidation candidates; it does not settle any value.
+
+---
+
+## Adversarial review (self, 2026-07-19)
+
+After the initial draft, I attacked my own load-bearing claims — trying to refute, not confirm — and verified eight against live files/DB. Two landed as substantive corrections, five minor calibrations; the core held. Corrections are folded inline above and marked; summarized here so the change is on record (per this project's own standing pattern).
+
+**Substantive corrections (findings changed):**
+1. **Thermal was over-claimed as a "missing category."** `data/decisions/decision_register.yaml:292` records a standing decision that Thermal Comfort (TC-01–05) lives in **Appendix C**. Downgraded to a *fragmentation* finding (Appendix C + Category-F items + K-05 misfile); the "create a category" remedy now competes with the existing decision and is [H]. §1.4.
+2. **The two-axis (building-type × space) model is the project's own design, not my recommendation.** `armature_v4.md:111` already defines the spatial axis as room-type × building-type (residential…public-realm enumerated); `page-templates.md:209` already queries `room … WHERE building_type = :type`; it was deferred to v2 by DR-2026-07-12. Reframed §0 from "adopt a new model" to "the site flattening contradicts armature_v4; implement/stage toward it."
+
+**Minor calibrations:**
+3. "Retire the JSON" — added the caveat that four live migration/convert scripts consume it as input; it can't be deleted without handling them (§2.4).
+4. "NR-RET/CUL/HOS/TRP have ZERO case studies" → "no *dedicated*" — one mixed-use study touches retail (§4.4).
+5. NR-CARE: the *split-across-two-homes* observation is [C]; the *new-typology* remedy is [H] (§4.2).
+6. Sensory room: *absent from the 17* is [C]; *should be a distinct room* is [H] (§3.2).
+7. "part04-item-index is an *older/abandoned* scheme" — I can only prove it **matches no current items** (part files verified: A=ACOUSTICS…G=FURNITURE); its direction (older vs. rejected-forward-proposal) is unproven. The actionable claim (not canonical) is unaffected.
+
+**Claims that held under attack (re-verified this pass):**
+- Two conflicting category naming schemes; part files confirm the canonical set (A=ACOUSTICS, B=LIGHTING, C=COLOUR AND SURFACE FINISH, F=SENSORY ZONING, G=FURNITURE…), so the index Summary genuinely matches no items. **[C]**
+- J resolution (bariatric J struck by CO-0001; both `part05-j` and `part05-k` headed "DEAFBLIND ENVIRONMENT PROVISIONS", confirming the J→K renumber). **[C]**
+- JSON `item_code` mis-mapping; `conflicts`=0 vs 13 markdown matrices. **[C]**
+- Site room corruption: `site/rooms/r_ba.html:88` literally renders `A-09 | PAIN` in the Code/Specification cells with an empty crit-note. **[C]**
+- **Anti-fabrication (the project's documented failure mode):** the self-flagged missing-item gaps are real, not invented — OFS supine-recovery (`pain-ofs…:83`, GAP-FDR-07) and MH female-only area (`mental-health…:56`, "No current Part 4 item — GAP for Phase 3"; source Rodríguez-Labajos 2024 PMID 38385552 present verbatim). **[C]**
+
+**Residual (not exhaustively attacked, flagged honestly):** I re-verified 2 of the 9 missing-technique evidence claims against source; the other 7 rest on the research-pass agent's reading and should be spot-checked before any becomes a Change Order. The §5 HYPOTHESIS list and the "weak-evidence items" (A-09/A-02/B-01) were not independently re-derived this pass.
 
 ---
 
