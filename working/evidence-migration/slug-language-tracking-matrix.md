@@ -50,13 +50,18 @@ re-verified sources were confirmed accurate.
 
 ## Global-South language investigation (cross-slug, not per-slug — see `global-south-finding.md`)
 
-| language | verdict | direct-read status |
+| language | verdict | resolution (batch 6) |
 |---|---|---|
-| Swahili (SW) | 🚫A genuine absence (underlying KE/TZ law is real but English-only) | n/a — nothing to direct-read |
-| Indonesian (ID) | 🔎F — query-construction failure, NOT absence; 3 real candidates found | ⛔ 2 attempts, 0/3 direct-read (session-wide WebFetch outage both times) |
-| Hindi (HI) | 🔎F — query-construction failure, NOT absence; 1 real candidate found | ⛔ 2 attempts, 0/1 direct-read |
-| Bengali (BN) | 🔎F — query-construction failure (subtler), NOT absence; 2 real candidates found | ⛔ 2 attempts, 0/2 direct-read |
-| Arabic (AR) | 🔎F — query-construction failure, NOT absence; 4 real candidates found | ⛔ 2 attempts, 0/4 direct-read (2 of 4 re-attempted in round 2) |
+| Swahili (SW) | 🚫A genuine absence (underlying KE/TZ law is real but English-only) | n/a — nothing to ingest |
+| Indonesian (ID) | 🔎F — query-construction failure, NOT absence; 3 candidates found | ⛔B SNI 03-1735-2000 confirmed OUT OF SCOPE (fire-safety egress standard, not accessibility — full title resolved batch 6). 🔎F Kepmen PU 468/1998 + Permen PUPR 14/2017 not re-investigated batch 6, still open. |
+| Hindi (HI) | 🔎F — query-construction failure, NOT absence; 1 candidate found | ⛔B could not re-locate the file via WebSearch batch 6 (4 queries, empty); relationship to REF-00509 (already-ingested India HGS-2021) undetermined — not ingested to avoid double-count risk. |
+| Bengali (BN) | 🔎F — query-construction failure (subtler), NOT absence; 2 candidates found | ✅N Bangladesh 2013 Disability Rights Act ingested (REF-00769, honest enforcement-weakness caveat). ⛔B BUAG confirmed a secondary BNBC explainer, not a primary standard, publisher still unconfirmed — not ingested. |
+| Arabic (AR) | 🔎F — query-construction failure, NOT absence; 4 candidates found | ✅N×3 Saudi SBC 201 (REF-00766), Egyptian Code 601 (REF-00767), Dubai Universal Design Code (REF-00768) all ingested, all confirmed mandatory/enforceable. |
+
+**7 of 9 original leads resolved in batch 6** (4 ingested, 3 correctly excluded) via careful WebSearch-only
+re-verification — `WebFetch` failed its control-URL test for a 3rd consecutive session, so batch 6 stopped
+waiting for it and applied the batch-5-validated verification standard instead. 2 leads (the Indonesian
+Kepmen/Permen pair) remain genuinely open, simply not revisited this batch.
 
 ## `lang_detected` hygiene fix (cross-cutting, not slug-specific)
 

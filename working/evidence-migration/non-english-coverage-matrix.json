@@ -3,12 +3,20 @@
     "generated": "2026-07-19",
     "sessions": [
       "session_2026-07-19-non-english-research-recovery (batch 1)",
-      "session_2026-07-19-non-english-research-recovery-batch2 (batch 2)"
+      "session_2026-07-19-non-english-research-recovery-batch2 (batch 2)",
+      "session_2026-07-19-non-english-research-recovery-batch3 (batch 3)",
+      "session_2026-07-19-non-english-research-recovery-batch4 (batch 4)",
+      "session_2026-07-19-non-english-research-recovery-batch5 (batch 5, adversarial review)",
+      "session_2026-07-19-non-english-research-recovery-batch6 (batch 6, Global-South resolution)"
     ],
     "method": "Per research-handoff-non-english.md recovery pipeline: extract named instruments from search_languages.notes -> verify via real WebSearch/WebFetch -> dedup against evidence_sources -> ingest via migration. Empties/negative findings recorded, not dropped (S6).",
     "migrations": [
       "scripts/migrations/data_20260719034512_2026-07-19-non-english-research-recovery.sql",
-      "scripts/migrations/data_20260719052009_2026-07-19-non-english-research-recovery-batch2.sql"
+      "scripts/migrations/data_20260719052009_2026-07-19-non-english-research-recovery-batch2.sql",
+      "scripts/migrations/data_20260719053052_2026-07-19-non-english-research-recovery-batch3.sql",
+      "scripts/migrations/data_20260719055205_2026-07-19-non-english-research-recovery-batch4.sql",
+      "scripts/migrations/data_20260719060557_2026-07-19-non-english-research-recovery-batch5.sql",
+      "scripts/migrations/data_20260719175641_2026-07-19-non-english-research-recovery-batch6.sql"
     ],
     "scope_disclosure": "Two passes, per handoff S7 honest-limit clause. Batch 1: Tier-0 registry backlog (6 refs), Tier-1 richest 2 slugs by non-EN yield (deaf-classroom-reverberation-time, stair-ramp-threshold-biomechanics-accessibility) + a partial pass on wayfinding-dementia-spatial-design (3 of ~15 named instruments), plus the 5-language Global-South investigation. Batch 2: completed wayfinding-dementia-spatial-design (10 more instruments, Portugal re-confirmed as genuine absence), filled the NL ramp gap and corrected the ES ramp-gradient citation for stair-ramp-threshold-biomechanics-accessibility, and re-attempted (unsuccessfully, tooling-blocked) direct-read verification of the 9 Global-South leads. The remaining Tier-1/Tier-2 slugs (luminance-contrast-and-pattern 74 non-EN hits, sensory-room-user-control 42, cognitive-wayfinding-design/deaf-spatial-design/mental-health-built-environment/accessible-circulation-geometry 19-23 each) and the full 14-language x 24-jurisdiction sweep remain a running fraction, not claimed complete."
   },
@@ -649,5 +657,61 @@
         "reason": "undercounted 2 pre-existing non-EN relinks (REF-00346 sv, REF-00347 it) that predated this session's fresh-research additions."
       }
     ]
+  },
+  "batch6_global_south_resolution": {
+    "summary": "Follow-on session after PR #19 merged. WebFetch confirmed non-functional for a 3rd consecutive session (control-URL test). Applied the batch-5-validated WebSearch-corroboration + VERIFIED-2 methodology to the 9 flagged leads instead of continuing to wait for WebFetch.",
+    "ingested": [
+      {
+        "ref_id": "REF-00766",
+        "jurisdiction": "SA",
+        "candidate": "Saudi Building Code SBC 201 (accessibility, Ch.11)",
+        "tier": 6,
+        "confidence": "high",
+        "note": "Mandatory via Royal Decree M/43. First Saudi jurisdiction in this corpus."
+      },
+      {
+        "ref_id": "REF-00767",
+        "jurisdiction": "EG",
+        "candidate": "Egyptian Code for Accessibility (Code 601)",
+        "tier": 6,
+        "confidence": "medium-high",
+        "note": "Mandatory via ministerial decree + Law 10/2018. Base edition 2003 anchored; later update years uncertain, not guessed. First Egyptian jurisdiction in this corpus."
+      },
+      {
+        "ref_id": "REF-00768",
+        "jurisdiction": "AE",
+        "candidate": "Dubai Universal Design Code",
+        "tier": 6,
+        "confidence": "high",
+        "note": "Mandatory via Dubai Municipality permitting + Wosool certification (Oct 2023). First UAE/Gulf jurisdiction in this corpus."
+      },
+      {
+        "ref_id": "REF-00769",
+        "jurisdiction": "BD",
+        "candidate": "Bangladesh Rights and Protection of Persons with Disabilities Act 2013, Section 34",
+        "tier": 6,
+        "confidence": "high on existence, medium-high on enforceability characterization",
+        "note": "INGESTED WITH HONEST CAVEAT: multiple independent sources describe Section 34's enforcement as weak/aspirational (soft 'as much as possible' phrasing, no designated enforcement authority) -- tiered T6 because it is genuinely statute, not because it is strongly enforced. First Bangladeshi jurisdiction in this corpus."
+      }
+    ],
+    "excluded_after_careful_recheck": [
+      {
+        "candidate": "Indonesia SNI 03-1735-2000",
+        "reason": "Full official title retrieved this batch: 'Tata Cara Perencanaan Akses Bangunan dan Akses Lingkungan UNTUK PENCEGAHAN BAHAYA KEBAKARAN pada Bangunan Gedung' -- this is a FIRE-SAFETY EGRESS standard (access roads/openings for firefighting), not a disability-accessibility standard. The original lead was based on a truncated title fragment that omitted the fire-hazard-prevention qualifier. Correctly excluded, not ingested."
+      },
+      {
+        "candidate": "Hindi '92 Hindi_Corrected.pdf' (MoHUA)",
+        "reason": "Could not be re-located via WebSearch this batch (4 distinct queries, including exact filename, all empty). Relationship to already-ingested REF-00509 (India HGS-2021) remains undetermined -- could be a translation of REF-00509, a translation of a DIFFERENT older 2016 document, or unconfirmable. Not ingested to avoid double-counting or citing an unretrievable file."
+      },
+      {
+        "candidate": "BUAG (buag.info, Bangladesh)",
+        "reason": "Confirmed to be a derivative/secondary Bengali-language explainer of BNBC 2020 Part 3 Appendix D, not an independent primary standard. Operating/publishing organization remains unconfirmed after 2 separate investigation rounds (batch 1 and batch 6). Not citable as a primary source."
+      }
+    ],
+    "still_unresolved_not_reinvestigated_this_batch": [
+      "Indonesia Kepmen PU No. 468/KPTS/1998",
+      "Indonesia Permen PUPR No. 14/2017"
+    ],
+    "webfetch_status": "Confirmed non-functional via control-URL test (example.com returned HTTP 403) for the 3rd consecutive session (batches 1-2, batch 4, batch 6). Recommend escalating to the project owner as a likely persistent environment/infrastructure issue rather than continuing to re-test it each session."
   }
 }

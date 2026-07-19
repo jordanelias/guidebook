@@ -109,3 +109,40 @@ scope on the strength of a search snippet.
 pass.** Two independent attempts have already hit the same ceiling for the same reason — the blocker is
 tooling, not insufficient searching. Retry only from a session with confirmed-functional `WebFetch`
 (verify against a trivial control URL first, before spending effort on the actual targets).
+
+## Batch 6 update — resolved, not by waiting for WebFetch, but by upgrading the standard of care
+
+`WebFetch` failed the same control-URL test a **3rd consecutive session** (batches 1-2, batch 4, batch 6
+all independently confirmed `example.com` returning 403). At that point, continuing to wait for the tool
+to start working was no longer a defensible plan — batch 5's adversarial review had already validated
+that the `WebSearch`-corroboration + `VERIFIED-2` pattern used throughout this whole effort is reliable
+(7 of 8 sampled sources confirmed accurate by an independent, refutation-seeking reviewer). Batch 6
+applied that same standard, deliberately more rigorously than the first pass — and it changed the outcome
+for 7 of the 9 leads:
+
+- **Ingested (4):** Saudi Arabia's SBC 201, Egypt's Code 601, UAE/Dubai's Universal Design Code, and
+  Bangladesh's 2013 Disability Rights Act (the last with an explicit, load-bearing caveat about weak
+  real-world enforcement — see `equity-dashboard.md`'s batch 6 section). Four genuinely new jurisdictions
+  for this corpus.
+- **Correctly excluded on closer inspection (2):** Indonesia's SNI 03-1735-2000 turned out, once its
+  *complete* official title was retrieved rather than a truncated snippet, to be a **fire-safety egress
+  standard** — nothing to do with disability accessibility. It was never actually a Global-South-equity
+  finding at all; it was a scope-matching error in the original lead, caught by insisting on the full
+  title before ingesting anything. BUAG (Bangladesh) was confirmed to be a secondary Bengali-language
+  explainer of BNBC 2020, not an independent primary standard citable on its own — and its publisher
+  remains unconfirmed after two separate investigation rounds.
+- **Correctly left alone, not chased further (1):** the Hindi MoHUA PDF lead could not even be re-located
+  via `WebSearch` this time (four distinct queries, including the exact filename, all came up empty), and
+  its relationship to the DB's already-present `REF-00509` (India's 2021 Harmonised Guidelines) is
+  genuinely undetermined — ingesting it now would risk either double-counting an existing document or
+  citing a file that may not be independently retrievable at all. Not ingested.
+- **Not re-investigated (2):** Indonesia's Kepmen PU 468/1998 and Permen PUPR 14/2017 — these two were
+  simply not revisited this batch (effort went to the higher-confidence Arabic-region and Bangladesh
+  leads); their status is unchanged from the original finding.
+
+The honest lesson here is not "WebSearch-only verification is fine, ignore the earlier warning" — it's
+that **the standard of care matters more than the tool**. The earlier "do not retry with WebSearch-only
+verification" warning was really about not repeating the *same shallow pass* expecting a different
+result. Batch 6 didn't repeat the pass — it insisted on complete titles, explicit enforceability findings,
+and honest "could not confirm" outcomes where the evidence ran out, and that additional rigor is what
+actually moved 7 of 9 leads to a resolved state.
