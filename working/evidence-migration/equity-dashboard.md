@@ -1,22 +1,23 @@
 # Equity dashboard — before/after, 2026-07-19 non-English research recovery
 
 *Sessions: `session_2026-07-19-non-english-research-recovery` (batch 1) through
-`session_2026-07-19-non-english-research-recovery-batch7` (batch 7), across two calendar sessions (PR
-#18 merged batch 1; PR #19 merged batches 2-5; PR #20 merged batch 6; batch 7 is a follow-on after #20
-merged). Full detail in `non-english-coverage-matrix.json`; the recovery pipeline and discipline are in
-`research-handoff-non-english.md`. Migrations: `data_20260719034512` (batch 1) through
-`data_20260719190934` (batch 7), all under `scripts/migrations/`.*
+`session_2026-07-19-non-english-research-recovery-batch9` (batch 9), across two calendar sessions (PR
+#18 merged batch 1; PR #19 merged batches 2-5; PR #20 merged batch 6; PR #21 merged batch 7; batches 8-9
+are a follow-on after #21 merged). Full detail in `non-english-coverage-matrix.json`; the recovery pipeline
+and discipline are in `research-handoff-non-english.md`. Migrations: `data_20260719034512` (batch 1)
+through `data_20260719192627` (batch 9), all under `scripts/migrations/`.*
 
-## Headline numbers (cumulative, all seven batches)
+## Headline numbers (cumulative, all nine batches)
 
-| metric | baseline | b1 | b2 | b3 | b4 | b5 | b6 | b7 | cumulative delta |
-|---|---|---|---|---|---|---|---|---|---|
-| `evidence_sources` total | 640 | 650 | 661 | 662 | 670 | 670 | 674 | **675** | +35 (new ingests; batch 5 corrected existing rows, added none) |
-| non-English (`lang_detected` != en/eng) | 87 | 136 | 147 | 150 | 158 | 157 | 160 | **161** | **+74** |
-| `lang_detected` rows corrected (mislabel fix) | — | 59 | 59 | 61 | 61 | 61 (net) | 61 | 61 | 59 (b1) + 2 (b3) − 1 reverted (b5) + 1 honesty-fixed (b5, value unchanged) |
-| `jurisdiction` = INTL (seam, should be INT) | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | fixed |
-| `verification_status` = VERIFIED-2 (search-corroborated, primary fetch blocked) | 0 | 10 | 21 | 22 | 30 | 30 | 34 | **35** | new category, honestly disclosed |
-| `data_migrations` ledger rows | 199 | 200 | 201 | 202 | 203 | 204 | 205 | **206** | 7 migrations across the effort |
+| metric | baseline | b1 | b2 | b3 | b4 | b5 | b6 | b7 | b8 | b9 | cumulative delta |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| `evidence_sources` total | 640 | 650 | 661 | 662 | 670 | 670 | 674 | 675 | 675 | **675** | +35 (new ingests; batches 5 & 8 corrected/relinked existing rows, added none) |
+| non-English (`lang_detected` != en/eng) | 87 | 136 | 147 | 150 | 158 | 157 | 160 | 161 | 161 | **161** | **+74** (b8 relabeled 3 rows ja→zh, no net count change — they were already counted non-EN) |
+| `lang_detected` rows corrected (mislabel fix) | — | 59 | 59 | 61 | 61 | 61 (net) | 61 | 61 | 64 | 64 | 59 (b1) + 2 (b3) − 1 reverted (b5) + 1 honesty-fixed (b5, value unchanged) + 3 (b8) |
+| `jurisdiction` = INTL (seam, should be INT) | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | fixed |
+| `verification_status` = VERIFIED-2 (search-corroborated, primary fetch blocked) | 0 | 10 | 21 | 22 | 30 | 30 | 34 | 35 | 35 | **35** | new category, honestly disclosed |
+| `data_migrations` ledger rows | 199 | 200 | 201 | 202 | 203 | 204 | 205 | 206 | 207 | **208** | 9 migrations across the effort |
+| `citation_mining` rows | 107 | — | — | — | — | — | — | — | — | **129** | +22 honestly-deferred rows (b9, network-blocked) |
 
 ### Batch 6 — 4 new Global-South jurisdictions, careful re-verification catches 3 real problems
 
@@ -267,16 +268,62 @@ Batch 7 closed every item batch 6 had left open:
 Full detail in `global-south-finding.md`'s "Batch 7 update" section and
 `non-english-coverage-matrix.json` → `batch7_global_south_closeout`.
 
-## Next batch (not done through batch 7)
+## Batch 8 — the last 2 Tier-2 stub-notes slugs closed out, via relink not fresh research
 
-1. Tier-2: 2 of 4 stub-notes slugs remain untouched (`cognitive-wayfinding-design`,
-   `accessible-circulation-geometry`) — both lower priority since they already carry partial non-English
-   coverage from relinks (8/22 and 3/12 respectively), unlike the 2 batch-4 addressed (which started at
-   1/22 and 0/10).
-2. **`WebFetch` has now failed control-URL tests in 4 consecutive sessions** (batches 1-2, batch 4, batch
-   6, batch 7) — worth escalating to the project owner as a likely persistent environment/infrastructure
-   issue, not something a future session should keep re-testing hoping it resolves itself.
+Rather than risk new WebSearch-only fabrication surface on 2 already-lower-priority slugs, batch 8 closed
+`cognitive-wayfinding-design` and `accessible-circulation-geometry` via 4 pure relinks of rows already
+verified in earlier sessions/batches (zero new fabrication surface, same `✅R` pattern used throughout this
+effort):
+
+- **cognitive-wayfinding-design**: +Sweden (REF-00754) and +Denmark (REF-00747), both cited specifically
+  for their small-scale-housing-unit content — directly matching this slug's own documented "small-group
+  residential scale supports DEM wayfinding" consensus finding, per each source's own scope note. 22→24
+  links, 8→10 non-English.
+- **accessible-circulation-geometry**: +Netherlands (REF-00071, NEN 9120) and +Japan (REF-00065, Japan's
+  national accessible-building-design standard), both general national accessibility standards of the same
+  category as the DIN 18040-1 citation already present, with honest caveats that specific numeric
+  circulation-geometry provisions weren't independently re-confirmed this session. 12→14 links, 3→5
+  non-English.
+- **Incidental finding while researching**: 3 more instances of the `unicode_block`
+  Chinese-hanzi-misread-as-Japanese bug (REF-00195, REF-00196, REF-00502 — all corrected ja→zh) plus 1
+  jurisdiction-code typo (REF-00198, the corpus's sole `JA` value among otherwise-consistent `JP` rows,
+  corrected). Neither slug's non-English *count* changed from the lang fix alone (these rows were already
+  counted as non-English before correction) but the *labeling* is now accurate.
+
+## Batch 9 — citation mining for non-English sources: a scoping finding, not a full sweep
+
+Tested feasibility of the project's actual citation-mining method (CrossRef backward-reference +
+OpenAlex forward-citation mining, keyed by DOI — the same method the pre-existing `citation_mining` table
+and `scripts/probes/citation_mining_pipeline.py` already implement) against all non-English sources.
+**Finding: only 21 of 161 non-English sources carry a DOI at all** — the rest (140) are national
+codes/standards/grey literature, structurally outside CrossRef/OpenAlex's coverage regardless of network
+state. Of the 21, 4 were already mined or deferred in earlier sessions; the remaining 17 (22 slug-links)
+were tested this session — real `curl` calls to `api.crossref.org`, `api.openalex.org`, and
+`api.semanticscholar.org` all returned `connect_rejected`/403, confirmed via the environment's own
+proxy-status endpoint. **This is the same root-cause network-egress block underlying the `WebFetch` outage
+documented in every prior batch**, not a per-source problem — and the corpus's own history (REF-00107/
+REF-00493's existing mining rows) confirms CrossRef/OpenAlex access *did* work in an earlier session, so
+this is session-specific, not permanently broken.
+
+No citation mining was performed or approximated (a `WebSearch`-based substitute was deliberately avoided,
+since it wouldn't reproduce the table's real backward/forward semantics). Instead, 22 honestly-deferred
+`citation_mining` rows were added with the exact blocker documented, so a future session with working
+egress has a ready-to-run list rather than needing to rediscover the scope. Full detail, including the
+recommendation against mechanically padding the table with 140 "no DOI, not applicable" rows for the
+non-eligible majority, is in `citation-mining-non-english-finding.md`.
+
+## Next batch (not done through batch 9)
+
+1. **`WebFetch` has now failed control-URL tests in 4 consecutive sessions** (batches 1-2, batch 4, batch
+   6, batch 7) — and batch 9 found the *same* network-egress block also blocks CrossRef/OpenAlex/Semantic
+   Scholar directly (not just the `WebFetch` tool). Worth escalating to the project owner as a general
+   outbound-HTTPS policy issue, not a `WebFetch`-specific bug.
+2. Citation mining for the 17 DOI-bearing non-English refs listed in
+   `citation-mining-non-english-finding.md` — ready to run once egress is confirmed working.
 3. A corpus-wide audit of whether the *original* 81×19 multilingual sweep's zero-results (beyond the 5
    flagged Global-South languages) are partly a WebFetch-domain-blocking artifact — every investigating
    agent across every batch has hit the same blocking pattern independently across unrelated domains/
    languages/sessions.
+4. The full 14×24 sweep beyond the slugs touched across batches 1-8 remains untouched — batches 1-8
+   covered a prioritized subset (Tier-0/Tier-1/Tier-2 slugs + the Global-South investigation), not the
+   whole matrix.

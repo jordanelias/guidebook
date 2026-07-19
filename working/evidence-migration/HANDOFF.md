@@ -3,24 +3,39 @@
 *Written 2026-07-18 for a fresh context. Self-contained: a cold session should be able to resume from this
 document + the two it points to (`pipeline-audit.md`, `/root/.claude/plans/delegated-pondering-pine.md`).*
 
-*Updated 2026-07-19, seven batches across four sessions (batches 1-3 in the original session; batches 4-5
+*Updated 2026-07-19, nine batches across five sessions (batches 1-3 in the original session; batches 4-5
 in a follow-on merged as PR #19; batch 6 in a further follow-on merged as PR #20; batch 7 in a further
-follow-on after #20 merged) — see §0 below for what changed. Sections 1-9 are the 2026-07-18 state as
-originally written; treat §0 as the current addendum.*
+follow-on merged as PR #21; batches 8-9 in a further follow-on after #21 merged) — see §0 below for what
+changed. Sections 1-9 are the 2026-07-18 state as originally written; treat §0 as the current addendum.*
 
 ---
 
-## 0. 2026-07-19 addendum — non-English research recovery (batches 1-7)
+## 0. 2026-07-19 addendum — non-English research recovery (batches 1-9)
 
-Picked up `research-handoff-non-english.md` and ran its recovery pipeline across seven batches; batch 5
-was a dedicated **adversarial review** of the first four, batch 6 and batch 7 further follow-ons after
-each prior PR merged. Full detail: `equity-dashboard.md`, `non-english-coverage-matrix.json`,
-`global-south-finding.md`, `slug-language-tracking-matrix.md` (a live slug×language tracking table —
-check this first before spending more research effort on any given slug/language). Seven migrations
-applied (`data_20260719034512` through `data_20260719190934`, suffixed `...recovery.sql` /
-`...recovery-batch{2..7}.sql`) — `data_migrations` now 206 rows; `PRAGMA foreign_key_check`/
-`integrity_check` clean after all seven.
+Picked up `research-handoff-non-english.md` and ran its recovery pipeline across nine batches; batch 5
+was a dedicated **adversarial review** of the first four, batches 6-9 further follow-ons after each prior
+PR merged. Full detail: `equity-dashboard.md`, `non-english-coverage-matrix.json`,
+`global-south-finding.md`, `citation-mining-non-english-finding.md`, `slug-language-tracking-matrix.md` (a
+live slug×language tracking table — check this first before spending more research effort on any given
+slug/language). Nine migrations applied (`data_20260719034512` through `data_20260719192627`, suffixed
+`...recovery.sql` / `...recovery-batch{2..9}.sql`) — `data_migrations` now 208 rows; `PRAGMA
+foreign_key_check`/`integrity_check` clean after all nine.
 
+- **Batch 9**: a citation-mining scoping pass, prompted by a direct request to consider it for all
+  non-English sources. Found only 21/161 non-English sources carry a DOI at all (the rest are national
+  codes/standards, structurally outside CrossRef/OpenAlex's coverage). Tested real network reachability to
+  CrossRef/OpenAlex/Semantic Scholar for the 17 untouched DOI-bearing refs — all 3 blocked (`connect_rejected`
+  via curl and the environment's own proxy-status endpoint), the **same root-cause egress policy** as the
+  `WebFetch` outage, confirmed session-specific (not permanently broken — earlier sessions' rows show it
+  worked before). Recorded 22 honestly-deferred `citation_mining` rows with the exact blocker rather than
+  fabricating or silently skipping. No mechanical rows added for the 140 structurally-ineligible sources —
+  documented as a scope statement instead.
+- **Batch 8**: closed out the last 2 of 4 PRE-REMEDIATION stub-notes slugs (`cognitive-wayfinding-design`,
+  `accessible-circulation-geometry`) via 4 pure relinks of already-verified DB rows (Sweden + Denmark;
+  Netherlands + Japan) rather than fresh WebSearch-only ingests — zero new fabrication surface for 2
+  already-lower-priority slugs. Incidentally found and fixed 3 more Chinese-mislabeled-as-Japanese
+  `lang_detected` rows (the same `unicode_block` bug pattern from earlier batches) plus 1 jurisdiction-code
+  typo.
 - **Batch 7**: closed out the 2 Indonesian leads batch 6 left untouched, plus 2 small unrelated loose
   ends. `WebFetch` failed its control-URL test a **4th consecutive session** — same WebSearch-only
   standard applied again. Permen PUPR 14/2017 ingested (REF-00770, tier 6/`code`, "Berlaku"/in force) —
@@ -137,7 +152,7 @@ items. The English skew is manufactured in **ingestion**, not search.
 |---|---|---|
 | doctrine | complete, highest rigour | 25+ DR records; S1–S8 added this session |
 | language search | done | `search_languages` 1539 = 19 langs × 81 slugs |
-| **ingestion (bias funnel)** | **narrowing** | 14 langs returned hits + 5 new Global-South jurisdictions (SA/EG/AE/BD/ID); corpus now **514 EN : 161 non-EN** (2026-07-19, 7 batches: +74 non-EN net, partly a lang_detected hygiene fix, partly new real-retrieval ingests — see §0) |
+| **ingestion (bias funnel)** | **narrowing** | 14 langs returned hits + 5 new Global-South jurisdictions (SA/EG/AE/BD/ID); corpus now **514 EN : 161 non-EN** (2026-07-19, 9 batches: +74 non-EN net, partly a lang_detected hygiene fix, partly new real-retrieval ingests — see §0) |
 | citation-mine / supersession | ~7% | 7 / 6 slugs |
 | **extraction / grading** | **the throat** | extractions **1 slug**; cells **7 / 93 items** |
 | connections (post-grading) | 273 over ungraded items | generative loop; owe re-validation once graded |

@@ -22,6 +22,18 @@ found to contain none (clinical/organizational care guidance only) — this **co
 overturns, Portugal's existing genuine-absence finding for wayfinding-dementia-spatial-design. No DB
 change needed for the Portugal item. Full detail in `equity-dashboard.md`'s "Batch 7" section.
 
+**Batch 8-9 note (the 2 final Tier-2 stub-notes slugs + a citation-mining scoping pass):**
+`cognitive-wayfinding-design` and `accessible-circulation-geometry` — the last 2 "not started" slugs from
+the substrate-quality finding below — were closed out via 4 pure relinks of already-verified DB rows (zero
+new fabrication surface): Sweden + Denmark for cognitive-wayfinding-design (both matching its own
+documented small-group-residential-scale finding), Netherlands + Japan for accessible-circulation-geometry
+(both general national accessibility standards analogous to the DIN 18040-1 citation already there). While
+researching, found and fixed 3 more instances of the unicode_block Chinese-hanzi-misread-as-Japanese bug
+(REF-00195, REF-00196, REF-00502) plus 1 jurisdiction-code typo (REF-00198, `JA`→`JP`). Separately, a
+citation-mining scoping pass (batch 9) tested real network reachability to CrossRef/OpenAlex/Semantic
+Scholar and confirmed all 3 are blocked this session — the same root-cause egress policy as the `WebFetch`
+outage, not a per-source problem. Full detail in `citation-mining-non-english-finding.md`.
+
 ## Legend
 
 - ✅**R** = relinked an already-verified DB row (zero new fabrication surface)
@@ -55,8 +67,8 @@ change needed for the Portugal item. Full detail in `equity-dashboard.md`'s "Bat
 | **luminance-contrast-and-pattern** | ✅N (DIN 32975) | ✅R (Arrêté 2014, LCP-03) | ✅R (DM236/DPR503, LCP-04) | ✅R (CTE-DB-SUA §SUA1 4.3, LCP-05) | ✅R (NEN9120 REF-00071, LCP-06) | ✅R (BFS/BBR, LCP-07) | ✅N (NS11001-1/2) | ✅R (BR18, LCP-08) | ✅R (Decree241/2017, LCP-09) | ✅R (DL163/2006, LCP-10) | ✅R (バリアフリー法, general only — specific Road Mobility Guideline unconfirmed, LCP-11) | ✅R (편의증진법 REF-00511, LCP-12) | ✅R (GB50763, LCP-13) | — **100% non-EN (13/13) — 0/0 → 13/13** |
 | **mental-health-built-environment** | ✅N ×2 (EPH Planungshandbuch Psychiatrie; DGUV Info 207-027) | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ✅N (Werkboek HIC); ⛔B (College bouw zorginstellingen — historical/defunct, not ingested) | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | — | ⬜ `stub` | — | ⬜ `stub` | 🔎F Niedersachsen Planungshilfe (state- not federal-level, not ingested) |
 | **deaf-spatial-design** | ✅N (DAB DeafSpace article); 🔎F TU Darmstadt research group + Elbschule Hamburg (context only, not separately ingested) | ⬜ `stub` | pre-existing non-EN (REF-00347, LIS decree — predates this session, not counted as a batch-4 addition) | ⬜ `stub` | ⬜ `stub` | pre-existing non-EN (REF-00346, Stockholm accessibility — predates this session, not counted as a batch-4 addition) | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ✅N ×2 (Tsukuba Univ. of Technology campus — grey/national; Metote Lab — **Co-1**, Deaf-led, Tokyo-regional); 🔎F Nikken Sekkei (corporate research, not ingested) | ⬜ `stub` | ⬜ `stub` | — total non-EN 5/13 (2 pre-existing + 3 new; corrected 2026-07-19 batch5, see note at top) |
-| **cognitive-wayfinding-design** | ⬜ `stub`, not yet attempted | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | — already 22 links/8 non-EN from prior work; lowest-priority remaining slug |
-| **accessible-circulation-geometry** | ⬜ `stub` (already has 2 relinked refs from batch-1 lang-fix, not a fresh recovery pass) | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | — |
+| **cognitive-wayfinding-design** | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ✅R (REF-00754, Nationella riktlinjer — small-scale-housing scope) | ⬜ `stub` | ✅R (REF-00747, DK dementia-home labelling — small-scale-housing scope) | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ✅N (lang-fix: REF-00502 corrected ja→zh, unicode_block bug) | — batch 8: 22→24 links, 8→10 non-EN (2 relinks: SE, DK) |
+| **accessible-circulation-geometry** | ⬜ `stub` (already has 2 relinked refs from batch-1 lang-fix, not a fresh recovery pass) | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ✅R (REF-00071, NEN 9120 — reduced/scoped, content specifics unconfirmed) | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ⬜ `stub` | ✅R (REF-00065, Japan MLIT accessible-building design standard — reduced/scoped) | ⬜ `stub` | ⬜ `stub` | — batch 8: 12→14 links, 3→5 non-EN (2 relinks: NL, JP) |
 
 ## Global-South language investigation (cross-slug, not per-slug — see `global-south-finding.md`)
 
@@ -76,12 +88,17 @@ The final 2 leads (the Indonesian Kepmen/Permen pair) were resolved batch 7: Per
 
 ## `lang_detected` hygiene fix (cross-cutting, not slug-specific)
 
-61 rows corrected total (59 batch 1 + 2 batch 3), spanning DE(13+1=14), CH(2), CN(7), SE(6), NO(11), DK(3),
-NL(5), FR(2+1=3), FI(2), IT(2), ES(2), JP(4) jurisdictions. Full list in
-`non-english-coverage-matrix.json` → `lang_detected_hygiene_fix`. **Known incomplete**: batch 3's widened
-sweep (beyond `standard_number`-bearing rows) checked only 28 candidate rows across 8 jurisdictions and
-found 2 more — a full audit of all non-`standard_number` rows (journal articles, reports, grey lit) across
-all non-English jurisdictions is still owed (see `equity-dashboard.md` next-batch list).
+64 rows corrected total (59 batch 1 + 2 batch 3 + 3 batch 8), spanning DE(13+1=14), CH(2), CN(7+3=10),
+SE(6), NO(11), DK(3), NL(5), FR(2+1=3), FI(2), IT(2), ES(2), JP(4) jurisdictions. The 3 batch-8 corrections
+(REF-00195, REF-00196, REF-00502) are the same `unicode_block` Chinese-hanzi-misread-as-Japanese pattern as
+the earlier CN fixes, found incidentally while researching cognitive-wayfinding-design/
+accessible-circulation-geometry — not from a dedicated sweep. Plus 1 jurisdiction-code typo fixed
+(REF-00198, `JA`→`JP`, unrelated to language). Full list in `non-english-coverage-matrix.json` →
+`lang_detected_hygiene_fix`. **Known incomplete**: batch 3's widened sweep (beyond `standard_number`-bearing
+rows) checked only 28 candidate rows across 8 jurisdictions and found 2 more, and batch 8's 3 finds were
+incidental, not from a dedicated audit — a full audit of all non-`standard_number` rows (journal articles,
+reports, grey lit) across all non-English jurisdictions is still owed (see `equity-dashboard.md` next-batch
+list).
 
 ## Substrate-quality finding (important, cross-cutting)
 
@@ -115,6 +132,15 @@ new + 1 investigated-and-rejected pending bill; most jurisdictions are genuine a
 recorded), mental-health-built-environment (3 new, DE+NL only, `stub`-notes slug), deaf-spatial-design (3
 new, DE+JA only, `stub`-notes slug, includes 1 Co-1 addition).
 
-**Not started:** cognitive-wayfinding-design, accessible-circulation-geometry (both `stub`-notes, both
-already have partial non-EN coverage from relinks so are lower-priority), the Global-South 9 leads
-(blocked on tooling, not research effort), and the full 14×24 sweep beyond these 8 slugs.
+**Closed out via relink (batch 8), not fresh primary research:** cognitive-wayfinding-design (24 links,
+10/24 non-EN — added SE, DK), accessible-circulation-geometry (14 links, 5/14 non-EN — added NL, JP). Both
+were `stub`-notes slugs where the notes-extraction pipeline doesn't apply; rather than risk new
+WebSearch-only fabrication surface for a low-priority slug, both were closed via pure relinks of
+already-verified DB rows with honestly reduced/scoped relevance notes. This is a real jurisdictional
+addition, not exhaustive coverage — neither slug has been searched fresh in all 14 languages.
+
+**Not started:** the full 14×24 sweep beyond the slugs touched across batches 1-8. The Global-South 9
+leads are fully resolved (batch 7); citation mining for non-English sources has a documented scoping
+finding (batch 9, `citation-mining-non-english-finding.md`) rather than full coverage, since most
+non-English sources (140/161) are structurally ineligible (no DOI) and the DOI-bearing remainder is
+network-blocked this session.

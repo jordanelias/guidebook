@@ -8,7 +8,9 @@
       "session_2026-07-19-non-english-research-recovery-batch4 (batch 4)",
       "session_2026-07-19-non-english-research-recovery-batch5 (batch 5, adversarial review)",
       "session_2026-07-19-non-english-research-recovery-batch6 (batch 6, Global-South resolution)",
-      "session_2026-07-19-non-english-research-recovery-batch7 (batch 7, final Global-South leads + 2 small loose ends)"
+      "session_2026-07-19-non-english-research-recovery-batch7 (batch 7, final Global-South leads + 2 small loose ends)",
+      "session_2026-07-19-non-english-research-recovery-batch8 (batch 8, close out final Tier-2 stub-notes slugs)",
+      "session_2026-07-19-non-english-research-recovery-batch9 (batch 9, citation-mining scoping pass for non-English sources)"
     ],
     "method": "Per research-handoff-non-english.md recovery pipeline: extract named instruments from search_languages.notes -> verify via real WebSearch/WebFetch -> dedup against evidence_sources -> ingest via migration. Empties/negative findings recorded, not dropped (S6).",
     "migrations": [
@@ -18,7 +20,9 @@
       "scripts/migrations/data_20260719055205_2026-07-19-non-english-research-recovery-batch4.sql",
       "scripts/migrations/data_20260719060557_2026-07-19-non-english-research-recovery-batch5.sql",
       "scripts/migrations/data_20260719175641_2026-07-19-non-english-research-recovery-batch6.sql",
-      "scripts/migrations/data_20260719190934_2026-07-19-non-english-research-recovery-batch7.sql"
+      "scripts/migrations/data_20260719190934_2026-07-19-non-english-research-recovery-batch7.sql",
+      "scripts/migrations/data_20260719192523_2026-07-19-non-english-research-recovery-batch8.sql",
+      "scripts/migrations/data_20260719192627_2026-07-19-non-english-research-recovery-batch9.sql"
     ],
     "scope_disclosure": "Two passes, per handoff S7 honest-limit clause. Batch 1: Tier-0 registry backlog (6 refs), Tier-1 richest 2 slugs by non-EN yield (deaf-classroom-reverberation-time, stair-ramp-threshold-biomechanics-accessibility) + a partial pass on wayfinding-dementia-spatial-design (3 of ~15 named instruments), plus the 5-language Global-South investigation. Batch 2: completed wayfinding-dementia-spatial-design (10 more instruments, Portugal re-confirmed as genuine absence), filled the NL ramp gap and corrected the ES ramp-gradient citation for stair-ramp-threshold-biomechanics-accessibility, and re-attempted (unsuccessfully, tooling-blocked) direct-read verification of the 9 Global-South leads. The remaining Tier-1/Tier-2 slugs (luminance-contrast-and-pattern 74 non-EN hits, sensory-room-user-control 42, cognitive-wayfinding-design/deaf-spatial-design/mental-health-built-environment/accessible-circulation-geometry 19-23 each) and the full 14-language x 24-jurisdiction sweep remain a running fraction, not claimed complete."
   },
@@ -743,5 +747,65 @@
     ],
     "outcome": "All 9 original Global-South leads (batches 1-7) now resolved: 5 ingested (Saudi Arabia, Egypt, UAE, Bangladesh, Indonesia), 4 correctly excluded (Indonesia x2 -- SNI wrong-scope + Kepmen superseded; Bangladesh's BUAG -- secondary/unconfirmed; India's Hindi MoHUA PDF -- unlocatable). Swahili's genuine-absence finding stands unchanged.",
     "webfetch_status": "Confirmed non-functional (WebSearch-only used throughout) for a 4th consecutive session (batches 1-2, batch 4, batch 6, batch 7). Recommend escalating to the project owner as a likely persistent environment/infrastructure issue."
+  },
+  "batch8_final_tier2_slugs": {
+    "summary": "Closed out cognitive-wayfinding-design and accessible-circulation-geometry, the last 2 of the 4 PRE-REMEDIATION stub-notes slugs, via pure relinks of already-verified DB rows rather than fresh WebSearch-only ingests -- zero new fabrication surface, lower risk for 2 already-lower-priority slugs.",
+    "relinks": [
+      {
+        "ref_id": "REF-00754",
+        "slug": "cognitive-wayfinding-design",
+        "local_ref_id": "CWD-23",
+        "jurisdiction": "SE",
+        "note": "Small-scale-housing-unit recommendation, matching this slug's own consensus finding. Already verified batch 2."
+      },
+      {
+        "ref_id": "REF-00747",
+        "slug": "cognitive-wayfinding-design",
+        "local_ref_id": "CWD-24",
+        "jurisdiction": "DK",
+        "note": "Dementia-care-home labelling scheme, individual-housing-group scale. Already verified batch 2."
+      },
+      {
+        "ref_id": "REF-00071",
+        "slug": "accessible-circulation-geometry",
+        "local_ref_id": "ACG-13",
+        "jurisdiction": "NL",
+        "note": "NEN 9120:2025, general Dutch accessibility standard, same category as DIN 18040-1 already in this slug. Content specifics not independently confirmed."
+      },
+      {
+        "ref_id": "REF-00065",
+        "slug": "accessible-circulation-geometry",
+        "local_ref_id": "ACG-14",
+        "jurisdiction": "JP",
+        "note": "Japan's national accessible-building-design standard, already established in sibling slugs. Content specifics not independently confirmed."
+      }
+    ],
+    "incidental_lang_detected_fixes": [
+      {
+        "ref_id": "REF-00195",
+        "fix": "lang_detected ja -> zh (unicode_block bug, PRC ministry authors, jurisdiction already ZH)"
+      },
+      {
+        "ref_id": "REF-00196",
+        "fix": "lang_detected ja -> zh (unicode_block bug, PRC ministry authors, jurisdiction already ZH)"
+      },
+      {
+        "ref_id": "REF-00502",
+        "fix": "lang_detected ja -> zh (unicode_block bug, Chinese author/publisher, jurisdiction already CN)"
+      },
+      {
+        "ref_id": "REF-00198",
+        "fix": "jurisdiction JA -> JP (typo, sole non-JP Japanese-jurisdiction row in corpus)"
+      }
+    ],
+    "outcome": "cognitive-wayfinding-design: 22->24 links, 8->10 non-EN. accessible-circulation-geometry: 12->14 links, 3->5 non-EN. All 4 PRE-REMEDIATION stub-notes slugs from the substrate-quality finding are now touched (2 via fresh research in batch 4, 2 via relink in batch 8)."
+  },
+  "batch9_citation_mining_scoping": {
+    "summary": "Tested feasibility of DOI-keyed CrossRef/OpenAlex backward/forward citation mining (the method the pre-existing citation_mining table and scripts/probes/citation_mining_pipeline.py already implement) against all 161 non-English evidence_sources rows.",
+    "scope_finding": "Only 21/161 non-English sources carry a DOI at all; the other 140 are national codes/standards/grey literature not indexed by CrossRef/OpenAlex regardless of network state. Of the 21, 4 already had citation_mining rows from earlier sessions (REF-00107, REF-00493 fully mined; REF-00700, REF-00702 already deferred as Tier-3/non-mandatory).",
+    "network_test": "curl to api.crossref.org, api.openalex.org, api.semanticscholar.org all returned connect_rejected/403, confirmed via the environment's own proxy-status endpoint. Same root-cause egress block as the WebFetch outage documented throughout this whole effort -- confirmed session-specific (not permanently broken) since REF-00107/REF-00493's existing rows show CrossRef/OpenAlex calls succeeded in an earlier session (session_2026-05-23-bpc-rewrite-phase-b-closure).",
+    "action_taken": "Added 22 honestly-deferred citation_mining rows (one per slug-link of the 17 untouched DOI-bearing refs) with deferred_reason=DEFERRED-NETWORK-BLOCKED, each recording the exact DOI and blocker. No citation mining was performed or approximated via WebSearch -- that would not reproduce the table's real backward/forward semantics.",
+    "recommendation": "A future session with confirmed working egress to the 3 hosts should re-run scripts/probes/citation_mining_pipeline.py against the 17 refs. Several are DIN standards with real Beuth-Verlag-registered DOIs (10.31030 prefix), plausible genuine CrossRef records worth prioritizing. Not recommending mechanical citation_mining rows for the 140 no-DOI sources -- structurally ineligible regardless of network state; see citation-mining-non-english-finding.md.",
+    "full_detail": "working/evidence-migration/citation-mining-non-english-finding.md"
   }
 }

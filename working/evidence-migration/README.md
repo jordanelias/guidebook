@@ -2,13 +2,16 @@
 
 **Status:** pilot in progress · **Branch:** `claude/project-status-next-steps-wgatjq` (restarted off `main` @ fcc366e) · **Started:** 2026-07-18
 
-**2026-07-19 update (7 batches):** `research-handoff-non-english.md`'s recovery pipeline was run — see
+**2026-07-19 update (9 batches):** `research-handoff-non-english.md`'s recovery pipeline was run — see
 `HANDOFF.md` §0, `equity-dashboard.md`, `non-english-coverage-matrix.json`, `global-south-finding.md`,
-`slug-language-tracking-matrix.md`. Non-English sources by `lang_detected`: 87 → **161**. 5 new
-Global-South jurisdictions added (Saudi Arabia, Egypt, UAE, Bangladesh, Indonesia) — all 9 original
-Global-South leads now resolved. Batch 5 was an adversarial review of batches 1-4 (found + fixed 1
-factual error, 6 tier-doctrine violations, 1 language over-correction). Migrations:
-`data_20260719034512` through `data_20260719190934`, 7 total, all under `scripts/migrations/`.
+`citation-mining-non-english-finding.md`, `slug-language-tracking-matrix.md`. Non-English sources by
+`lang_detected`: 87 → **161**. 5 new Global-South jurisdictions added (Saudi Arabia, Egypt, UAE,
+Bangladesh, Indonesia) — all 9 original Global-South leads now resolved. All 4 PRE-REMEDIATION
+stub-notes Tier-2 slugs now touched. Batch 5 was an adversarial review of batches 1-4 (found + fixed 1
+factual error, 6 tier-doctrine violations, 1 language over-correction). Batch 9 scoped citation mining
+for non-English sources and found the required CrossRef/OpenAlex/Semantic Scholar APIs are
+network-blocked this session (same root cause as the WebFetch outage). Migrations:
+`data_20260719034512` through `data_20260719192627`, 9 total, all under `scripts/migrations/`.
 
 This directory is the working deliverable for finishing the evidence migration — taking each provision
 from a retracted stub to a rehabilitated, multimodally-sourced, equity-searched, ethically-screened,
