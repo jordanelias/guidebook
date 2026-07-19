@@ -1,0 +1,359 @@
+<title>Per-Slice Evidentiary Audit — Guidebook</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --ground:#f6f7f9; --surface:#ffffff; --surface-2:#eef1f4; --line:#dbe0e6;
+  --ink:#151a22; --ink-2:#3d4653; --slate:#5b6472; --faint:#8a919c;
+  --accent:#2f6f7e; --accent-soft:#e2eef0; --accent-ink:#1e4c57;
+  --gA:#1f9d6b; --gB:#5a9a3d; --gC:#c9a227; --gD:#d97a2b; --gE:#c0503a; --gF:#9299a3;
+  --shadow:0 1px 2px rgba(20,26,34,.06),0 4px 16px rgba(20,26,34,.05);
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --serif:"Iowan Old Style",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme:dark){:root{
+  --ground:#11141a; --surface:#181c24; --surface-2:#1f242e; --line:#2b323d;
+  --ink:#e7eaef; --ink-2:#b7bec9; --slate:#8b93a0; --faint:#6b727d;
+  --accent:#59a7b8; --accent-soft:#1c3940; --accent-ink:#9fd4e0;
+  --gA:#39b984; --gB:#7bb955; --gC:#d9bd63; --gD:#e8944a; --gE:#d96b54; --gF:#7f868f;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.28);
+}}
+:root[data-theme="light"]{
+  --ground:#f6f7f9; --surface:#ffffff; --surface-2:#eef1f4; --line:#dbe0e6;
+  --ink:#151a22; --ink-2:#3d4653; --slate:#5b6472; --faint:#8a919c;
+  --accent:#2f6f7e; --accent-soft:#e2eef0; --accent-ink:#1e4c57;
+  --gA:#1f9d6b; --gB:#5a9a3d; --gC:#c9a227; --gD:#d97a2b; --gE:#c0503a; --gF:#9299a3;
+}
+:root[data-theme="dark"]{
+  --ground:#11141a; --surface:#181c24; --surface-2:#1f242e; --line:#2b323d;
+  --ink:#e7eaef; --ink-2:#b7bec9; --slate:#8b93a0; --faint:#6b727d;
+  --accent:#59a7b8; --accent-soft:#1c3940; --accent-ink:#9fd4e0;
+  --gA:#39b984; --gB:#7bb955; --gC:#d9bd63; --gD:#e8944a; --gE:#d96b54; --gF:#7f868f;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);
+  font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:32px 24px 80px}
+header.masthead{border-bottom:2px solid var(--ink);padding-bottom:16px;margin-bottom:8px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);font-weight:600}
+h1{font-family:var(--serif);font-weight:600;font-size:34px;line-height:1.1;margin:8px 0 6px;
+  text-wrap:balance;letter-spacing:-.01em}
+.sub{color:var(--slate);font-size:14px;max-width:70ch}
+.sub code{font-family:var(--mono);font-size:12px;background:var(--surface-2);padding:1px 5px;border-radius:4px}
+.controls{position:sticky;top:0;z-index:20;background:var(--ground);
+  padding:16px 0 14px;margin-top:14px;border-bottom:1px solid var(--line)}
+.filter-row{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+input[type=search],select{font-family:var(--sans);font-size:14px;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:9px 12px;
+  box-shadow:var(--shadow);min-height:40px}
+input[type=search]{min-width:280px}
+input[type=search]:focus,select:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+.grades{display:flex;gap:5px}
+.gchip{font-family:var(--mono);font-size:12px;font-weight:600;width:32px;height:40px;border-radius:8px;
+  border:1px solid var(--line);background:var(--surface);color:var(--slate);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:.12s}
+.gchip[aria-pressed=true]{color:#fff;border-color:transparent}
+.gchip.A[aria-pressed=true]{background:var(--gA)}.gchip.B[aria-pressed=true]{background:var(--gB)}
+.gchip.C[aria-pressed=true]{background:var(--gC)}.gchip.D[aria-pressed=true]{background:var(--gD)}
+.gchip.E[aria-pressed=true]{background:var(--gE)}.gchip.F[aria-pressed=true]{background:var(--gF)}
+.btn-reset{font-family:var(--mono);font-size:12px;background:none;border:1px solid var(--line);
+  border-radius:8px;padding:0 14px;height:40px;color:var(--slate);cursor:pointer}
+.btn-reset:hover{color:var(--ink);border-color:var(--slate)}
+.scope-note{font-family:var(--mono);font-size:11.5px;color:var(--faint);margin-top:10px}
+.scope-note b{color:var(--accent);font-weight:600}
+h2.dim-head{font-family:var(--serif);font-size:15px;font-weight:600;margin:26px 0 12px;
+  padding-bottom:6px;border-bottom:1px solid var(--line);color:var(--ink-2);
+  letter-spacing:0;display:flex;align-items:baseline;gap:8px}
+h2.dim-head span{font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.1em;text-transform:uppercase}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}
+.card .big{font-family:var(--serif);font-size:30px;font-weight:600;line-height:1;font-variant-numeric:tabular-nums}
+.card .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);margin-top:7px}
+.card .note{font-size:12.5px;color:var(--slate);margin-top:4px}
+.barset{display:flex;flex-direction:column;gap:7px;margin-top:2px}
+.barrow{display:grid;grid-template-columns:56px 1fr 62px;align-items:center;gap:10px;font-size:13px}
+.barrow .k{font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+.track{height:10px;background:var(--surface-2);border-radius:6px;overflow:hidden}
+.fill{height:100%;border-radius:6px;background:var(--accent)}
+.fill.bp{background:var(--gA)}.fill.code{background:var(--gD)}
+.barrow .v{font-family:var(--mono);font-size:12px;text-align:right;color:var(--slate);font-variant-numeric:tabular-nums}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media(max-width:720px){.split{grid-template-columns:1fr}}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);margin-top:12px}
+table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface)}
+thead th{position:sticky;top:0;background:var(--surface-2);text-align:left;padding:10px 12px;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--slate);
+  border-bottom:1px solid var(--line);cursor:pointer;white-space:nowrap;user-select:none}
+thead th.sorted{color:var(--accent)}
+thead th .arw{opacity:.5}
+tbody td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:middle;white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:var(--surface-2)}
+td.slug{font-family:var(--mono);font-size:12.5px;color:var(--ink);white-space:normal;min-width:210px}
+td.slug .tp{display:block;font-size:10.5px;color:var(--faint);letter-spacing:.02em}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+.gpill{font-family:var(--mono);font-weight:700;font-size:12px;color:#fff;border-radius:6px;
+  padding:2px 0;width:26px;display:inline-block;text-align:center}
+.gpill.A{background:var(--gA)}.gpill.B{background:var(--gB)}.gpill.C{background:var(--gC)}
+.gpill.D{background:var(--gD)}.gpill.E{background:var(--gE)}.gpill.F{background:var(--gF)}
+.mini{display:inline-flex;height:9px;border-radius:3px;overflow:hidden;min-width:70px;vertical-align:middle;border:1px solid var(--line)}
+.mini i{height:100%}
+.enbar{display:inline-block;height:9px;border-radius:3px;background:linear-gradient(90deg,var(--gE) 0 var(--p),var(--surface-2) var(--p));width:64px;border:1px solid var(--line);vertical-align:middle}
+.empty-row td{color:var(--faint);font-style:italic}
+footer{margin-top:34px;font-family:var(--mono);font-size:11.5px;color:var(--faint);line-height:1.7}
+.legend{font-family:var(--mono);font-size:11px;color:var(--slate);margin:10px 0 0;line-height:1.8}
+.legend b{color:var(--ink-2);font-weight:600}
+.theme-toggle{position:fixed;top:14px;right:14px;z-index:40;font-family:var(--mono);font-size:11px;
+  background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:7px 11px;color:var(--slate);cursor:pointer;box-shadow:var(--shadow)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">◐ theme</button>
+<div class="wrap">
+  <header class="masthead">
+    <div class="eyebrow">Guidebook · Evidence Integrity</div>
+    <h1>Per-Slice Evidentiary Audit</h1>
+    <p class="sub">Every research slice scored on six dimensions — amount, tiers, jurisdictions,
+    languages, English/Anglophone bias, and overall base quality — over the linked evidence in
+    <code>data/guidebook.db</code>. Filter the <b>entire corpus</b>, <b>by category</b>, or
+    <b>by term</b> (type a slug, jurisdiction code, language, tier, or evidence type). Every panel
+    below recomputes live for the current filter.</p>
+  </header>
+
+  <div class="controls">
+    <div class="filter-row">
+      <div class="field" style="flex:1;min-width:280px">
+        <label for="term">Search term</label>
+        <input type="search" id="term" placeholder="e.g. acoustic · JP · ja · T1 · co1 · empty" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="cat">Category</label>
+        <select id="cat"><option value="">Entire corpus (all categories)</option></select>
+      </div>
+      <div class="field">
+        <label>Grade</label>
+        <div class="grades" id="grades"></div>
+      </div>
+      <button class="btn-reset" id="reset">Reset</button>
+    </div>
+    <div class="scope-note" id="scope"></div>
+  </div>
+
+  <h2 class="dim-head">Snapshot <span>dimensions 1 &amp; 6 · amount &amp; overall quality</span></h2>
+  <div class="cards" id="cards"></div>
+
+  <div class="split">
+    <div>
+      <h2 class="dim-head">Tiers of evidence <span>dimension 2</span></h2>
+      <div class="barset" id="tiers"></div>
+      <p class="legend" id="bpline"></p>
+    </div>
+    <div>
+      <h2 class="dim-head">English / Anglophone bias <span>dimension 5</span></h2>
+      <div class="barset" id="bias"></div>
+      <p class="legend" id="biasline"></p>
+    </div>
+  </div>
+
+  <div class="split">
+    <div>
+      <h2 class="dim-head">Jurisdictions sourced <span>dimension 3</span></h2>
+      <div class="barset" id="jurs"></div>
+      <p class="legend" id="jurline"></p>
+    </div>
+    <div>
+      <h2 class="dim-head">Languages sourced <span>dimension 4</span></h2>
+      <div class="barset" id="langs"></div>
+      <p class="legend" id="langline"></p>
+    </div>
+  </div>
+
+  <h2 class="dim-head">Slices <span id="tcount"></span></h2>
+  <p class="legend"><b>N</b> linked sources · <b>BP</b> best-practice-capable (T1/Co-1/T2/Co-2/T3-clinical) ·
+  <b>tier bar</b> green=best-practice-capable, orange=code-baseline (T4–T6) · <b>JUR/LNG</b> distinct
+  jurisdictions / languages · <b>EN</b> English-language share (redder = more concentrated) ·
+  <b>%ANG</b> native-Anglophone-jurisdiction share · <b style="color:var(--gD)">&#8225;</b> convergence-only
+  (0 best-practice-capable sources; grade = code-floor coverage, not best-practice quality).
+  Click a header to sort.</p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr>
+        <th data-k="grade">Grade</th><th data-k="score">Score</th>
+        <th data-k="slug">Slice</th>
+        <th data-k="n" class="num">N</th><th data-k="bp" class="num">BP</th>
+        <th data-k="tierbar">Tier mix</th>
+        <th data-k="n_jur" class="num">JUR</th><th data-k="n_lang" class="num">LNG</th>
+        <th data-k="pct_en" class="num">EN</th><th data-k="pct_anglo" class="num">%ANG</th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <footer>
+    Data as of 2026-07-19 · read-only over data/guidebook.db · 82 ACTIVE slices ·
+    749 source-instances (651 unique).<br>
+    Tiers per governance/tier-system.md (OPERATIVE 2026-05-25). Scores are a triage lens over the linked
+    evidence base, not a verdict on any single citation. Companion: evidentiary-base-audit.md / .csv / .json.
+  </footer>
+</div>
+
+<script>
+const DATA = [{"slug":"cognitive-wayfinding-design","topic":"wayfinding-and-signage","state":"RETRACTED-PRE-REHAB","n":22,"bp":15,"code_only":7,"tiers":{"1":1,"2":4,"3":10,"5":7},"etypes":{"clinical":10,"national_fw":7,"standard_eb":3,"co1":1,"sr_meta":1},"n_jur":11,"jurs":{"INT":8,"NL":3,"SG":2,"KR":2,"NO":1,"UK":1,"FR":1,"DE":1,"AU":1,"CN":1,"IT":1},"n_lang":7,"langs":{"en":14,"de":2,"nl":2,"no":1,"fr":1,"ko":1,"ja":1},"n_en":14,"n_nonen":8,"pct_en":63.6,"anglo_core":2,"supra":8,"non_anglo":12,"pct_anglo":9.1,"grade":"A","score":88.1,"conv":false,"blob":"cognitive-wayfinding-design wayfinding-and-signage a retracted-pre-rehab int nl sg kr no uk fr de au cn it en de nl no fr ko ja t1 t2 t3 t5 clinical national_fw standard_eb co1 sr_meta"},{"slug":"sensory-room-user-control","topic":"sensory-environment","state":"RETRACTED-PRE-REHAB","n":13,"bp":12,"code_only":1,"tiers":{"2":4,"3":8,"6":1},"etypes":{"clinical":8,"sr_meta":4,"code":1},"n_jur":9,"jurs":{"UK":3,"INT":3,"AU":1,"IT":1,"US":1,"FR":1,"CN/INT":1,"KR":1,"CL":1},"n_lang":4,"langs":{"en":10,"fr":1,"ko":1,"es":1},"n_en":10,"n_nonen":3,"pct_en":76.9,"anglo_core":5,"supra":4,"non_anglo":4,"pct_anglo":38.5,"grade":"A","score":86.8,"conv":false,"blob":"sensory-room-user-control sensory-environment a retracted-pre-rehab uk int au it us fr cn/int kr cl en fr ko es t2 t3 t6 clinical sr_meta code"},{"slug":"wayfinding-dementia-spatial-design","topic":"wayfinding-and-signage","state":"RETRACTED-PRE-REHAB","n":22,"bp":12,"code_only":10,"tiers":{"1":1,"2":3,"3":9,"5":5,"6":4},"etypes":{"clinical":8,"co1":1,"standard_eb":3,"code":5,"national_fw":4,"grey":1},"n_jur":16,"jurs":{"INT":3,"US":2,"NL":2,"UK":2,"DK":2,"HK":1,"NO":1,"CN":1,"FI":1,"IT":1,"ES":1,"FR":1,"JP":1,"KR":1,"SE":1,"DE":1},"n_lang":13,"langs":{"en":9,"da":2,"no":1,"zh":1,"fi":1,"it":1,"es":1,"fr":1,"ja":1,"ko":1,"nl":1,"sv":1,"de":1},"n_en":9,"n_nonen":13,"pct_en":40.9,"anglo_core":4,"supra":3,"non_anglo":15,"pct_anglo":18.2,"grade":"A","score":86.5,"conv":false,"blob":"wayfinding-dementia-spatial-design wayfinding-and-signage a retracted-pre-rehab int us nl uk dk hk no cn fi it es fr jp kr se de en da no zh fi it es fr ja ko nl sv de t1 t2 t3 t5 t6 clinical co1 standard_eb code national_fw grey"},{"slug":"deaf-spatial-design","topic":"communication-and-alerts","state":"RETRACTED-PRE-REHAB","n":13,"bp":10,"code_only":3,"tiers":{"1":5,"2":3,"3":4,"5":1},"etypes":{"co1":5,"clinical":2,"standard_eb":3,"national_fw":1,"grey":2},"n_jur":8,"jurs":{"US":5,"JP":2,"INT":1,"INT/ZA":1,"GH":1,"SE":1,"IT":1,"DE":1},"n_lang":5,"langs":{"en":8,"ja":2,"sv":1,"it":1,"de":1},"n_en":8,"n_nonen":5,"pct_en":61.5,"anglo_core":5,"supra":2,"non_anglo":6,"pct_anglo":38.5,"grade":"A","score":84.9,"conv":false,"blob":"deaf-spatial-design communication-and-alerts a retracted-pre-rehab us jp int int/za gh se it de en ja sv it de t1 t2 t3 t5 co1 clinical standard_eb national_fw grey"},{"slug":"mobility-built-environment","topic":"population-general","state":"RETRACTED-PRE-REHAB","n":24,"bp":15,"code_only":9,"tiers":{"1":11,"2":2,"3":2,"5":4,"6":5},"etypes":{"clinical":8,"national_fw":4,"co1":5,"standard_eb":2,"code":5},"n_jur":17,"jurs":{"US":4,"AU":3,"JP":2,"NZ":2,"UK":1,"NO":1,"SE":1,"INT":1,"NL":1,"FR":1,"CA":1,"SG":1,"BR":1,"CH":1,"IE":1,"FI":1,"DE":1},"n_lang":9,"langs":{"en":14,"ja":2,"fr":2,"no":1,"sv":1,"nl":1,"pt":1,"fi":1,"de":1},"n_en":14,"n_nonen":10,"pct_en":58.3,"anglo_core":12,"supra":1,"non_anglo":11,"pct_anglo":50.0,"grade":"A","score":84.4,"conv":false,"blob":"mobility-built-environment population-general a retracted-pre-rehab us au jp nz uk no se int nl fr ca sg br ch ie fi de en ja fr no sv nl pt fi de t1 t2 t3 t5 t6 clinical national_fw co1 standard_eb code"},{"slug":"room-acoustic-performance","topic":"sensory-environment","state":"RETRACTED-PRE-REHAB","n":32,"bp":20,"code_only":12,"tiers":{"1":16,"2":1,"3":4,"4":2,"5":8,"6":1},"etypes":{"clinical":19,"national_fw":8,"standard_eb":3,"code":1,"grey":1},"n_jur":13,"jurs":{"US":11,"INT":7,"UK":3,"IT":2,"DE":1,"NO":1,"CN":1,"JP":1,"CA":1,"FR":1,"AU/NZ":1,"DA":1,"IN":1},"n_lang":7,"langs":{"en":26,"de":1,"it":1,"no":1,"zh":1,"ja":1,"fr":1},"n_en":26,"n_nonen":6,"pct_en":81.2,"anglo_core":16,"supra":7,"non_anglo":9,"pct_anglo":50.0,"grade":"A","score":82.7,"conv":false,"blob":"room-acoustic-performance sensory-environment a retracted-pre-rehab us int uk it de no cn jp ca fr au/nz da in en de it no zh ja fr t1 t2 t3 t4 t5 t6 clinical national_fw standard_eb code grey"},{"slug":"mental-health-built-environment","topic":"population-general","state":"RETRACTED-PRE-REHAB","n":25,"bp":16,"code_only":9,"tiers":{"1":3,"2":2,"3":17,"4":1,"5":2},"etypes":{"standard_eb":3,"clinical":11,"grey":6,"co1":3,"national_fw":2},"n_jur":8,"jurs":{"INT":8,"US":4,"NL":4,"DE":3,"UK":2,"AU":2,"NO":1,"CA":1},"n_lang":4,"langs":{"en":21,"de":2,"fr":1,"nl":1},"n_en":21,"n_nonen":4,"pct_en":84.0,"anglo_core":9,"supra":8,"non_anglo":8,"pct_anglo":36.0,"grade":"A","score":80.8,"conv":false,"blob":"mental-health-built-environment population-general a retracted-pre-rehab int us nl de uk au no ca en de fr nl t1 t2 t3 t4 t5 standard_eb clinical grey co1 national_fw"},{"slug":"accessible-bathroom-and-grab-bar","topic":"bathrooms-and-wet-areas","state":"RETRACTED-PRE-REHAB","n":19,"bp":9,"code_only":10,"tiers":{"1":5,"2":4,"3":1,"4":1,"5":4,"6":4},"etypes":{"standard_eb":4,"national_fw":4,"code":4,"clinical":5,"grey":1,"co2":1},"n_jur":12,"jurs":{"CA":3,"UK":3,"US":2,"IE":2,"AU":2,"DE":1,"BE":1,"IT":1,"PT":1,"KR":1,"NZ":1,"CN":1},"n_lang":8,"langs":{"en":11,"fr":2,"de":1,"it":1,"pt":1,"ko":1,"nl":1,"zh":1},"n_en":11,"n_nonen":8,"pct_en":57.9,"anglo_core":13,"supra":0,"non_anglo":6,"pct_anglo":68.4,"grade":"A","score":80.0,"conv":false,"blob":"accessible-bathroom-and-grab-bar bathrooms-and-wet-areas a retracted-pre-rehab ca uk us ie au de be it pt kr nz cn en fr de it pt ko nl zh t1 t2 t3 t4 t5 t6 standard_eb national_fw code clinical grey co2"},{"slug":"deaf-classroom-reverberation-time","topic":"communication-and-alerts","state":"RETRACTED-PRE-REHAB","n":12,"bp":2,"code_only":10,"tiers":{"1":2,"4":1,"5":6,"6":3},"etypes":{"clinical":2,"national_fw":6,"standard_eb":1,"code":3},"n_jur":9,"jurs":{"US":3,"IT":2,"DE":1,"NO":1,"CN":1,"FI":1,"FR":1,"SE":1,"NL":1},"n_lang":9,"langs":{"en":3,"it":2,"de":1,"no":1,"zh":1,"fi":1,"fr":1,"sv":1,"nl":1},"n_en":3,"n_nonen":9,"pct_en":25.0,"anglo_core":3,"supra":0,"non_anglo":9,"pct_anglo":25.0,"grade":"B","score":79.5,"conv":false,"blob":"deaf-classroom-reverberation-time communication-and-alerts b retracted-pre-rehab us it de no cn fi fr se nl en it de no zh fi fr sv nl t1 t4 t5 t6 clinical national_fw standard_eb code"},{"slug":"residential-kitchen-and-task-surfaces","topic":"kitchens-and-workspaces","state":"RETRACTED-PRE-REHAB","n":13,"bp":3,"code_only":10,"tiers":{"1":3,"4":2,"5":3,"6":5},"etypes":{"code":5,"standard_eb":2,"clinical":3,"national_fw":3},"n_jur":10,"jurs":{"US":3,"UK":2,"DE":1,"CN":1,"BE":1,"ISO":1,"AU":1,"IT":1,"PT":1,"KR":1},"n_lang":8,"langs":{"en":5,"fr":2,"de":1,"no":1,"zh":1,"it":1,"pt":1,"ko":1},"n_en":5,"n_nonen":8,"pct_en":38.5,"anglo_core":6,"supra":1,"non_anglo":6,"pct_anglo":46.2,"grade":"B","score":78.2,"conv":false,"blob":"residential-kitchen-and-task-surfaces kitchens-and-workspaces b retracted-pre-rehab us uk de cn be iso au it pt kr en fr de no zh it pt ko t1 t4 t5 t6 code standard_eb clinical national_fw"},{"slug":"wayfinding-global-south","topic":"wayfinding-and-signage","state":"RETRACTED-PRE-REHAB","n":15,"bp":1,"code_only":14,"tiers":{"1":1,"4":4,"6":10},"etypes":{"code":10,"standard_eb":4,"clinical":1},"n_jur":13,"jurs":{"SG":2,"INT":2,"NG":1,"ASEAN":1,"IN":1,"CN":1,"KR":1,"JP":1,"SA":1,"EG":1,"AE":1,"BD":1,"ID":1},"n_lang":7,"langs":{"en":8,"ar":2,"zh":1,"ko":1,"ja":1,"bn":1,"id":1},"n_en":8,"n_nonen":7,"pct_en":53.3,"anglo_core":0,"supra":3,"non_anglo":12,"pct_anglo":0.0,"grade":"B","score":77.3,"conv":false,"blob":"wayfinding-global-south wayfinding-and-signage b retracted-pre-rehab sg int ng asean in cn kr jp sa eg ae bd id en ar zh ko ja bn id t1 t4 t6 code standard_eb clinical"},{"slug":"dementia-built-environment","topic":"population-general","state":"RETRACTED-PRE-REHAB","n":8,"bp":5,"code_only":3,"tiers":{"1":1,"3":4,"5":3},"etypes":{"clinical":4,"national_fw":3,"co1":1},"n_jur":5,"jurs":{"INT":3,"NL":2,"UK":1,"DE":1,"NO":1},"n_lang":4,"langs":{"en":5,"nl":1,"de":1,"no":1},"n_en":5,"n_nonen":3,"pct_en":62.5,"anglo_core":1,"supra":3,"non_anglo":4,"pct_anglo":12.5,"grade":"B","score":76.9,"conv":false,"blob":"dementia-built-environment population-general b retracted-pre-rehab int nl uk de no en nl de no t1 t3 t5 clinical national_fw co1"},{"slug":"accessible-design-economics-cost-premium","topic":"economics","state":"RETRACTED-PRE-REHAB","n":11,"bp":9,"code_only":2,"tiers":{"1":1,"2":2,"3":6,"6":2},"etypes":{"clinical":7,"standard_eb":2,"code":2},"n_jur":7,"jurs":{"INT":2,"DE":2,"US":2,"BE":1,"NO":1,"CA":1,"NL":1},"n_lang":3,"langs":{"en":8,"de":2,"no":1},"n_en":8,"n_nonen":3,"pct_en":72.7,"anglo_core":3,"supra":2,"non_anglo":5,"pct_anglo":30.0,"grade":"B","score":75.7,"conv":false,"blob":"accessible-design-economics-cost-premium economics b retracted-pre-rehab int de us be no ca nl en de no t1 t2 t3 t6 clinical standard_eb code"},{"slug":"threshold-door-hardware","topic":"entrances-and-circulation","state":"RETRACTED-PRE-REHAB","n":32,"bp":2,"code_only":30,"tiers":{"1":1,"3":1,"4":1,"5":9,"6":20},"etypes":{"code":20,"clinical":2,"national_fw":9,"standard_eb":1},"n_jur":26,"jurs":{"US":3,"AU":2,"NO":2,"CA":2,"DK":2,"EU":1,"IE":1,"FR":1,"UK":1,"DE":1,"SE":1,"NZ":1,"SG":1,"INT":1,"TH/AU":1,"BR":1,"CH":1,"FI":1,"IT":1,"KR":1,"CN":1,"JP":1,"ES":1,"PT":1,"NL":1,"BE":1},"n_lang":13,"langs":{"en":15,"de":2,"no":2,"pt":2,"da":2,"nl":2,"fr":1,"sv":1,"fi":1,"it":1,"zh":1,"ja":1,"es":1},"n_en":15,"n_nonen":17,"pct_en":46.9,"anglo_core":11,"supra":2,"non_anglo":19,"pct_anglo":34.4,"grade":"B","score":75.2,"conv":false,"blob":"threshold-door-hardware entrances-and-circulation b retracted-pre-rehab us au no ca dk eu ie fr uk de se nz sg int th/au br ch fi it kr cn jp es pt nl be en de no pt da nl fr sv fi it zh ja es t1 t3 t4 t5 t6 code clinical national_fw standard_eb"},{"slug":"visual-impairment-built-environment","topic":"population-general","state":"RETRACTED-PRE-REHAB","n":8,"bp":2,"code_only":6,"tiers":{"2":2,"4":2,"5":1,"6":3},"etypes":{"standard_eb":4,"code":3,"national_fw":1},"n_jur":7,"jurs":{"KR":2,"INT":1,"CN":1,"JP":1,"DE":1,"BR":1,"UK":1},"n_lang":6,"langs":{"en":2,"ko":2,"zh":1,"ja":1,"de":1,"pt":1},"n_en":2,"n_nonen":6,"pct_en":25.0,"anglo_core":1,"supra":1,"non_anglo":6,"pct_anglo":12.5,"grade":"B","score":75.2,"conv":false,"blob":"visual-impairment-built-environment population-general b retracted-pre-rehab kr int cn jp de br uk en ko zh ja de pt t2 t4 t5 t6 standard_eb code national_fw"},{"slug":"residential-entry-and-threshold","topic":"entrances-and-circulation","state":"RETRACTED-PRE-REHAB","n":20,"bp":4,"code_only":16,"tiers":{"1":1,"2":3,"4":1,"5":6,"6":9},"etypes":{"standard_eb":4,"national_fw":6,"clinical":1,"code":9},"n_jur":13,"jurs":{"UK":5,"AU":3,"NL":2,"TH/AU":1,"US":1,"CA":1,"NO":1,"DE":1,"SE":1,"BR":1,"FR":1,"JP":1,"INT":1},"n_lang":7,"langs":{"en":13,"nl":2,"no":1,"de":1,"sv":1,"fr":1,"ja":1},"n_en":13,"n_nonen":7,"pct_en":65.0,"anglo_core":11,"supra":1,"non_anglo":8,"pct_anglo":55.0,"grade":"B","score":75.0,"conv":false,"blob":"residential-entry-and-threshold entrances-and-circulation b retracted-pre-rehab uk au nl th/au us ca no de se br fr jp int en nl no de sv fr ja t1 t2 t4 t5 t6 standard_eb national_fw clinical code"},{"slug":"stair-ramp-threshold-biomechanics-accessibility","topic":"entrances-and-circulation","state":"RETRACTED-PRE-REHAB","n":26,"bp":13,"code_only":13,"tiers":{"3":14,"4":1,"5":1,"6":10},"etypes":{"clinical":13,"national_fw":1,"code":10,"standard_eb":1,"grey":1},"n_jur":15,"jurs":{"INT":11,"UK":2,"SE":1,"IT":1,"PT":1,"CA":1,"US":1,"NO":1,"FR":1,"DE":1,"FI":1,"DK":1,"CN":1,"ES":1,"NL":1},"n_lang":12,"langs":{"en":15,"sv":1,"it":1,"pt":1,"no":1,"fr":1,"de":1,"fi":1,"da":1,"zh":1,"es":1,"nl":1},"n_en":15,"n_nonen":11,"pct_en":57.7,"anglo_core":4,"supra":11,"non_anglo":11,"pct_anglo":15.4,"grade":"B","score":74.5,"conv":false,"blob":"stair-ramp-threshold-biomechanics-accessibility entrances-and-circulation b retracted-pre-rehab int uk se it pt ca us no fr de fi dk cn es nl en sv it pt no fr de fi da zh es nl t3 t4 t5 t6 clinical national_fw code standard_eb grey"},{"slug":"assistive-listening-systems","topic":"communication-and-alerts","state":"RETRACTED-PRE-REHAB","n":8,"bp":4,"code_only":4,"tiers":{"2":4,"4":1,"5":1,"6":2},"etypes":{"standard_eb":5,"code":2,"national_fw":1},"n_jur":7,"jurs":{"INT":2,"NO":1,"FR":1,"DE":1,"UK":1,"AU":1,"JP":1},"n_lang":5,"langs":{"en":4,"no":1,"fr":1,"de":1,"ja":1},"n_en":4,"n_nonen":4,"pct_en":50.0,"anglo_core":2,"supra":2,"non_anglo":4,"pct_anglo":25.0,"grade":"B","score":74.4,"conv":false,"blob":"assistive-listening-systems communication-and-alerts b retracted-pre-rehab int no fr de uk au jp en no fr de ja t2 t4 t5 t6 standard_eb code national_fw"},{"slug":"deafblind-built-environment-design","topic":"population-general","state":"RETRACTED-PRE-REHAB","n":9,"bp":7,"code_only":2,"tiers":{"1":3,"2":4,"3":1,"6":1},"etypes":{"code":1,"standard_eb":4,"co1":3,"grey":1},"n_jur":5,"jurs":{"US":3,"INT":2,"JP":2,"BR":1,"AU":1},"n_lang":3,"langs":{"en":6,"ja":2,"pt":1},"n_en":6,"n_nonen":3,"pct_en":66.7,"anglo_core":4,"supra":2,"non_anglo":3,"pct_anglo":44.4,"grade":"B","score":74.3,"conv":false,"blob":"deafblind-built-environment-design population-general b retracted-pre-rehab us int jp br au en ja pt t1 t2 t3 t6 code standard_eb co1 grey"},{"slug":"construction-cost-data","topic":"economics","state":null,"n":10,"bp":8,"code_only":2,"tiers":{"1":2,"2":4,"3":2,"6":2},"etypes":{"code":2,"standard_eb":4,"clinical":4},"n_jur":8,"jurs":{"DE":2,"US":2,"CA":1,"BE":1,"SE":1,"INT":1,"UK":1,"AU":1},"n_lang":2,"langs":{"en":8,"de":2},"n_en":8,"n_nonen":2,"pct_en":80.0,"anglo_core":5,"supra":1,"non_anglo":4,"pct_anglo":50.0,"grade":"B","score":72.2,"conv":false,"blob":"construction-cost-data economics b  de us ca be se int uk au en de t1 t2 t3 t6 code standard_eb clinical"},{"slug":"upper-limb-impairment-built-environment","topic":"population-general","state":"RETRACTED-PRE-REHAB","n":14,"bp":13,"code_only":1,"tiers":{"1":2,"3":12},"etypes":{"clinical":12,"grey":1,"co1":1},"n_jur":3,"jurs":{"INT":7,"US":6,"CA":1},"n_lang":2,"langs":{"en":13,"sv":1},"n_en":13,"n_nonen":1,"pct_en":92.9,"anglo_core":7,"supra":7,"non_anglo":0,"pct_anglo":50.0,"grade":"B","score":70.9,"conv":false,"blob":"upper-limb-impairment-built-environment population-general b retracted-pre-rehab int us ca en sv t1 t3 clinical grey co1"},{"slug":"neurological-built-environment","topic":"population-general","state":"RETRACTED-PRE-REHAB","n":8,"bp":8,"code_only":0,"tiers":{"1":2,"3":6},"etypes":{"clinical":7,"co1":1},"n_jur":5,"jurs":{"INT":3,"NL":2,"US":1,"NO":1,"SE":1},"n_lang":1,"langs":{"en":8},"n_en":8,"n_nonen":0,"pct_en":100.0,"anglo_core":1,"supra":3,"non_anglo":4,"pct_anglo":12.5,"grade":"B","score":69.6,"conv":false,"blob":"neurological-built-environment population-general b retracted-pre-rehab int nl us no se en t1 t3 clinical co1"},{"slug":"school-environment-autism","topic":"sensory-environment","state":null,"n":17,"bp":16,"code_only":1,"tiers":{"1":2,"2":2,"3":13},"etypes":{"grey":1,"sr_meta":2,"clinical":14},"n_jur":3,"jurs":{"INT":1,"IT":1,"FR":1},"n_lang":1,"langs":{"en":17},"n_en":17,"n_nonen":0,"pct_en":100.0,"anglo_core":0,"supra":1,"non_anglo":2,"pct_anglo":0.0,"grade":"B","score":69.3,"conv":false,"blob":"school-environment-autism sensory-environment b  int it fr en t1 t2 t3 grey sr_meta clinical"},{"slug":"accessible-circulation-geometry","topic":"entrances-and-circulation","state":"RETRACTED-PRE-REHAB","n":12,"bp":3,"code_only":9,"tiers":{"1":1,"2":1,"3":1,"4":1,"5":2,"6":6},"etypes":{"standard_eb":2,"code":6,"national_fw":2,"clinical":2},"n_jur":7,"jurs":{"UK":5,"INT":2,"US":1,"AU":1,"DE":1,"SE":1,"FI":1},"n_lang":4,"langs":{"en":9,"de":1,"sv":1,"fi":1},"n_en":9,"n_nonen":3,"pct_en":75.0,"anglo_core":7,"supra":2,"non_anglo":3,"pct_anglo":58.3,"grade":"B","score":69.0,"conv":false,"blob":"accessible-circulation-geometry entrances-and-circulation b retracted-pre-rehab uk int us au de se fi en de sv fi t1 t2 t3 t4 t5 t6 standard_eb code national_fw clinical"},{"slug":"pain-ofs-built-environment-design","topic":"health-and-symptom-management","state":"RETRACTED-PRE-REHAB","n":12,"bp":5,"code_only":7,"tiers":{"1":2,"2":3,"3":3,"5":3,"6":1},"etypes":{"standard_eb":3,"co1":2,"grey":3,"national_fw":3,"code":1},"n_jur":6,"jurs":{"US":4,"UK":2,"SE":1,"FR":1,"DE":1,"INT":1},"n_lang":3,"langs":{"en":10,"sv":1,"fr":1},"n_en":10,"n_nonen":2,"pct_en":83.3,"anglo_core":6,"supra":1,"non_anglo":3,"pct_anglo":60.0,"grade":"B","score":68.6,"conv":false,"blob":"pain-ofs-built-environment-design health-and-symptom-management b retracted-pre-rehab us uk se fr de int en sv fr t1 t2 t3 t5 t6 standard_eb co1 grey national_fw code"},{"slug":"accessibility-feature-market-value-uplift-framing","topic":"economics","state":"RETRACTED-PRE-REHAB","n":33,"bp":10,"code_only":23,"tiers":{"1":2,"3":8,"4":4,"5":15,"6":4},"etypes":{"clinical":10,"code":4,"national_fw":15,"standard_eb":4},"n_jur":11,"jurs":{"US":16,"UK":5,"NO":2,"AU":2,"EU":2,"CA / INT":1,"DE":1,"NL":1,"CA":1,"US/AU/INT":1,"INT":1},"n_lang":3,"langs":{"en":30,"no":2,"de":1},"n_en":30,"n_nonen":3,"pct_en":90.9,"anglo_core":26,"supra":3,"non_anglo":4,"pct_anglo":78.8,"grade":"B","score":67.4,"conv":false,"blob":"accessibility-feature-market-value-uplift-framing economics b retracted-pre-rehab us uk no au eu ca / int de nl ca us/au/int int en no de t1 t3 t4 t5 t6 clinical code national_fw standard_eb"},{"slug":"sensory-space-global-south","topic":"sensory-environment","state":"RETRACTED-PRE-REHAB","n":8,"bp":4,"code_only":4,"tiers":{"1":2,"2":1,"3":3,"5":1,"6":1},"etypes":{"clinical":3,"national_fw":1,"grey":2,"code":1,"standard_eb":1},"n_jur":5,"jurs":{"INT":3,"JP":2,"MY":1,"CL":1,"IN":1},"n_lang":2,"langs":{"en":6,"ja":2},"n_en":6,"n_nonen":2,"pct_en":75.0,"anglo_core":0,"supra":3,"non_anglo":5,"pct_anglo":0.0,"grade":"B","score":67.4,"conv":false,"blob":"sensory-space-global-south sensory-environment b retracted-pre-rehab int jp my cl in en ja t1 t2 t3 t5 t6 clinical national_fw grey code standard_eb"},{"slug":"air-quality-voc-chemical-sensitivity-built-environment","topic":"sensory-environment","state":"RETRACTED-PRE-REHAB","n":12,"bp":7,"code_only":5,"tiers":{"2":1,"3":6,"4":4,"5":1},"etypes":{"standard_eb":5,"clinical":6,"national_fw":1},"n_jur":7,"jurs":{"INT":4,"UK":3,"US":1,"AU":1,"US/AU/SE/UK":1,"DE":1,"IT":1},"n_lang":1,"langs":{"en":12},"n_en":12,"n_nonen":0,"pct_en":100.0,"anglo_core":6,"supra":4,"non_anglo":2,"pct_anglo":50.0,"grade":"C","score":62.5,"conv":false,"blob":"air-quality-voc-chemical-sensitivity-built-environment sensory-environment c retracted-pre-rehab int uk us au us/au/se/uk de it en t2 t3 t4 t5 standard_eb clinical national_fw"},{"slug":"thermal-comfort-older-adults-care-settings","topic":"health-and-symptom-management","state":"RETRACTED-PRE-REHAB","n":6,"bp":4,"code_only":2,"tiers":{"2":1,"3":4,"5":1},"etypes":{"clinical":3,"grey":1,"national_fw":1,"standard_eb":1},"n_jur":4,"jurs":{"ES":2,"INT":2,"JP":1,"UK":1},"n_lang":2,"langs":{"en":5,"ja":1},"n_en":5,"n_nonen":1,"pct_en":83.3,"anglo_core":1,"supra":2,"non_anglo":3,"pct_anglo":16.7,"grade":"C","score":60.8,"conv":false,"blob":"thermal-comfort-older-adults-care-settings health-and-symptom-management c retracted-pre-rehab es int jp uk en ja t2 t3 t5 clinical grey national_fw standard_eb"},{"slug":"deaf-acoustic-built-environment","topic":"communication-and-alerts","state":"RETRACTED-PRE-REHAB","n":10,"bp":5,"code_only":5,"tiers":{"1":2,"2":3,"4":3,"5":2},"etypes":{"standard_eb":6,"national_fw":2,"clinical":2},"n_jur":4,"jurs":{"INT":7,"DE":1,"UK":1,"US":1},"n_lang":2,"langs":{"en":9,"de":1},"n_en":9,"n_nonen":1,"pct_en":90.0,"anglo_core":2,"supra":7,"non_anglo":1,"pct_anglo":20.0,"grade":"C","score":60.7,"conv":false,"blob":"deaf-acoustic-built-environment communication-and-alerts c retracted-pre-rehab int de uk us en de t1 t2 t4 t5 standard_eb national_fw clinical"},{"slug":"sensory-relief-space-design","topic":"sensory-environment","state":"RETRACTED-PRE-REHAB","n":10,"bp":8,"code_only":2,"tiers":{"1":1,"2":3,"3":4,"4":1,"6":1},"etypes":{"standard_eb":2,"clinical":5,"sr_meta":2,"code":1},"n_jur":6,"jurs":{"UK":4,"AU":2,"IE":1,"INT":1,"US":1,"IT":1},"n_lang":1,"langs":{"en":10},"n_en":10,"n_nonen":0,"pct_en":100.0,"anglo_core":8,"supra":1,"non_anglo":1,"pct_anglo":80.0,"grade":"C","score":60.5,"conv":false,"blob":"sensory-relief-space-design sensory-environment c retracted-pre-rehab uk au ie int us it en t1 t2 t3 t4 t6 standard_eb clinical sr_meta code"},{"slug":"residential-accessible-home-case-studies","topic":"frameworks-and-methodology","state":null,"n":8,"bp":8,"code_only":0,"tiers":{"1":4,"2":2,"3":2},"etypes":{"clinical":5,"co1":1,"standard_eb":2},"n_jur":4,"jurs":{"UK":3,"AU":2,"INT":1,"NZ":1},"n_lang":1,"langs":{"en":8},"n_en":8,"n_nonen":0,"pct_en":100.0,"anglo_core":6,"supra":1,"non_anglo":0,"pct_anglo":85.7,"grade":"C","score":60.1,"conv":false,"blob":"residential-accessible-home-case-studies frameworks-and-methodology c  uk au int nz en t1 t2 t3 clinical co1 standard_eb"},{"slug":"biophilic-design-healthcare-workplace","topic":"sensory-environment","state":"RETRACTED-PRE-REHAB","n":6,"bp":6,"code_only":0,"tiers":{"1":1,"3":5},"etypes":{"clinical":5,"co1":1},"n_jur":3,"jurs":{"INT":4,"US":1,"AU":1},"n_lang":1,"langs":{"en":6},"n_en":6,"n_nonen":0,"pct_en":100.0,"anglo_core":2,"supra":4,"non_anglo":0,"pct_anglo":33.3,"grade":"C","score":60.0,"conv":false,"blob":"biophilic-design-healthcare-workplace sensory-environment c retracted-pre-rehab int us au en t1 t3 clinical co1"},{"slug":"manoeuvring-footprint-vs-turning-radius-methodology","topic":"frameworks-and-methodology","state":"METHODOLOGY-AUTHORED","n":8,"bp":7,"code_only":1,"tiers":{"1":5,"3":2,"4":1},"etypes":{"clinical":5,"standard_eb":1,"co1":2},"n_jur":3,"jurs":{"US":5,"INT":2,"INT/ZA":1},"n_lang":1,"langs":{"en":8},"n_en":8,"n_nonen":0,"pct_en":100.0,"anglo_core":5,"supra":3,"non_anglo":0,"pct_anglo":62.5,"grade":"C","score":59.3,"conv":false,"blob":"manoeuvring-footprint-vs-turning-radius-methodology frameworks-and-methodology c methodology-authored us int int/za en t1 t3 t4 clinical standard_eb co1"},{"slug":"ms-thermal-temperature-conflict-resolution","topic":"health-and-symptom-management","state":"RETRACTED-PRE-REHAB","n":10,"bp":7,"code_only":3,"tiers":{"1":1,"3":6,"4":2,"5":1},"etypes":{"clinical":6,"co1":1,"standard_eb":2,"national_fw":1},"n_jur":4,"jurs":{"INT":7,"ES":1,"US":1,"UK":1},"n_lang":1,"langs":{"en":10},"n_en":10,"n_nonen":0,"pct_en":100.0,"anglo_core":2,"supra":7,"non_anglo":1,"pct_anglo":20.0,"grade":"C","score":59.0,"conv":false,"blob":"ms-thermal-temperature-conflict-resolution health-and-symptom-management c retracted-pre-rehab int es us uk en t1 t3 t4 t5 clinical co1 standard_eb national_fw"},{"slug":"acoustics-speech-intelligibility-disability","topic":"sensory-environment","state":"RETRACTED-PRE-REHAB","n":8,"bp":5,"code_only":3,"tiers":{"1":1,"2":1,"3":3,"4":3},"etypes":{"standard_eb":4,"clinical":4},"n_jur":4,"jurs":{"INT":5,"US":1,"FR":1,"KR":1},"n_lang":1,"langs":{"en":8},"n_en":8,"n_nonen":0,"pct_en":100.0,"anglo_core":1,"supra":5,"non_anglo":2,"pct_anglo":12.5,"grade":"C","score":58.1,"conv":false,"blob":"acoustics-speech-intelligibility-disability sensory-environment c retracted-pre-rehab int us fr kr en t1 t2 t3 t4 standard_eb clinical"},{"slug":"ot-cpg-built-environment","topic":"population-general","state":"RETRACTED-PRE-REHAB","n":6,"bp":6,"code_only":0,"tiers":{"2":6},"etypes":{"standard_eb":4,"co2":2},"n_jur":4,"jurs":{"UK":3,"US":1,"CA":1,"INT":1},"n_lang":1,"langs":{"en":6},"n_en":6,"n_nonen":0,"pct_en":100.0,"anglo_core":5,"supra":1,"non_anglo":0,"pct_anglo":83.3,"grade":"C","score":56.3,"conv":false,"blob":"ot-cpg-built-environment population-general c retracted-pre-rehab uk us ca int en t2 standard_eb co2"},{"slug":"visitability-residential-accessibility-minimum-standards","topic":"frameworks-and-methodology","state":"RETRACTED-PRE-REHAB","n":7,"bp":1,"code_only":6,"tiers":{"1":1,"5":1,"6":5},"etypes":{"co1":1,"national_fw":1,"code":5},"n_jur":5,"jurs":{"US":3,"CA":1,"DE":1,"NO":1,"AU":1},"n_lang":3,"langs":{"en":5,"de":1,"no":1},"n_en":5,"n_nonen":2,"pct_en":71.4,"anglo_core":5,"supra":0,"non_anglo":2,"pct_anglo":71.4,"grade":"C","score":55.2,"conv":false,"blob":"visitability-residential-accessibility-minimum-standards frameworks-and-methodology c retracted-pre-rehab us ca de no au en de no t1 t5 t6 co1 national_fw code"},{"slug":"ot-frameworks-built-environment","topic":"frameworks-and-methodology","state":"RETRACTED-PRE-REHAB","n":4,"bp":4,"code_only":0,"tiers":{"1":4},"etypes":{"clinical":4},"n_jur":3,"jurs":{"INT":2,"CA":1,"US":1},"n_lang":1,"langs":{"en":4},"n_en":4,"n_nonen":0,"pct_en":100.0,"anglo_core":2,"supra":2,"non_anglo":0,"pct_anglo":50.0,"grade":"C","score":54.8,"conv":false,"blob":"ot-frameworks-built-environment frameworks-and-methodology c retracted-pre-rehab int ca us en t1 clinical"},{"slug":"ndv-aut-built-environment-quantified-thresholds","topic":"population-general","state":"RETRACTED-PRE-REHAB","n":6,"bp":4,"code_only":2,"tiers":{"2":2,"3":3,"4":1},"etypes":{"clinical":2,"grey":1,"standard_eb":2,"sr_meta":1},"n_jur":3,"jurs":{"INT":4,"UK":1,"IT":1},"n_lang":1,"langs":{"en":6},"n_en":6,"n_nonen":0,"pct_en":100.0,"anglo_core":1,"supra":4,"non_anglo":1,"pct_anglo":16.7,"grade":"C","score":54.5,"conv":false,"blob":"ndv-aut-built-environment-quantified-thresholds population-general c retracted-pre-rehab int uk it en t2 t3 t4 clinical grey standard_eb sr_meta"},{"slug":"detectable-gradient-protocol-sensory-zones","topic":"wayfinding-and-signage","state":"RETRACTED-PRE-REHAB","n":6,"bp":4,"code_only":2,"tiers":{"1":1,"2":1,"3":2,"4":2},"etypes":{"clinical":3,"standard_eb":3},"n_jur":3,"jurs":{"INT":4,"US":1,"UK":1},"n_lang":1,"langs":{"en":6},"n_en":6,"n_nonen":0,"pct_en":100.0,"anglo_core":2,"supra":4,"non_anglo":0,"pct_anglo":33.3,"grade":"C","score":53.3,"conv":false,"blob":"detectable-gradient-protocol-sensory-zones wayfinding-and-signage c retracted-pre-rehab int us uk en t1 t2 t3 t4 clinical standard_eb"},{"slug":"design-framework-evidence-audit","topic":"frameworks-and-methodology","state":"RETRACTED-PRE-REHAB","n":9,"bp":4,"code_only":5,"tiers":{"2":1,"3":5,"4":2,"5":1},"etypes":{"national_fw":1,"standard_eb":3,"clinical":3,"grey":2},"n_jur":4,"jurs":{"INT":5,"UK":2,"US":1,"SE":1},"n_lang":1,"langs":{"en":9},"n_en":9,"n_nonen":0,"pct_en":100.0,"anglo_core":3,"supra":5,"non_anglo":1,"pct_anglo":33.3,"grade":"C","score":52.9,"conv":false,"blob":"design-framework-evidence-audit frameworks-and-methodology c retracted-pre-rehab int uk us se en t2 t3 t4 t5 national_fw standard_eb clinical grey"},{"slug":"luminance-contrast-and-pattern","topic":"wayfinding-and-signage","state":null,"n":13,"bp":0,"code_only":13,"tiers":{"5":4,"6":9},"etypes":{"code":9,"national_fw":4},"n_jur":13,"jurs":{"JP":1,"NL":1,"SE":1,"IT":1,"PT":1,"FR":1,"FI":1,"DK":1,"CN":1,"ES":1,"KR":1,"DE":1,"NO":1},"n_lang":13,"langs":{"ja":1,"nl":1,"sv":1,"it":1,"pt":1,"fr":1,"fi":1,"da":1,"zh":1,"es":1,"ko":1,"de":1,"no":1},"n_en":0,"n_nonen":13,"pct_en":0.0,"anglo_core":0,"supra":0,"non_anglo":13,"pct_anglo":0.0,"grade":"C","score":52.5,"conv":true,"blob":"luminance-contrast-and-pattern wayfinding-and-signage c  jp nl se it pt fr fi dk cn es kr de no ja nl sv it pt fr fi da zh es ko de no t5 t6 code national_fw convergence-only ‡"},{"slug":"sensory-processing-model-design-application","topic":"sensory-environment","state":"RETRACTED-PRE-REHAB","n":6,"bp":4,"code_only":2,"tiers":{"1":2,"2":1,"3":1,"4":1,"5":1},"etypes":{"standard_eb":2,"national_fw":1,"clinical":3},"n_jur":4,"jurs":{"INT":3,"UK":1,"CA":1,"US":1},"n_lang":1,"langs":{"en":6},"n_en":6,"n_nonen":0,"pct_en":100.0,"anglo_core":3,"supra":3,"non_anglo":0,"pct_anglo":50.0,"grade":"C","score":52.1,"conv":false,"blob":"sensory-processing-model-design-application sensory-environment c retracted-pre-rehab int uk ca us en t1 t2 t3 t4 t5 standard_eb national_fw clinical"},{"slug":"ot-built-environment-interface","topic":"frameworks-and-methodology","state":"RETRACTED-PRE-REHAB","n":5,"bp":2,"code_only":3,"tiers":{"1":1,"3":4},"etypes":{"clinical":2,"grey":3},"n_jur":3,"jurs":{"AU":2,"UK":2,"INT":1},"n_lang":2,"langs":{"en":4,"fi":1},"n_en":4,"n_nonen":1,"pct_en":80.0,"anglo_core":4,"supra":1,"non_anglo":0,"pct_anglo":80.0,"grade":"C","score":51.0,"conv":false,"blob":"ot-built-environment-interface frameworks-and-methodology c retracted-pre-rehab au uk int en fi t1 t3 clinical grey"},{"slug":"circadian-lighting-melanopic-edi","topic":"sensory-environment","state":"RETRACTED-PRE-REHAB","n":10,"bp":5,"code_only":5,"tiers":{"3":5,"4":2,"5":3},"etypes":{"clinical":5,"standard_eb":2,"national_fw":3},"n_jur":4,"jurs":{"INT":6,"US":2,"DE":1,"NO":1},"n_lang":2,"langs":{"en":9,"de":1},"n_en":9,"n_nonen":1,"pct_en":90.0,"anglo_core":2,"supra":6,"non_anglo":2,"pct_anglo":20.0,"grade":"C","score":50.7,"conv":false,"blob":"circadian-lighting-melanopic-edi sensory-environment c retracted-pre-rehab int us de no en de t3 t4 t5 clinical standard_eb national_fw"},{"slug":"visual-fire-alarm-seizure-safety","topic":"sensory-environment","state":"RETRACTED-PRE-REHAB","n":7,"bp":4,"code_only":3,"tiers":{"2":1,"3":3,"4":2,"6":1},"etypes":{"standard_eb":3,"clinical":3,"code":1},"n_jur":3,"jurs":{"INT":4,"US":2,"EU/UK":1},"n_lang":1,"langs":{"en":7},"n_en":7,"n_nonen":0,"pct_en":100.0,"anglo_core":3,"supra":4,"non_anglo":0,"pct_anglo":42.9,"grade":"C","score":50.7,"conv":false,"blob":"visual-fire-alarm-seizure-safety sensory-environment c retracted-pre-rehab int us eu/uk en t2 t3 t4 t6 standard_eb clinical code"},{"slug":"luminance-contrast-lrv-evidence-base","topic":"wayfinding-and-signage","state":"RETRACTED-PRE-REHAB","n":7,"bp":5,"code_only":2,"tiers":{"2":1,"3":4,"5":1,"6":1},"etypes":{"clinical":4,"standard_eb":1,"code":1,"national_fw":1},"n_jur":4,"jurs":{"AU":3,"US":2,"CA":1,"UK":1},"n_lang":1,"langs":{"en":7},"n_en":7,"n_nonen":0,"pct_en":100.0,"anglo_core":7,"supra":0,"non_anglo":0,"pct_anglo":100.0,"grade":"D","score":49.3,"conv":false,"blob":"luminance-contrast-lrv-evidence-base wayfinding-and-signage d retracted-pre-rehab au us ca uk en t2 t3 t5 t6 clinical standard_eb code national_fw"},{"slug":"ofs-built-environment","topic":"health-and-symptom-management","state":"RETRACTED-PRE-REHAB","n":7,"bp":4,"code_only":3,"tiers":{"1":3,"3":1,"5":2,"6":1},"etypes":{"clinical":2,"co1":2,"national_fw":2,"code":1},"n_jur":3,"jurs":{"US":3,"UK":3,"INT":1},"n_lang":1,"langs":{"en":7},"n_en":7,"n_nonen":0,"pct_en":100.0,"anglo_core":6,"supra":1,"non_anglo":0,"pct_anglo":85.7,"grade":"D","score":47.5,"conv":false,"blob":"ofs-built-environment health-and-symptom-management d retracted-pre-rehab us uk int en t1 t3 t5 t6 clinical co1 national_fw code"},{"slug":"cross-population-case-studies","topic":"frameworks-and-methodology","state":null,"n":3,"bp":3,"code_only":0,"tiers":{"1":2,"3":1},"etypes":{"clinical":2,"co1":1},"n_jur":2,"jurs":{"UK":2,"US":1},"n_lang":1,"langs":{"en":3},"n_en":3,"n_nonen":0,"pct_en":100.0,"anglo_core":3,"supra":0,"non_anglo":0,"pct_anglo":100.0,"grade":"D","score":47.0,"conv":false,"blob":"cross-population-case-studies frameworks-and-methodology d  uk us en t1 t3 clinical co1"},{"slug":"ecological-psychology-haptic-affordances-built-environment","topic":"frameworks-and-methodology","state":"RETRACTED-PRE-REHAB","n":5,"bp":5,"code_only":0,"tiers":{"3":5},"etypes":{"clinical":5},"n_jur":2,"jurs":{"INT":4,"US":1},"n_lang":1,"langs":{"en":5},"n_en":5,"n_nonen":0,"pct_en":100.0,"anglo_core":1,"supra":4,"non_anglo":0,"pct_anglo":20.0,"grade":"D","score":47.0,"conv":false,"blob":"ecological-psychology-haptic-affordances-built-environment frameworks-and-methodology d retracted-pre-rehab int us en t3 clinical"},{"slug":"reach-range-and-accessible-controls","topic":"controls-and-hardware","state":"RETRACTED-PRE-REHAB","n":11,"bp":1,"code_only":10,"tiers":{"3":1,"5":5,"6":5},"etypes":{"code":5,"clinical":1,"national_fw":5},"n_jur":6,"jurs":{"US":4,"CA":3,"DE":1,"BR":1,"UK":1,"AU":1},"n_lang":3,"langs":{"en":9,"de":1,"pt":1},"n_en":9,"n_nonen":2,"pct_en":81.8,"anglo_core":9,"supra":0,"non_anglo":2,"pct_anglo":81.8,"grade":"D","score":46.5,"conv":false,"blob":"reach-range-and-accessible-controls controls-and-hardware d retracted-pre-rehab us ca de br uk au en de pt t3 t5 t6 code clinical national_fw"},{"slug":"threshold-and-level-access","topic":"entrances-and-circulation","state":"RETRACTED-PRE-REHAB","n":15,"bp":0,"code_only":15,"tiers":{"4":1,"5":4,"6":10},"etypes":{"national_fw":4,"code":10,"standard_eb":1},"n_jur":12,"jurs":{"US":2,"UK":2,"DE":2,"CA":1,"NO":1,"NL":1,"FR":1,"BR":1,"AU":1,"SE":1,"JP":1,"INT":1},"n_lang":8,"langs":{"en":7,"de":2,"no":1,"nl":1,"fr":1,"pt":1,"sv":1,"ja":1},"n_en":7,"n_nonen":8,"pct_en":46.7,"anglo_core":6,"supra":1,"non_anglo":8,"pct_anglo":40.0,"grade":"D","score":46.0,"conv":true,"blob":"threshold-and-level-access entrances-and-circulation d retracted-pre-rehab us uk de ca no nl fr br au se jp int en de no nl fr pt sv ja t4 t5 t6 national_fw code standard_eb convergence-only ‡"},{"slug":"wayfinding-cognitive-science-spatial-design","topic":"wayfinding-and-signage","state":"RETRACTED-PRE-REHAB","n":7,"bp":7,"code_only":0,"tiers":{"3":7},"etypes":{"clinical":7},"n_jur":2,"jurs":{"INT":4,"US":3},"n_lang":1,"langs":{"en":7},"n_en":7,"n_nonen":0,"pct_en":100.0,"anglo_core":3,"supra":4,"non_anglo":0,"pct_anglo":42.9,"grade":"D","score":45.3,"conv":false,"blob":"wayfinding-cognitive-science-spatial-design wayfinding-and-signage d retracted-pre-rehab int us en t3 clinical"},{"slug":"jurisdiction-grant-programmes-comprehensive","topic":"frameworks-and-methodology","state":"RETRACTED-PRE-REHAB","n":9,"bp":0,"code_only":9,"tiers":{"5":9},"etypes":{"national_fw":9},"n_jur":9,"jurs":{"CA":1,"US":1,"UK":1,"FR":1,"SG":1,"DE":1,"NO":1,"SE":1,"DK":1},"n_lang":6,"langs":{"en":4,"fr":1,"de":1,"no":1,"sv":1,"da":1},"n_en":4,"n_nonen":5,"pct_en":44.4,"anglo_core":3,"supra":0,"non_anglo":6,"pct_anglo":33.3,"grade":"D","score":42.7,"conv":true,"blob":"jurisdiction-grant-programmes-comprehensive frameworks-and-methodology d retracted-pre-rehab ca us uk fr sg de no se dk en fr de no sv da t5 national_fw convergence-only ‡"},{"slug":"case-study-economics-financial-data","topic":"economics","state":null,"n":4,"bp":3,"code_only":1,"tiers":{"1":1,"2":1,"3":1,"5":1},"etypes":{"clinical":2,"national_fw":1,"standard_eb":1},"n_jur":2,"jurs":{"UK":2,"US":2},"n_lang":1,"langs":{"en":4},"n_en":4,"n_nonen":0,"pct_en":100.0,"anglo_core":4,"supra":0,"non_anglo":0,"pct_anglo":100.0,"grade":"D","score":42.0,"conv":false,"blob":"case-study-economics-financial-data economics d  uk us en t1 t2 t3 t5 clinical national_fw standard_eb"},{"slug":"residential-dar-provisions-priority-register","topic":"frameworks-and-methodology","state":"RETRACTED-PRE-REHAB","n":6,"bp":1,"code_only":5,"tiers":{"2":1,"4":1,"5":4},"etypes":{"national_fw":4,"standard_eb":2},"n_jur":3,"jurs":{"UK":3,"CA":2,"INT":1},"n_lang":1,"langs":{"en":6},"n_en":6,"n_nonen":0,"pct_en":100.0,"anglo_core":5,"supra":1,"non_anglo":0,"pct_anglo":83.3,"grade":"D","score":39.6,"conv":false,"blob":"residential-dar-provisions-priority-register frameworks-and-methodology d retracted-pre-rehab uk ca int en t2 t4 t5 national_fw standard_eb"},{"slug":"floor-vibration-wheelchair-disability","topic":"entrances-and-circulation","state":"RETRACTED-PRE-REHAB","n":7,"bp":4,"code_only":3,"tiers":{"3":4,"4":3},"etypes":{"clinical":4,"standard_eb":3},"n_jur":2,"jurs":{"INT":6,"UK":1},"n_lang":1,"langs":{"en":7},"n_en":7,"n_nonen":0,"pct_en":100.0,"anglo_core":1,"supra":6,"non_anglo":0,"pct_anglo":14.3,"grade":"D","score":38.8,"conv":false,"blob":"floor-vibration-wheelchair-disability entrances-and-circulation d retracted-pre-rehab int uk en t3 t4 clinical standard_eb"},{"slug":"intellectual-disability-built-environment-design","topic":"population-general","state":"RETRACTED-PRE-REHAB","n":5,"bp":2,"code_only":3,"tiers":{"3":2,"4":3},"etypes":{"clinical":2,"standard_eb":3},"n_jur":3,"jurs":{"INT":3,"AU":1,"CA":1},"n_lang":1,"langs":{"en":5},"n_en":5,"n_nonen":0,"pct_en":100.0,"anglo_core":2,"supra":3,"non_anglo":0,"pct_anglo":40.0,"grade":"D","score":37.5,"conv":false,"blob":"intellectual-disability-built-environment-design population-general d retracted-pre-rehab int au ca en t3 t4 clinical standard_eb"},{"slug":"visual-alerting-and-wayfinding-light","topic":"wayfinding-and-signage","state":"RETRACTED-PRE-REHAB","n":7,"bp":0,"code_only":7,"tiers":{"4":2,"5":2,"6":3},"etypes":{"standard_eb":2,"code":3,"national_fw":2},"n_jur":7,"jurs":{"INT":1,"EU/UK":1,"US":1,"JP":1,"CN":1,"FR":1,"NO":1},"n_lang":5,"langs":{"en":3,"ja":1,"zh":1,"fr":1,"no":1},"n_en":3,"n_nonen":4,"pct_en":42.9,"anglo_core":2,"supra":1,"non_anglo":4,"pct_anglo":28.6,"grade":"D","score":36.1,"conv":true,"blob":"visual-alerting-and-wayfinding-light wayfinding-and-signage d retracted-pre-rehab int eu/uk us jp cn fr no en ja zh fr no t4 t5 t6 standard_eb code national_fw convergence-only ‡"},{"slug":"body-sizes-supplementary-populations","topic":"frameworks-and-methodology","state":"RETRACTED-PRE-REHAB","n":11,"bp":0,"code_only":11,"tiers":{"3":2,"4":4,"5":5},"etypes":{"national_fw":5,"grey":2,"standard_eb":4},"n_jur":5,"jurs":{"US":3,"INT":3,"ZH":3,"UK":1,"JA":1},"n_lang":2,"langs":{"en":8,"ja":3},"n_en":8,"n_nonen":3,"pct_en":72.7,"anglo_core":4,"supra":3,"non_anglo":4,"pct_anglo":36.4,"grade":"E","score":33.8,"conv":true,"blob":"body-sizes-supplementary-populations frameworks-and-methodology e retracted-pre-rehab us int zh uk ja en ja t3 t4 t5 national_fw grey standard_eb convergence-only ‡"},{"slug":"cross-population-conflict-resolutions","topic":"frameworks-and-methodology","state":"RETRACTED-PRE-REHAB","n":6,"bp":2,"code_only":4,"tiers":{"3":2,"4":3,"5":1},"etypes":{"standard_eb":3,"national_fw":1,"clinical":2},"n_jur":2,"jurs":{"INT":4,"UK":2},"n_lang":1,"langs":{"en":6},"n_en":6,"n_nonen":0,"pct_en":100.0,"anglo_core":2,"supra":4,"non_anglo":0,"pct_anglo":33.3,"grade":"E","score":32.7,"conv":false,"blob":"cross-population-conflict-resolutions frameworks-and-methodology e retracted-pre-rehab int uk en t3 t4 t5 standard_eb national_fw clinical"},{"slug":"thermoregulation-built-environment","topic":"health-and-symptom-management","state":"RETRACTED-PRE-REHAB","n":5,"bp":2,"code_only":3,"tiers":{"3":4,"4":1},"etypes":{"clinical":2,"standard_eb":1,"grey":2},"n_jur":1,"jurs":{"INT":5},"n_lang":1,"langs":{"en":5},"n_en":5,"n_nonen":0,"pct_en":100.0,"anglo_core":0,"supra":5,"non_anglo":0,"pct_anglo":0.0,"grade":"E","score":32.5,"conv":false,"blob":"thermoregulation-built-environment health-and-symptom-management e retracted-pre-rehab int en t3 t4 clinical standard_eb grey"},{"slug":"european-accessibility-act-scope-clarification","topic":"frameworks-and-methodology","state":"RETRACTED-PRE-REHAB","n":6,"bp":0,"code_only":6,"tiers":{"5":2,"6":4},"etypes":{"code":4,"national_fw":2},"n_jur":4,"jurs":{"EU":3,"NZ":1,"NL":1,"ES":1},"n_lang":3,"langs":{"en":4,"nl":1,"es":1},"n_en":4,"n_nonen":2,"pct_en":66.7,"anglo_core":1,"supra":3,"non_anglo":2,"pct_anglo":16.7,"grade":"E","score":31.7,"conv":true,"blob":"european-accessibility-act-scope-clarification frameworks-and-methodology e retracted-pre-rehab eu nz nl es en nl es t5 t6 code national_fw convergence-only ‡"},{"slug":"accessible-laundry-room-design","topic":"room-types","state":"RETRACTED-PRE-REHAB","n":6,"bp":0,"code_only":6,"tiers":{"4":3,"5":3},"etypes":{"standard_eb":3,"national_fw":3},"n_jur":4,"jurs":{"US":3,"AU":1,"SE":1,"DE":1},"n_lang":3,"langs":{"en":4,"sv":1,"de":1},"n_en":4,"n_nonen":2,"pct_en":66.7,"anglo_core":4,"supra":0,"non_anglo":2,"pct_anglo":66.7,"grade":"E","score":28.0,"conv":true,"blob":"accessible-laundry-room-design room-types e retracted-pre-rehab us au se de en sv de t4 t5 standard_eb national_fw convergence-only ‡"},{"slug":"government-grant-programmes-home-adaptation","topic":"economics","state":"RETRACTED-PRE-REHAB","n":7,"bp":0,"code_only":7,"tiers":{"5":7},"etypes":{"national_fw":7},"n_jur":6,"jurs":{"US":2,"CA":1,"UK":1,"AU":1,"DE":1,"CH":1},"n_lang":2,"langs":{"en":5,"de":2},"n_en":5,"n_nonen":2,"pct_en":71.4,"anglo_core":5,"supra":0,"non_anglo":2,"pct_anglo":71.4,"grade":"E","score":27.3,"conv":true,"blob":"government-grant-programmes-home-adaptation economics e retracted-pre-rehab us ca uk au de ch en de t5 national_fw convergence-only ‡"},{"slug":"therapeutic-lighting-design","topic":"sensory-environment","state":"RETRACTED-PRE-REHAB","n":4,"bp":0,"code_only":4,"tiers":{"4":1,"5":3},"etypes":{"national_fw":3,"standard_eb":1},"n_jur":3,"jurs":{"INT":2,"SE":1,"DK":1},"n_lang":2,"langs":{"en":3,"sv":1},"n_en":3,"n_nonen":1,"pct_en":75.0,"anglo_core":0,"supra":2,"non_anglo":2,"pct_anglo":0.0,"grade":"E","score":26.4,"conv":true,"blob":"therapeutic-lighting-design sensory-environment e retracted-pre-rehab int se dk en sv t4 t5 national_fw standard_eb convergence-only ‡"},{"slug":"crpd-implementation-built-environment","topic":"frameworks-and-methodology","state":"RETRACTED-PRE-REHAB","n":5,"bp":0,"code_only":5,"tiers":{"4":5},"etypes":{"standard_eb":5},"n_jur":1,"jurs":{"INT":5},"n_lang":1,"langs":{"en":5},"n_en":5,"n_nonen":0,"pct_en":100.0,"anglo_core":0,"supra":5,"non_anglo":0,"pct_anglo":0.0,"grade":"E","score":22.0,"conv":true,"blob":"crpd-implementation-built-environment frameworks-and-methodology e retracted-pre-rehab int en t4 standard_eb convergence-only ‡"},{"slug":"co1-housing-research-global-south","topic":"frameworks-and-methodology","state":"RETRACTED-PRE-REHAB","n":3,"bp":0,"code_only":3,"tiers":{"4":3},"etypes":{"standard_eb":3},"n_jur":1,"jurs":{"INT":3},"n_lang":1,"langs":{"en":3},"n_en":3,"n_nonen":0,"pct_en":100.0,"anglo_core":0,"supra":3,"non_anglo":0,"pct_anglo":0.0,"grade":"E","score":18.0,"conv":true,"blob":"co1-housing-research-global-south frameworks-and-methodology e retracted-pre-rehab int en t4 standard_eb convergence-only ‡"},{"slug":"accessible-design-failures-poor-performance","topic":"frameworks-and-methodology","state":null,"n":0,"bp":0,"code_only":0,"tiers":{},"etypes":{},"n_jur":0,"jurs":{},"n_lang":0,"langs":{},"n_en":0,"n_nonen":0,"pct_en":null,"anglo_core":0,"supra":0,"non_anglo":0,"pct_anglo":null,"grade":"F","score":0,"conv":false,"blob":"accessible-design-failures-poor-performance frameworks-and-methodology f     "},{"slug":"bariatric-turning-radius-built-environment","topic":"seating-and-rest","state":"RETRACTED-PRE-REHAB","n":0,"bp":0,"code_only":0,"tiers":{},"etypes":{},"n_jur":0,"jurs":{},"n_lang":0,"langs":{},"n_en":0,"n_nonen":0,"pct_en":null,"anglo_core":0,"supra":0,"non_anglo":0,"pct_anglo":null,"grade":"F","score":0,"conv":false,"blob":"bariatric-turning-radius-built-environment seating-and-rest f retracted-pre-rehab    "},{"slug":"bathroom-typology-global-south","topic":"bathrooms-and-wet-areas","state":"RETRACTED-PRE-REHAB","n":0,"bp":0,"code_only":0,"tiers":{},"etypes":{},"n_jur":0,"jurs":{},"n_lang":0,"langs":{},"n_en":0,"n_nonen":0,"pct_en":null,"anglo_core":0,"supra":0,"non_anglo":0,"pct_anglo":null,"grade":"F","score":0,"conv":false,"blob":"bathroom-typology-global-south bathrooms-and-wet-areas f retracted-pre-rehab    "},{"slug":"chronic-pain-built-environment","topic":"health-and-symptom-management","state":null,"n":0,"bp":0,"code_only":0,"tiers":{},"etypes":{},"n_jur":0,"jurs":{},"n_lang":0,"langs":{},"n_en":0,"n_nonen":0,"pct_en":null,"anglo_core":0,"supra":0,"non_anglo":0,"pct_anglo":null,"grade":"F","score":0,"conv":false,"blob":"chronic-pain-built-environment health-and-symptom-management f     "},{"slug":"economics-sources","topic":"economics","state":null,"n":0,"bp":0,"code_only":0,"tiers":{},"etypes":{},"n_jur":0,"jurs":{},"n_lang":0,"langs":{},"n_en":0,"n_nonen":0,"pct_en":null,"anglo_core":0,"supra":0,"non_anglo":0,"pct_anglo":null,"grade":"F","score":0,"conv":false,"blob":"economics-sources economics f     "},{"slug":"fatigue-spectrum-built-environment","topic":"health-and-symptom-management","state":null,"n":0,"bp":0,"code_only":0,"tiers":{},"etypes":{},"n_jur":0,"jurs":{},"n_lang":0,"langs":{},"n_en":0,"n_nonen":0,"pct_en":null,"anglo_core":0,"supra":0,"non_anglo":0,"pct_anglo":null,"grade":"F","score":0,"conv":false,"blob":"fatigue-spectrum-built-environment health-and-symptom-management f     "},{"slug":"fold-down-grab-bar-specification","topic":"bathrooms-and-wet-areas","state":"RETRACTED-PRE-REHAB","n":0,"bp":0,"code_only":0,"tiers":{},"etypes":{},"n_jur":0,"jurs":{},"n_lang":0,"langs":{},"n_en":0,"n_nonen":0,"pct_en":null,"anglo_core":0,"supra":0,"non_anglo":0,"pct_anglo":null,"grade":"F","score":0,"conv":false,"blob":"fold-down-grab-bar-specification bathrooms-and-wet-areas f retracted-pre-rehab    "},{"slug":"government-grant-programmes","topic":"economics","state":null,"n":0,"bp":0,"code_only":0,"tiers":{},"etypes":{},"n_jur":0,"jurs":{},"n_lang":0,"langs":{},"n_en":0,"n_nonen":0,"pct_en":null,"anglo_core":0,"supra":0,"non_anglo":0,"pct_anglo":null,"grade":"F","score":0,"conv":false,"blob":"government-grant-programmes economics f     "},{"slug":"hearing-impairment-built-environment","topic":"population-general","state":null,"n":0,"bp":0,"code_only":0,"tiers":{},"etypes":{},"n_jur":0,"jurs":{},"n_lang":0,"langs":{},"n_en":0,"n_nonen":0,"pct_en":null,"anglo_core":0,"supra":0,"non_anglo":0,"pct_anglo":null,"grade":"F","score":0,"conv":false,"blob":"hearing-impairment-built-environment population-general f     "},{"slug":"jurisdiction-matrix-accessibility-standards","topic":"frameworks-and-methodology","state":"RETRACTED-PRE-REHAB","n":0,"bp":0,"code_only":0,"tiers":{},"etypes":{},"n_jur":0,"jurs":{},"n_lang":0,"langs":{},"n_en":0,"n_nonen":0,"pct_en":null,"anglo_core":0,"supra":0,"non_anglo":0,"pct_anglo":null,"grade":"F","score":0,"conv":false,"blob":"jurisdiction-matrix-accessibility-standards frameworks-and-methodology f retracted-pre-rehab    "},{"slug":"multilingual-evidence-convergence-non-english","topic":"frameworks-and-methodology","state":"RETRACTED-PRE-REHAB","n":0,"bp":0,"code_only":0,"tiers":{},"etypes":{},"n_jur":0,"jurs":{},"n_lang":0,"langs":{},"n_en":0,"n_nonen":0,"pct_en":null,"anglo_core":0,"supra":0,"non_anglo":0,"pct_anglo":null,"grade":"F","score":0,"conv":false,"blob":"multilingual-evidence-convergence-non-english frameworks-and-methodology f retracted-pre-rehab    "},{"slug":"neurodivergent-built-environment","topic":"population-general","state":"RETRACTED-PRE-REHAB","n":0,"bp":0,"code_only":0,"tiers":{},"etypes":{},"n_jur":0,"jurs":{},"n_lang":0,"langs":{},"n_en":0,"n_nonen":0,"pct_en":null,"anglo_core":0,"supra":0,"non_anglo":0,"pct_anglo":null,"grade":"F","score":0,"conv":false,"blob":"neurodivergent-built-environment population-general f retracted-pre-rehab    "},{"slug":"post-occupancy-evaluation-global","topic":"frameworks-and-methodology","state":null,"n":0,"bp":0,"code_only":0,"tiers":{},"etypes":{},"n_jur":0,"jurs":{},"n_lang":0,"langs":{},"n_en":0,"n_nonen":0,"pct_en":null,"anglo_core":0,"supra":0,"non_anglo":0,"pct_anglo":null,"grade":"F","score":0,"conv":false,"blob":"post-occupancy-evaluation-global frameworks-and-methodology f     "}];
+const CATS = ["bathrooms-and-wet-areas", "communication-and-alerts", "controls-and-hardware", "economics", "entrances-and-circulation", "frameworks-and-methodology", "health-and-symptom-management", "kitchens-and-workspaces", "population-general", "room-types", "seating-and-rest", "sensory-environment", "wayfinding-and-signage"];
+const GRADES = ["A","B","C","D","E","F"];
+let activeGrades = new Set();
+let sortK = "score", sortDir = -1;
+
+const catSel = document.getElementById("cat");
+CATS.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;catSel.appendChild(o);});
+const gwrap = document.getElementById("grades");
+GRADES.forEach(g=>{const b=document.createElement("button");b.className="gchip "+g;b.textContent=g;
+  b.setAttribute("aria-pressed","false");b.onclick=()=>{activeGrades.has(g)?activeGrades.delete(g):activeGrades.add(g);
+  b.setAttribute("aria-pressed",activeGrades.has(g));render();};gwrap.appendChild(b);});
+
+function filtered(){
+  const term=document.getElementById("term").value.trim().toLowerCase();
+  const cat=catSel.value;
+  return DATA.filter(r=>{
+    if(cat && r.topic!==cat) return false;
+    if(activeGrades.size && !activeGrades.has(r.grade)) return false;
+    if(term && !r.blob.includes(term)) return false;
+    return true;
+  });
+}
+function cvar(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+function esc(s){return (s||"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));}
+
+function agg(rows){
+  const a={n:0,bp:0,code:0,tiers:{},langs:{},jurs:{},en:0,nonen:0,core:0,supra:0,other:0,
+    empty:0,enonly:0,withev:0,scoreSum:0};
+  rows.forEach(r=>{
+    if(r.n===0){a.empty++;return;}
+    a.withev++; a.n+=r.n; a.bp+=r.bp; a.code+=r.code_only; a.scoreSum+=r.score;
+    if(r.n_nonen===0)a.enonly++;
+    a.en+=r.n_en; a.nonen+=r.n_nonen; a.core+=r.anglo_core; a.supra+=r.supra; a.other+=r.non_anglo;
+    for(const[k,v]of Object.entries(r.tiers))a.tiers[k]=(a.tiers[k]||0)+v;
+    for(const[k,v]of Object.entries(r.langs))a.langs[k]=(a.langs[k]||0)+v;
+    for(const[k,v]of Object.entries(r.jurs))a.jurs[k]=(a.jurs[k]||0)+v;
+  });
+  return a;
+}
+function barRows(el,pairs,total){
+  el.innerHTML=pairs.map(([k,v])=>{
+    const p=total?100*v/total:0;
+    return `<div class="barrow"><span class="k">${esc(k)}</span>
+      <span class="track"><span class="fill" style="width:${p.toFixed(1)}%"></span></span>
+      <span class="v">${v} · ${p.toFixed(0)}%</span></div>`;
+  }).join("")||`<div class="legend" style="color:var(--faint)">no evidence in scope</div>`;
+}
+function barRow2(k,v,tot,col){const p=tot?100*v/tot:0;
+  return `<div class="barrow"><span class="k">${k}</span>
+    <span class="track"><span class="fill" style="width:${p.toFixed(1)}%;background:var(${col})"></span></span>
+    <span class="v">${v} · ${p.toFixed(0)}%</span></div>`;}
+function tierColor(k){return (k==="T1"||k==="T2")?cvar("--gA"):(k==="T3")?cvar("--accent"):cvar("--gD");}
+function medianN(rows){const ns=rows.filter(r=>r.n>0).map(r=>r.n).sort((a,b)=>a-b);
+  return ns.length?ns[Math.floor(ns.length/2)]:0;}
+function gradeFor(s){return s>=80?"A":s>=65?"B":s>=50?"C":s>=35?"D":s>0?"E":"F";}
+
+function render(){
+  const rows=filtered(), a=agg(rows);
+  document.getElementById("scope").innerHTML =
+    `In scope: <b>${rows.length}</b> slices · <b>${a.n}</b> source-instances · `+
+    `<b>${a.withev}</b> evidenced · <b>${a.empty}</b> empty`;
+  const meanScore = a.withev? (a.scoreSum/a.withev):0;
+  const bpShare = a.n? Math.round(100*a.bp/a.n):0;
+  const cards=[
+    ["Source-instances", a.n, `${a.withev} of ${rows.length} slices evidenced`],
+    ["Median / slice", medianN(rows), `${a.empty} slice(s) with zero evidence`],
+    ["Mean score", meanScore.toFixed(1), gradeFor(meanScore)+" band (evidenced slices)"],
+    ["Best-practice share", bpShare+"%", `${a.bp} of ${a.n} instances anchor best practice`],
+    ["English share", (a.n?Math.round(100*a.en/a.n):0)+"%", `${a.enonly} slice(s) English-only`],
+    ["Distinct jurisdictions", Object.keys(a.jurs).length, `${Object.keys(a.langs).length} languages sourced`],
+  ];
+  document.getElementById("cards").innerHTML=cards.map(([l,b,n])=>
+    `<div class="card"><div class="big">${b}</div><div class="lbl">${l}</div><div class="note">${n}</div></div>`).join("");
+
+  const tp=["1","2","3","4","5","6"].map(t=>["T"+t,a.tiers[t]||0]);
+  document.getElementById("tiers").innerHTML=tp.map(([k,v])=>{
+    const p=a.n?100*v/a.n:0;
+    return `<div class="barrow"><span class="k">${k}</span>
+      <span class="track"><span class="fill" style="width:${p.toFixed(1)}%;background:${tierColor(k)}"></span></span>
+      <span class="v">${v} · ${p.toFixed(0)}%</span></div>`;}).join("");
+  document.getElementById("bpline").innerHTML=
+    `<b>${a.bp}/${a.n}</b> (${bpShare}%) best-practice-capable · <b>${a.code}</b> code-baseline (T4–T6). `+
+    `T4–T6 cannot anchor best-practice claims (convergence ≠ evidence).`;
+
+  const enp=a.n?100*a.en/a.n:0, jnull=a.n-(a.core+a.supra+a.other);
+  document.getElementById("bias").innerHTML=
+    barRow2("English-lang.",a.en,a.n,"--gE")+
+    barRow2("Non-English",a.nonen,a.n,"--accent")+
+    barRow2("Anglophone jur.",a.core,a.n,"--gD")+
+    barRow2("Supranational",a.supra,a.n,"--slate")+
+    barRow2("Other jur.",a.other,a.n,"--gA")+
+    barRow2("No jurisdiction",jnull,a.n,"--faint");
+  document.getElementById("biasline").innerHTML=
+    `<b>${enp.toFixed(0)}%</b> English · <b>${a.enonly}</b> English-only slices in scope.`;
+
+  const js=Object.entries(a.jurs).sort((x,y)=>y[1]-x[1]);
+  barRows(document.getElementById("jurs"),js.slice(0,8),a.n);
+  document.getElementById("jurline").innerHTML=
+    `<b>${Object.keys(a.jurs).length}</b> distinct jurisdictions in scope`+(js.length>8?` · showing top 8`:``)+`.`;
+  const ls=Object.entries(a.langs).sort((x,y)=>y[1]-x[1]);
+  barRows(document.getElementById("langs"),ls.slice(0,8),a.n);
+  document.getElementById("langline").innerHTML=
+    `<b>${Object.keys(a.langs).length}</b> distinct languages in scope`+(ls.length>8?` · showing top 8`:``)+`.`;
+
+  renderTable(rows);
+}
+function renderTable(rows){
+  const sorted=[...rows].sort((x,y)=>{
+    if(sortK==="slug") return sortDir*x.slug.localeCompare(y.slug);
+    let A,B;
+    if(sortK==="grade"){A=x.score;B=y.score;}
+    else if(sortK==="tierbar"){A=x.n?x.bp/x.n:-1;B=y.n?y.bp/y.n:-1;}
+    else {A=x[sortK]??-1;B=y[sortK]??-1;}
+    return sortDir*(A-B);
+  });
+  document.getElementById("tcount").textContent=`${rows.length} in scope · dimension detail`;
+  document.querySelectorAll("thead th").forEach(th=>{
+    th.classList.toggle("sorted",th.dataset.k===sortK);
+    const base=th.textContent.replace(/[▲▼]/g,"").trim();
+    th.innerHTML=th.dataset.k===sortK? base+` <span class="arw">${sortDir<0?"▼":"▲"}</span>`:base;
+  });
+  document.getElementById("tbody").innerHTML=sorted.map(r=>{
+    if(r.n===0) return `<tr class="empty-row"><td><span class="gpill F">F</span></td><td class="num">—</td>
+      <td class="slug">${esc(r.slug)}<span class="tp">${esc(r.topic)} · ${esc(r.state||'no state')} · empty</span></td>
+      <td class="num">0</td><td class="num">—</td><td>—</td><td class="num">—</td><td class="num">—</td>
+      <td class="num">—</td><td class="num">—</td></tr>`;
+    const bpp=r.n?100*r.bp/r.n:0;
+    const tierbar=`<span class="mini" title="green=best-practice-capable, orange=code-baseline">
+      <i style="width:${bpp}%;background:var(--gA)"></i><i style="width:${100-bpp}%;background:var(--gD)"></i></span>`;
+    const enb=`<span class="enbar" style="--p:${r.pct_en??0}%" title="${r.pct_en??0}% English"></span>`;
+    const conv=r.conv?` <b title="convergence-only: 0 best-practice-capable sources" style="color:var(--gD)">&#8225;</b>`:"";
+    return `<tr>
+      <td><span class="gpill ${r.grade}">${r.grade}</span>${conv}</td>
+      <td class="num">${r.score}</td>
+      <td class="slug">${esc(r.slug)}<span class="tp">${esc(r.topic)}</span></td>
+      <td class="num">${r.n}</td><td class="num">${r.bp}</td>
+      <td>${tierbar}</td>
+      <td class="num">${r.n_jur}</td><td class="num">${r.n_lang}</td>
+      <td class="num">${enb} ${r.pct_en??'—'}</td>
+      <td class="num">${r.pct_anglo??'—'}</td></tr>`;
+  }).join("");
+}
+
+document.getElementById("term").addEventListener("input",render);
+catSel.addEventListener("change",render);
+document.getElementById("reset").onclick=()=>{document.getElementById("term").value="";catSel.value="";
+  activeGrades.clear();document.querySelectorAll(".gchip").forEach(b=>b.setAttribute("aria-pressed","false"));render();};
+document.querySelectorAll("thead th").forEach(th=>th.onclick=()=>{
+  const k=th.dataset.k; if(sortK===k)sortDir*=-1; else {sortK=k;sortDir=(k==="slug")?1:-1;} render();});
+const root=document.documentElement, themeBtn=document.getElementById("themeBtn");
+themeBtn.onclick=()=>{const cur=root.getAttribute("data-theme")||
+  (matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+  root.setAttribute("data-theme",cur==="dark"?"light":"dark");};
+render();
+</script>
