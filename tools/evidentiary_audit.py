@@ -63,6 +63,15 @@ JUR_LANGCODE_POLLUTION = {"ZH", "JA", "DA"}
 EURO_CJK = {"en", "de", "fr", "nl", "sv", "no", "da", "fi", "es", "pt", "it",
             "ja", "zh", "ko"}
 
+# Item (specification) category labels — from data/question-headings.yaml.
+CATEGORY_LABELS = {
+    "A": "Acoustics", "B": "Lighting", "C": "Colour and Contrast",
+    "D": "Wayfinding and Cognition", "E": "Circulation and Access",
+    "F": "Sensory Environment", "G": "Furniture, Fixtures and Spatial Layout",
+    "H": "Controls and Technology", "I": "Hardware and Fixtures",
+    "K": "DeafBlind Provisions",
+}
+
 
 def is_bp_anchor(row):
     """Can this source ANCHOR a best-practice claim?
@@ -301,8 +310,46 @@ def compute(db_path):
     zero = con.execute("SELECT language FROM search_languages GROUP BY language "
                        "HAVING SUM(COALESCE(results_count,0))=0 ORDER BY language").fetchall()
     f["zero_yield_langs"] = [r[0] for r in zero]
+    # ---- Per-specification (item) inheritance view -----------------------
+    # Evidence attaches to slugs, not items; each item inherits the evidentiary
+    # base of the slug it draws on (bpc_source_slug). Items with no source slug
+    # are gaps (cannot inherit). This makes the audit answerable per-spec.
+    recs_by_slug = {r["slug"]: r for r in records}
+    item_rows = q("SELECT item_code, item_id, category, name, bpc_source_slug, status "
+                  "FROM items ORDER BY item_code")
+    items = []
+    for it in item_rows:
+        src = (it["bpc_source_slug"] or "").strip() or None
+        base = recs_by_slug.get(src) if src else None
+        if src is None:
+            health, igrade, iscore = "no-source", "—", None
+        elif base is None:
+            health, igrade, iscore = "source-missing", "—", None   # slug not found
+        elif base["n"] == 0:
+            health, igrade, iscore = "empty-base", base["grade"], base["score"]
+        elif base["convergence_only"]:
+            health, igrade, iscore = "code-floor", base["grade"], base["score"]
+        elif base["no_anchor"]:
+            health, igrade, iscore = "no-anchor", base["grade"], base["score"]
+        else:
+            health, igrade, iscore = "ok", base["grade"], base["score"]
+        items.append(dict(
+            item_code=it["item_code"], name=it["name"], category=it["category"],
+            category_label=CATEGORY_LABELS.get(it["category"], it["category"]),
+            source_slug=src, basis_health=health, grade=igrade, score=iscore,
+            # inherited dimension snapshot (None when no base)
+            n=base["n"] if base else None,
+            anchor=base["anchor"] if base else None,
+            confirmed=base["confirmed"] if base else None,
+            n_jur=base["n_jur"] if base else None,
+            n_lang=base["n_lang"] if base else None,
+            pct_en=base["pct_en"] if base else None,
+            pct_anglo=base["pct_anglo_core"] if base else None,
+        ))
+    f["n_items"] = len(items)
+
     con.close()
-    return records, f
+    return records, items, f
 
 
 # ------------------------------------------------------------------ formatting
@@ -311,7 +358,7 @@ def bar(frac, width=20):
     return "█" * filled + "·" * (width - filled)
 
 
-def build_markdown(records, f):
+def build_markdown(records, items, f):
     N = f["n_slices"]
     withev = [r for r in records if r["n"]]
     empty = [r for r in records if not r["n"]]
@@ -681,6 +728,62 @@ def build_markdown(records, f):
     w("- **Compound jurisdictions classify by their strongest Anglophone member** (e.g. `US/AU/INT` "
       "counts as native-Anglophone). Magnitude ≈1% of instances.")
     w("")
+
+    # 8. Per-specification (item) inheritance view
+    HEALTH_LABEL = {"ok": "inherits a graded base", "no-anchor": "base has no best-practice anchor",
+                    "code-floor": "base is code-floor / convergence-only",
+                    "empty-base": "base has zero linked evidence",
+                    "no-source": "no source slug — cannot inherit",
+                    "source-missing": "source slug not found (data error)"}
+    n_items = len(items)
+    health_ct = Counter(it["basis_health"] for it in items)
+    weak = [it for it in items if it["basis_health"] in
+            ("no-source", "source-missing", "empty-base", "code-floor", "no-anchor")]
+    w("## 8. Per-specification (item) adjudication — inheritance view")
+    w("")
+    w(f"The Guidebook’s **{n_items} design specifications** (the `items` table, categories A–K) do "
+      "**not** carry their own evidence links — each *inherits* the evidentiary base of the research "
+      "slug it draws on (`items.bpc_source_slug`). This section adjudicates every specification by "
+      "that inherited base, so a spec built on a thin or unanchored slug is visible as such. (A spec "
+      "with no source slug cannot inherit and is a coverage gap.)")
+    w("")
+    w("| Basis health | Specs | Meaning |")
+    w("|---|---|---|")
+    for h in ["ok", "no-anchor", "code-floor", "empty-base", "no-source", "source-missing"]:
+        if health_ct.get(h):
+            w(f"| {h} | {health_ct[h]} | {HEALTH_LABEL[h]} |")
+    w("")
+    w(f"**{n_items - len(weak)} of {n_items} specs inherit a fully-graded, anchored base; "
+      f"{len(weak)} rest on a weak or missing base** and are the priority remediation set.")
+    w("")
+    w("### By category")
+    w("| Cat | Specifications | Specs | On weak/missing base |")
+    w("|---|---|---|---|")
+    cats = sorted({it["category"] for it in items})
+    for cat in cats:
+        cat_items = [it for it in items if it["category"] == cat]
+        cat_weak = sum(1 for it in cat_items if it in weak)
+        w(f"| {cat} | {CATEGORY_LABELS.get(cat, cat)} | {len(cat_items)} | {cat_weak} |")
+    w("")
+    w("### Specifications resting on a weak or missing base")
+    w("")
+    if weak:
+        w("| Item | Category | Specification | Source slug | Basis | Inh. grade |")
+        w("|---|---|---|---|---|---|")
+        for it in sorted(weak, key=lambda x: x["item_code"]):
+            nm = (it["name"] or "")[:52]
+            w(f"| `{it['item_code']}` | {it['category']} | {nm} | "
+              f"{('`'+it['source_slug']+'`') if it['source_slug'] else '—'} | {it['basis_health']} | "
+              f"{it['grade']} |")
+    else:
+        w("*None — every specification inherits a graded, anchored base.*")
+    w("")
+    w("The full per-specification table (all "
+      f"{n_items} items with inherited grade and dimension snapshot) is in "
+      "`evidentiary-base-audit-items.csv` and the `items` array of the JSON; the dashboard’s "
+      "**Specifications** view filters them by corpus / category / term.")
+    w("")
+
     w("---")
     w(f"*Data as of {f['as_of']} · read-only over `data/guidebook.db` · generated by "
       "`tools/evidentiary_audit.py`. Independently red-teamed; raw counts reproduce through a second "
@@ -716,22 +819,43 @@ def build_csv(records):
     return buf.getvalue()
 
 
-def build_json(records, f):
+def build_items_csv(items):
+    import io
+    buf = io.StringIO()
+    wtr = csv.writer(buf, lineterminator="\n")
+    wtr.writerow(["item_code", "category", "category_label", "name", "source_slug",
+                  "basis_health", "inherited_grade", "inherited_score",
+                  "base_n_sources", "base_anchor", "base_confirmed",
+                  "base_n_jurisdictions", "base_n_languages", "base_pct_english",
+                  "base_pct_anglo_core"])
+    for it in items:
+        wtr.writerow([it["item_code"], it["category"], it["category_label"], it["name"],
+                      it["source_slug"] or "", it["basis_health"], it["grade"], it["score"],
+                      it["n"], it["anchor"], it["confirmed"], it["n_jur"], it["n_lang"],
+                      it["pct_en"], it["pct_anglo"]])
+    return buf.getvalue()
+
+
+def build_json(records, items, f):
     grade_ct = Counter(r["grade"] for r in records)
     tier_tot = Counter()
     for r in records:
         for k, v in r["tiers"].items():
             tier_tot[k] += v
+    item_health = Counter(it["basis_health"] for it in items)
     payload = {
         "as_of": f["as_of"],
         "n_slices": f["n_slices"],
+        "n_items": f["n_items"],
         "total_source_instances": f["tot_src"],
         "unique_sources": f["unique_linked"],
         "grade_distribution": {g: grade_ct.get(g, 0) for g in "ABCDEF"},
         "tier_totals": dict(sorted(tier_tot.items())),
         "english_instances": sum(r["n_en"] for r in records),
         "zero_yield_search_languages": f["zero_yield_langs"],
+        "item_basis_health": dict(item_health),
         "slices": records,
+        "items": items,
     }
     return json.dumps(payload, indent=2, ensure_ascii=False) + "\n"
 
@@ -846,6 +970,17 @@ footer{margin-top:34px;font-family:var(--mono);font-size:11.5px;color:var(--fain
 .legend b{color:var(--ink-2);font-weight:600}
 .theme-toggle{position:fixed;top:14px;right:14px;z-index:40;font-family:var(--mono);font-size:11px;
   background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:7px 11px;color:var(--slate);cursor:pointer;box-shadow:var(--shadow)}
+.viewtabs{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
+.vtab{font-family:var(--mono);font-size:12px;padding:9px 16px;border:0;background:none;color:var(--slate);cursor:pointer;min-height:40px}
+.vtab[aria-selected=true]{background:var(--accent);color:#fff}
+.hpill{font-family:var(--mono);font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap;
+  border:1px solid var(--line);color:var(--ink-2);background:var(--surface-2)}
+.hpill.ok{color:#fff;background:var(--gA);border-color:transparent}
+.hpill.noanchor{color:#fff;background:var(--gD);border-color:transparent}
+.hpill.codefloor{color:#fff;background:var(--gE);border-color:transparent}
+.hpill.empty,.hpill.nosource{color:#fff;background:var(--gF);border-color:transparent}
+td.itemname{white-space:normal;min-width:240px}
+td.itemname .tp{display:block;font-size:10.5px;color:var(--faint);font-family:var(--mono)}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 
@@ -854,16 +989,23 @@ footer{margin-top:34px;font-family:var(--mono);font-size:11.5px;color:var(--fain
   <header class="masthead">
     <div class="eyebrow">Guidebook · Evidence Integrity</div>
     <h1>Per-Slice Evidentiary Audit</h1>
-    <p class="sub">Every research slice scored on six dimensions — amount, tiers, jurisdictions,
-    languages, English/Anglophone bias, and overall base quality — over the linked evidence in
-    <code>data/guidebook.db</code>. Filter the <b>entire corpus</b>, <b>by category</b>, or
-    <b>by term</b> (type a slug, jurisdiction code, language, tier, or evidence type). Every panel
-    below recomputes live for the current filter.</p>
+    <p class="sub">The <b>Slices</b> view scores every research slug on six dimensions — amount, tiers,
+    jurisdictions, languages, English/Anglophone bias, and overall base quality — over the linked
+    evidence in <code>data/guidebook.db</code>. The <b>Specifications</b> view adjudicates all
+    __NITEMS__ design items by the evidentiary base each inherits from its source slug. Filter the
+    <b>entire corpus</b>, <b>by category</b>, or <b>by term</b>; every panel recomputes live.</p>
   </header>
 
   <div class="controls">
     <div class="filter-row">
-      <div class="field" style="flex:1;min-width:280px">
+      <div class="field">
+        <label>View</label>
+        <div class="viewtabs" id="viewtabs" role="tablist">
+          <button class="vtab" data-view="slices" role="tab" aria-selected="true">Slices</button>
+          <button class="vtab" data-view="items" role="tab" aria-selected="false">Specifications</button>
+        </div>
+      </div>
+      <div class="field" style="flex:1;min-width:240px">
         <label for="term">Search term</label>
         <input type="search" id="term" placeholder="e.g. acoustic · JP · ja · T1 · co1 · empty" autocomplete="off">
       </div>
@@ -871,7 +1013,7 @@ footer{margin-top:34px;font-family:var(--mono);font-size:11.5px;color:var(--fain
         <label for="cat">Category</label>
         <select id="cat"><option value="">Entire corpus (all categories)</option></select>
       </div>
-      <div class="field">
+      <div class="field" id="gradeField">
         <label>Grade</label>
         <div class="grades" id="grades"></div>
       </div>
@@ -879,6 +1021,8 @@ footer{margin-top:34px;font-family:var(--mono);font-size:11.5px;color:var(--fain
     </div>
     <div class="scope-note" id="scope"></div>
   </div>
+
+  <div id="slicesView">
 
   <h2 class="dim-head">Snapshot <span>dimensions 1 &amp; 6 · amount &amp; overall quality</span></h2>
   <div class="cards" id="cards"></div>
@@ -929,28 +1073,109 @@ footer{margin-top:34px;font-family:var(--mono);font-size:11.5px;color:var(--fain
       <tbody id="tbody"></tbody>
     </table>
   </div>
+  </div><!-- /slicesView -->
+
+  <div id="itemsView" hidden>
+    <h2 class="dim-head">Specifications <span>design items · adjudicated by inherited base</span></h2>
+    <div class="cards" id="icards"></div>
+    <div class="split">
+      <div>
+        <h2 class="dim-head">Basis health <span>where each spec's evidence comes from</span></h2>
+        <div class="barset" id="ihealth"></div>
+        <p class="legend" id="ihealthline"></p>
+      </div>
+      <div>
+        <h2 class="dim-head">Inherited grade <span>strength of the base each spec rests on</span></h2>
+        <div class="barset" id="igrade"></div>
+        <p class="legend" id="igradeline"></p>
+      </div>
+    </div>
+    <h2 class="dim-head">Specifications <span id="itcount"></span></h2>
+    <p class="legend"><b>Basis</b> = health of the slug this spec inherits from · <b>Grade</b> inherited ·
+    <b>N/BP</b> base sources / best-practice anchors · <b>JUR/LNG</b> base jurisdictions / languages ·
+    <b>%EN</b> base English share. A spec on a red/grey basis rests on weak or missing evidence.
+    Click a header to sort.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr>
+          <th data-k="grade">Grade</th><th data-k="basis">Basis</th>
+          <th data-k="code">Item</th><th data-k="cat">Cat</th>
+          <th data-k="src">Source slug</th>
+          <th data-k="n" class="num">N</th><th data-k="bp" class="num">BP</th>
+          <th data-k="n_jur" class="num">JUR</th><th data-k="n_lang" class="num">LNG</th>
+          <th data-k="pct_en" class="num">%EN</th>
+        </tr></thead>
+        <tbody id="itbody"></tbody>
+      </table>
+    </div>
+  </div><!-- /itemsView -->
 
   <footer>
     Data as of __ASOF__ · read-only over data/guidebook.db · __NSLICES__ ACTIVE slices ·
-    __TOTSRC__ source-instances (__UNIQ__ unique).<br>
+    __NITEMS__ specifications · __TOTSRC__ source-instances (__UNIQ__ unique).<br>
     Tiers per governance/tier-system.md (OPERATIVE 2026-05-25). Scores are a triage lens over the linked
-    evidence base, not a verdict on any single citation. Companion: evidentiary-base-audit.md / .csv / .json.
+    evidence base, not a verdict on any single citation. Companion: evidentiary-base-audit.md / .csv /
+    -items.csv / .json.
   </footer>
 </div>
 
 <script>
 const DATA = __DATA__;
+const IDATA = __IDATA__;
 const CATS = __CATS__;
+const ICATS = __ICATS__;
 const GRADES = ["A","B","C","D","E","F"];
 let activeGrades = new Set();
+let view = "slices";
 let sortK = "score", sortDir = -1;
 
 const catSel = document.getElementById("cat");
-CATS.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;catSel.appendChild(o);});
+function populateCats(){
+  catSel.innerHTML = "";
+  const first=document.createElement("option"); first.value="";
+  first.textContent = view==="slices" ? "Entire corpus (all categories)" : "All categories (A–K)";
+  catSel.appendChild(first);
+  if(view==="slices"){
+    CATS.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;catSel.appendChild(o);});
+  } else {
+    ICATS.forEach(([c,label])=>{const o=document.createElement("option");o.value=c;o.textContent=c+" — "+label;catSel.appendChild(o);});
+  }
+}
+populateCats();
 const gwrap = document.getElementById("grades");
 GRADES.forEach(g=>{const b=document.createElement("button");b.className="gchip "+g;b.textContent=g;
   b.setAttribute("aria-pressed","false");b.onclick=()=>{activeGrades.has(g)?activeGrades.delete(g):activeGrades.add(g);
   b.setAttribute("aria-pressed",activeGrades.has(g));render();};gwrap.appendChild(b);});
+
+// View toggle
+document.querySelectorAll(".vtab").forEach(t=>t.onclick=()=>{
+  const nv=t.dataset.view; if(nv===view) return;
+  view=nv;
+  document.querySelectorAll(".vtab").forEach(x=>x.setAttribute("aria-selected", x.dataset.view===view));
+  document.getElementById("slicesView").hidden = view!=="slices";
+  document.getElementById("itemsView").hidden = view!=="items";
+  document.getElementById("gradeField").style.display = view==="slices" ? "" : "none";
+  document.getElementById("term").value=""; activeGrades.clear();
+  document.querySelectorAll(".gchip").forEach(b=>b.setAttribute("aria-pressed","false"));
+  sortK = view==="slices" ? "score" : "basis"; sortDir = view==="slices" ? -1 : 1;
+  populateCats();
+  render();
+});
+
+const HEALTH_ORDER=["ok","no-anchor","code-floor","empty-base","no-source","source-missing"];
+const HEALTH_CLASS={"ok":"ok","no-anchor":"noanchor","code-floor":"codefloor","empty-base":"empty","no-source":"nosource","source-missing":"nosource"};
+const HEALTH_LABEL={"ok":"graded base","no-anchor":"no anchor","code-floor":"code-floor","empty-base":"empty base","no-source":"no source slug","source-missing":"source missing"};
+const HEALTH_RANK={"ok":0,"no-anchor":1,"code-floor":2,"empty-base":3,"no-source":4,"source-missing":5};
+
+function filteredItems(){
+  const term=document.getElementById("term").value.trim().toLowerCase();
+  const cat=catSel.value;
+  return IDATA.filter(r=>{
+    if(cat && r.cat!==cat) return false;
+    if(term && !r.blob.includes(term)) return false;
+    return true;
+  });
+}
 
 function filtered(){
   const term=document.getElementById("term").value.trim().toLowerCase();
@@ -996,7 +1221,71 @@ function medianN(rows){const ns=rows.filter(r=>r.n>0).map(r=>r.n).sort((a,b)=>a-
   return ns.length?ns[Math.floor(ns.length/2)]:0;}
 function gradeFor(s){return s>=80?"A":s>=65?"B":s>=50?"C":s>=35?"D":s>0?"E":"F";}
 
-function render(){
+function render(){ if(view==="items"){ renderItems(); return; } renderSlices(); }
+
+function renderItems(){
+  const rows=filteredItems();
+  const hc={}, gc={}; let weak=0;
+  rows.forEach(r=>{ hc[r.health]=(hc[r.health]||0)+1;
+    if(r.health!=="ok") weak++;
+    const g=r.grade||"—"; gc[g]=(gc[g]||0)+1; });
+  document.getElementById("scope").innerHTML =
+    `In scope: <b>${rows.length}</b> specifications · <b>${rows.length-weak}</b> on a graded/anchored base · `+
+    `<b>${weak}</b> on a weak or missing base`;
+  const cats=new Set(rows.map(r=>r.cat));
+  const cards=[
+    ["Specifications", rows.length, `${cats.size} categor${cats.size===1?"y":"ies"} in scope`],
+    ["On weak/missing base", weak, `${rows.length-weak} inherit a graded, anchored base`],
+    ["No source slug", hc["no-source"]||0, `coverage gaps — cannot inherit evidence`],
+    ["Anchored (grade A–C)", rows.filter(r=>["A","B","C"].includes(r.grade)&&r.health==="ok").length,
+      `specs on a solid, anchored base`],
+  ];
+  document.getElementById("icards").innerHTML=cards.map(([l,b,n])=>
+    `<div class="card"><div class="big">${b}</div><div class="lbl">${l}</div><div class="note">${n}</div></div>`).join("");
+  // basis health bars
+  const hcols={"ok":"--gA","no-anchor":"--gD","code-floor":"--gE","empty-base":"--gF","no-source":"--gF","source-missing":"--gF"};
+  document.getElementById("ihealth").innerHTML=HEALTH_ORDER.filter(h=>hc[h]).map(h=>
+    barRow2(HEALTH_LABEL[h], hc[h], rows.length, hcols[h])).join("")||
+    `<div class="legend" style="color:var(--faint)">no specifications in scope</div>`;
+  document.getElementById("ihealthline").innerHTML=
+    `Each spec inherits the base of its <code>bpc_source_slug</code>; a spec cannot be stronger than the slug it rests on.`;
+  // inherited grade bars
+  document.getElementById("igrade").innerHTML=["A","B","C","D","E","F","—"].filter(g=>gc[g]).map(g=>
+    barRow2("Grade "+g, gc[g], rows.length, g==="—"?"--faint":("--g"+g))).join("")||"";
+  document.getElementById("igradeline").innerHTML=
+    `Grade is inherited from the source slug (— = no source slug to inherit from).`;
+  renderItemTable(rows);
+}
+function renderItemTable(rows){
+  const sorted=[...rows].sort((x,y)=>{
+    if(sortK==="code"||sortK==="cat"||sortK==="src")
+      return sortDir*String(x[sortK]||"").localeCompare(String(y[sortK]||""));
+    if(sortK==="basis") return sortDir*((HEALTH_RANK[x.health]??9)-(HEALTH_RANK[y.health]??9));
+    if(sortK==="grade") return sortDir*((x.score??-1)-(y.score??-1));
+    return sortDir*((x[sortK]??-1)-(y[sortK]??-1));
+  });
+  document.getElementById("itcount").textContent=`${rows.length} in scope`;
+  document.querySelectorAll("#itemsView thead th").forEach(th=>{
+    th.classList.toggle("sorted",th.dataset.k===sortK);
+    const base=th.textContent.replace(/[▲▼]/g,"").trim();
+    th.innerHTML=th.dataset.k===sortK? base+` <span class="arw">${sortDir<0?"▼":"▲"}</span>`:base;
+  });
+  document.getElementById("itbody").innerHTML=sorted.map(r=>{
+    const g=r.grade||"—";
+    const gp=g==="—"?`<span class="hpill nosource">—</span>`:`<span class="gpill ${g}">${g}</span>`;
+    const hp=`<span class="hpill ${HEALTH_CLASS[r.health]||''}">${HEALTH_LABEL[r.health]||r.health}</span>`;
+    return `<tr>
+      <td>${gp}</td><td>${hp}</td>
+      <td class="itemname">${esc(r.name)}<span class="tp">${esc(r.code)}</span></td>
+      <td class="num">${esc(r.cat)}</td>
+      <td class="slug">${r.src?esc(r.src):'<span style="color:var(--faint)">— none —</span>'}</td>
+      <td class="num">${r.n??'—'}</td><td class="num">${r.bp??'—'}</td>
+      <td class="num">${r.n_jur??'—'}</td><td class="num">${r.n_lang??'—'}</td>
+      <td class="num">${r.pct_en??'—'}</td></tr>`;
+  }).join("");
+}
+
+function renderSlices(){
   const rows=filtered(), a=agg(rows);
   document.getElementById("scope").innerHTML =
     `In scope: <b>${rows.length}</b> slices · <b>${a.n}</b> source-instances · `+
@@ -1056,7 +1345,7 @@ function renderTable(rows){
     return sortDir*(A-B);
   });
   document.getElementById("tcount").textContent=`${rows.length} in scope · dimension detail`;
-  document.querySelectorAll("thead th").forEach(th=>{
+  document.querySelectorAll("#slicesView thead th").forEach(th=>{
     th.classList.toggle("sorted",th.dataset.k===sortK);
     const base=th.textContent.replace(/[▲▼]/g,"").trim();
     th.innerHTML=th.dataset.k===sortK? base+` <span class="arw">${sortDir<0?"▼":"▲"}</span>`:base;
@@ -1088,8 +1377,9 @@ document.getElementById("term").addEventListener("input",render);
 catSel.addEventListener("change",render);
 document.getElementById("reset").onclick=()=>{document.getElementById("term").value="";catSel.value="";
   activeGrades.clear();document.querySelectorAll(".gchip").forEach(b=>b.setAttribute("aria-pressed","false"));render();};
+const STRING_SORT=["slug","code","cat","src","basis"];
 document.querySelectorAll("thead th").forEach(th=>th.onclick=()=>{
-  const k=th.dataset.k; if(sortK===k)sortDir*=-1; else {sortK=k;sortDir=(k==="slug")?1:-1;} render();});
+  const k=th.dataset.k; if(sortK===k)sortDir*=-1; else {sortK=k;sortDir=STRING_SORT.includes(k)?1:-1;} render();});
 const root=document.documentElement, themeBtn=document.getElementById("themeBtn");
 themeBtn.onclick=()=>{const cur=root.getAttribute("data-theme")||
   (matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
@@ -1099,7 +1389,7 @@ render();
 """
 
 
-def build_html(records, f):
+def build_html(records, items, f):
     slim = []
     for r in records:
         blob = " ".join([
@@ -1120,17 +1410,39 @@ def build_html(records, f):
             anglo_core=r["anglo_core"], supra=r["supra"], non_anglo=r["non_anglo"],
             pct_anglo=r["pct_anglo_core"], grade=r["grade"], score=r["score"],
             conv=r["convergence_only"], noanchor=r["no_anchor"], blob=blob))
-    # Escape "</" so a slug/topic containing "</script>" can't break out of the
-    # embedded <script> block; also neutralise the JS line-separator code points.
-    data = (json.dumps(slim, separators=(",", ":"), ensure_ascii=False)
-            .replace("</", "<\\/").replace(" ", "\\u2028").replace(" ", "\\u2029"))
-    cats = json.dumps(sorted({r["topic"] for r in slim if r["topic"]}),
-                      ensure_ascii=False).replace("</", "<\\/")
+    # Item (specification) records for the dashboard's Specifications view.
+    islim = []
+    for it in items:
+        iblob = " ".join([
+            it["item_code"], it["name"] or "", it["category"], it["category_label"],
+            it["source_slug"] or "", it["basis_health"], it["grade"] or "",
+        ]).lower()
+        islim.append(dict(
+            code=it["item_code"], name=it["name"], cat=it["category"],
+            catl=it["category_label"], src=it["source_slug"], health=it["basis_health"],
+            grade=it["grade"], score=it["score"], n=it["n"], bp=it["anchor"],
+            confirmed=it["confirmed"], n_jur=it["n_jur"], n_lang=it["n_lang"],
+            pct_en=it["pct_en"], pct_anglo=it["pct_anglo"], blob=iblob))
+
+    def js_safe(s):
+        # Escape "</" (…</script> breakout) and the JS line terminators U+2028/9.
+        return (s.replace("</", "<\\/")
+                 .replace("\u2028", "\\u2028").replace("\u2029", "\\u2029"))
+    data = js_safe(json.dumps(slim, separators=(",", ":"), ensure_ascii=False))
+    idata = js_safe(json.dumps(islim, separators=(",", ":"), ensure_ascii=False))
+    cats = js_safe(json.dumps(sorted({r["topic"] for r in slim if r["topic"]}),
+                              ensure_ascii=False))
+    icats = js_safe(json.dumps([[c, CATEGORY_LABELS.get(c, c)]
+                                for c in sorted({it["category"] for it in items})],
+                               ensure_ascii=False))
     return (HTML_TEMPLATE
             .replace("__DATA__", data)
+            .replace("__IDATA__", idata)
             .replace("__CATS__", cats)
+            .replace("__ICATS__", icats)
             .replace("__ASOF__", f["as_of"])
             .replace("__NSLICES__", str(f["n_slices"]))
+            .replace("__NITEMS__", str(f["n_items"]))
             .replace("__TOTSRC__", str(f["tot_src"]))
             .replace("__UNIQ__", str(f["unique_linked"])))
 
@@ -1169,12 +1481,13 @@ def main():
     if not db_path.exists():
         sys.exit(f"DB not found: {db_path}")
 
-    records, facts = compute(db_path)
+    records, items, facts = compute(db_path)
     outputs = {
-        Path(args.audits_dir) / "evidentiary-base-audit.md": build_markdown(records, facts),
+        Path(args.audits_dir) / "evidentiary-base-audit.md": build_markdown(records, items, facts),
         Path(args.audits_dir) / "evidentiary-base-audit.csv": build_csv(records),
-        Path(args.audits_dir) / "evidentiary-base-audit.json": build_json(records, facts),
-        Path(args.tools_dir) / "evidentiary-audit-dashboard.html": build_html(records, facts),
+        Path(args.audits_dir) / "evidentiary-base-audit-items.csv": build_items_csv(items),
+        Path(args.audits_dir) / "evidentiary-base-audit.json": build_json(records, items, facts),
+        Path(args.tools_dir) / "evidentiary-audit-dashboard.html": build_html(records, items, facts),
     }
 
     if args.check:
