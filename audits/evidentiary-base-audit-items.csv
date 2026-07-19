@@ -18,7 +18,7 @@ A-15,A,Acoustics,Acoustic Differentiation Between Spaces (Navigation Aid for VIS
 A-16,A,Acoustics,"Sensory Room / Quiet Room Provision (≥8 m², one per floor or per 500 m² GFA)",sensory-relief-space-design,ok,C,55.7,10,4,8,6,1,100.0,80.0
 A-17,A,Acoustics,Upholstered Seating Throughout Occupied Spaces,room-acoustic-performance,ok,A,81.8,32,17,20,13,8,78.1,50.0
 A-18,A,Acoustics,RT60 in Occupied Learning and Listening Spaces,room-acoustic-performance,ok,A,81.8,32,17,20,13,8,78.1,50.0
-B-01,B,Lighting,Circadian Lighting (≥150 EML Minimum at Eye Level in Daytime Spaces),circadian-lighting-melanopic-edi,no-anchor,D,44.7,10,0,5,4,2,90.0,20.0
+B-01,B,Lighting,Circadian Lighting (≥150 EML Minimum at Eye Level in Daytime Spaces),circadian-lighting-melanopic-edi,ok,C,61.6,12,2,7,4,2,91.7,16.7
 B-02,B,Lighting,Diffuse Lighting for Lip Reading and Sign Language (Shadow-Free Face Illumination),deaf-spatial-design,ok,A,83.0,13,8,10,8,5,61.5,38.5
 B-03,B,Lighting,Elimination of Fluorescent Overhead Lighting,therapeutic-lighting-design,code-floor,E,26.4,4,0,0,3,2,75.0,0.0
 B-04,B,Lighting,Flicker-Free LED Luminaires (IEEE 1789-2015 Compliant),therapeutic-lighting-design,code-floor,E,26.4,4,0,0,3,2,75.0,0.0
@@ -28,7 +28,7 @@ B-07,B,Lighting,Indirect and Cove Lighting in Sensitive Spaces,therapeutic-light
 B-08,B,Lighting,"Matte, Low-Reflectance Floor Finishes (≤30 Gloss Units)",,no-source,—,,,,,,,,
 B-09,B,Lighting,"Maximisation of Natural Light (Clerestory, Light Wells, Rooflights)",biophilic-design-healthcare-workplace,ok,C,50.0,6,1,6,3,1,100.0,33.3
 B-10,B,Lighting,Visual Fire Alarm (Strobe VAD Throughout Building),visual-fire-alarm-seizure-safety,ok,D,45.6,7,1,4,3,1,100.0,42.9
-B-11,B,Lighting,Warm Colour Temperature for Evening (≤2700 K After 19:00),circadian-lighting-melanopic-edi,no-anchor,D,44.7,10,0,5,4,2,90.0,20.0
+B-11,B,Lighting,Warm Colour Temperature for Evening (≤2700 K After 19:00),circadian-lighting-melanopic-edi,ok,C,61.6,12,2,7,4,2,91.7,16.7
 B-12,B,Lighting,Sensor-Activated Overnight Pathway Lighting,visual-alerting-and-wayfinding-light,code-floor,D,36.1,7,0,0,7,5,42.9,28.6
 C-01,C,Colour and Contrast,"Colour Palette (Muted, Low-Chroma, Non-Institutional)",wayfinding-dementia-spatial-design,ok,A,82.1,22,4,12,16,13,40.9,18.2
 C-02,C,Colour and Contrast,Colour-Coded Wayfinding Zones (Distinct Warm Colour Per Wing/Zone),wayfinding-dementia-spatial-design,ok,A,82.1,22,4,12,16,13,40.9,18.2
@@ -49,11 +49,11 @@ D-10,D,Wayfinding and Cognition,Transparent Glazed Panels in Internal Partitions
 D-11,D,Wayfinding and Cognition,"Safe Accessible Garden (Loop Path, Secured Perimeter, Seating Every 20 m)",wayfinding-dementia-spatial-design,ok,A,82.1,22,4,12,16,13,40.9,18.2
 E-01,E,Circulation and Access,"Accessible Lift (1400×1100 mm Car, All Floors Served)",accessible-circulation-geometry,ok,B,74.8,14,2,3,9,6,64.3,50.0
 E-02,E,Circulation and Access,Platform Lift (Where Full Passenger Lift Not Achievable),accessible-circulation-geometry,ok,B,74.8,14,2,3,9,6,64.3,50.0
-E-03,E,Circulation and Access,Ramp Gradient (≤1:20 — MS Fatigue and Temporal Accessibility),stair-ramp-threshold-biomechanics-accessibility,no-anchor,B,68.5,26,0,13,15,12,57.7,15.4
+E-03,E,Circulation and Access,Ramp Gradient (≤1:20 — MS Fatigue and Temporal Accessibility),stair-ramp-threshold-biomechanics-accessibility,ok,B,79.0,27,1,14,15,12,59.3,14.8
 E-04,E,Circulation and Access,"Accessible Parking (3600 mm Width, Covered, Closest to Entry)",accessible-circulation-geometry,ok,B,74.8,14,2,3,9,6,64.3,50.0
 E-05,E,Circulation and Access,Weather Protection at Entry (Covered Canopy Minimum 3000×2000 mm),threshold-and-level-access,code-floor,D,46.0,15,0,0,12,8,46.7,40.0
 E-06,E,Circulation and Access,Level Entry (Zero Step at All Accessible Entrances),threshold-and-level-access,code-floor,D,46.0,15,0,0,12,8,46.7,40.0
-E-07,E,Circulation and Access,Slip Resistance (PTV ≥36 Wet Throughout All Circulation and Entry),stair-ramp-threshold-biomechanics-accessibility,no-anchor,B,68.5,26,0,13,15,12,57.7,15.4
+E-07,E,Circulation and Access,Slip Resistance (PTV ≥36 Wet Throughout All Circulation and Entry),stair-ramp-threshold-biomechanics-accessibility,ok,B,79.0,27,1,14,15,12,59.3,14.8
 E-08,E,Circulation and Access,Corridor Clear Width (≥1200 mm Minimum on All Primary Routes),accessible-circulation-geometry,ok,B,74.8,14,2,3,9,6,64.3,50.0
 E-09,E,Circulation and Access,Tactile Walking Surface Indicators (ISO 23599:2019),detectable-gradient-protocol-sensory-zones,ok,D,49.3,6,2,4,3,1,100.0,33.3
 E-10,E,Circulation and Access,Rest Seating at Regular Intervals on All Accessible Routes,accessible-circulation-geometry,ok,B,74.8,14,2,3,9,6,64.3,50.0

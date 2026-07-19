@@ -2,25 +2,25 @@
   "as_of": "2026-07-19",
   "n_slices": 82,
   "n_items": 93,
-  "total_source_instances": 753,
-  "unique_sources": 651,
+  "total_source_instances": 756,
+  "unique_sources": 653,
   "grade_distribution": {
     "A": 6,
     "B": 17,
-    "C": 19,
-    "D": 16,
+    "C": 20,
+    "D": 15,
     "E": 11,
     "F": 13
   },
   "tier_totals": {
     "1": 100,
-    "2": 76,
-    "3": 218,
+    "2": 80,
+    "3": 217,
     "4": 76,
     "5": 147,
     "6": 136
   },
-  "english_instances": 551,
+  "english_instances": 554,
   "zero_yield_search_languages": [
     "AR",
     "BN",
@@ -29,10 +29,10 @@
     "SW"
   ],
   "item_basis_health": {
-    "ok": 66,
+    "ok": 70,
     "no-source": 6,
-    "no-anchor": 13,
-    "code-floor": 8
+    "code-floor": 8,
+    "no-anchor": 9
   },
   "slices": [
     {
@@ -800,6 +800,113 @@
         "C": 20,
         "D": 12,
         "E": 6.3
+      },
+      "grade": "B"
+    },
+    {
+      "slug": "stair-ramp-threshold-biomechanics-accessibility",
+      "topic": "entrances-and-circulation",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 27,
+      "bp": 1,
+      "anchor": 1,
+      "confirmed": 14,
+      "t3_clinical": 13,
+      "code_only": 13,
+      "no_anchor": false,
+      "convergence_only": false,
+      "basis": null,
+      "tiers": {
+        "2": 1,
+        "3": 14,
+        "4": 1,
+        "5": 1,
+        "6": 10
+      },
+      "etypes": {
+        "clinical": 13,
+        "sr_meta": 1,
+        "national_fw": 1,
+        "code": 10,
+        "standard_eb": 1,
+        "grey": 1
+      },
+      "markers": {
+        "●": 14,
+        "◐": 2,
+        "○": 11
+      },
+      "n_jur": 15,
+      "n_jur_raw": 15,
+      "n_true_jur": 15,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 12,
+        "UK": 2,
+        "SE": 1,
+        "IT": 1,
+        "PT": 1,
+        "CA": 1,
+        "US": 1,
+        "NO": 1,
+        "FR": 1,
+        "DE": 1,
+        "FI": 1,
+        "DK": 1,
+        "CN": 1,
+        "ES": 1,
+        "NL": 1
+      },
+      "jurs_clean": {
+        "INT": 12,
+        "SE": 1,
+        "IT": 1,
+        "PT": 1,
+        "CA": 1,
+        "UK": 2,
+        "US": 1,
+        "NO": 1,
+        "FR": 1,
+        "DE": 1,
+        "FI": 1,
+        "DK": 1,
+        "CN": 1,
+        "ES": 1,
+        "NL": 1
+      },
+      "n_lang": 12,
+      "langs": {
+        "en": 16,
+        "sv": 1,
+        "it": 1,
+        "pt": 1,
+        "no": 1,
+        "fr": 1,
+        "de": 1,
+        "fi": 1,
+        "da": 1,
+        "zh": 1,
+        "es": 1,
+        "nl": 1
+      },
+      "n_en": 16,
+      "n_nonen": 11,
+      "pct_en": 59.3,
+      "anglo_core": 4,
+      "supra": 12,
+      "non_anglo": 11,
+      "pct_anglo_core": 14.8,
+      "sl_searched": 19,
+      "sl_hit": 14,
+      "search_jurs": 47,
+      "score": 79.0,
+      "components": {
+        "A": 20,
+        "B": 14.6,
+        "C": 20,
+        "D": 15,
+        "E": 9.4
       },
       "grade": "B"
     },
@@ -1925,111 +2032,6 @@
       "grade": "B"
     },
     {
-      "slug": "stair-ramp-threshold-biomechanics-accessibility",
-      "topic": "entrances-and-circulation",
-      "state": "RETRACTED-PRE-REHAB",
-      "n": 26,
-      "bp": 0,
-      "anchor": 0,
-      "confirmed": 13,
-      "t3_clinical": 13,
-      "code_only": 13,
-      "no_anchor": true,
-      "convergence_only": false,
-      "basis": "supporting-only",
-      "tiers": {
-        "3": 14,
-        "4": 1,
-        "5": 1,
-        "6": 10
-      },
-      "etypes": {
-        "clinical": 13,
-        "national_fw": 1,
-        "code": 10,
-        "standard_eb": 1,
-        "grey": 1
-      },
-      "markers": {
-        "●": 13,
-        "◐": 2,
-        "○": 11
-      },
-      "n_jur": 15,
-      "n_jur_raw": 15,
-      "n_true_jur": 15,
-      "n_null_jur": 0,
-      "polluted_jur": {},
-      "jurs": {
-        "INT": 11,
-        "UK": 2,
-        "SE": 1,
-        "IT": 1,
-        "PT": 1,
-        "CA": 1,
-        "US": 1,
-        "NO": 1,
-        "FR": 1,
-        "DE": 1,
-        "FI": 1,
-        "DK": 1,
-        "CN": 1,
-        "ES": 1,
-        "NL": 1
-      },
-      "jurs_clean": {
-        "INT": 11,
-        "SE": 1,
-        "IT": 1,
-        "PT": 1,
-        "CA": 1,
-        "UK": 2,
-        "US": 1,
-        "NO": 1,
-        "FR": 1,
-        "DE": 1,
-        "FI": 1,
-        "DK": 1,
-        "CN": 1,
-        "ES": 1,
-        "NL": 1
-      },
-      "n_lang": 12,
-      "langs": {
-        "en": 15,
-        "sv": 1,
-        "it": 1,
-        "pt": 1,
-        "no": 1,
-        "fr": 1,
-        "de": 1,
-        "fi": 1,
-        "da": 1,
-        "zh": 1,
-        "es": 1,
-        "nl": 1
-      },
-      "n_en": 15,
-      "n_nonen": 11,
-      "pct_en": 57.7,
-      "anglo_core": 4,
-      "supra": 11,
-      "non_anglo": 11,
-      "pct_anglo_core": 15.4,
-      "sl_searched": 19,
-      "sl_hit": 14,
-      "search_jurs": 47,
-      "score": 68.5,
-      "components": {
-        "A": 20,
-        "B": 4.0,
-        "C": 20,
-        "D": 15,
-        "E": 9.5
-      },
-      "grade": "B"
-    },
-    {
       "slug": "sensory-space-global-south",
       "topic": "sensory-environment",
       "state": "RETRACTED-PRE-REHAB",
@@ -2198,22 +2200,24 @@
       "topic": "population-general",
       "state": "RETRACTED-PRE-REHAB",
       "n": 14,
-      "bp": 2,
-      "anchor": 2,
+      "bp": 3,
+      "anchor": 3,
       "confirmed": 13,
-      "t3_clinical": 11,
+      "t3_clinical": 10,
       "code_only": 1,
       "no_anchor": false,
       "convergence_only": false,
       "basis": null,
       "tiers": {
         "1": 2,
-        "3": 12
+        "2": 1,
+        "3": 11
       },
       "etypes": {
-        "clinical": 12,
+        "clinical": 11,
         "grey": 1,
-        "co1": 1
+        "co1": 1,
+        "sr_meta": 1
       },
       "markers": {
         "●": 13,
@@ -2249,13 +2253,84 @@
       "sl_searched": 19,
       "sl_hit": 0,
       "search_jurs": 47,
-      "score": 61.4,
+      "score": 62.3,
       "components": {
         "A": 20,
-        "B": 19.1,
+        "B": 20.0,
         "C": 13,
         "D": 5,
         "E": 4.3
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "circadian-lighting-melanopic-edi",
+      "topic": "sensory-environment",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 12,
+      "bp": 2,
+      "anchor": 2,
+      "confirmed": 7,
+      "t3_clinical": 5,
+      "code_only": 5,
+      "no_anchor": false,
+      "convergence_only": false,
+      "basis": null,
+      "tiers": {
+        "2": 2,
+        "3": 5,
+        "4": 2,
+        "5": 3
+      },
+      "etypes": {
+        "clinical": 5,
+        "standard_eb": 2,
+        "national_fw": 3,
+        "sr_meta": 2
+      },
+      "markers": {
+        "●": 7,
+        "◐": 5
+      },
+      "n_jur": 4,
+      "n_jur_raw": 4,
+      "n_true_jur": 4,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 8,
+        "US": 2,
+        "DE": 1,
+        "NO": 1
+      },
+      "jurs_clean": {
+        "INT": 8,
+        "DE": 1,
+        "NO": 1,
+        "US": 2
+      },
+      "n_lang": 2,
+      "langs": {
+        "en": 11,
+        "de": 1
+      },
+      "n_en": 11,
+      "n_nonen": 1,
+      "pct_en": 91.7,
+      "anglo_core": 2,
+      "supra": 8,
+      "non_anglo": 2,
+      "pct_anglo_core": 16.7,
+      "sl_searched": 19,
+      "sl_hit": 3,
+      "search_jurs": 47,
+      "score": 61.6,
+      "components": {
+        "A": 20,
+        "B": 16.7,
+        "C": 13,
+        "D": 5,
+        "E": 6.9
       },
       "grade": "C"
     },
@@ -3952,75 +4027,6 @@
         "C": 17,
         "D": 9,
         "E": 2.7
-      },
-      "grade": "D"
-    },
-    {
-      "slug": "circadian-lighting-melanopic-edi",
-      "topic": "sensory-environment",
-      "state": "RETRACTED-PRE-REHAB",
-      "n": 10,
-      "bp": 0,
-      "anchor": 0,
-      "confirmed": 5,
-      "t3_clinical": 5,
-      "code_only": 5,
-      "no_anchor": true,
-      "convergence_only": false,
-      "basis": "supporting-only",
-      "tiers": {
-        "3": 5,
-        "4": 2,
-        "5": 3
-      },
-      "etypes": {
-        "clinical": 5,
-        "standard_eb": 2,
-        "national_fw": 3
-      },
-      "markers": {
-        "●": 5,
-        "◐": 5
-      },
-      "n_jur": 4,
-      "n_jur_raw": 4,
-      "n_true_jur": 4,
-      "n_null_jur": 0,
-      "polluted_jur": {},
-      "jurs": {
-        "INT": 6,
-        "US": 2,
-        "DE": 1,
-        "NO": 1
-      },
-      "jurs_clean": {
-        "INT": 6,
-        "DE": 1,
-        "NO": 1,
-        "US": 2
-      },
-      "n_lang": 2,
-      "langs": {
-        "en": 9,
-        "de": 1
-      },
-      "n_en": 9,
-      "n_nonen": 1,
-      "pct_en": 90.0,
-      "anglo_core": 2,
-      "supra": 6,
-      "non_anglo": 2,
-      "pct_anglo_core": 20.0,
-      "sl_searched": 19,
-      "sl_hit": 3,
-      "search_jurs": 47,
-      "score": 44.7,
-      "components": {
-        "A": 16,
-        "B": 4.0,
-        "C": 13,
-        "D": 5,
-        "E": 6.7
       },
       "grade": "D"
     },
@@ -6181,16 +6187,16 @@
       "category": "B",
       "category_label": "Lighting",
       "source_slug": "circadian-lighting-melanopic-edi",
-      "basis_health": "no-anchor",
-      "grade": "D",
-      "score": 44.7,
-      "n": 10,
-      "anchor": 0,
-      "confirmed": 5,
+      "basis_health": "ok",
+      "grade": "C",
+      "score": 61.6,
+      "n": 12,
+      "anchor": 2,
+      "confirmed": 7,
       "n_jur": 4,
       "n_lang": 2,
-      "pct_en": 90.0,
-      "pct_anglo": 20.0
+      "pct_en": 91.7,
+      "pct_anglo": 16.7
     },
     {
       "item_code": "B-02",
@@ -6351,16 +6357,16 @@
       "category": "B",
       "category_label": "Lighting",
       "source_slug": "circadian-lighting-melanopic-edi",
-      "basis_health": "no-anchor",
-      "grade": "D",
-      "score": 44.7,
-      "n": 10,
-      "anchor": 0,
-      "confirmed": 5,
+      "basis_health": "ok",
+      "grade": "C",
+      "score": 61.6,
+      "n": 12,
+      "anchor": 2,
+      "confirmed": 7,
       "n_jur": 4,
       "n_lang": 2,
-      "pct_en": 90.0,
-      "pct_anglo": 20.0
+      "pct_en": 91.7,
+      "pct_anglo": 16.7
     },
     {
       "item_code": "B-12",
@@ -6708,16 +6714,16 @@
       "category": "E",
       "category_label": "Circulation and Access",
       "source_slug": "stair-ramp-threshold-biomechanics-accessibility",
-      "basis_health": "no-anchor",
+      "basis_health": "ok",
       "grade": "B",
-      "score": 68.5,
-      "n": 26,
-      "anchor": 0,
-      "confirmed": 13,
+      "score": 79.0,
+      "n": 27,
+      "anchor": 1,
+      "confirmed": 14,
       "n_jur": 15,
       "n_lang": 12,
-      "pct_en": 57.7,
-      "pct_anglo": 15.4
+      "pct_en": 59.3,
+      "pct_anglo": 14.8
     },
     {
       "item_code": "E-04",
@@ -6776,16 +6782,16 @@
       "category": "E",
       "category_label": "Circulation and Access",
       "source_slug": "stair-ramp-threshold-biomechanics-accessibility",
-      "basis_health": "no-anchor",
+      "basis_health": "ok",
       "grade": "B",
-      "score": 68.5,
-      "n": 26,
-      "anchor": 0,
-      "confirmed": 13,
+      "score": 79.0,
+      "n": 27,
+      "anchor": 1,
+      "confirmed": 14,
       "n_jur": 15,
       "n_lang": 12,
-      "pct_en": 57.7,
-      "pct_anglo": 15.4
+      "pct_en": 59.3,
+      "pct_anglo": 14.8
     },
     {
       "item_code": "E-08",
