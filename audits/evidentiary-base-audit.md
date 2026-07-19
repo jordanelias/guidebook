@@ -5,15 +5,15 @@ This audit scores every research slice on the six requested dimensions — (1) a
 
 > **Reproducibility.** Every number here is regenerated from the DB by `tools/evidentiary_audit.py` — nothing is hand-transcribed, and the “data as of” date is the DB’s own `max(updated_at)`, so identical data yields byte-identical output. No grade is stored in the DB; the composite is a *derived* view whose rubric is fully specified in §2, so any reader can recompute it. Companion outputs: `evidentiary-base-audit.json` / `.csv`, and the interactive `tools/evidentiary-audit-dashboard.html` (filter by corpus / category / term).
 
-> **Adversarial review (two passes).** The audit was independently red-teamed twice; all raw counts (volume, tiers, language/jurisdiction distributions, search yield) reproduce exactly through a second code path. Folded in: (i) the **best-practice split** — *anchor* (T1/Co-1/T2/Co-2, the only tiers §3 lets anchor a best-practice claim) is now separated from *confirmed* (adds T3-clinical, ● per §5); a T3-clinical-only slice is confirmed evidence but flagged **no-anchor** (§2, §4); (ii) a **convergence discount** so code-floor-only slices can’t score highly on breadth alone (§2, §6); (iii) full disclosure of the **18 NULL-jurisdiction instances** (§3.5); (iv) **true-jurisdiction** breadth scoring that excludes the 4 language codes (`DA`×1, `ZH`×3) mis-filed in the `jurisdiction` column (§3.3).
+> **Adversarial review (two passes).** The audit was independently red-teamed twice; all raw counts (volume, tiers, language/jurisdiction distributions, search yield) reproduce exactly through a second code path. Folded in: (i) the **best-practice split** — *anchor* (T1/Co-1/T2/Co-2, the only tiers §3 lets anchor a best-practice claim) is now separated from *confirmed* (adds T3-clinical, ● per §5); a T3-clinical-only slice is confirmed evidence but flagged **no-anchor** (§2, §4); (ii) a **convergence discount** so code-floor-only slices can’t score highly on breadth alone (§2, §6); (iii) full disclosure of the **18 NULL-jurisdiction instances** (§3.5); (iv) **true-jurisdiction** breadth scoring that excludes the 0 language codes () mis-filed in the `jurisdiction` column (§3.3).
 
 ## 1. Executive summary
 
 - **753 source-instances** are linked across **69 of 82 slices**; **13 slices carry zero linked evidence**.
-- **Grade distribution:** A=6 · B=17 · C=19 · D=15 · E=12 · F=13  (A≥80, B≥65, C≥50, D≥35, E>0, F=empty).
+- **Grade distribution:** A=6 · B=17 · C=19 · D=16 · E=11 · F=13  (A≥80, B≥65, C≥50, D≥35, E>0, F=empty).
 - **Tier profile is code-and-clinical heavy, synthesis-light.** Of linked instances: T1=100, T2=76, T3=218, T4=76, T5=147, T6=136. Only **76 Tier-2 (systematic-review / evidence-based-standard) instances** exist across the whole corpus — the synthesis tier that best anchors best-practice claims is the thinnest.
 - **Best-practice anchoring is thin.** Only **176/753 (23%)** of instances can *anchor* a best-practice claim (T1/Co-1/T2/Co-2, §3); a further 187 are confirmed-but-supporting T3-clinical (● §5). **20 slices have no anchor at all** (11 code-floor, 9 T3-clinical-only).
-- **Anglophone concentration is the dominant quality risk.** **553/753 (73%) of linked sources are English-language**; only 200 are non-English. By jurisdiction, 295 instances are native-Anglophone (US/UK/AU/CA/NZ/IE), 192 supranational (INT/EU/ISO), 248 other, 18 unrecorded.
+- **Anglophone concentration is the dominant quality risk.** **551/753 (73%) of linked sources are English-language**; only 202 are non-English. By jurisdiction, 295 instances are native-Anglophone (US/UK/AU/CA/NZ/IE), 192 supranational (INT/EU/ISO), 248 other, 18 unrecorded.
 - **Search breadth ≠ evidentiary yield.** Slices were searched across **19 languages** and ~47 jurisdictions, but 5 searched languages (`ar`, `bn`, `hi`, `id`, `sw`) returned **zero** usable sources in **every** slice. The bias lives in what converted to evidence, not in search effort.
 
 ## 2. Method & definitions
@@ -80,7 +80,7 @@ Median linked sources among non-empty slices: **8**. Largest bases: `accessibili
 **Best-practice-anchor share: 176/753 (23%)** (T1/Co-1/T2/Co-2, §3). Adding confirmed-but-supporting T3-clinical brings *confirmed* evidence to 363/753 (48%). The remaining 390 are T4–T6 code/standards + T3-grey that carry no confirmed evidence. Slices with zero anchors are the sharpest risk — see the no-anchor list in §4.
 
 ### (3) Jurisdictions sourced
-Distinct jurisdiction strings across the corpus: **48** — but **2 are language codes mis-filed in the jurisdiction column** (`DA`×1, `ZH`×3 = 4 instances; a data-integrity defect, see the note below), leaving **~46 true jurisdictions**. Top: INT (181), US (126), UK (84), AU (38), DE (35), CA (28), NL (25), NO (22), JP (21), SE (18).
+Distinct jurisdiction strings across the corpus: **46** — but **0 are language codes mis-filed in the jurisdiction column** ( = 0 instances; a data-integrity defect, see the note below), leaving **~46 true jurisdictions**. Top: INT (181), US (126), UK (84), AU (38), DE (35), CA (28), NL (25), NO (22), JP (21), SE (18).
 
 **3 non-empty slices draw on ≤1 jurisdiction** — monojurisdictional bases whose values may not transfer across code regimes. Separately, **18 source-instances carry no jurisdiction at all** (NULL) — mostly clinical/synthesis sources with no single national home; these are excluded from every jurisdiction-share denominator.
 
@@ -89,19 +89,19 @@ Distinct jurisdiction strings across the corpus: **48** — but **2 are language
 ### (4) Languages sourced
 | Language | Instances |
 |---|---|
-| en | 553 |
+| en | 551 |
 | de | 35 |
 | ja | 21 |
 | fr | 21 |
 | no | 20 |
 | nl | 17 |
 | sv | 16 |
-| zh | 14 |
+| zh | 15 |
 | pt | 11 |
 | it | 10 |
 | ko | 9 |
+| da | 9 |
 | fi | 8 |
-| da | 8 |
 | es | 6 |
 | ar | 2 |
 | bn | 1 |
@@ -123,8 +123,8 @@ Distinct source languages: **17** (`en`/`eng` merged; raw ISO codes may be one m
 | A | 6 | strong, balanced, synthesis-anchored |
 | B | 17 | solid, some concentration or tier gaps |
 | C | 19 | usable but thin or monolingual |
-| D | 15 | weak — few sources / single jurisdiction / English-only |
-| E | 12 | very weak — 1 jurisdiction, no anchor |
+| D | 16 | weak — few sources / single jurisdiction / English-only |
+| E | 11 | very weak — 1 jurisdiction, no anchor |
 | F | 13 | empty — no linked evidence |
 
 ## 4. Master per-slice table (ranked by composite score)
@@ -137,7 +137,7 @@ Legend: **N** linked sources · **BP** best-practice-anchor count (T1/Co-1/T2/Co
 | 2 | **A** | 83.3 | `cognitive-wayfinding-design` | wayfinding-and-signage | 24 | 6 | 16 | T1×1,T2×5,T3×10,T5×7,T6×1 | 13 | 9 | 58.3 | 8.3 | 20·18.3·20·15·10.0 |
 | 3 | **A** | 83.0 | `deaf-spatial-design` | communication-and-alerts | 13 | 8 | 10 | T1×5,T2×3,T3×4,T5×1 | 8 | 5 | 61.5 | 38.5 | 20·23.5·20·12·7.5 |
 | 4 | **A** | 82.1 | `wayfinding-dementia-spatial-design` | wayfinding-and-signage | 22 | 4 | 12 | T1×1,T2×3,T3×9,T5×5,T6×4 | 16 | 13 | 40.9 | 18.2 | 20·16.5·20·15·10.6 |
-| 5 | **A** | 81.6 | `room-acoustic-performance` | sensory-environment | 32 | 17 | 20 | T1×16,T2×1,T3×4,T4×2,T5×8,T6×1 | 12 | 7 | 81.2 | 50.0 | 20·21.4·20·15·5.2 |
+| 5 | **A** | 81.8 | `room-acoustic-performance` | sensory-environment | 32 | 17 | 20 | T1×16,T2×1,T3×4,T4×2,T5×8,T6×1 | 13 | 8 | 78.1 | 50.0 | 20·21.4·20·15·5.4 |
 | 6 | **A** | 80.0 | `accessible-bathroom-and-grab-bar` | bathrooms-and-wet-areas | 19 | 9 | 9 | T1×5,T2×4,T3×1,T4×1,T5×4,T6×4 | 12 | 8 | 57.9 | 68.4 | 20·19.5·20·15·5.5 |
 | 7 | **B** | 79.5 | `deaf-classroom-reverberation-time` | communication-and-alerts | 12 | 2 | 2 | T1×2,T4×1,T5×6,T6×3 | 9 | 9 | 25.0 | 25.0 | 20·13.3·20·15·11.2 |
 | 8 | **B** | 79.4 | `sensory-room-user-control` | sensory-environment | 13 | 4 | 12 | T2×4,T3×8,T6×1 | 9 | 4 | 76.9 | 38.5 | 20·21.1·20·12·6.3 |
@@ -188,9 +188,9 @@ Legend: **N** linked sources · **BP** best-practice-anchor count (T1/Co-1/T2/Co
 | 53 | **D** | 42.4 | `luminance-contrast-lrv-evidence-base` | wayfinding-and-signage | 7 | 1 | 5 | T2×1,T3×4,T5×1,T6×1 | 4 | 1 | 100.0 | 100.0 | 12·17.4·13·0·0.0 |
 | 54 | **D** | 39.6 | `residential-dar-provisions-priority-register` | frameworks-and-methodology | 6 | 1 | 1 | T2×1,T4×1,T5×4 | 3 | 1 | 100.0 | 83.3 | 12·13.3·13·0·1.3 |
 | 55 | **D** | 39.0 | `case-study-economics-financial-data` | economics | 4 | 2 | 3 | T1×1,T2×1,T3×1,T5×1 | 2 | 1 | 100.0 | 100.0 | 8·22.0·9·0·0.0 |
-| 56 | **D** ‡ | 36.1 | `visual-alerting-and-wayfinding-light` | wayfinding-and-signage | 7 | 0 | 0 | T4×2,T5×2,T6×3 | 7 | 5 | 42.9 | 28.6 | 12·0.0·8.5·6.0·9.6 |
-| 57 | **D** † | 35.0 | `ecological-psychology-haptic-affordances-built-environment` | frameworks-and-methodology | 5 | 0 | 5 | T3×5 | 2 | 1 | 100.0 | 20.0 | 12·8.0·9·0·6.0 |
-| 58 | **E** ‡ | 33.8 | `body-sizes-supplementary-populations` | frameworks-and-methodology | 11 | 0 | 0 | T3×2,T4×4,T5×5 | 4 | 3 | 72.7 | 36.4 | 16·0.0·6.5·4.5·6.8 |
+| 56 | **D** ‡ | 36.5 | `body-sizes-supplementary-populations` | frameworks-and-methodology | 11 | 0 | 0 | T3×2,T4×4,T5×5 | 5 | 3 | 63.6 | 36.4 | 16·0.0·8.5·4.5·7.5 |
+| 57 | **D** ‡ | 36.1 | `visual-alerting-and-wayfinding-light` | wayfinding-and-signage | 7 | 0 | 0 | T4×2,T5×2,T6×3 | 7 | 5 | 42.9 | 28.6 | 12·0.0·8.5·6.0·9.6 |
+| 58 | **D** † | 35.0 | `ecological-psychology-haptic-affordances-built-environment` | frameworks-and-methodology | 5 | 0 | 5 | T3×5 | 2 | 1 | 100.0 | 20.0 | 12·8.0·9·0·6.0 |
 | 59 | **E** † | 33.3 | `wayfinding-cognitive-science-spatial-design` | wayfinding-and-signage | 7 | 0 | 7 | T3×7 | 2 | 1 | 100.0 | 42.9 | 12·8.0·9·0·4.3 |
 | 60 | **E** † | 32.7 | `intellectual-disability-built-environment-design` | population-general | 5 | 0 | 2 | T3×2,T4×3 | 3 | 1 | 100.0 | 40.0 | 12·3.2·13·0·4.5 |
 | 61 | **E** † | 32.0 | `floor-vibration-wheelchair-disability` | entrances-and-circulation | 7 | 0 | 4 | T3×4,T4×3 | 2 | 1 | 100.0 | 14.3 | 12·4.6·9·0·6.4 |
@@ -217,7 +217,7 @@ Legend: **N** linked sources · **BP** best-practice-anchor count (T1/Co-1/T2/Co
 | 82 | **F** | 0 | `post-occupancy-evaluation-global` | frameworks-and-methodology | 0 | 0 | 0 | — | 0 | 0 | — | — | 0·0·0·0·0 |
 
 **No-anchor slices (20)** — real sources but **zero best-practice anchors** (no T1/Co-1/T2/Co-2), so the base cannot carry a best-practice claim on its own. Two kinds:
-- **‡ Code-floor / convergence-only (11)** — 0 confirmed evidence (pure T4–T6/grey); breadth is discounted. Read grades as coverage, not quality: `luminance-contrast-and-pattern`, `threshold-and-level-access`, `jurisdiction-grant-programmes-comprehensive`, `visual-alerting-and-wayfinding-light`, `body-sizes-supplementary-populations`, `european-accessibility-act-scope-clarification`, `accessible-laundry-room-design`, `government-grant-programmes-home-adaptation`, `therapeutic-lighting-design`, `crpd-implementation-built-environment`, `co1-housing-research-global-south`.
+- **‡ Code-floor / convergence-only (11)** — 0 confirmed evidence (pure T4–T6/grey); breadth is discounted. Read grades as coverage, not quality: `luminance-contrast-and-pattern`, `threshold-and-level-access`, `jurisdiction-grant-programmes-comprehensive`, `body-sizes-supplementary-populations`, `visual-alerting-and-wayfinding-light`, `european-accessibility-act-scope-clarification`, `accessible-laundry-room-design`, `government-grant-programmes-home-adaptation`, `therapeutic-lighting-design`, `crpd-implementation-built-environment`, `co1-housing-research-global-south`.
 - **† Supporting-only (9)** — confirmed T3-clinical primary evidence but no anchor; genuine supporting evidence that still needs a T1/Co-1/T2/Co-2 anchor to make a best-practice claim: `stair-ramp-threshold-biomechanics-accessibility`, `reach-range-and-accessible-controls`, `circadian-lighting-melanopic-edi`, `ecological-psychology-haptic-affordances-built-environment`, `wayfinding-cognitive-science-spatial-design`, `intellectual-disability-built-environment-design`, `floor-vibration-wheelchair-disability`, `cross-population-conflict-resolutions`, `thermoregulation-built-environment`.
 
 ## 5. Evidence-empty slices (13)
@@ -250,7 +250,7 @@ Several name high-salience topics where an empty base is a material coverage gap
 3. **De-risk monojurisdictional slices.** 3 evidenced slices rest on ≤1 jurisdiction; flag their numeric thresholds as non-transferable until a second regime is sourced.
 4. **Fill or formally park the empty slices.** Move the 7 un-started slices into an active search queue or an explicit deferred state so they stop reading as silent gaps.
 5. **Treat the doubly-concentrated slices as citation-risk.** The 14 ≥90%-English-and-≥50%-Anglophone slices are where global-applicability claims are weakest.
-6. **Fix the mis-filed jurisdiction codes.** Move the 4 `DA`×1, `ZH`×3 values out of `evidence_sources.jurisdiction` and recover the true jurisdiction — a one-off migration.
+6. **Fix the mis-filed jurisdiction codes.** Move the 0  values out of `evidence_sources.jurisdiction` and recover the true jurisdiction — a one-off migration.
 
 ## 7. Limitations & what this audit does *not* claim
 

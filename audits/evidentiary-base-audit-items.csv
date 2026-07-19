@@ -1,23 +1,23 @@
 item_code,category,category_label,name,source_slug,basis_health,inherited_grade,inherited_score,base_n_sources,base_anchor,base_confirmed,base_n_jurisdictions,base_n_languages,base_pct_english,base_pct_anglo_core
-A-01,A,Acoustics,Acoustic Buffer Zones at Noisy Adjacencies,room-acoustic-performance,ok,A,81.6,32,17,20,12,7,81.2,50.0
-A-02,A,Acoustics,Acoustic Ceiling Panels (NRC ≥0.85) in Occupied Spaces,room-acoustic-performance,ok,A,81.6,32,17,20,12,7,81.2,50.0
-A-03,A,Acoustics,Acoustic Door (STC ≥35) at All Sensitive Space Boundaries,room-acoustic-performance,ok,A,81.6,32,17,20,12,7,81.2,50.0
-A-04,A,Acoustics,Acoustic Zoning: Graduated from Arrival to Primary Occupation,room-acoustic-performance,ok,A,81.6,32,17,20,12,7,81.2,50.0
-A-05,A,Acoustics,Carpet in Corridors and Occupied Spaces (Where VIS Navigation Maintained),room-acoustic-performance,ok,A,81.6,32,17,20,12,7,81.2,50.0
-A-06,A,Acoustics,Fabric Wall Panels (NRC ≥0.70) at Acoustic Reflection Points,room-acoustic-performance,ok,A,81.6,32,17,20,12,7,81.2,50.0
-A-07,A,Acoustics,Flutter Echo Elimination (Parallel Hard Surface Avoidance),room-acoustic-performance,ok,A,81.6,32,17,20,12,7,81.2,50.0
-A-08,A,Acoustics,HVAC Noise Control (NC-25 Maximum in Sensitive Spaces),room-acoustic-performance,ok,A,81.6,32,17,20,12,7,81.2,50.0
-A-09,A,Acoustics,HVAC Vibration Isolation (Floating Plant Room),room-acoustic-performance,ok,A,81.6,32,17,20,12,7,81.2,50.0
+A-01,A,Acoustics,Acoustic Buffer Zones at Noisy Adjacencies,room-acoustic-performance,ok,A,81.8,32,17,20,13,8,78.1,50.0
+A-02,A,Acoustics,Acoustic Ceiling Panels (NRC ≥0.85) in Occupied Spaces,room-acoustic-performance,ok,A,81.8,32,17,20,13,8,78.1,50.0
+A-03,A,Acoustics,Acoustic Door (STC ≥35) at All Sensitive Space Boundaries,room-acoustic-performance,ok,A,81.8,32,17,20,13,8,78.1,50.0
+A-04,A,Acoustics,Acoustic Zoning: Graduated from Arrival to Primary Occupation,room-acoustic-performance,ok,A,81.8,32,17,20,13,8,78.1,50.0
+A-05,A,Acoustics,Carpet in Corridors and Occupied Spaces (Where VIS Navigation Maintained),room-acoustic-performance,ok,A,81.8,32,17,20,13,8,78.1,50.0
+A-06,A,Acoustics,Fabric Wall Panels (NRC ≥0.70) at Acoustic Reflection Points,room-acoustic-performance,ok,A,81.8,32,17,20,13,8,78.1,50.0
+A-07,A,Acoustics,Flutter Echo Elimination (Parallel Hard Surface Avoidance),room-acoustic-performance,ok,A,81.8,32,17,20,13,8,78.1,50.0
+A-08,A,Acoustics,HVAC Noise Control (NC-25 Maximum in Sensitive Spaces),room-acoustic-performance,ok,A,81.8,32,17,20,13,8,78.1,50.0
+A-09,A,Acoustics,HVAC Vibration Isolation (Floating Plant Room),room-acoustic-performance,ok,A,81.8,32,17,20,13,8,78.1,50.0
 A-10,A,Acoustics,Counter Hearing Loop (Induction Loop at Reception/Service Counter),assistive-listening-systems,ok,B,74.4,8,4,4,7,5,50.0,25.0
-A-10b,A,Acoustics,RT60 for Hydrotherapy and Pool Environments,room-acoustic-performance,ok,A,81.6,32,17,20,12,7,81.2,50.0
+A-10b,A,Acoustics,RT60 for Hydrotherapy and Pool Environments,room-acoustic-performance,ok,A,81.8,32,17,20,13,8,78.1,50.0
 A-11,A,Acoustics,Room Perimeter Hearing Loop (Assembly and Meeting Spaces),assistive-listening-systems,ok,B,74.4,8,4,4,7,5,50.0,25.0
 A-12,A,Acoustics,Auracast Infrastructure Readiness,assistive-listening-systems,ok,B,74.4,8,4,4,7,5,50.0,25.0
 A-13,A,Acoustics,No Sound Masking in Neurological Population Environments,,no-source,—,,,,,,,,
-A-14,A,Acoustics,Double-Leaf Partition (STC ≥50) for Sensitive Adjacencies,room-acoustic-performance,ok,A,81.6,32,17,20,12,7,81.2,50.0
+A-14,A,Acoustics,Double-Leaf Partition (STC ≥50) for Sensitive Adjacencies,room-acoustic-performance,ok,A,81.8,32,17,20,13,8,78.1,50.0
 A-15,A,Acoustics,Acoustic Differentiation Between Spaces (Navigation Aid for VIS),,no-source,—,,,,,,,,
 A-16,A,Acoustics,"Sensory Room / Quiet Room Provision (≥8 m², one per floor or per 500 m² GFA)",sensory-relief-space-design,ok,C,55.7,10,4,8,6,1,100.0,80.0
-A-17,A,Acoustics,Upholstered Seating Throughout Occupied Spaces,room-acoustic-performance,ok,A,81.6,32,17,20,12,7,81.2,50.0
-A-18,A,Acoustics,RT60 in Occupied Learning and Listening Spaces,room-acoustic-performance,ok,A,81.6,32,17,20,12,7,81.2,50.0
+A-17,A,Acoustics,Upholstered Seating Throughout Occupied Spaces,room-acoustic-performance,ok,A,81.8,32,17,20,13,8,78.1,50.0
+A-18,A,Acoustics,RT60 in Occupied Learning and Listening Spaces,room-acoustic-performance,ok,A,81.8,32,17,20,13,8,78.1,50.0
 B-01,B,Lighting,Circadian Lighting (≥150 EML Minimum at Eye Level in Daytime Spaces),circadian-lighting-melanopic-edi,no-anchor,D,44.7,10,0,5,4,2,90.0,20.0
 B-02,B,Lighting,Diffuse Lighting for Lip Reading and Sign Language (Shadow-Free Face Illumination),deaf-spatial-design,ok,A,83.0,13,8,10,8,5,61.5,38.5
 B-03,B,Lighting,Elimination of Fluorescent Overhead Lighting,therapeutic-lighting-design,code-floor,E,26.4,4,0,0,3,2,75.0,0.0
