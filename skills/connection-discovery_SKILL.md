@@ -32,11 +32,37 @@ description: >
 | `--mode spec` | New or updated item specification | Item spec text + cross-reference tables |
 | `--mode evidence` | New BPC synthesis, gap register update | BPC files + gap register + pending connections |
 | `--mode external` | Citation mining complete for a slug | Tier 1-2 forward citations via Scholar Gateway / PubMed |
+| `--mode category-crosstest` | Intra-category cross-test (ICCT) over a category/functional group | Every item pair in the category — the exhaustive `C(n,2)` pass |
 
 Run spec and evidence modes together for a full per-item scan. External mode is
 invoked separately after citation mining completes and is scoped to the mined slug.
 
 Default mode when not specified: `spec`.
+
+### `--mode category-crosstest` — the exhaustive intra-category pass (ICCT)
+
+Per `decisions/DR-2026-07-20-intra-category-cross-test.md` (PROPOSED). The other
+three modes are opportunistic and title-driven: `spec` mode reads author-declared
+cross-reference tables, so it inherits exactly the title-silos the ICCT exists to
+dismantle. `category-crosstest` is different — it enumerates **every** unordered
+item pair in a category (letter-category A–K and/or functional/thematic BPC group)
+and records a controlled **verdict** per pair, so no pairing is skipped because an
+author did not happen to cross-reference it.
+
+Per pair, assign exactly one verdict (DR X3): `INDEPENDENT`, `SUBSUMES` /
+`SUBSUMED_BY`, `INTERACTS`, `SHARED_ELEMENT_DISTINCT_PROGRAM`, `CONFLATED_VARIABLE`,
+or `GENUINE_CONFLICT`. Compare a pair **only within measurement paradigm and device/
+functional class** (DR X4, reusing the DR-2026-07-13 `measurement_paradigm` /
+`device_class` fields); a cross-paradigm or cross-class pairing is recorded as a
+*derivation*, never an identity, and can never register `GENUINE_CONFLICT`. Emit a
+mandatory **cross-partition leakage** flag for any pair whose shared physical element,
+movement/acoustic/air envelope, or shared population links items across a category
+boundary (the corridor ↔ rest-alcove case). Only `GENUINE_CONFLICT` routes to
+conflict resolution (Population Mode); the other five are typed `connections` rows —
+finally populating `connection_type`. Worked demonstration:
+`references/methodology/intra-category-cross-test-methodology.md` (acoustic cluster
+A-02 · A-08 · A-18). Until the `cross_test_pairs` migration ships (DR X6), record
+verdicts as typed `connections` rows and log unexamined pairs as gaps.
 
 ---
 
