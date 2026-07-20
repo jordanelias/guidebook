@@ -5,6 +5,13 @@
 **SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
 (See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
 
+> **RE-DERIVATION FIRST PASS — 2026-07-20** (`session_2026-07-20-retracted-slice-rederivation-batch`, WS2). Synthesis
+> stays retracted (Opus rewrite BLOCKED). `source_slug_links` 0 → 9, `evidence_state` → **PARTIAL**. Re-linked verified
+> corpus rows — PAS 6463:2022 (REF-00130), Mostafa ASPECTSS (REF-00051), autism-BE review (REF-00710, IT), biophilic
+> NDV transitional zones (REF-00641, AU, Co-1), Australian neuroinclusive guidance (REF-00610), RCOT+NAS sensory
+> guidance (REF-00549), NDV indoor comfort (REF-00726), ASD environmental-design scoping review (REF-00547), autism
+> acoustic requirements (REF-00561). Strong anchor mix (T1×2, T2×4). Audit: F → **C** (58.3). DB is source of truth.
+
 ### Concept boundary notes
 | Language | Native alias | Map | Warning |
 |---|---|---|---|

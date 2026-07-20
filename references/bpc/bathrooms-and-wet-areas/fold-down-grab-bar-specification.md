@@ -6,6 +6,14 @@
 **SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
 (See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
 
+> **RE-DERIVATION FIRST PASS — 2026-07-20** (`session_2026-07-20-retracted-slice-rederivation-batch`, WS2). Synthesis
+> stays retracted (Opus rewrite BLOCKED). `source_slug_links` 0 → 8, `evidence_state` → **PARTIAL**. Re-linked verified
+> corpus rows — ADA S604 (REF-00142, 1.1 kN), FHA Design Manual (REF-00143, 400 mm CL + blocking), NS 11001 (REF-00759),
+> UK NHS/BS 8300 grab-rail SWL 250/350 kg (REF-00193), BS 8300-2 (REF-00358), grab-bar fall-hazard biomechanics
+> (REF-00028), Co-1 grab-bar user perspectives (REF-00036) — plus one net-new verified source, WHO APS15 (REF-00883,
+> 110 kg × 3 directions). The slice's standing **"DO NOT CITE Novak 2024" flag is honoured** — REF-00368 was
+> deliberately NOT linked. WHO 110 kg is recorded as a procurement floor, not a best-practice anchor. Audit: F → **C**.
+
 **Consensus finding:** Fold-down grab bars require ≥200 kg safe working load minimum for standard provision; structural wall backing/blocking is mandatory at all positions and must span full toilet wall length to allow bilateral positioning. ADA floor standard is 250 lbs (1.1 kN). Centrepoint of fold-down bar to be 400 mm from toilet centreline.
 **Load ratings:**
   - Standard floor: ADA ≥250 lbs (1.1 kN) at any point on bar, fastener, or supporting structure (US Access Board 2010)
