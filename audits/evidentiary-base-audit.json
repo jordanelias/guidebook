@@ -5,8 +5,8 @@
   "total_source_instances": 862,
   "unique_sources": 755,
   "grade_distribution": {
-    "A": 8,
-    "B": 16,
+    "A": 7,
+    "B": 17,
     "C": 21,
     "D": 15,
     "E": 10,
@@ -20,7 +20,7 @@
     "5": 147,
     "6": 136
   },
-  "english_instances": 639,
+  "english_instances": 643,
   "zero_yield_search_languages": [
     "AR",
     "BN",
@@ -77,11 +77,12 @@
       "jurs": {
         "US": 7,
         "INT": 3,
-        "GB": 3,
         "NL": 2,
         "UK": 2,
         "NO": 2,
         "DK": 2,
+        "GB": 2,
+        "AU": 2,
         "HK": 1,
         "CN": 1,
         "FI": 1,
@@ -92,8 +93,7 @@
         "KR": 1,
         "SE": 1,
         "DE": 1,
-        "CA": 1,
-        "AU": 1
+        "CA": 1
       },
       "jurs_clean": {
         "INT": 3,
@@ -112,9 +112,9 @@
         "KR": 1,
         "SE": 1,
         "DE": 1,
-        "GB": 3,
+        "GB": 2,
         "CA": 1,
-        "AU": 1
+        "AU": 2
       },
       "n_lang": 13,
       "langs": {
@@ -135,20 +135,20 @@
       "n_en": 21,
       "n_nonen": 14,
       "pct_en": 60.0,
-      "anglo_core": 11,
+      "anglo_core": 12,
       "supra": 3,
-      "non_anglo": 19,
-      "pct_anglo_core": 33.3,
+      "non_anglo": 18,
+      "pct_anglo_core": 36.4,
       "sl_searched": 19,
       "sl_hit": 14,
       "search_jurs": 47,
-      "score": 83.9,
+      "score": 83.7,
       "components": {
         "A": 20,
         "B": 20.9,
         "C": 20,
         "D": 15,
-        "E": 8.0
+        "E": 7.8
       },
       "grade": "A"
     },
@@ -222,19 +222,19 @@
       },
       "n_lang": 9,
       "langs": {
-        "en": 15,
-        "de": 2,
+        "en": 16,
         "nl": 2,
         "no": 1,
         "fr": 1,
+        "de": 1,
         "ko": 1,
         "zh": 1,
         "da": 1,
         "sv": 1
       },
-      "n_en": 15,
-      "n_nonen": 10,
-      "pct_en": 60.0,
+      "n_en": 16,
+      "n_nonen": 9,
+      "pct_en": 64.0,
       "anglo_core": 2,
       "supra": 9,
       "non_anglo": 14,
@@ -242,13 +242,13 @@
       "sl_searched": 19,
       "sl_hit": 14,
       "search_jurs": 47,
-      "score": 83.7,
+      "score": 83.4,
       "components": {
         "A": 20,
         "B": 18.8,
         "C": 20,
         "D": 15,
-        "E": 9.9
+        "E": 9.6
       },
       "grade": "A"
     },
@@ -505,20 +505,19 @@
         "PT": 1,
         "KR": 1
       },
-      "n_lang": 8,
+      "n_lang": 7,
       "langs": {
-        "en": 22,
-        "fr": 2,
+        "en": 24,
         "de": 1,
-        "no": 1,
         "zh": 1,
+        "fr": 1,
         "it": 1,
         "pt": 1,
         "ko": 1
       },
-      "n_en": 22,
-      "n_nonen": 8,
-      "pct_en": 73.3,
+      "n_en": 24,
+      "n_nonen": 6,
+      "pct_en": 80.0,
       "anglo_core": 6,
       "supra": 1,
       "non_anglo": 6,
@@ -526,13 +525,13 @@
       "sl_searched": 19,
       "sl_hit": 12,
       "search_jurs": 47,
-      "score": 82.7,
+      "score": 82.2,
       "components": {
         "A": 20,
         "B": 21.7,
         "C": 20,
         "D": 15,
-        "E": 6.0
+        "E": 5.5
       },
       "grade": "A"
     },
@@ -757,9 +756,8 @@
       "n_null_jur": 3,
       "polluted_jur": {},
       "jurs": {
-        "CA": 3,
+        "CA": 4,
         "UK": 3,
-        "US": 2,
         "IE": 2,
         "AU": 2,
         "INT": 1,
@@ -769,37 +767,37 @@
         "PT": 1,
         "KR": 1,
         "NZ": 1,
-        "CN": 1
+        "CN": 1,
+        "US": 1
       },
       "jurs_clean": {
         "INT": 1,
-        "CA": 3,
+        "CA": 4,
         "DE": 1,
         "UK": 3,
         "BE": 1,
         "IT": 1,
         "PT": 1,
         "KR": 1,
-        "US": 2,
         "NZ": 1,
         "CN": 1,
         "IE": 2,
+        "US": 1,
         "AU": 2
       },
-      "n_lang": 8,
+      "n_lang": 7,
       "langs": {
-        "en": 15,
-        "fr": 2,
+        "en": 17,
         "de": 1,
+        "fr": 1,
         "it": 1,
         "pt": 1,
         "ko": 1,
-        "nl": 1,
         "zh": 1
       },
-      "n_en": 15,
-      "n_nonen": 8,
-      "pct_en": 65.2,
+      "n_en": 17,
+      "n_nonen": 6,
+      "pct_en": 73.9,
       "anglo_core": 13,
       "supra": 1,
       "non_anglo": 6,
@@ -807,15 +805,15 @@
       "sl_searched": 19,
       "sl_hit": 8,
       "search_jurs": 47,
-      "score": 80.5,
+      "score": 79.9,
       "components": {
         "A": 20,
         "B": 20.3,
         "C": 20,
         "D": 15,
-        "E": 5.2
+        "E": 4.6
       },
-      "grade": "A"
+      "grade": "B"
     },
     {
       "slug": "deaf-classroom-reverberation-time",
@@ -907,6 +905,85 @@
       "grade": "B"
     },
     {
+      "slug": "construction-cost-data",
+      "topic": "economics",
+      "state": null,
+      "n": 12,
+      "bp": 6,
+      "anchor": 6,
+      "confirmed": 10,
+      "t3_clinical": 4,
+      "code_only": 2,
+      "no_anchor": false,
+      "convergence_only": false,
+      "basis": null,
+      "tiers": {
+        "1": 2,
+        "2": 4,
+        "3": 4,
+        "6": 2
+      },
+      "etypes": {
+        "code": 2,
+        "standard_eb": 4,
+        "clinical": 6
+      },
+      "markers": {
+        "●": 10,
+        "○": 2
+      },
+      "n_jur": 8,
+      "n_jur_raw": 8,
+      "n_true_jur": 8,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "DE": 4,
+        "US": 2,
+        "CA": 1,
+        "BE": 1,
+        "SE": 1,
+        "INT": 1,
+        "UK": 1,
+        "AU": 1
+      },
+      "jurs_clean": {
+        "CA": 1,
+        "DE": 4,
+        "BE": 1,
+        "US": 2,
+        "SE": 1,
+        "INT": 1,
+        "UK": 1,
+        "AU": 1
+      },
+      "n_lang": 3,
+      "langs": {
+        "en": 7,
+        "de": 4,
+        "sv": 1
+      },
+      "n_en": 7,
+      "n_nonen": 5,
+      "pct_en": 58.3,
+      "anglo_core": 5,
+      "supra": 1,
+      "non_anglo": 6,
+      "pct_anglo_core": 41.7,
+      "sl_searched": 19,
+      "sl_hit": 1,
+      "search_jurs": 47,
+      "score": 79.2,
+      "components": {
+        "A": 20,
+        "B": 22.7,
+        "C": 20,
+        "D": 9,
+        "E": 7.5
+      },
+      "grade": "B"
+    },
+    {
       "slug": "mental-health-built-environment",
       "topic": "population-general",
       "state": "RETRACTED-PRE-REHAB",
@@ -940,19 +1017,20 @@
         "◐": 3,
         "○": 5
       },
-      "n_jur": 10,
-      "n_jur_raw": 10,
-      "n_true_jur": 10,
+      "n_jur": 11,
+      "n_jur_raw": 11,
+      "n_true_jur": 11,
       "n_null_jur": 0,
       "polluted_jur": {},
       "jurs": {
         "DE": 10,
-        "INT": 8,
+        "INT": 7,
         "US": 5,
         "NL": 5,
         "UK": 2,
         "AU": 2,
         "JP": 2,
+        "GB": 1,
         "NO": 1,
         "CA": 1,
         "AT": 1
@@ -960,9 +1038,10 @@
       "jurs_clean": {
         "UK": 2,
         "AU": 2,
-        "INT": 8,
+        "INT": 7,
         "US": 5,
         "NL": 5,
+        "GB": 1,
         "DE": 10,
         "NO": 1,
         "CA": 1,
@@ -981,8 +1060,8 @@
       "n_nonen": 15,
       "pct_en": 59.5,
       "anglo_core": 10,
-      "supra": 8,
-      "non_anglo": 19,
+      "supra": 7,
+      "non_anglo": 20,
       "pct_anglo_core": 27.0,
       "sl_searched": 19,
       "sl_hit": 10,
@@ -1198,6 +1277,178 @@
       "grade": "B"
     },
     {
+      "slug": "assistive-listening-systems",
+      "topic": "communication-and-alerts",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 8,
+      "bp": 4,
+      "anchor": 4,
+      "confirmed": 4,
+      "t3_clinical": 0,
+      "code_only": 4,
+      "no_anchor": false,
+      "convergence_only": false,
+      "basis": null,
+      "tiers": {
+        "2": 4,
+        "4": 1,
+        "5": 1,
+        "6": 2
+      },
+      "etypes": {
+        "standard_eb": 5,
+        "code": 2,
+        "national_fw": 1
+      },
+      "markers": {
+        "●": 4,
+        "◐": 2,
+        "○": 2
+      },
+      "n_jur": 5,
+      "n_jur_raw": 5,
+      "n_true_jur": 5,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 4,
+        "NO": 1,
+        "FR": 1,
+        "DE": 1,
+        "JP": 1
+      },
+      "jurs_clean": {
+        "INT": 4,
+        "NO": 1,
+        "FR": 1,
+        "DE": 1,
+        "JP": 1
+      },
+      "n_lang": 5,
+      "langs": {
+        "en": 4,
+        "no": 1,
+        "fr": 1,
+        "de": 1,
+        "ja": 1
+      },
+      "n_en": 4,
+      "n_nonen": 4,
+      "pct_en": 50.0,
+      "anglo_core": 0,
+      "supra": 4,
+      "non_anglo": 4,
+      "pct_anglo_core": 0.0,
+      "sl_searched": 19,
+      "sl_hit": 4,
+      "search_jurs": 47,
+      "score": 76.2,
+      "components": {
+        "A": 16,
+        "B": 20.0,
+        "C": 17,
+        "D": 12,
+        "E": 11.2
+      },
+      "grade": "B"
+    },
+    {
+      "slug": "residential-entry-and-threshold",
+      "topic": "entrances-and-circulation",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 20,
+      "bp": 4,
+      "anchor": 4,
+      "confirmed": 4,
+      "t3_clinical": 0,
+      "code_only": 16,
+      "no_anchor": false,
+      "convergence_only": false,
+      "basis": null,
+      "tiers": {
+        "1": 1,
+        "2": 3,
+        "4": 1,
+        "5": 6,
+        "6": 9
+      },
+      "etypes": {
+        "standard_eb": 4,
+        "national_fw": 6,
+        "clinical": 1,
+        "code": 9
+      },
+      "markers": {
+        "●": 4,
+        "◐": 7,
+        "○": 9
+      },
+      "n_jur": 13,
+      "n_jur_raw": 13,
+      "n_true_jur": 13,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "UK": 5,
+        "AU": 3,
+        "NL": 2,
+        "TH": 1,
+        "US": 1,
+        "CA": 1,
+        "NO": 1,
+        "DE": 1,
+        "SE": 1,
+        "BR": 1,
+        "FR": 1,
+        "JP": 1,
+        "INT": 1
+      },
+      "jurs_clean": {
+        "UK": 5,
+        "NL": 2,
+        "AU": 3,
+        "TH": 1,
+        "US": 1,
+        "CA": 1,
+        "NO": 1,
+        "DE": 1,
+        "SE": 1,
+        "BR": 1,
+        "FR": 1,
+        "JP": 1,
+        "INT": 1
+      },
+      "n_lang": 7,
+      "langs": {
+        "en": 13,
+        "nl": 2,
+        "no": 1,
+        "de": 1,
+        "sv": 1,
+        "fr": 1,
+        "ja": 1
+      },
+      "n_en": 13,
+      "n_nonen": 7,
+      "pct_en": 65.0,
+      "anglo_core": 10,
+      "supra": 1,
+      "non_anglo": 9,
+      "pct_anglo_core": 50.0,
+      "sl_searched": 19,
+      "sl_hit": 12,
+      "search_jurs": 47,
+      "score": 75.4,
+      "components": {
+        "A": 20,
+        "B": 14.0,
+        "C": 20,
+        "D": 15,
+        "E": 6.4
+      },
+      "grade": "B"
+    },
+    {
       "slug": "visual-impairment-built-environment",
       "topic": "population-general",
       "state": "RETRACTED-PRE-REHAB",
@@ -1279,190 +1530,6 @@
       "grade": "B"
     },
     {
-      "slug": "residential-entry-and-threshold",
-      "topic": "entrances-and-circulation",
-      "state": "RETRACTED-PRE-REHAB",
-      "n": 20,
-      "bp": 4,
-      "anchor": 4,
-      "confirmed": 4,
-      "t3_clinical": 0,
-      "code_only": 16,
-      "no_anchor": false,
-      "convergence_only": false,
-      "basis": null,
-      "tiers": {
-        "1": 1,
-        "2": 3,
-        "4": 1,
-        "5": 6,
-        "6": 9
-      },
-      "etypes": {
-        "standard_eb": 4,
-        "national_fw": 6,
-        "clinical": 1,
-        "code": 9
-      },
-      "markers": {
-        "●": 4,
-        "◐": 7,
-        "○": 9
-      },
-      "n_jur": 13,
-      "n_jur_raw": 13,
-      "n_true_jur": 13,
-      "n_null_jur": 0,
-      "polluted_jur": {},
-      "jurs": {
-        "UK": 5,
-        "AU": 3,
-        "NL": 2,
-        "TH/AU": 1,
-        "US": 1,
-        "CA": 1,
-        "NO": 1,
-        "DE": 1,
-        "SE": 1,
-        "BR": 1,
-        "FR": 1,
-        "JP": 1,
-        "INT": 1
-      },
-      "jurs_clean": {
-        "UK": 5,
-        "NL": 2,
-        "AU": 3,
-        "TH/AU": 1,
-        "US": 1,
-        "CA": 1,
-        "NO": 1,
-        "DE": 1,
-        "SE": 1,
-        "BR": 1,
-        "FR": 1,
-        "JP": 1,
-        "INT": 1
-      },
-      "n_lang": 7,
-      "langs": {
-        "en": 13,
-        "nl": 2,
-        "no": 1,
-        "de": 1,
-        "sv": 1,
-        "fr": 1,
-        "ja": 1
-      },
-      "n_en": 13,
-      "n_nonen": 7,
-      "pct_en": 65.0,
-      "anglo_core": 11,
-      "supra": 1,
-      "non_anglo": 8,
-      "pct_anglo_core": 55.0,
-      "sl_searched": 19,
-      "sl_hit": 12,
-      "search_jurs": 47,
-      "score": 75.0,
-      "components": {
-        "A": 20,
-        "B": 14.0,
-        "C": 20,
-        "D": 15,
-        "E": 6.0
-      },
-      "grade": "B"
-    },
-    {
-      "slug": "accessible-circulation-geometry",
-      "topic": "entrances-and-circulation",
-      "state": "RETRACTED-PRE-REHAB",
-      "n": 14,
-      "bp": 2,
-      "anchor": 2,
-      "confirmed": 3,
-      "t3_clinical": 1,
-      "code_only": 11,
-      "no_anchor": false,
-      "convergence_only": false,
-      "basis": null,
-      "tiers": {
-        "1": 1,
-        "2": 1,
-        "3": 1,
-        "4": 1,
-        "5": 3,
-        "6": 7
-      },
-      "etypes": {
-        "standard_eb": 2,
-        "code": 7,
-        "national_fw": 3,
-        "clinical": 2
-      },
-      "markers": {
-        "●": 3,
-        "◐": 4,
-        "○": 7
-      },
-      "n_jur": 9,
-      "n_jur_raw": 9,
-      "n_true_jur": 9,
-      "n_null_jur": 0,
-      "polluted_jur": {},
-      "jurs": {
-        "UK": 5,
-        "INT": 2,
-        "JP": 1,
-        "NL": 1,
-        "US": 1,
-        "AU": 1,
-        "DE": 1,
-        "SE": 1,
-        "FI": 1
-      },
-      "jurs_clean": {
-        "UK": 5,
-        "JP": 1,
-        "NL": 1,
-        "US": 1,
-        "AU": 1,
-        "INT": 2,
-        "DE": 1,
-        "SE": 1,
-        "FI": 1
-      },
-      "n_lang": 6,
-      "langs": {
-        "en": 9,
-        "ja": 1,
-        "nl": 1,
-        "de": 1,
-        "sv": 1,
-        "fi": 1
-      },
-      "n_en": 9,
-      "n_nonen": 5,
-      "pct_en": 64.3,
-      "anglo_core": 7,
-      "supra": 2,
-      "non_anglo": 5,
-      "pct_anglo_core": 50.0,
-      "sl_searched": 19,
-      "sl_hit": 14,
-      "search_jurs": 47,
-      "score": 74.8,
-      "components": {
-        "A": 20,
-        "B": 13.4,
-        "C": 20,
-        "D": 15,
-        "E": 6.4
-      },
-      "grade": "B"
-    },
-    {
       "slug": "threshold-door-hardware",
       "topic": "entrances-and-circulation",
       "state": "RETRACTED-PRE-REHAB",
@@ -1513,7 +1580,7 @@
         "NZ": 1,
         "SG": 1,
         "INT": 1,
-        "TH/AU": 1,
+        "TH": 1,
         "BR": 1,
         "CH": 1,
         "FI": 1,
@@ -1540,7 +1607,7 @@
         "CA": 2,
         "SG": 1,
         "INT": 1,
-        "TH/AU": 1,
+        "TH": 1,
         "BR": 1,
         "CH": 1,
         "DK": 2,
@@ -1573,178 +1640,108 @@
       "n_en": 15,
       "n_nonen": 17,
       "pct_en": 46.9,
-      "anglo_core": 11,
+      "anglo_core": 10,
       "supra": 2,
-      "non_anglo": 19,
-      "pct_anglo_core": 34.4,
+      "non_anglo": 20,
+      "pct_anglo_core": 31.2,
       "sl_searched": 19,
       "sl_hit": 11,
       "search_jurs": 47,
-      "score": 74.8,
+      "score": 75.0,
       "components": {
         "A": 20,
         "B": 10.9,
         "C": 20,
         "D": 15,
-        "E": 8.9
+        "E": 9.1
       },
       "grade": "B"
     },
     {
-      "slug": "construction-cost-data",
-      "topic": "economics",
-      "state": null,
-      "n": 12,
-      "bp": 6,
-      "anchor": 6,
-      "confirmed": 10,
-      "t3_clinical": 4,
-      "code_only": 2,
+      "slug": "accessible-circulation-geometry",
+      "topic": "entrances-and-circulation",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 14,
+      "bp": 2,
+      "anchor": 2,
+      "confirmed": 3,
+      "t3_clinical": 1,
+      "code_only": 11,
       "no_anchor": false,
       "convergence_only": false,
       "basis": null,
       "tiers": {
-        "1": 2,
-        "2": 4,
-        "3": 4,
-        "6": 2
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 3,
+        "6": 7
       },
       "etypes": {
-        "code": 2,
-        "standard_eb": 4,
-        "clinical": 6
+        "standard_eb": 2,
+        "code": 7,
+        "national_fw": 3,
+        "clinical": 2
       },
       "markers": {
-        "●": 10,
-        "○": 2
+        "●": 3,
+        "◐": 4,
+        "○": 7
       },
-      "n_jur": 8,
-      "n_jur_raw": 8,
-      "n_true_jur": 8,
+      "n_jur": 9,
+      "n_jur_raw": 9,
+      "n_true_jur": 9,
       "n_null_jur": 0,
       "polluted_jur": {},
       "jurs": {
-        "DE": 4,
-        "US": 2,
-        "CA": 1,
-        "BE": 1,
+        "UK": 4,
+        "AU": 2,
+        "INT": 2,
+        "JP": 1,
+        "NL": 1,
+        "US": 1,
+        "DE": 1,
         "SE": 1,
-        "INT": 1,
-        "UK": 1,
-        "AU": 1
+        "FI": 1
       },
       "jurs_clean": {
-        "CA": 1,
-        "DE": 4,
-        "BE": 1,
-        "US": 2,
+        "UK": 4,
+        "JP": 1,
+        "NL": 1,
+        "US": 1,
+        "AU": 2,
+        "INT": 2,
+        "DE": 1,
         "SE": 1,
-        "INT": 1,
-        "UK": 1,
-        "AU": 1
+        "FI": 1
       },
-      "n_lang": 2,
+      "n_lang": 6,
       "langs": {
-        "en": 8,
-        "de": 4
+        "en": 9,
+        "ja": 1,
+        "nl": 1,
+        "de": 1,
+        "sv": 1,
+        "fi": 1
       },
-      "n_en": 8,
-      "n_nonen": 4,
-      "pct_en": 66.7,
-      "anglo_core": 5,
-      "supra": 1,
-      "non_anglo": 6,
-      "pct_anglo_core": 41.7,
+      "n_en": 9,
+      "n_nonen": 5,
+      "pct_en": 64.3,
+      "anglo_core": 7,
+      "supra": 2,
+      "non_anglo": 5,
+      "pct_anglo_core": 50.0,
       "sl_searched": 19,
-      "sl_hit": 1,
+      "sl_hit": 14,
       "search_jurs": 47,
-      "score": 74.6,
+      "score": 74.8,
       "components": {
         "A": 20,
-        "B": 22.7,
+        "B": 13.4,
         "C": 20,
-        "D": 5,
-        "E": 6.9
-      },
-      "grade": "B"
-    },
-    {
-      "slug": "assistive-listening-systems",
-      "topic": "communication-and-alerts",
-      "state": "RETRACTED-PRE-REHAB",
-      "n": 8,
-      "bp": 4,
-      "anchor": 4,
-      "confirmed": 4,
-      "t3_clinical": 0,
-      "code_only": 4,
-      "no_anchor": false,
-      "convergence_only": false,
-      "basis": null,
-      "tiers": {
-        "2": 4,
-        "4": 1,
-        "5": 1,
-        "6": 2
-      },
-      "etypes": {
-        "standard_eb": 5,
-        "code": 2,
-        "national_fw": 1
-      },
-      "markers": {
-        "●": 4,
-        "◐": 2,
-        "○": 2
-      },
-      "n_jur": 7,
-      "n_jur_raw": 7,
-      "n_true_jur": 7,
-      "n_null_jur": 0,
-      "polluted_jur": {},
-      "jurs": {
-        "INT": 2,
-        "NO": 1,
-        "FR": 1,
-        "DE": 1,
-        "UK": 1,
-        "AU": 1,
-        "JP": 1
-      },
-      "jurs_clean": {
-        "INT": 2,
-        "NO": 1,
-        "FR": 1,
-        "DE": 1,
-        "UK": 1,
-        "AU": 1,
-        "JP": 1
-      },
-      "n_lang": 5,
-      "langs": {
-        "en": 4,
-        "no": 1,
-        "fr": 1,
-        "de": 1,
-        "ja": 1
-      },
-      "n_en": 4,
-      "n_nonen": 4,
-      "pct_en": 50.0,
-      "anglo_core": 2,
-      "supra": 2,
-      "non_anglo": 4,
-      "pct_anglo_core": 25.0,
-      "sl_searched": 19,
-      "sl_hit": 4,
-      "search_jurs": 47,
-      "score": 74.4,
-      "components": {
-        "A": 16,
-        "B": 20.0,
-        "C": 17,
-        "D": 12,
-        "E": 9.4
+        "D": 15,
+        "E": 6.4
       },
       "grade": "B"
     },
@@ -1855,23 +1852,25 @@
         "◐": 1,
         "○": 3
       },
-      "n_jur": 6,
-      "n_jur_raw": 6,
-      "n_true_jur": 6,
+      "n_jur": 7,
+      "n_jur_raw": 7,
+      "n_true_jur": 7,
       "n_null_jur": 1,
       "polluted_jur": {},
       "jurs": {
         "JP": 6,
-        "INT": 4,
+        "INT": 3,
+        "GB": 1,
         "UK": 1,
         "MY": 1,
         "CL": 1,
         "IN": 1
       },
       "jurs_clean": {
-        "INT": 4,
+        "GB": 1,
         "UK": 1,
         "JP": 6,
+        "INT": 3,
         "MY": 1,
         "CL": 1,
         "IN": 1
@@ -1885,8 +1884,8 @@
       "n_nonen": 6,
       "pct_en": 60.0,
       "anglo_core": 1,
-      "supra": 4,
-      "non_anglo": 9,
+      "supra": 3,
+      "non_anglo": 10,
       "pct_anglo_core": 7.1,
       "sl_searched": 19,
       "sl_hit": 0,
@@ -2295,6 +2294,78 @@
       "grade": "C"
     },
     {
+      "slug": "deaf-acoustic-built-environment",
+      "topic": "communication-and-alerts",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 10,
+      "bp": 5,
+      "anchor": 5,
+      "confirmed": 5,
+      "t3_clinical": 0,
+      "code_only": 5,
+      "no_anchor": false,
+      "convergence_only": false,
+      "basis": null,
+      "tiers": {
+        "1": 2,
+        "2": 3,
+        "4": 3,
+        "5": 2
+      },
+      "etypes": {
+        "standard_eb": 6,
+        "national_fw": 2,
+        "clinical": 2
+      },
+      "markers": {
+        "●": 5,
+        "◐": 5
+      },
+      "n_jur": 5,
+      "n_jur_raw": 5,
+      "n_true_jur": 5,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 5,
+        "DE": 2,
+        "UK": 1,
+        "AU": 1,
+        "US": 1
+      },
+      "jurs_clean": {
+        "INT": 5,
+        "DE": 2,
+        "UK": 1,
+        "AU": 1,
+        "US": 1
+      },
+      "n_lang": 2,
+      "langs": {
+        "en": 9,
+        "de": 1
+      },
+      "n_en": 9,
+      "n_nonen": 1,
+      "pct_en": 90.0,
+      "anglo_core": 3,
+      "supra": 5,
+      "non_anglo": 2,
+      "pct_anglo_core": 30.0,
+      "sl_searched": 19,
+      "sl_hit": 14,
+      "search_jurs": 47,
+      "score": 64.0,
+      "components": {
+        "A": 16,
+        "B": 20.0,
+        "C": 17,
+        "D": 5,
+        "E": 6.0
+      },
+      "grade": "C"
+    },
+    {
       "slug": "manoeuvring-footprint-vs-turning-radius-methodology",
       "topic": "frameworks-and-methodology",
       "state": "METHODOLOGY-AUTHORED",
@@ -2359,70 +2430,6 @@
         "C": 13,
         "D": 0,
         "E": 2.8
-      },
-      "grade": "C"
-    },
-    {
-      "slug": "school-environment-autism",
-      "topic": "sensory-environment",
-      "state": null,
-      "n": 17,
-      "bp": 5,
-      "anchor": 5,
-      "confirmed": 17,
-      "t3_clinical": 12,
-      "code_only": 0,
-      "no_anchor": false,
-      "convergence_only": false,
-      "basis": null,
-      "tiers": {
-        "1": 2,
-        "2": 3,
-        "3": 12
-      },
-      "etypes": {
-        "sr_meta": 3,
-        "clinical": 14
-      },
-      "markers": {
-        "●": 17
-      },
-      "n_jur": 3,
-      "n_jur_raw": 3,
-      "n_true_jur": 3,
-      "n_null_jur": 14,
-      "polluted_jur": {},
-      "jurs": {
-        "INT": 1,
-        "IT": 1,
-        "FR": 1
-      },
-      "jurs_clean": {
-        "INT": 1,
-        "IT": 1,
-        "FR": 1
-      },
-      "n_lang": 1,
-      "langs": {
-        "en": 17
-      },
-      "n_en": 17,
-      "n_nonen": 0,
-      "pct_en": 100.0,
-      "anglo_core": 0,
-      "supra": 1,
-      "non_anglo": 2,
-      "pct_anglo_core": 0.0,
-      "sl_searched": 19,
-      "sl_hit": 13,
-      "search_jurs": 47,
-      "score": 62.0,
-      "components": {
-        "A": 20,
-        "B": 21.5,
-        "C": 13,
-        "D": 0,
-        "E": 7.5
       },
       "grade": "C"
     },
@@ -2498,76 +2505,6 @@
       "grade": "C"
     },
     {
-      "slug": "deaf-acoustic-built-environment",
-      "topic": "communication-and-alerts",
-      "state": "RETRACTED-PRE-REHAB",
-      "n": 10,
-      "bp": 5,
-      "anchor": 5,
-      "confirmed": 5,
-      "t3_clinical": 0,
-      "code_only": 5,
-      "no_anchor": false,
-      "convergence_only": false,
-      "basis": null,
-      "tiers": {
-        "1": 2,
-        "2": 3,
-        "4": 3,
-        "5": 2
-      },
-      "etypes": {
-        "standard_eb": 6,
-        "national_fw": 2,
-        "clinical": 2
-      },
-      "markers": {
-        "●": 5,
-        "◐": 5
-      },
-      "n_jur": 4,
-      "n_jur_raw": 4,
-      "n_true_jur": 4,
-      "n_null_jur": 0,
-      "polluted_jur": {},
-      "jurs": {
-        "INT": 7,
-        "DE": 1,
-        "UK": 1,
-        "US": 1
-      },
-      "jurs_clean": {
-        "INT": 7,
-        "DE": 1,
-        "UK": 1,
-        "US": 1
-      },
-      "n_lang": 2,
-      "langs": {
-        "en": 9,
-        "de": 1
-      },
-      "n_en": 9,
-      "n_nonen": 1,
-      "pct_en": 90.0,
-      "anglo_core": 2,
-      "supra": 7,
-      "non_anglo": 1,
-      "pct_anglo_core": 20.0,
-      "sl_searched": 19,
-      "sl_hit": 14,
-      "search_jurs": 47,
-      "score": 60.7,
-      "components": {
-        "A": 16,
-        "B": 20.0,
-        "C": 13,
-        "D": 5,
-        "E": 6.7
-      },
-      "grade": "C"
-    },
-    {
       "slug": "neurological-built-environment",
       "topic": "population-general",
       "state": "RETRACTED-PRE-REHAB",
@@ -2631,6 +2568,72 @@
         "C": 17,
         "D": 0,
         "E": 6.6
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "school-environment-autism",
+      "topic": "sensory-environment",
+      "state": null,
+      "n": 17,
+      "bp": 5,
+      "anchor": 5,
+      "confirmed": 17,
+      "t3_clinical": 12,
+      "code_only": 0,
+      "no_anchor": false,
+      "convergence_only": false,
+      "basis": null,
+      "tiers": {
+        "1": 2,
+        "2": 3,
+        "3": 12
+      },
+      "etypes": {
+        "sr_meta": 3,
+        "clinical": 14
+      },
+      "markers": {
+        "●": 17
+      },
+      "n_jur": 4,
+      "n_jur_raw": 4,
+      "n_true_jur": 4,
+      "n_null_jur": 12,
+      "polluted_jur": {},
+      "jurs": {
+        "US": 2,
+        "INT": 1,
+        "IT": 1,
+        "TN": 1
+      },
+      "jurs_clean": {
+        "INT": 1,
+        "IT": 1,
+        "TN": 1,
+        "US": 2
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 17
+      },
+      "n_en": 17,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 2,
+      "supra": 1,
+      "non_anglo": 2,
+      "pct_anglo_core": 40.0,
+      "sl_searched": 19,
+      "sl_hit": 13,
+      "search_jurs": 47,
+      "score": 59.0,
+      "components": {
+        "A": 20,
+        "B": 21.5,
+        "C": 13,
+        "D": 0,
+        "E": 4.5
       },
       "grade": "C"
     },
@@ -3263,67 +3266,6 @@
       "grade": "C"
     },
     {
-      "slug": "ot-frameworks-built-environment",
-      "topic": "frameworks-and-methodology",
-      "state": "RETRACTED-PRE-REHAB",
-      "n": 4,
-      "bp": 4,
-      "anchor": 4,
-      "confirmed": 4,
-      "t3_clinical": 0,
-      "code_only": 0,
-      "no_anchor": false,
-      "convergence_only": false,
-      "basis": null,
-      "tiers": {
-        "1": 4
-      },
-      "etypes": {
-        "clinical": 4
-      },
-      "markers": {
-        "●": 4
-      },
-      "n_jur": 3,
-      "n_jur_raw": 3,
-      "n_true_jur": 3,
-      "n_null_jur": 0,
-      "polluted_jur": {},
-      "jurs": {
-        "INT": 2,
-        "CA": 1,
-        "US": 1
-      },
-      "jurs_clean": {
-        "CA": 1,
-        "INT": 2,
-        "US": 1
-      },
-      "n_lang": 1,
-      "langs": {
-        "en": 4
-      },
-      "n_en": 4,
-      "n_nonen": 0,
-      "pct_en": 100.0,
-      "anglo_core": 2,
-      "supra": 2,
-      "non_anglo": 0,
-      "pct_anglo_core": 50.0,
-      "sl_searched": 19,
-      "sl_hit": 2,
-      "search_jurs": 47,
-      "score": 54.8,
-      "components": {
-        "A": 8,
-        "B": 30,
-        "C": 13,
-        "D": 0,
-        "E": 3.8
-      },
-      "grade": "C"
-    },
-    {
       "slug": "ms-thermal-temperature-conflict-resolution",
       "topic": "health-and-symptom-management",
       "state": "RETRACTED-PRE-REHAB",
@@ -3458,6 +3400,67 @@
         "C": 13,
         "D": 0,
         "E": 1.5
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "ot-frameworks-built-environment",
+      "topic": "frameworks-and-methodology",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 4,
+      "bp": 4,
+      "anchor": 4,
+      "confirmed": 4,
+      "t3_clinical": 0,
+      "code_only": 0,
+      "no_anchor": false,
+      "convergence_only": false,
+      "basis": null,
+      "tiers": {
+        "1": 4
+      },
+      "etypes": {
+        "clinical": 4
+      },
+      "markers": {
+        "●": 4
+      },
+      "n_jur": 3,
+      "n_jur_raw": 3,
+      "n_true_jur": 3,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "US": 2,
+        "CA": 1,
+        "INT": 1
+      },
+      "jurs_clean": {
+        "CA": 1,
+        "US": 2,
+        "INT": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 4
+      },
+      "n_en": 4,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 3,
+      "supra": 1,
+      "non_anglo": 0,
+      "pct_anglo_core": 75.0,
+      "sl_searched": 19,
+      "sl_hit": 2,
+      "search_jurs": 47,
+      "score": 52.9,
+      "components": {
+        "A": 8,
+        "B": 30,
+        "C": 13,
+        "D": 0,
+        "E": 1.9
       },
       "grade": "C"
     },
@@ -3722,20 +3725,22 @@
         "●": 4,
         "◐": 2
       },
-      "n_jur": 3,
-      "n_jur_raw": 3,
-      "n_true_jur": 3,
+      "n_jur": 4,
+      "n_jur_raw": 4,
+      "n_true_jur": 4,
       "n_null_jur": 0,
       "polluted_jur": {},
       "jurs": {
-        "INT": 4,
+        "INT": 3,
         "US": 1,
-        "UK": 1
+        "UK": 1,
+        "EG": 1
       },
       "jurs_clean": {
         "US": 1,
-        "INT": 4,
-        "UK": 1
+        "INT": 3,
+        "UK": 1,
+        "EG": 1
       },
       "n_lang": 1,
       "langs": {
@@ -3745,8 +3750,8 @@
       "n_nonen": 0,
       "pct_en": 100.0,
       "anglo_core": 2,
-      "supra": 4,
-      "non_anglo": 0,
+      "supra": 3,
+      "non_anglo": 1,
       "pct_anglo_core": 33.3,
       "sl_searched": 19,
       "sl_hit": 1,
@@ -3829,6 +3834,72 @@
         "C": 13,
         "D": 0,
         "E": 5.0
+      },
+      "grade": "D"
+    },
+    {
+      "slug": "floor-vibration-wheelchair-disability",
+      "topic": "entrances-and-circulation",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 7,
+      "bp": 1,
+      "anchor": 1,
+      "confirmed": 4,
+      "t3_clinical": 3,
+      "code_only": 3,
+      "no_anchor": false,
+      "convergence_only": false,
+      "basis": null,
+      "tiers": {
+        "2": 1,
+        "3": 3,
+        "4": 3
+      },
+      "etypes": {
+        "clinical": 3,
+        "sr_meta": 1,
+        "standard_eb": 3
+      },
+      "markers": {
+        "●": 4,
+        "◐": 3
+      },
+      "n_jur": 3,
+      "n_jur_raw": 3,
+      "n_true_jur": 3,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 5,
+        "FR": 1,
+        "UK": 1
+      },
+      "jurs_clean": {
+        "INT": 5,
+        "FR": 1,
+        "UK": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 7
+      },
+      "n_en": 7,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 1,
+      "supra": 5,
+      "non_anglo": 1,
+      "pct_anglo_core": 14.3,
+      "sl_searched": 19,
+      "sl_hit": 14,
+      "search_jurs": 47,
+      "score": 47.7,
+      "components": {
+        "A": 12,
+        "B": 16.3,
+        "C": 13,
+        "D": 0,
+        "E": 6.4
       },
       "grade": "D"
     },
@@ -3961,12 +4032,12 @@
       "jurs": {
         "US": 3,
         "UK": 3,
-        "INT": 1
+        "BE": 1
       },
       "jurs_clean": {
         "US": 3,
         "UK": 3,
-        "INT": 1
+        "BE": 1
       },
       "n_lang": 1,
       "langs": {
@@ -3976,8 +4047,8 @@
       "n_nonen": 0,
       "pct_en": 100.0,
       "anglo_core": 6,
-      "supra": 1,
-      "non_anglo": 0,
+      "supra": 0,
+      "non_anglo": 1,
       "pct_anglo_core": 85.7,
       "sl_searched": 19,
       "sl_hit": 13,
@@ -4132,70 +4203,6 @@
         "C": 17,
         "D": 9,
         "E": 2.7
-      },
-      "grade": "D"
-    },
-    {
-      "slug": "floor-vibration-wheelchair-disability",
-      "topic": "entrances-and-circulation",
-      "state": "RETRACTED-PRE-REHAB",
-      "n": 7,
-      "bp": 1,
-      "anchor": 1,
-      "confirmed": 4,
-      "t3_clinical": 3,
-      "code_only": 3,
-      "no_anchor": false,
-      "convergence_only": false,
-      "basis": null,
-      "tiers": {
-        "2": 1,
-        "3": 3,
-        "4": 3
-      },
-      "etypes": {
-        "clinical": 3,
-        "sr_meta": 1,
-        "standard_eb": 3
-      },
-      "markers": {
-        "●": 4,
-        "◐": 3
-      },
-      "n_jur": 2,
-      "n_jur_raw": 2,
-      "n_true_jur": 2,
-      "n_null_jur": 0,
-      "polluted_jur": {},
-      "jurs": {
-        "INT": 6,
-        "UK": 1
-      },
-      "jurs_clean": {
-        "INT": 6,
-        "UK": 1
-      },
-      "n_lang": 1,
-      "langs": {
-        "en": 7
-      },
-      "n_en": 7,
-      "n_nonen": 0,
-      "pct_en": 100.0,
-      "anglo_core": 1,
-      "supra": 6,
-      "non_anglo": 0,
-      "pct_anglo_core": 14.3,
-      "sl_searched": 19,
-      "sl_hit": 14,
-      "search_jurs": 47,
-      "score": 43.7,
-      "components": {
-        "A": 12,
-        "B": 16.3,
-        "C": 9,
-        "D": 0,
-        "E": 6.4
       },
       "grade": "D"
     },
@@ -6081,14 +6088,14 @@
       "source_slug": "assistive-listening-systems",
       "basis_health": "ok",
       "grade": "B",
-      "score": 74.4,
+      "score": 76.2,
       "n": 8,
       "anchor": 4,
       "confirmed": 4,
-      "n_jur": 7,
+      "n_jur": 5,
       "n_lang": 5,
       "pct_en": 50.0,
-      "pct_anglo": 25.0
+      "pct_anglo": 0.0
     },
     {
       "item_code": "A-10b",
@@ -6115,14 +6122,14 @@
       "source_slug": "assistive-listening-systems",
       "basis_health": "ok",
       "grade": "B",
-      "score": 74.4,
+      "score": 76.2,
       "n": 8,
       "anchor": 4,
       "confirmed": 4,
-      "n_jur": 7,
+      "n_jur": 5,
       "n_lang": 5,
       "pct_en": 50.0,
-      "pct_anglo": 25.0
+      "pct_anglo": 0.0
     },
     {
       "item_code": "A-12",
@@ -6132,14 +6139,14 @@
       "source_slug": "assistive-listening-systems",
       "basis_health": "ok",
       "grade": "B",
-      "score": 74.4,
+      "score": 76.2,
       "n": 8,
       "anchor": 4,
       "confirmed": 4,
-      "n_jur": 7,
+      "n_jur": 5,
       "n_lang": 5,
       "pct_en": 50.0,
-      "pct_anglo": 25.0
+      "pct_anglo": 0.0
     },
     {
       "item_code": "A-13",
@@ -6455,14 +6462,14 @@
       "source_slug": "wayfinding-dementia-spatial-design",
       "basis_health": "ok",
       "grade": "A",
-      "score": 83.9,
+      "score": 83.7,
       "n": 35,
       "anchor": 15,
       "confirmed": 25,
       "n_jur": 19,
       "n_lang": 13,
       "pct_en": 60.0,
-      "pct_anglo": 33.3
+      "pct_anglo": 36.4
     },
     {
       "item_code": "C-02",
@@ -6472,14 +6479,14 @@
       "source_slug": "wayfinding-dementia-spatial-design",
       "basis_health": "ok",
       "grade": "A",
-      "score": 83.9,
+      "score": 83.7,
       "n": 35,
       "anchor": 15,
       "confirmed": 25,
       "n_jur": 19,
       "n_lang": 13,
       "pct_en": 60.0,
-      "pct_anglo": 33.3
+      "pct_anglo": 36.4
     },
     {
       "item_code": "C-03",
@@ -6557,14 +6564,14 @@
       "source_slug": "wayfinding-dementia-spatial-design",
       "basis_health": "ok",
       "grade": "A",
-      "score": 83.9,
+      "score": 83.7,
       "n": 35,
       "anchor": 15,
       "confirmed": 25,
       "n_jur": 19,
       "n_lang": 13,
       "pct_en": 60.0,
-      "pct_anglo": 33.3
+      "pct_anglo": 36.4
     },
     {
       "item_code": "D-02",
@@ -6574,13 +6581,13 @@
       "source_slug": "cognitive-wayfinding-design",
       "basis_health": "ok",
       "grade": "A",
-      "score": 83.7,
+      "score": 83.4,
       "n": 25,
       "anchor": 7,
       "confirmed": 17,
       "n_jur": 13,
       "n_lang": 9,
-      "pct_en": 60.0,
+      "pct_en": 64.0,
       "pct_anglo": 8.0
     },
     {
@@ -6591,14 +6598,14 @@
       "source_slug": "wayfinding-dementia-spatial-design",
       "basis_health": "ok",
       "grade": "A",
-      "score": 83.9,
+      "score": 83.7,
       "n": 35,
       "anchor": 15,
       "confirmed": 25,
       "n_jur": 19,
       "n_lang": 13,
       "pct_en": 60.0,
-      "pct_anglo": 33.3
+      "pct_anglo": 36.4
     },
     {
       "item_code": "D-04",
@@ -6642,14 +6649,14 @@
       "source_slug": "wayfinding-dementia-spatial-design",
       "basis_health": "ok",
       "grade": "A",
-      "score": 83.9,
+      "score": 83.7,
       "n": 35,
       "anchor": 15,
       "confirmed": 25,
       "n_jur": 19,
       "n_lang": 13,
       "pct_en": 60.0,
-      "pct_anglo": 33.3
+      "pct_anglo": 36.4
     },
     {
       "item_code": "D-07",
@@ -6659,13 +6666,13 @@
       "source_slug": "cognitive-wayfinding-design",
       "basis_health": "ok",
       "grade": "A",
-      "score": 83.7,
+      "score": 83.4,
       "n": 25,
       "anchor": 7,
       "confirmed": 17,
       "n_jur": 13,
       "n_lang": 9,
-      "pct_en": 60.0,
+      "pct_en": 64.0,
       "pct_anglo": 8.0
     },
     {
@@ -6676,13 +6683,13 @@
       "source_slug": "cognitive-wayfinding-design",
       "basis_health": "ok",
       "grade": "A",
-      "score": 83.7,
+      "score": 83.4,
       "n": 25,
       "anchor": 7,
       "confirmed": 17,
       "n_jur": 13,
       "n_lang": 9,
-      "pct_en": 60.0,
+      "pct_en": 64.0,
       "pct_anglo": 8.0
     },
     {
@@ -6693,14 +6700,14 @@
       "source_slug": "wayfinding-dementia-spatial-design",
       "basis_health": "ok",
       "grade": "A",
-      "score": 83.9,
+      "score": 83.7,
       "n": 35,
       "anchor": 15,
       "confirmed": 25,
       "n_jur": 19,
       "n_lang": 13,
       "pct_en": 60.0,
-      "pct_anglo": 33.3
+      "pct_anglo": 36.4
     },
     {
       "item_code": "D-10",
@@ -6710,13 +6717,13 @@
       "source_slug": "cognitive-wayfinding-design",
       "basis_health": "ok",
       "grade": "A",
-      "score": 83.7,
+      "score": 83.4,
       "n": 25,
       "anchor": 7,
       "confirmed": 17,
       "n_jur": 13,
       "n_lang": 9,
-      "pct_en": 60.0,
+      "pct_en": 64.0,
       "pct_anglo": 8.0
     },
     {
@@ -6727,14 +6734,14 @@
       "source_slug": "wayfinding-dementia-spatial-design",
       "basis_health": "ok",
       "grade": "A",
-      "score": 83.9,
+      "score": 83.7,
       "n": 35,
       "anchor": 15,
       "confirmed": 25,
       "n_jur": 19,
       "n_lang": 13,
       "pct_en": 60.0,
-      "pct_anglo": 33.3
+      "pct_anglo": 36.4
     },
     {
       "item_code": "E-01",
@@ -6884,7 +6891,7 @@
       "n": 6,
       "anchor": 2,
       "confirmed": 4,
-      "n_jur": 3,
+      "n_jur": 4,
       "n_lang": 1,
       "pct_en": 100.0,
       "pct_anglo": 33.3
@@ -6914,14 +6921,14 @@
       "source_slug": "threshold-door-hardware",
       "basis_health": "ok",
       "grade": "B",
-      "score": 74.8,
+      "score": 75.0,
       "n": 32,
       "anchor": 1,
       "confirmed": 2,
       "n_jur": 26,
       "n_lang": 13,
       "pct_en": 46.9,
-      "pct_anglo": 34.4
+      "pct_anglo": 31.2
     },
     {
       "item_code": "E-12",
@@ -6948,13 +6955,13 @@
       "source_slug": "cognitive-wayfinding-design",
       "basis_health": "ok",
       "grade": "A",
-      "score": 83.7,
+      "score": 83.4,
       "n": 25,
       "anchor": 7,
       "confirmed": 17,
       "n_jur": 13,
       "n_lang": 9,
-      "pct_en": 60.0,
+      "pct_en": 64.0,
       "pct_anglo": 8.0
     },
     {
@@ -6964,14 +6971,14 @@
       "category_label": "Circulation and Access",
       "source_slug": "accessible-bathroom-and-grab-bar",
       "basis_health": "ok",
-      "grade": "A",
-      "score": 80.5,
+      "grade": "B",
+      "score": 79.9,
       "n": 23,
       "anchor": 11,
       "confirmed": 13,
       "n_jur": 13,
-      "n_lang": 8,
-      "pct_en": 65.2,
+      "n_lang": 7,
+      "pct_en": 73.9,
       "pct_anglo": 65.0
     },
     {
@@ -7122,7 +7129,7 @@
       "n": 37,
       "anchor": 7,
       "confirmed": 29,
-      "n_jur": 10,
+      "n_jur": 11,
       "n_lang": 5,
       "pct_en": 59.5,
       "pct_anglo": 27.0
@@ -7151,14 +7158,14 @@
       "category_label": "Furniture, Fixtures and Spatial Layout",
       "source_slug": "accessible-bathroom-and-grab-bar",
       "basis_health": "ok",
-      "grade": "A",
-      "score": 80.5,
+      "grade": "B",
+      "score": 79.9,
       "n": 23,
       "anchor": 11,
       "confirmed": 13,
       "n_jur": 13,
-      "n_lang": 8,
-      "pct_en": 65.2,
+      "n_lang": 7,
+      "pct_en": 73.9,
       "pct_anglo": 65.0
     },
     {
@@ -7168,14 +7175,14 @@
       "category_label": "Furniture, Fixtures and Spatial Layout",
       "source_slug": "accessible-bathroom-and-grab-bar",
       "basis_health": "ok",
-      "grade": "A",
-      "score": 80.5,
+      "grade": "B",
+      "score": 79.9,
       "n": 23,
       "anchor": 11,
       "confirmed": 13,
       "n_jur": 13,
-      "n_lang": 8,
-      "pct_en": 65.2,
+      "n_lang": 7,
+      "pct_en": 73.9,
       "pct_anglo": 65.0
     },
     {
@@ -7186,13 +7193,13 @@
       "source_slug": "residential-kitchen-and-task-surfaces",
       "basis_health": "ok",
       "grade": "A",
-      "score": 82.7,
+      "score": 82.2,
       "n": 30,
       "anchor": 16,
       "confirmed": 20,
       "n_jur": 10,
-      "n_lang": 8,
-      "pct_en": 73.3,
+      "n_lang": 7,
+      "pct_en": 80.0,
       "pct_anglo": 46.2
     },
     {
@@ -7305,14 +7312,14 @@
       "source_slug": "assistive-listening-systems",
       "basis_health": "ok",
       "grade": "B",
-      "score": 74.4,
+      "score": 76.2,
       "n": 8,
       "anchor": 4,
       "confirmed": 4,
-      "n_jur": 7,
+      "n_jur": 5,
       "n_lang": 5,
       "pct_en": 50.0,
-      "pct_anglo": 25.0
+      "pct_anglo": 0.0
     },
     {
       "item_code": "H-04",
@@ -7322,14 +7329,14 @@
       "source_slug": "threshold-door-hardware",
       "basis_health": "ok",
       "grade": "B",
-      "score": 74.8,
+      "score": 75.0,
       "n": 32,
       "anchor": 1,
       "confirmed": 2,
       "n_jur": 26,
       "n_lang": 13,
       "pct_en": 46.9,
-      "pct_anglo": 34.4
+      "pct_anglo": 31.2
     },
     {
       "item_code": "H-05",
@@ -7356,14 +7363,14 @@
       "source_slug": "threshold-door-hardware",
       "basis_health": "ok",
       "grade": "B",
-      "score": 74.8,
+      "score": 75.0,
       "n": 32,
       "anchor": 1,
       "confirmed": 2,
       "n_jur": 26,
       "n_lang": 13,
       "pct_en": 46.9,
-      "pct_anglo": 34.4
+      "pct_anglo": 31.2
     },
     {
       "item_code": "I-02",
@@ -7373,13 +7380,13 @@
       "source_slug": "residential-kitchen-and-task-surfaces",
       "basis_health": "ok",
       "grade": "A",
-      "score": 82.7,
+      "score": 82.2,
       "n": 30,
       "anchor": 16,
       "confirmed": 20,
       "n_jur": 10,
-      "n_lang": 8,
-      "pct_en": 73.3,
+      "n_lang": 7,
+      "pct_en": 80.0,
       "pct_anglo": 46.2
     },
     {
@@ -7389,14 +7396,14 @@
       "category_label": "Hardware and Fixtures",
       "source_slug": "accessible-bathroom-and-grab-bar",
       "basis_health": "ok",
-      "grade": "A",
-      "score": 80.5,
+      "grade": "B",
+      "score": 79.9,
       "n": 23,
       "anchor": 11,
       "confirmed": 13,
       "n_jur": 13,
-      "n_lang": 8,
-      "pct_en": 65.2,
+      "n_lang": 7,
+      "pct_en": 73.9,
       "pct_anglo": 65.0
     },
     {
@@ -7406,14 +7413,14 @@
       "category_label": "Hardware and Fixtures",
       "source_slug": "accessible-bathroom-and-grab-bar",
       "basis_health": "ok",
-      "grade": "A",
-      "score": 80.5,
+      "grade": "B",
+      "score": 79.9,
       "n": 23,
       "anchor": 11,
       "confirmed": 13,
       "n_jur": 13,
-      "n_lang": 8,
-      "pct_en": 65.2,
+      "n_lang": 7,
+      "pct_en": 73.9,
       "pct_anglo": 65.0
     },
     {
