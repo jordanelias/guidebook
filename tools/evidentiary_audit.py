@@ -24,8 +24,12 @@ Design notes
   That lets the GitHub workflow detect drift with a plain `git diff`.
 * Every figure in the prose is computed from the DB — nothing is hardcoded —
   so the report stays correct when the evidence base changes.
-* Tiers follow governance/tier-system.md (OPERATIVE 2026-05-25). "Tier number
-  reflects what kind of claim a source can anchor, not raw quality."
+* Tiers follow governance/tier-system.md. Under the weighted-strength model
+  (§8, DR-2026-07-20) every tier can anchor a best-practice claim; the claim's
+  *strength* is weighted by tier — ● full (T1/Co-1/T2/Co-2/T3-clinical),
+  ◐ partial (T4/T5), ○ weak (T3-grey/T6/grey). DISPUTED sources (§4) are
+  stripped of anchoring. "Tier number reflects what kind of claim a source can
+  anchor, not raw quality."
 
 Usage:
   python3 tools/evidentiary_audit.py                 # default DB + output paths
@@ -73,30 +77,39 @@ CATEGORY_LABELS = {
 }
 
 
-def is_bp_anchor(row):
-    """Can this source ANCHOR a best-practice claim?
+def is_disputed(row):
+    """Has this source been DISPUTED by the anti-fabrication sweep?
 
-    Per governance/tier-system.md §3 — "Best-practice claims require T1, Co-1,
-    T2, or Co-2 evidence" — the anchor set is exactly T1/Co-1/T2/Co-2. T3
-    (including T3-clinical) is *supporting* evidence, "rarely the sole basis"
-    (§1 T3 row), so it does NOT anchor.
+    verification_status='DISPUTED' (DR-2026-07-20 §4) strips a source of its
+    VERIFIED standing and its ability to anchor a claim until a real source is
+    located or it is retired. Such rows are *recorded findings, not deleted*:
+    they are excluded from every anchoring/strength computation (band, full/
+    partial/weak counts) but remain in the raw volume / tier / jurisdiction /
+    language totals so the disputed source stays visible in the audit.
     """
-    t = row["tier"]
-    et = (row["evidence_type"] or "").lower()
-    if et in ("co1", "co2"):
-        return True
-    return t in (1, 2)
+    return (row["verification_status"] or "").strip().upper() == "DISPUTED"
 
 
-def is_confirmed(row):
-    """Is this a CONFIRMED evidence base (● per §5), regardless of anchoring?
+def anchor_band(row):
+    """Strength band at which this source can anchor a best-practice claim.
 
-    §5 maps ● to T1, T2, T3-clinical, Co-1, Co-2. This is a *quality* marker,
-    distinct from the §3 anchor question: T3-clinical is confirmed primary
-    evidence (just lower control), so it is ● / confirmed — but it still cannot
-    solely anchor a best-practice claim (see is_bp_anchor).
+    Weighted-strength model (governance/tier-system.md §8, DR-2026-07-20 §1):
+    *every* tier can anchor a best-practice claim; the claim's strength is
+    weighted by the tier of the evidence behind it.
+
+      ● full    T1, Co-1, T2, Co-2, T3-clinical  — anchors outright (adjudicated)
+      ◐ partial T4, T5                            — anchors as *standards practice*
+                                                     ("standards basis, not primary")
+      ○ weak    T3-grey, T6, grey / thin base     — anchors only a floor/convergence
+                                                     claim, honesty-flagged
+
+    The band is exactly the §5 evidence-quality marker (● / ◐ / ○) read with
+    anchoring semantics, so it reuses quality_marker(). A DISPUTED source cannot
+    anchor at any band and returns None.
     """
-    return is_bp_anchor(row) or quality_marker(row) == "●"
+    if is_disputed(row):
+        return None
+    return {"●": "full", "◐": "partial", "○": "weak"}[quality_marker(row)]
 
 
 def is_t3_clinical(row):
@@ -148,12 +161,15 @@ def score(rec):
         return 0, dict(A=0, B=0, C=0, D=0, E=0), "F"
     # A volume (0-20)
     A = 4 if n < 3 else 8 if n < 5 else 12 if n < 8 else 16 if n < 12 else 20
-    # B tier strength (0-30). Anchors (T1/Co-1/T2/Co-2, §3) carry full weight;
-    # T3-clinical is confirmed-but-supporting (§5 ●, §1 "rarely the sole basis")
-    # so it earns partial credit; a present anchor adds a bonus.
-    anchor_share = rec["anchor"] / n
-    t3c_share = rec["t3_clinical"] / n
-    B = min(30, 20 * anchor_share + 8 * t3c_share + (10 if rec["anchor"] > 0 else 0))
+    # B tier strength (0-30), weighted-strength model (§8, DR-2026-07-20). The
+    # score mirrors the anchoring bands: ● full anchors (T1/Co-1/T2/Co-2 AND
+    # T3-clinical, now full-strength) carry full weight; ◐ partial anchors (T4/T5,
+    # "standards basis") earn partial credit; ○ weak (T3-grey/T6/grey) earn none.
+    # A present full anchor adds a bonus. DISPUTED sources anchor at no band
+    # (excluded from full/partial/weak in compute()), so they earn no B credit.
+    full_share = rec["full"] / n
+    partial_share = rec["partial"] / n
+    B = min(30, 20 * full_share + 8 * partial_share + (10 if rec["full"] > 0 else 0))
     # C jurisdictional breadth (0-20). Uses TRUE jurisdictions — excludes the
     # language codes mis-filed in the jurisdiction column (§3.3), which are not
     # real jurisdictions and must not earn breadth credit.
@@ -174,15 +190,15 @@ def score(rec):
     else:
         concentration = (pct_en + rec["pct_anglo_core"]) / 2
     E = round(15 * (1 - concentration / 100), 1)
-    # Convergence discount (tier-system.md §3): a slice whose entire base is
-    # code-floor / standards (T4-T6 + grey; ZERO confirmed evidence) is a
-    # convergence base. Breadth of such sources across many jurisdictions is
-    # "convergence, not evidence" and must not inflate the grade — halve breadth
-    # credit so it cannot out-rank a genuinely evidenced but narrow slice. Note
-    # this is scoped to code-floor slices; a T3-clinical-only slice keeps its
-    # breadth credit (its breadth is real primary evidence) but is still flagged
-    # no_anchor and earns low B.
-    if rec["convergence_only"]:
+    # Convergence discount (tier-system.md §8 / DR-2026-07-20 §1): the
+    # "convergence, not evidence" honesty rule is scoped to the ○ weak band. A
+    # weak-only slice — strongest anchor is weak (only T3-grey/T6/grey; no full
+    # or partial source) — is a code / expert-consensus floor. Breadth of such
+    # sources across many jurisdictions is convergence of floors, not evidence,
+    # and must not inflate the grade, so halve the breadth credit (C, D). A
+    # ◐ partial slice (T4/T5 standards) keeps full breadth credit: it anchors as
+    # standards practice, a real (if secondary) basis, not mere convergence.
+    if rec["weak_only"]:
         C *= 0.5
         D *= 0.5
     total = round(A + B + C + D + E, 1)
@@ -232,10 +248,22 @@ def compute(db_path):
         n = len(ev)
         tiers = Counter(e["tier"] for e in ev)
         etypes = Counter((e["evidence_type"] or "?") for e in ev)
-        anchor = sum(1 for e in ev if is_bp_anchor(e))          # T1/Co-1/T2/Co-2 (§3)
-        confirmed = sum(1 for e in ev if is_confirmed(e))       # ● incl T3-clinical (§5)
-        t3_clinical = sum(1 for e in ev if is_t3_clinical(e))
-        markers = Counter(quality_marker(e) for e in ev)
+        # Weighted-strength bands (§8, DR-2026-07-20): every non-disputed source
+        # anchors at ● full / ◐ partial / ○ weak; DISPUTED sources anchor at no
+        # band (band None) — stripped of anchoring but retained in raw totals.
+        bands = Counter(anchor_band(e) for e in ev)
+        full = bands["full"]            # ● T1/Co-1/T2/Co-2/T3-clinical — adjudicated anchor
+        partial = bands["partial"]      # ◐ T4/T5 — standards-practice anchor
+        weak = bands["weak"]            # ○ T3-grey/T6/grey — floor/convergence anchor
+        disputed = sum(1 for e in ev if is_disputed(e))
+        t3_clinical = sum(1 for e in ev if is_t3_clinical(e) and not is_disputed(e))
+        # Practitioner practice-stream (a `practice` evidence_type, conceptually a
+        # "Co-3" authority stream, DR-2026-07-20 §3). Surfaced as its own count;
+        # its anchoring strength is banded by method tier like any other source.
+        practice = sum(1 for e in ev
+                       if (e["evidence_type"] or "").lower() == "practice" and not is_disputed(e))
+        # Marker mix over anchorable (non-disputed) sources — this IS the band split.
+        markers = Counter(quality_marker(e) for e in ev if not is_disputed(e))
         jurs = Counter(norm_jur(e["jurisdiction"]) for e in ev if norm_jur(e["jurisdiction"]))
         polluted = {k: v for k, v in jurs.items() if is_polluted_jur(k)}
         jurs_clean = {k: v for k, v in jurs.items() if not is_polluted_jur(k)}
@@ -250,20 +278,21 @@ def compute(db_path):
         n_with_jur = sum(1 for e in ev if norm_jur(e["jurisdiction"]))
         sl = search_langs.get(slug, [0, 0])
 
-        # no_anchor: cannot anchor a best-practice claim (0 T1/Co-1/T2/Co-2).
-        # Two species: code-floor (0 confirmed = pure T4-T6/grey, the §3
-        # convergence trap) vs supporting-only (has confirmed T3-clinical but no
-        # anchor). convergence_only keeps its strict code-floor meaning and drives
-        # the breadth discount.
-        no_anchor = (n > 0 and anchor == 0)
-        convergence_only = (n > 0 and confirmed == 0)
-        basis = (None if not no_anchor
-                 else "code-floor" if convergence_only else "supporting-only")
+        # strength_band = the strongest anchoring band present among the slice's
+        # non-disputed sources (● full > ◐ partial > ○ weak); None when a slice
+        # has sources but none can anchor (all DISPUTED). weak_only replaces the
+        # old binary no-anchor flag: it marks a slice whose strongest anchor is
+        # ○ weak — the convergence / honesty-flag case (§8, DR-2026-07-20 §1),
+        # rendered "best available given current regulation/practice, NOT
+        # academically adjudicated."
+        strength_band = ("full" if full else "partial" if partial
+                         else "weak" if weak else None)
+        weak_only = (n > 0 and strength_band == "weak")
         rec = dict(
             slug=slug, topic=s["topic_directory"], state=state.get(slug),
-            n=n, bp=anchor, anchor=anchor, confirmed=confirmed,
-            t3_clinical=t3_clinical, code_only=n - confirmed,
-            no_anchor=no_anchor, convergence_only=convergence_only, basis=basis,
+            n=n, full=full, partial=partial, weak=weak, disputed=disputed,
+            t3_clinical=t3_clinical, practice=practice, code_only=partial + weak,
+            strength_band=strength_band, weak_only=weak_only,
             tiers={str(k): tiers[k] for k in sorted(tiers)},
             etypes=dict(etypes),
             markers={k: markers[k] for k in ("●", "◐", "○") if markers[k]},
@@ -331,20 +360,22 @@ def compute(db_path):
             health, igrade, iscore = "source-missing", "—", None   # slug not found
         elif base["n"] == 0:
             health, igrade, iscore = "empty-base", base["grade"], base["score"]
-        elif base["convergence_only"]:
-            health, igrade, iscore = "code-floor", base["grade"], base["score"]
-        elif base["no_anchor"]:
-            health, igrade, iscore = "no-anchor", base["grade"], base["score"]
         else:
-            health, igrade, iscore = "ok", base["grade"], base["score"]
+            # Inherit the base's strength band: full (● adjudicated anchor),
+            # partial (◐ standards-practice anchor), weak (○ honesty-flagged), or
+            # disputed-only (n>0 but every source DISPUTED → cannot anchor).
+            health = base["strength_band"] or "disputed-only"
+            igrade, iscore = base["grade"], base["score"]
         items.append(dict(
             item_code=it["item_code"], name=it["name"], category=it["category"],
             category_label=CATEGORY_LABELS.get(it["category"], it["category"]),
             source_slug=src, basis_health=health, grade=igrade, score=iscore,
             # inherited dimension snapshot (None when no base)
             n=base["n"] if base else None,
-            anchor=base["anchor"] if base else None,
-            confirmed=base["confirmed"] if base else None,
+            full=base["full"] if base else None,
+            partial=base["partial"] if base else None,
+            weak=base["weak"] if base else None,
+            disputed=base["disputed"] if base else None,
             n_jur=base["n_jur"] if base else None,
             n_lang=base["n_lang"] if base else None,
             pct_en=base["pct_en"] if base else None,
@@ -387,8 +418,10 @@ def build_markdown(records, items, f):
     supra = sum(r["supra"] for r in withev)
     nonanglo = sum(r["non_anglo"] for r in withev)
     null_jur_tot = tot_src - (anglo_core + supra + nonanglo)
-    anchor_tot = sum(r["anchor"] for r in withev)
-    confirmed_tot = sum(r["confirmed"] for r in withev)
+    full_tot = sum(r["full"] for r in withev)          # ● adjudicated anchors
+    partial_tot = sum(r["partial"] for r in withev)    # ◐ standards-practice anchors
+    weak_tot = sum(r["weak"] for r in withev)          # ○ floor/convergence
+    disputed_tot = sum(r["disputed"] for r in withev)  # DISPUTED (anchoring stripped)
     alljur = Counter()
     polluted_tot = Counter()
     for r in withev:
@@ -400,9 +433,12 @@ def build_markdown(records, items, f):
     single = [r for r in withev if r["n_jur"] <= 1]
     enonly = [r for r in withev if r["n_nonen"] == 0]
     heavy = [r for r in withev if (r["pct_en"] or 0) >= 90 and (r["pct_anglo_core"] or 0) >= 50]
-    conv = [r for r in records if r["convergence_only"]]        # code-floor only
-    no_anchor = [r for r in records if r["no_anchor"]]          # cannot anchor best practice
-    supporting_only = [r for r in no_anchor if not r["convergence_only"]]  # T3-clinical-only
+    # Slices by strongest anchoring band (non-empty only). full ≥ partial ≥ weak;
+    # disputed_only = has sources but every one is DISPUTED (cannot anchor).
+    full_slices = [r for r in withev if r["strength_band"] == "full"]
+    partial_slices = [r for r in withev if r["strength_band"] == "partial"]
+    weak_slices = [r for r in withev if r["strength_band"] == "weak"]      # weak_only, honesty-flag
+    disputed_only = [r for r in withev if r["strength_band"] is None]      # all-disputed base
     all_tiers = sorted(set(tier_tot) | {"1", "2", "3", "4", "5", "6"}, key=lambda x: (len(x), x))
     other_langs = sorted(((k, v) for k, v in lang_tot.items() if k not in EURO_CJK),
                          key=lambda kv: (-kv[1], kv[0]))
@@ -433,12 +469,15 @@ def build_markdown(records, items, f):
     w("")
     w("> **Adversarial review (two passes).** The audit was independently red-teamed twice; all raw "
       "counts (volume, tiers, language/jurisdiction distributions, search yield) reproduce exactly "
-      "through a second code path. Folded in: (i) the **best-practice split** — *anchor* (T1/Co-1/T2/"
-      "Co-2, the only tiers §3 lets anchor a best-practice claim) is now separated from *confirmed* "
-      "(adds T3-clinical, ● per §5); a T3-clinical-only slice is confirmed evidence but flagged "
-      "**no-anchor** (§2, §4); (ii) a **convergence discount** so code-floor-only slices can’t score "
-      f"highly on breadth alone (§2, §6); (iii) full disclosure of the **{null_jur_tot} "
-      "NULL-jurisdiction instances** (§3.5); (iv) **true-jurisdiction** breadth scoring that excludes "
+      "through a second code path. Folded in: (i) the **weighted-strength bands** (§8, "
+      "DR-2026-07-20) — every slice is graded by the strongest band it can anchor at: ● full "
+      "(T1/Co-1/T2/Co-2/T3-clinical), ◐ partial (T4/T5 standards), ○ weak (T3-grey/T6/grey); a "
+      "○ weak-only slice carries the honesty flag in place of the retired binary no-anchor flag "
+      f"(§2, §4); (ii) **DISPUTED sources** ({disputed_tot} instances) stripped of anchoring per the "
+      "anti-fabrication sweep (§4) — retained in raw totals but counted at no band; (iii) a "
+      "**convergence discount** (scoped to the ○ weak band) so code-floor-only slices can’t score "
+      f"highly on breadth alone (§2, §6); (iv) full disclosure of the **{null_jur_tot} "
+      "NULL-jurisdiction instances** (§3.5); (v) **true-jurisdiction** breadth scoring that excludes "
       f"the {n_polluted_inst} language codes ({polluted_str}) mis-filed in the `jurisdiction` column "
       "(§3.3).")
     w("")
@@ -455,11 +494,20 @@ def build_markdown(records, items, f):
       + f". Only **{tier_tot.get('2', 0)} Tier-2 (systematic-review / evidence-based-standard) "
       "instances** exist across the whole corpus — the synthesis tier that best anchors "
       "best-practice claims is the thinnest.")
-    w(f"- **Best-practice anchoring is thin.** Only **{anchor_tot}/{tot_src} "
-      f"({round(100 * anchor_tot / tot_src)}%)** of instances can *anchor* a best-practice claim "
-      f"(T1/Co-1/T2/Co-2, §3); a further {confirmed_tot - anchor_tot} are confirmed-but-supporting "
-      f"T3-clinical (● §5). **{len(no_anchor)} slices have no anchor at all** "
-      f"({len(conv)} code-floor, {len(supporting_only)} T3-clinical-only).")
+    w(f"- **Anchoring strength, banded.** Under the weighted-strength model (§8) every tier can "
+      f"anchor a best-practice claim, weighted by tier: **{full_tot}/{tot_src} "
+      f"({round(100 * full_tot / tot_src)}%)** of instances anchor at ● full strength "
+      f"(T1/Co-1/T2/Co-2/T3-clinical, adjudicated), {partial_tot} at ◐ partial (T4/T5 standards "
+      f"practice), {weak_tot} at ○ weak (T3-grey/T6/grey floor). "
+      + (f"**{disputed_tot} DISPUTED instances anchor at no band** (§4). " if disputed_tot else "")
+      + f"By slice: **{len(full_slices)} full · {len(partial_slices)} partial · {len(weak_slices)} "
+      f"weak-only**"
+      + (f" · {len(disputed_only)} disputed-only" if disputed_only else "")
+      + f" (of {len(withev)} evidenced). "
+      + (f"The {len(weak_slices)} ○ weak-only slices carry the honesty flag; the rest anchor at full "
+         "or standards-practice strength." if weak_slices
+         else "Every evidenced slice anchors at ● full or ◐ partial strength — none rests on a "
+         "weak-only base."))
     w(f"- **Anglophone concentration is the dominant quality risk.** **{en_tot}/{tot_src} "
       f"({round(100 * en_tot / tot_src)}%) of linked sources are English-language**; only {nonen_tot} "
       f"are non-English. By jurisdiction, {anglo_core} instances are native-Anglophone (US/UK/AU/CA/NZ/IE), "
@@ -483,30 +531,37 @@ def build_markdown(records, items, f):
       f"({f['unlinked_sources']} of the {f['total_sources']} rows in `evidence_sources` are linked to no "
       "active slug.)")
     w("")
-    w("**Tiers** follow `governance/tier-system.md` (OPERATIVE 2026-05-25). Tier number reflects *what "
-      "kind of claim a source can anchor*, not raw quality:")
+    w("**Tiers** follow `governance/tier-system.md`. Tier number reflects *what kind of claim a source "
+      "can anchor*, not raw quality. Under the **weighted-strength model** (§8, `DR-2026-07-20`) every "
+      "tier can anchor a best-practice claim; the claim's *strength* is weighted by the tier of the "
+      "evidence behind it. The three strength bands reuse the `●◐○` quality markers (§5), now given "
+      "anchoring semantics:")
     w("")
-    w("| Tier | Character | Anchors |")
+    w("| Band | Tiers | Anchoring behaviour |")
     w("|---|---|---|")
-    w("| T1 / Co-1 | primary research / disability-led lived experience | best-practice claims |")
-    w("| T2 / Co-2 | systematic review · meta-analysis · evidence-based standard / OT CPG | best-practice claims |")
-    w("| T3 | lower-control clinical (●) + grey primary (○) | supporting |")
-    w("| T4 | international standards (ISO/IEC/CEN) | code-baseline |")
-    w("| T5 | national beyond-code frameworks (BS 8300, DIN 18040) | code-baseline |")
-    w("| T6 | statutory code (ADA, AS 1428.1) | code-floor only |")
+    w("| **● full** | T1, Co-1, T2, Co-2, T3-clinical | anchors a best-practice claim outright (adjudicated evidence) |")
+    w("| **◐ partial** | T4, T5 | anchors as *current standards practice* — “standards basis, not primary evidence” |")
+    w("| **○ weak** | T3-grey, T6, expert-consensus / thin base | anchors only a floor/convergence claim, honesty-flagged: “best available given current regulation/practice, **not** academically adjudicated” |")
     w("")
-    w("**Two distinct measures, per the doctrine.** §3 and §5 answer different questions, so the audit "
-      "tracks both:")
+    w("Each slice is graded by the **strongest band** it can anchor at (column **Band** in §4). The "
+      "*convergence-not-evidence* rule is preserved as an honesty rule *within* the ○ weak band: "
+      "multiple T4–T6 codes agreeing on a value is convergence of floors, stated as regulatory "
+      "practice at weak strength — never relabelled best practice. A slice whose strongest anchor is "
+      "○ weak carries the **weak-only** flag (†), which replaces the retired binary *no-anchor* flag.")
     w("")
-    w("- **Best-practice *anchor* (§3)** = T1, Co-1, T2, Co-2. These are the *only* tiers that can anchor "
-      "a best-practice claim. This is the primary strength signal (column **BP** in §4).")
-    w("- **Confirmed evidence (§5, ●)** = the anchor set *plus* T3-clinical (lower-control primary "
-      "research — confirmed, but “rarely the sole basis” per §1, so it *supports* rather than "
-      "*anchors*). T3-grey (○), T4, T5, T6 are not confirmed.")
+    w("**DISPUTED sources.** Sources set `verification_status='DISPUTED'` by the anti-fabrication sweep "
+      "(§4, `DR-2026-07-20`) have lost their VERIFIED standing and their ability to anchor a claim. "
+      "They are **not deleted** (a disputed row is a recorded finding): the audit still counts them in "
+      "raw volume / tier / jurisdiction / language totals, but they anchor at **no band** and earn no "
+      "strength credit. The **disputed** count is surfaced per slice (§4 table, CSV, JSON) so the "
+      "stripped anchoring is visible.")
     w("")
-    w("A slice with sources but **zero anchors** is flagged **no-anchor**: either *code-floor* "
-      "(0 confirmed — the T4–T6 “convergence-is-not-evidence” trap of §3) or *supporting-only* "
-      "(confirmed T3-clinical but no anchor). Neither can carry a best-practice claim on its own.")
+    w("**Practitioner practice-stream.** A `practice` evidence_type (conceptually a “Co-3” authority "
+      "stream, §3 / `DR-2026-07-20`) marks practitioner / firm design work placed *by method, not "
+      "authorship* and ranked below Co-1/Co-2. The audit surfaces a **practice** count per slice and "
+      "bands each such source by its method tier like any other source; it does not adjudicate the "
+      "role-appropriate-authority gate (a firm may anchor a measured/descriptive claim but not a "
+      "functional-need claim alone), which is a claim-level rather than slice-level judgment.")
     w("")
     w("**Anglophone classification** of a jurisdiction: *native-Anglophone* = US, UK, AU, CA, NZ, IE; "
       "*supranational/English-medium* = INT, EU, ISO, ASEAN; *English-official (non-native)* = SG, HK, "
@@ -518,7 +573,7 @@ def build_markdown(records, items, f):
     w("| Comp | Max | Measures |")
     w("|---|---|---|")
     w("| A Volume | 20 | count of linked source-instances |")
-    w("| B Tier strength | 30 | anchor share (full weight) + T3-clinical share (partial) + anchor-present bonus |")
+    w("| B Tier strength | 30 | ● full-band share (full weight) + ◐ partial-band share (partial) + full-anchor-present bonus |")
     w("| C Jurisdictional breadth | 20 | distinct *true* jurisdictions (mis-filed language codes excluded) |")
     w("| D Linguistic breadth | 15 | distinct languages; capped at 4 if English-only |")
     w("| E Anglophone balance | 15 | rewards distance from 100% English + 100% Anglo-core concentration |")
@@ -528,13 +583,13 @@ def build_markdown(records, items, f):
       "synthesis-anchored* base and penalises thin or monolingual ones; it is a triage lens, not a "
       "verdict on any single citation.")
     w("")
-    w("**Convergence discount.** Per §3, a slice whose entire base is code-floor (T4–T6 + grey; **zero "
-      "confirmed** evidence) is a *convergence* base: breadth of such sources across many jurisdictions "
-      "is “convergence, not evidence.” Without a correction it can out-score a genuinely "
-      "well-evidenced but narrow slice purely on breadth. The rubric therefore **halves the breadth "
-      "components (C, D) for code-floor slices**, each flagged *convergence-only* (‡). A "
-      "*supporting-only* slice (T3-clinical but no anchor) keeps its breadth credit — that breadth is "
-      "real primary evidence — but still earns low B and carries the **no-anchor** flag (†).")
+    w("**Convergence discount.** Scoped to the ○ weak band (§8 / `DR-2026-07-20` §1): a slice whose "
+      "strongest anchor is weak (only T3-grey/T6/grey; no ● full or ◐ partial source) is a "
+      "code / expert-consensus floor. Breadth of such sources across many jurisdictions is "
+      "“convergence, not evidence,” and without a correction can out-score a genuinely well-evidenced "
+      "but narrow slice purely on breadth. The rubric therefore **halves the breadth components (C, D) "
+      "for ○ weak-only slices** (flagged †). A ◐ partial slice (T4/T5 standards) keeps full breadth "
+      "credit — it anchors as standards practice, a real if secondary basis, not mere convergence.")
     w("")
 
     # 3. Portfolio view
@@ -564,11 +619,13 @@ def build_markdown(records, items, f):
         c = tier_tot.get(t, 0)
         w(f"| T{t} | {c} | {bar(c / tot_src)} {round(100 * c / tot_src)}% |")
     w("")
-    w(f"**Best-practice-anchor share: {anchor_tot}/{tot_src} ({round(100 * anchor_tot / tot_src)}%)** "
-      f"(T1/Co-1/T2/Co-2, §3). Adding confirmed-but-supporting T3-clinical brings *confirmed* evidence "
-      f"to {confirmed_tot}/{tot_src} ({round(100 * confirmed_tot / tot_src)}%). The remaining "
-      f"{tot_src - confirmed_tot} are T4–T6 code/standards + T3-grey that carry no confirmed evidence. "
-      "Slices with zero anchors are the sharpest risk — see the no-anchor list in §4.")
+    w(f"**Strength-band split of instances:** **{full_tot}/{tot_src} "
+      f"({round(100 * full_tot / tot_src)}%)** anchor at ● full (T1/Co-1/T2/Co-2/T3-clinical), "
+      f"{partial_tot} ({round(100 * partial_tot / tot_src)}%) at ◐ partial (T4/T5 standards), and "
+      f"{weak_tot} ({round(100 * weak_tot / tot_src)}%) at ○ weak (T3-grey/T6/grey floor)"
+      + (f"; a further {disputed_tot} DISPUTED instances anchor at no band (§4)" if disputed_tot else "")
+      + f". The {len(weak_slices)} slices whose *strongest* anchor is ○ weak are the sharpest risk — "
+      "see the band breakdown in §4.")
     w("")
 
     w("### (3) Jurisdictions sourced")
@@ -627,7 +684,7 @@ def build_markdown(records, items, f):
                 "B": "solid, some concentration or tier gaps",
                 "C": "usable but thin or monolingual",
                 "D": "weak — few sources / single jurisdiction / English-only",
-                "E": "very weak — 1 jurisdiction, no anchor",
+                "E": "very weak — 1 jurisdiction, weak-only or thin base",
                 "F": "empty — no linked evidence"}
     for g in "ABCDEF":
         w(f"| {g} | {grade_ct.get(g, 0)} | {meanings[g]} |")
@@ -636,33 +693,46 @@ def build_markdown(records, items, f):
     # 4. Master table
     w("## 4. Master per-slice table (ranked by composite score)")
     w("")
-    w("Legend: **N** linked sources · **BP** best-practice-anchor count (T1/Co-1/T2/Co-2) · "
-      "**CF** confirmed (incl T3-clinical) · **JUR** distinct *true* jurisdictions · **LNG** distinct "
-      "languages · **%EN** English-language share · **%ANG** native-Anglophone share · "
-      "**A/B/C/D/E** score components · **‡** convergence-only (code-floor, breadth discounted) · "
-      "**†** no-anchor supporting-only (confirmed T3-clinical but nothing to anchor best practice).")
+    w("Legend: **N** linked sources · **Band** strongest anchoring band (● full / ◐ partial / ○ weak / "
+      "⊘ disputed-only) · **●/◐/○** full / partial / weak instance counts · **⊘** DISPUTED instances "
+      "(anchoring stripped, §4) · **JUR** distinct *true* jurisdictions · **LNG** distinct languages · "
+      "**%EN** English-language share · **%ANG** native-Anglophone share · **A/B/C/D/E** score "
+      "components · **†** ○ weak-only slice (breadth discounted, honesty-flagged).")
     w("")
-    w("| # | Grade | Score | Slice | Topic | N | BP | CF | Tiers | JUR | LNG | %EN | %ANG | A·B·C·D·E |")
-    w("|---|---|---|---|---|---|---|---|---|---|---|---|---|---|")
+    band_mark = {"full": "●", "partial": "◐", "weak": "○", None: "⊘"}
+    w("| # | Grade | Score | Slice | Topic | N | Band | ● | ◐ | ○ | ⊘ | Tiers | JUR | LNG | %EN | %ANG | A·B·C·D·E |")
+    w("|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|")
     for i, r in enumerate(records, 1):
         tiers = ",".join(f"T{k}×{v}" for k, v in sorted(r["tiers"].items())) or "—"
         comp = "·".join(str(r["components"][k]) for k in "ABCDE")
-        flag = " ‡" if r["convergence_only"] else (" †" if r["no_anchor"] else "")
+        flag = " †" if r["weak_only"] else ""
+        bm = band_mark[r["strength_band"]] if r["n"] else "—"
         pe = r["pct_en"] if r["pct_en"] is not None else "—"
         pa = r["pct_anglo_core"] if r["pct_anglo_core"] is not None else "—"
         w(f"| {i} | **{r['grade']}**{flag} | {r['score']} | `{r['slug']}` | {r['topic']} | {r['n']} | "
-          f"{r['anchor']} | {r['confirmed']} | {tiers} | {r['n_jur']} | {r['n_lang']} | {pe} | {pa} | "
-          f"{comp} |")
+          f"{bm} | {r['full']} | {r['partial']} | {r['weak']} | {r['disputed']} | {tiers} | "
+          f"{r['n_jur']} | {r['n_lang']} | {pe} | {pa} | {comp} |")
     w("")
-    w(f"**No-anchor slices ({len(no_anchor)})** — real sources but **zero best-practice anchors** "
-      "(no T1/Co-1/T2/Co-2), so the base cannot carry a best-practice claim on its own. Two kinds:")
-    w(f"- **‡ Code-floor / convergence-only ({len(conv)})** — 0 confirmed evidence (pure T4–T6/grey); "
-      "breadth is discounted. Read grades as coverage, not quality: "
-      + ", ".join(f"`{r['slug']}`" for r in conv) + ".")
-    if supporting_only:
-        w(f"- **† Supporting-only ({len(supporting_only)})** — confirmed T3-clinical primary evidence "
-          "but no anchor; genuine supporting evidence that still needs a T1/Co-1/T2/Co-2 anchor to "
-          "make a best-practice claim: " + ", ".join(f"`{r['slug']}`" for r in supporting_only) + ".")
+    w(f"**Anchoring bands across the {len(withev)} evidenced slices:** "
+      f"**{len(full_slices)} ● full** (adjudicated anchor) · **{len(partial_slices)} ◐ partial** "
+      f"(standards-practice basis) · **{len(weak_slices)} ○ weak-only**"
+      + (f" · **{len(disputed_only)} ⊘ disputed-only**" if disputed_only else "") + ".")
+    if weak_slices:
+        w(f"- **† ○ weak-only ({len(weak_slices)})** — strongest anchor is weak (T3-grey/T6/grey; no "
+          "full or partial source): breadth is discounted and the base is honesty-flagged “best "
+          "available given current regulation/practice, **not** academically adjudicated.” "
+          + ", ".join(f"`{r['slug']}`" for r in weak_slices) + ".")
+    else:
+        w("- **† ○ weak-only (0)** — no evidenced slice rests on a weak-only base; every slice anchors "
+          "at ● full or ◐ partial strength.")
+    if partial_slices:
+        w(f"- **◐ partial ({len(partial_slices)})** — strongest anchor is T4/T5 standards: renders as "
+          "*current standards practice* (“standards basis, not primary evidence”), not a code-floor. "
+          + ", ".join(f"`{r['slug']}`" for r in partial_slices) + ".")
+    if disputed_only:
+        w(f"- **⊘ disputed-only ({len(disputed_only)})** — has sources but every one is DISPUTED (§4): "
+          "cannot anchor until a real source is located. "
+          + ", ".join(f"`{r['slug']}`" for r in disputed_only) + ".")
     w("")
 
     # 5. Empty slices
@@ -693,12 +763,15 @@ def build_markdown(records, items, f):
     # 6. Findings
     w("## 6. Findings & recommended remediation")
     w("")
-    w(f"1. **Thicken the anchor tiers (T1/Co-1/T2/Co-2).** With only {tier_tot.get('2', 0)} "
-      "systematic-review/evidence-based-standard instances corpus-wide, most best-practice claims lean "
-      "on individual T1 primary studies or on code convergence (T4–T6, disallowed as best-practice "
-      f"warrant). Prioritise SR/meta-analysis + DPO-standard recovery on the {len(no_anchor)} "
-      f"no-anchor slices — especially the {len(supporting_only)} supporting-only ones, which already "
-      "hold confirmed T3-clinical evidence and need only an anchor to become citable.")
+    w(f"1. **Strengthen the ◐ partial and ○ weak bases toward ● full.** {len(partial_slices)} slices "
+      "anchor only at ◐ partial (T4/T5 standards practice) and "
+      + (f"{len(weak_slices)} at ○ weak (code/expert-consensus floor)" if weak_slices
+         else "none rest on a ○ weak-only base")
+      + f". With only {tier_tot.get('2', 0)} systematic-review/evidence-based-standard instances "
+      "corpus-wide, the ● full synthesis tier is the thinnest. Prioritise SR/meta-analysis + "
+      "DPO-standard recovery on the partial/weak slices to lift them to full-strength anchoring"
+      + (f", and replace the {disputed_tot} DISPUTED sources (§4) with verifiable citations"
+         if disputed_tot else "") + ".")
     w(f"2. **Convert non-English search into non-English evidence.** Searches ran in {f['n_search_langs']} "
       f"languages but the corpus is ~{round(100 * en_tot / tot_src)}% English. Target the languages "
       f"already searched-with-results but under-linked, and the zero-yield languages ({zero_str}) "
@@ -734,15 +807,19 @@ def build_markdown(records, items, f):
     w("")
 
     # 8. Per-specification (item) inheritance view
-    HEALTH_LABEL = {"ok": "inherits a graded base", "no-anchor": "base has no best-practice anchor",
-                    "code-floor": "base is code-floor / convergence-only",
+    HEALTH_LABEL = {"full": "inherits a ● full (adjudicated) anchor base",
+                    "partial": "inherits a ◐ partial (standards-practice) anchor base",
+                    "weak": "inherits a ○ weak-only base (honesty-flagged)",
+                    "disputed-only": "base sources all DISPUTED — cannot anchor",
                     "empty-base": "base has zero linked evidence",
                     "no-source": "no source slug — cannot inherit",
                     "source-missing": "source slug not found (data error)"}
+    HEALTH_ORDER = ["full", "partial", "weak", "disputed-only",
+                    "empty-base", "no-source", "source-missing"]
     n_items = len(items)
     health_ct = Counter(it["basis_health"] for it in items)
     weak = [it for it in items if it["basis_health"] in
-            ("no-source", "source-missing", "empty-base", "code-floor", "no-anchor")]
+            ("no-source", "source-missing", "empty-base", "weak", "disputed-only")]
     w("## 8. Per-specification (item) adjudication — inheritance view")
     w("")
     w(f"The Guidebook’s **{n_items} design specifications** (the `items` table, categories A–K) do "
@@ -753,12 +830,13 @@ def build_markdown(records, items, f):
     w("")
     w("| Basis health | Specs | Meaning |")
     w("|---|---|---|")
-    for h in ["ok", "no-anchor", "code-floor", "empty-base", "no-source", "source-missing"]:
+    for h in HEALTH_ORDER:
         if health_ct.get(h):
             w(f"| {h} | {health_ct[h]} | {HEALTH_LABEL[h]} |")
     w("")
-    w(f"**{n_items - len(weak)} of {n_items} specs inherit a fully-graded, anchored base; "
-      f"{len(weak)} rest on a weak or missing base** and are the priority remediation set.")
+    w(f"**{n_items - len(weak)} of {n_items} specs inherit a ● full or ◐ partial anchored base; "
+      f"{len(weak)} rest on a ○ weak, disputed-only, or missing base** and are the priority "
+      "remediation set.")
     w("")
     w("### By category")
     w("| Cat | Specifications | Specs | On weak/missing base |")
@@ -800,8 +878,8 @@ def build_csv(records):
     buf = io.StringIO()
     wtr = csv.writer(buf, lineterminator="\n")
     wtr.writerow(["rank", "slug", "topic", "evidence_state", "grade", "score",
-                  "n_sources", "bp_anchor", "confirmed", "t3_clinical", "noncconfirmed",
-                  "no_anchor", "basis", "convergence_only",
+                  "n_sources", "strength_band", "full_anchor", "partial_anchor", "weak_anchor",
+                  "disputed", "t3_clinical", "practice", "weak_only",
                   "tier_profile", "n_true_jurisdictions", "n_jurisdictions_raw", "jurisdictions",
                   "n_languages", "languages",
                   "pct_english", "n_nonenglish", "pct_anglo_core", "anglo_core_instances",
@@ -810,8 +888,8 @@ def build_csv(records):
                   "search_langs_run", "search_langs_hit"])
     for i, r in enumerate(records, 1):
         wtr.writerow([i, r["slug"], r["topic"], r["state"], r["grade"], r["score"],
-                      r["n"], r["anchor"], r["confirmed"], r["t3_clinical"], r["code_only"],
-                      int(r["no_anchor"]), r["basis"] or "", int(r["convergence_only"]),
+                      r["n"], r["strength_band"] or "", r["full"], r["partial"], r["weak"],
+                      r["disputed"], r["t3_clinical"], r["practice"], int(r["weak_only"]),
                       ";".join(f"T{k}:{v}" for k, v in sorted(r["tiers"].items())),
                       r["n_true_jur"], r["n_jur_raw"],
                       ";".join(f"{k}:{v}" for k, v in r["jurs"].items()),
@@ -829,14 +907,14 @@ def build_items_csv(items):
     wtr = csv.writer(buf, lineterminator="\n")
     wtr.writerow(["item_code", "category", "category_label", "name", "source_slug",
                   "basis_health", "inherited_grade", "inherited_score",
-                  "base_n_sources", "base_anchor", "base_confirmed",
+                  "base_n_sources", "base_full", "base_partial", "base_weak", "base_disputed",
                   "base_n_jurisdictions", "base_n_languages", "base_pct_english",
                   "base_pct_anglo_core"])
     for it in items:
         wtr.writerow([it["item_code"], it["category"], it["category_label"], it["name"],
                       it["source_slug"] or "", it["basis_health"], it["grade"], it["score"],
-                      it["n"], it["anchor"], it["confirmed"], it["n_jur"], it["n_lang"],
-                      it["pct_en"], it["pct_anglo"]])
+                      it["n"], it["full"], it["partial"], it["weak"], it["disputed"],
+                      it["n_jur"], it["n_lang"], it["pct_en"], it["pct_anglo"]])
     return buf.getvalue()
 
 
@@ -847,6 +925,9 @@ def build_json(records, items, f):
         for k, v in r["tiers"].items():
             tier_tot[k] += v
     item_health = Counter(it["basis_health"] for it in items)
+    # Strength-band split (weighted-strength model, §8 / DR-2026-07-20): by slice
+    # (strongest anchoring band) and by instance (each source's own band).
+    band_by_slice = Counter(r["strength_band"] or "disputed-only" for r in records if r["n"])
     payload = {
         "as_of": f["as_of"],
         "n_slices": f["n_slices"],
@@ -855,6 +936,15 @@ def build_json(records, items, f):
         "unique_sources": f["unique_linked"],
         "grade_distribution": {g: grade_ct.get(g, 0) for g in "ABCDEF"},
         "tier_totals": dict(sorted(tier_tot.items())),
+        "strength_band_slices": {b: band_by_slice.get(b, 0)
+                                 for b in ("full", "partial", "weak", "disputed-only")},
+        "strength_band_instances": {
+            "full": sum(r["full"] for r in records),
+            "partial": sum(r["partial"] for r in records),
+            "weak": sum(r["weak"] for r in records),
+            "disputed": sum(r["disputed"] for r in records),
+        },
+        "practice_stream_instances": sum(r["practice"] for r in records),
         "english_instances": sum(r["n_en"] for r in records),
         "zero_yield_search_languages": f["zero_yield_langs"],
         "item_basis_health": dict(item_health),
@@ -979,9 +1069,10 @@ footer{margin-top:34px;font-family:var(--mono);font-size:11.5px;color:var(--fain
 .vtab[aria-selected=true]{background:var(--accent);color:#fff}
 .hpill{font-family:var(--mono);font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap;
   border:1px solid var(--line);color:var(--ink-2);background:var(--surface-2)}
-.hpill.ok{color:#fff;background:var(--gA);border-color:transparent}
-.hpill.noanchor{color:#fff;background:var(--gD);border-color:transparent}
-.hpill.codefloor{color:#fff;background:var(--gE);border-color:transparent}
+.hpill.full{color:#fff;background:var(--gA);border-color:transparent}
+.hpill.partial{color:#fff;background:var(--gC);border-color:transparent}
+.hpill.weak{color:#fff;background:var(--gD);border-color:transparent}
+.hpill.disputedonly{color:#fff;background:var(--gE);border-color:transparent}
 .hpill.empty,.hpill.nosource{color:#fff;background:var(--gF);border-color:transparent}
 td.itemname{white-space:normal;min-width:240px}
 td.itemname .tp{display:block;font-size:10.5px;color:var(--faint);font-family:var(--mono)}
@@ -1058,19 +1149,18 @@ td.itemname .tp{display:block;font-size:10.5px;color:var(--faint);font-family:va
   </div>
 
   <h2 class="dim-head">Slices <span id="tcount"></span></h2>
-  <p class="legend"><b>N</b> linked sources · <b>BP</b> best-practice-anchor count (T1/Co-1/T2/Co-2, §3) ·
-  <b>tier bar</b> green=anchor, orange=code/other · <b>JUR/LNG</b> distinct true jurisdictions / languages ·
-  <b>EN</b> English-language share (redder = more concentrated) · <b>%ANG</b> native-Anglophone share ·
-  <b style="color:var(--gD)">&#8225;</b> convergence-only (code-floor, breadth discounted) ·
-  <b style="color:var(--gD)">&#8224;</b> no-anchor supporting-only (confirmed T3-clinical, no anchor).
+  <p class="legend"><b>N</b> linked sources · <b>Band</b> strongest anchoring band (● full / ◐ partial / ○ weak) ·
+  <b>●</b> full-band anchor count (T1/Co-1/T2/Co-2/T3-clinical) · <b>band bar</b> green=full, amber=partial, orange=weak ·
+  <b>JUR/LNG</b> distinct true jurisdictions / languages · <b>EN</b> English-language share (redder = more concentrated) ·
+  <b>%ANG</b> native-Anglophone share · <b style="color:var(--gD)">&#8224;</b> ○ weak-only (breadth discounted, honesty-flagged).
   Click a header to sort.</p>
   <div class="tablewrap">
     <table>
       <thead><tr>
         <th data-k="grade">Grade</th><th data-k="score">Score</th>
         <th data-k="slug">Slice</th>
-        <th data-k="n" class="num">N</th><th data-k="bp" class="num">BP</th>
-        <th data-k="tierbar">Tier mix</th>
+        <th data-k="n" class="num">N</th><th data-k="full" class="num">●</th>
+        <th data-k="tierbar">Band mix</th>
         <th data-k="n_jur" class="num">JUR</th><th data-k="n_lang" class="num">LNG</th>
         <th data-k="pct_en" class="num">EN</th><th data-k="pct_anglo" class="num">%ANG</th>
       </tr></thead>
@@ -1095,9 +1185,9 @@ td.itemname .tp{display:block;font-size:10.5px;color:var(--faint);font-family:va
       </div>
     </div>
     <h2 class="dim-head">Specifications <span id="itcount"></span></h2>
-    <p class="legend"><b>Basis</b> = health of the slug this spec inherits from · <b>Grade</b> inherited ·
-    <b>N/BP</b> base sources / best-practice anchors · <b>JUR/LNG</b> base jurisdictions / languages ·
-    <b>%EN</b> base English share. A spec on a red/grey basis rests on weak or missing evidence.
+    <p class="legend"><b>Basis</b> = strength band of the slug this spec inherits (● full / ◐ partial / ○ weak) · <b>Grade</b> inherited ·
+    <b>N/●</b> base sources / full-band anchors · <b>JUR/LNG</b> base jurisdictions / languages ·
+    <b>%EN</b> base English share. A spec on a ○ weak, disputed-only, or missing basis rests on weak or missing evidence.
     Click a header to sort.</p>
     <div class="tablewrap">
       <table>
@@ -1105,7 +1195,7 @@ td.itemname .tp{display:block;font-size:10.5px;color:var(--faint);font-family:va
           <th data-k="grade">Grade</th><th data-k="basis">Basis</th>
           <th data-k="code">Item</th><th data-k="cat">Cat</th>
           <th data-k="src">Source slug</th>
-          <th data-k="n" class="num">N</th><th data-k="bp" class="num">BP</th>
+          <th data-k="n" class="num">N</th><th data-k="full" class="num">●</th>
           <th data-k="n_jur" class="num">JUR</th><th data-k="n_lang" class="num">LNG</th>
           <th data-k="pct_en" class="num">%EN</th>
         </tr></thead>
@@ -1166,10 +1256,11 @@ document.querySelectorAll(".vtab").forEach(t=>t.onclick=()=>{
   render();
 });
 
-const HEALTH_ORDER=["ok","no-anchor","code-floor","empty-base","no-source","source-missing"];
-const HEALTH_CLASS={"ok":"ok","no-anchor":"noanchor","code-floor":"codefloor","empty-base":"empty","no-source":"nosource","source-missing":"nosource"};
-const HEALTH_LABEL={"ok":"graded base","no-anchor":"no anchor","code-floor":"code-floor","empty-base":"empty base","no-source":"no source slug","source-missing":"source missing"};
-const HEALTH_RANK={"ok":0,"no-anchor":1,"code-floor":2,"empty-base":3,"no-source":4,"source-missing":5};
+const HEALTH_ORDER=["full","partial","weak","disputed-only","empty-base","no-source","source-missing"];
+const HEALTH_CLASS={"full":"full","partial":"partial","weak":"weak","disputed-only":"disputedonly","empty-base":"empty","no-source":"nosource","source-missing":"nosource"};
+const HEALTH_LABEL={"full":"● full base","partial":"◐ partial base","weak":"○ weak base","disputed-only":"disputed-only","empty-base":"empty base","no-source":"no source slug","source-missing":"source missing"};
+const HEALTH_RANK={"full":0,"partial":1,"weak":2,"disputed-only":3,"empty-base":4,"no-source":5,"source-missing":6};
+const HEALTHY=new Set(["full","partial"]);  // inherits an anchoring base (● full or ◐ partial)
 
 function filteredItems(){
   const term=document.getElementById("term").value.trim().toLowerCase();
@@ -1195,11 +1286,11 @@ function cvar(v){return getComputedStyle(document.documentElement).getPropertyVa
 function esc(s){return (s||"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));}
 
 function agg(rows){
-  const a={n:0,bp:0,confirmed:0,code:0,tiers:{},langs:{},jurs:{},en:0,nonen:0,core:0,supra:0,other:0,
+  const a={n:0,full:0,partial:0,weak:0,disputed:0,tiers:{},langs:{},jurs:{},en:0,nonen:0,core:0,supra:0,other:0,
     empty:0,enonly:0,withev:0,scoreSum:0};
   rows.forEach(r=>{
     if(r.n===0){a.empty++;return;}
-    a.withev++; a.n+=r.n; a.bp+=r.bp; a.confirmed+=r.confirmed; a.code+=r.code_only; a.scoreSum+=r.score;
+    a.withev++; a.n+=r.n; a.full+=r.full; a.partial+=r.partial; a.weak+=r.weak; a.disputed+=r.disputed; a.scoreSum+=r.score;
     if(r.n_nonen===0)a.enonly++;
     a.en+=r.n_en; a.nonen+=r.n_nonen; a.core+=r.anglo_core; a.supra+=r.supra; a.other+=r.non_anglo;
     for(const[k,v]of Object.entries(r.tiers))a.tiers[k]=(a.tiers[k]||0)+v;
@@ -1231,23 +1322,23 @@ function renderItems(){
   const rows=filteredItems();
   const hc={}, gc={}; let weak=0;
   rows.forEach(r=>{ hc[r.health]=(hc[r.health]||0)+1;
-    if(r.health!=="ok") weak++;
+    if(!HEALTHY.has(r.health)) weak++;
     const g=r.grade||"—"; gc[g]=(gc[g]||0)+1; });
   document.getElementById("scope").innerHTML =
-    `In scope: <b>${rows.length}</b> specifications · <b>${rows.length-weak}</b> on a graded/anchored base · `+
-    `<b>${weak}</b> on a weak or missing base`;
+    `In scope: <b>${rows.length}</b> specifications · <b>${rows.length-weak}</b> on a full/partial anchored base · `+
+    `<b>${weak}</b> on a weak, disputed-only, or missing base`;
   const cats=new Set(rows.map(r=>r.cat));
   const cards=[
     ["Specifications", rows.length, `${cats.size} categor${cats.size===1?"y":"ies"} in scope`],
-    ["On weak/missing base", weak, `${rows.length-weak} inherit a graded, anchored base`],
+    ["On weak/missing base", weak, `${rows.length-weak} inherit a full/partial anchored base`],
     ["No source slug", hc["no-source"]||0, `coverage gaps — cannot inherit evidence`],
-    ["Anchored (grade A–C)", rows.filter(r=>["A","B","C"].includes(r.grade)&&r.health==="ok").length,
-      `specs on a solid, anchored base`],
+    ["Full anchor (grade A–C)", rows.filter(r=>["A","B","C"].includes(r.grade)&&r.health==="full").length,
+      `specs on a ● full, adjudicated base`],
   ];
   document.getElementById("icards").innerHTML=cards.map(([l,b,n])=>
     `<div class="card"><div class="big">${b}</div><div class="lbl">${l}</div><div class="note">${n}</div></div>`).join("");
   // basis health bars
-  const hcols={"ok":"--gA","no-anchor":"--gD","code-floor":"--gE","empty-base":"--gF","no-source":"--gF","source-missing":"--gF"};
+  const hcols={"full":"--gA","partial":"--gC","weak":"--gD","disputed-only":"--gE","empty-base":"--gF","no-source":"--gF","source-missing":"--gF"};
   document.getElementById("ihealth").innerHTML=HEALTH_ORDER.filter(h=>hc[h]).map(h=>
     barRow2(HEALTH_LABEL[h], hc[h], rows.length, hcols[h])).join("")||
     `<div class="legend" style="color:var(--faint)">no specifications in scope</div>`;
@@ -1283,7 +1374,7 @@ function renderItemTable(rows){
       <td class="itemname">${esc(r.name)}<span class="tp">${esc(r.code)}</span></td>
       <td class="num">${esc(r.cat)}</td>
       <td class="slug">${r.src?esc(r.src):'<span style="color:var(--faint)">— none —</span>'}</td>
-      <td class="num">${r.n??'—'}</td><td class="num">${r.bp??'—'}</td>
+      <td class="num">${r.n??'—'}</td><td class="num">${r.full??'—'}</td>
       <td class="num">${r.n_jur??'—'}</td><td class="num">${r.n_lang??'—'}</td>
       <td class="num">${r.pct_en??'—'}</td></tr>`;
   }).join("");
@@ -1295,12 +1386,12 @@ function renderSlices(){
     `In scope: <b>${rows.length}</b> slices · <b>${a.n}</b> source-instances · `+
     `<b>${a.withev}</b> evidenced · <b>${a.empty}</b> empty`;
   const meanScore = a.withev? (a.scoreSum/a.withev):0;
-  const bpShare = a.n? Math.round(100*a.bp/a.n):0;
+  const fullShare = a.n? Math.round(100*a.full/a.n):0;
   const cards=[
     ["Source-instances", a.n, `${a.withev} of ${rows.length} slices evidenced`],
     ["Median / slice", medianN(rows), `${a.empty} slice(s) with zero evidence`],
     ["Mean score", meanScore.toFixed(1), gradeFor(meanScore)+" band (evidenced slices)"],
-    ["Best-practice anchor", bpShare+"%", `${a.bp} of ${a.n} instances can anchor best practice`],
+    ["● Full-band anchor", fullShare+"%", `${a.full} of ${a.n} instances anchor at full strength`],
     ["English share", (a.n?Math.round(100*a.en/a.n):0)+"%", `${a.enonly} slice(s) English-only`],
     ["Distinct jurisdictions", Object.keys(a.jurs).length, `${Object.keys(a.langs).length} languages sourced`],
   ];
@@ -1314,8 +1405,9 @@ function renderSlices(){
       <span class="track"><span class="fill" style="width:${p.toFixed(1)}%;background:${tierColor(k)}"></span></span>
       <span class="v">${v} · ${p.toFixed(0)}%</span></div>`;}).join("");
   document.getElementById("bpline").innerHTML=
-    `<b>${a.bp}/${a.n}</b> (${bpShare}%) can anchor best practice (T1/Co-1/T2/Co-2) · `+
-    `<b>${a.confirmed}</b> confirmed incl T3-clinical. Only anchors carry a best-practice claim (§3).`;
+    `<b>${a.full}</b> ● full (${fullShare}%) · <b>${a.partial}</b> ◐ partial · <b>${a.weak}</b> ○ weak`+
+    (a.disputed?` · <b>${a.disputed}</b> ⊘ disputed (no anchor)`:``)+
+    ` of ${a.n} instances. Weighted-strength model: every tier anchors, weighted by band (§8).`;
 
   const enp=a.n?100*a.en/a.n:0, jnull=a.n-(a.core+a.supra+a.other);
   document.getElementById("bias").innerHTML=
@@ -1344,7 +1436,7 @@ function renderTable(rows){
     if(sortK==="slug") return sortDir*x.slug.localeCompare(y.slug);
     let A,B;
     if(sortK==="grade"){A=x.score;B=y.score;}
-    else if(sortK==="tierbar"){A=x.n?x.bp/x.n:-1;B=y.n?y.bp/y.n:-1;}
+    else if(sortK==="tierbar"){A=x.n?x.full/x.n:-1;B=y.n?y.full/y.n:-1;}
     else {A=x[sortK]??-1;B=y[sortK]??-1;}
     return sortDir*(A-B);
   });
@@ -1359,17 +1451,16 @@ function renderTable(rows){
       <td class="slug">${esc(r.slug)}<span class="tp">${esc(r.topic)} · ${esc(r.state||'no state')} · empty</span></td>
       <td class="num">0</td><td class="num">—</td><td>—</td><td class="num">—</td><td class="num">—</td>
       <td class="num">—</td><td class="num">—</td></tr>`;
-    const bpp=r.n?100*r.bp/r.n:0;
-    const tierbar=`<span class="mini" title="green=best-practice anchor, orange=code/other">
-      <i style="width:${bpp}%;background:var(--gA)"></i><i style="width:${100-bpp}%;background:var(--gD)"></i></span>`;
+    const fp=r.n?100*r.full/r.n:0, pp=r.n?100*r.partial/r.n:0, wp=r.n?100*r.weak/r.n:0;
+    const tierbar=`<span class="mini" title="green=● full, amber=◐ partial, orange=○ weak (gap=⊘ disputed)">
+      <i style="width:${fp}%;background:var(--gA)"></i><i style="width:${pp}%;background:var(--gC)"></i><i style="width:${wp}%;background:var(--gD)"></i></span>`;
     const enb=`<span class="enbar" style="--p:${r.pct_en??0}%" title="${r.pct_en??0}% English"></span>`;
-    const conv=r.conv?` <b title="convergence-only: 0 confirmed evidence (code-floor); breadth discounted" style="color:var(--gD)">&#8225;</b>`
-      :(r.noanchor?` <b title="no-anchor supporting-only: confirmed T3-clinical but no T1/Co-1/T2/Co-2 anchor" style="color:var(--gD)">&#8224;</b>`:"");
+    const flag=r.weakonly?` <b title="○ weak-only: strongest anchor is weak (T3-grey/T6/grey); breadth discounted, honesty-flagged" style="color:var(--gD)">&#8224;</b>`:"";
     return `<tr>
-      <td><span class="gpill ${r.grade}">${r.grade}</span>${conv}</td>
+      <td><span class="gpill ${r.grade}">${r.grade}</span>${flag}</td>
       <td class="num">${r.score}</td>
       <td class="slug">${esc(r.slug)}<span class="tp">${esc(r.topic)}</span></td>
-      <td class="num">${r.n}</td><td class="num">${r.bp}</td>
+      <td class="num">${r.n}</td><td class="num">${r.full}</td>
       <td>${tierbar}</td>
       <td class="num">${r.n_jur}</td><td class="num">${r.n_lang}</td>
       <td class="num">${enb} ${r.pct_en??'—'}</td>
@@ -1401,19 +1492,22 @@ def build_html(records, items, f):
             " ".join(r["jurs_clean"].keys()), " ".join(r["langs"].keys()),
             " ".join("T" + k for k in r["tiers"].keys()), " ".join(r["etypes"].keys()),
         ]).lower()
-        if r["convergence_only"]:
-            blob += " convergence-only ‡"
-        elif r["no_anchor"]:
-            blob += " no-anchor supporting-only †"
+        blob += " " + (r["strength_band"] or "disputed-only") + " band"
+        if r["weak_only"]:
+            blob += " weak-only †"
+        if r["disputed"]:
+            blob += " disputed"
+        if r["practice"]:
+            blob += " practice-stream"
         slim.append(dict(
             slug=r["slug"], topic=r["topic"], state=r["state"],
-            n=r["n"], bp=r["anchor"], confirmed=r["confirmed"], code_only=r["code_only"],
+            n=r["n"], full=r["full"], partial=r["partial"], weak=r["weak"], disputed=r["disputed"],
+            band=r["strength_band"], weakonly=r["weak_only"], practice=r["practice"],
             tiers=r["tiers"], etypes=r["etypes"],
             n_jur=r["n_true_jur"], jurs=r["jurs_clean"], n_lang=r["n_lang"], langs=r["langs"],
             n_en=r["n_en"], n_nonen=r["n_nonen"], pct_en=r["pct_en"],
             anglo_core=r["anglo_core"], supra=r["supra"], non_anglo=r["non_anglo"],
-            pct_anglo=r["pct_anglo_core"], grade=r["grade"], score=r["score"],
-            conv=r["convergence_only"], noanchor=r["no_anchor"], blob=blob))
+            pct_anglo=r["pct_anglo_core"], grade=r["grade"], score=r["score"], blob=blob))
     # Item (specification) records for the dashboard's Specifications view.
     islim = []
     for it in items:
@@ -1424,8 +1518,9 @@ def build_html(records, items, f):
         islim.append(dict(
             code=it["item_code"], name=it["name"], cat=it["category"],
             catl=it["category_label"], src=it["source_slug"], health=it["basis_health"],
-            grade=it["grade"], score=it["score"], n=it["n"], bp=it["anchor"],
-            confirmed=it["confirmed"], n_jur=it["n_jur"], n_lang=it["n_lang"],
+            grade=it["grade"], score=it["score"], n=it["n"], full=it["full"],
+            partial=it["partial"], weak=it["weak"], disputed=it["disputed"],
+            n_jur=it["n_jur"], n_lang=it["n_lang"],
             pct_en=it["pct_en"], pct_anglo=it["pct_anglo"], blob=iblob))
 
     def js_safe(s):
