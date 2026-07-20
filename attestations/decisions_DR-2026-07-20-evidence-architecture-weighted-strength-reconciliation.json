@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-07-20-project-pipeline-overview-adjudication",
+  "artifact": "decisions/DR-2026-07-20-evidence-architecture-weighted-strength-reconciliation.md",
+  "doctrine_sha": "373255e",
+  "rules_in_scope": ["adherence-logging-and-attestation", "best-practice-synthesis-routing", "evidence-verification-gate-for-synthesis"],
+  "per_rule_status": {
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/decisions_DR-2026-07-20-evidence-architecture-weighted-strength-reconciliation.json"
+    },
+    "best-practice-synthesis-routing": {
+      "status": "NOT-FIRED",
+      "reason": "This DR frames a doctrine-reconciliation decision for the owner; it writes no best_practice_synthesis and assigns no value, so the model-routing rule is not exercised."
+    },
+    "evidence-verification-gate-for-synthesis": {
+      "status": "NOT-FIRED",
+      "reason": "The DR cites no evidence source and asserts no synthesis claim about the built environment; the rule #10 existence/verification gate has nothing to gate here."
+    }
+  },
+  "deviations": [],
+  "bias_direction": "Authoring a reconciliation DR is itself governance work of exactly the kind the 2026-07-14 anti-displacement freeze warns can crowd out the judgment-heavy core; framing an unreconciled-text state as a contradiction that 'must' be resolved lends it an urgency that could rationalize further governance churn. It also lets the author of the session's overview reclassify a self-diagnosed description error (having summarized superseded doctrine) as a repo-level issue, shifting attribution off the overview and onto the documents.",
+  "independent_reviewer_counterclaim": "A reviewer could argue no DR is warranted: the evidence-architecture.md:4 precedence clause already makes tier-system.md §8 govern, so the divergence is inert until evidence-architecture.md is next edited, and opening a DR manufactures work the freeze forbids. The counter is narrow but real — assess_cell.py's v_best_practice still mechanically excludes regulatory-stratum-only cells, so code and §8 already disagree at render time; whether that matters before any such cell is actually rendered is itself the open question, which this DR routes to the owner rather than deciding.",
+  "verdict": "CLEAN"
+}
