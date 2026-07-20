@@ -83,3 +83,44 @@ totals: 82 slices / 862 instances (was 852). `tools/regenerate_vetting_surface.p
   BPC redirect) is a small, mechanical data-hygiene fix for a future batch — noted, not fixed here
   (out of scope for a research session; fixing it means updating `slugs.status` via a migration,
   which touches audit-counting logic this session didn't want to disturb mid-research).
+
+## Adversarial review (same day, follow-up pass)
+
+Per this project's established discipline (batch B/batch 5 precedent), ran an independent
+fresh-context reviewer briefed to *refute* the ingestion batch — 5 targeted risk points rather
+than a full re-check of all 10 rows (the other 6 had clean DOIs and multi-source corroboration
+already). Findings, applied via a compensating migration
+(`scripts/migrations/data_20260720013909_2026-07-20-poe-global-adversarial-review.sql` — the
+original migration is never edited, per the forward-only discipline):
+
+- **REF-00873 (Zimring & Reizenstein 1980) — REFUTED the "no DOI exists" claim.** A DOI does
+  exist (`10.1177/0013916580124002`), confirmed via direct WebFetch of the SAGE landing page.
+  Added; `metadata_quality` upgraded PARTIAL → COMPLETE.
+- **REF-00874 (Vizioli et al. 2003) — real fabrication risk caught.** The original 10-author list
+  could not be independently confirmed against any primary proceedings; 2 of the 10 names
+  (Uddin, Merighi) have indexed profiles in airport *pavement engineering*, not accessibility —
+  consistent with a secondary-search conflation of multiple papers' authors from the same
+  multi-track 2003 conference into one list, not genuine co-authorship. **Trimmed** to Vizioli
+  (confirmed sole owner) plus Merighi/Bruna flagged attendance-corroborated-only;
+  `author_count_is_complete` set 1 → 0.
+- **REF-00875 (Lee & Kwon 2011) — CONFIRMED, upgraded to primary-document read.** `WebFetch`
+  reachability varied session to session — the reviewer got a direct PDF read
+  (`koreascience.kr/article/JAKO201122262523247.pdf`) where the original pass got a 503. All
+  originally-recorded fields held up exactly; verification note strengthened, no field changes.
+- **REF-00868/00869 tier (T3) and REF-00867/00876 jurisdiction tags (CY / INT) — CONFIRMED,** no
+  change. The reviewer read `governance/tier-system.md` independently and argued the T3 call
+  for the Zallio Delphi-study papers holds (T2 `standard_eb` requires named-*organisation*
+  authorship, not individual academic authorship); checked DB precedent for CY/INT usage and
+  found both tags consistent with existing corpus convention.
+- **Bonus finding from the universal per-source DOI-resolution check — REF-00876's first author's
+  first name was wrong.** Stored as "Emmanuel," should be **"Elvis"** Attakora-Amaniampong
+  (confirmed via Emerald/ResearchGate/Google Scholar/Semantic Scholar convergence; no "Emmanuel
+  Attakora-Amaniampong" academic exists anywhere searched). Corrected. (`author_display`'s
+  initials-only "E" form was coincidentally unaffected.)
+
+`PRAGMA foreign_key_check`/`integrity_check` clean after the correction migration.
+`tools/evidentiary_audit.py` re-run: byte-identical output (the corrections touched author/DOI
+metadata, not tier/jurisdiction/language counts, so the audit's dimensions were unaffected — as
+expected). One real citation gap fixed, one likely-fabricated author list caught and trimmed
+before it could compound, one author-name misattribution fixed — the adversarial pass earned its
+cost on a 10-source batch, consistent with this project's prior experience of the same move.
