@@ -477,9 +477,10 @@ def build_markdown(records, items, f):
       "anti-fabrication sweep (§4) — retained in raw totals but counted at no band; (iii) a "
       "**convergence discount** (scoped to the ○ weak band) so code-floor-only slices can’t score "
       f"highly on breadth alone (§2, §6); (iv) full disclosure of the **{null_jur_tot} "
-      "NULL-jurisdiction instances** (§3.5); (v) **true-jurisdiction** breadth scoring that excludes "
-      f"the {n_polluted_inst} language codes ({polluted_str}) mis-filed in the `jurisdiction` column "
-      "(§3.3).")
+      "NULL-jurisdiction instances** (§3.5); (v) **true-jurisdiction** breadth scoring "
+      + (f"that excludes the {n_polluted_inst} language codes ({polluted_str}) mis-filed in the "
+         "`jurisdiction` column (§3.3)." if n_polluted_codes else
+         "of the jurisdiction column (no language codes are currently mis-filed there)."))
     w("")
 
     # 1. Executive summary
@@ -624,27 +625,36 @@ def build_markdown(records, items, f):
       f"{partial_tot} ({round(100 * partial_tot / tot_src)}%) at ◐ partial (T4/T5 standards), and "
       f"{weak_tot} ({round(100 * weak_tot / tot_src)}%) at ○ weak (T3-grey/T6/grey floor)"
       + (f"; a further {disputed_tot} DISPUTED instances anchor at no band (§4)" if disputed_tot else "")
-      + f". The {len(weak_slices)} slices whose *strongest* anchor is ○ weak are the sharpest risk — "
-      "see the band breakdown in §4.")
+      + ". "
+      + (f"The {len(weak_slices)} slices whose *strongest* anchor is ○ weak are the sharpest risk — "
+         "see the band breakdown in §4." if weak_slices else
+         "No evidenced slice rests on a ○ weak-only base — every slice anchors at ● full or ◐ partial "
+         "strength (see the band breakdown in §4)."))
     w("")
 
     w("### (3) Jurisdictions sourced")
-    w(f"Distinct jurisdiction strings across the corpus: **{len(alljur)}** — but "
-      f"**{n_polluted_codes} are language codes mis-filed in the jurisdiction column** "
-      f"({polluted_str} = {n_polluted_inst} instances; a data-integrity defect, see the note below), "
-      f"leaving **~{len(true_jur)} true jurisdictions**. Top: "
-      + ", ".join(f"{k} ({v})" for k, v in alljur.most_common(10)) + ".")
+    if n_polluted_codes:
+        w(f"Distinct jurisdiction strings across the corpus: **{len(alljur)}** — but "
+          f"**{n_polluted_codes} are language codes mis-filed in the jurisdiction column** "
+          f"({polluted_str} = {n_polluted_inst} instances; a data-integrity defect, see the note below), "
+          f"leaving **~{len(true_jur)} true jurisdictions**. Top: "
+          + ", ".join(f"{k} ({v})" for k, v in alljur.most_common(10)) + ".")
+    else:
+        w(f"Distinct jurisdiction strings across the corpus: **{len(true_jur)}**, none mis-filed as "
+          "language codes in the `jurisdiction` column. Top: "
+          + ", ".join(f"{k} ({v})" for k, v in alljur.most_common(10)) + ".")
     w("")
     w(f"**{len(single)} non-empty slices draw on ≤1 jurisdiction** — monojurisdictional bases "
       f"whose values may not transfer across code regimes. Separately, **{null_jur_tot} source-instances "
       "carry no jurisdiction at all** (NULL) — mostly clinical/synthesis sources with no single "
       "national home; these are excluded from every jurisdiction-share denominator.")
     w("")
-    w("> **Data-integrity note (§3.3).** The audit *surfaces rather than propagates* the mis-filed "
-      "language codes: language codes appearing as `jurisdiction` values are almost certainly the source "
-      "language leaking into the wrong column. Recommend a data fix moving these to `lang_detected` and "
-      "recovering the true jurisdiction.")
-    w("")
+    if n_polluted_codes:
+        w("> **Data-integrity note (§3.3).** The audit *surfaces rather than propagates* the mis-filed "
+          "language codes: language codes appearing as `jurisdiction` values are almost certainly the source "
+          "language leaking into the wrong column. Recommend a data fix moving these to `lang_detected` and "
+          "recovering the true jurisdiction.")
+        w("")
 
     w("### (4) Languages sourced")
     w("| Language | Instances |")
@@ -736,29 +746,34 @@ def build_markdown(records, items, f):
     w("")
 
     # 5. Empty slices
-    w(f"## 5. Evidence-empty slices ({len(empty)})")
-    w("")
-    w("These carry **zero** linked source-instances. `bpc_metadata.evidence_state` distinguishes:")
-    w("")
     ret = [r for r in empty if r["state"] == "RETRACTED-PRE-REHAB"]
     none = [r for r in empty if r["state"] is None]
     other = [r for r in empty if r["state"] not in (None, "RETRACTED-PRE-REHAB")]
-    w(f"**Retracted pending rehabilitation ({len(ret)})** — prior work cleared, awaiting re-derivation:")
-    for r in ret:
-        w(f"- `{r['slug']}` ({r['topic']})")
+    w(f"## 5. Evidence-empty slices ({len(empty)})")
     w("")
-    w(f"**Un-started / placeholder ({len(none)})** — `evidence_state` unset, search not run:")
-    for r in none:
-        w(f"- `{r['slug']}` ({r['topic']})")
-    if other:
+    if not empty:
+        w("Every ACTIVE slice carries at least one linked source-instance — no evidence-empty slices "
+          "in the current corpus.")
         w("")
-        w(f"**Other state ({len(other)}):**")
-        for r in other:
-            w(f"- `{r['slug']}` ({r['topic']}) — {r['state']}")
-    w("")
-    w("Several name high-salience topics where an empty base is a material coverage gap, not "
-      "bookkeeping.")
-    w("")
+    else:
+        w("These carry **zero** linked source-instances. `bpc_metadata.evidence_state` distinguishes:")
+        w("")
+        w(f"**Retracted pending rehabilitation ({len(ret)})** — prior work cleared, awaiting re-derivation:")
+        for r in ret:
+            w(f"- `{r['slug']}` ({r['topic']})")
+        w("")
+        w(f"**Un-started / placeholder ({len(none)})** — `evidence_state` unset, search not run:")
+        for r in none:
+            w(f"- `{r['slug']}` ({r['topic']})")
+        if other:
+            w("")
+            w(f"**Other state ({len(other)}):**")
+            for r in other:
+                w(f"- `{r['slug']}` ({r['topic']}) — {r['state']}")
+        w("")
+        w("Several name high-salience topics where an empty base is a material coverage gap, not "
+          "bookkeeping.")
+        w("")
 
     # 6. Findings
     w("## 6. Findings & recommended remediation")
@@ -778,12 +793,17 @@ def build_markdown(records, items, f):
       "explicitly.")
     w(f"3. **De-risk monojurisdictional slices.** {len(single)} evidenced slices rest on ≤1 "
       "jurisdiction; flag their numeric thresholds as non-transferable until a second regime is sourced.")
-    w(f"4. **Fill or formally park the empty slices.** Move the {len(none)} un-started slices into an "
-      "active search queue or an explicit deferred state so they stop reading as silent gaps.")
+    if none:
+        w(f"4. **Fill or formally park the empty slices.** Move the {len(none)} un-started slices into an "
+          "active search queue or an explicit deferred state so they stop reading as silent gaps.")
+    else:
+        w("4. **Keep the corpus free of silent gaps.** No ACTIVE slice is currently un-started or "
+          "evidence-empty; hold that line as new slices are added.")
     w(f"5. **Treat the doubly-concentrated slices as citation-risk.** The {len(heavy)} "
       "≥90%-English-and-≥50%-Anglophone slices are where global-applicability claims are weakest.")
-    w(f"6. **Fix the mis-filed jurisdiction codes.** Move the {n_polluted_inst} {polluted_str} values out "
-      "of `evidence_sources.jurisdiction` and recover the true jurisdiction — a one-off migration.")
+    if n_polluted_codes:
+        w(f"6. **Fix the mis-filed jurisdiction codes.** Move the {n_polluted_inst} {polluted_str} values "
+          "out of `evidence_sources.jurisdiction` and recover the true jurisdiction — a one-off migration.")
     w("")
 
     # 7. Limitations

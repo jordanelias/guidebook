@@ -5,7 +5,7 @@ This audit scores every research slice on the six requested dimensions — (1) a
 
 > **Reproducibility.** Every number here is regenerated from the DB by `tools/evidentiary_audit.py` — nothing is hand-transcribed, and the “data as of” date is the DB’s own `max(updated_at)`, so identical data yields byte-identical output. No grade is stored in the DB; the composite is a *derived* view whose rubric is fully specified in §2, so any reader can recompute it. Companion outputs: `evidentiary-base-audit.json` / `.csv`, and the interactive `tools/evidentiary-audit-dashboard.html` (filter by corpus / category / term).
 
-> **Adversarial review (two passes).** The audit was independently red-teamed twice; all raw counts (volume, tiers, language/jurisdiction distributions, search yield) reproduce exactly through a second code path. Folded in: (i) the **weighted-strength bands** (§8, DR-2026-07-20) — every slice is graded by the strongest band it can anchor at: ● full (T1/Co-1/T2/Co-2/T3-clinical), ◐ partial (T4/T5 standards), ○ weak (T3-grey/T6/grey); a ○ weak-only slice carries the honesty flag in place of the retired binary no-anchor flag (§2, §4); (ii) **DISPUTED sources** (10 instances) stripped of anchoring per the anti-fabrication sweep (§4) — retained in raw totals but counted at no band; (iii) a **convergence discount** (scoped to the ○ weak band) so code-floor-only slices can’t score highly on breadth alone (§2, §6); (iv) full disclosure of the **77 NULL-jurisdiction instances** (§3.5); (v) **true-jurisdiction** breadth scoring that excludes the 0 language codes () mis-filed in the `jurisdiction` column (§3.3).
+> **Adversarial review (two passes).** The audit was independently red-teamed twice; all raw counts (volume, tiers, language/jurisdiction distributions, search yield) reproduce exactly through a second code path. Folded in: (i) the **weighted-strength bands** (§8, DR-2026-07-20) — every slice is graded by the strongest band it can anchor at: ● full (T1/Co-1/T2/Co-2/T3-clinical), ◐ partial (T4/T5 standards), ○ weak (T3-grey/T6/grey); a ○ weak-only slice carries the honesty flag in place of the retired binary no-anchor flag (§2, §4); (ii) **DISPUTED sources** (10 instances) stripped of anchoring per the anti-fabrication sweep (§4) — retained in raw totals but counted at no band; (iii) a **convergence discount** (scoped to the ○ weak band) so code-floor-only slices can’t score highly on breadth alone (§2, §6); (iv) full disclosure of the **77 NULL-jurisdiction instances** (§3.5); (v) **true-jurisdiction** breadth scoring of the jurisdiction column (no language codes are currently mis-filed there).
 
 ## 1. Executive summary
 
@@ -73,14 +73,12 @@ Median linked sources among non-empty slices: **9**. Largest bases: `mental-heal
 | T5 | 155 | ███················· 16% |
 | T6 | 151 | ███················· 16% |
 
-**Strength-band split of instances:** **486/948 (51%)** anchor at ● full (T1/Co-1/T2/Co-2/T3-clinical), 241 (25%) at ◐ partial (T4/T5 standards), and 211 (22%) at ○ weak (T3-grey/T6/grey floor); a further 10 DISPUTED instances anchor at no band (§4). The 0 slices whose *strongest* anchor is ○ weak are the sharpest risk — see the band breakdown in §4.
+**Strength-band split of instances:** **486/948 (51%)** anchor at ● full (T1/Co-1/T2/Co-2/T3-clinical), 241 (25%) at ◐ partial (T4/T5 standards), and 211 (22%) at ○ weak (T3-grey/T6/grey floor); a further 10 DISPUTED instances anchor at no band (§4). No evidenced slice rests on a ○ weak-only base — every slice anchors at ● full or ◐ partial strength (see the band breakdown in §4).
 
 ### (3) Jurisdictions sourced
-Distinct jurisdiction strings across the corpus: **50** — but **0 are language codes mis-filed in the jurisdiction column** ( = 0 instances; a data-integrity defect, see the note below), leaving **~50 true jurisdictions**. Top: INT (197), US (150), UK (99), DE (50), AU (46), CA (33), JP (30), NL (27), NO (26), SE (20).
+Distinct jurisdiction strings across the corpus: **50**, none mis-filed as language codes in the `jurisdiction` column. Top: INT (197), US (150), UK (99), DE (50), AU (46), CA (33), JP (30), NL (27), NO (26), SE (20).
 
 **3 non-empty slices draw on ≤1 jurisdiction** — monojurisdictional bases whose values may not transfer across code regimes. Separately, **77 source-instances carry no jurisdiction at all** (NULL) — mostly clinical/synthesis sources with no single national home; these are excluded from every jurisdiction-share denominator.
-
-> **Data-integrity note (§3.3).** The audit *surfaces rather than propagates* the mis-filed language codes: language codes appearing as `jurisdiction` values are almost certainly the source language leaking into the wrong column. Recommend a data fix moving these to `lang_detected` and recovering the true jurisdiction.
 
 ### (4) Languages sourced
 | Language | Instances |
@@ -215,22 +213,15 @@ Legend: **N** linked sources · **Band** strongest anchoring band (● full / �
 
 ## 5. Evidence-empty slices (0)
 
-These carry **zero** linked source-instances. `bpc_metadata.evidence_state` distinguishes:
-
-**Retracted pending rehabilitation (0)** — prior work cleared, awaiting re-derivation:
-
-**Un-started / placeholder (0)** — `evidence_state` unset, search not run:
-
-Several name high-salience topics where an empty base is a material coverage gap, not bookkeeping.
+Every ACTIVE slice carries at least one linked source-instance — no evidence-empty slices in the current corpus.
 
 ## 6. Findings & recommended remediation
 
 1. **Strengthen the ◐ partial and ○ weak bases toward ● full.** 13 slices anchor only at ◐ partial (T4/T5 standards practice) and none rest on a ○ weak-only base. With only 113 systematic-review/evidence-based-standard instances corpus-wide, the ● full synthesis tier is the thinnest. Prioritise SR/meta-analysis + DPO-standard recovery on the partial/weak slices to lift them to full-strength anchoring, and replace the 10 DISPUTED sources (§4) with verifiable citations.
 2. **Convert non-English search into non-English evidence.** Searches ran in 19 languages but the corpus is ~76% English. Target the languages already searched-with-results but under-linked, and the zero-yield languages (`ar`, `bn`, `hi`, `sw`) explicitly.
 3. **De-risk monojurisdictional slices.** 3 evidenced slices rest on ≤1 jurisdiction; flag their numeric thresholds as non-transferable until a second regime is sourced.
-4. **Fill or formally park the empty slices.** Move the 0 un-started slices into an active search queue or an explicit deferred state so they stop reading as silent gaps.
+4. **Keep the corpus free of silent gaps.** No ACTIVE slice is currently un-started or evidence-empty; hold that line as new slices are added.
 5. **Treat the doubly-concentrated slices as citation-risk.** The 19 ≥90%-English-and-≥50%-Anglophone slices are where global-applicability claims are weakest.
-6. **Fix the mis-filed jurisdiction codes.** Move the 0  values out of `evidence_sources.jurisdiction` and recover the true jurisdiction — a one-off migration.
 
 ## 7. Limitations & what this audit does *not* claim
 
