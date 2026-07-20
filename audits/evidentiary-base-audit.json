@@ -20,7 +20,7 @@
     "5": 147,
     "6": 136
   },
-  "english_instances": 637,
+  "english_instances": 639,
   "zero_yield_search_languages": [
     "AR",
     "BN",
@@ -2139,9 +2139,9 @@
       "n": 10,
       "bp": 3,
       "anchor": 3,
-      "confirmed": 9,
-      "t3_clinical": 6,
-      "code_only": 1,
+      "confirmed": 10,
+      "t3_clinical": 7,
+      "code_only": 0,
       "no_anchor": false,
       "convergence_only": false,
       "basis": null,
@@ -2150,13 +2150,11 @@
         "3": 7
       },
       "etypes": {
-        "clinical": 6,
-        "sr_meta": 3,
-        "grey": 1
+        "clinical": 7,
+        "sr_meta": 3
       },
       "markers": {
-        "●": 9,
-        "○": 1
+        "●": 10
       },
       "n_jur": 8,
       "n_jur_raw": 8,
@@ -2198,10 +2196,10 @@
       "sl_searched": 19,
       "sl_hit": 8,
       "search_jurs": 48,
-      "score": 67.0,
+      "score": 67.8,
       "components": {
         "A": 16,
-        "B": 20.8,
+        "B": 21.6,
         "C": 20,
         "D": 5,
         "E": 5.2
@@ -2293,74 +2291,6 @@
         "C": 20,
         "D": 9,
         "E": 2.3
-      },
-      "grade": "C"
-    },
-    {
-      "slug": "upper-limb-impairment-built-environment",
-      "topic": "population-general",
-      "state": "RETRACTED-PRE-REHAB",
-      "n": 17,
-      "bp": 5,
-      "anchor": 5,
-      "confirmed": 16,
-      "t3_clinical": 11,
-      "code_only": 1,
-      "no_anchor": false,
-      "convergence_only": false,
-      "basis": null,
-      "tiers": {
-        "1": 3,
-        "2": 2,
-        "3": 12
-      },
-      "etypes": {
-        "clinical": 13,
-        "grey": 1,
-        "co1": 1,
-        "sr_meta": 2
-      },
-      "markers": {
-        "●": 16,
-        "○": 1
-      },
-      "n_jur": 3,
-      "n_jur_raw": 3,
-      "n_true_jur": 3,
-      "n_null_jur": 3,
-      "polluted_jur": {},
-      "jurs": {
-        "INT": 7,
-        "US": 6,
-        "CA": 1
-      },
-      "jurs_clean": {
-        "INT": 7,
-        "US": 6,
-        "CA": 1
-      },
-      "n_lang": 2,
-      "langs": {
-        "en": 16,
-        "sv": 1
-      },
-      "n_en": 16,
-      "n_nonen": 1,
-      "pct_en": 94.1,
-      "anglo_core": 7,
-      "supra": 7,
-      "non_anglo": 0,
-      "pct_anglo_core": 50.0,
-      "sl_searched": 19,
-      "sl_hit": 0,
-      "search_jurs": 47,
-      "score": 63.3,
-      "components": {
-        "A": 20,
-        "B": 21.1,
-        "C": 13,
-        "D": 5,
-        "E": 4.2
       },
       "grade": "C"
     },
@@ -2705,69 +2635,69 @@
       "grade": "C"
     },
     {
-      "slug": "ot-built-environment-interface",
-      "topic": "frameworks-and-methodology",
+      "slug": "upper-limb-impairment-built-environment",
+      "topic": "population-general",
       "state": "RETRACTED-PRE-REHAB",
-      "n": 16,
-      "bp": 2,
-      "anchor": 2,
-      "confirmed": 13,
-      "t3_clinical": 11,
-      "code_only": 3,
+      "n": 17,
+      "bp": 5,
+      "anchor": 5,
+      "confirmed": 17,
+      "t3_clinical": 12,
+      "code_only": 0,
       "no_anchor": false,
       "convergence_only": false,
       "basis": null,
       "tiers": {
-        "1": 1,
-        "2": 1,
-        "3": 14
+        "1": 3,
+        "2": 2,
+        "3": 12
       },
       "etypes": {
-        "clinical": 12,
-        "grey": 3,
-        "sr_meta": 1
+        "clinical": 14,
+        "co1": 1,
+        "sr_meta": 2
       },
       "markers": {
-        "●": 13,
-        "○": 3
+        "●": 17
       },
-      "n_jur": 3,
-      "n_jur_raw": 3,
-      "n_true_jur": 3,
-      "n_null_jur": 11,
+      "n_jur": 4,
+      "n_jur_raw": 4,
+      "n_true_jur": 4,
+      "n_null_jur": 3,
       "polluted_jur": {},
       "jurs": {
-        "AU": 2,
-        "UK": 2,
-        "INT": 1
+        "INT": 6,
+        "US": 6,
+        "GB": 1,
+        "CA": 1
       },
       "jurs_clean": {
-        "AU": 2,
-        "UK": 2,
-        "INT": 1
+        "INT": 6,
+        "US": 6,
+        "GB": 1,
+        "CA": 1
       },
-      "n_lang": 2,
+      "n_lang": 1,
       "langs": {
-        "en": 15,
-        "fi": 1
+        "en": 17
       },
-      "n_en": 15,
-      "n_nonen": 1,
-      "pct_en": 93.8,
-      "anglo_core": 4,
-      "supra": 1,
-      "non_anglo": 0,
-      "pct_anglo_core": 80.0,
+      "n_en": 17,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 7,
+      "supra": 6,
+      "non_anglo": 1,
+      "pct_anglo_core": 50.0,
       "sl_searched": 19,
-      "sl_hit": 3,
+      "sl_hit": 0,
       "search_jurs": 47,
-      "score": 58.0,
+      "score": 58.3,
       "components": {
         "A": 20,
-        "B": 18.0,
+        "B": 21.5,
         "C": 13,
-        "D": 5,
-        "E": 2.0
+        "D": 0,
+        "E": 3.8
       },
       "grade": "C"
     },
@@ -3462,6 +3392,72 @@
         "C": 13,
         "D": 0,
         "E": 6.0
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "ot-built-environment-interface",
+      "topic": "frameworks-and-methodology",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 16,
+      "bp": 2,
+      "anchor": 2,
+      "confirmed": 14,
+      "t3_clinical": 12,
+      "code_only": 2,
+      "no_anchor": false,
+      "convergence_only": false,
+      "basis": null,
+      "tiers": {
+        "1": 1,
+        "2": 1,
+        "3": 14
+      },
+      "etypes": {
+        "clinical": 13,
+        "grey": 2,
+        "sr_meta": 1
+      },
+      "markers": {
+        "●": 14,
+        "○": 2
+      },
+      "n_jur": 3,
+      "n_jur_raw": 3,
+      "n_true_jur": 3,
+      "n_null_jur": 11,
+      "polluted_jur": {},
+      "jurs": {
+        "AU": 2,
+        "UK": 2,
+        "INT": 1
+      },
+      "jurs_clean": {
+        "AU": 2,
+        "UK": 2,
+        "INT": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 16
+      },
+      "n_en": 16,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 4,
+      "supra": 1,
+      "non_anglo": 0,
+      "pct_anglo_core": 80.0,
+      "sl_searched": 19,
+      "sl_hit": 3,
+      "search_jurs": 47,
+      "score": 53.0,
+      "components": {
+        "A": 20,
+        "B": 18.5,
+        "C": 13,
+        "D": 0,
+        "E": 1.5
       },
       "grade": "C"
     },

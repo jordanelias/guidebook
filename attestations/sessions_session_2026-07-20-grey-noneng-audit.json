@@ -1,0 +1,32 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-07-20-grey-noneng-audit",
+ "artifact": "sessions/session_2026-07-20-grey-noneng-audit.md",
+ "doctrine_sha": "3fb2882",
+ "rules_in_scope": [
+  "doctrine-check",
+  "evidence-verification-gate",
+  "source-discipline"
+ ],
+ "per_rule_status": {
+  "doctrine-check": {
+   "status": "FIRED",
+   "evidence_path": "governance/tier-system.md",
+   "reason": "All three reclassifications move grey (T3 grey-species) to clinical (T3 clinical-species) within Tier 3 per the §1/§5 T3 split — a source-type correction under existing doctrine, deliberately kept independent of the pending weighted-strength anchor-model decision the owner is still reviewing. REF-00032 was explicitly held at T3 rather than promoted to a T1 results anchor because the source is a study protocol, not a results RCT."
+  },
+  "evidence-verification-gate": {
+   "status": "FIRED",
+   "evidence_path": "scripts/migrations/data_20260720050901_2026-07-20-grey-noneng-audit.sql",
+   "reason": "Each reclassified row was re-verified against an external index via a real tool call before migration: REF-00032 WebSearch (f1000research.com/articles/10-500, confirmed as the OTIS RCT study protocol); REF-00137 WebSearch (ScienceDirect/repositories, Zallio & Clarkson, Building and Environment 206:108352); REF-00875 WebSearch (KCI/DBpia, Lee & Kwon, J. Korean Inst. Interior Design 20(3)). No row was reclassified on stored metadata alone."
+  },
+  "source-discipline": {
+   "status": "FIRED",
+   "evidence_path": "sessions/session_2026-07-20-grey-noneng-audit.md",
+   "reason": "The grey-vs-academic determination was made per source on verified provenance, not convenience: only the 3 confirmed peer-reviewed journal/protocol sources were moved out of grey, and the 9 genuinely grey institutional sources (govt portals, handbooks, trade magazine, campus pages, policy-evaluation reports) were left grey. The exact stored title caught that REF-00032 is a protocol, preventing an over-tier to T1; two English papers mislabeled sv/fi were corrected to en rather than left to pad the non-English count."
+  }
+ },
+ "deviations": [],
+ "bias_direction": "Reclassifying sources out of grey can look like laundering weak material into stronger tiers, and correcting language tags can be abused to inflate or deflate the non-English count either way. Bounded by verifying each against an external index, moving only demonstrable journal/protocol publications, holding a study protocol at T3 rather than promoting it to a results anchor, and correcting language strictly to the true source language (two English papers relabeled en, reducing the non-English count honestly rather than padding it).",
+ "independent_reviewer_counterclaim": "A reviewer could argue that a peer-reviewed study protocol is closer to grey than to clinical primary research and should not have left the grey bucket at all. Response: it is a peer-reviewed, DOI-bearing publication, which is categorically not grey literature; its lower standalone evidentiary weight (methodology, not outcomes) is recorded in the verification note and reflected by keeping it at T3 rather than elevating it, so the correction states its status honestly without overclaiming.",
+ "verdict": "CLEAN"
+}
