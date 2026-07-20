@@ -5,6 +5,26 @@
 **SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
 (See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
 
+> **RE-DERIVATION FIRST PASS — 2026-07-20** (`session_2026-07-20-bathroom-typology-global-south-rederivation`, WS2 of
+> `workplan/evidentiary-base-research-plan-2026-07-19.md`). The retracted synthesis below is **not** yet rewritten — it
+> remains retracted. What changed: the slice's live evidence base has been re-derived from zero (`source_slug_links`
+> 0 → 8, `bpc_metadata.evidence_state` RETRACTED-PRE-REHAB → **PARTIAL**), each source re-retrieved via a real tool call
+> and passed through an adversarial refutation pass. New verified base (`data/guidebook.db`, DB is source of truth):
+> - **REF-00877** (BTG-1, T2 SR/meta-analysis, INT) — Sprouse et al. 2024, shared-sanitation SR — *Cluster 4*.
+>   Supersedes the retracted synthesis's garbled "ScienceDirect 2025, 93 studies, 22 countries" citation.
+> - **REF-00878** (BTG-2, T3, ID) — Daniel et al. 2023, inclusive-sanitation access for PWDs, Indonesia — *Cluster 2*.
+> - **REF-00879** (BTG-3, T3, ID) — Sokhibi et al. 2025, universal-design accessible toilet + Javanese culture — *Cluster 2*.
+> - **REF-00880** (BTG-4, T4, INT) — WHO/UNICEF JMP 2023 (3.5bn without safely managed sanitation) — *Cluster 4 context*.
+> - **REF-00881** (BTG-5, Co-1 grey, ID) — the Sejong / Setengah Jongkok semi-squat toilet — *Cluster 2 exemplar*.
+> - **REF-00077 / REF-00770 / REF-00065** (BTG-6/7/8, deduped existing standards, BR/ID/JP) — NBR 9050:2020,
+>   Permen PUPR 14/PRT/M/2017, MLIT 建築設計標準 — *Clusters 1/2/3*.
+>
+> Audit movement: grade **F (rank 73, 0.0) → B (rank 24, 68.3)**. The "Solano LAC review" named in the retracted
+> synthesis did NOT re-retrieve and was **dropped** (anti-fabrication gate). `best_practice_synthesis` remains
+> **BLOCKED** pending an Opus-class rewrite (per the skill's capability floor — this was a Sonnet search pass).
+> `search_complete=0`: no Co-1 field pass beyond the Sejong exemplar; squat-toilet dimensional specification remains
+> a genuine open gap. See `references/search-log/bathrooms-and-wet-areas/bathroom-typology-global-south.md`.
+
 **GAP:** GAP-LRP-04 (P1)
 **Phase:** 1-D (Session 1)
 **Last updated:** 2026-04-07 00:33

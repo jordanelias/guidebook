@@ -1,0 +1,32 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-07-20-bathroom-typology-global-south-rederivation",
+ "artifact": "sessions/session_2026-07-20-bathroom-typology-global-south-rederivation.md",
+ "doctrine_sha": "3fb2882",
+ "rules_in_scope": [
+  "doctrine-check",
+  "evidence-verification-gate",
+  "source-discipline"
+ ],
+ "per_rule_status": {
+  "doctrine-check": {
+   "status": "FIRED",
+   "evidence_path": "governance/tier-system.md",
+   "reason": "Tiered every source strictly by governance/tier-system.md: Sprouse 2024 placed at T2 as an sr_meta (§2 t2>t3), the two Indonesian primary studies at T3, the JMP monitoring report at T4 per the WHO/UNICEF-guidance convention (cf. REF-00125/00187/00215), and the three national accessibility codes (NBR 9050, Permen PUPR 14/2017, MLIT 建築設計標準) at T6 code-floor. Applied §3 explicitly: the T6 codes and the T4 JMP report are recorded as code-baseline / scope citations that do NOT anchor a best-practice claim, and the squat-toilet specification gap was left open rather than resolved by code-convergence."
+  },
+  "evidence-verification-gate": {
+   "status": "FIRED",
+   "evidence_path": "scripts/migrations/data_20260720051528_2026-07-20-bathroom-typology-global-south-rederivation.sql",
+   "reason": "Every ingested source re-retrieved via a real tool call before ingestion: Sprouse 2024 (PubMed get_article_metadata PMID 38788338) and Daniel 2023 (PMID 36922602) confirmed field-by-field against PubMed; Sokhibi 2025 confirmed via WebFetch of the ETASR DOI record (10.48084/etasr.12975); JMP 2023 and the Sejong toilet confirmed via WebSearch cross-read. No row was ingested on stored or remembered metadata alone. The two national standards already in the corpus (NBR 9050 REF-00077, Permen PUPR REF-00770) and the Japanese MLIT standard (REF-00065) were linked, not re-ingested, so no duplicate DOIs/standard-numbers were created (verified post-migration)."
+  },
+  "source-discipline": {
+   "status": "FIRED",
+   "evidence_path": "scripts/migrations/data_20260720051847_2026-07-20-bathroom-typology-global-south-rederivation.sql",
+   "reason": "The anti-fabrication gate fired on unconfirmable leads carried by the retracted synthesis: the 'Solano LAC review' did not re-retrieve under any search and was dropped, and the synthesis's 'ScienceDirect 2025, 93 studies, 22 countries' SR figure matched no real record and was replaced by the genuine Sprouse 2024 (167 publications). A fresh-context adversarial refuter then re-retrieved all 8 sources and forced two forward-only field corrections (Sejong pub_year 2022->2020; NBR 9050 rim note 43-46cm->43-45cm) via the compensating migration named here; the MLIT 多機能トイレ PDF, unparseable this session, was held as a lead rather than ingested."
+  }
+ },
+ "deviations": [],
+ "bias_direction": "The pull on a retracted-slice re-derivation is completion bias: reinstating the prior synthesis's rich named-source list wholesale to move the grade fastest, which would silently re-import whatever fabricated or drifted citations caused the retraction. Bounded by treating every prior lead as guilty until a live tool call proved it, dropping the two that failed (Solano review; the phantom 93-study SR), and letting the slice land at PARTIAL with best_practice_synthesis still BLOCKED rather than papering the squat-specification gap.",
+ "independent_reviewer_counterclaim": "A reviewer could argue the shared-sanitation SR (Sprouse 2024) is overstated as a Cluster-4 anchor because disability is a sub-theme, not its focus, so tagging it T2 inflates the slice's best-practice depth. Response: it is cited for its shared-sanitation user-preference synthesis (privacy, lighting, safety) that genuinely informs the communal-facility cluster, and the relevance note explicitly records that disability is a named vulnerability rather than the review's primary subject, so the anchor is scoped, not inflated.",
+ "verdict": "CLEAN"
+}
