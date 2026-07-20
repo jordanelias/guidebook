@@ -11,7 +11,7 @@ This audit scores every research slice on the six requested dimensions — (1) a
 
 - **917 source-instances** are linked across **76 of 82 slices**; **6 slices carry zero linked evidence**.
 - **Grade distribution:** A=7 · B=19 · C=23 · D=17 · E=10 · F=6  (A≥80, B≥65, C≥50, D≥35, E>0, F=empty).
-- **Tier profile is code-and-clinical heavy, synthesis-light.** Of linked instances: T1=135, T2=127, T3=264, T4=86, T5=154, T6=151. Only **127 Tier-2 (systematic-review / evidence-based-standard) instances** exist across the whole corpus — the synthesis tier that best anchors best-practice claims is the thinnest.
+- **Tier profile is code-and-clinical heavy, synthesis-light.** Of linked instances: T1=135, T2=127, T3=266, T4=86, T5=154, T6=149. Only **127 Tier-2 (systematic-review / evidence-based-standard) instances** exist across the whole corpus — the synthesis tier that best anchors best-practice claims is the thinnest.
 - **Best-practice anchoring is thin.** Only **262/917 (29%)** of instances can *anchor* a best-practice claim (T1/Co-1/T2/Co-2, §3); a further 234 are confirmed-but-supporting T3-clinical (● §5). **18 slices have no anchor at all** (12 code-floor, 6 T3-clinical-only).
 - **Anglophone concentration is the dominant quality risk.** **685/917 (75%) of linked sources are English-language**; only 232 are non-English. By jurisdiction, 328 instances are native-Anglophone (US/UK/AU/CA/NZ/IE), 206 supranational (INT/EU/ISO), 307 other, 76 unrecorded.
 - **Search breadth ≠ evidentiary yield.** Slices were searched across **19 languages** and ~48 jurisdictions, but 4 searched languages (`ar`, `bn`, `hi`, `sw`) returned **zero** usable sources in **every** slice. The bias lives in what converted to evidence, not in search effort.
@@ -72,10 +72,10 @@ Median linked sources among non-empty slices: **9**. Largest bases: `mental-heal
 |---|---|---|
 | T1 | 135 | ███················· 15% |
 | T2 | 127 | ███················· 14% |
-| T3 | 264 | ██████·············· 29% |
+| T3 | 266 | ██████·············· 29% |
 | T4 | 86 | ██·················· 9% |
 | T5 | 154 | ███················· 17% |
-| T6 | 151 | ███················· 16% |
+| T6 | 149 | ███················· 16% |
 
 **Best-practice-anchor share: 262/917 (29%)** (T1/Co-1/T2/Co-2, §3). Adding confirmed-but-supporting T3-clinical brings *confirmed* evidence to 496/917 (54%). The remaining 421 are T4–T6 code/standards + T3-grey that carry no confirmed evidence. Slices with zero anchors are the sharpest risk — see the no-anchor list in §4.
 
@@ -142,7 +142,7 @@ Legend: **N** linked sources · **BP** best-practice-anchor count (T1/Co-1/T2/Co
 | 7 | **A** | 81.4 | `sensory-room-user-control` | sensory-environment | 14 | 6 | 13 | T2×6,T3×7,T6×1 | 9 | 4 | 71.4 | 38.5 | 20·22.6·20·12·6.8 |
 | 8 | **B** | 79.9 | `accessible-bathroom-and-grab-bar` | bathrooms-and-wet-areas | 23 | 11 | 13 | T1×7,T2×4,T3×3,T4×1,T5×4,T6×4 | 13 | 7 | 73.9 | 65.0 | 20·20.3·20·15·4.6 |
 | 9 | **B** | 79.5 | `deaf-classroom-reverberation-time` | communication-and-alerts | 12 | 2 | 2 | T1×2,T4×1,T5×6,T6×3 | 9 | 9 | 25.0 | 25.0 | 20·13.3·20·15·11.2 |
-| 10 | **B** | 79.2 | `construction-cost-data` | economics | 12 | 6 | 10 | T1×2,T2×4,T3×4,T6×2 | 8 | 3 | 58.3 | 41.7 | 20·22.7·20·9·7.5 |
+| 10 | **B** | 79.2 | `construction-cost-data` | economics | 12 | 6 | 10 | T1×2,T2×4,T3×5,T6×1 | 8 | 3 | 58.3 | 41.7 | 20·22.7·20·9·7.5 |
 | 11 | **B** | 79.0 | `mental-health-built-environment` | population-general | 37 | 7 | 29 | T1×3,T2×4,T3×27,T4×1,T5×2 | 11 | 5 | 59.5 | 27.0 | 20·18.5·20·12·8.5 |
 | 12 | **B** | 79.0 | `stair-ramp-threshold-biomechanics-accessibility` | entrances-and-circulation | 27 | 1 | 14 | T2×1,T3×14,T4×1,T5×1,T6×10 | 15 | 12 | 59.3 | 14.8 | 20·14.6·20·15·9.4 |
 | 13 | **B** | 77.3 | `wayfinding-global-south` | wayfinding-and-signage | 15 | 1 | 1 | T1×1,T4×4,T6×10 | 13 | 7 | 53.3 | 0.0 | 20·11.3·20·15·11.0 |
@@ -154,7 +154,7 @@ Legend: **N** linked sources · **BP** best-practice-anchor count (T1/Co-1/T2/Co
 | 19 | **B** | 74.8 | `accessible-circulation-geometry` | entrances-and-circulation | 14 | 2 | 3 | T1×1,T2×1,T3×1,T4×1,T5×3,T6×7 | 9 | 6 | 64.3 | 50.0 | 20·13.4·20·15·6.4 |
 | 20 | **B** | 74.3 | `deafblind-built-environment-design` | population-general | 9 | 7 | 7 | T1×3,T2×4,T3×1,T6×1 | 5 | 3 | 66.7 | 44.4 | 16·25.6·17·9·6.7 |
 | 21 | **B** | 73.5 | `sensory-space-global-south` | sensory-environment | 15 | 7 | 11 | T1×5,T2×2,T3×6,T5×1,T6×1 | 7 | 2 | 60.0 | 7.1 | 20·21.5·17·5·10.0 |
-| 22 | **B** | 72.7 | `accessible-design-economics-cost-premium` | economics | 14 | 3 | 9 | T1×1,T2×2,T3×9,T6×2 | 7 | 3 | 57.1 | 23.1 | 20·17.7·17·9·9.0 |
+| 22 | **B** | 72.7 | `accessible-design-economics-cost-premium` | economics | 14 | 3 | 9 | T1×1,T2×2,T3×10,T6×1 | 7 | 3 | 57.1 | 23.1 | 20·17.7·17·9·9.0 |
 | 23 | **B** | 70.9 | `dementia-built-environment` | population-general | 8 | 1 | 5 | T1×1,T3×4,T5×3 | 5 | 4 | 62.5 | 12.5 | 16·16.5·17·12·9.4 |
 | 24 | **B** | 70.3 | `pain-ofs-built-environment-design` | health-and-symptom-management | 12 | 6 | 6 | T1×2,T2×4,T3×2,T5×3,T6×1 | 6 | 3 | 83.3 | 60.0 | 20·20.0·17·9·4.3 |
 | 25 | **B** | 68.3 | `bathroom-typology-global-south` | bathrooms-and-wet-areas | 8 | 2 | 4 | T1×1,T2×1,T3×2,T4×1,T6×3 | 4 | 4 | 62.5 | 0.0 | 16·17.0·13·12·10.3 |

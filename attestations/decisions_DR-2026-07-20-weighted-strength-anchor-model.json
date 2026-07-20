@@ -1,0 +1,20 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-07-20-tier-model-enshrinement",
+ "artifact": "decisions/DR-2026-07-20-weighted-strength-anchor-model.md",
+ "doctrine_sha": "3fb2882",
+ "rules_in_scope": [
+  "doctrine-check"
+ ],
+ "per_rule_status": {
+  "doctrine-check": {
+   "status": "FIRED",
+   "evidence_path": "governance/tier-system.md",
+   "reason": "This decision record enshrines the owner directive of 2026-07-20 (weighted-strength anchoring; distrust of architect authority on functional need), approved 2026-07-20. It amends governance/tier-system.md in lock-step (§8 weighted-strength model superseding §3's binary rule; §9 review-species closing GAP-298; §10 practitioner practice-stream closing GAP-299), matching the 2026-05-25 precedent where a tier decision was recorded as both a DR-equivalent and a tier-system.md amendment."
+  }
+ },
+ "deviations": [],
+ "bias_direction": "A decision record authored by the same agent that proposed the model can launder the agent's own framing into doctrine as if it were the owner's. Bounded by grounding each clause in the owner's verbatim directives (quoted in the DR header), by carrying the recommendations forward exactly as the owner approved them ('approve my decisions'), and by leaving the consequential audit rework and bulk corrections as explicitly-deferred follow-ups rather than sweeping them in under the approval.",
+ "independent_reviewer_counterclaim": "A reviewer could argue that closing GAP-299 with an encoding whose audit representation is deferred is closing a gap without implementing it. Response: the gap was a DECISION gap (tier placement of practitioner work), which is now decided doctrinally and applied to its first row (REF-00300); the audit-encoding is a separate engineering follow-up tracked in §5 of the DR, not part of the decision the gap asked for.",
+ "verdict": "CLEAN"
+}

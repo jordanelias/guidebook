@@ -1,7 +1,7 @@
 # Tier system — canonical definition
 
-**Status:** OPERATIVE — 2026-05-25
-**Source decision:** Owner directive 2026-05-25 ("t2>t3 this is enshrined") closing GAP-273 and resolving GAP-296.
+**Status:** OPERATIVE — 2026-05-25; amended 2026-07-20 (§8–§10 added; §3 binary rule superseded).
+**Source decision:** Owner directive 2026-05-25 ("t2>t3 this is enshrined") closing GAP-273 and resolving GAP-296; owner directive 2026-07-20 (weighted-strength anchoring) enshrined by `decisions/DR-2026-07-20-weighted-strength-anchor-model.md`, closing GAP-298 and GAP-299.
 **Supersedes:** drift between PI v10.14 line 138 implicit usage and `skills/guidebook-auditor_SKILL.md` §4.1 explicit ladder.
 
 ---
@@ -42,7 +42,9 @@ A separate canonical clarification, surfaced 2026-05-25 during reverification sc
 
 **The corridor-width worked example.** Multiple Tier 5/6 codes converge on 1800mm two-wheelchair-passing. Co-1/T2/T3 evidence (DSDG Bauman 2010, DeafScape Vaughn 2018, Cloete & Rout 2025) anchors 2440mm primary corridors. The 1800mm convergence describes the regulatory floor; the 2440mm Co-1/T2/T3 anchor describes best practice. Labelling 1800mm "preferred" or "best practice" because it converges across T5/T6 jurisdictions is the failure mode this section names.
 
-**The implication for citation tiering.** Tier 4–6 citations are valid for code-baseline claims (this is the legal floor in jurisdiction X) and for jurisdiction-tracking work, but they do not — by themselves — anchor best-practice claims. Best-practice claims require T1, Co-1, T2, or Co-2 evidence appropriate to the claim type.
+**The implication for citation tiering.** Tier 4–6 citations are valid for code-baseline claims (this is the legal floor in jurisdiction X) and for jurisdiction-tracking work.
+
+> **⚠ Superseded 2026-07-20 by §8.** The original text here read *"they do not — by themselves — anchor best-practice claims. Best-practice claims require T1, Co-1, T2, or Co-2 evidence."* That binary is replaced by the **weighted-strength anchor model** (§8): a T4–T6-only claim *may* be stated, but is rendered at partial/weak strength with an explicit honesty flag. The convergence-not-evidence principle above is retained as the honesty rule for the weak band.
 
 ## 4. Code-currency check is part of citing T4–T6
 
@@ -81,3 +83,32 @@ The previous guidebook-auditor SKILL §4.1 had `[Tier 4]` = systematic review / 
 | Gap closure | GAP-273 (CLOSED-FIXED), GAP-296 (CLOSED-FIXED) |
 | Skill amendment | `skills/guidebook-auditor_SKILL.md` §4.1 |
 | Session | `session_2026-05-23-bpc-rewrite-phase-b-closure` |
+
+## 8. Weighted-strength anchor model (2026-07-20)
+
+Enshrined by `decisions/DR-2026-07-20-weighted-strength-anchor-model.md` per owner directive. **Supersedes the binary rule in §3** ("best-practice claims require T1/Co-1/T2/Co-2").
+
+**Every tier can anchor a best-practice claim; the strength of the claim is weighted by the tier of its evidence.** The tiers exist so a reader can grade the confidence behind each proposal — not to gate whether a proposal may be stated. Three strength bands (the `●◐○` markers of §5, now with anchoring semantics):
+
+| Band | Tiers | Anchoring behaviour |
+|---|---|---|
+| **● Full** | T1, Co-1, T2, Co-2, T3-clinical | Anchors outright (adjudicated evidence). |
+| **◐ Partial** | T4, T5 | Anchors, rendered as *current standards practice* — flagged "standards basis, not primary evidence." |
+| **○ Weak** | T3-grey, T6 (code-floor), expert-consensus / thin base | Anchors only a floor/convergence claim, rendered with the flag: *"best available given current regulation/practice, NOT academically adjudicated."* |
+
+Convergence-not-evidence (§3) is retained as the honesty rule within the weak band: T4–T6-only convergence is stated as regulatory floor at weak strength, never relabelled "best practice." The only change: such a claim is *stated and flagged*, not suppressed, when no stronger evidence exists.
+
+## 9. Review-species tiering (closes GAP-298)
+
+- **Systematic reviews / meta-analyses → T2** (`sr_meta`) — unchanged (§2).
+- **Scoping reviews and narrative / literature reviews → T3** (`clinical`/`grey`, never `sr_meta`): they map breadth without graded critical-appraisal synthesis, so they are *supporting* (● band) but not a T2 synthesis anchor.
+- **Rapid reviews → case-by-case:** T2 only if a systematic search + appraisal was retained; else T3 (default).
+
+## 10. Practitioner / firm practice-stream (closes GAP-299)
+
+Practitioner and firm design work (architects, accessibility consultants) is placed **by method, not authorship**, and sits **below Co-1 and Co-2 in authority**:
+- Firm POE / measured study (outcome or cost data) → primary evidence at its method tier (T1/T3).
+- Firm framework/index that genuinely synthesises evidence → T2-adjacent; else supporting (T3).
+- Firm guidance/white-paper without method → T3-grey (○ weak).
+
+**Role-appropriate-authority gate.** A firm/architect source can anchor a *descriptive/measured* claim (what was built, cost, measured) at its method strength, but **cannot anchor a functional-need claim** ("disabled people need X / X works because Y") on its own — that requires **Co-1** (lived experience) or **Co-2** (OT). A firm asserting a functional-need claim alone is flagged *"designer assertion, unadjudicated."* A dedicated `practice` (Co-3) encoding is defined in the DR; its audit representation is deferred to the audit rework.

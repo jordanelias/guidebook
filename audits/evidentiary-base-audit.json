@@ -15,10 +15,10 @@
   "tier_totals": {
     "1": 135,
     "2": 127,
-    "3": 264,
+    "3": 266,
     "4": 86,
     "5": 154,
-    "6": 151
+    "6": 149
   },
   "english_instances": 685,
   "zero_yield_search_languages": [
@@ -919,13 +919,14 @@
       "tiers": {
         "1": 2,
         "2": 4,
-        "3": 4,
-        "6": 2
+        "3": 5,
+        "6": 1
       },
       "etypes": {
-        "code": 2,
+        "grey": 1,
         "standard_eb": 4,
-        "clinical": 6
+        "clinical": 6,
+        "code": 1
       },
       "markers": {
         "●": 10,
@@ -1996,14 +1997,14 @@
       "tiers": {
         "1": 1,
         "2": 2,
-        "3": 9,
-        "6": 2
+        "3": 10,
+        "6": 1
       },
       "etypes": {
         "clinical": 7,
         "standard_eb": 2,
-        "code": 2,
-        "grey": 3
+        "grey": 4,
+        "code": 1
       },
       "markers": {
         "●": 9,
