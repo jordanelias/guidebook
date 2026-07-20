@@ -758,6 +758,17 @@ def main():
     p_as.add_argument("--lang-detection-method",
                       help="How --lang-detected was determined, e.g. 'native_title_verified', "
                            "'journal_family_inference', 'citing_document_language'")
+    p_as.add_argument("--metadata-quality",
+                      choices=["COMPLETE", "PMID-ONLY", "GREY", "AUTHOR-TITLE-ONLY"],
+                      help="REQUIRED in practice, not just schema — see adversarial-research skill. "
+                           "COMPLETE if DOI/full metadata confirmed via CrossRef/PubMed/Semantic Scholar; "
+                           "AUTHOR-TITLE-ONLY if only single-source (citing-document) attestation.")
+    p_as.add_argument("--verification-status",
+                      choices=["VERIFIED", "VERIFIED-2", "UNVERIFIED-1"],
+                      help="REQUIRED in practice. VERIFIED requires an independent connector/registry hit "
+                           "(CrossRef, PubMed, Semantic Scholar, a second citing source). A source found only "
+                           "in one citing document's bibliography, with no independent hit, is UNVERIFIED-1, "
+                           "not VERIFIED — do not upgrade it because the citing document looks authoritative.")
     p_as.add_argument("--slug", help="Link to slug (requires --local-ref-id)")
     p_as.add_argument("--local-ref-id", help="Local ref ID within slug")
     p_as.add_argument("--session", required=True)
@@ -1093,6 +1104,10 @@ def main():
             data["lang_detected"] = args.lang_detected
         if args.lang_detection_method:
             data["lang_detection_method"] = args.lang_detection_method
+        if args.metadata_quality:
+            data["metadata_quality"] = args.metadata_quality
+        if args.verification_status:
+            data["verification_status"] = args.verification_status
         ref_id = insert_evidence_source(data, session=args.session, dry_run=args.dry_run)
         if args.slug and args.local_ref_id:
             insert_source_slug_link(ref_id, args.slug, args.local_ref_id,
