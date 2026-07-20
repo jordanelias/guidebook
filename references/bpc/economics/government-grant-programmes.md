@@ -1,5 +1,12 @@
 # Government Grant Programmes — Housing Adaptation/Accessibility
 
+> **DB RECONCILIATION — 2026-07-20** (`session_2026-07-20-ws2-remainder-merged-hygiene-and-content-reconciliation`,
+> WS2). Had **0 `source_slug_links`** despite the cited grant-economics evidence below. Reconciled: linked the
+> PubMed-verified cost-effectiveness anchors underpinning the grant-programme claims — Keall HAPPI RCT (REF-00068,
+> NZ 9:1 BCR), CAPABLE Medicaid savings (REF-00900, Szanton 2017) + CAPABLE pilot (REF-00886), Clemson 2023 Cochrane
+> SR (REF-00901). `evidence_state` → **PARTIAL**, audit **F → D**. Japan (Tsuchiya-Ito) and Sweden (Fänge & Iwarsson)
+> grant-programme sources are in the documented backlog (see `economics-sources.md`), not yet ingested.
+
 
 
 ## International Housing Adaptation Grant Programmes (added 2026-05-03)
