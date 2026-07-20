@@ -5,6 +5,15 @@
 **SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
 (See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
 
+> **RE-DERIVATION FIRST PASS — 2026-07-20** (`session_2026-07-20-retracted-slice-rederivation-batch`, WS2). Synthesis
+> stays retracted (Opus rewrite BLOCKED). `source_slug_links` 0 → 14, `evidence_state` → **PARTIAL**. As a reference
+> *matrix of statutory codes*, this slice was re-derived purely by re-linking the verified corpus standards it
+> tabulates — ISO 21542:2021 (REF-00361), EN 17210:2021 (REF-00121), ICC/ANSI A117.1-2017 (REF-00447), NCC 2022
+> (REF-00146), TEK17 (REF-00145), MoHUA 2021 (REF-00509), CRPD + GC2 + GC5 (REF-00155/156/157), SIA 500 (REF-00457),
+> BFS 2024:12 (REF-00067), Singapore BCA 2025 (REF-00074), NBR 9050 (REF-00077), Japan MLIT standard (REF-00065).
+> Audit: F → **D‡** — the ‡ correctly marks this as **code-floor/convergence-only** (T4×4, T6×10, no best-practice
+> anchor), which is the honest character of a jurisdiction matrix per governance/tier-system.md §3, not a defect to fix.
+
 **Consensus finding:** Mandatory residential accessibility requirements exist in Australia (NCC 2022, Class 1a+2), India (MoHUA 2021/RPwD 2023), Norway (TEK17), and Sweden (BBR). UK, Canada, and USA rely on voluntary/sector-adopted standards. Major gap: individual residential unit accessibility is not mandated in Brazil (NBR 9050 covers common areas only).
 **Key facts by jurisdiction:**
   - ISO 21542:2021 (Ed. 2): wheelchair dims 800×1300 mm; 1524 mm turning — gap with ANSI A117.1-2017 (1702 mm for powered chairs)
