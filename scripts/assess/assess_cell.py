@@ -6,7 +6,7 @@ Implements the pure determination function of workplan/best-practices-assessment
 §3 for the pilot cells in working/pilot/PILOT-MANIFEST.md §3, under the doctrine of
 governance/evidence-architecture.md (PROPOSED) with the G1/G2/G3/G6 fixes active
 ADDITIVELY — no existing schema function is modified; every deviation from the
-schemas/directness.py defaults is engine-side and tagged rule_version="pilot-1",
+schemas/directness.py defaults is engine-side and tagged rule_version="pilot-2",
 so no PROPOSED doctrine changes live behavior before owner ratification.
 
 Determinism: same evidence + same rule_version ⇒ same state + same derivation_sha.

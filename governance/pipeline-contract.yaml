@@ -89,10 +89,14 @@ stages:
         kind: integrity
         criterion: "Determinations record derivation_paths (dual/population_only/function_only); a single-path assertion carries a named-path rationale; advisory CONTRADICTS/UNLINKED checks force `provisional` (never `stated`) until resolved."
         references: "DR-2026-07-13-value-genealogy-and-derivation-handshake (A6) H2/H4"
-        check: scripts/assess/assess_cell.py
+        # assess_cell.py computes derivation_sha (an identity hash) only; it does NOT
+        # implement the derivation_paths handshake (dual/population_only/function_only,
+        # CONTRADICTS/UNLINKED advisories). That layer is unbuilt A6 execution work, so
+        # this criterion is honestly DECLARED-BUT-UNENFORCED, not phantom-VERIFIABLE.
+        check: null
       - id: convergence-independence
         kind: completeness
-        criterion: "Convergence counts INDEPENDENT evidence axes (and, once genealogy lands, independent roots excluding committee_assertion), never document/citation count. Root-count layer is proposed/unbuilt (source_value_extractions=0)."
+        criterion: "Convergence counts INDEPENDENT evidence axes (and, once genealogy lands, independent roots excluding committee_assertion), never document/citation count. Root-count layer is unbuilt (source_value_extractions is pilot-only — 8 rows on a single slug as of 2026-07-20; no general extraction pass)."
         references: "evidence-methodology.md §3; DR-2026-07-13 H1 (v_value_independence)"
         check: null
 
