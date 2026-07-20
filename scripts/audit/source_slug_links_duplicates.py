@@ -56,7 +56,8 @@ def audit(db_path, slug_filter=None, output_json=False):
     for ds in dup_sets:
         members = con.execute("""
             SELECT ssl.ref_id, ssl.local_ref_id, ssl.created_at, ssl.created_by_session,
-                   es.tier, es.verification_status, es.authors, es.year, es.title, es.doi
+                   es.tier, es.verification_status,
+                   es.author_display AS authors, es.pub_year AS year, es.pub_title AS title, es.doi
             FROM source_slug_links ssl
             LEFT JOIN evidence_sources es ON ssl.ref_id = es.ref_id
             WHERE ssl.slug = ? AND ssl.local_ref_id = ?
