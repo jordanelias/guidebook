@@ -8,10 +8,10 @@ A-06,A,Acoustics,Fabric Wall Panels (NRC ≥0.70) at Acoustic Reflection Points,
 A-07,A,Acoustics,Flutter Echo Elimination (Parallel Hard Surface Avoidance),room-acoustic-performance,ok,A,82.2,32,18,20,13,8,78.1,50.0
 A-08,A,Acoustics,HVAC Noise Control (NC-25 Maximum in Sensitive Spaces),room-acoustic-performance,ok,A,82.2,32,18,20,13,8,78.1,50.0
 A-09,A,Acoustics,HVAC Vibration Isolation (Floating Plant Room),room-acoustic-performance,ok,A,82.2,32,18,20,13,8,78.1,50.0
-A-10,A,Acoustics,Counter Hearing Loop (Induction Loop at Reception/Service Counter),assistive-listening-systems,ok,B,74.4,8,4,4,7,5,50.0,25.0
+A-10,A,Acoustics,Counter Hearing Loop (Induction Loop at Reception/Service Counter),assistive-listening-systems,ok,B,76.2,8,4,4,5,5,50.0,0.0
 A-10b,A,Acoustics,RT60 for Hydrotherapy and Pool Environments,room-acoustic-performance,ok,A,82.2,32,18,20,13,8,78.1,50.0
-A-11,A,Acoustics,Room Perimeter Hearing Loop (Assembly and Meeting Spaces),assistive-listening-systems,ok,B,74.4,8,4,4,7,5,50.0,25.0
-A-12,A,Acoustics,Auracast Infrastructure Readiness,assistive-listening-systems,ok,B,74.4,8,4,4,7,5,50.0,25.0
+A-11,A,Acoustics,Room Perimeter Hearing Loop (Assembly and Meeting Spaces),assistive-listening-systems,ok,B,76.2,8,4,4,5,5,50.0,0.0
+A-12,A,Acoustics,Auracast Infrastructure Readiness,assistive-listening-systems,ok,B,76.2,8,4,4,5,5,50.0,0.0
 A-13,A,Acoustics,No Sound Masking in Neurological Population Environments,,no-source,—,,,,,,,,
 A-14,A,Acoustics,Double-Leaf Partition (STC ≥50) for Sensitive Adjacencies,room-acoustic-performance,ok,A,82.2,32,18,20,13,8,78.1,50.0
 A-15,A,Acoustics,Acoustic Differentiation Between Spaces (Navigation Aid for VIS),,no-source,—,,,,,,,,
@@ -30,23 +30,23 @@ B-09,B,Lighting,"Maximisation of Natural Light (Clerestory, Light Wells, Rooflig
 B-10,B,Lighting,Visual Fire Alarm (Strobe VAD Throughout Building),visual-fire-alarm-seizure-safety,ok,D,45.6,7,1,4,3,1,100.0,42.9
 B-11,B,Lighting,Warm Colour Temperature for Evening (≤2700 K After 19:00),circadian-lighting-melanopic-edi,ok,C,61.6,12,2,7,4,2,91.7,16.7
 B-12,B,Lighting,Sensor-Activated Overnight Pathway Lighting,visual-alerting-and-wayfinding-light,code-floor,D,36.1,7,0,0,7,5,42.9,28.6
-C-01,C,Colour and Contrast,"Colour Palette (Muted, Low-Chroma, Non-Institutional)",wayfinding-dementia-spatial-design,ok,A,83.9,35,15,25,19,13,60.0,33.3
-C-02,C,Colour and Contrast,Colour-Coded Wayfinding Zones (Distinct Warm Colour Per Wing/Zone),wayfinding-dementia-spatial-design,ok,A,83.9,35,15,25,19,13,60.0,33.3
+C-01,C,Colour and Contrast,"Colour Palette (Muted, Low-Chroma, Non-Institutional)",wayfinding-dementia-spatial-design,ok,A,83.7,35,15,25,19,13,60.0,36.4
+C-02,C,Colour and Contrast,Colour-Coded Wayfinding Zones (Distinct Warm Colour Per Wing/Zone),wayfinding-dementia-spatial-design,ok,A,83.7,35,15,25,19,13,60.0,36.4
 C-03,C,Colour and Contrast,Pattern Avoidance (Plain Flooring and Walls in Sensitive Environments),luminance-contrast-lrv-evidence-base,ok,D,42.4,7,1,5,4,1,100.0,100.0
 C-04,C,Colour and Contrast,LRV Contrast (≥30 at All Critical Junctions),luminance-contrast-lrv-evidence-base,ok,D,42.4,7,1,5,4,1,100.0,100.0
 C-05,C,Colour and Contrast,Low LRV Differential at Adjacent Floor Materials (DEM Inverse Contrast Rule),luminance-contrast-lrv-evidence-base,ok,D,42.4,7,1,5,4,1,100.0,100.0
 C-06,C,Colour and Contrast,"Plain, Low-Contrast Flooring Throughout (No Geometric Patterns)",luminance-contrast-lrv-evidence-base,ok,D,42.4,7,1,5,4,1,100.0,100.0
-D-01,D,Wayfinding and Cognition,Loop Floor Plan (No Dead-End Corridors in DEM Environments),wayfinding-dementia-spatial-design,ok,A,83.9,35,15,25,19,13,60.0,33.3
-D-02,D,Wayfinding and Cognition,Cognitive Simplicity (Single Primary Route from Entry to Destination),cognitive-wayfinding-design,ok,A,83.7,25,7,17,13,9,60.0,8.0
-D-03,D,Wayfinding and Cognition,Toilet Visibility from Primary Occupied Spaces (No Navigation Required),wayfinding-dementia-spatial-design,ok,A,83.9,35,15,25,19,13,60.0,33.3
+D-01,D,Wayfinding and Cognition,Loop Floor Plan (No Dead-End Corridors in DEM Environments),wayfinding-dementia-spatial-design,ok,A,83.7,35,15,25,19,13,60.0,36.4
+D-02,D,Wayfinding and Cognition,Cognitive Simplicity (Single Primary Route from Entry to Destination),cognitive-wayfinding-design,ok,A,83.4,25,7,17,13,9,64.0,8.0
+D-03,D,Wayfinding and Cognition,Toilet Visibility from Primary Occupied Spaces (No Navigation Required),wayfinding-dementia-spatial-design,ok,A,83.7,35,15,25,19,13,60.0,36.4
 D-04,D,Wayfinding and Cognition,Landmarks at Every Decision Point,wayfinding-cognitive-science-spatial-design,no-anchor,E,33.3,7,0,7,2,1,100.0,42.9
 D-05,D,Wayfinding and Cognition,"Enclosed Low-Stimulation Spaces (Focus Rooms, Breakout Alcoves, and Compartmentalisation)",sensory-relief-space-design,ok,C,55.7,10,4,8,6,1,100.0,80.0
-D-06,D,Wayfinding and Cognition,Memory Boxes at Private Office and Residential Room Entrances,wayfinding-dementia-spatial-design,ok,A,83.9,35,15,25,19,13,60.0,33.3
-D-07,D,Wayfinding and Cognition,No Blind Corners (Curved or Mirrored at All Hidden Junctions),cognitive-wayfinding-design,ok,A,83.7,25,7,17,13,9,60.0,8.0
-D-08,D,Wayfinding and Cognition,Pictogram + Single-Word Signage Throughout,cognitive-wayfinding-design,ok,A,83.7,25,7,17,13,9,60.0,8.0
-D-09,D,Wayfinding and Cognition,Consistent Furniture Layout (No Rearrangement Without User Consultation),wayfinding-dementia-spatial-design,ok,A,83.9,35,15,25,19,13,60.0,33.3
-D-10,D,Wayfinding and Cognition,Transparent Glazed Panels in Internal Partitions,cognitive-wayfinding-design,ok,A,83.7,25,7,17,13,9,60.0,8.0
-D-11,D,Wayfinding and Cognition,"Safe Accessible Garden (Loop Path, Secured Perimeter, Seating Every 20 m)",wayfinding-dementia-spatial-design,ok,A,83.9,35,15,25,19,13,60.0,33.3
+D-06,D,Wayfinding and Cognition,Memory Boxes at Private Office and Residential Room Entrances,wayfinding-dementia-spatial-design,ok,A,83.7,35,15,25,19,13,60.0,36.4
+D-07,D,Wayfinding and Cognition,No Blind Corners (Curved or Mirrored at All Hidden Junctions),cognitive-wayfinding-design,ok,A,83.4,25,7,17,13,9,64.0,8.0
+D-08,D,Wayfinding and Cognition,Pictogram + Single-Word Signage Throughout,cognitive-wayfinding-design,ok,A,83.4,25,7,17,13,9,64.0,8.0
+D-09,D,Wayfinding and Cognition,Consistent Furniture Layout (No Rearrangement Without User Consultation),wayfinding-dementia-spatial-design,ok,A,83.7,35,15,25,19,13,60.0,36.4
+D-10,D,Wayfinding and Cognition,Transparent Glazed Panels in Internal Partitions,cognitive-wayfinding-design,ok,A,83.4,25,7,17,13,9,64.0,8.0
+D-11,D,Wayfinding and Cognition,"Safe Accessible Garden (Loop Path, Secured Perimeter, Seating Every 20 m)",wayfinding-dementia-spatial-design,ok,A,83.7,35,15,25,19,13,60.0,36.4
 E-01,E,Circulation and Access,"Accessible Lift (1400×1100 mm Car, All Floors Served)",accessible-circulation-geometry,ok,B,74.8,14,2,3,9,6,64.3,50.0
 E-02,E,Circulation and Access,Platform Lift (Where Full Passenger Lift Not Achievable),accessible-circulation-geometry,ok,B,74.8,14,2,3,9,6,64.3,50.0
 E-03,E,Circulation and Access,Ramp Gradient (≤1:20 — MS Fatigue and Temporal Accessibility),stair-ramp-threshold-biomechanics-accessibility,ok,B,79.0,27,1,14,15,12,59.3,14.8
@@ -55,12 +55,12 @@ E-05,E,Circulation and Access,Weather Protection at Entry (Covered Canopy Minimu
 E-06,E,Circulation and Access,Level Entry (Zero Step at All Accessible Entrances),threshold-and-level-access,code-floor,D,46.0,15,0,0,12,8,46.7,40.0
 E-07,E,Circulation and Access,Slip Resistance (PTV ≥36 Wet Throughout All Circulation and Entry),stair-ramp-threshold-biomechanics-accessibility,ok,B,79.0,27,1,14,15,12,59.3,14.8
 E-08,E,Circulation and Access,Corridor Clear Width (≥1200 mm Minimum on All Primary Routes),accessible-circulation-geometry,ok,B,74.8,14,2,3,9,6,64.3,50.0
-E-09,E,Circulation and Access,Tactile Walking Surface Indicators (ISO 23599:2019),detectable-gradient-protocol-sensory-zones,ok,D,49.3,6,2,4,3,1,100.0,33.3
+E-09,E,Circulation and Access,Tactile Walking Surface Indicators (ISO 23599:2019),detectable-gradient-protocol-sensory-zones,ok,D,49.3,6,2,4,4,1,100.0,33.3
 E-10,E,Circulation and Access,Rest Seating at Regular Intervals on All Accessible Routes,accessible-circulation-geometry,ok,B,74.8,14,2,3,9,6,64.3,50.0
-E-11,E,Circulation and Access,Automatic Sliding Entry and Internal Doors,threshold-door-hardware,ok,B,74.8,32,1,2,26,13,46.9,34.4
+E-11,E,Circulation and Access,Automatic Sliding Entry and Internal Doors,threshold-door-hardware,ok,B,75.0,32,1,2,26,13,46.9,31.2
 E-12,E,Circulation and Access,Entrance Landing and Manoeuvring Space for Power Wheelchair Users,accessible-circulation-geometry,ok,B,74.8,14,2,3,9,6,64.3,50.0
-E-13,E,Circulation and Access,Entrance Cognitive Legibility Provisions,cognitive-wayfinding-design,ok,A,83.7,25,7,17,13,9,60.0,8.0
-E-15,E,Circulation and Access,"Changing Places Facility (Height-Adjustable Bench, Overhead",accessible-bathroom-and-grab-bar,ok,A,80.5,23,11,13,13,8,65.2,65.0
+E-13,E,Circulation and Access,Entrance Cognitive Legibility Provisions,cognitive-wayfinding-design,ok,A,83.4,25,7,17,13,9,64.0,8.0
+E-15,E,Circulation and Access,"Changing Places Facility (Height-Adjustable Bench, Overhead",accessible-bathroom-and-grab-bar,ok,B,79.9,23,11,13,13,7,73.9,65.0
 F-01,F,Sensory Environment,Sensory Gradient (High to Low Stimulation from Entry to Occupation),sensory-processing-model-design-application,ok,C,50.1,6,3,4,4,1,100.0,50.0
 F-02,F,Sensory Environment,Olfactory Control (Fragrance-Free Zones in Sensitive Areas),air-quality-voc-chemical-sensitivity-built-environment,ok,C,56.5,12,1,7,7,1,100.0,50.0
 F-03,F,Sensory Environment,Graduated Stimulation Re-entry (Sensory Room to General Space Transition),sensory-relief-space-design,ok,C,55.7,10,4,8,6,1,100.0,80.0
@@ -69,24 +69,24 @@ F-05,F,Sensory Environment,Seated-Task Design (All Primary Occupational Tasks Ac
 F-06,F,Sensory Environment,Fragrance-Free Policy (Whole-Building Operational Standard),air-quality-voc-chemical-sensitivity-built-environment,ok,C,56.5,12,1,7,7,1,100.0,50.0
 F-07,F,Sensory Environment,Thermal Zoning — Building-Wide Temperature Management,,no-source,—,,,,,,,,
 F-08,F,Sensory Environment,Thermal Transition — Heating and Cooling System Response,thermoregulation-built-environment,no-anchor,E,27.7,5,0,2,1,1,100.0,0.0
-G-01,G,"Furniture, Fixtures and Spatial Layout","Defensible Seating (Back-to-Wall, Entry Sightline Configuration)",mental-health-built-environment,ok,B,79.0,37,7,29,10,5,59.5,27.0
+G-01,G,"Furniture, Fixtures and Spatial Layout","Defensible Seating (Back-to-Wall, Entry Sightline Configuration)",mental-health-built-environment,ok,B,79.0,37,7,29,11,5,59.5,27.0
 G-02,G,"Furniture, Fixtures and Spatial Layout",Variety of Seating Types (Three Heights at Every Seating Area),,no-source,—,,,,,,,,
-G-03,G,"Furniture, Fixtures and Spatial Layout",Grab Bars in All Accessible Bathrooms (Clinical Positioning and Bilateral),accessible-bathroom-and-grab-bar,ok,A,80.5,23,11,13,13,8,65.2,65.0
-G-04,G,"Furniture, Fixtures and Spatial Layout",Accessible Bathroom (Wet Room Configuration — Zero Threshold),accessible-bathroom-and-grab-bar,ok,A,80.5,23,11,13,13,8,65.2,65.0
-G-05,G,"Furniture, Fixtures and Spatial Layout",Adjustable-Height Work Surfaces and Desks (650--870 mm AFF Range),residential-kitchen-and-task-surfaces,ok,A,82.7,30,16,20,10,8,73.3,46.2
+G-03,G,"Furniture, Fixtures and Spatial Layout",Grab Bars in All Accessible Bathrooms (Clinical Positioning and Bilateral),accessible-bathroom-and-grab-bar,ok,B,79.9,23,11,13,13,7,73.9,65.0
+G-04,G,"Furniture, Fixtures and Spatial Layout",Accessible Bathroom (Wet Room Configuration — Zero Threshold),accessible-bathroom-and-grab-bar,ok,B,79.9,23,11,13,13,7,73.9,65.0
+G-05,G,"Furniture, Fixtures and Spatial Layout",Adjustable-Height Work Surfaces and Desks (650--870 mm AFF Range),residential-kitchen-and-task-surfaces,ok,A,82.2,30,16,20,10,7,80.0,46.2
 G-06,G,"Furniture, Fixtures and Spatial Layout",Reception Counter (Accessible Height Section — 760--860 mm AFF),reach-range-and-accessible-controls,no-anchor,D,45.4,11,0,1,6,3,81.8,81.8
 G-07,G,"Furniture, Fixtures and Spatial Layout",Waiting Area Seating (Accessible Configuration — Adjacent to Service Points),,no-source,—,,,,,,,,
 G-08,G,"Furniture, Fixtures and Spatial Layout",Bedroom Wardrobe and Storage Reach Configuration,reach-range-and-accessible-controls,no-anchor,D,45.4,11,0,1,6,3,81.8,81.8
 G-09,G,"Furniture, Fixtures and Spatial Layout",Bedroom Emergency Call Provision and Overnight Lighting,reach-range-and-accessible-controls,no-anchor,D,45.4,11,0,1,6,3,81.8,81.8
 H-01,H,Controls and Technology,"All Controls at Accessible Height (400--1100 mm AFF, One-Fist Operable)",reach-range-and-accessible-controls,no-anchor,D,45.4,11,0,1,6,3,81.8,81.8
 H-02,H,Controls and Technology,Individual Environmental Control (Lighting and Temperature Per Space),reach-range-and-accessible-controls,no-anchor,D,45.4,11,0,1,6,3,81.8,81.8
-H-03,H,Controls and Technology,Visual Paging and Real-Time Captioning in Assembly Spaces,assistive-listening-systems,ok,B,74.4,8,4,4,7,5,50.0,25.0
-H-04,H,Controls and Technology,Accessible Intercom and Video Door Entry with Visual and Tactile Feedback,threshold-door-hardware,ok,B,74.8,32,1,2,26,13,46.9,34.4
+H-03,H,Controls and Technology,Visual Paging and Real-Time Captioning in Assembly Spaces,assistive-listening-systems,ok,B,76.2,8,4,4,5,5,50.0,0.0
+H-04,H,Controls and Technology,Accessible Intercom and Video Door Entry with Visual and Tactile Feedback,threshold-door-hardware,ok,B,75.0,32,1,2,26,13,46.9,31.2
 H-05,H,Controls and Technology,Emergency Call — Multi-Position Reach Envelope,reach-range-and-accessible-controls,no-anchor,D,45.4,11,0,1,6,3,81.8,81.8
-I-01,I,Hardware and Fixtures,"Hardware Throughout (Lever, D-Pull, One-Hand Operable, ≤22 N)",threshold-door-hardware,ok,B,74.8,32,1,2,26,13,46.9,34.4
-I-02,I,Hardware and Fixtures,Kitchen (One-Handed Operation Throughout),residential-kitchen-and-task-surfaces,ok,A,82.7,30,16,20,10,8,73.3,46.2
-I-03,I,Hardware and Fixtures,"Bathroom (UPL Anti-Scald, Bilateral Grab Bars, One-Hand Operation)",accessible-bathroom-and-grab-bar,ok,A,80.5,23,11,13,13,8,65.2,65.0
-I-04,I,Hardware and Fixtures,Ceiling Hoist Provision,accessible-bathroom-and-grab-bar,ok,A,80.5,23,11,13,13,8,65.2,65.0
+I-01,I,Hardware and Fixtures,"Hardware Throughout (Lever, D-Pull, One-Hand Operable, ≤22 N)",threshold-door-hardware,ok,B,75.0,32,1,2,26,13,46.9,31.2
+I-02,I,Hardware and Fixtures,Kitchen (One-Handed Operation Throughout),residential-kitchen-and-task-surfaces,ok,A,82.2,30,16,20,10,7,80.0,46.2
+I-03,I,Hardware and Fixtures,"Bathroom (UPL Anti-Scald, Bilateral Grab Bars, One-Hand Operation)",accessible-bathroom-and-grab-bar,ok,B,79.9,23,11,13,13,7,73.9,65.0
+I-04,I,Hardware and Fixtures,Ceiling Hoist Provision,accessible-bathroom-and-grab-bar,ok,B,79.9,23,11,13,13,7,73.9,65.0
 K-01,K,DeafBlind Provisions,Intervenor Adjacency at Service Counters,deafblind-built-environment-design,ok,B,74.3,9,7,7,5,3,66.7,44.4
 K-02,K,DeafBlind Provisions,Tactile Building Map Station at Principal Entrance,deafblind-built-environment-design,ok,B,74.3,9,7,7,5,3,66.7,44.4
 K-03,K,DeafBlind Provisions,Haptic Communication Clear Floor Zone,deafblind-built-environment-design,ok,B,74.3,9,7,7,5,3,66.7,44.4

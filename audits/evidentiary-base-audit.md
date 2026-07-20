@@ -5,15 +5,15 @@ This audit scores every research slice on the six requested dimensions — (1) a
 
 > **Reproducibility.** Every number here is regenerated from the DB by `tools/evidentiary_audit.py` — nothing is hand-transcribed, and the “data as of” date is the DB’s own `max(updated_at)`, so identical data yields byte-identical output. No grade is stored in the DB; the composite is a *derived* view whose rubric is fully specified in §2, so any reader can recompute it. Companion outputs: `evidentiary-base-audit.json` / `.csv`, and the interactive `tools/evidentiary-audit-dashboard.html` (filter by corpus / category / term).
 
-> **Adversarial review (two passes).** The audit was independently red-teamed twice; all raw counts (volume, tiers, language/jurisdiction distributions, search yield) reproduce exactly through a second code path. Folded in: (i) the **best-practice split** — *anchor* (T1/Co-1/T2/Co-2, the only tiers §3 lets anchor a best-practice claim) is now separated from *confirmed* (adds T3-clinical, ● per §5); a T3-clinical-only slice is confirmed evidence but flagged **no-anchor** (§2, §4); (ii) a **convergence discount** so code-floor-only slices can’t score highly on breadth alone (§2, §6); (iii) full disclosure of the **79 NULL-jurisdiction instances** (§3.5); (iv) **true-jurisdiction** breadth scoring that excludes the 0 language codes () mis-filed in the `jurisdiction` column (§3.3).
+> **Adversarial review (two passes).** The audit was independently red-teamed twice; all raw counts (volume, tiers, language/jurisdiction distributions, search yield) reproduce exactly through a second code path. Folded in: (i) the **best-practice split** — *anchor* (T1/Co-1/T2/Co-2, the only tiers §3 lets anchor a best-practice claim) is now separated from *confirmed* (adds T3-clinical, ● per §5); a T3-clinical-only slice is confirmed evidence but flagged **no-anchor** (§2, §4); (ii) a **convergence discount** so code-floor-only slices can’t score highly on breadth alone (§2, §6); (iii) full disclosure of the **77 NULL-jurisdiction instances** (§3.5); (iv) **true-jurisdiction** breadth scoring that excludes the 0 language codes () mis-filed in the `jurisdiction` column (§3.3).
 
 ## 1. Executive summary
 
 - **948 source-instances** are linked across **79 of 79 slices**; **0 slices carry zero linked evidence**.
-- **Grade distribution:** A=8 · B=18 · C=24 · D=18 · E=11 · F=0  (A≥80, B≥65, C≥50, D≥35, E>0, F=empty).
-- **Tier profile is code-and-clinical heavy, synthesis-light.** Of linked instances: T1=137, T2=129, T3=291, T4=86, T5=154, T6=151. Only **129 Tier-2 (systematic-review / evidence-based-standard) instances** exist across the whole corpus — the synthesis tier that best anchors best-practice claims is the thinnest.
-- **Best-practice anchoring is thin.** Only **266/948 (28%)** of instances can *anchor* a best-practice claim (T1/Co-1/T2/Co-2, §3); a further 257 are confirmed-but-supporting T3-clinical (● §5). **19 slices have no anchor at all** (12 code-floor, 7 T3-clinical-only).
-- **Anglophone concentration is the dominant quality risk.** **709/948 (75%) of linked sources are English-language**; only 239 are non-English. By jurisdiction, 352 instances are native-Anglophone (US/UK/AU/CA/NZ/IE), 217 supranational (INT/EU/ISO), 300 other, 79 unrecorded.
+- **Grade distribution:** A=7 · B=19 · C=24 · D=18 · E=11 · F=0  (A≥80, B≥65, C≥50, D≥35, E>0, F=empty).
+- **Tier profile is code-and-clinical heavy, synthesis-light.** Of linked instances: T1=137, T2=129, T3=293, T4=86, T5=154, T6=149. Only **129 Tier-2 (systematic-review / evidence-based-standard) instances** exist across the whole corpus — the synthesis tier that best anchors best-practice claims is the thinnest.
+- **Best-practice anchoring is thin.** Only **266/948 (28%)** of instances can *anchor* a best-practice claim (T1/Co-1/T2/Co-2, §3); a further 260 are confirmed-but-supporting T3-clinical (● §5). **19 slices have no anchor at all** (12 code-floor, 7 T3-clinical-only).
+- **Anglophone concentration is the dominant quality risk.** **716/948 (76%) of linked sources are English-language**; only 232 are non-English. By jurisdiction, 353 instances are native-Anglophone (US/UK/AU/CA/NZ/IE), 210 supranational (INT/EU/ISO), 308 other, 77 unrecorded.
 - **Search breadth ≠ evidentiary yield.** Slices were searched across **19 languages** and ~48 jurisdictions, but 4 searched languages (`ar`, `bn`, `hi`, `sw`) returned **zero** usable sources in **every** slice. The bias lives in what converted to evidence, not in search effort.
 
 ## 2. Method & definitions
@@ -72,56 +72,56 @@ Median linked sources among non-empty slices: **9**. Largest bases: `mental-heal
 |---|---|---|
 | T1 | 137 | ███················· 14% |
 | T2 | 129 | ███················· 14% |
-| T3 | 291 | ██████·············· 31% |
+| T3 | 293 | ██████·············· 31% |
 | T4 | 86 | ██·················· 9% |
 | T5 | 154 | ███················· 16% |
-| T6 | 151 | ███················· 16% |
+| T6 | 149 | ███················· 16% |
 
-**Best-practice-anchor share: 266/948 (28%)** (T1/Co-1/T2/Co-2, §3). Adding confirmed-but-supporting T3-clinical brings *confirmed* evidence to 523/948 (55%). The remaining 425 are T4–T6 code/standards + T3-grey that carry no confirmed evidence. Slices with zero anchors are the sharpest risk — see the no-anchor list in §4.
+**Best-practice-anchor share: 266/948 (28%)** (T1/Co-1/T2/Co-2, §3). Adding confirmed-but-supporting T3-clinical brings *confirmed* evidence to 526/948 (55%). The remaining 422 are T4–T6 code/standards + T3-grey that carry no confirmed evidence. Slices with zero anchors are the sharpest risk — see the no-anchor list in §4.
 
 ### (3) Jurisdictions sourced
-Distinct jurisdiction strings across the corpus: **49** — but **0 are language codes mis-filed in the jurisdiction column** ( = 0 instances; a data-integrity defect, see the note below), leaving **~49 true jurisdictions**. Top: INT (204), US (148), UK (101), DE (49), AU (44), CA (32), JP (30), NL (27), NO (26), SE (20).
+Distinct jurisdiction strings across the corpus: **50** — but **0 are language codes mis-filed in the jurisdiction column** ( = 0 instances; a data-integrity defect, see the note below), leaving **~50 true jurisdictions**. Top: INT (197), US (150), UK (99), DE (50), AU (46), CA (33), JP (30), NL (27), NO (26), SE (20).
 
-**3 non-empty slices draw on ≤1 jurisdiction** — monojurisdictional bases whose values may not transfer across code regimes. Separately, **79 source-instances carry no jurisdiction at all** (NULL) — mostly clinical/synthesis sources with no single national home; these are excluded from every jurisdiction-share denominator.
+**3 non-empty slices draw on ≤1 jurisdiction** — monojurisdictional bases whose values may not transfer across code regimes. Separately, **77 source-instances carry no jurisdiction at all** (NULL) — mostly clinical/synthesis sources with no single national home; these are excluded from every jurisdiction-share denominator.
 
 > **Data-integrity note (§3.3).** The audit *surfaces rather than propagates* the mis-filed language codes: language codes appearing as `jurisdiction` values are almost certainly the source language leaking into the wrong column. Recommend a data fix moving these to `lang_detected` and recovering the true jurisdiction.
 
 ### (4) Languages sourced
 | Language | Instances |
 |---|---|
-| en | 709 |
-| de | 51 |
+| en | 716 |
+| de | 50 |
 | ja | 30 |
-| no | 24 |
-| fr | 22 |
-| nl | 18 |
+| no | 23 |
+| fr | 19 |
+| nl | 17 |
 | sv | 17 |
 | zh | 15 |
 | pt | 13 |
 | ko | 11 |
 | it | 10 |
 | da | 9 |
-| fi | 8 |
+| fi | 7 |
 | es | 6 |
 | ar | 2 |
 | id | 2 |
 | bn | 1 |
 
-Distinct source languages: **17** (`en`/`eng` merged; raw ISO codes may be one more). English dominates at 75%. The non-English corpus is overwhelmingly Western-European + East-Asian; the only languages outside that group to yield *any* linked source are: ar (2); id (2); bn (1).
+Distinct source languages: **17** (`en`/`eng` merged; raw ISO codes may be one more). English dominates at 76%. The non-English corpus is overwhelmingly Western-European + East-Asian; the only languages outside that group to yield *any* linked source are: ar (2); id (2); bn (1).
 
-**33 non-empty slices are English-only** (42% of evidenced slices).
+**36 non-empty slices are English-only** (46% of evidenced slices).
 
 ### (5) English / Anglophone bias
-- **Language axis:** 75% English. 33 slices 100% English.
-- **Jurisdiction axis (all 948 instances):** native-Anglophone (US/UK/AU/CA/NZ/IE) **352** · supranational/English-medium (INT/EU/ISO) **217** · English-official + other non-Anglophone **300** · **no jurisdiction recorded 79**. (These four sum to 948 = all instances.)
-- **19 slices are doubly-concentrated** (≥90% English *and* ≥50% native-Anglophone jurisdiction): `accessibility-feature-market-value-uplift-framing`, `upper-limb-impairment-built-environment`, `economics-sources`, `manoeuvring-footprint-vs-turning-radius-methodology`, `ot-built-environment-interface`, `residential-accessible-home-case-studies`, `air-quality-voc-chemical-sensitivity-built-environment`, `ot-cpg-built-environment`, `sensory-relief-space-design`, `ot-frameworks-built-environment`, `sensory-processing-model-design-application`, `ofs-built-environment`, `bariatric-turning-radius-built-environment`, `government-grant-programmes`, `cross-population-case-studies`, `luminance-contrast-lrv-evidence-base`, `residential-dar-provisions-priority-register`, `case-study-economics-financial-data`, `accessible-design-failures-poor-performance`.
+- **Language axis:** 76% English. 36 slices 100% English.
+- **Jurisdiction axis (all 948 instances):** native-Anglophone (US/UK/AU/CA/NZ/IE) **353** · supranational/English-medium (INT/EU/ISO) **210** · English-official + other non-Anglophone **308** · **no jurisdiction recorded 77**. (These four sum to 948 = all instances.)
+- **19 slices are doubly-concentrated** (≥90% English *and* ≥50% native-Anglophone jurisdiction): `accessibility-feature-market-value-uplift-framing`, `manoeuvring-footprint-vs-turning-radius-methodology`, `upper-limb-impairment-built-environment`, `economics-sources`, `residential-accessible-home-case-studies`, `air-quality-voc-chemical-sensitivity-built-environment`, `ot-cpg-built-environment`, `sensory-relief-space-design`, `ot-built-environment-interface`, `ot-frameworks-built-environment`, `sensory-processing-model-design-application`, `ofs-built-environment`, `bariatric-turning-radius-built-environment`, `government-grant-programmes`, `cross-population-case-studies`, `luminance-contrast-lrv-evidence-base`, `residential-dar-provisions-priority-register`, `case-study-economics-financial-data`, `accessible-design-failures-poor-performance`.
 - **Process counter-evidence:** non-English/Global-South *searches were run* (19 languages across 81 of 79 slices in `search_languages`) but `ar`, `bn`, `hi`, `sw` yielded nothing linkable in any slice. The gap is a *yield/recovery* gap, not a *search-effort* gap.
 
 ### (6) Overall quality of the evidentiary base
 | Grade | Slices | Meaning |
 |---|---|---|
-| A | 8 | strong, balanced, synthesis-anchored |
-| B | 18 | solid, some concentration or tier gaps |
+| A | 7 | strong, balanced, synthesis-anchored |
+| B | 19 | solid, some concentration or tier gaps |
 | C | 24 | usable but thin or monolingual |
 | D | 18 | weak — few sources / single jurisdiction / English-only |
 | E | 11 | very weak — 1 jurisdiction, no anchor |
@@ -133,66 +133,66 @@ Legend: **N** linked sources · **BP** best-practice-anchor count (T1/Co-1/T2/Co
 
 | # | Grade | Score | Slice | Topic | N | BP | CF | Tiers | JUR | LNG | %EN | %ANG | A·B·C·D·E |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | **A** | 83.9 | `wayfinding-dementia-spatial-design` | wayfinding-and-signage | 35 | 15 | 25 | T1×6,T2×9,T3×11,T5×5,T6×4 | 19 | 13 | 60.0 | 33.3 | 20·20.9·20·15·8.0 |
-| 2 | **A** | 83.7 | `cognitive-wayfinding-design` | wayfinding-and-signage | 25 | 7 | 17 | T1×1,T2×6,T3×10,T5×7,T6×1 | 13 | 9 | 60.0 | 8.0 | 20·18.8·20·15·9.9 |
+| 1 | **A** | 83.7 | `wayfinding-dementia-spatial-design` | wayfinding-and-signage | 35 | 15 | 25 | T1×6,T2×9,T3×11,T5×5,T6×4 | 19 | 13 | 60.0 | 36.4 | 20·20.9·20·15·7.8 |
+| 2 | **A** | 83.4 | `cognitive-wayfinding-design` | wayfinding-and-signage | 25 | 7 | 17 | T1×1,T2×6,T3×10,T5×7,T6×1 | 13 | 9 | 64.0 | 8.0 | 20·18.8·20·15·9.6 |
 | 3 | **A** | 83.4 | `mobility-built-environment` | population-general | 24 | 13 | 15 | T1×11,T2×2,T3×2,T5×4,T6×5 | 17 | 9 | 58.3 | 50.0 | 20·21.5·20·15·6.9 |
 | 4 | **A** | 83.0 | `deaf-spatial-design` | communication-and-alerts | 13 | 8 | 10 | T1×5,T2×3,T3×4,T5×1 | 8 | 5 | 61.5 | 38.5 | 20·23.5·20·12·7.5 |
-| 5 | **A** | 82.7 | `residential-kitchen-and-task-surfaces` | kitchens-and-workspaces | 30 | 16 | 20 | T1×5,T2×11,T3×4,T4×2,T5×3,T6×5 | 10 | 8 | 73.3 | 46.2 | 20·21.7·20·15·6.0 |
+| 5 | **A** | 82.2 | `residential-kitchen-and-task-surfaces` | kitchens-and-workspaces | 30 | 16 | 20 | T1×5,T2×11,T3×4,T4×2,T5×3,T6×5 | 10 | 7 | 80.0 | 46.2 | 20·21.7·20·15·5.5 |
 | 6 | **A** | 82.2 | `room-acoustic-performance` | sensory-environment | 32 | 18 | 20 | T1×16,T2×2,T3×3,T4×2,T5×8,T6×1 | 13 | 8 | 78.1 | 50.0 | 20·21.8·20·15·5.4 |
 | 7 | **A** | 81.4 | `sensory-room-user-control` | sensory-environment | 14 | 6 | 13 | T2×6,T3×7,T6×1 | 9 | 4 | 71.4 | 38.5 | 20·22.6·20·12·6.8 |
-| 8 | **A** | 80.5 | `accessible-bathroom-and-grab-bar` | bathrooms-and-wet-areas | 23 | 11 | 13 | T1×7,T2×4,T3×3,T4×1,T5×4,T6×4 | 13 | 8 | 65.2 | 65.0 | 20·20.3·20·15·5.2 |
+| 8 | **B** | 79.9 | `accessible-bathroom-and-grab-bar` | bathrooms-and-wet-areas | 23 | 11 | 13 | T1×7,T2×4,T3×3,T4×1,T5×4,T6×4 | 13 | 7 | 73.9 | 65.0 | 20·20.3·20·15·4.6 |
 | 9 | **B** | 79.5 | `deaf-classroom-reverberation-time` | communication-and-alerts | 12 | 2 | 2 | T1×2,T4×1,T5×6,T6×3 | 9 | 9 | 25.0 | 25.0 | 20·13.3·20·15·11.2 |
-| 10 | **B** | 79.0 | `mental-health-built-environment` | population-general | 37 | 7 | 29 | T1×3,T2×4,T3×27,T4×1,T5×2 | 10 | 5 | 59.5 | 27.0 | 20·18.5·20·12·8.5 |
-| 11 | **B** | 79.0 | `stair-ramp-threshold-biomechanics-accessibility` | entrances-and-circulation | 27 | 1 | 14 | T2×1,T3×14,T4×1,T5×1,T6×10 | 15 | 12 | 59.3 | 14.8 | 20·14.6·20·15·9.4 |
-| 12 | **B** | 77.3 | `wayfinding-global-south` | wayfinding-and-signage | 15 | 1 | 1 | T1×1,T4×4,T6×10 | 13 | 7 | 53.3 | 0.0 | 20·11.3·20·15·11.0 |
-| 13 | **B** | 75.7 | `multilingual-evidence-convergence-non-english` | frameworks-and-methodology | 8 | 3 | 5 | T1×2,T2×1,T3×3,T5×2 | 7 | 4 | 50.0 | 0.0 | 16·19.5·17·12·11.2 |
-| 14 | **B** | 75.2 | `visual-impairment-built-environment` | population-general | 8 | 2 | 2 | T2×2,T4×2,T5×1,T6×3 | 7 | 6 | 25.0 | 12.5 | 16·15.0·17·15·12.2 |
-| 15 | **B** | 75.0 | `residential-entry-and-threshold` | entrances-and-circulation | 20 | 4 | 4 | T1×1,T2×3,T4×1,T5×6,T6×9 | 13 | 7 | 65.0 | 55.0 | 20·14.0·20·15·6.0 |
-| 16 | **B** | 74.8 | `accessible-circulation-geometry` | entrances-and-circulation | 14 | 2 | 3 | T1×1,T2×1,T3×1,T4×1,T5×3,T6×7 | 9 | 6 | 64.3 | 50.0 | 20·13.4·20·15·6.4 |
-| 17 | **B** | 74.8 | `threshold-door-hardware` | entrances-and-circulation | 32 | 1 | 2 | T1×1,T3×1,T4×1,T5×9,T6×20 | 26 | 13 | 46.9 | 34.4 | 20·10.9·20·15·8.9 |
-| 18 | **B** | 74.6 | `construction-cost-data` | economics | 12 | 6 | 10 | T1×2,T2×4,T3×4,T6×2 | 8 | 2 | 66.7 | 41.7 | 20·22.7·20·5·6.9 |
-| 19 | **B** | 74.4 | `assistive-listening-systems` | communication-and-alerts | 8 | 4 | 4 | T2×4,T4×1,T5×1,T6×2 | 7 | 5 | 50.0 | 25.0 | 16·20.0·17·12·9.4 |
+| 10 | **B** | 79.2 | `construction-cost-data` | economics | 12 | 6 | 10 | T1×2,T2×4,T3×5,T6×1 | 8 | 3 | 58.3 | 41.7 | 20·22.7·20·9·7.5 |
+| 11 | **B** | 79.0 | `mental-health-built-environment` | population-general | 37 | 7 | 29 | T1×3,T2×4,T3×27,T4×1,T5×2 | 11 | 5 | 59.5 | 27.0 | 20·18.5·20·12·8.5 |
+| 12 | **B** | 79.0 | `stair-ramp-threshold-biomechanics-accessibility` | entrances-and-circulation | 27 | 1 | 14 | T2×1,T3×14,T4×1,T5×1,T6×10 | 15 | 12 | 59.3 | 14.8 | 20·14.6·20·15·9.4 |
+| 13 | **B** | 77.3 | `wayfinding-global-south` | wayfinding-and-signage | 15 | 1 | 1 | T1×1,T4×4,T6×10 | 13 | 7 | 53.3 | 0.0 | 20·11.3·20·15·11.0 |
+| 14 | **B** | 76.2 | `assistive-listening-systems` | communication-and-alerts | 8 | 4 | 4 | T2×4,T4×1,T5×1,T6×2 | 5 | 5 | 50.0 | 0.0 | 16·20.0·17·12·11.2 |
+| 15 | **B** | 75.7 | `multilingual-evidence-convergence-non-english` | frameworks-and-methodology | 8 | 3 | 5 | T1×2,T2×1,T3×3,T5×2 | 7 | 4 | 50.0 | 0.0 | 16·19.5·17·12·11.2 |
+| 16 | **B** | 75.4 | `residential-entry-and-threshold` | entrances-and-circulation | 20 | 4 | 4 | T1×1,T2×3,T4×1,T5×6,T6×9 | 13 | 7 | 65.0 | 50.0 | 20·14.0·20·15·6.4 |
+| 17 | **B** | 75.2 | `visual-impairment-built-environment` | population-general | 8 | 2 | 2 | T2×2,T4×2,T5×1,T6×3 | 7 | 6 | 25.0 | 12.5 | 16·15.0·17·15·12.2 |
+| 18 | **B** | 75.0 | `threshold-door-hardware` | entrances-and-circulation | 32 | 1 | 2 | T1×1,T3×1,T4×1,T5×9,T6×20 | 26 | 13 | 46.9 | 31.2 | 20·10.9·20·15·9.1 |
+| 19 | **B** | 74.8 | `accessible-circulation-geometry` | entrances-and-circulation | 14 | 2 | 3 | T1×1,T2×1,T3×1,T4×1,T5×3,T6×7 | 9 | 6 | 64.3 | 50.0 | 20·13.4·20·15·6.4 |
 | 20 | **B** | 74.3 | `deafblind-built-environment-design` | population-general | 9 | 7 | 7 | T1×3,T2×4,T3×1,T6×1 | 5 | 3 | 66.7 | 44.4 | 16·25.6·17·9·6.7 |
-| 21 | **B** | 73.5 | `sensory-space-global-south` | sensory-environment | 15 | 7 | 11 | T1×5,T2×2,T3×6,T5×1,T6×1 | 6 | 2 | 60.0 | 7.1 | 20·21.5·17·5·10.0 |
-| 22 | **B** | 72.7 | `accessible-design-economics-cost-premium` | economics | 14 | 3 | 9 | T1×1,T2×2,T3×9,T6×2 | 7 | 3 | 57.1 | 23.1 | 20·17.7·17·9·9.0 |
+| 21 | **B** | 73.5 | `sensory-space-global-south` | sensory-environment | 15 | 7 | 11 | T1×5,T2×2,T3×6,T5×1,T6×1 | 7 | 2 | 60.0 | 7.1 | 20·21.5·17·5·10.0 |
+| 22 | **B** | 72.7 | `accessible-design-economics-cost-premium` | economics | 14 | 3 | 9 | T1×1,T2×2,T3×10,T6×1 | 7 | 3 | 57.1 | 23.1 | 20·17.7·17·9·9.0 |
 | 23 | **B** | 70.9 | `dementia-built-environment` | population-general | 8 | 1 | 5 | T1×1,T3×4,T5×3 | 5 | 4 | 62.5 | 12.5 | 16·16.5·17·12·9.4 |
 | 24 | **B** | 70.3 | `pain-ofs-built-environment-design` | health-and-symptom-management | 12 | 6 | 6 | T1×2,T2×4,T3×2,T5×3,T6×1 | 6 | 3 | 83.3 | 60.0 | 20·20.0·17·9·4.3 |
 | 25 | **B** | 68.3 | `bathroom-typology-global-south` | bathrooms-and-wet-areas | 8 | 2 | 4 | T1×1,T2×1,T3×2,T4×1,T6×3 | 4 | 4 | 62.5 | 0.0 | 16·17.0·13·12·10.3 |
-| 26 | **B** | 67.0 | `post-occupancy-evaluation-global` | frameworks-and-methodology | 10 | 3 | 9 | T2×3,T3×7 | 8 | 2 | 90.0 | 40.0 | 16·20.8·20·5·5.2 |
+| 26 | **B** | 67.8 | `post-occupancy-evaluation-global` | frameworks-and-methodology | 10 | 3 | 10 | T2×3,T3×7 | 8 | 2 | 90.0 | 40.0 | 16·21.6·20·5·5.2 |
 | 27 | **C** | 64.5 | `accessibility-feature-market-value-uplift-framing` | economics | 33 | 2 | 10 | T1×2,T3×8,T4×4,T5×15,T6×4 | 11 | 3 | 90.9 | 78.8 | 20·13.2·20·9·2.3 |
-| 28 | **C** | 63.3 | `upper-limb-impairment-built-environment` | population-general | 17 | 5 | 16 | T1×3,T2×2,T3×12 | 3 | 2 | 94.1 | 50.0 | 20·21.1·13·5·4.2 |
-| 29 | **C** | 62.6 | `economics-sources` | economics | 23 | 3 | 23 | T1×2,T2×1,T3×20 | 6 | 2 | 95.7 | 90.9 | 20·19.6·17·5·1.0 |
-| 30 | **C** | 62.3 | `manoeuvring-footprint-vs-turning-radius-methodology` | frameworks-and-methodology | 30 | 22 | 29 | T1×19,T2×3,T3×7,T4×1 | 3 | 1 | 100.0 | 62.5 | 20·26.5·13·0·2.8 |
-| 31 | **C** | 62.0 | `school-environment-autism` | sensory-environment | 17 | 5 | 17 | T1×2,T2×3,T3×12 | 3 | 1 | 100.0 | 0.0 | 20·21.5·13·0·7.5 |
-| 32 | **C** | 61.6 | `circadian-lighting-melanopic-edi` | sensory-environment | 12 | 2 | 7 | T2×2,T3×5,T4×2,T5×3 | 4 | 2 | 91.7 | 16.7 | 20·16.7·13·5·6.9 |
-| 33 | **C** | 60.7 | `deaf-acoustic-built-environment` | communication-and-alerts | 10 | 5 | 5 | T1×2,T2×3,T4×3,T5×2 | 4 | 2 | 90.0 | 20.0 | 16·20.0·13·5·6.7 |
-| 34 | **C** | 60.6 | `neurological-built-environment` | population-general | 8 | 2 | 8 | T1×2,T3×6 | 5 | 1 | 100.0 | 12.5 | 16·21.0·17·0·6.6 |
-| 35 | **C** | 58.3 | `neurodivergent-built-environment` | population-general | 9 | 6 | 8 | T1×2,T2×4,T3×2,T4×1 | 4 | 1 | 100.0 | 44.4 | 16·25.1·13·0·4.2 |
-| 36 | **C** | 58.0 | `ot-built-environment-interface` | frameworks-and-methodology | 16 | 2 | 13 | T1×1,T2×1,T3×14 | 3 | 2 | 93.8 | 80.0 | 20·18.0·13·5·2.0 |
-| 37 | **C** | 57.1 | `residential-accessible-home-case-studies` | frameworks-and-methodology | 8 | 6 | 8 | T1×4,T2×2,T3×2 | 4 | 1 | 100.0 | 85.7 | 16·27.0·13·0·1.1 |
-| 38 | **C** | 56.8 | `thermal-comfort-older-adults-care-settings` | health-and-symptom-management | 6 | 2 | 4 | T2×2,T3×3,T5×1 | 4 | 2 | 83.3 | 16.7 | 12·19.3·13·5·7.5 |
-| 39 | **C** | 56.5 | `air-quality-voc-chemical-sensitivity-built-environment` | sensory-environment | 12 | 1 | 7 | T2×1,T3×6,T4×4,T5×1 | 7 | 1 | 100.0 | 50.0 | 20·15.7·17·0·3.8 |
-| 40 | **C** | 56.3 | `ot-cpg-built-environment` | population-general | 6 | 6 | 6 | T2×6 | 4 | 1 | 100.0 | 83.3 | 12·30·13·0·1.3 |
-| 41 | **C** | 56.0 | `biophilic-design-healthcare-workplace` | sensory-environment | 6 | 4 | 6 | T1×1,T2×3,T3×2 | 3 | 1 | 100.0 | 33.3 | 12·26.0·13·0·5.0 |
-| 42 | **C** | 55.7 | `sensory-relief-space-design` | sensory-environment | 10 | 4 | 8 | T1×1,T2×3,T3×4,T4×1,T6×1 | 6 | 1 | 100.0 | 80.0 | 16·21.2·17·0·1.5 |
-| 43 | **C** | 55.3 | `fold-down-grab-bar-specification` | bathrooms-and-wet-areas | 8 | 1 | 2 | T1×1,T3×1,T4×2,T5×2,T6×2 | 5 | 2 | 87.5 | 62.5 | 16·13.5·17·5·3.8 |
-| 44 | **C** | 55.2 | `visitability-residential-accessibility-minimum-standards` | frameworks-and-methodology | 7 | 1 | 1 | T1×1,T5×1,T6×5 | 5 | 3 | 71.4 | 71.4 | 12·12.9·17·9·4.3 |
-| 45 | **C** | 55.1 | `acoustics-speech-intelligibility-disability` | sensory-environment | 8 | 3 | 5 | T1×1,T2×2,T3×2,T4×3 | 4 | 1 | 100.0 | 12.5 | 16·19.5·13·0·6.6 |
-| 46 | **C** | 54.8 | `ot-frameworks-built-environment` | frameworks-and-methodology | 4 | 4 | 4 | T1×4 | 3 | 1 | 100.0 | 50.0 | 8·30·13·0·3.8 |
-| 47 | **C** | 53.0 | `ms-thermal-temperature-conflict-resolution` | health-and-symptom-management | 10 | 2 | 7 | T1×1,T2×1,T3×5,T4×2,T5×1 | 4 | 1 | 100.0 | 20.0 | 16·18.0·13·0·6.0 |
+| 28 | **C** | 64.0 | `deaf-acoustic-built-environment` | communication-and-alerts | 10 | 5 | 5 | T1×2,T2×3,T4×3,T5×2 | 5 | 2 | 90.0 | 30.0 | 16·20.0·17·5·6.0 |
+| 29 | **C** | 62.3 | `manoeuvring-footprint-vs-turning-radius-methodology` | frameworks-and-methodology | 30 | 22 | 29 | T1×19,T2×3,T3×7,T4×1 | 3 | 1 | 100.0 | 62.5 | 20·26.5·13·0·2.8 |
+| 30 | **C** | 61.6 | `circadian-lighting-melanopic-edi` | sensory-environment | 12 | 2 | 7 | T2×2,T3×5,T4×2,T5×3 | 4 | 2 | 91.7 | 16.7 | 20·16.7·13·5·6.9 |
+| 31 | **C** | 60.6 | `neurological-built-environment` | population-general | 8 | 2 | 8 | T1×2,T3×6 | 5 | 1 | 100.0 | 12.5 | 16·21.0·17·0·6.6 |
+| 32 | **C** | 59.0 | `school-environment-autism` | sensory-environment | 17 | 5 | 17 | T1×2,T2×3,T3×12 | 4 | 1 | 100.0 | 40.0 | 20·21.5·13·0·4.5 |
+| 33 | **C** | 58.3 | `neurodivergent-built-environment` | population-general | 9 | 6 | 8 | T1×2,T2×4,T3×2,T4×1 | 4 | 1 | 100.0 | 44.4 | 16·25.1·13·0·4.2 |
+| 34 | **C** | 58.3 | `upper-limb-impairment-built-environment` | population-general | 17 | 5 | 17 | T1×3,T2×2,T3×12 | 4 | 1 | 100.0 | 50.0 | 20·21.5·13·0·3.8 |
+| 35 | **C** | 57.3 | `economics-sources` | economics | 23 | 3 | 23 | T1×2,T2×1,T3×20 | 6 | 1 | 100.0 | 90.9 | 20·19.6·17·0·0.7 |
+| 36 | **C** | 57.1 | `residential-accessible-home-case-studies` | frameworks-and-methodology | 8 | 6 | 8 | T1×4,T2×2,T3×2 | 4 | 1 | 100.0 | 85.7 | 16·27.0·13·0·1.1 |
+| 37 | **C** | 56.8 | `thermal-comfort-older-adults-care-settings` | health-and-symptom-management | 6 | 2 | 4 | T2×2,T3×3,T5×1 | 4 | 2 | 83.3 | 16.7 | 12·19.3·13·5·7.5 |
+| 38 | **C** | 56.5 | `air-quality-voc-chemical-sensitivity-built-environment` | sensory-environment | 12 | 1 | 7 | T2×1,T3×6,T4×4,T5×1 | 7 | 1 | 100.0 | 50.0 | 20·15.7·17·0·3.8 |
+| 39 | **C** | 56.3 | `ot-cpg-built-environment` | population-general | 6 | 6 | 6 | T2×6 | 4 | 1 | 100.0 | 83.3 | 12·30·13·0·1.3 |
+| 40 | **C** | 56.0 | `biophilic-design-healthcare-workplace` | sensory-environment | 6 | 4 | 6 | T1×1,T2×3,T3×2 | 3 | 1 | 100.0 | 33.3 | 12·26.0·13·0·5.0 |
+| 41 | **C** | 55.7 | `sensory-relief-space-design` | sensory-environment | 10 | 4 | 8 | T1×1,T2×3,T3×4,T4×1,T6×1 | 6 | 1 | 100.0 | 80.0 | 16·21.2·17·0·1.5 |
+| 42 | **C** | 55.3 | `fold-down-grab-bar-specification` | bathrooms-and-wet-areas | 8 | 1 | 2 | T1×1,T3×1,T4×2,T5×2,T6×2 | 5 | 2 | 87.5 | 62.5 | 16·13.5·17·5·3.8 |
+| 43 | **C** | 55.2 | `visitability-residential-accessibility-minimum-standards` | frameworks-and-methodology | 7 | 1 | 1 | T1×1,T5×1,T6×5 | 5 | 3 | 71.4 | 71.4 | 12·12.9·17·9·4.3 |
+| 44 | **C** | 55.1 | `acoustics-speech-intelligibility-disability` | sensory-environment | 8 | 3 | 5 | T1×1,T2×2,T3×2,T4×3 | 4 | 1 | 100.0 | 12.5 | 16·19.5·13·0·6.6 |
+| 45 | **C** | 53.0 | `ms-thermal-temperature-conflict-resolution` | health-and-symptom-management | 10 | 2 | 7 | T1×1,T2×1,T3×5,T4×2,T5×1 | 4 | 1 | 100.0 | 20.0 | 16·18.0·13·0·6.0 |
+| 46 | **C** | 53.0 | `ot-built-environment-interface` | frameworks-and-methodology | 16 | 2 | 14 | T1×1,T2×1,T3×14 | 3 | 1 | 100.0 | 80.0 | 20·18.5·13·0·1.5 |
+| 47 | **C** | 52.9 | `ot-frameworks-built-environment` | frameworks-and-methodology | 4 | 4 | 4 | T1×4 | 3 | 1 | 100.0 | 75.0 | 8·30·13·0·1.9 |
 | 48 | **C** ‡ | 52.5 | `luminance-contrast-and-pattern` | wayfinding-and-signage | 13 | 0 | 0 | T5×4,T6×9 | 13 | 13 | 0.0 | 0.0 | 20·0.0·10.0·7.5·15.0 |
 | 49 | **C** | 50.5 | `ndv-aut-built-environment-quantified-thresholds` | population-general | 6 | 2 | 4 | T2×2,T3×3,T4×1 | 3 | 1 | 100.0 | 16.7 | 12·19.3·13·0·6.2 |
 | 50 | **C** | 50.1 | `sensory-processing-model-design-application` | sensory-environment | 6 | 3 | 4 | T1×2,T2×1,T3×1,T4×1,T5×1 | 4 | 1 | 100.0 | 50.0 | 12·21.3·13·0·3.8 |
-| 51 | **D** | 49.3 | `detectable-gradient-protocol-sensory-zones` | wayfinding-and-signage | 6 | 2 | 4 | T1×1,T2×1,T3×2,T4×2 | 3 | 1 | 100.0 | 33.3 | 12·19.3·13·0·5.0 |
+| 51 | **D** | 49.3 | `detectable-gradient-protocol-sensory-zones` | wayfinding-and-signage | 6 | 2 | 4 | T1×1,T2×1,T3×2,T4×2 | 4 | 1 | 100.0 | 33.3 | 12·19.3·13·0·5.0 |
 | 52 | **D** | 48.9 | `design-framework-evidence-audit` | frameworks-and-methodology | 9 | 1 | 4 | T2×1,T3×5,T4×2,T5×1 | 4 | 1 | 100.0 | 33.3 | 16·14.9·13·0·5.0 |
-| 53 | **D** ‡ | 46.6 | `jurisdiction-matrix-accessibility-standards` | frameworks-and-methodology | 14 | 0 | 0 | T4×4,T6×10 | 12 | 6 | 64.3 | 14.3 | 20·0.0·10.0·7.5·9.1 |
-| 54 | **D** ‡ | 46.0 | `threshold-and-level-access` | entrances-and-circulation | 15 | 0 | 0 | T4×1,T5×4,T6×10 | 12 | 8 | 46.7 | 40.0 | 20·0.0·10.0·7.5·8.5 |
-| 55 | **D** | 45.8 | `ofs-built-environment` | health-and-symptom-management | 7 | 3 | 4 | T1×3,T3×1,T5×2,T6×1 | 3 | 1 | 100.0 | 85.7 | 12·19.7·13·0·1.1 |
-| 56 | **D** | 45.6 | `visual-fire-alarm-seizure-safety` | sensory-environment | 7 | 1 | 4 | T2×1,T3×3,T4×2,T6×1 | 3 | 1 | 100.0 | 42.9 | 12·16.3·13·0·4.3 |
-| 57 | **D** † | 45.4 | `reach-range-and-accessible-controls` | controls-and-hardware | 11 | 0 | 1 | T3×1,T5×5,T6×5 | 6 | 3 | 81.8 | 81.8 | 16·0.7·17·9·2.7 |
-| 58 | **D** | 45.0 | `bariatric-turning-radius-built-environment` | seating-and-rest | 8 | 2 | 3 | T1×2,T3×1,T4×2,T5×3 | 4 | 1 | 100.0 | 100.0 | 16·16.0·13·0·0.0 |
-| 59 | **D** | 43.9 | `government-grant-programmes` | economics | 4 | 1 | 4 | T2×1,T3×3 | 3 | 1 | 100.0 | 75.0 | 8·21.0·13·0·1.9 |
-| 60 | **D** | 43.7 | `floor-vibration-wheelchair-disability` | entrances-and-circulation | 7 | 1 | 4 | T2×1,T3×3,T4×3 | 2 | 1 | 100.0 | 14.3 | 12·16.3·9·0·6.4 |
+| 53 | **D** | 47.7 | `floor-vibration-wheelchair-disability` | entrances-and-circulation | 7 | 1 | 4 | T2×1,T3×3,T4×3 | 3 | 1 | 100.0 | 14.3 | 12·16.3·13·0·6.4 |
+| 54 | **D** ‡ | 46.6 | `jurisdiction-matrix-accessibility-standards` | frameworks-and-methodology | 14 | 0 | 0 | T4×4,T6×10 | 12 | 6 | 64.3 | 14.3 | 20·0.0·10.0·7.5·9.1 |
+| 55 | **D** ‡ | 46.0 | `threshold-and-level-access` | entrances-and-circulation | 15 | 0 | 0 | T4×1,T5×4,T6×10 | 12 | 8 | 46.7 | 40.0 | 20·0.0·10.0·7.5·8.5 |
+| 56 | **D** | 45.8 | `ofs-built-environment` | health-and-symptom-management | 7 | 3 | 4 | T1×3,T3×1,T5×2,T6×1 | 3 | 1 | 100.0 | 85.7 | 12·19.7·13·0·1.1 |
+| 57 | **D** | 45.6 | `visual-fire-alarm-seizure-safety` | sensory-environment | 7 | 1 | 4 | T2×1,T3×3,T4×2,T6×1 | 3 | 1 | 100.0 | 42.9 | 12·16.3·13·0·4.3 |
+| 58 | **D** † | 45.4 | `reach-range-and-accessible-controls` | controls-and-hardware | 11 | 0 | 1 | T3×1,T5×5,T6×5 | 6 | 3 | 81.8 | 81.8 | 16·0.7·17·9·2.7 |
+| 59 | **D** | 45.0 | `bariatric-turning-radius-built-environment` | seating-and-rest | 8 | 2 | 3 | T1×2,T3×1,T4×2,T5×3 | 4 | 1 | 100.0 | 100.0 | 16·16.0·13·0·0.0 |
+| 60 | **D** | 43.9 | `government-grant-programmes` | economics | 4 | 1 | 4 | T2×1,T3×3 | 3 | 1 | 100.0 | 75.0 | 8·21.0·13·0·1.9 |
 | 61 | **D** | 43.0 | `cross-population-case-studies` | frameworks-and-methodology | 3 | 2 | 3 | T1×2,T3×1 | 2 | 1 | 100.0 | 100.0 | 8·26.0·9·0·0.0 |
 | 62 | **D** ‡ | 42.7 | `jurisdiction-grant-programmes-comprehensive` | frameworks-and-methodology | 9 | 0 | 0 | T5×9 | 9 | 6 | 44.4 | 33.3 | 16·0.0·10.0·7.5·9.2 |
 | 63 | **D** | 42.4 | `luminance-contrast-lrv-evidence-base` | wayfinding-and-signage | 7 | 1 | 5 | T2×1,T3×4,T5×1,T6×1 | 4 | 1 | 100.0 | 100.0 | 12·17.4·13·0·0.0 |
@@ -230,7 +230,7 @@ Several name high-salience topics where an empty base is a material coverage gap
 ## 6. Findings & recommended remediation
 
 1. **Thicken the anchor tiers (T1/Co-1/T2/Co-2).** With only 129 systematic-review/evidence-based-standard instances corpus-wide, most best-practice claims lean on individual T1 primary studies or on code convergence (T4–T6, disallowed as best-practice warrant). Prioritise SR/meta-analysis + DPO-standard recovery on the 19 no-anchor slices — especially the 7 supporting-only ones, which already hold confirmed T3-clinical evidence and need only an anchor to become citable.
-2. **Convert non-English search into non-English evidence.** Searches ran in 19 languages but the corpus is ~75% English. Target the languages already searched-with-results but under-linked, and the zero-yield languages (`ar`, `bn`, `hi`, `sw`) explicitly.
+2. **Convert non-English search into non-English evidence.** Searches ran in 19 languages but the corpus is ~76% English. Target the languages already searched-with-results but under-linked, and the zero-yield languages (`ar`, `bn`, `hi`, `sw`) explicitly.
 3. **De-risk monojurisdictional slices.** 3 evidenced slices rest on ≤1 jurisdiction; flag their numeric thresholds as non-transferable until a second regime is sourced.
 4. **Fill or formally park the empty slices.** Move the 0 un-started slices into an active search queue or an explicit deferred state so they stop reading as silent gaps.
 5. **Treat the doubly-concentrated slices as citation-risk.** The 19 ≥90%-English-and-≥50%-Anglophone slices are where global-applicability claims are weakest.
