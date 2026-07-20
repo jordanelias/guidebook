@@ -754,6 +754,10 @@ def main():
     p_as.add_argument("--pmid")
     p_as.add_argument("--jurisdiction")
     p_as.add_argument("--evidence-type")
+    p_as.add_argument("--lang-detected", help="ISO 639-1 code for the source's actual publication language")
+    p_as.add_argument("--lang-detection-method",
+                      help="How --lang-detected was determined, e.g. 'native_title_verified', "
+                           "'journal_family_inference', 'citing_document_language'")
     p_as.add_argument("--slug", help="Link to slug (requires --local-ref-id)")
     p_as.add_argument("--local-ref-id", help="Local ref ID within slug")
     p_as.add_argument("--session", required=True)
@@ -1085,6 +1089,10 @@ def main():
             data["jurisdiction"] = args.jurisdiction
         if args.evidence_type:
             data["evidence_type"] = args.evidence_type
+        if args.lang_detected:
+            data["lang_detected"] = args.lang_detected
+        if args.lang_detection_method:
+            data["lang_detection_method"] = args.lang_detection_method
         ref_id = insert_evidence_source(data, session=args.session, dry_run=args.dry_run)
         if args.slug and args.local_ref_id:
             insert_source_slug_link(ref_id, args.slug, args.local_ref_id,
@@ -1327,7 +1335,8 @@ def insert_evidence_source(data: dict, session: str,
         "ref_id", "author_display", "pub_year", "pub_title", "doi",
         "pmid", "tier", "evidence_type", "jurisdiction", "metadata_quality",
         "verification_status", "co1_provenance", "co1_source_type",
-        "synthesis_attribution_required", "notes"
+        "synthesis_attribution_required", "notes", "lang_detected",
+        "lang_detection_method"
     })
     _validate_cols(data.keys(), _ES_COLS, "insert_evidence_source")
     row = {**data, **audit(session)}
