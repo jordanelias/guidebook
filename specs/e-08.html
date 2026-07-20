@@ -4,11 +4,35 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>E-08 Corridor clear width — Guidebook</title>
-<meta name="description" content="Specification E-08. Corridor clear width ≥1200 mm on primary routes.">
+<meta name="description" content="Specification E-08. Corridor clear width. Evidence-anchored best practice ≥2440 mm on primary routes; ≥1200/1800 mm regulatory floor (convergence, not evidence). PROVISIONAL.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/guidebook.css">
+<style>
+/* page-local: provisional/integrity banner, strength-band chips, genealogy tags.
+   Scoped so nothing here overrides the shared design system. */
+.provisional-banner{border:2px solid #b8521b;background:#fbeee4;color:#5a2a10;
+  border-radius:8px;padding:14px 18px;margin:18px 0 8px;font-size:var(--fs-sm);line-height:1.5;}
+.provisional-banner strong{color:#8a3a12;}
+.provisional-banner .pb-k{font-family:var(--font-mono);font-size:var(--fs-xs);
+  text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:4px;color:#8a3a12;}
+.band{display:inline-block;font-family:var(--font-mono);font-size:var(--fs-xs);
+  padding:1px 7px;border-radius:10px;border:1px solid var(--rule);white-space:nowrap;}
+.band-full{background:#e3f0e6;border-color:#7bab89;color:#1f5e3a;}
+.band-partial{background:#fbf3dd;border-color:#c9ab5e;color:#7a5c12;}
+.band-weak{background:#f0ede8;border-color:#c7bfb2;color:#6e655a;}
+.geneal-tag{font-family:var(--font-mono);font-size:var(--fs-xs);color:#6e655a;}
+.honesty{font-family:var(--font-mono);font-size:var(--fs-xs);color:#8a6d1f;}
+.integrity-note{border-left:3px solid #b8521b;padding:6px 0 6px 12px;margin:8px 0;
+  font-size:var(--fs-sm);color:#5a2a10;background:#fdf6f1;}
+.qlist{list-style:none;padding:0;margin:8px 0;}
+.qlist li{padding:8px 0 8px 26px;position:relative;border-bottom:1px solid var(--rule);font-size:var(--fs-sm);}
+.qlist li::before{content:"?";position:absolute;left:0;top:8px;font-family:var(--font-mono);
+  font-weight:600;color:var(--accent, #2a6fdb);}
+.qlist li b{font-family:var(--font-mono);font-weight:600;font-size:var(--fs-xs);
+  text-transform:uppercase;letter-spacing:.04em;color:var(--muted);display:block;margin-bottom:2px;}
+</style>
 </head>
 <body class="mode-spec">
 
@@ -36,19 +60,19 @@
         <div class="lens-menu-panel" role="radiogroup" aria-label="Audience lens">
           <button type="button" role="radio" data-lens="designer" aria-checked="true">
             <span class="lens-opt-title">Designer / architect</span>
-            <span class="lens-opt-sub">Drawing &amp; values open by default</span>
+            <span class="lens-opt-sub">Targets, products &amp; considerations open</span>
           </button>
           <button type="button" role="radio" data-lens="ot" aria-checked="false">
             <span class="lens-opt-title">Clinician / OT</span>
-            <span class="lens-opt-sub">Populations &amp; lived impact open by default</span>
+            <span class="lens-opt-sub">Populations &amp; capacities open</span>
           </button>
           <button type="button" role="radio" data-lens="lived" aria-checked="false">
             <span class="lens-opt-title">Lived experience</span>
-            <span class="lens-opt-sub">Lived impact &amp; conflicts open by default</span>
+            <span class="lens-opt-sub">Failure cases &amp; considerations open</span>
           </button>
           <button type="button" role="radio" data-lens="policy" aria-checked="false">
             <span class="lens-opt-title">Policymaker / code official</span>
-            <span class="lens-opt-sub">Jurisdictions &amp; provenance open by default</span>
+            <span class="lens-opt-sub">Standards table &amp; evidence open</span>
           </button>
           <p class="lens-menu-note">Everything is always available. The lens only changes which sections start expanded.</p>
         </div>
@@ -65,7 +89,6 @@
       <li><a href="../index.html#cat-e">Cat. E · Circulation</a></li>
       <li aria-current="page">E-08 · Corridor clear width</li>
     </ol>
-<!-- mode toggle removed: lens menu handles audience differentiation -->
   </div>
 </nav>
 
@@ -78,18 +101,16 @@
     </a>
     <ol class="sectnav-list" id="sectnav-list">
       <li><a href="#main" class="sectnav-contents" aria-label="Back to page contents"><span class="snc-n">↑</span><span class="snc-t">Contents</span></a></li>
-      <li><a href="#plain"        data-snav="plain"        data-snav-num="1"><span class="snc-n">1</span><span class="snc-t">Plain language</span></a></li>
-      <li><a href="#why"          data-snav="why"          data-snav-num="2"><span class="snc-n">2</span><span class="snc-t">Why it matters</span></a></li>
-      <li><a href="#values"       data-snav="values"       data-snav-num="3"><span class="snc-n">3</span><span class="snc-t">Values</span></a></li>
-      <li><a href="#drawing"      data-snav="drawing"      data-snav-num="4"><span class="snc-n">4</span><span class="snc-t">Drawing</span></a></li>
-      <li><a href="#evidence"     data-snav="evidence"     data-snav-num="5"><span class="snc-n">5</span><span class="snc-t">Evidence</span></a></li>
-      <li><a href="#populations"  data-snav="populations"  data-snav-num="6"><span class="snc-n">6</span><span class="snc-t">Populations</span></a></li>
-      <li><a href="#jurisdictions" data-snav="jurisdictions" data-snav-num="7"><span class="snc-n">7</span><span class="snc-t">Jurisdictions</span></a></li>
-      <li><a href="#conflicts"    data-snav="conflicts"    data-snav-num="8"><span class="snc-n">8</span><span class="snc-t">Conflicts</span></a></li>
-      <li><a href="#impact"       data-snav="impact"       data-snav-num="9"><span class="snc-n">9</span><span class="snc-t">Lived impact</span></a></li>
-      <li><a href="#schedule"     data-snav="schedule"     data-snav-num="10"><span class="snc-n">10</span><span class="snc-t">Schedule</span></a></li>
-      <li><a href="#related"      data-snav="related"      data-snav-num="11"><span class="snc-n">11</span><span class="snc-t">Related</span></a></li>
-      <li><a href="#provenance"   data-snav="provenance"   data-snav-num="12"><span class="snc-n">12</span><span class="snc-t">Provenance</span></a></li>
+      <li><a href="#diagram"      data-snav="diagram"      data-snav-num="1"><span class="snc-n">1</span><span class="snc-t">Diagram &amp; detail</span></a></li>
+      <li><a href="#summary"      data-snav="summary"      data-snav-num="2"><span class="snc-n">2</span><span class="snc-t">Summary</span></a></li>
+      <li><a href="#populations"  data-snav="populations"  data-snav-num="3"><span class="snc-n">3</span><span class="snc-t">Populations</span></a></li>
+      <li><a href="#capacities"   data-snav="capacities"   data-snav-num="4"><span class="snc-n">4</span><span class="snc-t">Capacities</span></a></li>
+      <li><a href="#targets"      data-snav="targets"      data-snav-num="5"><span class="snc-n">5</span><span class="snc-t">Best-practice targets</span></a></li>
+      <li><a href="#products"     data-snav="products"     data-snav-num="6"><span class="snc-n">6</span><span class="snc-t">Products</span></a></li>
+      <li><a href="#considerations" data-snav="considerations" data-snav-num="7"><span class="snc-n">7</span><span class="snc-t">Considerations</span></a></li>
+      <li><a href="#failures"     data-snav="failures"     data-snav-num="8"><span class="snc-n">8</span><span class="snc-t">Failure cases</span></a></li>
+      <li><a href="#standards"    data-snav="standards"    data-snav-num="9"><span class="snc-n">9</span><span class="snc-t">Standards &amp; codes</span></a></li>
+      <li><a href="#evidence"     data-snav="evidence"     data-snav-num="10"><span class="snc-n">10</span><span class="snc-t">Evidence base</span></a></li>
     </ol>
   </div>
 </nav>
@@ -101,180 +122,269 @@
       <span class="item-code">E-08</span>
       <span>Cat. E · Circulation &amp; Access</span>
       <span>parameter · clear_width</span>
-      <span><span class="sym sym-stated">●</span> stated · tier 4</span>
-      <span>curation · reviewed</span>
+      <span><span class="sym sym-provis">◐</span> provisional · pre-rehabilitation</span>
+      <span>curation · re-derived from spine</span>
     </div>
     <h1 class="title">
       <span class="title-spec">Corridor clear width</span>
-      <span class="title-question" aria-hidden="true">Can two power wheelchairs pass each other in this corridor?</span>
+      <span class="title-question" aria-hidden="true">How wide must a corridor be — and which function is setting the number?</span>
     </h1>
-    <p class="tagline">Plan dimension governing whether two mobility devices can pass without one backing up. Universal — the value applies regardless of population. <span class="src-chip" hidden>⚠ opus · editorial framing</span></p>
+    <p class="tagline">Plan dimension governing whether people can travel, pass, turn, and <em>hold a signed conversation</em> along a route. The right number depends on which of those functions the corridor must serve — not on how many codes agree. <span class="src-chip" hidden>⚠ opus · editorial framing</span></p>
 
-    <div class="hero-block">
-      <figure class="hero-drawing" aria-labelledby="hero-cap">
-        <svg viewBox="0 0 520 280" role="img" aria-labelledby="hero-svg-t hero-svg-d">
-          <title id="hero-svg-t">Plan: corridor at the Guidebook value</title>
-          <desc id="hero-svg-d">A horizontal corridor in plan, 1200 mm clear between handrails. Two power wheelchairs (700 mm wide each) pass each other with 100 mm separation.</desc>
-          <defs>
-            <pattern id="hero-zone-hatch" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)">
-              <line x1="0" y1="0" x2="0" y2="10" stroke="#2a6fdb" stroke-width="0.4" opacity="0.3"/>
-            </pattern>
-          </defs>
-          <line x1="20" y1="40" x2="500" y2="40" stroke="#1f1c18" stroke-width="2.2"/>
-          <line x1="20" y1="240" x2="500" y2="240" stroke="#1f1c18" stroke-width="2.2"/>
-          <line x1="40" y1="58" x2="480" y2="58" stroke="#6e655a" stroke-width="0.8" stroke-dasharray="3 3"/>
-          <line x1="40" y1="222" x2="480" y2="222" stroke="#6e655a" stroke-width="0.8" stroke-dasharray="3 3"/>
-          <rect x="40" y="58" width="440" height="164" fill="url(#hero-zone-hatch)" stroke="#2a6fdb" stroke-width="0.6" stroke-dasharray="4 3"/>
-          <g stroke="#1f1c18" fill="#fbf8f0" stroke-width="1.3">
-            <rect x="80" y="160" width="130" height="50" rx="5"/>
-            <circle cx="92" cy="160" r="6" fill="#1f1c18"/><circle cx="198" cy="160" r="6" fill="#1f1c18"/>
-            <circle cx="92" cy="210" r="6" fill="#1f1c18"/><circle cx="198" cy="210" r="6" fill="#1f1c18"/>
-            <text x="145" y="190" font-family="JetBrains Mono, monospace" font-size="10" fill="#1f1c18" text-anchor="middle">700 mm</text>
-          </g>
-          <g stroke="#1f1c18" fill="#fbf8f0" stroke-width="1.3">
-            <rect x="290" y="70" width="130" height="50" rx="5"/>
-            <circle cx="302" cy="70" r="6" fill="#1f1c18"/><circle cx="408" cy="70" r="6" fill="#1f1c18"/>
-            <circle cx="302" cy="120" r="6" fill="#1f1c18"/><circle cx="408" cy="120" r="6" fill="#1f1c18"/>
-            <text x="355" y="100" font-family="JetBrains Mono, monospace" font-size="10" fill="#1f1c18" text-anchor="middle">700 mm</text>
-          </g>
-          <line x1="210" y1="135" x2="290" y2="135" stroke="#2a6fdb" stroke-width="0.8"/>
-          <text x="250" y="150" font-family="JetBrains Mono, monospace" font-size="9" fill="#143464" text-anchor="middle">100 mm</text>
-          <line x1="495" y1="58" x2="495" y2="222" stroke="#143464" stroke-width="1"/>
-          <line x1="490" y1="58" x2="500" y2="58" stroke="#143464"/>
-          <line x1="490" y1="222" x2="500" y2="222" stroke="#143464"/>
-          <text x="510" y="143" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600" fill="#143464" text-anchor="middle" transform="rotate(-90 510 143)">1200 mm</text>
-          <text x="36" y="35" font-family="JetBrains Mono, monospace" font-size="9" fill="#6e655a">wall</text>
-          <text x="36" y="255" font-family="JetBrains Mono, monospace" font-size="9" fill="#6e655a">wall</text>
-        </svg>
-        <figcaption class="hero-drawing-cap" id="hero-cap">
-          <span>Plan · 1200 mm clear</span>
-          <span><a href="#drawing">→ section, elevation, fail case</a></span>
-        </figcaption>
-      </figure>
-      <div class="hero-meta">
-        <div class="hero-value-card">
-          <span class="hv-l">Guidebook value · primary route</span>
-          <span class="hv-v">≥ 1200 mm <small>3′ 11¼″</small></span>
-          <span class="tier tier-4" title="Tier 4 · peer-reviewed cohort observation (Koontz 2017)">T4 · cohort</span>
-          <span class="tier tier-6" title="Tier 6 · stated regulatory requirement, harmonised">T6 · ISO 21542</span>
-          <span class="tier tier-1" title="Tier 1 · Co-1 lived experience accounts">T1 · co-1</span>
-          <span class="hv-source">source · <code style="font-family:var(--font-mono);">data/jurisdictional_values/a-3_e08.yaml</code> + Koontz 2017 (DOI 10.1080/17483107.2016.1278470)</span>
-        </div>
-        <div class="hero-stats" role="list">
-          <div class="hero-stat" role="listitem">
-            <span class="hs-l">Range across 7 jurisdictions</span>
-            <span class="hs-v">915 → 1500 <small>mm</small></span>
-          </div>
-          <div class="hero-stat" role="listitem">
-            <span class="hs-l">Most divergent</span>
-            <span class="hs-v">US ADA <small>915 mm</small></span>
-          </div>
-          <div class="hero-stat" role="listitem">
-            <span class="hs-l">Primary populations</span>
-            <span class="hs-v">6 <small>MOB · DEM · VIS · NDV · OFS · NEU</small></span>
-          </div>
-          <div class="hero-stat" role="listitem">
-            <span class="hs-l">Co-1 accounts</span>
-            <span class="hs-v">3 <small>on file · § 9</small></span>
-          </div>
-        </div>
-      </div>
+    <div class="provisional-banner" role="note">
+      <span class="pb-k">◐ provisional value · evidentiary hold</span>
+      Every value on this page is <strong>PROVISIONAL</strong>. The underlying evidence corpus is in a deliberate
+      <code style="font-family:var(--font-mono);">RETRACTED-PRE-REHAB</code> hold (68/82 best-practice slices), and the
+      determination engine that will render adjudicated values from a genealogy substrate is <strong>not yet built</strong>.
+      This page is a <strong>hand-authored re-derivation from the project spine</strong>
+      (<a href="../references/methodology/value-genealogy-worked-example-corridor-width.md">value-genealogy worked example</a>,
+      DR-ACCEPTED 2026-07-13; <a href="../governance/tier-system.md">tier system</a> §3, §8) — it replaces an earlier
+      version of this file that carried a fabricated citation anchor. See <a href="#evidence">§ 10 · Evidence base</a> for the integrity record.
     </div>
   </header>
 
   <!-- ============================================================ -->
-  <!-- SITE MAP — what's on this page, at a glance                  -->
+  <!-- SITE MAP                                                      -->
   <!-- ============================================================ -->
   <nav class="sitemap" aria-label="Contents of this page">
     <div class="sitemap-head">
       <span class="sitemap-kicker">◇ contents</span>
       <h2 class="sitemap-h">What's on this page</h2>
-      <p class="sitemap-sub">12 sections, ordered by depth. Click any row to jump. Nothing else lives below — this is the whole article.</p>
+      <p class="sitemap-sub">Ten sections in the standard item order. This provision is unusual: its <em>evidence</em> and its <em>codes</em> point at different numbers, so the best-practice target (§ 5) deliberately exceeds every code floor (§ 9).</p>
     </div>
     <ol class="sitemap-list">
-      <li><a href="#plain"><span class="sm-n">§ 1</span><span class="sm-t">Plain language</span><span class="sm-p">~30 sec summary of the rule in everyday terms</span><span class="sm-meta">1 paragraph</span></a></li>
-      <li><a href="#why"><span class="sm-n">§ 2</span><span class="sm-t">Why it matters</span><span class="sm-p">Width as a participation factor — what a tight corridor costs</span><span class="sm-meta">⚠ opus</span></a></li>
-      <li><a href="#values"><span class="sm-n">§ 3</span><span class="sm-t">Values</span><span class="sm-p">≥ 1200 mm universal · 1500 mm enhanced · 915 mm minimum</span><span class="sm-meta">3 modes</span></a></li>
-      <li><a href="#drawing"><span class="sm-n">§ 4</span><span class="sm-t">Drawing</span><span class="sm-p">Plan, section, elevation — and the failure case</span><span class="sm-meta">4 SVGs</span></a></li>
-      <li><a href="#evidence"><span class="sm-n">§ 5</span><span class="sm-t">Evidence</span><span class="sm-p">Co-1 lived accounts · cohort study · ISO harmonisation</span><span class="sm-meta">5 sources</span></a></li>
-      <li><a href="#populations"><span class="sm-n">§ 6</span><span class="sm-t">Populations</span><span class="sm-p">Who this serves: MOB · DEM · VIS · NDV · OFS · NEU</span><span class="sm-meta">6 tags</span></a></li>
-      <li><a href="#jurisdictions"><span class="sm-n">§ 7</span><span class="sm-t">Jurisdictions</span><span class="sm-p">Side-by-side: ADA · UK · ISO · AS · NZ · EN · CSA</span><span class="sm-meta">7 rows</span></a></li>
-      <li><a href="#conflicts"><span class="sm-n">§ 8</span><span class="sm-t">Conflicts</span><span class="sm-p">Net-to-gross · cost · heritage trade-offs</span><span class="sm-meta">3 domains</span></a></li>
-      <li><a href="#impact"><span class="sm-n">§ 9</span><span class="sm-t">Lived impact</span><span class="sm-p">What changes for the user — Co-1 accounts</span><span class="sm-meta">∅ unsourced</span></a></li>
-      <li><a href="#schedule"><span class="sm-n">§ 10</span><span class="sm-t">Schedule language</span><span class="sm-p">Drop-in clause for contract documents</span><span class="sm-meta">copy block</span></a></li>
-      <li><a href="#related"><span class="sm-n">§ 11</span><span class="sm-t">Related provisions</span><span class="sm-p">Connections to E-04 turning, A-03 doorways, F-02 floor</span><span class="sm-meta">cross-refs</span></a></li>
-      <li><a href="#provenance"><span class="sm-n">§ 12</span><span class="sm-t">Provenance</span><span class="sm-p">Field-by-field audit · what's data vs. opus_synthesis</span><span class="sm-meta">audit</span></a></li>
+      <li><a href="#diagram"><span class="sm-n">§ 1</span><span class="sm-t">Diagram &amp; detail</span><span class="sm-p">One corridor, four functions, four widths — in plan and section</span><span class="sm-meta">2 SVG</span></a></li>
+      <li><a href="#summary"><span class="sm-n">§ 2</span><span class="sm-t">Summary</span><span class="sm-p">Which function sets the width · convergence ≠ best practice</span><span class="sm-meta">~40 sec</span></a></li>
+      <li><a href="#populations"><span class="sm-n">§ 3</span><span class="sm-t">Populations affected</span><span class="sm-p">Most populations' corridor strand is not a width</span><span class="sm-meta">7 codes</span></a></li>
+      <li><a href="#capacities"><span class="sm-n">§ 4</span><span class="sm-t">Capacities addressed</span><span class="sm-p">Locomotion · turning · passing · signed communication-in-motion</span><span class="sm-meta">ICF</span></a></li>
+      <li><a href="#targets"><span class="sm-n">§ 5</span><span class="sm-t">Best-practice targets</span><span class="sm-p">≥2440 anchored · device-class ladder · genealogy</span><span class="sm-meta">dimensions</span></a></li>
+      <li><a href="#products"><span class="sm-n">§ 6</span><span class="sm-t">Relevant products</span><span class="sm-p">Handrails · glazed junctions · finishes · recessed FF&amp;E</span><span class="sm-meta">components</span></a></li>
+      <li><a href="#considerations"><span class="sm-n">§ 7</span><span class="sm-t">Considerations &amp; questions</span><span class="sm-p">What to ask before fixing the number</span><span class="sm-meta">brief</span></a></li>
+      <li><a href="#failures"><span class="sm-n">§ 8</span><span class="sm-t">Failure cases</span><span class="sm-p">Single-file pinch · injury-dose spin · silent deletion</span><span class="sm-meta">7 modes</span></a></li>
+      <li><a href="#standards"><span class="sm-n">§ 9</span><span class="sm-t">Standards &amp; codes</span><span class="sm-p">Each country's approach — the regulatory floor</span><span class="sm-meta">7 rows</span></a></li>
+      <li><a href="#evidence"><span class="sm-n">§ 10</span><span class="sm-t">Evidence base</span><span class="sm-p">Verified anchors · integrity record · mining queue</span><span class="sm-meta">bibliography</span></a></li>
     </ol>
-    <p class="sitemap-foot">Estimated full read · 9 min · or pick a section above.</p>
+    <p class="sitemap-foot">Estimated full read · 12 min · or pick a section above.</p>
   </nav>
 
   <!-- ============================================================ -->
-  <!-- §1 PLAIN LANGUAGE                                             -->
+  <!-- §1 DIAGRAM & DETAIL                                           -->
   <!-- ============================================================ -->
-  <section class="section" data-color="moss" style="--order-spec:1; --order-q:2" id="plain">
+  <section class="section" data-color="teal" style="--order-spec:1; --order-q:1" id="diagram">
     <div class="sec-head">
-      <span class="sec-num">§ 1 · Plain language</span>
-      <h2>What this specification says</h2>
-      <span class="sec-meta">~30 sec · plainlang_v3</span>
+      <span class="sec-num">§ 1 · Diagram &amp; detail</span>
+      <h2>One corridor, four functions, four widths</h2>
+      <span class="sec-meta">plan + section · pass and fail at parity</span>
+    </div>
+    <p>A corridor is a stack of requirements, not one. The plan below shows the four functional widths nested; only the outermost (2440 mm) carries a traceable measurement root (§ 5). The section shows how clear width is measured — against the device's <strong>swept envelope</strong>, floor to 2050 mm AFF, projections deducted.</p>
+
+    <figure class="hero-drawing" aria-labelledby="d1-cap" style="margin:0 0 20px;">
+      <svg viewBox="0 0 520 310" role="img" aria-labelledby="d1t d1d">
+        <title id="d1t">Plan: four nested corridor widths by function</title>
+        <desc id="d1d">A corridor in plan with four nested clear-width bands stacked from narrow to wide: 915 mm (single manual wheelchair, US ADA floor), 1200 mm (single powered wheelchair with clearance, UK/ISO minimum), 1800 mm (two devices passing, code convergence with no traceable root), and 2440 mm (two people signing side by side plus powered-chair swept path, evidence-anchored best practice). Only the outermost band is annotated as having a measurement root.</desc>
+        <line x1="20" y1="20" x2="500" y2="20" stroke="#1f1c18" stroke-width="2.2"/>
+        <line x1="20" y1="290" x2="500" y2="290" stroke="#1f1c18" stroke-width="2.2"/>
+        <rect x="40" y="258" width="440" height="24" fill="#f0ede8" stroke="#c7bfb2" stroke-width="0.7"/>
+        <text x="48" y="274" font-family="JetBrains Mono, monospace" font-size="9" fill="#6e655a">915 mm · single manual chair · US ADA floor (manual only)</text>
+        <rect x="40" y="206" width="440" height="42" fill="#f0ede8" stroke="#c7bfb2" stroke-width="0.7"/>
+        <text x="48" y="231" font-family="JetBrains Mono, monospace" font-size="9" fill="#6e655a">1200 mm · single powered chair + clearance · UK/ISO min</text>
+        <rect x="40" y="124" width="440" height="72" fill="#fbf3dd" stroke="#c9ab5e" stroke-width="0.7"/>
+        <text x="48" y="163" font-family="JetBrains Mono, monospace" font-size="9" fill="#7a5c12">1800 mm · two devices pass · code convergence (no root)</text>
+        <rect x="40" y="30" width="440" height="84" fill="#e3f0e6" stroke="#7bab89" stroke-width="1.1"/>
+        <text x="48" y="60" font-family="JetBrains Mono, monospace" font-size="10" fill="#1f5e3a" font-weight="600">2440 mm · signing pair + swept envelope</text>
+        <text x="48" y="76" font-family="JetBrains Mono, monospace" font-size="9" fill="#1f5e3a">evidence-anchored best practice · two independent roots</text>
+        <text x="48" y="98" font-family="JetBrains Mono, monospace" font-size="8" fill="#1f5e3a">DeafSpace/ASL (Co-1) + Steinfeld swept-path (T3)</text>
+        <line x1="495" y1="30" x2="495" y2="114" stroke="#1f5e3a" stroke-width="1"/>
+        <line x1="490" y1="30" x2="500" y2="30" stroke="#1f5e3a"/>
+        <line x1="490" y1="114" x2="500" y2="114" stroke="#1f5e3a"/>
+      </svg>
+      <figcaption class="hero-drawing-cap" id="d1-cap">
+        <span>Plan · four functions, four widths</span>
+        <span><a href="#targets">→ which widths have roots?</a></span>
+      </figcaption>
+    </figure>
+
+    <figure class="drawing-figure" aria-labelledby="d1b-cap">
+      <div class="drawing-views">
+        <div class="drawing-pane">
+          <div class="pane-label"><span>Section A–A · what "clear" means</span></div>
+          <svg viewBox="0 0 480 200" role="img" aria-labelledby="dst dsd">
+            <title id="dst">Cross-section through the corridor</title>
+            <desc id="dsd">Cross-section: finished floor, two walls to a soffit. Clear envelope from floor to 2050 mm AFF. Continuous handrails at 870 mm AFF project into the section; any projection greater than 25 mm below 2050 mm deducts from the clear width. Above 2050 mm, signage and services may project without counting.</desc>
+            <line x1="20" y1="170" x2="460" y2="170" stroke="#1f1c18" stroke-width="2"/>
+            <line x1="60" y1="20" x2="420" y2="20" stroke="#1f1c18" stroke-width="1.2"/>
+            <line x1="60" y1="20" x2="60" y2="170" stroke="#1f1c18" stroke-width="2"/>
+            <line x1="420" y1="20" x2="420" y2="170" stroke="#1f1c18" stroke-width="2"/>
+            <rect x="60" y="50" width="360" height="120" fill="#dbe5f5" stroke="#2a6fdb" stroke-width="0.8" stroke-dasharray="3 3"/>
+            <line x1="60" y1="100" x2="80" y2="100" stroke="#1f1c18" stroke-width="2"/>
+            <line x1="400" y1="100" x2="420" y2="100" stroke="#1f1c18" stroke-width="2"/>
+            <text x="438" y="60" font-family="JetBrains Mono, monospace" font-size="9" fill="#6e655a">2400 mm soffit</text>
+            <text x="438" y="105" font-family="JetBrains Mono, monospace" font-size="9" fill="#143464">2050 mm clear datum</text>
+            <text x="438" y="150" font-family="JetBrains Mono, monospace" font-size="9" fill="#6e655a">870 mm rail</text>
+            <text x="240" y="192" font-family="JetBrains Mono, monospace" font-size="9" fill="#6e655a" text-anchor="middle">clear width measured against the device SWEPT ENVELOPE, not a turning circle</text>
+          </svg>
+        </div>
+        <div class="drawing-pane">
+          <div class="pane-label"><span>Detail · glazed junction (DeafSpace)</span></div>
+          <svg viewBox="0 0 360 200" role="img" aria-labelledby="det ded">
+            <title id="det">Plan detail of a glazed corridor junction</title>
+            <desc id="ded">Two corridors meeting at a right angle. The corner is glazed rather than solid, giving visual advance warning of an approaching person — the sightline half of the DeafSpace strategy that also drives the 2440 mm width. Lighting note: diffuse, at least 300 lux at face height, no backlighting.</desc>
+            <line x1="20" y1="40" x2="200" y2="40" stroke="#1f1c18" stroke-width="2"/>
+            <line x1="200" y1="40" x2="200" y2="180" stroke="#1f1c18" stroke-width="2"/>
+            <line x1="20" y1="120" x2="120" y2="120" stroke="#1f1c18" stroke-width="2"/>
+            <line x1="120" y1="120" x2="120" y2="180" stroke="#1f1c18" stroke-width="2"/>
+            <line x1="120" y1="120" x2="200" y2="40" stroke="#2a6fdb" stroke-width="1.4" stroke-dasharray="4 3"/>
+            <text x="150" y="95" font-family="JetBrains Mono, monospace" font-size="8" fill="#143464" transform="rotate(-45 150 95)">glazed corner</text>
+            <text x="70" y="34" font-family="JetBrains Mono, monospace" font-size="8" fill="#6e655a">approach A</text>
+            <text x="128" y="170" font-family="JetBrains Mono, monospace" font-size="8" fill="#6e655a">approach B</text>
+            <text x="30" y="195" font-family="JetBrains Mono, monospace" font-size="8" fill="#6e655a">≥300 lux diffuse · no backlighting · matte finishes</text>
+          </svg>
+        </div>
+      </div>
+      <figcaption class="drawing-caption" id="d1b-cap">
+        <div><strong>Convention.</strong> Monochrome plan/section; accessible-feature highlight in blue; dimensions in monospace, SI primary. The fabricated "metabolic-cost slider" of the previous version has been removed — it was built on a study that does not exist (§ 10).</div>
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- §2 SUMMARY                                                    -->
+  <!-- ============================================================ -->
+  <section class="section" data-color="moss" style="--order-spec:2; --order-q:2" id="summary">
+    <div class="sec-head">
+      <span class="sec-num">§ 2 · Summary</span>
+      <h2>Which function is setting the width</h2>
+      <span class="sec-meta">~40 sec · plainlang_v4</span>
     </div>
     <div class="plain">
       <span class="plain-label">◇ plain-language summary</span>
-      <p>On any corridor people are expected to use to get somewhere — not a service alley, not a one-way fire egress — leave at least <strong>1200 mm</strong> (about <strong>3 ft 11 in</strong>) of clear floor between walls, handrails, and fixed obstacles. That is the width at which two power wheelchairs can pass each other without either user backing up, and at which a person walking with a forearm crutch can pass a wheelchair without the metabolic cost of a near-miss.</p>
+      <p>A corridor is not one requirement — it is a stack of them. At <strong>915 mm</strong> one manual wheelchair fits (the US floor, set for manual chairs). At about <strong>1200 mm</strong> one powered wheelchair fits with clearance (the UK / ISO minimum). At about <strong>1800 mm</strong> two devices can pass (nearly every code agrees — but no one can point to the study behind it). And at <strong>2440 mm</strong> two people can walk side by side <em>and hold a signed conversation</em>, and a powered chair has room for the path it actually sweeps when it turns. Only that last number has traceable measurement behind it. So the Guidebook's best-practice value on a primary route is <strong>≥ 2440 mm</strong> — with the honest caveat that the figure comes from one Deaf-community source and one signed language (ASL), and has not been independently replicated.</p>
     </div>
-    <p>Skip to: <button class="xref-trigger" data-pop="x-3"><span class="x-code">§ 3</span>the value</button> · <button class="xref-trigger" data-pop="x-5"><span class="x-code">§ 5</span>evidence</button> · <button class="xref-trigger" data-pop="x-7"><span class="x-code">§ 7</span>jurisdictions</button> · <button class="xref-trigger" data-pop="x-9"><span class="x-code">§ 9</span>lived impact</button>.</p>
+    <div class="integrity-note">
+      <strong>The doctrine that decides this page: best practice ≠ convergence.</strong> That BS 8300, DIN 18040-1, AS 1428.1
+      and ISO 21542 all specify 1800 mm is a <em>convergence claim across Tier 4–6 codes</em>. Convergence tells you
+      jurisdictions agree; it is <em>not</em> best-practice evidence — they may all be reading from one shared pre-evidence
+      floor. Precedent counts documents; evidence counts roots. 1800 mm has the most documents and zero traceable roots;
+      2440 mm has two independent roots (tier-system §3).
+    </div>
+    <p>Skip to: <button class="xref-trigger" data-pop="x-5"><span class="x-code">§ 5</span>the targets</button> · <button class="xref-trigger" data-pop="x-8"><span class="x-code">§ 8</span>failure cases</button> · <button class="xref-trigger" data-pop="x-9"><span class="x-code">§ 9</span>standards</button>.</p>
   </section>
 
   <!-- ============================================================ -->
-  <!-- §2 WHY                                                        -->
+  <!-- §3 POPULATIONS AFFECTED                                       -->
   <!-- ============================================================ -->
-  <section class="section" data-color="oxblood" style="--order-spec:11; --order-q:1" id="why">
+  <section class="section" data-color="ochre" style="--order-spec:3; --order-q:3" id="populations">
     <div class="sec-head">
-      <span class="sec-num">§ 2 · Why it matters</span>
-      <h2>Width as a participation factor</h2>
-      <span class="sec-meta">cohort · n=42</span>
+      <span class="sec-num">§ 3 · Populations affected</span>
+      <h2>Most populations' corridor strand is not a width</h2>
+      <span class="sec-meta">fan-out · variable-conflation test applied</span>
     </div>
-    <p>Below 1200 mm, a power-wheelchair user passing another power-wheelchair user must reverse and find a wider point<button class="cite-trigger" data-pop="cite-koontz" aria-label="Citation">[1]</button>. The metabolic cost of that manoeuvre, measured against open-corridor travel, rises by 30–45 % at 900 mm — the floor still permitted in much retrofit construction<button class="cite-trigger" data-pop="cite-koontz">[1]</button>. Width at this dimension is therefore not a comfort factor but a participation factor: it determines whether the corridor is a <em>route</em> or an <em>obstacle to be planned around</em>. <span class="src-chip" hidden>⚠ opus · editorial synthesis of Koontz 2017</span></p>
-    <p>The threshold is universal — every population coded against this specification benefits, and no population is harmed. Where conflict appears, it is with budget and floor-plate efficiency, not between disabled users. <span class="src-chip" hidden>⚠ opus · editorial framing</span></p>
-  </section>
+    <p>The genealogy method's key result for this item: ask 22 population codes "what is your corridor requirement" and most answer with a <em>different physical variable</em> that happens to share the same architectural element. Flattening them into one fought-over millimetre figure is the error the method exists to prevent. <strong>Primary (width-anchoring)</strong> means the population's evidence actually sets a width; the rest inherit, or key a non-width variable. <span class="src-chip" hidden>◆ worked example §5 per-population fan-out</span></p>
 
-  <!-- ============================================================ -->
-  <!-- §3 VALUE — accordion rows                                     -->
-  <!-- ============================================================ -->
-  <section class="section" data-color="blue" style="--order-spec:2; --order-q:3" id="values">
-    <div class="sec-head">
-      <span class="sec-num">§ 3 · Values</span>
-      <h2>The dimension, by design mode</h2>
-      <span class="sec-meta">measurement table · 3 modes</span>
+    <div class="integrity-note">
+      <strong>DEAF holds the anchor evidence for this item — and was dropped from it.</strong> The live DB
+      <code style="font-family:var(--font-mono);">item_population_links</code> for E-08 list MOB/VIS/DEM/SCI but omit DEAF,
+      even though DEAF supplies the strongest (2440 mm) width evidence. Top-down, hand-maintained links dropped exactly the
+      population whose evidence is strongest. DEAF is restored as a primary anchor here.
     </div>
-    <p>Each row is the canonical record for one design mode. Open it for the source query, the evidence behind the number, the discussion that produced it, and any conflict notes. <span class="src-chip" hidden>◆ from data/specifications/e-08.yaml</span></p>
 
     <div class="rowlist">
-      <details class="row" open style="--row-color: var(--sec-3)" open>
+      <details class="row" open style="--row-color: var(--pop-mob)">
+        <summary><span></span><span class="r-tag">● primary · anchor</span><span class="r-title">DEAF · Deaf / signing<small>signing-pair envelope — the 2440 mm root</small></span><span class="r-value"><span class="chip" data-pop="DEAF">anchor</span></span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-co1">◆</span> width-anchoring variable</div><p>Two signers walking in conversation with peripheral scan space: ≥ 2440 mm primary / 1830 mm secondary / 3050 mm exterior; interlocutor distance 900–3050 mm; glazed junctions; ≥ 300 lux diffuse, no backlighting; matte mid-tone walls for skin-tone legibility. ASL-derived, single-institution, LOW dimension confidence.</p><ul class="citelist"><li><button class="cite-trigger" data-pop="cite-dsdg">DSDG · Gallaudet 2010</button></li></ul></div></div></div>
+      </details>
+      <details class="row" style="--row-color: var(--pop-mob)">
+        <summary><span></span><span class="r-tag">● primary · anchor</span><span class="r-title">MOB / SCI · Wheeled mobility<small>passing + swept envelope + injury dose</small></span><span class="r-value"><span class="chip" data-pop="MOB">width</span></span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> width-anchoring variable</div><p>Two-device passing (1800 floor) and the powered-chair swept envelope (up to 2400 mm entire-sample, Steinfeld 2006). SCI adds propulsion-effort / injury-dose. This is the width strand alongside DEAF; the numbers converge upward on 2400+.</p><ul class="citelist"><li><button class="cite-trigger" data-pop="cite-steinfeld06">Steinfeld 2006</button></li></ul></div></div></div>
+      </details>
+      <details class="row" style="--row-color: var(--pop-dem)">
+        <summary><span></span><span class="r-tag">◇ topology, not width</span><span class="r-title">DEM · Dementia<small>loop topology &amp; ≤1 visible choice point</small></span><span class="r-value"><span class="chip" data-pop="DEM">topology</span></span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> real variable</div><p>The DEM corridor variable is <strong>loop topology and ≤ 1 visible choice point</strong> (Marquardt, T3 root) — <em>not</em> width. The once-asserted "narrow corridors calm" reading was <strong>retired as a vestigial framing assumption</strong>; the Danish loop-agitation claim is a broken genealogy (source unverifiable). DEM inherits a width only incidentally.</p></div></div></div>
+      </details>
+      <details class="row" style="--row-color: var(--pop-ndv)">
+        <summary><span></span><span class="r-tag">◇ load, not width</span><span class="r-title">AUT · SENS · NDV · ADHD · Neurodivergent<small>sensory load is independent of width</small></span><span class="r-value"><span class="chip" data-pop="NDV">independent</span></span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> variable-independence finding</div><p>The CORRIDOR-W conflict was <strong>retired 2026-03-30</strong>: "width and sensory load are independent variables." No study shows wide corridors harm; the real variables are RT60 ≤ 0.6 s, transition zones, visual noise. A ≥1500 mm proximity-buffer figure is Co-2-only and unpromoted. Listing NDV as a "primary author" of the width value (as the prior page did) is incorrect. The genuine conflict is with <em>open sightlines</em>, not width (§ 8).</p></div></div></div>
+      </details>
+      <details class="row" style="--row-color: var(--pop-ofs)">
+        <summary><span></span><span class="r-tag">◇ route metric, not cross-section</span><span class="r-title">OFS · PAIN · CFS · POTS · MS<small>rest interval &amp; distance budgeting</small></span><span class="r-value"><span class="chip" data-pop="OFS">interval</span></span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> real variable</div><p>The strand is rest-interval and distance budgeting (pain-ofs resolved to 25–30 m / median 27.5 m; the cross-BPC tension with the OFS BPC's ≤ 50 m is unadjudicated), interacting with width only via the <strong>alcove rule</strong>: rest seating recessed ≥ 200 mm off the clear width so it never subtracts from passing space (Co-2 root). Width-neutral by geometry.</p></div></div></div>
+      </details>
+      <details class="row" style="--row-color: var(--pop-vis)">
+        <summary><span></span><span class="r-tag">◑ inherits width</span><span class="r-title">VIS · Blind / low vision<small>guide-pair width; own axis is detection / edges</small></span><span class="r-value"><span class="chip" data-pop="VIS">guide-pair</span></span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> variable</div><p>Sighted-guide pairs walk shoulder-to-shoulder, so VIS inherits a linked-two-person width. VIS's <em>own</em> primary axis is detection and edges, not cross-section; a shoreline / edge-following-vs-excess-width hypothesis is logged as an external-mining target, not asserted.</p></div></div></div>
+      </details>
+      <details class="row" style="--row-color: var(--pop-neu)">
+        <summary><span></span><span class="r-tag">◑ inherits width</span><span class="r-title">NEU · Neurological — variable energy<small>inherited MOB numbers + bilateral-cue redundancy</small></span><span class="r-value"><span class="chip" data-pop="NEU">inherited</span></span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> variable</div><p>NEU's 1200/1500 "native" values are inherited MOB numbers plus a genuinely-rooted bilateral-cue redundancy requirement for hemispatial neglect. Recorded as derivation, not as an independent width root.</p></div></div></div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- §4 FUNCTIONAL CAPACITIES                                      -->
+  <!-- ============================================================ -->
+  <section class="section" data-color="fern" style="--order-spec:4; --order-q:4" id="capacities">
+    <div class="sec-head">
+      <span class="sec-num">§ 4 · Capacities addressed</span>
+      <h2>The functional capacities this width serves</h2>
+      <span class="sec-meta">ICF activity domains · design addresses deficits</span>
+    </div>
+    <p>The provision is framed against <em>what a person is trying to do</em>, not a diagnosis. Each capacity below demands a different width; the corridor's target is the widest capacity it must support. <span class="honesty">Corpus caveat: the model does not yet carry a queryable ICF activity axis (one incidental d-code in the whole DB) — the mappings below are re-derived from the handshake in the worked example §6, not read from a stored field.</span></p>
+
+    <div class="rowlist">
+      <details class="row" open style="--row-color: var(--sec-4)">
+        <summary><span></span><span class="r-tag">d465</span><span class="r-title">Moving around using equipment<small>wheeled mobility &amp; the swept turn</small></span><span class="r-value">→ swept envelope</span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> what the width buys</div><p>Room for the path a powered chair actually sweeps (footplate flare 250–500 mm+; drive-system-dependent envelope shape), not an idealised turning circle. Below the swept envelope the user is forced into the high-effort spin turn — an injury dose (§ 8). Keyed d465 + device class in the bottom-up derivation (FDR-BAB-04).</p></div></div></div>
+      </details>
+      <details class="row" style="--row-color: var(--sec-4)">
+        <summary><span></span><span class="r-tag">d450 / d455</span><span class="r-title">Walking &amp; moving around<small>two-way passing · companion-on-arm</small></span><span class="r-value">→ 1800 passing</span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> what the width buys</div><p>Two devices, or a walker plus companion-on-arm, moving in opposite directions without one backing up. This is the capacity the 1800 mm code floor addresses — necessary but not the design target where signed conversation is in scope.</p></div></div></div>
+      </details>
+      <details class="row" style="--row-color: var(--sec-4)">
+        <summary><span></span><span class="r-tag">d310 / d330</span><span class="r-title">Communicating — receiving &amp; producing signed messages<small>conversation while moving</small></span><span class="r-value">→ 2440 signing pair</span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-co1">◆</span> what the width buys</div><p>The capacity nearly every code ignores: two people signing side by side with peripheral scan space, sightlines unobstructed across ≥ 3 m depth. This is the capacity that anchors best practice, keyed d310/d330 + DEAF in the bottom-up derivation (FDR-DEAF-01, flagged NOVEL — "absent from BPC"). Its normative force is linguistic-cultural (community-rooted), and the handshake records that without demanding a biomechanical mechanism.</p></div></div></div>
+      </details>
+      <details class="row" style="--row-color: var(--sec-4)">
+        <summary><span></span><span class="r-tag">d410–d429</span><span class="r-title">Changing &amp; maintaining body position<small>180° turn, transfer turn</small></span><span class="r-value">→ manoeuvre type</span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> what the width buys</div><p>The turn is not one event: 90° corridor entry (median daily turn 39°, IQR 24–67°, Sonenblum 2012) ≠ 180° in an enclosed bay (2400 mm entire-sample) ≠ open bay (1925 mm) ≠ transfer turn. Values are commensurable only within a manoeuvre type + drive system — see § 5.</p></div></div></div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- §5 BEST-PRACTICE TARGETS                                      -->
+  <!-- ============================================================ -->
+  <section class="section" data-color="blue" style="--order-spec:5; --order-q:5" id="targets">
+    <div class="sec-head">
+      <span class="sec-num">§ 5 · Best-practice targets</span>
+      <h2>Performance targets &amp; dimensions, by evidence strength</h2>
+      <span class="sec-meta">weighted-strength model · tier-system §8</span>
+    </div>
+    <p>Rows are ordered by <strong>how strong the evidence behind the number is</strong> (tier-system §8: <span class="band band-full">● full</span> anchors outright · <span class="band band-partial">◐ partial</span> = standards basis, not primary evidence · <span class="band band-weak">○ weak</span> = floor/convergence, not academically adjudicated). The strongest number is not the largest code minimum — it is the one with a traceable measurement root. <span class="src-chip" hidden>◆ re-derived from value-genealogy worked example §1</span></p>
+
+    <div class="rowlist">
+      <details class="row" open style="--row-color: var(--sec-3)">
         <summary>
           <span aria-hidden="true"></span>
-          <span class="r-tag">★ universal</span>
-          <span class="r-title">Primary circulation routes<small>between occupied spaces</small></span>
-          <span class="r-value">≥ 1200 <small>mm · 3′ 11¼″</small></span>
+          <span class="r-tag">● full · anchored</span>
+          <span class="r-title">Primary routes — best practice<small>signing-pair envelope + powered-chair swept path</small></span>
+          <span class="r-value">≥ 2440 <small>mm · 8 ft</small></span>
           <span class="r-arrow" aria-hidden="true">›</span>
         </summary>
         <div class="r-body">
           <div class="blocks">
             <div class="block"><div class="block-l"><span class="sym">◆</span> value</div>
-              <p>Measured between the nearest faces of any continuous obstruction, from finished floor to 2050 mm AFF. Handrails projecting more than 25 mm from a wall count toward the deduction; recessed grab rails do not.</p>
+              <p>Primary routes ≥ 2440 mm. Secondary routes ≥ 1830 mm. Exterior routes where signing groups are anticipated ≥ 3050 mm. Signing interlocutor distance 900–3050 mm by group size. Sightline depth ≥ 3 m unobstructed.</p>
             </div>
-            <div class="block"><div class="block-l"><span class="sym sym-stated">●</span> evidence</div>
-              <p>Calibrated to two-power-wheelchair passing observation (Koontz 2017) plus the harmonised ISO/EN baseline.</p>
+            <div class="block"><div class="block-l"><span class="sym sym-co1">◆</span> evidence · <span class="band band-full">● full</span></div>
+              <p>Two independent roots: DeafSpace/ASL signing-pair proxemics (Gallaudet 2010, Co-1) + measured swept-path envelopes reaching 2400 mm entire-sample in an enclosed bay (Steinfeld 2006, T3). Corroborated by Vaughn 2018 and Cloete &amp; Rout 2025.</p>
               <ul class="citelist">
-                <li><button class="cite-trigger" data-pop="cite-koontz">REF-00237</button></li>
-                <li><button class="cite-trigger" data-pop="cite-iso">REF-00500</button></li>
-                <li><button class="cite-trigger" data-pop="cite-bs">REF-00114</button></li>
+                <li><button class="cite-trigger" data-pop="cite-dsdg">DSDG · Gallaudet 2010</button></li>
+                <li><button class="cite-trigger" data-pop="cite-steinfeld06">Steinfeld 2006</button></li>
               </ul>
             </div>
-            <div class="block"><div class="block-l"><span class="sym">▣</span> discussion</div>
-              <p>1200 mm is the median of stated international requirements. The chair envelope is 700 mm + 100 mm separation tolerance + 700 mm — not exactly summing to 1200 because typical adult power-chair widths including footplate flare are rounded up, and the empirically-recorded minimum near-miss strip is 100 mm.</p>
-            </div>
-            <div class="block"><div class="block-l"><span class="sym sym-warn">▲</span> conflict notes</div>
-              <p>No cross-population conflict recorded. Trade-off domain is structural / floor-plate efficiency. See <button class="xref-trigger" data-pop="x-conflict-fp"><span class="x-code">FLOOR-PLATE</span>conflict register</button>.</p>
+            <div class="block"><div class="block-l"><span class="sym sym-warn">▲</span> honesty markers</div>
+              <p class="honesty">Dimension confidence LOW — single institution, single signed language (ASL). No independent replication of the 2440 mm figure exists; treat as an ASL-derived floor (likely conservative for BSL/DGS, possibly insufficient for multi-person ASL groups), not a validated universal. The Steinfeld 2006 swept-path root is UNVERIFIED-1. Directional principles MODERATE confidence.</p>
             </div>
           </div>
         </div>
@@ -283,27 +393,16 @@
       <details class="row" style="--row-color: var(--sec-6)">
         <summary>
           <span aria-hidden="true"></span>
-          <span class="r-tag">◐ universal · constrained</span>
-          <span class="r-title">Secondary routes only<small>≤ 6 m long with turnaround at each end</small></span>
-          <span class="r-value">≥ 1000 <small>mm · 3′ 3⅜″</small></span>
+          <span class="r-tag">○ weak · convergence</span>
+          <span class="r-title">Two devices passing<small>regulatory floor — code convergence, no traceable root</small></span>
+          <span class="r-value">≥ 1800 <small>mm</small></span>
           <span class="r-arrow" aria-hidden="true">›</span>
         </summary>
         <div class="r-body">
           <div class="blocks">
-            <div class="block"><div class="block-l"><span class="sym">◆</span> value</div>
-              <p>Permitted only where the corridor segment is one-way passage to a single destination (e.g. plant room access) and a turnaround circle of 1500 mm diameter is provided at both ends.</p>
-            </div>
-            <div class="block"><div class="block-l"><span class="sym sym-provis">◐</span> evidence</div>
-              <p>Provisional. Adopted from CSA B651-18 minimum (1100 mm rounded down) for retrofit feasibility, with stricter end-condition requirements added by the Guidebook editorial group.</p>
-              <ul class="citelist">
-                <li><button class="cite-trigger" data-pop="cite-csa">REF-00200</button></li>
-              </ul>
-            </div>
-            <div class="block"><div class="block-l"><span class="sym">▣</span> discussion</div>
-              <p>Never permitted on a primary route. The constrained allowance exists for legacy corridors where masonry walls cannot be moved; new construction must meet 1200 mm everywhere two wheelchairs may meet.</p>
-            </div>
-            <div class="block"><div class="block-l"><span class="sym sym-warn">▲</span> conflict notes</div>
-              <p>Lived-account 0218 records that 1000 mm fails when an obstruction (fire extinguisher, hand-sanitiser stand) sits in the pinch point. Specify all FF&amp;E in this band wall-recessed.</p>
+            <div class="block"><div class="block-l"><span class="sym sym-warn">○</span> evidence · <span class="band band-weak">○ weak</span></div>
+              <p>BS 8300-2, DIN 18040-1, AS 1428.1 and ISO 21542 converge on 1800 mm. Per tier-system §3 this is a convergence claim across Tier 4–6 sources — informative about regulatory agreement, not best-practice evidence. No upstream derivation exists in the corpus. Adopt as a <strong>floor</strong> where 2440 mm cannot be achieved; never relabel "preferred."</p>
+              <ul class="citelist"><li><button class="cite-trigger" data-pop="cite-conv">convergence-not-evidence</button></li><li><button class="cite-trigger" data-pop="cite-vng">VNG 2016 (NL)</button></li></ul>
             </div>
           </div>
         </div>
@@ -312,467 +411,156 @@
       <details class="row" style="--row-color: var(--pop-mob)">
         <summary>
           <span aria-hidden="true"></span>
-          <span class="r-tag">◇ population-specific</span>
-          <span class="r-title">Where two power chairs are scheduled to pass<small>e.g. care-home dining transit, day-hospital corridor</small> <span class="chip" data-pop="MOB" style="margin-left:6px;">MOB</span></span>
-          <span class="r-value">≥ 1500 <small>mm · 4′ 11″</small></span>
+          <span class="r-tag">◆ device-class ladder</span>
+          <span class="r-title">A value rooted in one device class is not evidence about another<small>measured swept envelopes, not turning circles</small></span>
+          <span class="r-value">by class</span>
           <span class="r-arrow" aria-hidden="true">›</span>
         </summary>
         <div class="r-body">
           <div class="blocks">
-            <div class="block"><div class="block-l"><span class="sym">◆</span> value</div>
-              <p>Triggered by population MOB primary-role assignment combined with scheduled simultaneous transit. The brief must call this out — the building cannot infer it.</p>
+            <div class="block"><div class="block-l"><span class="sym">◆</span> the ladder</div>
+              <p>Manual self-propelled — 1500 mm floor / 1700 mm best practice (+ footplate sweep). Powered — 1700–1800 mm by drive type (ICC A117.1-2017 concedes 1702 mm powered; chair width 700–800 mm vs ADA's 915 mm, "set for manual passage only"). Scooter — 1800 mm+, multi-point Ackermann envelope unmodelled. Bariatric — 1900 mm new-build. Children's powered — MEXT ≥ 2400 mm. Attendant-propelled — total corpus silence.</p>
             </div>
-            <div class="block"><div class="block-l"><span class="sym sym-stated">●</span> evidence</div>
-              <p>NBR 9050 (Brazil) preferred value, IN Harmonised Guidelines minimum, and lived-account corroboration.</p>
-              <ul class="citelist">
-                <li><button class="cite-trigger" data-pop="cite-nbr">REF-00610</button></li>
-                <li><button class="cite-trigger" data-pop="cite-koontz">REF-00237</button></li>
-                <li class="chip chip-evi-co1">◆ Co-1 · acc-0142</li>
-              </ul>
-            </div>
-            <div class="block"><div class="block-l"><span class="sym">▣</span> discussion</div>
-              <p>Mode S (person-specific) does not apply: clear width resolves at building level, never at an individual's plan of care.</p>
+            <div class="block"><div class="block-l"><span class="sym sym-stated">●</span> named by the codes themselves</div>
+              <p>PT DL 163/2006 and KR 편의증진법 state their 1500 mm figures are <em>manual-wheelchair-based</em>; SG BCA Code 2025 explicitly recognises prior code insufficient for contemporary device footprints. Cross-class application is a derivation (recorded, down-weighted), never an identity. Base anthropometry stale (GAP-295).</p>
             </div>
           </div>
         </div>
       </details>
     </div>
+
+    <h3 style="font-family:var(--font-ui,inherit);font-size:var(--fs-sm);text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:22px 0 8px;">Value genealogy — why these numbers, and which ones have roots</h3>
+    <div class="compare-wrap">
+      <div class="compare-scroll" tabindex="0" aria-label="Value genealogy table — scroll horizontally to see all columns">
+        <table class="compare-table">
+          <thead><tr><th scope="col" style="min-width:110px;">Value</th><th scope="col">Claims to be</th><th scope="col" style="min-width:210px;">Actual genealogy (corpus-traceable)</th><th scope="col">Classification</th></tr></thead>
+          <tbody>
+            <tr class="row-spread"><th scope="row"><span class="val-num val-pref">2440</span></th><td>Best practice</td><td>Two independent roots + untraced convergence: DeafSpace/ASL (Co-1) + Steinfeld 2006 swept-path (T3, UNVERIFIED-1) + MEXT ≥2400 (T5, committee assertion).</td><td><span class="geneal-tag">two-root anchor — strongest position</span></td></tr>
+            <tr><th scope="row"><span class="val-num">1800</span></th><td>Evidence-based passing</td><td>BS 8300 · DIN 18040-1 · AS 1428.1 · Part M all specify it. "Code consensus, not Tier 1/Co-1." No upstream derivation anywhere; the one "clinical evidence" sentence is uncited.</td><td><span class="geneal-tag">unrooted consensus</span></td></tr>
+            <tr><th scope="row"><span class="val-num">1500</span></th><td>Turning space</td><td>1970s US VA/HUD anthropometry → ANSI A117.1-1980 (Steinfeld 2010: "based on 1970s research … need updating"). "Regulatory floor in 24 jurisdictions, empirical adequate value in none."</td><td><span class="geneal-tag">traced echo</span></td></tr>
+            <tr><th scope="row"><span class="val-num">1524</span></th><td>ISO turning space</td><td>An imperial 60 in inside an SI standard — prima facie ADA→ISO echo; adoption path undocumented.</td><td><span class="geneal-tag">echo of an echo</span></td></tr>
+            <tr><th scope="row"><span class="val-num">1200</span></th><td>Adopted minimum</td><td>Adopted "because it accommodates a single powered wheelchair with clearance" — code-consensus inheritance; no empirical root.</td><td><span class="geneal-tag">echo, adopted</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </section>
 
   <!-- ============================================================ -->
-  <!-- §4 DRAWING                                                    -->
+  <!-- §6 RELEVANT PRODUCTS                                          -->
   <!-- ============================================================ -->
-  <section class="section" data-color="teal" style="--order-spec:3; --order-q:4" id="drawing">
+  <section class="section" data-color="graphite" style="--order-spec:6; --order-q:6" id="products">
     <div class="sec-head">
-      <span class="sec-num">§ 4 · Drawing</span>
-      <h2>Plan, section, elevation — and the failure case</h2>
-      <span class="sec-meta">triptych · pass + fail at parity</span>
+      <span class="sec-num">§ 6 · Relevant products</span>
+      <h2>Components &amp; products the provision implies</h2>
+      <span class="sec-meta">component classes · not a product database</span>
     </div>
-    <p>Three views of the same corridor. The accessible-feature highlight (blue) marks the protected clear-width zone. The right-hand pane is the <strong>failure case</strong> — same corridor at 900 mm — at equal weight rather than hidden behind a toggle. Tap any numbered marker to expand its annotation.</p>
-
-    <!-- INTERACTIVE EXPLORER (Bartosz move): drag to change corridor width -->
-    <figure class="drawing-figure" aria-labelledby="exp-cap" style="margin-bottom: 28px;">
-      <div class="explorer">
-        <div class="exp-head">
-          <span class="exp-eyebrow">interactive · drag the slider</span>
-          <h3 class="exp-title">What happens at every width between 800 and 1800 mm</h3>
-        </div>
-        <div class="exp-readout" role="status" aria-live="polite">
-          <div class="ex-cell"><span class="ex-l">clear width</span><span class="ex-v"><span id="ex-w">1200</span> <small>mm</small></span></div>
-          <div class="ex-cell"><span class="ex-l">passing separation</span><span class="ex-v" id="ex-sep">100 <small>mm</small></span></div>
-          <div class="ex-cell"><span class="ex-l">metabolic cost</span><span class="ex-v" id="ex-cost">+0 <small>%</small></span></div>
-          <div class="ex-cell"><span class="ex-l">verdict</span><span class="ex-v" id="ex-verdict">complies</span></div>
-        </div>
-        <svg id="ex-svg" viewBox="0 0 720 280" role="img" aria-label="Plan, two power wheelchairs in a corridor of variable width">
-          <defs>
-            <pattern id="ex-hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
-              <line x1="0" y1="0" x2="0" y2="6" stroke="#b8521b" stroke-width="0.9"/>
-            </pattern>
-          </defs>
-          <!-- walls (object lines) -->
-          <line id="ex-wall-top" class="ln-object" x1="20" y1="60" x2="700" y2="60"/>
-          <line id="ex-wall-bot" class="ln-object" x1="20" y1="220" x2="700" y2="220"/>
-          <!-- handrail (hidden / secondary) -->
-          <line id="ex-rail-top" class="ln-hidden" x1="40" y1="73" x2="680" y2="73"/>
-          <line id="ex-rail-bot" class="ln-hidden" x1="40" y1="207" x2="680" y2="207"/>
-          <!-- protected zone -->
-          <rect id="ex-zone" x="40" y="73" width="640" height="134" fill="#dbe5f5" stroke="#2a6fdb" stroke-width="0.6" stroke-dasharray="3 3"/>
-          <!-- conflict overlay (hidden when complies) -->
-          <rect id="ex-conflict" x="280" y="73" width="160" height="134" fill="url(#ex-hatch)" opacity="0" pointer-events="none"/>
-          <!-- chairs -->
-          <g id="ex-chair-a" class="ex-chair">
-            <rect x="120" y="155" width="120" height="42" rx="4" fill="#fbf8f0" stroke="#1f1c18" stroke-width="1.1"/>
-            <circle cx="132" cy="155" r="6" fill="#1f1c18"/><circle cx="228" cy="155" r="6" fill="#1f1c18"/>
-            <circle cx="132" cy="197" r="6" fill="#1f1c18"/><circle cx="228" cy="197" r="6" fill="#1f1c18"/>
-            <text x="180" y="180" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle" fill="#1f1c18">CHAIR A · 700 mm</text>
-          </g>
-          <g id="ex-chair-b" class="ex-chair">
-            <rect x="380" y="83" width="120" height="42" rx="4" fill="#fbf8f0" stroke="#1f1c18" stroke-width="1.1"/>
-            <circle cx="392" cy="83" r="6" fill="#1f1c18"/><circle cx="488" cy="83" r="6" fill="#1f1c18"/>
-            <circle cx="392" cy="125" r="6" fill="#1f1c18"/><circle cx="488" cy="125" r="6" fill="#1f1c18"/>
-            <text x="440" y="108" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle" fill="#1f1c18">CHAIR B · 700 mm</text>
-          </g>
-          <!-- dimension string (right side, vertical) -->
-          <line id="ex-dim" class="ln-dim" x1="694" y1="73" x2="694" y2="207"/>
-          <line class="ln-dim-tick" x1="688" y1="73" x2="700" y2="73"/>
-          <line class="ln-dim-tick" x1="688" y1="207" x2="700" y2="207"/>
-          <text id="ex-dim-label" x="712" y="144" font-family="JetBrains Mono, monospace" font-size="11" fill="#143464" text-anchor="middle" transform="rotate(-90 712 144)">1200 mm clear</text>
-        </svg>
-        <div class="exp-controls">
-          <label for="ex-range" class="ex-range-label">corridor wall-to-wall (less 50 mm rails each side)</label>
-          <input id="ex-range" type="range" min="800" max="1800" step="10" value="1200" aria-label="Corridor clear width in millimetres" list="ex-ticks">
-          <datalist id="ex-ticks">
-            <option value="915" label="US ADA"></option>
-            <option value="1000" label="AU"></option>
-            <option value="1100" label="CA"></option>
-            <option value="1200" label="GB / ISO / EU"></option>
-            <option value="1500" label="BR pref / IN"></option>
-            <option value="1800" label="UK pref"></option>
-          </datalist>
-          <div class="ex-presets">
-            <button type="button" class="ex-preset" data-w="915">915 · US</button>
-            <button type="button" class="ex-preset" data-w="1000">1000 · AU</button>
-            <button type="button" class="ex-preset" data-w="1100">1100 · CA</button>
-            <button type="button" class="ex-preset" data-w="1200">1200 · GB</button>
-            <button type="button" class="ex-preset" data-w="1500">1500 · IN</button>
-          </div>
-        </div>
-      </div>
-      <figcaption class="drawing-caption" id="exp-cap">
-        <div><strong>Method.</strong> Chair A holds the lower lane; Chair B advances in the upper lane. Below 1500 mm wall-to-wall (≈ 1400 mm clear), the chairs overlap — Chair B reverses. Metabolic-cost curve from Koontz et al. (2017), interpolated at 10 mm steps.</div>
-        <div><span class="src-line">source · Koontz, Ding, Jan, de Groot &amp; Hansen 2017 · cohort n=42 · DOI <a href="https://doi.org/10.1080/17483107.2016.1278470" target="_blank" rel="noopener">10.1080/17483107.2016.1278470</a></span></div>
-      </figcaption>
-    </figure>
-
-    <figure class="drawing-figure" aria-labelledby="dwg-cap">
-      <div class="drawing-canvas">
-        <!-- PASS -->
-        <div class="drawing-pane">
-          <div class="pane-label"><span>Plan · 1200 mm clear</span><span class="verdict-pass">✓ complies</span></div>
-          <svg viewBox="0 0 480 240" role="img" aria-labelledby="dpt dpd">
-            <title id="dpt">Plan, corridor at 1200 mm clear width</title>
-            <desc id="dpd">Horizontal corridor in plan. Wall-to-wall 1300 mm; deducting 50 mm handrail projection on each side, clear floor is 1200 mm. A 700 mm power wheelchair occupies the lower lane; a second 700 mm power wheelchair passes in the upper lane with 100 mm separation. Dimension string shows 1200 mm clear.</desc>
-            <line x1="20" y1="40" x2="460" y2="40" stroke="#1f1c18" stroke-width="2"/>
-            <line x1="20" y1="200" x2="460" y2="200" stroke="#1f1c18" stroke-width="2"/>
-            <line x1="40" y1="55" x2="440" y2="55" stroke="#1f1c18" stroke-width="1"/>
-            <line x1="40" y1="185" x2="440" y2="185" stroke="#1f1c18" stroke-width="1"/>
-            <rect x="40" y="55" width="400" height="130" fill="#dbe5f5" stroke="#2a6fdb" stroke-width="0.8" stroke-dasharray="3 3"/>
-            <g stroke="#1f1c18" fill="#fbf8f0" stroke-width="1.2">
-              <rect x="80" y="135" width="120" height="40" rx="4"/>
-              <circle cx="92" cy="135" r="6" fill="#1f1c18"/><circle cx="188" cy="135" r="6" fill="#1f1c18"/>
-              <circle cx="92" cy="175" r="6" fill="#1f1c18"/><circle cx="188" cy="175" r="6" fill="#1f1c18"/>
-              <text x="140" y="160" font-family="JetBrains Mono, monospace" font-size="9" fill="#1f1c18" text-anchor="middle">CHAIR A · 700 mm</text>
-              <rect x="260" y="65" width="120" height="40" rx="4"/>
-              <circle cx="272" cy="65" r="6" fill="#1f1c18"/><circle cx="368" cy="65" r="6" fill="#1f1c18"/>
-              <circle cx="272" cy="105" r="6" fill="#1f1c18"/><circle cx="368" cy="105" r="6" fill="#1f1c18"/>
-              <text x="320" y="90" font-family="JetBrains Mono, monospace" font-size="9" fill="#1f1c18" text-anchor="middle">CHAIR B · 700 mm</text>
-            </g>
-            <rect x="200" y="113" width="60" height="14" fill="#fbf8f0" stroke="#2a6fdb" stroke-dasharray="2 2"/>
-            <text x="230" y="123" font-family="JetBrains Mono, monospace" font-size="8" fill="#143464" text-anchor="middle">100 mm sep.</text>
-            <line x1="450" y1="55" x2="450" y2="185" stroke="#2a6fdb" stroke-width="1"/>
-            <line x1="446" y1="55" x2="454" y2="55" stroke="#2a6fdb"/>
-            <line x1="446" y1="185" x2="454" y2="185" stroke="#2a6fdb"/>
-            <text x="468" y="124" font-family="JetBrains Mono, monospace" font-size="11" fill="#143464" text-anchor="middle" transform="rotate(-90 468 124)">1200 mm clear</text>
-            <text x="60" y="50" font-family="JetBrains Mono, monospace" font-size="8" fill="#6e655a">handrail · 50 mm proj.</text>
-            <text x="60" y="218" font-family="JetBrains Mono, monospace" font-size="8" fill="#6e655a">handrail · 50 mm proj.</text>
-            <g>
-              <circle class="hot-hitarea" r="18" cx="40" cy="120" tabindex="0" role="button" aria-expanded="false" aria-label="Annotation 1: handrail projection" data-disclose="d-1"/>
-              <circle class="hot" data-disclose="d-1" cx="40" cy="120" r="10" pointer-events="none"/>
-              <text class="hot-label" x="40" y="124" text-anchor="middle">1</text>
-              <circle class="hot-hitarea" r="18" cx="240" cy="120" tabindex="0" role="button" aria-expanded="false" aria-label="Annotation 2: passing separation" data-disclose="d-2"/>
-              <circle class="hot" data-disclose="d-2" cx="240" cy="120" r="10" pointer-events="none"/>
-              <text class="hot-label" x="240" y="124" text-anchor="middle">2</text>
-              <circle class="hot-hitarea" r="18" cx="440" cy="120" tabindex="0" role="button" aria-expanded="false" aria-label="Annotation 3: clear-zone definition" data-disclose="d-3"/>
-              <circle class="hot" data-disclose="d-3" cx="440" cy="120" r="10" pointer-events="none"/>
-              <text class="hot-label" x="440" y="124" text-anchor="middle">3</text>
-            </g>
-          </svg>
-        </div>
-        <!-- FAIL -->
-        <div class="drawing-pane fail">
-          <div class="pane-label"><span>Plan · 900 mm clear (legacy retrofit)</span><span class="verdict-fail">✗ does not comply</span></div>
-          <svg viewBox="0 0 480 240" role="img" aria-labelledby="dft dfd">
-            <title id="dft">Plan, corridor at 900 mm clear width — passing not possible</title>
-            <desc id="dfd">Same corridor narrowed to 900 mm clear. The two power wheelchairs cannot occupy the corridor at the same time. Chair A continues; Chair B is shown stopped, with a hatched conflict zone marking the missing 300 mm. Annotation describes metabolic and confidence cost.</desc>
-            <line x1="20" y1="65" x2="460" y2="65" stroke="#1f1c18" stroke-width="2"/>
-            <line x1="20" y1="175" x2="460" y2="175" stroke="#1f1c18" stroke-width="2"/>
-            <line x1="40" y1="78" x2="440" y2="78" stroke="#1f1c18" stroke-width="1"/>
-            <line x1="40" y1="162" x2="440" y2="162" stroke="#1f1c18" stroke-width="1"/>
-            <rect x="40" y="78" width="400" height="84" fill="#fbf8f0" stroke="#6e655a" stroke-width="0.6" stroke-dasharray="2 2"/>
-            <g stroke="#1f1c18" fill="#fbf8f0" stroke-width="1.2">
-              <rect x="60" y="100" width="120" height="40" rx="4"/>
-              <circle cx="72" cy="100" r="6" fill="#1f1c18"/><circle cx="168" cy="100" r="6" fill="#1f1c18"/>
-              <circle cx="72" cy="140" r="6" fill="#1f1c18"/><circle cx="168" cy="140" r="6" fill="#1f1c18"/>
-              <text x="120" y="125" font-family="JetBrains Mono, monospace" font-size="9" fill="#1f1c18" text-anchor="middle">CHAIR A</text>
-            </g>
-            <g stroke="#b8521b" fill="#f4dec6" stroke-width="1.2">
-              <rect x="280" y="100" width="120" height="40" rx="4"/>
-              <circle cx="292" cy="100" r="6" fill="#b8521b"/><circle cx="388" cy="100" r="6" fill="#b8521b"/>
-              <circle cx="292" cy="140" r="6" fill="#b8521b"/><circle cx="388" cy="140" r="6" fill="#b8521b"/>
-              <text x="340" y="125" font-family="JetBrains Mono, monospace" font-size="9" fill="#b8521b" text-anchor="middle">CHAIR B · stopped</text>
-            </g>
-            <pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
-              <line x1="0" y1="0" x2="0" y2="6" stroke="#b8521b" stroke-width="1"/>
-            </pattern>
-            <rect x="180" y="78" width="100" height="84" fill="url(#hatch)" opacity="0.55"/>
-            <text x="230" y="125" font-family="JetBrains Mono, monospace" font-size="10" fill="#b8521b" text-anchor="middle" font-weight="600">CONFLICT</text>
-            <line x1="450" y1="78" x2="450" y2="162" stroke="#b8521b" stroke-width="1"/>
-            <line x1="446" y1="78" x2="454" y2="78" stroke="#b8521b"/>
-            <line x1="446" y1="162" x2="454" y2="162" stroke="#b8521b"/>
-            <text x="468" y="124" font-family="JetBrains Mono, monospace" font-size="11" fill="#b8521b" text-anchor="middle" transform="rotate(-90 468 124)">900 mm clear</text>
-            <text x="240" y="55" font-family="JetBrains Mono, monospace" font-size="9" fill="#b8521b" text-anchor="middle">300 mm short · +30–45 % metabolic cost to reverse</text>
-          </svg>
-        </div>
-      </div>
-      <div class="drawing-views">
-        <div class="drawing-pane">
-          <div class="pane-label"><span>Section A–A · headroom envelope</span></div>
-          <svg viewBox="0 0 480 200" role="img" aria-labelledby="dst dsd">
-            <title id="dst">Cross-section through the corridor</title>
-            <desc id="dsd">Cross-section showing finished floor, two walls rising to a 2400 mm soffit. Clear envelope from floor to 2050 mm AFF, 1200 mm clear span between handrail projections at 870 mm AFF.</desc>
-            <line x1="20" y1="170" x2="460" y2="170" stroke="#1f1c18" stroke-width="2"/>
-            <line x1="60" y1="20" x2="420" y2="20" stroke="#1f1c18" stroke-width="1.2"/>
-            <line x1="60" y1="20" x2="60" y2="170" stroke="#1f1c18" stroke-width="2"/>
-            <line x1="420" y1="20" x2="420" y2="170" stroke="#1f1c18" stroke-width="2"/>
-            <rect x="60" y="50" width="360" height="120" fill="#dbe5f5" stroke="#2a6fdb" stroke-width="0.8" stroke-dasharray="3 3"/>
-            <line x1="60" y1="100" x2="80" y2="100" stroke="#1f1c18" stroke-width="2"/>
-            <line x1="400" y1="100" x2="420" y2="100" stroke="#1f1c18" stroke-width="2"/>
-            <g fill="#1f1c18">
-              <circle cx="240" cy="120" r="7"/>
-              <rect x="232" y="128" width="16" height="22"/>
-              <rect x="222" y="150" width="36" height="20"/>
-            </g>
-            <text x="438" y="60" font-family="JetBrains Mono, monospace" font-size="9" fill="#6e655a">2400 mm soffit</text>
-            <text x="438" y="105" font-family="JetBrains Mono, monospace" font-size="9" fill="#143464">2050 mm clear</text>
-            <text x="438" y="150" font-family="JetBrains Mono, monospace" font-size="9" fill="#6e655a">870 mm rail</text>
-            <line x1="80" y1="158" x2="400" y2="158" stroke="#2a6fdb"/>
-            <line x1="80" y1="154" x2="80" y2="162" stroke="#2a6fdb"/>
-            <line x1="400" y1="154" x2="400" y2="162" stroke="#2a6fdb"/>
-            <text x="240" y="153" font-family="JetBrains Mono, monospace" font-size="10" fill="#143464" text-anchor="middle">1200 mm clear</text>
-          </svg>
-        </div>
-        <div class="drawing-pane">
-          <div class="pane-label"><span>Elevation · what counts as obstruction</span></div>
-          <svg viewBox="0 0 360 200" role="img" aria-labelledby="det ded">
-            <title id="det">Elevation, projections counted toward the deduction</title>
-            <desc id="ded">Wall elevation. A fire extinguisher cabinet projects 110 mm and counts. A handrail projects 50 mm continuously and counts. A wall luminaire above 2050 mm AFF projects 95 mm and does not count.</desc>
-            <line x1="20" y1="180" x2="340" y2="180" stroke="#1f1c18" stroke-width="2"/>
-            <line x1="20" y1="20" x2="340" y2="20" stroke="#1f1c18" stroke-width="1.2"/>
-            <line x1="20" y1="120" x2="340" y2="120" stroke="#1f1c18" stroke-width="1.2"/>
-            <text x="24" y="115" font-family="JetBrains Mono, monospace" font-size="8" fill="#6e655a">handrail · 50 mm · COUNTS</text>
-            <rect x="80" y="80" width="40" height="40" fill="#fbf8f0" stroke="#1f1c18"/>
-            <text x="100" y="76" font-family="JetBrains Mono, monospace" font-size="8" fill="#143464" text-anchor="middle">110 mm · COUNTS</text>
-            <text x="100" y="105" font-family="JetBrains Mono, monospace" font-size="8" text-anchor="middle">FIRE EXT.</text>
-            <rect x="220" y="38" width="60" height="14" fill="#fbf8f0" stroke="#6e655a"/>
-            <text x="250" y="34" font-family="JetBrains Mono, monospace" font-size="8" fill="#6e655a" text-anchor="middle">95 mm · DOES NOT COUNT (&gt; 2050 AFF)</text>
-            <text x="20" y="195" font-family="JetBrains Mono, monospace" font-size="8" fill="#6e655a">AFF 0</text>
-          </svg>
-        </div>
-      </div>
-      <figcaption class="drawing-caption" id="dwg-cap">
-        <div><strong>Convention.</strong> Plan, section, elevation rendered monochrome with the accessible-feature highlight in blue. Failure case at parity, hatched terracotta. Dual-unit dimensions in monospace.</div>
-        <div>
-          <span class="legend"><span class="swatch-line"></span> wall / fixed line</span><br>
-          <span class="legend"><span class="swatch-fill"></span> protected clear-width zone</span><br>
-          <span class="legend"><span class="swatch-fail"></span> conflict / non-compliance zone</span><br>
-          <span class="legend"><span class="swatch-dim"></span> dimension string · SI primary, US secondary</span>
-        </div>
-      </figcaption>
-    </figure>
+    <p>The corpus holds no product-SKU register, so these are <strong>component classes</strong> implied by the provision, each tied to a requirement established above — not brand recommendations. Two rules govern all of them: continuous projections below 2050 mm AFF deduct from the clear width, and anything that can creep into the clear zone post-occupancy must be wall-recessed. <span class="honesty">product-class list is editorial, derived from the schedule spec + DeafSpace finish spec; no SKU-level source exists.</span></p>
 
     <div class="rowlist">
-      <details class="row" open id="d-1" style="--row-color: var(--sec-4)" open>
-        <summary>
-          <span aria-hidden="true"></span>
-          <span class="r-tag">① annotation</span>
-          <span class="r-title">Handrail projection<small>what counts as a wall, what counts as obstruction</small></span>
-          <span class="r-value">50 <small>mm typical</small></span>
-          <span class="r-arrow" aria-hidden="true">›</span>
-        </summary>
-        <div class="r-body">
-          <div class="blocks">
-            <div class="block"><div class="block-l"><span class="sym">◆</span> definition</div>
-              <p>1200 mm is measured between the <em>nearest faces of any continuous obstruction</em>. Continuous handrails count even though intermittent in plan, because a wheelchair user cannot pass through them. 50 mm is typical for stainless rails; brass / timber project 60–75 mm.</p>
-            </div>
-            <div class="block"><div class="block-l"><span class="sym sym-stated">●</span> source</div>
-              <p><button class="cite-trigger" data-pop="cite-bs">REF-00114 · BS 8300-2:2018 §10.2.2</button> · <button class="cite-trigger" data-pop="cite-csa">REF-00200 · CAN/CSA B651-18 §4.2.1</button></p>
-            </div>
-            <div class="block"><div class="block-l"><span class="sym">▣</span> counterexample</div>
-              <p>Wall-recessed grab rails do <em>not</em> count toward the deduction. Movable equipment (catering trolleys, gurneys at rest) is excluded — measured against design intent, not transient occupancy.</p>
-            </div>
-          </div>
-        </div>
+      <details class="row" open style="--row-color: var(--sec-6)">
+        <summary><span></span><span class="r-tag">◆ handrails</span><span class="r-title">Continuous handrails<small>projection deducts from clear width</small></span><span class="r-value">−50 mm typ.</span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> spec impact</div><p>Continuous rails count against the clear width even though intermittent in plan (a wheelchair cannot pass through them): 50 mm typical stainless, 60–75 mm brass/timber. Wall-recessed grab rails do <em>not</em> count. Size the wall-to-wall so the clear dimension survives the deduction.</p></div></div></div>
       </details>
-
-      <details class="row" id="d-2" style="--row-color: var(--sec-4)">
-        <summary>
-          <span aria-hidden="true"></span>
-          <span class="r-tag">② annotation</span>
-          <span class="r-title">Passing separation<small>why 100 mm and not zero</small></span>
-          <span class="r-value">100 <small>mm tolerance</small></span>
-          <span class="r-arrow" aria-hidden="true">›</span>
-        </summary>
-        <div class="r-body">
-          <div class="blocks">
-            <div class="block"><div class="block-l"><span class="sym">◆</span> definition</div>
-              <p>The 100 mm strip between two passing power wheelchairs is the empirical near-miss tolerance recorded by Koontz et al. across mixed-skill drivers. Below 50 mm separation, drivers slow to walking pace; below 30 mm, contact occurs in 12 % of passes.</p>
-            </div>
-            <div class="block"><div class="block-l"><span class="sym sym-stated">●</span> source</div>
-              <p><button class="cite-trigger" data-pop="cite-koontz">REF-00237 · Koontz 2017</button> — cohort observation, n=42, two-pass corridor task. ● Tier 4 — peer-reviewed cohort.</p>
-            </div>
-          </div>
-        </div>
+      <details class="row" style="--row-color: var(--sec-6)">
+        <summary><span></span><span class="r-tag">◆ glazing</span><span class="r-title">Glazed junction corners / vision panels<small>DeafSpace visual advance warning</small></span><span class="r-value">at junctions</span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-co1">◆</span> spec impact</div><p>Glazed corners replace opaque corners at all circulation junctions so an approaching person is seen in advance — the sightline half of the 2440 mm provision (see § 1 detail, and D-04 landmarks). Co-1 root: DeafSpace / DeafScape.</p></div></div></div>
       </details>
-
-      <details class="row" id="d-3" style="--row-color: var(--sec-4)">
-        <summary>
-          <span aria-hidden="true"></span>
-          <span class="r-tag">③ annotation</span>
-          <span class="r-title">Clear-zone definition<small>full-height vs. shoulder-height</small></span>
-          <span class="r-value">2050 <small>mm AFF datum</small></span>
-          <span class="r-arrow" aria-hidden="true">›</span>
-        </summary>
-        <div class="r-body">
-          <div class="blocks">
-            <div class="block"><div class="block-l"><span class="sym">◆</span> definition</div>
-              <p>"Clear" applies from finished floor to 2050 mm AFF. Above that height, signage, luminaires, HVAC diffusers may project without counting — out of head- and shoulder-strike envelope of any standing or seated user.</p>
-            </div>
-            <div class="block"><div class="block-l"><span class="sym">▣</span> threshold</div>
-              <p>Below 2050 mm AFF, every projection &gt; 25 mm counts and is deducted. Cross-ref: <button class="xref-trigger" data-pop="x-a02"><span class="x-code">A-02</span>overhead obstacle base-detectability</button>.</p>
-            </div>
-          </div>
-        </div>
+      <details class="row" style="--row-color: var(--sec-6)">
+        <summary><span></span><span class="r-tag">◆ finishes + lighting</span><span class="r-title">Matte medium-contrast finishes · ≥300 lux diffuse<small>skin-tone legibility for signing / lip-reading</small></span><span class="r-value">≥300 lux</span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-co1">◆</span> spec impact</div><p>Matte, medium-contrast neutral wall/floor finishes (muted greens/blues) against which skin tone is legible; diffuse, shadow-free lighting ≥ 300 lux at face height in communication zones; backlighting eliminated. Cross-ref B-08 floor finish, A-02 overhead. Confidence MODERATE (converging directional evidence).</p></div></div></div>
+      </details>
+      <details class="row" style="--row-color: var(--sec-6)">
+        <summary><span></span><span class="r-tag">◆ recessed FF&amp;E</span><span class="r-title">Wall-recessed fixtures<small>extinguisher cabinets · sanitiser stations · call points</small></span><span class="r-value">0 mm proj.</span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> spec impact</div><p>Fire extinguisher cabinets, hand-sanitiser stands, emergency call stations and signage below 2050 mm AFF must be wall-recessed so they do not eat the clear width post-occupancy (a common failure mode — § 8). Specify at FF&amp;E review; mark the clear zone in floor-plate hatching.</p></div></div></div>
+      </details>
+      <details class="row" style="--row-color: var(--sec-6)">
+        <summary><span></span><span class="r-tag">◆ seating</span><span class="r-title">Rest-seating alcoves<small>recessed ≥ 200 mm off the clear width</small></span><span class="r-value">≥200 mm recess</span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> spec impact</div><p>The OFS/PAIN rest-interval strand (§ 3) meets E-08 only via the alcove rule: rest seating recessed ≥ 200 mm off the clear width so it never subtracts from passing/signing space (Co-2 root). See E-10.</p></div></div></div>
+      </details>
+      <details class="row" style="--row-color: var(--sec-6)">
+        <summary><span></span><span class="r-tag">◆ doors + furniture</span><span class="r-title">Powered doors &amp; movable furniture<small>door opening ≥ corridor; armrest-free chairs</small></span><span class="r-value">≥900 mm clear</span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> spec impact</div><p>Door clear opening not narrower than the corridor (900 mm best practice; 850 mm min for power WC, CSA B651) — see E-11. In DEAF communication zones, furniture movable and without fixed armrests so users can form conversation circles (DeafSpace).</p></div></div></div>
       </details>
     </div>
   </section>
 
   <!-- ============================================================ -->
-  <!-- §5 EVIDENCE                                                   -->
+  <!-- §7 CONSIDERATIONS & QUESTIONS                                 -->
   <!-- ============================================================ -->
-  <section class="section" data-color="plum" style="--order-spec:4; --order-q:5" id="evidence">
+  <section class="section" data-color="indigo" style="--order-spec:7; --order-q:7" id="considerations">
     <div class="sec-head">
-      <span class="sec-num">§ 5 · Evidence</span>
-      <h2>What the literature and lived experience say</h2>
-      <span class="sec-meta">5 sources · 1 opus_synthesis flag</span>
+      <span class="sec-num">§ 7 · Considerations &amp; questions</span>
+      <h2>What to ask before you fix the number</h2>
+      <span class="sec-meta">design-brief interrogation</span>
     </div>
-    <p>Three citation tiers below. Co-1 (lived experience) sits at the top — never subordinated to the academic tier list. Click any chip for the full record.</p>
+    <p>The width follows from the answers to these. The single most consequential is the first — because the building cannot infer which functions it must serve, the brief must state them.</p>
+    <ul class="qlist">
+      <li><b>Function scope</b> Which functions must this route serve — single-device travel (1200), two-way passing (1800), or signed conversation-in-motion (2440)? If any Deaf/signing use is plausible, the target is 2440, not the passing floor.</li>
+      <li><b>Silent-deletion check</b> Is the population scope "MOB accessibility" only? If so, does stopping at 1800 mm silently delete DEAF signing space (CON-0122)? Confirm DEAF is in scope explicitly — the live data dropped it (§ 3).</li>
+      <li><b>Device classes</b> Manual, powered, scooter, bariatric, children's powered, or attendant-propelled? The ladder differs by class (§ 5); scooter and attendant-propelled envelopes are corpus-unmodelled — treat as open risk, not solved.</li>
+      <li><b>New-build vs retrofit</b> Is 2440 mm achievable, or is a masonry constraint forcing the floor? If forced below best practice, document as a DAR design compromise, not as compliance.</li>
+      <li><b>Mixed-population enclosure conflict</b> Does the facility also serve NDV/SENS or DEM users who need enclosure? Open DeafSpace sightlines conflict with compartmentalisation — resolve by Tier-1 spatial zoning, never a Universal-Mode split-the-difference width (GAP-CONF-01, § 8).</li>
+      <li><b>Measurement paradigm</b> Is the clear width measured against the device's swept envelope or an idealised turning circle? Use swept envelope + manoeuvre type; a turning-circle number cannot adjudicate a swept-path requirement.</li>
+      <li><b>Anthropometric currency</b> Is the governing dimension from current device-fleet data, or a 1970s/2010 base now stale against heavier chairs and scooters (GAP-295)?</li>
+      <li><b>FF&amp;E &amp; seating placement</b> Where will fixtures and rest seating sit relative to the clear zone, and are they recessed so they cannot creep in post-occupancy (§ 6, § 8)?</li>
+      <li><b>Cross-language validity</b> If the Deaf user community signs a language other than ASL (BSL, DGS, LSF, LIS…), note that 2440 mm is an ASL-derived floor with no cross-language measurement — record the assumption rather than treating it as settled.</li>
+    </ul>
+  </section>
 
-    <div class="chiprow" style="margin: 8px 0 14px;">
-      <span class="chip chip-evi-co1">◆ Co-1 lived experience · 3 accounts</span>
-      <span class="chip chip-evi-stated">● tier 4 · primary cohort</span>
-      <span class="chip chip-evi-stated">● tier 2 · regulatory baseline</span>
-      <span class="chip chip-evi-provis">◐ tier 5 · synthesis</span>
+  <!-- ============================================================ -->
+  <!-- §8 FAILURE CASES                                              -->
+  <!-- ============================================================ -->
+  <section class="section" data-color="terra" style="--order-spec:8; --order-q:8" id="failures">
+    <div class="sec-head">
+      <span class="sec-num">§ 8 · Failure cases</span>
+      <h2>How this provision fails in practice</h2>
+      <span class="sec-meta">7 modes · design + evidential</span>
     </div>
+    <p>Failure modes, physical and evidential. Each is a real, corpus-grounded way the provision goes wrong — none rely on the fabricated metabolic figures the previous version of this page invented.</p>
 
     <div class="rowlist">
-      <details class="row" open style="--row-color: var(--ev-co1)" open>
-        <summary>
-          <span aria-hidden="true"></span>
-          <span class="r-tag">◆ co-1</span>
-          <span class="r-title">Lived experience · 3 accounts<small>see § 9 for full text</small></span>
-          <span class="r-value"><span class="chip chip-evi-co1">primary</span></span>
-          <span class="r-arrow" aria-hidden="true">›</span>
-        </summary>
-        <div class="r-body">
-          <div class="blocks">
-            <div class="block"><div class="block-l"><span class="sym sym-co1">◆</span> accounts</div>
-              <p>acc-0142 (power-chair user, 2025-11) · acc-0218 (forearm-cane user, 2025-09) · acc-0301 (blind cane traveller, 2026-02). All three identify the same 1200 mm threshold from different angles.</p>
-            </div>
-          </div>
-        </div>
+      <details class="row" open style="--row-color: var(--sec-8)">
+        <summary><span></span><span class="r-tag">✗ FAIL-1</span><span class="r-title">Single-file pinch<small>"one chair fits" mistaken for "the corridor works"</small></span><span class="r-value"><span class="chip chip-warn">at 1200</span></span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn">▲</span> mode</div><p>A corridor at the 1200 mm single-device minimum admits one powered chair — and nothing else. Two devices cannot pass (VNG 2016: 1200 mm insufficient to pass or turn); signed conversation collapses to single file. Meeting the minimum is not meeting the requirement.</p></div></div></div>
       </details>
-
-      <details class="row" style="--row-color: var(--ev-stated)">
-        <summary>
-          <span aria-hidden="true"></span>
-          <span class="r-tag">● tier 4</span>
-          <span class="r-title">Koontz et al. 2017<small>Wheeled mobility passing-width thresholds in interior corridors</small></span>
-          <span class="r-value">REF-00237</span>
-          <span class="r-arrow" aria-hidden="true">›</span>
-        </summary>
-        <div class="r-body">
-          <div class="blocks">
-            <div class="block"><div class="block-l"><span class="sym">◆</span> citation</div>
-              <p>Koontz, A. M., Ding, D., Jan, Y. K., de Groot, S., &amp; Hansen, A. H. (2017). Wheeled mobility passing-width thresholds in interior corridors. <em>Disability and Rehabilitation: Assistive Technology</em>, 12(7), 715–724.</p>
-            </div>
-            <div class="block"><div class="block-l"><span class="sym sym-stated">●</span> method</div>
-              <p>Cohort observation · n=42 · two-pass corridor task across widths 800 / 900 / 1000 / 1100 / 1200 / 1400 mm. Tier 4. Synthesis: primary.</p>
-            </div>
-          </div>
-        </div>
+      <details class="row" style="--row-color: var(--sec-8)">
+        <summary><span></span><span class="r-tag">✗ FAIL-2</span><span class="r-title">Forced spin-turn — injury dose<small>width below the swept envelope</small></span><span class="r-value"><span class="chip chip-warn">RSI</span></span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn">▲</span> mode</div><p>Below the swept envelope the user is forced into the inferior spin turn — inner-hand braking ~15× a straight push, hundreds of times a day, against a manual-user upper-limb injury prevalence of 55–72%. A cramped corridor is a repetitive-strain-injury dose, delivered for the user's whole wheelchair-using lifetime.</p></div></div></div>
       </details>
-
-      <details class="row" style="--row-color: var(--ev-stated)">
-        <summary>
-          <span aria-hidden="true"></span>
-          <span class="r-tag">● tier 2</span>
-          <span class="r-title">Regulatory baseline<small>CSA B651 · BS 8300 · ISO 21542 · AS 1428.1 · NBR 9050</small></span>
-          <span class="r-value">5 standards</span>
-          <span class="r-arrow" aria-hidden="true">›</span>
-        </summary>
-        <div class="r-body">
-          <div class="blocks">
-            <div class="block"><div class="block-l"><span class="sym">◆</span> bundle</div>
-              <p>Detailed in § 7 (jurisdictions). Tier 2 = stated regulatory requirement, primary source.</p>
-            </div>
-          </div>
-        </div>
+      <details class="row" style="--row-color: var(--sec-8)">
+        <summary><span></span><span class="r-tag">✗ FAIL-3</span><span class="r-title">Silent deletion of DEAF space<small>MOB-only spec stops at the passing floor</small></span><span class="r-value"><span class="chip chip-warn">CON-0122</span></span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn">▲</span> mode</div><p>A designer specifying "MOB accessibility" and stopping at 1800 mm deletes the 2440 mm signing envelope without ever seeing it — and the dropped <code style="font-family:var(--font-mono);">item_population_links</code> row for DEAF (§ 3) makes the deletion invisible in the data too. The subsumption 2440 ⊃ 1800 is the guard: meet the larger.</p></div></div></div>
       </details>
-
-      <details class="row" style="--row-color: var(--ev-provis)">
-        <summary>
-          <span aria-hidden="true"></span>
-          <span class="r-tag">◐ tier 5</span>
-          <span class="r-title">Steinfeld &amp; Maisel 2012<small>Universal Design — synthesis chapter</small> <span class="opus-flag" style="margin-left:8px;">⚠ opus_synthesis</span></span>
-          <span class="r-value">REF-00390</span>
-          <span class="r-arrow" aria-hidden="true">›</span>
-        </summary>
-        <div class="r-body">
-          <div class="blocks">
-            <div class="block"><div class="block-l"><span class="sym sym-warn">⚠</span> downstream synthesis</div>
-              <p>This entry is opus_synthesized — it summarises primary sources rather than reporting original observation. Surfaced per Standing Rule #2 so the reader can distinguish synthesis from primary evidence.</p>
-            </div>
-          </div>
-        </div>
+      <details class="row" style="--row-color: var(--sec-8)">
+        <summary><span></span><span class="r-tag">✗ FAIL-4</span><span class="r-title">Open sightlines vs enclosure<small>DeafSpace ⟂ NDV/DEM in a mixed facility</small></span><span class="r-value"><span class="chip chip-warn">GAP-CONF-01</span></span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn">▲</span> mode</div><p>Delivering 2440 mm via open sightlines produces visual complexity and lack of enclosure contraindicated for NDV/SENS (ASPECTSS crit. 4) and DEM (bounded sections). Trying to resolve it with a compromise width at Universal Mode fails both — the resolution is Tier-1 spatial zoning (Deaf communication zones vs retreat zones), evidence LOW for dimensions / MODERATE for principles.</p></div></div></div>
       </details>
-    </div>
-
-    <p style="font-size: var(--fs-sm); color: var(--muted); margin-top: 12px;">Suggested citation: <em>Guidebook E-08 · Corridor clear width.</em> Generated 2026-05-04 from <code style="font-family: var(--font-mono);">data/guidebook.db</code>. CC BY-SA 4.0.</p>
-  </section>
-
-  <!-- ============================================================ -->
-  <!-- §6 POPULATIONS                                                -->
-  <!-- ============================================================ -->
-  <section class="section" data-color="ochre" style="--order-spec:5; --order-q:6" id="populations">
-    <div class="sec-head">
-      <span class="sec-num">§ 6 · Populations</span>
-      <h2>Who this provision serves</h2>
-      <span class="sec-meta">7 codes · no ranking</span>
-    </div>
-    <p>The dimension is universal: every population coded against this specification gets the same value. <strong>Primary</strong> = canonical source for the value. <strong>Secondary</strong> = benefits without authoring.</p>
-
-    <div class="rowlist">
-      <details class="row" open style="--row-color: var(--pop-mob)" open>
-        <summary><span></span><span class="r-tag">● primary</span><span class="r-title">MOB · Mobility — wheeled<small>manual + powered devices</small></span><span class="r-value"><span class="chip" data-pop="MOB">canonical</span></span><span class="r-arrow">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> functional profile</div><p>Uses a wheeled mobility device for primary indoor travel. Device envelope including footplate flare governs the corridor lower bound.</p><ul class="citelist"><li><button class="cite-trigger" data-pop="cite-koontz">REF-00237 · Koontz 2017</button></li><li><button class="cite-trigger" data-pop="cite-iso">REF-00500 · ISO 21542 §11.5</button></li></ul></div></div></div>
+      <details class="row" style="--row-color: var(--sec-8)">
+        <summary><span></span><span class="r-tag">✗ FAIL-5</span><span class="r-title">FF&amp;E creep &amp; door pinch<small>the clear zone lost post-occupancy</small></span><span class="r-value"><span class="chip chip-warn">−width</span></span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn">▲</span> mode</div><p>A fire extinguisher, sanitiser stand or planter added after handover projects into the pinch point; or a door clear opening narrower than the corridor reintroduces the pinch the width was meant to remove (E-11). Both defeat a compliant plan. Mitigation: recessed FF&amp;E (§ 6), hatched clear-zone at review, post-occupancy walk-through.</p></div></div></div>
       </details>
-      <details class="row" style="--row-color: var(--pop-dem)">
-        <summary><span></span><span class="r-tag">● primary</span><span class="r-title">DEM · Dementia<small>cognitive support of wayfinding</small></span><span class="r-value"><span class="chip" data-pop="DEM">primary</span></span><span class="r-arrow">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> functional profile</div><p>Wider corridors reduce decision-load at junctions and accommodate carer-side walking — two abreast at sustained pace without crowding.</p><ul class="citelist"><li><button class="cite-trigger" data-pop="cite-bs">REF-00114 · BS 8300-2 §10.2</button></li></ul></div></div></div>
+      <details class="row" style="--row-color: var(--sec-8)">
+        <summary><span></span><span class="r-tag">✗ FAIL-6</span><span class="r-title">The "narrow calms" design myth<small>applying a retired assumption to DEM</small></span><span class="r-value"><span class="chip chip-warn">retired</span></span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn">▲</span> mode</div><p>Deliberately narrowing corridors "to calm" dementia or neurodivergent users applies a claim the corpus <strong>retired</strong> (a broken genealogy; "width and sensory load are independent variables," 2026-03-30). The real DEM variable is loop topology; the real NDV variables are acoustics and visual noise. Narrowing helps neither and harms mobility.</p></div></div></div>
       </details>
-      <details class="row" style="--row-color: var(--pop-vis)">
-        <summary><span></span><span class="r-tag">● primary</span><span class="r-title">VIS · Vision — blind / low vision<small>cane-tracking and human-guide travel</small></span><span class="r-value"><span class="chip" data-pop="VIS">primary</span></span><span class="r-arrow">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> functional profile</div><p>Predictable clear width supports cane sweep and human-guide travel where guide and traveller walk shoulder-to-shoulder.</p><ul class="citelist"><li><button class="cite-trigger" data-pop="cite-iso">REF-00500 · ISO 21542 §11.5</button></li><li class="chip chip-evi-co1">◆ Co-1 · acc-0301</li></ul></div></div></div>
-      </details>
-      <details class="row" style="--row-color: var(--pop-ndv)">
-        <summary><span></span><span class="r-tag">● primary</span><span class="r-title">NDV · Neurodivergent<small>sensory load of near-miss encounters</small></span><span class="r-value"><span class="chip" data-pop="NDV">primary</span></span><span class="r-arrow">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> functional profile</div><p>Reduces sensory load of evasion in transit. Width is one of several factors with surface, lighting, acoustic.</p><ul class="citelist"><li><button class="cite-trigger" data-pop="cite-iso">REF-00500 · ISO 21542 §11.5</button></li></ul></div></div></div>
-      </details>
-      <details class="row" style="--row-color: var(--pop-ofs)">
-        <summary><span></span><span class="r-tag">● primary</span><span class="r-title">OFS · Older / frail / chronic-illness<small>two-abreast walking with companion or walking-frame</small></span><span class="r-value"><span class="chip" data-pop="OFS">primary</span></span><span class="r-arrow">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> functional profile</div><p>Walking frame width plus companion-on-arm exceeds 1000 mm. Below 1200 mm, the companion drops behind.</p><ul class="citelist"><li><button class="cite-trigger" data-pop="cite-nbr">REF-00610 · NBR 9050 §6.11</button></li><li><button class="cite-trigger" data-pop="cite-bs">REF-00114 · BS 8300-2 §10.2</button></li></ul></div></div></div>
-      </details>
-      <details class="row" style="--row-color: var(--pop-pain)">
-        <summary><span></span><span class="r-tag">○ secondary</span><span class="r-title">PAIN · Chronic pain<small>metabolic cost of routine corridor travel</small></span><span class="r-value"><span class="chip" data-pop="PAIN">secondary</span></span><span class="r-arrow">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> functional profile</div><p>Lowers cumulative metabolic cost over a day of corridor transits. Not the canonical driver, but consistently positive.</p><ul class="citelist"><li><button class="cite-trigger" data-pop="cite-koontz">REF-00237 · Koontz 2017</button></li></ul></div></div></div>
-      </details>
-      <details class="row" style="--row-color: var(--pop-neu)">
-        <summary><span></span><span class="r-tag">● primary</span><span class="r-title">NEU · Neurological — variable energy<small>fatigue cost of evasive manoeuvring</small></span><span class="r-value"><span class="chip" data-pop="NEU">primary</span></span><span class="r-arrow">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> functional profile</div><p>Reduces fatigue cost of evasive manoeuvring at near-miss widths. Variable energy means some days a 1000 mm corridor is the same as a 1500 mm corridor for an able-bodied user.</p><ul class="citelist"><li><button class="cite-trigger" data-pop="cite-koontz">REF-00237 · Koontz 2017</button></li></ul></div></div></div>
+      <details class="row" style="--row-color: var(--sec-8)">
+        <summary><span></span><span class="r-tag">✗ FAIL-7</span><span class="r-title">Convergence sold as evidence<small>"1800 is best practice because every code agrees"</small></span><span class="r-value"><span class="chip chip-warn">method</span></span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn">▲</span> mode</div><p>The named failure mode of tier-system §3: labelling the 1800 mm code convergence "preferred" or "best practice." It is the regulatory floor with zero traceable roots. This is the exact error the previous version of this page committed by calling ≥1200/1800 "the Guidebook value."</p></div></div></div>
       </details>
     </div>
   </section>
 
   <!-- ============================================================ -->
-  <!-- §7 JURISDICTIONS — Constitute-style compare table              -->
+  <!-- §9 STANDARDS & CODES                                          -->
   <!-- ============================================================ -->
-  <section class="section" data-color="fern" style="--order-spec:6; --order-q:7" id="jurisdictions">
+  <section class="section" data-color="fern" style="--order-spec:9; --order-q:9" id="standards">
     <div class="sec-head">
-      <span class="sec-num">§ 7 · Jurisdictions</span>
-      <h2>Where standards differ — side by side</h2>
-      <span class="sec-meta">7 surveyed · range 915–1500 mm · source <code style="font-family:var(--font-mono);">data/jurisdictional_values/a-3_e08.yaml</code></span>
+      <span class="sec-num">§ 9 · Standards &amp; codes</span>
+      <h2>Each country's approach — the regulatory floor</h2>
+      <span class="sec-meta">7 surveyed · source <code style="font-family:var(--font-mono);">data/jurisdictional_values/a-3_e08.yaml</code></span>
     </div>
-    <p>The widest gap is <strong>US 915 mm vs DE / NO 1500 mm</strong> — a 64 % difference on the same provision. The Guidebook recommended value (≥ 1200 mm) is the median of stated requirements, and matches the ISO and GB primary value. Toggle a jurisdiction to add or remove its column.</p>
+    <p><strong>This table is the regulatory <em>floor</em>, not best practice.</strong> Every value is Tier 6 (statutory code) — the ○ weak band. The widest gap is <strong>US 915 mm vs DE / NO 1500 mm</strong>, a 585 mm spread; the US figure was set for <em>manual</em> passage only. Codes clustering at 1200/1800 mm tells you jurisdictions agree; per tier-system §3 it does <em>not</em> tell you the number is right. The entire signing-space row is empty across all seven. <span class="src-chip" hidden>◆ cell-for-cell from a-3_e08.yaml</span></p>
 
     <div class="compare-wrap">
       <div class="compare-controls" role="group" aria-label="Select jurisdictions to compare">
@@ -784,7 +572,7 @@
         <label class="juris-pick" data-on="false" aria-label="Norway"><input type="checkbox" data-juris="NO"><span class="juris-flag">NO</span></label>
         <label class="juris-pick" data-on="false" aria-label="Canada"><input type="checkbox" data-juris="CA"><span class="juris-flag">CA</span></label>
         <label class="juris-pick" data-on="true" aria-label="ISO international standard"><input type="checkbox" data-juris="ISO" checked><span class="juris-flag">ISO</span></label>
-        <label class="juris-pick" data-on="true" aria-label="Guidebook recommended value"><input type="checkbox" data-juris="GB-GUIDE" checked><span class="juris-flag">★ Guidebook</span></label>
+        <label class="juris-pick" data-on="true" aria-label="Guidebook best-practice value"><input type="checkbox" data-juris="GB-GUIDE" checked><span class="juris-flag">★ Guidebook</span></label>
       </div>
       <div class="compare-scroll" tabindex="0" aria-label="Jurisdiction comparison table — scroll horizontally to see all columns">
         <table class="compare-table" id="juris-table">
@@ -798,23 +586,23 @@
               <th scope="col" data-jcol="NO"><span class="juris-name">Norway</span><span class="juris-std">TEK17 §12-6</span></th>
               <th scope="col" data-jcol="CA"><span class="juris-name">Canada</span><span class="juris-std">CSA B651:2023</span></th>
               <th scope="col" data-jcol="ISO"><span class="juris-name">ISO harmonised</span><span class="juris-std">ISO 21542:2021</span></th>
-              <th scope="col" data-jcol="GB-GUIDE" class="gb-col"><span class="juris-name">Guidebook</span><span class="juris-std">E-08 · A.3</span></th>
+              <th scope="col" data-jcol="GB-GUIDE" class="gb-col"><span class="juris-name">Guidebook</span><span class="juris-std">E-08 · best practice</span></th>
             </tr>
           </thead>
           <tbody>
             <tr class="row-spread">
               <th scope="row">Min clear width<small>continuous accessible path</small></th>
-              <td data-jcol="US"><span class="val-num val-warn">915 <small>mm</small></span><span class="val-note">36 in · lowest globally</span></td>
+              <td data-jcol="US"><span class="val-num val-warn">915 <small>mm</small></span><span class="val-note">36 in · manual only · lowest globally</span></td>
               <td data-jcol="GB"><span class="val-num">1200 <small>mm</small></span></td>
-              <td data-jcol="DE"><span class="val-num val-pref">1500 <small>mm</small></span><span class="val-note">most generous min.</span></td>
+              <td data-jcol="DE"><span class="val-num">1500 <small>mm</small></span><span class="val-note">most generous min.</span></td>
               <td data-jcol="AU"><span class="val-num">1000 <small>mm</small></span></td>
-              <td data-jcol="NO"><span class="val-num val-pref">1500 <small>mm</small></span></td>
+              <td data-jcol="NO"><span class="val-num">1500 <small>mm</small></span></td>
               <td data-jcol="CA"><span class="val-empty">— silent</span><span class="val-note">no stated min</span></td>
               <td data-jcol="ISO"><span class="val-num">1200 <small>mm</small></span></td>
-              <td data-jcol="GB-GUIDE" class="gb-col"><span class="val-num">≥ 1200 <small>mm</small></span><span class="tier tier-6" title="Tier 6 · stated regulatory baseline">T6</span></td>
+              <td data-jcol="GB-GUIDE" class="gb-col"><span class="val-num val-pref">≥ 2440 <small>mm</small></span><span class="band band-full">● anchored</span></td>
             </tr>
             <tr>
-              <th scope="row">Passing width<small>two devices in opposite directions</small></th>
+              <th scope="row">Passing width<small>two devices, opposite directions</small></th>
               <td data-jcol="US"><span class="val-num">1524 <small>mm</small></span><span class="val-note">60 in</span></td>
               <td data-jcol="GB"><span class="val-num">1800 <small>mm</small></span></td>
               <td data-jcol="DE"><span class="val-num">1800 <small>mm</small></span></td>
@@ -822,29 +610,40 @@
               <td data-jcol="NO"><span class="val-empty">— silent</span></td>
               <td data-jcol="CA"><span class="val-empty">— silent</span></td>
               <td data-jcol="ISO"><span class="val-num">1800 <small>mm</small></span></td>
-              <td data-jcol="GB-GUIDE" class="gb-col"><span class="val-num">≥ 1800 <small>mm</small></span><span class="tier tier-6" title="Tier 6 · 4-of-5 standards converge">T6</span></td>
+              <td data-jcol="GB-GUIDE" class="gb-col"><span class="val-num">1800 <small>mm</small></span><span class="band band-weak">○ floor</span></td>
             </tr>
             <tr>
-              <th scope="row">Turning circle<small>180° change of direction</small></th>
-              <td data-jcol="US"><span class="val-num">1524 <small>mm</small></span><span class="val-note">ADA · 1702 mm A117.1</span></td>
+              <th scope="row">Turning<small>180° change of direction</small></th>
+              <td data-jcol="US"><span class="val-num">1524 <small>mm</small></span><span class="val-note">1702 mm A117.1</span></td>
               <td data-jcol="GB"><span class="val-num">1500 <small>mm</small></span></td>
               <td data-jcol="DE"><span class="val-num">1500 <small>mm</small></span></td>
               <td data-jcol="AU"><span class="val-num">1540 <small>mm</small></span><span class="val-note">2070 mm powered</span></td>
               <td data-jcol="NO"><span class="val-num">1500 <small>mm</small></span></td>
-              <td data-jcol="CA"><span class="val-num val-pref">1700 <small>mm</small></span><span class="val-note">2100 mm U-turn</span></td>
+              <td data-jcol="CA"><span class="val-num">1700 <small>mm</small></span></td>
               <td data-jcol="ISO"><span class="val-num">1524 <small>mm</small></span></td>
-              <td data-jcol="GB-GUIDE" class="gb-col"><span class="val-num">by device type</span><span class="val-note">see E-12</span></td>
+              <td data-jcol="GB-GUIDE" class="gb-col"><span class="val-num">swept envelope</span><span class="val-note">by manoeuvre + class</span></td>
             </tr>
             <tr>
-              <th scope="row">Tier<small>evidence basis</small></th>
-              <td data-jcol="US"><span class="tier tier-6" title="Tier 6 · stated regulatory">T6</span></td>
-              <td data-jcol="GB"><span class="tier tier-6">T6</span></td>
-              <td data-jcol="DE"><span class="tier tier-6">T6</span></td>
-              <td data-jcol="AU"><span class="tier tier-6">T6</span></td>
-              <td data-jcol="NO"><span class="tier tier-6">T6</span></td>
-              <td data-jcol="CA"><span class="tier tier-6">T6</span></td>
-              <td data-jcol="ISO"><span class="tier tier-6">T6</span></td>
-              <td data-jcol="GB-GUIDE" class="gb-col"><span class="tier tier-1" title="Tier 1 · co-1 lived experience">T1</span><span class="tier tier-4" title="Tier 4 · cohort">T4</span><span class="tier tier-6" title="Tier 6 · regulatory harmonised">T6</span></td>
+              <th scope="row">Signing-pair width<small>two signers walking in conversation</small></th>
+              <td data-jcol="US"><span class="val-empty">— silent</span></td>
+              <td data-jcol="GB"><span class="val-empty">— silent</span></td>
+              <td data-jcol="DE"><span class="val-empty">— silent</span></td>
+              <td data-jcol="AU"><span class="val-empty">— silent</span></td>
+              <td data-jcol="NO"><span class="val-empty">— silent</span></td>
+              <td data-jcol="CA"><span class="val-empty">— silent</span></td>
+              <td data-jcol="ISO"><span class="val-empty">— silent</span></td>
+              <td data-jcol="GB-GUIDE" class="gb-col"><span class="val-num val-pref">≥ 2440 <small>mm</small></span><span class="val-note">no code on Earth specifies this</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Basis<small>tier / band</small></th>
+              <td data-jcol="US"><span class="band band-weak">○ T6</span></td>
+              <td data-jcol="GB"><span class="band band-weak">○ T6</span></td>
+              <td data-jcol="DE"><span class="band band-weak">○ T6</span></td>
+              <td data-jcol="AU"><span class="band band-weak">○ T6</span></td>
+              <td data-jcol="NO"><span class="band band-weak">○ T6</span></td>
+              <td data-jcol="CA"><span class="band band-weak">○ T6</span></td>
+              <td data-jcol="ISO"><span class="band band-weak">○ T6</span></td>
+              <td data-jcol="GB-GUIDE" class="gb-col"><span class="band band-full">● Co-1</span><span class="band band-partial">◐ T3</span></td>
             </tr>
             <tr>
               <th scope="row">Source link</th>
@@ -862,327 +661,188 @@
       </div>
       <div class="compare-spread">
         <div class="spread-stat"><span class="ss-l">Min spread</span><span class="ss-v">585 mm</span></div>
-        <div class="spread-stat"><span class="ss-l">Passing spread</span><span class="ss-v">276 mm</span></div>
-        <div class="spread-stat"><span class="ss-l">Median min</span><span class="ss-v">1200 mm</span></div>
-        <div class="spread-stat"><span class="ss-l">Convergence</span><span class="ss-v">4 of 5 = 1800 mm</span></div>
+        <div class="spread-stat"><span class="ss-l">Passing convergence</span><span class="ss-v">4 of 5 = 1800</span></div>
+        <div class="spread-stat"><span class="ss-l">Codes specifying signing space</span><span class="ss-v">0 of 7</span></div>
+        <div class="spread-stat"><span class="ss-l">Best-practice vs floor</span><span class="ss-v">2440 vs 1800</span></div>
       </div>
     </div>
-    <p style="margin-top: 16px;"><strong>Reading the table.</strong> Empty cells (—) mean the standard is silent on that field, not that it permits anything. Bordered ★ column on the right is the Guidebook recommended value, never the minimum stated. Where the Guidebook value diverges from the median, § 5 carries the evidence justification. <span class="src-chip" hidden>⚠ opus · editorial reading guide</span></p>
+    <p style="margin-top: 16px;"><strong>Reading the table.</strong> Empty cells (—) mean the standard is silent, not that it permits anything. CA is silent on a minimum. The empty signing-pair row across all seven jurisdictions is itself a finding: a 14-language Tier-6 absence — no jurisdiction specifies an entire language community's spatial needs. The bordered ★ column is the Guidebook <em>best-practice</em> value, which deliberately exceeds every code floor. <span class="src-chip" hidden>⚠ opus · editorial reading guide</span></p>
   </section>
 
   <!-- ============================================================ -->
-  <!-- §8 CONFLICTS                                                  -->
+  <!-- §10 EVIDENCE BASE / BIBLIOGRAPHY                              -->
   <!-- ============================================================ -->
-  <section class="section" data-color="terra" style="--order-spec:7; --order-q:8" id="conflicts">
+  <section class="section" data-color="plum" style="--order-spec:10; --order-q:10" id="evidence">
     <div class="sec-head">
-      <span class="sec-num">§ 8 · Conflicts</span>
-      <h2>Where this provision is contested</h2>
-      <span class="sec-meta">3 trade-off domains · 0 cross-population</span>
+      <span class="sec-num">§ 10 · Evidence base</span>
+      <h2>Bibliography, integrity record &amp; mining queue</h2>
+      <span class="sec-meta">registry-checked · slug deaf-spatial-design + mobility-built-environment</span>
     </div>
-    <p>No <em>cross-population</em> conflict is on record for E-08: every population coded benefits from the wider dimension. Conflict is with non-disability constraints — building footprint, structural grid, retrofit. <span class="src-chip" hidden>⚠ opus · editorial summary of conflict register</span></p>
+    <p>Every source below was confirmed against <code style="font-family:var(--font-mono);">references/global-reference-registry.json</code> this session. Because the project's numeric REF-IDs are known to collide across surfaces (worked example §7.3), sources are cited by <strong>author · year · title · tier · slug</strong> — the stable keys — with global REF-IDs noted only where verified.</p>
+
+    <div class="chiprow" style="margin: 8px 0 14px;">
+      <span class="chip chip-evi-co1">◆ Co-1 · DeafSpace (Bauman/Gallaudet, Vaughn)</span>
+      <span class="chip chip-evi-stated">● T3 · swept-path + scoping (Steinfeld, Cloete &amp; Rout)</span>
+      <span class="chip chip-evi-provis">◐ T4–T6 · code floor (convergence)</span>
+      <span class="chip" style="background:#fdf6f1;border-color:#b8521b;color:#8a3a12;">✗ purged · fabricated Koontz anchor</span>
+    </div>
 
     <div class="rowlist">
-      <details class="row" open style="--row-color: var(--sec-8)" id="x-conflict-fp" open>
-        <summary><span></span><span class="r-tag">▲ FLOOR-PLATE</span><span class="r-title">Net-to-gross efficiency<small>more circulation = less programme</small></span><span class="r-value"><span class="chip chip-warn">trade-off</span></span><span class="r-arrow">›</span></summary>
+      <details class="row" open style="--row-color: var(--ev-co1)">
+        <summary><span></span><span class="r-tag">◆ co-1</span><span class="r-title">DeafSpace Design Guidelines<small>Bauman / Gallaudet — the 2440 mm anchor</small></span><span class="r-value">REF-00135</span><span class="r-arrow">›</span></summary>
         <div class="r-body"><div class="blocks">
-          <div class="block"><div class="block-l"><span class="sym">◆</span> nature</div><p>Wider corridors increase the circulation share of the floor plate, reducing net-to-gross.</p></div>
-          <div class="block"><div class="block-l"><span class="sym">▣</span> resolution</div><p>Locate non-circulation programme adjacent to corridors so the corridor pays for itself in flexibility (Steinfeld &amp; Maisel 2012). Corridor as social space, not waste space.</p></div>
+          <div class="block"><div class="block-l"><span class="sym sym-co1">◆</span> citation</div><p>Bauman, H-D. (2010). <em>DeafSpace Design Guidelines</em> (working draft, 85 pp). Gallaudet University. Co-1/2 · US · slug <code style="font-family:var(--font-mono);">deaf-spatial-design</code> (DSD-01). With Gallaudet University (2010) <em>DSDG Vol. 1</em> (DSD-02) and Vaughn, A. (2018) <em>DeafScape: Applying DeafSpace to Landscape</em>, GroundUp Journal (REF-00510, DSD-05).</p></div>
+          <div class="block"><div class="block-l"><span class="sym sym-warn">▲</span> evidence-base warning</div><p class="honesty">Primary; unpublished; single-institution. No independent replication of the quantified dimensions (2440 mm corridor, 900–3050 mm signing distance) exists. Co-1 specifications from a single Deaf-community context (ASL), not validated across signed languages — a genuine evidence limitation, not a searchable gap.</p></div>
         </div></div>
       </details>
-      <details class="row" style="--row-color: var(--sec-8)">
-        <summary><span></span><span class="r-tag">▲ RETROFIT-WALL</span><span class="r-title">Existing structural walls<small>masonry that cannot be moved</small></span><span class="r-value"><span class="chip chip-warn">trade-off</span></span><span class="r-arrow">›</span></summary>
+
+      <details class="row" style="--row-color: var(--ev-stated)">
+        <summary><span></span><span class="r-tag">● tier 3</span><span class="r-title">Steinfeld et&nbsp;al. — swept-path anthropometry<small>IDeA Center · the 2400 mm entire-sample root</small></span><span class="r-value">UNVERIFIED-1</span><span class="r-arrow">›</span></summary>
         <div class="r-body"><div class="blocks">
-          <div class="block"><div class="block-l"><span class="sym">▣</span> resolution</div><p>Use the constrained allowance (1000 mm · § 3) only for short secondary routes with turnaround at each end; never on primary routes.</p></div>
+          <div class="block"><div class="block-l"><span class="sym">◆</span> citation</div><p>Steinfeld, E. et&nbsp;al. (2006, RESNA) — measured 180° swept-path envelopes; entire sample cleared within 2400 mm in an enclosed bay (1925 mm open-bay UDI sub-sample). Steinfeld et&nbsp;al. (2010, IDeA Center AWM Final Report, n≈500) confirmed the ADA 1524 mm standard, from 1970s data, under-accommodates power-WC users at the 50th percentile.</p></div>
+          <div class="block"><div class="block-l"><span class="sym sym-warn">◐</span> flag</div><p>Swept-envelope clear areas, not turning circles. The 2006 figure is <strong>UNVERIFIED-1</strong> in the corpus (retrieval pending); the flag travels with any determination resting on it. slug <code style="font-family:var(--font-mono);">mobility-built-environment</code>.</p></div>
         </div></div>
       </details>
-      <details class="row" style="--row-color: var(--sec-8)">
-        <summary><span></span><span class="r-tag">▲ FIRE-EGRESS</span><span class="r-title">Furniture &amp; fixtures in egress paths<small>FF&amp;E that creep in post-occupancy</small></span><span class="r-value"><span class="chip chip-warn">trade-off</span></span><span class="r-arrow">›</span></summary>
-        <div class="r-body"><div class="blocks">
-          <div class="block"><div class="block-l"><span class="sym">▣</span> resolution</div><p>Mark the 1200 mm zone in floor-plate hatching at FF&amp;E review. Specify obstacles &gt; 100 mm to be wall-recessed. Schedule a post-occupancy walk-through against the hatched zone.</p></div>
-        </div></div>
+
+      <details class="row" style="--row-color: var(--ev-stated)">
+        <summary><span></span><span class="r-tag">● tier 3</span><span class="r-title">Cloete &amp; Rout 2025<small>DeafSpace scoping review — cross-cultural applicability</small></span><span class="r-value">REF-00189</span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> citation</div><p>Cloete, M. &amp; Rout, M. (2025). "DeafSpace" in the built school environment: scoping review. <em>Acta Structilia</em> 32(2):238–263. T3 · INT/ZA. Confirms cross-cultural applicability of DeafSpace <em>principles</em> — does not replicate the quantified 2440 mm dimension.</p></div></div></div>
+      </details>
+
+      <details class="row" style="--row-color: var(--ev-provis)">
+        <summary><span></span><span class="r-tag">◐ tier 4–6</span><span class="r-title">Regulatory floor bundle<small>ADA · BS 8300-2 · DIN 18040-1 · AS 1428.1 · ISO 21542 · CSA B651</small></span><span class="r-value">§ 9</span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-provis">◐</span> role</div><p>Detailed in § 9. These are code-baseline citations (legal floor in each jurisdiction) — valid for jurisdiction-tracking, weak band for best practice. Their convergence on 1200/1800 mm is convergence-not-evidence.</p><ul class="citelist"><li><button class="cite-trigger" data-pop="cite-conv">convergence-not-evidence</button></li></ul></div></div></div>
+      </details>
+
+      <details class="row" style="--row-color: var(--muted)">
+        <summary><span></span><span class="r-tag">◇ community claim</span><span class="r-title">Lived experience — individual Co-1 accounts<small>0 keyed to E-08</small></span><span class="r-value"><span class="opus-flag" style="background: var(--paper); color: var(--muted); border-color: var(--rule);">∅ 0 on file</span></span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◇</span> status</div><p>No individual Co-1 account is keyed to E-08 (<code style="font-family:var(--font-mono);">co1_pass_count = 0</code> corpus-wide). The community-level Deaf claim (DeafSpace, a published DPO/community source) is the standing lived-experience anchor for the width. Accounts are recorded verbatim with consent, never seeded with composite text.</p></div></div></div>
+      </details>
+
+      <details class="row" style="--row-color: var(--warn)">
+        <summary><span></span><span class="r-tag">✗ purged</span><span class="r-title">Fabricated Koontz 2017 anchor<small>+ all derived quant + 6 collided REF-IDs + phantom yaml + 3 fake accounts</small> <span class="opus-flag" style="margin-left:8px;">✗ removed</span></span><span class="r-value">∅</span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn">⚠</span> integrity finding (worked example §7.1)</div><p>The prior version cited "Koontz, A.&nbsp;M. et&nbsp;al. (2017), <em>Wheeled mobility passing-width thresholds</em>, DOI 10.1080/17483107.2016.1278470, n=42" as its Tier-4 anchor, plus derived figures (+30–45% metabolic cost, 12% contact rate, 100 mm near-miss tolerance, a cost curve at 10 mm steps) and an interactive slider built on that curve. <strong>None of this exists in the corpus.</strong> Registry <code style="font-family:var(--font-mono);">REF-00237</code> is the Epilepsy Foundation; the registered Koontz rows are propulsion-biomechanics papers. All six of the prior page's REF-IDs collided with unrelated rows; its stated source file <code style="font-family:var(--font-mono);">data/specifications/e-08.yaml</code> does not exist; and its three Co-1 accounts (acc-0142/0218/0301) appear in no register. The anchor, the figures, the slider and the fake accounts are removed — not re-sourced.</p></div></div></div>
+      </details>
+
+      <details class="row" style="--row-color: var(--warn)">
+        <summary><span></span><span class="r-tag">⚠ known defect</span><span class="r-title">Four coexisting "Guidebook values"<small>2440 canon · 1800 matrix · 1200 live item · this page</small></span><span class="r-value"><span class="opus-flag">⚠ drift</span></span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn">⚠</span> unresolved</div><p>The item still carries four values across surfaces: tier-system §3 canon (2440 best practice), item-jurisdiction-divergence-matrix (target 1800), live v10 item name (≥1200 minimum), and this page. This page aligns to the §3 canon and labels floor values as such, but the underlying drift is a data defect the extraction layer must resolve — not something a hand-authored page can fix alone. A separate legacy copy at <code style="font-family:var(--font-mono);">site/specs/e-08.html</code> (different design system) still carries the ≥1200 framing and is flagged for the same rewrite.</p></div></div></div>
+      </details>
+
+      <details class="row" style="--row-color: var(--muted)">
+        <summary><span></span><span class="r-tag">queue</span><span class="r-title">External-mining queue<small>what must be retrieved before this value is adjudicated</small></span><span class="r-value">8 items</span><span class="r-arrow">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◇</span> priority order</div><p>(1) Koontz passing-width study — verify-or-purge; (2) pre-1980 root documents (Nugent/UIUC → ANSI A117.1, BS CP96 → 8300, DIN 18024 → 18040, ISO 7176-5) to settle whether 1200/1800 descend from measurement or committee inheritance; (3) the 1800 mm derivation specifically; (4) wheelchair-user turning biomechanics to replace the able-bodied-novice base; (5) cross-signed-language spatial grammar + Protactile contact space; (6) attendant-propelled &amp; scooter multi-point envelopes; (7) post-2010 device-fleet anthropometry (GAP-295); (8) OFS rest-interval divergence (25–30 m vs ≤50 m).</p></div></div></div>
       </details>
     </div>
-  </section>
 
-  <!-- ============================================================ -->
-  <!-- §9 LIVED IMPACT                                               -->
-  <!-- ============================================================ -->
-  <section class="section" data-color="umber" style="--order-spec:8; --order-q:9" id="impact">
-    <div class="sec-head">
-      <span class="sec-num">§ 9 · Lived impact</span>
-      <h2>What changes for the user</h2>
-      <span class="sec-meta">co-1 · awaiting accounts</span>
-    </div>
-    <p>Co-1 evidence sits at the top of the tier list, never subordinated to the academic stack. <strong>This section is not yet populated for E-08.</strong> The Guidebook does not synthesise lived experience; an account appears here only when it has been recorded against this provision in <code style="font-family:var(--font-mono);">data/co1_register.md</code>.</p>
-
-    <div class="empty-state">
-      <div class="empty-state-mark" aria-hidden="true">◆</div>
-      <div class="empty-state-body">
-        <h3>0 Co-1 accounts on file for E-08</h3>
-        <p>The structure below shows how a recorded account would appear. Empty placeholders are intentional — they are not seeded with composite or paraphrased text.</p>
-        <dl class="empty-shape">
-          <div><dt>Account ID</dt><dd>acc-NNNN · assigned at intake</dd></div>
-          <div><dt>Speaker frame</dt><dd>self-described, e.g. "power-chair user, 12 years"</dd></div>
-          <div><dt>Setting</dt><dd>building type · jurisdiction · stated corridor width</dd></div>
-          <div><dt>Account</dt><dd>verbatim, recorded with consent · never edited for tone</dd></div>
-          <div><dt>Date</dt><dd>YYYY-MM</dd></div>
-        </dl>
-        <p class="empty-cta"><a href="../index.html#contribute">→ How to contribute a Co-1 account</a></p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================ -->
-  <!-- §10 SCHEDULE                                                  -->
-  <!-- ============================================================ -->
-  <section class="section" data-color="graphite" style="--order-spec:9; --order-q:10" id="schedule">
-    <div class="sec-head">
-      <span class="sec-num">§ 10 · Schedule language</span>
-      <h2>Drop into a contract document</h2>
-      <span class="sec-meta">copyable · edit jurisdiction line</span>
-    </div>
-    <pre class="schedule" id="schedule-text"><button class="copy" type="button" data-copy="schedule-text">Copy</button>CORRIDOR CLEAR WIDTH — PRIMARY ROUTES
-
-Minimum:    1200 mm clear, wall-to-wall less projections.
-Constrained: 1000 mm clear permitted only for secondary routes
-            ≤ 6 m long with turnaround at each end.
-Datum:      Clear envelope from FFL to 2050 mm AFF.
-Obstacles:  Any continuous projection &gt; 25 mm deducts from
-            the clear width. Wall-recess fire extinguishers,
-            hand sanitisers, emergency call stations and any
-            FF&amp;E in the corridor zone.
-Reference:  Guidebook E-08 · CAN/CSA B651-18 §4.2.1 ·
-            BS 8300-2:2018 §10.2 · ISO 21542:2021 §11.5.</pre>
-  </section>
-
-  <!-- ============================================================ -->
-  <!-- §11 CROSS-REFERENCES                                          -->
-  <!-- ============================================================ -->
-  <section class="section" data-color="indigo" style="--order-spec:10; --order-q:11" id="related">
-    <div class="sec-head">
-      <span class="sec-num">§ 11 · Related provisions</span>
-      <h2>How this connects</h2>
-      <span class="sec-meta">connection register</span>
-    </div>
-    <div class="rowlist">
-      <details class="row" open style="--row-color: var(--sec-11)" open><summary><span></span><span class="r-tag">A-02</span><span class="r-title">Overhead obstacle detectability<small>cap on the same envelope · 2050 mm AFF</small></span><span class="r-value"><span class="chip">linked</span></span><span class="r-arrow">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> relation</div><p>A-02 governs the upper bound of the clear envelope referenced in § 4 (annotation 3).</p></div></div></div></details>
-      <details class="row" style="--row-color: var(--sec-11)"><summary><span></span><span class="r-tag">E-12</span><span class="r-title">Entrance landing &amp; manoeuvring space<small>turnaround at corridor termination</small></span><span class="r-value"><span class="chip">linked</span></span><span class="r-arrow">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> relation</div><p>The constrained allowance (§ 3) requires E-12 turnaround circles at both ends.</p></div></div></div></details>
-      <details class="row" style="--row-color: var(--sec-11)"><summary><span></span><span class="r-tag">E-11</span><span class="r-title">Automatic sliding doors<small>door clear opening = corridor clear width</small></span><span class="r-value"><span class="chip">linked</span></span><span class="r-arrow">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> relation</div><p>A door narrower than the corridor reintroduces the pinch the dimension was designed to prevent.</p></div></div></div></details>
-      <details class="row" style="--row-color: var(--sec-11)"><summary><span></span><span class="r-tag">D-04</span><span class="r-title">Landmarks at decision points<small>junctions defined by E-08 require D-04</small></span><span class="r-value"><span class="chip">linked</span></span><span class="r-arrow">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> relation</div><p>Where corridors meet at the dimension governed by E-08, a landmark at the junction is required.</p></div></div></div></details>
-      <details class="row" style="--row-color: var(--sec-11)"><summary><span></span><span class="r-tag">B-08</span><span class="r-title">Matte floor finishes ≤ 30 GU<small>finish constraint on the corridor floor</small></span><span class="r-value"><span class="chip">linked</span></span><span class="r-arrow">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> relation</div><p>The clear floor zone of E-08 falls within the surface specification of B-08.</p></div></div></div></details>
-      <details class="row" style="--row-color: var(--sec-11)"><summary><span></span><span class="r-tag">E-10</span><span class="r-title">Rest seating ≤ 20 m interval<small>furniture placement</small></span><span class="r-value"><span class="chip">linked</span></span><span class="r-arrow">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> relation</div><p>Rest seating must sit outside the 1200 mm hatched zone — recessed niches preferred.</p></div></div></div></details>
-    </div>
-  </section>
-
-  <!-- ============================================================ -->
-  <!-- §12 PROVENANCE                                                -->
-  <!-- ============================================================ -->
-  <section class="section" data-color="slate" style="--order-spec:12; --order-q:12" id="provenance">
-    <div class="sec-head">
-      <span class="sec-num">§ 12 · Provenance</span>
-      <h2>How this record was assembled</h2>
-      <span class="sec-meta">field-by-field log</span>
-    </div>
-    <p>Every field on this page is sourced from a named file in <code style="font-family:var(--font-mono);">data/</code> or marked unsourced. Nothing is paraphrased, composited, or synthesised in transit. The two opus-flag entries below are the only fields that pass through editorial summarisation, and they are explicitly marked per Standing Rule #2.</p>
-    <div class="rowlist">
-      <details class="row" open style="--row-color: var(--sec-12)" open><summary><span></span><span class="r-tag">field</span><span class="r-title">specification.value · ≥ 1200 mm<small>data/specifications/e-08.yaml · field: value_universal</small></span><span class="r-value">db · reviewed</span><span class="r-arrow">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> source</div><p>Read directly from the specifications table. Curation review 2026-04-23. Two cited sources back the value: Koontz 2017 (cohort) + ISO 21542:2021 (harmonised baseline).</p></div></div></div></details>
-      <details class="row" style="--row-color: var(--sec-12)"><summary><span></span><span class="r-tag">field</span><span class="r-title">jurisdictional_value · 7 columns<small>data/jurisdictional_values/a-3_e08.yaml</small></span><span class="r-value">yaml · reviewed</span><span class="r-arrow">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> source</div><p>Cell-for-cell from the yaml. "— silent" cells reflect a stated absence in the standard, not a missing data fetch. NZ, JP, IN, SE, NL, FR, ES not yet keyed for this provision.</p></div></div></div></details>
-      <details class="row" style="--row-color: var(--warn)"><summary><span></span><span class="r-tag">field</span><span class="r-title">specification.evidence_summary<small>§ 5 narrative · downstream of database</small></span><span class="r-value"><span class="opus-flag">⚠ opus</span> 2026-04-09</span><span class="r-arrow">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn">⚠</span> opus_synthesis</div><p>The connective prose between citations in § 5 is editorial synthesis, not a database field. Flagged per SR-2. Underlying citations and tier values remain fully sourced.</p></div></div></div></details>
-      <details class="row" style="--row-color: var(--warn)"><summary><span></span><span class="r-tag">field</span><span class="r-title">§ 6 population_specifications<small>tag_de_claims.py · automated tag</small></span><span class="r-value"><span class="opus-flag">⚠ opus</span> 2026-04-12</span><span class="r-arrow">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn">⚠</span> opus_synthesis</div><p>Population tags are auto-extracted from Part 4 prose by a heuristic tagger, then human-reviewed. Functional-profile sentences are paraphrase, not verbatim. Flagged per SR-2.</p></div></div></div></details>
-      <details class="row" style="--row-color: var(--muted)"><summary><span></span><span class="r-tag">field</span><span class="r-title">§ 9 co1_accounts<small>data/co1_register.md · register lookup</small></span><span class="r-value"><span class="opus-flag" style="background: var(--paper); color: var(--muted); border-color: var(--rule);">∅ unsourced</span></span><span class="r-arrow">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◇</span> status</div><p>Zero accounts keyed against E-08. Deliberately left empty rather than seeded with paraphrased material. § 9 documents the empty state and the recording protocol.</p></div></div></div></details>
-      <details class="row" style="--row-color: var(--sec-12)"><summary><span></span><span class="r-tag">page</span><span class="r-title">page generation<small>built from data/guidebook.db at render time</small></span><span class="r-value">CC BY-SA 4.0</span><span class="r-arrow">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym">◆</span> source</div><p>This HTML is a static render. Citation: <em>Guidebook E-08 · Corridor clear width.</em> Rebuilt 2026-05-04 from db revision <code style="font-family:var(--font-mono);">v10.3-486e299</code>.</p></div></div></div></details>
-    </div>
+    <p style="font-size: var(--fs-sm); color: var(--muted); margin-top: 12px;">Suggested citation: <em>Guidebook E-08 · Corridor clear width</em> (PROVISIONAL). Hand-authored re-derivation from the value-genealogy spine, 2026-07-20; not machine-generated from an adjudicated determination. CC BY-SA 4.0.</p>
   </section>
 
 </main>
 
 <!-- ============================================================ -->
-<!-- POPOVER LIBRARY (citations + cross-refs)                      -->
+<!-- POPOVER LIBRARY                                               -->
 <!-- ============================================================ -->
-<div class="pop" data-pop-id="cite-koontz">
-  <div class="pop-head"><span class="pop-tag">REF-00237</span><span>● tier 4 · primary</span></div>
-  <div class="pop-title"><a href="https://doi.org/10.1080/17483107.2016.1278470" target="_blank" rel="noopener">Koontz, A. M. et al. — Wheeled mobility passing-width thresholds</a></div>
-  <p class="pop-doi"><span>DOI</span> <a href="https://doi.org/10.1080/17483107.2016.1278470" target="_blank" rel="noopener">10.1080/17483107.2016.1278470</a></p>
-  <p style="margin: 4px 0 0; color: var(--muted); font-size: var(--fs-xs); font-family: var(--font-mono);">Disability and Rehabilitation: Assistive Technology · 12(7) 715–724 · 2017</p>
-  <dl><dt>Method</dt><dd>Cohort observation · n=42 · two-pass corridor</dd>
-  <dt>Tier</dt><dd>● tier 4 · primary cohort</dd>
-  <dt>Synthesis</dt><dd>primary</dd></dl>
-  <div class="pop-foot"><span>cited 2× on this page</span><a href="#evidence">→ open in § 5</a></div>
+<div class="pop" data-pop-id="cite-dsdg">
+  <div class="pop-head"><span class="pop-tag">REF-00135</span><span>◆ Co-1/2 · US</span></div>
+  <div class="pop-title">Bauman, H-D. — DeafSpace Design Guidelines (Gallaudet, 2010)</div>
+  <p style="margin: 4px 0 0; color: var(--muted); font-size: var(--fs-xs); font-family: var(--font-mono);">Working draft, 85 pp · slug deaf-spatial-design · DSD-01</p>
+  <dl><dt>Anchors</dt><dd>≥2440 mm primary signing-pair corridor</dd>
+  <dt>Warning</dt><dd>single-institution, ASL-derived, unpublished; dimension confidence LOW</dd></dl>
+  <div class="pop-foot"><span>the 2440 mm root</span><a href="#evidence">→ open in § 10</a></div>
 </div>
-<div class="pop" data-pop-id="cite-csa">
-  <div class="pop-head"><span class="pop-tag">REF-00200</span><span>● tier 2 · regulatory</span></div>
-  <div class="pop-title"><a href="https://www.csagroup.org/store/product/CAN%20CSA-B651-18/" target="_blank" rel="noopener">CAN/CSA B651-18 §4.2.1</a></div>
-  <p class="pop-doi"><span>standard</span> <a href="https://www.csagroup.org/store/product/CAN%20CSA-B651-18/" target="_blank" rel="noopener">CSA Group catalogue</a></p>
-  <p style="margin: 4px 0 0; color: var(--muted); font-size: var(--fs-xs); font-family: var(--font-mono);">Accessible design for the built environment · CSA Group · 2018</p>
-  <dl><dt>Stated</dt><dd>min 1100 mm · pref 1200 mm</dd></dl>
+<div class="pop" data-pop-id="cite-steinfeld06">
+  <div class="pop-head"><span class="pop-tag">Steinfeld 2006</span><span>● tier 3 · UNVERIFIED-1</span></div>
+  <div class="pop-title">Steinfeld, E. et al. — swept-path anthropometry (RESNA 2006)</div>
+  <p style="margin: 4px 0 0; color: var(--muted); font-size: var(--fs-xs); font-family: var(--font-mono);">IDeA Center · entire-sample 180° swept envelope · slug mobility-built-environment</p>
+  <dl><dt>Anchors</dt><dd>2400 mm entire-sample (enclosed bay); 1925 mm open-bay sub-sample</dd>
+  <dt>Flag</dt><dd>UNVERIFIED-1 — retrieval pending; flag travels with the determination</dd></dl>
 </div>
-<div class="pop" data-pop-id="cite-bs">
-  <div class="pop-head"><span class="pop-tag">REF-00114</span><span>● tier 2 · regulatory</span></div>
-  <div class="pop-title"><a href="https://knowledge.bsigroup.com/products/design-of-an-accessible-and-inclusive-built-environment-buildings-code-of-practice-1" target="_blank" rel="noopener">BS 8300-2:2018 §10.2</a></div>
-  <p class="pop-doi"><span>standard</span> <a href="https://knowledge.bsigroup.com/products/design-of-an-accessible-and-inclusive-built-environment-buildings-code-of-practice-1" target="_blank" rel="noopener">BSI knowledge</a></p>
-  <p style="margin: 4px 0 0; color: var(--muted); font-size: var(--fs-xs); font-family: var(--font-mono);">Design of an accessible &amp; inclusive built environment · BSI · 2018</p>
-  <dl><dt>Stated</dt><dd>min 1200 mm · pref 1800 mm</dd></dl>
+<div class="pop" data-pop-id="cite-conv">
+  <div class="pop-head"><span class="pop-tag">tier-system §3</span><span>doctrine</span></div>
+  <div class="pop-title">Best practice ≠ convergence</div>
+  <p>"BS 8300, DIN 18040-1, Part M and AS 1428.1 all specify X" is a convergence claim across Tier 4–6 sources. Informative about regulatory agreement; NOT best-practice evidence — the jurisdictions could all be reading from one shared pre-evidence floor.</p>
+  <div class="pop-foot"><a href="../governance/tier-system.md">→ tier system §3</a></div>
 </div>
-<div class="pop" data-pop-id="cite-iso">
-  <div class="pop-head"><span class="pop-tag">REF-00500</span><span>● tier 2 · harmonised</span></div>
-  <div class="pop-title"><a href="https://www.iso.org/standard/71860.html" target="_blank" rel="noopener">ISO 21542:2021 §11.5</a></div>
-  <p class="pop-doi"><span>standard</span> <a href="https://www.iso.org/standard/71860.html" target="_blank" rel="noopener">iso.org/standard/71860</a></p>
-  <p style="margin: 4px 0 0; color: var(--muted); font-size: var(--fs-xs); font-family: var(--font-mono);">Building construction — accessibility &amp; usability of the built environment</p>
-  <dl><dt>Stated</dt><dd>min 1200 mm · pref 1800 mm</dd></dl>
-</div>
-<div class="pop" data-pop-id="cite-nbr">
-  <div class="pop-head"><span class="pop-tag">REF-00610</span><span>● tier 2 · regulatory</span></div>
-  <div class="pop-title"><a href="https://www.abntcatalogo.com.br/norma.aspx?ID=453065" target="_blank" rel="noopener">NBR 9050:2020 §6.11</a></div>
-  <p class="pop-doi"><span>standard</span> <a href="https://www.abntcatalogo.com.br/norma.aspx?ID=453065" target="_blank" rel="noopener">ABNT catálogo</a></p>
-  <p style="margin: 4px 0 0; color: var(--muted); font-size: var(--fs-xs); font-family: var(--font-mono);">Acessibilidade a edificações · ABNT · 2020</p>
-  <dl><dt>Stated</dt><dd>min 1200 mm · pref 1500 mm</dd></dl>
-</div>
-
-<div class="pop" data-pop-id="x-3">
-  <div class="pop-head"><span class="pop-tag">§ 3</span><span>section anchor</span></div>
-  <div class="pop-title">Values · the dimension by design mode</div>
-  <p>Three rows: universal · constrained · population-specific.</p>
-  <div class="pop-foot"><a href="#values">→ jump</a></div>
+<div class="pop" data-pop-id="cite-vng">
+  <div class="pop-head"><span class="pop-tag">VNG 2016</span><span>NL · case evidence</span></div>
+  <div class="pop-title">VNG corridor-width case study (Netherlands)</div>
+  <p>Confirms a 1200 mm Bbl corridor is insufficient for a wheelchair user to pass or turn; 1500 mm for pedestrian–wheelchair passing; 1800 mm for two scooter/wheelchair users. Corroborates the 1800 mm floor; supplies no measurement root.</p>
 </div>
 <div class="pop" data-pop-id="x-5">
   <div class="pop-head"><span class="pop-tag">§ 5</span><span>section anchor</span></div>
-  <div class="pop-title">Evidence · 5 sources, 1 opus_synthesis flag</div>
-  <p>Co-1 lived experience sits at the top of the list.</p>
-  <div class="pop-foot"><a href="#evidence">→ jump</a></div>
+  <div class="pop-title">Best-practice targets</div>
+  <p>≥2440 anchored · 1800 floor (convergence) · device-class ladder · genealogy.</p>
+  <div class="pop-foot"><a href="#targets">→ jump</a></div>
 </div>
-<div class="pop" data-pop-id="x-7">
-  <div class="pop-head"><span class="pop-tag">§ 7</span><span>section anchor</span></div>
-  <div class="pop-title">Jurisdictions · 14 standards side-by-side</div>
-  <p>Range across surveyed standards: 915–1500 mm.</p>
-  <div class="pop-foot"><a href="#jurisdictions">→ jump</a></div>
+<div class="pop" data-pop-id="x-8">
+  <div class="pop-head"><span class="pop-tag">§ 8</span><span>section anchor</span></div>
+  <div class="pop-title">Failure cases</div>
+  <p>Single-file pinch · injury-dose spin · silent deletion of DEAF space · convergence-as-evidence.</p>
+  <div class="pop-foot"><a href="#failures">→ jump</a></div>
 </div>
 <div class="pop" data-pop-id="x-9">
   <div class="pop-head"><span class="pop-tag">§ 9</span><span>section anchor</span></div>
-  <div class="pop-title">Lived impact · 3 Co-1 accounts</div>
-  <p>Three short accounts, never subordinated to the academic tier.</p>
-  <div class="pop-foot"><a href="#impact">→ jump</a></div>
-</div>
-<div class="pop" data-pop-id="x-conflict-fp">
-  <div class="pop-head"><span class="pop-tag">FLOOR-PLATE</span><span>conflict</span></div>
-  <div class="pop-title">Net-to-gross efficiency trade-off</div>
-  <p>Wider corridors increase circulation share. Resolution: locate non-circulation programme adjacent.</p>
-  <div class="pop-foot"><a href="#conflicts">→ open in § 8</a></div>
-</div>
-<div class="pop" data-pop-id="x-a02">
-  <div class="pop-head"><span class="pop-tag">A-02</span><span>related</span></div>
-  <div class="pop-title">Overhead obstacle base-detectability</div>
-  <p>Cap on the same envelope at 2050 mm AFF.</p>
-  <div class="pop-foot"><a href="#">→ open A-02</a></div>
+  <div class="pop-title">Standards &amp; codes — the regulatory floor</div>
+  <p>7 codes, range 915–1500 mm minimum. All Tier 6. None specify signing space.</p>
+  <div class="pop-foot"><a href="#standards">→ jump</a></div>
 </div>
 
 <footer class="colophon" role="contentinfo">
   <div class="colophon-inner">
     <div>
       <h2 class="colo-h">E-08 · Corridor clear width</h2>
-      <p>One canonical record assembled from <code style="font-family: var(--font-mono);">data/guidebook.db</code>. Citation: <em>Guidebook E-08 · Corridor clear width.</em> Generated 2026-05-04. CC BY-SA 4.0.</p>
+      <p>PROVISIONAL · hand-authored re-derivation from the value-genealogy spine, 2026-07-20. Citation: <em>Guidebook E-08 · Corridor clear width.</em> CC BY-SA 4.0.</p>
     </div>
     <div>
-      <h2 class="colo-h">Standing rules</h2>
-      <p>SR-1 source discipline · SR-2 opus_synthesis flag · SR-3 jurisdiction parity · SR-4 co-1 visibility · SR-5 no ranking by disability.</p>
+      <h2 class="colo-h">Standing rules applied</h2>
+      <p>Best practice ≠ convergence (tier-system §3) · weighted-strength anchoring (§8) · swept-path measurement · co-1 visibility (no unrecorded accounts) · no fabricated anchors.</p>
     </div>
     <div>
       <h2 class="colo-h">Audit</h2>
-      <p>WCAG 2.2 AA · keyboard pass · screen reader pass · drawing alt-text reviewed.</p>
+      <p>Sources registry-checked this session · fabricated Koontz anchor + 3 fake Co-1 accounts purged · WCAG 2.2 AA structure retained.</p>
     </div>
   </div>
 </footer>
 
 <script>
 (function () {
-  // ---------- reduced-motion detection ----------
   var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ---------- mode toggle ----------
-  var btns = document.querySelectorAll('.mode-toggle button');
-  var titleSpec = document.querySelector('.title-spec');
-  var titleQ    = document.querySelector('.title-question');
-  function setMode(mode) {
-    document.body.classList.toggle('mode-question', mode === 'question');
-    document.body.classList.toggle('mode-spec', mode !== 'question');
-    btns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.mode === mode)); });
-    // sync aria-hidden so AT follows the visible title
-    if (titleSpec) titleSpec.setAttribute('aria-hidden', mode === 'question' ? 'true' : 'false');
-    if (titleQ)    titleQ.setAttribute('aria-hidden',    mode === 'question' ? 'false' : 'true');
-    try { localStorage.setItem('guidebook-mode', mode); } catch (e) {}
-  }
-  btns.forEach(function (b) { b.addEventListener('click', function () { setMode(b.dataset.mode); }); });
-  try {
-    var saved = localStorage.getItem('guidebook-mode');
-    if (saved === 'question') setMode('question');
-    if (location.search.indexOf('mode=question') !== -1) setMode('question');
-  } catch (e) {}
-
-  // ---------- popovers (citations + cross-refs) ----------
-  // Add role and tabindex to all popover containers for focus management
+  // ---------- popovers ----------
   document.querySelectorAll('.pop').forEach(function (p) {
     p.setAttribute('role', 'dialog');
     p.setAttribute('tabindex', '-1');
     var title = p.querySelector('.pop-title');
     if (title) p.setAttribute('aria-label', title.textContent.trim());
   });
-
-  var openPop = null;
-  var openTrigger = null;
-
+  var openPop = null, openTrigger = null;
   function closePop() {
-    if (openPop) {
-      openPop.dataset.open = 'false';
-      openPop = null;
-    }
-    if (openTrigger) {
-      openTrigger.setAttribute('aria-expanded', 'false');
-      try { openTrigger.focus(); } catch (e) {}
-      openTrigger = null;
-    }
+    if (openPop) { openPop.dataset.open = 'false'; openPop = null; }
+    if (openTrigger) { openTrigger.setAttribute('aria-expanded', 'false'); try { openTrigger.focus(); } catch (e) {} openTrigger = null; }
   }
-
   function showPop(trigger) {
-    var id = trigger.dataset.pop;
-    if (!id) return;
-    var pop = document.querySelector('.pop[data-pop-id="' + id + '"]');
-    if (!pop) return;
+    var id = trigger.dataset.pop; if (!id) return;
+    var pop = document.querySelector('.pop[data-pop-id="' + id + '"]'); if (!pop) return;
     if (openPop === pop) { closePop(); return; }
     closePop();
     pop.dataset.open = 'true';
     var rect = trigger.getBoundingClientRect();
-    var top = rect.bottom + window.scrollY + 10;
-    var left = rect.left + window.scrollX;
+    var top = rect.bottom + window.scrollY + 10, left = rect.left + window.scrollX;
     var popWidth = Math.min(420, window.innerWidth - 24);
     pop.style.width = popWidth + 'px';
     if (left + popWidth > window.innerWidth - 12) left = window.innerWidth - popWidth - 12;
     if (left < 12) left = 12;
-    pop.style.top = top + 'px';
-    pop.style.left = left + 'px';
-    openPop = pop;
-    openTrigger = trigger;
+    pop.style.top = top + 'px'; pop.style.left = left + 'px';
+    openPop = pop; openTrigger = trigger;
     trigger.setAttribute('aria-expanded', 'true');
     try { pop.focus(); } catch (e) {}
   }
-
   document.querySelectorAll('.cite-trigger, .xref-trigger').forEach(function (t) {
     t.setAttribute('aria-expanded', 'false');
     t.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); showPop(t); });
   });
-  document.addEventListener('click', function (e) {
-    if (openPop && !openPop.contains(e.target)) closePop();
-  });
+  document.addEventListener('click', function (e) { if (openPop && !openPop.contains(e.target)) closePop(); });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
       closePop();
@@ -1190,54 +850,30 @@ Reference:  Guidebook E-08 · CAN/CSA B651-18 §4.2.1 ·
       if (menu && menu.open) { menu.open = false; var sum = menu.querySelector('summary'); if (sum) sum.focus(); }
     }
   });
-  // scroll listener removed — was hostile to users who need to scroll while reading a popover
   window.addEventListener('resize', closePop);
 
-  // ---------- drawing hotspots → row accordion ----------
-  // Interaction is on .hot-hitarea (larger touch target); .hot is visual only
-  document.querySelectorAll('.hot-hitarea').forEach(function (h) {
-    function triggerHot() {
-      var id = h.dataset.disclose;
-      var el = document.getElementById(id);
-      if (!el) return;
-      var willOpen = !el.open;
-      document.querySelectorAll('.hot-hitarea').forEach(function (h2) { h2.setAttribute('aria-expanded', 'false'); });
-      el.open = willOpen;
-      h.setAttribute('aria-expanded', String(willOpen));
-      if (willOpen) el.scrollIntoView({ behavior: prefersReducedMotion ? 'instant' : 'smooth', block: 'center' });
-    }
-    h.addEventListener('click', triggerHot);
-    h.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerHot(); }
-    });
-  });
-
-  // ---------- jurisdiction compare toggles ----------
+  // ---------- jurisdiction compare ----------
   (function () {
     var picks = document.querySelectorAll('.compare-controls .juris-pick input[data-juris]');
     var table = document.getElementById('juris-table');
     if (!picks.length || !table) return;
     function apply() {
       picks.forEach(function (input) {
-        var on = input.checked;
-        var key = input.dataset.juris;
+        var on = input.checked, key = input.dataset.juris;
         input.parentElement.setAttribute('data-on', on ? 'true' : 'false');
-        table.querySelectorAll('[data-jcol="' + key + '"]').forEach(function (cell) {
-          cell.style.display = on ? '' : 'none';
-        });
+        table.querySelectorAll('[data-jcol="' + key + '"]').forEach(function (cell) { cell.style.display = on ? '' : 'none'; });
       });
     }
     picks.forEach(function (i) { i.addEventListener('change', apply); });
     apply();
   })();
 
-  // ---------- audience lens (masthead menu) ----------
+  // ---------- audience lens ----------
   (function () {
-    var menu = document.getElementById('lens-menu');
-    if (!menu) return;
+    var menu = document.getElementById('lens-menu'); if (!menu) return;
     var current = document.getElementById('lens-current');
     var labels = { designer: 'Designer / architect', ot: 'Clinician / OT', lived: 'Lived experience', policy: 'Policymaker / code official' };
-    var openByLens = { designer: ['drawing', 'values'], ot: ['populations', 'impact'], lived: ['impact', 'conflicts'], policy: ['jurisdictions', 'provenance'] };
+    var openByLens = { designer: ['targets', 'products', 'considerations'], ot: ['populations', 'capacities'], lived: ['failures', 'considerations'], policy: ['standards', 'evidence'] };
     var lbtns = menu.querySelectorAll('button[data-lens]');
     function setLens(lens) {
       lbtns.forEach(function (b) { b.setAttribute('aria-checked', String(b.dataset.lens === lens)); });
@@ -1250,69 +886,49 @@ Reference:  Guidebook E-08 · CAN/CSA B651-18 §4.2.1 ·
       menu.open = false;
     }
     lbtns.forEach(function (b) { b.addEventListener('click', function () { setLens(b.dataset.lens); }); });
-    try {
-      var savedLens = localStorage.getItem('guidebook-lens');
-      setLens(savedLens && labels[savedLens] ? savedLens : 'designer');
-    } catch (e) { setLens('designer'); }
+    try { var s = localStorage.getItem('guidebook-lens'); setLens(s && labels[s] ? s : 'designer'); } catch (e) { setLens('designer'); }
     document.addEventListener('click', function (e) { if (menu.open && !menu.contains(e.target)) menu.open = false; });
-    // Escape: close menu, return focus to summary trigger
     menu.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && menu.open) {
-        e.stopPropagation();
-        menu.open = false;
-        var sum = menu.querySelector('summary'); if (sum) sum.focus();
-      }
+      if (e.key === 'Escape' && menu.open) { e.stopPropagation(); menu.open = false; var sum = menu.querySelector('summary'); if (sum) sum.focus(); }
     });
-    // Arrow key navigation within the radiogroup
     var panel = menu.querySelector('[role="radiogroup"]');
     if (panel) {
       panel.addEventListener('keydown', function (e) {
         if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
         e.preventDefault();
-        var arr = Array.prototype.slice.call(lbtns);
-        var idx = arr.indexOf(document.activeElement);
+        var arr = Array.prototype.slice.call(lbtns), idx = arr.indexOf(document.activeElement);
         if (idx === -1) return;
         arr[(e.key === 'ArrowDown' ? idx + 1 : idx - 1 + arr.length) % arr.length].focus();
       });
     }
   })();
 
-  // ---------- sectnav: single-source-of-truth section locator ----------
+  // ---------- sectnav ----------
   (function () {
-    var nav = document.getElementById('sectnav');
-    if (!nav) return;
-    var snNum = document.getElementById('sn-num');
-    var snTitle = document.getElementById('sn-title');
+    var nav = document.getElementById('sectnav'); if (!nav) return;
+    var snNum = document.getElementById('sn-num'), snTitle = document.getElementById('sn-title');
     var list = document.getElementById('sectnav-list');
     var links = list ? list.querySelectorAll('a[data-snav]') : [];
     var sections = Array.prototype.map.call(links, function (a) {
-      var id = a.dataset.snav; var num = a.dataset.snavNum;
-      var title = a.querySelector('.snc-t').textContent;
-      var el = document.getElementById(id);
-      return el ? { id: id, num: num, title: title, el: el, link: a } : null;
+      var el = document.getElementById(a.dataset.snav);
+      return el ? { num: a.dataset.snavNum, title: a.querySelector('.snc-t').textContent, el: el, link: a } : null;
     }).filter(Boolean);
     function setActive(idx) {
       var s = sections[idx]; if (!s) return;
       if (snNum) snNum.textContent = '§ ' + s.num;
       if (snTitle) snTitle.textContent = s.title;
-      var color = getComputedStyle(s.el).getPropertyValue('--sec-color') || '';
-      if (snNum && color) snNum.style.color = color.trim();
-      // propagate section color to the current-section indicator (border + tint)
-      var cur = document.getElementById('sectnav-current');
-      if (cur && color) cur.style.setProperty('--sec-color', color.trim());
       links.forEach(function (a) { a.removeAttribute('aria-current'); });
       s.link.setAttribute('aria-current', 'true');
       try {
-        var lr = list.getBoundingClientRect(); var ar = s.link.getBoundingClientRect();
+        var lr = list.getBoundingClientRect(), ar = s.link.getBoundingClientRect();
         if (ar.left < lr.left || ar.right > lr.right) list.scrollTo({ left: s.link.offsetLeft - 12, behavior: 'smooth' });
       } catch (e) {}
     }
     if ('IntersectionObserver' in window && sections.length) {
       var io = new IntersectionObserver(function () {
-        var navH = nav.getBoundingClientRect().height + 8; var best = -1, bestDist = Infinity;
+        var navH = nav.getBoundingClientRect().height + 8, best = -1, bestDist = Infinity;
         sections.forEach(function (s, i) {
-          var top = s.el.getBoundingClientRect().top - navH;
-          var dist = top <= 0 ? -top : Infinity;
+          var top = s.el.getBoundingClientRect().top - navH, dist = top <= 0 ? -top : Infinity;
           if (dist < bestDist) { bestDist = dist; best = i; }
         });
         if (best >= 0) setActive(best);
@@ -1321,19 +937,19 @@ Reference:  Guidebook E-08 · CAN/CSA B651-18 §4.2.1 ·
     }
     links.forEach(function (a) {
       a.addEventListener('click', function (e) {
-        var id = a.dataset.snav; var el = document.getElementById(id); if (!el) return;
+        var el = document.getElementById(a.dataset.snav); if (!el) return;
         e.preventDefault();
         var navH = nav.getBoundingClientRect().height + 8;
         var top = el.getBoundingClientRect().top + window.scrollY - navH;
         window.scrollTo({ top: top, behavior: prefersReducedMotion ? 'instant' : 'smooth' });
-        history.replaceState(null, '', '#' + id);
+        history.replaceState(null, '', '#' + a.dataset.snav);
       });
     });
   })();
 
-  // ---------- source/editorial markers toggle ----------
+  // ---------- markers toggle ----------
   (function () {
-    var btn = document.getElementById('markers-toggle'); var label = document.getElementById('markers-label');
+    var btn = document.getElementById('markers-toggle'), label = document.getElementById('markers-label');
     if (!btn) return;
     function setMarkers(on) {
       document.body.setAttribute('data-markers', on ? 'on' : 'off');
@@ -1346,88 +962,12 @@ Reference:  Guidebook E-08 · CAN/CSA B651-18 §4.2.1 ·
     try { setMarkers(localStorage.getItem('guidebook-markers') === 'on'); } catch (e) { setMarkers(false); }
   })();
 
-  // ---------- copy schedule ----------
-  document.querySelectorAll('[data-copy]').forEach(function (b) {
-    b.addEventListener('click', function () {
-      var t = document.getElementById(b.dataset.copy); if (!t) return;
-      var text = t.innerText.replace(/^Copy\s*/, '').trim();
-      if (navigator.clipboard) navigator.clipboard.writeText(text).then(function () {
-        var orig = b.textContent; b.textContent = 'Copied'; setTimeout(function () { b.textContent = orig; }, 1500);
-      });
-    });
-  });
-
-  // ---------- interactive width explorer ----------
-  (function () {
-    var range = document.getElementById('ex-range'); if (!range) return;
-    var svg = document.getElementById('ex-svg');
-    var wOut = document.getElementById('ex-w'), sepOut = document.getElementById('ex-sep');
-    var costOut = document.getElementById('ex-cost'), verdictOut = document.getElementById('ex-verdict');
-    var conflict = document.getElementById('ex-conflict'), dimLabel = document.getElementById('ex-dim-label');
-    var chairA = document.getElementById('ex-chair-a'), chairB = document.getElementById('ex-chair-b');
-    var ZONE_TOP = 73, REF_CLEAR_MM = 1200, REF_HEIGHT_PX = 134;
-    var pxPerMm = REF_HEIGHT_PX / REF_CLEAR_MM, CHAIR_PX = 42;
-
-    function update(wallToWallMm) {
-      var clearMm = wallToWallMm - 100;
-      var heightPx = Math.max(40, clearMm * pxPerMm);
-      var zoneBot = ZONE_TOP + heightPx, midY = ZONE_TOP + heightPx / 2;
-      var aTop = zoneBot - 10 - CHAIR_PX, bTop = ZONE_TOP + 10, bBottom = bTop + CHAIR_PX;
-      var sepMm = Math.round((aTop - bBottom) / pxPerMm);
-      var passes = clearMm >= 1400;
-      var cost = clearMm >= 1400 ? 0 : clearMm >= 1200 ? Math.round((1400-clearMm)/200*8) : clearMm >= 900 ? Math.round(8+(1200-clearMm)/300*22) : Math.round(30+(900-clearMm)/100*15);
-
-      // readout always updates
-      wOut.textContent = clearMm;
-      sepOut.innerHTML = Math.max(0, sepMm) + ' <small>mm</small>';
-      costOut.innerHTML = '+' + cost + ' <small>%</small>';
-      costOut.style.color = cost >= 30 ? '#b8521b' : cost >= 10 ? '#8a6d1f' : '#1f1c18';
-      verdictOut.textContent = passes ? 'complies' : clearMm < 1100 ? 'fails — chair B reverses' : 'tight — slows to walking pace';
-      verdictOut.style.color = passes ? '#1f5e3a' : '#b8521b';
-
-      if (prefersReducedMotion) return; // skip SVG animation when reduced motion preferred
-
-      document.getElementById('ex-zone').setAttribute('y', ZONE_TOP);
-      document.getElementById('ex-zone').setAttribute('height', heightPx);
-      document.getElementById('ex-wall-top').setAttribute('y1', ZONE_TOP - 13); document.getElementById('ex-wall-top').setAttribute('y2', ZONE_TOP - 13);
-      document.getElementById('ex-wall-bot').setAttribute('y1', zoneBot + 13);  document.getElementById('ex-wall-bot').setAttribute('y2', zoneBot + 13);
-      document.getElementById('ex-rail-top').setAttribute('y1', ZONE_TOP); document.getElementById('ex-rail-top').setAttribute('y2', ZONE_TOP);
-      document.getElementById('ex-rail-bot').setAttribute('y1', zoneBot);  document.getElementById('ex-rail-bot').setAttribute('y2', zoneBot);
-      document.getElementById('ex-dim').setAttribute('y1', ZONE_TOP); document.getElementById('ex-dim').setAttribute('y2', zoneBot);
-      svg.querySelectorAll('.ln-dim-tick').forEach(function (t, i) { var y = i === 0 ? ZONE_TOP : zoneBot; t.setAttribute('y1', y); t.setAttribute('y2', y); });
-      dimLabel.textContent = clearMm + ' mm clear';
-      dimLabel.setAttribute('y', midY); dimLabel.setAttribute('x', 712); dimLabel.setAttribute('transform', 'rotate(-90 712 ' + midY + ')');
-      moveChair(chairA, 120, aTop); moveChair(chairB, 380, bTop);
-      if (passes) { conflict.setAttribute('opacity', 0); chairB.classList.remove('stopped'); dimLabel.setAttribute('fill', '#143464'); }
-      else {
-        var overlap = Math.max(20, -(aTop - bBottom) + 40);
-        conflict.setAttribute('y', bBottom - 4); conflict.setAttribute('height', overlap);
-        conflict.setAttribute('opacity', 0.55); conflict.setAttribute('x', 280); conflict.setAttribute('width', 160);
-        chairB.classList.add('stopped'); dimLabel.setAttribute('fill', '#b8521b');
-      }
-    }
-
-    function moveChair(g, x, y) {
-      var rect = g.querySelector('rect');
-      if (g._baseX == null) { g._baseX = parseFloat(rect.getAttribute('x')); g._baseY = parseFloat(rect.getAttribute('y')); }
-      g.setAttribute('transform', 'translate(' + (x - g._baseX) + ',' + (y - g._baseY) + ')');
-    }
-
-    range.addEventListener('input', function () { update(parseInt(range.value, 10)); });
-    document.querySelectorAll('.ex-preset').forEach(function (b) {
-      b.addEventListener('click', function () { var wall = parseInt(b.dataset.w, 10) + 100; range.value = wall; update(wall); });
-    });
-    update(parseInt(range.value, 10));
-  })();
-
-  // ---------- expand all / collapse all per section ----------
+  // ---------- expand all / collapse all ----------
   document.querySelectorAll('section.section').forEach(function (sec) {
     var rows = sec.querySelectorAll('details.row');
-    if (rows.length < 2) return; // don't add toggle for sections with 0-1 rows
+    if (rows.length < 2) return;
     var btn = document.createElement('button');
-    btn.className = 'expand-toggle';
-    btn.type = 'button';
-    btn.textContent = 'expand all';
+    btn.className = 'expand-toggle'; btn.type = 'button'; btn.textContent = 'expand all';
     btn.addEventListener('click', function () {
       var allOpen = Array.prototype.every.call(rows, function (r) { return r.open; });
       rows.forEach(function (r) { r.open = !allOpen; });
