@@ -1,0 +1,32 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-07-20-retracted-slice-rederivation-batch",
+ "artifact": "sessions/session_2026-07-20-retracted-slice-rederivation-batch.md",
+ "doctrine_sha": "3fb2882",
+ "rules_in_scope": [
+  "doctrine-check",
+  "evidence-verification-gate",
+  "source-discipline"
+ ],
+ "per_rule_status": {
+  "doctrine-check": {
+   "status": "FIRED",
+   "evidence_path": "governance/tier-system.md",
+   "reason": "Applied governance/tier-system.md §3 (convergence-not-evidence) as the load-bearing doctrine: jurisdiction-matrix-accessibility-standards was left graded D-double-dagger (code-floor/convergence-only, T4x4 T6x10) and its BPC banner states explicitly that a matrix of statutory codes carries no best-practice anchor by nature, rather than manufacturing a T1/T2 anchor to lift the grade. WHO APS15's 110 kg and the ADA/BS 8300 code figures were tagged as procurement/code floors, not best-practice anchors, on the grab-bar slice. Each re-linked source kept its corpus tier; none was re-tiered to flatter a slice."
+  },
+  "evidence-verification-gate": {
+   "status": "FIRED",
+   "evidence_path": "scripts/migrations/data_20260720054037_2026-07-20-retracted-slice-rederivation-batch.sql",
+   "reason": "45 of 47 links point to rows already carrying verification_status VERIFIED in the corpus; the sole UNVERIFIED-1 row (REF-00737) was linked with an explicit in-note disclosure rather than silently. The two net-new sources were each re-retrieved via a real tool call before ingestion: WHO APS15 by WebFetch of the who.int PDF (110 kg x 3 directions confirmed verbatim) and Stroupe & Sarbaugh by WebSearch, then confirmed to a PubMed record (PMID 18472475) in the adversarial pass. No duplicate DOIs/standard-numbers were created (WHO APS15 unique; NBR 9050 / Permen PUPR / MLIT / ISO 21542 etc. were linked, not re-ingested)."
+  },
+  "source-discipline": {
+   "status": "FIRED",
+   "evidence_path": "scripts/migrations/data_20260720054657_2026-07-20-retracted-slice-rederivation-batch.sql",
+   "reason": "The anti-fabrication gate fired on the session's own output: REF-00882 was first recorded with an invented first-author name (John M. Stroupe / Sarbaugh D). A fresh-context adversarial refuter located the PubMed record and the true authors (Jocelyn Stroupe, Shirley Sarbaugh); both names were corrected and the PMID added via a forward-only compensating migration, and REF-00883's year was corrected 2022->2021 against the WHO ISBN'd compilation. The standing 'DO NOT CITE Novak 2024' flag on the grab-bar slice was honoured — REF-00368 was deliberately not linked."
+  }
+ },
+ "deviations": [],
+ "bias_direction": "The dominant temptation across a five-slice batch is throughput bias: bulk-linking corpus rows by keyword match to clear all five fast, which risks mis-linking a source that shares vocabulary but not substance, and inventing tidy citation metadata to fill gaps. Bounded by linking only rows the retracted syntheses themselves named as their evidence base, spot-checking cross-slug links with an independent refuter (ICC A117.1 1702 mm, PAS 6463, Ielegems & Vanrie all confirmed on-topic), disclosing the one UNVERIFIED-1 link rather than hiding it, and correcting the batch's one fabricated author name the moment it surfaced instead of shipping it.",
+ "independent_reviewer_counterclaim": "A reviewer could argue that re-deriving a slice mostly by re-linking pre-existing corpus rows is bookkeeping dressed as research, and that grades of D / D-double-dagger for bariatric and the jurisdiction matrix show the slices are still thin. Response: these were RETRACTED-PRE-REHAB slices whose evidence was cleared, not never-gathered — restoring verified links IS the re-derivation the plan specifies, and the D grades are the honest ceiling for an Anglophone-only bariatric-turning literature and a statutory-code matrix, states the banners declare openly rather than inflate.",
+ "verdict": "CLEAN"
+}

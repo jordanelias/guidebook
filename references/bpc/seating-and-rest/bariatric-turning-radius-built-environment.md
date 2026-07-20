@@ -5,6 +5,15 @@
 **SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
 (See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
 
+> **RE-DERIVATION FIRST PASS — 2026-07-20** (`session_2026-07-20-retracted-slice-rederivation-batch`, WS2). The
+> synthesis below stays retracted (Opus rewrite still BLOCKED). Live evidence base re-derived: `source_slug_links`
+> 0 → 8, `evidence_state` RETRACTED-PRE-REHAB → **PARTIAL**. Anchors re-linked from verified corpus rows —
+> Ringaert 2001 UDI (REF-00073, 1925 mm 180° turn), Anthropometry of Wheeled Mobility (REF-00060), VA BFDS
+> (REF-00061, 1830 mm), CSA B651:23 (REF-00005, 2100 mm), IWA (REF-00376, 1800 mm), UK NHS bariatric HBN/BS 8300
+> (REF-00193) — plus one net-new verified source, Stroupe & Sarbaugh 2008 HFM (REF-00882, 72-in/1830 mm bariatric
+> turning). REF-00737 (Steinfeld 2006) linked with an explicit UNVERIFIED-1 disclosure. Audit: F → **D** (Anglophone-
+> concentrated, honestly — no non-English bariatric turning standard exists). DB is source of truth.
+
 **Consensus finding:** Standard accessible turning circles (1500–1525 mm) are insufficient for bariatric wheelchairs; ≥1900 mm clear diameter is the evidence-informed recommendation for bariatric-specific turning space in new build. 1800 mm is the minimum where 1900 mm is unachievable.
 **Key evidence:**
   - Empirical: Steinfeld et al. (2006, RESNA) — 1925 mm required to accommodate full UDI sample for 180° turn (peer-reviewed; most directly relevant)

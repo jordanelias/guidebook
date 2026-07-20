@@ -5,6 +5,14 @@
 **SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
 (See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
 
+> **RE-DERIVATION FIRST PASS — 2026-07-20** (`session_2026-07-20-retracted-slice-rederivation-batch`, WS2). Synthesis
+> stays retracted (Opus rewrite BLOCKED). `source_slug_links` 0 → 8, `evidence_state` → **PARTIAL**. Re-linked the
+> verified non-English-jurisdiction rows this entry documents — Marquardt dementia-wayfinding (REF-00202, DE), De
+> Hogeweyk POE (REF-00085, NL), Ielegems & Vanrie 2024 UD-cost (REF-00296, BE), SINTEF (REF-00263, NO), Japanese
+> bathtub/heat-shock Vital Statistics (REF-00252, JP), Nationalt Videnscenter (REF-00599, DK), DIN 18040-2 cost /
+> TERRAGON (REF-00306, DE), KfW/Prognos retrofit (REF-00835, DE). Audit: F → **B** (75.7) — the strongest of the five,
+> fittingly, since this methodology entry is *about* non-English evidence. DB is source of truth.
+
 **Consensus finding:** Seven provisions have stronger empirical evidence in non-English language literature than in English-language sources. Five provisions have cross-linguistic consensus (≥5 language bodies). Three provisions lack any non-English evidence base and rest entirely on English-language sources.
 **Stronger in non-English literature:**
   | Provision | Strongest evidence language | Key finding |
