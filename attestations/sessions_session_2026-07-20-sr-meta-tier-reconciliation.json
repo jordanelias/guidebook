@@ -1,0 +1,32 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-07-20-sr-meta-tier-reconciliation",
+ "artifact": "sessions/session_2026-07-20-sr-meta-tier-reconciliation.md",
+ "doctrine_sha": "3fb2882",
+ "rules_in_scope": [
+  "doctrine-check",
+  "evidence-verification-gate",
+  "source-discipline"
+ ],
+ "per_rule_status": {
+  "doctrine-check": {
+   "status": "FIRED",
+   "evidence_path": "governance/tier-system.md",
+   "reason": "Applied the enshrined rule (tier-system.md §2, owner directive 2026-05-25 't2>t3 this is enshrined') that systematic reviews / meta-analyses sit at T2. The re-tier corrects rows the 2026-05-25 canonicalization's WHERE clause (evidence_type='sr_meta') could not reach because their evidence_type was mis-set to clinical/grey. Doctrinally-unresolved cases (scoping reviews, one rapid review, one narrative review) were held at T3 and logged as GAP-298 rather than decided unilaterally."
+  },
+  "evidence-verification-gate": {
+   "status": "FIRED",
+   "evidence_path": "scripts/migrations/data_20260720044407_2026-07-20-sr-meta-tier-reconciliation.sql",
+   "reason": "Each re-tiered row was confirmed to be a genuine systematic review via a real retrieval call before/after migration: REF-00398 WebFetch (mdpi.com, PRISMA); REF-00097 PMID 36082841; REF-00240 PMID 28990665; REF-00642 and REF-00570 WebSearch (publisher pages, database+study counts); REF-00227 PMID 33421589; REF-00607 PMID 39246212; REF-00638 PMID 37947544; REF-00639 PMID 35996349; REF-00611/00637/00256 confirmed by the independent refuter. No row was re-tiered on stored metadata alone without a self-declared SR/meta title."
+  },
+  "source-discipline": {
+   "status": "FIRED",
+   "evidence_path": "scripts/migrations/data_20260720045138_2026-07-20-sr-meta-tier-reconciliation.sql",
+   "reason": "The anti-fabrication / mislabel gate fired: a fresh-context adversarial refuter re-retrieved the rows not independently checked in the first pass and caught REF-00589 as a narrative literature review (PubMed PMID 35695710, article_types ['Journal Article','Review']) mislabeled 'systematic review.' in the DB. It was reverted T2->T3 and its title corrected in a forward-only compensating migration; the original migration was not edited."
+  }
+ },
+ "deviations": [],
+ "bias_direction": "The temptation here is anchor-inflation: re-tiering borderline reviews upward makes weak slices look better-evidenced and lifts the corpus T2 count, which flatters the audit. Bounded by tiering strictly on the source's own self-declared methodology, verifying against external indexes rather than stored metadata, holding every ambiguous review-species (scoping, rapid, narrative) at T3 pending an owner decision, and running an adversarial pass that actively removed one row rather than adding any.",
+ "independent_reviewer_counterclaim": "A reviewer could argue that applying the 2026-05-25 directive to thirteen rows it did not name is editorial extension beyond the enshrined migration, not the directive itself. Response: the directive enshrines a rule about a source class, not a hand-picked row list; these rows are members of that class stranded only by a mis-set evidence_type, and the doctrinally-unresolved members were explicitly withheld under GAP-298 rather than swept in.",
+ "verdict": "CLEAN"
+}
