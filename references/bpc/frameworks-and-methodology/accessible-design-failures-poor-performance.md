@@ -4,6 +4,14 @@
 **Opus synthesis:** NO — Opus re-synthesis required for resolution hierarchy
 **Status:** PARTIAL — Co-1 and Tier 3 evidence gathered; Opus synthesis pending for §8.5 input
 
+> **DB RECONCILIATION — 2026-07-20** (`session_2026-07-20-ws2-remainder-merged-hygiene-and-content-reconciliation`,
+> WS2). Had **0 `source_slug_links`** despite the documented failure-case evidence. Linked the in-corpus anchors:
+> the Zallio & Clarkson POE-deficit trio (REF-00136 2021 / REF-00868 2022 IDEA audit / REF-00138 2023) and
+> Rodríguez-Labajos et al. 2024 (REF-00109, autism-inpatient design review). `evidence_state` → **PARTIAL**, audit
+> **F → E†** (†=supporting-only: all T3, no best-practice anchor — the honest state of a failure-documentation
+> slice). **Backlog (not PubMed-confirmable this pass):** Mazumdar & Geis 2002 (JAPR, PVA v. Ellerbe Beckett),
+> Slaug et al. 2025 (Swedish 30-year persistence), Oslo Economics 2018/2023. DB is source of truth.
+
 ### Scope
 Documented accessible design failures, poor-performance cases, and post-occupancy regressions. Feeds Part 5 §5.3 (unresolvable conflicts register), Part 12 §12.x (methodology note), and connection register.
 
