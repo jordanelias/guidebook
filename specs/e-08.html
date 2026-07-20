@@ -4,47 +4,29 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>E-08 Corridor clear width — Guidebook</title>
-<meta name="description" content="Specification E-08, corridor clear width. The width you design to depends on which function the route must serve. PROVISIONAL, hand-authored re-derivation.">
+<meta name="description" content="Specification E-08, corridor clear width. The width depends on which function the route must serve, including the swept path of a turning device. Provisional. Every value carries its sources.">
 <link rel="stylesheet" href="../assets/guidebook.css">
 <style>
-/* ============================================================
-   Page-local styles. This block sits AFTER guidebook.css, so
-   equal-specificity rules here win. Used for: accessibility
-   overrides (contrast, focus, mobile table semantics), the
-   decision table, strength tokens, and legibility caps.
-   No webfont is linked; the design system's own fallback stacks
-   (Georgia / Menlo) render this page.
-   ============================================================ */
+/* Page-local styles sit AFTER guidebook.css so equal-specificity rules win.
+   No webfont linked; the design system's fallback stacks render the page. */
 
-/* --- visually-hidden helper for AT-only text --- */
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
   clip:rect(0 0 0 0);white-space:nowrap;border:0;}
-
-/* --- hold focused targets clear of the sticky section-nav (WCAG 2.4.11) --- */
 :where(.row>summary,.sectnav-list a,.compare-table a,.juris-pick,.decision-table a,h2){
   scroll-margin-top:88px;}
-
-/* --- deck / plain heading structure --- */
 .sec-head h2{margin:2px 0 0;}
 .deck{font-family:var(--font-slab);font-size:var(--fs-md,18px);color:var(--ink);
   margin:6px 0 0;max-width:66ch;font-weight:400;text-wrap:balance;}
 .sec-num{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.06em;
   text-transform:uppercase;color:var(--muted);}
-
-/* --- legibility: cap measure on the densest blocks (was uncapped) --- */
 .r-body .block p,.integrity-note,.provisional-plain,.provisional-detail,.qlist li,
 .spec-clause p,.callout p,.deck{max-width:68ch;}
-
-/* --- contrast fixes (computed fails in the shared tokens) --- */
 .honesty{color:#6f5510;font-size:14px;line-height:1.5;font-family:var(--font-mono);}
 .val-warn{color:#8f3d12;}
 .chip-warn{color:#8f3d12;background:#f6e2cf;border-color:#c98a5e;}
 .sym-warn{color:#8f3d12;}
-
-/* --- text-spacing tolerance (WCAG 1.4.12): let tight mono wrap --- */
 .r-value,.compare-table tbody th{white-space:normal;overflow-wrap:anywhere;}
 
-/* --- strength tokens: type of evidence + separate confidence note --- */
 .band{display:inline-flex;align-items:center;gap:5px;font-family:var(--font-mono);
   font-size:var(--fs-xs);padding:2px 8px;border-radius:10px;border:1px solid var(--rule);
   min-height:22px;white-space:normal;}
@@ -52,103 +34,92 @@
 .band-partial{background:#fbf3dd;border-color:#b79322;color:#6a4e0f;}
 .band-weak{background:#eeeae3;border-color:#a89e8f;color:#5b5347;}
 .conf{font-family:var(--font-mono);font-size:var(--fs-xs);color:#6f5510;}
-
-/* --- DEAF gets its own accent, not the mobility colour --- */
 :root{--pop-deaf:#5a3fb0;}
 
-/* --- "at a glance" value summary --- */
+/* inline "sources" button — every claim carries one, ≥24px target */
+.cite{display:inline-flex;align-items:center;justify-content:center;gap:3px;
+  min-width:24px;min-height:24px;padding:0 7px;margin:0 2px;vertical-align:baseline;
+  font-family:var(--font-mono);font-size:11px;line-height:1;border:1px solid var(--rule);
+  border-radius:6px;background:var(--paper);color:#173a6b;cursor:pointer;}
+.cite::before{content:"◇";font-size:10px;}
+.cite::after{content:"sources";font-size:9px;letter-spacing:.02em;color:var(--muted);}
+.cite:hover,.cite:focus-visible{background:#eef3fb;border-color:#7ea3d6;}
+.cite.mini::after{content:"src";}
+
+/* popover source lists (many sources per popup) */
+.pop{max-width:470px;}
+.pop-lead{margin:0 0 2px;font-size:13px;}
+.pop-src{list-style:none;margin:6px 0 0;padding:0;}
+.pop-src li{padding:7px 0;border-top:1px solid var(--rule);font-size:12px;line-height:1.45;}
+.pop-src .s-meta{display:block;font-family:var(--font-mono);font-size:10px;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.03em;margin-top:2px;}
+.pop-src .s-status{color:#6f5510;}
+.pop-src code{font-family:var(--font-mono);font-size:11px;background:#efeadf;padding:0 3px;border-radius:3px;}
+.pop-close{position:absolute;top:6px;right:6px;width:28px;height:28px;border-radius:6px;
+  border:1px solid var(--rule);background:var(--paper);cursor:pointer;font-size:16px;line-height:1;}
+.pop-close:hover{background:#efeadf;}
+.pop{padding-top:34px;}
+
 .glance{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;
-  margin:18px 0 4px;padding:14px;border:1px solid var(--rule);border-radius:10px;
-  background:var(--paper-2,#fbf8f0);}
+  margin:18px 0 4px;padding:14px;border:1px solid var(--rule);border-radius:10px;background:var(--paper-2,#fbf8f0);}
 .glance div{display:flex;flex-direction:column;gap:2px;}
 .glance dt{font-family:var(--font-mono);font-size:var(--fs-xs);text-transform:uppercase;
   letter-spacing:.04em;color:var(--muted);}
 .glance dd{margin:0;font-family:var(--font-slab);font-size:var(--fs-lg,22px);font-weight:600;}
 .glance dd small{font-size:var(--fs-sm);font-weight:400;color:var(--muted);}
 
-/* --- two-tier provisional banner --- */
 .provisional-plain{border:2px solid #b06a1f;background:#fbeee0;color:#5a3410;
   border-radius:8px 8px 0 0;padding:12px 16px;font-size:var(--fs-md,18px);line-height:1.5;}
 .provisional-plain strong{color:#7a3f0e;}
 .provisional-detail{border:1px solid #d8c4a6;border-top:none;background:#fdf7ef;
   border-radius:0 0 8px 8px;padding:10px 16px 14px;}
-.provisional-detail summary{cursor:pointer;font-family:var(--font-mono);font-size:var(--fs-sm);
-  color:#7a3f0e;}
+.provisional-detail summary{cursor:pointer;font-family:var(--font-mono);font-size:var(--fs-sm);color:#7a3f0e;}
 .provisional-detail p{font-size:var(--fs-sm);color:#5a3410;margin:8px 0 0;line-height:1.55;}
 
-/* --- decision table (the lede) --- */
 .decision-wrap{overflow-x:auto;margin:8px 0 4px;}
 .decision-table{width:100%;border-collapse:collapse;font-size:var(--fs-base);}
 .decision-table caption{text-align:left;font-family:var(--font-mono);font-size:var(--fs-xs);
   text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding-bottom:6px;}
-.decision-table th,.decision-table td{border-bottom:1px solid var(--rule);
-  padding:11px 12px;text-align:left;vertical-align:top;}
-.decision-table thead th{font-family:var(--font-mono);font-size:var(--fs-xs);
-  text-transform:uppercase;letter-spacing:.04em;color:var(--muted);}
+.decision-table th,.decision-table td{border-bottom:1px solid var(--rule);padding:11px 12px;text-align:left;vertical-align:top;}
+.decision-table thead th{font-family:var(--font-mono);font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.04em;color:var(--muted);}
 .decision-table .dv{font-family:var(--font-slab);font-weight:600;white-space:nowrap;}
 .decision-table tr.is-req{background:#f1edfb;}
 .decision-table tr.is-req .dv{color:#3f2a86;}
 .decision-table .dbasis{font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--muted);}
 
-/* --- callouts / quick-ref / spec clause --- */
-.callout{border-left:3px solid var(--accent,#2a6fdb);background:#eef3fb;
-  padding:10px 14px;margin:14px 0;border-radius:0 6px 6px 0;}
-.callout h3{font-family:var(--font-mono);font-size:var(--fs-xs);text-transform:uppercase;
-  letter-spacing:.05em;margin:0 0 6px;color:#173a6b;}
+.callout{border-left:3px solid var(--accent,#2a6fdb);background:#eef3fb;padding:10px 14px;margin:14px 0;border-radius:0 6px 6px 0;}
+.callout h3{font-family:var(--font-mono);font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.05em;margin:0 0 6px;color:#173a6b;}
 .callout ul{margin:0;padding-left:18px;}
 .callout li{margin:3px 0;font-size:var(--fs-sm);}
-.integrity-note{border-left:3px solid #8f3d12;padding:8px 0 8px 12px;margin:10px 0;
-  font-size:var(--fs-sm);color:#5a2a10;background:#fdf6f1;}
-.spec-clause{border:1px solid var(--rule);border-radius:8px;background:#fbf8f0;
-  padding:0;margin:14px 0;overflow:hidden;}
-.spec-clause .sc-head{display:flex;justify-content:space-between;align-items:center;
-  gap:10px;padding:8px 14px;background:#efeadf;border-bottom:1px solid var(--rule);}
-.spec-clause .sc-head h3{font-family:var(--font-mono);font-size:var(--fs-xs);
-  text-transform:uppercase;letter-spacing:.05em;margin:0;color:var(--ink);}
-.spec-clause pre{margin:0;padding:14px;font-family:var(--font-mono);font-size:var(--fs-sm);
-  line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere;}
-.copy-btn{font-family:var(--font-mono);font-size:var(--fs-xs);padding:4px 10px;min-height:26px;
-  border:1px solid var(--rule);border-radius:6px;background:var(--paper);cursor:pointer;}
+.callout.two-roads{border-left-color:#5a3fb0;background:#f1edfb;}
+.callout.two-roads h3{color:#3f2a86;}
+.integrity-note{border-left:3px solid #8f3d12;padding:8px 0 8px 12px;margin:10px 0;font-size:var(--fs-sm);color:#5a2a10;background:#fdf6f1;}
+.spec-clause{border:1px solid var(--rule);border-radius:8px;background:#fbf8f0;padding:0;margin:14px 0;overflow:hidden;}
+.spec-clause .sc-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 14px;background:#efeadf;border-bottom:1px solid var(--rule);}
+.spec-clause .sc-head h3{font-family:var(--font-mono);font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.05em;margin:0;color:var(--ink);}
+.spec-clause pre{margin:0;padding:14px;font-family:var(--font-mono);font-size:var(--fs-sm);line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere;}
+.copy-btn{font-family:var(--font-mono);font-size:var(--fs-xs);padding:4px 10px;min-height:26px;border:1px solid var(--rule);border-radius:6px;background:var(--paper);cursor:pointer;}
 .copy-btn:hover{background:#efeadf;}
 
-/* --- questions list --- */
 .qlist{list-style:none;padding:0;margin:10px 0;}
-.qlist li{padding:10px 0 10px 26px;position:relative;border-bottom:1px solid var(--rule);
-  font-size:var(--fs-base);}
-.qlist li::before{content:"?";position:absolute;left:2px;top:10px;font-family:var(--font-mono);
-  font-weight:700;color:var(--accent,#2a6fdb);}
-.qlist b{display:block;font-family:var(--font-mono);font-size:var(--fs-xs);
-  text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:3px;}
+.qlist li{padding:10px 0 10px 26px;position:relative;border-bottom:1px solid var(--rule);font-size:var(--fs-base);}
+.qlist li::before{content:"?";position:absolute;left:2px;top:10px;font-family:var(--font-mono);font-weight:700;color:var(--accent,#2a6fdb);}
+.qlist b{display:block;font-family:var(--font-mono);font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:3px;}
 
-/* --- device ladder as definition list --- */
 .ladder{margin:6px 0;border-top:1px solid var(--rule);}
-.ladder div{display:grid;grid-template-columns:minmax(160px,1fr) auto;gap:6px 14px;
-  padding:8px 0;border-bottom:1px solid var(--rule);align-items:baseline;}
+.ladder div{display:grid;grid-template-columns:minmax(160px,1fr) auto;gap:6px 14px;padding:8px 0;border-bottom:1px solid var(--rule);align-items:baseline;}
 .ladder dt{font-weight:600;}
 .ladder .lval{font-family:var(--font-mono);font-size:var(--fs-sm);text-align:right;white-space:nowrap;}
 .ladder .lnote{grid-column:1 / -1;font-size:var(--fs-sm);color:var(--muted);margin:0;}
 
-/* --- larger, legible SVG diagram + HTML callout mirror --- */
-.fig-callouts{list-style:none;padding:0;margin:10px 0 0;display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;}
-.fig-callouts li{font-size:var(--fs-sm);padding:8px 10px;border:1px solid var(--rule);
-  border-radius:6px;background:var(--paper-2,#fbf8f0);}
-.fig-callouts b{font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--muted);
-  display:block;text-transform:uppercase;letter-spacing:.03em;}
+.fig-callouts{list-style:none;padding:0;margin:10px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px;}
+.fig-callouts li{font-size:var(--fs-sm);padding:8px 10px;border:1px solid var(--rule);border-radius:6px;background:var(--paper-2,#fbf8f0);}
+.fig-callouts b{font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--muted);display:block;text-transform:uppercase;letter-spacing:.03em;}
 
-/* --- popover close button --- */
-.pop-close{position:absolute;top:6px;right:6px;width:28px;height:28px;border-radius:6px;
-  border:1px solid var(--rule);background:var(--paper);cursor:pointer;font-size:16px;line-height:1;}
-.pop-close:hover{background:#efeadf;}
-.pop{padding-top:34px;}
-
-/* --- KEEP TABLE SEMANTICS on small screens (mobile SR fix).
-   The shared sheet linearises .compare-table into label-less cards;
-   we keep it a real table and rely on the keyboard-scrollable wrapper. --- */
 @media (max-width:640px){
   .compare-table{display:table;}
   .compare-table thead{display:table-header-group;}
-  .compare-table tbody,.compare-table tr{display:table-row-group;}
+  .compare-table tbody{display:table-row-group;}
   .compare-table tr{display:table-row;}
   .compare-table th,.compare-table td{display:table-cell;}
   .compare-table td::before{content:none !important;}
@@ -158,8 +129,6 @@
 <body class="mode-spec">
 
 <a href="#main" class="skip">Skip to main content</a>
-
-<!-- polite live region for state changes (jurisdiction toggles, copy) -->
 <div id="live" class="sr-only" aria-live="polite"></div>
 
 <header class="masthead" role="banner">
@@ -193,16 +162,16 @@
     </a>
     <ol class="sectnav-list" id="sectnav-list">
       <li><a href="#main" class="sectnav-contents" aria-label="Back to top"><span class="snc-n" aria-hidden="true">↑</span><span class="snc-t">Top</span></a></li>
-      <li><a href="#decision"      data-snav="decision"      data-snav-num="1"><span class="snc-n" aria-hidden="true">1</span><span class="snc-t">The decision</span></a></li>
-      <li><a href="#summary"       data-snav="summary"       data-snav-num="2"><span class="snc-n" aria-hidden="true">2</span><span class="snc-t">Summary</span></a></li>
-      <li><a href="#diagram"       data-snav="diagram"       data-snav-num="3"><span class="snc-n" aria-hidden="true">3</span><span class="snc-t">Diagram</span></a></li>
-      <li><a href="#targets"       data-snav="targets"       data-snav-num="4"><span class="snc-n" aria-hidden="true">4</span><span class="snc-t">Targets</span></a></li>
+      <li><a href="#decision"       data-snav="decision"       data-snav-num="1"><span class="snc-n" aria-hidden="true">1</span><span class="snc-t">The decision</span></a></li>
+      <li><a href="#summary"        data-snav="summary"        data-snav-num="2"><span class="snc-n" aria-hidden="true">2</span><span class="snc-t">Summary</span></a></li>
+      <li><a href="#diagram"        data-snav="diagram"        data-snav-num="3"><span class="snc-n" aria-hidden="true">3</span><span class="snc-t">Diagram</span></a></li>
+      <li><a href="#targets"        data-snav="targets"        data-snav-num="4"><span class="snc-n" aria-hidden="true">4</span><span class="snc-t">Targets</span></a></li>
       <li><a href="#considerations" data-snav="considerations" data-snav-num="5"><span class="snc-n" aria-hidden="true">5</span><span class="snc-t">Considerations</span></a></li>
-      <li><a href="#populations"   data-snav="populations"   data-snav-num="6"><span class="snc-n" aria-hidden="true">6</span><span class="snc-t">Populations</span></a></li>
-      <li><a href="#failures"      data-snav="failures"      data-snav-num="7"><span class="snc-n" aria-hidden="true">7</span><span class="snc-t">Failure cases</span></a></li>
-      <li><a href="#standards"     data-snav="standards"     data-snav-num="8"><span class="snc-n" aria-hidden="true">8</span><span class="snc-t">Standards</span></a></li>
-      <li><a href="#products"      data-snav="products"      data-snav-num="9"><span class="snc-n" aria-hidden="true">9</span><span class="snc-t">Products</span></a></li>
-      <li><a href="#provenance"    data-snav="provenance"    data-snav-num="10"><span class="snc-n" aria-hidden="true">10</span><span class="snc-t">Provenance</span></a></li>
+      <li><a href="#populations"    data-snav="populations"    data-snav-num="6"><span class="snc-n" aria-hidden="true">6</span><span class="snc-t">Populations</span></a></li>
+      <li><a href="#failures"       data-snav="failures"       data-snav-num="7"><span class="snc-n" aria-hidden="true">7</span><span class="snc-t">Failure cases</span></a></li>
+      <li><a href="#standards"      data-snav="standards"      data-snav-num="8"><span class="snc-n" aria-hidden="true">8</span><span class="snc-t">Standards</span></a></li>
+      <li><a href="#products"       data-snav="products"       data-snav-num="9"><span class="snc-n" aria-hidden="true">9</span><span class="snc-t">Products</span></a></li>
+      <li><a href="#provenance"     data-snav="provenance"     data-snav-num="10"><span class="snc-n" aria-hidden="true">10</span><span class="snc-t">Provenance</span></a></li>
     </ol>
   </div>
 </nav>
@@ -216,32 +185,28 @@
       <span>parameter · clear_width</span>
       <span><span class="sym sym-provis" aria-hidden="true">◐</span> provisional</span>
     </div>
-    <h1 class="title">
-      <span class="title-spec">Corridor clear width</span>
-    </h1>
-    <p class="tagline">How wide a corridor must be depends on which function the route has to serve. This page helps you decide, and it is honest about how firm each number is.</p>
+    <h1 class="title"><span class="title-spec">Corridor clear width</span></h1>
+    <p class="tagline">How wide a corridor must be depends on which function the route serves, including the path a wheelchair sweeps when it turns. This page helps you decide, and every value carries its sources.</p>
 
-    <!-- Two-tier provisional banner: plain sentence first, machinery collapsed -->
     <div class="provisional-plain" role="note">
       Every number here is <strong>provisional</strong>. It was re-derived by hand from source and is not yet finalised by the project's review system. Do not cite it as a settled requirement. The full record is in <a href="#provenance">§ 10 · Provenance</a>.
     </div>
     <details class="provisional-detail">
       <summary>Why provisional — project status</summary>
-      <p>The underlying evidence corpus is in a deliberate pre-rehabilitation hold. The system that will render finalised, adjudicated values is not yet built. This page is a hand-authored re-derivation from the project spine (the value-genealogy worked example and the tier system). It replaces an earlier version of this file that carried a fabricated citation. See <a href="#provenance">§ 10</a>.</p>
+      <p>The underlying evidence corpus is in a deliberate pre-rehabilitation hold. The system that will render finalised, adjudicated values is not yet built. This page is a hand-authored re-derivation from the project spine. It replaces an earlier version of this file that carried a fabricated citation. See <a href="#provenance">§ 10</a>.</p>
     </details>
 
-    <!-- At-a-glance value summary, reachable one step from the top -->
+    <p style="margin:12px 0 0;font-size:var(--fs-sm);color:var(--muted);">Every value, statement and case below has a <span class="cite" aria-hidden="true"></span> button. Open it for the sources behind that claim. A source list may hold several references, and it names each one's evidence tier and whether it is verified.</p>
+
     <dl class="glance" aria-label="Values at a glance">
-      <div><dt>Where signing is in scope</dt><dd>≥ 2440 <small>mm primary</small></dd></div>
-      <div><dt>Two devices passing</dt><dd>≥ 1800 <small>mm · floor</small></dd></div>
-      <div><dt>Single powered chair</dt><dd>≥ 1200 <small>mm · floor</small></dd></div>
-      <div><dt>Status</dt><dd>Provisional <small>not for compliance</small></dd></div>
+      <div><dt>Where signing is in scope</dt><dd>≥ 2440 <small>mm primary</small> <button class="cite-trigger cite mini" data-pop="deafspace" aria-label="Sources for the signing width"></button></dd></div>
+      <div><dt>Where a device turns / maneuvers</dt><dd>to ≈ 2400 <small>mm swept</small> <button class="cite-trigger cite mini" data-pop="sweptpath" aria-label="Sources for the swept-path width"></button></dd></div>
+      <div><dt>Two devices passing</dt><dd>≥ 1800 <small>mm · floor</small> <button class="cite-trigger cite mini" data-pop="codes-floor" aria-label="Sources for the passing floor"></button></dd></div>
+      <div><dt>Single powered chair</dt><dd>≥ 1200 <small>mm · floor</small> <button class="cite-trigger cite mini" data-pop="codes-floor" aria-label="Sources for the single-chair minimum"></button></dd></div>
     </dl>
   </header>
 
-  <!-- ============================================================ -->
-  <!-- §1 THE DECISION (the lede)                                    -->
-  <!-- ============================================================ -->
+  <!-- §1 THE DECISION -->
   <section class="section" data-color="blue" style="--order-spec:1; --order-q:1" id="decision">
     <div class="sec-head">
       <span class="sec-num">§ 1</span>
@@ -253,44 +218,48 @@
       <table class="decision-table">
         <caption>Which function &rarr; which width</caption>
         <thead>
-          <tr><th scope="col">If the route must support&hellip;</th><th scope="col">Design to</th><th scope="col">What kind of number this is</th></tr>
+          <tr><th scope="col">If the route must support&hellip;</th><th scope="col">Design to</th><th scope="col">What kind of number this is</th><th scope="col"><span class="sr-only">Sources</span></th></tr>
         </thead>
         <tbody>
           <tr>
             <th scope="row">One powered wheelchair, one direction</th>
             <td class="dv">&ge; 1200 mm</td>
             <td class="dbasis">Code minimum. A floor, not a target.</td>
+            <td><button class="cite-trigger cite mini" data-pop="codes-floor" aria-label="Sources: single-chair minimum"></button></td>
           </tr>
           <tr>
-            <th scope="row">Two mobility devices passing</th>
+            <th scope="row">Two mobility devices passing without turning</th>
             <td class="dv">&ge; 1800 mm</td>
-            <td class="dbasis">Code convergence. A floor. No traceable measurement behind it.</td>
+            <td class="dbasis">Code convergence. A floor. No measurement behind it.</td>
+            <td><button class="cite-trigger cite mini" data-pop="codes-floor" aria-label="Sources: passing floor"></button></td>
           </tr>
           <tr>
-            <th scope="row">The swept path of a scooter, bariatric, or children's powered chair</th>
-            <td class="dv">1900&ndash;2400 mm</td>
-            <td class="dbasis">Measured swept envelope, by device class. See §&nbsp;4.</td>
+            <th scope="row">A device turning or maneuvering — junctions, room entries, passing with rotation</th>
+            <td class="dv">to &asymp; 2400 mm</td>
+            <td class="dbasis">The swept path governs here, not a straight-line width. Measured envelope.</td>
+            <td><button class="cite-trigger cite mini" data-pop="sweptpath" aria-label="Sources: swept path"></button></td>
           </tr>
           <tr class="is-req">
-            <th scope="row">Signed conversation in motion &mdash; any Deaf or signing use is in scope</th>
+            <th scope="row">Signed conversation in motion — any Deaf or signing use is in scope</th>
             <td class="dv">&ge; 2440 mm</td>
-            <td class="dbasis">Required on that route. Anchored by Deaf-community evidence. See §&nbsp;4 and §&nbsp;6.</td>
+            <td class="dbasis">Required on that route. Anchored by Deaf-community evidence.</td>
+            <td><button class="cite-trigger cite mini" data-pop="deafspace" aria-label="Sources: signing width"></button></td>
           </tr>
         </tbody>
       </table>
     </div>
 
+    <p>Two of these four push the corridor to about the same place. Wherever a device must turn, the swept envelope reaches roughly 2400 mm, and a corridor wide enough to pass without turning removes the hardest maneuver entirely. Where signing is in scope, the signing pair needs about 2440 mm. So the mobility case and the Deaf case converge on best practice from two independent directions. <button class="cite-trigger cite" data-pop="two-roads" aria-label="Sources: the two drivers of best-practice width"></button></p>
+
     <div class="callout">
       <h3>The one idea that decides this page</h3>
-      <p><strong>Best practice is the number with a traceable measurement root, not the number the most codes share.</strong> Many national codes agree on 1200 mm and 1800 mm. That agreement is real, but no measurement study sits behind it. The one width with independent measurement behind it &mdash; the space two people need to sign while walking &mdash; is larger. So the codes are the floor, and the evidence is above them.</p>
+      <p><strong>Best practice is the number with a traceable measurement root, not the number the most codes share.</strong> Many national codes agree on 1200 mm and 1800 mm. That agreement is real, but no measurement study sits behind it. The widths with measurement behind them — the swept path of a turning chair, and the space two people need to sign while walking — are larger. So the codes are the floor, and the evidence sits above them. <button class="cite-trigger cite" data-pop="doctrine" aria-label="Sources: best practice is not convergence"></button></p>
     </div>
 
-    <p class="honesty">One caveat travels with the ≥ 2440 mm figure everywhere on this page. It comes from one Deaf institution and one signed language (ASL). The need for generous signing space is well established. The exact millimetre is not yet confirmed across other signed languages, and a wheelchair swept-path measurement that lands nearby has not yet been retrieved and verified.</p>
+    <p class="honesty">One caveat travels with the ≥ 2440 mm figure everywhere on this page. It comes from one Deaf institution and one signed language (ASL). The need for generous signing space is well established. The exact millimetre is not yet confirmed across other signed languages, and the wheelchair swept-path measurement that lands nearby has not yet been retrieved into the project's reference table. <button class="cite-trigger cite" data-pop="scoping" aria-label="Sources: scope and confidence of the 2440 figure"></button></p>
   </section>
 
-  <!-- ============================================================ -->
-  <!-- §2 SUMMARY                                                    -->
-  <!-- ============================================================ -->
+  <!-- §2 SUMMARY -->
   <section class="section" data-color="moss" style="--order-spec:2; --order-q:2" id="summary">
     <div class="sec-head">
       <span class="sec-num">§ 2</span>
@@ -299,65 +268,66 @@
     </div>
     <div class="plain">
       <span class="plain-label" aria-hidden="true">◇ plain-language summary</span>
-      <p>At 915 mm, one manual wheelchair fits. That is the United States floor, and it was set for manual chairs.</p>
-      <p>At about 1200 mm, one powered wheelchair fits with a little clearance. That is the UK and ISO minimum.</p>
-      <p>At about 1800 mm, two devices can pass each other. Nearly every code agrees on this. No one can point to the study behind it.</p>
-      <p>At 2440 mm, two people can walk side by side and hold a signed conversation, and a powered chair has room for the path it actually sweeps when it turns. This is the only one of the four widths with independent measurement behind it.</p>
-      <p>So on a route where signed communication is in scope, the Guidebook value is <strong>≥ 2440 mm</strong>. On other routes, size to the widest function present — usually two-device passing or the swept path of the chairs in use.</p>
+      <p>At 915 mm, one manual wheelchair fits. That is the United States floor, and it was set for manual chairs. <button class="cite-trigger cite" data-pop="jurisdiction" aria-label="Sources: US 915 mm"></button></p>
+      <p>At about 1200 mm, one powered wheelchair fits with a little clearance. That is the UK and ISO minimum. <button class="cite-trigger cite" data-pop="codes-floor" aria-label="Sources: 1200 mm minimum"></button></p>
+      <p>At about 1800 mm, two devices can pass each other. Nearly every code agrees on this. No one can point to the study behind it. <button class="cite-trigger cite" data-pop="codes-floor" aria-label="Sources: 1800 mm passing"></button></p>
+      <p>At about 2400 mm, a powered chair has room for the path it actually sweeps when it turns, so it never has to force a tight, high-strain spin. <button class="cite-trigger cite" data-pop="sweptpath" aria-label="Sources: swept path 2400 mm"></button></p>
+      <p>At 2440 mm, two people can also walk side by side and hold a signed conversation. The mobility width and the signing width land in the same place. <button class="cite-trigger cite" data-pop="deafspace" aria-label="Sources: 2440 mm signing"></button></p>
+      <p>So on a route where signing is in scope, the Guidebook value is <strong>≥ 2440 mm</strong>. Elsewhere, size to the widest function present — usually two-device passing, or the swept path wherever the route turns. <button class="cite-trigger cite" data-pop="two-roads" aria-label="Sources: choosing the width"></button></p>
     </div>
     <p>Jump to <a href="#targets">the targets (§ 4)</a>, <a href="#failures">how it fails (§ 7)</a>, or <a href="#standards">the standards table (§ 8)</a>.</p>
   </section>
 
-  <!-- ============================================================ -->
-  <!-- §3 DIAGRAM                                                    -->
-  <!-- ============================================================ -->
+  <!-- §3 DIAGRAM -->
   <section class="section" data-color="teal" style="--order-spec:3; --order-q:3" id="diagram">
     <div class="sec-head">
       <span class="sec-num">§ 3</span>
       <h2>Diagram &amp; detail</h2>
-      <p class="deck">Four functions nested in one corridor. Only the outer band has a measurement root.</p>
+      <p class="deck">Four functions nested in one corridor. Two of them reach ~2400 mm.</p>
     </div>
 
     <figure class="hero-drawing" aria-labelledby="d1cap">
-      <svg viewBox="0 0 560 340" role="img" aria-labelledby="d1t d1d">
+      <svg viewBox="0 0 560 360" role="img" aria-labelledby="d1t d1d">
         <title id="d1t">Plan: four nested corridor widths, by function</title>
-        <desc id="d1d">A corridor seen in plan. Four clear-width bands are nested from narrow to wide. 915 mm fits a single manual wheelchair (United States floor). 1200 mm fits a single powered wheelchair (UK and ISO minimum). 1800 mm lets two devices pass (code convergence, no traceable measurement root). 2440 mm lets two people sign side by side and covers a powered chair's swept path (evidence-anchored, required where signing use is in scope). The signing-pair requirement is drawn as its own dimension line so it is not absorbed into the wheelchair band.</desc>
+        <desc id="d1d">A corridor seen in plan. Four clear-width bands are nested from narrow to wide. 915 mm fits a single manual wheelchair, the United States floor. 1200 mm fits a single powered wheelchair, the UK and ISO minimum. 1800 mm lets two devices pass in a straight line, a code floor with no measurement root. About 2400 to 2440 mm covers both the swept path of a powered chair as it turns and two people signing side by side. That outer band is drawn with two separate dimension lines, one for the swept path and one for the signing pair, to show they arrive at the same width from different evidence.</desc>
         <line x1="20" y1="18" x2="540" y2="18" stroke="#1f1c18" stroke-width="2.4"/>
-        <line x1="20" y1="322" x2="540" y2="322" stroke="#1f1c18" stroke-width="2.4"/>
-        <rect x="44" y="286" width="472" height="28" fill="#eeeae3" stroke="#a89e8f"/>
-        <text x="54" y="304" font-family="Menlo,monospace" font-size="13" fill="#4a4034">915 mm · single manual chair · US floor</text>
-        <rect x="44" y="230" width="472" height="48" fill="#eeeae3" stroke="#a89e8f"/>
-        <text x="54" y="258" font-family="Menlo,monospace" font-size="13" fill="#4a4034">1200 mm · single powered chair · UK / ISO minimum</text>
-        <rect x="44" y="140" width="472" height="82" fill="#fbf3dd" stroke="#b79322"/>
-        <text x="54" y="184" font-family="Menlo,monospace" font-size="13" fill="#6a4e0f">1800 mm · two devices pass · code floor (no root)</text>
-        <rect x="44" y="30" width="472" height="102" fill="#e3f0e6" stroke="#5c8f6c" stroke-width="1.5"/>
-        <text x="54" y="60" font-family="Menlo,monospace" font-size="14" font-weight="600" fill="#184d30">2440 mm · signing pair + swept path</text>
-        <text x="54" y="80" font-family="Menlo,monospace" font-size="13" fill="#184d30">evidence-anchored · required where signing in scope</text>
-        <!-- DEAF signing-pair dimension line, its own identity -->
-        <line x1="30" y1="30" x2="30" y2="132" stroke="#5a3fb0" stroke-width="2"/>
-        <line x1="25" y1="30" x2="35" y2="30" stroke="#5a3fb0" stroke-width="2"/>
-        <line x1="25" y1="132" x2="35" y2="132" stroke="#5a3fb0" stroke-width="2"/>
-        <text x="16" y="88" font-family="Menlo,monospace" font-size="12" fill="#5a3fb0" transform="rotate(-90 16 88)">signing pair</text>
+        <line x1="20" y1="342" x2="540" y2="342" stroke="#1f1c18" stroke-width="2.4"/>
+        <rect x="60" y="306" width="456" height="28" fill="#eeeae3" stroke="#a89e8f"/>
+        <text x="70" y="324" font-family="Menlo,monospace" font-size="13" fill="#4a4034">915 mm · single manual chair · US floor</text>
+        <rect x="60" y="250" width="456" height="48" fill="#eeeae3" stroke="#a89e8f"/>
+        <text x="70" y="278" font-family="Menlo,monospace" font-size="13" fill="#4a4034">1200 mm · single powered chair · UK / ISO minimum</text>
+        <rect x="60" y="160" width="456" height="82" fill="#fbf3dd" stroke="#b79322"/>
+        <text x="70" y="204" font-family="Menlo,monospace" font-size="13" fill="#6a4e0f">1800 mm · two devices pass straight · code floor</text>
+        <rect x="60" y="30" width="456" height="122" fill="#e3f0e6" stroke="#5c8f6c" stroke-width="1.5"/>
+        <text x="70" y="58" font-family="Menlo,monospace" font-size="14" font-weight="600" fill="#184d30">~2400–2440 mm · turning + signing</text>
+        <text x="70" y="78" font-family="Menlo,monospace" font-size="13" fill="#184d30">evidence-anchored best practice</text>
+        <!-- swept-path dimension (mobility) -->
+        <line x1="44" y1="30" x2="44" y2="152" stroke="#2a6fdb" stroke-width="2"/>
+        <line x1="39" y1="30" x2="49" y2="30" stroke="#2a6fdb" stroke-width="2"/>
+        <line x1="39" y1="152" x2="49" y2="152" stroke="#2a6fdb" stroke-width="2"/>
+        <text x="30" y="95" font-family="Menlo,monospace" font-size="12" fill="#173a6b" transform="rotate(-90 30 95)">swept path</text>
+        <!-- signing-pair dimension (Deaf) -->
+        <line x1="532" y1="30" x2="532" y2="152" stroke="#5a3fb0" stroke-width="2"/>
+        <line x1="527" y1="30" x2="537" y2="30" stroke="#5a3fb0" stroke-width="2"/>
+        <line x1="527" y1="152" x2="537" y2="152" stroke="#5a3fb0" stroke-width="2"/>
+        <text x="548" y="95" font-family="Menlo,monospace" font-size="12" fill="#3f2a86" transform="rotate(-90 548 95)">signing pair</text>
       </svg>
       <figcaption class="hero-drawing-cap" id="d1cap">
-        <span>Plan · four functions, four widths</span>
-        <span><a href="#targets">→ which widths have roots?</a></span>
+        <span>Plan · four functions · two reach ~2400 mm</span>
+        <span><button class="cite-trigger cite" data-pop="two-roads" aria-label="Sources for the diagram"></button></span>
       </figcaption>
     </figure>
 
-    <!-- Key drawing content mirrored as HTML text (not trapped in SVG at 8px) -->
     <ul class="fig-callouts">
-      <li><b>How to measure</b> Against the device's swept path, not an idealised turning circle.</li>
-      <li><b>Clear datum</b> Floor to 2050 mm above finished floor level.</li>
-      <li><b>Projections</b> Any continuous projection over 25 mm below the datum is deducted. A handrail takes about 50 mm.</li>
-      <li><b>Above 2050 mm</b> Signage, luminaires and services may project without counting.</li>
-      <li><b>Signing junctions</b> Glaze corners so an approaching person is seen in advance. Light diffusely, at least 300 lux at face height, with no backlighting.</li>
+      <li><b>How to measure</b> Against the device's swept path, not an idealised turning circle. <button class="cite-trigger cite mini" data-pop="measurement" aria-label="Sources: measurement basis"></button></li>
+      <li><b>Clear datum</b> Floor to 2050 mm above finished floor level. <button class="cite-trigger cite mini" data-pop="measurement" aria-label="Sources: clear datum"></button></li>
+      <li><b>Projections</b> Any continuous projection over 25 mm below the datum is deducted. A handrail takes about 50 mm. <button class="cite-trigger cite mini" data-pop="measurement" aria-label="Sources: projections"></button></li>
+      <li><b>The turn</b> A width below the swept envelope forces a tight spin turn, at a high braking-force cost to the arm. <button class="cite-trigger cite mini" data-pop="turn-injury" aria-label="Sources: turning cost"></button></li>
+      <li><b>Signing junctions</b> Glaze corners so an approaching person is seen in advance. Light diffusely, at least 300 lux at face height, no backlighting. <button class="cite-trigger cite mini" data-pop="deafspace" aria-label="Sources: signing junctions"></button></li>
     </ul>
   </section>
 
-  <!-- ============================================================ -->
-  <!-- §4 TARGETS + GENEALOGY + SPEC CLAUSE                          -->
-  <!-- ============================================================ -->
+  <!-- §4 TARGETS -->
   <section class="section" data-color="plum" style="--order-spec:4; --order-q:4" id="targets">
     <div class="sec-head">
       <span class="sec-num">§ 4</span>
@@ -365,89 +335,85 @@
       <p class="deck">Each value, with the kind of evidence behind it kept separate from how firm the number is.</p>
     </div>
 
+    <div class="callout two-roads">
+      <h3>Two roads to about 2400 mm</h3>
+      <p>The best-practice width is not carried by one source. Two independent needs arrive at nearly the same figure. The <strong>swept path</strong> of a turning powered chair reaches about 2400 mm, and a corridor that wide lets people pass without the injury-dose spin turn. The <strong>signing pair</strong> needs about 2440 mm to keep a conversation going while walking. One is a mobility measurement, the other is Deaf-community knowledge. They agree. <button class="cite-trigger cite" data-pop="two-roads" aria-label="Sources: the two drivers"></button></p>
+    </div>
+
     <div class="callout">
       <h3>Reading the evidence marks</h3>
-      <p>The <span class="band band-full"><span aria-hidden="true">●</span> full</span>, <span class="band band-partial"><span aria-hidden="true">◐</span> partial</span> and <span class="band band-weak"><span aria-hidden="true">○</span> weak</span> marks say what <em>kind</em> of source a value rests on. They do not say how precise or how verified the number is. That is a separate note, marked <span class="conf">confidence</span>. A value can rest on strong-kind evidence and still have an unsettled exact figure.</p>
+      <p>The <span class="band band-full"><span aria-hidden="true">●</span> full</span>, <span class="band band-partial"><span aria-hidden="true">◐</span> partial</span> and <span class="band band-weak"><span aria-hidden="true">○</span> weak</span> marks say what <em>kind</em> of source a value rests on. They do not say how precise or how verified the number is. That is a separate note, marked <span class="conf">confidence</span>. <button class="cite-trigger cite" data-pop="doctrine" aria-label="Sources: evidence bands"></button></p>
     </div>
 
     <div class="rowlist">
       <details class="row" open style="--row-color: var(--pop-deaf)">
         <summary>
           <span aria-hidden="true"></span>
-          <span class="r-tag"><span aria-hidden="true">●</span> required where signing in scope</span>
+          <span class="r-tag"><span aria-hidden="true">●</span> signing routes</span>
           <span class="r-title">Signed conversation in motion<small>two people signing, side by side</small></span>
-          <span class="r-value">≥ 2440 <small>mm · primary</small></span>
+          <span class="r-value">≥ 2440 <small>mm</small></span>
           <span class="r-arrow" aria-hidden="true">›</span>
         </summary>
-        <div class="r-body">
-          <div class="blocks">
-            <div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> value</div>
-              <p>Primary routes: ≥ 2440 mm.</p>
-              <p>Secondary routes: ≥ 1830 mm.</p>
-              <p>Exterior routes with signing groups: ≥ 3050 mm.</p>
-              <p>Distance between people signing: 900–3050 mm, by group size.</p>
-              <p>Sightlines: unobstructed for at least 3 m.</p>
-            </div>
-            <div class="block"><div class="block-l"><span class="sym sym-co1" aria-hidden="true">◆</span> evidence · <span class="band band-full"><span aria-hidden="true">●</span> Co-1</span></div>
-              <p>This value is anchored by Deaf-community knowledge (DeafSpace, Gallaudet).</p>
-              <p>Under the tier system, lived and cultural evidence ranks alongside primary research. It is not below it. The number stands on the community's own authority.</p>
-              <p>A wheelchair swept-path study (Steinfeld 2006) measures a similar width from a different direction. It is recorded as corroboration only, and it is not yet retrieved or verified.</p>
-            </div>
-            <div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">▲</span> <span class="conf">confidence</span></div>
-              <p class="honesty">The need for generous signing space is community-authoritative. Confidence in that is high.</p>
-              <p class="honesty">The exact 2440 mm figure is ASL-derived at one institution. It has not been replicated across other signed languages. It may be conservative for BSL or DGS, and the source itself warns it may be too small for large ASL groups. Treat it as a floor, not a ceiling.</p>
-            </div>
+        <div class="r-body"><div class="blocks">
+          <div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> value <button class="cite-trigger cite mini" data-pop="deafspace" aria-label="Sources: signing dimensions"></button></div>
+            <p>Primary routes: ≥ 2440 mm. Secondary routes: ≥ 1830 mm. Exterior routes with signing groups: ≥ 3050 mm.</p>
+            <p>Distance between people signing: 900–3050 mm, by group size. Sightlines unobstructed for at least 3 m.</p>
           </div>
-        </div>
+          <div class="block"><div class="block-l"><span class="sym sym-co1" aria-hidden="true">◆</span> evidence · <span class="band band-full"><span aria-hidden="true">●</span> Co-1</span> <button class="cite-trigger cite mini" data-pop="deafspace" aria-label="Sources: DeafSpace"></button></div>
+            <p>Anchored by Deaf-community knowledge (DeafSpace, Gallaudet). Under the tier system, lived and cultural evidence ranks alongside primary research, not below it. The number stands on the community's own authority.</p>
+          </div>
+          <div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">▲</span> <span class="conf">confidence</span> <button class="cite-trigger cite mini" data-pop="scoping" aria-label="Sources: confidence and scope"></button></div>
+            <p class="honesty">The need for generous signing space is community-authoritative. Confidence in that is high.</p>
+            <p class="honesty">The exact 2440 mm figure is ASL-derived at one institution. It is not yet replicated across other signed languages. The source warns it may be too small for large ASL groups. Treat it as a floor, not a ceiling.</p>
+          </div>
+        </div></div>
+      </details>
+
+      <details class="row" style="--row-color: var(--pop-mob)">
+        <summary>
+          <span aria-hidden="true"></span>
+          <span class="r-tag"><span aria-hidden="true">◐</span> turning &amp; maneuvering</span>
+          <span class="r-title">The swept path of a turning chair<small>this is where width is really tested</small></span>
+          <span class="r-value">to ≈ 2400 <small>mm</small></span>
+          <span class="r-arrow" aria-hidden="true">›</span>
+        </summary>
+        <div class="r-body"><div class="blocks">
+          <div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> why turning sets the width <button class="cite-trigger cite mini" data-pop="sweptpath" aria-label="Sources: swept path"></button></div>
+            <p>A wheelchair does not pivot on a spot. When it turns to enter a room, round a junction, or pass another device, it sweeps an asymmetric path wider than its own footprint. Footrests and feet swing through a separate forward arc.</p>
+            <p>Measured whole-sample swept envelopes reach about 2400 mm in an enclosed bay. The project's own derivation sets powered-chair turning space at not less than 1800 by 1800 mm. A straight passing width alone does not cover the turn.</p>
+          </div>
+          <div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">▲</span> the cost of getting it wrong <button class="cite-trigger cite mini" data-pop="turn-injury" aria-label="Sources: turning biomechanics"></button></div>
+            <p>A width below the swept envelope forces a tight spin turn. In that turn the braking force on the inner hand is many times a straight push, and a wheelchair user makes hundreds of turns a day.</p>
+            <p>Over years this is a documented source of shoulder, elbow and wrist injury. A corridor wide enough to turn, or wide enough to avoid turning, lowers that dose.</p>
+          </div>
+          <div class="block"><div class="block-l"><span class="sym" aria-hidden="true">▣</span> by device class <button class="cite-trigger cite mini" data-pop="device-ladder" aria-label="Sources: device-class widths"></button></div>
+            <dl class="ladder">
+              <div><dt>Manual, self-propelled</dt><span class="lval">1500 floor / 1700 best</span><p class="lnote">Add footplate sweep.</p></div>
+              <div><dt>Powered</dt><span class="lval">1700–1800</span><p class="lnote">By drive type. One US standard concedes 1702 mm for powered chairs.</p></div>
+              <div><dt>Scooter</dt><span class="lval">1800+</span><p class="lnote">Multi-point steering. Not yet modelled in the corpus.</p></div>
+              <div><dt>Bariatric</dt><span class="lval">1900</span><p class="lnote">New-build turning.</p></div>
+              <div><dt>Children's powered</dt><span class="lval">≥ 2400</span><p class="lnote">Japan school guidance.</p></div>
+              <div><dt>Attendant-propelled</dt><span class="lval">— silent</span><p class="lnote">No corpus value. An open risk, not a solved case.</p></div>
+            </dl>
+          </div>
+        </div></div>
       </details>
 
       <details class="row" style="--row-color: var(--sec-6)">
         <summary>
           <span aria-hidden="true"></span>
           <span class="r-tag"><span aria-hidden="true">○</span> floor · convergence</span>
-          <span class="r-title">Two devices passing<small>regulatory floor</small></span>
+          <span class="r-title">Two devices passing straight<small>regulatory floor</small></span>
           <span class="r-value">≥ 1800 <small>mm</small></span>
           <span class="r-arrow" aria-hidden="true">›</span>
         </summary>
-        <div class="r-body">
-          <div class="blocks">
-            <div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">○</span> evidence · <span class="band band-weak"><span aria-hidden="true">○</span> weak</span></div>
-              <p>BS 8300-2, DIN 18040-1, AS 1428.1 and ISO 21542 all state 1800 mm.</p>
-              <p>That is agreement across codes. It is not measurement. No study behind the figure exists in the corpus.</p>
-              <p>Adopt 1800 mm as a floor only where 2440 mm cannot be met. Never relabel it "preferred."</p>
-              <p>Dutch case evidence (VNG 2016) confirms 1200 mm is too tight to pass or turn, that 1500 mm allows a pedestrian and a wheelchair to pass, and that 1800 mm allows two wheelchair or scooter users to pass.</p>
-            </div>
+        <div class="r-body"><div class="blocks">
+          <div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">○</span> evidence · <span class="band band-weak"><span aria-hidden="true">○</span> weak</span> <button class="cite-trigger cite mini" data-pop="codes-floor" aria-label="Sources: passing floor"></button></div>
+            <p>BS 8300-2, DIN 18040-1, AS 1428.1 and ISO 21542 all state 1800 mm. That is agreement across codes. It is not measurement.</p>
+            <p>Adopt 1800 mm as a floor only where the governing width cannot be met. Never relabel it "preferred."</p>
+            <p>Dutch case evidence confirms 1200 mm is too tight to pass or turn, 1500 mm lets a pedestrian and a wheelchair pass, and 1800 mm lets two wheelchair or scooter users pass. <button class="cite-trigger cite mini" data-pop="vng" aria-label="Sources: Dutch passing evidence"></button></p>
           </div>
-        </div>
-      </details>
-
-      <details class="row" style="--row-color: var(--pop-mob)">
-        <summary>
-          <span aria-hidden="true"></span>
-          <span class="r-tag"><span aria-hidden="true">◐</span> by device class</span>
-          <span class="r-title">Wheeled-mobility swept path<small>measured envelopes, not turning circles</small></span>
-          <span class="r-value">1500–2400 <small>mm</small></span>
-          <span class="r-arrow" aria-hidden="true">›</span>
-        </summary>
-        <div class="r-body">
-          <div class="blocks">
-            <div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> the ladder</div>
-              <dl class="ladder">
-                <div><dt>Manual, self-propelled</dt><span class="lval">1500 floor / 1700 best</span><p class="lnote">Add footplate sweep.</p></div>
-                <div><dt>Powered</dt><span class="lval">1700–1800</span><p class="lnote">By drive type. ICC A117.1-2017 concedes 1702 mm for powered chairs. Chair width is 700–800 mm. The US 915 mm figure was set for manual passage only.</p></div>
-                <div><dt>Scooter</dt><span class="lval">1800+</span><p class="lnote">Multi-point (Ackermann) envelope. Not yet modelled in the corpus.</p></div>
-                <div><dt>Bariatric</dt><span class="lval">1900</span><p class="lnote">New-build turning.</p></div>
-                <div><dt>Children's powered</dt><span class="lval">≥ 2400</span><p class="lnote">Japan MEXT school guidance.</p></div>
-                <div><dt>Attendant-propelled</dt><span class="lval">— silent</span><p class="lnote">No corpus value. Treat as an open risk, not a solved case.</p></div>
-              </dl>
-            </div>
-            <div class="block"><div class="block-l"><span class="sym" aria-hidden="true">▣</span> the class-transfer trap</div>
-              <p>A width measured for one device class is not evidence about another.</p>
-              <p>Portugal's DL 163/2006 and Korea's accessibility law both state their 1500 mm figures are manual-wheelchair-based. Singapore's 2025 code revision explicitly recognises that older codes were too small for contemporary devices.</p>
-              <p class="honesty">The base anthropometry is dated (a 2010 base, now old against heavier chairs and scooters). The US 1524 mm figure is cited here as evidence of regulatory lag, not as a design value.</p>
-            </div>
-          </div>
-        </div>
+        </div></div>
       </details>
 
       <details class="row" style="--row-color: var(--sec-6)">
@@ -458,40 +424,37 @@
           <span class="r-value">document it</span>
           <span class="r-arrow" aria-hidden="true">›</span>
         </summary>
-        <div class="r-body">
-          <div class="blocks">
-            <div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> step down in order</div>
-              <p>1. Target the governing function's width (2440 mm where signing is in scope).</p>
-              <p>2. If a fixed constraint prevents it, step to the 1800 mm passing floor.</p>
-              <p>3. If even that is impossible, step to the device-class floor (1500 mm manual).</p>
-              <p>4. Below that, record it as a documented design compromise with a named decision-maker. Do not present it as compliance.</p>
-              <p class="honesty">On a route where signing use is in scope, dropping below 2440 mm removes signing space. Treat that as a loss to justify, not a default to reach for.</p>
-            </div>
+        <div class="r-body"><div class="blocks">
+          <div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> step down in order <button class="cite-trigger cite mini" data-pop="doctrine" aria-label="Sources: floor vs best practice"></button></div>
+            <p>1. Target the governing function's width. That is 2440 mm where signing is in scope, or the swept-path width where the route turns.</p>
+            <p>2. If a fixed constraint prevents it, step to the 1800 mm straight-passing floor.</p>
+            <p>3. If even that is impossible, step to the device-class floor, 1500 mm for manual.</p>
+            <p>4. Below that, record a documented design compromise with a named decision-maker. Do not present it as compliance.</p>
+            <p class="honesty">On a signing route, dropping below 2440 mm removes signing space. Treat that as a loss to justify.</p>
           </div>
-        </div>
+        </div></div>
       </details>
     </div>
 
     <h3 style="font-family:var(--font-mono);font-size:var(--fs-sm);text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:22px 0 6px;">Value genealogy — which numbers have roots</h3>
-    <p class="deck" style="font-size:var(--fs-base);">These are the page's predictions of how each value would be adjudicated. They are recorded so they can be checked, or proved wrong, when the review engine is built.</p>
+    <p class="deck" style="font-size:var(--fs-base);">These are predictions of how each value would be adjudicated. They are recorded so they can be checked, or proved wrong, when the review engine is built. <button class="cite-trigger cite" data-pop="genealogy" aria-label="Sources: value genealogy"></button></p>
     <div class="compare-wrap">
       <div class="compare-scroll" tabindex="0" role="group" aria-label="Value genealogy table, scroll to see all columns">
         <table class="compare-table">
-          <thead><tr><th scope="col">Value</th><th scope="col">Claims to be</th><th scope="col">Where it actually comes from</th><th scope="col">Current standing (provisional)</th></tr></thead>
+          <thead><tr><th scope="col">Value</th><th scope="col">Claims to be</th><th scope="col">Where it comes from</th><th scope="col">Standing (provisional)</th><th scope="col"><span class="sr-only">Sources</span></th></tr></thead>
           <tbody>
-            <tr class="row-spread"><th scope="row" data-jcol="Value"><span class="val-num val-pref">2440</span></th><td data-jcol="Claim">Best practice</td><td data-jcol="Origin">Deaf-community proxemics (ASL, Gallaudet). A swept-path measurement lands nearby but is unverified.</td><td data-jcol="Standing">One community-anchored root, plus one unverified corroboration.</td></tr>
-            <tr><th scope="row" data-jcol="Value"><span class="val-num">1800</span></th><td data-jcol="Claim">Evidence-based passing width</td><td data-jcol="Origin">Four codes agree. No upstream measurement anywhere in the corpus.</td><td data-jcol="Standing">Agreement without a root.</td></tr>
-            <tr><th scope="row" data-jcol="Value"><span class="val-num">1500</span></th><td data-jcol="Claim">Turning space</td><td data-jcol="Origin">1970s US anthropometry, carried into standards and never updated.</td><td data-jcol="Standing">One old root, many copies.</td></tr>
-            <tr><th scope="row" data-jcol="Value"><span class="val-num">1200</span></th><td data-jcol="Claim">Adopted minimum</td><td data-jcol="Origin">Adopted because one powered chair fits. No measurement root.</td><td data-jcol="Standing">A copy, adopted.</td></tr>
+            <tr class="row-spread"><th scope="row" data-jcol="Value"><span class="val-num val-pref">2440</span></th><td data-jcol="Claim">Best practice</td><td data-jcol="Origin">Two independent needs: the swept-turning envelope, and Deaf-community signing proxemics.</td><td data-jcol="Standing">Two converging drivers, one measurement still to be retrieved.</td><td><button class="cite-trigger cite mini" data-pop="two-roads" aria-label="Sources: 2440"></button></td></tr>
+            <tr><th scope="row" data-jcol="Value"><span class="val-num">1800</span></th><td data-jcol="Claim">Evidence-based passing width</td><td data-jcol="Origin">Four codes agree. No upstream measurement in the corpus.</td><td data-jcol="Standing">Agreement without a root.</td><td><button class="cite-trigger cite mini" data-pop="codes-floor" aria-label="Sources: 1800"></button></td></tr>
+            <tr><th scope="row" data-jcol="Value"><span class="val-num">1500</span></th><td data-jcol="Claim">Turning space</td><td data-jcol="Origin">1970s US anthropometry, carried into standards and never updated.</td><td data-jcol="Standing">One old root, many copies.</td><td><button class="cite-trigger cite mini" data-pop="genealogy" aria-label="Sources: 1500"></button></td></tr>
+            <tr><th scope="row" data-jcol="Value"><span class="val-num">1200</span></th><td data-jcol="Claim">Adopted minimum</td><td data-jcol="Origin">Adopted because one powered chair fits. No measurement root.</td><td data-jcol="Standing">A copy, adopted.</td><td><button class="cite-trigger cite mini" data-pop="genealogy" aria-label="Sources: 1200"></button></td></tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <!-- Spec / contract clause -->
     <div class="spec-clause">
       <div class="sc-head">
-        <h3>Specification language</h3>
+        <h3>Specification language <button class="cite-trigger cite mini" data-pop="measurement" aria-label="Sources: specification basis"></button></h3>
         <button type="button" class="copy-btn" data-copy="clause-text">Copy</button>
       </div>
       <pre id="clause-text">CORRIDOR CLEAR WIDTH — PRIMARY ROUTES  [PROVISIONAL — not for compliance]
@@ -500,8 +463,10 @@ Performance requirement:
   Primary circulation routes shall provide a clear width sufficient
   for the functions the route serves. These functions are:
     - two people passing while signing side by side, where Deaf or
-      signing use is within the project brief, and
-    - the swept path of the specified powered-mobility fleet.
+      signing use is within the project brief,
+    - the swept path of the specified powered-mobility fleet where
+      the route turns, meets a junction, or admits a room, and
+    - two mobility devices passing in a straight run.
   On signing routes this shall be not less than 2440 mm clear.
   On secondary routes it shall be not less than 1830 mm.
 
@@ -521,9 +486,7 @@ Bind the function and the outcome, not a contested reference.</pre>
     </div>
   </section>
 
-  <!-- ============================================================ -->
-  <!-- §5 CONSIDERATIONS                                             -->
-  <!-- ============================================================ -->
+  <!-- §5 CONSIDERATIONS -->
   <section class="section" data-color="indigo" style="--order-spec:5; --order-q:5" id="considerations">
     <div class="sec-head">
       <span class="sec-num">§ 5</span>
@@ -531,154 +494,94 @@ Bind the function and the outcome, not a contested reference.</pre>
       <p class="deck">What to settle before you fix the number.</p>
     </div>
     <ul class="qlist">
-      <li><b>Function scope</b> Which functions must this route serve? See the decision table in § 1. The answer sets the width.</li>
-      <li><b>Signing use</b> Is any Deaf or signing use in scope? If it is plausible, the route is a 2440 mm route. The building cannot infer this. The brief must state it.</li>
-      <li><b>Silent deletion</b> If the population scope is "mobility access" only, does stopping at 1800 mm quietly remove signing space? Confirm Deaf use is named. The project's own data dropped it (see § 6).</li>
-      <li><b>Device classes</b> Manual, powered, scooter, bariatric, children's powered, or attendant-propelled? The ladder in § 4 differs by class. Scooter and attendant-propelled envelopes are not modelled. Treat them as open risk.</li>
-      <li><b>New-build or retrofit</b> Is the target achievable? If a fixed constraint forces you below it, follow the fallback ladder in § 4 and document the compromise.</li>
-      <li><b>Mixed populations</b> Do you also serve people who need enclosure, such as some neurodivergent or dementia users? Open signing sightlines can conflict with enclosure. Resolve this by zoning distinct areas, not by averaging to a middle width. See § 7.</li>
-      <li><b>Measurement basis</b> Are you measuring against the swept path or an idealised turning circle? Use the swept path.</li>
-      <li><b>Fixtures and seating</b> Where will fixtures and rest seating sit? Recess them so they cannot creep into the clear width after handover.</li>
+      <li><b>Function scope</b> Which functions must this route serve? See the decision table in § 1. The answer sets the width. <button class="cite-trigger cite mini" data-pop="two-roads" aria-label="Sources"></button></li>
+      <li><b>Turning points</b> Where does the route turn, meet a junction, or admit a room? Those points are governed by the swept path, not the straight-passing width. Size them to the envelope. <button class="cite-trigger cite mini" data-pop="sweptpath" aria-label="Sources"></button></li>
+      <li><b>Signing use</b> Is any Deaf or signing use in scope? If it is plausible, this is a 2440 mm route. The building cannot infer it. The brief must state it. <button class="cite-trigger cite mini" data-pop="deafspace" aria-label="Sources"></button></li>
+      <li><b>Silent deletion</b> If the scope is "mobility access" only, does stopping at 1800 mm quietly remove signing space? The project's own data dropped the Deaf link (see § 6). <button class="cite-trigger cite mini" data-pop="livedb-deaf" aria-label="Sources"></button></li>
+      <li><b>Device classes</b> Manual, powered, scooter, bariatric, children's powered, or attendant-propelled? The ladder in § 4 differs by class. Scooter and attendant-propelled envelopes are not modelled. <button class="cite-trigger cite mini" data-pop="device-ladder" aria-label="Sources"></button></li>
+      <li><b>New-build or retrofit</b> Is the target achievable? If a fixed constraint forces you below it, follow the fallback ladder in § 4 and document the compromise. <button class="cite-trigger cite mini" data-pop="doctrine" aria-label="Sources"></button></li>
+      <li><b>Mixed populations</b> Do you also serve people who need enclosure, such as some neurodivergent or dementia users? Open signing sightlines can conflict with enclosure. Zone the two needs. Do not average them. See § 7. <button class="cite-trigger cite mini" data-pop="signing-conflict" aria-label="Sources"></button></li>
+      <li><b>Measurement basis</b> Are you measuring against the swept path or an idealised turning circle? Use the swept path. <button class="cite-trigger cite mini" data-pop="measurement" aria-label="Sources"></button></li>
     </ul>
   </section>
 
-  <!-- ============================================================ -->
-  <!-- §6 POPULATIONS (populations + capacities merged)             -->
-  <!-- ============================================================ -->
+  <!-- §6 POPULATIONS -->
   <section class="section" data-color="ochre" style="--order-spec:6; --order-q:6" id="populations">
     <div class="sec-head">
       <span class="sec-num">§ 6</span>
       <h2>Populations affected</h2>
-      <p class="deck">Most groups' corridor need is not a width at all. It is a different thing that happens to share the same hallway.</p>
+      <p class="deck">Most groups' corridor need is not a width at all. It is a different thing sharing the same hallway.</p>
     </div>
-    <p>Ask many groups "what is your corridor requirement" and they answer with a different variable. Flattening them all into one contested millimetre is the mistake this section exists to prevent. The column on the right names what each group is actually trying to do.</p>
+    <p>Ask many groups "what is your corridor requirement" and they answer with a different variable. Flattening them all into one contested millimetre is the mistake this section prevents. The right-hand tag names what each group is actually trying to do.</p>
 
     <div class="rowlist">
       <details class="row" open style="--row-color: var(--pop-deaf)">
-        <summary>
-          <span aria-hidden="true"></span>
-          <span class="r-tag">DEAF · sets the width</span>
-          <span class="r-title">Deaf and signing people<small>a language needs room to be used</small></span>
-          <span class="r-value">≥ 2440 <small>mm</small></span>
-          <span class="r-arrow" aria-hidden="true">›</span>
-        </summary>
-        <div class="r-body">
-          <div class="blocks">
-            <div class="block"><div class="block-l"><span class="sym sym-co1" aria-hidden="true">◆</span> what the width is for</div>
-              <p>Signed conversation happens in the space between and around two people's hands, faces and upper bodies. To keep talking while walking, two signers travel side by side and need room to see each other and to watch what is ahead.</p>
-              <p>This is a communicative and cultural need, not a medical accommodation. Sign language is a language. It needs room, the way a conversation needs air.</p>
-              <p>Below the signing width, friends are forced into single file. A conversation is cut off mid-sentence. A group cannot gather. In a building meant to include Deaf people, the corridor is where their language is quietly switched off.</p>
-            </div>
-            <div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> this is a requirement, not a bonus</div>
-              <p>On a route where signing use is in scope, 2440 mm is the requirement. It is not a stretch goal to trade away under budget pressure.</p>
-              <p>The honest caveat points the other way from the usual one: the figure may be too small for large groups, not too large.</p>
-            </div>
+        <summary><span aria-hidden="true"></span><span class="r-tag">DEAF · sets the width</span><span class="r-title">Deaf and signing people<small>a language needs room to be used</small></span><span class="r-value">≥ 2440 <small>mm</small></span><span class="r-arrow" aria-hidden="true">›</span></summary>
+        <div class="r-body"><div class="blocks">
+          <div class="block"><div class="block-l"><span class="sym sym-co1" aria-hidden="true">◆</span> what the width is for <button class="cite-trigger cite mini" data-pop="deafspace" aria-label="Sources: DeafSpace"></button></div>
+            <p>Signed conversation lives in the space between and around two people's hands, faces and upper bodies. To keep talking while walking, two signers travel side by side, and need to see each other and what is ahead.</p>
+            <p>This is a communicative and cultural need, not a medical accommodation. Sign language is a language. It needs room, the way a conversation needs air.</p>
+            <p>Below the signing width, friends are forced into single file. A conversation is cut off mid-sentence. A group cannot gather. In a building meant to include Deaf people, the corridor is where their language is quietly switched off.</p>
           </div>
-        </div>
+          <div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> a requirement, not a bonus <button class="cite-trigger cite mini" data-pop="scoping" aria-label="Sources: scope"></button></div>
+            <p>On a route where signing is in scope, 2440 mm is the requirement. It is not a stretch goal to trade away.</p>
+            <p>The honest caveat points toward "may be too small for large groups," not "maybe more than needed."</p>
+          </div>
+        </div></div>
       </details>
 
       <details class="row" style="--row-color: var(--pop-mob)">
-        <summary>
-          <span aria-hidden="true"></span>
-          <span class="r-tag">MOB / SCI · sets the width</span>
-          <span class="r-title">Wheeled-mobility users<small>passing, and the swept turn</small></span>
-          <span class="r-value">1800–2400 <small>mm</small></span>
-          <span class="r-arrow" aria-hidden="true">›</span>
-        </summary>
-        <div class="r-body">
-          <div class="blocks">
-            <div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> what the width is for</div>
-              <p>Two devices passing (the 1800 mm floor) and the real path a powered chair sweeps when it turns (up to about 2400 mm for the whole sample).</p>
-              <p>This is also a bodily matter, not only a spatial one. Below the swept envelope, a wheelchair user is forced into a hard braking turn. The load on one arm in that turn is many times a straight push. It is repeated hundreds of times a day, over a whole life of using the chair. Upper-limb injury is common among manual users. A tight corridor is a repeated strain, not an inconvenience.</p>
-            </div>
-            <div class="block"><div class="block-l"><span class="sym" aria-hidden="true">▣</span> capacity</div>
-              <p>In activity terms, this is moving around using equipment, and changing body position. The turn is not one event. A gentle 90° corner is not a 180° turn in an enclosed bay.</p>
-            </div>
+        <summary><span aria-hidden="true"></span><span class="r-tag">MOB / SCI · sets the width</span><span class="r-title">Wheeled-mobility users<small>passing, and the swept turn</small></span><span class="r-value">1800–2400 <small>mm</small></span><span class="r-arrow" aria-hidden="true">›</span></summary>
+        <div class="r-body"><div class="blocks">
+          <div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> what the width is for <button class="cite-trigger cite mini" data-pop="sweptpath" aria-label="Sources: swept path"></button></div>
+            <p>Two devices passing sets the 1800 mm floor. But the harder test is the turn. When a powered chair turns into a room or rounds a junction, it sweeps a path up to about 2400 mm for the whole sample. Wherever the route turns, that envelope, not the straight width, governs.</p>
           </div>
-        </div>
+          <div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">▲</span> a bodily cost, not only a spatial one <button class="cite-trigger cite mini" data-pop="turn-injury" aria-label="Sources: turning biomechanics"></button></div>
+            <p>Below the swept envelope, a wheelchair user is forced into a hard braking turn. The load on one arm in that turn is many times a straight push. It is repeated hundreds of times a day, over a whole life of using the chair.</p>
+            <p>Upper-limb injury is common among manual users. A tight corridor is a repeated strain, not an inconvenience. A width that lets the chair turn freely, or pass without turning, lowers the dose.</p>
+          </div>
+        </div></div>
       </details>
 
       <details class="row" style="--row-color: var(--pop-dem)">
-        <summary>
-          <span aria-hidden="true"></span>
-          <span class="r-tag">DEM · not a width</span>
-          <span class="r-title">People living with dementia<small>the variable is route shape</small></span>
-          <span class="r-value">topology</span>
-          <span class="r-arrow" aria-hidden="true">›</span>
-        </summary>
-        <div class="r-body">
-          <div class="blocks">
-            <div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> the real variable</div>
-              <p>For dementia, the corridor variable is the shape of the route, not its width. The evidence points to simple loops and one visible choice at a time.</p>
-              <p>An older idea that "narrow corridors calm" has been retired. It never had a sound source. Dementia inherits a width only incidentally.</p>
-            </div>
-          </div>
-        </div>
+        <summary><span aria-hidden="true"></span><span class="r-tag">DEM · not a width</span><span class="r-title">People living with dementia<small>the variable is route shape</small></span><span class="r-value">topology</span><span class="r-arrow" aria-hidden="true">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> the real variable <button class="cite-trigger cite mini" data-pop="dem-topology" aria-label="Sources: dementia"></button></div>
+          <p>For dementia, the corridor variable is the shape of the route, not its width. The evidence points to simple loops and one visible choice at a time.</p>
+          <p>An older idea that "narrow corridors calm" has been retired. It never had a sound source. Dementia inherits a width only incidentally.</p>
+        </div></div></div>
       </details>
 
       <details class="row" style="--row-color: var(--pop-ndv)">
-        <summary>
-          <span aria-hidden="true"></span>
-          <span class="r-tag">NDV · not a width</span>
-          <span class="r-title">Neurodivergent people<small>the variable is sensory load</small></span>
-          <span class="r-value">independent</span>
-          <span class="r-arrow" aria-hidden="true">›</span>
-        </summary>
-        <div class="r-body">
-          <div class="blocks">
-            <div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> the real variable</div>
-              <p>Width and sensory load are independent. No study shows wide corridors harm. The real variables are sound, transition zones and visual clutter.</p>
-              <p>An old "wide corridors overwhelm" conflict was retired for that reason. The genuine tension is with open sightlines, not with width. See § 7.</p>
-            </div>
-          </div>
-        </div>
+        <summary><span aria-hidden="true"></span><span class="r-tag">NDV · not a width</span><span class="r-title">Neurodivergent people<small>the variable is sensory load</small></span><span class="r-value">independent</span><span class="r-arrow" aria-hidden="true">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> the real variable <button class="cite-trigger cite mini" data-pop="ndv-load" aria-label="Sources: neurodivergent"></button></div>
+          <p>Width and sensory load are independent. No study shows wide corridors harm. The real variables are sound, transition zones and visual clutter.</p>
+          <p>An old "wide corridors overwhelm" conflict was retired for that reason. The genuine tension is with open sightlines, not with width. See § 7.</p>
+        </div></div></div>
       </details>
 
       <details class="row" style="--row-color: var(--pop-ofs)">
-        <summary>
-          <span aria-hidden="true"></span>
-          <span class="r-tag">OFS · PAIN · not a width</span>
-          <span class="r-title">Fatigue and chronic-pain conditions<small>the variable is rest interval</small></span>
-          <span class="r-value">interval</span>
-          <span class="r-arrow" aria-hidden="true">›</span>
-        </summary>
-        <div class="r-body">
-          <div class="blocks">
-            <div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> the real variable</div>
-              <p>The variable here is how far apart rest points sit, not how wide the corridor is.</p>
-              <p>It touches width in one way only, the alcove rule: recess rest seating at least 200 mm off the clear width, so a place to rest never eats the passing space.</p>
-            </div>
-          </div>
-        </div>
+        <summary><span aria-hidden="true"></span><span class="r-tag">OFS · PAIN · not a width</span><span class="r-title">Fatigue and chronic-pain conditions<small>the variable is rest interval</small></span><span class="r-value">interval</span><span class="r-arrow" aria-hidden="true">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> the real variable <button class="cite-trigger cite mini" data-pop="ofs-alcove" aria-label="Sources: fatigue and pain"></button></div>
+          <p>The variable here is how far apart rest points sit, not how wide the corridor is.</p>
+          <p>It touches width in one way only, the alcove rule: recess rest seating at least 200 mm off the clear width, so a place to rest never eats the passing space.</p>
+        </div></div></div>
       </details>
 
       <details class="row" style="--row-color: var(--pop-vis)">
-        <summary>
-          <span aria-hidden="true"></span>
-          <span class="r-tag">VIS · inherits width</span>
-          <span class="r-title">Blind and low-vision people<small>guide-pair travel</small></span>
-          <span class="r-value">guide-pair</span>
-          <span class="r-arrow" aria-hidden="true">›</span>
-        </summary>
-        <div class="r-body">
-          <div class="blocks">
-            <div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> the real variable</div>
-              <p>A sighted guide and traveller walk shoulder to shoulder, so this group inherits a two-person width.</p>
-              <p>Its own primary need is about detection and edges, not cross-section.</p>
-            </div>
-          </div>
-        </div>
+        <summary><span aria-hidden="true"></span><span class="r-tag">VIS · inherits width</span><span class="r-title">Blind and low-vision people<small>guide-pair travel</small></span><span class="r-value">guide-pair</span><span class="r-arrow" aria-hidden="true">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> the real variable <button class="cite-trigger cite mini" data-pop="vis-guide" aria-label="Sources: vision"></button></div>
+          <p>A sighted guide and traveller walk shoulder to shoulder, so this group inherits a two-person width.</p>
+          <p>Its own primary need is about detection and edges, not cross-section.</p>
+        </div></div></div>
       </details>
     </div>
 
     <div class="integrity-note">
-      <strong>The project's own data dropped the group that anchors this item.</strong> As of this session, E-08's population links in the live database are dementia, mobility, spinal-cord injury and vision. Deaf is absent, even though Deaf-community evidence supplies the strongest width on the page. Restoring that link is on the correction list in § 10.
+      <strong>The project's own data dropped the group that anchors this item.</strong> As of this session, E-08's population links in the live database are dementia, mobility, spinal-cord injury and vision. Deaf is absent, even though Deaf-community evidence supplies the strongest width on the page. Restoring that link is on the correction list in § 10. <button class="cite-trigger cite" data-pop="livedb-deaf" aria-label="Sources: the dropped Deaf link"></button>
     </div>
   </section>
 
-  <!-- ============================================================ -->
-  <!-- §7 FAILURE CASES                                              -->
-  <!-- ============================================================ -->
+  <!-- §7 FAILURE CASES -->
   <section class="section" data-color="terra" style="--order-spec:7; --order-q:7" id="failures">
     <div class="sec-head">
       <span class="sec-num">§ 7</span>
@@ -689,7 +592,7 @@ Bind the function and the outcome, not a contested reference.</pre>
     <div class="rowlist">
       <details class="row" open style="--row-color: var(--sec-8)">
         <summary><span aria-hidden="true"></span><span class="r-tag"><span aria-hidden="true">✗</span> single-file pinch</span><span class="r-title">"One chair fits" mistaken for "the corridor works"</span><span class="r-value">at 1200</span><span class="r-arrow" aria-hidden="true">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">▲</span> what happens</div>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">▲</span> what happens <button class="cite-trigger cite mini" data-pop="vng" aria-label="Sources"></button></div>
           <p>A corridor at the 1200 mm minimum takes one powered chair and nothing else.</p>
           <p>Two devices cannot pass. A signed conversation collapses into single file. Meeting the minimum is not meeting the need.</p>
         </div></div></div>
@@ -697,24 +600,24 @@ Bind the function and the outcome, not a contested reference.</pre>
 
       <details class="row" style="--row-color: var(--sec-8)">
         <summary><span aria-hidden="true"></span><span class="r-tag"><span aria-hidden="true">✗</span> signing space deleted</span><span class="r-title">A mobility-only spec quietly removes the Deaf route</span><span class="r-value">silent loss</span><span class="r-arrow" aria-hidden="true">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">▲</span> what happens</div>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">▲</span> what happens <button class="cite-trigger cite mini" data-pop="subsumption" aria-label="Sources: subsumption"></button></div>
           <p>A team designs for "mobility access", stops at the 1800 mm passing floor, and moves on.</p>
           <p>No one decided to remove signing space. It was simply never named, so it was never drawn. The corridor is built, and Deaf users find they cannot hold a conversation in it. Because the data also dropped the Deaf link (§ 6), nothing in the system flags the loss either.</p>
-          <p>The guard is simple: the 2440 mm signing width already contains the 1800 mm passing width. Build the larger, and both are served.</p>
+          <p>The guard is simple. The 2440 mm signing width already contains the 1800 mm passing width. Build the larger, and both are served.</p>
         </div></div></div>
       </details>
 
       <details class="row" style="--row-color: var(--sec-8)">
         <summary><span aria-hidden="true"></span><span class="r-tag"><span aria-hidden="true">✗</span> injury dose</span><span class="r-title">A width below the swept path forces the hard turn</span><span class="r-value">repeated strain</span><span class="r-arrow" aria-hidden="true">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">▲</span> what happens</div>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">▲</span> what happens <button class="cite-trigger cite mini" data-pop="turn-injury" aria-label="Sources: turning biomechanics"></button></div>
           <p>Below the swept envelope, a wheelchair user must brake and pivot hard to turn.</p>
-          <p>That turn loads one arm many times over a straight push. Repeated all day, for years, it is a documented source of upper-limb injury. The corridor width is, in effect, a dose.</p>
+          <p>That turn loads one arm many times over a straight push. Repeated all day, for years, it is a documented source of upper-limb injury. The corridor width is, in effect, a dose. A route sized to the swept path, or wide enough to avoid the turn, reduces it.</p>
         </div></div></div>
       </details>
 
       <details class="row" style="--row-color: var(--sec-8)">
         <summary><span aria-hidden="true"></span><span class="r-tag"><span aria-hidden="true">✗</span> sightlines vs enclosure</span><span class="r-title">Open signing design clashes with enclosure needs</span><span class="r-value">zone it</span><span class="r-arrow" aria-hidden="true">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">▲</span> what happens</div>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">▲</span> what happens <button class="cite-trigger cite mini" data-pop="signing-conflict" aria-label="Sources: sightlines vs enclosure"></button></div>
           <p>The open sightlines that serve Deaf users can be the opposite of what some neurodivergent or dementia users need, which is enclosure and clear bounds.</p>
           <p>You cannot resolve this by picking a width in the middle. Resolve it by giving each need its own zone: open communication areas, and separate calm, bounded retreats.</p>
         </div></div></div>
@@ -722,7 +625,7 @@ Bind the function and the outcome, not a contested reference.</pre>
 
       <details class="row" style="--row-color: var(--sec-8)">
         <summary><span aria-hidden="true"></span><span class="r-tag"><span aria-hidden="true">✗</span> creep</span><span class="r-title">Fixtures and doors eat the clear width after handover</span><span class="r-value">−width</span><span class="r-arrow" aria-hidden="true">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">▲</span> what happens</div>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">▲</span> what happens <button class="cite-trigger cite mini" data-pop="measurement" aria-label="Sources: measurement and projections"></button></div>
           <p>A fire extinguisher, a sanitiser stand or a planter is added after the building opens, and projects into the pinch point.</p>
           <p>Or a door opening is narrower than the corridor, and re-creates the very pinch the width was meant to remove. Recess fixtures, hatch the clear zone on the drawings, and walk the route after occupancy.</p>
         </div></div></div>
@@ -730,24 +633,22 @@ Bind the function and the outcome, not a contested reference.</pre>
 
       <details class="row" style="--row-color: var(--sec-8)">
         <summary><span aria-hidden="true"></span><span class="r-tag"><span aria-hidden="true">✗</span> convergence sold as evidence</span><span class="r-title">"1800 is best practice because every code agrees"</span><span class="r-value">method error</span><span class="r-arrow" aria-hidden="true">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">▲</span> what happens</div>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">▲</span> what happens <button class="cite-trigger cite mini" data-pop="doctrine" aria-label="Sources: convergence is not evidence"></button></div>
           <p>Agreement among codes gets read as proof. It is not. It is the floor, with no measurement behind it.</p>
-          <p>This is the exact error an earlier version of this very page committed, by calling the 1200 and 1800 figures the Guidebook value.</p>
+          <p>This is the exact error an earlier version of this very page committed, by calling the 1200 and 1800 figures the Guidebook value. <button class="cite-trigger cite mini" data-pop="koontz" aria-label="Sources: the prior version's errors"></button></p>
         </div></div></div>
       </details>
     </div>
   </section>
 
-  <!-- ============================================================ -->
-  <!-- §8 STANDARDS                                                  -->
-  <!-- ============================================================ -->
+  <!-- §8 STANDARDS -->
   <section class="section" data-color="fern" style="--order-spec:8; --order-q:8" id="standards">
     <div class="sec-head">
       <span class="sec-num">§ 8</span>
       <h2>Standards &amp; codes</h2>
       <p class="deck">Each country's floor, side by side. This is the legal minimum, not best practice.</p>
     </div>
-    <p>Every value in this table is a statutory code minimum. The widest gap is the United States at 915 mm against Germany and Norway at 1500 mm, and the US figure was set for manual chairs only. That codes cluster near 1200 and 1800 mm shows they agree. It does not show the number is right. No surveyed code addresses signing-space width at all.</p>
+    <p>Every value in this table is a statutory code minimum. The widest gap is the United States at 915 mm against Germany and Norway at 1500 mm, and the US figure was set for manual chairs only. That codes cluster near 1200 and 1800 mm shows they agree. It does not show the number is right. No surveyed code addresses signing-space width at all. <button class="cite-trigger cite" data-pop="jurisdiction" aria-label="Sources: jurisdiction dataset"></button></p>
 
     <div class="compare-wrap">
       <div class="compare-controls" role="group" aria-label="Choose jurisdictions to compare">
@@ -778,8 +679,8 @@ Bind the function and the outcome, not a contested reference.</pre>
           </thead>
           <tbody>
             <tr class="row-spread">
-              <th scope="row">Minimum clear width<small>continuous accessible path</small></th>
-              <td data-jcol="US"><span class="val-num val-warn">915 <small>mm</small></span><span class="val-note">manual only · lowest</span></td>
+              <th scope="row">Minimum clear width<small>continuous path</small></th>
+              <td data-jcol="US"><span class="val-num val-warn">915 <small>mm</small></span><span class="val-note">manual only</span></td>
               <td data-jcol="GB"><span class="val-num">1200 <small>mm</small></span></td>
               <td data-jcol="DE"><span class="val-num">1500 <small>mm</small></span></td>
               <td data-jcol="AU"><span class="val-num">1000 <small>mm</small></span></td>
@@ -800,7 +701,7 @@ Bind the function and the outcome, not a contested reference.</pre>
               <td data-jcol="GB-GUIDE" class="gb-col"><span class="val-num">1800 <small>mm</small></span><span class="val-note">floor only</span></td>
             </tr>
             <tr>
-              <th scope="row">Turning<small>180° change of direction</small></th>
+              <th scope="row">Turning<small>180°</small></th>
               <td data-jcol="US"><span class="val-num">1524 <small>mm</small></span><span class="val-note">1702 A117.1</span></td>
               <td data-jcol="GB"><span class="val-num">1500 <small>mm</small></span></td>
               <td data-jcol="DE"><span class="val-num">1500 <small>mm</small></span></td>
@@ -808,7 +709,7 @@ Bind the function and the outcome, not a contested reference.</pre>
               <td data-jcol="NO"><span class="val-num">1500 <small>mm</small></span></td>
               <td data-jcol="CA"><span class="val-empty">— silent</span></td>
               <td data-jcol="ISO"><span class="val-num">1524 <small>mm</small></span></td>
-              <td data-jcol="GB-GUIDE" class="gb-col"><span class="val-num">swept path</span><span class="val-note">by class · § 4</span></td>
+              <td data-jcol="GB-GUIDE" class="gb-col"><span class="val-num">swept ≈ 2400</span><span class="val-note">measured envelope · § 4</span></td>
             </tr>
             <tr>
               <th scope="row">Signing-pair width<small>two people signing</small></th>
@@ -832,6 +733,17 @@ Bind the function and the outcome, not a contested reference.</pre>
               <td data-jcol="ISO"><span class="band band-weak"><span aria-hidden="true">○</span> code floor</span></td>
               <td data-jcol="GB-GUIDE" class="gb-col"><span class="band band-full"><span aria-hidden="true">●</span> Co-1</span> <span class="conf">provisional</span></td>
             </tr>
+            <tr>
+              <th scope="row">Sources</th>
+              <td data-jcol="US"><button class="cite-trigger cite mini" data-pop="jurisdiction" aria-label="Sources: US"></button></td>
+              <td data-jcol="GB"><button class="cite-trigger cite mini" data-pop="jurisdiction" aria-label="Sources: UK"></button></td>
+              <td data-jcol="DE"><button class="cite-trigger cite mini" data-pop="jurisdiction" aria-label="Sources: Germany"></button></td>
+              <td data-jcol="AU"><button class="cite-trigger cite mini" data-pop="jurisdiction" aria-label="Sources: Australia"></button></td>
+              <td data-jcol="NO"><button class="cite-trigger cite mini" data-pop="jurisdiction" aria-label="Sources: Norway"></button></td>
+              <td data-jcol="CA"><button class="cite-trigger cite mini" data-pop="jurisdiction" aria-label="Sources: Canada"></button></td>
+              <td data-jcol="ISO"><button class="cite-trigger cite mini" data-pop="jurisdiction" aria-label="Sources: ISO"></button></td>
+              <td data-jcol="GB-GUIDE" class="gb-col"><button class="cite-trigger cite mini" data-pop="two-roads" aria-label="Sources: Guidebook value"></button></td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -839,9 +751,7 @@ Bind the function and the outcome, not a contested reference.</pre>
     <p style="margin-top:14px;">A dash means the standard says nothing on that field. It does not mean anything is allowed. Canada states no minimum here. The Guidebook column is a provisional, hand-derived value, not a statutory peer. It is placed last, and marked, for that reason.</p>
   </section>
 
-  <!-- ============================================================ -->
-  <!-- §9 PRODUCTS                                                   -->
-  <!-- ============================================================ -->
+  <!-- §9 PRODUCTS -->
   <section class="section" data-color="graphite" style="--order-spec:9; --order-q:9" id="products">
     <div class="sec-head">
       <span class="sec-num">§ 9</span>
@@ -850,7 +760,7 @@ Bind the function and the outcome, not a contested reference.</pre>
     </div>
 
     <div class="callout">
-      <h3>Measurable quick reference</h3>
+      <h3>Measurable quick reference <button class="cite-trigger cite mini" data-pop="measurement" aria-label="Sources: measurable references"></button></h3>
       <ul>
         <li>Continuous handrail: deduct about 50 mm from the clear width.</li>
         <li>Recessed fixtures (extinguisher, sanitiser, call point): 0 mm projection into the clear zone.</li>
@@ -863,33 +773,33 @@ Bind the function and the outcome, not a contested reference.</pre>
     <div class="rowlist">
       <details class="row" open style="--row-color: var(--sec-6)">
         <summary><span aria-hidden="true"></span><span class="r-tag">handrails</span><span class="r-title">Continuous handrails<small>projection deducts from clear width</small></span><span class="r-value">−50 mm</span><span class="r-arrow" aria-hidden="true">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> effect</div>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> effect <button class="cite-trigger cite mini" data-pop="measurement" aria-label="Sources"></button></div>
           <p>A continuous rail counts against the clear width, because a wheelchair cannot pass through it. Stainless is about 50 mm. Brass or timber project more.</p>
           <p>A wall-recessed grab rail does not count. Size the wall-to-wall so the clear dimension survives the deduction.</p>
         </div></div></div></details>
 
       <details class="row" style="--row-color: var(--sec-6)">
         <summary><span aria-hidden="true"></span><span class="r-tag">glazing</span><span class="r-title">Glazed junction corners<small>see an approaching person in advance</small></span><span class="r-value">at junctions</span><span class="r-arrow" aria-hidden="true">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-co1" aria-hidden="true">◆</span> effect</div>
-          <p>Glaze corners rather than leaving them solid. A signer walking and watching their companion's hands needs advance sight of anyone approaching the junction. This is the sightline half of the signing provision.</p>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-co1" aria-hidden="true">◆</span> effect <button class="cite-trigger cite mini" data-pop="deafspace" aria-label="Sources"></button></div>
+          <p>Glaze corners rather than leaving them solid. A signer walking and watching a companion's hands needs advance sight of anyone approaching the junction. This is the sightline half of the signing provision.</p>
         </div></div></div></details>
 
       <details class="row" style="--row-color: var(--sec-6)">
         <summary><span aria-hidden="true"></span><span class="r-tag">finishes + light</span><span class="r-title">Matte finishes and diffuse light<small>so hands and faces stay legible</small></span><span class="r-value">≥ 300 lux</span><span class="r-arrow" aria-hidden="true">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-co1" aria-hidden="true">◆</span> effect</div>
-          <p>Use matte, medium-contrast wall finishes so that hands, faces and facial grammar read clearly against them. Aim for a mid-tone that holds contrast against a range of skin tones.</p>
-          <p>Light the communication zone diffusely, at least 300 lux at face height, with no backlighting and no glare. As a testable target, choose finishes in a mid light-reflectance band rather than specifying a colour by name.</p>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-co1" aria-hidden="true">◆</span> effect <button class="cite-trigger cite mini" data-pop="deafspace" aria-label="Sources"></button></div>
+          <p>Use matte, medium-contrast wall finishes so hands, faces and facial grammar read clearly against them. Choose a mid-tone that holds contrast against a range of skin tones.</p>
+          <p>Light the communication zone diffusely, at least 300 lux at face height, with no backlighting and no glare. As a testable target, specify finishes in a mid light-reflectance band rather than naming a colour.</p>
         </div></div></div></details>
 
       <details class="row" style="--row-color: var(--sec-6)">
         <summary><span aria-hidden="true"></span><span class="r-tag">recessed fixtures</span><span class="r-title">Wall-recessed fixtures<small>so they cannot creep into the clear width</small></span><span class="r-value">0 mm</span><span class="r-arrow" aria-hidden="true">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> effect</div>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> effect <button class="cite-trigger cite mini" data-pop="measurement" aria-label="Sources"></button></div>
           <p>Recess fire extinguisher cabinets, sanitiser stands, call points and low signage below the 2050 mm datum, so they do not eat the clear width after handover. Mark the clear zone in hatching at the fixtures review.</p>
         </div></div></div></details>
 
       <details class="row" style="--row-color: var(--sec-6)">
         <summary><span aria-hidden="true"></span><span class="r-tag">seating + doors</span><span class="r-title">Alcove seating and wide doors<small>keep the passing width intact</small></span><span class="r-value">≥ 200 mm recess</span><span class="r-arrow" aria-hidden="true">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> effect</div>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> effect <button class="cite-trigger cite mini" data-pop="ofs-alcove" aria-label="Sources"></button></div>
           <p>Recess rest seating at least 200 mm off the clear width. Keep door openings at least 900 mm, and no narrower than the corridor.</p>
           <p>In signing zones, use movable furniture without fixed armrests, so people can form a conversation circle.</p>
         </div></div></div></details>
@@ -897,41 +807,37 @@ Bind the function and the outcome, not a contested reference.</pre>
     <p class="honesty">The corpus holds no product catalogue. These are component classes implied by the requirements above, not brand recommendations.</p>
   </section>
 
-  <!-- ============================================================ -->
-  <!-- §10 PROVENANCE, INTEGRITY & EVIDENCE                          -->
-  <!-- ============================================================ -->
+  <!-- §10 PROVENANCE -->
   <section class="section" data-color="slate" style="--order-spec:10; --order-q:10" id="provenance">
     <div class="sec-head">
       <span class="sec-num">§ 10</span>
       <h2>Provenance, integrity &amp; evidence</h2>
       <p class="deck">What this page is, what it is built from, and what it fixes.</p>
     </div>
-    <p>This page is a hand-authored re-derivation from the project spine. It is not produced by an adjudication engine, because that engine is not yet built. Sources are named by author, year and title, which are stable. Internal reference numbers are not used in the text, because they are known to collide across the project's files.</p>
+    <p>This page is a hand-authored re-derivation from the project spine. It is not produced by an adjudication engine, because that engine is not yet built. Sources are named by author, year and title, which are stable. Internal reference numbers are avoided in the text, because they are known to collide across the project's files. Every claim above links to a source list here or to a primary reference.</p>
 
     <h3 style="font-family:var(--font-mono);font-size:var(--fs-sm);text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:20px 0 6px;">Sources you can cite</h3>
     <div class="rowlist">
       <details class="row" open style="--row-color: var(--pop-deaf)">
         <summary><span aria-hidden="true"></span><span class="r-tag">Deaf-community · anchor</span><span class="r-title">DeafSpace and Deaf-authored sources<small>the ≥ 2440 mm anchor</small></span><span class="r-value">Co-1</span><span class="r-arrow" aria-hidden="true">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-co1" aria-hidden="true">◆</span> citations</div>
-          <p>DeafSpace Design Guidelines, Gallaudet University (2010). This is the primary source for the signing-space dimensions. It is community-informed, led by an architect at a Deaf university. It is an institutional guideline, not a disabled-persons'-organisation output.</p>
-          <p>Vaughn, DeafScape (2018), extends DeafSpace principles.</p>
-          <p>Cloete &amp; Rout (2025), a scoping review, confirms the principles apply across cultures. It does not re-measure the 2440 mm figure.</p>
-          <p>Deaf-authored scholarship — Kusters (2015) and Bauman &amp; Murray, <em>Deaf Gain</em> (2014) — grounds the cultural and linguistic framing and should be read alongside the guideline.</p>
-          <p class="honesty">No individual Deaf lived-experience account is yet recorded for this item. A spec anchored by Deaf knowledge with no individual Deaf voice on file is an obligation, not a footnote. Recording that testimony is on the queue below.</p>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-co1" aria-hidden="true">◆</span> citations <button class="cite-trigger cite mini" data-pop="deafspace" aria-label="Full source list"></button></div>
+          <p>DeafSpace Design Guidelines, Gallaudet University (2010), is the primary source for the signing dimensions. It is community-informed, led by an architect at a Deaf university. It is an institutional guideline, not a disabled-persons'-organisation output.</p>
+          <p>Vaughn, DeafScape (2018), extends the principles. Cloete &amp; Rout (2025), a scoping review, confirms they apply across cultures but does not re-measure 2440 mm. Deaf-authored scholarship — Kusters (2015) and Bauman &amp; Murray, <em>Deaf Gain</em> (2014) — grounds the cultural framing.</p>
+          <p class="honesty">No individual Deaf lived-experience account is yet recorded for this item. A spec anchored by Deaf knowledge with no individual Deaf voice on file is an obligation, not a footnote. <button class="cite-trigger cite mini" data-pop="co1zero" aria-label="Sources: no accounts on file"></button></p>
         </div></div></div></details>
 
       <details class="row" style="--row-color: var(--sec-6)">
-        <summary><span aria-hidden="true"></span><span class="r-tag">swept path · unverified</span><span class="r-title">Wheeled-mobility measurement<small>corroborates 2440, not yet retrieved</small></span><span class="r-value">pending</span><span class="r-arrow" aria-hidden="true">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">◐</span> status</div>
-          <p>Steinfeld and colleagues (2006, 2010) measured swept-path envelopes. The whole-sample figure reaches about 2400 mm in an enclosed bay.</p>
-          <p>The 2006 measurement is not yet retrieved and verified in the corpus. Until it is, it corroborates the signing width but does not co-anchor it.</p>
-          <p class="honesty">The injury-dose figures in § 6 and § 7, and the turn statistics, are relayed from the project's methodology notes. They are not yet independently registered in our reference list. Treat them as directional.</p>
+        <summary><span aria-hidden="true"></span><span class="r-tag">swept path + turning</span><span class="r-title">Mobility measurement<small>the second driver of ~2400 mm</small></span><span class="r-value">Tier 1–3</span><span class="r-arrow" aria-hidden="true">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> citations <button class="cite-trigger cite mini" data-pop="sweptpath" aria-label="Full source list: swept path"></button> <button class="cite-trigger cite mini" data-pop="turn-injury" aria-label="Full source list: turning biomechanics"></button></div>
+          <p>Chaikhot et al. (2023) is a Tier 1 biomechanical study of the corridor-entry turn. It is a real, verifiable paper with a DOI and PubMed ID, though it is not yet entered in the project's reference table.</p>
+          <p>Steinfeld and colleagues (2006, 2010) measured swept-path envelopes reaching about 2400 mm. The 2006 measurement is not yet retrieved and verified into the corpus. Sonenblum et al. (2012) and Boninger et al. supply the turn-frequency and injury figures.</p>
+          <p class="honesty">Where a source is not yet in the project reference table, its popup says so. Treat those figures as directional until they are entered.</p>
         </div></div></div></details>
 
       <details class="row" style="--row-color: var(--sec-6)">
         <summary><span aria-hidden="true"></span><span class="r-tag">codes · floor</span><span class="r-title">Statutory codes<small>the § 8 table</small></span><span class="r-value">floor</span><span class="r-arrow" aria-hidden="true">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> role</div>
-          <p>ADA, BS 8300-2, DIN 18040-1, AS 1428.1, TEK17, CSA B651 and ISO 21542 supply the legal floor in each place. The § 8 table is taken cell for cell from the project's jurisdiction data.</p>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> role <button class="cite-trigger cite mini" data-pop="jurisdiction" aria-label="Full source list: codes"></button></div>
+          <p>ADA, BS 8300-2, DIN 18040-1, AS 1428.1, TEK17, CSA B651 and ISO 21542 supply the legal floor in each place. The § 8 table is taken cell for cell from the project jurisdiction data.</p>
           <p>Their agreement is useful for tracking the law. It is not evidence of best practice.</p>
         </div></div></div></details>
     </div>
@@ -940,7 +846,7 @@ Bind the function and the outcome, not a contested reference.</pre>
     <div class="rowlist">
       <details class="row" open style="--row-color: var(--warn)">
         <summary><span aria-hidden="true"></span><span class="r-tag">removed</span><span class="r-title">A fabricated citation in the prior version<small>verified this session</small></span><span class="r-value">purged</span><span class="r-arrow" aria-hidden="true">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">▲</span> what was wrong</div>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">▲</span> what was wrong <button class="cite-trigger cite mini" data-pop="koontz" aria-label="Sources: the fabrication check"></button></div>
           <p>The earlier version of this file cited a "Koontz 2017" study on corridor passing width, with a sample size and precise cost figures.</p>
           <p>No such study exists. The digital identifier it carried resolves to an unrelated 2017 review of robotic rollators by Werner and colleagues. The author, title, topic and figures were invented and attached to a real but unrelated identifier.</p>
           <p>That citation, every figure derived from it, an interactive slider built on it, and three lived-experience account numbers that appear in no record, have all been removed.</p>
@@ -948,8 +854,8 @@ Bind the function and the outcome, not a contested reference.</pre>
 
       <details class="row" style="--row-color: var(--warn)">
         <summary><span aria-hidden="true"></span><span class="r-tag">known defect</span><span class="r-title">The item has more than one live value<small>do not cite "the Guidebook value" loosely</small></span><span class="r-value">drift</span><span class="r-arrow" aria-hidden="true">›</span></summary>
-        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">▲</span> status</div>
-          <p>Across the project's files, this item still carries several values. The canonical doctrine gives 2440 mm. A tracking matrix gives 1800 mm. The live item is still named for the 1200 mm minimum. A separate legacy copy of this page, in another folder, still shows the 1200 mm framing.</p>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">▲</span> status <button class="cite-trigger cite mini" data-pop="drift" aria-label="Sources: the four values"></button></div>
+          <p>Across the project's files, this item still carries several values. The canonical doctrine gives 2440 mm. A tracking matrix gives 1800 mm. The live item is still named for the 1200 mm minimum. A separate legacy copy of this page still shows the 1200 mm framing.</p>
           <p>So do not cite "Guidebook E-08" as a single number without saying which value and which surface. Only the review engine can reconcile these, and it is not built yet.</p>
         </div></div></div></details>
 
@@ -957,11 +863,10 @@ Bind the function and the outcome, not a contested reference.</pre>
         <summary><span aria-hidden="true"></span><span class="r-tag">to do</span><span class="r-title">What must be retrieved before this value is settled</span><span class="r-value">queue</span><span class="r-arrow" aria-hidden="true">›</span></summary>
         <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◇</span> in priority order</div>
           <p>1. Record individual Deaf lived-experience accounts for this item.</p>
-          <p>2. Restore the Deaf population link in the live data (it is currently dropped).</p>
-          <p>3. Retrieve and verify the Steinfeld swept-path measurement.</p>
-          <p>4. Register the relayed injury and turn statistics against primary sources.</p>
-          <p>5. Fund cross-language signing-space research, so 2440 mm can be confirmed or revised for BSL, DGS and others.</p>
-          <p>6. Reconcile the several live values so the item can be cited as one thing.</p>
+          <p>2. Restore the Deaf population link in the live data.</p>
+          <p>3. Enter the Chaikhot 2023 and Steinfeld swept-path sources into the project reference table, and verify the 2006 measurement.</p>
+          <p>4. Fund cross-language signing-space research, so 2440 mm can be confirmed or revised for other signed languages.</p>
+          <p>5. Reconcile the several live values so the item can be cited as one thing.</p>
         </div></div></div></details>
     </div>
 
@@ -971,12 +876,250 @@ Bind the function and the outcome, not a contested reference.</pre>
 </main>
 
 <!-- ============================================================ -->
-<!-- POPOVER LIBRARY (citation detail)                            -->
+<!-- SOURCE LIBRARY — every claim points to one of these.         -->
+<!-- A list may hold several references. Each names its evidence  -->
+<!-- tier and whether it is verified / registered.                -->
 <!-- ============================================================ -->
-<div class="pop" data-pop-id="cite-dsdg">
-  <div class="pop-head"><span class="pop-tag">DeafSpace</span><span>Co-1 · Gallaudet</span></div>
-  <div class="pop-title">DeafSpace Design Guidelines (Gallaudet, 2010)</div>
-  <p>The primary source for signing-space dimensions. Community-informed, architect-led, at a Deaf university. ASL context. See § 10.</p>
+
+<div class="pop" data-pop-id="doctrine">
+  <div class="pop-head"><span class="pop-tag">method</span><span>doctrine</span></div>
+  <div class="pop-title">Best practice is not code convergence</div>
+  <p class="pop-lead">The rule that best practice is the value with a traceable measurement root, not the value the most codes share.</p>
+  <ul class="pop-src">
+    <li><code>governance/tier-system.md</code> §3 (Best practice ≠ convergence) and §8 (weighted-strength anchor model).<span class="s-meta">Project doctrine · operative</span></li>
+    <li><code>references/methodology/value-genealogy-worked-example-corridor-width.md</code> — corridor width as the worked example.<span class="s-meta">Project methodology · DR-accepted 2026-07-13</span></li>
+  </ul>
+</div>
+
+<div class="pop" data-pop-id="genealogy">
+  <div class="pop-head"><span class="pop-tag">genealogy</span><span>value pedigrees</span></div>
+  <div class="pop-title">Where each candidate width comes from</div>
+  <p class="pop-lead">The traceable origin of 2440, 1800, 1500 and 1200 mm.</p>
+  <ul class="pop-src">
+    <li><code>references/methodology/value-genealogy-worked-example-corridor-width.md</code> §1 — five values, five pedigrees.<span class="s-meta">Project methodology</span></li>
+    <li>Steinfeld et al. (2010), IDeA Center AWM Final Report — the 1500 mm turning figure descends from 1970s US anthropometry.<span class="s-meta">Tier 1 · <span class="s-status">not yet in the project reference table</span></span></li>
+    <li><code>governance/tier-system.md</code> §3 — 1800 mm is code convergence, no root.<span class="s-meta">Project doctrine</span></li>
+  </ul>
+</div>
+
+<div class="pop" data-pop-id="deafspace">
+  <div class="pop-head"><span class="pop-tag">Deaf-community</span><span>Co-1</span></div>
+  <div class="pop-title">Signing space — 2440 / 1830 / 3050 mm</div>
+  <p class="pop-lead">The signing-pair widths, distances, glazing and lighting come from DeafSpace and Deaf scholarship.</p>
+  <ul class="pop-src">
+    <li>Bauman, H-D. — <em>DeafSpace Design Guidelines</em>, Gallaudet University (2010). Primary source for the dimensions.<span class="s-meta">Co-1 · single institution · ASL · unpublished working draft</span></li>
+    <li>Vaughn, A. — <a href="https://groundupjournal.com/" target="_blank" rel="noopener">DeafScape: Applying DeafSpace to Landscape</a>, GroundUp Journal (2018).<span class="s-meta">Co-1</span></li>
+    <li>Cloete, M. &amp; Rout, M. — "DeafSpace" in the built school environment: a scoping review, <em>Acta Structilia</em> 32(2):238–263 (2025).<span class="s-meta">Tier 3 · confirms principles cross-culturally, does not re-measure 2440</span></li>
+    <li>Bauman, H-D. &amp; Murray, J. — <em>Deaf Gain</em>, U of Minnesota Press (2014).<span class="s-meta">Tier 2 · cultural framing</span></li>
+    <li>Kusters, A. (2015) — Deaf-authored ethnography.<span class="s-meta">Deaf-authored scholarship</span></li>
+    <li><code>references/bpc/communication-and-alerts/deaf-spatial-design.md</code> — project synthesis.<span class="s-meta">Project BPC</span></li>
+  </ul>
+</div>
+
+<div class="pop" data-pop-id="scoping">
+  <div class="pop-head"><span class="pop-tag">confidence</span><span>scope of 2440</span></div>
+  <div class="pop-title">How firm the 2440 mm figure is</div>
+  <p class="pop-lead">The need for generous signing space is community-authoritative. The exact millimetre is ASL-derived and may be too small for large groups.</p>
+  <ul class="pop-src">
+    <li><code>references/bpc/communication-and-alerts/deaf-spatial-design.md</code> — cross-language divergence note: 2440 mm is an ASL-derived floor, likely conservative for BSL/DGS, possibly insufficient for large ASL groups. No independent replication of the quantified dimensions exists.<span class="s-meta">Project BPC · evidence-base warning</span></li>
+    <li>Bauman DeafSpace Design Guidelines (2010).<span class="s-meta">Co-1 · single institution</span></li>
+  </ul>
+</div>
+
+<div class="pop" data-pop-id="sweptpath">
+  <div class="pop-head"><span class="pop-tag">mobility</span><span>swept envelope</span></div>
+  <div class="pop-title">The swept path governs turning and width</div>
+  <p class="pop-lead">A turning chair sweeps an asymmetric path wider than its footprint, reaching about 2400 mm. The corridor must hold it.</p>
+  <ul class="pop-src">
+    <li><code>references/bpc/frameworks-and-methodology/manoeuvring-footprint-vs-turning-radius-methodology.md</code> — why swept path, not turning circle.<span class="s-meta">Project methodology · operative</span></li>
+    <li>Steinfeld et al. (2006, RESNA) — measured swept envelopes. Whole-sample ≈ 2400 mm in an enclosed bay.<span class="s-meta">Tier 3 · <span class="s-status">retrieval and verification pending</span></span></li>
+    <li>Steinfeld et al. (2010), IDeA Center AWM Final Report — ADA 1524 mm under-accommodates power chairs.<span class="s-meta">Tier 1 · <span class="s-status">not yet in the project reference table</span></span></li>
+    <li>Trefler &amp; Sawatzky (2008) — devices tested against a dedicated swept-path rig (<a href="https://www.researchgate.net/publication/43533647" target="_blank" rel="noopener">ResearchGate 43533647</a>).<span class="s-meta">Grey / technical</span></li>
+    <li><code>references/fdr/accessible-circulation-geometry.md</code> (FDR-ACG-02) and FDR-BAB-04 — power-WC turning space ≥ 1800 × 1800 mm.<span class="s-meta">Project derivation · E-08's own source slug</span></li>
+    <li>US patent 7,182,166 (<a href="https://patents.justia.com/patent/7182166" target="_blank" rel="noopener">Justia</a>) — footrest sweep is part of the turning envelope.<span class="s-meta">Patent literature</span></li>
+  </ul>
+</div>
+
+<div class="pop" data-pop-id="turn-injury">
+  <div class="pop-head"><span class="pop-tag">biomechanics</span><span>the cost of a tight turn</span></div>
+  <div class="pop-title">A width below the swept path forces the hard spin turn</div>
+  <p class="pop-lead">Turning stats and the injury dose. All are real, verifiable primary sources.</p>
+  <ul class="pop-src">
+    <li>Chaikhot D, Taylor MJD, de Vries WHK, Hettinga FJ (2023) — Biomechanics of wheelchair turning manoeuvres, <em>Front. Sports Act. Living</em> (<a href="https://doi.org/10.3389/fspor.2023.1127514" target="_blank" rel="noopener">doi:10.3389/fspor.2023.1127514</a>, PMID 37383064). 97% spin turns. Peak braking on the inner hand 15.3 ± 15.7× a straight push. About 900 turns a day.<span class="s-meta">Tier 1 · n=10 able-bodied novices · <span class="s-status">verified paper, not yet in the project reference table</span></span></li>
+    <li>Sonenblum SE, Sprigle S, et al. (2012) — median daily turn 39°, range 24–67° (<a href="https://pubmed.ncbi.nlm.nih.gov/22377684/" target="_blank" rel="noopener">PMID 22377684</a>).<span class="s-meta">Tier 1</span></li>
+    <li>Boninger et al. (2003–2004) — manual-wheelchair-user upper-limb-injury prevalence 55–72%.<span class="s-meta">Tier 1–3 · injury prevalence literature</span></li>
+    <li><code>references/bpc/frameworks-and-methodology/manoeuvring-footprint-vs-turning-radius-methodology.md</code> §2–3.<span class="s-meta">Project methodology</span></li>
+  </ul>
+</div>
+
+<div class="pop" data-pop-id="two-roads">
+  <div class="pop-head"><span class="pop-tag">best practice</span><span>two drivers</span></div>
+  <div class="pop-title">Two independent needs reach ~2400 mm</div>
+  <p class="pop-lead">The mobility swept path (~2400 mm) and the signing pair (~2440 mm) converge from different evidence.</p>
+  <ul class="pop-src">
+    <li>Mobility: swept envelope + turning biomechanics — see the swept-path and biomechanics source lists (Steinfeld 2006/2010; Chaikhot 2023; Trefler 2008; FDR-ACG-02).<span class="s-meta">Tier 1–3 · some retrieval pending</span></li>
+    <li>Deaf: signing-pair proxemics — Bauman DeafSpace 2010; Vaughn 2018; Cloete &amp; Rout 2025.<span class="s-meta">Co-1 · Tier 3</span></li>
+    <li><code>governance/tier-system.md</code> §3 and the value-genealogy worked example — convergence of independent evidence streams is informative. Code convergence is not.<span class="s-meta">Project doctrine</span></li>
+  </ul>
+</div>
+
+<div class="pop" data-pop-id="codes-floor">
+  <div class="pop-head"><span class="pop-tag">codes</span><span>floor</span></div>
+  <div class="pop-title">1200 and 1800 mm — the code floor</div>
+  <p class="pop-lead">Multiple codes agree on these figures. Agreement is not measurement.</p>
+  <ul class="pop-src">
+    <li>BS 8300-2:2018 §10.2 (UK) — min 1200 mm, passing 1800 mm.<span class="s-meta">Tier 6 · statutory code</span></li>
+    <li>ISO 21542:2021 §11.5 — min 1200 mm, passing 1800 mm.<span class="s-meta">Tier 4 · international standard</span></li>
+    <li>DIN 18040-1 (DE), AS 1428.1:2021 (AU) — passing 1800 mm.<span class="s-meta">Tier 6</span></li>
+    <li><code>data/jurisdictional_values/a-3_e08.yaml</code> — the project's jurisdiction dataset.<span class="s-meta">Project data</span></li>
+    <li><code>governance/tier-system.md</code> §3 — this is convergence, not best-practice evidence.<span class="s-meta">Project doctrine</span></li>
+  </ul>
+</div>
+
+<div class="pop" data-pop-id="jurisdiction">
+  <div class="pop-head"><span class="pop-tag">jurisdictions</span><span>§ 8 table</span></div>
+  <div class="pop-title">The standards table, cell by cell</div>
+  <p class="pop-lead">Every cell is from the project jurisdiction dataset and the cited national code.</p>
+  <ul class="pop-src">
+    <li><code>data/jurisdictional_values/a-3_e08.yaml</code> — source for every value in § 8.<span class="s-meta">Project data</span></li>
+    <li>US: <a href="https://www.access-board.gov/ada/" target="_blank" rel="noopener">ADA 2010 §403</a> (915 mm, manual basis).</li>
+    <li>UK: <a href="https://knowledge.bsigroup.com/products/design-of-an-accessible-and-inclusive-built-environment-buildings-code-of-practice-1" target="_blank" rel="noopener">BS 8300-2:2018</a>.</li>
+    <li>DE: <a href="https://www.beuth.de/en/standard/din-18040-1/119079876" target="_blank" rel="noopener">DIN 18040-1</a>. AU: <a href="https://www.standards.org.au/standards-catalogue/sa-snz/publicsafety/me-064/as--1428-dot-1-colon-2021" target="_blank" rel="noopener">AS 1428.1:2021</a>.</li>
+    <li>NO: <a href="https://dibk.no/regelverk/byggteknisk-forskrift-tek17/12/12-6/" target="_blank" rel="noopener">TEK17 §12-6</a>. CA: <a href="https://www.csagroup.org/store/product/CSA%20B651%3A23/" target="_blank" rel="noopener">CSA B651:2023</a> (silent on the minimum). ISO: <a href="https://www.iso.org/standard/71860.html" target="_blank" rel="noopener">ISO 21542:2021</a>.</li>
+  </ul>
+</div>
+
+<div class="pop" data-pop-id="vng">
+  <div class="pop-head"><span class="pop-tag">case evidence</span><span>Netherlands</span></div>
+  <div class="pop-title">Passing at 1200 / 1500 / 1800 mm</div>
+  <p class="pop-lead">A Dutch case study on what each width allows.</p>
+  <ul class="pop-src">
+    <li>VNG (2016) case study — 1200 mm is too tight to pass or turn. 1500 mm lets a pedestrian and a wheelchair pass. 1800 mm lets two wheelchair or scooter users pass.<span class="s-meta">Cited in the mobility BPC (NL addendum)</span></li>
+    <li><code>references/bpc/population-general/mobility-built-environment.md</code>.<span class="s-meta">Project BPC</span></li>
+  </ul>
+</div>
+
+<div class="pop" data-pop-id="device-ladder">
+  <div class="pop-head"><span class="pop-tag">device class</span><span>the ladder</span></div>
+  <div class="pop-title">Widths by device class</div>
+  <p class="pop-lead">Each class needs a different width, and a value for one class is not evidence for another.</p>
+  <ul class="pop-src">
+    <li><code>references/bpc/population-general/mobility-built-environment.md</code> — the tier ladder (manual 1500/1700; powered 1700–1800; scooter 1800+; bariatric 1900).<span class="s-meta">Project BPC · most evidence-rich</span></li>
+    <li>ICC A117.1-2017 — concedes 1702 mm for powered chairs. VA CFM — 1675 mm power / 1800 mm bariatric.<span class="s-meta">Tier 5–6</span></li>
+    <li>MEXT (Japan) — children's powered chairs ≥ 2400 mm. PT DL 163/2006 and KR 편의증진법 — 1500 mm figures stated as manual-only. SG BCA Code 2025 — updated for contemporary devices.<span class="s-meta">National codes</span></li>
+  </ul>
+</div>
+
+<div class="pop" data-pop-id="measurement">
+  <div class="pop-head"><span class="pop-tag">measurement</span><span>datum &amp; deduction</span></div>
+  <div class="pop-title">How clear width is measured</div>
+  <p class="pop-lead">Against the swept envelope, from floor to 2050 mm. Projections over 25 mm deduct. A handrail takes about 50 mm.</p>
+  <ul class="pop-src">
+    <li>BS 8300-2:2018 §10.2 — clear-width and projection basis.<span class="s-meta">Tier 6</span></li>
+    <li>CAN/CSA B651-18 §4.2.1; ISO 21542:2021 §11.5.<span class="s-meta">Tier 4–6</span></li>
+    <li><code>references/bpc/frameworks-and-methodology/manoeuvring-footprint-vs-turning-radius-methodology.md</code> — swept-envelope measurement basis.<span class="s-meta">Project methodology</span></li>
+  </ul>
+</div>
+
+<div class="pop" data-pop-id="livedb-deaf">
+  <div class="pop-head"><span class="pop-tag">live data</span><span>queried this session</span></div>
+  <div class="pop-title">Deaf is absent from E-08's population links</div>
+  <p class="pop-lead">Checked directly against the live database on 2026-07-20.</p>
+  <ul class="pop-src">
+    <li><code>data/guidebook.db</code>, table <code>item_population_links</code>: E-08 → DEM, MOB, SCI, VIS. DEAF not present.<span class="s-meta">Live query · 2026-07-20</span></li>
+    <li><code>references/methodology/value-genealogy-worked-example-corridor-width.md</code> §4 — same finding, independently.<span class="s-meta">Project methodology</span></li>
+  </ul>
+</div>
+
+<div class="pop" data-pop-id="co1zero">
+  <div class="pop-head"><span class="pop-tag">live data</span><span>queried this session</span></div>
+  <div class="pop-title">No individual Deaf accounts on file</div>
+  <p class="pop-lead">There is no recorded individual lived-experience account for this item.</p>
+  <ul class="pop-src">
+    <li><code>data/guidebook.db</code>, table <code>bpc_metadata</code>: <code>co1_pass_count = 0</code> across all 82 slices.<span class="s-meta">Live query · 2026-07-20</span></li>
+    <li><code>references/bpc/communication-and-alerts/deaf-spatial-design.md</code>.<span class="s-meta">Project BPC</span></li>
+  </ul>
+</div>
+
+<div class="pop" data-pop-id="koontz">
+  <div class="pop-head"><span class="pop-tag">integrity</span><span>fabrication check</span></div>
+  <div class="pop-title">The prior version's "Koontz 2017" was fabricated</div>
+  <p class="pop-lead">The digital identifier it carried belongs to a different, unrelated paper. Verified this session.</p>
+  <ul class="pop-src">
+    <li>Crossref record for <a href="https://doi.org/10.1080/17483107.2016.1278470" target="_blank" rel="noopener">10.1080/17483107.2016.1278470</a> → Werner et al. (2017), "A systematic review … robotic rollators", <em>Disabil. Rehabil. Assist. Technol.</em> 13(1):31–39.<span class="s-meta">Verified · 2026-07-20 · not Koontz, not corridors</span></li>
+    <li><code>references/methodology/value-genealogy-worked-example-corridor-width.md</code> §7.1 — flags the same anchor as unregistered.<span class="s-meta">Project methodology</span></li>
+    <li><code>references/global-reference-registry.json</code> — the reused REF-00237 is the Epilepsy Foundation, not Koontz.<span class="s-meta">Project reference registry</span></li>
+  </ul>
+</div>
+
+<div class="pop" data-pop-id="drift">
+  <div class="pop-head"><span class="pop-tag">integrity</span><span>value drift</span></div>
+  <div class="pop-title">Several Guidebook values coexist</div>
+  <p class="pop-lead">This item is stated as different numbers across the project's files.</p>
+  <ul class="pop-src">
+    <li><code>governance/tier-system.md</code> §3 — canonical doctrine gives 2440 mm.<span class="s-meta">Project doctrine</span></li>
+    <li><code>data/guidebook.db</code> <code>items</code> — E-08 is still named "Corridor Clear Width (≥ 1200 mm Minimum …)".<span class="s-meta">Live data</span></li>
+    <li>Item-jurisdiction divergence matrix — tracks 1800 mm.<span class="s-meta">Project data</span></li>
+    <li><code>references/methodology/value-genealogy-worked-example-corridor-width.md</code> §7.2 — four coexisting values named.<span class="s-meta">Project methodology</span></li>
+  </ul>
+</div>
+
+<div class="pop" data-pop-id="dem-topology">
+  <div class="pop-head"><span class="pop-tag">dementia</span><span>route shape</span></div>
+  <div class="pop-title">The dementia variable is topology, not width</div>
+  <p class="pop-lead">Simple loops and one visible choice; "narrow calms" was retired.</p>
+  <ul class="pop-src">
+    <li>Marquardt, G. (2011) — wayfinding for people with dementia.<span class="s-meta">Tier 3</span></li>
+    <li><code>references/methodology/value-genealogy-worked-example-corridor-width.md</code> §5 — DEM strand is loop topology. The "narrow corridors calm" reading was retired.<span class="s-meta">Project methodology</span></li>
+  </ul>
+</div>
+
+<div class="pop" data-pop-id="ndv-load">
+  <div class="pop-head"><span class="pop-tag">neurodivergent</span><span>independence</span></div>
+  <div class="pop-title">Width and sensory load are independent</div>
+  <p class="pop-lead">No study shows wide corridors harm. The conflict was retired.</p>
+  <ul class="pop-src">
+    <li><code>references/methodology/value-genealogy-worked-example-corridor-width.md</code> §5 — the CORRIDOR-W conflict was retired 2026-03-30. Real variables are acoustics, transitions and visual noise.<span class="s-meta">Project methodology</span></li>
+  </ul>
+</div>
+
+<div class="pop" data-pop-id="ofs-alcove">
+  <div class="pop-head"><span class="pop-tag">fatigue / pain</span><span>rest interval</span></div>
+  <div class="pop-title">The variable is rest interval. The width rule is the alcove</div>
+  <p class="pop-lead">Rest seating recessed ≥ 200 mm off the clear width.</p>
+  <ul class="pop-src">
+    <li><code>references/fdr/accessible-circulation-geometry.md</code> — OFS alcove geometry and interval (E-08's source slug).<span class="s-meta">Project derivation</span></li>
+    <li><code>references/methodology/value-genealogy-worked-example-corridor-width.md</code> §5 — rest-interval strand; alcove recess ≥ 200 mm.<span class="s-meta">Project methodology</span></li>
+  </ul>
+</div>
+
+<div class="pop" data-pop-id="vis-guide">
+  <div class="pop-head"><span class="pop-tag">vision</span><span>guide pair</span></div>
+  <div class="pop-title">Guide-pair width, with detection as its own axis</div>
+  <p class="pop-lead">Sighted-guide travel inherits a two-person width. Vision's primary need is edges and detection.</p>
+  <ul class="pop-src">
+    <li><code>references/methodology/value-genealogy-worked-example-corridor-width.md</code> §5 — VIS guide-pair strand.<span class="s-meta">Project methodology</span></li>
+    <li>ISO 21542:2021 §11.5 — human-guide travel context.<span class="s-meta">Tier 4</span></li>
+  </ul>
+</div>
+
+<div class="pop" data-pop-id="signing-conflict">
+  <div class="pop-head"><span class="pop-tag">conflict</span><span>sightlines vs enclosure</span></div>
+  <div class="pop-title">Open signing sightlines vs enclosure needs</div>
+  <p class="pop-lead">Resolve by zoning, not by averaging to a middle width.</p>
+  <ul class="pop-src">
+    <li><code>references/bpc/communication-and-alerts/deaf-spatial-design.md</code> — open-plan sightline principle conflicts with enclosure for some neurodivergent and dementia users; resolution is spatial zoning.<span class="s-meta">Project BPC · flagged GAP-CONF-01</span></li>
+    <li><code>references/methodology/value-genealogy-worked-example-corridor-width.md</code> §4.<span class="s-meta">Project methodology</span></li>
+  </ul>
+</div>
+
+<div class="pop" data-pop-id="subsumption">
+  <div class="pop-head"><span class="pop-tag">geometry</span><span>subsumption</span></div>
+  <div class="pop-title">The signing width contains the passing width</div>
+  <p class="pop-lead">2440 mm already includes 1800 mm. Build the larger and both are served.</p>
+  <ul class="pop-src">
+    <li><code>references/methodology/value-genealogy-worked-example-corridor-width.md</code> §4 — recorded as subsumption (CON-0122), not a conflict.<span class="s-meta">Project methodology</span></li>
+  </ul>
 </div>
 
 <footer class="colophon" role="contentinfo">
@@ -987,7 +1130,7 @@ Bind the function and the outcome, not a contested reference.</pre>
     </div>
     <div>
       <h2 class="colo-h">How to read it</h2>
-      <p>Best practice is the number with a measurement root, not the number the most codes share. Evidence marks say the kind of source. Confidence notes say how firm the figure is.</p>
+      <p>Best practice is the number with a measurement root, not the number the most codes share. Two roots reach ~2400 mm: the swept turn, and the signing pair. Every value carries its sources.</p>
     </div>
     <div>
       <h2 class="colo-h">Corrections in this version</h2>
@@ -1002,18 +1145,17 @@ Bind the function and the outcome, not a contested reference.</pre>
   var live = document.getElementById('live');
   function announce(msg){ if(live){ live.textContent=''; setTimeout(function(){ live.textContent=msg; },30); } }
 
-  // ---------- popovers: modal-ish, close button, focus return ----------
+  // ---------- popovers: close button, aria, focus trap, close on scroll ----------
   document.querySelectorAll('.pop').forEach(function (p) {
     p.setAttribute('role', 'dialog');
     p.setAttribute('aria-modal', 'true');
     p.setAttribute('tabindex', '-1');
     var title = p.querySelector('.pop-title');
-    if (title) { title.id = title.id || ('poptitle-' + Math.random().toString(36).slice(2)); p.setAttribute('aria-labelledby', title.id); }
-    var body = p.querySelector('p');
-    if (body) { body.id = body.id || ('popbody-' + Math.random().toString(36).slice(2)); p.setAttribute('aria-describedby', body.id); }
-    // inject close button
+    if (title) { title.id = title.id || ('pt-' + Math.random().toString(36).slice(2)); p.setAttribute('aria-labelledby', title.id); }
+    var lead = p.querySelector('.pop-lead');
+    if (lead) { lead.id = lead.id || ('pb-' + Math.random().toString(36).slice(2)); p.setAttribute('aria-describedby', lead.id); }
     var btn = document.createElement('button');
-    btn.type = 'button'; btn.className = 'pop-close'; btn.setAttribute('aria-label', 'Close'); btn.textContent = '×';
+    btn.type = 'button'; btn.className = 'pop-close'; btn.setAttribute('aria-label', 'Close sources'); btn.textContent = '×';
     btn.addEventListener('click', function(){ closePop(); });
     p.insertBefore(btn, p.firstChild);
   });
@@ -1030,7 +1172,7 @@ Bind the function and the outcome, not a contested reference.</pre>
     closePop();
     pop.dataset.open = 'true';
     var rect = trigger.getBoundingClientRect();
-    var popWidth = Math.min(420, window.innerWidth - 24);
+    var popWidth = Math.min(470, window.innerWidth - 24);
     pop.style.width = popWidth + 'px';
     var left = rect.left + window.scrollX;
     if (left + popWidth > window.innerWidth - 12) left = window.innerWidth - popWidth - 12;
@@ -1046,9 +1188,8 @@ Bind the function and the outcome, not a contested reference.</pre>
     t.setAttribute('aria-haspopup', 'dialog');
     t.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); showPop(t); });
   });
-  document.addEventListener('click', function (e) { if (openPop && !openPop.contains(e.target)) closePop(); });
+  document.addEventListener('click', function (e) { if (openPop && !openPop.contains(e.target) && !e.target.closest('.cite-trigger')) closePop(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePop(); });
-  // trap Tab inside the open dialog
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Tab' || !openPop) return;
     var f = openPop.querySelectorAll('button, a[href]');
@@ -1060,7 +1201,7 @@ Bind the function and the outcome, not a contested reference.</pre>
   window.addEventListener('resize', closePop);
   window.addEventListener('scroll', function(){ if (openPop) closePop(); }, { passive: true });
 
-  // ---------- jurisdiction compare (with focus guard + announce) ----------
+  // ---------- jurisdiction compare ----------
   (function () {
     var picks = document.querySelectorAll('.compare-controls .juris-pick input[data-juris]');
     var table = document.getElementById('juris-table');
@@ -1133,7 +1274,7 @@ Bind the function and the outcome, not a contested reference.</pre>
     });
   });
 
-  // ---------- expand all / collapse all (visible control) ----------
+  // ---------- expand all / collapse all ----------
   document.querySelectorAll('section.section').forEach(function (sec) {
     var rows = sec.querySelectorAll('details.row');
     if (rows.length < 2) return;
