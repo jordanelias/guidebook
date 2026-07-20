@@ -2,7 +2,7 @@
  "schema_version": "1.0",
  "session": "session_2026-07-20-intra-category-cross-test",
  "artifact": "decisions/DR-2026-07-20-intra-category-cross-test.md",
- "doctrine_sha": "3fb2882",
+ "doctrine_sha": "373255e",
  "rules_in_scope": [
   "doctrine-check"
  ],
