@@ -1,0 +1,20 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-07-20-intra-category-cross-test",
+ "artifact": "decisions/DR-2026-07-20-intra-category-cross-test.md",
+ "doctrine_sha": "3fb2882",
+ "rules_in_scope": [
+  "doctrine-check"
+ ],
+ "per_rule_status": {
+  "doctrine-check": {
+   "status": "FIRED",
+   "evidence_path": "references/methodology/value-genealogy-worked-example-corridor-width.md",
+   "reason": "This decision record proposes the intra-category cross-test (ICCT) on the owner directive of 2026-07-20 (test every item/specification against its category-siblings; consider items beyond silos by title / too-specific topics). It is authored as PROPOSED, not ratified, and extends without contradiction: DR-2026-07-13 (its measurement_paradigm/device_class fields are the ICCT commensurability inputs), governance/tier-system.md sections 3 and 8 (subsumption/independence as inter-item convergence-not-evidence), and mission doctrine 3. Every relationship-type and exemplar in the verdict vocabulary is grounded in the corridor value-genealogy worked example (CON-0122 subsumption, the alcove interaction, the CORRIDOR-W variable-independence dissolution)."
+  }
+ },
+ "deviations": [],
+ "bias_direction": "A decision record authored by the same agent that proposed the step can overstate the gap it fills and present a chosen design (hard gate, functional-neighbourhood granularity) as the only coherent option, laundering the agent's framing into doctrine. Bounded by leaving the two consequential design choices (X2 granularity, X5 gate strength) as explicitly flagged owner judgment calls with the alternatives stated, by holding status at PROPOSED pending owner ratification, and by grounding every verdict-type in the pre-existing corridor worked example rather than inventing new claims.",
+ "independent_reviewer_counterclaim": "A reviewer could argue the ICCT duplicates the existing connection-discovery machinery and adds process for no new capability. Response: the register is opportunistic and title-driven (spec mode reads author cross-reference tables) and untyped (connection_type NULL on migrated rows), so a determination can reach stated having never been tested against a sibling that subsumes or interacts with it; the ICCT's contribution is exhaustiveness (every C(n,2) pair, not the pairs an author cross-referenced) and a controlled verdict vocabulary, which the corridor case shows is load-bearing (the project repeatedly mistook subsumption and variable-independence for conflict).",
+ "verdict": "CLEAN"
+}
