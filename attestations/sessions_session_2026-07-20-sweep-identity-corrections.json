@@ -1,0 +1,32 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-07-20-sweep-identity-corrections",
+ "artifact": "sessions/session_2026-07-20-sweep-identity-corrections.md",
+ "doctrine_sha": "3fb2882",
+ "rules_in_scope": [
+  "evidence-verification-gate",
+  "doctrine-check",
+  "source-discipline"
+ ],
+ "per_rule_status": {
+  "evidence-verification-gate": {
+   "status": "FIRED",
+   "evidence_path": "audits/anchor-correctness-sweep-2026-07-20.md",
+   "reason": "Every applied correction (54 identity + 59 tier/type) was an anchor-sweep defect that survived both the verify agent (real retrieval) and the adversarial refuter; only adversarially-upheld defects were eligible. No new claim was retrieved this pass — the corrections are the two-agent-verified findings, applied only where the value/target was unambiguous."
+  },
+  "doctrine-check": {
+   "status": "FIRED",
+   "evidence_path": "governance/tier-system.md",
+   "reason": "Tier/type reclassifications were applied under the enshrined weighted-strength model (DR-2026-07-20 / tier-system.md §8-§10) and only where the (tier, evidence_type) pair is internally consistent with the ladder. Review-species and practice-stream cases requiring §9/§10 judgment, and Co-1 elevations, were deliberately HELD rather than auto-applied."
+  },
+  "source-discipline": {
+   "status": "FIRED",
+   "evidence_path": "scripts/migrations/data_20260720155454_2026-07-20-sweep-identity-corrections.sql",
+   "reason": "Applied only clean, fully-determined values: 7 prose author entries and 41 ambiguous tier/type rows were held, not forced; the 7 DISPUTED rows were left untouched; each UPDATE carries a WHERE guard on the current (tier, evidence_type) so it is a no-op if the row already moved. Downgrades of mislabeled anchors were preferred and elevations to sr_meta applied only where the row is a genuine systematic review per the two-agent check."
+  }
+ },
+ "deviations": [],
+ "bias_direction": "Bulk-applying 113 machine-proposed corrections risks laundering agent output into the record and, for tier changes, either inflating anchors (elevations) or gutting the corpus (over-downgrading). Bounded by the two-agent verify+refute gate, by applying only unambiguous fully-determined values (holding 48 ambiguous/prose rows), by WHERE-guarding every tier/type UPDATE against the current value, by preferring downgrades of demonstrably-mislabeled anchors, and by admitting sr_meta elevations only for rows confirmed to be systematic reviews.",
+ "independent_reviewer_counterclaim": "A reviewer could argue the large T1->T3 shift guts the high-control anchor tier on agent say-so. Response: each downgrade corrects a row the sweep found to be lower-control or mislabeled (e.g. an academic study tagged Co-1 lived-experience), was adversarially upheld, and moves the row to its TRUE tier rather than removing it; the weighted-strength model still lets these T3 rows anchor at their real strength, so no evidence is lost, only correctly graded.",
+ "verdict": "CLEAN"
+}
