@@ -315,7 +315,9 @@ For each jurisdiction, retrieve the primary beyond-code framework if one exists.
 
 **Step 4 — Citation mining (mandatory — invoke `citation-miner` skill)**  
 
-For every confirmed Tier 1–2 source found in Steps 1–3: invoke `citation-miner`. Do not perform inline — the skill is built and must be used. Backward: mine reference list. Forward: Google Scholar "cited by". Log backward/forward counts and sources added in BPC `citation_mining` block per citation-miner §4 output format. Complete Steps 1–3 for a slug first, then mine all confirmed Tier 1–2 sources as a batch before writing the LOG.
+For every confirmed Tier 1–2 source found in Steps 1–3: invoke `citation-miner`. Do not perform inline — the skill is built and must be used. Backward: mine reference list. Forward: Semantic Scholar Graph API "cited by" (preferred; Scholar Gateway is topical search, not a citation graph — see citation-miner §0/§2). Log backward/forward counts and sources added in BPC `citation_mining` block per citation-miner §4 output format. Complete Steps 1–3 for a slug first, then mine all confirmed Tier 1–2 sources as a batch before writing the LOG.
+
+**Non-English sources found in Steps 1–3 are not DOI-gated for citation-mining purposes.** citation-miner §2's non-DOI sub-protocol (fetch the actual document — browsing the site if you land on an org homepage first — and read its own reference list) applies regardless of language; do not skip citation-mining a source just because it lacks a DOI or isn't in an international index. Conversely, do not expect citation-miner's CrossRef/Semantic-Scholar connector path to *discover* non-English sources on its own — that path is structurally English-dominant (see citation-miner §6a). This skill's native-language search (Step 1–3 above) remains the primary mechanism for genuine non-English discovery; citation-miner mines outward from what this skill already found.
 
 **Step 5 — `research-log-manager LOG`**  
 
