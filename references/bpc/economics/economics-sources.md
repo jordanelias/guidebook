@@ -1,5 +1,16 @@
 # Economics Sources — Verified Citation Register
 
+> **DB RECONCILIATION — 2026-07-20** (`session_2026-07-20-ws2-remainder-merged-hygiene-and-content-reconciliation`,
+> WS2). This register documented an economics evidence base that had **0 `source_slug_links` in the live DB** — the
+> citations existed here in markdown but were never (or only partly) ingested. This pass reconciled it:
+> `source_slug_links` 0 → 23, `evidence_state` → **PARTIAL**, audit **F → C (62.6)**. 18 documented sources absent
+> from the corpus were ingested (`REF-00884`–`REF-00901`), each confirmed via a real **PubMed** call
+> (`get_article_metadata` on the PMID recorded here; Szanton 2017 = PMID 29165789 / Clemson 2023 Cochrane SR = PMID
+> 36893804 additionally resolved); 5 already-in-corpus rows (Keall 2015/2021, Gitlin 2006, Provan 2023, Cockayne 2021
+> OTIS) were linked, not duplicated. **Documented backlog (real, deferred to a dedicated economics ingest — not yet
+> in the DB):** Tsuchiya-Ito 2022/2023/2024, Fänge & Iwarsson 2005, Carnemolla 2019/2020, Mackintosh 2020, Hutchinson
+> 2025, González Alonso 2024, Chandola 2022, Ielegems 2019. DB is source of truth.
+
 
 
 ## Sources added 2026-05-03 (economics audit sessions 1-2)

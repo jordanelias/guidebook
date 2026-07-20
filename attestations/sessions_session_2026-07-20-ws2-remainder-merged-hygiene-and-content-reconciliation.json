@@ -1,0 +1,32 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-07-20-ws2-remainder-merged-hygiene-and-content-reconciliation",
+ "artifact": "sessions/session_2026-07-20-ws2-remainder-merged-hygiene-and-content-reconciliation.md",
+ "doctrine_sha": "3fb2882",
+ "rules_in_scope": [
+  "doctrine-check",
+  "evidence-verification-gate",
+  "source-discipline"
+ ],
+ "per_rule_status": {
+  "doctrine-check": {
+   "status": "FIRED",
+   "evidence_path": "governance/tier-system.md",
+   "reason": "Tiered per governance/tier-system.md: the one Cochrane systematic review (Clemson 2023) at T2 sr_meta, the 16 falls-prevention / home-modification RCTs and economic evaluations at T3 clinical rather than T1, on the §1 reading that T1 requires intervention-level control on the built-environment parameter under design, whereas these evaluate falls/home-modification programme cost-effectiveness. The MERGED-status fix also required a doctrine-consistent audit change: a MERGED redirect is not an ACTIVE slice, so the audit query was scoped to status='ACTIVE' so redirects are not graded as empty slices (the count moved 82 -> 79 honestly)."
+  },
+  "evidence-verification-gate": {
+   "status": "FIRED",
+   "evidence_path": "scripts/migrations/data_20260720060351_2026-07-20-ws2-remainder-merged-hygiene-and-content-reconciliation.sql",
+   "reason": "Each of the 18 net-new economics sources was re-retrieved via a real PubMed call before ingestion (get_article_metadata on the PMID documented in economics-sources.md; Szanton 2017 located via search + get_article_metadata PMID 29165789; Tsuchiya-Ito and Fange DOIs resolved via convert_article_ids). Canonical PubMed metadata was used verbatim. The 18 were deduped against the corpus by DOI, PMID and author-year before ingest: two candidates already in-corpus (Cockayne 2021 OTIS, Gitlin 2006) were linked, not re-ingested, so no duplicate DOIs/PMIDs were created. Sources that could not be PubMed-confirmed this pass (Fange 2005, Tsuchiya-Ito, Mazumdar 2002, Slaug 2025, etc.) were left as a documented backlog rather than ingested on secondary attestation."
+  },
+  "source-discipline": {
+   "status": "FIRED",
+   "evidence_path": "sessions/session_2026-07-20-ws2-remainder-merged-hygiene-and-content-reconciliation.md",
+   "reason": "The no-quota / no-padding discipline governed scope: rather than bulk-ingesting every DOI named in economics-sources.md to inflate the link count, only the sources with full canonical PubMed metadata in hand were ingested, and roughly a dozen real-but-unverified-this-pass sources were named explicitly in the BPC banners and the session note as a deferred backlog. The audit was re-run to measure the shift (F-count 6 -> 0) rather than asserted, and a fresh-context adversarial reviewer was tasked with re-retrieving a sample of the 18 PMIDs and sanity-checking the T3-vs-T1 tier calls and the MERGED-status legitimacy."
+  }
+ },
+ "deviations": [],
+ "bias_direction": "Two temptations here. First, count-inflation: economics-sources.md lists ~40 citations, and ingesting all of them by trusting the markdown's own DOIs would make the slice look richly evidenced without any independent check. Bounded by ingesting only PubMed-canonical-verified rows and parking the rest as a named backlog. Second, hiding a scope change: quietly marking three slugs MERGED without touching the audit would leave them silently graded F, or touching the audit without regenerating would desync it. Bounded by making the audit's status filter explicit, regenerating deterministically, and reporting the 82->79 scope move plainly.",
+ "independent_reviewer_counterclaim": "A reviewer could argue that changing tools/evidentiary_audit.py to exclude MERGED slugs is the session moving the goalposts — dropping three F-graded slices from the denominator is exactly what makes the F-count reach zero, so the headline improvement is partly definitional. Response: the three are redirect-only stubs whose BPC files declared the merge in March; grading a redirect as an empty research slice was the pre-existing bug, and the fix aligns the audit with the long-standing merge decision rather than inventing a new exclusion to flatter the number — the content slices that actually left F did so by gaining 23/4/4 verified links, not by exclusion.",
+ "verdict": "CLEAN"
+}

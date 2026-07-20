@@ -199,7 +199,11 @@ def compute(db_path):
     q = lambda s, *a: [dict(r) for r in con.execute(s, a).fetchall()]
     one = lambda s: con.execute(s).fetchone()[0]
 
-    slugs = q("SELECT slug, topic_directory, status FROM slugs ORDER BY topic_directory, slug")
+    # Only ACTIVE slices are audited. MERGED slugs are redirect-only stubs whose evidence
+    # lives on their merge target (slugs.merged_into); grading them would count a redirect as
+    # an empty slice and inflate the F-count. (WS2 hygiene, 2026-07-20.)
+    slugs = q("SELECT slug, topic_directory, status FROM slugs WHERE status='ACTIVE' "
+              "ORDER BY topic_directory, slug")
     state = {r["slug"]: r["evidence_state"] for r in q("SELECT slug, evidence_state FROM bpc_metadata")}
 
     search_langs = defaultdict(lambda: [0, 0])   # [rows, rows_with_results]
