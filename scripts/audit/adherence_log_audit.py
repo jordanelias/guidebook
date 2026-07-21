@@ -69,6 +69,7 @@ SCHEMA_PATH = REPO / "schemas" / "attestation.schema.json"
 ATTESTATIONS_DIR = REPO / "attestations"
 SKILL_REGISTRY = REPO / "references" / "skill-registry.md"
 DOCTRINE_PATH = "governance/mission-and-epistemics.md"
+DOCTRINE_DELTAS_PATH = "governance/doctrine-deltas.json"
 
 SYNTHESIS_PATH_RE = re.compile(
     r"^(references/bpc-reasoning|references/connection-reasoning|decisions|sessions)/.+\.md$"
@@ -384,31 +385,78 @@ def check_6_counterclaim_uniqueness(changed, issues):
                     )
 
 
+def _doctrine_states():
+    m = _load_json(REPO / DOCTRINE_DELTAS_PATH)
+    return (m or {}).get("states", [])
+
+
+def _order_index(states):
+    """Map every known sha alias (blob / commit / listed aliases) -> state order."""
+    idx = {}
+    for st in states:
+        for key in (st.get("blob"), st.get("commit"), *st.get("aliases", [])):
+            if key:
+                idx[key] = st.get("order", 0)
+    return idx
+
+
+def _grounding_order(data, idx):
+    """Latest doctrine-state order this attestation is grounded to: its
+    doctrine_sha, advanced by any reattestation entries' new_doctrine_sha."""
+    orders = [idx.get(data.get("doctrine_sha"))]
+    for r in data.get("reattestation", []) or []:
+        orders.append(idx.get(r.get("new_doctrine_sha")))
+    known = [o for o in orders if o is not None]
+    return max(known) if known else None
+
+
+def _delta_material_to(state, artifact, rules):
+    """A doctrine delta is material to an attestation iff its declared scope
+    (path substrings and/or rule ids, governance/doctrine-deltas.json) intersects
+    the attestation's artifact path or rules_in_scope."""
+    mat = state.get("material", {}) or {}
+    a = (artifact or "").lower()
+    for sub in mat.get("path_contains", []) or []:
+        if sub.lower() in a:
+            return True
+    if rules & set(mat.get("rule_ids", []) or []):
+        return True
+    return False
+
+
 def check_7_reattestation_window(changed, issues):
-    """If last doctrine commit was > RE_ATTESTATION_WINDOW commits ago and
-    any synthesis attestation hasn't been re-attested since, FAIL."""
-    last_doc = _last_doctrine_sha()
-    if not last_doc:
+    """Materiality-scoped re-attestation (DR-2026-07-21 M4). An attestation owes
+    re-grounding only when a doctrine delta adopted AFTER its grounding state is
+    MATERIAL to it (path/rule-id intersection per governance/doctrine-deltas.json);
+    immaterial artifacts never trip this check. Grounding is read from the
+    attestation's own doctrine_sha (+ any reattestation entries), not git depth, so
+    it is not history-depth sensitive (DR-2026-07-21 side-finding). The obligation
+    lands on the doctrine-change session, which discharges the MATERIAL set before
+    the check can pass (DR-2026-07-21 M5 — replaces the unsatisfiable flat window)."""
+    states = _doctrine_states()
+    if not states or not ATTESTATIONS_DIR.exists():
         return
-    ago = _commits_since(last_doc)
-    if ago <= RE_ATTESTATION_WINDOW:
-        return
-    if not ATTESTATIONS_DIR.exists():
-        return
+    idx = _order_index(states)
     for p in sorted(ATTESTATIONS_DIR.glob("*.json")):
-        rel = p.relative_to(REPO).as_posix()
-        last_att = _last_commit_for(rel)
-        if not last_att:
+        data = _load_json(p)
+        if data is None:
             continue
-        try:
-            order = int(_git("rev-list", "--count", f"{last_doc}..{last_att}"))
-        except (subprocess.CalledProcessError, ValueError):
-            continue
-        if order <= 0:
-            issues.append(
-                f"CHECK 7: {p.name} not re-attested since doctrine change "
-                f"({ago} commits ago, window={RE_ATTESTATION_WINDOW})"
-            )
+        artifact = data.get("artifact", p.name)
+        rules = set(data.get("rules_in_scope", []) or [])
+        grounded = _grounding_order(data, idx)
+        if grounded is None:
+            grounded = 0  # doctrine_sha not in manifest: treat as pre-oldest
+        for st in states:
+            if st.get("order", 0) <= grounded:
+                continue
+            if _delta_material_to(st, artifact, rules):
+                issues.append(
+                    f"CHECK 7: {p.name} owes re-grounding vs material doctrine delta "
+                    f"'{st.get('delta_id')}' (grounded at order {grounded}, delta at "
+                    f"order {st.get('order')}); genuinely re-review and append a "
+                    f"reattestation entry (DR-2026-07-21 M1/M3)."
+                )
+                break
 
 
 def check_8_verdict_evidence(changed, issues):

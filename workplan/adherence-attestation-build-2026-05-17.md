@@ -254,7 +254,7 @@ Add as a new step in the existing `commit-msg` job:
     echo "PASS: doctrine token $TOKEN matches HEAD."
 ```
 
-Re-attestation window is enforced by the audit script (§4.5 check #7), which derives the doctrine-change SHA from git history directly — no sidecar state file. This was a Pass 2b correction to the original Pass 2a design.
+Re-attestation is enforced by the audit script (§4.5 check #7). **As of DR-2026-07-21 (materiality triage), check #7 is materiality-scoped:** it reads `governance/doctrine-deltas.json` (the doctrine-state manifest, with blob+commit aliases) and flags an attestation only when a doctrine delta adopted *after* its grounding is **material** to it (path/rule-id intersection); grounding is read from the attestation's own `doctrine_sha` (+ any `reattestation` entries), not git depth. This supersedes the earlier flat-window, git-history-derived design (the former Pass 2b): immaterial artifacts no longer trip the check, and the discharge obligation lands on the doctrine-change session (M4/M5).
 
 ### §4.5 `scripts/audit/adherence_log_audit.py` — module spec
 
@@ -424,7 +424,7 @@ last_quality_review: 2026-05-17  # Initial value: set to adoption date
 
 | Constant | Default | Defined in | Revisit |
 |---|---|---|---|
-| `RE_ATTESTATION_WINDOW` | 5 commits | `scripts/audit/adherence_log_audit.py` | After 60 days of observed commit cadence; DR at adoption justifying default |
+| `RE_ATTESTATION_WINDOW` | 5 commits (superseded) | `scripts/audit/adherence_log_audit.py` | **Superseded by DR-2026-07-21 M5:** the flat window is replaced by a materiality-scoped obligation — only material artifacts are flagged, discharged by the doctrine-change session. The 5-commit window no longer gates immaterial files. |
 | Levenshtein boilerplate threshold | 0.85 ratio | audit script check #6 | After 100+ attestations accumulate |
 | Levenshtein comparison window | previous 10 attestations | audit script check #6 | Year 2; consider embedding-based similarity replacement |
 | Schema version | `"1.0"` | `schemas/attestation.schema.json` | When schema evolves; DR-class change |
