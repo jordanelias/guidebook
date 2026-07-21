@@ -1,6 +1,7 @@
 # Held Tensions Register
 
-**Status: PROPOSED — pending owner ratification.** Decision wrapper:
+**Status: RATIFIED — owner directive "Ratify all", 2026-07-21. OPERATIVE (doctrine).**
+See `decisions/RATIFICATION-RECORD-2026-07-21.md`. Decision wrapper:
 `decisions/DR-2026-07-21-held-tensions-register.md`. Public-facing rendering source:
 `governance/grounds.md`. This document states doctrine; it executes nothing.
 

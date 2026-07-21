@@ -1,6 +1,8 @@
 # Functional Taxonomy — Two-Layer Model (Axes × Profiles)
 
-**Status: PROPOSED — pending owner ratification.** Version 1.1 (2026-07-21) —
+**Status: RATIFIED — owner directive "Ratify all", 2026-07-21. Doctrine OPERATIVE;
+DB execution staged and gated per §9 (see `decisions/RATIFICATION-RECORD-2026-07-21.md`
+and `workplan/ratification-execution-register-2026-07-21.md`).** Version 1.2 (2026-07-21) —
 amended after two adversarial passes (general; lived-experience and global
 non-English standpoints) and reconciliation with canon. Decision wrapper:
 `decisions/DR-2026-07-21-two-layer-functional-taxonomy.md`. Staged schema:

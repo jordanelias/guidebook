@@ -1,6 +1,6 @@
 # DR-2026-07-21 — Two-layer functional taxonomy: axes × profiles
 
-- Status: **PROPOSED — pending owner ratification.** States and does not execute
+- Status: **ACCEPTED — owner ratification "Ratify all", 2026-07-21.** Doctrine operative (functional-taxonomy.md v1.2 incl. §0.5); DB execution staged and gated per §9 — see `decisions/RATIFICATION-RECORD-2026-07-21.md` and `workplan/ratification-execution-register-2026-07-21.md`. Originally stated and did not execute
   (posture per `DR-2026-07-21-product-posture-thinking-tool-not-authority.md`).
 - Version: **1.2 (2026-07-21)** — v1.1 amended after (a) an adversarial pass from a
   lived-experience standpoint, (b) an intensified pass from person-first and global

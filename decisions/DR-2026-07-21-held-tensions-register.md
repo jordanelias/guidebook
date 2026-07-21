@@ -1,6 +1,6 @@
 # DR-2026-07-21 — Held-tensions register and public grounds section
 
-- Status: **PROPOSED — pending owner ratification.** States and does not execute
+- Status: **ACCEPTED — owner ratification "Ratify all", 2026-07-21.** Doctrine operative (held-tensions.md, grounds.md); see `decisions/RATIFICATION-RECORD-2026-07-21.md`. Originally stated and did not execute
   (posture per `DR-2026-07-21-product-posture-thinking-tool-not-authority.md`).
 - Date: 2026-07-21
 - Prepared by: Claude, on owner directive 2026-07-21 ("perhaps the issue is trying to

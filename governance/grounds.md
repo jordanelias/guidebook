@@ -1,6 +1,7 @@
 # How This Project Thinks
 
-**Status: PROPOSED — pending owner ratification.** This is the render source for the
+**Status: RATIFIED — owner directive "Ratify all", 2026-07-21. OPERATIVE (doctrine);
+renders at Phase E.** This is the render source for the
 public "Grounds" section of the website (Phase E renders `governance/*.md`; placement
 and per-page instruments are specified in §R at the end). It is the public-facing
 companion of `governance/held-tensions.md` and is written in plain language on
