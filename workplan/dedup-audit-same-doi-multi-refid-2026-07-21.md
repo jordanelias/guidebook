@@ -37,11 +37,47 @@ unchanged; links net-zero); distinct-linked `ref_id`s drop by one per merged twi
 `10.2196/60622`, `10.2196/69442`, `10.3233/wor-210997`, `10.3389/frdem.2025.1524425`,
 `10.3390/ijerph192114279`.
 
-## Recommended batch
-1. **Verify the 5 container splits** — confirm each `ref_id` is a genuinely distinct part/chapter (keep) vs a sloppy dup (merge). Likely keep most.
-2. **Per-case the 22 live-dupe candidates** — for each: confirm the rows are the same work (same DOI is strong but check for DOI-entry errors), choose the canonical (best/most-complete metadata, VERIFIED-2 preferred), supersede the rest + repoint links, adversarial spot-check a sample.
-3. **Re-run the audit** — the "781/780 unique" headline drops by the number of merged twins; per-slice counts self-correct.
-4. **Consider a small DR** on the shared-source model (one-row-many-links as the canonical representation) so new ingests dedup on DOI by default and this stops recurring — the same discipline the tier system applies to convergence, applied to identity.
+## Execution status (2026-07-21)
+
+**DONE — 16 confirmed same-work groups merged** (migration `data_20260721203616_…dedup-batch-16-clean`).
+Per-case verified: matching first-author + title, tier-consistent. 18 duplicate rows superseded_by their
+canonical, links repointed (2 redundant links dropped where the canonical already had the slug), rows
+retained. **Distinct linked `ref_id`s 780 → 762.** Determinism + integrity clean. Canonicals:
+REF-00901, REF-00134, REF-00030, REF-00223 (absorbed 3 twins), REF-00570, REF-00296, REF-00069,
+REF-00542, REF-00007, REF-00202, REF-00033, REF-00301, REF-00395, REF-00393, REF-00488, REF-00090.
+
+**RESOLVED — 4 of the 6 held groups merged after per-case adjudication** (migration
+`data_20260721204803_…dedup-held-tierconflict`; 7 duplicate rows superseded; distinct linked 762 → 756):
+- `10.1016/S0140-6736(14)61006-0` (**Keall**) — HIPI **RCT** (Lancet 2015) → **T1**; canonical REF-00373.
+- `10.1016/j.msard.2022.104075` (**Christogianni**) — patient survey, **not** a standard → tier-fixed
+  T2 `standard_eb` → **T3 clinical**; canonical REF-00254.
+- `10.1016/j.buildenv.2021.108352` (**Zallio**) — NOT a DOI-error: REF-00171's own note confirms
+  "Accessible toilet failures" is claim-framing of the same IDEA paper → **T3** merge; canonical REF-00136.
+- `10.2196/69442` (**Levine**) — verified observational **biomechanical** study (motion capture/ANOVA,
+  JMIR 2025 e69442), **not** an RCT → tier-fixed T1 → **T3 clinical**; canonical REF-00367.
+
+**The "5 container-DOI splits" hypothesis was WRONG (verified 2026-07-21).** None are distinct parts —
+all are same-work duplicates; `10.31030/2853913` (**IEC 60118-4**, 3× all T4) merged first (canonical
+REF-00200). The remaining four carried tier drift on foundational sources and were held for a doctrine
+ruling.
+
+## ALL HELD GROUPS RESOLVED (ratified DR-2026-07-21-tier-doctrine-source-class-consistency)
+Migration `data_20260721215124_…dedup-held-ratified` executed the five rulings; distinct linked 754 → 740:
+- **Black** (scoping review) → **T3** (ruling 1: `sr_meta`/T2 is for *systematic* reviews only). Merged, canonical REF-00589.
+- **ASPECTSS** (Mostafa 2014 framework paper) → **T3** (ruling 3: framework paper = primary, not synthesis). Merged, canonical REF-00724.
+- **DIN 18040-2** and **DIN 18040-1** → **T5 `national_fw`** at standard level (ruling 2; code-floor T6 only for adopted-code citations). Merged, canonicals REF-00323 / REF-00422.
+- **RIBA/Habinteg Inclusive Housing Guide** → **T5 `national_fw`** (ruling 4). Merged, canonical REF-00054.
+- **Steinfeld** (ruling 5) — **adversarial-pass corrected to 2 works, not 3:** REF-00192 is the *same*
+  journal article as REF-00059 (PMID 20402047) → **merged**; only REF-00060 (Final Report) is distinct →
+  DOI nulled (NO-MATCH) + audit trail restored via report URL (migration `…steinfeld-adversarial-fix`).
+
+**All same-DOI duplicates are now resolved (0 remaining). Distinct linked sources 781 → 739 across the
+full effort.** DB integrity returned to the main baseline (zero net regression). tier-system.md §2
+clarified (scoping-review / framework-paper ≠ T2).
+
+**Broader finding (carried forward):** same-DOI duplication very often carries **tier drift** (the same
+source tiered differently by different ingest passes). Worth a future small DR on the shared-source model
+(one-row-many-links as canonical) so new ingests dedup on DOI by default and this stops recurring.
 
 ## Guardrail
 Do **not** bulk-merge on same-DOI alone. A shared DOI is strong evidence but not proof (container DOIs,
