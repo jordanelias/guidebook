@@ -73,7 +73,7 @@ Per Core Doctrine: "Codes are Tier 6: the compliance floor, not the aspiration."
 - A code value establishes what the minimum legal standard is in that jurisdiction
 - A code value does NOT establish best practice
 - Code consensus (many jurisdictions agreeing on the same value) is stronger than a single code but weaker than Tier 4–5 standards or Tier 1–3 clinical evidence
-- A BPC best_practice_synthesis derived solely from code consensus is in error (project-standards L20)
+- A BPC best_practice_synthesis derived solely from code consensus is a weak-band (○) flagged "best practice as currently known" claim — not full strength, not excluded (project-standards L20, amended 2026-07-21 Option A)
 
 ### 2.2 Standards are Tier 4–5
 

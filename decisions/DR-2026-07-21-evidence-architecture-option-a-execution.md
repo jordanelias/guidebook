@@ -123,20 +123,21 @@ column semantics (migrations 026/027 schema); tier assignments of any source; `t
    violations, `validate_evidence_state.py`, and re-attestation of the superseded framing DR's
    attestation record.
 
-## 6. Required pending owner action — mission reconciliation (NOT applied)
+## 6. Mission reconciliation — APPLIED by owner directive 2026-07-21
 
-`governance/mission-and-epistemics.md` doctrine #2 (:46) states: *"A best-practice claim derived solely from
-code consensus — convergence across Tier 4–6 sources — is in error"* (also the :42 heading and the :177
-review-checklist item 3). Option A directly carves an exception to this. Under the precedence clause, until
-the mission is reconciled it *governs* — so at the mission level the Option A phrase-extension remains
-contested. This reconciliation is **escalated to the owner, not applied**, because (a) the mission is the
-owner's identity statement, and (b) editing it rotates the `373255e` doctrine-sha that every attestation and
-doctrine-token pins, cascading a re-attestation obligation. **Proposed amendment for owner approval**
-(doctrine #2, append): *"Amended 2026-07-21 (Option A): such a claim may be stated only as weak-band (○)
-'best practice as currently known,' always flagged code-derived with the convergence-not-evidence caveat; an
-unflagged or above-weak-band code-consensus best-practice claim remains in error."* Update checklist item
-:177 correspondingly. Until the owner rules, Option A holds across the evidence architecture and its other
-governing sources, with this single mission-level reconciliation outstanding.
+`governance/mission-and-epistemics.md` doctrine #2 previously stated: *"A best-practice claim derived solely
+from code consensus … is in error."* The owner ruled 2026-07-21 ("no, it's just weak"): such a claim is **not
+in error — it is a weak-band (○) best-practice claim**, valid only when flagged code-derived with the
+convergence-not-evidence caveat, never rendered unflagged or above the weak band (an unflagged or
+above-weak-band code-consensus best-practice claim *is* still in error). Applied to the mission's doctrine #2
+heading, statement, and review-checklist item 3. This **rotated the doctrine-sha `373255e → 0f2f525`**; per
+PI rule #11 (doctrine self-modification), this session's three artifact attestations were re-attested to
+`0f2f525` in the same commit (within the re-attestation window). The same reconciliation was applied to the
+other active sources that carried the repealed "in error" rule: `references/project-standards.md` L20,
+`governance/adversarial-use-framework.md`, and `governance/jurisdiction-philosophy.md` (the PROVISIONAL
+mission draft and prior DRs are left as historical/append-only records). Option A now holds across the
+evidence architecture, its governing sources, and the mission; no mission-level reconciliation remains
+outstanding.
 
 **Adversarial-remediation provenance.** This DR's §3 governing-source reconciliation, the §2.5 safeguard, and
 the attestation fixes were produced by a three-reviewer adversarial pass (Fable-5, max effort) over the

@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "session": "session_2026-07-20-project-pipeline-overview-xfpid1",
   "artifact": "decisions/DR-2026-07-20-evidence-architecture-weighted-strength-reconciliation.md",
-  "doctrine_sha": "373255e",
+  "doctrine_sha": "0f2f525",
   "rules_in_scope": ["adherence-logging-and-attestation"],
   "per_rule_status": {
     "adherence-logging-and-attestation": {
