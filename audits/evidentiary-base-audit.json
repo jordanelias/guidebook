@@ -1,39 +1,39 @@
 {
-  "as_of": "2026-07-20",
+  "as_of": "2026-07-21",
   "n_slices": 79,
   "n_items": 93,
-  "total_source_instances": 948,
-  "unique_sources": 781,
+  "total_source_instances": 952,
+  "unique_sources": 780,
   "grade_distribution": {
     "A": 11,
-    "B": 27,
+    "B": 28,
     "C": 25,
-    "D": 13,
+    "D": 12,
     "E": 3,
     "F": 0
   },
   "tier_totals": {
     "1": 93,
-    "2": 113,
-    "3": 350,
+    "2": 115,
+    "3": 352,
     "4": 86,
     "5": 155,
     "6": 151
   },
   "strength_band_slices": {
-    "full": 66,
-    "partial": 13,
+    "full": 67,
+    "partial": 12,
     "weak": 0,
     "disputed-only": 0
   },
   "strength_band_instances": {
-    "full": 486,
+    "full": 490,
     "partial": 241,
     "weak": 211,
     "disputed": 10
   },
   "practice_stream_instances": 0,
-  "english_instances": 716,
+  "english_instances": 720,
   "zero_yield_search_languages": [
     "AR",
     "BN",
@@ -41,9 +41,9 @@
     "SW"
   ],
   "item_basis_health": {
-    "full": 79,
+    "full": 84,
     "no-source": 6,
-    "partial": 8
+    "partial": 3
   },
   "slices": [
     {
@@ -1353,6 +1353,7 @@
         "DK": 2,
         "EU": 1,
         "IE": 1,
+        "TH": 1,
         "FR": 1,
         "UK": 1,
         "DE": 1,
@@ -1360,7 +1361,6 @@
         "NZ": 1,
         "SG": 1,
         "INT": 1,
-        "TH": 1,
         "BR": 1,
         "CH": 1,
         "FI": 1,
@@ -1377,6 +1377,7 @@
         "EU": 1,
         "US": 3,
         "IE": 1,
+        "TH": 1,
         "FR": 1,
         "UK": 1,
         "DE": 1,
@@ -1387,7 +1388,6 @@
         "CA": 2,
         "SG": 1,
         "INT": 1,
-        "TH": 1,
         "BR": 1,
         "CH": 1,
         "DK": 2,
@@ -3020,6 +3020,78 @@
         "C": 20,
         "D": 15,
         "E": 9.1
+      },
+      "grade": "B"
+    },
+    {
+      "slug": "therapeutic-lighting-design",
+      "topic": "sensory-environment",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 8,
+      "full": 4,
+      "partial": 4,
+      "weak": 0,
+      "disputed": 0,
+      "t3_clinical": 2,
+      "practice": 0,
+      "code_only": 4,
+      "strength_band": "full",
+      "weak_only": false,
+      "tiers": {
+        "2": 2,
+        "3": 2,
+        "4": 1,
+        "5": 3
+      },
+      "etypes": {
+        "clinical": 2,
+        "national_fw": 3,
+        "standard_eb": 1,
+        "sr_meta": 2
+      },
+      "markers": {
+        "●": 4,
+        "◐": 4
+      },
+      "n_jur": 4,
+      "n_jur_raw": 4,
+      "n_true_jur": 4,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 5,
+        "NO": 1,
+        "SE": 1,
+        "DK": 1
+      },
+      "jurs_clean": {
+        "INT": 5,
+        "NO": 1,
+        "SE": 1,
+        "DK": 1
+      },
+      "n_lang": 2,
+      "langs": {
+        "en": 7,
+        "sv": 1
+      },
+      "n_en": 7,
+      "n_nonen": 1,
+      "pct_en": 87.5,
+      "anglo_core": 0,
+      "supra": 5,
+      "non_anglo": 3,
+      "pct_anglo_core": 0.0,
+      "sl_searched": 19,
+      "sl_hit": 1,
+      "search_jurs": 47,
+      "score": 66.4,
+      "components": {
+        "A": 16,
+        "B": 24.0,
+        "C": 13,
+        "D": 5,
+        "E": 8.4
       },
       "grade": "B"
     },
@@ -5876,71 +5948,6 @@
       "grade": "D"
     },
     {
-      "slug": "therapeutic-lighting-design",
-      "topic": "sensory-environment",
-      "state": "RETRACTED-PRE-REHAB",
-      "n": 4,
-      "full": 0,
-      "partial": 4,
-      "weak": 0,
-      "disputed": 0,
-      "t3_clinical": 0,
-      "practice": 0,
-      "code_only": 4,
-      "strength_band": "partial",
-      "weak_only": false,
-      "tiers": {
-        "4": 1,
-        "5": 3
-      },
-      "etypes": {
-        "national_fw": 3,
-        "standard_eb": 1
-      },
-      "markers": {
-        "◐": 4
-      },
-      "n_jur": 3,
-      "n_jur_raw": 3,
-      "n_true_jur": 3,
-      "n_null_jur": 0,
-      "polluted_jur": {},
-      "jurs": {
-        "INT": 2,
-        "SE": 1,
-        "DK": 1
-      },
-      "jurs_clean": {
-        "SE": 1,
-        "INT": 2,
-        "DK": 1
-      },
-      "n_lang": 2,
-      "langs": {
-        "en": 3,
-        "sv": 1
-      },
-      "n_en": 3,
-      "n_nonen": 1,
-      "pct_en": 75.0,
-      "anglo_core": 0,
-      "supra": 2,
-      "non_anglo": 2,
-      "pct_anglo_core": 0.0,
-      "sl_searched": 19,
-      "sl_hit": 1,
-      "search_jurs": 47,
-      "score": 43.4,
-      "components": {
-        "A": 8,
-        "B": 8.0,
-        "C": 13,
-        "D": 5,
-        "E": 9.4
-      },
-      "grade": "D"
-    },
-    {
       "slug": "residential-dar-provisions-priority-register",
       "topic": "frameworks-and-methodology",
       "state": "RETRACTED-PRE-REHAB",
@@ -6530,17 +6537,17 @@
       "category": "B",
       "category_label": "Lighting",
       "source_slug": "therapeutic-lighting-design",
-      "basis_health": "partial",
-      "grade": "D",
-      "score": 43.4,
-      "n": 4,
-      "full": 0,
+      "basis_health": "full",
+      "grade": "B",
+      "score": 66.4,
+      "n": 8,
+      "full": 4,
       "partial": 4,
       "weak": 0,
       "disputed": 0,
-      "n_jur": 3,
+      "n_jur": 4,
       "n_lang": 2,
-      "pct_en": 75.0,
+      "pct_en": 87.5,
       "pct_anglo": 0.0
     },
     {
@@ -6549,17 +6556,17 @@
       "category": "B",
       "category_label": "Lighting",
       "source_slug": "therapeutic-lighting-design",
-      "basis_health": "partial",
-      "grade": "D",
-      "score": 43.4,
-      "n": 4,
-      "full": 0,
+      "basis_health": "full",
+      "grade": "B",
+      "score": 66.4,
+      "n": 8,
+      "full": 4,
       "partial": 4,
       "weak": 0,
       "disputed": 0,
-      "n_jur": 3,
+      "n_jur": 4,
       "n_lang": 2,
-      "pct_en": 75.0,
+      "pct_en": 87.5,
       "pct_anglo": 0.0
     },
     {
@@ -6568,17 +6575,17 @@
       "category": "B",
       "category_label": "Lighting",
       "source_slug": "therapeutic-lighting-design",
-      "basis_health": "partial",
-      "grade": "D",
-      "score": 43.4,
-      "n": 4,
-      "full": 0,
+      "basis_health": "full",
+      "grade": "B",
+      "score": 66.4,
+      "n": 8,
+      "full": 4,
       "partial": 4,
       "weak": 0,
       "disputed": 0,
-      "n_jur": 3,
+      "n_jur": 4,
       "n_lang": 2,
-      "pct_en": 75.0,
+      "pct_en": 87.5,
       "pct_anglo": 0.0
     },
     {
@@ -6587,17 +6594,17 @@
       "category": "B",
       "category_label": "Lighting",
       "source_slug": "therapeutic-lighting-design",
-      "basis_health": "partial",
-      "grade": "D",
-      "score": 43.4,
-      "n": 4,
-      "full": 0,
+      "basis_health": "full",
+      "grade": "B",
+      "score": 66.4,
+      "n": 8,
+      "full": 4,
       "partial": 4,
       "weak": 0,
       "disputed": 0,
-      "n_jur": 3,
+      "n_jur": 4,
       "n_lang": 2,
-      "pct_en": 75.0,
+      "pct_en": 87.5,
       "pct_anglo": 0.0
     },
     {
@@ -6606,17 +6613,17 @@
       "category": "B",
       "category_label": "Lighting",
       "source_slug": "therapeutic-lighting-design",
-      "basis_health": "partial",
-      "grade": "D",
-      "score": 43.4,
-      "n": 4,
-      "full": 0,
+      "basis_health": "full",
+      "grade": "B",
+      "score": 66.4,
+      "n": 8,
+      "full": 4,
       "partial": 4,
       "weak": 0,
       "disputed": 0,
-      "n_jur": 3,
+      "n_jur": 4,
       "n_lang": 2,
-      "pct_en": 75.0,
+      "pct_en": 87.5,
       "pct_anglo": 0.0
     },
     {
