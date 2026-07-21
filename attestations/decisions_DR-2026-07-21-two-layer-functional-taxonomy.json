@@ -1,0 +1,32 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-07-21-taxonomy-interrogation",
+ "artifact": "decisions/DR-2026-07-21-two-layer-functional-taxonomy.md",
+ "doctrine_sha": "0f2f525",
+ "rules_in_scope": [
+  "doctrine-check",
+  "source-discipline",
+  "adherence-logging-and-attestation"
+ ],
+ "per_rule_status": {
+  "doctrine-check": {
+   "status": "FIRED",
+   "evidence_path": "governance/mission-and-epistemics.md",
+   "reason": "The DR is PROPOSED and states-without-executing, per the product-posture DR it nests under: it adds curation attachment structure (axes, profiles, selection rules), not authority claims. It preserves parity conflict display, Co-1 non-subordination, and the DR-2026-07-20 strength bands unchanged, and explicitly repudiates the in-session precedence-rule proposal that would have adjudicated between populations. No doctrine text, database row, item link, or skill file is changed by the commit it attests."
+  },
+  "source-discipline": {
+   "status": "FIRED",
+   "evidence_path": "governance/functional-taxonomy.md",
+   "reason": "The DR's factual claims are corpus-verification claims (zero ICF b-codes; b235/b240/d415 absent; SENS at 1 item link; PCS defined incompatibly in DB vs FDA skill; free-text target_population), each checked against the live database or repo files in-session, with two of the session's own instrument errors (a silent join failure and a regex false positive) corrected before authoring. All literature-dependent content is deferred: the taxonomy text states that nothing in it is citable evidence, new axes carry falsification conditions, and no threshold may enter an item without tier-anchored sourcing."
+  },
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "attestations/decisions_DR-2026-07-21-two-layer-functional-taxonomy.json",
+   "reason": "PI rule #11 attestation obligation for the new decision record; this attestation is that rule firing, grounded at current doctrine 0f2f525 with the self-authorship bias disclosed below."
+  }
+ },
+ "deviations": [],
+ "bias_direction": "The agent authored the adversarial critique that motivated this DR, the taxonomy it proposes, the DR itself, and this attestation — and the proposal expands the entity surface (17 axes, 7 new profiles), which flatters the critique that recommended expansion. Expansion is the session's own documented failure mode (additive bias against an owner trajectory of consolidation). Bounded by: PROPOSED status with a ratification checklist that flags the three least-mechanical judgment calls (DEAF dual disposition, EPI situational mapping, DBL compound-profile); the staged SQL is outside the migration glob and was validated only against a scratch copy; each new axis carries a falsification condition permitting collapse back into existing axes; and the queue-behind rule adds zero search-execution obligations, so ratification cannot displace the language/jurisdiction debt.",
+ "independent_reviewer_counterclaim": "A reviewer could argue this is over-engineering that changes labels rather than curation reality: 17 axes, 29 dispositions, and 69 mappings authored by one agent in one session, resting on corpus-absence greps rather than sourced literature, when the missing evidence (e.g., vestibular) could be gathered under a single new slug with no schema at all. Response: the session audit showed absence-of-entity causally produced absence-of-search (zero b-codes and zero balance content despite three years-equivalent of slug coverage elsewhere), so attachment points are upstream of curation, not cosmetic; the slug-only alternative leaves the FDA-skill/DB vocabulary drift, the PCS dual definition, and the MS/MCAS mis-parenting unfixed, which are data-integrity defects independent of taxonomy philosophy; and the schema cost is one staged migration already validated to apply cleanly, while the model's falsification conditions make the expansion reversible where evidence fails to materialise.",
+ "verdict": "CLEAN"
+}
