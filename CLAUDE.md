@@ -8,12 +8,14 @@ apparatus. **Read it fully before your first edit.**
 > `references/project-standards.md`, the governance docs under `governance/`, and the
 > Decision Records under `decisions/`. Where this file disagrees with them, *they win* —
 > and this file should be corrected. The single canonical data source is the SQLite
-> database `data/guidebook.db`; every count, value, or list in prose (including here) may
-> be stale. When a number matters, query the DB.
+> database `data/guidebook.db`; every count, value, status, or list in prose (including
+> here) may be stale. **When a fact is volatile — a row count, a schema version, the CI
+> status, the doctrine SHA, the current plan — derive it from the live repo rather than
+> trusting a number written here.** This guide deliberately avoids hardcoding such values.
 
 ---
 
-## 0. TL;DR — the non-negotiables (CI blocks these)
+## 0. TL;DR — the non-negotiables
 
 Two GitHub Actions workflows gate `main` (`.github/workflows/ci.yml`, `audit.yml`). Before
 you commit or push, know these five rules. Details in §7–§8.
@@ -56,16 +58,17 @@ universal" in this repo always means *inclusion of persons with disabilities* �
 design-for-everyone framing.)
 
 - **Maturity:** pre-launch, single primary author (`@jordanelias`). The governance, schema,
-  and tooling are elaborate and real; **the synthesized content is ~1% populated.** Today
-  `bpc_metadata` shows **0 of 82** BPCs `COMPLETE` and 62 `RETRACTED-PRE-REHAB`. The project
-  is parked mid-rehabilitation (Phase B / pilot Phase E — see §9). Treat it as scaffolding
-  under active construction, not a finished book.
+  and tooling are elaborate and real; **the synthesized content is largely unpopulated** —
+  most BPCs are retracted-pre-rehabilitation or partial, and the per-BPC reasoning docs (the
+  primary deliverable) are barely started. The project is parked mid-rehabilitation (Phase B /
+  pilot Phase E — see §9). Treat it as scaffolding under active construction, not a finished
+  book; query `bpc_metadata` / `evidence_cell_state` for the current populated state.
 - **Repo:** `jordanelias/guidebook`, default branch `main` (protected by CI).
 - **Two product front-ends exist and are different things:** the hand-authored mockup
-  (`index.html` + `assets/guidebook.css`, showing the *intended* end-state — every provision
-  link is dead except the `specs/e-08.html` exemplar) versus the actually-generated static
-  site under `site/` (thin, real, full of honest "not yet computed" banners). Don't confuse
-  the mockup for output.
+  (`index.html` + `assets/guidebook.css`, showing the *intended* end-state — most provision
+  links are dead, wired only for a lone exemplar) versus the actually-generated static site
+  under `site/` (thin, real, full of honest "not yet computed" banners). Don't confuse the
+  mockup for output.
 
 ## 2. Mental model: the layers
 
@@ -92,8 +95,8 @@ a rule up the spectrum only when it's mechanically checkable and drift is costly
 
 | Path | Contents |
 |---|---|
-| `governance/` | Doctrine + protocols. `mission-and-epistemics.md` (**the doctrine**, SHA-tracked), `evidence-architecture.md`, `tier-system.md`, `conceptual-model.md`, `decision-protocol.md`, `doctrine-recheck.md`, `pipeline-contract.yaml`, `project-instructions-v10_14.md` (latest PI). CODEOWNERS-protected. |
-| `references/` | Working corpus (~440 files). `project-standards.md` + `skill-registry.md` are the two most-loaded files. Also `bpc/`, `bpc-reasoning/`, `connection-reasoning/`, `fdr/`, `search-log/`, `audit-briefs/`, `conflict-matrices/`, registries. |
+| `governance/` | Doctrine + protocols. `mission-and-epistemics.md` (**the doctrine**, SHA-tracked), `evidence-architecture.md`, `tier-system.md`, `conceptual-model.md`, `decision-protocol.md`, `doctrine-recheck.md`, `pipeline-contract.yaml`, `project-instructions-v*.md` (the highest-numbered is the live PI). CODEOWNERS-protected. |
+| `references/` | Working corpus (hundreds of files). `project-standards.md` + `skill-registry.md` are the two most-loaded files. Also `bpc/`, `bpc-reasoning/`, `connection-reasoning/`, `fdr/`, `search-log/`, `audit-briefs/`, `conflict-matrices/`, registries. |
 | `decisions/` | Decision Records `DR-YYYY-MM-DD-slug.md` — the governance changelog. Read the recent ones (§9). |
 | `attestations/` | `*.json` adherence-log attestations (see §8). |
 | `schemas/` | Pydantic v2 models mirroring the SQLite layout + `attestation.schema.json`. CODEOWNERS-protected. |
@@ -107,26 +110,27 @@ a rule up the spectrum only when it's mechanically checkable and drift is costly
 
 ## 4. The data layer (how to change data safely)
 
-`data/guidebook.db` — SQLite, ~5.3 MB, committed as a binary blob (`.gitattributes`, **not**
-Git-LFS). **`PRAGMA user_version = 28`** is the authoritative schema version. (The
-`db_meta.schema_version` row says `21` — that's a stale 2026-05-08 artifact; ignore it.)
-There is **no `sqlite3` CLI** in this environment — use Python, read-only:
+`data/guidebook.db` — SQLite, committed as a binary blob (`.gitattributes`, **not** Git-LFS).
+**`PRAGMA user_version` is the authoritative schema version** — read it from the DB; don't
+rely on a number written here. (Ignore the `db_meta.schema_version` row — it's a stale
+init-time artifact that never tracked migrations.) There is **no `sqlite3` CLI** in this
+environment — use Python, read-only:
 
 ```python
 import sqlite3
 con = sqlite3.connect('file:data/guidebook.db?mode=ro', uri=True)
+# enumerate the schema: SELECT name, type FROM sqlite_master WHERE type IN ('table','view')
 ```
 
-**Backbone (42 tables, 9 views).** Two axes — `items` (design parameters, `item_code`
-`A-01…K-NN`, 93 rows) × `populations` (disability population codes, self-referencing
-`parent_code`, 22 rows) — meet in **`evidence_cell_state`**, the per-(item×population)
-synthesis cell (`state` ∈ `stated`/`provisional`/`pending`/`not_applicable`). Evidence lives
-in **`evidence_sources`** (`ref_id` `REF-NNNNN`, 804 rows; `tier` 1–6 and `evidence_type` are
-orthogonal) and attaches through `source_slug_links` → `slugs` (research units, 82) and
-directly via `evidence_population_match`, `reasoning_doc_citations`, `spec_value_probes`,
-`source_value_extractions`, `jurisdictional_values`. `gaps` (299; 37 open) is the gap register.
-`decisions` in the DB is **empty scaffolding** — canonical decisions live in
-`data/decisions/decision_register.yaml`.
+**Backbone.** Two axes — `items` (design parameters, `item_code` `A-01…K-NN`) × `populations`
+(disability population codes, self-referencing `parent_code`) — meet in
+**`evidence_cell_state`**, the per-(item×population) synthesis cell (`state` ∈
+`stated`/`provisional`/`pending`/`not_applicable`). Evidence lives in **`evidence_sources`**
+(`ref_id` `REF-NNNNN`; `tier` 1–6 and `evidence_type` are orthogonal) and attaches through
+`source_slug_links` → `slugs` (research units) and directly via `evidence_population_match`,
+`reasoning_doc_citations`, `spec_value_probes`, `source_value_extractions`,
+`jurisdictional_values`. `gaps` is the gap register. `decisions` in the DB is **empty
+scaffolding** — canonical decisions live in `data/decisions/decision_register.yaml`.
 
 **Changing the data model:**
 
@@ -146,7 +150,7 @@ directly via `evidence_population_match`, `reasoning_doc_citations`, `spec_value
 - **Exempt tables** (written by scheduled jobs outside migrations, per DR-2026-05-28):
   `evidence_source_authors`, `pipeline_runs`. Don't add to that list without a DR.
 
-`scripts/db.py` is the read/query workhorse (library + ~30-subcommand CLI). Use it to *read*
+`scripts/db.py` is the read/query workhorse (library + multi-subcommand CLI). Use it to *read*
 freely; route any *write* to the committed DB through a migration.
 
 ## 5. Governance & doctrine (the crux of this repo)
@@ -176,11 +180,11 @@ Every substantive change is a governed act. The pieces:
   · **T2** synthesis (systematic reviews/meta-analyses + named-org evidence-based standards) ·
   **Co-2** OT professional-body CPGs (co-primary with T2) · **T3** lower-control/grey primary
   (supporting; T3-alone never reaches `stated`) · **T4** international standards · **T5**
-  national frameworks · **T6** statutory codes. **T4–T6 are the "regulatory stratum," walled
-  off from best-practice anchoring** — *convergence across codes is not evidence*. Per the
-  weighted-strength model (2026-07-20) + "Option A" (2026-07-21), a code-consensus best-practice
-  claim is a **weak-band (○)** claim, always flagged code-derived; rendered unflagged or above
-  the weak band it is *in error*.
+  national frameworks · **T6** statutory codes. **T4–T6 are the "regulatory stratum":** code
+  convergence is *not evidence*, so it is walled off from **full-strength (●/◐)** anchoring —
+  but per the weighted-strength model (2026-07-20) + "Option A" (2026-07-21) a code-consensus
+  claim *can* anchor best practice **only at the flagged weak band (○)** ("best practice as
+  currently known"); rendered unflagged, or at ●/◐/above the weak band, it is *in error*.
 - **Evidence markers** (tier-system §5): **●** confirmed evidence base · **◐** policy/standards
   basis only (T4/T5) · **○** grey/expert-consensus/thin/T6. Every spec sentence carries one;
   unmarked = error. (Note: `mission-and-epistemics.md` still describes a two-marker ●/○ scheme —
@@ -197,7 +201,7 @@ Every substantive change is a governed act. The pieces:
   *Corridor Clear Width* parameter). Don't conflate them.
 - **BPC** = Best Practice Compendium. Per-slug synthesis at `references/bpc/<topic>/<slug>.md`;
   the audit-trail/reasoning behind it at `references/bpc-reasoning/<slug>.md` (the workplan's
-  primary deliverable — currently ~1% written); connection reasoning at
+  primary deliverable — barely started); connection reasoning at
   `references/connection-reasoning/<con-id>.md`.
 - **Synthesis routing (hard floor, PI rule #2 + DR-2026-06-10):** only **Opus-class** models
   write `best_practice_synthesis`. Lower-tier models do inventories, verification, multilingual
@@ -215,12 +219,13 @@ Phase B verification.
 
 ## 7. Running things (setup, validators, tests)
 
-**Environment setup (do this first).** `PyYAML` is present but **`pydantic` and `jsonschema`
-are not** — the schema/governance validators import `schemas/*.py` and will `ModuleNotFoundError`
-until you install deps (CI installs them per-job):
+**Environment setup (do this first).** The schema/governance validators import `schemas/*.py`,
+so they need `pydantic` (and the attestation audits need `jsonschema`) — which may not be
+preinstalled. Install deps before running them or they'll `ModuleNotFoundError`; CI installs
+them per-job:
 
 ```
-pip install -r requirements.txt      # pydantic==2.13.3, PyYAML==6.0.3
+pip install -r requirements.txt      # pydantic + PyYAML (the only pinned deps)
 pip install jsonschema                # only needed for attestation audits
 ```
 
@@ -231,33 +236,34 @@ Every DB-aware script honours `GUIDEBOOK_DB_PATH` (default `data/guidebook.db`).
 |---|---|---|
 | `python3 scripts/validate_bpc.py --all --verbose` | BPC file structure | stdlib |
 | `python3 scripts/validate_cross_refs.py --repo-root .` | cross-reference integrity | stdlib |
-| `python3 scripts/tests/test_db_integrity.py` | 35 DB checks (FK/enum/consistency) | stdlib |
+| `python3 scripts/tests/test_db_integrity.py` | DB integrity checks (FK/enum/consistency) | stdlib |
 | `python3 scripts/migrate_db.py --rebuild /tmp/rebuilt.db` | rebuild DB from migrations (repro check) | stdlib |
 | `python3 scripts/validate_schema.py --verbose` (`--cross-check`) | entity YAML vs Pydantic | pydantic |
 | `python3 scripts/validate_evidence_state.py` | cell-state machine + Co-1 fields | pydantic |
 | `python3 scripts/audit_evidence_metadata.py` | rule-#10 evidence-eligibility gate | pydantic |
 | `python3 scripts/decision_capture.py` · `doctrine_recheck.py --cross-ref` | governance audits | pydantic |
 
-Tests are **standalone scripts, not pytest** (`python3 scripts/tests/<name>.py`, each prints
-`RESULTS: X/Y` and exits 0/1). Only `test_db_integrity.py` is wired into CI.
+Tests are **standalone scripts, not pytest** (`python3 scripts/tests/<name>.py`, each prints a
+`RESULTS: X/Y` line and exits 0/1). Only `test_db_integrity.py` is wired into CI. Prefer it over
+the older `validate_db.py`, which may be stale against the current schema.
 
 **CI workflows** (both trigger on push to `main` and PRs to `main`):
-`ci.yml` — 6 jobs: syntax, structure, commit-msg (push-only), schema, `db_integrity` (blocking),
-governance. `audit.yml` — `source_slug_links` duplicates, citation-mining completeness (reads
-`sessions/LATEST`), **migration reproducibility** (blocking; 7 invariants), and attestation
-schema/presence (blocking). Several jobs are path-gated: a PR that touches only docs (like this
-file) runs just `syntax` + `structure` + the `audit.yml` jobs.
+`ci.yml` — jobs: syntax, structure, commit-msg, schema, `db_integrity`, governance. `audit.yml`
+— `source_slug_links` duplicates, citation-mining completeness (reads `sessions/LATEST`),
+**migration reproducibility** (this is the check that actually enforces rule 4 — no path filter,
+runs on every PR), and attestation schema/presence. Note the trigger asymmetry: on a **pull
+request**, `ci.yml` in practice runs only `syntax` + `structure` — `commit-msg` is push-only,
+and `schema`/`db_integrity`/`governance` fire only on **push to `main`**. So the enum/schema/
+governance validators don't gate PRs at all; a data- or schema-touching change can pass the PR
+yet fail once merged — run those validators locally before you push.
 
-> **CI is currently RED on `main` — this predates you; don't assume your change caused it.**
-> On the latest `main` run, three jobs fail: **commit-msg** (the merge-commit subject can't
-> match the `{skill}: {action} [ts]` format — every PR merge trips this), **`db_integrity`**
-> (`test_db_integrity.py` fails ~26/35 against the committed DB: a mix of *stale hardcoded enum
-> allowlists in the test* — the DB legitimately contains newer `verification_status` /
-> `metadata_quality` / `source_type` / `gaps.status` values — and *real data-invariant debt*),
-> and the **schema** job's `validate_evidence_state.py` step. Fixing these is unscoped
-> owner-gated work (it touches CODEOWNERS-protected `scripts/` and DB data); don't fold it into
-> an unrelated change. Also note `scripts/validate_db.py` is outright broken against the current
-> schema (`no such column: doi_less_key`) — prefer `test_db_integrity.py` for DB health.
+> **Before assuming a red `main` or a failing check was caused by your change, read the actual
+> run.** `main` can carry pre-existing, owner-gated failures unrelated to your work. Current CI
+> status lives in the repo's **Actions** tab (workflows `ci.yml` / `audit.yml`) for your commit;
+> reproduce any check locally with its command from the table above (e.g.
+> `python3 scripts/tests/test_db_integrity.py`) and read its `RESULTS:` line / exit code.
+> Diagnose from that output — this file deliberately doesn't transcribe which checks are
+> currently green or red, because that goes stale.
 
 ## 8. The commit + attestation workflow (walkthrough)
 
@@ -270,7 +276,8 @@ For a routine, non-synthesis change (docs, tooling, a script):
 
 The format check (`scripts/ci_helpers/check_commit_msg.py`) requires:
 `^[a-z][a-z0-9_-]+:\s+.+\s+\[\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}\]$` — lowercase-hyphenated prefix,
-timestamp as the **final** bracket.
+timestamp as the **final** bracket. (This check is push-only; skipped on PRs, so it won't gate
+your PR — but keep the format anyway, it's the house convention.)
 
 For a **synthesis-path** change (`references/bpc-reasoning/`, `references/connection-reasoning/`,
 `decisions/`, `sessions/`) you additionally must:
@@ -295,12 +302,15 @@ repo-side copy and GitHub push-protection is on.
 
 ## 9. Current state, active work & guardrails
 
-The live plan is **`workplan/consolidation-execution-plan-2026-07-21.md`** — a consolidation
-push (execute already-ratified archival; retire md/yaml/json shadows in favour of the DB;
-finish the re-attestation mechanism; de-duplicate doctrine statements). Recent doctrine motion
-is in the 2026-07 DRs: entity-code rename, evidence-architecture "Option A" (weak-band code
-consensus), weighted-strength anchor model, product-posture ("thinking tool, not authority"),
-and re-attestation materiality. Read those DRs before touching evidence/tier/attestation logic.
+**To find where things stand right now**, don't trust a date in this file — read the newest
+entries in `sessions/`, `workplan/`, and `audits/` (sort by name/date), skim recent `git log`,
+and scan the latest `decisions/DR-*`. As of this writing the active thread is a **consolidation
+push** (`workplan/consolidation-execution-plan-2026-07-21.md`): execute already-ratified
+archival, retire md/yaml/json shadows in favour of the DB, finish the re-attestation mechanism,
+and de-duplicate doctrine statements. The most recent doctrine motion (entity-code rename,
+evidence-architecture "Option A", weighted-strength anchoring, product-posture, re-attestation
+materiality) is captured in the 2026-07 DRs — read those before touching evidence/tier/
+attestation logic.
 
 **Guardrails carried from that plan (they encode failure modes already hit):**
 
@@ -317,13 +327,14 @@ and re-attestation materiality. Read those DRs before touching evidence/tier/att
 
 - **Prose counts are stale everywhere** (`index.html`, `parts/*/manifest.md`, older audits
   disagree with each other and with the DB). Query the DB; never trust a hardcoded number.
-- **Stale pointers:** `sessions/LATEST` and `sessions/handoff-next-session.md` both point at
-  old sessions. The current handoff is the consolidation plan above. (`audit.yml` reads
+- **Stale pointers:** `sessions/LATEST` and `sessions/handoff-next-session.md` may both point at
+  old sessions. The current handoff is the plan referenced in §9. (`audit.yml` reads
   `sessions/LATEST` for its citation-mining check — a known wrinkle, not something to "fix" ad hoc.)
-- **PI versioning is intentional:** `project-instructions-v10_7…v10_13` are historical snapshots;
-  `v10_14` (2026-05-20) is the deployed one. The PI is not API-writable — the owner pastes it
-  into claude.ai — so the repo PI legitimately lags current doctrine. Don't "fix" the multiple
-  versions; don't treat PI text as more current than `project-standards.md` + recent DRs.
+- **PI versioning is intentional:** the numbered `project-instructions-v*.md` files are
+  historical snapshots; the highest-numbered one is the deployed copy. The PI is not
+  API-writable — the owner pastes it into claude.ai — so the repo PI legitimately lags current
+  doctrine. Don't "fix" the multiple versions; don't treat PI text as more current than
+  `references/project-standards.md` + recent DRs.
 - **`schemas/*.py` ↔ SQLite drift is a bug, not a convention** — keep them in sync when you
   change either.
 - **Don't hand-edit generated output** (`parts/`, `site/`) — edit the DB / reasoning docs and
@@ -349,7 +360,7 @@ and re-attestation materiality. Read those DRs before touching evidence/tier/att
 | Data-model / schema reconciliation | `architecture/schema-spec.md`, `architecture/schema-reconciliation.md`, `architecture/sqlite-data-layer.md` |
 | Content pipeline / phases A–G | `audits/bpc-rewrite-workplan-2026-05-11.md`; `governance/pipeline-contract.yaml` |
 | Skill roster | `references/skill-registry.md` |
-| What to do next | `workplan/consolidation-execution-plan-2026-07-21.md` |
+| What to do next | newest plan in `workplan/` (currently `consolidation-execution-plan-2026-07-21.md`) |
 
-*This guide reflects the repository as of 2026-07-21. Verify volatile facts (doctrine SHA, DB
-counts, CI status, the active plan) against the live repo — the commands to do so are above.*
+*Volatile facts — doctrine SHA, DB counts, schema version, CI status, the active plan — are
+deliberately not hardcoded above; derive them from the live repo with the commands in this guide.*
