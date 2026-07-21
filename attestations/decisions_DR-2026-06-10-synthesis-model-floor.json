@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "session": "session_2026-06-10-stage4-3-ratification",
   "artifact": "decisions/DR-2026-06-10-synthesis-model-floor.md",
-  "doctrine_sha": "3da73bd",
+  "doctrine_sha": "0f2f525",
   "rules_in_scope": ["best-practice-synthesis-routing", "adherence-logging-and-attestation"],
   "per_rule_status": {
     "best-practice-synthesis-routing": {
@@ -17,5 +17,15 @@
   "deviations": [],
   "bias_direction": "Acute self-serving risk: this is an AI ratifying that a model of its own class is authorized to perform the project's highest-judgment work. The bias runs toward expansively reading the capability floor so the current model qualifies, and toward downplaying that a brand-pin reading would have blocked synthesis until an owner ruling. The mitigation is that the ruling is the owner's, not mine, and the capability-floor logic holds independently of which model is current — it would equally authorize a future non-Anthropic-named top-tier model and equally restrict a future weaker one.",
   "independent_reviewer_counterclaim": "An independent reviewer would object that 'capability floor' is unfalsifiable as stated — no benchmark defines 'Opus-class', so the floor collapses to 'whatever model is running'. Counter: the rule's real safeguard was never the model string but the downstream verification gates (#7/#8/#10), which bind every synthesis claim regardless of model and are the dominant cost; the model floor is a coarse backstop, and the reviewer's objection argues for strengthening the gates, not for pinning a superseded brand name that forbids the more capable model.",
-  "verdict": "CLEAN"
+  "verdict": "CLEAN",
+  "reattestation": [
+    {
+      "prior_doctrine_sha": "3da73bd",
+      "new_doctrine_sha": "0f2f525",
+      "delta_ref": "D-2026-07-21-weak-band",
+      "materiality": "MATERIAL",
+      "verdict_change": "none",
+      "reason": "The weak-band delta concerns which cells may be called best practice, not who authors synthesis. This DR's capability-floor rule ('Opus-class or above') is untouched. Verdict unchanged."
+    }
+  ]
 }

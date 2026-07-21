@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "session": "session_2026-07-13-person-mode-correction",
   "artifact": "decisions/DR-2026-07-13-person-mode-functional-capacity-not-population-range.md",
-  "doctrine_sha": "3fb2882",
+  "doctrine_sha": "0f2f525",
   "rules_in_scope": [
     "source-discipline",
     "doctrine-check",
@@ -28,5 +28,15 @@
   "deviations": [],
   "bias_direction": "Having concluded the owner is right and the doctrine already agrees with them, my pull is to overstate certainty -- to present the corrected wording as obviously final and to treat the doctrine-SHA re-baseline as frictionless because I verified it CI-safe. Counter-pressure applied: the anchor edit was applied only AFTER checking each CI gate line-by-line (token exemption at ci.yml:85, cross-ref-only mode of doctrine_recheck, ungated pins) rather than assumed safe; the DR names the full Q12 pin-sweep follow-up and the re-attestation-window effect rather than burying them; and the owner's Universal-mode phrasing ('as available as reasonably possible') is surfaced as an OPEN question against commitment 5 rather than quietly folded into the same edit as though it were settled. Residual risk owned: I applied a change to the doctrine-SHA anchor on the strength of the owner's repeated directive plus 'most important principle,' not a literal 'edit mission-and-epistemics.md now' -- if that inference is wrong the edit is a single revert, but it is an inference.",
   "independent_reviewer_counterclaim": "An outside reviewer would observe: (a) the DR treats 'within the range' as unambiguously an error, but a defensible original reading exists -- the pilot renderer's intent ('population evidence conditions the assessment process, never the assessed answer') suggests some authors used 'within the range' loosely to mean 'the range is the assessment's starting scaffold,' not 'the answer is bounded by the range'; the correction is still right, but it is resolving a genuine ambiguity in the original authors' favor of the stricter reading, not merely fixing a typo; (b) the doctrine-SHA anchor was edited inside PR #6, a 'follow-up cleanup' PR -- a reviewer might reasonably prefer a project-most-important-principle doctrine change to ride its own dedicated PR with its own review, rather than being bundled with unrelated cleanup; (c) the DR asserts the owner's three-mode articulation is 'authoritative' but the Population-Mode and Universal-Mode lines were NOT reconciled against the current doctrine's existing definitions the way the Person-Mode line was -- only flagged. Counter: (a) is acknowledged in the DR's own framing (it corrects an internal contradiction, not a typo); (b) is a fair process point -- the edit is isolated to two governance files + this DR + attestation and is trivially separable to its own PR if the owner prefers, and the atomic-origin-correctness argument was judged to outweigh PR-hygiene given the owner's 'most important principle' framing; (c) is a fair gap -- Universal/Population reconciliation is deferred to the open question, not claimed as done.",
-  "verdict": "CLEAN"
+  "verdict": "CLEAN",
+  "reattestation": [
+    {
+      "prior_doctrine_sha": "3fb2882",
+      "new_doctrine_sha": "0f2f525",
+      "delta_ref": "D-2026-07-13-person-mode-a",
+      "materiality": "MATERIAL",
+      "verdict_change": "none",
+      "reason": "This DR is the substrate of the Person-Mode delta itself (functional capacity, not population range). Fully consistent with the completed reconciliation. Verdict unchanged."
+    }
+  ]
 }

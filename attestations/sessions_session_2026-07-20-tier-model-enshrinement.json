@@ -2,7 +2,7 @@
  "schema_version": "1.0",
  "session": "session_2026-07-20-tier-model-enshrinement",
  "artifact": "sessions/session_2026-07-20-tier-model-enshrinement.md",
- "doctrine_sha": "3fb2882",
+ "doctrine_sha": "0f2f525",
  "rules_in_scope": [
   "doctrine-check",
   "source-discipline"
@@ -22,5 +22,15 @@
  "deviations": [],
  "bias_direction": "Enshrining a model that lets weaker tiers anchor claims risks lowering the evidentiary bar under cover of 'the owner approved it.' Bounded by preserving the convergence-not-evidence honesty rule as the weak-band constraint, requiring an explicit 'not academically adjudicated' flag on weak-only claims rather than presenting them as equal, keeping the role-appropriate-authority gate that subordinates designer assertion to lived experience and OT judgment, and stripping VERIFIED standing from the 7 unverifiable sources rather than letting the new model rationalise them.",
  "independent_reviewer_counterclaim": "A reviewer could argue the weighted-strength model weakens the corpus by legitimising T4-T6-only claims that the prior binary rule excluded. Response: the prior rule did not remove those claims, it left them unscored and implicit; the new model makes their weakness explicit and legible via the strength band and the honesty flag, which is more transparent, not less rigorous — and the strongest-available-evidence still governs where it exists.",
- "verdict": "CLEAN"
+ "verdict": "CLEAN",
+ "reattestation": [
+  {
+   "prior_doctrine_sha": "3fb2882",
+   "new_doctrine_sha": "0f2f525",
+   "delta_ref": "D-2026-07-21-weak-band",
+   "materiality": "MATERIAL",
+   "verdict_change": "none",
+   "reason": "Tier-model (weighted-strength) enshrinement session — direct lineage of the weak-band delta, which the mission reconciliation completes. Consistent; verdict unchanged."
+  }
+ ]
 }

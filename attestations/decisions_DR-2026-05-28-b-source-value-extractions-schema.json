@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "session": "session_2026-05-28-vetting-surface-and-extraction-layer",
   "artifact": "decisions/DR-2026-05-28-b-source-value-extractions-schema.md",
-  "doctrine_sha": "3da73bd",
+  "doctrine_sha": "0f2f525",
   "rules_in_scope": [
     "source-discipline",
     "adherence-logging-and-attestation",
@@ -33,5 +33,15 @@
   ],
   "bias_direction": "Risk of overbuilding — a schema-level deliverable in response to a user spec, before any mining attempt has shown that the existing layers actually fail in practice. Mitigated by (a) keeping the table minimal (12 substantive columns; no premature audit script, no CLI helpers, no data migrations); (b) preserving rule #10 unchanged so the new layer earns its keep only when extractions actually graduate; (c) explicit DR §What this does not do section listing deferred work, so the scope creep is policed. [RE-ATTESTATION 2026-06-11 per PI rule #11a: originally attested by session_2026-05-28-vetting-surface-and-extraction-layer at doctrine 61c7f95; re-checked and re-attested at 3da73bd by session_2026-06-11-stage-4.3-gate-closure after doctrine delta 3fb2882 (Stage-1.1 tier-hierarchy revision: SR/meta T3->T2, Tier 1 expanded to admit directly-relevant high-control non-OT primary research, Tier 3 redefined as lower-control primary, Tiers 4-6 walled off). Assessment: No tier-dependent claims; schema-definition DR. Compliance unchanged.]",
   "independent_reviewer_counterclaim": "A reviewer could argue: the table is speculative — no extraction work was performed this session, so the schema is built before there's evidence the existing layers fall short for real mining work. Counter: (a) the surface generated this session demonstrated the gap empirically (67/68 topics show 0 extractions because there is no slot to record them in); (b) the user's vetting spec explicitly named 'what values you are taking from sources' as a required view dimension that the prior schema could not support without overloading reasoning_doc_citations (which is the synthesis-gate layer and would lose its gate semantics if it also held preliminary extractions); (c) the migration is reversible by writing a 019_drop_source_value_extractions.sql if the layer is judged unnecessary after a pilot — the cost of trying it is low.",
-  "verdict": "DEVIATION-LOGGED"
+  "verdict": "DEVIATION-LOGGED",
+  "reattestation": [
+    {
+      "prior_doctrine_sha": "3da73bd",
+      "new_doctrine_sha": "0f2f525",
+      "delta_ref": "D-2026-07-13-core-reconcile",
+      "materiality": "MATERIAL",
+      "verdict_change": "none",
+      "reason": "Delta ratified the value-genealogy layer this schema feeds. The source_value_extractions schema decision is unaffected by the later rendering/anchoring refinements. Verdict CLEAN stands."
+    }
+  ]
 }

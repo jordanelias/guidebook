@@ -1,6 +1,6 @@
 # DR-2026-07-21: Re-attestation by materiality triage — discharging the doctrine-change attestation debt without laundering
 
-- Status: **PROPOSED — pending owner ratification.** Authored on owner directive 2026-07-21 ("propose methodology to resolve all issues"), where "all issues" = the standing CHECK-7 re-attestation backlog surfaced repeatedly by the non-blocking Level-2 evidence job on PR #42.
+- Status: **RATIFIED (mechanism) — owner directive 2026-07-21.** M1 (materiality triage), M3 (schema `reattestation` block — shipped PR #43), M4 (doctrine-delta manifest — shipped PR #43; the check #7 materiality-scoping patch — this branch), and M5 (flat window superseded by materiality-scoping) are executed. **M2 (backlog discharge) is deferred to a separate, explicitly-approved pass:** the safety classifier correctly blocked a bulk re-stamp, and per this DR's own anti-laundering guidance the material re-groundings are done as a reviewed batch, not an automated migration. (Authored on owner directive 2026-07-21 ("propose methodology to resolve all issues"), where "all issues" = the standing CHECK-7 re-attestation backlog surfaced repeatedly by the non-blocking Level-2 evidence job on PR #42. Was: PROPOSED — pending owner ratification.)
 - Date: 2026-07-21
 - Prepared by: Claude. This DR **proposes and does not enact** the backlog discharge — matching the `DR-2026-07-14` precedent of investigating a doctrine-attestation issue and leaving the mass action for an explicit owner decision, precisely because a blanket re-stamp is the laundering failure mode the attestation system exists to prevent.
 - Affects (if ratified): `scripts/audit/adherence_log_audit.py` (check #7 becomes materiality-scoped); `schemas/attestation.schema.json` (optional `reattestation` block); `workplan/adherence-attestation-build-2026-05-17.md` §5 (closes the flagged-open `RE_ATTESTATION_WINDOW` justification, line 594); a one-time backlog-discharge pass over ~21 stale attestations.
@@ -66,6 +66,33 @@ One backlog-discharge pass (M2: ~7 MATERIAL re-reviews + ~14 IMMATERIAL currency
 1. **M1/M2 — the materiality line.** Recommendation: re-review the ~7 MATERIAL set, currency-refresh the rest, borderline→MATERIAL. Alternative: treat *all* as MATERIAL (maximally conservative, but ~21 genuine re-reviews for a narrow Person-Mode delta is disproportionate and invites fatigue-stamping — the failure mode dressed as rigor).
 2. **M4 — where the delta manifest lives** (commit-body convention vs a sidecar the check parses) and **who owns discharge** (proposed: the doctrine-change session). 
 3. **Scope/branch** — this DR is separable from the ICCT PR; recommend it move to its own branch/PR on your word (current branch policy kept it here as a proposal).
+
+## Known accepted findings (from M2 execution, owner decision 2026-07-21)
+
+Discharging M2 (re-grounding the 23 material attestations) pulled those files into the CI
+changeset, which re-ran check #4 (evidence-path resolution) over their **original**
+`per_rule_status[...].evidence_path` fields. A pre-existing check #4 bug — it treated
+`file.md#anchor` as a literal path and never stripped the `#fragment` — false-failed every
+anchored path; that bug is now fixed (strip the fragment, then resolve the heading's
+GitHub-style slug). The corrected check isolated **3 genuinely stale/incorrect anchors, all
+in `attestations/decisions_DR-2026-05-24-best-practice-supersession-protocol.json`**:
+
+1. `…DR-2026-05-24…md#decision-rationale-per-mission-test` — the heading gained a
+   parenthetical suffix, so its slug changed (the section still exists).
+2. `…DR-2026-05-24…md#section-4-recording-the-outcome` — "Recording the outcome" is a
+   heading in `skills/supersession-audit_SKILL.md`, not this DR (wrong target file).
+3. `…supersession-audit_SKILL.md#section-7-…` — the real slug is `#7-…`; the `section-`
+   prefix was never valid.
+
+**Owner decision (2026-07-21): left as-is, not repaired.** Repairing them would edit
+`evidence_path` fields inside a historical attestation, against the forward-only/immutable
+principle this DR is built on (and 2 of the 3 are genuinely-wrong *original* claims, not
+merely rotted links). check #4 now reports them correctly and non-blockingly; this note is
+the durable record so the honest red is understood as accepted, not overlooked. Should a
+future session ever legitimately touch that attestation's substance, the correct anchors to
+adopt are `#decision-rationale-per-mission-test-test-against-which-all-downstream-decisions-are-evaluated`,
+`skills/supersession-audit_SKILL.md#4-recording-the-outcome`, and
+`skills/supersession-audit_SKILL.md#7-spot-check-requirement-per-pi-rule-11-attestation`.
 
 ## Revision history
 

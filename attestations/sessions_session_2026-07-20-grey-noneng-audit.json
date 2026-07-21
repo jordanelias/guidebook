@@ -2,7 +2,7 @@
  "schema_version": "1.0",
  "session": "session_2026-07-20-grey-noneng-audit",
  "artifact": "sessions/session_2026-07-20-grey-noneng-audit.md",
- "doctrine_sha": "3fb2882",
+ "doctrine_sha": "0f2f525",
  "rules_in_scope": [
   "doctrine-check",
   "evidence-verification-gate",
@@ -28,5 +28,15 @@
  "deviations": [],
  "bias_direction": "Reclassifying sources out of grey can look like laundering weak material into stronger tiers, and correcting language tags can be abused to inflate or deflate the non-English count either way. Bounded by verifying each against an external index, moving only demonstrable journal/protocol publications, holding a study protocol at T3 rather than promoting it to a results anchor, and correcting language strictly to the true source language (two English papers relabeled en, reducing the non-English count honestly rather than padding it).",
  "independent_reviewer_counterclaim": "A reviewer could argue that a peer-reviewed study protocol is closer to grey than to clinical primary research and should not have left the grey bucket at all. Response: it is a peer-reviewed, DOI-bearing publication, which is categorically not grey literature; its lower standalone evidentiary weight (methodology, not outcomes) is recorded in the verification note and reflected by keeping it at T3 rather than elevating it, so the correction states its status honestly without overclaiming.",
- "verdict": "CLEAN"
+ "verdict": "CLEAN",
+ "reattestation": [
+  {
+   "prior_doctrine_sha": "3fb2882",
+   "new_doctrine_sha": "0f2f525",
+   "delta_ref": "D-2026-07-21-weak-band",
+   "materiality": "MATERIAL",
+   "verdict_change": "none",
+   "reason": "Grey-literature non-English audit; weak-band material by best-practice scope. It re-tagged mis-tagged academic sources; unaffected by the rendering delta. Verdict unchanged."
+  }
+ ]
 }

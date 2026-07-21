@@ -2,7 +2,7 @@
  "schema_version": "1.0",
  "session": "session_2026-07-12-evidence-architecture-unification",
  "artifact": "decisions/DR-2026-07-13-value-genealogy-and-derivation-handshake.md",
- "doctrine_sha": "3fb2882",
+ "doctrine_sha": "0f2f525",
  "rules_in_scope": [
   "source-discipline"
  ],
@@ -22,5 +22,15 @@
  ],
  "bias_direction": "This DR was authored by the same session that designed the evidence-architecture it extends, and it recommends building schema the session itself specified - systematic pressure toward 'the answer is more of my own architecture.' Bounded by: every schema element is traced to an already-Opus-ratified paper decision (Q2/Q4/Q12, FDA D-0147, doctrine #3) rather than invented; the two research sweeps were run by separate agent contexts against the corpus, not summarized from this session's beliefs; the H2 cultural-claim protection cuts AGAINST the mechanization bias the rest of the DR could be accused of; and the corridor worked example includes findings embarrassing to the project's own artifacts (specs/e-08.html unregistered anchor; four coexisting E-08 values), which a purely self-confirming synthesis would have omitted.",
  "independent_reviewer_counterclaim": "A reviewer might argue the handshake adds schema complexity before the base system (026, extraction, engine) has even run once, and that genealogy classification is judgment-laden (root vs echo can be contested). Response: the columns-now-vs-retrofit cost asymmetry is real (0 rows today), H4's gates bind only where checks actually ran, and genealogy judgments are recorded as falsifiable per-row classifications with file anchors - contestable by design, which is the point.",
- "verdict": "DEVIATION-LOGGED"
+ "verdict": "DEVIATION-LOGGED",
+ "reattestation": [
+  {
+   "prior_doctrine_sha": "3fb2882",
+   "new_doctrine_sha": "0f2f525",
+   "delta_ref": "D-2026-07-21-weak-band",
+   "materiality": "MATERIAL",
+   "verdict_change": "none",
+   "reason": "Weak-band material scope includes value-genealogy, but the delta (code-only = flagged weak best practice) does not alter the genealogy/derivation-handshake design this DR ratified. Verdict unchanged."
+  }
+ ]
 }

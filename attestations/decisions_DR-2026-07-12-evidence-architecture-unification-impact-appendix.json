@@ -2,7 +2,7 @@
  "schema_version": "1.0",
  "session": "session_2026-07-12-evidence-architecture-unification",
  "artifact": "decisions/DR-2026-07-12-evidence-architecture-unification-impact-appendix.md",
- "doctrine_sha": "3fb2882",
+ "doctrine_sha": "0f2f525",
  "rules_in_scope": [
   "source-discipline"
  ],
@@ -16,5 +16,15 @@
  "deviations": [],
  "bias_direction": "Coverage overstatement is the main exposure: an impact map's value claim is completeness, and the sweep was performed by one agent lineage. Bounded by: the file-by-file classification lists every file with its verdict (so omissions are auditable by diffing against a directory listing), the five highest-risk touchpoints are stated with checkable line numbers, and the census figures (96 Mode-P/S files, 22 Tier-as-design-mode files) are grep-reproducible.",
  "independent_reviewer_counterclaim": "A reviewer might contend the risk ranking is judgment presented as fact - e.g. ranking project-standards.md above the stated-threshold triangle. Response: the ranking's factual substrate (which files restate the old ladder as RULEs, which checks crash on the committed DB) is verified; the ordering is explicitly a prioritization for the owner and each entry carries the evidence needed to re-rank it.",
- "verdict": "CLEAN"
+ "verdict": "CLEAN",
+ "reattestation": [
+  {
+   "prior_doctrine_sha": "3fb2882",
+   "new_doctrine_sha": "0f2f525",
+   "delta_ref": "D-2026-07-21-weak-band",
+   "materiality": "MATERIAL",
+   "verdict_change": "none",
+   "reason": "The weak-band delta directly amends the unified evidence-architecture (I3 / regulatory_stratum_only rendering). Re-reviewed: this impact-appendix's analysis of the unification remains valid; the weak-band amendment is a later, documented forward delta on top of it, not a reversal. Verdict unchanged."
+  }
+ ]
 }

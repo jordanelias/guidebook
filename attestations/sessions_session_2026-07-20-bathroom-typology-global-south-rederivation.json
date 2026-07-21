@@ -2,7 +2,7 @@
  "schema_version": "1.0",
  "session": "session_2026-07-20-bathroom-typology-global-south-rederivation",
  "artifact": "sessions/session_2026-07-20-bathroom-typology-global-south-rederivation.md",
- "doctrine_sha": "3fb2882",
+ "doctrine_sha": "0f2f525",
  "rules_in_scope": [
   "doctrine-check",
   "evidence-verification-gate",
@@ -28,5 +28,15 @@
  "deviations": [],
  "bias_direction": "The pull on a retracted-slice re-derivation is completion bias: reinstating the prior synthesis's rich named-source list wholesale to move the grade fastest, which would silently re-import whatever fabricated or drifted citations caused the retraction. Bounded by treating every prior lead as guilty until a live tool call proved it, dropping the two that failed (Solano review; the phantom 93-study SR), and letting the slice land at PARTIAL with best_practice_synthesis still BLOCKED rather than papering the squat-specification gap.",
  "independent_reviewer_counterclaim": "A reviewer could argue the shared-sanitation SR (Sprouse 2024) is overstated as a Cluster-4 anchor because disability is a sub-theme, not its focus, so tagging it T2 inflates the slice's best-practice depth. Response: it is cited for its shared-sanitation user-preference synthesis (privacy, lighting, safety) that genuinely informs the communal-facility cluster, and the relevance note explicitly records that disability is a named vulnerability rather than the review's primary subject, so the anchor is scoped, not inflated.",
- "verdict": "CLEAN"
+ "verdict": "CLEAN",
+ "reattestation": [
+  {
+   "prior_doctrine_sha": "3fb2882",
+   "new_doctrine_sha": "0f2f525",
+   "delta_ref": "D-2026-07-21-weak-band",
+   "materiality": "MATERIAL",
+   "verdict_change": "none",
+   "reason": "Multilingual re-derivation session; weak-band material by scope. It added/verified sources; the rendering-layer delta does not change them. Verdict unchanged."
+  }
+ ]
 }

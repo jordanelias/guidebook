@@ -69,6 +69,7 @@ SCHEMA_PATH = REPO / "schemas" / "attestation.schema.json"
 ATTESTATIONS_DIR = REPO / "attestations"
 SKILL_REGISTRY = REPO / "references" / "skill-registry.md"
 DOCTRINE_PATH = "governance/mission-and-epistemics.md"
+DOCTRINE_DELTAS_PATH = "governance/doctrine-deltas.json"
 
 SYNTHESIS_PATH_RE = re.compile(
     r"^(references/bpc-reasoning|references/connection-reasoning|decisions|sessions)/.+\.md$"
@@ -81,11 +82,25 @@ LEVENSHTEIN_WINDOW = 10
 # Rule identifiers that are valid in attestations but not listed in skill-registry's
 # "active skills" block (governance/methodology rules, not skills).
 EXTRA_RULE_IDS = {
+    # Pre-existing cross-cutting identifiers (governance/methodology rules, not skills).
     "doctrine-check",
     "jurisdictional-synthesis",
     "evidence-verification-gate",
     "pmp",
     "source-discipline",
+    # Added per decisions/DR-2026-07-13-attestation-rule-identifier-registry-gap.md
+    # (RATIFIED by owner 2026-07-21). Category A — genuine cross-cutting rule identifiers
+    # (a PI standing rule / doctrine commitment, not an invocable skill):
+    "adherence-logging-and-attestation",         # PI rule #11 — the attestation obligation itself
+    "evidence-verification-gate-for-synthesis",  # PI rule #10 — no unverified source as sole synthesis basis
+    "best-practice-synthesis-routing",           # mission doctrine #2 — best-practice vs code-consensus routing
+    "canonical-workplan",                        # PI rule #6 — the workplan is canonical
+    "best-practice-supersession",                # DR-2026-05-24 supersession-check rule
+    # Category B — documented historical aliases of registered skills (variants, NOT
+    # renamed; the historical attestations are left untouched — see skill-registry.md):
+    "adversarial-research-protocol",             # alias of skill `adversarial-research`
+    "citation-mining",                           # alias of skill `citation-miner`
+    "progressive-measurement-probe",             # alias of skill `progressive-measurement`
 }
 
 
@@ -259,8 +274,28 @@ def check_3_rule_resolution(changed, issues):
             issues.append(f"CHECK 3: {f} unknown rule identifiers: {sorted(unknown)}")
 
 
+def _md_heading_slugs(md_rel):
+    """GitHub-style heading slugs in a markdown file, for resolving evidence_path
+    #anchors. Returns None if the file does not exist."""
+    p = REPO / md_rel
+    if not p.exists():
+        return None
+    slugs = set()
+    for line in p.read_text(errors="ignore").splitlines():
+        m = re.match(r"\s{0,3}#{1,6}\s+(.*?)\s*#*\s*$", line)
+        if not m:
+            continue
+        s = m.group(1).strip().lower()
+        s = re.sub(r"[^\w\s-]", "", s)   # drop punctuation except word chars/space/hyphen
+        s = re.sub(r"\s+", "-", s)
+        slugs.add(s)
+    return slugs
+
+
 def check_4_evidence_path(changed, issues):
-    """status=FIRED entries must have a resolvable evidence_path."""
+    """status=FIRED entries must have a resolvable evidence_path. The path may carry a
+    markdown #fragment (a heading anchor): the file part must exist, and for a .md
+    target the fragment must resolve to a heading's GitHub-style slug."""
     for f in _attestations_in_changeset(changed):
         data = _load_json(REPO / f)
         if data is None:
@@ -274,11 +309,19 @@ def check_4_evidence_path(changed, issues):
                 continue
             if ep.startswith("db://"):
                 continue  # validated in check #5
-            if (REPO / ep).exists():
+            ep_file, _, frag = ep.partition("#")   # strip an optional #anchor fragment
+            if (REPO / ep_file).exists():
+                if frag and ep_file.endswith(".md"):
+                    slugs = _md_heading_slugs(ep_file)
+                    if slugs is not None and frag.lower() not in slugs:
+                        issues.append(
+                            f"CHECK 4: {f} rule={rule} evidence_path anchor not found "
+                            f"in {ep_file}: #{frag}"
+                        )
                 continue
-            if ":" in ep:
+            if ":" in ep_file:
                 try:
-                    _git("rev-parse", ep)
+                    _git("rev-parse", ep_file)
                     continue
                 except subprocess.CalledProcessError:
                     pass
@@ -370,31 +413,78 @@ def check_6_counterclaim_uniqueness(changed, issues):
                     )
 
 
+def _doctrine_states():
+    m = _load_json(REPO / DOCTRINE_DELTAS_PATH)
+    return (m or {}).get("states", [])
+
+
+def _order_index(states):
+    """Map every known sha alias (blob / commit / listed aliases) -> state order."""
+    idx = {}
+    for st in states:
+        for key in (st.get("blob"), st.get("commit"), *st.get("aliases", [])):
+            if key:
+                idx[key] = st.get("order", 0)
+    return idx
+
+
+def _grounding_order(data, idx):
+    """Latest doctrine-state order this attestation is grounded to: its
+    doctrine_sha, advanced by any reattestation entries' new_doctrine_sha."""
+    orders = [idx.get(data.get("doctrine_sha"))]
+    for r in data.get("reattestation", []) or []:
+        orders.append(idx.get(r.get("new_doctrine_sha")))
+    known = [o for o in orders if o is not None]
+    return max(known) if known else None
+
+
+def _delta_material_to(state, artifact, rules):
+    """A doctrine delta is material to an attestation iff its declared scope
+    (path substrings and/or rule ids, governance/doctrine-deltas.json) intersects
+    the attestation's artifact path or rules_in_scope."""
+    mat = state.get("material", {}) or {}
+    a = (artifact or "").lower()
+    for sub in mat.get("path_contains", []) or []:
+        if sub.lower() in a:
+            return True
+    if rules & set(mat.get("rule_ids", []) or []):
+        return True
+    return False
+
+
 def check_7_reattestation_window(changed, issues):
-    """If last doctrine commit was > RE_ATTESTATION_WINDOW commits ago and
-    any synthesis attestation hasn't been re-attested since, FAIL."""
-    last_doc = _last_doctrine_sha()
-    if not last_doc:
+    """Materiality-scoped re-attestation (DR-2026-07-21 M4). An attestation owes
+    re-grounding only when a doctrine delta adopted AFTER its grounding state is
+    MATERIAL to it (path/rule-id intersection per governance/doctrine-deltas.json);
+    immaterial artifacts never trip this check. Grounding is read from the
+    attestation's own doctrine_sha (+ any reattestation entries), not git depth, so
+    it is not history-depth sensitive (DR-2026-07-21 side-finding). The obligation
+    lands on the doctrine-change session, which discharges the MATERIAL set before
+    the check can pass (DR-2026-07-21 M5 — replaces the unsatisfiable flat window)."""
+    states = _doctrine_states()
+    if not states or not ATTESTATIONS_DIR.exists():
         return
-    ago = _commits_since(last_doc)
-    if ago <= RE_ATTESTATION_WINDOW:
-        return
-    if not ATTESTATIONS_DIR.exists():
-        return
+    idx = _order_index(states)
     for p in sorted(ATTESTATIONS_DIR.glob("*.json")):
-        rel = p.relative_to(REPO).as_posix()
-        last_att = _last_commit_for(rel)
-        if not last_att:
+        data = _load_json(p)
+        if data is None:
             continue
-        try:
-            order = int(_git("rev-list", "--count", f"{last_doc}..{last_att}"))
-        except (subprocess.CalledProcessError, ValueError):
-            continue
-        if order <= 0:
-            issues.append(
-                f"CHECK 7: {p.name} not re-attested since doctrine change "
-                f"({ago} commits ago, window={RE_ATTESTATION_WINDOW})"
-            )
+        artifact = data.get("artifact", p.name)
+        rules = set(data.get("rules_in_scope", []) or [])
+        grounded = _grounding_order(data, idx)
+        if grounded is None:
+            grounded = 0  # doctrine_sha not in manifest: treat as pre-oldest
+        for st in states:
+            if st.get("order", 0) <= grounded:
+                continue
+            if _delta_material_to(st, artifact, rules):
+                issues.append(
+                    f"CHECK 7: {p.name} owes re-grounding vs material doctrine delta "
+                    f"'{st.get('delta_id')}' (grounded at order {grounded}, delta at "
+                    f"order {st.get('order')}); genuinely re-review and append a "
+                    f"reattestation entry (DR-2026-07-21 M1/M3)."
+                )
+                break
 
 
 def check_8_verdict_evidence(changed, issues):

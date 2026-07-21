@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "session": "session_2026-06-10-stage4-3-ratification",
   "artifact": "decisions/DR-2026-06-10-e2g-reverification-scope.md",
-  "doctrine_sha": "3da73bd",
+  "doctrine_sha": "0f2f525",
   "rules_in_scope": ["evidence-verification-gate-for-synthesis", "best-practice-synthesis-routing", "adherence-logging-and-attestation"],
   "per_rule_status": {
     "evidence-verification-gate-for-synthesis": {
@@ -21,5 +21,15 @@
   "deviations": [],
   "bias_direction": "The 'full re-synthesis, discard prior prose' ruling conveniently lets the synthesizer avoid the harder cognitive task of critically auditing and editing forward 68 prior syntheses; 'anchor bias' can function as a rationalization for not engaging with prior work. It also enlarges the total work the synthesizer commits to, which could read as scope inflation. The honest counterweight: the prior text is already RETRACTED — formally deemed unreliable — so re-verifying it forward costs the same gate-work as fresh synthesis while adding anchoring risk; the claim-inventory carve-out preserves the genuine value (knowing what was asserted).",
   "independent_reviewer_counterclaim": "A reviewer would object that discarding 68 syntheses' prose wastes real prior labor and that selective salvage of the defensible parts would be more efficient. Counter: under rule #10 the drafting minutes are a small fraction of per-BPC cost (the re-reads and PMP walks dominate), and 'defensible parts' cannot be identified without the same verification that fresh synthesis requires — so salvage offers little time saving against material anchor-bias exposure in a single-reviewer setting.",
-  "verdict": "CLEAN"
+  "verdict": "CLEAN",
+  "reattestation": [
+    {
+      "prior_doctrine_sha": "3da73bd",
+      "new_doctrine_sha": "0f2f525",
+      "delta_ref": "D-2026-07-13-core-reconcile",
+      "materiality": "MATERIAL",
+      "verdict_change": "none",
+      "reason": "Delta ratified the doctrine whose reverification this DR scopes. The E.2g reverification-scope decision (full re-synthesis) is unchanged by the later T4-6 rendering delta. Verdict CLEAN stands."
+    }
+  ]
 }

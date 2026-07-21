@@ -2,7 +2,7 @@
  "schema_version": "1.0",
  "session": "session_2026-07-12-evidence-architecture-unification",
  "artifact": "decisions/DR-2026-07-13-integrity-protocol-three-modes.md",
- "doctrine_sha": "3fb2882",
+ "doctrine_sha": "0f2f525",
  "rules_in_scope": [
   "source-discipline"
  ],
@@ -17,5 +17,15 @@
  "deviations": [],
  "bias_direction": "A session codifying its own review experience as standing doctrine is grading its own methodology as worth institutionalizing - and P3's hard gate makes future sessions dependent on the exact review pattern this session pioneered. Bounded by: the empirical base is two reviews that found 41 defects in THIS session's own work (the doctrine institutionalizes the mechanism that embarrassed its author, not one that flattered it); each mode is separately ratifiable; and P2's design explicitly names its own failure mode (ritual annotation) as a revisable finding rather than claiming permanence.",
  "independent_reviewer_counterclaim": "A reviewer might argue the protocol adds friction that will be skipped under time pressure, making it worse than nothing (false assurance from a stale docket). Response: the check command gates mechanically (a stale docket fails, it does not silently pass), the skill states the protocol makes bias visible rather than the model rigorous, and the owner can weigh friction directly because the demo run's real number (228 triggered claims on this branch) is disclosed rather than smoothed.",
- "verdict": "CLEAN"
+ "verdict": "CLEAN",
+ "reattestation": [
+  {
+   "prior_doctrine_sha": "3fb2882",
+   "new_doctrine_sha": "0f2f525",
+   "delta_ref": "D-2026-07-13-person-mode-a",
+   "materiality": "MATERIAL",
+   "verdict_change": "none",
+   "reason": "Person-Mode delta (the individual's own needs, not a point on a population range) is material. Re-reviewed: the three-mode integrity protocol already encodes Person Mode as assessment, not range-lookup; consistent. Verdict unchanged."
+  }
+ ]
 }

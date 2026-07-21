@@ -2,7 +2,7 @@
     "schema_version": "1.0",
     "session": "session_2026-06-09-evidence-hierarchy-reconciliation",
     "artifact": "decisions/DR-2026-05-29-evidence-hierarchy-reconciliation.md",
-    "doctrine_sha": "3da73bd",
+    "doctrine_sha": "0f2f525",
     "rules_in_scope": [
         "source-discipline",
         "adherence-logging-and-attestation"
@@ -22,5 +22,15 @@
     "deviations": [],
     "bias_direction": "Risk of overstating the completeness of the reconciliation by treating the canonical-prose fix as if it closed the whole fork, when the DB-superseded BPC prose labels and references/methodology-evidence-hierarchy-mapping.md still encode the old placement. Mitigated by scoping the DR to doctrine-only, listing the deferred caller surfaces explicitly, and flagging the methodology-mapping reference as a HIGH-priority unresolved caller rather than implying it is fixed.",
     "independent_reviewer_counterclaim": "A reviewer could argue that re-tiering the prose while leaving references/methodology-evidence-hierarchy-mapping.md (which 'governs all BPC entries') stating the opposite creates a worse split than before. Counter: the canonical conflict-resolution order makes tier-system.md authoritative over a derived references mapping, the contradiction is now explicitly logged with a disposition rather than latent, and the mapping file's rationale-reversal is a content task correctly sequenced to its own pass rather than smuggled into a doctrine-prose bump.",
-    "verdict": "CLEAN"
+    "verdict": "CLEAN",
+    "reattestation": [
+        {
+            "prior_doctrine_sha": "3da73bd",
+            "new_doctrine_sha": "0f2f525",
+            "delta_ref": "D-2026-07-13-core-reconcile",
+            "materiality": "MATERIAL",
+            "verdict_change": "none",
+            "reason": "This DR is itself a constituent of the ladder that D-2026-07-13-core-reconcile ratified; the weak-band delta refines T4-6 rendering while preserving the hierarchy. Fully consistent; verdict unchanged."
+        }
+    ]
 }
