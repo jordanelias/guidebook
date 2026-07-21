@@ -667,7 +667,7 @@ TABLE conflict_party (
 
 ### 3.4 Question (`schemas/question.py` — new module, deferred to B3)
 
-E-20 (per b1-criteria-weighting.md §4.4) — Question entity for the questions-led teaching mode (DC-6). The schema is specified here for completeness; implementation is at B3.
+ENT-20 (per b1-criteria-weighting.md §4.4) — Question entity for the questions-led teaching mode (DC-6). The schema is specified here for completeness; implementation is at B3.
 
 ```
 TABLE question (

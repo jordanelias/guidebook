@@ -33,7 +33,7 @@ A3 signed off 2026-04-26 with 6 entity types schematized, 1098 records, Pydantic
 
 | Proposal | A3 state | Impact |
 |---|---|---|
-| **PopulationCategory** (7th entity type) | A3 has E-12 (Sub-population) deferred to A7. PopulationCategory subsumes E-12 and is substantially larger — a content-bearing entity with multilingual names, mapping confidence, sub-classification scaffolds, validation provenance, population-specific design considerations. | A3 amendment required. Exceeds E-12 scope. |
+| **PopulationCategory** (7th entity type) | A3 has ENT-12 (Sub-population) deferred to A7. PopulationCategory subsumes ENT-12 and is substantially larger — a content-bearing entity with multilingual names, mapping confidence, sub-classification scaffolds, validation provenance, population-specific design considerations. | A3 amendment required. Exceeds ENT-12 scope. |
 | **axes_applicable** array on Specification | A3 has `populations: list[str]` + cross-cutting `design_stages` and `project_types`. No functional-axis attributes. | Schema extension at A7 (when axis set is finalized). |
 | **jurisdiction_scope** structured array | A3 has `jurisdictions_supporting: list[str]` + `jurisdictions_divergent: list[str]` + `divergence_note: Optional[str]`. Armature proposes richer structure with per-jurisdiction compliance status. | Schema extension at A8 (when jurisdiction philosophy is settled). |
 | **synthesis_method_indicator** + **inference_basis** | Not in current schema. | Schema extension at A6 (evidence methodology). |
@@ -41,7 +41,7 @@ A3 signed off 2026-04-26 with 6 entity types schematized, 1098 records, Pydantic
 | **adjustability_metadata** structure | Not in current schema. | Schema extension at A7 or later. |
 | **physical_variable** identifier | Not in current schema. Needed for variable conflation check algorithm. | Schema extension — timing TBD. |
 | **cultural_context** array | Not in current schema. | Schema extension at A8 or later. |
-| **version_history** array | A3 deferred time-versioning to A9 (E-19). Consistent. | A9 handles this. |
+| **version_history** array | A3 deferred time-versioning to A9 (ENT-19). Consistent. | A9 handles this. |
 | **EvidenceSource search_strategy, screening_counts, quality_assessment** | Not in current schema. | Schema extension at A6. |
 | **BPCMetadata synthesis_method, quality_summary** | Not in current schema. | Schema extension at A6. |
 | **Gap user_facing, population_level, surfacing_method** | Not in current schema. | Schema extension — timing flexible. |
@@ -50,7 +50,7 @@ A3 signed off 2026-04-26 with 6 entity types schematized, 1098 records, Pydantic
 
 A3 does not need to be reopened wholesale. The signed-off entity inventory and relationships are structurally sound. What the armature requires is:
 
-1. **One new entity type** (PopulationCategory) — larger than E-12 but occupying the same conceptual slot. Define at A7 when population taxonomy is settled, not before.
+1. **One new entity type** (PopulationCategory) — larger than ENT-12 but occupying the same conceptual slot. Define at A7 when population taxonomy is settled, not before.
 2. **Schema extensions** on existing entities — each timed to the phase that owns the relevant decision (A6 for evidence fields, A7 for axis and population fields, A8 for jurisdiction fields, A9 for versioning).
 
 The A3 amendment is a documented schema amendment, not a rewrite. It follows the CO-0008 pattern: governance document + Pydantic schema + validator update + converter update. It executes at A7 completion (when the axis set and population taxonomy are finalized), with earlier extensions (A6 evidence fields) executing at A6.
@@ -59,7 +59,7 @@ The A3 amendment is a documented schema amendment, not a rewrite. It follows the
 - A6: add synthesis_method_indicator, inference_basis, search_strategy, screening_counts, quality_assessment to EvidenceSource/BPCMetadata/Specification
 - A7: add PopulationCategory entity; add axes_applicable to Specification; add communication axis value "sign language user" to enums; extend PopulationCode enum if needed
 - A8: restructure jurisdiction_scope on Specification
-- A9: add version_history (already planned as E-19)
+- A9: add version_history (already planned as ENT-19)
 
 Each is a scoped amendment at the phase that owns the decision. No single "reopen A3" event.
 
@@ -94,7 +94,7 @@ This is significant scope expansion, but it's the right scope for A6. A6 was alr
 
 **A7 (Population taxonomy — 2–3 sessions):** Armature substantially expands A7:
 - 18-axis functional axis set with ICF cross-mapping
-- PopulationCategory entity type definition (subsumes E-12)
+- PopulationCategory entity type definition (subsumes ENT-12)
 - Mapping confidence classification for all populations
 - Clinical sub-classification scaffold fitness assessment
 - Population code ↔ PopulationCategory coexistence model
@@ -118,7 +118,7 @@ This is the largest scope expansion. A7 was always the population taxonomy phase
 
 Some of this was already implicit in A8's scope ("specify what jurisdictional comparability means at parameter level"). The structured jurisdiction_scope and cultural context notes are new. **Impact: +1 session. A8 becomes 3–4 sessions.**
 
-**A9 (Time model — 2–3 sessions):** Armature's version_history requirement aligns with E-19 (Time-Version) already deferred to A9. **Impact: none.**
+**A9 (Time model — 2–3 sessions):** Armature's version_history requirement aligns with ENT-19 (Time-Version) already deferred to A9. **Impact: none.**
 
 **A10 (Adversarial-use — 1–2 sessions):** No armature impact.
 
@@ -163,7 +163,7 @@ This is a meaningful increase. However: the armature resolves questions that wou
 
 ### B3 (Navigation mode specification — 3–4 sessions)
 
-B3 was scoped to specify 7 navigation modes + Question entity (E-20). The armature pre-decides the query architecture that B3 implements. B3 still has work: the specific navigation modes (information-finding, decision-frame, jurisdiction-comparison, questions-led, etc.) are distinct from the person-profile query architecture. But B3's scope reduces because the foundational architecture (two layers, axis system, scope dimensions, role layer, output schema) is settled.
+B3 was scoped to specify 7 navigation modes + Question entity (ENT-20). The armature pre-decides the query architecture that B3 implements. B3 still has work: the specific navigation modes (information-finding, decision-frame, jurisdiction-comparison, questions-led, etc.) are distinct from the person-profile query architecture. But B3's scope reduces because the foundational architecture (two layers, axis system, scope dimensions, role layer, output schema) is settled.
 
 **Impact: B3 reduces to 1–2 sessions** — specifying navigation modes against the settled architecture rather than designing the architecture.
 
@@ -267,7 +267,7 @@ The armature adds 7–10 sessions to Stage A but removes ~3 from Stage B and pro
 - Plain-language register specification: ISO 24495-1 governed, authored per category-topic combination (resolved in Q31)
 - Easy Read as separate content format (resolved in Q18)
 
-**B3 (navigation mode):** Receives armature v4 as primary architectural input. B3 scope narrows to specifying navigation modes (information-finding, decision-frame, jurisdiction-comparison, questions-led, etc.) against the settled two-layer architecture. Question entity (E-20) still defined at B3.
+**B3 (navigation mode):** Receives armature v4 as primary architectural input. B3 scope narrows to specifying navigation modes (information-finding, decision-frame, jurisdiction-comparison, questions-led, etc.) against the settled two-layer architecture. Question entity (ENT-20) still defined at B3.
 
 ### Schema amendment tracking
 
@@ -285,7 +285,7 @@ Create `workplan/a3-amendment-register.md` to track scoped schema extensions acr
 | A3-AM-08 | A7 | enums.py | FunctionalAxis enum, MappingConfidence enum, CommunicationMode (add sign_language_user) | Pending A7 |
 | A3-AM-09 | A8 | Specification | jurisdiction_scope (structured, replacing flat lists) | Pending A8 |
 | A3-AM-10 | A8 | Specification | cultural_context | Pending A8 |
-| A3-AM-11 | A9 | All mutable entities | version_history (per E-19 already planned) | Pending A9 |
+| A3-AM-11 | A9 | All mutable entities | version_history (per ENT-19 already planned) | Pending A9 |
 | A3-AM-12 | A7/A12 | Specification | physical_variable (for variable conflation check) | Pending |
 | A3-AM-13 | TBD | Gap | user_facing, population_level, surfacing_method | Pending |
 

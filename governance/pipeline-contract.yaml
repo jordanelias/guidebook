@@ -30,7 +30,7 @@ dr: decisions/DR-2026-07-13-pipeline-contract.md
 enforcement_level: 2
 
 # Canonical entity spine (governance/conceptual-model.md §2.1):
-spine: "EvidenceSource (E-02) -> BPC entry (E-03) -> Specification (E-01) -> Item (E-08) -> render"
+spine: "EvidenceSource (ENT-02) -> BPC entry (ENT-03) -> Specification (ENT-01) -> Item (ENT-08) -> render"
 
 stages:
   - id: research
@@ -50,7 +50,7 @@ stages:
         check: scripts/audit/pmp_audit.py
 
   - id: collection
-    anchor: "EvidenceSource corpus (E-02); PI rule #2 (Sonnet evidence inventories)"
+    anchor: "EvidenceSource corpus (ENT-02); PI rule #2 (Sonnet evidence inventories)"
     entry:
       - "sources discovered for the topic/slug under research"
     criteria:
