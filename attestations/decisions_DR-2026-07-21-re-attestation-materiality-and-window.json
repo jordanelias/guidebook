@@ -1,0 +1,20 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-07-21-re-attestation-methodology",
+ "artifact": "decisions/DR-2026-07-21-re-attestation-materiality-and-window.md",
+ "doctrine_sha": "373255e",
+ "rules_in_scope": [
+  "doctrine-check"
+ ],
+ "per_rule_status": {
+  "doctrine-check": {
+   "status": "FIRED",
+   "evidence_path": "workplan/adherence-attestation-build-2026-05-17.md",
+   "reason": "This decision record proposes a methodology for discharging the CHECK-7 re-attestation backlog by materiality triage rather than blanket re-stamp. It extends the attestation system's own stated intent (workplan line 56, downstream re-grounding; line 594, the owed window-justification DR) and the DR-2026-07-14 forward-only/immutable principle, and applies the project's core anti-laundering discipline to the audit layer. Authored as PROPOSED, not enacted: the MATERIAL backlog subset requires genuine re-review, which is deferred to owner-ratified execution."
+  }
+ },
+ "deviations": [],
+ "bias_direction": "The agent proposing a materiality triage has an interest in classifying artifacts IMMATERIAL, because that is the cheap path to a green check — the exact fatigue-stamping this DR claims to prevent. Bounded by resolving borderline cases to MATERIAL (asymmetry favors re-review over stamping), by requiring every IMMATERIAL clearance to record its immateriality reasoning as a checkable judgment (not a bare doctrine_sha bump), and by not enacting any clearance in this DR — the triage is proposed for owner ratification, and the MATERIAL re-reviews remain real work, not a migration.",
+ "independent_reviewer_counterclaim": "A reviewer could argue that any materiality filter is a loophole: it lets the doctrine-changer decide what counts as affected, and a motivated author will call everything immaterial. Response: the delta manifest (M4) and the recorded immateriality reason make the call auditable and disputable per artifact, exactly as root-vs-echo is made disputable in the genealogy DR; and the obligation lands on the doctrine-change session, which is the party that actually knows the delta, rather than on unrelated downstream PRs that cannot assess it. The alternative — treat all as material — is not more rigorous; ~21 forced re-reviews for a narrow Person-Mode delta produce rubber-stamps dressed as diligence.",
+ "verdict": "CLEAN"
+}
