@@ -104,6 +104,14 @@ available — which is most of the built world, most of the time. The taxonomy i
 legitimate only as an approximation in service of the individual, never as a portrait
 of them. Where it is read as a portrait, it is being misused.
 
+**Owner adjudication (2026-07-21).** The enterprise-legitimacy question this principle
+raises is settled in favour of proceeding: *something is better than nothing, and a
+solution that serves 95% beats one that serves 50%.* The generalization is legitimate
+**as the floor**; the individual override (Person Mode, situations, Co-1) carries the
+remainder, so shipping the floor is not conceding the tail. This closes the ratified
+posture — the taxonomy generalizes openly and declares that it does; it does not wait
+for a per-person completeness it can never reach.
+
 ## §1 The representations being reconciled
 
 Three representations of the population layer currently coexist and have drifted:
