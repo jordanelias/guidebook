@@ -56,34 +56,28 @@ REF-00542, REF-00007, REF-00202, REF-00033, REF-00301, REF-00395, REF-00393, REF
 - `10.2196/69442` (**Levine**) — verified observational **biomechanical** study (motion capture/ANOVA,
   JMIR 2025 e69442), **not** an RCT → tier-fixed T1 → **T3 clinical**; canonical REF-00367.
 
-**STILL HELD — 2 groups:**
-- `10.1177/13623613221102753` (**Black**) — verified a **scoping review** (5 databases, 28 studies).
-  Contested tier: the 07-20 pass set T2 `sr_meta`, but strict doctrine reserves `sr_meta` for *systematic*
-  reviews/meta-analyses — a scoping review is arguably T3. Needs an owner/tier-doctrine ruling before merge.
-- `10.1080/10400430903520280` (**Steinfeld**) — genuine DOI-error: 3 *distinct* outputs (journal article
-  REF-00059 holds the DOI by PMID; "Final Report" REF-00060 and "International Comparison" REF-00192 are
-  different works). Needs bibliographic verification of the correct DOIs — a correction, not a merge.
-
 **The "5 container-DOI splits" hypothesis was WRONG (verified 2026-07-21).** None are distinct parts —
-all are same-work duplicates:
-- `10.31030/2853913` (**IEC 60118-4**, hearing-loop std, 3× all T4) — **MERGED** (canonical REF-00200;
-  migration `data_20260721205113_…dedup-iec-clean`; distinct linked 756 → 754).
-- **HELD — same-work dups with tier drift** (merging forces a tier choice on *foundational* sources →
-  defer to a tier-doctrine pass, not an ad-hoc dedup call): `10.31030/1803049` (DIN 18040-2, 5×, T4/T6),
-  `10.31030/1715500` (DIN 18040-1, 3×, T5/T6), `10.26687/archnet-ijar.v8i1.314` (ASPECTSS / Mostafa 2014
-  framework paper, 5×, T2/T3), `10.4324/9781003564164` (RIBA/Habinteg Inclusive Housing Design Guide, 3×,
-  T1/T2 — a design *guide*, so both tiers are likely wrong).
+all are same-work duplicates; `10.31030/2853913` (**IEC 60118-4**, 3× all T4) merged first (canonical
+REF-00200). The remaining four carried tier drift on foundational sources and were held for a doctrine
+ruling.
 
-**Broader finding:** same-DOI duplication very often carries **tier drift** (the same source tiered
-differently by different ingest passes). Deduping therefore repeatedly surfaces tier-consistency questions.
-The held set below is really a **tier-doctrine consistency pass** (what tier is DIN 18040 / the ASPECTSS
-index / a professional design guide?), not more dedup.
+## ALL HELD GROUPS RESOLVED (ratified DR-2026-07-21-tier-doctrine-source-class-consistency)
+Migration `data_20260721215124_…dedup-held-ratified` executed the five rulings; distinct linked 754 → 740:
+- **Black** (scoping review) → **T3** (ruling 1: `sr_meta`/T2 is for *systematic* reviews only). Merged, canonical REF-00589.
+- **ASPECTSS** (Mostafa 2014 framework paper) → **T3** (ruling 3: framework paper = primary, not synthesis). Merged, canonical REF-00724.
+- **DIN 18040-2** and **DIN 18040-1** → **T5 `national_fw`** at standard level (ruling 2; code-floor T6 only for adopted-code citations). Merged, canonicals REF-00323 / REF-00422.
+- **RIBA/Habinteg Inclusive Housing Guide** → **T5 `national_fw`** (ruling 4). Merged, canonical REF-00054.
+- **Steinfeld** (ruling 5) — **adversarial-pass corrected to 2 works, not 3:** REF-00192 is the *same*
+  journal article as REF-00059 (PMID 20402047) → **merged**; only REF-00060 (Final Report) is distinct →
+  DOI nulled (NO-MATCH) + audit trail restored via report URL (migration `…steinfeld-adversarial-fix`).
 
-## Next
-1. **Resolve the 4 tier-conflict groups** — adjudicate the correct tier per `governance/tier-system.md`, set it on the canonical, then merge (same pattern).
-2. **Fix the 2 DOI-error groups** — correct the wrong DOI on the mis-attributed row (do NOT merge).
-3. **Verify the 5 container splits** — keep distinct parts; merge only true dups.
-4. **Consider a small DR** on the shared-source model (one-row-many-links as canonical) so new ingests dedup on DOI by default and this stops recurring — the identity analogue of the convergence discipline.
+**All same-DOI duplicates are now resolved (0 remaining). Distinct linked sources 781 → 739 across the
+full effort.** DB integrity returned to the main baseline (zero net regression). tier-system.md §2
+clarified (scoping-review / framework-paper ≠ T2).
+
+**Broader finding (carried forward):** same-DOI duplication very often carries **tier drift** (the same
+source tiered differently by different ingest passes). Worth a future small DR on the shared-source model
+(one-row-many-links as canonical) so new ingests dedup on DOI by default and this stops recurring.
 
 ## Guardrail
 Do **not** bulk-merge on same-DOI alone. A shared DOI is strong evidence but not proof (container DOIs,

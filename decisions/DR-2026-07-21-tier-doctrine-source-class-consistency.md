@@ -53,11 +53,14 @@ consistent already, which anchors the rulings below:
    practitioner `practice`/Co-3 stream from `DR-2026-07-20`, that is the alternative; T5 is the pragmatic
    default.)
 
-5. **Steinfeld is a DOI-error, not a duplicate — fix, don't merge.** DOI `10.1080/10400430903520280`
-   belongs to the journal article **REF-00059** (confirmed by PMID 20402047). The "Final Report"
-   (REF-00060) and the "International Comparison" (REF-00192) are **different works** that inherited the
-   wrong DOI. → **null the erroneous DOI** on REF-00060 and REF-00192 (correct DOIs TBD; a report may have
-   none), with a note. This removes the false-duplicate without fabricating identifiers.
+5. **Steinfeld is *partly* a DOI-error — 2 works, not 3 (corrected in execution, see v3).** DOI
+   `10.1080/10400430903520280` / PMID 20402047 belongs to the journal article, which appears under **two
+   ref_ids** — **REF-00059** ("Anthropometry and Standards for Wheeled Mobility") and **REF-00192** (same
+   paper with its full subtitle "…An International Comparison") — so those two are the **same work and are
+   merged** (REF-00192 → REF-00059). Only the IDEA Center **"Final Report" (REF-00060)** is a genuinely
+   **distinct** work that had inherited the journal DOI → its DOI is nulled (NO-MATCH; a report with no
+   DOI) and its audit trail restored via the report URL. (The v1 proposal wrongly called REF-00192 a third
+   distinct output; the adversarial verification pass corrected this before merge.)
 
 ## Consequences if ratified
 One dedup/re-tier migration resolving the six held groups (2 re-tiers to T3 for Black/ASPECTSS;
@@ -75,3 +78,9 @@ doctrine-consistency corrections with little latitude.
 - v2 (2026-07-21): RATIFIED by owner. All five rulings accepted (incl. the standard-vs-code-floor split
   and the design-guide → T5 default). Held-group merges/re-tiers + Steinfeld DOI-fix executed; §2
   clarification applied to tier-system.md.
+- v3 (2026-07-21): **adversarial-pass correction to ruling 5.** Verification (PMID 20402047) showed
+  REF-00192 is the *same* journal article as REF-00059 (its full-subtitle form), not a third distinct
+  output — so it was **merged** into REF-00059, not DOI-nulled. Only REF-00060 (the IDEA Center Final
+  Report) is distinct; its DOI is nulled (NO-MATCH) and its audit trail restored via the report URL.
+  Net: Steinfeld = 2 works, not 3. DB integrity returned to the main baseline (no net regression); the
+  earlier DOI-null had transiently broken checks C01/C04, now resolved.

@@ -2,38 +2,38 @@
   "as_of": "2026-07-21",
   "n_slices": 79,
   "n_items": 93,
-  "total_source_instances": 948,
-  "unique_sources": 740,
+  "total_source_instances": 947,
+  "unique_sources": 739,
   "grade_distribution": {
     "A": 11,
-    "B": 28,
-    "C": 26,
+    "B": 29,
+    "C": 25,
     "D": 11,
     "E": 3,
     "F": 0
   },
   "tier_totals": {
-    "1": 94,
+    "1": 95,
     "2": 104,
     "3": 355,
-    "4": 83,
+    "4": 81,
     "5": 168,
     "6": 144
   },
   "strength_band_slices": {
-    "full": 67,
-    "partial": 12,
+    "full": 68,
+    "partial": 11,
     "weak": 0,
     "disputed-only": 0
   },
   "strength_band_instances": {
-    "full": 482,
-    "partial": 251,
+    "full": 483,
+    "partial": 249,
     "weak": 205,
     "disputed": 10
   },
   "practice_stream_instances": 0,
-  "english_instances": 716,
+  "english_instances": 715,
   "zero_yield_search_languages": [
     "AR",
     "BN",
@@ -2943,6 +2943,82 @@
       "grade": "B"
     },
     {
+      "slug": "body-sizes-supplementary-populations",
+      "topic": "frameworks-and-methodology",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 11,
+      "full": 1,
+      "partial": 8,
+      "weak": 2,
+      "disputed": 0,
+      "t3_clinical": 0,
+      "practice": 0,
+      "code_only": 10,
+      "strength_band": "full",
+      "weak_only": false,
+      "tiers": {
+        "1": 1,
+        "3": 2,
+        "4": 3,
+        "5": 5
+      },
+      "etypes": {
+        "clinical": 1,
+        "national_fw": 5,
+        "grey": 2,
+        "standard_eb": 3
+      },
+      "markers": {
+        "●": 1,
+        "◐": 8,
+        "○": 2
+      },
+      "n_jur": 5,
+      "n_jur_raw": 5,
+      "n_true_jur": 5,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "US": 4,
+        "CN": 3,
+        "INT": 2,
+        "UK": 1,
+        "JP": 1
+      },
+      "jurs_clean": {
+        "US": 4,
+        "INT": 2,
+        "UK": 1,
+        "CN": 3,
+        "JP": 1
+      },
+      "n_lang": 3,
+      "langs": {
+        "en": 7,
+        "zh": 3,
+        "ja": 1
+      },
+      "n_en": 7,
+      "n_nonen": 4,
+      "pct_en": 63.6,
+      "anglo_core": 5,
+      "supra": 2,
+      "non_anglo": 4,
+      "pct_anglo_core": 45.5,
+      "sl_searched": 19,
+      "sl_hit": 4,
+      "search_jurs": 47,
+      "score": 66.4,
+      "components": {
+        "A": 16,
+        "B": 17.6,
+        "C": 17,
+        "D": 9,
+        "E": 6.8
+      },
+      "grade": "B"
+    },
+    {
       "slug": "jurisdiction-matrix-accessibility-standards",
       "topic": "frameworks-and-methodology",
       "state": "PARTIAL",
@@ -3409,32 +3485,29 @@
       "slug": "manoeuvring-footprint-vs-turning-radius-methodology",
       "topic": "frameworks-and-methodology",
       "state": "METHODOLOGY-AUTHORED",
-      "n": 30,
+      "n": 29,
       "full": 28,
-      "partial": 1,
+      "partial": 0,
       "weak": 1,
       "disputed": 0,
       "t3_clinical": 10,
       "practice": 0,
-      "code_only": 2,
+      "code_only": 1,
       "strength_band": "full",
       "weak_only": false,
       "tiers": {
         "1": 14,
         "2": 4,
-        "3": 11,
-        "4": 1
+        "3": 11
       },
       "etypes": {
         "clinical": 22,
         "grey": 1,
-        "standard_eb": 1,
         "co1": 2,
         "sr_meta": 4
       },
       "markers": {
         "●": 28,
-        "◐": 1,
         "○": 1
       },
       "n_jur": 3,
@@ -3444,35 +3517,35 @@
       "polluted_jur": {},
       "jurs": {
         "US": 5,
-        "INT": 2,
-        "INT/ZA": 1
+        "INT/ZA": 1,
+        "INT": 1
       },
       "jurs_clean": {
         "US": 5,
-        "INT": 2,
-        "INT/ZA": 1
+        "INT/ZA": 1,
+        "INT": 1
       },
       "n_lang": 1,
       "langs": {
-        "en": 30
+        "en": 29
       },
-      "n_en": 30,
+      "n_en": 29,
       "n_nonen": 0,
       "pct_en": 100.0,
       "anglo_core": 5,
-      "supra": 3,
+      "supra": 2,
       "non_anglo": 0,
-      "pct_anglo_core": 62.5,
+      "pct_anglo_core": 71.4,
       "sl_searched": 0,
       "sl_hit": 0,
       "search_jurs": 0,
-      "score": 64.7,
+      "score": 64.4,
       "components": {
         "A": 20,
-        "B": 28.9,
+        "B": 29.3,
         "C": 13,
         "D": 0,
-        "E": 2.8
+        "E": 2.1
       },
       "grade": "C"
     },
@@ -4318,79 +4391,6 @@
         "C": 13,
         "D": 0,
         "E": 6.4
-      },
-      "grade": "C"
-    },
-    {
-      "slug": "body-sizes-supplementary-populations",
-      "topic": "frameworks-and-methodology",
-      "state": "RETRACTED-PRE-REHAB",
-      "n": 11,
-      "full": 0,
-      "partial": 9,
-      "weak": 2,
-      "disputed": 0,
-      "t3_clinical": 0,
-      "practice": 0,
-      "code_only": 11,
-      "strength_band": "partial",
-      "weak_only": false,
-      "tiers": {
-        "3": 2,
-        "4": 4,
-        "5": 5
-      },
-      "etypes": {
-        "national_fw": 5,
-        "grey": 2,
-        "standard_eb": 4
-      },
-      "markers": {
-        "◐": 9,
-        "○": 2
-      },
-      "n_jur": 5,
-      "n_jur_raw": 5,
-      "n_true_jur": 5,
-      "n_null_jur": 0,
-      "polluted_jur": {},
-      "jurs": {
-        "US": 3,
-        "INT": 3,
-        "CN": 3,
-        "UK": 1,
-        "JP": 1
-      },
-      "jurs_clean": {
-        "US": 3,
-        "INT": 3,
-        "UK": 1,
-        "CN": 3,
-        "JP": 1
-      },
-      "n_lang": 3,
-      "langs": {
-        "en": 7,
-        "zh": 3,
-        "ja": 1
-      },
-      "n_en": 7,
-      "n_nonen": 4,
-      "pct_en": 63.6,
-      "anglo_core": 4,
-      "supra": 3,
-      "non_anglo": 4,
-      "pct_anglo_core": 36.4,
-      "sl_searched": 19,
-      "sl_hit": 4,
-      "search_jurs": 47,
-      "score": 56.0,
-      "components": {
-        "A": 16,
-        "B": 6.5,
-        "C": 17,
-        "D": 9,
-        "E": 7.5
       },
       "grade": "C"
     },
