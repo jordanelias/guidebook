@@ -38,12 +38,17 @@ be named, generalized, and made public.
 
 ## Decision (proposed)
 
-1. Adopt `governance/held-tensions.md` as doctrine: eight held tensions, the four
+1. Adopt `governance/held-tensions.md` as doctrine: **nine held tensions** (T1–T8
+   pole-vs-pole; **T9 — generality vs. irreducible individuality — the meta-tension**
+   that conditions T2/T3/T4/T7 and governs how the entire functional taxonomy is
+   read: no two people are the same, function is a spectrum along a spectrum, and
+   measured function is never independent of selfhood — the shared claim of the
+   project's own Kawa, ICF capacity/performance, and Capability frameworks), the four
    operations (declare / disclose / navigate / interrogate), the anti-fig-leaf rule
    (every disclosure carries a bound, correction path, or standing question), the
    unification map, and the governance bindings — including: no session may resolve
-   a held tension without a DR; instruments-not-essays on content pages; the eight
-   standing questions seed the questions-led entry surface (mission commitment #6).
+   a held tension without a DR; instruments-not-essays on content pages; the standing
+   questions seed the questions-led entry surface (mission commitment #6).
 2. Adopt `governance/grounds.md` as the public-facing render source ("How This
    Project Thinks"), rendering at Phase E with the placement and per-page
    instruments specified in its §R — the "for whom" half of radical transparency:
@@ -82,7 +87,8 @@ is decided with disabled people post-launch, or honestly never); mission amendme
 
 ## Ratification checklist (owner)
 
-1. Ratify the eight tensions and their declared stances (or amend membership).
+1. Ratify the nine tensions and their declared stances (or amend membership) —
+   including **T9 as the meta-tension** governing the functional taxonomy's reading.
 2. Ratify the anti-fig-leaf rule and the four governance bindings.
 3. Ratify `grounds.md` as public-facing text (tone, disclosure level, the
    never-QALY commitment sentence).

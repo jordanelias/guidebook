@@ -63,7 +63,12 @@ eight times. This table is the unification map's spine: one epistemic signature 
 | "Codes are an organizing convenience, not a definition of people" | `population-taxonomy.md` §1.1 | categorization (T4) |
 | Adjudicates evidence, declines authority | posture DR | prescription vs dignity (T6) |
 
-## §2 The eight held tensions
+## §2 The nine held tensions
+
+T1–T8 are pole-vs-pole tensions. **T9 is the meta-tension** — the relationship
+between any model and the individual it models — and it conditions T2, T3, T4, and
+T7. It is stated last but governs how all the others, and the entire functional
+taxonomy, are to be read.
 
 Format per entry: **Poles → Stance (declared) → Cost (disclosed, with bound/path) →
 Instrument (navigate) → Standing question (interrogate) → Canon anchors.**
@@ -316,6 +321,54 @@ band markers with plain-language translation.
 has shown — and what lives in the gap?*
 
 **Canon.** mission #2, #5; DR-2026-07-20; DR-2026-07-21 Option A; PMP; economics Part 11.
+
+### T9 — Generality vs. irreducible individuality (the meta-tension)
+
+**Poles.** To help anyone at all, the project must generalize: populations, axes,
+ranges, and specifications are all generalizations, and generalization is what makes
+shared knowledge possible and buildings buildable. And: every generalization is
+false of someone. No two people — even two with the same diagnosis and the same
+measured abilities — share an experience; **every disability and every function is a
+spectrum along a spectrum**, and how a function manifests is never static, never
+generic, and never independent of the whole person and their world. A measured axis
+value is a coordinate of *how specifications vary*, not a fact stored in a person.
+
+**Stance.** Generalize openly, and **declare the abstraction at every altitude** —
+not only at the point of hand-off. Person Mode is the **ground truth the population
+and axis layers serve, not an exception the model escalates to**; the specification
+is a starting hypothesis for a conversation with a person, never a verdict about them
+(mission #7); the person overrides every default (armature §4.3: "the user can adjust
+any axis value"); within-population variability is rendered first-class, not as a
+caveat (mission #1); axes are dimensions along which *specifications* vary, not a
+decomposition of persons (armature §4.2); and the irreducible remainder — what no
+coordinate captures — lives in the situations entity and in Co-1 testimony, which are
+never subordinated. That measured function is not separable from selfhood is not an
+outside objection: it is the shared claim of three of the project's four declared
+frameworks — **Kawa** (the inseparable flow), **ICF** (its own capacity-vs-
+performance gap), and the **Capability Approach** (conversion factors). The taxonomy
+is bound by its own foundations to hold it. Operationalized for the axis model in
+`functional-taxonomy.md` §0.5 (the irreducibility principle).
+
+**Cost.** A guide that constantly declares its own insufficiency can read as evasive
+or unusable; and the abstraction, however hedged, still shapes what a designer sees
+first. *Bound:* the generalization raises the floor precisely where no individual
+assessment is available — which is most of the built world, most of the time.
+*Path:* Person Mode + OT co-design resolve the individual case; mapping-confidence
+(armature §4.2) discloses where the generalization is weakest; situations carry what
+the model cannot.
+
+**Instrument.** Mapping-confidence disclosure on every population→axis pre-fill; the
+individual-override on every axis value; within-population variability shown as data,
+not prose; situations rendered beside specifications; the "this describes a pattern;
+you are the ground truth" framing on reader-facing pages.
+
+**Standing question.** *Whose specific life is this general claim false of — and does
+the design let them override it?*
+
+**Canon.** mission #1, #4, #7; armature §4.2 (axes as specification-variation), §4.3
+(individual override); population-taxonomy §3.4 (codes step aside at Tier 2);
+`functional-taxonomy.md` §0.5; the four-framework stack (Kawa · ICF · Capability ·
+PEO/PEOP).
 
 ## §3 Unification map — one pattern, every mechanism
 

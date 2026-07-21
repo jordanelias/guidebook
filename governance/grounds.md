@@ -99,10 +99,10 @@ that disabled people rate their own lives far higher than outside observers assu
 Our economics volume argues from costs and value — never from discounting anyone's
 life.
 
-## Eight tensions we hold on purpose
+## Nine tensions we hold on purpose
 
 Some contradictions in this field cannot be solved, only handled honestly. We keep
-eight of them deliberately open. Each one gives you a question worth asking of any
+nine of them deliberately open. Each one gives you a question worth asking of any
 design — including ours.
 
 1. **Every body / every culture.** Bodies share physiology; lives differ by
@@ -135,6 +135,18 @@ design — including ours.
 8. **Done / possible.** The best that has been built is not the best that evidence
    supports. We show both numbers and the gap between them. *Ask: is this the best
    anyone has done, or the best anyone has shown — and what lives in the gap?*
+9. **General / individual.** No two people are the same — not even two people with
+   the same diagnosis and the same measured abilities — and how any ability shows up
+   in your life depends on everything else about you, your history, your culture, and
+   your day. This guide describes *patterns* across many people. It is a starting
+   point for a conversation, never the last word about you, and every recommendation
+   can and should be adjusted to the actual person in front of you. You are not your
+   measurements; the guide describes the pattern, and you are the ground truth. *Ask:
+   whose real life does this general rule get wrong — and can they overrule it?*
+
+This ninth one sits underneath the other eight: everything in this guide is a
+generalization, and generalizations are how shared knowledge is possible — but each
+one is untrue of someone. We try never to forget that the someone is the point.
 
 ## How you can read this
 

@@ -53,6 +53,57 @@ The 2026-07-21 audit found both curation failure modes live:
   populations with the same functional demand (SCI poikilothermia, POTS, older
   adults) cannot reach it.
 
+## §0.5 The irreducibility principle (governs everything below)
+
+This principle governs how every table, axis, and mapping in this document is to be
+read. It is `held-tensions.md` T9 operationalized for the axis model, and it is
+binding: no downstream use may read the taxonomy against it.
+
+1. **A spectrum along a spectrum.** Every axis is a continuum, and a person's
+   position on it is itself contextual, fluctuating, and fuzzy — not a fixed
+   coordinate. The register discretizes for retrieval; the discretization is a
+   property of the *tool*, not of the person. `fluctuating: yes/no` is a coarse flag
+   over a condition that is, in truth, universal: all function varies by the hour,
+   the setting, and the meaning of the task.
+
+2. **Axes describe specifications, not persons.** Per armature §4.2, axes are "the
+   dimensions along which built-environment *specifications* vary." They are a
+   property of the specification space, not a decomposition of a human being.
+   `population_axis_map` (§4) is therefore a **retrieval index and navigation
+   hypothesis**, graded by mapping-confidence (§3.2) — **never a portrait**. A person
+   is never the join of their axis values, and the taxonomy makes no claim that they
+   are.
+
+3. **Measured function is not independent of selfhood.** The same axis value
+   manifests differently by fatigue, familiarity, culture, mood, history, and the
+   meaning the task holds for the person. This is not a caveat; it is the shared
+   claim of three of the project's four declared frameworks — ICF's own
+   *capacity vs. performance* gap (what a body can do in a standard room is not what
+   this person does in their life), Kawa's inseparable flow of self-context-function,
+   and the Capability Approach's conversion factors. No axis value is a stored
+   attribute; each is provisional and context-relative.
+
+4. **The person is the ground truth; the specification serves them.** A specification
+   is an approximation in service of an individual — a starting hypothesis for a
+   conversation, never a verdict about them (mission #7). Person Mode is not the
+   exception the model escalates to; it is the reality the model approximates
+   (mission #4: the population range "neither bounds nor defines the person"). Every
+   default is overridable at the individual value (armature §4.3).
+
+5. **The irreducible remainder has a home.** What no coordinate captures — why two
+   people at identical axis values live different lives — is curated in the
+   `situations` entity (§5.4) and in Co-1 testimony, which are never subordinated to
+   axis-level evidence (§3.1). Their existence in the schema is the project's
+   structural admission that the person exceeds the profile.
+
+**Consequence for the enterprise (stated honestly).** Pushed to its end, this
+principle is in tension with the whole idea of a specification guide. The project's
+answer is that a generalization held *as* a generalization, with the individual as
+the override and the ground truth, raises the floor where no individual assessment is
+available — which is most of the built world, most of the time. The taxonomy is
+legitimate only as an approximation in service of the individual, never as a portrait
+of them. Where it is read as a portrait, it is being misused.
+
 ## §1 The representations being reconciled
 
 Three representations of the population layer currently coexist and have drifted:
@@ -191,7 +242,10 @@ are presentation-layer, revisable without schema change **[T1][T5]**.
 
 No rows change until ratification. Canonical sub-code aliases shown where the DB
 flattened them. `ALL` is a scope qualifier, not a population
-(population-taxonomy §1.3).
+(population-taxonomy §1.3). **Per §0.5, this table is a retrieval index, not a
+portrait:** the "maps to" column says which axes a code *indexes into* for evidence
+retrieval, graded by mapping-confidence (§3.2) — it does not claim any person
+decomposes into those axes, and any individual overrides the mapping.
 
 | Code (DB) | Canonical | Disposition | Maps to | Rationale / fixes |
 |---|---|---|---|---|

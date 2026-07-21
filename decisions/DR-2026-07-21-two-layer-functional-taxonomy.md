@@ -2,16 +2,23 @@
 
 - Status: **PROPOSED — pending owner ratification.** States and does not execute
   (posture per `DR-2026-07-21-product-posture-thinking-tool-not-authority.md`).
-- Version: **1.1 (2026-07-21)** — amended after (a) an adversarial pass from a
+- Version: **1.2 (2026-07-21)** — v1.1 amended after (a) an adversarial pass from a
   lived-experience standpoint, (b) an intensified pass from person-first and global
   non-English standpoints, and (c) reconciliation with canon this DR's v1.0 failed
   to read: `governance/armature_v4.md` (whose §§4.2–4.3/§5 two-layer architecture
   this taxonomy executes), `governance/population-taxonomy.md` (CANONICAL),
   `governance/mission-and-epistemics.md`, DR-2026-06-11-remove-colonial-role. The
   convergent re-derivation is evidence for the architecture; the failure to read
-  first is recorded in the attestation.
-- Doctrine: `governance/functional-taxonomy.md` v1.1 (dispositions, curation rules,
-  gates). Staged schema: `working/taxonomy/staged_schema_functional_axes.sql`
+  first is recorded in the attestation. **v1.2 adds the irreducibility principle
+  (§0.5)** — a governing preamble binding the whole taxonomy: every function is a
+  spectrum along a spectrum, axes describe *specification-variation* not persons
+  (armature §4.2), `population_axis_map` is a retrieval index not a portrait, measured
+  function is inseparable from selfhood (ICF capacity/performance, Kawa, Capability
+  conversion factors), and the person is the ground truth the specification serves.
+  It operationalizes `held-tensions.md` T9.
+- Doctrine: `governance/functional-taxonomy.md` v1.2 (irreducibility principle §0.5;
+  dispositions, curation rules, gates). Staged schema:
+  `working/taxonomy/staged_schema_functional_axes.sql`
   (outside the migration glob). Governed by `governance/held-tensions.md`
   (PROPOSED) — amendments annotated [T1]–[T8] therein.
 - Affects (if ratified): population-layer semantics (via population-taxonomy §5's
@@ -89,6 +96,10 @@ lived-experience review *structure* (mission §Operational reality governs) ·
 
 ## Ratification checklist (owner)
 
+0. Ratify **the irreducibility principle (§0.5)** as the governing preamble — the
+   axes are a retrieval index over specification-variation, never a portrait of a
+   person; the person is the ground truth the taxonomy serves. (Listed first because
+   it conditions how every item below is read.)
 1. Ratify the 17-axis register — or amend membership/granularity.
 2. Ratify dispositions incl. flagged judgment calls: DEAF dual disposition
    (armature's open question, answered as axis-infrastructure + identity-profile
