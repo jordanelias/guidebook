@@ -1,278 +1,335 @@
 # Functional Taxonomy — Two-Layer Model (Axes × Profiles)
 
-**Status: PROPOSED — pending owner ratification.** See
-`decisions/DR-2026-07-21-two-layer-functional-taxonomy.md` for the decision wrapper,
-alternatives considered, and ratification checklist.
-**This document states doctrine; it executes nothing.** No `populations` row, item link,
-or skill file changes until ratification. Staged schema:
-`working/taxonomy/staged_schema_functional_axes.sql` (deliberately outside
-`scripts/migrations/` so `db.py migrate` cannot pick it up).
+**Status: PROPOSED — pending owner ratification.** Version 1.1 (2026-07-21) —
+amended after two adversarial passes (general; lived-experience and global
+non-English standpoints) and reconciliation with canon. Decision wrapper:
+`decisions/DR-2026-07-21-two-layer-functional-taxonomy.md`. Staged schema:
+`working/taxonomy/staged_schema_functional_axes.sql` (outside the migration glob).
+**This document states doctrine; it executes nothing.**
+
+**Architectural basis.** This taxonomy is the data-model execution of
+`governance/armature_v4.md` §§4.2–4.3 and §5 — the two-layer architecture ("Layer 1
+— Functional axes … Layer 2 — Population identity … Neither reduces to the other.
+Both are first-class"; two entry paths, "Neither is primary. Neither is fallback")
+and its impairment-axes candidate set. Version 1.0 of this document was drafted
+without reading the armature and independently re-derived much of it; that
+convergence is evidence for the architecture, and this version defers to the
+armature's vocabulary and mechanisms wherever they are stronger (notably
+mapping-confidence, §3.2). Amendments are annotated **[T1]–[T8]** to the tensions
+they instantiate in `governance/held-tensions.md`, whose bindings govern this
+document.
 
 ---
 
 ## §0 Why taxonomy is the curation gate
 
 Every research entity downstream of this document — slugs, search-log entries, BPC
-files, evidence rows, item links — inherits its selection and attachment rules from the
-population taxonomy. A source is only findable if some entity names the thing it is
-evidence *about*; it is only curatable if some entity exists for it to attach *to*. The
-session audit of 2026-07-21 showed both failure modes live:
+files, evidence rows, item links — inherits its selection and attachment rules from
+the taxonomy. A source is only findable if some entity names what it is evidence
+*about*; it is only curatable if an entity exists for it to attach *to*.
 
-- **Findability failure:** vestibular/balance function has no entity → zero slugs, zero
-  searches, zero ICF `b`-code anchors corpus-wide → an entire evidence base is
-  structurally invisible, regardless of search effort.
-- **Attachment failure:** evidence about MS thermal intolerance attaches to a *diagnosis*
-  parented under "neurological" — an etiological shelf — rather than to the
-  thermoregulation function it is actually about, so sibling populations with the same
-  functional demand (SCI poikilothermia, POTS, older adults) cannot reach it.
+Axes are framed as **person-environment interaction dimensions** — where a person's
+functioning meets an environmental demand — per armature §5 ("Axes are framed as
+person-environment interaction dimensions where possible") and the mission's
+biopsychosocial ground. The taxonomy names demands the *environment* places on
+variable bodies, which is the part designers control; it does not define bodies by
+deficit. **[T1][T2]** Where an ICF `b`-code anchor (a body-function code) appears,
+it serves *findability* — reaching the clinical literatures indexed that way — and
+never serves as a description of any person (population-taxonomy §1.1: codes are
+"an organizing convenience, not a definition of people").
 
-The fix is not more entities of the same kind. It is separating the two kinds that are
-currently fused: **what a body cannot do in an environment** (functional axes) and
-**who the evidence is about** (profiles).
+The 2026-07-21 audit found both curation failure modes live:
 
-## §1 The defect being fixed
+- **Findability failure:** balance/vestibular function was named in canon
+  (armature §5 lists a vestibular axis; `population-taxonomy.md` NEU/PCS names
+  "vestibular") yet is **operationally invisible**: zero ICF b-codes corpus-wide,
+  zero slugs, zero searches in any of 19 tracked languages. Conceptual presence
+  without curation machinery produced structural absence. **Caveat [T1]:** the
+  absence checks were run with English search terms over an EN-heavy corpus; the
+  non-English validation gate (§9.2) exists precisely because "missing" so far
+  means "missing-in-English."
+- **Attachment failure:** evidence about MS thermal intolerance attaches to a
+  diagnosis shelved under "neurological" — an etiological placement — so sibling
+  populations with the same functional demand (SCI poikilothermia, POTS, older
+  adults) cannot reach it.
 
-The current `populations` table (22 rows) plus the unmodeled supplementary-volume
-archetypes (CHD/LPA/EXH/BAR) mix three ontologies under one key:
+## §1 The representations being reconciled
 
-| Kind | Current members | Problem |
+Three representations of the population layer currently coexist and have drifted:
+
+| Representation | Where | Shape |
 |---|---|---|
-| Functional axes | MOB, UPL, VIS, DEAF, PAIN, OFS, SENS | Correct kind, wrong grain (MOB fuses ambulant+wheeled; VIS fuses low-vision+blind) |
-| Diagnoses | MS, POTS, MCAS, CFS, EPI, SCI, ADHD, AUT, PCS, DEM, MH, NEU | Category-thinking §1.3 forbids; several mis-parented (MS←NEU, MCAS←OFS); PCS defined two incompatible ways (DB: post-concussion/cognitive; FDA skill: post-COVID/autonomic) |
-| Archetypes | CHD, LPA, EXH, BAR | Body-envelope classes, absent from the table entirely |
+| Canonical governance taxonomy | `governance/population-taxonomy.md` (CANONICAL, A7) | 11 top-level codes + sub-codes (MOB/AMB, MOB/UPL, NDV/AUT, NDV/ADHD, NDV/SENS, NEU/PCS, OFS/ME, OFS/POTS, OFS/MCAS); supplementary CHD/LPA/EXH/BAR; IntD proxied |
+| Live database | `data/guidebook.db` `populations` | 22 flat codes (sub-codes flattened: AUT, ADHD, MS, EPI, SCI, CFS, POTS, MCAS, PCS…), archetypes absent |
+| This proposal | this document + staged SQL | 17 axes (Layer 1) × profiles (Layer 2) |
 
-Verified consequences (session 2026-07-21, live DB): the corpus contains **zero** ICF
-`b`-codes (body functions) — impairment information therefore smuggles in as diagnoses;
-`d415` (maintaining body position) maps to no population; SENS carries 1 item link
-despite sensory processing being the theoretical core of the NDV corpus; the FDA skill
-audits against codes (`ABI`, `ASD`, `LOW-VISION`) that do not exist in the canonical
-table; `evidence_population_match.target_population` is uncontrolled free text.
+This document **amends-by-proposal** the canonical taxonomy rather than silently
+diverging from it **[T4]**: under ratification, `population-taxonomy.md` §5's own
+change process applies (proposal → decision → enum → governance update). The
+canonical codes are retained as Layer 2 identifiers; where the DB flattened a
+canonical sub-code (e.g. `CFS` for `OFS/ME`, `AUT` for `NDV/AUT`, `PCS` for
+`NEU/PCS`), §4 records the canonical alias and the migration plan re-aligns the DB
+to canon. The defect being fixed is not the canonical codes — it is that the
+canonical structure mixes three ontologies (functional clusters, diagnoses,
+archetypes) in one namespace, which armature §4.2 already resolves into two layers.
 
 ## §2 Layer 1 — Functional axes
 
-An **axis** is an architect-actionable functional-demand primitive: a capacity of the
-person that a design parameter can meet, compensate, or fail. Axes are anchored on ICF
-**body functions (`b`)** mapped to the **activities (`d`)** they limit. Axes are the
-canonical attachment point for mechanism and threshold evidence, and for
-`item_axis_links`. An axis with zero linked slugs or items is a *visible, queryable
-coverage hole* — that visibility is a design goal of this model, not an error state.
+An **axis** is an architect-actionable person-environment interaction dimension:
+an environmental demand that bodies meet variably, which design parameters can
+lower, meet, or fail. Axes anchor mechanism and threshold evidence and
+`item_axis_links`. An axis with zero linked slugs or items is a *visible,
+queryable coverage hole* — by design.
 
 ### §2.1 The axis register (17)
 
-| Axis | Name | ICF `b` anchors | ICF `d` anchors | Mechanism (one line) | Status |
-|---|---|---|---|---|---|
-| `AX-AMB` | Ambulation & gait | b770, b730 | d450, d455, d460 | Walking, stairs, distance, gradients for ambulant users | ESTABLISHED |
-| `AX-WHM` | Wheeled mobility & transfer | b730, b710 | d465, d420, d410 | Wheelchair/scooter geometry, turning, transfer | ESTABLISHED |
-| `AX-REA` | Reach & manipulation | b730, b710 | d440, d445 | Reach ranges, grip, operating force, bilateral/one-hand use | ESTABLISHED |
-| `AX-BAL` | Balance & postural stability | **b235, b240** | **d415**, d410 | (i) biomechanical fall risk; (ii) vestibular-sensory precipitants — environments that *induce* dizziness (pattern, glare, glazed edges, escalators, large open visual fields) | **STUB — new** |
-| `AX-STA` | Stamina & orthostatic tolerance | b455, b130 | d230, d450, d455 | Exertion limits, standing intolerance, PEM; rest/distance/seating economy | ESTABLISHED |
-| `AX-PAI` | Pain-limited function | b280 | d410, d450, d640 | Nociceptive load: impact, vibration, pressure, cold-triggered pain | ESTABLISHED |
-| `AX-THR` | Thermoregulation & autonomic tolerance | b550 | d230 | Impaired heat/cold regulation (Uhthoff, poikilothermia); ambient stability, zoned control | PARTIAL |
-| `AX-CHM` | Chemical & air-quality tolerance | b435, b440 | d230 | Immune/respiratory reaction to VOCs, fragrance, particulates | PARTIAL |
-| `AX-VIS-L` | Low vision | b210 (partial) | d460, d166 | Residual-vision use: contrast, lighting, glare, size | ESTABLISHED |
-| `AX-VIS-N` | Non-visual function | b210 (profound) | d460 | Tactile/auditory substitution: TWSI, acoustic differentiation, braille | ESTABLISHED |
-| `AX-AUD` | Auditory access & alerting | b230 | d310–d329, d115 | Speech access, alert receipt, assistive listening | ESTABLISHED |
-| `AX-SPR` | Sensory processing & modulation | b156, b140 † | d230, d160 | Hyper/hypo-reactivity, sensory load, trigger avoidance (incl. photic) | ESTABLISHED (mislabeled as pop. SENS) |
-| `AX-COG-O` | Orientation & wayfinding cognition | b114, b144 | d460, d175 | Memory, spatial cognition, sequencing, legibility | ESTABLISHED |
-| `AX-COG-L` | Learning & information access | b117, b167 | d166, d310, d315 | Comprehension of environmental information: Easy Read, pictograms, symbol systems | **STUB — new** |
-| `AX-COM-E` | Expressive communication | b320, b330 | d330–d349, d350 | Producing speech/sign/AAC in the environment: counter dwell, sightlines for sign (d340), acoustic conditions for device output | **STUB — new** |
-| `AX-ARO` | Arousal, stress & emotional regulation | b152 | d240 | Threat appraisal, retreat, predictability, defensible space | **STUB — new (currently FDA-scoped-out)** |
-| `AX-CNT` | Continence & elimination urgency | b620, b525 | d530 | Urgency/frequency as plan-driver: proximity, provision count, management space (ostomy/catheter) | **STUB — new** |
+| Axis | Name (interaction-framed) | ICF anchors (findability) | Demand the environment places | Status |
+|---|---|---|---|---|
+| `AX-AMB` | Ambulant movement | b770, b730 · d450, d455, d460 | Continuous walking, stairs, distance, gradients — incl. **floor-level living: floor-sitting, prostration, and floor-to-standing transitions** [T1] | ESTABLISHED |
+| `AX-WHM` | Wheeled movement & transfer | b730, b710 · d465, d420, d410 | Turning, clearance, transfer geometry — independent **and assisted** (two-person, hoist) [T3][T5] | ESTABLISHED |
+| `AX-REA` | Reach & manipulation | b730, b710 · d440, d445 | Reach envelopes, grip, operating force — at chair, counter, **and floor-level** heights | ESTABLISHED |
+| `AX-BAL` | Balance & postural demand | b235, b240 · d415, d410 | (a) fall-risk under gait/transfer load; (b) **environments that precipitate dizziness**: repeating pattern, specular floors, glazed edges at height, escalators, large uniform visual fields | STUB |
+| `AX-STA` | Sustained-exertion demand | b455, b130 · d230, d450 | Standing, queueing, distance without rest; **grid/lift failure converting routes into exertion cliffs** [T1] | ESTABLISHED |
+| `AX-PAI` | Pain-load demand | b280 · d410, d450, d640 | Impact, vibration, pressure, cold. Mechanism spans **nociceptive and centrally-sensitized pain** — fibromyalgia-type pain is not nociception-dominant, and provisions must not assume load-avoidance alone suffices | ESTABLISHED |
+| `AX-THR` | Thermal demand | b550 · d230 | Heat/cold exposure for impaired thermoregulation — via conditioning **and passive means (shading, mass, ventilation) where grids are intermittent** [T1] | PARTIAL |
+| `AX-CHM` | Airborne-exposure demand | b435, b440 · d230 | VOCs, fragrance, particulates, smoke | PARTIAL |
+| `AX-VIS-L` | Low-vision information demand | b210 · d460, d166 | Environments legible through residual vision: contrast, lighting, glare, size | ESTABLISHED |
+| `AX-VIS-N` | Non-visual information demand | b210 · d460 | Environments legible without vision: tactile, acoustic, layout consistency | ESTABLISHED |
+| `AX-AUD` | Auditory access & alerting demand | b230 · d310, d115 | Speech access, alert receipt, assistive listening infrastructure | ESTABLISHED |
+| `AX-SPR` | Sensory-load demand | b156, b140 · d230, d160 | Stimulus intensity, unpredictability, trigger exposure (incl. photic) — ICF under-represents modulation; anchors are nearest-fit, recorded honestly | ESTABLISHED |
+| `AX-COG-O` | Orientation demand | b114, b144 · d460, d175 | Legible-space demands: memory, sequencing, decision-point load | ESTABLISHED |
+| `AX-COG-L` | Information-access demand | b117, b167 · d166, d310, d315 | Legible-information demands: comprehension load of signage and instructions — **across scripts and literacy levels, not only Easy-Read-genre English** [T1] | STUB |
+| `AX-COM-E` | Expressive-communication demand | b320, b330 · d330, d335, d350 | Environments that require producing speech under time/acoustic pressure: counters, intercoms, service interactions; AAC-user dwell and device acoustics. **Signed languages are languages, not deficits: d340 (sign production) is held by the Deaf-community profile (§4), which this axis serves only for sightline/lighting infrastructure** [T2][T3] | STUB |
+| `AX-ARO` | Arousal-safety demand | b152 · d240 | Threat-appraisal load: exposure, unpredictability, lack of retreat or exit legibility | STUB |
+| `AX-CNT` | Toileting-proximity demand | b620, b525 · d530 | Urgency/frequency as plan-driver: distance, provision count, management space (ostomy/catheter; adult-changing provision as need-driven), **squat and sitting WC typologies both first-class** [T1] | STUB |
 
-† ICF represents sensory *modulation* poorly (a known limitation); `b156/b140` are the
-closest anchors. This is recorded honestly rather than forced — consistent with
-thinking-tool posture.
+**Falsification symmetry [T4].** *Every* axis — established and new alike — carries
+a dissolution condition in the staged schema (e.g., AX-AMB/AX-WHM re-merge if
+evidence shows no parameter divergence; AX-BAL merges into AX-AMB if precipitant
+guidance reduces to fall-prevention parameters). New categories do not audition for
+existence under a burden established categories are spared.
 
-Axes deliberately **not** created, with reasons: respiratory (decomposes to `AX-STA` +
-`AX-CHM`; residual O₂-equipment egress note belongs to the egress thread); anthropometric
-fit (archetypes are profiles interacting with `AX-REA`/`AX-WHM` envelopes, not a
-capacity); interoception (research-immature; parked); fluctuation/episodic capacity
-(cross-cutting temporal property of several axes; handled as a profile attribute
-`fluctuating: yes/no`, candidate future axis).
+### §2.2 New-axis specifications (abbreviated)
 
-### §2.2 Specifications for the six new axes
+`AX-BAL`: both mechanisms currently homeless operationally (§0). Proposed slug
+`vestibular-balance-built-environment`, queued per §8. `AX-COG-L`: un-proxies
+intellectual disability for information access (GAP-277); armature §5.1 governs the
+IntD treatment (population-level content + axis entry; minimal-predictive mapping).
+`AX-COM-E`: built-environment residual only; the bulk of communication support is
+human/service scope. `AX-ARO`: rescinds the FDA scope-out of b152/d240 for the
+architecturally actionable subset; trauma-informed design evidence curates here.
+`AX-CNT`: the physiological driver behind provision-count/proximity parameters.
+`AX-CHM`: names the axis the air-quality slug already feeds; re-homes MCAS by
+mechanism.
 
-**`AX-BAL` — Balance & postural stability.** Two distinct mechanisms, both currently
-homeless: *(a) biomechanical* — fall risk under gait/transfer load (handrails, stair
-geometry, slip resistance already exist as items but link only via MOB); *(b)
-vestibular-sensory* — the environment as symptom *precipitant*: high-contrast repeating
-patterns, specular floors, glass balustrades at height, escalators/travelators, large
-uniform visual fields. Mechanism (b) has zero corpus presence (verified). Feeding slug
-(proposed, queued): `vestibular-balance-built-environment`. Falsification: axis merges
-back into `AX-AMB` if research shows precipitant guidance fully reduces to existing
-fall-prevention parameters. Prevalence and mechanism claims **require Tier-anchored
-sourcing before any threshold enters an item** — nothing in this document is citable
-evidence.
+### §2.3 Reconciliation with armature §5 (20-axis candidate set)
 
-**`AX-COG-L` — Learning & information access.** Un-proxies intellectual disability
-(currently "proxied through DEM and NDV" per ToC note; GAP-277 asks the existence
-question this axis answers). Curates: symbol/pictogram comprehension, Easy Read
-signage, plain-language wayfinding, dwell-time tolerance. Distinct from `AX-COG-O`
-(orientation) because the design responses differ: legible *information* vs legible
-*space*.
+The armature's candidate set maps onto this register as follows; granularity
+deltas are ratification items, not silent decisions:
 
-**`AX-COM-E` — Expressive communication.** Receiving-side communication lives in
-`AX-AUD`/`AX-VIS-*`; the producing side has no home. Curates: reception-counter design
-for AAC users (shelf, sightline, time), acoustic conditions for speech-generating
-devices, sign-production sightlines and lighting (d340 — shared custody with the
-Deaf-cultural profile's DeafSpace corpus), intercom/entry systems with non-speech paths
-(H-04). Bulk of communication *support* remains human/service scope — out of remit; the
-built-environment residual is this axis.
-
-**`AX-ARO` — Arousal, stress & emotional regulation.** `b152/d240` are currently
-scoped **out** by the FDA — which leaves MH represented only by proxy codes (routine,
-retreat, interpersonal). Ratifying this axis rescinds that scope-out for the
-architecturally actionable subset: defensible seating (G-01), retreat provision (A-16,
-D-05), stimulus gradient (F-01), sightline control, exit legibility. Trauma-informed
-design evidence curates here.
-
-**`AX-CNT` — Continence & elimination urgency.** d530 is Tier-A spatially dependent,
-yet all bathroom entities are *spatial-geometry* framed (grab bars, turning). This axis
-curates the physiological drivers: urgency→proximity and provision-count parameters,
-frequency→distribution, management space (ostomy/catheter/Changing Places-class
-provision as need-driven, not checkbox). Serves MS, SCI, OFS, IBD/ostomy (future
-profile), older-adult, PAIN.
-
-**`AX-CHM` — Chemical & air-quality tolerance.** Names the axis the
-`air-quality-voc-chemical-sensitivity` slug already feeds; re-homes MCAS correctly
-(immune mechanism, not orthostatic association) and gives asthma/MCS evidence an
-attachment point. Items F-02, F-04.
+| Armature §5 candidate | This register | Note |
+|---|---|---|
+| Ambulatory capacity; Postural control; Transfer capacity | AX-AMB; AX-BAL (postural); AX-WHM (transfer) | Transfer folded into wheeled-movement; **checklist item R6**: keep folded or split per armature |
+| Vestibular function | AX-BAL | Convergent — armature named it first |
+| Limb presence; Reach envelope; Grip & manipulation | AX-REA (+ profile modifier for limb presence) | Limb presence as profile attribute, not axis |
+| Visual acuity / field / processing; Light tolerance | AX-VIS-L, AX-VIS-N, AX-SPR (photic) | Coarser here; armature's finer grain available as axis sub-values at build |
+| Auditory acuity / processing | AX-AUD | Processing sub-values at build |
+| Sensory regulation | AX-SPR | Convergent |
+| Cognitive processing (memory/executive/speed/abstract) | AX-COG-O, AX-COG-L | Armature flags granularity as an A7 decision — unresolved here too; **checklist item R7** |
+| Communication & speech | AX-COM-E | With the d340 carve-out (§2.1) |
+| Pain & fatigue envelope | AX-PAI + AX-STA | Split by mechanism (nociceptive/central vs exertional); both feed pain-ofs slug |
+| Thermoregulation | AX-THR | Convergent |
+| Continence & toileting independence | AX-CNT | Convergent; independence spectrum carried as axis values |
+| **Respiratory / oxygen dependency** | **Divergence — checklist item R8** | v1.0 rejected a respiratory axis (decomposes to AX-STA + AX-CHM + egress thread); armature lists it with concrete spatial consequences (corridor width, bathroom space, lift priority, egress). Both positions are recorded; the owner adjudicates |
 
 ## §3 Layer 2 — Profiles
 
-A **profile** is who evidence is about: a diagnostic, identity-cultural, demographic,
-anthropometric, compound, or umbrella grouping, expressed as **weighted mappings onto
-axes** *plus* **authored emergent content** that is never derived from, and never
-reduced to, the axis layer.
+A **profile** is who evidence is about: population codes (canonical Layer 2
+identifiers), diagnosis-level, identity-level, demographic, anthropometric,
+compound, and umbrella groupings — each carrying weighted axis mappings *plus
+authored emergent content that is never derived from, and never reduced to, the
+axis layer*.
 
-**The emergence guarantee (anti-reductionism clause).** Mature design corpora —
-DeafSpace, dementia-friendly design, ASPECTSS, age-friendly design, DBL tactile-first
-practice — are *authored at profile level* and are not reconstructable as sums of axis
-guidance. Profile-level evidence, and all Co-1 lived-experience evidence, curates
-against profiles and is **never subordinated** to axis-level clinical evidence
-(re-affirming `co1-operational.md`; consistent with DR-2026-07-20 weighted-strength
-bands). Where profile guidance and axis-derived guidance conflict, the conflict is
-**displayed at parity** per the existing convention — this taxonomy adds no precedence
-rule and repudiates the one floated (and retracted) in-session.
+### §3.1 The emergence guarantee **[T3]**
 
-**Profile kinds:** `diagnostic` (ICD-11-anchored where verifiable), `identity-cultural`
-(deliberately **no** ICD anchor — Deaf culture and identity-model neurodivergence are
-not disorders-of-record here), `demographic`, `anthropometric`, `compound`, `umbrella`.
+Mature design corpora — DeafSpace, dementia-friendly design, ASPECTSS, age-friendly
+design, DBL tactile-first practice — are authored at profile level and are not
+reconstructable from axis sums. Profile-level and Co-1 evidence curate against
+profiles and are never subordinated: Co-1 is encoded `tier: 1` (mission #3), so
+lived-experience evidence anchors full-strength (●) claims. Conflicts between
+profile guidance and axis-derived guidance display at parity (held-tensions T7);
+no precedence rule exists.
 
-## §4 Disposition of every existing population code
+### §3.2 Mapping confidence (adopted from armature §4.2) **[T2][T4]**
 
-No rows change until ratification. `ALL` is re-classed as a link-scope **qualifier**
-(it is not a population). Codes are retained for continuity; layer membership is what
-changes.
+Diagnosis-to-axis mappings are *navigation hypotheses, not prescriptions*, graded:
+**high-predictive** (confident pre-fill; e.g. complete T6 SCI), **moderate**
+(sub-classification prompt; validated scaffolds), **low** (explicit high-variation
+disclosure; e.g. MS, ABI), **minimal** (no pre-fill; population content + direct
+axis entry; e.g. IntD). Each mapping's confidence is itself a documented claim with
+provenance. This replaces v1.0's flat PRIMARY/SECONDARY roles as the honesty
+mechanism; the staged schema carries both (role for query weighting, confidence for
+disclosure).
 
-| Code | Disposition | Maps to | Rationale / fixes |
-|---|---|---|---|
-| MOB | AXIS-ALIAS | `AX-AMB` + `AX-WHM` | Fuses ambulant and wheeled users whose parameters differ (stairs vs turning circles); 31 item links to be re-derived per mechanism at harvest |
-| UPL | AXIS-ALIAS | `AX-REA` | Direct |
-| VIS | AXIS-ALIAS | `AX-VIS-L` + `AX-VIS-N` | Low-vision and blindness have partially *inverse* responses (contrast maximisation vs tactile substitution); FDA already splits them informally |
-| DEAF | **Dual** | axis-alias `AX-AUD` **+ Deaf-cultural profile** (identity-cultural, no ICD) | Hearing function is an axis; DeafSpace spatial practice (incl. d340 sign production) is emergent profile content. The one deliberately non-mechanical disposition — flagged for owner attention |
-| SENS | AXIS-ALIAS | `AX-SPR` | Was an axis mislabeled as a population; explains its 1-item-link starvation |
-| PAIN | AXIS-ALIAS | `AX-PAI` | Slug layer already merged pain+fatigue; axes stay distinct (nociception ≠ endurance), both feed `pain-ofs-built-environment-design` |
-| OFS | AXIS-ALIAS | `AX-STA` (+`AX-THR` secondary) | Named umbrella retained as alias for slug continuity |
-| DEM | PROFILE (diagnostic) | `AX-COG-O` primary; `AX-ARO`, `AX-VIS-L`, `AX-AMB` secondary | Carries mature emergent corpus (dementia-friendly design); ICD-11 6D8x TO-VERIFY |
-| NDV | PROFILE (umbrella, identity-cultural framing) | `AX-SPR`, `AX-ARO`, `AX-COG-O` | Umbrella retained; no ICD anchor by design |
-| AUT | PROFILE (diagnostic/identity dual; parent NDV) | `AX-SPR` primary; `AX-ARO`, `AX-COM-E` secondary | **Retained as distinct profile** — ASPECTSS is autism-specific emergent content; the in-session claim that AUT≡NDV was retracted (FDA mapping coarseness, not world-fact). ICD-11 6A02 |
-| ADHD | PROFILE (diagnostic; parent NDV) | `AX-SPR`, `AX-COG-O` | ICD-11 6A05 |
-| MH | PROFILE (umbrella) | **`AX-ARO` primary** (its real axis, currently scoped out); `AX-SPR` secondary | Fixes proxy-only representation |
-| NEU | PROFILE (umbrella: ABI, stroke, TBI…) | `AX-COG-O`, `AX-AMB`, `AX-ARO`, `AX-COM-E` | FDA's `ABI` reconciles here |
-| EPI | PROFILE (diagnostic; parent NEU) | `AX-SPR` (situational: photic/flicker trigger avoidance) | Judgment call documented: seizure is not sensory-*processing*, but the design lever (stimulus control, B-04) lives on that axis; safety adjacency noted |
-| MS | PROFILE (diagnostic) — **re-parented off NEU** | `AX-THR` primary (Uhthoff); `AX-STA`, `AX-AMB`, `AX-VIS-L`, `AX-CNT` | Etiological shelf → functional vector; existing `ms-thermal` slug becomes legible as THR evidence |
-| SCI | PROFILE (diagnostic) — **re-parented off MOB** | `AX-WHM`, `AX-REA`, `AX-THR` (poikilothermia), `AX-CNT`, `AX-PAI` | FDA already noted "biomechanical **+ autonomic**"; the table didn't |
-| POTS | PROFILE (diagnostic; was OFS sub-code) | `AX-STA`, `AX-THR`, `AX-BAL` (situational) | |
-| CFS | PROFILE (diagnostic; was OFS sub-code) | `AX-STA` (PEM note: rest ≠ recovery; `fluctuating: yes`) | |
-| MCAS | PROFILE (diagnostic) — **re-parented off OFS** | `AX-CHM` primary | Was parented by comorbidity, not mechanism |
-| PCS | **SPLIT.** `PCS-TBI` profile (post-concussion) | `AX-BAL`, `AX-SPR` (photo/phonophobia), `AX-COG-O`, `AX-STA` | DB and FDA skill currently define PCS as two different conditions. Split resolves it: post-concussion here (ICD-10 legacy F07.2; ICD-11 mapping TO-VERIFY)… |
-| — | …and `LCOV` profile (post-COVID condition), **new** | `AX-STA` (PEM), `AX-THR`, `AX-COG-O` ("fog") | …post-COVID here (ICD-11 RA02). FDA skill's PCS row reconciles to LCOV |
-| DBL | PROFILE (compound) | `AX-VIS-N` × `AX-AUD` at compound weight | De-privileged as a special population, retained as first-class *profile* with emergent tactile-first corpus (K-04 vibrotactile). Any compound may become a profile when it carries authored content — DBL qualifies; this resolves "why is DBL special" |
-| ALL | QUALIFIER | — | Link-scope marker, not a population; excluded from both layers |
+### §3.3 Membership doctrine **[T2][T4]**
 
-**New profiles admitted (4):** `CHD`, `LPA`, `EXH`, `BAR` (anthropometric; weights on
-`AX-REA`/`AX-WHM`/`AX-AMB` envelope parameters; emergent corpora = Supplementary Volume
-Parts 1–4) · `OLD` older adults (demographic; `AX-VIS-L`+`AX-AUD`+`AX-AMB`+`AX-BAL`+
-`AX-COG-O`+`AX-THR`+`AX-CNT`; age-friendly emergent corpus — readmitted per the
-decomposition-test consistency correction: same emergent-corpus criterion that keeps
-DEM) · `VES` vestibular disorders (diagnostic; `AX-BAL` primary, `AX-SPR` secondary;
-STUB pending slug) · `LCOV` (above).
-**Deferred candidates** (named, not created; queue-behind rule §8 applies): migraine
-(`AX-SPR`+`AX-BAL` — vestibular migraine), aphasia/dysarthria (`AX-COM-E`), IBD/ostomy
-(`AX-CNT`).
+**Diagnosis-optional.** Profiles describe; they never gate. Axis entry retrieves
+every specification with no population selection (armature §4.3 — the two paths are
+peers), so no diagnosis, certification, or code is ever a condition of any
+provision, any Co-1 attachment, or any reader's use. **ICD-11 negative
+commitment:** ICD anchors on diagnostic profiles serve interoperability and
+disambiguation only; they are never required for membership, never gate content,
+and are never used to rank populations. Identity profiles (Deaf community;
+identity-model neurodivergence) carry **no** ICD anchor by design.
+
+**Naming.** Person-first vs identity-first conventions differ *between communities
+and between languages*; the taxonomy defers to each community's stated preference
+in English and to native-language conventions via `term_aliases` — display names
+are presentation-layer, revisable without schema change **[T1][T5]**.
+
+## §4 Disposition of the population layer
+
+No rows change until ratification. Canonical sub-code aliases shown where the DB
+flattened them. `ALL` is a scope qualifier, not a population
+(population-taxonomy §1.3).
+
+| Code (DB) | Canonical | Disposition | Maps to | Rationale / fixes |
+|---|---|---|---|---|
+| MOB | MOB (+MOB/AMB, MOB/UPL) | AXIS-ALIAS | AX-AMB + AX-WHM | Canonical sub-codes already split ambulant/upper-limb; axis layer completes it |
+| UPL | MOB/UPL | AXIS-ALIAS | AX-REA | |
+| VIS | VIS | AXIS-ALIAS | AX-VIS-L + AX-VIS-N | Armature's finer visual axes available at build |
+| DEAF | DEAF | Dual: axis-alias AX-AUD **+ Deaf-community profile** (identity; no ICD) | AX-AUD | Armature §5 poses this exact open question ("identity-recognition question, not just clinical-framing"); this is the proposed answer. DeafSpace corpus and d340 sign-space provisions are held by the profile — signed language as language, with the axis serving infrastructure only |
+| SENS | NDV/SENS | AXIS-ALIAS | AX-SPR | Sub-code was an axis in population clothing; explains its 1-item-link starvation |
+| PAIN | PAIN | AXIS-ALIAS | AX-PAI | Mechanism spans nociceptive + central sensitization (§2.1) |
+| OFS | OFS | AXIS-ALIAS | AX-STA (+AX-THR) | |
+| DEM | DEM | PROFILE (diagnostic; low-predictive) | COG-O primary; ARO, VIS-L, AMB | Emergent corpus: dementia-friendly design |
+| NDV | NDV | PROFILE (umbrella; identity-framed; no ICD) | SPR, ARO, COG-O | |
+| AUT | NDV/AUT | PROFILE (diagnostic/identity dual; parent NDV) | SPR primary; ARO, COM-E | Distinct emergent corpus (ASPECTSS); ICD-11 6A02 |
+| ADHD | NDV/ADHD | PROFILE (diagnostic; parent NDV) | SPR, COG-O | ICD-11 6A05 |
+| MH | NDV/MH (top-level per canon §2.4) | PROFILE (umbrella) | **ARO primary**; SPR | Canon already holds MH top-level for distinct functional profile; ARO gives it the axis it lacked |
+| NEU | NEU | PROFILE (umbrella; low-predictive) | COG-O, AMB, ARO, COM-E | FDA term `ABI` resolves here |
+| EPI | (sub-code proposal: NEU/EPI) | PROFILE (diagnostic) | SPR (situational: photic trigger) | Documented judgment call — checklist item |
+| MS | (sub-code proposal: NEU/MS) | PROFILE (diagnostic; **low-predictive** per armature) | **THR primary** (Uhthoff); STA, AMB, VIS-L, CNT | Re-homed by mechanism, not etiology |
+| SCI | (sub-code proposal: MOB/SCI) | PROFILE (diagnostic; high-predictive at complete lesions, else moderate) | WHM, REA, THR, CNT, PAI | Autonomic demands made visible |
+| POTS | OFS/POTS | PROFILE (diagnostic) | STA, THR, BAL (situational) | |
+| CFS | **OFS/ME** | PROFILE (diagnostic) | STA primary | Canonical name is OFS/ME; display "ME/CFS" per community preference. **Post-exertional malaise is a first-class design constraint: environments must not assume exertion is recoverable by rest — distance, queueing, and standing demands are harm vectors, not inconveniences** [T3] |
+| MCAS | OFS/MCAS | PROFILE (diagnostic) | **CHM primary** | Re-homed by mechanism (immune), not comorbidity. Contested-legitimacy history noted: thin Tier-1 evidence partly reflects historical dismissal; §5.6 intake path applies |
+| PCS | NEU/PCS | **SPLIT**: `PCS-TBI` (post-concussion) | BAL, SPR, COG-O, STA | Canon's NEU/PCS description ("light sensitivity, cognitive fatigue, vestibular") matches PCS-TBI; the FDA skill's "PCS = post-COVID" resolves to LCOV below |
+| — | (new) | `LCOV` PROFILE (post-COVID condition; ICD-11 RA02) | STA (PEM), THR, COG-O | |
+| DBL | DBL | PROFILE (compound; first-class) | VIS-N × AUD at compound weight | Retains full first-class standing with its authored tactile-first corpus; canon §3.1 rule preserved verbatim: DBL ≠ VIS + DEAF. (v1.0's "de-privileged" phrasing is retracted — the change is structural placement, not standing) [T4] |
+| ALL | ALL | QUALIFIER | — | |
+
+**Admitted profiles:** `CHD`, `LPA`, `EXH`, `BAR` (anthropometric; Supplementary
+Volume corpora; BAR containment rule preserved — validator scope extends to the
+profile layer), **`OAD` older adults** (demographic; age-friendly corpus;
+readmitted under the same emergent-corpus criterion that keeps DEM), `VES`
+vestibular disorders (diagnostic; BAL primary; evidence-stub *record status* — the
+status describes the record, never the people **[T4]**), `LCOV` (above).
+**Deferred candidates:** migraine (SPR+BAL), aphasia/dysarthria (COM-E),
+IBD/ostomy (CNT) — named so their absence is visible.
 
 ## §5 Curation rules — what gets curated, and how
 
-1. **Selection principle (the gate).** A source is in-scope iff it bears on (a) an
-   axis mechanism or threshold, (b) a profile's axis-weights or emergent guidance, or
-   (c) an item parameter. Otherwise it is logged out-of-scope with reason. This is the
-   selection principle the slug system currently lacks.
-2. **Attachment.** Mechanism/threshold evidence (clinical, biomechanical,
-   psychophysical) → **axes**. Population-specific outcomes, lived experience (Co-1),
-   cultural design corpora → **profiles**. Spec values and jurisdictional floors →
-   **items** (unchanged). One source may attach at multiple layers.
-3. **Slug discipline.** Every slug declares `serves_axes` (≥1) at creation; existing 79
-   slugs get a backfill pass (post-ratification step). Search-log entries record axis
-   codes henceforth, ending the free-text population drift found in
-   `evidence_population_match.target_population` (to be normalised to codes +
-   elaboration text).
-4. **Strength semantics unchanged.** Tier and `●◐○` banding per
-   DR-2026-07-20 apply at every layer; Co-1 non-subordination per `co1-operational.md`
-   applies at profile layer. This taxonomy adds attachment rules, not strength rules.
-5. **Items.** `item_axis_links` (staged) carries item→axis with a mechanism note and
-   strength band; initial seeding by harvest from the 87 FDA audit briefs
-   (`references/audit-briefs/*_brief.md`), which already contain per-item ICF
-   reasoning in prose. `item_population_links` is retained during transition and
-   re-derived as item→profile (via axes ∪ direct emergent links) after harvest QA.
-6. **Coverage semantics.** `axis with zero slugs` and `axis with zero item links` are
-   standing queryable gap conditions (extend `db.py validate`). The six new axes start
-   as exactly such visible holes — by design.
+1. **Selection principle.** A source is in-scope iff it bears on (a) an axis
+   demand-mechanism or threshold, (b) a profile's mappings or emergent guidance,
+   (c) an item parameter, **(d) a situation (§5.4), or (e) operational access
+   (§5.5)**. Otherwise logged out-of-scope with reason.
+2. **Attachment.** Mechanism/threshold evidence → axes. Population outcomes, Co-1,
+   cultural design corpora → profiles. Spec values and jurisdictional floors →
+   items. First-person accounts → situations. Maintenance/POE/operational evidence
+   → operational-access records against items or buildings.
+3. **Slug discipline.** Every slug declares `serves_axes` (≥1). Reconciliation
+   with population-taxonomy §3.3 ("one slug, one population"): slugs serve *axes*;
+   population linkage is *derived* through the axis layer, so the one-population
+   rule is preserved where a slug is population-scoped and relaxed only at the
+   axis layer — the canonical rule is not violated, it is layered. Search-log
+   entries record axis codes; `evidence_population_match.target_population` is
+   normalised to codes + free-text elaboration.
+4. **Situations entity [T3][T1].** First-person, episode- or journey-level
+   accounts (an induced-vertigo episode in an atrium; a day navigated around
+   toilet access), curated *in the teller's language* with translation held
+   alongside, attaching to items, axes, profiles, or buildings. Situations are
+   never decomposed into axis fragments as their primary representation;
+   decomposition may *reference* them. This is the native Co-1 attachment point
+   and the seed content for questions-led navigation (mission #6).
+5. **Assisted and collective use [T3][T5].** Every axis carries independent /
+   assisted / collective use-mode values where applicable (armature: transfer
+   "independent / assisted / dependent"; carer as distinct role §4.5). Evidence
+   about two-person transfers, hoist clearances, multigenerational and communal
+   use curates first-class — the solo-user default is a disclosed bias, not a
+   frame. The four-framework layering already includes Kawa (project-standards
+   §2026-04-09), whose collectivist ground this operationalizes.
+6. **Intake path for non-DOI evidence [T1][T3].** Gray, oral-history-derived, and
+   DPO-authored evidence without DOI resolvability enters via a defined route:
+   archived copy (or transcript) + provenance record + translation note, tiered
+   normally (Co-1/Tier 3/grey per content), flagged `non_doi_intake`. DOI
+   verification machinery applies where DOIs exist; its absence does not bar
+   intake. This closes the loop where the verification pipeline's strictness
+   would otherwise filter out exactly the evidence Co-1 doctrine protects.
+7. **Strength semantics unchanged.** Tiers, bands, weak-band code-consensus rule
+   per mission #2 and DR-2026-07-20. Co-1 = tier 1 = eligible to anchor ● claims.
+8. **Coverage semantics.** `axis with zero slugs` and `axis with zero item links`
+   are standing gap queries (extend `db.py validate`).
 
-## §6 Vocabulary reconciliation (FDA skill ↔ DB ↔ this document)
+## §6 Vocabulary reconciliation
 
-| FDA skill term | Canonical resolution |
+| Term in use | Canonical resolution |
 |---|---|
-| `ABI` | `NEU` umbrella profile |
-| `ASD` | `AUT` profile |
-| `LOW-VISION` | `AX-VIS-L` axis |
-| `PCS` (= post-COVID, autonomic) | `LCOV` profile |
-| `PCS` (DB: post-concussion, cognitive) | `PCS-TBI` profile |
-| MOB "balance" (mechanism text) | `AX-BAL` (previously unmapped: b235/b240/d415 had zero corpus presence) |
+| `ABI` (FDA skill) | NEU umbrella profile |
+| `ASD` (FDA skill) | NDV/AUT |
+| `LOW-VISION` (FDA skill) | AX-VIS-L |
+| `PCS` = post-COVID (FDA skill) | LCOV |
+| `PCS` = post-concussion (DB) | PCS-TBI (canon NEU/PCS) |
+| `CFS` (DB) | OFS/ME (display: ME/CFS) |
+| `AUT`,`ADHD`,`SENS`,`POTS`,`MCAS` (DB flat) | canonical sub-codes NDV/AUT, NDV/ADHD, NDV/SENS, OFS/POTS, OFS/MCAS |
+| MOB "balance" (FDA mechanism text) | AX-BAL |
 
-Post-ratification, `functional-deficit-auditor_SKILL.md` §1–2 is regenerated from the
-axis register so the audit instrument and the canonical store can no longer drift.
+Post-ratification the FDA skill §§1–2 regenerate from the axis register, ending
+skill↔DB drift; the `PopulationCode` enum change follows population-taxonomy §5's
+process.
 
 ## §7 Compatibility — what this document does NOT change
 
-Item codes A–K (per DR-2026-07-21 namespace rename, entities are `ENT-##`; items keep
-`E-##` etc.) · conflict handling (parity display; §3.9 strategies menu; no precedence
-rule) · tier system and DR-2026-07-20 weighted-strength bands · product posture
-(adjudicates, declines authority) · the `populations` table rows themselves, the FDA
-skill text, and all item links — until ratification · Part 2's prose structure (a
-rendering concern for Phase E, downstream of this doctrine).
+Item codes A–K (entities are `ENT-##` per the rename DR) · parity conflict display
+and §3.9 menu · tier system, bands, Option A weak-band rule · posture ·
+population-taxonomy validator rules (BAR containment, VIS/DEAF non-compound,
+DBL ≠ VIS+DEAF, ALL exclusivity — all preserved and extended to the profile
+layer) · `lang_jur_map` remains empty pending owner-defined PRIMARY/SECONDARY
+criteria per DR-2026-06-11 (v1.0-adjacent session advice to populate it is
+withdrawn) · the mission, audience-priority, armature, and canonical taxonomy
+texts · all DB rows, item links, and skill files — until ratification.
 
-## §8 Coverage holes made visible, and the queue rule
+## §8 Coverage holes, and the queue rule's honest cost
 
-Ratification creates five STUB axes (`AX-BAL`, `AX-COG-L`, `AX-COM-E`, `AX-ARO`,
-`AX-CNT`), one newly *named* PARTIAL axis (`AX-CHM`, already fed by the air-quality
-slug), and two STUB profiles (`VES`, `LCOV`) — with **zero evidence obligations
-attached**. Research execution against them **queues behind the
-existing language/jurisdiction debt** (AR/HI/BN/SW at zero; 3,140 NOT-RUN cells) unless
-the owner explicitly reorders — new taxonomy must not displace declared-debt execution
-(anti-displacement discipline, `workplan/next-steps-synthesis-2026-07-14.md` §4).
-Proposed slug stubs, held until then: `vestibular-balance-built-environment`,
-`egress-under-failure-disability`, `toileting-proximity-urgency-design`.
+Ratification creates five STUB axes, one newly named PARTIAL axis (AX-CHM), and
+two evidence-stub profile records (`VES`, `LCOV`) with zero evidence obligations
+attached. Research execution queues behind the existing language/jurisdiction debt
+(AR/HI/BN/SW at zero; ~82% of coverage cells NOT-RUN) unless the owner reorders.
+**The equity cost of that queue is named, not elided [T1][T3]:** the populations
+these axes serve — newly visible after being structurally invisible — wait longer
+because of a debt they did not create. The queue order is an owner decision made
+for anti-displacement reasons (a governance-capacity constraint), not a judgment
+of priority between people; the checklist (§9) offers the reorder explicitly.
 
-## §9 Migration plan (all steps post-ratification)
+## §9 Migration plan and gates (post-ratification)
 
-1. Apply staged DDL + seeds (`working/taxonomy/staged_schema_functional_axes.sql` →
-   promoted into `scripts/migrations/` with a proper timestamp at apply time).
-2. Backfill `slugs.serves_axes` (79 slugs; mechanical for ~60, judgment for the rest).
-3. Harvest `item_axis_links` from FDA briefs; QA pass; then re-derive
-   `item_population_links`.
-4. Regenerate FDA skill §1–2 from the axis register.
-5. Normalise `evidence_population_match.target_population` to codes + elaboration.
-6. Extend `db.py validate` with the two zero-coverage gap conditions.
-7. Record gaps: close GAP-277 (IntD existence — answered by `AX-COG-L`); open gap rows
-   for the six STUB axes' evidence debts.
+1. **Co-1 review gate [T3][T5].** This taxonomy is *provisional pending
+   lived-experience review* in whatever form the mission's §Operational reality
+   permits: pre-launch, adversarial standpoint passes (the 2026-07-21 pair stand
+   as the form) plus published-Co-1 checks per disposition; post-launch, the
+   consultation infrastructure decides *with* disabled people. Ratification by the
+   owner does not discharge this gate; it schedules it.
+2. **Non-English validation gate [T1].** Before the axis register is frozen: check
+   the 17 axes against `term_aliases` / native-alias machinery and the already-
+   searched JA/DE/ZH/KO/ES/FR strata — do non-English literatures carve the space
+   differently? Divergences are ratification items.
+3. Apply staged DDL + seeds (promoted into `scripts/migrations/` at apply time).
+4. Backfill `slugs.serves_axes` (79 slugs); harvest `item_axis_links` from the 87
+   FDA audit briefs; then re-derive population links.
+5. Regenerate FDA skill §§1–2 from the axis register; follow population-taxonomy
+   §5 for enum changes.
+6. Normalise `evidence_population_match.target_population`.
+7. Extend `db.py validate` with zero-coverage axis queries and profile-layer
+   containment rules.
+8. Close GAP-277 (IntD information-access — answered by AX-COG-L + armature §5.1
+   treatment); open gap rows for STUB-axis evidence debts.
