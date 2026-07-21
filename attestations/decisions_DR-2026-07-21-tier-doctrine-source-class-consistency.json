@@ -1,0 +1,26 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-07-21-tier-doctrine-source-class-consistency",
+ "artifact": "decisions/DR-2026-07-21-tier-doctrine-source-class-consistency.md",
+ "doctrine_sha": "0f2f525",
+ "rules_in_scope": [
+  "doctrine-check",
+  "best-practice-synthesis-routing"
+ ],
+ "per_rule_status": {
+  "doctrine-check": {
+   "status": "FIRED",
+   "evidence_path": "governance/tier-system.md",
+   "reason": "Proposes tier rulings for four source classes (scoping reviews, national accessibility standards, conceptual/framework papers, professional design guides) plus a DOI-error fix, grounded in the live-corpus tiering of each class (ISO/IEC=T4, national_fw=T5, sr_meta=T2). PROPOSED only; the held dedup merges execute on ratification, not by this record."
+  },
+  "best-practice-synthesis-routing": {
+   "status": "FIRED",
+   "evidence_path": "governance/tier-system.md",
+   "reason": "Tier assignment routes what strength band a source anchors at (mission doctrine #2 / weighted-strength model). Correcting mis-tiered foundational sources (ASPECTSS, DIN 18040, the RIBA guide, the Black scoping review) directly affects which best-practice claims they can anchor, so the routing rule is in scope."
+  }
+ },
+ "deviations": [],
+ "bias_direction": "The agent proposing tier rulings has an interest in choosing tiers that make the held dedup batch mergeable (closing its own thread), which could bias toward whichever tier resolves the conflict most cleanly rather than the doctrinally-correct one. Bounded by: each ruling is anchored to the live-corpus modal tiering of its class (queried, not asserted); the two genuine judgment calls (standard-vs-code-floor; design-guide T5-vs-Co-3) are flagged explicitly for the owner; and nothing executes until ratification.",
+ "independent_reviewer_counterclaim": "A reviewer could argue this smuggles substantive re-tiering of load-bearing sources (ASPECTSS, DIN 18040) into what was framed as a hygiene/dedup exercise, lowering their anchoring strength without a full evidence-architecture review. Response: the DR does not lower tiers to a convenient value — it aligns each source to how the corpus already tiers its class, and where genuine latitude exists it defers to the owner rather than deciding; the alternative (leaving the same source at two contradictory tiers) is the larger integrity defect.",
+ "verdict": "CLEAN"
+}

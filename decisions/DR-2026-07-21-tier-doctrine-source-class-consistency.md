@@ -1,0 +1,73 @@
+# DR-2026-07-21: Tier-doctrine consistency for four source classes (+ Steinfeld DOI-error)
+
+- Status: **PROPOSED — pending owner ratification.** Surfaced by the same-DOI dedup batch
+  (`workplan/dedup-audit-same-doi-multi-refid-2026-07-21.md`): the held groups can't be merged without
+  first ruling the *tier* of the source, because the corpus tiers the same source differently across
+  ingest passes. This DR **proposes the rulings and does not execute** the merges — they run on
+  ratification, exactly as the dedup batch held them for.
+- Date: 2026-07-21
+- Prepared by: Claude, on owner directive 2026-07-21 ("perform (i)").
+- Affects (if ratified): the four held dedup groups + Black + Steinfeld; a short clarification to
+  `governance/tier-system.md` on scoping reviews vs. systematic reviews, and on national accessibility
+  standards vs. adopted code floors.
+- Related: `governance/tier-system.md` (§2 tier definitions; §8 weighted-strength bands);
+  `DR-2026-07-20-weighted-strength-anchor-model`; the dedup workplan; `DR-2026-07-13-…evidence-hierarchy`.
+
+## Context — same-DOI dedup keeps surfacing tier drift
+
+Deduping same-work rows repeatedly hit **tier disagreement between the duplicates** (the same source
+tiered differently by different passes). Merging forces one tier, which is an evidence-doctrine call, not
+a dedup — so six groups were held. Grounding query over the live corpus shows the *classes* are mostly
+consistent already, which anchors the rulings below:
+
+- **International technical standards** (ISO, IEC): **T4** — 14 ISO + 5 IEC rows, all T4. (Consistent.)
+- **National frameworks** (`national_fw`): **T5** — 131 rows, all T5. (Consistent.)
+- **Systematic reviews / meta-analyses** (`sr_meta`): **T2** — 56 rows, all T2. (Consistent.)
+- **National accessibility *standards*** (DIN 18040, BS 8300, AS 1428): **inconsistent** — DIN spread
+  across T3/T4/T5/T6; but BS 8300 sits predominantly at **T5** `national_fw`. This is the real gap.
+
+## Decision — five rulings
+
+1. **Scoping reviews are T3, not T2 (`sr_meta`).** `sr_meta` (T2) is reserved for *systematic* reviews
+   and meta-analyses — a defined method with risk-of-bias appraisal and/or effect synthesis. A **scoping
+   review** maps a literature without appraisal and is a weaker synthesis; it anchors at T3.
+   → **Black** ("Considerations of the built environment for autistic individuals", verified a scoping
+   review of 28 studies): re-tier T2 `sr_meta` → **T3**, then merge (canonical REF-00589, best metadata).
+
+2. **National accessibility standards are T5 (`national_fw`) at the standard level.** DIN 18040 / BS 8300 /
+   AS 1428 as *standards* are national recommended practice → **T5** (aligning with BS 8300's dominant
+   treatment and the invariant `national_fw` = T5). The **exception**, preserved: where a citation is
+   specifically to a provision **adopted as a mandatory code floor** (e.g. via the Technische
+   Baubestimmungen), that instance is T6 `code` (weak-band convergence floor). The deduped canonical
+   carries the **standard-level T5** unless the surviving citation is specifically the code-floor use.
+   → **DIN 18040-2** and **DIN 18040-1** groups: normalize the canonical to **T5**, then merge.
+
+3. **Peer-reviewed conceptual/framework papers are T3, not T2.** A framework-proposing primary paper
+   (peer-reviewed, but not a synthesis) is T3, not `sr_meta`. → **ASPECTSS** (Mostafa 2014, "Architecture
+   for Autism", ArchNet-IJAR — a design-index framework paper): re-tier the T2 rows → **T3**, then merge.
+
+4. **Professional design guides are T5 (`national_fw`), not T1/T2.** A professional-body design guide is
+   recommended practice, neither primary research (T1) nor systematic review (T2). → **RIBA/Habinteg/CAE
+   Inclusive Housing Design Guide (2024)**: normalize to **T5**, then merge. (If the owner prefers the
+   practitioner `practice`/Co-3 stream from `DR-2026-07-20`, that is the alternative; T5 is the pragmatic
+   default.)
+
+5. **Steinfeld is a DOI-error, not a duplicate — fix, don't merge.** DOI `10.1080/10400430903520280`
+   belongs to the journal article **REF-00059** (confirmed by PMID 20402047). The "Final Report"
+   (REF-00060) and the "International Comparison" (REF-00192) are **different works** that inherited the
+   wrong DOI. → **null the erroneous DOI** on REF-00060 and REF-00192 (correct DOIs TBD; a report may have
+   none), with a note. This removes the false-duplicate without fabricating identifiers.
+
+## Consequences if ratified
+One dedup/re-tier migration resolving the six held groups (2 re-tiers to T3 for Black/ASPECTSS;
+normalize DIN and the RIBA guide to T5; merge; Steinfeld DOI-null). A two-line clarification to
+`tier-system.md` §2 (scoping-review ≠ systematic-review; national-standard-vs-code-floor). Distinct
+linked sources drop further as the last twins merge. No source deleted (forward-only supersession).
+
+## What would make this ACCEPTED
+Owner confirms the five rulings — in particular (2)'s standard-vs-code-floor split and (4)'s T5-vs-Co-3
+choice for professional design guides, the two genuine judgment calls. Rulings 1, 3, 5 are
+doctrine-consistency corrections with little latitude.
+
+## Revision history
+- v1 (2026-07-21): initial proposal on owner directive, grounded in the live-corpus class tiering.
