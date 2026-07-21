@@ -5,13 +5,19 @@
  "doctrine_sha": "0f2f525",
  "rules_in_scope": [
   "doctrine-check",
-  "best-practice-synthesis-routing"
+  "best-practice-synthesis-routing",
+  "adherence-logging-and-attestation"
  ],
  "per_rule_status": {
   "doctrine-check": {
    "status": "FIRED",
    "evidence_path": "governance/tier-system.md",
    "reason": "Proposes tier rulings for four source classes (scoping reviews, national accessibility standards, conceptual/framework papers, professional design guides) plus a DOI-error fix, grounded in the live-corpus tiering of each class (ISO/IEC=T4, national_fw=T5, sr_meta=T2). PROPOSED only; the held dedup merges execute on ratification, not by this record."
+  },
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "attestations/decisions_DR-2026-07-21-tier-doctrine-source-class-consistency.json",
+   "reason": "PI rule #11 attestation obligation for the new decision record; this attestation is that rule firing, grounded against current doctrine 0f2f525 with the currency-proof [DOCTRINE: 0f2f525] token in the landing commit."
   },
   "best-practice-synthesis-routing": {
    "status": "FIRED",
