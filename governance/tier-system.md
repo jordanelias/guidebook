@@ -34,6 +34,8 @@ The reasoning, in declining priority:
 
 The four sr_meta rows previously sitting at T3 are migrated to T2 by `scripts/migrations/data_20260525070000_sr_meta_t2_canonicalization.sql`.
 
+**Scoping reviews and conceptual/framework papers are T3, not T2 (DR-2026-07-21).** `sr_meta` (T2) is reserved for *systematic* reviews and meta-analyses — a defined method with risk-of-bias appraisal and/or effect synthesis. A **scoping review** maps a literature without appraisal (a weaker synthesis) and anchors at **T3**; a peer-reviewed **conceptual/framework paper** (e.g. a design-index proposal such as ASPECTSS) is primary work, also **T3**. Relatedly (DR-2026-07-21): **national accessibility standards** (DIN 18040, BS 8300) and **professional-body design guides** (e.g. the RIBA/Habinteg Inclusive Housing Design Guide) sit at **T5** `national_fw` at the standard/guidance level — a specific provision only becomes T6 when cited as a legally-enforceable adopted code floor (the T5-vs-T6 split already drawn in §1's table).
+
 ## 3. Best-practice ≠ convergence
 
 A separate canonical clarification, surfaced 2026-05-25 during reverification scoping.

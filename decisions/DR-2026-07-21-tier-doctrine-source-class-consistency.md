@@ -1,10 +1,11 @@
 # DR-2026-07-21: Tier-doctrine consistency for four source classes (+ Steinfeld DOI-error)
 
-- Status: **PROPOSED — pending owner ratification.** Surfaced by the same-DOI dedup batch
+- Status: **RATIFIED — owner directive 2026-07-21.** Surfaced by the same-DOI dedup batch
   (`workplan/dedup-audit-same-doi-multi-refid-2026-07-21.md`): the held groups can't be merged without
   first ruling the *tier* of the source, because the corpus tiers the same source differently across
-  ingest passes. This DR **proposes the rulings and does not execute** the merges — they run on
-  ratification, exactly as the dedup batch held them for.
+  ingest passes. All five rulings ACCEPTED as proposed; the held-group merges/re-tiers and the Steinfeld
+  DOI-fix are executed in migration `data_2026-07-21-…dedup-held-ratified`, and the §2 clarification is
+  applied to `governance/tier-system.md`. (Was: PROPOSED — pending owner ratification.)
 - Date: 2026-07-21
 - Prepared by: Claude, on owner directive 2026-07-21 ("perform (i)").
 - Affects (if ratified): the four held dedup groups + Black + Steinfeld; a short clarification to
@@ -71,3 +72,6 @@ doctrine-consistency corrections with little latitude.
 
 ## Revision history
 - v1 (2026-07-21): initial proposal on owner directive, grounded in the live-corpus class tiering.
+- v2 (2026-07-21): RATIFIED by owner. All five rulings accepted (incl. the standard-vs-code-floor split
+  and the design-guide → T5 default). Held-group merges/re-tiers + Steinfeld DOI-fix executed; §2
+  clarification applied to tier-system.md.
