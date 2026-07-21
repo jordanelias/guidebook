@@ -46,15 +46,23 @@ retained. **Distinct linked `ref_id`s 780 → 762.** Determinism + integrity cle
 REF-00901, REF-00134, REF-00030, REF-00223 (absorbed 3 twins), REF-00570, REF-00296, REF-00069,
 REF-00542, REF-00007, REF-00202, REF-00033, REF-00301, REF-00395, REF-00393, REF-00488, REF-00090.
 
-**HELD — 6 groups need per-case judgment, deliberately NOT merged mechanically:**
-- **Tier-conflict (4)** — same work carried at *different tiers* across rows; merging forces a tier choice,
-  which is an evidence-adjudication call, not a dedup: `10.1016/S0140-6736(14)61006-0` (Keall, T1 vs T3 —
-  likely T1 RCT), `10.1016/j.msard.2022.104075` (Christogianni, T2 vs T3; note one row already unlinked),
-  `10.1177/13623613221102753` (Black, T2 vs T3), `10.2196/69442` (Levine, T1 vs T3 + paraphrased title).
-- **DOI-error (2)** — rows share a DOI but describe *different works* → not duplicates; one row has a
-  wrong DOI to correct: `10.1016/j.buildenv.2021.108352` (REF-00171 "Accessible toilet failures" ≠ the
-  Zallio IDEA paper), `10.1080/10400430903520280` (Steinfeld — article vs "Final Report" vs "standard",
-  3 distinct outputs).
+**RESOLVED — 4 of the 6 held groups merged after per-case adjudication** (migration
+`data_20260721204803_…dedup-held-tierconflict`; 7 duplicate rows superseded; distinct linked 762 → 756):
+- `10.1016/S0140-6736(14)61006-0` (**Keall**) — HIPI **RCT** (Lancet 2015) → **T1**; canonical REF-00373.
+- `10.1016/j.msard.2022.104075` (**Christogianni**) — patient survey, **not** a standard → tier-fixed
+  T2 `standard_eb` → **T3 clinical**; canonical REF-00254.
+- `10.1016/j.buildenv.2021.108352` (**Zallio**) — NOT a DOI-error: REF-00171's own note confirms
+  "Accessible toilet failures" is claim-framing of the same IDEA paper → **T3** merge; canonical REF-00136.
+- `10.2196/69442` (**Levine**) — verified observational **biomechanical** study (motion capture/ANOVA,
+  JMIR 2025 e69442), **not** an RCT → tier-fixed T1 → **T3 clinical**; canonical REF-00367.
+
+**STILL HELD — 2 groups:**
+- `10.1177/13623613221102753` (**Black**) — verified a **scoping review** (5 databases, 28 studies).
+  Contested tier: the 07-20 pass set T2 `sr_meta`, but strict doctrine reserves `sr_meta` for *systematic*
+  reviews/meta-analyses — a scoping review is arguably T3. Needs an owner/tier-doctrine ruling before merge.
+- `10.1080/10400430903520280` (**Steinfeld**) — genuine DOI-error: 3 *distinct* outputs (journal article
+  REF-00059 holds the DOI by PMID; "Final Report" REF-00060 and "International Comparison" REF-00192 are
+  different works). Needs bibliographic verification of the correct DOIs — a correction, not a merge.
 
 **Still to verify — 5 likely-legit container-DOI splits:** DIN standards `10.31030/1715500` `…/1803049`
 `…/2853913`; Routledge book `10.4324/9781003564164`; ArchNet-IJAR `10.26687/…`. Confirm each `ref_id` is

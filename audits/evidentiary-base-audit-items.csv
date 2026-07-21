@@ -60,7 +60,7 @@ E-10,E,Circulation and Access,Rest Seating at Regular Intervals on All Accessibl
 E-11,E,Circulation and Access,Automatic Sliding Entry and Internal Doors,threshold-door-hardware,full,B,77.8,32,2,10,20,0,26,13,46.9,31.2
 E-12,E,Circulation and Access,Entrance Landing and Manoeuvring Space for Power Wheelchair Users,accessible-circulation-geometry,full,B,78.0,14,3,4,7,0,9,6,64.3,50.0
 E-13,E,Circulation and Access,Entrance Cognitive Legibility Provisions,cognitive-wayfinding-design,full,A,89.6,25,16,7,2,0,13,9,64.0,8.0
-E-15,E,Circulation and Access,"Changing Places Facility (Height-Adjustable Bench, Overhead",accessible-bathroom-and-grab-bar,full,A,81.8,23,12,5,5,1,13,7,73.9,65.0
+E-15,E,Circulation and Access,"Changing Places Facility (Height-Adjustable Bench, Overhead",accessible-bathroom-and-grab-bar,full,A,81.2,22,11,5,5,1,12,7,72.7,68.4
 F-01,F,Sensory Environment,Sensory Gradient (High to Low Stimulation from Entry to Occupation),sensory-processing-model-design-application,full,C,54.8,6,4,2,0,0,4,1,100.0,50.0
 F-02,F,Sensory Environment,Olfactory Control (Fragrance-Free Zones in Sensitive Areas),air-quality-voc-chemical-sensitivity-built-environment,full,B,65.8,12,7,5,0,0,7,1,100.0,50.0
 F-03,F,Sensory Environment,Graduated Stimulation Re-entry (Sensory Room to General Space Transition),sensory-relief-space-design,full,C,59.3,10,7,1,1,1,6,1,100.0,80.0
@@ -71,8 +71,8 @@ F-07,F,Sensory Environment,Thermal Zoning — Building-Wide Temperature Manageme
 F-08,F,Sensory Environment,Thermal Transition — Heating and Cooling System Response,thermoregulation-built-environment,full,D,44.1,5,2,1,2,0,1,1,100.0,0.0
 G-01,G,"Furniture, Fixtures and Spatial Layout","Defensible Seating (Back-to-Wall, Entry Sightline Configuration)",mental-health-built-environment,full,A,85.5,37,27,3,6,1,11,5,59.5,29.7
 G-02,G,"Furniture, Fixtures and Spatial Layout",Variety of Seating Types (Three Heights at Every Seating Area),,no-source,—,,,,,,,,,,
-G-03,G,"Furniture, Fixtures and Spatial Layout",Grab Bars in All Accessible Bathrooms (Clinical Positioning and Bilateral),accessible-bathroom-and-grab-bar,full,A,81.8,23,12,5,5,1,13,7,73.9,65.0
-G-04,G,"Furniture, Fixtures and Spatial Layout",Accessible Bathroom (Wet Room Configuration — Zero Threshold),accessible-bathroom-and-grab-bar,full,A,81.8,23,12,5,5,1,13,7,73.9,65.0
+G-03,G,"Furniture, Fixtures and Spatial Layout",Grab Bars in All Accessible Bathrooms (Clinical Positioning and Bilateral),accessible-bathroom-and-grab-bar,full,A,81.2,22,11,5,5,1,12,7,72.7,68.4
+G-04,G,"Furniture, Fixtures and Spatial Layout",Accessible Bathroom (Wet Room Configuration — Zero Threshold),accessible-bathroom-and-grab-bar,full,A,81.2,22,11,5,5,1,12,7,72.7,68.4
 G-05,G,"Furniture, Fixtures and Spatial Layout",Adjustable-Height Work Surfaces and Desks (650--870 mm AFF Range),residential-kitchen-and-task-surfaces,full,A,85.2,30,20,5,5,0,10,7,80.0,46.2
 G-06,G,"Furniture, Fixtures and Spatial Layout",Reception Counter (Accessible Height Section — 760--860 mm AFF),reach-range-and-accessible-controls,full,C,60.2,11,1,5,5,0,6,3,81.8,81.8
 G-07,G,"Furniture, Fixtures and Spatial Layout",Waiting Area Seating (Accessible Configuration — Adjacent to Service Points),,no-source,—,,,,,,,,,,
@@ -85,8 +85,8 @@ H-04,H,Controls and Technology,Accessible Intercom and Video Door Entry with Vis
 H-05,H,Controls and Technology,Emergency Call — Multi-Position Reach Envelope,reach-range-and-accessible-controls,full,C,60.2,11,1,5,5,0,6,3,81.8,81.8
 I-01,I,Hardware and Fixtures,"Hardware Throughout (Lever, D-Pull, One-Hand Operable, ≤22 N)",threshold-door-hardware,full,B,77.8,32,2,10,20,0,26,13,46.9,31.2
 I-02,I,Hardware and Fixtures,Kitchen (One-Handed Operation Throughout),residential-kitchen-and-task-surfaces,full,A,85.2,30,20,5,5,0,10,7,80.0,46.2
-I-03,I,Hardware and Fixtures,"Bathroom (UPL Anti-Scald, Bilateral Grab Bars, One-Hand Operation)",accessible-bathroom-and-grab-bar,full,A,81.8,23,12,5,5,1,13,7,73.9,65.0
-I-04,I,Hardware and Fixtures,Ceiling Hoist Provision,accessible-bathroom-and-grab-bar,full,A,81.8,23,12,5,5,1,13,7,73.9,65.0
+I-03,I,Hardware and Fixtures,"Bathroom (UPL Anti-Scald, Bilateral Grab Bars, One-Hand Operation)",accessible-bathroom-and-grab-bar,full,A,81.2,22,11,5,5,1,12,7,72.7,68.4
+I-04,I,Hardware and Fixtures,Ceiling Hoist Provision,accessible-bathroom-and-grab-bar,full,A,81.2,22,11,5,5,1,12,7,72.7,68.4
 K-01,K,DeafBlind Provisions,Intervenor Adjacency at Service Counters,deafblind-built-environment-design,full,B,74.3,9,7,0,2,0,5,3,66.7,44.4
 K-02,K,DeafBlind Provisions,Tactile Building Map Station at Principal Entrance,deafblind-built-environment-design,full,B,74.3,9,7,0,2,0,5,3,66.7,44.4
 K-03,K,DeafBlind Provisions,Haptic Communication Clear Floor Zone,deafblind-built-environment-design,full,B,74.3,9,7,0,2,0,5,3,66.7,44.4
