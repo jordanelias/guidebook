@@ -1,10 +1,11 @@
 # DR-2026-07-21: Product posture — the Guidebook adjudicates evidence and declines authority
 
-- Status: **PROPOSED — pending owner ratification.** Authored on owner directive 2026-07-21 to
-  record the standing product posture that has been re-litigated across many sessions but never
-  captured as a decision record. This DR **states and does not execute** any engine or content
-  change; its purpose is to end the re-litigation and give downstream sessions one canonical answer
-  to "what is this product, and what may it claim?"
+- Status: **RATIFIED — owner directive 2026-07-21** (merge of PR #46 + explicit owner ratification).
+  Records the standing product posture that has been re-litigated across many sessions but never
+  captured as a decision record. Its purpose is to end the re-litigation and give downstream sessions
+  one canonical answer to "what is this product, and what may it claim?" The posture itself is now
+  doctrine; its consequences (the mission:16 disambiguation edit and the anti-displacement freeze,
+  §Consequences) are in force and executed as separate, tracked follow-ups — not by this record.
 - Date: 2026-07-21
 - Prepared by: Claude, quoting the owner's own framing (owner messages, 2026-07-21).
 - Affects (if ratified): `governance/mission-and-epistemics.md` (the "thinking tool / does not dictate
@@ -102,3 +103,8 @@ anti-displacement clause (consequence 2) is in force from ratification.
 - v1 (2026-07-21): initial proposal on owner directive, corrected framing (adjudicate hard / present
   transparently / decline authority), superseding an earlier draft framing that wrongly implied pruning
   the adjudication machinery.
+- v2 (2026-07-21): RATIFIED by owner (merge of PR #46 + explicit directive). Clarification recorded per
+  owner: the machinery adjudicates the *evidence* (determines the best-supported figure at a stated
+  strength); the *end product* — the website as it presents to a person — does not adjudicate a correct
+  answer for that person's building. Adjudicate the evidence; present figures for thought; never
+  adjudicate the reader's conclusion.
