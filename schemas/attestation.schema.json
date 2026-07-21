@@ -49,7 +49,24 @@
     },
     "bias_direction":                    { "type": "string", "minLength": 30 },
     "independent_reviewer_counterclaim": { "type": "string", "minLength": 30 },
-    "verdict": { "enum": ["CLEAN","DEVIATION-LOGGED","NON-COMPLIANT","REVERT"] }
+    "verdict": { "enum": ["CLEAN","DEVIATION-LOGGED","NON-COMPLIANT","REVERT"] },
+    "reattestation": {
+      "type": "array",
+      "description": "Forward-only re-grounding log (DR-2026-07-21). Each entry records a re-attestation against a later doctrine state; the top-level doctrine_sha tracks the most recent grounding. Never rewrite a prior entry.",
+      "items": {
+        "type": "object",
+        "required": ["prior_doctrine_sha", "delta_ref", "materiality", "reason"],
+        "properties": {
+          "prior_doctrine_sha": { "type": "string", "pattern": "^[a-f0-9]{7}$" },
+          "new_doctrine_sha":   { "type": "string", "pattern": "^[a-f0-9]{7}$" },
+          "delta_ref":          { "type": "string", "minLength": 3, "description": "Doctrine-state id or commit that defines the delta (see governance/doctrine-deltas.json)" },
+          "materiality":        { "enum": ["MATERIAL", "IMMATERIAL"] },
+          "verdict_change":     { "enum": ["none", "CLEAN", "DEVIATION-LOGGED", "NON-COMPLIANT", "REVERT"] },
+          "reason":             { "type": "string", "minLength": 20 }
+        },
+        "additionalProperties": false
+      }
+    }
   },
   "additionalProperties": false
 }

@@ -1,0 +1,69 @@
+{
+  "_purpose": "Doctrine-state manifest for materiality-scoped re-attestation (DR-2026-07-21). Each state records a doctrine version of governance/mission-and-epistemics.md with BOTH its blob-sha and commit-sha aliases (resolving the SHA-identity drift flagged in DR-2026-07-14), the delta adopted INTO that state, and which artifacts that delta is material to (matched by substring on the attestation's `artifact` path, or by rule id). check #7 flags an attestation as owing re-grounding only when a delta adopted AFTER its grounding is material to it. Immaterial artifacts pass untouched. States are ordered oldest->newest; `current` names the head blob.",
+  "doctrine_path": "governance/mission-and-epistemics.md",
+  "current": "0f2f525",
+  "states": [
+    {
+      "order": 1,
+      "delta_id": "D-2026-06-evidence-ladder",
+      "blob": "3da73bd",
+      "commit": "3fb2882",
+      "aliases": [],
+      "date": "2026-06-10",
+      "delta_summary": "Evidence hierarchy reconciled to the ratified ladder (D-A/D-D/D-E; sr_meta at T2; T3 redefined; directness + mode-asymmetry). Grounding floor for the current backlog.",
+      "material": { "path_contains": [], "rule_ids": [] }
+    },
+    {
+      "order": 2,
+      "delta_id": "D-2026-07-13-core-reconcile",
+      "blob": "dbd26e4",
+      "commit": "92122f2",
+      "aliases": ["e508657", "1147384"],
+      "date": "2026-07-13",
+      "delta_summary": "Owner ratification executed (16 DRs ACCEPTED); core doctrine reconciled; Q14 adversarial pass.",
+      "material": {
+        "path_contains": ["evidence-architecture", "evidence-cell-state", "evidence-hierarchy", "evidence-metadata", "tier3-stated", "tier-model", "weighted-strength", "best-practice-supersession", "synthesis-model", "value-genealogy", "sr-meta", "source-value-extractions", "e2g-reverification"],
+        "rule_ids": []
+      }
+    },
+    {
+      "order": 3,
+      "delta_id": "D-2026-07-13-person-mode-a",
+      "blob": "8a5a717",
+      "commit": "32f3c49",
+      "aliases": [],
+      "date": "2026-07-13",
+      "delta_summary": "Person Mode is the individual's own functional needs, not a point on a population range.",
+      "material": {
+        "path_contains": ["person-mode", "three-modes", "integrity-protocol", "intra-category-cross-test"],
+        "rule_ids": []
+      }
+    },
+    {
+      "order": 4,
+      "delta_id": "D-2026-07-14-person-mode-sweep",
+      "blob": "373255e",
+      "commit": "c6109ec",
+      "aliases": [],
+      "date": "2026-07-14",
+      "delta_summary": "Person Mode reconciliation completed across canonical governance; the population range informs the assessment but never bounds the person's answer.",
+      "material": {
+        "path_contains": ["person-mode", "three-modes", "integrity-protocol", "intra-category-cross-test"],
+        "rule_ids": []
+      }
+    },
+    {
+      "order": 5,
+      "delta_id": "D-2026-07-21-weak-band",
+      "blob": "0f2f525",
+      "commit": "67f2b02",
+      "aliases": [],
+      "date": "2026-07-21",
+      "delta_summary": "Doctrine #2 reconciled to the weak band: a best-practice claim from code consensus alone is a flagged weak (circle) claim, not 'in error' (DR-2026-07-21-evidence-architecture-option-a-execution).",
+      "material": {
+        "path_contains": ["best-practice", "evidence-architecture", "evidence-cell-state", "evidence-hierarchy", "evidence-metadata", "tier3-stated", "tier-model", "weighted-strength", "value-genealogy", "supersession", "synthesis-model", "sr-meta", "grey-noneng", "retracted-slice", "anchor-correctness", "bathroom-typology", "ws2-remainder", "option-a-execution", "intra-category-cross-test"],
+        "rule_ids": []
+      }
+    }
+  ]
+}
