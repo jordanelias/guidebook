@@ -1,0 +1,32 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-07-21-product-posture-capture",
+ "artifact": "decisions/DR-2026-07-21-product-posture-thinking-tool-not-authority.md",
+ "doctrine_sha": "0f2f525",
+ "rules_in_scope": [
+  "doctrine-check",
+  "best-practice-synthesis-routing",
+  "adherence-logging-and-attestation"
+ ],
+ "per_rule_status": {
+  "doctrine-check": {
+   "status": "FIRED",
+   "evidence_path": "governance/mission-and-epistemics.md",
+   "reason": "This DR reconciles the mission's 'does not dictate values / thinking tool' language with the requirement that the machinery adjudicate to determine a best-supported figure. It records the adjudicate-vs-dictate disambiguation (decline authority, not adjudication) and requests that mission-and-epistemics:16 carry it. Authored as PROPOSED; no doctrine text is edited by this DR."
+  },
+  "best-practice-synthesis-routing": {
+   "status": "FIRED",
+   "evidence_path": "decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md",
+   "reason": "The posture depends on and affirms the weak-band routing already ratified in Option A: every determination renders at a stated strength band as a figure for thought, never suppressed and never promoted to unflagged authority. This DR states why that routing is load-bearing rather than changing it."
+  },
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "attestations/decisions_DR-2026-07-21-product-posture-thinking-tool-not-authority.json",
+   "reason": "PI rule #11 attestation obligation for the new decision record; this attestation is that rule firing, grounded against current doctrine 0f2f525 with the self-authorship bias disclosed below."
+  }
+ },
+ "deviations": [],
+ "bias_direction": "The agent authored both the adversarial analysis that recommended this DR and the DR itself, and the posture it records lowers the bar for shipping (a 'figure for thought' is easier to defend than 'authority'), which could rationalize the very synthesis backlog the analysis flagged as unbuilt. Bounded by: the DR explicitly AFFIRMS and does not prune the adjudication engine (it makes adjudication the protected priority, not the thing de-scoped); it is PROPOSED, not enacted, so the owner ratifies; and it re-imposes the anti-displacement clause against the agent's own documented tendency toward tractable governance work.",
+ "independent_reviewer_counterclaim": "A reviewer could argue this DR launders the project's reliability problem: relabelling solo+AI adjudicated values as 'figures for thought' to dodge external validation while still publishing them to readers who will treat them as authority regardless of the disclaimer. Response: the posture keeps full transparency and per-figure strength-flagging (the reader is shown the evidence and its weakness, not a bare number), it affirms adjudication rigor rather than lowering it, and it leaves counsel/DPO review as a separate, still-binding launch gate (governance/legal-regulatory.md) that a disclaimer does not satisfy and this DR does not claim to satisfy.",
+ "verdict": "CLEAN"
+}
