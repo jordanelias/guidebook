@@ -1,7 +1,7 @@
 {
  "schema_version": "1.0",
  "session": "session_2026-07-12-evidence-architecture-unification",
- "doctrine_sha": "3fb2882",
+ "doctrine_sha": "0f2f525",
  "rules_in_scope": [
   "source-discipline"
  ],
@@ -17,5 +17,15 @@
   }
  },
  "bias_direction": "An attestation authored by the ratifying session for another session's DR risks rubber-stamping content it did not produce. Bounded by: it attests only to the status flip and to the specific independent grounding named above; the DR's own revision history carries its authoring session's adversarial-review record.",
- "independent_reviewer_counterclaim": "A reviewer might argue the originating session should author its own attestation retroactively. Response: that session is closed; the ratification record is the operative event changing the artifact, and this attestation is scoped to exactly that event."
+ "independent_reviewer_counterclaim": "A reviewer might argue the originating session should author its own attestation retroactively. Response: that session is closed; the ratification record is the operative event changing the artifact, and this attestation is scoped to exactly that event.",
+ "reattestation": [
+  {
+   "prior_doctrine_sha": "3fb2882",
+   "new_doctrine_sha": "0f2f525",
+   "delta_ref": "D-2026-07-21-weak-band",
+   "materiality": "MATERIAL",
+   "verdict_change": "none",
+   "reason": "The weak-band delta concerns T4-6 (regulatory) rendering; this DR's T3-alone-stays-provisional threshold is a separate tier boundary, left intact. Verdict unchanged."
+  }
+ ]
 }

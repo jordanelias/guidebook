@@ -2,7 +2,7 @@
  "schema_version": "1.0",
  "session": "session_2026-07-12-evidence-architecture-unification",
  "artifact": "sessions/session_2026-07-13-value-genealogy-mining-dossier.md",
- "doctrine_sha": "3fb2882",
+ "doctrine_sha": "0f2f525",
  "rules_in_scope": [
   "source-discipline"
  ],
@@ -17,5 +17,15 @@
  "deviations": [],
  "bias_direction": "A preserved-source artifact attested by the session that commissioned the source risks laundering agent output into the record with an authority it has not earned. Bounded by: the header carries the known-defect list on its face; the document claims only to be what an agent returned, never to be verified truth; and every load-bearing claim distilled from it into governance-adjacent documents was independently re-verified by the adversarial review before this file was committed.",
  "independent_reviewer_counterclaim": "A reviewer might argue session artifacts should not enter the repo at all, only their verified distillations. Response: the adversarial review itself demanded this preservation (auditability of the distillation), and the alternative - an unpreserved dossier behind 'preserved' claims - was the defect being corrected.",
- "verdict": "CLEAN"
+ "verdict": "CLEAN",
+ "reattestation": [
+  {
+   "prior_doctrine_sha": "3fb2882",
+   "new_doctrine_sha": "0f2f525",
+   "delta_ref": "D-2026-07-13-core-reconcile",
+   "materiality": "MATERIAL",
+   "verdict_change": "none",
+   "reason": "Value-genealogy mining session; same domain as the value-genealogy DR. The later deltas refine rendering/anchoring, not this dossier's mined findings. Verdict unchanged."
+  }
+ ]
 }

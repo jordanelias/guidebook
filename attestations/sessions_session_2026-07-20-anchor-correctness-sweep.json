@@ -2,7 +2,7 @@
  "schema_version": "1.0",
  "session": "session_2026-07-20-anchor-correctness-sweep",
  "artifact": "sessions/session_2026-07-20-anchor-correctness-sweep.md",
- "doctrine_sha": "3fb2882",
+ "doctrine_sha": "0f2f525",
  "rules_in_scope": [
   "evidence-verification-gate",
   "source-discipline",
@@ -28,5 +28,15 @@
  "deviations": [],
  "bias_direction": "A large automated sweep invites two failure modes: rubber-stamping machine-proposed changes into the record, and cherry-picking corrections that flatter the corpus. Bounded by an adversarial refutation gate on every defect, by applying only unambiguous scalar/code values (holding all string and tier changes for reviewed passes), by surfacing rather than quietly fixing the 7 unverifiable sources, and by publishing the full 256-defect report including the 20 refuted and 3 unretrievable so the withheld and rejected items are auditable.",
  "independent_reviewer_counterclaim": "A reviewer could argue that even scalar corrections (e.g. jurisdiction reassignments) encode modeling choices and should not be auto-applied without per-row human sign-off. Response: jurisdiction/language/year/count fields do not affect anchor status or best-practice weight, each was adversarially upheld against a live retrieval, each records its evidence in verification_note, and all are forward-only reversible; the consequential tier/type and identity-string changes were explicitly withheld for exactly the human-review reason raised.",
- "verdict": "CLEAN"
+ "verdict": "CLEAN",
+ "reattestation": [
+  {
+   "prior_doctrine_sha": "3fb2882",
+   "new_doctrine_sha": "0f2f525",
+   "delta_ref": "D-2026-07-21-weak-band",
+   "materiality": "MATERIAL",
+   "verdict_change": "none",
+   "reason": "Weak-band material by anchor/best-practice scope. The sweep verified anchor SOURCES (T1/T2/Co); the weak-band rendering change does not alter those source verifications. Verdict unchanged."
+  }
+ ]
 }

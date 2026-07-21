@@ -2,7 +2,7 @@
  "schema_version": "1.0",
  "session": "session_2026-07-20-ws2-remainder-merged-hygiene-and-content-reconciliation",
  "artifact": "sessions/session_2026-07-20-ws2-remainder-merged-hygiene-and-content-reconciliation.md",
- "doctrine_sha": "3fb2882",
+ "doctrine_sha": "0f2f525",
  "rules_in_scope": [
   "doctrine-check",
   "evidence-verification-gate",
@@ -28,5 +28,15 @@
  "deviations": [],
  "bias_direction": "Two temptations here. First, count-inflation: economics-sources.md lists ~40 citations, and ingesting all of them by trusting the markdown's own DOIs would make the slice look richly evidenced without any independent check. Bounded by ingesting only PubMed-canonical-verified rows and parking the rest as a named backlog. Second, hiding a scope change: quietly marking three slugs MERGED without touching the audit would leave them silently graded F, or touching the audit without regenerating would desync it. Bounded by making the audit's status filter explicit, regenerating deterministically, and reporting the 82->79 scope move plainly.",
  "independent_reviewer_counterclaim": "A reviewer could argue that changing tools/evidentiary_audit.py to exclude MERGED slugs is the session moving the goalposts — dropping three F-graded slices from the denominator is exactly what makes the F-count reach zero, so the headline improvement is partly definitional. Response: the three are redirect-only stubs whose BPC files declared the merge in March; grading a redirect as an empty research slice was the pre-existing bug, and the fix aligns the audit with the long-standing merge decision rather than inventing a new exclusion to flatter the number — the content slices that actually left F did so by gaining 23/4/4 verified links, not by exclusion.",
- "verdict": "CLEAN"
+ "verdict": "CLEAN",
+ "reattestation": [
+  {
+   "prior_doctrine_sha": "3fb2882",
+   "new_doctrine_sha": "0f2f525",
+   "delta_ref": "D-2026-07-21-weak-band",
+   "materiality": "MATERIAL",
+   "verdict_change": "none",
+   "reason": "WS2-remainder hygiene + content reconciliation session; weak-band material by scope. A hygiene/reconciliation session, unaffected by the rendering delta. Verdict unchanged."
+  }
+ ]
 }

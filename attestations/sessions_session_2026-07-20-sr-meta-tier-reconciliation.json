@@ -2,7 +2,7 @@
  "schema_version": "1.0",
  "session": "session_2026-07-20-sr-meta-tier-reconciliation",
  "artifact": "sessions/session_2026-07-20-sr-meta-tier-reconciliation.md",
- "doctrine_sha": "3fb2882",
+ "doctrine_sha": "0f2f525",
  "rules_in_scope": [
   "doctrine-check",
   "evidence-verification-gate",
@@ -28,5 +28,15 @@
  "deviations": [],
  "bias_direction": "The temptation here is anchor-inflation: re-tiering borderline reviews upward makes weak slices look better-evidenced and lifts the corpus T2 count, which flatters the audit. Bounded by tiering strictly on the source's own self-declared methodology, verifying against external indexes rather than stored metadata, holding every ambiguous review-species (scoping, rapid, narrative) at T3 pending an owner decision, and running an adversarial pass that actively removed one row rather than adding any.",
  "independent_reviewer_counterclaim": "A reviewer could argue that applying the 2026-05-25 directive to thirteen rows it did not name is editorial extension beyond the enshrined migration, not the directive itself. Response: the directive enshrines a rule about a source class, not a hand-picked row list; these rows are members of that class stranded only by a mis-set evidence_type, and the doctrinally-unresolved members were explicitly withheld under GAP-298 rather than swept in.",
- "verdict": "CLEAN"
+ "verdict": "CLEAN",
+ "reattestation": [
+  {
+   "prior_doctrine_sha": "3fb2882",
+   "new_doctrine_sha": "0f2f525",
+   "delta_ref": "D-2026-07-13-core-reconcile",
+   "materiality": "MATERIAL",
+   "verdict_change": "none",
+   "reason": "sr_meta->T2 re-tiering, consistent with core-reconcile's 'sr_meta at T2'. The weak-band delta concerns T4-6, not sr_meta. Verdict unchanged."
+  }
+ ]
 }
