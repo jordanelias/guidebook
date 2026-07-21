@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-07-21-evidence-architecture-option-a-execution",
+  "artifact": "decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md",
+  "doctrine_sha": "373255e",
+  "rules_in_scope": ["adherence-logging-and-attestation", "best-practice-synthesis-routing", "evidence-verification-gate-for-synthesis"],
+  "per_rule_status": {
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/decisions_DR-2026-07-21-evidence-architecture-option-a-execution.json"
+    },
+    "best-practice-synthesis-routing": {
+      "status": "NOT-FIRED",
+      "reason": "This DR records an owner-ratified doctrine reconciliation and amends the architecture text; it writes no best_practice_synthesis and adjudicates no cell value, so the model-routing rule is not exercised."
+    },
+    "evidence-verification-gate-for-synthesis": {
+      "status": "NOT-FIRED",
+      "reason": "The DR and the evidence-architecture amendments cite no evidence source and assert no synthesis claim about the built environment; the rule #10 gate has nothing to gate here."
+    }
+  },
+  "deviations": [],
+  "bias_direction": "Executing a canonical-doctrine amendment under an owner one-liner ('Option A … flagged as weak') gives the author wide latitude to shape ratified text, and three interpretive resolutions (weak ○ band even with T4/T5 present; no code x person anchoring; state machine untouched) were decided by the author, not the owner — each could be a convenient reading that minimizes downstream engine work while presenting as faithful execution. The doc was also deliberately advanced ahead of the engine, which lets the author claim the doctrine is 'done' while the mechanically-enforced invariant (I3) still enforces the repealed form.",
+  "independent_reviewer_counterclaim": "A reviewer could object that repealing invariant I3's absolute form in a ratified document while register_integrity_check.py still enforces the old form creates exactly the doc-vs-code divergence finding F1 flagged in the first place — the fix reproduces the disease. The counter: the divergence is now explicit (every affected passage carries an inline ENGINE-LAG marker pointing at DR-2026-07-21 §5) and directional (doc states the ratified target, engine catches up), rather than silent and contradictory; and no regulatory_stratum_only cell renders today (v_best_practice still excludes them), so nothing user-facing changes until the engine follow-up lands. Whether to gate the doc amendment on the engine work instead is a real call the owner can still make.",
+  "verdict": "CLEAN"
+}

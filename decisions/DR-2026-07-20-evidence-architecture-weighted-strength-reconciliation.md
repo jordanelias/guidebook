@@ -1,6 +1,6 @@
 # DR-2026-07-20 — Reconcile evidence-architecture.md with the weighted-strength anchor model
 
-**Status:** PROPOSED — pending owner ratification. Not owner-ratified. DRAFT authored by Claude for owner review.
+**Status:** SUPERSEDED-BY `decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md` — owner ruled **Option A** (with direction-aware most-accommodating floor selection) on 2026-07-21; this DR's framing function is complete. (Was: PROPOSED — pending owner ratification.)
 **Category:** D-METH / doctrine reconciliation
 **Raised by:** Session `project-pipeline-overview-xfpid1` adjudication pass (finding F1), 2026-07-20.
 **Blocks:** promotion of `governance/pipeline-contract.yaml` to ratified; any render of regulatory-stratum-only cells.
