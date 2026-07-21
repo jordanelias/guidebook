@@ -81,11 +81,25 @@ LEVENSHTEIN_WINDOW = 10
 # Rule identifiers that are valid in attestations but not listed in skill-registry's
 # "active skills" block (governance/methodology rules, not skills).
 EXTRA_RULE_IDS = {
+    # Pre-existing cross-cutting identifiers (governance/methodology rules, not skills).
     "doctrine-check",
     "jurisdictional-synthesis",
     "evidence-verification-gate",
     "pmp",
     "source-discipline",
+    # Added per decisions/DR-2026-07-13-attestation-rule-identifier-registry-gap.md
+    # (RATIFIED by owner 2026-07-21). Category A — genuine cross-cutting rule identifiers
+    # (a PI standing rule / doctrine commitment, not an invocable skill):
+    "adherence-logging-and-attestation",         # PI rule #11 — the attestation obligation itself
+    "evidence-verification-gate-for-synthesis",  # PI rule #10 — no unverified source as sole synthesis basis
+    "best-practice-synthesis-routing",           # mission doctrine #2 — best-practice vs code-consensus routing
+    "canonical-workplan",                        # PI rule #6 — the workplan is canonical
+    "best-practice-supersession",                # DR-2026-05-24 supersession-check rule
+    # Category B — documented historical aliases of registered skills (variants, NOT
+    # renamed; the historical attestations are left untouched — see skill-registry.md):
+    "adversarial-research-protocol",             # alias of skill `adversarial-research`
+    "citation-mining",                           # alias of skill `citation-miner`
+    "progressive-measurement-probe",             # alias of skill `progressive-measurement`
 }
 
 

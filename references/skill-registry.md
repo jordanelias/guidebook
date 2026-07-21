@@ -21,7 +21,18 @@ Renaming a skill identifier is a governance event that requires:
 
 The audit script `scripts/audit/adherence_log_audit.py` check #3 validates
 that every rule identifier in an attestation resolves to a stable identifier
-listed in this registry.
+listed in this registry **or** to the `EXTRA_RULE_IDS` set in that audit script.
+
+`EXTRA_RULE_IDS` is the second, non-skill vocabulary of valid `rules_in_scope`
+values — cross-cutting rule identifiers that name a PI standing rule or doctrine
+commitment rather than an invocable skill (e.g. `adherence-logging-and-attestation`
+= rule #11; `best-practice-synthesis-routing` = mission doctrine #2), plus a few
+documented historical aliases of registered skills. It is the ratified extension
+point for such identifiers (per
+`decisions/DR-2026-07-13-attestation-rule-identifier-registry-gap.md`, RATIFIED
+2026-07-21) and is distinct from the skill-rename governance process above: that
+process governs renaming a skill going forward; `EXTRA_RULE_IDS` accepts a non-skill
+or historical-alias identifier without rewriting past attestations.
 
 ---
 

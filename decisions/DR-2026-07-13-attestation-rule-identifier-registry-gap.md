@@ -1,6 +1,6 @@
 # DR-2026-07-13: Attestation rule-identifier registry gap — proposed resolution
 
-- Status: **PROPOSED — pending owner ratification (or an independent reviewer distinct from the session that surfaced this)**
+- Status: **RATIFIED — owner directive 2026-07-21.** Executed by a later session (`project-pipeline-overview-xfpid1`), distinct from the 2026-07-13 session that surfaced and authored this DR; the authorizing act is the owner's ratification, not the authoring session's self-approval, so the self-grading conflict this DR describes is avoided. Both categories adopted as proposed: `EXTRA_RULE_IDS` grown 5→13; no historical attestation content rewritten. (Was: PROPOSED — pending owner ratification.)
 - Date: 2026-07-13
 - Prepared by: Claude, on the owner's directive ("Accept all and fix assuming best case for long-term integrity of project") following a contradiction sweep that found this session's own re-attestation of two DR files failing CI's "Attestation evidence" check on unrecognized `rules_in_scope` identifiers.
 - Affects (if ratified): `scripts/audit/adherence_log_audit.py` (`EXTRA_RULE_IDS`), `references/skill-registry.md` ("Identifier stability" section, cross-reference only — no rename)
