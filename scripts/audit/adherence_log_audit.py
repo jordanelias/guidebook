@@ -274,8 +274,28 @@ def check_3_rule_resolution(changed, issues):
             issues.append(f"CHECK 3: {f} unknown rule identifiers: {sorted(unknown)}")
 
 
+def _md_heading_slugs(md_rel):
+    """GitHub-style heading slugs in a markdown file, for resolving evidence_path
+    #anchors. Returns None if the file does not exist."""
+    p = REPO / md_rel
+    if not p.exists():
+        return None
+    slugs = set()
+    for line in p.read_text(errors="ignore").splitlines():
+        m = re.match(r"\s{0,3}#{1,6}\s+(.*?)\s*#*\s*$", line)
+        if not m:
+            continue
+        s = m.group(1).strip().lower()
+        s = re.sub(r"[^\w\s-]", "", s)   # drop punctuation except word chars/space/hyphen
+        s = re.sub(r"\s+", "-", s)
+        slugs.add(s)
+    return slugs
+
+
 def check_4_evidence_path(changed, issues):
-    """status=FIRED entries must have a resolvable evidence_path."""
+    """status=FIRED entries must have a resolvable evidence_path. The path may carry a
+    markdown #fragment (a heading anchor): the file part must exist, and for a .md
+    target the fragment must resolve to a heading's GitHub-style slug."""
     for f in _attestations_in_changeset(changed):
         data = _load_json(REPO / f)
         if data is None:
@@ -289,11 +309,19 @@ def check_4_evidence_path(changed, issues):
                 continue
             if ep.startswith("db://"):
                 continue  # validated in check #5
-            if (REPO / ep).exists():
+            ep_file, _, frag = ep.partition("#")   # strip an optional #anchor fragment
+            if (REPO / ep_file).exists():
+                if frag and ep_file.endswith(".md"):
+                    slugs = _md_heading_slugs(ep_file)
+                    if slugs is not None and frag.lower() not in slugs:
+                        issues.append(
+                            f"CHECK 4: {f} rule={rule} evidence_path anchor not found "
+                            f"in {ep_file}: #{frag}"
+                        )
                 continue
-            if ":" in ep:
+            if ":" in ep_file:
                 try:
-                    _git("rev-parse", ep)
+                    _git("rev-parse", ep_file)
                     continue
                 except subprocess.CalledProcessError:
                     pass
