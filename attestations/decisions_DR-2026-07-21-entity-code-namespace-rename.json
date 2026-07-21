@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-07-20-project-pipeline-overview-xfpid1",
+  "artifact": "decisions/DR-2026-07-21-entity-code-namespace-rename.md",
+  "doctrine_sha": "0f2f525",
+  "rules_in_scope": ["adherence-logging-and-attestation"],
+  "per_rule_status": {
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/decisions_DR-2026-07-21-entity-code-namespace-rename.json"
+    }
+  },
+  "deviations": [],
+  "bias_direction": "Renaming a namespace across a signed-off governance doc under an owner one-liner ('fix it') risks scope creep and the appearance of tidiness-for-its-own-sake; the author also had an incentive to bound the sweep narrowly (definitional home + active surfaces) to keep the change tractable in one turn, which could be read as under-delivering on a directive that sounded total ('that needs to change').",
+  "independent_reviewer_counterclaim": "A reviewer could object that renaming the entity side while leaving ~250 item_code references and all historical mentions untouched produces a repo where E-## still appears everywhere, so the collision is only half-resolved. The counter: item_codes are the other, correct namespace (renaming them is a high-risk data migration, not a fix), and append-only records (sessions, archived, dated audits, prior DRs) are immutable by the repo's own forward-only convention; the collision is resolved where it is defined and actively read, and a namespace note now makes the split explicit. Whether to sweep remaining active references/ mentions is a bounded follow-up, not a blocker.",
+  "verdict": "CLEAN"
+}

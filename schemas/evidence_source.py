@@ -7,7 +7,7 @@ encoding the clinical-evidence position and the kind of evidence as
 two orthogonal dimensions.
 
 Cross-entity relationships:
-- used_in_slugs → links to BPC entries (E-03)
+- used_in_slugs → links to BPC entries (ENT-03)
 - local_ref_ids → links to per-BPC reference tables
 - ref_id → cited by Specification evidence basis
 """

@@ -225,7 +225,7 @@ This cluster is Candidate A's worst (12/27, 44%). The relational form's premise 
 
 #### C-7.4 — Questions-led query mode **[Weight 3]**
 
-1. **Adapted (extensibility) / Native (when E-20 lands).** B3 specifies the Question entity. When B3 ships, Question is a new table; the query mode is a SQL filter on Question rows joined to cells. Extensibility (adding new entity types without migrating existing) requires `ALTER TABLE` for new columns or new tables for new entities — both are mechanical relational work, not migration of existing data.
+1. **Adapted (extensibility) / Native (when ENT-20 lands).** B3 specifies the Question entity. When B3 ships, Question is a new table; the query mode is a SQL filter on Question rows joined to cells. Extensibility (adding new entity types without migrating existing) requires `ALTER TABLE` for new columns or new tables for new entities — both are mechanical relational work, not migration of existing data.
 2. **Cost: 1 session** when B3 ships, for the question-aware query pattern.
 3. **Operational risk: low.** New tables don't disrupt existing.
 4. **Downstream binding: low.** Renderers read questions like any other entity.

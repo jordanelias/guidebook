@@ -39,11 +39,11 @@ The mission's claim on audience commitments is operational, not honorific: when 
 
 Every parameter exposes its within-population variability. Population codes are organizing scaffolding, not a description of any individual within the population. Within-population variation is shown as a first-class data dimension, not buried in narrative caveats. Co-occurring conditions are the norm, not the exception.
 
-### 2. Best practice is determined by the evidence hierarchy, not by code consensus
+### 2. Best practice is graded by the evidence hierarchy — code consensus anchors it only at the weak band
 
 Best practice is anchored by Tier 1 primary research (OT-prioritized but **not** OT-exclusive — directly-relevant high-control non-OT primary research is admitted at Tier 1, per decision D-E), Co-1 lived experience, Tier 2 synthesis (systematic reviews / meta-analyses and named-organisation evidence-based standards), and Co-2 OT CPGs. Tier 3 lower-control primary clinical evidence is supporting, rarely the sole basis.
 
-Tiers 4–6 are a regulatory-baseline stratum, walled off from best-practice anchoring: Tier 6 codes are the compliance floor, not the aspiration. **A best-practice claim derived solely from code consensus — convergence across Tier 4–6 sources — is in error.** Convergence is informative (it tells us multiple jurisdictions adopted a value) but is not itself best-practice evidence: the jurisdictions may be wrong together, or reading from a shared pre-evidence floor that none has updated.
+Tiers 4–6 are a regulatory-baseline stratum: Tier 6 codes are the compliance floor, not the aspiration. **Amended 2026-07-21 (owner directive, Option A; `decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md`):** a best-practice claim derived solely from code consensus — convergence across Tier 4–6 sources — is **not *in error*; it is a weak-band (○) best-practice claim** ("best practice as currently known"), valid only when flagged code-derived with the convergence-not-evidence caveat, never rendered unflagged or above the weak band. (An unflagged or above-weak-band code-consensus best-practice claim *is* still in error.) Convergence is informative (it tells us multiple jurisdictions adopted a value) but is not itself strong evidence: the jurisdictions may be wrong together, or reading from a shared pre-evidence floor that none has updated — which is exactly why the claim sits at the weak band, not why it is excluded.
 
 The seven-tier hierarchy is operative throughout the guidebook; full schema is specified under §Epistemic commitments §Evidence hierarchy below.
 
@@ -174,7 +174,7 @@ Every methodological, architectural, and editorial decision in the project must 
 
 1. Does this decision help readers ask better questions about how to design for accessibility?
 2. Does it acknowledge non-uniformity — within-population variability and individual specificity?
-3. Does it ground best practice in the evidence hierarchy, not in code consensus?
+3. Does it grade best practice by the evidence hierarchy — treating code consensus as the weak (○) band, flagged, rather than as full strength or as excluded?
 4. Does it surface where Co-1 evidence governs, where Tier 1 clinical evidence governs, where they converge, and where they diverge?
 5. Does it respect the operational reality on Co-1 (pre-launch solo synthesis from published corpus) and document the partial-honoring limit honestly?
 6. Does it teach professional judgment rather than substitute for it?

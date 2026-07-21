@@ -343,11 +343,11 @@ CREATE TABLE throughline_specification (
 | D-SCHEMA-022 | economics_entry | New entity table | DG-REVIEW |
 | D-SCHEMA-023 | case_study | New entity table + 2 join tables | DG-REVIEW |
 | D-SCHEMA-024 | throughline | New entity table + 1 join table | DG-REVIEW |
-| D-SCHEMA-025 | question (E-20) | Add audience, category, navigation_group, display_order fields | DG-AUTO |
+| D-SCHEMA-025 | question (ENT-20) | Add audience, category, navigation_group, display_order fields | DG-AUTO |
 
 ## 11. Updated change log
 
 | Date | Change |
 |---|---|
 | 2026-05-04 07:30 | Amendment 2 issued. Doctrine + Room + Specialist (3 tables, 8 sub/join). |
-| 2026-05-04 07:45 | Amendment 2b appended. Economics + Case Study + Throughline (3 tables, 3 join). Question E-20 updated. |
+| 2026-05-04 07:45 | Amendment 2b appended. Economics + Case Study + Throughline (3 tables, 3 join). Question ENT-20 updated. |

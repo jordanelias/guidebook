@@ -259,7 +259,7 @@ Scores: **0** = absent; **1** = adapted, high cost; **2** = adapted, moderate co
 
 #### C-7.4 — Questions-led query mode (B3 specifies; storage must accept) **[Weight 3]**
 
-1. **Adapted.** B3 will specify the Question entity (E-20). Candidate A accepts new entity types without migrating existing entities (per C-1.1). Once B3 ships the schema, the query mode is "filter by Question.applies_to_population × Question.parameter_class" — same pattern as C-7.1–7.3.
+1. **Adapted.** B3 will specify the Question entity (ENT-20). Candidate A accepts new entity types without migrating existing entities (per C-1.1). Once B3 ships the schema, the query mode is "filter by Question.applies_to_population × Question.parameter_class" — same pattern as C-7.1–7.3.
 2. **Cost: shared.** When B3 ships, the additional query-layer cost is incremental — adding a question-aware filter to the existing query layer.
 3. **Operational risk: low.** Question entity addition does not affect existing entities; query layer extension is the same pattern as the other navigation modes.
 4. **Downstream binding: low.** B3 specifies its own schema; B5 renderers read questions like any other entity.

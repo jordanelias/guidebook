@@ -26,7 +26,7 @@ Three vectors were named at workplan-v3 as the project's minimum adversarial-use
 
 **Mitigation in the guidebook's structure.**
 - Project-standards Core Doctrine: "Codes are Tier 6 — the compliance floor, not the aspiration." Every code-only specification is explicitly the floor.
-- Project-standards L20: a best_practice_synthesis derived solely from code consensus is in error. The guidebook does not offer code values as best practice.
+- Project-standards L20 (amended 2026-07-21, Option A): a best_practice_synthesis derived solely from code consensus is a weak-band (○) "best practice as currently known" claim, valid only flagged code-derived with the convergence-not-evidence caveat — never unflagged or full-strength. The guidebook offers code-only values only as weak-band, flagged best practice, never as full-strength best practice.
 - Voice-style §8.1: Universal Mode specifications cite the code; Tier 1 specifications cite the evidence; Tier 2 specifications locate authority in OT assessment plus the individual. A reader cannot extract a code-floor range while reading the evidence-citing prose.
 - Three-tier design hierarchy: Universal Mode is *universal design / code compliance*, never *best practice*. The hierarchy makes the distinction between floor and aspiration unmistakable.
 

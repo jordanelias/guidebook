@@ -30,7 +30,7 @@ dr: decisions/DR-2026-07-13-pipeline-contract.md
 enforcement_level: 2
 
 # Canonical entity spine (governance/conceptual-model.md §2.1):
-spine: "EvidenceSource (E-02) -> BPC entry (E-03) -> Specification (E-01) -> Item (E-08) -> render"
+spine: "EvidenceSource (ENT-02) -> BPC entry (ENT-03) -> Specification (ENT-01) -> Item (ENT-08) -> render"
 
 stages:
   - id: research
@@ -50,7 +50,7 @@ stages:
         check: scripts/audit/pmp_audit.py
 
   - id: collection
-    anchor: "EvidenceSource corpus (E-02); PI rule #2 (Sonnet evidence inventories)"
+    anchor: "EvidenceSource corpus (ENT-02); PI rule #2 (Sonnet evidence inventories)"
     entry:
       - "sources discovered for the topic/slug under research"
     criteria:
@@ -77,7 +77,7 @@ stages:
         check: scripts/validate_evidence_state.py
       - id: no-regulatory-stratum-stated
         kind: integrity
-        criterion: "A cell flagged code_floor_only or regulatory_stratum_only is never `stated` (convergence-not-evidence; invariant I3)."
+        criterion: "A cell flagged code_floor_only or regulatory_stratum_only is never `stated` (convergence-not-evidence; DR-2026-07-21 §2.2 — such cells stay `provisional` and render as weak-band best practice only, per amended I3)."
         references: "evidence-architecture.md §5/§6 I3; tier-system.md §3; migration 027"
         check: scripts/validate_evidence_state.py
       - id: tier3-alone-threshold
@@ -89,10 +89,14 @@ stages:
         kind: integrity
         criterion: "Determinations record derivation_paths (dual/population_only/function_only); a single-path assertion carries a named-path rationale; advisory CONTRADICTS/UNLINKED checks force `provisional` (never `stated`) until resolved."
         references: "DR-2026-07-13-value-genealogy-and-derivation-handshake (A6) H2/H4"
-        check: scripts/assess/assess_cell.py
+        # assess_cell.py computes derivation_sha (an identity hash) only; it does NOT
+        # implement the derivation_paths handshake (dual/population_only/function_only,
+        # CONTRADICTS/UNLINKED advisories). That layer is unbuilt A6 execution work, so
+        # this criterion is honestly DECLARED-BUT-UNENFORCED, not phantom-VERIFIABLE.
+        check: null
       - id: convergence-independence
         kind: completeness
-        criterion: "Convergence counts INDEPENDENT evidence axes (and, once genealogy lands, independent roots excluding committee_assertion), never document/citation count. Root-count layer is proposed/unbuilt (source_value_extractions=0)."
+        criterion: "Convergence counts INDEPENDENT evidence axes (and, once genealogy lands, independent roots excluding committee_assertion), never document/citation count. Root-count layer is unbuilt (source_value_extractions is pilot-only — 8 rows on a single slug as of 2026-07-20; no general extraction pass)."
         references: "evidence-methodology.md §3; DR-2026-07-13 H1 (v_value_independence)"
         check: null
 
@@ -119,7 +123,11 @@ stages:
     criteria:
       - id: register-invariants
         kind: integrity
-        criterion: "Every rendering of a cell carries the identical determination tuple across registers; no best-practice language on regulatory-stratum cells under any weighting profile; no register exceeds its map row (I1-I5)."
+        # I3 amended 2026-07-21 (Option A, DR-2026-07-21-evidence-architecture-option-a-execution):
+        # regulatory-stratum cells may carry ONLY weak-band (○) best-practice language, always
+        # flagged + caveated, never above the weak-band map row. NB register_integrity_check.py
+        # still enforces I3's repealed absolute form (ENGINE-LAG → DR-2026-07-21 §5).
+        criterion: "Every rendering of a cell carries the identical determination tuple across registers; no unflagged and no above-weak-band best-practice language on regulatory-stratum cells under any weighting profile; no register exceeds its map row (amended I1-I5)."
         references: "evidence-architecture.md §6 I1-I5"
         check: scripts/audit/register_integrity_check.py
       - id: mode-stratum-matrix-consistency

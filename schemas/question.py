@@ -29,7 +29,7 @@ class Question(GuidebookEntity):
     that answer it, with an answer_role indicating whether the spec
     is primary, partial, or related.
 
-    Per D-0139 §3.4, navigation-modes.md §2.2, and B3.2 (E-20).
+    Per D-0139 §3.4, navigation-modes.md §2.2, and B3.2 (ENT-20).
     """
 
     # Identity

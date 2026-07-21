@@ -8,7 +8,7 @@
 
 ## 1. The principle
 
-Your mission already prescribes *how* best practice is decided. "Best practice is determined by the evidence hierarchy, not code consensus" (doctrine #2), and every `(parameter × population)` cell must carry one of four states (doctrine #4): **`stated`** (≥Tier 3 OR Co‑1 OR Co‑2), **`provisional`**, **`pending`**, **`not_applicable`**. The system's job is to *apply* this consistently, dynamically, and auditably across all cells. It must never let a determination be "best practice" on Tier‑6 (code) evidence alone — code is the floor.
+Your mission already prescribes *how* best practice is decided. "Best practice is determined by the evidence hierarchy, not code consensus" (doctrine #2), and every `(parameter × population)` cell must carry one of four states (doctrine #4): **`stated`** (≥Tier 3 OR Co‑1 OR Co‑2), **`provisional`**, **`pending`**, **`not_applicable`**. The system's job is to *apply* this consistently, dynamically, and auditably across all cells. It must never let a code-only determination render above **weak-band (○), flagged, "best practice as currently known"** — a Tier‑6-only cell stays `provisional`, never `stated`, and code is the floor (amended 2026-07-21, Option A; `decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md`).
 
 So the system = **a deterministic assessment function + a clean place to store its output + a dynamic presentation layer + enforcement gates.**
 
@@ -92,7 +92,7 @@ Provenance is intrinsic: a row **cannot exist** without `governing_refs` (anti-h
 
 ## 5. Dynamic weighting — same evidence, user-conditioned framing (S1)
 
-The **determination is fixed**; the **emphasis re-ranks** by audience × use-pattern (the mission's dynamic-weighting goal). A small profile table parameterizes a view — it changes *what is foregrounded*, never the 4‑state verdict (code stays the floor for everyone, so no profile can manufacture best practice from code):
+The **determination is fixed**; the **emphasis re-ranks** by audience × use-pattern (the mission's dynamic-weighting goal). A small profile table parameterizes a view — it changes *what is foregrounded*, never the 4‑state verdict (code stays the floor for everyone; no weighting profile can manufacture *full-strength* best practice from code — a code-only cell renders only as weak-band ○ flagged best practice, per amended I3, 2026-07-21 Option A):
 
 | Audience · use-pattern | Weighting profile |
 |---|---|

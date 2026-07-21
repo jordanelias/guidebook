@@ -6,7 +6,7 @@ matrix, DAR provisions, conflict register, and schematic checklist.
 Rooms serve the /rooms/ URL family.
 
 Per navigation-modes.md §3.1, unified-data-schema Entity 3, and B3.2.
-Entity E-17 (deferred from A6, now scoped).
+Entity ENT-17 (deferred from A6, now scoped).
 """
 
 import re
