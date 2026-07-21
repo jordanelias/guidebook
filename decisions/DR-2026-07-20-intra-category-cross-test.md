@@ -43,24 +43,27 @@ The pass runs over two partitions and one leakage check:
 
 **Recommendation:** run the primary enumeration on the functional/thematic group (adjacency is where interactions live), carry the letter-category as a coarse secondary partition, and treat leakage detection as a first-class output, not an afterthought. The "category" is defined by what shares a physical event, not by what shares a heading.
 
-### X3 — The verdict vocabulary (generalized from the four relationship types the corridor case surfaced)
+### X3 — The verdict vocabulary (generalized from the relationship types the corridor case surfaced), recorded per *(pair × program)*
 
-Per pair, exactly one primary verdict, drawn from the corridor example's own surfaced types plus genuine independence and genuine conflict:
+A verdict is recorded **per (pair × functional program / population lens)**, not once per pair — the same grain as the cell (`item × population`) and the grain the corridor fan-out already used, where one pair reads differently under different populations. This is not optional precision: the acoustic demonstration shows **A-08 (NC-25) × A-18 (RT60)** is `INTERACTS` under speech intelligibility (ALL-ENV.md L91/L169) and `INDEPENDENT` under VIS acoustic wayfinding (VIS.md L23) — both corpus-grounded and opposite. A one-verdict-per-pair rule would suppress one of them, and the natural pick (the citable coupling) would erase a finding the corpus flags as an "Important correction."
+
+`SHARED_ELEMENT_DISTINCT_PROGRAM` is therefore **not a peer verdict** but the **decomposition trigger**: when a pair shares one physical element across distinct programs (one corridor width serving signing / passing / linked travel; one acoustic field serving intelligibility / wayfinding), the pass splits it by program and assigns one of the five atomic verdicts *within each program*:
 
 | Verdict | Meaning | Corridor-case exemplar |
 |---|---|---|
 | `INDEPENDENT` | Different physical variables sharing an architectural element; recording independence is itself a finding (it forecloses phantom conflicts) | "Width and sensory load are independent variables" (CORRIDOR-W dissolution) |
-| `SUBSUMES` / `SUBSUMED_BY` | One spec's requirement geometrically/physically contains another's — the wider silently satisfies *or* deletes the narrower's function | 2440 ⊃ 1800 (CON-0122) |
+| `SUBSUMES` / `SUBSUMED_BY` | One spec's requirement geometrically/physically contains another's — the wider silently satisfies *or* deletes the narrower's function | 2440 ⊃ 1800 (CON-0122), under the signing-vs-passing programs |
 | `INTERACTS` | One item's value modifies the usable value of another; the pair must be solved jointly | rest seating recessed ≥200 mm off clear width |
-| `SHARED_ELEMENT_DISTINCT_PROGRAM` | Same physical element, functionally distinct programs, each with its own evidence stream and grain | one width: signing / passing / linked travel |
 | `CONFLATED_VARIABLE` | Two differently-titled items are the same underlying variable named as if commensurable — a merge/rename finding | turning circle vs swept envelope named as one number |
 | `GENUINE_CONFLICT` | Competing requirements on the **same** variable and paradigm for overlapping populations — and *only* these are true conflicts | routes to Part 5 / cross-population resolution |
 
-Only `GENUINE_CONFLICT` invokes the conflict-resolution protocol. Distinguishing it from the five non-conflict relationships is most of the value: the corridor history shows the project repeatedly mistook subsumption and variable-independence for conflict.
+Only `GENUINE_CONFLICT` invokes the conflict-resolution protocol. Distinguishing it from the non-conflict relationships is most of the value: the corridor history shows the project repeatedly mistook subsumption and variable-independence for conflict.
 
-### X4 — Commensurability guards (swept-path faithful)
+### X4 — Commensurability guards (swept-path faithful), scoped to the value-comparison verdicts
 
-A pair is compared **only within `measurement_paradigm` and within `device_class` / functional class** (the DR-2026-07-13 H1 fields). A cross-paradigm or cross-class pairing is recorded as a **derivation** (down-weighted, its transfer named), **never as an identity**, and **can never itself register `GENUINE_CONFLICT`** — a static turning circle cannot contradict a swept envelope; NC-25 background noise cannot contradict an RT60 target as if they were one number, they *interact*. This imports the corridor doctrine verbatim: *"values are commensurable only within a measurement paradigm."*
+The guard governs the verdicts that **compare values** — `CONFLATED_VARIABLE` (are these two the *same* value?) and `GENUINE_CONFLICT` (are these two *competing* values?). For those, a pair is read **only within `measurement_paradigm` and within `device_class` / functional class** (the DR-2026-07-13 H1 fields): a cross-paradigm or cross-class pairing is recorded as a **derivation** (down-weighted, its transfer named), **never as an identity**, and **can never register `CONFLATED_VARIABLE` or `GENUINE_CONFLICT`** — a static turning circle cannot contradict a swept envelope. This imports the corridor doctrine verbatim: *"values are commensurable only within a measurement paradigm."*
+
+`INTERACTS` and `SUBSUMES` are **not** value comparisons — they are causal or geometric relations *between different quantities* (NC-25 background noise and an RT60 target are not one number; absorption in sabins and reverberation in seconds are a cause and its effect). They are checked for **dimensional/physical consistency** (does the mechanism connect these two quantities?), not for value-commensurability. Treating a causal `INTERACTS` pair as "paradigm-commensurable" is a category error — the guard simply does not apply to it.
 
 ### X5 — Gate semantics  *(flagged judgment call — gate strength)*
 
@@ -70,9 +73,9 @@ A pair is compared **only within `measurement_paradigm` and within `device_class
 
 ### X6 — Output is worklist rows, not prose (mirrors H5's engine-driven gap-filling)
 
-Enumeration writes one row per unordered pair per category into a `cross_test_pairs` worklist table (`item_a`, `item_b`, `category`, `partition`, `verdict`, `paradigm_commensurable`, `class_commensurable`, `rationale`, `spawned_con_id`, `spawned_gap_id`, `spawned_conflict_id`, provenance). Downstream:
+Enumeration writes one row per *(unordered pair × program)* into a `cross_test_pairs` worklist table (`item_a`, `item_b`, `category`, `partition`, `program`, `verdict`, `commensurability_gate` — `pass` / `fail` / `n/a-causal`, `rationale`, `spawned_con_id`, `spawned_gap_id`, `spawned_conflict_id`, provenance). The `program` column is what lets A-08 × A-18 hold `INTERACTS` and `INDEPENDENT` rows at once; a pair with a single program collapses to one row. Downstream:
 
-- `SUBSUMES` / `INTERACTS` / `SHARED_ELEMENT_DISTINCT_PROGRAM` → a typed `connections` row (reuse the 273-row register; finally populate `connection_type`).
+- `SUBSUMES` / `INTERACTS` → a typed `connections` row (reuse the 273-row register; finally populate `connection_type`).
 - `CONFLATED_VARIABLE` → a merge/rename finding (gap or decision item).
 - `GENUINE_CONFLICT` → a conflict-register entry routed to Population-Mode resolution.
 - Unexamined pair → an open `cross_test_pairs` row surfaced by `v_cross_test_open` — the pass's live "what we owe," identical in spirit to `v_pending`.
@@ -101,7 +104,7 @@ Deliberately does **not**: compute at Person Mode (co-design is not an engine ou
 
 ## Consequences if ratified
 
-One follow-on migration (the `cross_test_pairs` table + `v_cross_test_open`; can ride the next data migration). The pilot's 13 cells get their first ICCT pass — the acoustic cluster (A-02 × A-08 × A-18: absorption → RT60 → speech-intelligibility-under-background-noise, demonstrated in the companion methodology doc), the circulation cluster (E-06 × E-08 × E-12), and G-03. `connection-discovery` gains `--mode category-crosstest`; `assess_cell.py` gains the X5 gate under a new `rule_version`. The corridor worked example is retro-designated the ICCT **acceptance test at the inter-item level**: its subsumption, alcove-interaction, and variable-independence findings must reproduce as `cross_test_pairs` rows with the corresponding verdicts.
+One follow-on migration (the `cross_test_pairs` table + `v_cross_test_open`; can ride the next data migration). The pilot's 13 cells get their first ICCT pass — the acoustic cluster A-02 / A-06 / A-08 / A-18 (all four already share `bpc_source_slug=room-acoustic-performance` yet carry **zero registered connections among them** — direct evidence that the opportunistic register leaves intra-BPC couplings untyped; demonstrated in the companion methodology doc, where A-08 × A-18 resolves to opposite verdicts by program), the corridor pair E-08 × E-12 (power-wheelchair manoeuvring envelope; E-06 level-entry is largely width-independent and is a control, not a coupling), and G-03. `connection-discovery` gains `--mode category-crosstest`; `assess_cell.py` gains the X5 gate under a new `rule_version`. The corridor worked example is retro-designated the ICCT **acceptance test at the inter-item level**: its subsumption, alcove-interaction, and variable-independence findings must reproduce as `cross_test_pairs` rows with the corresponding verdicts, per program.
 
 ---
 
@@ -115,3 +118,4 @@ Both are named here rather than inherited silently, per the DR-2026-07-13 preced
 ## Revision history
 
 - v1 (2026-07-20): initial proposal on owner directive.
+- v2 (2026-07-20) — adversarial-review corrections (self-review + corpus verification against the acoustic cluster): **the verdict grain is now per *(pair × program)*, not one-per-pair** — falsified by A-08 (NC-25) × A-18 (RT60), which is `INTERACTS` under speech intelligibility (ALL-ENV.md L91/L169) and `INDEPENDENT` under VIS acoustic wayfinding (VIS.md L23), both corpus-grounded; the v1 rule also contradicted this DR's own acceptance test (the corridor fan-out records per-population verdicts). `SHARED_ELEMENT_DISTINCT_PROGRAM` demoted from peer verdict to **decomposition trigger** (resolving its overlap with `SUBSUMES` on the corridor case). **X4 commensurability guard scoped** to the value-comparison verdicts only (`CONFLATED_VARIABLE`/`GENUINE_CONFLICT`); `INTERACTS`/`SUBSUMES` are causal/geometric relations between different quantities and are checked for dimensional consistency, not value-commensurability — the v1 "paradigm-commensurable" framing of an `INTERACTS` pair was a category error. X6 row grain gains a `program` column. Consequences corrected: the acoustic pilot is A-02/A-06/A-08/A-18 with zero registered inter-connections (positive evidence for the exhaustive pass), and E-06 reclassified as a width-independent control rather than a cluster member.
