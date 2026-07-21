@@ -1,9 +1,10 @@
 # Coverage-completion loop — methodology proposal (2026-07-21)
 
-**Status: PROPOSED.** Requires owner ratification of the decision gates in §8 before any
-execution. This document proposes *how* to correct the search-coverage defect; it does **not**
-run a single search, build a table, create a routine, or change any adjudicated figure. Those
-wait for a ratified gate.
+**Status: RATIFIED — owner directive 2026-07-21** ("Ratify proposal", owner message 2026-07-21).
+The decision gates in §8 are resolved as recorded there. This document is now the operative
+execution model for the search-coverage defect. Ratification is completed by merge of PR #48
+(the mechanism by which `DR-2026-07-21-product-posture` was itself ratified: owner directive +
+PR merge). Execution proceeds under the guardrails in §3–§5; no guardrail is waived by ratification.
 
 **Relation to existing plans.** This is not a third competing plan. It supplies the *execution
 model* that `workplan/search-coverage-completion-workplan.md` (the "what": event-log substrate +
@@ -179,22 +180,38 @@ on drain.
   saturated or DEFERRED-WITH-REASON; publish the five-axis coverage from the log. Loop disables
   itself.
 
-## 8. Owner decision gates (cannot be decided by this document)
+## 8. Owner decision gates — RESOLVED (owner directive 2026-07-21)
 
-1. **Substrate size** — full `search_executions` + derived views (completion-workplan), or a thin
-   append-only logger first? (Recommendation: thin logger now, evolve later — but owner's call.)
-2. **Loop autonomy** — (a) manual-fire only; (b) scheduled cron, fresh session per batch,
-   PR-gated + escalations as in §5; or (c) higher autonomy. (Recommendation: start (a), promote to
-   (b) after guardrails proven. **Never** unattended admission/ratification.)
-3. **Freeze classification** — affirm this as adjudication-unblocking (like de-grade) so it may
-   proceed, or hold it behind the value-genealogy adjudication backlog.
-4. **Vocabulary verification standard for AR/BN/HI/ID/SW** — authoritative-source sufficient, or
-   native-speaker review required before those languages go live?
+1. **Substrate size — RESOLVED: thin append-only logger first**, evolvable to full
+   `search_executions` + views later. (Owner-endorsed default.)
+2. **Loop autonomy — RESOLVED: a looping routine**, per owner ("maybe this needs to be a looping
+   routine"). Implemented as a scheduled cron firing a fresh session per bounded batch,
+   **PR-gated** (opens PRs, never merges, never pushes to `main`) and **self-throttling** (skips
+   while a prior `coverage-loop:` PR is open) — so effective cadence is the owner's review speed.
+   Self-disables when the required-cell queue drains. **Never** unattended admission / figure-change
+   / gap-ratification. Routine id `trig_01PBSBLySykFKYt2XhmQZJvt` ("Coverage-completion loop
+   (guidebook)"), daily `0 14 * * *` UTC.
+3. **Freeze classification — RESOLVED: affirmed adjudication-unblocking**, on the same footing as
+   the de-grade workplan; permitted under the anti-displacement freeze.
+4. **Vocabulary verification standard — RESOLVED: authoritative-source sufficient**, with anything
+   unconfirmed flagged `[UNVERIFIED-TERMS]` (CO-0005) and never asserted; native-speaker review
+   remains an escalation the owner may impose later.
 
-## 9. What this proposal explicitly does NOT do
+## 9. Operationalization (post-ratification)
 
-No search is run, no table is created, no `term_aliases` row is added, no routine/cron is created,
-and no adjudicated figure is touched by this document. It is a PROPOSED methodology entering the
-ratification pipeline (PR → owner review), consistent with how `DR-2026-07-21-product-posture` was
-itself ratified (PR merge + explicit owner directive). Execution begins only after the §8 gates are
-answered.
+The looping routine (§8.2) is live. Each firing does ONE bounded batch, phased: Phase 0 (build
+verified vocabulary for a dead language), then Phase 1 (thin logger substrate + populate
+`lang_jur_map`), then Phase 2+ (pop the priority queue; log every search; keep empties), and opens
+a PR for review. It never merges, never writes `main`, never admits an unverifiable source or moves
+an adjudicated figure unattended. It disables itself when every required cell is SATURATED or
+DEFERRED-WITH-REASON.
+
+**Known limitation (connector grants).** Triggers created via the MCP tool cannot carry MCP
+connectors, so the routine's fresh sessions run with built-in tools only — **WebSearch + WebFetch
+are available** (sufficient for national codes, standards bodies, government and grey sources, and
+in-language web research), but **PubMed / Scholar / Consensus / bioRxiv and the GitHub MCP are
+not**. Consequence: (a) academic-database evidence is out of reach for autonomous batches — those
+cells should be worked in a connector-holding session, or the routine re-created from the claude.ai
+routines UI with connectors attached; (b) without GitHub MCP a batch pushes its branch and reports
+the branch name for PR-opening rather than opening the PR itself. This limitation is a grant/tooling
+constraint, not a methodology change; the guardrails are unaffected.
