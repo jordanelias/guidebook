@@ -1,0 +1,32 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-07-21-taxonomy-interrogation",
+ "artifact": "decisions/DR-2026-07-21-held-tensions-register.md",
+ "doctrine_sha": "0f2f525",
+ "rules_in_scope": [
+  "doctrine-check",
+  "source-discipline",
+  "adherence-logging-and-attestation"
+ ],
+ "per_rule_status": {
+  "doctrine-check": {
+   "status": "FIRED",
+   "evidence_path": "governance/mission-and-epistemics.md",
+   "reason": "The register operates under, and never overrides, canon: it cites mission commitments #1-#7 and the Test verbatim as authorities, generalizes a pattern the canon already practices in at least eight mechanisms (documented with file references in held-tensions.md §1), and binds itself to the mission Test including the requirement that it fail its own standard if it functions as license rather than bind. It is PROPOSED, states-without-executing, and routes its own amendments through decision-protocol. The public grounds.md quotes mission language (thinking tool; partial Art. 4.3; informal-settlement exclusion; solo-permanent possibility) rather than restating it loosely."
+  },
+  "source-discipline": {
+   "status": "FIRED",
+   "evidence_path": "governance/held-tensions.md",
+   "reason": "The register makes no empirical literature claims; its factual content is confined to citations of repo artifacts read in-session (mission, armature §§4-5, population-taxonomy, audience-priority summary via mission, DR-2026-06-11, DR-2026-07-20, posture DR, weighting_profile rows, search-language coverage counts verified against the live DB). Theory names in grounds.md (ICF, PEO/PEOP, Capability Approach, Kawa) restate the four-framework layering already adopted in project-standards §2026-04-09 as cited by mission-and-epistemics §'What this file does not do'; no new theoretical authority is claimed."
+  },
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "attestations/decisions_DR-2026-07-21-held-tensions-register.json",
+   "reason": "PI rule #11 attestation obligation for the new decision record; grounded at doctrine 0f2f525 with self-authorship bias disclosed below."
+  }
+ },
+ "deviations": [],
+ "bias_direction": "The register was authored by the same agent whose taxonomy work two adversarial passes faulted, and it converts those faults into 'held tensions' — a move that risks reframing failure as philosophy. It also flatters the agent's session narrative (the 'convergence with canon' story). Bounded by: the register adds bindings, not permissions — its governance section makes silent tension-resolution a DR-requiring act and unbounded disclosure a doctrine-recheck finding, i.e., it raises the cost of exactly the behavior it could have excused; every stance is anchored to a canon citation that predates this session; and ratification is owner-gated with the grounds text (including the never-QALY sentence and the disclosure level) explicitly on the checklist.",
+ "independent_reviewer_counterclaim": "A reviewer could argue 'held tensions' is sophisticated fence-sitting: a project that refuses to resolve universality-vs-situatedness or protection-vs-dignity ships an unfalsifiable philosophy that licenses any content decision post hoc. Response: each register entry declares a working stance and what would move it (adjudication is preserved — the posture DR requires it); the anti-fig-leaf rule forbids disclosure without bound, correction path, or standing question; the tensions bind renderers to concrete instruments (parity display, delta rendering, stratum labels, role-epistemology disclosure) that are checkable in output, not just professed; and the alternative — silent resolution — is precisely what the session's documented failures (deficit framing, Anglophone gap-detection) resulted from.",
+ "verdict": "CLEAN"
+}
