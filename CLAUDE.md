@@ -302,17 +302,16 @@ repo-side copy and GitHub push-protection is on.
 
 ## 9. Current state, active work & guardrails
 
-**To find where things stand right now**, don't trust a date in this file — read the newest
-entries in `sessions/`, `workplan/`, and `audits/` (sort by name/date), skim recent `git log`,
-and scan the latest `decisions/DR-*`. As of this writing the active thread is a **consolidation
-push** (`workplan/consolidation-execution-plan-2026-07-21.md`): execute already-ratified
-archival, retire md/yaml/json shadows in favour of the DB, finish the re-attestation mechanism,
-and de-duplicate doctrine statements. The most recent doctrine motion (entity-code rename,
+**To find where things stand right now**, don't trust a date in this file — sort `workplan/`,
+`sessions/`, and `audits/` by date and read the newest, skim recent `git log`, and scan the
+latest `decisions/DR-*`. Expect **several dated workplans to coexist** (consolidation,
+coverage-completion, de-grade/remediation, dedup, …) rather than one canonical "current plan";
+pick the newest that matches your task. The most recent doctrine motion (entity-code rename,
 evidence-architecture "Option A", weighted-strength anchoring, product-posture, re-attestation
 materiality) is captured in the 2026-07 DRs — read those before touching evidence/tier/
 attestation logic.
 
-**Guardrails carried from that plan (they encode failure modes already hit):**
+**Standing guardrails (from the recent consolidation work; they encode failure modes already hit):**
 
 1. **Re-verify every "divergence" claim against *current* files before acting.** Older audits
    describe a moving repo; a prior doc's stale anchor caused a real error.
@@ -328,7 +327,7 @@ attestation logic.
 - **Prose counts are stale everywhere** (`index.html`, `parts/*/manifest.md`, older audits
   disagree with each other and with the DB). Query the DB; never trust a hardcoded number.
 - **Stale pointers:** `sessions/LATEST` and `sessions/handoff-next-session.md` may both point at
-  old sessions. The current handoff is the plan referenced in §9. (`audit.yml` reads
+  old sessions; find the current handoff via §9 (the newest `workplan/` file). (`audit.yml` reads
   `sessions/LATEST` for its citation-mining check — a known wrinkle, not something to "fix" ad hoc.)
 - **PI versioning is intentional:** the numbered `project-instructions-v*.md` files are
   historical snapshots; the highest-numbered one is the deployed copy. The PI is not
@@ -360,7 +359,7 @@ attestation logic.
 | Data-model / schema reconciliation | `architecture/schema-spec.md`, `architecture/schema-reconciliation.md`, `architecture/sqlite-data-layer.md` |
 | Content pipeline / phases A–G | `audits/bpc-rewrite-workplan-2026-05-11.md`; `governance/pipeline-contract.yaml` |
 | Skill roster | `references/skill-registry.md` |
-| What to do next | newest plan in `workplan/` (currently `consolidation-execution-plan-2026-07-21.md`) |
+| What to do next | the newest dated file(s) in `workplan/` (several coexist — sort by date) |
 
 *Volatile facts — doctrine SHA, DB counts, schema version, CI status, the active plan — are
 deliberately not hardcoded above; derive them from the live repo with the commands in this guide.*
