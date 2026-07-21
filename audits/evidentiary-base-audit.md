@@ -18,7 +18,7 @@ This audit scores every research slice on the six requested dimensions — (1) a
 
 ## 2. Method & definitions
 
-**Slice = slug.** The 79 ACTIVE slugs are the unit of audit. Evidence is attributed through `source_slug_links`; each linked `evidence_sources` row is one *source-instance* (a source shared by two slices counts once in each). The 948 instances collapse to **756 unique sources** (reuse factor 1.25×; 136 sources span >1 slice, one — `REF-00050` — spans 6). Instance-weighting is deliberate — it measures per-slice coverage — but shared sources are re-counted, so corpus tier/language totals read ~25% above unique-source counts. (48 of the 804 rows in `evidence_sources` are linked to no active slug.)
+**Slice = slug.** The 79 ACTIVE slugs are the unit of audit. Evidence is attributed through `source_slug_links`; each linked `evidence_sources` row is one *source-instance* (a source shared by two slices counts once in each). The 948 instances collapse to **754 unique sources** (reuse factor 1.26×; 136 sources span >1 slice, one — `REF-00050` — spans 6). Instance-weighting is deliberate — it measures per-slice coverage — but shared sources are re-counted, so corpus tier/language totals read ~26% above unique-source counts. (50 of the 804 rows in `evidence_sources` are linked to no active slug.)
 
 **Tiers** follow `governance/tier-system.md`. Tier number reflects *what kind of claim a source can anchor*, not raw quality. Under the **weighted-strength model** (§8, `DR-2026-07-20`) every tier can anchor a best-practice claim; the claim's *strength* is weighted by the tier of the evidence behind it. The three strength bands reuse the `●◐○` quality markers (§5), now given anchoring semantics:
 
@@ -225,7 +225,7 @@ Every ACTIVE slice carries at least one linked source-instance — no evidence-e
 
 ## 7. Limitations & what this audit does *not* claim
 
-- **Instance-weighted, not source-weighted.** The 948 instances are 756 unique sources, so corpus tier/language totals run ~25% above unique-source counts. Per-slice figures are unaffected.
+- **Instance-weighted, not source-weighted.** The 948 instances are 754 unique sources, so corpus tier/language totals run ~26% above unique-source counts. Per-slice figures are unaffected.
 - **The composite is a lens, not ground truth.** Weights (20/30/20/15/15) are a defensible but editorial choice; the six raw dimensions are printed alongside every grade so a reader can re-weight. No grade is stored in the DB — it is recomputed each run.
 - **Coverage ≠ correctness.** The audit measures the *shape* of each base (how much, what tier, where from, what language, how concentrated). It does **not** re-verify that any citation resolves, is current, or supports its claim — those are the `url_verification_runs` / `code_currency` / supersession checks, run separately.
 - **Jurisdiction shares rest on recorded jurisdictions only.** NULL-jurisdiction instances are excluded from %ANG denominators, so a low %ANG can mean *genuinely non-Anglophone* or *unrecorded* — the master table’s JUR count exposes the denominator.

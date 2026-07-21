@@ -64,9 +64,20 @@ REF-00542, REF-00007, REF-00202, REF-00033, REF-00301, REF-00395, REF-00393, REF
   REF-00059 holds the DOI by PMID; "Final Report" REF-00060 and "International Comparison" REF-00192 are
   different works). Needs bibliographic verification of the correct DOIs — a correction, not a merge.
 
-**Still to verify — 5 likely-legit container-DOI splits:** DIN standards `10.31030/1715500` `…/1803049`
-`…/2853913`; Routledge book `10.4324/9781003564164`; ArchNet-IJAR `10.26687/…`. Confirm each `ref_id` is
-a genuinely distinct part/chapter (keep) vs a sloppy dup (merge). Likely keep most.
+**The "5 container-DOI splits" hypothesis was WRONG (verified 2026-07-21).** None are distinct parts —
+all are same-work duplicates:
+- `10.31030/2853913` (**IEC 60118-4**, hearing-loop std, 3× all T4) — **MERGED** (canonical REF-00200;
+  migration `data_20260721205113_…dedup-iec-clean`; distinct linked 756 → 754).
+- **HELD — same-work dups with tier drift** (merging forces a tier choice on *foundational* sources →
+  defer to a tier-doctrine pass, not an ad-hoc dedup call): `10.31030/1803049` (DIN 18040-2, 5×, T4/T6),
+  `10.31030/1715500` (DIN 18040-1, 3×, T5/T6), `10.26687/archnet-ijar.v8i1.314` (ASPECTSS / Mostafa 2014
+  framework paper, 5×, T2/T3), `10.4324/9781003564164` (RIBA/Habinteg Inclusive Housing Design Guide, 3×,
+  T1/T2 — a design *guide*, so both tiers are likely wrong).
+
+**Broader finding:** same-DOI duplication very often carries **tier drift** (the same source tiered
+differently by different ingest passes). Deduping therefore repeatedly surfaces tier-consistency questions.
+The held set below is really a **tier-doctrine consistency pass** (what tier is DIN 18040 / the ASPECTSS
+index / a professional design guide?), not more dedup.
 
 ## Next
 1. **Resolve the 4 tier-conflict groups** — adjudicate the correct tier per `governance/tier-system.md`, set it on the canonical, then merge (same pattern).
