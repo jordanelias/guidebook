@@ -20,11 +20,11 @@ A-17,A,Acoustics,Upholstered Seating Throughout Occupied Spaces,room-acoustic-pe
 A-18,A,Acoustics,RT60 in Occupied Learning and Listening Spaces,room-acoustic-performance,full,A,84.8,32,19,10,3,0,13,8,78.1,50.0
 B-01,B,Lighting,Circadian Lighting (≥150 EML Minimum at Eye Level in Daytime Spaces),circadian-lighting-melanopic-edi,full,B,69.9,12,7,5,0,0,4,2,91.7,16.7
 B-02,B,Lighting,Diffuse Lighting for Lip Reading and Sign Language (Shadow-Free Face Illumination),deaf-spatial-design,full,A,82.4,13,8,1,4,0,8,5,61.5,38.5
-B-03,B,Lighting,Elimination of Fluorescent Overhead Lighting,therapeutic-lighting-design,partial,D,43.4,4,0,4,0,0,3,2,75.0,0.0
-B-04,B,Lighting,Flicker-Free LED Luminaires (IEEE 1789-2015 Compliant),therapeutic-lighting-design,partial,D,43.4,4,0,4,0,0,3,2,75.0,0.0
-B-05,B,Lighting,Gradual Lighting Transition Zones (≥5 m at All Major Illuminance Changes),therapeutic-lighting-design,partial,D,43.4,4,0,4,0,0,3,2,75.0,0.0
-B-06,B,Lighting,Individual Dimming Control (≥300 Lux Range),therapeutic-lighting-design,partial,D,43.4,4,0,4,0,0,3,2,75.0,0.0
-B-07,B,Lighting,Indirect and Cove Lighting in Sensitive Spaces,therapeutic-lighting-design,partial,D,43.4,4,0,4,0,0,3,2,75.0,0.0
+B-03,B,Lighting,Elimination of Fluorescent Overhead Lighting,therapeutic-lighting-design,full,B,66.4,8,4,4,0,0,4,2,87.5,0.0
+B-04,B,Lighting,Flicker-Free LED Luminaires (IEEE 1789-2015 Compliant),therapeutic-lighting-design,full,B,66.4,8,4,4,0,0,4,2,87.5,0.0
+B-05,B,Lighting,Gradual Lighting Transition Zones (≥5 m at All Major Illuminance Changes),therapeutic-lighting-design,full,B,66.4,8,4,4,0,0,4,2,87.5,0.0
+B-06,B,Lighting,Individual Dimming Control (≥300 Lux Range),therapeutic-lighting-design,full,B,66.4,8,4,4,0,0,4,2,87.5,0.0
+B-07,B,Lighting,Indirect and Cove Lighting in Sensitive Spaces,therapeutic-lighting-design,full,B,66.4,8,4,4,0,0,4,2,87.5,0.0
 B-08,B,Lighting,"Matte, Low-Reflectance Floor Finishes (≤30 Gloss Units)",,no-source,—,,,,,,,,,,
 B-09,B,Lighting,"Maximisation of Natural Light (Clerestory, Light Wells, Rooflights)",biophilic-design-healthcare-workplace,full,C,56.7,6,5,0,0,1,3,1,100.0,33.3
 B-10,B,Lighting,Visual Fire Alarm (Strobe VAD Throughout Building),visual-fire-alarm-seizure-safety,full,C,53.0,7,4,2,1,0,3,1,100.0,42.9
@@ -32,10 +32,10 @@ B-11,B,Lighting,Warm Colour Temperature for Evening (≤2700 K After 19:00),circ
 B-12,B,Lighting,Sensor-Activated Overnight Pathway Lighting,visual-alerting-and-wayfinding-light,partial,C,55.2,7,0,4,3,0,7,5,42.9,28.6
 C-01,C,Colour and Contrast,"Colour Palette (Muted, Low-Chroma, Non-Institutional)",wayfinding-dementia-spatial-design,full,A,88.2,35,25,5,5,0,19,13,60.0,36.4
 C-02,C,Colour and Contrast,Colour-Coded Wayfinding Zones (Distinct Warm Colour Per Wing/Zone),wayfinding-dementia-spatial-design,full,A,88.2,35,25,5,5,0,19,13,60.0,36.4
-C-03,C,Colour and Contrast,Pattern Avoidance (Plain Flooring and Walls in Sensitive Environments),luminance-contrast-lrv-evidence-base,full,D,48.7,7,4,2,1,0,4,1,100.0,100.0
-C-04,C,Colour and Contrast,LRV Contrast (≥30 at All Critical Junctions),luminance-contrast-lrv-evidence-base,full,D,48.7,7,4,2,1,0,4,1,100.0,100.0
-C-05,C,Colour and Contrast,Low LRV Differential at Adjacent Floor Materials (DEM Inverse Contrast Rule),luminance-contrast-lrv-evidence-base,full,D,48.7,7,4,2,1,0,4,1,100.0,100.0
-C-06,C,Colour and Contrast,"Plain, Low-Contrast Flooring Throughout (No Geometric Patterns)",luminance-contrast-lrv-evidence-base,full,D,48.7,7,4,2,1,0,4,1,100.0,100.0
+C-03,C,Colour and Contrast,Pattern Avoidance (Plain Flooring and Walls in Sensitive Environments),luminance-contrast-lrv-evidence-base,full,C,51.0,7,3,2,2,0,5,1,100.0,85.7
+C-04,C,Colour and Contrast,LRV Contrast (≥30 at All Critical Junctions),luminance-contrast-lrv-evidence-base,full,C,51.0,7,3,2,2,0,5,1,100.0,85.7
+C-05,C,Colour and Contrast,Low LRV Differential at Adjacent Floor Materials (DEM Inverse Contrast Rule),luminance-contrast-lrv-evidence-base,full,C,51.0,7,3,2,2,0,5,1,100.0,85.7
+C-06,C,Colour and Contrast,"Plain, Low-Contrast Flooring Throughout (No Geometric Patterns)",luminance-contrast-lrv-evidence-base,full,C,51.0,7,3,2,2,0,5,1,100.0,85.7
 D-01,D,Wayfinding and Cognition,Loop Floor Plan (No Dead-End Corridors in DEM Environments),wayfinding-dementia-spatial-design,full,A,88.2,35,25,5,5,0,19,13,60.0,36.4
 D-02,D,Wayfinding and Cognition,Cognitive Simplicity (Single Primary Route from Entry to Destination),cognitive-wayfinding-design,full,A,89.6,25,16,7,2,0,13,9,64.0,8.0
 D-03,D,Wayfinding and Cognition,Toilet Visibility from Primary Occupied Spaces (No Navigation Required),wayfinding-dementia-spatial-design,full,A,88.2,35,25,5,5,0,19,13,60.0,36.4
@@ -69,7 +69,7 @@ F-05,F,Sensory Environment,Seated-Task Design (All Primary Occupational Tasks Ac
 F-06,F,Sensory Environment,Fragrance-Free Policy (Whole-Building Operational Standard),air-quality-voc-chemical-sensitivity-built-environment,full,B,65.8,12,7,5,0,0,7,1,100.0,50.0
 F-07,F,Sensory Environment,Thermal Zoning — Building-Wide Temperature Management,,no-source,—,,,,,,,,,,
 F-08,F,Sensory Environment,Thermal Transition — Heating and Cooling System Response,thermoregulation-built-environment,full,D,44.1,5,2,1,2,0,1,1,100.0,0.0
-G-01,G,"Furniture, Fixtures and Spatial Layout","Defensible Seating (Back-to-Wall, Entry Sightline Configuration)",mental-health-built-environment,full,A,85.7,37,27,3,6,1,11,5,59.5,27.0
+G-01,G,"Furniture, Fixtures and Spatial Layout","Defensible Seating (Back-to-Wall, Entry Sightline Configuration)",mental-health-built-environment,full,A,85.5,37,27,3,6,1,11,5,59.5,29.7
 G-02,G,"Furniture, Fixtures and Spatial Layout",Variety of Seating Types (Three Heights at Every Seating Area),,no-source,—,,,,,,,,,,
 G-03,G,"Furniture, Fixtures and Spatial Layout",Grab Bars in All Accessible Bathrooms (Clinical Positioning and Bilateral),accessible-bathroom-and-grab-bar,full,A,81.8,23,12,5,5,1,13,7,73.9,65.0
 G-04,G,"Furniture, Fixtures and Spatial Layout",Accessible Bathroom (Wet Room Configuration — Zero Threshold),accessible-bathroom-and-grab-bar,full,A,81.8,23,12,5,5,1,13,7,73.9,65.0

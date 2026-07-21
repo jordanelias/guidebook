@@ -37,11 +37,34 @@ unchanged; links net-zero); distinct-linked `ref_id`s drop by one per merged twi
 `10.2196/60622`, `10.2196/69442`, `10.3233/wor-210997`, `10.3389/frdem.2025.1524425`,
 `10.3390/ijerph192114279`.
 
-## Recommended batch
-1. **Verify the 5 container splits** — confirm each `ref_id` is a genuinely distinct part/chapter (keep) vs a sloppy dup (merge). Likely keep most.
-2. **Per-case the 22 live-dupe candidates** — for each: confirm the rows are the same work (same DOI is strong but check for DOI-entry errors), choose the canonical (best/most-complete metadata, VERIFIED-2 preferred), supersede the rest + repoint links, adversarial spot-check a sample.
-3. **Re-run the audit** — the "781/780 unique" headline drops by the number of merged twins; per-slice counts self-correct.
-4. **Consider a small DR** on the shared-source model (one-row-many-links as the canonical representation) so new ingests dedup on DOI by default and this stops recurring — the same discipline the tier system applies to convergence, applied to identity.
+## Execution status (2026-07-21)
+
+**DONE — 16 confirmed same-work groups merged** (migration `data_20260721203616_…dedup-batch-16-clean`).
+Per-case verified: matching first-author + title, tier-consistent. 18 duplicate rows superseded_by their
+canonical, links repointed (2 redundant links dropped where the canonical already had the slug), rows
+retained. **Distinct linked `ref_id`s 780 → 762.** Determinism + integrity clean. Canonicals:
+REF-00901, REF-00134, REF-00030, REF-00223 (absorbed 3 twins), REF-00570, REF-00296, REF-00069,
+REF-00542, REF-00007, REF-00202, REF-00033, REF-00301, REF-00395, REF-00393, REF-00488, REF-00090.
+
+**HELD — 6 groups need per-case judgment, deliberately NOT merged mechanically:**
+- **Tier-conflict (4)** — same work carried at *different tiers* across rows; merging forces a tier choice,
+  which is an evidence-adjudication call, not a dedup: `10.1016/S0140-6736(14)61006-0` (Keall, T1 vs T3 —
+  likely T1 RCT), `10.1016/j.msard.2022.104075` (Christogianni, T2 vs T3; note one row already unlinked),
+  `10.1177/13623613221102753` (Black, T2 vs T3), `10.2196/69442` (Levine, T1 vs T3 + paraphrased title).
+- **DOI-error (2)** — rows share a DOI but describe *different works* → not duplicates; one row has a
+  wrong DOI to correct: `10.1016/j.buildenv.2021.108352` (REF-00171 "Accessible toilet failures" ≠ the
+  Zallio IDEA paper), `10.1080/10400430903520280` (Steinfeld — article vs "Final Report" vs "standard",
+  3 distinct outputs).
+
+**Still to verify — 5 likely-legit container-DOI splits:** DIN standards `10.31030/1715500` `…/1803049`
+`…/2853913`; Routledge book `10.4324/9781003564164`; ArchNet-IJAR `10.26687/…`. Confirm each `ref_id` is
+a genuinely distinct part/chapter (keep) vs a sloppy dup (merge). Likely keep most.
+
+## Next
+1. **Resolve the 4 tier-conflict groups** — adjudicate the correct tier per `governance/tier-system.md`, set it on the canonical, then merge (same pattern).
+2. **Fix the 2 DOI-error groups** — correct the wrong DOI on the mis-attributed row (do NOT merge).
+3. **Verify the 5 container splits** — keep distinct parts; merge only true dups.
+4. **Consider a small DR** on the shared-source model (one-row-many-links as canonical) so new ingests dedup on DOI by default and this stops recurring — the identity analogue of the convergence discipline.
 
 ## Guardrail
 Do **not** bulk-merge on same-DOI alone. A shared DOI is strong evidence but not proof (container DOIs,
