@@ -98,7 +98,7 @@ Loaded in two GraphQL batch reads across 6 governance documents + roadmap + oper
 | `governance/repo-strategy.md` | Repo-decision revisit trigger keyed to B1 |
 | `governance/workplan-adoption.md` | C2 cut-list; budget context |
 | `references/project-standards.md` | Locked rules that constrain schema (e.g. evidence markers ●/○; CS8 capture-pair-with-RULE) |
-| `references/connections/_index.md` | Connection register surface; entity connection (E-04) shape |
+| `references/connections/_index.md` | Connection register surface; entity connection (ENT-04) shape |
 | Live state: `schemas/`, `scripts/`, `data/` directory listing | Current implemented schema set as starting point |
 
 A6 was read in full headers + selected sections (Schema/State/Encoding/values-criteria/design-pedagogy/epistemic-defense/convergence). Other documents were read complete.
@@ -119,12 +119,12 @@ The storage form must satisfy four bands. Each requirement is sourced to a speci
 | F-04 | Cell-level state per (parameter × population) | A6 §2.1 | The four-state machine is the unit of synthesis |
 | F-05 | Multi-source attribution per cell (multiple `EvidenceSource` records cite into one cell) | A6 §3 + A3 §2.1 | Convergence/divergence requires this |
 | F-06 | Cross-cutting axes as filter dimensions (DesignStage × ProjectType) | A3 §1.3 | Implemented as optional list attributes; storage form must support filter queries on them |
-| F-07 | Connection register (E-04): item↔item with status, confidence, target, opus_review flag | A3 §1.1 + connections/_index.md | 188 records currently |
+| F-07 | Connection register (ENT-04): item↔item with status, confidence, target, opus_review flag | A3 §1.1 + connections/_index.md | 188 records currently |
 | F-08 | Within-population variability as first-class data dimension | Mission §1 | A6 §2.x rendering depends on this; not a narrative caveat field |
 | F-09 | Sub-population hierarchy + inheritance | A7 | Sub-codes (e.g. NDV/AUT, MOB/AMB) inherit population properties unless overridden |
-| F-10 | Question entity (E-20) when B3 specifies it | Mission §6 + roadmap §5 B3 | Questions are first-class data per mission; storage form must accept this without retrofit |
+| F-10 | Question entity (ENT-20) when B3 specifies it | Mission §6 + roadmap §5 B3 | Questions are first-class data per mission; storage form must accept this without retrofit |
 | F-11 | Cross-reference resolvability (REF-IDs, CON-IDs, item codes, slugs) | project-standards Endnote/Source Pipeline | Currently enforced by `validate_cross_refs.py` |
-| F-12 | Conflict entity (E-09) with intra-individual / inter-group / both classifications | Project-standards 2026-03-28 21:30 | Deferred from A3; lands at A6 or B1 depending on candidate form |
+| F-12 | Conflict entity (ENT-09) with intra-individual / inter-group / both classifications | Project-standards 2026-03-28 21:30 | Deferred from A3; lands at A6 or B1 depending on candidate form |
 
 ### 4.2 Epistemic requirements — what the storage form must encode
 
@@ -366,7 +366,7 @@ These are explicit deferrals — not unresolved-because-overlooked. Session 2 mu
 1. **Weighting scheme.** All-equal vs tiered vs doctrinal-anchor-weighted. §6.3.
 2. **L-04 partial scope.** v3 §B1 says B1 "implements" the time model in the storage layer (resolves D-05 + L-04 in storage layer). Session 2 must confirm exactly which of A9's five temporal axes are storage-layer concerns vs query-layer concerns vs render-layer concerns. The split affects which criteria in Cluster VIII bind storage choice.
 3. **D-05 partial scope.** v3 says "Time-handling integrated from this point onward" activates at C1, with B1 implementing the schema-layer hooks. Session 2 must confirm whether stale-evidence detection (C-8.4) is a storage-layer requirement or a query-layer requirement under the chosen form. If the latter, C-8.4 weights lower in storage selection.
-4. **Question entity (E-20) timing.** B3 specifies the Question entity. B1 must accept that without retrofit. Session 2 confirms the minimum schema commitment B1 makes for E-20 acceptance.
+4. **Question entity (ENT-20) timing.** B3 specifies the Question entity. B1 must accept that without retrofit. Session 2 confirms the minimum schema commitment B1 makes for ENT-20 acceptance.
 5. **Migration-out specification.** S-05 requires a bounded, documented migration-out cost. Session 2 specifies what a satisfactory exit-plan looks like — schema export, semantic preservation, downstream tool independence — so each candidate is evaluated against the same exit standard.
 6. **Hybrid eliminator test.** §7.1 conjecture: Candidate D may be strictly dominated. Session 2 specifies the test that would establish dominance (or fail to). Testing happens in Session 6.
 

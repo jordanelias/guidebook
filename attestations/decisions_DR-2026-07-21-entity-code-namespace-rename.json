@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "session": "session_2026-07-21-entity-code-namespace-rename",
+  "session": "session_2026-07-20-project-pipeline-overview-xfpid1",
   "artifact": "decisions/DR-2026-07-21-entity-code-namespace-rename.md",
   "doctrine_sha": "373255e",
   "rules_in_scope": ["adherence-logging-and-attestation"],

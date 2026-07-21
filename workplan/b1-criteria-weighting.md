@@ -103,15 +103,15 @@ D-05 ("Time-as-data deferred") was specified by A9 as freshness windows + last_v
 
 This resolution narrows the B1 scope on D-05. B1 implements the storage-layer hooks (the field set); B2 specifies the validator that does the detection; C1 activates the validator operationally.
 
-### 3.4 Q4 — Question entity (E-20) minimum schema acceptance
+### 3.4 Q4 — Question entity (ENT-20) minimum schema acceptance
 
 **Resolution: B1 commits to "supports addition of new entity types of arbitrary structure without migrating existing entities." This is a property of the storage form, evaluated under criterion C-1.1 (entity-type expressiveness). No new criterion is introduced.**
 
-B3 specifies the Question entity. B3 is several phases away. B1 cannot speculate on E-20's schema — that would prejudge B3's scope. What B1 can commit to is a property of the chosen storage form: the form must support adding new entity types without forcing migration of existing entities.
+B3 specifies the Question entity. B3 is several phases away. B1 cannot speculate on ENT-20's schema — that would prejudge B3's scope. What B1 can commit to is a property of the chosen storage form: the form must support adding new entity types without forcing migration of existing entities.
 
 Operationalization in Sessions 3–6 evaluation:
 
-When evaluating C-1.1 per candidate, the four-question template's question 1 ("native, adapted, or absent?") is answered with explicit attention to extensibility. The evaluation cell asks: "Can this form accept E-20 (or any other future entity type) when it lands, without requiring migration of the 20 existing entity types?"
+When evaluating C-1.1 per candidate, the four-question template's question 1 ("native, adapted, or absent?") is answered with explicit attention to extensibility. The evaluation cell asks: "Can this form accept ENT-20 (or any other future entity type) when it lands, without requiring migration of the 20 existing entity types?"
 
 | Candidate | Extensibility prima facie | Sessions-3–6 verifies |
 |---|---|---|
@@ -303,7 +303,7 @@ Session 3 does NOT compare A to B/C/D; that's Session 7. Session 3 produces A's 
 
 - Does not evaluate any candidate against any criterion (Sessions 3–6).
 - Does not select a storage form (Sessions 7–9).
-- Does not commit to E-20's schema (B3 specifies; B1 commits only to extensibility property under C-1.1).
+- Does not commit to ENT-20's schema (B3 specifies; B1 commits only to extensibility property under C-1.1).
 - Does not specify validators (B2).
 - Does not revise `governance/repo-strategy.md` (Session 9).
 

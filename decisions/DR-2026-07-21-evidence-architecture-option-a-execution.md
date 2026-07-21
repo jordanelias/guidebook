@@ -55,6 +55,15 @@ register map's ○ row as ceiling.
    weak band" clause is not executed, and the §3 matrix Person-Mode cells stay NON-ANCHORING in
    both senses. (Consistent with the live DB: all three current `regulatory_stratum_only` cells are
    `design_scale = universal`.)
+5. **Contested-direction safeguard (author-added 2026-07-21 after adversarial review; owner may veto).**
+   Where a parameter's accessibility direction is population-contested — flush thresholds aid wheeled
+   mobility but remove the tactile cues cane users rely on; heavy acoustic absorption aids hearing-aid
+   users but degrades echolocation; brighter light aids low vision but harms photosensitive users —
+   most-accommodating selection is inapplicable: no single value is anchored, the conflict is recorded
+   via the conflicts machinery, and the jurisdiction spread is rendered with each population's direction
+   stated. This protects Option A's intent (a "best practice" label must not disadvantage one disability
+   group) and honors the mission's rule that suppressed divergence is in error. Engine item: a
+   `direction=contested` state (added to §5.2).
 
 ## 3. Doc edits applied (this DR's execution set)
 
@@ -70,6 +79,17 @@ status → SUPERSEDED-BY. Every doc statement that outruns the engine carries an
 `[ENGINE-LAG → DR-2026-07-21 §5]` marker; markers are removed only by the follow-up that lands
 the behavior.
 
+**Governing-source reconciliation (added 2026-07-21 after adversarial review).** The precedence clause
+(`evidence-architecture.md:4`) makes divergent *cited sources* govern, so Option A does not fully hold
+until they are reconciled too. Amended to the weak-band model in the same pass: `governance/tier-system.md`
+§8 closing paragraph + §2 T6 row (removed "never relabelled 'best practice'"; added the determination-level
+○-band rule); `governance/evidence-methodology.md` §1.6, the §2.3 scale-tagging clause, and the §3.4
+Tier-4–6 voice row; `governance/pipeline-contract.yaml` `register-invariants` + `no-regulatory-stratum-stated`
+criteria; `workplan/best-practices-assessment-system.md` §1 and §5. The 5 active `workplan/` entity-code
+cross-references orphaned by the A4 rename were also swept to `ENT-##` (the B1 epistemic-requirement `E-##`
+namespace was left intact). `governance/mission-and-epistemics.md` is the one governing source NOT
+reconciled — see §6.
+
 ## 4. What this DR does NOT change
 
 `schemas/directness.py`; `scripts/audit/matrix_consistency.py` EXPECTED table; the §10 sweep
@@ -79,7 +99,7 @@ column semantics (migrations 026/027 schema); tier assignments of any source; `t
 
 ## 5. Engine follow-up (tracked; doc markers point here)
 
-1. **`v_best_practice`** — migration 028 + `scripts/assess/assess_cell.py` interim view: drop the
+1. **`v_best_practice`** — migration 029 + `scripts/assess/assess_cell.py` interim view (NB: migration 028 already exists — value-genealogy H1; use 029): drop the
    `regulatory_stratum_only` exclusion (both the column predicate and the `tier_basis` marker
    guard, migration 027; assess_cell.py view); add a queryable strength-band column so
    weak-band rows are distinct, never silently mixed with anchored rows.
@@ -102,6 +122,27 @@ column semantics (migrations 026/027 schema); tier assignments of any source; `t
    `derivation_sha` on re-run), I1–I5 via the reworked checker shown firing on injected
    violations, `validate_evidence_state.py`, and re-attestation of the superseded framing DR's
    attestation record.
+
+## 6. Required pending owner action — mission reconciliation (NOT applied)
+
+`governance/mission-and-epistemics.md` doctrine #2 (:46) states: *"A best-practice claim derived solely from
+code consensus — convergence across Tier 4–6 sources — is in error"* (also the :42 heading and the :177
+review-checklist item 3). Option A directly carves an exception to this. Under the precedence clause, until
+the mission is reconciled it *governs* — so at the mission level the Option A phrase-extension remains
+contested. This reconciliation is **escalated to the owner, not applied**, because (a) the mission is the
+owner's identity statement, and (b) editing it rotates the `373255e` doctrine-sha that every attestation and
+doctrine-token pins, cascading a re-attestation obligation. **Proposed amendment for owner approval**
+(doctrine #2, append): *"Amended 2026-07-21 (Option A): such a claim may be stated only as weak-band (○)
+'best practice as currently known,' always flagged code-derived with the convergence-not-evidence caveat; an
+unflagged or above-weak-band code-consensus best-practice claim remains in error."* Update checklist item
+:177 correspondingly. Until the owner rules, Option A holds across the evidence architecture and its other
+governing sources, with this single mission-level reconciliation outstanding.
+
+**Adversarial-remediation provenance.** This DR's §3 governing-source reconciliation, the §2.5 safeguard, and
+the attestation fixes were produced by a three-reviewer adversarial pass (Fable-5, max effort) over the
+session's committed work, judged for long-term data integrity, transparency, and ethics. Attestation
+conformance applied in the same pass: both prior DR attestations narrowed to the single fired rule (check-8
+conformance) and all three session attestations consolidated to one truthful session id.
 
 ---
 

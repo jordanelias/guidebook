@@ -77,7 +77,7 @@ stages:
         check: scripts/validate_evidence_state.py
       - id: no-regulatory-stratum-stated
         kind: integrity
-        criterion: "A cell flagged code_floor_only or regulatory_stratum_only is never `stated` (convergence-not-evidence; invariant I3)."
+        criterion: "A cell flagged code_floor_only or regulatory_stratum_only is never `stated` (convergence-not-evidence; DR-2026-07-21 §2.2 — such cells stay `provisional` and render as weak-band best practice only, per amended I3)."
         references: "evidence-architecture.md §5/§6 I3; tier-system.md §3; migration 027"
         check: scripts/validate_evidence_state.py
       - id: tier3-alone-threshold
@@ -123,7 +123,11 @@ stages:
     criteria:
       - id: register-invariants
         kind: integrity
-        criterion: "Every rendering of a cell carries the identical determination tuple across registers; no best-practice language on regulatory-stratum cells under any weighting profile; no register exceeds its map row (I1-I5)."
+        # I3 amended 2026-07-21 (Option A, DR-2026-07-21-evidence-architecture-option-a-execution):
+        # regulatory-stratum cells may carry ONLY weak-band (○) best-practice language, always
+        # flagged + caveated, never above the weak-band map row. NB register_integrity_check.py
+        # still enforces I3's repealed absolute form (ENGINE-LAG → DR-2026-07-21 §5).
+        criterion: "Every rendering of a cell carries the identical determination tuple across registers; no unflagged and no above-weak-band best-practice language on regulatory-stratum cells under any weighting profile; no register exceeds its map row (amended I1-I5)."
         references: "evidence-architecture.md §6 I1-I5"
         check: scripts/audit/register_integrity_check.py
       - id: mode-stratum-matrix-consistency
