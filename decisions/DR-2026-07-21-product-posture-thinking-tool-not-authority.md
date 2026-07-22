@@ -1,11 +1,13 @@
 # DR-2026-07-21: Product posture — the Guidebook adjudicates evidence and declines authority
 
-- Status: **RATIFIED — owner directive 2026-07-21** (merge of PR #46 + explicit owner ratification).
+- Status: **RATIFIED — owner directive 2026-07-21** (merge of PR #46 + explicit owner ratification; independently reaffirmed by the "Yes, ratify ALL recent work" directive — see `decisions/RATIFICATION-RECORD-2026-07-21.md` §Addendum, which acknowledges this DR was already ratified on `main` rather than re-flipping it).
   Records the standing product posture that has been re-litigated across many sessions but never
   captured as a decision record. Its purpose is to end the re-litigation and give downstream sessions
   one canonical answer to "what is this product, and what may it claim?" The posture itself is now
   doctrine; its consequences (the mission:16 disambiguation edit and the anti-displacement freeze,
-  §Consequences) are in force and executed as separate, tracked follow-ups — not by this record.
+  §Consequences) are in force and executed as separate, tracked follow-ups — not by this record. The
+  mission:16 edit changes the doctrine blob sha and runs through the re-attestation materiality
+  process (`DR-2026-07-21-re-attestation-materiality-and-window`).
 - Date: 2026-07-21
 - Prepared by: Claude, quoting the owner's own framing (owner messages, 2026-07-21).
 - Affects (if ratified): `governance/mission-and-epistemics.md` (the "thinking tool / does not dictate
