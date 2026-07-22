@@ -1,0 +1,32 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-07-21-taxonomy-interrogation",
+ "artifact": "decisions/DR-2026-07-22-work-from-axes.md",
+ "doctrine_sha": "0f2f525",
+ "rules_in_scope": [
+  "doctrine-check",
+  "source-discipline",
+  "adherence-logging-and-attestation"
+ ],
+ "per_rule_status": {
+  "doctrine-check": {
+   "status": "FIRED",
+   "evidence_path": "governance/functional-taxonomy.md",
+   "reason": "The discipline is a direct consequence of already-ratified doctrine — mission §1.3 (function over category), the two-layer taxonomy, §0.5 (irreducibility), §3.2 (mapping-confidence), and held-tensions T2/T4/T9 — not a new doctrinal commitment; it names a working failure and forbids it. Owner-directed and ADOPTED, paired with the project-standards RULE per A12 CS8. No schema/DB/code change."
+  },
+  "source-discipline": {
+   "status": "FIRED",
+   "evidence_path": "decisions/DR-2026-07-22-work-from-axes.md",
+   "reason": "No external literature claim is made. The factual content is (a) the three erasures, self-evident from this session's own transcript, and (b) the axis signatures they contradicted (POTS→STA+THR+BAL, CFS→STA, MCAS→CHM), which are rows in population_axis_map verified this session. The clinical distinctions cited (orthostatic vs exertional vs immune; dyspnea vs fatigue) are used to justify NOT-lumping and carry no threshold or spec claim requiring tier-anchoring."
+  },
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "attestations/decisions_DR-2026-07-22-work-from-axes.json",
+   "reason": "PI rule #11 attestation for the new decision record; grounded at current doctrine 0f2f525."
+  }
+ },
+ "deviations": [],
+ "bias_direction": "The agent authored the errors, the critique of them, this corrective rule, and this attestation — and codifying its own failure as project doctrine could read as self-serving absolution (turning three mistakes into a virtuous 'guardrail' commit). It also expands the governance surface, which the anti-displacement discipline discourages. Bounded by: the owner explicitly directed the recording ('extremely important to your process') and the corrective framing ('work from axes'), so it is owner-mandated, not agent-initiated displacement; the rule constrains the agent's own future behaviour rather than granting it latitude; and it points to (does not resolve) the substantive reopenings (orthostatic/respiratory axes), leaving the real work undone and honestly flagged rather than claimed.",
+ "independent_reviewer_counterclaim": "A reviewer could argue this is process theatre: a rule that says 'don't lump' will not stop the next lump, and the same agent that lumped three times in two turns is unlikely to be saved by a RULE it wrote. Response: the guardrail is deliberately placed where it mechanically re-surfaces at the point of failure — CLAUDE.md §10 (read at session start) and the project-standards ledger (loaded often) and the taxonomy doctrine §3.3 (loaded exactly when population work happens) — and it converts a vague 'be careful' into a concrete stop-and-decompose trigger with named anti-examples; it is a necessary-not-sufficient control, and the real test is the reopened orthostatic/respiratory axis work being done axis-first, which this DR schedules rather than claims.",
+ "verdict": "CLEAN"
+}

@@ -344,6 +344,12 @@ attestation logic.
 - **Don't run `scripts/bootstrap.sh`** (PAT-gated, remote-fetching; for the claude.ai surface).
 - **Don't run `scripts/init_db.py`** expecting a working DB (it applies only migration 001) —
   use `migrate_db.py --rebuild`.
+- **Work from axes, not population umbrellas.** When adding, scoping, or reasoning about
+  population/profile codes, curate *from* the functional axes (the specific, non-erasing demand
+  layer) — never coin broad umbrellas ("physically disabled", "energy-limiting chronic illness").
+  They collapse opposed demands and erase specific communities (a repeatedly-caught failure mode).
+  Profiles are specific self-identified communities, co-produced. See `governance/functional-taxonomy.md`
+  §3.3, `references/project-standards.md` (RULE 2026-07-22), and `DR-2026-07-22-work-from-axes`.
 
 ## 11. Where to read for depth
 
