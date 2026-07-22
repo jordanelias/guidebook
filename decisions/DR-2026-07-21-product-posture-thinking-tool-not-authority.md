@@ -1,6 +1,6 @@
 # DR-2026-07-21: Product posture — the Guidebook adjudicates evidence and declines authority
 
-- Status: **PROPOSED — pending owner ratification.** Authored on owner directive 2026-07-21 to
+- Status: **ACCEPTED — owner ratification "Yes, ratify ALL recent work", 2026-07-21. Doctrine accepted; execution (the `mission-and-epistemics.md` language edit) staged, NOT applied — it changes the doctrine blob sha and must run through the re-attestation materiality process (`DR-2026-07-21-re-attestation-materiality-and-window`). See `decisions/RATIFICATION-RECORD-2026-07-21.md` §Addendum.** Authored on owner directive 2026-07-21 to
   record the standing product posture that has been re-litigated across many sessions but never
   captured as a decision record. This DR **states and does not execute** any engine or content
   change; its purpose is to end the re-litigation and give downstream sessions one canonical answer

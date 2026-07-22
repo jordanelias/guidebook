@@ -21,6 +21,14 @@ confirmed.
 | E7 | Close GAP-277 (IntD info-access → AX-COG-L); open STUB-axis evidence-debt gaps | gap register | **BLOCKED** | After E1 (gap rows are DB) |
 | E8 | Enum change (`PopulationCode`) per `population-taxonomy.md` §5 process | governance+schema | **BLOCKED** | After E1; follows canonical change process |
 
+## Addendum items — from "Yes, ratify ALL recent work" (three further DRs)
+
+| # | Stage | Kind | Status | Blocker / note |
+|---|---|---|---|---|
+| E9 | Pipeline-contract: reconcile stage ids vs the deployed `<audit_trail>`; resolve the blob-vs-commit `doctrine_sha` convention + `ci.yml` doctrine-gate mismatch | owner action + tooling | **BLOCKED (owner)** | Ratification precondition per DR-2026-07-13; only the owner has the deployed list. `pipeline-contract.yaml` is accepted as the Level-2 index meanwhile; the sha-convention fix also affects how every attestation's `doctrine_sha` is checked |
+| E10 | ICCT: `cross_test_pairs` table + `v_cross_test_open` view (migration); `connection-discovery` `--mode category-crosstest`; `assess_cell.py` ICCT gate in the `stated` predicate (new `rule_version`); methodology doc | DB + tooling (large) | **READY (non-canonical)** | Migration is additive/read-oriented; can be authored+staged without touching determinations. The `stated`-predicate gate change is behaviour-affecting — stage under a new rule_version and adversarial-pass it |
+| E11 | Product-posture: apply the `mission-and-epistemics.md` language edit (adjudicate-vs-dictate disambiguation at §doctrine) | doctrine edit (SHA cascade) | **BLOCKED (careful)** | Changes doctrine blob `0f2f525` → triggers re-attestation materiality (DR-2026-07-21-re-attestation-materiality-and-window). Run deliberately with the materiality triage, not as a casual edit |
+
 ## Sequence
 
 Gates first (**G1 partial, G2 pending**) → **E1** apply (confirmed, validated stage)

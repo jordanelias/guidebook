@@ -109,3 +109,60 @@ separately rather than swept in here.
 | `governance/functional-taxonomy.md` v1.2 | PROPOSED | **RATIFIED / OPERATIVE** (DB exec gated) |
 | `working/taxonomy/staged_schema_functional_axes.sql` | staged | staged (unchanged; promotion gated) |
 | `data/guidebook.db` | — | **unchanged** (apply gated per §9) |
+
+---
+
+## Addendum — "Yes, ratify ALL recent work" (2026-07-21)
+
+**Owner directive (verbatim):** "Yes, ratify ALL recent work" — extending scope, in
+direct response to this record's §"Scope boundary" flag, to the remaining recent
+PROPOSED decision records. Enumeration performed against `decisions/*.md` status lines
+(the three genuinely-PROPOSED recent records; other grep hits were body-text matches on
+already-ACCEPTED records).
+
+### Additionally ratified — three recent PROPOSED decision records, in full
+
+- **`DR-2026-07-13-pipeline-contract`** (→ **ACCEPTED, doctrine**). The five-stage
+  spine + `pipeline-contract.yaml` as the canonical Level-2 stage-gate index.
+  **Owner-action precondition outstanding (recorded, not papered over):** the stage ids
+  are a repo-side reconstruction and the DR itself makes reconciliation against the
+  deployed `<audit_trail>` a *ratification precondition* — an owner action I cannot
+  verify. Also outstanding: the blob-vs-commit `doctrine_sha` convention inconsistency
+  and the `ci.yml` doctrine-gate-vs-convention mismatch the DR flags. Doctrine accepted;
+  correctness-against-deployed-reality remains owner-verifiable (register E9).
+- **`DR-2026-07-20-intra-category-cross-test`** (→ **ACCEPTED**). The ICCT — every
+  specification adjudicated against its category-siblings before determination (your
+  2026-07-20 directive). Forks **X2** (category = functional neighbourhood, not title
+  silo) and **X5** (gate strength) accepted **as drafted**, reversible by future DR.
+  Execution (the `cross_test_pairs` migration + view, the `connection-discovery`
+  crosstest mode, the `assess_cell.py` ICCT gate) is staged (register E10), not run.
+- **`DR-2026-07-21-product-posture-thinking-tool-not-authority`** (→ **ACCEPTED**).
+  The standing posture — adjudicates evidence, declines authority — that this session's
+  entire body of work nests under; ratifying it resolves the incoherence of PROPOSED
+  work nesting under a PROPOSED frame. Execution (the `mission-and-epistemics.md`
+  language edit) is **staged, not applied** because it changes the doctrine blob sha
+  (`0f2f525`) that every current attestation is grounded on, and must run through the
+  re-attestation materiality process (register E11).
+
+### Still out of scope (not "PROPOSED", so not ratification targets)
+
+`DR-2026-07-13-person-mode-*` and `DR-2026-07-14-person-mode-governance-reconciliation`
+are **APPLIED but execution-incomplete** (blast-radius), and
+`DR-2026-07-21-re-attestation-materiality-and-window` is **RATIFIED (mechanism)** — these
+are execution-completeness items, not pending ratifications. `PI-update-needed.md` is a
+queued task. None is swept in by "ratify all recent work"; flagged here so the boundary
+is explicit.
+
+### Unchanged by this addendum
+
+No canonical `data/guidebook.db` mutation; no `mission-and-epistemics.md` edit (doctrine
+sha preserved at `0f2f525`); no staged SQL promoted into `scripts/migrations/`; no skill
+regenerated. All execution consequences are staged in
+`workplan/ratification-execution-register-2026-07-21.md`.
+
+| Artifact | Before | After |
+|---|---|---|
+| `DR-2026-07-13-pipeline-contract.md` | PROPOSED | **ACCEPTED (doctrine; owner-action precondition outstanding)** |
+| `DR-2026-07-20-intra-category-cross-test.md` | PROPOSED | **ACCEPTED** |
+| `DR-2026-07-21-product-posture-thinking-tool-not-authority.md` | PROPOSED | **ACCEPTED** |
+| `governance/mission-and-epistemics.md` | `0f2f525` | **unchanged** (product-posture edit staged, register E11) |

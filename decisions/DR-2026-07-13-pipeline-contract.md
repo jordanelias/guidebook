@@ -1,6 +1,6 @@
 # DR-2026-07-13: Pipeline contract — one machine-checkable stage-gate spec for evidence work
 
-- Status: **PROPOSED — pending owner ratification. Not owner-ratified.** (Authored by Claude in the vectorized-audit-tool build; it introduces no new doctrine and is advisory / Level-2 until the owner ratifies it.)
+- Status: **ACCEPTED (doctrine) — owner ratification "Yes, ratify ALL recent work", 2026-07-21; owner-action precondition OUTSTANDING (stage-id reconciliation vs the deployed `<audit_trail>`; the blob-vs-commit `doctrine_sha` + `ci.yml` gate inconsistency it flags) — see `decisions/RATIFICATION-RECORD-2026-07-21.md` §Addendum. Was:** (Authored by Claude in the vectorized-audit-tool build; it introduces no new doctrine and is advisory / Level-2 until the owner ratifies it.)
 - Date: 2026-07-13
 - Prepared by: Claude. Grounded in a full read of the enforcement stack (`governance/`, `decisions/`, `schemas/`, `scripts/audit/`) performed this session, not from memory.
 - Category: **D-METH** (methodological — how evidence work is gated as it flows through stages). Default delegation **DG-NON** (new methodology is the owner's to adopt); other agents propose, the owner decides.
