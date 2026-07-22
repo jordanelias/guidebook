@@ -248,6 +248,27 @@ and between languages*; the taxonomy defers to each community's stated preferenc
 in English and to native-language conventions via `term_aliases` — display names
 are presentation-layer, revisable without schema change **[T1][T5]**.
 
+**Work from axes — no armchair umbrellas [T2][T4][T9].** Curation, demand-mapping,
+and specification proceed *from the axes* (Layer 1) — the specific, architect-
+actionable, diagnosis-neutral, co-occurrence-native demand dimensions — **never from
+broad population/profile umbrellas.** The profile layer is populated only with
+*specific self-identified communities on their own terms* (co-produced); it is never
+a place to coin lumped coalition codes from an armchair. Broad umbrellas (e.g.
+"physically disabled", or clinical-cluster relabels like "energy-limiting chronic
+illness") are **forbidden as profile codes** because they (a) collapse opposed and
+orthogonal design demands and (b) erase specific communities — the exact
+pre-taxonomy category-thinking §1.3 and §0.5 exist to end. A population is a
+mapping-confidence-weighted **vector over axes** (§3.2), not a bucket. **The impulse
+to reach for a population umbrella is the signal to STOP and decompose to axes
+instead**; umbrellas may exist only as additive cross-cutting *tags* over specifics,
+never as replacement codes. Provenance and the operative rule:
+`references/project-standards.md` (RULE 2026-07-22) and `DR-2026-07-22-work-from-axes`
+— which record three self-caught erasures (OFS→"ELCI" erasing POTS/ME/MCAS;
+respiratory dismissed as "decomposed"; "physically disabled/wheelchair users"
+erasing the ambulatory and part-time-wheelchair disabled and burying the upper-limb
+axis), in each of which the axis layer already held the distinctions the umbrella
+destroyed.
+
 ## §4 Disposition of the population layer
 
 No rows change until ratification. Canonical sub-code aliases shown where the DB
