@@ -136,7 +136,7 @@ already-ACCEPTED records).
   silo) and **X5** (gate strength) accepted **as drafted**, reversible by future DR.
   Execution (the `cross_test_pairs` migration + view, the `connection-discovery`
   crosstest mode, the `assess_cell.py` ICCT gate) is staged (register E10), not run.
-- **`DR-2026-07-21-product-posture-thinking-tool-not-authority`** (→ **ACCEPTED**).
+- **`DR-2026-07-21-product-posture-thinking-tool-not-authority`** (→ **RATIFIED — already ratified on `main` (PR #46 + owner directive; commit `ac23484`); this directive reaffirms it and does not re-flip a PROPOSED record. Reconciled at the 2026-07-21 merge of `origin/main`**).
   The standing posture — adjudicates evidence, declines authority — that this session's
   entire body of work nests under; ratifying it resolves the incoherence of PROPOSED
   work nesting under a PROPOSED frame. Execution (the `mission-and-epistemics.md`
@@ -164,5 +164,5 @@ regenerated. All execution consequences are staged in
 |---|---|---|
 | `DR-2026-07-13-pipeline-contract.md` | PROPOSED | **ACCEPTED (doctrine; owner-action precondition outstanding)** |
 | `DR-2026-07-20-intra-category-cross-test.md` | PROPOSED | **ACCEPTED** |
-| `DR-2026-07-21-product-posture-thinking-tool-not-authority.md` | PROPOSED | **ACCEPTED** |
+| `DR-2026-07-21-product-posture-thinking-tool-not-authority.md` | already RATIFIED on `main` | **RATIFIED (reaffirmed; not re-flipped)** |
 | `governance/mission-and-epistemics.md` | `0f2f525` | **unchanged** (product-posture edit staged, register E11) |
