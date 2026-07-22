@@ -1,0 +1,32 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-07-21-taxonomy-interrogation",
+ "artifact": "decisions/DR-2026-07-22-population-representation-reconciliation.md",
+ "doctrine_sha": "0f2f525",
+ "rules_in_scope": [
+  "doctrine-check",
+  "source-discipline",
+  "adherence-logging-and-attestation"
+ ],
+ "per_rule_status": {
+  "doctrine-check": {
+   "status": "FIRED",
+   "evidence_path": "governance/population-taxonomy.md",
+   "reason": "PROPOSED, states-without-executing per the posture DR. It does not invent a new canonical — it aligns the DB to the enum already declared the single source of truth by population-taxonomy.md §5, and follows §5's owner-gated enum-change process for the genuinely-new codes. Structural change (enum + code renames) is correctly owner-gated and sequenced (ratify enum decisions, then write the migration), mirroring the taxonomy DR. No enum, DB row, or schema file changes with this commit."
+  },
+  "source-discipline": {
+   "status": "FIRED",
+   "evidence_path": "decisions/DR-2026-07-22-population-representation-reconciliation.md",
+   "reason": "Every factual claim is a live-DB / repo-file check performed this session: the enum's slash notation and CHD/LPA/EXH/BAR membership (schemas/enums.py read directly), the populations-vs-population_reclass delta (29 vs 22), the exact rename map (population_reclass.canonical_code), and the item_population_links carry-over counts (SCI 26, PCS 20, AUT 19, …). No literature claim is made; this is a data-model reconciliation."
+  },
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "attestations/decisions_DR-2026-07-22-population-representation-reconciliation.json",
+   "reason": "PI rule #11 attestation for the new decision record; grounded at current doctrine 0f2f525."
+  }
+ },
+ "deviations": [],
+ "bias_direction": "The agent authored the taxonomy that created population_reclass and now proposes reconciling the DB to fit it — a self-reinforcing loop where 'align to canonical' could smuggle in the agent's own new codes (OAD/VES/LCOV, the NEU/MS etc. sub-codes) under cover of a bug fix. Bounded by: the DR explicitly SEPARATES the genuine bug fix (Bucket A — targets already in the enum, not the agent's invention) from the owner-gated enum additions (Bucket B — the agent's proposed new codes, flagged as D-SCHEMA decisions the owner must approve, not folded into the bug fix); it is PROPOSED with the migration deferred until ratification; and it rejects the more agent-convenient 'make population_reclass the single table' option in favour of preserving existing FKs.",
+ "independent_reviewer_counterclaim": "A reviewer could argue this manufactures a mandate for the agent's new taxonomy: by framing the flat→slash drift as a 'bug', it pressures the owner to also accept the bundled new codes as if they were part of the same fix. Response: the DR does the opposite — it draws a hard line between Bucket A (drift whose slash targets predate this session in schemas/enums.py) and Bucket B (new codes), makes Bucket B an explicit, separately-checkable ratification item under population-taxonomy §5's process, and lets the owner ratify A while rejecting or amending B; the buckets are independently executable.",
+ "verdict": "CLEAN"
+}
