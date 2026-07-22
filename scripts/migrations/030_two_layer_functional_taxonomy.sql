@@ -1,19 +1,19 @@
--- ============================================================================
--- STAGED — DO NOT APPLY BEFORE RATIFICATION OF
--- decisions/DR-2026-07-21-two-layer-functional-taxonomy.md  (v1.1)
--- Deliberately located in working/taxonomy/ (NOT scripts/migrations/) so that
--- `db.py migrate` cannot pick it up. On ratification: move into
--- scripts/migrations/ with an apply-time timestamp prefix and record in
--- data_migrations per migration-based-writes doctrine.
--- Source doctrine: governance/functional-taxonomy.md v1.1 (PROPOSED), governed
--- by governance/held-tensions.md. Axis names are person-environment interaction
--- framed; ICF anchors serve findability, never person-description.
--- v1.1 deltas: OAD replaces OLD; mapping_confidence + canonical_code columns;
--- situations table (native Co-1 attachment); use_mode on item_axis_links;
--- falsification conditions on ALL axes (symmetry); wording per adversarial
--- passes. Non-DOI intake path is evidence_sources-side, defined in doctrine §5.6
--- and implemented at apply time.
--- ============================================================================
+-- 030_two_layer_functional_taxonomy.sql
+-- Schema migration — two-layer functional taxonomy (axes × profiles).
+-- Ratifies into the DB: DR-2026-07-21-two-layer-functional-taxonomy (v1.2);
+-- owner directive "just do it" (2026-07-21). Doctrine: governance/functional-taxonomy.md
+-- v1.2, incl. §0.5 the irreducibility principle (axes describe specification-variation,
+-- not persons; population_axis_map is a retrieval index, not a portrait).
+--
+-- Forward-only and immutable once committed. Deterministic for the CI rebuild-
+-- reproducibility gate: seed rows carry FIXED created_at/created_by_session
+-- (normalised at the tail of this transaction), never datetime('now').
+--
+-- Creates: axes (17), population_reclass (29), population_axis_map (69),
+-- item_axis_links (EMPTY), situations (EMPTY). The item↔axis and slug↔axis
+-- bridges are intentionally empty — coverage holes are visible-by-construction;
+-- the population→axis / FDA-brief harvest is a tracked follow-up (execution
+-- register E2/E3), not part of this schema step.
 
 BEGIN TRANSACTION;
 
@@ -223,11 +223,10 @@ INSERT INTO population_axis_map (population_code, axis_code, role, note) VALUES
 ('LCOV','AX-THR','SECONDARY',NULL),
 ('LCOV','AX-COG-O','SECONDARY','cognitive fog');
 
-COMMIT;
 
--- Post-apply (doctrine §9, gated): Co-1 review gate and non-English validation
--- gate precede freeze; backfill slugs.serves_axes; harvest item_axis_links from
--- references/audit-briefs/*_brief.md; regenerate FDA skill §§1-2; normalise
--- evidence_population_match.target_population; extend db.py validate
--- (zero-coverage axes; profile-layer containment); close GAP-277; open
--- STUB-axis evidence-debt gaps; define non-DOI intake fields on evidence intake.
+-- ── Determinism: normalise seed-row provenance to fixed values (rebuild-safe) ──
+UPDATE axes             SET created_at='2026-07-21T22:45:00Z', created_by_session='session_2026-07-21-taxonomy-execution';
+UPDATE population_reclass SET created_at='2026-07-21T22:45:00Z', created_by_session='session_2026-07-21-taxonomy-execution';
+UPDATE population_axis_map SET created_at='2026-07-21T22:45:00Z', created_by_session='session_2026-07-21-taxonomy-execution';
+
+COMMIT;

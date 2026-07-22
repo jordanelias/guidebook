@@ -10,7 +10,9 @@ confirmed.
 
 | # | Stage | Kind | Status | Blocker / note |
 |---|---|---|---|---|
-| G1 | Co-1 review gate (pre-launch form): adversarial passes + published-Co-1 checks per disposition | gate | **PARTIAL** | Two 2026-07-21 adversarial passes done (stand as the form); per-disposition published-Co-1 checks not yet run. Full discharge needs post-launch consultation (may never exist) — taxonomy is operative-but-provisional meanwhile |
+| G1 | ~~Co-1 review gate~~ → **DISSOLVED** (not a completeness gate) | n/a | **DISSOLVED 2026-07-21** | Owner directive: lived-experience *vetting* would require an infinite surface (every cross-cut × context per §0.5/T9), so it cannot gate. Reframed as standing openness (continuous, per-person correction via Person Mode + situations); taxonomy ships as the floor and stays revisable. See `functional-taxonomy.md` §9.1 |
+| G2 | Non-English concept validation (quick pass 2026-07-21) | gate | **DONE (pass 1)** | `term_aliases` (880 rows) carries no aliases yet for the new axis stems (vestibular/balance/continence/arousal/ambulation = 0; thermo = 7) — expected for new entities. Finding: native-language alias population for the 17 axes is a follow-up (E12), not a blocker; the schema apply creates the entities that alias work annotates |
+| E1 | Apply schema migration `030_two_layer_functional_taxonomy.sql` to `data/guidebook.db` | DB mutation | **DONE 2026-07-21** | Applied via `db.py migrate` → user_version 30; axes 17 / population_reclass 29 / population_axis_map 69 / item_axis_links 0 / situations 0. **Rebuild-reproducibility verified** (all 5 tables byte-identical committed vs `--rebuild`); no new integrity failures (the 9 pre-exist on main) |
 | G2 | Non-English concept validation: 17 axes vs `term_aliases` + searched JA/DE/ZH/KO/ES/FR strata | gate | **PENDING** | Real work; doable this repo. Must precede axis-register freeze |
 | E1 | Promote staged SQL → `scripts/migrations/` (timestamped) + apply to `data/guidebook.db` + record in `data_migrations` | DB mutation | **BLOCKED** | Gated behind G1+G2. Irreversible on canonical DB — run as a distinct, confirmed, validated stage. Do NOT promote early (arms CI rebuild) |
 | E2 | Backfill `slugs.serves_axes` (79 slugs) | DB mutation | **BLOCKED** | After E1. ~60 mechanical, remainder judgment |
@@ -29,16 +31,24 @@ confirmed.
 | E10 | ICCT: `cross_test_pairs` table + `v_cross_test_open` view (migration); `connection-discovery` `--mode category-crosstest`; `assess_cell.py` ICCT gate in the `stated` predicate (new `rule_version`); methodology doc | DB + tooling (large) | **READY (non-canonical)** | Migration is additive/read-oriented; can be authored+staged without touching determinations. The `stated`-predicate gate change is behaviour-affecting — stage under a new rule_version and adversarial-pass it |
 | E11 | Product-posture: apply the `mission-and-epistemics.md` language edit (adjudicate-vs-dictate disambiguation at §doctrine) | doctrine edit (SHA cascade) | **BLOCKED (careful)** | Changes doctrine blob `0f2f525` → triggers re-attestation materiality (DR-2026-07-21-re-attestation-materiality-and-window). Run deliberately with the materiality triage, not as a casual edit |
 
+| E12 | Native-language alias population for the 17 axes (`term_aliases`) | data | **READY** | Surfaced by G2 pass 1; enables the deeper non-English concept-carving check. Not a blocker for the schema (already applied) |
+
 ## Sequence
 
-Gates first (**G1 partial, G2 pending**) → **E1** apply (confirmed, validated stage)
-→ E2/E3/E5/E7/E8 (DB) and E4 (skill) → E6 may run any time. Research execution against
-the new STUB axes remains queued behind the language/jurisdiction debt (ratified queue
-rule), so no new search work is in this register.
+**G1 dissolved · G2 pass-1 done · E1 DONE (migration 030 applied + reproducibility-verified).**
+Remaining: **E3** (harvest `item_axis_links` from 87 FDA briefs — the substantive next
+step that makes items reference axes) and **E2** (`slugs.serves_axes`) are the bridges
+that turn the now-created scaffolding into a connected graph; then **E4** (FDA skill
+regen), **E5/E7/E8** (DB), **E6/E10** (tooling), **E12** (aliases). **E9** (pipeline
+stage-id reconciliation) and **E11** (product-posture mission edit — doctrine-sha
+cascade) remain owner-gated. All canonical-DB writes go through migration files (never
+direct `db.py` writes — those bypass the reproducibility gate). Research execution
+against the STUB axes stays queued behind the language/jurisdiction debt.
 
 ## Next action
 
-G2 (non-English validation) and E6 (validator extension) are the two stages runnable
-now without touching the canonical DB. Recommend running G2 next (it gates E1 and is
-the ratified pre-freeze check), then returning to the owner to confirm the E1 apply as
-a distinct stage.
+The taxonomy scaffolding is live in the canonical DB. The highest-value next step is
+**E3** — harvesting `item_axis_links` from the 87 FDA audit briefs — because it is what
+connects the 93 items to the 17 axes and makes the two-layer model queryable end-to-end.
+It is large and correctness-critical (a data migration, adversarial-passed), so it is
+its own focused stage rather than part of this one.

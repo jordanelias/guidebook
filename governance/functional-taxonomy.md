@@ -377,12 +377,22 @@ of priority between people; the checklist (§9) offers the reorder explicitly.
 
 ## §9 Migration plan and gates (post-ratification)
 
-1. **Co-1 review gate [T3][T5].** This taxonomy is *provisional pending
-   lived-experience review* in whatever form the mission's §Operational reality
-   permits: pre-launch, adversarial standpoint passes (the 2026-07-21 pair stand
-   as the form) plus published-Co-1 checks per disposition; post-launch, the
-   consultation infrastructure decides *with* disabled people. Ratification by the
-   owner does not discharge this gate; it schedules it.
+1. **Co-1 openness — NOT a completeness gate [T3][T9] (amended 2026-07-21, owner
+   directive).** The earlier framing — *provisional pending lived-experience review*
+   as a pre-freeze gate — is **withdrawn as a category error**. By the irreducibility
+   principle (§0.5) the taxonomy just adopted, "vetting by lived experience" would
+   require representatives across every cross-cut of every axis at every context — an
+   **infinite surface** no finite panel can cover. Lived experience therefore *cannot*
+   be a completeness gate (a pass/fail the taxonomy waits on); treating it as one
+   would stall the work forever on an unsatisfiable condition. It is instead a
+   **standing openness**: the taxonomy ships as the floor (owner adjudication, §0.5 —
+   "something is better than nothing"), stays permanently revisable, and is corrected
+   by lived experience *continuously and one person at a time* — through Person Mode,
+   the `situations` entity, and any post-launch feedback — never as a representative
+   sign-off. Owner directive 2026-07-21: *"We don't have access to lived experience…
+   that implies … an infinite surface."* The two 2026-07-21 adversarial standpoint
+   passes stand as the strongest pre-launch input available; they are input, not
+   completion.
 2. **Non-English validation gate [T1].** Before the axis register is frozen: check
    the 17 axes against `term_aliases` / native-alias machinery and the already-
    searched JA/DE/ZH/KO/ES/FR strata — do non-English literatures carve the space
