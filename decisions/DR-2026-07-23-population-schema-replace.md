@@ -5,9 +5,10 @@
 - Category: **D-DOCT + D-SCHEMA**, delegation **DG-NON** (population taxonomy is owner-only).
 - Supersedes: `DR-2026-07-21-two-layer-functional-taxonomy` and
   `DR-2026-07-22-population-representation-reconciliation` **as to the population code scheme**
-  (their slash-notation, parent-child nesting model). The `axes` layer (Layer 1) they created
-  is retained and is now cross-walked from the new access-needs layer (see the access-needs
-  migration 031).
+  (their slash-notation, parent-child nesting model); and `DR-2026-07-22-work-from-axes`
+  **IN PART** — the design-equivalence umbrella exception for `COM`/`BRAIN` only (sub-decision 6);
+  its base anti-umbrella rule otherwise stands. The `axes` layer (Layer 1) is retained and is
+  now cross-walked from the new access-needs layer (see migration 031).
 - Prepared by: Claude, on owner direction, integrating the uploaded **Access Taxonomy (v0.1)**.
 
 ## Context
@@ -42,6 +43,18 @@ IntD→ID, ABI→BRAIN.
    "proxy IntD through DEM+NDV" rule (project-standards 2026-03-25).
 5. **Body size** (`LPA`/`TALL`/`BAR`) — retained as a population group, framed as *the
    environment being wrongly normed to an average body*, served by the `A-SIZE` access need.
+6. **`COM` and `BRAIN` are ratified umbrella exceptions** to the anti-umbrella rule
+   (`DR-2026-07-22-work-from-axes`). Owner rationale (2026-07-23): they are too complex to
+   avoid umbrellas, carry high within-group comorbidity, and have ~100% design overlap — five
+   near-identical tags otherwise. Principle: *umbrellas are forbidden only when they erase
+   design differences; here the members differ in etiology but not in design demand.* Verified:
+   the union of member axis signatures is preserved on each umbrella (COM =
+   AX-CHM+AX-STA+AX-BAL+AX-THR+AX-COG-O; BRAIN = AX-COG-O+AX-BAL+AX-AMB+AX-ARO+AX-COM-E+AX-SPR+AX-STA),
+   with no opposed demands — so no design distinction is erased. This **supersedes
+   `DR-2026-07-22-work-from-axes` IN PART** (the exception only; the base anti-umbrella rule
+   stands for all other cases). Recorded as an appended RULE in `references/project-standards.md`
+   (the "design-equivalence exception," 2026-07-23) with the (a) comorbidity/overlap,
+   (b) preserved-axis-union, (c) no-opposed-demand test.
 
 ## Execution (this session)
 
