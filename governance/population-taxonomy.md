@@ -1,10 +1,27 @@
 # Population Taxonomy
-**Status:** CANONICAL — A7 Session 1
+**Status:** SUPERSEDED (population code set) — see banner below. Structural detail retained pending full rewrite.
 **Phase:** Stage A Phase 7 — Population taxonomy
 **Created:** 2026-04-29 19:06 UTC
 **Doctrinal basis:** workplan-orchestrator §Population Codes · project-standards (L11, L38, L41, L96, L118) · `schemas/enums.py` PopulationCode
 
 ---
+
+> ## ⚠ Superseded by DR-2026-07-23 (Access-Taxonomy Axis-2 population set)
+>
+> The population **code set** below (11 top-level + slash sub-codes + parent nesting) is
+> **retired**. Per `decisions/DR-2026-07-23-population-schema-replace.md`, the canonical set is
+> now the flat, community-organized **23 codes** (no parent codes, no containment):
+>
+> `BLIND DEAF DEAFBLIND MOB LMB SCI MOVE NDV AUT ADHD ID DEM BRAIN COM PAIN MS EPI VES MH LPA TALL BAR ALL`
+>
+> **Crosswalk:** VIS→BLIND · UPL→LMB · DBL→DEAFBLIND · {NEU,PCS}→BRAIN ·
+> {OFS,CFS,MCAS,POTS}→COM · SENS→NDV · EXH→TALL · IntD→ID · ABI→BRAIN. New: MOVE, ID, VES,
+> LPA, TALL, BAR. `ID` (intellectual disability) is now **first-class** (ends the DEM+NDV proxy).
+> `NDV` is a **peer view, not a parent** of AUT/ADHD. Life stage (SEN older adults, CHD children)
+> is an **orthogonal modifier** (`life_stage_modifiers` table), not a population. `ALL` and `MH`
+> are retained. Access needs (Axis 1) are the tagging axis — see the access-needs layer
+> (migration 031) crosswalked to ICF. The single source of truth remains `schemas/enums.py`
+> `PopulationCode`. Sections below describe the retired scheme and await a full rewrite.
 
 ## 1. Taxonomy structure
 
