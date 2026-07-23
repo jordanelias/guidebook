@@ -1,0 +1,124 @@
+name: Regenerate pipeline completeness
+
+# Auto-rebuilds tools/pipeline-completeness-dashboard.html from data/guidebook.db.
+# The dashboard reports per-stage completeness of the evidence pipeline
+# (research -> collection -> judgment -> synthesis -> render) with per-category,
+# per-item, and per-population breakdowns. The regenerated HTML is committed back
+# to main by github-actions[bot]; GitHub Pages then serves it at the stable
+# bookmark URL:
+#
+#   https://jordanelias.github.io/guidebook/tools/pipeline-completeness-dashboard.html
+#
+# Recurrence: a change to data/guidebook.db (e.g. the weekly source-verification
+# job's commit) triggers an immediate rebuild; a weekly schedule is a belt-and-
+# braces catch. Both are safe when nothing changed — see loop safety below.
+#
+# Determinism / loop safety: tools/pipeline_completeness.py derives the report's
+# "as-of" date from the DB's own max(updated_at), never wall-clock, so identical
+# DB content produces byte-identical output. This workflow's own commits only
+# touch the generated HTML -- never data/guidebook.db -- so they cannot retrigger
+# it. Belt and braces: the job exits without committing when the regenerated HTML
+# is byte-identical to the committed copy.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/guidebook.db'
+      - 'tools/pipeline_completeness.py'
+      - 'governance/pipeline-contract.yaml'
+      - '.github/workflows/regenerate-pipeline-completeness.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'data/guidebook.db'
+      - 'tools/pipeline_completeness.py'
+      - 'governance/pipeline-contract.yaml'
+      - 'tools/pipeline-completeness-dashboard.html'
+      - '.github/workflows/regenerate-pipeline-completeness.yml'
+  schedule:
+    - cron: '30 7 * * 1'  # Mondays 07:30 UTC (after the weekly source-verification job)
+  workflow_dispatch:
+
+# Prevent overlapping runs racing on the generated HTML.
+concurrency:
+  group: regenerate-pipeline-completeness-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  # On PRs: fail if the committed dashboard is stale versus the DB, so a data
+  # change can't merge with an out-of-date dashboard. No writes.
+  check:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: pip install --quiet pyyaml
+      - name: Check dashboard is current
+        run: python3 tools/pipeline_completeness.py --check
+
+  # On push to main / schedule / manual dispatch: regenerate and commit changes.
+  regenerate:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install deps
+        run: pip install --quiet pyyaml
+
+      - name: Regenerate dashboard
+        run: python3 tools/pipeline_completeness.py
+
+      - name: Commit if changed
+        id: commit
+        run: |
+          set -e
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add tools/pipeline-completeness-dashboard.html
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit (dashboard byte-identical to committed copy)."
+            echo "committed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          TS=$(date -u '+%Y-%m-%d %H:%M')
+          git commit -m "pipeline-completeness-regen: rebuild after data change [${TS}]"
+          echo "committed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Push with race-aware retry
+        if: steps.commit.outputs.committed == 'true'
+        run: |
+          set -e
+          for i in 1 2 3; do
+            if git push origin main; then
+              echo "Push succeeded on attempt $i"
+              exit 0
+            fi
+            echo "Push attempt $i failed; pulling --rebase and retrying"
+            git pull --rebase origin main || true
+            sleep $((i * 5))
+          done
+          echo "All push attempts failed"
+          exit 1

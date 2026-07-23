@@ -42,6 +42,33 @@ python3 tools/regenerate_vetting_surface.py
 
 The script is idempotent: same DB content produces byte-identical HTML output. CI exits without committing if the regenerated file matches the committed copy.
 
+## Pipeline Completeness Dashboard
+
+**Bookmark this URL:**
+
+> **<https://jordanelias.github.io/guidebook/tools/pipeline-completeness-dashboard.html>**
+
+Per-stage completeness of the evidence pipeline (`research → collection → judgment → synthesis → render`), measured against each stage's own denominator, with breakdowns by:
+
+- **Category** — the 10 item categories (A–K), items × judgment coverage × population breadth.
+- **Item** — the frontier of items that have reached a materialized determination, and which ones reached synthesis.
+- **Class (population)** — where determinations exist versus where they are needed (applicability vs. coverage).
+
+It also surfaces the pipeline contract's own enforcement coverage per stage (which integrity/completeness gates are built) and flags the `RETRACTED-PRE-REHAB` caveat so the stale `bpc_complete` flags aren't read as finished work.
+
+### Regeneration
+
+Automatic, via `.github/workflows/regenerate-pipeline-completeness.yml`. Triggers on any push to `main` that modifies `data/guidebook.db`, the generator, or `governance/pipeline-contract.yaml`; a weekly schedule (Mondays 07:30 UTC) is a belt-and-braces catch. On pull requests the workflow runs `--check` and **fails if the committed dashboard is stale** versus the DB. Loop-safe: the workflow's own commits only modify the HTML, never the DB.
+
+Manual run (local):
+
+```bash
+python3 tools/pipeline_completeness.py            # writes tools/pipeline-completeness-dashboard.html
+python3 tools/pipeline_completeness.py --check    # exit 1 if the committed copy is stale
+```
+
+Deterministic: the report's "as-of" date is the DB's own `max(updated_at)`, never wall-clock, so identical DB content yields byte-identical output. Requires `pyyaml` (a pinned project dependency). A `--format fragment` mode emits the body for a claude.ai Artifact.
+
 ## Pages setup (one-time)
 
 To make the bookmark URL above live:
