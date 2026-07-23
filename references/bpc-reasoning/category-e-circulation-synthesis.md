@@ -18,12 +18,17 @@ scripts/validate_reasoning.py.
 **Opus session ref:** session_2026-07-23-category-e-circulation-synthesis
 
 > **⚠ CONTROLLING NOTE — read §H first.** This document has been through two
-> adversarial passes (a self red-team and an independent reviewer). §§0–G are the
-> **first pass** and contain errors that §H corrects — most importantly, the
-> flagship "corridor ≥2440 mm ● as a universal wheeled width" claim (§B.3) does
-> **not** survive review (UNVERIFIED source + claim-type overreach — see §H.7),
-> and several determinations were graded one band too strong (§H.5) or inverted
-> (§H.11). **Where §H corrects §§0–G, §H governs.** The first-pass text is
+> adversarial passes (a self red-team and an independent reviewer) plus two
+> owner-caught corrections of the red-team itself. **§H.0 is a method note that
+> governs the rest of §H: the red-team over-segregated a synthesis that was
+> holistically sound — read §H through H.0.** §§0–G are the **first pass**;
+> §H records the corrections. The corridor **≥2440 mm conclusion holds** (a
+> wheelchair turns in corridors, so the width must fit the swept turn — anchored
+> on wheeled turning evidence, with DeafSpace converging; §H.7) — only its
+> *specific source* needs verification and its claim-type *phrasing* needed
+> precision. The genuine defects are elsewhere: determinations graded one band
+> too strong (handrail/TWSI/lift-Type-2, §H.5) and the door-force grading
+> inverted (§H.11). **Where §H corrects §§0–G, §H governs.** First-pass text is
 > retained for auditability, not as the operative claim.
 
 ---
@@ -990,6 +995,51 @@ place. Findings are severity-tagged. The first-pass text above is retained (not
 silently rewritten) so the correction is auditable; where a first-pass claim is
 superseded, a "⚠ H.n" pointer marks it.
 
+### H.0 Method note — this red-team over-segregated (owner-caught); read §H holistically
+
+The single most important correction to §H is a **method** one, and it applies to
+the whole section. §§0c/0e of the first pass read circulation *holistically*: a
+corridor is **one space worked in all directions at once**, and Category E is a
+**host surface** where passing, turning, signed conversation, wayfinding, sensory
+modulation, effort and support all coexist in the same physical run. The red-team
+below then **fragmented** that reading — splitting the corridor into three
+isolated "quantities," walling claim-types apart, and grading each thin parameter
+in a vacuum. **That segregation is what manufactured the errors**, not the
+evidence. It produced the H.7 nonsense ("an ideal width that won't fit a turn")
+and it distorts H.5 and H.11. Read the rest of §H through this lens:
+
+- **The convergences are mutual reinforcement, not coincidence and not
+  separable.** Passing width, the 180° swept turn, signed-conversation space, and
+  *not forcing the injurious tight spin-turn* (Chaikhot 15.3× braking force) all
+  land near **~2440 mm because one generous, legible circulation space serves them
+  together**. Segregating this into "signing vs turning vs passing" and asking
+  which one "really" governs the width is the error — a corridor does all of them
+  at once, so the width is set by their union, and the streams agreeing is the
+  design truth, not a fluke.
+- **Sensory support is a system, not a pile of isolated ○ parameters.** Handrail +
+  tactile-information handrail + luminance contrast + TWSI + acoustic navigation
+  are **one integrated wayfinding-and-support system** for the vestibular/sight
+  user moving down the run (§B.9, §D.3 vestibular/sight lens). The band rule below
+  still grades each *determination* honestly (H.5), but the best-practice
+  *specification* is the coherent system, whose value is holistic and survives
+  even where each atom's standalone primary evidence is thin.
+- **Effort is a budget, not a parameter.** Door force, ramp gradient, distance and
+  turning are **one cumulative effort experience**; for AX-STA/OFS/PAIN the
+  whole-journey load governs (H.11) — which is why "powered / lowest-achievable"
+  is the aspiration, read as an effort-budget point, not an isolated number war
+  between 20 N and 30 N.
+
+**What still holds after de-segregating:** the missed evidence base (H.1), the
+non-English correction (H.2), cite-don't-re-spin the connections (H.3), the
+unverified-source swap for the corridor figure (H.7 point 1), and the
+effort-budget aspiration (H.11). **What was a segregation artifact and is
+retracted:** the corridor "doesn't survive" verdict (H.7, corrected) and any
+reading of the sensory/support parameters as mere isolated band-laundering rather
+than a coherent system (H.5, reframed). The lesson mirrors H.10 one level up: work
+from the evidence *and think about the space as a whole* — a red-team that
+atomises can break a sound holistic synthesis as easily as a first pass can
+overclaim.
+
 ### H.1 [BLOCKING] The first pass worked from the item scaffold, not the evidence — and missed the OPERATIVE geometry methodology
 
 The single biggest defect. The geometry reasoning (§0b throughline 3, §B.3,
@@ -1113,13 +1163,21 @@ The real determination-level ◐-laundering instances are:
 - **TWSI (§B.7 Step 6)** — "◐" on ISO 23599 (T4) only, and the direction is
   CONTESTED → must be **○**, and per `evidence-architecture.md:106` a
   population-contested direction anchors **nothing** universally.
-- **Lift Type-2 (§B.6 Step 6)** — "◐ international floor" on EN 81-70 (T4). Since
-  no E-01 cell exists and the proposed Steinfeld ● anchor is itself contested
-  (H.7), this reduces to a T4-only floor → **○**.
+- **Lift Type-2 (§B.6 Step 6)** — "◐ international floor" on EN 81-70 (T4). As a
+  standalone code-floor citation this is a T4-only determination → **○**. (The
+  lift-car *best-practice* size is separately ● on the AWM power-WC-fit anchor,
+  §H.7; Type-2 is only the ○ floor beneath it.)
 
-Net: the document systematically rendered code/standards-only content **one band
-stronger than doctrine permits** (handrail, TWSI, lift-Type-2), compounding the
-door-force inversion (H.4). All three regrade to ○, `provisional`.
+Net (read with H.0): each of these **standalone determinations** regrades to **○,
+`provisional`** — the band rule grades the evidence for each parameter honestly,
+and code/standards-only content cannot render ◐. **But that is a statement about
+each atom's evidence strength, not about the design answer.** Holistically the
+handrail + tactile-info + contrast + TWSI + acoustic provisions are **one
+integrated support system** (H.0), and deploying that system coherently *is* the
+best-practice specification for the vestibular/sight user even though each
+component's standalone primary evidence is ○/thin. So: grade the atoms ○, specify
+the system. Do not let the honest per-atom ○ be read as "there is no
+best-practice answer here" — there is; it is the coherent whole.
 
 ### H.6 [MATERIAL] E-06 "under-grades" was the wrong frame (corrects §C.3)
 
@@ -1134,47 +1192,45 @@ E-07/E-09 (§A.2) — the fix is **re-linking E-06 to the clinical threshold
 evidence**, after which the cell re-derives to ● direction; it is not a grading
 error to be scolded. Reframe §C.3 and §G proposal 7 accordingly.
 
-### H.7 [BLOCKING — upgraded from MINOR by the independent pass] The 2400 mm figure rests on an UNVERIFIED, mis-slugged source, and the "convergence" is unsound
+### H.7 [MINOR — this item over-corrected in draft; corrected here] Corridor width, the swept turn, and the convergence
 
-§0b/§B.3/§E leaned on "Steinfeld 2006 RESNA swept-path → 2400 mm" as a ● stream
-converging with DeafSpace 2440 mm. The DB shows this is **triply unsound**:
+**Draft H.7 got this wrong and is retracted.** It claimed the ~2440 mm corridor
+width was "unsound" — exiling the 180° turning footprint to E-12 "Manoeuvring
+Space" and calling the DeafSpace/AWM convergence a coincidence. That reasoning
+produces the nonsense of "an ideal corridor width that doesn't fit a wheelchair
+turn," and it is wrong: **wheelchair users turn *in* corridors** — into every
+doorway that opens off the run, at corners and junctions, and 180° to reverse at
+dead-ends and destinations. The swept turn is therefore a **corridor-width
+driver**, not something that lives only in a separate "manoeuvring space" item.
 
-1. **UNVERIFIED source.** "Steinfeld 2006 RESNA" = **REF-00737**, whose
-   `verification_status = UNVERIFIED`. My §F promised "every ● anchor …
-   VERIFIED (exceptions NZS 4121, RET-08)." REF-00737 is a **third, unnamed
-   UNVERIFIED source leaned on for a ● claim** — a direct breach of §F and of
-   the anti-hallucination governing_refs rule (`evidence-architecture.md:100`).
-   **§F is corrected: the 2400 mm figure is UNVERIFIED prose, not a ● anchor.**
-2. **Mis-slug + tier.** REF-00737 is **T3**, and is linked to
-   `bariatric-turning-radius-built-environment` and
-   `manoeuvring-footprint-vs-turning-radius-methodology` — **not** to any of the
-   8 circulation slugs. (Its bariatric-slug home also brushes the RULE "large
-   body size is not a disability," `project-standards.md:29` — bariatric sizing
-   is a device-range fact, cite it as such, not as a disability claim.)
-3. **Claim-type + population overreach (the independent pass's Defect 2).**
-   §B.3 Step 6 "extended the `E-08/DEAF` stated anchor to AX-WHM." But **there is
-   no E-08/MOB cell**, and DeafSpace 2440 mm is a **Deaf-community Co-1
-   signing-space** claim — Co-1 anchors preference/dignity/self-determined
-   accommodation **for the community that produced it**
-   (`tier-system.md:16`), not a universal wheeled-mobility *biomechanical* width.
-   Transferring it is a claim-type substitution + population mismatch.
+**Corrected (and simpler) position.** Corridor clear width is set by the
+worst-case manoeuvre performed along it — passing **and** turning. The turning
+footprint (~2400 mm for a 180°, AWM entire-sample) exceeds both the 1500 mm code
+"circle" and the 1800 mm passing floor, so the best-practice width is ~2440 mm
+**on wheeled/MOB grounds directly**: Steinfeld AWM (T1, REF-00059) + Chaikhot
+2023 (T1, REF-00736 — a tight spin-turn in an undersized width costs **15.3×**
+the braking force, ~900 turns/day). DeafSpace 2440 mm (Co-1, REF-00338/342)
+converges as a **genuinely independent** stream (signing-space need); two real,
+separate spatial demands landing on the same value is exactly the convergence the
+`manoeuvring-footprint` methodology BPC §4 endorses. **The ~2440 mm conclusion
+holds.**
 
-**The deeper correction — three distinct quantities were conflated:**
-(a) **signing corridor width** (DeafSpace Co-1, 2440 mm — a DEAF claim);
-(b) **180° turning footprint** (Steinfeld, ~2400 mm — a manoeuvre clear-floor,
-which anchors **E-12** "Manoeuvring Space," not E-08 width);
-(c) **two-device passing width** (= device-width × 2 + clearance, from the AWM
-device catalogue — the actual E-08 corridor-width quantity, still uncelled).
-These measure different things; their numeric proximity is **not** evidential
-convergence. The `manoeuvring-footprint` BPC §4 *does* endorse the (a)↔(b)
-agreement as informative "where no shared upstream source could have produced
-it" — but that endorsement is itself contestable precisely because (a) and (b)
-are different manoeuvres, and it says nothing about (c), which is what E-08
-actually specifies. **Corrected position:** E-08/DEAF ≥2440 mm stands as a **●
-Co-1 DEAF** determination (unchanged); **E-08/MOB passing width is uncelled and
-must be derived from the AWM device catalogue** (device-width × 2 + clearance),
-value PENDING — the ● is on the *method* (envelope-not-radius), not on a borrowed
-magnitude.
+**The two narrow points that DO survive** (and are the whole of what the first
+pass got wrong):
+
+1. **Source verification.** The specific "2400 mm 180°-turn" figure traces to
+   **REF-00737**, whose `verification_status = UNVERIFIED`. Cite the **verified**
+   AWM T1 (REF-00059) + Chaikhot T1 (REF-00736) for the wheeled anchor, and carry
+   the exact 2400 figure as value-level-PENDING until REF-00737 is verified. §F's
+   "every ● anchor VERIFIED" promise is corrected to name REF-00737 as the one
+   unverified figure, not leaned on.
+2. **Claim-type phrasing.** Say "**MOB** width anchored by **MOB turning
+   evidence**; **DEAF** width anchored by **DeafSpace Co-1**; the two converge" —
+   not "extend the DeafSpace Co-1 anchor to wheeled." A Co-1 warrant is not
+   transferable across communities, but nothing needs transferring here: the
+   wheeled evidence stands on its own. `E-08/DEAF ≥2440 mm` is a ● Co-1 DEAF
+   determination; the `E-08/MOB` cell is not yet written, but its ● anchor is the
+   AWM + Chaikhot turning evidence, converging on the same ~2440 mm.
 
 ### H.8 [MINOR] Contested-direction conflicts have a home I didn't name
 
@@ -1264,14 +1320,16 @@ inversion and the band-laundering independently.
 **Honest net.** The document's **doctrinal framing** (§0) and its **structural
 findings** (E-07/E-09/E-06 mis-links, E-13↔D duplication, E-15 mis-cat, absent
 handrail item, E-14 vacant, empty value-extraction) **survive and are
-corroborated** by the graph. Its **flagship quantitative "correction" — corridor
-≥2440 mm ● as a universal wheeled width — does NOT survive**: it rested on an
-UNVERIFIED source, a claim-type overreach, and three conflated quantities (H.7).
-E-08/DEAF 2440 mm stands as a DEAF Co-1 claim; E-08/MOB is uncelled. Several
-determinations were **band-laundered ◐ where doctrine mandates ○** (handrail,
-TWSI, lift-Type-2, H.5) and the **door-force grading was inverted** (H.11). These
-are exactly the failure modes §0 named — which is the point of running the
-red-team: the first pass restated the rules correctly and then broke them, and
-only working from the evidence graph (not the item scaffold) surfaced it.
-**Controlling note:** where §H corrects §§0–G, §H governs; the first-pass text is
-retained for auditability, not as the operative claim.
+corroborated** by the graph. The **corridor ≥2440 mm conclusion holds** — a
+wheelchair turns in corridors, so the width must fit the swept turn; it is
+anchored on wheeled turning evidence (AWM T1 + Chaikhot T1), with DeafSpace
+converging (H.7). Its only real faults were narrow: the exact 2400 figure came
+from an UNVERIFIED source (cite the verified AWM/Chaikhot instead) and the
+claim-type phrasing needed precision. **The genuine grading defects are
+elsewhere:** determinations **band-laundered ◐ where doctrine mandates ○**
+(handrail, TWSI, lift-Type-2, H.5) and the **door-force grading inverted**
+(H.11). A cautionary note on the red-team itself: draft H.7 *over-corrected* the
+corridor claim into nonsense (an "ideal width" that won't fit a turn) — caught by
+the owner — a reminder that a red-team can swing too far as easily as a first
+pass can overclaim. **Controlling note:** where §H corrects §§0–G, §H governs;
+first-pass text is retained for auditability.
