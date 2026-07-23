@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-07-23-category-e-circulation-synthesis",
+  "artifact": "references/bpc-reasoning/category-e-circulation-synthesis.md",
+  "doctrine_sha": "0f2f525",
+  "rules_in_scope": [
+    "best-practice-synthesis-routing",
+    "evidence-verification-gate-for-synthesis",
+    "source-discipline",
+    "adversarial-research",
+    "cross-reference-resolver",
+    "reasoning-doc-citations",
+    "cell-curator",
+    "item-specification-writer",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "best-practice-synthesis-routing": {
+      "status": "FIRED",
+      "evidence_path": "references/bpc-reasoning/category-e-circulation-synthesis.md"
+    },
+    "evidence-verification-gate-for-synthesis": {
+      "status": "FIRED",
+      "evidence_path": "references/bpc-reasoning/category-e-circulation-synthesis.md"
+    },
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "references/bpc-reasoning/category-e-circulation-synthesis.md"
+    },
+    "adversarial-research": {
+      "status": "FIRED",
+      "evidence_path": "references/bpc-reasoning/category-e-circulation-synthesis.md"
+    },
+    "cross-reference-resolver": {
+      "status": "FIRED",
+      "evidence_path": "references/bpc-reasoning/category-e-circulation-synthesis.md"
+    },
+    "reasoning-doc-citations": {
+      "status": "SKIPPED",
+      "reason": "reasoning_doc_citations table not populated in this pass. Structured DB citation linkage is deferred to the owner-gated operationalisation step (see §G proposal 8); this run authors the synthesis and proposal only, and asserts no reasoning_doc_citations rows."
+    },
+    "cell-curator": {
+      "status": "NOT-FIRED",
+      "reason": "No evidence_cell_state rows written. Cell operationalisation (promoting the graded direction-anchors to stated/provisional cells with governing_refs) is gated on the value-level extraction pass and owner sign-off (§G proposals 7-8); deliberately not performed here."
+    },
+    "item-specification-writer": {
+      "status": "NOT-FIRED",
+      "reason": "No item specifications written to the DB and no items renamed/split/relinked. The Category E restructuring (E-07/E-09 relink, E-13 boundary, E-15 recategorisation, handrail item, E-14) is proposal-only pending owner direction, per the structural-move owner-gating rule (§G)."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/bpc-reasoning_category-e-circulation-synthesis.json"
+    }
+  },
+  "deviations": [],
+  "bias_direction": "This synthesis flatters its author by producing a large, architecturally sweeping reframe (the host-surface thesis, envelope-not-radius, corridor-as-experiential-system) that reads as insight while deferring the unglamorous falsifiable work — value-level extraction, cell writes, item relinks — to an owner-gated 'later,' and the DRAFT/proposal framing conveniently shields every claim from immediate mechanical checking. The honest counterweight: those deferrals are doctrinally required (structural moves are owner-gated; value-level extraction is a distinct pass with its own tables), and every quantitative magnitude is rendered value-level-PENDING rather than stamped confirmed, so the reframe cannot smuggle in unearned precision or a stated cell it did not verify.",
+  "independent_reviewer_counterclaim": "A reviewer would object that re-deriving corridor width to >=2440 mm and manual door force to <=30 N on two-to-three sources apiece, without the value-level extraction the doctrine itself requires before a quantitative confirmed marker, over-states confidence — and that surfacing the E-07/E-09 evidence mis-links, the E-13/D-suite duplication, and the absent handrail item is critique, not synthesis. Counter: the directions (wider, gentler, lower-force, flush-with-substitution) are the evidence-anchored claims and their magnitudes are explicitly withheld from the confirmed band pending extraction; the structural findings are prerequisites to any honest cell, not a substitute for one, and no cell is promoted to stated in this pass.",
+  "verdict": "DEVIATION-LOGGED"
+}
