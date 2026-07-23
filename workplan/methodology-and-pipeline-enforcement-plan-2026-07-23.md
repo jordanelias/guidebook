@@ -36,13 +36,18 @@ enforcement*:
 | **Enforcer exists but never runs in CI** (Level 2) | 7 | adversarial-fields, pmp-strict-termination, evidence-verification-gate (rule #10), **nine-step-synthesis**, register-invariants, matrix-consistency, **definition-of-done** |
 | **CI-verified** | 7 | governing-refs / no-rso-stated / tier3-threshold (path-gated), adherence-log, attestation-doctrine-binding, reproducibility-invariant, doctrine-recheck |
 
-**F2 — Synthesis/reasoning-doc PRs are verified by only two contracts.** ci.yml's
-`schema`, `db_integrity`, and `governance` jobs are gated on `push` OR a PR
-touching `data/`/`schemas/`/`governance/`; `commit-msg` (with the doctrine-token
-step) is `push`-only. A PR that touches only `references/bpc-reasoning/**` triggers
-**syntax + structure + attestation(presence/schema) + audit(reproducibility)** and
-nothing else. `validate_reasoning.py` (the **nine-step synthesis** contract) is
-**not invoked by any workflow.** This is the mechanism by which PR #56 (the
+**F2 — Synthesis/reasoning-doc PRs are not verified by any *synthesis* contract.**
+ci.yml's `schema`, `db_integrity`, and `governance` jobs are gated on `push` OR a
+PR touching `data/`/`schemas/`/`governance/`; `commit-msg` (with the doctrine-token
+step) is `push`-only. A PR that touches only `references/bpc-reasoning/**` fires:
+`syntax` + `structure` (no path filter); the whole `audit.yml` `audit` job —
+`source_slug_links_duplicates`, `citation_mining_completeness`, and
+migration-reproducibility, **all blocking, no path filter**; and the three
+`attestation_*` jobs (presence/schema blocking). *(Precision fix, v2: the earlier
+draft listed only "reproducibility" here — corrected per the independent review,
+which verified the two additional always-on audit checks.)* None of those checks
+the **synthesis** stage: `validate_reasoning.py` (the **nine-step synthesis**
+contract) is **not invoked by any workflow** (independently confirmed). This is the mechanism by which PR #56 (the
 Category-E synthesis) passed CI green while failing the 9-step's spirit and
 flip-flopping through its adversarial pass: **CI never checked the synthesis
 contract.**
@@ -71,6 +76,16 @@ research → collection → judgment → synthesis → render. It omits **(a)** 
 pre-research *scope / derivation-frame* stage (the frame is assumed correct — the
 exact locus of the session's scaffold-not-graph failure) and **(b)** a post-render
 *publish/deploy* stage (git artifacts ≠ what's served live).
+
+**F8 — The committed `parts/` are ALREADY stale vs the DB (a live instance of the F5 gap).**
+Regenerating `parts/v10/` from the committed DB (via `scripts/generate_parts.py`)
+yields **16 changed files**; `part04.md` regenerates to **93 items vs the
+committed 92** (adds `F-07 Thermal Zoning`) and **13 cell-state rows vs the
+committed 0**. The generator is deterministic (a second regen is byte-identical),
+so this is genuine staleness, not nondeterminism: **the published `parts/` product
+currently misrepresents the canonical data.** (Independently verified; reproducible
+by regenerate-and-diff.) This both motivates R6 and constrains it — see the WS2-d
+correction in §3.
 
 **F7 — What already exists and must NOT be rebuilt** (from the enforcement map):
 `claims_docket.py` (working-diff claim register + commitment gate),
@@ -164,11 +179,24 @@ count only after demonstrated firing" norm).
   query against the DB and fails on mismatch (the ledger is *run*, not merely
   annotated — the gap `claims_docket.py` leaves). Trust becomes re-checkable, not
   narrative.
-- **WS2-d `render_freshness_audit.py` (R6, the website gate).** Regenerate
-  `parts/` and `site/` from the committed DB into a temp dir via the existing
-  `scripts/generate_parts.py` + `scripts/generate/*`; compare fingerprints vs the
-  committed artifacts; **fail on drift.** Mirrors the migration-reproducibility
-  gate exactly, for the render tail. Closes the one null render contract.
+- **WS2-d `render_freshness_audit.py` (R6, the render gate) — scoped down per the
+  review.** *Corrected v2:* the earlier draft ("regenerate `parts/` and `site/` …
+  mirrors the migration gate exactly") was two claims too strong.
+  - **`parts/` half — feasible now, but with a precondition.** `scripts/generate_parts.py`
+    deterministically rebuilds `parts/` from the DB, so a regenerate-and-compare
+    gate is buildable. **But** F8 shows the committed `parts/` are *already* stale,
+    so the gate is RED on the current tree. Precondition: **first regenerate and
+    commit `parts/` (a one-time sync), then** the gate holds it fresh. Unlike the
+    migration gate (which currently passes), this gate first *surfaces an existing
+    bug* before it can protect against new drift — sequence accordingly.
+  - **`site/` half — deferred; no build entry point exists.** `scripts/generate/*`
+    are **per-page CLIs** (`spec_page.py` takes one `item_code`); no orchestrator
+    loops them over the corpus, and `site/assets/*` are not DB-derived. A
+    site-freshness gate therefore needs a **site-build orchestrator built first**
+    (excluding `site/assets/`). Deferred until that orchestrator exists.
+  - So WS2-d ships as a **`parts/`-only** gate after the one-time sync; `site/` is a
+    later, larger piece. This still closes the render-freshness contract for the
+    machine-generated `parts/` corpus.
 - **WS2-e `cite_or_declare_audit.py` (R2/R5 support).** Connection/conflict
   reasoning-doc cross-link assertions must cite a CON-ID/conflict row or state
   "no existing row." Extends `reasoning_doc_citations_audit.py` (BPC-only today)
@@ -177,13 +205,18 @@ count only after demonstrated firing" norm).
   must contain **zero** retracted-position / "where §X corrects §Y governs" /
   controlling-note braid. Extends the `pre_rehab_banner_audit.py` cohort-linter
   pattern. (Superseded reasoning lives in git history, not interleaved prose.)
-- **WS2-g (proportionality-flagged) website accessibility + link check.** A
-  non-blocking job runs an offline HTML validator + a11y linter (e.g. a
-  vendored axe-core/pa11y-equivalent, self-contained per the no-external-CDN
-  norm) + internal-link checker over `site/`. *Mission-fidelity:* an accessibility
-  project should test its own product. *Proportionality:* pre-launch and
-  single-author, this stays **non-blocking / informational** until the site is
-  real (§7 adversarial pass revisits).
+- **WS2-g (proportionality-flagged, DEFERRED) website accessibility + link check.**
+  *Corrected v2:* "vendored axe-core/pa11y-equivalent, self-contained" was
+  hand-waving — axe-core needs a live DOM engine and pa11y needs headless
+  Chrome + node; vendoring minified JS does not make either runnable in CI, and
+  "no external CDN" is the Artifact-runtime CSP rule, not a CI-dependency norm.
+  What is genuinely feasible and proportionate to a 116-file static site is a
+  **pure-Python static-subset linter** (lxml checks: `alt` text, `lang`, heading
+  order, form-label association, landmark presence) + an internal-link checker —
+  *not* an axe-core equivalent, and honestly weaker. *Mission-fidelity:* an
+  accessibility project testing its own product is right in principle.
+  *Proportionality:* deferred until the site is real (it is currently thin, with
+  "not yet computed" banners) — stays **informational** when it lands.
 
 ### WS3 — Tool-chain sequence: receipts + verification (the sequence-consistency layer)
 
@@ -254,9 +287,13 @@ acceptable.
 
 ## §5. Rollout (phased; each phase owner-gated)
 
-1. **Phase 0 — Ratify the rules.** Owner rules on R1, R2, R4, R5, R6 (DG-NON) via
-   short DRs (this plan supplies drafts on request). No code ships before the
-   doctrinal rules are decided.
+1. **Phase 0 — Ratify the rules.** Owner rules on **R1, R2, R4, R5 (DG-NON —
+   new methodology/doctrine)** via short DRs (this plan supplies drafts on
+   request). **R3 and R6 are D-OP/DG-REVIEW** (operational CI gates — agent
+   decides, owner reviews; *not* owner-non-delegable). *Corrected v2: the earlier
+   draft wrongly swept R6 into the DG-NON list, contradicting its own §2 table;
+   per decision-protocol §2.2 a render-freshness CI gate is D-OP, never DG-NON.*
+   No code ships before the doctrinal rules (R1/R2/R4/R5) are decided.
 2. **Phase 1 — WS1 promotion + trigger-gating fix + the ENGINE-LAG patch.** Cheap,
    high-leverage, no new scripts. Ships non-blocking. Closes 7 gaps.
 3. **Phase 2 — WS2 scripts** (a–f), each with `--selftest`, ships non-blocking.
@@ -267,12 +304,37 @@ acceptable.
    Update `pipeline-contract.yaml` `check:` paths + `enforcement_level`, and wire
    `pipeline_contract_audit.py` so contract drift is itself gated.
 
+### §5.1 Demonstrated vs speculative — apply the spectrum's own bar honestly (v2)
+
+The enforcement spectrum promotes a rule *only when drift is **observably**
+costly*. The independent review's central correction: I met that bar for WS1 but
+merely **asserted** it for the rest. Re-scored honestly:
+
+| Tier | Workstreams | Justification | Disposition |
+|---|---|---|---|
+| **Demonstrated** | WS1 (promote existing enforcers + fix trigger-gating), WS2-a (evidence-graph coverage), WS2-b (claim-flip) | PR #56 is the observed, concrete failure these three directly prevent | **Ship** (Phase 1–2) |
+| **Motivated but single-instance** | WS2-d/R6 (`parts/`-only render gate) | F8 shows a real current staleness bug | **Ship the one-time `parts/` sync now; the gate after** |
+| **Speculative** | WS2-c (facts-ledger), WS2-e (cite-or-declare), WS2-f (ship-clean), WS2-g (site a11y), WS3 (receipts/sequence) | aspiration or single incidents, not observed *recurring* cost | **Defer** until a recurrence or a second contributor earns it |
+
+**Backfill / exemption (the missing piece).** WS2-a's required
+`## Evidence inventory — slugs considered` section, WS2-c's `*.facts.yaml`, and
+WS3's `*.run.json` are **new structural contracts on the primary deliverable —
+which is "barely started"** (most BPCs retracted-pre-rehab or partial, CLAUDE.md
+§1). Imposing per-doc compliance on docs that mostly don't exist is the
+scaffolding-for-scaffolding the spectrum warns against. Therefore: **any new
+author-side structural requirement applies only to synthesis docs authored/edited
+*after* its rule ratifies AND at `Status: COMPLETE`; the stub / `DRAFT` /
+retracted-pre-rehab corpus is exempt** (mirroring the backfill-on-touch pattern
+already used for attestations). No retroactive sweep.
+
 ---
 
 ## §6. Governance & gating (respected, not bypassed)
 
-- **DG-NON (owner decides; I propose):** R1, R2, R4, R5, R6 are *new methodology*
-  → decision-protocol §2.2 default DG-NON. I draft the DRs; the owner ratifies.
+- **DG-NON (owner decides; I propose):** **R1, R2, R4, R5** are *new methodology/
+  doctrine* → decision-protocol §2.2 default DG-NON. I draft the DRs; the owner
+  ratifies. **R3 and R6 are D-OP/DG-REVIEW** (CI-gate operations — the §2.2 named
+  example is "CI matrix updates"; not on the §2.3 DG-NON always-list).
 - **CODEOWNERS:** every `scripts/audit/*.py` and every `.github/workflows/` edit
   is `@jordanelias`-gated. Each new RULE in `project-standards.md` is append-only
   via `session-consolidator`, and `decision_capture.py` C7 expects a paired DR.
@@ -283,9 +345,13 @@ acceptable.
 
 ## §7. Adversarial pass — commensurability & proportionality (vs mission/doctrine/standards/ethos)
 
-*Held to the evidence bar (R2): each objection below either survives or is
-answered with a fact; the pass does not overswing into "scrap it all."*
-*(This section is refined after an independent adversarial review — see §9.)*
+*Held to the evidence bar (R2): each objection either survives or is answered
+with a fact; the pass does not overswing into "scrap it all."* **This section was
+refined by an independent adversarial review (v2); its verified findings are
+integrated in §1 (F2 precision, F8), §3 (WS2-d, WS2-g corrections), §5/§6 (R6
+gating), and §5.1 (demonstrated-vs-speculative split + backfill exemption). The
+review's verdict — "slightly over-reaching: WS1 + WS2-a/b commensurate, the rest
+speculative" — is adopted.**
 
 - **Proportionality (the strongest objection).** The repo is single-author,
   pre-launch; the enforcement spectrum says promote *only* when drift is
@@ -340,6 +406,24 @@ answered with a fact; the pass does not overswing into "scrap it all."*
 
 - v1 (2026-07-23): initial draft on owner directive, grounded in the Fable-5
   audit + the contract-completion interrogation (§1 facts F1–F7).
-- v2 (2026-07-23): *pending* — independent adversarial-review corrections to §7
-  (proportionality of WS3; false-positive scope; any commensurability overreach).
-  Per R2, each correction will name the specific finding that forced it.
+- v2 (2026-07-23): independent adversarial-review corrections applied. Per R2,
+  each names the fact that forced it:
+  - **F2 precision** — a bpc-reasoning PR also triggers `source_slug_links_duplicates`
+    + `citation_mining_completeness` (both blocking), not only reproducibility
+    (verified in `audit.yml`). Fixed.
+  - **F8 added** — regenerating `parts/v10` yields 16 changed files (part04: 93 vs
+    92 items, adds F-07, 13 cell-rows vs 0); the committed product is stale.
+  - **WS2-d rescoped** — the render gate is RED on the current tree and "mirrors
+    the migration gate exactly" was false; there is no site-build orchestrator
+    (`scripts/generate/*` are per-page CLIs). Now `parts/`-only, after a one-time
+    sync; `site/` deferred.
+  - **WS2-g corrected** — axe-core/pa11y "vendored self-contained" is infeasible
+    in CI (DOM engine / headless Chrome); replaced with a pure-Python static-subset
+    linter and deferred.
+  - **R6 re-gated** — was wrongly listed DG-NON in §5/§6, contradicting the §2
+    table; D-OP → DG-REVIEW per decision-protocol §2.2.
+  - **§5.1 added** — demonstrated (WS1 + WS2-a/b) vs speculative (the rest,
+    deferred) split, plus a backfill exemption so new per-doc contracts never
+    sweep the "barely started" stub/retracted corpus. This is the review's most
+    important finding: the plan applied the demonstrated-cost bar to WS3 but not to
+    the speculative half of WS2. Corrected.
