@@ -25,7 +25,7 @@
     },
     "evidence-verification-gate-for-synthesis": {
       "status": "FIRED",
-      "evidence_path": "decisions/DR-2026-07-23-population-schema-replace.md#conservation--losses",
+      "evidence_path": "decisions/DR-2026-07-23-population-schema-replace.md#conservation-losses",
       "reason": "The re-key was verified rebuild-reproducible and against the pre-change integrity baseline before adoption: A03 (item_population_links -> populations FK) passes, no new integrity failures introduced, 13 evidence cells preserved, item-link merges deduped deterministically (366->363)."
     },
     "adherence-logging-and-attestation": {
@@ -37,5 +37,5 @@
   "deviations": [],
   "bias_direction": "Risk of over-eager execution: adopting a self-declared v0.1 unvalidated draft as the operative population scheme could over-privilege internal tidiness over the lived-experience validation the taxonomy itself flags as missing. Mitigated by recording the draft provenance, keeping the set revisable, and deferring the irreversible pieces (prose sweep, parent_code drop) rather than forcing them.",
   "independent_reviewer_counterclaim": "A reviewer could argue this change is premature and structurally destructive: it retires a ratified scheme and re-keys the only populated synthesis work against an unvalidated draft, before any disabled-community consultation. The counter-check is that all 13 evidence cells and 363 links were conserved, the change is rebuild-reproducible and revertible on a branch behind a PR, and it was owner-directed with explicit sub-decisions preserving ALL and MH.",
-  "verdict": "CLEAN"
+  "verdict": "DEVIATION-LOGGED"
 }
