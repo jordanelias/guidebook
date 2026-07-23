@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Pipeline Completeness — Guidebook</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --paper:#f6f7f9; --card:#fff; --ink:#131a1f; --ink-2:#43535e; --ink-3:#6b7a85;
+    --line:#dde3e8; --line-2:#eaeef1; --accent:#3a6ea5; --accent-soft:#e7eef6;
+    --b0:#9aa7b0; --b1:#c0603a; --b2:#d69a3c; --b3:#7fa04d; --b4:#3c8f6b;
+    --b0-bg:#eceff1; --b1-bg:#f7e4dc; --b2-bg:#f8ecd6; --b3-bg:#e9eed9; --b4-bg:#dcefe6;
+    --shadow:0 1px 2px rgba(16,24,32,.05),0 8px 24px rgba(16,24,32,.05);
+    --mono:ui-monospace,"SF Mono","Cascadia Code","JetBrains Mono",Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --paper:#0e1418; --card:#151d23; --ink:#e7edf1; --ink-2:#a9b7c1; --ink-3:#7c8b95;
+    --line:#263139; --line-2:#1d262d; --accent:#6ea0d6; --accent-soft:#1a2735;
+    --b0:#5d6b74; --b1:#d1734d; --b2:#e0ad57; --b3:#9bbb63; --b4:#4faa84;
+    --b0-bg:#1b242b; --b1-bg:#33211a; --b2-bg:#2c2415; --b3-bg:#26301a; --b4-bg:#16302a;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+  }}
+  :root[data-theme="light"]{
+    --paper:#f6f7f9; --card:#fff; --ink:#131a1f; --ink-2:#43535e; --ink-3:#6b7a85;
+    --line:#dde3e8; --line-2:#eaeef1; --accent:#3a6ea5; --accent-soft:#e7eef6;
+    --b0:#9aa7b0; --b1:#c0603a; --b2:#d69a3c; --b3:#7fa04d; --b4:#3c8f6b;
+    --b0-bg:#eceff1; --b1-bg:#f7e4dc; --b2-bg:#f8ecd6; --b3-bg:#e9eed9; --b4-bg:#dcefe6;
+  }
+  :root[data-theme="dark"]{
+    --paper:#0e1418; --card:#151d23; --ink:#e7edf1; --ink-2:#a9b7c1; --ink-3:#7c8b95;
+    --line:#263139; --line-2:#1d262d; --accent:#6ea0d6; --accent-soft:#1a2735;
+    --b0:#5d6b74; --b1:#d1734d; --b2:#e0ad57; --b3:#9bbb63; --b4:#4faa84;
+    --b0-bg:#1b242b; --b1-bg:#33211a; --b2-bg:#2c2415; --b3-bg:#26301a; --b4-bg:#16302a;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+    line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px) 80px}
+  h1,h2,h3{text-wrap:balance;line-height:1.15;margin:0}
+  a{color:var(--accent)}
+  .mono,.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  /* status tokens */
+  .b0-fg{color:var(--b0)} .b1-fg{color:var(--b1)} .b2-fg{color:var(--b2)} .b3-fg{color:var(--b3)} .b4-fg{color:var(--b4)}
+  .b0-bg-solid{background:var(--b0)} .b1-bg-solid{background:var(--b1)} .b2-bg-solid{background:var(--b2)}
+  .b3-bg-solid{background:var(--b3)} .b4-bg-solid{background:var(--b4)}
+  .b0-tag{color:var(--b0);background:var(--b0-bg)} .b1-tag{color:var(--b1);background:var(--b1-bg)}
+  .b2-tag{color:var(--b2);background:var(--b2-bg)} .b3-tag{color:var(--b3);background:var(--b3-bg)}
+  .b4-tag{color:var(--b4);background:var(--b4-bg)}
+  .b0-sw{background:var(--b0-bg);border-color:var(--b0)} .b1-sw{background:var(--b1-bg);border-color:var(--b1)}
+  .b2-sw{background:var(--b2-bg);border-color:var(--b2)} .b3-sw{background:var(--b3-bg);border-color:var(--b3)}
+  .b4-sw{background:var(--b4-bg);border-color:var(--b4)}
+  /* header */
+  header.top{border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:32px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:14px}
+  h1{font-size:clamp(26px,4.4vw,40px);font-weight:680;letter-spacing:-.02em}
+  .lede{color:var(--ink-2);font-size:clamp(15px,1.7vw,17px);max-width:64ch;margin-top:12px}
+  .meta-row{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:18px;font-family:var(--mono);
+    font-size:12px;color:var(--ink-3)}
+  .meta-row b{color:var(--ink-2);font-weight:600}
+  section{margin-top:48px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+  .sec-head h2{font-size:clamp(19px,2.4vw,23px);font-weight:640;letter-spacing:-.01em}
+  .sec-num{font-family:var(--mono);color:var(--accent);font-size:13px;font-weight:600}
+  .sec-sub{color:var(--ink-3);font-size:13.5px}
+  /* gauges */
+  .gauges{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+  @media (max-width:860px){.gauges{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:480px){.gauges{grid-template-columns:1fr}}
+  .gauge{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 15px 15px;
+    box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .gauge .stage-idx{font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.1em}
+  .gauge .stage-name{font-size:14px;font-weight:640;margin-top:2px}
+  .gauge .pct{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:680;font-size:30px;
+    letter-spacing:-.02em;margin-top:12px;line-height:1}
+  .gauge .pct small{font-size:15px;font-weight:600;color:var(--ink-3)}
+  .gauge .denom{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-top:6px}
+  .bar{height:6px;border-radius:4px;background:var(--line-2);margin-top:12px;overflow:hidden}
+  .bar>i{display:block;height:100%;border-radius:4px}
+  .stage-tag{display:inline-block;margin-top:11px;font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;
+    text-transform:uppercase;padding:2px 7px;border-radius:999px;font-weight:600}
+  .pattern{margin-top:16px;background:var(--accent-soft);border:1px solid var(--line);
+    border-left:3px solid var(--accent);border-radius:10px;padding:14px 16px;font-size:14.5px;color:var(--ink-2)}
+  .pattern b{color:var(--ink)}
+  .caveat{background:var(--b2-bg);border:1px solid var(--line);border-left:3px solid var(--b2);
+    border-radius:10px;padding:15px 17px;font-size:14px;color:var(--ink-2)}
+  .caveat h3{font-size:14px;color:var(--ink);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  .caveat h3 .dot{width:8px;height:8px;border-radius:50%;background:var(--b2);display:inline-block;flex:none}
+  /* stage detail */
+  .stage-detail{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    box-shadow:var(--shadow);overflow:hidden}
+  .stage-block{display:grid;grid-template-columns:190px 1fr;border-top:1px solid var(--line-2)}
+  .stage-block:first-child{border-top:none}
+  @media (max-width:720px){.stage-block{grid-template-columns:1fr}}
+  .sb-left{padding:18px;border-right:1px solid var(--line-2)}
+  @media (max-width:720px){.sb-left{border-right:none;border-bottom:1px solid var(--line-2)}}
+  .sb-left .n{font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.1em}
+  .sb-left .t{font-size:16px;font-weight:660;margin-top:3px}
+  .sb-left .entry{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+  .sb-right{padding:16px 18px}
+  .metric-row{display:grid;grid-template-columns:1fr auto;gap:4px 14px;align-items:center;padding:7px 0;
+    border-top:1px dashed var(--line-2)}
+  .metric-row:first-child{border-top:none}
+  .metric-row .lbl{font-size:13.5px;color:var(--ink-2)}
+  .metric-row .val{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:13.5px;font-weight:600;
+    white-space:nowrap}
+  .mini-bar{grid-column:1/-1;height:5px;border-radius:3px;background:var(--line-2);overflow:hidden}
+  .mini-bar>i{display:block;height:100%;border-radius:3px}
+  .gates{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+  .chip{font-family:var(--mono);font-size:11px;padding:3px 9px;border-radius:999px;font-weight:600;
+    border:1px solid var(--line);display:inline-flex;align-items:center;gap:6px}
+  .chip.ver{color:var(--b4);background:var(--b4-bg);border-color:transparent}
+  .chip.inc{color:var(--b2);background:var(--b2-bg);border-color:transparent}
+  .chip .g{width:6px;height:6px;border-radius:50%;flex:none}
+  .gate-label{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:12px;text-transform:uppercase;
+    letter-spacing:.08em}
+  /* tables */
+  .tbl-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);
+    background:var(--card)}
+  table{border-collapse:collapse;width:100%;font-size:13.5px}
+  th,td{padding:10px 14px;text-align:left;border-top:1px solid var(--line-2);white-space:nowrap}
+  thead th{background:var(--card);border-top:none;border-bottom:1px solid var(--line);position:sticky;top:0;
+    font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+  tbody tr:hover td{background:color-mix(in srgb,var(--accent) 5%,transparent)}
+  td.code,th.code{font-family:var(--mono);font-weight:600}
+  td.n,th.n{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+  .heat{display:inline-flex;align-items:center;gap:8px}
+  .heat .sw{width:30px;height:18px;border-radius:5px;flex:none;border:1px solid;overflow:hidden;display:block}
+  .heat .sw>i{display:block;height:100%;border-radius:4px}
+  .heat .frac{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:12.5px;color:var(--ink-2)}
+  .ratio-cell{min-width:150px}
+  .state-badge{font-family:var(--mono);font-size:11px;padding:2px 8px;border-radius:6px;color:var(--b1);
+    background:var(--b1-bg);font-weight:600}
+  /* frontier */
+  .frontier{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  @media (max-width:680px){.frontier{grid-template-columns:1fr}}
+  .item-card{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:14px 15px;
+    box-shadow:var(--shadow)}
+  .item-card.champ{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),var(--shadow)}
+  .item-card .ih{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+  .item-card .ic{font-family:var(--mono);font-weight:680;font-size:16px}
+  .item-card .inm{font-size:12.5px;color:var(--ink-3);text-align:right}
+  .champ-tag{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--accent);background:var(--accent-soft);padding:2px 7px;border-radius:999px;font-weight:700}
+  .cells{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+  .cellpill{font-family:var(--mono);font-size:11.5px;padding:3px 9px;border-radius:6px;font-weight:600;
+    display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line)}
+  .st-stated{color:var(--b4);background:var(--b4-bg);border-color:transparent}
+  .st-provisional{color:var(--b2);background:var(--b2-bg);border-color:transparent}
+  .st-pending,.st-not_applicable{color:var(--ink-3);background:var(--b0-bg);border-color:transparent}
+  .cellpill .g{width:6px;height:6px;border-radius:50%;flex:none}
+  .synth-note{margin-top:11px;font-size:12.5px;color:var(--ink-3);padding-top:10px;border-top:1px dashed var(--line-2)}
+  .synth-note b{color:var(--b4)}
+  .equity{background:var(--b1-bg);border:1px solid var(--line);border-left:3px solid var(--b1);border-radius:10px;
+    padding:14px 16px;font-size:13.5px;color:var(--ink-2);margin-top:14px}
+  .equity b{color:var(--ink)}
+  .legend{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin-top:16px;font-family:var(--mono);
+    font-size:11.5px;color:var(--ink-3)}
+  .legend .li{display:inline-flex;align-items:center;gap:6px}
+  .legend .sw{width:22px;height:13px;border-radius:4px}
+  footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-3)}
+  footer code{font-family:var(--mono);background:var(--line-2);padding:1px 5px;border-radius:4px;color:var(--ink-2)}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:720px){.two-col{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow">Accessible Built Environments Guidebook · Evidence Pipeline</div>
+    <h1>Pipeline stage completeness</h1>
+    <p class="lede">How far the corpus has actually moved through each of the five pipeline stages —
+      <span class="mono">research → collection → judgment → synthesis → render</span> — measured against each
+      stage's own denominator, then broken down by category, item, and population class.</p>
+    <div class="meta-row">
+      <span><b>Source</b> data/guidebook.db (read-only)</span>
+      <span><b>Schema</b> user_version 30</span>
+      <span><b>Data as of</b> 2026-07-21</span>
+      <span><b>Auto-generated</b> tools/pipeline_completeness.py</span>
+    </div>
+  </header>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">01</span><h2>The five stages at a glance</h2>
+      <span class="sec-sub">content throughput — % of each stage's unit that has cleared it</span></div>
+    <div class="gauges">
+      <div class="gauge">
+        <div class="stage-idx">STAGE 1</div><div class="stage-name">Research</div>
+        <div class="pct b3-fg">59<small>%</small></div>
+        <div class="denom">48 / 82<br>search-complete slugs</div>
+        <div class="bar"><i class="b3-bg-solid" style="width:59%"></i></div>
+        <span class="stage-tag b3-tag">Partial</span>
+      </div>
+      <div class="gauge">
+        <div class="stage-idx">STAGE 2</div><div class="stage-name">Collection</div>
+        <div class="pct b4-fg">94<small>%</small></div>
+        <div class="denom">753 / 804<br>metadata-complete sources</div>
+        <div class="bar"><i class="b4-bg-solid" style="width:94%"></i></div>
+        <span class="stage-tag b4-tag">High</span>
+      </div>
+      <div class="gauge">
+        <div class="stage-idx">STAGE 3</div><div class="stage-name">Judgment</div>
+        <div class="pct b1-fg">4<small>%</small></div>
+        <div class="denom">13 / 366<br>cells determined</div>
+        <div class="bar"><i class="b1-bg-solid" style="width:4%"></i></div>
+        <span class="stage-tag b1-tag">Minimal</span>
+      </div>
+      <div class="gauge">
+        <div class="stage-idx">STAGE 4</div><div class="stage-name">Synthesis</div>
+        <div class="pct b1-fg">1<small>%</small></div>
+        <div class="denom">1 / 82<br>slugs w/ reasoning doc</div>
+        <div class="bar"><i class="b1-bg-solid" style="width:2%"></i></div>
+        <span class="stage-tag b1-tag">Minimal</span>
+      </div>
+      <div class="gauge">
+        <div class="stage-idx">STAGE 5</div><div class="stage-name">Render</div>
+        <div class="pct b1-fg">3<small>%</small></div>
+        <div class="denom">12 / 366<br>cells render-ready</div>
+        <div class="bar"><i class="b1-bg-solid" style="width:3%"></i></div>
+        <span class="stage-tag b1-tag">Minimal</span>
+      </div>
+    </div>
+    <div class="pattern"><b>The shape is front-loaded, then it collapses.</b> Sourcing (collection) is essentially
+      finished — 784/804 sources verified, metadata near-complete — but almost nothing has been
+      <i>adjudicated</i> into determinations (judgment, 4%) and only
+      1 parameter has a real synthesis reasoning
+      doc (synthesis, 1%). Render faithfully mirrors that emptiness: it can only
+      present the 12 determinations that exist. This is scaffolding with the shelves stocked but
+      the book largely unwritten — consistent with the project's pre-launch, mid-rehabilitation state.</div>
+  </section>
+
+  <section>
+    <div class="caveat">
+      <h3><span class="dot"></span>Read the flags with care: the item-facing corpus is retracted, not finished</h3>
+      Every one of the 87 items that points at a BPC slug points at one whose
+      <span class="mono">evidence_state = RETRACTED-PRE-REHAB</span>. Those slugs still carry a stale
+      <span class="mono">bpc_complete = 1</span> flag from the pre-rehabilitation era — so a naïve flag count would
+      report the BPC layer as largely "complete," when the honest current state is that
+      <b>0 item-facing syntheses are live</b>. The 10
+      <span class="mono">PARTIAL</span> slugs genuinely in progress are cross-cutting methodology/infrastructure
+      units, none linked to a design parameter. The gauges above use current-state signals (reasoning docs,
+      materialized cells), not the stale completion flags.
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">02</span><h2>Stage by stage</h2>
+      <span class="sec-sub">throughput sub-metrics + which integrity gates are actually built</span></div>
+    <div class="stage-detail">
+      <div class="stage-block">
+        <div class="sb-left"><div class="n">STAGE 1</div><div class="t">Research</div>
+          <div class="entry">Entry: an open gap or a parameter lacking sufficient evidence.</div></div>
+        <div class="sb-right">
+          <div class="metric-row"><span class="lbl">Slugs with search complete</span><span class="val">48 / 82 · 59%</span>
+          <span class="mini-bar"><i class="b3-bg-solid" style="width:59%"></i></span></div>
+          <div class="metric-row"><span class="lbl">Slugs touched by search coverage</span><span class="val">76 / 82 · 93%</span>
+          <span class="mini-bar"><i class="b4-bg-solid" style="width:93%"></i></span></div>
+          <div class="metric-row"><span class="lbl">Slug × jurisdiction cells searched</span><span class="val">667 / 3808 · 18%</span>
+          <span class="mini-bar"><i class="b2-bg-solid" style="width:18%"></i></span></div>
+          <div class="metric-row"><span class="lbl">PICO formalized</span><span class="val">0 / 82 · 0%</span>
+          <span class="mini-bar"><i class="b0-bg-solid" style="width:2%"></i></span></div>
+          <div class="metric-row"><span class="lbl">Gaps closed (register)</span><span class="val">262 / 299 · 88%</span>
+          <span class="mini-bar"><i class="b4-bg-solid" style="width:88%"></i></span></div>
+          <div class="gate-label">Integrity gates</div>
+          <div class="gates"><span class="chip ver"><span class="g b4-bg-solid"></span>adversarial-fields</span><span class="chip ver"><span class="g b4-bg-solid"></span>pmp-strict-termination</span></div>
+        </div>
+      </div>
+      <div class="stage-block">
+        <div class="sb-left"><div class="n">STAGE 2</div><div class="t">Collection</div>
+          <div class="entry">Entry: sources discovered for the topic under research.</div></div>
+        <div class="sb-right">
+          <div class="metric-row"><span class="lbl">Sources verified</span><span class="val">784 / 804 · 98%</span>
+          <span class="mini-bar"><i class="b4-bg-solid" style="width:98%"></i></span></div>
+          <div class="metric-row"><span class="lbl">Metadata complete</span><span class="val">753 / 804 · 94%</span>
+          <span class="mini-bar"><i class="b4-bg-solid" style="width:94%"></i></span></div>
+          <div class="metric-row"><span class="lbl">Author-title-only (rule&nbsp;#10 blockers)</span><span class="val">48 · 6%</span>
+          <span class="mini-bar"><i class="b1-bg-solid" style="width:6%"></i></span></div>
+          <div class="metric-row"><span class="lbl">Discovery provenance recorded</span><span class="val">88 / 804 · 11%</span>
+          <span class="mini-bar"><i class="b1-bg-solid" style="width:11%"></i></span></div>
+          <div class="metric-row"><span class="lbl">Citation-mining complete (slugs)</span><span class="val">6 / 82 · 7%</span>
+          <span class="mini-bar"><i class="b1-bg-solid" style="width:7%"></i></span></div>
+          <div class="gate-label">Integrity gates</div>
+          <div class="gates"><span class="chip ver"><span class="g b4-bg-solid"></span>evidence-verification</span><span class="chip inc"><span class="g b2-bg-solid"></span>discovery-provenance · unenforced</span></div>
+        </div>
+      </div>
+      <div class="stage-block">
+        <div class="sb-left"><div class="n">STAGE 3</div><div class="t">Judgment</div>
+          <div class="entry">Entry: verified sources linked to an item × population cell.</div></div>
+        <div class="sb-right">
+          <div class="metric-row"><span class="lbl">Cells determined (of applicable pairs)</span><span class="val">13 / 366 · 4%</span>
+          <span class="mini-bar"><i class="b1-bg-solid" style="width:4%"></i></span></div>
+          <div class="metric-row"><span class="lbl">Items with any determination</span><span class="val">9 / 93 · 10%</span>
+          <span class="mini-bar"><i class="b1-bg-solid" style="width:10%"></i></span></div>
+          <div class="metric-row"><span class="lbl">State split</span><span class="val">6 stated · 6 prov · 1 pend</span></div>
+          <div class="metric-row"><span class="lbl">Determinations with governing_refs</span><span class="val">12 / 12 · 100%</span>
+          <span class="mini-bar"><i class="b4-bg-solid" style="width:100%"></i></span></div>
+          <div class="metric-row"><span class="lbl">Convergence assessments · value extractions</span><span class="val">12 · 8 rows</span></div>
+          <div class="gate-label">Integrity gates</div>
+          <div class="gates"><span class="chip ver"><span class="g b4-bg-solid"></span>governing-refs</span><span class="chip ver"><span class="g b4-bg-solid"></span>no-reg-stratum-stated</span><span class="chip ver"><span class="g b4-bg-solid"></span>tier3-alone-threshold</span><span class="chip inc"><span class="g b2-bg-solid"></span>derivation-handshake · unenforced</span><span class="chip inc"><span class="g b2-bg-solid"></span>convergence-independence · unenforced</span></div>
+        </div>
+      </div>
+      <div class="stage-block">
+        <div class="sb-left"><div class="n">STAGE 4</div><div class="t">Synthesis</div>
+          <div class="entry">Entry: a determination with a resolved value, ready for cross-jurisdictional synthesis.</div></div>
+        <div class="sb-right">
+          <div class="metric-row"><span class="lbl">Slugs with a reasoning doc + citations</span><span class="val">1 / 82 · 1%</span>
+          <span class="mini-bar"><i class="b1-bg-solid" style="width:2%"></i></span></div>
+          <div class="metric-row"><span class="lbl">Verified reasoning-doc citations</span><span class="val">14 rows</span></div>
+          <div class="metric-row"><span class="lbl">Live item-facing syntheses</span><span class="val">0 / 87 · 0%</span>
+          <span class="mini-bar"><i class="b0-bg-solid" style="width:2%"></i></span></div>
+          <div class="metric-row"><span class="lbl">Slugs in PARTIAL (non-item methodology)</span><span class="val">10</span></div>
+          <div class="gate-label">Integrity gates</div>
+          <div class="gates"><span class="chip ver"><span class="g b4-bg-solid"></span>nine-step-synthesis</span><span class="chip inc"><span class="g b2-bg-solid"></span>opus-routing · unenforced</span></div>
+        </div>
+      </div>
+      <div class="stage-block">
+        <div class="sb-left"><div class="n">STAGE 5</div><div class="t">Render</div>
+          <div class="entry">Entry: determinations tagged with design_scale, ready to present.</div></div>
+        <div class="sb-right">
+          <div class="metric-row"><span class="lbl">Determinations render-ready (of matrix)</span><span class="val">12 / 366 · 3%</span>
+          <span class="mini-bar"><i class="b1-bg-solid" style="width:3%"></i></span></div>
+          <div class="metric-row"><span class="lbl">Render-ready share of determinations made</span><span class="val">12 / 13 · 92%</span>
+          <span class="mini-bar"><i class="b4-bg-solid" style="width:92%"></i></span></div>
+          <div class="metric-row"><span class="lbl">Distinct design-scales in use</span><span class="val">2</span></div>
+          <div class="gate-label">Integrity gates</div>
+          <div class="gates"><span class="chip ver"><span class="g b4-bg-solid"></span>register-invariants</span><span class="chip ver"><span class="g b4-bg-solid"></span>matrix-consistency</span><span class="chip inc"><span class="g b2-bg-solid"></span>render-freshness · unenforced</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="pattern" style="background:var(--card);border-left-color:var(--accent)">
+      <b>Governance gates are 9/14 built.</b> The pipeline contract reports
+      enforcement coverage per stage: research <span class="mono">2/2</span> · collection <span class="mono">1/2</span> · judgment <span class="mono">3/5</span> · synthesis <span class="mono">1/2</span> · render <span class="mono">2/3</span>. Every unenforced criterion is a <i>completeness</i>-kind one
+      (provenance, convergence roots, Opus-routing, render-freshness) — the integrity gates are wired; the
+      coverage gates are not.
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">03</span><h2>Breakdown by category</h2>
+      <span class="sec-sub">10 item categories — 93 items total</span></div>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th class="code">Cat</th><th class="n">Items</th><th class="n">With slug</th>
+        <th>BPC synthesis state</th><th class="ratio-cell">Reached judgment</th><th class="n">Pop breadth</th></tr></thead>
+      <tbody>
+      <tr>
+        <td class="code">A</td>
+        <td class="n">19</td>
+        <td class="n">17</td>
+        <td><span class="state-badge">retracted×17</span></td>
+        <td><span class="heat"><span class="sw b2-sw"><i class="b2-bg-solid" style="width:16%"></i></span><span class="frac">3/19 · 16%</span></span></td>
+        <td class="n">16</td>
+      </tr>
+      <tr>
+        <td class="code">B</td>
+        <td class="n">12</td>
+        <td class="n">11</td>
+        <td><span class="state-badge">retracted×11</span></td>
+        <td><span class="heat"><span class="sw b1-sw"><i class="b1-bg-solid" style="width:8%"></i></span><span class="frac">1/12 · 8%</span></span></td>
+        <td class="n">15</td>
+      </tr>
+      <tr>
+        <td class="code">C</td>
+        <td class="n">6</td>
+        <td class="n">6</td>
+        <td><span class="state-badge">retracted×6</span></td>
+        <td><span class="heat"><span class="sw b2-sw"><i class="b2-bg-solid" style="width:17%"></i></span><span class="frac">1/6 · 17%</span></span></td>
+        <td class="n">9</td>
+      </tr>
+      <tr>
+        <td class="code">D</td>
+        <td class="n">11</td>
+        <td class="n">11</td>
+        <td><span class="state-badge">retracted×11</span></td>
+        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/11 · 0%</span></span></td>
+        <td class="n">11</td>
+      </tr>
+      <tr>
+        <td class="code">E</td>
+        <td class="n">14</td>
+        <td class="n">14</td>
+        <td><span class="state-badge">retracted×14</span></td>
+        <td><span class="heat"><span class="sw b2-sw"><i class="b2-bg-solid" style="width:21%"></i></span><span class="frac">3/14 · 21%</span></span></td>
+        <td class="n">10</td>
+      </tr>
+      <tr>
+        <td class="code">F</td>
+        <td class="n">8</td>
+        <td class="n">7</td>
+        <td><span class="state-badge">retracted×7</span></td>
+        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/8 · 0%</span></span></td>
+        <td class="n">16</td>
+      </tr>
+      <tr>
+        <td class="code">G</td>
+        <td class="n">9</td>
+        <td class="n">7</td>
+        <td><span class="state-badge">retracted×7</span></td>
+        <td><span class="heat"><span class="sw b1-sw"><i class="b1-bg-solid" style="width:11%"></i></span><span class="frac">1/9 · 11%</span></span></td>
+        <td class="n">13</td>
+      </tr>
+      <tr>
+        <td class="code">H</td>
+        <td class="n">5</td>
+        <td class="n">5</td>
+        <td><span class="state-badge">retracted×5</span></td>
+        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/5 · 0%</span></span></td>
+        <td class="n">13</td>
+      </tr>
+      <tr>
+        <td class="code">I</td>
+        <td class="n">4</td>
+        <td class="n">4</td>
+        <td><span class="state-badge">retracted×4</span></td>
+        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/4 · 0%</span></span></td>
+        <td class="n">8</td>
+      </tr>
+      <tr>
+        <td class="code">K</td>
+        <td class="n">5</td>
+        <td class="n">5</td>
+        <td><span class="state-badge">retracted×5</span></td>
+        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/5 · 0%</span></span></td>
+        <td class="n">7</td>
+      </tr>
+      </tbody>
+    </table></div>
+    <div class="legend"><span class="li"><span class="sw b0-bg-solid"></span>none</span><span class="li"><span class="sw b1-bg-solid"></span>&lt;15%</span><span class="li"><span class="sw b2-bg-solid"></span>15–50%</span><span class="li"><span class="sw b3-bg-solid"></span>50–85%</span><span class="li"><span class="sw b4-bg-solid"></span>&gt;85%</span>
+      <span class="li" style="margin-left:auto">Judgment coverage = items with ≥1 determination</span></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">04</span><h2>Breakdown by item — the frontier</h2>
+      <span class="sec-sub">the 9 of 93 items with a materialized determination; the other 84 have none</span></div>
+    <div class="frontier">
+      <div class="item-card champ">
+        <div class="ih"><span class="ic">A-18</span><span class="champ-tag">reached synthesis</span></div>
+        <div class="cells"><span class="cellpill st-stated"><span class="g b4-bg-solid"></span>ALL · stated</span><span class="cellpill st-stated"><span class="g b4-bg-solid"></span>DEAF · stated</span><span class="cellpill st-provisional"><span class="g b2-bg-solid"></span>AUT · prov</span><span class="cellpill st-provisional"><span class="g b2-bg-solid"></span>DEM · prov</span></div><div class="synth-note">Reached <b>synthesis</b>: linked to a reasoning doc with verified citations.</div>
+      </div>
+      <div class="item-card champ">
+        <div class="ih"><span class="ic">A-02</span><span class="champ-tag">reached synthesis</span></div>
+        <div class="cells"><span class="cellpill st-provisional"><span class="g b2-bg-solid"></span>ALL · prov</span></div><div class="synth-note">Reached <b>synthesis</b>: linked to a reasoning doc with verified citations.</div>
+      </div>
+      <div class="item-card champ">
+        <div class="ih"><span class="ic">A-08</span><span class="champ-tag">reached synthesis</span></div>
+        <div class="cells"><span class="cellpill st-provisional"><span class="g b2-bg-solid"></span>ALL · prov</span></div><div class="synth-note">Reached <b>synthesis</b>: linked to a reasoning doc with verified citations.</div>
+      </div>
+      <div class="item-card">
+        <div class="ih"><span class="ic">G-03</span><span class="inm">2 cells</span></div>
+        <div class="cells"><span class="cellpill st-stated"><span class="g b4-bg-solid"></span>MOB · stated</span><span class="cellpill st-pending"><span class="g b0-bg-solid"></span>SCI · pending</span></div>
+      </div>
+      <div class="item-card">
+        <div class="ih"><span class="ic">B-10</span><span class="inm">1 cell</span></div>
+        <div class="cells"><span class="cellpill st-stated"><span class="g b4-bg-solid"></span>NEU · stated</span></div>
+      </div>
+      <div class="item-card">
+        <div class="ih"><span class="ic">C-02</span><span class="inm">1 cell</span></div>
+        <div class="cells"><span class="cellpill st-provisional"><span class="g b2-bg-solid"></span>DEM · prov</span></div>
+      </div>
+      <div class="item-card">
+        <div class="ih"><span class="ic">E-06</span><span class="inm">1 cell</span></div>
+        <div class="cells"><span class="cellpill st-provisional"><span class="g b2-bg-solid"></span>MOB · prov</span></div>
+      </div>
+      <div class="item-card">
+        <div class="ih"><span class="ic">E-08</span><span class="inm">1 cell</span></div>
+        <div class="cells"><span class="cellpill st-stated"><span class="g b4-bg-solid"></span>DEAF · stated</span></div>
+      </div>
+      <div class="item-card">
+        <div class="ih"><span class="ic">E-12</span><span class="inm">1 cell</span></div>
+        <div class="cells"><span class="cellpill st-stated"><span class="g b4-bg-solid"></span>MOB · stated</span></div>
+      </div>
+    </div>
+    <div class="pattern">Categories <span class="mono">D, F, H, I, K</span> (33 items) have <b>zero</b> determinations of any kind.</div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">05</span><h2>Breakdown by class (population)</h2>
+      <span class="sec-sub">the disability-population axis — where determinations exist vs. where they're needed</span></div>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th class="code">Pop</th><th>Class</th><th class="n">Applies to items</th>
+        <th class="n">Determinations</th><th class="ratio-cell">Judgment coverage</th></tr></thead>
+      <tbody>
+      <tr>
+        <td class="code">DEM</td>
+        <td>cognitive · dementia</td>
+        <td class="n">55</td>
+        <td class="n">2</td>
+        <td><span class="heat"><span class="sw b1-sw"><i class="b1-bg-solid" style="width:4%"></i></span><span class="frac">2/55 · 4%</span></span></td>
+      </tr>
+      <tr>
+        <td class="code">VIS</td>
+        <td>sensory · vision impairment</td>
+        <td class="n">43</td>
+        <td class="n">0</td>
+        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/43 · 0%</span></span></td>
+      </tr>
+      <tr>
+        <td class="code">OFS</td>
+        <td>pain_fatigue · orthostatic/fatigue spectrum</td>
+        <td class="n">31</td>
+        <td class="n">0</td>
+        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/31 · 0%</span></span></td>
+      </tr>
+      <tr>
+        <td class="code">PAIN</td>
+        <td>pain_fatigue · chronic pain</td>
+        <td class="n">29</td>
+        <td class="n">0</td>
+        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/29 · 0%</span></span></td>
+      </tr>
+      <tr>
+        <td class="code">MOB</td>
+        <td>mobility · mobility impairment (general)</td>
+        <td class="n">28</td>
+        <td class="n">3</td>
+        <td><span class="heat"><span class="sw b1-sw"><i class="b1-bg-solid" style="width:11%"></i></span><span class="frac">3/28 · 11%</span></span></td>
+      </tr>
+      <tr>
+        <td class="code">NDV</td>
+        <td>developmental · neurodivergence (broad)</td>
+        <td class="n">27</td>
+        <td class="n">0</td>
+        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/27 · 0%</span></span></td>
+      </tr>
+      <tr>
+        <td class="code">SCI</td>
+        <td>mobility · spinal cord injury</td>
+        <td class="n">26</td>
+        <td class="n">1</td>
+        <td><span class="heat"><span class="sw b1-sw"><i class="b1-bg-solid" style="width:4%"></i></span><span class="frac">1/26 · 4%</span></span></td>
+      </tr>
+      <tr>
+        <td class="code">PCS</td>
+        <td>cognitive · post-concussion syndrome</td>
+        <td class="n">20</td>
+        <td class="n">0</td>
+        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/20 · 0%</span></span></td>
+      </tr>
+      <tr>
+        <td class="code">AUT</td>
+        <td>developmental · autism</td>
+        <td class="n">19</td>
+        <td class="n">1</td>
+        <td><span class="heat"><span class="sw b1-sw"><i class="b1-bg-solid" style="width:5%"></i></span><span class="frac">1/19 · 5%</span></span></td>
+      </tr>
+      <tr>
+        <td class="code">DBL</td>
+        <td>sensory · deafblindness</td>
+        <td class="n">17</td>
+        <td class="n">0</td>
+        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/17 · 0%</span></span></td>
+      </tr>
+      <tr>
+        <td class="code">DEAF</td>
+        <td>sensory · hearing impairment / Deaf</td>
+        <td class="n">15</td>
+        <td class="n">2</td>
+        <td><span class="heat"><span class="sw b1-sw"><i class="b1-bg-solid" style="width:13%"></i></span><span class="frac">2/15 · 13%</span></span></td>
+      </tr>
+      <tr>
+        <td class="code">MH</td>
+        <td>mental_health · mental health condition</td>
+        <td class="n">15</td>
+        <td class="n">0</td>
+        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/15 · 0%</span></span></td>
+      </tr>
+      <tr>
+        <td class="code">NEU</td>
+        <td>neurological · neurological (general)</td>
+        <td class="n">10</td>
+        <td class="n">1</td>
+        <td><span class="heat"><span class="sw b1-sw"><i class="b1-bg-solid" style="width:10%"></i></span><span class="frac">1/10 · 10%</span></span></td>
+      </tr>
+      <tr>
+        <td class="code">ALL</td>
+        <td>general · applies universally to all populations</td>
+        <td class="n">9</td>
+        <td class="n">3</td>
+        <td><span class="heat"><span class="sw b2-sw"><i class="b2-bg-solid" style="width:33%"></i></span><span class="frac">3/9 · 33%</span></span></td>
+      </tr>
+      <tr>
+        <td class="code">UPL</td>
+        <td>mobility · upper-limb impairment</td>
+        <td class="n">8</td>
+        <td class="n">0</td>
+        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/8 · 0%</span></span></td>
+      </tr>
+      <tr>
+        <td class="code">CFS</td>
+        <td>pain_fatigue · chronic fatigue syndrome / ME</td>
+        <td class="n">2</td>
+        <td class="n">0</td>
+        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/2 · 0%</span></span></td>
+      </tr>
+      <tr>
+        <td class="code">MS</td>
+        <td>neurological · multiple sclerosis</td>
+        <td class="n">2</td>
+        <td class="n">0</td>
+        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/2 · 0%</span></span></td>
+      </tr>
+      <tr>
+        <td class="code">ADHD</td>
+        <td>developmental · attention-deficit/hyperactivity disorder</td>
+        <td class="n">1</td>
+        <td class="n">0</td>
+        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/1 · 0%</span></span></td>
+      </tr>
+      <tr>
+        <td class="code">EPI</td>
+        <td>neurological · epilepsy</td>
+        <td class="n">1</td>
+        <td class="n">0</td>
+        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/1 · 0%</span></span></td>
+      </tr>
+      <tr>
+        <td class="code">MCAS</td>
+        <td>pain_fatigue · mast cell activation syndrome</td>
+        <td class="n">1</td>
+        <td class="n">0</td>
+        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/1 · 0%</span></span></td>
+      </tr>
+      <tr>
+        <td class="code">POTS</td>
+        <td>pain_fatigue · postural tachycardia syndrome</td>
+        <td class="n">1</td>
+        <td class="n">0</td>
+        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/1 · 0%</span></span></td>
+      </tr>
+      <tr>
+        <td class="code">SENS</td>
+        <td>sensory · sensory processing differences</td>
+        <td class="n">1</td>
+        <td class="n">0</td>
+        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/1 · 0%</span></span></td>
+      </tr>
+      </tbody>
+    </table></div>
+    <div class="equity"><b>Coverage tends to invert need.</b> The most broadly-relevant populations are often the
+      least served — several axes that apply to dozens of items carry no determination yet. What determinations
+      exist cluster on the handful of axes the early pilots happened to touch.</div>
+  </section>
+
+  <footer>
+    <div class="two-col">
+      <div><strong style="color:var(--ink-2)">How these numbers were derived</strong><br>
+        Read-only queries against <code>data/guidebook.db</code> (<code>user_version 30</code>,
+        241 data migrations). Denominators: research/synthesis over 82
+        <code>bpc_metadata</code> slugs; collection over 804 <code>evidence_sources</code>; judgment/render over
+        366 applicable item×population pairs (<code>item_population_links</code>). Determinations from
+        <code>evidence_cell_state</code>; synthesis from <code>reasoning_doc_citations</code>; enforcement coverage
+        from <code>governance/pipeline-contract.yaml</code>.</div>
+      <div><strong style="color:var(--ink-2)">Two things to keep in mind</strong><br>
+        (1) "Completeness" here means throughput, not correctness — a <code>stated</code> cell has cleared the gate,
+        not been peer-reviewed. (2) <code>bpc_complete</code> and similar flags are <em>pre-rehabilitation</em>
+        artifacts and overstate reality; current-state signals are used throughout. Auto-generated by
+        <code>tools/pipeline_completeness.py</code>; do not hand-edit — the "as-of" date is the DB's own
+        <code>max(updated_at)</code>, so identical data yields byte-identical output.</div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
