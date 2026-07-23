@@ -17,6 +17,15 @@ scripts/validate_reasoning.py.
 **Status:** DRAFT
 **Opus session ref:** session_2026-07-23-category-e-circulation-synthesis
 
+> **⚠ CONTROLLING NOTE — read §H first.** This document has been through two
+> adversarial passes (a self red-team and an independent reviewer). §§0–G are the
+> **first pass** and contain errors that §H corrects — most importantly, the
+> flagship "corridor ≥2440 mm ● as a universal wheeled width" claim (§B.3) does
+> **not** survive review (UNVERIFIED source + claim-type overreach — see §H.7),
+> and several determinations were graded one band too strong (§H.5) or inverted
+> (§H.11). **Where §H corrects §§0–G, §H governs.** The first-pass text is
+> retained for auditability, not as the operative claim.
+
 ---
 
 ## §0. Scope, doctrine posture, and headline caveats
@@ -123,9 +132,15 @@ Six throughlines organize everything below.
    from axes, not patched (§G).
 
 6. **Value-level extraction is the missing floor under everything.** Because
-   `source_value_extractions` is empty for circulation, no quantitative value can
-   currently earn a `●`. This is the concrete, mechanical next step and it gates
-   every `stated` promotion.
+   `source_value_extractions` is empty for circulation, no quantitative value has
+   a **structured** value-level record. *(Corrected by §H.12: this does not mean
+   "no value can earn ●" — where a source states a number directly in its text
+   (Brandt 30 N/94.7 %; Roxburgh ≥480 mm; Al Lawati 45.8 %), the ● attaches to
+   that stated value with the structured extraction still owed; where the number
+   is code/inference (ramp 1:20, corridor width, threshold 6 mm) it is PENDING.
+   My first draft over-stated this as a categorical "no value can earn ●," which
+   B.4/B.5 then contradicted — see §H.12.)* Running the structured extraction is
+   the concrete next step and it gates every `stated` promotion.
 
 ---
 
@@ -254,7 +269,7 @@ Distribution by tier (counts are live-queried, not transcribed as fixed truth):
 | accessible-circulation-geometry | 14 | T2×1, T3×2, T4×1, T5×4, T6×6 | Russell/RCOT 2019 (T2 ●); Roxburgh 2024, Omura 2022 (T3 ●) |
 | stair-ramp-threshold-biomechanics | 27 | T2×1, T3×14, T4×1, T5×2, T6×9 | Rouvier 2022 (T2 ●); Al Lawati 2017, Pavol 2001, Kim 2014 + cluster (T3-clinical ●) |
 | threshold-and-level-access | 15 | T4×1, T5×5, T6×9 | ISO 21542 (T4 ◐); otherwise regulatory stratum |
-| threshold-door-hardware | 32 | T3×2, T4×1, T5×11, T6×18 | Brandt 2016 (T3 ●, value-level 30 N/94.7 %); Putthinoi 2017 (T1 ●) |
+| threshold-door-hardware | 32 | T3×2, T4×1, T5×11, T6×18 | Brandt 2016 (T3 ●, value-level 30 N/94.7 %); Putthinoi 2017 (T3-clinical ●) |
 | detectable-gradient-protocol-sensory-zones | 6 | T2×1, T3×3, T4×2 | Williams 2024 (T2 ●); Mostafa 2014, Kaplan 1989 (T3 ●) |
 | cognitive-wayfinding-design | 25 | T2×5, T3×12, T5×7, T6×1 | Marquardt 2011 + van Buuren (T3 ●); Mostafa 2023, DSDC EADDAT (T2/Co-1 ●) |
 | floor-vibration-wheelchair-disability | 7 | T2×1, T3×3, T4×3 | Larivière 2021 (T2 ●); Garcia-Mendez, Misch (T3 ●) |
@@ -565,7 +580,7 @@ best practice is a convergence claim, not evidence.**
 **Step 5 — Tier 1 / Co-1 / Tier 2 / Co-2 / Tier 3 evidence**: **Brandt 2016 (T3-clinical ●,
 REF-00204) — 30 N acceptable to 94.7 % of WC users; 40 N to 92.1 %; walker users
 30 N = 100 %.** This is the one circulation parameter with a **directly stated,
-value-level** empirical anchor. Putthinoi 2017 (T1 ●, REF-00407) — combined
+value-level** empirical anchor. Putthinoi 2017 (T3-clinical ●, REF-00407) — combined
 threshold+landing barrier effect on home-bound elders.
 
 **Step 6 — Guidebook chosen value per population**: **eliminate operating force via automatic
@@ -848,7 +863,7 @@ Tested via the **swept-envelope / device-range** lens where geometric, and the
 | E spec | Interacts with | Nature | Finding / required action |
 |---|---|---|---|
 | E-11 door force | **I-01** (≤22 N, code-anchored, GAP-008/011) · **H-04** (video door entry, same slug) | Duplication + contradiction | Three different force numbers (≤20/≤22/≤30) across items; only Brandt ● (≤30 N) is evidence. **Reconcile to one Brandt-anchored force spec.** |
-| E-08 corridor floor | **A-05** (carpet where VIS navigation) · **C-03/C-06** (plain, no pattern) · **C-05** (low LRV differential, DEM) · **B-08** (matte ≤30 gloss) · **E-07** (slip PTV≥36) · **A-09/floor-vibration** (resilient) | Multi-item convergence on ONE surface | A single corridor floor must be: ≥2440 mm wide, plain/low-pattern (C), low LRV differential (DEM), matte (B-08), slip-resistant (E-07), resilient for WBV (A-09), and trailing-detectable at edges (VIS). **Mostly compatible; the tension is patterned-carpet-for-VIS (A-05) vs plain-for-DEM/vestibular (C-06) — resolve to plain resilient surface with edge/contrast shoreline, not surface pattern.** |
+| E-08 corridor floor | **A-05** (carpet where VIS navigation) · **C-03/C-06** (plain, no pattern) · **C-05** (low LRV differential, DEM) · **B-08** (matte ≤30 gloss) · **E-07** (slip PTV≥36) · **A-09/floor-vibration** (resilient) | Multi-item convergence on ONE surface | A single corridor floor (at Population-Mode median) should be: ≥2440 mm wide, plain/low-pattern (C), low LRV differential (DEM), matte (B-08), slip-resistant (E-07), resilient for WBV (A-09), and trailing-detectable at edges (VIS). **Mostly compatible; the tension is patterned-carpet-for-VIS (A-05) vs plain-for-DEM/vestibular (C-06) — resolve to plain resilient surface with edge/contrast shoreline, not surface pattern.** |
 | E-10 rest seating | **G-02** (three seat heights) · **G-07** (waiting seating) · **F-05** (seated-task OFS) · **A-17** (upholstered) · **D-05/D-11** (alcoves, garden seating) | Seat-height + provision reconciliation | E-10 ≥480 mm (POTS) vs stair-ramp 450–500 mm vs G-02 "three heights." **Reconcile: range 450–500 mm with ≥480 mm as the POTS end; state which end applies at which mode (Population median vs Person co-design) per `project-standards.md:32`.** |
 | E-09 TWSI | **K-02** (tactile map) · **K-04** (vibrotactile) · **A-15/A-05** (acoustic navigation) · **C-04** (LRV at junctions) · **B-12** (pathway lighting) | Redundancy layer for VIS/DBL | TWSI is one channel in a multi-channel VIS/DBL system; must be specified alongside K-02/A-15/C-04, not alone. Re-link E-09 (§G) then coordinate. |
 | E-13 entrance legibility | **D-02/D-07/D-08/D-10** (same slug) · **C-01/C-02** (colour) · **B-05** (lighting transition) | Duplication | E-13 and the D-suite draw from `cognitive-wayfinding-design`. **Define the boundary: E-13 = entrance-scoped legibility; D-suite = internal wayfinding — or merge.** |
@@ -963,3 +978,300 @@ is executed in this commit. "None of the Category E specs are sacrosanct" (owner
 
 Every item above touches items/schema/links and is therefore withheld from this
 commit pending owner direction.
+
+---
+
+## H. Second-pass adversarial critique (self red-team) and corrections
+
+This section red-teams §§0–G against the evidence graph (slugs + `connections` +
+`convergence_assessment`) rather than the item→slug scaffold the first pass
+worked from. It records what the first pass got **wrong** and corrects it in
+place. Findings are severity-tagged. The first-pass text above is retained (not
+silently rewritten) so the correction is auditable; where a first-pass claim is
+superseded, a "⚠ H.n" pointer marks it.
+
+### H.1 [BLOCKING] The first pass worked from the item scaffold, not the evidence — and missed the OPERATIVE geometry methodology
+
+The single biggest defect. The geometry reasoning (§0b throughline 3, §B.3,
+§B.6) was grounded in `accessible-circulation-geometry` **prose**. But the
+guidebook already has an **OPERATIVE methodology BPC** —
+`references/bpc/frameworks-and-methodology/manoeuvring-footprint-vs-turning-radius-methodology.md`
+(slug `manoeuvring-footprint-vs-turning-radius-methodology`; **14 T1 / 4 T2 / 11
+T3** sources) — that is the canonical reference for exactly the swept-envelope
+question, plus `mobility-built-environment` (7 T1 / 2 T2 / …) and
+`bariatric-turning-radius-built-environment` (device-size range). **None of the
+three is linked to any E item**, so working from the scaffold made them
+invisible. This is the concrete failure the owner's steers named in advance
+("work from the evidence itself"; "require the catalogue"; "turning envelope is
+better than turning radius").
+
+**Corrections (supersede §0b#3 / §B.3 / §B.6):**
+
+- **Adopt the methodology BPC's operative parameter-name deprecation** (its §5):
+  "turning circle / turning radius" → **"manoeuvring footprint / swept envelope,"
+  qualified by manoeuvre type (90° corridor entry / 180° within enclosed bay /
+  360° reorientation / transfer turn) AND drive system (manual / MWD / RWD / FWD
+  / scooter).** "1500 mm turning circle" is a **Tier 6 code minimum (regulatory
+  floor only), not a design value.** My first pass used "swept envelope" loosely
+  but did not qualify by manoeuvre type or drive system — a material imprecision.
+- **Use its empirical values (● where T1, magnitude still value-level-PENDING):**
+  180° within enclosed bay, entire-sample = **2400 mm** clear floor; open-ended
+  bay, UDI sub-sample = **1925 mm**; power-WC single-user = **1700–1800 mm**,
+  **larger for RWD/FWD**; scooter **1800 mm+**; **bariatric ≥1675 mm** (VA
+  Barrier-Free Standard, REF-00061; Ringaert 2001 REF-00073; Steinfeld AWM). The
+  1500 mm code circle is "the regulatory floor in 24 jurisdictions and the
+  empirical adequate value in none of them" (methodology BPC §3).
+- **Add the biomechanical warrant I omitted:** Chaikhot et al. 2023 (T1,
+  REF-00736) — 97 % of turns are asymmetric **spin turns** (axis at the inner
+  wheel, not occupant centre); peak inner-hand braking force **15.3×** straight-line;
+  ~**900 turns/day**; manual-WC upper-limb-injury prevalence **55–72 %**. An
+  undersized footprint doesn't just cramp — it forces the injurious manoeuvre
+  repeatedly for a user's whole wheelchair-using life. This is the dignity/■
+  argument for the envelope over the circle, and it was missing.
+- **Turn-footprint ≠ passing-width (corrects §B.3 conflation).** The 2400 mm
+  figure is a **180° turn** envelope; the DeafSpace **2440 mm** is a **corridor**
+  width (two-device passing + signed conversation). They are different manoeuvres
+  that **converge via independent evidence streams** — and the methodology BPC §4
+  explicitly rules that convergence "genuinely informative … the distinct
+  evidential warrant of Co-1/Tier 1/Tier 3 anchors agreeing where no shared
+  upstream source could have produced the agreement." So the corridor-width **●**
+  anchor is **DeafSpace 2440 mm (Co-1, passing + signing)**, *cross-validated* by
+  the 2400 mm turn envelope — not, as §B.3 loosely implied, one number doing both
+  jobs.
+
+### H.2 [MATERIAL] The non-English finding was miscomputed — corrected (answers "do we have high-tier non-English work?")
+
+§0/§E implied the ● base is ~96 % Anglophone. That figure is real **but only for
+the 8 item-linked slugs** — an artifact of the §H.1 scope error. Corrected
+picture, from the evidence actually anchoring circulation cells:
+
+- **High-tier non-English work exists and anchors a `stated` circulation cell
+  now.** `E-12/MOB` (convergence_assessment **9002**) is anchored partly by
+  **non-English Co-1**: 国土交通省 / MLIT housing handbook (JP, T1 Co-1, REF-00066),
+  **Ifop/APF** disability-housing survey (FR, T1 Co-1, REF-00072), **Invalidiliitto
+  ESKEH** audit method (FI, T1 Co-1, REF-00080), plus **Direktoratet** (NO, T2,
+  REF-00064) and **Bundesverband Selbsthilfe Körperbehinderter** (DE, T2,
+  REF-00082).
+- **DB-wide there are 41 high-tier non-English sources** (T1/T2/T3-clinical/Co-1/Co-2),
+  incl. de-clinical ×12, ja ×6, plus fr/nl/no/ko/sv/es/fi.
+- **The real, honest gap:** non-English **high-tier clinical/primary** circulation
+  work is thin, and most non-English circulation evidence sits in the **T4–T6
+  regulatory stratum** (which doctrine walls off from best practice). The
+  multilingual search recovered non-English **codes** well and non-English
+  **primary/lived** evidence poorly. That is a **coverage gap to log**, not an
+  absence — and it is under-served precisely where the mission (CRPD Art. 4.3,
+  globally-disabled-centred) most needs it: non-Anglophone lived experience.
+
+### H.3 [MATERIAL] The first pass re-spun the connection graph instead of extending it
+
+Guardrail #3 ("don't spin up a new register/sweep — extend the existing
+apparatus") was violated. My §D "novel" cross-links already exist as CONSUMED
+`connections`:
+
+- **CON-0200** = A-09 / E-07 / C-04 / E-08 — the exact **corridor-floor**
+  convergence I presented as a fresh finding.
+- **CON-0207 / CON-0212** = E-10 ↔ G-02 / G-05 / G-07 / I-03 — the **seat-height /
+  seating** reconciliation.
+- **CON-0116** = E-01 / D-02 — "**doors are the primary decision points in
+  wayfinding**" (my §0c edge dimension).
+- **CON-0136** = E-01 / H-01 — **door force ≤30 N preferred / ≤38 N max**, and it
+  already flags **OFS and PAIN as under-served** by the MOB-calibrated value.
+- **CON-0133** = H-01/H-02/E-01 (controls ≤22.2 N); **CON-0001** = I-01 ≤22 N;
+  **CON-0197** = C-04/E-09; **CON-0037** = E-05/E-10; **CON-0229** = A-02/A-07/A-09/E-07.
+
+**Correction:** §D.2/§D.3 should *cite and extend* these CON-IDs, not re-derive
+them. The relationships are corroborated — which strengthens the findings — but
+the failure to reference the existing graph is exactly the anti-pattern the
+guardrail forbids.
+
+### H.4 [MATERIAL] Door-force: I inverted the most-accommodating axis (corrects §B.5)
+
+§B.5 elevated **≤30 N to "● best practice"** and demoted **≤20 N to "○ code."**
+On the doctrine's most-accommodating principle this is **backwards**: lower force
+excludes fewer users; Brandt's own data (30 N = 94.7 %, 40 N = 92.1 %) shows
+lower-is-better, and 30 N still excludes **5.3 %** — more for OFS/PAIN
+(CON-0136 confirms the ≤30 N value is MOB-calibrated and OFS/PAIN need lower).
+**Correction:** the aspiration (●, direction) is **powered/automatic operation
+(zero force), and the lowest achievable manual force**; ≤30 N is the **empirical
+"acceptable to 94.7 % of WC users, MOB-calibrated" threshold (Brandt T3)**, not
+the best-practice ceiling; ≤20 N is *more* accommodating than 30 N (whatever its
+provenance). Neither number is the aspiration — powered/lowest-achievable is.
+
+### H.5 [MATERIAL] Band-assignment slip: T4–T6-only determinations must take ○, not ◐
+
+Per `tier-system.md:101` / `evidence-architecture.md:105`, a determination whose
+**entire** basis is T4–T6 takes the **○ weak band** and stays **`provisional`**;
+◐ is only for individual T4/T5 *citations* inside an otherwise ●-anchored cell.
+The independent-reviewer pass corrected the specific instances (my first draft of
+this item named E-05 canopy, which is never actually 9-step-graded — a mis-hit).
+The real determination-level ◐-laundering instances are:
+
+- **Handrails (§B.9 Step 6)** — graded "◐" on ISO 21542 (T4) / BS 8300 (T5),
+  while §B.9 Step 5 **explicitly states no primary source anchors the parameter**
+  and tags [THIN BASE]. A T4/T5/T6-only determination with a THIN-BASE flag is
+  **○**, full stop. This is the exact convergence-laundering §0 warns against.
+- **TWSI (§B.7 Step 6)** — "◐" on ISO 23599 (T4) only, and the direction is
+  CONTESTED → must be **○**, and per `evidence-architecture.md:106` a
+  population-contested direction anchors **nothing** universally.
+- **Lift Type-2 (§B.6 Step 6)** — "◐ international floor" on EN 81-70 (T4). Since
+  no E-01 cell exists and the proposed Steinfeld ● anchor is itself contested
+  (H.7), this reduces to a T4-only floor → **○**.
+
+Net: the document systematically rendered code/standards-only content **one band
+stronger than doctrine permits** (handrail, TWSI, lift-Type-2), compounding the
+door-force inversion (H.4). All three regrade to ○, `provisional`.
+
+### H.6 [MATERIAL] E-06 "under-grades" was the wrong frame (corrects §C.3)
+
+§C.3 said the `E-06/MOB` regulatory-stratum cell "under-grades" the evidence,
+implying a cell-curator error. `convergence_assessment` **9005** shows the
+curator correctly returned `single_axis / regulatory stratum only` **given
+E-06's linked slug** (`threshold-and-level-access` = all T4–T6). The ● threshold
+evidence (Al Lawati 2017, REF-00025 — 2 cm threshold defeats 45.8 % of manual-WC
+users; Pavol 2001) is linked to **`stair-ramp-threshold-biomechanics`, not
+E-06's slug**. **Correction:** this is the **same slug-linkage defect** as
+E-07/E-09 (§A.2) — the fix is **re-linking E-06 to the clinical threshold
+evidence**, after which the cell re-derives to ● direction; it is not a grading
+error to be scolded. Reframe §C.3 and §G proposal 7 accordingly.
+
+### H.7 [BLOCKING — upgraded from MINOR by the independent pass] The 2400 mm figure rests on an UNVERIFIED, mis-slugged source, and the "convergence" is unsound
+
+§0b/§B.3/§E leaned on "Steinfeld 2006 RESNA swept-path → 2400 mm" as a ● stream
+converging with DeafSpace 2440 mm. The DB shows this is **triply unsound**:
+
+1. **UNVERIFIED source.** "Steinfeld 2006 RESNA" = **REF-00737**, whose
+   `verification_status = UNVERIFIED`. My §F promised "every ● anchor …
+   VERIFIED (exceptions NZS 4121, RET-08)." REF-00737 is a **third, unnamed
+   UNVERIFIED source leaned on for a ● claim** — a direct breach of §F and of
+   the anti-hallucination governing_refs rule (`evidence-architecture.md:100`).
+   **§F is corrected: the 2400 mm figure is UNVERIFIED prose, not a ● anchor.**
+2. **Mis-slug + tier.** REF-00737 is **T3**, and is linked to
+   `bariatric-turning-radius-built-environment` and
+   `manoeuvring-footprint-vs-turning-radius-methodology` — **not** to any of the
+   8 circulation slugs. (Its bariatric-slug home also brushes the RULE "large
+   body size is not a disability," `project-standards.md:29` — bariatric sizing
+   is a device-range fact, cite it as such, not as a disability claim.)
+3. **Claim-type + population overreach (the independent pass's Defect 2).**
+   §B.3 Step 6 "extended the `E-08/DEAF` stated anchor to AX-WHM." But **there is
+   no E-08/MOB cell**, and DeafSpace 2440 mm is a **Deaf-community Co-1
+   signing-space** claim — Co-1 anchors preference/dignity/self-determined
+   accommodation **for the community that produced it**
+   (`tier-system.md:16`), not a universal wheeled-mobility *biomechanical* width.
+   Transferring it is a claim-type substitution + population mismatch.
+
+**The deeper correction — three distinct quantities were conflated:**
+(a) **signing corridor width** (DeafSpace Co-1, 2440 mm — a DEAF claim);
+(b) **180° turning footprint** (Steinfeld, ~2400 mm — a manoeuvre clear-floor,
+which anchors **E-12** "Manoeuvring Space," not E-08 width);
+(c) **two-device passing width** (= device-width × 2 + clearance, from the AWM
+device catalogue — the actual E-08 corridor-width quantity, still uncelled).
+These measure different things; their numeric proximity is **not** evidential
+convergence. The `manoeuvring-footprint` BPC §4 *does* endorse the (a)↔(b)
+agreement as informative "where no shared upstream source could have produced
+it" — but that endorsement is itself contestable precisely because (a) and (b)
+are different manoeuvres, and it says nothing about (c), which is what E-08
+actually specifies. **Corrected position:** E-08/DEAF ≥2440 mm stands as a **●
+Co-1 DEAF** determination (unchanged); **E-08/MOB passing width is uncelled and
+must be derived from the AWM device catalogue** (device-width × 2 + clearance),
+value PENDING — the ● is on the *method* (envelope-not-radius), not on a borrowed
+magnitude.
+
+### H.8 [MINOR] Contested-direction conflicts have a home I didn't name
+
+The `conflicts` table (pop_a / pop_b / resolution / gap_id) is **empty for
+circulation**. My MOB↔VIS threshold and MOB/PAIN↔VIS TWSI conflicts (§B.2, §B.7)
+should be **logged there** (extending the existing apparatus), not described as
+if no register existed. Also: the §B.2 "resolve by substitution" should be
+recorded as a *proposed* resolution in the conflict row, not presented inline as
+settled (the 9-step rule: log per-population, do not reconcile inline).
+
+### H.9 What survived the red-team (fairness pass)
+
+The core does hold: **best-practice ≠ convergence**; the weighted-strength bands;
+**every quantitative magnitude value-level-PENDING** (corroborated — convergence
+9001/9002 both read "value-level convergence not yet assessable"); **no
+fabrication** (the unverifiable numbers were flagged). The **structural findings
+survive and are corroborated by the graph**: E-07/E-09 mis-links, E-13↔D-suite
+duplication (CON-0067/CON-0116), E-15 mis-categorisation, **no handrail item**,
+**E-14 genuinely vacant** (no item row; only CONSUMED CON-0054/CON-0108),
+value-extraction empty. The **corridor ≥2440 mm** anchor survives — on the
+corrected basis of §H.1 (DeafSpace Co-1 passing+signing, cross-validated by the
+2400 mm turn envelope). Rest-seating and cognitive-legibility ● anchors survive.
+
+### H.10 The one lesson
+
+**Work from the evidence graph — slugs + `connections` + `convergence_assessment`
+— not the item→slug scaffold.** Every material defect above (missed methodology
+BPC, miscomputed non-English picture, re-spun connections, mis-framed E-06)
+traces to reasoning outward from the fourteen E item codes instead of inward from
+the evidence. Operationalisation (§G) must begin by **re-pointing the E items at
+the slugs that actually carry their evidence** (manoeuvring-footprint,
+mobility-built-environment, bariatric, the clinical threshold/slip/TWSI slugs) —
+that relink is prerequisite to every cell promotion.
+
+### H.11 [BLOCKING — surfaced by the independent pass] Door-force, restated with the correction fully applied
+
+Folding H.4 and the independent pass together: §B.5's "≤30 N ● best practice /
+≤20 N ○ code" is wrong on the most-accommodating axis. Door force is **monotonic**
+(Brandt: 30 N→94.7 %, 40 N→92.1 %; lower excludes fewer). The tier marker grades
+**evidence strength, not which value is best practice**; Brandt's ● supports
+"lower is better," which points **below** 30 N. Per `evidence-architecture.md:106`
+the direction-aware most-accommodating floor selects the **lowest** maximum
+(≤20 N), and treating ≤20 N as ○ merely because no study named that exact number
+is absence-of-evidence-as-evidence-of-absence (`:170`). **Final corrected
+position:** aspiration = **powered/automatic (zero force)** or **lowest achievable
+manual force**, ●; ≤30 N = "MOB-calibrated acceptability threshold, excludes
+5.3 % and more for OFS/PAIN," not the ceiling; ≤20 N is *more* accommodating than
+≤30 N regardless of provenance.
+
+### H.12 [MATERIAL — internal contradiction] The ● gate leaks
+
+§0b throughline 6 (now corrected) asserted "no quantitative value can earn ●,"
+but §B.4 renders seat-height ≥480 mm ●, alcove dims ●, and §B.5 renders ≤30 N ●.
+`source_value_extractions` = 0 rows for circulation, so there is no **structured**
+value-level record for any of these. **Resolution (the honest rule):** a number
+stated directly in a source's text *is* value-level support in principle (Brandt
+30 N; Roxburgh ≥480 mm; RCOT alcove; Al Lawati 45.8 %), so those magnitudes may
+carry ● **with the structured extraction still owed**; magnitudes that are
+code/inference rather than source-stated (ramp 1:20, corridor width, threshold
+6 mm) stay PENDING. Throughline 6's categorical form was the error; the
+per-parameter grading was closer to right, but the two must be made consistent —
+done in the throughline-6 correction above.
+
+### H.13 [MINOR, verified] Two residual factual fixes (already applied inline)
+
+- **Putthinoi 2017 is T3-clinical, not T1** (`evidence_sources` REF-00407
+  `tier=3`). Corrected in §A.3 and §B.5. Still ● by marker; the T1 label had
+  inflated the apparent primary base for the door parameter.
+- **Voice:** §D.3's "a single corridor floor **must be**…" (blanket fixed-value
+  "must" voice, `project-standards.md:500`) changed to "at Population-Mode median
+  … should be." It sat in an audit-trail table, not guidebook-surface prose, but
+  the voice rule still applies.
+
+### H.14 Provenance of this critique, and the honest net
+
+This §H was produced by **two independent adversarial passes**: (1) a self
+red-team working from the evidence graph (slugs + `connections` +
+`convergence_assessment`), which found the missed methodology BPC (H.1), the
+non-English mis-computation (H.2), the re-spun connections (H.3) and the E-06
+mis-frame (H.6); and (2) an **independent reviewer** given the document and the
+doctrine but not my rationalisations, which upgraded the Steinfeld/DeafSpace
+corridor claim from "minor precision" to **BLOCKING** (H.7), corrected my own
+mis-hit in H.5 (handrail, not E-05 canopy), and caught the internal ● contradiction
+(H.12) and the Putthinoi tier (H.13). The two passes converged on the door-force
+inversion and the band-laundering independently.
+
+**Honest net.** The document's **doctrinal framing** (§0) and its **structural
+findings** (E-07/E-09/E-06 mis-links, E-13↔D duplication, E-15 mis-cat, absent
+handrail item, E-14 vacant, empty value-extraction) **survive and are
+corroborated** by the graph. Its **flagship quantitative "correction" — corridor
+≥2440 mm ● as a universal wheeled width — does NOT survive**: it rested on an
+UNVERIFIED source, a claim-type overreach, and three conflated quantities (H.7).
+E-08/DEAF 2440 mm stands as a DEAF Co-1 claim; E-08/MOB is uncelled. Several
+determinations were **band-laundered ◐ where doctrine mandates ○** (handrail,
+TWSI, lift-Type-2, H.5) and the **door-force grading was inverted** (H.11). These
+are exactly the failure modes §0 named — which is the point of running the
+red-team: the first pass restated the rules correctly and then broke them, and
+only working from the evidence graph (not the item scaffold) surfaced it.
+**Controlling note:** where §H corrects §§0–G, §H governs; the first-pass text is
+retained for auditability, not as the operative claim.
