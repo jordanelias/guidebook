@@ -1768,7 +1768,7 @@
     {
       "slug": "post-occupancy-evaluation-global",
       "topic": "frameworks-and-methodology",
-      "state": "PARTIAL",
+      "state": null,
       "n": 10,
       "full": 10,
       "partial": 0,
@@ -1828,7 +1828,7 @@
       "non_anglo": 5,
       "pct_anglo_core": 40.0,
       "sl_searched": 19,
-      "sl_hit": 8,
+      "sl_hit": 0,
       "search_jurs": 48,
       "score": 76.2,
       "components": {

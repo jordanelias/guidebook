@@ -1,5 +1,10 @@
 # DR-2026-07-24 — `search_executions` logged-search substrate (coverage-loop memory)
 
+- **RATIFIED — owner directive 2026-07-24 ("Ratify all").** Register D-0151 `review_status:
+  CONFIRMED`. Applied this session: `scripts/migrations/033_search_executions.sql`
+  (`user_version` 32→33, table ships empty), `schemas/search_execution.py`, and the `v_coverage_*`
+  views; legacy grids frozen read-only, not dropped. Rebuild reproducibility verified on the 7 CI
+  invariants. The proposal text below is preserved as authored.
 - Status: **PROPOSED — DG-REVIEW (agent decides, owner reviews before canonical).**
   Register entry D-0151 carries `review_status: PENDING`. The migration + Pydantic
   artifacts are *embedded here for review*; they are **not** yet placed in

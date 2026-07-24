@@ -1,5 +1,11 @@
 # DR-2026-07-24 — `lang_jur_map` role definitions + population (PROPOSAL, owner-to-decide)
 
+- **RATIFIED — owner directive 2026-07-24 ("Ratify all").** Recorded as register decision **D-0152**
+  (DG-NON, owner-decided). The PRIMARY/SECONDARY definitions below are adopted and the map applied:
+  70 rows (50 PRIMARY / 20 SECONDARY) across all 48 jurisdictions via data migration
+  `data_20260724060958`, each row carrying its official-language sourcing note; CY/ET/TH/ZA carry
+  `[PRIMARY-LANGUAGE-GAP]`. COLONIAL stays withdrawn. Edge cases (Kenya/Tanzania/ZA/Singapore) are
+  owner-amendable via a forward compensating migration. The proposal text below is preserved as authored.
 - Status: **PROPOSED — DG-NON. Owner decides; this agent proposes only.** No register entry
   is added (a proposal is not a made decision; the register holds decisions, status ∈
   {ACTIVE, SUPERSEDED, RETIRED}). No data migration is emitted and `data/guidebook.db` is

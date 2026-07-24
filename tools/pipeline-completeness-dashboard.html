@@ -176,7 +176,7 @@
       stage's own denominator, then broken down by category, item, and population class.</p>
     <div class="meta-row">
       <span><b>Source</b> data/guidebook.db (read-only)</span>
-      <span><b>Schema</b> user_version 33</span>
+      <span><b>Schema</b> user_version 34</span>
       <span><b>Data as of</b> 2026-07-24</span>
       <span><b>Auto-generated</b> tools/pipeline_completeness.py</span>
     </div>
@@ -196,7 +196,7 @@
       <div class="gauge">
         <div class="stage-idx">STAGE 2</div><div class="stage-name">Collection</div>
         <div class="pct b4-fg">91<small>%</small></div>
-        <div class="denom">753 / 823<br>metadata-complete sources</div>
+        <div class="denom">749 / 823<br>metadata-complete sources</div>
         <div class="bar"><i class="b4-bg-solid" style="width:91%"></i></div>
         <span class="stage-tag b4-tag">High</span>
       </div>
@@ -223,7 +223,7 @@
       </div>
     </div>
     <div class="pattern"><b>The shape is front-loaded, then it collapses.</b> Sourcing (collection) is essentially
-      finished — 792/823 sources verified, metadata near-complete — but almost nothing has been
+      finished — 791/823 sources verified, metadata near-complete — but almost nothing has been
       <i>adjudicated</i> into determinations (judgment, 4%) and only
       1 parameter has a real synthesis reasoning
       doc (synthesis, 1%). Render faithfully mirrors that emptiness: it can only
@@ -238,7 +238,7 @@
       <span class="mono">evidence_state = RETRACTED-PRE-REHAB</span>. Those slugs still carry a stale
       <span class="mono">bpc_complete = 1</span> flag from the pre-rehabilitation era — so a naïve flag count would
       report the BPC layer as largely "complete," when the honest current state is that
-      <b>0 item-facing syntheses are live</b>. The 10
+      <b>0 item-facing syntheses are live</b>. The 9
       <span class="mono">PARTIAL</span> slugs genuinely in progress are cross-cutting methodology/infrastructure
       units, none linked to a design parameter. The gauges above use current-state signals (reasoning docs,
       materialized cells), not the stale completion flags.
@@ -257,8 +257,8 @@
           <span class="mini-bar"><i class="b3-bg-solid" style="width:59%"></i></span></div>
           <div class="metric-row"><span class="lbl">Slugs touched by search coverage</span><span class="val">77 / 83 · 93%</span>
           <span class="mini-bar"><i class="b4-bg-solid" style="width:93%"></i></span></div>
-          <div class="metric-row"><span class="lbl">Slug × jurisdiction cells searched</span><span class="val">673 / 4960 · 14%</span>
-          <span class="mini-bar"><i class="b1-bg-solid" style="width:14%"></i></span></div>
+          <div class="metric-row"><span class="lbl">Slug × jurisdiction cells searched</span><span class="val">662 / 4960 · 13%</span>
+          <span class="mini-bar"><i class="b1-bg-solid" style="width:13%"></i></span></div>
           <div class="metric-row"><span class="lbl">PICO formalized</span><span class="val">1 / 83 · 1%</span>
           <span class="mini-bar"><i class="b1-bg-solid" style="width:2%"></i></span></div>
           <div class="metric-row"><span class="lbl">Gaps closed (register)</span><span class="val">262 / 301 · 87%</span>
@@ -271,11 +271,11 @@
         <div class="sb-left"><div class="n">STAGE 2</div><div class="t">Collection</div>
           <div class="entry">Entry: sources discovered for the topic under research.</div></div>
         <div class="sb-right">
-          <div class="metric-row"><span class="lbl">Sources verified</span><span class="val">792 / 823 · 96%</span>
+          <div class="metric-row"><span class="lbl">Sources verified</span><span class="val">791 / 823 · 96%</span>
           <span class="mini-bar"><i class="b4-bg-solid" style="width:96%"></i></span></div>
-          <div class="metric-row"><span class="lbl">Metadata complete</span><span class="val">753 / 823 · 91%</span>
+          <div class="metric-row"><span class="lbl">Metadata complete</span><span class="val">749 / 823 · 91%</span>
           <span class="mini-bar"><i class="b4-bg-solid" style="width:91%"></i></span></div>
-          <div class="metric-row"><span class="lbl">Author-title-only (rule&nbsp;#10 blockers)</span><span class="val">48 · 6%</span>
+          <div class="metric-row"><span class="lbl">Author-title-only (rule&nbsp;#10 blockers)</span><span class="val">52 · 6%</span>
           <span class="mini-bar"><i class="b1-bg-solid" style="width:6%"></i></span></div>
           <div class="metric-row"><span class="lbl">Discovery provenance recorded</span><span class="val">88 / 823 · 11%</span>
           <span class="mini-bar"><i class="b1-bg-solid" style="width:11%"></i></span></div>
@@ -310,7 +310,7 @@
           <div class="metric-row"><span class="lbl">Verified reasoning-doc citations</span><span class="val">14 rows</span></div>
           <div class="metric-row"><span class="lbl">Live item-facing syntheses</span><span class="val">0 / 87 · 0%</span>
           <span class="mini-bar"><i class="b0-bg-solid" style="width:2%"></i></span></div>
-          <div class="metric-row"><span class="lbl">Slugs in PARTIAL (non-item methodology)</span><span class="val">10</span></div>
+          <div class="metric-row"><span class="lbl">Slugs in PARTIAL (non-item methodology)</span><span class="val">9</span></div>
           <div class="gate-label">Integrity gates</div>
           <div class="gates"><span class="chip ver"><span class="g b4-bg-solid"></span>nine-step-synthesis</span><span class="chip inc"><span class="g b2-bg-solid"></span>opus-routing · unenforced</span></div>
         </div>
@@ -625,8 +625,8 @@
   <footer>
     <div class="two-col">
       <div><strong style="color:var(--ink-2)">How these numbers were derived</strong><br>
-        Read-only queries against <code>data/guidebook.db</code> (<code>user_version 33</code>,
-        255 data migrations). Denominators: research/synthesis over 83
+        Read-only queries against <code>data/guidebook.db</code> (<code>user_version 34</code>,
+        256 data migrations). Denominators: research/synthesis over 83
         <code>bpc_metadata</code> slugs; collection over 823 <code>evidence_sources</code>; judgment/render over
         363 applicable item×population pairs (<code>item_population_links</code>). Determinations from
         <code>evidence_cell_state</code>; synthesis from <code>reasoning_doc_citations</code>; enforcement coverage
