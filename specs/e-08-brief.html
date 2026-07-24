@@ -2662,9 +2662,112 @@ button:focus-visible,a:focus-visible,summary:focus-visible,.pop:focus-visible{
   .dimrow{grid-template-columns:72px 1fr;}
   .dimrow .st{grid-column:1/-1;justify-self:start;margin-top:var(--s1);}
 }
+
+/* ============ AUDIT REMEDIATION ============ */
+
+/* 2. collapsible control bar — was 423px of an 800px viewport */
+.ctl-toggle{display:none;width:100%;align-items:center;justify-content:space-between;
+  gap:var(--s1);padding:var(--s1) 0;min-height:44px;background:none;border:none;
+  cursor:pointer;font-family:var(--font-mono);font-size:var(--fs-2xs);
+  text-transform:uppercase;letter-spacing:.08em;color:var(--ink);}
+.ctl-toggle-i{font-family:var(--font-mono);font-size:var(--fs-md);line-height:1;}
+#ctl-body{display:flex;flex-direction:column;gap:var(--s1);}
+#ctl-body[hidden]{display:none;}
+@media (max-width:900px){ .ctl-toggle{display:flex;} }
+
+/* 4. legend — chip and definition now travel together */
+/* min() so the track can shrink below its ideal floor — a bare minmax(280px,1fr)
+   forced the document to 966px and broke reflow at 320 and 640 (1.4.10). */
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));
+  gap:var(--s1) var(--s3);align-items:start;}
+.leg-lab{grid-column:1/-1;}
+.leg-pair{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--s1);
+  align-items:baseline;min-width:0;}
+.leg-pair .leg-d{margin:0;font-size:var(--fs-sm);color:var(--ink-soft);min-width:0;
+  overflow-wrap:anywhere;}
+
+/* 5. grouped scope rows replace the label repeated on every row */
+.grp{display:flex;align-items:baseline;gap:var(--s1);margin:var(--s3) 0 var(--s1);
+  font-family:var(--font-geo);font-size:var(--fs-base);font-weight:600;}
+.grp::before{content:"";width:10px;height:10px;border-radius:var(--radius-pill);
+  background:var(--mark-src-fg);flex:none;}
+.grp-context::before{background:var(--oxblood);}
+.grp-n{font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--muted);
+  border:1px solid var(--rule);border-radius:var(--radius-pill);padding:0 var(--s1);}
+.scope-row .r-title{font-family:var(--font-mono);font-weight:600;}
+
+/* 6. ICF codes are case-significant — do not uppercase them */
+.pills[data-scheme="icf"] .pill{text-transform:none;letter-spacing:.04em;}
+
+/* 9. one display face across the whole heading ladder (specificity fix:
+   .sec-head h2 and .callout h3 in the base sheet were winning) */
+.page h1,.page .sec-head h2,.page h2,.page h3,.callout h3,.pop-title,.colo-h,.grp{
+  font-family:var(--font-geo);}
+.callout h3{font-size:var(--fs-base);text-transform:none;letter-spacing:0;font-weight:600;}
+.page h3{text-transform:none;letter-spacing:0;font-weight:600;font-size:var(--fs-md);}
+
+/* 2.4.11 — clearance must exceed the real bar height (167px), not 112px */
+:where(button,a,summary,input,select,textarea,[tabindex],h1,h2,h3,section,details){
+  scroll-margin-top:184px;}
+
+/* 2.5.8 — source links were 17px tall */
+.pop-src a,.decision-table a,.srclist a{display:inline-block;min-height:24px;
+  padding:var(--s-half) 0;line-height:1.5;}
+
+/* Aesthetics: widen the measure only. An earlier attempt also set
+   .page{max-width:100%} and gave each section max-width + margin-inline:auto —
+   but .page is a flex container, so those sections sized to max-content and
+   forced the document to 1062px, breaking reflow at 320 and 640 (1.4.10).
+   Reverted; the prose measure is widened without touching the layout box. */
+.page>*{min-width:0;}
+.callout p,.page p,.scope-note{max-width:72ch;}
+.decision-table td,.decision-table th{max-width:52ch;}
+.decision-wrap{overflow-x:auto;max-width:100%;}
+
+/* the scale figure gains an axis so 2400 vs 2440 is readable */
+.dimfig{position:relative;}
+.dimscale{display:grid;grid-template-columns:88px 1fr auto;gap:0 var(--s2);
+  margin-top:var(--s1);padding-top:var(--s1);border-top:1px solid var(--rule);}
+.dimticks{position:relative;height:18px;}
+.dimticks span{position:absolute;top:0;font-family:var(--font-mono);
+  font-size:var(--fs-2xs);color:var(--muted);transform:translateX(-50%);}
+.dimticks span::before{content:"";position:absolute;top:-6px;left:50%;width:1px;
+  height:5px;background:var(--muted);}
+
+/* citation affordance carries the page's central promise — make it legible */
+.cite{border-color:var(--muted);color:var(--blue-ink);background:var(--blue-soft);
+  min-height:24px;}
+.cite:hover,.cite:focus-visible{background:var(--paper);border-color:var(--blue);}
+
+/* print: architects put these into consultant sets */
+@media print{
+  .ctlbar,.ctl-toggle,.cite,.sortb,.pill,.pill-reset,.scheme{display:none !important;}
+  body{background:#fff;color:#000;font-size:11pt;}
+  .page>section{break-inside:avoid;max-width:100%;}
+  details{display:block !important;}
+  details>summary{list-style:none;}
+  details .r-body{display:block !important;}
+  .pop{display:none !important;}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:9pt;color:#444;}
+  .dimfig,.legend,.callout,.affected{border:1px solid #999;break-inside:avoid;}
+}
+
+.sectionfig{margin:var(--s3) 0;padding:var(--s3);border:1px solid var(--rule);
+  border-radius:var(--radius);background:var(--paper-3);}
+.sectionfig svg{width:100%;height:auto;display:block;}
+.svg-lab{font-family:var(--font-mono);font-size:11px;fill:var(--muted);}
+.svg-mid{text-anchor:middle;}
+.svg-key{fill:var(--blue-ink);font-weight:600;}
+.callout.startpoint{border-left-color:var(--mark-src-fg);background:var(--mark-src-bg);}
+.callout.startpoint h3{color:var(--mark-src-fg);}
+.callout.startpoint .qlist li::before{color:var(--mark-src-fg);}
 </style>
 <div class="ctlbar" role="region" aria-label="Coding scheme and filters">
   <div class="ctlbar-inner">
+    <button type="button" class="ctl-toggle" id="ctl-toggle" aria-expanded="true" aria-controls="ctl-body">
+      <span class="ctl-toggle-t">Filters &amp; naming</span><span class="ctl-toggle-i" aria-hidden="true">–</span>
+    </button>
+    <div id="ctl-body">
     <div class="ctl-row">
       <span class="ctl-lab">Read as</span>
       <span class="scheme" role="group" aria-label="Coding scheme">
@@ -2683,7 +2786,9 @@ button:focus-visible,a:focus-visible,summary:focus-visible,.pop:focus-visible{
         <button type="button" class="trm" data-term="code" aria-pressed="false">Code only</button>
       </span>
     </div>
-    <div class="ctl-row"><span class="ctl-lab">Filter</span><span class="pills" id="pills"></span></div>
+    <div class="ctl-row ctl-filter"><span class="ctl-lab">Filter</span>
+      <span class="pills" id="pills"></span></div>
+    </div>
     <p class="ctl-state" id="ctl-state" role="status" aria-live="polite"></p>
     <p class="sr-only" id="ctl-transient" role="status" aria-live="polite"></p>
   </div>
@@ -2701,11 +2806,11 @@ button:focus-visible,a:focus-visible,summary:focus-visible,.pop:focus-visible{
 </header>
 
 <div class="legend" role="note">
-  <span class="leg-lab">Status of every figure in this brief</span>
-  <span class="st st-floor">Code floor</span><span class="leg-d">a legal minimum in a named jurisdiction</span>
-  <span class="st st-rec">Standards recommendation</span><span class="leg-d">a standards body's figure, not law</span><span class="st st-consensus">Code consensus</span><span class="leg-d">the same figure across many instruments, with no traceable measurement — informative about copying, not about corridors</span>
-  <span class="st st-gb">Guidebook position</span><span class="leg-d">this project's reading of the evidence, graded ● ◐ ○</span>
-  <span class="st st-obs">Measured</span><span class="leg-d">an observation from a study, not a specification</span>
+  <p class="leg-lab">Status of every figure in this brief</p>
+  <span class="leg-pair"><span class="st st-floor">Code floor</span><span class="leg-d">a legal minimum in a named jurisdiction</span></span>
+  <span class="leg-pair"><span class="st st-rec">Standards recommendation</span><span class="leg-d">a standards body's figure, not law</span></span><span class="leg-pair"><span class="st st-consensus">Code consensus</span><span class="leg-d">the same figure across many instruments, with no traceable measurement — informative about copying, not about corridors</span></span>
+  <span class="leg-pair"><span class="st st-gb">Guidebook position</span><span class="leg-d">this project's reading of the evidence, graded ● ◐ ○</span></span>
+  <span class="leg-pair"><span class="st st-obs">Measured</span><span class="leg-d">an observation from a study, not a specification</span></span>
 </div>
 
 <section class="section" id="circulation">
@@ -2836,6 +2941,15 @@ button:focus-visible,a:focus-visible,summary:focus-visible,.pop:focus-visible{
         <span class="dimcap">Signing pair walking abreast · Co-1 evidence</span></span>
       <span class="st st-gb">Guidebook <span class="band band-full">●</span></span>
     </button>
+    <div class="dimscale" aria-hidden="true">
+      <span></span>
+      <div class="dimticks">
+        <span style="left:0%">0</span><span style="left:24.6%">600</span>
+        <span style="left:49.2%">1200</span><span style="left:73.8%">1800</span>
+        <span style="left:98.4%">2400</span>
+      </div>
+      <span></span>
+    </div>
     <figcaption class="drawing-caption">Scaled against 2440 mm. Clear width between finished faces. Tinted bars have a measurement or participatory root.</figcaption>
   </figure>
 
@@ -2851,6 +2965,63 @@ button:focus-visible,a:focus-visible,summary:focus-visible,.pop:focus-visible{
     <p><strong>a.</strong> If the convergence reflects an unrecorded common source, then the figure may be sound and the task is to find that source — which would move it from the weak band to a graded one.</p>
     <p><strong>b.</strong> If there is no common source, then twenty-odd jurisdictions have inherited a figure none of them tested, and the convergence is evidence about regulatory copying rather than about corridors.</p>
     <p>Nothing in the record distinguishes (a) from (b). Until it does, the honest grade is the weak band, and the derivation is logged as an open question rather than resolved by preference.</p>
+  </div>
+
+  <h3>What this means at the drawing board</h3>
+  <p>The figures above are evidence, not a specification. What a drawing needs is the
+  clear dimension that survives everything mounted in it — so the section below shows
+  what subtracts from a nominal structural opening.</p>
+
+  <figure class="sectionfig">
+    <svg viewBox="0 0 640 250" role="img" aria-labelledby="xs-t xs-d">
+      <title id="xs-t">Corridor cross-section showing what subtracts from clear width</title>
+      <desc id="xs-d">A corridor section between two walls. The structural opening is
+      measured wall to wall. A continuous handrail on one side projects about 50 millimetres
+      into it, and skirting or a projecting fixture takes a further allowance. The clear
+      width is what remains between those projections, measured from floor level up to a
+      datum 2050 millimetres above finished floor. A door opening onto the corridor requires
+      latch-side clearance beside it, which is not part of the corridor width but governs
+      whether the route works at that point.</desc>
+      <rect x="40" y="30" width="26" height="160" fill="var(--paper-2)" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="574" y="30" width="26" height="160" fill="var(--paper-2)" stroke="var(--ink)" stroke-width="2"/>
+      <line x1="40" y1="190" x2="600" y2="190" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="66" y="96" width="12" height="16" fill="var(--oxblood-soft)" stroke="var(--oxblood)" stroke-width="1.5"/>
+      <text x="84" y="92" class="svg-lab">handrail −50</text>
+      <line x1="40" y1="214" x2="600" y2="214" stroke="var(--muted)" stroke-width="1"/>
+      <line x1="40" y1="208" x2="40" y2="220" stroke="var(--muted)" stroke-width="1"/>
+      <line x1="600" y1="208" x2="600" y2="220" stroke="var(--muted)" stroke-width="1"/>
+      <text x="320" y="234" class="svg-lab svg-mid">structural opening (wall to wall)</text>
+      <line x1="78" y1="70" x2="574" y2="70" stroke="var(--blue)" stroke-width="2"/>
+      <line x1="78" y1="62" x2="78" y2="78" stroke="var(--blue)" stroke-width="2"/>
+      <line x1="574" y1="62" x2="574" y2="78" stroke="var(--blue)" stroke-width="2"/>
+      <text x="326" y="56" class="svg-lab svg-mid svg-key">CLEAR WIDTH — what the evidence is about</text>
+      <line x1="40" y1="30" x2="600" y2="30" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4 3"/>
+      <text x="320" y="22" class="svg-lab svg-mid">datum 2050 above finished floor</text>
+      <text x="320" y="130" class="svg-lab svg-mid">measure between finished faces, floor to datum</text>
+    </svg>
+    <figcaption class="drawing-caption">Projections over 25 mm below the datum are deducted.
+    A continuous handrail takes about 50 mm; where one is provided on both sides, both deduct.</figcaption>
+  </figure>
+
+  <div class="callout startpoint">
+    <h3>A defensible starting point, and what each step down costs</h3>
+    <p>This brief does not prescribe a value. It can say what the record supports and what is
+    given up at each reduction, which is the information a drawing decision actually needs.</p>
+    <ul class="qlist">
+      <li><b>On a route where signing is anticipated</b>The evidence supports ≥ 2440 mm clear.
+      Below it, two people cannot hold a signed conversation while walking; the language is
+      switched off in the corridor. This is the one figure the guidebook advances as a position.</li>
+      <li><b>Wherever the route turns or admits a room</b>The measured swept envelope reaches
+      about 2400 mm for the entire sample. Below it, a powered chair is forced into the
+      high-load spin turn rather than a free turn.</li>
+      <li><b>Where only two-device passing governs</b>1800 mm is the near-universal code
+      figure — with no traceable measurement behind it. Sound as a floor, weak as a target.</li>
+      <li><b>Below 1800 mm</b>Passing requires one party to reverse or wait. Treat as a
+      constrained-retrofit condition to document, not a design value.</li>
+      <li><b>What to check before committing any of these</b>Door latch-side clearance and
+      swing, handrail projection, and whether the route turns — each of which can consume the
+      margin the figure was chosen to provide.</li>
+    </ul>
   </div>
 
   <details class="row juris">
@@ -3120,6 +3291,19 @@ button:focus-visible,a:focus-visible,summary:focus-visible,.pop:focus-visible{
   function closePop(){ if(!openPop) return; openPop.classList.remove('is-open');
     if(openTrig){ openTrig.setAttribute('aria-expanded','false'); try{openTrig.focus();}catch(e){} }
     openPop=null; openTrig=null; }
+  /* Position the panel under its trigger, flipping above when it would overflow
+     the bottom, and clamping to the viewport so it is always fully reachable. */
+  function place(p, r){
+    p.style.maxHeight = Math.max(220, window.innerHeight - 32) + 'px';
+    var h = p.offsetHeight, spaceBelow = window.innerHeight - r.bottom;
+    var top = (spaceBelow >= h + 12 || spaceBelow >= r.top)
+      ? r.bottom + window.scrollY + 8
+      : Math.max(window.scrollY + 8, r.top + window.scrollY - h - 8);
+    p.style.top = top + 'px';
+    var w = p.offsetWidth;
+    var left = Math.min(r.left + window.scrollX, window.scrollX + window.innerWidth - w - 12);
+    p.style.left = Math.max(window.scrollX + 12, left) + 'px';
+  }
   function showPop(t){
     var id=t.getAttribute('data-pop'); var p=document.querySelector('.pop[data-pop-id="'+id+'"]');
     if(!p) return; if(openPop===p){ closePop(); return; }
@@ -3130,10 +3314,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible,.pop:focus-visible{
       b.addEventListener('click', closePop); p.insertBefore(b, p.firstChild);
     }
     p.classList.add('is-open'); p.setAttribute('tabindex','-1');
-    var r=t.getBoundingClientRect();
-    p.style.top=(r.bottom+window.scrollY+8)+'px';
-    var left=Math.min(r.left+window.scrollX, window.innerWidth-Math.min(470,window.innerWidth-24)-14);
-    p.style.left=Math.max(12,left)+'px';
+    place(p, t.getBoundingClientRect());
     openPop=p; openTrig=t; t.setAttribute('aria-expanded','true');
     try{p.focus();}catch(e){}
   }
@@ -3145,7 +3326,16 @@ button:focus-visible,a:focus-visible,summary:focus-visible,.pop:focus-visible{
     if(openPop && !openPop.contains(e.target) && !e.target.closest('.cite-trigger')) closePop(); });
   document.addEventListener('keydown', function(e){ if(e.key==='Escape') closePop(); });
   window.addEventListener('resize', closePop);
-  window.addEventListener('scroll', function(){ if(openPop) closePop(); }, {passive:true});
+  /* FIX: previously any scroll closed the popover, so a source list taller than
+     the viewport could never be read, and trackpad drift dismissed it. The
+     popover now follows its trigger instead of dying. */
+  function reposition(){
+    if(!openPop || !openTrig) return;
+    var r=openTrig.getBoundingClientRect();
+    if(r.bottom < 0 || r.top > window.innerHeight){ closePop(); return; }
+    place(openPop, r);
+  }
+  window.addEventListener('scroll', reposition, {passive:true});
 
   /* ---------- sortable tables ---------- */
   document.querySelectorAll('table.sortable').forEach(function(tb){
@@ -3226,6 +3416,10 @@ button:focus-visible,a:focus-visible,summary:focus-visible,.pop:focus-visible{
 
   function render(){
     var S=SCHEMES[scheme];
+    /* FIX: ICF codes are case-significant (b body-function, d activity,
+       e environmental). The shared uppercase label style corrupted them. */
+    pills.setAttribute('data-scheme', scheme);
+    panel.setAttribute('data-scheme', scheme);
     pills.innerHTML='';
     S.items.forEach(function(it){
       var b=document.createElement('button'); b.type='button';
@@ -3253,16 +3447,27 @@ button:focus-visible,a:focus-visible,summary:focus-visible,.pop:focus-visible{
              term!==it.pref && it.pf!==it.idf;
     }
     var shown=S.items.filter(function(it){ return active.size===0 || active.has(it.k); });
-    panel.innerHTML='<p class="scope-note">'+S.note+'</p>'+
-      '<div class="rowlist">'+shown.map(function(it){
-        return '<details class="row scope-row"><summary><span class="r-tag">'+
-          (it.t==='applies'?'clear width is the variable':'stake, different variable')+
-          '</span><span class="r-title">'+it.k+'<small>'+nameOf(it)+
-          (overridden(it)?' <span class="term-flag">not this community\u2019s usage</span>':'')+'</small></span>'+
-          '<span class="r-value">'+(it.t==='applies'?'applies':'context')+'</span>'+
-          '<span class="r-arrow" aria-hidden="true">›</span></summary>'+
-          '<div class="r-body"><p>'+it.d+'</p></div></details>';
-      }).join('')+'</div>';
+    /* FIX: the group label repeated on all 15 rows, and each row stated its
+       state twice. The label is now a group heading emitted once per change. */
+    var html='<p class="scope-note">'+S.note+'</p>', lastT=null;
+    shown.forEach(function(it){
+      if(it.t!==lastT){
+        if(lastT!==null) html+='</div>';
+        html+='<h3 class="grp grp-'+it.t+'">'+
+          (it.t==='applies'?'Clear width is the operative variable'
+                           :'Real stake, different governing variable')+
+          '<span class="grp-n">'+shown.filter(function(x){return x.t===it.t;}).length+'</span></h3>'+
+          '<div class="rowlist">';
+        lastT=it.t;
+      }
+      html+='<details class="row scope-row"><summary><span class="r-title">'+it.k+
+        '<small>'+nameOf(it)+
+        (overridden(it)?' <span class="term-flag">not this community\u2019s usage</span>':'')+
+        '</small></span><span class="r-arrow" aria-hidden="true">›</span></summary>'+
+        '<div class="r-body"><p>'+it.d+'</p></div></details>';
+    });
+    if(lastT!==null) html+='</div>';
+    panel.innerHTML=html;
     var TERMS={community:'community usage',person:'person-first',identity:'identity-first',code:'codes only'};
     var termBit = scheme==='pop' ? ' Naming: '+TERMS[term]+'.' : '';
     var offCount = scheme==='pop' ? S.items.filter(overridden).length : 0;
@@ -3281,6 +3486,19 @@ button:focus-visible,a:focus-visible,summary:focus-visible,.pop:focus-visible{
       scheme=b.dataset.scheme; active.clear(); render();
     });
   });
+  /* FIX: the control bar consumed 53% of a 320px viewport. It now collapses,
+     and starts collapsed on small screens so the page opens on its title. */
+  (function(){
+    var t=document.getElementById('ctl-toggle'), body=document.getElementById('ctl-body');
+    if(!t||!body) return;
+    function set(open){
+      body.hidden=!open; t.setAttribute('aria-expanded',String(open));
+      t.querySelector('.ctl-toggle-i').textContent = open?'\u2013':'+';
+    }
+    t.addEventListener('click',function(){ set(body.hidden); });
+    set(window.innerWidth >= 900);
+  })();
+
   document.querySelectorAll('.trm').forEach(function(b){
     b.addEventListener('click', function(){
       document.querySelectorAll('.trm').forEach(function(x){ x.classList.remove('is-on'); x.setAttribute('aria-pressed','false'); });
