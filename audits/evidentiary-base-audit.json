@@ -2,8 +2,8 @@
   "as_of": "2026-07-24",
   "n_slices": 80,
   "n_items": 93,
-  "total_source_instances": 973,
-  "unique_sources": 764,
+  "total_source_instances": 974,
+  "unique_sources": 765,
   "grade_distribution": {
     "A": 11,
     "B": 30,
@@ -15,7 +15,7 @@
   "tier_totals": {
     "1": 98,
     "2": 109,
-    "3": 369,
+    "3": 370,
     "4": 83,
     "5": 170,
     "6": 144
@@ -27,13 +27,13 @@
     "disputed-only": 0
   },
   "strength_band_instances": {
-    "full": 503,
+    "full": 504,
     "partial": 253,
     "weak": 207,
     "disputed": 10
   },
   "practice_stream_instances": 0,
-  "english_instances": 725,
+  "english_instances": 726,
   "zero_yield_search_languages": [
     "AR",
     "BN",
@@ -3772,6 +3772,81 @@
       "grade": "C"
     },
     {
+      "slug": "fold-down-grab-bar-specification",
+      "topic": "bathrooms-and-wet-areas",
+      "state": "PARTIAL",
+      "n": 9,
+      "full": 3,
+      "partial": 4,
+      "weak": 2,
+      "disputed": 0,
+      "t3_clinical": 3,
+      "practice": 0,
+      "code_only": 6,
+      "strength_band": "full",
+      "weak_only": false,
+      "tiers": {
+        "3": 3,
+        "4": 2,
+        "5": 2,
+        "6": 2
+      },
+      "etypes": {
+        "clinical": 3,
+        "code": 2,
+        "standard_eb": 2,
+        "national_fw": 2
+      },
+      "markers": {
+        "●": 3,
+        "◐": 4,
+        "○": 2
+      },
+      "n_jur": 5,
+      "n_jur_raw": 5,
+      "n_true_jur": 5,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "US": 3,
+        "INT": 2,
+        "UK": 2,
+        "CA": 1,
+        "NO": 1
+      },
+      "jurs_clean": {
+        "INT": 2,
+        "CA": 1,
+        "US": 3,
+        "UK": 2,
+        "NO": 1
+      },
+      "n_lang": 2,
+      "langs": {
+        "en": 8,
+        "no": 1
+      },
+      "n_en": 8,
+      "n_nonen": 1,
+      "pct_en": 88.9,
+      "anglo_core": 6,
+      "supra": 2,
+      "non_anglo": 1,
+      "pct_anglo_core": 66.7,
+      "sl_searched": 19,
+      "sl_hit": 0,
+      "search_jurs": 47,
+      "score": 61.5,
+      "components": {
+        "A": 16,
+        "B": 20.2,
+        "C": 17,
+        "D": 5,
+        "E": 3.3
+      },
+      "grade": "C"
+    },
+    {
       "slug": "ms-thermal-temperature-conflict-resolution",
       "topic": "health-and-symptom-management",
       "state": "RETRACTED-PRE-REHAB",
@@ -3986,81 +4061,6 @@
         "C": 17,
         "D": 9,
         "E": 2.7
-      },
-      "grade": "C"
-    },
-    {
-      "slug": "fold-down-grab-bar-specification",
-      "topic": "bathrooms-and-wet-areas",
-      "state": "PARTIAL",
-      "n": 8,
-      "full": 2,
-      "partial": 4,
-      "weak": 2,
-      "disputed": 0,
-      "t3_clinical": 2,
-      "practice": 0,
-      "code_only": 6,
-      "strength_band": "full",
-      "weak_only": false,
-      "tiers": {
-        "3": 2,
-        "4": 2,
-        "5": 2,
-        "6": 2
-      },
-      "etypes": {
-        "clinical": 2,
-        "code": 2,
-        "standard_eb": 2,
-        "national_fw": 2
-      },
-      "markers": {
-        "●": 2,
-        "◐": 4,
-        "○": 2
-      },
-      "n_jur": 5,
-      "n_jur_raw": 5,
-      "n_true_jur": 5,
-      "n_null_jur": 0,
-      "polluted_jur": {},
-      "jurs": {
-        "INT": 2,
-        "US": 2,
-        "UK": 2,
-        "CA": 1,
-        "NO": 1
-      },
-      "jurs_clean": {
-        "INT": 2,
-        "CA": 1,
-        "US": 2,
-        "UK": 2,
-        "NO": 1
-      },
-      "n_lang": 2,
-      "langs": {
-        "en": 7,
-        "no": 1
-      },
-      "n_en": 7,
-      "n_nonen": 1,
-      "pct_en": 87.5,
-      "anglo_core": 5,
-      "supra": 2,
-      "non_anglo": 1,
-      "pct_anglo_core": 62.5,
-      "sl_searched": 19,
-      "sl_hit": 0,
-      "search_jurs": 47,
-      "score": 60.8,
-      "components": {
-        "A": 16,
-        "B": 19.0,
-        "C": 17,
-        "D": 5,
-        "E": 3.8
       },
       "grade": "C"
     },
