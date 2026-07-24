@@ -18,11 +18,25 @@ THREE QUERY MODES, on two different adversarial axes:
                 "harm adverse-effect barrier exclusion".
 
 The distinction matters and was a structural blind spot until 2026-07-24.
-Only --adversarial existed, so the protocol could ask whether a *source* was
-weak but never whether a *design* harmed somebody. Across the first 50 recorded
-search_executions rows, zero queries contained harm / adverse / barrier / fail /
-risk / detriment. A corpus that never searches for harm cannot record harm, and
-evidence of what does not work for people is evidence — absence of it is a
+Only --adversarial existed, so the *generator* could ask whether a source was
+weak but never whether a design harmed somebody.
+
+Scope that claim precisely (corrected by adversarial review the same day, after
+an earlier draft of this note overstated it):
+  * All 50 rows of search_executions contain zero queries with harm / adverse /
+    barrier / fail / risk / detriment. But search_executions is not the whole
+    search history — search_coverage tracks 4960 slug x jurisdiction cells and
+    98 markdown search logs predate the structured log.
+  * Harm-oriented searching HAS happened, slug by slug, without tooling: the
+    search logs mention barrier in 32 files, risk in 11, failure in 6. The
+    vestibular-balance slug goes further and sets its PICO outcome to "falls,
+    fall-injury, balance recovery, vision-induced dizziness" — an explicitly
+    harm-framed question.
+So the gap is not that nobody ever looked. It is that looking for harm was left
+to whoever thought of it, in one language, with no generated queries and no
+structured record — while looking for what works was tooled and tracked.
+
+Evidence of what does not work for people is evidence. Absence of it is a
 finding about the search protocol, not about the built environment.
 
 Owner directive 2026-07-24: "our search slugs need to include harm... we need to
