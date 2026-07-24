@@ -2,8 +2,8 @@
   "as_of": "2026-07-24",
   "n_slices": 80,
   "n_items": 93,
-  "total_source_instances": 967,
-  "unique_sources": 758,
+  "total_source_instances": 969,
+  "unique_sources": 760,
   "grade_distribution": {
     "A": 11,
     "B": 30,
@@ -15,7 +15,7 @@
   "tier_totals": {
     "1": 98,
     "2": 109,
-    "3": 364,
+    "3": 366,
     "4": 82,
     "5": 170,
     "6": 144
@@ -27,13 +27,13 @@
     "disputed-only": 0
   },
   "strength_band_instances": {
-    "full": 498,
+    "full": 500,
     "partial": 252,
     "weak": 207,
     "disputed": 10
   },
   "practice_stream_instances": 0,
-  "english_instances": 719,
+  "english_instances": 721,
   "zero_yield_search_languages": [
     "AR",
     "BN",
@@ -2649,6 +2649,77 @@
       "grade": "B"
     },
     {
+      "slug": "upper-limb-impairment-built-environment",
+      "topic": "population-general",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 17,
+      "full": 16,
+      "partial": 0,
+      "weak": 1,
+      "disputed": 0,
+      "t3_clinical": 13,
+      "practice": 0,
+      "code_only": 1,
+      "strength_band": "full",
+      "weak_only": false,
+      "tiers": {
+        "1": 1,
+        "2": 2,
+        "3": 14
+      },
+      "etypes": {
+        "clinical": 14,
+        "sr_meta": 2,
+        "grey": 1
+      },
+      "markers": {
+        "●": 16,
+        "○": 1
+      },
+      "n_jur": 5,
+      "n_jur_raw": 5,
+      "n_true_jur": 5,
+      "n_null_jur": 2,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 6,
+        "US": 5,
+        "CA": 2,
+        "GB": 1,
+        "PL": 1
+      },
+      "jurs_clean": {
+        "INT": 6,
+        "US": 5,
+        "GB": 1,
+        "CA": 2,
+        "PL": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 17
+      },
+      "n_en": 17,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 7,
+      "supra": 6,
+      "non_anglo": 2,
+      "pct_anglo_core": 46.7,
+      "sl_searched": 19,
+      "sl_hit": 0,
+      "search_jurs": 47,
+      "score": 69.8,
+      "components": {
+        "A": 20,
+        "B": 28.8,
+        "C": 17,
+        "D": 0,
+        "E": 4.0
+      },
+      "grade": "B"
+    },
+    {
       "slug": "neurological-built-environment",
       "topic": "population-general",
       "state": "RETRACTED-PRE-REHAB",
@@ -3495,75 +3566,6 @@
       "grade": "B"
     },
     {
-      "slug": "upper-limb-impairment-built-environment",
-      "topic": "population-general",
-      "state": "RETRACTED-PRE-REHAB",
-      "n": 16,
-      "full": 15,
-      "partial": 0,
-      "weak": 1,
-      "disputed": 0,
-      "t3_clinical": 12,
-      "practice": 0,
-      "code_only": 1,
-      "strength_band": "full",
-      "weak_only": false,
-      "tiers": {
-        "1": 1,
-        "2": 2,
-        "3": 13
-      },
-      "etypes": {
-        "clinical": 13,
-        "sr_meta": 2,
-        "grey": 1
-      },
-      "markers": {
-        "●": 15,
-        "○": 1
-      },
-      "n_jur": 4,
-      "n_jur_raw": 4,
-      "n_true_jur": 4,
-      "n_null_jur": 2,
-      "polluted_jur": {},
-      "jurs": {
-        "INT": 6,
-        "US": 5,
-        "CA": 2,
-        "GB": 1
-      },
-      "jurs_clean": {
-        "INT": 6,
-        "US": 5,
-        "GB": 1,
-        "CA": 2
-      },
-      "n_lang": 1,
-      "langs": {
-        "en": 16
-      },
-      "n_en": 16,
-      "n_nonen": 0,
-      "pct_en": 100.0,
-      "anglo_core": 7,
-      "supra": 6,
-      "non_anglo": 1,
-      "pct_anglo_core": 50.0,
-      "sl_searched": 19,
-      "sl_hit": 0,
-      "search_jurs": 47,
-      "score": 65.5,
-      "components": {
-        "A": 20,
-        "B": 28.8,
-        "C": 13,
-        "D": 0,
-        "E": 3.8
-      },
-      "grade": "B"
-    },
-    {
       "slug": "manoeuvring-footprint-vs-turning-radius-methodology",
       "topic": "frameworks-and-methodology",
       "state": "METHODOLOGY-AUTHORED",
@@ -4066,30 +4068,30 @@
       "slug": "sensory-relief-space-design",
       "topic": "sensory-environment",
       "state": "RETRACTED-PRE-REHAB",
-      "n": 10,
-      "full": 7,
+      "n": 11,
+      "full": 8,
       "partial": 1,
       "weak": 1,
       "disputed": 1,
-      "t3_clinical": 6,
+      "t3_clinical": 7,
       "practice": 0,
       "code_only": 2,
       "strength_band": "full",
       "weak_only": false,
       "tiers": {
         "2": 2,
-        "3": 6,
+        "3": 7,
         "4": 1,
         "6": 1
       },
       "etypes": {
         "standard_eb": 2,
-        "clinical": 6,
+        "clinical": 7,
         "code": 1,
         "sr_meta": 1
       },
       "markers": {
-        "●": 7,
+        "●": 8,
         "◐": 1,
         "○": 1
       },
@@ -4101,8 +4103,8 @@
       "jurs": {
         "UK": 4,
         "AU": 2,
+        "US": 2,
         "IE": 1,
-        "US": 1,
         "INT": 1,
         "IT": 1
       },
@@ -4110,31 +4112,31 @@
         "UK": 4,
         "AU": 2,
         "IE": 1,
-        "US": 1,
+        "US": 2,
         "INT": 1,
         "IT": 1
       },
       "n_lang": 1,
       "langs": {
-        "en": 10
+        "en": 11
       },
-      "n_en": 10,
+      "n_en": 11,
       "n_nonen": 0,
       "pct_en": 100.0,
-      "anglo_core": 8,
+      "anglo_core": 9,
       "supra": 1,
       "non_anglo": 1,
-      "pct_anglo_core": 80.0,
+      "pct_anglo_core": 81.8,
       "sl_searched": 19,
       "sl_hit": 0,
       "search_jurs": 47,
-      "score": 59.3,
+      "score": 59.7,
       "components": {
         "A": 16,
-        "B": 24.8,
+        "B": 25.3,
         "C": 17,
         "D": 0,
-        "E": 1.5
+        "E": 1.4
       },
       "grade": "C"
     },
@@ -6526,16 +6528,16 @@
       "source_slug": "sensory-relief-space-design",
       "basis_health": "full",
       "grade": "C",
-      "score": 59.3,
-      "n": 10,
-      "full": 7,
+      "score": 59.7,
+      "n": 11,
+      "full": 8,
       "partial": 1,
       "weak": 1,
       "disputed": 1,
       "n_jur": 6,
       "n_lang": 1,
       "pct_en": 100.0,
-      "pct_anglo": 80.0
+      "pct_anglo": 81.8
     },
     {
       "item_code": "A-17",
@@ -7001,16 +7003,16 @@
       "source_slug": "sensory-relief-space-design",
       "basis_health": "full",
       "grade": "C",
-      "score": 59.3,
-      "n": 10,
-      "full": 7,
+      "score": 59.7,
+      "n": 11,
+      "full": 8,
       "partial": 1,
       "weak": 1,
       "disputed": 1,
       "n_jur": 6,
       "n_lang": 1,
       "pct_en": 100.0,
-      "pct_anglo": 80.0
+      "pct_anglo": 81.8
     },
     {
       "item_code": "D-06",
@@ -7438,16 +7440,16 @@
       "source_slug": "sensory-relief-space-design",
       "basis_health": "full",
       "grade": "C",
-      "score": 59.3,
-      "n": 10,
-      "full": 7,
+      "score": 59.7,
+      "n": 11,
+      "full": 8,
       "partial": 1,
       "weak": 1,
       "disputed": 1,
       "n_jur": 6,
       "n_lang": 1,
       "pct_en": 100.0,
-      "pct_anglo": 80.0
+      "pct_anglo": 81.8
     },
     {
       "item_code": "F-04",
