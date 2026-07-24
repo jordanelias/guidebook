@@ -2,8 +2,8 @@
   "as_of": "2026-07-24",
   "n_slices": 80,
   "n_items": 93,
-  "total_source_instances": 971,
-  "unique_sources": 762,
+  "total_source_instances": 973,
+  "unique_sources": 764,
   "grade_distribution": {
     "A": 11,
     "B": 30,
@@ -15,8 +15,8 @@
   "tier_totals": {
     "1": 98,
     "2": 109,
-    "3": 368,
-    "4": 82,
+    "3": 369,
+    "4": 83,
     "5": 170,
     "6": 144
   },
@@ -27,13 +27,13 @@
     "disputed-only": 0
   },
   "strength_band_instances": {
-    "full": 502,
-    "partial": 252,
+    "full": 503,
+    "partial": 253,
     "weak": 207,
     "disputed": 10
   },
   "practice_stream_instances": 0,
-  "english_instances": 723,
+  "english_instances": 725,
   "zero_yield_search_languages": [
     "AR",
     "BN",
@@ -4830,28 +4830,28 @@
       "slug": "sensory-processing-model-design-application",
       "topic": "sensory-environment",
       "state": "RETRACTED-PRE-REHAB",
-      "n": 6,
-      "full": 4,
+      "n": 7,
+      "full": 5,
       "partial": 2,
       "weak": 0,
       "disputed": 0,
-      "t3_clinical": 4,
+      "t3_clinical": 5,
       "practice": 0,
       "code_only": 2,
       "strength_band": "full",
       "weak_only": false,
       "tiers": {
-        "3": 4,
+        "3": 5,
         "4": 1,
         "5": 1
       },
       "etypes": {
         "standard_eb": 1,
         "national_fw": 1,
-        "clinical": 4
+        "clinical": 5
       },
       "markers": {
-        "●": 4,
+        "●": 5,
         "◐": 2
       },
       "n_jur": 4,
@@ -4861,37 +4861,37 @@
       "polluted_jur": {},
       "jurs": {
         "INT": 2,
+        "US": 2,
         "UK": 1,
-        "CA": 1,
-        "US": 1
+        "CA": 1
       },
       "jurs_clean": {
         "UK": 1,
         "CA": 1,
         "INT": 2,
-        "US": 1
+        "US": 2
       },
       "n_lang": 1,
       "langs": {
-        "en": 6
+        "en": 7
       },
-      "n_en": 6,
+      "n_en": 7,
       "n_nonen": 0,
       "pct_en": 100.0,
-      "anglo_core": 3,
+      "anglo_core": 4,
       "supra": 2,
       "non_anglo": 0,
-      "pct_anglo_core": 60.0,
+      "pct_anglo_core": 66.7,
       "sl_searched": 19,
       "sl_hit": 0,
       "search_jurs": 47,
-      "score": 54.0,
+      "score": 54.1,
       "components": {
         "A": 12,
-        "B": 26.0,
+        "B": 26.6,
         "C": 13,
         "D": 0,
-        "E": 3.0
+        "E": 2.5
       },
       "grade": "C"
     },
@@ -6108,29 +6108,30 @@
       "slug": "crpd-implementation-built-environment",
       "topic": "frameworks-and-methodology",
       "state": "RETRACTED-PRE-REHAB",
-      "n": 5,
+      "n": 6,
       "full": 0,
-      "partial": 5,
+      "partial": 6,
       "weak": 0,
       "disputed": 0,
       "t3_clinical": 0,
       "practice": 0,
-      "code_only": 5,
+      "code_only": 6,
       "strength_band": "partial",
       "weak_only": false,
       "tiers": {
-        "4": 5
+        "4": 6
       },
       "etypes": {
-        "standard_eb": 5
+        "standard_eb": 5,
+        "national_fw": 1
       },
       "markers": {
-        "◐": 5
+        "◐": 6
       },
       "n_jur": 1,
       "n_jur_raw": 1,
       "n_true_jur": 1,
-      "n_null_jur": 0,
+      "n_null_jur": 1,
       "polluted_jur": {},
       "jurs": {
         "INT": 5
@@ -6140,9 +6141,9 @@
       },
       "n_lang": 1,
       "langs": {
-        "en": 5
+        "en": 6
       },
-      "n_en": 5,
+      "n_en": 6,
       "n_nonen": 0,
       "pct_en": 100.0,
       "anglo_core": 0,
@@ -7408,16 +7409,16 @@
       "source_slug": "sensory-processing-model-design-application",
       "basis_health": "full",
       "grade": "C",
-      "score": 54.0,
-      "n": 6,
-      "full": 4,
+      "score": 54.1,
+      "n": 7,
+      "full": 5,
       "partial": 2,
       "weak": 0,
       "disputed": 0,
       "n_jur": 4,
       "n_lang": 1,
       "pct_en": 100.0,
-      "pct_anglo": 60.0
+      "pct_anglo": 66.7
     },
     {
       "item_code": "F-02",

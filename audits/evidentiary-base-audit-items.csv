@@ -61,7 +61,7 @@ E-11,E,Circulation and Access,Automatic Sliding Entry and Internal Doors,thresho
 E-12,E,Circulation and Access,Entrance Landing and Manoeuvring Space for Power Wheelchair Users,accessible-circulation-geometry,full,B,78.5,14,3,5,6,0,9,6,64.3,50.0
 E-13,E,Circulation and Access,Entrance Cognitive Legibility Provisions,cognitive-wayfinding-design,full,A,89.6,25,16,7,2,0,13,9,64.0,8.3
 E-15,E,Circulation and Access,"Changing Places Facility (Height-Adjustable Bench, Overhead",accessible-bathroom-and-grab-bar,full,A,81.2,22,11,5,5,1,12,7,72.7,68.4
-F-01,F,Sensory Environment,Sensory Gradient (High to Low Stimulation from Entry to Occupation),sensory-processing-model-design-application,full,C,54.0,6,4,2,0,0,4,1,100.0,60.0
+F-01,F,Sensory Environment,Sensory Gradient (High to Low Stimulation from Entry to Occupation),sensory-processing-model-design-application,full,C,54.1,7,5,2,0,0,4,1,100.0,66.7
 F-02,F,Sensory Environment,Olfactory Control (Fragrance-Free Zones in Sensitive Areas),air-quality-voc-chemical-sensitivity-built-environment,full,B,65.8,12,7,5,0,0,7,1,100.0,50.0
 F-03,F,Sensory Environment,Graduated Stimulation Re-entry (Sensory Room to General Space Transition),sensory-relief-space-design,full,C,59.7,11,8,1,1,1,6,1,100.0,81.8
 F-04,F,Sensory Environment,"Air Quality (MERV 13+ Filtration, Low-VOC Specification, Thermal Stability)",air-quality-voc-chemical-sensitivity-built-environment,full,B,65.8,12,7,5,0,0,7,1,100.0,50.0
