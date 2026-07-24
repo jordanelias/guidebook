@@ -12,12 +12,12 @@
     "source-discipline": {
       "status": "FIRED",
       "evidence_path": "decisions/DR-2026-07-24-search-executions-substrate.md#context-the-gap-this-closes-facts-ledger-re-verifiable-db-checkable",
-      "reason": "The DR's premise is a DB-measured facts ledger: search_coverage 4,960 rows (4,286 NOT-RUN), search_languages 1,558 rows (859 NOT-RUN), lang_jur_map 0 rows, search_executions absent — all read-only-queried this session, none asserted. The table shape mirrors established STRICT + json_valid peers (item_population_links, spec_value_probes, evidence_cell_state) rather than inventing a pattern."
+      "reason": "The DR's premise is a DB-measured facts ledger: search_coverage 4,960 rows (4,286 NOT-RUN), search_languages 1,558 rows (859 NOT-RUN), lang_jur_map 0 rows, search_executions absent \u2014 all read-only-queried this session, none asserted. The table shape mirrors established STRICT + json_valid peers (item_population_links, spec_value_probes, evidence_cell_state) rather than inventing a pattern."
     },
     "canonical-workplan": {
       "status": "FIRED",
       "evidence_path": "decisions/DR-2026-07-24-search-executions-substrate.md#decision-the-proposed-schema-embedded-for-review",
-      "reason": "The DDL implements search-coverage-completion-workplan.md §2.2 verbatim and the coverage-completion-loop methodology §4 (both ratified), not a new plan; it is the substrate those documents specify but never built."
+      "reason": "The DDL implements search-coverage-completion-workplan.md \u00a72.2 verbatim and the coverage-completion-loop methodology \u00a74 (both ratified), not a new plan; it is the substrate those documents specify but never built."
     },
     "adherence-logging-and-attestation": {
       "status": "FIRED",
@@ -25,8 +25,13 @@
       "reason": "Commit carries [DOCTRINE: 0f2f525] before the timestamp per rule #11(a); this attestation is co-committed per rule #11(b). doctrine_sha matches HEAD:governance/mission-and-epistemics.md."
     }
   },
-  "deviations": [],
-  "bias_direction": "Risk of overbuild — a 24-column log authored before a single loop batch has run, the repo's known scaffolding-for-scaffolding failure mode. Mitigated by (a) the thin-logger scope deferring FTS5 and the priority-queue view; (b) every column mapping to one of the five mission-committed coverage axes plus provenance, none speculative; (c) DG-REVIEW gating so the schema is applied only on owner approval, and (d) shipping the table empty so it earns its keep only when the loop writes to it.",
-  "independent_reviewer_counterclaim": "A reviewer could argue the substrate is premature — no cell has been worked, so a full event-log schema precedes any demonstrated need and duplicates search_coverage/search_languages. Counter: the two grids are exactly what is being escaped (they cannot record what was searched, in what language, how deep — the mission's own transparency commitment), coverage is DERIVED from this log so it cannot be faked, and the migration is reversible by a forward 034_drop if a pilot judges it unnecessary. The DR does not apply it; the owner decides.",
-  "verdict": "CLEAN"
+  "deviations": [
+    {
+      "rule": "source-discipline",
+      "reason": "Post-ratification follow-up (owner 'Ratify all', 2026-07-24): the DR proposal stated the schema is applied only on owner approval; it is now applied. Migration 033 was run against data/guidebook.db (user_version 32->33; new empty table + three coverage views). Pure-additive: zero entity-row deltas; rebuild reproducibility verified on all 7 CI invariants (committed == migration-history rebuild). Recorded here so the adherence log reflects the applied state, not the pre-approval proposal state."
+    }
+  ],
+  "bias_direction": "Risk of overbuild \u2014 a 24-column log authored before a single loop batch has run, the repo's known scaffolding-for-scaffolding failure mode. Mitigated by (a) the thin-logger scope deferring FTS5 and the priority-queue view; (b) every column mapping to one of the five mission-committed coverage axes plus provenance, none speculative; (c) DG-REVIEW gating so the schema is applied only on owner approval, and (d) shipping the table empty so it earns its keep only when the loop writes to it.",
+  "independent_reviewer_counterclaim": "A reviewer could argue the substrate is premature \u2014 no cell has been worked, so a full event-log schema precedes any demonstrated need and duplicates search_coverage/search_languages. Counter: the two grids are exactly what is being escaped (they cannot record what was searched, in what language, how deep \u2014 the mission's own transparency commitment), coverage is DERIVED from this log so it cannot be faked, and the migration is reversible by a forward 034_drop if a pilot judges it unnecessary. The DR does not apply it; the owner decides.",
+  "verdict": "DEVIATION-LOGGED"
 }
