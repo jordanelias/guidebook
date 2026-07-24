@@ -22,13 +22,16 @@ findings:
   affected_artifacts:
   - governance/population-taxonomy.md
   - decisions/DR-2026-07-23-population-schema-replace.md
-  recommended_action: 'No remediation. Baseline advanced to snapshot_2026-07-24 (post-transition canon) for future
-    rechecks. The full community-organized rewrite of population-taxonomy.md remains tracked in DR-2026-07-23 "Deferred /
-    follow-up".'
+  recommended_action: 'No remediation needed — the removal is the intended end-state. Baseline was deliberately NOT
+    advanced by this targeted recheck (see RC-002-04); the [2.4] signal correctly persists against snapshot_2026-04-30
+    until a periodic recheck rebaselines. The full community-organized rewrite of population-taxonomy.md remains tracked in
+    DR-2026-07-23 "Deferred / follow-up".'
   status: RESOLVED
   resolution_commit: cfe45b9
-  notes: 'CI runs doctrine_recheck.py --cross-ref (pass 2.3 only), so this 2.4 drift signal is not a CI gate; recorded here
-    for the doctrinal audit trail.'
+  notes: 'resolution_commit cfe45b9 is the EXECUTING/ACKNOWLEDGING commit (it applied the owner-directed supersession), NOT
+    a remediation — there was no defect to fix; the drift is intentional. Severity recorded INFO (not the detector''s
+    mechanical ERROR) because the removal is explicit-with-successor per doctrine-recheck.md §2.4, not silent. CI runs
+    doctrine_recheck.py --cross-ref (pass 2.3 only), so this 2.4 signal is not a CI gate.'
 - finding_id: RC-002-02
   severity: WARNING
   pass_id: '2.4'
@@ -57,13 +60,30 @@ findings:
   recommended_action: 'Reconcile in a general doctrine-inventory recheck (periodic §1.1), not this targeted one. No action
     under RC-002.'
   status: DEFERRED
+- finding_id: RC-002-04
+  severity: WARNING
+  pass_id: '2.4'
+  description: 'Scope guard (self-caught in adversarial review). A §1.3 rule-revision recheck runs only passes 2.3/2.4/2.5
+    scoped to the revised rule (doctrine-recheck.md §2.1) and must NOT establish a new GLOBAL drift baseline. An earlier
+    version of this record wrote a full snapshot_2026-07-24.yaml; because find_prior_snapshot() picks the most-recent
+    snapshot, that would have silently discharged drift coverage for ~3 months of un-examined intervening doctrine (evidence-
+    architecture Option A, tier-system weighted-strength, ENT-## rename) that has never been drift-examined against
+    snapshot_2026-04-30. The advanced snapshot has been REMOVED; the baseline stays at 2026-04-30.'
+  affected_artifacts:
+  - data/doctrine_recheck/snapshot_2026-04-30.yaml
+  recommended_action: 'A full PERIODIC recheck (§1.1 — all five passes incl. 2.6 contamination resampling) is OWED to
+    examine the accumulated intervening drift and establish the next global baseline. Do not let a targeted recheck stand in
+    for it.'
+  status: OPEN
 drift_summary:
   additions: 2
   removals: 1
   mutations: 0
   removed_governance_docs:
   - governance/population-taxonomy.md
-next_recheck_due: 'periodic §1.1 at next 25-session multiple, or on the next doctrinal-rule revision'
+next_recheck_due: 'periodic §1.1 recheck OWED (RC-002-04) — examines ~3mo intervening drift and rebaselines; also at next 25-session multiple'
 notes: 'Targeted RULE_REVISION recheck (§1.3) discharging the recheck obligation created by DR-2026-07-23. Passes 2.3/2.4/2.5
-  per §2.1. Baseline advanced to snapshot_2026-07-24. The population-taxonomy supersession is confirmed doctrinally consistent
-  (successor exists, no downstream work-product asserts the retired slash/parent code scheme as canonical).'
+  per §2.1. Baseline deliberately NOT advanced (RC-002-04). The population-taxonomy supersession itself is intentional and
+  carries a successor; no downstream work-product asserts the retired slash/parent code scheme as canonical. NOT fully closed:
+  RC-002-02 (A7 canonical-status contradiction) stays OPEN and RC-002-04 (periodic recheck owed) stays OPEN — this record is a
+  scoped acknowledgment, not a clean bill of doctrinal health.'
