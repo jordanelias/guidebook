@@ -1,6 +1,6 @@
 # Search Log — vestibular-balance-built-environment
 **Topic:** health-and-symptom-management (vestibular / balance / A-STABLE / AX-BAL)
-**Status:** PARTIAL LOG — EN-language collection pass 1 (2026-07-24); Opus synthesis provisional
+**Status:** PARTIAL LOG — EN-language collection pass 1 + **Phase-B content verification** (2026-07-24): 10 core anchors full-text/abstract-read vs PubMed (REF-00792/00396/00903/00905/00906/00907/00908/00911/00912/00913); 7 secondary sources metadata-verified but content-pending (REF-00902/00904/00810/00910/00914/00915/00916). Two VES `provisional` determination cells emitted (B-08, C-06). Opus synthesis provisional
 **Population (coverage):** VES (primary); also serves MOVE, BRAIN, older/ambulant fallers
 **Access need / axis:** A-STABLE / AX-BAL
 **opus_synthesis:** provisional
