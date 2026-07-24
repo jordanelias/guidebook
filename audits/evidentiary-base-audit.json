@@ -2,8 +2,8 @@
   "as_of": "2026-07-24",
   "n_slices": 80,
   "n_items": 93,
-  "total_source_instances": 976,
-  "unique_sources": 767,
+  "total_source_instances": 979,
+  "unique_sources": 770,
   "grade_distribution": {
     "A": 11,
     "B": 30,
@@ -14,10 +14,10 @@
   },
   "tier_totals": {
     "1": 98,
-    "2": 109,
-    "3": 371,
+    "2": 110,
+    "3": 372,
     "4": 84,
-    "5": 170,
+    "5": 171,
     "6": 144
   },
   "strength_band_slices": {
@@ -27,13 +27,13 @@
     "disputed-only": 0
   },
   "strength_band_instances": {
-    "full": 505,
-    "partial": 254,
+    "full": 507,
+    "partial": 255,
     "weak": 207,
     "disputed": 10
   },
   "practice_stream_instances": 0,
-  "english_instances": 728,
+  "english_instances": 731,
   "zero_yield_search_languages": [
     "AR",
     "BN",
@@ -1769,8 +1769,8 @@
       "slug": "post-occupancy-evaluation-global",
       "topic": "frameworks-and-methodology",
       "state": "PARTIAL",
-      "n": 10,
-      "full": 10,
+      "n": 11,
+      "full": 11,
       "partial": 0,
       "weak": 0,
       "disputed": 0,
@@ -1780,19 +1780,19 @@
       "strength_band": "full",
       "weak_only": false,
       "tiers": {
-        "2": 3,
+        "2": 4,
         "3": 7
       },
       "etypes": {
         "clinical": 7,
-        "sr_meta": 3
+        "sr_meta": 4
       },
       "markers": {
-        "●": 10
+        "●": 11
       },
-      "n_jur": 8,
-      "n_jur_raw": 8,
-      "n_true_jur": 8,
+      "n_jur": 9,
+      "n_jur_raw": 9,
+      "n_true_jur": 9,
       "n_null_jur": 0,
       "polluted_jur": {},
       "jurs": {
@@ -1803,7 +1803,8 @@
         "IT": 1,
         "US": 1,
         "KR": 1,
-        "INT": 1
+        "INT": 1,
+        "SE": 1
       },
       "jurs_clean": {
         "CY": 1,
@@ -1813,30 +1814,31 @@
         "IT": 1,
         "US": 1,
         "KR": 1,
-        "INT": 1
+        "INT": 1,
+        "SE": 1
       },
       "n_lang": 2,
       "langs": {
-        "en": 9,
+        "en": 10,
         "ko": 1
       },
-      "n_en": 9,
+      "n_en": 10,
       "n_nonen": 1,
-      "pct_en": 90.0,
+      "pct_en": 90.9,
       "anglo_core": 4,
       "supra": 1,
-      "non_anglo": 5,
-      "pct_anglo_core": 40.0,
+      "non_anglo": 6,
+      "pct_anglo_core": 36.4,
       "sl_searched": 19,
       "sl_hit": 8,
       "search_jurs": 48,
-      "score": 76.2,
+      "score": 76.5,
       "components": {
         "A": 16,
         "B": 30,
         "C": 20,
         "D": 5,
-        "E": 5.2
+        "E": 5.5
       },
       "grade": "B"
     },
@@ -4143,6 +4145,85 @@
       "grade": "C"
     },
     {
+      "slug": "visual-alerting-and-wayfinding-light",
+      "topic": "wayfinding-and-signage",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 8,
+      "full": 0,
+      "partial": 5,
+      "weak": 3,
+      "disputed": 0,
+      "t3_clinical": 0,
+      "practice": 0,
+      "code_only": 8,
+      "strength_band": "partial",
+      "weak_only": false,
+      "tiers": {
+        "4": 2,
+        "5": 3,
+        "6": 3
+      },
+      "etypes": {
+        "standard_eb": 2,
+        "code": 4,
+        "national_fw": 2
+      },
+      "markers": {
+        "◐": 5,
+        "○": 3
+      },
+      "n_jur": 7,
+      "n_jur_raw": 7,
+      "n_true_jur": 7,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "US": 2,
+        "INT": 1,
+        "EU/UK": 1,
+        "JP": 1,
+        "CN": 1,
+        "FR": 1,
+        "NO": 1
+      },
+      "jurs_clean": {
+        "INT": 1,
+        "EU/UK": 1,
+        "US": 2,
+        "JP": 1,
+        "CN": 1,
+        "FR": 1,
+        "NO": 1
+      },
+      "n_lang": 5,
+      "langs": {
+        "en": 4,
+        "ja": 1,
+        "zh": 1,
+        "fr": 1,
+        "no": 1
+      },
+      "n_en": 4,
+      "n_nonen": 4,
+      "pct_en": 50.0,
+      "anglo_core": 3,
+      "supra": 1,
+      "non_anglo": 4,
+      "pct_anglo_core": 37.5,
+      "sl_searched": 19,
+      "sl_hit": 2,
+      "search_jurs": 47,
+      "score": 58.4,
+      "components": {
+        "A": 16,
+        "B": 5.0,
+        "C": 17,
+        "D": 12,
+        "E": 8.4
+      },
+      "grade": "C"
+    },
+    {
       "slug": "visitability-residential-accessibility-minimum-standards",
       "topic": "frameworks-and-methodology",
       "state": "RETRACTED-PRE-REHAB",
@@ -4414,6 +4495,69 @@
       "grade": "C"
     },
     {
+      "slug": "ot-frameworks-built-environment",
+      "topic": "frameworks-and-methodology",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 5,
+      "full": 5,
+      "partial": 0,
+      "weak": 0,
+      "disputed": 0,
+      "t3_clinical": 1,
+      "practice": 0,
+      "code_only": 0,
+      "strength_band": "full",
+      "weak_only": false,
+      "tiers": {
+        "1": 4,
+        "3": 1
+      },
+      "etypes": {
+        "clinical": 5
+      },
+      "markers": {
+        "●": 5
+      },
+      "n_jur": 3,
+      "n_jur_raw": 3,
+      "n_true_jur": 3,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "US": 3,
+        "CA": 1,
+        "INT": 1
+      },
+      "jurs_clean": {
+        "CA": 1,
+        "US": 3,
+        "INT": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 5
+      },
+      "n_en": 5,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 4,
+      "supra": 1,
+      "non_anglo": 0,
+      "pct_anglo_core": 80.0,
+      "sl_searched": 19,
+      "sl_hit": 2,
+      "search_jurs": 47,
+      "score": 56.5,
+      "components": {
+        "A": 12,
+        "B": 30,
+        "C": 13,
+        "D": 0,
+        "E": 1.5
+      },
+      "grade": "C"
+    },
+    {
       "slug": "floor-vibration-wheelchair-disability",
       "topic": "entrances-and-circulation",
       "state": "RETRACTED-PRE-REHAB",
@@ -4679,85 +4823,6 @@
         "C": 9,
         "D": 0,
         "E": 4.3
-      },
-      "grade": "C"
-    },
-    {
-      "slug": "visual-alerting-and-wayfinding-light",
-      "topic": "wayfinding-and-signage",
-      "state": "RETRACTED-PRE-REHAB",
-      "n": 7,
-      "full": 0,
-      "partial": 4,
-      "weak": 3,
-      "disputed": 0,
-      "t3_clinical": 0,
-      "practice": 0,
-      "code_only": 7,
-      "strength_band": "partial",
-      "weak_only": false,
-      "tiers": {
-        "4": 2,
-        "5": 2,
-        "6": 3
-      },
-      "etypes": {
-        "standard_eb": 2,
-        "code": 3,
-        "national_fw": 2
-      },
-      "markers": {
-        "◐": 4,
-        "○": 3
-      },
-      "n_jur": 7,
-      "n_jur_raw": 7,
-      "n_true_jur": 7,
-      "n_null_jur": 0,
-      "polluted_jur": {},
-      "jurs": {
-        "INT": 1,
-        "EU/UK": 1,
-        "US": 1,
-        "JP": 1,
-        "CN": 1,
-        "FR": 1,
-        "NO": 1
-      },
-      "jurs_clean": {
-        "INT": 1,
-        "EU/UK": 1,
-        "US": 1,
-        "JP": 1,
-        "CN": 1,
-        "FR": 1,
-        "NO": 1
-      },
-      "n_lang": 5,
-      "langs": {
-        "en": 3,
-        "ja": 1,
-        "zh": 1,
-        "fr": 1,
-        "no": 1
-      },
-      "n_en": 3,
-      "n_nonen": 4,
-      "pct_en": 42.9,
-      "anglo_core": 2,
-      "supra": 1,
-      "non_anglo": 4,
-      "pct_anglo_core": 28.6,
-      "sl_searched": 19,
-      "sl_hit": 2,
-      "search_jurs": 47,
-      "score": 55.2,
-      "components": {
-        "A": 12,
-        "B": 4.6,
-        "C": 17,
-        "D": 12,
-        "E": 9.6
       },
       "grade": "C"
     },
@@ -5092,68 +5157,6 @@
       "pct_anglo_core": 75.0,
       "sl_searched": 19,
       "sl_hit": 0,
-      "search_jurs": 47,
-      "score": 52.9,
-      "components": {
-        "A": 8,
-        "B": 30,
-        "C": 13,
-        "D": 0,
-        "E": 1.9
-      },
-      "grade": "C"
-    },
-    {
-      "slug": "ot-frameworks-built-environment",
-      "topic": "frameworks-and-methodology",
-      "state": "RETRACTED-PRE-REHAB",
-      "n": 4,
-      "full": 4,
-      "partial": 0,
-      "weak": 0,
-      "disputed": 0,
-      "t3_clinical": 0,
-      "practice": 0,
-      "code_only": 0,
-      "strength_band": "full",
-      "weak_only": false,
-      "tiers": {
-        "1": 4
-      },
-      "etypes": {
-        "clinical": 4
-      },
-      "markers": {
-        "●": 4
-      },
-      "n_jur": 3,
-      "n_jur_raw": 3,
-      "n_true_jur": 3,
-      "n_null_jur": 0,
-      "polluted_jur": {},
-      "jurs": {
-        "US": 2,
-        "CA": 1,
-        "INT": 1
-      },
-      "jurs_clean": {
-        "CA": 1,
-        "US": 2,
-        "INT": 1
-      },
-      "n_lang": 1,
-      "langs": {
-        "en": 4
-      },
-      "n_en": 4,
-      "n_nonen": 0,
-      "pct_en": 100.0,
-      "anglo_core": 3,
-      "supra": 1,
-      "non_anglo": 0,
-      "pct_anglo_core": 75.0,
-      "sl_searched": 19,
-      "sl_hit": 2,
       "search_jurs": 47,
       "score": 52.9,
       "components": {
@@ -6804,16 +6807,16 @@
       "source_slug": "visual-alerting-and-wayfinding-light",
       "basis_health": "partial",
       "grade": "C",
-      "score": 55.2,
-      "n": 7,
+      "score": 58.4,
+      "n": 8,
       "full": 0,
-      "partial": 4,
+      "partial": 5,
       "weak": 3,
       "disputed": 0,
       "n_jur": 7,
       "n_lang": 5,
-      "pct_en": 42.9,
-      "pct_anglo": 28.6
+      "pct_en": 50.0,
+      "pct_anglo": 37.5
     },
     {
       "item_code": "C-01",
