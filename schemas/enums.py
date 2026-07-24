@@ -14,51 +14,67 @@ from enum import Enum
 
 
 class PopulationCode(str, Enum):
-    """Canonical population codes per workplan-orchestrator.
+    """Canonical population codes — Access-Taxonomy Axis-2 set (DR-2026-07-23).
 
-    Top-level codes and sub-codes are both valid enum members.
-    Sub-code implies parent: MOB_AMB implies MOB.
-    VIS, DEAF, DBL are three distinct codes — VIS/DEAF compound is invalid.
-    BAR is NOT main taxonomy (Supp. Part 4 only).
-    IntD proxied through DEM + NDV per project-standards.
+    Community-organized, flat: NO parent codes, no containment, no slash sub-codes.
+    NDV is a self-claimed umbrella you may select on; it does NOT contain AUT/ADHD.
+    DEAFBLIND is its own community, not VIS+DEAF. ID (intellectual disability) is
+    first-class — this supersedes the former DEM+NDV proxy. Life stage (SEN/CHD) is
+    an orthogonal modifier, not a population — see LifeStageModifier. `ALL` is a
+    scope-marker meaning "applies to all populations", not a community.
+
+    Supersedes the nested/slash scheme of DR-2026-07-21 / DR-2026-07-22.
     """
 
-    # Top-level
-    MOB = "MOB"
-    VIS = "VIS"
+    # Seeing, hearing, communicating
+    BLIND = "BLIND"
     DEAF = "DEAF"
-    NEU = "NEU"
-    DEM = "DEM"
+    DEAFBLIND = "DEAFBLIND"
+
+    # Moving and handling
+    MOB = "MOB"
+    LMB = "LMB"
+    SCI = "SCI"
+    MOVE = "MOVE"
+
+    # Neurodivergence (peer codes; NDV is a view, not a container)
     NDV = "NDV"
-    NDV_MH = "NDV/MH"
+    AUT = "AUT"
+    ADHD = "ADHD"
+    ID = "ID"
+
+    # Acquired cognitive
+    DEM = "DEM"
+    BRAIN = "BRAIN"
+
+    # Energy-limiting and chronic
+    COM = "COM"
     PAIN = "PAIN"
-    DBL = "DBL"
-    OFS = "OFS"
-    IntD = "IntD"
+
+    # Neurological
+    MS = "MS"
+    EPI = "EPI"
+    VES = "VES"
+
+    # Mental health (kept as its own population per DR-2026-07-23)
+    MH = "MH"
+
+    # Body size and stature (served by the A-SIZE access need)
+    LPA = "LPA"
+    TALL = "TALL"
+    BAR = "BAR"
+
+    # Scope marker (not a population)
     ALL = "ALL"
 
-    # Sub-codes (MOB)
-    MOB_AMB = "MOB/AMB"
-    MOB_UPL = "MOB/UPL"
 
-    # Sub-codes (NDV)
-    NDV_AUT = "NDV/AUT"
-    NDV_ADHD = "NDV/ADHD"
-    NDV_SENS = "NDV/SENS"
+class LifeStageModifier(str, Enum):
+    """Orthogonal life-stage modifiers (DR-2026-07-23).
 
-    # Sub-codes (NEU)
-    NEU_PCS = "NEU/PCS"
-
-    # Sub-codes (OFS)
-    OFS_ME = "OFS/ME"
-    OFS_POTS = "OFS/POTS"
-    OFS_MCAS = "OFS/MCAS"
-
-    # Supplementary only (not main taxonomy)
-    CHD = "CHD"
-    LPA = "LPA"
-    EXH = "EXH"
-    BAR = "BAR"
+    Not populations: a child or an older adult can hold any access profile.
+    """
+    SEN = "SEN"   # older adults
+    CHD = "CHD"   # disabled children
 
 
 class EvidenceTier(int, Enum):

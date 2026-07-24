@@ -1,0 +1,89 @@
+recheck_id: RC-002
+trigger: RULE_REVISION
+trigger_detail: 'population-taxonomy.md population-code scheme superseded by DR-2026-07-23 (Access-Taxonomy Axis-2 set); targeted §1.3 recheck'
+recheck_date: 2026-07-24 03:57
+recheck_by: session_2026-07-24-pipeline-contract-run
+model_routing: opus/150/arbitrate
+passes_run:
+- '2.3'
+- '2.4'
+- '2.5'
+findings:
+- finding_id: RC-002-01
+  severity: INFO
+  pass_id: '2.4'
+  description: 'Drift detection flagged governance/population-taxonomy.md present in the prior baseline (snapshot_2026-04-30)
+    but absent from the CANONICAL governance inventory now. This is the EXPECTED, owner-directed effect of DR-2026-07-23
+    (retire the disability-population code schema; replace with the flat Access-Taxonomy Axis-2 set). The document was not
+    deleted: its header Status was changed CANONICAL -> "SUPERSEDED (population code set) — structural detail retained
+    pending full rewrite", so build_snapshot (which counts only **Status:** CANONICAL docs) correctly drops it from
+    governance_docs. Successor recorded (the 23-code Axis-2 set + the access-needs layer, migration 031/032). Not a silent
+    removal — the §1.3 removal criterion ("confirm explicit retirement with successor or rationale recorded") is satisfied.'
+  affected_artifacts:
+  - governance/population-taxonomy.md
+  - decisions/DR-2026-07-23-population-schema-replace.md
+  recommended_action: 'No remediation needed — the removal is the intended end-state. Baseline was deliberately NOT
+    advanced by this targeted recheck (see RC-002-04); the [2.4] signal correctly persists against snapshot_2026-04-30
+    until a periodic recheck rebaselines. The full community-organized rewrite of population-taxonomy.md remains tracked in
+    DR-2026-07-23 "Deferred / follow-up".'
+  status: RESOLVED
+  resolution_commit: cfe45b9
+  notes: 'resolution_commit cfe45b9 is the EXECUTING/ACKNOWLEDGING commit (it applied the owner-directed supersession), NOT
+    a remediation — there was no defect to fix; the drift is intentional. Severity recorded INFO (not the detector''s
+    mechanical ERROR) because the removal is explicit-with-successor per doctrine-recheck.md §2.4, not silent. CI runs
+    doctrine_recheck.py --cross-ref (pass 2.3 only), so this 2.4 signal is not a CI gate.'
+- finding_id: RC-002-02
+  severity: WARNING
+  pass_id: '2.4'
+  description: 'canonical_rules still carries "A7 population-taxonomy.md is CANONICAL" while the document header is now
+    SUPERSEDED (population code set). This is a partial-retention state, not a contradiction: DR-2026-07-23 superseded only
+    the population-CODE scheme; the document explicitly retains its structural/taxonomy detail "pending full rewrite", so
+    the A7 canon marker is not wholly false. The reconciliation lands with the tracked full rewrite, not this targeted
+    recheck.'
+  affected_artifacts:
+  - governance/population-taxonomy.md
+  - references/project-standards.md
+  recommended_action: 'On the DR-2026-07-23 full-rewrite follow-up: either re-issue population-taxonomy.md as CANONICAL under
+    the community-organized model (restoring a clean A7 marker) or retire the A7 rule with a successor pointer. Tracked, not
+    remediated here.'
+  status: OPEN
+- finding_id: RC-002-03
+  severity: WARNING
+  pass_id: '2.3'
+  description: 'Pre-existing cross-reference warnings unaffected by this revision (present on origin/main before this branch):
+    evidence-architecture.md doctrinal_basis references tier-system.md and armature_v4.md, and migration-survival.md
+    references repo-strategy.md, none carrying a **Status:** CANONICAL header. Out of scope for the population-schema
+    revision; recorded so RC-002 does not silently absorb them.'
+  affected_artifacts:
+  - governance/evidence-architecture.md
+  - governance/migration-survival.md
+  recommended_action: 'Reconcile in a general doctrine-inventory recheck (periodic §1.1), not this targeted one. No action
+    under RC-002.'
+  status: DEFERRED
+- finding_id: RC-002-04
+  severity: WARNING
+  pass_id: '2.4'
+  description: 'Scope guard (self-caught in adversarial review). A §1.3 rule-revision recheck runs only passes 2.3/2.4/2.5
+    scoped to the revised rule (doctrine-recheck.md §2.1) and must NOT establish a new GLOBAL drift baseline. An earlier
+    version of this record wrote a full snapshot_2026-07-24.yaml; because find_prior_snapshot() picks the most-recent
+    snapshot, that would have silently discharged drift coverage for ~3 months of un-examined intervening doctrine (evidence-
+    architecture Option A, tier-system weighted-strength, ENT-## rename) that has never been drift-examined against
+    snapshot_2026-04-30. The advanced snapshot has been REMOVED; the baseline stays at 2026-04-30.'
+  affected_artifacts:
+  - data/doctrine_recheck/snapshot_2026-04-30.yaml
+  recommended_action: 'A full PERIODIC recheck (§1.1 — all five passes incl. 2.6 contamination resampling) is OWED to
+    examine the accumulated intervening drift and establish the next global baseline. Do not let a targeted recheck stand in
+    for it.'
+  status: OPEN
+drift_summary:
+  additions: 2
+  removals: 1
+  mutations: 0
+  removed_governance_docs:
+  - governance/population-taxonomy.md
+next_recheck_due: 'periodic §1.1 recheck OWED (RC-002-04) — examines ~3mo intervening drift and rebaselines; also at next 25-session multiple'
+notes: 'Targeted RULE_REVISION recheck (§1.3) discharging the recheck obligation created by DR-2026-07-23. Passes 2.3/2.4/2.5
+  per §2.1. Baseline deliberately NOT advanced (RC-002-04). The population-taxonomy supersession itself is intentional and
+  carries a successor; no downstream work-product asserts the retired slash/parent code scheme as canonical. NOT fully closed:
+  RC-002-02 (A7 canonical-status contradiction) stays OPEN and RC-002-04 (periodic recheck owed) stays OPEN — this record is a
+  scoped acknowledgment, not a clean bill of doctrinal health.'
