@@ -17,7 +17,7 @@
     "canonical-workplan": {
       "status": "FIRED",
       "evidence_path": "decisions/DR-2026-07-24-lang-jur-map-roles.md#proposed-role-definitions-the-piece-migration-023-said-was-missing",
-      "reason": "The DR supplies the PRIMARY/SECONDARY role definitions that migration 023 and the ratified coverage-completion workplan (§2.3, the lang_jur_map bridge) explicitly deferred to owner/spec input, unblocking the priority queue's required-vs-not-applicable determination — an operationalization of the canonical workplan, not new methodology. It performs no jurisdictional evidence synthesis and produces no reasoning_doc_citations."
+      "reason": "The DR supplies the PRIMARY/SECONDARY role definitions that migration 023 and the ratified coverage-completion workplan (\u00a72.3, the lang_jur_map bridge) explicitly deferred to owner/spec input, unblocking the priority queue's required-vs-not-applicable determination \u2014 an operationalization of the canonical workplan, not new methodology. It performs no jurisdictional evidence synthesis and produces no reasoning_doc_citations."
     },
     "adherence-logging-and-attestation": {
       "status": "FIRED",
@@ -25,8 +25,13 @@
       "reason": "Commit carries [DOCTRINE: 0f2f525] before the timestamp per rule #11(a); this attestation is co-committed per rule #11(b). doctrine_sha matches HEAD:governance/mission-and-epistemics.md."
     }
   },
-  "deviations": [],
-  "bias_direction": "Risk of quietly repeating the withdrawn 2026-06-11 auto-population under a new name — an agent supplying jurisdiction/language scope that is owner-only (DG-NON). Mitigated by writing zero rows, dropping the undefined COLONIAL role entirely, defining PRIMARY/SECONDARY before proposing any assignment, and routing the whole map to the owner as a proposal rather than a migration; a second reviewer of the actual row set is required before any land.",
-  "independent_reviewer_counterclaim": "A reviewer could argue that even proposing PRIMARY/SECONDARY assignments pre-commits the owner to a colonial-inflected framing and should not be drafted by an agent at all. Counter: the DR proposes only the definitions and a sourcing standard, flags the erasure risk explicitly via [PRIMARY-LANGUAGE-GAP], commits no rows, and states in three places that jurisdiction/language scope is the owner's DG-NON call — the agent supplies the missing definitions migration 023 asked for, nothing more.",
-  "verdict": "CLEAN"
+  "deviations": [
+    {
+      "rule": "source-discipline",
+      "reason": "Post-ratification follow-up (owner 'Ratify all', 2026-07-24): the DR proposal wrote zero rows pending owner decision; the owner ratified, and 70 rows (50 PRIMARY / 20 SECONDARY, all 48 jurisdictions) were then applied via data migration data_20260724060958. Each row carries a verifiable official-language sourcing note; CY/ET/TH/ZA carry [PRIMARY-LANGUAGE-GAP]; COLONIAL stays withdrawn. No duplicate (language,jurisdiction) keys; rebuild reproducibility verified. Recorded so the log reflects the applied map, not the pre-approval proposal."
+    }
+  ],
+  "bias_direction": "Risk of quietly repeating the withdrawn 2026-06-11 auto-population under a new name \u2014 an agent supplying jurisdiction/language scope that is owner-only (DG-NON). Mitigated by writing zero rows, dropping the undefined COLONIAL role entirely, defining PRIMARY/SECONDARY before proposing any assignment, and routing the whole map to the owner as a proposal rather than a migration; a second reviewer of the actual row set is required before any land.",
+  "independent_reviewer_counterclaim": "A reviewer could argue that even proposing PRIMARY/SECONDARY assignments pre-commits the owner to a colonial-inflected framing and should not be drafted by an agent at all. Counter: the DR proposes only the definitions and a sourcing standard, flags the erasure risk explicitly via [PRIMARY-LANGUAGE-GAP], commits no rows, and states in three places that jurisdiction/language scope is the owner's DG-NON call \u2014 the agent supplies the missing definitions migration 023 asked for, nothing more.",
+  "verdict": "DEVIATION-LOGGED"
 }

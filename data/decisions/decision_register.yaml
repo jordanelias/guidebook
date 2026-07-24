@@ -4801,10 +4801,55 @@ decisions:
   - D-0001
   supersedes: []
   status: ACTIVE
-  review_status: PENDING
+  review_status: CONFIRMED
   notes: >
-    Migration + Pydantic artifacts embedded in the DR for review; NOT yet placed in
-    scripts/migrations/ and NOT applied to data/guidebook.db (applying bumps user_version and
-    is itself the ratification act). On ratification: add 033_search_executions.sql, add
-    schemas/search_execution.py, run migrate_db.py, commit the updated DB. lang_jur_map role
-    population is a separate DG-NON proposal (DR-2026-07-24-lang-jur-map-roles), no register entry.
+    Ratified by owner 2026-07-24 ("Ratify all"). Migration applied: 033_search_executions.sql
+    (user_version 32->33, table ships empty), schemas/search_execution.py added, coverage views
+    created; legacy search_coverage/search_languages frozen read-only, not dropped. Reproducibility
+    verified (7 CI invariants match on rebuild). lang_jur_map role population is the paired
+    decision D-0152 (DR-2026-07-24-lang-jur-map-roles).
+- decision_id: D-0152
+  category: D-METH
+  delegation: DG-NON
+  delegation_rationale: >
+    Upgraded from the D-METH default to DG-NON per decision-protocol §2.3/§2.4: the map fixes
+    which of the 19 languages are in-scope for which of the 48 jurisdictions, i.e. jurisdiction/
+    language inclusion (§2.4 item #4, always DG-NON). Agent proposed the definitions + candidate
+    rows; owner decided.
+  summary: >
+    Populate lang_jur_map with PRIMARY/SECONDARY role definitions and 70 jurisdiction x language
+    rows so the coverage loop can distinguish required from not-applicable cells.
+  outcome: >
+    PRIMARY = language the jurisdiction authors statutes/codes/standards in; SECONDARY = official/
+    administrative but non-primary (co-official, major regional, or colonial-legacy law/higher-ed
+    language). 70 rows (50 PRIMARY / 20 SECONDARY) across all 48 jurisdictions; [PRIMARY-LANGUAGE-GAP]
+    flags CY/ET/TH/ZA whose primary authoring language is outside the 19. COLONIAL role remains
+    withdrawn (DR-2026-06-11). Applied via data migration data_20260724060958.
+  rationale: >
+    lang_jur_map was empty, so the language and jurisdiction coverage axes could not be crossed and
+    the priority queue could not compute required-vs-not-applicable. Migration 023 created the table
+    empty and deferred population "pending role definitions (owner/spec input)"; this decision supplies
+    those definitions and the map. Every row carries a verifiable official-language sourcing note, so
+    the map is a checkable fact set rather than the undefined-role fabrication withdrawn in 2026-06-11.
+  alternatives_considered:
+  - Treat all 19x48 as required — rejected; inflates the denominator with not-applicable cells and dilutes effort.
+  - Re-introduce a third (COLONIAL) role — rejected; withdrawn and undefined per DR-2026-06-11.
+  - Leave the table empty — rejected; blocks the coverage loop's required-cell computation.
+  decision_date: 2026-07-24 06:05
+  decided_by: owner_directive_2026-07-24_ratify-all
+  model_routing: opus/125/extract
+  effort_level: 125
+  decision_artifacts:
+  - decisions/DR-2026-07-24-lang-jur-map-roles.md
+  - scripts/migrations/data_20260724060958_2026-07-24-research-matrix-completion.sql
+  - workplan/research-matrix-completion-execution-plan-2026-07-24.md §5
+  predecessors:
+  - D-0001
+  - D-0151
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: >
+    Edge cases (Kenya/Tanzania SW-primary vs EN-secondary; ZA EN-secondary per A.3 with
+    PRIMARY-LANGUAGE-GAP; Singapore EN-primary) carry sourcing notes and are owner-amendable via a
+    forward compensating migration if reclassification is directed.
