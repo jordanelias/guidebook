@@ -1,0 +1,3294 @@
+<title>E-08 Corridor clear width — circulation, evidence and open questions</title>
+<style>
+/* ============================================================
+   Guidebook — stylesheet
+
+   DESIGN LANGUAGE MANIFESTO (accessibility + executive dysfunction)
+   ─────────────────────────────────────────────────────────────
+   Every element of the same type must look identical. No surprises.
+   Reduce cognitive load: fewer visual styles, fewer decisions.
+
+   TYPEFACE ROLES (exactly 2 families)
+     slab  → all readable text: body, headings, nav links, buttons
+     mono  → metadata, labels, code, chips, captions — never body text
+
+   TYPE SCALE (8 steps, nothing in between)
+     2xs 10px  — smallest legal: fine print, superscript labels
+     xs  12px  — mono labels, meta tags, chips
+     sm  14px  — secondary prose, nav links, captions
+     base 16px — body text
+     md  18px  — lead paragraphs, plain-language summaries
+     lg  24px  — section subheads (h3)
+     xl  34→42 — section titles (h2), responsive via clamp()
+     xxl 48px  — hero title only
+
+   FONT WEIGHT (exactly 3)
+     400 — body text, secondary prose
+     600 — emphasis: labels, chips, nav items, meta
+     700 — headings (h1, h2, h3), brand name
+
+   BORDER / LINE WEIGHTS (exactly 3)
+     1px — subtle rules, cell borders, dividers
+     2px — emphasis borders, focus outlines
+     3px — section-opener accent stripe (only)
+
+   COLOUR
+     Every colour is a variable. No hardcoded hex outside :root.
+     Section colours (sec-1…sec-12) are the ONLY colour system.
+     Interactive states: ink for active, ink-soft for default, muted for disabled.
+     Markers: --mark-opus-* (warm amber), --mark-src-* (cool green).
+
+   SPACING
+     Vertical rhythm: 8px base unit. Sections: 64px gap. Rows: 12px pad.
+     Horizontal: 28px page gutter desktop, 16px mobile.
+
+   INTERACTIVE STATES (consistent everywhere)
+     hover:  background → paper-2, border → rule
+     focus:  2px solid blue, offset 2px
+     active/pressed: background → ink, text → paper
+
+   ============================================================ */
+
+:root {
+  /* ---------- paper & ink ---------- */
+  --paper:        #f6f1e6;
+  --paper-2:      #ede5d2;
+  --paper-3:      #fbf8f0;
+  --paper-deep:   #2a2521;
+  --ink:          #1f1c18;
+  --ink-soft:     #3a342d;
+  --muted:        #6e655a;
+  --muted-2:      #948a7c;
+  --rule:         #d6cdb8;
+  --rule-strong:  #1f1c18;
+
+  /* ---------- accents (drawing + UI) ---------- */
+  --blue:         #2a6fdb;
+  --blue-soft:    #dbe5f5;
+  --blue-ink:     #143464;
+
+  --oxblood:      #8b2f2c;
+  --oxblood-soft: #f1dad6;
+
+  --warn:         #b8521b;
+  --warn-soft:    #f4dec6;
+
+  /* ---------- source / editorial markers ---------- */
+  --mark-opus-bg:      #f8ecd4;
+  --mark-opus-fg:      #7a5a00;
+  --mark-opus-border:  #d4b47a;
+  --mark-src-bg:       #d8ead4;
+  --mark-src-fg:       #2d5a3a;
+  --mark-src-border:   #8ab88a;
+
+  /* ---------- missing utility tokens ---------- */
+  --radius:  10px;
+  --accent:  #1f5ab0;
+  --ochre:   #7a5a00;
+  --wrap:    var(--max-w);
+
+  /* ---------- semantic palette ---------- */
+  --sec-1: #4a6b3f;
+  --sec-2: #8b2f2c;
+  --sec-3: #2a6fdb;
+  --sec-4: #1a4a4a;
+  --sec-5: #6b4a8b;
+  --sec-6: #7a5a00;
+  --sec-7: #2d5a3a;
+  --sec-8: #b85b1b;
+  --sec-9: #5a4a3a;
+  --sec-10:#3a3a3a;
+  --sec-11:#4a4a8b;
+  --sec-12:#5a5a5a;
+
+  /* populations */
+  --pop-mob:  #3d5a8b;
+  --pop-dem:  #6b4a8b;
+  --pop-vis:  #7a5a00;
+  --pop-ndv:  #2a7a8b;
+  --pop-ofs:  #4a6b3f;
+  --pop-pain: #b85b1b;
+  --pop-neu:  #8b2f4a;
+  --pop-deaf: #5a4a8b;
+  --pop-dbl:  #2d5a4a;
+
+  /* evidence states */
+  --ev-stated:    #2d5a3a;
+  --ev-provis:    #7a5a00;
+  --ev-pending:   #948a7c;
+  --ev-co1:       #8b2f2c;
+
+  /* ---------- type ---------- */
+  --font-slab:    "Roboto Slab", Georgia, "Times New Roman", serif;
+  --font-mono:    "JetBrains Mono", "IBM Plex Mono", ui-monospace, Menlo, monospace;
+
+  /* ---------- scale (8 steps — nothing in between) ---------- */
+  --max-w:        1080px;
+  --fs-2xs:       10px;
+  --fs-xs:        12px;
+  --fs-sm:        14px;
+  --fs-base:      16px;
+  --fs-md:        18px;
+  --fs-lg:        24px;
+  --fs-xl:        34px;
+  --fs-xxl:       48px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background:
+    radial-gradient(1200px 600px at 50% -200px, rgba(255,255,255,0.4), transparent),
+    var(--paper);
+  color: var(--ink);
+  font-family: var(--font-slab);
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  font-feature-settings: "kern", "liga", "calt";
+  text-rendering: optimizeLegibility;
+}
+
+/* ---------- access ---------- */
+.skip {
+  position: absolute; left: 0; top: -100px;
+  background: var(--ink); color: var(--paper);
+  padding: 10px 14px; font-family: var(--font-mono); font-size: var(--fs-sm);
+  z-index: 200; text-decoration: none;
+}
+.skip:focus { top: 0; outline: 3px solid var(--blue); }
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+
+/* ============================================================
+   BRAND — logo mark and wordmark
+   ============================================================ */
+.brand {
+  font-family: var(--font-slab);
+  font-weight: 700;
+  font-size: var(--fs-lg);
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-decoration: none;
+  display: inline-flex; align-items: baseline; gap: 12px;
+}
+.brand::before {
+  content: "";
+  display: inline-block;
+  width: 22px; height: 22px;
+  background:
+    conic-gradient(from 90deg at 50% 50%,
+      var(--sec-2) 0 25%, var(--sec-3) 25% 50%,
+      var(--sec-6) 50% 75%, var(--sec-7) 75% 100%);
+  border-radius: 50%;
+  transform: translateY(2px);
+  box-shadow: inset 0 0 0 2px var(--paper);
+}
+.brand .brand-sub {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 400;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+/* primary nav lives in the MASTHEAD block below */
+
+/* ---------- subbar ---------- */
+.subbar {
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper-2);
+}
+.subbar-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 8px 28px;
+  display: flex; gap: 14px; align-items: center; flex-wrap: wrap;
+  font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--muted);
+}
+.subbar a { color: var(--ink-soft); text-decoration: none; border-bottom: 1px dotted var(--muted); }
+.subbar a:hover { border-bottom-style: solid; }
+.subbar .crumb-sep { color: var(--muted-2); }
+
+.mode-toggle {
+  margin-left: auto;
+  display: inline-flex;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  overflow: hidden;
+  font-family: var(--font-mono); font-size: var(--fs-xs);
+  background: var(--paper);
+}
+.mode-toggle button {
+  background: transparent; border: 0; padding: 8px 14px; min-height: 32px;
+  font: inherit; color: var(--ink-soft);
+  cursor: pointer; letter-spacing: 0.04em; text-transform: uppercase;
+}
+.mode-toggle button + button { border-left: 1px solid var(--rule); }
+.mode-toggle button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+
+/* ============================================================
+   PAGE FRAME — single column, no floating rail
+   ============================================================ */
+main { display: block; }
+.page {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 36px 28px 80px;
+}
+
+/* ---------- hero / article header ---------- */
+.article-header {
+  position: relative;
+  padding-bottom: 26px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--rule);
+}
+.kicker {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+  margin-bottom: 14px;
+}
+.kicker .item-code {
+  background: var(--ink); color: var(--paper);
+  padding: 3px 10px; border-radius: 999px;
+  font-weight: 600; letter-spacing: 0.1em;
+}
+.kicker > span:not(.item-code) {
+  padding: 2px 8px;
+  border: 1px solid var(--rule);
+  background: var(--paper-3);
+  border-radius: 999px;
+  color: var(--ink-soft);
+}
+
+h1.title-spec, h1.title-question {
+  margin: 0;
+  font-family: var(--font-slab);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+  font-size: var(--fs-xxl);
+  text-wrap: balance;
+  color: var(--ink);
+  max-width: 24ch;
+}
+h1.title-question { display: none; }
+body.mode-question h1.title-spec { display: none; }
+body.mode-question h1.title-question { display: block; }
+
+.tagline {
+  margin: 14px 0 0;
+  font-size: var(--fs-md);
+  color: var(--muted);
+  max-width: 64ch;
+  font-style: italic;
+}
+
+/* ---------- AT A GLANCE row (no floating sidebar) ---------- */
+.glance {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--paper-3);
+  margin-top: 22px;
+}
+@media (max-width: 720px) { .glance { grid-template-columns: repeat(2, 1fr); } }
+.glance-cell {
+  padding: 14px 18px;
+  border-right: 1px solid var(--rule);
+  display: flex; flex-direction: column; gap: 4px;
+}
+.glance-cell:last-child { border-right: 0; }
+@media (max-width: 720px) {
+  .glance-cell:nth-child(2n) { border-right: 0; }
+  .glance-cell:nth-child(-n+2) { border-bottom: 1px solid var(--rule); }
+}
+.glance-cell .gl-l {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.glance-cell .gl-v {
+  font-family: var(--font-slab);
+  font-weight: 700;
+  font-size: var(--fs-md);
+  color: var(--ink);
+}
+.glance-cell .gl-v small { color: var(--muted); font-weight: 400; font-size: var(--fs-xs); margin-left: 4px; }
+
+/* ============================================================
+   MASTHEAD — brand · primary nav · audience lens menu
+   ============================================================ */
+.masthead {
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper);
+}
+.masthead-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 18px 28px;
+  display: flex; align-items: center; gap: 28px; flex-wrap: wrap;
+}
+.masthead nav {
+  display: flex; gap: 22px; flex-wrap: wrap;
+  font-family: var(--font-slab);
+  font-size: var(--fs-sm);
+}
+.masthead nav a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding: 6px 0;
+  border-bottom: 1px solid transparent;
+}
+.masthead nav a:hover { border-bottom-color: var(--ink); color: var(--ink); }
+.masthead nav a[aria-current="page"] { border-bottom-color: var(--oxblood); color: var(--oxblood); }
+.mh-tools { margin-left: auto; }
+
+/* lens menu — discrete masthead control, replaces the old lens-bar */
+.lens-menu { position: relative; }
+.lens-menu > summary {
+  list-style: none;
+  cursor: pointer;
+  display: inline-flex; align-items: baseline; gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--paper-2);
+  font-family: var(--font-slab);
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  user-select: none;
+}
+.lens-menu > summary::-webkit-details-marker { display: none; }
+.lens-menu > summary:hover { border-color: var(--ink-soft); }
+.lens-menu .mh-tool-l {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.lens-menu .mh-tool-v { font-weight: 600; color: var(--ink); }
+.lens-menu .mh-tool-chev {
+  font-size: var(--fs-2xs);
+  color: var(--muted);
+  margin-left: 2px;
+  transition: transform 0.15s ease;
+}
+.lens-menu[open] .mh-tool-chev { transform: rotate(180deg); }
+.lens-menu-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 320px;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  border-radius: 6px;
+  box-shadow: 0 8px 28px rgba(31, 28, 24, 0.12);
+  padding: 6px;
+  z-index: 100;
+}
+.lens-menu-panel button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  padding: 10px 12px;
+  cursor: pointer;
+  gap: 2px;
+  font-family: inherit;
+}
+.lens-menu-panel button:hover { background: var(--paper-3); }
+.lens-menu-panel button[aria-checked="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+.lens-menu-panel button[aria-checked="true"] .lens-opt-sub { color: color-mix(in srgb, var(--paper) 80%, var(--ink)); }
+.lens-opt-title { font-weight: 600; font-size: var(--fs-sm); }
+.lens-opt-sub { font-size: var(--fs-xs); color: var(--muted); }
+.lens-menu-note {
+  margin: 6px 8px 4px;
+  padding-top: 8px;
+  border-top: 1px solid var(--rule);
+  font-size: 11.5px;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ============================================================
+   SECTNAV — sticky single-source-of-truth section locator
+   "You are reading" + numbered chips for all 12 sections.
+   ============================================================ */
+.sectnav {
+  position: sticky;
+  top: 0;
+  /* always-on contents bar — never hides */
+  z-index: 80;
+  background: var(--paper);
+  border-bottom: 1px solid var(--ink);
+  box-shadow: 0 1px 0 rgba(31, 28, 24, 0.04);
+}
+.sectnav-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 12px 28px;
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) 1fr;
+  align-items: center;
+  gap: 24px;
+}
+@media (max-width: 880px) {
+  .sectnav-inner { grid-template-columns: 1fr; gap: 8px; padding: 10px 16px; }
+}
+.sectnav-current {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 12px;
+  row-gap: 0;
+  align-items: baseline;
+  text-decoration: none;
+  color: var(--ink);
+  padding: 6px 12px 6px 14px;
+  border-left: 4px solid var(--sec-color, var(--ink));
+  border-radius: 0 4px 4px 0;
+  background: color-mix(in srgb, var(--sec-color, var(--ink)) 6%, var(--paper));
+}
+.sectnav-current .sn-eyebrow {
+  grid-column: 1 / -1;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.sectnav-current .sn-num {
+  font-family: var(--font-slab);
+  font-weight: 700;
+  font-size: var(--fs-lg);
+  color: var(--sec-color, var(--ink));
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+}
+.sectnav-current .sn-title {
+  font-family: var(--font-slab);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  line-height: 1.15;
+}
+.sectnav-contents {
+  background: var(--paper-2) !important;
+  border: 1px solid var(--rule) !important;
+}
+.sectnav-contents .snc-n { color: var(--muted) !important; }
+.sectnav-contents:hover { background: var(--paper) !important; border-color: var(--ink-soft) !important; }
+.sectnav-list {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+}
+.sectnav-list::-webkit-scrollbar { height: 4px; }
+.sectnav-list::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 2px; }
+.sectnav-list li { flex: 0 0 auto; }
+.sectnav-list a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 7px 10px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--ink-soft);
+  white-space: nowrap;
+  min-height: 36px;
+}
+.sectnav-list a:hover { background: var(--paper-2); border-color: var(--rule); color: var(--ink); }
+.sectnav-list a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.sectnav-list a .snc-n {
+  font-weight: 700;
+  font-size: var(--fs-xs);
+  color: var(--ink);
+}
+.sectnav-list a .snc-t {
+  font-family: var(--font-slab);
+  font-size: var(--fs-xs);
+  color: var(--ink-soft);
+}
+.sectnav-list a[aria-current="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+.sectnav-list a[aria-current="true"] .snc-n,
+.sectnav-list a[aria-current="true"] .snc-t {
+  color: var(--paper);
+}
+
+/* ============================================================
+   SITEMAP — full directory below the hero, before §1
+   12 rows. Every section visible at a glance, with previews.
+   ============================================================ */
+.sitemap {
+  max-width: var(--max-w);
+  margin: 0 auto 56px;
+  padding: 24px clamp(20px, 4vw, 56px);
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+}
+.sitemap-head { margin-bottom: 16px; }
+.sitemap-kicker {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.sitemap-h {
+  font-family: var(--font-slab);
+  font-size: clamp(20px, 2.4vw, 28px);
+  margin: 4px 0 6px;
+  letter-spacing: -0.01em;
+}
+.sitemap-sub {
+  font-size: var(--fs-sm);
+  color: var(--ink-soft);
+  max-width: 64ch;
+  margin: 0;
+}
+.sitemap-list {
+  list-style: none;
+  margin: 18px 0 12px;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+}
+.sitemap-list li {
+  border-bottom: 1px solid var(--rule);
+}
+.sitemap-list a {
+  display: grid;
+  grid-template-columns: 56px 200px 1fr auto;
+  gap: 16px;
+  align-items: baseline;
+  padding: 12px 8px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: background 0.12s ease;
+}
+.sitemap-list a:hover {
+  background: var(--paper);
+}
+.sitemap-list a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  background: var(--paper);
+}
+.sm-n {
+  font-family: var(--font-slab);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+.sm-t {
+  font-family: var(--font-slab);
+  font-weight: 600;
+  font-size: var(--fs-base);
+  color: var(--ink);
+}
+.sm-p {
+  font-size: var(--fs-sm);
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+.sm-meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  white-space: nowrap;
+}
+/* source / editorial marker chips */
+.src-chip {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  letter-spacing: 0.04em;
+  padding: 2px 8px;
+  border-radius: 3px;
+  vertical-align: middle;
+  margin-left: 6px;
+  line-height: 1.6;
+}
+.src-chip:where([hidden]) { display: none; }
+body[data-markers="on"] .src-chip { display: inline-block !important; }
+body[data-markers="off"] .src-chip { display: none !important; }
+/* opus = warm amber */
+.src-chip:not([data-kind]) {
+  background: var(--mark-opus-bg);
+  color: var(--mark-opus-fg);
+  border: 1px solid var(--mark-opus-border);
+}
+/* source = cool green */
+.src-chip[data-kind="source"] {
+  background: var(--mark-src-bg);
+  color: var(--mark-src-fg);
+  border: 1px solid var(--mark-src-border);
+}
+/* markers toggle button in masthead */
+.mh-markers-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  padding: 4px 10px;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: var(--paper);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.mh-markers-toggle:hover { background: var(--paper-2); border-color: var(--ink-soft); }
+.mh-markers-toggle[aria-pressed="true"] {
+  background: var(--mark-opus-bg);
+  border-color: var(--mark-opus-border);
+  color: var(--mark-opus-fg);
+}
+
+.sitemap-foot {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  margin: 8px 0 0;
+  letter-spacing: 0.04em;
+}
+@media (max-width: 720px) {
+  .sitemap-list a {
+    grid-template-columns: 44px 1fr;
+    grid-template-rows: auto auto;
+    row-gap: 4px;
+    column-gap: 12px;
+  }
+  .sm-t { grid-column: 2; grid-row: 1; }
+  .sm-p { grid-column: 2; grid-row: 2; }
+  .sm-n { grid-row: 1 / span 2; }
+  .sm-meta { grid-column: 2; grid-row: 3; padding-top: 4px; }
+}
+
+/* ============================================================
+   SECTION SHELL — chapter-opener treatment + breathing room.
+   ============================================================ */
+.section {
+  margin: 0 0 64px;
+  --sec-color: var(--ink);
+  padding-top: 24px;
+}
+.section[data-color="moss"]      { --sec-color: var(--sec-1); }
+.section[data-color="oxblood"]   { --sec-color: var(--sec-2); }
+.section[data-color="blue"]      { --sec-color: var(--sec-3); }
+.section[data-color="teal"]      { --sec-color: var(--sec-4); }
+.section[data-color="plum"]      { --sec-color: var(--sec-5); }
+.section[data-color="ochre"]     { --sec-color: var(--sec-6); }
+.section[data-color="fern"]      { --sec-color: var(--sec-7); }
+.section[data-color="terra"]     { --sec-color: var(--sec-8); }
+.section[data-color="umber"]     { --sec-color: var(--sec-9); }
+.section[data-color="graphite"]  { --sec-color: var(--sec-10); }
+.section[data-color="indigo"]    { --sec-color: var(--sec-11); }
+.section[data-color="slate"]     { --sec-color: var(--sec-12); }
+
+/* Section heading — flows as ROWS that wrap, never a 3-column grid.
+   On any viewport the title is the dominant element; pill + meta sit
+   on a thin meta-row above it. Title takes full width and wraps freely. */
+.sec-head {
+  display: block;
+  padding: 20px 0 14px;
+  border-top: 3px solid var(--sec-color);
+  margin-bottom: 20px;
+}
+.sec-head .sec-row {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: 10px 14px;
+  margin-bottom: 8px;
+}
+.sec-head .sec-num {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--paper);
+  background: var(--sec-color);
+  padding: 3px 9px;
+  border-radius: 3px;
+  font-weight: 600;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+.sec-head .sec-meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-left: auto;
+  flex: 0 0 auto;
+}
+.sec-head h2 {
+  font-family: var(--font-slab);
+  font-weight: 700;
+  font-size: clamp(28px, 3.2vw, 42px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  margin: 6px 0 0;
+  color: var(--ink);
+  text-wrap: balance;
+}
+@media (max-width: 720px) {
+  .sec-head h2 { font-size: var(--fs-lg); }
+  .sec-head .sec-meta { margin-left: 0; flex-basis: 100%; }
+}
+.section p { margin: 12px 0; max-width: 70ch; }
+.section h3 {
+  font-family: var(--font-slab);
+  font-weight: 700;
+  font-size: var(--fs-md);
+  margin: 18px 0 6px;
+  color: var(--ink);
+}
+.section h3::before {
+  content: "";
+  display: inline-block;
+  width: 8px; height: 8px;
+  background: var(--sec-color);
+  border-radius: 50%;
+  margin-right: 8px;
+  transform: translateY(-2px);
+}
+
+/* ---------- plain language band ---------- */
+.plain {
+  background: var(--paper-3);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--sec-color);
+  border-radius: 0 8px 8px 0;
+  padding: 16px 20px;
+  margin: 14px 0;
+}
+.plain .plain-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--sec-color);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+}
+.plain p { margin: 0; font-size: var(--fs-md); line-height: 1.6; }
+
+/* ============================================================
+   ROW LIST — used for measurements, jurisdictions, populations,
+   conflicts, related provisions. Each row has a colour stripe
+   on the left, a value cluster, and an accordion body holding
+   data + evidence + discussion + conflict notes together.
+   ============================================================ */
+.rowlist {
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: var(--paper-3);
+  overflow: hidden;
+}
+.rowlist .row {
+  border-top: 1px solid var(--rule);
+}
+.rowlist .row:first-child { border-top: 0; }
+
+/* Row summary — short code column on the left, then country name on
+   row 1 and document/clause on row 2 to the right of it. Value pinned
+   right. Two-line title achieved via .r-title small as second row. */
+.row > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 12px 14px 12px 22px;
+  display: grid;
+  grid-template-columns: 60px 1fr auto 18px;
+  column-gap: 12px; row-gap: 0;
+  align-items: center;
+  user-select: none;
+  background: var(--paper-3);
+  transition: background 0.12s;
+  position: relative;
+}
+.row > summary > span:empty { display: none; }
+.row > summary > .r-tag    { grid-column: 1; align-self: center; }
+.row > summary > .r-title  { grid-column: 2; align-self: center; min-width: 0; }
+.row > summary > .r-value  { grid-column: 3; align-self: center; text-align: right; }
+.row > summary > .r-arrow  { grid-column: 4; align-self: center; }
+
+/* Default for non-jurisdiction rows: code on its own row above title.
+   Jurisdictions (data-color=fern) keep the short-code column layout. */
+.section:not([data-color="fern"]) .row > summary {
+  grid-template-columns: 1fr auto 18px;
+  row-gap: 4px;
+}
+.section:not([data-color="fern"]) .row > summary > .r-tag    { grid-column: 1 / -1; grid-row: 1; }
+.section:not([data-color="fern"]) .row > summary > .r-title  { grid-column: 1; grid-row: 2; }
+.section:not([data-color="fern"]) .row > summary > .r-value  { grid-column: 2; grid-row: 2; }
+.section:not([data-color="fern"]) .row > summary > .r-arrow  { grid-column: 3; grid-row: 2; }
+.row .r-title small        { display: block; margin-top: 2px; }
+@media (max-width: 720px) {
+  .row > summary {
+    grid-template-columns: 56px 1fr auto 16px;
+    column-gap: 10px;
+    padding: 10px 12px 10px 18px;
+  }
+  .row .r-value { font-size: var(--fs-base); white-space: normal; }
+  .row .r-tag { font-size: var(--fs-xs); }
+  .row .r-title { font-size: var(--fs-base); }
+  .row .r-title small { font-size: var(--fs-xs); }
+
+  /* Mobile jurisdiction rows: stack code → title → value (no overlap) */
+  .section[data-color="fern"] .row > summary {
+    grid-template-columns: 1fr 16px;
+    row-gap: 4px;
+  }
+  .section[data-color="fern"] .row > summary > .r-tag    { grid-column: 1 / -1; grid-row: 1; }
+  .section[data-color="fern"] .row > summary > .r-title  { grid-column: 1; grid-row: 2; }
+  .section[data-color="fern"] .row > summary > .r-value  { grid-column: 1 / -1; grid-row: 3; text-align: left; }
+  .section[data-color="fern"] .row > summary > .r-arrow  { grid-column: 2; grid-row: 1; }
+}
+.row > summary::-webkit-details-marker { display: none; }
+
+/* ---------- accessibility: focus, hierarchy helpers ---------- */
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+button:focus-visible, summary:focus-visible, a:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+/* Breadcrumb list reset */
+.crumbs { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+.crumbs li { display: inline-flex; align-items: center; }
+.crumbs li + li::before { content: "›"; color: var(--muted-2); margin-right: 8px; }
+.crumbs [aria-current="page"] { color: var(--ink); font-weight: 600; }
+
+/* Single h1 with two visible variants — only the active one is shown
+   and exposed to AT; the other is fully hidden. */
+.title { font-family: var(--font-slab); font-weight: 700; font-size: var(--fs-xxl); line-height: 1.05; letter-spacing: -0.02em; margin: 6px 0 8px; color: var(--ink); text-wrap: balance; }
+@media (max-width: 720px) { .title { font-size: var(--fs-xl); } }
+body.mode-spec     .title-question { display: none; }
+body.mode-question .title-spec     { display: none; }
+body.mode-spec     .title-question[aria-hidden="false"],
+body.mode-question .title-spec[aria-hidden="false"] { display: inline; }
+
+/* Footer headings — promoted to h2 in source; visual size stays compact */
+.colophon .colo-h { font-family: var(--font-slab); font-size: var(--fs-sm); color: var(--ink); margin: 0 0 6px; font-weight: 700; text-transform: none; letter-spacing: 0; }
+.row > summary:hover { background: var(--paper-2); }
+.row > summary::before {
+  content: "";
+  width: 8px; height: 100%;
+  background: var(--row-color, var(--rule));
+  position: absolute; left: 0; top: 0; bottom: 0;
+}
+
+.row .r-tag {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--row-color, var(--ink));
+  font-weight: 600;
+}
+.row .r-title {
+  font-family: var(--font-slab);
+  font-weight: 600;
+  font-size: var(--fs-base);
+  color: var(--ink);
+  line-height: 1.3;
+}
+.row .r-title small {
+  display: block;
+  font-family: var(--font-slab);
+  font-weight: 400;
+  font-size: var(--fs-sm);
+  color: var(--muted);
+  margin-top: 2px;
+}
+.row .r-value {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: var(--fs-md);
+  color: var(--ink);
+  white-space: nowrap;
+}
+.row .r-value small { color: var(--muted); font-weight: 400; font-size: var(--fs-xs); margin-left: 4px; }
+.row .r-arrow {
+  width: 18px; height: 18px; flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--muted);
+  transition: transform 0.18s;
+}
+.row[open] > summary .r-arrow { transform: rotate(90deg); color: var(--row-color, var(--ink)); }
+
+/* accordion body — three labelled blocks: VALUE / EVIDENCE / NOTES */
+.row .r-body {
+  padding: 4px 18px 18px 18px;
+  background: var(--paper);
+  border-top: 1px dashed var(--rule);
+}
+.r-body .blocks {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-top: 12px;
+}
+.r-body .block {
+  border-left: 3px solid var(--row-color, var(--rule));
+  padding: 8px 0 6px 14px;
+  background: transparent;
+}
+.r-body .block-l {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--row-color, var(--muted));
+  font-weight: 600;
+  margin-bottom: 4px;
+  display: flex; align-items: center; gap: 8px;
+}
+.r-body .block p { margin: 4px 0; max-width: none; }
+.r-body .block .citelist {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-top: 6px;
+  padding: 0; list-style: none;
+}
+
+/* ============================================================
+   POPOVER (citations + cross-refs)
+   Inline button. Click → floating panel anchored under it.
+   Built with [popover] where supported, JS fallback otherwise.
+   ============================================================ */
+.cite-trigger,
+.xref-trigger {
+  display: inline-flex; align-items: baseline;
+  background: transparent;
+  border: 0;
+  padding: 0 2px;
+  font: inherit;
+  cursor: pointer;
+  color: var(--ink);
+  border-bottom: 1px solid var(--blue);
+  text-decoration: none;
+  border-radius: 0;
+}
+.cite-trigger { font-family: var(--font-mono); font-size: 0.82em; vertical-align: super; line-height: 1; padding: 3px 6px; min-height: 26px; border: 1px solid var(--blue); border-radius: 4px; color: var(--blue-ink); background: var(--blue-soft); }
+.cite-trigger:hover, .cite-trigger:focus,
+.xref-trigger:hover, .xref-trigger:focus {
+  background: var(--blue-soft);
+  color: var(--blue-ink);
+}
+.xref-trigger .x-code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  color: var(--blue-ink);
+  margin-right: 3px;
+  letter-spacing: 0.02em;
+}
+
+.pop {
+  position: absolute;
+  z-index: 80;
+  width: min(420px, 92vw);
+  background: var(--paper-3);
+  border: 1px solid var(--ink);
+  border-radius: 10px;
+  box-shadow: 0 18px 40px -10px rgba(31,28,24,0.35), 0 4px 10px -2px rgba(31,28,24,0.18);
+  padding: 14px 16px;
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  display: none;
+}
+.pop[data-open="true"] { display: block; }
+.pop::before {
+  content: "";
+  position: absolute;
+  top: -7px; left: 22px;
+  width: 12px; height: 12px;
+  background: var(--paper-3);
+  border-left: 1px solid var(--ink);
+  border-top: 1px solid var(--ink);
+  transform: rotate(45deg);
+}
+.pop .pop-head {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin: 0 0 6px;
+  display: flex; gap: 8px; align-items: center;
+}
+.pop .pop-head .pop-tag { background: var(--ink); color: var(--paper); padding: 2px 8px; border-radius: 4px; font-weight: 600; }
+.pop .pop-title { font-family: var(--font-slab); font-weight: 700; font-size: var(--fs-base); margin: 0 0 4px; color: var(--ink); line-height: 1.3; }
+.pop dl { margin: 8px 0 0; display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px; }
+.pop dt { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.pop dd { margin: 0; }
+.pop .pop-foot {
+  border-top: 1px dashed var(--rule);
+  margin-top: 10px; padding-top: 8px;
+  font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--muted);
+  display: flex; gap: 12px; flex-wrap: wrap; justify-content: space-between;
+}
+.pop .pop-foot a { color: var(--blue-ink); }
+
+/* ============================================================
+   SYMBOLS / BADGES / CHIPS
+   ============================================================ */
+.sym {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.1em; height: 1.1em;
+  margin-right: 4px;
+  font-style: normal;
+}
+.sym-stated  { color: var(--ev-stated); }
+.sym-provis  { color: var(--ev-provis); }
+.sym-pending { color: var(--ev-pending); }
+.sym-co1     { color: var(--ev-co1); }
+.sym-warn    { color: var(--warn); }
+.sym-ok      { color: var(--ev-stated); }
+
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  background: var(--paper-3);
+  border: 1px solid var(--rule);
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+.chip[data-pop="MOB"]  { background: color-mix(in srgb, var(--pop-mob)  15%, var(--paper-3)); border-color: var(--pop-mob);  color: var(--pop-mob); }
+.chip[data-pop="DEM"]  { background: color-mix(in srgb, var(--pop-dem)  15%, var(--paper-3)); border-color: var(--pop-dem);  color: var(--pop-dem); }
+.chip[data-pop="VIS"]  { background: color-mix(in srgb, var(--pop-vis)  18%, var(--paper-3)); border-color: var(--pop-vis);  color: #7a5a1a; }
+.chip[data-pop="NDV"]  { background: color-mix(in srgb, var(--pop-ndv)  15%, var(--paper-3)); border-color: var(--pop-ndv);  color: var(--pop-ndv); }
+.chip[data-pop="OFS"]  { background: color-mix(in srgb, var(--pop-ofs)  18%, var(--paper-3)); border-color: var(--pop-ofs);  color: var(--pop-ofs); }
+.chip[data-pop="PAIN"] { background: color-mix(in srgb, var(--pop-pain) 15%, var(--paper-3)); border-color: var(--pop-pain); color: var(--pop-pain); }
+.chip[data-pop="NEU"]  { background: color-mix(in srgb, var(--pop-neu)  15%, var(--paper-3)); border-color: var(--pop-neu);  color: var(--pop-neu); }
+
+.chip-evi-stated  { background: color-mix(in srgb, var(--ev-stated) 14%, var(--paper-3)); border-color: var(--ev-stated); color: var(--ev-stated); }
+.chip-evi-provis  { background: color-mix(in srgb, var(--ev-provis) 16%, var(--paper-3)); border-color: var(--ev-provis); color: #7a5a1a; }
+.chip-evi-pending { background: var(--paper-3); border-color: var(--rule); color: var(--muted); }
+.chip-evi-co1     { background: color-mix(in srgb, var(--ev-co1) 12%, var(--paper-3)); border-color: var(--ev-co1); color: var(--ev-co1); font-weight: 600; }
+
+.chip-warn { background: var(--warn-soft); border-color: var(--warn); color: var(--warn); }
+
+.chiprow { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+
+/* opus_synthesis flag */
+.opus-flag {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  background: var(--warn-soft);
+  border: 1px solid var(--warn);
+  color: var(--warn);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+/* ============================================================
+   DRAWING CANVAS
+   ============================================================ */
+.drawing-figure {
+  margin: 16px 0 18px;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: var(--paper-3);
+  overflow: hidden;
+}
+.drawing-canvas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  background: var(--paper-3);
+}
+@media (max-width: 720px) { .drawing-canvas { grid-template-columns: 1fr; } }
+.drawing-pane {
+  padding: 18px 20px 14px;
+  border-right: 1px solid var(--rule);
+  position: relative;
+  background: var(--paper-3);
+}
+.drawing-pane:last-child { border-right: 0; }
+.drawing-pane.fail {
+  background: linear-gradient(180deg, var(--paper-3) 0%, color-mix(in srgb, var(--warn-soft) 35%, var(--paper-3)) 100%);
+}
+.pane-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  display: flex; justify-content: space-between; align-items: baseline; gap: 10px;
+  margin-bottom: 8px;
+}
+.pane-label .verdict-pass { color: var(--ev-stated); border: 1px solid var(--ev-stated); padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, var(--ev-stated) 10%, var(--paper-3)); font-weight: 600; }
+.pane-label .verdict-fail { color: var(--warn); border: 1px solid var(--warn); padding: 2px 8px; border-radius: 999px; background: var(--warn-soft); font-weight: 600; }
+.drawing-pane svg { width: 100%; height: auto; display: block; }
+
+.drawing-views {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  border-top: 1px solid var(--rule);
+}
+@media (max-width: 720px) { .drawing-views { grid-template-columns: 1fr; } }
+.drawing-views .drawing-pane { border-right: 1px solid var(--rule); }
+.drawing-views .drawing-pane:last-child { border-right: 0; }
+
+.drawing-caption {
+  border-top: 1px solid var(--rule);
+  padding: 12px 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  font-size: var(--fs-sm);
+  background: color-mix(in srgb, var(--paper-2) 50%, var(--paper-3));
+}
+@media (max-width: 720px) { .drawing-caption { grid-template-columns: 1fr; } }
+.drawing-caption .legend { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--muted); margin-top: 4px; }
+.drawing-caption .legend .swatch-line { display: inline-block; width: 14px; border-bottom: 2px solid var(--ink); vertical-align: middle; margin-right: 4px; }
+.drawing-caption .legend .swatch-fill { display: inline-block; width: 12px; height: 12px; background: var(--blue-soft); border: 1px solid var(--blue); vertical-align: middle; margin-right: 4px; }
+.drawing-caption .legend .swatch-fail { display: inline-block; width: 12px; height: 12px; background: var(--warn-soft); border: 1px solid var(--warn); vertical-align: middle; margin-right: 4px; }
+.drawing-caption .src-line { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--muted); }
+.drawing-caption .src-line a { color: var(--ink); }
+
+/* drawing stroke hierarchy (Dimensions.com discipline) */
+.ln-object { stroke: var(--ink); stroke-width: 1.6; fill: none; }
+.ln-hidden { stroke: var(--ink); stroke-width: 0.8; stroke-dasharray: 4 3; fill: none; opacity: 0.7; }
+.ln-dim    { stroke: var(--blue); stroke-width: 0.8; }
+.ln-dim-tick { stroke: var(--blue); stroke-width: 0.8; }
+
+/* interactive explorer */
+.explorer { padding: 18px 20px 16px; background: var(--paper-3); }
+.exp-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+.exp-eyebrow { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.exp-title { font-family: var(--font-slab); font-size: 1.15rem; font-weight: 600; margin: 0; }
+.exp-readout { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--rule); background: var(--paper); margin-bottom: 12px; }
+@media (max-width: 720px) { .exp-readout { grid-template-columns: repeat(2, 1fr); } }
+.ex-cell { padding: 10px 12px; border-right: 1px solid var(--rule); display: flex; flex-direction: column; gap: 2px; }
+.ex-cell:last-child { border-right: 0; }
+@media (max-width: 720px) { .ex-cell:nth-child(2) { border-right: 0; } .ex-cell:nth-child(1), .ex-cell:nth-child(2) { border-bottom: 1px solid var(--rule); } }
+.ex-l { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.ex-v { font-family: var(--font-mono); font-size: 1.15rem; font-weight: 600; color: var(--ink); }
+.ex-v small { font-weight: 400; font-size: 0.75em; color: var(--muted); margin-left: 2px; }
+#ex-svg { width: 100%; height: auto; display: block; background: var(--paper); border: 1px solid var(--rule); }
+.exp-controls { margin-top: 12px; }
+.ex-range-label { display: block; font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+#ex-range { width: 100%; accent-color: var(--blue); }
+.ex-presets { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.ex-preset { font-family: var(--font-mono); font-size: var(--fs-xs); padding: 4px 10px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); cursor: pointer; border-radius: 999px; }
+.ex-preset:hover { border-color: var(--blue); color: var(--blue); }
+.ex-chair.stopped rect { stroke: var(--warn); fill: var(--warn-soft); }
+.ex-chair.stopped circle { fill: var(--warn); }
+.ex-chair.stopped text { fill: var(--warn); }
+.drawing-caption .legend .swatch-dim { display: inline-block; width: 14px; border-bottom: 1px dashed var(--muted); vertical-align: middle; margin-right: 4px; }
+
+/* annotation hotspots in drawing */
+.hot {
+  cursor: pointer;
+  fill: var(--paper-3);
+  stroke: var(--ink);
+  stroke-width: 1.5;
+  transition: fill 0.15s;
+}
+.hot:hover, .hot:focus, .hot[aria-expanded="true"] { fill: var(--blue); stroke: var(--blue-ink); }
+.hot-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  fill: var(--ink);
+  pointer-events: none;
+  font-weight: 600;
+}
+.hot[aria-expanded="true"] + .hot-label { fill: var(--paper); }
+
+/* ============================================================
+   SCHEDULE TEXT BLOCK
+   ============================================================ */
+.schedule {
+  position: relative;
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  background: var(--paper-deep);
+  color: var(--paper);
+  border-radius: 10px;
+  padding: 18px 20px;
+  white-space: pre-wrap;
+  margin: 12px 0;
+  line-height: 1.6;
+  border: 1px solid var(--paper-deep);
+}
+.schedule .copy {
+  position: absolute; top: 10px; right: 10px;
+  font: inherit; font-size: var(--fs-xs);
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: var(--paper);
+  padding: 3px 10px; border-radius: 4px;
+  cursor: pointer;
+}
+.schedule .copy:hover { background: rgba(255,255,255,0.18); }
+
+/* ============================================================
+   LIVED IMPACT (accounts) — warm card row
+   ============================================================ */
+.account {
+  background: var(--paper-3);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--ev-co1);
+  border-radius: 0 10px 10px 0;
+  padding: 14px 18px;
+  margin: 10px 0;
+}
+.account p {
+  margin: 0 0 6px;
+  font-family: var(--font-slab);
+  font-size: var(--fs-md);
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.account .acc-meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+.account .acc-meta .co1-tag { color: var(--ev-co1); font-weight: 600; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.colophon {
+  background: var(--paper-2);
+  border-top: 1px solid var(--rule);
+  margin-top: 80px;
+  padding: 32px 28px 60px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--muted);
+}
+.colophon-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 32px;
+}
+@media (max-width: 720px) { .colophon-inner { grid-template-columns: 1fr; } }
+.colophon h4 { font-family: var(--font-slab); font-size: var(--fs-sm); color: var(--ink); margin: 0 0 6px; text-transform: none; letter-spacing: 0; }
+.colophon a { color: var(--ink-soft); text-decoration: none; border-bottom: 1px dotted var(--muted); }
+.colophon a:hover { border-bottom-style: solid; }
+
+/* ============================================================
+   LANDING — doors, stats, recent
+   ============================================================ */
+.lede {
+  max-width: 60ch;
+  font-size: var(--fs-md);
+  line-height: 1.6;
+  color: var(--ink);
+  margin: 0 0 22px;
+}
+.doors {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin: 18px 0;
+}
+.door {
+  display: grid;
+  grid-template-columns: 14px 80px 1fr auto;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 22px 18px 12px;
+  text-decoration: none;
+  color: var(--ink);
+  background: var(--paper-3);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  position: relative;
+  transition: transform 0.15s, border-color 0.15s, background 0.15s;
+}
+.door::before {
+  content: "";
+  width: 6px;
+  height: 60%;
+  background: var(--door-color, var(--ink));
+  border-radius: 3px;
+}
+.door[data-door="1"] { --door-color: var(--sec-3); }
+.door[data-door="2"] { --door-color: var(--sec-2); }
+.door[data-door="3"] { --door-color: var(--sec-6); }
+.door[data-door="4"] { --door-color: var(--sec-7); }
+.door:hover { background: var(--paper-2); border-color: var(--door-color); transform: translateX(2px); }
+.door .door-num {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+.door .door-body { display: flex; flex-direction: column; gap: 4px; }
+.door .door-title {
+  font-family: var(--font-slab); font-weight: 700; font-size: var(--fs-md);
+  color: var(--ink);
+}
+.door .door-prompt {
+  font-style: italic; color: var(--muted-2); font-size: var(--fs-sm);
+  margin: 0;
+}
+.door .door-cta {
+  font-family: var(--font-mono); font-size: var(--fs-xs);
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--door-color);
+  white-space: nowrap;
+}
+
+.statline {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin: 22px 0;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: var(--paper-3);
+  overflow: hidden;
+}
+@media (max-width: 720px) { .statline { grid-template-columns: repeat(2, 1fr); } }
+.statline .s {
+  padding: 14px 18px;
+  border-right: 1px solid var(--rule);
+}
+.statline .s:last-child { border-right: 0; }
+.statline .s .n {
+  font-family: var(--font-slab);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  display: block; line-height: 1;
+  color: var(--ink);
+}
+.statline .s .l {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-top: 6px; display: block;
+}
+
+.recent {
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  margin: 14px 0;
+  background: var(--paper-3);
+  overflow: hidden;
+}
+.recent ul { list-style: none; margin: 0; padding: 0; }
+.recent li {
+  padding: 12px 16px;
+  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 60px 1fr auto;
+  gap: 14px; align-items: center;
+  font-size: var(--fs-sm);
+}
+.recent li:first-child { border-top: 0; }
+.recent li .r-code {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  background: var(--paper-2);
+  border-radius: 4px;
+  padding: 2px 8px;
+  text-align: center;
+  color: var(--ink);
+}
+.recent li .r-title { color: var(--ink); text-decoration: none; }
+.recent li .r-title:hover { color: var(--blue-ink); }
+.recent li .r-meta { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--muted); }
+
+/* convention swatches */
+.conv {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: var(--paper-3);
+  overflow: hidden;
+}
+.conv .item {
+  padding: 14px 18px;
+  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 16px;
+  align-items: baseline;
+}
+.conv .item:first-child { border-top: 0; }
+.conv .item .label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--ink);
+  font-weight: 600;
+}
+.conv .item p { margin: 0; font-size: var(--fs-sm); }
+
+/* ============================================================
+   PRINT + REDUCED MOTION
+   ============================================================ */
+@media print {
+  .masthead, .subbar, .sectnav, .skip, .colophon { display: none; }
+  body { background: white; color: black; }
+  .row { break-inside: avoid; }
+  .row[open] > .r-body { display: block !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+
+
+/* ============================================================
+   ADDITIONS — compare table, tier chips, 4-mode toggle, hero variant
+   ============================================================ */
+
+/* ---------- audience lens (single-select dropdown) ---------- */
+.lens-bar {
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--rule);
+}
+.lens-bar-inner {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 8px 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.lens-select-label,
+.lens-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.lens-select {
+  font-family: var(--font-slab);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  border-radius: 4px;
+  padding: 8px 32px 8px 12px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' stroke='%231f1c18' stroke-width='1.5' fill='none' stroke-linecap='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  min-width: 240px;
+}
+.lens-select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+/* legacy classes — preserved so a stale fragment of the old toggle keeps shape */
+.lens-toggle {
+  display: inline-flex;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--paper);
+}
+.lens-toggle button {
+  background: transparent;
+  border: 0;
+  padding: 7px 14px;
+  font-family: var(--font-slab);
+  font-size: var(--fs-sm);
+  color: var(--ink-soft);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-left: 1px solid var(--rule);
+  white-space: nowrap;
+}
+.lens-toggle button:first-child { border-left: 0; }
+.lens-toggle button[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 600;
+}
+.lens-toggle button .lens-glyph {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  opacity: 0.7;
+}
+.lens-toggle button[aria-pressed="true"] .lens-glyph { opacity: 1; }
+.lens-hint {
+  font-size: var(--fs-sm);
+  color: var(--muted);
+  font-style: italic;
+}
+@media (max-width: 720px) {
+  .lens-bar-inner { padding: 10px 14px; gap: 8px; flex-wrap: wrap; }
+  .lens-select { width: 100%; min-width: 0; flex: 1 1 100%; }
+  .lens-hint { display: none; }
+  .lens-toggle button { padding: 7px 9px; font-size: var(--fs-sm); }
+  .lens-toggle button .lens-text { display: none; }
+}
+
+/* ---------- tier chips (Cochrane pattern) ---------- */
+.tier {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 1px 6px;
+  border-radius: 3px;
+  border: 1px solid currentColor;
+  vertical-align: baseline;
+  text-transform: uppercase;
+  cursor: help;
+  background: color-mix(in srgb, currentColor 8%, var(--paper));
+  line-height: 1.5;
+  margin: 0 2px;
+}
+.tier-1 { color: var(--sec-5); }  /* lived experience — plum */
+.tier-2 { color: var(--sec-7); }  /* regulatory — fern */
+.tier-3 { color: var(--sec-7); }  /* clinical — fern */
+.tier-4 { color: var(--blue-ink); } /* peer-reviewed cohort */
+.tier-5 { color: var(--sec-6); }  /* synthesis — ochre */
+.tier-6 { color: var(--blue-ink); } /* harmonised standard */
+.tier-7 { color: var(--sec-6); }  /* expert opinion — ochre */
+.tier-na { color: var(--muted); }
+
+/* ---------- compare table (Constitute Project pattern) ---------- */
+.compare-wrap {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--paper);
+  margin-top: 16px;
+}
+.compare-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--rule);
+  font-size: var(--fs-sm);
+}
+.compare-controls .cc-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.compare-controls .juris-pick {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--paper);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+  user-select: none;
+}
+.compare-controls .juris-pick input { margin: 0; cursor: pointer; }
+.compare-controls .juris-pick[data-on="true"] {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+.compare-controls .juris-pick[data-on="true"] .juris-flag { color: var(--paper); }
+
+.compare-scroll {
+  overflow-x: auto;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+  min-width: 640px;
+}
+.compare-table thead th {
+  position: sticky;
+  top: 0;
+  background: var(--paper-2);
+  border-bottom: 2px solid var(--rule);
+  text-align: left;
+  padding: 12px 14px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  text-transform: uppercase;
+  font-weight: 600;
+  vertical-align: bottom;
+}
+.compare-table thead th .juris-name {
+  display: block;
+  font-family: var(--font-slab);
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.compare-table thead th .juris-std {
+  display: block;
+  font-family: var(--font-mono);
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  font-weight: 400;
+  margin-top: 4px;
+}
+.compare-table thead th.gb-col { background: color-mix(in srgb, var(--ev-stated) 14%, var(--paper-2)); border-bottom-color: var(--ev-stated); }
+.compare-table thead th.gb-col .juris-name::after {
+  content: " ★";
+  color: var(--ev-stated);
+}
+.compare-table tbody th {
+  position: sticky;
+  left: 0;
+  background: var(--paper);
+  border-right: 2px solid var(--rule);
+  text-align: left;
+  padding: 12px 14px;
+  font-family: var(--font-slab);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  white-space: nowrap;
+  vertical-align: top;
+  z-index: 1;
+}
+.compare-table tbody th small {
+  display: block;
+  font-weight: 400;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  margin-top: 2px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.compare-table tbody td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+  vertical-align: top;
+  background: var(--paper);
+  font-variant-numeric: tabular-nums;
+}
+.compare-table tbody td:last-child { border-right: 0; }
+.compare-table tbody tr:last-child td,
+.compare-table tbody tr:last-child th { border-bottom: 0; }
+.compare-table tbody td.gb-col {
+  background: color-mix(in srgb, var(--ev-stated) 8%, var(--paper));
+}
+.compare-table .val-num {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+}
+.compare-table .val-num small { font-weight: 400; color: var(--muted); margin-left: 2px; }
+.compare-table .val-pref { color: var(--ev-stated); }
+.compare-table .val-warn { color: var(--warn); }
+.compare-table .val-empty { color: var(--muted); font-family: var(--font-mono); }
+.compare-table .val-note {
+  display: block;
+  margin-top: 4px;
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  line-height: 1.4;
+}
+.compare-table tbody tr.row-spread { background: color-mix(in srgb, var(--ochre) 6%, var(--paper)); }
+.compare-spread {
+  padding: 12px 16px;
+  background: var(--paper-2);
+  border-top: 1px solid var(--rule);
+  font-size: var(--fs-sm);
+  color: var(--ink-soft);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+.compare-spread strong { color: var(--ink); font-weight: 600; }
+.compare-spread .spread-stat {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  border-left: 3px solid var(--ev-stated);
+  padding-left: 10px;
+}
+.compare-spread .spread-stat .ss-l {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.compare-spread .spread-stat .ss-v {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  color: var(--ink);
+}
+
+/* ---------- hero (dimensions.com pattern) ---------- */
+.hero-block {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 28px;
+  align-items: stretch;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 32px;
+}
+@media (max-width: 920px) { .hero-block { grid-template-columns: 1fr; gap: 18px; } }
+.hero-drawing {
+  background: var(--paper-3);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 18px 18px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.hero-drawing svg { width: 100%; height: auto; display: block; max-height: 320px; }
+.hero-drawing-cap {
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+.hero-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.hero-value-card {
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  position: relative;
+}
+.hero-value-card::before {
+  content: "";
+  position: absolute;
+  left: -1px; top: -1px; bottom: -1px;
+  width: 6px;
+  background: var(--ev-stated);
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+.hero-value-card .hv-l {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.hero-value-card .hv-v {
+  display: block;
+  font-family: var(--font-slab);
+  font-size: var(--fs-xl);
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+}
+.hero-value-card .hv-v small {
+  font-size: var(--fs-md);
+  font-weight: 400;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  letter-spacing: 0;
+  margin-left: 6px;
+}
+.hero-value-card .hv-source {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--rule);
+}
+.hero-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--paper);
+  overflow: hidden;
+}
+.hero-stat {
+  padding: 12px 14px;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.hero-stat:nth-child(2n) { border-right: 0; }
+.hero-stat:nth-child(n+3) { border-bottom: 0; }
+.hero-stat .hs-l {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.hero-stat .hs-v {
+  display: block;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  color: var(--ink);
+}
+.hero-stat .hs-v small {
+  font-weight: 400;
+  color: var(--muted);
+  margin-left: 4px;
+  font-size: var(--fs-xs);
+}
+
+/* hide the old glance grid when hero-block is used */
+.glance.legacy-hide { display: none; }
+
+/* ---------- lens-mode default disclosure ---------- */
+/* When a particular lens is active, set which sections are open by default.
+   We do this by adding class names on body and setting open via JS. */
+.lens-active-designer .for-designer-default-open[open] {}
+
+/* lens-mode collapse hint chip */
+.section[data-collapsed-by-lens="true"] > details.row { /* visual placeholder */ }
+.lens-collapsed-note {
+  font-size: var(--fs-sm);
+  color: var(--muted);
+  font-style: italic;
+  margin: 6px 0 0;
+}
+
+/* ---------- empty-state card (used in §9 when no Co-1 accounts) ---------- */
+.empty-state {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 18px;
+  align-items: start;
+  padding: 22px 24px;
+  border: 1px dashed var(--rule);
+  border-radius: 8px;
+  background: var(--paper-2);
+  margin: 16px 0 0;
+}
+.empty-state-mark {
+  font-size: var(--fs-lg);
+  color: var(--muted);
+  text-align: center;
+  line-height: 1;
+  margin-top: 4px;
+}
+.empty-state-body h3 {
+  font-family: var(--font-slab);
+  font-weight: 700;
+  font-size: var(--fs-md);
+  margin: 0 0 6px;
+  color: var(--ink);
+}
+.empty-state-body p { margin: 0 0 10px; color: var(--ink-soft); }
+.empty-state-body .empty-shape {
+  margin: 10px 0;
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+}
+.empty-state-body .empty-shape > div {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 16px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: var(--fs-sm);
+}
+.empty-state-body .empty-shape dt {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.empty-state-body .empty-shape dd { margin: 0; color: var(--ink-soft); }
+.empty-state-body .empty-cta { margin-top: 12px; }
+.empty-state-body .empty-cta a {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--ink);
+  border-bottom: 1px solid var(--ink);
+  text-decoration: none;
+}
+
+/* ============================================================
+   LANDING LAYOUT — two-column article + sidebar
+   ============================================================ */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 268px;
+  gap: 48px;
+  align-items: start;
+}
+@media (max-width: 860px) { .layout { grid-template-columns: 1fr; } }
+
+.spec-content {
+  min-width: 0;
+  /* section reordering — flex column so --order-spec/--order-q take effect */
+  display: flex;
+  flex-direction: column;
+}
+body.mode-spec   .spec-content > .section { order: var(--order-spec, 0); }
+body.mode-question .spec-content > .section { order: var(--order-q, 0); }
+
+.infobox {
+  position: sticky;
+  top: 24px;
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  font-size: var(--fs-sm);
+}
+.infobox-head {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin: 0 0 14px;
+  font-weight: 600;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
+}
+.infobox dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; align-items: baseline; }
+.infobox dt { font-family: var(--font-mono); font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); white-space: nowrap; }
+.infobox dd { margin: 0; font-size: var(--fs-sm); }
+.infobox .value-big { font-family: var(--font-slab); font-weight: 700; font-size: var(--fs-md); color: var(--ink); }
+.infobox .value-big small { font-weight: 400; color: var(--muted); font-size: var(--fs-xs); margin-left: 4px; }
+.infobox .iblist { list-style: none; margin: 0; padding: 0; }
+.infobox .iblist li { font-size: var(--fs-xs); color: var(--ink-soft); line-height: 1.8; }
+.infobox a { color: var(--blue-ink); text-decoration: underline; }
+
+.h2-num {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 6px;
+}
+
+/* ============================================================
+   SPEC PAGE section reordering — sections are direct children of .page
+   ============================================================ */
+.page {
+  display: flex;
+  flex-direction: column;
+}
+.page > .article-header { order: -100; }
+.page > .sitemap        { order: -99; }
+body.mode-spec   .page > .section { order: var(--order-spec, 0); }
+body.mode-question .page > .section { order: var(--order-q, 0); }
+
+/* ============================================================
+   EXPAND/COLLAPSE + CONTENTS LINK
+   ============================================================ */
+.expand-toggle {
+  display: inline-block;
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 4px 12px;
+  cursor: pointer;
+}
+.expand-toggle:hover { border-color: var(--ink-soft); color: var(--ink-soft); }
+
+.sectnav-contents,
+.snav-contents {
+  font-family: var(--font-mono) !important;
+  font-weight: 700 !important;
+  font-size: var(--fs-sm) !important;
+  color: var(--muted) !important;
+  border: 1px solid var(--rule) !important;
+  background: var(--paper-2) !important;
+  border-radius: 6px !important;
+  padding: 6px 10px !important;
+  min-height: 36px;
+}
+.sectnav-contents:hover,
+.snav-contents:hover {
+  background: var(--paper) !important;
+  border-color: var(--ink-soft) !important;
+  color: var(--ink) !important;
+}
+
+/* ============================================================
+   SVG HOTSPOT — expanded invisible touch area for motor access
+   ============================================================ */
+.hot-hitarea {
+  fill: transparent;
+  cursor: pointer;
+}
+
+/* ============================================================
+   COMPARE-SCROLL — keyboard scrollability
+   ============================================================ */
+.compare-scroll[tabindex="0"]:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* ============================================================
+   BODY-TEXT LINKS — underline for color-independence
+   ============================================================ */
+.section p a:not(.cite-trigger):not(.xref-trigger):not(.chip),
+.plain p a,
+.r-body p a,
+.lede a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ============================================================
+   CHIP CONTRAST FIXES
+   ============================================================ */
+.chip-evi-provis {
+  color: var(--ev-provis);  /* now #7a5a00 — passes contrast */
+}
+
+/* disabled / unavailable nav links */
+.masthead nav a[aria-disabled="true"],
+a[data-unavailable] {
+  color: var(--muted);
+  cursor: default;
+  pointer-events: none;
+  border-bottom-color: transparent !important;
+}
+
+/* ============================================================
+   CATEGORY DIRECTORY — flat list of provisions per category
+   ============================================================ */
+.cat-section .sec-head { margin-bottom: 0; }
+
+.cat-section .rowlist {
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+.cat-row {
+  display: grid;
+  grid-template-columns: 60px 1fr auto;
+  gap: 14px;
+  align-items: center;
+  padding: 10px 16px;
+  border-top: 1px solid var(--rule);
+  text-decoration: none;
+  color: var(--ink);
+  font-size: var(--fs-sm);
+  transition: background 0.12s;
+}
+.cat-row:first-child { border-top: 0; }
+.cat-row:hover { background: var(--paper-2); }
+.cat-row[data-unavailable] {
+  pointer-events: none;
+  color: var(--ink-soft);
+}
+.cr-code {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  background: var(--paper-2);
+  border-radius: 4px;
+  padding: 2px 8px;
+  text-align: center;
+  color: var(--ink);
+  font-weight: 600;
+}
+.cr-name {
+  font-family: var(--font-slab);
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.3;
+}
+.cat-row[data-unavailable] .cr-name { font-weight: 400; }
+.cr-refs {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  white-space: nowrap;
+}
+@media (max-width: 640px) {
+  .cat-row {
+    grid-template-columns: 48px 1fr;
+    gap: 8px;
+  }
+  .cr-refs { grid-column: 1 / -1; justify-self: start; }
+}
+
+/* ============================================================
+   MOBILE — collapse every multi-column block into stacked rows.
+   Applied below 640px so phone widths (390–414) render as a
+   single readable column. Tables become row-per-jurisdiction
+   stacks. Stat strips become a vertical list of label + value.
+   ============================================================ */
+@media (max-width: 640px) {
+  /* --- four-up / two-up stat strips --- */
+  .glance,
+  .statline,
+  .exp-readout,
+  .hero-stats,
+  .compare-spread {
+    grid-template-columns: 1fr !important;
+  }
+  .glance-cell,
+  .statline .s,
+  .ex-cell,
+  .hero-stat,
+  .spread-stat {
+    border-right: 0 !important;
+    border-bottom: 1px solid var(--rule) !important;
+    padding: 12px 16px !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: baseline !important;
+    gap: 16px !important;
+  }
+  .glance-cell:last-child,
+  .statline .s:last-child,
+  .ex-cell:last-child,
+  .hero-stat:last-child,
+  .spread-stat:last-child { border-bottom: 0 !important; }
+
+  /* --- door rows on landing --- */
+  .door {
+    grid-template-columns: 1fr !important;
+    gap: 6px !important;
+    padding: 14px 16px !important;
+  }
+  .door .door-tag,
+  .door .door-cta { justify-self: start; }
+
+  /* --- conv (key/value paragraph rows) --- */
+  .conv-row {
+    grid-template-columns: 1fr !important;
+    gap: 4px !important;
+  }
+
+  /* --- popover dl --- */
+  .pop dl {
+    grid-template-columns: 1fr !important;
+    gap: 2px 0 !important;
+  }
+  .pop dt { margin-top: 6px; }
+
+  /* --- hero card: drawing on top, value/stats below --- */
+  .hero-block { gap: 14px !important; }
+
+  /* --- compare table → linearised "card per jurisdiction" --- */
+  .compare-scroll { overflow-x: visible; }
+  table.compare-table { display: block; }
+  table.compare-table thead { display: none; }
+  table.compare-table tbody { display: block; }
+  table.compare-table tr {
+    display: block;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    background: var(--paper);
+    margin: 0 0 10px;
+    padding: 4px 0;
+  }
+  table.compare-table tr.row-spread th[scope="row"],
+  table.compare-table tr th[scope="row"] {
+    display: block;
+    padding: 10px 14px 6px;
+    font-family: var(--font-slab);
+    font-weight: 700;
+    font-size: var(--fs-sm);
+    color: var(--ink);
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper-2);
+  }
+  table.compare-table td {
+    display: grid !important;
+    grid-template-columns: 90px 1fr;
+    column-gap: 14px;
+    padding: 8px 14px;
+    border-bottom: 1px dotted var(--rule);
+    align-items: baseline;
+  }
+  table.compare-table td:last-child { border-bottom: 0; }
+  /* show jurisdiction code as the row label */
+  table.compare-table td::before {
+    content: attr(data-jcol);
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  table.compare-table td.gb-col::before {
+    color: var(--ink);
+    content: "★ Guidebook";
+  }
+  table.compare-table td.gb-col {
+    background: color-mix(in srgb, var(--accent-muted) 30%, var(--paper));
+  }
+
+  /* --- row summary: drop the leading short-code into its own line --- */
+  .row > summary {
+    grid-template-columns: 1fr 18px !important;
+    row-gap: 4px !important;
+    padding: 12px 14px !important;
+  }
+  .row > summary > .r-tag {
+    grid-column: 1 / 2 !important;
+    grid-row: 1 !important;
+    font-size: var(--fs-xs) !important;
+    color: var(--muted);
+    margin-bottom: 2px;
+  }
+  .row > summary > .r-title  { grid-column: 1 / 2 !important; grid-row: 2 !important; }
+  .row > summary > .r-value  { grid-column: 1 / 2 !important; grid-row: 3 !important; justify-self: start !important; }
+  .row > summary > .r-arrow  { grid-column: 2 / 3 !important; grid-row: 1 / 4 !important; align-self: center; }
+
+  /* --- breadcrumb trail wraps cleanly --- */
+  .crumbs { flex-wrap: wrap; row-gap: 4px; }
+
+  /* --- kicker pills wrap --- */
+  .kicker { flex-wrap: wrap; row-gap: 6px; }
+
+  /* --- subbar mode toggle goes on its own row --- */
+  .subbar-inner { flex-wrap: wrap; row-gap: 8px; }
+
+  /* --- masthead nav: scroll horizontally rather than wrap --- */
+  .masthead nav {
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* --- citelist chips wrap --- */
+  .citelist { flex-wrap: wrap; row-gap: 6px; }
+
+  /* --- title / h2 sizes scaled --- */
+  .title { font-size: var(--fs-xl) !important; }
+  .sec-head h2 { font-size: var(--fs-lg) !important; }
+
+  /* --- empty state --- */
+  .empty-state {
+    grid-template-columns: 1fr !important;
+    padding: 16px 16px !important;
+  }
+  .empty-state-mark { text-align: left; }
+  .empty-state-body .empty-shape > div {
+    grid-template-columns: 1fr !important;
+    gap: 2px !important;
+    padding: 8px 0 !important;
+  }
+}
+
+/* ---- page-local layer from specs/e-08.html ---- */
+
+/* Page-local styles sit AFTER guidebook.css so equal-specificity rules win.
+   No webfont linked; the design system's fallback stacks render the page. */
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+:where(.row>summary,.sectnav-list a,.compare-table a,.juris-pick,.decision-table a,h2){
+  scroll-margin-top:88px;}
+.sec-head h2{margin:2px 0 0;}
+.deck{font-family:var(--font-slab);font-size:var(--fs-md,18px);color:var(--ink);
+  margin:6px 0 0;max-width:66ch;font-weight:400;text-wrap:balance;}
+.sec-num{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.06em;
+  text-transform:uppercase;color:var(--muted);}
+.r-body .block p,.integrity-note,.provisional-plain,.provisional-detail,.qlist li,
+.spec-clause p,.callout p,.deck{max-width:68ch;}
+.honesty{color:#6f5510;font-size:14px;line-height:1.5;font-family:var(--font-mono);}
+.val-warn{color:#8f3d12;}
+.chip-warn{color:#8f3d12;background:#f6e2cf;border-color:#c98a5e;}
+.sym-warn{color:#8f3d12;}
+.r-value,.compare-table tbody th{white-space:normal;overflow-wrap:anywhere;}
+
+.band{display:inline-flex;align-items:center;gap:5px;font-family:var(--font-mono);
+  font-size:var(--fs-xs);padding:2px 8px;border-radius:10px;border:1px solid var(--rule);
+  min-height:22px;white-space:normal;}
+.band-full{background:#e3f0e6;border-color:#3d7551;color:#123a24;}
+.band-partial{background:#fbf3dd;border-color:#8a6d14;color:#543d09;}
+.band-weak{background:#eeeae3;border-color:#7d7466;color:#3f3a31;}
+.conf{font-family:var(--font-mono);font-size:var(--fs-xs);color:#6f5510;}
+:root{--pop-deaf:#5a3fb0;}
+
+/* inline "sources" button — every claim carries one, ≥24px target */
+.cite{display:inline-flex;align-items:center;justify-content:center;gap:3px;
+  min-width:24px;min-height:24px;padding:0 7px;margin:0 2px;vertical-align:baseline;
+  font-family:var(--font-mono);font-size:11px;line-height:1;border:1px solid var(--rule);
+  border-radius:6px;background:var(--paper);color:#173a6b;cursor:pointer;}
+.cite::before{content:"◇";font-size:10px;}
+.cite::after{content:"sources";font-size:9px;letter-spacing:.02em;color:var(--muted);}
+.cite:hover,.cite:focus-visible{background:#eef3fb;border-color:#7ea3d6;}
+.cite.mini::after{content:"src";}
+
+/* popover source lists (many sources per popup) */
+.pop{max-width:470px;}
+.pop-lead{margin:0 0 2px;font-size:13px;}
+.pop-src{list-style:none;margin:6px 0 0;padding:0;}
+.pop-src li{padding:7px 0;border-top:1px solid var(--rule);font-size:12px;line-height:1.45;}
+.pop-src .s-meta{display:block;font-family:var(--font-mono);font-size:10px;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.03em;margin-top:2px;}
+.pop-src .s-status{color:#6f5510;}
+.pop-src code{font-family:var(--font-mono);font-size:11px;background:#efeadf;padding:0 3px;border-radius:3px;}
+.pop-close{position:absolute;top:6px;right:6px;width:28px;height:28px;border-radius:6px;
+  border:1px solid var(--rule);background:var(--paper);cursor:pointer;font-size:16px;line-height:1;}
+.pop-close:hover{background:#efeadf;}
+.pop{padding-top:34px;}
+
+.glance{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;
+  margin:18px 0 4px;padding:14px;border:1px solid var(--rule);border-radius:10px;background:var(--paper-2,#fbf8f0);}
+.glance div{display:flex;flex-direction:column;gap:2px;}
+.glance dt{font-family:var(--font-mono);font-size:var(--fs-xs);text-transform:uppercase;
+  letter-spacing:.04em;color:var(--muted);}
+.glance dd{margin:0;font-family:var(--font-slab);font-size:var(--fs-lg,22px);font-weight:600;}
+.glance dd small{font-size:var(--fs-sm);font-weight:400;color:var(--muted);}
+
+.provisional-plain{border:2px solid #b06a1f;background:#fbeee0;color:#5a3410;
+  border-radius:8px 8px 0 0;padding:12px 16px;font-size:var(--fs-md,18px);line-height:1.5;}
+.provisional-plain strong{color:#7a3f0e;}
+.provisional-detail{border:1px solid #d8c4a6;border-top:none;background:#fdf7ef;
+  border-radius:0 0 8px 8px;padding:10px 16px 14px;}
+.provisional-detail summary{cursor:pointer;font-family:var(--font-mono);font-size:var(--fs-sm);color:#7a3f0e;}
+.provisional-detail p{font-size:var(--fs-sm);color:#5a3410;margin:8px 0 0;line-height:1.55;}
+
+.decision-wrap{overflow-x:auto;margin:8px 0 4px;}
+.decision-table{width:100%;border-collapse:collapse;font-size:var(--fs-base);}
+.decision-table caption{text-align:left;font-family:var(--font-mono);font-size:var(--fs-xs);
+  text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding-bottom:6px;}
+.decision-table th,.decision-table td{border-bottom:1px solid var(--rule);padding:11px 12px;text-align:left;vertical-align:top;}
+.decision-table thead th{font-family:var(--font-mono);font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.04em;color:var(--muted);}
+.decision-table .dv{font-family:var(--font-slab);font-weight:600;white-space:nowrap;}
+.decision-table tr.is-req{background:#f1edfb;}
+.decision-table tr.is-req .dv{color:#3f2a86;}
+.decision-table .dbasis{font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--muted);}
+
+.callout{border-left:3px solid var(--accent,#2a6fdb);background:#eef3fb;padding:10px 14px;margin:14px 0;border-radius:0 6px 6px 0;}
+.callout h3{font-family:var(--font-mono);font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.05em;margin:0 0 6px;color:#173a6b;}
+.callout ul{margin:0;padding-left:18px;}
+.callout li{margin:3px 0;font-size:var(--fs-sm);}
+.callout.two-roads{border-left-color:#5a3fb0;background:#f1edfb;}
+.callout.two-roads h3{color:#3f2a86;}
+.integrity-note{border-left:3px solid #8f3d12;padding:8px 0 8px 12px;margin:10px 0;font-size:var(--fs-sm);color:#5a2a10;background:#fdf6f1;}
+.spec-clause{border:1px solid var(--rule);border-radius:8px;background:#fbf8f0;padding:0;margin:14px 0;overflow:hidden;}
+.spec-clause .sc-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 14px;background:#efeadf;border-bottom:1px solid var(--rule);}
+.spec-clause .sc-head h3{font-family:var(--font-mono);font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.05em;margin:0;color:var(--ink);}
+.spec-clause pre{margin:0;padding:14px;font-family:var(--font-mono);font-size:var(--fs-sm);line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere;}
+.copy-btn{font-family:var(--font-mono);font-size:var(--fs-xs);padding:4px 10px;min-height:26px;border:1px solid var(--rule);border-radius:6px;background:var(--paper);cursor:pointer;}
+.copy-btn:hover{background:#efeadf;}
+
+.qlist{list-style:none;padding:0;margin:10px 0;}
+.qlist li{padding:10px 0 10px 26px;position:relative;border-bottom:1px solid var(--rule);font-size:var(--fs-base);}
+.qlist li::before{content:"?";position:absolute;left:2px;top:10px;font-family:var(--font-mono);font-weight:700;color:var(--accent,#2a6fdb);}
+.qlist b{display:block;font-family:var(--font-mono);font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:3px;}
+
+.ladder{margin:6px 0;border-top:1px solid var(--rule);}
+.ladder div{display:grid;grid-template-columns:minmax(160px,1fr) auto;gap:6px 14px;padding:8px 0;border-bottom:1px solid var(--rule);align-items:baseline;}
+.ladder dt{font-weight:600;}
+.ladder .lval{font-family:var(--font-mono);font-size:var(--fs-sm);text-align:right;white-space:nowrap;}
+.ladder .lnote{grid-column:1 / -1;font-size:var(--fs-sm);color:var(--muted);margin:0;}
+
+.fig-callouts{list-style:none;padding:0;margin:10px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px;}
+.fig-callouts li{font-size:var(--fs-sm);padding:8px 10px;border:1px solid var(--rule);border-radius:6px;background:var(--paper-2,#fbf8f0);}
+.fig-callouts b{font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--muted);display:block;text-transform:uppercase;letter-spacing:.03em;}
+
+@media (max-width:640px){
+  .compare-table{display:table;}
+  .compare-table thead{display:table-header-group;}
+  .compare-table tbody{display:table-row-group;}
+  .compare-table tr{display:table-row;}
+  .compare-table th,.compare-table td{display:table-cell;}
+  .compare-table td::before{content:none !important;}
+}
+
+
+/* ===== Brief layer — strictly on-system =====
+   Type: only the 8 scale steps, via var(--fs-*). Weight: only 400/600/700.
+   Lines: only 1px/2px/3px. Spacing: 8px rhythm via --s* tokens, 4px half-step
+   only where the system itself uses one. Radius: exactly two. Colour: every
+   value a token — no hex below :root. */
+:root{
+  /* stone ground — warmth reduced, not removed */
+  --paper:#f1efeb; --paper-2:#e5e2dc; --paper-3:#f8f7f5; --paper-deep:#26262b;
+  --ink:#1e1d1c; --ink-soft:#3b3a37; --muted:#6d6b66; --muted-2:#95928b;
+  --rule:#d4d1cb; --rule-strong:#1e1d1c;
+  /* Bauhaus triad, held quiet — status and section accents only, never ground */
+  --blue:#1f5fc4; --blue-soft:#dde6f6; --blue-ink:#143464;
+  --oxblood:#a33028; --oxblood-soft:#f2ddda; --oxblood-ink:#63201b;
+  --warn:#b0541c; --warn-soft:#f0e0cd; --warn-ink:#6d3210;
+  --mark-opus-bg:#ebe7dc; --mark-opus-fg:#514524; --mark-opus-border:#c3bda9;
+  --mark-src-bg:#dfe8dd; --mark-src-fg:#1f4029; --mark-src-border:#8fae90;
+  /* spacing rhythm — 8px base, 4px half-step, 64px section gap */
+  --s-half:4px; --s1:8px; --s2:16px; --s3:24px; --s4:32px; --s5:48px; --s6:64px;
+  --radius:16px; --radius-pill:999px;
+  --font-geo:"Futura","Avenir Next","Century Gothic","Questrial",ui-rounded,"Segoe UI",system-ui,sans-serif;
+}
+
+/* ---------- hierarchy ladder: one size + weight per information rank ---------- */
+h1{font-family:var(--font-geo);font-size:var(--fs-xl);font-weight:700;letter-spacing:-.01em;}
+h2{font-family:var(--font-geo);font-size:var(--fs-lg);font-weight:600;letter-spacing:-.008em;}
+h3{font-family:var(--font-geo);font-size:var(--fs-md);font-weight:600;margin:var(--s3) 0 var(--s1);}
+.tagline,.deck{font-size:var(--fs-md);font-weight:400;color:var(--ink-soft);max-width:66ch;}
+.page p{font-size:var(--fs-base);max-width:68ch;}
+.honesty{font-size:var(--fs-sm);}
+.st,.pill,.band,.chip,.sec-num,.s-meta,.dimcap,.ctl-lab,.ctl-state,.affected-lab,.term-flag{
+  font-family:var(--font-mono);font-size:var(--fs-2xs);letter-spacing:.08em;text-transform:uppercase;}
+.apop,.sch,.trm,.dimval{font-family:var(--font-mono);font-size:var(--fs-xs);}
+
+/* ---------- rhythm: air between everything ---------- */
+.page{padding-top:var(--s4);}
+.section{margin-top:var(--s6);padding-top:var(--s2);border-top:1px solid var(--rule);}
+.sec-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--s2);
+  margin-bottom:var(--s3);padding-bottom:var(--s2);border-bottom:2px solid var(--ink);}
+.sec-head .deck{width:100%;margin:var(--s-half) 0 0;}
+.page p{margin:0 0 var(--s2);}
+.page p + p{margin-top:0;}
+.article-header{margin-bottom:var(--s4);}
+.rowlist{display:flex;flex-direction:column;gap:var(--s1);margin:var(--s3) 0;}
+.callout{margin:var(--s3) 0;padding:var(--s2) var(--s3);border-left:3px solid var(--blue);
+  border-radius:0 var(--radius) var(--radius) 0;}
+.callout h3{margin:0 0 var(--s1);font-size:var(--fs-base);}
+.callout p{margin-bottom:var(--s1);}
+.decision-wrap{margin:var(--s3) 0;}
+.qlist{margin:var(--s2) 0;}
+.qlist li{padding:var(--s2) 0 var(--s2) var(--s3);}
+
+/* ---------- section rank carried by colour, uniformly ---------- */
+.sec-num{background:var(--blue);color:var(--paper);padding:var(--s-half) var(--s2);
+  border-radius:var(--radius-pill);font-weight:600;}
+#values .sec-num{background:var(--warn-ink);}
+#swept .sec-num{background:var(--mark-src-fg);}
+#hinders .sec-num{background:var(--oxblood);}
+#scope .sec-num{background:var(--ink);}
+#apparatus .sec-num{background:#4f4d49;}
+
+/* ---------- control bar ---------- */
+.ctlbar{position:sticky;top:0;z-index:60;background:var(--paper-3);border-bottom:2px solid var(--ink);}
+.ctlbar-inner{max-width:var(--max-w);margin:0 auto;padding:var(--s1) 28px;
+  display:flex;flex-direction:column;gap:var(--s1);}
+.ctl-row{display:flex;align-items:center;gap:var(--s1);flex-wrap:wrap;}
+.ctl-lab{color:var(--muted);min-width:64px;}
+.scheme{display:inline-flex;border:1px solid var(--muted);border-radius:var(--radius-pill);overflow:hidden;}
+.sch,.trm{padding:var(--s-half) var(--s2);min-height:32px;border:none;
+  border-right:1px solid var(--rule);background:var(--paper);color:var(--ink-soft);cursor:pointer;}
+.sch:last-child,.trm:last-child{border-right:none;}
+.sch.is-on,.trm.is-on{background:var(--ink);color:var(--paper);font-weight:600;}
+.pills{display:flex;flex-wrap:wrap;gap:var(--s-half);flex:1;}
+.pill{padding:var(--s-half) var(--s2);min-height:32px;min-width:32px;
+  display:inline-flex;align-items:center;justify-content:center;
+  border:1px solid var(--muted);border-radius:var(--radius-pill);
+  background:var(--paper);color:var(--ink-soft);cursor:pointer;}
+.pill-ctx{border-style:dashed;color:var(--ink-soft);}
+.pill.is-on{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+.pill-reset{padding:var(--s-half) var(--s2);min-height:32px;font-family:var(--font-mono);
+  font-size:var(--fs-2xs);text-transform:uppercase;letter-spacing:.08em;
+  border:1px solid var(--muted);border-radius:var(--radius-pill);background:var(--paper);
+  color:var(--ink-soft);cursor:pointer;}
+.ctl-state{margin:0;color:var(--muted);border-top:1px solid var(--rule);padding-top:var(--s1);
+  text-transform:none;letter-spacing:.02em;line-height:1.6;}
+
+/* ---------- status demarcation ---------- */
+.st{display:inline-flex;align-items:center;gap:var(--s-half);padding:var(--s-half) var(--s2);
+  border-radius:var(--radius-pill);border:1px solid var(--rule);white-space:nowrap;}
+.st-floor{color:var(--ink-soft);background:var(--paper-2);border-color:var(--muted);}
+.st-consensus{color:var(--warn-ink);background:var(--warn-soft);border-color:var(--warn-ink);}
+.st-rec{color:var(--mark-opus-fg);background:var(--mark-opus-bg);border-color:var(--mark-opus-border);}
+.st-obs{color:var(--mark-src-fg);background:var(--mark-src-bg);border-color:var(--mark-src-border);}
+.st-gb{color:var(--blue-ink);background:var(--blue-soft);border-color:var(--blue);font-weight:600;}
+.legend{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s1) var(--s2);
+  margin:var(--s3) 0;padding:var(--s2) var(--s3);border:1px solid var(--rule);
+  border-radius:var(--radius);background:var(--paper-3);}
+.leg-lab{width:100%;margin:0 0 var(--s-half);color:var(--muted);}
+.leg-d{font-size:var(--fs-sm);color:var(--ink-soft);margin-right:var(--s2);}
+
+/* ---------- dimension figure ---------- */
+.dimfig{margin:var(--s3) 0;padding:var(--s2);border:1px solid var(--rule);
+  border-radius:var(--radius);background:var(--paper-3);}
+.dimrow{display:grid;grid-template-columns:88px 1fr auto;gap:0 var(--s2);align-items:center;
+  width:100%;padding:var(--s2) var(--s1);border:none;border-bottom:1px solid var(--rule);
+  background:none;text-align:left;cursor:pointer;color:inherit;border-radius:var(--radius);}
+.dimrow:last-of-type{border-bottom:none;}
+.dimrow:hover{background:var(--paper-2);}
+.dimval{font-variant-numeric:tabular-nums;text-align:right;color:var(--ink);font-weight:600;}
+.bar-hold{display:block;min-width:150px;}
+.bar{display:block;height:16px;border:1px solid var(--muted);background:var(--paper-2);border-radius:var(--radius-pill);}
+.bar-ev{border-color:var(--ev-stated);background:var(--mark-src-bg);}
+.dimcap{display:block;color:var(--muted);margin-top:var(--s-half);text-transform:none;letter-spacing:.02em;}
+
+/* ---------- affected-population pills ---------- */
+.affected{display:flex;flex-wrap:wrap;gap:var(--s1);align-items:center;margin:var(--s2) 0 var(--s3);
+  padding:var(--s2) var(--s3);border:1px solid var(--rule);border-left:3px solid var(--oxblood);
+  border-radius:0 var(--radius) var(--radius) 0;background:var(--paper-3);}
+.affected-lab{width:100%;margin:0;color:var(--muted);}
+.apop{display:inline-flex;align-items:center;gap:var(--s1);padding:var(--s-half) var(--s2);
+  min-height:32px;border-radius:var(--radius-pill);border:1px solid var(--oxblood);
+  background:var(--oxblood-soft);color:var(--oxblood-ink);font-weight:600;}
+.apop .role{font-weight:400;color:var(--ink-soft);border-left:1px solid var(--oxblood);
+  padding-left:var(--s1);}
+.term-flag{display:inline-block;color:var(--oxblood-ink);background:var(--oxblood-soft);
+  border:1px solid var(--oxblood);border-radius:var(--radius-pill);
+  padding:0 var(--s1);margin-left:var(--s1);text-transform:none;letter-spacing:.02em;}
+
+/* ---------- popovers ---------- */
+.pop{display:none;position:absolute;z-index:80;max-width:470px;width:calc(100vw - 32px);
+  background:var(--paper-3);border:2px solid var(--ink);border-radius:var(--radius);
+  padding:var(--s4) var(--s3) var(--s3);}
+.pop.is-open{display:block;}
+.pop-head{display:flex;gap:var(--s1);font-family:var(--font-mono);font-size:var(--fs-2xs);
+  text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:var(--s-half);}
+.pop-title{font-family:var(--font-geo);font-weight:700;font-size:var(--fs-base);margin-bottom:var(--s1);}
+.pop-lead{font-size:var(--fs-sm);margin:0 0 var(--s1);}
+.pop-src li{padding:var(--s2) 0;font-size:var(--fs-sm);line-height:1.55;border-top:1px solid var(--rule);}
+.pop-close{position:absolute;top:var(--s1);right:var(--s1);width:32px;height:32px;
+  border-radius:var(--radius-pill);border:1px solid var(--muted);background:var(--paper);cursor:pointer;}
+
+/* ---------- fork, sort, scope ---------- */
+.callout.fork{border-left-color:var(--oxblood);background:var(--oxblood-soft);}
+.callout.fork h3{color:var(--oxblood-ink);}
+.sortb{font-family:var(--font-mono);font-size:var(--fs-2xs);text-transform:uppercase;
+  letter-spacing:.08em;color:var(--ink-soft);background:none;border:none;cursor:pointer;
+  min-height:24px;min-width:24px;padding:var(--s-half) 0;display:inline-flex;align-items:center;gap:var(--s-half);}
+.sortb::after{content:" \2195";opacity:.5;}
+.sortb[data-dir=asc]::after{content:" \2191";opacity:1;}
+.sortb[data-dir=desc]::after{content:" \2193";opacity:1;}
+.scope-note{font-size:var(--fs-sm);color:var(--muted);margin:0 0 var(--s2);max-width:68ch;}
+
+/* every class used in markup has an intentional rule — an undefined hook is a
+   latent inconsistency, which the manifesto's "no surprises" rule rules out.
+   (.sortable is a JS selector only and carries no style by design.) */
+.bar-code{border-color:var(--muted);background:var(--paper-2);}
+.holon .r-value,.scope-row .r-value{font-family:var(--font-mono);font-size:var(--fs-2xs);
+  text-transform:uppercase;letter-spacing:.08em;color:var(--muted);}
+.scope-row .r-title small{display:block;font-weight:400;color:var(--ink-soft);margin-top:var(--s-half);}
+
+/* ---------- accessibility ---------- */
+:where(button,a,summary,input,select,textarea,[tabindex],h1,h2,h3,section,details){scroll-margin-top:112px;}
+button:focus-visible,a:focus-visible,summary:focus-visible,.pop:focus-visible{
+  outline:3px solid var(--blue);outline-offset:2px;border-radius:var(--radius-pill);}
+@media (max-width:640px){
+  .ctlbar-inner{padding:var(--s1) 16px;}
+  .dimrow{grid-template-columns:72px 1fr;}
+  .dimrow .st{grid-column:1/-1;justify-self:start;margin-top:var(--s1);}
+}
+</style>
+<div class="ctlbar" role="region" aria-label="Coding scheme and filters">
+  <div class="ctlbar-inner">
+    <div class="ctl-row">
+      <span class="ctl-lab">Read as</span>
+      <span class="scheme" role="group" aria-label="Coding scheme">
+        <button type="button" class="sch is-on" data-scheme="pop" aria-pressed="true">Disability population</button>
+        <button type="button" class="sch" data-scheme="need" aria-pressed="false">Access need</button>
+        <button type="button" class="sch" data-scheme="icf" aria-pressed="false">ICF</button>
+      </span>
+      <button type="button" class="pill-reset" id="pill-reset">Clear filter</button>
+    </div>
+    <div class="ctl-row">
+      <span class="ctl-lab">Naming</span>
+      <span class="scheme" role="group" aria-label="Terminology">
+        <button type="button" class="trm is-on" data-term="community" aria-pressed="true">Community usage</button>
+        <button type="button" class="trm" data-term="person" aria-pressed="false">Person-first</button>
+        <button type="button" class="trm" data-term="identity" aria-pressed="false">Identity-first</button>
+        <button type="button" class="trm" data-term="code" aria-pressed="false">Code only</button>
+      </span>
+    </div>
+    <div class="ctl-row"><span class="ctl-lab">Filter</span><span class="pills" id="pills"></span></div>
+    <p class="ctl-state" id="ctl-state" role="status" aria-live="polite"></p>
+    <p class="sr-only" id="ctl-transient" role="status" aria-live="polite"></p>
+  </div>
+</div>
+
+<main id="main" class="page">
+
+<header class="article-header">
+  <div class="kicker">
+    <span class="item-code">E-08</span><span>Circulation &amp; Access</span>
+    <span>working brief · 2026-07-24</span><span>source: data/guidebook.db</span>
+  </div>
+  <h1>Corridor clear width</h1>
+  <p class="tagline">A clear width is one property of one element of one system. This brief presents what the record holds, the reasoning that follows from it, and the questions the record cannot settle. Every value opens its own sources.</p>
+</header>
+
+<div class="legend" role="note">
+  <span class="leg-lab">Status of every figure in this brief</span>
+  <span class="st st-floor">Code floor</span><span class="leg-d">a legal minimum in a named jurisdiction</span>
+  <span class="st st-rec">Standards recommendation</span><span class="leg-d">a standards body's figure, not law</span><span class="st st-consensus">Code consensus</span><span class="leg-d">the same figure across many instruments, with no traceable measurement — informative about copying, not about corridors</span>
+  <span class="st st-gb">Guidebook position</span><span class="leg-d">this project's reading of the evidence, graded ● ◐ ○</span>
+  <span class="st st-obs">Measured</span><span class="leg-d">an observation from a study, not a specification</span>
+</div>
+
+<section class="section" id="circulation">
+  <div class="sec-head">
+    <span class="sec-num">§ 1</span>
+    <h2>What a corridor width is, in a building</h2>
+    <p class="deck">Corridor width is a circulation and wayfinding technique. It is not a property a corridor has; it is one answer to a question about moving through a building.</p>
+  </div>
+
+  <p><strong>Objective.</strong> In the item register this parameter sits in category E, Circulation and Access, alongside lifts, ramps, doors, level entry, slip resistance, rest seating and tactile surface indicators. It links to two functional demands at full and partial strength — wheeled movement and transfer, and ambulant movement — and to a third, balance, at weak strength.</p>
+
+  <p><strong>Reasoning.</strong> Circulation is the function; a width is one technique serving it. The journey this dimension serves also asks a person to know where they are, stay upright, find and open a door, rest, and not be overloaded on the way. None of those is satisfiable by a width, and each belongs to a different item. Reasoning that stops at the cross-section has followed the technique past the point where the governing variable changed.</p>
+
+  <p>The scales below move outward. At each one the parameter that governs is different, which is the practical content of the claim that width is a technique rather than the subject.</p>
+
+  <div class="rowlist holon">
+    <details class="row" open>
+      <summary><span class="r-tag">scale 1 · cross-section</span><span class="r-title">What a width settles by itself<small>this item, and nothing beyond it</small></span><span class="r-value">1 item</span><span class="r-arrow" aria-hidden="true">›</span></summary>
+      <div class="r-body"><p>Two devices passing. One device turning. A signing pair abreast. A guide pair abreast. These four are the whole of what a clear-width figure answers on its own.</p></div>
+    </details>
+
+    <details class="row">
+      <summary><span class="r-tag">scale 2 · built fabric</span><span class="r-title">What subtracts from the width, and what the floor is doing<small>same square metre, different provisions</small></span><span class="r-value">6 items</span><span class="r-arrow" aria-hidden="true">›</span></summary>
+      <div class="r-body">
+        <ul class="qlist">
+          <li><b>Handrails — no item exists</b>The provision that could resolve the width-versus-balance tension has no home in the guidebook. Registered as an open gap, with a matching one for stair going and riser.</li>
+          <li><b>E-11 · automatic and internal doors</b>A door narrower than the corridor re-creates the pinch the width removed. Latch-side manoeuvring clearance and the door swing both subtract from usable width.</li>
+          <li><b>E-07 · slip resistance</b>Applies continuously across the same floor the width measures.</li>
+          <li><b>B-08 · matte floor finishes</b>Low-reflectance surfaces; also the anchor for a vestibular determination.</li>
+          <li><b>C-04 / C-05 / C-06 · contrast and pattern</b>Three provisions pulling opposite ways on one floor. See § 4.</li>
+          <li><b>E-09 · tactile walking surface indicators</b>Shares the floor plane and must stay cane-distinguishable from flat contrast bands.</li>
+        </ul>
+        <p class="honesty">Each of these occupies the same square metre as the clear width and several deduct from it. A width specified without them is a width that will not survive construction.</p>
+      </div>
+    </details>
+
+    <details class="row">
+      <summary><span class="r-tag">scale 3 · the route</span><span class="r-title">Where the straight-run width stops governing<small>turns, landings, rests</small></span><span class="r-value">5 items</span><span class="r-arrow" aria-hidden="true">›</span></summary>
+      <div class="r-body">
+        <ul class="qlist">
+          <li><b>E-12 · manoeuvring space</b>Wherever the route turns or admits a room, the swept envelope governs, not the straight-run width.</li>
+          <li><b>E-10 · rest seating</b>The variable is interval, not cross-section — but seating is recessed off the clear width so a place to rest never eats the passing space.</li>
+          <li><b>E-03 · ramp gradient</b>Ramp clear width is a separate and usually narrower figure, and handrails deduct from it too.</li>
+          <li><b>E-01 · accessible lift</b>Landing turning space, clear of the door arc.</li>
+          <li><b>E-06 · level entry</b>Keeps the accessible route continuous where the corridor meets the outside.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="row">
+      <summary><span class="r-tag">scale 4 · the plan</span><span class="r-title">Wayfinding, where the answer stops being a dimension<small>topology, not cross-section</small></span><span class="r-value">4 items</span><span class="r-arrow" aria-hidden="true">›</span></summary>
+      <div class="r-body">
+        <ul class="qlist">
+          <li><b>D-01 · loop floor plan</b>For dementia the corridor variable is route topology — simple loops, no dead ends — not width.</li>
+          <li><b>D-02 · single primary route</b>Cognitive simplicity from entry to destination.</li>
+          <li><b>D-04 · landmarks at decision points</b>Orientation is carried by what is visible, not by how wide the passage is.</li>
+          <li><b>D-07 · no blind corners</b>Junction sightlines, which serve a signing approach and a startle risk at once, and can conflict with glare control.</li>
+        </ul>
+        <p class="honesty">At this scale a wider corridor answers nothing. This is where wayfinding takes over from circulation geometry, and where a brief that only knows a millimetre figure runs out.</p>
+      </div>
+    </details>
+
+    <details class="row">
+      <summary><span class="r-tag">scale 5 · ambient</span><span class="r-title">Demands sharing the space without touching the plan<small>sound, light, load</small></span><span class="r-value">3 items</span><span class="r-arrow" aria-hidden="true">›</span></summary>
+      <div class="r-body">
+        <ul class="qlist">
+          <li><b>A-02 · acoustic absorption</b>A wide corridor with hard parallel walls produces flutter echo. Width can create an acoustic problem it cannot solve.</li>
+          <li><b>B-05 · lighting transition zones</b>Adaptation time at illuminance changes, which is a fall-risk variable on the same route.</li>
+          <li><b>Sensory load</b>Independent of width. No study shows wide corridors harm; the variables are sound, transition and visual clutter.</li>
+        </ul>
+      </div>
+    </details>
+  </div>
+
+  <div class="callout fork">
+    <h3>Questions this raises</h3>
+    <p>What access need is this specification serving — not which technique does it name? At what scale does the governing variable stop being this one? Who else occupies this space, and what does this dimension take from them? If it takes something away, does another provision restore it, and does that provision exist yet?</p>
+  </div>
+</section>
+
+<section class="section" id="values">
+  <div class="sec-head">
+    <span class="sec-num">§ 2</span>
+    <h2>The figures, and what kind of thing each one is</h2>
+    <p class="deck">Sort or filter the table. Select any row to open its sources, pedigree and caveats.</p>
+  </div>
+
+  <figure class="dimfig">
+    <button type="button" class="dimrow cite-trigger" data-pop="v915">
+      <span class="dimval">915 mm</span>
+      <span class="bar-hold"><span class="bar bar-code" style="width:37.5%"></span>
+        <span class="dimcap">One manual chair · straight run</span></span>
+      <span class="st st-floor">Code floor</span>
+    </button>
+    <button type="button" class="dimrow cite-trigger" data-pop="v1200">
+      <span class="dimval">1200 mm</span>
+      <span class="bar-hold"><span class="bar bar-code" style="width:49.2%"></span>
+        <span class="dimcap">One powered chair · straight run</span></span>
+      <span class="st st-floor">Code floor</span>
+    </button>
+    <button type="button" class="dimrow cite-trigger" data-pop="v1500">
+      <span class="dimval">1500 mm</span>
+      <span class="bar-hold"><span class="bar bar-code" style="width:61.5%"></span>
+        <span class="dimcap">Radial turning circle · not a swept path</span></span>
+      <span class="st st-floor">Code floor</span>
+    </button>
+    <button type="button" class="dimrow cite-trigger" data-pop="v1800">
+      <span class="dimval">1800 mm</span>
+      <span class="bar-hold"><span class="bar bar-code" style="width:73.8%"></span>
+        <span class="dimcap">Two devices passing · straight run, no turn</span></span>
+      <span class="st st-consensus">Code consensus</span>
+    </button>
+    <button type="button" class="dimrow cite-trigger" data-pop="v1925">
+      <span class="dimval">1925 mm</span>
+      <span class="bar-hold"><span class="bar bar-ev" style="width:78.9%"></span>
+        <span class="dimcap">Swept path · 180° reversal, open-ended bay</span></span>
+      <span class="st st-obs">Measured</span>
+    </button>
+    <button type="button" class="dimrow cite-trigger" data-pop="v2400">
+      <span class="dimval">2400 mm</span>
+      <span class="bar-hold"><span class="bar bar-ev" style="width:98.4%"></span>
+        <span class="dimcap">Swept path · 180° reversal, enclosed bay, entire sample</span></span>
+      <span class="st st-obs">Measured</span>
+    </button>
+    <button type="button" class="dimrow cite-trigger" data-pop="v2440">
+      <span class="dimval">2440 mm</span>
+      <span class="bar-hold"><span class="bar bar-ev" style="width:100%"></span>
+        <span class="dimcap">Signing pair walking abreast · Co-1 evidence</span></span>
+      <span class="st st-gb">Guidebook <span class="band band-full">●</span></span>
+    </button>
+    <figcaption class="drawing-caption">Scaled against 2440 mm. Clear width between finished faces. Tinted bars have a measurement or participatory root.</figcaption>
+  </figure>
+
+  <div class="callout">
+    <h3>Radial turn and swept path measure different events</h3>
+    <p>A <strong>radial turning circle</strong> (i.e. the diameter a device is assumed to sweep pivoting about its own centre) is the circle inscribed in a square in most code drawings. A <strong>swept path</strong> is the floor area actually covered while a device executes a named manoeuvre.</p>
+    <p>The two are not commensurable. A 1500 mm turning circle can neither corroborate nor contradict a 2400 mm swept envelope, because they describe different physical events. The 1925 mm and 2400 mm figures are both <em>180° reversals</em> — a U-turn within a bay, not a pivot in place — differing only in whether the bay was enclosed or open-ended, which changes how far a user can lengthen the turn. Real turns are asymmetric: the rotation axis sits at the inner wheel rather than the occupant's centre, and footrests sweep a forward arc the circle excludes. <button class="cite-trigger cite mini" data-pop="paradigm" aria-label="Sources: measurement paradigm"></button></p>
+  </div>
+
+  <div class="callout fork">
+    <h3>Where the record does not resolve</h3>
+    <p>The 1800 mm passing width appears in nearly every instrument surveyed and has no traceable measurement behind it. Two readings are available, and the brief carries both:</p>
+    <p><strong>a.</strong> If the convergence reflects an unrecorded common source, then the figure may be sound and the task is to find that source — which would move it from the weak band to a graded one.</p>
+    <p><strong>b.</strong> If there is no common source, then twenty-odd jurisdictions have inherited a figure none of them tested, and the convergence is evidence about regulatory copying rather than about corridors.</p>
+    <p>Nothing in the record distinguishes (a) from (b). Until it does, the honest grade is the weak band, and the derivation is logged as an open question rather than resolved by preference.</p>
+  </div>
+
+  <details class="row juris">
+    <summary><span class="r-tag">jurisdictions</span><span class="r-title">Which jurisdictions are actually recorded<small>and the gap behind the "24 jurisdictions" figure</small></span><span class="r-value">7 recorded</span><span class="r-arrow" aria-hidden="true">›</span></summary>
+    <div class="r-body">
+      <div class="decision-wrap">
+        <table class="decision-table sortable" id="juris-table">
+          <caption>Recorded code values for this item · sort by any column</caption>
+          <thead><tr>
+            <th scope="col"><button type="button" class="sortb" data-col="0">Jur.</button></th>
+            <th scope="col"><button type="button" class="sortb" data-col="1">Instrument</button></th>
+            <th scope="col"><button type="button" class="sortb" data-col="2" data-num="1">Min width</button></th>
+            <th scope="col">Recorded value</th>
+            <th scope="col">Source record</th>
+          </tr></thead>
+          <tbody>
+            <tr><th scope="row">US</th><td>ADA 2010 §403</td><td class="dv" data-v="915">915</td><td>Passing 1524 · turning 1524 (ADA) / 1702 (A117.1)</td><td><a href="https://www.ada.gov/law-and-regs/design-standards/2010-stds/" rel="noopener">ada.gov</a><span class="s-meta">REF-00409 · T6</span></td></tr>
+            <tr><th scope="row">AU</th><td>AS 1428.1:2021</td><td class="dv" data-v="1000">1000</td><td>Passing 1800 · turning 1540 / 2070 powered</td><td><span class="s-meta s-status">no matching record — register holds AS 1428.2:1992</span></td></tr>
+            <tr><th scope="row">GB</th><td>BS 8300-2:2018</td><td class="dv" data-v="1200">1200</td><td>Passing 1800 · turning 1500</td><td><a href="https://www.bsigroup.com/en-GB/standards/bs-8300/" rel="noopener">bsigroup.com</a><span class="s-meta">REF-00406 covers Annex G only</span></td></tr>
+            <tr><th scope="row">ISO</th><td>ISO 21542:2021</td><td class="dv" data-v="1200">1200</td><td>Passing 1800 · turning 1524</td><td><a href="https://www.iso.org/standard/71860.html" rel="noopener">iso.org</a><span class="s-meta">REF-00361 / REF-00420 · T4</span></td></tr>
+            <tr><th scope="row">DE</th><td>DIN 18040-1</td><td class="dv" data-v="1500">1500</td><td>Passing 1800 · turning 1500</td><td><a href="https://www.dinmedia.de/en/standard/din-18040-2/142706210" rel="noopener">dinmedia.de</a><span class="s-meta s-status">registered record is Part 2, value cites Part 1</span></td></tr>
+            <tr><th scope="row">NO</th><td>TEK17 §12-6</td><td class="dv" data-v="1500">1500</td><td>Turning 1500</td><td><a href="https://dibk.no/regelverk/byggteknisk-forskrift-tek17/" rel="noopener">dibk.no</a><span class="s-meta">REF-00145 · T6</span></td></tr>
+            <tr><th scope="row">CA</th><td>CSA B651:2023</td><td class="dv" data-v="">—</td><td>Turning 1700 · no clear-width figure recorded</td><td><span class="s-meta">REF-00005 · T4</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="honesty"><strong>The "24 jurisdictions" figure cannot be itemised from this database.</strong> It comes from a survey recorded in the mobility compendium, not from per-jurisdiction rows. This item holds <strong>seven</strong>; the whole register holds twelve distinct jurisdictions across every item. The other seventeen are asserted in prose and are not individually retrievable — a gap in the record, not a claim about those jurisdictions.</p>
+      <p class="honesty">Three rows have no exactly-matching source record, as marked. Instrument status also varies: several of these are voluntary guidance rather than law, so legal standing is to be verified per jurisdiction before any is cited as a requirement.</p>
+    </div>
+  </details>
+</section>
+
+<section class="section" id="swept">
+  <div class="sec-head">
+    <span class="sec-num">§ 3</span>
+    <h2>Swept path, by device class</h2>
+    <p class="deck">What was measured, on which devices, and what the study does not cover.</p>
+  </div>
+
+  <p><strong>Objective.</strong> One study widened a passageway in 5 cm increments until each participant completed a task without touching the walls, across an L-turn, a 360° turn in place, and U-turns with and without a barrier.</p>
+
+  <div class="decision-wrap">
+    <table class="decision-table sortable" id="dev-table">
+      <caption>Minimum passageway width study · sort by column</caption>
+      <thead><tr>
+        <th scope="col"><button type="button" class="sortb" data-col="0">Device class</button></th>
+        <th scope="col"><button type="button" class="sortb" data-col="1" data-num="1">n</button></th>
+        <th scope="col">Finding</th><th scope="col"><span class="sr-only">Sources</span></th>
+      </tr></thead>
+      <tbody>
+        <tr><th scope="row">Manual</th><td class="dv" data-v="109">109</td><td>Ultralight chairs with rear axles behind the shoulder required the least space of any manual type.</td><td><button class="cite-trigger cite mini" data-pop="koontz" aria-label="Sources: manual"></button></td></tr>
+        <tr><th scope="row">Power</th><td class="dv" data-v="100">100</td><td>Mid-wheel drive required least for the 360° turn in place, against front- and rear-wheel drive. Chairs with seat functions required more.</td><td><button class="cite-trigger cite mini" data-pop="koontz" aria-label="Sources: power"></button></td></tr>
+        <tr><th scope="row">Scooter</th><td class="dv" data-v="14">14</td><td>In the sample, but steered like a car with no pivot point. No source models that envelope.</td><td><button class="cite-trigger cite mini" data-pop="koontz" aria-label="Sources: scooter"></button></td></tr>
+        <tr><th scope="row">Attendant-propelled</th><td class="dv" data-v="0">—</td><td>Absent from the corpus. No source records a rear-handle push geometry or its envelope.</td><td><button class="cite-trigger cite mini" data-pop="gaps-device" aria-label="Sources: device gaps"></button></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <h3>The study's stated conclusion</h3>
+    <p>"Between 10% and 100% of users would not be able to maneuver in spaces that meet current Accessibility Guidelines for Buildings and Facilities specifications." <button class="cite-trigger cite mini" data-pop="koontz" aria-label="Sources"></button></p>
+  </div>
+
+  <p><strong>Reasoning.</strong> Where a corridor is too narrow to pass without turning, the manoeuvre it forces is a spin turn: one hand brakes on the rim while the other pushes. Peak braking force on the braking arm runs many times a straight push, a wheelchair user makes roughly nine hundred turns a day, and upper-limb injury prevalence among manual users sits between 55 and 72 per cent. On that reading the width is a dose parameter rather than a comfort parameter. <button class="cite-trigger cite mini" data-pop="turncost" aria-label="Sources: turning cost"></button></p>
+
+  <p class="honesty">Two limits travel with this. Per-manoeuvre millimetre values sit in the paper's tables behind a paywall and have not been extracted, so they are not reproduced here rather than approximated. The study establishing spin-turn dominance used ten able-bodied novices.</p>
+
+  <div class="callout fork">
+    <h3>Where the record does not resolve</h3>
+    <p>The device classes above were measured on a fleet assembled before 2010. Two readings follow:</p>
+    <p><strong>a.</strong> If the fleet has not materially changed, the envelopes hold and the only task is extracting the per-task values.</p>
+    <p><strong>b.</strong> If powered chairs and scooters have grown heavier and larger since — which the corpus records as likely — then every figure here understates present need, and the direction of the error is known even though its size is not.</p>
+    <p>No replacement anthropometric study has been identified. Under (b) the figures remain the best available and are stated with the direction of their error, which is a different claim from stating them as current.</p>
+  </div>
+</section>
+
+<section class="section" id="hinders">
+  <div class="sec-head">
+    <span class="sec-num">§ 4</span>
+    <h2>Who a wider corridor may hinder</h2>
+    <p class="deck">Best practice is not automatically better for everyone.</p>
+  </div>
+
+  <p><strong>Objective.</strong> Three groups route to the balance demand. The balance research holds twenty-one sources, including handrail-grasp biomechanics, a Cochrane falls review and an international handrail specification. <button class="cite-trigger cite mini" data-pop="balance" aria-label="Sources: balance"></button></p>
+
+  <div class="affected">
+    <p class="affected-lab">Who a wider corridor may affect — balance demand</p>
+    <span class="apop">VES · people with vestibular disorders <span class="role">primary</span></span>
+    <span class="apop">BRAIN · people with acquired brain injury <span class="role">primary</span></span>
+    <span class="apop">COM · people with complex conditions <span class="role">situational · presyncope</span></span>
+  </div>
+
+  <div class="affected">
+    <p class="affected-lab">Who the same width serves — and would lose by narrowing</p>
+    <span class="apop">MOB · wheelchair users <span class="role">passing and swept turn</span></span>
+    <span class="apop">SCI · people with spinal cord injuries <span class="role">injury dose</span></span>
+    <span class="apop">BAR · people in larger bodies <span class="role">width envelope</span></span>
+    <span class="apop">DEAF · Deaf and hard-of-hearing people <span class="role">signing pair</span></span>
+    <span class="apop">DEAFBLIND · DeafBlind people <span class="role">intervenor pair</span></span>
+  </div>
+
+  <p><strong>Reasoning.</strong> Someone who walks unsteadily may cross a corridor by staying within reach of something solid. Widen the route and the wall moves away. Narrowing is not the resolution: it re-imposes the injury-dose turn on wheelchair users, trading one group's shoulders for another's balance. The candidate answer is continuous support at full width — but a handrail deducts about 50 mm from clear width, and no handrail-dimension item exists to carry it. <button class="cite-trigger cite mini" data-pop="handrail-gap" aria-label="Sources: handrail gap"></button></p>
+
+  <p class="honesty"><strong>Scope of the claim.</strong> Balance is well evidenced. What no source addresses is the <em>interaction</em>: how far a steadying surface may sit from a walking person before the distance is itself the barrier. Handrails are studied on stairs; corridor width is studied for wheeled passage and signing. Nobody has measured them against each other.</p>
+
+  <div class="affected">
+    <p class="affected-lab">Who the contrast provisions pull apart</p>
+    <span class="apop">BLIND · blind and low-vision people <span class="role">needs high contrast at junctions</span></span>
+    <span class="apop">DEM · people living with dementia <span class="role">needs low floor differential</span></span>
+    <span class="apop">VES · people with vestibular disorders <span class="role">needs plain, non-patterned floor</span></span>
+  </div>
+  <p>Contrast shows the same shape. High luminance contrast at junctions helps a low-vision traveller read an edge; <em>low</em> contrast between adjacent floor materials stops a tonal change being misread as a hole; plain flooring avoids optic-flow patterns that provoke visual vertigo. All three are evidenced, which makes "high contrast is good practice" false as a universal. <button class="cite-trigger cite mini" data-pop="contrast" aria-label="Sources: contrast"></button></p>
+
+  <div class="callout fork">
+    <h3>Where the record does not resolve</h3>
+    <p>On the width-versus-balance question the record supports two readings, and this brief asserts neither:</p>
+    <p><strong>a.</strong> If steadying distance matters at corridor scale, then wide primary routes owe a continuous handrail, and the missing item is urgent rather than tidy-up.</p>
+    <p><strong>b.</strong> If it does not — if people who need support use the wall opportunistically and a wide route simply changes where they walk — then the tension dissolves and the handrail question belongs to stairs and ramps alone.</p>
+    <p>The measurement that would separate these has not been made. Anyone citing this brief for either position is citing a question, not a finding.</p>
+  </div>
+</section>
+
+<section class="section" id="scope">
+  <div class="sec-head">
+    <span class="sec-num">§ 5</span>
+    <h2>Who this parameter is for</h2>
+    <p class="deck">The same item read three ways. Switch scheme and filter at the top of the page; the panel and the count below follow the control.</p>
+  </div>
+  <div id="scope-panel"></div>
+</section>
+
+<section class="section" id="apparatus">
+  <div class="sec-head">
+    <span class="sec-num">§ 6</span>
+    <h2>What the record cannot yet say</h2>
+    <p class="deck">Two limits in the guidebook's own machinery, which is why trade-offs stay invisible.</p>
+  </div>
+  <p><strong>The database cannot record harm.</strong> An item linked to a functional demand can be marked full, partial or weak — three degrees of serving. No value means "increasing this parameter degrades that demand." The table built to hold conflicts between groups exists, with the right columns, and holds no rows. <button class="cite-trigger cite mini" data-pop="schema" aria-label="Sources: schema"></button></p>
+  <p><strong>The search protocol did not look for harm.</strong> Generated queries asked what a provision achieves and, adversarially, whether a source was weak. Neither asked who a design fails. Harm-oriented searching happened anyway, slug by slug, untooled and in one language.</p>
+  <p>A withheld row and an unwritten row look identical. Neither is queryable and neither reaches a reader, so the belief that best practice is universally better survives without anyone asserting it.</p>
+</section>
+
+<footer class="colophon">
+  <div class="colophon-inner">
+    <div><h2 class="colo-h">Guidebook</h2><p>Item E-08 · working brief, not a specification. A thinking tool and an advocacy project — not a code, not a legal authority, and not a substitute for professional judgment.</p></div>
+    <div><h2 class="colo-h">Method</h2><p>Evidence graded by tier. Code convergence is flagged at the weak band rather than presented as best practice. Population-level values inform an individual assessment; they do not bound it.</p></div>
+    <div><h2 class="colo-h">Declared limit</h2><p>Engagement with lived-experience evidence here is at the level of the published corpus, not participation. A declared methodological limit, not a claim of consultation.</p></div>
+  </div>
+</footer>
+
+</main>
+
+<div class="pop" data-pop-id="v915"><div class="pop-head"><span class="pop-tag">code floor</span><span>US</span></div>
+<div class="pop-title">915 mm — one manual chair, straight run</div>
+<p class="pop-lead">A statutory minimum, set for manual chairs. Not a recommendation and not a guidebook position.</p>
+<ul class="pop-src"><li>ADA 2010 Standards for Accessible Design §403, Accessible Routes. <a href="https://www.ada.gov/law-and-regs/design-standards/2010-stds/" rel="noopener">ada.gov</a><span class="s-meta">REF-00409 · Tier 6 · statutory</span></li>
+<li>The value predates contemporary powered chairs; the anthropometry behind US standards is recorded in the corpus as 1970s-derived.<span class="s-meta s-status">Grade: ○ weak band — code floor, convergence not evidence</span></li></ul></div>
+
+<div class="pop" data-pop-id="v1200"><div class="pop-head"><span class="pop-tag">code floor</span><span>GB · ISO</span></div>
+<div class="pop-title">1200 mm — one powered chair, straight run</div>
+<p class="pop-lead">The figure the live item is still named for. No empirical root in the corpus.</p>
+<ul class="pop-src"><li>BS 8300-2:2018. <a href="https://www.bsigroup.com/en-GB/standards/bs-8300/" rel="noopener">bsigroup.com</a><span class="s-meta">registered record REF-00406 covers Annex G power-WC turning geometry only</span></li>
+<li>ISO 21542:2021. <a href="https://www.iso.org/standard/71860.html" rel="noopener">iso.org</a><span class="s-meta">REF-00361 / REF-00420 · Tier 4</span></li>
+<li>Genealogy classification: <em>echo, adopted</em> — inherited from code consensus.<span class="s-meta s-status">Grade: ○ weak band</span></li></ul></div>
+
+<div class="pop" data-pop-id="v1500"><div class="pop-head"><span class="pop-tag">code floor</span><span>DE · NO</span></div>
+<div class="pop-title">1500 mm — radial turning circle</div>
+<p class="pop-lead">A turning-circle figure, not a swept path. The two are not commensurable.</p>
+<ul class="pop-src"><li>DIN 18040-1 (DE) and TEK17 §12-6 (NO) record 1500 mm as both minimum width and turning figure. <a href="https://dibk.no/regelverk/byggteknisk-forskrift-tek17/" rel="noopener">dibk.no</a><span class="s-meta">REF-00145 · Tier 6 · DIN record on file is Part 2, not Part 1</span></li>
+<li>Genealogy: <em>traced echo</em> — descends from 1970s anthropometry via one mid-century standard.<span class="s-meta s-status">Described in the corpus as "the regulatory floor in 24 jurisdictions and the empirical adequate value in none of them"</span></li></ul></div>
+
+<div class="pop" data-pop-id="v1800"><div class="pop-head"><span class="pop-tag">standards rec.</span><span>near-universal</span></div>
+<div class="pop-title">1800 mm — two devices passing</div>
+<p class="pop-lead">The most widely agreed figure here and the least anchored. No traceable measurement anywhere in the corpus.</p>
+<ul class="pop-src"><li>Recorded in BS 8300-2, DIN 18040-1, AS 1428.1 and ISO 21542 as a passing width.<span class="s-meta">Tier 5–6 · see the jurisdiction table</span></li>
+<li>Genealogy: <em>unrooted consensus</em>. The single corpus sentence describing it as "clinical evidence" carries no citation.<span class="s-meta s-status">Grade: ○ weak band. Derivation logged as an open question.</span></li></ul></div>
+
+<div class="pop" data-pop-id="v1925"><div class="pop-head"><span class="pop-tag">measured</span><span>observation</span></div>
+<div class="pop-title">1925 mm — 180° reversal, open-ended bay</div>
+<p class="pop-lead">An observation from a sub-sample, not a specification. Open-ended bays let a user lengthen the turn.</p>
+<ul class="pop-src"><li>Steinfeld E, Maisel J, Feathers D, D'Souza C (2006). Anthropometry of wheeled mobility, RESNA proceedings.<span class="s-meta">REF-00737 · Tier 3 · <span class="s-status">UNVERIFIED — conference proceedings, no DOI or pagination</span></span></li>
+<li>The corpus records that this smaller figure was at points cited in preference to the 2400 mm entire-sample figure from the same paper.<span class="s-meta s-status">Registered as an open selective-citation finding</span></li></ul></div>
+
+<div class="pop" data-pop-id="v2400"><div class="pop-head"><span class="pop-tag">measured</span><span>entire sample</span></div>
+<div class="pop-title">2400 mm — 180° reversal, enclosed bay</div>
+<p class="pop-lead">The envelope that accommodated the entire sample. An observation, not a specification.</p>
+<ul class="pop-src"><li>Steinfeld et al. (2006), same source as 1925 mm; this is the entire-sample figure.<span class="s-meta">REF-00737 · Tier 3 · <span class="s-status">UNVERIFIED at source</span></span></li>
+<li>Underlying anthropometry: Steinfeld et al. (2010), international comparison.<span class="s-meta">REF-00059 / REF-00060 · Tier 1 · doi 10.1080/10400430903520280</span></li>
+<li>Arrives within 40 mm of the signing figure from an unrelated evidence stream.<span class="s-meta s-status">Convergence of independent streams, unlike code convergence</span></li></ul></div>
+
+<div class="pop" data-pop-id="v2440"><div class="pop-head"><span class="pop-tag">guidebook position</span><span>Co-1 ●</span></div>
+<div class="pop-title">2440 mm — signing pair walking abreast</div>
+<p class="pop-lead">The one figure here the guidebook advances as a position rather than reports. Graded ● on Co-1 evidence, with its caveats attached.</p>
+<ul class="pop-src"><li>Bauman HW (2010), DeafSpace Design Guidelines, Gallaudet University.<span class="s-meta">REF-00338 · Tier 1 · evidence_type co1</span></li>
+<li>Vaughn HC (2018), DeafScape.<span class="s-meta">REF-00342 · Tier 1 · co1</span></li>
+<li>Cloete N &amp; Rout S (2025), cross-cultural scoping review, Acta Structilia 32(2):238–263.<span class="s-meta">REF-00341 · Tier 3</span></li>
+<li><span class="s-status">Caveats that travel with the figure: derived from one signed language (ASL) at one institution; dimension-confidence recorded as LOW; no independent replication of the quantified dimension; no jurisdiction anywhere specifies signing-space dimensions, across fourteen languages searched.</span></li>
+<li>This is the only determination cell recorded for this item, at state <code>stated</code>, tier basis CO1+T2.<span class="s-meta">Value-level convergence assessment still pending extraction</span></li></ul></div>
+
+<div class="pop" data-pop-id="paradigm"><div class="pop-head"><span class="pop-tag">method</span><span>measurement paradigm</span></div>
+<div class="pop-title">Why turning circle was deprecated</div>
+<ul class="pop-src"><li>Chaikhot D, Taylor MJD, de Vries WHK, Hettinga FJ (2023). 97% of participants executed a spin turn; the rotation axis sits at the inner wheel and the outer wheel sweeps roughly a 1.4 m arc.<span class="s-meta">REF-00736 · Tier 1 · doi 10.3389/fspor.2023.1127514 · <span class="s-status">n=10 able-bodied novices</span></span></li>
+<li>Footrests project 250–400 mm forward on a manual chair, over 500 mm with elevating legrests — a forward arc the circle excludes.<span class="s-meta">Corpus methodology record</span></li>
+<li>Drive system changes the envelope shape, not only its size: mid-wheel drive approximates a pivot, rear-wheel drive sweeps wide at the front, front-wheel drive fishtails rearward.<span class="s-meta s-status">Described qualitatively; no per-drive-type figure exists in the corpus</span></li></ul></div>
+
+<div class="pop" data-pop-id="koontz"><div class="pop-head"><span class="pop-tag">measured</span><span>device classes</span></div>
+<div class="pop-title">Minimum passageway width by device class</div>
+<ul class="pop-src"><li>Koontz AM, Brindle ED, Kankipati P, Feathers D, Cooper RA (2010). Design features that affect the maneuverability of wheelchairs and scooters. <em>Arch Phys Med Rehabil</em> 91(5):759–64.<span class="s-meta">REF-00784 · Tier 3 · doi 10.1016/j.apmr.2010.01.009 · PMID 20434614 · retrieved via PubMed</span></li>
+<li>Method: passageway widened in 5 cm increments until the task completed without wall contact. Four manoeuvres; manual n=109, power n=100, scooter n=14.<span class="s-meta">Case series across four sites</span></li>
+<li><span class="s-status">Per-manoeuvre millimetre values are in the paper's tables, paywalled, and not extracted into the corpus. Not reproduced rather than approximated.</span></li>
+<li><span class="s-status">Correction logged this session: an operative methodology document attributed this title to "Trefler &amp; Sawatzky 2008" and cited it for a five-rig protocol the paper does not describe. Attribution corrected; that claim withdrawn.</span></li></ul></div>
+
+<div class="pop" data-pop-id="gaps-device"><div class="pop-head"><span class="pop-tag">gap</span><span>unmodelled</span></div>
+<div class="pop-title">Device classes with no envelope in the corpus</div>
+<ul class="pop-src"><li>Attendant-propelled chairs: no source records a rear-handle push geometry or its swept envelope.<span class="s-meta s-status">Total corpus silence — logged, not estimated</span></li>
+<li>Scooters: steered like a car, so no pivot exists and the envelope is multi-point. Described in the corpus as "geometrically different from a circle and currently absent from the corpus."<span class="s-meta s-status">One scalar figure circulates for scooters but is untraceable to any registered source</span></li>
+<li>Per-drive-type figures for mid-, rear- and front-wheel drive do not exist as values anywhere in the register.</li></ul></div>
+
+<div class="pop" data-pop-id="turncost"><div class="pop-head"><span class="pop-tag">measured</span><span>dose</span></div>
+<div class="pop-title">The biomechanical cost of a forced turn</div>
+<ul class="pop-src"><li>Peak braking force on the inner hand during a spin turn runs many times straight-line propulsion; roughly nine hundred turns per day.<span class="s-meta">REF-00736 · Tier 1 · <span class="s-status">n=10 able-bodied novices — population-validity limit</span></span></li>
+<li>Sawatzky B et al. (2015). Upper-extremity preservation in manual wheelchair users.<span class="s-meta">REF-00070 · Tier 1 · doi 10.1097/PHM.0000000000000203</span></li>
+<li>Upper-limb injury prevalence among manual users recorded at 55–72% across the literature.<span class="s-meta">Corpus methodology record</span></li></ul></div>
+
+<div class="pop" data-pop-id="balance"><div class="pop-head"><span class="pop-tag">counter-strand</span><span>balance</span></div>
+<div class="pop-title">Balance evidence, and the gap that is not balance</div>
+<p class="pop-lead">The domain is well evidenced. The interaction with corridor width is not.</p>
+<ul class="pop-src"><li>Slug <code>vestibular-balance-built-environment</code> — ACTIVE, serves the balance axis, 21 linked sources.<span class="s-meta">bpc_metadata: evidence_state PROVISIONAL · non-EN language strata NOT-RUN</span></li>
+<li>Komisar V, Maki BE, Novak AC (2019) — rail height did not compromise reach-to-grasp on slope descent; centre-of-mass control after the grasp mattered more.<span class="s-meta">REF-00911 · Tier 1 · doi 10.1016/j.apergo.2019.102873</span></li>
+<li>Gosine P, Komisar V, Novak AC (2020) — under balance loss people take a compensatory step and load the rail in several directions at once.<span class="s-meta">REF-00913 · Tier 1 · doi 10.1016/j.apergo.2020.103317</span></li>
+<li>Cochrane review — home assessment and modification reduced the rate of falls 0.81 (95% CI 0.68–0.97), more effective when delivered by an occupational therapist.<span class="s-meta">REF-00792 · Tier 2 · doi 10.1002/14651858.CD007146.pub3</span></li>
+<li>Lachance C et al. (2017) — compliant flooring reduces impact forces and may reduce injuries, "but may increase the risk of falls."<span class="s-meta">REF-00905 · Tier 3 · doi 10.1371/journal.pone.0171652 · <span class="s-status">a benefit and a harm in one finding</span></span></li>
+<li><span class="s-status">Correction logged this session: an earlier draft called the balance axis unsourced, quoting axis metadata that reads "zero slugs, zero searches." That metadata is stale against the slug above. Coverage status is flagged rather than re-graded, because axis grading is a taxonomy decision.</span></li></ul></div>
+
+<div class="pop" data-pop-id="handrail-gap"><div class="pop-head"><span class="pop-tag">gap</span><span>registered</span></div>
+<div class="pop-title">No handrail-dimension item exists</div>
+<ul class="pop-src"><li>Registered open gap: no handrail-dimension item in the register, with a matching gap for stair going and riser.<span class="s-meta">Priority P2 · OPEN · not a finding of this brief</span></li>
+<li>Handrail dimensions that do exist are code-derived: height 900–1000 mm, circular section 32–51 mm, clearance ≥50 mm, continuous both sides on stairs and ramps.<span class="s-meta">Tier 5 · UK Approved Doc K; IBC §1014; AS 1428.1 · <span class="s-status">○ code-derived, convergence not measurement</span></span></li>
+<li>WHO assistive product specification APS15, handrails and grab bars.<span class="s-meta">REF-00883 · Tier 4</span></li>
+<li>Grab bars exist in the register only bathroom-scoped.<span class="s-meta s-status">A continuous handrail also deducts ~50 mm from clear width, so support and width compete for the same millimetres</span></li></ul></div>
+
+<div class="pop" data-pop-id="contrast"><div class="pop-head"><span class="pop-tag">opposed</span><span>same property</span></div>
+<div class="pop-title">Three provisions pulling opposite ways on one floor</div>
+<ul class="pop-src"><li>High luminance contrast at critical junctions — edge detection for low-vision travellers.<span class="s-meta">Item C-04</span></li>
+<li>Low contrast between adjacent floor materials — a strong tonal change can be misread as a hole or step, a fall risk.<span class="s-meta">Item C-05 · axis note: "prevents misperceiving dark floor as a hole"</span></li>
+<li>Plain low-contrast flooring — avoids optic-flow patterns provoking visual vertigo.<span class="s-meta">Item C-06 · full strength on the balance axis</span></li>
+<li><span class="s-status">The balance research declines to assert a high-contrast cell for vestibular users, reasoning that localised junction contrast aids edge detection while large repeating field patterns are the vestibular harm. Harm recorded by withholding a row — which is not queryable.</span></li></ul></div>
+
+<div class="pop" data-pop-id="schema"><div class="pop-head"><span class="pop-tag">apparatus</span><span>structural limit</span></div>
+<div class="pop-title">The record has no field for harm</div>
+<ul class="pop-src"><li>Item-to-axis links admit only <code>full</code>, <code>partial</code>, <code>weak</code> — three degrees of serving. No adverse value exists.<span class="s-meta">DB schema · item_axis_links.strength_band</span></li>
+<li>The conflicts table exists with columns for item, domain, and two populations, and holds zero rows.<span class="s-meta">DB · conflicts</span></li>
+<li>Across all 50 rows of the structured search log, no query contains harm, adverse, barrier, fail, risk or detriment. The generator's adversarial mode appends "criticism limitation evidence" — interrogating the source, not the outcome.<span class="s-meta s-status">Harm-oriented searching did happen slug by slug: 32 of 98 markdown search logs mention "barrier", and the vestibular slug sets its PICO outcome to "falls, fall-injury". Untooled and unrecorded, not absent.</span></li>
+<li><span class="s-status">A harm-axis query mode now exists in 14 languages. An adverse-direction value for the link table is proposed for owner decision, not applied — schema enum changes are owner-gated.</span></li></ul></div>
+
+<script>
+(function () {
+  var live = document.getElementById('ctl-state');
+  var transient = document.getElementById('ctl-transient');
+  /* Persistent filter state and one-off announcements use separate live regions,
+     so sorting a table never overwrites the standing "what is filtered" readout. */
+  function say(m){ if(live) live.textContent = m; }
+  function announce(m){ if(transient) transient.textContent = m; }
+
+  /* ---------- citation popovers ---------- */
+  var openPop=null, openTrig=null;
+  function closePop(){ if(!openPop) return; openPop.classList.remove('is-open');
+    if(openTrig){ openTrig.setAttribute('aria-expanded','false'); try{openTrig.focus();}catch(e){} }
+    openPop=null; openTrig=null; }
+  function showPop(t){
+    var id=t.getAttribute('data-pop'); var p=document.querySelector('.pop[data-pop-id="'+id+'"]');
+    if(!p) return; if(openPop===p){ closePop(); return; }
+    closePop();
+    if(!p.querySelector('.pop-close')){
+      var b=document.createElement('button'); b.type='button'; b.className='pop-close';
+      b.setAttribute('aria-label','Close sources'); b.textContent='×';
+      b.addEventListener('click', closePop); p.insertBefore(b, p.firstChild);
+    }
+    p.classList.add('is-open'); p.setAttribute('tabindex','-1');
+    var r=t.getBoundingClientRect();
+    p.style.top=(r.bottom+window.scrollY+8)+'px';
+    var left=Math.min(r.left+window.scrollX, window.innerWidth-Math.min(470,window.innerWidth-24)-14);
+    p.style.left=Math.max(12,left)+'px';
+    openPop=p; openTrig=t; t.setAttribute('aria-expanded','true');
+    try{p.focus();}catch(e){}
+  }
+  document.querySelectorAll('.cite-trigger').forEach(function(t){
+    t.setAttribute('aria-expanded','false'); t.setAttribute('aria-haspopup','dialog');
+    t.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); showPop(t); });
+  });
+  document.addEventListener('click', function(e){
+    if(openPop && !openPop.contains(e.target) && !e.target.closest('.cite-trigger')) closePop(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closePop(); });
+  window.addEventListener('resize', closePop);
+  window.addEventListener('scroll', function(){ if(openPop) closePop(); }, {passive:true});
+
+  /* ---------- sortable tables ---------- */
+  document.querySelectorAll('table.sortable').forEach(function(tb){
+    tb.querySelectorAll('.sortb').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var col=+btn.dataset.col, num=btn.dataset.num==='1';
+        var body=tb.tBodies[0], rows=Array.prototype.slice.call(body.rows);
+        var asc = btn.getAttribute('data-dir')!=='asc';
+        tb.querySelectorAll('.sortb').forEach(function(b){ b.removeAttribute('data-dir');
+          if(b.closest('th')) b.closest('th').removeAttribute('aria-sort'); });
+        btn.setAttribute('data-dir', asc?'asc':'desc');
+        if(btn.closest('th')) btn.closest('th').setAttribute('aria-sort', asc?'ascending':'descending');
+        rows.sort(function(a,b){
+          var x=a.cells[col], y=b.cells[col];
+          var xv=(x.dataset.v!==undefined?x.dataset.v:x.textContent).trim();
+          var yv=(y.dataset.v!==undefined?y.dataset.v:y.textContent).trim();
+          if(num){ var nx=parseFloat(xv), ny=parseFloat(yv);
+            if(isNaN(nx)) return 1; if(isNaN(ny)) return -1;
+            return asc?nx-ny:ny-nx; }
+          return asc?xv.localeCompare(yv):yv.localeCompare(xv);
+        });
+        rows.forEach(function(r){ body.appendChild(r); });
+        announce('Table sorted by ' + btn.textContent.trim() + ', ' + (asc?'ascending':'descending') + '.');
+      });
+    });
+  });
+
+  /* ---------- three coding schemes ---------- */
+  var SCHEMES = {
+    pop: { label:'disability population code', note:'Population codes are organizing scaffolding, not a description of any individual. Seven codes take clear width as the operative variable; six have a real stake whose governing variable is something else.',
+      items:[
+        {k:'DEAF', pf:'people who are deaf or hard of hearing', idf:'Deaf and hard-of-hearing people', pref:'identity', t:'applies', d:'Signing pair walking abreast. Holds the only determination cell recorded for this item.'},
+        {k:'MOB', pf:'people with mobility disabilities; people who use wheelchairs', idf:'disabled people with mobility needs; wheelchair users', pref:'identity', t:'applies', d:'Two devices passing, and the swept path wherever the route turns.'},
+        {k:'SCI', pf:'people with spinal cord injuries', idf:'spinal-cord-injured people', pref:'person', t:'applies', d:'Propulsion effort and injury dose; primary on the wheeled-movement demand.'},
+        {k:'BAR', pf:'people in larger bodies', idf:'fat people', pref:'identity', t:'applies', d:'Primary on the wheeled-movement demand — turning and width envelope. No bariatric-specific empirical envelope exists.'},
+        {k:'DEAFBLIND', pf:'people who are deafblind', idf:'DeafBlind people', pref:'identity', t:'applies', d:'Linked two-person travel with an intervenor. Thin base; no Tier 1–2 evidence.'},
+        {k:'BLIND', pf:'people who are blind or have low vision', idf:'blind and low-vision people', pref:'identity', t:'applies', d:'Guide-pair travel takes a two-person width. The primary variable is detection and edges, not cross-section.'},
+        {k:'DEM', pf:'people living with dementia', idf:'people living with dementia', pref:'person', t:'applies', d:'The corridor variable is route topology — loops and choice points — not width.'},
+        {k:'BRAIN', pf:'people with acquired brain injury', idf:'brain-injured people', pref:'person', t:'context', d:'Two opposed pulls: ambulant width, and balance support. Direction unsettled.'},
+        {k:'VES', pf:'people with vestibular disorders', idf:'vestibular-disabled people', pref:'person', t:'context', d:'The balance counter-strand. Open floor offers less to steady against.'},
+        {k:'COM', pf:'people with complex conditions', idf:'people with complex conditions', pref:'person', t:'context', d:'Rest interval and route length; touches width only through the alcove rule.'},
+        {k:'LMB', pf:'people with limb differences', idf:'limb-different people', pref:'person', t:'context', d:'Turning envelope. Its only quantitative basis is untraceable to any registered source.'},
+        {k:'MS', pf:'people with MS', idf:'people with MS', pref:'person', t:'context', d:'Route length and cooling — a longitudinal metric, not a cross-section.'},
+        {k:'LPA', pf:'people with dwarfism', idf:'little people', pref:'identity', t:'applies', d:'Reach and envelope shift rather than clear width.'}
+      ]},
+    need: { label:'access need', note:'Access needs describe the design obligation rather than the person. One need can span several functional demands, and several populations can share one need.',
+      items:[
+        {k:'A-REACH', n:'Be physically reachable', t:'applies', d:'Step-free routes, seated-height controls, doorway and turning clearance. Spans wheeled movement, ambulant movement and reach.'},
+        {k:'A-SIZE', n:'Fit the range of bodies present', t:'applies', d:'Clearance and envelope. Framed as the environment being wrongly normed to an average body, never as bodies deviating.'},
+        {k:'A-NOSOUND', n:'Never carry meaning in sound alone', t:'applies', d:'Sign-language provision where it is the user’s language — which requires room for the language to be used while moving.'},
+        {k:'A-NOSIGHT', n:'Be perceivable without sight', t:'applies', d:'Guide-pair travel and edge detection along the route.'},
+        {k:'A-TACTILE', n:'Offer touch as a first-class channel', t:'applies', d:'Hand-under-hand guidance and protactile contact space. Recorded as a genuine coverage gap against the axis layer.'},
+        {k:'A-STABLE', n:'Hold the visual reference still', t:'context', d:'Handrails, signalled level changes, rest points. The balance counter-strand lives here.'},
+        {k:'A-EFFORT', n:'Cost little energy', t:'context', d:'Short paths, seated options, rest points — an interval question, not a width.'}
+      ]},
+    icf: { label:'ICF code', note:'ICF anchors are recorded per functional demand, plus environmental factors. Body-function and activity codes describe the demand; e-codes describe the environment the guidebook can actually change.',
+      items:[
+        {k:'d465', n:'Moving around using equipment', t:'applies', d:'Wheeled movement and transfer — the demand this item links at full strength.'},
+        {k:'d420', n:'Transferring oneself', t:'applies', d:'Wheeled movement and transfer.'},
+        {k:'d410', n:'Changing basic body position', t:'applies', d:'Shared by the wheeled-movement and balance demands.'},
+        {k:'b710', n:'Mobility of joint functions', t:'applies', d:'Body-function anchor for wheeled movement.'},
+        {k:'b730', n:'Muscle power functions', t:'applies', d:'Anchors both wheeled and ambulant movement.'},
+        {k:'d450', n:'Walking', t:'applies', d:'Ambulant movement — linked at partial strength.'},
+        {k:'d455', n:'Moving around', t:'applies', d:'Ambulant movement.'},
+        {k:'d460', n:'Moving around in different locations', t:'applies', d:'Ambulant movement; the route scale rather than the cross-section.'},
+        {k:'b770', n:'Gait pattern functions', t:'applies', d:'Ambulant movement.'},
+        {k:'b235', n:'Vestibular functions', t:'context', d:'Balance demand — linked at weak strength, coverage recorded as a stub.'},
+        {k:'b240', n:'Sensations associated with hearing and vestibular function', t:'context', d:'Dizziness precipitants, including large uniform visual fields.'},
+        {k:'d415', n:'Maintaining a body position', t:'context', d:'Balance demand.'},
+        {k:'e150', n:'Design of public buildings', t:'applies', d:'Environmental factor confirmed across every access need on this item.'},
+        {k:'e155', n:'Design of private buildings', t:'applies', d:'Environmental factor.'},
+        {k:'e120', n:'Mobility products and technology', t:'applies', d:'The device the envelope is measured around.'}
+      ]}
+  };
+
+  var scheme='pop', term='community', active=new Set();
+  var pills=document.getElementById('pills'), panel=document.getElementById('scope-panel');
+
+  function render(){
+    var S=SCHEMES[scheme];
+    pills.innerHTML='';
+    S.items.forEach(function(it){
+      var b=document.createElement('button'); b.type='button';
+      b.className='pill'+(it.t==='context'?' pill-ctx':'')+(active.has(it.k)?' is-on':'');
+      b.textContent=it.k; b.setAttribute('aria-pressed', active.has(it.k)?'true':'false');
+      b.title=it.n;
+      b.addEventListener('click', function(){
+        if(active.has(it.k)) active.delete(it.k); else active.add(it.k);
+        render();
+      });
+      pills.appendChild(b);
+    });
+    /* Identity-first and person-first are both correct; the right form follows the
+       community being described. 'Community usage' is therefore the default, and any
+       other mode marks where it overrides a community's own stated preference. */
+    function nameOf(it){
+      if(scheme!=='pop') return it.n;
+      if(term==='code') return '';
+      if(term==='person') return it.pf;
+      if(term==='identity') return it.idf;
+      return it.pref==='identity' ? it.idf : it.pf;
+    }
+    function overridden(it){
+      return scheme==='pop' && (term==='person'||term==='identity') &&
+             term!==it.pref && it.pf!==it.idf;
+    }
+    var shown=S.items.filter(function(it){ return active.size===0 || active.has(it.k); });
+    panel.innerHTML='<p class="scope-note">'+S.note+'</p>'+
+      '<div class="rowlist">'+shown.map(function(it){
+        return '<details class="row scope-row"><summary><span class="r-tag">'+
+          (it.t==='applies'?'clear width is the variable':'stake, different variable')+
+          '</span><span class="r-title">'+it.k+'<small>'+nameOf(it)+
+          (overridden(it)?' <span class="term-flag">not this community\u2019s usage</span>':'')+'</small></span>'+
+          '<span class="r-value">'+(it.t==='applies'?'applies':'context')+'</span>'+
+          '<span class="r-arrow" aria-hidden="true">›</span></summary>'+
+          '<div class="r-body"><p>'+it.d+'</p></div></details>';
+      }).join('')+'</div>';
+    var TERMS={community:'community usage',person:'person-first',identity:'identity-first',code:'codes only'};
+    var termBit = scheme==='pop' ? ' Naming: '+TERMS[term]+'.' : '';
+    var offCount = scheme==='pop' ? S.items.filter(overridden).length : 0;
+    var warnBit = offCount ? ' \u26a0 '+offCount+' of these communities use the other form; overrides are marked.' : '';
+    var msg = (active.size===0
+      ? 'Showing all '+S.items.length+' '+S.label+'s. No filter applied.'
+      : 'Filtered: showing '+shown.length+' of '+S.items.length+' '+S.label+'s. '+
+        (S.items.length-shown.length)+' hidden. Selected: '+Array.from(active).join(', ')+'.')
+      + termBit + warnBit;
+    say(msg);
+  }
+  document.querySelectorAll('.sch').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('.sch').forEach(function(x){ x.classList.remove('is-on'); x.setAttribute('aria-pressed','false'); });
+      b.classList.add('is-on'); b.setAttribute('aria-pressed','true');
+      scheme=b.dataset.scheme; active.clear(); render();
+    });
+  });
+  document.querySelectorAll('.trm').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('.trm').forEach(function(x){ x.classList.remove('is-on'); x.setAttribute('aria-pressed','false'); });
+      b.classList.add('is-on'); b.setAttribute('aria-pressed','true');
+      term=b.dataset.term; render();
+    });
+  });
+  document.getElementById('pill-reset').addEventListener('click', function(){ active.clear(); render(); });
+  render();
+})();
+</script>
