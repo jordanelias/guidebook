@@ -5,7 +5,9 @@
 **Owner directive:** "yes, but you have to include a discussion about why turning radius is disingenuous compared to swept path/turning maneouvres" (2026-05-25)
 **Closes:** GAP-272 (geometry framing failure)
 
-**AUTHORSHIP CORRECTION (2026-05-25):** This BPC was first authored citing the primary biomechanical study as "Chaikhot et al. 2023". That was an error introduced by a misread of the PMC full-text snippet during initial authoring. The correct authors per PubMed PMID 37383064 are **Chaikhot D, Taylor MJD, de Vries WHK, Hettinga FJ 2023**. All other content (97% spin-turn dominance, 15.3× braking force, n=10 sample, etc.) is from the same paper at DOI 10.3389/fspor.2023.1127514 and is unchanged. Citations throughout this BPC corrected at this same revision.
+**AUTHORSHIP CORRECTION (2026-05-25; note itself repaired 2026-07-24):** This BPC was first authored citing the primary biomechanical study as **"Vergara et al. 2023"**. That was an error introduced by a misread of the PMC10293636 full-text snippet during initial authoring. The correct authors per PubMed PMID 37383064 are **Chaikhot D, Taylor MJD, de Vries WHK, Hettinga FJ 2023**. All other content (97% spin-turn dominance, 15.3× braking force, n=10 sample, etc.) is from the same paper at DOI 10.3389/fspor.2023.1127514 and is unchanged. Citations throughout this BPC corrected at this same revision.
+
+> **Repair note (2026-07-24).** As written on 2026-05-25 this paragraph named "Chaikhot" as *both* the error and the correction, making it self-cancelling and unusable as an audit record. The erroneous form was **"Vergara"**, per `evidence_sources.notes` on REF-00736 ("*The prior migration data_20260525080000 recorded first_author_last='Vergara'… Per PubMed PMID 37383064 the correct authors are: Chaikhot D…*"). **Still open:** the closure text of **GAP-272** carries the same uncorrected "Vergara 2023" attribution and needs the identical repair.
 
 ---
 
@@ -66,7 +68,9 @@ The "turning circle" parameter conflates at least five empirically distinct mano
 | 360° rotation for orientation reversal | Low — but common in fitting rooms, accessible toilets, narrow vestibules | No — same as 180° within bay, executed twice |
 | Turn-on-the-spot during transfers | Moderate — required for chair-to-bed, chair-to-toilet transfers | No — requires both hands free, occupant trunk lean, transfer-board clearance |
 
-The Australian public-transport standard recognises this and tests power-mobility devices against **five separate rigs**: 180° turn rig, pavement-gap rig, swept-path rig, allocated-space rig, narrow-access-path rig (per Trefler & Sawatzky 2008, *Design Features That Affect the Maneuverability of Wheelchairs and Scooters*, summarised at [ResearchGate publication 43533647](https://www.researchgate.net/publication/43533647)). The accessibility codes specify a single circle and call it good.
+Empirical work measures this manoeuvre-dependency directly. According to PubMed, [Koontz AM, Brindle ED, Kankipati P, Feathers D, Cooper RA (2010)](https://doi.org/10.1016/j.apmr.2010.01.009) — *Design features that affect the maneuverability of wheelchairs and scooters*, **Arch Phys Med Rehabil** 91(5):759–64, PMID 20434614 (**REF-00784**, Tier 3, VERIFIED) — determined **minimum passageway width for four distinct tasks** (L-turn; 360° turn in place; U-turn with barrier; U-turn without barrier) across **manual wheelchair (n=109), power wheelchair (n=100) and scooter (n=14)** users, widening the passageway in **5-cm increments until each task could be completed without hitting the walls**. Device class governed the result: mid-wheel-drive power chairs required the least space for the 360° turn in place versus front- and rear-wheel-drive (P<.01); **power chairs with seat functions required more space**; ultralight manual chairs with rear axles posterior to the shoulder required the least of any manual type (P<.05). The paper's headline finding is a direct verdict on the codes: *"Between 10% and 100% of users would not be able to maneuver in spaces that meet current Accessibility Guidelines for Buildings and Facilities specifications."* The per-task millimetre values sit in the paper's tables and are **not yet extracted into `source_value_extractions`** — they are therefore not reproduced here rather than approximated. The accessibility codes specify a single circle and call it good.
+
+> **CITATION CORRECTED (2026-07-24).** This paragraph previously attributed the title above to **"Trefler & Sawatzky 2008"** and cited it for the claim that *the Australian public-transport standard tests power-mobility devices against five separate rigs (180°-turn, pavement-gap, swept-path, allocated-space, narrow-access-path)*. Per PubMed, that title belongs to **Koontz et al. 2010** (US; Human Engineering Research Laboratories / VA Pittsburgh), a four-task laboratory study that describes **no Australian standard and no five-rig protocol**. The citation was wrong *and* did not support the claim attached to it. **The five-rig claim is therefore withdrawn pending an independent source** and is not restated above; the Koontz findings, which support this section's actual argument more directly, replace it. See §9.
 
 ### 3. The convergence-not-evidence trap
 
@@ -123,7 +127,13 @@ See `## Key sources` table below (mandatory CO-0006 format).
 
 ### 9. Bibliographic placeholders
 
-Steinfeld 2006 RESNA and Trefler 2008 are not yet rows in `evidence_sources`. To be added via a follow-up data migration when this methodology BPC is anchored. Chaikhot et al. 2023 is not yet a row in `evidence_sources` either; same.
+**RESOLVED 2026-07-24 — all three are registered rows; this section was stale prose.** Steinfeld 2006 RESNA = **REF-00737** (Tier 3 — but still flagged **UNVERIFIED-1**, grey: *"Conference proceedings (RESNA 2006) — grey literature; no DOI/ISSN/page numbers assigned"*). Chaikhot et al. 2023 = **REF-00736** (Tier 1, VERIFIED). The paper formerly cited here as "Trefler 2008" = **REF-00784** — correctly **Koontz et al. 2010** (Tier 3, VERIFIED, DOI 10.1016/j.apmr.2010.01.009), already linked to this slug as `MFM-22`; see the citation correction in §2.4.
+
+**Still open after this repair:**
+1. **REF-00784's per-task passageway-width values are not extracted.** `source_value_extractions` holds **zero rows for any mobility, corridor, turning or bariatric slug** (its only populated slug is `room-acoustic-performance`), so the corpus's single best device-class swept-path measurement is cited but unmined.
+2. **The withdrawn five-rig claim has no source** (§2.4).
+3. **REF-00737 remains UNVERIFIED-1** while carrying the 2400 mm entire-sample envelope that this BPC and the corridor genealogy both lean on.
+4. **Drive-type figures do not exist.** §2.3's MWD/RWD/FWD distinction is qualitative throughout the corpus; Koontz 2010 establishes the *ordering* (MWD needs least for 360°-in-place) but no per-drive-type millimetre value is registered anywhere.
 
 ### 10. Cross-references
 
@@ -149,6 +159,7 @@ The following BPCs cite or should cite this methodology BPC as the canonical ref
 | REF-00338 | MFM-06 | Bauman H W | 2010 | DeafSpace Design Guidelines (DSDG), Gallaudet University | 1 | co1 | 2440 mm primary corridor; independent-evidence-stream convergence with IDeA 2400 mm |
 | REF-00342 | MFM-07 | Vaughn HC | 2018 | DeafScape | 1 | co1 | Co-1 corroboration of DSDG 2440 mm corridor specification |
 | REF-00341 | MFM-08 | Cloete N, Rout S | 2025 | Cross-cultural scoping review of DeafSpace principles. *Acta Structilia* 32(2):238-263 | 3 | clinical | Cross-cultural validation of DeafSpace design principles |
+| REF-00784 | MFM-22 | Koontz AM, Brindle ED, Kankipati P, Feathers D, Cooper RA | 2010 | Design features that affect the maneuverability of wheelchairs and scooters. *Arch Phys Med Rehabil* 91(5):759–64 | 3 | clinical | §2.4 manoeuvre-type + device-class dependency: minimum passageway width across 4 tasks for manual (n=109) / power (n=100) / scooter (n=14) users, 5-cm increments to first no-contact pass; MWD < FWD/RWD for 360°-in-place (P<.01); seat-function chairs need more; 10–100% of users cannot manoeuvre in ADA-compliant spaces. doi:10.1016/j.apmr.2010.01.009, PMID 20434614. **Corrects the prior "Trefler & Sawatzky 2008" attribution of this title.** Per-task values not yet extracted |
 
 ## Metadata
 
