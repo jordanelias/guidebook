@@ -39,6 +39,7 @@ run "validate_schema"           python3 scripts/validate_schema.py --verbose
 run "validate_schema --cross"   python3 scripts/validate_schema.py --cross-check
 run "validate_evidence_state"   python3 scripts/validate_evidence_state.py
 run "verification_consistency"  python3 scripts/validate_verification_consistency.py
+run "validate_axes"             python3 scripts/validate_axes.py
 run "validate_population"       python3 scripts/validate_population.py
 run "validate_temporal"         python3 scripts/validate_temporal.py
 run "test_db_integrity"         python3 scripts/tests/test_db_integrity.py
