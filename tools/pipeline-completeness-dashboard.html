@@ -176,7 +176,7 @@
       stage's own denominator, then broken down by category, item, and population class.</p>
     <div class="meta-row">
       <span><b>Source</b> data/guidebook.db (read-only)</span>
-      <span><b>Schema</b> user_version 34</span>
+      <span><b>Schema</b> user_version 35</span>
       <span><b>Data as of</b> 2026-07-24</span>
       <span><b>Auto-generated</b> tools/pipeline_completeness.py</span>
     </div>
@@ -196,7 +196,7 @@
       <div class="gauge">
         <div class="stage-idx">STAGE 2</div><div class="stage-name">Collection</div>
         <div class="pct b4-fg">91<small>%</small></div>
-        <div class="denom">749 / 823<br>metadata-complete sources</div>
+        <div class="denom">765 / 841<br>metadata-complete sources</div>
         <div class="bar"><i class="b4-bg-solid" style="width:91%"></i></div>
         <span class="stage-tag b4-tag">High</span>
       </div>
@@ -223,7 +223,7 @@
       </div>
     </div>
     <div class="pattern"><b>The shape is front-loaded, then it collapses.</b> Sourcing (collection) is essentially
-      finished — 791/823 sources verified, metadata near-complete — but almost nothing has been
+      finished — 809/841 sources verified, metadata near-complete — but almost nothing has been
       <i>adjudicated</i> into determinations (judgment, 4%) and only
       1 parameter has a real synthesis reasoning
       doc (synthesis, 1%). Render faithfully mirrors that emptiness: it can only
@@ -271,14 +271,14 @@
         <div class="sb-left"><div class="n">STAGE 2</div><div class="t">Collection</div>
           <div class="entry">Entry: sources discovered for the topic under research.</div></div>
         <div class="sb-right">
-          <div class="metric-row"><span class="lbl">Sources verified</span><span class="val">791 / 823 · 96%</span>
+          <div class="metric-row"><span class="lbl">Sources verified</span><span class="val">809 / 841 · 96%</span>
           <span class="mini-bar"><i class="b4-bg-solid" style="width:96%"></i></span></div>
-          <div class="metric-row"><span class="lbl">Metadata complete</span><span class="val">749 / 823 · 91%</span>
+          <div class="metric-row"><span class="lbl">Metadata complete</span><span class="val">765 / 841 · 91%</span>
           <span class="mini-bar"><i class="b4-bg-solid" style="width:91%"></i></span></div>
           <div class="metric-row"><span class="lbl">Author-title-only (rule&nbsp;#10 blockers)</span><span class="val">52 · 6%</span>
           <span class="mini-bar"><i class="b1-bg-solid" style="width:6%"></i></span></div>
-          <div class="metric-row"><span class="lbl">Discovery provenance recorded</span><span class="val">88 / 823 · 11%</span>
-          <span class="mini-bar"><i class="b1-bg-solid" style="width:11%"></i></span></div>
+          <div class="metric-row"><span class="lbl">Discovery provenance recorded</span><span class="val">88 / 841 · 10%</span>
+          <span class="mini-bar"><i class="b1-bg-solid" style="width:10%"></i></span></div>
           <div class="metric-row"><span class="lbl">Citation-mining complete (slugs)</span><span class="val">6 / 83 · 7%</span>
           <span class="mini-bar"><i class="b1-bg-solid" style="width:7%"></i></span></div>
           <div class="gate-label">Integrity gates</div>
@@ -625,9 +625,9 @@
   <footer>
     <div class="two-col">
       <div><strong style="color:var(--ink-2)">How these numbers were derived</strong><br>
-        Read-only queries against <code>data/guidebook.db</code> (<code>user_version 34</code>,
-        259 data migrations). Denominators: research/synthesis over 83
-        <code>bpc_metadata</code> slugs; collection over 823 <code>evidence_sources</code>; judgment/render over
+        Read-only queries against <code>data/guidebook.db</code> (<code>user_version 35</code>,
+        271 data migrations). Denominators: research/synthesis over 83
+        <code>bpc_metadata</code> slugs; collection over 841 <code>evidence_sources</code>; judgment/render over
         363 applicable item×population pairs (<code>item_population_links</code>). Determinations from
         <code>evidence_cell_state</code>; synthesis from <code>reasoning_doc_citations</code>; enforcement coverage
         from <code>governance/pipeline-contract.yaml</code>.</div>
