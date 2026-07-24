@@ -4759,3 +4759,52 @@ decisions:
     handing off. Skill file to be created in Phase 4.
 
 
+- decision_id: D-0151
+  category: D-SCHEMA
+  delegation: DG-REVIEW
+  delegation_rationale: >
+    Decision-protocol §2.2 default for schema satisfying already-canonical methodology.
+    The table is called for verbatim by the ratified search-coverage-completion workplan
+    (§2.2) and coverage-completion-loop methodology (§4), so this is application of
+    existing methodology, not novel doctrine; agent decides, owner reviews before canonical.
+  summary: >
+    Create search_executions logged-search event table plus derived coverage views as the
+    coverage-loop memory; coverage is derived from the log, never hand-written.
+  outcome: >
+    Proposed migration 033_search_executions.sql (STRICT + CHECK + json_valid, ships empty,
+    user_version 32->33) mirrored in schemas/search_execution.py, with v_coverage_jurisdiction
+    / v_coverage_language / v_coverage_branch views. Legacy search_coverage / search_languages
+    frozen read-only, not dropped. Migration applied only on owner ratification (PENDING).
+  rationale: >
+    Coverage today is two hand-maintained grids (86% NOT-RUN) joined by nothing, with verbatim
+    query text surviving in only ~47 rows; a cell reading SEARCHED cannot prove what was searched.
+    The loop's success metric (percent required cells with >=1 logged search; percent
+    saturated-or-deferred) is un-fakeable only if coverage is DERIVED from a per-search log.
+    search_executions is that log: deferred_reason makes an honest non-search a counted outcome;
+    admitted_ref_ids gives per-source chain-of-custody and makes spillover routing auditable;
+    explicit executed_at keeps rebuild byte-deterministic. Implements the substrate owner Gate 1
+    resolved as "thin append-only logger first."
+  alternatives_considered:
+  - Keep hand-writing the two grids — rejected, re-creates the un-auditable state.
+  - Full search_executions + FTS5 + materialized v_priority_queue now — deferred per "thin logger first."
+  - Boolean-depth columns like search_coverage — rejected; depth is a method (scoping/systematic + mining), not booleans.
+  decision_date: 2026-07-24 05:50
+  decided_by: opus_session_2026-07-24-research-matrix-completion
+  model_routing: opus/125/extract
+  effort_level: 125
+  decision_artifacts:
+  - decisions/DR-2026-07-24-search-executions-substrate.md
+  - workplan/search-coverage-completion-workplan.md §2.2
+  - workplan/coverage-completion-loop-methodology-2026-07-21.md §4
+  - workplan/research-matrix-completion-execution-plan-2026-07-24.md §5
+  predecessors:
+  - D-0001
+  supersedes: []
+  status: ACTIVE
+  review_status: PENDING
+  notes: >
+    Migration + Pydantic artifacts embedded in the DR for review; NOT yet placed in
+    scripts/migrations/ and NOT applied to data/guidebook.db (applying bumps user_version and
+    is itself the ratification act). On ratification: add 033_search_executions.sql, add
+    schemas/search_execution.py, run migrate_db.py, commit the updated DB. lang_jur_map role
+    population is a separate DG-NON proposal (DR-2026-07-24-lang-jur-map-roles), no register entry.

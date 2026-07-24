@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-07-24-research-matrix-completion",
+  "artifact": "decisions/DR-2026-07-24-lang-jur-map-roles.md",
+  "doctrine_sha": "0f2f525",
+  "rules_in_scope": [
+    "source-discipline",
+    "canonical-workplan",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-07-24-lang-jur-map-roles.md#why-this-is-a-proposal-and-not-a-migration-the-precedent-that-governs-it",
+      "reason": "No lang_jur_map row is written; the DR explicitly refuses to re-populate the table (which was withdrawn as fabrication in DR-2026-06-11) and instead proposes the missing role definitions for owner ratification, with a per-row sourcing standard grounded in verifiable official-language facts. Fabrication risk is named and structurally avoided by writing nothing."
+    },
+    "canonical-workplan": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-07-24-lang-jur-map-roles.md#proposed-role-definitions-the-piece-migration-023-said-was-missing",
+      "reason": "The DR supplies the PRIMARY/SECONDARY role definitions that migration 023 and the ratified coverage-completion workplan (§2.3, the lang_jur_map bridge) explicitly deferred to owner/spec input, unblocking the priority queue's required-vs-not-applicable determination — an operationalization of the canonical workplan, not new methodology. It performs no jurisdictional evidence synthesis and produces no reasoning_doc_citations."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/decisions_DR-2026-07-24-lang-jur-map-roles.json",
+      "reason": "Commit carries [DOCTRINE: 0f2f525] before the timestamp per rule #11(a); this attestation is co-committed per rule #11(b). doctrine_sha matches HEAD:governance/mission-and-epistemics.md."
+    }
+  },
+  "deviations": [],
+  "bias_direction": "Risk of quietly repeating the withdrawn 2026-06-11 auto-population under a new name — an agent supplying jurisdiction/language scope that is owner-only (DG-NON). Mitigated by writing zero rows, dropping the undefined COLONIAL role entirely, defining PRIMARY/SECONDARY before proposing any assignment, and routing the whole map to the owner as a proposal rather than a migration; a second reviewer of the actual row set is required before any land.",
+  "independent_reviewer_counterclaim": "A reviewer could argue that even proposing PRIMARY/SECONDARY assignments pre-commits the owner to a colonial-inflected framing and should not be drafted by an agent at all. Counter: the DR proposes only the definitions and a sourcing standard, flags the erasure risk explicitly via [PRIMARY-LANGUAGE-GAP], commits no rows, and states in three places that jurisdiction/language scope is the owner's DG-NON call — the agent supplies the missing definitions migration 023 asked for, nothing more.",
+  "verdict": "CLEAN"
+}
