@@ -1,10 +1,12 @@
 # Writing & Framing Skill — Guidebook for Accessible Design
-*Built from: 500+ sent emails (2019–2026), thesis (UBC MArch 2022), undergraduate papers (2018–2019), Claude conversation history (2025–2026). Last updated: 2026-04-29 (A5 close — added §8.3 Co-1 voice patterns; previously A4 close added §8.2 patterns + §12 false-positive guards).*
+*Built from: 500+ sent emails (2019–2026), thesis (UBC MArch 2022), undergraduate papers (2018–2019), professional regulatory correspondence (2026), Claude conversation history (2025–2026). Last updated: 2026-07-24 (added §13 authorial fingerprints from the regulatory-correspondence corpus; previously 2026-04-29 A5 close added §8.3 Co-1 voice patterns, A4 close added §8.2 patterns + §12 false-positive guards).*
 
 ## Purpose
 This skill governs all prose writing for the *Guidebook for Accessible Design*. It encodes: (1) Jordan Elias's writing voice — argument structure, sentence construction, vocabulary, and register — and (2) the framing standards the Guidebook must meet: social model alignment, CRPD consistency, advocacy-identity-appropriate epistemic authority.
 
-The skill is calibrated for **discursive technical non-fiction** — analytical, argument-driven writing that integrates clinical research, policy, and design thinking. Email-register patterns are excluded as inapplicable to the Guidebook.
+The skill is calibrated for **discursive technical non-fiction** — analytical, argument-driven writing that integrates clinical research, policy, and design thinking.
+
+**On email-register patterns.** Correspondence *courtesy scaffolding* — salutations, sign-offs, gratitude formulas, scheduling offers — is excluded as inapplicable to the Guidebook. The exclusion does **not** extend to the argumentative motion carried inside professional correspondence. Where Jordan reads a governing instrument, applies it to facts, and forces an ambiguity into the open, that is the same register the Guidebook works in, and it is the closest available evidence of how he argues about codes and standards. Those patterns are in scope and are specified in §13.
 
 **Doctrinal anchors (Core Doctrine, project-standards.md):**
 - *The guidebook is an advocacy project, not an authority* (2026-04-26). It does not teach professional judgment, does not confer competence, and is not a registered body, standard-setting organization, or regulatory instrument.
@@ -89,8 +91,13 @@ The writing operates at a university-educated general reader level. Technical te
 ### No hedging vocabulary
 Avoid: "it could be argued," "perhaps," "seems to suggest," "in some ways," "relatively," "somewhat," "it is worth noting that." Uncertainty is marked by explicit epistemic qualifiers ("we can infer," "it follows that") rather than vague softeners.
 
+Where the claim is an *interpretation* rather than a settled fact, the canonical construction is the **attributed reading**: name whose reading it is, give the reason that makes it falsifiable, and invite correction. This asserts the position plainly while exposing exactly what would defeat it — the opposite of a hedge, which conceals the grounds. See §13.2.
+
+> ✓ "My reading of Part 4, Article 9 is that we would not be subject to ESC because the threshold is 0.4 hectares or excavation of 3 m or more."
+> ✗ "It could be argued that ESC may not apply here."
+
 ### Preferred connective phrases
-"From here we can argue / see / suggest…" · "It follows that…" · "This means that…" · "In turn…" · "By the same token…" · "Herein lies…" · "Put another way…"
+"From here we can argue / see / suggest…" · "It follows that…" · "This means that…" · "In turn…" · "…which in turn means that…" · "I note that…" · "By the same token…" · "Herein lies…" · "Put another way…"
 
 ### Avoided constructions
 - Passive voice as a way of avoiding agency
@@ -102,10 +109,15 @@ Avoid: "it could be argued," "perhaps," "seems to suggest," "in some ways," "rel
 Name the specific thing, not the category. Not "the provision" but "the grab bar diameter specification." Not "the document" but "the evidence table for A-03." Critical in technical writing where vague references create ambiguity.
 
 ### Canadian spelling
-centred, behaviour, neighbourhood, honour, colour, favour, recognise, realise, fulfil, programme.
+centred, behaviour, neighbourhood, honour, colour, favour, recognise, realise, fulfil, programme. Retained diacritics in naturalised loanwords: **façade** (not "facade").
 
 ### First person ("I")
 Used without apology for authorial claims and argumentative moves. Academic hedging via passive or "one" is not the default.
+
+**Singular for the epistemic act; the Guidebook for the position.** The corpus shows a consistent split: "I" carries the interpretive or observational move ("I note that…", "my reading of X is…", "I have reviewed your comments against it"), while positions the author holds on behalf of a party take the party as subject, not a first-person plural. In the Guidebook this resolves as: **"I" for the interpretive act, "this guidebook" for the position.** An editorial "we" holding a substantive position is not this voice — it obscures whether the claim belongs to the author, the evidence, or the project.
+
+> ✓ "I read the 24-jurisdiction convergence as code consensus rather than evidence; this guidebook therefore anchors the value at the flagged weak band."
+> ✗ "We believe the value should be anchored at the weak band."
 
 ---
 
@@ -400,6 +412,111 @@ Summary: X flags — Y 🔴 / Z 🟡 / W 🟢 · Regression risk: HIGH / MED / L
 
 ---
 
+## 13. Authorial Fingerprints — Regulatory-Interpretive Register
+
+*Corpus: professional correspondence, Jordan Elias to the City of Surrey Engineering Department re BP 24-66404 / DP 23-0181, June–July 2026 (nine authored messages). Added 2026-07-24.*
+
+This section exists for **authorship fidelity**. Sections 1–12 specify what good Guidebook prose does; this section specifies what makes prose recognisably Jordan's. Where the Guidebook reasons about a code, a bylaw, a standard, or a definition — which is most of Part 4, most BPC reasoning, and every jurisdictional comparison — these are the moves to reproduce.
+
+The corpus is unusually good evidence because the subject matter matches the Guidebook's: reading regulatory text closely, applying it to a specific set of facts, and identifying where the text does not resolve.
+
+### 13.1 Quote the instrument, cite the clause, then apply it
+
+Name the instrument and the clause number, quote the operative text verbatim, then apply it to the specific facts. Never paraphrase a governing text and then treat the paraphrase as the authority.
+
+> "In the bylaw you cited, I note that Clause 36.1 states 'The General Manager, Engineering may waive any of the requirements of Section 36 of this By-law if the General Manager, Engineering deems the cost of the replacement excessive.' The project's total construction value was set at $350,000 in 2023."
+
+The verbatim quotation does the work: the discretion in "may waive" and the trigger in "deems the cost excessive" are both load-bearing, and a paraphrase would lose them. This is the correspondence-register form of §8.1 Universal Mode ("Code requires [value] per [standard]").
+
+### 13.2 The attributed reading
+
+When the claim is an interpretation, attribute the reading, state the reason that makes it falsifiable, and invite correction.
+
+> "Our developable area is 0.114 hectares, and my reading of Part 4, Article 9 is that we would not be subject to ESC because the threshold is 0.4 hectares or excavation of 3 m or more. Please let me know if I am missing any documentation."
+
+Three parts, all required: the fact (0.114 ha), the attributed reading ("my reading of [instrument, article] is that…"), and the threshold that would defeat it (0.4 ha / 3 m). The invitation to correct is not politeness — it names the class of thing that would change the conclusion.
+
+This is the register the advocacy-not-authority doctrine needs. It asserts a position and simultaneously shows the reader how to check it, which is the Guidebook's stated purpose in a single sentence shape. Prefer it over both bare assertion and hedging.
+
+### 13.3 The exhaustive conditional fork
+
+Where a governing text is ambiguous, do not argue for the preferred reading. Enumerate the available readings and carry each one to its consequence. The ambiguity becomes the thing that has to be resolved, and the author never has to claim an authority they do not have.
+
+> "Redevelop explicitly mentions 'non-residential roof replacement, façade, or building envelope.' Does this mean that the total building value for Bylaw 16610 is limited to the scope of work outlined in the building permit for the roof, façade or building envelope?
+> **a.** If yes, then why is the clause requiring a storm service connection being triggered?
+> **b.** If no, then why does the definition of 'redevelop' mention roof replacement, façade or building envelope? Wouldn't we be able to bypass this by submitting one building permit application for the exterior work then later submitting a tenant improvement permit?"
+
+This is the sharpest instrument in the corpus and the closest sentence-level expression of the project's first rule — *the purpose of this guidebook is to get people to ask the right questions*. Both branches are followed honestly, including the branch that favours the author.
+
+**Guidebook application:** jurisdictional conflicts, standards that contradict each other, definitions that do not resolve, and any cell where the evidence is genuinely indeterminate. Reach for the fork instead of manufacturing a settled answer. Where the fork exposes a real gap, it routes to the gap register rather than to a `stated` cell.
+
+### 13.4 Definitional challenge — name the term and its instrument
+
+When the disagreement is definitional, say so, and name the term in quotation marks alongside the instrument that defines it. Do not argue about the application of a term whose definition is unsettled.
+
+> "I have been asked to return to you and seek clarification about the definitions for 'building value' in Bylaw 17850 and 'redevelop' in Bylaw 16610."
+> "I would appreciate confirmation of the City of Surrey's understanding of what constitutes a 'building drain'."
+
+The companion move is the **inline gloss** — parenthetical `(i.e. …)` defining a term at the point of use, so the reader knows which sense is operative:
+
+> "The estimated cost (i.e. worth of all construction related to the roof replacement, façade, or building envelope) is under $100k."
+
+### 13.5 Factual predicate, then consequence, then the scoped ask
+
+Establish the facts first, one fact per sentence, in short declaratives. Mark the consequence with a connective. Then make the ask, enumerated and bounded. Close by generalising upward.
+
+> "The project's scope is the exterior and renewal of an existing building, not new construction. All existing drainage infrastructure is to remain, and the asphalt work is patch-and-repair. […] We are not proposing to regrade, expand upon, or change any impervious areas, **which in turn means that** our proposed work is not changing the volume, rate or path of stormwater leaving the site.
+>
+> We ask that the City of Surrey waive its engineering requirements for **(a)** the potential replacement of a storm service connection, and **(b)** the installation of a water quality treatment facility. The site has drained the same way for the entirety of Soul Foods' 34-year tenancy, and it would continue to do so if the renovation were unable to proceed."
+
+Three things to reproduce: the facts arrive before any conclusion is drawn; the ask names exactly what is being asked for and nothing more; the closing sentence is a counterfactual that generalises the argument rather than recapping it (§1, *closing with synthesis*).
+
+### 13.6 Structural roadmap — permitted when it is specific
+
+A sentence announcing the shape of what follows is **not** throat-clearing when it states the actual count and structure. It is throat-clearing when it gestures.
+
+> ✓ "I have one process question and a response to each of your two comments below."
+> ✗ "I'd like to raise a few things about your comments."
+
+The paired move is to **reprise the interlocutor's point as the topic sentence**: "Your first comment concerns the status of the existing storm service connection." · "Your second comment refers to a water quality / sediment control facility being installed on-site." Use this in reasoning docs answering an audit finding and in responses to critique.
+
+### 13.7 What does *not* transfer
+
+The corpus is correspondence with a permitting authority. Three things in it are artifacts of that relationship and must not reach Guidebook prose:
+
+| Corpus pattern | Why it does not transfer |
+|---|---|
+| Courtesy scaffolding — "Thank you as always for your continued help", "I'd be happy to set up a brief call", salutations and sign-offs | Correspondence furniture. Never Guidebook prose. |
+| Deference to a decision-maker — "we would appreciate the City's consideration of this clause" | The Guidebook petitions no one. It addresses readers, not adjudicators. Asking a reader's indulgence is not this voice. |
+| Advocate's "we/our" holding a position — "Our developable area is 0.114 hectares", "We ask that…" | Correct when representing a client. In the Guidebook, positions belong to *this guidebook* and interpretive acts to *I* (§4). An editorial "we" obscures which. |
+
+### 13.8 Corpus corroboration of existing rules
+
+The corpus independently confirms rules previously asserted without a documented basis. These are now evidenced, not stipulated:
+
+| Rule | Corroborating instance |
+|---|---|
+| §3 em-dash — sets off a conclusory clause, proper character, unspaced | "all exterior changes to the building are façade treatments—there are no structural changes" |
+| §4 precision naming | Clause numbers, dollar figures, hectares, dates, and named parties throughout; never "the bylaw" where "Clause 36.1" is available |
+| §4 connective "In turn…" | "which in turn means that our proposed work is not changing the volume, rate or path…" |
+| §11 enumerated constructions `(1)…(2)…` in prose | "(a) the potential replacement of a storm service connection, and (b) the installation of a water quality treatment facility" |
+| §1 closing with synthesis, not summary | The 34-year-tenancy counterfactual closing the waiver request |
+| §2 no padding sentences | No instance in nine messages of a sentence that does not carry a fact, a claim, or a question |
+| `prose-style-checker` soft-imperative subjunctive | "All existing drainage infrastructure **is to remain**" — the "to be + condition" construction, unprompted, in the author's own hand |
+
+### 13.9 Calibration — regulatory-interpretive passages only
+
+Where a passage reasons about a code, standard, bylaw, or definition:
+
+1. Is the governing text quoted verbatim with its clause locator, rather than paraphrased?
+2. Is every interpretation attributed, with the fact that would defeat it named?
+3. Where the text is ambiguous, are the readings forked and both branches followed — including the unfavourable one?
+4. Are defined terms quoted and located in the instrument that defines them?
+5. Do the facts arrive before the conclusion, and is the ask bounded?
+6. Has all courtesy scaffolding, deference, and advocate's "we" been stripped (§13.7)?
+
+---
+
 ## Source Corpora
 
 - Email archive, Jordan Elias (2019–2026): 500+ sent emails across professional, institutional, medical, and personal-professional contexts
@@ -407,6 +524,7 @@ Summary: X flags — Y 🔴 / Z 🟡 / W 🟢 · Regression risk: HIGH / MED / L
 - Elias, Jordan. "The Architecture of Domination in Palestine." ARCH 505C paper, University of British Columbia, December 2018.
 - Elias, Jordan. "Spectacularly Bereft Architecture." ARTH 480 paper, University of British Columbia, April 2019.
 - Claude conversation history, Jordan Elias (2025–2026): workflow and project management communications showing consistent register in written instruction
+- Regulatory correspondence, Jordan Elias to City of Surrey Engineering Department (June–July 2026): BP 24-66404 / DP 23-0181 thread, nine authored messages. Basis for §13. Value to this skill is subject-matter match — sustained close reading of bylaw text applied to a specific fact pattern, which is the register most of the Guidebook's specification and BPC reasoning work operates in.
 
 ## Doctrinal anchors (operative as of 2026-04-27)
 
