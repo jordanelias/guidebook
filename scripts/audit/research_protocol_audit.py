@@ -94,14 +94,14 @@ def audit():
     # checks while 642/659 evidence_sources were missing this field. Closing
     # the hole.
     verified_no_prior = db.execute("""
-        SELECT ref_id, title FROM evidence_sources
+        SELECT ref_id, pub_title AS title FROM evidence_sources
         WHERE verification_status = 'VERIFIED'
         AND (prior_expectation IS NULL OR prior_expectation = '')
     """).fetchall()
 
     # CHECK 8 (added 2026-05-10): Verified citations lacking search_queries_used.
     verified_no_queries = db.execute("""
-        SELECT ref_id, title FROM evidence_sources
+        SELECT ref_id, pub_title AS title FROM evidence_sources
         WHERE verification_status = 'VERIFIED'
         AND (search_queries_used IS NULL OR search_queries_used = '')
     """).fetchall()
