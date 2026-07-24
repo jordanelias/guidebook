@@ -335,16 +335,19 @@ def build_part13(conn, fp):
     # Glossary
     md.append("\n## Appendix — Glossary\n")
     if table_exists(conn, "terms"):
-        nterms = count(conn, "terms")
+        # Exclude functional-axis pseudo-terms (domain='functional_axis'): they are the
+        # 17 taxonomy axes seeded for multilingual search aliases (E12), not glossary
+        # definitions — their `definition` column holds a search-keyword bag, which reads
+        # as nonsense in a reader-facing glossary. Design vocabulary only here.
+        cols = [d[0] for d in conn.execute("SELECT * FROM terms LIMIT 0").description]
+        axis_filter = " WHERE domain IS NULL OR domain != 'functional_axis'" if "domain" in cols else ""
+        nterms = conn.execute(f"SELECT COUNT(*) FROM terms{axis_filter}").fetchone()[0]
         md.append(f"{nterms} glossary terms recorded.\n")
-        sample = conn.execute(
-            "SELECT * FROM terms LIMIT 0").description
-        cols = [d[0] for d in sample]
         tcol = "term" if "term" in cols else cols[0]
         dcol = next((c for c in ("definition", "description", "gloss") if c in cols), None)
         md.append("| Term | Definition |\n|---|---|")
-        for r in conn.execute(f"SELECT {tcol}{(',' + dcol) if dcol else ''} FROM terms "
-                              f"ORDER BY {tcol} LIMIT 40"):
+        for r in conn.execute(f"SELECT {tcol}{(',' + dcol) if dcol else ''} FROM terms"
+                              f"{axis_filter} ORDER BY {tcol} LIMIT 40"):
             md.append(f"| {r[0]} | {(r[1] if dcol and len(r) > 1 else '') or '—'} |")
     else:
         md.append(stub("terms table absent", "Glossary renders once terms are loaded."))

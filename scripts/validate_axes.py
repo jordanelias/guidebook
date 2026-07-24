@@ -10,7 +10,7 @@ INTEGRITY (ERROR, exit 1) — profile-layer containment:
   - every population_axis_map.population_code resolves to a populations row
   - every item_axis_links.axis_code resolves to an axes row (when the table has rows)
   - every access_need_axis_map.axis_code resolves to an axes row (when present)
-  - population_axis_map.role ∈ {PRIMARY, ALIAS, SECONDARY, SUPPORTING}
+  - population_axis_map.role ∈ {PRIMARY, SECONDARY, ALIAS, SITUATIONAL}
 
 COVERAGE (WARN, non-fatal) — surfaced so the debt is visible, not hidden:
   - axes with zero population mappings

@@ -66,9 +66,13 @@ def main():
     if not term_ids:
         slug_words = slug.replace('-', ' ').split()
         for word in slug_words:
+            # Exclude functional_axis pseudo-terms (E12): their canonical_en are common
+            # words ("balance", "pain", "orientation") that would spuriously match many
+            # slugs and inject axis translations into query generation uncontrolled.
             matches = conn.execute("""
-                SELECT term_id FROM terms 
+                SELECT term_id FROM terms
                 WHERE lower(canonical_en) LIKE ?
+                  AND (domain IS NULL OR domain != 'functional_axis')
             """, (f'%{word}%',)).fetchall()
             for m in matches:
                 term_ids.add(m['term_id'])
