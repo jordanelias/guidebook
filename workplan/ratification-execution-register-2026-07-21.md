@@ -68,7 +68,7 @@ two-layer DR's *population code scheme* but RETAINED the axes layer):
 | E1 | migration 030 (axes/scaffolding) | axes=17, access_needs=17 (031 added) — **DONE** | closed |
 | E8 | `PopulationCode` enum change | **DONE differently** — replaced with the flat 23-code set by DR-2026-07-23 (`schemas/enums.py`) | closed (superseding path) |
 | E5/E7 | population junctions / gap rows | **SUPERSEDED in part** by the 2026-07-23 population re-key | reconcile under new scheme, not old |
-| **E3** | `item_axis_links` from 87 FDA briefs | **`item_axis_links` = 0 rows — UNBUILT** | **authorized/owed — highest value** |
+| **E3** | `item_axis_links` from 87 FDA briefs | **DONE 2026-07-24 — 157 links, 93 items → 17/17 axes** (adversarially validated, ~139/150 first-pass sound; fixes applied) | closed — see caveat |
 | **E2** | `slugs.serves_axes` backfill | **column does not exist — UNBUILT** | authorized/owed (schema + data) |
 | **E10** | ICCT intra-category cross-test (owner-directed 2026-07-20) | **`cross_test_pairs` table missing — UNBUILT** | authorized/owed |
 | E6 | `db.py validate` axis/containment extensions | tooling — not built | authorized/owed (non-DB) |
@@ -76,7 +76,14 @@ two-layer DR's *population code scheme* but RETAINED the axes layer):
 | **E9** | pipeline-contract stage-id reconciliation | **still OWNER-INPUT** — needs the deployed `<audit_trail>` list only the owner has | remains owner-gated (rule limit 2) |
 | **E11** | product-posture `mission-and-epistemics.md` edit | not applied — **doctrine-SHA cascade** | authorized but run with materiality triage (rule limit 2) |
 
-**Bottom line:** the *ratification* backlog is clear (merge=ratify + 2026-07-21 "ratify all").
-The *execution* backlog is real: **E2, E3, E6, E10, E12 are buildable now**; **E9 and E11 need
-owner input/care**. Nothing is lost — but three owner-directed builds (E2/E3/E10) sat unbuilt,
-which is exactly the failure mode the merge=ratify rule exists to prevent going forward.
+**Bottom line:** ratification backlog clear. Done this session: **E2 (column unblocked), E6, E12, E3**.
+Remaining: **E10** buildable; **E9/E11** owner-gated. (Rows above for E2/E6/E12 predate their build; see PR #63.)
+
+**E3 epistemic caveat (owner-flagged 2026-07-24).** `item_axis_links` is a **structural / research-targeting
+map, not derived content.** It was authored by mapping item *names/function* onto axis semantics — the same
+knowledge that named the items — so it re-expresses, it does not discover. It was validated for *internal
+consistency* against the FDA briefs (thin — gap tables only), **not** against evidence: the underlying item
+set is **~0.7% researched** (15 of 2,139 item×population evidence cells exist; 11 of 93 items have any cell).
+Legitimate use: show where the *current item list* is thin (e.g. AX-COG-L has items but zero population
+mappings) so research can be targeted — never a substitute for the research, and not a claim about what
+accessible design requires.
