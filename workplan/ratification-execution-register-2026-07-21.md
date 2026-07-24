@@ -52,3 +52,31 @@ The taxonomy scaffolding is live in the canonical DB. The highest-value next ste
 connects the 93 items to the 17 axes and makes the two-layer model queryable end-to-end.
 It is large and correctness-critical (a data migration, adversarial-passed), so it is
 its own focused stage rather than part of this one.
+
+---
+
+## 2026-07-24 reconciliation (under RULE "merge implies ratification")
+
+The standing rule recorded 2026-07-24 (`project-standards.md`; owner: "always assume I Ratify
+if I merge it") retires the "BLOCKED — pending ratification" state for everything here: these
+items are **authorized and owed**, not un-authorized. Verified against DB truth this date, and
+cross-reconciled with the later **DR-2026-07-23-population-schema-replace** (which superseded the
+two-layer DR's *population code scheme* but RETAINED the axes layer):
+
+| # | Item | DB-verified status 2026-07-24 | Disposition |
+|---|---|---|---|
+| E1 | migration 030 (axes/scaffolding) | axes=17, access_needs=17 (031 added) — **DONE** | closed |
+| E8 | `PopulationCode` enum change | **DONE differently** — replaced with the flat 23-code set by DR-2026-07-23 (`schemas/enums.py`) | closed (superseding path) |
+| E5/E7 | population junctions / gap rows | **SUPERSEDED in part** by the 2026-07-23 population re-key | reconcile under new scheme, not old |
+| **E3** | `item_axis_links` from 87 FDA briefs | **`item_axis_links` = 0 rows — UNBUILT** | **authorized/owed — highest value** |
+| **E2** | `slugs.serves_axes` backfill | **column does not exist — UNBUILT** | authorized/owed (schema + data) |
+| **E10** | ICCT intra-category cross-test (owner-directed 2026-07-20) | **`cross_test_pairs` table missing — UNBUILT** | authorized/owed |
+| E6 | `db.py validate` axis/containment extensions | tooling — not built | authorized/owed (non-DB) |
+| E12 | native-language aliases for 17 axes | not built | authorized/owed (non-blocking) |
+| **E9** | pipeline-contract stage-id reconciliation | **still OWNER-INPUT** — needs the deployed `<audit_trail>` list only the owner has | remains owner-gated (rule limit 2) |
+| **E11** | product-posture `mission-and-epistemics.md` edit | not applied — **doctrine-SHA cascade** | authorized but run with materiality triage (rule limit 2) |
+
+**Bottom line:** the *ratification* backlog is clear (merge=ratify + 2026-07-21 "ratify all").
+The *execution* backlog is real: **E2, E3, E6, E10, E12 are buildable now**; **E9 and E11 need
+owner input/care**. Nothing is lost — but three owner-directed builds (E2/E3/E10) sat unbuilt,
+which is exactly the failure mode the merge=ratify rule exists to prevent going forward.
