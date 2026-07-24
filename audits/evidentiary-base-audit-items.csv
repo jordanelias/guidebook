@@ -39,7 +39,7 @@ C-06,C,Colour and Contrast,"Plain, Low-Contrast Flooring Throughout (No Geometri
 D-01,D,Wayfinding and Cognition,Loop Floor Plan (No Dead-End Corridors in DEM Environments),wayfinding-dementia-spatial-design,full,A,88.2,35,25,5,5,0,19,13,60.0,36.4
 D-02,D,Wayfinding and Cognition,Cognitive Simplicity (Single Primary Route from Entry to Destination),cognitive-wayfinding-design,full,A,89.6,25,16,7,2,0,13,9,64.0,8.3
 D-03,D,Wayfinding and Cognition,Toilet Visibility from Primary Occupied Spaces (No Navigation Required),wayfinding-dementia-spatial-design,full,A,88.2,35,25,5,5,0,19,13,60.0,36.4
-D-04,D,Wayfinding and Cognition,Landmarks at Every Decision Point,wayfinding-cognitive-science-spatial-design,full,C,55.3,7,7,0,0,0,2,1,100.0,42.9
+D-04,D,Wayfinding and Cognition,Landmarks at Every Decision Point,wayfinding-cognitive-science-spatial-design,full,C,63.7,8,8,0,0,0,3,1,100.0,37.5
 D-05,D,Wayfinding and Cognition,"Enclosed Low-Stimulation Spaces (Focus Rooms, Breakout Alcoves, and Compartmentalisation)",sensory-relief-space-design,full,C,59.7,11,8,1,1,1,6,1,100.0,81.8
 D-06,D,Wayfinding and Cognition,Memory Boxes at Private Office and Residential Room Entrances,wayfinding-dementia-spatial-design,full,A,88.2,35,25,5,5,0,19,13,60.0,36.4
 D-07,D,Wayfinding and Cognition,No Blind Corners (Curved or Mirrored at All Hidden Junctions),cognitive-wayfinding-design,full,A,89.6,25,16,7,2,0,13,9,64.0,8.3
@@ -62,11 +62,11 @@ E-12,E,Circulation and Access,Entrance Landing and Manoeuvring Space for Power W
 E-13,E,Circulation and Access,Entrance Cognitive Legibility Provisions,cognitive-wayfinding-design,full,A,89.6,25,16,7,2,0,13,9,64.0,8.3
 E-15,E,Circulation and Access,"Changing Places Facility (Height-Adjustable Bench, Overhead",accessible-bathroom-and-grab-bar,full,A,81.2,22,11,5,5,1,12,7,72.7,68.4
 F-01,F,Sensory Environment,Sensory Gradient (High to Low Stimulation from Entry to Occupation),sensory-processing-model-design-application,full,C,54.1,7,5,2,0,0,4,1,100.0,66.7
-F-02,F,Sensory Environment,Olfactory Control (Fragrance-Free Zones in Sensitive Areas),air-quality-voc-chemical-sensitivity-built-environment,full,B,65.8,12,7,5,0,0,7,1,100.0,50.0
+F-02,F,Sensory Environment,Olfactory Control (Fragrance-Free Zones in Sensitive Areas),air-quality-voc-chemical-sensitivity-built-environment,full,B,75.0,13,8,5,0,0,8,2,92.3,46.2
 F-03,F,Sensory Environment,Graduated Stimulation Re-entry (Sensory Room to General Space Transition),sensory-relief-space-design,full,C,59.7,11,8,1,1,1,6,1,100.0,81.8
-F-04,F,Sensory Environment,"Air Quality (MERV 13+ Filtration, Low-VOC Specification, Thermal Stability)",air-quality-voc-chemical-sensitivity-built-environment,full,B,65.8,12,7,5,0,0,7,1,100.0,50.0
+F-04,F,Sensory Environment,"Air Quality (MERV 13+ Filtration, Low-VOC Specification, Thermal Stability)",air-quality-voc-chemical-sensitivity-built-environment,full,B,75.0,13,8,5,0,0,8,2,92.3,46.2
 F-05,F,Sensory Environment,Seated-Task Design (All Primary Occupational Tasks Achievable Without Sustained Standing),ofs-built-environment,full,D,49.8,7,4,2,1,0,3,1,100.0,85.7
-F-06,F,Sensory Environment,Fragrance-Free Policy (Whole-Building Operational Standard),air-quality-voc-chemical-sensitivity-built-environment,full,B,65.8,12,7,5,0,0,7,1,100.0,50.0
+F-06,F,Sensory Environment,Fragrance-Free Policy (Whole-Building Operational Standard),air-quality-voc-chemical-sensitivity-built-environment,full,B,75.0,13,8,5,0,0,8,2,92.3,46.2
 F-07,F,Sensory Environment,Thermal Zoning — Building-Wide Temperature Management,,no-source,—,,,,,,,,,,
 F-08,F,Sensory Environment,Thermal Transition — Heating and Cooling System Response,thermoregulation-built-environment,full,D,44.1,5,2,1,2,0,1,1,100.0,0.0
 G-01,G,"Furniture, Fixtures and Spatial Layout","Defensible Seating (Back-to-Wall, Entry Sightline Configuration)",mental-health-built-environment,full,A,85.5,37,27,3,6,1,11,5,59.5,29.7
