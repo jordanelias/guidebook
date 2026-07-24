@@ -20,11 +20,11 @@ A-17,A,Acoustics,Upholstered Seating Throughout Occupied Spaces,room-acoustic-pe
 A-18,A,Acoustics,RT60 in Occupied Learning and Listening Spaces,room-acoustic-performance,full,A,84.8,32,19,10,3,0,13,8,78.1,50.0
 B-01,B,Lighting,Circadian Lighting (≥150 EML Minimum at Eye Level in Daytime Spaces),circadian-lighting-melanopic-edi,full,B,69.9,12,7,5,0,0,4,2,91.7,16.7
 B-02,B,Lighting,Diffuse Lighting for Lip Reading and Sign Language (Shadow-Free Face Illumination),deaf-spatial-design,full,A,82.4,13,8,1,4,0,8,5,61.5,38.5
-B-03,B,Lighting,Elimination of Fluorescent Overhead Lighting,therapeutic-lighting-design,full,B,66.4,8,4,4,0,0,4,2,87.5,0.0
-B-04,B,Lighting,Flicker-Free LED Luminaires (IEEE 1789-2015 Compliant),therapeutic-lighting-design,full,B,66.4,8,4,4,0,0,4,2,87.5,0.0
-B-05,B,Lighting,Gradual Lighting Transition Zones (≥5 m at All Major Illuminance Changes),therapeutic-lighting-design,full,B,66.4,8,4,4,0,0,4,2,87.5,0.0
-B-06,B,Lighting,Individual Dimming Control (≥300 Lux Range),therapeutic-lighting-design,full,B,66.4,8,4,4,0,0,4,2,87.5,0.0
-B-07,B,Lighting,Indirect and Cove Lighting in Sensitive Spaces,therapeutic-lighting-design,full,B,66.4,8,4,4,0,0,4,2,87.5,0.0
+B-03,B,Lighting,Elimination of Fluorescent Overhead Lighting,therapeutic-lighting-design,full,B,70.2,9,5,4,0,0,5,2,88.9,11.1
+B-04,B,Lighting,Flicker-Free LED Luminaires (IEEE 1789-2015 Compliant),therapeutic-lighting-design,full,B,70.2,9,5,4,0,0,5,2,88.9,11.1
+B-05,B,Lighting,Gradual Lighting Transition Zones (≥5 m at All Major Illuminance Changes),therapeutic-lighting-design,full,B,70.2,9,5,4,0,0,5,2,88.9,11.1
+B-06,B,Lighting,Individual Dimming Control (≥300 Lux Range),therapeutic-lighting-design,full,B,70.2,9,5,4,0,0,5,2,88.9,11.1
+B-07,B,Lighting,Indirect and Cove Lighting in Sensitive Spaces,therapeutic-lighting-design,full,B,70.2,9,5,4,0,0,5,2,88.9,11.1
 B-08,B,Lighting,"Matte, Low-Reflectance Floor Finishes (≤30 Gloss Units)",,no-source,—,,,,,,,,,,
 B-09,B,Lighting,"Maximisation of Natural Light (Clerestory, Light Wells, Rooflights)",biophilic-design-healthcare-workplace,full,C,56.7,6,5,0,0,1,3,1,100.0,33.3
 B-10,B,Lighting,Visual Fire Alarm (Strobe VAD Throughout Building),visual-fire-alarm-seizure-safety,full,C,53.0,7,4,2,1,0,3,1,100.0,42.9
@@ -55,7 +55,7 @@ E-05,E,Circulation and Access,Weather Protection at Entry (Covered Canopy Minimu
 E-06,E,Circulation and Access,Level Entry (Zero Step at All Accessible Entrances),threshold-and-level-access,partial,B,66.7,15,0,6,9,0,12,8,46.7,40.0
 E-07,E,Circulation and Access,Slip Resistance (PTV ≥36 Wet Throughout All Circulation and Entry),stair-ramp-threshold-biomechanics-accessibility,full,A,85.7,27,14,3,10,0,15,12,59.3,14.8
 E-08,E,Circulation and Access,Corridor Clear Width (≥1200 mm Minimum on All Primary Routes),accessible-circulation-geometry,full,B,78.5,14,3,5,6,0,9,6,64.3,50.0
-E-09,E,Circulation and Access,Tactile Walking Surface Indicators (ISO 23599:2019),detectable-gradient-protocol-sensory-zones,full,C,55.5,6,4,2,0,0,3,1,100.0,40.0
+E-09,E,Circulation and Access,Tactile Walking Surface Indicators (ISO 23599:2019),detectable-gradient-protocol-sensory-zones,full,C,54.4,7,4,3,0,0,3,1,100.0,40.0
 E-10,E,Circulation and Access,Rest Seating at Regular Intervals on All Accessible Routes,accessible-circulation-geometry,full,B,78.5,14,3,5,6,0,9,6,64.3,50.0
 E-11,E,Circulation and Access,Automatic Sliding Entry and Internal Doors,threshold-door-hardware,full,B,78.1,32,2,11,19,0,26,13,46.9,31.2
 E-12,E,Circulation and Access,Entrance Landing and Manoeuvring Space for Power Wheelchair Users,accessible-circulation-geometry,full,B,78.5,14,3,5,6,0,9,6,64.3,50.0

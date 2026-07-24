@@ -2,8 +2,8 @@
   "as_of": "2026-07-24",
   "n_slices": 80,
   "n_items": 93,
-  "total_source_instances": 974,
-  "unique_sources": 765,
+  "total_source_instances": 976,
+  "unique_sources": 767,
   "grade_distribution": {
     "A": 11,
     "B": 30,
@@ -15,8 +15,8 @@
   "tier_totals": {
     "1": 98,
     "2": 109,
-    "3": 370,
-    "4": 83,
+    "3": 371,
+    "4": 84,
     "5": 170,
     "6": 144
   },
@@ -27,13 +27,13 @@
     "disputed-only": 0
   },
   "strength_band_instances": {
-    "full": 504,
-    "partial": 253,
+    "full": 505,
+    "partial": 254,
     "weak": 207,
     "disputed": 10
   },
   "practice_stream_instances": 0,
-  "english_instances": 726,
+  "english_instances": 728,
   "zero_yield_search_languages": [
     "AR",
     "BN",
@@ -2577,6 +2577,80 @@
       "grade": "B"
     },
     {
+      "slug": "therapeutic-lighting-design",
+      "topic": "sensory-environment",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 9,
+      "full": 5,
+      "partial": 4,
+      "weak": 0,
+      "disputed": 0,
+      "t3_clinical": 3,
+      "practice": 0,
+      "code_only": 4,
+      "strength_band": "full",
+      "weak_only": false,
+      "tiers": {
+        "2": 2,
+        "3": 3,
+        "4": 1,
+        "5": 3
+      },
+      "etypes": {
+        "clinical": 3,
+        "national_fw": 3,
+        "standard_eb": 1,
+        "sr_meta": 2
+      },
+      "markers": {
+        "●": 5,
+        "◐": 4
+      },
+      "n_jur": 5,
+      "n_jur_raw": 5,
+      "n_true_jur": 5,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 5,
+        "NO": 1,
+        "SE": 1,
+        "DK": 1,
+        "UK": 1
+      },
+      "jurs_clean": {
+        "INT": 5,
+        "NO": 1,
+        "SE": 1,
+        "DK": 1,
+        "UK": 1
+      },
+      "n_lang": 2,
+      "langs": {
+        "en": 8,
+        "sv": 1
+      },
+      "n_en": 8,
+      "n_nonen": 1,
+      "pct_en": 88.9,
+      "anglo_core": 1,
+      "supra": 5,
+      "non_anglo": 3,
+      "pct_anglo_core": 11.1,
+      "sl_searched": 19,
+      "sl_hit": 1,
+      "search_jurs": 47,
+      "score": 70.2,
+      "components": {
+        "A": 16,
+        "B": 24.7,
+        "C": 17,
+        "D": 5,
+        "E": 7.5
+      },
+      "grade": "B"
+    },
+    {
       "slug": "circadian-lighting-melanopic-edi",
       "topic": "sensory-environment",
       "state": "RETRACTED-PRE-REHAB",
@@ -3256,78 +3330,6 @@
         "C": 20,
         "D": 15,
         "E": 9.1
-      },
-      "grade": "B"
-    },
-    {
-      "slug": "therapeutic-lighting-design",
-      "topic": "sensory-environment",
-      "state": "RETRACTED-PRE-REHAB",
-      "n": 8,
-      "full": 4,
-      "partial": 4,
-      "weak": 0,
-      "disputed": 0,
-      "t3_clinical": 2,
-      "practice": 0,
-      "code_only": 4,
-      "strength_band": "full",
-      "weak_only": false,
-      "tiers": {
-        "2": 2,
-        "3": 2,
-        "4": 1,
-        "5": 3
-      },
-      "etypes": {
-        "clinical": 2,
-        "national_fw": 3,
-        "standard_eb": 1,
-        "sr_meta": 2
-      },
-      "markers": {
-        "●": 4,
-        "◐": 4
-      },
-      "n_jur": 4,
-      "n_jur_raw": 4,
-      "n_true_jur": 4,
-      "n_null_jur": 0,
-      "polluted_jur": {},
-      "jurs": {
-        "INT": 5,
-        "NO": 1,
-        "SE": 1,
-        "DK": 1
-      },
-      "jurs_clean": {
-        "INT": 5,
-        "NO": 1,
-        "SE": 1,
-        "DK": 1
-      },
-      "n_lang": 2,
-      "langs": {
-        "en": 7,
-        "sv": 1
-      },
-      "n_en": 7,
-      "n_nonen": 1,
-      "pct_en": 87.5,
-      "anglo_core": 0,
-      "supra": 5,
-      "non_anglo": 3,
-      "pct_anglo_core": 0.0,
-      "sl_searched": 19,
-      "sl_hit": 1,
-      "search_jurs": 47,
-      "score": 66.4,
-      "components": {
-        "A": 16,
-        "B": 24.0,
-        "C": 13,
-        "D": 5,
-        "E": 8.4
       },
       "grade": "B"
     },
@@ -4479,73 +4481,6 @@
       "grade": "C"
     },
     {
-      "slug": "detectable-gradient-protocol-sensory-zones",
-      "topic": "wayfinding-and-signage",
-      "state": "RETRACTED-PRE-REHAB",
-      "n": 6,
-      "full": 4,
-      "partial": 2,
-      "weak": 0,
-      "disputed": 0,
-      "t3_clinical": 3,
-      "practice": 0,
-      "code_only": 2,
-      "strength_band": "full",
-      "weak_only": false,
-      "tiers": {
-        "2": 1,
-        "3": 3,
-        "4": 2
-      },
-      "etypes": {
-        "clinical": 3,
-        "standard_eb": 2,
-        "sr_meta": 1
-      },
-      "markers": {
-        "●": 4,
-        "◐": 2
-      },
-      "n_jur": 3,
-      "n_jur_raw": 3,
-      "n_true_jur": 3,
-      "n_null_jur": 1,
-      "polluted_jur": {},
-      "jurs": {
-        "INT": 3,
-        "US": 1,
-        "UK": 1
-      },
-      "jurs_clean": {
-        "US": 1,
-        "INT": 3,
-        "UK": 1
-      },
-      "n_lang": 1,
-      "langs": {
-        "en": 6
-      },
-      "n_en": 6,
-      "n_nonen": 0,
-      "pct_en": 100.0,
-      "anglo_core": 2,
-      "supra": 3,
-      "non_anglo": 0,
-      "pct_anglo_core": 40.0,
-      "sl_searched": 19,
-      "sl_hit": 1,
-      "search_jurs": 47,
-      "score": 55.5,
-      "components": {
-        "A": 12,
-        "B": 26.0,
-        "C": 13,
-        "D": 0,
-        "E": 4.5
-      },
-      "grade": "C"
-    },
-    {
       "slug": "ndv-aut-built-environment-quantified-thresholds",
       "topic": "population-general",
       "state": "RETRACTED-PRE-REHAB",
@@ -4823,6 +4758,74 @@
         "C": 17,
         "D": 12,
         "E": 9.6
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "detectable-gradient-protocol-sensory-zones",
+      "topic": "wayfinding-and-signage",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 7,
+      "full": 4,
+      "partial": 3,
+      "weak": 0,
+      "disputed": 0,
+      "t3_clinical": 3,
+      "practice": 0,
+      "code_only": 3,
+      "strength_band": "full",
+      "weak_only": false,
+      "tiers": {
+        "2": 1,
+        "3": 3,
+        "4": 3
+      },
+      "etypes": {
+        "clinical": 3,
+        "standard_eb": 2,
+        "sr_meta": 1,
+        "code": 1
+      },
+      "markers": {
+        "●": 4,
+        "◐": 3
+      },
+      "n_jur": 3,
+      "n_jur_raw": 3,
+      "n_true_jur": 3,
+      "n_null_jur": 2,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 3,
+        "US": 1,
+        "UK": 1
+      },
+      "jurs_clean": {
+        "US": 1,
+        "INT": 3,
+        "UK": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 7
+      },
+      "n_en": 7,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 2,
+      "supra": 3,
+      "non_anglo": 0,
+      "pct_anglo_core": 40.0,
+      "sl_searched": 19,
+      "sl_hit": 1,
+      "search_jurs": 47,
+      "score": 54.4,
+      "components": {
+        "A": 12,
+        "B": 24.9,
+        "C": 13,
+        "D": 0,
+        "E": 4.5
       },
       "grade": "C"
     },
@@ -6630,16 +6633,16 @@
       "source_slug": "therapeutic-lighting-design",
       "basis_health": "full",
       "grade": "B",
-      "score": 66.4,
-      "n": 8,
-      "full": 4,
+      "score": 70.2,
+      "n": 9,
+      "full": 5,
       "partial": 4,
       "weak": 0,
       "disputed": 0,
-      "n_jur": 4,
+      "n_jur": 5,
       "n_lang": 2,
-      "pct_en": 87.5,
-      "pct_anglo": 0.0
+      "pct_en": 88.9,
+      "pct_anglo": 11.1
     },
     {
       "item_code": "B-04",
@@ -6649,16 +6652,16 @@
       "source_slug": "therapeutic-lighting-design",
       "basis_health": "full",
       "grade": "B",
-      "score": 66.4,
-      "n": 8,
-      "full": 4,
+      "score": 70.2,
+      "n": 9,
+      "full": 5,
       "partial": 4,
       "weak": 0,
       "disputed": 0,
-      "n_jur": 4,
+      "n_jur": 5,
       "n_lang": 2,
-      "pct_en": 87.5,
-      "pct_anglo": 0.0
+      "pct_en": 88.9,
+      "pct_anglo": 11.1
     },
     {
       "item_code": "B-05",
@@ -6668,16 +6671,16 @@
       "source_slug": "therapeutic-lighting-design",
       "basis_health": "full",
       "grade": "B",
-      "score": 66.4,
-      "n": 8,
-      "full": 4,
+      "score": 70.2,
+      "n": 9,
+      "full": 5,
       "partial": 4,
       "weak": 0,
       "disputed": 0,
-      "n_jur": 4,
+      "n_jur": 5,
       "n_lang": 2,
-      "pct_en": 87.5,
-      "pct_anglo": 0.0
+      "pct_en": 88.9,
+      "pct_anglo": 11.1
     },
     {
       "item_code": "B-06",
@@ -6687,16 +6690,16 @@
       "source_slug": "therapeutic-lighting-design",
       "basis_health": "full",
       "grade": "B",
-      "score": 66.4,
-      "n": 8,
-      "full": 4,
+      "score": 70.2,
+      "n": 9,
+      "full": 5,
       "partial": 4,
       "weak": 0,
       "disputed": 0,
-      "n_jur": 4,
+      "n_jur": 5,
       "n_lang": 2,
-      "pct_en": 87.5,
-      "pct_anglo": 0.0
+      "pct_en": 88.9,
+      "pct_anglo": 11.1
     },
     {
       "item_code": "B-07",
@@ -6706,16 +6709,16 @@
       "source_slug": "therapeutic-lighting-design",
       "basis_health": "full",
       "grade": "B",
-      "score": 66.4,
-      "n": 8,
-      "full": 4,
+      "score": 70.2,
+      "n": 9,
+      "full": 5,
       "partial": 4,
       "weak": 0,
       "disputed": 0,
-      "n_jur": 4,
+      "n_jur": 5,
       "n_lang": 2,
-      "pct_en": 87.5,
-      "pct_anglo": 0.0
+      "pct_en": 88.9,
+      "pct_anglo": 11.1
     },
     {
       "item_code": "B-08",
@@ -7295,10 +7298,10 @@
       "source_slug": "detectable-gradient-protocol-sensory-zones",
       "basis_health": "full",
       "grade": "C",
-      "score": 55.5,
-      "n": 6,
+      "score": 54.4,
+      "n": 7,
       "full": 4,
-      "partial": 2,
+      "partial": 3,
       "weak": 0,
       "disputed": 0,
       "n_jur": 3,
