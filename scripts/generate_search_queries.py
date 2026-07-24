@@ -1,13 +1,35 @@
 #!/usr/bin/env python3
 """Generate multilingual search queries for a slug using term_aliases.
 
-Usage: python3 scripts/generate_search_queries.py <slug> [--adversarial]
+Usage: python3 scripts/generate_search_queries.py <slug> [--adversarial] [--harm]
 
 Reads term_aliases from data/guidebook.db, maps slug to relevant terms
-via items→term_item_links, and generates search query pairs for each
-language: a standard query and an adversarial query.
+via items→term_item_links, and generates search queries for each language.
 
-Output: JSON array of {language, standard_query, adversarial_query, terms_used}
+THREE QUERY MODES, on two different adversarial axes:
+
+  standard      What provision is recommended, and at what value.
+
+  --adversarial Interrogates THE EVIDENCE: is this study limited, contested,
+                criticised? Suffixes translate "criticism limitation evidence".
+
+  --harm        Interrogates THE EFFECT ON PEOPLE: who does this provision
+                fail, exclude, or actively hurt? Suffixes translate
+                "harm adverse-effect barrier exclusion".
+
+The distinction matters and was a structural blind spot until 2026-07-24.
+Only --adversarial existed, so the protocol could ask whether a *source* was
+weak but never whether a *design* harmed somebody. Across the first 50 recorded
+search_executions rows, zero queries contained harm / adverse / barrier / fail /
+risk / detriment. A corpus that never searches for harm cannot record harm, and
+evidence of what does not work for people is evidence — absence of it is a
+finding about the search protocol, not about the built environment.
+
+Owner directive 2026-07-24: "our search slugs need to include harm... we need to
+record all evidence of failures/what doesn't work for people."
+
+Output: JSON array of {language, standard_query, terms_used,
+                       adversarial_query?, harm_query?}
 """
 import sqlite3
 import json
@@ -33,6 +55,34 @@ ADVERSARIAL_SUFFIXES = {
     'ZH': '批评 局限 证据',
 }
 
+# Harm-axis suffixes: what a provision costs the people it was not designed for.
+# Deliberately NOT synonyms of the adversarial set above — those question the
+# source, these question the outcome. Terms chosen to surface adverse-effect
+# reporting, access barriers, and exclusion, including post-occupancy findings
+# where a compliant building still failed somebody.
+#
+# TRANSLATION STATUS: first pass, EN-anchored. Per the project's multilingual
+# protocol these belong in term_aliases with per-language review rather than
+# hardcoded here; several are literal renderings that a native-speaker pass
+# should confirm before non-EN results are treated as saturated. Flagged, not
+# silently trusted.
+HARM_SUFFIXES = {
+    'DA': 'skade utilsigtet virkning barriere udelukkelse',
+    'DE': 'Schaden unerwünschte Wirkung Barriere Ausschluss',
+    'EN': 'harm adverse effect barrier exclusion',
+    'ES': 'daño efecto adverso barrera exclusión',
+    'FI': 'haitta haittavaikutus este poissulkeminen',
+    'FR': 'préjudice effet indésirable obstacle exclusion',
+    'IT': 'danno effetto avverso barriera esclusione',
+    'JA': '有害 悪影響 障壁 排除',
+    'KO': '피해 부작용 장벽 배제',
+    'NL': 'schade nadelig effect barrière uitsluiting',
+    'NO': 'skade uheldig virkning hindring ekskludering',
+    'PT': 'dano efeito adverso barreira exclusão',
+    'SV': 'skada negativ effekt hinder uteslutning',
+    'ZH': '危害 不良影响 障碍 排斥',
+}
+
 def main():
     if len(sys.argv) < 2:
         print("Usage: python3 generate_search_queries.py <slug> [--adversarial]")
@@ -40,6 +90,7 @@ def main():
     
     slug = sys.argv[1]
     adversarial = '--adversarial' in sys.argv
+    harm = '--harm' in sys.argv
     
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
@@ -123,11 +174,27 @@ def main():
         std_terms = aliases[:min(4, len(aliases))]
         standard_query = ' '.join(std_terms)
         
+        # Suffix tables are keyed by uppercase ISO code; term_aliases.language
+        # returns lowercase. Normalise before lookup.
+        #
+        # BUG FIX 2026-07-24: this lookup previously used the raw `lang`, so
+        # ADVERSARIAL_SUFFIXES.get(lang) missed on every language and every
+        # "adversarial" query ever generated was a truncated standard query with
+        # no criticism terms appended — the adversarial mode was inert for its
+        # entire existence. Found by the harm_suffix_available diagnostic below.
+        lang_key = (lang or '').upper()
+
         # Build adversarial query: top 2 aliases + adversarial suffix
         adv_terms = aliases[:min(2, len(aliases))]
-        adv_suffix = ADVERSARIAL_SUFFIXES.get(lang, '')
+        adv_suffix = ADVERSARIAL_SUFFIXES.get(lang_key, '')
         adversarial_query = ' '.join(adv_terms) + ' ' + adv_suffix
-        
+
+        # Build harm query: top 2 aliases + harm suffix. Same alias base as the
+        # adversarial query so the two are comparable; only the axis differs.
+        harm_terms = aliases[:min(2, len(aliases))]
+        harm_suffix = HARM_SUFFIXES.get(lang_key, '')
+        harm_query = ' '.join(harm_terms) + ' ' + harm_suffix
+
         entry = {
             'language': lang,
             'standard_query': standard_query,
@@ -135,7 +202,13 @@ def main():
         }
         if adversarial:
             entry['adversarial_query'] = adversarial_query.strip()
-        
+        if harm:
+            # Emitted even where no harm suffix exists for the language, so a
+            # missing translation shows up as a bare query rather than silently
+            # dropping the language from harm coverage.
+            entry['harm_query'] = harm_query.strip()
+            entry['harm_suffix_available'] = lang_key in HARM_SUFFIXES
+
         results.append(entry)
     
     print(json.dumps(results, ensure_ascii=False, indent=2))
