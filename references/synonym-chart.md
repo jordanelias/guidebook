@@ -34,11 +34,11 @@ are a *retrieval aid, not authoritative terminology*. Each row carries that stat
 Five languages required by `lang_jur_map` (AR, BN, HI, ID, SW) still carry **no aliases**
 and cannot be searched until vocabulary is built from published glossaries.
 
-**Coverage:** 88 concepts · 2381 aliases · 14 languages (of 19 required)
+**Coverage:** 88 concepts · 2367 aliases · 14 languages (of 19 required)
 
 | EN | DE | FR | ES | IT | PT | NL | SV | NO | DA | FI | JA | ZH | KO |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 416 | 192 | 171 | 172 | 122 | 115 | 141 | 135 | 133 | 158 | 161 | 151 | 156 | 158 |
+| 415 | 191 | 170 | 171 | 121 | 114 | 140 | 134 | 132 | 157 | 160 | 150 | 155 | 157 |
 
 ---
 
@@ -1305,7 +1305,7 @@ Overwhelming sensory input causing distress/shutdown
 
 Reduced capacity for sustained activity, including symptom exacerbation following exertion
 
-> **Scope:** Symptom/mechanism term, NOT a population label — do not use as an umbrella population code (see governance/functional-taxonomy.md §3.3). Demand axis is TERM-043.
+> **Scope:** Symptom/mechanism term, NOT a population label — do not use as an umbrella population code (see governance/functional-taxonomy.md §3.3). Demand axis is TERM-043. Shares the de alias 'Belastungsintoleranz' with axis TERM-043 (Sustained-exertion demand): this is the symptom, that is the demand layer.
 
 **English group:** `OFS` *(domain)*, `PEM`, `energy limitation`, `exertion intolerance`, `fatigability`, `payback`, `post-exertional malaise`, `symptom crash`
 
@@ -1842,29 +1842,29 @@ Environmental sensory conditions considered from neurodivergent access requireme
 
 **Linked items:** A-16, D-05, F-01, F-03
 
-### TERM-074 · retreat space and exit legibility
+### TERM-074 · withdrawal space and exit legibility
 
-Provision of withdrawal space plus a legible, visible route out of it
+Somewhere to withdraw to that is not necessarily a room, plus a legible visible route out of it
 
-> **Scope:** Links items A-16, D-05. Retreat without a legible exit fails the arousal-safety axis (TERM-032).
+> **Scope:** Links items A-16, D-05, E-13. The designated room is TERM-012 (sensory room) — this term is the wider provision (alcove, recess, edge seating) plus the exit-legibility half. Retreat without a legible exit fails the arousal-safety axis (TERM-032).
 
-**English group:** `escape route legibility` *(narrower)*, `exit visibility` *(narrower)*, `calm space`, `quiet room`, `refuge`, `safe space`, `sensory retreat`, `withdrawal space`
+**English group:** `escape route legibility` *(narrower)*, `exit visibility` *(narrower)*, `sensory room` *(narrower)*, `refuge`, `safe space`, `sensory retreat`, `withdrawal space`
 
 | Lang | Equivalents |
 |---|---|
-| DE | Ruheraum, Rückzugsraum |
-| FR | salle de repos, espace de retrait |
-| ES | sala de calma, espacio de retiro |
-| IT | stanza tranquilla, spazio di ritiro |
-| PT | sala tranquila, espaço de recolhimento |
-| NL | stilteruimte, terugtrekruimte |
-| SV | tyst rum, reträttrum |
-| NO | stillerom, tilbaketrekningsrom |
-| DA | stillerum, tilbagetrækningsrum |
-| FI | rauhoittumistila, vetäytymistila |
-| JA | 静養室, 退避スペース |
-| ZH | 静音室, 撤离空间 |
-| KO | 정온실, 대피 공간 |
+| DE | Rückzugsraum |
+| FR | espace de retrait |
+| ES | espacio de retiro |
+| IT | spazio di ritiro |
+| PT | espaço de recolhimento |
+| NL | terugtrekruimte |
+| SV | reträttrum |
+| NO | tilbaketrekningsrom |
+| DA | tilbagetrækningsrum |
+| FI | vetäytymistila |
+| JA | 退避スペース |
+| ZH | 撤离空间 |
+| KO | 대피 공간 |
 
 **Linked items:** A-16, D-05, E-13, F-03
 
