@@ -2,6 +2,10 @@
   "_comment": "Inherited research-contract debt at baseline. The gate fails only on counts EXCEEDING these \u2014 a permanently-red gate teaches people to ignore it. Lower these numbers as debt is remediated; never raise them to make a batch pass.",
   "captured_at": "2026-07-24",
   "counts": {
-    "R13": 494
+    "R13": 494,
+    "R3": 307,
+    "R9": 29,
+    "R10": 7,
+    "R11": 856
   }
 }

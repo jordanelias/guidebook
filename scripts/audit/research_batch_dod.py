@@ -129,7 +129,7 @@ def _rows(cx, sql, args=()):
     return cx.execute(sql, args).fetchall()
 
 
-def audit(session=None, allmode=False, capture=None):
+def audit(session=None, allmode=False, capture=None, use_baseline=True):
     cx = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
     scope = "" if allmode else " AND session = ?"
     sargs = () if allmode else (session,)
@@ -401,7 +401,7 @@ def audit(session=None, allmode=False, capture=None):
     # exists to prevent. In --all mode, pre-existing debt recorded in the baseline is reported
     # as INHERITED and does not fail the run; any INCREASE over baseline does.
     inherited = []
-    if allmode and BASELINE_PATH.exists():
+    if allmode and use_baseline and BASELINE_PATH.exists():
         import json
         base = json.loads(BASELINE_PATH.read_text()).get("counts", {})
         kept = []
@@ -518,7 +518,27 @@ if __name__ == "__main__":
     if a.write_baseline:
         import json, datetime
         caught = {}
-        audit(allmode=True, capture=caught)
+        # Run WITHOUT baseline filtering: capture must see every failing rule, otherwise
+        # already-baselined entries are filtered out before capture and would be DELETED from
+        # the baseline on rewrite (observed and fixed 2026-07-25).
+        audit(allmode=True, capture=caught, use_baseline=False)
+        # MERGE, ratchet-down-only: an existing entry may fall (debt remediated) but never rise,
+        # and is never dropped. Raising a threshold to make a batch pass would defeat the gate.
+        prior = {}
+        if BASELINE_PATH.exists():
+            prior = json.loads(BASELINE_PATH.read_text()).get("counts", {})
+        merged = dict(prior)
+        raised = []
+        for code, n in caught.items():
+            if code in merged:
+                if n > merged[code]:
+                    raised.append(f"{code}: {merged[code]} -> {n}")
+                merged[code] = min(merged[code], n)   # ratchet DOWN only
+            else:
+                merged[code] = n
+        caught = merged
+        if raised:
+            print("REGRESSION (baseline NOT raised; remediate instead): " + "; ".join(raised))
         BASELINE_PATH.parent.mkdir(parents=True, exist_ok=True)
         BASELINE_PATH.write_text(json.dumps({
             "_comment": "Inherited research-contract debt at baseline. The gate fails only on "
