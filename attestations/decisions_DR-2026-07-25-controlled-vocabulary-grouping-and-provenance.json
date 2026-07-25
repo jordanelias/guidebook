@@ -1,0 +1,37 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-07-25-synonym-grouping",
+ "artifact": "decisions/DR-2026-07-25-controlled-vocabulary-grouping-and-provenance.md",
+ "doctrine_sha": "0f2f525",
+ "rules_in_scope": [
+  "doctrine-check",
+  "source-discipline",
+  "adherence-logging-and-attestation",
+  "canonical-workplan"
+ ],
+ "per_rule_status": {
+  "doctrine-check": {
+   "status": "FIRED",
+   "evidence_path": "decisions/DR-2026-07-25-controlled-vocabulary-grouping-and-provenance.md",
+   "reason": "Checked against the two doctrine commitments this work could plausibly breach. (1) Work-from-axes (CLAUDE.md §10, DR-2026-07-22): no population umbrella was coined. The 41 new terms are built-environment elements, parameters, methods and symptoms; named conditions such as stroke and multiple sclerosis are marked DOMAIN/NARROWER retrieval aliases with scope_notes stating explicitly that they are never population labels. (2) Convergence-is-not-evidence (tier-system.md): TERM-075 groups jurisdictional standards for RETRIEVAL only and its scope_note records that code convergence is not evidence; no evidence state, cell, grade or tier is touched by any of the four migrations. The DR is DG-REVIEW: it originates no doctrine, extends an existing register, and quarantines the D-SCHEMA item (§6.1) and the DG-NON-adjacent language-scope question (§6.2) as raised-not-decided."
+  },
+  "source-discipline": {
+   "status": "FIRED",
+   "evidence_path": "decisions/DR-2026-07-25-controlled-vocabulary-grouping-and-provenance.md",
+   "reason": "The load-bearing application of 'I don't know > invention' in this session was the refusal to generate vocabulary for AR/BN/HI/ID/SW. Those five languages are required by lang_jur_map and hold zero aliases; producing terms in languages nobody on the project reads would be unfalsifiable by construction, since no one here could detect a wrong term and the failure mode is a silent zero-result search indistinguishable from an absent literature. Registered as GAP-302 naming the candidate published glossary per language instead. Separately, every non-English alias that WAS produced (1163 rows) is flagged model-generated and pending native-speaker review in term_aliases.notes, and the generated chart states that in the artefact so the caveat travels with it."
+  },
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "attestations/decisions_DR-2026-07-25-controlled-vocabulary-grouping-and-provenance.json",
+   "reason": "decisions/ is a synthesis path, so this DR requires the doctrine token and this attestation. Doctrine SHA 0f2f525 verified live via git rev-parse HEAD:governance/mission-and-epistemics.md at commit time; governance/mission-and-epistemics.md is not modified by this change, so no re-attestation cascade is triggered."
+  },
+  "canonical-workplan": {
+   "status": "SKIPPED",
+   "reason": "No workplan phase is advanced or reordered. The work sits upstream of the research-matrix-completion plan's vocabulary blocker rather than executing one of its phases: the plan names term_aliases as blocking, and this change removes part of that block (slug coverage 68/106 to 106/106) while registering the residue it cannot remove (GAP-302, GAP-303). No workplan file is edited."
+  }
+ },
+ "deviations": [],
+ "bias_direction": "The pull was toward declaring the request finished once the visible ask — a synonym chart — looked complete, and toward treating scale as evidence of quality: 41 concepts and 1417 aliases read as thorough regardless of whether they retrieve correctly. That bias produced a real defect, TERM-074 duplicating TERM-012 across thirteen languages, which shipped because the collision audit was run before the build and not after. A second pull ran toward overstating the fix: reporting coverage of 106/106 without noting that the stoplist enabling it is tuned to the present 106 slugs and will drift. Bounded by measuring rather than asserting (matches per slug fell from a 12-match maximum to 1.8, which is the signature of precision rather than bulk), by re-running the collision audit after the build and fixing forward when it failed, by recording the stoplist's drift risk as a known limit in DR §7 rather than omitting it, and by declining to close GAP-302/GAP-303 with generated content.",
+ "independent_reviewer_counterclaim": "A reviewer could argue this launders unverified terminology into the retrieval path: 1163 model-generated aliases now drive multilingual search, and a 'pending native-speaker review' flag makes the corpus look governed while every non-English query still rests on terms no native speaker has confirmed — arguably worse than the prior thin vocabulary, because breadth invites reliance. The objection is substantially correct and is not fully answerable, which is why DR §6.3 and GAP-303 state it rather than resolve it. The defence is narrow and comparative, not absolute: before this change 789 non-English aliases carried no provenance marker at all, so the question could not even be posed; now the unverified population is machine-readable, counted per language every CI run, stated in the generated chart, and tracked at P2 with a defined route to VERIFIED-*. Labelled-unverified is strictly better than unlabelled and is not the same as verified. A reviewer could also argue the four new blocking CI gates are disproportionate to a vocabulary change; the answer is that three of the four exist because a specific defect reached main or nearly did, and each one caught something on its first run — including one row written earlier in this same session.",
+ "verdict": "CLEAN"
+}
