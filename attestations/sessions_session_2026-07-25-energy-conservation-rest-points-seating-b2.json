@@ -1,0 +1,74 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-07-25-energy-conservation-rest-points-seating-b2",
+ "artifact": "sessions/session_2026-07-25-energy-conservation-rest-points-seating-b2.md",
+ "doctrine_sha": "0f2f525",
+ "rules_in_scope": [
+  "source-discipline",
+  "evidence-verification-gate",
+  "citation-mining",
+  "adversarial-research-protocol",
+  "best-practice-synthesis-routing",
+  "research-log-manager",
+  "gap-driven-mining",
+  "adherence-logging-and-attestation"
+ ],
+ "per_rule_status": {
+  "source-discipline": {
+   "status": "FIRED",
+   "evidence_path": "scripts/migrations/data_20260725160614_2026-07-25-energy-conservation-rest-points-seating-b2.sql",
+   "reason": "All 7 admissions pre-checked by DOI and PMID (R9, all absent) and re-retrieved before admission (R10). Two sources were REFUSED admission despite being wanted: Transport for All and Ulahannan, both HTTP 403. A web-search summary described Transport for All as disabled-led and it would have been easy to admit it as Co-1 on that basis, which is exactly what batch 1 established must not happen. REF-00953 was tiered T3 not T1 on the authors own limitations statement that the study 'did not include objective measures of strain, pressure or movement'. REF-00954 metadata gaps (no publication date, no participant count) were recorded as gaps rather than estimated."
+  },
+  "evidence-verification-gate": {
+   "status": "FIRED",
+   "evidence_path": "references/search-log/seating-and-rest/energy-conservation-rest-points-seating.md",
+   "reason": "REF-00953 was read in full text, not from its abstract, which is how the equity/DVT harm finding and the 330mm vs 379mm popliteal figures were obtained - none of that is in the abstract. REF-00954 was fetched directly rather than accepted from the batch-1 snippet, which is how the staged description was found to be wrong about it stating an interval."
+  },
+  "citation-mining": {
+   "status": "FIRED",
+   "evidence_path": "scripts/migrations/data_20260725160614_2026-07-25-energy-conservation-rest-points-seating-b2.sql",
+   "reason": "Batch 1's highest-value deferred target (forward mining on REF-00947) was executed and produced 5 connections, closing GAP-306. The method was chosen against the obvious one: a citation walk from a Finnish-cluster paper returns the same cluster and would have manufactured apparent corroboration, so an adversarially-constructed topical query was used instead. Backward mining on REF-00953 enumerated five further named anchors but resolved none to a locator, so 0 connections were recorded rather than counting unresolved names as found. Two further mining rows carry explicit deferrals with reasons."
+  },
+  "adversarial-research-protocol": {
+   "status": "FIRED",
+   "evidence_path": "references/bpc/seating-and-rest/energy-conservation-rest-points-seating.md",
+   "reason": "The independence check was run in BOTH directions this batch, which is the substantive methodological result. Batch 1 found a FALSE corroboration (Wheels for Wellbeing's 50m cites the DfT standard it appeared to confirm). Batch 2 found a REAL one (REF-00953 reaches the plural-height position independently, never citing the UK guidance). Applying the check only where it demolishes a conclusion would be motivated scepticism; both directions are recorded in conflict note 2."
+  },
+  "best-practice-synthesis-routing": {
+   "status": "SKIPPED",
+   "reason": "No best_practice_synthesis authored. The slug now has a substantially stronger evidence base and the temptation to synthesise was correspondingly higher, but the Co-1 base is still ONE source and two Co-1 candidates are access-blocked (GAP-309). Synthesising a slug about disabled people's rest needs on a single lived-experience source would invert the doctrine's own tier logic. opus_synthesis remains false."
+  },
+  "research-log-manager": {
+   "status": "FIRED",
+   "evidence_path": "references/search-log/seating-and-rest/energy-conservation-rest-points-seating.md",
+   "reason": "All 6 searches logged verbatim before screening, including two locator-blocked attempts recorded as executed searches with the block documented rather than silently dropped, and one deliberate non-EN deferral carried forward. The R10 ladder for Transport for All is logged as three distinct routes tried, so a later session does not repeat the same three failures."
+  },
+  "gap-driven-mining": {
+   "status": "FIRED",
+   "evidence_path": "scripts/migrations/data_20260725160614_2026-07-25-energy-conservation-rest-points-seating-b2.sql",
+   "reason": "GAP-306 closed with the full protocol field set (confidence 80-90%, shift conditions, named dissenter) after the audit correctly refused a closure carrying only a falsification condition. GAP-304 was SHARPENED rather than closed - six more sources, still no spacing figure - which is a more useful outcome than closing it would have been. Three new gaps registered: GAP-307 (P1 equity harm), GAP-308 (anticipatability has no specification anywhere), GAP-309 (two Co-1 sources access-blocked)."
+  },
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "attestations/sessions_session_2026-07-25-energy-conservation-rest-points-seating-b2.json",
+   "reason": "This attestation. Three errors were made and are recorded in the session file rather than presented as a clean run, including one that repeats a batch-1 mistake."
+  }
+ },
+ "deviations": [
+  {
+   "rule": "source-discipline",
+   "reason": "I repeated a vocabulary error I had already made and fixed in batch 1 - writing NOT-APPLICABLE into doi_resolution_outcome, which accepts only RESOLVED/NO-MATCH/REVERTED - on the one batch-2 source lacking a DOI. It was caught only by diffing test_db_integrity against the pre-batch DB (25/35 against a 26/35 baseline) and fixed at source before commit. Worth recording as a deviation rather than a silent fix: the batch-1 lesson was written into prose and prose did not stop me repeating it three hours later, which is the precise failure mode the harness hooks exist to address. A CHECK-style guard on this enum at migration-emit time would have caught it both times."
+  },
+  {
+   "rule": "gap-driven-mining",
+   "reason": "GAP-306 was initially closed carrying only a falsification_condition, which research_protocol_audit CHECK 1 correctly rejected, and its confidence_interval was then written as narrative prose which CHECK 4 also correctly rejected. Both were fixed to the corpus convention (numerical 80-90%, with the scoping reasoning moved into shift_conditions rather than deleted). Disclosed because the first attempt at closing a gap was under-specified, and a gap closed without recording what would reopen it is barely closed at all."
+  },
+  {
+   "rule": "best-practice-synthesis-routing",
+   "reason": "Batch 2 admitted ZERO Co-1 sources despite running the R1 lived-experience pass first, because both Co-1 candidates returned HTTP 403. The batch therefore strengthened the academic evidence base while leaving the lived-experience base at one source - the opposite of the intended balance for a project whose doctrine makes Co-1 co-primary with T1. Recorded as GAP-309 and flagged here rather than left implicit in a passing R1 check, because R1 passed on the presence of a Co-1-TARGETED SEARCH, not on Co-1 evidence being found."
+  }
+ ],
+ "bias_direction": "The pull in a second batch is confirmation: batch 1 staked out a position (need evidenced, interval not) and the cheapest batch 2 would have been one that decorated it. Two specific temptations. First, having found five independent sources, to let that warmth spread onto the interval figure - resisted by checking each one for a spacing number and recording that none has one, which made GAP-304 sharper rather than softer. Second, having caught a false corroboration in batch 1, to treat every agreement as suspect - resisted by recording REF-00953 as genuine independent corroboration of the Co-1 plural-height position, because the test is whether sources share an origin, not whether agreement is convenient. The batch's most quotable finding (the gendered DVT harm) is also the one I am least able to check independently, and it is carried as a single-source claim from REF-00953 rather than stated as established.",
+ "independent_reviewer_counterclaim": "A reviewer could argue GAP-306 was closed too cheaply: five studies that merely include benches among many variables is not replication of a specific finding, and none was designed to test the resting-places association as its primary question - REF-00959 in particular is an instrument-validation paper where benches are one retained item, not a result. That is a fair challenge and the reason the closure records 80-90% rather than higher, scopes itself explicitly to independence rather than effect size, and names the weakness in named_dissenter (n=25 exploratory, n=38 qualitative, one source with no participants at all). A second reviewer could argue REF-00953 is out of scope: aged-care chairs are indoor furniture, not pedestrian rest points, so importing its dimensions into a streetscape slug is a domain leap. The response is that the parameter it evidences - the conflict between height needed for sit-to-stand and height needed for seated comfort, and the resulting need for variety - is a property of human bodies rather than of the room, and REF-00954 converges on the armrest point from a street setting; but the domain gap is real, is recorded in the population grade as PARTIAL, and would be worth an explicit outdoor-seating replication.",
+ "verdict": "DEVIATION-LOGGED"
+}

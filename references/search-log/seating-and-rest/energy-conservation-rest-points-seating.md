@@ -215,3 +215,102 @@ distinction is the finding of this batch.
 | Jurisdiction | Language | Reason | Co-1 attempted? | T5 attempted? |
 |---|---|---|---|---|
 | All non-UK/US | non-EN | Deliberately deferred — batch 1 is EN-only | No | No |
+
+---
+
+# Batch 2 — 2026-07-25
+
+**Session:** session_2026-07-25-energy-conservation-rest-points-seating-b2
+**Objective:** resolve the 6 staged candidates, and settle GAP-306 (single-research-group dependency).
+**Result:** 7 sources admitted (REF-00953–00959); **GAP-306 CLOSED**; GAP-304 sharpened; 3 new gaps.
+
+## Queries executed (verbatim, logged before screening — R8)
+
+| # | Engine | Query (verbatim) | Found | Admitted | Outcome |
+|---|---|---|---|---|---|
+| 12 | web | `Transport for All Are We There Yet 2023 highlights PDF - direct retrieval` | 1 | 0 | **403 × 3 routes** |
+| 13 | web | `Transport Scotland Inclusive Design in Town Centres Appendix C perspectives of disabled street users seating` | 1 | 1 | REF-00954 |
+| 14 | pubmed | `Blackler seating aged care physical fit independence comfort` | 1 | 1 | REF-00953 |
+| 15 | pubmed | `benches AND neighborhood AND older adults walking` | 19 | 5 | **GAP-306 test** |
+| 16 | web | `Inclusive Streetscapes Ulahannan disabled people lived experience street accessibility - direct retrieval` | 1 | 0 | 403 |
+| 17 | manual | *(deferred — non-EN)* | — | — | `deferred_reason` |
+
+## GAP-306 — the independence test, and its result
+
+Batch 1 admitted four primary sources of which **three shared authors and institution**
+(Jyväskylä: Rantakokko, Rantanen, Iwarsson, Portegijs). Independence was untested, so the
+resting-places finding could have been one group's result echoed.
+
+**Method chosen deliberately.** A citation walk from a Finnish-cluster paper tends to return the
+same cluster, so instead of forward-walking REF-00947's citations, the question was attacked with
+a well-formed topical query designed to surface *other* groups. (Note the contrast with batch 1's
+failures: three concepts returned 19 usable records where batch 1's seven- and eight-concept
+AND-chains returned zero.)
+
+**Result — the gap does not hold.** Five groups, six countries, five distinct methods:
+
+| Source | Country | Method | Independence value |
+|---|---|---|---|
+| REF-00955 | CA | GPS-recorded routes + GIS | **Objective route measurement**, not recalled barriers |
+| REF-00956 | CZ (+LV) | n=525 survey, ordinal regression | Distributional: rural provision substantially worse |
+| REF-00957 | FR | Spatial accessibility model | Benches = 1 of only **4** model variables |
+| REF-00958 | HK | n=38 qualitative, social-ecological | Non-Western setting; benches surface unprompted |
+| REF-00959 | US | n=3,677, validated MAPS-Mini instrument | Benches **survived empirical item selection** |
+
+The methods are independent of one another as well as of the authors, so this is not one finding
+restated five times — which is precisely the failure mode batch 1 caught on the 50 m interval.
+
+## GAP-304 — sharpened, not closed
+
+Six further sources were read this batch, including a **participatory national framework**
+(REF-00954, disabled street users consulted directly) and a **validated instrument at n=3,677**
+(REF-00959). **Not one states a spacing figure.** REF-00954 says only "at regular intervals where
+possible"; REF-00959 records bench *presence*.
+
+So the position is now much stronger and much more uncomfortable: bench **presence** is
+repeatedly and independently associated with walking outcomes, while the **interval** is
+unmeasured by anyone in the literature located so far. The 50 m figure is not merely
+under-evidenced — the whole evidence base that supports rest provision is silent on spacing.
+
+## R7 — new harm finding (GAP-307)
+
+REF-00953 audited 410–505 mm seat heights across facilities and 423–510 mm across suppliers.
+**None would fit a 5th-percentile older Australian female** (popliteal height 330 mm vs population
+mean 379 mm). Verbatim: *"shorter residents are being disadvantaged compared with taller ones,
+suffering discomfort and possible musculoskeletal damage while sitting and being put at risk of
+deep venous thrombosis (DVT) due to the seating design."* Women are 69% of permanent aged care in
+Australia and likelier to be shorter, so **the harm is gendered**. The UK 470–480 mm single band
+sits inside the excluding range.
+
+## R15 — candidate resolutions, re-described from source
+
+| # | Was staged as | What the source actually says |
+|---|---|---|
+| 17 Blackler | "may be the only primary basis for the seat-dimension figures" | **Right but under-claimed.** It does not merely supply dimensions — it shows they cannot be single-valued. → REF-00953 |
+| 16 Transport Scotland | "suggests regular rest locations…; verify whether it states an interval" | **Corrected.** States *no* interval and *no* dimensions. My staged wording implied a richer spec than exists. Adds the unanticipated visibility requirement. → REF-00954 |
+| 15 Transport for All | "likely Co-1; snippet says only 4% reported no barriers" | **Still a hypothesis.** Blocked; whether it mentions seating at all remains unknown. |
+| 13 Ulahannan | "26 UK interviews on streetscape barriers" | **Still a hypothesis.** Blocked; whether it addresses seating specifically remains unestablished. |
+
+## Locator blocks (R10 ladder, honestly exhausted)
+
+**Transport for All** — three distinct routes tried, all HTTP 403: highlights PDF, full
+`NATS_Full_PDF.pdf`, HTML news page. A web-search summary described the organisation as
+disabled-led; that is search-engine prose, not the source speaking, and batch 1 set the standard
+of verifying organisational status from the organisation's own material (as was done for
+REF-00950). **Not admitted on secondary description.**
+
+**Ulahannan 2025** — sciencedirect.com 403; no DOI available from the engine that surfaced it, so
+the ladder has no next rung without a Crossref lookup.
+
+Both registered as **GAP-309**. This matters disproportionately: both are UK lived-experience
+sources, and **the slug still holds only one Co-1 source**. Batch 2 admitted zero new Co-1
+evidence — the R1 pass ran and came back empty because of access, not absence.
+
+## Batch 3 queue
+
+1. **REF-00953 backward leads** — Christenson (380–457 mm variety), Holden & Fernie (armrest
+   730 mm floor / 250 mm seat / 120 mm width), Kothiyal & Tettey (376 mm depth), Australian
+   Standard for fixed-height chairs. Likeliest route to a primary derivation for the dimensions.
+2. **GAP-309** — retrieve the two blocked Co-1 sources by another route.
+3. **Transport Scotland parent report** — the appendix omits the interval; the parent may not.
+4. **`term_aliases`** for this slug, to unblock non-EN (still deferred, still not "absent").
