@@ -4973,8 +4973,52 @@ decisions:
   status: ACTIVE
   review_status: PENDING
   notes: >
-    NEEDS-RECONCILIATION before any case study is ingested. Designed from the Pydantic models alone;
+    RECONCILED 2026-07-25 by migration 038 / decision D-0156 — this entry's blocker is CLEARED.
+    Originally: NEEDS-RECONCILIATION before any case study is ingested. Designed from the Pydantic models alone;
     consulting prior work afterwards found a real mismatch — references/case-study-compendium.md
     carries its own "## Schema" block and uses CS-01 (2-digit) while the model validator demands
     CS-NNNN, and case studies are numbered §13.x in v9 rather than §12. Tables ship empty so nothing
     is asserted in the interim. Raised as DR §6.1.
+- decision_id: D-0156
+  category: D-SCHEMA
+  delegation: DG-REVIEW
+  summary: >
+    Migration 038 — reconcile the case_studies table against references/case-study-compendium.md,
+    closing D-0155's NEEDS-RECONCILIATION blocker.
+  outcome: >
+    Adds the 16 compendium fields missing from 037 (design_intent, populations_served_note,
+    outcome_data, conflict_documented, failure_notes, construction_cost, accessible_design_premium,
+    funding_sources, operational_cost_change, remediation_cost, roi_data, financial_evidence_tier,
+    financial_data_quality, evidence_contribution, part13_status, sources) and widens
+    schemas/case_study.py case_study_id to CS-\d{2,4}. No existing identifier renumbered.
+    Applied; user_version 37->38. Table still ships empty.
+  rationale: >
+    Migration 037 was built from schemas/case_study.py alone rather than from the prior work.
+    The compendium's own schema block specifies "id — CS-NN sequential" and holds 26 entries
+    (CS-01..CS-26), so the model's CS-NNNN pattern — never enforced because no table existed —
+    was the thing out of step, and the validator is widened rather than the corpus renumbered.
+    The larger finding was 16 omitted fields, including the compendium's entire financial block
+    and its conflict_documented / failure_notes fields: the prior work already had first-class
+    homes for failure evidence and cross-population conflict. The §13.x vs §12 discrepancy was a
+    false conflict (Part 13 in v9.0, Part 12 in v10).
+  alternatives_considered:
+  - Renumber the 26 compendium entries to CS-NNNN — rejected; breaks every §13.x cross-reference
+    to satisfy a validator that had no table behind it.
+  - Leave 037 as-is and map fields at ingest time — rejected; the omitted financial block is half
+    the compendium's purpose and would have been silently dropped.
+  decision_date: 2026-07-25 04:45
+  decided_by: opus_session_2026-07-24-research-matrix-completion
+  model_routing: opus/125/extract
+  effort_level: 125
+  decision_artifacts:
+  - scripts/migrations/038_case_study_compendium_reconciliation.sql
+  - schemas/case_study.py
+  - references/case-study-compendium.md
+  predecessors:
+  - D-0155
+  supersedes: []
+  status: ACTIVE
+  review_status: PENDING
+  notes: >
+    Closes DR-2026-07-25 §6.1. Ingesting the 26 existing compendium entries is follow-on work, not
+    done here; the table remains empty so nothing is asserted.

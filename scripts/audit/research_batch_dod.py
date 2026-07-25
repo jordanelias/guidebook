@@ -124,6 +124,30 @@ COMBINATORIAL_HINTS = (
 CO1_HINTS = ("lived experience", "co-production", "co-design", "participatory", "dpo",
              "disabled people's organisation", "user-led", "peer research", "nothing about us")
 
+# ---------------------------------------------------------------------------------------------
+# TUNABLE THRESHOLDS — collected here ON PURPOSE, for review.
+#
+# These numbers were chosen by the agent whose work this gate judges, which is a conflict of
+# interest, not a neutral act: the FIRST version of R1 accepted a substring and duly passed a run
+# with zero Co-1 sources. They are gathered in one block instead of buried in the checks so a
+# reviewer can audit every discretionary number in under a minute and change one without reading
+# the logic. Each records what it is and why it is where it is.
+#
+# STATUS: PROVISIONAL pending independent review (DR-2026-07-25 §6.4). Raising any of these makes
+# the gate weaker; do that deliberately and say so in the PR, never to make a batch pass.
+# ---------------------------------------------------------------------------------------------
+
+# R2 — citation_mining rows expected per admitted tier-1..3 anchor.
+# 1/4 = "mine a meaningful minority of anchors per batch", not "mine everything" (which would
+# stall batches) and not ">0" (which one stub row satisfies forever). Deliberately weak-ish: it is
+# a floor against doing NOTHING, not a definition of systematic mining.
+R2_MINING_PER_ANCHORS = 4
+
+# R7 — screened results per registered candidate.
+# 1 candidate per 25 screened results. Rationale: most screened hits are correctly discarded; this
+# asserts only that a batch which screened hundreds of results found SOMETHING worth staging.
+R7_SCREENED_PER_CANDIDATE = 25
+
 
 def _rows(cx, sql, args=()):
     return cx.execute(sql, args).fetchall()
@@ -184,9 +208,9 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
                    f"(mining_direction<>'none' on {mined_dir} search rows is NOT evidence of "
                    f"mining — the mining register is the evidence). Mine backward AND forward, "
                    f"depth 2-3, per citation-miner.")
-    elif admitted > 0 and mined_rows < max(1, admitted // 4):
+    elif admitted > 0 and mined_rows < max(1, admitted // R2_MINING_PER_ANCHORS):
         fail("R2", f"only {mined_rows} citation_mining rows for {admitted} anchors — mining is "
-                   f"token rather than systematic (expect >= {max(1, admitted // 4)}).")
+                   f"token rather than systematic (expect >= {max(1, admitted // R2_MINING_PER_ANCHORS)}).")
     else:
         ok("R2", f"{mined_rows} citation_mining rows for {admitted} anchors")
 
@@ -256,7 +280,7 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     cand = _rows(cx, f"SELECT COUNT(*) FROM search_candidates WHERE 1=1{scope}", sargs)[0][0]
     screened = _rows(cx, f"SELECT COALESCE(SUM(results_screened),0) FROM search_executions "
                          f"WHERE 1=1{scope}", sargs)[0][0]
-    expected = max(1, screened // 25) if screened else 0
+    expected = max(1, screened // R7_SCREENED_PER_CANDIDATE) if screened else 0
     if total and cand < expected:
         fail("R7", f"only {cand} candidates registered for {screened} screened results "
                    f"(expect >= {expected}). Off-slug / unverified material must land in "

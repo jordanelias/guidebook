@@ -100,18 +100,28 @@ false confidence.
   owner's.
 - Does **not** make content checks blocking (only the selftest blocks); promotion per check is a
   separate owner-gated step.
-- Does **not** ratify migration **037's shape**. It was designed from the Pydantic models alone;
+- **[RESOLVED 2026-07-25 — migration 038.]** Did not originally ratify migration **037's shape**. It was designed from the Pydantic models alone;
   consulting prior work afterwards found a real mismatch — `references/case-study-compendium.md`
   carries its own `## Schema` and uses `CS-01`, while the model's validator demands `CS-NNNN`, and
-  case studies are §13.x in v9, not §12. **037 is flagged NEEDS-RECONCILIATION** and its tables ship
-  empty. See §6.
+  case studies are §13.x in v9, not §12. **037 was flagged NEEDS-RECONCILIATION**; migration **038** closes it — see §6.1.
 - Does **not** claim the corpus is compliant. 494 tier-1..3 sources still lack population grading —
   disclosed in the baseline, not resolved.
 
 ## §6 — Raised for the owner, not decided here
 
-1. **Reconcile 037 against `case-study-compendium.md`** (ID format `CS-01` vs `CS-NNNN`, the
-   compendium's own schema block, §13.x vs §12) before any case study is ingested.
+1. **~~Reconcile 037 against `case-study-compendium.md`~~ — RESOLVED, migration 038.** The
+   compendium's own schema (`id — CS-NN sequential`, 26 live entries CS-01..CS-26) is the
+   authoritative prior work, so `schemas/case_study.py` was widened to `CS-\d{2,4}` rather than
+   renumbering 26 entries to satisfy a model that had no table. The substantive finding was not
+   the ID format but **16 missing fields**: 037 modelled the descriptive half and omitted the
+   compendium's entire financial block (`construction_cost`, `accessible_design_premium`,
+   `funding_sources`, `operational_cost_change`, `remediation_cost`, `roi_data`,
+   `financial_evidence_tier`, `financial_data_quality`) plus `conflict_documented`,
+   `failure_notes`, `design_intent`, `outcome_data`, `evidence_contribution`, `part13_status`,
+   `populations_served_note`, `sources`. Note that the prior work **already had** first-class
+   fields for failure evidence and cross-population conflict — this session did not discover that
+   need, it rediscovered it. §13.x vs §12 was a false conflict: case studies were Part 13 in v9.0
+   and are Part 12 in v10; `part_section` stays free text.
 2. **Promotion of content checks to blocking**, per check, after shakedown.
 3. **The 494-source population-grading backlog** — the largest single quality gap now visible.
 4. **Independent review of the gate's thresholds.** They were authored by the agent whose work they
