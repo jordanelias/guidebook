@@ -66,6 +66,36 @@ CHECKS (each maps to a documented rule and to the observed violation that motiva
   R12 STRUCTURED HOMES USED.  Case-study, economics and jurisdictional VALUE data belong in
       case_studies / economics_entries / jurisdictional_values — not in prose notes.
 
+  --- Added 2026-07-25, derived from the remediation pass itself. ---
+
+  R13 POPULATION-OF-STUDY vs POPULATION-SERVED.  Every tier-1..3 admission carries a graded
+      population match. An admission with no match row silently asserts that the population
+      STUDIED is the population SERVED. Observed: a chamber emissions test with no human
+      participants filed against chemical sensitivity; a general-population autistic-TRAITS
+      sample filed against autistic people; a general-population CHILDREN sample used for
+      neurodivergent adults. All three are usable as PROXY and misleading as anything else.
+
+  R14 A ZERO-YIELD SEARCH MUST SAY WHY.  An empty result is evidence of ABSENCE only if the
+      query was well-formed. Observed: four PubMed queries returned 0 purely because
+      descriptive multi-concept phrasings AND-chain — a METHOD failure. Keep the empty (R8),
+      but distinguish query-shape failure / wrong index / genuine absence. Only the last counts.
+
+  R15 A RESOLVED CANDIDATE IS RE-DESCRIBED FROM THE SOURCE.  A staged candidate's description
+      is a HYPOTHESIS. Observed: a lead staged as "the direct built-environment claim" resolved
+      to an SEM mechanism study in a general-population trait sample supplying no design
+      parameter. Unchecked, that description would have hardened into fact in the register.
+
+DESIGN RULES for anyone extending this gate (learned by attacking it on 2026-07-24, when eight
+of eight attacks succeeded):
+  * Prefer STRUCTURAL evidence over TEXT evidence. Substring checks false-pass: "lived
+    experience" appearing in a query proved nothing; population codes matched inside ordinary
+    words because SQLite LIKE is case-insensitive ("COM" in "accommodate").
+  * Thresholds of "> 0" are gameable forever by one row. Make them proportionate.
+  * A check that can never fail is decorative. R8 passed while every empty row was deleted.
+  * Baseline numbers may only RATCHET DOWN. Raising one to make a batch pass defeats the gate.
+  * The selftest must clone the LIVE schema and fail loudly; a silently-rotted guard is worse
+    than no guard, because it manufactures confidence.
+
 Usage:
     python3 scripts/audit/research_batch_dod.py --session <session-id>   # gate one batch
     python3 scripts/audit/research_batch_dod.py --all                    # whole corpus posture
@@ -312,6 +342,59 @@ def audit(session=None, allmode=False, capture=None):
     else:
         ok("R12", f"structured homes used (economics_entries={econ_rows} for {econ_words} "
                   f"prose findings)")
+
+    # --- R13 POPULATION-OF-STUDY vs POPULATION-SERVED ---------------------------------------
+    # LESSON (2026-07-25): the highest-frequency silent error in this session was admitting a
+    # source for a population it did not study. Twice caught only because linkage was done by
+    # hand: Jinno 2007 is a CHAMBER EMISSIONS test with no human participants, filed against COM;
+    # Amos 2019 is a GENERAL-POPULATION autistic-TRAITS sample, filed against AUT. Both are
+    # legitimate as PROXY evidence and dangerous as anything else. An admission with no population
+    # match asserts, silently, that study population == served population.
+    anchors = _rows(cx, f"SELECT ref_id FROM evidence_sources WHERE tier BETWEEN 1 AND 3"
+                        f"{scope.replace('session','created_by_session')}", sargs)
+    unmatched = [r[0] for r in anchors
+                 if not _rows(cx, "SELECT 1 FROM evidence_population_match WHERE ref_id=?",
+                              (r[0],))]
+    if unmatched:
+        fail("R13", f"{len(unmatched)} tier-1..3 source(s) admitted with NO population match row "
+                    f"— silently asserting that the population studied is the population served: "
+                    f"{', '.join(unmatched[:5])}. Grade each EXACT/PARTIAL/PROXY and write the "
+                    f"mismatch note.", len(unmatched))
+    else:
+        ok("R13", f"all {len(anchors)} tier-1..3 admissions carry a graded population match")
+
+    # --- R14 ZERO-YIELD MUST SAY WHY ---------------------------------------------------------
+    # LESSON: a zero-yield search is only evidence of ABSENCE if the query was well-formed. Twice
+    # this session an over-conjunctive PubMed query returned 0 and the honest reading was "wrong
+    # query shape", not "no evidence exists" — PubMed AND-chains every term, so descriptive
+    # multi-concept phrasings return nothing. Recording the empty without that distinction
+    # silently converts a method failure into a finding of absence.
+    bare_empty = _rows(cx, f"SELECT COUNT(*) FROM search_executions WHERE results_found = 0 AND "
+                           f"deferred_reason IS NULL AND COALESCE(findings_note,'') = ''{scope}",
+                       sargs)[0][0]
+    if bare_empty:
+        fail("R14", f"{bare_empty} zero-yield search(es) carry no findings_note. Keep the empty "
+                    f"(R8) but say WHICH it is: query-shape failure, wrong index, or genuine "
+                    f"absence. Only the last is evidence.", bare_empty)
+    else:
+        ok("R14", "every zero-yield search records why it was empty")
+
+    # --- R15 A RESOLVED CANDIDATE MUST BE RE-DESCRIBED FROM THE SOURCE ------------------------
+    # LESSON: a staged candidate's description is a HYPOTHESIS, not a finding. This session staged
+    # "Amos et al. — sensory input as a barrier to autistic adults engaging in public and
+    # occupational spaces — the direct built-environment claim". Resolving it showed that was
+    # over-claimed: it is an SEM mechanism study in a general-population trait sample supplying no
+    # design parameter. Unresolved, that description would have hardened into fact in the register.
+    admitted_cands = _rows(cx, f"SELECT candidate_id, title FROM search_candidates WHERE "
+                               f"disposition = 'ADMITTED' AND COALESCE(notes,'') NOT LIKE "
+                               f"'%RESOLVED%'{scope}", sargs)
+    if admitted_cands:
+        fail("R15", f"{len(admitted_cands)} candidate(s) marked ADMITTED without a RESOLVED note "
+                    f"re-describing them from the actual source. A candidate description is a "
+                    f"hypothesis until the source is read; confirm or correct it on resolution.",
+             len(admitted_cands))
+    else:
+        ok("R15", "resolved candidates are re-described from the source")
 
     # ---- baseline: legacy debt must not hold the gate permanently red ----------------------
     # A gate that is always red teaches people to ignore it — the precise failure this script
