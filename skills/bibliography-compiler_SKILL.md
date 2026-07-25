@@ -9,7 +9,7 @@ description: >
   "reference list", "export sources".
 ---
 
-**Model:** Sonnet 4.6
+**Model:** Sonnet-class
 **SQLite:** `data/guidebook.db` via `scripts/db.py coverage --slug {slug}`
 
 ---

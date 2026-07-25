@@ -15,7 +15,7 @@ description: >
 
 # Economics Auditor
 
-**Model:** Sonnet 4.6 (checklist application — no Opus required)
+**Model:** Sonnet-class (checklist application — no Opus required)
 **Intake:** Single item spec (≤500 lines). Full document → haiku-chunker first.
 **Output target:** SQLite gaps table (EC for missing content; AUDT for framing violations)
 **Feeds INTO:** economics-researcher (via EC gaps); ISW (via AUDT gaps)

@@ -13,7 +13,7 @@ description: >
   audit". Phase 5 skill — runs during QA on content-final matrices.
 ---
 
-**Model:** Sonnet 4.6 — cross-domain judgment required.
+**Model:** Sonnet-class — cross-domain judgment required.
 **Input:** Room type matrices (Parts 5 and 6) + K-category items (Part 7) + Part 8 conflict resolutions
 **Output:** Sensory coherence report + conflict register
 **Chunk ceiling:** ≤10 room types per run.

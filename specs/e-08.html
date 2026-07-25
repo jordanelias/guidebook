@@ -10,8 +10,12 @@
 /* Page-local styles sit AFTER guidebook.css so equal-specificity rules win.
    No webfont linked; the design system's fallback stacks render the page. */
 
-.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
-  clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+/* left:0 is load-bearing. Without it an .sr-only inside a horizontally scrolling
+   table takes its static position beyond the viewport, and because its containing
+   block is the initial containing block it escapes the scroller and widens the
+   whole document — a WCAG 1.4.10 reflow failure caused by a visually hidden span. */
+.sr-only{position:absolute;left:0;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;}
 :where(.row>summary,.sectnav-list a,.compare-table a,.juris-pick,.decision-table a,h2){
   scroll-margin-top:88px;}
 .sec-head h2{margin:2px 0 0;}
@@ -71,9 +75,13 @@
 .provisional-plain{border:2px solid #b06a1f;background:#fbeee0;color:#5a3410;
   border-radius:8px 8px 0 0;padding:12px 16px;font-size:var(--fs-md,18px);line-height:1.5;}
 .provisional-plain strong{color:#7a3f0e;}
+/* WCAG 2.2 2.5.8: this is a standalone navigation link, not a link inside a
+   sentence, so the inline exception does not cover it. 24 px minimum. */
+.provisional-plain a{display:inline-block;min-height:24px;line-height:24px;}
 .provisional-detail{border:1px solid #d8c4a6;border-top:none;background:#fdf7ef;
   border-radius:0 0 8px 8px;padding:10px 16px 14px;}
-.provisional-detail summary{cursor:pointer;font-family:var(--font-mono);font-size:var(--fs-sm);color:#7a3f0e;}
+.provisional-detail summary{cursor:pointer;font-family:var(--font-mono);font-size:var(--fs-sm);color:#7a3f0e;
+  min-height:24px;display:flex;align-items:center;}
 .provisional-detail p{font-size:var(--fs-sm);color:#5a3410;margin:8px 0 0;line-height:1.55;}
 
 .decision-wrap{overflow-x:auto;margin:8px 0 4px;}
@@ -361,6 +369,7 @@
           </div>
           <div class="block"><div class="block-l"><span class="sym sym-co1" aria-hidden="true">◆</span> evidence · <span class="band band-full"><span aria-hidden="true">●</span> Co-1</span> <button class="cite-trigger cite mini" data-pop="deafspace" aria-label="Sources: DeafSpace"></button></div>
             <p>Anchored by Deaf-community knowledge (DeafSpace, Gallaudet). Under the tier system, lived and cultural evidence ranks alongside primary research, not below it. The number stands on the community's own authority.</p>
+            <p class="honesty">The ● grades the axes, not the value. The convergence record for this cell is <code>pending_assessment</code> and every governing source in it is down-weighted, because no value-level extraction has been done. Seven governing refs, four of them Co-1 and one of them a statute, are listed in the source panel.</p>
           </div>
           <div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">▲</span> <span class="conf">confidence</span> <button class="cite-trigger cite mini" data-pop="scoping" aria-label="Sources: confidence and scope"></button></div>
             <p class="honesty">The need for generous signing space is community-authoritative. Confidence in that is high.</p>
@@ -939,7 +948,22 @@ Bind the function and the outcome, not a contested reference.</pre>
 <!-- SOURCE LIBRARY — every claim points to one of these.         -->
 <!-- A list may hold several references. Each names its evidence  -->
 <!-- tier and whether it is verified / registered.                -->
+<!-- Provenance must not depend on script execution: without JS   -->
+<!-- the citation buttons open nothing, so the panels render in   -->
+<!-- flow as an appendix instead.                                 -->
 <!-- ============================================================ -->
+<noscript><style>
+  .pop{position:static !important;display:block !important;width:auto !important;max-width:var(--wrap) !important;
+       margin:0 auto 14px !important;box-shadow:none !important;padding-top:14px !important;}
+  .pop::before{display:none !important;}
+  .pop-close{display:none !important;}
+  .cite-trigger{cursor:default;opacity:0.55;}
+  #nojs-appendix{display:block !important;}
+</style></noscript>
+<div id="nojs-appendix" style="display:none;max-width:var(--wrap);margin:32px auto 12px;padding:0 24px;">
+  <h2>Sources appendix</h2>
+  <p>JavaScript is off, so every source panel appears below in full rather than opening from the citation button beside the claim it supports.</p>
+</div>
 
 <div class="pop" data-pop-id="balance-counter">
   <div class="pop-head"><span class="pop-tag">counter-strand</span><span>open question</span></div>
@@ -993,14 +1017,21 @@ Bind the function and the outcome, not a contested reference.</pre>
   <div class="pop-head"><span class="pop-tag">Deaf-community</span><span>Co-1</span></div>
   <div class="pop-title">Signing space — 2440 / 1830 / 3050 mm</div>
   <p class="pop-lead">The signing-pair widths, distances, glazing and lighting come from DeafSpace and Deaf scholarship.</p>
+  <p class="pop-lead">All seven governing refs of this cell are listed. Four more sources sit alongside them: two supporting, one discounted, one project synthesis.</p>
   <ul class="pop-src">
-    <li>Bauman, H-D. — <em>DeafSpace Design Guidelines</em>, Gallaudet University (2010). Primary source for the dimensions.<span class="s-meta">Co-1 · single institution · ASL · unpublished working draft</span></li>
-    <li>Vaughn, A. — <a href="https://groundupjournal.com/" target="_blank" rel="noopener">DeafScape: Applying DeafSpace to Landscape</a>, GroundUp Journal (2018).<span class="s-meta">Co-1</span></li>
-    <li>Cloete, M. &amp; Rout, M. — "DeafSpace" in the built school environment: a scoping review, <em>Acta Structilia</em> 32(2):238–263 (2025).<span class="s-meta">Tier 3 · confirms principles cross-culturally, does not re-measure 2440</span></li>
-    <li>Bauman, H-D. &amp; Murray, J. — <em>Deaf Gain</em>, U of Minnesota Press (2014).<span class="s-meta">Tier 2 · cultural framing</span></li>
-    <li>Kusters, A. (2015) — Deaf-authored ethnography.<span class="s-meta">Deaf-authored scholarship</span></li>
-    <li><code>references/bpc/communication-and-alerts/deaf-spatial-design.md</code> — project synthesis.<span class="s-meta">Project BPC</span></li>
+    <li>Bauman, <strong>Hansel</strong> (architect; Director of Campus Planning and Design, Gallaudet) — <em>with <strong>Bahan B., Bauman H-Dirksen L., Sirvage R.</strong> (ASL and Deaf Studies, Gallaudet)</em>; Mitnick H.; Dangermond S.; Keane C.; Dunlop B. (2010). <em>DeafSpace Design Guidelines</em>. Primary source for the dimensions.<span class="s-meta">REF-00338 · Tier 1 · co1 · governing · single institution · ASL · unpublished working draft<span class="s-status">Corrected: earlier versions of this page rendered this "Bauman, H-D." and named only the architect. The Deaf Studies collaborators carry the Co-1 warrant.</span></span></li>
+    <li><em>DeafSpace Design Guidelines</em> Vol. 1, Gallaudet University (2010).<span class="s-meta">REF-00339 · Tier 1 · co1 · governing</span></li>
+    <li>Vaughn, <strong>Alexa</strong> (Associate ASLA; a Deaf landscape architect) — <a href="https://www.designwithdisabledpeoplenow.com/deafscape" target="_blank" rel="noopener">DeafScape: Applying DeafSpace to Landscape</a> (2018).<span class="s-meta">REF-00342 · Tier 1 · co1 · governing<span class="s-status">Corrected from "Vaughn, A." with a journal link that is not the registered URL.</span></span></li>
+    <li>Kusters, A. (2015). <em>Deaf Space in Adamorobe</em> — ethnography of a Ghanaian signing village.<span class="s-meta">REF-00345 · Tier 1 · co1 · governing · doi 10.2307/j.ctv2rh28wp<span class="s-status">Bears directly on the one-signed-language caveat, and was omitted from earlier versions of this page.</span></span></li>
+    <li>Bauman H-Dirksen L. &amp; Murray J. (eds) (2014). <em>Deaf Gain: Raising the Stakes for Human Diversity</em>, U of Minnesota Press.<span class="s-meta">REF-00343 · Tier 2 · standard_eb · governing<span class="s-status">The declared tier_basis CO1+T2 rests entirely on this record — an edited academic collection classed as a named-organisation evidence-based standard. That classification is contestable.</span></span></li>
+    <li>RIT/NTID InfoGuides bibliographic reference for DeafSpace principles (2020).<span class="s-meta">REF-00344 · Tier 3 · grey · governing</span></li>
+    <li>Decreto-Legge 22 marzo 2021 n. 41 art. 34-ter — Italian recognition of Lingua dei Segni Italiana.<span class="s-meta">REF-00347 · <strong>Tier 6 · code</strong> · governing<span class="s-status">A statute is a governing ref of this cell, in tension with the project's own rule that the T4–T6 regulatory stratum is walled off from full-strength anchoring.</span></span></li>
+    <li>Cloete, M. &amp; Rout, M. — "DeafSpace" in the built school environment: a scoping review, <em>Acta Structilia</em> 32(2):238–263 (2025).<span class="s-meta">REF-00341 · Tier 3 · supporting, not governing · confirms principles cross-culturally, does not re-measure 2440</span></li>
+    <li>Edwards C. &amp; Harold G. — deaf-space literature.<span class="s-meta">REF-00340 · Tier 3 · supporting, not governing · doi 10.3109/09638288.2014.913710</span></li>
+    <li>Stockholms stad — <em>En stad för alla</em>.<span class="s-meta">REF-00346 · Tier 5 · <span class="s-status">discounted in the convergence record; shown so its exclusion is visible rather than silent</span></span></li>
+    <li><code>references/bpc/communication-and-alerts/deaf-spatial-design.md</code> — project synthesis.<span class="s-meta">Project BPC · not an evidence record</span></li>
   </ul>
+  <p class="honesty"><strong>Status of the determination.</strong> <code>convergence_assessment</code> 9001 records <code>status = pending_assessment</code>, and <strong>all nine clinical and Co-1 sources are recorded as down-weighted</strong>. The rationale on file reads: "Value-level convergence not yet assessable: <code>source_value_extractions</code> has no rows for these sources; assessment queued, not assumed." The ● therefore grades the presence of two evidence axes. It does not grade an adjudicated value.</p>
 </div>
 
 <div class="pop" data-pop-id="scoping">

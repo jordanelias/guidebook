@@ -13,7 +13,7 @@ description: >
   "revise this item", "new specification", "item spec", "ISW", "evidence upgrade".
 ---
 
-**Model:** Sonnet 4.6 (judgment required for evidence and framing)
+**Model:** Sonnet-class (judgment required for evidence and framing)
 **SQLite:** `data/guidebook.db`
 **GitHub backend:** `jordanelias/guidebook` · `main` (Part 4 prose files)
 

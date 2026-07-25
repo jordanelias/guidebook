@@ -15,7 +15,7 @@ description: >
 <!-- Updated: 2026-05-04 — Phase 1-C: session-start SQLite migration (1b connections, 2 gaps) -->
 <!-- Prior: CO-0008 2026-04-26 — Stage A workflows, Python-backed skill classification, Phase 2B dormant -->
 
-**Model:** Opus 4.6 (primary for all work per CO-0008 PI update)
+**Model:** Opus-class (primary for all work per CO-0008 PI update)
 **GitHub backend:** `jordanelias/guidebook` · `main` · All GitHub operations use `github-io` patterns.
 
 ---
@@ -336,31 +336,31 @@ Claude reads SKILL.md for judgment; output validated by _validate.py.
 
 | Skill | Validator status | Model |
 |---|---|---|
-| item-specification-writer | To build (A6) | Sonnet 4.6 |
-| multilingual-research | To build (A6) | Opus 4.6 (synthesis) |
-| citation-miner | To build (C-stage) | Sonnet 4.6 |
-| citation-verifier | To build (C-stage) | Sonnet 4.6 |
-| functional-deficit-researcher | To build (C-stage) | Opus 4.6 (synthesis) |
-| connection-discovery | To build (B2) | Opus 4.6 |
-| connection-auditor | To build (B2) | Sonnet 4.6 |
-| cross-population-conflict-mapper | To build (C-stage) | Opus 4.6 (synthesis) |
-| economics-researcher | To build (C-stage) | Sonnet 4.6 |
-| jurisdiction-tracker | To build (A8) | Sonnet 4.6 |
-| literature-review-planner | To build (C-stage) | Sonnet 4.6 |
-| item-consolidation-analyzer | To build (C-stage) | Sonnet 4.6 |
-| research-log-manager | To build (C-stage) | Sonnet 4.6 |
-| practice-note-generator | To build (C-stage) | Sonnet 4.6 |
-| critique-report-writer | To build (C-stage) | Sonnet 4.6 |
+| item-specification-writer | To build (A6) | Sonnet-class |
+| multilingual-research | To build (A6) | Opus-class or above (synthesis) |
+| citation-miner | To build (C-stage) | Sonnet-class |
+| citation-verifier | To build (C-stage) | Sonnet-class |
+| functional-deficit-researcher | To build (C-stage) | Opus-class or above (synthesis) |
+| connection-discovery | To build (B2) | Opus-class |
+| connection-auditor | To build (B2) | Sonnet-class |
+| cross-population-conflict-mapper | To build (C-stage) | Opus-class or above (synthesis) |
+| economics-researcher | To build (C-stage) | Sonnet-class |
+| jurisdiction-tracker | To build (A8) | Sonnet-class |
+| literature-review-planner | To build (C-stage) | Sonnet-class |
+| item-consolidation-analyzer | To build (C-stage) | Sonnet-class |
+| research-log-manager | To build (C-stage) | Sonnet-class |
+| practice-note-generator | To build (C-stage) | Sonnet-class |
+| critique-report-writer | To build (C-stage) | Sonnet-class |
 
 ### Prose Only (4)
 Guidance for Claude's judgment. No mechanical validation.
 
 | Skill | Model |
 |---|---|
-| voice-style | Sonnet 4.6 |
-| prose-style-checker | Sonnet 4.6 |
-| workplan-orchestrator | Opus 4.6 |
-| session-consolidator | Opus 4.6 |
+| voice-style | Sonnet-class |
+| prose-style-checker | Sonnet-class |
+| workplan-orchestrator | Opus-class |
+| session-consolidator | Opus-class |
 
 ### Infrastructure (2)
 Unchanged.

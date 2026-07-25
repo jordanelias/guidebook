@@ -12,7 +12,7 @@ description: >
 
 # Item Audit Pipeline (Wrapper)
 
-**Model:** Sonnet 4.6 (routing/orchestration) · delegates to member skill models
+**Model:** Sonnet-class (routing/orchestration) · delegates to member skill models
 **Inputs:**
   - `item_code` (required) — e.g. `I-01`
   - `session` (required) — current session filename

@@ -14,7 +14,7 @@ description: >
 
 # Functional Deficit Auditor
 
-**Model:** Sonnet 4.6 (extraction, coverage mapping) · Opus 4.6 (mechanism validity judgment
+**Model:** Sonnet-class (extraction, coverage mapping) · Opus-class (mechanism validity judgment
 and FDR trigger decision — Steps 3b and 5 require Opus)
 **Intake:** Single item spec (≤500 lines). Longer items → haiku-chunker first.
 **Output target:** SQLite gaps table (AUDT for scope errors; RP for FDR triggers)

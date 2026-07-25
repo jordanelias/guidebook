@@ -14,7 +14,7 @@ description: >
   "best-practice audit".
 ---
 
-**Model:** Sonnet 4.6 (mining + candidate harvesting) → Opus 4.7 for outcome judgment when ≥3 candidates returned
+**Model:** Sonnet-class (mining + candidate harvesting) → Opus-class for outcome judgment when ≥3 candidates returned
 **Connectors:** PubMed (required), Scholar Gateway (required for design/OT/Co-1), Cochrane (web_fetch acceptable), CrossRef (web_fetch acceptable). Activate for the audit.
 **SQLite:** `data/guidebook.db` via `scripts/db.py`
 **Authoritative DR:** `decisions/DR-2026-05-24-best-practice-supersession-protocol.md`

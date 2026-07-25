@@ -10,7 +10,7 @@ description: >
   "was this an improvement", "revision comparison".
 ---
 
-**Model:** Sonnet 4.6
+**Model:** Sonnet-class
 **Intake:** both versions as section-aligned pre-chunked inputs. Not aligned → haiku-chunker Mode A on both first.
 
 ## Change Types
