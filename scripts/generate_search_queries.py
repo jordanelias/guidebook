@@ -47,10 +47,97 @@ Output: JSON array of {language, standard_query, terms_used,
 """
 import sqlite3
 import json
+import re
 import sys
 import os
 
-DB_PATH = os.path.join(os.path.dirname(__file__), '..', 'data', 'guidebook.db')
+DB_PATH = os.environ.get(
+    'GUIDEBOOK_DB_PATH',
+    os.path.join(os.path.dirname(__file__), '..', 'data', 'guidebook.db'))
+
+# --- slug -> term matching (token-based; replaced substring matching 2026-07-25) --------
+#
+# The fallback used to test `lower(canonical_en) LIKE '%<slug word>%'`. Substring
+# matching produced silent false positives that no one saw because the generator
+# prints queries, not the terms behind them:
+#   'room'   matched  head-ROOM clearance
+#   'ot'     matched  vibr-OT-actile alert
+#   'aut'    matched  dys-AUT-onomia
+#   'read'   matched  Adaptable READ-iness
+#   'and'    matched  every canonical containing the word "and"
+# Token equality kills all of these. Aliases are indexed too, so the synonym
+# chart itself drives retrieval rather than the canonical name alone.
+
+# Tokens too common across the slug corpus to discriminate (df >= ~7 of 106),
+# plus generic English. Dropping them prevents shotgun matches such as
+# 'accessibility' pulling in seven unrelated terms.
+_STOP = {
+    "environment", "built", "design", "and", "for", "the", "of", "in", "to",
+    "with", "on", "by", "a", "an", "or", "at", "as", "its", "per", "non",
+    "all", "general", "global", "v2", "access", "accessibility", "accessible",
+    "disability", "impairment", "provision", "space", "room", "free",
+    "material", "time", "load", "post", "care", "setting", "data", "based",
+    "using", "review", "analysis", "study", "user", "control",
+}
+
+
+def _stem(w):
+    """Crude singulariser. Must not strip the 's' of access/cross/analysis."""
+    if w.endswith("ies") and len(w) > 4:
+        return w[:-3] + "y"
+    if w.endswith("s") and len(w) > 3 and not w.endswith(("ss", "is", "us", "as")):
+        return w[:-1]
+    return w
+
+
+def _tokens(text):
+    return {_stem(w) for w in re.split(r'[^a-z0-9]+', text.lower())
+            if len(w) >= 2 and w not in _STOP} - _STOP
+
+
+def _term_token_index(conn):
+    """term_id -> token set, drawn from canonical_en AND its English aliases.
+
+    Functional-axis pseudo-terms stay excluded: their canonical names are common
+    words ("balance", "pain", "orientation") that would match many slugs and
+    inject axis translations into query generation uncontrolled.
+    """
+    idx = {}
+    for r in conn.execute(
+            "SELECT term_id, canonical_en FROM terms "
+            "WHERE domain IS NULL OR domain != 'functional_axis'"):
+        idx[r['term_id']] = _tokens(r['canonical_en'])
+    for r in conn.execute(
+            "SELECT term_id, alias FROM term_aliases WHERE language = 'en'"):
+        if r['term_id'] in idx:
+            idx[r['term_id']] |= _tokens(r['alias'])
+    return idx
+
+
+def _slug_token_df(conn):
+    df = {}
+    for (slug,) in conn.execute("SELECT slug FROM slugs").fetchall():
+        for w in _tokens(slug):
+            df[w] = df.get(w, 0) + 1
+    return df
+
+
+def match_terms_by_slug(conn, slug):
+    """Return {term_id: {matching tokens}} for a slug with no item->term links."""
+    idx = _term_token_index(conn)
+    df = _slug_token_df(conn)
+    hits = {}
+    for w in _tokens(slug):
+        for tid, toks in idx.items():
+            if w in toks:
+                hits.setdefault(tid, set()).add(w)
+    # Precision rule: once a slug matches on a *specific* token (rare across the
+    # corpus), discard terms resting only on generic ones. Without this,
+    # 'wheelchair'-plus-'housing' slugs drag in every loosely related term.
+    specific = {t for t, ws in hits.items() if any(df.get(w, 0) <= 4 for w in ws)}
+    if specific:
+        hits = {t: ws for t, ws in hits.items() if t in specific}
+    return hits
 
 ADVERSARIAL_SUFFIXES = {
     'DA': 'kritik begrænsning evidens',
@@ -127,20 +214,10 @@ def main():
         for link in links:
             term_ids.add(link['term_id'])
     
-    # If no item-term links, try to match slug words to term canonical names
+    # If no item-term links, match slug tokens against term canonical names and
+    # their English aliases (see match_terms_by_slug for why this is not LIKE).
     if not term_ids:
-        slug_words = slug.replace('-', ' ').split()
-        for word in slug_words:
-            # Exclude functional_axis pseudo-terms (E12): their canonical_en are common
-            # words ("balance", "pain", "orientation") that would spuriously match many
-            # slugs and inject axis translations into query generation uncontrolled.
-            matches = conn.execute("""
-                SELECT term_id FROM terms
-                WHERE lower(canonical_en) LIKE ?
-                  AND (domain IS NULL OR domain != 'functional_axis')
-            """, (f'%{word}%',)).fetchall()
-            for m in matches:
-                term_ids.add(m['term_id'])
+        term_ids |= set(match_terms_by_slug(conn, slug))
     
     if not term_ids:
         print(f"No terms found for slug '{slug}'.", file=sys.stderr)

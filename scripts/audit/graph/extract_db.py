@@ -149,6 +149,28 @@ def extract(gdb, store):
             store.add_edge(node_id("population", pop), node_id("population", parent), "self_ref",
                            attrs={"via": "populations.parent_code"})
 
+    # 6. controlled-vocabulary edges (added 2026-07-25).
+    # `terms` was already registered in PRIMARY, so 47 term nodes existed — but
+    # term_aliases and term_item_links emitted no edges, leaving every term node
+    # an isolated island. The audit therefore could not see the vocabulary layer
+    # at all: a term_item_links row pointing at a nonexistent item was
+    # structurally invisible (that column carries no FK constraint, so the FK
+    # passes above could not catch it either).
+    if "term_item_links" in tables:
+        for term_id, item_code in cur.execute(
+                "SELECT term_id, item_code FROM term_item_links"):
+            store.add_edge(node_id("term", term_id), node_id("item", item_code),
+                           "junction", attrs={"via": "term_item_links"})
+    if "term_aliases" in tables:
+        # One edge per (term, language) rather than per alias: the audit needs to
+        # know which terms carry which language coverage, not to re-store 2k aliases.
+        for term_id, lang, n in cur.execute(
+                "SELECT term_id, language, COUNT(*) FROM term_aliases "
+                "GROUP BY term_id, language"):
+            store.add_edge(node_id("term", term_id), node_id("db_table", "term_aliases"),
+                           "junction", attrs={"via": "term_aliases", "language": lang,
+                                              "alias_count": n})
+
     store.set_meta("guidebook_user_version",
                    cur.execute("PRAGMA user_version").fetchone()[0])
     return row_counts
