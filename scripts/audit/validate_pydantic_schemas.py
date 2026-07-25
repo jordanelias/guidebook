@@ -52,7 +52,7 @@ import pydantic
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(REPO_ROOT))
-DEFAULT_DB = REPO_ROOT / "data" / "guidebook.db"
+DEFAULT_DB = Path(os.environ.get("GUIDEBOOK_DB_PATH", REPO_ROOT / "data" / "guidebook.db"))
 
 # model qualified name ("<module>.<ClassName>") -> live table name.
 # Only models with a confident, unambiguous live-table match are listed.

@@ -31,7 +31,7 @@ from pathlib import Path
 
 # ── Constants ────────────────────────────────────────────────────────────────
 
-DB_PATH = "data/guidebook.db"
+DB_PATH = os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db")
 BPC_ROOT = "references/bpc"
 SEARCH_LOG_ROOT = "references/search-log"
 

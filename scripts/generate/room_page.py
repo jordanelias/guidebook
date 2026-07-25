@@ -17,7 +17,7 @@ from pathlib import Path
 from html import escape
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
-DB_PATH = REPO_ROOT / "data" / "guidebook.db"
+DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", REPO_ROOT / "data" / "guidebook.db"))
 OUTPUT_DIR = REPO_ROOT / "site" / "rooms"
 
 
