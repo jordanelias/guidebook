@@ -52,6 +52,22 @@ w(f"**Coverage:** {len(terms)} concepts · {sum(counts.values())} aliases · {le
 w("| " + " | ".join(u for _,u in LANGS) + " |")
 w("|" + "---|"*len(LANGS))
 w("| " + " | ".join(str(counts[l]) for l,_ in LANGS) + " |\n")
+prov=dict(con.execute("""SELECT CASE
+  WHEN notes LIKE '%VERIFIED-%' THEN 'verified'
+  WHEN notes LIKE '%model-generated%' THEN 'model-generated'
+  WHEN notes LIKE '%curated%' THEN 'curated (EN)'
+  WHEN notes LIKE '%repo shorthand%' THEN 'project code'
+  ELSE 'unrecorded' END, COUNT(*) FROM term_aliases GROUP BY 1"""))
+w("### Provenance of these aliases\n")
+w("| Provenance | Aliases |")
+w("|---|---|")
+for k in ('verified','model-generated','curated (EN)','project code','unrecorded'):
+    if prov.get(k): w(f"| {k} | {prov[k]} |")
+w("")
+w("**No alias has reached a verified state yet** (`VERIFIED-GLOSSARY` / `VERIFIED-NATIVE` /")
+w("`VERIFIED-CROSS`). Non-English retrieval rests on terminology no native speaker has")
+w("confirmed — tracked as **GAP-303**. The five languages with no vocabulary at all are")
+w("**GAP-302**. Measured by `scripts/audit/alias_provenance_audit.py`.\n")
 w("---\n")
 for dom in sorted(bydom):
     w(f"## {dom.replace('_',' ').title()}\n")

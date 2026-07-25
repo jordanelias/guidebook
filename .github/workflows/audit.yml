@@ -49,6 +49,13 @@ jobs:
       - name: GUIDEBOOK_DB_PATH contract (BLOCKING)
         run: python3 scripts/audit/db_path_env_audit.py
 
+      # Retrieval quality depends on where an alias came from. Grandfathers the
+      # pre-2026-07-24 cohort; fails only on new aliases lacking provenance.
+      - name: Alias provenance (BLOCKING for new aliases)
+        env:
+          GUIDEBOOK_DB_PATH: data/guidebook.db
+        run: python3 scripts/audit/alias_provenance_audit.py
+
       - name: Citation-mining completeness — current session (BLOCKING)
         if: steps.session.outputs.session != ''
         env:

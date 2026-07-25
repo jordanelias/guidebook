@@ -40,6 +40,20 @@ and cannot be searched until vocabulary is built from published glossaries.
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | 415 | 191 | 170 | 171 | 121 | 114 | 140 | 134 | 132 | 157 | 160 | 150 | 155 | 157 |
 
+### Provenance of these aliases
+
+| Provenance | Aliases |
+|---|---|
+| model-generated | 1163 |
+| curated (EN) | 304 |
+| project code | 20 |
+| unrecorded | 880 |
+
+**No alias has reached a verified state yet** (`VERIFIED-GLOSSARY` / `VERIFIED-NATIVE` /
+`VERIFIED-CROSS`). Non-English retrieval rests on terminology no native speaker has
+confirmed — tracked as **GAP-303**. The five languages with no vocabulary at all are
+**GAP-302**. Measured by `scripts/audit/alias_provenance_audit.py`.
+
 ---
 
 ## Acoustic
