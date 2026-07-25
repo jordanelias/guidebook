@@ -29,6 +29,21 @@ run() {  # run "<label>" <cmd...>
     fail=1
   fi
 }
+# Same, but exit code 2 means "the tool could not run here" (missing browser,
+# missing node) rather than "the check failed". SKIP is printed loudly: a gate that
+# quietly does nothing is worse than no gate.
+run_opt() {  # run_opt "<label>" <cmd...>
+  local label="$1"; shift
+  "$@" >/tmp/preflight_step.log 2>&1
+  case $? in
+    0) echo "[PASS] $label" ;;
+    2) echo "[SKIP] $label — tool unavailable here; this check did NOT run"
+       sed 's/^/         /' /tmp/preflight_step.log | tail -2 ;;
+    *) echo "[FAIL] $label"
+       sed 's/^/         /' /tmp/preflight_step.log | tail -10
+       fail=1 ;;
+  esac
+}
 
 echo "===== preflight: structure & cross-refs ====="
 run "validate_bpc"              python3 scripts/validate_bpc.py --all
@@ -73,6 +88,14 @@ fi
 echo "===== preflight: DB-derived output freshness (--check gates) ====="
 run "pipeline_completeness --check"  python3 tools/pipeline_completeness.py --check
 run "evidentiary_audit --check"      python3 tools/evidentiary_audit.py --check
+
+# A rendered document is a derived surface: it may summarise the record, but it may
+# not contradict it or present it as stronger than it is. Three adversarial audits of
+# specs/e-08-brief.html found ~90 defects; every serious one was mechanically checkable
+# and none was caught by re-reading the prose. Hence a gate rather than a habit.
+echo "===== preflight: rendered documents (specs/*.html vs the record) ====="
+run     "rendered_docs vs DB"        python3 scripts/audit/check_rendered_docs.py --all
+run_opt "rendered_docs in browser"   node scripts/audit/render_audit.js
 
 echo "==================================================="
 if [ "$fail" -eq 0 ]; then

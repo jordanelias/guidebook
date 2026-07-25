@@ -10,7 +10,7 @@ description: >
 ---
 
 **Intake:** Confirm scope (version, sections, dimensions) before writing. Assemble upstream outputs only — do not re-run analysis. Missing upstream → note "Pending [skill-name]".
-**Model:** Sonnet 4.6
+**Model:** Sonnet-class
 **Output:** `Critique_Report_Guidebook_[Version]_[YYYY-MM-DD].md` · Word only if explicitly requested
 **Severity:** 🔴 HIGH · 🟡 MED · 🟢 LOW · Status: ✅ CONFIRMED · ⚠️ UNSUPPORTED · ❌ NOT_FOUND
 **Sources:** content-gap-analyzer · citation-verifier · guidebook-auditor · multilingual-research · evidence-auditor · framing-checker

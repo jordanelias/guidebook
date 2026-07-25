@@ -13,7 +13,7 @@ description: >
 
 # Connection Auditor
 
-**Model:** Sonnet 4.6 (structured querying + validation; no open-ended synthesis)
+**Model:** Sonnet-class (structured querying + validation; no open-ended synthesis)
 **Execution pattern:** Python Tool (queries) + Hybrid (action recommendations)
 **Input:** filter parameters (status, confidence, type, target item, topic)
 **Output:** audit report with ACTION recommendations per connection

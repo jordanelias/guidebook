@@ -10,7 +10,7 @@ description: >
   "has this been updated", "standard superseded check". Run once per edition — not per draft.
 ---
 
-**Model:** Sonnet 4.6 with web search.
+**Model:** Sonnet-class with web search.
 **Run schedule:** once per edition.
 **Intake:** standards list required. Full document → haiku-chunker Mode C first.
 **Storage:** `references/standards-registry.md` on GitHub — one YAML entry per jurisdiction-standard pair.

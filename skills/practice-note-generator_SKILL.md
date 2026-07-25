@@ -10,7 +10,7 @@ description: >
   Output is for OT practitioners and design teams — NOT for critique reports or authors.
 ---
 
-**Model:** Sonnet 4.6
+**Model:** Sonnet-class
 **Intake:** Requires (a) design element or population focus AND (b) source skill output. If neither → ask before proceeding.
 **No ABSENT-stratum claims in output. EMERGING claims → "emerging evidence suggests..."**
 **Language:** occupation-based, plain language (Flesch-Kincaid ≤10). Dimensions in mm; imperial in parentheses.

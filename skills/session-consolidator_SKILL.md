@@ -14,7 +14,7 @@ description: >
 
 <!-- Updated: 2026-05-04 — Phase 1-C verification pass -->
 
-**Model:** Sonnet 4.6
+**Model:** Sonnet-class
 **GitHub backend:** `jordanelias/guidebook` · `main` · All GitHub operations use `github-io` patterns.
 **All timestamps: `YYYY-MM-DD HH:MM`**
 

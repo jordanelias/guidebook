@@ -15,7 +15,7 @@ description: >
   belong to prose-style-checker, framing-checker, or evidence-auditor respectively.
 ---
 
-**Model:** Sonnet 4.6
+**Model:** Sonnet-class
 **Input:** target document (chunked if >500 lines) + replacement specification  
 **Output:** instance register (YAML) + validated replacement set + downstream impact table
 **GitHub backend:** `jordanelias/guidebook` · `main` · Protocol → Project Instructions §GitHub API  

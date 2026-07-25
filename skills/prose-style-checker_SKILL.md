@@ -4,15 +4,17 @@ description: >
   Audit and rewrite guidebook text to conform to the project prose register: soft imperative
   subjunctive ("to be", "to provide"), descriptive headings (no values in headings), qualitative
   sequencing (Ideal → Best Practice → Acceptable → Minimum) at item level, concise evidentiary
-  sentences, no hedging. ALWAYS use this skill when asked to: check writing style, audit prose
+  sentences, defined terms glossed or located in their instrument, no hedging. ALWAYS use this
+  skill when asked to: check writing style, audit prose
   register, fix hedging language, rewrite for concision, apply style rules, enforce subjunctive
   voice, check sentence structure, or review text before publication. Trigger on: "check the
   style", "fix the writing", "apply the style guide", "too wordy", "too hedging", "rewrite this
-  section", "prose audit", "style pass", "register check", "is this too passive", "fix the voice".
+  section", "prose audit", "style pass", "register check", "is this too passive", "fix the voice",
+  "is this term defined", "undefined term".
   Use proactively on any section being drafted or revised before it is packaged.
 ---
 
-**Model:** Sonnet 4.6
+**Model:** Sonnet-class
 **Intake:** ≤500 lines. Full document → haiku-chunker first.
 **Passes:** 2. Pass 1: flag. Pass 2: rewrite flagged items. Do not rewrite what is not flagged.
 **Output:** flagged item table + corrected text block. No commentary outside the table.
@@ -23,6 +25,8 @@ description: >
 
 ### Voice
 Soft imperative subjunctive. The construction "to be + [value/condition]" is the canonical form.
+
+**Corpus basis.** This register is evidenced, not invented. It appears unprompted in the author's own professional writing: *"All existing drainage infrastructure **is to remain**, and the asphalt work is patch-and-repair."* (Jordan Elias to City of Surrey Engineering, 2026-07-07). Rewriting toward this construction moves text *toward* the author's natural register, not away from it — see `voice-style_SKILL.md` §13.8.
 
 | Wrong | Correct |
 |---|---|
@@ -68,6 +72,18 @@ Example structure:
 - Every prescriptive claim to carry a citation or evidence tier marker, or be flagged.
 - Unsupported prescriptions: flag `[UNSUPPORTED — citation required]`.
 - Do not soften unsupported claims — flag them and leave prescription intact pending evidence.
+- Thresholds to be stated with the condition that triggers them, not bare. "Not subject to ESC below 0.4 hectares or 3 m excavation" carries its trigger; "0.4 hectares" alone does not.
+
+### Defined Terms
+A term of art carrying a specific meaning in a code, standard, or this guidebook is to be quoted and located at first use in a section, or glossed inline.
+
+| Wrong | Correct |
+|---|---|
+| Building value to be under $100k | "Building value" (Bylaw 17850) to be under $100k |
+| Redevelopment triggers the requirement | The requirement is triggered by "redevelop" as defined in Bylaw 16610 |
+| Clear width to be 1500 mm | Clear width — measured between finished wall faces — to be 1500 mm |
+
+The canonical inline gloss is parenthetical `(i.e. …)`: *"The estimated cost (i.e. worth of all construction related to the roof replacement, façade, or building envelope) is under $100k."* Where the definition itself is contested or the guidebook cannot resolve it, do not silently pick a sense — flag it and route to the gap register.
 
 ---
 
@@ -83,6 +99,7 @@ Example structure:
 | PASSIVE_ACTOR | Passive voice where actor is known | "Grab bars are to be installed by..." |
 | SEQUENCE_VIOLATION | Tiers out of order or better-than-minimum stated last | Minimum stated before Ideal |
 | UNSUPPORTED | Prescriptive claim with no citation | Any specification claim without source |
+| UNDEFINED_TERM | Term of art used without gloss or locator to the instrument defining it | "Building value to be under $100k"; "clear width to be 1500 mm" (measured how?) |
 | OVERLONG | Sentence >35 words | Any run-on specification sentence |
 
 ---
@@ -92,7 +109,7 @@ Example structure:
 **Pass 1 — Flag**
 1. Scan for each flag category. Record: exact quote · location (heading/line reference) · flag code · severity.
    - 🔴 HIGH: IMPERATIVE, RECOMMENDATION, VALUE_IN_HEADING, SEQUENCE_VIOLATION
-   - 🟡 MED: HEDGE, PREAMBLE, PASSIVE_ACTOR, UNSUPPORTED
+   - 🟡 MED: HEDGE, PREAMBLE, PASSIVE_ACTOR, UNSUPPORTED, UNDEFINED_TERM
    - 🟢 LOW: OVERLONG
 
 2. Output flag table:
@@ -104,6 +121,7 @@ Example structure:
 Rewrite flagged items only. Do not alter unflagged text.
 For each flagged item: produce corrected version in register.
 For UNSUPPORTED: retain claim, append `[UNSUPPORTED — citation required]`. Do not soften.
+For UNDEFINED_TERM: add the locator or inline gloss if the defining instrument is known. If the definition is contested or unresolved, append `[UNDEFINED — definition required]` and leave the claim intact; do not pick a sense.
 For SEQUENCE_VIOLATION: reorder tiers; do not alter the specification values.
 
 Output corrected text block in full, with flagged items replaced. Mark each correction inline: `{FIXED: [code]}`.

@@ -16,7 +16,7 @@ description: >
   been corrupted or escaped. Run after structure-auditor (audit first, correct second).
 ---
 
-**Model:** Sonnet 4.6 — pattern matching and substitution.
+**Model:** Sonnet-class — pattern matching and substitution.
 **Input:** section map (from haiku-chunker) + document chunk (≤500 lines)  
 **Output:** corrected chunk + change log per chunk  
 **Rule:** Never change heading text. Only change heading level (number of `#` characters) or fix escaping artifacts.

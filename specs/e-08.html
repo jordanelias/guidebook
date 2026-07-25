@@ -10,8 +10,12 @@
 /* Page-local styles sit AFTER guidebook.css so equal-specificity rules win.
    No webfont linked; the design system's fallback stacks render the page. */
 
-.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
-  clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+/* left:0 is load-bearing. Without it an .sr-only inside a horizontally scrolling
+   table takes its static position beyond the viewport, and because its containing
+   block is the initial containing block it escapes the scroller and widens the
+   whole document — a WCAG 1.4.10 reflow failure caused by a visually hidden span. */
+.sr-only{position:absolute;left:0;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;}
 :where(.row>summary,.sectnav-list a,.compare-table a,.juris-pick,.decision-table a,h2){
   scroll-margin-top:88px;}
 .sec-head h2{margin:2px 0 0;}
@@ -71,9 +75,13 @@
 .provisional-plain{border:2px solid #b06a1f;background:#fbeee0;color:#5a3410;
   border-radius:8px 8px 0 0;padding:12px 16px;font-size:var(--fs-md,18px);line-height:1.5;}
 .provisional-plain strong{color:#7a3f0e;}
+/* WCAG 2.2 2.5.8: this is a standalone navigation link, not a link inside a
+   sentence, so the inline exception does not cover it. 24 px minimum. */
+.provisional-plain a{display:inline-block;min-height:24px;line-height:24px;}
 .provisional-detail{border:1px solid #d8c4a6;border-top:none;background:#fdf7ef;
   border-radius:0 0 8px 8px;padding:10px 16px 14px;}
-.provisional-detail summary{cursor:pointer;font-family:var(--font-mono);font-size:var(--fs-sm);color:#7a3f0e;}
+.provisional-detail summary{cursor:pointer;font-family:var(--font-mono);font-size:var(--fs-sm);color:#7a3f0e;
+  min-height:24px;display:flex;align-items:center;}
 .provisional-detail p{font-size:var(--fs-sm);color:#5a3410;margin:8px 0 0;line-height:1.55;}
 
 .decision-wrap{overflow-x:auto;margin:8px 0 4px;}
@@ -361,6 +369,7 @@
           </div>
           <div class="block"><div class="block-l"><span class="sym sym-co1" aria-hidden="true">◆</span> evidence · <span class="band band-full"><span aria-hidden="true">●</span> Co-1</span> <button class="cite-trigger cite mini" data-pop="deafspace" aria-label="Sources: DeafSpace"></button></div>
             <p>Anchored by Deaf-community knowledge (DeafSpace, Gallaudet). Under the tier system, lived and cultural evidence ranks alongside primary research, not below it. The number stands on the community's own authority.</p>
+            <p class="honesty">The ● grades the axes, not the value. The convergence record for this cell is <code>pending_assessment</code> and every governing source in it is down-weighted, because no value-level extraction has been done. Seven governing refs, four of them Co-1 and one of them a statute, are listed in the source panel.</p>
           </div>
           <div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">▲</span> <span class="conf">confidence</span> <button class="cite-trigger cite mini" data-pop="scoping" aria-label="Sources: confidence and scope"></button></div>
             <p class="honesty">The need for generous signing space is community-authoritative. Confidence in that is high.</p>
@@ -577,7 +586,67 @@ Bind the function and the outcome, not a contested reference.</pre>
     </div>
 
     <div class="integrity-note">
-      <strong>The project's own data dropped the group that anchors this item.</strong> As of this session, E-08's population links in the live database are dementia, mobility, spinal-cord injury and vision. Deaf is absent, even though Deaf-community evidence supplies the strongest width on the page. Restoring that link is on the correction list in § 10. <button class="cite-trigger cite" data-pop="livedb-deaf" aria-label="Sources: the dropped Deaf link"></button>
+      <strong>The project's own data had dropped the group that anchors this item — now repaired.</strong> Until this session, E-08's population links in the live database were dementia, mobility, spinal-cord injury and vision only. Deaf was absent, even though Deaf-community evidence supplies the strongest width on this page. So was every group in a larger body, though the functional taxonomy records that group as <em>primary</em> on the wheeled-movement axis this item links at full strength. A data migration this session restored nine links, taking the item from four groups to thirteen. The links were curated from the functional axes rather than assigned by hand, which is what the hand-maintained list had failed at. <button class="cite-trigger cite" data-pop="livedb-deaf" aria-label="Sources: the dropped Deaf link and its repair"></button>
+    </div>
+    <p class="honesty">Linking a group is not a claim that one millimetre serves it. Nine of the thirteen are recorded as <em>applies</em>, where clear width really is the operative variable. Four — brain injury, vestibular disorders, complex conditions, limb difference — are recorded as <em>context-dependent</em>, meaning the stake is real but the governing variable is something else, or the direction of the demand is contested or unsourced. Absence of a verified number is not absence of a stake, so the number is withheld and the community is not.</p>
+  </section>
+
+  <!-- §6b OPPOSED DEMANDS -->
+  <section class="section" data-color="terra" style="--order-spec:7; --order-q:7" id="hinders">
+    <div class="sec-head">
+      <span class="sec-num">§ 6b</span>
+      <h2>Who this may hinder</h2>
+      <p class="deck">A width that serves one person can take something away from another. Best practice is not automatically better for everyone, and this section names the trades rather than hiding them.</p>
+    </div>
+    <p>Every other section asks what width a function <em>requires</em>. That question has a blind spot: a dimension chosen for one body can quietly withdraw something another body was relying on. Where that happens, the honest response is usually not to split the difference on the millimetre. It is to ask whether a <em>different provision</em> restores what the width took away.</p>
+
+    <div class="rowlist">
+      <details class="row" open style="--row-color: var(--sec-8)">
+        <summary><span aria-hidden="true"></span><span class="r-tag"><span aria-hidden="true">▲</span> open question · unsourced</span><span class="r-title">Open floor offers nothing to steady against<small>balance, dizziness and fall risk</small></span><span class="r-value">contested</span><span class="r-arrow" aria-hidden="true">›</span></summary>
+        <div class="r-body"><div class="blocks">
+          <div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">▲</span> the counter-strand <button class="cite-trigger cite mini" data-pop="balance-counter" aria-label="Sources: the balance counter-strand"></button></div>
+            <p>A person who walks unsteadily may travel a corridor by staying within reach of something solid. Widen the route and the wall moves further away. The same millimetres that free a wheelchair to turn without strain can leave a person with a vestibular disorder or a brain injury crossing open floor with nothing in reach. The project's own balance axis also names large uniform visual fields as a thing that can precipitate dizziness.</p>
+            <p>Three groups route to that axis: people with vestibular disorders and people with acquired brain injury as primary, people with complex conditions situationally, for presyncope.</p>
+          </div>
+          <div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> what is known, and what precisely is not <button class="cite-trigger cite mini" data-pop="balance-counter" aria-label="Sources: balance evidence and the actual gap"></button></div>
+            <p><strong>Balance is not an unevidenced subject.</strong> An active research slug covers vestibular and balance demands in the built environment. It carries twenty-one sources. These include handrail-grasp biomechanics, a Cochrane falls-prevention review, the World Health Organization's handrail specification, and the code dimensions. Falls are among the best-studied outcomes in this corpus.</p>
+            <p><strong>The gap is narrower and more specific than "balance."</strong> What no source addresses is the <em>interaction</em>: how far a steadying surface may sit from a walking person before the distance itself becomes the barrier. Handrails are studied on stairs and slopes. Corridor width is studied for wheeled passage and signing. Nobody has measured the two against each other. So nothing here says a wide corridor causes falls — what is established is that the two demands pull opposite ways and that the crossing point is unmeasured.</p>
+            <p class="honesty">A correction to an earlier version of this section, kept visible rather than quietly edited. It stated that the balance axis had "no research slugs and no searches in any of the nineteen tracked languages." That text came from the axis's own record, which is <strong>stale</strong>. The slug above serves that axis, and evidence cells already exist for vestibular users on two other items. The axis metadata declares a gap the corpus has partly filled. Re-grading it is a taxonomy decision, so it is flagged for the owner rather than changed here.</p>
+          </div>
+          <div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> the candidate resolution, and its three problems <button class="cite-trigger cite mini" data-pop="balance-counter" aria-label="Sources: handrails as the candidate resolution"></button></div>
+            <p>Narrowing is not the resolution. Restoring a steadying surface that way re-imposes the injury-dose turn on wheelchair users, trading one group's shoulders for another's balance. The candidate answer is to add continuous support and keep the width. The balance axis already lists handrails among its design domains, so the taxonomy anticipated this before this page did.</p>
+            <p>The supporting evidence is more specific than "handrails help." When balance is lost, people take a compensatory step and load the rail in several directions at once. Two-handed facing grasps produce the highest forces. Rail <em>height</em> did not compromise reach-to-grasp during slope descent; control of the body's mass after the grasp mattered more. The design implication drawn in the source is a rail permitting multidirectional force, not one "correct" height. Separately, a Cochrane review found home assessment and modification reduced the rate of falls, and more so when an occupational therapist delivered it.</p>
+            <p class="honesty">Three honest problems, all ours. A continuous handrail deducts about 50 mm from the clear width, so support and width compete for the same millimetres and the trade does not fully dissolve. The guidebook has <strong>no handrail-dimension item</strong> to point at; grab bars exist only inside bathrooms. This is not a discovery of this page but an already-registered open gap, alongside a matching one for stair going and riser. And the handrail dimensions that do exist here are code-derived, so they sit at the weak band: convergence, not measurement.</p>
+          </div>
+        </div></div>
+      </details>
+
+      <details class="row" style="--row-color: var(--sec-5)">
+        <summary><span aria-hidden="true"></span><span class="r-tag">worked parallel</span><span class="r-title">The same property, pulled two ways<small>contrast is the clearest case</small></span><span class="r-value">C-04 vs C-05</span><span class="r-arrow" aria-hidden="true">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym" aria-hidden="true">◆</span> not hypothetical <button class="cite-trigger cite mini" data-pop="balance-counter" aria-label="Sources: opposed contrast items"></button></div>
+          <p>If "more is better" were sound, the guidebook would not already hold two items pointing in opposite directions on the same property. One calls for high luminance contrast at critical junctions, so that a low-vision traveller can read the edge. Another calls for <em>low</em> contrast between adjacent floor materials, because a strong tonal change can be misread as a hole or a step — a fall risk rather than a wayfinding aid. A third asks for plain, low-contrast flooring to avoid the optic-flow patterns that provoke visual vertigo.</p>
+          <p>All three are evidenced. None is wrong. "High contrast is good practice" is simply false as a universal, and the item set has known it all along without ever saying so on a page.</p>
+        </div></div></div>
+      </details>
+
+      <details class="row" style="--row-color: var(--sec-9)">
+        <summary><span aria-hidden="true"></span><span class="r-tag">our own apparatus</span><span class="r-title">The database cannot currently record harm<small>why trade-offs stay invisible</small></span><span class="r-value">schema gap</span><span class="r-arrow" aria-hidden="true">›</span></summary>
+        <div class="r-body"><div class="blocks"><div class="block"><div class="block-l"><span class="sym sym-warn" aria-hidden="true">▲</span> a finding about us, not about corridors <button class="cite-trigger cite mini" data-pop="balance-counter" aria-label="Sources: schema limits"></button></div>
+          <p>When this page links an item to a functional axis, the only strengths available are <em>full</em>, <em>partial</em> and <em>weak</em>. All three are degrees of <em>serving</em>. No available value means "increasing this parameter degrades that demand." The table built to hold population-versus-population conflicts on an item exists, with the right columns, and holds <strong>no rows at all</strong>.</p>
+          <p>That does not mean the project ignores harm. It records it in two ways the database cannot see. It writes the trade in prose — the balance research notes, for instance, that impact-absorbing flooring reduces injury forces yet <em>may increase the number of falls</em>, a benefit and a harm in one sentence. And it records harm by <strong>withholding</strong>: the same research declines to assert a high-contrast junction cell for vestibular users, reasoning that localised contrast aids edge detection while large repeating patterns are the vestibular harm. That is careful, and it is exactly the reasoning this section is about.</p>
+          <p>But a withheld row looks identical to a row nobody got round to writing. Neither is queryable, neither surfaces on a page, and neither can be counted. The belief that best practice is universally better therefore survives without anyone asserting it. The structure can state that a corridor serves wheeled movement fully. It has no field for what the same width costs. Fixing that is a schema decision, and schema decisions are owner-gated, so it is proposed rather than done.</p>
+        </div></div></div>
+      </details>
+    </div>
+
+    <div class="callout">
+      <h3>The question this section generalises</h3>
+      <ul>
+        <li>What access need or function is this specification actually serving — not which technique does it name?</li>
+        <li>Who else is in this space, and what does this dimension take away from them?</li>
+        <li>If it takes something away, is the answer to reduce the value, or to add a different provision that restores what was lost?</li>
+        <li>Does that other provision exist in the guidebook yet — and if not, is that a gap to log?</li>
+      </ul>
     </div>
   </section>
 
@@ -879,7 +948,49 @@ Bind the function and the outcome, not a contested reference.</pre>
 <!-- SOURCE LIBRARY — every claim points to one of these.         -->
 <!-- A list may hold several references. Each names its evidence  -->
 <!-- tier and whether it is verified / registered.                -->
+<!-- Provenance must not depend on script execution: without JS   -->
+<!-- the citation buttons open nothing, so the panels render in   -->
+<!-- flow as an appendix instead.                                 -->
 <!-- ============================================================ -->
+<noscript><style>
+  .pop{position:static !important;display:block !important;width:auto !important;max-width:var(--wrap) !important;
+       margin:0 auto 14px !important;box-shadow:none !important;padding-top:14px !important;}
+  .pop::before{display:none !important;}
+  .pop-close{display:none !important;}
+  .cite-trigger{cursor:default;opacity:0.55;}
+  #nojs-appendix{display:block !important;}
+</style></noscript>
+<div id="nojs-appendix" style="display:none;max-width:var(--wrap);margin:32px auto 12px;padding:0 24px;">
+  <h2>Sources appendix</h2>
+  <p>JavaScript is off, so every source panel appears below in full rather than opening from the citation button beside the claim it supports.</p>
+</div>
+
+<div class="pop" data-pop-id="balance-counter">
+  <div class="pop-head"><span class="pop-tag">counter-strand</span><span>open question</span></div>
+  <div class="pop-title">Width against balance — what is sourced, and what is not</div>
+  <p class="pop-lead">The balance domain is well evidenced. The specific interaction with corridor width is not. These are the records behind that distinction, including a correction to an earlier version of this section.</p>
+  <ul class="pop-src">
+    <li><strong>Balance evidence that does exist.</strong> Slug <code>vestibular-balance-built-environment</code> — ACTIVE, <code>serves_axes: ["AX-BAL"]</code>, 21 linked sources. <span class="s-meta">DB · slugs + source_slug_links</span><span class="s-status">bpc_metadata: evidence_state PROVISIONAL, search_complete, bpc_complete = 0. Non-EN language strata NOT-RUN.</span></li>
+    <li>Komisar V, Maki BE, Novak AC (2019) — handrail height did not compromise reach-to-grasp timing during slope descent; centre-of-mass control after grasping more decisive. 14 younger + 13 older adults. <span class="s-meta">REF-00911 · Tier 1 · Applied Ergonomics · doi 10.1016/j.apergo.2019.102873</span></li>
+    <li>Gosine P, Komisar V, Novak AC (2020) — under balance loss people use compensatory stepping and apply large multidirectional handrail forces; higher perturbation raises rail force. 18 younger adults. <span class="s-meta">REF-00913 · Tier 1 · doi 10.1016/j.apergo.2020.103317</span><span class="s-status">Population-proxy caveat: younger-adult sample.</span></li>
+    <li>Komisar V, Nirmalanathan K, King EC, Maki BE, Novak AC (2019) — two-handed facing grasp yields highest forces; forces scale with body weight. 50 younger adults. <span class="s-meta">REF-00912 · Tier 1 · doi 10.1016/j.apergo.2018.11.006</span></li>
+    <li>Cochrane SR — home safety assessment and modification reduced rate of falls 0.81 (95% CI 0.68–0.97; 6 trials, 4208 participants), "more effective when delivered by an occupational therapist." <span class="s-meta">REF-00792 · Tier 2 · doi 10.1002/14651858.CD007146.pub3</span></li>
+    <li>Handrail dimensions — height 900–1000 mm; circular section 32–51 mm; clearance ≥50 mm; continuous, both sides on stairs/ramps. <span class="s-meta">REF-00921 · Tier 5 · UK Approved Doc K; IBC §1014; AS 1428.1; cf. ISO 21542</span><span class="s-status">○ CODE — convergence, not measurement. Recovery-load rationale is T1-pending.</span></li>
+    <li>WHO assistive product specification APS15, handrails and grab bars. <span class="s-meta">REF-00883 · Tier 4</span></li>
+    <li><strong>The corpus's own benefit-and-harm sentence.</strong> Compliant flooring reduces fall-impact forces with minimal effect on standing/walking balance and may reduce injuries, "<strong>but may increase the risk of falls</strong>." <span class="s-meta">REF-00905 · Tier 3 scoping review · doi 10.1371/journal.pone.0171652</span></li>
+    <li><strong>Harm recorded by withholding a cell.</strong> The same research declines to assert a C-04 × VES cell: "localised junction contrast aids edge detection, whereas the vestibular harm is large repeating field patterns. No C-04×VES cell is asserted." <span class="s-meta">references/bpc/health-and-symptom-management/vestibular-balance-built-environment.md</span></li>
+    <li><strong>CORRECTION.</strong> An earlier version of § 6b stated the balance axis had "no research slugs and no searches in 19 tracked languages," quoting <code>axes.AX-BAL.notes</code>. That metadata is <strong>stale</strong> — the slug above serves the axis, and <code>evidence_cell_state</code> already holds VES cells at B-08 and C-06 (both provisional, T3-only). <code>coverage_status</code> is flagged rather than re-graded: axis grading is a taxonomy decision and owner-gated. <span class="s-meta">migration data_20260724202042</span></li>
+    <li><strong>The missing handrail item is not a new finding.</strong> Already registered as <strong>GAP-300</strong> (P2, OPEN) — "No handrail-dimension item exists… vestibular-balance evidence + code specs" — with <strong>GAP-301</strong> for stair going/riser. <span class="s-meta">DB · gaps</span></li>
+    <li>Populations routed to that axis: vestibular disorders (PRIMARY), acquired brain injury (PRIMARY, as post-concussion/TBI), complex conditions (SITUATIONAL — presyncope). <span class="s-meta">DB · population_axis_map</span></li>
+    <li>ICF anchors for the axis: body functions b235 (vestibular), b240 (dizziness-related sensations); activities d415 (maintaining body position), d410 (changing basic body position). <span class="s-meta">DB · axes · ICF crosswalk</span></li>
+    <li>E-08 → <code>AX-BAL</code> link created this session at strength band <em>weak</em>, recorded explicitly as an open counter-strand rather than a claim. <span class="s-meta">migration data_20260724193917</span></li>
+    <li>The opposed-contrast parallel: <code>C-04</code> "LRV Contrast (≥30 at All Critical Junctions)" against <code>C-05</code> "Low LRV Differential at Adjacent Floor Materials (DEM Inverse Contrast Rule)" — axis note: "low floor-material contrast prevents misperceiving dark floor as a hole (fall/gait)" — and <code>C-06</code> plain low-contrast flooring, full strength on AX-BAL: "avoids optic-flow visual-vertigo trigger." <span class="s-meta">DB · items + item_axis_links</span></li>
+    <li>Schema limit: <code>item_axis_links.strength_band</code> admits only <code>full</code> / <code>partial</code> / <code>weak</code> — three degrees of serving, no adverse value. The <code>conflicts</code> table (columns item_code, domain, pop_a, pop_b, resolution, evidence, gap_id) holds <strong>zero rows</strong>. <span class="s-meta">DB · schema</span><span class="s-status">Changing the enum is a D-SCHEMA decision, Change-Order gated — proposed, not executed.</span></li>
+    <li>Search limit, scoped precisely: all 50 rows of the structured execution log contain zero queries with harm, adverse, barrier, fail, risk or detriment, and the generator's "adversarial" mode appends "criticism limitation evidence" — interrogating the evidence's quality, not the design's effect on people. Harm-oriented searching has nonetheless happened slug by slug without tooling (barrier appears in 32 of 98 markdown search logs; the vestibular slug sets its PICO outcome to "falls, fall-injury, balance recovery"). The gap is that looking for harm was left to whoever thought of it, untooled and unrecorded, while looking for what works was tooled and tracked. <span class="s-meta">DB · search_executions + search_coverage · references/search-log/ · scripts/generate_search_queries.py</span></li>
+    <li>Counter-strands the project already recorded as unseeable — blind-traveller edge-following against excess width, optic flow, corridor crowd density, fall-zone geometry — "logged as external-mining targets, not asserted." <span class="s-meta">references/methodology/value-genealogy-worked-example-corridor-width.md §5</span></li>
+    <li>No handrail item exists in the guidebook; grab bars appear only bathroom-scoped (<code>G-03</code>, <code>I-03</code>). On this page handrails otherwise appear only as a −50 mm projection deduction. <span class="s-meta">DB · items (queried, no match for handrail/rail)</span></li>
+  </ul>
+</div>
 
 <div class="pop" data-pop-id="doctrine">
   <div class="pop-head"><span class="pop-tag">method</span><span>doctrine</span></div>
@@ -906,14 +1017,21 @@ Bind the function and the outcome, not a contested reference.</pre>
   <div class="pop-head"><span class="pop-tag">Deaf-community</span><span>Co-1</span></div>
   <div class="pop-title">Signing space — 2440 / 1830 / 3050 mm</div>
   <p class="pop-lead">The signing-pair widths, distances, glazing and lighting come from DeafSpace and Deaf scholarship.</p>
+  <p class="pop-lead">All seven governing refs of this cell are listed. Four more sources sit alongside them: two supporting, one discounted, one project synthesis.</p>
   <ul class="pop-src">
-    <li>Bauman, H-D. — <em>DeafSpace Design Guidelines</em>, Gallaudet University (2010). Primary source for the dimensions.<span class="s-meta">Co-1 · single institution · ASL · unpublished working draft</span></li>
-    <li>Vaughn, A. — <a href="https://groundupjournal.com/" target="_blank" rel="noopener">DeafScape: Applying DeafSpace to Landscape</a>, GroundUp Journal (2018).<span class="s-meta">Co-1</span></li>
-    <li>Cloete, M. &amp; Rout, M. — "DeafSpace" in the built school environment: a scoping review, <em>Acta Structilia</em> 32(2):238–263 (2025).<span class="s-meta">Tier 3 · confirms principles cross-culturally, does not re-measure 2440</span></li>
-    <li>Bauman, H-D. &amp; Murray, J. — <em>Deaf Gain</em>, U of Minnesota Press (2014).<span class="s-meta">Tier 2 · cultural framing</span></li>
-    <li>Kusters, A. (2015) — Deaf-authored ethnography.<span class="s-meta">Deaf-authored scholarship</span></li>
-    <li><code>references/bpc/communication-and-alerts/deaf-spatial-design.md</code> — project synthesis.<span class="s-meta">Project BPC</span></li>
+    <li>Bauman, <strong>Hansel</strong> (architect; Director of Campus Planning and Design, Gallaudet) — <em>with <strong>Bahan B., Bauman H-Dirksen L., Sirvage R.</strong> (ASL and Deaf Studies, Gallaudet)</em>; Mitnick H.; Dangermond S.; Keane C.; Dunlop B. (2010). <em>DeafSpace Design Guidelines</em>. Primary source for the dimensions.<span class="s-meta">REF-00338 · Tier 1 · co1 · governing · single institution · ASL · unpublished working draft<span class="s-status">Corrected: earlier versions of this page rendered this "Bauman, H-D." and named only the architect. The Deaf Studies collaborators carry the Co-1 warrant.</span></span></li>
+    <li><em>DeafSpace Design Guidelines</em> Vol. 1, Gallaudet University (2010).<span class="s-meta">REF-00339 · Tier 1 · co1 · governing</span></li>
+    <li>Vaughn, <strong>Alexa</strong> (Associate ASLA; a Deaf landscape architect) — <a href="https://www.designwithdisabledpeoplenow.com/deafscape" target="_blank" rel="noopener">DeafScape: Applying DeafSpace to Landscape</a> (2018).<span class="s-meta">REF-00342 · Tier 1 · co1 · governing<span class="s-status">Corrected from "Vaughn, A." with a journal link that is not the registered URL.</span></span></li>
+    <li>Kusters, A. (2015). <em>Deaf Space in Adamorobe</em> — ethnography of a Ghanaian signing village.<span class="s-meta">REF-00345 · Tier 1 · co1 · governing · doi 10.2307/j.ctv2rh28wp<span class="s-status">Bears directly on the one-signed-language caveat, and was omitted from earlier versions of this page.</span></span></li>
+    <li>Bauman H-Dirksen L. &amp; Murray J. (eds) (2014). <em>Deaf Gain: Raising the Stakes for Human Diversity</em>, U of Minnesota Press.<span class="s-meta">REF-00343 · Tier 2 · standard_eb · governing<span class="s-status">The declared tier_basis CO1+T2 rests entirely on this record — an edited academic collection classed as a named-organisation evidence-based standard. That classification is contestable.</span></span></li>
+    <li>RIT/NTID InfoGuides bibliographic reference for DeafSpace principles (2020).<span class="s-meta">REF-00344 · Tier 3 · grey · governing</span></li>
+    <li>Decreto-Legge 22 marzo 2021 n. 41 art. 34-ter — Italian recognition of Lingua dei Segni Italiana.<span class="s-meta">REF-00347 · <strong>Tier 6 · code</strong> · governing<span class="s-status">A statute is a governing ref of this cell, in tension with the project's own rule that the T4–T6 regulatory stratum is walled off from full-strength anchoring.</span></span></li>
+    <li>Cloete, M. &amp; Rout, M. — "DeafSpace" in the built school environment: a scoping review, <em>Acta Structilia</em> 32(2):238–263 (2025).<span class="s-meta">REF-00341 · Tier 3 · supporting, not governing · confirms principles cross-culturally, does not re-measure 2440</span></li>
+    <li>Edwards C. &amp; Harold G. — deaf-space literature.<span class="s-meta">REF-00340 · Tier 3 · supporting, not governing · doi 10.3109/09638288.2014.913710</span></li>
+    <li>Stockholms stad — <em>En stad för alla</em>.<span class="s-meta">REF-00346 · Tier 5 · <span class="s-status">discounted in the convergence record; shown so its exclusion is visible rather than silent</span></span></li>
+    <li><code>references/bpc/communication-and-alerts/deaf-spatial-design.md</code> — project synthesis.<span class="s-meta">Project BPC · not an evidence record</span></li>
   </ul>
+  <p class="honesty"><strong>Status of the determination.</strong> <code>convergence_assessment</code> 9001 records <code>status = pending_assessment</code>, and <strong>all nine clinical and Co-1 sources are recorded as down-weighted</strong>. The rationale on file reads: "Value-level convergence not yet assessable: <code>source_value_extractions</code> has no rows for these sources; assessment queued, not assumed." The ● therefore grades the presence of two evidence axes. It does not grade an adjudicated value.</p>
 </div>
 
 <div class="pop" data-pop-id="scoping">

@@ -15,7 +15,7 @@ description: >
   for THIN-BASE", "0/N Co-1 jurisdictions", "no indexed evidence", "mine for the gap".
 ---
 
-**Model:** Sonnet 4.6 (search + candidate harvesting) → Opus 4.7 for outcome judgment when ≥3 candidates returned
+**Model:** Sonnet-class (search + candidate harvesting) → Opus-class for outcome judgment when ≥3 candidates returned
 **Connectors:** PubMed (required), Scholar Gateway (required for Co-1 / lived experience), Cochrane (via web_fetch), CrossRef (via web_fetch), standards-body catalogs (via web_fetch). Activate for the pass.
 **SQLite:** `data/guidebook.db` via `scripts/db.py`
 **Authoritative DR:** `decisions/DR-2026-05-26-gap-driven-mining-protocol.md`

@@ -11,7 +11,7 @@ description: >
 <!-- Updated: CO-0006 2026-04-08 — ENRICH action added -->
 
 **Intake:** ≤500 lines only. Full document → haiku-chunker first.
-**Model:** Sonnet 4.6
+**Model:** Sonnet-class
 **Never assume a source exists. Confirm via tool lookup or mark UNVERIFIED.**
 **Sources/journals:** → `references/project-standards.md`
 **Output schema:** → `references/project-standards.md` (fields: claim_id, section, claim_text, source, claim_type, confidence, citation_status)

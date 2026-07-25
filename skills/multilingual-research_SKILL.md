@@ -14,7 +14,7 @@ description: >
 
 <!-- Updated: CO-0006 2026-04-08 — metadata capture mandate at research time; disposition field in LOG -->
 
-**Model:** Sonnet 4.6 (search, extraction, Steps 1–4) · Opus-class or above (best_practice_synthesis, per rule #2 capability floor — DR-2026-06-10-A; "Opus" was the authoring-time ceiling, not a brand pin)
+**Model:** Sonnet-class (search, extraction, Steps 1–4) · Opus-class or above (best_practice_synthesis, per rule #2 capability floor — DR-2026-06-10-A; "Opus" was the authoring-time ceiling, not a brand pin)
 **Opus routing:** Sonnet completes search → checkpoints to GitHub → flags synthesis for Opus session. Sonnet NEVER writes best_practice_synthesis.  
 
 **GitHub backend:** `jordanelias/guidebook` · `main` · Protocol → Project Instructions §GitHub API  

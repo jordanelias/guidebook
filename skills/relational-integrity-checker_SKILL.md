@@ -13,7 +13,7 @@ description: >
 
 <!-- Created: CO-0006 2026-04-08 -->
 
-**Model:** Sonnet 4.6
+**Model:** Sonnet-class
 **GitHub backend:** `jordanelias/guidebook` · `main`
 **Canonical sources:**
 - Item codes: Part 4 TOC (parts/v10/part04.md or toc.md §Part 4)

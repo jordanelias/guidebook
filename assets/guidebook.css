@@ -1473,11 +1473,25 @@ body.mode-question .title-spec[aria-hidden="false"] { display: inline; }
 /* ============================================================
    PRINT + REDUCED MOTION
    ============================================================ */
+/* Navigation goes; the evidential apparatus stays. Printing must not strip sources,
+   tiers, caveats or the colophon disclaimer — a printed page is precisely where the
+   document stops being browsable and starts being cited. Source panels, hidden on
+   screen until their citation button is pressed, print in flow after the content. */
 @media print {
-  .masthead, .subbar, .sectnav, .skip, .colophon { display: none; }
+  .masthead, .subbar, .sectnav, .skip { display: none; }
   body { background: white; color: black; }
   .row { break-inside: avoid; }
   .row[open] > .r-body { display: block !important; }
+  .colophon { display: block !important; }
+  .pop {
+    display: block !important; position: static !important;
+    width: auto !important; max-width: 100% !important; max-height: none !important;
+    border: 1px solid #999; box-shadow: none !important;
+    margin: 6pt 0; padding: 6pt; break-inside: avoid;
+  }
+  .pop::before, .pop-close { display: none !important; }
+  .cite, .cite-trigger { display: inline !important; border: none; background: none; color: #000; }
+  .cite::after, .cite-trigger::after { content: " [sources below]"; font-size: 8pt; }
 }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }

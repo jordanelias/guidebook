@@ -15,7 +15,7 @@ description: >
 
 # Connection Discovery
 
-**Model:** Opus 4.6 (multi-step synthesis across dispersed evidence required)
+**Model:** Opus-class or above (multi-step synthesis across dispersed evidence required)
 **Execution pattern:** Hybrid — Claude performs synthesis; output validated by db.py schema
 **Output target:** SQLite `connections` table via `python3 scripts/db.py add-connection`
 

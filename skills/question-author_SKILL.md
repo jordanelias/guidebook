@@ -10,7 +10,7 @@ description: >
   new spec that needs a question_heading.
 ---
 
-**Model:** Opus 4.6 (questions must be epistemically tested)
+**Model:** Opus-class (questions must be epistemically tested)
 **SQLite:** `data/guidebook.db`
 
 ---

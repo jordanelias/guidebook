@@ -9,7 +9,7 @@ description: >
   "phase transition check", or automatically per CS1 cadence.
 ---
 
-**Model:** Opus 4.6 (doctrine assessment requires judgment)
+**Model:** Opus-class (doctrine assessment requires judgment)
 **SQLite:** `data/guidebook.db`
 **Script:** `scripts/doctrine_recheck.py` (automated checks)
 

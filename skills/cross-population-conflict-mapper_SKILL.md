@@ -17,7 +17,7 @@ description: >
   "opposing requirements", "conflicting disability needs". Phase 2B–3 skill.
 ---
 
-**Model:** Sonnet 4.6 (retrieval/collation) · Opus 4.6 (resolution synthesis + best-practice determination)
+**Model:** Sonnet-class (retrieval/collation) · Opus-class or above (resolution synthesis + best-practice determination)
 **Input:** Environmental parameter(s) OR item specification draft OR room type
 **Output:** Conflict domain matrix + resolution evidence register + unresolved gap flags
 **Chunk ceiling:** ≤3 conflict domains per run

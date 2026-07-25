@@ -14,7 +14,7 @@ description: >
 > **SQLite integration (C2 overhaul 2026-05-05):** All slug lookups use `python3 scripts/db.py coverage {slug}` instead of reading SQLite slugs table. Citation mining tracking uses `db.py is-mined` / `log-mining`. Gap register operations use SQLite gaps table. Evidence sources added to evidence_sources SQLite table.
 
 
-**Model:** Sonnet 4.6 (search, scenario execution) · Opus 4.6 (synthesis, NOVEL/REFINES classification)
+**Model:** Sonnet-class (search, scenario execution) · Opus-class or above (synthesis, NOVEL/REFINES classification)
 **Opus routing:** Sonnet runs scenarios → Opus synthesizes findings into BPC.
 **Practical constraint:** No programmatic Opus path from claude.ai artifact proxy. Opus requires model picker set to Opus.  
 **GitHub backend:** `jordanelias/guidebook` · `main` · Protocol → Project Instructions §GitHub API  

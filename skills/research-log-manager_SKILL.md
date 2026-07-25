@@ -9,7 +9,7 @@ description: >
   "search status", "what do we know about", or any research workflow start/end.
 ---
 
-**Model:** Sonnet 4.6 (mechanical) or Opus 4.6 (if BPC synthesis judgment needed)
+**Model:** Sonnet-class (mechanical) · Opus-class or above (if BPC synthesis judgment needed)
 **GitHub backend:** `jordanelias/guidebook` · `main`
 **SQLite:** `data/guidebook.db` via `scripts/db.py`
 
