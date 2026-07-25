@@ -4853,3 +4853,128 @@ decisions:
     Edge cases (Kenya/Tanzania SW-primary vs EN-secondary; ZA EN-secondary per A.3 with
     PRIMARY-LANGUAGE-GAP; Singapore EN-primary) carry sourcing notes and are owner-amendable via a
     forward compensating migration if reclassification is directed.
+- decision_id: D-0153
+  category: D-METH
+  delegation: DG-REVIEW
+  delegation_rationale: >
+    The validity principle is owner-stated doctrine (DG-NON, already decided): "our research is
+    invalid if it is not compliant with our governance and verification tools and rules and ethos".
+    What is decided here is the MECHANISM — promoting already-canonical rules from prose (level 1)
+    to scripts and CI (level 2/3) per the enforcement spectrum. It originates no doctrine, so
+    DG-REVIEW rather than DG-NON.
+  summary: >
+    Research validity is enforced mechanically by research_batch_dod.py (R1-R15), harness hooks and
+    CI, because prose rules degrade as agent context fills.
+  outcome: >
+    scripts/audit/research_batch_dod.py implements R1-R15 with a schema-cloning selftest;
+    .claude/settings.json injects the contract at SessionStart and gates at Stop;
+    .github/workflows/research-contract.yml runs the gate plus six previously-unwired enforcers
+    (research_protocol_audit, metadata_integrity_audit, gap_mining_audit, population_integrity_audit,
+    graph_audit, pipeline_contract_audit). All checks non-blocking during shakedown EXCEPT the
+    selftest, which blocks from day one. governance/research-contract-baseline.json discloses
+    inherited debt and ratchets DOWN only.
+  rationale: >
+    A nine-batch run skipped Co-1 entirely (co-primary with T1 under CRPD Art 4.3), did zero citation
+    mining, cited zero clauses on quantified regulatory values, and never crossed a population or ICF
+    code — while every one of those rules sat documented in skills/, governance/ and CLAUDE.md. The
+    rules did not fail; prose failed. This confirms finding F1 of the 2026-07-23 enforcement plan
+    (28 enforcers on disk wired to no workflow). Each of R1-R15 restates an existing rule and is
+    traceable to an observed violation, so the mechanism adds enforcement, not doctrine.
+  alternatives_considered:
+  - Write another methodology document — rejected; prose is the demonstrated failure mode.
+  - Make every check blocking immediately — rejected; violates the spectrum's shakedown discipline
+    and the false-positive rate is unknown. Only the selftest blocks (no false-positive surface).
+  - Leave inherited debt failing the gate — rejected; a permanently-red gate teaches people to
+    ignore it, which is the failure being fixed.
+  decision_date: 2026-07-25 04:30
+  decided_by: owner_directive_2026-07-24_research-validity + opus_session_2026-07-24-research-matrix-completion
+  model_routing: opus/150/synth
+  effort_level: 150
+  decision_artifacts:
+  - decisions/DR-2026-07-25-research-contract-mechanical-enforcement.md
+  - scripts/audit/research_batch_dod.py
+  - .claude/settings.json
+  - .github/workflows/research-contract.yml
+  - governance/research-contract-baseline.json
+  predecessors:
+  - D-0001
+  - D-0151
+  supersedes: []
+  status: ACTIVE
+  review_status: PENDING
+  notes: >
+    Adversarially attacked before adoption: 8 of 8 attacks succeeded and were fixed (R1 substring
+    false-pass, R2 stub-row gaming, R4 case-insensitive code matching, R8 could never fail, R7/R12
+    one-row thresholds, R10 ignoring resolution outcome, permanently-red --all, silently-rotted
+    selftest). Design rules recorded in the script. Gate thresholds were authored by the agent whose
+    work they judge — independent review is raised in DR §6.4.
+- decision_id: D-0154
+  category: D-SCHEMA
+  delegation: DG-REVIEW
+  summary: >
+    Migration 036 — search_executions.findings_note + harm_finding, and the search_candidates register.
+  outcome: >
+    Adds findings_note and harm_finding to search_executions and creates search_candidates
+    (exec_id, found_under_slug, suggested_slug, disposition, locator, harm_finding, why_not_admitted).
+    Applied; user_version 35->36.
+  rationale: >
+    Substantive findings were being written into deferred_reason, which means DELIBERATELY NOT
+    SEARCHED and which the coverage views filter on, so six genuinely-searched cells were counted as
+    deferred. Evidence of failure/harm/inadequacy — first-class under the "ask the right questions"
+    mission — had no home, and off-slug or unverified material survived only in prose that
+    evaporates. Extends the existing logger rather than spinning up a new register (CLAUDE.md
+    guardrail 3).
+  alternatives_considered:
+  - Keep overloading deferred_reason — rejected; it corrupts coverage semantics.
+  - A separate standalone register — rejected; search_candidates is the logger's missing many-side.
+  decision_date: 2026-07-25 04:30
+  decided_by: opus_session_2026-07-24-research-matrix-completion
+  model_routing: opus/125/extract
+  effort_level: 125
+  decision_artifacts:
+  - scripts/migrations/036_search_findings_and_candidates.sql
+  - decisions/DR-2026-07-25-research-contract-mechanical-enforcement.md
+  predecessors:
+  - D-0151
+  supersedes: []
+  status: ACTIVE
+  review_status: PENDING
+  notes: >
+    Six mis-filed cells were migrated out of deferred_reason into findings_note in the same batch.
+- decision_id: D-0155
+  category: D-SCHEMA
+  delegation: DG-REVIEW
+  summary: >
+    Migration 037 — case_studies and economics_entries tables, closing a schema-to-DB drift where
+    Pydantic models existed with no SQLite tables.
+  outcome: >
+    Creates case_studies, case_study_outcomes, case_study_populations, case_study_specs,
+    case_study_strategies, economics_entries, economics_entry_specs, economics_entry_populations.
+    Ships EMPTY. Applied; user_version 36->37. SHAPE NOT RATIFIED — see notes.
+  rationale: >
+    schemas/case_study.py and schemas/economics.py were fully specified with validators, pillars and
+    entry types but had NO corresponding SQLite table — the drift CLAUDE.md §10 calls a bug, across
+    eight ACTIVE slugs. Economic findings surfaced by research therefore had nowhere to land and
+    survived only as prose.
+  alternatives_considered:
+  - Leave economics/case-study findings in prose notes — rejected; invisible and unverifiable.
+  - Defer until the compendium reconciliation completes — rejected in part; the tables ship empty so
+    nothing is asserted, but the reconciliation is a hard precondition for ingesting any case study.
+  decision_date: 2026-07-25 04:30
+  decided_by: opus_session_2026-07-24-research-matrix-completion
+  model_routing: opus/125/extract
+  effort_level: 125
+  decision_artifacts:
+  - scripts/migrations/037_case_studies_and_economics.sql
+  - decisions/DR-2026-07-25-research-contract-mechanical-enforcement.md
+  predecessors:
+  - D-0151
+  supersedes: []
+  status: ACTIVE
+  review_status: PENDING
+  notes: >
+    NEEDS-RECONCILIATION before any case study is ingested. Designed from the Pydantic models alone;
+    consulting prior work afterwards found a real mismatch — references/case-study-compendium.md
+    carries its own "## Schema" block and uses CS-01 (2-digit) while the model validator demands
+    CS-NNNN, and case studies are numbered §13.x in v9 rather than §12. Tables ship empty so nothing
+    is asserted in the interim. Raised as DR §6.1.
