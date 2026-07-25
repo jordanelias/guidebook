@@ -50,7 +50,7 @@
   },
   "adherence-logging-and-attestation": {
    "status": "FIRED",
-   "evidence_path": "attestations/session-2026-07-25-energy-conservation-rest-points-seating.json",
+   "evidence_path": "attestations/sessions_session_2026-07-25-energy-conservation-rest-points-seating.json",
    "reason": "This attestation. The session ran the DoD gate, failed 4 rules, remediated all 4, and re-ran to COMPLIANT; the failures and their fixes are recorded in the session file rather than presented as a clean first pass."
   }
  },
