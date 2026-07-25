@@ -76,8 +76,12 @@ class CaseStudy(GuidebookEntity):
     @field_validator("case_study_id")
     @classmethod
     def valid_case_study_id(cls, v: str) -> str:
-        if not re.match(r"^CS-\d{4}$", v):
-            raise ValueError(f"case_study_id must match CS-NNNN, got: '{v}'")
+        # Widened 2026-07-25 (migration 038 reconciliation). The compendium's own schema block
+        # specifies "id — CS-NN sequential" and holds CS-01..CS-26; this validator demanded
+        # CS-NNNN while no table existed to enforce it against. The prior corpus wins; both
+        # widths are accepted so existing entries validate and future 4-digit IDs still can.
+        if not re.match(r"^CS-\d{2,4}$", v):
+            raise ValueError(f"case_study_id must match CS-NN..CS-NNNN, got: '{v}'")
         return v
 
     @field_validator("slug")
