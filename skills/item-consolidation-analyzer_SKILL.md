@@ -9,7 +9,7 @@ description: >
 ---
 
 **Intake:** ≤30 items per run. Full Part → haiku-chunker first.
-**Model:** Sonnet 4.6
+**Model:** Sonnet-class
 **Typology system:** Residential (R) · Non-Residential (NR) · Both (note scope differences)
 **Population codes:** → `references/project-standards.md`
 **Run after:** content-gap-analyzer · **Run before:** critique-report-writer

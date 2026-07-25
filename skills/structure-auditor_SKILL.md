@@ -14,7 +14,7 @@ description: >
   content or format rules.
 ---
 
-**Model:** Sonnet 4.6 — structural extraction and validation.
+**Model:** Sonnet-class — structural extraction and validation.
 **Intake:** ≤500 lines. Full document → haiku-chunker Mode A first; feed section map to this skill.
 **Output:** structural map + violation table. No content changes. No rewrites.
 

@@ -12,7 +12,7 @@ description: >
   "forward citations", "expand evidence base", "bibliography", "unmined sources".
 ---
 
-**Model:** Sonnet 4.6 + web search
+**Model:** Sonnet-class + web search
 **Connectors:** PubMed (required), Scholar Gateway (preferred for forward), Consensus (optional). CrossRef via web_fetch acceptable for backward when PubMed lacks the record. Activate for mining.
 **SQLite:** `data/guidebook.db` via `scripts/db.py`
 

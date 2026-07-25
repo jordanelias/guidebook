@@ -14,7 +14,7 @@ The skill is calibrated for **discursive technical non-fiction** — analytical,
 
 **CO-0008 classification:** Prose Only. No Python validator. Judgment guidance for Claude's drafting and review work.
 
-**Model:** Opus 4.6 (primary). Sonnet 4.6 acceptable for short-pass voice review of bounded passages. Input limit: ≤500 lines. Larger documents → process in chunks.
+**Model:** Opus-class (primary). Sonnet-class acceptable for short-pass voice review of bounded passages. Input limit: ≤500 lines. Larger documents → process in chunks.
 
 ---
 

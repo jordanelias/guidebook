@@ -160,20 +160,29 @@ Where:
 
 | Component | Allowed values | Required? |
 |---|---|---|
-| `model_tier` | `opus`, `sonnet`, `haiku`, `human` | Yes |
+| `model_tier` | `opus`, `fable`, `sonnet`, `haiku`, `human` | Yes |
 | `effort_level` | `200`, `150`, `125`, `100`, `75`, `50` | Yes |
 | `reasoning_modifier` | `synth`, `arbitrate`, `extract`, `format`, `route`, `none` | Yes |
+
+**A tier names a class, never a version.** Write `opus`, not "Opus 4.6"; `sonnet`,
+not "Sonnet 4.7". A version pin dates the moment it is written, and a rule pinned to
+a retired number reads as excluding the model that replaced it — which is how a
+routing floor silently becomes a routing ceiling. Any version number encountered in
+model-routing text is stripped on touch (owner directive 2026-07-25; see
+`DR-2026-07-25-rendered-document-integrity-gate` §3). `fable` is a synthesis-capable
+tier alongside `opus`; `sonnet` and `haiku` are not.
 
 Examples:
 
 | Notation | Meaning |
 |---|---|
-| `opus/150/synth` | Opus 4.6, effort 150, reasoning modifier = best-practice synthesis |
-| `opus/150/arbitrate` | Opus 4.6, effort 150, reasoning modifier = evidence arbitration between divergent positions |
-| `sonnet/125/synth` | Sonnet 4.6, effort 125, reasoning modifier = synthesis (high-end Sonnet load) |
-| `sonnet/100/route` | Sonnet 4.6, effort 100, reasoning modifier = workplan routing / orchestration |
-| `sonnet/75/extract` | Sonnet 4.6, effort 75, reasoning modifier = single-pass extraction |
-| `haiku/50/format` | Haiku 4.5, effort 50, reasoning modifier = mechanical format |
+| `opus/150/synth` | Opus-class, effort 150, reasoning modifier = best-practice synthesis |
+| `fable/150/synth` | Fable-class, effort 150, reasoning modifier = best-practice synthesis |
+| `opus/150/arbitrate` | Opus-class, effort 150, reasoning modifier = evidence arbitration between divergent positions |
+| `sonnet/125/synth` | Sonnet-class, effort 125, reasoning modifier = synthesis (high-end Sonnet load; **not** best-practice synthesis) |
+| `sonnet/100/route` | Sonnet-class, effort 100, reasoning modifier = workplan routing / orchestration |
+| `sonnet/75/extract` | Sonnet-class, effort 75, reasoning modifier = single-pass extraction |
+| `haiku/50/format` | Haiku-class, effort 50, reasoning modifier = mechanical format |
 | `human/none/none` | Project owner decision; no model assigned |
 
 ### 4.3 Phase-table application
@@ -182,9 +191,9 @@ Every phase table that records model-routing uses this notation. The skill index
 
 ### 4.4 Notation in decision records
 
-Every Decision record's `model_routing` field uses this notation. Decisions made by the project owner without model assistance use `human/none/none`. Decisions made by an Opus session at effort 150 producing best-practice synthesis use `opus/150/synth`. The validator (§7) checks the notation against the regex `^(opus|sonnet|haiku|human|legacy)/(200|150|125|100|75|50|none)/(synth|arbitrate|extract|format|route|none)$` and rejects anything else.
+Every Decision record's `model_routing` field uses this notation. Decisions made by the project owner without model assistance use `human/none/none`. Decisions made by an Opus-class session at effort 150 producing best-practice synthesis use `opus/150/synth`. The validator (§7) checks the notation against the regex `^(opus|fable|sonnet|haiku|human|legacy)/(200|150|125|100|75|50|none)/(synth|arbitrate|extract|format|route|none)$` and rejects anything else.
 
-**Effort level 200 — when to use.** Standard synthesis sessions run at effort 150 (Opus 4.6/4.7 at `max` per `userPreferences <effort_levels>`). Effort 200 marks sessions whose synthesis load exceeds the standard ceiling — typically a doctrinal commitment that integrates a deep chain of prior sessions, decisions, frameworks, and weightings into one defensible commit. Use sparingly; if multiple sessions in a quarter claim 200, the ceiling is no longer differentiating and the calibration of all levels should be revisited. First documented use: D-0138 (Operative storage form selection, 2026-05-02).
+**Effort level 200 — when to use.** Standard synthesis sessions run at effort 150 (Opus-class at `max` per `userPreferences <effort_levels>`). Effort 200 marks sessions whose synthesis load exceeds the standard ceiling — typically a doctrinal commitment that integrates a deep chain of prior sessions, decisions, frameworks, and weightings into one defensible commit. Use sparingly; if multiple sessions in a quarter claim 200, the ceiling is no longer differentiating and the calibration of all levels should be revisited. First documented use: D-0138 (Operative storage form selection, 2026-05-02).
 
 **Legacy tier.** Decisions extracted from pre-A12 records during initial register seeding carry `model_routing: legacy/none/none` and `effort_level: 100` as placeholder values (per §5.3). The `legacy` tier is reserved for that seeding pattern; new decisions should not use it.
 

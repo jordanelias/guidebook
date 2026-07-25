@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-07-24-e08-corridor-width-prototype",
+  "artifact": "decisions/DR-2026-07-25-rendered-document-integrity-gate.md",
+  "doctrine_sha": "0f2f525",
+  "rules_in_scope": [
+    "source-discipline",
+    "best-practice-synthesis-routing",
+    "adherence-logging-and-attestation",
+    "adversarial-research",
+    "guidebook-auditor"
+  ],
+  "per_rule_status": {
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-07-25-rendered-document-integrity-gate.md#1-context-what-happened-stated-plainly",
+      "reason": "The DR's premise is a defect ledger from three executed audits, not an assertion: each defect class is named with the specific artifact it occurred in, and each of the four fixed defects was re-verified against the live files and the read-only DB before commit (governing refs and tiers for REF-00338/339/342/343/344/345/347 read from evidence_sources; convergence_assessment 9001 status and down_weighted_sources read from the DB; print and no-JS behaviour measured in a real browser rather than inferred from CSS text)."
+    },
+    "best-practice-synthesis-routing": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-07-25-rendered-document-integrity-gate.md#3-decision-four-operative-rules",
+      "reason": "§3.4 completes the caller sweep DR-2026-06-10-synthesis-model-floor §4 explicitly owed and did not perform: 80 version pins stripped across 43 skill files, `fable` admitted as a synthesis-capable tier in governance/decision-protocol.md §4.2/§4.4 and schemas/decision.py, and the synthesis pins re-worded to the capability-floor form 'Opus-class or above'. The floor itself is unchanged — this records the class, not a new permission."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/decisions_DR-2026-07-25-rendered-document-integrity-gate.json",
+      "reason": "The commit carries [DOCTRINE: 0f2f525] before the timestamp per rule #11(a); this attestation is co-committed per rule #11(b). doctrine_sha matches HEAD:governance/mission-and-epistemics.md at authorship."
+    },
+    "adversarial-research": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-07-25-rendered-document-integrity-gate.md#4-adversarial-pass-one-pass-this-version-r2-dr-2026-05-09",
+      "reason": "One adversarial pass, five objections, each answered on the record rather than deflected — including two conceded in part: that §3.2/§3.3 are unenforceable level-1 prose (conceded and labelled as such), and that a four-check apparatus for two documents risks the repo's scaffolding-for-scaffolding failure mode. A falsifiable refutation test is stated and was run: reverting any of the four fixed defects turns preflight red."
+    },
+    "guidebook-auditor": {
+      "status": "SKIPPED",
+      "reason": "No full-repository audit pass was run in this session. The scope was one item's rendered surfaces plus the gate that now covers them; a repo-wide audit would be a separate, dated audit artifact and is not claimed here."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "source-discipline",
+      "reason": "assets/guidebook.css is shared by index.html and site/index.html as well as the two specs pages. The print-block fix (un-hiding .colophon, printing .pop source panels) therefore changes the printed output of pages this session did not audit. The change is a strict widening — it hides less than before, so no page can lose content by it — and it repairs a defect that silently stripped the not-a-legal-authority disclaimer from every printed page. Recorded rather than treated as in-scope, because the blast radius exceeds the audited surface."
+    }
+  ],
+  "bias_direction": "Toward over-crediting the gate. Having built the checker, the temptation is to treat a green preflight as evidence that the documents are correct, when the gates check four mechanical properties and say nothing about whether the synthesis is sound, whether the right sources were found, or whether the reasoning holds. Two of the four rules recorded here (§3.2 symmetric disclosure, §3.3 no scope narrowing) are explicitly NOT mechanisable and are labelled level-1 for that reason. A second bias runs the other way: this session's own first checker overclaimed — it FAILED three classes the renderer proved visible — so the correction risk of writing checks that assert more than their evidence supports is demonstrated, not hypothetical, and is why C2 was demoted to WARN.",
+  "independent_reviewer_counterclaim": "A reviewer could argue this DR converts a one-page prototype's polish pass into governance, and that ~90 audit findings on a single hand-authored page is evidence the page should not have been hand-authored at all — that the correct fix is to generate specs/ from the DB like parts/ and site/, making the whole class of doc-vs-record drift structurally impossible rather than gated after the fact. That is a serious counterclaim and this DR does not refute it; it is the stronger long-run answer. The reply is only that the generator does not exist, the prototype's purpose was to discover what such a generator would have to guarantee, and these four checks are a working statement of those guarantees — usable now, and reusable as the generator's acceptance tests later. A reviewer could also fairly object that §5 raises a doctrinal question and leaves it open, which is a real cost; it is left open deliberately because tightening the non-prescription stance is DG-NON and not an agent's to decide.",
+  "verdict": "DEVIATION-LOGGED"
+}

@@ -11,7 +11,7 @@ description: >
   any bulk find-and-replace pass that touches table rows.
 ---
 
-**Model:** Sonnet 4.6
+**Model:** Sonnet-class
 
 ---
 
@@ -156,8 +156,8 @@ Always confirm table type before generating:
 
 ## Token Efficiency
 
-- Process grid→pipe conversion with Haiku 4.5 (pattern substitution, no judgment needed)
-- Use Sonnet 4.6 only for: ambiguous multi-line cell merges, footnote extraction decisions
+- Process grid→pipe conversion with Haiku-class (pattern substitution, no judgment needed)
+- Use Sonnet-class only for: ambiguous multi-line cell merges, footnote extraction decisions
 - Process files in sections of ≤400 lines to avoid context overflow
 - Use `haiku-chunker` if file >500 lines before running Mode A
 

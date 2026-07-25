@@ -8,7 +8,7 @@ description: >
   operation from any skill.
 ---
 
-**Model:** Sonnet 4.6 — pure I/O, no judgment required.
+**Model:** Sonnet-class — pure I/O, no judgment required.
 **Repo:** `jordanelias/guidebook` · branch `main`
 **PAT:** Provided in Project Instructions. Never hardcode. GraphQL uses `bearer` auth; REST uses `token` auth.
 **API priority:** GraphQL first. REST only for LIST, APPEND, and files >1 MB.

@@ -11,7 +11,7 @@ description: >
   is being added to the guidebook suite.
 ---
 
-**Model:** Sonnet 4.6
+**Model:** Sonnet-class
 **GitHub backend:** `jordanelias/guidebook` · `main` · Protocol → Project Instructions §GitHub API
 **Intake:** confirm before starting — supplemental volume file · list of codes to relocate · Option A or B · target volumes in scope.
 **Output:** amended .md files per volume + integration log (`supp_integration_log_[VOL-ID]_[DATE].md`)
@@ -36,7 +36,7 @@ Run before any file edits:
 ## 1. Stage 1 — Taxonomy & Standards Amendments
 
 **File:** `project-standards.md` — GET + SHA before editing; PUT back after (Project Instructions §GitHub API)
-**Model:** Sonnet 4.6
+**Model:** Sonnet-class
 
 ### 1a. Remove relocated code(s) from disability taxonomy table
 - Locate the population taxonomy table.
@@ -64,7 +64,7 @@ Run before any file edits:
 ## 2. Stage 2 — Vol 1 Amendments
 
 **Files:** Current Vol 1 working file (confirm filename from session YAML before starting)
-**Model:** Sonnet 4.6
+**Model:** Sonnet-class
 **Passes:** 2 (framing judgment required for §2.x population description rewrites)
 
 ### 2a. Population description section (§2.x for relocated code)
@@ -89,7 +89,7 @@ Apply **Option A or B** per intake:
 ## 3. Stage 3 — Vol 2 Amendments (haiku-chunker required if >500 lines)
 
 **Files:** Current Vol 2 working files (confirm filenames from session YAML before starting)
-**Model:** Haiku 4.5 for extraction/replacement; Sonnet 4.6 for any framing edits
+**Model:** Haiku-class for extraction/replacement; Sonnet-class for any framing edits
 
 ### 3a. Item tag replacements
 - For each item that had `[CODE]` in its population tag list:
@@ -108,7 +108,7 @@ Apply **Option A or B** per intake:
 ## 4. Stage 4 — Vol 3 + Room Matrices
 
 **Files:** Current Vol 3 working file and any active session output files (confirm from session YAML before starting)
-**Model:** Haiku 4.5 sufficient for Option B; Sonnet if Option A
+**Model:** Haiku-class sufficient for Option B; Sonnet if Option A
 
 ### 4a. Room matrices (Option B — standard interim)
 For each matrix row/column with `[CODE]` entries:
@@ -123,7 +123,7 @@ Replace with: `[CODE]: see Supplementary Volume "[Title]," Section [Y] — [desc
 
 ## 5. Stage 5 — Verification Pass
 
-**Model:** Haiku 4.5 (pattern matching)
+**Model:** Haiku-class (pattern matching)
 
 1. Grep all amended files for the relocated code in isolation (e.g., `\bBAR\b`).
 2. For each remaining instance: classify as:

@@ -14,7 +14,7 @@ description: >
   Use proactively on any section being drafted or revised before it is packaged.
 ---
 
-**Model:** Sonnet 4.6
+**Model:** Sonnet-class
 **Intake:** ≤500 lines. Full document → haiku-chunker first.
 **Passes:** 2. Pass 1: flag. Pass 2: rewrite flagged items. Do not rewrite what is not flagged.
 **Output:** flagged item table + corrected text block. No commentary outside the table.

@@ -15,13 +15,13 @@ description: >
 ---
 
 **Intake:** ≤500 lines only. Full document → haiku-chunker first.
-**Model:** Sonnet 4.6
+**Model:** Sonnet-class
 **Output schema:** → `references/project-standards.md` (fields: claim_id, section, claim_text, source, claim_type, confidence, evidence_stratum, stratum_status)
 **SelfCheck:** STRONG-stratum claims and ABSENT claims on contested topics → assess twice; divergence = UNCERTAIN_REVIEW
 
 ## Evidence Strata
 
-**Model:** Sonnet 4.6 (extraction, marker counting) · Opus 4.6 (overclaiming judgment, evidence sufficiency)
+**Model:** Sonnet-class (extraction, marker counting) · Opus-class (overclaiming judgment, evidence sufficiency)
 **Opus routing:** Sonnet extracts markers and evidence tiers → Opus determines whether evidence supports claims.
 
 Per §1.5 (Volume 1) — canonical hierarchy. Strata map to §1.5 tiers as follows:

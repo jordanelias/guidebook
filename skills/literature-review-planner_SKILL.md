@@ -12,7 +12,7 @@ description: >
 > **SQLite integration (C2 overhaul 2026-05-05):** All slug lookups use `python3 scripts/db.py coverage {slug}` instead of reading SQLite slugs table. Citation mining tracking uses `db.py is-mined` / `log-mining`. Gap register operations use SQLite gaps table. Evidence sources added to evidence_sources SQLite table.
 
 
-**Model:** Sonnet 4.6 + web  
+**Model:** Sonnet-class + web  
 **Framing:** Social model throughout. CRPD Article 9 as governing framework.  
 **Output audience:** Design professionals AND academic reviewers.  
 **Research log:** `research-log-manager CHECK` before any search run. `research-log-manager LOG` after. Skipping either is an error.

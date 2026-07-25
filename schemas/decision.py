@@ -26,9 +26,11 @@ from schemas.temporal import DATETIME_PATTERN
 
 DECISION_ID_PATTERN = re.compile(r"^D-\d{4,5}$")
 
-# Per governance/decision-protocol.md §4.4
+# Per governance/decision-protocol.md §4.4. Tiers name a model CLASS, never a
+# version number: `fable` added 2026-07-25 as a synthesis-capable tier alongside
+# `opus` (owner directive — see DR-2026-07-25-rendered-document-integrity-gate §3).
 MODEL_ROUTING_PATTERN = re.compile(
-    r"^(opus|sonnet|haiku|human|legacy)/(200|150|125|100|75|50|none)/"
+    r"^(opus|fable|sonnet|haiku|human|legacy)/(200|150|125|100|75|50|none)/"
     r"(synth|arbitrate|extract|format|route|none)$"
 )
 
@@ -80,7 +82,7 @@ class Decision(GuidebookEntity):
     def valid_model_routing(cls, v: str) -> str:
         if not MODEL_ROUTING_PATTERN.match(v):
             raise ValueError(
-                f"model_routing must match {{opus|sonnet|haiku|human|legacy}}/"
+                f"model_routing must match {{opus|fable|sonnet|haiku|human|legacy}}/"
                 f"{{200|150|125|100|75|50|none}}/{{synth|arbitrate|extract|format|"
                 f"route|none}}, got: '{v}'"
             )

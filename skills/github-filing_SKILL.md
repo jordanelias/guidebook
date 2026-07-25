@@ -8,7 +8,7 @@ description: >
   workplan-orchestrator or session-consolidator detect >1 active file in a watched directory.
 ---
 
-**Model:** Sonnet 4.6 — mechanical file operations.
+**Model:** Sonnet-class — mechanical file operations.
 **Pattern:** GET source → PUT to target deprecated/ path → DELETE source → repeat
 
 ---

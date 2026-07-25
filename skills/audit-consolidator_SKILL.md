@@ -14,7 +14,7 @@ description: >
 
 # Audit Consolidator
 
-**Model:** Sonnet 4.6 · effort 75 · extract (pure collation — no synthesis)
+**Model:** Sonnet-class · effort 75 · extract (pure collation — no synthesis)
 **Intake:** item_code + session (required) · run_id (from item_audit_runs)
 **Output:** references/audit-briefs/{item_code}_brief.md committed to GitHub
 **Side effect:** item_audit_runs status → COMPLETE; brief_path populated
