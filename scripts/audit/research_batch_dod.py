@@ -253,8 +253,15 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
         ok("R4", f"{linked} population linkages produced across {total} searches")
 
     # --- R5 non-English not down-tiered --------------------------------------------------
+    # CASE BUG FIXED 2026-07-25: this compared `language <> 'en'` against a column that carries
+    # ISO codes in UPPERCASE in lang_jur_map and search_languages. SQLite '=' / '<>' on TEXT is
+    # case-sensitive, so every English-language row written as 'EN' was read as non-English and
+    # any English grey-targeted search failed R5 spuriously — while a genuinely non-English grey
+    # search written lowercase would still be caught only by luck of the writer's casing. Compare
+    # case-insensitively so the check tests the language, not the keystroke.
     downtiered = _rows(cx, f"SELECT exec_id, language FROM search_executions WHERE "
-                           f"language <> 'en' AND target_evidence_type = 'grey'{scope}", sargs)
+                           f"upper(language) <> 'EN' AND target_evidence_type = 'grey'{scope}",
+                       sargs)
     if downtiered:
         fail("R5", f"{len(downtiered)} non-English search(es) targeted as 'grey'. A peer-reviewed "
                    f"journal or professional standard is academic literature in its own right; "
