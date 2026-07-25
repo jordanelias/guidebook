@@ -41,9 +41,14 @@ jobs:
           GUIDEBOOK_DB_PATH: data/guidebook.db
         run: python3 scripts/audit/research_batch_dod.py --all
 
-      # Prove the gate still detects violations (guards against a gate rotting into a no-op).
-      - name: DoD gate selftest
-        continue-on-error: true
+      # BLOCKING from day one, deliberately. Every other step is non-blocking during shakedown
+      # because its false-positive rate is unknown; this one has NO false-positive surface — it
+      # builds a knowingly-violating corpus (cloned from the live schema) and asserts the gate
+      # rejects it. An adversarial pass on 2026-07-24 found the v1 selftest had silently begun
+      # CRASHING instead of testing when the checks were hardened: the guard against the gate
+      # rotting had itself rotted, undetected. A gate that has stopped detecting anything is
+      # worse than no gate, because it manufactures false confidence. So this fails the build.
+      - name: DoD gate selftest (BLOCKING — a rotted gate is worse than no gate)
         run: python3 scripts/audit/research_batch_dod.py --selftest
 
       # --- WS1: promote existing Level-2 enforcers that were wired to NOTHING ---------------

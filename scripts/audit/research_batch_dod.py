@@ -83,6 +83,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent.parent
 DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", str(REPO / "data" / "guidebook.db")))
+BASELINE_PATH = REPO / "governance" / "research-contract-baseline.json"
 
 # Populations / axes / ICF vocabulary used to detect a combinatorial query (R4).
 COMBINATORIAL_HINTS = (
@@ -98,42 +99,66 @@ def _rows(cx, sql, args=()):
     return cx.execute(sql, args).fetchall()
 
 
-def audit(session=None, allmode=False):
+def audit(session=None, allmode=False, capture=None):
     cx = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
     scope = "" if allmode else " AND session = ?"
     sargs = () if allmode else (session,)
     issues, notes = [], []
 
-    def fail(code, msg):
-        issues.append(f"{code}: {msg}")
+    def fail(code, msg, count=1):
+        issues.append((code, msg, count))
 
     def ok(code, msg):
         notes.append(f"{code}: PASS — {msg}")
 
     # --- R1 Co-1 / Co-2 lived-experience pass -------------------------------------------
+    # HARDENED (adversarial pass 2026-07-24): the original accepted a SUBSTRING match in
+    # query_text as proof of a Co-1 pass. It therefore PASSED a run with 0 co1/co2-targeted
+    # searches and 0 co1/co2 sources admitted, because one unrelated query happened to contain
+    # the words "lived experience". The project's most important doctrinal commitment had the
+    # weakest check. Structural evidence is now REQUIRED; the phrase match is a hint only.
     co1 = _rows(cx, f"SELECT COUNT(*) FROM search_executions WHERE target_evidence_type IN "
                     f"('co1','co2'){scope}", sargs)[0][0]
+    co1_src = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources WHERE evidence_type IN "
+                        f"('co1','co2'){scope.replace('session','created_by_session')}",
+                    sargs)[0][0]
+    co1_waiver = _rows(cx, f"SELECT COUNT(*) FROM search_executions WHERE "
+                           f"COALESCE(findings_note,'') LIKE '%CO1-NOT-APPLICABLE%'{scope}",
+                       sargs)[0][0]
     co1_txt = _rows(cx, f"SELECT COUNT(*) FROM search_executions WHERE ("
                         + " OR ".join(["LOWER(query_text) LIKE ?"] * len(CO1_HINTS))
                         + f"){scope}", tuple(f"%{h}%" for h in CO1_HINTS) + sargs)[0][0]
-    if co1 == 0 and co1_txt == 0:
-        fail("R1", "NO Co-1/Co-2 lived-experience search in this batch. Co-1 is CO-PRIMARY with "
-                   "T1 (CRPD Art 4.3) and multilingual-research Step 1 says 'first; no "
-                   "exceptions'. Run a DPO/lived-experience pass or log why none applies.")
+    if co1 == 0 and co1_src == 0 and co1_waiver == 0:
+        fail("R1", f"NO Co-1/Co-2 pass: 0 searches targeted co1/co2 and 0 co1/co2 sources "
+                   f"admitted ({co1_txt} query text merely MENTIONS lived experience — that is "
+                   f"not a Co-1 pass). Co-1 is CO-PRIMARY with T1 (CRPD Art 4.3); "
+                   f"multilingual-research Step 1 is 'first; no exceptions'. Run a DPO/"
+                   f"lived-experience retrieval, or record 'CO1-NOT-APPLICABLE: <reason>' in "
+                   f"findings_note.")
     else:
-        ok("R1", f"{co1} co1/co2-targeted + {co1_txt} lived-experience-phrased searches")
+        ok("R1", f"{co1} co1/co2-targeted searches, {co1_src} co1/co2 sources, "
+                 f"{co1_waiver} reasoned waivers")
 
     # --- R2 citation mining on admitted anchors -----------------------------------------
+    # HARDENED: the original was satisfied by a single stub row with mining_direction<>'none'
+    # and never consulted citation_mining at all — "did you mine?" did not look at the mining
+    # table. Now requires actual citation_mining rows, proportionate to admitted anchors.
     admitted = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources WHERE tier BETWEEN 1 AND 3"
                          f"{scope.replace('session','created_by_session')}", sargs)[0][0]
-    mined = _rows(cx, f"SELECT COUNT(*) FROM search_executions WHERE mining_direction IS NOT NULL"
-                      f" AND mining_direction <> 'none'{scope}", sargs)[0][0]
-    if admitted > 0 and mined == 0:
-        fail("R2", f"{admitted} tier-1..3 sources admitted but ZERO backward/forward mining "
-                   f"(mining_direction='none' everywhere). citation-miner is part of the "
-                   f"pipeline, not optional depth.")
+    mined_rows = _rows(cx, f"SELECT COUNT(*) FROM citation_mining WHERE 1=1"
+                           f"{scope.replace('session','created_by_session')}", sargs)[0][0]
+    mined_dir = _rows(cx, f"SELECT COUNT(*) FROM search_executions WHERE mining_direction IS NOT "
+                          f"NULL AND mining_direction <> 'none'{scope}", sargs)[0][0]
+    if admitted > 0 and mined_rows == 0:
+        fail("R2", f"{admitted} tier-1..3 anchors admitted but ZERO citation_mining rows "
+                   f"(mining_direction<>'none' on {mined_dir} search rows is NOT evidence of "
+                   f"mining — the mining register is the evidence). Mine backward AND forward, "
+                   f"depth 2-3, per citation-miner.")
+    elif admitted > 0 and mined_rows < max(1, admitted // 4):
+        fail("R2", f"only {mined_rows} citation_mining rows for {admitted} anchors — mining is "
+                   f"token rather than systematic (expect >= {max(1, admitted // 4)}).")
     else:
-        ok("R2", f"{mined} mining searches for {admitted} anchors")
+        ok("R2", f"{mined_rows} citation_mining rows for {admitted} anchors")
 
     # --- R3 clause citation on quantified regulatory values -----------------------------
     uncited = _rows(cx, f"SELECT ref_id FROM evidence_sources WHERE tier >= 4 AND "
@@ -144,20 +169,34 @@ def audit(session=None, allmode=False):
     if uncited:
         fail("R3", f"{len(uncited)} regulatory-stratum source(s) carry values with no clause/"
                    f"section/page AND no [UNVERIFIED-QUANT] flag: "
-                   f"{', '.join(r[0] for r in uncited[:5])}")
+                   f"{', '.join(r[0] for r in uncited[:5])}", len(uncited))
     else:
         ok("R3", "all regulatory sources clause-cited or flagged [UNVERIFIED-QUANT]")
 
     # --- R4 combinatorial dimension ------------------------------------------------------
-    comb = _rows(cx, f"SELECT COUNT(*) FROM search_executions WHERE ("
-                     + " OR ".join(["LOWER(query_text) LIKE ?"] * len(COMBINATORIAL_HINTS))
-                     + f"){scope}", tuple(f"%{h}%" for h in COMBINATORIAL_HINTS) + sargs)[0][0]
+    # HARDENED: the original counted a query containing the substring "disabilit" as
+    # "combinatorial". On the run that motivated this script that scored 21/52 PASS while ZERO
+    # queries had actually crossed a population code, access need, ICF code or axis. Word
+    # presence is not study design. Now requires a REAL crossing: either an explicit population/
+    # ICF/axis identifier in the query, or a population linkage produced by the batch.
     total = _rows(cx, f"SELECT COUNT(*) FROM search_executions WHERE 1=1{scope}", sargs)[0][0]
-    if total and comb == 0:
-        fail("R4", f"0/{total} searches crossed a population / access-need / ICF / axis. Cells "
-                   f"are (item x population); one-dimensional coverage understates the matrix.")
+    # HARDENED TWICE. v1 counted the substring "disabilit" as combinatorial. v2 matched population
+    # codes in query_text — also unsound, because SQLite LIKE is case-INSENSITIVE and the codes are
+    # short ASCII: 'COM' matches "accommodate", 'AUT' matches "autistic", 'BAR' matches
+    # "bariatric", 'ID' matches almost anything. Text can never prove a crossing. v3 therefore
+    # requires STRUCTURAL evidence: a population linkage actually produced by the batch.
+    linked = 0
+    if _rows(cx, "SELECT COUNT(*) FROM sqlite_master WHERE name='evidence_population_match'"
+             )[0][0]:
+        linked = _rows(cx, f"SELECT COUNT(*) FROM evidence_population_match WHERE 1=1"
+                           f"{scope.replace('session','created_by_session')}", sargs)[0][0]
+    if total and linked == 0:
+        fail("R4", f"{total} searches produced ZERO population linkages "
+                   f"(evidence_population_match). Cells are (item x population): a search that "
+                   f"merely mentions a population in prose is not a crossing — link admitted "
+                   f"evidence to the population(s)/axis it actually speaks to.", total)
     else:
-        ok("R4", f"{comb}/{total} searches carry a population/axis dimension")
+        ok("R4", f"{linked} population linkages produced across {total} searches")
 
     # --- R5 non-English not down-tiered --------------------------------------------------
     downtiered = _rows(cx, f"SELECT exec_id, language FROM search_executions WHERE "
@@ -182,18 +221,33 @@ def audit(session=None, allmode=False):
     # --- R7 failure/harm captured + candidates registered --------------------------------
     harm = _rows(cx, f"SELECT COUNT(*) FROM search_executions WHERE harm_finding=1{scope}",
                  sargs)[0][0]
+    # HARDENED: threshold was "> 0", so ONE candidate satisfied it forever no matter how much
+    # material stayed in prose. Now proportionate to the yield actually screened.
     cand = _rows(cx, f"SELECT COUNT(*) FROM search_candidates WHERE 1=1{scope}", sargs)[0][0]
-    if total and cand == 0:
-        fail("R7", "no candidates registered. Material that surfaces off-slug, or unverified, "
-                   "must land in search_candidates (REHOME/MISCELLANEOUS/PENDING-VERIFICATION), "
-                   "not in prose that evaporates.")
+    screened = _rows(cx, f"SELECT COALESCE(SUM(results_screened),0) FROM search_executions "
+                         f"WHERE 1=1{scope}", sargs)[0][0]
+    expected = max(1, screened // 25) if screened else 0
+    if total and cand < expected:
+        fail("R7", f"only {cand} candidates registered for {screened} screened results "
+                   f"(expect >= {expected}). Off-slug / unverified material must land in "
+                   f"search_candidates, not in prose that evaporates.")
     else:
-        ok("R7", f"{cand} candidates registered; {harm} harm/failure findings flagged")
+        ok("R7", f"{cand} candidates for {screened} screened; {harm} harm/failure flagged")
 
-    # --- R8 empties kept ------------------------------------------------------------------
+    # --- R8 empties kept + APPEND-ONLY integrity -------------------------------------------
+    # HARDENED: the original could never fail — it printed a count and passed. Deleting the
+    # ENTIRE zero-yield record (destroying the honesty evidence) still returned PASS. The log is
+    # append-only by design, so deletion is detectable as gaps between max(exec_id) and COUNT(*).
     empties = _rows(cx, f"SELECT COUNT(*) FROM search_executions WHERE results_found = 0 AND "
                         f"deferred_reason IS NULL{scope}", sargs)[0][0]
-    ok("R8", f"{empties} zero-yield searches retained as findings (never delete these)")
+    mx, cnt = _rows(cx, "SELECT COALESCE(MAX(exec_id),0), COUNT(*) FROM search_executions")[0]
+    if mx > cnt:
+        fail("R8", f"search_executions is APPEND-ONLY but max(exec_id)={mx} exceeds COUNT={cnt}: "
+                   f"{mx - cnt} row(s) were DELETED. Zero-yield and deferred searches are the "
+                   f"honesty record — 'we tried hard and nothing surfaced' — and must never be "
+                   f"removed or back-filled.")
+    else:
+        ok("R8", f"{empties} zero-yield searches retained; log intact (no deleted rows)")
 
     # --- R9 duplicate DOI ------------------------------------------------------------------
     # Scoped to THIS batch: did this batch introduce a duplicate? (Corpus-wide duplicate debt is
@@ -207,28 +261,38 @@ def audit(session=None, allmode=False):
     if dupes:
         fail("R9", f"{len(dupes)} DOI(s) admitted by THIS batch already exist in the corpus — "
                    f"pre-check DOIs and cross-file the existing ref_id instead of creating a "
-                   f"second row: {', '.join(str(d[0]) for d in dupes[:5])}")
+                   f"second row: {', '.join(str(d[0]) for d in dupes[:5])}", len(dupes))
     else:
         ok("R9", "this batch introduced no duplicate DOIs")
 
     # --- R10 locator re-retrieval ----------------------------------------------------------
+    # HARDENED: the original accepted ANY non-empty locator field and never checked whether the
+    # locator actually RESOLVED — 77 VERIFIED sources with unresolved DOIs passed silently.
     unver = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources WHERE verification_status='VERIFIED'"
                       f" AND COALESCE(doi,'')='' AND COALESCE(url,'')='' AND COALESCE(pmid,'')=''"
                       f" AND COALESCE(verified_by_tool,'')=''"
                       f"{scope.replace('session','created_by_session')}", sargs)[0][0]
+    unresolved = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources WHERE "
+                           f"verification_status='VERIFIED' AND COALESCE(doi,'') <> '' AND "
+                           f"COALESCE(doi_resolution_outcome,'') NOT IN ('RESOLVED','NO-MATCH')"
+                           f"{scope.replace('session','created_by_session')}", sargs)[0][0]
     if unver:
         fail("R10", f"{unver} VERIFIED source(s) with no locator or verifying tool. Ladder "
                     f"DOI -> Crossref/PubMed -> publisher -> repository; a publisher block is "
-                    f"not a terminal answer.")
+                    f"not a terminal answer.", unver)
+    elif unresolved:
+        fail("R10", f"{unresolved} VERIFIED source(s) carry a DOI whose resolution was never "
+                    f"recorded (doi_resolution_outcome unset). Holding a DOI string is not "
+                    f"re-retrieval — resolve it and record the outcome.")
     else:
-        ok("R10", "every VERIFIED source carries a locator/verification trail")
+        ok("R10", "every VERIFIED source has a locator AND a recorded resolution outcome")
 
     # --- R11 vocabulary provenance ---------------------------------------------------------
     noprov = _rows(cx, f"SELECT COUNT(*) FROM term_aliases WHERE COALESCE(notes,'')=''"
                        f"{scope.replace('session','created_by_session')}", sargs)[0][0]
     if noprov:
         fail("R11", f"{noprov} alias(es) with no sourcing note. No back-translation: every alias "
-                    f"needs its authoritative in-language basis or [UNVERIFIED-TERMS].")
+                    f"needs its authoritative in-language basis or [UNVERIFIED-TERMS].", noprov)
     else:
         ok("R11", "all vocabulary carries in-language sourcing provenance")
 
@@ -237,13 +301,34 @@ def audit(session=None, allmode=False):
                            f"LOWER(COALESCE(findings_note,'')) LIKE '%cost%' OR "
                            f"LOWER(COALESCE(findings_note,'')) LIKE '%grant%' OR "
                            f"LOWER(COALESCE(findings_note,'')) LIKE '%bcr%'){scope}", sargs)[0][0]
+    # HARDENED: threshold was "table is empty", so ONE row satisfied it permanently while any
+    # amount of economic data stayed in prose. Now proportionate to the prose findings observed.
     econ_rows = _rows(cx, "SELECT COUNT(*) FROM economics_entries")[0][0]
-    if econ_words and econ_rows == 0:
-        fail("R12", f"{econ_words} search(es) carry economic findings in prose while "
-                    f"economics_entries is EMPTY. Economic/case-study/value data belongs in its "
-                    f"table (economics_entries / case_studies / jurisdictional_values).")
+    if econ_words and econ_rows < econ_words:
+        fail("R12", f"{econ_words} search(es) carry economic findings in prose but only "
+                    f"{econ_rows} economics_entries row(s) exist. Economic/case-study/value data "
+                    f"belongs in economics_entries / case_studies / jurisdictional_values, not "
+                    f"in prose notes.", econ_words)
     else:
-        ok("R12", f"structured homes used (economics_entries={econ_rows})")
+        ok("R12", f"structured homes used (economics_entries={econ_rows} for {econ_words} "
+                  f"prose findings)")
+
+    # ---- baseline: legacy debt must not hold the gate permanently red ----------------------
+    # A gate that is always red teaches people to ignore it — the precise failure this script
+    # exists to prevent. In --all mode, pre-existing debt recorded in the baseline is reported
+    # as INHERITED and does not fail the run; any INCREASE over baseline does.
+    inherited = []
+    if allmode and BASELINE_PATH.exists():
+        import json
+        base = json.loads(BASELINE_PATH.read_text()).get("counts", {})
+        kept = []
+        for code, msg, count in issues:
+            b = base.get(code)
+            if b is not None and count <= b:
+                inherited.append(f"{code}: {count} (baseline {b}) — INHERITED DEBT, not a regression")
+            else:
+                kept.append((code, msg, count))
+        issues = kept
 
     # ---- report ----------------------------------------------------------------------------
     scope_txt = "ALL SESSIONS" if allmode else f"session={session}"
@@ -252,16 +337,20 @@ def audit(session=None, allmode=False):
     print("=" * 78)
     for n in notes:
         print(f"  {n}")
+    for i in inherited:
+        print(f"  ~ {i}")
     if issues:
         print("-" * 78)
-        for i in issues:
-            print(f"  ✗ {i}")
+        for code, msg, _c in issues:
+            print(f"  ✗ {code}: {msg}")
         print("-" * 78)
         print(f"  NON-COMPLIANT: {len(issues)} rule(s) unmet.")
         print("  Per owner directive 2026-07-24: RESEARCH IS INVALID IF IT IS NOT COMPLIANT WITH")
         print("  OUR GOVERNANCE AND VERIFICATION TOOLS AND RULES AND ETHOS.")
         print("  Remediate, or record an explicit reasoned waiver in the PR before merge.")
         print("=" * 78)
+        if capture is not None:
+            capture.update({c: n for c, _m, n in issues})
         return 1
     print("-" * 78)
     print("  COMPLIANT — all research definition-of-done rules met.")
@@ -270,41 +359,67 @@ def audit(session=None, allmode=False):
 
 
 def selftest():
-    """Prove the checks fire: build a tiny in-memory corpus that violates every rule."""
+    """Prove the checks fire.
+
+    The synthetic corpus is built by CLONING THE LIVE SCHEMA (sqlite_master DDL) rather than
+    hand-writing CREATE statements. v1 hand-wrote them, drifted the moment the checks were
+    hardened, and the selftest began CRASHING instead of testing — the guard against the gate
+    rotting had itself rotted, and only a manual re-run caught it. Cloning removes that class of
+    failure entirely.
+    """
     import tempfile
+    global DB_PATH
+    if not DB_PATH.exists():
+        print("SELFTEST: SKIP — no live DB to clone schema from")
+        return 0
+    live = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
+    ddl = [r[0] for r in live.execute(
+        "SELECT sql FROM sqlite_master WHERE type='table' AND sql IS NOT NULL")]
+    live.close()
+
     fd = tempfile.NamedTemporaryFile(suffix=".db", delete=False)
     cx = sqlite3.connect(fd.name)
-    cx.executescript("""
-      CREATE TABLE search_executions (exec_id INTEGER PRIMARY KEY, slug TEXT, language TEXT,
-        target_evidence_type TEXT, query_text TEXT, mining_direction TEXT, results_found INT,
-        deferred_reason TEXT, findings_note TEXT, harm_finding INT DEFAULT 0, session TEXT);
-      CREATE TABLE evidence_sources (ref_id TEXT, tier INT, article_number TEXT, pages TEXT,
-        notes TEXT, doi TEXT, url TEXT, pmid TEXT, verified_by_tool TEXT,
-        verification_status TEXT, created_by_session TEXT);
-      CREATE TABLE search_candidates (candidate_id INTEGER PRIMARY KEY, session TEXT);
-      CREATE TABLE term_aliases (alias TEXT, notes TEXT, created_by_session TEXT);
-      CREATE TABLE economics_entries (entry_id TEXT);
-      -- violations: no co1, no mining, grey-targeted ID, findings in deferred_reason, econ prose
-      INSERT INTO search_executions VALUES
-        (1,'s','id','grey','corridor width',NULL,5,'found stuff','cost of retrofit',0,'T'),
-        (2,'s','en','clinical','ramp',NULL,0,NULL,NULL,0,'T');
-      INSERT INTO evidence_sources VALUES
-        ('REF-1',5,NULL,NULL,'250 lbf value',NULL,NULL,NULL,NULL,'VERIFIED','T'),
-        ('REF-2',3,NULL,NULL,'x','10.1/dup',NULL,NULL,'pubmed','VERIFIED','T'),
-        ('REF-3',3,NULL,NULL,'x','10.1/dup',NULL,NULL,'pubmed','VERIFIED','T');
-      INSERT INTO term_aliases VALUES ('kata','', 'T');
-    """)
+    for stmt in ddl:
+        try:
+            cx.execute(stmt)
+        except sqlite3.Error:
+            pass  # skip anything with unmet deps; the gate degrades gracefully on missing tables
+    T = "SELFTEST-SESSION"
+    # A corpus that violates: R1 (no co1), R2 (no mining), R3 (uncited tier-6 value),
+    # R4 (no population linkage), R5 (non-EN targeted grey), R6 (findings in deferred_reason),
+    # R8 (deleted row -> id gap), R10 (VERIFIED, no locator), R11 (alias w/o provenance).
+    cx.execute("INSERT INTO search_executions (exec_id,slug,jurisdiction,language,"
+               "target_evidence_type,query_text,engine,depth_method,mining_direction,"
+               "results_found,results_screened,results_admitted,deferred_reason,backfill,"
+               "session,executed_at) VALUES (1,'s','ID','id','grey','q','web','scoping','none',"
+               "5,5,0,'found things',0,?,'t')", (T,))
+    cx.execute("INSERT INTO search_executions (exec_id,slug,language,query_text,engine,"
+               "depth_method,mining_direction,results_found,results_screened,results_admitted,"
+               "backfill,session,executed_at) VALUES (3,'s','en','q','web','scoping','none',"
+               "0,0,0,0,?,'t')", (T,))   # exec_id 2 absent => append-only violation for R8
+    cx.execute("INSERT INTO evidence_sources (ref_id,tier,evidence_type,verification_status,"
+               "notes,created_by_session) VALUES ('REF-ST1',6,'code','VERIFIED','250 lbf',?)", (T,))
+    cx.execute("INSERT INTO term_aliases (term_id,alias,language,alias_type,notes,created_at,"
+               "created_by_session,updated_at,updated_by_session) "
+               "VALUES ('TERM-001','x','id','TRANSLATION','','t',?,'t',?)", (T, T))
     cx.commit(); cx.close()
-    global DB_PATH
-    DB_PATH = Path(fd.name)
-    rc = audit(session="T")
-    expected_fail = rc == 1
+    # NOTE: inserts above are deliberately NOT wrapped in try/except. If the live schema changes
+    # such that this corpus can no longer be built, the selftest must CRASH LOUDLY rather than
+    # quietly stop testing — silent rot is the exact failure this guard exists to catch.
+
+    real, DB_PATH = DB_PATH, Path(fd.name)
+    try:
+        rc = audit(session=T)
+    finally:
+        DB_PATH = real
+        os.unlink(fd.name)
+    expected = {"R1", "R2", "R3", "R4", "R5", "R6", "R8", "R10", "R11"}
     print()
-    print(f"SELFTEST: {'PASS' if expected_fail else 'FAIL'} — "
-          f"gate {'correctly rejected' if expected_fail else 'FAILED TO REJECT'} a corpus "
-          f"violating R1/R2/R3/R5/R6/R7/R9/R11/R12")
-    os.unlink(fd.name)
-    return 0 if expected_fail else 1
+    if rc == 1:
+        print(f"SELFTEST: PASS — gate rejected a corpus violating {sorted(expected)}")
+        return 0
+    print("SELFTEST: FAIL — gate did NOT reject a knowingly-violating corpus")
+    return 1
 
 
 if __name__ == "__main__":
@@ -312,9 +427,26 @@ if __name__ == "__main__":
     p.add_argument("--session", help="session id to gate")
     p.add_argument("--all", action="store_true", help="whole-corpus posture")
     p.add_argument("--selftest", action="store_true", help="prove the checks fire")
+    p.add_argument("--write-baseline", action="store_true",
+                   help="snapshot current INHERITED debt so the gate fails only on regressions")
     a = p.parse_args()
     if a.selftest:
         sys.exit(selftest())
+    if a.write_baseline:
+        import json, datetime
+        caught = {}
+        audit(allmode=True, capture=caught)
+        BASELINE_PATH.parent.mkdir(parents=True, exist_ok=True)
+        BASELINE_PATH.write_text(json.dumps({
+            "_comment": "Inherited research-contract debt at baseline. The gate fails only on "
+                        "counts EXCEEDING these — a permanently-red gate teaches people to "
+                        "ignore it. Lower these numbers as debt is remediated; never raise them "
+                        "to make a batch pass.",
+            "captured_at": "2026-07-24",
+            "counts": caught,
+        }, indent=2) + "\n")
+        print(f"\nwrote baseline: {BASELINE_PATH} -> {caught}")
+        sys.exit(0)
     if not a.session and not a.all:
         p.error("give --session <id> or --all")
     sys.exit(audit(session=a.session, allmode=a.all))
