@@ -249,3 +249,33 @@ sequencing and on who performs native review.**
   audit uses; `scripts/db/**` additionally targets a different database file.
 - Does **not** resolve the 9 pre-existing `test_db_integrity.py` failures — verified identical
   on the pre-change baseline, all in `evidence_sources`/`gaps`, unrelated to this work.
+
+---
+
+## 9. Merge reconciliation — 2026-07-25 (post-ratification, factual update)
+
+This branch was merged with `main` after ratification. `main` had concurrently landed
+`55c4665` (session_2026-07-24-research-matrix-completion), which built **Indonesian
+vocabulary from published statute** — 15 aliases from Permen PUPR No. 14/PRT/M/2017,
+UU No. 8/2016 and PP No. 42/2020, each recorded verbatim with no back-translation.
+
+Two factual claims above are superseded by it, and one gate needed correcting:
+
+- **§6.2 is narrowed.** Indonesian is **closed**. Four languages remain at zero
+  vocabulary: **AR, BN, HI, SW**. GAP-302 updated, and it now names the Indonesian
+  build as the worked model for the remaining four — from a named national
+  instrument, not generated.
+- **§6.3 is no longer absolute.** 15 aliases have reached `VERIFIED-GLOSSARY`. The
+  remaining 2367 have not. GAP-303 restated to track the real remainder rather than
+  a stale absolute.
+- **§4's gate was wrong about their rows, and that is the more useful finding.**
+  `alias_provenance_audit.py` failed all 15 — the highest-quality aliases in the
+  register — because their provenance was asserted in prose rather than as a marker
+  string. A gate that blocks verified work while passing generated work is worse than
+  no gate. Reconciled by stamping `[VERIFIED-GLOSSARY]` on rows whose notes already
+  cite a named national instrument and verbatim retrieval; this classifies what those
+  notes assert and upgrades nothing.
+
+The general lesson, and the reason this section exists rather than a silent fix: **a
+convention introduced mid-flight will meet correct work that predates it, and the
+convention — not the work — is what yields.**

@@ -31,19 +31,20 @@ queries. Every slug in the corpus resolves to at least one concept.
 Non-English equivalents are **model-generated and pending native-speaker review** — they
 are a *retrieval aid, not authoritative terminology*. Each row carries that status in
 `term_aliases.notes`. Verification protocol: `references/native-alias-verification.md`.
-Five languages required by `lang_jur_map` (AR, BN, HI, ID, SW) still carry **no aliases**
-and cannot be searched until vocabulary is built from published glossaries.
+4 language(s) required by `lang_jur_map` (AR, BN, HI, SW) carry **no aliases**
+and cannot be searched until vocabulary is built from published glossaries (**GAP-302**).
 
-**Coverage:** 88 concepts · 2367 aliases · 14 languages (of 19 required)
+**Coverage:** 88 concepts · 2382 aliases · 15 languages (of 19 required)
 
-| EN | DE | FR | ES | IT | PT | NL | SV | NO | DA | FI | JA | ZH | KO |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 415 | 191 | 170 | 171 | 121 | 114 | 140 | 134 | 132 | 157 | 160 | 150 | 155 | 157 |
+| EN | DE | FR | ES | IT | PT | NL | SV | NO | DA | FI | JA | ZH | KO | ID |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 415 | 191 | 170 | 171 | 121 | 114 | 140 | 134 | 132 | 157 | 160 | 150 | 155 | 157 | 15 |
 
 ### Provenance of these aliases
 
 | Provenance | Aliases |
 |---|---|
+| verified | 15 |
 | model-generated | 1163 |
 | curated (EN) | 304 |
 | project code | 20 |
@@ -227,6 +228,7 @@ Bathroom designed for wheelchair users and people with disabilities
 | JA | 車いす対応トイレ, 多機能トイレ, バリアフリートイレ |
 | ZH | 残疾人卫生间, 无障碍卫生间 |
 | KO | 무장애 화장실, 장애인 화장실 |
+| ID | toilet penyandang disabilitas, toilet difabel |
 
 **Linked items:** G-01, G-03, G-04, I-03
 
@@ -326,6 +328,7 @@ Slope of an accessible ramp expressed as ratio or percentage
 | JA | バリアフリースロープ, 傾斜路, スロープ勾配 |
 | ZH | 无障碍坡道, 坡道坡度 |
 | KO | 램프 경사, 경사로 기울기 |
+| ID | ram, bordes, kemiringan ram |
 
 **Linked items:** E-03
 
@@ -400,6 +403,7 @@ Elevator meeting accessibility standards
 | JA | 車いす対応エレベーター, バリアフリーエレベーター |
 | ZH | 残疾人电梯, 无障碍电梯 |
 | KO | 무장애 엘리베이터, 장애인용 엘리베이터 |
+| ID | lift |
 
 **Linked items:** E-01, E-02
 
@@ -1493,6 +1497,7 @@ Design usable by all people without adaptation
 | JA | バリアフリーデザイン, ユニバーサルデザイン |
 | ZH | 无障碍设计, 通用设计 |
 | KO | 보편적 설계, 유니버설 디자인 |
+| ID | aksesibilitas, universal desain, desain universal |
 
 ### TERM-030 · dementia-friendly design
 
@@ -1801,6 +1806,7 @@ Person using manual or powered wheelchair for mobility
 | JA | 車椅子利用者, 車いす使用者 |
 | ZH | 乘轮椅者, 坐轮椅者, 轮椅使用者 |
 | KO | 지체장애인, 휠체어 사용자 |
+| ID | kursi roda, penyandang disabilitas, difabel, pengguna kursi roda |
 
 **Linked items:** E-01, E-03, E-04, E-08, G-01, G-03, G-04
 
@@ -1959,6 +1965,7 @@ Ground surface detectable by foot or cane for guidance/warning
 | JA | 点字ブロック, 視覚障害者誘導用ブロック |
 | ZH | 触觉地面指示器, 盲道 |
 | KO | 시각장애인유도블록, 점자블록 |
+| ID | guiding block, ubin pemandu |
 
 **Linked items:** E-09
 

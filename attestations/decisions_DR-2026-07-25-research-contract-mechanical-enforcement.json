@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-07-24-research-matrix-completion",
+  "artifact": "decisions/DR-2026-07-25-research-contract-mechanical-enforcement.md",
+  "doctrine_sha": "0f2f525",
+  "rules_in_scope": [
+    "source-discipline",
+    "canonical-workplan",
+    "adherence-logging-and-attestation",
+    "adversarial-research-protocol"
+  ],
+  "per_rule_status": {
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-07-25-research-contract-mechanical-enforcement.md#context-the-failure-this-closes",
+      "reason": "Every claim in the DR is a measured fact from this session's own record, not an assertion: 52 logged searches, 18 admitted sources, 0 Co-1, mining_direction='none' on all rows, 5 regulatory sources with 0 clauses and 0 [UNVERIFIED-QUANT] flags, 0 of 52 queries crossing a population/ICF code, and 28 enforcer scripts referenced by no workflow. Each was verified by direct query or grep before being written down."
+    },
+    "canonical-workplan": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-07-25-research-contract-mechanical-enforcement.md#decision",
+      "reason": "The mechanism executes workplan/methodology-and-pipeline-enforcement-plan-2026-07-23 WS1 (promote existing Level-2 enforcers into CI, zero new enforcer scripts) and its finding F1. It adds no competing plan and re-implements none of the existing enforcers; it wires the six that existed unwired."
+    },
+    "adversarial-research-protocol": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-07-25-research-contract-mechanical-enforcement.md#adversarial-pass-this-version",
+      "reason": "The enforcement mechanism was adversarially attacked before adoption rather than after. Eight of eight attacks succeeded against the first version and each was empirically demonstrated (not asserted) against a throwaway DB copy, then fixed and re-tested. The most serious finding — that the selftest had silently rotted into crashing instead of testing — was itself only caught by re-running it, and is now blocking in CI."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/decisions_DR-2026-07-25-research-contract-mechanical-enforcement.json",
+      "reason": "Commit carries [DOCTRINE: 0f2f525] before the timestamp per rule #11(a); this attestation is co-committed per rule #11(b). doctrine_sha matches HEAD:governance/mission-and-epistemics.md."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "source-discipline",
+      "reason": "Migration 037 (case_studies / economics_entries) was designed from schemas/case_study.py and schemas/economics.py ALONE, without first consulting references/case-study-compendium.md, parts/v10/part12.md or references/methodology/economics-methodology-core.md. Consulting them afterwards revealed a real mismatch: the compendium carries its own '## Schema' block and uses CS-01 (2-digit) while the Pydantic validator demands CS-NNNN, and case studies are numbered §13.x in v9 rather than §12. The tables therefore ship EMPTY and 037 is flagged NEEDS-RECONCILIATION in both the DR (§6.1) and register entry D-0155; nothing is asserted in the interim. The economics pillars (health/inaction/construction/market) were checked and DO align with the prior methodology's four throughlines."
+    }
+  ],
+  "bias_direction": "Strong risk of self-serving construction: the gate's rules and thresholds were authored by the same agent whose work they judge, creating an incentive to set bars that its own output clears. Direct evidence this bias operated: the first R1 accepted a substring match and duly PASSED a run with zero Co-1 searches and zero Co-1 sources. Mitigated by (a) attacking the mechanism empirically against a throwaway DB rather than reasoning about it, (b) reporting all eight successful attacks rather than the fixes alone, (c) requiring structural over textual evidence after the substring failure, (d) running the hardened gate against my own session and remediating the five failures it found instead of exempting them, and (e) raising independent threshold review as an open item (DR §6.4). A second risk is over-building: 15 rules plus hooks plus a CI job for a single-author pre-launch repo. Mitigated by every rule restating a pre-existing documented rule, adding zero new doctrine, and all content checks shipping non-blocking.",
+  "independent_reviewer_counterclaim": "A reviewer could argue this is scaffolding-for-scaffolding of exactly the kind the enforcement spectrum warns against — a 15-rule gate, two schema migrations, harness hooks and a CI job, built by one agent in one session for a repo whose primary deliverable is 'barely started', and that the effort would have been better spent on the 494 ungraded sources or on actual coverage. The counterclaim has real force on proportionality. Answer: the drift cost is demonstrated rather than hypothetical (a full nine-batch run produced research that was invalid under the project's own doctrine, and CI showed green throughout), the plan being executed was already written and owner-premised on exactly this failure mode, and no new doctrine is introduced. A second reviewer could argue the gate's thresholds are self-set and therefore untrustworthy; that objection is conceded, not answered, and is raised as an open item.",
+  "verdict": "DEVIATION-LOGGED"
+}

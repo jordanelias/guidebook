@@ -1,0 +1,89 @@
+# research-contract.yml — mechanical enforcement of the research definition-of-done.
+#
+# Per owner directive 2026-07-24: "OUR RESEARCH IS INVALID IF IT IS NOT COMPLIANT WITH OUR
+# GOVERNANCE AND VERIFICATION TOOLS AND RULES AND ETHOS."
+#
+# This closes the gap diagnosed in workplan/methodology-and-pipeline-enforcement-plan-2026-07-23
+# (finding F1) and empirically confirmed on 2026-07-24: 28 enforcer scripts existed on disk while
+# being referenced by NO workflow, so a research run could skip Co-1, citation mining, clause
+# citation and combinatorial pairing and still show all-green CI.
+#
+# SHAKEDOWN DISCIPLINE (architecture v2.3 <enforcement_spectrum>): every check starts
+# NON-BLOCKING (continue-on-error: true = Level 3). Flip to blocking (Level 4) per check, in a
+# separate owner-gated commit, once its false-positive rate is known. Precedent: audit.yml's
+# attestation_evidence job.
+
+name: Research contract
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  research_contract:
+    runs-on: ubuntu-latest
+    name: Research definition-of-done (shakedown — non-blocking)
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install deps
+        run: pip install -r requirements.txt --quiet && pip install jsonschema --quiet
+
+      # The synthesis gate: R1-R12, every rule derived from an observed 2026-07-24 violation.
+      - name: Research definition-of-done gate (R1-R12)
+        continue-on-error: true
+        env:
+          GUIDEBOOK_DB_PATH: data/guidebook.db
+        run: python3 scripts/audit/research_batch_dod.py --all
+
+      # BLOCKING from day one, deliberately. Every other step is non-blocking during shakedown
+      # because its false-positive rate is unknown; this one has NO false-positive surface — it
+      # builds a knowingly-violating corpus (cloned from the live schema) and asserts the gate
+      # rejects it. An adversarial pass on 2026-07-24 found the v1 selftest had silently begun
+      # CRASHING instead of testing when the checks were hardened: the guard against the gate
+      # rotting had itself rotted, undetected. A gate that has stopped detecting anything is
+      # worse than no gate, because it manufactures false confidence. So this fails the build.
+      - name: DoD gate selftest (BLOCKING — a rotted gate is worse than no gate)
+        run: python3 scripts/audit/research_batch_dod.py --selftest
+
+      # --- WS1: promote existing Level-2 enforcers that were wired to NOTHING ---------------
+      - name: Adversarial research protocol (was unwired)
+        continue-on-error: true
+        env:
+          GUIDEBOOK_DB_PATH: data/guidebook.db
+        run: python3 scripts/audit/research_protocol_audit.py
+
+      - name: Evidence metadata integrity — rule #10 gate (was unwired)
+        continue-on-error: true
+        env:
+          GUIDEBOOK_DB_PATH: data/guidebook.db
+        run: python3 scripts/audit/metadata_integrity_audit.py
+
+      - name: Gap-mining falsification conditions (was unwired)
+        continue-on-error: true
+        env:
+          GUIDEBOOK_DB_PATH: data/guidebook.db
+        run: python3 scripts/audit/gap_mining_audit.py
+
+      - name: Population/junction integrity (was unwired)
+        continue-on-error: true
+        env:
+          GUIDEBOOK_DB_PATH: data/guidebook.db
+        run: python3 scripts/audit/population_integrity_audit.py
+
+      - name: Evidence graph — orphan/uncited sources (was unwired)
+        continue-on-error: true
+        env:
+          GUIDEBOOK_DB_PATH: data/guidebook.db
+        run: python3 scripts/audit/graph_audit.py
+
+      - name: Pipeline contract self-integrity (was unwired)
+        continue-on-error: true
+        env:
+          GUIDEBOOK_DB_PATH: data/guidebook.db
+        run: python3 scripts/audit/pipeline_contract_audit.py

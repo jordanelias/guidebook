@@ -9,8 +9,10 @@ from collections import defaultdict
 import os
 DB=os.environ.get('GUIDEBOOK_DB_PATH','data/guidebook.db')
 con=sqlite3.connect(f'file:{DB}?mode=ro',uri=True); con.row_factory=sqlite3.Row
-LANGS=[('en','EN'),('de','DE'),('fr','FR'),('es','ES'),('it','IT'),('pt','PT'),('nl','NL'),
-       ('sv','SV'),('no','NO'),('da','DA'),('fi','FI'),('ja','JA'),('zh','ZH'),('ko','KO')]
+_PREF=['en','de','fr','es','it','pt','nl','sv','no','da','fi','ja','zh','ko']
+_present=[r[0] for r in con.execute("SELECT DISTINCT language FROM term_aliases ORDER BY 1")]
+LANGS=[(l,l.upper()) for l in _PREF if l in _present] + \
+      [(l,l.upper()) for l in _present if l not in _PREF]
 terms=list(con.execute("SELECT term_id,canonical_en,definition,domain,scope_note FROM terms ORDER BY domain,term_id"))
 al=defaultdict(lambda: defaultdict(list))
 for r in con.execute("SELECT term_id,alias,language,alias_type FROM term_aliases ORDER BY term_id,language,alias_type,alias"):
@@ -44,8 +46,10 @@ w("### Provenance and limits\n")
 w("Non-English equivalents are **model-generated and pending native-speaker review** — they")
 w("are a *retrieval aid, not authoritative terminology*. Each row carries that status in")
 w("`term_aliases.notes`. Verification protocol: `references/native-alias-verification.md`.")
-w("Five languages required by `lang_jur_map` (AR, BN, HI, ID, SW) still carry **no aliases**")
-w("and cannot be searched until vocabulary is built from published glossaries.\n")
+miss=[r[0] for r in con.execute("SELECT DISTINCT language FROM lang_jur_map WHERE lower(language) NOT IN (SELECT DISTINCT lower(language) FROM term_aliases) ORDER BY 1")]
+if miss:
+    w(f"{len(miss)} language(s) required by `lang_jur_map` (" + ", ".join(miss) + ") carry **no aliases**")
+    w("and cannot be searched until vocabulary is built from published glossaries (**GAP-302**).\n")
 counts={l:con.execute("SELECT COUNT(*) FROM term_aliases WHERE language=?",(l,)).fetchone()[0] for l,_ in LANGS}
 w(f"**Coverage:** {len(terms)} concepts · {sum(counts.values())} aliases · {len(LANGS)} languages "
   f"(of 19 required)\n")
