@@ -17,13 +17,14 @@ Flags:
 Per DR-2026-05-09 (CHECK 1-6) and Stage B.5 audit findings 2026-05-10 (CHECK 7-9).
 Run before each session close.
 """
+import os
 import sqlite3
 import sys
 import re
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent.parent
-DB = REPO / "data" / "guidebook.db"
+DB = Path(os.environ.get("GUIDEBOOK_DB_PATH", REPO / "data" / "guidebook.db"))
 
 
 def audit():

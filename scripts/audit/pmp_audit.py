@@ -32,12 +32,13 @@ Flags:
 Per DR-2026-05-10 (PMP protocol) and DR-2026-05-13 (rule #10 sharpening).
 Level 2 enforcement (audit, not hook). Run before each session close.
 """
+import os
 import sqlite3
 import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent.parent
-DB = REPO / "data" / "guidebook.db"
+DB = Path(os.environ.get("GUIDEBOOK_DB_PATH", REPO / "data" / "guidebook.db"))
 
 
 def audit():

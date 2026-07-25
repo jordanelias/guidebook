@@ -229,8 +229,15 @@ pip install -r requirements.txt      # pydantic + PyYAML (the only pinned deps)
 pip install jsonschema                # only needed for attestation audits
 ```
 
-Every DB-aware script honours `GUIDEBOOK_DB_PATH` (default `data/guidebook.db`). There's no
-"run all" wrapper; CI runs discrete steps. The ones you'll actually use:
+Live DB-aware scripts under `scripts/` and `tools/` honour `GUIDEBOOK_DB_PATH` (default
+`data/guidebook.db`), enforced by `python3 scripts/audit/db_path_env_audit.py`. Two documented
+exemptions live in that script: `assess_cell.py` (requires `--db` and deliberately refuses the
+canonical DB) and `graph_audit.py` (resolves the path via `graph/build.py`). **One-time/legacy
+code does *not* honour it** — `scripts/{db,migrate,probes,test}/**` is out of scope, and note
+that `scripts/db/**` targets `data/db/guidebook.db`, a *different, legacy* file that is not the
+canonical database. If you point the variable at a scratch copy and run something under those
+paths, it will read the committed DB regardless. There's no "run all" wrapper; CI runs discrete
+steps. The ones you'll actually use:
 
 | Command | Purpose | Deps |
 |---|---|---|
@@ -242,6 +249,7 @@ Every DB-aware script honours `GUIDEBOOK_DB_PATH` (default `data/guidebook.db`).
 | `python3 scripts/validate_evidence_state.py` | cell-state machine + Co-1 fields | pydantic |
 | `python3 scripts/audit_evidence_metadata.py` | rule-#10 evidence-eligibility gate | pydantic |
 | `python3 scripts/decision_capture.py` · `doctrine_recheck.py --cross-ref` | governance audits | pydantic |
+| `python3 scripts/audit/db_path_env_audit.py` | `GUIDEBOOK_DB_PATH` contract | stdlib |
 
 Tests are **standalone scripts, not pytest** (`python3 scripts/tests/<name>.py`, each prints a
 `RESULTS: X/Y` line and exits 0/1). Only `test_db_integrity.py` is wired into CI. Prefer it over

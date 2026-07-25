@@ -22,6 +22,7 @@ Verdict enum:
 Pure audit — emits JSON report, no DB writes. Corrective action is per-class
 follow-up migration(s).
 """
+import os
 import json
 import re
 import sqlite3
@@ -32,7 +33,8 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
-DB_PATH = Path(__file__).resolve().parents[2] / "data" / "guidebook.db"
+DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH",
+                              Path(__file__).resolve().parents[2] / "data" / "guidebook.db"))
 CROSSREF_BASE = "https://api.crossref.org/works/"
 PUBMED_BASE = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi"
 USER_AGENT = "Guidebook-Audit/1.0 (mailto:[email protected])"
