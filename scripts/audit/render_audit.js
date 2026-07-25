@@ -25,6 +25,7 @@
  *                    WCAG 1.4.12 text-spacing override
  *   R4 target size — interactive controls meet WCAG 2.2 2.5.8 (24x24 CSS px)
  *   R5 focus       — no focused control is hidden behind a sticky bar (2.4.11)
+ *   R6 shell       — doctype, html lang, charset, viewport, title (3.1.1 / 2.4.2)
  *
  * Usage:  node scripts/audit/render_audit.js [doc.html ...]     (default: specs/*.html)
  * Exit 1 on any FAIL. Prints one RESULTS: line, matching house convention.
@@ -92,6 +93,30 @@ async function auditDoc(browser, file) {
   await page.goto(url, { waitUntil: 'load' });
   await page.waitForTimeout(250);
   if (pageErrors.length) fail('R0-script', doc, `uncaught script error: ${pageErrors[0].slice(0, 160)}`);
+
+  // ---------------------------------------------------------- R6 document shell
+  // A document meant to be shared is opened from disk, on someone else's machine,
+  // possibly on a phone. Without a doctype it renders in quirks mode; without lang
+  // a screen reader picks the wrong voice (WCAG 3.1.1, Level A); without a declared
+  // charset the em dashes and the ● ◐ ○ marks depend on sniffing; without a viewport
+  // meta a phone lays the page out at 980 px and zooms out, so every bit of reflow
+  // work stops short of the device that needs it most. All four are invisible in a
+  // desktop browser, which is why this is a check and not a glance.
+  {
+    const r = await page.evaluate(() => ({
+      quirks: document.compatMode === 'BackCompat',
+      lang: document.documentElement.lang || null,
+      charsetDeclared: !!document.querySelector('meta[charset], meta[http-equiv="Content-Type"]'),
+      viewport: !!document.querySelector('meta[name="viewport"]'),
+      title: (document.title || '').trim(),
+    }));
+    if (r.quirks) fail('R6-shell', doc, 'no doctype — the page renders in quirks mode');
+    if (!r.lang) fail('R6-shell', doc, 'no lang on <html> — WCAG 3.1.1 (Level A); a screen reader picks the wrong voice');
+    if (!r.charsetDeclared) fail('R6-shell', doc, 'no declared charset — non-ASCII text depends on the browser sniffing correctly');
+    if (!r.viewport) fail('R6-shell', doc, 'no viewport meta — a phone lays the page out at 980px and zooms out');
+    if (!r.title) fail('R6-shell', doc, 'no <title> — WCAG 2.4.2 (Level A)');
+    checksRun++;
+  }
 
   // ---------------------------------------------------------------- R1 print
   {
