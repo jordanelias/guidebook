@@ -15,9 +15,10 @@ opus_session: null
 status: STUB
 last_updated: 2026-07-25
 evidence_tier_range: "Co-1, Tier 3–5"
-jurisdiction_count: 10     # UK, GB-SCT, US, FI, NO, AU, CA, CZ, FR, HK
-language_count: 1          # EN — non-EN deferred, not searched-and-empty
-batches_run: 2
+jurisdiction_count: 10     # UK, GB-SCT, US, FI, NO, AU, CA, CZ, FR, HK — ALL Anglophone-published
+language_count: 1          # EN — non-EN deferred 3 batches running; now GAP-311
+batches_run: 3
+co1_source_count: 1        # the slug's thinnest point, unchanged since batch 1
 ```
 
 **Scope (worked from axes — `DR-2026-07-22-work-from-axes`).** This slug serves the
@@ -56,6 +57,12 @@ boundary.**
 - **Anticipatability** is a newly surfaced parameter with no specification anywhere: a rest point
   that cannot be seen or signposted in advance does not support the decision to attempt the
   journey (REF-00954). See GAP-308.
+- **Exhaustion is documented as an outcome, in disabled people's own words** (REF-00960, n=26 UK
+  interviews): *"a recurrent impact of participants feeling exhausted due to the streetscape
+  barriers… participation in society was draining."* This evidences the **demand** (`AX-STA`) that
+  the slug exists to serve. It does **not** evidence any provision — see conflict note 6.
+- **The dimensional figures are attributed, not primary-verified** (batch 3). The chain behind
+  them is now located (REF-00961–00964) but unread. See GAP-310.
 
 **Opus note:** the need/value split remains the governing distinction — do not let ● on the need
 migrate onto the interval figure. Batch 2 makes the split sharper, not softer: the need is now
@@ -109,6 +116,12 @@ migrate onto the interval figure. Batch 2 makes the split sharper, not softer: t
 | REF-00957 | amaya-model | Amaya V, Moulaert T, Gwiazdzinski L, Vuillerme N | 2022 | Assessing and Qualifying Neighborhood Walkability for Older Adults | Int J Environ Res Public Health 19(3):1808 | 10.3390/ijerph19031808 | Tier 3 | EN | FR |
 | REF-00958 | leung-perceptions | Leung KM, Ou KL, Chung PK, Thøgersen-Ntoumani C | 2021 | Older Adults' Perceptions toward Walking: A Qualitative Study Using a Social-Ecological Model | Int J Environ Res Public Health 18(14):7686 | 10.3390/ijerph18147686 | Tier 3 | EN | HK |
 | REF-00959 | sallis-maps-mini | Sallis JF, Cain KL, Conway TL, et al. | 2015 | Is Your Neighborhood Designed to Support Physical Activity? A Brief Streetscape Audit Tool | Prev Chronic Dis 12:E141 | 10.5888/pcd12.150098 | Tier 3 | EN | US |
+
+| REF-00960 | ulahannan-streetscapes | Ulahannan A, Birrell S, Herriotts P | 2025 | Inclusive streetscapes: Embedding disabled people's lived experience into street accessibility | Wellbeing, Space and Society 8:100261 | 10.1016/j.wss.2025.100261 | Tier 3 | EN | GB |
+| REF-00961 | holden-fernie-1989 | Holden JM, Fernie GR | 1989 | Specifications for a mass producible static lounge chair for the elderly | Applied Ergonomics 20(1) | 10.1016/0003-6870(89)90007-0 | Tier 3 | EN | CA |
+| REF-00962 | holden-fernie-1988 | Holden JM, Fernie GR, Lunau K | 1988 | Chairs for the elderly — design considerations | Applied Ergonomics 19(4) | 10.1016/0003-6870(88)90075-0 | Tier 3 | EN | CA |
+| REF-00963 | kothiyal-2001 | Kothiyal K, Tettey S | 2001 | Anthropometry for Design for the Elderly | Int J Occup Saf Ergon 7(1) | 10.1080/10803548.2001.11076474 | Tier 3 | EN | AU |
+| REF-00964 | kothiyal-2000 | Kothiyal K, Tettey S | 2000 | Anthropometric data of elderly people in Australia | Applied Ergonomics 31(3) | 10.1016/s0003-6870(99)00052-6 | Tier 3 | EN | AU |
 
 *REF-IDs are stable once emitted. Do not renumber.*
 
@@ -175,3 +188,33 @@ REF-00949 nor REF-00950 specifies visibility, sightline or signage — both spec
 setback only. A bench that cannot be seen in advance does not inform the decision of whether the
 journey is attemptable at all, which is the decision the sustained-exertion demand actually
 turns on. No parameter for this exists anywhere in the corpus.
+
+**6. Ulahannan 2025 evidences the demand, not the provision — recorded to stop a future misread.**
+REF-00960 was staged across two batches as probable support for rest-point provision. On reading,
+it contains **no seating finding at all**: "benches" appears twice, both as an example of street
+furniture in definitional text. It is admitted for its *"feeling exhausted"* theme — one of its
+four key impacts — which is lived-experience evidence for the `AX-STA` demand. Its population
+match is **EXACT** (26 disabled people, recruited as such) while its topical contribution to
+seating is **nil**. Population fit and topical fit are separate axes; conflating them is how a
+paper about streetscapes becomes a citation for benches.
+
+**7. The seat and armrest dimensions rest on unread primaries (GAP-310).**
+Batch 3 traced REF-00953's figures to REF-00961–00964 and admitted them, but obtained only
+Crossref metadata — no full text. So the corpus knows precisely *where* the numbers come from
+without having read them at source. Two attributions are additionally **split across companion
+papers**: "Holden and Fernie" could be the 1988 paper, the 1989 paper, or both; likewise
+Kothiyal & Tettey (2000 dataset vs 2001 design paper). Until read:
+
+- armrest 730 mm from floor / 250 mm above seat / 120 mm width / 120 mm protrusion — **attributed**
+- seat depth 376 mm — **attributed**
+
+These must not be cited as primary-sourced. Given batch 1 already caught a professional body
+misreporting its own citation (conflict note 3), the reading should actively look for a
+discrepancy rather than assume confirmation.
+
+**8. Every jurisdiction reached so far is Anglophone-published (GAP-311).**
+Ten jurisdictions sounds broad; all ten were reached through English-language publication. Non-EN
+vocabulary has been deferred for three consecutive batches — correctly, since inventing terms
+would be back-translation (R11) — but three deferrals is a structural hole, not a scheduling
+accident. Public-realm seating traditions in Nordic, German and Japanese practice are likely to
+differ substantively, so this is a probable **content** gap, not merely a coverage metric.

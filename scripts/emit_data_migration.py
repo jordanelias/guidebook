@@ -52,6 +52,61 @@ RISKY_PATTERNS = [
     (re.compile(r"\bUPDATE\s+\w+\s+SET\s+[^;]+;", re.I), "UPDATE — check WHERE clause"),
 ]
 
+# Closed vocabularies that are enforced by an AUDIT rather than by a table CHECK, so SQLite
+# accepts a bad value silently and only test_db_integrity.py catches it — one integrity check
+# down, discoverable solely by diffing against the pre-batch DB.
+#
+# WHY THIS EXISTS: the same wrong value ('NOT-APPLICABLE' in doi_resolution_outcome, whose
+# vocabulary is RESOLVED/NO-MATCH/REVERTED) was written in two consecutive research batches on
+# 2026-07-25. After the first, the lesson was recorded in prose — a session file, a PR body and
+# an attestation deviation — and prose did not prevent the repeat a few hours later. The fix
+# belongs at the point of writing, not in a document someone has to remember to re-read.
+#
+# This is a BLOCKING check, not a warning: warnings are what the repeat slipped past.
+ENUM_GUARDS = [
+    ("doi_resolution_outcome", {"RESOLVED", "NO-MATCH", "REVERTED"},
+     "test_db_integrity.py [B03]"),
+    ("url_resolution_outcome", {"MATCHED", "PARTIAL", "NO-MATCH", "DEAD-LINK", "DEAD-DNS",
+                                "WAYBACK-MATCH", "WAYBACK-PARTIAL", "URL-NO-MATCH",
+                                "RESOLVED", "DEAD", "RESOLVED-PARTIAL"},
+     "test_db_integrity.py [B04]"),
+]
+
+
+def check_enum_guards(sql: str) -> list:
+    """Return violations of the audit-enforced closed vocabularies.
+
+    Scans for `'VALUE'` literals appearing near a guarded column name — both the
+    `SET col='X'` form and the positional-INSERT form where the column appears in a column
+    list. Deliberately conservative: it reports a value only when that value is not in the
+    vocabulary AND is not obviously a placeholder (NULL / bind parameter).
+    """
+    violations = []
+    for col, allowed, enforced_by in ENUM_GUARDS:
+        if col not in sql:
+            continue
+        # Form 1: explicit assignment — col = 'VALUE'
+        for m in re.finditer(rf"{col}\s*=\s*'([^']*)'", sql, re.I):
+            if m.group(1) not in allowed:
+                violations.append((col, m.group(1), allowed, enforced_by))
+        # Form 2: the column is named in an INSERT column list. We cannot map positions
+        # reliably, so flag any literal in the statement that looks like a member of a
+        # RESOLUTION vocabulary but is not in this one — catches NOT-APPLICABLE, N/A, etc.
+        if re.search(rf"\b{col}\b", sql, re.I):
+            suspicious = {"NOT-APPLICABLE", "NOT APPLICABLE", "N/A", "NA", "NONE",
+                          "UNKNOWN", "PENDING", "NOT-CHECKED", "UNRESOLVED"}
+            for m in re.finditer(r"'([A-Z][A-Z /-]{2,24})'", sql):
+                v = m.group(1).strip()
+                if v in suspicious and v not in allowed:
+                    violations.append((col, v, allowed, enforced_by))
+    # de-duplicate while preserving order
+    seen, out = set(), []
+    for v in violations:
+        if v[:2] not in seen:
+            seen.add(v[:2])
+            out.append(v)
+    return out
+
 
 def slugify_session(session: str) -> str:
     """Convert 'session_2026-05-11g-citation-mining.md' → '2026-05-11g-citation-mining'."""
@@ -96,6 +151,21 @@ def main():
     if warnings:
         for w in warnings:
             print(f"  WARNING: detected risky pattern — {w}", file=sys.stderr)
+
+    # Audit-enforced enum vocabularies — BLOCKING (see ENUM_GUARDS rationale).
+    enum_violations = check_enum_guards(sql)
+    if enum_violations:
+        print("  ERROR: value outside an audit-enforced vocabulary — migration NOT emitted.",
+              file=sys.stderr)
+        for col, val, allowed, enforced_by in enum_violations:
+            print(f"    {col}: '{val}' is not permitted. Allowed: "
+                  f"{', '.join(sorted(allowed))}", file=sys.stderr)
+            print(f"      Enforced by {enforced_by}. SQLite has no CHECK on this column, so a "
+                  f"bad value applies silently and only shows up as a lost integrity check.",
+                  file=sys.stderr)
+            print(f"      If the value is genuinely inapplicable (e.g. a source with no DOI), "
+                  f"use NULL — not a sentinel string.", file=sys.stderr)
+        sys.exit(1)
 
     if args.force_timestamp:
         ts = args.force_timestamp

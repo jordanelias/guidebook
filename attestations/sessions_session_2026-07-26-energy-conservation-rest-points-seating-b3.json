@@ -1,0 +1,74 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-07-26-energy-conservation-rest-points-seating-b3",
+ "artifact": "sessions/session_2026-07-26-energy-conservation-rest-points-seating-b3.md",
+ "doctrine_sha": "0f2f525",
+ "rules_in_scope": [
+  "source-discipline",
+  "evidence-verification-gate",
+  "citation-mining",
+  "adversarial-research-protocol",
+  "best-practice-synthesis-routing",
+  "research-log-manager",
+  "gap-driven-mining",
+  "adherence-logging-and-attestation"
+ ],
+ "per_rule_status": {
+  "source-discipline": {
+   "status": "FIRED",
+   "evidence_path": "scripts/migrations/data_20260726000721_2026-07-26-energy-conservation-rest-points-seating-b3.sql",
+   "reason": "All 5 admissions DOI-prechecked absent (R9) and re-retrieved (R10). The load-bearing act was a REFUSAL: REF-00960 was filed T3 rather than Co-1 after re-retrieving its publisher's About page specifically to test the claim. The slug holds one Co-1 source and has since batch 1, so classifying it Co-1 would have relieved the batch's most visible weakness; ncat's page describes engagement with disabled people, not disabled governance, so the same standard that passed Wheels for Wellbeing and failed Rosenberg 2012 was applied here against my own interest. Four sources (REF-00961..00964) were admitted on Crossref metadata alone with full text explicitly NOT obtained, and every figure attributed to them is recorded as attributed-not-verified rather than restated as sourced."
+  },
+  "evidence-verification-gate": {
+   "status": "FIRED",
+   "evidence_path": "references/search-log/seating-and-rest/energy-conservation-rest-points-seating.md",
+   "reason": "REF-00960 was read in FULL TEXT, not from its abstract, and that is the only reason the R15 correction exists: the abstract and title are entirely consistent with a paper about seating, and the absence of any seating finding is visible only in the body. The R10 ladder was climbed four rungs (Crossref DOI recovery, CC BY licence confirmation, OpenAlex OA-location, repository full text) rather than accepting the batch-2 403 as terminal."
+  },
+  "citation-mining": {
+   "status": "FIRED",
+   "evidence_path": "scripts/migrations/data_20260726000721_2026-07-26-energy-conservation-rest-points-seating-b3.sql",
+   "reason": "Backward mining on REF-00953 located the primary derivation chain behind its dimensional figures - four papers across Applied Ergonomics and IJOSE - and surfaced that two attributions are SPLIT across companion papers, so 'Holden and Fernie' cannot be resolved to one source without reading both. Three mining rows carry explicit deferrals with reasons, one of them on RELEVANCE established by reading (REF-00960's reference list is a streetscape bibliography with no seating strand) rather than on budget."
+  },
+  "adversarial-research-protocol": {
+   "status": "FIRED",
+   "evidence_path": "references/bpc/seating-and-rest/energy-conservation-rest-points-seating.md",
+   "reason": "Applied to my own staged hypothesis rather than to an external source. Ulahannan had been described across two batches in terms that implied seating relevance; reading it falsified that. The correction is recorded in the candidate row, the source row, the search log, the BPC as conflict note 6, and here - deliberately in more places than a confirmation would have been, because a wrong citation that survives is harder to find later than one that never entered. GAP-310 is also framed adversarially: the batch-4 reading is instructed to hunt for a discrepancy between what REF-00953 attributes and what the primaries say, since batch 1 already caught a professional body misreporting its own citation."
+  },
+  "best-practice-synthesis-routing": {
+   "status": "SKIPPED",
+   "reason": "No best_practice_synthesis authored, third batch running. The case against is now stronger than in batch 2, not weaker: the slug still holds ONE Co-1 source, and batch 3 established that the dimensional figures rest on primaries nobody in this corpus has read. Synthesising on an unread derivation chain would be exactly the failure the guidebook exists to expose."
+  },
+  "research-log-manager": {
+   "status": "FIRED",
+   "evidence_path": "references/search-log/seating-and-rest/energy-conservation-rest-points-seating.md",
+   "reason": "All 7 searches logged verbatim before screening, including two that admitted nothing (the environment-blocked Wayback attempt and the ncat governance test) and one deliberate non-EN deferral. The failed ladder is logged rung-by-rung with the exact blocking mechanism for each, so a later session can see that five routes are already exhausted and which two are environment rather than publisher blocks."
+  },
+  "gap-driven-mining": {
+   "status": "FIRED",
+   "evidence_path": "scripts/migrations/data_20260726000721_2026-07-26-energy-conservation-rest-points-seating-b3.sql",
+   "reason": "GAP-309 updated to half-resolved with the environment/evidence distinction made explicit. Two new gaps registered with falsification conditions: GAP-310 (dimensional figures attributed, not primary-verified) and GAP-311 (non-EN deferred three consecutive batches; all ten jurisdictions reached are Anglophone-published, making this a probable content gap rather than a coverage metric). GAP-311 exists specifically because a third deferral should stop being invisible."
+  },
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "scripts/emit_data_migration.py",
+   "reason": "The recurring vocabulary error from batches 1 and 2 was fixed at the point of writing rather than recorded in prose a third time. emit_data_migration.py now BLOCKS on values outside audit-enforced closed vocabularies, with the rationale in the code, tested against both forms of the actual mistake."
+  }
+ },
+ "deviations": [
+  {
+   "rule": "source-discipline",
+   "reason": "Four sources (REF-00961..00964) were admitted to the corpus on Crossref bibliographic metadata alone, with no full text read. This is a weaker admission standard than the batch's other source and than batches 1-2 generally. Justified because their evidential role is to LOCATE the derivation chain rather than to supply values: every figure attributed to them is explicitly marked attributed-not-primary-verified on the row, in GAP-310, and in BPC conflict note 7, and none is restated as sourced. The alternative - leaving them as candidates - would have lost the finding that two attributions are split across companion papers, which is the part a future reader most needs. Recorded as a deviation because 'admitted but unread' is a real epistemic step down and should not pass silently."
+  },
+  {
+   "rule": "adherence-logging-and-attestation",
+   "reason": "I modified an enforcement-adjacent script (scripts/emit_data_migration.py) during a batch it governs, adding a blocking check - the second time in three batches that a gated session has edited its own gating machinery (batch 1 edited research_batch_dod.py's R5). The risk is the same and so is the bound: the new check was tested against the specific error it targets in both syntactic forms and against valid values including NULL, and it only ever ADDS a refusal - it cannot cause a bad migration to pass. Disclosed rather than presented as routine tooling upkeep."
+  },
+  {
+   "rule": "best-practice-synthesis-routing",
+   "reason": "Third consecutive batch admitting ZERO Co-1 sources. The R1 lived-experience pass ran first each time and this batch it produced two negative results rather than one: the resolvable candidate turned out not to be Co-1 on verification, and the genuine Co-1 source is unreachable from this environment. R1 passes on Co-1-TARGETED SEARCHES, not on Co-1 evidence being found, so the gate reads PASS while the underlying balance gets worse relative to a growing academic base. Flagged here because a passing check should not be allowed to launder a three-batch trend."
+  }
+ ],
+ "bias_direction": "By batch 3 the pull is closure: two batches of open gaps create pressure to convert candidates into admissions, and the single most available conversion was the one that would have been wrong. Ulahannan had been carried as a lead across two batches, its title and abstract fit the slug, and admitting it would have closed half of GAP-309 and eased the Co-1 shortage in one move - which is precisely why reading it mattered and why the correction is recorded in five places rather than one. The second pull was toward treating located-as-verified: having traced the dimensional figures to named primaries after two batches of them floating on a single secondary, it was tempting to log the chain as resolved. It is not; the primaries are unread, two attributions are ambiguous between companion papers, and GAP-310 says so. The batch's honest shape is that it found where the numbers come from and admitted it has not yet checked them.",
+ "independent_reviewer_counterclaim": "A reviewer could argue REF-00961..00964 should not be in the corpus at all: admitting four sources nobody has read, on metadata alone, imports four rows whose tier, population and content are all effectively guesses, and 'PROXY, population not established' is an admission that the grade is a placeholder. The stronger version of that objection is that this inflates the slug's apparent source count from 15 to 20 while adding no readable evidence. The response is that their role is navigational and is labelled as such throughout, and that the alternative loses the split-attribution finding - but the objection is sound enough that if batch 4 cannot obtain the full texts, these rows should arguably be demoted back to candidates rather than left looking like evidence. A second reviewer could argue the ncat judgement is too strict: a body constituted to amplify disabled people's voices, funded to do accessible-transport research, publishing interviews with 26 disabled people, is closer to Co-1 than to ordinary academic work, and a rule that excludes it may be drawing the Co-1 line in a place that starves the category. That is a fair challenge to the DEFINITION rather than to its application here, and it is worth putting to the owner as a doctrine question rather than resolved by me mid-batch.",
+ "verdict": "DEVIATION-LOGGED"
+}

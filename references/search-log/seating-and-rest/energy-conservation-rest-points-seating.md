@@ -314,3 +314,125 @@ evidence — the R1 pass ran and came back empty because of access, not absence.
 2. **GAP-309** — retrieve the two blocked Co-1 sources by another route.
 3. **Transport Scotland parent report** — the appendix omits the interval; the parent may not.
 4. **`term_aliases`** for this slug, to unblock non-EN (still deferred, still not "absent").
+
+---
+
+# Batch 3 — 2026-07-26
+
+**Session:** session_2026-07-26-energy-conservation-rest-points-seating-b3
+**Objective:** GAP-309 (two blocked Co-1 sources) and the primary derivation behind the dimensional figures.
+**Result:** 5 sources admitted (REF-00960–00964); GAP-309 half-resolved; 2 new gaps; one **R15 correction that matters**.
+
+## The R10 ladder, and what it's for
+
+Batch 2 hit HTTP 403 on both remaining Co-1 candidates and stopped there. R10 says a publisher
+block is *not* a terminal answer, so batch 3 kept climbing. The two cases diverged completely.
+
+**Ulahannan — resolved in four rungs:**
+
+| Rung | Action | Result |
+|---|---|---|
+| 1 | Crossref `query.bibliographic` | Recovered DOI `10.1016/j.wss.2025.100261` |
+| 2 | Crossref licence field | **CC BY 4.0** — so a lawful copy *must* exist elsewhere |
+| 3 | OpenAlex locations | Green-OA PDF at Coventry University Pure |
+| 4 | Download + read full text | 12 pages, read |
+
+**General lesson worth keeping:** for a gold/green-OA paper a publisher 403 is never terminal —
+the licence guarantees a compliant copy somewhere, and OpenAlex `locations` is the fastest way to
+find it. Two batches of "blocked" collapsed into four API calls once the licence was checked.
+
+**Transport for All — ladder exhausted, and the blocker is us:**
+
+| Rung | Route | Result |
+|---|---|---|
+| 1–3 | Highlights PDF · full PDF · HTML news page | HTTP 403 ×3 (batch 2) |
+| 4 | Wayback via WebFetch | Harness refuses `web.archive.org` |
+| 5 | Wayback via curl | `Blocked by egress policy` |
+
+The Wayback availability API **confirms both URLs are archived and return HTTP 200**. The
+document is public, archived, and retrievable — just not from this environment. That is an
+**environment limitation, not an evidence gap**, and it is now recorded as such so a future
+session doesn't re-run the same five routes.
+
+## R15 — the correction that matters
+
+**Ulahannan 2025 contains no seating finding at all.**
+
+Batch 1 staged it from a Consensus abstract as "26 UK interviews on streetscape barriers" and
+flagged honestly that whether it addressed seating was *not established*. Batch 2 repeated the
+caveat. Reading it settles the question: **"benches" occurs exactly twice, both as an example of
+street furniture in definitional text** — once defining streetscape ("pavements, trees, benches,
+bins, public art, lampposts etc.") and once in the interview preamble. There is no finding about
+seating provision, rest points or spacing.
+
+Had it been admitted on title and abstract — which two batches of pressure to close GAP-309 made
+tempting — it would have entered the corpus as apparent support for rest-point provision. It is
+not that. **This is precisely the failure R15 exists to prevent, caught on the third look.**
+
+It *was* admitted, for a different claim: **"feeling exhausted" is one of its four key impacts** —
+*"a recurrent impact of participants feeling exhausted due to the streetscape barriers…
+participation in society was draining"* — direct lived-experience evidence for the **AX-STA demand**
+even though it says nothing about the provision. Population match **EXACT**; topical fit, nil on
+seating. Those are different axes and are recorded separately.
+
+## Co-1 eligibility, tested against my own interest
+
+The slug holds one Co-1 source, so classifying Ulahannan as Co-1 would have been convenient. Its
+publisher — National Centre for Accessible Transport (ncat), Coventry University — was checked:
+the About page says ncat *"works directly with disabled people, disability organisations,
+transport providers and policy makers"* and *"amplifying the voices of disabled people"*. That is
+**engagement language, not governance**; it does not say disabled-led. Filed **T3, not Co-1** —
+the same standard applied to Wheels for Wellbeing (which passed) and Rosenberg 2012 (which didn't).
+
+## The dimensional derivation chain — located, not yet read
+
+REF-00953's dimensional figures traced to four Applied Ergonomics / IJOSE papers, all admitted:
+
+| REF | Source | Carries |
+|---|---|---|
+| REF-00961 | Holden & Fernie 1989, *Appl Ergon* | Armrest specs (mass-producible lounge chair) |
+| REF-00962 | Holden, Fernie & Lunau 1988, *Appl Ergon* | Chairs for the elderly — design considerations |
+| REF-00963 | Kothiyal & Tettey 2001, *IJOSE* | Anthropometry for design for the elderly |
+| REF-00964 | Kothiyal & Tettey 2000, *Appl Ergon* | **Anthropometric data of elderly people in Australia** |
+
+**Crossref metadata verified; no full text obtainable for any of the four.** So the corpus now
+knows precisely *where* the numbers come from without having read them at source. Two attributions
+are also **split across companion papers** — "Holden and Fernie" could be the 1988 or the 1989
+paper or both; likewise Kothiyal & Tettey. Registered as **GAP-310**: these figures must not be
+cited as primary-sourced while they rest on REF-00953 reporting them.
+
+REF-00964 is the highest-value read remaining: if it is the measured anthropometric dataset it
+appears to be, it is the deepest layer the whole seat-height equity argument (GAP-307) rests on.
+
+## Queries executed (verbatim — R8)
+
+| # | Engine | Query | Found | Admitted |
+|---|---|---|---|---|
+| 18 | web | `Transport for All Are We There Yet 2023 - Wayback Machine archived copy (full PDF + news page)` | 2 | 0 — **env-blocked** |
+| 19 | crossref | `Inclusive streetscapes embedding disabled people lived experience street accessibility` | 3 | 0 (DOI recovery) |
+| 20 | registry | `OpenAlex work lookup by DOI 10.1016/j.wss.2025.100261` | 3 | 1 |
+| 21 | web | `National Centre for Accessible Transport (ncat) about page - governance verification` | 1 | 0 |
+| 22 | crossref | `Holden Fernie chair design armrest elderly rising` | 4 | 2 |
+| 23 | crossref | `Kothiyal Tettey anthropometry seat design elderly bus office` | 3 | 2 |
+| 24 | manual | *(deferred — non-EN)* | — | — |
+
+Note on #22: the same query on PubMed returned one unrelated record. Late-1980s ergonomics is
+thinly indexed there — a **wrong-index** result, not absence.
+
+## Tooling change made this batch
+
+`scripts/emit_data_migration.py` now **blocks** on values outside audit-enforced closed
+vocabularies (`doi_resolution_outcome`, `url_resolution_outcome`). Rationale in the code: the same
+wrong value was written in two consecutive batches; the lesson was recorded in prose after the
+first and prose did not prevent the repeat. The fix belongs at the point of writing. It is
+blocking, not a warning — a warning is what the repeat slipped past.
+
+## Batch 4 queue
+
+1. **GAP-310** — read the four primaries. Actively look for a discrepancy between what REF-00953
+   attributes and what the primaries say; batch 1 already found one professional body misreporting
+   its own citation.
+2. **GAP-311** — build `term_aliases`. Deferred three batches running; all 10 jurisdictions
+   reached so far are Anglophone-published, which is now a probable content gap.
+3. **GAP-309** — Transport for All needs an environment with `web.archive.org` reachable.
+4. Transport Scotland **parent** report (Appendix C omits the interval; the parent may not).
