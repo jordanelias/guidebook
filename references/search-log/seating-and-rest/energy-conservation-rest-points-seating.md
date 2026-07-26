@@ -436,3 +436,61 @@ blocking, not a warning — a warning is what the repeat slipped past.
    reached so far are Anglophone-published, which is now a probable content gap.
 3. **GAP-309** — Transport for All needs an environment with `web.archive.org` reachable.
 4. Transport Scotland **parent** report (Appendix C omits the interval; the parent may not).
+
+---
+
+# Adversarial pass — 2026-07-26
+
+**Session:** session_2026-07-26-energy-conservation-rest-points-seating-adversarial
+**Prompted by:** owner — *"adversarial pass. you should be reading your sources btw."*
+**Sources admitted:** 0. **Errors found in my own batches 1–3:** 7.
+
+Batch 3 admitted four primaries on Crossref metadata and logged a deviation about it instead of
+reading them. That was the wrong call — the deviation was a substitute for the work, not a
+disclosure of an unavoidable limit. All four have now been read at abstract-and-method level via
+PubMed, **where all four were indexed the entire time.**
+
+## Findings — all against my own record
+
+| # | Finding | Where it came from |
+|---|---|---|
+| **A1** | **Batch-2 prose overclaimed what had been read.** "Six further sources were read… Not one states a spacing figure." Only REF-00953 was read in full text and REF-00954 fetched; **REF-00955–00959 were abstract-only**. The row metadata was honest (`get_article_metadata`); the prose built on it was not. An abstract omitting a figure does not establish the paper lacks one. | Comparing prose against `verified_by_tool` |
+| **A2** | **Same dataset admitted twice.** REF-00963 and REF-00964 are both Kothiyal & Tettey, **n=171, aged 65+, metropolitan Sydney** — one study reported as a 4-page data note and a 20-page treatment. Batch 3 counted them as two sources. | Reading both abstracts |
+| **A3** | **The 376 mm figure is circular.** "Jean's" buttock-popliteal length and the "Kothiyal & Tettey recommend 376 mm" both trace to that one dataset. "Exactly right for Jean" is a tautology. | A2 |
+| **A4** | **REF-00961 under-tiered.** An adjustable rig, elderly inpatients, four iterated chair shapes with outcome evaluation — a **T1 candidate**, filed T3. *Not* promoted here: re-tiering upward on an abstract is the inflation risk this pass exists to check. | Reading the abstract |
+| **A5** | **REF-00962 over-tiered.** No study, no participants — a design-considerations discussion. Now **grey-flagged** so it anchors at the weak band. Batch 3 filed it identically to A4's experimental study. | Reading the abstract |
+| **A6** | **My batch-3 R14 diagnosis was wrong.** I wrote that PubMed "thinly indexes late-1980s ergonomics — a wrong-index result." False: all four were indexed, and the single record my query returned (PMID 15676669) **was one of my two targets**. I failed to check the returned PMID, then blamed the database. True cause: query shape plus my own screening failure. | Re-running with one word changed |
+| **A7** | **GAP-312** — the GAP-307 equity harm generalises from 171 Sydney residents measured ~25 years ago, and its DVT/musculoskeletal consequence is REF-00953's inference, not a measured outcome. Never stated. | A2 |
+
+## What this says about the method
+
+A1 and A6 are the same failure in different clothes: **a claim was made at a confidence the
+underlying retrieval didn't support, and nothing caught it.** The DoD gate can't — it checks that
+population grades exist, that empties carry reasons, that mining rows are present. Nothing
+compares *a claim in prose* against *the retrieval depth recorded on the rows it cites*. That's
+**GAP-313**, and it's the generalisable one.
+
+A2/A3 are the batch-1 double-count error committed by me. I caught it in Wheels for Wellbeing
+because I checked a reference list; I missed it in Kothiyal & Tettey because I never opened them.
+
+## Access findings (R10)
+
+Three of four primaries are **closed access** with no repository copy (Unpaywall `is_oa=false`).
+The fourth is **bronze OA** — free at the publisher — but tandfonline returns 403 here. Worth
+distinguishing from batch 3's Ulahannan rescue: that worked because the paper was **gold OA under
+CC BY with a repository copy**. Bronze OA gives no such fallback. **The OpenAlex trick is not
+general; it depends on the licence.**
+
+The armrest dimensions (730/250/120/120 mm) appear in no abstract and still require the 1989 full
+text. **GAP-310 stays open.**
+
+## DoD outcome
+
+R1 and R4 remediated in substance — R1 via the gate's in-band `CO1-NOT-APPLICABLE` (this pass
+admitted nothing, so there was no admission for a Co-1 pass to precede); R4 via a real new linkage
+(EPM-00953-B) recording the population GAP-307 actually generalises from.
+
+**R7 is waived, not remediated.** It expects ≥1 candidate per screened batch; this pass screened
+seven records that were all *already-admitted sources* and surfaced no off-slug material.
+Registering a candidate row to satisfy the counter is precisely the one-row gaming the gate was
+hardened against in `5a59aaf`. Recorded as an explicit reasoned waiver instead.

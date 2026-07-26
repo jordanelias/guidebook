@@ -48,9 +48,13 @@ boundary.**
   (REF-00955, CA), population survey (REF-00956, CZ), spatial accessibility model (REF-00957, FR),
   qualitative interviews (REF-00958, HK), and a validated audit instrument at n=3,677
   (REF-00959, US). None share authors with the Jyväskylä cluster.
-- The **interval value** is evidenced at **○ weak band only**, and batch 2 *sharpened* rather
-  than closed this. Six further sources were read, including a participatory national framework
-  and a validated instrument; **not one states a spacing figure**. See conflict note 1.
+- The **interval value** is evidenced at **○ weak band only**. Batch 2 *sharpened* rather than
+  closed this — but its wording was an overclaim, corrected by the 2026-07-26 adversarial pass.
+  **What was actually established:** of the six sources batch 2 cited here, only REF-00953 was
+  read in full text and REF-00954 fetched; **REF-00955–00959 were abstract-only**, and an
+  abstract omitting a spacing figure does not establish the paper contains none. So the honest
+  statement is that **no spacing figure has been found in any source read so far**, not that none
+  exists in them. See conflict note 1 and GAP-313.
 - **Seat usability** determines whether a rest point functions at all. Batch 2 moved this from
   Co-1-versus-standard to **primary-evidence-backed**: REF-00953 demonstrates a single seat
   height cannot serve the population. See conflict note 2 and GAP-307.
@@ -218,3 +222,28 @@ vocabulary has been deferred for three consecutive batches — correctly, since 
 would be back-translation (R11) — but three deferrals is a structural hole, not a scheduling
 accident. Public-realm seating traditions in Nordic, German and Japanese practice are likely to
 differ substantively, so this is a probable **content** gap, not merely a coverage metric.
+
+**9. Adversarial pass, 2026-07-26 — errors found in this slug's own record.**
+Prompted by the owner. The four primaries batch 3 admitted unread were read; every finding below
+is a defect in *my* work, not in the sources.
+
+- **The 376 mm seat depth is circular.** REF-00953 writes that "Jean" has a buttock-popliteal
+  length of 376 mm and that "Kothiyal and Tettey recommend 376 mm… exactly right for Jean." Both
+  halves trace to the **same 171-person Sydney dataset**. It is one number appearing twice, so
+  "exactly right" is a tautology, not an independent match. Same double-count class as the 50 m
+  interval caught in batch 1 — committed by me this time.
+- **REF-00963 and REF-00964 are one study, not two.** Both are Kothiyal & Tettey, n=171, aged
+  65+, metropolitan Sydney — a 4-page data note (*Appl Ergon* 2000) and a 20-page treatment
+  (*IJOSE* 2001). Batch 3 admitted them as two rows, inflating the apparent source count.
+- **The two Holden & Fernie papers are different species.** The 1989 paper is an iterative
+  rig-based experiment on elderly inpatients across four chair shapes — a genuine **T1 candidate**,
+  deliberately *not* re-tiered upward here because promoting on an abstract is the inflation risk
+  this pass exists to check. The 1988 paper is a **discussion piece with no participants** and is
+  now **grey-flagged**, so it anchors at the weak band only. Batch 3 filed both identically at T3,
+  having read neither.
+- **GAP-312:** the GAP-307 equity harm generalises from those 171 Sydney residents, measured a
+  quarter-century ago, and its DVT/musculoskeletal consequence is REF-00953's own inference rather
+  than a measured outcome. The claim may well hold; the scope was simply never stated.
+- **GAP-313:** the structural version of the overclaim above — prose asserted what had been read
+  while the row metadata stayed honest. No automated check compares a claim about source *content*
+  against the retrieval depth recorded on the rows it cites.

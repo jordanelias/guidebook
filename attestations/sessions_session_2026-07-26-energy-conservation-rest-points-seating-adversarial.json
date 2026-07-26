@@ -1,0 +1,63 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-07-26-energy-conservation-rest-points-seating-adversarial",
+ "artifact": "sessions/session_2026-07-26-energy-conservation-rest-points-seating-adversarial.md",
+ "doctrine_sha": "0f2f525",
+ "rules_in_scope": [
+  "adversarial-research-protocol",
+  "source-discipline",
+  "evidence-verification-gate",
+  "citation-verifier",
+  "gap-driven-mining",
+  "adherence-logging-and-attestation"
+ ],
+ "per_rule_status": {
+  "adversarial-research-protocol": {
+   "status": "FIRED",
+   "evidence_path": "sessions/session_2026-07-26-energy-conservation-rest-points-seating-adversarial.md",
+   "reason": "The pass was turned on my own three batches rather than on external sources, and found seven defects, none of which any automated gate had caught. The two that matter structurally are A1 (batch-2 prose claimed six sources were 'read' when five were abstract-only, and asserted a negative about their contents on that basis) and A6 (my batch-3 R14 diagnosis blamed PubMed indexing for what was my own query shape and my own failure to check a returned PMID against my target). Both are claims pitched above the confidence the retrieval supported."
+  },
+  "source-discipline": {
+   "status": "FIRED",
+   "evidence_path": "scripts/migrations/data_20260726015205_2026-07-26-energy-conservation-rest-points-seating-adversarial.sql",
+   "reason": "Two tier misclassifications corrected in OPPOSITE directions, which is the test of whether a re-tiering exercise is honest. REF-00962 was DOWNGRADED (grey-flagged: no study, no participants, a discussion paper) because downgrading on an abstract is safe. REF-00961 was identified as a T1 candidate - an adjustable rig, elderly inpatients, four iterated chair shapes with outcome evaluation - and DELIBERATELY NOT PROMOTED, because re-tiering upward on an abstract is exactly the inflation this pass exists to check. Recording the upgrade case without taking it is the point."
+  },
+  "evidence-verification-gate": {
+   "status": "FIRED",
+   "evidence_path": "references/search-log/seating-and-rest/energy-conservation-rest-points-seating.md",
+   "reason": "All four sources batch 3 admitted unread were read at abstract-and-method level. This established that REF-00963 and REF-00964 are ONE study (n=171, Sydney) reported twice rather than two sources, and that the 376mm seat-depth figure is circular - the percentile and the 'recommendation' are the same dataset number restated. Neither could have been seen from metadata, which is precisely why batch 3's decision to admit them unread was wrong."
+  },
+  "citation-verifier": {
+   "status": "FIRED",
+   "evidence_path": "scripts/migrations/data_20260726015205_2026-07-26-energy-conservation-rest-points-seating-adversarial.sql",
+   "reason": "The circular-attribution finding (A3) is the batch-1 double-count error class - which I caught in Wheels for Wellbeing by reading a reference list - committed by me in Kothiyal & Tettey because I never opened them. Recorded on REF-00953 itself so the corpus carries the warning at the point of use rather than only in a session file."
+  },
+  "gap-driven-mining": {
+   "status": "FIRED",
+   "evidence_path": "scripts/migrations/data_20260726015337_2026-07-26-energy-conservation-rest-points-seating-adversarial.sql",
+   "reason": "Two gaps registered, both about my own work rather than the literature. GAP-312: the GAP-307 equity harm generalises from 171 Sydney residents measured ~25 years ago and its DVT consequence is REF-00953's own inference, none of which batches 2-3 stated. GAP-313: the generalisable defect - no automated check compares a prose claim about source CONTENT against the retrieval depth recorded on the rows it cites, which is why A1 survived two batches and a PR review."
+  },
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "attestations/sessions_session_2026-07-26-energy-conservation-rest-points-seating-adversarial.json",
+   "reason": "This attestation, and the R7 waiver recorded in the session file rather than engineered away."
+  }
+ },
+ "deviations": [
+  {
+   "rule": "adherence-logging-and-attestation",
+   "reason": "R7 (at least one search_candidates row per screened batch) is WAIVED, not remediated. This pass screened seven records that were all already-admitted sources and surfaced no off-slug or unverified material, so there was nothing to stage. Registering a candidate row to move the counter is the one-row gaming that commit 5a59aaf hardened the gate against, so satisfying R7 here would have defeated its purpose. R1 and R4 were by contrast remediated in SUBSTANCE - R1 through the gate's own in-band CO1-NOT-APPLICABLE mechanism, R4 through a genuinely new linkage tracing GAP-307 to its n=171 Sydney base - and the difference between those two responses and this waiver is the thing a reviewer should check."
+  },
+  {
+   "rule": "source-discipline",
+   "reason": "The prior session (batch 3) admitted four sources unread and I disclosed that as a deviation rather than fixing it. That was the wrong response: a deviation entry is appropriate for an unavoidable limit, and this was not one - the sources were three PubMed calls away. The corpus carried four rows with placeholder population grades and two wrong tier assignments for one merged PR as a result. Recorded here because the failure was not the unread admission alone but the belief that documenting it discharged the obligation."
+  },
+  {
+   "rule": "evidence-verification-gate",
+   "reason": "Batch 3's write-up presented the OpenAlex open-access route as a general technique for defeating publisher blocks. This pass shows it is licence-dependent: Ulahannan was rescued because it is GOLD OA under CC BY with a repository copy, whereas three of these four primaries are closed with no repository copy and the fourth is BRONZE OA - free at the publisher, which is the one access mode a blocked fetcher cannot exploit. The batch-3 generalisation was too broad and is corrected in the search log."
+  }
+ ],
+ "bias_direction": "The dominant risk in a self-adversarial pass is theatre: producing findings that look like scrutiny while leaving every substantive conclusion intact, so the exercise reads as rigour without costing anything. Two guards against that here. First, the findings had to be able to hurt - A1 retracts a sentence I wrote in a merged PR, A3 shows I committed the exact error I had publicly caught in someone else's work, and A6 shows I blamed a database for my own screening failure. Second, the re-tiering had to run both ways: REF-00962 was downgraded and REF-00961 was identified as an upgrade candidate and left alone, because a pass that only ever finds reasons to strengthen is not adversarial. The opposite risk also exists and I have tried to name it rather than indulge it: nothing here overturns the slug's substantive positions, and inflating seven procedural corrections into a crisis would be its own kind of performance.",
+ "independent_reviewer_counterclaim": "A reviewer could argue this pass still stopped short of the actual instruction. 'Read your sources' most plausibly means read them in full; I read four abstracts and method summaries, which is enough to establish study design and population but not enough to verify the armrest dimensions that motivated admitting these sources in the first place - those remain unlocated and GAP-310 remains open. On that reading the pass substituted a cheaper retrieval for the expensive one again, one rung higher than batch 3 but the same move. The honest response is that three of the four are closed-access with no lawful copy reachable from this environment, so full text was not available at any price I could pay here - but that is an explanation, not a completion, and a reviewer with institutional access would be right to finish the job rather than accept it. A second reviewer could argue A2 is overstated: two papers reporting one dataset in different journals with different framings are not straightforwardly 'the same source', and treating them as one may under-count a genuine 20-page analytical contribution against a 4-page data note. That is fair; what the corpus now records is that they must not be counted as INDEPENDENT of each other, which is the claim that actually mattered.",
+ "verdict": "DEVIATION-LOGGED"
+}
