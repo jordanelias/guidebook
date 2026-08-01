@@ -260,6 +260,21 @@ def main():
     # and exited 2 — CI passes `--kinds "$KINDS"` unquoted-empty on any docs-only
     # diff, so three battery jobs died on an argparse usage error while the six
     # always-on checks they were supposed to run did not run at all.
+    # Explicit kinds and a diff to classify are contradictory: one of them would be
+    # silently discarded. It used to be --changed-from, which produced the worst
+    # possible output — `--kinds "" --changed-from origin/main` reported "0 changed
+    # file(s)" against a 12-file diff and ran 6 checks instead of 39. Fixing the
+    # empty-kinds crash created that path, so this is a regression introduced while
+    # removing one of the same family. preflight.sh forwards extra flags onto a
+    # --changed-from invocation, so `preflight.sh --kinds ""` reaches it. Use
+    # `--kinds auto` to mean "classify the diff for me".
+    if args.kinds is not None and args.kinds != "auto" and args.changed_from:
+        print("run_checks: --kinds and --changed-from are mutually exclusive "
+              "(one would be silently ignored).", file=sys.stderr)
+        print("  Use --kinds auto --changed-from REF to classify the diff, or pass "
+              "--kinds alone.", file=sys.stderr)
+        return 2
+
     if args.kinds is not None and args.kinds != "auto":
         kinds = {k.strip() for k in args.kinds.split(",") if k.strip()}
         unknown = kinds - set(reg["kinds"]) - {"always"}
@@ -520,6 +535,18 @@ def selftest(reg):
     r = cli("--dry-run")
     check("C6 omitting all selectors is still a usage error", r.returncode == 2,
           f"exit {r.returncode}")
+
+    # Regression: fixing the empty-kinds crash opened a path where --kinds "" beat
+    # --changed-from, so a real diff reported "0 changed file(s)" and ran 6 checks
+    # instead of 39 — loud-wrong traded for silent-wrong. Found by adversarial
+    # review after the three cases above passed.
+    r = cli("--kinds", "", "--changed-from", "HEAD~1", "--dry-run")
+    check("C6 --kinds with --changed-from is refused, not silently resolved",
+          r.returncode == 2, f"exit {r.returncode}")
+
+    r = cli("--kinds", "auto", "--changed-from", "HEAD~1", "--dry-run")
+    check("C6 --kinds auto still classifies the diff", r.returncode == 0,
+          f"exit {r.returncode}: {r.stderr.strip()[:160]}")
 
     print("=" * 78)
     if failures:

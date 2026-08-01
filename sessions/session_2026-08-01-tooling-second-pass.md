@@ -103,6 +103,34 @@ Left advisory deliberately. Resolving it is an owner choice between widening the
 exemption list and requiring those jobs to emit migrations, and promoting it first would block
 every data PR on a divergence the project may well consider legitimate.
 
+## What the adversarial review of my own work found
+
+The fixes above were then attacked rather than accepted. **Four real defects, three of them
+introduced by the commits that fixed F7–F12** — full detail in `references/tooling-register.md`
+§4.3.
+
+The one that matters most: **the `--kinds ""` fix opened a fresh silent-skip.** With
+`--changed-from` also present, the kinds branch won and the diff was silently discarded —
+`--kinds "" --changed-from origin/main` reported "0 changed file(s)" against a 12-file diff and
+ran 6 checks instead of 39. I traded loud-wrong for silent-wrong **inside the commit whose
+entire subject was silent-wrong.** The two flags are now mutually exclusive and refused.
+
+Also: `--deep` mis-paired rows and reported timestamp-only drift as CONTENT; it was blind to
+views and triggers, so editing `v_best_practice`'s `WHERE` guard — which is where the
+convergence-laundering exclusion lives — passed while every row stayed identical; and unquoted
+identifiers crashed it, reintroducing in new code the crash-vs-verdict conflation I had just
+fixed in `render_audit.js`.
+
+**All four survived a selftest that already had six passing cases.** That is the transferable
+result: a green selftest bounds the failures you thought of, and nothing more. Each defect now
+has a case written from its reproduction.
+
+Separately, the review caught this file's own §5 stating the drift audit's hit count as 19 when
+it was 21 — **falsified 64 minutes later by my own commit**, which added a docstring saying "an
+`UPDATE` changes no count" and a selftest doing `CREATE TABLE t`, so `changes` and `t` are now
+reported as missing tables. Writing prose about SQL manufactures findings in that tool. The
+entry now says to re-run rather than trust the number.
+
 ## Not done / honest limits
 
 - **The `verification_status` enum was NOT widened**, though doing so would turn `B01`/`B06`

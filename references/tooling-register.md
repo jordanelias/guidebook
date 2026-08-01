@@ -363,6 +363,45 @@ was therefore indistinguishable from a legitimate environment skip. Crashes now
 exit 3 and fail; exit 2 is reserved for the one branch that actually means the
 environment cannot run it.
 
+### §4.3 What the adversarial review of §4.2 found
+
+The fixes in §4.2 were then attacked rather than accepted. The review found four real defects
+**in the new code**, three of which were introduced by the very commits that fixed F7–F12.
+Recorded because a session that reports only the bugs it found in other people's work, and not
+the ones it shipped, is not the kind of record this repo runs on.
+
+1. **The `--kinds ""` fix opened a fresh silent-skip.** With `--changed-from` also present, the
+   kinds branch won and the diff was discarded: `--kinds "" --changed-from origin/main`
+   reported **"0 changed file(s)"** against a 12-file diff and selected 6 checks instead of 39.
+   `preflight.sh` forwards extra flags onto a `--changed-from` invocation, so
+   `preflight.sh --kinds ""` reached it. **Loud-wrong was traded for silent-wrong — the exact
+   family being fixed.** The two are now mutually exclusive and refused; `--kinds auto` remains
+   the supported way to say "classify the diff for me".
+2. **`--deep` misclassified timestamp-only drift as CONTENT.** Rows were paired by `zip()` after
+   `ORDER BY` *every* column in declaration order, so a table whose volatile column is declared
+   early re-sorts when a timestamp changes, mis-pairs the rows, and smears the diff across
+   unrelated columns. Now ordered by the substantive columns first. Where those tie, any pairing
+   is equivalent — the rows agree on everything non-volatile, so the verdict is volatile either way.
+3. **"Every table, every row" was blind to views and triggers.** `v_best_practice` carries the
+   convergence-laundering exclusion in its `WHERE` clause, so editing that view changes what the
+   project treats as a best-practice claim while leaving every row identical — and the check
+   said PASS. It now compares view/trigger/index DDL too.
+4. **Unquoted identifiers** reached `PRAGMA` and `ORDER BY`, so a legal-but-odd table name
+   crashed the comparator — reintroducing, in new code, the crash-instead-of-verdict conflation
+   this same session fixed in `render_audit.js` (F12).
+
+Each now has a selftest case, written from the reproduction rather than from the description.
+**All four survived a selftest that already had six passing cases**, which is the durable
+lesson: a green selftest bounds the failures you thought of.
+
+A fifth finding was purely about this file. §5 stated the drift audit's hit count as **19**;
+it was **21** by the end of the session, because a later commit added a docstring containing
+*"an `UPDATE` changes no count"* and a selftest doing `CREATE TABLE t` — so `changes` and `t`
+are now reported as missing tables. **A commit falsified a figure written 64 minutes earlier in
+the same session.** That is the concrete case for the repo's own guardrail 1 (re-verify every
+claim against current files) and against writing fixed counts into prose at all; the entry now
+says to re-run rather than trust a number.
+
 ---
 
 ## §5. Quarantine — registered, never selected
@@ -386,7 +425,9 @@ Remaining categories:
   wired with `--strict` by the same session that wrote this list. Corrected.)*
 - **Red, needing triage before they can gate**: `schema_reference_drift_audit` (whose stated
   subject was wrong — it scans *scripts' SQL table references*, not `schemas/*.py`, and its
-  signal is now 12/19 lexical false positives), `adjudication_integrity` (274 tier
+  signal is now mostly lexical false positives — two of them added by *this session's own
+  commits*, because writing the words "an `UPDATE` changes no count" in a docstring makes it
+  report `changes` as a missing table), `adjudication_integrity` (274 tier
   inconsistencies), `code_currency_audit`, `validate_conflict` (11 unknown population codes —
   note its own detection regex is also old-taxonomy), `pre_rehab_banner_audit` (**not** red by
   design, as first recorded: it is a file↔DB drift gate red on a fixable 6-slug mismatch).

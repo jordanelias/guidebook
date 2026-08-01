@@ -116,9 +116,31 @@ def compare(committed_path, rebuilt_path):
     return rows, mismatches
 
 
+def q(identifier):
+    """Quote an identifier. Table names reach PRAGMA and ORDER BY from sqlite_master,
+    so an unquoted interpolation turns an odd-but-legal name into an OperationalError
+    — a crash where a verdict belongs, which is the conflation this repo just fixed
+    in render_audit.js."""
+    return '"' + str(identifier).replace('"', '""') + '"'
+
+
 def user_tables(conn):
     return {n for (n,) in conn.execute(
         "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'")}
+
+
+def schema_objects(conn):
+    """Views, triggers and indexes, by name -> DDL.
+
+    Rows are not the whole database. `v_best_practice` (migration 027/029) carries
+    the convergence-laundering exclusion in its WHERE clause, so editing that view
+    in the committed DB changes what the project treats as a best-practice claim
+    while leaving every row identical. A row-only comparison calls that PASS.
+    """
+    return {(t, n): sql for t, n, sql in conn.execute(
+        "SELECT type, name, sql FROM sqlite_master "
+        "WHERE type IN ('view','trigger','index') AND sql IS NOT NULL "
+        "AND name NOT LIKE 'sqlite_%'")}
 
 
 def deep_compare(committed_path, rebuilt_path):
@@ -149,18 +171,30 @@ def deep_compare(committed_path, rebuilt_path):
         if table in EXEMPT_TABLES:
             rows.append((table, "EXEMPT", "job-owned per DR-2026-05-28"))
             continue
-        cols = [r[1] for r in committed.execute(f"PRAGMA table_info({table})")]
-        rcols = [r[1] for r in rebuilt.execute(f"PRAGMA table_info({table})")]
+        cols = [r[1] for r in committed.execute(f"PRAGMA table_info({q(table)})")]
+        rcols = [r[1] for r in rebuilt.execute(f"PRAGMA table_info({q(table)})")]
         if cols != rcols:
             rows.append((table, "SCHEMA-DIFF", f"columns differ: {set(cols) ^ set(rcols)}"))
             substantive.append(table)
             continue
         if table == LEDGER_TABLE:
             cols = [c for c in cols if c in LEDGER_COLUMNS]
-        order = ", ".join(f'"{c}"' for c in cols)
+        select = ", ".join(q(c) for c in cols)
+        # Sort by the SUBSTANTIVE columns first, then the volatile ones. Sorting by
+        # every column in declaration order pairs rows by whatever comes first, so
+        # a table whose volatile column is declared early re-sorts when a timestamp
+        # changes, zip() pairs row 1 against row 2, and the resulting diff smears
+        # across unrelated columns — reporting a pure updated_at change as CONTENT.
+        # Ordering on identity first makes a volatile-only edit leave the pairing
+        # untouched. Where the substantive columns tie, any pairing is equivalent:
+        # the rows agree on everything non-volatile, so the verdict is volatile
+        # either way.
+        ordered = ([c for c in cols if c not in VOLATILE_COLUMNS]
+                   + [c for c in cols if c in VOLATILE_COLUMNS])
+        order = ", ".join(q(c) for c in ordered)
         # Explicit column list, not SELECT * — the ledger case narrows `cols`, and
         # * would return the excluded columns anyway and compare them.
-        sql = f'SELECT {order} FROM "{table}" ORDER BY {order}'
+        sql = f'SELECT {select} FROM {q(table)} ORDER BY {order}'
         cr = committed.execute(sql).fetchall()
         rr = rebuilt.execute(sql).fetchall()
         if len(cr) != len(rr):
@@ -187,6 +221,19 @@ def deep_compare(committed_path, rebuilt_path):
         else:
             rows.append((table, "TIMESTAMPS", f"{n_rows} rows; {summary}"))
             volatile_only.append(table)
+
+    # Views/triggers/indexes: DDL, not rows. See schema_objects().
+    oc, orb = schema_objects(committed), schema_objects(rebuilt)
+    for key in sorted(set(oc) - set(orb)):
+        rows.append((f"{key[0]} {key[1]}", "MISSING-IN-REBUILD", "not built by the migrations"))
+        substantive.append(f"{key[0]} {key[1]}")
+    for key in sorted(set(orb) - set(oc)):
+        rows.append((f"{key[0]} {key[1]}", "EXTRA-IN-REBUILD", "migrations build it; the DB lacks it"))
+        substantive.append(f"{key[0]} {key[1]}")
+    for key in sorted(set(oc) & set(orb)):
+        if " ".join(oc[key].split()) != " ".join(orb[key].split()):
+            rows.append((f"{key[0]} {key[1]}", "DDL", "definition differs from the migrations'"))
+            substantive.append(f"{key[0]} {key[1]}")
 
     committed.close()
     rebuilt.close()
@@ -370,6 +417,65 @@ def selftest():
         _, subst2, volatile2 = deep_compare(d, f)
         check("a timestamp-only difference is classed volatile, not content",
               "t" in volatile2 and "t" not in subst2, f"subst={subst2} volatile={volatile2}")
+
+        # Regression: a table whose VOLATILE column is declared FIRST. Sorting by
+        # every column in declaration order re-sorted the rows when the timestamp
+        # changed, mis-paired them, and smeared the diff across `name` — reporting
+        # a pure timestamp change as CONTENT. Found by adversarial review of this
+        # very function, after the three cases above all passed.
+        def volatile_first(path, ts):
+            con = sqlite3.connect(path)
+            con.execute("PRAGMA user_version = 42")
+            for table in ("evidence_sources", "citation_mining", "source_slug_links",
+                          "gaps", "connections", "items"):
+                con.execute(f"CREATE TABLE {table} (id INTEGER PRIMARY KEY)")
+                con.execute(f"INSERT INTO {table} (id) VALUES (1)")
+            con.execute("CREATE TABLE vf (updated_at TEXT, name TEXT)")
+            con.execute("INSERT INTO vf VALUES ('2026-06-01', 'alpha')")
+            con.execute("INSERT INTO vf VALUES (?, 'beta')", (ts,))
+            con.commit()
+            con.close()
+
+        g, h = os.path.join(tmpdir, "g.db"), os.path.join(tmpdir, "h.db")
+        volatile_first(g, "2026-01-01")
+        volatile_first(h, "2026-12-31")
+        _, subst3, volatile3 = deep_compare(g, h)
+        check("volatile-first column order does not mis-pair rows into false CONTENT",
+              "vf" in volatile3 and "vf" not in subst3, f"subst={subst3} volatile={volatile3}")
+
+        # A view whose WHERE guard is edited changes what the DB means while every
+        # row stays identical. v_best_practice is exactly such a guard.
+        i_, j_ = os.path.join(tmpdir, "i.db"), os.path.join(tmpdir, "j.db")
+        for path, where in ((i_, "WHERE id > 0"), (j_, "")):
+            con = sqlite3.connect(path)
+            con.execute("PRAGMA user_version = 42")
+            for table in ("evidence_sources", "citation_mining", "source_slug_links",
+                          "gaps", "connections", "items"):
+                con.execute(f"CREATE TABLE {table} (id INTEGER PRIMARY KEY)")
+                con.execute(f"INSERT INTO {table} (id) VALUES (1)")
+            con.execute(f"CREATE VIEW v_guard AS SELECT * FROM items {where}")
+            con.commit()
+            con.close()
+        _, subst4, _ = deep_compare(i_, j_)
+        check("an edited view definition is caught though every row is identical",
+              any(s.startswith("view ") for s in subst4), str(subst4))
+
+        # Odd-but-legal table names must yield a verdict, not an OperationalError.
+        k_ = os.path.join(tmpdir, "k.db")
+        con = sqlite3.connect(k_)
+        con.execute("PRAGMA user_version = 42")
+        for table in ("evidence_sources", "citation_mining", "source_slug_links",
+                      "gaps", "connections", "items"):
+            con.execute(f"CREATE TABLE {table} (id INTEGER PRIMARY KEY)")
+            con.execute(f"INSERT INTO {table} (id) VALUES (1)")
+        con.execute('CREATE TABLE "odd name" (id INTEGER PRIMARY KEY)')
+        con.commit()
+        con.close()
+        try:
+            deep_compare(k_, k_)
+            check("a table name needing quoting does not crash the comparator", True)
+        except sqlite3.OperationalError as exc:
+            check("a table name needing quoting does not crash the comparator", False, str(exc))
 
     print("=" * 70)
     if failures:

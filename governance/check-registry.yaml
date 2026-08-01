@@ -120,8 +120,11 @@ batteries:
   data:        {deps: [], description: Migration reproducibility and data-layer integrity (stdlib only).}
   # Split out of `data` on 2026-08-01 so branch protection can require the green
   # data-layer gates without also requiring the DB-content backlog. test_db_integrity
-  # is red against a real content backlog (106 bad verification_status rows of 863;
-  # 80 COMPLETE rows with no author). Requiring it as a merge gate would make every
+  # is red against a real content backlog (see the test_db_integrity entry below:
+  # 81 out-of-enum verification_status rows of 863, most of which are a stale test
+  # rather than bad data, plus the C01-C04/G02 rows that are the genuine backlog —
+  # this comment said "106" until 2026-08-01, which double-counted UNVERIFIED-1).
+  # Requiring it as a merge gate would make every
   # data-touching PR permanently unmergeable — i.e. it would freeze the project's
   # main activity. It stays BLOCKING and stays visible; it is simply not in the
   # required-check set until the backlog is cleared.
@@ -785,7 +788,8 @@ quarantine:
     cmd: [python3, scripts/audit/schema_reference_drift_audit.py]
     status: quarantined
     reason: >-
-      RED (19 hits, ~7 real). CORRECTED 2026-08-01 — this entry previously said it
+      RED (21 hits, ~7 real — but see the caveat on that number below). CORRECTED
+      2026-08-01 — this entry previously said it
       "detects schemas/*.py vs SQLite drift". It does not, and the script's own
       docstring disclaims exactly that ("Does not parse schemas/*.py Pydantic
       models against column definitions... checks table-name reachability only").
@@ -794,10 +798,18 @@ quarantine:
       parity belongs to validate_pydantic_schemas, now wired; these two never
       overlapped, so the "one of the two should own schema drift" framing was
       false on both sides.
-      Held because the signal has been overtaken by lexical false positives: of 19
-      FAILs, 12 are prose words in docstrings (THE, of, table), selftest fixture
+      Held because the signal has been overtaken by lexical false positives: 14 of
+      them are prose words in docstrings (THE, of, table), selftest fixture
       literals (no_such_table, zzz_phantom) and tables of a DIFFERENT database
-      (build_meta/edges/findings/nodes live in the gitignored audit_graph.db). The
+      (build_meta/edges/findings/nodes live in the gitignored audit_graph.db).
+      DO NOT TRUST A FIXED NUMBER HERE — re-run it. This entry said 19 for about an
+      hour, until a later commit in the same session pushed it to 21 by adding a
+      docstring containing the words "an UPDATE changes no count" and a selftest
+      that does CREATE TABLE t. `changes` and `t` are now reported as missing
+      tables. Writing English prose about SQL manufactures findings in this tool,
+      which is the strongest available argument that its lexical scan has stopped
+      being a signal — and a reminder that a count written into a register is
+      falsified by the next commit, not by the next year. The
       ~7 real hits are room_page.py's 6 phantom tables — an already-tracked,
       owner-gated gap (workplan/website-v0-path-forward-2026-07-12.md) — plus
       evidence_sources_v2 in a legacy script.
@@ -830,7 +842,7 @@ quarantine:
       what it checks against, not what it complains about.
       It fails today on invariant 2 only: 6 slugs carry the in-file retraction
       banner while sitting at evidence_state='PARTIAL' in the DB
-      (bariatric-turning-radius, bathroom-typology-global-south,
+      (bariatric-turning-radius-built-environment, bathroom-typology-global-south,
       fold-down-grab-bar-specification, jurisdiction-matrix-accessibility-standards,
       multilingual-evidence-convergence-non-english,
       neurodivergent-built-environment). That is a real 6-row drift needing an
@@ -874,8 +886,9 @@ quarantine:
     cmd: [python3, scripts/validate_commits.py]
     status: quarantined
     reason: >-
-      RED, and CORRECTED 2026-08-01: not merely "against history". It fails 16/16
-      commits in the last 7 days, including current, convention-compliant ones.
+      RED, and CORRECTED 2026-08-01: not merely "against history". It fails every commit in the recent
+      window, including current, convention-compliant ones (23 flags across the
+      last 7 days at the time of writing; re-run rather than trusting that count).
       Its own token lists have rotted, so what it reports is its staleness, not the
       commits':
         - V2 rejects the `governance:` prefix that CLAUDE.md §0 mandates for
