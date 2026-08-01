@@ -54,6 +54,22 @@
 # NB `main` is not branch-protected (verified against the GitHub API 2026-08-01),
 # so `blocking` today means "red X on the commit", not "cannot merge". The level
 # is still the right declaration; it becomes teeth the day protection is enabled.
+#
+# READING THE NUMBERS IN `note:` FIELDS
+# ------------------------------------
+# Every count in a note ("236 findings", "277 rows", "81 of 863", "6 slugs") is a
+# DATED MEASUREMENT, not an invariant. They are recorded because a finding with
+# no magnitude cannot be triaged or falsified — "RED" alone tells you nothing
+# about whether the fix is an afternoon or a quarter. They are also all wrong
+# eventually, and some of them quickly: a data migration moves the row counts, a
+# schema change moves the drift counts, and the schema_reference_drift_audit
+# count moved three times in one session because that tool counts English prose
+# about SQL as table references.
+#
+# So: use a number here to decide WHERE TO LOOK, never to report state. Before
+# citing one anywhere it matters, re-run the check. This applies to CLAUDE.md and
+# references/tooling-register.md equally — both are derived maps, and both have
+# already carried a figure that was false when written.
 
 schema_version: 1
 

@@ -16,7 +16,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(os.path.dirname(HERE))
 MIGRATIONS = os.path.join(REPO, "scripts", "migrations")
 sys.path.insert(0, os.path.join(REPO, "scripts"))
-from validate_evidence_state import validate_db  # noqa: E402
+from validate_evidence_state import CELL_STATE_REQUIRED, validate_db  # noqa: E402
 
 fails = []
 
@@ -75,12 +75,10 @@ def assert_fixture_current():
     c = fresh()
     present = {r[1] for r in c.execute("PRAGMA table_info(evidence_cell_state)")}
     c.close()
-    required = {"cell_id", "item_code", "population_code", "state", "design_scale",
-                "convergence_id", "confidence_dimensions_present",
-                "confidence_dimensions_absent", "confidence_synthesis_basis",
-                "gap_register_id", "not_applicable_rationale", "governing_refs",
-                "code_floor_only", "tier_basis"}
-    missing = sorted(required - present)
+    # Imported, not restated. A second hardcoded copy of the validator's column
+    # list would silently stop covering any column added there — the guard would
+    # keep passing while checking less, which is the failure it exists to catch.
+    missing = sorted(set(CELL_STATE_REQUIRED) - present)
     if missing:
         print(f"  [FAIL] fixture schema is stale — evidence_cell_state lacks {missing}.\n"
               f"         A migration changed the table and schema_ddl() did not pick it up.")
