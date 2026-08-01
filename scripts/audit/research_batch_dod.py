@@ -15,6 +15,18 @@ as a mechanical check that fires regardless of what any agent remembers.
   "compliance must not rely on Claude instructions that degrade or are ignored as context fills"
   — workplan/methodology-and-pipeline-enforcement-plan-2026-07-23.md, premise
 
+WHERE THE CONTRACT LIVES. governance/research-contract.yaml is the CANONICAL text of R1-R15
+(DR-2026-08-01-research-contract-single-source). Until then it existed as two hand-transcribed
+copies — this docstring and the SessionStart hook in .claude/settings.json — with no comparator,
+and they had drifted on R1, R2 and R3; two of those changed what the contract obliges. The hook
+is now GENERATED from the contract, and `research_contract_sync` cross-references the rule ids
+here against it, so a rule defined in one place and absent from the other fails a check.
+
+The table below is documentation of what this script implements. It is not the contract. If it
+and governance/research-contract.yaml ever disagree, the contract governs and this table is the
+thing to correct — and note that R1's pass is Co-1 / **Tier 2** / Co-2, and R2's scope is
+confirmed **Tier 1-2** (not T1-T3), both corrected at the contract on 2026-08-01.
+
 CHECKS (each maps to a documented rule and to the observed violation that motivates it):
 
   R1  Co-1 / Co-2 LIVED EXPERIENCE pass.  multilingual-research_SKILL Step 1 is "Co-1 / Tier 2 /

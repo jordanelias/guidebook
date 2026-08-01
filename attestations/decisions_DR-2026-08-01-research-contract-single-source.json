@@ -1,0 +1,53 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-08-01-tooling-second-pass",
+ "artifact": "decisions/DR-2026-08-01-research-contract-single-source.md",
+ "doctrine_sha": "0f2f525",
+ "rules_in_scope": [
+  "audit-consolidator",
+  "structure-auditor",
+  "guidebook-auditor",
+  "evidence-verification-gate",
+  "adherence-logging-and-attestation"
+ ],
+ "per_rule_status": {
+  "audit-consolidator": {
+   "status": "FIRED",
+   "evidence_path": "governance/research-contract.yaml",
+   "reason": "The consolidation acted on a measured divergence rather than a suspicion: R1-R15 existed in exactly two hand-transcribed copies, and diffing them found three disagreements of which two changed the obligation. The remedy is the one this repo has already used twice for the same defect — commit_gate.py for the two commit gates, check-registry.yaml for four check lists — applied to the contract that decides whether research counts at all. The hook is now generated and gated on drift; the enforcer is cross-referenced rather than generated, because its rules are implemented rather than transcribed and a generator would have been fiction."
+  },
+  "structure-auditor": {
+   "status": "FIRED",
+   "evidence_path": "scripts/generate/research_contract_hook.py",
+   "reason": "Both comparators were mutation-tested rather than assumed: the hook check was watched failing against the pre-existing settings.json before --write, and the id cross-reference was watched failing when a synthetic R16 was added to the contract alone. The generated printf was executed as a shell command and confirmed to emit 51 lines at exit 0, because a hook that no longer parses is a silent loss of the entire contract and would not otherwise surface."
+  },
+  "guidebook-auditor": {
+   "status": "FIRED",
+   "evidence_path": "decisions/DR-2026-08-01-research-contract-single-source.md",
+   "reason": "Each divergence was resolved against the operative source named by CLAUDE.md §5 rather than by preference between the two copies, and the resolution is recorded on the rule itself rather than applied silently. R2's correction narrows an obligation — the hook had been requiring citation mining across T1-T3 where the rule ledger requires it for confirmed Tier 1-2 — so the honest description is that a transcription error had been levying real cost on every session, not that the contract is being relaxed."
+  },
+  "evidence-verification-gate": {
+   "status": "FIRED",
+   "evidence_path": "governance/research-contract.yaml",
+   "reason": "R3 was resolved as a SPLIT rather than a choice, because the two copies described different source classes and each had kept only one: quantified outcome claims take DOI plus page/table per the ledger's 2026-04-09 RULE, while code and standard values take clause/section/page since standards are not DOI-bearing. Picking either copy wholesale would have silently dropped a locator requirement for half the corpus. R1's restored Tier 2 leg is likewise a restoration from the cited source, not a new obligation."
+  },
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "attestations/decisions_DR-2026-08-01-research-contract-single-source.json",
+   "reason": "This attestation, bound to the doctrine SHA the commit carries, recording the one substantive judgement (that depth-1 and depth-2-3 are not in conflict) as a deviation rather than presenting it as a finding."
+  }
+ },
+ "deviations": [
+  {
+   "rule": "guidebook-auditor",
+   "reason": "I judged that gap-driven-mining's 'Depth-1 enforced (both modes)' and citation-miner's 'depth 2-3' are not contradictory — the first is a per-pass bound with an explicit hand-off, the second a traversal target — and wrote both into the contract on that reading. That is an interpretation, not a citation: no document states the reconciliation, and I inferred it from gap-driven-mining's own sentence that discovered sources 'are NOT mined in the same pass. Hand off to citation-miner.' If the owner reads them as genuinely conflicting obligations, the contract now records a reconciliation that was never decided, and R2 needs a real ruling rather than my synthesis."
+  },
+  {
+   "rule": "audit-consolidator",
+   "reason": "research_contract_sync landed advisory, so the hook can drift from the contract without failing a build until it is promoted. The house norm requires advisory-first and the check is green today, but the practical effect is that the single-source guarantee is currently a report rather than a gate — and the defect it exists to prevent is precisely one that went unnoticed for months."
+  }
+ ],
+ "bias_direction": "My bias here was toward treating divergence as error and consolidation as obviously good, which is the frame the whole session has been operating in and therefore the least examined. Two of the three resolutions genuinely reduce ambiguity, but the third — R3 — could equally be read as one rule that I have split into two on the strength of a scoping clause, adding structure where a simpler reading would have sufficed. I was also motivated to make R2's correction look like pure gain, since narrowing T1-T3 to T1-2 reduces obligation and a reviewer might reasonably ask whether I chose the operative source because it was operative or because it was cheaper; the honest answer is that CLAUDE.md §5 names project-standards.md as the preferred source independently of which way it cuts, but I did not test that preference against a case where it increased work. Finally, generating the hook from a YAML file is the kind of engineering I find satisfying, and satisfying is not the same as warranted — a comparator alone, with both copies left in place, would have caught the same drift with less machinery.",
+ "independent_reviewer_counterclaim": "The strongest objection is that this decision changes doctrine on a session's own authority. R1 and R2 are not formatting: R1 adds a third leg to a mandatory first pass, and R2 removes an entire tier band from a mining obligation that has been injected into every session for weeks. Both were resolved by appeal to references/project-standards.md as 'operative', but that file is append-only and 119 rules deep, and I searched it for a superseding entry rather than proving none exists — an append-only ledger is exactly where a later, wider rule would hide. A reviewer could fairly say the correct move was to propose all three and execute none, particularly R2, where the effect of being wrong is that real research obligations quietly stopped being stated. A second line: the contract now has a machine-readable canonical form, which makes it look more settled than it is — six of its fifteen rules carry anchors to skills rather than to governance documents, and a skill is not doctrine. The counter is that the prior state was strictly worse in the same dimension: two copies, both wrong in different ways, neither traceable to an anchor at all, and no mechanism that would ever have revealed it. But 'better than an unnoticed defect' is a low bar, and it is the bar this decision clears rather than the one it should be held to.",
+ "verdict": "DEVIATION-LOGGED"
+}

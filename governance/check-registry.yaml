@@ -574,6 +574,26 @@ checks:
     note: Surfaces NON-COMPLIANT verdicts. Never blocking by design.
 
   # ===== research contract ==================================================
+  - id: research_contract_sync
+    cmd: [python3, scripts/generate/research_contract_hook.py, --check]
+    battery: research
+    kinds: [governance, tooling]
+    level: advisory
+    basis: hygiene
+    cost: fast
+    min_items: 10
+    note: >-
+      The R1-R15 contract had TWO hand-transcribed copies with no comparator — the
+      SessionStart hook in .claude/settings.json and the rule table in
+      research_batch_dod.py — and they had drifted on R1, R2 and R3, two of which
+      changed what the contract obliges. governance/research-contract.yaml is now
+      the single source; the hook is generated from it and this check fails on
+      drift, plus cross-references the rule ids against the enforcer so a rule
+      defined in one and absent from the other is caught.
+      Same shape as the other derived-artifact gates (pipeline_completeness --check,
+      evidentiary_audit --check). Advisory during shakedown per the house norm;
+      it is green today and is a candidate for promotion.
+
   - id: research_dod_selftest
     cmd: [python3, scripts/audit/research_batch_dod.py, --selftest]
     battery: research
