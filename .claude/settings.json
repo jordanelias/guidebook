@@ -30,7 +30,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "if [ -f scripts/audit/research_batch_dod.py ] && [ -f data/guidebook.db ]; then python3 scripts/audit/research_batch_dod.py --all 2>/dev/null | tail -n 20 || true; fi"
+            "command": "if [ -f scripts/audit/research_batch_dod.py ] && [ -f data/guidebook.db ]; then out=$(python3 scripts/audit/research_batch_dod.py --all 2>&1); rc=$?; printf '%s\\n' \"$out\" | tail -n 20; if [ \"$rc\" -eq 0 ]; then echo \"RESEARCH DoD: PASS (exit 0)\"; else echo \"RESEARCH DoD: FAIL (exit $rc) — non-blocking by design, but this session closed non-compliant. See governance/research-contract.yaml.\"; fi; fi"
           }
         ]
       }
