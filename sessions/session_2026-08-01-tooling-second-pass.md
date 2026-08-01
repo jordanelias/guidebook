@@ -125,11 +125,14 @@ fixed in `render_audit.js`.
 result: a green selftest bounds the failures you thought of, and nothing more. Each defect now
 has a case written from its reproduction.
 
-Separately, the review caught this file's own §5 stating the drift audit's hit count as 19 when
-it was 21 — **falsified 64 minutes later by my own commit**, which added a docstring saying "an
-`UPDATE` changes no count" and a selftest doing `CREATE TABLE t`, so `changes` and `t` are now
-reported as missing tables. Writing prose about SQL manufactures findings in that tool. The
-entry now says to re-run rather than trust the number.
+Separately, the review caught the register stating the drift audit's hit count as **19** when it
+was 21 — falsified 64 minutes later by my own commit, which added a docstring saying "an
+`UPDATE` changes no count" and a selftest doing `CREATE TABLE t`, so `changes` and `t` became
+reported missing tables. **The correction was then falsified again by the commit that made it**
+(a fixture named `vf` took it to 22). Three values for one number, across three commits of one
+session, every move caused by this session's own prose rather than by any change to the code
+being audited. The entry no longer states a count. Guardrail 1 — re-verify every claim against
+current files — binds on a timescale of minutes here, not months.
 
 ## Not done / honest limits
 

@@ -394,13 +394,18 @@ Each now has a selftest case, written from the reproduction rather than from the
 **All four survived a selftest that already had six passing cases**, which is the durable
 lesson: a green selftest bounds the failures you thought of.
 
-A fifth finding was purely about this file. §5 stated the drift audit's hit count as **19**;
-it was **21** by the end of the session, because a later commit added a docstring containing
-*"an `UPDATE` changes no count"* and a selftest doing `CREATE TABLE t` — so `changes` and `t`
-are now reported as missing tables. **A commit falsified a figure written 64 minutes earlier in
-the same session.** That is the concrete case for the repo's own guardrail 1 (re-verify every
-claim against current files) and against writing fixed counts into prose at all; the entry now
-says to re-run rather than trust a number.
+A fifth finding was purely about this file, and it kept being true. §5 stated the drift audit's
+hit count as **19**. It became **21**, then **22** — three values across three commits of one
+session, each move caused by *this session's own prose and fixtures* rather than by any change
+to the code being audited: a docstring reading *"an `UPDATE` changes no count"* made it report
+`changes` as a missing table, and selftest fixtures named `t` and `vf` added two more.
+
+**A commit falsified a figure written 64 minutes earlier; the correction was then falsified
+again by the commit that made it.** The entry no longer states a count at all. Two things follow.
+The narrow one is the repo's guardrail 1 (re-verify every claim against current files), which
+turns out to bind on a timescale of minutes, not months. The broader one is about the tool: a
+scanner that manufactures findings from English prose about SQL is not measuring the codebase,
+and that is stronger evidence for retiring it than any of its false positives individually.
 
 ---
 

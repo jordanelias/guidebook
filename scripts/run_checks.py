@@ -540,13 +540,23 @@ def selftest(reg):
     # --changed-from, so a real diff reported "0 changed file(s)" and ran 6 checks
     # instead of 39 — loud-wrong traded for silent-wrong. Found by adversarial
     # review after the three cases above passed.
-    r = cli("--kinds", "", "--changed-from", "HEAD~1", "--dry-run")
+    # HEAD, not HEAD~1. A selftest must not depend on how deeply the repo was
+    # cloned: with --depth 1 there is no HEAD~1 and this case failed with a git
+    # error, so the registry selftest — a BLOCKING CI step — would have reported
+    # the checkout depth as a registry defect. It passes today only because the
+    # classify job happens to use fetch-depth: 0, an undeclared coupling. HEAD
+    # exists in any repo with a commit; the diff is empty, which is all these two
+    # cases need. Asserting on "changed file(s) vs" proves the classify path was
+    # taken rather than the explicit-kinds one, so `auto` cannot silently become
+    # a literal kind name.
+    r = cli("--kinds", "", "--changed-from", "HEAD", "--dry-run")
     check("C6 --kinds with --changed-from is refused, not silently resolved",
           r.returncode == 2, f"exit {r.returncode}")
 
-    r = cli("--kinds", "auto", "--changed-from", "HEAD~1", "--dry-run")
-    check("C6 --kinds auto still classifies the diff", r.returncode == 0,
-          f"exit {r.returncode}: {r.stderr.strip()[:160]}")
+    r = cli("--kinds", "auto", "--changed-from", "HEAD", "--dry-run")
+    check("C6 --kinds auto still takes the classify path",
+          r.returncode == 0 and "changed file(s) vs" in r.stdout,
+          f"exit {r.returncode}: {(r.stderr or r.stdout).strip()[:160]}")
 
     print("=" * 78)
     if failures:

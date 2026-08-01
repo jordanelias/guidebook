@@ -788,8 +788,8 @@ quarantine:
     cmd: [python3, scripts/audit/schema_reference_drift_audit.py]
     status: quarantined
     reason: >-
-      RED (21 hits, ~7 real — but see the caveat on that number below). CORRECTED
-      2026-08-01 — this entry previously said it
+      RED (~7 real findings; the raw hit count is unstable — see below, and do not
+      write a number here). CORRECTED 2026-08-01 — this entry previously said it
       "detects schemas/*.py vs SQLite drift". It does not, and the script's own
       docstring disclaims exactly that ("Does not parse schemas/*.py Pydantic
       models against column definitions... checks table-name reachability only").
@@ -802,14 +802,15 @@ quarantine:
       them are prose words in docstrings (THE, of, table), selftest fixture
       literals (no_such_table, zzz_phantom) and tables of a DIFFERENT database
       (build_meta/edges/findings/nodes live in the gitignored audit_graph.db).
-      DO NOT TRUST A FIXED NUMBER HERE — re-run it. This entry said 19 for about an
-      hour, until a later commit in the same session pushed it to 21 by adding a
-      docstring containing the words "an UPDATE changes no count" and a selftest
-      that does CREATE TABLE t. `changes` and `t` are now reported as missing
-      tables. Writing English prose about SQL manufactures findings in this tool,
-      which is the strongest available argument that its lexical scan has stopped
-      being a signal — and a reminder that a count written into a register is
-      falsified by the next commit, not by the next year. The
+      DO NOT WRITE A FIXED NUMBER HERE — re-run it. This entry said 19, then 21,
+      then 22, across three commits of a single session, and each move was caused
+      by the session's own prose and test fixtures rather than by any change to the
+      code being audited: a docstring reading "an UPDATE changes no count" made it
+      report `changes` as a missing table, and selftest fixtures named `t` and `vf`
+      added two more. Writing English about SQL manufactures findings in this tool.
+      That is the strongest available evidence that its lexical scan has stopped
+      being a signal, and a demonstration that a count written into a register can
+      be falsified by the next commit rather than the next year. The
       ~7 real hits are room_page.py's 6 phantom tables — an already-tracked,
       owner-gated gap (workplan/website-v0-path-forward-2026-07-12.md) — plus
       evidence_sources_v2 in a legacy script.
