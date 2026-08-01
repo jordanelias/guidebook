@@ -141,6 +141,30 @@ jobs:
       - run: pip install PyYAML --quiet
       - run: python3 scripts/run_checks.py --battery data --kinds "${{ needs.classify.outputs.kinds }}" --github
 
+  db-integrity:
+    name: DB integrity (content checks)
+    needs: classify
+    if: contains(format(',{0},', needs.classify.outputs.batteries), ',db_integrity,')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install PyYAML --quiet
+      - run: python3 scripts/run_checks.py --battery db_integrity --kinds "${{ needs.classify.outputs.kinds }}" --github
+
+  tests:
+    name: Tests (regression cover for the audit scripts)
+    needs: classify
+    if: contains(format(',{0},', needs.classify.outputs.batteries), ',tests,')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - run: pip install -r requirements.txt --quiet
+      - run: python3 scripts/run_checks.py --battery tests --kinds "${{ needs.classify.outputs.kinds }}" --github
+
   schema:
     name: Schema (entity YAML, evidence state, populations, jurisdictions)
     needs: classify

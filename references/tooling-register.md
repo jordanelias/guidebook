@@ -1,8 +1,12 @@
 # Ecosystem tooling register — assessment, consolidation, gating
 
 **Date:** 2026-08-01
-**Status:** OPERATIVE for §2–§3 (executed). §5–§6 are FINDINGS and OWNER-GATED PROPOSALS —
-nothing in them has been executed.
+**Status:** OPERATIVE. §2–§3 and the "Executed" half of §6 are done and in CI. §4–§5 are
+FINDINGS. The remainder of §6 is proposals — two of them withdrawn on review as unwise, one
+blocked on repo-settings access the session does not have.
+**Revised:** 2026-08-01, after an adversarial re-review of every proposal. Two claims in the
+first draft (F3, F5) were overturned by that review and are corrected in place, with the
+correction marked rather than silently applied.
 **Scope:** every script under `scripts/` and `tools/`, every GitHub Actions workflow, the
 harness hooks in `.claude/settings.json`, and the local gate `scripts/preflight.sh`.
 **Method:** every script in `scripts/` and `tools/` was executed once against a clean
@@ -106,17 +110,17 @@ into kinds and runs the intersection.
 | `render` | `parts/**`, `site/**`, `specs/**`, `tools/*.html`, `audits/evidentiary-base-audit*`, `index.html`, `assets/**` |
 | `tooling` | `scripts/**`, `tools/**`, `.github/**`, `.claude/**`, `requirements.txt` |
 
-Resulting selectivity, out of 42 registered checks:
+Resulting selectivity, out of 51 registered checks:
 
 | Change is… | Checks selected |
 |---|---|
 | docs-only (no kind matched) | 6 |
-| `tooling` | 8 |
 | `render` | 10 |
-| `governance` | 16 |
-| `schema` | 19 |
-| `synthesis` | 20 |
-| `data` | 34 |
+| `tooling` | 16 |
+| `governance` | 17 |
+| `schema` | 20 |
+| `synthesis` | 21 |
+| `data` | 37 |
 
 `kinds: [always]` means the check is cheap enough that gating buys nothing — gating exists to
 save time and reduce noise, and below ~2s of stdlib-only work neither applies. **Cost decides,
@@ -124,12 +128,13 @@ not principle.** `validate_bpc` and `validate_cross_refs` are deliberately ungat
 reason: gating a 0.2s check would only create a way for a misclassified diff to slip past it.
 
 Levels map to the architecture v2.3 enforcement spectrum and live in the registry, not in
-workflow YAML: **27 blocking / 12 advisory / 3 informational**. `run_checks.py` exits non-zero
+workflow YAML: **27 blocking / 21 advisory / 3 informational**. `run_checks.py` exits non-zero
 only when a *blocking* check fails, which is why `continue-on-error:` no longer appears
 scattered through job definitions where it was easy to lose track of.
 
 Every check newly wired by this change — `matrix_consistency`, `audit_evidence_metadata`,
-`pipeline_contract_audit`, `validate_axes`, `validate_verification_consistency` — landed as
+`pipeline_contract_audit`, `validate_axes`, `validate_verification_consistency`,
+`validate_reasoning --strict`, and the eight `tests` battery entries — landed as
 **advisory**, per the repo's shakedown norm (precedent: `audit.yml`'s `attestation_evidence`,
 all of `research-contract.yml`). Nothing was promoted to blocking in the commit that first
 wired it.
@@ -158,12 +163,19 @@ CLAUDE.md §1 describes `main` as "protected by CI", which is aspirational rathe
 descriptive. The registry still declares levels honestly, so they become teeth the day
 protection is switched on; switching it on is an owner decision (§6).
 
-**F3 — `validate_reasoning.py` does not gate.** It reports `1 with errors` (a missing
-`F. Provenance trail` section) and **exits 0**. This is the *nine-step-synthesis* contract —
-the check the 2026-07-23 enforcement plan (finding F2) identified as the one whose absence let
-PR #56 pass green. Wiring it as-is would have added a green tick that means nothing, so it is
-quarantined rather than wired. Fixing the exit code is a prerequisite, not a nicety.
-`validate_pydantic_schemas.py` has the same shape: exits 0 while reporting 240 drift findings.
+**F3 — `validate_reasoning.py` needs `--strict`, and nothing passed it.** Invoked bare it
+reports `1 with errors` (a missing `F. Provenance trail` section) and **exits 0**; with
+`--strict` it exits 1 (`if args.strict and err_files: return 1`). Verified both ways against
+the same corpus. This is the *nine-step-synthesis* contract — the check the 2026-07-23
+enforcement plan (finding F2) identified as the one whose absence let PR #56 pass green.
+
+> *Corrected 2026-08-01:* the first draft of this register called it "broken — does not gate"
+> and proposed fixing the exit code. That was wrong. The gate works; nobody had passed it the
+> flag. It is now wired **with `--strict`**, advisory (it is red on one doc). The lesson
+> generalises — before calling a tool broken, check whether it has a mode you did not invoke.
+
+`validate_pydantic_schemas.py` genuinely does have the exits-0-while-reporting-240-findings
+shape, with no strict mode.
 
 **F4 — `contamination_sampler.py` writes files as a side effect of being run.** Executing it
 created `data/doctrine_recheck/sample_2026-08-01.yaml` in the working tree. It is a generator,
@@ -171,11 +183,20 @@ not a check, and per `governance/doctrine-recheck.md` §2.6 it requires human ju
 only at scheduled rechecks. It must never appear in a check battery; it is quarantined with
 that reason recorded.
 
-**F5 — Three scripts crash rather than fail.** `validate_db.py`
-(`no such column: doi_less_key`), `validate_items.py` (`IndexError: No item with that key`),
-and `scripts/tests/test_validate_evidence_state_2_4.py` (`no such column: governing_refs`) are
-written against a schema the DB no longer has. A crashing gate is worse than a missing one: it
-reads as noise rather than as a finding.
+**F5 — Three scripts crash rather than fail, for two different reasons.** A crashing gate is
+worse than a missing one: it reads as noise rather than as a finding.
+
+- `validate_db.py` (`no such column: doi_less_key`) and `validate_items.py`
+  (`IndexError: No item with that key`) expect a schema the DB no longer has. Genuinely stale.
+- `scripts/tests/test_validate_evidence_state_2_4.py` (`no such column: governing_refs`) is the
+  **opposite** case. `governing_refs` *does* exist on `evidence_cell_state`; the crash happens
+  inside `scripts/validate_evidence_state.py` when it runs against the test's **fixture** DB,
+  which predates the column. The script is current and the fixture is behind it — a one-column
+  fixture update, not a stale tool.
+
+> *Corrected 2026-08-01:* the first draft lumped all three together as "written against a
+> schema the DB no longer has". For the third that is backwards, and it matters: retiring it on
+> that reasoning would have deleted live regression cover for a wired blocking check.
 
 **F6 — A classification bug, caught by the new selftest.** The first draft of the classifier
 used `path.lstrip("./")`, which strips those two *characters* in any order — silently turning
@@ -190,8 +211,9 @@ gets quietly downgraded to advisory stops being information.
 
 | Check | Level | State |
 |---|---|---|
-| `test_db_integrity` | blocking | **26/35 checks pass.** Failures in B05/B06 (enum values), C01–C04 (verification audit trail), G02 (author rows). Pre-existing owner-gated debt. |
-| `evidentiary_audit_fresh` | blocking | **Committed outputs are stale versus the DB.** `audits/evidentiary-base-audit.{md,json}` and `tools/evidentiary-audit-dashboard.html` do not match a fresh regeneration. Fix: `scripts/regenerate_derived.sh`, then commit. Deliberately *not* fixed here — regenerating derived content is a separate act from consolidating tooling, and the drift is worth an owner's attention rather than a silent paper-over. |
+| `test_db_integrity` | blocking | **STILL RED. 26/35 checks pass.** Failures in B01/B02/B05/B06 (enum values), C01–C04 (verification audit trail), G02 (author rows). Quantified 2026-08-01: **106 of 863** `evidence_sources` rows carry a `verification_status` outside the enum, and **80** `COMPLETE` rows have neither `first_author_last` nor `is_corporate_primary`. That is a content backlog, not a tooling defect. It is held in its own `db_integrity` battery so branch protection can be enabled without deadlocking every data-touching PR on it. |
+| `evidentiary_audit_fresh` | blocking | **FIXED 2026-08-01.** Regenerated via `scripts/regenerate_derived.sh`. The drift was purely the report's "as-of" date (2026-07-26 → 2026-07-27, tracking the DB's own `max(updated_at)` after the source-verification commit); no substantive figure moved. Both `--check` gates now pass. |
+| `validate_reasoning` | advisory | Newly wired with `--strict`. Red on 1 doc (missing `F. Provenance trail`). See F3. |
 | `research_protocol_audit` | advisory | 2138 issues (largely multilingual-coverage warnings). Advisory before this change too. |
 | `metadata_integrity_audit` | advisory | VERDICT: FAIL. Advisory before this change too. |
 | `population_integrity_audit` | advisory | 31 issues. Advisory before this change too. |
@@ -224,40 +246,96 @@ are in the registry; the categories are:
 
 ---
 
-## §6. Owner-gated proposals — NOT executed
+## §6. Proposals — adversarially reviewed 2026-08-01
 
-Each needs a decision; none is a unilateral call.
+Each of the original eight was re-examined against the evidence rather than carried forward on
+momentum. Three were **executed**, two were **withdrawn as unwise**, one is **blocked on
+access**, and the rest stand. Where the review overturned an earlier claim in this file, the
+correction is recorded at the finding (F3, F5) rather than quietly applied.
 
-1. **Enable branch protection on `main`** with the `classify` job plus the blocking batteries
-   as required checks. Until then, F2 stands and "blocking" means "red X". This is the single
-   highest-leverage change available, and it costs nothing to make except accepting that the
-   two red gates in §4 must be fixed or explicitly waived first.
-2. **Fix `validate_reasoning.py`'s exit code, then wire it** (advisory first). It is the
-   nine-step-synthesis contract, and it is the specific check whose absence the 2026-07-23
-   plan blamed for PR #56. Registered as `broken` today.
-3. **Retire the three broken duplicates** to `_archived/` — `validate_db.py` (superseded by
-   `test_db_integrity.py`, which CLAUDE.md §7 already tells you to prefer), `validate_items.py`
-   (duplicate of the green `validate_item.py`), and
-   `scripts/tests/test_validate_evidence_state_2_4.py`. File retirement is owner-gated
-   (CLAUDE.md §9 guardrail 4), so they are quarantined and left in place.
-4. **Adjudicate `validate_conflict.py`'s 11 errors** — unknown population codes `IntD` and
-   `VIS` in `references/conflict-matrices/`. Either the matrices are stale or the code list
-   is; either way it is a real finding, and it is *content*, not tooling.
-5. **Decide who owns schema drift.** `schema_reference_drift_audit.py` (red) and
-   `validate_pydantic_schemas.py` (240 findings, exits 0) overlap. CLAUDE.md §10 calls
-   `schemas/*.py` ↔ SQLite drift "a bug, not a convention", so one of the two should become the
-   operative gate and the other should be retired.
-6. **Move `full_db_metadata_verification.py` onto the source-verification schedule.** At ~298s
-   and network-bound it belongs beside `resolve-dois.yml`, not in any PR path.
-7. **Wire the 8 green, unwired tests.** `test_assess_cell_pilot`, `test_directness_2_2`,
-   `test_evidence_cell_state_2_3`, `test_graph_audit` (27s), `test_jurisdictional_divergence`,
-   `test_pipeline_contract`, `test_url_verifier`, `test_verification_pipeline` all pass and are
-   invoked by nothing. They are cheap regression cover for the audit scripts and are the
-   obvious next registry additions; held back here only to keep this change reviewable.
-8. **Promote the shakedown checks to blocking** once their false-positive rate is known — the
-   flip is meant to be a separate, deliberate, owner-gated commit.
+### Executed
 
----
+1. **Wire `validate_reasoning.py` with `--strict`** (advisory). The nine-step-synthesis
+   contract now runs on synthesis diffs. See F3 — the earlier "fix the exit code" framing was
+   wrong; it needed a flag, not a patch.
+2. **Regenerate the stale evidentiary audit.** One of the two red blocking gates is now green.
+   Drift was the as-of date only.
+3. **Wire the 8 green regression tests** (advisory, new `tests` battery, keyed to `tooling`).
+   Six carry mutation harnesses or assertion counts; `test_directness_2_2` is recorded as
+   partially vacuous (its live-smoke leg SKIPs without `/tmp/work14.db`) so its pass is not read
+   as broader than it is. `test_generate_parts_4_2` was **excluded** — it SKIPs entirely without
+   a fixture DB and would be a pure green tick.
+4. **Split `test_db_integrity` into its own `db_integrity` battery.** Prerequisite for enabling
+   branch protection without freezing data work — see below.
+
+### Withdrawn as unwise
+
+5. **Retiring the three broken duplicates — WITHDRAWN.** `scripts/db.py:1120` *invokes*
+   `validate_db.py` as a subprocess, so archiving it breaks a live path in the read/query
+   workhorse. Its remaining references sit in four `sessions/` records and a DR — historical
+   documents that state what was true at the time and must not be rewritten to tidy a filename.
+   `validate_items.py` is the same story via DR-2026-07-23 and two workplans. Retirement buys
+   tidiness at the cost of editing immutable records, and **quarantine already achieves the
+   actual goal**: the script can no longer be mistaken for a working gate. Quarantine is the
+   correct terminal state, not a waypoint to retirement.
+6. **Promoting the advisory checks to blocking — WITHDRAWN, and specifically inadvisable now.**
+   `research_protocol_audit` (2138 issues), `metadata_integrity_audit` (FAIL) and
+   `population_integrity_audit` (31) are all red. Promoting them in the same window that branch
+   protection goes on would make the repository unmergeable outright. The shakedown norm exists
+   for exactly this; the flip stays a separate, deliberate, later decision.
+
+### Blocked on access — needs the owner
+
+7. **Enable branch protection on `main`.** Could not be executed from this session: the GitHub
+   API returns `403 GitHub access is not enabled for this session`, and no available tool
+   exposes branch protection. It must be set in repo Settings → Branches. **The configuration
+   matters more than the switch** — three traps:
+
+   - **Do not require the `DB integrity (content checks)` job.** It is red against a real
+     content backlog (§4), so requiring it would make every data-touching PR permanently
+     unmergeable — i.e. it would freeze the project's main activity. This is why that check was
+     split into its own battery.
+   - **Do require `Classify change (work kinds → batteries)`.** A GitHub job skipped by an `if:`
+     condition reports as *passing* for required status checks. So requiring only the battery
+     jobs leaves a hole: if classification breaks, the batteries skip and the PR goes green on
+     checks that never ran. `classify` always runs and carries the registry selftest, so it is
+     the one job whose failure means the gating itself is broken.
+   - **Do not require pull-request reviews** (or leave admin bypass on). This is a single-author
+     repo; a review requirement with no second reviewer is a deadlock.
+
+   Recommended initial required set — every one of these is green today:
+
+   ```
+   Classify change (work kinds → batteries)
+   Syntax (UTF-8, JSON, YAML)
+   Structure (BPC, cross-refs)
+   Data layer (DB integrity, migration reproducibility, citation mining)
+   Schema (entity YAML, evidence state, populations, jurisdictions)
+   Governance (decisions, doctrine recheck, adversarial use, contract)
+   Attestations (presence, schema, evidence, verdict)
+   Research contract (definition-of-done + its enforcers)
+   Render (derived-output freshness, rendered-document integrity)
+   ```
+
+   Add `DB integrity (content checks)` once the backlog in §4 is cleared.
+
+   > **Fragility worth knowing:** required checks are matched by job **name string**. The names
+   > above are long and contain commas and parentheses. Renaming a job in `ci.yml` silently
+   > turns its required check into "expected — waiting", and every PR hangs. If you enable
+   > protection, treat those `name:` fields as a public interface.
+
+### Still standing
+
+8. **Adjudicate `validate_conflict.py`'s 11 errors** — unknown population codes `IntD`/`VIS` in
+   `references/conflict-matrices/`. Content, not tooling.
+9. **Decide who owns schema drift** — `schema_reference_drift_audit.py` (red) vs
+   `validate_pydantic_schemas.py` (240 findings, exits 0) overlap.
+10. **Move `full_db_metadata_verification.py` (~298s, network-bound) onto the source-verification
+    schedule**, beside `resolve-dois.yml`.
+11. **Update `test_validate_evidence_state_2_4.py`'s fixture** to include `governing_refs`
+    (one column), then wire it. Per F5 this is a fixture fix, not a retirement.
+12. **Clear the `test_db_integrity` backlog** — 106 enum violations and 80 authorless COMPLETE
+    rows, via migrations. The largest single piece of debt the apparatus surfaces.
 
 ## §7. How to add or change a check
 

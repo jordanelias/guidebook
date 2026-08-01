@@ -283,7 +283,7 @@ and is quarantined.
 
 | Workflow | Trigger | What it does |
 |---|---|---|
-| `ci.yml` | push `main`, PR → `main` | The gate. A `classify` job maps the diff to work kinds, then the battery jobs (`syntax`, `structure`, `data`, `schema`, `governance`, `attestation`, `research`, `render`) run the registry checks those kinds warrant. `commit-msg` (format + doctrine token) stays push-only. |
+| `ci.yml` | push `main`, PR → `main` | The gate. A `classify` job maps the diff to work kinds, then the battery jobs (`syntax`, `structure`, `data`, `db_integrity`, `schema`, `governance`, `attestation`, `research`, `render`, `tests`) run the registry checks those kinds warrant. `commit-msg` (format + doctrine token) stays push-only. |
 | `regenerate-derived.yml` | push `main` (DB/generator paths), weekly, dispatch | 3-leg matrix rebuilding the vetting surface, evidentiary audit and pipeline-completeness dashboard, committed back by the bot. |
 | `resolve-dois.yml` | weekly Mon 06:00 UTC | Source-verification Channel 1. |
 | `verify-urls.yml` | bi-weekly | URL-verification Channel 2. |
@@ -297,8 +297,10 @@ an *integer count*, so that expression was always false and those jobs never ran
 They now run on the PRs that warrant them.
 
 > **`main` is not branch-protected** (checked 2026-08-01), so a `blocking` check paints a red
-> X and stops nothing. Enabling protection is an owner decision — see
-> `references/tooling-register.md` §6.
+> X and stops nothing. Turning protection on is an owner action in repo Settings — the
+> recommended required-check set, and the three traps that make the naive version deadlock the
+> repo, are in `references/tooling-register.md` §6.7. Do **not** require the `DB integrity`
+> job until its content backlog is cleared, or no data-touching PR will ever merge.
 
 > **Before assuming a red `main` or a failing check was caused by your change, read the actual
 > run.** `main` can carry pre-existing, owner-gated failures unrelated to your work — two

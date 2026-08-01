@@ -117,7 +117,16 @@ kinds:
 batteries:
   syntax:      {deps: [], description: Encoding and parse checks.}
   structure:   {deps: [], description: Corpus structure and cross-reference integrity.}
-  data:        {deps: [], description: DB integrity and migration reproducibility (stdlib only).}
+  data:        {deps: [], description: Migration reproducibility and data-layer integrity (stdlib only).}
+  # Split out of `data` on 2026-08-01 so branch protection can require the green
+  # data-layer gates without also requiring the DB-content backlog. test_db_integrity
+  # is red against a real content backlog (106 bad verification_status rows of 863;
+  # 80 COMPLETE rows with no author). Requiring it as a merge gate would make every
+  # data-touching PR permanently unmergeable — i.e. it would freeze the project's
+  # main activity. It stays BLOCKING and stays visible; it is simply not in the
+  # required-check set until the backlog is cleared.
+  db_integrity: {deps: [], description: DB content integrity (35 checks). Red on main - see tooling-register 4.}
+  tests:       {deps: [], description: Regression cover for the audit scripts.}
   schema:      {deps: [pydantic], description: Entity/schema validators.}
   governance:  {deps: [pydantic], description: Decision protocol, doctrine recheck, adversarial-use.}
   attestation: {deps: [jsonschema], description: Adherence-log attestations.}
@@ -171,14 +180,15 @@ checks:
   # ===== data — DB integrity and reproducibility ============================
   - id: test_db_integrity
     cmd: [python3, scripts/tests/test_db_integrity.py]
-    battery: data
+    battery: db_integrity
     kinds: [data, schema]
     level: blocking
     cost: fast
     note: >-
       RED on main as of 2026-08-01 (26/35 checks pass). Pre-existing, owner-gated
       debt — see references/tooling-register.md §4. Level left as declared rather
-      than demoted to hide it.
+      than demoted to hide it, but held in its own battery so enabling branch
+      protection does not deadlock every data-touching PR on a content backlog.
       Deliberately NOT triggered by `tooling`: it asserts things about DB CONTENT,
       which a scripts-only diff cannot change. db_path_env_audit and
       pipeline_contract_audit are the checks that a tooling diff can actually break.
@@ -448,6 +458,88 @@ checks:
     cost: slow
     note: ~2s locally; resolves its DB path via graph/build.py (documented exemption).
 
+  - id: validate_reasoning
+    cmd: [python3, scripts/validate_reasoning.py, --strict]
+    battery: research
+    kinds: [synthesis]
+    level: advisory
+    cost: fast
+    note: >-
+      The NINE-STEP-SYNTHESIS contract — the check the 2026-07-23 enforcement plan
+      (F2) identified as the one whose absence let PR #56 pass green.
+      It must be run with --strict. Without the flag it prints its errors and
+      returns 0 by design (`if args.strict and err_files: return 1`), so the
+      unflagged invocation is a green tick that means nothing. Verified: --strict
+      exits 1, default exits 0 on the same corpus.
+      RED today (1 doc missing 'F. Provenance trail'), hence advisory.
+
+  # ===== tests — regression cover for the audit scripts ======================
+  # Green and invoked by nothing before 2026-08-01. Wired advisory. `tooling` is
+  # the operative kind: these assert that the AUDIT SCRIPTS still behave, so a
+  # scripts-only diff is exactly when they earn their keep.
+  - id: test_graph_audit
+    cmd: [python3, scripts/tests/test_graph_audit.py]
+    battery: tests
+    kinds: [tooling]
+    level: advisory
+    cost: slow
+    note: ~27s — carries graph_audit's mutation harness. The slowest test by far.
+
+  - id: test_jurisdictional_divergence
+    cmd: [python3, scripts/tests/test_jurisdictional_divergence.py]
+    battery: tests
+    kinds: [tooling]
+    level: advisory
+    cost: fast
+
+  - id: test_pipeline_contract
+    cmd: [python3, scripts/tests/test_pipeline_contract.py]
+    battery: tests
+    kinds: [tooling, governance]
+    level: advisory
+    cost: fast
+
+  - id: test_url_verifier
+    cmd: [python3, scripts/tests/test_url_verifier.py]
+    battery: tests
+    kinds: [tooling]
+    level: advisory
+    cost: fast
+    note: 25/25 assertions.
+
+  - id: test_verification_pipeline
+    cmd: [python3, scripts/tests/test_verification_pipeline.py]
+    battery: tests
+    kinds: [tooling]
+    level: advisory
+    cost: fast
+    note: 18/18 assertions.
+
+  - id: test_assess_cell_pilot
+    cmd: [python3, scripts/tests/test_assess_cell_pilot.py]
+    battery: tests
+    kinds: [tooling, data]
+    level: advisory
+    cost: fast
+
+  - id: test_evidence_cell_state_2_3
+    cmd: [python3, scripts/tests/test_evidence_cell_state_2_3.py]
+    battery: tests
+    kinds: [tooling, data, schema]
+    level: advisory
+    cost: fast
+
+  - id: test_directness_2_2
+    cmd: [python3, scripts/tests/test_directness_2_2.py]
+    battery: tests
+    kinds: [tooling, data]
+    level: advisory
+    cost: fast
+    note: >-
+      Partially vacuous by design: its live-smoke leg SKIPs when /tmp/work14.db is
+      absent (it is, in CI) and the rest still asserts. Recorded so the pass is not
+      read as broader than it is.
+
   # ===== render — derived-output freshness ==================================
   - id: pipeline_completeness_fresh
     cmd: [python3, tools/pipeline_completeness.py, --check]
@@ -499,15 +591,22 @@ quarantine:
     reason: >-
       Crashes — `sqlite3.OperationalError: no such column: doi_less_key`. Written
       against a schema the DB no longer has. Superseded by test_db_integrity.py,
-      which CLAUDE.md §7 already tells you to prefer. Proposed: retire to _archived/.
+      which CLAUDE.md §7 already tells you to prefer.
+      DO NOT RETIRE without fixing the caller first: scripts/db.py:1120 INVOKES it
+      as a subprocess, so archiving the file breaks a live path in the read/query
+      workhorse. Its other references live in sessions/ records and a DR — historical
+      documents that describe what was true then and must not be rewritten to tidy a
+      filename. Quarantine is the correct terminal state here, not retirement:
+      it already stops the script being mistaken for a working gate.
 
   - id: validate_items
     cmd: [python3, scripts/validate_items.py]
     status: broken
     reason: >-
       Crashes — `IndexError: No item with that key`. Duplicate of validate_item.py
-      (green): same subject, table-oriented rather than corpus-oriented. Proposed:
-      retire to _archived/, keep validate_item.py.
+      (green): same subject, table-oriented rather than corpus-oriented.
+      Retirement would require touching DR-2026-07-23-population-schema-replace and
+      two workplans — historical records. Quarantined instead; fix or leave.
 
   - id: validate_item
     cmd: [python3, scripts/validate_item.py]
@@ -532,16 +631,6 @@ quarantine:
     reason: >-
       Green but vacuous — the conflicts table has 0 rows, so it asserts nothing.
       Wire when the table is populated.
-
-  - id: validate_reasoning
-    cmd: [python3, scripts/validate_reasoning.py]
-    status: broken
-    reason: >-
-      Does not gate. Reports "1 with errors" (a missing 'F. Provenance trail'
-      section) and still EXITS 0. This is the nine-step-synthesis contract — the
-      one the 2026-07-23 plan (F2) identified as the check whose absence let PR #56
-      pass green. Fix the exit code first, then wire; wiring it as-is would add a
-      green tick that means nothing.
 
   - id: register_integrity_check
     cmd: [python3, scripts/audit/register_integrity_check.py]
