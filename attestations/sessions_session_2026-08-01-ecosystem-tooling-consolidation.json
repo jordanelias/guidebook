@@ -1,0 +1,75 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-08-01-ecosystem-tooling-consolidation",
+ "artifact": "sessions/session_2026-08-01-ecosystem-tooling-consolidation.md",
+ "doctrine_sha": "0f2f525",
+ "rules_in_scope": [
+  "audit-consolidator",
+  "structure-auditor",
+  "guidebook-auditor",
+  "doctrine-recheck",
+  "evidence-verification-gate",
+  "canonical-workplan",
+  "session-consolidator",
+  "adherence-logging-and-attestation"
+ ],
+ "per_rule_status": {
+  "audit-consolidator": {
+   "status": "FIRED",
+   "evidence_path": "governance/check-registry.yaml",
+   "reason": "The consolidation was driven by measurement, not by reading: all 158 executables under scripts/ and tools/ were executed once against a clean main and their exit codes and runtimes recorded before any decision was made about which to wire. That baseline is what stopped three plausible-looking gates being promoted — validate_reasoning (exits 0 without --strict), validate_conflicts (green but the table has 0 rows, so it asserts nothing) and test_generate_parts_4_2 (SKIPs entirely without a fixture DB). Each would have added a green tick meaning nothing. 8 workflows became 4 and 4 hand-kept check lists became 1 registry, but the load-bearing act was declining to wire the vacuous ones."
+  },
+  "structure-auditor": {
+   "status": "FIRED",
+   "evidence_path": "scripts/run_checks.py",
+   "reason": "The registry selftest (C1-C5) asserts that every registered executable still exists on disk, which makes a rename that skipped its caller sweep fail loudly rather than silently stop running a check — the architecture v2.3 <migration_and_growth> obligation, mechanised. It fired against my own code before the first commit: path.lstrip('./') strips those two characters in any order, turning '.github/workflows/ci.yml' into 'github/...' and misclassifying every workflow edit. That bug was written and caught inside the same hour, by the guard rather than by re-reading."
+  },
+  "guidebook-auditor": {
+   "status": "FIRED",
+   "evidence_path": "references/tooling-register.md",
+   "reason": "Two blocking gates were found red on main and reported as red rather than demoted to advisory: test_db_integrity (26/35) and evidentiary_audit_fresh. The second was fixed properly by regeneration; the first was quantified rather than hidden (106 of 863 evidence_sources rows carry an out-of-enum verification_status; 80 COMPLETE rows have no author) and left blocking. Demoting it would have produced a green board and a worse repository. The finding that main is not branch-protected — so every BLOCKING label is currently nominal — was verified against the API and contradicts CLAUDE.md's own claim that main is 'protected by CI'; CLAUDE.md was corrected rather than left flattering."
+  },
+  "doctrine-recheck": {
+   "status": "FIRED",
+   "evidence_path": "governance/check-registry.yaml",
+   "reason": "doctrine_recheck --cross-ref is registered blocking on kinds governance and synthesis, and check_doctrine_token.py was extracted from ~45 lines of inline CI bash into a script with a 9-case selftest covering all four exemptions (E1 non-synthesis, E2 doctrine self-modification, E3 bot author, E4 merge commit). The exemption logic is the part that silently over-permits, so each exemption is asserted individually rather than as a group."
+  },
+  "evidence-verification-gate": {
+   "status": "FIRED",
+   "evidence_path": "governance/check-registry.yaml",
+   "reason": "audit_evidence_metadata (the PI rule #10 eligibility gate) reached CI for the first time, registered on kinds data and synthesis. validate_evidence_state additionally now fires on SYNTHESIS diffs, closing finding F2 of the 2026-07-23 enforcement plan: a synthesis PR asserting a determination previously could not trigger the judgment-stage check, because the path filter it depended on never evaluated true."
+  },
+  "canonical-workplan": {
+   "status": "FIRED",
+   "evidence_path": "workplan/methodology-and-pipeline-enforcement-plan-2026-07-23.md",
+   "reason": "The 2026-07-23 enforcement plan was read before designing anything, and its WS1 list of unwired Level-2 enforcers drove which checks were registered. Its ENGINE-LAG warning was honoured against my own inclination to wire more: register_integrity_check.py is left quarantined precisely because the plan flags that it still enforces I3's repealed absolute form and would false-fail correct weak-band rendering under DR-2026-07-21 Option A. Wiring it would have looked like progress and produced a wrong gate."
+  },
+  "session-consolidator": {
+   "status": "FIRED",
+   "evidence_path": "sessions/session_2026-08-01-ecosystem-tooling-consolidation.md",
+   "reason": "The record states both corrections to my own published findings in place and marked, rather than amending them silently: validate_reasoning was called broken when it merely needed --strict, and test_validate_evidence_state_2_4 was called schema-stale when its FIXTURE is behind the schema — the opposite diagnosis, and one that would have justified deleting live regression cover. Both errors were mine, both were in a document already committed, and both are corrected where the wrong claim was made."
+  },
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "attestations/sessions_session_2026-08-01-ecosystem-tooling-consolidation.json",
+   "reason": "This file. The session touched a synthesis path (sessions/) for the first time, so the doctrine token and attestation obligations attach; both were satisfied against SHA 0f2f525, and check_doctrine_token.py was run against the actual commit rather than trusted."
+  }
+ },
+ "deviations": [
+  {
+   "rule": "guidebook-auditor",
+   "reason": "The owner explicitly instructed 'definitely do enable the branch protection for main' and it was NOT done. The GitHub API returns 403 'GitHub access is not enabled for this session' and no available tool exposes branch protection, so this is an access limit rather than a judgement call — but it is still an unfulfilled instruction and is recorded as a deviation rather than folded into a 'not done' note, because an instruction that was given and not carried out should not be discoverable only by reading to the end of a summary. The full configuration was prepared in its place (tooling-register 6.7), including the three traps that make the naive version deadlock the repo."
+  },
+  {
+   "rule": "audit-consolidator",
+   "reason": "I modified the enforcement machinery that governs my own session, and then used it to gate that session. run_checks.py, the registry, and the doctrine-token checker are all new in the same commits they validate — the same self-gating risk logged in the 2026-07-26 batch-3 attestation for emit_data_migration.py. The bound is weaker here than there: that change only ever ADDED a refusal, whereas this one decides which checks run at all, and a mistake in the classifier could silently reduce coverage instead of raising a failure. Mitigations actually applied: the classifier has a selftest asserting expected kind-mappings in both directions (including a negative case that single-* must not cross '/'), CI runs that selftest as a BLOCKING step in the classify job, and every run prints its own selected-check count so a vacuously-empty battery is visible rather than silent. A reviewer should still treat the gating logic as the least independently-verified thing in this session."
+  },
+  {
+   "rule": "session-consolidator",
+   "reason": "sessions/LATEST was deliberately not advanced to this session, so the repository's 'latest session' pointer remains stale and now visibly disagrees with this record's existence. Tested before deciding: pointing LATEST here makes the blocking citation_mining_session check report 'Total in scope: 191, Outstanding: 0' — it would pass by having nothing in scope, which is the vacuous-green pattern this whole session existed to remove. Choosing a knowingly-stale pointer over a knowingly-vacuous gate is a real trade-off and is disclosed rather than presented as tidiness; the correct fix is an owner decision about what LATEST is for, since a research-session pointer and a most-recent-session pointer are not the same object."
+  }
+ ],
+ "bias_direction": "The dominant pull was toward making the board green, and it had two forms. First, toward wiring: having built a registry, every unwired script looks like an argument for the registry's value, and wiring 20 checks would have read as a bigger result than wiring 13 and quarantining 20. The checks I declined — validate_reasoning bare, validate_conflicts against an empty table, test_generate_parts_4_2 without its fixture — would each have passed, and each would have been a tick asserting nothing. Second, toward fixing the reds: evidentiary_audit_fresh was one command away and I ran it, which was right; test_db_integrity was tempting to demote to advisory on the reasoning that it is 'pre-existing debt, not my change', and demoting it would have produced an all-green report from a repository whose data is 106 enum violations deep. It stayed blocking and got quantified instead. The related pull was toward my own prior work: two claims in the register were mine, published, and comfortable, and the adversarial review the owner asked for is the only reason they were re-tested rather than carried forward. Both were wrong, and one of them (test_validate_evidence_state_2_4) would have justified deleting a working test. The session's honest shape is that its measurements were sound from the start and its interpretations of them were not, and that the mechanical checks caught the interpretation errors while the prose did not.",
+ "independent_reviewer_counterclaim": "The strongest objection is that this session made the repository's enforcement WEAKER on pull requests, not stronger, and the metrics hide it. Before, audit.yml and research-contract.yml ran with no path filter at all, so roughly 24 checks ran on EVERY pull request including a docs-only one; now a docs-only PR runs 6. Gating is the stated goal, but 'we run fewer checks' and 'we run the right checks' are only the same claim if the classifier is correct, and the classifier is new, written by the same agent that wrote the tests asserting it works. A reviewer would be right to say the true test has not happened yet: no synthesis PR and no data PR has passed through this gating, so the two most consequential paths are unexercised, and the first misclassified diff will be discovered by something slipping through rather than by a red X. A concrete hardening: assert in the selftest that no BLOCKING check is reachable ONLY via a kind no path can produce, and consider a periodic scheduled --all run so drift between 'what the gate selects' and 'what the corpus needs' surfaces on a timer rather than on incident. A second, narrower objection: splitting test_db_integrity into its own battery is presented as enabling branch protection, but it also makes it materially easier to leave that check permanently out of the required set and call the repo protected. The split is defensible; the risk that it becomes a permanent exemption rather than a temporary one is real, and the backlog numbers should be re-quantified at each protection review rather than cited from this record. A third: the two workflows left unconsolidated (resolve-dois, verify-urls) were judged 'almost no shared logic' from their headers rather than from a diff of their bodies, which is a weaker basis than the rest of the assessment used.",
+ "verdict": "DEVIATION-LOGGED"
+}
