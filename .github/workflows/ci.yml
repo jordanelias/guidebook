@@ -249,7 +249,15 @@ jobs:
 
       # Was ~45 lines of inline bash here, which could not be run or tested
       # locally. Same logic, same four exemptions, now a script with a --selftest.
+      #
+      # `!cancelled()` so this runs even when the format step above fails. Steps
+      # skip by default after a failure, so the two gates were serially coupled:
+      # while merge commits failed the format step (fixed 2026-08-01), the
+      # blocking doctrine gate was *skipped* on every push to main rather than
+      # evaluated. They check different things and neither should be able to
+      # mask the other.
       - name: Doctrine-SHA token
+        if: ${{ !cancelled() }}
         run: |
           python3 scripts/ci_helpers/check_doctrine_token.py \
             --target "${{ github.sha }}" --before "${{ github.event.before }}"

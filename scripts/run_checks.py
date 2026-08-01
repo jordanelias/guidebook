@@ -253,7 +253,14 @@ def main():
 
     # --- work out kinds -----------------------------------------------------
     kinds, attribution, paths = set(), {}, []
-    if args.kinds and args.kinds != "auto":
+    # `is not None`, not truthiness: `--kinds ""` is the docs-only case (a diff that
+    # matched no kind) and must mean "select the always-on checks", which is exactly
+    # what select() already does with an empty set. Testing truthiness made an empty
+    # --kinds indistinguishable from an absent one, so it fell through to ap.error()
+    # and exited 2 — CI passes `--kinds "$KINDS"` unquoted-empty on any docs-only
+    # diff, so three battery jobs died on an argparse usage error while the six
+    # always-on checks they were supposed to run did not run at all.
+    if args.kinds is not None and args.kinds != "auto":
         kinds = {k.strip() for k in args.kinds.split(",") if k.strip()}
         unknown = kinds - set(reg["kinds"]) - {"always"}
         if unknown:
@@ -488,6 +495,31 @@ def selftest(reg):
                   if c.get("level", "blocking") not in LEVELS}
     check("C5 every level is one of blocking/advisory/informational", not bad_levels,
           str(bad_levels))
+
+    # --- C6: the CLI layer, not just the selector ---------------------------
+    # C5 asserted that an empty kind set selects the always-on checks, and it was
+    # true — while `--kinds ""` still exited 2 on an argparse usage error, because
+    # empty-string kinds were tested for truthiness and so read as "not supplied".
+    # Every docs-only diff hit that path in CI. The selector was right and the
+    # entry point was wrong, so testing select() in isolation could not see it.
+    # These cases drive the real command line.
+    def cli(*argv):
+        return subprocess.run([sys.executable, os.path.abspath(__file__), *argv],
+                              capture_output=True, text=True, timeout=120)
+
+    r = cli("--kinds", "", "--dry-run")
+    check("C6 --kinds '' is the docs-only case, not a usage error", r.returncode == 0,
+          f"exit {r.returncode}: {r.stderr.strip()[:200]}")
+
+    r = cli("--kinds", "", "--dry-run", "--explain")
+    planned = sum(1 for ln in r.stdout.splitlines() if ln.strip().startswith("RUN "))
+    always_n = len([c for c in reg["checks"] if "always" in c.get("kinds", [])])
+    check("C6 --kinds '' still plans the always-on checks", planned == always_n,
+          f"planned {planned}, expected {always_n}")
+
+    r = cli("--dry-run")
+    check("C6 omitting all selectors is still a usage error", r.returncode == 2,
+          f"exit {r.returncode}")
 
     print("=" * 78)
     if failures:
