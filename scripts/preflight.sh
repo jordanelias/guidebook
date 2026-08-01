@@ -49,6 +49,7 @@ cd "$(dirname "$0")/.."
 BASE="origin/main"
 ARGS=()
 MODE_ALL=0
+USER_KINDS=0
 
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -57,6 +58,12 @@ while [ $# -gt 0 ]; do
     -h|--help)
       sed -n '2,44p' "$0" | sed 's/^# \{0,1\}//'
       exit 0 ;;
+    # An explicit --kinds means the caller has chosen the work kinds themselves,
+    # so appending --changed-from would hand run_checks.py two contradictory
+    # sources of truth. It refuses that combination (deliberately — silently
+    # discarding one of them is how a real diff came to report "0 changed
+    # files"), which would have made `preflight.sh --kinds X` permanently exit 2.
+    --kinds) USER_KINDS=1; ARGS+=("$1"); shift ;;
     *)       ARGS+=("$1"); shift ;;
   esac
 done
@@ -75,6 +82,8 @@ echo
 
 if [ "$MODE_ALL" -eq 1 ]; then
   python3 scripts/run_checks.py --all ${ARGS[@]+"${ARGS[@]}"}
+elif [ "$USER_KINDS" -eq 1 ]; then
+  python3 scripts/run_checks.py ${ARGS[@]+"${ARGS[@]}"}
 else
   if ! git rev-parse --verify --quiet "$BASE" >/dev/null; then
     echo "preflight: base ref '$BASE' not found; fetching..." >&2

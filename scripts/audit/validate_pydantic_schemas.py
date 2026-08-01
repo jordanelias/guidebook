@@ -112,6 +112,16 @@ def python_type_group(annotation) -> str:
         return "list"
     if "dict" in s or "Dict" in s:
         return "dict"
+    # bool before the str fallback, after list/dict so List[bool] stays a list.
+    # SQLite has no boolean type; the project stores flags as INTEGER 0/1, so a
+    # bool field is num-like. Without this branch bool fell through to "str" and
+    # every flag column read as a type mismatch against its INTEGER declaration
+    # (opus_reviewed, synthesis_attribution_required, has_unverified_sources,
+    # all_sources_disqualified — all four "mismatches" this audit reported were
+    # this bug). The quieter half matters more: bool-as-"str" also *matched* TEXT,
+    # so a flag genuinely declared TEXT passed silently.
+    if "bool" in s:
+        return "int"
     return "str"
 
 
@@ -242,6 +252,20 @@ def selftest() -> int:
     clean_quiet = not result3["pydantic_only"] and not result3["db_only"] and not result3["type_mismatch"]
     print(f"{'PASS' if clean_quiet else '**FAIL**'}: exact-match model/table stays quiet")
     ok &= clean_quiet
+
+    # bool/INTEGER, both directions. The false-positive leg is what shipped four
+    # bogus findings; the silent leg is the one that would have hidden real drift.
+    class BoolModel(BaseModel):
+        flag: bool
+
+    conn.execute("CREATE TABLE bool_ok (flag INTEGER)")
+    conn.execute("CREATE TABLE bool_bad (flag TEXT)")
+    conn.commit()
+    bool_quiet = not check_pair(BoolModel, "bool_ok", conn)["type_mismatch"]
+    bool_fires = len(check_pair(BoolModel, "bool_bad", conn)["type_mismatch"]) == 1
+    print(f"{'PASS' if bool_quiet else '**FAIL**'}: bool vs INTEGER stays quiet (flags are 0/1)")
+    print(f"{'FIRED' if bool_fires else '**MISSED**'}: bool vs TEXT detected")
+    ok &= bool_quiet and bool_fires
 
     conn.close()
     os.unlink(tmp.name)

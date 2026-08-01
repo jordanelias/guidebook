@@ -253,7 +253,29 @@ def main():
 
     # --- work out kinds -----------------------------------------------------
     kinds, attribution, paths = set(), {}, []
-    if args.kinds and args.kinds != "auto":
+    # `is not None`, not truthiness: `--kinds ""` is the docs-only case (a diff that
+    # matched no kind) and must mean "select the always-on checks", which is exactly
+    # what select() already does with an empty set. Testing truthiness made an empty
+    # --kinds indistinguishable from an absent one, so it fell through to ap.error()
+    # and exited 2 — CI passes `--kinds "$KINDS"` unquoted-empty on any docs-only
+    # diff, so three battery jobs died on an argparse usage error while the six
+    # always-on checks they were supposed to run did not run at all.
+    # Explicit kinds and a diff to classify are contradictory: one of them would be
+    # silently discarded. It used to be --changed-from, which produced the worst
+    # possible output — `--kinds "" --changed-from origin/main` reported "0 changed
+    # file(s)" against a 12-file diff and ran 6 checks instead of 39. Fixing the
+    # empty-kinds crash created that path, so this is a regression introduced while
+    # removing one of the same family. preflight.sh forwards extra flags onto a
+    # --changed-from invocation, so `preflight.sh --kinds ""` reaches it. Use
+    # `--kinds auto` to mean "classify the diff for me".
+    if args.kinds is not None and args.kinds != "auto" and args.changed_from:
+        print("run_checks: --kinds and --changed-from are mutually exclusive "
+              "(one would be silently ignored).", file=sys.stderr)
+        print("  Use --kinds auto --changed-from REF to classify the diff, or pass "
+              "--kinds alone.", file=sys.stderr)
+        return 2
+
+    if args.kinds is not None and args.kinds != "auto":
         kinds = {k.strip() for k in args.kinds.split(",") if k.strip()}
         unknown = kinds - set(reg["kinds"]) - {"always"}
         if unknown:
@@ -488,6 +510,53 @@ def selftest(reg):
                   if c.get("level", "blocking") not in LEVELS}
     check("C5 every level is one of blocking/advisory/informational", not bad_levels,
           str(bad_levels))
+
+    # --- C6: the CLI layer, not just the selector ---------------------------
+    # C5 asserted that an empty kind set selects the always-on checks, and it was
+    # true — while `--kinds ""` still exited 2 on an argparse usage error, because
+    # empty-string kinds were tested for truthiness and so read as "not supplied".
+    # Every docs-only diff hit that path in CI. The selector was right and the
+    # entry point was wrong, so testing select() in isolation could not see it.
+    # These cases drive the real command line.
+    def cli(*argv):
+        return subprocess.run([sys.executable, os.path.abspath(__file__), *argv],
+                              capture_output=True, text=True, timeout=120)
+
+    r = cli("--kinds", "", "--dry-run")
+    check("C6 --kinds '' is the docs-only case, not a usage error", r.returncode == 0,
+          f"exit {r.returncode}: {r.stderr.strip()[:200]}")
+
+    r = cli("--kinds", "", "--dry-run", "--explain")
+    planned = sum(1 for ln in r.stdout.splitlines() if ln.strip().startswith("RUN "))
+    always_n = len([c for c in reg["checks"] if "always" in c.get("kinds", [])])
+    check("C6 --kinds '' still plans the always-on checks", planned == always_n,
+          f"planned {planned}, expected {always_n}")
+
+    r = cli("--dry-run")
+    check("C6 omitting all selectors is still a usage error", r.returncode == 2,
+          f"exit {r.returncode}")
+
+    # Regression: fixing the empty-kinds crash opened a path where --kinds "" beat
+    # --changed-from, so a real diff reported "0 changed file(s)" and ran 6 checks
+    # instead of 39 — loud-wrong traded for silent-wrong. Found by adversarial
+    # review after the three cases above passed.
+    # HEAD, not HEAD~1. A selftest must not depend on how deeply the repo was
+    # cloned: with --depth 1 there is no HEAD~1 and this case failed with a git
+    # error, so the registry selftest — a BLOCKING CI step — would have reported
+    # the checkout depth as a registry defect. It passes today only because the
+    # classify job happens to use fetch-depth: 0, an undeclared coupling. HEAD
+    # exists in any repo with a commit; the diff is empty, which is all these two
+    # cases need. Asserting on "changed file(s) vs" proves the classify path was
+    # taken rather than the explicit-kinds one, so `auto` cannot silently become
+    # a literal kind name.
+    r = cli("--kinds", "", "--changed-from", "HEAD", "--dry-run")
+    check("C6 --kinds with --changed-from is refused, not silently resolved",
+          r.returncode == 2, f"exit {r.returncode}")
+
+    r = cli("--kinds", "auto", "--changed-from", "HEAD", "--dry-run")
+    check("C6 --kinds auto still takes the classify path",
+          r.returncode == 0 and "changed file(s) vs" in r.stdout,
+          f"exit {r.returncode}: {(r.stderr or r.stdout).strip()[:160]}")
 
     print("=" * 78)
     if failures:

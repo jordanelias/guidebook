@@ -174,8 +174,19 @@ enforcement plan (finding F2) identified as the one whose absence let PR #56 pas
 > flag. It is now wired **with `--strict`**, advisory (it is red on one doc). The lesson
 > generalises — before calling a tool broken, check whether it has a mode you did not invoke.
 
-`validate_pydantic_schemas.py` genuinely does have the exits-0-while-reporting-240-findings
-shape, with no strict mode.
+> *Corrected again 2026-08-01 (second pass):* the sentence that stood here — "`validate_pydantic_schemas.py`
+> genuinely does have the exits-0-while-reporting-240-findings shape, with no strict mode" — was
+> itself an instance of the error the paragraph above it warns about. It **has** `--strict`
+> (`scripts/audit/validate_pydantic_schemas.py:255`); verified both ways, bare exits 0 and
+> `--strict` exits 1. Having just corrected this mistake for `validate_reasoning`, the same
+> draft repeated it one paragraph later about a different tool. The check is now wired with
+> `--strict`, advisory. **The lesson did not generalise by being written down** — it generalised
+> only when a later pass re-ran every tool's `--help`. That is an argument for the mechanical
+> re-check, not for a better-remembered rule.
+
+`validate_commits.py` is a third instance of the same shape in the other direction: both its
+bare and `--strict` invocations exit 1, but what they report is the script's own rot, not the
+commits' — see its quarantine entry.
 
 **F4 — `contamination_sampler.py` writes files as a side effect of being run.** Executing it
 created `data/doctrine_recheck/sample_2026-08-01.yaml` in the working tree. It is a generator,
@@ -211,7 +222,7 @@ gets quietly downgraded to advisory stops being information.
 
 | Check | Level | State |
 |---|---|---|
-| `test_db_integrity` | blocking | **STILL RED. 26/35 checks pass.** Failures in B01/B02/B05/B06 (enum values), C01–C04 (verification audit trail), G02 (author rows). Quantified 2026-08-01: **106 of 863** `evidence_sources` rows carry a `verification_status` outside the enum, and **80** `COMPLETE` rows have neither `first_author_last` nor `is_corporate_primary`. That is a content backlog, not a tooling defect. It is held in its own `db_integrity` battery so branch protection can be enabled without deadlocking every data-touching PR on it. |
+| `test_db_integrity` | blocking | **STILL RED. 26/35 checks pass.** Failures in B01/B02/B05/B06 (enum values), C01–C04 (verification audit trail), G02 (author rows). **Both figures and the verdict in the first draft were wrong — see §4.1 below.** The out-of-enum count is **81, not 106**, and the failure is a *split* tool/content verdict, not a uniform content backlog. Held in its own `db_integrity` battery so branch protection can be enabled without deadlocking every data-touching PR on it. |
 | `evidentiary_audit_fresh` | blocking | **FIXED 2026-08-01.** Regenerated via `scripts/regenerate_derived.sh`. The drift was purely the report's "as-of" date (2026-07-26 → 2026-07-27, tracking the DB's own `max(updated_at)` after the source-verification commit); no substantive figure moved. Both `--check` gates now pass. |
 | `validate_reasoning` | advisory | Newly wired with `--strict`. Red on 1 doc (missing `F. Provenance trail`). See F3. |
 | `research_protocol_audit` | advisory | 2138 issues (largely multilingual-coverage warnings). Advisory before this change too. |
@@ -219,22 +230,257 @@ gets quietly downgraded to advisory stops being information.
 | `population_integrity_audit` | advisory | 31 issues. Advisory before this change too. |
 | `citation_mining_backlog_t2/t3` | informational | Backlog surfaces, not pass/fail claims. |
 
+### §4.1 The `test_db_integrity` failure, re-derived 2026-08-01
+
+The first draft asserted "**106 of 863** rows carry a `verification_status` outside the enum…
+That is a content backlog, not a tooling defect." Both halves are wrong, and the second half
+was load-bearing: it is the premise on which §6.7 defers requiring this job in branch
+protection, and on which standing task 12 is scoped as data work.
+
+**The count is 81.** 106 is `863 − 757` — total rows minus plain `VERIFIED` — which counts the
+25 `UNVERIFIED-1` rows as violations even though `UNVERIFIED-1` **is** in the test's own list.
+The measured distribution:
+
+| `verification_status` | rows | in the test's enum? |
+|---|--:|---|
+| `VERIFIED` | 757 | yes |
+| `VERIFIED-2` | 71 | no |
+| `UNVERIFIED-1` | 25 | **yes — wrongly counted as a violation** |
+| `DISPUTED` | 7 | no |
+| `VERIFIED-WITH-CORRECTION` | 2 | no |
+| `VERIFIED-1` | 1 | no |
+
+**The verdict is split.** Per failing sub-check:
+
+| Sub-check | Verdict | Why |
+|---|---|---|
+| B01, B06 | **stale test** | The test's list was last curated **May 2026** (its own comments cite the 2026-05-12 proposal and DR-2026-05-19). `DISPUTED` and `CLOSED-DECIDED` were then created by the **owner-approved** DR-2026-07-20 migration; `VERIFIED-WITH-CORRECTION` is in `schemas/enums.py` and the test simply omits it. `VERIFIED-2` (71 rows, 19 migrations) records verification by convergent retrieval rather than a first-hand render — an honesty distinction that collapsing to `VERIFIED` would destroy. |
+| B02, B05 | **mixed** | `PARTIAL` and `code` are coined consistently with disclosed rationale across several sessions; the lowercase `high`/`medium` (4 rows) and `grey_literature`/`magazine_article` (3 rows) are genuine junk. |
+| C01–C04, G02 | **genuine content backlog** | One July citation-mining batch inserted rows with DOIs but no `doi_resolution_outcome`, no `source_type` and premature `COMPLETE` labels. G02's figure is **113**, not 80 — 80 was C03's number. The scheduled resolver cannot self-heal these: every phase targets `WHERE doi IS NULL`, and Phase-4 author enrichment filters on a `source_type` these rows do not have. |
+
+**Not fixed here, deliberately.** Widening the test's enum would be the obvious tooling fix and
+is the wrong unilateral act: `verification_status` has **no CHECK constraint**, and four
+vocabularies coexist — the test's list, `schemas/enums.py`, the stale draft in
+`architecture/schema-spec.md`, and live practice. Ratifying one is a D-SCHEMA decision. The
+established pattern is visible in the test's own comments (`COMPLETE-STATUTORY` per DR-2026-05-18,
+`IS-PAYWALL` per DR-2026-05-19): the vocabulary changes, a DR ratifies it, the test is amended.
+What went missing in July was that third step. **That makes most of B01/B06 process debt, not
+content debt** — and it means the content backlog standing task 12 must clear is C01–C04/G02,
+not the enum rows.
+
+### §4.2 Second-pass findings — the next F1-class bugs
+
+The 2026-08-01 consolidation's headline finding (F1) was a CI condition that could
+never evaluate true, so three jobs never ran on any PR in the repo's history. A
+deliberate hunt for the *next* bug of that class, run against the newly-written
+apparatus rather than the code it replaced, found four. All were confirmed by
+execution, not by reading.
+
+**F7 — A docs-only diff crashed three CI jobs and ran nothing. (Fixed.)** A diff
+matching no work kind classifies to an empty kind set, which `ci.yml` passes on as
+`--kinds ""`. `run_checks.py` tested that argument for **truthiness**, so an empty
+kinds string was indistinguishable from an absent one and fell through to
+`ap.error()` → exit 2. Every docs-only PR would have got three red jobs bearing an
+argparse usage error, while the six `always` checks they were meant to run did not
+run at all. The selector was never wrong — the selftest asserts *"empty kind set
+selects exactly the always-on checks"* and passes. **The fault was entirely in the
+entry point, which is why a selftest exercising `select()` could not see it.** New
+`C6` cases drive the actual command line. Generalisable: a selftest that only calls
+internals cannot catch a bug in how the program is invoked.
+
+**F8 — Every push run of `ci.yml` on `main` was red for a fake reason. (Fixed.)**
+`check_commit_msg.py` had no merge or bot exemption, but every human integration on
+`main` arrives as a GitHub merge commit, so the format step failed on all six of
+the last six push runs while every PR run was green. It also took **no arguments at
+all**, so the `--selftest` the session record credited it with silently re-checked
+`HEAD` and printed PASS. Now carries `E3`/`E4` mirroring `check_doctrine_token.py`'s,
+and a real 9-case selftest. This matters beyond tidiness: **a permanently-red `main`
+is the ecology the F1 class lives in.** Once red is normal, a newly-red check
+carries no information.
+
+**F9 — The doctrine gate was serially coupled to F8. (Fixed.)** It runs after the
+format step in the same job, and GitHub skips later steps after a failure, so the
+*blocking* doctrine-token check was **skipped rather than evaluated on every push to
+`main`**. Now gated on `!cancelled()`. Two gates in one job must not be able to mask
+each other.
+
+**F10 — The gate that enforces "never write the DB directly" compares seven
+scalars.** `migration_reproducibility.py` compares `PRAGMA user_version` plus
+`COUNT(*)` on six tables, while CLAUDE.md §0 rule 4 says CI "fails on any
+divergence". An `UPDATE` changes no count, so value-level edits are invisible, as is
+everything in the other 55 tables — demonstrated by tampering with a scratch copy
+(a row's `tier` and title rewritten, and a forged `stated` cell inserted into
+`evidence_cell_state`) and watching it return `VERDICT: PASS`. `EXEMPT_TABLES` was
+decorative: the comparator never enumerated tables, so it was printed and never
+applied.
+
+Added `--deep`, wired **advisory** as `migration_reproducibility_deep`. It compares
+every table and every row, and separates timestamp-only divergence from content so
+it does not cry wolf. What it finds looks like an **incomplete exemption list
+rather than a hand-edited DB**:
+
+| Table | Divergence | Written by |
+|---|---|---|
+| `evidence_sources` | 277 rows — `subtype`, `citation_count`, `pages`, `pub_month` | `scripts/resolve_dois.py` writes Crossref enrichment straight into it |
+| `url_verification_runs` | 1 row | `verify-urls.yml` inserts its run record |
+| `bpc_metadata`, `gaps`, `slugs`, `source_slug_links` | timestamps only | — |
+
+Both substantive tables are written by the same scheduled workflows that
+DR-2026-05-28 already exempted `evidence_source_authors` and `pipeline_runs` for.
+They were simply never added to the list. **Left advisory deliberately:** resolving
+it is an owner choice between widening the DR's exemption list and requiring those
+jobs to emit migrations, and promoting it first would block every data PR on a
+divergence the project may consider legitimate.
+
+> Worth stating plainly, because it bears on the branch-protection plan in §6.7:
+> between F10 and the fact that bot pushes to `main` do not trigger `push`
+> workflows at all (a `GITHUB_TOKEN` push raises no `push` event), **the canonical
+> DB's only unreviewed writers are also its only unchecked ones.**
+
+**F11 — `citation_mining_session` is blocking and vacuous.** It scopes its
+enforcement to the session named in `sessions/LATEST`, which points at a June
+session. Measured: **191 tier≤2 sources in scope, 9 of them (4.7%) carry
+citation-mining rows, and the check reports `Outstanding: 0` and exits 0** — the
+session filter reduces the enforced set to nothing, so a blocking gate passes by
+having nothing to check. Worse, when the pointer is absent it degrades to `SKIP`,
+which the runner excludes from the verdict even at blocking level.
+
+Left unchanged on purpose. The 2026-08-01 session already declined to advance
+`sessions/LATEST` to itself for exactly this reason, and pointing it at the right
+place is an owner call about what the pointer is *for*. Recorded here so that the
+number — 4.7% — is on the record before anyone adds this job to a required-check
+set on the strength of its green tick. **It is the third distinct vacuous-green
+mechanism found in this apparatus** (after a skipped job reporting as passing, and
+a crash reporting as a skip), which suggests the pattern to look for is not any
+one bug but the general question: *what does this check do when its input is
+missing?*
+
+**F12 — A crash in the render audit was reported as a skip. (Fixed.)**
+`render_audit.js` used exit 2 for "playwright is not installed here" *and* for any
+uncaught error in its top-level `catch`, while the runner maps exit 2 to `SKIP` for
+that check. A genuinely broken audit — a bug, a changed DOM, a missing module —
+was therefore indistinguishable from a legitimate environment skip. Crashes now
+exit 3 and fail; exit 2 is reserved for the one branch that actually means the
+environment cannot run it.
+
+### §4.3 What the adversarial review of §4.2 found
+
+The fixes in §4.2 were then attacked rather than accepted. The review found four real defects
+**in the new code**, three of which were introduced by the very commits that fixed F7–F12.
+Recorded because a session that reports only the bugs it found in other people's work, and not
+the ones it shipped, is not the kind of record this repo runs on.
+
+1. **The `--kinds ""` fix opened a fresh silent-skip.** With `--changed-from` also present, the
+   kinds branch won and the diff was discarded: `--kinds "" --changed-from origin/main`
+   reported **"0 changed file(s)"** against a 12-file diff and selected 6 checks instead of 39.
+   `preflight.sh` forwards extra flags onto a `--changed-from` invocation, so
+   `preflight.sh --kinds ""` reached it. **Loud-wrong was traded for silent-wrong — the exact
+   family being fixed.** The two are now mutually exclusive and refused; `--kinds auto` remains
+   the supported way to say "classify the diff for me".
+2. **`--deep` misclassified timestamp-only drift as CONTENT.** Rows were paired by `zip()` after
+   `ORDER BY` *every* column in declaration order, so a table whose volatile column is declared
+   early re-sorts when a timestamp changes, mis-pairs the rows, and smears the diff across
+   unrelated columns. Now ordered by the substantive columns first. Where those tie, any pairing
+   is equivalent — the rows agree on everything non-volatile, so the verdict is volatile either way.
+3. **"Every table, every row" was blind to views and triggers.** `v_best_practice` carries the
+   convergence-laundering exclusion in its `WHERE` clause, so editing that view changes what the
+   project treats as a best-practice claim while leaving every row identical — and the check
+   said PASS. It now compares view/trigger/index DDL too.
+4. **Unquoted identifiers** reached `PRAGMA` and `ORDER BY`, so a legal-but-odd table name
+   crashed the comparator — reintroducing, in new code, the crash-instead-of-verdict conflation
+   this same session fixed in `render_audit.js` (F12).
+
+Each now has a selftest case, written from the reproduction rather than from the description.
+**All four survived a selftest that already had six passing cases**, which is the durable
+lesson: a green selftest bounds the failures you thought of.
+
+A fifth finding was purely about this file, and it kept being true. §5 stated the drift audit's
+hit count as **19**. It became **21**, then **22** — three values across three commits of one
+session, each move caused by *this session's own prose and fixtures* rather than by any change
+to the code being audited: a docstring reading *"an `UPDATE` changes no count"* made it report
+`changes` as a missing table, and selftest fixtures named `t` and `vf` added two more.
+
+**A commit falsified a figure written 64 minutes earlier; the correction was then falsified
+again by the commit that made it.** The entry no longer states a count at all. Two things follow.
+The narrow one is the repo's guardrail 1 (re-verify every claim against current files), which
+turns out to bind on a timescale of minutes, not months. The broader one is about the tool: a
+scanner that manufactures findings from English prose about SQL is not measuring the codebase,
+and that is stronger evidence for retiring it than any of its false positives individually.
+
+### §4.4 The 2026-08-01 second pass, measured against its own description
+
+The work in §4.2–§4.3 was described as *unification, consolidation, streamlining and
+improvement*. Those four words were then audited adversarially, with instructions to refute
+them. **Three came back NOT SUPPORTED.** The verdict is recorded here as given, because a
+register that only preserves flattering assessments is not evidence of anything.
+
+| Claim | Verdict | The numbers |
+|---|---|---|
+| **Unification** | **NOT SUPPORTED** | 0 pre-existing duplicate definitions eliminated. `BOT_RE` went 1 → 2 → 1: this branch *introduced* the duplicate and then removed it, netting zero. It also shipped a second hand-kept copy of the validator's column list (since fixed). |
+| **Consolidation** | **NOT SUPPORTED** | +1,388 / −90 lines. Registered checks 51 → 57. Workflow jobs 15 → 15; `ci.yml` 255 → 272 lines. **Nothing merged, nothing retired.** The only shrinking number — quarantine 20 → 16 — is reclassification onto a board that grew. |
+| **Streamlining** | **NOT SUPPORTED** | The heaviest battery is **+101% slower** (39s → 78.5s: two full rebuilds), the board is **+57% redder** (7 → 11 red lines), and there are strictly more moving parts. |
+| **Improvement** | **PARTIALLY SUPPORTED** | 15 consecutive failing push runs on `main` → fixed. A skipped *blocking* doctrine gate → evaluated. A dead regression test for a blocking validator → alive. A false enforcement claim in CLAUDE.md rule 4 → corrected. A demonstrated tamper-blindness → visible. |
+
+**The strongest argument that this pass made things worse**, recorded in full because it is the
+one most worth acting on: *it industrialised the failure mode it diagnoses.* This register
+argues that "once red is normal, a newly-red check carries no information" — that is precisely
+how 15 consecutive red push runs went unremarked — and then **added four permanently-red
+advisory checks**, each blocked on an owner decision with no deadline. A reviewer running
+`--all` now sees ten non-blocking failures and must read paragraphs of YAML prose to learn that
+every one is known and owner-pending. That is the reading burden under which the next *unknown*
+red will be missed.
+
+Three things follow, and only the third is done:
+
+1. **The four new advisories are on the clock.** They were landed to make invisible failures
+   visible, not to become scenery. If the owner decisions in §6 are not taken, the honest move
+   is to re-quarantine them — a check nobody can act on is noise, and this register has already
+   argued that a red gate quietly downgraded stops being information. Either resolution beats
+   leaving them red indefinitely.
+2. **The double rebuild should be folded into one invocation.** `migration_reproducibility` and
+   `migration_reproducibility_deep` each run `migrate_db.py --rebuild`; the deep comparison is
+   a strict superset of the shallow one. They are separate registry entries only because they
+   carry different levels. That is a solvable problem and it was shipped unsolved.
+3. **Counts in `note:` fields are dated measurements, not invariants** — now stated once at the
+   top of the registry rather than implied. Magnitudes are kept, because a finding without one
+   cannot be triaged or falsified; the rule is to re-run before citing.
+
 ---
 
 ## §5. Quarantine — registered, never selected
 
-21 scripts are registered in the `quarantine:` block of the registry with a stated reason, so
-that an unwired enforcer stays *visible* instead of becoming another silent 28. Full reasons
-are in the registry; the categories are:
+**Revised 2026-08-01 (second pass).** Every entry was re-run and its stated reason checked
+against observed behaviour. **Five of the twenty reasons were factually wrong**, four entries
+were de-quarantined, and the count is now **16**. The corrections are recorded in the registry
+at each entry. That five of twenty stated reasons did not survive their first audit is the
+finding here: a quarantine reason is an *assertion about a tool*, and writing one down does not
+verify it.
 
-- **Broken** (crash or don't gate): `validate_db`, `validate_items`, `validate_reasoning`.
-- **Red, needing triage before they can gate**: `pmp_audit` (3), `reasoning_doc_citations_audit`
-  (2), `schema_reference_drift_audit`, `adjudication_integrity` (274 tier inconsistencies),
-  `code_currency_audit`, `validate_conflict` (11 unknown population codes),
-  `pre_rehab_banner_audit` (red *by design* pre-launch — would be permanently red).
+De-quarantined and now wired advisory: `pmp_audit`, `reasoning_doc_citations_audit`,
+`claims_docket` (the registered command was missing its `check` subcommand — the recorded "no
+default action, exits 0" was a fact about the bare invocation, not the tool), and
+`validate_pydantic_schemas` (with `--strict`).
+
+Remaining categories:
+
+- **Broken** (crash or don't gate): `validate_db`, `validate_items`.
+  *(`validate_reasoning` was listed here in the first draft and should not have been — it was
+  wired with `--strict` by the same session that wrote this list. Corrected.)*
+- **Red, needing triage before they can gate**: `schema_reference_drift_audit` (whose stated
+  subject was wrong — it scans *scripts' SQL table references*, not `schemas/*.py`, and its
+  signal is now mostly lexical false positives — two of them added by *this session's own
+  commits*, because writing the words "an `UPDATE` changes no count" in a docstring makes it
+  report `changes` as a missing table), `adjudication_integrity` (274 tier
+  inconsistencies), `code_currency_audit`, `validate_conflict` (11 unknown population codes —
+  note its own detection regex is also old-taxonomy), `pre_rehab_banner_audit` (**not** red by
+  design, as first recorded: it is a file↔DB drift gate red on a fixable 6-slug mismatch).
 - **Not actually gates** (surfacing tools, reports, or generators whose exit code carries no
-  verdict): `jurisdictional_divergence`, `validate_pydantic_schemas`, `contamination_sampler`,
-  `check_phase_a_complete`, `validate_commits`, `validate_audit_runs`.
+  verdict): `jurisdictional_divergence` (though the registry's own `informational` level fits
+  it), `contamination_sampler`, `check_phase_a_complete` (itself partly rotten — it reports "0
+  item headings found" against the v10 parts), `validate_commits` (red against *present*
+  compliant commits because its skill/author/merge token lists have rotted, not against
+  history), `validate_audit_runs` (green with real assertions over 87 `item_audit_runs` rows;
+  wiring awaits only a named owner).
 - **Wrong shape for CI**: `register_integrity_check` (needs an `html` argument *and* still
   enforces I3's repealed absolute form — the ENGINE-LAG flagged in the 2026-07-23 plan; it
   would false-fail correct weak-band rendering under DR-2026-07-21 Option A),
@@ -326,16 +572,38 @@ correction is recorded at the finding (F3, F5) rather than quietly applied.
 
 ### Still standing
 
-8. **Adjudicate `validate_conflict.py`'s 11 errors** — unknown population codes `IntD`/`VIS` in
-   `references/conflict-matrices/`. Content, not tooling.
-9. **Decide who owns schema drift** — `schema_reference_drift_audit.py` (red) vs
-   `validate_pydantic_schemas.py` (240 findings, exits 0) overlap.
+8. **Adjudicate `validate_conflict.py`'s 11 errors** — unknown population codes. The first draft
+   named `IntD`/`VIS`; the full set is `IntD, VIS, NEU, OFS, DBL`, none of which exist among the
+   23 live `populations` codes. The validator's own detection regex is old-taxonomy too, so
+   fixing the matrices alone will not clear it. Content + tooling; `DR-2026-07-22-work-from-axes`
+   governs (work from the functional axes, never coin umbrellas).
 10. **Move `full_db_metadata_verification.py` (~298s, network-bound) onto the source-verification
-    schedule**, beside `resolve-dois.yml`.
-11. **Update `test_validate_evidence_state_2_4.py`'s fixture** to include `governing_refs`
-    (one column), then wire it. Per F5 this is a fixture fix, not a retirement.
-12. **Clear the `test_db_integrity` backlog** — 106 enum violations and 80 authorless COMPLETE
-    rows, via migrations. The largest single piece of debt the apparatus surfaces.
+    schedule**, beside `resolve-dois.yml`. Confirmed a pure audit with no DB writes; it also
+    accepts an undocumented positional row-limit, so a bounded smoke variant is possible.
+12. **Clear the `test_db_integrity` backlog** — **scoped down by §4.1**. The genuine content
+    debt is C01–C04/G02: one July citation-mining batch (~105 rows) needing
+    `doi_resolution_outcome`, `source_type`, and author data or a `COMPLETE` downgrade, plus 7
+    rows with no audit trail and 7 junk enum values. The enum rows are **not** part of it.
+
+### Resolved by the 2026-08-01 second pass
+
+9. ~~**Decide who owns schema drift**~~ — **the premise was false.** The two tools never
+   overlapped: `validate_pydantic_schemas.py` compares Pydantic models to SQLite columns;
+   `schema_reference_drift_audit.py` scans *scripts' SQL table references* against the live DB
+   and its docstring explicitly disclaims the Pydantic comparison. Both the registry's and this
+   file's descriptions of them were wrong. Resolved by wiring `validate_pydantic_schemas
+   --strict` as the owner of the §10 invariant (advisory, 236 findings) and correcting the other
+   entry. **Proposed, not executed:** retiring `schema_reference_drift_audit` — its one gating
+   check is carried with better precision by the already-wired `graph_audit`
+   (`code.phantom_table`, CTE/view-aware), but retirement is owner-gated.
+11. ~~**Update `test_validate_evidence_state_2_4.py`'s fixture**~~ — **done.** It was not "one
+    column": the fixture built its DDL from migration 024 alone, so it needed to track 026 and
+    027 as well. It now discovers its DDL from the migrations that touch the tables and carries
+    a guard that fails as a stale *fixture* rather than as a broken validator. Two assertions
+    were also absent rather than merely unrunnable, including the `stated ⇒ governing_refs`
+    anti-hallucination gate, which had no test at all. Wired advisory; 12/12.
+    It had been in **neither** the active checks nor the quarantine block — unwired with no
+    stated reason, which is the exact condition this register exists to make impossible.
 
 ## §7. How to add or change a check
 

@@ -185,6 +185,20 @@ def _ref_tiers(conn, ref_ids):
     return {r[0]: r[1] for r in rows}
 
 
+# The evidence_cell_state columns this validator selects. Module-level so the
+# regression test's stale-fixture guard can assert against THIS list rather than
+# keeping a second copy of it — a hand-maintained duplicate would silently stop
+# covering any column added here, weakening the tripwire without failing it.
+# tier_basis is appended unconditionally by the query below;
+# regulatory_stratum_only is probed at runtime (pre-027 DBs stay validatable), so
+# it is deliberately not part of the required set.
+CELL_STATE_COLUMNS = ("cell_id,item_code,population_code,state,design_scale,convergence_id,"
+                      "confidence_dimensions_present,confidence_dimensions_absent,"
+                      "confidence_synthesis_basis,gap_register_id,not_applicable_rationale,"
+                      "governing_refs,code_floor_only")
+CELL_STATE_REQUIRED = tuple(CELL_STATE_COLUMNS.split(",")) + ("tier_basis",)
+
+
 def validate_cell_states_db(conn, gap_ids: set):
     """Validate evidence_cell_state rows against the §2 state machine, scale-aware.
     Mirrors schemas.evidence_state.EvidenceStateRecord's state-field rules at the
@@ -203,10 +217,7 @@ def validate_cell_states_db(conn, gap_ids: set):
       of Tier 3.
     """
     errors = []
-    cols = ("cell_id,item_code,population_code,state,design_scale,convergence_id,"
-            "confidence_dimensions_present,confidence_dimensions_absent,"
-            "confidence_synthesis_basis,gap_register_id,not_applicable_rationale,"
-            "governing_refs,code_floor_only")
+    cols = CELL_STATE_COLUMNS
     # G1b (unification DR, ACCEPTED 2026-07-13): the T4-6-only flag is
     # migration-027 schema; select it where present, marker-check `tier_basis`
     # everywhere (pre-027 DBs stay validatable).

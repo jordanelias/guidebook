@@ -7,17 +7,44 @@ and the §1.7 directness rule that a discounted source cannot also anchor).
 Exit 0 = pass.
 """
 import os
+import re
 import sqlite3
 import sys
 import tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(os.path.dirname(HERE))
+MIGRATIONS = os.path.join(REPO, "scripts", "migrations")
 sys.path.insert(0, os.path.join(REPO, "scripts"))
-from validate_evidence_state import validate_db  # noqa: E402
+from validate_evidence_state import CELL_STATE_REQUIRED, validate_db  # noqa: E402
 
 fails = []
-DDL = open(os.path.join(REPO, "scripts", "migrations", "024_evidence_cell_state.sql")).read()
+
+
+def schema_ddl():
+    """The cell-state DDL, discovered from the migrations rather than pinned to one.
+
+    The fixture used to read 024 alone. 026 then rebuilt the table (adding
+    governing_refs et al.) and 027 added regulatory_stratum_only, so the fixture
+    fell behind a validator that selects those columns and the whole file died
+    with `no such column: governing_refs` before asserting anything. Collecting
+    every schema migration that touches these two tables keeps the fixture
+    tracking the schema instead of re-pinning it to a newer number that will
+    rot the same way. Verified to reproduce the live table definitions exactly.
+    """
+    out = []
+    for fn in sorted(os.listdir(MIGRATIONS)):
+        m = re.match(r"^(\d{3})_.*\.sql$", fn)
+        if not m:
+            continue  # data_*.sql are rows, not shape
+        text = open(os.path.join(MIGRATIONS, fn)).read()
+        body = "\n".join(ln for ln in text.splitlines() if not ln.strip().startswith("--"))
+        if "evidence_cell_state" in body or "convergence_assessment" in body:
+            out.append((int(m.group(1)), text))
+    return [text for _, text in sorted(out)]
+
+
+DDL = schema_ddl()
 fd, DBP = tempfile.mkstemp(suffix=".db"); os.close(fd)
 
 
@@ -31,8 +58,35 @@ def fresh():
     c.executemany("INSERT INTO items VALUES(?)", [(x,) for x in ("A-02", "A-03", "A-04", "A-05", "A-06", "A-07")])
     c.executemany("INSERT INTO populations VALUES(?)", [(x,) for x in ("AUT", "MOB", "DEAF")])
     c.execute("INSERT INTO gaps VALUES('GAP-001')")
-    c.executescript(DDL)
+    for step in DDL:
+        c.executescript(step)
     return c
+
+
+def assert_fixture_current():
+    """Fail loudly here if the fixture drifts from what the validator selects.
+
+    Without this, a missing column surfaces as an OperationalError raised deep
+    inside validate_evidence_state on the first check — which reads as a broken
+    validator rather than a stale fixture. That misreading is exactly what
+    happened: the file was nearly retired as testing a schema the DB no longer
+    had, when in fact the DB had moved on and the fixture had not.
+    """
+    c = fresh()
+    present = {r[1] for r in c.execute("PRAGMA table_info(evidence_cell_state)")}
+    c.close()
+    # Imported, not restated. A second hardcoded copy of the validator's column
+    # list would silently stop covering any column added there — the guard would
+    # keep passing while checking less, which is the failure it exists to catch.
+    missing = sorted(set(CELL_STATE_REQUIRED) - present)
+    if missing:
+        print(f"  [FAIL] fixture schema is stale — evidence_cell_state lacks {missing}.\n"
+              f"         A migration changed the table and schema_ddl() did not pick it up.")
+        print(f"\nFAILURES: stale fixture  (1 failed)")
+        sys.exit(1)
+
+
+assert_fixture_current()
 
 
 def run(setup, fk=True):
@@ -58,9 +112,21 @@ def has(errs, *subs):
 def clean(c):
     c.execute("INSERT INTO convergence_assessment(convergence_id,status,clinical_sources,co1_sources) "
               "VALUES (1,'convergent','[\"REF-1\"]','[\"REF-2\"]')")
-    c.execute("INSERT INTO evidence_cell_state(cell_id,item_code,population_code,state,design_scale,convergence_id) "
-              "VALUES (1,'A-02','AUT','stated','population',1)")
+    # governing_refs is required on 'stated' (anti-hallucination gate, §2.7). The
+    # baseline predated that rule, so it was not clean once the fixture caught up.
+    c.execute("INSERT INTO evidence_cell_state(cell_id,item_code,population_code,state,design_scale,convergence_id,governing_refs) "
+              "VALUES (1,'A-02','AUT','stated','population',1,'[\"REF-1\"]')")
 check("clean stated+convergent → 0 errors", run(clean) == [])
+
+# stated without governing_refs — the anti-hallucination gate. Untested until now:
+# the rule postdates this file, and the clean baseline was the only 'stated' row.
+check("stated without governing_refs caught (anti-hallucination gate)",
+      has(run(lambda c: (
+          c.execute("INSERT INTO convergence_assessment(convergence_id,status,clinical_sources,co1_sources) "
+                    "VALUES (1,'convergent','[\"REF-1\"]','[\"REF-2\"]')"),
+          c.execute("INSERT INTO evidence_cell_state(cell_id,item_code,population_code,state,design_scale,convergence_id) "
+                    "VALUES (1,'A-07','MOB','stated','population',1)"))),
+          "stated", "governing_refs"))
 
 # pending without gap
 check("pending without gap_register_id caught",

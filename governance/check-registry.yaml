@@ -54,6 +54,22 @@
 # NB `main` is not branch-protected (verified against the GitHub API 2026-08-01),
 # so `blocking` today means "red X on the commit", not "cannot merge". The level
 # is still the right declaration; it becomes teeth the day protection is enabled.
+#
+# READING THE NUMBERS IN `note:` FIELDS
+# ------------------------------------
+# Every count in a note ("236 findings", "277 rows", "81 of 863", "6 slugs") is a
+# DATED MEASUREMENT, not an invariant. They are recorded because a finding with
+# no magnitude cannot be triaged or falsified — "RED" alone tells you nothing
+# about whether the fix is an afternoon or a quarter. They are also all wrong
+# eventually, and some of them quickly: a data migration moves the row counts, a
+# schema change moves the drift counts, and the schema_reference_drift_audit
+# count moved three times in one session because that tool counts English prose
+# about SQL as table references.
+#
+# So: use a number here to decide WHERE TO LOOK, never to report state. Before
+# citing one anywhere it matters, re-run the check. This applies to CLAUDE.md and
+# references/tooling-register.md equally — both are derived maps, and both have
+# already carried a figure that was false when written.
 
 schema_version: 1
 
@@ -120,8 +136,11 @@ batteries:
   data:        {deps: [], description: Migration reproducibility and data-layer integrity (stdlib only).}
   # Split out of `data` on 2026-08-01 so branch protection can require the green
   # data-layer gates without also requiring the DB-content backlog. test_db_integrity
-  # is red against a real content backlog (106 bad verification_status rows of 863;
-  # 80 COMPLETE rows with no author). Requiring it as a merge gate would make every
+  # is red against a real content backlog (see the test_db_integrity entry below:
+  # 81 out-of-enum verification_status rows of 863, most of which are a stale test
+  # rather than bad data, plus the C01-C04/G02 rows that are the genuine backlog —
+  # this comment said "106" until 2026-08-01, which double-counted UNVERIFIED-1).
+  # Requiring it as a merge gate would make every
   # data-touching PR permanently unmergeable — i.e. it would freeze the project's
   # main activity. It stays BLOCKING and stays visible; it is simply not in the
   # required-check set until the backlog is cleared.
@@ -189,6 +208,27 @@ checks:
       debt — see references/tooling-register.md §4. Level left as declared rather
       than demoted to hide it, but held in its own battery so enabling branch
       protection does not deadlock every data-touching PR on a content backlog.
+      CORRECTED 2026-08-01 — this entry and the register both said "106 of 863
+      evidence_sources rows carry a verification_status outside the enum" and
+      called the whole failure a content backlog. Both halves were wrong:
+        - The count is 81, not 106. 106 is 863 minus the 757 plain-VERIFIED rows,
+          which wrongly counts the 25 UNVERIFIED-1 rows that ARE in the enum.
+          Verified distribution: VERIFIED 757, VERIFIED-2 71, UNVERIFIED-1 25,
+          DISPUTED 7, VERIFIED-WITH-CORRECTION 2, VERIFIED-1 1.
+        - The verdict is split, not uniform. B01/B06 are a STALE TEST: the test's
+          list was last curated in May 2026, while DISPUTED and CLOSED-DECIDED were
+          created by the owner-approved DR-2026-07-20 migration, and
+          VERIFIED-WITH-CORRECTION is in schemas/enums.py, which the test omits.
+          VERIFIED-2 (71 rows across 19 migrations) is a deliberate honesty
+          distinction — verification by convergent retrieval rather than a
+          first-hand render — that collapsing to VERIFIED would destroy.
+          C01-C04 and G02 ARE a genuine content backlog (one July citation-mining
+          batch inserted with DOIs but no resolution outcome, no source_type and
+          premature COMPLETE labels), and B02/B05 are mixed.
+      Widening the test's enum is NOT done here: verification_status has no CHECK
+      constraint and four vocabularies coexist (test list, schemas/enums.py,
+      architecture/schema-spec.md, live practice), so ratifying it is a D-SCHEMA
+      decision for the owner, not a unilateral edit to a blocking gate.
       Deliberately NOT triggered by `tooling`: it asserts things about DB CONTENT,
       which a scripts-only diff cannot change. db_path_env_audit and
       pipeline_contract_audit are the checks that a tooling diff can actually break.
@@ -202,6 +242,39 @@ checks:
     note: >-
       GAP-290 enforcement — the gate that actually stops direct DB writes. Was two
       hand-kept inline heredocs (audit.yml and preflight.sh); now one script.
+      SCOPE, recorded 2026-08-01 because the description above overstates it: this
+      compares PRAGMA user_version plus COUNT(*) on six tables. An UPDATE changes
+      no count, so value-level edits are invisible to it, as is anything in the
+      other 55 tables. CLAUDE.md §0 rule 4 says CI "fails on any divergence",
+      which this has never done. See migration_reproducibility_deep.
+
+  - id: migration_reproducibility_deep
+    cmd: [python3, scripts/audit/migration_reproducibility.py, --deep]
+    battery: data
+    kinds: [data, schema]
+    level: advisory
+    cost: slow
+    note: >-
+      Every table, every row — the comparison the core invariants cannot make.
+      Added 2026-08-01 after an adversarial trace showed the blocking check above
+      passes on a tampered DB: editing a row's tier and title, and inserting a
+      forged `stated` cell into evidence_cell_state, both leave all seven
+      invariants identical.
+      RED, and the two findings look like an incomplete exemption list rather than
+      a hand-edited DB: evidence_sources diverges on 277 rows (subtype,
+      citation_count, pages, pub_month) because scripts/resolve_dois.py writes
+      Crossref enrichment straight into it, and url_verification_runs diverges by
+      one row because verify-urls.yml inserts its run record. Both are written by
+      the same scheduled workflows that DR-2026-05-28 already exempted
+      evidence_source_authors and pipeline_runs for — they were simply never added.
+      ADVISORY, not blocking, and deliberately so: resolving this is an owner call
+      between widening the DR's exemption list and requiring those jobs to emit
+      migrations. Promoting it before that decision would block every data PR on
+      a divergence the project may well consider legitimate.
+      Timestamp-only divergence is reported separately from content so the check
+      does not cry wolf: 4 further tables differ only in created_at/updated_at.
+      Costs a second full rebuild alongside the blocking check; worth folding into
+      one invocation if data-PR wall-clock becomes a problem.
 
   - id: source_slug_links_duplicates
     cmd: [python3, scripts/audit/source_slug_links_duplicates.py]
@@ -322,6 +395,28 @@ checks:
     cost: fast
     note: Rule-#10 evidence-eligibility gate. Newly wired — advisory during shakedown.
 
+  - id: validate_pydantic_schemas
+    cmd: [python3, scripts/audit/validate_pydantic_schemas.py, --strict]
+    battery: schema
+    kinds: [schema, data]
+    level: advisory
+    cost: fast
+    note: >-
+      The schemas/*.py <-> SQLite parity check CLAUDE.md §10 calls "a bug, not a
+      convention" — and the only tool that checks it. De-quarantined 2026-08-01
+      on two corrections. First, --strict exists (verified: bare exits 0, --strict
+      exits 1); its quarantine reason had called it a not-really-a-gate for lacking
+      the mode, which is precisely the error already made and corrected for
+      validate_reasoning. Second, it does NOT overlap schema_reference_drift_audit,
+      which measures something else entirely (see that entry).
+      RED — 236 findings, so advisory, and blocking would be dishonest until the
+      backlog is triaged. Note the findings are not yet all adjudicated as drift:
+      an open owner question is whether schemas/*.py canonically mirrors the SQLite
+      tables or the YAML entity layer. Models like Population clearly mirror the
+      latter, and every live model_validate caller feeds from YAML. §10 as written
+      says SQLite; if the owner rules otherwise, a narrower model->table map is the
+      fix and much of the 236 is not drift at all.
+
   # ===== governance =========================================================
   - id: audit_adversarial_use
     cmd: [python3, scripts/audit_adversarial_use.py, --catalog-only]
@@ -363,6 +458,25 @@ checks:
     note: >-
       The meta-check (plan F3). `tooling` matters most: it detects a contract whose
       named enforcer has been renamed or deleted.
+
+  - id: claims_docket
+    cmd: [python3, scripts/audit/claims_docket.py, check]
+    battery: governance
+    kinds: [governance, synthesis]
+    level: advisory
+    cost: fast
+    note: >-
+      Mode-2 claims docket (skills/integrity-protocol_SKILL.md): every triggered
+      claim must carry a warrant annotation. De-quarantined 2026-08-01 by adding
+      the `check` subcommand the registered command was missing — the entry had
+      recorded "no default action, prints usage, exits 0", which was a fact about
+      the bare invocation, not the tool. `check` needs no diff plumbing: it
+      validates the committed docket. Green today (68/68 annotated); --selftest
+      fires on synthetic triggers.
+      CONDITIONALLY green: with no docket file it prints "nothing to check" and
+      exits 0. working/claims-docket.md exists and is populated, so it asserts
+      something today; if that file is ever removed this check goes vacuously
+      green rather than failing.
 
   # ===== attestation ========================================================
   - id: attestation_presence
@@ -473,6 +587,30 @@ checks:
       exits 1, default exits 0 on the same corpus.
       RED today (1 doc missing 'F. Provenance trail'), hence advisory.
 
+  - id: pmp_audit
+    cmd: [python3, scripts/audit/pmp_audit.py]
+    battery: research
+    kinds: [data, synthesis]
+    level: advisory
+    cost: fast
+    note: >-
+      Rule #8 / #10.1 — numerical-spec claims must cite an active PMP walk.
+      De-quarantined 2026-08-01 after triage: the 3 issues are content (walks
+      PMP-A08-001/A18-003/A18-004 have no passing strict step), not tool defects,
+      and checks 1/2/4/5/6 are clean. Advisory per the shakedown norm.
+
+  - id: reasoning_doc_citations_audit
+    cmd: [python3, scripts/audit/reasoning_doc_citations_audit.py]
+    battery: research
+    kinds: [data, synthesis]
+    level: advisory
+    cost: fast
+    note: >-
+      Track 3 of DR-2026-05-13 — citation integrity behind reasoning docs.
+      De-quarantined 2026-08-01: the 2 issues are content (NOT-FOUND rows
+      RDC-RAP-PAS-UK-001 / RDC-RAP-RT60-IT-001); the other checks are clean
+      over 14 rows.
+
   # ===== tests — regression cover for the audit scripts ======================
   # Green and invoked by nothing before 2026-08-01. Wired advisory. `tooling` is
   # the operative kind: these assert that the AUDIT SCRIPTS still behave, so a
@@ -529,6 +667,19 @@ checks:
     level: advisory
     cost: fast
 
+  - id: test_validate_evidence_state_2_4
+    cmd: [python3, scripts/tests/test_validate_evidence_state_2_4.py]
+    battery: tests
+    kinds: [tooling, data, schema]
+    level: advisory
+    cost: fast
+    note: >-
+      12/12 assertions; regression cover for the blocking validate_evidence_state
+      check. Was unregistered entirely — neither active nor quarantined — while its
+      fixture, pinned to migration 024, died on 026's governing_refs before
+      asserting anything. The fixture now discovers its DDL from the migrations and
+      fails loudly if it falls behind again.
+
   - id: test_directness_2_2
     cmd: [python3, scripts/tests/test_directness_2_2.py]
     battery: tests
@@ -577,6 +728,11 @@ checks:
     note: >-
       Exit 2 means "node/browser unavailable here", which is reported as SKIP —
       loudly. A gate that quietly does nothing is worse than no gate.
+      Corrected 2026-08-01: the script's top-level catch also exited 2, so any
+      uncaught error — a bug, a changed DOM, a missing module — was reported as
+      "no browser available" and was indistinguishable from a legitimate skip. A
+      crash now exits 3 and fails. Exit 2 is reserved for the one branch that
+      genuinely means the environment cannot run it.
 
 # --- quarantine -------------------------------------------------------------
 # Registered so they stay visible, never selected. Every entry needs a `reason`
@@ -641,29 +797,42 @@ quarantine:
       I3's repealed absolute form and will false-fail correct weak-band rendering
       under DR-2026-07-21 Option A. Needs the Option-A patch AND an --all mode.
 
-  - id: claims_docket
-    cmd: [python3, scripts/audit/claims_docket.py]
-    status: quarantined
-    reason: >-
-      A subcommand CLI with no default action (prints usage, exits 0). Needs a
-      `check` invocation against a working diff to be meaningful in CI.
-
-  - id: pmp_audit
-    cmd: [python3, scripts/audit/pmp_audit.py]
-    status: quarantined
-    reason: RED (3 issues). Named by the 2026-07-23 plan WS1; triage the 3 before wiring.
-
-  - id: reasoning_doc_citations_audit
-    cmd: [python3, scripts/audit/reasoning_doc_citations_audit.py]
-    status: quarantined
-    reason: RED (2 issues). Triage before wiring.
+  # claims_docket, pmp_audit and reasoning_doc_citations_audit were de-quarantined
+  # on 2026-08-01 after triage; they are now active advisory checks above.
 
   - id: schema_reference_drift_audit
     cmd: [python3, scripts/audit/schema_reference_drift_audit.py]
     status: quarantined
     reason: >-
-      RED. Detects schemas/*.py vs SQLite drift — which CLAUDE.md §10 calls a bug,
-      not a convention. A real finding; needs triage, then wiring as advisory.
+      RED (~7 real findings; the raw hit count is unstable — see below, and do not
+      write a number here). CORRECTED 2026-08-01 — this entry previously said it
+      "detects schemas/*.py vs SQLite drift". It does not, and the script's own
+      docstring disclaims exactly that ("Does not parse schemas/*.py Pydantic
+      models against column definitions... checks table-name reachability only").
+      What it actually does is lexically scan scripts/**/*.py for SQL table
+      references and flag identifiers absent from the live DB. Pydantic-vs-SQLite
+      parity belongs to validate_pydantic_schemas, now wired; these two never
+      overlapped, so the "one of the two should own schema drift" framing was
+      false on both sides.
+      Held because the signal has been overtaken by lexical false positives: 14 of
+      them are prose words in docstrings (THE, of, table), selftest fixture
+      literals (no_such_table, zzz_phantom) and tables of a DIFFERENT database
+      (build_meta/edges/findings/nodes live in the gitignored audit_graph.db).
+      DO NOT WRITE A FIXED NUMBER HERE — re-run it. This entry said 19, then 21,
+      then 22, across three commits of a single session, and each move was caused
+      by the session's own prose and test fixtures rather than by any change to the
+      code being audited: a docstring reading "an UPDATE changes no count" made it
+      report `changes` as a missing table, and selftest fixtures named `t` and `vf`
+      added two more. Writing English about SQL manufactures findings in this tool.
+      That is the strongest available evidence that its lexical scan has stopped
+      being a signal, and a demonstration that a count written into a register can
+      be falsified by the next commit rather than the next year. The
+      ~7 real hits are room_page.py's 6 phantom tables — an already-tracked,
+      owner-gated gap (workplan/website-v0-path-forward-2026-07-12.md) — plus
+      evidence_sources_v2 in a legacy script.
+      Its one gating check is also carried, with better precision, by the already
+      wired graph_audit (code.phantom_table, CTE/view-aware). Retiring it is
+      therefore proposed but NOT executed here: retirement is owner-gated.
 
   - id: adjudication_integrity
     cmd: [python3, scripts/audit/adjudication_integrity.py]
@@ -682,8 +851,20 @@ quarantine:
     cmd: [python3, scripts/audit/pre_rehab_banner_audit.py]
     status: quarantined
     reason: >-
-      RED by design pre-launch — it lists retracted-pre-rehabilitation BPCs, which
-      is the project's known state (CLAUDE.md §1). Would be permanently red.
+      RED (6 slugs). CORRECTED 2026-08-01 — this entry previously said it was "RED
+      by design pre-launch... would be permanently red". It is not. It is a
+      4-invariant file<->DB drift gate (DR-2026-05-23; its docstring states "Exit
+      code 0 = pass"), and it PASSES when the banners and the DB agree. Retraction
+      being the project's known state makes it green, not red — the known state is
+      what it checks against, not what it complains about.
+      It fails today on invariant 2 only: 6 slugs carry the in-file retraction
+      banner while sitting at evidence_state='PARTIAL' in the DB
+      (bariatric-turning-radius-built-environment, bathroom-typology-global-south,
+      fold-down-grab-bar-specification, jurisdiction-matrix-accessibility-standards,
+      multilingual-evidence-convergence-non-english,
+      neurodivergent-built-environment). That is a real 6-row drift needing an
+      owner call on which side is canonical — after which this becomes a genuine,
+      permanently-meaningful anti-drift gate rather than a permanent red.
 
   - id: jurisdictional_divergence
     cmd: [python3, scripts/audit/jurisdictional_divergence.py]
@@ -693,13 +874,8 @@ quarantine:
       not a pass/fail gate. Its exit code carries no verdict. Belongs in a report,
       not a gate.
 
-  - id: validate_pydantic_schemas
-    cmd: [python3, scripts/audit/validate_pydantic_schemas.py]
-    status: quarantined
-    reason: >-
-      Green but exits 0 with 240 drift findings it labels informational — same
-      not-really-a-gate shape as validate_reasoning. Overlaps
-      schema_reference_drift_audit. One of the two should own schema drift.
+  # validate_pydantic_schemas was de-quarantined 2026-08-01 with --strict; it is
+  # now an active advisory check in the schema battery above.
 
   - id: full_db_metadata_verification
     cmd: [python3, scripts/audit/full_db_metadata_verification.py]
@@ -727,9 +903,21 @@ quarantine:
     cmd: [python3, scripts/validate_commits.py]
     status: quarantined
     reason: >-
-      RED against history (unknown skill/author tokens in past commits). Overlaps
-      ci_helpers/check_commit_msg.py, which checks HEAD only and is the wired one.
-      Useful as a one-shot history report; not a per-commit gate.
+      RED, and CORRECTED 2026-08-01: not merely "against history". It fails every commit in the recent
+      window, including current, convention-compliant ones (23 flags across the
+      last 7 days at the time of writing; re-run rather than trusting that count).
+      Its own token lists have rotted, so what it reports is its staleness, not the
+      commits':
+        - V2 rejects the `governance:` prefix that CLAUDE.md §0 mandates for
+          non-skill work — every governance commit reads as V2_UNKNOWN_SKILL.
+        - V5's author pattern is `^Claude \(.+\)$`, which does not match the
+          current bot author, so V5_UNKNOWN_AUTHOR fires on nearly everything.
+        - V1 has no merge-commit or bot exemption, unlike the wired
+          ci_helpers/check_commit_msg.py, so every "Merge pull request #NN" fails.
+      Still correctly quarantined — it overlaps check_commit_msg.py, which checks
+      HEAD only and is the wired one — but its output must not be read as evidence
+      about the commits until those three lists are refreshed. Repairing it is a
+      real if low-priority task, not a matter of triaging findings.
 
   - id: validate_audit_runs
     cmd: [python3, scripts/validate_audit_runs.py]
