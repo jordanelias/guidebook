@@ -1,0 +1,69 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-08-01-tooling-second-pass",
+ "artifact": "sessions/session_2026-08-01-tooling-second-pass.md",
+ "doctrine_sha": "0f2f525",
+ "rules_in_scope": [
+  "audit-consolidator",
+  "structure-auditor",
+  "guidebook-auditor",
+  "doctrine-recheck",
+  "evidence-verification-gate",
+  "session-consolidator",
+  "adherence-logging-and-attestation"
+ ],
+ "per_rule_status": {
+  "audit-consolidator": {
+   "status": "FIRED",
+   "evidence_path": "references/tooling-register.md",
+   "reason": "Every finding acted on was re-derived by execution before it was believed, including findings produced by my own read-only audits. That discipline is what produced the session's main results rather than a tidy-up: the 106-row figure in the register decomposed into 81 on a direct query, the 'these two tools overlap' premise of standing task 9 collapsed once both scripts were actually read and run, and five of twenty quarantine reasons failed against observed behaviour. Consolidation here meant deleting false claims from the record, not merging files."
+  },
+  "structure-auditor": {
+   "status": "FIRED",
+   "evidence_path": "scripts/tests/test_validate_evidence_state_2_4.py",
+   "reason": "The caller-sweep obligation was applied to a fixture rather than a rename: the test built its DDL from migration 024 while 026 and 027 had since altered the table, so it died before asserting anything. Rather than re-pin it to 027 — which would rot identically at 034 — the fixture now discovers its DDL from the migrations that touch those tables, and a guard fails with a stale-fixture message naming the missing columns. Verified to reproduce the live table definitions exactly, and mutation-tested by feeding it the old 024-only DDL to confirm the guard fires."
+  },
+  "guidebook-auditor": {
+   "status": "FIRED",
+   "evidence_path": "references/tooling-register.md",
+   "reason": "Six defects were found in the enforcement apparatus and reported at full strength rather than softened. Three concerned checks that appeared green: a blocking gate passing on 4.7% coverage (F11), a crash disguised as an environment skip (F12), and a blocking doctrine gate that was skipped rather than evaluated on every push to main (F9). The most consequential, F10, is that the gate CLAUDE.md credits with failing 'on any divergence' compares seven scalars and passes a DB with a forged synthesis cell in it. CLAUDE.md was corrected to say what the gate does rather than what it was believed to do."
+  },
+  "doctrine-recheck": {
+   "status": "FIRED",
+   "evidence_path": "scripts/ci_helpers/check_commit_msg.py",
+   "reason": "The doctrine-token gate was found structurally unable to fire on the pushes it exists to police, because it is serially downstream of a format step that failed on every merge commit. Both halves were fixed — the format gate gained the E3/E4 exemptions that check_doctrine_token already had, so the two agree about what a checkable commit is, and the doctrine step now runs under !cancelled() so neither gate can mask the other. check_doctrine_token's own 9-case selftest was re-run and passes."
+  },
+  "evidence-verification-gate": {
+   "status": "FIRED",
+   "evidence_path": "governance/check-registry.yaml",
+   "reason": "The anti-hallucination gate ('stated' requires non-empty governing_refs) was found to have no test case at all — the rule postdated the test file, and the only 'stated' row in the fixture was the clean baseline, which had silently stopped being clean. A case was added for it, and validate_pydantic_schemas was wired with --strict so that schemas/*.py vs SQLite drift, which CLAUDE.md calls a bug rather than a convention, is visible on every schema diff instead of being quarantined on a false premise."
+  },
+  "session-consolidator": {
+   "status": "FIRED",
+   "evidence_path": "sessions/session_2026-08-01-tooling-second-pass.md",
+   "reason": "The record states the corrections to the previous session's record as corrections, marked in place, rather than quietly writing over them — including the one that is unflattering to the machinery I inherited and the two probes of my own that were wrong. The handoff section leads with the four owner decisions that now block real work, each with the measurement that makes it decidable, rather than with a task list."
+  },
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "attestations/sessions_session_2026-08-01-tooling-second-pass.json",
+   "reason": "This attestation, carrying the doctrine SHA the session's commits bind to, with the enum and retirement decisions I declined to make recorded as deviations rather than omitted."
+  }
+ },
+ "deviations": [
+  {
+   "rule": "evidence-verification-gate",
+   "reason": "I did not widen test_db_integrity's verification_status enum, although I established that 80 of its 81 'violations' are a stale test rather than bad data and that widening it would turn a red blocking gate green. Doing so would have made a blocking gate agree with the data by editing the gate, and the vocabulary has no CHECK constraint and four competing definitions, so ratifying one is a D-SCHEMA decision. Recorded as a deviation rather than a 'not done' note because leaving a gate red when I hold the evidence that it is wrong is a real cost being paid deliberately, and the next session should see the choice rather than inherit the red."
+  },
+  {
+   "rule": "guidebook-auditor",
+   "reason": "migration_reproducibility_deep was landed advisory while red, so the divergence it reports is visible but stops nothing. The alternative — promoting it to blocking — would freeze every data-touching PR on a divergence that is most likely legitimate job-owned writes needing a DR exemption rather than a violation. I judged a visible advisory better than either a block or continued invisibility, but the effect is that between this and the fact that GITHUB_TOKEN pushes raise no push event, the canonical DB's only unreviewed writers remain its only unchecked ones."
+  },
+  {
+   "rule": "audit-consolidator",
+   "reason": "schema_reference_drift_audit was left quarantined rather than retired even though its single gating check is carried with better precision by the already-wired graph_audit and 12 of its 19 current hits are lexical false positives. Retirement is owner-gated under CLAUDE.md guardrail 4, so it is proposed in the register instead. The cost is that a tool whose stated purpose was wrong stays on the books; the reason is that unilaterally retiring files is the failure mode that guardrail exists to prevent."
+  }
+ ],
+ "bias_direction": "My structural bias this session was toward finding defects, because the task named adversarial review and because the previous session's record rewarded exactly that. A session hunting for silent no-ops will tend to classify ambiguity as breakage, and I did reach for 'this tool is broken' twice before checking: my first reading of validate_commits recorded exit 0 when both its modes exit 1, and I twice measured an exit code through a pipe to tail and read tail's status instead of the command's. Both were caught by re-running rather than by care, which is the argument for the method and not for my judgement. The opposite bias also operated and is less visible: having found four real bugs early, I had an incentive to keep the count climbing, and F11 and F12 are genuine but materially smaller than F7-F10 — I have tried to say so in the register rather than let a list of six imply six equals. Where the evidence pointed at an owner decision rather than a fix, the same bias pulled toward fixing anyway, most sharply on the verification_status enum, where a one-line edit would have turned a red blocking gate green and I would have been able to report a cleared gate. Declining that is the single judgement in this session most worth a second opinion.",
+ "independent_reviewer_counterclaim": "A reviewer could reasonably argue this session mistook instrumentation for progress. Nothing here fixes a single row of the content backlog the project actually exists to produce; it fixes the machinery that measures the backlog, and it adds three more red advisory checks to a board that already had six. The strongest form of the objection is that vacuous-green gates on a repository whose main branch is not protected are harmless by construction — every BLOCKING label is nominal today, so F9's skipped doctrine gate and F11's 4.7% coverage stopped nothing that would otherwise have been stopped, and the effort might have gone to C01-C04 instead. A second line of attack: the --deep comparison may be measuring an intended design rather than a defect. If the project's settled position is that scheduled jobs own their enrichment columns, then evidence_sources was always meant to diverge, the DR simply under-enumerated, and I have wired a permanently-red check to report a non-problem. Third, and most concretely: I corrected the register's '106' to '81' and its uniform content-backlog verdict to a split one, but both my figure and my split rest on the same re-derivation, unreplicated — and the register's own history shows a confidently-stated figure surviving one review before failing the next. The honest answer to all three is that the branch-protection plan is the thing these findings serve: the moment protection is switched on, a gate that passes vacuously becomes a gate that lets a bad PR through, and every one of these corrections is load-bearing at that moment rather than now.",
+ "verdict": "DEVIATION-LOGGED"
+}

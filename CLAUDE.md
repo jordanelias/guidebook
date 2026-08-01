@@ -32,9 +32,15 @@ you commit or push, know these five rules. Details in §7–§8.
    `attestations/<artifact-slug>.json`, valid against `schemas/attestation.schema.json`
    (backfill-on-touch: the first edit of a grandfathered artifact creates its attestation).
 4. **Never write `data/guidebook.db` directly.** All DB changes ship as migrations via
-   `scripts/emit_data_migration.py`; CI rebuilds the DB from migration history and fails on
-   any divergence (§6). Direct writes (including ad-hoc `scripts/db.py` writes to the
-   committed DB) break the reproducibility gate.
+   `scripts/emit_data_migration.py`; CI rebuilds the DB from migration history and compares
+   it against the committed one (§6). Direct writes (including ad-hoc `scripts/db.py` writes
+   to the committed DB) break the reproducibility gate.
+   **The rule is absolute; the enforcement is not — do not rely on CI to catch you.** The
+   blocking gate compares `PRAGMA user_version` and `COUNT(*)` on six tables, so an `UPDATE`
+   passes it untouched, as does anything in the other 55 tables (this line used to claim CI
+   "fails on any divergence"; corrected 2026-08-01). The full comparison exists as
+   `migration_reproducibility_deep`, advisory while an owner decision is pending — see
+   `references/tooling-register.md` §4.2.
 5. **Structural renames/removals aren't done until the caller sweep is done.** Renaming or
    deleting any identifier, path, tag, heading, schema column, table, or skill name requires
    searching all non-archived callers and fixing every one (per

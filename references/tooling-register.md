@@ -337,6 +337,32 @@ divergence the project may consider legitimate.
 > workflows at all (a `GITHUB_TOKEN` push raises no `push` event), **the canonical
 > DB's only unreviewed writers are also its only unchecked ones.**
 
+**F11 — `citation_mining_session` is blocking and vacuous.** It scopes its
+enforcement to the session named in `sessions/LATEST`, which points at a June
+session. Measured: **191 tier≤2 sources in scope, 9 of them (4.7%) carry
+citation-mining rows, and the check reports `Outstanding: 0` and exits 0** — the
+session filter reduces the enforced set to nothing, so a blocking gate passes by
+having nothing to check. Worse, when the pointer is absent it degrades to `SKIP`,
+which the runner excludes from the verdict even at blocking level.
+
+Left unchanged on purpose. The 2026-08-01 session already declined to advance
+`sessions/LATEST` to itself for exactly this reason, and pointing it at the right
+place is an owner call about what the pointer is *for*. Recorded here so that the
+number — 4.7% — is on the record before anyone adds this job to a required-check
+set on the strength of its green tick. **It is the third distinct vacuous-green
+mechanism found in this apparatus** (after a skipped job reporting as passing, and
+a crash reporting as a skip), which suggests the pattern to look for is not any
+one bug but the general question: *what does this check do when its input is
+missing?*
+
+**F12 — A crash in the render audit was reported as a skip. (Fixed.)**
+`render_audit.js` used exit 2 for "playwright is not installed here" *and* for any
+uncaught error in its top-level `catch`, while the runner maps exit 2 to `SKIP` for
+that check. A genuinely broken audit — a bug, a changed DOM, a missing module —
+was therefore indistinguishable from a legitimate environment skip. Crashes now
+exit 3 and fail; exit 2 is reserved for the one branch that actually means the
+environment cannot run it.
+
 ---
 
 ## §5. Quarantine — registered, never selected

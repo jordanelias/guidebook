@@ -709,6 +709,11 @@ checks:
     note: >-
       Exit 2 means "node/browser unavailable here", which is reported as SKIP —
       loudly. A gate that quietly does nothing is worse than no gate.
+      Corrected 2026-08-01: the script's top-level catch also exited 2, so any
+      uncaught error — a bug, a changed DOM, a missing module — was reported as
+      "no browser available" and was indistinguishable from a legitimate skip. A
+      crash now exits 3 and fails. Exit 2 is reserved for the one branch that
+      genuinely means the environment cannot run it.
 
 # --- quarantine -------------------------------------------------------------
 # Registered so they stay visible, never selected. Every entry needs a `reason`

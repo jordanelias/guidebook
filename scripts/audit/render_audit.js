@@ -287,4 +287,12 @@ async function auditDoc(browser, file) {
   console.log(`\nRESULTS: ${total - failedChecks}/${total} checks passed ` +
               `(${docs.length} document(s), ${fails.length} failure(s), ${warns.length} warning(s))`);
   process.exit(fails.length ? 1 : 0);
-})().catch(e => { console.error('render_audit: ' + e.message); process.exit(2); });
+})().catch(e => {
+  // Exit 3, NOT 2. Exit 2 is claimed above for "playwright is not installed here",
+  // and the runner maps 2 to SKIP for this check. Reusing it for an uncaught error
+  // meant a genuinely broken audit — a bug, a changed DOM, a missing module —
+  // reported as "no browser available" and was indistinguishable from a legitimate
+  // skip. A crash must not be able to disguise itself as an absent environment.
+  console.error('render_audit: CRASHED (not a clean skip) — ' + (e && e.stack || e));
+  process.exit(3);
+});
