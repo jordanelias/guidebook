@@ -529,6 +529,19 @@ checks:
     level: advisory
     cost: fast
 
+  - id: test_validate_evidence_state_2_4
+    cmd: [python3, scripts/tests/test_validate_evidence_state_2_4.py]
+    battery: tests
+    kinds: [tooling, data, schema]
+    level: advisory
+    cost: fast
+    note: >-
+      12/12 assertions; regression cover for the blocking validate_evidence_state
+      check. Was unregistered entirely — neither active nor quarantined — while its
+      fixture, pinned to migration 024, died on 026's governing_refs before
+      asserting anything. The fixture now discovers its DDL from the migrations and
+      fails loudly if it falls behind again.
+
   - id: test_directness_2_2
     cmd: [python3, scripts/tests/test_directness_2_2.py]
     battery: tests
