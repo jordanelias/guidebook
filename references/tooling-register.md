@@ -407,6 +407,44 @@ turns out to bind on a timescale of minutes, not months. The broader one is abou
 scanner that manufactures findings from English prose about SQL is not measuring the codebase,
 and that is stronger evidence for retiring it than any of its false positives individually.
 
+### §4.4 The 2026-08-01 second pass, measured against its own description
+
+The work in §4.2–§4.3 was described as *unification, consolidation, streamlining and
+improvement*. Those four words were then audited adversarially, with instructions to refute
+them. **Three came back NOT SUPPORTED.** The verdict is recorded here as given, because a
+register that only preserves flattering assessments is not evidence of anything.
+
+| Claim | Verdict | The numbers |
+|---|---|---|
+| **Unification** | **NOT SUPPORTED** | 0 pre-existing duplicate definitions eliminated. `BOT_RE` went 1 → 2 → 1: this branch *introduced* the duplicate and then removed it, netting zero. It also shipped a second hand-kept copy of the validator's column list (since fixed). |
+| **Consolidation** | **NOT SUPPORTED** | +1,388 / −90 lines. Registered checks 51 → 57. Workflow jobs 15 → 15; `ci.yml` 255 → 272 lines. **Nothing merged, nothing retired.** The only shrinking number — quarantine 20 → 16 — is reclassification onto a board that grew. |
+| **Streamlining** | **NOT SUPPORTED** | The heaviest battery is **+101% slower** (39s → 78.5s: two full rebuilds), the board is **+57% redder** (7 → 11 red lines), and there are strictly more moving parts. |
+| **Improvement** | **PARTIALLY SUPPORTED** | 15 consecutive failing push runs on `main` → fixed. A skipped *blocking* doctrine gate → evaluated. A dead regression test for a blocking validator → alive. A false enforcement claim in CLAUDE.md rule 4 → corrected. A demonstrated tamper-blindness → visible. |
+
+**The strongest argument that this pass made things worse**, recorded in full because it is the
+one most worth acting on: *it industrialised the failure mode it diagnoses.* This register
+argues that "once red is normal, a newly-red check carries no information" — that is precisely
+how 15 consecutive red push runs went unremarked — and then **added four permanently-red
+advisory checks**, each blocked on an owner decision with no deadline. A reviewer running
+`--all` now sees ten non-blocking failures and must read paragraphs of YAML prose to learn that
+every one is known and owner-pending. That is the reading burden under which the next *unknown*
+red will be missed.
+
+Three things follow, and only the third is done:
+
+1. **The four new advisories are on the clock.** They were landed to make invisible failures
+   visible, not to become scenery. If the owner decisions in §6 are not taken, the honest move
+   is to re-quarantine them — a check nobody can act on is noise, and this register has already
+   argued that a red gate quietly downgraded stops being information. Either resolution beats
+   leaving them red indefinitely.
+2. **The double rebuild should be folded into one invocation.** `migration_reproducibility` and
+   `migration_reproducibility_deep` each run `migrate_db.py --rebuild`; the deep comparison is
+   a strict superset of the shallow one. They are separate registry entries only because they
+   carry different levels. That is a solvable problem and it was shipped unsolved.
+3. **Counts in `note:` fields are dated measurements, not invariants** — now stated once at the
+   top of the registry rather than implied. Magnitudes are kept, because a finding without one
+   cannot be triaged or falsified; the rule is to re-run before citing.
+
 ---
 
 ## §5. Quarantine — registered, never selected
