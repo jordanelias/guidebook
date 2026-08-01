@@ -103,6 +103,38 @@ def migrations_fingerprint():
     return digest.hexdigest()[:16]
 
 
+def _usable_cache(path):
+    """Is this cached rebuild safe to compare a BLOCKING gate against?
+
+    Existence and non-zero size are not enough. A truncated or half-written file
+    would be copied in and become the baseline the reproducibility gate measures
+    the committed DB against — and a corrupt baseline produces a verdict that
+    means nothing while looking exactly like one that does. Trusting a cache more
+    than the thing it stands in for is how the defects this session spent its time
+    on came about.
+
+    So: open it, confirm SQLite agrees it is a database, and confirm it carries
+    the core tables the comparison needs. Cheap (milliseconds) next to a ~45s
+    rebuild, and a failed probe simply falls through to building fresh.
+    """
+    if not (os.path.exists(path) and os.path.getsize(path) > 0):
+        return False
+    try:
+        con = sqlite3.connect(f"file:{path}?mode=ro", uri=True)
+        try:
+            if con.execute("PRAGMA quick_check").fetchone()[0] != "ok":
+                return False
+            present = {n for (n,) in con.execute(
+                "SELECT name FROM sqlite_master WHERE type='table'")}
+            needed = {"evidence_sources", "citation_mining", "source_slug_links",
+                      "gaps", "connections", "items"}
+            return needed <= present
+        finally:
+            con.close()
+    except sqlite3.Error:
+        return False
+
+
 def rebuild(target, cache=True):
     """C1 — rebuild from migration history alone.
 
@@ -120,7 +152,7 @@ def rebuild(target, cache=True):
     if cache:
         cached = os.path.join(tempfile.gettempdir(),
                               f"guidebook-repro-{migrations_fingerprint()}.db")
-        if os.path.exists(cached) and os.path.getsize(cached) > 0:
+        if _usable_cache(cached):
             try:
                 shutil.copyfile(cached, target)
                 return True, f"reused cached rebuild ({os.path.basename(cached)})"
