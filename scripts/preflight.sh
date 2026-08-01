@@ -1,107 +1,95 @@
 #!/usr/bin/env bash
-# preflight.sh — run every gate CI applies to a PR/merge, LOCALLY, before you push.
+# preflight.sh — run the gates CI will apply, LOCALLY, before you push.
 #
-# Lesson (2026-07-24): every real defect that session was caught by a gate (a --check, a
-# validator, reproducibility, an independent audit) — none by re-reading prose. CI's schema/
-# db_integrity/governance jobs are PUSH-ONLY (they don't gate the PR), so a data/schema change
-# can pass the PR yet fail on merge. Run this first; narrative confidence is not a gate.
+# This is now a thin wrapper over scripts/run_checks.py, which reads
+# governance/check-registry.yaml. It used to be a second hand-kept list of checks
+# alongside ci.yml, audit.yml and research-contract.yml — and the four lists had
+# already drifted: preflight ran validate_axes and validate_verification_consistency
+# that no workflow ran, ci.yml ran validate_jurisdiction and validate_temporal that
+# preflight didn't, and the migration-reproducibility invariant existed as two
+# separately-maintained inline heredocs. One registry means preflight and CI
+# cannot disagree about what a check is.
 #
-# Read-only: runs validators + reproducibility + the --check gates (does NOT regenerate — use
-# scripts/regenerate_derived.sh to fix staleness). Honors GUIDEBOOK_DB_PATH. Needs pydantic
-# (+ jsonschema for attestation audits); pip install -r requirements.txt first.
+# BY DEFAULT it gates on WHAT YOU CHANGED — it classifies your diff against
+# origin/main into work kinds (data / schema / synthesis / governance / render /
+# tooling) and runs the checks those kinds warrant. Pass --all to run everything.
 #
-# Prints [PASS]/[FAIL]/[SKIP] per gate, runs them ALL (does not stop at first failure), and
-# exits non-zero if any FAIL. Mirrors ci.yml + audit.yml (minus push-only commit-msg).
+# Lesson (2026-07-24): every real defect that session was caught by a gate (a
+# --check, a validator, reproducibility, an independent audit) — none by re-reading
+# prose. Run this first; narrative confidence is not a gate.
 #
-# NB (L2 baseline lesson): a [FAIL] here may be PRE-EXISTING owner-gated debt on main, not your
-# change. Before assuming you broke it, confirm the delta — e.g. run the same gate in a throwaway
-# `git worktree add /tmp/base origin/main` and diff. test_db_integrity in particular carries a
-# standing set of pre-existing failures unrelated to most changes.
+# Read-only: it runs validators, it does NOT regenerate. To fix a staleness
+# failure, run scripts/regenerate_derived.sh.
+#
+# Needs pydantic + PyYAML (+ jsonschema for the attestation checks):
+#     pip install -r requirements.txt jsonschema
+#
+# Honours GUIDEBOOK_DB_PATH. Prints [PASS]/[FAIL]/[SKIP] per check, runs them ALL
+# rather than stopping at the first failure, and exits non-zero if any BLOCKING
+# check fails. Advisory and informational failures are reported but do not fail —
+# levels are declared in the registry, not here.
+#
+# NB (L2 baseline lesson): a [FAIL] here may be PRE-EXISTING owner-gated debt on
+# main, not your change. Before assuming you broke it, confirm the delta — e.g.
+# run the same check in a throwaway `git worktree add /tmp/base origin/main` and
+# diff. test_db_integrity and evidentiary_audit_fresh in particular are red on
+# main as of 2026-08-01; see references/tooling-register.md §4.
+#
+# Usage:
+#     scripts/preflight.sh                      # gate what you changed vs origin/main
+#     scripts/preflight.sh --all                # every registered check
+#     scripts/preflight.sh --base HEAD~3        # diff against something else
+#     scripts/preflight.sh --explain            # show why each check ran or didn't
+#     scripts/preflight.sh --battery schema     # one battery
+#   Any further flags are passed straight through to run_checks.py.
+
+set -uo pipefail
 cd "$(dirname "$0")/.."
-fail=0
-run() {  # run "<label>" <cmd...>
-  local label="$1"; shift
-  if "$@" >/tmp/preflight_step.log 2>&1; then
-    echo "[PASS] $label"
-  else
-    echo "[FAIL] $label"
-    sed 's/^/         /' /tmp/preflight_step.log | tail -8
-    fail=1
-  fi
-}
-# Same, but exit code 2 means "the tool could not run here" (missing browser,
-# missing node) rather than "the check failed". SKIP is printed loudly: a gate that
-# quietly does nothing is worse than no gate.
-run_opt() {  # run_opt "<label>" <cmd...>
-  local label="$1"; shift
-  "$@" >/tmp/preflight_step.log 2>&1
-  case $? in
-    0) echo "[PASS] $label" ;;
-    2) echo "[SKIP] $label — tool unavailable here; this check did NOT run"
-       sed 's/^/         /' /tmp/preflight_step.log | tail -2 ;;
-    *) echo "[FAIL] $label"
-       sed 's/^/         /' /tmp/preflight_step.log | tail -10
-       fail=1 ;;
+
+BASE="origin/main"
+ARGS=()
+MODE_ALL=0
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --base)  BASE="$2"; shift 2 ;;
+    --all)   MODE_ALL=1; shift ;;
+    -h|--help)
+      sed -n '2,44p' "$0" | sed 's/^# \{0,1\}//'
+      exit 0 ;;
+    *)       ARGS+=("$1"); shift ;;
   esac
-}
+done
 
-echo "===== preflight: structure & cross-refs ====="
-run "validate_bpc"              python3 scripts/validate_bpc.py --all
-run "validate_cross_refs"       python3 scripts/validate_cross_refs.py --repo-root .
-
-echo "===== preflight: schema & data layer ====="
-run "validate_schema"           python3 scripts/validate_schema.py --verbose
-run "validate_schema --cross"   python3 scripts/validate_schema.py --cross-check
-run "validate_evidence_state"   python3 scripts/validate_evidence_state.py
-run "verification_consistency"  python3 scripts/validate_verification_consistency.py
-run "validate_axes"             python3 scripts/validate_axes.py
-run "validate_population"       python3 scripts/validate_population.py
-run "validate_temporal"         python3 scripts/validate_temporal.py
-run "test_db_integrity"         python3 scripts/tests/test_db_integrity.py
-
-echo "===== preflight: governance ====="
-run "decision_capture"          python3 scripts/decision_capture.py
-run "doctrine_recheck --cross"  python3 scripts/doctrine_recheck.py --cross-ref
-run "source_slug_dupes"         python3 scripts/audit/source_slug_links_duplicates.py
-
-echo "===== preflight: DB reproducibility (audit.yml GAP-290, the real PR gate) ====="
-if python3 scripts/migrate_db.py --rebuild /tmp/preflight_rebuilt.db >/tmp/preflight_step.log 2>&1; then
-  python3 - <<'PY'
-import sqlite3, sys, os
-a=sqlite3.connect(os.environ.get("GUIDEBOOK_DB_PATH","data/guidebook.db")); b=sqlite3.connect("/tmp/preflight_rebuilt.db")
-inv=[("PRAGMA user_version","user_version"),("SELECT COUNT(*) FROM evidence_sources","evidence_sources"),
-     ("SELECT COUNT(*) FROM citation_mining","citation_mining"),("SELECT COUNT(*) FROM source_slug_links","source_slug_links"),
-     ("SELECT COUNT(*) FROM gaps","gaps"),("SELECT COUNT(*) FROM connections","connections"),("SELECT COUNT(*) FROM items","items")]
-bad=[]
-for sql,label in inv:
-    c=a.execute(sql).fetchone()[0]; r=b.execute(sql).fetchone()[0]
-    if c!=r: bad.append(f"{label}: committed={c} rebuilt={r}")
-if bad:
-    print("[FAIL] reproducibility (7 core invariants)"); [print("         "+x) for x in bad]; sys.exit(1)
-print("[PASS] reproducibility (7 core invariants)")
-PY
-  [ $? -ne 0 ] && fail=1
-else
-  echo "[FAIL] reproducibility (rebuild errored)"; tail -6 /tmp/preflight_step.log; fail=1
+if ! python3 -c "import yaml" 2>/dev/null; then
+  echo "preflight: PyYAML is required — pip install -r requirements.txt" >&2
+  exit 2
 fi
 
-echo "===== preflight: DB-derived output freshness (--check gates) ====="
-run "pipeline_completeness --check"  python3 tools/pipeline_completeness.py --check
-run "evidentiary_audit --check"      python3 tools/evidentiary_audit.py --check
+# The registry selftest runs first: it verifies every registered script still
+# exists on disk, so a rename that skipped its caller sweep surfaces here rather
+# than as a check that has silently stopped running.
+echo "===== preflight: registry selftest ====="
+python3 scripts/run_checks.py --selftest || exit 1
+echo
 
-# A rendered document is a derived surface: it may summarise the record, but it may
-# not contradict it or present it as stronger than it is. Three adversarial audits of
-# specs/e-08-brief.html found ~90 defects; every serious one was mechanically checkable
-# and none was caught by re-reading the prose. Hence a gate rather than a habit.
-echo "===== preflight: rendered documents (specs/*.html vs the record) ====="
-run     "rendered_docs vs DB"        python3 scripts/audit/check_rendered_docs.py --all
-run_opt "rendered_docs in browser"   node scripts/audit/render_audit.js
-
-echo "==================================================="
-if [ "$fail" -eq 0 ]; then
-  echo "PREFLIGHT: PASS — safe to push."
+if [ "$MODE_ALL" -eq 1 ]; then
+  python3 scripts/run_checks.py --all ${ARGS[@]+"${ARGS[@]}"}
 else
-  echo "PREFLIGHT: FAIL — fix the [FAIL] gates above before pushing."
+  if ! git rev-parse --verify --quiet "$BASE" >/dev/null; then
+    echo "preflight: base ref '$BASE' not found; fetching..." >&2
+    git fetch origin main --quiet 2>/dev/null || true
+  fi
+  python3 scripts/run_checks.py --changed-from "$BASE" ${ARGS[@]+"${ARGS[@]}"}
+fi
+status=$?
+
+echo
+if [ "$status" -eq 0 ]; then
+  echo "PREFLIGHT: PASS — safe to push."
+  echo "  (gated on your diff — run 'scripts/preflight.sh --all' for the full battery.)"
+else
+  echo "PREFLIGHT: FAIL — fix the blocking failures above before pushing."
   echo "  (stale --check? run: scripts/regenerate_derived.sh)"
 fi
-exit "$fail"
+exit "$status"

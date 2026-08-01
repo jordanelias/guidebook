@@ -236,8 +236,30 @@ canonical DB) and `graph_audit.py` (resolves the path via `graph/build.py`). **O
 code does *not* honour it** — `scripts/{db,migrate,probes,test}/**` is out of scope, and note
 that `scripts/db/**` targets `data/db/guidebook.db`, a *different, legacy* file that is not the
 canonical database. If you point the variable at a scratch copy and run something under those
-paths, it will read the committed DB regardless. There's no "run all" wrapper; CI runs discrete
-steps. The ones you'll actually use:
+paths, it will read the committed DB regardless.
+
+**Run checks through the registry, not one at a time.** Every check lives in
+`governance/check-registry.yaml`; `scripts/run_checks.py` is the only thing that invokes one,
+and both CI and `preflight.sh` call it. It gates on **what kind of work you did** — it
+classifies your diff into work kinds (`data` / `schema` / `synthesis` / `governance` / `render`
+/ `tooling`) and runs the checks those kinds warrant.
+
+| Command | Purpose |
+|---|---|
+| `scripts/preflight.sh` | **start here** — gate your diff vs `origin/main` |
+| `scripts/preflight.sh --all` | every registered check |
+| `python3 scripts/run_checks.py --changed-from origin/main --explain` | show why each check ran or didn't |
+| `python3 scripts/run_checks.py --kinds data --battery schema` | one battery, one kind |
+| `python3 scripts/run_checks.py --list` | the registry, plus what's quarantined and why |
+| `python3 scripts/run_checks.py --selftest` | verify the registry is coherent |
+
+`run_checks.py` exits non-zero only when a **blocking** check fails; `advisory` and
+`informational` results are reported but don't fail. Levels are declared in the registry.
+Adding a check means editing the registry — never a workflow. See
+`references/tooling-register.md` for the full assessment, the quarantine list, and the
+owner-gated proposals.
+
+The individual commands still work if you want one in isolation:
 
 | Command | Purpose | Deps |
 |---|---|---|
@@ -252,22 +274,36 @@ steps. The ones you'll actually use:
 | `python3 scripts/audit/db_path_env_audit.py` | `GUIDEBOOK_DB_PATH` contract | stdlib |
 
 Tests are **standalone scripts, not pytest** (`python3 scripts/tests/<name>.py`, each prints a
-`RESULTS: X/Y` line and exits 0/1). Only `test_db_integrity.py` is wired into CI. Prefer it over
-the older `validate_db.py`, which may be stale against the current schema.
+`RESULTS: X/Y` line and exits 0/1). Only `test_db_integrity.py` is in the registry; eight more
+pass and are wired to nothing (`references/tooling-register.md` §6.7). Prefer it over the older
+`validate_db.py`, which is **broken** against the current schema (`no such column: doi_less_key`)
+and is quarantined.
 
-**CI workflows** (both trigger on push to `main` and PRs to `main`):
-`ci.yml` — jobs: syntax, structure, commit-msg, schema, `db_integrity`, governance. `audit.yml`
-— `source_slug_links` duplicates, citation-mining completeness (reads `sessions/LATEST`),
-**migration reproducibility** (this is the check that actually enforces rule 4 — no path filter,
-runs on every PR), and attestation schema/presence. Note the trigger asymmetry: on a **pull
-request**, `ci.yml` in practice runs only `syntax` + `structure` — `commit-msg` is push-only,
-and `schema`/`db_integrity`/`governance` fire only on **push to `main`**. So the enum/schema/
-governance validators don't gate PRs at all; a data- or schema-touching change can pass the PR
-yet fail once merged — run those validators locally before you push.
+**CI workflows** — four, since the 2026-08-01 consolidation (was eight):
+
+| Workflow | Trigger | What it does |
+|---|---|---|
+| `ci.yml` | push `main`, PR → `main` | The gate. A `classify` job maps the diff to work kinds, then the battery jobs (`syntax`, `structure`, `data`, `schema`, `governance`, `attestation`, `research`, `render`) run the registry checks those kinds warrant. `commit-msg` (format + doctrine token) stays push-only. |
+| `regenerate-derived.yml` | push `main` (DB/generator paths), weekly, dispatch | 3-leg matrix rebuilding the vetting surface, evidentiary audit and pipeline-completeness dashboard, committed back by the bot. |
+| `resolve-dois.yml` | weekly Mon 06:00 UTC | Source-verification Channel 1. |
+| `verify-urls.yml` | bi-weekly | URL-verification Channel 2. |
+
+`audit.yml` and `research-contract.yml` were folded into `ci.yml`; the three `regenerate-*.yml`
+became the matrix. All five are preserved in `_archived/workflows/` with a mapping README.
+
+**The old PR trigger asymmetry is fixed.** `schema`/`db_integrity`/`governance` used to be
+gated on `contains(github.event.pull_request.changed_files, 'data/')` — but `changed_files` is
+an *integer count*, so that expression was always false and those jobs never ran on any PR.
+They now run on the PRs that warrant them.
+
+> **`main` is not branch-protected** (checked 2026-08-01), so a `blocking` check paints a red
+> X and stops nothing. Enabling protection is an owner decision — see
+> `references/tooling-register.md` §6.
 
 > **Before assuming a red `main` or a failing check was caused by your change, read the actual
-> run.** `main` can carry pre-existing, owner-gated failures unrelated to your work. Current CI
-> status lives in the repo's **Actions** tab (workflows `ci.yml` / `audit.yml`) for your commit;
+> run.** `main` can carry pre-existing, owner-gated failures unrelated to your work — two
+> blocking gates are red on `main` today (`references/tooling-register.md` §4). Current CI
+> status lives in the repo's **Actions** tab for your commit;
 > reproduce any check locally with its command from the table above (e.g.
 > `python3 scripts/tests/test_db_integrity.py`) and read its `RESULTS:` line / exit code.
 > Diagnose from that output — this file deliberately doesn't transcribe which checks are
