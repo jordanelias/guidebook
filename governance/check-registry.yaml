@@ -308,8 +308,13 @@ checks:
       a divergence the project may well consider legitimate.
       Timestamp-only divergence is reported separately from content so the check
       does not cry wolf: 4 further tables differ only in created_at/updated_at.
-      Costs a second full rebuild alongside the blocking check; worth folding into
-      one invocation if data-PR wall-clock becomes a problem.
+      RESOLVED 2026-08-01: the second rebuild is gone. A rebuild's only input is
+      the migration files, so it is cached on their SHA; this check and the
+      blocking one run in the same `data` battery job, so the pair now costs one
+      rebuild rather than two (45.4s -> 0.1s on the second invocation). Any
+      migration edit changes the fingerprint and forces a fresh build, verified by
+      mutation, so the cache cannot mask what the check exists to detect. Reuse is
+      printed rather than silent.
 
   - id: source_slug_links_duplicates
     cmd: [python3, scripts/audit/source_slug_links_duplicates.py]
