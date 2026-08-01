@@ -206,10 +206,45 @@ def run_check(check, session, env, github=False):
     elapsed = time.time() - started
     output = (proc.stdout + proc.stderr).strip()
     if proc.returncode == 0:
+        vacuity = vacuity_failure(check, output)
+        if vacuity:
+            return "FAIL", elapsed, f"{output}\n\nVACUITY GUARD: {vacuity}"
         return "PASS", elapsed, output
     if proc.returncode == 2 and check.get("optional_exit2"):
         return "SKIP", elapsed, output
     return "FAIL", elapsed, output
+
+
+EXAMINED_RE = re.compile(r"^EXAMINED:\s*(\d+)\b", re.MULTILINE)
+
+
+def vacuity_failure(check, output):
+    """A check that examined nothing has not passed — it has abstained.
+
+    `validate_schema` was BLOCKING and named six data/ subdirectories that have
+    never existed. It found zero files, printed "No entity files found to
+    validate." and exited 0, so the entity-schema gate reported green for its
+    whole life while examining nothing. That is worse than no gate, because it is
+    counted as coverage.
+
+    Opt-in per check via `min_items:` in the registry, because some corpora are
+    legitimately empty. A declared check must print `EXAMINED: <n>`; if it does
+    not, that is itself the failure — an unverifiable count cannot be trusted to
+    be non-zero. Deliberately a FAIL and not a SKIP: SKIP is excluded from the
+    verdict even at blocking level, which would hide exactly what this catches.
+    """
+    minimum = check.get("min_items")
+    if not minimum:
+        return None
+    match = EXAMINED_RE.search(output or "")
+    if not match:
+        return (f"declares min_items={minimum} but printed no 'EXAMINED: <n>' line, "
+                "so the number of items it looked at cannot be established")
+    seen = int(match.group(1))
+    if seen < minimum:
+        return (f"examined {seen} item(s), below the declared minimum of {minimum} — "
+                "the check passed by having nothing to look at")
+    return None
 
 
 def report_line(check, status, elapsed):

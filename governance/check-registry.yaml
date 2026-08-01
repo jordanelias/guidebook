@@ -162,6 +162,7 @@ checks:
     kinds: [always]
     level: blocking
     cost: fast
+    min_items: 1000
 
   - id: check_json
     cmd: [python3, scripts/ci_helpers/check_json.py]
@@ -169,6 +170,7 @@ checks:
     kinds: [always]
     level: blocking
     cost: fast
+    min_items: 50
 
   - id: check_yaml
     cmd: [python3, scripts/ci_helpers/check_yaml.py]
@@ -176,6 +178,7 @@ checks:
     kinds: [always]
     level: blocking
     cost: fast
+    min_items: 20
 
   # ===== structure — always, stdlib =========================================
   - id: validate_bpc
@@ -330,6 +333,7 @@ checks:
     kinds: [schema, data, governance]
     level: blocking
     cost: fast
+    min_items: 1
 
   - id: validate_schema_cross_check
     cmd: [python3, scripts/validate_schema.py, --cross-check]

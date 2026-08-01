@@ -21,6 +21,7 @@ import argparse
 import glob
 import os
 import random
+import sqlite3
 import sys
 
 import yaml
@@ -28,22 +29,27 @@ import yaml
 # Allow importing schemas from repo root
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from schemas.specification import Specification
-from schemas.evidence_source import EvidenceSource
-from schemas.bpc_metadata import BPCMetadata
-from schemas.connection import Connection
-from schemas.slug import Slug
-from schemas.gap import Gap
+from schemas.jurisdictional_value import JurisdictionalValueFile
 
 
-# Registry: maps data/ subdirectory to its Pydantic model
+# Registry: maps data/ subdirectory to its Pydantic model.
+#
+# CORRECTED 2026-08-01. This registry previously named six subdirectories —
+# specifications, sources, bpc-metadata, connections, slugs, gaps — and NOT ONE OF
+# THEM EXISTS under data/. find_entity_files() therefore returned [], main()
+# short-circuited on "No entity files found to validate.", and the check exited 0.
+# It is registered BLOCKING. So the entity-schema gate has reported green, for its
+# whole life, while examining nothing: the most expensive kind of defect, because
+# it is counted as coverage.
+#
+# data/ actually contains: adversarial_use/, decisions/, doctrine_recheck/,
+# jurisdictional_values/. Three of those already have validators —
+# audit_adversarial_use.py, decision_capture.py and doctrine_recheck.py — so
+# duplicating them here would add a second opinion, not coverage. jurisdictional_values
+# is the one corpus with a real DB counterpart and no validator at all, which is
+# why it is the one wired up.
 ENTITY_REGISTRY = {
-    "specifications": Specification,
-    "sources": EvidenceSource,
-    "bpc-metadata": BPCMetadata,
-    "connections": Connection,
-    "slugs": Slug,
-    "gaps": Gap,
+    "jurisdictional_values": JurisdictionalValueFile,
 }
 
 
@@ -136,9 +142,12 @@ def main():
                     matched = True
                     break
             if not matched:
-                print(f"WARNING: Cannot determine entity type for {f}", file=sys.stderr)
-                # Default to Specification
-                file_list.append((f, Specification))
+                # Was `file_list.append((f, Specification))` — a fallback to a model
+                # that is no longer imported, so this branch would have raised
+                # NameError. An unrecognised path is a caller error; say so.
+                print(f"ERROR: cannot determine entity type for {f}. "
+                      f"Known types: {list(ENTITY_REGISTRY)}", file=sys.stderr)
+                return 2
     elif args.dir:
         # Specific directory
         entity_dir = args.dir
@@ -156,8 +165,17 @@ def main():
         file_list = find_entity_files()
 
     if not file_list:
-        print("No entity files found to validate.")
-        return 0
+        # Exit 2, not 0. Finding nothing to validate is a configuration fault —
+        # this script returned 0 here for its whole life while ENTITY_REGISTRY
+        # named six directories that do not exist, so a BLOCKING gate reported
+        # green having examined nothing. The runner's vacuity guard (min_items in
+        # check-registry.yaml) catches this independently; the non-zero exit means
+        # a direct invocation says so too.
+        print("EXAMINED: 0 entity file(s)")
+        print("No entity files found to validate — ENTITY_REGISTRY names no "
+              "directory that exists under data/. This is a configuration fault, "
+              "not a pass.")
+        return 2
 
     # Quick mode: sample
     if args.quick and len(file_list) > 5:
@@ -179,7 +197,8 @@ def main():
             all_errors.extend(errors)
 
     # Report
-    print(f"\nSchema validation: {total} files checked, "
+    print(f"\nEXAMINED: {total} entity file(s)")
+    print(f"Schema validation: {total} files checked, "
           f"{total - failed} passed, {failed} failed")
 
     if all_errors:
@@ -205,62 +224,67 @@ def main():
 
 
 def run_cross_checks(base_dir: str = "data") -> list:
-    """Run cross-entity referential integrity checks.
+    """Reconcile the entity YAML corpus against its DB counterpart.
 
-    Returns list of error strings. Empty = all pass.
+    REWRITTEN 2026-08-01. This function previously loaded index sets from
+    data/slugs, data/sources, data/connections, data/bpc-metadata and
+    data/specifications and cross-referenced them. None of those directories has
+    ever existed, so every index was empty, every loop body was unreachable, and
+    the function reported "Cross-entity integrity: all checks passed" having
+    compared nothing.
+
+    data/jurisdictional_values/ is the one entity corpus with a real DB table
+    behind it (`jurisdictional_values`), and the 2026-08-01 boundary map recorded
+    that pairing as UNCHECKED in both directions. This reconciles them on the
+    (item_code, jurisdiction, standard_name) identity: a record present in one
+    store and absent from the other is drift, regardless of which side is
+    canonical — that question is open (see check-registry.yaml on whether
+    schemas/*.py mirrors SQLite or the YAML layer) and this check deliberately
+    does not presume an answer. It reports the disagreement and lets the owner
+    decide the direction.
     """
     errors = []
+    yaml_dir = os.path.join(base_dir, "jurisdictional_values")
+    if not os.path.isdir(yaml_dir):
+        return [f"{yaml_dir} not found — cross-check cannot run"]
 
-    # Load indices
-    slug_names = _load_field_set(base_dir, "slugs", "slug")
-    source_ref_ids = _load_field_set(base_dir, "sources", "ref_id")
-    con_ids = _load_field_set(base_dir, "connections", "con_id")
-    bpc_slugs = _load_field_set(base_dir, "bpc-metadata", "slug")
-    topic_dirs = _load_field_set(base_dir, "bpc-metadata", "topic_directory")
+    db_path = os.environ.get("GUIDEBOOK_DB_PATH",
+                             os.path.join(base_dir, "guidebook.db"))
+    if not os.path.exists(db_path):
+        return [f"DB not found at {db_path} — cross-check cannot run"]
 
-    # Check 1: Specification.bpc_source_slug → Slug or BPC metadata
-    known_slugs = slug_names | bpc_slugs
-    spec_dir = os.path.join(base_dir, "specifications")
-    if os.path.isdir(spec_dir):
-        for f in glob.glob(os.path.join(spec_dir, "*.yaml")):
-            with open(f) as fh:
-                d = yaml.safe_load(fh)
-            bpc_slug = d.get("bpc_source_slug", "")
-            if bpc_slug and bpc_slug not in known_slugs:
-                # Population-level slugs (MOB, VIS, etc.) won't match — skip
-                if not bpc_slug.isupper() and len(bpc_slug) > 3:
-                    errors.append(
-                        f"SPEC {d.get('spec_id')}: bpc_source_slug '{bpc_slug}' "
-                        f"not found in slugs or bpc-metadata"
-                    )
+    def key(item_code, jurisdiction, standard_name):
+        return (str(item_code or "").strip(),
+                str(jurisdiction or "").strip(),
+                str(standard_name or "").strip())
 
-    # Check 2: Connection.filed_in → topic directory
-    conn_dir = os.path.join(base_dir, "connections")
-    if os.path.isdir(conn_dir) and topic_dirs:
-        for f in glob.glob(os.path.join(conn_dir, "*.yaml")):
-            with open(f) as fh:
-                d = yaml.safe_load(fh)
-            filed = d.get("filed_in", "")
-            if filed and filed not in topic_dirs and filed not in (
-                "cross-cutting", "_frozen", "population-general"
-            ):
-                errors.append(
-                    f"CON {d.get('con_id')}: filed_in '{filed}' "
-                    f"not a known topic directory"
-                )
+    yaml_keys = set()
+    for path in sorted(glob.glob(os.path.join(yaml_dir, "*.yaml"))):
+        with open(path, encoding="utf-8") as fh:
+            doc = yaml.safe_load(fh) or {}
+        for rec in doc.get("records", []) or []:
+            yaml_keys.add(key(rec.get("item_code"), rec.get("jurisdiction"),
+                              rec.get("standard_name")))
 
-    # Check 3: BPCMetadata.slug → Slug registry
-    bpc_dir = os.path.join(base_dir, "bpc-metadata")
-    if os.path.isdir(bpc_dir) and slug_names:
-        for f in glob.glob(os.path.join(bpc_dir, "*.yaml")):
-            with open(f) as fh:
-                d = yaml.safe_load(fh)
-            slug = d.get("slug", "")
-            if slug and slug not in slug_names:
-                errors.append(
-                    f"BPC {slug}: not found in slug registry"
-                )
+    con = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+    try:
+        db_keys = {key(*row) for row in con.execute(
+            "SELECT item_code, jurisdiction, standard_name FROM jurisdictional_values")}
+    finally:
+        con.close()
 
+    only_yaml = sorted(yaml_keys - db_keys)
+    only_db = sorted(db_keys - yaml_keys)
+    for k in only_yaml[:20]:
+        errors.append(f"jurisdictional_values: in YAML, absent from DB: {k}")
+    if len(only_yaml) > 20:
+        errors.append(f"  ... and {len(only_yaml) - 20} more YAML-only records")
+    for k in only_db[:20]:
+        errors.append(f"jurisdictional_values: in DB, absent from YAML: {k}")
+    if len(only_db) > 20:
+        errors.append(f"  ... and {len(only_db) - 20} more DB-only records")
+
+    print(f"CROSS-CHECK: {len(yaml_keys)} YAML record(s) vs {len(db_keys)} DB row(s)")
     return errors
 
 
