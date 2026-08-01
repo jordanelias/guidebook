@@ -223,6 +223,39 @@ checks:
     note: >-
       GAP-290 enforcement — the gate that actually stops direct DB writes. Was two
       hand-kept inline heredocs (audit.yml and preflight.sh); now one script.
+      SCOPE, recorded 2026-08-01 because the description above overstates it: this
+      compares PRAGMA user_version plus COUNT(*) on six tables. An UPDATE changes
+      no count, so value-level edits are invisible to it, as is anything in the
+      other 55 tables. CLAUDE.md §0 rule 4 says CI "fails on any divergence",
+      which this has never done. See migration_reproducibility_deep.
+
+  - id: migration_reproducibility_deep
+    cmd: [python3, scripts/audit/migration_reproducibility.py, --deep]
+    battery: data
+    kinds: [data, schema]
+    level: advisory
+    cost: slow
+    note: >-
+      Every table, every row — the comparison the core invariants cannot make.
+      Added 2026-08-01 after an adversarial trace showed the blocking check above
+      passes on a tampered DB: editing a row's tier and title, and inserting a
+      forged `stated` cell into evidence_cell_state, both leave all seven
+      invariants identical.
+      RED, and the two findings look like an incomplete exemption list rather than
+      a hand-edited DB: evidence_sources diverges on 277 rows (subtype,
+      citation_count, pages, pub_month) because scripts/resolve_dois.py writes
+      Crossref enrichment straight into it, and url_verification_runs diverges by
+      one row because verify-urls.yml inserts its run record. Both are written by
+      the same scheduled workflows that DR-2026-05-28 already exempted
+      evidence_source_authors and pipeline_runs for — they were simply never added.
+      ADVISORY, not blocking, and deliberately so: resolving this is an owner call
+      between widening the DR's exemption list and requiring those jobs to emit
+      migrations. Promoting it before that decision would block every data PR on
+      a divergence the project may well consider legitimate.
+      Timestamp-only divergence is reported separately from content so the check
+      does not cry wolf: 4 further tables differ only in created_at/updated_at.
+      Costs a second full rebuild alongside the blocking check; worth folding into
+      one invocation if data-PR wall-clock becomes a problem.
 
   - id: source_slug_links_duplicates
     cmd: [python3, scripts/audit/source_slug_links_duplicates.py]

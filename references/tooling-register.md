@@ -268,6 +268,75 @@ What went missing in July was that third step. **That makes most of B01/B06 proc
 content debt** — and it means the content backlog standing task 12 must clear is C01–C04/G02,
 not the enum rows.
 
+### §4.2 Second-pass findings — the next F1-class bugs
+
+The 2026-08-01 consolidation's headline finding (F1) was a CI condition that could
+never evaluate true, so three jobs never ran on any PR in the repo's history. A
+deliberate hunt for the *next* bug of that class, run against the newly-written
+apparatus rather than the code it replaced, found four. All were confirmed by
+execution, not by reading.
+
+**F7 — A docs-only diff crashed three CI jobs and ran nothing. (Fixed.)** A diff
+matching no work kind classifies to an empty kind set, which `ci.yml` passes on as
+`--kinds ""`. `run_checks.py` tested that argument for **truthiness**, so an empty
+kinds string was indistinguishable from an absent one and fell through to
+`ap.error()` → exit 2. Every docs-only PR would have got three red jobs bearing an
+argparse usage error, while the six `always` checks they were meant to run did not
+run at all. The selector was never wrong — the selftest asserts *"empty kind set
+selects exactly the always-on checks"* and passes. **The fault was entirely in the
+entry point, which is why a selftest exercising `select()` could not see it.** New
+`C6` cases drive the actual command line. Generalisable: a selftest that only calls
+internals cannot catch a bug in how the program is invoked.
+
+**F8 — Every push run of `ci.yml` on `main` was red for a fake reason. (Fixed.)**
+`check_commit_msg.py` had no merge or bot exemption, but every human integration on
+`main` arrives as a GitHub merge commit, so the format step failed on all six of
+the last six push runs while every PR run was green. It also took **no arguments at
+all**, so the `--selftest` the session record credited it with silently re-checked
+`HEAD` and printed PASS. Now carries `E3`/`E4` mirroring `check_doctrine_token.py`'s,
+and a real 9-case selftest. This matters beyond tidiness: **a permanently-red `main`
+is the ecology the F1 class lives in.** Once red is normal, a newly-red check
+carries no information.
+
+**F9 — The doctrine gate was serially coupled to F8. (Fixed.)** It runs after the
+format step in the same job, and GitHub skips later steps after a failure, so the
+*blocking* doctrine-token check was **skipped rather than evaluated on every push to
+`main`**. Now gated on `!cancelled()`. Two gates in one job must not be able to mask
+each other.
+
+**F10 — The gate that enforces "never write the DB directly" compares seven
+scalars.** `migration_reproducibility.py` compares `PRAGMA user_version` plus
+`COUNT(*)` on six tables, while CLAUDE.md §0 rule 4 says CI "fails on any
+divergence". An `UPDATE` changes no count, so value-level edits are invisible, as is
+everything in the other 55 tables — demonstrated by tampering with a scratch copy
+(a row's `tier` and title rewritten, and a forged `stated` cell inserted into
+`evidence_cell_state`) and watching it return `VERDICT: PASS`. `EXEMPT_TABLES` was
+decorative: the comparator never enumerated tables, so it was printed and never
+applied.
+
+Added `--deep`, wired **advisory** as `migration_reproducibility_deep`. It compares
+every table and every row, and separates timestamp-only divergence from content so
+it does not cry wolf. What it finds looks like an **incomplete exemption list
+rather than a hand-edited DB**:
+
+| Table | Divergence | Written by |
+|---|---|---|
+| `evidence_sources` | 277 rows — `subtype`, `citation_count`, `pages`, `pub_month` | `scripts/resolve_dois.py` writes Crossref enrichment straight into it |
+| `url_verification_runs` | 1 row | `verify-urls.yml` inserts its run record |
+| `bpc_metadata`, `gaps`, `slugs`, `source_slug_links` | timestamps only | — |
+
+Both substantive tables are written by the same scheduled workflows that
+DR-2026-05-28 already exempted `evidence_source_authors` and `pipeline_runs` for.
+They were simply never added to the list. **Left advisory deliberately:** resolving
+it is an owner choice between widening the DR's exemption list and requiring those
+jobs to emit migrations, and promoting it first would block every data PR on a
+divergence the project may consider legitimate.
+
+> Worth stating plainly, because it bears on the branch-protection plan in §6.7:
+> between F10 and the fact that bot pushes to `main` do not trigger `push`
+> workflows at all (a `GITHUB_TOKEN` push raises no `push` event), **the canonical
+> DB's only unreviewed writers are also its only unchecked ones.**
+
 ---
 
 ## §5. Quarantine — registered, never selected

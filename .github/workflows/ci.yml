@@ -91,6 +91,15 @@ jobs:
       - name: Compute the check plan
         id: plan
         run: |
+          # pipefail is load-bearing here, not boilerplate. This pipe is the single
+          # point where the whole gating plan is produced, and it is the only place
+          # in the workflow where a command's exit code passes through one. The
+          # default shell is `bash -e {0}` with no pipefail, so without this line a
+          # failing run_checks.py (bad registry, failed git diff) would be masked by
+          # tee's 0: the step would pass with empty kinds/batteries outputs, every
+          # battery job's `if:` would evaluate false, and the workflow would go
+          # green having run nothing at all.
+          set -euo pipefail
           python3 scripts/run_checks.py \
             --changed-from "${{ steps.base.outputs.base }}" \
             --print-plan | tee -a "$GITHUB_OUTPUT"
