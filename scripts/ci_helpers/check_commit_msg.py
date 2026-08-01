@@ -20,11 +20,16 @@ Two consequences made that worse than cosmetic:
   * A permanently-red `main` is how the F1 class of bug survives: once red is
     normal, a newly-red check carries no information.
 
-The exemptions mirror check_doctrine_token.py's E3/E4 exactly, so the two gates
-in this job agree about what a checkable commit is:
+The two gates in this job must agree about what a checkable commit is, so they
+share one definition rather than two matching copies — commit_gate.py:
 
   E3  bot / automation author  -> exempt
   E4  merge commit (>1 parent) -> exempt
+
+(The first pass at this copied check_doctrine_token.py's regex into this file.
+Two gates that must agree, agreeing via two hand-maintained copies, is the same
+defect as the four drifted check lists this repo's registry exists to replace —
+just smaller. Corrected before merge.)
 
 Bot commits are exempt rather than fixed because the scheduled workflows compose
 their own subjects ("url-verification: V1 run ... verified +0 (757 total); ...")
@@ -41,12 +46,15 @@ Exit codes: 0 = pass or exempt, 1 = fail, 2 = cannot run.
 """
 
 import argparse
+import os
 import re
 import subprocess
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from commit_gate import is_bot, is_merge  # noqa: E402
+
 PATTERN = re.compile(r"^[a-z][a-z0-9_-]+:\s+.+\s+\[\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}\]$")
-BOT_RE = re.compile(r"dependabot|github-actions|-bot@")
 
 
 def git(*args):
@@ -57,9 +65,9 @@ def git(*args):
 def evaluate(message, author, parent_count):
     """Pure decision function — no git, so the selftest can drive it directly.
     Returns (exit_code, explanation)."""
-    if BOT_RE.search(author or ""):
+    if is_bot(author):
         return 0, f"E3: bot commit ({author}) — format exempt."
-    if parent_count > 1:
+    if is_merge(parent_count):
         return 0, "E4: merge commit — format exempt."
     if PATTERN.match(message or ""):
         return 0, "PASS: commit message format valid."

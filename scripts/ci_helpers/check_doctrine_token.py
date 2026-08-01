@@ -35,16 +35,19 @@ Exit codes: 0 = pass or exempt, 1 = fail, 2 = cannot run.
 """
 
 import argparse
+import os
 import re
 import subprocess
 import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from commit_gate import is_bot, is_merge  # noqa: E402
 
 SYNTHESIS_RE = re.compile(
     r"^(references/bpc-reasoning|references/connection-reasoning|decisions|sessions)/"
 )
 TOKEN_RE = re.compile(r"\[DOCTRINE:\s*([a-f0-9]{7})\]")
 DOCTRINE_PATH = "governance/mission-and-epistemics.md"
-BOT_RE = re.compile(r"dependabot|github-actions|-bot@")
 
 
 def git(*args):
@@ -69,9 +72,9 @@ def evaluate(files, message, author, parent_count, expected):
     if DOCTRINE_PATH in files:
         return 0, ("E2: doctrine commit — token exempt. Re-attestation required "
                    "within RE_ATTESTATION_WINDOW commits.")
-    if BOT_RE.search(author or ""):
+    if is_bot(author):
         return 0, f"E3: bot commit ({author}) — exempt."
-    if parent_count > 1:
+    if is_merge(parent_count):
         return 0, "E4: merge commit — exempt."
 
     match = TOKEN_RE.search(message or "")
