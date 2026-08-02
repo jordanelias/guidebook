@@ -223,6 +223,38 @@ def run_checks(db_path):
            bad_complete_doi == 0,
            f"{bad_complete_doi} COMPLETE rows lack doi with no acceptable explanation" if bad_complete_doi else "")
 
+    # C06 — data_capture_status must agree with the joinable evidence tables in
+    # BOTH directions. A status that can drift from the rows it summarises is
+    # worse than no status: it looks authoritative while being wrong. When W5.4
+    # gives jurisdictional_values a ref_id, add it to this predicate AND to the
+    # backfill in data_20260802215744.
+    CAPTURED = """(EXISTS (SELECT 1 FROM source_value_extractions x WHERE x.ref_id=s.ref_id)
+                OR EXISTS (SELECT 1 FROM spec_value_probes p       WHERE p.ref_id=s.ref_id)
+                OR EXISTS (SELECT 1 FROM reasoning_doc_citations r WHERE r.source_ref_id=s.ref_id)
+                OR EXISTS (SELECT 1 FROM economics_entries e       WHERE e.ref_id=s.ref_id))"""
+    claims_not_held = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources s
+        WHERE s.data_capture_status='captured' AND NOT {CAPTURED}""").fetchone()[0]
+    held_not_claimed = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources s
+        WHERE s.data_capture_status<>'captured' AND {CAPTURED}""").fetchone()[0]
+    record("C06", "data_capture_status='captured' ⟺ a joinable capture row exists",
+           claims_not_held == 0 and held_not_claimed == 0,
+           f"{claims_not_held} claim capture with no row; {held_not_claimed} have rows but do not claim it"
+           if (claims_not_held or held_not_claimed) else "")
+
+    # C07 — a value column must hold a value, not a state written as prose.
+    # This is not hypothetical: '[author surname pending ...]' strings in
+    # first_author_last are non-empty, so C03 accepted them as authors and a
+    # missing author passed a blocking gate. Unknown belongs in NULL plus a
+    # coded status, never in the value field.
+    placeholder = conn.execute("""SELECT COUNT(*) FROM evidence_sources
+        WHERE first_author_last LIKE '[%'
+           OR first_author_last LIKE '%pending%'
+           OR first_author_last LIKE '%TBD%'
+           OR first_author_last LIKE '%unknown%'""").fetchone()[0]
+    record("C07", "first_author_last holds a name, not a placeholder state",
+           placeholder == 0,
+           f"{placeholder} rows hold placeholder prose where a surname belongs" if placeholder else "")
+
     # legacy/v2 row count parity — only when legacy table still exists
     has_legacy = conn.execute("""SELECT COUNT(*) FROM sqlite_master
         WHERE type='table' AND name='evidence_sources_v1_legacy'""").fetchone()[0]
