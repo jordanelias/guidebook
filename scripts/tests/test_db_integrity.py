@@ -266,6 +266,35 @@ def run_checks(db_path):
            f"{claims_mined} claim mined with no row; {mined_not_claimed} have a row but do not claim it"
            if (claims_mined or mined_not_claimed) else "")
 
+    # C10 — a best practice may not rest on a source whose data was never
+    # captured. 'pending' means nobody has confirmed the source contains what
+    # the cell claims it contains, so a stated or provisional cell citing a
+    # pending source is asserting a value that may not exist. Owner ruling
+    # 2026-08-02: "pending isn't good enough for us — anything pending may well
+    # not exist."
+    #
+    # This fails today (55 of 59 cited sources are pending) and is supposed to:
+    # it converts an unexamined contradiction between two layers into a number
+    # that has to go down.
+    try:
+        resting_on_pending = conn.execute("""
+            SELECT COUNT(DISTINCT c.cell_id)
+            FROM evidence_cell_state c
+            JOIN json_each(c.governing_refs) j
+            JOIN evidence_sources e ON e.ref_id = j.value
+            WHERE c.state IN ('stated','provisional')
+              AND e.data_capture_status = 'pending'""").fetchone()[0]
+        total_cells = conn.execute("""SELECT COUNT(*) FROM evidence_cell_state
+            WHERE state IN ('stated','provisional')""").fetchone()[0]
+        record("C10", "no stated/provisional cell rests on a capture-pending source",
+               resting_on_pending == 0,
+               f"{resting_on_pending} of {total_cells} published cells cite a source "
+               f"whose data was never captured — the claim may not be in the source"
+               if resting_on_pending else "")
+    except sqlite3.OperationalError as exc:
+        record("C10", "no stated/provisional cell rests on a capture-pending source",
+               False, f"could not evaluate: {exc}")
+
     # C07 — a value column must hold a value, not a state written as prose.
     # This is not hypothetical: '[author surname pending ...]' strings in
     # first_author_last are non-empty, so C03 accepted them as authors and a
