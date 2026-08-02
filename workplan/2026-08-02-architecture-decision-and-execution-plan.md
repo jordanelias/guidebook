@@ -13,6 +13,70 @@ executed the proposed invariant), a contract-triple census (all 112 edges scored
 constraint/check/log), and an adversarial review briefed to kill the design. **The design was
 substantially rejected.** This plan records what survived and why.
 
+**Revised 2026-08-02, later the same day**, after W1, W5.1 and W5.2 landed and a fifth adversarial
+pass ran against them. §0 is new. Findings that changed priority are marked **[NEW]**; items whose
+diagnosis was wrong are marked **[CORRECTED]** rather than quietly rewritten.
+
+---
+
+## 0. Executive overview — what all of this is for
+
+### The goal
+
+> **Any published best practice can be walked backwards — to the values it rests on, the sources
+> those values came from, the population it claims to serve, and the doctrine that governed the
+> judgement — and at every step the difference between "nothing found" and "not looked for" is
+> visible.**
+
+Everything below is justified by that sentence or it does not belong in this plan.
+
+### The one number that measures it
+
+The **fully-evidenced walk**: topic → source → captured value → population match → specification →
+best-practice cell, with every hop required rather than optional.
+
+| | |
+|---|---|
+| Backbone walk (topic → source → spec → best practice) | **306 tuples**, 7 topics, 13 cells |
+| …of which pass through a captured value | 42 |
+| …of which are population-matched to the cell's population | **0** |
+| **Fully evidenced** | **0** |
+
+**Zero.** Not one best practice in the database can show its work. That is the number this plan
+exists to move, and it should be reported at the top of every future status.
+
+### What is and is not broken
+
+The structure is far sounder than the data. The walk **executes** — every stage 1–11 has a table and
+a key, and 73 declared foreign keys have zero orphans. Two genuine structural absences remain
+(no `rooms` table; no `jurisdictions`/`languages` vocabulary), and one genuine disconnection
+(`jurisdictional_values` cannot name its source). Everything else that looks like a broken pipe is
+an **empty** pipe: 8 extractions and 64 population matches against 863 sources.
+
+Distinguishing these two is the discipline this plan most often failed at, in both directions —
+once proposing a junction table to fix reachability that already worked, once reporting a comparator
+artifact as dangling data. **Test the logic before blaming the data, and test the data before
+blaming the logic.**
+
+### The three principles, learned the hard way
+
+1. **A column holds one domain.** Where a value and its qualifying prose must coexist, pair the
+   value column with a `<column>_note` overflow rather than forcing a split at write time. A first
+   attempt to split by heuristic mis-handled 120 rows and destroyed a real identifier.
+2. **A status ships with its check, or it does not ship.** `data_capture_status` shipped with a
+   biconditional; `citation_mining_status` shipped without one and was wrong from creation — 80
+   sources misreported, and nothing in the system could contradict it.
+3. **Absence must be recordable.** A NULL that means "never looked" and a NULL that means "looked,
+   nothing there" will be re-searched forever. 337 sources have no DOI and no resolution outcome;
+   75 have `NO-MATCH` and never need looking at again. The pattern already exists in four places
+   under four names and is generalised nowhere.
+
+### How to use this plan
+
+Each item states **which link in the walk it makes demonstrable**. An item that cannot answer that
+is either a genuine hygiene fix (say so) or should be dropped. Priority follows the walk: a link
+nothing can traverse outranks a link that is merely unenforced.
+
 ---
 
 ## 1. The verdict
@@ -166,6 +230,55 @@ against a source row. Extend that mechanism to doctrine rather than migrating do
 ---
 
 ## 4. Workstreams
+
+### 4.0 Status, and what changed after this plan was written
+
+| Item | Status | Link in the walk it serves |
+|---|---|---|
+| **W1** stop active harm | **DONE** (PR #78) | none — removed instructions that actively misled |
+| **W5.1** declare soft edges as FKs | **DONE** — 12 of 13; `evidence_sources` deferred, traded for check A09 | every hop: 73 FKs, 0 orphans |
+| **W5.2** per-source processing state | **DONE** — migration 040 + corrections | makes "unexamined" queryable at source grain |
+| **041** paired value/prose overflow | **DONE** | prevents states masquerading as values |
+| Checks A09, C06, C07, C08, C09 | **DONE**, all mutation-verified | binds each status to the rows it summarises |
+| `scripts/audit/table_connectivity.py` | **BUILT**, not registered | measures the walk; register once its six missing-feature findings are resolved |
+| W2 repair gates that cannot fire | open | — |
+| W3 prune | open | — |
+| W4 continuity | open | — |
+| W5.3–5.5, W6, W7, W8 | open | — |
+
+**Corrections to this plan's own diagnosis**, recorded rather than rewritten:
+
+- **[CORRECTED] Stage 5 is a population problem, not a structural one.** This plan implied the
+  cell→extraction link was missing and proposed a junction. It is not missing: `sve.ref_id` is a
+  declared FK, locators exist (`source_section`, `file_anchor`, `claim_text`), and 4 of 14 cells
+  already resolve to an extraction through existing IDs. The junction is withdrawn. What *is*
+  missing is narrow: **`sve` has no `item_code`**, so extraction→specification resolves by
+  text-matching `parameter`, the one fuzzy hop in an otherwise typed chain.
+- **[CORRECTED] The "243 dangling languages" was a comparator artifact.** Language values were
+  compared against `lang_jur_map`, a language×jurisdiction *mapping*, not a vocabulary. All 37
+  distinct language values are ISO 639-1 shaped and clean.
+- **[CORRECTED] `graph_audit`'s 959 components** are a builder artifact (one 1 290-node component
+  plus 953 singletons, mostly node kinds emitted with no edges), not fragmentation.
+
+### 4.0.1 New findings that outrank existing items **[NEW]**
+
+| # | Finding | Why it outranks |
+|---|---|---|
+| **N1** | **`jurisdictional_values` has no `ref_id`.** 109 code values, none traceable to a source. Its `spec_id` is 26/26 phantom | This is the **only** home for the regulatory stratum's values, and T4–T6 is **314 of 863 sources (36%)**. Not one of five rival tables to tidy — the sole store for a third of the corpus, disconnected |
+| **N2** | **No `rooms` table.** Stage 12's catalogue exists for case studies (0 rows) and not at all for rooms — yet `site/rooms/` holds 17 hand-built pages and `room_page.py` crashes on `no such table: room` | The only *structural* break in stages 1–12 |
+| **N3** | **No `jurisdictions` / `languages` vocabulary.** 72 jurisdiction values with no canonical list; `UK` and `GB` both in use for one place; 8 compound values (`AU/NZ`, `US/AU/SE/UK`) cram several countries into one field | Jurisdiction is a first-class axis of the research-tracking table (a). Owner decisions taken 2026-08-02: **`UK` is canonical**; **countries are never lumped** — compounds split into separate rows; **`MULTI`/`Multi`/`colloquial` mean nothing** and are nulled; **`ISO` stays**, with other standards bodies such as UN, as a jurisdiction level of its own |
+| **N4** | **`search_candidates` has no `admitted_ref_id`.** 4 ADMITTED rows record nothing about what they became | Stage 6's queue drains into a void; the loop back to stage 4 cannot be closed |
+| **N5** | **No QC at cell grain.** `item_audit_runs` is per item, `supersession_check` per (slug, ref); neither carries a `cell_id` | "Was this best practice adversarially reviewed?" is unanswerable — stage 7 runs parallel to stage 10 rather than on it |
+| **N6** | **55 of 59 sources cited by a synthesis cell are `data_capture_status='pending'`** | Two layers contradict each other: synthesis has consumed sources the capture status says were never touched. Needs a ruling, not a patch |
+| **N7** | **7 tables hold data with no provenance anchor** — `connection_targets`, `supersession_check`, `pipeline_runs`, `url_verification_runs`, `data_migrations`, `db_meta`, `weighting_profile` | Cannot tell who wrote those rows or when — the work-performed flag has nowhere to hang |
+| **N8** | `slugs.merged_into` permits self-reference and cycles; `test_db_integrity` crashes against a pre-040 DB (C06 unguarded) | Small, cheap, from the fifth adversarial pass |
+
+**Revised priority.** N1 and N3 move ahead of the remaining W5 items: N1 because a third of the
+corpus is unprovenanced, N3 because the owner decisions are already taken and it unblocks the
+research-tracking axis. N2 is owner-gated with ⚑3. `sve.item_code`, N4 and N5 are three small
+columns that together make stages 5–7 traceable to stage 10.
+
+---
 
 W1 is complete (PR #78). W2–W4 need no owner decision.
 
