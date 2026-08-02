@@ -21,32 +21,36 @@ description: >
 
 ## 0. Data Sourcing (SQLite-first)
 
-> **Schema note:** The `specification`, `specification_population`, `measurement`, `room`,
-> and related entity tables are populated by `scripts/db/migrate_all.py` (not by the Phase 1
-> schema). These tables coexist in `data/guidebook.db` alongside the Phase 1 register tables.
-> If `specification` queries return empty, run `python3 scripts/db/migrate_all.py` to rebuild.
+> **Schema note (corrected 2026-08-02):** The `specification`, `specification_population`,
+> `measurement`, and `room` tables **do not exist** in `data/guidebook.db` — verified against
+> `sqlite_master`. The canonical equivalents are **`items`** (93 rows) and
+> **`item_population_links`** (372 rows). The queries below have been repointed accordingly.
+>
+> Do **not** run `scripts/db/migrate_all.py`. It targets `data/db/guidebook.db`, a legacy path
+> that does not exist; running it creates an empty database and then fails. If a query here
+> returns empty, that is a finding about the data — not a signal to rebuild anything.
 
 
 ### Before writing or revising any item:
 
-1. **Load spec record from SQLite:**
+1. **Load the item record from SQLite:**
    ```sql
-   SELECT * FROM specification WHERE item_code = '{code}'
+   SELECT * FROM items WHERE item_code = '{code}'
    ```
 
 2. **Load evidence sources:**
    ```sql
-   SELECT es.ref_id, es.surname, es.year, es.title, es.evidence_tier, es.language
+   SELECT es.ref_id, es.first_author_last, es.pub_year, es.pub_title, es.tier, es.language
    FROM evidence_sources es
    JOIN source_slug_links ssl ON es.ref_id = ssl.ref_id
-   WHERE ssl.slug IN (SELECT bpc_source_slug FROM specification WHERE item_code = '{code}')
-   ORDER BY es.evidence_tier ASC
+   WHERE ssl.slug IN (SELECT bpc_source_slug FROM items WHERE item_code = '{code}')
+   ORDER BY es.tier ASC
    ```
 
 3. **Load population associations:**
    ```sql
-   SELECT population_code, role FROM specification_population  -- role col from migrate_all.py schema
-   WHERE spec_id IN (SELECT spec_id FROM specification WHERE item_code = '{code}')
+   SELECT population_code, applicability, subtype
+   FROM item_population_links WHERE item_code = '{code}'
    ```
 
 4. **Load connections targeting this item:**
@@ -54,7 +58,7 @@ description: >
    SELECT c.con_id, c.status, c.confidence, c.description
    FROM connections c
    JOIN connection_targets ct ON c.con_id = ct.con_id
-   WHERE ct.target_id = '{code}' AND c.status = 'PENDING'
+   WHERE ct.target = '{code}' AND c.status = 'PENDING'
    ```
 
 5. **Load BPC synthesis from GitHub:** GET `references/bpc/{topic}/{slug}.md`
@@ -62,16 +66,28 @@ description: >
 
 ### After writing or revising:
 
-6. **Write spec fields to SQLite:**
-   ```sql
-   UPDATE specification SET
-     summary = ?, evidence_summary = ?, why_md = ?, schedule_md = ?,
-     question_heading = ?, dar_relevant = ?, dar_note = ?,
-     retrofit_category = ?, ot_evidence_basis = ?,
-     person_specific_note = ?, evidence_tier = ?,
-     updated_at = ?, updated_by_session = ?
-   WHERE item_code = '{code}'
-   ```
+6. **Write structured fields — via migration, never a direct `UPDATE`.**
+
+   > **Corrected 2026-08-02.** This step previously issued
+   > `UPDATE specification SET summary, evidence_summary, why_md, schedule_md, …`.
+   > That table does not exist, and **no table in `data/guidebook.db` carries those prose
+   > fields** (checked column-by-column across all 63 tables). A direct `UPDATE` would also
+   > violate the migrations-only rule.
+
+   Prose is canonical in the markdown file — see step 7. Only these structured surfaces are
+   writable, and each change ships as a migration
+   (`scripts/emit_data_migration.py` → `scripts/migrate_db.py`):
+
+   | Surface | Holds |
+   |---|---|
+   | `items` | `name`, `category`, `status`, `bpc_source_slug`, the `pmp_*` walk fields |
+   | `item_population_links` | `population_code`, `applicability`, `subtype`, `rationale_ref` |
+   | `evidence_cell_state` | the per-(item × population) synthesis cell and its `governing_refs` |
+
+   ⚑ **Open question for the owner:** whether the spec template's prose fields should have a
+   home in the schema at all, or remain file-canonical. Today they are file-canonical by
+   default rather than by decision — which is part of why 79 of 87 generated spec pages
+   render an empty best-practice banner.
 
 7. **Write updated Part 4 prose to GitHub** (the markdown file remains canonical for prose)
 

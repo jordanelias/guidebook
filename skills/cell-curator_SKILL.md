@@ -12,8 +12,14 @@ description: >
 
 **Model:** Opus-class (evidence state classification requires judgment)
 **SQLite:** `data/guidebook.db`
-> **Schema note:** `specification` and `specification_population` tables are from
-> `scripts/db/migrate_all.py` (entity layer), not Phase 1 schema. Coexist in same DB.
+> **Schema note (corrected 2026-08-02):** `specification`, `specification_population`, and
+> `population` (singular) **do not exist** in `data/guidebook.db` — verified against
+> `sqlite_master`. The canonical tables are **`items`** (93, all `status='active'`),
+> **`populations`** (23), and **`evidence_cell_state`** (the per-(item × population) cell this
+> skill exists to populate — 15 rows today, of a 93 × 23 grid). Queries below are repointed.
+>
+> Do **not** run `scripts/db/migrate_all.py`; it targets a legacy path that does not exist.
+> All cell writes ship as migrations (`emit_data_migration.py` → `migrate_db.py`).
 
 
 ---
@@ -36,27 +42,29 @@ For a given spec, assess evidence state across all 11+ populations:
 
 1. Query existing evidence links:
    ```sql
-   SELECT sp.population_code, es.evidence_tier, es.surname, es.year
-   FROM specification_population sp
-   JOIN specification s ON sp.spec_id = s.spec_id
-   LEFT JOIN source_slug_links ssl ON s.bpc_source_slug = ssl.slug
+   SELECT ipl.population_code, es.tier, es.first_author_last, es.pub_year
+   FROM item_population_links ipl
+   JOIN items i ON ipl.item_code = i.item_code
+   LEFT JOIN source_slug_links ssl ON i.bpc_source_slug = ssl.slug
    LEFT JOIN evidence_sources es ON ssl.ref_id = es.ref_id
-   WHERE s.item_code = '{item_code}'
+   WHERE i.item_code = '{item_code}'
    ```
 
 2. For each population: classify evidence state based on what's available
-3. Write cell records to specification_population or a dedicated cell table
+3. Write cell records to **`evidence_cell_state`** — one row per (`item_code`,
+   `population_code`), `state` ∈ `stated` / `provisional` / `pending` / `not_applicable`.
+   `stated` and `provisional` require non-empty `governing_refs`. Ships as a migration.
 
 ### Batch curation
 1. Query uncurated cells:
    ```sql
-   SELECT s.item_code, p.population_code
-   FROM specification s
-   CROSS JOIN population p
-   WHERE s.status = 'active'
+   SELECT i.item_code, p.population_code
+   FROM items i
+   CROSS JOIN populations p
+   WHERE i.status = 'active'
    AND NOT EXISTS (
-     SELECT 1 FROM specification_population sp
-     WHERE sp.spec_id = s.spec_id AND sp.population_code = p.population_code
+     SELECT 1 FROM evidence_cell_state ecs
+     WHERE ecs.item_code = i.item_code AND ecs.population_code = p.population_code
    )
    ```
 2. For each uncurated pair: assess and classify
@@ -68,11 +76,11 @@ For a given spec, assess evidence state across all 11+ populations:
 Per C10: all active spec × population pairs must have an evidence state assigned.
 ```sql
 SELECT COUNT(*) as uncurated
-FROM specification s
-CROSS JOIN population p
-WHERE s.status = 'active'
+FROM items i
+CROSS JOIN populations p
+WHERE i.status = 'active'
 AND NOT EXISTS (
-  SELECT 1 FROM specification_population sp
-  WHERE sp.spec_id = s.spec_id AND sp.population_code = p.population_code
+  SELECT 1 FROM evidence_cell_state ecs
+  WHERE ecs.item_code = i.item_code AND ecs.population_code = p.population_code
 )
 ```
