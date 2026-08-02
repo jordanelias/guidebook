@@ -61,7 +61,7 @@ Measured 2026-08-02; derive current numbers rather than trusting these.
 | Operation | State |
 |---|---|
 | Search execution | `search_executions` 84 rows, 3 days of activity; 39 admissions logged against 863 sources |
-| Citation mining | 20 sources mined, 17 deferred, **826 pending** — of which **182 of 191 Tier 1–2** are outstanding, which is the R2 obligation |
+| Citation mining | 100 sources mined, 67 deferred, **696 pending**. Tier 1–2, where R2 obliges the work: **134 pending, 23 deferred, 34 mined of 191** |
 | Gap-driven mining | `gap_mining` **0 rows** — the table exists and has never been written to; 50 gaps OPEN |
 | Data extraction | **11 of 863** sources have a joinable capture row; 852 pending |
 | Synthesis | `evidence_cell_state` 15 cells of a 93 × 23 grid |
@@ -73,6 +73,13 @@ Measured 2026-08-02; derive current numbers rather than trusting these.
 Each operation must leave a row saying it happened, so that "not done" and "done, nothing found"
 are distinguishable states rather than the same absence. Migration 040 closed that gap for
 operations 2 and 4 at source grain.
+
+**A status column without a biconditional check is an assertion nobody verifies.** The first
+backfill of `citation_mining_status` resolved rows by `global_ref_id` alone — NULL in 146 of 183
+rows — and left 80 sources reading `pending` while holding a non-deferred mining row. The capture
+status had check `C06` from the start; the mining status had no counterpart, so nothing
+contradicted it. Both now have one (`C06`, `C08`). Any future status column ships with its check
+or it does not ship.
 
 **Unresolved (⚑8 in the current plan):** under migrations-only, a log row is authored by the same
 session whose compliance it attests, at commit time, with self-reported timestamps. R8's

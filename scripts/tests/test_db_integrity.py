@@ -241,6 +241,31 @@ def run_checks(db_path):
            f"{claims_not_held} claim capture with no row; {held_not_claimed} have rows but do not claim it"
            if (claims_not_held or held_not_claimed) else "")
 
+    # C08 — citation_mining_status must agree with citation_mining in both
+    # directions, resolving a row to its source the way the table's own primary
+    # key does: global_ref_id when present, otherwise (slug, local_ref_id)
+    # through source_slug_links.
+    #
+    # This check exists because its absence cost something. The original
+    # backfill joined on global_ref_id alone — NULL in 146 of 183 rows — and
+    # left 80 sources reading 'pending' while holding a non-deferred mining
+    # row. C06 was written for data_capture_status and had no counterpart
+    # here, so nothing contradicted the wrong value. A status column without a
+    # biconditional is an assertion nobody checks.
+    MINED_SRC = """SELECT COALESCE(m.global_ref_id, l.ref_id) FROM citation_mining m
+                   LEFT JOIN source_slug_links l
+                     ON l.slug = m.slug AND l.local_ref_id = m.local_ref_id
+                   WHERE COALESCE(m.deferred_reason,'') = ''
+                     AND COALESCE(m.global_ref_id, l.ref_id) IS NOT NULL"""
+    claims_mined = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources
+        WHERE citation_mining_status='mined' AND ref_id NOT IN ({MINED_SRC})""").fetchone()[0]
+    mined_not_claimed = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources
+        WHERE citation_mining_status<>'mined' AND ref_id IN ({MINED_SRC})""").fetchone()[0]
+    record("C08", "citation_mining_status='mined' ⟺ a non-deferred mining row resolves to it",
+           claims_mined == 0 and mined_not_claimed == 0,
+           f"{claims_mined} claim mined with no row; {mined_not_claimed} have a row but do not claim it"
+           if (claims_mined or mined_not_claimed) else "")
+
     # C07 — a value column must hold a value, not a state written as prose.
     # This is not hypothetical: '[author surname pending ...]' strings in
     # first_author_last are non-empty, so C03 accepted them as authors and a
