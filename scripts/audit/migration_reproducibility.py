@@ -43,6 +43,7 @@ Honours GUIDEBOOK_DB_PATH (default data/guidebook.db).
 
 import argparse
 import os
+import shutil
 import sqlite3
 import subprocess
 import sys
@@ -85,13 +86,90 @@ def db_path():
     return os.environ.get("GUIDEBOOK_DB_PATH", os.path.join(REPO_ROOT, "data", "guidebook.db"))
 
 
-def rebuild(target):
-    """C1 — rebuild from migration history alone."""
+def migrations_fingerprint():
+    """SHA over every migration file's bytes — the sole input to a rebuild.
+
+    If this is unchanged, a rebuild is byte-for-byte the work already done.
+    """
+    import hashlib
+    digest = hashlib.sha256()
+    migrations = os.path.join(REPO_ROOT, "scripts", "migrations")
+    for name in sorted(os.listdir(migrations)):
+        if not name.endswith(".sql"):
+            continue
+        digest.update(name.encode())
+        with open(os.path.join(migrations, name), "rb") as fh:
+            digest.update(fh.read())
+    return digest.hexdigest()[:16]
+
+
+def _usable_cache(path):
+    """Is this cached rebuild safe to compare a BLOCKING gate against?
+
+    Existence and non-zero size are not enough. A truncated or half-written file
+    would be copied in and become the baseline the reproducibility gate measures
+    the committed DB against — and a corrupt baseline produces a verdict that
+    means nothing while looking exactly like one that does. Trusting a cache more
+    than the thing it stands in for is how the defects this session spent its time
+    on came about.
+
+    So: open it, confirm SQLite agrees it is a database, and confirm it carries
+    the core tables the comparison needs. Cheap (milliseconds) next to a ~45s
+    rebuild, and a failed probe simply falls through to building fresh.
+    """
+    if not (os.path.exists(path) and os.path.getsize(path) > 0):
+        return False
+    try:
+        con = sqlite3.connect(f"file:{path}?mode=ro", uri=True)
+        try:
+            if con.execute("PRAGMA quick_check").fetchone()[0] != "ok":
+                return False
+            present = {n for (n,) in con.execute(
+                "SELECT name FROM sqlite_master WHERE type='table'")}
+            needed = {"evidence_sources", "citation_mining", "source_slug_links",
+                      "gaps", "connections", "items"}
+            return needed <= present
+        finally:
+            con.close()
+    except sqlite3.Error:
+        return False
+
+
+def rebuild(target, cache=True):
+    """C1 — rebuild from migration history alone.
+
+    COST. A rebuild is ~33s and dominates the board: this check and its --deep
+    sibling are 66s of the full run's 110s, and they were doing the SAME rebuild
+    twice because they are two registry entries sharing one input. The registry
+    note conceded that and shipped it anyway.
+
+    The rebuild's only input is the migration files, so it is cached on their
+    fingerprint. Both checks run in one CI job (the `data` battery), so the second
+    invocation reuses the first's artifact and the pair costs one rebuild rather
+    than two. A change to any migration changes the fingerprint and forces a fresh
+    build, so the cache cannot mask the thing the check exists to detect.
+    """
+    if cache:
+        cached = os.path.join(tempfile.gettempdir(),
+                              f"guidebook-repro-{migrations_fingerprint()}.db")
+        if _usable_cache(cached):
+            try:
+                shutil.copyfile(cached, target)
+                return True, f"reused cached rebuild ({os.path.basename(cached)})"
+            except OSError:
+                pass  # fall through to a real rebuild
+
     proc = subprocess.run(
         [sys.executable, "scripts/migrate_db.py", "--rebuild", target],
         cwd=REPO_ROOT, capture_output=True, text=True,
     )
-    return proc.returncode == 0, (proc.stdout + proc.stderr).strip()
+    ok = proc.returncode == 0
+    if ok and cache:
+        try:
+            shutil.copyfile(target, cached)
+        except OSError:
+            pass  # caching is an optimisation; never fail the check for it
+    return ok, (proc.stdout + proc.stderr).strip()
 
 
 def compare(committed_path, rebuilt_path):
@@ -267,7 +345,14 @@ def audit(rebuilt_to=None, deep=False):
         for line in log.splitlines()[-15:]:
             print(f"      {line}")
         return 1
-    print("  C1 rebuild from migration history: OK")
+    # Say when the rebuild was reused. A cache that is invisible is a cache nobody
+    # can distrust, and "this check ran in 0.1s" should never be a silent fact.
+    if "reused cached rebuild" in log:
+        print(f"  C1 rebuild from migration history: OK ({log})")
+        print("     cache key is the SHA of every migration file, so any migration "
+              "change forces a fresh build")
+    else:
+        print("  C1 rebuild from migration history: OK (built fresh)")
     print()
 
     rows, mismatches = compare(committed_path, tmp)

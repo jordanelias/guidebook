@@ -32,9 +32,26 @@ def main():
         print(r.stdout + r.stderr)
     ok = ok and passed
 
+    # Assert the audit RUNS AND CLASSIFIES, not that the repo currently has zero
+    # findings. This previously asserted `returncode == 0 and "VERDICT: PASS"`,
+    # which made the test fail the moment the audit started reporting a real one:
+    # once enforcers were resolved against the registry rather than the
+    # filesystem, `register-invariants` correctly became QUARANTINED and the audit
+    # correctly went red. A test that requires its subject to find nothing is a
+    # test that penalises the subject for working.
     r = _run([])
-    passed = r.returncode == 0 and "VERDICT: PASS" in r.stdout
-    print(f"[{'PASS' if passed else 'FAIL'}] pipeline_contract_audit clean run exits 0")
+    passed = (r.returncode in (0, 1)
+              and "referential integrity:" in r.stdout
+              and "VERDICT:" in r.stdout)
+    print(f"[{'PASS' if passed else 'FAIL'}] pipeline_contract_audit runs and reports a verdict")
+    if not passed:
+        print(r.stdout + r.stderr)
+    ok = ok and passed
+
+    # The contract must never regress to phantom enforcement: a criterion may be
+    # honestly INCOMPLETE, but a path that is missing outright is always a defect.
+    passed = "broken=0" in r.stdout
+    print(f"[{'PASS' if passed else 'FAIL'}] no criterion cites a path that does not exist")
     if not passed:
         print(r.stdout + r.stderr)
     ok = ok and passed

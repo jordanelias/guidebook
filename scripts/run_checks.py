@@ -206,10 +206,45 @@ def run_check(check, session, env, github=False):
     elapsed = time.time() - started
     output = (proc.stdout + proc.stderr).strip()
     if proc.returncode == 0:
+        vacuity = vacuity_failure(check, output)
+        if vacuity:
+            return "FAIL", elapsed, f"{output}\n\nVACUITY GUARD: {vacuity}"
         return "PASS", elapsed, output
     if proc.returncode == 2 and check.get("optional_exit2"):
         return "SKIP", elapsed, output
     return "FAIL", elapsed, output
+
+
+EXAMINED_RE = re.compile(r"^EXAMINED:\s*(\d+)\b", re.MULTILINE)
+
+
+def vacuity_failure(check, output):
+    """A check that examined nothing has not passed — it has abstained.
+
+    `validate_schema` was BLOCKING and named six data/ subdirectories that have
+    never existed. It found zero files, printed "No entity files found to
+    validate." and exited 0, so the entity-schema gate reported green for its
+    whole life while examining nothing. That is worse than no gate, because it is
+    counted as coverage.
+
+    Opt-in per check via `min_items:` in the registry, because some corpora are
+    legitimately empty. A declared check must print `EXAMINED: <n>`; if it does
+    not, that is itself the failure — an unverifiable count cannot be trusted to
+    be non-zero. Deliberately a FAIL and not a SKIP: SKIP is excluded from the
+    verdict even at blocking level, which would hide exactly what this catches.
+    """
+    minimum = check.get("min_items")
+    if not minimum:
+        return None
+    match = EXAMINED_RE.search(output or "")
+    if not match:
+        return (f"declares min_items={minimum} but printed no 'EXAMINED: <n>' line, "
+                "so the number of items it looked at cannot be established")
+    seen = int(match.group(1))
+    if seen < minimum:
+        return (f"examined {seen} item(s), below the declared minimum of {minimum} — "
+                "the check passed by having nothing to look at")
+    return None
 
 
 def report_line(check, status, elapsed):
@@ -557,6 +592,62 @@ def selftest(reg):
     check("C6 --kinds auto still takes the classify path",
           r.returncode == 0 and "changed file(s) vs" in r.stdout,
           f"exit {r.returncode}: {(r.stderr or r.stdout).strip()[:160]}")
+
+    # --- C7: every check declares the authority it enforces ------------------
+    # 51 of 57 checks could not say what they were for. A check with no stated
+    # basis cannot be audited for relevance, cannot be retired with confidence,
+    # and cannot answer the only question that matters of a governance
+    # apparatus: is every contract actually enforced?
+    #
+    # `basis` is a pipeline-contract criterion id ("stage/criterion"), the literal
+    # `hygiene` (encoding, parsing, structural sanity — no doctrinal authority is
+    # needed to justify checking that JSON parses), or `unattributed`.
+    # `unattributed` is ALLOWED and COUNTED, deliberately: forbidding it would
+    # have meant inventing authorities for 29 checks in one sitting, which is how
+    # a register fills up with plausible fiction. The count is printed so it can
+    # be ratcheted down and so its direction is visible.
+    missing = [c["id"] for c in reg["checks"] if not c.get("basis")]
+    check("C7 every check declares a basis", not missing, str(missing[:5]))
+
+    contract_ids = set()
+    try:
+        import yaml as _yaml
+        _pc = _yaml.safe_load(open(os.path.join(REPO_ROOT, "governance",
+                                                "pipeline-contract.yaml"), encoding="utf-8"))
+        for _st in _pc.get("stages", []) or []:
+            for _cr in _st.get("criteria", []) or []:
+                contract_ids.add(f"{_st['id']}/{_cr['id']}")
+        for _cs in _pc.get("cross_stage", []) or []:
+            contract_ids.add(f"cross_stage/{_cs['id']}")
+    except Exception as exc:  # noqa: BLE001
+        contract_ids = None
+        check("C7 pipeline contract is readable for basis resolution", False, str(exc))
+
+    if contract_ids is not None:
+        # `basis` may be a list: one check often enforces several criteria
+        # (validate_evidence_state covers three judgment-stage rules), and
+        # claiming only the first is how a criterion silently reads as unenforced.
+        def _bases(entry):
+            b = entry.get("basis")
+            return b if isinstance(b, list) else [b]
+
+        dangling = [(c["id"], b) for c in reg["checks"] for b in _bases(c)
+                    if "/" in str(b) and b not in contract_ids]
+        check("C7 every contract basis resolves to a real criterion",
+              not dangling, str(dangling[:5]))
+
+        # The reverse direction: a criterion whose enforcer is registered must be
+        # claimed by that check's basis, or the two maps have drifted apart.
+        claimed = {b for c in reg["checks"] for b in _bases(c) if "/" in str(b)}
+        unclaimed = sorted(contract_ids - claimed)
+        print(f"  [INFO] contract criteria with no check claiming them: "
+              f"{len(unclaimed)} of {len(contract_ids)}")
+        for cid in unclaimed:
+            print(f"           {cid}")
+
+    unattributed = [c["id"] for c in reg["checks"] if c.get("basis") == "unattributed"]
+    print(f"  [INFO] checks with no stated authority: {len(unattributed)} of "
+          f"{len(reg['checks'])} — ratchet this down, do not invent authorities")
 
     print("=" * 78)
     if failures:

@@ -55,6 +55,30 @@
 # so `blocking` today means "red X on the commit", not "cannot merge". The level
 # is still the right declaration; it becomes teeth the day protection is enabled.
 #
+# `basis:` — THE AUTHORITY A CHECK ENFORCES  (added 2026-08-01)
+# ------------------------------------------------------------
+# Every check declares what makes it legitimate. Before this field, 51 of 57
+# checks could not say what they were for: they could not be audited for
+# relevance, retired with confidence, or used to answer the only question that
+# matters of a governance apparatus — is every contract actually enforced?
+#
+# Permitted values:
+#   "stage/criterion"  a governance/pipeline-contract.yaml criterion id, or a
+#                      LIST of them where one check enforces several (e.g.
+#                      validate_evidence_state covers three judgment-stage rules;
+#                      claiming only the first makes the others read as unenforced)
+#   hygiene            encoding, parsing, structural sanity. No doctrinal authority
+#                      is needed to justify checking that JSON parses, and writing
+#                      contract prose to license a UTF-8 check would be ceremony.
+#   unattributed       authority not yet established. ALLOWED and COUNTED.
+#
+# `unattributed` is deliberately permitted. Forbidding it would have meant
+# inventing authorities for 29 checks in one sitting, which is how a register
+# fills with plausible fiction. `run_checks.py --selftest` prints the count and
+# the contract criteria that no check claims, in both directions, so the gap is
+# visible and can be ratcheted down. Reduce it by finding the real authority, or
+# by concluding a check has none and retiring it — never by guessing.
+#
 # READING THE NUMBERS IN `note:` FIELDS
 # ------------------------------------
 # Every count in a note ("236 findings", "277 rows", "81 of 863", "6 slugs") is a
@@ -161,21 +185,27 @@ checks:
     battery: syntax
     kinds: [always]
     level: blocking
+    basis: hygiene
     cost: fast
+    min_items: 1000
 
   - id: check_json
     cmd: [python3, scripts/ci_helpers/check_json.py]
     battery: syntax
     kinds: [always]
     level: blocking
+    basis: hygiene
     cost: fast
+    min_items: 50
 
   - id: check_yaml
     cmd: [python3, scripts/ci_helpers/check_yaml.py]
     battery: syntax
     kinds: [always]
     level: blocking
+    basis: hygiene
     cost: fast
+    min_items: 20
 
   # ===== structure — always, stdlib =========================================
   - id: validate_bpc
@@ -183,6 +213,7 @@ checks:
     battery: structure
     kinds: [always]
     level: blocking
+    basis: hygiene
     cost: fast
     note: >-
       Cheap enough that gating it would buy nothing and risk a misclassified diff
@@ -193,6 +224,7 @@ checks:
     battery: structure
     kinds: [always]
     level: blocking
+    basis: hygiene
     cost: fast
     note: Cross-references span every corpus, so no path filter is correct here.
 
@@ -202,6 +234,7 @@ checks:
     battery: db_integrity
     kinds: [data, schema]
     level: blocking
+    basis: unattributed
     cost: fast
     note: >-
       RED on main as of 2026-08-01 (26/35 checks pass). Pre-existing, owner-gated
@@ -238,6 +271,7 @@ checks:
     battery: data
     kinds: [data, schema]
     level: blocking
+    basis: cross_stage/reproducibility-invariant
     cost: slow
     note: >-
       GAP-290 enforcement — the gate that actually stops direct DB writes. Was two
@@ -253,6 +287,7 @@ checks:
     battery: data
     kinds: [data, schema]
     level: advisory
+    basis: cross_stage/reproducibility-invariant
     cost: slow
     note: >-
       Every table, every row — the comparison the core invariants cannot make.
@@ -273,14 +308,20 @@ checks:
       a divergence the project may well consider legitimate.
       Timestamp-only divergence is reported separately from content so the check
       does not cry wolf: 4 further tables differ only in created_at/updated_at.
-      Costs a second full rebuild alongside the blocking check; worth folding into
-      one invocation if data-PR wall-clock becomes a problem.
+      RESOLVED 2026-08-01: the second rebuild is gone. A rebuild's only input is
+      the migration files, so it is cached on their SHA; this check and the
+      blocking one run in the same `data` battery job, so the pair now costs one
+      rebuild rather than two (45.4s -> 0.1s on the second invocation). Any
+      migration edit changes the fingerprint and forces a fresh build, verified by
+      mutation, so the cache cannot mask what the check exists to detect. Reuse is
+      printed rather than silent.
 
   - id: source_slug_links_duplicates
     cmd: [python3, scripts/audit/source_slug_links_duplicates.py]
     battery: data
     kinds: [data]
     level: blocking
+    basis: unattributed
     cost: fast
 
   - id: db_path_env_audit
@@ -288,6 +329,7 @@ checks:
     battery: data
     kinds: [data, tooling]
     level: blocking
+    basis: unattributed
     cost: fast
     note: >-
       Triggers on `tooling` too: the contract it enforces is a property of the
@@ -298,6 +340,7 @@ checks:
     battery: data
     kinds: [data]
     level: blocking
+    basis: unattributed
     cost: fast
 
   - id: citation_mining_session
@@ -305,6 +348,7 @@ checks:
     battery: data
     kinds: [data, synthesis]
     level: blocking
+    basis: unattributed
     cost: fast
     requires_session: true
     note: "@SESSION@ is substituted from sessions/LATEST; skipped when absent."
@@ -314,6 +358,7 @@ checks:
     battery: data
     kinds: [data]
     level: informational
+    basis: unattributed
     cost: fast
 
   - id: citation_mining_backlog_t3
@@ -321,6 +366,7 @@ checks:
     battery: data
     kinds: [data]
     level: informational
+    basis: unattributed
     cost: fast
 
   # ===== schema — entity and evidence-state validators ======================
@@ -329,13 +375,16 @@ checks:
     battery: schema
     kinds: [schema, data, governance]
     level: blocking
+    basis: unattributed
     cost: fast
+    min_items: 1
 
   - id: validate_schema_cross_check
     cmd: [python3, scripts/validate_schema.py, --cross-check]
     battery: schema
     kinds: [schema, data]
     level: advisory
+    basis: unattributed
     cost: fast
     note: "Was `continue-on-error: true` in ci.yml; advisory is the same thing, declared."
 
@@ -344,6 +393,7 @@ checks:
     battery: schema
     kinds: [schema, data, synthesis]
     level: blocking
+    basis: [judgment/governing-refs-nonempty, judgment/no-regulatory-stratum-stated, judgment/tier3-alone-threshold]
     cost: fast
     note: >-
       `synthesis` added per the 2026-07-23 enforcement plan F2: a synthesis PR that
@@ -355,6 +405,7 @@ checks:
     battery: schema
     kinds: [schema, data]
     level: blocking
+    basis: unattributed
     cost: fast
 
   - id: validate_jurisdiction
@@ -362,6 +413,7 @@ checks:
     battery: schema
     kinds: [schema, data]
     level: blocking
+    basis: unattributed
     cost: fast
 
   - id: validate_temporal
@@ -369,6 +421,7 @@ checks:
     battery: schema
     kinds: [schema, data]
     level: blocking
+    basis: unattributed
     cost: fast
 
   - id: validate_axes
@@ -376,6 +429,7 @@ checks:
     battery: schema
     kinds: [schema, data]
     level: blocking
+    basis: unattributed
     cost: fast
     note: Ran in preflight only; no workflow invoked it. Now both do.
 
@@ -384,6 +438,7 @@ checks:
     battery: schema
     kinds: [schema, data]
     level: blocking
+    basis: unattributed
     cost: fast
     note: Ran in preflight only; no workflow invoked it. Now both do.
 
@@ -392,6 +447,7 @@ checks:
     battery: schema
     kinds: [data, synthesis]
     level: advisory
+    basis: unattributed
     cost: fast
     note: Rule-#10 evidence-eligibility gate. Newly wired — advisory during shakedown.
 
@@ -400,6 +456,7 @@ checks:
     battery: schema
     kinds: [schema, data]
     level: advisory
+    basis: unattributed
     cost: fast
     note: >-
       The schemas/*.py <-> SQLite parity check CLAUDE.md §10 calls "a bug, not a
@@ -423,6 +480,7 @@ checks:
     battery: governance
     kinds: [governance, data]
     level: blocking
+    basis: unattributed
     cost: fast
 
   - id: decision_capture
@@ -430,6 +488,7 @@ checks:
     battery: governance
     kinds: [governance, data, schema]
     level: blocking
+    basis: unattributed
     cost: fast
 
   - id: doctrine_recheck
@@ -437,6 +496,7 @@ checks:
     battery: governance
     kinds: [governance, synthesis]
     level: blocking
+    basis: cross_stage/doctrine-recheck
     cost: fast
 
   - id: matrix_consistency
@@ -444,6 +504,7 @@ checks:
     battery: governance
     kinds: [governance, schema]
     level: advisory
+    basis: render/mode-stratum-matrix-consistency
     cost: fast
     note: >-
       Mode-stratum matrix vs evidence-architecture.md §3. Named by the 2026-07-23
@@ -454,6 +515,7 @@ checks:
     battery: governance
     kinds: [governance, tooling]
     level: advisory
+    basis: unattributed
     cost: fast
     note: >-
       The meta-check (plan F3). `tooling` matters most: it detects a contract whose
@@ -464,6 +526,7 @@ checks:
     battery: governance
     kinds: [governance, synthesis]
     level: advisory
+    basis: cross_stage/definition-of-done
     cost: fast
     note: >-
       Mode-2 claims docket (skills/integrity-protocol_SKILL.md): every triggered
@@ -484,6 +547,7 @@ checks:
     battery: attestation
     kinds: [synthesis, governance]
     level: blocking
+    basis: cross_stage/adherence-log
     cost: fast
 
   - id: attestation_schema
@@ -491,6 +555,7 @@ checks:
     battery: attestation
     kinds: [synthesis, governance]
     level: blocking
+    basis: cross_stage/adherence-log
     cost: fast
 
   - id: attestation_evidence
@@ -498,6 +563,7 @@ checks:
     battery: attestation
     kinds: [synthesis, governance]
     level: advisory
+    basis: [cross_stage/adherence-log, cross_stage/attestation-doctrine-binding]
     cost: fast
     note: >-
       Level-2 shakedown per audit.yml's original comment; flip to blocking once the
@@ -508,15 +574,37 @@ checks:
     battery: attestation
     kinds: [synthesis, governance]
     level: informational
+    basis: cross_stage/adherence-log
     cost: fast
     note: Surfaces NON-COMPLIANT verdicts. Never blocking by design.
 
   # ===== research contract ==================================================
+  - id: research_contract_sync
+    cmd: [python3, scripts/generate/research_contract_hook.py, --check]
+    battery: research
+    kinds: [governance, tooling]
+    level: advisory
+    basis: hygiene
+    cost: fast
+    min_items: 10
+    note: >-
+      The R1-R15 contract had TWO hand-transcribed copies with no comparator — the
+      SessionStart hook in .claude/settings.json and the rule table in
+      research_batch_dod.py — and they had drifted on R1, R2 and R3, two of which
+      changed what the contract obliges. governance/research-contract.yaml is now
+      the single source; the hook is generated from it and this check fails on
+      drift, plus cross-references the rule ids against the enforcer so a rule
+      defined in one and absent from the other is caught.
+      Same shape as the other derived-artifact gates (pipeline_completeness --check,
+      evidentiary_audit --check). Advisory during shakedown per the house norm;
+      it is green today and is a candidate for promotion.
+
   - id: research_dod_selftest
     cmd: [python3, scripts/audit/research_batch_dod.py, --selftest]
     battery: research
     kinds: [always]
     level: blocking
+    basis: unattributed
     cost: fast
     note: >-
       BLOCKING from day one and deliberately ungated. It builds a knowingly-
@@ -531,6 +619,7 @@ checks:
     battery: research
     kinds: [data, synthesis]
     level: advisory
+    basis: unattributed
     cost: fast
 
   - id: research_protocol_audit
@@ -538,6 +627,7 @@ checks:
     battery: research
     kinds: [data, synthesis]
     level: advisory
+    basis: research/adversarial-fields-complete
     cost: fast
     note: RED on main. Advisory, as it was in research-contract.yml.
 
@@ -546,6 +636,7 @@ checks:
     battery: research
     kinds: [data, synthesis]
     level: advisory
+    basis: collection/evidence-verification-gate
     cost: fast
     note: RED on main. Advisory, as it was in research-contract.yml.
 
@@ -554,6 +645,7 @@ checks:
     battery: research
     kinds: [data, synthesis]
     level: advisory
+    basis: unattributed
     cost: fast
 
   - id: population_integrity_audit
@@ -561,6 +653,7 @@ checks:
     battery: research
     kinds: [data, schema]
     level: advisory
+    basis: unattributed
     cost: fast
     note: RED on main (31 issues). Advisory, as it was in research-contract.yml.
 
@@ -569,6 +662,7 @@ checks:
     battery: research
     kinds: [data, synthesis]
     level: advisory
+    basis: unattributed
     cost: slow
     note: ~2s locally; resolves its DB path via graph/build.py (documented exemption).
 
@@ -577,6 +671,7 @@ checks:
     battery: research
     kinds: [synthesis]
     level: advisory
+    basis: synthesis/nine-step-synthesis
     cost: fast
     note: >-
       The NINE-STEP-SYNTHESIS contract — the check the 2026-07-23 enforcement plan
@@ -592,6 +687,7 @@ checks:
     battery: research
     kinds: [data, synthesis]
     level: advisory
+    basis: research/pmp-strict-termination
     cost: fast
     note: >-
       Rule #8 / #10.1 — numerical-spec claims must cite an active PMP walk.
@@ -604,6 +700,7 @@ checks:
     battery: research
     kinds: [data, synthesis]
     level: advisory
+    basis: unattributed
     cost: fast
     note: >-
       Track 3 of DR-2026-05-13 — citation integrity behind reasoning docs.
@@ -620,6 +717,7 @@ checks:
     battery: tests
     kinds: [tooling]
     level: advisory
+    basis: hygiene
     cost: slow
     note: ~27s — carries graph_audit's mutation harness. The slowest test by far.
 
@@ -628,6 +726,7 @@ checks:
     battery: tests
     kinds: [tooling]
     level: advisory
+    basis: hygiene
     cost: fast
 
   - id: test_pipeline_contract
@@ -635,6 +734,7 @@ checks:
     battery: tests
     kinds: [tooling, governance]
     level: advisory
+    basis: hygiene
     cost: fast
 
   - id: test_url_verifier
@@ -642,6 +742,7 @@ checks:
     battery: tests
     kinds: [tooling]
     level: advisory
+    basis: hygiene
     cost: fast
     note: 25/25 assertions.
 
@@ -650,6 +751,7 @@ checks:
     battery: tests
     kinds: [tooling]
     level: advisory
+    basis: hygiene
     cost: fast
     note: 18/18 assertions.
 
@@ -658,6 +760,7 @@ checks:
     battery: tests
     kinds: [tooling, data]
     level: advisory
+    basis: hygiene
     cost: fast
 
   - id: test_evidence_cell_state_2_3
@@ -665,6 +768,7 @@ checks:
     battery: tests
     kinds: [tooling, data, schema]
     level: advisory
+    basis: hygiene
     cost: fast
 
   - id: test_validate_evidence_state_2_4
@@ -672,6 +776,7 @@ checks:
     battery: tests
     kinds: [tooling, data, schema]
     level: advisory
+    basis: hygiene
     cost: fast
     note: >-
       12/12 assertions; regression cover for the blocking validate_evidence_state
@@ -685,6 +790,7 @@ checks:
     battery: tests
     kinds: [tooling, data]
     level: advisory
+    basis: hygiene
     cost: fast
     note: >-
       Partially vacuous by design: its live-smoke leg SKIPs when /tmp/work14.db is
@@ -697,6 +803,7 @@ checks:
     battery: render
     kinds: [data, render]
     level: blocking
+    basis: unattributed
     cost: fast
 
   - id: evidentiary_audit_fresh
@@ -704,6 +811,7 @@ checks:
     battery: render
     kinds: [data, render]
     level: blocking
+    basis: unattributed
     cost: fast
     note: >-
       STALE on main as of 2026-08-01 — the committed evidentiary-base-audit outputs
@@ -715,6 +823,7 @@ checks:
     battery: render
     kinds: [render, data, synthesis]
     level: blocking
+    basis: unattributed
     cost: fast
     note: DR-2026-07-25 rendered-document integrity gate.
 
@@ -723,6 +832,7 @@ checks:
     battery: render
     kinds: [render]
     level: advisory
+    basis: unattributed
     cost: slow
     optional_exit2: true
     note: >-

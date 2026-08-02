@@ -9,3 +9,25 @@
 /.github/workflows/         @jordanelias
 /.github/CODEOWNERS         @jordanelias
 /references/skill-registry.md @jordanelias
+
+# Added 2026-08-01. The 2026-08-01 contract inventory found three contract-bearing
+# paths outside the gate, each of which can change what the project enforces
+# without an owner ever seeing the diff:
+#
+#   .claude/settings.json      carries the SessionStart hook that injects the
+#                              R1-R15 research contract into every session, and
+#                              the Stop hook that runs the definition-of-done
+#                              gate. Corrupting it disables both, silently.
+#   references/project-standards.md
+#                              the append-only OPERATIVE rule ledger — 119 RULE
+#                              blocks, and the source CLAUDE.md §5 says to prefer
+#                              over the PI. It outranks most of /governance/ in
+#                              practice while being less protected than any of it.
+#   scripts/ci_helpers/        the commit-message and doctrine-token gates, plus
+#                              the shared exemption definition they now both use.
+#
+# Note this is a deliberateness gate, not a merge gate: `main` is not
+# branch-protected, so CODEOWNERS produces a review request rather than a block.
+/.claude/settings.json      @jordanelias
+/references/project-standards.md @jordanelias
+/scripts/ci_helpers/        @jordanelias

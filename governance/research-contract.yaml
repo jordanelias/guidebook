@@ -1,0 +1,230 @@
+# research-contract.yaml — the single source for the R1-R15 research contract.
+#
+# STATUS: OPERATIVE. Adopted per DR-2026-07-25-research-contract-mechanical-enforcement
+# ("RESEARCH IS INVALID IF IT IS NOT COMPLIANT WITH OUR GOVERNANCE AND VERIFICATION
+# TOOLS AND RULES AND ETHOS"). This file is the canonical text; the two places that
+# previously carried it are now derived from or checked against it.
+#
+# WHY THIS FILE EXISTS
+# --------------------
+# R1-R15 existed in exactly two hand-transcribed copies with no comparator:
+#
+#   A  .claude/settings.json SessionStart hook — injected into every session
+#   B  scripts/audit/research_batch_dod.py docstring — the enforcer's own table
+#
+# They had drifted, and not cosmetically. The 2026-08-01 contract inventory found
+# three substantive divergences, two of which changed what the contract obliges:
+# R1 dropped Tier 2 from a pass its cited source defines as Co-1/T2/Co-2; R2
+# claimed a tier scope wider than the operative rule ledger's; R3 named a
+# different locator class in each copy.
+#
+# That is the same defect scripts/ci_helpers/commit_gate.py was extracted to end
+# for the commit gates, and the same defect governance/check-registry.yaml exists
+# to end for check lists — arriving, this time, at the contract the owner declared
+# research invalid without. A rule injected into every session and a rule enforced
+# by a gate must be the same rule, and the only way to guarantee that is for there
+# to be one of them.
+#
+# HOW THE COPIES ARE KEPT HONEST
+#   * The hook payload is GENERATED from this file.
+#     scripts/generate/research_contract_hook.py --check  (registered; fails on drift)
+#     scripts/generate/research_contract_hook.py --write  (regenerates settings.json)
+#   * research_batch_dod.py's checks are cross-referenced against `enforcer:` here,
+#     so a rule that claims an enforcer must have one and vice versa.
+#
+# RESOLUTIONS RECORDED
+# --------------------
+# Where the two copies disagreed, the operative source governs — per CLAUDE.md §5,
+# references/project-standards.md is the append-only operative rule ledger and is
+# preferred over older restatements. Each resolution is recorded on its rule below
+# under `resolution:` rather than applied silently. See
+# decisions/DR-2026-08-01-research-contract-single-source.md.
+
+version: 1
+status: OPERATIVE
+adopted_by: decisions/DR-2026-07-25-research-contract-mechanical-enforcement.md
+resolved_by: decisions/DR-2026-08-01-research-contract-single-source.md
+enforcer: scripts/audit/research_batch_dod.py
+
+# Phases order the hook payload. They are presentational: the contract is the set
+# of rules, and a rule may bear on more than one phase (R7 does).
+phases:
+  - id: before-admitting
+    heading: "BEFORE admitting evidence:"
+  - id: while-searching
+    heading: "WHILE searching:"
+  - id: when-filing
+    heading: "WHEN filing:"
+
+rules:
+  - id: R1
+    phase: before-admitting
+    title: "Co-1 / T2 / Co-2 pass FIRST"
+    hook: >-
+      Co-1 / T2 / Co-2 pass FIRST - no exceptions (Co-1 co-primary w/ T1, CRPD 4.3)
+    anchor: "skills/multilingual-research_SKILL.md Step 1; CRPD Art. 4.3; governance/tier-system.md"
+    enforcer: R1
+    resolution: >-
+      CORRECTED 2026-08-01. Both prior copies said "Co-1/Co-2". The cited source is
+      "Step 1 - Co-1 / Tier 2 / Co-2 pass (first; no exceptions)", where Tier 2 in
+      this pass means disability-led NGO/advocacy publication, retrieved directly
+      from publication pages in native-language terms. Dropping T2 narrowed a
+      three-part obligation to two parts in the text injected into every session.
+      Restored to the source.
+
+  - id: R2
+    phase: while-searching
+    title: "Citation mining on admitted anchors, backward AND forward"
+    hook: >-
+      Mine every CONFIRMED T1-T2 anchor backward AND forward. Depth 2-3 via
+      citation-miner; gap-driven mode is depth-1 per pass and hands off.
+    anchor: "references/project-standards.md RULE (2026-04) 'Forward + backward citation mining mandatory for every confirmed Tier 1-2 source'; skills/citation-miner_SKILL.md; skills/gap-driven-mining_SKILL.md"
+    enforcer: R2
+    resolution: >-
+      CORRECTED 2026-08-01, two divergences resolved against the operative ledger.
+      (a) SCOPE: the hook said "T1-T3". The operative RULE says "every confirmed
+      Tier 1-2 source". T1-T2 governs; the hook had been obliging work on a tier
+      band the rule ledger does not require, which is a real cost silently imposed
+      on every session.
+      (b) DEPTH: "depth 2-3" and gap-driven-mining's "Depth-1 enforced (both
+      modes)" are NOT in conflict, though they read as such. Depth 2-3 is the
+      traversal target for citation-miner. Depth-1 is a per-PASS bound in
+      gap-driven mode, where discovered sources are inserted but their networks
+      are explicitly handed off rather than mined inline. Both are stated so the
+      apparent contradiction cannot be rediscovered as a defect.
+
+  - id: R3
+    phase: when-filing
+    title: "Quantified values carry a locator, or carry the flag"
+    hook: >-
+      Quantified values need a locator or [UNVERIFIED-QUANT]. Code/standard values:
+      clause/section/page. Outcome claims: DOI + page/table, or a direct URL.
+    anchor: "references/project-standards.md RULE (2026-04-09) quantified outcome claims; CLAUDE.md §6"
+    enforcer: R3
+    resolution: >-
+      CORRECTED 2026-08-01. The hook required "clause/section/page"; the enforcer's
+      table required "DOI + page/table (or direct URL)". Neither was wrong — they
+      describe DIFFERENT SOURCE CLASSES, and each copy had kept only one. The
+      operative ledger scopes DOI + page/table to quantified OUTCOME claims
+      (percentages, n= counts, reduction figures) in BPC files; a clause/section
+      locator is what a code or standard value can actually carry, since standards
+      are not DOI-bearing. Both are now stated, both flag [UNVERIFIED-QUANT] when
+      absent. The ledger's two-failed-attempts termination rule applies to the
+      outcome-claim branch.
+
+  - id: R4
+    phase: while-searching
+    title: "Combinatorial dimension"
+    hook: >-
+      Cross slug x population / access-need / ICF / axis. Cells are (item x population).
+    anchor: "governance/conceptual-model.md; governance/functional-taxonomy.md; evidence_cell_state"
+    enforcer: R4
+
+  - id: R5
+    phase: before-admitting
+    title: "Non-English peer-reviewed work is academic, not grey"
+    hook: >-
+      Non-English peer-reviewed work is ACADEMIC, not grey. Non-indexation in
+      PubMed/Scopus is an INDEXING fact, not an evidence-quality fact.
+    anchor: "governance/tier-system.md; DR-2026-05-09"
+    enforcer: R5
+
+  - id: R6
+    phase: when-filing
+    title: "Findings not smuggled into deferred_reason"
+    hook: >-
+      Findings go in findings_note. deferred_reason means DELIBERATELY NOT SEARCHED.
+    anchor: "search_executions schema; skills/research-log-manager_SKILL.md"
+    enforcer: R6
+
+  - id: R7
+    phase: while-searching
+    title: "Failure / harm / inadequacy is first-class evidence"
+    hook: >-
+      Capture FAILURE / HARM / INADEQUACY as first-class evidence, not a by-product.
+    anchor: "governance/mission-and-epistemics.md — 'get people to ask the right questions'"
+    enforcer: R7
+    also_phase: when-filing
+    also_hook: >-
+      Off-slug or unverified material -> search_candidates (REHOME/MISC/PENDING), not prose.
+
+  - id: R8
+    phase: while-searching
+    title: "Empties and deferrals kept"
+    hook: >-
+      Log EVERY query verbatim before screening. KEEP EMPTIES - a zero-yield search
+      is a COMPLETED unit of work. Never delete or backfill them.
+    anchor: "references/project-standards.md; skills/research-log-manager_SKILL.md"
+    enforcer: R8
+
+  - id: R9
+    phase: before-admitting
+    title: "No duplicate-DOI admission"
+    hook: >-
+      Pre-check the DOI. If it exists, cross-file the existing ref_id - never duplicate.
+    anchor: "evidence_sources uniqueness; skills/citation-miner_SKILL.md"
+    enforcer: R9
+
+  - id: R10
+    phase: before-admitting
+    title: "Locator re-retrieval before admission"
+    hook: >-
+      Re-retrieve every locator. DOI -> Crossref/PubMed -> publisher -> repository.
+      A publisher block is NOT a terminal answer. No re-retrieval = no admission.
+    anchor: "references/project-standards.md citation discipline; DR-2026-05-13"
+    enforcer: R10
+
+  - id: R11
+    phase: when-filing
+    title: "Vocabulary provenance"
+    hook: >-
+      No back-translation. Every alias carries its in-language source, else
+      [UNVERIFIED-TERMS].
+    anchor: "CO-0005; DR-2026-05-09; skills/multilingual-research_SKILL.md"
+    enforcer: R11
+
+  - id: R12
+    phase: when-filing
+    title: "Structured homes used"
+    hook: >-
+      Case studies -> case_studies. Economics -> economics_entries. Code values ->
+      jurisdictional_values. Never leave them in prose notes.
+    anchor: "schemas/case_study.py; schemas/economics.py; schemas/jurisdictional_value.py"
+    enforcer: R12
+
+  - id: R13
+    phase: while-searching
+    title: "Population-of-study vs population-served"
+    hook: >-
+      Grade population-of-STUDY vs population-SERVED on every admission. No match row
+      = silently claiming they are the same. Children/general-population/no-participants
+      = PROXY.
+    anchor: "evidence_population_match; governance/evidence-architecture.md directness"
+    enforcer: R13
+
+  - id: R14
+    phase: while-searching
+    title: "A zero-yield search must say why"
+    hook: >-
+      A zero-yield search is evidence of ABSENCE only if the query was well-formed.
+      PubMed AND-chains every term: say query-shape failure vs wrong index vs
+      genuine absence.
+    anchor: "skills/multilingual-research_SKILL.md; search_executions.findings_note"
+    enforcer: R14
+
+  - id: R15
+    phase: when-filing
+    title: "A resolved candidate is re-described from the source"
+    hook: >-
+      A staged candidate description is a HYPOTHESIS. On resolution, re-describe it
+      from the source and CORRECT it if you over-claimed. Do not let your own guess
+      harden into fact.
+    anchor: "search_candidates; skills/citation-miner_SKILL.md"
+    enforcer: R15
+
+# Lines appended verbatim after the phased rules. These are standing invariants
+# rather than per-phase research rules, so they are not numbered.
+footer:
+  - "ALWAYS: migrations-only (emit_data_migration -> migrate_db). Never hand-edit the DB."
+  - "Never author best_practice_synthesis below the Opus floor. Never move an adjudicated figure."
+  - "Gate before you claim done:  python3 scripts/audit/research_batch_dod.py --session <id>"

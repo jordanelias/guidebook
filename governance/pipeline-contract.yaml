@@ -156,8 +156,18 @@ cross_stage:
     check: scripts/audit/claims_docket.py
   - id: reproducibility-invariant
     criterion: "The committed DB reproduces the 7 core invariants from migration history; job-owned tables (evidence_source_authors, pipeline_runs) are the only exemptions."
-    references: "DR-2026-05-28 migration-ledger; audit.yml GAP-290 gate"
-    check: scripts/migrate_db.py
+    # CORRECTED 2026-08-01 on two counts, both surfaced when pipeline_contract_audit
+    # began resolving enforcers against check-registry.yaml instead of the filesystem:
+    #   * the enforcer was `scripts/migrate_db.py`, which is the migration RUNNER and
+    #     is not a registered check at all. The registered gate is
+    #     migration_reproducibility. The old audit called this VERIFIABLE because the
+    #     file existed.
+    #   * `audit.yml` no longer exists; it was folded into ci.yml on 2026-08-01.
+    # Scope note kept honest: the blocking gate compares user_version plus COUNT(*)
+    # on six tables, so it cannot see an UPDATE. migration_reproducibility_deep
+    # (advisory) is the full comparison.
+    references: "DR-2026-05-28 migration-ledger; GAP-290; ci.yml data battery"
+    check: scripts/audit/migration_reproducibility.py
   - id: doctrine-recheck
     criterion: "A doctrine recheck fires at every stage transition and every 25 sessions; work-product must not contradict canonical doctrine."
     references: "governance/doctrine-recheck.md §1; RecheckTrigger STAGE_TRANSITION"
