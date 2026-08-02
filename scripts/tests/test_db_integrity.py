@@ -271,14 +271,56 @@ def run_checks(db_path):
     # first_author_last are non-empty, so C03 accepted them as authors and a
     # missing author passed a blocking gate. Unknown belongs in NULL plus a
     # coded status, never in the value field.
-    placeholder = conn.execute("""SELECT COUNT(*) FROM evidence_sources
-        WHERE first_author_last LIKE '[%'
-           OR first_author_last LIKE '%pending%'
-           OR first_author_last LIKE '%TBD%'
-           OR first_author_last LIKE '%unknown%'""").fetchone()[0]
-    record("C07", "first_author_last holds a name, not a placeholder state",
+    # Guarding one column was not enough: the identical mask survived one column
+    # over, on the same rows, in author_display — which is what the vetting
+    # surface actually renders. Since migration 041 every one of these has a
+    # paired *_note overflow, so prose in the VALUE column is now unambiguously
+    # a defect rather than a place-of-last-resort.
+    PLACEHOLDER = ("{c} LIKE '[%' OR {c} LIKE '%pending%' OR {c} LIKE '%TBD%' "
+                   "OR {c} LIKE '%TBC%' OR {c} LIKE '%unknown (%'")
+    VALUE_COLS = [("evidence_sources", "first_author_last"),
+                  ("evidence_sources", "author_display"),
+                  ("evidence_sources", "publisher"),
+                  ("evidence_source_authors", "corporate_name")]
+    placeholder, detail = 0, []
+    for tbl, col in VALUE_COLS:
+        n = conn.execute(f"SELECT COUNT(*) FROM {tbl} WHERE "
+                         + PLACEHOLDER.format(c=col)).fetchone()[0]
+        placeholder += n
+        if n:
+            detail.append(f"{tbl}.{col}={n}")
+    record("C07", "value columns hold values, not placeholder states",
            placeholder == 0,
-           f"{placeholder} rows hold placeholder prose where a surname belongs" if placeholder else "")
+           f"{placeholder} rows hold placeholder prose in a value column "
+           f"({', '.join(detail)}) — the prose belongs in the paired _note column"
+           if placeholder else "")
+
+    # C09 — the states nobody can contradict. C06 binds only 'captured' and C08
+    # only 'mined', which leaves every "we looked and decided" state freely
+    # assertable: all 852 pending rows could be flipped to 'none-extractable'
+    # and the whole suite would still pass. Those are the states most worth
+    # lying about, so they are the ones that most need a witness. Migration
+    # 040's own DDL promises a reason accompanies them; this enforces it.
+    unreasoned = conn.execute("""SELECT COUNT(*) FROM evidence_sources
+        WHERE data_capture_status IN ('deferred','none-extractable')
+          AND COALESCE(processing_blocked_reason,'') = ''""").fetchone()[0]
+    orphan_reason = conn.execute("""SELECT COUNT(*) FROM evidence_sources
+        WHERE COALESCE(processing_blocked_reason,'') <> ''
+          AND data_capture_status NOT IN ('deferred','none-extractable')
+          AND citation_mining_status <> 'deferred'""").fetchone()[0]
+    bad_deferred = conn.execute("""SELECT COUNT(*) FROM evidence_sources s
+        WHERE s.citation_mining_status='deferred' AND NOT EXISTS (
+            SELECT 1 FROM citation_mining m
+            LEFT JOIN source_slug_links l
+              ON l.slug=m.slug AND l.local_ref_id=m.local_ref_id
+            WHERE COALESCE(m.global_ref_id, l.ref_id) = s.ref_id
+              AND COALESCE(m.deferred_reason,'') <> '')""").fetchone()[0]
+    record("C09", "a 'we looked and stopped' state carries its witness",
+           unreasoned == 0 and orphan_reason == 0 and bad_deferred == 0,
+           f"{unreasoned} deferred/none-extractable with no coded reason; "
+           f"{orphan_reason} reasons attached to a non-stopped state; "
+           f"{bad_deferred} claim mining-deferred with no deferred mining row"
+           if (unreasoned or orphan_reason or bad_deferred) else "")
 
     # legacy/v2 row count parity — only when legacy table still exists
     has_legacy = conn.execute("""SELECT COUNT(*) FROM sqlite_master
