@@ -248,3 +248,129 @@ have a live enforcer, and does every enforcer have a stated authority?"* — and
 | 5.3 | Extend CODEOWNERS to the three unprotected contract paths | 5.3 |
 
 Nothing in Phases 0.2–0.4, 2, 3.1–3.3, 3.5, 5.1 requires an owner decision.
+
+---
+
+# PART II — Closing out, and getting back to research
+
+**Added 2026-08-02.** Phases 0, 1, 2, 5.1 and 5.3 are done (PR #77). This part is
+deliberately about **stopping**, not building. The apparatus is now more elaborate than
+the corpus it governs; every further enforcement hour is an hour not spent on the
+guidebook.
+
+## The reframe that makes this tractable
+
+`test_db_integrity` — the one blocking red — is **not** an apparatus problem wearing a
+content mask. Measured 2026-08-02:
+
+| Sub-check | Rows | Nature |
+|---|--:|---|
+| `C01` VERIFIED with no audit trail | 7 | content |
+| `C02` DOI-bearing, no resolution outcome | 105 | content |
+| `C03` COMPLETE with no author | 80 | content |
+| `G02` COMPLETE person-authored, no author rows | 113 | content |
+| **distinct rows behind C02/C03/G02** | **110** | **content** |
+| `B01` out-of-enum `verification_status` | 81 | **stale test** (~80 of 81) |
+
+**Clearing those 110 rows IS research work.** It is source verification under R9/R10 —
+re-retrieve the locator, record the outcome, capture the authors. So "resolve everything
+so we can get back to research" and "clear the red gate" are the same activity, not
+competing ones. That is the single most useful thing in this document.
+
+## Step 1 — Land PR #77 *(unblocked; do first)*
+
+It is green except the pre-existing `test_db_integrity`. Merge it. Waiting for that gate
+to go green before merging tooling fixes couples unrelated work — the fixes are what make
+the rest of this plan measurable.
+
+## Step 2 — One decision sitting *(~1 hour, unblocks everything else)*
+
+Six decisions, batched. Recommendations given so this is an approval exercise, not a
+research exercise.
+
+| # | Decision | Recommendation |
+|---|---|---|
+| **D1** | Ratify the `verification_status` vocabulary (D-SCHEMA) | **Ratify** `VERIFIED-2`, `DISPUTED`, `VERIFIED-WITH-CORRECTION`, `CLOSED-DECIDED`. `DISPUTED`/`CLOSED-DECIDED` already came from an owner-approved DR; `VERIFIED-WITH-CORRECTION` is already in `schemas/enums.py`. One DR + update `enums.py` and the test list together. **Turns B01/B06 green honestly** and shrinks the red gate to its genuine content half. |
+| **D2** | `--deep`'s two divergences | **Widen DR-2026-05-28's exemption list**, scoped to *columns* not whole tables: `evidence_sources`' Crossref enrichment set plus `url_verification_runs`. Same scheduled writers already exempted for two other tables; requiring migrations from a network-bound cron job is impractical. Column-scoping keeps the gate live for everything else in that table. |
+| **D3** | What `schemas/*.py` mirrors | **SQLite, for the models in `MODEL_TABLE_MAP` only.** Move or drop the YAML-layer models (`Population`, `Item`) from that map. Decides how much of the 236 is real — probably collapses it to ~9 reconciliation items. |
+| **D4** | The 6-slug banner/DB mismatch | **DB is canonical** (CLAUDE.md §2). Update the six banners; `pre_rehab_banner_audit` then becomes a real anti-drift gate rather than a permanent red. |
+| **D5** | `sessions/LATEST` | **Point it at the current session** *or* de-scope `citation_mining_session` from session-filtering. Today it is a blocking gate passing on 4.7% coverage. Either fixes it; leaving it is the worst option. |
+| **D6** | `schema_reference_drift_audit` | **Retire to `_archived/`.** Its one gating check is carried with better precision by the wired `graph_audit`, and its hit count moved three times in one session purely from prose. |
+
+## Step 3 — Make red mean something *(~2 hours, high leverage)*
+
+The four red advisories are scenery. The fix is the pattern this repo already invented in
+`governance/research-contract-baseline.json`: **baseline the count, fail on increase.**
+
+- Add `baseline: <n>` to the registry alongside `level:`.
+- `run_checks.py` fails an advisory only when its finding count **exceeds** the baseline.
+- Applies to `validate_pydantic_schemas` (236), `population_integrity_audit` (31),
+  `pmp_audit` (3), `reasoning_doc_citations_audit` (2), `research_protocol_audit`.
+
+This converts "permanently red, ignore it" into "red means someone made it worse" — which
+is the property this whole effort has been trying to buy. It also means the four checks
+I added stop being noise without being re-quarantined.
+
+**This is the one piece of new apparatus this document endorses**, because it is what lets
+everything else stop.
+
+## Step 4 — Clear the 110 rows *(research work; several sessions)*
+
+Under the research contract, not around it. Per batch:
+
+1. `emit_data_migration` only — never touch the DB directly.
+2. **R10 forbids fabricating a resolution outcome.** Each DOI must actually be
+   re-retrieved. `NO-MATCH` is a legitimate outcome for pre-DOI-era sources; a guess is not.
+3. Note the scheduled resolver **cannot** self-heal these: every phase targets
+   `WHERE doi IS NULL`, and Phase-4 author enrichment filters on a `source_type` these
+   rows lack. Fixing `source_type` first lets the cron job do the author half.
+4. Gate each batch with `research_batch_dod.py --session <id>`.
+
+When this finishes, `test_db_integrity` goes green on its own merits and the blocking red
+disappears — without anyone editing a gate to agree with the data.
+
+## Step 5 — Explicitly close the apparatus phase
+
+**Dropped. Not deferred — dropped**, with the reason recorded so a later session does not
+rediscover them as gaps:
+
+| Item | Why dropped |
+|---|---|
+| 3.1/3.2 `parts/` + `site/` freshness checks | `parts/v10` is 13 schema versions stale and `site/` has 116 uncovered files. Adding checks would add two permanent reds to a board this plan is trying to quieten. Record the staleness in the register; regenerate when the render pipeline is next worked on. |
+| 3.4 DB write guard in `db.py` | Touches a tool 15 skills depend on. Real risk, low current harm. |
+| 4.5 Shared selftest harness | Touches ~18 files for modest gain. |
+
+**Kept, because each is under ~30 lines and closes a stated-but-unverified promise:**
+
+- **3.3 migration immutability** — every migration header promises it, nothing checks it.
+- **3.5 `skills/` work-kind** — `skills/**` is in no kind, so a skills-only diff runs
+  almost nothing, and two skills already name a path that does not exist.
+- **3.6 bot-commit exemption** — record it in `commit_gate.py` where the other exemptions
+  live. Currently neither enforced nor exempted, just unexamined.
+- **4.4 `EXTRA_RULE_IDS`** → into `references/skill-registry.md` as a declared second
+  section, so the rule vocabulary has one home.
+
+## Step 6 — Then stop, and revisit the tool question later
+
+A comparative review (2026-08-02) found this project has hand-rolled equivalents of
+**pre-commit** (the check registry), **Alembic/Flyway** (migration checksums), **pytest**
+(which exits 5 on zero tests collected — the vacuity guard, built in), and
+**betterer/ratchet** (the baseline pattern in Step 3). The opaque SQLite blob is what
+creates the need for the reproducibility gate at all; **sqlite-diffable** or **Dolt** would
+make drift visible in `git diff` and delete that category of apparatus.
+
+**None of that should be done now.** It is recorded so the next architecture decision is
+informed, not so it becomes Phase 6. The correct next move after Step 4 is guidebook
+content.
+
+## Definition of done for this whole effort
+
+1. PR #77 merged.
+2. Six decisions taken (Step 2).
+3. Advisories baselined, so red means regression (Step 3).
+4. The 110 rows cleared, so `test_db_integrity` is green on its merits (Step 4).
+5. The four kept items landed; the dropped ones recorded as dropped (Step 5).
+
+At that point the board is green-or-meaningfully-red, every check states its authority,
+every contract has one source — and there is no apparatus work queued. **That is the exit
+condition.**
