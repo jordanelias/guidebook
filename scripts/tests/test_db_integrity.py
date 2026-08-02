@@ -90,6 +90,21 @@ def run_checks(db_path):
             WHERE NOT EXISTS (SELECT 1 FROM items i WHERE i.item_code=e.item_code)
         """).fetchone()[0] == 0)
 
+    # A09 stands in for a foreign key that migration 039 deliberately did NOT
+    # declare. Every other soft edge in that migration became a real FK; this
+    # one would have required rebuilding evidence_sources — 88 columns, 9
+    # inbound FKs — to protect 44 values, and hand-transcribing a definition
+    # that size is how a rebuild silently changes a type or a CHECK. The
+    # constraint is traded for this check; if evidence_sources is ever rebuilt
+    # for another reason, declare the FK and delete this.
+    record("A09", "evidence_sources.superseded_by_ref_id → evidence_sources",
+        conn.execute("""SELECT COUNT(*) FROM evidence_sources s
+            WHERE s.superseded_by_ref_id IS NOT NULL
+            AND s.superseded_by_ref_id <> ''
+            AND NOT EXISTS (SELECT 1 FROM evidence_sources e
+                            WHERE e.ref_id = s.superseded_by_ref_id)
+        """).fetchone()[0] == 0)
+
     # ── B: Enum validation ────────────────────────────────────────────────────
     print("\n[B] Enum column validation")
 
