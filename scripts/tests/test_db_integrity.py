@@ -12,7 +12,8 @@ Checks performed:
   C — Consistency invariants (VERIFIED audit trail, pre-pipeline backfill,
       COMPLETE criteria, run record completeness)
   D — Duplicate / collision detection (duplicate DOIs excluding known intentional
-      triples, duplicate ref_ids across tables)
+      triples, duplicate ref_ids across tables, and the DOI-less half: sources
+      colliding on author+year+title, plus sources with no computable key at all)
   E — Schema contract (required columns present, migration log non-empty,
       PRAGMA foreign_keys honoured)
   F — Pipeline run health (no regressions, all started runs completed)
@@ -448,6 +449,81 @@ def run_checks(db_path):
     record("D03", "No duplicate slugs in bpc_metadata",
            len(dup_slugs) == 0,
            f"duplicates: {[dict(r) for r in dup_slugs]}" if dup_slugs else "")
+
+    # D04 — the DOI-less half of D01.
+    #
+    # R9 ("pre-check the DOI, cross-file the existing ref_id, never duplicate")
+    # is only mechanically enforceable for sources that HAVE a DOI, which D01
+    # covers. 422 of 863 sources have none — every T4/T5/T6 code, standard and
+    # decree, plus grey and non-indexed work — and for those nothing has
+    # detected a re-entry since `evidence_sources.doi_less_key` left the schema.
+    #
+    # That column was a stored author_year_title dedup key, present in
+    # 001_initial_schema.sql and dropped by migrate_evidence_sources_v2.py when
+    # authors were normalised into evidence_source_authors. Dropping it was
+    # right: a denormalised key that can be recomputed from pub fields is a
+    # second copy waiting to disagree with the first. What was never done is
+    # re-expressing the CHECK on the new basis, so scripts/validate_db.py C5
+    # ("without doi or doi_less_key — incomplete dedup data") simply started
+    # crashing and was quarantined. The contract was sound; only its column
+    # was obsolete. This recomputes the key and applies the contract.
+    #
+    # Key = normalised(first author) + pub_year + normalised(full title). The
+    # full title is load-bearing: truncating it collapses legitimately distinct
+    # clause-level rows (BCA Code 2025 whole-code vs Chapter 8; Finnish Decree
+    # 241/2017 general vs door provisions) into false positives.
+    KNOWN_DUP_SOURCE_KEYS = (
+        # (normalised_author, pub_year, normalised_title) pairs that are
+        # deliberately two rows. Empty today — every current collision is a
+        # genuine re-entry queued for merge. Add here only with the reason.
+    )
+    import re as _re
+
+    # Normalisation is Unicode-aware by necessity, not by politeness. An
+    # ASCII-only fold ([^a-z]) erases 中华人民共和国住房和城乡建设部, 日本工業標準調査会,
+    # 한국시각장애인연합회 and every other non-Latin corporate author to the empty
+    # string. Both effects are unacceptable: D05 would report those sources as
+    # "keyless" for not being Latin, and D04 would SKIP them — enforcing dedup
+    # discipline on the English corpus while exempting the multilingual one, in
+    # a corpus whose R5/R11 exist to prevent exactly that asymmetry.
+    # Split before folding so "国土交通省 住宅局 (MLIT Housing Bureau)" keys on the
+    # in-language name rather than the parenthetical gloss (R11: no
+    # back-translation).
+    def _norm_author(a):
+        a = _re.split(r"[,;&(]| et al| and ", (a or "").casefold())[0]
+        return _re.sub(r"\W", "", a, flags=_re.UNICODE)
+
+    def _norm_title(t):
+        return _re.sub(r"\W", "", (t or "").casefold(), flags=_re.UNICODE)
+
+    _groups = {}
+    for r in conn.execute("""SELECT ref_id, pub_year, author_display, pub_title
+                             FROM evidence_sources
+                             WHERE doi IS NULL OR doi = ''"""):
+        key = (_norm_author(r[2]), r[1], _norm_title(r[3]))
+        if not key[0] or not key[2] or key in KNOWN_DUP_SOURCE_KEYS:
+            continue  # no computable key — C03/G02 own missing-author coverage
+        _groups.setdefault(key, []).append(r[0])
+    dup_sources = {k: v for k, v in _groups.items() if len(v) > 1}
+    record("D04", "No duplicate DOI-less sources (author+year+title collision)",
+           len(dup_sources) == 0,
+           f"{len(dup_sources)} collisions across "
+           f"{sum(len(v) for v in dup_sources.values())} rows: "
+           + "; ".join("+".join(v) for v in sorted(dup_sources.values()))
+           if dup_sources else "")
+
+    # Sources with no DOI and no computable dedup key are invisible to both
+    # D01 and D04 — the actual "incomplete dedup data" condition validate_db C5
+    # was written to catch.
+    undedupable = sum(
+        1 for r in conn.execute("""SELECT author_display, pub_year, pub_title
+                                   FROM evidence_sources
+                                   WHERE doi IS NULL OR doi = ''""")
+        if not _norm_author(r[0]) or r[1] is None or not _norm_title(r[2]))
+    record("D05", "Every DOI-less source has a computable dedup key",
+           undedupable == 0,
+           f"{undedupable} DOI-less sources lack author, year or title — "
+           f"invisible to both D01 and D04" if undedupable else "")
 
     # ── E: Schema contract ────────────────────────────────────────────────────
     print("\n[E] Schema contract")
