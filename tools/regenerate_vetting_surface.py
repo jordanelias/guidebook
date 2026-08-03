@@ -180,7 +180,8 @@ def fetch_backbone(db_path: Path) -> dict:
     bb = {}
     for slug in slugs:
         linked = q(
-            """SELECT e.ref_id, e.author_display, e.pub_year, e.tier, e.evidence_type,
+            """SELECT e.ref_id, e.author_display, e.author_display_note,
+                      e.pub_year, e.tier, e.evidence_type,
                       e.jurisdiction, e.doi, e.pmid, e.metadata_quality,
                       e.verification_status, e.doi_resolution_outcome,
                       sl.relevance_note
@@ -365,6 +366,9 @@ table.spread td.c-auth,table.spread td.c-rel{font-size:11px;line-height:1.35}
 .tier-name{font-family:var(--serif);font-weight:700;font-size:13px;color:var(--ink);margin-right:10px}
 .tier-disc{font-size:10.5px;color:var(--muted);font-family:var(--serif);font-style:italic}
 .no-rel{font-style:italic;color:var(--muted);font-size:10px}
+/* author_display_note: prose standing in for a name. Italic + muted so it
+   never reads as an attribution a curator could cite. */
+.auth-note{font-style:italic;color:var(--muted)}
 .pop-cell{display:flex;flex-direction:column;gap:2px}
 .pop-codes{display:flex;flex-wrap:wrap;gap:3px}
 .pop-code{font-family:var(--mono);font-size:10px;font-weight:600;padding:1px 5px;border-radius:2px;
@@ -456,6 +460,14 @@ function matchClass(m){if(m==='EXACT')return'm-exact';if(m==='WITHIN-TOLERANCE')
 function statClass(s){return{'preliminary':'s-prel','reviewed':'s-rev','verified':'s-ver','contradicted':'s-con','absent-confirmed':'s-abs'}[s]||'s-prel';}
 function idCell(s){const id=s.doi?('doi:'+s.doi):(s.pmid?('PMID:'+s.pmid):null);
  return id?('<span class="badge b-id">'+esc(id)+'</span>'):'<span class="badge b-noid">no id</span>';}
+// author_display holds a name; author_display_note holds the prose that used to
+// be glued into it (migration 041 split them, and check C07 now forbids putting
+// it back). Render the note as a visible caveat rather than as a name -- a
+// curator needs to see "[Author pending -- ...]", not an em-dash.
+function authCell(s){const yr=s.pub_year?' ('+esc(s.pub_year)+')':'';
+ if(s.author_display)return esc(s.author_display)+yr;
+ if(s.author_display_note)return '<span class="auth-note">'+esc(s.author_display_note)+'</span>'+yr;
+ return '&mdash;'+yr;}
 let cur=null;
 function renderList(){
  const mode=document.getElementById('sort').value;
@@ -561,7 +573,7 @@ function renderDetail(slug){
       ? esc(s.relevance_note)
       : '<span class="no-rel">no relevance note recorded</span>';
     h+='<tr><td class="ref">'+esc(s.ref_id)+'</td>'+
-     '<td class="c-auth">'+esc(s.author_display||'&mdash;')+' '+(s.pub_year?'('+esc(s.pub_year)+')':'')+'</td>'+
+     '<td class="c-auth">'+authCell(s)+'</td>'+
      '<td class="c-rel">'+relHtml+'</td>'+
      '<td class="tier">T'+esc(s.tier)+'</td><td>'+esc(s.jurisdiction||'&mdash;')+'</td>'+
      '<td>'+idCell(s)+'</td>'+
@@ -573,7 +585,7 @@ function renderDetail(slug){
    h+='<tr class="tier-row"><td colspan="8"><span class="tier-name">Other</span><span class="tier-disc">Sources outside the T1&ndash;T6 / Co-1 / Co-2 ladder. Investigate.</span></td></tr>';
    unBucketed.forEach(s=>{const v=s._v.verdict;
      h+='<tr><td class="ref">'+esc(s.ref_id)+'</td>'+
-      '<td class="c-auth">'+esc(s.author_display||'&mdash;')+' '+(s.pub_year?'('+esc(s.pub_year)+')':'')+'</td>'+
+      '<td class="c-auth">'+authCell(s)+'</td>'+
       '<td class="c-rel"><span class="no-rel">no relevance note recorded</span></td>'+
       '<td class="tier">T'+esc(s.tier)+'</td><td>'+esc(s.jurisdiction||'&mdash;')+'</td>'+
       '<td>'+idCell(s)+'</td>'+
