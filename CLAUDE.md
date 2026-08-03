@@ -388,7 +388,7 @@ attestation logic.
   being asked to mean both "most recent session" and "most recent *research* session", and those are
   different objects. Left stale the gate validates a closed set; advanced to the current session it
   reports `Outstanding: 0` and passes by having nothing in scope. **Both states are meaningless.**
-  The fix is to split the pointer — see W4.1 of `workplan/comprehensive-plan-2026-08-02.md`.
+  The fix is to split the pointer — see W4.1 of `workplan/2026-08-02-architecture-decision-and-execution-plan.md`.
 - **PI versioning is intentional:** the numbered `project-instructions-v*.md` files are
   historical snapshots; the highest-numbered one is the deployed copy. The PI is not
   API-writable — the owner pastes it into claude.ai — so the repo PI legitimately lags current

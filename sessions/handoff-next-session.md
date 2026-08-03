@@ -6,7 +6,7 @@
 **Last session record:** `sessions/session_2026-08-01-tooling-second-pass.md`
 **Latest PI in repo:** `governance/project-instructions-v10_14.md` (the repo PI legitimately lags — the owner pastes it into claude.ai)
 **Doctrine SHA:** `0f2f525`
-**The plan to work from:** `workplan/comprehensive-plan-2026-08-02.md`
+**The plan to work from:** `workplan/2026-08-02-architecture-decision-and-execution-plan.md`
 
 > **Rewritten 2026-08-02.** The previous handoff pointed at HEAD `de364a88` and a 2026-05-13
 > session record for eleven weeks, and named branch `main`. Keeping this file current is W4.2 of
@@ -16,7 +16,7 @@
 
 ## Where things stand
 
-**One plan supersedes the rest.** `workplan/comprehensive-plan-2026-08-02.md` replaces the
+**One plan supersedes the rest.** `workplan/2026-08-02-architecture-decision-and-execution-plan.md` replaces the
 2026-08-01 consolidation plan and the 2026-08-02 prune plan. Those remain as the record of how the
 findings were reached — do not start from them.
 
@@ -96,7 +96,7 @@ of why 79 of 87 generated spec pages render an empty best-practice banner.
 
 `scripts/preflight.sh` gates a diff; `python3 scripts/run_checks.py --changed-from origin/main
 --explain` says why each check ran or didn't. Expect one blocking failure on any branch —
-`test_db_integrity` at 26/35, pre-existing and identical on clean `main` — plus four advisories.
+`test_db_integrity` at 31/41 — nine pre-existing content rows plus C10 — and a dozen advisories.
 Install deps first: `pip install -r requirements.txt`, then `pip install jsonschema`.
 
 Never write `data/guidebook.db` directly. All changes ship as migrations

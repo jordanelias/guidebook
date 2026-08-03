@@ -1,7 +1,7 @@
 # Architecture decision and execution plan
 
-**Date:** 2026-08-02 · **Status:** PROPOSED · **Supersedes:** `workplan/comprehensive-plan-2026-08-02.md`,
-`workplan/prune-and-reinvest-plan-2026-08-01.md`, `workplan/consolidation-and-compliance-plan-2026-08-01.md`
+**Date:** 2026-08-02 · **Status:** PROPOSED · **Supersedes:** `workplan/_superseded/comprehensive-plan-2026-08-02.md`,
+`workplan/_superseded/prune-and-reinvest-plan-2026-08-02.md`, `workplan/_superseded/consolidation-and-compliance-plan-2026-08-01.md`
 
 > **Filename adopts the `YYYY-MM-DD-slug.md` convention this plan mandates (W4.3).** The three
 > superseded plans do not sort chronologically by name; this one does. Practice before precept.
