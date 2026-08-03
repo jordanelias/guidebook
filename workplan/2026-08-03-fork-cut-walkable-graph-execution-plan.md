@@ -29,9 +29,9 @@ takes the same graph in the forward direction, because that is where the fork ha
 | | |
 |---|---|
 | Rendered spec pages | **87** |
-| …that name a single source | **0** |
+| …that name a single source | **0** → **1** (E-08, 2026-08-03) |
 
-Zero. Not one published page shows its evidence. This is not a content gap — `E-08 × DEAF` is a
+Zero at the time of writing. Not one published page showed its evidence. This is not a content gap — `E-08 × DEAF` is a
 `stated` cell holding seven governing refs today — it is that `scripts/generate/spec_page.py:69-73`
 selects nine cell columns and **not `governing_refs`**. The data reaches the renderer's doorstep and
 is dropped there. Verified: `grep -c 'REF-' site/specs/*.html` returns 0 for every file.
@@ -249,6 +249,45 @@ views. Recursion is needed in exactly one place: `populations.parent_code` ances
 
 ## 7. Sequencing
 
+### 7.0 Status, and six corrections to this plan's own ordering **[REVISED 2026-08-03, same day]**
+
+An adversarial pass over §7 as written found the ordering wrong in six places. Recorded here
+rather than silently rewritten, per the convention of the plan this one extends.
+
+| Item | Status |
+|---|---|
+| **F2a/F2b** `cell_source_links` + backfill | **DONE** — migration 044 + data migration. 63 rows / 14 cells, junction and JSON agree exactly both directions, 0 FK violations. Rebuilds byte-identically. |
+| **F9** vetting-surface note render | **DONE** — all 7 affected entries show their caveat again; C07 still passes. |
+| **F6-core** spec pages cite their sources | **DONE** — E-08 renders 7 governing sources. **The measuring number is 1, not 0.** |
+| F2-drop, F3a, F5, F6-infra, F7, N1-schema | open |
+| F1 (⚑2), F4 (⚑3), F8 | owner-gated, not started |
+
+1. **[CORRECTED] F6 was on the wrong side of the fork line.** §0 calls the citation fix the
+   cheapest high-value change in this plan; §7 then parked it behind a fork gated by ⚑1/DG-NON,
+   which the owner may decline — so under the original ordering the measuring number would have
+   stayed at zero indefinitely. Split: **F6-core** (the render fix) is fork-independent and
+   executes now; **F6-infra** (`build_site.py` + `render_manifest`) waits behind ⚑3.
+2. **[CORRECTED] F2 never depended on F1.** The table implied it queued behind an owner ruling.
+   `cell_source_links` is orthogonal to the `evidence_sources` tier split. Owner-gate latency
+   should not sit in front of an ungated mechanical migration.
+3. **[CORRECTED] "Freeze then drop" understated the sweep.** `governing_refs` has **nine** live
+   code consumers — `validate_evidence_state.py`, `test_db_integrity.py`, `assess_cell.py`,
+   `adjudication_integrity.py`, `check_rendered_docs.py`, `validate_verification_consistency.py`,
+   `pilot_renderings.py`, `pipeline_completeness.py`, one test — plus `v_best_practice`
+   (`SELECT *`). §2 named four. The drop is its own item, not a sub-step of F2, and until it
+   lands a consistency check should hold junction ⊇ JSON.
+4. **[CORRECTED] F3's blast radius was understated the same way.**
+   `data/decisions/decision_register.yaml` is read by at least five live scripts including the
+   **blocking** `decision_capture.py`. Retiring it to a stub without repointing them breaks the
+   governance battery. Split: **F3a** import-to-DB; **F3b** retirement, after the sweep.
+5. **[CORRECTED] F9 at position nine was indefensible** — minutes of work restoring the exact
+   information whose loss prompted this review. It ships with the first session touching a
+   generator, which is what happened.
+6. **[CORRECTED] F5 is not a cut-blocker.** Nothing about the fork's shape depends on it;
+   treating it as one adds schedule risk for no definitional gain.
+
+### 7.1 The sequence as revised
+
 **Before the fork is cut** — these define the fork; several are owner-gated.
 
 | | Item | Gate |
@@ -279,8 +318,26 @@ column at all, and a docstring claiming 531 records against 863.
 ## 8. What this plan does not decide
 
 - Whether to fork at all (⚑1, DG-NON trajectory — owner only).
-- N1 (`jurisdictional_values` has no `ref_id`) and N3 (jurisdiction vocabulary) remain ahead of this
-  work in the 2026-08-02 priority order. A third of the corpus being unprovenanced outranks making
-  the render hop walkable — this plan does not jump that queue, it queues behind it.
+- ~~N1 and N3 remain ahead of this work in the 2026-08-02 priority order. A third of the corpus
+  being unprovenanced outranks making the render hop walkable — this plan does not jump that queue,
+  it queues behind it.~~ **[CORRECTED 2026-08-03]** This sentence was written as scope discipline
+  and was wrong in its premise. §8's concern is the *honesty of rendered output*: that a page
+  citing its sources while silently presenting unprovenanced code values would look sourced and
+  hide the unsourced third. Verified against the actual generator — `spec_page.py` contains **zero**
+  references to `jurisdictional_values` or any jurisdiction column, and **zero of 87** rendered
+  pages mention jurisdiction or a code value. The feared page cannot currently exist. Meanwhile the
+  render hop's real honesty failure was the opposite one: 87 confident pages citing nothing.
+
+  N1 keeps its rank as the top **content-effort** item (109 values, no `ref_id`, 26/26 phantom
+  `spec_id`, and T4–T6 is 314 of 863 sources) and its backfill proceeds as the priority workstream.
+  It does not gate two disjoint one-session structural fixes that touch different tables and
+  different files.
+
+  **§8's substance is better served as an invariant than as a queue position**, and is hereby
+  restated as one: *a regulatory-floor value renders only from a `jurisdictional_values` row
+  carrying a non-null `ref_id`.* Today that is trivially satisfied because no floors render at all.
+  The moment a floors section is added to the page template, the rule — not a remembered priority
+  ordering — prevents the false-confidence page. Queue positions evaporate the day they are
+  forgotten; invariants do not.
 - Whether the 22 docless slugs and 62 retracted BPCs are rehabilitated before or after the cut. That
   is content sequencing, and it belongs to the BPC rewrite workplan.
