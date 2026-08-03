@@ -1,0 +1,139 @@
+name: Regenerate derived outputs
+
+# Rebuilds every DB-derived output and commits the result back to main.
+#
+# Absorbs three near-identical workflows — regenerate-vetting-surface.yml,
+# regenerate-evidentiary-audit.yml and regenerate-pipeline-completeness.yml —
+# which differed only in the generator invoked, the files staged, the commit
+# prefix and the trigger paths. Everything else (checkout, python, concurrency,
+# the byte-identical short-circuit, the race-aware push retry) was copied three
+# times, so a fix to the push retry had to be made three times or the copies
+# drifted. That is now one matrix.
+#
+# WHAT MOVED OUT OF HERE
+# ----------------------
+# Two of the three old workflows also ran a `check` job on pull requests, failing
+# if the committed output was stale versus the DB. That duty now belongs to
+# ci.yml's `render` battery, which runs the same `--check` gates from
+# governance/check-registry.yaml and is gated on the same work kinds. Keeping a
+# second copy of the PR gate here would mean two places to keep in step. This
+# workflow is now purely the write-back half.
+#
+# DETERMINISM / LOOP SAFETY
+# -------------------------
+# Each generator derives its "as-of" date from the DB's own max(updated_at), never
+# wall-clock, so identical DB content produces byte-identical output. This
+# workflow's own commits touch only generated files — never data/guidebook.db — so
+# they cannot retrigger it. Belt and braces: each matrix leg exits without
+# committing when its regenerated output is byte-identical to the committed copy.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/guidebook.db'
+      - 'governance/pipeline-contract.yaml'
+      - 'tools/evidentiary_audit.py'
+      - 'tools/pipeline_completeness.py'
+      - 'tools/regenerate_vetting_surface.py'
+      - '.github/workflows/regenerate-derived.yml'
+  schedule:
+    # Mondays 07:30 UTC, after the weekly source-verification job. A belt-and-
+    # braces catch; safe when nothing changed, per the loop-safety note above.
+    - cron: '30 7 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  regenerate:
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    # Per-leg concurrency: two legs write different files and must not be
+    # serialised against each other, but a leg must not race itself.
+    concurrency:
+      group: regenerate-${{ matrix.id }}
+      cancel-in-progress: false
+    strategy:
+      # One stale output must not stop the others from being refreshed.
+      fail-fast: false
+      matrix:
+        include:
+          - id: vetting-surface
+            name: Vetting surface
+            generator: tools/regenerate_vetting_surface.py
+            commit_prefix: vetting-surface-regen
+            outputs: tools/spec-curation-vetting-surface.html
+
+          - id: evidentiary-audit
+            name: Evidentiary audit
+            generator: tools/evidentiary_audit.py
+            commit_prefix: evidentiary-audit-regen
+            outputs: >-
+              audits/evidentiary-base-audit.md
+              audits/evidentiary-base-audit.csv
+              audits/evidentiary-base-audit-items.csv
+              audits/evidentiary-base-audit.json
+              tools/evidentiary-audit-dashboard.html
+
+          - id: pipeline-completeness
+            name: Pipeline completeness
+            generator: tools/pipeline_completeness.py
+            commit_prefix: pipeline-completeness-regen
+            outputs: tools/pipeline-completeness-dashboard.html
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install deps
+        run: pip install --quiet PyYAML
+
+      # Call the writer; never redirect its stdout. The tools write their own
+      # output path (DEFAULT_OUT), so `python3 tool.py > out.html` captures the
+      # STATUS LINE instead of the HTML. That happened on 2026-07-24; the fix is
+      # this comment plus never reintroducing the redirect.
+      - name: Regenerate
+        env:
+          GUIDEBOOK_DB_PATH: data/guidebook.db
+        run: python3 ${{ matrix.generator }}
+
+      - name: Commit if changed
+        id: commit
+        run: |
+          set -e
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add ${{ matrix.outputs }}
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit (output byte-identical to the committed copy)."
+            echo "committed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          TS=$(date -u '+%Y-%m-%d %H:%M')
+          git commit -m "${{ matrix.commit_prefix }}: rebuild after data change [${TS}]"
+          echo "committed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Push with race-aware retry
+        if: steps.commit.outputs.committed == 'true'
+        run: |
+          set -e
+          for i in 1 2 3; do
+            if git push origin main; then
+              echo "Push succeeded on attempt $i"
+              exit 0
+            fi
+            echo "Push attempt $i failed; pulling --rebase and retrying"
+            git pull --rebase origin main || true
+            sleep $((i * 5))
+          done
+          echo "All push attempts failed"
+          exit 1

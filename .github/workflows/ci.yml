@@ -1,0 +1,272 @@
+name: Guidebook CI
+
+# THE single PR/push gate. Absorbs what used to be three overlapping workflows:
+# ci.yml, audit.yml (Repo Integrity Audits) and research-contract.yml. Each had
+# its own checkout, its own pip install, and its own hand-transcribed list of
+# checks; the three lists — plus scripts/preflight.sh — disagreed about which
+# checks exist.
+#
+# There is now no list of checks in this file. Every check lives in
+# governance/check-registry.yaml and is invoked by scripts/run_checks.py, which
+# preflight.sh also calls. Adding a check means editing the registry; it does not
+# mean editing this workflow.
+#
+# GATING — "what kind of work is this?"
+# -------------------------------------
+# The `classify` job diffs the change, maps the touched paths to WORK KINDS
+# (data / schema / synthesis / governance / render / tooling) and emits the set of
+# batteries that have anything to do. Every other job gates on that.
+#
+# This replaces path filters written as
+#     contains(github.event.pull_request.changed_files, 'data/')
+# `changed_files` on the PR payload is an INTEGER — the count of changed files —
+# so `contains(12, 'data/')` was always false and the schema, db_integrity and
+# governance jobs never ran on ANY pull request. The symptom was recorded in
+# CLAUDE.md §7; this is the cause. Those three jobs now run on the PRs that
+# warrant them.
+#
+# WHAT CHANGED SEMANTICALLY (everything else is a like-for-like move)
+#   - schema/db_integrity/governance actually gate PRs now.
+#   - validate_evidence_state additionally fires on synthesis diffs, per the
+#     2026-07-23 enforcement plan finding F2.
+#   - validate_axes and validate_verification_consistency reach CI; they ran only
+#     in preflight before, so CI never saw them.
+#   - Newly-wired checks (matrix_consistency, audit_evidence_metadata,
+#     pipeline_contract_audit) are ADVISORY, per the repo's shakedown norm. None
+#     was promoted to blocking in the commit that first wired it.
+#
+# Levels are declared in the registry, not here: run_checks.py exits non-zero only
+# when a `blocking` check fails, so `continue-on-error` is no longer needed and no
+# longer sprinkled across job definitions where it was easy to lose track of.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  GUIDEBOOK_DB_PATH: data/guidebook.db
+
+jobs:
+
+  classify:
+    name: Classify change (work kinds → batteries)
+    runs-on: ubuntu-latest
+    outputs:
+      kinds: ${{ steps.plan.outputs.kinds }}
+      batteries: ${{ steps.plan.outputs.batteries }}
+      checks: ${{ steps.plan.outputs.checks }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install PyYAML
+        run: pip install PyYAML --quiet
+
+      - name: Resolve the base commit to diff against
+        id: base
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE="${{ github.event.pull_request.base.sha }}"
+          else
+            BASE="${{ github.event.before }}"
+          fi
+          # A new branch, a force-push, or workflow_dispatch can leave BASE unset
+          # or all-zeros. Fall back rather than classify against nothing — a
+          # silently-empty diff would select only the always-on checks and read as
+          # a green run that checked almost nothing.
+          if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ] \
+             || ! git cat-file -e "$BASE^{commit}" 2>/dev/null; then
+            BASE=$(git rev-parse origin/main 2>/dev/null || git rev-parse HEAD~1)
+            echo "Base unusable; falling back to $BASE"
+          fi
+          echo "base=$BASE" >> "$GITHUB_OUTPUT"
+
+      - name: Compute the check plan
+        id: plan
+        run: |
+          # pipefail is load-bearing here, not boilerplate. This pipe is the single
+          # point where the whole gating plan is produced, and it is the only place
+          # in the workflow where a command's exit code passes through one. The
+          # default shell is `bash -e {0}` with no pipefail, so without this line a
+          # failing run_checks.py (bad registry, failed git diff) would be masked by
+          # tee's 0: the step would pass with empty kinds/batteries outputs, every
+          # battery job's `if:` would evaluate false, and the workflow would go
+          # green having run nothing at all.
+          set -euo pipefail
+          python3 scripts/run_checks.py \
+            --changed-from "${{ steps.base.outputs.base }}" \
+            --print-plan | tee -a "$GITHUB_OUTPUT"
+
+      # Human-readable record of what this run will and will not check, so a
+      # green build never has to be taken on trust about its own coverage.
+      - name: Explain the plan (build log)
+        run: |
+          python3 scripts/run_checks.py \
+            --changed-from "${{ steps.base.outputs.base }}" --explain --dry-run
+
+      - name: Registry selftest (BLOCKING — the gate that guards the gates)
+        run: python3 scripts/run_checks.py --selftest
+
+  syntax:
+    name: Syntax (UTF-8, JSON, YAML)
+    needs: classify
+    if: contains(format(',{0},', needs.classify.outputs.batteries), ',syntax,')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - run: pip install PyYAML --quiet
+      - run: python3 scripts/run_checks.py --battery syntax --kinds "${{ needs.classify.outputs.kinds }}" --github
+
+  structure:
+    name: Structure (BPC, cross-refs)
+    needs: classify
+    if: contains(format(',{0},', needs.classify.outputs.batteries), ',structure,')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - run: pip install PyYAML --quiet
+      - run: python3 scripts/run_checks.py --battery structure --kinds "${{ needs.classify.outputs.kinds }}" --github
+
+  data:
+    name: Data layer (DB integrity, migration reproducibility, citation mining)
+    needs: classify
+    if: contains(format(',{0},', needs.classify.outputs.batteries), ',data,')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install PyYAML --quiet
+      - run: python3 scripts/run_checks.py --battery data --kinds "${{ needs.classify.outputs.kinds }}" --github
+
+  db-integrity:
+    name: DB integrity (content checks)
+    needs: classify
+    if: contains(format(',{0},', needs.classify.outputs.batteries), ',db_integrity,')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install PyYAML --quiet
+      - run: python3 scripts/run_checks.py --battery db_integrity --kinds "${{ needs.classify.outputs.kinds }}" --github
+
+  tests:
+    name: Tests (regression cover for the audit scripts)
+    needs: classify
+    if: contains(format(',{0},', needs.classify.outputs.batteries), ',tests,')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - run: pip install -r requirements.txt --quiet
+      - run: python3 scripts/run_checks.py --battery tests --kinds "${{ needs.classify.outputs.kinds }}" --github
+
+  schema:
+    name: Schema (entity YAML, evidence state, populations, jurisdictions)
+    needs: classify
+    if: contains(format(',{0},', needs.classify.outputs.batteries), ',schema,')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - run: pip install -r requirements.txt --quiet
+      - run: python3 scripts/run_checks.py --battery schema --kinds "${{ needs.classify.outputs.kinds }}" --github
+
+  governance:
+    name: Governance (decisions, doctrine recheck, adversarial use, contract)
+    needs: classify
+    if: contains(format(',{0},', needs.classify.outputs.batteries), ',governance,')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - run: pip install -r requirements.txt --quiet
+      - run: python3 scripts/run_checks.py --battery governance --kinds "${{ needs.classify.outputs.kinds }}" --github
+
+  attestation:
+    name: Attestations (presence, schema, evidence, verdict)
+    needs: classify
+    if: contains(format(',{0},', needs.classify.outputs.batteries), ',attestation,')
+    runs-on: ubuntu-latest
+    steps:
+      # Full history required: the evidence check resolves each attestation's
+      # last-modifying commit via `git log -1 -- <file>`, which can be arbitrarily
+      # far back. A shallow checkout misattributes the file to the PR-head commit
+      # and produces spurious doctrine_sha mismatches.
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - run: pip install PyYAML jsonschema --quiet
+      - run: python3 scripts/run_checks.py --battery attestation --kinds "${{ needs.classify.outputs.kinds }}" --github
+
+  research:
+    name: Research contract (definition-of-done + its enforcers)
+    needs: classify
+    if: contains(format(',{0},', needs.classify.outputs.batteries), ',research,')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -r requirements.txt jsonschema --quiet
+      - run: python3 scripts/run_checks.py --battery research --kinds "${{ needs.classify.outputs.kinds }}" --github
+
+  render:
+    name: Render (derived-output freshness, rendered-document integrity)
+    needs: classify
+    if: contains(format(',{0},', needs.classify.outputs.batteries), ',render,')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - uses: actions/setup-node@v4
+        with: {node-version: "20"}
+      - run: pip install PyYAML --quiet
+      - run: python3 scripts/run_checks.py --battery render --kinds "${{ needs.classify.outputs.kinds }}" --github
+
+  commit-msg:
+    name: Commit message + doctrine token
+    # Push-only, as before: on a PR only the head commit message exists to check,
+    # and intermediate commits are not walked, so the check would be misleading.
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 2}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+
+      - name: Commit message format
+        run: python3 scripts/ci_helpers/check_commit_msg.py
+
+      # Was ~45 lines of inline bash here, which could not be run or tested
+      # locally. Same logic, same four exemptions, now a script with a --selftest.
+      #
+      # `!cancelled()` so this runs even when the format step above fails. Steps
+      # skip by default after a failure, so the two gates were serially coupled:
+      # while merge commits failed the format step (fixed 2026-08-01), the
+      # blocking doctrine gate was *skipped* on every push to main rather than
+      # evaluated. They check different things and neither should be able to
+      # mask the other.
+      - name: Doctrine-SHA token
+        if: ${{ !cancelled() }}
+        run: |
+          python3 scripts/ci_helpers/check_doctrine_token.py \
+            --target "${{ github.sha }}" --before "${{ github.event.before }}"

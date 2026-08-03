@@ -1,0 +1,316 @@
+---
+name: functional-deficit-researcher
+description: >
+  Bottom-up OT intervention research by functional deficit. Retrieves OT literature organized
+  by ICF activity code + functional constraint + environment context, then categorizes findings
+  into the guidebook's population framework. Complements multilingual-research (top-down) —
+  does not replace it. ALWAYS use when: a slug's BPC has ≥2 THIN flags, item-specification-writer
+  reports insufficient evidence for a spatial parameter, connection-scout identifies a cross-population
+  gap that top-down search didn't fill, or user requests explicitly. Trigger on: "bottom-up search",
+  "functional deficit", "OT intervention search", "what does the OT literature say about [specific
+  functional task]", "search by function not population", "ICF search". CHECK before / LOG after
+  every run. Runs AFTER multilingual-research top-down pass is COMPLETE for target slugs.
+---
+> **SQLite integration (C2 overhaul 2026-05-05):** All slug lookups use `python3 scripts/db.py coverage {slug}` instead of reading SQLite slugs table. Citation mining tracking uses `db.py is-mined` / `log-mining`. Gap register operations use SQLite gaps table. Evidence sources added to evidence_sources SQLite table.
+
+
+**Model:** Sonnet-class (search, scenario execution) · Opus-class or above (synthesis, NOVEL/REFINES classification)
+**Opus routing:** Sonnet runs scenarios → Opus synthesizes findings into BPC.
+**Practical constraint:** No programmatic Opus path from claude.ai artifact proxy. Opus requires model picker set to Opus.  
+**GitHub backend:** `jordanelias/guidebook` · `main` · Protocol → Project Instructions §GitHub API  
+**Methodology:** `/mnt/user-data/outputs/methodology-functional-deficit-research-2026-03-26.md`  
+**Every source confirmed real. Flag grey literature. Flag thin base (<3 studies). "I don't know" → gap list.**
+
+---
+
+## 1. Concept
+
+OT clinical literature is organized by functional deficit — a finer grain than the guidebook's population codes. Top-down search (population → slug → evidence) misses intervention studies indexed by specific functional tasks. This skill works in reverse: functional deficit → OT intervention → spatial/environmental requirement → population code assignment → BPC integration.
+
+---
+
+## 2. Search Unit: Functional Scenario
+
+The search unit is a **functional scenario** — not a bare ICF code.
+
+Format: `{ICF-d code} + {functional constraint} → {environment context}`
+
+Example: `d420 + hemiplegia → bathroom` searches for hemiplegic toilet transfer techniques and extracts spatial parameters (lateral clearance, grab bar configuration).
+
+### 2.1 Scoped ICF Activity Codes
+
+Only ICF-d (Activities and Participation) codes with built-environment spatial dependency are in scope. Filter: **can an architect specify something for this activity?**
+
+**Tier A — High spatial dependency (always in scope):**
+
+| ICF | Activity | Spatial nexus |
+|---|---|---|
+| d410 | Changing basic body position | Floor space, grab bars, surface height, transfer clearances |
+| d420 | Transferring oneself | Transfer geometry, fixture adjacency, grab bar config |
+| d440 | Fine hand use | Control type, reach envelope, mounting height, operating force |
+| d445 | Hand and arm use | Counter depth, shelf height, hardware, reach range |
+| d450 | Walking | Corridor width, gradient, surface, rest points |
+| d455 | Moving around | Turning radii, thresholds, floor surface |
+| d460 | Moving around in different locations | Wayfinding, level changes, transitions |
+| d465 | Moving around using equipment | Clear widths, charging/storage, turning space |
+| d470 | Using transportation | Entrance approach, drop-off, parking adjacency |
+| d510 | Washing oneself | Shower/bath geometry, seat, controls reach, drainage |
+| d520 | Caring for body parts | Mirror, basin clearance, outlet placement |
+| d530 | Toileting | WC clearances, grab bars, privacy, bidet |
+| d540 | Dressing | Bench/seat, closet reach, lighting |
+| d550 | Eating | Table clearance, serving reach, seating stability |
+| d620 | Acquisition of goods/services | Door width, counter height, queuing, display reach |
+| d630 | Preparing meals | Worktop height/depth, cooktop clearance, appliance reach, knee space |
+| d640 | Doing housework | Storage reach, floor access, laundry ergonomics |
+
+**Tier B — Moderate spatial dependency (in scope where specified):**
+
+d230 (daily routine — spatial sequencing), d310–d329 (receiving communication — acoustics, visual alerts, signage), d330–d349 (producing communication — intercom, quiet rooms), d475 (driving — parking, vehicle-building transition), d570 (health management — medication storage, emergency alert, lighting), d610 (acquiring a place to live — adaptability, DAR), d650 (caring for household objects — storage, maintenance reach), d660 (assisting others — carer circulation, dual-occupancy), d710–d729 (interpersonal — social space, retreat, sensory zoning), d910–d920 (community/recreation — common areas, outdoor).
+
+**Out of scope:** d110–d199 (learning — except wayfinding), d240 (stress — except retreat space under NDV/MH), d810–d899 (education/work beyond common areas).
+
+---
+
+## 3. Pre-Run (mandatory)
+
+1. **Confirm top-down baseline exists.** Target slug(s) must have a COMPLETE or near-COMPLETE BPC entry from `multilingual-research`. If not → stop; run top-down first.
+
+2. **Select functional scenarios.** Intersect:
+   - Gap register OPEN items and BPC THIN flags for target environment context
+   - ICF codes from §2.1 that map to that environment context
+   - Functional constraints relevant to the slug's population codes
+
+3. **Cap:** ≤12 functional scenarios per session.
+
+4. **Load Keyword Compendium** ICF functional scenario terms (when available; generate inline if Part 3 extension not yet done — flag as INLINE-GENERATED).
+
+5. **Load existing BPC entry** for target slug(s) — this is the baseline against which `specification_delta` is assessed.
+
+---
+
+## 4. Search Sequence
+
+**Step 1 — OT intervention databases (primary)**
+
+For each functional scenario, search:
+
+| Database | Filter |
+|---|---|
+| OTseeker | Intervention studies with environmental modification outcomes |
+| PubMed | MeSH: "Self-Help Devices" OR "Environmental Design" OR "Home Modification" + ICF activity term |
+| CINAHL | OT subject heading + functional scenario terms |
+
+**Spatial filter (mandatory):** Does the study describe a spatial dimension, clearance, fixture specification, layout recommendation, or environmental modification that an architect could implement? YES → extract. NO → discard.
+
+**Step 2 — OT practice guidelines and home modification resources**
+
+| Source | Target |
+|---|---|
+| AOTA home modification resources | US practice guidelines for functional scenario |
+| RCOT / RCOTSS | UK — Housing Adaptations Without Delay; GenHOME |
+| CAOT | Canadian OT practice resources |
+| OT Australia / Home Mod Clearinghouse (UNSW) | Australian home modification evidence |
+| DVE (DE), EVS (CH) | German-language OT practice resources |
+
+Priority: home modification guides > general CPGs. These describe specific adaptations with spatial dimensions.
+
+**Step 3 — Assistive technology databases**
+
+| Database | When |
+|---|---|
+| REHADAT (DE) | All runs; especially OFS/AT scenarios |
+| AbleData / ATwiki (US) | All runs |
+| AT databases by jurisdiction | When scenario involves device with spatial envelope (hoist, stair lift, standing frame) |
+
+Target: not the device itself — the **spatial envelope** the device requires (clear floor zone, structural reinforcement, power supply location, storage).
+
+**Step 4 — Cross-language targeted check**
+
+For any finding with a specific spatial specification: check whether the same specification appears in non-English OT literature. Targeted, not a full 14-language sweep.
+
+Priority languages by OT tradition strength:
+- Home modification: SE, NO, DK, FI (Nordic model), AU, UK
+- Rehabilitation engineering: DE, CH, JP
+- Aging-in-place: JP, KR, DE
+
+**Diminishing-return gate:** If 3 consecutive scenarios in the same environment context yield no new spatial specifications beyond existing BPC content → stop that environment context, move to next.
+
+**Step 4b — Citation mining (mandatory for confirmed Tier 1–2 sources)**
+
+After completing Steps 1–3 for a scenario batch: collect all confirmed Tier 1–2 sources. Invoke `citation-miner` for each (backward + forward). Do not defer to inline execution. Log backward/forward counts in the FDR findings file under a `citation_mining` block per scenario. Sources discovered via citation mining that pass the §4 Step 1 spatial filter are extracted using the standard §5 template with `discovery_method: citation_mining`.
+
+### Checkpoint (after each scenario):
+```
+CHECKPOINT [YYYY-MM-DD HH:MM] — scenario: {scenario} — sources found: {N} — novel: {N} — refines: {N} — contradicts: {N}
+```
+
+---
+
+## 5. Extraction Template
+
+For each finding that passes the spatial filter:
+
+```yaml
+scenario: "{ICF code} + {functional constraint} → {environment context}"
+source: "{author, year, title, journal/publisher}"
+source_tier: "{evidence hierarchy tier}"
+language: "{source language}"
+jurisdiction: "{if jurisdiction-specific}"
+
+spatial_findings:
+  - parameter: "{what is specified}"
+    value: "{dimension, range, or qualitative specification}"
+    condition: "{when this applies — functional constraint}"
+    confidence: "{HIGH | MODERATE | LOW}"
+
+existing_slug_match: "{slug — or NEW}"
+specification_delta: "{NOVEL | CONFIRMS | REFINES | CONTRADICTS | GAP}"
+```
+
+**Population mapping is NOT performed at collection stage.** FDR evidence is function-indexed, not population-indexed. Population applicability is a downstream annotation applied during Opus synthesis where warranted. Do not assign population codes during collection.
+
+### Extraction rules:
+- ≤6 sources per scenario (prioritize by tier, then spatial specificity).
+- CONFIRMS: 1-line log only, no full extraction.
+- CONTRADICTS: full extraction + flag for `evidence-auditor`.
+- GAP: log with rationale — no spatial parameter extractable; inherently individualized or no literature exists.
+- LOW confidence (single small-N study): cannot enter FDR findings file without corroboration. Hold in extraction log.
+
+---
+
+## 6. Storage and Integration Protocol
+
+### 6.1 FDR Findings Store
+
+All FDR findings are written to `references/fdr/{slug}.md` — a function-indexed file separate from the population BPC. This is the canonical output of every FDR run. Population BPCs are **not modified** during FDR collection.
+
+**File structure:** one section per scenario, indexed by label (e.g. `FDR-RRC-01`). Each section contains the extraction block(s) and, for GAPs, the gap log.
+
+FDR findings feed `item-specification-writer` and Opus synthesis independently of population BPC content.
+
+### 6.2 Specification Delta Actions
+
+| `specification_delta` | Action |
+|---|---|
+| CONFIRMS | 1-line log in FDR file. No further action. |
+| REFINES | Full extraction in FDR file. Flag for item-specification-writer. |
+| NOVEL | Full extraction in FDR file. Flag for item-specification-writer as new spec candidate. |
+| CONTRADICTS | Full extraction in FDR file + flag for `evidence-auditor` before any spec integration. |
+| GAP | Log gap with rationale. No spatial parameter extractable. |
+
+### 6.3 Population Applicability (Downstream — Opus only)
+
+Population codes are **not assigned during collection**. After FDR evidence is assembled, an Opus synthesis pass may annotate findings with applicable population codes where the functional deficit profile overlaps a defined population. This annotation is optional and does not constrain what evidence is collected.
+
+**Universal Mode Escalation:** Same spatial specification converging from ≥3 functional scenarios with no cross-functional conflict → `TIER-0-CANDIDATE`. Route to connection-scout. Population codes not required for Universal Mode nomination.
+
+
+## 7. Post-Run (mandatory)
+
+1. **Write findings to BPC** — GET `references/best-practices-compendium.md` + SHA. Append to relevant slug(s) under `### Bottom-up findings`. PUT back. Commit: `functional-deficit-researcher: append bottom-up findings [{YYYY-MM-DD HH:MM}]`
+
+2. **Update search-log** — GET `references/search-log.md` + SHA. Update relevant slug entry `functional_deficit_pass` block. PUT back. Commit: `functional-deficit-researcher: update search-log [{YYYY-MM-DD HH:MM}]`
+
+3. **Feed downstream:**
+   - REFINES + NOVEL → briefing list for `item-specification-writer`
+   - CONTRADICTS → queue for `evidence-auditor`
+   - Cross-pop flags → queue for `connection-scout` internal mode
+   - TIER-0-CANDIDATES → append to `SQLite gaps table` as P2 items
+
+4. **Checkpoint summary:**
+```
+COMPLETE [YYYY-MM-DD HH:MM] — scenarios: {N} — novel: {N} — refines: {N} — contradicts: {N} — tier0 candidates: {N} — sources extracted: {N}
+```
+
+---
+
+## 8. Token Rules
+
+- ≤12 functional scenario equivalents per session. Compound = 2x, occupation = 3x, environment = 2x.
+- Compound and occupation synthesis: Opus REQUIRED (per framework-compound-functioning-review.md §5).
+- ≤6 sources extracted per scenario.
+- CONFIRMS = 1 line. No full extraction.
+- Diminishing-return gate: 3 consecutive no-yield → stop environment context.
+- Checkpoint per scenario: 1–2 lines.
+- Do not re-run a scenario already marked COMPLETE in search-log `functional_deficit_pass`.
+
+---
+
+## 9. Research Slug Registry
+
+**Canonical registry:** `references/fdr/SQLite slugs table`
+
+The registry supersedes the original §9 priority targets (all 8 COMPLETE as of 2026-04-09). It contains four scenario types:
+
+| Type | Format | Token weight | Synthesis model |
+|---|---|---|---|
+| Granular (ICF) | `{d-code} + {constraint} → {env}` | 1x | Sonnet (search) + Opus (classify) |
+| Compound `[COMPOUND]` | `{d-code} + {constraint-A} + {constraint-B} → {env}` | 2x | Sonnet (search) + Opus (synthesis REQUIRED) |
+| Occupation `[OCCUPATION]` | `{occupation} + {constraint cluster} → {env}` | 3x | Sonnet (search) + Opus (synthesis REQUIRED) |
+| Environment `[ENVIRONMENT]` | `{env type} + {research question}` | 2x | Sonnet (search) + Opus (synthesis REQUIRED) |
+
+Compound and occupation scenarios draw on Person-Environment-Occupation (PEO) theory and Multimorbidity-Weighted Index (MWI) research — see `references/fdr/framework-compound-functioning-review.md` for theoretical basis.
+
+Session mix recommendation: 4 granular + 2 compound + 1 occupation = ~12 equivalent.
+
+---
+
+## 11. Compound, Occupation, and Environment Scenario Protocols
+
+### 11.1 Compound Scenario Search Protocol `[COMPOUND]`
+
+Compound scenarios address non-additive functional interactions in persons with co-occurring conditions. Theoretical basis: MWI research (each additional condition increases disability risk ~16%, supra-additive); Clarke et al. environment-impairment interaction (4.52x multiplicative effect).
+
+1. Search each constituent constraint independently using standard §4 sequence.
+2. Search the compound profile explicitly: `"{constraint-A} AND {constraint-B}" AND {environment}`.
+3. If no compound-specific literature exists: document the interaction as clinical reasoning (Co-2), citing the individual constraint findings and the non-additivity principle.
+4. Classification uses extended delta codes:
+   - `COMPOUND-NOVEL` — no prior BPC or FDR entry addresses the interaction
+   - `COMPOUND-REFINES` — existing spec adequate for compound but interaction rationale unstated
+   - `COMPOUND-CONFLICTS` — individual specs give contradictory guidance for compound profile
+5. Compound synthesis is an Opus task. Sonnet collects; Opus synthesises the interaction.
+
+### 11.2 Occupation Scenario Search Protocol `[OCCUPATION]`
+
+Occupation scenarios search whole-occupation performance (PEO/PEOP model). The search target is the occupational flow, not any single ICF code.
+
+1. Map the occupation to its constituent ICF codes (typically 3-6).
+2. Search the occupation name directly in OT home modification literature (e.g., "morning routine home modification").
+3. Search PEO literature for occupation-environment fit studies.
+4. Extract spatial parameters that emerge only at the occupation level (room adjacency, transition zones, sequential grab bar provision) that no individual ICF code search would surface.
+5. Occupation synthesis is an Opus task.
+
+### 11.3 Environment Scenario Search Protocol `[ENVIRONMENT]`
+
+Environment scenarios search by room/space type, not by functional deficit.
+
+1. Search the environment type + "accessible design" + "home modification".
+2. Search population-specific guidance for that environment (e.g., "dementia balcony safety").
+3. Extract parameters unique to the environment type that cross-cut populations.
+4. Apply spatial filter (standard §4): can an architect specify this?
+
+### 11.4 Extraction Template Extensions
+
+**Compound extraction adds:**
+```yaml
+compound_profile: "{constraint-A} + {constraint-B}"
+interaction_type: "{SYNERGISTIC | ANTAGONISTIC | INDEPENDENT}"
+interaction_mechanism: "{clinical reasoning for non-additive effect}"
+```
+
+**Occupation extraction adds:**
+```yaml
+occupation: "{named occupation}"
+constituent_codes: ["{d-code-1}", "{d-code-2}", ...]
+flow_parameter: "{spatial parameter that emerges only at occupation level}"
+```
+
+
+## 10. Dependencies
+
+| Dependency | Status | Required before first run |
+|---|---|---|
+| ≥1 slug with COMPLETE top-down BPC | Near-complete (bathroom/kitchen backfill in progress) | YES |
+| Keyword Compendium Part 3 ICF terms | NOT AVAILABLE — generate inline, flag INLINE-GENERATED | NO (workaround exists) |
+| Search-log schema `functional_deficit_pass` block | NOT DONE — add on first LOG | YES (auto-extends on first run) |
+| BPC schema `### Bottom-up findings` subsection | NOT DONE — add on first write | YES (auto-extends on first run) |

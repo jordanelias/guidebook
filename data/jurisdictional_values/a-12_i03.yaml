@@ -1,0 +1,49 @@
+section: A.12
+title: Anti-Scald Temperature Limits
+item_code: I-03
+spec_id: null
+records:
+- spec_id: null
+  item_code: I-03
+  jurisdiction: DE
+  standard_name: DIN 18040 / DVGW W 551
+  value_text: 'Max Temperature: ≤43°C; Valve Type: TMV required; Notes: Strictest'
+  value_numeric: 43.0
+  unit: °C
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.12
+  notes: null
+- spec_id: null
+  item_code: I-03
+  jurisdiction: GB
+  standard_name: Building Regs Part G / HTM 04-01
+  value_text: 'Max Temperature: ≤44°C; Valve Type: TMV2/TMV3; Notes: Care/healthcare'
+  value_numeric: 44.0
+  unit: °C
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.12
+  notes: null
+- spec_id: null
+  item_code: I-03
+  jurisdiction: AU
+  standard_name: AS 1428.1 / AS 4032.1
+  value_text: 'Max Temperature: ≤45°C; Valve Type: TMV required'
+  value_numeric: 45.0
+  unit: °C
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.12
+  notes: null
+- spec_id: null
+  item_code: I-03
+  jurisdiction: US
+  standard_name: IPC / ADA reference
+  value_text: 'Max Temperature: ≤49°C; Valve Type: Per plumbing code; Notes: Least restrictive'
+  value_numeric: 49.0
+  unit: °C
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.12
+  notes: null

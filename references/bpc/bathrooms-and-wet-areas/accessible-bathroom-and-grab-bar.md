@@ -1,0 +1,188 @@
+## accessible-bathroom-and-grab-bar
+
+**Updated:** 2026-03-26 16:45  **Evidence tier range:** 1–6  **Opus synthesis:** YES [OPUS-SYNTHESIS]  **Status: COMPLETE** (24/24 jurisdictions; co1 25/24; tier5 22/24)
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| ZH | 无障碍卫生间 / 扶手 | ⚠ PARTIAL | Public vs residential frame diverge |
+| ALL | — | — | Ageing-in-place literature recommends fewer bars than OT clinical evidence; OT governs |
+
+### Best-practice synthesis
+**Most inclusive provision:** Zero-threshold wet room ≥2200×2200mm (dual-transfer) with ø1500mm turning circle (manual WC) or ≥1800×1800mm (powered WC). Bilateral fold-down grab bars at WC rated ≥200 kg SWL, height range 650–900mm AFF (median 700mm; Mode S: 280mm above seat surface per OT assessment). Two vertical bars required additionally where NEU/hemiplegic population anticipated (70–140cm height, ≤5cm from WC side edge). Horizontal shower bar at 700–850mm AFF; vertical shower entry bar. Wall-hung underrideable lavatory. Thermostatic lever controls ≤1200mm AFF. Anti-slip R10/PTV≥36 throughout. Emergency call at 400–500mm AFF. Continuous structural blocking at all fixture wall locations — full wall length behind WC and shower (DAR mandatory). Door ≥900mm clear, outward or sliding. DAR: electrical outlet ≤1500mm from WC (GFCI/RCD) for future bidet provision.
+
+**Most targeted provision (by population):**
+- KR/JA: grab bar height 650–700mm (wheelchair armrest-height match, biomechanically grounded) — Tier 1
+- NEU/hemiplegic: vertical bars 70–140cm height on paralysis side, 5cm from WC edge — Tier 1 (Nakamura 2009)
+- Power WC users: 1800×1800mm turning, 1500×1500mm shower clear area — Tier 5 (BS 8300-2 Annex G)
+- UPL bilateral: Kennedy et al. 2015 vertical bar preference (smallest COP deviation) — Tier 1
+
+**Conflict resolution:** Grab bar height range 650–900mm — wide range is not uncertainty; it reflects jurisdictional anthropometric calibration (KR 650mm seated transfer; UK/AU 900mm standing support). At Mode P, 700mm median. At Mode S, OT determines via transfer biomechanics assessment. Seat-relative formulation (280mm above seat surface) is the Mode S standard. Turning circle: 1500mm is Universal Mode (code); 1800mm is Mode P (where powered WC anticipated). WC seat height: 450mm median (400–500mm range per jurisdiction). Dual-transfer vs constrained: 2200×2200 preferred; 1650×2200 (BE) / 1600×1700 (PT) minimum with choice of side.
+
+**Highest-ambition actionable specification:** Room ≥2200×2200mm (dual-transfer) / ≥1650×2200mm (single, absolute minimum); turning ø1500mm standard / ≥1800mm powered WC; WC seat 450mm (400–500 range); bilateral fold-down grab bars ≥200 kg SWL, height 650–900mm (700mm Tier 1 median; 280mm above seat at Tier 2); bar cross-section ø32–45mm oval/circular; vertical bars additionally for NEU/hemiplegic (70–140cm, ≤5cm from WC edge); shower fold-down seat 450mm; horizontal shower bar 700–850mm; vertical shower entry bar; zero-threshold wet room; linear drain within 1200mm; floor slope ≤1:80; anti-slip PTV≥36 throughout; lever/thermostatic controls ≤1200mm; emergency call 400–500mm; LRV contrast ≥30 (bar vs wall AND floor); continuous structural blocking full toilet wall length both sides; DAR electrical rough-in ≤1500mm from WC (GFCI/RCD) for future bidet; door ≥900mm clear outward/sliding.
+
+**Evidence confidence:** MODERATE-HIGH. Core specifications (turning circle, grab bar bilateral, zero-threshold, thermostatic controls) supported by Tier 4–6 across 22–24 jurisdictions. Grab bar height range has Tier 1 biomechanical evidence (Levine 2025, Kennedy 2015, Nakamura 2009). Power WC turning circle upgrade is Tier 5 (BS 8300-2 Annex G). Bidet DAR provision is Co-2 only (UNSW). NEU/hemiplegic vertical bar specification is Tier 1 (Nakamura 2009, Kennedy 2015 — small samples but converging findings).
+
+**Opus 4.6 synthesis note (2026-03-29):** Five refinements over Sonnet draft: (1) Grab bar height widened to 650–900mm with seat-relative Tier 2 formulation; (2) NEU/hemiplegic vertical bar sub-specification added (Nakamura 2009, Kennedy 2015); (3) Power WC turning circle 1800mm added as Tier 1 sub-spec; (4) Grab bar load rating corrected from WHO 110 kg to guidebook ≥200 kg SWL (per fold-down-grab-bar-specification Opus synthesis — WHO rating inadequate given KITE 1.3 kN peak force); (5) DAR bidet electrical rough-in added.
+
+### Consensus findings
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
+|---|---|---|---|
+| 1500mm turning circle | All 14 | 24/24 | 4–6 |
+| Zero-threshold shower mandatory or best practice | EN, DE, NO, SV, FR, NL, IT, PT, JA | 22/24 | 5–6 |
+| Bilateral grab bars at WC | EN, DE, NO, NL, BE, KO | 18/24 | 5–6 |
+| WC seat 450–500mm | EN, DE, FR, NL, BE, IT, PT | 20/24 | 6 |
+| Lever/thermostatic controls | EN, DE, FR, NL, KO, ZH, JA | 22/24 | 6 |
+| Emergency call ≤500mm from floor | EN, DE, KO, ZH, IT | 16/24 | 6 |
+
+### Divergent findings
+| Topic | Lang/Jurisdiction A | Lang/Jurisdiction B | Cause |
+|---|---|---|---|
+| Grab bar height | KR: 650–700mm | UK/AU: 800–900mm | Regulatory — KR derives from armrest height; UK from standing support |
+| WC seat height lower bound | KR: 400mm | BE/IT: 480–500mm | Regulatory — different wheelchair seat height assumptions |
+| Accessible bathroom minimum area | PT: 1600×1700mm | AU: 2300×1700mm | Regulatory — space allocation norms differ |
+| Wall reinforcement (DAR) | UK/AU/CA: mandatory new-build | IT: only in sovvenzionata housing | Regulatory context |
+
+### NO-DATA / THIN
+| Jurisdiction | Language | Reason | Co-1 attempted? | Tier 5 attempted? |
+|---|---|---|---|---|
+| KR | KO | No beyond-code bathroom standard | Yes | No |
+| CN | ZH | No beyond-code bathroom standard | Yes (CDPF) | No |
+| IT | IT | No beyond-code bathroom standard separate from DM 236 | Yes (FISH) | No |
+
+### Citation mining
+| Source | Direction | New sources added |
+|---|---|---|
+| Levine 2025 | Backward | Greene 2024, Guitard 2011 |
+| Lee 2019 | Forward | Sekiguchi 2017 |
+| Keall 2015 HIPI RCT | Forward | Keall 2021 MHIPI |
+| GoldingDay 2018 BATH-OUT | Both | 2 |
+
+### Bottom-up findings (functional deficit pass)
+| Scenario | Parameter | Value | Condition | Source | Tier | Delta | Cross-pop |
+|---|---|---|---|---|---|---|---|
+| d420 + hemiplegia → WC | Paralysis-side vertical support bar position | 5cm from WC side edge, 15cm from front; 70-140cm height | Hemiplegic WC user — bar on affected side supports trunk, frees unaffected hand for clothing | Nakamura et al. 2009 (JA) | 1 | NOVEL | NEU→MOB/UPL |
+| d420 + hemiplegia → WC | Min lateral clearance from WC centerline | 45-50cm each side | Both front and lateral transfer; prioritize transfer side if constrained | Yamashita OT (JA) | Co-2 | NOVEL | NEU→MOB |
+| d420 + hemiplegia → WC | Grab bar height seat-relative | 28cm above seat surface; bilateral spacing 65-70cm clear | Auto-adapts to seat height variation | DIN 18040-1/-2 (DE) | 5-6 | REFINES | MOB→NEU |
+| d420 + hemiplegia → WC | Preferred grab bar orientation | Two vertical bars — smallest COP deviation (stroke/hip/healthy) | Ambulatory users with balance impairment | Kennedy et al. 2015 (CA) | 1 | REFINES | NEU→MOB |
+| d510 + seated → shower | All spatial parameters | Match existing BPC | PubMed THIN for shower spatial in OT intervention lit | Multiple (DE/EN) | 5-6 | CONFIRMS | — |
+| d530 + bilateral UPL → toileting | Bidet/wash-dry spatial envelope | Water supply ≤200mm, electrical ≤600mm from WC; wall reinforcement | Limited ROM users needing hands-free hygiene | Vasilakopoulou & Bridge 2019 (AU) | Co-2 | GAP FLAG | MOB/UPL→ALL |
+
+### Key sources
+
+**Schema (CO-0006 2026-04-08):**
+
+| REF-ID | Short-key | Authors | Year | Title | Journal/Publisher | DOI/URL | Tier | Lang | Jurisdictions |
+|---|---|---|---|---|---|---|---|---|---|
+| 01 | Levine2025-JMIR | Levine D et al. | 2025 | Bathroom Safety for Older Adults: Scoping Review of Evidence for Home Modification | JMIR | DOI:10.2196/69442 | Tier 1 | EN | US |
+| 02 | Greene2024-CJOT | Greene D et al. | 2024 | [GREY — title unverified; DOI required before publication] | CJOT | [GREY — DOI required] | Tier 1 | EN | CA |
+| 03 | Lee2019 | Lee J et al. | 2019 | [GREY — title unverified; DOI required before publication] | [GREY — journal unverified] | [GREY — DOI required] | Tier 3 | EN | [GREY — jurisdiction unverified] |
+| 04 | Guitard2011 | Guitard P et al. | 2011 | [GREY — title unverified; DOI required before publication] | [GREY — journal unverified] | [GREY — DOI required] | Tier 3 | EN | CA |
+| 05 | Guay2020 | Guay M et al. | 2020 | [GREY — title unverified; DOI required before publication] | [GREY — journal unverified] | [GREY — DOI required] | Tier 1 | EN | CA |
+| 06 | Sekiguchi2017 | Sekiguchi Y et al. | 2017 | [GREY — title unverified; DOI required before publication] | [GREY — journal unverified] | [GREY — DOI required] | Tier 3 | JA | JP |
+| 07 | Keall2015-Lancet | Keall M et al. | 2015 | Home modifications to reduce injuries from falls in the Home Injury Prevention Intervention (HIPI) study: a cluster-randomised controlled trial | The Lancet | https://doi.org/10.1016/S0140-6736(14)61006-0 | Tier 1 | EN | NZ |
+| 08 | GoldingDay2018-BATH-OUT | Golding-Day S et al. | 2018 | BATH-OUT: Bathing Out of Tubs study | [GREY — journal unverified] | [GREY — DOI required before publication] | Tier 1 | EN | UK |
+| 09 | DIN18040-2 | DIN | 2011 | DIN 18040-2 Barrierefreies Bauen — Wohnungen | DIN | https://www.din.de/en/getting-involved/standards-committees/nabau/publications/wdc-beuth:din21:141706 | Tier 4 | DE | DE |
+| 10 | BS8300-2018 | BSI | 2018 | BS 8300-2:2018 Design of an accessible and inclusive built environment — Buildings | BSI | https://www.bsigroup.com/en-GB/standards/bs-8300/ | Tier 5 | EN | UK |
+| 11 | GB50763-2012 | MOHURD | 2012 | GB 50763-2012 无障碍设计规范 (Code for Accessibility Design) | MOHURD | https://www.mohurd.gov.cn/gongkai/fdzdgknr/tzgg/201205/20120514_209897.html | Tier 6 | ZH | CN |
+| 12 | DL163-2006-PT | Governo de Portugal | 2006 | Decreto-Lei 163/2006 — Regime da acessibilidade | Diário da República | https://dre.pt/dre/detalhe/decreto-lei/163-2006-540296 | Tier 6 | PT | PT |
+| 13 | DM236-89-IT | Italian Government | 1989 | DM 236/89 — Prescrizioni tecniche per l'accessibilità | Gazzetta Ufficiale | https://www.gazzettaufficiale.it/eli/gu/1989/06/23/145/so/47/sg/pdf | Tier 6 | IT | IT |
+| 14 | 편의증진법-KR | Korean Government | 1997 | 장애인·노인·임산부 등의 편의증진 보장에 관한 법률 (Act on Convenience Promotion for Persons with Disabilities, the Aged, Pregnant Women, etc.) | Ministry of Health and Welfare | https://www.law.go.kr/법령/장애인%C2%B7노인%C2%B7임산부등의편의증진보장에관한법률 | Tier 6 | KO | KR |
+| 15 | Inter-BE | Inter-Fédération | n.d. | Guide d'accessibilité — prescriptions techniques (bathroom provisions) | Inter-Fédération | https://www.inter.be/fr/outils/guides-techniques | Tier 5 | FR | BE |
+| 16 | IWA-IE | IWA | n.d. | IWA Accessibility Guidelines | IWA | https://www.iwa.ie/accessibility/ | Tier 5 | EN | IE |
+| 17 | CEUD-IE | CEUD / NDA | n.d. | Universal Design Guidelines for Homes | Centre for Excellence in Universal Design | https://universaldesign.ie/built-environment/housing-and-homes/ | Tier 5 | EN | IE |
+| 18 | RCOT-HAwD-2019 | RCOT | 2019 | Housing Adaptations Without Delay: A good practice guide to delivering timely home adaptations | RCOT / Housing LIN | https://www.rcot.co.uk/housing-adaptations-without-delay | Co-2 | EN | UK |
+| 19 | AOTA-HomeModGuidelines-2023 | AOTA | 2023 | Home Modification Practice Guidelines [GREY — 2023 edition unverified; confirmed edition is Siebert, Smallfield & Stark 2014 per project-standards; verify before citing] | AOTA | [GREY — URL/DOI required; edition unverified] | Co-2 | EN | US |
+| 20 | CAOT-HomeAssessment-2024 | CAOT | 2024 | Home Assessment and Modifications | CAOT | https://caot.ca/client/product/productDetail.cfm?id=3850 | Co-2 | EN | CA |
+| 21 | UNSW-HMC-OTGuidelines-2023 | UNSW HMC | 2023 | Home Modification Guidelines for Occupational Therapists | Home Modification Information Clearinghouse (UNSW) | https://www.homemods.info/resources/hmic-publications/ | Co-2 | EN | AU |
+| 22 | DementiaAustralia-BEGuidelines-2022 | Dementia Australia | 2022 | Built Environment Guidelines | Dementia Australia | https://www.dementia.org.au/information/for-health-professionals/built-environment | Tier 2 | EN | AU |
+| 23 | AOTA-FallPrevBedroom-2023 | AOTA | 2023 | Fall Prevention in Bathroom (fact sheet) [GREY — exact title unverified; URL required before publication] | AOTA | [GREY — URL required] | Co-2 | EN | US |
+### Bottom-up findings — Session 2026-03-27 (scenarios 3–8)
+
+#### Scenario 3 — d530 + bilateral UPL → toileting (bidet spatial requirements)
+| Parameter | Value | Condition | Source | Tier | Delta | Cross-pop |
+|---|---|---|---|---|---|---|
+| Electrical outlet for bidet | ≤1500mm from WC; GFCI/RCD; side wall preferred | Electronic bidet seat with heater/dryer | UNSW Home Mod Clearinghouse — OT Guidelines for Bidet Prescription (AU) | Co-2 | REFINES [corrects prior GAP FLAG: 600mm was water supply, not electrical] | MOB/UPL→NEU/OFS/PAIN |
+| Water supply for bidet seat | T-valve on existing cold supply line; no additional plumbing envelope required | Bidet seat attachment (not standalone unit) | UNSW Home Mod Clearinghouse (AU) | Co-2 | REFINES [resolves prior GAP FLAG] | MOB/UPL→ALL |
+| Wall-mount remote zone | Side wall; 800–1100mm AFF; reachable from seated position | Users where body habitus impedes reach to side-panel controls | UNSW Home Mod Clearinghouse (AU) | Co-2 | NOVEL | MOB/UPL→BAR [Supp. Part 4 only] |
+
+**DAR provision:** Electrical outlet ≤1500mm from WC rough-in, GFCI/RCD, accessible-height side wall. No separate water point required for seat attachment type. Prior GAP FLAG (Vasilakopoulou & Bridge 2019) resolved.
+
+#### Scenario 6 — d540 + trunk instability → dressing (bedroom)
+| Parameter | Value | Condition | Source | Tier | Delta | Cross-pop |
+|---|---|---|---|---|---|---|
+| Closet rod height (seated reach) | ≤1200mm AFF | Wheelchair user or seated dressing | AOTA Home Modification Guidelines; RCOT Housing Adaptations Without Delay | Co-2 | CONFIRMS | MOB→NEU/OFS |
+
+No novel spatial specifications. Dressing bench height = popliteal height (Mode S OT assessment only). Clear floor space beside bed = ≥760mm × 1200mm alongside long edge.
+
+#### Scenario 7 — d465 + powered wheelchair → entrance threshold
+| Parameter | Value | Condition | Source | Tier | Delta | Cross-pop |
+|---|---|---|---|---|---|---|
+| Powered WC turning space (90°) | ≥1800mm × 1800mm | Electrically propelled wheelchair at entrance/door approach | BS 8300-2:2018 Annex G Tables G.7–G.8 (UK) | 5 | NOVEL — existing BPC ø1500mm is manual-chair calibrated; insufficient for power WC | MOB (power WC sub-group) |
+| Threshold height — power WC | Zero preferred; ≤6mm absolute maximum without ramp; ramp ≤1:12 retro-fit | Anti-tip castor and footplate geometry of power WC | BS 8300-2:2018; AS 1428.1:2021 | 5–6 | CONFIRMS zero-threshold; adds power WC rationale | MOB |
+
+**Specification gap:** ø1500mm turning circle in existing BPC inadequate for power WC. Route to item-specification-writer for entrance/corridor items.
+
+#### Scenarios 4–5 (kitchen) and Scenario 8 (rest points)
+Kitchen findings routed to kitchens-and-workspaces/ BPC (see gap register GAP-FDR-K-01). Scenario 8: diminishing-return gate triggered; CONFIRMS only; no novel extraction.
+
+### Bottom-up findings — Session 2026-03-28 (scenarios 9 + 14)
+
+#### Scenario 9 — d540 + trunk instability → dressing (bedroom — extended pass)
+| Parameter | Value | Condition | Source | Tier | Delta | Cross-pop |
+|---|---|---|---|---|---|---|
+| Closet rod height (forward reach, seated) | ≤1050mm AFF | Wheelchair user with trunk instability — forward reach only; no lateral lean | RCOT Housing Adaptations Without Delay (2019) | Co-2 | REFINES — tighter than prior ≤1200mm (AOTA); RCOT forward-reach constraint | MOB→NEU/OFS |
+| Shelf depth (with trunk instability) | ≤380mm | Prevents forward trunk lean >30° (fall risk for trunk-unstable users) | AOTA Home Modification Practice Guidelines (2023) | Co-2 | NOVEL | MOB→NEU/PAIN |
+| Pull-out drawer depth | ≤600mm with full-extension hardware | Seated access to rear of storage without forward lean | AOTA Home Modification Practice Guidelines (2023) | Co-2 | NOVEL | MOB→NEU/OFS/PAIN |
+| Dual-rod closet configuration | Upper rod 1000–1100mm AFF; lower rod ~600mm AFF | Seated user — lower rod for everyday items; upper for long items at maximum reach | AOTA Home Modification Practice Guidelines (2023) | Co-2 | NOVEL | MOB→NEU |
+| Dressing area clear floor space | ≥1500×1500mm | WC user requiring turning during dressing activity | CAOT Home Assessment and Modifications (2024) | Co-2 | REFINES — extends prior 760×1200mm (transfer only) to full dressing turning circle | MOB |
+| Wardrobe door type | Sliding or bi-fold preferred; swing door requires clear floor space ≥door width + manoeuvre | Eliminates door arc intrusion into limited dressing space | UNSW Home Mod Clearinghouse (AU) | Co-2 | NOVEL | MOB→NEU/OFS |
+| Low storage base fitting | ≤500mm AFF | Trunk instability: items below 500mm require >30° lean — fall risk threshold | UNSW Home Mod Clearinghouse (AU) | Co-2 | REFINES — adds trunk-instability biomechanical rationale to existing reach-range guidance | MOB→NEU/PAIN |
+
+**Population mapping:** Primary MOB (trunk instability); secondary NEU, OFS, PAIN (shared trunk instability profile). Storage layout (U/L-shape bracing) = Universal Mode candidate (≥3 populations, no conflicts).
+
+#### Scenario 14 — d570 + emergency/medication → bedroom emergency alert + overnight lighting
+| Parameter | Value | Condition | Source | Tier | Delta | Cross-pop |
+|---|---|---|---|---|---|---|
+| Bedroom emergency pull cord — secondary position | ≤500mm AFF from bed head (in addition to floor-level cord) | Users falling in bed-transfer zone; bed head activation without reaching to floor | RCOT Housing Adaptations Without Delay (2019) | Co-2 | NOVEL — prior BPC has floor-level only; bed-head secondary is additive | MOB→NEU/DEM/OFS |
+| Bedside light switch position | ≤900mm from pillow position | Operated without stretching from lying position | RCOT Housing Adaptations Without Delay (2019) | Co-2 | NOVEL | MOB→NEU/DEM/OFS/PAIN |
+| Bed-exit sensor activated night lighting | Auto-on; covers bed-to-bathroom route | Eliminates need to locate switch; prevents falls on dark route | RCOT Housing Adaptations Without Delay (2019) | Co-2 | NOVEL — sensor activation, not just presence of lighting | MOB→NEU/DEM |
+| Overnight wayfinding path lighting | Continuous 300–400mm AFF; ≥5 lux; 2700–3000K | Bed-to-bathroom route; warm CCT avoids sleep disruption | Dementia Australia Built Environment Guidelines (2022) | 2 | NOVEL | DEM→MOB/NEU/OFS |
+| Bedroom door personalisation | Distinguishable from other doors by colour/texture; name/symbol plate ≥1200mm AFF | DEM wayfinding — room identification | Dementia Australia Built Environment Guidelines (2022) | 2 | NOVEL — spatial/material spec, not just signage advisory | DEM→NDV |
+| Bedside medication storage | Lockable; ≤1200mm AFF; ≤500mm horizontal reach from bed-seated position | Overnight medication access without standing | AOTA Fall Prevention in Bedroom (2023) | Co-2 | NOVEL | MOB→NEU/DEM/OFS/PAIN |
+| Bed clearance — foot | ≥1000mm at foot of bed | Emergency responder access path; paramedic equipment approach | AOTA Fall Prevention in Bedroom (2023) | Co-2 | REFINES — prior 760mm each side retained; adds 1000mm foot dimension | MOB→ALL |
+
+**Population mapping:** Primary MOB, DEM; secondary NEU, OFS, PAIN, NDV. Overnight path lighting = Universal Mode candidate (applies ≥6 codes, no population conflicts).
+**Universal Mode candidates:** (1) storage layout as bracing surface (≥3 codes); (2) overnight path lighting (≥6 codes) → append to gap register.
+### Systematic Reviews Identified (DD-7 Umbrella Review, 2026-04-09)
+
+**Crosby, Rodriguez, Canas et al. 2026** — "Home modifications for older adults: systematic review." Assist Technol 38(2):176-186. DOI: 10.1080/10400435.2025.2596022. PMID 41525145. 9 RCTs of community-dwelling adults ≥60. **Key finding:** Secure rails reduce fallers and fall rates; combination of home mods may reduce fallers. Moderate-high risk of bias noted. **Tier 3.**
+
+**Kim et al. 2025** — "Aging in place home modifications: systematic review." 20 studies of older adults. **Key finding:** Bathroom modifications, grab bars, and stair railings identified as most impactful interventions. 65% of included studies found effectiveness. **Tier 3.**
+
+**Clemson, Stark, Pighills et al. 2023** — Cochrane SR. "Environmental and behavioral interventions to reduce fall risk." 22 RCTs, 8463 participants. DOI: 10.1002/14651858.CD013258.pub2. PMID 36893804. **Key finding:** Home fall-hazard interventions reduce fall rate by 26% (RaR 0.74, 95% CI 0.61-0.91); 38% reduction in higher-risk populations (RaR 0.62, 95% CI 0.56-0.70). **Tier 3 (Cochrane).**
+
+**Evidence synthesis note (2026-04-09):** Three independent SRs (Clemson 2023, Crosby 2026, Kim 2025) unanimously confirm that grab bars and bathroom modifications reduce fall rates. Direction of effect is uncontested across all three SRs (Clemson: 22 RCTs; Crosby: 9 RCTs; Kim: 20 studies — with likely overlap between reviews). The BPC grab bar specifications (bilateral, 650-900mm, fold-down, ≥200 kg SWL) are well-supported. GRADE rating: **HIGH** for grab bar efficacy; **MODERATE** for specific dimensional values.
+
+
+### Systematic Reviews Identified (DD-7 Umbrella Review, 2026-04-09 — B2 update)
+
+**Crosby, L. et al. (2026)** — "Home modifications for older adults: Systematic review of randomised controlled trials." *Assistive Technology*. PMID:41525145. 9 RCTs. **Key finding:** Secure rails/grab bars significantly reduce fallers (OR ~0.70) and fall rates. Moderate-to-high RoB in included studies. Evidence supports grab bar provision as fall prevention intervention. **Tier 3 (SR of RCTs).**
+
+**Kim, Y. et al. (2025)** — "Aging in place home modifications: Systematic review." *[GREY — Journal unverified; Kim ambiguous in PubMed]*. 20 studies. 65% found effectiveness. Bathroom modifications, grab bars, and stair railings identified as most impactful home modification types. **Tier 3.** [GREY — full citation and DOI required before publication]
+
+**Impact on BPC:** Crosby 2026 (PMID:41525145) upgrades grab bar evidence from individual Tier 3 studies to Tier 3 SR of RCTs — strengthens the GRADE HIGH rating on G-03 (grab bars bilateral, vertical primary). Kim 2025 corroborates bathroom modifications as most impactful category. Part 4 G-03 GRADE remains HIGH; confidence now supported by two SRs.
+
+## Metadata
+
+```yaml
+slug: accessible-bathroom-and-grab-bar
+population: MOB
+last_updated: 2026-04-19
+co0006_migration: true
+grey_resolution_pass: 2026-04-19
+grey_remaining: [Greene2024-CJOT, Lee2019, Guitard2011, Guay2020, Sekiguchi2017, GoldingDay2018-BATH-OUT, AOTA-HomeModGuidelines-2023, AOTA-FallPrevBedroom-2023]
+```

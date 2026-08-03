@@ -1,0 +1,60 @@
+section: A.6
+title: Luminance Contrast (LRV)
+item_code: C-04
+spec_id: null
+records:
+- spec_id: null
+  item_code: C-04
+  jurisdiction: US
+  standard_name: ADA 2010
+  value_text: 'Min Contrast: None specified; Method: Significant gap'
+  value_numeric: null
+  unit: LRV
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.6
+  notes: null
+- spec_id: null
+  item_code: C-04
+  jurisdiction: GB
+  standard_name: BS 8300
+  value_text: 'Min Contrast: ≥30 LRV points; Critical Contrast: ≥70 LRV points; Method: BRE methodology'
+  value_numeric: 30.0
+  unit: LRV
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.6
+  notes: null
+- spec_id: null
+  item_code: C-04
+  jurisdiction: AU
+  standard_name: AS 1428.1:2021
+  value_text: ≥30%
+  value_numeric: 30.0
+  unit: LRV
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.6
+  notes: null
+- spec_id: null
+  item_code: C-04
+  jurisdiction: DE
+  standard_name: DIN 32975:2009
+  value_text: 'Min Contrast: Specified; Method: Visual design standard'
+  value_numeric: null
+  unit: LRV
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.6
+  notes: null
+- spec_id: null
+  item_code: C-04
+  jurisdiction: ISO
+  standard_name: ISO 21542:2021
+  value_text: 'Min Contrast: Referenced; Method: Defers to national'
+  value_numeric: null
+  unit: LRV
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.6
+  notes: null

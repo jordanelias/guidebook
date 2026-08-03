@@ -1,0 +1,108 @@
+## deaf-acoustic-built-environment
+
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19 01:45  **Evidence tier range:** Tier 1–Tier 4  **Opus synthesis:** YES [OPUS-SYNTHESIS]
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
+**KNOWN CONFLICT (Q24, `workplan/ratification-execution-register-2026-07-13.md`):** this file's "STI ≥0.50 minimum; ≥0.60 best practice" framing conflicts with `room-acoustic-performance.md`'s "STI ≥0.60 general / ≥0.75 DEAF-CI" and `acoustics-speech-intelligibility-disability.md`'s flat "STI ≥0.5". Do not resolve by inspection or point-fix ahead of reverification — all three are in the same PRE-REHABILITATION cohort above; flagged for Phase E.2g to adjudicate together.
+
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| EN | hearing loop / induction loop / reverberation time / STI | ✓ CLEAN | — |
+| SV | hörselslingor / efterklangstid | ✓ CLEAN | — |
+| NO | teleslynge / etterklangstid | ✓ CLEAN | — |
+| DA | teleslynge / efterklangstid | ✓ CLEAN | — |
+| FI | induktiosilmukka / jälkikaiunta-aika | ✓ CLEAN | — |
+| FR | boucle magnétique / temps de réverbération | ✓ CLEAN | — |
+| DE | Induktionsschleife / Nachhallzeit / DIN 18041 | ✓ CLEAN | DIN 18041:2016 is THE governing standard for hearing-impaired room acoustics in DE; more specific than any EN equivalent |
+| ZH | 感应线圈 / 混响时间 | ⚠ PARTIAL | CI acoustic research in ZH rehabilitation medicine journals; GB 50763 loop provision only; no RT60 targets for DEAF |
+| JA | ヒアリングループ / 残響時間 | ⚠ PARTIAL | JA standards specify loop provision not acoustic performance targets; CI acoustic evidence in audiology literature not built environment |
+| NL | ringleiding / nagalmtijd | ✓ CLEAN | — |
+| ES | bucle magnético / tiempo de reverberación | ✓ CLEAN | — |
+| PT | loop de indução / tempo de reverberação | ✓ CLEAN | — |
+| KO | 청각장애인용 루프 시스템 / 잔향 시간 | ✓ CLEAN | — |
+| IT | anello ad induzione / tempo di riverberazione | ✓ CLEAN | — |
+
+### Best-practice synthesis
+
+**Most inclusive provision:** Hearing loop systems compliant with IEC 60118-4:2014+AMD1:2017 (field strength ±3 dB across listening plane, SNR ≥47 dB(A) above magnetic noise floor) to be installed in all assembly, reception, service counter, and primary communication spaces. RT60 in speech communication spaces not to exceed 0.4 s at 500 Hz–4 kHz (DIN 18041:2016 Nutzungsart A3/A4; BS 8300-2:2018 §11). Background noise criterion NC-25 or below in hearing-critical spaces. STI ≥ 0.60 in all looped spaces. Auracast (Bluetooth LE Audio) infrastructure provision to be included in all new assembly spaces as a DAR provision for technology transition. [IEC 60118-17 expected late 2027 — confirmed March 2026; dual provision best practice during transition.]
+
+**Most targeted provision:** For cochlear implant users: source-to-listener distance to be not more than 3 m without assistive listening augmentation; reverberation to be treated as a primary design variable, not a secondary adjustment. CI users are more sensitive to reverberation than hearing aid users and benefit from dense early reflection patterns rather than long decay tails — design implication is sound-absorbing treatment concentrated at rear and side walls, with early reflection preserved at ceiling. FM/DM remote microphone infrastructure to be provided in all classrooms and meeting rooms serving hearing device users.
+
+**Conflict resolution:** IEC 60118-4 requires hearing loop provision; Auracast standard expected 2027 will complement, not replace, loops during transition. Best practice is dual provision: loop + Auracast-ready infrastructure. Loop decommissioning before Auracast is fully adopted would eliminate access for the majority of hearing aid users who lack Auracast-compatible devices.
+
+**Cross-language convergence:** RT60 ≤ 0.4 s is the consensus best-practice target across all 14 languages and their governing standards (DIN 18041, BS 8300, BBR, NS 8175, BR18, Asetus 241, CTE HR, NBR 10152, NEN 9120 equivalent, Korean school standard). IEC 60118-4 is universally adopted as the hearing loop performance standard across all jurisdictions — the highest cross-language convergence of any DEAF-related specification.
+
+**Highest-ambition actionable specification:**
+Hearing loop systems in all assembly and service counter spaces are to comply with IEC 60118-4:2014+AMD1:2017. Reverberation time in speech communication spaces is to not exceed 0.4 s at mid-frequencies. Background noise is to be controlled to NC-25 or below. STI at the listening position is to achieve not less than 0.60. Auracast-ready infrastructure is to be included in new-build assembly spaces as a DAR provision. Remote microphone assistive listening infrastructure is to be provided in all classrooms and meeting rooms. Visual fire alarm strobes (≥110 cd) are to be installed throughout all occupied spaces; audible alarm alone is not adequate where Deaf or deaf-blind occupants are anticipated.
+
+**Opus 4.6 synthesis note (2026-03-29):** Synthesis reviewed and confirmed. Three additions: (1) STI measurement must be at furthest occupied seat, not room average — cross-reference RAP BPC Opus adjudication (GAP-RAP-01-b, closed 2026-03-29). Compliant room-average STI does not guarantee adequate listening beyond critical distance (Amlani & Russo 2016). (2) Acoustic panel spectral balance must be verified across 250 Hz–4 kHz — high-frequency-dominant panels degrade consonant-vowel contrast for CI users specifically (RAP BPC caveat 1). (3) The 2440 mm corridor width from deaf-spatial-design BPC creates a potential conflict with NDV compartmentalisation preferences (narrower, enclosed spaces) in mixed-population settings — route to cross-population-conflict-mapper SPATIAL-OPEN domain. Evidence confidence: HIGH for core provisions (IEC 60118-4, RT60 ≤ 0.4 s — Tier 4–5 across 12+ jurisdictions with Tier 1 CI-specific support); MODERATE for Auracast provisions (technology transition, no IEC standard until 2027).
+
+### Consensus findings
+| Finding | Languages with evidence | Tier |
+|---|---|---|
+| IEC 60118-4 governs hearing loop performance; universally adopted | EN, SV, NO, DA, FI, FR, DE, ZH, JA, NL, ES, PT, KO, IT | Tier 4 |
+| RT60 ≤ 0.4 s in speech communication spaces (best practice) | EN, SV, NO, DA, FI, FR, DE, NL, ES, PT, KO, IT | Tier 4–5 |
+| STI ≥ 0.50 minimum; ≥ 0.60 best practice | EN, FR, DE (DIN 18041) | Tier 4 |
+| CI users more sensitive to reverberation than normal hearing; short RT60 and controlled early reflections are the design priority | EN (Badajoz-Davila 2020; ScienceDirect 2019) | Tier 1 |
+| CI users spend majority of daily life in noisy environments; built environment design can reduce this load | EN (JSLHR data-logging study) | Tier 1 |
+| NC-25 background noise maximum in hearing-critical spaces | EN (ANSI S12.60; BS 8300) | Tier 4–5 |
+| Auracast (Bluetooth LE Audio) is emerging complement to hearing loops; IEC standard expected 2027; dual provision recommended during transition | EN (HLAA, RNID, Bluetooth SIG) | Tier 2 |
+| Visual fire alarm (strobe ≥110 cd) mandatory throughout; auditory alarm alone inadequate | EN, SV, NO, DA, FI, FR, DE, NL, ES, PT, KO, IT | Tier 4–6 |
+| Remote microphone / FM system provides better SNR for hearing device users than room acoustics alone | EN (AAA guidelines; MED-EL) | Tier 1 |
+
+### Divergent findings
+| Topic | Position A | Position B | Cause |
+|---|---|---|---|
+| Auracast vs hearing loops | Hearing loops remain essential during transition (RNID, HLAA, Center for Hearing Access) | Auracast will supersede loops (Bluetooth SIG marketing) | Regulatory — no IEC standard for Auracast until 2027; telecoil penetration still dominant |
+| RT60 target for CI users | ≤ 0.4 s (DIN 18041 Nutzungsart A; standard recommendation) | Room volume and early reflection pattern matter more than absolute RT60 (Badajoz-Davila 2020) | Empirical — CI users benefit from different acoustic profiles than hearing aid users; room geometry is a confound |
+
+### NO-DATA / THIN
+| Language | Reason | Predicted by concept boundary warning? |
+|---|---|---|
+| ZH | GB 50763 specifies loop provision but no RT60/STI targets for DEAF; CI acoustic research in rehabilitation medicine journals not retrieved | YES |
+| JA | MLIT specifies loop provision but no acoustic performance targets; CI acoustic research in JA audiology literature | YES |
+
+### Citation mining
+| Source | Direction | New sources added |
+|---|---|---|
+| Badajoz-Davila et al. (2020) JASA | Backward | Ricketts & Hornsby (2003); van Hoesel & Clark (1995) |
+| IEC 60118-4 standards history | Forward | IEC TR 63079:2017 (Code of practice HLS); IEC 60118-17 ED1 (Auracast, expected 2027) |
+
+### Key sources
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| DAB-01 | IEC | 2017 | IEC 60118-4:2014+AMD1:2017 — Induction-loop systems performance requirements | 4 | INT | Universal; universally adopted |
+| DAB-02 | DIN | 2016 | DIN 18041:2016 — Hörsamkeit in Räumen | 5 | DE | Most specific DEAF acoustic standard |
+| DAB-03 | BSI | 2018 | BS 8300-2:2018 — Design of an accessible and inclusive built environment Pt 2 | 5 | UK | — |
+| DAB-04 | Badajoz-Davila et al. | 2020 | Effect of noise and reverberation on speech intelligibility for CI recipients. JASA 147(5):3538. DOI:10.1121/10.0001259 | 1 | INT | CI-specific RT60 |
+| DAB-05 | (author TBC) | 2019 | Impact of room acoustic parameters on speech/music perception among CI participants. Hearing Research. DOI:10.1016/j.heares.2018.12.006 | 1 | INT | CI-specific |
+| DAB-06 | HLAA | 2025 | Auracast Broadcast Audio | 2 | US | Transition guidance |
+| DAB-07 | IEC | 2017 | IEC TR 63079:2017 — Code of practice for hearing-loop systems | 4 | INT | — |
+| DAB-08 | ASA | 2010 | ANSI S12.60:2010 — Acoustical Performance Criteria for Schools | 4 | US | — |
+| DAB-09 | Ampetronic / Listen Technologies | 2023 | AURI Auracast system | 2 | INT | Product evidence |
+| DAB-10 | Center for Hearing Access | 2025 | Auracast Streamed Assistive Listening System | 2 | US | Advocacy |
+
+---
+
+### Standard currency (verified 2026-03-28)
+| Jurisdiction | Standard | Currency |
+|---|---|---|
+| NL | NEN 9120:2025 | CURRENT (supersedes NEN 1814:2001; published February 2025) |
+| SE | BFS 2024:12 / ALM 2 | CURRENT (in force 1 September 2024; supersedes BFS 2013:9) |
+| IEC loop | IEC 60118-4:2014+AMD1:2017 | CURRENT |
+| DE | DIN 18041:2016 | CURRENT (no revision found March 2026) |
+| UK | BS 8300-2:2018 | CURRENT (no revision found March 2026) |
+| Auracast | IEC 60118-17 | NOT YET PUBLISHED — expected late 2027 |
+
+## Metadata
+
+```yaml
+slug: deaf-acoustic-built-environment
+population: DEAF
+last_updated: 2026-04-19
+co0006_migration: true
+```

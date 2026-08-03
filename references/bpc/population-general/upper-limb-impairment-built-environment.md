@@ -1,0 +1,124 @@
+## upper-limb-impairment-built-environment
+
+**Updated:** 2026-03-30 (Co-1 EN pass)  **Evidence tier:** 1–3
+**Opus synthesis:** YES [OPUS-SYNTHESIS]
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
+**Co-1 status:** PARTIAL EN — Fredericks et al. 2024 (wheelchair user cooperative inquiry, ZA); Widehammar et al. 2017 (n=156 AT users, SE). Environmental barriers confirmed as primary participation restrictor. No contradictions to BPC specifications.
+**Consensus finding:** Turning space, toilet configuration, and threshold height are the three highest-impact specification domains with the largest evidence-practice conflicts across all major standards. UPL built environment evidence base is critically thin — zero indexed studies on one-handed kitchen/bathroom design.
+**Core evidence-practice conflicts:**
+  - Turning circle: ADA/BS 8300 1525 mm serves only 50th percentile; 2108 mm needed for 95th-percentile power chairs; 2489 mm for scooters (D'Souza et al. 2011, n=339, Tier 3). Only CSA B651:23 (2100 mm) approaches the 95th percentile.
+  - Toilet transfer: 90% of older disabled persons stand-pivot transfer (not lateral transfer assumed by ADA 18-inch centreline); 30-inch centreline preferred for assisted transfers (Sanford & Bosch 2013, n=20, Tier 3)
+  - Grab bar type: two vertical bars produce smallest COP deviation and are most preferred; horizontal bars (ADA-mandated) are least preferred and least stable (Kennedy et al. 2015, Tier 3)
+  - Threshold: 2 cm defeats 45.8% of wheelchair users on first attempt; women OR 2.71 of failure vs. men (Al Lawati et al. 2017, n=214, Tier 3)
+  - Grab bar load: 1.3 kN peak force during bathtub exit fall recovery (KITE Research 2023–2025)
+  - Grab bar placement: grasp location varies with body height (r=0.67) — fixed placement cannot serve all users (Levine et al. 2025, Tier 3)
+**Non-English standards as evidence-aligned benchmarks:**
+  - Ramp gradient: ADA/BS 8300 8.3% (1:12) vs. DIN 18040 6% (1:16.7), TEK17 6.7% (1:15), France 5% preferred
+  - Corridor width: ADA 914 mm vs. TEK17 1800 mm on ramps, France ERP 1400 mm
+  - Turning circle: ADA 1525 mm vs. CSA B651:23 2100 mm, Sweden indoor 1300 mm
+  - Rest seating: ADA (not specified) vs. BS 8300 every 50 m, France every 10 m on ramps
+  - Hardware: DIN 18040 U-shaped mandatory at 85 cm; Japan sliding/pushbutton doors mandatory for accessible WC
+  - Dual handrail heights: TEK17 dual option (900 mm + 700 mm) — no evidence base but consensus strong
+**UPL evidence (critical gaps):**
+  - Zero PubMed-indexed studies on one-handed kitchen/bathroom built-environment design
+  - Zero studies linking grip strength measurements to hardware specifications
+  - German DIN 18040 offers most detailed hardware specs (U-shape, 85 cm height, force tables) — non-English standards essential reference for UPL
+  - Bilateral fold-down grab bars at 813 mm height, 356 mm from toilet CL outperform ADA configuration (Lee et al. 2017, Tier 3)
+  - Wall-mounted vertical bars biomechanically superior to rim-mounted (>30° trunk flexion with rim-mounted — King & Novak 2024)
+**Jurisdictions confirmed:** UK · AU · CA · US · DE · NO · SV · FR · JA
+### best_practice_synthesis
+**Opus synthesis:** YES [OPUS-SYNTHESIS] — 2026-03-28
+
+**Most inclusive provision:** Turning space ≥ 2100 mm diameter (serves 95th-percentile power wheelchair users per D'Souza et al. 2011, n=339); threshold height 0 mm (flush/level — 2 cm defeats 45.8% of wheelchair users on first attempt); grab bars: two vertical bars as primary configuration (smallest COP deviation, highest user preference per Kennedy et al. 2015); dual handrail heights 900 mm + 700 mm on all ramps and stairs.
+
+**Most targeted provision:** Unilateral upper-limb impairment users performing one-handed transfers and manipulation tasks. Evidence base is critically thin (zero indexed studies on one-handed kitchen/bathroom design), but available evidence converges on: toilet centreline at 760 mm (30 in.) from nearest wall for assisted stand-pivot transfers (90% of older disabled persons use stand-pivot, not lateral transfer — Sanford and Bosch 2013); grab bar loading capacity ≥ 1.3 kN to withstand fall-recovery forces during bathtub exit (KITE Research 2023–2025); adjustable-height grab bar mounting (grasp location varies with body height, r = 0.67 — Levine et al. 2025) or continuous vertical bar spanning 600–1200 mm AFF.
+
+**Conflict resolution:** Turning circle: ADA 1525 mm serves only 50th percentile; CSA B651:23 at 2100 mm approaches 95th percentile; 2489 mm needed for scooters. Resolution: 2100 mm as standard minimum; 2500 mm in new-build primary accessible routes and all accessible toilet/bathroom compartments. Where 2100 mm cannot be achieved in existing buildings, document as a Tier 2 compromise with individual assessment required.
+
+**Highest-ambition actionable specification:** Turning space: ≥ 2100 mm diameter standard; ≥ 2500 mm in new-build accessible bathrooms and primary circulation (Tier 3, D'Souza et al. 2011). Toilet centreline: 760 mm (30 in.) from nearest side wall (Tier 3, Sanford and Bosch 2013) — ADA 457 mm (18 in.) is based on lateral-transfer assumption that does not match observed transfer method of 90% of users. Grab bars: two vertical bars as primary; rated ≥ 1.3 kN at any point and any angle (Tier 3, KITE Research); mounting height adjustable or continuous vertical rail 600–1200 mm AFF; oval cross-section 32–45 mm permitted. Threshold: 0 mm (flush level transition); where impossible, ≤ 5 mm bevelled (Tier 3, Al Lawati et al. 2017). Ramp gradient: ≤ 6% (TEK17/DIN 18040 benchmark) with dual handrail 900 + 700 mm; ADA 8.3% is a statutory floor, not a design target. Hardware: U-shaped lever at 850 mm AFF (DIN 18040 mandatory).
+
+**Evidence confidence:** MODERATE for turning circle, threshold, and grab bar type (Tier 3, adequate sample sizes, replicated findings). LOW for toilet centreline (Tier 3, n=20 — directional but small sample). LOW for one-handed kitchen/bathroom design (zero indexed studies — [THIN]). MODERATE for grab bar loading (Tier 3, biomechanical study with force measurement).
+
+**Opus note:** The ADA 18-inch toilet centreline is the single most consequential evidence-practice conflict in this slug. It is based on an assumed lateral wheelchair transfer that 90% of the target population does not perform. The guidebook should state this directly — the 18-inch specification is not merely suboptimal, it is designed for a transfer method that clinical evidence shows is not the dominant method. The 30-inch specification should be presented as the evidence-based default, with the 18-inch value noted only as a statutory reference baseline. Similarly, the ADA turning circle (1525 mm) excludes the majority of power wheelchair users by design — this is not a marginal shortfall but a 50th-percentile specification applied as if it were universal.
+
+**Guidebook items affected:** All Part 7 MOB/UPL items; toilet compartment specifications; grab bar specifications; threshold specifications; ramp gradient items; turning space items; hardware specifications.
+
+**Key sources (see ## Key sources table below)**
+**Divergent findings:** OT home assessment effectiveness: Cochrane (RR 0.88 high-risk) vs. OTIS RCT (no benefit in general at-risk elderly, IRR 1.17, p=0.07) — targeting criteria unclear; high-risk subgroup qualification required
+
+---
+
+<!-- v4 schema stubs — CONSUME schema backfill 2026-03-30. Opus synthesis pass required (GAP-TRIAGE-02). -->
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| [STUB — populate in Opus synthesis pass] | | | |
+
+### Best-practice synthesis
+**Most inclusive provision:** [STUB — see synthesis content above]
+**Most targeted provision:** [STUB — see synthesis content above]
+**Conflict resolution:** [STUB — see synthesis content above]
+**Highest-ambition actionable specification:** [STUB — see synthesis content above]
+**Opus synthesis note:** [STUB — pending Opus synthesis pass]
+
+### Consensus findings
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
+|---|---|---|---|
+| [STUB — pending Opus synthesis pass] | | | |
+
+### Divergent findings
+| Topic | Jurisdiction A | Jurisdiction B | Cause |
+|---|---|---|---|
+| [STUB — pending Opus synthesis pass] | | | |
+
+### NO-DATA / THIN
+| Jurisdiction | Language | Reason | Co-1? | Tier 5? |
+|---|---|---|---|---|
+| [STUB — pending Opus synthesis pass] | | | | |
+
+### Citation mining
+**Date:** 2026-05-04 07:32
+| Source | Direction | New sources added |
+|---|---|---|
+| Kennedy 2015 (ULB-05) | Forward | Lee/Sanford 2018 (ULB-12); Lee/Mehta-Desai 2019 (ULB-13); Levine 2022 Co-1 (ULB-14) |
+| Al Lawati 2017 (ULB-03) | Forward | Rouvier 2022 systematic review (ULB-15) |
+| Lee/Sanford 2018 (ULB-12) | Backward | Sanford/Echt/Malassigné 2000 (ULB-16) |
+| D'Souza 2011 (ULB-01) | Forward | ANSI A117.1-2017 67" turning space (already known) |
+**Notes:** ULB-11 (Lee 2017) confirmed as Phase 1 of ULB-12 (Lee 2018). ULB-04 DOI confirmed. ICC 2021 IBC code changes E123-18 adopted assisted toileting provisions based on Lee/Sanford research (Tier 6 confirmation).
+
+### Bottom-up findings (functional deficit pass)
+Not yet run.
+
+### Key sources
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| ULB-01 | D'Souza, C. et al. | 2011 | Wheeled mobility device dimensions. IDeA Center / Steinfeld. Assist Technol. DOI:10.1080/10400430903496580 | 1 | US | 2108mm needed for 95th-percentile power chairs |
+| ULB-02 | Togni, G. et al. | 2022 | [GREY — full citation unverified; DOI required] | 3 | INT | — |
+| ULB-03 | Al Lawati, Z., Kirby, R.L. et al. | 2017 | Getting a Manual Wheelchair Over a Threshold Using the Momentum Method. *Arch Phys Med Rehabil* 98(10):2097-2099.e7. DOI:10.1016/j.apmr.2017.04.023. PMID:28579369 | 3 | INT | See SRB-06; corrected 2026-05-07 |
+| ULB-04 | Sanford, J. & Bosch, S.J. | 2013 | An investigation of noncompliant toilet room designs for assisted toileting. HERD 6(2):43–57. DOI:10.1177/193758671300600205 | 3 | US | 90% use stand-pivot, not lateral; 30" CL preferred |
+| ULB-05 | Kennedy, M.J. et al. | 2015 | Toilet grab-bar preference and COP deviation during toilet transfers. Assist Technol 27(2):78–87. PMID:26132352. DOI:10.1080/10400435.2014.976799 | 3 | INT | 2VB most preferred + smallest COP deviation |
+| ULB-06 | Levine, D. et al. | 2023 | Grab bar placement varies with body height (r=0.67). Human Factors. DOI:10.1177/00187208211059860 | 3 | INT | See per project-standards Levine 2023 |
+| ULB-07 | Levine, D. et al. | 2025 | Grab bar adjustability evidence. JMIR. DOI:10.2196/69442 | 3 | INT | See per project-standards Levine 2025 |
+| ULB-08 | Kim, W. et al. | 2014 | Ramp gradient >6% increases propulsion effort | 3 | INT | See SRB-04 |
+| ULB-09 | Zanotto, D. et al. | 2023 | [GREY — full citation unverified; DOI required] | 3 | INT | — |
+| ULB-10 | Cockayne, S. et al. | 2021 | [GREY — full citation unverified; DOI required] | 3 | INT | — |
+| ULB-11 | Lee, S.J. et al. | 2017 | Bilateral fold-down grab bars at 813mm height outperform ADA configuration. [Phase 1 — superseded by ULB-12 full publication] | 3 | US | 356mm from toilet CL |
+| ULB-12 | Lee, S.J., Sanford, J., Calkins, M. et al. | 2018 | Beyond ADA Accessibility Requirements: Meeting Seniors' Needs for Toilet Transfers. HERD 11(2):32–44. DOI:10.1177/1937586717730338 | 3 | US | n=130+ residents, 11 facilities; bilateral fold-down bars 356mm from CL, 813mm AFF; significantly more effective than ADA |
+| ULB-13 | Lee, S.J., Mehta-Desai, R., Oh, K., Sanford, J., Prilutsky, B.I. | 2019 | Effects of bilateral swing-away grab bars on biomechanics of STS toilet transfers. Disabil Rehabil Assist Technol 14(3):292–300. DOI:10.1080/17483107.2018.1447605 | 3 | US | Kinetic data for 9 bilateral grab bar configurations |
+| ULB-14 | Levine, I.C., Lau, S.T., King, E.C., Novak, A.C. | 2022 | Consumer perspectives on grab bars: A Canadian national survey. Front Public Health 10:915100. DOI:10.3389/fpubh.2022.915100 | Co-1 | CA | National survey; majority support mandatory bathroom grab bars |
+| ULB-15 | Rouvier, T., Louessard, A., Simonetti, E. et al. | 2022 | Manual wheelchair biomechanics while overcoming environmental barriers: A systematic review. PLOS ONE. DOI:10.1371/journal.pone.0269657 | 3 (SR) | INT | Systematic review of WC biomechanics for environmental barriers |
+| ULB-16 | Sanford, J., Echt, K., Malassigné, P. | 2000 | An E for ADAAG: The case for ADA accessibility guidelines for the elderly. Phys Occup Ther Geriatr 16:39–58. DOI:10.1080/J148v16n03_03 | 3 | US | Foundation piece — three studies of toilet transfer |
+
+## Metadata
+
+```yaml
+slug: upper-limb-impairment-built-environment
+population: MOB
+last_updated: 2026-05-04
+co0006_migration: true
+citation_mining_date: 2026-05-04
+```

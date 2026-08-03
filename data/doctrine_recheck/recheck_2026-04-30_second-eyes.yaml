@@ -1,0 +1,310 @@
+recheck_id: RC-002
+trigger: STAGE_TRANSITION
+trigger_detail: 'A->B'
+recheck_date: 2026-05-01 04:30
+recheck_by: opus_4.7_session_2026-05-01_audit-remediation
+model_routing: opus/150/arbitrate
+parent_recheck: RC-001
+audit_basis: 'audit_2026-04-30 R2: RC-001 was conducted by the same Opus session that authored A10–A13, partially violating A13 §4.2 fresh-context principle. This second-eyes pass independently re-classifies the same 15-BPC sample to test classification robustness. Not a fully fresh-context recheck (this conversation produced the audit document, not the original A10-A13 corpus); positioned as one external mitigation step short of the fully fresh-context recheck recommended for the next periodic cycle.'
+passes_run:
+- '2.6'
+passes_skipped:
+  - id: '2.2'
+    reason: doctrine inventory unchanged since RC-001 (snapshot still current at HEAD d06f66fb)
+  - id: '2.3'
+    reason: cross-reference check passed in RC-001 with one resolution; no new governance docs landed since
+  - id: '2.4'
+    reason: drift detection requires prior snapshot comparison; RC-001 IS the baseline
+  - id: '2.5'
+    reason: decision register unchanged since RC-001 (still 107 records post-D-0107)
+findings:
+- finding_id: RC-002-001
+  severity: WARNING
+  pass_id: '2.6'
+  description: 'Independent re-classification of the RC-001 sample produces 3/15 (20%) classification disagreements,
+    all shifting toward AMBIGUOUS. (a) accessible-design-economics-cost-premium.md: RC-001 CLEAN → second-eyes AMBIGUOUS.
+    BPC body carries [UNVERIFIED-QUANT — original 47%/32 facilities claim removed; not in cited source. Replacement source required.]
+    inline flag, which meets §3.2 AMBIGUOUS criterion (self-flagged; requires confidence-flag review). The flag IS a real
+    contamination correction surfacing — Block 32 struck the Rhee/INSERM/Kapsalis sources from this BPC and others.
+    (b) accessible-laundry-room-design.md: RC-001 CLEAN → second-eyes AMBIGUOUS. Status header
+    "PARTIAL — 4 jurisdictions searched; Co-1 pass: 0 jurisdictions; ADA S611 is the sole source with quantified
+    appliance-height specifications" matches AMBIGUOUS criterion (self-flagged PARTIAL, single-jurisdiction primary
+    evidence). (c) bariatric-turning-radius-built-environment.md: RC-001 STUB → second-eyes AMBIGUOUS. BPC carries
+    substantive Opus synthesis with Tier 3-5 evidence (Steinfeld 2006, VA BFDS 2025, IWA) AND an internal "[STUB — this
+    BPC file is a deferred non-standard file]" marker reflecting BAR being out-of-main-taxonomy. The synthesis itself
+    is not a placeholder; the file scope is deferred. AMBIGUOUS captures the dual state more accurately than STUB.'
+  affected_artifacts:
+  - references/bpc/economics/accessible-design-economics-cost-premium.md
+  - references/bpc/room-types/accessible-laundry-room-design.md
+  - references/bpc/seating-and-rest/bariatric-turning-radius-built-environment.md
+  recommended_action: 'No remediation. The disagreements are calibration drift between two reviewers, not RC-001 errors.
+    Both classifications use the same §3.2 rubric; the disagreements reflect reasonable differences in weighing self-flagged
+    PARTIAL/PROVISIONAL markers vs substantive content. Future rechecks should expect ±20% inter-reviewer variance at
+    this rubric''s current resolution. Consider tightening §3.2 with explicit decision rules (e.g., "any [UNVERIFIED]
+    flag in body → AMBIGUOUS") if calibration matters for downstream work.'
+  status: OPEN
+- finding_id: RC-002-002
+  severity: INFO
+  pass_id: '2.6'
+  description: 'RC-001 finding RC-001-01 ("CLEAN drift methodologically virtuous, not contamination") is reinforced
+    by second-eyes pass. With second-eyes classifications applied, drift increases (CLEAN 78%→53%, -25 pp instead
+    of -18 pp). Of the 5 AMBIGUOUS-classified BPCs in second-eyes pass: 4/5 (reach-range, circulation-geometry,
+    residential-kitchen, laundry-room) reflect coverage gaps and explicit self-flagging — exactly the "improved
+    epistemic discipline" RC-001 names. 1/5 (economics-cost) reflects a contamination correction in progress
+    ([UNVERIFIED-QUANT] flag where 47% claim was removed). The "methodologically virtuous" framing covers 4 of 5
+    new AMBIGUOUS markings; the economics-cost case is genuine contamination remediation rather than virtuous
+    discipline. RC-001-01 stands but should be qualified: drift is mostly virtuous discipline (~80% of AMBIGUOUS
+    markings) plus some contamination correction (~20%).'
+  affected_artifacts:
+  - references/bpc/economics/accessible-design-economics-cost-premium.md
+  recommended_action: 'Future periodic rechecks should distinguish virtuous-discipline AMBIGUOUS from
+    contamination-correction AMBIGUOUS. Suggest adding sub-classification to §3.2: AMBIGUOUS-DISCIPLINE
+    (self-flagged for evidence-state machine compliance) vs AMBIGUOUS-CORRECTION (contamination correction
+    artifact in body, e.g., struck source, [UNVERIFIED-QUANT] flag). The two have different remediation paths.'
+  status: OPEN
+- finding_id: RC-002-003
+  severity: INFO
+  pass_id: '2.6'
+  description: 'Inter-reviewer agreement: 12/15 (80%). All 3 disagreements shift in same direction (toward
+    AMBIGUOUS). No CLEAN→STUB or AMBIGUOUS→CLEAN movements. This indicates RC-001 was systematically slightly
+    less conservative than this second-eyes pass. The bias direction is what fresh-context principle aims to
+    correct: an authoring-context reviewer is more likely to credit work as CLEAN than an external reviewer.
+    The size of the bias (3 of 15 cases, all in same direction) is small but non-zero.'
+  affected_artifacts: []
+  recommended_action: 'Treat RC-001 baseline as approximately accurate but slightly optimistic. For Stage B
+    drift detection, allow a ±2-classification buffer when comparing post-Stage-B samples to RC-001 ratios.
+    Alternatively: re-baseline against second-eyes ratios (53/33/7/7) which represent the more conservative
+    of two readings. Project owner decides which baseline becomes canonical for Stage B drift purposes.'
+  status: OPEN
+contamination_samples:
+- recheck_id: RC-002
+  bpc_path: references/bpc/bathrooms-and-wet-areas/accessible-bathroom-and-grab-bar.md
+  topic_group: bathrooms-and-wet-areas
+  disposition: CLEAN
+  rc001_disposition: CLEAN
+  agree: true
+  disposition_rationale: 'Status COMPLETE (24/24 jurisdictions; co1 25/24; tier5 22/24). Evidence tier range 1-6.
+    Opus synthesis YES. Substantive convergence/divergence assessment per cell. Population assignments correct
+    (MOB, NEU, UPL, LPA explicitly addressed). Co-1 evidence cited (Levine 2025, Kennedy 2015, Nakamura 2009).
+    Five Opus refinements documented over Sonnet draft (grab bar height widening; NEU vertical bars; power WC
+    turning; load rating correction; DAR bidet). Matches all four CLEAN criteria.'
+  reviewer: opus_4.7_session_2026-05-01
+  review_date: 2026-05-01 04:30
+- recheck_id: RC-002
+  bpc_path: references/bpc/communication-and-alerts/assistive-listening-systems.md
+  topic_group: communication-and-alerts
+  disposition: CLEAN
+  rc001_disposition: CLEAN
+  agree: true
+  disposition_rationale: 'Status COMPLETE (9 core languages + NL extended). Tier 4 (IEC 60118-4) + Tier 2
+    (HLAA, RNID, Zennancho) + Tier 5 (Auracast emerging). Opus synthesis with explicit confidence note (HIGH
+    for loops, MODERATE for Auracast). Japan gap (GAP-ALS-01) explicitly flagged. CEREMA stricter trigger
+    threshold proposed for guidebook adoption. Population correctly DEAF.'
+  reviewer: opus_4.7_session_2026-05-01
+  review_date: 2026-05-01 04:30
+- recheck_id: RC-002
+  bpc_path: references/bpc/controls-and-hardware/reach-range-and-accessible-controls.md
+  topic_group: controls-and-hardware
+  disposition: AMBIGUOUS
+  rc001_disposition: AMBIGUOUS
+  agree: true
+  disposition_rationale: 'Header explicitly "STATUS: PROVISIONAL — 16 jurisdictions NOT-RUN; Co-1 0/24; Tier 5 3/24.
+    Do not use as sole basis for specification writing." Self-flagged PROVISIONAL with explicit usage warning.
+    Substantive Opus synthesis present but coverage thin. Matches AMBIGUOUS criterion (self-flagged PROVISIONAL).'
+  reviewer: opus_4.7_session_2026-05-01
+  review_date: 2026-05-01 04:30
+- recheck_id: RC-002
+  bpc_path: references/bpc/economics/accessible-design-economics-cost-premium.md
+  topic_group: economics
+  disposition: AMBIGUOUS
+  rc001_disposition: CLEAN
+  agree: false
+  disposition_rationale: 'DISAGREES WITH RC-001. Substantive Opus synthesis with Tier 1-3 evidence (Ielegems & Vanrie,
+    TERRAGON/DStGB, Fuglerud, Swiss Federal Office) — by content, looks CLEAN. BUT body carries inline flag
+    "[UNVERIFIED-QUANT — original 47%/32 facilities claim removed; not in cited source. Replacement source required.]"
+    on a key Marquardt 2011 wayfinding/incontinence claim. This flag is the residue of the Block 32 source-deletion
+    (Rhee/INSERM/Kapsalis struck for 2-failed-search rule). The presence of an [UNVERIFIED-QUANT] flag in the body
+    matches §3.2 AMBIGUOUS criterion ("unclear convergence assessment; not frankly contaminated but requires
+    confidence-flag review"). RC-001 may have weighted the substantive synthesis higher than the inline flag;
+    second-eyes weights the inline flag as a real signal. Difference is calibration of the rubric''s "self-flagged"
+    criterion when applied to inline-body flags vs header-level status flags.'
+  reviewer: opus_4.7_session_2026-05-01
+  review_date: 2026-05-01 04:30
+- recheck_id: RC-002
+  bpc_path: references/bpc/entrances-and-circulation/accessible-circulation-geometry.md
+  topic_group: entrances-and-circulation
+  disposition: AMBIGUOUS
+  rc001_disposition: AMBIGUOUS
+  agree: true
+  disposition_rationale: 'Status PARTIAL (PROVISIONAL). Opus synthesis YES — PARTIAL-RETAINED. Tier 3-6 only.
+    Co-1 partial pass. OFS rest-seating evidence noted as OT-clinical only with no built-environment standard
+    in any jurisdiction. Honest disclosure of evidence gaps; correct AMBIGUOUS classification.'
+  reviewer: opus_4.7_session_2026-05-01
+  review_date: 2026-05-01 04:30
+- recheck_id: RC-002
+  bpc_path: references/bpc/frameworks-and-methodology/accessible-design-failures-poor-performance.md
+  topic_group: frameworks-and-methodology
+  disposition: STUB
+  rc001_disposition: STUB
+  agree: true
+  disposition_rationale: 'Status PARTIAL — Opus synthesis pending for §8.5 input. "Opus synthesis: NO — Opus
+    re-synthesis required for resolution hierarchy". Multiple [STUB — Opus synthesis pending] markers per
+    RC-001. Tier 3 + Co-1 evidence gathered but synthesis is incomplete by author''s own marking. Matches STUB
+    criterion (synthesis pending Opus pass).'
+  reviewer: opus_4.7_session_2026-05-01
+  review_date: 2026-05-01 04:30
+- recheck_id: RC-002
+  bpc_path: references/bpc/frameworks-and-methodology/body-sizes-supplementary-populations.md
+  topic_group: frameworks-and-methodology
+  disposition: CLEAN
+  rc001_disposition: CLEAN
+  agree: true
+  disposition_rationale: 'Updated 2026-03-30 (v4 schema synthesis). Tier 3-5 (anthropometric data, standards,
+    limited OT evidence). Substantive synthesis with multiple sources (WHO Child Growth Standards; CDC NHANES;
+    Hoover-Fong CLARITY study, n=1,374). Consensus finding clearly stated. Population taxonomy alignment correct
+    (CHD, LPA, EXH in main taxonomy; BAR explicitly relocated to Supplementary Volume per project-standards).
+    No frank contamination; no self-flagging. Matches CLEAN.'
+  reviewer: opus_4.7_session_2026-05-01
+  review_date: 2026-05-01 04:30
+- recheck_id: RC-002
+  bpc_path: references/bpc/health-and-symptom-management/chronic-pain-built-environment.md
+  topic_group: health-and-symptom-management
+  disposition: MERGED
+  rc001_disposition: MERGED
+  agree: true
+  disposition_rationale: '15 lines. Status MERGED 2026-03-28. Merged into pain-ofs-built-environment-design.
+    co0006_migration: true. Pure CO-0006 redirect file. Matches MERGED criterion exactly.'
+  reviewer: opus_4.7_session_2026-05-01
+  review_date: 2026-05-01 04:30
+- recheck_id: RC-002
+  bpc_path: references/bpc/kitchens-and-workspaces/residential-kitchen-and-task-surfaces.md
+  topic_group: kitchens-and-workspaces
+  disposition: AMBIGUOUS
+  rc001_disposition: AMBIGUOUS
+  agree: true
+  disposition_rationale: 'Status PROVISIONAL (19/24 jurisdictions searched; tier5 8/24 — structural gap accepted;
+    6 NOT-RUN). Self-flagged. Substantive synthesis but coverage thin. Matches AMBIGUOUS.'
+  reviewer: opus_4.7_session_2026-05-01
+  review_date: 2026-05-01 04:30
+- recheck_id: RC-002
+  bpc_path: references/bpc/population-general/deafblind-built-environment-design.md
+  topic_group: population-general
+  disposition: CLEAN
+  rc001_disposition: CLEAN
+  agree: true
+  disposition_rationale: 'Two-section file (post-merge from deafblind-built-environment). First section: Tier 4-5,
+    Opus synthesis YES, "Zero Tier 1-2 evidence" honestly stated. Second section: Tier 2-4 + Co-1 (Protactile movement,
+    DbI guidelines, ISO 23599:2019). Combined evidence base spans Co-1 to Tier 5. Population correctly DBL.
+    Substantive design principles (tactile-first, intervenor clear floor space, vibrotactile alerting). Honest
+    disclosure of Tier 1-2 absence is methodologically virtuous, not a contamination signal. Matches CLEAN. Note:
+    dual-section structure is non-standard but non-blocking; both sections cohere doctrinally.'
+  reviewer: opus_4.7_session_2026-05-01
+  review_date: 2026-05-01 04:30
+- recheck_id: RC-002
+  bpc_path: references/bpc/population-general/dementia-built-environment.md
+  topic_group: population-general
+  disposition: CLEAN
+  rc001_disposition: CLEAN
+  agree: true
+  disposition_rationale: 'Tier 3-5 (strong systematic review base; quantified lighting from DSDC Stirling).
+    Opus synthesis YES. 13 languages CLEAN concept boundary notes. Substantive synthesis with Tier 2 OT-co-design
+    bridge specified. Population DEM correct. Convergence assessment present. Matches CLEAN.'
+  reviewer: opus_4.7_session_2026-05-01
+  review_date: 2026-05-01 04:30
+- recheck_id: RC-002
+  bpc_path: references/bpc/room-types/accessible-laundry-room-design.md
+  topic_group: room-types
+  disposition: AMBIGUOUS
+  rc001_disposition: CLEAN
+  agree: false
+  disposition_rationale: 'DISAGREES WITH RC-001. Header explicitly "STATUS: PARTIAL — 4 jurisdictions searched;
+    Co-1 pass: 0 jurisdictions; ADA S611 is the sole source with quantified appliance-height specifications".
+    Self-flagged PARTIAL. Single-jurisdiction primary evidence (ADA S611). Co-1 entirely absent. Per §3.2 rubric,
+    self-flagged PROVISIONAL/PARTIAL with thin coverage = AMBIGUOUS. RC-001 may have weighted the Opus synthesis
+    presence higher than the explicit PARTIAL marker; second-eyes weights the PARTIAL marker as definitive.
+    Calibration disagreement.'
+  reviewer: opus_4.7_session_2026-05-01
+  review_date: 2026-05-01 04:30
+- recheck_id: RC-002
+  bpc_path: references/bpc/seating-and-rest/bariatric-turning-radius-built-environment.md
+  topic_group: seating-and-rest
+  disposition: AMBIGUOUS
+  rc001_disposition: STUB
+  agree: false
+  disposition_rationale: 'DISAGREES WITH RC-001. File has substantive Opus synthesis (Tier 3-5: Steinfeld 2006
+    1925mm RESNA empirical; VA BFDS 2025 1830mm federal standard; IWA TurningCircle; bariatric wheelchair dimensions
+    confirmed). Consensus finding present. Jurisdictions confirmed: US, Ireland. Divergent findings discussed.
+    BUT internal "[STUB — this BPC file is a deferred non-standard file]" marker present because BAR is "not a
+    main taxonomy code" per project-standards. The synthesis content is not placeholder — it is substantive.
+    The deferral is scope/inclusion (Supplementary Volume only), not synthesis-status. AMBIGUOUS better captures
+    the dual state (substantive synthesis + scope-deferred) than STUB (synthesis pending). RC-001 likely
+    classified by the explicit STUB marker; second-eyes classifies by content character.'
+  reviewer: opus_4.7_session_2026-05-01
+  review_date: 2026-05-01 04:30
+- recheck_id: RC-002
+  bpc_path: references/bpc/sensory-environment/acoustics-speech-intelligibility-disability.md
+  topic_group: sensory-environment
+  disposition: CLEAN
+  rc001_disposition: CLEAN
+  agree: true
+  disposition_rationale: 'Tier 1-3. Opus synthesis YES. Tier 1 systematic review (Murgia 2023 classroom acoustics).
+    Tier 2 PLOS ONE 2025 binaural study. Substantive Opus synthesis with explicit conflict resolution noting
+    no-population-disadvantaged conclusion (the 0.3s ceiling for hearing-impaired contains the 0.6s
+    general-population ceiling). Matches CLEAN.'
+  reviewer: opus_4.7_session_2026-05-01
+  review_date: 2026-05-01 04:30
+- recheck_id: RC-002
+  bpc_path: references/bpc/wayfinding-and-signage/cognitive-wayfinding-design.md
+  topic_group: wayfinding-and-signage
+  disposition: CLEAN
+  rc001_disposition: CLEAN
+  agree: true
+  disposition_rationale: 'Status COMPLETE. Co-1 to Tier 5. Opus synthesis YES. 13 languages CLEAN. Substantive
+    Opus synthesis with cross-population coherence (DEM, NEU, NDV, VIS) explicitly addressed. Matches CLEAN.'
+  reviewer: opus_4.7_session_2026-05-01
+  review_date: 2026-05-01 04:30
+distribution_comparison:
+  rc001:
+    CLEAN: 9
+    AMBIGUOUS: 3
+    STUB: 2
+    MERGED: 1
+    CLEAN_pct: 60.0
+    AMBIGUOUS_pct: 20.0
+    STUB_pct: 13.3
+    MERGED_pct: 6.7
+  second_eyes:
+    CLEAN: 8
+    AMBIGUOUS: 5
+    STUB: 1
+    MERGED: 1
+    CLEAN_pct: 53.3
+    AMBIGUOUS_pct: 33.3
+    STUB_pct: 6.7
+    MERGED_pct: 6.7
+  delta:
+    CLEAN: -6.7
+    AMBIGUOUS: +13.3
+    STUB: -6.7
+    MERGED: 0.0
+agreement:
+  agreed: 12
+  disagreed: 3
+  agreement_pct: 80.0
+  disagreement_direction: 'all 3 disagreements shift toward AMBIGUOUS (more conservative); none shift toward CLEAN'
+notes: |
+  This second-eyes pass is one external mitigation step short of the fully fresh-context recheck recommended for
+  the next periodic cycle (currently scheduled at working-session counter == 25). It does not replace that
+  fresh-context recheck. The reviewer (opus_4.7_session_2026-05-01) authored the audit document that recommended
+  this pass; the conversation context is therefore not strictly fresh, only different from the RC-001 authoring
+  context (which had additionally produced A10 through A12 S2 in-conversation).
+
+  The 80% inter-reviewer agreement is reasonable for a four-state rubric applied to BPCs with substantial inline
+  self-flagging. The systematic shift direction (3/3 disagreements toward AMBIGUOUS) suggests RC-001 was slightly
+  optimistic relative to second-eyes — consistent with the fresh-context principle's predicted authoring-context
+  bias. The bias size is small (3 of 15) and does not refute RC-001's overall finding (drift is mostly virtuous
+  discipline).
+
+  Recommendation: project owner decides whether to re-baseline at second-eyes ratios (53/33/7/7) or retain
+  RC-001 baseline (60/20/13/7) for Stage B drift detection. The two are within the noise floor of N=15 sampling
+  but the choice affects what counts as "drift" in future rechecks.

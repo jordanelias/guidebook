@@ -1,0 +1,93 @@
+section: A.1
+title: Ramp Gradients
+item_code: E-03
+spec_id: null
+records:
+- spec_id: null
+  item_code: E-03
+  jurisdiction: US
+  standard_name: ADA 2010 §405
+  value_text: 'Max Gradient: 1:12 (8.3%); Max Rise/Run: 760mm per run; Handrails: Both sides'
+  value_numeric: 8.3
+  unit: ratio
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.1
+  notes: null
+- spec_id: null
+  item_code: E-03
+  jurisdiction: GB
+  standard_name: BS 8300-1:2018
+  value_text: 'Max Gradient: 1:12 (8.3%); Preferred: 1:20 (5%); Max Rise/Run: 500mm per run; Handrails: Both sides'
+  value_numeric: 8.3
+  unit: ratio
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.1
+  notes: null
+- spec_id: null
+  item_code: E-03
+  jurisdiction: DE
+  standard_name: DIN 18040-1
+  value_text: 'Max Gradient: 1:16.7 (6%); Max Rise/Run: 600mm per run; Handrails: Both sides'
+  value_numeric: 6.0
+  unit: ratio
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.1
+  notes: null
+- spec_id: null
+  item_code: E-03
+  jurisdiction: AU
+  standard_name: AS 1428.1 / NCC
+  value_text: 'Max Gradient: 1:14 (7.1%); Handrails: Both sides'
+  value_numeric: 7.1
+  unit: ratio
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.1
+  notes: null
+- spec_id: null
+  item_code: E-03
+  jurisdiction: 'NO'
+  standard_name: TEK17 §12-18
+  value_text: 'Max Gradient: 1:12 indoor; Preferred: 1:20 outdoor; Handrails: Both sides'
+  value_numeric: 1.0
+  unit: ratio
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.1
+  notes: null
+- spec_id: null
+  item_code: E-03
+  jurisdiction: FR
+  standard_name: Arrêté 2017
+  value_text: 'Max Gradient: 8% short; Preferred: 5% preferred; Handrails: Both sides'
+  value_numeric: 8.0
+  unit: ratio
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.1
+  notes: null
+- spec_id: null
+  item_code: E-03
+  jurisdiction: CH
+  standard_name: SIA 500
+  value_text: 'Max Gradient: 6%; Handrails: Both sides'
+  value_numeric: 6.0
+  unit: ratio
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.1
+  notes: null
+- spec_id: null
+  item_code: E-03
+  jurisdiction: ISO
+  standard_name: ISO 21542:2021
+  value_text: 'Max Gradient: 1:12 (8.3%); Preferred: 1:20 (5%); Handrails: Both sides'
+  value_numeric: 8.3
+  unit: ratio
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.1
+  notes: null

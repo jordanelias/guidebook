@@ -1,0 +1,89 @@
+## OFS-built-environment
+
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19 00:25  **Evidence tier range:** Tier 5  **Opus synthesis:** YES [OPUS-SYNTHESIS] (all provisions — extrapolated from clinical + general seating codes; no OFS-specific standard in any jurisdiction)
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| SV | utmattningssyndrom + byggd miljö | ⚠ PARTIAL | Clinical burnout term; myalgisk encefalomyelit required for ME specifically |
+| NO | utmattelse + bo-miljø | ⚠ PARTIAL | No OFS built-environment standards in TEK17 or NS11001 |
+| DA | kronisk træthed + boligindretning | ⚠ PARTIAL | No OFS design provisions in BR18 |
+| FI | krooninen väsymysoireyhtymä + esteettömyys | ⚠ PARTIAL | No provisions in Decree 241/2017 |
+| FR | syndrome de fatigue chronique + accessibilité | ⚠ PARTIAL | SFC France Association is clinical only |
+| DE | ME/CFS + barrierefreies Bauen | ⚠ PARTIAL | Deutsche Gesellschaft für ME/CFS is clinical only |
+| ZH | 慢性疲劳综合征 + 无障碍 | ⚠ PARTIAL | No OFS design provisions in GB 50763 |
+| JA | 慢性疲労症候群 + 生活環境 | ⚠ PARTIAL | 日本ME協会 is clinical only |
+| NL | ME/CVS + toegankelijkheid | ✓ CLEAN | Strongest non-EN base; ME/cvs Stichting; Dutch housing adaptation research |
+| ES | síndrome de fatiga crónica + accesibilidad | ⚠ PARTIAL | Clinical only |
+| PT | síndrome de fadiga crónica + acessibilidade | ⚠ PARTIAL | Clinical only |
+| KO | 만성피로증후군 + 접근성 | ⚠ PARTIAL | No provisions in Korean welfare standards |
+| IT | sindrome da fatica cronica + accessibilità | ⚠ PARTIAL | No provisions in DM 236/89 |
+
+### Best-practice synthesis
+**Most inclusive provision:** Seating at ≤50m intervals on all public circulation routes; a proportion of seating to offer semi-recumbent or adjustable back-angle options (0–30° recline); quiet, low-stimulation rest spaces accessible without purchase or payment obligation; queue management systems eliminating prolonged enforced standing.
+
+**Most targeted provision (Tier 2):** Semi-reclined seating with footrest provision at OT-assessed intervals along individual's habitual routes; low-VOC, fragrance-free environment in healthcare and retail settings; accessible changing or rest facilities with space for fully recumbent positioning.
+
+**Conflict resolution:** Where OFS (reclined preference) conflicts with PAIN (upright seating preference), provide both option types within the same rest zone.
+
+**Opus synthesis note:** The 50m seating interval (VisitEngland/BS 8300) is a MOB-derived provision. The pain-ofs-built-environment-design BPC tightens this to 25–30 m for OFS users based on orthostatic intolerance onset timing (Strassheim 2018; CDC 2024). The OFS-specific interval (25–30 m) should govern where OFS users are the design population; 50 m remains adequate for MOB-only contexts.
+
+**Highest-ambition actionable specification:** Minimum one accessible rest space per 50m of public circulation; rest space to include at least one seat with adjustable back support (0–30°); queue systems to permit seated waiting; chemical/scent-free zones in all healthcare settings. `[TIER 5 — no OFS-specific architectural standard in any jurisdiction; March 2026]`
+
+### Consensus findings
+| Finding | Languages with evidence | Tier |
+|---|---|---|
+| Seating provision every 50–100m in public routes is accepted best practice (UK: VisitEngland 50m; BS8300/DfT 100m) | EN (UK) | Tier 5–6 |
+| Post-exertional malaise from orthostatic stress requires built environment to minimise prolonged upright posture | EN (CDC, IOM/NAM 2015, Bateman Horne) | Co-1/Tier 3 |
+| Recumbent positioning relieves OFS/POTS symptoms; standard accessible seating alone is insufficient — reclined seating options needed | EN (CDC, Bateman Horne, POTS clinical guidance) | Tier 1/Co-1 |
+| OT pacing interventions have Tier 1 evidence for energy conservation in ME/CFS but are behavioural, not architectural | EN (Kos et al. 2015 AJOT RCT; PMC9397391 systematic review 2022) | Tier 1 |
+| Accessible seating specification: seat height 430–480mm, backrest, armrests, clear heel space | EN (AS1428.2 AU; BS8300 UK; ADA draft) | Tier 4–6 |
+| Cool ambient temperature ≤19–21°C (MS Uhthoff threshold; benefits POTS thermal intolerance) | EN (CDC ME/CFS; MS Trust; fatigue-spectrum BPC) | Co-1/Tier 3 |
+| Environmental photosensitivity and chemical sensitivity (MCAS co-occurrence) require low-VOC materials, controlled lighting, reduced scent | EN (CDC ME/CFS clinical guidance; MCAS patient organisations) | Co-1/Tier 2 |
+
+### Divergent findings
+| Topic | Lang A | Lang B | Cause |
+|---|---|---|---|
+| N/A — evidence base is EN-only | — | — | — |
+
+> **[LANGUAGE GAP]** All OFS built-environment evidence identified to date is EN-only. Non-EN research passes pending. Confidence reduced for cross-jurisdictional applicability until multilingual retrieval is completed.
+
+### NO-DATA / THIN
+| Language | Reason | Predicted by boundary warning? |
+|---|---|---|
+| DE, NO, DA, FI, ZH, JA, NL, KO, IT | OFS not a recognised policy or design category; no built environment standards exist | Yes |
+| SV, FR, ES, PT | Clinical literature only; no design provisions | Yes |
+
+### Citation mining
+| Source | Direction | New sources added |
+|---|---|---|
+| Kos 2015 AJOT | backward | 2 pacing RCTs added |
+| Wheels for Wellbeing UK seating 2025 | forward | 1 access association endorsement |
+
+### Key sources
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| OBE-01 | IOM/NAM | 2015 | Beyond ME/CFS: Redefining an Illness. NAP. DOI:10.17226/19012 | 3 | US | Core clinical framework |
+| OBE-02 | Bateman Horne Center | 2025 | ME/CFS Clinical Care: Criteria-Specific Guidance | Co-1 | US | https://batemanhornecenter.org/providers/mecfs/ |
+| OBE-03 | CDC | 2024 | ME/CFS Clinical Care for Severely Affected Patients | Co-1 | US | https://www.cdc.gov/me-cfs/ |
+| OBE-04 | Wheels for Wellbeing | 2025 | Benches and Seating in Public Spaces | 5 | UK | https://www.wheelsforwellbeing.org.uk |
+| OBE-05 | VisitEngland | n.d. | Make Your Business Accessible §5 — 50m seating interval | 5 | UK | https://www.visitbritain.org/business-advice/make-your-business-accessible |
+| OBE-06 | BSI / DfT | 2018 | BS 8300-1:2018 + Manual for Streets — 100m seating interval | 6 | UK | — |
+| OBE-07 | Kos, D. et al. | 2015 | Activity pacing self-management in ME/CFS: RCT. Am J Occup Ther | 1 | INT | [GREY — DOI required] |
+
+---
+### Bottom-up findings (functional deficit pass)
+FDR-OFS-01: Orthostatic intolerance onset 2-10 min (Raj 2013 Circulation Tier 1; Stewart 2012 Tier 2) — seated service at all counters must be immediately available, not on-request. G-06 specification gap. FDR-OFS-02: PEM delayed 12-72h (IOM/NAM 2015 Tier 1) — residential layout circuit bedroom-bathroom-kitchen-rest ≤25m one-way; bedroom-bathroom ≤5m; bedroom-kitchen ≤8m. Tier X architectural (no standard). FDR-OFS-03: MCAS co-occurrence (Afrin 2020 Tier 3) — commissioning specification: OFS spaces not to be occupied until post-installation VOC test confirms TVOC ≤0.5 mg/m³ (28-day clearance). F-04 addition. Items affected: G-06, Part 6 matrices, F-04.
+
+## Metadata
+
+```yaml
+slug: ofs-built-environment
+population: OFS
+last_updated: 2026-04-19
+co0006_migration: true
+```

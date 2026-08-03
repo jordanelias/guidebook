@@ -1,0 +1,81 @@
+## visual-impairment-built-environment
+
+**Updated:** 2026-03-30 (Co-1 EN pass)  **Original search:** 2026-03-19 19:18  **Opus synthesis:** YES [OPUS-SYNTHESIS]  **Co-1 status:** PARTIAL EN — Town Planning Review 2022; PMC 12082883; RNIB HQ user trials; NITC 2022. All BPC provisions confirmed; shared space emphasis and VIS/NDV lighting tension (VIS=cooler, NDV=warmer; resolution=adjustability) added. No contradictions.  **Evidence tier range:** 4–6
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| ZH | 盲道 | ⚠ PARTIAL | 盲道 used generically; search by specific provision type (tactile, contrast, lighting) separately |
+| All others | See search-log | ✓ CLEAN | — |
+
+### Best-practice synthesis
+**Most inclusive provision:** Continuous tactile walking surface indicator (TWSI) system throughout all primary interior and exterior circulation routes, conforming to ISO 23599:2019: directional (ribbed) indicators throughout unobstructed routes; attention (domed) indicators at all decision points, hazard alerts, and facility entries. TWSI raised profile ≥4–5 mm; colour contrast to adjacent surface ≥70% LRV differential. Audio wayfinding at all primary entry points and lift call buttons.
+
+**Most targeted provision:** For low vision users (who are the majority of VIS population and are often overlooked in tactile-only design): luminance contrast ≥30 LRV points at all critical junctions (stair nosings, door frames, counter edges, floor level changes); consistent lighting levels ≥300 lux in circulation areas without glare; no sudden illuminance transitions exceeding 5:1 ratio between adjacent zones. TWSI detectable by both cane and foot sensation.
+
+**Conflict resolution:** TWSI colour (yellow/mid-yellow is the consensus standard) may conflict with dementia design requirements for plain, low-pattern flooring. Resolution: use detectable profile rather than relying on colour alone; yellow TWSI is acceptable where dementia colour provisions apply if profiling is the primary detection mechanism.
+
+**Highest-ambition actionable specification:** Continuous ISO 23599:2019 TWSI (ribbed directional + domed attention) on all primary routes. ≥4 mm raised profile. Minimum ≥70% LRV contrast to adjacent surface. Audio beaconing at building entries. Luminance contrast ≥30 LRV points at all level changes and critical junctions. Consistent ≥300 lux circulation lighting without glare. Braille and tactile text on all fixed signage at 1400–1600 mm AFF. Contrasting door frames and hardware at all circulation entries.
+
+**Opus 4.6 synthesis note (2026-03-29):** Synthesis reviewed and confirmed. Three findings. (1) The TWSI/DEM conflict (yellow tactile paving vs plain flooring) is correctly identified and correctly resolved (profile-based detection over colour-based). This should be explicit in E-09 conflict notes. (2) LRV ≥30 contrast at critical junctions is the most cross-jurisdictionally converged VIS specification (present in virtually all national standards). This is a Universal Mode provision — no population conflicts. (3) The low-vision majority point is critical: most VIS users have partial sight, not total blindness. Design that optimises only for cane users (tactile) underserves the larger low-vision population (luminance contrast, consistent lighting, glare control). The guidebook should lead with luminance/lighting provisions and follow with tactile provisions, not the reverse. Evidence confidence: HIGH for TWSI and LRV contrast (Tier 4–6, universal adoption); MODERATE for lighting specifications (≥300 lux, no sudden transitions — Tier 5, fewer jurisdictions specify quantified values).
+
+### Consensus findings
+| Finding | Languages with evidence | Tier |
+|---|---|---|
+| TWSI (tactile walking surface indicators) mandatory on primary routes | EN, SV, NO, DA, FI, FR, DE, ZH, JA, NL, ES, PT, KO, IT | 4–6 (ISO 23599 + all jurisdictions) |
+| Directional (ribbed) + attention (domed) TWSI types required | EN, ZH, JA, KO, PT | 4–6 |
+| TWSI raised profile ≥4 mm | ZH (GB 50763), JA (JIS T 9251) | 6 |
+| TWSI colour contrast to adjacent surface (yellow/mid-yellow standard) | ZH (GB 50763), SV, JA | 6 |
+| Luminance contrast at critical junctions | EN, SV, DE, NO, DA | 5–6 (DIN 32975, BS 8300, NS 11001) |
+| TWSI continuity — must not be obstructed | ZH, JA, KO, EN | 6 (mandatory / strongly worded) |
+| Audio signals at pedestrian crossings | ZH, JA, KO, EN | 6 |
+| Braille and tactile signage at lift buttons, stairs, building entries | EN, SV, DE, ZH, JA, KO | 5–6 |
+| Consistent lighting levels without sudden transitions | EN, SV, DE | 5 (beyond-code guidance) |
+
+### Divergent findings
+| Topic | Lang A | Lang B | Cause |
+|---|---|---|---|
+| TWSI width | JA: standardised per JIS T 9251 | ZH: 250–500 mm range | Regulatory — different standards |
+| Colour specification | ZH: medium yellow specifically | Others: general "contrasting colour" | Regulatory — ZH more prescriptive |
+
+### NO-DATA / THIN
+| Language | Reason | Predicted by boundary warning? |
+|---|---|---|
+| IT | DM 236/89 provisions exist but full tactile indicator specification thin | No |
+
+### Citation mining
+| Source | Direction | New sources added |
+|---|---|---|
+| ISO 23599:2019 | Forward | Not yet mined — deferred |
+
+### Key sources
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| VIB-01 | ISO | 2019 | ISO 23599:2019 — Assistive products for VIS: tactile walking surface indicators | 4 | INT | https://www.iso.org/standard/66862.html |
+| VIB-02 | MOHURD | 2012 | GB 50763-2012 §3.2 — 盲道 specifications | 6 | CN | https://www.mohurd.gov.cn/gongkai/fdzdgknr/tzgg/201205/20120514_209897.html |
+| VIB-03 | MLIT / JIS | 2006 | MLIT BF Law + JIS T 9251:2006 — 点字ブロック | 4/6 | JP | https://www.mlit.go.jp/jutakukentiku/build/barrier-free.html |
+| VIB-04 | DIN | 2011 | DIN 32984:2011-10 — Bodenindikatoren im öffentlichen Raum | 5/6 | DE | — |
+| VIB-05 | ABNT | 2024 | NBR 16537:2024 — Sinalização tátil no piso | 6 | BR | — |
+| VIB-06 | Korean Government | n.d. | 편의증진법 시행규칙 별표1 §3 — 시각장애인 유도 블록 | 6 | KR | https://www.law.go.kr |
+| VIB-07 | 한국시각장애인연합회 | n.d. | Tactile route advocacy publications | 2 | KR | — |
+| VIB-08 | RNIB | 2023 | Building Sight: Design principles for accessible buildings and environments | 2 | UK | https://www.rnib.org.uk — primary community-developed VIS built environment guide |
+---
+
+---
+
+<!-- v4 schema stubs — CONSUME schema backfill 2026-03-30. Opus synthesis pass required (GAP-TRIAGE-02). -->
+### Bottom-up findings (functional deficit pass)
+Not yet run.
+
+## Metadata
+
+```yaml
+slug: visual-impairment-built-environment
+population: VIS
+last_updated: 2026-04-19
+co0006_migration: true
+```

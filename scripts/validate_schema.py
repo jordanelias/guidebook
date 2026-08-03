@@ -1,0 +1,306 @@
+#!/usr/bin/env python3
+"""
+scripts/validate_schema.py — Validate entity YAML files against Pydantic schemas.
+
+Walks data/ directories and validates each YAML file against the appropriate
+schema model. Used by CI (schema job) and session start (--quick mode).
+
+Usage:
+    python3 scripts/validate_schema.py                  # validate all
+    python3 scripts/validate_schema.py --quick           # quick health check (sample 5)
+    python3 scripts/validate_schema.py --dir data/specifications
+    python3 scripts/validate_schema.py data/specifications/spec-0001.yaml
+
+Exit codes:
+    0 = all valid
+    1 = validation failures found
+    2 = configuration error
+"""
+
+import argparse
+import glob
+import os
+import random
+import sqlite3
+import sys
+
+import yaml
+
+# Allow importing schemas from repo root
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from schemas.jurisdictional_value import JurisdictionalValueFile
+
+
+# Registry: maps data/ subdirectory to its Pydantic model.
+#
+# CORRECTED 2026-08-01. This registry previously named six subdirectories —
+# specifications, sources, bpc-metadata, connections, slugs, gaps — and NOT ONE OF
+# THEM EXISTS under data/. find_entity_files() therefore returned [], main()
+# short-circuited on "No entity files found to validate.", and the check exited 0.
+# It is registered BLOCKING. So the entity-schema gate has reported green, for its
+# whole life, while examining nothing: the most expensive kind of defect, because
+# it is counted as coverage.
+#
+# data/ actually contains: adversarial_use/, decisions/, doctrine_recheck/,
+# jurisdictional_values/. Three of those already have validators —
+# audit_adversarial_use.py, decision_capture.py and doctrine_recheck.py — so
+# duplicating them here would add a second opinion, not coverage. jurisdictional_values
+# is the one corpus with a real DB counterpart and no validator at all, which is
+# why it is the one wired up.
+ENTITY_REGISTRY = {
+    "jurisdictional_values": JurisdictionalValueFile,
+}
+
+
+
+def validate_file(path: str, model_class) -> list:
+    """Validate a single YAML file against its model.
+
+    Returns list of error dicts. Empty list = valid.
+    """
+    errors = []
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = yaml.safe_load(f)
+    except yaml.YAMLError as e:
+        return [{"file": path, "error": f"YAML parse error: {e}"}]
+    except Exception as e:
+        return [{"file": path, "error": f"File read error: {e}"}]
+
+    if data is None:
+        return [{"file": path, "error": "Empty file"}]
+
+    try:
+        model_class.model_validate(data)
+    except Exception as e:
+        errors.append({"file": path, "error": str(e)})
+
+    return errors
+
+
+def find_entity_files(base_dir: str = "data") -> list:
+    """Find all YAML entity files and their model classes.
+
+    Returns list of (path, model_class) tuples.
+    """
+    results = []
+    if not os.path.isdir(base_dir):
+        return results
+
+    for subdir, model_class in ENTITY_REGISTRY.items():
+        entity_dir = os.path.join(base_dir, subdir)
+        if not os.path.isdir(entity_dir):
+            continue
+        for path in sorted(glob.glob(os.path.join(entity_dir, "*.yaml"))):
+            results.append((path, model_class))
+        for path in sorted(glob.glob(os.path.join(entity_dir, "*.yml"))):
+            results.append((path, model_class))
+
+    return results
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Validate guidebook entity YAML against Pydantic schemas"
+    )
+    parser.add_argument(
+        "files",
+        nargs="*",
+        help="Specific files to validate (if omitted, validates all in data/)",
+    )
+    parser.add_argument(
+        "--dir",
+        help="Validate all files in a specific data/ subdirectory",
+    )
+    parser.add_argument(
+        "--quick",
+        action="store_true",
+        help="Quick mode: validate a random sample of 5 files per entity type",
+    )
+    parser.add_argument(
+        "--verbose",
+        action="store_true",
+        help="Print each file as it's validated",
+    )
+    parser.add_argument(
+        "--cross-check",
+        action="store_true",
+        help="Run cross-entity referential integrity checks after validation",
+    )
+    args = parser.parse_args()
+
+    # Determine files to validate
+    if args.files:
+        # Specific files — infer model from path
+        file_list = []
+        for f in args.files:
+            matched = False
+            for subdir, model_class in ENTITY_REGISTRY.items():
+                if subdir in f:
+                    file_list.append((f, model_class))
+                    matched = True
+                    break
+            if not matched:
+                # Was `file_list.append((f, Specification))` — a fallback to a model
+                # that is no longer imported, so this branch would have raised
+                # NameError. An unrecognised path is a caller error; say so.
+                print(f"ERROR: cannot determine entity type for {f}. "
+                      f"Known types: {list(ENTITY_REGISTRY)}", file=sys.stderr)
+                return 2
+    elif args.dir:
+        # Specific directory
+        entity_dir = args.dir
+        subdir_name = os.path.basename(entity_dir)
+        model_class = ENTITY_REGISTRY.get(subdir_name)
+        if not model_class:
+            print(f"ERROR: Unknown entity type '{subdir_name}'", file=sys.stderr)
+            print(f"Known types: {list(ENTITY_REGISTRY.keys())}", file=sys.stderr)
+            return 2
+        file_list = [
+            (p, model_class)
+            for p in sorted(glob.glob(os.path.join(entity_dir, "*.yaml")))
+        ]
+    else:
+        file_list = find_entity_files()
+
+    if not file_list:
+        # Exit 2, not 0. Finding nothing to validate is a configuration fault —
+        # this script returned 0 here for its whole life while ENTITY_REGISTRY
+        # named six directories that do not exist, so a BLOCKING gate reported
+        # green having examined nothing. The runner's vacuity guard (min_items in
+        # check-registry.yaml) catches this independently; the non-zero exit means
+        # a direct invocation says so too.
+        print("EXAMINED: 0 entity file(s)")
+        print("No entity files found to validate — ENTITY_REGISTRY names no "
+              "directory that exists under data/. This is a configuration fault, "
+              "not a pass.")
+        return 2
+
+    # Quick mode: sample
+    if args.quick and len(file_list) > 5:
+        file_list = random.sample(file_list, min(5, len(file_list)))
+        print(f"Quick mode: validating {len(file_list)} sampled files")
+
+    # Validate
+    total = 0
+    failed = 0
+    all_errors = []
+
+    for path, model_class in file_list:
+        total += 1
+        if args.verbose:
+            print(f"  Validating: {path}")
+        errors = validate_file(path, model_class)
+        if errors:
+            failed += 1
+            all_errors.extend(errors)
+
+    # Report
+    print(f"\nEXAMINED: {total} entity file(s)")
+    print(f"Schema validation: {total} files checked, "
+          f"{total - failed} passed, {failed} failed")
+
+    if all_errors:
+        print("\nErrors:")
+        for e in all_errors:
+            print(f"  {e['file']}: {e['error'][:200]}")
+        return 1
+
+    # Cross-entity referential integrity
+    if args.cross_check:
+        cross_errors = run_cross_checks("data")
+        if cross_errors:
+            print(f"\nCross-entity integrity: {len(cross_errors)} issues")
+            for ce in cross_errors[:20]:
+                print(f"  {ce}")
+            if len(cross_errors) > 20:
+                print(f"  ... and {len(cross_errors) - 20} more")
+            return 1
+        else:
+            print("Cross-entity integrity: all checks passed")
+
+    return 0
+
+
+def run_cross_checks(base_dir: str = "data") -> list:
+    """Reconcile the entity YAML corpus against its DB counterpart.
+
+    REWRITTEN 2026-08-01. This function previously loaded index sets from
+    data/slugs, data/sources, data/connections, data/bpc-metadata and
+    data/specifications and cross-referenced them. None of those directories has
+    ever existed, so every index was empty, every loop body was unreachable, and
+    the function reported "Cross-entity integrity: all checks passed" having
+    compared nothing.
+
+    data/jurisdictional_values/ is the one entity corpus with a real DB table
+    behind it (`jurisdictional_values`), and the 2026-08-01 boundary map recorded
+    that pairing as UNCHECKED in both directions. This reconciles them on the
+    (item_code, jurisdiction, standard_name) identity: a record present in one
+    store and absent from the other is drift, regardless of which side is
+    canonical — that question is open (see check-registry.yaml on whether
+    schemas/*.py mirrors SQLite or the YAML layer) and this check deliberately
+    does not presume an answer. It reports the disagreement and lets the owner
+    decide the direction.
+    """
+    errors = []
+    yaml_dir = os.path.join(base_dir, "jurisdictional_values")
+    if not os.path.isdir(yaml_dir):
+        return [f"{yaml_dir} not found — cross-check cannot run"]
+
+    db_path = os.environ.get("GUIDEBOOK_DB_PATH",
+                             os.path.join(base_dir, "guidebook.db"))
+    if not os.path.exists(db_path):
+        return [f"DB not found at {db_path} — cross-check cannot run"]
+
+    def key(item_code, jurisdiction, standard_name):
+        return (str(item_code or "").strip(),
+                str(jurisdiction or "").strip(),
+                str(standard_name or "").strip())
+
+    yaml_keys = set()
+    for path in sorted(glob.glob(os.path.join(yaml_dir, "*.yaml"))):
+        with open(path, encoding="utf-8") as fh:
+            doc = yaml.safe_load(fh) or {}
+        for rec in doc.get("records", []) or []:
+            yaml_keys.add(key(rec.get("item_code"), rec.get("jurisdiction"),
+                              rec.get("standard_name")))
+
+    con = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+    try:
+        db_keys = {key(*row) for row in con.execute(
+            "SELECT item_code, jurisdiction, standard_name FROM jurisdictional_values")}
+    finally:
+        con.close()
+
+    only_yaml = sorted(yaml_keys - db_keys)
+    only_db = sorted(db_keys - yaml_keys)
+    for k in only_yaml[:20]:
+        errors.append(f"jurisdictional_values: in YAML, absent from DB: {k}")
+    if len(only_yaml) > 20:
+        errors.append(f"  ... and {len(only_yaml) - 20} more YAML-only records")
+    for k in only_db[:20]:
+        errors.append(f"jurisdictional_values: in DB, absent from YAML: {k}")
+    if len(only_db) > 20:
+        errors.append(f"  ... and {len(only_db) - 20} more DB-only records")
+
+    print(f"CROSS-CHECK: {len(yaml_keys)} YAML record(s) vs {len(db_keys)} DB row(s)")
+    return errors
+
+
+def _load_field_set(base_dir: str, subdir: str, field: str) -> set:
+    """Load a set of values for a specific field from all YAML in a subdir."""
+    result = set()
+    entity_dir = os.path.join(base_dir, subdir)
+    if not os.path.isdir(entity_dir):
+        return result
+    for f in glob.glob(os.path.join(entity_dir, "*.yaml")):
+        with open(f) as fh:
+            d = yaml.safe_load(fh)
+        if d and field in d:
+            result.add(d[field])
+    return result
+
+
+if __name__ == "__main__":
+    sys.exit(main())

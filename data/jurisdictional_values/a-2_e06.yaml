@@ -1,0 +1,93 @@
+section: A.2
+title: Threshold Heights
+item_code: E-06
+spec_id: null
+records:
+- spec_id: null
+  item_code: E-06
+  jurisdiction: AU
+  standard_name: AS 1428.1:2021
+  value_text: 'Max Threshold: ≤5mm; Notes: Strictest globally'
+  value_numeric: 5.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.2
+  notes: null
+- spec_id: null
+  item_code: E-06
+  jurisdiction: DE
+  standard_name: E DIN 18040-2:2023
+  value_text: 'Max Threshold: ≤10mm; Notes: Pending publication'
+  value_numeric: 10.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.2
+  notes: Draft standard — pending publication
+- spec_id: null
+  item_code: E-06
+  jurisdiction: US
+  standard_name: ADA 2010 §404.2.5
+  value_text: 'Max Threshold: ≤13mm; Notes: Beveled if >6mm'
+  value_numeric: 13.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.2
+  notes: null
+- spec_id: null
+  item_code: E-06
+  jurisdiction: DE
+  standard_name: DIN 18040-2:2011
+  value_text: 'Max Threshold: ≤20mm; Notes: Revision pending'
+  value_numeric: 20.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.2
+  notes: Current standard — revision pending
+- spec_id: null
+  item_code: E-06
+  jurisdiction: FR
+  standard_name: Arrêté 2014
+  value_text: ≤20mm
+  value_numeric: 20.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.2
+  notes: null
+- spec_id: null
+  item_code: E-06
+  jurisdiction: GB
+  standard_name: AD M
+  value_text: 'Max Threshold: Level preferred; Notes: M4(2) level threshold'
+  value_numeric: null
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.2
+  notes: null
+- spec_id: null
+  item_code: E-06
+  jurisdiction: 'NO'
+  standard_name: TEK17 §12-4
+  value_text: 'Max Threshold: Step-free; Notes: Mandatory for dwellings'
+  value_numeric: null
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.2
+  notes: null
+- spec_id: null
+  item_code: E-06
+  jurisdiction: ISO
+  standard_name: ISO 21542:2021
+  value_text: Level preferred
+  value_numeric: null
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.2
+  notes: null

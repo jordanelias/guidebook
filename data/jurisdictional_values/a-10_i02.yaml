@@ -1,0 +1,49 @@
+section: A.10
+title: Kitchen Worktop
+item_code: I-02
+spec_id: SPEC-0050
+records:
+- spec_id: SPEC-0050
+  item_code: I-02
+  jurisdiction: US
+  standard_name: ADA §804
+  value_text: 'Height: 710-865mm; Adjustable: No; Notes: Controls front-mounted'
+  value_numeric: 865.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.10
+  notes: null
+- spec_id: SPEC-0050
+  item_code: I-02
+  jurisdiction: GB
+  standard_name: BS 8300 / M4(3)
+  value_text: 'Height: 850mm; Adjustable: Recommended; Notes: Wheelchair-user dwellings'
+  value_numeric: 850.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.10
+  notes: null
+- spec_id: SPEC-0050
+  item_code: I-02
+  jurisdiction: DE
+  standard_name: DIN 18040-2 §5.7
+  value_text: 'Height: 820-870mm; Adjustable: YES — mandatory; Notes: Height-adjustable worktop'
+  value_numeric: 870.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.10
+  notes: null
+- spec_id: SPEC-0050
+  item_code: I-02
+  jurisdiction: AU
+  standard_name: AS 1428.1
+  value_text: 'Height: Referenced; Adjustable: No'
+  value_numeric: null
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.10
+  notes: null

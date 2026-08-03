@@ -1,0 +1,44 @@
+## bariatric-turning-radius-built-environment
+
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-18 22:00  **Evidence tier:** 3–5 (empirical + standards)  **Opus synthesis:** YES [OPUS-SYNTHESIS]
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
+> **RE-DERIVATION FIRST PASS — 2026-07-20** (`session_2026-07-20-retracted-slice-rederivation-batch`, WS2). The
+> synthesis below stays retracted (Opus rewrite still BLOCKED). Live evidence base re-derived: `source_slug_links`
+> 0 → 8, `evidence_state` RETRACTED-PRE-REHAB → **PARTIAL**. Anchors re-linked from verified corpus rows —
+> Ringaert 2001 UDI (REF-00073, 1925 mm 180° turn), Anthropometry of Wheeled Mobility (REF-00060), VA BFDS
+> (REF-00061, 1830 mm), CSA B651:23 (REF-00005, 2100 mm), IWA (REF-00376, 1800 mm), UK NHS bariatric HBN/BS 8300
+> (REF-00193) — plus one net-new verified source, Stroupe & Sarbaugh 2008 HFM (REF-00882, 72-in/1830 mm bariatric
+> turning). REF-00737 (Steinfeld 2006) linked with an explicit UNVERIFIED-1 disclosure. Audit: F → **D** (Anglophone-
+> concentrated, honestly — no non-English bariatric turning standard exists). DB is source of truth.
+
+**Consensus finding:** Standard accessible turning circles (1500–1525 mm) are insufficient for bariatric wheelchairs; ≥1900 mm clear diameter is the evidence-informed recommendation for bariatric-specific turning space in new build. 1800 mm is the minimum where 1900 mm is unachievable.
+**Key evidence:**
+  - Empirical: Steinfeld et al. (2006, RESNA) — 1925 mm required to accommodate full UDI sample for 180° turn (peer-reviewed; most directly relevant)
+  - VA Barrier Free Design Standard (2025): 6'-0" (1830 mm) for bariatric patient care areas (federal standard)
+  - Bariatric wheelchair dimensions: seat width 34–48 in. (864–1220 mm); overall width up to 1220 mm — confirming larger than standard 710 mm wheelchair
+**Ranges:**
+  - Recommended new build: ≥1900 mm clear diameter
+  - Minimum where 1900 mm unachievable: 1800 mm
+  - Standard accessible (non-bariatric): 1525 mm (ADA) / 2100 mm (CSA B651:23 for general powered chairs)
+**Jurisdictions confirmed:** US (VA BFDS 2025; ADA general) · Ireland (IWA: 1800 mm general accessible — not bariatric-specific)
+**Early-close:** No  **Thin/No-data:** All non-English jurisdictions — no bariatric-specific turning space standard found in any language
+**Key sources:** Steinfeld2006-RESNA · VA-BFDS-2025 · Stroupe-Sarbaugh-2008-ASPHP · IWA-TurningCircle
+**Divergent findings:** Steinfeld 1925 mm empirical vs. VA 1830 mm federal standard — guidebook should cite 1900 mm as the rounded, evidence-informed figure
+**Notes:** BAR cross-reference code only — not a main taxonomy code; not in Volume 2. Item belongs in Supplementary Volume §IV. Current BAR-03 specification (1800 mm) is supported by VA and IWA standards; upgrade to 1900 mm recommended for new build. Stroupe & Sarbaugh "radius" likely means diameter — verify terminology before citing.
+
+## Key sources
+
+[STUB — this BPC file is a deferred non-standard file. Full research pass pending (Block 5 decision required). See gap register for status.]
+
+## Metadata
+
+```yaml
+slug: bariatric-turning-radius-built-environment
+population: MOB
+last_updated: 2026-04-19
+status: DEFERRED-NON-STANDARD
+note: Non-standard BPC file. Full content deferred pending project decision.
+```

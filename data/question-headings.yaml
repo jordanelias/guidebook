@@ -1,0 +1,289 @@
+# Question Headings — Part 4 Items
+# B2.7 deliverable — authored 2026-05-03
+# Each question must: (1) be answerable yes/no from building inspection,
+# (2) reference the lived experience the spec addresses,
+# (3) follow voice-style §8.1 guidance.
+
+# Category A — Acoustics
+A-01:
+  title: "Acoustic Buffer Zones at Noisy Adjacencies"
+  question_heading: "Is there enough space between noisy and quiet areas to prevent sound from disrupting someone who needs silence to function?"
+A-02:
+  title: "Acoustic Ceiling Panels (NRC ≥0.85)"
+  question_heading: "Do the ceilings absorb enough sound for someone with a hearing aid or cochlear implant to understand speech?"
+A-03:
+  title: "Acoustic Door (STC ≥35)"
+  question_heading: "Can the doors block enough sound for someone with sensory sensitivity to feel safe in the next room?"
+A-04:
+  title: "Acoustic Zoning"
+  question_heading: "Does the building get progressively quieter as you move from the entrance toward occupied spaces?"
+A-05:
+  title: "Carpet in Corridors"
+  question_heading: "Is the floor soft enough to absorb footfall noise without creating a navigation barrier for someone using a white cane?"
+A-06:
+  title: "Fabric Wall Panels (NRC ≥0.70)"
+  question_heading: "Do the walls absorb reflected sound at the points where echoes would interfere with hearing?"
+A-07:
+  title: "Flutter Echo Elimination"
+  question_heading: "Can someone with a hearing device hold a conversation in this space without competing with echoes?"
+A-08:
+  title: "HVAC Noise Control (NC-25)"
+  question_heading: "Is the mechanical system quiet enough for someone with hearing loss to follow speech without straining?"
+A-09:
+  title: "HVAC Vibration Isolation"
+  question_heading: "Can someone with chronic pain or sensory sensitivity occupy a space near the plant room without feeling vibration?"
+A-10:
+  title: "Counter Hearing Loop"
+  question_heading: "Can someone wearing a hearing aid receive speech directly through their device at every counter?"
+A-10b:
+  title: "RT60 for Hydrotherapy and Pool Environments"
+  question_heading: "Can someone with hearing loss follow instructions in the pool area without the room swallowing every word?"
+A-11:
+  title: "Room Perimeter Hearing Loop"
+  question_heading: "Can someone with a telecoil hear clearly from any seat in the room?"
+A-12:
+  title: "Auracast Infrastructure Readiness"
+  question_heading: "Is the building ready to broadcast audio directly to future hearing devices over Bluetooth?"
+A-13:
+  title: "No Sound Masking in Neurological Environments"
+  question_heading: "Is the building free of artificial background noise that could overwhelm someone with neurological sensitivity?"
+A-14:
+  title: "Double-Leaf Partition (STC ≥50)"
+  question_heading: "Can someone in a therapy room or bedroom have a private conversation without being heard next door?"
+A-15:
+  title: "Acoustic Differentiation Between Spaces"
+  question_heading: "Can someone who is blind tell they have moved into a different room by the way it sounds?"
+A-16:
+  title: "Sensory Room / Quiet Room"
+  question_heading: "Is there a room where someone overwhelmed by sensory input can go to recover?"
+
+# Category B — Lighting
+B-01:
+  title: "Circadian Lighting (≥250 Melanopic EDI)"
+  question_heading: "Does the daytime lighting support the biological clock of someone whose circadian rhythm is disrupted by their condition?"
+B-02:
+  title: "Diffuse Lighting for Lip Reading"
+  question_heading: "Can someone who reads lips see the speaker's face without shadows?"
+B-03:
+  title: "Elimination of Fluorescent Lighting"
+  question_heading: "Is the lighting free of the flicker that triggers pain, seizures, or distress in neurologically sensitive people?"
+B-05:
+  title: "Gradual Lighting Transition Zones"
+  question_heading: "Does the lighting change gradually enough for someone whose eyes adapt slowly to avoid temporary blindness?"
+B-06:
+  title: "Individual Dimming Control"
+  question_heading: "Can someone who needs less light reduce it at their own workstation without affecting others?"
+B-07:
+  title: "Indirect and Cove Lighting"
+  question_heading: "Is the light source hidden from direct view so it cannot cause glare pain for someone with photosensitivity?"
+B-08:
+  title: "Matte Floor Finishes (≤30 Gloss Units)"
+  question_heading: "Is the floor free of reflective glare that could cause a visually impaired person to misjudge distances?"
+B-09:
+  title: "Maximisation of Natural Light"
+  question_heading: "Does the building bring enough daylight in for someone whose wellbeing depends on natural light exposure?"
+B-10:
+  title: "Visual and Vibrotactile Fire Alarm"
+  question_heading: "Will someone who cannot hear a fire alarm still know immediately that they need to evacuate?"
+B-11:
+  title: "Warm Colour Temperature for Evening"
+  question_heading: "Does the evening lighting shift warm enough to avoid disrupting sleep for someone with a neurological condition?"
+B-12:
+  title: "Sensor-Activated Overnight Pathway Lighting"
+  question_heading: "Can someone who needs the bathroom at night find their way without fully waking or risking a fall?"
+
+# Category C — Colour and Contrast
+C-01:
+  title: "Colour Palette (Muted, Low-Chroma)"
+  question_heading: "Is the colour scheme calm enough for someone with sensory sensitivity to occupy the space without distress?"
+C-02:
+  title: "Colour-Coded Wayfinding Zones"
+  question_heading: "Can someone with dementia tell which part of the building they are in by the colour of the walls?"
+C-03:
+  title: "Pattern Avoidance (Plain Flooring)"
+  question_heading: "Is the floor free of patterns that someone with dementia might perceive as obstacles or holes?"
+C-04:
+  title: "LRV Contrast (≥30 minimum)"
+  question_heading: "Can someone with low vision distinguish the edge of every step, door frame, and counter from its surroundings?"
+C-05:
+  title: "Low LRV Differential at Floor Materials"
+  question_heading: "Are floor material changes subtle enough that someone with dementia will not stop walking, believing there is a step?"
+
+# Category D — Wayfinding and Cognition
+D-01:
+  title: "Loop Floor Plan"
+  question_heading: "Can someone with dementia walk without encountering a dead end that causes confusion or distress?"
+D-02:
+  title: "Cognitive Simplicity"
+  question_heading: "Can someone with a brain injury find their destination by following one obvious route from the entrance?"
+D-03:
+  title: "Toilet Visibility"
+  question_heading: "Can someone with dementia see or find the toilet from wherever they are sitting?"
+D-04:
+  title: "Landmarks at Every Decision Point"
+  question_heading: "Is there something distinctive at every turn or junction that helps someone with memory loss know where they are?"
+D-05:
+  title: "Enclosed Low-Stimulation Spaces"
+  question_heading: "Is there somewhere enclosed and quiet for someone who needs to withdraw from stimulation to regain composure?"
+D-06:
+  title: "Memory Boxes at Room Entrances"
+  question_heading: "Can someone with dementia recognise their own room by personal objects displayed at the door?"
+D-07:
+  title: "No Blind Corners"
+  question_heading: "Can someone with PTSD or anxiety see what is around every corner before they reach it?"
+D-08:
+  title: "Pictogram + Single-Word Signage"
+  question_heading: "Can someone who cannot read text understand every sign in the building?"
+D-09:
+  title: "Consistent Furniture Layout"
+  question_heading: "Will someone who is blind or has dementia find the furniture where they expect it every time?"
+D-10:
+  title: "Transparent Glazed Panels"
+  question_heading: "Can someone see into a room before entering, so they know whether it is occupied or safe?"
+D-11:
+  title: "Safe Accessible Garden"
+  question_heading: "Can someone with dementia walk outside safely without getting lost, and rest every 20 metres?"
+
+# Category E — Circulation and Access
+E-01:
+  title: "Accessible Lift"
+  question_heading: "Can someone in a power wheelchair reach every floor independently?"
+E-02:
+  title: "Platform Lift"
+  question_heading: "Where a full lift is not possible, can a wheelchair user still get between levels without assistance?"
+E-03:
+  title: "Ramp Gradient (≤1:20)"
+  question_heading: "Can someone with MS-related fatigue use this ramp without it exhausting them before they reach the top?"
+E-04:
+  title: "Accessible Parking"
+  question_heading: "Can someone transfer from their vehicle to their wheelchair under cover, at the closest point to the entrance?"
+E-05:
+  title: "Weather Protection at Entry"
+  question_heading: "Can someone who transfers slowly between wheelchair and vehicle do so without getting wet?"
+E-06:
+  title: "Level Entry (Zero Step)"
+  question_heading: "Can a wheelchair user enter the building without encountering any step at any entrance?"
+E-07:
+  title: "Slip Resistance (PTV ≥36 Wet)"
+  question_heading: "Can someone with balance impairment walk on this floor when wet without risk of falling?"
+E-08:
+  title: "Corridor Clear Width (≥1200 mm)"
+  question_heading: "Can two power wheelchairs pass each other?"
+E-09:
+  title: "Tactile Walking Surface Indicators"
+  question_heading: "Can someone who is blind detect the edge of a platform, a crossing, or a direction change through their feet or cane?"
+E-10:
+  title: "Rest Seating (≤20m Interval)"
+  question_heading: "Can someone with chronic fatigue always see the next place to sit down?"
+E-11:
+  title: "Automatic Sliding Doors"
+  question_heading: "Can someone with no grip strength enter without touching a door?"
+E-12:
+  title: "Entrance Landing and Manoeuvring Space"
+  question_heading: "Is there enough flat space at the entrance for a power wheelchair to stop, turn, and approach the door?"
+E-13:
+  title: "Entrance Cognitive Legibility"
+  question_heading: "Can someone with a brain injury tell which opening is the entrance and how to use it?"
+E-15:
+  title: "Changing Places Facility"
+  question_heading: "Is there a room where an adult who cannot stand can be changed by a carer using a ceiling hoist?"
+
+# Category F — Sensory Environment
+F-01:
+  title: "Sensory Gradient"
+  question_heading: "Does the building get calmer as you move deeper in, so someone with sensory overload can find relief without leaving?"
+F-02:
+  title: "Olfactory Control"
+  question_heading: "Is the building free of fragrances that could trigger a mast cell reaction, migraine, or sensory distress?"
+F-03:
+  title: "Graduated Stimulation Re-entry"
+  question_heading: "Can someone leaving a quiet room re-enter the general space without being hit by a sudden wall of stimulation?"
+F-04:
+  title: "Air Quality (MERV 13+)"
+  question_heading: "Is the air clean enough for someone with chemical sensitivity or respiratory fragility to breathe comfortably?"
+F-05:
+  title: "Seated-Task Design [MOVED TO G-08]"
+  question_heading: null  # Merged — see G-08
+F-06:
+  title: "Fragrance-Free Policy"
+  question_heading: "Is there a building-wide policy preventing fragranced products that could make the space uninhabitable for someone with MCAS?"
+F-07:
+  title: "Thermal Zoning"
+  question_heading: "Can the building maintain different temperatures in different zones for people whose neurological conditions are affected by heat or cold?"
+F-08:
+  title: "Thermal Transition"
+  question_heading: "Does the heating and cooling system respond fast enough that someone with thermoregulatory impairment is never left in danger?"
+
+# Category G — Furniture, Fixtures and Spatial Layout
+G-01:
+  title: "Defensible Seating"
+  question_heading: "Can someone with PTSD sit with their back to a wall and a clear view of the exit?"
+G-02:
+  title: "Variety of Seating Types"
+  question_heading: "Can someone find a seat at the right height for their body, with arms to push up from, wherever seating is provided?"
+G-03:
+  title: "Grab Bars in Accessible Bathrooms"
+  question_heading: "Are there grab bars positioned where someone actually needs them during the specific type of transfer they perform?"
+G-04:
+  title: "Accessible Bathroom (Wet Room)"
+  question_heading: "Can someone who uses a shower wheelchair roll from the bedroom into the shower without encountering a lip, ledge, or change of level?"
+G-05:
+  title: "Adjustable-Height Work Surfaces"
+  question_heading: "Can someone in a wheelchair and someone standing both use the same work surface at a height that works for their body?"
+G-06:
+  title: "Reception Counter (Accessible Height)"
+  question_heading: "Can someone in a wheelchair conduct their business at the counter without looking up at the receptionist?"
+G-07:
+  title: "Waiting Area Seating"
+  question_heading: "Can someone with chronic pain sit in the waiting area in a chair that supports them, adjacent to the service point?"
+G-08:
+  title: "Bedroom Wardrobe and Storage Reach"
+  question_heading: "Can someone who cannot raise their arms above their shoulders reach everything in their own wardrobe?"
+G-09:
+  title: "Bedroom Emergency Call and Overnight Lighting"
+  question_heading: "Can someone who has fallen in their bedroom at night summon help and see the floor?"
+
+# Category H — Controls and Technology
+H-01:
+  title: "All Controls at Accessible Height (400–1100 mm)"
+  question_heading: "Can someone in a wheelchair reach and operate every switch, outlet, and control in the building with one hand?"
+H-02:
+  title: "Individual Environmental Control"
+  question_heading: "Can someone adjust the temperature, lighting, or ventilation in their own space without asking for help?"
+H-03:
+  title: "Visual Paging and Real-Time Captioning"
+  question_heading: "Can someone who is deaf follow a live announcement or presentation without an interpreter?"
+H-04:
+  title: "Accessible Intercom and Video Door Entry"
+  question_heading: "Can someone who is deaf or blind identify and communicate with a visitor at the door?"
+H-05:
+  title: "Nurse Call and Personal Emergency Response"
+  question_heading: "Can someone who has fallen or is in distress summon help from wherever they are in the building?"
+
+# Category I — Hardware and Fixtures
+I-01:
+  title: "Hardware (Lever, D-Pull, ≤20 N)"
+  question_heading: "Can someone with no grip strength open every door and operate every handle in the building?"
+I-02:
+  title: "Kitchen (One-Handed Operation)"
+  question_heading: "Can someone using only one hand prepare food independently in this kitchen?"
+I-03:
+  title: "Bathroom (Anti-Scald, Bilateral Grab Bars)"
+  question_heading: "Can someone who cannot feel temperature be safe from scalding in this bathroom?"
+I-04:
+  title: "Ceiling Hoist Provision"
+  question_heading: "Is there structural provision for a ceiling hoist so someone who cannot transfer independently can be lifted safely?"
+
+# Category K — DeafBlind Provisions
+K-01:
+  title: "Intervenor Adjacency at Service Counters"
+  question_heading: "Is there enough space beside the counter for a DeafBlind person's intervenor to stand and relay information?"
+K-02:
+  title: "Tactile Building Map Station"
+  question_heading: "Can someone who is DeafBlind understand the layout of the building by touch at the entrance?"
+K-03:
+  title: "Haptic Communication Clear Floor Zone"
+  question_heading: "Is there a flat, obstruction-free area where a DeafBlind person and their intervenor can communicate using touch?"
+K-04:
+  title: "Vibrotactile Alert Provision"
+  question_heading: "Will someone who cannot see or hear an alarm still know through vibration that something requires their attention?"

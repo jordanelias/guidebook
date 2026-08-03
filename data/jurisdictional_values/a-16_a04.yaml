@@ -1,0 +1,61 @@
+section: A.16
+title: Classroom Acoustic Standards
+item_code: A-04
+spec_id: null
+records:
+- spec_id: null
+  item_code: A-04
+  jurisdiction: US
+  standard_name: ANSI/ASA S12.60-2010
+  value_text: 'RT (general): ≤0.6s (<283m³); RT (hearing-impaired): ≤0.3s; Background Noise: ≤35 dBA; Mandatory: Via IBC/A117.1'
+  value_numeric: 0.6
+  unit: s
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.16
+  notes: null
+- spec_id: null
+  item_code: A-04
+  jurisdiction: GB
+  standard_name: BB93
+  value_text: 'RT (general): By room type; RT (hearing-impaired): Lower targets; Background Noise: By room type; Mandatory:
+    Yes (England)'
+  value_numeric: null
+  unit: s
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.16
+  notes: null
+- spec_id: null
+  item_code: A-04
+  jurisdiction: DE
+  standard_name: DIN 18041:2016
+  value_text: 'RT (general): By room type/use; Background Noise: By classification; Mandatory: Via Landesbauordnung'
+  value_numeric: null
+  unit: s
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.16
+  notes: null
+- spec_id: null
+  item_code: A-04
+  jurisdiction: 'NO'
+  standard_name: NS 8175:2019
+  value_text: 'RT (general): Acoustic classification; Background Noise: By class (A–D)'
+  value_numeric: null
+  unit: s
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.16
+  notes: null
+- spec_id: null
+  item_code: A-04
+  jurisdiction: AU
+  standard_name: AS/NZS 2107:2016
+  value_text: 'RT (general): Recommended levels; Background Noise: By space type'
+  value_numeric: null
+  unit: s
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.16
+  notes: null

@@ -1,0 +1,49 @@
+section: A.14
+title: Door Opening Force
+item_code: I-01
+spec_id: SPEC-0054
+records:
+- spec_id: SPEC-0054
+  item_code: I-01
+  jurisdiction: AU
+  standard_name: AS 1428.1:2021
+  value_text: 'Interior Doors: ≤20N; Fire Doors: Per fire code'
+  value_numeric: 20.0
+  unit: N
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.14
+  notes: null
+- spec_id: SPEC-0054
+  item_code: I-01
+  jurisdiction: US
+  standard_name: ADA 2010 §404.2.9
+  value_text: 'Interior Doors: ≤22N; Exterior Doors: ≤38N; Fire Doors: ≤67N'
+  value_numeric: 22.0
+  unit: N
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.14
+  notes: null
+- spec_id: SPEC-0054
+  item_code: I-01
+  jurisdiction: ISO
+  standard_name: ISO 21542:2021
+  value_text: ≤25N
+  value_numeric: 25.0
+  unit: N
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.14
+  notes: null
+- spec_id: SPEC-0054
+  item_code: I-01
+  jurisdiction: GB
+  standard_name: BS 8300-2:2018
+  value_text: 'Interior Doors: ≤30N (code) / ≤20N (BP); Fire Doors: Per BS 8300'
+  value_numeric: 30.0
+  unit: N
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.14
+  notes: null

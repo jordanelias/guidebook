@@ -1,0 +1,136 @@
+name: URL verification (Channel 2 V1)
+
+# Generic URL-fetch + title-match verifier per
+#   scripts/verify_urls.py
+#   references/audits/verification-pipeline-proposal-2026-05-12-v2.md §Channel 2
+#
+# Scope: sources with url IS NOT NULL AND verification_status IS NULL.
+# Outcomes: VERIFIED / PROBABILISTIC / NO-MATCH (retry in 30d) / DEAD-LINK /
+#           DEAD-DNS / WAYBACK-MATCH / transient (retry next run).
+#
+# State tracking: url_verification_runs table in data/guidebook.db.
+# This is independent of pipeline_runs (used by Channel 1) — both channels can
+# run concurrently without contention.
+
+on:
+  schedule:
+    # Bi-weekly, complementing the weekly Channel 1 run. URLs change slowly;
+    # less aggressive cadence avoids overloading publisher sites.
+    - cron: "0 06 1,15 * *"
+  workflow_dispatch:
+    inputs:
+      max_verify:
+        description: "Max URLs to attempt this run"
+        required: false
+        default: "500"
+        type: string
+      rate_limit:
+        description: "Seconds between requests"
+        required: false
+        default: "3.0"
+        type: string
+      use_wayback:
+        description: "Enable archive.org Wayback fallback on dead links"
+        required: false
+        default: "1"
+        type: choice
+        options:
+          - "1"
+          - "0"
+
+concurrency:
+  group: url-verification
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run URL verifier
+        env:
+          GUIDEBOOK_DB_PATH:  data/guidebook.db
+          MAX_VERIFY:         ${{ inputs.max_verify || '500' }}
+          RATE_LIMIT:         ${{ inputs.rate_limit || '3.0' }}
+          USE_WAYBACK:        ${{ inputs.use_wayback || '1' }}
+          SKIP_NO_MATCH_DAYS: "30"
+          GITHUB_RUN_ID:      ${{ github.run_id }}
+        run: |
+          python scripts/verify_urls.py
+
+      - name: Build commit message from url_verification_runs
+        id: msg
+        run: |
+          python <<'PY'
+          import sqlite3, os
+          c = sqlite3.connect('data/guidebook.db')
+          r = c.execute("""
+              SELECT run_id, candidates_pool, attempted,
+                     verified, probabilistic, no_match,
+                     dead, wayback_verified, wayback_probabilistic,
+                     dead_dns, transient,
+                     verified_before, verified_after
+              FROM url_verification_runs
+              ORDER BY started_at DESC LIMIT 1
+          """).fetchone()
+          if not r:
+              msg = "url-verification: no run record found"
+          else:
+              (run_id, pool, attempted, ver, prob, nm, dead, wv, wp, dns,
+               trans, vb, va) = r
+              ver_d = (va or 0) - (vb or 0)
+              msg = (
+                  f"url-verification: V1 run {run_id} — "
+                  f"verified {ver_d:+d} ({va} total); "
+                  f"attempted={attempted}/{pool}; "
+                  f"outcomes V={ver} P={prob} NM={nm} D={dead} "
+                  f"WV={wv} WP={wp} DNS={dns}"
+                  + (f"; {trans} transient" if trans else "")
+              )
+          print(msg)
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              f.write(f"msg={msg}\n")
+          PY
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/guidebook.db
+          if git diff --cached --quiet; then
+            echo "No verification changes — nothing to commit"
+            exit 0
+          fi
+          git commit -m "${{ steps.msg.outputs.msg }}"
+
+          # Push with binary-conflict-aware retry (same pattern as Channel 1).
+          for i in 1 2 3 4 5; do
+            git fetch origin main
+            if git rebase origin/main; then
+              if git push origin main; then
+                echo "Push succeeded on attempt $i"
+                exit 0
+              fi
+              echo "Push attempt $i failed (transient); backing off..."
+              sleep $((i * 5))
+            else
+              echo "Rebase conflict on data/guidebook.db: main advanced during run."
+              echo "Discarding this run's results; next scheduled run will reprocess."
+              git rebase --abort 2>/dev/null || true
+              git reset --hard origin/main
+              exit 0
+            fi
+          done
+          echo "ERROR: push failed after 5 transient retries"
+          exit 1

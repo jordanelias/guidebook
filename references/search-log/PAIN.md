@@ -1,0 +1,82 @@
+<!-- FROZEN — Do not read or write. Per-slug files at references/{bpc|search-log}/{topic}/{slug}.md are canonical. This file is a historical archive only. Any skill reading this file is in error. -->
+
+# Search Log — PAIN
+<!-- Managed by research-log-manager. Do not edit manually. -->
+<!-- Population partition: PAIN -->
+
+---
+
+```yaml
+slug: chronic-pain-built-environment
+query: "chronic pain fibromyalgia ME/CFS POTS built environment design occupational therapy evidence"
+last_searched: 2026-03-18 16:30
+early_close_triggered: false
+note: "Extended language pass completed 2026-03-18 per early-close gate suspension rule. All 14 languages searched. Unanimous NO-DATA for built-environment design across all non-English sources."
+languages:
+  EN: {status: SEARCHED, results: 14, db: [PubMed, web]}
+  DE: {status: NO-DATA, results: 0, db: [web], note: "No DE OT built-environment evidence for PAIN/OFS"}
+  NO: {status: NO-DATA, results: 0, db: [web], note: "No NO evidence found"}
+  SV: {status: THIN, results: 1, db: [web], note: "Swedish fibromyalgia prevalence data only"}
+  FR: {status: THIN, results: 1, db: [web], note: "French OT chronic pain reference only"}
+  DA: {status: NO-DATA, results: 0, db: [web]}
+  FI: {status: NO-DATA, results: 0, db: [web]}
+  ZH: {status: NO-DATA, results: 0, db: [web]}
+  JA: {status: NO-DATA, results: 0, db: [web]}
+  NL: {status: NO-DATA, results: 0, db: [web], note: "NEN 9120:2025 covers MOB/VIS/cognitive only; Ergotherapie NL clinical only — no PAIN/OFS built-env design"}
+  ES: {status: THIN, results: 2, db: [web], note: "Spanish OT literature (Dialnet, TOG, RevSanitInv) on FM — clinical only; IMSERSO/ONCE accessibility standards do not address PAIN/OFS"}
+  PT: {status: THIN, results: 2, db: [web], note: "PT/BR OT literature (SciELO, Lusíadas) — clinical only; NBR 9050 covers physical access only; no PAIN/OFS design provisions"}
+  KO: {status: NO-DATA, results: 0, db: [web], note: "Korean Welfare Facilities Standard covers MOB/sensory only; Korean OT CFS literature clinical only"}
+  IT: {status: NO-DATA, results: 0, db: [web], note: "DM 236/89 and DPR 503/96 cover motoria/sensoriale only; Italian OT fibromialgia literature clinical only; CNAPPC follows same framework"}
+top_sources: [PMC6260403-OT-CP, AOTA-FM-2018, Autonomic-POTS-2018, CDC-MECFS, Bateman-Horne, PMID18805903-POTS-CFS]
+bpc_ref: "chronic-pain-built-environment"
+thin_flags: [SV, FR, ES, PT]
+no_data_flags: [DE, NO, DA, FI, ZH, JA, NL, KO, IT]
+```
+
+jurisdiction_coverage:
+  US: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  UK: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  DE: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NO: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  SE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ISO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  EU: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  FR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NL: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  DK: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  FI: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  JP: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  SG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KR: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BR: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  ES: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IT: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PT: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CN: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IN: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ZA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  MX: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CL: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ID: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BD: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EG: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TH: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CO: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  AR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GT: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EC: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  UY: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  MA: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ET: {status: NOT-RUN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}

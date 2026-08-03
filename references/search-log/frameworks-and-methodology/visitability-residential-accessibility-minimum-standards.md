@@ -1,0 +1,81 @@
+```yaml
+slug: visitability-residential-accessibility-minimum-standards
+query: "visitability residential accessibility minimum standards three requirements cost construction"
+last_searched: 2026-03-05 00:00
+early_close_triggered: false
+note: "Derived from Systematic review with checkpoint documentation (2026-03-05). Concrete Change 1987 three criteria. ADA Fair Housing Act seven features. EN-primary for core evidence."
+languages:
+  EN: {status: SEARCHED, results: 12, db: [web], note: "Concrete Change/Eleanor Smith 1987; ADA Fair Housing Act 7 features; $100-600 additional cost; entry bench 430-485mm; laundry front-loading 200-380mm pedestal; home office 710-865mm ADA; wall blocking FHA Design Manual; Lifetime Homes UK"}
+  DE: {status: SEARCHED, results: 2, db: [web], note: "DIN 18040-2 anpassbares Bauen; threshold ≤10mm reduced-barrier variant; storage 400-1200mm reach zones"}
+  NO: {status: SEARCHED, results: 2, db: [web], note: "NS 11001-2:2018 adaptable housing; TEK17 residential provisions"}
+  SV: {status: THIN, results: 1, db: [web], note: "Boverket BBR adaptable residential; thin"}
+  FR: {status: THIN, results: 1, db: [web], note: "French habitat adaptable; thin"}
+  DA: {status: THIN, results: 1, db: [web]}
+  FI: {status: THIN, results: 1, db: [web]}
+  ZH: {status: THIN, results: 1, db: [web], note: "GB 55019 residential adaptable provisions"}
+  JA: {status: SEARCHED, results: 2, db: [web], note: "Japanese Housing Performance Indication Grade 5; home modification programme; visitability concept"}
+  NL: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  ES: {status: SEARCHED, results: 2, db: [web], co1_pass: partial, native_standards_pass: partial}
+  PT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  KO: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+top_sources: [Concrete-Change-1987, ADA-FHA-7-features, DIN18040-2-adaptable, NS11001-2-2018, Habinteg-LH, CMHC-Universal-Design, NCC2022-Livable]
+bpc_ref: "visitability-residential-accessibility-minimum-standards"
+thin_flags: [SV, FR, DA, FI, ZH]
+no_data_flags: []
+```
+
+```yaml
+
+jurisdiction_coverage:
+  US: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  UK: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  AU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  CA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  DE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  NO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  SE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: true}
+  ISO: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EU: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  FR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NL: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  DK: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  FI: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  JP: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  SG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  BR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ES: {status: SEARCHED, results: 2, db: [web], co1_pass: partial, native_standards_pass: partial}
+  IT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  PT: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  IE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CN: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  IN: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ZA: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  MX: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CL: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ID: {status: THIN, results: 1, db: [web], co1_pass: not-run, native_standards_pass: partial}
+  BD: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  NG: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EG: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  KE: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TH: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  CO: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  AR: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  PE: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GT: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  EC: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  UY: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  MA: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  GH: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  TZ: {status: SEARCHED, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+  ET: {status: THIN, co1_attempted: false, tier5_attempted: false, tier6_attempted: false}
+
+jurisdiction_summary: >
+  UK Lifetime Homes / M4(2). AU Livable Housing (NCC mandatory). US visitability advocacy (Concrete Change). NO TEK17 step-free mandatory. KEY DIVERGENCE: AU mandatory vs US/UK voluntary.
+
+```

@@ -1,0 +1,38 @@
+section: A.15
+title: Rest Seating Intervals
+item_code: E-10
+spec_id: null
+records:
+- spec_id: null
+  item_code: E-10
+  jurisdiction: US
+  standard_name: ADA 2010
+  value_text: 'External Routes: Not specified; Internal Routes: Not specified'
+  value_numeric: null
+  unit: m
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.15
+  notes: null
+- spec_id: null
+  item_code: E-10
+  jurisdiction: GB
+  standard_name: BS 8300-1:2018 §10
+  value_text: 'External Routes: ≤50m; Seat Features: Armrests recommended'
+  value_numeric: 50.0
+  unit: m
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.15
+  notes: null
+- spec_id: null
+  item_code: E-10
+  jurisdiction: DE
+  standard_name: DIN 18040-1
+  value_text: —
+  value_numeric: null
+  unit: m
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.15
+  notes: null

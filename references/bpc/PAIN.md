@@ -1,0 +1,16 @@
+<!-- FROZEN — Do not read or write. Per-slug files at references/{bpc|search-log}/{topic}/{slug}.md are canonical. This file is a historical archive only. Any skill reading this file is in error. -->
+
+# Best Practices Compendium — PAIN
+<!-- Managed by research-log-manager. Do not edit manually. -->
+<!-- Population partition: PAIN -->
+
+---
+
+## chronic-pain-built-environment
+**Updated:** 2026-03-18 23:30  **Evidence tier:** 1–4 (THIN BASE — see GAP-029)
+**PAIN Consensus:** OT built-environment evidence is near-zero across all 14 languages. All provisions derived from ergonomic and energy conservation principles. Highest-impact: seated task provision, storage at waist-to-shoulder height (750–1050 mm), thermostatic shower controls, rest seating. Hydrotherapy has Tier 1 evidence (10 RCTs) for FM pain reduction. ES and PT OT literature confirms clinical role only — no built-environment specifications.
+**Extended language pass (2026-03-18):** NL (NEN 9120:2025), IT (DM 236/89), KO (Welfare Facilities Standard) — all cover MOB/sensory/cognitive only; no PAIN/**Critical gap:** GAP-029 P2 OPEN — confirmed universal. Both populations lack any built-environment evidence base in any language or jurisdiction. Guidebook must disclose that PAIN/**Temperature spec gap:** H-04 (HVAC/Thermal) — temperature range absent from all 14-language standard search. GAP-ITEM-SPEC confirmed cross-jurisdictional.
+
+> **[LANGUAGE GAP]** All PAIN built-environment evidence identified to date is EN-only. Non-EN research passes pending. Confidence reduced for cross-jurisdictional applicability until multilingual retrieval is completed.
+**New item candidates:** Reclining/tilt seating specification; cushioned flooring specification (thin EN-only evidence).
+**SCOPE-GATE-FINAL:** DA, FI, ZH, JA, NL, KO, IT (7 languages) confirmed NO-DATA — move to extended set for PAIN/**Key sources:** PMC6260403 · AOTA2018-FM · CDC-MECFS · · ~~Ismail2023~~ [CLOSED-DELETED: citation-verifier 2026-04-23 — PMID 18751709 resolves to McVeigh 2008, not Ismail 2023. Wrong source. Remove from BPC.]

@@ -1,0 +1,79 @@
+## threshold-and-level-access
+
+**Updated:** 2026-03-29 (Opus synthesis)  **Original search:** 2026-03-19 21:05  **Evidence tier range:** 4–6  **Opus synthesis:** YES [OPUS-SYNTHESIS] — PROVISIONAL-RETAINED
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
+**STATUS: PROVISIONAL — 11 jurisdictions NOT-RUN; Co-1 0/24; Tier 5 6/24. Do not use as sole basis for specification writing.**
+
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| JA | 段差 (dansā) / 敷居 (shikii) | ⚠ PARTIAL | 敷居 is cultural/architectural threshold — not equivalent to regulatory 段差. バリアフリー法 mandates 段差なし (no level difference). |
+| NO | trinnfri per §1-3(m) | ✓ CLEAN | Statutory definition allows up to 25mm with chamfer — "step-free" in Norwegian law does not mean zero |
+
+### Best-practice synthesis
+**Most inclusive provision:** Zero level change at all accessible route thresholds. Where a weather or structural threshold is unavoidable: ≤13mm (ADA/US) or ≤15mm (UK) maximum, with bevelled/chamfered profile not exceeding 45°. This removes barriers for manual WC caster wheels, rollator front wheels, and eliminates the tripping hazard for ambulant populations.
+
+**Most targeted provision:** Thermally broken accessible threshold unit (proprietary sealed threshold with weather bar embedded below floor surface), achieving 0mm internal-to-external level difference with drainage channel, tested to thermal performance standards. This represents the best-practice resolution of the tension between weather protection and accessibility.
+
+**Conflict resolution:** The 13mm/15mm/20mm/25mm cross-jurisdictional variation reflects different weather protection assumptions, not different functional requirements. The functional requirement is uniform: WC caster wheels (typically 75mm diameter on manual WC) cannot reliably navigate upstands >6mm without tipping risk at low approach speeds. The 13mm ADA and 15mm UK values better reflect functional WC capability than the 20–25mm values in NO/DE. The direction of travel in drafts (DE reducing to 10mm) confirms convergence toward tighter standards.
+
+**Highest-ambition actionable specification:** Zero level change at all accessible entrances. Where technically unavoidable: upstand ≤13mm maximum, bevelled at ≤1:2 (no vertical face), with drainage channel integrated into threshold unit. Profile must not exceed 15mm total height on weather side. Threshold material: slip-resistant, visually contrasting to door surround.
+
+### Consensus findings
+| Finding | Jurisdictions confirming | Languages | Tier |
+|---|---|---|---|
+| Level change ≤5mm: no treatment needed | BR | PT | 6 |
+| Level change 5–13mm: bevelled/chamfered, no vertical face | US | EN | 6 |
+| Level change 6–15mm: chamfered not steeper than 45° | UK | EN | 6 |
+| Level change ≤20mm: chamfered, maximum statutory in multiple jurisdictions | DE, NO (≤20mm if chamfered), NL, FR, BR | DE, NO, NL, FR, PT | 6 |
+| Level change >20mm: ramp mandatory (all jurisdictions) | US, UK, CA, AU, NO, SE, NL, FR, DE, BR, JP | All searched | 5–6 |
+| Zero threshold is the design intent; tolerance values are failure modes | AU LHDG, UK M4(3), NO universell utforming | EN, NO, SV | 5–6 |
+
+### Divergent findings
+| Topic | Jurisdiction A | Jurisdiction B | Cause |
+|---|---|---|---|
+| Threshold max | ADA ≤13mm / UK ≤15mm | NO ≤25mm / DE ≤20mm | Weather protection assumptions; functional data supports tighter limits |
+| "Step-free" definition | AU/UK: zero threshold | NO: ≤25mm called trinnfri | Regulatory boundary mismatch — not empirical |
+| Retrofit threshold | AS 1428.1: ≤35mm at 1:8 ramp in doorways | ADA: ≤13mm no exceptions | Retrofit vs new-build context |
+
+### NO-DATA / THIN
+Same as residential-entry-and-threshold — see above.
+
+### Citation mining
+| Source | Direction | New sources added |
+|---|---|---|
+| ADA §303 threshold provisions | Backward | 1 |
+
+### Key sources
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| TLA-01 | US Access Board | 2010 | ADA Standards §303 Changes in Level | 6 | US | https://www.ada.gov/law-and-regs/design-standards/2010-stds/#303-changes-in-level |
+| TLA-02 | BSI | 2018 | BS 8300-2:2018 — threshold provisions | 5 | UK | See RET-04 |
+| TLA-03 | DIN | 2011 | DIN 18040-2:2011 — Nullschwelle doctrine | 6 | DE | See RET-12 |
+| TLA-04 | Direktoratet for byggkvalitet | 2017 | TEK17 §1-3(m) trinnfri ≤25mm definition | 6 | NO | See RET-11 |
+| TLA-05 | NEN | 2025 | NEN 9120:2025 — drempel ≤20mm | 5 | NL | See RET-18 |
+| TLA-06 | Légifrance | 2014 | Arrêté 2014 — ressaut ≤20mm | 6 | FR | See RET-15 |
+| TLA-07 | ABNT | 2020 | NBR 9050:2020 — soleira ≤20mm | 6 | BR | See RET-14 |
+| TLA-08 | Standards Australia | 2021 | AS 1428.1:2021 — threshold ≤35mm at 1:8 ramp (retrofit) | 6 | AU | See RET-17 |
+| TLA-09 | Habinteg/CAE | 2024 | Inclusive Housing Design Guide — threshold provisions | 5 | UK | See RET-01 |
+| TLA-10 | Rick Hansen Foundation | 2024 | RHFAC Rating Survey v4.0 §2 — threshold | 5 | CA | See RET-10 |
+| TLA-11 | DIN | 2023 | Draft E DIN 18040-2:2023 — tightening to ≤10mm | 6 | DE | Draft only; confirms convergence trend |
+| TLA-12 | Boverket | 2024 | BFS 2024:12 / BBR threshold provisions | 6 | SE | See RET-13 |
+| TLA-13 | MLIT | 2024 | バリアフリー法 — 段差なし principle | 6 | JP | See RET-20 |
+| TLA-14 | ISO | 2021 | ISO 21542:2021 — threshold provisions | 4 | INT | See RET-21 |
+| TLA-15 | iDigHardware | 2021 | Decoded: Thresholds and Changes in Level (ADA §303 analysis) | 6 commentary | US | https://www.idigardware.com |
+
+---
+
+## Metadata
+
+```yaml
+slug: threshold-and-level-access
+population: MOB
+last_updated: 2026-04-19
+co0006_migration: true
+```

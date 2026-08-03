@@ -1,0 +1,65 @@
+section: A.17
+title: Signage & Tactile Requirements
+item_code: D-08
+spec_id: null
+records:
+- spec_id: null
+  item_code: D-08
+  jurisdiction: US
+  standard_name: ADA 2010 §703
+  value_text: 'Sign Height (centre): 1220–1524mm; Tactile Characters: Raised ≥0.8mm; Braille: Grade 2 required; Pictogram
+    Standard: ADA pictograms'
+  value_numeric: 1524.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.17
+  notes: null
+- spec_id: null
+  item_code: D-08
+  jurisdiction: GB
+  standard_name: BS 8300-2:2018 §12
+  value_text: 'Sign Height (centre): 1400–1700mm; Tactile Characters: Recommended; Braille: Recommended; Pictogram Standard:
+    BS EN ISO 7010'
+  value_numeric: 1700.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.17
+  notes: null
+- spec_id: null
+  item_code: D-08
+  jurisdiction: AU
+  standard_name: AS 1428.1:2021
+  value_text: 'Sign Height (centre): 1200–1600mm; Tactile Characters: Required; Braille: Required; Pictogram Standard: AS
+    pictograms'
+  value_numeric: 1600.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.17
+  notes: null
+- spec_id: null
+  item_code: D-08
+  jurisdiction: DE
+  standard_name: DIN 32975 / DIN 32986
+  value_text: 'Sign Height (centre): 1200–1600mm; Tactile Characters: DIN 32986; Braille: Per DIN; Pictogram Standard: DIN
+    EN ISO 7010'
+  value_numeric: 1600.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.17
+  notes: null
+- spec_id: null
+  item_code: D-08
+  jurisdiction: ISO
+  standard_name: ISO 21542:2021 §40
+  value_text: 'Sign Height (centre): 1200–1600mm; Tactile Characters: Referenced; Braille: Referenced; Pictogram Standard:
+    ISO 7010'
+  value_numeric: 1600.0
+  unit: mm
+  is_code_minimum: 1
+  evidence_tier: 6
+  source_section: A.17
+  notes: null

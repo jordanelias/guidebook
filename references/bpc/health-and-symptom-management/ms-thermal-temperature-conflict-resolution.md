@@ -1,0 +1,101 @@
+## ms-thermal-temperature-conflict-resolution
+
+**Updated:** 2026-03-30 (v4 schema synthesis)  **Original search:** 2026-03-19 00:30  **Evidence tier:** 2–4  **Opus synthesis:** YES [OPUS-SYNTHESIS]
+
+**SYNTHESIS VALIDITY:** PRE-REHABILITATION — RETRACTED PENDING REVERIFICATION
+(See PI rule #10; cohort defined by DR-2026-05-23. Evidence cited herein predates the 2026-05-23 metadata-quality rehabilitation. Claims requiring Phase E.2g reverification.)
+
+**Consensus finding:** MS (Uhthoff's phenomenon), fibromyalgia, and OFS/MCAS thermal requirements are directly conflicting and irreconcilable in a shared space without individual controls. The only design resolution is ambient ≤18–21°C with individual supplemental heating at each seat/workstation. No single fixed ambient temperature serves all three populations.
+**Conflict table:**
+  | Population | Thermal requirement | Clinical basis | Quantified threshold (Jevotovsky 2025, MST-11) |
+  |---|---|---|---|
+  | NEU/MS (Uhthoff) | Ambient ≤18°C; avoid core temp rise ≥0.5°C | 60–80% of MS patients heat-sensitive; MSIF Atlas 2023; Tier 3 | Core temp increase ≥0.2–0.5°C triggers neurological deterioration (Syndulko et al.); MS patients prefer room temp <20°C (survey data). Uhthoff recovery requires active cooling. |
+  | PAIN/fibromyalgia | Warmth ≥20°C; cold environments increase pain | Staud (2011); Geisser et al. 2021 (hyperacusis + temperature); Tier 3 | Heat pain threshold 41.1°C vs controls 45.2°C (Δ4.1°C — Hurtig et al.); cold pain threshold 10.9–26.3°C vs controls 5.9–13.5°C (Berwick 2021 SR, 14/17 QST studies). FMS shows BOTH heat AND cold hypersensitivity — reduced thermal tolerance envelope on both sides. |
+  | OFS/MCAS/POTS | Cool environment ≤19–21°C; heat triggers symptoms | CDC ME/CFS guidelines; Newcastle POTS 2018; Tier 4 | No quantified ambient threshold in Jevotovsky; OFS thermal sensitivity documented as clinical consensus only. |
+  | DEM/older adults | 24.9°C neutral; comfort zone 18.3–26.3°C | Baquero et al. 2023, n=1,065; Tier 3 | Not covered in Jevotovsky (older adult-specific review). |
+  | CRPS | Avoid warm/hot environments | Jevotovsky 2025 (ten Brink et al.) | Warm weather triggers and intensifies pain; chronic phase vasoconstriction impairs thermoregulation. Cold sensitivity also present in some CRPS subtypes. |
+  | OA | Avoid cold + high humidity | Jevotovsky 2025 (McAlindon 2007; Wang meta-analysis) | Lower temperature + higher humidity = increased pain and joint rigidity. Barometric pressure contributes but mechanism disputed. |
+**Resolution for shared spaces:** Ambient temperature ≤18–21°C (serving NEU/MS and OFS as floor); individual supplemental heating (radiant, portable, zoned) at each primary seating position — resolves fibromyalgia and older adult requirements without raising ambient
+**F-06 full specification (MS/NEU/PAIN/OFS primary occupied spaces):**
+  - Primary occupied spaces: ≤18°C ambient with individual supplemental heating
+  - Individual zone control per desk/seat (BMS or portable); minimum: accessible thermostat within reach of each primary seat
+  - No forced air heating as sole source in NEU/OFS spaces (acoustic + airborne trigger concern)
+  - Personal cooling provision (desk fan, cooling vest storage) in all MS neurology ward/room settings
+**Part 9 §9.1.4a high-performance envelope [formerly TC-02]:** U-value ≤0.15 W/m²K external wall; triple glazing Uw ≤0.8 W/m²K; thermal bridges eliminated; internal surface temperature variation ≤2°C between floor and 1800 mm AFF `[Tier 5 — engineering best practice; these values are Passivhaus-grade targets linked to thermal stability, not directly from clinical disability evidence]`
+**Part 9 §9.1.4b thermal mass [formerly TC-03]:** ≤3°C diurnal internal temperature variation without active HVAC (passive thermal stability)
+**Jurisdictions confirmed:** No jurisdiction has a disability-specific thermal comfort standard for MS, fibromyalgia, or OFS. ISO 7730:2005 (PMV/PPD) is unreliable for these populations — standard comfort model developed for healthy adults. WELL v2 Thermal Comfort feature addresses general thermal comfort only.
+
+---
+
+### Concept boundary notes
+| Language | Native alias | Map | Warning |
+|---|---|---|---|
+| EN | thermal comfort, heat sensitivity | ms-thermal-temperature-conflict-resolution | Distinct from thermal-comfort-older-adults (age-specific); this entry is conflict-resolution focused |
+| DE | Wärmeverträglichkeit, Uhthoff-Phänomen | — | German MS literature uses Uhthoff-Phänomen directly |
+| JA | 温熱環境, ウートフ現象 | — | Japanese bathing heat shock literature overlaps but is distinct (see thermal-comfort-older-adults) |
+
+### Best-practice synthesis
+**Most inclusive provision:** Ambient temperature ≤18–21°C with individual supplemental heating at each primary seating position; serves NEU/MS and OFS as floor while allowing PAIN/DEM occupants to warm locally.
+**Most targeted provision:** Personal cooling provision (desk fan, cooling vest storage) in MS neurology ward/room settings; no forced air heating as sole source in NEU/OFS spaces.
+**Conflict resolution:** No single ambient temperature satisfies all populations simultaneously. Resolution is architectural: low ambient + individual supplemental heating. Spatial separation or individual controls are the only viable approaches. **Evidence-auditor 2026-05-04: conflict resolution now SR-supported on both sides — Berwick 2021 (FMS cold sensitivity) + Christogianni 2018 (MS Uhthoff 0.5C threshold). Harm-asymmetry rule in project-standards has MODERATE stratum.**
+
+**Jevotovsky 2025 integration (2026-05-06):** Jevotovsky et al. 2025 (MST-11, PMID:39847186) is the first single-paper cross-population thermal review covering FM, MS, CRPS, and OA. Key findings integrated into conflict table above. Design implications: (1) FMS shows BOTH heat AND cold hypersensitivity — the thermal tolerance envelope is narrowed on both sides, not just one. This means the ≤18°C ambient may itself trigger FMS cold pain (CPT range 10.9–26.3°C includes 18°C for some individuals). Individual supplemental heating is therefore not optional for FMS — it is clinically necessary at ≤18°C ambient. (2) CRPS and OA are newly added to the conflict table — both populations have thermal sensitivity documented at Tier 3 level. CRPS warm-trigger adds to the cool-ambient rationale; OA cold+humidity trigger adds to the supplemental-heating rationale. (3) The harm-asymmetry argument is strengthened: Uhthoff's at ≥0.2°C core temp rise is a safety-critical neurological deterioration; FMS cold pain is significant but not safety-critical. Cool ambient + individual warmth remains the correct resolution.
+**Highest-ambition actionable specification:** F-06: ≤18°C ambient with individual zone control per desk/seat (BMS or portable); accessible thermostat within reach of each primary seat; Part 9 §9.1.4 Passivhaus-grade envelope (U ≤0.15, Uw ≤0.8) for passive thermal stability.
+**Opus synthesis note:** Synthesis is conflict-resolution focused. No single-population best practice applies — the synthesis IS the conflict resolution protocol.
+
+### Consensus findings
+| Finding | Languages with evidence | Jurisdictions confirming | Tier |
+|---|---|---|---|
+| Uhthoff's phenomenon affects 60–80% of MS patients; ambient heat worsens neurological symptoms | EN, DE, FR, JA | Cross-jurisdictional (MSIF Atlas 2023) | 3 |
+| Standard PMV/PPD model unreliable for disability populations | EN, NL | ISO 7730 acknowledged limitation | 4 |
+| No jurisdiction has disability-specific thermal comfort standard | All 14 searched | 24 jurisdictions confirmed gap | — |
+| Individual zone control is the only viable multi-population resolution | EN, DE, NL, SE | PAS 6463:2022 (UK); no mandatory standard | 4–5 |
+
+### Divergent findings
+| Topic | Position A | Position B | Cause |
+|---|---|---|---|
+| Ambient temperature target | NEU/MS: ≤18°C | DEM/older adults: 24.9°C neutral | Physiological opposition — Uhthoff's vs. age-related thermoregulation decline |
+| Heating method | PAIN: warmth ≥20°C ambient preferred | OFS/MCAS: heat triggers symptoms | Individual variation in thermal sensitivity direction |
+
+### NO-DATA / THIN
+| Jurisdiction | Language | Reason | Co-1? | Tier 5? |
+|---|---|---|---|---|
+| All 24 | All 14 | No jurisdiction addresses disability-specific thermal comfort | Not applicable | Not applicable |
+| JA | JA | Standards-based only (bathing heat shock); no peer-reviewed OT thermal comfort evidence | No | No |
+
+### Citation mining
+**Date:** 2026-05-04 08:15
+| Source | Direction | New sources added |
+|---|---|---|
+| Staud 2011 (MST-02) | Forward | Berwick 2021 FMS thermal SR (MST-09) |
+| MSIF 2023 (MST-01) | Forward | MS temperature sensitivity review 2018 (MST-10); Ambient temperature chronic pain review 2025 (MST-11) |
+**Notes:** Berwick 2021 is a systematic review of temperature influence on FMS pain — 14/17 QST studies show reduced cold pain thresholds (10.9-26.3°C in FMS vs 5.9-13.5°C controls). Directly supports the harm-asymmetry conflict resolution (cool default protects MS/SCI from neurological deterioration; FMS cold sensitivity is real but lower-harm). MS temperature review 2018 quantifies the 0.5°C core temperature threshold for Uhthoff onset. Ambient temperature review 2025 provides cross-condition comparison (MS, FM, CRPS, OA).
+
+### Bottom-up findings (functional deficit pass)
+FDR-MST-01: Uhthoff recovery time 30-60 min post heat exposure (Leavitt 2014 Tier 3; Davis 2010 Tier 3) — cooling station ≤16C within 50m of MS facility circulation; extended occupancy capacity distinct from NDV retreat. FDR-MST-02: MS fatigue diurnal pattern — afternoon ambient should reduce 1-2C from morning setpoint via BMS programming. Krupp 2003 Tier 3. Items affected: F-07, A-16.
+
+### Key sources
+
+| REF-ID | Authors | Year | Title | Tier | Jurisdiction | Notes |
+|---|---|---|---|---|---|---|
+| MST-01 | MSIF | 2023 | MS International Federation Atlas 2023 — heat sensitivity 60–80% | 3 | INT | https://www.msif.org/research/ms-atlas/ |
+| MST-02 | Staud, R. | 2011 | Evidence for shared pain mechanisms in OA, LBP, and fibromyalgia. Curr Rheumatol Rep 13(6):513–520. PMID:21833699. DOI:10.1007/s11926-011-0206-6 | 3 | INT | Central sensitization + cold hypersensitivity in FM |
+| MST-03 | Geisser, M. et al. | 2021 | Hyperacusis + temperature co-occurrence in fibromyalgia. [GREY — DOI required] | 3 | INT | — |
+| MST-04 | Baquero Larriva, M.T. & Forcada, N. | 2023 | A Field Investigation of the Thermal Comfort of Older Adults in Cold Winter Climates. Indoor Air 2023:9185216. DOI:10.1155/2023/9185216 | 3 | ES | n=1,065; neutral temp 24.9°C; PMV underpredicts by 2.3°C — GREY RESOLVED 2026-05-04 |
+| MST-05 | CDC | 2024 | ME/CFS Clinical Care — cool environment requirement | Co-1 | US | https://www.cdc.gov/me-cfs/ |
+| MST-06 | Newcastle POTS clinic | 2018 | POTS thermal triggers — clinical guidance. [GREY — specific publication unverified] | 4 | UK | — |
+| MST-07 | ISO | 2005 | ISO 7730:2005 — Ergonomics of the thermal environment (PMV/PPD) | 4 | INT | https://www.iso.org/standard/39155.html |
+| MST-08 | IWBI | 2024 | WELL v2 Thermal Comfort feature | 5 | INT | https://v2.wellcertified.com/wellv2/en/thermal-comfort |
+| MST-09 | Berwick, R.J., Siew, S., Andersson, D.A., Marshall, A. & Goebel, A. | 2021 | A Systematic Review Into the Influence of Temperature on Fibromyalgia Pain: Meteorological Studies and QST. J Pain 22(5):473-486. DOI:10.1016/j.jpain.2020.12.005. PMID:33421589 | 3 (SR) | INT | 14/17 QST studies show reduced CPT in FMS; CPT 10.9-26.3°C vs 5.9-13.5°C controls |
+| MST-10 | Christogianni, A. et al. | 2018 | Temperature sensitivity in multiple sclerosis: An overview of its impact on sensory and cognitive symptoms. Temperature 5(3):208-223. PMC6205043 | 3 | INT | 0.5°C core temp increase triggers Uhthoff; MS-specific thermal review |
+| MST-11 | Jevotovsky, D.S., Bhatt, R.R., Engel, A., Gupta, A. & Keltner, J.R. | 2025 | Weathering the Pain: Ambient Temperature's Role in Chronic Pain Syndromes. Current Pain and Headache Reports 29(1):27. DOI:10.1007/s11916-025-01361-8. PMID:39847186. PMC11759284 | 3 (narrative review) | INT | Cross-population thermal review: FM (heat pain 41.1°C/controls 45.2°C; cold pain 10.9-26.3°C/controls 5.9-13.5°C), MS (Uhthoff ≥0.2-0.5°C core temp), CRPS (warm weather trigger; chronic vasoconstriction), OA (cold+humidity). First single-paper cross-population thermal profile. |
+
+## Metadata
+
+```yaml
+slug: ms-thermal-temperature-conflict-resolution
+population: NEU, PAIN, OFS, DEM
+last_updated: 2026-05-04
+co0006_migration: true
+citation_mining_date: 2026-05-04
+```
