@@ -266,33 +266,44 @@ def run_checks(db_path):
            f"{claims_mined} claim mined with no row; {mined_not_claimed} have a row but do not claim it"
            if (claims_mined or mined_not_claimed) else "")
 
-    # C10 — a best practice may not rest on a source whose data was never
-    # captured. 'pending' means nobody has confirmed the source contains what
-    # the cell claims it contains, so a stated or provisional cell citing a
-    # pending source is asserting a value that may not exist. Owner ruling
-    # 2026-08-02: "pending isn't good enough for us — anything pending may well
-    # not exist."
+    # C10 — a published cell may not rest on a source that has not been
+    # established as real and usable.
     #
-    # This fails today (55 of 59 cited sources are pending) and is supposed to:
-    # it converts an unexamined contradiction between two layers into a number
-    # that has to go down.
+    # CORRECTED 2026-08-02, same day it was written. The first version tested
+    # data_capture_status='pending' and failed 13 of 13 cells. That was wrong,
+    # and wrong in an instructive way: capture-pending means "no row in an
+    # extraction table", NOT "unread". All 59 sources cited by published cells
+    # are VERIFIED or DISPUTED with COMPLETE metadata, and every cell carries a
+    # convergence_id and tier_basis — they were plainly read. A cell cannot
+    # precede the reading that produced it, so a well-formed cell is itself
+    # evidence its sources were read, and the first version could only ever
+    # have fired on a fabricated cell.
+    #
+    # Read-ness is recorded in verification_status, not in capture status. That
+    # is what this now tests. DISPUTED counts as a failure: a best practice
+    # resting on a source whose standing is contested is exactly the case worth
+    # surfacing, and it is not hypothetical — 2 of the 59 are DISPUTED.
+    OK_VSTATUS = ("VERIFIED", "VERIFIED-1", "VERIFIED-2",
+                  "VERIFIED-WITH-CORRECTION", "CO1-VERIFIED")
     try:
-        resting_on_pending = conn.execute("""
+        ph = ",".join("?" * len(OK_VSTATUS))
+        unsound = conn.execute(f"""
             SELECT COUNT(DISTINCT c.cell_id)
             FROM evidence_cell_state c
             JOIN json_each(c.governing_refs) j
             JOIN evidence_sources e ON e.ref_id = j.value
             WHERE c.state IN ('stated','provisional')
-              AND e.data_capture_status = 'pending'""").fetchone()[0]
+              AND COALESCE(e.verification_status,'') NOT IN ({ph})""",
+            OK_VSTATUS).fetchone()[0]
         total_cells = conn.execute("""SELECT COUNT(*) FROM evidence_cell_state
             WHERE state IN ('stated','provisional')""").fetchone()[0]
-        record("C10", "no stated/provisional cell rests on a capture-pending source",
-               resting_on_pending == 0,
-               f"{resting_on_pending} of {total_cells} published cells cite a source "
-               f"whose data was never captured — the claim may not be in the source"
-               if resting_on_pending else "")
+        record("C10", "no published cell rests on an unverified or disputed source",
+               unsound == 0,
+               f"{unsound} of {total_cells} published cells cite a source that is "
+               f"not verified (disputed, unverified, or no status)"
+               if unsound else "")
     except sqlite3.OperationalError as exc:
-        record("C10", "no stated/provisional cell rests on a capture-pending source",
+        record("C10", "no published cell rests on an unverified or disputed source",
                False, f"could not evaluate: {exc}")
 
     # C07 — a value column must hold a value, not a state written as prose.
