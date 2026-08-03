@@ -17,8 +17,11 @@ apparatus. **Read it fully before your first edit.**
 
 ## 0. TL;DR — the non-negotiables
 
-Two GitHub Actions workflows gate `main` (`.github/workflows/ci.yml`, `audit.yml`). Before
-you commit or push, know these five rules. Details in §7–§8.
+One GitHub Actions workflow gates `main` (`.github/workflows/ci.yml`); three more run on
+schedules (§7). `audit.yml` was folded into `ci.yml` on 2026-08-01 — this line said otherwise
+until 2026-08-02, contradicting §7 two hundred lines below it. Note also that **`main` is not
+branch-protected**, so a failing blocking check paints a red X and stops nothing (§7).
+Before you commit or push, know these five rules. Details in §7–§8.
 
 1. **Commit message format.** `{skill-name}: {action} [YYYY-MM-DD HH:MM]` — the timestamp
    must be the **last** bracket on the line. Get it with `date -u '+%Y-%m-%d %H:%M'`.
@@ -379,8 +382,13 @@ attestation logic.
 - **Prose counts are stale everywhere** (`index.html`, `parts/*/manifest.md`, older audits
   disagree with each other and with the DB). Query the DB; never trust a hardcoded number.
 - **Stale pointers:** `sessions/LATEST` and `sessions/handoff-next-session.md` may both point at
-  old sessions; find the current handoff via §9 (the newest `workplan/` file). (`audit.yml` reads
-  `sessions/LATEST` for its citation-mining check — a known wrinkle, not something to "fix" ad hoc.)
+  old sessions; find the current handoff via §9 (the newest `workplan/` file). **`sessions/LATEST`
+  is read by the *blocking* `citation_mining_session` check** (via `run_checks.py`, not `audit.yml`,
+  which was retired 2026-08-01). This is a live defect, not a wrinkle to leave alone: the pointer is
+  being asked to mean both "most recent session" and "most recent *research* session", and those are
+  different objects. Left stale the gate validates a closed set; advanced to the current session it
+  reports `Outstanding: 0` and passes by having nothing in scope. **Both states are meaningless.**
+  The fix is to split the pointer — see W4.1 of `workplan/2026-08-02-architecture-decision-and-execution-plan.md`.
 - **PI versioning is intentional:** the numbered `project-instructions-v*.md` files are
   historical snapshots; the highest-numbered one is the deployed copy. The PI is not
   API-writable — the owner pastes it into claude.ai — so the repo PI legitimately lags current

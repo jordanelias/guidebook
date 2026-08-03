@@ -1,87 +1,104 @@
-# Handoff — Resume Data-Integrity Verification
+# Handoff — Execute the comprehensive plan, then return to research
 
 **Repo:** `jordanelias/guidebook`
-**Branch:** `main`
-**HEAD:** `de364a88` ("governance: add data-integrity verification plan…")
-**Last session record:** `sessions/session_2026-05-13b-evidence-verification-methodology.md`
-**Latest PI version in repo:** `governance/project-instructions-v10_10.md` (live in claude.ai still = v10.6 unless you've pasted v10.10)
+**Branch:** `claude/resume-infrastructure-work-zvl5ft` (restarted from `main` after PR #77 merged)
+**HEAD at handoff:** `c4073a0` ("Merge pull request #77 …")
+**Last session record:** `sessions/session_2026-08-01-tooling-second-pass.md`
+**Latest PI in repo:** `governance/project-instructions-v10_14.md` (the repo PI legitimately lags — the owner pastes it into claude.ai)
+**Doctrine SHA:** `0f2f525`
+**The plan to work from:** `workplan/2026-08-02-architecture-decision-and-execution-plan.md`
+
+> **Rewritten 2026-08-02.** The previous handoff pointed at HEAD `de364a88` and a 2026-05-13
+> session record for eleven weeks, and named branch `main`. Keeping this file current is W4.2 of
+> the plan; until the mechanical check lands, rewrite it at every session close.
 
 ---
 
-## Paste this into the new conversation
+## Where things stand
 
-> I'm resuming the Guidebook data-integrity verification work. Bootstrap normally per PI. Then read these three files in order, fully:
->
-> 1. `audits/data-integrity-verification-plan.md` — the operative plan; 6 phases, sequenced.
-> 2. `audits/verification-coverage-catalog-2026-05-13b.md` — what was verified vs claimed at end of session_2026-05-13b. Plan supersedes catalog for forward work; catalog kept for evidence.
-> 3. `architecture/project-architecture-guidebook-v2.3.md` — universal patterns, especially `<enforcement_spectrum>` and `<migration_and_growth>`.
->
-> Then execute **Phase 1.1** of the plan: push a trivial commit to trigger CI, watch `.github/workflows/audit.yml`, confirm the migration-reproducibility job passes. If it fails, fix before doing anything else. If it passes, proceed to Phase 1.2 (confirm FK integrity is a blocking CI check; add the job if it isn't) then Phase 1.3 (write `scripts/audit/validate_pydantic_schemas.py`).
->
-> Do not skip phases. Do not start Phase 2 until Phase 1 closes.
+**One plan supersedes the rest.** `workplan/2026-08-02-architecture-decision-and-execution-plan.md` replaces the
+2026-08-01 consolidation plan and the 2026-08-02 prune plan. Those remain as the record of how the
+findings were reached — do not start from them.
 
----
+It is organised as eight workstreams and written against the owner's stated target shape — twelve
+pipeline stages and five tables (a)–(e) — rather than the repo's own five-stage abstraction. Every
+number in it carries its derivation in §9.
 
-## Current state at handoff
+**W1 is done** (this session): the two skills that directed sessions at a nonexistent database are
+repointed and every rewritten query verified by execution; CLAUDE.md's two self-contradictions are
+fixed; this handoff is current.
 
-**Phase 1 (Data layer sound) — not started**
-- 1.1 trigger CI run: **next action**
-- 1.2 FK integrity blocking in CI: unknown — need to inspect `.github/workflows/audit.yml`
-- 1.3 Pydantic-vs-SQLite drift audit: known drift exists in `schemas/evidence_source.py` (5 fields in Pydantic gone from DB; 64 DB columns missing from Pydantic). Audit script not yet written.
-- 1.4 Direct-write detection test: not started
-
-**Phase 2 (Rows grounded) — partially in place**
-- 2.1 evidence verification gate audit `scripts/audit/audit_evidence_metadata.py`: NOT written
-- 2.2 `evidence_population_match` audit: NOT written
-- 2.3 PMP walks: `scripts/audit/pmp_audit.py` exists and runs; known finding PMP-A02-001-S2 cites REF-00335 which is AUTHOR-TITLE-ONLY (cross-rule signal between rules 8 and 10)
-- 2.4 `reasoning_doc_citations`: audit script exists at `scripts/audit/reasoning_doc_citations_audit.py`; corpus not yet populated (Phase E.1 pilot hasn't started)
-
-**Phase 3 (Pipeline faithful) — not started**
-- 3.1 generate scripts: paths fixed this session but never executed end-to-end against current DB
-
-**Phase 4 (Sources real) — partial**
-- 4.1 DOI resolution workflow `.github/workflows/resolve-dois.yml` exists; never inspected this session
-- 4.3 Track 1: 41 records done (Pass 1); ~600 remaining
-
-**Phase 5–6 — depends on 1–4**
+**W2–W8 are open.** W2, W3, and W4 need no owner decision and can land as small PRs.
 
 ---
 
-## Repo state set during session_2026-05-13b
+## The findings that should shape the next session
 
-- DB: `data/guidebook.db`, user_version=11, schema_version=11, FK violations=0
-- 3 SQL migrations in `scripts/migrations/`: `010_fk_integrity_legacy_to_evidence_sources.sql`, `011_reasoning_doc_citations.sql`, `data_20260513025900_track1_versioning_backfill_pass1.sql` — verified locally to reproduce committed DB state on 14 invariants
-- Repo reorg: 134 file moves; top-level reduced to 4 files; `_archived/` populated; `misc/` and `research/` emptied of dated work
-- Architecture v2.3 authored (was phantom across v10.3–v10.9), now lives at `architecture/project-architecture-guidebook-v2.3.md`. Pure framing; no logging.
-- PI v10.10 drafted at `governance/project-instructions-v10_10.md`. Currently live in claude.ai = v10.6.
+1. **Three blocking gates cannot fail.** `doctrine_recheck` as invoked (deleting a CANONICAL
+   governance document exits 0), `audit_evidence_metadata` as invoked (garbage in every metadata
+   field exits 0), and `matrix_consistency` (compares code against a transcription of the doctrine
+   held inside the check itself). That is W2, and none of it needs a decision.
+2. **`test_db_integrity` is not one backlog.** It is 111 rows across 11 unratified vocabulary
+   values — one D-SCHEMA decision, ⚑7 — plus 120 distinct rows of genuine metadata backfill that
+   does require re-retrieval under R10. Four of the 111 (`high`, `medium`) are junk from a foreign
+   vocabulary, marked *investigate*, not *ratify*.
+3. **The schema cannot express two defining features of the target shape.** Table (b) has no column
+   recording whether a source's data has been scraped — 856 of 863 sources have no extraction row
+   and are indistinguishable from "read, nothing to extract". Table (a) does not store per-tier
+   source counts per topic. Both are W5.
+4. **`sessions/LATEST` serves two incompatible consumers** and has been quietly disabling the
+   blocking `citation_mining_session` check for seven weeks. W4.1 splits it.
+5. **`main` is not branch-protected**, so 30 blocking controls are advisory in fact. ⚑1.
 
 ---
 
-## Decision queue (do not auto-execute; surface to owner)
+## Decision queue — surface to the owner, do not auto-execute
 
-- **Paste PI v10.10 to claude.ai project knowledge.** Live = v10.6. v10.10 supersedes v10.7-v10.9 in one paste. Path: claude.ai → Project Settings → Custom Instructions. The PI file is at `governance/project-instructions-v10_10.md`.
-- **~14 working-doc files still in `references/`** (theory-gap-analysis.md, throughline-*.md, methodology-*.md, parser-source-readiness.md, phase-b-handoff.md, etc.) — looked stale during session, left for owner triage.
-- **Pilot BPC selection for Phase E.1** (`reasoning_doc_citations` workflow) — owner directive needed.
-- **`mobile-app-prototype-v9/` in `working/`** — left in place pending owner confirmation it's active.
+⚑1 branch protection (with the `DB integrity` carve-out until W7 completes) · ⚑2 consolidate the
+five rival (c)-layer tables · ⚑3 `room_page.py` fix-or-archive · ⚑4 `test_adjudication_integrity`
+· ⚑5 `test_generate_parts_4_2` (recommend keep + re-fixture — it is the only test of a live
+generator) · ⚑6 `citation_mining_pipeline.py` · ⚑7 ratify the 11 vocabulary values.
+
+**New this session:** whether the spec template's prose fields should have a home in the schema at
+all. No table carries them — `summary`, `why_md`, `schedule_md`, `dar_note` and the rest exist in
+no table across all 63. They are file-canonical by default rather than by decision, which is part
+of why 79 of 87 generated spec pages render an empty best-practice banner.
 
 ---
 
-## Known issues to address opportunistically (P1, not blocking)
+## Working rules that bit during this session
 
-- `skills/workplan-orchestrator_SKILL.md` has universality violations: 1 hardcoded DB path, 1 absolute path, 8 embedded dates, plus stale embedded skill-index taxonomy (classifies `toc-editor` as deprecated despite PI rule #3 invoking it; missing 11 newer skills). Fix when touching that skill for any reason.
-- `scripts/convert/` (18 scripts) never inspected end-to-end this session. JSON inputs in `references/*.json` may be stale.
-- 3 rows in `data_migrations` table have row-IDs from the Python migrations that don't match the new SQL filenames. Cosmetic only; doesn't affect CI.
+- **The DB is a 6.8 MB binary blob with no merge driver.** Two branches both touching it produce an
+  unresolvable conflict. Serialize anything that writes it. The resolution protocol is to discard
+  both blobs and `migrate_db.py --rebuild` — except `evidence_source_authors` and `pipeline_runs`,
+  which are written outside migrations and would be lost.
+- **Use a quoted heredoc for commit messages** (`<<'EOF'`). An unquoted one command-substituted
+  backticked terms out of a message earlier in this session.
+- **`$?` after a pipeline is the last command's status**, not the interesting one. Use
+  `${PIPESTATUS[0]}`.
+- **Verify by execution, not by reading.** Five of the six data-sourcing queries in
+  `item-specification-writer` had been broken for months precisely because nobody ran them.
+
+---
+
+## Carried forward, still open (P1, not blocking)
+
+- `skills/workplan-orchestrator_SKILL.md`: 1 hardcoded DB path, 1 absolute path, 8 embedded dates,
+  and a stale embedded skill-index taxonomy. Fix when touching that skill for any reason. Given
+  what W1 found in two other skills, **the whole `skills/` directory deserves the same
+  execute-every-query sweep** — that is a candidate addition to W2.
+- 3 rows in `data_migrations` have row-IDs from the Python migrations that don't match the SQL
+  filenames. Cosmetic; doesn't affect CI.
 
 ---
 
 ## Tools and access
 
-- PAT visible per owner (in PI bootstrap, `gap_register*.md`, and this handoff): `[REDACTED — see PI bootstrap or owner-side notes]`
-- Git Data API helper at `/tmp/git_data_api.py` — recreate from session_2026-05-13b transcript if needed
-- Effort-level default: `max` per user preferences
+`scripts/preflight.sh` gates a diff; `python3 scripts/run_checks.py --changed-from origin/main
+--explain` says why each check ran or didn't. Expect one blocking failure on any branch —
+`test_db_integrity` at 31/41 — nine pre-existing content rows plus C10 — and a dozen advisories.
+Install deps first: `pip install -r requirements.txt`, then `pip install jsonschema`.
 
----
-
-## Sequencing reminder
-
-Phase 1 is the precondition for everything. If 1.1 fails on first CI run, stop and fix before doing 1.2 or anything in Phase 2. The plan's acceptance criterion (the 6-step claim-verification chain) is the destination, not the next step.
+Never write `data/guidebook.db` directly. All changes ship as migrations
+(`scripts/emit_data_migration.py` → `scripts/migrate_db.py`), verified with
+`python3 scripts/migrate_db.py --rebuild /tmp/rebuilt.db` before pushing.

@@ -2,7 +2,7 @@
 """
 scripts/decision_capture.py — Decision-register validator (per governance/decision-protocol.md, A12).
 
-Eight checks per §7.3:
+Nine checks — C1-C8 per §7.3, C9 added 2026-08-03:
   C1 register well-formed: data/decisions/decision_register.yaml validates as DecisionRegister
   C2 unique decision_ids (covered at schema level; surfaced here for clarity)
   C3 rationale length compliant: §3.3 norms (warning, not error)
@@ -11,6 +11,8 @@ Eight checks per §7.3:
   C6 rationale anti-pattern: §3.4 patterns (warning)
   C7 RULE coverage: every CANONICAL RULE in project-standards has at least one Decision (warning)
   C8 review_status consistency (covered at schema level; surfaced here)
+  C9 DR coverage: every decisions/DR-*.md has a register row (warning) — C1-C8
+     validate the register against itself and never ask whether it is complete
 
 Usage:
     python3 scripts/decision_capture.py                       # full audit
@@ -223,6 +225,55 @@ def check_rule_coverage(register: DecisionRegister) -> list[str]:
 
 # --- Main ---
 
+# --- C9: every Decision Record has a register row (warnings) ---
+
+def check_dr_register_coverage(register: DecisionRegister) -> list[str]:
+    """C9: every decisions/DR-*.md is cited by some register entry.
+
+    The register is the only store that carries the governance-operative
+    fields — status, category, delegation, supersedes. A DR file with no
+    register row is a decision with no lifecycle: it cannot be marked
+    SUPERSEDED or RETIRED, so it stays indistinguishable from live doctrine
+    forever. That is the mechanism by which superseded material accumulates,
+    and C1-C8 do not look for it — they validate the register against itself
+    and never ask whether it is complete.
+
+    Warning, not error, deliberately: this check is invoked at level
+    `blocking`, and closing a gap costs one governance judgement per DR
+    (114 of 156 register entries are DG-NON, owner-only). Erroring would
+    deadlock every governance/data/schema change until the backlog cleared.
+    Promote to error once the count reaches zero.
+    """
+    dr_dir = os.path.join(REPO_ROOT, "decisions")
+    if not os.path.isdir(dr_dir):
+        return []
+    drs = sorted(f for f in os.listdir(dr_dir)
+                 if f.startswith("DR-") and f.endswith(".md"))
+    if not drs:
+        return []
+
+    # A register entry may cite its DR from decision_artifacts or any prose
+    # field, so scan the whole record rather than one column.
+    cited: set[str] = set()
+    for d in register.decisions:
+        for value in d.model_dump().values():
+            for item in (value if isinstance(value, (list, tuple)) else [value]):
+                for m in re.finditer(r"DR-[A-Za-z0-9._-]+\.md", str(item)):
+                    cited.add(m.group(0))
+
+    orphans = [f for f in drs if f not in cited]
+    if not orphans:
+        return []
+
+    warnings = [
+        f"C9: {len(orphans)} of {len(drs)} Decision Records have no register "
+        f"row — no status, category, delegation or supersedes chain, so they "
+        f"cannot be marked SUPERSEDED or RETIRED"
+    ]
+    warnings += [f"C9   orphan DR (no register entry): {f}" for f in orphans]
+    return warnings
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[1])
     ap.add_argument("--register-only", action="store_true",
@@ -255,6 +306,7 @@ def main() -> int:
         all_warnings.extend(check_rationale_antipatterns(register))
         if not args.register_only and not args.decision_id:
             all_warnings.extend(check_rule_coverage(register))
+            all_warnings.extend(check_dr_register_coverage(register))
 
     # Report
     if register:

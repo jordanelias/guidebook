@@ -12,7 +12,8 @@ Checks performed:
   C — Consistency invariants (VERIFIED audit trail, pre-pipeline backfill,
       COMPLETE criteria, run record completeness)
   D — Duplicate / collision detection (duplicate DOIs excluding known intentional
-      triples, duplicate ref_ids across tables)
+      triples, duplicate ref_ids across tables, and the DOI-less half: sources
+      colliding on author+year+title, plus sources with no computable key at all)
   E — Schema contract (required columns present, migration log non-empty,
       PRAGMA foreign_keys honoured)
   F — Pipeline run health (no regressions, all started runs completed)
@@ -88,6 +89,21 @@ def run_checks(db_path):
     record("A08", "item_population_elaborations → items",
         conn.execute("""SELECT COUNT(*) FROM item_population_elaborations e
             WHERE NOT EXISTS (SELECT 1 FROM items i WHERE i.item_code=e.item_code)
+        """).fetchone()[0] == 0)
+
+    # A09 stands in for a foreign key that migration 039 deliberately did NOT
+    # declare. Every other soft edge in that migration became a real FK; this
+    # one would have required rebuilding evidence_sources — 88 columns, 9
+    # inbound FKs — to protect 44 values, and hand-transcribing a definition
+    # that size is how a rebuild silently changes a type or a CHECK. The
+    # constraint is traded for this check; if evidence_sources is ever rebuilt
+    # for another reason, declare the FK and delete this.
+    record("A09", "evidence_sources.superseded_by_ref_id → evidence_sources",
+        conn.execute("""SELECT COUNT(*) FROM evidence_sources s
+            WHERE s.superseded_by_ref_id IS NOT NULL
+            AND s.superseded_by_ref_id <> ''
+            AND NOT EXISTS (SELECT 1 FROM evidence_sources e
+                            WHERE e.ref_id = s.superseded_by_ref_id)
         """).fetchone()[0] == 0)
 
     # ── B: Enum validation ────────────────────────────────────────────────────
@@ -208,6 +224,145 @@ def run_checks(db_path):
            bad_complete_doi == 0,
            f"{bad_complete_doi} COMPLETE rows lack doi with no acceptable explanation" if bad_complete_doi else "")
 
+    # C06 — data_capture_status must agree with the joinable evidence tables in
+    # BOTH directions. A status that can drift from the rows it summarises is
+    # worse than no status: it looks authoritative while being wrong. When W5.4
+    # gives jurisdictional_values a ref_id, add it to this predicate AND to the
+    # backfill in data_20260802215744.
+    CAPTURED = """(EXISTS (SELECT 1 FROM source_value_extractions x WHERE x.ref_id=s.ref_id)
+                OR EXISTS (SELECT 1 FROM spec_value_probes p       WHERE p.ref_id=s.ref_id)
+                OR EXISTS (SELECT 1 FROM reasoning_doc_citations r WHERE r.source_ref_id=s.ref_id)
+                OR EXISTS (SELECT 1 FROM economics_entries e       WHERE e.ref_id=s.ref_id))"""
+    claims_not_held = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources s
+        WHERE s.data_capture_status='captured' AND NOT {CAPTURED}""").fetchone()[0]
+    held_not_claimed = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources s
+        WHERE s.data_capture_status<>'captured' AND {CAPTURED}""").fetchone()[0]
+    record("C06", "data_capture_status='captured' ⟺ a joinable capture row exists",
+           claims_not_held == 0 and held_not_claimed == 0,
+           f"{claims_not_held} claim capture with no row; {held_not_claimed} have rows but do not claim it"
+           if (claims_not_held or held_not_claimed) else "")
+
+    # C08 — citation_mining_status must agree with citation_mining in both
+    # directions, resolving a row to its source the way the table's own primary
+    # key does: global_ref_id when present, otherwise (slug, local_ref_id)
+    # through source_slug_links.
+    #
+    # This check exists because its absence cost something. The original
+    # backfill joined on global_ref_id alone — NULL in 146 of 183 rows — and
+    # left 80 sources reading 'pending' while holding a non-deferred mining
+    # row. C06 was written for data_capture_status and had no counterpart
+    # here, so nothing contradicted the wrong value. A status column without a
+    # biconditional is an assertion nobody checks.
+    MINED_SRC = """SELECT COALESCE(m.global_ref_id, l.ref_id) FROM citation_mining m
+                   LEFT JOIN source_slug_links l
+                     ON l.slug = m.slug AND l.local_ref_id = m.local_ref_id
+                   WHERE COALESCE(m.deferred_reason,'') = ''
+                     AND COALESCE(m.global_ref_id, l.ref_id) IS NOT NULL"""
+    claims_mined = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources
+        WHERE citation_mining_status='mined' AND ref_id NOT IN ({MINED_SRC})""").fetchone()[0]
+    mined_not_claimed = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources
+        WHERE citation_mining_status<>'mined' AND ref_id IN ({MINED_SRC})""").fetchone()[0]
+    record("C08", "citation_mining_status='mined' ⟺ a non-deferred mining row resolves to it",
+           claims_mined == 0 and mined_not_claimed == 0,
+           f"{claims_mined} claim mined with no row; {mined_not_claimed} have a row but do not claim it"
+           if (claims_mined or mined_not_claimed) else "")
+
+    # C10 — a published cell may not rest on a source that has not been
+    # established as real and usable.
+    #
+    # CORRECTED 2026-08-02, same day it was written. The first version tested
+    # data_capture_status='pending' and failed 13 of 13 cells. That was wrong,
+    # and wrong in an instructive way: capture-pending means "no row in an
+    # extraction table", NOT "unread". All 59 sources cited by published cells
+    # are VERIFIED or DISPUTED with COMPLETE metadata, and every cell carries a
+    # convergence_id and tier_basis — they were plainly read. A cell cannot
+    # precede the reading that produced it, so a well-formed cell is itself
+    # evidence its sources were read, and the first version could only ever
+    # have fired on a fabricated cell.
+    #
+    # Read-ness is recorded in verification_status, not in capture status. That
+    # is what this now tests. DISPUTED counts as a failure: a best practice
+    # resting on a source whose standing is contested is exactly the case worth
+    # surfacing, and it is not hypothetical — 2 of the 59 are DISPUTED.
+    OK_VSTATUS = ("VERIFIED", "VERIFIED-1", "VERIFIED-2",
+                  "VERIFIED-WITH-CORRECTION", "CO1-VERIFIED")
+    try:
+        ph = ",".join("?" * len(OK_VSTATUS))
+        unsound = conn.execute(f"""
+            SELECT COUNT(DISTINCT c.cell_id)
+            FROM evidence_cell_state c
+            JOIN json_each(c.governing_refs) j
+            JOIN evidence_sources e ON e.ref_id = j.value
+            WHERE c.state IN ('stated','provisional')
+              AND COALESCE(e.verification_status,'') NOT IN ({ph})""",
+            OK_VSTATUS).fetchone()[0]
+        total_cells = conn.execute("""SELECT COUNT(*) FROM evidence_cell_state
+            WHERE state IN ('stated','provisional')""").fetchone()[0]
+        record("C10", "no published cell rests on an unverified or disputed source",
+               unsound == 0,
+               f"{unsound} of {total_cells} published cells cite a source that is "
+               f"not verified (disputed, unverified, or no status)"
+               if unsound else "")
+    except sqlite3.OperationalError as exc:
+        record("C10", "no published cell rests on an unverified or disputed source",
+               False, f"could not evaluate: {exc}")
+
+    # C07 — a value column must hold a value, not a state written as prose.
+    # This is not hypothetical: '[author surname pending ...]' strings in
+    # first_author_last are non-empty, so C03 accepted them as authors and a
+    # missing author passed a blocking gate. Unknown belongs in NULL plus a
+    # coded status, never in the value field.
+    # Guarding one column was not enough: the identical mask survived one column
+    # over, on the same rows, in author_display — which is what the vetting
+    # surface actually renders. Since migration 041 every one of these has a
+    # paired *_note overflow, so prose in the VALUE column is now unambiguously
+    # a defect rather than a place-of-last-resort.
+    PLACEHOLDER = ("{c} LIKE '[%' OR {c} LIKE '%pending%' OR {c} LIKE '%TBD%' "
+                   "OR {c} LIKE '%TBC%' OR {c} LIKE '%unknown (%'")
+    VALUE_COLS = [("evidence_sources", "first_author_last"),
+                  ("evidence_sources", "author_display"),
+                  ("evidence_sources", "publisher"),
+                  ("evidence_source_authors", "corporate_name")]
+    placeholder, detail = 0, []
+    for tbl, col in VALUE_COLS:
+        n = conn.execute(f"SELECT COUNT(*) FROM {tbl} WHERE "
+                         + PLACEHOLDER.format(c=col)).fetchone()[0]
+        placeholder += n
+        if n:
+            detail.append(f"{tbl}.{col}={n}")
+    record("C07", "value columns hold values, not placeholder states",
+           placeholder == 0,
+           f"{placeholder} rows hold placeholder prose in a value column "
+           f"({', '.join(detail)}) — the prose belongs in the paired _note column"
+           if placeholder else "")
+
+    # C09 — the states nobody can contradict. C06 binds only 'captured' and C08
+    # only 'mined', which leaves every "we looked and decided" state freely
+    # assertable: all 852 pending rows could be flipped to 'none-extractable'
+    # and the whole suite would still pass. Those are the states most worth
+    # lying about, so they are the ones that most need a witness. Migration
+    # 040's own DDL promises a reason accompanies them; this enforces it.
+    unreasoned = conn.execute("""SELECT COUNT(*) FROM evidence_sources
+        WHERE data_capture_status IN ('deferred','none-extractable')
+          AND COALESCE(processing_blocked_reason,'') = ''""").fetchone()[0]
+    orphan_reason = conn.execute("""SELECT COUNT(*) FROM evidence_sources
+        WHERE COALESCE(processing_blocked_reason,'') <> ''
+          AND data_capture_status NOT IN ('deferred','none-extractable')
+          AND citation_mining_status <> 'deferred'""").fetchone()[0]
+    bad_deferred = conn.execute("""SELECT COUNT(*) FROM evidence_sources s
+        WHERE s.citation_mining_status='deferred' AND NOT EXISTS (
+            SELECT 1 FROM citation_mining m
+            LEFT JOIN source_slug_links l
+              ON l.slug=m.slug AND l.local_ref_id=m.local_ref_id
+            WHERE COALESCE(m.global_ref_id, l.ref_id) = s.ref_id
+              AND COALESCE(m.deferred_reason,'') <> '')""").fetchone()[0]
+    record("C09", "a 'we looked and stopped' state carries its witness",
+           unreasoned == 0 and orphan_reason == 0 and bad_deferred == 0,
+           f"{unreasoned} deferred/none-extractable with no coded reason; "
+           f"{orphan_reason} reasons attached to a non-stopped state; "
+           f"{bad_deferred} claim mining-deferred with no deferred mining row"
+           if (unreasoned or orphan_reason or bad_deferred) else "")
+
     # legacy/v2 row count parity — only when legacy table still exists
     has_legacy = conn.execute("""SELECT COUNT(*) FROM sqlite_master
         WHERE type='table' AND name='evidence_sources_v1_legacy'""").fetchone()[0]
@@ -294,6 +449,81 @@ def run_checks(db_path):
     record("D03", "No duplicate slugs in bpc_metadata",
            len(dup_slugs) == 0,
            f"duplicates: {[dict(r) for r in dup_slugs]}" if dup_slugs else "")
+
+    # D04 — the DOI-less half of D01.
+    #
+    # R9 ("pre-check the DOI, cross-file the existing ref_id, never duplicate")
+    # is only mechanically enforceable for sources that HAVE a DOI, which D01
+    # covers. 422 of 863 sources have none — every T4/T5/T6 code, standard and
+    # decree, plus grey and non-indexed work — and for those nothing has
+    # detected a re-entry since `evidence_sources.doi_less_key` left the schema.
+    #
+    # That column was a stored author_year_title dedup key, present in
+    # 001_initial_schema.sql and dropped by migrate_evidence_sources_v2.py when
+    # authors were normalised into evidence_source_authors. Dropping it was
+    # right: a denormalised key that can be recomputed from pub fields is a
+    # second copy waiting to disagree with the first. What was never done is
+    # re-expressing the CHECK on the new basis, so scripts/validate_db.py C5
+    # ("without doi or doi_less_key — incomplete dedup data") simply started
+    # crashing and was quarantined. The contract was sound; only its column
+    # was obsolete. This recomputes the key and applies the contract.
+    #
+    # Key = normalised(first author) + pub_year + normalised(full title). The
+    # full title is load-bearing: truncating it collapses legitimately distinct
+    # clause-level rows (BCA Code 2025 whole-code vs Chapter 8; Finnish Decree
+    # 241/2017 general vs door provisions) into false positives.
+    KNOWN_DUP_SOURCE_KEYS = (
+        # (normalised_author, pub_year, normalised_title) pairs that are
+        # deliberately two rows. Empty today — every current collision is a
+        # genuine re-entry queued for merge. Add here only with the reason.
+    )
+    import re as _re
+
+    # Normalisation is Unicode-aware by necessity, not by politeness. An
+    # ASCII-only fold ([^a-z]) erases 中华人民共和国住房和城乡建设部, 日本工業標準調査会,
+    # 한국시각장애인연합회 and every other non-Latin corporate author to the empty
+    # string. Both effects are unacceptable: D05 would report those sources as
+    # "keyless" for not being Latin, and D04 would SKIP them — enforcing dedup
+    # discipline on the English corpus while exempting the multilingual one, in
+    # a corpus whose R5/R11 exist to prevent exactly that asymmetry.
+    # Split before folding so "国土交通省 住宅局 (MLIT Housing Bureau)" keys on the
+    # in-language name rather than the parenthetical gloss (R11: no
+    # back-translation).
+    def _norm_author(a):
+        a = _re.split(r"[,;&(]| et al| and ", (a or "").casefold())[0]
+        return _re.sub(r"\W", "", a, flags=_re.UNICODE)
+
+    def _norm_title(t):
+        return _re.sub(r"\W", "", (t or "").casefold(), flags=_re.UNICODE)
+
+    _groups = {}
+    for r in conn.execute("""SELECT ref_id, pub_year, author_display, pub_title
+                             FROM evidence_sources
+                             WHERE doi IS NULL OR doi = ''"""):
+        key = (_norm_author(r[2]), r[1], _norm_title(r[3]))
+        if not key[0] or not key[2] or key in KNOWN_DUP_SOURCE_KEYS:
+            continue  # no computable key — C03/G02 own missing-author coverage
+        _groups.setdefault(key, []).append(r[0])
+    dup_sources = {k: v for k, v in _groups.items() if len(v) > 1}
+    record("D04", "No duplicate DOI-less sources (author+year+title collision)",
+           len(dup_sources) == 0,
+           f"{len(dup_sources)} collisions across "
+           f"{sum(len(v) for v in dup_sources.values())} rows: "
+           + "; ".join("+".join(v) for v in sorted(dup_sources.values()))
+           if dup_sources else "")
+
+    # Sources with no DOI and no computable dedup key are invisible to both
+    # D01 and D04 — the actual "incomplete dedup data" condition validate_db C5
+    # was written to catch.
+    undedupable = sum(
+        1 for r in conn.execute("""SELECT author_display, pub_year, pub_title
+                                   FROM evidence_sources
+                                   WHERE doi IS NULL OR doi = ''""")
+        if not _norm_author(r[0]) or r[1] is None or not _norm_title(r[2]))
+    record("D05", "Every DOI-less source has a computable dedup key",
+           undedupable == 0,
+           f"{undedupable} DOI-less sources lack author, year or title — "
+           f"invisible to both D01 and D04" if undedupable else "")
 
     # ── E: Schema contract ────────────────────────────────────────────────────
     print("\n[E] Schema contract")
