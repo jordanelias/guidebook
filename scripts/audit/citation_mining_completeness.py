@@ -60,9 +60,21 @@ def audit(db_path, session=None, tier_max=2, output_json=False):
                         GROUP_CONCAT(DISTINCT ssl.slug) as slugs
         FROM evidence_sources es
         JOIN source_slug_links ssl ON es.ref_id = ssl.ref_id
-        LEFT JOIN citation_mining cm ON cm.global_ref_id = es.ref_id
+        -- Resolve a mining row to its source the way citation_mining's own
+        -- primary key does: global_ref_id when present, otherwise
+        -- (slug, local_ref_id) through source_slug_links. global_ref_id is NULL
+        -- on 146 of 183 rows, so joining on it alone reported 48 of 168
+        -- Tier 1-2 sources as unmined when a mining row for them exists.
+        -- This gate is BLOCKING, so those were 48 false positives at session
+        -- close. Same defect as data_20260802215744, found by the adversarial
+        -- pass over that fix; corrected here rather than in a second column.
+        LEFT JOIN citation_mining cm
+               ON cm.global_ref_id = es.ref_id
+        LEFT JOIN citation_mining cm2
+               ON cm2.slug = ssl.slug AND cm2.local_ref_id = ssl.local_ref_id
         WHERE es.tier BETWEEN 1 AND :tier_max
           AND cm.global_ref_id IS NULL
+          AND cm2.slug IS NULL
           {where_session}
         GROUP BY es.ref_id
         ORDER BY es.tier, es.ref_id
