@@ -79,6 +79,69 @@ nothing can traverse outranks a link that is merely unenforced.
 
 ---
 
+## 0.1 Reading order for a new session
+
+Read these, in this order, before touching anything. Roughly 40 minutes.
+
+| # | Read | For |
+|---|---|---|
+| 1 | `CLAUDE.md` §0, §4, §7, §8 | the non-negotiables: commit format, migrations-only, how to run checks |
+| 2 | **this file, §0** | the goal and the one number that measures it |
+| 3 | `governance/pipeline-operations.md` | what the five operations are, and why "mining" unqualified is banned |
+| 4 | **`references/tooling-register.md`** | **read this BEFORE proposing any tooling work.** 600+ lines of existing diagnosis. This plan re-derived findings it already held, and one item (⚑7) was framed as an owner decision when the register had already called it a stale test |
+| 5 | `sessions/handoff-next-session.md` | where the last session stopped |
+| 6 | `git log --oneline -25` | what moved recently; commit bodies carry the reasoning |
+
+Then derive current state rather than trusting any number written down:
+
+```
+python3 scripts/audit/table_connectivity.py     # islands, edges, the walk, missing features
+python3 scripts/tests/test_db_integrity.py      # expect ~31/41; nine content rows + C10
+scripts/preflight.sh                            # gate your own diff
+python3 scripts/run_checks.py --changed-from origin/main --explain
+```
+
+**Do not trust a count in prose — including in this file.** Every volatile number here was true when
+written and may not be now.
+
+### 0.2 Lessons this effort paid for
+
+These are not general advice. Each one cost a defect, all of them in the same session, and every one
+was in work that had already been verified and confidently described.
+
+1. **Test the logic before blaming the data, and the data before blaming the logic.** Failed in both
+   directions: a junction table was proposed to fix reachability that already worked, and a
+   comparator artifact was reported as dangling data. The structure here is consistently sounder
+   than the population.
+2. **Do not relabel an intermediate result and then reason from the label.** `data_capture_status =
+   'pending'` means *no row in one of four extraction tables*. It was relabelled "never captured",
+   then "the claim may not exist", and produced a check that condemned every published cell. Three
+   small slides across three artifacts in under an hour, each defensible alone.
+3. **Ask whether a "decision" is really two copies disagreeing.** ⚑7 looked like eleven values
+   needing owner ratification. Most of it is `schemas/enums.py`, the test's allow-list, and the data
+   holding three different versions of one vocabulary. **A synchronisation defect wearing a
+   governance decision's clothes.** Check for other copies before escalating anything as a decision.
+4. **A column holds one domain.** Where a value and its qualifying prose must coexist, pair the
+   value with a `<column>_note` overflow instead of splitting at write time. Splitting by heuristic
+   mis-handled 120 rows and destroyed a real standard identifier.
+5. **A status column ships with its check, or it does not ship.** `citation_mining_status` shipped
+   without a biconditional and was wrong from creation — 80 sources misreported, and nothing in the
+   system could contradict it.
+6. **Look before destroying.** A migration nulled four "placeholder" authors; two were recoverable
+   from elsewhere in the same database, and the loss was then reported as a finding.
+7. **Generate DDL, never hand-transcribe it.** Deriving `CREATE TABLE` from `sqlite_master` for
+   migration 039 caught a defect a hand-written migration would have shipped: two columns carry
+   trailing comments, and appending `REFERENCES` buried the clause inside the comment, so two of
+   twelve keys would have silently not existed.
+8. **Declare pointers; do not infer them from column names.** Name-matching invented
+   `local_ref_id → citation_mining` and `subtype → item_population_links`, neither of which is a
+   pointer. Noise gets a checker demoted, which is how this repo's advisory checks died.
+9. **Mutation-test before registering.** Every check added here was verified by planting the
+   violation it exists to catch. Two "passing" mutations turned out to be NOT NULL and UNIQUE
+   failures proving nothing, and were only caught by reading the error text.
+
+---
+
 ## 1. The verdict
 
 | Proposal | Verdict | Decisive evidence |
