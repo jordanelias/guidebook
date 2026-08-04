@@ -363,6 +363,12 @@ migration; `magazine_article` (1 row) is a single-row judgment recorded in its n
 | `DISPUTED` | 7 | `UNVERIFIED` | `CLOSED` once attempts are recorded, else `OPEN` | `corroborated-not-retrieved` / per note | Reason **`disputed-existence`** per the owner's ruling (§4.4). None of the 7 currently records the ≥2 attempts its own justification claims, so under I3 they cannot be written `CLOSED` until that work is recorded — citing `audits/anchor-correctness-sweep-2026-07-20.md` as the documented witness of those retrievals, never asserting them bare. |
 | `PARTIAL` (metadata_quality) | 5 | `UNVERIFIED` | `OPEN` | per note | Outstanding item named in the reason. Cross-cuts three different statuses today, which is why it was never a standing (§4.4). |
 | `SUPERSEDED` | 1 | — | — | — | Retired; `superseded_by_ref_id` is the record (§4.4). |
+| `UNVERIFIED-CLOSED` | 0 | `UNVERIFIED` | `CLOSED` | per note | **[ADDED 2026-08-04, completing §5.]** Zero rows today, but live in `schemas/enums.py:277`. It decomposes with no residue — the name is literally the two columns concatenated, which is the clearest possible demonstration that the split was already latent in the vocabulary. |
+| `CLOSED-DELETED` | 0 | `UNVERIFIED` | `CLOSED` | per note | **[ADDED 2026-08-04.]** Zero rows, live in `schemas/enums.py:278` and named in CLAUDE.md's citation discipline ("two failed searches → `CLOSED-DELETED`"). Reason `not-found-after-search`; the two failed searches are exactly the `attempt_count ≥ 2` that I3 requires, so the rule that produces this state and the invariant that guards it are the same statement. |
+
+Neither of the last two has any rows, so they cost nothing to map — but they were absent from an
+earlier revision of this table, and a migration that met them for the first time at execution
+would have had to invent a mapping under time pressure. Deciding them here is the cheaper order.
 
 No row may be written `CLOSED` by this migration without satisfying §4.2. Where effort was not in
 fact spent, the row lands `OPEN` with `attempt_count = 0` — an honest queue entry rather than a
