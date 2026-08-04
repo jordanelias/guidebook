@@ -23,6 +23,20 @@ section { margin: 28px 0; padding-bottom: 20px; border-bottom: 1px solid var(--b
 section:last-child { border-bottom: none; }
 h2 { font-family: var(--font-ui); font-size: 15px; font-weight: 600; text-transform: uppercase;
       letter-spacing: 0.5px; color: var(--muted); margin-bottom: 10px; }
+h3 { font-family: var(--font-ui); font-size: 13px; font-weight: 600; margin: 18px 0 6px;
+      color: var(--ink); }
+ul.sources { list-style: none; font-size: 14px; }
+ul.sources li { padding: 6px 0 6px 12px; border-left: 2px solid var(--border);
+                 margin-bottom: 6px; }
+ul.sources .ref { font-family: var(--font-mono); font-size: 12px; color: var(--accent); }
+.tier-badge { font-family: var(--font-ui); font-size: 11px; padding: 1px 5px;
+               background: var(--accent-light); color: var(--accent); border-radius: 2px; }
+.vs { font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.3px; }
+.vs.ok { color: #2e6b3e; }
+.vs.warn { color: #8a4b2d; font-weight: 600; }
+.bpc-state { font-family: var(--font-ui); font-size: 11px; color: var(--muted); }
+.bpc-retracted { font-family: var(--font-ui); font-size: 11px; font-weight: 600;
+                  color: #8a2d2d; background: #f7e8e8; padding: 1px 5px; border-radius: 2px; }
 table { width: 100%; border-collapse: collapse; font-size: 14px; }
 th { font-family: var(--font-ui); font-size: 12px; text-transform: uppercase; text-align: left;
       padding: 6px 10px; background: var(--accent-light); color: var(--accent);
@@ -43,7 +57,7 @@ td a { color: var(--accent); text-decoration: none; font-family: var(--font-mono
 <h2>Applicable populations (1)</h2>
 <table>
 <thead><tr><th>Code</th><th>Name</th><th>Applicability</th></tr></thead>
-<tbody><tr><td><a href="/populations/all.html">ALL</a></td><td>applies universally to all populations</td><td>applies</td></tr>
+<tbody><tr><td><a href="/populations/all.html">ALL</a></td><td>applies to all populations (scope marker)</td><td>applies</td></tr>
 </tbody>
 </table>
 </section>
@@ -51,8 +65,8 @@ td a { color: var(--accent); text-decoration: none; font-family: var(--font-mono
 <section>
 <h2>Governing Best Practice Compendium entries</h2>
 <table>
-<thead><tr><th>Slug</th><th>Link type</th><th>Rationale</th></tr></thead>
-<tbody><tr><td>room-acoustic-performance</td><td>legacy bpc_source_slug</td><td class="empty">item_bpc_links (the intended many-to-many bridge, migration 013) has no row for this item yet — see decisions/DR-2026-07-12-evidence-cell-state-schema-reconciliation.md.</td></tr></tbody>
+<thead><tr><th>Slug</th><th>Link type</th><th>BPC state</th><th>Rationale</th></tr></thead>
+<tbody><tr><td>room-acoustic-performance</td><td>legacy bpc_source_slug</td><td class="empty">&mdash;</td><td class="empty">item_bpc_links (the intended many-to-many bridge, migration 013) has no row for this item yet — see decisions/DR-2026-07-12-evidence-cell-state-schema-reconciliation.md.</td></tr></tbody>
 </table>
 </section>
 
@@ -68,9 +82,15 @@ td a { color: var(--accent); text-decoration: none; font-family: var(--font-mono
             <th>Code floor only</th><th>Regulatory stratum only</th>
             <th>Source caveats</th><th>Confidence basis</th>
             <th>Falsification condition</th></tr></thead>
-            <tbody><tr><td>ALL</td><td>provisional</td><td>T4-6-only(regulatory_stratum_only)</td><td>no</td><td>yes</td><td>—</td><td>—</td><td>Floor claim: NRC &gt;= 0.90 per ANSI/ASA S12.60 S5.3 (REF-00563; empirical ceiling 0.935). Overturned if the cited code edition is superseded. Never becomes a best-practice (filled-circle) claim by more codes agreeing — only a Tier-1/2 study establishing an NRC panel threshold, or Co-1/Co-2, can do that. Note: the item-name spec &quot;NRC &gt;= 0.85&quot; sits BELOW this 0.90 code floor (surfaced for review).</td></tr>
+            <tbody><tr><td>ALL</td><td>provisional</td><td>T4-6-only(regulatory_stratum_only)</td><td>no</td><td>yes</td><td>—</td><td>Regulatory-stratum floor: the acoustic value derives from a single T4 evidence-based standard (ANSI/ASA S12.60-2010 Part 1). NOT an evidence-anchored best practice — no clinical anchoring dimension; renders as weak-band (○) best-practice-as-currently-known only (Option A, DR-2026-07-21). §2.3 confidence flags backfilled 2026-07-24; determination unchanged.</td><td>Floor claim: NRC &gt;= 0.90 per ANSI/ASA S12.60 S5.3 (REF-00563; empirical ceiling 0.935). Overturned if the cited code edition is superseded. Never becomes a best-practice (filled-circle) claim by more codes agreeing — only a Tier-1/2 study establishing an NRC panel threshold, or Co-1/Co-2, can do that. Note: the item-name spec &quot;NRC &gt;= 0.85&quot; sits BELOW this 0.90 code floor (surfaced for review).</td></tr>
 </tbody>
         </table>
+        <h2>Governing sources</h2>
+        <p>Every source below governs the determination for its population.
+        Walk the other direction — every specification a source justifies —
+        through <code>cell_source_links</code>.</p>
+        <h3>ALL — 1 governing source</h3>
+<ul class="sources"><li><span class="ref">REF-00563</span> Acoustical Society of America (ASA) — S12 Noise Standards Committee; ANSI accredited (2010). <em>ANSI/ASA S12.60-2010/Part 1 — Schools</em> <span class="tier-badge">T4</span> <span class="vs ok">VERIFIED</span></li></ul>
 </section>
 
 </body>

@@ -23,6 +23,20 @@ section { margin: 28px 0; padding-bottom: 20px; border-bottom: 1px solid var(--b
 section:last-child { border-bottom: none; }
 h2 { font-family: var(--font-ui); font-size: 15px; font-weight: 600; text-transform: uppercase;
       letter-spacing: 0.5px; color: var(--muted); margin-bottom: 10px; }
+h3 { font-family: var(--font-ui); font-size: 13px; font-weight: 600; margin: 18px 0 6px;
+      color: var(--ink); }
+ul.sources { list-style: none; font-size: 14px; }
+ul.sources li { padding: 6px 0 6px 12px; border-left: 2px solid var(--border);
+                 margin-bottom: 6px; }
+ul.sources .ref { font-family: var(--font-mono); font-size: 12px; color: var(--accent); }
+.tier-badge { font-family: var(--font-ui); font-size: 11px; padding: 1px 5px;
+               background: var(--accent-light); color: var(--accent); border-radius: 2px; }
+.vs { font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.3px; }
+.vs.ok { color: #2e6b3e; }
+.vs.warn { color: #8a4b2d; font-weight: 600; }
+.bpc-state { font-family: var(--font-ui); font-size: 11px; color: var(--muted); }
+.bpc-retracted { font-family: var(--font-ui); font-size: 11px; font-weight: 600;
+                  color: #8a2d2d; background: #f7e8e8; padding: 1px 5px; border-radius: 2px; }
 table { width: 100%; border-collapse: collapse; font-size: 14px; }
 th { font-family: var(--font-ui); font-size: 12px; text-transform: uppercase; text-align: left;
       padding: 6px 10px; background: var(--accent-light); color: var(--accent);
@@ -43,9 +57,9 @@ td a { color: var(--accent); text-decoration: none; font-family: var(--font-mono
 <h2>Applicable populations (3)</h2>
 <table>
 <thead><tr><th>Code</th><th>Name</th><th>Applicability</th></tr></thead>
-<tbody><tr><td><a href="/populations/dem.html">DEM</a></td><td>dementia</td><td>applies</td></tr>
-<tr><td><a href="/populations/ndv.html">NDV</a></td><td>neurodivergence (broad)</td><td>applies</td></tr>
-<tr><td><a href="/populations/vis.html">VIS</a></td><td>vision impairment</td><td>applies</td></tr>
+<tbody><tr><td><a href="/populations/blind.html">BLIND</a></td><td>blind and low-vision people</td><td>applies</td></tr>
+<tr><td><a href="/populations/dem.html">DEM</a></td><td>people living with dementia</td><td>applies</td></tr>
+<tr><td><a href="/populations/ndv.html">NDV</a></td><td>neurodivergent people</td><td>applies</td></tr>
 </tbody>
 </table>
 </section>
@@ -53,8 +67,8 @@ td a { color: var(--accent); text-decoration: none; font-family: var(--font-mono
 <section>
 <h2>Governing Best Practice Compendium entries</h2>
 <table>
-<thead><tr><th>Slug</th><th>Link type</th><th>Rationale</th></tr></thead>
-<tbody><tr><td>wayfinding-dementia-spatial-design</td><td>legacy bpc_source_slug</td><td class="empty">item_bpc_links (the intended many-to-many bridge, migration 013) has no row for this item yet — see decisions/DR-2026-07-12-evidence-cell-state-schema-reconciliation.md.</td></tr></tbody>
+<thead><tr><th>Slug</th><th>Link type</th><th>BPC state</th><th>Rationale</th></tr></thead>
+<tbody><tr><td>wayfinding-dementia-spatial-design</td><td>legacy bpc_source_slug</td><td class="empty">&mdash;</td><td class="empty">item_bpc_links (the intended many-to-many bridge, migration 013) has no row for this item yet — see decisions/DR-2026-07-12-evidence-cell-state-schema-reconciliation.md.</td></tr></tbody>
 </table>
 </section>
 
@@ -73,6 +87,18 @@ td a { color: var(--accent); text-decoration: none; font-family: var(--font-mono
             <tbody><tr><td>DEM</td><td>provisional</td><td>T3-only</td><td>no</td><td>no</td><td>—</td><td>Qualified synthesis from 7 T3-clinical sources on wayfinding-cognitive-science-spatial-design</td><td>Overturned if T1/Co-1/T2/Co-2 evidence emerges (cell upgrades to stated per §2.7) or the T3 sources are retracted (cell downgrades to pending).</td></tr>
 </tbody>
         </table>
+        <h2>Governing sources</h2>
+        <p>Every source below governs the determination for its population.
+        Walk the other direction — every specification a source justifies —
+        through <code>cell_source_links</code>.</p>
+        <h3>DEM — 7 governing sources</h3>
+<ul class="sources"><li><span class="ref">REF-00484</span> Kahneman, D. (Hebrew University of Jerusalem) (1973). <em>Attention and Effort</em> <span class="tier-badge">T3</span> <span class="vs ok">VERIFIED</span></li>
+<li><span class="ref">REF-00482</span> Siegel, A., &amp; White, S. (1975). <em>The development of spatial representations. Adv Child Dev Behav 10:9</em> <span class="tier-badge">T3</span> <span class="vs ok">VERIFIED</span></li>
+<li><span class="ref">REF-00478</span> Passini, R. (1984). <em>Wayfinding in Architecture</em> <span class="tier-badge">T3</span> <span class="vs ok">VERIFIED</span></li>
+<li><span class="ref">REF-00480</span> Sweller, J. (1988). <em>Cognitive load during problem solving</em> <span class="tier-badge">T3</span> <span class="vs ok">VERIFIED</span></li>
+<li><span class="ref">REF-00485</span> Kaplan, R.; Kaplan, S. (both University of Michigan) (1989). <em>The Experience of Nature: A Psychological Perspective</em> <span class="tier-badge">T3</span> <span class="vs ok">VERIFIED</span></li>
+<li><span class="ref">REF-00479</span> O&#x27;Neill, M. (1991). <em>Effects of signage and floor plan configuration on wayfinding accuracy</em> <span class="tier-badge">T3</span> <span class="vs ok">VERIFIED</span></li>
+<li><span class="ref">REF-00481</span> Wiener, J.M., &amp; Pazzaglia, F. (2021). <em>Ageing- and dementia-friendly design. PMC8545728</em> <span class="tier-badge">T3</span> <span class="vs ok">VERIFIED</span></li></ul>
 </section>
 
 </body>

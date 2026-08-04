@@ -249,7 +249,13 @@ precisely the one-column-two-domains failure §2 is about. A DR that diagnosed t
 reproduced it would deserve to be rejected.
 
 So: a new `verification_closure_reason` column, its own controlled set — `paywalled`,
-`print-only`, `access-denied-persistent`, `withdrawn`, `not-found-after-search`.
+`print-only`, `access-denied-persistent`, `withdrawn`, `not-found-after-search`,
+`disputed-existence`.
+
+The last of those is the owner's ruling on `DISPUTED` (§4.4), and it is the reason the set needed
+to distinguish more than "we failed". `paywalled` says *the work exists and we cannot reach it*.
+`disputed-existence` says *the work may not exist at all*. Those are different facts about the
+world, and a corpus that cannot tell them apart cannot be honest about what it does not know.
 
 ### 4.3 `verification_method` — a fourth column for *how*
 
@@ -298,11 +304,23 @@ anchor-suspension consequence is bolted onto the status — and that consequence
 because an `UNVERIFIED` source should never anchor a determination in the first place. Confirmed
 in the data: DISPUTED rows anchor **0** cells today.
 
-`DISPUTED` becomes `UNVERIFIED` + `CLOSED` + reason `not-found-after-search`, with the attempt
-count carrying what the name was asserting. The 0-and-1 attempt counts are a **finding, not an
-obstacle**: the sweep's two independent retrievals were real work that was never recorded. Under
-I3 those rows cannot be written `CLOSED` until the count reflects them — which is the invariant
-doing its job on the first migration that meets it.
+**`DISPUTED` survives — owner ruling, 2026-08-04:** *"DISPUTED survives because of the possibility
+that there is no resolution for something."*
+
+That reason places it precisely. "There may be no resolution" is a fact about **why closure
+happened**, not about what standing the source holds — so `DISPUTED` survives as a
+**closure reason**, `disputed-existence` (§4.2), and the status column stays binary. Nothing the
+value carried is lost: the standing (`UNVERIFIED`), the terminality (`CLOSED`), the effort spent
+(the attempt count) and the specific claim (*this may not exist*) are each recorded where they can
+be checked, rather than compressed into one string where none of them could be.
+
+The anchor-suspension consequence needs no special handling, because it is already implied — an
+`UNVERIFIED` source should never anchor a determination in the first place. Confirmed in data:
+these rows anchor 0 cells.
+
+The 0-and-1 attempt counts remain a **finding, not an obstacle**: the sweep's two independent
+retrievals were real work that was never recorded. Under I3 these rows cannot be written `CLOSED`
+until the count reflects them — the invariant doing its job on the first migration that meets it.
 
 **`SUPERSEDED` — retired.** A row-lifecycle fact, not a standing, and *already* recorded by
 `superseded_by_ref_id` being non-null. Keeping it in the status column is the same conflation one
@@ -336,7 +354,7 @@ migration; `magazine_article` (1 row) is a single-row judgment recorded in its n
 | `VERIFIED-WITH-CORRECTION` | 2 | `VERIFIED` | `CLOSED` | `direct-render` | Correction already in `verification_note`. |
 | `VERIFIED-2` | 71 | `UNVERIFIED` | `OPEN`, or `CLOSED` where the block is permanent | `corroborated-not-retrieved` | **The material change.** No cell is affected (§2.4). 13 record HTTP 403 and are candidates for `CLOSED` + `access-denied-persistent`; each needs adjudicating, not batch-closing. |
 | `UNVERIFIED-1` | 31 | `UNVERIFIED` | `OPEN` | per note | Attempt count already carries the truth and corrects the name for 26 rows: 25 have **0** attempts, so they are `OPEN` with nothing yet spent — which is exactly what they should have said all along. |
-| `DISPUTED` | 7 | `UNVERIFIED` | `CLOSED` once attempts are recorded, else `OPEN` | `corroborated-not-retrieved` / per note | Reason `not-found-after-search`. None of the 7 currently records the ≥2 attempts its own justification claims, so under I3 they cannot be written `CLOSED` until that work is recorded (§4.4). |
+| `DISPUTED` | 7 | `UNVERIFIED` | `CLOSED` once attempts are recorded, else `OPEN` | `corroborated-not-retrieved` / per note | Reason **`disputed-existence`** per the owner's ruling (§4.4). None of the 7 currently records the ≥2 attempts its own justification claims, so under I3 they cannot be written `CLOSED` until that work is recorded — citing `audits/anchor-correctness-sweep-2026-07-20.md` as the documented witness of those retrievals, never asserting them bare. |
 | `PARTIAL` (metadata_quality) | 5 | `UNVERIFIED` | `OPEN` | per note | Outstanding item named in the reason. Cross-cuts three different statuses today, which is why it was never a standing (§4.4). |
 | `SUPERSEDED` | 1 | — | — | — | Retired; `superseded_by_ref_id` is the record (§4.4). |
 
@@ -370,8 +388,9 @@ is the DR working, not failing.
   audit that applies it is separate work and may reclassify more rows.
 - The `standard_eb` vs `national_fw` classification of UN treaty-body instruments, recorded as an
   open conflict by the 2026-08-04 dedup merge.
-- Whether any specific formerly-`DISPUTED` source in fact exists. Retiring the value re-expresses
-  their standing; it does not adjudicate the underlying question, which is research under R10.
+- Whether any specific source carrying `disputed-existence` in fact exists. Recording the closure
+  reason states what is known; it does not adjudicate the underlying question, which is research
+  under R10 and may have no resolution — which is the point of having the reason at all.
 
 ## 7. If not ratified
 

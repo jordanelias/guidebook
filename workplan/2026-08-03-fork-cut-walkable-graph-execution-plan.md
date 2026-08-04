@@ -161,7 +161,22 @@ and 35 revisions of a **462 KB single-line** JSON blob — single-line defeats g
 compression, so each revision is near-full-size in history.
 
 **Fork policy.** Committed: the DB, migrations, schemas, governance, BPC/reasoning docs, the
-generators. **Nothing generated.** All derived surfaces build in CI and publish as an artifact.
+generators. **Nothing generated.**
+
+**[CORRECTED 2026-08-04 — owner directive: "Do not rely on artifacts for rendering the site."]**
+This section previously said derived surfaces would "build in CI and publish as an artifact". That
+was wrong, and the objection is sound: a CI artifact expires, is not addressable, and cannot be
+browsed or diffed. Making the site depend on one trades a stale committed copy for a *vanishing*
+one, which is worse — the repo would no longer contain the means of knowing what was published.
+
+The correct property is not "where the bytes are parked" but **regenerability**: the DB plus the
+generators, both committed, must reproduce the site deterministically at any time, and
+`render_manifest` must let anyone prove that a given render corresponds to a given DB state. Under
+that property, ⚑3's real choice is between **committing the generated output** and **regenerating
+it on demand from committed inputs** — and an ephemeral artifact is not an answer to either.
+
+This makes `render_manifest` more load-bearing, not less. If the rendered output is not stored,
+the manifest is the only thing that can attest what a render consumed.
 
 This dissolves the staleness class rather than patching it: there is no committed derived copy left
 *to be* stale, and §1's trigger question stops mattering. The PR gate inverts from "committed copy
