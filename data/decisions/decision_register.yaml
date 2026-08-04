@@ -5029,7 +5029,9 @@ decisions:
     verification_status is a standing, not a history — retire the numbered status suffixes and
     split verification into three orthogonal columns (status, disposition, attempt count).
   outcome: >
-    PROPOSED, owner decision required; nothing executed. Proposes a BINARY verification_status
+    ADOPTED by owner directive 2026-08-04 ("ratify all"). Vocabulary and definitions are settled;
+    the implementing migration has NOT run, so B01/B02/B05 stay red until it does. Adopts a BINARY
+    verification_status
     in {VERIFIED, UNVERIFIED}, a new verification_disposition in {OPEN, CLOSED}, and the
     existing verification_attempt_count as the third column of that set, plus a
     verification_method column recording how a standing was established. Retires VERIFIED-1,
@@ -5067,7 +5069,7 @@ decisions:
     - >
       Leave B01/B02/B05 red indefinitely — the status quo, and the fallback if not ratified.
   decision_date: '2026-08-04 00:45'
-  decided_by: PENDING-OWNER
+  decided_by: 'owner_jordanelias_directive_2026-08-04'
   model_routing: 'opus/200/arbitrate'
   effort_level: 200
   decision_artifacts:
@@ -5075,7 +5077,7 @@ decisions:
   predecessors:
     - D-0156
   supersedes: []
-  status: PROPOSED
+  status: ACTIVE
   review_status: 'NA'
   notes: >
     DG-NON because it defines what counts as verified evidence. Consequence the owner should weigh

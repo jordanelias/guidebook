@@ -1,8 +1,14 @@
 # DR-2026-08-04 — `verification_status` is a standing, not a history
 
-- Status: **PROPOSED** — owner decision required. Nothing in this DR is executed until it is
-  ratified. The three checks it unblocks (B01, B02, B05 in `test_db_integrity.py`) stay red
-  until then, which is the correct state for an unratified vocabulary.
+- Status: **ADOPTED — owner directive 2026-08-04 ("ratify all, dispatch resolver").** Ratified
+  with the DISPUTED ruling of the same day already incorporated (§4.4: DISPUTED survives as the
+  closure reason `disputed-existence`, "because of the possibility that there is no resolution for
+  something"), and with the three defects an adversarial pass found — the Co-1 gap (§3.1), the
+  closure-reason column collision (§4.2), and the unaddressed pipeline write vocabulary (§5.1) —
+  fixed before ratification rather than after.
+  **Ratified ≠ executed.** The migration implementing §5 has not run; B01/B02/B05 stay red until
+  it does. What ratification settles is the vocabulary and the definition of VERIFIED, so that
+  migration can now be written without re-litigating them.
 - Date: 2026-08-04
 - Category: **D-SCHEMA** (controlled vocabulary + column semantics). Change-Order gated per
   `schemas/enums.py` header. Touches what "verified" *means*, so it is **DG-NON-adjacent**:
