@@ -107,6 +107,12 @@ def write_verification(conn, ref_id, tool, status=None, doi=None, pmcid=None,
     Only fields explicitly supplied are touched. Never clobbers existing doi or
     pmcid with NULL. Always increments verification_attempt_count. Always sets
     verified_by_tool, last_verified_at, updated_at, updated_by_session.
+
+    D-0157: when this function sets a status it must also set the standing
+    columns, or it writes a row that violates the invariants the same decision
+    installed. A VERIFIED row with no disposition fails I1; a tool-established
+    row with no method loses the fact that a tool established it. Both are set
+    here rather than at the call sites, so a future phase cannot forget.
     """
     ts = ts or time.strftime("%Y-%m-%d %H:%M", time.gmtime())
 
@@ -118,6 +124,14 @@ def write_verification(conn, ref_id, tool, status=None, doi=None, pmcid=None,
     if status is not None:
         sets.append("verification_status = ?")
         params.append(status)
+        # A standing this function establishes is established BY THIS TOOL, and
+        # verification is finished when it returns -- there is no "verified but
+        # still owed" (D-0157 I1). UNVERIFIED stays OPEN: the job did not
+        # succeed, so a return pass is still owed.
+        sets.append("verification_disposition = ?")
+        params.append("CLOSED" if status == "VERIFIED" else "OPEN")
+        sets.append("verification_method = ?")
+        params.append("tool")
     if note is not None:
         sets.append("verification_note = ?")
         params.append(note)

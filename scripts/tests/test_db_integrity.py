@@ -109,24 +109,13 @@ def run_checks(db_path):
     # ── B: Enum validation ────────────────────────────────────────────────────
     print("\n[B] Enum column validation")
 
-    VALID_VSTATUS = ("VERIFIED","UNVERIFIED-1","UNVERIFIED-CLOSED",
-                     "PROBABILISTIC","CO1-VERIFIED",
-                     # V1 state machine §4 (verification-pipeline-proposal-2026-05-12-v2):
-                     "NO-MATCH","NEEDS-HUMAN","SUPERSEDED","REVERTED",
-                     # DR-2026-05-19 amendment 2026-05-19 — manual-track explicit-cause states:
-                     "IS-PAYWALL","DEFERRED-V2-AUTOMATED",
-                     # 2026-08-03: three values this list rejected while the rest of the
-                     # repo already treated them as valid. Not a widening of the
-                     # vocabulary — a correction of this transcription of it.
-                     #   VERIFIED-WITH-CORRECTION is in the authoritative Pydantic enum
-                     #     (schemas/enums.py:275) and was simply never copied across.
-                     #   DISPUTED was written by the owner-approved DR-2026-07-20 migration
-                     #     (data_20260720135718_...-tier-model-enshrinement.sql:64-68) for
-                     #     7 anchor sources two independent agents could not retrieve.
-                     # C10 in THIS FILE already accepts VERIFIED-WITH-CORRECTION as sound
-                     # (OK_VSTATUS, below), so B01 and C10 contradicted each other on the
-                     # same rows in the same run.
-                     "VERIFIED-WITH-CORRECTION","DISPUTED")
+    # D-0157 (ADOPTED 2026-08-04): the standing is BINARY. How it was
+    # established lives in verification_method, whether more effort is owed in
+    # verification_disposition, and how much was spent in
+    # verification_attempt_count. Every value this list used to carry was one of
+    # those three facts smuggled into the status string -- and UNVERIFIED-1
+    # asserted an attempt count its own column contradicted in 25 of 31 rows.
+    VALID_VSTATUS = ("VERIFIED", "UNVERIFIED")
     bad = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources
         WHERE verification_status IS NOT NULL
         AND verification_status NOT IN ({','.join('?'*len(VALID_VSTATUS))})
@@ -173,7 +162,13 @@ def run_checks(db_path):
 
     VALID_ST = ("journal_article","book","book_chapter","conference_paper","thesis",
                 "primary_research","case_study","standard","guideline","report",
-                "grey","internal","letter","editorial","commentary","other")
+                "grey","internal","letter","editorial","commentary","other",
+                # D-0157 section 4.6 ratifies `code`: 16 rows, statutory
+                # instruments (French arretes, Italian DPCM, Japanese ministerial
+                # standards), mirroring EvidenceType.CODE in schemas/enums.py.
+                # Used consistently since coinage; the transcription here was
+                # simply never updated.
+                "code")
     bad = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources
         WHERE source_type IS NOT NULL
         AND source_type NOT IN ({','.join('?'*len(VALID_ST))})
@@ -193,6 +188,42 @@ def run_checks(db_path):
     """, VALID_GAP_STATUS).fetchone()[0]
     record("B06", "gaps.status values", bad == 0,
            f"{bad} invalid values" if bad else "")
+
+    # ── D-0157 standing invariants (I1–I4) ────────────────────────────────────
+    # The point of splitting one column into three is that they can now be
+    # checked against each other. Each of these was unprovable while the claim
+    # and its evidence were the same string.
+    i1 = conn.execute("""SELECT COUNT(*) FROM evidence_sources
+        WHERE verification_status='VERIFIED' AND verification_disposition='OPEN'""").fetchone()[0]
+    record("I1", "no source is VERIFIED with effort still owed", i1 == 0,
+           f"{i1} rows VERIFIED+OPEN — verification is finished or it did not happen" if i1 else "")
+
+    i2 = conn.execute("""SELECT COUNT(*) FROM evidence_sources
+        WHERE verification_status='VERIFIED'
+          AND COALESCE(verification_attempt_count,0)=0""").fetchone()[0]
+    record("I2", "a VERIFIED source records at least one attempt", i2 == 0,
+           f"{i2} rows VERIFIED with zero attempts — nobody recorded doing the thing "
+           f"that verified them; adjudication queue, not a backfill" if i2 else "")
+
+    i3 = conn.execute("""SELECT COUNT(*) FROM evidence_sources
+        WHERE verification_disposition='CLOSED' AND verification_status<>'VERIFIED'
+          AND (verification_closure_reason IS NULL OR verification_closure_reason='')""").fetchone()[0]
+    record("I3", "closure is earned and reasoned", i3 == 0,
+           f"{i3} rows CLOSED without a closure reason" if i3 else "")
+
+    i3b = conn.execute("""SELECT COUNT(*) FROM evidence_sources
+        WHERE verification_disposition='CLOSED' AND verification_status<>'VERIFIED'
+          AND COALESCE(verification_attempt_count,0) < 2""").fetchone()[0]
+    record("I3b", "closure rests on at least two recorded attempts", i3b == 0,
+           f"{i3b} rows CLOSED with fewer than 2 attempts — 'cannot be verified "
+           f"after effort spent' requires the effort to be on record" if i3b else "")
+
+    i4 = conn.execute("""SELECT COUNT(*) FROM evidence_sources
+        WHERE verification_status='VERIFIED'
+          AND verification_method IS NOT NULL
+          AND verification_method NOT IN ('direct-render','co1-attestation','tool')""").fetchone()[0]
+    record("I4", "VERIFIED is reachable only by a method that obtains the artefact", i4 == 0,
+           f"{i4} rows VERIFIED via a method that never obtained the document" if i4 else "")
 
     # ── C: Consistency invariants ─────────────────────────────────────────────
     print("\n[C] Consistency invariants")
@@ -300,8 +331,11 @@ def run_checks(db_path):
     # is what this now tests. DISPUTED counts as a failure: a best practice
     # resting on a source whose standing is contested is exactly the case worth
     # surfacing, and it is not hypothetical — 2 of the 59 are DISPUTED.
-    OK_VSTATUS = ("VERIFIED", "VERIFIED-1", "VERIFIED-2",
-                  "VERIFIED-WITH-CORRECTION", "CO1-VERIFIED")
+    # D-0157: a published cell may rest only on a source whose standing is
+    # VERIFIED. The old list admitted VERIFIED-2 -- corroborated but never
+    # obtained -- as sound; the remap moved those 71 rows to UNVERIFIED, so this
+    # narrowing is the same judgement applied consistently rather than a new one.
+    OK_VSTATUS = ("VERIFIED",)
     try:
         ph = ",".join("?" * len(OK_VSTATUS))
         unsound = conn.execute(f"""

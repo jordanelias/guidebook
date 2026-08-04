@@ -84,9 +84,31 @@ STAMP = "2026-07-12 00:00:00"  # fixed, not wall-clock: determinism (see docstri
 NOT_ASSESSED = "NOT_ASSESSED"
 
 # Verification gates (evidence-methodology.md §2.2 cond. 2 / §2.8)
-VERIFIED_OK = {VerificationStatus.VERIFIED.value, VerificationStatus.VERIFIED_WITH_CORRECTION.value} \
-    if hasattr(VerificationStatus, "VERIFIED") else {"VERIFIED", "VERIFIED-WITH-CORRECTION"}
+# D-0157: the standing is binary, so the sound set is a single value. The old
+# set also admitted VERIFIED-WITH-CORRECTION, which described an event during
+# verification rather than a different standing -- "it's merely verified".
+VERIFIED_OK = {VerificationStatus.VERIFIED.value}
+# Disqualification is now a disposition, not a status: effort spent and nothing
+# found. Callers pass the disposition alongside the status; a plain UNVERIFIED
+# row is not disqualified, because a return pass is still owed on it.
+DISQUALIFIED_DISPOSITION = {"CLOSED"}
+# Legacy statuses kept ONLY so that a fixture or an un-migrated DB still
+# disqualifies correctly; live rows are disqualified by disposition.
 DISQUALIFIED = {"UNVERIFIED-CLOSED", "CLOSED-DELETED"}
+
+
+def _is_disqualified(rec) -> bool:
+    """Effort was spent and nothing was found.
+
+    D-0157: a plain UNVERIFIED source is NOT disqualified -- a return pass is
+    still owed on it, which is what OPEN means. Disqualification is the CLOSED
+    disposition on a non-VERIFIED row, the thing the old UNVERIFIED-CLOSED and
+    CLOSED-DELETED values were each spelling out.
+    """
+    status = rec.get("verification_status") or ""
+    if status in DISQUALIFIED:
+        return True
+    return status != "VERIFIED" and (rec.get("verification_disposition") or "") in DISQUALIFIED_DISPOSITION
 
 # Pilot cells — PILOT-MANIFEST.md §3 (manual slug→item mapping recorded there)
 PILOT_CELLS = [
@@ -124,13 +146,22 @@ def source_grain(evidence_type, tier, co1_source_type):
 
 
 def gather_sources(conn, slug):
-    q = """SELECT e.ref_id, e.tier, e.evidence_type, e.co1_source_type,
-                  e.verification_status, e.scope, e.jurisdiction
-           FROM source_slug_links l JOIN evidence_sources e ON e.ref_id = l.ref_id
-           WHERE l.slug = ? AND e.superseded_by_ref_id IS NULL
-           ORDER BY e.ref_id"""
+    # verification_disposition arrived with migration 049 (D-0157). This script
+    # is run against scratch and fixture databases as well as the canonical one
+    # -- it refuses the canonical DB by design -- so the column is selected only
+    # when it exists. A pre-049 database still disqualifies correctly through
+    # the legacy status values in DISQUALIFIED.
+    has_disp = any(r[1] == "verification_disposition"
+                   for r in conn.execute("PRAGMA table_info(evidence_sources)"))
+    disp_col = "e.verification_disposition" if has_disp else "NULL"
+    q = f"""SELECT e.ref_id, e.tier, e.evidence_type, e.co1_source_type,
+                   e.verification_status, {disp_col}, e.scope, e.jurisdiction
+            FROM source_slug_links l JOIN evidence_sources e ON e.ref_id = l.ref_id
+            WHERE l.slug = ? AND e.superseded_by_ref_id IS NULL
+            ORDER BY e.ref_id"""
     return [dict(zip(("ref_id", "tier", "evidence_type", "co1_source_type",
-                      "verification_status", "scope", "jurisdiction"), r))
+                      "verification_status", "verification_disposition",
+                      "scope", "jurisdiction"), r))
             for r in conn.execute(q, (slug,))]
 
 
@@ -172,13 +203,14 @@ def assess_source(conn, src, claim_scale, population):
         "needs_population_assessment": pop == NOT_ASSESSED,
         "tier_consistent": tier_ok,
         "verification_status": src["verification_status"],
+        "verification_disposition": src.get("verification_disposition"),
         "jurisdiction": src["jurisdiction"],  # richness §2.3 jurisdiction distinctness
     }
 
 
 def classify(recs):
     """Bucket assessed sources into doctrinal strata (disqualified sources excluded)."""
-    live = [r for r in recs if (r["verification_status"] or "") not in DISQUALIFIED]
+    live = [r for r in recs if not _is_disqualified(r)]
     b = {"t1": [], "co1": [], "t2": [], "co2": [], "t3c": [], "t3g": [], "t45": [], "t6": []}
     for r in live:
         t, ty = r["tier"], r["evidence_type"]
@@ -248,7 +280,7 @@ def determine(conn, item_code, population, slug, note):
     recs = [assess_source(conn, s, SCALE_POPULATION, population) for s in sources]
     b = classify(recs)
     # §2.8 verification-status machinery
-    live = [r for r in recs if (r["verification_status"] or "") not in DISQUALIFIED]
+    live = [r for r in recs if not _is_disqualified(r)]
     has_unverified = any((r["verification_status"] or "") == "UNVERIFIED-1" for r in live)
     all_disqualified = bool(recs) and not live
     anchors = anchoring(b["t1"]) + anchoring(b["co1"]) + anchoring(b["t2"]) + anchoring(b["co2"])

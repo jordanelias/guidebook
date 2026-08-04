@@ -124,7 +124,7 @@ def audit():
           AND (es.metadata_quality = 'AUTHOR-TITLE-ONLY'
                OR es.verification_status IS NULL
                OR es.verification_status = ''
-               OR es.verification_status IN ('UNVERIFIED-CLOSED', 'CLOSED-DELETED'))
+               OR (es.verification_status = 'UNVERIFIED' AND es.verification_disposition = 'CLOSED'))
         ORDER BY svp.walk_id
     """))
     print(f"\n[CHECK 4] PMP passing steps citing ineligible sources (rule #10): {len(bad_source)}")

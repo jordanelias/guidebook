@@ -6,8 +6,8 @@
   "unique_sources": 791,
   "grade_distribution": {
     "A": 11,
-    "B": 30,
-    "C": 26,
+    "B": 31,
+    "C": 25,
     "D": 10,
     "E": 3,
     "F": 0
@@ -27,10 +27,10 @@
     "disputed-only": 0
   },
   "strength_band_instances": {
-    "full": 515,
+    "full": 525,
     "partial": 255,
     "weak": 207,
-    "disputed": 10
+    "disputed": 0
   },
   "practice_stream_instances": 0,
   "english_instances": 739,
@@ -351,10 +351,10 @@
       "topic": "population-general",
       "state": "RETRACTED-PRE-REHAB",
       "n": 36,
-      "full": 27,
+      "full": 28,
       "partial": 3,
       "weak": 5,
-      "disputed": 1,
+      "disputed": 0,
       "t3_clinical": 22,
       "practice": 0,
       "code_only": 8,
@@ -376,7 +376,7 @@
         "national_fw": 2
       },
       "markers": {
-        "●": 27,
+        "●": 28,
         "◐": 3,
         "○": 5
       },
@@ -429,10 +429,10 @@
       "sl_searched": 19,
       "sl_hit": 10,
       "search_jurs": 47,
-      "score": 85.8,
+      "score": 86.3,
       "components": {
         "A": 20,
-        "B": 25.7,
+        "B": 26.2,
         "C": 20,
         "D": 12,
         "E": 8.1
@@ -1032,10 +1032,10 @@
       "topic": "bathrooms-and-wet-areas",
       "state": "RETRACTED-PRE-REHAB",
       "n": 22,
-      "full": 11,
+      "full": 12,
       "partial": 5,
       "weak": 5,
-      "disputed": 1,
+      "disputed": 0,
       "t3_clinical": 2,
       "practice": 0,
       "code_only": 10,
@@ -1057,7 +1057,7 @@
         "grey": 1
       },
       "markers": {
-        "●": 11,
+        "●": 12,
         "◐": 5,
         "○": 5
       },
@@ -1114,10 +1114,10 @@
       "sl_searched": 19,
       "sl_hit": 8,
       "search_jurs": 47,
-      "score": 81.2,
+      "score": 82.1,
       "components": {
         "A": 20,
-        "B": 21.8,
+        "B": 22.7,
         "C": 20,
         "D": 15,
         "E": 4.4
@@ -1388,6 +1388,103 @@
       "grade": "B"
     },
     {
+      "slug": "residential-entry-and-threshold",
+      "topic": "entrances-and-circulation",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 20,
+      "full": 4,
+      "partial": 8,
+      "weak": 8,
+      "disputed": 0,
+      "t3_clinical": 1,
+      "practice": 0,
+      "code_only": 16,
+      "strength_band": "full",
+      "weak_only": false,
+      "tiers": {
+        "2": 3,
+        "3": 1,
+        "4": 1,
+        "5": 7,
+        "6": 8
+      },
+      "etypes": {
+        "standard_eb": 4,
+        "national_fw": 7,
+        "clinical": 1,
+        "code": 8
+      },
+      "markers": {
+        "●": 4,
+        "◐": 8,
+        "○": 8
+      },
+      "n_jur": 13,
+      "n_jur_raw": 13,
+      "n_true_jur": 13,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "UK": 5,
+        "AU": 3,
+        "NL": 2,
+        "DE": 1,
+        "TH": 1,
+        "US": 1,
+        "CA": 1,
+        "NO": 1,
+        "SE": 1,
+        "BR": 1,
+        "FR": 1,
+        "JP": 1,
+        "INT": 1
+      },
+      "jurs_clean": {
+        "UK": 5,
+        "NL": 2,
+        "DE": 1,
+        "AU": 3,
+        "TH": 1,
+        "US": 1,
+        "CA": 1,
+        "NO": 1,
+        "SE": 1,
+        "BR": 1,
+        "FR": 1,
+        "JP": 1,
+        "INT": 1
+      },
+      "n_lang": 7,
+      "langs": {
+        "en": 13,
+        "nl": 2,
+        "de": 1,
+        "no": 1,
+        "sv": 1,
+        "fr": 1,
+        "ja": 1
+      },
+      "n_en": 13,
+      "n_nonen": 7,
+      "pct_en": 65.0,
+      "anglo_core": 10,
+      "supra": 1,
+      "non_anglo": 9,
+      "pct_anglo_core": 50.0,
+      "sl_searched": 19,
+      "sl_hit": 12,
+      "search_jurs": 47,
+      "score": 78.6,
+      "components": {
+        "A": 20,
+        "B": 17.2,
+        "C": 20,
+        "D": 15,
+        "E": 6.4
+      },
+      "grade": "B"
+    },
+    {
       "slug": "accessible-circulation-geometry",
       "topic": "entrances-and-circulation",
       "state": "RETRACTED-PRE-REHAB",
@@ -1600,103 +1697,6 @@
         "C": 20,
         "D": 15,
         "E": 9.1
-      },
-      "grade": "B"
-    },
-    {
-      "slug": "residential-entry-and-threshold",
-      "topic": "entrances-and-circulation",
-      "state": "RETRACTED-PRE-REHAB",
-      "n": 20,
-      "full": 3,
-      "partial": 8,
-      "weak": 8,
-      "disputed": 1,
-      "t3_clinical": 1,
-      "practice": 0,
-      "code_only": 16,
-      "strength_band": "full",
-      "weak_only": false,
-      "tiers": {
-        "2": 3,
-        "3": 1,
-        "4": 1,
-        "5": 7,
-        "6": 8
-      },
-      "etypes": {
-        "standard_eb": 4,
-        "national_fw": 7,
-        "clinical": 1,
-        "code": 8
-      },
-      "markers": {
-        "●": 3,
-        "◐": 8,
-        "○": 8
-      },
-      "n_jur": 13,
-      "n_jur_raw": 13,
-      "n_true_jur": 13,
-      "n_null_jur": 0,
-      "polluted_jur": {},
-      "jurs": {
-        "UK": 5,
-        "AU": 3,
-        "NL": 2,
-        "DE": 1,
-        "TH": 1,
-        "US": 1,
-        "CA": 1,
-        "NO": 1,
-        "SE": 1,
-        "BR": 1,
-        "FR": 1,
-        "JP": 1,
-        "INT": 1
-      },
-      "jurs_clean": {
-        "UK": 5,
-        "NL": 2,
-        "DE": 1,
-        "AU": 3,
-        "TH": 1,
-        "US": 1,
-        "CA": 1,
-        "NO": 1,
-        "SE": 1,
-        "BR": 1,
-        "FR": 1,
-        "JP": 1,
-        "INT": 1
-      },
-      "n_lang": 7,
-      "langs": {
-        "en": 13,
-        "nl": 2,
-        "de": 1,
-        "no": 1,
-        "sv": 1,
-        "fr": 1,
-        "ja": 1
-      },
-      "n_en": 13,
-      "n_nonen": 7,
-      "pct_en": 65.0,
-      "anglo_core": 10,
-      "supra": 1,
-      "non_anglo": 9,
-      "pct_anglo_core": 50.0,
-      "sl_searched": 19,
-      "sl_hit": 12,
-      "search_jurs": 47,
-      "score": 77.6,
-      "components": {
-        "A": 20,
-        "B": 16.2,
-        "C": 20,
-        "D": 15,
-        "E": 6.4
       },
       "grade": "B"
     },
@@ -3576,6 +3576,84 @@
       "grade": "B"
     },
     {
+      "slug": "sensory-relief-space-design",
+      "topic": "sensory-environment",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 12,
+      "full": 10,
+      "partial": 1,
+      "weak": 1,
+      "disputed": 0,
+      "t3_clinical": 7,
+      "practice": 0,
+      "code_only": 2,
+      "strength_band": "full",
+      "weak_only": false,
+      "tiers": {
+        "1": 1,
+        "2": 2,
+        "3": 7,
+        "4": 1,
+        "6": 1
+      },
+      "etypes": {
+        "standard_eb": 2,
+        "clinical": 7,
+        "code": 1,
+        "sr_meta": 1,
+        "co1": 1
+      },
+      "markers": {
+        "●": 10,
+        "◐": 1,
+        "○": 1
+      },
+      "n_jur": 6,
+      "n_jur_raw": 6,
+      "n_true_jur": 6,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "UK": 5,
+        "AU": 2,
+        "US": 2,
+        "IE": 1,
+        "INT": 1,
+        "IT": 1
+      },
+      "jurs_clean": {
+        "UK": 5,
+        "AU": 2,
+        "IE": 1,
+        "US": 2,
+        "INT": 1,
+        "IT": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 12
+      },
+      "n_en": 12,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 10,
+      "supra": 1,
+      "non_anglo": 1,
+      "pct_anglo_core": 83.3,
+      "sl_searched": 19,
+      "sl_hit": 0,
+      "search_jurs": 47,
+      "score": 65.6,
+      "components": {
+        "A": 20,
+        "B": 27.3,
+        "C": 17,
+        "D": 0,
+        "E": 1.3
+      },
+      "grade": "B"
+    },
+    {
       "slug": "manoeuvring-footprint-vs-turning-radius-methodology",
       "topic": "frameworks-and-methodology",
       "state": "METHODOLOGY-AUTHORED",
@@ -3640,84 +3718,6 @@
         "C": 13,
         "D": 0,
         "E": 2.1
-      },
-      "grade": "C"
-    },
-    {
-      "slug": "sensory-relief-space-design",
-      "topic": "sensory-environment",
-      "state": "RETRACTED-PRE-REHAB",
-      "n": 12,
-      "full": 9,
-      "partial": 1,
-      "weak": 1,
-      "disputed": 1,
-      "t3_clinical": 7,
-      "practice": 0,
-      "code_only": 2,
-      "strength_band": "full",
-      "weak_only": false,
-      "tiers": {
-        "1": 1,
-        "2": 2,
-        "3": 7,
-        "4": 1,
-        "6": 1
-      },
-      "etypes": {
-        "standard_eb": 2,
-        "clinical": 7,
-        "code": 1,
-        "sr_meta": 1,
-        "co1": 1
-      },
-      "markers": {
-        "●": 9,
-        "◐": 1,
-        "○": 1
-      },
-      "n_jur": 6,
-      "n_jur_raw": 6,
-      "n_true_jur": 6,
-      "n_null_jur": 0,
-      "polluted_jur": {},
-      "jurs": {
-        "UK": 5,
-        "AU": 2,
-        "US": 2,
-        "IE": 1,
-        "INT": 1,
-        "IT": 1
-      },
-      "jurs_clean": {
-        "UK": 5,
-        "AU": 2,
-        "IE": 1,
-        "US": 2,
-        "INT": 1,
-        "IT": 1
-      },
-      "n_lang": 1,
-      "langs": {
-        "en": 12
-      },
-      "n_en": 12,
-      "n_nonen": 0,
-      "pct_en": 100.0,
-      "anglo_core": 10,
-      "supra": 1,
-      "non_anglo": 1,
-      "pct_anglo_core": 83.3,
-      "sl_searched": 19,
-      "sl_hit": 0,
-      "search_jurs": 47,
-      "score": 64.0,
-      "components": {
-        "A": 20,
-        "B": 25.7,
-        "C": 17,
-        "D": 0,
-        "E": 1.3
       },
       "grade": "C"
     },
@@ -4072,6 +4072,77 @@
       "grade": "C"
     },
     {
+      "slug": "neurodivergent-built-environment",
+      "topic": "population-general",
+      "state": "PARTIAL",
+      "n": 9,
+      "full": 8,
+      "partial": 1,
+      "weak": 0,
+      "disputed": 0,
+      "t3_clinical": 4,
+      "practice": 0,
+      "code_only": 1,
+      "strength_band": "full",
+      "weak_only": false,
+      "tiers": {
+        "1": 2,
+        "2": 2,
+        "3": 4,
+        "4": 1
+      },
+      "etypes": {
+        "standard_eb": 2,
+        "clinical": 5,
+        "co1": 1,
+        "sr_meta": 1
+      },
+      "markers": {
+        "●": 8,
+        "◐": 1
+      },
+      "n_jur": 4,
+      "n_jur_raw": 4,
+      "n_true_jur": 4,
+      "n_null_jur": 1,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 3,
+        "UK": 2,
+        "AU": 2,
+        "IT": 1
+      },
+      "jurs_clean": {
+        "UK": 2,
+        "INT": 3,
+        "AU": 2,
+        "IT": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 9
+      },
+      "n_en": 9,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 4,
+      "supra": 3,
+      "non_anglo": 1,
+      "pct_anglo_core": 50.0,
+      "sl_searched": 19,
+      "sl_hit": 14,
+      "search_jurs": 47,
+      "score": 61.5,
+      "components": {
+        "A": 16,
+        "B": 28.7,
+        "C": 13,
+        "D": 0,
+        "E": 3.8
+      },
+      "grade": "C"
+    },
+    {
       "slug": "ms-thermal-temperature-conflict-resolution",
       "topic": "health-and-symptom-management",
       "state": "RETRACTED-PRE-REHAB",
@@ -4364,6 +4435,72 @@
       "grade": "C"
     },
     {
+      "slug": "biophilic-design-healthcare-workplace",
+      "topic": "sensory-environment",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 6,
+      "full": 6,
+      "partial": 0,
+      "weak": 0,
+      "disputed": 0,
+      "t3_clinical": 2,
+      "practice": 0,
+      "code_only": 0,
+      "strength_band": "full",
+      "weak_only": false,
+      "tiers": {
+        "1": 1,
+        "2": 3,
+        "3": 2
+      },
+      "etypes": {
+        "clinical": 2,
+        "sr_meta": 3,
+        "co1": 1
+      },
+      "markers": {
+        "●": 6
+      },
+      "n_jur": 3,
+      "n_jur_raw": 3,
+      "n_true_jur": 3,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "INT": 4,
+        "US": 1,
+        "AU": 1
+      },
+      "jurs_clean": {
+        "US": 1,
+        "INT": 4,
+        "AU": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 6
+      },
+      "n_en": 6,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 2,
+      "supra": 4,
+      "non_anglo": 0,
+      "pct_anglo_core": 33.3,
+      "sl_searched": 19,
+      "sl_hit": 14,
+      "search_jurs": 47,
+      "score": 60.0,
+      "components": {
+        "A": 12,
+        "B": 30,
+        "C": 13,
+        "D": 0,
+        "E": 5.0
+      },
+      "grade": "C"
+    },
+    {
       "slug": "design-framework-evidence-audit",
       "topic": "frameworks-and-methodology",
       "state": "RETRACTED-PRE-REHAB",
@@ -4433,6 +4570,78 @@
         "C": 17,
         "D": 0,
         "E": 4.2
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "ot-cpg-built-environment",
+      "topic": "population-general",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 7,
+      "full": 6,
+      "partial": 1,
+      "weak": 0,
+      "disputed": 0,
+      "t3_clinical": 1,
+      "practice": 0,
+      "code_only": 1,
+      "strength_band": "full",
+      "weak_only": false,
+      "tiers": {
+        "2": 5,
+        "3": 1,
+        "5": 1
+      },
+      "etypes": {
+        "standard_eb": 2,
+        "national_fw": 1,
+        "co2": 3,
+        "clinical": 1
+      },
+      "markers": {
+        "●": 6,
+        "◐": 1
+      },
+      "n_jur": 5,
+      "n_jur_raw": 5,
+      "n_true_jur": 5,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "UK": 3,
+        "US": 1,
+        "CA": 1,
+        "INT": 1,
+        "AU": 1
+      },
+      "jurs_clean": {
+        "UK": 3,
+        "US": 1,
+        "CA": 1,
+        "INT": 1,
+        "AU": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 7
+      },
+      "n_en": 7,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 6,
+      "supra": 1,
+      "non_anglo": 0,
+      "pct_anglo_core": 85.7,
+      "sl_searched": 19,
+      "sl_hit": 0,
+      "search_jurs": 47,
+      "score": 58.4,
+      "components": {
+        "A": 12,
+        "B": 28.3,
+        "C": 17,
+        "D": 0,
+        "E": 1.1
       },
       "grade": "C"
     },
@@ -4576,143 +4785,6 @@
       "grade": "C"
     },
     {
-      "slug": "neurodivergent-built-environment",
-      "topic": "population-general",
-      "state": "PARTIAL",
-      "n": 9,
-      "full": 6,
-      "partial": 1,
-      "weak": 0,
-      "disputed": 2,
-      "t3_clinical": 4,
-      "practice": 0,
-      "code_only": 1,
-      "strength_band": "full",
-      "weak_only": false,
-      "tiers": {
-        "1": 2,
-        "2": 2,
-        "3": 4,
-        "4": 1
-      },
-      "etypes": {
-        "standard_eb": 2,
-        "clinical": 5,
-        "co1": 1,
-        "sr_meta": 1
-      },
-      "markers": {
-        "●": 6,
-        "◐": 1
-      },
-      "n_jur": 4,
-      "n_jur_raw": 4,
-      "n_true_jur": 4,
-      "n_null_jur": 1,
-      "polluted_jur": {},
-      "jurs": {
-        "INT": 3,
-        "UK": 2,
-        "AU": 2,
-        "IT": 1
-      },
-      "jurs_clean": {
-        "UK": 2,
-        "INT": 3,
-        "AU": 2,
-        "IT": 1
-      },
-      "n_lang": 1,
-      "langs": {
-        "en": 9
-      },
-      "n_en": 9,
-      "n_nonen": 0,
-      "pct_en": 100.0,
-      "anglo_core": 4,
-      "supra": 3,
-      "non_anglo": 1,
-      "pct_anglo_core": 50.0,
-      "sl_searched": 19,
-      "sl_hit": 14,
-      "search_jurs": 47,
-      "score": 57.0,
-      "components": {
-        "A": 16,
-        "B": 24.2,
-        "C": 13,
-        "D": 0,
-        "E": 3.8
-      },
-      "grade": "C"
-    },
-    {
-      "slug": "biophilic-design-healthcare-workplace",
-      "topic": "sensory-environment",
-      "state": "RETRACTED-PRE-REHAB",
-      "n": 6,
-      "full": 5,
-      "partial": 0,
-      "weak": 0,
-      "disputed": 1,
-      "t3_clinical": 2,
-      "practice": 0,
-      "code_only": 0,
-      "strength_band": "full",
-      "weak_only": false,
-      "tiers": {
-        "1": 1,
-        "2": 3,
-        "3": 2
-      },
-      "etypes": {
-        "clinical": 2,
-        "sr_meta": 3,
-        "co1": 1
-      },
-      "markers": {
-        "●": 5
-      },
-      "n_jur": 3,
-      "n_jur_raw": 3,
-      "n_true_jur": 3,
-      "n_null_jur": 0,
-      "polluted_jur": {},
-      "jurs": {
-        "INT": 4,
-        "US": 1,
-        "AU": 1
-      },
-      "jurs_clean": {
-        "US": 1,
-        "INT": 4,
-        "AU": 1
-      },
-      "n_lang": 1,
-      "langs": {
-        "en": 6
-      },
-      "n_en": 6,
-      "n_nonen": 0,
-      "pct_en": 100.0,
-      "anglo_core": 2,
-      "supra": 4,
-      "non_anglo": 0,
-      "pct_anglo_core": 33.3,
-      "sl_searched": 19,
-      "sl_hit": 14,
-      "search_jurs": 47,
-      "score": 56.7,
-      "components": {
-        "A": 12,
-        "B": 26.7,
-        "C": 13,
-        "D": 0,
-        "E": 5.0
-      },
-      "grade": "C"
-    },
-    {
       "slug": "ot-frameworks-built-environment",
       "topic": "frameworks-and-methodology",
       "state": "RETRACTED-PRE-REHAB",
@@ -4839,6 +4911,77 @@
         "C": 13,
         "D": 0,
         "E": 6.4
+      },
+      "grade": "C"
+    },
+    {
+      "slug": "residential-accessible-home-case-studies",
+      "topic": "frameworks-and-methodology",
+      "state": null,
+      "n": 8,
+      "full": 6,
+      "partial": 1,
+      "weak": 1,
+      "disputed": 0,
+      "t3_clinical": 3,
+      "practice": 0,
+      "code_only": 2,
+      "strength_band": "full",
+      "weak_only": false,
+      "tiers": {
+        "1": 3,
+        "3": 4,
+        "5": 1
+      },
+      "etypes": {
+        "clinical": 5,
+        "national_fw": 1,
+        "co1": 1,
+        "grey": 1
+      },
+      "markers": {
+        "●": 6,
+        "◐": 1,
+        "○": 1
+      },
+      "n_jur": 4,
+      "n_jur_raw": 4,
+      "n_true_jur": 4,
+      "n_null_jur": 1,
+      "polluted_jur": {},
+      "jurs": {
+        "UK": 3,
+        "AU": 2,
+        "INT": 1,
+        "NZ": 1
+      },
+      "jurs_clean": {
+        "INT": 1,
+        "UK": 3,
+        "AU": 2,
+        "NZ": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 8
+      },
+      "n_en": 8,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 6,
+      "supra": 1,
+      "non_anglo": 0,
+      "pct_anglo_core": 85.7,
+      "sl_searched": 19,
+      "sl_hit": 0,
+      "search_jurs": 47,
+      "score": 56.1,
+      "components": {
+        "A": 16,
+        "B": 26.0,
+        "C": 13,
+        "D": 0,
+        "E": 1.1
       },
       "grade": "C"
     },
@@ -4980,77 +5123,6 @@
       "grade": "C"
     },
     {
-      "slug": "residential-accessible-home-case-studies",
-      "topic": "frameworks-and-methodology",
-      "state": null,
-      "n": 8,
-      "full": 5,
-      "partial": 1,
-      "weak": 1,
-      "disputed": 1,
-      "t3_clinical": 3,
-      "practice": 0,
-      "code_only": 2,
-      "strength_band": "full",
-      "weak_only": false,
-      "tiers": {
-        "1": 3,
-        "3": 4,
-        "5": 1
-      },
-      "etypes": {
-        "clinical": 5,
-        "national_fw": 1,
-        "co1": 1,
-        "grey": 1
-      },
-      "markers": {
-        "●": 5,
-        "◐": 1,
-        "○": 1
-      },
-      "n_jur": 4,
-      "n_jur_raw": 4,
-      "n_true_jur": 4,
-      "n_null_jur": 1,
-      "polluted_jur": {},
-      "jurs": {
-        "UK": 3,
-        "AU": 2,
-        "INT": 1,
-        "NZ": 1
-      },
-      "jurs_clean": {
-        "INT": 1,
-        "UK": 3,
-        "AU": 2,
-        "NZ": 1
-      },
-      "n_lang": 1,
-      "langs": {
-        "en": 8
-      },
-      "n_en": 8,
-      "n_nonen": 0,
-      "pct_en": 100.0,
-      "anglo_core": 6,
-      "supra": 1,
-      "non_anglo": 0,
-      "pct_anglo_core": 85.7,
-      "sl_searched": 19,
-      "sl_hit": 0,
-      "search_jurs": 47,
-      "score": 53.6,
-      "components": {
-        "A": 16,
-        "B": 23.5,
-        "C": 13,
-        "D": 0,
-        "E": 1.1
-      },
-      "grade": "C"
-    },
-    {
       "slug": "visual-fire-alarm-seizure-safety",
       "topic": "sensory-environment",
       "state": "RETRACTED-PRE-REHAB",
@@ -5181,78 +5253,6 @@
         "C": 13,
         "D": 0,
         "E": 1.9
-      },
-      "grade": "C"
-    },
-    {
-      "slug": "ot-cpg-built-environment",
-      "topic": "population-general",
-      "state": "RETRACTED-PRE-REHAB",
-      "n": 7,
-      "full": 4,
-      "partial": 1,
-      "weak": 0,
-      "disputed": 2,
-      "t3_clinical": 1,
-      "practice": 0,
-      "code_only": 1,
-      "strength_band": "full",
-      "weak_only": false,
-      "tiers": {
-        "2": 5,
-        "3": 1,
-        "5": 1
-      },
-      "etypes": {
-        "standard_eb": 2,
-        "national_fw": 1,
-        "co2": 3,
-        "clinical": 1
-      },
-      "markers": {
-        "●": 4,
-        "◐": 1
-      },
-      "n_jur": 5,
-      "n_jur_raw": 5,
-      "n_true_jur": 5,
-      "n_null_jur": 0,
-      "polluted_jur": {},
-      "jurs": {
-        "UK": 3,
-        "US": 1,
-        "CA": 1,
-        "INT": 1,
-        "AU": 1
-      },
-      "jurs_clean": {
-        "UK": 3,
-        "US": 1,
-        "CA": 1,
-        "INT": 1,
-        "AU": 1
-      },
-      "n_lang": 1,
-      "langs": {
-        "en": 7
-      },
-      "n_en": 7,
-      "n_nonen": 0,
-      "pct_en": 100.0,
-      "anglo_core": 6,
-      "supra": 1,
-      "non_anglo": 0,
-      "pct_anglo_core": 85.7,
-      "sl_searched": 19,
-      "sl_hit": 0,
-      "search_jurs": 47,
-      "score": 52.7,
-      "components": {
-        "A": 12,
-        "B": 22.6,
-        "C": 17,
-        "D": 0,
-        "E": 1.1
       },
       "grade": "C"
     },
@@ -6555,13 +6555,13 @@
       "category_label": "Acoustics",
       "source_slug": "sensory-relief-space-design",
       "basis_health": "full",
-      "grade": "C",
-      "score": 64.0,
+      "grade": "B",
+      "score": 65.6,
       "n": 12,
-      "full": 9,
+      "full": 10,
       "partial": 1,
       "weak": 1,
-      "disputed": 1,
+      "disputed": 0,
       "n_jur": 6,
       "n_lang": 1,
       "pct_en": 100.0,
@@ -6765,12 +6765,12 @@
       "source_slug": "biophilic-design-healthcare-workplace",
       "basis_health": "full",
       "grade": "C",
-      "score": 56.7,
+      "score": 60.0,
       "n": 6,
-      "full": 5,
+      "full": 6,
       "partial": 0,
       "weak": 0,
-      "disputed": 1,
+      "disputed": 0,
       "n_jur": 3,
       "n_lang": 1,
       "pct_en": 100.0,
@@ -7030,13 +7030,13 @@
       "category_label": "Wayfinding and Cognition",
       "source_slug": "sensory-relief-space-design",
       "basis_health": "full",
-      "grade": "C",
-      "score": 64.0,
+      "grade": "B",
+      "score": 65.6,
       "n": 12,
-      "full": 9,
+      "full": 10,
       "partial": 1,
       "weak": 1,
-      "disputed": 1,
+      "disputed": 0,
       "n_jur": 6,
       "n_lang": 1,
       "pct_en": 100.0,
@@ -7411,12 +7411,12 @@
       "source_slug": "accessible-bathroom-and-grab-bar",
       "basis_health": "full",
       "grade": "A",
-      "score": 81.2,
+      "score": 82.1,
       "n": 22,
-      "full": 11,
+      "full": 12,
       "partial": 5,
       "weak": 5,
-      "disputed": 1,
+      "disputed": 0,
       "n_jur": 12,
       "n_lang": 7,
       "pct_en": 72.7,
@@ -7467,13 +7467,13 @@
       "category_label": "Sensory Environment",
       "source_slug": "sensory-relief-space-design",
       "basis_health": "full",
-      "grade": "C",
-      "score": 64.0,
+      "grade": "B",
+      "score": 65.6,
       "n": 12,
-      "full": 9,
+      "full": 10,
       "partial": 1,
       "weak": 1,
-      "disputed": 1,
+      "disputed": 0,
       "n_jur": 6,
       "n_lang": 1,
       "pct_en": 100.0,
@@ -7582,12 +7582,12 @@
       "source_slug": "mental-health-built-environment",
       "basis_health": "full",
       "grade": "A",
-      "score": 85.8,
+      "score": 86.3,
       "n": 36,
-      "full": 27,
+      "full": 28,
       "partial": 3,
       "weak": 5,
-      "disputed": 1,
+      "disputed": 0,
       "n_jur": 11,
       "n_lang": 5,
       "pct_en": 61.1,
@@ -7620,12 +7620,12 @@
       "source_slug": "accessible-bathroom-and-grab-bar",
       "basis_health": "full",
       "grade": "A",
-      "score": 81.2,
+      "score": 82.1,
       "n": 22,
-      "full": 11,
+      "full": 12,
       "partial": 5,
       "weak": 5,
-      "disputed": 1,
+      "disputed": 0,
       "n_jur": 12,
       "n_lang": 7,
       "pct_en": 72.7,
@@ -7639,12 +7639,12 @@
       "source_slug": "accessible-bathroom-and-grab-bar",
       "basis_health": "full",
       "grade": "A",
-      "score": 81.2,
+      "score": 82.1,
       "n": 22,
-      "full": 11,
+      "full": 12,
       "partial": 5,
       "weak": 5,
-      "disputed": 1,
+      "disputed": 0,
       "n_jur": 12,
       "n_lang": 7,
       "pct_en": 72.7,
@@ -7886,12 +7886,12 @@
       "source_slug": "accessible-bathroom-and-grab-bar",
       "basis_health": "full",
       "grade": "A",
-      "score": 81.2,
+      "score": 82.1,
       "n": 22,
-      "full": 11,
+      "full": 12,
       "partial": 5,
       "weak": 5,
-      "disputed": 1,
+      "disputed": 0,
       "n_jur": 12,
       "n_lang": 7,
       "pct_en": 72.7,
@@ -7905,12 +7905,12 @@
       "source_slug": "accessible-bathroom-and-grab-bar",
       "basis_health": "full",
       "grade": "A",
-      "score": 81.2,
+      "score": 82.1,
       "n": 22,
-      "full": 11,
+      "full": 12,
       "partial": 5,
       "weak": 5,
-      "disputed": 1,
+      "disputed": 0,
       "n_jur": 12,
       "n_lang": 7,
       "pct_en": 72.7,

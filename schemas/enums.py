@@ -263,19 +263,48 @@ class Co1SourceType(str, Enum):
 
 
 class VerificationStatus(str, Enum):
-    """Source verification status per 2026-04-23 verification report.
+    """Whether a source is established. BINARY, per D-0157 (ADOPTED 2026-08-04).
 
-    Per A5 §6.3 + A6 §2.8:
-    - VERIFIED / VERIFIED_WITH_CORRECTION: no state-machine effect
-    - UNVERIFIED_1: flag, don't downgrade; triggers re-search
-    - UNVERIFIED_CLOSED: sole qualifying source → cell downgrades to pending
-    - CLOSED_DELETED: sole qualifying source → cell downgrades to pending
+    VERIFIED means the source document itself was obtained and the metadata
+    recorded was read from it -- not from a citing bibliography, a search-result
+    summary, or a publisher's landing page. For a Co-1 source the artefact is
+    the attestation (DR section 3.1); same standard, different artefact, which
+    co-primacy with T1 under CRPD Art. 4.3 requires.
+
+    The retired values -- VERIFIED-1, VERIFIED-2, VERIFIED-WITH-CORRECTION,
+    UNVERIFIED-1, UNVERIFIED-CLOSED, CLOSED-DELETED, DISPUTED, SUPERSEDED --
+    were each one of three orthogonal facts smuggled into the status string.
+    They now live in VerificationDisposition (is more effort owed),
+    verification_attempt_count (how much was spent), VerificationMethod (how it
+    was established) and VerificationClosureReason (why it stopped).
     """
     VERIFIED = "VERIFIED"
-    VERIFIED_WITH_CORRECTION = "VERIFIED-WITH-CORRECTION"
-    UNVERIFIED_1 = "UNVERIFIED-1"
-    UNVERIFIED_CLOSED = "UNVERIFIED-CLOSED"
-    CLOSED_DELETED = "CLOSED-DELETED"
+    UNVERIFIED = "UNVERIFIED"
+
+
+class VerificationDisposition(str, Enum):
+    """Is more effort owed on this source? D-0157."""
+    OPEN = "OPEN"      # a return pass is owed
+    CLOSED = "CLOSED"  # settled -- and for UNVERIFIED, earned against >=2 attempts
+
+
+class VerificationMethod(str, Enum):
+    """How the standing was established. D-0157 section 4.3."""
+    DIRECT_RENDER = "direct-render"
+    CO1_ATTESTATION = "co1-attestation"
+    CORROBORATED_NOT_RETRIEVED = "corroborated-not-retrieved"
+    CITING_BIBLIOGRAPHY = "citing-bibliography"
+    TOOL = "tool"
+
+
+class VerificationClosureReason(str, Enum):
+    """Why an unverified source stopped being pursued. D-0157 section 4.2."""
+    PAYWALLED = "paywalled"
+    PRINT_ONLY = "print-only"
+    ACCESS_DENIED_PERSISTENT = "access-denied-persistent"
+    WITHDRAWN = "withdrawn"
+    NOT_FOUND_AFTER_SEARCH = "not-found-after-search"
+    DISPUTED_EXISTENCE = "disputed-existence"  # owner ruling: there may be no resolution
 
 
 class BestPracticeStatus(str, Enum):

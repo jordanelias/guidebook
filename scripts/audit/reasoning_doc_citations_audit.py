@@ -108,7 +108,7 @@ def audit():
         JOIN evidence_sources es ON es.ref_id = rdc.source_ref_id
         WHERE es.metadata_quality = 'AUTHOR-TITLE-ONLY'
            OR es.verification_status IS NULL OR es.verification_status = ''
-           OR es.verification_status IN ('UNVERIFIED-CLOSED', 'CLOSED-DELETED')
+           OR (es.verification_status = 'UNVERIFIED' AND es.verification_disposition = 'CLOSED')
         ORDER BY rdc.reasoning_doc_slug
     """))
     print(f"\n[CHECK 4] Citations pointing to sources ineligible per rule #10: {len(ineligible_sources)}")

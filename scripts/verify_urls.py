@@ -22,7 +22,12 @@ Outcomes
                          (page exists but title diverges; flag for human review)
   (no status change)  — URL reachable but title doesn't match (likely wrong URL);
                          url_resolution_outcome=URL-NO-MATCH, 30-day retry
-  UNVERIFIED-CLOSED   — 404/410 (page permanently gone); url_resolution_outcome=DEAD
+  UNVERIFIED (OPEN)   — 404/410 (page permanently gone); url_resolution_outcome=DEAD.
+                        D-0157: the URL is dead, which is not the same as the
+                        WORK being unobtainable, and one failed fetch is not the
+                        earned effort invariant I3 requires before CLOSED. The
+                        death is recorded in url_resolution_outcome; the standing
+                        stays OPEN so a return pass is still owed.
                          Wayback fallback attempted before declaring DEAD.
   (no write)          — 403/429/5xx/timeout (transient); retry next run
 
@@ -228,6 +233,13 @@ def write_verification(conn, ref_id, *, status=None, outcome=None,
     if status is not None:
         sets.insert(0, "verification_status = ?")
         params.insert(0, status)
+        # D-0157: a status written here must carry its standing columns, or the
+        # row violates I1 (VERIFIED+OPEN) the moment it is written. Established
+        # by this tool; CLOSED when it succeeded, OPEN when it did not.
+        sets.append("verification_disposition = ?")
+        params.append("CLOSED" if status == "VERIFIED" else "OPEN")
+        sets.append("verification_method = ?")
+        params.append("tool")
     if outcome is not None:
         sets.append("url_resolution_outcome = ?")
         params.append(outcome)
@@ -266,7 +278,7 @@ def verify_one(conn, ref_id, url, pub_title, ts):
         # DNS failure / no such host => effectively dead
         if any(s in reason for s in ["name or service", "nodename", "no address",
                                       "name resolution"]):
-            write_verification(conn, ref_id, status="UNVERIFIED-CLOSED",
+            write_verification(conn, ref_id, status="UNVERIFIED",
                                outcome="DEAD-DNS",
                                note=f"DNS resolution failed: {url}", ts=ts)
             return "dead-dns"
@@ -335,7 +347,7 @@ def verify_dead_with_wayback(conn, ref_id, url, pub_title, ts, code, soft_error=
 
     # No Wayback match found
     note_prefix = f"HTTP {code}" if code else f"Soft error: {soft_error[:50]}"
-    write_verification(conn, ref_id, status="UNVERIFIED-CLOSED",
+    write_verification(conn, ref_id, status="UNVERIFIED",
                        outcome="DEAD-LINK",
                        note=f"{note_prefix}; Wayback no snapshot or no match: {url}",
                        ts=ts)
