@@ -124,6 +124,26 @@ invented a local answer. Proposed definition, for ratification:
 Everything short of that is not a weaker grade of verified. It is **not verified**, plus a
 recorded reason.
 
+### 3.1 What "the document" is for a Co-1 source
+
+The definition above is written for documentary sources and would, read literally, demote every
+Co-1 source in the corpus. That would be an error of doctrine, not of bookkeeping: **Co-1 —
+lived experience and participatory design — is co-primary with T1** under CRPD Art. 4.3
+(`governance/tier-system.md`), and its verification channel is deliberately manual
+(DR-2026-05-19). Measured: **41 rows** carry `verified_by_tool = 'co1-manual-pre-pipeline'` at
+status `VERIFIED`, and `test_db_integrity.py:236` (C04) already carves out `co1%` explicitly.
+A first draft of this DR omitted Co-1 entirely; that omission is corrected here.
+
+For a Co-1 source the artefact being obtained is the **attestation** — the recorded testimony,
+co-production record, or participatory-design output — not a publication. The bar is unchanged in
+substance: what is recorded must have been read from the thing itself, by someone who obtained it.
+
+> **VERIFIED (Co-1)** — the attestation itself was obtained, and what is recorded here was taken
+> from it. Method `co1-attestation` (§4.3).
+
+This is not a weaker verification. It is the same standard applied to a different kind of
+artefact, which is what co-primacy requires.
+
 ## 4. Proposed vocabulary — three columns, owner-specified
 
 The owner's decomposition, adopted:
@@ -181,7 +201,7 @@ invariants follow directly, and each one catches something no current check can 
 > verified row with zero attempts means nobody recorded doing the thing that verified it.
 >
 > **I3** — `disposition = 'CLOSED'` **and** `status ≠ 'VERIFIED'` ⟹ `attempt_count ≥ 2`
-> **and** `processing_blocked_reason IS NOT NULL`.
+> **and** `verification_closure_reason IS NOT NULL`.
 > "Can't be verified **after effort spent**" — closure has to be earned and reasoned, not asserted.
 >
 > **I4** — `disposition = 'OPEN'` ⟹ the row is in the return queue.
@@ -218,8 +238,18 @@ row itself already proves:
 So I2 is a check that *sorts* rather than condemns: 135 are a bookkeeping fix, 83 are near-certain,
 and 142 are the real question. Only that last group needs judgment, and it cannot be batch-decided.
 
-Terminal reasons for I3 are a controlled set: `paywalled`, `print-only`,
-`access-denied-persistent`, `withdrawn`, `not-found-after-search`.
+**I3 needs its own column, and reusing an existing one would repeat this DR's own diagnosis.**
+An earlier draft pointed closure at `processing_blocked_reason`. That column already has a
+CHECK-constrained vocabulary bound to a *different* domain — data capture and mining deferral:
+`no-full-text`, `paywalled`, `no-doi`, `not-indexed`, `language`, `no-quantified-claims`,
+`superseded`, `out-of-scope`, `tier-not-required` (`040_source_processing_state.sql:70-80`). Three
+of the terminal reasons below are not in that CHECK, so the ratification migration would have
+violated the constraint outright; and loading verification closure into a capture-status column is
+precisely the one-column-two-domains failure §2 is about. A DR that diagnosed the disease and then
+reproduced it would deserve to be rejected.
+
+So: a new `verification_closure_reason` column, its own controlled set — `paywalled`,
+`print-only`, `access-denied-persistent`, `withdrawn`, `not-found-after-search`.
 
 ### 4.3 `verification_method` — a fourth column for *how*
 
@@ -231,9 +261,10 @@ Orthogonal again, and the home for what the `-1`/`-2` suffixes were really carry
 | `corroborated-not-retrieved` | ≥2 independent retrievals agree on title/publisher/content; document not obtained. **Never `VERIFIED`.** |
 | `citing-bibliography` | Existence attested only by another work's reference list. **Never `VERIFIED`.** |
 | `tool` | Established by `resolve_dois` / `verify_urls`; `verified_by_tool` names which. |
+| `co1-attestation` | The attestation itself was obtained and read (§3.1). Compatible with `VERIFIED`. Covers the 41 `co1-manual-pre-pipeline` rows, which have no home under the other four. |
 
-> `verification_status = 'VERIFIED'` **⟹** `verification_method = 'direct-render'`
-> **or** `verified_by_tool IS NOT NULL`.
+> `verification_status = 'VERIFIED'` **⟹** `verification_method` ∈
+> {`direct-render`, `co1-attestation`} **or** `verified_by_tool IS NOT NULL`.
 
 This replaces B01's string-list matching with a rule that means something.
 
@@ -312,6 +343,20 @@ migration; `magazine_article` (1 row) is a single-row judgment recorded in its n
 No row may be written `CLOSED` by this migration without satisfying §4.2. Where effort was not in
 fact spent, the row lands `OPEN` with `attempt_count = 0` — an honest queue entry rather than a
 quiet burial.
+
+### 5.1 The pipeline writes this column too, and must be changed in the same act
+
+Retiring vocabulary from a column that a **weekly job writes** is not complete when the rows are
+remapped. `scripts/resolve_dois.py` declares in its own header that it writes `verification_status`
+values `VERIFIED` and `NO-MATCH`; B01's current list also admits `NO-MATCH`, `NEEDS-HUMAN`,
+`REVERTED`, `PROBABILISTIC`, `IS-PAYWALL` and `DEFERRED-V2-AUTOMATED` — zero rows each today, which
+is exactly why they are easy to overlook. If B01 narrows to `{VERIFIED, UNVERIFIED}` and the jobs
+are left alone, **the next scheduled run can write a value the check now forbids** and paint the
+gate red without a human touching anything.
+
+The ratification migration therefore ships with an audit and update of the write vocabulary in
+`scripts/resolve_dois.py` and `scripts/verify_urls.py`, in the same change. A vocabulary decision
+that does not reach the code that writes the column has not been made, only announced.
 
 **Consequence the owner should weigh explicitly:** the corpus's "verified" count drops by at
 least 71 (~8%), and §5's first row may push it further. Nothing is lost — the same sources, the
