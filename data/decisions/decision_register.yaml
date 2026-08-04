@@ -4120,7 +4120,7 @@ decisions:
     precision. Rule 3 (tradeoff-aware) was committed by D-0137 specifically to
     prevent Rule 1's mechanical resolution of a genuinely contested selection.
   decision_date: 2026-05-02 02:40
-  decided_by: opus_4_7_session_2026-05-02_proposal
+  decided_by: 'owner_jordanelias_directive_2026-08-04'
   model_routing: opus/200/synth
   effort_level: 200
   decision_artifacts:
@@ -4151,9 +4151,10 @@ decisions:
   - D-0136
   - D-0137
   supersedes: []
-  status: PROVISIONAL
+  status: ACTIVE
   review_status: NA
   notes: >
+    [RATIFICATION 2026-08-04] ADOPTED by owner directive 2026-08-04 ("ratify all"). This decision has been the operative reality since May: the canonical store is data/guidebook.db, 48 schema migrations have been applied against it, and every generator, check and audit in the repo queries it. Ratification makes the record match the practice rather than changing anything. Its sibling D-0139 (architecture/schema-spec.md) was deliberately NOT ratified in the same act -- see that entry.
     DG-NON per A12 §2.2 D-DOCT default delegation. Storage form is doctrinal because it
     governs synthesis structure for 12+ years and reaches into all downstream work
     (B2 tooling, B3 navigation, B4 pilot, B5 rendering, B6 validation, B7 architecture
@@ -4190,6 +4191,7 @@ decisions:
     delegations (which have no DG-REVIEW review batch). The opus/200/synth →
     effort_level 200 widening was applied to schemas/decision.py and
     governance/decision-protocol.md §3.2 + §4.2 + §4.4 in the same session.
+
 - decision_id: D-0139
   category: D-SCHEMA
   delegation: DG-REVIEW
@@ -4264,9 +4266,11 @@ decisions:
   status: PROVISIONAL
   review_status: PENDING
   notes: >
+    [RATIFICATION 2026-08-04] HELD, NOT ratified under the owner directive of 2026-08-04 ("ratify all"), and the reason is recorded rather than the decision quietly skipped. architecture/schema-spec.md describes a database that does not exist: it names specification, population (singular), conflict, measurement, jurisdictional_value, specialist and doctrine as tables, none of which are in data/guidebook.db, and only 4 of the 66 live table names appear in it at all. This is the same divergence DR-2026-07-12 diagnosed in architecture/page-templates.md and declined to adopt on the same grounds. Ratifying it would bless a false map of the canonical store -- the opposite of what ratifying D-0138 achieves. Refresh the document against the live schema, then ratify.
     Schema spec is PROVISIONAL pending D-0138 adoption. On D-0138 adoption (PROVISIONAL
     -> CANONICAL), D-0139 follows automatically (PROVISIONAL -> CANONICAL) unless
     project-owner amendment requires re-spec.
+
 - decision_id: D-0140
   category: D-OP
   delegation: DG-REVIEW
