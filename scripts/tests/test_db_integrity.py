@@ -975,6 +975,81 @@ def run_checks(db_path):
         print(f"      note: {unattested} determination(s) carry no sha or no rule_version "
               f"and are unattested — reported, not failed (owner question)")
 
+    # ── L: shadow-store parity (YAML ↔ DB) ────────────────────────────────────
+    # Two governance stores are deliberately dual today: the DB table and the
+    # YAML file that five scripts still read. Dual-store is only safe while
+    # something holds them equal — otherwise the "DB is canonical" rule decays
+    # into "whichever one you happened to open". These are the holders.
+    print("\n[L] Shadow-store parity")
+
+    import json as _js
+    try:
+        import yaml as _yaml
+    except ImportError:
+        record("L01", "decision register: YAML ↔ decisions table", True,
+               "SKIPPED — PyYAML not installed")
+        _yaml = None
+
+    # Paths resolve from THIS FILE's location, not from cwd and not from the DB
+    # path. The first version of this check derived them from `db_path`, and a
+    # fault-injection run against a scratch copy in another directory made it
+    # silently SKIP — recorded as a pass. A parity check that reports success
+    # because it could not find one of the two stores is worse than no check.
+    # A missing register is now a failure: it is part of the repo, so its
+    # absence is a finding rather than a reason to stand down.
+    REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+    if _yaml is not None:
+        reg = os.path.join(REPO, "data", "decisions", "decision_register.yaml")
+        if not os.path.exists(reg):
+            record("L01", "decision register: YAML ↔ decisions table", False,
+                   f"register not found at {reg} — five scripts read it, including "
+                   f"the blocking decision_capture.py")
+        else:
+            y = {d["decision_id"]: d for d in _yaml.safe_load(open(reg))["decisions"]}
+            dbrows = {r[0]: r for r in conn.execute(
+                "SELECT decision_id, category, delegation, status, decision_date, "
+                "effort_level, supersedes FROM decisions")}
+            only_y = sorted(set(y) - set(dbrows))
+            only_d = sorted(set(dbrows) - set(y))
+            drift = []
+            for did in sorted(set(y) & set(dbrows)):
+                d, r = y[did], dbrows[did]
+                if (d["category"], d["delegation"], d["status"], d["decision_date"],
+                        int(d["effort_level"])) != (r[1], r[2], r[3], r[4], r[5]):
+                    drift.append(did)
+                elif _js.loads(r[6] or "[]") != (d.get("supersedes") or []):
+                    drift.append(did)
+            detail = []
+            if only_y:
+                detail.append(f"{len(only_y)} in YAML only ({', '.join(only_y[:5])})")
+            if only_d:
+                detail.append(f"{len(only_d)} in DB only ({', '.join(only_d[:5])})")
+            if drift:
+                detail.append(f"{len(drift)} disagree on a field ({', '.join(drift[:5])})")
+            record("L01", "decision register: YAML ↔ decisions table",
+                   not (only_y or only_d or drift),
+                   "; ".join(detail) + " — reconcile in a migration; the DB is canonical "
+                   "(CLAUDE.md §2), so a YAML-only entry is an import gap and a "
+                   "disagreement is a finding, not something to overwrite"
+                   if detail else "")
+
+    # jurisdictional_values has a YAML mirror too, held equal by
+    # validate_schema.py --cross-check. Asserted here as well because that
+    # check runs in a different battery and a data-only PR may not select it.
+    jv_dir = os.path.join(REPO, "data", "jurisdictional_values")
+    if _yaml is not None and os.path.isdir(jv_dir):
+        n_yaml = 0
+        for fn in os.listdir(jv_dir):
+            if fn.endswith((".yaml", ".yml")):
+                doc = _yaml.safe_load(open(os.path.join(jv_dir, fn))) or {}
+                vals = doc.get("records") or []
+                n_yaml += len(vals) if isinstance(vals, list) else 0
+        n_db = conn.execute("SELECT COUNT(*) FROM jurisdictional_values").fetchone()[0]
+        record("L02", "jurisdictional_values: YAML record count matches the table",
+               n_yaml == n_db,
+               f"{n_yaml} YAML records vs {n_db} table rows" if n_yaml != n_db else "")
+
     # ── Summary ───────────────────────────────────────────────────────────────
     conn.close()
     print("\n" + "=" * 70)
