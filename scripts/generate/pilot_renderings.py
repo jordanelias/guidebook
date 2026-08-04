@@ -23,6 +23,7 @@ Honesty rules baked in:
   (mission-and-epistemics §Operational reality).
 """
 import argparse
+import hashlib
 import html
 import json
 import os
@@ -99,20 +100,43 @@ REGISTER_MAP = {
         "advocacy_brief": "Early research supports this ask; label it as provisional evidence "
                           "when citing it — accuracy protects credibility.",
     },
+    # These rows asserted CONVERGENCE — "standards/codes converge", "Standards
+    # converge", "Building rules in several countries agree", "The law sets a
+    # floor here". That was written against cell 9005 (E-06×MOB: 15 governing
+    # refs, 8 code-minimum jurisdictions), where every word of it is true.
+    #
+    # It became false the moment cells 9012 (A-02×ALL) and 9013 (A-08×ALL) were
+    # rendered for the first time: both rest on ONE governing ref (REF-00563,
+    # ANSI/ASA S12.60, United States) and have ZERO is_code_minimum rows in
+    # jurisdictional_values. One instrument cannot converge, one country is not
+    # several, and no floor renders. The rows below therefore say what is true
+    # of a regulatory-stratum basis of ANY size. The epistemic verdict is
+    # unchanged — still walled off from anchoring, still not evidence, still
+    # "ask for better" — only the false plural is gone.
+    #
+    # Stating convergence WHERE IT IS REAL is a loss worth naming: cell 9005's
+    # eight-jurisdiction agreement is worth telling a reader about, and this
+    # text no longer does. Restoring it needs a per-cell split of this tuple
+    # class, which needs a new data attribute and a matching change to
+    # register_integrity_check's tuple_class call — that checker is quarantined
+    # pending the DR-2026-07-21 Option A rework, and this correction is not
+    # waiting behind it.
     "regulatory_stratum_only": {
-        "designer": "Regulatory-stratum value [◐]: standards/codes converge ({basis}); "
-                    "no anchoring evidence (T1/Co-1/T2/Co-2) exists for this cell.",
+        "designer": "Regulatory-stratum value [◐]: the basis is codes and standards only "
+                    "({basis}); no anchoring evidence (T1/Co-1/T2/Co-2) exists for this cell.",
         "ot": "Regulatory-stratum value only ({basis}): no clinical, lived-experience, or "
               "CPG anchor exists; treat the value as a compliance floor, not a clinical target.",
-        "policymaker": "Standards converge ({basis}). Convergence is not evidence: no "
-                       "T1/Co-1/T2/Co-2 anchor exists. Treat this value as floor, not target — "
-                       "the jurisdictions could all be wrong together.",
-        "disabled_person": "Building rules in several countries agree on this, but there's no "
-                           "research or lived-experience evidence yet showing it's what "
-                           "actually works best. You can ask for better than the rule.",
-        "carer": "Building rules agree on this, but no research or lived-experience evidence "
-                 "yet shows it's what works best.",
-        "advocacy_brief": "The law sets a floor here, and NO evidence yet shows that floor is "
+        "policymaker": "The basis here is regulatory-stratum instruments only ({basis}). Code "
+                       "agreement is not evidence, and where only one instrument speaks there "
+                       "is not even agreement: no T1/Co-1/T2/Co-2 anchor exists. Treat any "
+                       "such value as floor, not target — the jurisdictions could all be "
+                       "wrong together, or the single one could be.",
+        "disabled_person": "This comes from building rules and standards only. No research or "
+                           "lived-experience evidence yet shows it is what actually works "
+                           "best. You can ask for better than the rule.",
+        "carer": "This comes from building rules only; no research or lived-experience "
+                 "evidence yet shows it is what works best.",
+        "advocacy_brief": "The basis here is regulatory only, and NO evidence yet shows it is "
                           "enough. That gap is itself an advocacy point: demand the research.",
     },
     "pending": {
@@ -167,6 +191,23 @@ def fetch_cells(conn):
         # role='governing' is filtered explicitly rather than relied on: it is
         # the only value cell_source_links admits today, and a second role
         # arriving must not silently widen what this counts.
+        # Does the recorded derivation_sha still verify against this row? The
+        # engine's own function (assess_cell.sha) hashes
+        # item|population|sorted(governing_refs)::rule_version, so a sha that no
+        # longer recomputes means the row moved after the determination was
+        # recorded. Two of the seven non-NULL shas fail this today: 9007's
+        # attests population NEU (renamed to BRAIN without restamping) and
+        # 9003's attests a six-ref governing set that was narrowed to four.
+        # Rendering a stale hash unremarked would present a broken attestation
+        # as a working one — worse than the NULLs, which at least admit they
+        # attest nothing.
+        if c["derivation_sha"] and c["rule_version"]:
+            refs_for_sha = sorted(json.loads(c["governing_refs"] or "[]"))
+            payload = (f"{c['item_code']}|{c['population']}|" + "|".join(refs_for_sha)
+                       + "::" + c["rule_version"])
+            c["sha_stale"] = hashlib.sha256(payload.encode()).hexdigest() != c["derivation_sha"]
+        else:
+            c["sha_stale"] = False
         c["extractions"] = conn.execute(
             "SELECT COUNT(*) FROM cell_source_links l "
             "JOIN source_value_extractions x "
@@ -192,13 +233,22 @@ def _sha_label(sha):
     claim. The render says what is true and leaves the backfill to whoever
     adjudicates it.
 
-    NOTE — the `data-sha` HTML attribute is deliberately NOT routed through this.
-    register_integrity_check.py cross-checks it against `str(row['sha'])`, which
-    is the literal string 'None' for a NULL. That Python repr leaking into an
-    attribute is a real wart, but fixing it means changing the checker in
-    lockstep, and that checker is quarantined for an unrelated defect
-    (ENGINE-LAG on I3, per check-registry). Bundling a second change into a
-    quarantined check is how you get one nobody can reason about.
+    NOTE — the `data-sha` HTML attribute is deliberately NOT routed through this,
+    and neither is `data-rule-version`. register_integrity_check.py cross-checks
+    both against `str(row[...])`, which is the literal string 'None' for a NULL,
+    so a corrected attribute would fail the cross-check. Between them that repr
+    is published 8 + 12 = 20 times (cells 9008–9015 have no sha; 9014–9015 also
+    have no rule_version). Both are real warts and both are named here rather
+    than only the first — an earlier version of this note documented `data-sha`
+    alone, which made the disclosure look complete when it was half.
+
+    Fixing them means None-normalising the checker in lockstep. That is a
+    two-line change and the coupling is by design (the checker imports
+    REGISTER_MAP, ROLES and tuple_class from this module as single source of
+    truth), so the reluctance is narrower than "don't touch it": the checker is
+    quarantined pending the DR-2026-07-21 Option A rework of the I3 lexicon, and
+    the None-normalisation belongs in that same pass rather than arriving alone
+    into a check the registry cannot yet run.
     """
     return f"{sha[:16]}…" if sha else "not recorded"
 
@@ -307,8 +357,13 @@ def render(cells, out_path):
             f"<section class='cell' id='{c['item_code']}-{c['population']}'>"
             f"<h2>{html.escape(c['item_name'])} × {c['population']}</h2>"
             f"<p class='tuple'>tuple: state={c['state']} · basis={html.escape(basis)} · "
-            f"convergence={c['conv_status']} · rso={c['rso']} · cfo={c['code_floor_only']} "
+            f"convergence={c['conv_status'] or 'none recorded'} · rso={c['rso']} "
+            f"· cfo={c['code_floor_only']} "
             f"· sha={_sha_label(c['derivation_sha'])} · {c['rule_version'] or 'not recorded'}</p>"
+            + (f"<p class='sha-warning'>Derivation sha does not verify against this row's "
+               f"own governing set and rule version — the determination was recorded, then "
+               f"the row changed without restamping. Treat the sha as stale, not as "
+               f"attesting this state.</p>" if c["sha_stale"] else "")
             + (f"<p class='falsification'>Falsification: {html.escape(c['falsification'])}</p>"
                if c["falsification"] else "")
             + "<div class='roles'>" + "".join(blocks) + "</div></section>")

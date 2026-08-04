@@ -932,6 +932,49 @@ def run_checks(db_path):
            f"{moved} of the 8 rows adjudicated to A-18 by data_20260804175506 no "
            f"longer carry it — re-adjudicate in a migration, don't drift" if moved else "")
 
+    # ── K: determination attestation (derivation_sha) ─────────────────────────
+    # evidence-architecture §10 mechanical check 2: "same evidence + same
+    # rule_version ⇒ same state + same derivation_sha". The sha is computed by
+    # assess_cell.sha() over item|population|sorted(governing_refs)::rule_version,
+    # so it attests WHICH cell identity and WHICH governing set produced the
+    # determination. If a row moves after the sha is stamped and nobody
+    # restamps, the hash silently attests a state that no longer exists — worse
+    # than a NULL, which at least admits it attests nothing.
+    #
+    # This was found by hand during a render review, which is the wrong way to
+    # find it. Both live failures were caused by ordinary maintenance: cell 9007
+    # by the NEU→BRAIN population rename, cell 9003 by a governing-set
+    # narrowing in the DB-integrity backlog sweep. Neither operation is unusual;
+    # what was missing was anything that noticed.
+    print("\n[K] Determination attestation")
+
+    import hashlib as _hashlib
+    import json as _json
+    stale, unattested = [], 0
+    for cid, ic, pc, gr, rv, sha_rec in conn.execute(
+            "SELECT cell_id, item_code, population_code, governing_refs, rule_version, "
+            "derivation_sha FROM evidence_cell_state"):
+        if not sha_rec or not rv:
+            unattested += 1
+            continue
+        refs = sorted(_json.loads(gr or "[]"))
+        payload = f"{ic}|{pc}|" + "|".join(refs) + "::" + rv
+        if _hashlib.sha256(payload.encode()).hexdigest() != sha_rec:
+            stale.append(f"{cid} ({ic}×{pc})")
+    record("K01", "every recorded derivation_sha verifies against its own row",
+           not stale,
+           f"{len(stale)} stale: {', '.join(stale)} — the row changed after the "
+           f"determination was stamped; restamp or clear, don't leave a hash "
+           f"attesting a state that no longer exists" if stale else "")
+
+    # Reported, not enforced. Whether an unattested determination is acceptable
+    # is an owner call — these rows were hand-migrated, not produced by an
+    # engine run, so there is no derivation to hash. Failing on them would
+    # demand a fabricated sha, which is the opposite of what K01 protects.
+    if unattested:
+        print(f"      note: {unattested} determination(s) carry no sha or no rule_version "
+              f"and are unattested — reported, not failed (owner question)")
+
     # ── Summary ───────────────────────────────────────────────────────────────
     conn.close()
     print("\n" + "=" * 70)

@@ -572,12 +572,53 @@ computed, and minting one to make the render tidy would fabricate that claim.
 `register_integrity_check.py` **passes on the regenerated document**, DB cross-check on, and its
 `--selftest` still fires all seven tamper cases against it — so the pass is the checker working,
 not the checker asleep. Its quarantine (ENGINE-LAG on I3's repealed absolute form) did not bite
-here; no cell in this set triggers the weak-band path. One wart left standing and recorded in
-the code: `data-sha` emits the Python repr `'None'` for a NULL, because the checker cross-checks
-against `str(row['sha'])`. Fixing it means moving the checker in lockstep, and bundling a second
-change into a quarantined check is how you get one nobody can reason about.
+here; no *rendering* in this set takes the weak-band path — though at the data layer
+`v_best_practice` already classifies cells 9005/9012/9013 `strength_band='weak'`, so renderer and
+checker share the same lag rather than the checker lagging alone.
 
-**Two pre-existing defects surfaced while sweeping callers, neither fixed here.**
+**[AMENDED 2026-08-04 — the regeneration published a new falsehood, now fixed.]** A steelman
+review found that rendering eight never-before-rendered cells was not the mechanically safe act
+the passing integrity check made it look like:
+
+1. **"Building rules in several countries agree on this."** The `regulatory_stratum_only`
+   register rows asserted *convergence* across the board — "standards/codes converge",
+   "Standards converge", "The law sets a floor here". True of cell 9005 (15 governing refs,
+   8 code-minimum jurisdictions), for which they were written. **False of cells 9012 and 9013**,
+   rendered for the first time here: both rest on **one** governing ref (`REF-00563`,
+   ANSI/ASA S12.60, United States) and have **zero** `is_code_minimum` rows. One instrument
+   cannot converge and one country is not several. The rows now say what is true of a
+   regulatory-stratum basis of any size; the epistemic verdict is untouched. The checker could
+   never have caught it — `I4`/`I5` test *equality with the map row*, and the defect was in the
+   map. Naming the cost: cell 9005's real eight-jurisdiction agreement is no longer stated, and
+   restoring it needs a per-cell split of the tuple class, which needs the quarantined checker
+   to move.
+2. **Two of the seven recorded `derivation_sha` values do not verify against their own rows.**
+   Cell 9007's hash is `sha("B-10","NEU",…)` — the population rename to `BRAIN` never restamped
+   it, so the repair retired the visible `B-10×NEU` label while republishing NEU's cryptographic
+   fossil on the same cell. Cell 9003's attests the six-ref governing set that the DB-integrity
+   backfill narrowed to four. Both now render an explicit stale-sha warning, and — more to the
+   point — `test_db_integrity` **`K01`** recomputes every non-NULL sha and fails on exactly those
+   two. It is red and should stay red: restamping asserts an engine derivation that did not
+   happen, clearing loses the record, and choosing between them is an owner call. Finding this by
+   hand in a render review was the wrong way to find it; `K01` is the right way.
+
+Two warts left standing and recorded in the code: `data-sha` **and `data-rule-version`** both
+emit the Python repr `'None'` for a NULL — 20 occurrences between them — because the checker
+cross-checks each against `str(row[...])`. An earlier version of this note documented only the
+first, which made a half disclosure look whole. The None-normalisation is two lines and the
+generator/checker coupling is by design, so the reluctance is narrower than "don't touch it": it
+belongs in the Option-A rework rather than arriving alone into a check the registry cannot run.
+
+**Not fixed and owed to that pass** (all confirmed, all pre-existing): the `stated_multi_axis`
+plain and plain-care rows carry **no G8 value-convergence-pending disclosure**, which G8 requires
+"in every register", so cells 9001–9003 render without it; the document header still states
+**I3's absolute form**, repealed by DR-2026-07-21 Option A; and the checker has **no DB→doc
+completeness direction** — deleting an entire cell section still passes, which is precisely the
+failure state this repair just cleaned up. Nothing in `governance/check-registry.yaml` references
+`working/pilot`, so this artifact can go stale again silently, and now more silently than before:
+the crash that used to announce staleness is gone and nothing replaced it.
+
+~~**Two pre-existing defects surfaced while sweeping callers, neither fixed here.**
 `scripts/generate/pilot_renderings.py` **cannot run at all** — it crashes on
 `derivation_sha[:16]` because **8 of 15 cells (9008–9015) have `derivation_sha` NULL**. Confirmed
 pre-existing by running the committed version. So the false "source_value_extractions empty"
@@ -585,7 +626,14 @@ sentence is corrected *in the generator source* but still stands in the committe
 `working/pilot/pilot-renderings.html`, which cannot be regenerated until the generator or the
 data is fixed. `register_integrity_check.py` separately reports the committed HTML renders a
 `B-10×NEU` cell that no longer exists in `evidence_cell_state`. Both belong to a pilot-rendering
-repair, not to hop 4.
+repair, not to hop 4.~~
+
+**[SUPERSEDED 2026-08-04 by the repair recorded above, which landed 18 lines earlier in this
+same section and left this paragraph standing unqualified.]** Both defects are fixed; the text
+above described them as open. A review caught the contradiction — the same
+statement-refuted-by-a-later-statement-in-the-same-document failure CLAUDE.md's TL;DR recounts
+as a past incident, reproduced here at a distance of 18 lines. Rule #5's caller sweep applies to
+prose in the same document, not only to identifiers.
 
 One further constraint the profile surfaced, which bounds what closing the walk can even claim:
 **18 of the 19 are tier 3**, one is Co-1 (`REF-00950`) and one T5. Under `governance/tier-system.md`
