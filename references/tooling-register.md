@@ -481,9 +481,13 @@ Remaining categories:
   compliant commits because its skill/author/merge token lists have rotted, not against
   history), `validate_audit_runs` (green with real assertions over 87 `item_audit_runs` rows;
   wiring awaits only a named owner).
-- **Wrong shape for CI**: `register_integrity_check` (needs an `html` argument *and* still
+- **Wrong shape for CI**: ~~`register_integrity_check` (needs an `html` argument *and* still
   enforces I3's repealed absolute form — the ENGINE-LAG flagged in the 2026-07-23 plan; it
-  would false-fail correct weak-band rendering under DR-2026-07-21 Option A),
+  would false-fail correct weak-band rendering under DR-2026-07-21 Option A)~~ **[RESOLVED
+  2026-08-04** — both blockers cleared by the Option A rework: the document and DB paths now
+  default (the latter honouring `GUIDEBOOK_DB_PATH`), and the checker enforces amended I3
+  (unflagged / above-weak-band) instead of the repealed absolute form. It is registered as an
+  active advisory check in the `render` battery.**]**
   `claims_docket` (subcommand CLI with no default action),
   `full_db_metadata_verification` (**~298 seconds**, network-bound — correct as a scheduled
   job, never as a PR gate).

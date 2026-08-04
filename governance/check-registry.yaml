@@ -843,6 +843,26 @@ checks:
     cost: fast
     note: DR-2026-07-25 rendered-document integrity gate.
 
+  - id: register_integrity_check
+    cmd: [python3, scripts/audit/register_integrity_check.py, --selftest]
+    battery: render
+    kinds: [render, data, tooling]
+    level: advisory
+    basis: render/register-invariants
+    cost: fast
+    note: >-
+      Amended I1–I5 (DR-2026-07-21 Option A) over working/pilot/pilot-renderings.html,
+      with the DB cross-check and the DB→doc completeness direction on by default.
+      --selftest mutation-tests every invariant before checking the real document, so
+      a pass is a demonstrated-firing pass rather than an assumed one. De-quarantined
+      2026-08-04: both stated blockers were cleared — it now defaults its document and
+      DB paths (honouring GUIDEBOOK_DB_PATH), and enforces amended I3 rather than the
+      repealed absolute form. `tooling` kind because it imports REGISTER_MAP and
+      tuple_class from scripts/generate/pilot_renderings.py, so a renderer-only diff is
+      exactly when the coupling can break. Advisory on arrival per the house norm at
+      the head of this file; promotion to blocking is a separate owner-gated commit
+      once the false-positive rate of its lexicon checks is known.
+
   - id: render_audit_browser
     cmd: [node, scripts/audit/render_audit.js]
     battery: render
@@ -914,17 +934,12 @@ quarantine:
       Green but vacuous — the conflicts table has 0 rows, so it asserts nothing.
       Wire when the table is populated.
 
-  - id: register_integrity_check
-    cmd: [python3, scripts/audit/register_integrity_check.py]
-    status: quarantined
-    reason: >-
-      Requires an `html` positional argument, so it cannot run corpus-wide as-is.
-      Also carries the ENGINE-LAG flagged in the 2026-07-23 plan: it still enforces
-      I3's repealed absolute form and will false-fail correct weak-band rendering
-      under DR-2026-07-21 Option A. Needs the Option-A patch AND an --all mode.
-
   # claims_docket, pmp_audit and reasoning_doc_citations_audit were de-quarantined
   # on 2026-08-01 after triage; they are now active advisory checks above.
+  # register_integrity_check was de-quarantined on 2026-08-04: both of its stated
+  # blockers were cleared by the DR-2026-07-21 Option A rework — it now defaults
+  # its document path and DB, and enforces amended I3 instead of the repealed
+  # absolute form. It is an active advisory check in the render battery above.
 
   - id: schema_reference_drift_audit
     cmd: [python3, scripts/audit/schema_reference_drift_audit.py]

@@ -33,7 +33,14 @@ import sys
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 sys.path.insert(0, REPO_ROOT)
 
-RULE_VERSION = "pilot-1"
+# The register map is versioned, which is what evidence-architecture §6 means by
+# "versioned with rule_version". This constant was `RULE_VERSION = "pilot-1"` and
+# was dead — nothing read it, and the engine's real RULE_VERSION lives in
+# assess_cell.py (currently "pilot-2"), so the name invited exactly the confusion
+# of reading a renderer constant as a determination version. map-2 is the
+# DR-2026-07-21 Option A revision: weak-band split, G8 disclosure in the plain
+# registers, amended-I3 header.
+REGISTER_MAP_VERSION = "map-2"
 
 ROLES = ["designer", "ot", "policymaker", "disabled_person", "carer", "advocacy_brief"]
 REGISTERS = {"designer": "technical", "ot": "clinical", "policymaker": "policy",
@@ -44,11 +51,29 @@ REGISTERS = {"designer": "technical", "ot": "clinical", "policymaker": "policy",
 # rule_version). Keyed by tuple-class; one language cell per register. Renderers
 # MUST draw claim-strength language from here and nowhere else (I4/I5).
 # ---------------------------------------------------------------------------
-def tuple_class(state, tier_basis, conv_status, rso):
+def tuple_class(state, tier_basis, conv_status, rso, n_reg_refs=0, n_reg_jur=0):
+    """Map a determination tuple to its register-map key.
+
+    The regulatory-stratum branch splits in two as of the DR-2026-07-21 Option A
+    rework. One shared row previously served cell 9005 (15 instruments, 12
+    jurisdictions) and cells 9012/9013 (one instrument, one jurisdiction), and
+    it asserted convergence — which made it false for the singles. Collapsing to
+    a convergence-free text fixed the falsehood but silenced what is true and
+    worth saying about 9005. The split says each accurately.
+
+    Note what the broad row may and may not claim. E-06's recorded code minimums
+    are 5, 10, 13 and 20 mm across AU/DE/FR/US — they do NOT agree on a value.
+    So the honest claim for 9005 was never value convergence; it is BREADTH:
+    many instruments, many jurisdictions, regulating this parameter, with a
+    visible spread. A value-convergence row is not pre-built here because no
+    cell occupies that state (043's lesson); it becomes assertable when
+    direction-aware most-accommodating selection lands (DR §5.2) or the floors
+    actually agree.
+    """
     if state == "pending":
         return "pending"
     if rso:
-        return "regulatory_stratum_only"
+        return "rso_weak_broad" if (n_reg_refs >= 2 and n_reg_jur >= 2) else "rso_weak_single"
     if state == "provisional":
         return "provisional_t3"
     if conv_status == "pending_assessment":
@@ -65,11 +90,21 @@ REGISTER_MAP = {
         "policymaker": "Evidence-anchored best practice exists ({basis}); multiple independent "
                        "evidence axes. Its relation to the recorded code minimums is pending "
                        "value extraction — no delta is asserted before the values are.",
+        # G8 (RATIFIED 2026-07-13) requires the value-convergence-pending
+        # disclosure in EVERY register. The four technical registers carried it;
+        # these two plain registers did not, so cells 9001–9003 rendered without
+        # it. The disclosure lives in the claim-strength row, not role_body, so
+        # I4/I5 equality enforces it mechanically. Plain language, no jargon —
+        # "value-level convergence" must not appear in a plain register.
         "disabled_person": "Research and disabled people's own published experience both "
                            "address this. This is an evidence-based recommendation, not just "
-                           "a building rule.",
+                           "a building rule. One check is still in progress: whether the "
+                           "different kinds of evidence agree on the same measurements. "
+                           "Until that check is done, this page gives no number.",
         "carer": "Research and disabled people's published experience both support attention "
-                 "to this feature. It is an evidence-based recommendation, not just a rule.",
+                 "to this feature. It is an evidence-based recommendation, not just a rule. "
+                 "Whether the different evidence sources agree on exact measurements is still "
+                 "being checked, so no number is given yet.",
         "advocacy_brief": "You can cite independent research AND community evidence for this "
                           "({basis}). How the evidence-based value compares to the legal "
                           "minimum is pending extraction — cite the evidence itself; "
@@ -100,44 +135,80 @@ REGISTER_MAP = {
         "advocacy_brief": "Early research supports this ask; label it as provisional evidence "
                           "when citing it — accuracy protects credibility.",
     },
-    # These rows asserted CONVERGENCE — "standards/codes converge", "Standards
-    # converge", "Building rules in several countries agree", "The law sets a
-    # floor here". That was written against cell 9005 (E-06×MOB: 15 governing
-    # refs, 8 code-minimum jurisdictions), where every word of it is true.
+    # ── The weak band (DR-2026-07-21 Option A) ─────────────────────────────
+    # Under Option A a code-consensus claim CAN anchor best practice, but only
+    # at the flagged weak band (○) — "best practice as currently known" —
+    # rendered flagged in every register and never suppressed. Rendered
+    # unflagged, or at ●/◐, it is in error. These rows carry [○] and not [◐]:
+    # tier-system §8 puts the determination-level band for any regulatory-
+    # stratum cell at ○, and the previous row printed [◐], which was a band
+    # error under DR-2026-07-21 §2.3.
     #
-    # It became false the moment cells 9012 (A-02×ALL) and 9013 (A-08×ALL) were
-    # rendered for the first time: both rest on ONE governing ref (REF-00563,
-    # ANSI/ASA S12.60, United States) and have ZERO is_code_minimum rows in
-    # jurisdictional_values. One instrument cannot converge, one country is not
-    # several, and no floor renders. The rows below therefore say what is true
-    # of a regulatory-stratum basis of ANY size. The epistemic verdict is
-    # unchanged — still walled off from anchoring, still not evidence, still
-    # "ask for better" — only the false plural is gone.
-    #
-    # Stating convergence WHERE IT IS REAL is a loss worth naming: cell 9005's
-    # eight-jurisdiction agreement is worth telling a reader about, and this
-    # text no longer does. Restoring it needs a per-cell split of this tuple
-    # class, which needs a new data attribute and a matching change to
-    # register_integrity_check's tuple_class call — that checker is quarantined
-    # pending the DR-2026-07-21 Option A rework, and this correction is not
-    # waiting behind it.
-    "regulatory_stratum_only": {
-        "designer": "Regulatory-stratum value [◐]: the basis is codes and standards only "
-                    "({basis}); no anchoring evidence (T1/Co-1/T2/Co-2) exists for this cell.",
-        "ot": "Regulatory-stratum value only ({basis}): no clinical, lived-experience, or "
-              "CPG anchor exists; treat the value as a compliance floor, not a clinical target.",
-        "policymaker": "The basis here is regulatory-stratum instruments only ({basis}). Code "
-                       "agreement is not evidence, and where only one instrument speaks there "
-                       "is not even agreement: no T1/Co-1/T2/Co-2 anchor exists. Treat any "
-                       "such value as floor, not target — the jurisdictions could all be "
-                       "wrong together, or the single one could be.",
-        "disabled_person": "This comes from building rules and standards only. No research or "
-                           "lived-experience evidence yet shows it is what actually works "
-                           "best. You can ask for better than the rule.",
-        "carer": "This comes from building rules only; no research or lived-experience "
-                 "evidence yet shows it is what works best.",
-        "advocacy_brief": "The basis here is regulatory only, and NO evidence yet shows it is "
-                          "enough. That gap is itself an advocacy point: demand the research.",
+    # Two rows, not one. A single row served both cell 9005 and cells
+    # 9012/9013 and asserted convergence, which was false for the singles;
+    # collapsing it to convergence-free text fixed that and silenced what is
+    # true of 9005. The split states each accurately, with the counts drawn per
+    # cell from the DB rather than written into prose.
+    "rso_weak_broad": {
+        "designer": "Best practice as currently known [○ weak, code-derived] ({basis}): "
+                    "{n_refs} regulatory instruments across {n_jur} jurisdictions address "
+                    "this parameter, and their required values differ — see the recorded "
+                    "spread. No anchoring evidence (T1/Co-1/T2/Co-2) exists for this cell; "
+                    "code agreement is not evidence, and the value stands only because "
+                    "nothing stronger says otherwise.",
+        "ot": "Best practice as currently known [○ weak, code-derived] ({basis}): regulatory "
+              "instruments only ({n_refs} across {n_jur} jurisdictions); no clinical, "
+              "lived-experience, or CPG anchor. Treat this as the current regulatory answer, "
+              "not a clinically adjudicated target.",
+        "policymaker": "Best available given current regulation, NOT academically adjudicated "
+                       "[○ weak, code-derived]: {n_refs} instruments across {n_jur} "
+                       "jurisdictions regulate this parameter ({basis}). Convergence is not "
+                       "evidence — no T1/Co-1/T2/Co-2 anchor exists; the jurisdictions could "
+                       "all be wrong together, or all be copying one unevidenced ancestor. "
+                       "This stands as weak-band best practice only because nothing stronger "
+                       "says otherwise.",
+        "disabled_person": "Building rules and standards in {n_jur} countries or standards "
+                           "bodies cover this. That's a rules answer, not a research answer: "
+                           "no research and no lived-experience evidence yet shows what "
+                           "actually works best. It's the best answer anyone has right now, "
+                           "it could change when real evidence arrives, and you can ask for "
+                           "better than the rule.",
+        "carer": "This comes from building rules in {n_jur} countries or standards bodies, "
+                 "not from research or lived experience. It's the best answer available right "
+                 "now, and it could change when real evidence arrives.",
+        "advocacy_brief": "The only basis here is regulation — {n_refs} instruments across "
+                          "{n_jur} jurisdictions — and NO research or lived-experience "
+                          "evidence yet shows it is enough. Cite it as the current regulatory "
+                          "answer, never as proven best practice; the missing evidence is "
+                          "itself an advocacy point: demand the research.",
+    },
+    "rso_weak_single": {
+        "designer": "Best practice as currently known [○ weak, code-derived] ({basis}): the "
+                    "entire basis is a single regulatory instrument in a single jurisdiction. "
+                    "No anchoring evidence (T1/Co-1/T2/Co-2) exists for this cell; one "
+                    "instrument is not convergence, code is not evidence, and the value "
+                    "stands only because nothing stronger says otherwise.",
+        "ot": "Best practice as currently known [○ weak, code-derived] ({basis}): one "
+              "regulatory instrument, no clinical, lived-experience, or CPG anchor. Treat "
+              "this as the current regulatory answer, not a clinically adjudicated target.",
+        "policymaker": "Best available given current regulation, NOT academically adjudicated "
+                       "[○ weak, code-derived] ({basis}): a single instrument in a single "
+                       "jurisdiction. Where only one instrument speaks there is not even "
+                       "convergence — no T1/Co-1/T2/Co-2 anchor exists, and the one "
+                       "instrument could simply be wrong. This stands as weak-band best "
+                       "practice only because nothing stronger says otherwise.",
+        "disabled_person": "This comes from one set of building rules in one country. That's "
+                           "a rules answer, not a research answer: no research and no "
+                           "lived-experience evidence yet shows what actually works best. "
+                           "It's the best answer anyone has right now, it could change when "
+                           "real evidence arrives, and you can ask for better than the rule.",
+        "carer": "This comes from one set of building rules in one country, not from research "
+                 "or lived experience. It's the best answer available right now, and it could "
+                 "change when real evidence arrives.",
+        "advocacy_brief": "The basis here is one regulatory instrument in one jurisdiction, "
+                          "and NO research or lived-experience evidence yet shows it is "
+                          "enough. Cite it as exactly that; the missing evidence is itself an "
+                          "advocacy point: demand the research.",
     },
     "pending": {
         "designer": "[BEST-PRACTICE-PENDING] — evidence gap logged (→ gap register). "
@@ -191,6 +262,25 @@ def fetch_cells(conn):
         # role='governing' is filtered explicitly rather than relied on: it is
         # the only value cell_source_links admits today, and a second role
         # arriving must not silently widen what this counts.
+        # Breadth of the regulatory basis, for the weak-band split. Drawn from
+        # evidence_sources.jurisdiction over the governing set — the fact is
+        # already there and needs no column.
+        #
+        # Two signals were rejected. convergence_assessment.status records
+        # single_axis for all three RSO cells: that counts EVIDENCE AXES, not
+        # jurisdictions, and overloading it would corrupt its meaning.
+        # jurisdictional_values is wrong the other way — cells 9012/9013 have
+        # zero rows there while having a real single-instrument basis, so it
+        # would read "no basis" where a basis exists. COUNT(DISTINCT ...) skips
+        # NULL jurisdictions, which errs toward calling a basis narrow.
+        c["n_reg_refs"] = len(c["refs"]) if c["rso"] else 0
+        if c["rso"] and c["refs"]:
+            qs = ",".join("?" * len(c["refs"]))
+            c["n_reg_jur"] = conn.execute(
+                f"SELECT COUNT(DISTINCT jurisdiction) FROM evidence_sources "
+                f"WHERE ref_id IN ({qs})", c["refs"]).fetchone()[0]
+        else:
+            c["n_reg_jur"] = 0
         # Does the recorded derivation_sha still verify against this row? The
         # engine's own function (assess_cell.sha) hashes
         # item|population|sorted(governing_refs)::rule_version, so a sha that no
@@ -298,8 +388,13 @@ def role_body(c, role):
             anchor_txt = ("ANCHOR: evidence-anchored best practice exists "
                           f"({c['tier_basis']}); extracted delta pending value extraction."
                           if c["state"] == "stated" and not c["rso"] else
+                          # "the floor is the only defensible value claim" stated
+                          # I3's repealed absolute form: under Option A the
+                          # determination above IS a claim, at the flagged weak
+                          # band. The floor is its basis, not its replacement.
                           "ANCHOR: none — no anchoring evidence (T1/Co-1/T2/Co-2) exists for "
-                          "this cell; the floor is the only defensible value claim.")
+                          "this cell; the determination above is weak-band and code-derived, "
+                          "and the recorded floors are its entire basis.")
             parts.append(anchor_txt)
         parts.append(f"Citation chain: {', '.join(c['refs'][:6])}{'…' if len(c['refs']) > 6 else ''}"
                      if c["refs"] else "Citation chain: none (see gap register).")
@@ -337,11 +432,15 @@ def role_body(c, role):
 def render(cells, out_path):
     rows = []
     for c in cells:
-        tc = tuple_class(c["state"], c["tier_basis"], c["conv_status"], c["rso"])
+        tc = tuple_class(c["state"], c["tier_basis"], c["conv_status"], c["rso"],
+                         c["n_reg_refs"], c["n_reg_jur"])
         basis = c["tier_basis"] or "no basis"
         blocks = []
         for role in ROLES:
-            claim = REGISTER_MAP[tc][role].format(basis=basis)
+            # n_refs/n_jur are surplus kwargs for every row but the two weak-band
+            # ones; str.format ignores what a template does not reference.
+            claim = REGISTER_MAP[tc][role].format(
+                basis=basis, n_refs=c["n_reg_refs"], n_jur=c["n_reg_jur"])
             body = "".join(f"<p class='emphasis'>{html.escape(p)}</p>"
                            for p in role_body(c, role))
             blocks.append(
@@ -349,8 +448,10 @@ def render(cells, out_path):
                 f"data-role='{role}' data-register='{REGISTERS[role]}' "
                 f"data-state='{c['state']}' data-tier-basis='{html.escape(basis)}' "
                 f"data-conv='{c['conv_status'] or ''}' data-rso='{c['rso']}' "
-                f"data-cfo='{c['code_floor_only']}' data-sha='{c['derivation_sha']}' "
-                f"data-rule-version='{c['rule_version']}' data-tuple-class='{tc}'>"
+                f"data-cfo='{c['code_floor_only']}' "
+                f"data-reg-refs='{c['n_reg_refs']}' data-reg-jur='{c['n_reg_jur']}' "
+                f"data-sha='{c['derivation_sha'] or ''}' "
+                f"data-rule-version='{c['rule_version'] or ''}' data-tuple-class='{tc}'>"
                 f"<h4>{role.replace('_', ' ')} · {REGISTERS[role]}</h4>"
                 f"<p class='claim-strength'>{html.escape(claim)}</p>{body}</div>")
         rows.append(
@@ -376,8 +477,10 @@ def render(cells, out_path):
            "<h1>Same determination, six registers — pilot demonstration</h1>"
            "<p>Every rendering of a cell carries the identical determination tuple "
            "(I1); claim-strength language is drawn only from REGISTER_MAP (I4/I5); "
-           "regulatory-stratum-only cells carry no best-practice language in any register "
-           "(I3); the policymaker view always pairs floor with anchor (I2).</p>"
+           "regulatory-stratum-only cells render only as flagged weak-band (○, code-derived) "
+           "best practice with the code-is-not-evidence caveat — never unflagged, never above "
+           "the weak band (I3 as amended by DR-2026-07-21 Option A); the policymaker view "
+           f"always pairs floor with anchor (I2). Register map: {REGISTER_MAP_VERSION}.</p>"
            + "".join(rows))
     with open(out_path, "w") as f:
         f.write(doc)
