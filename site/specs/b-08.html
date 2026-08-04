@@ -23,6 +23,20 @@ section { margin: 28px 0; padding-bottom: 20px; border-bottom: 1px solid var(--b
 section:last-child { border-bottom: none; }
 h2 { font-family: var(--font-ui); font-size: 15px; font-weight: 600; text-transform: uppercase;
       letter-spacing: 0.5px; color: var(--muted); margin-bottom: 10px; }
+h3 { font-family: var(--font-ui); font-size: 13px; font-weight: 600; margin: 18px 0 6px;
+      color: var(--ink); }
+ul.sources { list-style: none; font-size: 14px; }
+ul.sources li { padding: 6px 0 6px 12px; border-left: 2px solid var(--border);
+                 margin-bottom: 6px; }
+ul.sources .ref { font-family: var(--font-mono); font-size: 12px; color: var(--accent); }
+.tier-badge { font-family: var(--font-ui); font-size: 11px; padding: 1px 5px;
+               background: var(--accent-light); color: var(--accent); border-radius: 2px; }
+.vs { font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.3px; }
+.vs.ok { color: #2e6b3e; }
+.vs.warn { color: #8a4b2d; font-weight: 600; }
+.bpc-state { font-family: var(--font-ui); font-size: 11px; color: var(--muted); }
+.bpc-retracted { font-family: var(--font-ui); font-size: 11px; font-weight: 600;
+                  color: #8a2d2d; background: #f7e8e8; padding: 1px 5px; border-radius: 2px; }
 table { width: 100%; border-collapse: collapse; font-size: 14px; }
 th { font-family: var(--font-ui); font-size: 12px; text-transform: uppercase; text-align: left;
       padding: 6px 10px; background: var(--accent-light); color: var(--accent);
@@ -43,10 +57,10 @@ td a { color: var(--accent); text-decoration: none; font-family: var(--font-mono
 <h2>Applicable populations (4)</h2>
 <table>
 <thead><tr><th>Code</th><th>Name</th><th>Applicability</th></tr></thead>
-<tbody><tr><td><a href="/populations/aut.html">AUT</a></td><td>autism</td><td>applies</td></tr>
-<tr><td><a href="/populations/dem.html">DEM</a></td><td>dementia</td><td>applies</td></tr>
-<tr><td><a href="/populations/pcs.html">PCS</a></td><td>post-concussion syndrome</td><td>applies</td></tr>
-<tr><td><a href="/populations/vis.html">VIS</a></td><td>vision impairment</td><td>applies</td></tr>
+<tbody><tr><td><a href="/populations/aut.html">AUT</a></td><td>autistic people</td><td>applies</td></tr>
+<tr><td><a href="/populations/blind.html">BLIND</a></td><td>blind and low-vision people</td><td>applies</td></tr>
+<tr><td><a href="/populations/brain.html">BRAIN</a></td><td>people with acquired brain injury</td><td>applies</td></tr>
+<tr><td><a href="/populations/dem.html">DEM</a></td><td>people living with dementia</td><td>applies</td></tr>
 </tbody>
 </table>
 </section>
@@ -54,8 +68,8 @@ td a { color: var(--accent); text-decoration: none; font-family: var(--font-mono
 <section>
 <h2>Governing Best Practice Compendium entries</h2>
 <table>
-<thead><tr><th>Slug</th><th>Link type</th><th>Rationale</th></tr></thead>
-<tbody><tr><td colspan="3" class="empty">No governing BPC recorded for this item.</td></tr></tbody>
+<thead><tr><th>Slug</th><th>Link type</th><th>BPC state</th><th>Rationale</th></tr></thead>
+<tbody><tr><td colspan="4" class="empty">No governing BPC recorded for this item.</td></tr></tbody>
 </table>
 </section>
 
@@ -66,7 +80,21 @@ td a { color: var(--accent); text-decoration: none; font-family: var(--font-mono
 
 <section>
 <h2>Best-practice determinations</h2>
-<p class="honest-banner">Best-practice determination: <strong>not yet computed</strong> for this item, for any population. See workplan/best-practices-assessment-system.md.</p>
+<table>
+            <thead><tr><th>Population</th><th>State</th><th>Tier basis</th>
+            <th>Code floor only</th><th>Regulatory stratum only</th>
+            <th>Source caveats</th><th>Confidence basis</th>
+            <th>Falsification condition</th></tr></thead>
+            <tbody><tr><td>VES</td><td>provisional</td><td>T3-only</td><td>no</td><td>no</td><td>—</td><td>Provisional VES determination (Phase-B verified 2026-07-24; adversarial-corrected): the visual-vertigo provocation anchor is Bronstein 2016 (REF-00908) — a single T3 review; Saftari &amp; Kwon (REF-00907) is supporting mechanism, not a second provocation source. Supports matte, low-reflectance floors for vestibular populations. The &lt;=30-gloss value is inherited from item B-08 (established for other populations), NOT vestibular-validated: DIRECTION provisional (single T3 review), numeric threshold conventional. Single T3 axis =&gt; provisional, not stated.</td><td>—</td></tr>
+</tbody>
+        </table>
+        <h2>Governing sources</h2>
+        <p>Every source below governs the determination for its population.
+        Walk the other direction — every specification a source justifies —
+        through <code>cell_source_links</code>.</p>
+        <h3>VES — 2 governing sources</h3>
+<ul class="sources"><li><span class="ref">REF-00908</span> Bronstein AM (2016). <em>Multisensory integration in balance control</em> <span class="tier-badge">T3</span> <span class="vs ok">VERIFIED</span></li>
+<li><span class="ref">REF-00907</span> Saftari LN, Kwon OS (2018). <em>Ageing vision and falls: a review</em> <span class="tier-badge">T3</span> <span class="vs ok">VERIFIED</span></li></ul>
 </section>
 
 </body>

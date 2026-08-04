@@ -61,10 +61,14 @@ def query_item(conn, item_code):
     # (migration 013) but is only sparsely populated today; bpc_source_slug is
     # the legacy single-string fallback still carried on most items. Report both.
     links = conn.execute(
-        "SELECT slug, link_type, rationale FROM item_bpc_links WHERE item_code = ?",
+        "SELECT l.slug, l.link_type, l.rationale, m.evidence_state "
+        "FROM item_bpc_links l "
+        "LEFT JOIN bpc_metadata m ON m.slug = l.slug "
+        "WHERE l.item_code = ? ORDER BY l.link_type, l.slug",
         (item_code,),
     ).fetchall()
-    item["bpc_links"] = [{"slug": r[0], "link_type": r[1], "rationale": r[2]} for r in links]
+    item["bpc_links"] = [{"slug": r[0], "link_type": r[1], "rationale": r[2],
+                          "evidence_state": r[3]} for r in links]
 
     cells = conn.execute(
         "SELECT cell_id, population_code, state, tier_basis, code_floor_only, "
@@ -116,6 +120,14 @@ def source_caveats(cell):
     return ", ".join(flags) if flags else "—"
 
 
+def bpc_state_cell(state):
+    """Render a BPC's evidence_state, loudly when it undercuts the page."""
+    if not state:
+        return '<span class="empty">not recorded</span>'
+    cls = "bpc-retracted" if "RETRACT" in state.upper() else "bpc-state"
+    return f'<span class="{escape(cls)}">{escape(state)}</span>'
+
+
 def citation(src):
     """One governing source, rendered as a citation a reader can chase.
 
@@ -152,18 +164,25 @@ def render_html(item):
     ) or '<tr><td colspan="3" class="empty">No populations linked to this item yet.</td></tr>'
 
     bpc_source = item["bpc_source_slug"]
+    # The BPC's own state, not the link's rationale prose. Those disagree: the
+    # A-18 link rationale says nothing about retraction while the BPC it points
+    # at is RETRACTED-PRE-REHAB, and 62 of 83 BPCs are in that state. A page
+    # that renders a determination governed by a retracted synthesis without
+    # saying so is asserting more than the project knows.
     bpc_rows = "".join(
         f'<tr><td>{e(b["slug"])}</td><td>{e(b["link_type"] or "")}</td>'
+        f'<td>{bpc_state_cell(b["evidence_state"])}</td>'
         f'<td>{e(b["rationale"] or "")}</td></tr>\n'
         for b in item["bpc_links"]
     )
     if not bpc_rows and bpc_source:
         bpc_rows = (f'<tr><td>{e(bpc_source)}</td><td>legacy bpc_source_slug</td>'
+                    f'<td class="empty">&mdash;</td>'
                     f'<td class="empty">item_bpc_links (the intended many-to-many bridge, '
                     f'migration 013) has no row for this item yet — see '
                     f'decisions/DR-2026-07-12-evidence-cell-state-schema-reconciliation.md.</td></tr>')
     elif not bpc_rows:
-        bpc_rows = '<tr><td colspan="3" class="empty">No governing BPC recorded for this item.</td></tr>'
+        bpc_rows = '<tr><td colspan="4" class="empty">No governing BPC recorded for this item.</td></tr>'
 
     if item["pmp_last_walk_at"]:
         pmp = (f'<p>Progressive Measurement Probe last walked '
@@ -257,6 +276,9 @@ ul.sources .ref {{ font-family: var(--font-mono); font-size: 12px; color: var(--
 .vs {{ font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.3px; }}
 .vs.ok {{ color: #2e6b3e; }}
 .vs.warn {{ color: #8a4b2d; font-weight: 600; }}
+.bpc-state {{ font-family: var(--font-ui); font-size: 11px; color: var(--muted); }}
+.bpc-retracted {{ font-family: var(--font-ui); font-size: 11px; font-weight: 600;
+                  color: #8a2d2d; background: #f7e8e8; padding: 1px 5px; border-radius: 2px; }}
 table {{ width: 100%; border-collapse: collapse; font-size: 14px; }}
 th {{ font-family: var(--font-ui); font-size: 12px; text-transform: uppercase; text-align: left;
       padding: 6px 10px; background: var(--accent-light); color: var(--accent);
@@ -284,7 +306,7 @@ td a {{ color: var(--accent); text-decoration: none; font-family: var(--font-mon
 <section>
 <h2>Governing Best Practice Compendium entries</h2>
 <table>
-<thead><tr><th>Slug</th><th>Link type</th><th>Rationale</th></tr></thead>
+<thead><tr><th>Slug</th><th>Link type</th><th>BPC state</th><th>Rationale</th></tr></thead>
 <tbody>{bpc_rows}</tbody>
 </table>
 </section>

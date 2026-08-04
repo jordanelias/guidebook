@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-08-04-verification-vocabulary-dr",
+  "artifact": "decisions/DR-2026-08-04-verification-status-is-a-standing-not-a-history.md",
+  "doctrine_sha": "0f2f525",
+  "rules_in_scope": [
+    "source-discipline",
+    "best-practice-synthesis-routing",
+    "evidence-verification-gate-for-synthesis",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-08-04-verification-status-is-a-standing-not-a-history.md#3-what-verified-should-mean",
+      "reason": "The DR's entire subject is what may be claimed about a source. It defines VERIFIED for the first time as requiring the document itself to have been obtained, and rules that corroboration-without-retrieval is not a weaker grade of verified but simply not verified. Every count quoted was measured against the live DB and is reproducible; no claim about any individual source's standing is asserted here. AMENDED 2026-08-04 after an independent adversarial pass found three design defects, each verified against the live repo before the fix: Co-1 was unaccounted for and the section-3 definition would have demoted all 41 co1-manual-pre-pipeline rows, colliding with Co-1 co-primacy under CRPD Art. 4.3 (section 3.1 and a co1-attestation method added); invariant I3 pointed closure at processing_blocked_reason, whose CHECK vocabulary in migration 040 belongs to the capture domain and excludes three of the five terminal reasons, so the ratification migration would have violated the constraint and reproduced this DR's own diagnosis (a dedicated verification_closure_reason column replaces it); and the weekly jobs that write this column were unaddressed, so narrowing B01 alone would have let the next scheduled run redden the gate unattended (section 5.1 added)."
+    },
+    "best-practice-synthesis-routing": {
+      "status": "NOT-FIRED",
+      "reason": "No best_practice_synthesis is written or altered. The DR is a vocabulary and column-semantics proposal."
+    },
+    "evidence-verification-gate-for-synthesis": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-08-04-verification-status-is-a-standing-not-a-history.md#24-verified-2-is-honest-about-its-method-and-wrong-about-its-standing",
+      "reason": "Reclassifying 71 rows out of VERIFIED could in principle pull support from a published cell. Checked before proposing: zero published cells cite a VERIFIED-2 source, so no cell state and no rendered page changes. The gate is engaged and the answer recorded rather than assumed."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/decisions_DR-2026-08-04-verification-status-is-a-standing-not-a-history.json"
+    }
+  },
+  "deviations": [
+    {
+      "rule": "doctrine-token-on-synthesis-paths",
+      "reason": "Commit a38aaa74 amended this DR (the owner ruling that DISPUTED survives as closure reason disputed-existence) without the required [DOCTRINE: 0f2f525] token. The edit was swept into an unrelated rendering commit by `git add -A` rather than committed on its own. Verified by running the repo's own enforcer: scripts/ci_helpers/check_doctrine_token.py --target a38aaa74 --before a38aaa74^ returns C1 FAIL. CI would never have caught it -- the commit-msg job is push-to-main only and is skipped on PRs, and the eventual merge commit is exempt -- so this was found by adversarial review, not by the gate. Remediated forward within the RE_ATTESTATION_WINDOW rather than by rewriting pushed history, so the miss stays legible instead of being hidden. The DR's content is unaffected; only its commit hygiene was."
+    }
+  ],
+  "bias_direction": "The bias in this DR runs toward tidiness at the expense of the people who did the original work. The 71 VERIFIED-2 rows were coined by sessions being unusually careful -- their notes say plainly 'real retrieval, not fabrication, but one step removed from a direct render' -- and this DR reclassifies all of them as UNVERIFIED. There is a real risk that a clean model reads as a rebuke of scrupulous work, and a second risk that demoting 71 rows makes the corpus look worse in a way that invites someone later to quietly re-promote them. Stated plainly to pre-empt both: the coinings were right about the distinction and wrong only about where to record it, and the falling verified count is a correction of an overstatement, not a loss. A second bias, toward minimalism for its own sake: having found that the suffixes collapse, there is momentum to collapse everything, and DISPUTED was retired in the same motion. That was checked against data rather than assumed -- 3 of its 7 rows record zero attempts and none records the two its justification claims, and it anchors zero cells -- but a reader should know the direction the argument was travelling when it arrived there. Third: I proposed a four-column design and kept PARTIAL; the owner's binary status plus disposition is better than mine on both counts, and I adopted it rather than defending my version. [AMENDED 2026-08-04, still PROPOSED, doctrine unchanged at 0f2f525 — recorded here rather than in reattestation[], which exists for doctrine deltas and there was none.] A further bias now visible in hindsight: this DR was drafted quickly under conversational momentum, and its three defects share a shape — each is a place where the model was elegant on paper and had not been checked against a constraint that already existed in the repo (Co-1 doctrine, a CHECK vocabulary, a scheduled writer). Minimalism is easy to admire and easy to under-test. The corrections came from an independent adversarial pass, not from re-reading my own argument, which is evidence about how this kind of error is actually caught.",
+  "independent_reviewer_counterclaim": "A reviewer would object that this is a large schema change justified largely by aesthetics -- 'one column, one domain' is a principle, not a defect report -- and that the corpus has functioned with these values for months. The sharpest form concerns DISPUTED: it was created by an owner-approved DR only two weeks ago to mark sources an adversarial sweep could not find, and retiring it so quickly risks losing a distinction that sweep thought worth drawing, on the technicality that nobody logged the attempt counter. Counter: the distinction is preserved exactly -- UNVERIFIED + CLOSED + not-found-after-search says what DISPUTED said -- and it is preserved in a form where the claim 'two independent agents tried' is checkable rather than asserted. Under invariant I3 those rows cannot even be written CLOSED until that work is recorded, so retiring the value strengthens the sweep's finding rather than discarding it. A reviewer might still reasonably want DISPUTED kept as a reason code rather than dissolved into not-found-after-search, and that is a live amendment the owner can make when ratifying.",
+  "verdict": "DEVIATION-LOGGED"
+}
