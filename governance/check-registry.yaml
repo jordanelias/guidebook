@@ -818,6 +818,22 @@ checks:
       do not match a fresh regeneration from the DB. Fix with
       scripts/regenerate_derived.sh, not by demoting the check.
 
+  - id: site_pages_fresh
+    cmd: [python3, scripts/generate/build_site.py, --check]
+    battery: render
+    kinds: [data, render]
+    level: advisory
+    basis: render/render-freshness
+    cost: fast
+    note: >-
+      Re-renders every site/specs page from the committed DB and compares against
+      what is on disk. Catches two things nothing else did: generated output that
+      drifted from its source, and generated output that was hand-edited (which
+      CLAUDE.md forbids). Also flags orphan pages whose item no longer exists in
+      `items` — those cannot be found by re-rendering, because the build walks
+      `items`. Advisory until the committed-vs-generated policy is settled; the
+      check is mutation-tested for both failure modes.
+
   - id: check_rendered_docs
     cmd: [python3, scripts/audit/check_rendered_docs.py, --all]
     battery: render

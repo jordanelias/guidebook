@@ -29,9 +29,13 @@ takes the same graph in the forward direction, because that is where the fork ha
 | | |
 |---|---|
 | Rendered spec pages | **87** |
-| …that name a single source | **0** → **1** (E-08, 2026-08-03) |
+| …that name a single source | **0** → **11 of 93** (2026-08-04) |
 
-Zero at the time of writing. Not one published page showed its evidence. This is not a content gap — `E-08 × DEAF` is a
+Zero at the time of writing. Not one published page showed its evidence.
+**[CORRECTED 2026-08-04]** An intermediate revision of this line read "0 → 1 (E-08)". That
+undercounted: `g-03.html` was also regenerated the same evening and cites 4 refs, so the true
+progression was 0 → 2 → 11. 11 of 93 is now every item that has a cell; the remaining ceiling is
+content, not code. This is not a content gap — `E-08 × DEAF` is a
 `stated` cell holding seven governing refs today — it is that `scripts/generate/spec_page.py:69-73`
 selects nine cell columns and **not `governing_refs`**. The data reaches the renderer's doorstep and
 is dropped there. Verified: `grep -c 'REF-' site/specs/*.html` returns 0 for every file.
@@ -123,11 +127,15 @@ FROM evidence_cell_state, json_each(governing_refs) je;
 `json1` is available (SQLite 3.45.1). FK both sides; `governing_refs` frozen then dropped. This is
 **W5.3**, already scoped — this plan supplies the migration shape and raises its rank.
 
-**`render_manifest(page_path, item_code, generator, generator_version, db_content_hash, rendered_at, inputs_json)`**
-— hop 10, entirely new. Written by the build driver; `inputs_json` (json1) enumerates the cell_ids,
-ref_ids and jurisdictional_value ids consumed. This makes a *page* a first-class node and doubles as
-the render-freshness receipt (§4). It also gives hop 10 the provenance anchor that finding **N7**
-demands of seven other tables.
+**Hop 10 — `render_manifest`, proposed here and since ABANDONED.** This plan proposed a table
+recording each page build. It was created (migration 045) and dropped (046) on 2026-08-04 once the
+owner stated the target architecture is dynamic rendering, under which there is no per-page build
+event to record. Left in place as the proposal it was, rather than edited to look prescient.
+
+What closed hop 10 instead: `v_item_provenance` and `v_source_reach` (migration 047), keyed on
+`item_code` rather than page path, so they survive a page becoming a route; and
+`scripts/generate/build_site.py`, which proves page↔DB correspondence by re-rendering rather than
+by consulting a stored receipt.
 
 Hop 6 gets `bpc_metadata.reasoning_doc_path` — a column, not a convention. Convention-coupling is
 what produced the `sessions/LATEST` defect; the same pattern is latent here.
@@ -144,8 +152,8 @@ what produced the `sessions/LATEST` defect; the same pattern is latent here.
   `references/case-study-compendium.md` (26 entries) into `case_studies` (0 rows, despite migrations
   037 *and* 038 shaping and reconciling its schema). CLAUDE.md guardrail 5 says the DB wins store
   conflicts; today the DB side is the empty one, which is backwards.
-- **JSON as json1 columns:** `render_manifest.inputs_json`; raw Crossref/PubMed responses in the
-  enrichment tier (§5), so every enriched value names the response that produced it.
+- **JSON as json1 columns:** raw Crossref/PubMed responses in the enrichment tier (§5), so every
+  enriched value names the response that produced it.
 - **JSON as files:** `attestations/*.json` stay files — schema-validated documents bound to commits,
   not graph data.
 - **Files with rows:** BPC docs, reasoning docs, governance prose. `slugs.bpc_path` already does this
@@ -171,23 +179,37 @@ one, which is worse — the repo would no longer contain the means of knowing wh
 
 The correct property is not "where the bytes are parked" but **regenerability**: the DB plus the
 generators, both committed, must reproduce the site deterministically at any time, and
-`render_manifest` must let anyone prove that a given render corresponds to a given DB state. Under
-that property, ⚑3's real choice is between **committing the generated output** and **regenerating
-it on demand from committed inputs** — and an ephemeral artifact is not an answer to either.
+it must be possible to prove that a given render corresponds to a given DB state. Under that
+property, ⚑3's real choice is between **committing the generated output** and **regenerating it on
+demand from committed inputs** — and an ephemeral artifact is not an answer to either.
 
-This makes `render_manifest` more load-bearing, not less. If the rendered output is not stored,
-the manifest is the only thing that can attest what a render consumed.
+**[SUPERSEDED the same day, by the next owner directive.]** The paragraph above originally
+concluded that this makes `render_manifest` *more* load-bearing. Then the owner stated the target
+architecture — "the entire pipeline is dynamic rendering on site" — under which there is no
+per-page build event to attest. `render_manifest` was created (migration 045) and dropped
+(migration 046) within hours; see 046's header for the full reasoning, including that it repeated
+migration 043's speculative-schema mistake.
+
+What actually carries provenance is `v_item_provenance` and `v_source_reach` (migration 047),
+which key on `item_code` rather than on a page path and therefore stay correct when a page stops
+being a file and becomes a route. And under current practice the DB, the generators and the pages
+are committed *atomically*, so the commit itself already answers "what did this page rest on".
 
 This dissolves the staleness class rather than patching it: there is no committed derived copy left
 *to be* stale, and §1's trigger question stops mattering. The PR gate inverts from "committed copy
-matches a fresh regeneration" (two sources of truth) to "the build succeeds and
-`render_manifest.db_content_hash` matches the PR's DB" (one source of truth, plus a receipt).
+matches a fresh regeneration" (two sources of truth) to "the pages on disk match a fresh render
+from the committed DB" (one source of truth). `build_site.py --check` implements exactly that;
+registering it in `governance/check-registry.yaml` is what makes it run.
 
-**The build driver** — `scripts/generate/build_site.py`, ~20 lines — iterates
-`SELECT item_code FROM items`, calls `spec_page.generate()`, then populations and rooms, writes
-`render_manifest`, and fails on any item that errors. It does not exist today in any form: no
-Makefile, no workflow reference, and `scripts/regenerate_derived.sh` calls only the three `tools/`
-generators.
+**The build driver** — `scripts/generate/build_site.py`. **[BUILT 2026-08-04.]** Iterates
+`SELECT item_code FROM items`, calls `spec_page`, and fails on any item that errors. It writes no
+state: `--check` answers staleness by comparing what is on disk against a fresh render, which needs
+no manifest and survives the move to dynamic rendering.
+
+Two limits to state rather than let the name imply otherwise: it currently builds **`site/specs/`
+only** — `site/populations/` (11 files) and `site/rooms/` (17 files) have generators that it does
+not drive — and `--check` does not yet detect an orphan file whose item has been deleted from
+`items`.
 
 ---
 
@@ -245,7 +267,7 @@ nothing.
 1. `cell_source_links` migration (W5.3) — the `json_each` insert above.
 2. `spec_page.py` renders governing refs with citation strings and evidence markers from
    `evidence_sources`. **The measuring number moves off zero here.**
-3. `build_site.py` + `render_manifest`.
+3. `build_site.py` (no manifest — see §2).
 4. Demonstrate both directions: `v_page_provenance` for `e-08.html`, and `v_source_reach` for
    REF-00338 — which also links `manoeuvring-footprint-vs-turning-radius-methodology`, so the
    multi-slug fan-out is exercised, not assumed.
@@ -281,7 +303,9 @@ rather than silently rewritten, per the convention of the plan this one extends.
    cheapest high-value change in this plan; §7 then parked it behind a fork gated by ⚑1/DG-NON,
    which the owner may decline — so under the original ordering the measuring number would have
    stayed at zero indefinitely. Split: **F6-core** (the render fix) is fork-independent and
-   executes now; **F6-infra** (`build_site.py` + `render_manifest`) waits behind ⚑3.
+   executes now; **F6-infra** (`build_site.py`) was thought to wait behind ⚑3 and does not — building
+the driver is correct under either answer, and only "delete `site/` from the tree" is gated. Built
+2026-08-04.
 2. **[CORRECTED] F2 never depended on F1.** The table implied it queued behind an owner ruling.
    `cell_source_links` is orthogonal to the `evidence_sources` tier split. Owner-gate latency
    should not sit in front of an ungated mechanical migration.
@@ -317,7 +341,7 @@ rather than silently rewritten, per the convention of the plan this one extends.
 
 | | Item |
 |---|---|
-| F6 | `build_site.py` + `render_manifest` + **the `governing_refs` render fix** (§0) |
+| F6 | **DONE 2026-08-04** — `build_site.py`, the `governing_refs` render fix, and BPC `evidence_state` on every page. No manifest (§2). |
 | F7 | `v_page_provenance` / `v_source_reach` + the population-ancestry CTE |
 | F8 | Point the weekly jobs at the enrichment tier; first run repopulates §1's ~1,179 cells by re-fetch |
 | F9 | Vetting-surface display fix: `COALESCE(author_display, author_display_note)` at `regenerate_vetting_surface.py:564,576` — **display-side only**. Restoring prose to `author_display` would re-trip `test_db_integrity.py:305-335` check C07, which names this surface as the reason placeholder prose in value columns is a defect |

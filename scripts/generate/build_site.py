@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 """
-scripts/generate/build_site.py — build every page of the static site.
+scripts/generate/build_site.py — build the spec pages, and prove they match the DB.
+
+SCOPE, STATED PLAINLY: this drives `site/specs/` only. `site/populations/` (11
+files) and `site/rooms/` (17 files) have generators — population_page.py and
+room_page.py — that it does NOT drive; room_page.py additionally crashes
+against the live schema (no `rooms` table). Naming this "build every page"
+would be false for 28 of ~121 files.
 
 The per-page generators (spec_page.py, population_page.py, room_page.py) each
 render ONE page from argv and have never had a driver. The 87 files under
@@ -84,13 +90,34 @@ def governing_refs(conn, item_code):
     views over cell_source_links, which work identically under static or
     dynamic rendering.
     """
+    # role='governing' matches spec_page.py's own filter. Without it the two
+    # definitions agree only while 'governing' is the sole role in the table,
+    # and diverge silently the day a second one exists.
     return [r[0] for r in conn.execute(
         "SELECT DISTINCT csl.ref_id FROM cell_source_links csl "
         "JOIN evidence_cell_state ecs USING (cell_id) "
-        "WHERE ecs.item_code = ? ORDER BY csl.ref_id", (item_code,))]
+        "WHERE ecs.item_code = ? AND csl.role = 'governing' "
+        "ORDER BY csl.ref_id", (item_code,))]
 
 
-def build_specs(conn, only=None, dry_run=False):
+def orphan_pages(conn):
+    """Files in site/specs/ with no matching row in `items`.
+
+    A page whose item was deleted keeps serving a specification the project no
+    longer holds. Nothing else looks for these, and re-rendering cannot find
+    them: the build walks `items`, so a file with no item is never visited.
+    """
+    live = {r[0].lower() for r in conn.execute("SELECT item_code FROM items")}
+    specs = SITE_DIR / "specs"
+    if not specs.is_dir():
+        return []
+    return sorted(
+        str(p.relative_to(REPO_ROOT))
+        for p in specs.glob("*.html") if p.stem.lower() not in live
+    )
+
+
+def build_specs(conn, only=None, dry_run=False, want_refs=True):
     import spec_page  # noqa: E402  (path injected above)
 
     fp = fingerprint(conn)
@@ -124,7 +151,7 @@ def build_specs(conn, only=None, dry_run=False):
             "item_code": item_code,
             "db_fingerprint": fp,
             "output_sha256": hashlib.sha256(html.encode("utf-8")).hexdigest(),
-            "governing_refs": governing_refs(conn, item_code),
+            "governing_refs": governing_refs(conn, item_code) if want_refs else [],
         })
 
     if failures:
@@ -163,17 +190,20 @@ def main():
                     help="exit 1 if any page differs from a fresh render")
     args = ap.parse_args()
 
-    conn = sqlite3.connect(str(DB_PATH))
-    conn.execute("PRAGMA foreign_keys = ON")
+    # Read-only: this process renders and compares, it never writes the DB.
+    conn = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
 
     rows = build_specs(conn, only=args.only,
-                       dry_run=args.dry_run or args.check)
+                       dry_run=args.dry_run or args.check,
+                       want_refs=not args.check)
     if rows is None:
         conn.close()
         sys.exit(1)
 
     if args.check:
         stale = check_stale(rows)
+        if not args.only:
+            stale += [(p, "orphan: no such item in `items`") for p in orphan_pages(conn)]
         conn.close()
         if stale:
             for path, why in stale:
