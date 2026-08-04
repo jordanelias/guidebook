@@ -555,7 +555,15 @@ def selftest():
     finally:
         DB_PATH = real
         os.unlink(fd.name)
-    expected = {"R1", "R2", "R3", "R4", "R5", "R6", "R8", "R10", "R11"}
+    # Every rule the corpus PROVABLY fires must be asserted, not just the nine the
+    # original comment named. R7, R13 and R14 were fired by this corpus all along
+    # and went unasserted — the same blind spot this selftest was hardened to
+    # close, left open for three rules that were already being exercised. R13
+    # fires because of REF-ST2 ("no population match row"), so it arrived with the
+    # R2 fix in the same commit. If a rule here stops firing, that is either
+    # detection rot or a corpus change; both need a human, so both fail.
+    expected = {"R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8",
+                "R10", "R11", "R13", "R14"}
     fired = {c for c, n in caught.items() if n}
     missed = expected - fired
     print()

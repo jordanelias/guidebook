@@ -81,6 +81,15 @@ def audit(db_path, session=None, tier_max=2, output_json=False):
     # BOTH states are meaningless (CLAUDE.md §10). The fix is the W4.1 LATEST split
     # and it is owner-gated. Until then this gate cannot be made to mean what its
     # name implies, and pretending otherwise by reddening main would not help.
+    # A session is RESOLVABLE if it has a record OR it logged rows. Requiring a
+    # `.md` file alone was wrong and was caught by the compliance check before it
+    # could bite: 22 of the 33 distinct `created_by_session` values in
+    # evidence_sources have no file under sessions/ — including every
+    # `session_2026-07-19-*` citation-mining batch, i.e. exactly the research
+    # sessions this gate exists to audit. File-only resolution is latent today
+    # (the registered check is fed sessions/LATEST, which is a real file) and
+    # would have turned this blocking gate red with a spurious "operator error"
+    # the moment W4.1 pointed it at a research session.
     if session:
         repo = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
         sdir = os.path.join(repo, "sessions")
@@ -91,7 +100,10 @@ def audit(db_path, session=None, tier_max=2, output_json=False):
                 if fn.endswith(".md"):
                     known.add(fn)
                     known.add(fn[:-3])
-        if known and stem not in known and session not in known:
+        logged = con.execute(
+            "SELECT EXISTS (SELECT 1 FROM evidence_sources "
+            "WHERE created_by_session IN (?, ?))", (stem, stem + ".md")).fetchone()[0]
+        if not logged and known and stem not in known and session not in known:
             print(f"ERROR: --session {session!r} names no session record under "
                   f"sessions/. A scope that selects nothing reports 'Outstanding: 0' "
                   f"and passes, which is indistinguishable from compliance — so an "

@@ -389,7 +389,7 @@ poe-assessor · intersectionality-checker · index-generator · glossary-manager
 | A6 (Evidence methodology) | validate_evidence_state.py, convert_sources.py | multilingual-research output validator |
 | A7 (Population taxonomy) | validate_population.py | — |
 | A8 (Jurisdiction philosophy) | validate_jurisdiction.py, convert_jurisdictions.py | jurisdiction-tracker output validator |
-| A9 (Time model) | validate_temporal.py, version_retrofit.py | — |
+| A9 (Time model) | ~~validate_temporal.py~~ (QUARANTINED 2026-08-04 — passes on zero records; `data/temporal/` absent), version_retrofit.py (its generator, never run) | — |
 | A10 (Adversarial-use review) | audit_adversarial_use.py | — |
 | A12 (Decision protocol) | decision_capture.py | — |
 | A13 (Doctrine recheck) | doctrine_recheck.py, contamination_sampler.py | — |
