@@ -1,9 +1,9 @@
 {
-  "as_of": "2026-07-27",
+  "as_of": "2026-08-04",
   "n_slices": 80,
   "n_items": 93,
-  "total_source_instances": 989,
-  "unique_sources": 798,
+  "total_source_instances": 987,
+  "unique_sources": 791,
   "grade_distribution": {
     "A": 11,
     "B": 30,
@@ -15,8 +15,8 @@
   "tier_totals": {
     "1": 100,
     "2": 110,
-    "3": 378,
-    "4": 84,
+    "3": 377,
+    "4": 83,
     "5": 172,
     "6": 145
   },
@@ -28,12 +28,12 @@
   },
   "strength_band_instances": {
     "full": 515,
-    "partial": 256,
-    "weak": 208,
+    "partial": 255,
+    "weak": 207,
     "disputed": 10
   },
   "practice_stream_instances": 0,
-  "english_instances": 740,
+  "english_instances": 739,
   "zero_yield_search_languages": [
     "AR",
     "BN",
@@ -347,6 +347,99 @@
       "grade": "A"
     },
     {
+      "slug": "mental-health-built-environment",
+      "topic": "population-general",
+      "state": "RETRACTED-PRE-REHAB",
+      "n": 36,
+      "full": 27,
+      "partial": 3,
+      "weak": 5,
+      "disputed": 1,
+      "t3_clinical": 22,
+      "practice": 0,
+      "code_only": 8,
+      "strength_band": "full",
+      "weak_only": false,
+      "tiers": {
+        "1": 3,
+        "2": 3,
+        "3": 27,
+        "4": 1,
+        "5": 2
+      },
+      "etypes": {
+        "standard_eb": 3,
+        "clinical": 22,
+        "sr_meta": 1,
+        "grey": 5,
+        "co1": 3,
+        "national_fw": 2
+      },
+      "markers": {
+        "●": 27,
+        "◐": 3,
+        "○": 5
+      },
+      "n_jur": 11,
+      "n_jur_raw": 11,
+      "n_true_jur": 11,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "DE": 10,
+        "INT": 6,
+        "US": 5,
+        "NL": 4,
+        "AU": 3,
+        "UK": 2,
+        "JP": 2,
+        "GB": 1,
+        "NO": 1,
+        "CA": 1,
+        "AT": 1
+      },
+      "jurs_clean": {
+        "UK": 2,
+        "AU": 3,
+        "INT": 6,
+        "US": 5,
+        "NL": 4,
+        "GB": 1,
+        "DE": 10,
+        "NO": 1,
+        "CA": 1,
+        "AT": 1,
+        "JP": 2
+      },
+      "n_lang": 5,
+      "langs": {
+        "en": 22,
+        "de": 10,
+        "ja": 2,
+        "fr": 1,
+        "nl": 1
+      },
+      "n_en": 22,
+      "n_nonen": 14,
+      "pct_en": 61.1,
+      "anglo_core": 11,
+      "supra": 6,
+      "non_anglo": 19,
+      "pct_anglo_core": 30.6,
+      "sl_searched": 19,
+      "sl_hit": 10,
+      "search_jurs": 47,
+      "score": 85.8,
+      "components": {
+        "A": 20,
+        "B": 25.7,
+        "C": 20,
+        "D": 12,
+        "E": 8.1
+      },
+      "grade": "A"
+    },
+    {
       "slug": "stair-ramp-threshold-biomechanics-accessibility",
       "topic": "entrances-and-circulation",
       "state": "RETRACTED-PRE-REHAB",
@@ -451,99 +544,6 @@
         "C": 20,
         "D": 15,
         "E": 9.4
-      },
-      "grade": "A"
-    },
-    {
-      "slug": "mental-health-built-environment",
-      "topic": "population-general",
-      "state": "RETRACTED-PRE-REHAB",
-      "n": 37,
-      "full": 27,
-      "partial": 3,
-      "weak": 6,
-      "disputed": 1,
-      "t3_clinical": 22,
-      "practice": 0,
-      "code_only": 9,
-      "strength_band": "full",
-      "weak_only": false,
-      "tiers": {
-        "1": 3,
-        "2": 3,
-        "3": 28,
-        "4": 1,
-        "5": 2
-      },
-      "etypes": {
-        "standard_eb": 3,
-        "clinical": 22,
-        "sr_meta": 1,
-        "grey": 6,
-        "co1": 3,
-        "national_fw": 2
-      },
-      "markers": {
-        "●": 27,
-        "◐": 3,
-        "○": 6
-      },
-      "n_jur": 11,
-      "n_jur_raw": 11,
-      "n_true_jur": 11,
-      "n_null_jur": 0,
-      "polluted_jur": {},
-      "jurs": {
-        "DE": 10,
-        "INT": 6,
-        "US": 5,
-        "NL": 5,
-        "AU": 3,
-        "UK": 2,
-        "JP": 2,
-        "GB": 1,
-        "NO": 1,
-        "CA": 1,
-        "AT": 1
-      },
-      "jurs_clean": {
-        "UK": 2,
-        "AU": 3,
-        "INT": 6,
-        "US": 5,
-        "NL": 5,
-        "GB": 1,
-        "DE": 10,
-        "NO": 1,
-        "CA": 1,
-        "AT": 1,
-        "JP": 2
-      },
-      "n_lang": 5,
-      "langs": {
-        "en": 22,
-        "de": 10,
-        "nl": 2,
-        "ja": 2,
-        "fr": 1
-      },
-      "n_en": 22,
-      "n_nonen": 15,
-      "pct_en": 59.5,
-      "anglo_core": 11,
-      "supra": 6,
-      "non_anglo": 20,
-      "pct_anglo_core": 29.7,
-      "sl_searched": 19,
-      "sl_hit": 10,
-      "search_jurs": 47,
-      "score": 85.5,
-      "components": {
-        "A": 20,
-        "B": 25.2,
-        "C": 20,
-        "D": 12,
-        "E": 8.3
       },
       "grade": "A"
     },
@@ -1049,11 +1049,11 @@
         "6": 4
       },
       "etypes": {
+        "standard_eb": 2,
         "co2": 2,
         "national_fw": 5,
         "code": 4,
         "clinical": 8,
-        "standard_eb": 2,
         "grey": 1
       },
       "markers": {
@@ -1081,9 +1081,9 @@
         "US": 1
       },
       "jurs_clean": {
+        "UK": 3,
         "CA": 4,
         "DE": 1,
-        "UK": 3,
         "BE": 1,
         "IT": 1,
         "PT": 1,
@@ -1819,8 +1819,8 @@
       "jurs_clean": {
         "BE": 1,
         "CA": 1,
-        "DE": 4,
         "US": 2,
+        "DE": 4,
         "SE": 1,
         "INT": 1,
         "UK": 1,
@@ -6130,30 +6130,29 @@
       "slug": "crpd-implementation-built-environment",
       "topic": "frameworks-and-methodology",
       "state": "RETRACTED-PRE-REHAB",
-      "n": 6,
+      "n": 5,
       "full": 0,
-      "partial": 6,
+      "partial": 5,
       "weak": 0,
       "disputed": 0,
       "t3_clinical": 0,
       "practice": 0,
-      "code_only": 6,
+      "code_only": 5,
       "strength_band": "partial",
       "weak_only": false,
       "tiers": {
-        "4": 6
+        "4": 5
       },
       "etypes": {
-        "standard_eb": 5,
-        "national_fw": 1
+        "standard_eb": 5
       },
       "markers": {
-        "◐": 6
+        "◐": 5
       },
       "n_jur": 1,
       "n_jur_raw": 1,
       "n_true_jur": 1,
-      "n_null_jur": 1,
+      "n_null_jur": 0,
       "polluted_jur": {},
       "jurs": {
         "INT": 5
@@ -6163,9 +6162,9 @@
       },
       "n_lang": 1,
       "langs": {
-        "en": 6
+        "en": 5
       },
-      "n_en": 6,
+      "n_en": 5,
       "n_nonen": 0,
       "pct_en": 100.0,
       "anglo_core": 0,
@@ -7583,16 +7582,16 @@
       "source_slug": "mental-health-built-environment",
       "basis_health": "full",
       "grade": "A",
-      "score": 85.5,
-      "n": 37,
+      "score": 85.8,
+      "n": 36,
       "full": 27,
       "partial": 3,
-      "weak": 6,
+      "weak": 5,
       "disputed": 1,
       "n_jur": 11,
       "n_lang": 5,
-      "pct_en": 59.5,
-      "pct_anglo": 29.7
+      "pct_en": 61.1,
+      "pct_anglo": 30.6
     },
     {
       "item_code": "G-02",
