@@ -519,8 +519,45 @@ migration rather than hidden. What was **not** used as a witness: "the slug's pr
 `item_bpc_links` row + `parameter='RT60'`" — it resolves uniquely today only because `A-10b` has
 no link yet, and a witness with an expiry date is not a witness.
 
-Two standing checks now hold the edge: `J01` (an extraction's item belongs to its slug) and
+Two standing checks were added with the edge: `J01` (an extraction's item belongs to its slug) and
 `J02` (an extraction agrees with the PMP probe its own basis text names). Both fault-injected.
+
+**[CORRECTED, same day — four findings from the steelman review of this step.]**
+
+1. **`J01` and `J02` did not hold the judgment they were written to hold.** The review proved it
+   by injection: setting extraction 6 to `A-10b` passes both. `A-10b` shares
+   `bpc_source_slug='room-acoustic-performance'`, so `J01`'s second branch admits it, and row 6
+   names no probe, so `J02` never reaches it. **The realistic error was never cross-slug — it was
+   the other RT60 item, same slug**, which is precisely the ambiguity the column exists to
+   resolve. `J03` now pins the eight adjudicated assignments by id, and fires on exactly that
+   fault. It is a snapshot check on purpose: the adjudication is not mechanizable, but it is
+   pinnable, and a legitimate change to the set has to move this check in the same commit.
+2. **One supporting claim in the backfill migration is false.** It closes W3 with "every one of
+   these five rows is scoped to classrooms, teaching spaces or learning spaces in its own
+   claim_text." Row 6 is not: *"DIN 18041:2016 volume-dependent target curve yields RT60
+   typically 0.4–0.8 s for small-to-medium rooms by use type"* — no scope word, and DIN 18041's
+   room-group scheme reaches sport and swimming halls, so `A-10b` is not excluded on claim text
+   alone. Rows 4, 5, 7 and 8 do carry the wording. The migration is immutable and stands; the
+   exclusion for row 6 rests on the other two legs, below.
+3. **W3's warrant was argued from the weaker of two available grounds.** "The row supplies a
+   locator, so dereferencing it is verification" is a *disclosed extension* of the D-0157 rule,
+   not a straight application of it — stated here rather than left as an implied continuity.
+   The stronger ground was on the rows and went unused: rows **6, 7 and 8 record in their own
+   `root_classification_basis` that the value came "from pilot step-3"**. The A-18 doc's Step-3
+   table is not external corroboration for those rows — it is their recorded provenance. Note
+   the inversion: row 6 has the weakest claim_text and the strongest warrant.
+4. **The pilot-rendering description below was wrong about the artifact.** It said the generator
+   "emitted `source_value_extractions empty` for all fifteen pilot cells — false for two." The
+   committed `working/pilot/pilot-renderings.html` contains **7 cells and the sentence 7 times**,
+   generated when only 9001–9007 existed; none of those seven has extractions. The 15-cell
+   description applies to a fresh run that cannot execute. The committed file's falsehood is real
+   but different: a table-level "empty" claim repeated 7 times that the table's 8 rows falsify —
+   and it labels the B-10 cell **`B-10×NEU`**, a population code that appears nowhere in
+   `evidence_cell_state` (the row is `B-10×BRAIN`).
+
+*Checked and refuted:* the review also suggested `tools/pipeline-completeness-dashboard.html`
+had been hand-patched rather than regenerated. Re-running `tools/pipeline_completeness.py`
+produces no diff, so it was generated.
 
 **Two pre-existing defects surfaced while sweeping callers, neither fixed here.**
 `scripts/generate/pilot_renderings.py` **cannot run at all** — it crashes on

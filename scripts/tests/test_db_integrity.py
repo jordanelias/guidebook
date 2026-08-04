@@ -908,6 +908,30 @@ def run_checks(db_path):
            f"{probe_disagree} extractions disagreeing with their named probe"
            if probe_disagree else "")
 
+    # J01 and J02 do NOT hold the judgment the backfill actually made, and an
+    # adversarial review proved it by injection: setting extraction 6 to A-10b
+    # passes both, because A-10b shares bpc_source_slug='room-acoustic-performance'
+    # (so J01's second branch admits it) and row 6 names no probe (so J02 never
+    # reaches it). The realistic error was never cross-slug — it was the OTHER
+    # RT60 item, same slug. J01 guards the least-likely class.
+    #
+    # These eight assignments were adjudicated once, per row, in
+    # data_20260804175506 under three named witness classes. That adjudication
+    # is not mechanizable — but it is pinnable, and pinning it is what stops a
+    # later pass from quietly reassigning a row to A-10b. This is a snapshot
+    # check by design: if the set legitimately changes, this check changes with
+    # it in the same commit, and the diff is the record of the re-adjudication.
+    ADJUDICATED_A18 = tuple(range(1, 9))
+    moved = conn.execute(f"""
+        SELECT COUNT(*) FROM source_value_extractions
+        WHERE extraction_id IN ({','.join('?' * len(ADJUDICATED_A18))})
+          AND (item_code IS NULL OR item_code != 'A-18')
+    """, ADJUDICATED_A18).fetchone()[0]
+    record("J03", "the 8 adjudicated RT60 extractions still hold their assigned item",
+           moved == 0,
+           f"{moved} of the 8 rows adjudicated to A-18 by data_20260804175506 no "
+           f"longer carry it — re-adjudicate in a migration, don't drift" if moved else "")
+
     # ── Summary ───────────────────────────────────────────────────────────────
     conn.close()
     print("\n" + "=" * 70)

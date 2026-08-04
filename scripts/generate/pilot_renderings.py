@@ -159,16 +159,20 @@ def fetch_cells(conn):
             "WHERE item_code=? AND is_code_minimum=1 AND value_numeric IS NOT NULL "
             "ORDER BY jurisdiction", (c["item_code"],)).fetchall()
         c["has_co1"] = "CO1" in (c["tier_basis"] or "")
-        # Per-source extracted values reaching THIS cell: a governing source
-        # whose extraction is for this cell's item. The item match is what
-        # migration 052 made possible and is not optional — joining on ref_id
-        # alone attributes four RT60-in-seconds extractions to cells for A-02
-        # (NRC) and A-08 (NC), parameters in different units entirely.
+        # Per-source extracted values reaching THIS cell: a governing source of
+        # this cell whose extraction is for this cell's item. The item match is
+        # what migration 052 made possible and is not optional — joining on
+        # ref_id alone attributes four RT60-in-seconds extractions to cells for
+        # A-02 (NRC) and A-08 (NC), parameters in different units entirely.
+        # role='governing' is filtered explicitly rather than relied on: it is
+        # the only value cell_source_links admits today, and a second role
+        # arriving must not silently widen what this counts.
         c["extractions"] = conn.execute(
             "SELECT COUNT(*) FROM cell_source_links l "
             "JOIN source_value_extractions x "
             "  ON x.ref_id = l.ref_id AND x.item_code = ? "
-            "WHERE l.cell_id = ?", (c["item_code"], c["cell_id"])).fetchone()[0]
+            "WHERE l.cell_id = ? AND l.role = 'governing'",
+            (c["item_code"], c["cell_id"])).fetchone()[0]
         cells.append(c)
     return cells
 
@@ -196,10 +200,14 @@ def role_body(c, role):
         # fifteen — a false statement in published output, the same class of
         # defect as a stale audit gate. It is now read per cell.
         if c["extractions"]:
+            # "reaching this cell", not "for this item" — the count is
+            # cell-scoped (governing sources of THIS cell), and 8 extractions
+            # exist for item A-18 while only 1 reaches cell 9008. Naming the
+            # wrong denominator would overstate the cell's evidence.
             parts.append(f"Evidence-anchored value range: not yet synthesised. "
-                         f"{c['extractions']} per-source extracted value(s) exist for this "
-                         f"item; none has been promoted to a cell determination, so no "
-                         f"number is stated here.")
+                         f"{c['extractions']} per-source extracted value(s) reach this cell "
+                         f"through its governing sources; none has been promoted to a cell "
+                         f"determination, so no number is stated here.")
         else:
             parts.append("Evidence-anchored value range: not yet extracted for this cell "
                          "— no number is invented here.")

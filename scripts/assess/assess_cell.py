@@ -323,14 +323,21 @@ def determine(conn, item_code, population, slug, note):
                                      ("co2", axes_co2)) if a]
         if n_axes >= 2:
             # Axis co-presence is real; value-level convergence is NOT assessable
-            # (source_value_extractions empty). pending_assessment is the honest
-            # status — never claim 'convergent' on unextracted values (G2 spirit).
+            # here. pending_assessment is the honest status — never claim
+            # 'convergent' on ungraded values (G2 spirit).
+            # The reason used to be given as "source_value_extractions empty",
+            # both here and in the emitted rationale below. That is now false in
+            # general (8 rows, item-typed since migration 052) AND it was never
+            # something this code checked — it asserted a fact about the table it
+            # had not queried. The true reason is narrower and does not expire:
+            # no rule exists for grading value-level convergence, so nothing here
+            # can grade it.
             # Rendering a pending_assessment cell deviates from §3.4's no-render
             # rule and is DR-gated as item G8 (mandatory disclosure in rendering).
             conv_status = "pending_assessment"
             rationale = (f"{n_axes} evidence axes present ({'/'.join(axes_named)}). "
-                         f"Value-level convergence not yet assessable: "
-                         f"source_value_extractions has no rows for these sources; "
+                         f"Value-level convergence not yet assessable: no rule "
+                         f"exists for grading agreement between extracted values; "
                          f"assessment queued, not assumed."
                          + (f" Supporting (non-governing) T3: {', '.join(supporting)}."
                             if supporting else ""))
