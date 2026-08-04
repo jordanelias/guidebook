@@ -133,32 +133,40 @@ The owner's decomposition, adopted:
 > it can't be verified after effort spent."
 >
 > "attempt count is the third column for that set."
+>
+> "PARTIAL no longer exists because that doesn't really mean anything."
+
+The last of those arrived after the first draft of this section had kept `PARTIAL`, and it is
+right: once disposition exists, `PARTIAL` is `UNVERIFIED` + `OPEN` said longer. Applying the same
+test to the one value this DR had reserved judgment on retires `DISPUTED` as well (§4.4).
 
 | Column | Values | Answers |
 |---|---|---|
-| `verification_status` | `VERIFIED` · `PARTIAL` · `UNVERIFIED` | **What is established?** |
+| `verification_status` | `VERIFIED` · `UNVERIFIED` | **Is it established?** |
 | `verification_disposition` | `OPEN` · `CLOSED` | **Is more effort owed?** |
 | `verification_attempt_count` | integer — **already exists** | **How much effort was spent?** |
 
 Three orthogonal facts, three columns. The suffixes disappear because there is nothing left for
 them to smuggle.
 
+**The status column is binary.** Every intermediate value proposed for it — `PARTIAL`,
+`DISPUTED`, and the six retired suffixes — turns out to be one of the other two columns wearing a
+disguise (§4.4). A source is established or it is not; how far anyone got, and whether they are
+coming back, are separate questions with their own columns.
+
 ### 4.1 The matrix
 
 |  | `OPEN` | `CLOSED` |
 |---|---|---|
 | **`VERIFIED`** | **⚠ ERROR STATE.** Verification is finished or it did not happen; there is no "verified but still owed". A row here is a defect to investigate, not a condition to occupy. | Verified and settled. The resting state of a good source. |
-| **`PARTIAL`** | Some of it confirmed from the document, the rest still owed. *The owner's "flagged for a return".* | Partial and it will stay partial — the remainder is unobtainable. *The owner's "if it can't be resolved, then that needs to be explicit".* |
-| **`UNVERIFIED`** | Not established; a return pass is owed. | Not established **after effort spent**. Terminal, and it had to be earned. |
+| **`UNVERIFIED`** | Not established; a return pass is owed. Everything previously called `PARTIAL`, `UNVERIFIED-1`, `IS-PAYWALL` or `DEFERRED-V2-AUTOMATED` lands here, distinguished by its reason and its attempt count rather than by its name. | Not established **after effort spent**. Terminal, earned, and reasoned. |
 
-`PARTIAL` is promoted out of `metadata_quality` into a verification standing, which is what it
-was always describing: the document was reached, but only some of the recorded metadata could be
-confirmed from it.
+Four cells, one of which is a defect detector. Nothing else is needed.
 
 A re-check falling due — a superseding edition, code currency — is **not** `VERIFIED` + `OPEN`.
 That is a different question with its own columns (`code_currency_status`,
-`code_currency_verified_at`). Letting it occupy this cell would put the one diagnostic signal in
-the matrix back to work as a legitimate state, and lose it.
+`code_currency_verified_at`). Letting it occupy this cell would put the matrix's one diagnostic
+signal back to work as a legitimate state, and lose it.
 
 ### 4.2 The tuple audits itself
 
@@ -229,33 +237,59 @@ Orthogonal again, and the home for what the `-1`/`-2` suffixes were really carry
 
 This replaces B01's string-list matching with a rule that means something.
 
-### 4.4 Two values that were never verification facts at all
+### 4.4 Three values that were never verification standings
 
-- **`SUPERSEDED`** (1 row) is a row-lifecycle fact, not a standing — and it is *already* recorded
-  by `superseded_by_ref_id` being non-null. Keeping it in the status column is the same
-  conflation one layer out. Retired; the pointer is the record.
-- **`DISPUTED`** (7 rows, owner-approved DR-2026-07-20) does not fit cleanly and this DR does not
-  force it. It is arguably `UNVERIFIED` + `CLOSED` + reason `not-found-after-search` — two
-  independent agents failed to retrieve these. But `DISPUTED` also asserts *active doubt that the
-  work exists*, which is stronger than "we could not find it," and the anchor-suspension rule
-  hangs off it. **Left as an open question for the owner** (§6), retained unchanged in the
-  meantime.
+An earlier draft of this DR kept `PARTIAL` and reserved judgment on `DISPUTED`. Both were wrong,
+and the same test that condemned the suffixes condemns them.
 
-### 4.5 `metadata_quality` — `PARTIAL` moves out, and gains the obligation it lacked
+**`PARTIAL` — retired.** It does not survive contact with its own rows. It lives in
+`metadata_quality`, and it cross-cuts verification entirely: its 5 rows are `VERIFIED-2` (1),
+`VERIFIED` (1) and `UNVERIFIED-1` (3). A value that appears on both sides of the verification
+line is not describing verification. Read as a standing it means "some of it confirmed, more
+owed" — which is `UNVERIFIED` + `OPEN`, said longer. The owner's condition for keeping it (*"so
+long as it is flagged for a return"*) is now discharged structurally by the disposition column, so
+the value has nothing left to carry.
 
-`PARTIAL` is **ratified as a meaning** and **relocated** to `verification_status` (§4.1), because
-what it describes is a verification standing, not a property of the metadata in the abstract.
+**`DISPUTED` — retired.** It fails on its own numbers. DR-2026-07-20 justified it as sources that
+"could not be located by two independent agents (verify + adversarial refuter) via real
+retrieval". Against `verification_attempt_count`:
 
-Its 5 rows today have no return mechanism whatsoever: nothing in the codebase queues a `PARTIAL`
-row for completion, so "partial" has meant "parked indefinitely, silently." Under the three-column
-model the obligation is structural rather than remembered — a `PARTIAL` row is `OPEN` (owed a
-return pass) or `CLOSED` (with an earned attempt count and a stated terminal reason, per §4.2).
-There is no third option and no way to sit between them.
+| DISPUTED rows | attempts recorded |
+|---|---|
+| 3 | **0** |
+| 4 | 1 |
+| **0** | **≥2** |
+
+Not one of the seven records the two attempts its own justification claims. This is precisely the
+`UNVERIFIED-1` failure (§2.1) in a different value: a status asserting an effort level that the
+column tracking effort contradicts. It also conflates a standing with a *usage rule* — the
+anchor-suspension consequence is bolted onto the status — and that consequence is already implied,
+because an `UNVERIFIED` source should never anchor a determination in the first place. Confirmed
+in the data: DISPUTED rows anchor **0** cells today.
+
+`DISPUTED` becomes `UNVERIFIED` + `CLOSED` + reason `not-found-after-search`, with the attempt
+count carrying what the name was asserting. The 0-and-1 attempt counts are a **finding, not an
+obstacle**: the sweep's two independent retrievals were real work that was never recorded. Under
+I3 those rows cannot be written `CLOSED` until the count reflects them — which is the invariant
+doing its job on the first migration that meets it.
+
+**`SUPERSEDED` — retired.** A row-lifecycle fact, not a standing, and *already* recorded by
+`superseded_by_ref_id` being non-null. Keeping it in the status column is the same conflation one
+layer out. The pointer is the record.
+
+### 4.5 `metadata_quality` — `PARTIAL` retired from here too
+
+`PARTIAL`'s 5 rows are re-expressed as `UNVERIFIED` + `OPEN` with the outstanding item named in
+the reason (§4.4). Its former home has no return mechanism at all — nothing in the codebase queues
+a `PARTIAL` row for completion, so "partial" has in practice meant "parked indefinitely,
+silently." The disposition column makes that impossible: a row is `OPEN` and owed a return pass,
+or `CLOSED` with an earned attempt count and a stated terminal reason. There is no third option
+and nowhere to sit between them.
 
 Separately, not a vocabulary question: 4 rows hold `high` / `medium`, confidence words written
 into the wrong column by a 2026-07-25 batch. Junk data, remediated by migration.
 
-### 4.5 `source_type` — `code` ratified
+### 4.6 `source_type` — `code` ratified
 
 16 rows, every one `tier=6` (French *arrêtés*, Italian DPCM, Japanese ministerial standards).
 Mirrors `EvidenceType.CODE` at `schemas/enums.py:208`. Used consistently; uncontroversial.
@@ -271,7 +305,8 @@ migration; `magazine_article` (1 row) is a single-row judgment recorded in its n
 | `VERIFIED-WITH-CORRECTION` | 2 | `VERIFIED` | `CLOSED` | `direct-render` | Correction already in `verification_note`. |
 | `VERIFIED-2` | 71 | `UNVERIFIED` | `OPEN`, or `CLOSED` where the block is permanent | `corroborated-not-retrieved` | **The material change.** No cell is affected (§2.4). 13 record HTTP 403 and are candidates for `CLOSED` + `access-denied-persistent`; each needs adjudicating, not batch-closing. |
 | `UNVERIFIED-1` | 31 | `UNVERIFIED` | `OPEN` | per note | Attempt count already carries the truth and corrects the name for 26 rows: 25 have **0** attempts, so they are `OPEN` with nothing yet spent — which is exactly what they should have said all along. |
-| `DISPUTED` | 7 | `DISPUTED` | — | — | Unchanged pending §6. |
+| `DISPUTED` | 7 | `UNVERIFIED` | `CLOSED` once attempts are recorded, else `OPEN` | `corroborated-not-retrieved` / per note | Reason `not-found-after-search`. None of the 7 currently records the ≥2 attempts its own justification claims, so under I3 they cannot be written `CLOSED` until that work is recorded (§4.4). |
+| `PARTIAL` (metadata_quality) | 5 | `UNVERIFIED` | `OPEN` | per note | Outstanding item named in the reason. Cross-cuts three different statuses today, which is why it was never a standing (§4.4). |
 | `SUPERSEDED` | 1 | — | — | — | Retired; `superseded_by_ref_id` is the record (§4.4). |
 
 No row may be written `CLOSED` by this migration without satisfying §4.2. Where effort was not in
@@ -290,6 +325,8 @@ is the DR working, not failing.
   audit that applies it is separate work and may reclassify more rows.
 - The `standard_eb` vs `national_fw` classification of UN treaty-body instruments, recorded as an
   open conflict by the 2026-08-04 dedup merge.
+- Whether any specific formerly-`DISPUTED` source in fact exists. Retiring the value re-expresses
+  their standing; it does not adjudicate the underlying question, which is research under R10.
 
 ## 7. If not ratified
 

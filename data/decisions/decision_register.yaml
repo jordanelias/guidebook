@@ -5029,15 +5029,15 @@ decisions:
     verification_status is a standing, not a history — retire the numbered status suffixes and
     split verification into three orthogonal columns (status, disposition, attempt count).
   outcome: >
-    PROPOSED, owner decision required; nothing executed. Proposes verification_status in
-    {VERIFIED, PARTIAL, UNVERIFIED}, a new verification_disposition in {OPEN, CLOSED}, and the
+    PROPOSED, owner decision required; nothing executed. Proposes a BINARY verification_status
+    in {VERIFIED, UNVERIFIED}, a new verification_disposition in {OPEN, CLOSED}, and the
     existing verification_attempt_count as the third column of that set, plus a
     verification_method column recording how a standing was established. Retires VERIFIED-1,
-    VERIFIED-2, VERIFIED-WITH-CORRECTION, UNVERIFIED-1, UNVERIFIED-CLOSED and SUPERSEDED.
+    VERIFIED-2, VERIFIED-WITH-CORRECTION, UNVERIFIED-1, UNVERIFIED-CLOSED, SUPERSEDED, DISPUTED
+    and PARTIAL — every intermediate value turns out to be another column in disguise.
     Defines VERIFIED for the first time as "the document itself was obtained and the metadata
-    recorded here was read from it". Ratifies source_type 'code'; relocates PARTIAL from
-    metadata_quality to verification_status. B01/B02/B05 in test_db_integrity stay red until
-    ratified.
+    recorded here was read from it". Ratifies source_type 'code'. B01/B02/B05 in
+    test_db_integrity stay red until ratified.
   rationale: >
     Asked to ratify the session-coined vocabulary, the owner rejected the premise: grades of
     VERIFIED mean either the sources are not properly verified or the definition of verified is
