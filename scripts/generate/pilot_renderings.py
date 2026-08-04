@@ -177,6 +177,32 @@ def fetch_cells(conn):
     return cells
 
 
+def _sha_label(sha):
+    """Human-readable derivation sha, tolerant of the 8 cells that have none.
+
+    This function exists because `derivation_sha[:16]` raised TypeError and made
+    the whole generator unrunnable: 8 of the 15 determination rows (9008–9015)
+    carry a NULL sha, so the crash arrived the moment the second batch of cells
+    was added and nobody could regenerate this document afterwards. The committed
+    HTML is therefore frozen at the 7-cell era.
+
+    "not recorded" is the honest rendering. Whether those 8 rows SHOULD carry a
+    sha is a data question — a derivation hash is a claim about how a
+    determination was computed, and inventing one here would be fabricating that
+    claim. The render says what is true and leaves the backfill to whoever
+    adjudicates it.
+
+    NOTE — the `data-sha` HTML attribute is deliberately NOT routed through this.
+    register_integrity_check.py cross-checks it against `str(row['sha'])`, which
+    is the literal string 'None' for a NULL. That Python repr leaking into an
+    attribute is a real wart, but fixing it means changing the checker in
+    lockstep, and that checker is quarantined for an unrelated defect
+    (ENGINE-LAG on I3, per check-registry). Bundling a second change into a
+    quarantined check is how you get one nobody can reason about.
+    """
+    return f"{sha[:16]}…" if sha else "not recorded"
+
+
 FLOOR_STATUS_CAVEAT = ("Instrument status varies: jurisdictional_values stores statutory codes "
                        "and referenced/voluntary standards together (e.g. BS 8300-2 is voluntary "
                        "guidance, not GB law) — verify legal status per jurisdiction before "
@@ -282,7 +308,7 @@ def render(cells, out_path):
             f"<h2>{html.escape(c['item_name'])} × {c['population']}</h2>"
             f"<p class='tuple'>tuple: state={c['state']} · basis={html.escape(basis)} · "
             f"convergence={c['conv_status']} · rso={c['rso']} · cfo={c['code_floor_only']} "
-            f"· sha={c['derivation_sha'][:16]}… · {c['rule_version']}</p>"
+            f"· sha={_sha_label(c['derivation_sha'])} · {c['rule_version'] or 'not recorded'}</p>"
             + (f"<p class='falsification'>Falsification: {html.escape(c['falsification'])}</p>"
                if c["falsification"] else "")
             + "<div class='roles'>" + "".join(blocks) + "</div></section>")

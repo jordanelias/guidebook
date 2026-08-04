@@ -559,6 +559,24 @@ Two standing checks were added with the edge: `J01` (an extraction's item belong
 had been hand-patched rather than regenerated. Re-running `tools/pipeline_completeness.py`
 produces no diff, so it was generated.
 
+**Pilot-rendering repair — DONE 2026-08-04, immediately after.** `_sha_label()` makes the tuple
+line NULL-tolerant and the generator runs for the first time since the second batch of cells was
+added. Regenerating replaces a document frozen at the 7-cell era with the live 15, and that one
+act clears three standing falsehoods in published output: the table-level
+`"source_value_extractions empty"` claim (7 occurrences → 0), the `B-10×NEU` ghost cell (6 → 0;
+the row is `B-10×BRAIN`), and the eight determinations whose `derivation_sha` now reads
+**"not recorded"** instead of crashing the render. Whether those eight *should* carry a sha is a
+data question left open on purpose — a derivation hash is a claim about how a determination was
+computed, and minting one to make the render tidy would fabricate that claim.
+
+`register_integrity_check.py` **passes on the regenerated document**, DB cross-check on, and its
+`--selftest` still fires all seven tamper cases against it — so the pass is the checker working,
+not the checker asleep. Its quarantine (ENGINE-LAG on I3's repealed absolute form) did not bite
+here; no cell in this set triggers the weak-band path. One wart left standing and recorded in
+the code: `data-sha` emits the Python repr `'None'` for a NULL, because the checker cross-checks
+against `str(row['sha'])`. Fixing it means moving the checker in lockstep, and bundling a second
+change into a quarantined check is how you get one nobody can reason about.
+
 **Two pre-existing defects surfaced while sweeping callers, neither fixed here.**
 `scripts/generate/pilot_renderings.py` **cannot run at all** — it crashes on
 `derivation_sha[:16]` because **8 of 15 cells (9008–9015) have `derivation_sha` NULL**. Confirmed
