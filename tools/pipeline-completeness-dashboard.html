@@ -176,7 +176,7 @@
       stage's own denominator, then broken down by category, item, and population class.</p>
     <div class="meta-row">
       <span><b>Source</b> data/guidebook.db (read-only)</span>
-      <span><b>Schema</b> user_version 48</span>
+      <span><b>Schema</b> user_version 51</span>
       <span><b>Data as of</b> 2026-08-04</span>
       <span><b>Auto-generated</b> tools/pipeline_completeness.py</span>
     </div>
@@ -223,7 +223,7 @@
       </div>
     </div>
     <div class="pattern"><b>The shape is front-loaded, then it collapses.</b> Sourcing (collection) is essentially
-      finished — 824/863 sources verified, metadata near-complete — but almost nothing has been
+      finished — 752/863 sources verified, metadata near-complete — but almost nothing has been
       <i>adjudicated</i> into determinations (judgment, 4%) and only
       1 parameter has a real synthesis reasoning
       doc (synthesis, 1%). Render faithfully mirrors that emptiness: it can only
@@ -271,8 +271,8 @@
         <div class="sb-left"><div class="n">STAGE 2</div><div class="t">Collection</div>
           <div class="entry">Entry: sources discovered for the topic under research.</div></div>
         <div class="sb-right">
-          <div class="metric-row"><span class="lbl">Sources verified</span><span class="val">824 / 863 · 95%</span>
-          <span class="mini-bar"><i class="b4-bg-solid" style="width:95%"></i></span></div>
+          <div class="metric-row"><span class="lbl">Sources verified</span><span class="val">752 / 863 · 87%</span>
+          <span class="mini-bar"><i class="b4-bg-solid" style="width:87%"></i></span></div>
           <div class="metric-row"><span class="lbl">Metadata complete</span><span class="val">798 / 863 · 92%</span>
           <span class="mini-bar"><i class="b4-bg-solid" style="width:92%"></i></span></div>
           <div class="metric-row"><span class="lbl">Author-title-only (rule&nbsp;#10 blockers)</span><span class="val">52 · 6%</span>
@@ -639,8 +639,8 @@
   <footer>
     <div class="two-col">
       <div><strong style="color:var(--ink-2)">How these numbers were derived</strong><br>
-        Read-only queries against <code>data/guidebook.db</code> (<code>user_version 48</code>,
-        304 data migrations). Denominators: research/synthesis over 83
+        Read-only queries against <code>data/guidebook.db</code> (<code>user_version 51</code>,
+        308 data migrations). Denominators: research/synthesis over 83
         <code>bpc_metadata</code> slugs; collection over 863 <code>evidence_sources</code>; judgment/render over
         372 applicable item×population pairs (<code>item_population_links</code>). Determinations from
         <code>evidence_cell_state</code>; synthesis from <code>reasoning_doc_citations</code>; enforcement coverage

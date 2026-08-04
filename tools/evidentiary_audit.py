@@ -78,16 +78,40 @@ CATEGORY_LABELS = {
 
 
 def is_disputed(row):
-    """Has this source been DISPUTED by the anti-fabrication sweep?
+    """Has this source been stripped of anchoring by the anti-fabrication sweep?
 
-    verification_status='DISPUTED' (DR-2026-07-20 §4) strips a source of its
-    VERIFIED standing and its ability to anchor a claim until a real source is
-    located or it is retired. Such rows are *recorded findings, not deleted*:
-    they are excluded from every anchoring/strength computation (band, full/
-    partial/weak counts) but remain in the raw volume / tier / jurisdiction /
-    language totals so the disputed source stays visible in the audit.
+    DR-2026-07-20 §4 stripped 7 sources of VERIFIED standing and of the ability
+    to anchor a claim, until a real source is located or the row is retired.
+    Such rows are *recorded findings, not deleted*: excluded from every
+    anchoring/strength computation, retained in the raw volume / tier /
+    jurisdiction / language totals so they stay visible.
+
+    D-0157 (2026-08-04) retired the DISPUTED status string. This gate tested
+    that string, so the remap silently emptied it: the audit header went from
+    "10 instances stripped" to "0", and `sensory-relief-space-design` rose from
+    grade C to B on a source the sweep had flagged as possibly nonexistent.
+
+    Restoring the ORIGINAL boundary exactly, not a wider one. A first attempt at
+    this fix tested `status != 'VERIFIED'`, which is defensible doctrine -- an
+    unverified source arguably should anchor nothing -- but it widened the strip
+    from 10 instances to 124 and moved four more slice grades DOWN. Widening an
+    anti-fabrication gate is a decision to take openly, not a side effect of a
+    vocabulary migration.
+
+    The durable marker is the sweep's own note stamp, which the remap preserved
+    (notes are append-only). Once those rows carry
+    closure_reason='disputed-existence' this should test that column instead.
     """
-    return (row["verification_status"] or "").strip().upper() == "DISPUTED"
+    status = (row["verification_status"] or "").strip().upper()
+    if status == "DISPUTED":                      # pre-D-0157 databases
+        return True
+    try:
+        if (row["verification_closure_reason"] or "") == "disputed-existence":
+            return True
+        note = row["verification_note"] or ""
+    except (KeyError, IndexError):
+        return False
+    return "DISPUTED 2026-07-20 correctness-sweep" in note
 
 
 def anchor_band(row):

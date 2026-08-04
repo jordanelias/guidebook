@@ -11,9 +11,10 @@ This script:
      verification_status IS NULL
   2. For each: calls CrossRef /works/<doi> to confirm the DOI is live
      and optionally compares title similarity (pub_title must be >10 chars)
-  3. On success: sets verification_status='VERIFIED', verified_by_tool='crossref-doi-backfill'
+  3. On success: sets verification_status='VERIFIED' + disposition='CLOSED'
+     + method='tool' (D-0157), verified_by_tool='crossref-doi-backfill'
      and runs metadata enrichment (fills NULL fields from CrossRef response)
-  4. On hard 404/410: sets verification_status='UNVERIFIED-1',
+  4. On hard 404/410: sets verification_status='UNVERIFIED' + OPEN (D-0157),
      verification_note='DOI confirmed RESOLVED in prior run but CrossRef
      returned 404 at backfill; may be preprint/grey DOI'
   5. On transient (timeout/5xx/429): skips for retry (no write)
@@ -189,10 +190,16 @@ def main():
                 sim = _title_jaccard(pub_title, cr_title)
                 note = f"CrossRef DOI backfill: Jaccard={sim:.2f}"
                 if sim < 0.25:
-                    # Low similarity — might be wrong DOI; mark UNVERIFIED-1
+                    # Low similarity — might be the wrong DOI. D-0157: the
+                    # standing is UNVERIFIED and a return pass is owed, so OPEN.
+                    # The old value here was UNVERIFIED-1, retired because its
+                    # suffix asserted an attempt count that contradicted the
+                    # column tracking attempts in 25 of 31 rows.
                     conn.execute(f"""
                         UPDATE {TABLE} SET
-                            verification_status = 'UNVERIFIED-1',
+                            verification_status = 'UNVERIFIED',
+                            verification_disposition = 'OPEN',
+                            verification_method = 'tool',
                             verified_by_tool = 'crossref-doi-backfill',
                             last_verified_at = ?,
                             verification_attempt_count = COALESCE(verification_attempt_count,0)+1,
@@ -202,7 +209,7 @@ def main():
                         WHERE ref_id = ?
                     """, (ts, f"Low title similarity {sim:.2f} — backfill flagged for review", ts, SESSION, ref_id))
                     conn.commit()
-                    print(f"  UNVERIFIED-1 (low sim {sim:.2f}): {ref_id} | {doi}")
+                    print(f"  UNVERIFIED/OPEN (low sim {sim:.2f}): {ref_id} | {doi}")
                     print(f"    DB title:  {pub_title[:60]}")
                     print(f"    CR title:  {cr_title[:60]}")
                     skipped += 1
@@ -215,6 +222,8 @@ def main():
             conn.execute(f"""
                 UPDATE {TABLE} SET
                     verification_status = 'VERIFIED',
+                    verification_disposition = 'CLOSED',
+                    verification_method = 'tool',
                     verified_by_tool = 'crossref-doi-backfill',
                     last_verified_at = ?,
                     verification_attempt_count = COALESCE(verification_attempt_count,0)+1,
@@ -237,7 +246,9 @@ def main():
         elif status == "not_found":
             conn.execute(f"""
                 UPDATE {TABLE} SET
-                    verification_status = 'UNVERIFIED-1',
+                    verification_status = 'UNVERIFIED',
+                    verification_disposition = 'OPEN',
+                    verification_method = 'tool',
                     verified_by_tool = 'crossref-doi-backfill',
                     last_verified_at = ?,
                     verification_attempt_count = COALESCE(verification_attempt_count,0)+1,
@@ -247,7 +258,7 @@ def main():
                 WHERE ref_id = ?
             """, (ts, ts, SESSION, ref_id))
             conn.commit()
-            print(f"  UNVERIFIED-1 (404): {ref_id} | {doi}")
+            print(f"  UNVERIFIED/OPEN (404): {ref_id} | {doi}")
             not_found += 1
 
         else:
@@ -259,7 +270,7 @@ def main():
     print()
     print("=== SUMMARY ===")
     print(f"  VERIFIED:         {verified}  (of which {newly_complete} newly upgraded to COMPLETE)")
-    print(f"  UNVERIFIED-1:     {not_found + skipped}  ({not_found} 404, {skipped} low-sim)")
+    print(f"  UNVERIFIED/OPEN: {not_found + skipped}  ({not_found} 404, {skipped} low-sim)")
     print(f"  Transient/skip:   {transient}")
     print(f"  Total candidates: {len(candidates)}")
 

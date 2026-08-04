@@ -61,12 +61,17 @@ TIER_MAP = {
 }
 
 # Verification status mapping from co1-verified-sources.json
+# D-0157 collapsed the status column to a binary standing. This converter reads
+# LEGACY input, so it keeps the old keys and maps them onto the current
+# vocabulary -- which is exactly what a converter is for. The dropped
+# distinctions are not lost: they are disposition and method, which the caller
+# sets alongside (see the DR section 5 mapping table).
 VERIFICATION_MAP = {
     "VERIFIED": VerificationStatus.VERIFIED,
-    "VERIFIED-WITH-CORRECTION": VerificationStatus.VERIFIED_WITH_CORRECTION,
-    "UNVERIFIED-1": VerificationStatus.UNVERIFIED_1,
-    "UNVERIFIED-CLOSED": VerificationStatus.UNVERIFIED_CLOSED,
-    "CLOSED-DELETED": VerificationStatus.CLOSED_DELETED,
+    "VERIFIED-WITH-CORRECTION": VerificationStatus.VERIFIED,   # merely verified
+    "UNVERIFIED-1": VerificationStatus.UNVERIFIED,             # + OPEN
+    "UNVERIFIED-CLOSED": VerificationStatus.UNVERIFIED,        # + CLOSED
+    "CLOSED-DELETED": VerificationStatus.UNVERIFIED,           # + CLOSED, not-found-after-search
 }
 
 # Co-1 source type inference from note/context
@@ -195,14 +200,14 @@ def map_verification_status(raw: str) -> VerificationStatus | None:
     # Partial match
     if "VERIFIED" in raw and "UN" not in raw:
         if "CORRECTION" in raw:
-            return VerificationStatus.VERIFIED_WITH_CORRECTION
+            return VerificationStatus.VERIFIED
         return VerificationStatus.VERIFIED
     if "CLOSED-DELETED" in raw or "CLOSED_DELETED" in raw:
-        return VerificationStatus.CLOSED_DELETED
+        return VerificationStatus.UNVERIFIED
     if "UNVERIFIED-CLOSED" in raw:
-        return VerificationStatus.UNVERIFIED_CLOSED
+        return VerificationStatus.UNVERIFIED
     if "UNVERIFIED" in raw:
-        return VerificationStatus.UNVERIFIED_1
+        return VerificationStatus.UNVERIFIED
     return None
 
 

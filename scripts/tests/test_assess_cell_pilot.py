@@ -12,7 +12,7 @@ Branches covered here, each against a synthetic in-memory DB:
   - pure T6-only, single jurisdiction -> pending (fails §2.3 jurisdiction
     distinctness, per the pilot-2 richness fix)
   - all sources disqualified -> pending + all_sources_disqualified flag (§2.8)
-  - UNVERIFIED-1 present -> has_unverified_sources flag set (§2.8)
+  - UNVERIFIED present -> has_unverified_sources flag set (§2.8; D-0157 vocabulary)
   - not_applicable requires rationale; divergent requires synthesis_approach
     (schemas.evidence_state model enforcement — the validator's counterparts of
     the two mutation cases the manifest previously claimed without artifacts)
@@ -93,12 +93,12 @@ def main():
     expect("all-disqualified => pending", d["state"] == "pending", d["state"])
     expect("all_sources_disqualified flag set", d["all_sources_disqualified"] == 1)
 
-    # 5. UNVERIFIED-1 present -> has_unverified_sources (§2.8)
+    # 5. UNVERIFIED present -> has_unverified_sources (§2.8)
     d = determine(synth_db([{"tier": 2, "evidence_type": "sr_meta"},
                             {"tier": 6, "evidence_type": "code",
-                             "verification_status": "UNVERIFIED-1"}]),
+                             "verification_status": "UNVERIFIED"}]),
                   "B-10", "DEM", "syn-slug", "unverified-present")
-    expect("UNVERIFIED-1 => has_unverified_sources=1", d["has_unverified_sources"] == 1)
+    expect("UNVERIFIED => has_unverified_sources=1", d["has_unverified_sources"] == 1)
     expect("anchored despite unverified T6", d["state"] == "stated", d["state"])
 
     # 6. Model enforcement: not_applicable requires rationale

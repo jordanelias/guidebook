@@ -18,6 +18,10 @@ Checks performed:
       PRAGMA foreign_keys honoured)
   F — Pipeline run health (no regressions, all started runs completed)
   G — Evidence chain integrity (source_slug_links → evidence_sources → authors)
+  H — JSON-array ↔ junction parity (cell_source_links, search_admissions), held
+      in both directions while the JSON columns await their caller sweep
+  I — D-0157 verification-standing invariants (status × disposition × method ×
+      attempt count)
 
 Run:
   python scripts/tests/test_db_integrity.py
@@ -106,27 +110,34 @@ def run_checks(db_path):
                             WHERE e.ref_id = s.superseded_by_ref_id)
         """).fetchone()[0] == 0)
 
+    # The two normalised edge junctions (migrations 044, 050). Their FKs are
+    # declared, but a declared FK only binds writes made with
+    # PRAGMA foreign_keys=ON — it does not retroactively validate rows already
+    # in the file, and section H's parity checks compare each junction against
+    # its JSON column, not against the tables the ids point at. A ref present in
+    # BOTH stores but absent from evidence_sources would pass every H check.
+    for tid, junction, col, parent, pcol in (
+        ("A10", "cell_source_links",  "cell_id", "evidence_cell_state", "cell_id"),
+        ("A11", "cell_source_links",  "ref_id",  "evidence_sources",    "ref_id"),
+        ("A12", "search_admissions",  "exec_id", "search_executions",   "exec_id"),
+        ("A13", "search_admissions",  "ref_id",  "evidence_sources",    "ref_id"),
+    ):
+        n = conn.execute(f"""SELECT COUNT(*) FROM {junction} j
+            WHERE NOT EXISTS (SELECT 1 FROM {parent} p WHERE p.{pcol} = j.{col})
+        """).fetchone()[0]
+        record(tid, f"{junction}.{col} → {parent}", n == 0,
+               f"{n} rows pointing at a {parent} row that does not exist" if n else "")
+
     # ── B: Enum validation ────────────────────────────────────────────────────
     print("\n[B] Enum column validation")
 
-    VALID_VSTATUS = ("VERIFIED","UNVERIFIED-1","UNVERIFIED-CLOSED",
-                     "PROBABILISTIC","CO1-VERIFIED",
-                     # V1 state machine §4 (verification-pipeline-proposal-2026-05-12-v2):
-                     "NO-MATCH","NEEDS-HUMAN","SUPERSEDED","REVERTED",
-                     # DR-2026-05-19 amendment 2026-05-19 — manual-track explicit-cause states:
-                     "IS-PAYWALL","DEFERRED-V2-AUTOMATED",
-                     # 2026-08-03: three values this list rejected while the rest of the
-                     # repo already treated them as valid. Not a widening of the
-                     # vocabulary — a correction of this transcription of it.
-                     #   VERIFIED-WITH-CORRECTION is in the authoritative Pydantic enum
-                     #     (schemas/enums.py:275) and was simply never copied across.
-                     #   DISPUTED was written by the owner-approved DR-2026-07-20 migration
-                     #     (data_20260720135718_...-tier-model-enshrinement.sql:64-68) for
-                     #     7 anchor sources two independent agents could not retrieve.
-                     # C10 in THIS FILE already accepts VERIFIED-WITH-CORRECTION as sound
-                     # (OK_VSTATUS, below), so B01 and C10 contradicted each other on the
-                     # same rows in the same run.
-                     "VERIFIED-WITH-CORRECTION","DISPUTED")
+    # D-0157 (ADOPTED 2026-08-04): the standing is BINARY. How it was
+    # established lives in verification_method, whether more effort is owed in
+    # verification_disposition, and how much was spent in
+    # verification_attempt_count. Every value this list used to carry was one of
+    # those three facts smuggled into the status string -- and UNVERIFIED-1
+    # asserted an attempt count its own column contradicted in 25 of 31 rows.
+    VALID_VSTATUS = ("VERIFIED", "UNVERIFIED")
     bad = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources
         WHERE verification_status IS NOT NULL
         AND verification_status NOT IN ({','.join('?'*len(VALID_VSTATUS))})
@@ -173,7 +184,13 @@ def run_checks(db_path):
 
     VALID_ST = ("journal_article","book","book_chapter","conference_paper","thesis",
                 "primary_research","case_study","standard","guideline","report",
-                "grey","internal","letter","editorial","commentary","other")
+                "grey","internal","letter","editorial","commentary","other",
+                # D-0157 section 4.6 ratifies `code`: 16 rows, statutory
+                # instruments (French arretes, Italian DPCM, Japanese ministerial
+                # standards), mirroring EvidenceType.CODE in schemas/enums.py.
+                # Used consistently since coinage; the transcription here was
+                # simply never updated.
+                "code")
     bad = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources
         WHERE source_type IS NOT NULL
         AND source_type NOT IN ({','.join('?'*len(VALID_ST))})
@@ -192,6 +209,83 @@ def run_checks(db_path):
         WHERE status NOT IN ({','.join('?'*len(VALID_GAP_STATUS))})
     """, VALID_GAP_STATUS).fetchone()[0]
     record("B06", "gaps.status values", bad == 0,
+           f"{bad} invalid values" if bad else "")
+
+    # ── D-0157 standing invariants (I1–I4) ────────────────────────────────────
+    # The point of splitting one column into three is that they can now be
+    # checked against each other. Each of these was unprovable while the claim
+    # and its evidence were the same string.
+    # NULL disposition is the hole a newly inserted row falls through, so the
+    # test is "not CLOSED", not "is OPEN".
+    i1 = conn.execute("""SELECT COUNT(*) FROM evidence_sources
+        WHERE verification_status='VERIFIED'
+          AND COALESCE(verification_disposition,'') <> 'CLOSED'""").fetchone()[0]
+    record("I1", "no source is VERIFIED with effort still owed", i1 == 0,
+           f"{i1} rows VERIFIED without a CLOSED disposition — verification is "
+           f"finished or it did not happen" if i1 else "")
+
+    i2 = conn.execute("""SELECT COUNT(*) FROM evidence_sources
+        WHERE verification_status='VERIFIED'
+          AND COALESCE(verification_attempt_count,0)=0""").fetchone()[0]
+    record("I2", "a VERIFIED source records at least one attempt", i2 == 0,
+           f"{i2} rows VERIFIED with zero attempts — nobody recorded doing the thing "
+           f"that verified them; adjudication queue, not a backfill" if i2 else "")
+
+    i3 = conn.execute("""SELECT COUNT(*) FROM evidence_sources
+        WHERE verification_disposition='CLOSED'
+          AND COALESCE(verification_status,'') <> 'VERIFIED'
+          AND COALESCE(verification_closure_reason,'') = ''""").fetchone()[0]
+    record("I3", "closure is earned and reasoned", i3 == 0,
+           f"{i3} rows CLOSED without a closure reason" if i3 else "")
+
+    i3b = conn.execute("""SELECT COUNT(*) FROM evidence_sources
+        WHERE verification_disposition='CLOSED'
+          AND COALESCE(verification_status,'') <> 'VERIFIED'
+          AND COALESCE(verification_attempt_count,0) < 2""").fetchone()[0]
+    record("I3b", "closure rests on at least two recorded attempts", i3b == 0,
+           f"{i3b} rows CLOSED with fewer than 2 attempts — 'cannot be verified "
+           f"after effort spent' requires the effort to be on record" if i3b else "")
+
+    i4 = conn.execute("""SELECT COUNT(*) FROM evidence_sources
+        WHERE verification_status='VERIFIED'
+          AND verification_method IS NOT NULL
+          AND verification_method NOT IN ('direct-render','co1-attestation','tool')""").fetchone()[0]
+    record("I4", "VERIFIED is reachable only by a method that obtains the artefact", i4 == 0,
+           f"{i4} rows VERIFIED via a method that never obtained the document" if i4 else "")
+
+    i4b = conn.execute("""SELECT COUNT(*) FROM evidence_sources
+        WHERE verification_method='tool'
+          AND COALESCE(verified_by_tool,'') = ''""").fetchone()[0]
+    record("I4b", "method='tool' names the tool that established it", i4b == 0,
+           f"{i4b} rows claim a tool established them without naming it" if i4b else "")
+
+    # The three new columns have CHECK constraints in migration 049, but a
+    # pre-049 database or a hand-edited blob would not, and B-checks are where
+    # vocabulary is enforced in this suite.
+    VALID_DISP = ("OPEN", "CLOSED")
+    bad = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources
+        WHERE verification_disposition IS NOT NULL
+        AND verification_disposition NOT IN ({','.join('?'*len(VALID_DISP))})""",
+        VALID_DISP).fetchone()[0]
+    record("B07", "verification_disposition values", bad == 0,
+           f"{bad} invalid values" if bad else "")
+
+    VALID_METH = ("direct-render","co1-attestation","corroborated-not-retrieved",
+                  "citing-bibliography","tool")
+    bad = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources
+        WHERE verification_method IS NOT NULL
+        AND verification_method NOT IN ({','.join('?'*len(VALID_METH))})""",
+        VALID_METH).fetchone()[0]
+    record("B08", "verification_method values", bad == 0,
+           f"{bad} invalid values" if bad else "")
+
+    VALID_CR = ("paywalled","print-only","access-denied-persistent","withdrawn",
+                "not-found-after-search","disputed-existence")
+    bad = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources
+        WHERE verification_closure_reason IS NOT NULL
+        AND verification_closure_reason NOT IN ({','.join('?'*len(VALID_CR))})""",
+        VALID_CR).fetchone()[0]
+    record("B09", "verification_closure_reason values", bad == 0,
            f"{bad} invalid values" if bad else "")
 
     # ── C: Consistency invariants ─────────────────────────────────────────────
@@ -299,9 +393,13 @@ def run_checks(db_path):
     # Read-ness is recorded in verification_status, not in capture status. That
     # is what this now tests. DISPUTED counts as a failure: a best practice
     # resting on a source whose standing is contested is exactly the case worth
-    # surfacing, and it is not hypothetical — 2 of the 59 are DISPUTED.
-    OK_VSTATUS = ("VERIFIED", "VERIFIED-1", "VERIFIED-2",
-                  "VERIFIED-WITH-CORRECTION", "CO1-VERIFIED")
+    # surfacing. (The old note here counted 2 DISPUTED among 59; D-0157
+    # retired that status and no governing ref has ever been one.)
+    # D-0157: a published cell may rest only on a source whose standing is
+    # VERIFIED. The old list admitted VERIFIED-2 -- corroborated but never
+    # obtained -- as sound; the remap moved those 71 rows to UNVERIFIED, so this
+    # narrowing is the same judgement applied consistently rather than a new one.
+    OK_VSTATUS = ("VERIFIED",)
     try:
         ph = ",".join("?" * len(OK_VSTATUS))
         unsound = conn.execute(f"""
@@ -669,6 +767,106 @@ def run_checks(db_path):
     record("G03", "ORCID values stored as plain identifier (no URL prefix)",
            bad_orcid == 0,
            f"{bad_orcid} ORCIDs with URL prefix — strip 'https://orcid.org/'" if bad_orcid else "")
+
+    # ── H: JSON-array ↔ junction parity ───────────────────────────────────────
+    # Two edges on the walk are being migrated out of JSON TEXT columns and into
+    # foreign-keyed junction tables (migrations 044 and 050). Until the columns
+    # are dropped — a structural removal that needs a caller sweep — both stores
+    # exist, and the only thing keeping them from silently diverging is this
+    # section. Migration 044's header called for it; it is here now, covering
+    # both junctions. Each is checked in BOTH directions: a one-way check would
+    # pass while the junction quietly lost rows.
+    print("\n[H] JSON-array ↔ junction parity")
+
+    # Both edge columns carry a table-level CHECK (json_valid(...)), so text
+    # that is not JSON at all cannot be written — fault-injection confirms the
+    # UPDATE is refused, and an unguarded json_each over the live data does not
+    # raise. What the CHECK does NOT stop is a valid JSON *scalar*: json_valid
+    # ('3') is true. A scalar there would be skipped by json_each and quietly
+    # shrink the comparison set instead of failing it. The shape is not
+    # hypothetical — `citation_mining.connections_produced` holds a bare integer
+    # in 13 of its 25 non-empty rows, a count in a column whose other rows hold
+    # a list. So every parity query is scoped to rows that are demonstrably
+    # arrays, and the rows that are not are reported by H06 rather than dropped.
+    ARRAY_ROWS = ("{t}.{c} IS NOT NULL AND {t}.{c} != '' "
+                  "AND json_valid({t}.{c}) AND json_type({t}.{c}) = 'array'")
+
+    EDGE_JSON = (("evidence_cell_state", "governing_refs"),
+                 ("search_executions",   "admitted_ref_ids"))
+
+    def _parity(tid_a, tid_b, label, junction, jcols, table, tcol, key):
+        jk, rk = jcols
+        arrays = ARRAY_ROWS.format(t="t", c=tcol)
+        extra = conn.execute(f"""
+            SELECT COUNT(*) FROM {junction} j WHERE NOT EXISTS (
+              SELECT 1 FROM {table} t, json_each(t.{tcol}) je
+              WHERE {arrays} AND t.{key} = j.{jk} AND je.value = j.{rk})
+        """).fetchone()[0]
+        missing = conn.execute(f"""
+            SELECT COUNT(*) FROM {table} t, json_each(t.{tcol}) je
+            WHERE {arrays} AND NOT EXISTS (
+              SELECT 1 FROM {junction} j WHERE j.{jk} = t.{key} AND j.{rk} = je.value)
+        """).fetchone()[0]
+        record(tid_a, f"{label}: every junction row is in the JSON", extra == 0,
+               f"{extra} rows in {junction} with no matching {tcol} entry" if extra else "")
+        record(tid_b, f"{label}: every JSON entry is in the junction", missing == 0,
+               f"{missing} {tcol} entries with no {junction} row" if missing else "")
+
+    _parity("H01", "H02", "cell_source_links ↔ governing_refs",
+            "cell_source_links", ("cell_id", "ref_id"),
+            "evidence_cell_state", "governing_refs", "cell_id")
+
+    _parity("H03", "H04", "search_admissions ↔ admitted_ref_ids",
+            "search_admissions", ("exec_id", "ref_id"),
+            "search_executions", "admitted_ref_ids", "exec_id")
+
+    # results_admitted is a third store of the same fact. It was consistent with
+    # the JSON on all 84 rows when 050 was written; if it drifts, the junction is
+    # the one to trust and this says so out loud rather than letting a stale
+    # counter be read as yield.
+    admit_count_drift = conn.execute("""
+        SELECT COUNT(*) FROM search_executions se
+        WHERE se.results_admitted != (
+          SELECT COUNT(*) FROM search_admissions sa WHERE sa.exec_id = se.exec_id)
+    """).fetchone()[0]
+    record("H05", "results_admitted equals the admission edge count",
+           admit_count_drift == 0,
+           f"{admit_count_drift} executions whose results_admitted disagrees with "
+           f"search_admissions" if admit_count_drift else "")
+
+    # H06 is what makes H01–H04 non-vacuous: they only compare rows that are
+    # JSON arrays, so a column drifting into some other shape would quietly
+    # shrink the comparison set rather than fail it. This names that drift.
+    nonarray = []
+    for table, tcol in EDGE_JSON:
+        n = conn.execute(f"""SELECT COUNT(*) FROM {table} t
+            WHERE t.{tcol} IS NOT NULL AND t.{tcol} != ''
+              AND NOT (json_valid(t.{tcol}) AND json_type(t.{tcol}) = 'array')
+        """).fetchone()[0]
+        if n:
+            nonarray.append(f"{table}.{tcol}: {n}")
+    record("H06", "edge JSON columns hold arrays, not scalars or malformed text",
+           not nonarray, "; ".join(nonarray))
+
+    # A ref repeated inside one array collapses to a single junction row (the
+    # PK dedupes it), and both parity directions still pass — the junction
+    # contains it and every entry is found. Only a count comparison sees it.
+    dup = []
+    for junction, jk, rk, table, tcol, key in (
+        ("cell_source_links", "cell_id", "ref_id",
+         "evidence_cell_state", "governing_refs", "cell_id"),
+        ("search_admissions", "exec_id", "ref_id",
+         "search_executions", "admitted_ref_ids", "exec_id"),
+    ):
+        arrays = ARRAY_ROWS.format(t="t", c=tcol)
+        entries = conn.execute(
+            f"SELECT COUNT(*) FROM {table} t, json_each(t.{tcol}) je WHERE {arrays}"
+        ).fetchone()[0]
+        edges = conn.execute(f"SELECT COUNT(*) FROM {junction}").fetchone()[0]
+        if entries != edges:
+            dup.append(f"{tcol} has {entries} entries but {junction} has {edges} rows")
+    record("H07", "no id repeats inside a single JSON edge array", not dup,
+           "; ".join(dup))
 
     # ── Summary ───────────────────────────────────────────────────────────────
     conn.close()

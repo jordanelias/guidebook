@@ -94,7 +94,8 @@ def validate_source_co1_fields(path: str) -> list:
 
     # Co-1 source: check verification status
     vs = data.get("verification_status")
-    if vs in ("UNVERIFIED-CLOSED", "CLOSED-DELETED"):
+    if vs in ("UNVERIFIED-CLOSED", "CLOSED-DELETED") or (
+                vs == "UNVERIFIED" and (r.get("verification_disposition") or "") == "CLOSED"):
         errors.append(
             f"Co-1 source {data.get('ref_id', '?')} has "
             f"verification_status={vs} — cells citing this source "

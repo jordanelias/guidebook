@@ -9,7 +9,10 @@ hand-written — the un-fakeable substrate the coverage-completion loop
 (coverage-completion-loop-methodology §4, search-coverage-completion-workplan §2.2)
 requires. `deferred_reason` makes an honest non-search a first-class counted outcome;
 `admitted_ref_ids` back-links each admitted source to the exact search that found it
-(chain of custody + auditable spillover routing); `backfill=1` isolates the recoverable
+(chain of custody + auditable spillover routing) — as of migration 050 that edge also
+lives in the foreign-keyed `search_admissions` junction, and the two are held equal in
+both directions by test_db_integrity H03/H04 until the column's caller sweep permits
+dropping it; `backfill=1` isolates the recoverable
 historical queries from forward loop rows; `executed_at` is an explicit ISO string so
 rebuild is byte-deterministic.
 
@@ -44,7 +47,7 @@ class SearchExecution(BaseModel):
     results_screened: int = 0
     results_admitted: int = 0
     saturation_signal: Optional[str] = None       # none|partial|saturated
-    admitted_ref_ids: Optional[str] = None        # JSON array of evidence_sources.ref_id
+    admitted_ref_ids: Optional[str] = None        # JSON array; normalised into search_admissions (050)
     deferred_reason: Optional[str] = None          # non-NULL => deliberate no-search for this cell
     backfill: int = 0
     session: str

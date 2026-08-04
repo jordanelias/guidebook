@@ -7,7 +7,7 @@ Three checks:
      MISMATCH-* or DOI-* integrity status. If a row is upgraded to COMPLETE
      but the integrity column says MISMATCH, one of the two writes was wrong.
   2. Coverage: rule #10 eligible rows (COMPLETE+VERIFIED, COMPLETE-STATUTORY+
-     VERIFIED/UNVERIFIED-1) without metadata_integrity_status populated are
+     VERIFIED/UNVERIFIED) without metadata_integrity_status populated are
      legacy rows that pre-date DR-2026-05-20. Surfaced as 'NEEDS-CROSS-CHECK'.
   3. Owner queue surface: rows with metadata_integrity_status NOT IN
      ('OK','RESOLVED', NULL) are the owner-review queue. Counted and bucketed.
@@ -71,14 +71,14 @@ def audit():
         SELECT COUNT(*)
         FROM evidence_sources
         WHERE metadata_quality IN ('COMPLETE', 'COMPLETE-STATUTORY')
-          AND verification_status IN ('VERIFIED', 'UNVERIFIED-1')
+          AND verification_status IN ('VERIFIED', 'UNVERIFIED')
           AND metadata_integrity_status IS NULL
     """).fetchone()[0]
     eligible_total = c.execute("""
         SELECT COUNT(*)
         FROM evidence_sources
         WHERE metadata_quality IN ('COMPLETE', 'COMPLETE-STATUTORY')
-          AND verification_status IN ('VERIFIED', 'UNVERIFIED-1')
+          AND verification_status IN ('VERIFIED', 'UNVERIFIED')
     """).fetchone()[0]
     pct = 100 * legacy / eligible_total if eligible_total else 0
     print(f"[2] INFO: {legacy} / {eligible_total} eligible rows lack a cross-check record "

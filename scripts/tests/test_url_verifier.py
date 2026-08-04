@@ -286,7 +286,7 @@ try:
 except Exception as e:
     record("E02", "verify weak match", False, error=traceback.format_exc(limit=2))
 
-# E03: 404 → UNVERIFIED-CLOSED + DEAD-LINK (with Wayback disabled)
+# E03: 404 → UNVERIFIED + OPEN + DEAD-LINK (D-0157; was UNVERIFIED-CLOSED)
 try:
     conn = fresh()
     mod.ensure_schema(conn)
@@ -303,14 +303,14 @@ try:
     conn.commit()
     mod.fetch_url = orig
     after = read(conn, rid)
-    record("E03", "404 → UNVERIFIED-CLOSED + url_resolution_outcome=DEAD-LINK",
-           outcome == "dead" and after["verification_status"] == "UNVERIFIED-CLOSED"
+    record("E03", "404 → UNVERIFIED/OPEN + url_resolution_outcome=DEAD-LINK",
+           outcome == "dead" and after["verification_status"] == "UNVERIFIED"
            and after["url_resolution_outcome"] == "DEAD-LINK",
            details=f"status={after.get('verification_status')} outcome={after.get('url_resolution_outcome')}")
 except Exception as e:
     record("E03", "verify 404 dead", False, error=traceback.format_exc(limit=2))
 
-# E04: DNS failure → UNVERIFIED-CLOSED + DEAD-DNS
+# E04: DNS failure → UNVERIFIED + OPEN + DEAD-DNS (D-0157)
 try:
     conn = fresh()
     mod.ensure_schema(conn)
@@ -327,8 +327,8 @@ try:
     conn.commit()
     mod.fetch_url = orig
     after = read(conn, rid)
-    record("E04", "DNS failure → UNVERIFIED-CLOSED + DEAD-DNS",
-           outcome == "dead-dns" and after["verification_status"] == "UNVERIFIED-CLOSED"
+    record("E04", "DNS failure → UNVERIFIED/OPEN + DEAD-DNS",
+           outcome == "dead-dns" and after["verification_status"] == "UNVERIFIED"
            and after["url_resolution_outcome"] == "DEAD-DNS",
            details=f"status={after.get('verification_status')} outcome={after.get('url_resolution_outcome')}")
 except Exception as e:
