@@ -764,7 +764,7 @@ def main():
                            "COMPLETE if DOI/full metadata confirmed via CrossRef/PubMed/Semantic Scholar; "
                            "AUTHOR-TITLE-ONLY if only single-source (citing-document) attestation.")
     p_as.add_argument("--verification-status",
-                      choices=["VERIFIED", "VERIFIED-2", "UNVERIFIED-1"],
+                      choices=["VERIFIED", "UNVERIFIED", "UNVERIFIED"],
                       help="REQUIRED in practice. VERIFIED requires an independent connector/registry hit "
                            "(CrossRef, PubMed, Semantic Scholar, a second citing source). A source found only "
                            "in one citing document's bibliography, with no independent hit, is UNVERIFIED-1, "

@@ -281,7 +281,7 @@ def determine(conn, item_code, population, slug, note):
     b = classify(recs)
     # §2.8 verification-status machinery
     live = [r for r in recs if not _is_disqualified(r)]
-    has_unverified = any((r["verification_status"] or "") == "UNVERIFIED-1" for r in live)
+    has_unverified = any((r["verification_status"] or "") == "UNVERIFIED" for r in live)
     all_disqualified = bool(recs) and not live
     anchors = anchoring(b["t1"]) + anchoring(b["co1"]) + anchoring(b["t2"]) + anchoring(b["co2"])
     t3c = anchoring(b["t3c"])

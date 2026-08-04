@@ -18,7 +18,12 @@ candidate URLs which this verifier then confirms.
 Outcomes
 --------
   VERIFIED            — URL reachable AND title similarity >= TITLE_MATCH_HIGH
-  PROBABILISTIC       — URL reachable AND TITLE_MATCH_LOW <= sim < TITLE_MATCH_HIGH
+  UNVERIFIED (OPEN)   — URL reachable AND TITLE_MATCH_LOW <= sim < TITLE_MATCH_HIGH.
+                        D-0157 retired PROBABILISTIC: a partial title match is
+                        not a weaker grade of verified, it is not verified, with
+                        the similarity recorded. OPEN, because a return pass is
+                        exactly what a partial match calls for. The score stays
+                        in url_match_similarity and the note.
                          (page exists but title diverges; flag for human review)
   (no status change)  — URL reachable but title doesn't match (likely wrong URL);
                          url_resolution_outcome=URL-NO-MATCH, 30-day retry
@@ -73,7 +78,7 @@ SESSION = os.environ.get("GITHUB_RUN_ID", "manual") or "manual"
 
 # Verification thresholds
 TITLE_MATCH_HIGH = 0.50  # >= => VERIFIED
-TITLE_MATCH_LOW  = 0.20  # >= => PROBABILISTIC
+TITLE_MATCH_LOW  = 0.20  # >= => partial match: UNVERIFIED + OPEN (D-0157)
 
 # Fetch limits
 TIMEOUT_S       = 20
@@ -305,7 +310,7 @@ def verify_one(conn, ref_id, url, pub_title, ts):
                            ts=ts)
         return "verified"
     elif sim >= TITLE_MATCH_LOW:
-        write_verification(conn, ref_id, status="PROBABILISTIC",
+        write_verification(conn, ref_id, status="UNVERIFIED",
                            outcome="PARTIAL", similarity=sim,
                            note=f"URL live; partial title match sim={sim:.2f}: {page_title[:80]}",
                            ts=ts)
@@ -337,7 +342,7 @@ def verify_dead_with_wayback(conn, ref_id, url, pub_title, ts, code, soft_error=
                                    ts=ts)
                 return "wayback-verified"
             elif sim >= TITLE_MATCH_LOW:
-                write_verification(conn, ref_id, status="PROBABILISTIC",
+                write_verification(conn, ref_id, status="UNVERIFIED",
                                    outcome="WAYBACK-PARTIAL", similarity=sim,
                                    note=f"Live URL dead; Wayback partial sim={sim:.2f}: {snap}",
                                    ts=ts)
@@ -497,7 +502,7 @@ def main():
     print(f"  Candidates pool:               {pool_size}")
     print(f"  Attempted this run:            {len(candidates)}")
     print(f"  VERIFIED (live + title match): {counts['verified']}")
-    print(f"  PROBABILISTIC (partial match): {counts['probabilistic']}")
+    print(f"  UNVERIFIED/OPEN (partial match): {counts['probabilistic']}")
     print(f"  NO-MATCH (title diverges):     {counts['no-match']} (retry in {SKIP_NO_MATCH_DAYS}d)")
     print(f"  DEAD-LINK (404/410):           {counts['dead']}")
     print(f"  WAYBACK rescued (verified):    {counts['wayback-verified']}")

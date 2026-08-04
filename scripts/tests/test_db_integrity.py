@@ -193,10 +193,14 @@ def run_checks(db_path):
     # The point of splitting one column into three is that they can now be
     # checked against each other. Each of these was unprovable while the claim
     # and its evidence were the same string.
+    # NULL disposition is the hole a newly inserted row falls through, so the
+    # test is "not CLOSED", not "is OPEN".
     i1 = conn.execute("""SELECT COUNT(*) FROM evidence_sources
-        WHERE verification_status='VERIFIED' AND verification_disposition='OPEN'""").fetchone()[0]
+        WHERE verification_status='VERIFIED'
+          AND COALESCE(verification_disposition,'') <> 'CLOSED'""").fetchone()[0]
     record("I1", "no source is VERIFIED with effort still owed", i1 == 0,
-           f"{i1} rows VERIFIED+OPEN — verification is finished or it did not happen" if i1 else "")
+           f"{i1} rows VERIFIED without a CLOSED disposition — verification is "
+           f"finished or it did not happen" if i1 else "")
 
     i2 = conn.execute("""SELECT COUNT(*) FROM evidence_sources
         WHERE verification_status='VERIFIED'
@@ -206,13 +210,15 @@ def run_checks(db_path):
            f"that verified them; adjudication queue, not a backfill" if i2 else "")
 
     i3 = conn.execute("""SELECT COUNT(*) FROM evidence_sources
-        WHERE verification_disposition='CLOSED' AND verification_status<>'VERIFIED'
-          AND (verification_closure_reason IS NULL OR verification_closure_reason='')""").fetchone()[0]
+        WHERE verification_disposition='CLOSED'
+          AND COALESCE(verification_status,'') <> 'VERIFIED'
+          AND COALESCE(verification_closure_reason,'') = ''""").fetchone()[0]
     record("I3", "closure is earned and reasoned", i3 == 0,
            f"{i3} rows CLOSED without a closure reason" if i3 else "")
 
     i3b = conn.execute("""SELECT COUNT(*) FROM evidence_sources
-        WHERE verification_disposition='CLOSED' AND verification_status<>'VERIFIED'
+        WHERE verification_disposition='CLOSED'
+          AND COALESCE(verification_status,'') <> 'VERIFIED'
           AND COALESCE(verification_attempt_count,0) < 2""").fetchone()[0]
     record("I3b", "closure rests on at least two recorded attempts", i3b == 0,
            f"{i3b} rows CLOSED with fewer than 2 attempts — 'cannot be verified "
@@ -224,6 +230,41 @@ def run_checks(db_path):
           AND verification_method NOT IN ('direct-render','co1-attestation','tool')""").fetchone()[0]
     record("I4", "VERIFIED is reachable only by a method that obtains the artefact", i4 == 0,
            f"{i4} rows VERIFIED via a method that never obtained the document" if i4 else "")
+
+    i4b = conn.execute("""SELECT COUNT(*) FROM evidence_sources
+        WHERE verification_method='tool'
+          AND COALESCE(verified_by_tool,'') = ''""").fetchone()[0]
+    record("I4b", "method='tool' names the tool that established it", i4b == 0,
+           f"{i4b} rows claim a tool established them without naming it" if i4b else "")
+
+    # The three new columns have CHECK constraints in migration 049, but a
+    # pre-049 database or a hand-edited blob would not, and B-checks are where
+    # vocabulary is enforced in this suite.
+    VALID_DISP = ("OPEN", "CLOSED")
+    bad = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources
+        WHERE verification_disposition IS NOT NULL
+        AND verification_disposition NOT IN ({','.join('?'*len(VALID_DISP))})""",
+        VALID_DISP).fetchone()[0]
+    record("B07", "verification_disposition values", bad == 0,
+           f"{bad} invalid values" if bad else "")
+
+    VALID_METH = ("direct-render","co1-attestation","corroborated-not-retrieved",
+                  "citing-bibliography","tool")
+    bad = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources
+        WHERE verification_method IS NOT NULL
+        AND verification_method NOT IN ({','.join('?'*len(VALID_METH))})""",
+        VALID_METH).fetchone()[0]
+    record("B08", "verification_method values", bad == 0,
+           f"{bad} invalid values" if bad else "")
+
+    VALID_CR = ("paywalled","print-only","access-denied-persistent","withdrawn",
+                "not-found-after-search","disputed-existence")
+    bad = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources
+        WHERE verification_closure_reason IS NOT NULL
+        AND verification_closure_reason NOT IN ({','.join('?'*len(VALID_CR))})""",
+        VALID_CR).fetchone()[0]
+    record("B09", "verification_closure_reason values", bad == 0,
+           f"{bad} invalid values" if bad else "")
 
     # ── C: Consistency invariants ─────────────────────────────────────────────
     print("\n[C] Consistency invariants")
@@ -330,7 +371,8 @@ def run_checks(db_path):
     # Read-ness is recorded in verification_status, not in capture status. That
     # is what this now tests. DISPUTED counts as a failure: a best practice
     # resting on a source whose standing is contested is exactly the case worth
-    # surfacing, and it is not hypothetical — 2 of the 59 are DISPUTED.
+    # surfacing. (The old note here counted 2 DISPUTED among 59; D-0157
+    # retired that status and no governing ref has ever been one.)
     # D-0157: a published cell may rest only on a source whose standing is
     # VERIFIED. The old list admitted VERIFIED-2 -- corroborated but never
     # obtained -- as sound; the remap moved those 71 rows to UNVERIFIED, so this

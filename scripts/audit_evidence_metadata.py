@@ -52,6 +52,23 @@ ELIGIBLE_VERIFICATION = {"VERIFIED", "UNVERIFIED"}
 EXCLUDED_VERIFICATION = set()
 EXCLUDED_DISPOSITION = {"CLOSED"}   # only meaningful when status != 'VERIFIED'
 
+# D-0157 collapsed several statuses into UNVERIFIED, and a naive rewrite of this
+# gate generalised "UNVERIFIED-1 is eligible" into "all UNVERIFIED are eligible".
+# Measured, that moved eligibility 753 -> 798 and Phase-E READY slugs 70 -> 73:
+# three BPCs became rewrite-ready because sources the DR had just DEMOTED for
+# honesty now counted. This is a B-before-E gate; loosening it by 45 sources is
+# a decision, not a migration side effect.
+#
+# The prior boundary admitted only the "flagged, pending re-search" population.
+# Two methods are outside it and stay excluded:
+#   corroborated-not-retrieved -- the document was never obtained (ex-VERIFIED-2)
+#   disputed-existence         -- the work may not exist (ex-DISPUTED)
+EXCLUDED_METHOD = {"corroborated-not-retrieved"}
+EXCLUDED_CLOSURE_REASON = {"disputed-existence"}
+# Until those 7 rows carry the closure reason, the sweep's own note stamp is the
+# durable marker -- the same marker tools/evidentiary_audit.py gates on.
+EXCLUDED_NOTE_MARKER = "DISPUTED 2026-07-20 correctness-sweep"
+
 
 def is_eligible(metadata_quality: str | None, verification_status: str | None) -> bool:
     """Implement the standing rule #10 eligibility test."""
@@ -77,6 +94,22 @@ def is_excluded(verification_status: str | None,
             and verification_disposition in EXCLUDED_DISPOSITION)
 
 
+def is_eligible_source(status, disposition=None, method=None,
+                       closure_reason=None, note=None) -> bool:
+    """Rule #10 source eligibility, at the boundary that predated D-0157."""
+    if status not in ELIGIBLE_VERIFICATION:
+        return False
+    if status == "VERIFIED":
+        return True
+    if (disposition or "") in EXCLUDED_DISPOSITION:
+        return False
+    if (method or "") in EXCLUDED_METHOD:
+        return False
+    if (closure_reason or "") in EXCLUDED_CLOSURE_REASON:
+        return False
+    return EXCLUDED_NOTE_MARKER not in (note or "")
+
+
 # ── Audit pieces ────────────────────────────────────────────────────────────
 
 def overall_health(conn) -> dict:
@@ -95,6 +128,17 @@ def overall_health(conn) -> dict:
         SELECT COUNT(*) FROM evidence_sources
         WHERE metadata_quality IN ({','.join(['?'] * len(ELIGIBLE_METADATA))})
         AND verification_status IN ({','.join(['?'] * len(ELIGIBLE_VERIFICATION))})
+        AND (verification_status = 'VERIFIED' OR (
+                 COALESCE(verification_disposition,'') <> 'CLOSED'
+             AND COALESCE(verification_method,'') <> 'corroborated-not-retrieved'
+             AND COALESCE(verification_closure_reason,'') <> 'disputed-existence'
+             AND COALESCE(verification_note,'') NOT LIKE '%DISPUTED 2026-07-20 correctness-sweep%'))
+        -- A merged duplicate is a tombstone; its evidence belongs to the
+        -- canonical row and counting both double-counts it toward Phase-E
+        -- readiness. 51 rows, 50 of them a pre-existing miss and 1 (REF-00844)
+        -- introduced when D-0157 retired the SUPERSEDED status that had been
+        -- excluding it by accident.
+        AND (superseded_by_ref_id IS NULL OR superseded_by_ref_id = '')
     """, (*ELIGIBLE_METADATA, *ELIGIBLE_VERIFICATION)).fetchone()[0]
     # Disposition test, not a status test (D-0157). Written as an explicit
     # predicate rather than an IN-list because EXCLUDED_VERIFICATION is now
@@ -120,9 +164,19 @@ def per_slug_eligibility(conn, min_eligible: int, min_tiers: int) -> list:
     rows = conn.execute("""
         SELECT s.slug,
                COUNT(DISTINCT sl.ref_id) as total_sources,
+               -- Same boundary as the corpus-level count (see EXCLUDED_METHOD
+               -- and friends above). Kept in sync deliberately: these two
+               -- diverging is how a B-before-E gate loosens without anyone
+               -- deciding to loosen it.
                COUNT(DISTINCT CASE
-                 WHEN es.metadata_quality IN ('COMPLETE','COMPLETE-STATUTORY')
-                 AND es.verification_status IN ('VERIFIED', 'UNVERIFIED')
+                 WHEN (es.metadata_quality IN ('COMPLETE','COMPLETE-STATUTORY')
+                       AND es.verification_status IN ('VERIFIED','UNVERIFIED')
+                       AND (es.superseded_by_ref_id IS NULL OR es.superseded_by_ref_id = '')
+                       AND (es.verification_status = 'VERIFIED' OR (
+                                COALESCE(es.verification_disposition,'') <> 'CLOSED'
+                            AND COALESCE(es.verification_method,'') <> 'corroborated-not-retrieved'
+                            AND COALESCE(es.verification_closure_reason,'') <> 'disputed-existence'
+                            AND COALESCE(es.verification_note,'') NOT LIKE '%DISPUTED 2026-07-20 correctness-sweep%')))
                  THEN sl.ref_id END) as eligible_sources,
                COUNT(DISTINCT CASE
                  WHEN es.verification_status = 'UNVERIFIED' AND es.verification_disposition = 'CLOSED'

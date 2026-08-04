@@ -18,7 +18,7 @@ from typing import Optional
 from pydantic import field_validator, model_validator
 
 from schemas.base import GuidebookEntity
-from schemas.enums import Co1Provenance, Co1SourceType, EvidenceType, VerificationStatus
+from schemas.enums import Co1Provenance, Co1SourceType, EvidenceType, VerificationStatus, VerificationDisposition, VerificationMethod, VerificationClosureReason
 
 
 class EvidenceSource(GuidebookEntity):
@@ -54,6 +54,12 @@ class EvidenceSource(GuidebookEntity):
 
     # Verification
     verification_status: Optional[VerificationStatus] = None
+    # D-0157: standing is binary; how, whether-more-is-owed and how-much-was-spent
+    # are peer columns. CLAUDE.md section 4 calls schema/SQLite drift a bug.
+    verification_disposition: Optional[VerificationDisposition] = None
+    verification_method: Optional[VerificationMethod] = None
+    verification_closure_reason: Optional[VerificationClosureReason] = None
+    verification_attempt_count: Optional[int] = None
 
     # Co-1 fields (A5 §6.1 — required when evidence_type == co1)
     co1_provenance: Optional[Co1Provenance] = None
