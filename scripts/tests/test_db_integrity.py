@@ -868,6 +868,188 @@ def run_checks(db_path):
     record("H07", "no id repeats inside a single JSON edge array", not dup,
            "; ".join(dup))
 
+    # ── J: hop-4 edge coherence (source_value_extractions.item_code) ──────────
+    # The column (migration 052) is nullable by design — NULL means the item was
+    # not established at extraction. What it must never hold is an item that
+    # contradicts the row's own slug or its own probe.
+    print("\n[J] Extraction → item edge coherence")
+
+    # An extraction's item should belong to the extraction's slug, by either
+    # route the repo models that with: the item_bpc_links junction (hop 7's
+    # edge object) or the legacy items.bpc_source_slug scalar it is replacing.
+    # Assumption stated out loud: this holds while extractions describe items
+    # their own BPC governs. If a legitimate cross-slug extraction ever appears,
+    # this check is the thing that should be revisited — not silently widened.
+    incoherent = conn.execute("""
+        SELECT COUNT(*) FROM source_value_extractions sve
+        WHERE sve.item_code IS NOT NULL
+          AND NOT EXISTS (SELECT 1 FROM item_bpc_links l
+                          WHERE l.item_code = sve.item_code AND l.slug = sve.slug)
+          AND NOT EXISTS (SELECT 1 FROM items i
+                          WHERE i.item_code = sve.item_code
+                            AND i.bpc_source_slug = sve.slug)
+    """).fetchone()[0]
+    record("J01", "an extraction's item belongs to the extraction's slug",
+           incoherent == 0,
+           f"{incoherent} extractions whose item_code is not linked to their slug"
+           if incoherent else "")
+
+    # Where a row's own basis text names a PMP probe, that probe carries a typed
+    # item_code. The two must agree — this is the W1 witness the backfill relied
+    # on, turned into a standing check so it cannot drift apart later.
+    probe_disagree = conn.execute("""
+        SELECT COUNT(*) FROM source_value_extractions sve
+        JOIN spec_value_probes p
+          ON sve.root_classification_basis LIKE '%' || p.probe_id || '%'
+        WHERE sve.item_code IS NOT NULL AND p.item_code != sve.item_code
+    """).fetchone()[0]
+    record("J02", "an extraction agrees with the PMP probe its basis text names",
+           probe_disagree == 0,
+           f"{probe_disagree} extractions disagreeing with their named probe"
+           if probe_disagree else "")
+
+    # J01 and J02 do NOT hold the judgment the backfill actually made, and an
+    # adversarial review proved it by injection: setting extraction 6 to A-10b
+    # passes both, because A-10b shares bpc_source_slug='room-acoustic-performance'
+    # (so J01's second branch admits it) and row 6 names no probe (so J02 never
+    # reaches it). The realistic error was never cross-slug — it was the OTHER
+    # RT60 item, same slug. J01 guards the least-likely class.
+    #
+    # These eight assignments were adjudicated once, per row, in
+    # data_20260804175506 under three named witness classes. That adjudication
+    # is not mechanizable — but it is pinnable, and pinning it is what stops a
+    # later pass from quietly reassigning a row to A-10b. This is a snapshot
+    # check by design: if the set legitimately changes, this check changes with
+    # it in the same commit, and the diff is the record of the re-adjudication.
+    ADJUDICATED_A18 = tuple(range(1, 9))
+    moved = conn.execute(f"""
+        SELECT COUNT(*) FROM source_value_extractions
+        WHERE extraction_id IN ({','.join('?' * len(ADJUDICATED_A18))})
+          AND (item_code IS NULL OR item_code != 'A-18')
+    """, ADJUDICATED_A18).fetchone()[0]
+    record("J03", "the 8 adjudicated RT60 extractions still hold their assigned item",
+           moved == 0,
+           f"{moved} of the 8 rows adjudicated to A-18 by data_20260804175506 no "
+           f"longer carry it — re-adjudicate in a migration, don't drift" if moved else "")
+
+    # ── K: determination attestation (derivation_sha) ─────────────────────────
+    # evidence-architecture §10 mechanical check 2: "same evidence + same
+    # rule_version ⇒ same state + same derivation_sha". The sha is computed by
+    # assess_cell.sha() over item|population|sorted(governing_refs)::rule_version,
+    # so it attests WHICH cell identity and WHICH governing set produced the
+    # determination. If a row moves after the sha is stamped and nobody
+    # restamps, the hash silently attests a state that no longer exists — worse
+    # than a NULL, which at least admits it attests nothing.
+    #
+    # This was found by hand during a render review, which is the wrong way to
+    # find it. Both live failures were caused by ordinary maintenance: cell 9007
+    # by the NEU→BRAIN population rename, cell 9003 by a governing-set
+    # narrowing in the DB-integrity backlog sweep. Neither operation is unusual;
+    # what was missing was anything that noticed.
+    print("\n[K] Determination attestation")
+
+    import hashlib as _hashlib
+    import json as _json
+    stale, unattested = [], 0
+    for cid, ic, pc, gr, rv, sha_rec in conn.execute(
+            "SELECT cell_id, item_code, population_code, governing_refs, rule_version, "
+            "derivation_sha FROM evidence_cell_state"):
+        if not sha_rec or not rv:
+            unattested += 1
+            continue
+        refs = sorted(_json.loads(gr or "[]"))
+        payload = f"{ic}|{pc}|" + "|".join(refs) + "::" + rv
+        if _hashlib.sha256(payload.encode()).hexdigest() != sha_rec:
+            stale.append(f"{cid} ({ic}×{pc})")
+    record("K01", "every recorded derivation_sha verifies against its own row",
+           not stale,
+           f"{len(stale)} stale: {', '.join(stale)} — the row changed after the "
+           f"determination was stamped; restamp or clear, don't leave a hash "
+           f"attesting a state that no longer exists" if stale else "")
+
+    # Reported, not enforced. Whether an unattested determination is acceptable
+    # is an owner call — these rows were hand-migrated, not produced by an
+    # engine run, so there is no derivation to hash. Failing on them would
+    # demand a fabricated sha, which is the opposite of what K01 protects.
+    if unattested:
+        print(f"      note: {unattested} determination(s) carry no sha or no rule_version "
+              f"and are unattested — reported, not failed (owner question)")
+
+    # ── L: shadow-store parity (YAML ↔ DB) ────────────────────────────────────
+    # Two governance stores are deliberately dual today: the DB table and the
+    # YAML file that five scripts still read. Dual-store is only safe while
+    # something holds them equal — otherwise the "DB is canonical" rule decays
+    # into "whichever one you happened to open". These are the holders.
+    print("\n[L] Shadow-store parity")
+
+    import json as _js
+    try:
+        import yaml as _yaml
+    except ImportError:
+        record("L01", "decision register: YAML ↔ decisions table", True,
+               "SKIPPED — PyYAML not installed")
+        _yaml = None
+
+    # Paths resolve from THIS FILE's location, not from cwd and not from the DB
+    # path. The first version of this check derived them from `db_path`, and a
+    # fault-injection run against a scratch copy in another directory made it
+    # silently SKIP — recorded as a pass. A parity check that reports success
+    # because it could not find one of the two stores is worse than no check.
+    # A missing register is now a failure: it is part of the repo, so its
+    # absence is a finding rather than a reason to stand down.
+    REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+    if _yaml is not None:
+        reg = os.path.join(REPO, "data", "decisions", "decision_register.yaml")
+        if not os.path.exists(reg):
+            record("L01", "decision register: YAML ↔ decisions table", False,
+                   f"register not found at {reg} — five scripts read it, including "
+                   f"the blocking decision_capture.py")
+        else:
+            y = {d["decision_id"]: d for d in _yaml.safe_load(open(reg))["decisions"]}
+            dbrows = {r[0]: r for r in conn.execute(
+                "SELECT decision_id, category, delegation, status, decision_date, "
+                "effort_level, supersedes FROM decisions")}
+            only_y = sorted(set(y) - set(dbrows))
+            only_d = sorted(set(dbrows) - set(y))
+            drift = []
+            for did in sorted(set(y) & set(dbrows)):
+                d, r = y[did], dbrows[did]
+                if (d["category"], d["delegation"], d["status"], d["decision_date"],
+                        int(d["effort_level"])) != (r[1], r[2], r[3], r[4], r[5]):
+                    drift.append(did)
+                elif _js.loads(r[6] or "[]") != (d.get("supersedes") or []):
+                    drift.append(did)
+            detail = []
+            if only_y:
+                detail.append(f"{len(only_y)} in YAML only ({', '.join(only_y[:5])})")
+            if only_d:
+                detail.append(f"{len(only_d)} in DB only ({', '.join(only_d[:5])})")
+            if drift:
+                detail.append(f"{len(drift)} disagree on a field ({', '.join(drift[:5])})")
+            record("L01", "decision register: YAML ↔ decisions table",
+                   not (only_y or only_d or drift),
+                   "; ".join(detail) + " — reconcile in a migration; the DB is canonical "
+                   "(CLAUDE.md §2), so a YAML-only entry is an import gap and a "
+                   "disagreement is a finding, not something to overwrite"
+                   if detail else "")
+
+    # jurisdictional_values has a YAML mirror too, held equal by
+    # validate_schema.py --cross-check. Asserted here as well because that
+    # check runs in a different battery and a data-only PR may not select it.
+    jv_dir = os.path.join(REPO, "data", "jurisdictional_values")
+    if _yaml is not None and os.path.isdir(jv_dir):
+        n_yaml = 0
+        for fn in os.listdir(jv_dir):
+            if fn.endswith((".yaml", ".yml")):
+                doc = _yaml.safe_load(open(os.path.join(jv_dir, fn))) or {}
+                vals = doc.get("records") or []
+                n_yaml += len(vals) if isinstance(vals, list) else 0
+        n_db = conn.execute("SELECT COUNT(*) FROM jurisdictional_values").fetchone()[0]
+        record("L02", "jurisdictional_values: YAML record count matches the table",
+               n_yaml == n_db,
+               f"{n_yaml} YAML records vs {n_db} table rows" if n_yaml != n_db else "")
+
     # ── Summary ───────────────────────────────────────────────────────────────
     conn.close()
     print("\n" + "=" * 70)

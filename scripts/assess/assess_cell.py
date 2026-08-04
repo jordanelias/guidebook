@@ -191,8 +191,12 @@ def assess_source(conn, src, claim_scale, population):
         pop = population_directness_from_match_grade(mg)
     else:
         pop = NOT_ASSESSED  # G2: applies but unassessed — never graded as EXACT
-    # value dimension: home substrate source_value_extractions is EMPTY (0 rows) —
-    # G2 again: applies but unassessed, never silently full-match.
+    # value dimension: still NOT_ASSESSED, but the reason has changed and the
+    # old one was that source_value_extractions "is EMPTY (0 rows)". It holds 8
+    # rows as of migration 052 and, since that migration, an item_code to join
+    # them on. What is still absent is any assessment RULE for grading a value
+    # dimension from them — writing one is a judgment act, not a caller sweep.
+    # G2 stands: applies but unassessed, never silently full-match.
     val = NOT_ASSESSED
     cond = consolidate(pop, val, sd)
     tier_ok = check_tier_consistency(src["evidence_type"], src["scope"], src["tier"])
@@ -249,8 +253,11 @@ def regulatory_richness(t45, t6):
 
     Honestly-partial implementation, named as such in the rationale it emits:
     §2.3's T4 clause requires "an evidence-based value directly addressing the
-    parameter" — not mechanically checkable while source_value_extractions is
-    empty, so the T4 branch checks presence only and SAYS SO. The T6 clause
+    parameter" — the T4 branch checks presence only and SAYS SO. (This used to
+    read "not mechanically checkable while source_value_extractions is empty";
+    the table now has 8 rows and, per migration 052, an item_code to address the
+    parameter with. The branch is unchanged because deciding what counts as
+    "directly addressing" is a judgment call, not a missing join.) The T6 clause
     requires convergence "on the same value or range" — likewise unverifiable;
     jurisdiction distinctness IS checkable and is enforced."""
     jur45 = {r.get("jurisdiction") for r in t45}
@@ -316,14 +323,21 @@ def determine(conn, item_code, population, slug, note):
                                      ("co2", axes_co2)) if a]
         if n_axes >= 2:
             # Axis co-presence is real; value-level convergence is NOT assessable
-            # (source_value_extractions empty). pending_assessment is the honest
-            # status — never claim 'convergent' on unextracted values (G2 spirit).
+            # here. pending_assessment is the honest status — never claim
+            # 'convergent' on ungraded values (G2 spirit).
+            # The reason used to be given as "source_value_extractions empty",
+            # both here and in the emitted rationale below. That is now false in
+            # general (8 rows, item-typed since migration 052) AND it was never
+            # something this code checked — it asserted a fact about the table it
+            # had not queried. The true reason is narrower and does not expire:
+            # no rule exists for grading value-level convergence, so nothing here
+            # can grade it.
             # Rendering a pending_assessment cell deviates from §3.4's no-render
             # rule and is DR-gated as item G8 (mandatory disclosure in rendering).
             conv_status = "pending_assessment"
             rationale = (f"{n_axes} evidence axes present ({'/'.join(axes_named)}). "
-                         f"Value-level convergence not yet assessable: "
-                         f"source_value_extractions has no rows for these sources; "
+                         f"Value-level convergence not yet assessable: no rule "
+                         f"exists for grading agreement between extracted values; "
                          f"assessment queued, not assumed."
                          + (f" Supporting (non-governing) T3: {', '.join(supporting)}."
                             if supporting else ""))

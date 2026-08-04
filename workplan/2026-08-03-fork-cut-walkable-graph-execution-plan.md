@@ -364,7 +364,7 @@ recorded here because a plan that lives only in a conversation is not a plan.
 | 1 | Verification standing — `evidence_sources` columns (D-0157) | **DONE 2026-08-04** — migrations 049 + remap; PR #82 |
 | 2 | ~~Hop 3~~ **Hop 2b — `search_admissions`** (search execution → admitted source) | **DONE 2026-08-04** — migrations 050 + 051; see below |
 | 3 | ~~`search_candidates.admitted_ref_id`~~ **deferred** — see the reordering note | deferred |
-| 4 | **`source_value_extractions.item_code` — extraction → item** — *promoted to next* | next |
+| 4 | **`source_value_extractions.item_code` — extraction → item** *(promoted over step 3)* | **DONE 2026-08-04** — migration 052 + backfill; see the step-4 note |
 | 5 | `bpc_metadata.reasoning_doc_path` — synthesis doc as a column, not a filename convention | pending |
 | 6 | Close the DISPUTED seven against `audits/anchor-correctness-sweep-2026-07-20.md` | pending |
 | 7 | N1 — `jurisdictional_values.ref_id` (the regulatory-floor invariant in §8) | pending |
@@ -467,6 +467,187 @@ Two consequences for sequencing:
   captures will need the moment capture runs. Building it before the rows exist is the one
   ordering where schema-first is right: the alternative is capturing values into a table that
   cannot say which parameter they describe.
+
+  **[CORRECTED 2026-08-04 — the second sentence of that justification is false.]** An
+  adversarial design review attacked it and the attack lands. `energy-conservation-rest-points-seating`
+  has **no item at all**: zero `items.bpc_source_slug` matches and zero `item_bpc_links` rows
+  (verified). When capture runs, all 19 land `item_code = NULL` and cannot use this edge until
+  an item is created and linked — itself a governed act belonging to step 9. Building an edge
+  for traffic that cannot use it is the 043/045 mistake with a better story, and that is what
+  the sentence above argued for. The 19-pending observation survives only as the argument for
+  the column being **nullable**, not for building it.
+
+  The rung is still right, on three feet that hold:
+
+  1. **It removes a demonstrable false positive, today.** Without `item_code`, joining a cell's
+     governing sources to their extractions on `ref_id` alone attributes **four** RT60-in-seconds
+     extractions to cells 9012 (`A-02`, acoustic ceiling panels, NRC ≥0.85) and 9013 (`A-08`,
+     HVAC noise, NC-25) — parameters measured in different units entirely. With the item match
+     those correctly drop to zero and only the two genuine `A-18` cells remain. That is not a
+     hypothetical drift; it is a wrong answer the schema was returning.
+  2. **The readers exist and are starving.** `scripts/assess/assess_cell.py` degrades three
+     separate assessments to `NOT_ASSESSED` / `pending_assessment` citing this table, and
+     `pilot_renderings.py` emitted "source_value_extractions empty" into published output for
+     all fifteen pilot cells — false for two of them.
+  3. **A closing window.** The backfill's witnesses resolve unambiguously only while `A-10b`
+     has nothing — no `item_bpc_links` row, no cell, no probe (all verified zero). Step 9's
+     `item_bpc_links` backfill is expected to give it a parameter link, after which "the slug's
+     item for this parameter" stops resolving uniquely. Hop 4 before hop 7 is the only order in
+     which this backfill is cheap and clean.
+
+**Step 4 outcome. [2026-08-04]** Migration 052 adds `item_code` (nullable, FK to `items`) plus
+`v_item_extractions` — the reader shipped *with* the edge this time, 051's lesson being one
+migration old. A column rather than a junction: an extraction row is one claim at one scope, and
+a source reaching two items is row multiplication, not an edge set (`REF-00563` already appears
+twice for exactly that reason). The cautionary precedent is in the table's own family —
+`extraction_population_links`, a junction hanging off `extraction_id`, has **zero rows**.
+
+All 8 rows backfill to `A-18`, but they are not all known the same way, and the migration records
+three witness classes rather than flattening them:
+
+| Class | Rows | Witness |
+|---|---|---|
+| **W1** typed key on the row | 1 | `root_classification_basis` names `PMP-A18-001-F`; that probe carries `item_code='A-18'` in a NOT NULL FK column |
+| **W2** typed join, one hop | 2, 3 | row 2 shares row 1's `root_id`/`root_ref_id`; row 3 is governed by exactly one cell, 9011 = (`A-18`, `AUT`) |
+| **W3** row-supplied locator, dereferenced | 4–8 | each row's own `file_anchor` points into the A-18 reasoning doc's Step-3 table; the document's subject item is established at its line 92; each claimed value matches its anchored row |
+
+W3 is the one worth defending. The D-0157 standard is "a value is written only where the row
+itself supplies it", and rows 4–8 supply a **locator**, not a value. Dereferencing a locator the
+row provides is verification; inferring from a table the row never mentions is what
+`data_20260804164915` had to revert. One dereference step is required and is stated in the
+migration rather than hidden. What was **not** used as a witness: "the slug's primary
+`item_bpc_links` row + `parameter='RT60'`" — it resolves uniquely today only because `A-10b` has
+no link yet, and a witness with an expiry date is not a witness.
+
+Two standing checks were added with the edge: `J01` (an extraction's item belongs to its slug) and
+`J02` (an extraction agrees with the PMP probe its own basis text names). Both fault-injected.
+
+**[CORRECTED, same day — four findings from the steelman review of this step.]**
+
+1. **`J01` and `J02` did not hold the judgment they were written to hold.** The review proved it
+   by injection: setting extraction 6 to `A-10b` passes both. `A-10b` shares
+   `bpc_source_slug='room-acoustic-performance'`, so `J01`'s second branch admits it, and row 6
+   names no probe, so `J02` never reaches it. **The realistic error was never cross-slug — it was
+   the other RT60 item, same slug**, which is precisely the ambiguity the column exists to
+   resolve. `J03` now pins the eight adjudicated assignments by id, and fires on exactly that
+   fault. It is a snapshot check on purpose: the adjudication is not mechanizable, but it is
+   pinnable, and a legitimate change to the set has to move this check in the same commit.
+2. **One supporting claim in the backfill migration is false.** It closes W3 with "every one of
+   these five rows is scoped to classrooms, teaching spaces or learning spaces in its own
+   claim_text." Row 6 is not: *"DIN 18041:2016 volume-dependent target curve yields RT60
+   typically 0.4–0.8 s for small-to-medium rooms by use type"* — no scope word, and DIN 18041's
+   room-group scheme reaches sport and swimming halls, so `A-10b` is not excluded on claim text
+   alone. Rows 4, 5, 7 and 8 do carry the wording. The migration is immutable and stands; the
+   exclusion for row 6 rests on the other two legs, below.
+3. **W3's warrant was argued from the weaker of two available grounds.** "The row supplies a
+   locator, so dereferencing it is verification" is a *disclosed extension* of the D-0157 rule,
+   not a straight application of it — stated here rather than left as an implied continuity.
+   The stronger ground was on the rows and went unused: rows **6, 7 and 8 record in their own
+   `root_classification_basis` that the value came "from pilot step-3"**. The A-18 doc's Step-3
+   table is not external corroboration for those rows — it is their recorded provenance. Note
+   the inversion: row 6 has the weakest claim_text and the strongest warrant.
+4. **The pilot-rendering description below was wrong about the artifact.** It said the generator
+   "emitted `source_value_extractions empty` for all fifteen pilot cells — false for two." The
+   committed `working/pilot/pilot-renderings.html` contains **7 cells and the sentence 7 times**,
+   generated when only 9001–9007 existed; none of those seven has extractions. The 15-cell
+   description applies to a fresh run that cannot execute. The committed file's falsehood is real
+   but different: a table-level "empty" claim repeated 7 times that the table's 8 rows falsify —
+   and it labels the B-10 cell **`B-10×NEU`**, a population code that appears nowhere in
+   `evidence_cell_state` (the row is `B-10×BRAIN`).
+
+*Checked and refuted:* the review also suggested `tools/pipeline-completeness-dashboard.html`
+had been hand-patched rather than regenerated. Re-running `tools/pipeline_completeness.py`
+produces no diff, so it was generated.
+
+**Pilot-rendering repair — DONE 2026-08-04, immediately after.** `_sha_label()` makes the tuple
+line NULL-tolerant and the generator runs for the first time since the second batch of cells was
+added. Regenerating replaces a document frozen at the 7-cell era with the live 15, and that one
+act clears three standing falsehoods in published output: the table-level
+`"source_value_extractions empty"` claim (7 occurrences → 0), the `B-10×NEU` ghost cell (6 → 0;
+the row is `B-10×BRAIN`), and the eight determinations whose `derivation_sha` now reads
+**"not recorded"** instead of crashing the render. Whether those eight *should* carry a sha is a
+data question left open on purpose — a derivation hash is a claim about how a determination was
+computed, and minting one to make the render tidy would fabricate that claim.
+
+`register_integrity_check.py` **passes on the regenerated document**, DB cross-check on, and its
+`--selftest` still fires all seven tamper cases against it — so the pass is the checker working,
+not the checker asleep. Its quarantine (ENGINE-LAG on I3's repealed absolute form) did not bite
+here; no *rendering* in this set takes the weak-band path — though at the data layer
+`v_best_practice` already classifies cells 9005/9012/9013 `strength_band='weak'`, so renderer and
+checker share the same lag rather than the checker lagging alone.
+
+**[AMENDED 2026-08-04 — the regeneration published a new falsehood, now fixed.]** A steelman
+review found that rendering eight never-before-rendered cells was not the mechanically safe act
+the passing integrity check made it look like:
+
+1. **"Building rules in several countries agree on this."** The `regulatory_stratum_only`
+   register rows asserted *convergence* across the board — "standards/codes converge",
+   "Standards converge", "The law sets a floor here". True of cell 9005 (15 governing refs,
+   8 code-minimum jurisdictions), for which they were written. **False of cells 9012 and 9013**,
+   rendered for the first time here: both rest on **one** governing ref (`REF-00563`,
+   ANSI/ASA S12.60, United States) and have **zero** `is_code_minimum` rows. One instrument
+   cannot converge and one country is not several. The rows now say what is true of a
+   regulatory-stratum basis of any size; the epistemic verdict is untouched. The checker could
+   never have caught it — `I4`/`I5` test *equality with the map row*, and the defect was in the
+   map. Naming the cost: cell 9005's real eight-jurisdiction agreement is no longer stated, and
+   restoring it needs a per-cell split of the tuple class, which needs the quarantined checker
+   to move.
+2. **Two of the seven recorded `derivation_sha` values do not verify against their own rows.**
+   Cell 9007's hash is `sha("B-10","NEU",…)` — the population rename to `BRAIN` never restamped
+   it, so the repair retired the visible `B-10×NEU` label while republishing NEU's cryptographic
+   fossil on the same cell. Cell 9003's attests the six-ref governing set that the DB-integrity
+   backfill narrowed to four. Both now render an explicit stale-sha warning, and — more to the
+   point — `test_db_integrity` **`K01`** recomputes every non-NULL sha and fails on exactly those
+   two. Finding this by hand in a render review was the wrong way to find it; `K01` is the right
+   way.
+
+   ~~It is red and should stay red: restamping asserts an engine derivation that did not happen,
+   clearing loses the record, and choosing between them is an owner call.~~
+   **[RESOLVED 2026-08-04 — owner ruling: restamp. My framing was wrong.]** The sha is
+   `sha256(item|population|sorted(governing_refs)::rule_version)` — a **fingerprint of the row's
+   inputs**, not a record that an engine process ran; `assess_cell.sha()`'s own docstring says
+   the point is that "staleness stays checkable". So recomputing it asserts only what the row now
+   says, and what an engine did is carried by `rule_version`, which the restamp leaves untouched
+   (both rows keep `pilot-2`). Realigning a drifted fingerprint is ordinary maintenance, and
+   treating it as an epistemic commitment was over-reading. `data_20260804185632` restamps both;
+   `K01` now passes on 7 of 7 non-NULL shas and the render carries no stale-sha warning.
+
+   The **8 unattested determinations** (9008–9015, of which 9014–9015 also have no
+   `rule_version`) are untouched and still reported-not-failed. They were never stamped, so there
+   is no drifted fingerprint to realign — a different question from this one, and open.
+
+Two warts left standing and recorded in the code: `data-sha` **and `data-rule-version`** both
+emit the Python repr `'None'` for a NULL — 20 occurrences between them — because the checker
+cross-checks each against `str(row[...])`. An earlier version of this note documented only the
+first, which made a half disclosure look whole. The None-normalisation is two lines and the
+generator/checker coupling is by design, so the reluctance is narrower than "don't touch it": it
+belongs in the Option-A rework rather than arriving alone into a check the registry cannot run.
+
+**Not fixed and owed to that pass** (all confirmed, all pre-existing): the `stated_multi_axis`
+plain and plain-care rows carry **no G8 value-convergence-pending disclosure**, which G8 requires
+"in every register", so cells 9001–9003 render without it; the document header still states
+**I3's absolute form**, repealed by DR-2026-07-21 Option A; and the checker has **no DB→doc
+completeness direction** — deleting an entire cell section still passes, which is precisely the
+failure state this repair just cleaned up. Nothing in `governance/check-registry.yaml` references
+`working/pilot`, so this artifact can go stale again silently, and now more silently than before:
+the crash that used to announce staleness is gone and nothing replaced it.
+
+~~**Two pre-existing defects surfaced while sweeping callers, neither fixed here.**
+`scripts/generate/pilot_renderings.py` **cannot run at all** — it crashes on
+`derivation_sha[:16]` because **8 of 15 cells (9008–9015) have `derivation_sha` NULL**. Confirmed
+pre-existing by running the committed version. So the false "source_value_extractions empty"
+sentence is corrected *in the generator source* but still stands in the committed
+`working/pilot/pilot-renderings.html`, which cannot be regenerated until the generator or the
+data is fixed. `register_integrity_check.py` separately reports the committed HTML renders a
+`B-10×NEU` cell that no longer exists in `evidence_cell_state`. Both belong to a pilot-rendering
+repair, not to hop 4.~~
+
+**[SUPERSEDED 2026-08-04 by the repair recorded above, which landed 18 lines earlier in this
+same section and left this paragraph standing unqualified.]** Both defects are fixed; the text
+above described them as open. A review caught the contradiction — the same
+statement-refuted-by-a-later-statement-in-the-same-document failure CLAUDE.md's TL;DR recounts
+as a past incident, reproduced here at a distance of 18 lines. Rule #5's caller sweep applies to
+prose in the same document, not only to identifiers.
 
 One further constraint the profile surfaced, which bounds what closing the walk can even claim:
 **18 of the 19 are tier 3**, one is Co-1 (`REF-00950`) and one T5. Under `governance/tier-system.md`

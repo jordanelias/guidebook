@@ -79,13 +79,19 @@ def classify_check(path, registry=None):
     """Classify a contract criterion's enforcer.
 
     CORRECTED 2026-08-01. This returned VERIFIABLE whenever the file existed on
-    disk. Existing is not running: `register-invariants` cites
-    scripts/audit/register_integrity_check.py, which is QUARANTINED in the
-    registry (it needs an `html` positional so it cannot run corpus-wide, and it
-    still enforces I3's repealed absolute form). The file exists, so the contract
-    reported its render-stage invariants as VERIFIABLE — phantom enforcement that
-    this audit was structurally unable to see, in the one check whose stated
-    purpose is that "no stage cites a gate that does not exist".
+    disk. Existing is not running: `register-invariants` cited
+    scripts/audit/register_integrity_check.py, which was QUARANTINED in the
+    registry (it needed an `html` positional so it could not run corpus-wide, and
+    it still enforced I3's repealed absolute form). The file existed, so the
+    contract reported its render-stage invariants as VERIFIABLE — phantom
+    enforcement that this audit was structurally unable to see, in the one check
+    whose stated purpose is that "no stage cites a gate that does not exist".
+
+    That example is now historical: the DR-2026-07-21 Option A rework landed on
+    2026-08-04 and `register-invariants` is genuinely VERIFIABLE. The correction
+    stands on its own reasoning, not on that instance — which is why the
+    selftest fixture was repointed at a check that is still shelved rather than
+    quietly dropped.
 
     Existence is still checked, because a path that is gone is a different and
     worse fault than one that is merely shelved.
@@ -248,7 +254,13 @@ def selftest():
         # id                         path                                         expected
         "missing path":              ("scripts/does/not/exist.py",                "BROKEN"),
         "active registered check":   ("scripts/audit/pmp_audit.py",               "VERIFIABLE"),
-        "quarantined check":         ("scripts/audit/register_integrity_check.py", "QUARANTINED"),
+        # This fixture was register_integrity_check.py until 2026-08-04, when the
+        # DR-2026-07-21 Option A rework de-quarantined it and the selftest
+        # correctly began failing — a fixture that names a specific check is a
+        # caller of the registry, and rule #5's sweep applies. validate_conflicts
+        # replaces it: quarantined as vacuous (the `conflicts` table has 0 rows),
+        # which is a status no code change of ours will flip.
+        "quarantined check":         ("scripts/validate_conflicts.py",            "QUARANTINED"),
         "exists but unregistered":   ("scripts/migrate_db.py",                    "UNREGISTERED"),
         "no enforcer named":         (None,                                       "INCOMPLETE"),
     }

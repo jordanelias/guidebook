@@ -19,6 +19,19 @@ migration 018 per DR-2026-05-28-b. Sits between the bare-link layer
 An extraction with extraction_status='verified' and a non-null
 promoted_to_rdc_id is the bridge: the extraction has graduated to the
 synthesis layer and the reasoning-doc cell points back via citation_id.
+
+SCOPE — this model is a DELIBERATE SUBSET, not a complete mirror.
+The SQLite table has 33 columns; this model declares 22. Missing, all added
+by later migrations that never reached here: root_id, root_type, root_ref_id,
+root_population_note, root_classification_basis, echo_of, measurement_paradigm,
+device_class, contested, file_anchor, setting. Those carry the value-genealogy
+and independence-scoring layer, and mirroring them means mirroring three CHECK
+vocabularies — real work with its own review surface, tracked as F5 in
+workplan/2026-08-03-fork-cut-walkable-graph-execution-plan.md. `item_code`
+(migration 052) IS declared below, because it is the hop-4 edge itself and a
+model silently missing it would misrepresent the chain this docstring draws.
+Stated here rather than left implicit: a reader should not infer from one
+added field that the mirror is whole.
 """
 
 from datetime import datetime
@@ -66,6 +79,12 @@ class SourceValueExtraction(BaseModel):
     slug: str = Field(..., description="topic; matches source_slug_links.slug")
 
     # What is being extracted
+    item_code: Optional[str] = Field(
+        None,
+        description="FK items.item_code (migration 052). NULL means the item was "
+                    "not established at extraction — `parameter` alone cannot "
+                    "resolve it (A-18 and A-10b are both RT60).",
+    )
     parameter: str = Field(..., description='e.g. "RT60", "door clear width"')
     parameter_canonical: Optional[str] = None  # normalized for join (lowercase, hyphens)
     population_code: Optional[str] = None  # FK populations.population_code
