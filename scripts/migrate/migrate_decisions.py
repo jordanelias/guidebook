@@ -16,7 +16,23 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db"))
+# LEGACY IMPORTER — see _legacy_guard.py. This used to default to the CANONICAL
+# database and write it with plain INSERT outside the migration system.
+_DEFAULT_DB = os.environ.get("LEGACY_IMPORT_DB", "")
+DB_PATH = Path(_DEFAULT_DB) if _DEFAULT_DB else None
+
+# --- LEGACY IMPORT GUARD (module level, so no entry point can bypass it) -------
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from _legacy_guard import assert_not_canonical  # noqa: E402
+if DB_PATH is None:
+    raise SystemExit(
+        os.path.basename(__file__) + ": refusing to run with no explicit target.\n"
+        "This is a ONE-TIME LEGACY IMPORTER that writes outside the migration system.\n"
+        "It no longer defaults to the canonical database. To reconstruct history,\n"
+        "set LEGACY_IMPORT_DB to a SCRATCH copy."
+    )
+assert_not_canonical(DB_PATH, os.path.basename(__file__))
+# ------------------------------------------------------------------------------
 
 try:
     import yaml
