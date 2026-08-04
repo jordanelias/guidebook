@@ -362,9 +362,9 @@ recorded here because a plan that lives only in a conversation is not a plan.
 | Step | Table / hop | State |
 |---|---|---|
 | 1 | Verification standing — `evidence_sources` columns (D-0157) | **DONE 2026-08-04** — migrations 049 + remap; PR #82 |
-| 2 | **Hop 3 — `search_admissions`** (search → admitted source) | **DONE 2026-08-04** — migration 050 + backfill; see below |
-| 3 | `search_candidates.admitted_ref_id` — the screening outcome that *did* admit | pending |
-| 4 | `source_value_extractions.item_code` — extraction → item | pending |
+| 2 | ~~Hop 3~~ **Hop 2b — `search_admissions`** (search execution → admitted source) | **DONE 2026-08-04** — migrations 050 + 051; see below |
+| 3 | ~~`search_candidates.admitted_ref_id`~~ **deferred** — see the reordering note | deferred |
+| 4 | **`source_value_extractions.item_code` — extraction → item** — *promoted to next* | next |
 | 5 | `bpc_metadata.reasoning_doc_path` — synthesis doc as a column, not a filename convention | pending |
 | 6 | Close the DISPUTED seven against `audits/anchor-correctness-sweep-2026-07-20.md` | pending |
 | 7 | N1 — `jurisdictional_values.ref_id` (the regulatory-floor invariant in §8) | pending |
@@ -375,8 +375,42 @@ recorded here because a plan that lives only in a conversation is not a plan.
 **Step 2 outcome, stated honestly.** The junction is correct and complete: 39 edges over 29 of
 84 executions, zero orphans, parity with the JSON held in both directions plus a third check
 against `results_admitted` (`test_db_integrity` H03/H04/H05, and H01/H02 which finally supply
-the consistency check migration 044's header called for and never got). The rebuild reproduces
-the rows byte-identically.
+the consistency check migration 044's header called for and never got). A rebuild from migration
+history reproduces `search_admissions` and `cell_source_links` row-for-row.
+
+**[CORRECTED 2026-08-04, same day — four claims this step made that the DB does not support.]**
+An adversarial review challenged the step's own framing; each correction below was re-derived
+against the live database before being written here. The commit and migration 050 stand as
+written — the 045→046 precedent is to record a mistake forward, not to edit history so it reads
+as prescient. Migration 051's header carries the two that belong to a migration.
+
+1. **"Hop 3" is the wrong label.** §2's hop 3 is *slug → source* via `source_slug_links` (1,013
+   rows, the healthiest edge in the repo) — already a junction, and untouched by this step. The
+   edge normalised here is *search execution → admitted source*, which appears nowhere in §2's
+   ten-hop table. It is a refinement of hop 2 and strictly finer than hop 3: hop 3 says the
+   source belongs to this topic; this says *which logged search found it*. Relabelled **hop 2b**
+   in the ladder above.
+2. **"The last JSON-array-as-edge on the path" is false.**
+   `citation_mining.connections_produced` is still one, and citation mining is a discovery
+   channel just as a logged search is. It is also a far worse one, and the difference matters
+   because it changes what fixing it costs. Of its 183 rows, 25 carry a non-empty value —
+   **13 of those hold a bare integer** (a count, in a column whose other rows hold a list). Of
+   the 81 array entries, **15** are global `REF-#####` ids, **50** are slug-scoped
+   `local_ref_id` values resolvable only through `source_slug_links(slug, local_ref_id)`, and
+   **3 resolve to nothing at all** (`CCD-12` under `accessible-design-economics-cost-premium`;
+   `MHB-35` and `MHB-36` under `sensory-space-global-south`). Three vocabularies and two
+   cardinalities in one column. It cannot be foreign-keyed until a decision says what the column
+   means, and those three unresolvable ids are a data finding owed a look on their own.
+   `convergence_assessment`'s five REF-array columns are the same question one hop later.
+3. **"Rebuild byte-identical" overstated the scope.** The two junctions reproduce exactly; the
+   *file* does not, and never has — ten tables diverge under rebuild for the pre-existing reasons
+   §5 documents, none of them caused by this step. The claim was true of the rows and false as
+   the sentence read.
+4. **The junction shipped with no reader.** 050's header names the reverse walk twice as "the
+   point" and builds an index for it, then shipped no query that performs it. Fixed by migration
+   051 (`v_source_admission`) — the missing half of 047: `v_source_reach` walks a source forward
+   to the pages it justifies, `v_source_admission` walks it back to the search that admitted it,
+   with the verbatim query text.
 
 What it does **not** yet do is close the walk. The 39 admitted refs and the 57 refs that govern
 a cell are **disjoint sets — zero overlap**. Hop 3 is a real edge on a limb that does not yet
@@ -390,6 +424,35 @@ The 824 pre-substrate sources get no admission row at all, and that absence is l
 source with no edge means *which search found this was never logged*, not *no search found it*.
 Minting an exec_id to make the table look full would fabricate a search — the failure R8 and R14
 of the research contract exist to prevent.
+
+**Reordering: step 3 deferred, step 4 promoted. [2026-08-04]** Chasing the disjointness finding
+into the data changed which rung is next.
+
+`energy-conservation-rest-points-seating` — 19 of the 39 admitted sources, the most-researched
+slug on the substrate — was profiled end to end. Every one of the 19 is `VERIFIED` + `CLOSED`, so
+**Phase B is clean and the B-before-E gate is open**. Downstream of that, nothing exists: no
+`bpc_metadata` row, no `source_value_extractions` row, no `item_bpc_links` row, no cell. All 19
+carry `data_capture_status = 'pending'`. The slug is simultaneously the best-researched and the
+least-connected in the repo, and the gap is not a missing edge object — it is that capture,
+extraction and synthesis never ran.
+
+Two consequences for sequencing:
+
+- **Step 3 is deferred.** `search_candidates` holds 18 rows, 4 of them `ADMITTED`. Adding
+  `admitted_ref_id` would wire four rows onto the limb that just received its edge object, while
+  rejections already have a home in `why_not_admitted`. More schema on a structurally complete
+  but content-dead limb is precisely the "inventing work" pattern to avoid.
+- **Step 4 is promoted.** `source_value_extractions` has 8 rows and **no `item_code` at all** —
+  hop 4 is a missing edge object, not a mis-shaped one, and it is the edge the 19 pending
+  captures will need the moment capture runs. Building it before the rows exist is the one
+  ordering where schema-first is right: the alternative is capturing values into a table that
+  cannot say which parameter they describe.
+
+One further constraint the profile surfaced, which bounds what closing the walk can even claim:
+**18 of the 19 are tier 3**, one is Co-1 (`REF-00950`) and one T5. Under `governance/tier-system.md`
+a T3-only basis never reaches `stated`. So a cell determined from this slug's corpus reaches
+`provisional` unless the Co-1 source anchors it as co-primary under CRPD Art. 4.3. Worth knowing
+before anyone treats "19 admitted sources" as a finished evidence base.
 
 ---
 

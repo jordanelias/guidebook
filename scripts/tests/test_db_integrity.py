@@ -110,6 +110,24 @@ def run_checks(db_path):
                             WHERE e.ref_id = s.superseded_by_ref_id)
         """).fetchone()[0] == 0)
 
+    # The two normalised edge junctions (migrations 044, 050). Their FKs are
+    # declared, but a declared FK only binds writes made with
+    # PRAGMA foreign_keys=ON — it does not retroactively validate rows already
+    # in the file, and section H's parity checks compare each junction against
+    # its JSON column, not against the tables the ids point at. A ref present in
+    # BOTH stores but absent from evidence_sources would pass every H check.
+    for tid, junction, col, parent, pcol in (
+        ("A10", "cell_source_links",  "cell_id", "evidence_cell_state", "cell_id"),
+        ("A11", "cell_source_links",  "ref_id",  "evidence_sources",    "ref_id"),
+        ("A12", "search_admissions",  "exec_id", "search_executions",   "exec_id"),
+        ("A13", "search_admissions",  "ref_id",  "evidence_sources",    "ref_id"),
+    ):
+        n = conn.execute(f"""SELECT COUNT(*) FROM {junction} j
+            WHERE NOT EXISTS (SELECT 1 FROM {parent} p WHERE p.{pcol} = j.{col})
+        """).fetchone()[0]
+        record(tid, f"{junction}.{col} → {parent}", n == 0,
+               f"{n} rows pointing at a {parent} row that does not exist" if n else "")
+
     # ── B: Enum validation ────────────────────────────────────────────────────
     print("\n[B] Enum column validation")
 
@@ -760,16 +778,33 @@ def run_checks(db_path):
     # pass while the junction quietly lost rows.
     print("\n[H] JSON-array ↔ junction parity")
 
+    # Both edge columns carry a table-level CHECK (json_valid(...)), so text
+    # that is not JSON at all cannot be written — fault-injection confirms the
+    # UPDATE is refused, and an unguarded json_each over the live data does not
+    # raise. What the CHECK does NOT stop is a valid JSON *scalar*: json_valid
+    # ('3') is true. A scalar there would be skipped by json_each and quietly
+    # shrink the comparison set instead of failing it. The shape is not
+    # hypothetical — `citation_mining.connections_produced` holds a bare integer
+    # in 13 of its 25 non-empty rows, a count in a column whose other rows hold
+    # a list. So every parity query is scoped to rows that are demonstrably
+    # arrays, and the rows that are not are reported by H06 rather than dropped.
+    ARRAY_ROWS = ("{t}.{c} IS NOT NULL AND {t}.{c} != '' "
+                  "AND json_valid({t}.{c}) AND json_type({t}.{c}) = 'array'")
+
+    EDGE_JSON = (("evidence_cell_state", "governing_refs"),
+                 ("search_executions",   "admitted_ref_ids"))
+
     def _parity(tid_a, tid_b, label, junction, jcols, table, tcol, key):
         jk, rk = jcols
+        arrays = ARRAY_ROWS.format(t="t", c=tcol)
         extra = conn.execute(f"""
             SELECT COUNT(*) FROM {junction} j WHERE NOT EXISTS (
               SELECT 1 FROM {table} t, json_each(t.{tcol}) je
-              WHERE t.{key} = j.{jk} AND je.value = j.{rk})
+              WHERE {arrays} AND t.{key} = j.{jk} AND je.value = j.{rk})
         """).fetchone()[0]
         missing = conn.execute(f"""
             SELECT COUNT(*) FROM {table} t, json_each(t.{tcol}) je
-            WHERE NOT EXISTS (
+            WHERE {arrays} AND NOT EXISTS (
               SELECT 1 FROM {junction} j WHERE j.{jk} = t.{key} AND j.{rk} = je.value)
         """).fetchone()[0]
         record(tid_a, f"{label}: every junction row is in the JSON", extra == 0,
@@ -798,6 +833,40 @@ def run_checks(db_path):
            admit_count_drift == 0,
            f"{admit_count_drift} executions whose results_admitted disagrees with "
            f"search_admissions" if admit_count_drift else "")
+
+    # H06 is what makes H01–H04 non-vacuous: they only compare rows that are
+    # JSON arrays, so a column drifting into some other shape would quietly
+    # shrink the comparison set rather than fail it. This names that drift.
+    nonarray = []
+    for table, tcol in EDGE_JSON:
+        n = conn.execute(f"""SELECT COUNT(*) FROM {table} t
+            WHERE t.{tcol} IS NOT NULL AND t.{tcol} != ''
+              AND NOT (json_valid(t.{tcol}) AND json_type(t.{tcol}) = 'array')
+        """).fetchone()[0]
+        if n:
+            nonarray.append(f"{table}.{tcol}: {n}")
+    record("H06", "edge JSON columns hold arrays, not scalars or malformed text",
+           not nonarray, "; ".join(nonarray))
+
+    # A ref repeated inside one array collapses to a single junction row (the
+    # PK dedupes it), and both parity directions still pass — the junction
+    # contains it and every entry is found. Only a count comparison sees it.
+    dup = []
+    for junction, jk, rk, table, tcol, key in (
+        ("cell_source_links", "cell_id", "ref_id",
+         "evidence_cell_state", "governing_refs", "cell_id"),
+        ("search_admissions", "exec_id", "ref_id",
+         "search_executions", "admitted_ref_ids", "exec_id"),
+    ):
+        arrays = ARRAY_ROWS.format(t="t", c=tcol)
+        entries = conn.execute(
+            f"SELECT COUNT(*) FROM {table} t, json_each(t.{tcol}) je WHERE {arrays}"
+        ).fetchone()[0]
+        edges = conn.execute(f"SELECT COUNT(*) FROM {junction}").fetchone()[0]
+        if entries != edges:
+            dup.append(f"{tcol} has {entries} entries but {junction} has {edges} rows")
+    record("H07", "no id repeats inside a single JSON edge array", not dup,
+           "; ".join(dup))
 
     # ── Summary ───────────────────────────────────────────────────────────────
     conn.close()
