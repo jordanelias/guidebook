@@ -114,7 +114,19 @@ def run_checks(db_path):
                      # V1 state machine §4 (verification-pipeline-proposal-2026-05-12-v2):
                      "NO-MATCH","NEEDS-HUMAN","SUPERSEDED","REVERTED",
                      # DR-2026-05-19 amendment 2026-05-19 — manual-track explicit-cause states:
-                     "IS-PAYWALL","DEFERRED-V2-AUTOMATED")
+                     "IS-PAYWALL","DEFERRED-V2-AUTOMATED",
+                     # 2026-08-03: three values this list rejected while the rest of the
+                     # repo already treated them as valid. Not a widening of the
+                     # vocabulary — a correction of this transcription of it.
+                     #   VERIFIED-WITH-CORRECTION is in the authoritative Pydantic enum
+                     #     (schemas/enums.py:275) and was simply never copied across.
+                     #   DISPUTED was written by the owner-approved DR-2026-07-20 migration
+                     #     (data_20260720135718_...-tier-model-enshrinement.sql:64-68) for
+                     #     7 anchor sources two independent agents could not retrieve.
+                     # C10 in THIS FILE already accepts VERIFIED-WITH-CORRECTION as sound
+                     # (OK_VSTATUS, below), so B01 and C10 contradicted each other on the
+                     # same rows in the same run.
+                     "VERIFIED-WITH-CORRECTION","DISPUTED")
     bad = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources
         WHERE verification_status IS NOT NULL
         AND verification_status NOT IN ({','.join('?'*len(VALID_VSTATUS))})
@@ -171,7 +183,11 @@ def run_checks(db_path):
 
     VALID_GAP_STATUS = ("OPEN","IN-PROGRESS","CLOSED-FIXED","CLOSED-RESOLVED",
                          "CLOSED-DELETED","BLOCKED","P1",
-                         "CLOSED-SYSTEMIC","CLOSED-SYNC","CLOSED-FALSE-POSITIVE")
+                         "CLOSED-SYSTEMIC","CLOSED-SYNC","CLOSED-FALSE-POSITIVE",
+                         # 2026-08-03: written by the owner-approved DR-2026-07-20
+                         # migration (data_20260720135718_...sql:18,34), which closes a
+                         # gap by *deciding* it rather than fixing or deleting it.
+                         "CLOSED-DECIDED")
     bad = conn.execute(f"""SELECT COUNT(*) FROM gaps
         WHERE status NOT IN ({','.join('?'*len(VALID_GAP_STATUS))})
     """, VALID_GAP_STATUS).fetchone()[0]
@@ -496,10 +512,19 @@ def run_checks(db_path):
     def _norm_title(t):
         return _re.sub(r"\W", "", (t or "").casefold(), flags=_re.UNICODE)
 
+    # A merged duplicate is retained as a tombstone (forward-only; the row keeps
+    # its id and gains superseded_by_ref_id), so without this exclusion a
+    # completed merge still collides with its own canonical row and D04 can
+    # never go green — the check would forbid the very remediation it demands.
+    # Mirrors D01's `doi_resolution_outcome != 'REVERTED'` exclusion above.
+    # This narrows the check to "no *live* duplicates", which is what it means;
+    # the pointer's own integrity is guarded separately by A09.
     _groups = {}
     for r in conn.execute("""SELECT ref_id, pub_year, author_display, pub_title
                              FROM evidence_sources
-                             WHERE doi IS NULL OR doi = ''"""):
+                             WHERE (doi IS NULL OR doi = '')
+                             AND (superseded_by_ref_id IS NULL
+                                  OR superseded_by_ref_id = '')"""):
         key = (_norm_author(r[2]), r[1], _norm_title(r[3]))
         if not key[0] or not key[2] or key in KNOWN_DUP_SOURCE_KEYS:
             continue  # no computable key — C03/G02 own missing-author coverage
