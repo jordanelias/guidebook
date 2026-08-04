@@ -18,6 +18,10 @@ Checks performed:
       PRAGMA foreign_keys honoured)
   F — Pipeline run health (no regressions, all started runs completed)
   G — Evidence chain integrity (source_slug_links → evidence_sources → authors)
+  H — JSON-array ↔ junction parity (cell_source_links, search_admissions), held
+      in both directions while the JSON columns await their caller sweep
+  I — D-0157 verification-standing invariants (status × disposition × method ×
+      attempt count)
 
 Run:
   python scripts/tests/test_db_integrity.py
@@ -745,6 +749,55 @@ def run_checks(db_path):
     record("G03", "ORCID values stored as plain identifier (no URL prefix)",
            bad_orcid == 0,
            f"{bad_orcid} ORCIDs with URL prefix — strip 'https://orcid.org/'" if bad_orcid else "")
+
+    # ── H: JSON-array ↔ junction parity ───────────────────────────────────────
+    # Two edges on the walk are being migrated out of JSON TEXT columns and into
+    # foreign-keyed junction tables (migrations 044 and 050). Until the columns
+    # are dropped — a structural removal that needs a caller sweep — both stores
+    # exist, and the only thing keeping them from silently diverging is this
+    # section. Migration 044's header called for it; it is here now, covering
+    # both junctions. Each is checked in BOTH directions: a one-way check would
+    # pass while the junction quietly lost rows.
+    print("\n[H] JSON-array ↔ junction parity")
+
+    def _parity(tid_a, tid_b, label, junction, jcols, table, tcol, key):
+        jk, rk = jcols
+        extra = conn.execute(f"""
+            SELECT COUNT(*) FROM {junction} j WHERE NOT EXISTS (
+              SELECT 1 FROM {table} t, json_each(t.{tcol}) je
+              WHERE t.{key} = j.{jk} AND je.value = j.{rk})
+        """).fetchone()[0]
+        missing = conn.execute(f"""
+            SELECT COUNT(*) FROM {table} t, json_each(t.{tcol}) je
+            WHERE NOT EXISTS (
+              SELECT 1 FROM {junction} j WHERE j.{jk} = t.{key} AND j.{rk} = je.value)
+        """).fetchone()[0]
+        record(tid_a, f"{label}: every junction row is in the JSON", extra == 0,
+               f"{extra} rows in {junction} with no matching {tcol} entry" if extra else "")
+        record(tid_b, f"{label}: every JSON entry is in the junction", missing == 0,
+               f"{missing} {tcol} entries with no {junction} row" if missing else "")
+
+    _parity("H01", "H02", "cell_source_links ↔ governing_refs",
+            "cell_source_links", ("cell_id", "ref_id"),
+            "evidence_cell_state", "governing_refs", "cell_id")
+
+    _parity("H03", "H04", "search_admissions ↔ admitted_ref_ids",
+            "search_admissions", ("exec_id", "ref_id"),
+            "search_executions", "admitted_ref_ids", "exec_id")
+
+    # results_admitted is a third store of the same fact. It was consistent with
+    # the JSON on all 84 rows when 050 was written; if it drifts, the junction is
+    # the one to trust and this says so out loud rather than letting a stale
+    # counter be read as yield.
+    admit_count_drift = conn.execute("""
+        SELECT COUNT(*) FROM search_executions se
+        WHERE se.results_admitted != (
+          SELECT COUNT(*) FROM search_admissions sa WHERE sa.exec_id = se.exec_id)
+    """).fetchone()[0]
+    record("H05", "results_admitted equals the admission edge count",
+           admit_count_drift == 0,
+           f"{admit_count_drift} executions whose results_admitted disagrees with "
+           f"search_admissions" if admit_count_drift else "")
 
     # ── Summary ───────────────────────────────────────────────────────────────
     conn.close()

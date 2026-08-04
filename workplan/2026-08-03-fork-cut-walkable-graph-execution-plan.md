@@ -352,6 +352,45 @@ Generate from `PRAGMA table_info` or scope the model honestly. `schemas/evidence
 fields, different names (`authors`/`year` vs `author_display`/`pub_year`), two fields with no DB
 column at all, and a docstring claiming 531 records against 863.
 
+### 7.2 The table-by-table ladder **[ADDED 2026-08-04]**
+
+§7.1 sequences the *fork*. This ladder sequences the *walk* — one table at a time, in the order
+the graph is traversed, so that at every rung the chain from a research question to a rendered
+page has one fewer JSON array standing in for an edge. It was worked out granularly and is
+recorded here because a plan that lives only in a conversation is not a plan.
+
+| Step | Table / hop | State |
+|---|---|---|
+| 1 | Verification standing — `evidence_sources` columns (D-0157) | **DONE 2026-08-04** — migrations 049 + remap; PR #82 |
+| 2 | **Hop 3 — `search_admissions`** (search → admitted source) | **DONE 2026-08-04** — migration 050 + backfill; see below |
+| 3 | `search_candidates.admitted_ref_id` — the screening outcome that *did* admit | pending |
+| 4 | `source_value_extractions.item_code` — extraction → item | pending |
+| 5 | `bpc_metadata.reasoning_doc_path` — synthesis doc as a column, not a filename convention | pending |
+| 6 | Close the DISPUTED seven against `audits/anchor-correctness-sweep-2026-07-20.md` | pending |
+| 7 | N1 — `jurisdictional_values.ref_id` (the regulatory-floor invariant in §8) | pending |
+| 8 | Drop `governing_refs` after the nine-caller sweep (F2c) | pending |
+| 9 | `item_bpc_links` backfill (~84 rows); retire `items.bpc_source_slug` | pending |
+| 10 | Render completion — `room_page.py` `FROM room`→`rooms`, drive populations/rooms, promote `site_pages_fresh` to blocking | pending |
+
+**Step 2 outcome, stated honestly.** The junction is correct and complete: 39 edges over 29 of
+84 executions, zero orphans, parity with the JSON held in both directions plus a third check
+against `results_admitted` (`test_db_integrity` H03/H04/H05, and H01/H02 which finally supply
+the consistency check migration 044's header called for and never got). The rebuild reproduces
+the rows byte-identically.
+
+What it does **not** yet do is close the walk. The 39 admitted refs and the 57 refs that govern
+a cell are **disjoint sets — zero overlap**. Hop 3 is a real edge on a limb that does not yet
+reach hop 9. Nineteen of the 39 belong to one slug
+(`energy-conservation-rest-points-seating`), whose cells are not determined. So the honest claim
+for this step is "the last JSON-array-as-edge on the path is now a foreign key", not "you can
+now walk from a search to a page" — you cannot, for any source, and no amount of schema work
+will change that. Only determining cells from searched-and-admitted sources will.
+
+The 824 pre-substrate sources get no admission row at all, and that absence is load-bearing: a
+source with no edge means *which search found this was never logged*, not *no search found it*.
+Minting an exec_id to make the table look full would fabricate a search — the failure R8 and R14
+of the research contract exist to prevent.
+
 ---
 
 ## 8. What this plan does not decide
