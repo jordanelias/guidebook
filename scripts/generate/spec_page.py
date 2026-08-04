@@ -67,19 +67,41 @@ def query_item(conn, item_code):
     item["bpc_links"] = [{"slug": r[0], "link_type": r[1], "rationale": r[2]} for r in links]
 
     cells = conn.execute(
-        "SELECT population_code, state, tier_basis, code_floor_only, falsification_condition, "
-        "regulatory_stratum_only, confidence_synthesis_basis, has_unverified_sources, "
-        "all_sources_disqualified "
+        "SELECT cell_id, population_code, state, tier_basis, code_floor_only, "
+        "falsification_condition, regulatory_stratum_only, confidence_synthesis_basis, "
+        "has_unverified_sources, all_sources_disqualified "
         "FROM evidence_cell_state WHERE item_code = ? ORDER BY population_code",
         (item_code,),
     ).fetchall()
     item["cells"] = [
-        {"population_code": r[0], "state": r[1], "tier_basis": r[2],
-         "code_floor_only": r[3], "falsification_condition": r[4],
-         "regulatory_stratum_only": r[5], "confidence_synthesis_basis": r[6],
-         "has_unverified_sources": r[7], "all_sources_disqualified": r[8]}
+        {"cell_id": r[0], "population_code": r[1], "state": r[2], "tier_basis": r[3],
+         "code_floor_only": r[4], "falsification_condition": r[5],
+         "regulatory_stratum_only": r[6], "confidence_synthesis_basis": r[7],
+         "has_unverified_sources": r[8], "all_sources_disqualified": r[9]}
         for r in cells
     ]
+
+    # The governing sources behind each cell. Until migration 044 this edge
+    # lived only as a JSON array in evidence_cell_state.governing_refs, which
+    # this generator never read -- so every page it produced cited nothing at
+    # all while presenting a confident determination. cell_source_links makes
+    # it a join.
+    for c in item["cells"]:
+        rows = conn.execute(
+            "SELECT csl.ref_id, e.author_display, e.author_display_note, e.pub_year, "
+            "e.pub_title, e.tier, e.verification_status "
+            "FROM cell_source_links csl "
+            "JOIN evidence_sources e ON e.ref_id = csl.ref_id "
+            "WHERE csl.cell_id = ? AND csl.role = 'governing' "
+            "ORDER BY e.tier, e.pub_year, csl.ref_id",
+            (c["cell_id"],),
+        ).fetchall()
+        c["sources"] = [
+            {"ref_id": r[0], "author_display": r[1], "author_display_note": r[2],
+             "pub_year": r[3], "pub_title": r[4], "tier": r[5],
+             "verification_status": r[6]}
+            for r in rows
+        ]
 
     return item
 
@@ -92,6 +114,28 @@ def source_caveats(cell):
     if cell["all_sources_disqualified"]:
         flags.append("ALL-DISQUALIFIED")
     return ", ".join(flags) if flags else "—"
+
+
+def citation(src):
+    """One governing source, rendered as a citation a reader can chase.
+
+    Deliberately does NOT compute an evidence marker (●/◐/○). Per
+    governance/tier-system.md §5 a marker qualifies a *claim sentence*, not a
+    source; deriving one per source here would manufacture a judgement the
+    synthesis layer has not made. Tier and verification status are properties
+    of the source itself, so those are what get shown.
+    """
+    e = escape
+    author = src["author_display"] or src["author_display_note"] or "[author not recorded]"
+    year = f' ({e(str(src["pub_year"]))})' if src["pub_year"] else ""
+    title = e(src["pub_title"] or "[title not recorded]")
+    tier = f'T{e(str(src["tier"]))}' if src["tier"] is not None else "tier not set"
+    vs = src["verification_status"] or "UNVERIFIED"
+    vs_cls = "ok" if vs == "VERIFIED" else "warn"
+    return (f'<li><span class="ref">{e(src["ref_id"])}</span> '
+            f'{e(author)}{year}. <em>{title}</em> '
+            f'<span class="tier-badge">{tier}</span> '
+            f'<span class="vs {vs_cls}">{e(vs)}</span></li>')
 
 
 def render_html(item):
@@ -140,13 +184,38 @@ def render_html(item):
             f'<td>{e(c["falsification_condition"] or "—")}</td></tr>\n'
             for c in item["cells"]
         )
+        src_blocks = []
+        for c in item["cells"]:
+            pop = e(c["population_code"])
+            if c["sources"]:
+                items_html = "\n".join(citation(s) for s in c["sources"])
+                src_blocks.append(
+                    f'<h3>{pop} — {len(c["sources"])} governing '
+                    f'source{"s" if len(c["sources"]) != 1 else ""}</h3>\n'
+                    f'<ul class="sources">{items_html}</ul>'
+                )
+            else:
+                src_blocks.append(
+                    f'<h3>{pop}</h3>\n<p class="honest-banner">This determination '
+                    f'records <strong>no governing sources</strong>. A '
+                    f'<code>{e(c["state"])}</code> cell with an empty source set '
+                    f'cannot be checked by a reader — treat it as unevidenced '
+                    f'until the omission is explained.</p>'
+                )
+        sources_section = "\n".join(src_blocks)
+
         bp_section = f"""<table>
             <thead><tr><th>Population</th><th>State</th><th>Tier basis</th>
             <th>Code floor only</th><th>Regulatory stratum only</th>
             <th>Source caveats</th><th>Confidence basis</th>
             <th>Falsification condition</th></tr></thead>
             <tbody>{cell_rows}</tbody>
-        </table>"""
+        </table>
+        <h2>Governing sources</h2>
+        <p>Every source below governs the determination for its population.
+        Walk the other direction — every specification a source justifies —
+        through <code>cell_source_links</code>.</p>
+        {sources_section}"""
     else:
         bp_section = ('<p class="honest-banner">Best-practice determination: '
                        '<strong>not yet computed</strong> for this item, for any population. '
@@ -177,6 +246,17 @@ section {{ margin: 28px 0; padding-bottom: 20px; border-bottom: 1px solid var(--
 section:last-child {{ border-bottom: none; }}
 h2 {{ font-family: var(--font-ui); font-size: 15px; font-weight: 600; text-transform: uppercase;
       letter-spacing: 0.5px; color: var(--muted); margin-bottom: 10px; }}
+h3 {{ font-family: var(--font-ui); font-size: 13px; font-weight: 600; margin: 18px 0 6px;
+      color: var(--ink); }}
+ul.sources {{ list-style: none; font-size: 14px; }}
+ul.sources li {{ padding: 6px 0 6px 12px; border-left: 2px solid var(--border);
+                 margin-bottom: 6px; }}
+ul.sources .ref {{ font-family: var(--font-mono); font-size: 12px; color: var(--accent); }}
+.tier-badge {{ font-family: var(--font-ui); font-size: 11px; padding: 1px 5px;
+               background: var(--accent-light); color: var(--accent); border-radius: 2px; }}
+.vs {{ font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.3px; }}
+.vs.ok {{ color: #2e6b3e; }}
+.vs.warn {{ color: #8a4b2d; font-weight: 600; }}
 table {{ width: 100%; border-collapse: collapse; font-size: 14px; }}
 th {{ font-family: var(--font-ui); font-size: 12px; text-transform: uppercase; text-align: left;
       padding: 6px 10px; background: var(--accent-light); color: var(--accent);
