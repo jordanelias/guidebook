@@ -237,10 +237,23 @@ checks:
     basis: unattributed
     cost: fast
     note: >-
-      RED on main as of 2026-08-01 (26/35 checks pass). Pre-existing, owner-gated
+      RED on main (63/69 checks pass as of 2026-08-04). Pre-existing, owner-gated
       debt — see references/tooling-register.md §4. Level left as declared rather
       than demoted to hide it, but held in its own battery so enabling branch
       protection does not deadlock every data-touching PR on a content backlog.
+      SUPERSEDED 2026-08-04 — everything below this line about the verification_status
+      vocabulary describes a database that no longer exists, and is retained only so
+      the reasoning is auditable. D-0157 (DR-2026-08-04-verification-status-is-a-
+      standing-not-a-history) was RATIFIED and its migrations ran: the live
+      distribution is VERIFIED 752 / UNVERIFIED 111 and nothing else. VERIFIED-1,
+      VERIFIED-2, VERIFIED-WITH-CORRECTION, UNVERIFIED-1, UNVERIFIED-CLOSED,
+      SUPERSEDED and DISPUTED are retired as status values (DISPUTED survives only as
+      a closure reason). B01/B02/B05/B06 now PASS. The six remaining failures are
+      I2 (the D-0157 adjudication queue: rows asserting VERIFIED with no recorded
+      attempt) plus C02/C03/C04/D05/G02, which ARE the genuine content backlog the
+      note below correctly identified. In particular the closing instruction below —
+      "ratifying it is a D-SCHEMA decision for the owner, not a unilateral edit to a
+      blocking gate" — has been satisfied; do not read it as still-open guidance.
       CORRECTED 2026-08-01 — this entry and the register both said "106 of 863
       evidence_sources rows carry a verification_status outside the enum" and
       called the whole failure a content backlog. Both halves were wrong:
@@ -410,14 +423,6 @@ checks:
 
   - id: validate_jurisdiction
     cmd: [python3, scripts/validate_jurisdiction.py]
-    battery: schema
-    kinds: [schema, data]
-    level: blocking
-    basis: unattributed
-    cost: fast
-
-  - id: validate_temporal
-    cmd: [python3, scripts/validate_temporal.py]
     battery: schema
     kinds: [schema, data]
     level: blocking
@@ -900,6 +905,29 @@ quarantine:
       documents that describe what was true then and must not be rewritten to tidy a
       filename. Quarantine is the correct terminal state here, not retirement:
       it already stops the script being mistaken for a working gate.
+
+  - id: validate_temporal
+    cmd: [python3, scripts/validate_temporal.py]
+    status: vacuous
+    reason: >-
+      QUARANTINED 2026-08-04 — it was `blocking` on `kinds: [schema, data]` while
+      examining ZERO records. It loads rules, standards, versions and supersedence
+      links from `data/temporal/`, and that directory DOES NOT EXIST; the run prints
+      "Temporal validation: 0 rules, 0 standards, 0 versions, 0 supersedence links /
+      All checks passed" and exits 0. Every schema and data change in this repo has
+      been passing a temporal-integrity gate that inspects nothing.
+      It has no `min_items` floor — the exact defect the 2026-08-01 rework fixed in
+      validate_schema.py and did not sweep for elsewhere. Only T-05 (a filename
+      pattern over `versions/`) touches real files.
+      NOT given a hard-fail guard instead: with the directory absent, failing on
+      empty input would turn a blocking check red on every data/schema diff, which
+      trades a silent lie for a loud blockage. Quarantine states the truth without
+      that cost.
+      RE-REGISTER when the `data/temporal/` corpus lands (its generator,
+      scripts/convert/version_retrofit.py, still exists) — and only with a
+      `min_items` floor so it can never again pass by having nothing in scope.
+      Owner ratification requested: fund the dataset, or retire the check and its
+      generator together.
 
   - id: validate_items
     cmd: [python3, scripts/validate_items.py]

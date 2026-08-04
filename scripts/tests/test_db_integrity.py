@@ -977,7 +977,7 @@ def run_checks(db_path):
 
     # ── L: shadow-store parity (YAML ↔ DB) ────────────────────────────────────
     # Two governance stores are deliberately dual today: the DB table and the
-    # YAML file that five scripts still read. Dual-store is only safe while
+    # YAML file that four scripts still open. Dual-store is only safe while
     # something holds them equal — otherwise the "DB is canonical" rule decays
     # into "whichever one you happened to open". These are the holders.
     print("\n[L] Shadow-store parity")
@@ -1003,7 +1003,7 @@ def run_checks(db_path):
         reg = os.path.join(REPO, "data", "decisions", "decision_register.yaml")
         if not os.path.exists(reg):
             record("L01", "decision register: YAML ↔ decisions table", False,
-                   f"register not found at {reg} — five scripts read it, including "
+                   f"register not found at {reg} — four scripts open it, including "
                    f"the blocking decision_capture.py")
         else:
             y = {d["decision_id"]: d for d in _yaml.safe_load(open(reg))["decisions"]}

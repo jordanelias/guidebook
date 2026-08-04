@@ -140,9 +140,10 @@ con = sqlite3.connect('file:data/guidebook.db?mode=ro', uri=True)
 `reasoning_doc_citations`, `spec_value_probes`, `source_value_extractions`,
 `jurisdictional_values`. `gaps` is the gap register. **`decisions` holds the governance
 decision records** — imported from `data/decisions/decision_register.yaml` on 2026-08-04
-(`a28e4eec`). The two stores are currently **dual**: the YAML is still read by five scripts,
-including the blocking `decision_capture.py`, and `test_db_integrity` L01 holds them equal in
-both directions. Per §2 the DB is canonical; retiring the YAML needs a caller sweep and owner
+(`a28e4eec`). The two stores are currently **dual**: the YAML is still opened by four scripts —
+the blocking `decision_capture.py`, `doctrine_recheck.py`, `test_db_integrity` (L01) and the
+legacy `migrate/migrate_decisions.py` — and L01 holds the two equal in both directions. (Two
+further scripts name the path only as a selftest fixture and never read it.) Per §2 the DB is canonical; retiring the YAML needs a caller sweep and owner
 sign-off. (This line said the table was "empty scaffolding" until the import.)
 
 **Changing the data model:**
@@ -288,7 +289,8 @@ The individual commands still work if you want one in isolation:
 
 Tests are **standalone scripts, not pytest** (`python3 scripts/tests/<name>.py`, exiting 0/1).
 Only three print a `RESULTS: X/Y` line — `test_db_integrity`, `test_url_verifier`,
-`test_verification_pipeline`; the others print `RESULT: PASS` or `ALL PASS`. **Ten of the twelve
+`test_verification_pipeline`; the rest print `RESULT: PASS`, `ALL PASS`, or (in
+`test_assess_cell_pilot`) `PASS: …`. Read the exit code, not the wording. **Ten of the twelve
 are registered** — `test_db_integrity` blocking, nine advisory in the `tests` battery. The two
 unregistered are `test_adjudication_integrity.py` (its subject audit is quarantined on a content
 backlog) and `test_generate_parts_4_2.py` (which currently exits 0 having asserted nothing: its
