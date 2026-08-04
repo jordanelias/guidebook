@@ -598,9 +598,23 @@ the passing integrity check made it look like:
    fossil on the same cell. Cell 9003's attests the six-ref governing set that the DB-integrity
    backfill narrowed to four. Both now render an explicit stale-sha warning, and — more to the
    point — `test_db_integrity` **`K01`** recomputes every non-NULL sha and fails on exactly those
-   two. It is red and should stay red: restamping asserts an engine derivation that did not
-   happen, clearing loses the record, and choosing between them is an owner call. Finding this by
-   hand in a render review was the wrong way to find it; `K01` is the right way.
+   two. Finding this by hand in a render review was the wrong way to find it; `K01` is the right
+   way.
+
+   ~~It is red and should stay red: restamping asserts an engine derivation that did not happen,
+   clearing loses the record, and choosing between them is an owner call.~~
+   **[RESOLVED 2026-08-04 — owner ruling: restamp. My framing was wrong.]** The sha is
+   `sha256(item|population|sorted(governing_refs)::rule_version)` — a **fingerprint of the row's
+   inputs**, not a record that an engine process ran; `assess_cell.sha()`'s own docstring says
+   the point is that "staleness stays checkable". So recomputing it asserts only what the row now
+   says, and what an engine did is carried by `rule_version`, which the restamp leaves untouched
+   (both rows keep `pilot-2`). Realigning a drifted fingerprint is ordinary maintenance, and
+   treating it as an epistemic commitment was over-reading. `data_20260804185632` restamps both;
+   `K01` now passes on 7 of 7 non-NULL shas and the render carries no stale-sha warning.
+
+   The **8 unattested determinations** (9008–9015, of which 9014–9015 also have no
+   `rule_version`) are untouched and still reported-not-failed. They were never stamped, so there
+   is no drifted fingerprint to realign — a different question from this one, and open.
 
 Two warts left standing and recorded in the code: `data-sha` **and `data-rule-version`** both
 emit the Python repr `'None'` for a NULL — 20 occurrences between them — because the checker
