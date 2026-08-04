@@ -5022,3 +5022,64 @@ decisions:
   notes: >
     Closes DR-2026-07-25 §6.1. Ingesting the 26 existing compendium entries is follow-on work, not
     done here; the table remains empty so nothing is asserted.
+- decision_id: D-0157
+  category: D-SCHEMA
+  delegation: DG-NON
+  summary: >
+    verification_status is a standing, not a history — retire the numbered status suffixes and
+    split verification into three orthogonal columns (status, disposition, attempt count).
+  outcome: >
+    PROPOSED, owner decision required; nothing executed. Proposes verification_status in
+    {VERIFIED, PARTIAL, UNVERIFIED}, a new verification_disposition in {OPEN, CLOSED}, and the
+    existing verification_attempt_count as the third column of that set, plus a
+    verification_method column recording how a standing was established. Retires VERIFIED-1,
+    VERIFIED-2, VERIFIED-WITH-CORRECTION, UNVERIFIED-1, UNVERIFIED-CLOSED and SUPERSEDED.
+    Defines VERIFIED for the first time as "the document itself was obtained and the metadata
+    recorded here was read from it". Ratifies source_type 'code'; relocates PARTIAL from
+    metadata_quality to verification_status. B01/B02/B05 in test_db_integrity stay red until
+    ratified.
+  rationale: >
+    Asked to ratify the session-coined vocabulary, the owner rejected the premise: grades of
+    VERIFIED mean either the sources are not properly verified or the definition of verified is
+    broken. Both were true. The column encodes three orthogonal facts at once — what is
+    established, how, and how hard anyone tried — the same conflation migration 041 fixed for
+    author_display/publisher/standard_number ("a column must hold one domain"). Evidence is
+    decisive: UNVERIFIED-1 claims one search attempt while 25 of its 31 rows have
+    verification_attempt_count = 0, and its documented meaning (evidence-methodology.md section
+    204, "one search attempt, not yet retried") is not what the owner inferred reading it cold —
+    an encoding ambiguous and wrong at once. VERIFIED-1 differs from canonical UNVERIFIED-1 by two
+    characters while meaning the opposite. VERIFIED-WITH-CORRECTION describes an event already
+    recorded in verification_note. VERIFIED-2's 71 rows are honestly documented but the document
+    was never obtained, so they are not verified. Separating the columns makes the tuple
+    self-auditing and immediately surfaces that 360 of 824 VERIFIED-family rows (43%) record zero
+    attempts — 135 of them a tool-counter defect that can simply be backfilled.
+  alternatives_considered:
+    - >
+      Ratify the coined values and amend the check — rejected by the owner; entrenches the
+      conflation without a decision record.
+    - >
+      Rewrite the 71 VERIFIED-2 rows to plain VERIFIED — destroys a distinction recorded
+      deliberately and overstates the corpus.
+    - >
+      A boolean blocked_permanent flag instead of a disposition column — superseded by the
+      owner's OPEN/CLOSED formulation, which pairs with status and makes closure auditable
+      against attempt count.
+    - >
+      Leave B01/B02/B05 red indefinitely — the status quo, and the fallback if not ratified.
+  decision_date: '2026-08-04 00:45'
+  decided_by: PENDING-OWNER
+  model_routing: 'opus/200/arbitrate'
+  effort_level: 200
+  decision_artifacts:
+    - decisions/DR-2026-08-04-verification-status-is-a-standing-not-a-history.md
+  predecessors:
+    - D-0156
+  supersedes: []
+  status: PROPOSED
+  review_status: 'NA'
+  notes: >
+    DG-NON because it defines what counts as verified evidence. Consequence the owner should weigh
+    explicitly: the corpus "verified" count falls by at least 71 (~8%) and possibly further.
+    Nothing is lost — same sources, same notes, same real work — the headline number falls because
+    it was overstated. Zero published cells cite a VERIFIED-2 source, so no cell state and no
+    rendered page changes. DISPUTED is left unchanged as an open question.
