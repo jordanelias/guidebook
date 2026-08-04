@@ -868,6 +868,46 @@ def run_checks(db_path):
     record("H07", "no id repeats inside a single JSON edge array", not dup,
            "; ".join(dup))
 
+    # ── J: hop-4 edge coherence (source_value_extractions.item_code) ──────────
+    # The column (migration 052) is nullable by design — NULL means the item was
+    # not established at extraction. What it must never hold is an item that
+    # contradicts the row's own slug or its own probe.
+    print("\n[J] Extraction → item edge coherence")
+
+    # An extraction's item should belong to the extraction's slug, by either
+    # route the repo models that with: the item_bpc_links junction (hop 7's
+    # edge object) or the legacy items.bpc_source_slug scalar it is replacing.
+    # Assumption stated out loud: this holds while extractions describe items
+    # their own BPC governs. If a legitimate cross-slug extraction ever appears,
+    # this check is the thing that should be revisited — not silently widened.
+    incoherent = conn.execute("""
+        SELECT COUNT(*) FROM source_value_extractions sve
+        WHERE sve.item_code IS NOT NULL
+          AND NOT EXISTS (SELECT 1 FROM item_bpc_links l
+                          WHERE l.item_code = sve.item_code AND l.slug = sve.slug)
+          AND NOT EXISTS (SELECT 1 FROM items i
+                          WHERE i.item_code = sve.item_code
+                            AND i.bpc_source_slug = sve.slug)
+    """).fetchone()[0]
+    record("J01", "an extraction's item belongs to the extraction's slug",
+           incoherent == 0,
+           f"{incoherent} extractions whose item_code is not linked to their slug"
+           if incoherent else "")
+
+    # Where a row's own basis text names a PMP probe, that probe carries a typed
+    # item_code. The two must agree — this is the W1 witness the backfill relied
+    # on, turned into a standing check so it cannot drift apart later.
+    probe_disagree = conn.execute("""
+        SELECT COUNT(*) FROM source_value_extractions sve
+        JOIN spec_value_probes p
+          ON sve.root_classification_basis LIKE '%' || p.probe_id || '%'
+        WHERE sve.item_code IS NOT NULL AND p.item_code != sve.item_code
+    """).fetchone()[0]
+    record("J02", "an extraction agrees with the PMP probe its basis text names",
+           probe_disagree == 0,
+           f"{probe_disagree} extractions disagreeing with their named probe"
+           if probe_disagree else "")
+
     # ── Summary ───────────────────────────────────────────────────────────────
     conn.close()
     print("\n" + "=" * 70)

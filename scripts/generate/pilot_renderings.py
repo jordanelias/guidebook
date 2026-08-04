@@ -11,11 +11,13 @@ Integrity invariants I1–I5 are asserted by scripts/audit/register_integrity_ch
 which imports REGISTER_MAP from this module (single source of truth).
 
 Honesty rules baked in:
-- No fabricated values. source_value_extractions is empty, so no evidence-anchored
-  numeric value exists for any pilot cell; renderings say so instead of inventing
+- No fabricated values. No evidence-anchored numeric value has been promoted to a
+  determination for any pilot cell, so renderings say so instead of inventing
   numbers (the corridor 2440mm figure in tier-system.md §3 is doctrine prose, not
   an extracted determination value — it is cited as context, never as this cell's
-  computed value).
+  computed value). This used to read "source_value_extractions is empty"; the
+  table now holds 8 rows and two pilot cells reach one each, so the claim is made
+  per cell rather than about the table.
 - Regulatory floors shown are real jurisdictional_values rows (is_code_minimum=1).
 - The solo-authorship Co-1 limit is declared on Co-1-governed renderings
   (mission-and-epistemics §Operational reality).
@@ -157,6 +159,16 @@ def fetch_cells(conn):
             "WHERE item_code=? AND is_code_minimum=1 AND value_numeric IS NOT NULL "
             "ORDER BY jurisdiction", (c["item_code"],)).fetchall()
         c["has_co1"] = "CO1" in (c["tier_basis"] or "")
+        # Per-source extracted values reaching THIS cell: a governing source
+        # whose extraction is for this cell's item. The item match is what
+        # migration 052 made possible and is not optional — joining on ref_id
+        # alone attributes four RT60-in-seconds extractions to cells for A-02
+        # (NRC) and A-08 (NC), parameters in different units entirely.
+        c["extractions"] = conn.execute(
+            "SELECT COUNT(*) FROM cell_source_links l "
+            "JOIN source_value_extractions x "
+            "  ON x.ref_id = l.ref_id AND x.item_code = ? "
+            "WHERE l.cell_id = ?", (c["item_code"], c["cell_id"])).fetchone()[0]
         cells.append(c)
     return cells
 
@@ -179,8 +191,18 @@ def role_body(c, role):
         if floors:
             parts.append(f"Recorded code minimums, per jurisdiction: {floor_line}. "
                          + FLOOR_STATUS_CAVEAT)
-        parts.append("Evidence-anchored value range: not yet extracted "
-                     "(source_value_extractions empty) — no number is invented here.")
+        # This sentence used to assert "source_value_extractions empty" for every
+        # cell. That was true when written and is now false for two of the
+        # fifteen — a false statement in published output, the same class of
+        # defect as a stale audit gate. It is now read per cell.
+        if c["extractions"]:
+            parts.append(f"Evidence-anchored value range: not yet synthesised. "
+                         f"{c['extractions']} per-source extracted value(s) exist for this "
+                         f"item; none has been promoted to a cell determination, so no "
+                         f"number is stated here.")
+        else:
+            parts.append("Evidence-anchored value range: not yet extracted for this cell "
+                         "— no number is invented here.")
     elif role == "ot":
         parts.append(f"Anchor: {c['tier_basis'] or 'none'}. Person-Mode resolution happens "
                      "within the Population-Mode range once extracted; the population "

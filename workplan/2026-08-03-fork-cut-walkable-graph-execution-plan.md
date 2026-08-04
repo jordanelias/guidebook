@@ -364,7 +364,7 @@ recorded here because a plan that lives only in a conversation is not a plan.
 | 1 | Verification standing — `evidence_sources` columns (D-0157) | **DONE 2026-08-04** — migrations 049 + remap; PR #82 |
 | 2 | ~~Hop 3~~ **Hop 2b — `search_admissions`** (search execution → admitted source) | **DONE 2026-08-04** — migrations 050 + 051; see below |
 | 3 | ~~`search_candidates.admitted_ref_id`~~ **deferred** — see the reordering note | deferred |
-| 4 | **`source_value_extractions.item_code` — extraction → item** — *promoted to next* | next |
+| 4 | **`source_value_extractions.item_code` — extraction → item** *(promoted over step 3)* | **DONE 2026-08-04** — migration 052 + backfill; see the step-4 note |
 | 5 | `bpc_metadata.reasoning_doc_path` — synthesis doc as a column, not a filename convention | pending |
 | 6 | Close the DISPUTED seven against `audits/anchor-correctness-sweep-2026-07-20.md` | pending |
 | 7 | N1 — `jurisdictional_values.ref_id` (the regulatory-floor invariant in §8) | pending |
@@ -467,6 +467,70 @@ Two consequences for sequencing:
   captures will need the moment capture runs. Building it before the rows exist is the one
   ordering where schema-first is right: the alternative is capturing values into a table that
   cannot say which parameter they describe.
+
+  **[CORRECTED 2026-08-04 — the second sentence of that justification is false.]** An
+  adversarial design review attacked it and the attack lands. `energy-conservation-rest-points-seating`
+  has **no item at all**: zero `items.bpc_source_slug` matches and zero `item_bpc_links` rows
+  (verified). When capture runs, all 19 land `item_code = NULL` and cannot use this edge until
+  an item is created and linked — itself a governed act belonging to step 9. Building an edge
+  for traffic that cannot use it is the 043/045 mistake with a better story, and that is what
+  the sentence above argued for. The 19-pending observation survives only as the argument for
+  the column being **nullable**, not for building it.
+
+  The rung is still right, on three feet that hold:
+
+  1. **It removes a demonstrable false positive, today.** Without `item_code`, joining a cell's
+     governing sources to their extractions on `ref_id` alone attributes **four** RT60-in-seconds
+     extractions to cells 9012 (`A-02`, acoustic ceiling panels, NRC ≥0.85) and 9013 (`A-08`,
+     HVAC noise, NC-25) — parameters measured in different units entirely. With the item match
+     those correctly drop to zero and only the two genuine `A-18` cells remain. That is not a
+     hypothetical drift; it is a wrong answer the schema was returning.
+  2. **The readers exist and are starving.** `scripts/assess/assess_cell.py` degrades three
+     separate assessments to `NOT_ASSESSED` / `pending_assessment` citing this table, and
+     `pilot_renderings.py` emitted "source_value_extractions empty" into published output for
+     all fifteen pilot cells — false for two of them.
+  3. **A closing window.** The backfill's witnesses resolve unambiguously only while `A-10b`
+     has nothing — no `item_bpc_links` row, no cell, no probe (all verified zero). Step 9's
+     `item_bpc_links` backfill is expected to give it a parameter link, after which "the slug's
+     item for this parameter" stops resolving uniquely. Hop 4 before hop 7 is the only order in
+     which this backfill is cheap and clean.
+
+**Step 4 outcome. [2026-08-04]** Migration 052 adds `item_code` (nullable, FK to `items`) plus
+`v_item_extractions` — the reader shipped *with* the edge this time, 051's lesson being one
+migration old. A column rather than a junction: an extraction row is one claim at one scope, and
+a source reaching two items is row multiplication, not an edge set (`REF-00563` already appears
+twice for exactly that reason). The cautionary precedent is in the table's own family —
+`extraction_population_links`, a junction hanging off `extraction_id`, has **zero rows**.
+
+All 8 rows backfill to `A-18`, but they are not all known the same way, and the migration records
+three witness classes rather than flattening them:
+
+| Class | Rows | Witness |
+|---|---|---|
+| **W1** typed key on the row | 1 | `root_classification_basis` names `PMP-A18-001-F`; that probe carries `item_code='A-18'` in a NOT NULL FK column |
+| **W2** typed join, one hop | 2, 3 | row 2 shares row 1's `root_id`/`root_ref_id`; row 3 is governed by exactly one cell, 9011 = (`A-18`, `AUT`) |
+| **W3** row-supplied locator, dereferenced | 4–8 | each row's own `file_anchor` points into the A-18 reasoning doc's Step-3 table; the document's subject item is established at its line 92; each claimed value matches its anchored row |
+
+W3 is the one worth defending. The D-0157 standard is "a value is written only where the row
+itself supplies it", and rows 4–8 supply a **locator**, not a value. Dereferencing a locator the
+row provides is verification; inferring from a table the row never mentions is what
+`data_20260804164915` had to revert. One dereference step is required and is stated in the
+migration rather than hidden. What was **not** used as a witness: "the slug's primary
+`item_bpc_links` row + `parameter='RT60'`" — it resolves uniquely today only because `A-10b` has
+no link yet, and a witness with an expiry date is not a witness.
+
+Two standing checks now hold the edge: `J01` (an extraction's item belongs to its slug) and
+`J02` (an extraction agrees with the PMP probe its own basis text names). Both fault-injected.
+
+**Two pre-existing defects surfaced while sweeping callers, neither fixed here.**
+`scripts/generate/pilot_renderings.py` **cannot run at all** — it crashes on
+`derivation_sha[:16]` because **8 of 15 cells (9008–9015) have `derivation_sha` NULL**. Confirmed
+pre-existing by running the committed version. So the false "source_value_extractions empty"
+sentence is corrected *in the generator source* but still stands in the committed
+`working/pilot/pilot-renderings.html`, which cannot be regenerated until the generator or the
+data is fixed. `register_integrity_check.py` separately reports the committed HTML renders a
+`B-10×NEU` cell that no longer exists in `evidence_cell_state`. Both belong to a pilot-rendering
+repair, not to hop 4.
 
 One further constraint the profile surfaced, which bounds what closing the walk can even claim:
 **18 of the 19 are tier 3**, one is Co-1 (`REF-00950`) and one T5. Under `governance/tier-system.md`

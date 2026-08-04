@@ -191,8 +191,12 @@ def assess_source(conn, src, claim_scale, population):
         pop = population_directness_from_match_grade(mg)
     else:
         pop = NOT_ASSESSED  # G2: applies but unassessed — never graded as EXACT
-    # value dimension: home substrate source_value_extractions is EMPTY (0 rows) —
-    # G2 again: applies but unassessed, never silently full-match.
+    # value dimension: still NOT_ASSESSED, but the reason has changed and the
+    # old one was that source_value_extractions "is EMPTY (0 rows)". It holds 8
+    # rows as of migration 052 and, since that migration, an item_code to join
+    # them on. What is still absent is any assessment RULE for grading a value
+    # dimension from them — writing one is a judgment act, not a caller sweep.
+    # G2 stands: applies but unassessed, never silently full-match.
     val = NOT_ASSESSED
     cond = consolidate(pop, val, sd)
     tier_ok = check_tier_consistency(src["evidence_type"], src["scope"], src["tier"])
@@ -249,8 +253,11 @@ def regulatory_richness(t45, t6):
 
     Honestly-partial implementation, named as such in the rationale it emits:
     §2.3's T4 clause requires "an evidence-based value directly addressing the
-    parameter" — not mechanically checkable while source_value_extractions is
-    empty, so the T4 branch checks presence only and SAYS SO. The T6 clause
+    parameter" — the T4 branch checks presence only and SAYS SO. (This used to
+    read "not mechanically checkable while source_value_extractions is empty";
+    the table now has 8 rows and, per migration 052, an item_code to address the
+    parameter with. The branch is unchanged because deciding what counts as
+    "directly addressing" is a judgment call, not a missing join.) The T6 clause
     requires convergence "on the same value or range" — likewise unverifiable;
     jurisdiction distinctness IS checkable and is enforced."""
     jur45 = {r.get("jurisdiction") for r in t45}
