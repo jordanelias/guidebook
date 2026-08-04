@@ -402,6 +402,26 @@ as prescient. Migration 051's header carries the two that belong to a migration.
    cardinalities in one column. It cannot be foreign-keyed until a decision says what the column
    means, and those three unresolvable ids are a data finding owed a look on their own.
    `convergence_assessment`'s five REF-array columns are the same question one hop later.
+
+   **[CORRECTED, same session — the "3 unresolvable" were my error, not the data's.]** I looked
+   those three up scoped to the mining row's own slug. Resolved globally, **all three exist**:
+   `CCD-12` → `REF-00843` (slug `construction-cost-data`), `MHB-35` → `REF-00845` and
+   `MHB-36` → `REF-00847` (slug `mental-health-built-environment`). They are **cross-slug
+   spillover**: the `SSG-15` mining row's own note says it "filtered to 6 relevant new
+   discoveries", two of which belong to another slug — and spillover routing is what
+   `DR-2026-07-24-search-executions-substrate` describes as intended behaviour, not breakage.
+   Resolved correctly the tally is **15 global `REF-` ids · 50 same-slug locals · 3 cross-slug
+   locals · 0 unresolvable.**
+
+   The obstacle survives, but it is a different one, and stating it right matters more than the
+   count. `connections_produced` entries carry **no slug scope**, and `local_ref_id` is **not
+   globally unique** — 30 values are shared by more than one slug (the bare-numeric `01`–`05`
+   series, 4–5 slugs each). An entry is therefore resolvable only by knowing which slug it
+   belongs to, and the column does not say; a global lookup happens to be unambiguous for the
+   prefixed ids and ambiguous for the bare-numeric ones. *That* is why it cannot be
+   foreign-keyed without a decision — not a dangling id. The bare-integer rows (13 of 25) remain
+   a separate defect, and the "3 dangling ids" line above is left standing as written so the
+   error is visible rather than tidied away.
 3. **"Rebuild byte-identical" overstated the scope.** The two junctions reproduce exactly; the
    *file* does not, and never has — ten tables diverge under rebuild for the pre-existing reasons
    §5 documents, none of them caused by this step. The claim was true of the rows and false as
