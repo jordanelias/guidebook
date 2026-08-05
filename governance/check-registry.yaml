@@ -445,9 +445,38 @@ checks:
     cmd: [python3, scripts/validate_population.py]
     battery: schema
     kinds: [schema, data]
-    level: blocking
+    level: advisory
     basis: unattributed
     cost: fast
+    note: >-
+      REWRITTEN AND DOWNGRADED blocking -> advisory, 2026-08-05. It was blocking
+      and green, and it had never validated anything. It printed "No files with
+      population codes found to validate" and exited 0, because it scanned
+      references/bpc/**/*.md for a `population:` key in YAML front matter and NO
+      BPC FILE HAS FRONT MATTER — 0 of 102. Its rules were also the taxonomy
+      DR-2026-07-23 retired: a SUBCODE_PARENTS map of MOB/UPL, NEU/PCS, OFS/POTS;
+      EXH treated as live; LPA and BAR treated as supplementary-only when both are
+      now first-class; and an explicit "IntD is not a standalone code — proxy
+      through DEM + NDV" rule that sub-decision 4 of that DR overturned. Had the
+      extractor ever found a file it would have rejected valid codes and accepted
+      retired ones.
+      It now checks the database: enum <-> populations parity both ways (P1),
+      every discovered `population`/`population_code` column resolving to a live
+      code (P2), retired codes reported with the DR-2026-07-23 crosswalk so the
+      message says what to write instead (P3), packed comma-joined code columns
+      (P4), and unregistered scope markers (P5). Columns are DISCOVERED, not
+      transcribed — a hardcoded list is what this file was.
+      **A check that examines zero subjects now FAILS.** That guard is the point:
+      a gate passing because nothing is in scope is indistinguishable in CI from a
+      gate passing on the merits, and worse than no gate because it reads as
+      assurance. Fourth gate found this session certifying nothing.
+      DOWNGRADED because its first real run surfaces 5 findings that are genuine
+      and NOT this session's to decide: `bpc_metadata.population` holds the
+      unregistered scope marker `MULTI` on 42 rows (registering it is a taxonomy
+      act, DG-NON), and two columns pack comma-joined codes, one of them hiding
+      two retired codes. Leaving it blocking would red-X every schema and data
+      diff for a backlog the committer cannot clear — the trap CLAUDE.md §7 warns
+      about for the DB integrity job. Promote once those five are resolved.
 
   - id: validate_jurisdiction
     cmd: [python3, scripts/validate_jurisdiction.py]
