@@ -357,6 +357,48 @@ deferred:
       literal search for VERIFIED-1 also matches UNVERIFIED-1, so these need
       `match: identifier` (word-boundary) and the counts above are upper bounds.
 
+  - tokens: [VIS, UPL, DBL, NEU, PCS, OFS, CFS, MCAS, POTS, LCOV, SENS, EXH, IntD, ABI]
+    retired_by: >-
+      DR-2026-07-23-population-schema-replace (ADOPTED, DG-NON — population
+      taxonomy is owner-only). Crosswalk: VIS->BLIND, UPL->LMB, DBL->DEAFBLIND,
+      {NEU,PCS}->BRAIN, {OFS,CFS,MCAS,POTS,LCOV}->COM, SENS->NDV, EXH->TALL,
+      IntD->ID, ABI->BRAIN.
+    precondition: >-
+      Fails admission test 4, and this is not close. Several tokens are CONDITION
+      NAMES as well as former codes: POTS, MCAS, CFS and ABI all appear in the
+      corpus as clinical terms in sentences that are correct English and correct
+      evidence. `references/bpc/health-and-symptom-management/pain-ofs-built-
+      environment-design.md` legitimately discusses OFS as a concept throughout.
+      No regex separates the code use from the clinical use; only reading the
+      sentence does. Wiring this would make the check wrong hundreds of files at a
+      time, which trains readers to ignore it — the exact failure the `rejected:`
+      section below exists to prevent.
+      It also fails test 3 for most of its volume: the bulk sits in the research
+      corpus, where a sweep is a CONTENT MIGRATION requiring per-file judgment and
+      owner scope, not a text substitution.
+    note: >-
+      Measured 2026-08-05 over the 869 live-surface files this register scans:
+      4,820 occurrences total. OFS 1,289 · VIS 840 · NEU 790 · DBL 523 · IntD 421 ·
+      UPL 229 · SENS 152 · CFS 148 · MCAS 140 · PCS 93 · POTS 87 · ABI 72 · EXH 30 ·
+      LCOV 6. Concentrated in references/connection-register-active.md,
+      references/connections/**, references/claim-reference-join.json and the BPC
+      corpus.
+      Restricted to skills/ scripts/ schemas/ tools/ governance/ it is ~390
+      occurrences across 267 files — a bounded, tractable sweep, and the one worth
+      doing first, because those files INSTRUCT sessions. A skill that says "scope
+      to UPL" makes the next session write a query against a code that does not
+      exist.
+      WHAT IS ALREADY ENFORCED, so this deferral is narrower than it looks: the
+      DATABASE side is checked. scripts/validate_population.py (rewritten
+      2026-08-05) grades every population-bearing column against the live taxonomy
+      and reports retired codes with the crosswalk above. What is deferred is the
+      PROSE, not the data.
+      Promotion path, if the owner scopes it: add these as entries with the
+      infrastructure directories in scope and the corpus deferred — which needs a
+      per-entry `scope_paths` the reader does not yet support. Do not fake it with
+      exempt_paths covering references/**; that would violate the licensed-mention
+      rule at the top of this file and hide the larger half of the problem.
+
   - tokens: [DISPUTED]
     retired_by: "partially — DR-2026-08-04 §4.4"
     precondition: >-
