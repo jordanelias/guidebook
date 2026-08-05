@@ -337,6 +337,34 @@ checks:
     basis: unattributed
     cost: fast
 
+  - id: validate_items
+    cmd: [python3, scripts/validate_items.py]
+    battery: data
+    kinds: [data, schema]
+    level: advisory
+    basis: unattributed
+    cost: fast
+    note: >-
+      REPAIRED AND WIRED 2026-08-05; was quarantined `broken`. It crashed with
+      `IndexError: No item with that key` reading `items.applicable_groups`, a CSV
+      of population codes packed into one column and dropped when
+      `item_population_links` replaced it — so V5 had been validating nothing,
+      loudly, for as long as that was true.
+      V5 now checks the junction: every link resolves to a live `populations` row
+      and to a live `items` row. Both foreign keys are re-checked rather than
+      trusted, because SQLite enforces FKs per-connection and they are OFF by
+      default, so a file can carry orphans its own DDL forbids.
+      It also dropped KNOWN_POPS, a 23-code population taxonomy transcribed into
+      the validator, which had drifted from the `populations` table it was
+      supposedly validating. Codes now come from that table, so the validator
+      cannot disagree with the data it checks. `applicability` is NOT re-checked —
+      the schema's CHECK constraint owns it, and a fault-injection run caught the
+      first draft re-transcribing it two values too narrow.
+      Measured 2026-08-05: 93 items, 372 links across 92 items, green.
+      Advisory per house norm. The previous quarantine note called this a
+      duplicate of validate_item.py; it is not — that one validates the markdown
+      and YAML corpus, this one validates the table.
+
   - id: db_path_env_audit
     cmd: [python3, scripts/audit/db_path_env_audit.py]
     battery: data
@@ -920,17 +948,27 @@ quarantine:
 
   - id: validate_db
     cmd: [python3, scripts/validate_db.py]
-    status: broken
+    status: quarantined
     reason: >-
-      Crashes — `sqlite3.OperationalError: no such column: doi_less_key`. Written
-      against a schema the DB no longer has. Superseded by test_db_integrity.py,
-      which CLAUDE.md §7 already tells you to prefer.
-      DO NOT RETIRE without fixing the caller first: scripts/db.py:1120 INVOKES it
-      as a subprocess, so archiving the file breaks a live path in the read/query
-      workhorse. Its other references live in sessions/ records and a DR — historical
-      documents that describe what was true then and must not be rewritten to tidy a
-      filename. Quarantine is the correct terminal state here, not retirement:
-      it already stops the script being mistaken for a working gate.
+      REPAIRED 2026-08-05 — no longer `broken`, but still not selected. Two stale
+      facts were killing it, both of the same species: C5 queried `doi_less_key`,
+      a column dropped from the schema, which crashed the whole script with
+      `sqlite3.OperationalError`; and C3 compared `PRAGMA user_version` against
+      the literal `5`, written when 005 was the newest migration, so it failed on
+      every correctly-migrated database. C5 now asks the question the dropped key
+      stood in for (does this source carry ANY stable identifier), and C3 derives
+      the expected version from the migrations directory.
+      This mattered beyond the check: `scripts/db.py validate` invokes the script
+      as a subprocess, so that CLI command was a guaranteed traceback rather than
+      a validation. It now runs.
+      STILL QUARANTINED, deliberately. test_db_integrity.py supersedes it (69
+      checks vs 9) and CLAUDE.md §7 already says to prefer that one; wiring both
+      would mean two overlapping gates to keep in step. The repair was to unbreak
+      a live CLI path and to stop the file reading as a working gate that
+      crashes — not to argue for selection. Retirement stays owner-gated.
+      Its one substantive finding on the live DB — C4, 31 connections with zero
+      targets — is a CONTENT defect, not a tooling one, and is recorded here so
+      the repair does not bury it.
 
   - id: validate_temporal
     cmd: [python3, scripts/validate_temporal.py]
@@ -954,15 +992,6 @@ quarantine:
       `min_items` floor so it can never again pass by having nothing in scope.
       Owner ratification requested: fund the dataset, or retire the check and its
       generator together.
-
-  - id: validate_items
-    cmd: [python3, scripts/validate_items.py]
-    status: broken
-    reason: >-
-      Crashes — `IndexError: No item with that key`. Duplicate of validate_item.py
-      (green): same subject, table-oriented rather than corpus-oriented.
-      Retirement would require touching DR-2026-07-23-population-schema-replace and
-      two workplans — historical records. Quarantined instead; fix or leave.
 
   - id: validate_item
     cmd: [python3, scripts/validate_item.py]
