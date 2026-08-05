@@ -162,7 +162,7 @@ cross_stage:
     #     is not a registered check at all. The registered gate is
     #     migration_reproducibility. The old audit called this VERIFIABLE because the
     #     file existed.
-    #   * `audit.yml` no longer exists; it was folded into ci.yml on 2026-08-01.
+    #   * `audit.yml` no longer exists; it was folded into ci.yml on 2026-08-01. [RETIRED-VOCAB-OK]
     # Scope note kept honest: the blocking gate compares user_version plus COUNT(*)
     # on six tables, so it cannot see an UPDATE. migration_reproducibility_deep
     # (advisory) is the full comparison.

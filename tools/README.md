@@ -31,7 +31,7 @@ Link integrity is verified at every regeneration: orphan source references acros
 
 ## Regeneration
 
-Automatic, via `.github/workflows/regenerate-vetting-surface.yml`. Triggers on any push to `main` that modifies `data/guidebook.db`, the generator script, or the workflow itself. Loop-safe: the workflow's own commits only modify the HTML, never the DB.
+Automatic, via `.github/workflows/regenerate-derived.yml` — leg 1 of its 3-leg matrix. Triggers on any push to `main` that modifies `data/guidebook.db`, the generator script, or the workflow itself; also a weekly run (Mondays 07:30 UTC) and manual dispatch. Loop-safe: the workflow's own commits only modify generated files, never the DB.
 
 Manual run (local):
 
@@ -58,7 +58,9 @@ It also surfaces the pipeline contract's own enforcement coverage per stage (whi
 
 ### Regeneration
 
-Automatic, via `.github/workflows/regenerate-pipeline-completeness.yml`. Triggers on any push to `main` that modifies `data/guidebook.db`, the generator, or `governance/pipeline-contract.yaml`; a weekly schedule (Mondays 07:30 UTC) is a belt-and-braces catch. On pull requests the workflow runs `--check` and **fails if the committed dashboard is stale** versus the DB. Loop-safe: the workflow's own commits only modify the HTML, never the DB.
+Automatic, via `.github/workflows/regenerate-derived.yml` — leg 3 of its 3-leg matrix. Triggers on any push to `main` that modifies `data/guidebook.db`, the generator, or `governance/pipeline-contract.yaml`; a weekly schedule (Mondays 07:30 UTC) is a belt-and-braces catch. Loop-safe: the workflow's own commits only modify generated files, never the DB.
+
+The pull-request staleness gate is **no longer this workflow's job**: it moved to `ci.yml`'s `render` battery, which runs the same `--check` from `governance/check-registry.yaml`. The write-back and the gate are now separate, so there is one place to keep each in step rather than two.
 
 Manual run (local):
 

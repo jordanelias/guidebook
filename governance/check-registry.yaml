@@ -504,6 +504,32 @@ checks:
     basis: cross_stage/doctrine-recheck
     cost: fast
 
+  - id: retired_vocabulary
+    cmd: [python3, scripts/audit/retired_vocabulary_audit.py]
+    battery: governance
+    kinds: [always]
+    level: advisory
+    basis: unattributed
+    cost: fast
+    note: >-
+      Flags text that is READABLE AND WRONG — a dropped column, a folded
+      workflow, a database path that never existed, a banned population umbrella.
+      Register and admission test in `governance/retired-vocabulary.yaml`.
+      `kinds: [always]` because the tokens are not confined to one work kind: the
+      same retired workflow name sits in a skill, a governance memo and the
+      deployed PI, so gating on the diff's kind would let a governance-only diff
+      reintroduce one into `skills/`. 2.8s over the whole tree, which is within
+      the "gating buys nothing below ~2s" band this file sets, and the alternative
+      is a check that misses the case it exists for.
+      ADVISORY BY NECESSITY, NOT ONLY BY HOUSE NORM: its largest single residue is
+      five occurrences in `governance/project-instructions-v10_14.md`, the deployed
+      PI, which must not be edited in place (snapshot convention) and is not
+      API-writable anyway. This check is expected to stay non-zero until a v10_15
+      ships. Promoting it to `blocking` before then would red-X every commit for a
+      defect the committer cannot fix. Measured 2026-08-05, after the first sweep:
+      31 occurrences, of which 26 are the two dropped columns (RV-001/RV-002) still
+      named by live skills and scripts.
+
   - id: matrix_consistency
     cmd: [python3, scripts/audit/matrix_consistency.py]
     battery: governance

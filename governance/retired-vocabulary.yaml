@@ -1,0 +1,395 @@
+# retired-vocabulary.yaml — tokens that are READABLE AND WRONG.
+#
+# STATUS: OPERATIVE. Consumed by scripts/audit/retired_vocabulary_audit.py, which
+# is registered in governance/check-registry.yaml as `retired_vocabulary` at level
+# `advisory` (house norm: a newly-wired check starts advisory).
+#
+# WHAT THIS FILE IS FOR
+# ---------------------
+# The failure mode it addresses is not untidiness. It is this: a session greps for
+# a fact, gets several answers, and cannot tell which is current. Every entry below
+# is a string that still returns hits on the live surface and whose hits are wrong —
+# a column that no longer exists, a workflow that was folded into another, a
+# database path that was never the database, a population umbrella that doctrine
+# bans. The cost of each is measured in the same unit: a wrong answer delivered
+# confidently to whoever greps next.
+#
+# ADMISSION TEST — an entry belongs here only if ALL FOUR hold
+# -----------------------------------------------------------
+#   1. The token is retired by a NAMED authority (a DR, a migration, a dated
+#      consolidation commit) — not by anyone's sense that it reads oddly.
+#   2. The REPLACEMENT HAS ALREADY LANDED. A token retired by a decision whose
+#      implementing migration has not run is still describing live data correctly.
+#      Flagging it produces noise and teaches the reader to ignore the check.
+#   3. A grep of the live surface today returns hits that are WRONG IN CONTEXT —
+#      not merely historical.
+#   4. The token can be matched MECHANICALLY without a judgment call. If telling a
+#      true hit from a false one needs a human read of the surrounding paragraph,
+#      it is not a tripwire; it is a backlog item.
+#
+# Entries that fail test 2 or 4 belong in `deferred:` or `rejected:` at the bottom,
+# WITH THEIR REASONING. Those two sections are not filler. They exist so the next
+# session does not spend an hour re-deriving a conclusion already reached, and then
+# add an entry that floods the check. Read them before adding anything.
+#
+# MENTION vs USE
+# --------------
+# A document that RETIRES a token must be able to name it. Three mechanisms:
+#   * global `exempt_paths` — immutable and historical records, listed below
+#   * per-entry `exempt_paths` — the specific live files licensed to say it
+#   * the inline escape `[RETIRED-VOCAB-OK]` anywhere on the same line
+# The inline escape is deliberately noisy to type. Reaching for it often is a
+# signal the entry is wrong, not that the file is special.
+#
+# THE ONLY LICENSED MENTION — read this before adding an exemption
+# ---------------------------------------------------------------
+#   An entry may exempt THE DOCUMENTS THAT RECORD ITS OWN RETIREMENT.
+#   It may not exempt anything else.
+#
+# So `ci.yml`'s header may say what it absorbed; `check-registry.yaml`'s header
+# may say which four lists it replaced; CLAUDE.md may narrate the 2026-08-01
+# fold. Those files are the retirement's paper trail and cannot describe it
+# without naming it. A workplan that USES a retired name as a live instruction
+# is not covered, no matter how convenient the exemption would be. The
+# distinction is exactly mention-vs-use, and getting it wrong in the permissive
+# direction turns this file into a way of making the check green rather than a
+# way of making the repo true.
+#
+# Corollary, learned while first tuning this register: per-file exemptions are
+# too COARSE for source files, which routinely both use and discuss a token —
+# scripts/db.py names `doi_less_key` in a comment explaining that it strips the
+# key (licensed) AND names `applicable_groups` in a live write path (a defect).
+# Exempt per entry, never blanket, and use the inline escape for single lines.
+#
+# COUNTS IN `note:` FIELDS are DATED MEASUREMENTS, not invariants — same convention
+# as check-registry.yaml. Use one to decide where to look, never to report state.
+
+schema_version: 1
+
+# --- global exemptions ------------------------------------------------------
+# Paths whose whole purpose is to preserve text as written. Sweeping these would
+# contradict the repo's forward-only, immutable-record convention — the same
+# principle DR-2026-07-21 §4 invoked when it refused to rewrite `E-##` in past
+# records, and the reason migrations are append-only (CLAUDE.md §4).
+exempt_paths:
+  - "_archived/**"                 # retired-but-preserved, mirrors origin paths
+  - "scripts/migrations/**"        # append-only, immutable once committed
+  - "sessions/**"                  # append-only session records
+  - "decisions/**"                 # DRs are the record OF a retirement
+  - "data/decisions/decision_register.yaml"   # the shadow store of decisions/, same class
+  - "attestations/**"              # append-only adherence log; reattestation[] is forward-only
+  - "references/project-standards.md"         # THE append-only operative rule ledger (CLAUDE.md §5)
+  - "audits/**"                    # dated reports, frozen at their date
+  - "references/audits/**"         # ditto
+  - "references/search-log/**"     # verbatim query logs; R8 forbids backfilling
+  - "workplan/_superseded/**"      # superseded by definition
+  # A DATED workplan records a plan as it stood on that date, exactly as a dated
+  # audit records findings as they stood. Rewriting `audit.yml` inside a
+  # 2026-05-17 build plan would falsify what was actually planned in May. UNDATED
+  # workplans are NOT exempt: they read as standing instructions, and
+  # workplan/workplan-item-audit-pipeline-co0009.md is the worked example — it
+  # names both a retired column and a database path that does not exist.
+  - "workplan/*20??-??-??*.md"
+  - "versions/**"                  # historical version snapshots
+  # The two documented legacy script directories. CLAUDE.md §7 places both
+  # outside the GUIDEBOOK_DB_PATH contract, and scripts/migrate/** is disarmed by
+  # scripts/migrate/_legacy_guard.py. They encode the PRE-SQLite schema on
+  # purpose: rewriting them would falsify the import they record, and commit
+  # 366766ee deliberately kept them because architecture/sqlite-data-layer.md §9
+  # names six of them in its build table. Guarded, not corrected.
+  - "scripts/migrate/**"
+  - "scripts/db/**"
+  - "**/__pycache__/**"
+  - ".git/**"
+  - "governance/retired-vocabulary.yaml"           # this file names every token
+  - "scripts/audit/retired_vocabulary_audit.py"    # so does its reader
+
+# --- active entries ---------------------------------------------------------
+entries:
+
+  - id: RV-001
+    token: applicable_groups
+    match: identifier
+    severity: broken
+    retired_by: "schema migration — column dropped from `items`"
+    replacement: "item_population_links (the junction that replaced the packed column)"
+    note: >-
+      Not a naming preference: the column DOES NOT EXIST in the live schema
+      (verified against data/guidebook.db 2026-08-05, all 67 tables). Code that
+      names it does not return a stale answer — it raises OperationalError.
+      This is exactly how scripts/migrate/migrate_items.py was discovered: it took
+      no required arguments, opened the canonical DB immediately, and was saved
+      from writing it only by crashing on this column name. Measured 2026-08-05:
+      17 files repo-wide before exemptions.
+
+  - id: RV-002
+    token: doi_less_key
+    match: identifier
+    severity: broken
+    retired_by: "schema migration — column dropped from `evidence_sources`"
+    replacement: "no direct successor; dedup is by DOI, then by normalised title"
+    exempt_paths:
+      - "CLAUDE.md"                              # §7 names the crash it causes
+      - "governance/check-registry.yaml"         # quarantine note quotes the error
+      - "references/tooling-register.md"         # ditto
+      - "scripts/tests/test_db_integrity.py"     # comment explains why C5 lapsed
+      - "scripts/db.py"                          # comment on the line that STRIPS the key
+      - "scripts/migrate_evidence_sources_v2.py" # one-time migrator FROM the old schema
+    note: >-
+      Same class as RV-001 — the column is absent from every live table. This is
+      the name that breaks scripts/validate_db.py (`no such column: doi_less_key`),
+      which is why that script is quarantined in check-registry.yaml rather than
+      run. A crashing gate reads as noise; see the registry's `broken` status note.
+      validate_db.py is deliberately NOT exempted: it does not discuss the column,
+      it queries it, and the check should keep saying so until the script is fixed
+      or retired (an owner decision — see the registry's `broken` status).
+      scripts/migrate_evidence_sources_v2.py is exempt on different grounds: it is
+      a one-time migrator that reads the OLD schema by design, and its inputs are
+      /home/claude/* paths that do not exist in this tree. It belongs in
+      _archived/ alongside its siblings, but archiving is owner-gated.
+
+  - id: RV-003
+    token: audit.yml
+    match: literal
+    severity: stale-pointer
+    retired_by: "2026-08-01 workflow consolidation (8 workflows -> 4)"
+    replacement: "ci.yml — the `classify` job plus the battery jobs it selects"
+    # The consolidation's paper trail — these four cannot describe the fold
+    # without naming what was folded. Nothing else may be added here.
+    exempt_paths:
+      - "_archived/workflows/README.md"   # the mapping doc; naming it is its job
+      - ".github/workflows/ci.yml"        # header states what it absorbed
+      - "governance/check-registry.yaml"  # header states which four lists it replaced
+      - "references/tooling-register.md"  # the four-list comparison table
+      - "CLAUDE.md"                       # §0 and §7 narrate the fold
+      # Historical PI snapshots. CLAUDE.md §10: the numbered files are snapshots and
+      # the HIGHEST-numbered one is the deployed copy — so v10_14 is deliberately NOT
+      # exempt. Its stale workflow names are what a claude.ai session actually loads,
+      # which makes them the highest-value occurrence in this whole register. When a
+      # v10_15 ships, add v10_14 to this list; do not exempt the live PI.
+      - "governance/project-instructions-v10_7.md"
+      - "governance/project-instructions-v10_8.md"
+      - "governance/project-instructions-v10_9.md"
+      - "governance/project-instructions-v10_10.md"
+      - "governance/project-instructions-v10_11.md"
+      - "governance/project-instructions-v10_12.md"
+      - "governance/project-instructions-v10_13.md"
+    note: >-
+      The highest-volume wrong answer in the repo. A session asking "which workflow
+      runs the audits" gets dozens of hits naming a file that has not existed since
+      2026-08-01. CLAUDE.md §0 carried this error itself until 2026-08-02, where it
+      contradicted §7 two hundred lines below. Measured 2026-08-05: 45 files
+      repo-wide before exemptions, concentrated in governance/, workplan/ and
+      references/ — i.e. on the live surface, not only in frozen records.
+
+      KNOWN OWNER-GATED RESIDUE, and the reason this entry is expected to stay red:
+      governance/project-instructions-v10_14.md names the retired workflow five
+      times. It is the DEPLOYED PI (highest-numbered wins, CLAUDE.md §10) and so
+      the highest-value occurrence in this register — a claude.ai session loads it
+      and is pointed at a workflow that has not existed since 2026-08-01. It is
+      deliberately NOT exempted and deliberately NOT edited. The numbered PI files
+      are snapshots, so correcting one in place breaks the convention that a new
+      version means a new file; and the PI is not API-writable — the owner pastes
+      it into claude.ai, so a repo-side edit does not reach the surface that
+      matters. The real fix is a v10_15 the owner pastes. Until then this check
+      reports the defect rather than hiding it, which is the correct behaviour for
+      a gate that must not act unilaterally. When v10_15 ships, add v10_14 above.
+
+  - id: RV-004
+    token: research-contract.yml
+    match: literal
+    severity: stale-pointer
+    retired_by: "2026-08-01 workflow consolidation"
+    replacement: "ci.yml — the `research` battery"
+    exempt_paths:                          # same paper trail as RV-003
+      - "_archived/workflows/README.md"
+      - ".github/workflows/ci.yml"
+      - "governance/check-registry.yaml"
+      - "references/tooling-register.md"
+      - "CLAUDE.md"
+      # Historical PI snapshots. CLAUDE.md §10: the numbered files are snapshots and
+      # the HIGHEST-numbered one is the deployed copy — so v10_14 is deliberately NOT
+      # exempt. Its stale workflow names are what a claude.ai session actually loads,
+      # which makes them the highest-value occurrence in this whole register. When a
+      # v10_15 ships, add v10_14 to this list; do not exempt the live PI.
+      - "governance/project-instructions-v10_7.md"
+      - "governance/project-instructions-v10_8.md"
+      - "governance/project-instructions-v10_9.md"
+      - "governance/project-instructions-v10_10.md"
+      - "governance/project-instructions-v10_11.md"
+      - "governance/project-instructions-v10_12.md"
+      - "governance/project-instructions-v10_13.md"
+    note: "Folded with RV-003. Measured 2026-08-05: 11 files repo-wide."
+
+  - id: RV-005
+    token: regenerate-vetting-surface.yml
+    match: literal
+    severity: stale-pointer
+    retired_by: "2026-08-01 workflow consolidation"
+    replacement: "regenerate-derived.yml — leg 1 of the 3-leg matrix"
+    exempt_paths:
+      - "_archived/workflows/README.md"
+      - ".github/workflows/regenerate-derived.yml"   # header states what it absorbed
+
+  - id: RV-006
+    token: regenerate-evidentiary-audit.yml
+    match: literal
+    severity: stale-pointer
+    retired_by: "2026-08-01 workflow consolidation"
+    replacement: "regenerate-derived.yml — leg 2 of the 3-leg matrix"
+    exempt_paths:
+      - "_archived/workflows/README.md"
+      - ".github/workflows/regenerate-derived.yml"   # header states what it absorbed
+
+  - id: RV-007
+    token: regenerate-pipeline-completeness.yml
+    match: literal
+    severity: stale-pointer
+    retired_by: "2026-08-01 workflow consolidation"
+    replacement: "regenerate-derived.yml — leg 3 of the 3-leg matrix"
+    exempt_paths:
+      - "_archived/workflows/README.md"
+      - ".github/workflows/regenerate-derived.yml"   # header states what it absorbed
+
+  - id: RV-008
+    token: data/db/guidebook.db
+    match: literal
+    severity: stale-pointer
+    retired_by: "superseded by data/guidebook.db as the canonical store"
+    replacement: "data/guidebook.db"
+    exempt_paths:
+      - "CLAUDE.md"                              # §7 documents the hazard by name
+      - "scripts/audit/db_path_env_audit.py"     # scopes the contract by this path
+      - "scripts/migrate/_legacy_guard.py"       # quotes §7 to justify the guard
+      - "skills/item-specification-writer_SKILL.md"   # warns sessions off it by name
+      # Proposal-of-record documents from 2026-05-02 whose execution landed
+      # elsewhere. Each now carries an OUTCOME BANNER at its head saying so; the
+      # proposal body is preserved verbatim, because rewriting a proposal to match
+      # its own outcome destroys the record of what was proposed.
+      - "governance/repo-strategy-revision-co.md"
+      - "architecture/schema-spec.md"
+    note: >-
+      A path that has never existed on disk in this working tree, presented in
+      several documents as though it were a database. CLAUDE.md §7 correctly warns
+      that scripts/db/** targets it and calls it "a different, legacy file" — that
+      warning is the only licensed mention.
+
+  - id: RV-009
+    token: /tmp/guidebook.db
+    match: literal
+    severity: stale-pointer
+    retired_by: "operational — a scratch path is not the canonical DB"
+    replacement: "file:data/guidebook.db?mode=ro for reads; a migration for writes"
+    exempt_paths:
+      - "CLAUDE.md"
+      - "scripts/audit/db_path_env_audit.py"
+      - "scripts/migrate/_legacy_guard.py"
+      # Correct uses of a scratch path, which is what /tmp is for:
+      - "scripts/bootstrap.sh"            # downloads a COPY of the DB and reads it
+      - "scripts/verify_resolved_dois.py" # defensive default; resolve-dois.yml sets the real path
+      - "scripts/tests/**"                # fixture DBs
+    note: >-
+      This is stale context that ACTIVELY MISLEADS rather than merely ageing: a
+      skill instructing a session to open /tmp/guidebook.db sends it to a file that
+      does not exist, and the failure looks like a broken environment rather than a
+      wrong instruction. Purged from skills/workplan-orchestrator_SKILL.md in
+      60bf6b75; this entry stops it coming back. Note that the tokens in
+      scripts/tests/** are fixture paths for scratch DBs, which is the correct use —
+      hence `severity: stale-pointer`, and read the hit before editing it.
+
+  - id: RV-010
+    token: physically disabled
+    match: phrase
+    severity: doctrine
+    exempt_paths:
+      - "governance/functional-taxonomy.md"   # §3.3 defines the ban; naming it is the point
+      - "CLAUDE.md"                          # §10 quotes both umbrellas as the worked examples
+    retired_by: "DR-2026-07-22-work-from-axes; RULE 2026-07-22 in references/project-standards.md"
+    replacement: >-
+      the specific functional axis or the specific self-identified profile —
+      see governance/functional-taxonomy.md §3.3
+    note: >-
+      A banned umbrella, not a style preference. Doctrine's objection is that broad
+      umbrellas COLLAPSE OPPOSED DEMANDS and erase specific communities — an
+      ambulatory wheelchair user and a full-time wheelchair user have conflicting
+      requirements that this phrase renders as one. Recorded in CLAUDE.md §10 as a
+      repeatedly-caught failure mode, which is the strongest argument for a
+      mechanical tripwire rather than another line of prose asking people to
+      remember. Measured 2026-08-05: 7 files repo-wide before exemptions.
+
+  - id: RV-011
+    token: energy-limiting chronic illness
+    match: phrase
+    severity: doctrine
+    exempt_paths:
+      - "governance/functional-taxonomy.md"
+      - "CLAUDE.md"
+    retired_by: "DR-2026-07-22-work-from-axes"
+    replacement: "the specific functional axis (fatigue/stamina demand) or the named profile"
+    note: >-
+      Named in CLAUDE.md §10 alongside RV-010 as the second worked example of the
+      umbrella failure. Measured 2026-08-05: 5 files repo-wide.
+
+# --- deferred: correct to retire, NOT YET SAFE TO FLAG ----------------------
+# These fail admission test 2 — the replacement has not landed — so flagging them
+# today would flag accurate descriptions of live data. Each records the precondition
+# that would promote it. Do not promote one without checking its precondition.
+deferred:
+
+  - tokens: [VERIFIED-1, VERIFIED-2, UNVERIFIED-1, UNVERIFIED-2, VERIFIED-WITH-CORRECTION]
+    retired_by: "DR-2026-08-04-verification-status-is-a-standing-not-a-history (D-0157)"
+    precondition: >-
+      The migration implementing DR §5 has NOT RUN. That DR says so itself, in its
+      own status block: "Ratified != executed ... B01/B02/B05 stay red until it
+      does." 863 evidence_sources rows still carry this vocabulary, so every
+      document describing it is currently describing the database accurately.
+      Promote these to `entries:` in the SAME commit that lands the §5 migration,
+      not before and not after — before is noise, after leaves a window where the
+      docs and the data disagree with nothing watching.
+    note: >-
+      Measured 2026-08-05, repo-wide: VERIFIED-1 89 files, UNVERIFIED-1 85,
+      VERIFIED-2 35, VERIFIED-WITH-CORRECTION 26. Note the substring trap — a
+      literal search for VERIFIED-1 also matches UNVERIFIED-1, so these need
+      `match: identifier` (word-boundary) and the counts above are upper bounds.
+
+  - tokens: [DISPUTED]
+    retired_by: "partially — DR-2026-08-04 §4.4"
+    precondition: >-
+      NOT fully retired, and this is the trap. The DR preserves DISPUTED as the
+      closure reason `disputed-existence`, explicitly "because of the possibility
+      that there is no resolution for something". Only its use as a
+      verification_status value is retired. A bare token match cannot separate the
+      two, so this fails admission test 4 as well as test 2. If promoted at all it
+      must match the status use specifically, not the word.
+
+# --- rejected: will NOT be added, and why -----------------------------------
+# Adding any of these would flood the check and train readers to ignore it. Each
+# was considered against the admission test on 2026-08-05 and failed.
+rejected:
+
+  - tokens: ["E-01 .. E-20 (entity codes)"]
+    reason: >-
+      Fails admission test 4, irreducibly. `E-08` is simultaneously the Item ENTITY
+      TYPE (retired spelling) and Corridor Clear Width, a live `items.item_code`
+      (correct spelling). No regex separates them; only reading the sentence does.
+      DR-2026-07-21 §4 reached the same conclusion and excluded the sweep
+      deliberately — it renamed the entity side precisely BECAUSE the item side is
+      a data key that must not move. Re-deriving this costs an hour; do not.
+
+  - tokens: [cross-population]
+    reason: >-
+      Fails admission test 3 in a way worth stating plainly: the token is retired by
+      CO-0003 ("use co-occurring disability or multi-population"), but
+      references/project-standards.md — the OPERATIVE ledger that carries the
+      retirement — goes on to use the retired term in at least five later rules of
+      its own. The rule is contradicted by its own authority. That is a finding
+      requiring adjudication, not a tripwire; wiring a check to a self-contradicting
+      rule makes the check wrong ~175 files at a time. Raise it as a DR.
+
+  - tokens: ["two-marker scheme"]
+    reason: >-
+      Fails test 4. The drift between mission-and-epistemics.md's two-marker
+      scheme and tier-system.md's operative three-marker scheme is real and is
+      already recorded in CLAUDE.md §6, but it is expressed as prose about markers,
+      not as a distinguishable token. The fix is to reconcile the doctrine
+      documents, which is item F, not to grep for symbols that both schemes share.

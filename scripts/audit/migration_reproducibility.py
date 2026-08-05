@@ -9,7 +9,7 @@ reproduces from its own history.
 
 WHY THIS IS A SCRIPT
 --------------------
-It used to exist twice — as an inline heredoc in .github/workflows/audit.yml and
+It used to exist twice — as an inline heredoc in .github/workflows/audit.yml and  [RETIRED-VOCAB-OK]
 a second, separately-maintained heredoc in scripts/preflight.sh. Two copies of an
 invariant list is one copy too many: adding a table to one does not add it to the
 other, and nothing would have told you. This is now the single definition, wired

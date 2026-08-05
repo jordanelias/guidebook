@@ -59,7 +59,7 @@ Sessions must:
 ### Pros
 - Minimal infrastructure change — just a new file convention
 - Works within existing git workflow
-- Can be enforced via `.github/workflows/audit.yml` (block DB-file pushes if the lock is held by another session)
+- Can be enforced in CI (block DB-file pushes if the lock is held by another session). *As filed this named `audit.yml`, which was folded into `ci.yml` on 2026-08-01; a check would now be declared in `governance/check-registry.yaml`.*  <!-- [RETIRED-VOCAB-OK] -->
 
 ### Cons
 - **Has its own race condition** — two sessions can both pull, both see "no current writer," both write the lock file. The lock commit is itself a race.

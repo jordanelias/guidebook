@@ -934,6 +934,11 @@ The proposed revision:
 - Same repo: continue in `jordanelias/guidebook` `main`. The trigger table predicted "Likely sibling repo or sub-directory (`db/`) for the database" — the actual recommendation is **subdirectory `data/db/` for the SQLite file**, NOT a sibling repo. Rationale: SQLite is a single file; a sibling repo for one binary file is overhead without benefit; the audit trail of decisions and migrations belongs alongside the corpus.
 - Add `architecture/` directory recognition (already created at S8).
 - Add `data/db/guidebook.db` as the operative substrate location once adopted.
+  **[Superseded by execution, noted 2026-08-05]** The canonical database landed at
+  `data/guidebook.db`, not `data/db/guidebook.db`. The proposal line is left as
+  written; see the outcome banner at the head of
+  `governance/repo-strategy-revision-co.md`, and RV-008 in
+  `governance/retired-vocabulary.yaml`.
 - Migration tooling lives under `scripts/migrate/`.
 - The original "sibling repo" predictions were conservative estimates pre-substrate-selection; SQLite's single-file form makes them moot.
 
