@@ -104,4 +104,5 @@ Status: RESOLVED (Part 8 ref exists) · UNRESOLVED (needs Part 8 entry) · ZONED
 **Upstream dependency:**  — runs at Phase 2B–3 to produce conflict domain matrix and resolution evidence. This skill's §3 Known Conflict Patterns table should be updated from cross-population-conflict-mapper output before Phase 5 runs.
 
 **Preceded by:** All Phase 3 writing complete · `evidence-marker` audit complete
-**Feeds into:** Part 8 §8.4 development · `gap_register.md` (unresolved conflicts) · `cross-reference-resolver` (new Part 8 refs)
+**Feeds into:** Part 8 §8.4 development · the `gaps` table for unresolved conflicts
+(`python3 scripts/db.py add-gap …` — `gap_register.md` was archived) · `cross-reference-resolver` (new Part 8 refs)

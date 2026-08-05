@@ -140,7 +140,11 @@ Validation:          PASS / FAIL [reason if FAIL]
 
 ## Stage 6 — Gap Register and Session Log Update
 
-For each completed replacement operation, GET `gap_register.md` + SHA, append entry, PUT back (Project Instructions §GitHub API):
+For each completed replacement operation, record the gap in the `gaps` table —
+`python3 scripts/db.py add-gap …`, or `close-gap` if the operation resolves one.
+This said "GET `gap_register.md` + SHA, append entry, PUT back"; that file does not
+exist anywhere in the repository. The YAML below is the shape of the entry, not a
+file format:
 
 ```yaml
 - id: FR-[DATE]-[SEQ]
