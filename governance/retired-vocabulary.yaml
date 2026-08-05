@@ -115,7 +115,8 @@ entries:
     replacement: "item_population_links (the junction that replaced the packed column)"
     note: >-
       Not a naming preference: the column DOES NOT EXIST in the live schema
-      (verified against data/guidebook.db 2026-08-05, all 67 tables). Code that
+      (verified against data/guidebook.db 2026-08-05 — all 67 tables and all 18
+      views; a view could otherwise still expose it). Code that
       names it does not return a stale answer — it raises OperationalError.
       This is exactly how scripts/migrate/migrate_items.py was discovered: it took
       no required arguments, opened the canonical DB immediately, and was saved

@@ -15,7 +15,7 @@ description: >
 
 > ## ⚠ INOPERATIVE — every SQL statement below targets a table that does not exist
 >
-> **Checked 2026-08-05 against all 67 tables and views in `data/guidebook.db`:
+> **Checked 2026-08-05 against all 67 tables and all 18 views in `data/guidebook.db`:
 > there is no `specification` table, and no column named `question_heading`
 > anywhere in the database.**
 >
