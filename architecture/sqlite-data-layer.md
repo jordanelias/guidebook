@@ -4,6 +4,33 @@
 **Version:** 3 (full rewrite — all review concerns addressed)  
 **Status:** FOR IMPLEMENTATION
 
+> **DDL BANNER — added 2026-08-05. The `CREATE TABLE` blocks below are the
+> 2026-05-05 DESIGN, not the live schema.**
+>
+> Implementation diverged, in some places substantially. The authoritative source
+> is the database, and it is one query away — never copy a column list out of this
+> document into code:
+>
+> ```python
+> import sqlite3
+> con = sqlite3.connect('file:data/guidebook.db?mode=ro', uri=True)
+> print([r[1] for r in con.execute("PRAGMA table_info(evidence_sources)")])
+> ```
+>
+> `evidence_sources` is the widest divergence. As designed here it has 13 columns
+> including `authors`, `year`, `title` and `doi_less_key`; the live table has none
+> of those four — they became `author_display` / `pub_year` / `pub_title`, with
+> structured authors in the separate `evidence_source_authors` table, and the
+> derived dedup key was dropped with no successor. Code written from the block in
+> §4.4 raises `no such column`. That is not hypothetical: it is exactly how
+> `scripts/validate_db.py` came to die at C5, and with it `scripts/db.py validate`,
+> which invokes it as a subprocess.
+>
+> The design blocks are **preserved, not corrected**: this document records what
+> was specified before implementation, and rewriting it to match the outcome would
+> destroy that record while leaving a second, competing copy of a schema the DB
+> already holds. §10 IS kept current, because it describes a script that runs.
+
 ---
 
 ## 1. Problem
@@ -1057,9 +1084,14 @@ Each script: `--dry-run` first → review output → `--commit` to apply → upl
 Checks:
   C1  PRAGMA integrity_check → must return 'ok'
   C2  PRAGMA foreign_key_check → must return 0 rows
-  C3  PRAGMA user_version → must match expected version constant in script
+  C3  PRAGMA user_version → must match the highest schema migration on disk
+      (derived from scripts/migrations/NNN_*.sql; was a constant in the script,
+      pinned at 5 and therefore failing on every correctly-migrated DB)
   C4  connections with 0 rows in connection_targets → must be 0 (every connection needs ≥1 target)
-  C5  evidence_sources with neither doi nor doi_less_key → WARNING (incomplete dedup data)
+  C5  evidence_sources carrying NO stable identifier — none of doi, pmid, pmcid,
+      isbn, issn, handle, standard_number, url → WARNING (can only be deduplicated
+      on normalised title). Was 'neither doi nor doi_less_key'; that key was
+      dropped from the schema, and the query against it crashed the whole script.
   C6  citation_mining rows with backward=1 AND forward=1 AND connections_produced='[]'
       → INFO only (mining completed, nothing found — valid outcome)
   C7  source_slug_links.local_ref_id not present in citation_mining for same slug

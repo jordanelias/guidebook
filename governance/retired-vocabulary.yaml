@@ -135,6 +135,11 @@ entries:
       - "scripts/tests/test_db_integrity.py"     # comment explains why C5 lapsed
       - "scripts/db.py"                          # comment on the line that STRIPS the key
       - "scripts/migrate_evidence_sources_v2.py" # one-time migrator FROM the old schema
+      # The 2026-05-05 pre-implementation DESIGN document. Its CREATE TABLE blocks
+      # are what was specified, not what was built; a DDL banner at the head of the
+      # file says so and points at the live schema. Preserved rather than corrected,
+      # for the same reason as the proposal-of-record documents under RV-008.
+      - "architecture/sqlite-data-layer.md"
     note: >-
       Same class as RV-001 — the column is absent from every live table. This is
       the name that breaks scripts/validate_db.py (`no such column: doi_less_key`),

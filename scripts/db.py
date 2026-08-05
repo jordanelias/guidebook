@@ -824,7 +824,7 @@ def main():
     p_ai.add_argument("--item-code", required=True)
     p_ai.add_argument("--category", required=True)
     p_ai.add_argument("--name", required=True)
-    # RETIRED. `items.applicable_groups` was a CSV of population codes packed into
+    # RETIRED. `items.applicable_groups` was a CSV of population codes packed into  # [RETIRED-VOCAB-OK]
     # one column; it was replaced by the `item_population_links` junction and
     # dropped from the schema. The flag is kept rather than deleted so the failure
     # says where populations went — insert_item builds its INSERT from the dict
@@ -1174,7 +1174,7 @@ def main():
         }
         if args.applicable_groups:                          # [RETIRED-VOCAB-OK]
             raise SystemExit(
-                "--applicable-groups is retired: items.applicable_groups was dropped "
+                "--applicable-groups is retired: items.applicable_groups was dropped "  # [RETIRED-VOCAB-OK]
                 "from the schema when the packed CSV column was replaced by the "
                 "item_population_links junction.\n"
                 "Populations attach to an item as one row per (item_code, "

@@ -106,9 +106,9 @@ def validate(verbose: bool = False):
 
     # C5: evidence_sources with no stable identifier to deduplicate on.
     #
-    # Rewritten 2026-08-05. This read `doi_less_key`, a derived dedup key that was
+    # Rewritten 2026-08-05. This read `doi_less_key`, a derived dedup key that was  # [RETIRED-VOCAB-OK]
     # dropped from the schema, so the whole script died here with
-    # `sqlite3.OperationalError: no such column: doi_less_key` — and it is invoked
+    # `sqlite3.OperationalError: no such column: doi_less_key` — and it is invoked  # [RETIRED-VOCAB-OK]
     # as a subprocess by `scripts/db.py validate`, so that CLI command had been a
     # guaranteed traceback rather than a validation.
     #

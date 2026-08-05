@@ -115,7 +115,7 @@ def db_get_item(conn, item_code):
 def db_get_item_populations(conn, item_code):
     """Population codes linked to an item, with their applicability.
 
-    Replaces `items.applicable_groups`, a CSV of codes packed into one column
+    Replaces `items.applicable_groups`, a CSV of codes packed into one column  # [RETIRED-VOCAB-OK]
     that was dropped when `item_population_links` took over. Reading the old
     column crashed this script on line 243 for every real run — `--status` was
     the only path that never touched it, which is why the breakage survived.

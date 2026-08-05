@@ -13,7 +13,7 @@ Exit codes: 0 = pass, 1 = fail
 
 V5 REWRITTEN 2026-08-05, for two reasons that were each independently fatal.
 
-It read `items.applicable_groups`, a CSV of population codes packed into one
+It read `items.applicable_groups`, a CSV of population codes packed into one  # [RETIRED-VOCAB-OK]
 column. That column was dropped when `item_population_links` replaced it, so
 every run of this validator raised `IndexError: No item with that key` on the
 first row. It validated nothing, loudly, for as long as that was true.

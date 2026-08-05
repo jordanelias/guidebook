@@ -346,7 +346,7 @@ checks:
     cost: fast
     note: >-
       REPAIRED AND WIRED 2026-08-05; was quarantined `broken`. It crashed with
-      `IndexError: No item with that key` reading `items.applicable_groups`, a CSV
+      `IndexError: No item with that key` reading `items.applicable_groups`, a CSV  # [RETIRED-VOCAB-OK]
       of population codes packed into one column and dropped when
       `item_population_links` replaced it — so V5 had been validating nothing,
       loudly, for as long as that was true.
