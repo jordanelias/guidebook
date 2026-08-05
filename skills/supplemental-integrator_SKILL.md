@@ -29,7 +29,9 @@ Run before any file edits:
    - New gap register entries (YAML blocks)
    - Matrix strategy: Option A or Option B
 3. Count BAR/code instances per target file. Log in integration plan.
-4. Confirm no open P1 blockers in `gap_register.md` that conflict with taxonomy changes.
+4. Confirm no open P1 blockers that conflict with taxonomy changes:
+   `python3 scripts/db.py gaps --status OPEN` (the gap register is the `gaps`
+   table; `gap_register.md` was archived and no longer exists).
 
 ---
 
@@ -56,7 +58,10 @@ Run before any file edits:
 - Add note: *These codes are supplementary-volume-specific and are not part of the main guidebook's disability taxonomy.*
 
 ### 1c. Gap register
-- Add new gap entries (YAML) from supplemental volume revision notes → GET `gap_register.md` + SHA, append, PUT back (Project Instructions §GitHub API).
+- Add new gap entries from supplemental volume revision notes:
+  `python3 scripts/db.py add-gap --category {CAT} --priority {P} --description "…" --session {session}`.
+  This said "GET `gap_register.md` + SHA, append, PUT back" — that file does not
+  exist anywhere in the repository; the register is the `gaps` table.
 - Append only. Never overwrite existing entries.
 
 ---

@@ -24,17 +24,27 @@ description: >
 
 ### 1a — Load core state (GraphQL batch_read — call 1)
 
-Fetch in one call via github-io batch_read:
-- `sessions/LATEST`
-- `references/project-standards.md`
-- `skills/workplan-orchestrator_SKILL.md`
-- `workplan/workplan-co0007-v4.md` — **canonical operative plan (always load)**
+Load:
+- `references/project-standards.md` — the append-only operative rule ledger
+- the **newest** dated file(s) in `workplan/` that match your task
 
-Parse LATEST to get session filename. Read v4 §Current position — report active stage before any task discussion.
+> **[CORRECTED 2026-08-04] There is no single canonical plan.** This step used to
+> name `workplan/workplan-co0007-v4.md` as "canonical operative plan (always
+> load)". **That file does not exist.** Per CLAUDE.md §9, several dated workplans
+> coexist by design (consolidation, coverage-completion, remediation, fork-cut, …);
+> sort `workplan/` by date and read the newest that matches the task at hand. Do
+> not treat any one of them as authority over the others, and do not trust a date
+> written inside one — derive current state from the DB and `git log`.
+
+> **`sessions/LATEST` is NOT a reliable session pointer** (CLAUDE.md §10). It is
+> being asked to mean both "most recent session" and "most recent *research*
+> session", and it currently names a session that logged zero `evidence_sources`
+> rows. Splitting it is W4.1 of `workplan/2026-08-02-architecture-decision-and-execution-plan.md`
+> and is owner-gated. Find the current handoff via the newest `workplan/` file instead.
 
 > **Connection register (Phase 1 SQLite — 2026-05-05):** All connection state is in `data/guidebook.db`. Do NOT load `references/connections/_index.md` (archived). Query connections via `python3 scripts/db.py connections`. Per-topic `connections.md` files are archived — do not read or write.
 
-> **Workplan authority (2026-05-08):** `workplan-co0007-v4.md` is the only operative plan. All other workplan files are either deprecated (with explicit banners) or tactical references subordinate to v4. Do not load or follow any other workplan for session planning. See `workplan/workplan-reconciliation-2026-05-08.md` for the full supersession map.
+> ~~**Workplan authority (2026-05-08):** `workplan-co0007-v4.md` is the only operative plan. All other workplan files are either deprecated (with explicit banners) or tactical references subordinate to v4. Do not load or follow any other workplan for session planning.~~ **[SUPERSEDED 2026-08-04 — the named file does not exist and the single-plan model was abandoned; see the correction above and CLAUDE.md §9.]** `workplan/workplan-reconciliation-2026-05-08.md` remains readable as the historical supersession map.
 
 ### 1b — Load session file + connection summary (GraphQL + bash — call 2)
 
@@ -47,12 +57,21 @@ python3 scripts/db.py connections --status PENDING --confidence HIGH
 ```
 Note count — these are the highest-priority integration targets for any ISW session.
 
-### 1c — Workplan roadmap (display — v4 already loaded in §1a)
+### 1c — Workplan roadmap (display)
 
-When the user's opening message mentions "workplan", "roadmap", "where are we", "what's left", or similar — render this roadmap from v4 §Current position + §Budget arithmetic (both already in context from §1a):
+When the user asks "where are we", "what's left" or similar, **derive the answer
+from the live repo** — the newest `workplan/` file, recent `git log`, and the DB —
+not from the block below.
+
+> **[SUPERSEDED 2026-08-04] The roadmap below is a May-2026 snapshot and its
+> instruction to "render from v4" points at a file that does not exist.** It shows
+> C1 as ACTIVE and every C-stage at zero; since then the project has run Phase B/E
+> rehabilitation, the SQLite substrate, D-0157, and the fork-cut work — none of
+> which this ladder can express. It is retained only as a record of how the work
+> was originally staged. **Do not report it to a user as current status.**
 
 ```
-ROADMAP — Accessible Built Environments Guidebook
+ROADMAP — Accessible Built Environments Guidebook (May 2026 snapshot — SUPERSEDED)
 ══════════════════════════════════════════════════
 Stage 0  Verification + decision freeze     ████████████████████ COMPLETE  (9 sessions)
 Stage A  Foundations (A1-A13)                ████████████████████ COMPLETE  (24 sessions)
@@ -77,7 +96,8 @@ B4.2-B7  Deferred (post-content)            ░░░░░░░░░░░░
 CONSUMED: ~43 sessions  |  REMAINING: ~145-210  |  TOTAL: 188-253
 ```
 
-**Update rules:** render from v4 budget table, not from this static block. As sessions complete, update consumed counts. When a C-stage completes, mark COMPLETE.
+**Do not update this block.** It is a superseded snapshot, not a live tracker;
+editing it would recreate the false impression that it reflects current state.
 
 ### 2 — Load gap register (SQLite query)
 
@@ -128,7 +148,7 @@ B3=$([ "$B1" = "PASS" ] && \
      [ "$(_exists references/spec-db-part4-reconciliation.md)" = "200" ] && echo PASS || echo FAIL)
 
 PENDING=$(python3 -c "import sqlite3; \
-  print(sqlite3.connect('/tmp/guidebook.db') \
+  print(sqlite3.connect('file:data/guidebook.db?mode=ro', uri=True) \
   .execute(\"SELECT COUNT(*) FROM connections WHERE status='PENDING'\") \
   .fetchone()[0])" 2>/dev/null || echo "?")
 
@@ -202,26 +222,36 @@ Full old→new mapping: `workplan/P1-D2-D3-co0004-remapping.md`.
 
 ---
 
-## Population Codes (canonical)
+## Population Codes
 
-| Code | Label |
-|---|---|
-| MOB | Mobility & Strength (MOB/AMB, MOB/UPL) |
-| VIS | Visual impairment |
-| DEAF | Deaf / hard of hearing / hearing device users |
-| NEU | Neurological / ABI (NEU/PCS) |
-| DEM | Dementia |
-| NDV | Neurodivergence (NDV/AUT, NDV/ADHD, NDV/SENS) |
-| NDV/MH | Mental health / PTSD / trauma |
-| PAIN | Chronic pain / fibromyalgia |
-| DBL | DeafBlind |
-| OFS | Orthostatic & fatigue spectrum (OFS/ME, OFS/POTS, OFS/MCAS) |
-| IntD | Intellectual disability |
-| ALL | All disability categories |
+**Do not read a population list out of a skill file — query the table.**
 
-VIS, DEAF, DBL: three distinct codes. VIS/DEAF is invalid. DBL ≠ VIS + DEAF.
-BAR is NOT main taxonomy. Large body size → Supp. Part 4 only. BAR in Volumes I–II = error.
-Supplementary only (not main taxonomy): CHD · LPA · EXH · BAR.
+```bash
+python3 -c "import sqlite3; c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True); \
+  [print(f'{r[0]:<12}{r[1]}') for r in c.execute('SELECT population_code, display_name FROM populations ORDER BY 1')]"
+```
+
+The set is **23 flat codes**, ratified by `DR-2026-07-23` and mirrored exactly by
+`schemas/enums.py:PopulationCode`. Curate *from the functional axes* — never coin
+umbrella codes (`governance/functional-taxonomy.md` §3.3, RULE 2026-07-22,
+`DR-2026-07-22-work-from-axes`).
+
+> **[CORRECTED 2026-08-04] The table that stood here was wrong on roughly half its
+> rows and was labelled "canonical".** It listed `VIS`, `NEU`, `DBL`, `OFS`,
+> `IntD` and `NDV/MH` — **none of which exist** in `populations`. The
+> 2026-07-21/22 reclassification replaced them (`VIS`→`BLIND`, `DBL`→`DEAFBLIND`,
+> the orthostatic/fatigue group→`COM`, `IntD`→`ID`, and so on) and added `LMB`,
+> `MOVE`, `BRAIN`, `LPA`, `TALL`, `VES`, `EPI`, `MS`, `SCI`.
+>
+> Two of its rules were not merely stale but **inverted**:
+> - *"VIS/DEAF is invalid"* — correct in outcome, but `table-formatter_SKILL.md`
+>   simultaneously mandates a `VIS/DEAF` matrix column as "canonical, never
+>   reorder". Neither code exists; the pair contradicted each other on a code that
+>   is simply gone.
+> - *"BAR is NOT main taxonomy … BAR in Volumes I–II = error"* — **`BAR` is an
+>   active population** in the live table (fat people; people in larger bodies).
+>   It carries one `item_population_links` row today, so it is thinly populated,
+>   not illegitimate. Flagging it as an error was doctrine-inverting.
 
 ---
 
@@ -303,10 +333,19 @@ These workflows are structurally sound but depend on skills that will be rebuilt
 ---
 
 ## Gap Register — Write Protocol
-When any skill produces a gap item:
-1. GET `SQLite gaps table` + SHA via github-io.
-2. Append: `GAP-XXX | P{1|2|3} | OPEN | {skill} | {section} | {description} | {YYYY-MM-DD HH:MM}`
-3. PUT back via github-io. Commit: `workplan-orchestrator: append GAP-XXX [{YYYY-MM-DD HH:MM}]`
+Gaps live in the `gaps` table (313 rows), not in a file. Write one with:
+
+```bash
+python3 scripts/db.py add-gap --priority P1 --category AUDT \
+  --description "..." --session "$SESSION"
+```
+
+> **[CORRECTED 2026-08-04]** These steps read *"GET `SQLite gaps table` + SHA via
+> github-io … PUT back"* — a literal placeholder string left by a find-and-replace
+> that swept `gap_register.md` out of the skills, producing an instruction to
+> fetch and commit a **file named "SQLite gaps table"**. `gap_register.md` was
+> archived; the register is a table. The same placeholder appears elsewhere in
+> this file and in three other skills.
 
 Never overwrite CLOSED items.
 
@@ -370,10 +409,24 @@ Unchanged.
 | github-io |
 | github-filing |
 
-### Deprecated (10)
-Replaced by Python tools or absorbed into other skills.
+### Deprecated (5)
+Replaced by Python tools or absorbed into other skills. These are the files that
+actually live in `skills/deprecated/`:
 
-chunk-assembler · file-splitter · find-and-replace · fix-linebreaks · markdown-formatter · table-formatter · haiku-chunker · toc-editor · supplemental-integrator · vol2-item-formatter
+chunk-assembler · file-splitter · fix-linebreaks · haiku-chunker · vol2-item-formatter
+
+> **[CORRECTED 2026-08-04]** This list named **ten**, five of which are live skills
+> in `skills/`: `find-and-replace`, `markdown-formatter`, `table-formatter`,
+> `toc-editor`, `supplemental-integrator`. An agent trusting this roster would
+> refuse to use five available skills. Verified against the filesystem, not the
+> registry — `references/skill-registry.md` is itself incomplete (it omits
+> `integrity-protocol` and `supersession-audit`, both live).
+>
+> The full deprecated set in `skills/deprecated/` is larger than five (it also
+> holds `bibliography-updater`, `bulk-renumber`, `connection-scout`,
+> `evidence-marker`, `keyword-lookup`, `neufert-image-analyzer`); the five above
+> are only the ones this list previously got right. **Check the directory, not
+> this table.**
 
 ### To build (Phase B/C)
 poe-assessor · intersectionality-checker · index-generator · glossary-manager · figure-numbering · docx-exporter · accessibility-checker
@@ -389,7 +442,7 @@ poe-assessor · intersectionality-checker · index-generator · glossary-manager
 | A6 (Evidence methodology) | validate_evidence_state.py, convert_sources.py | multilingual-research output validator |
 | A7 (Population taxonomy) | validate_population.py | — |
 | A8 (Jurisdiction philosophy) | validate_jurisdiction.py, convert_jurisdictions.py | jurisdiction-tracker output validator |
-| A9 (Time model) | validate_temporal.py, version_retrofit.py | — |
+| A9 (Time model) | ~~validate_temporal.py~~ (QUARANTINED 2026-08-04 — passes on zero records; `data/temporal/` absent), version_retrofit.py (its generator, never run) | — |
 | A10 (Adversarial-use review) | audit_adversarial_use.py | — |
 | A12 (Decision protocol) | decision_capture.py | — |
 | A13 (Doctrine recheck) | doctrine_recheck.py, contamination_sampler.py | — |
@@ -397,7 +450,7 @@ poe-assessor · intersectionality-checker · index-generator · glossary-manager
 ---
 
 ## Risk Escalation
-After each analysis level: tally escalation signals (→ `references/project-standards.md`). ≥2 signals → append REVIEW item to `SQLite gaps table` via github-io.
+After each analysis level: tally escalation signals (→ `references/project-standards.md`). ≥2 signals → record a REVIEW gap with `python3 scripts/db.py add-gap` (see the Gap Register write protocol above; the `SQLite gaps table` placeholder that stood here was a find-and-replace artifact).
 
 ## Token Rules
 Never re-run a completed stage. Consume existing outputs. Checkpoint per stage: 1–2 lines. Context limit approaching → complete stage, invoke `session-consolidator`, instruct user to start new chat. All timestamps: `YYYY-MM-DD HH:MM`.

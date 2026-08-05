@@ -22,7 +22,24 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).parent.parent.parent
-DB_PATH   = Path(os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db"))
+# LEGACY IMPORTER — see _legacy_guard.py. This took NO required arguments and
+# opened the CANONICAL database immediately; it was saved only by naming a column
+# that no longer exists.
+_DEFAULT_DB = os.environ.get("LEGACY_IMPORT_DB", "")
+DB_PATH   = Path(_DEFAULT_DB) if _DEFAULT_DB else None
+
+# --- LEGACY IMPORT GUARD (module level, so no entry point can bypass it) -------
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from _legacy_guard import assert_not_canonical  # noqa: E402
+if DB_PATH is None:
+    raise SystemExit(
+        os.path.basename(__file__) + ": refusing to run with no explicit target.\n"
+        "This is a ONE-TIME LEGACY IMPORTER that writes outside the migration system.\n"
+        "It no longer defaults to the canonical database. To reconstruct history,\n"
+        "set LEGACY_IMPORT_DB to a SCRATCH copy."
+    )
+assert_not_canonical(DB_PATH, os.path.basename(__file__))
+# ------------------------------------------------------------------------------
 SPEC_PATH = REPO_ROOT / "versions/current/Guidebook_for_Accessible_Design_v9-0_2026-03-20.md"
 SESSION   = "session_migration_migrate_items"
 

@@ -188,10 +188,10 @@ def github_list(path, pat):
 For files >50 KB where only a subset of lines is needed. Avoids loading full content into context.
 
 ```bash
-# Gap register — OPEN P1 items only
-curl -sL -H "Authorization: token ${PAT}" \
-  "https://api.github.com/repos/jordanelias/guidebook/contents/gap_register.md" \
-  | python3 -c "import sys,json,base64; d=json.load(sys.stdin); c=base64.b64decode(d['content']).decode(); [print(l) for l in c.split('\n') if '| OPEN |' in l or '| P1 |' in l]"
+# Gap register — OPEN P1 items only.
+# NOT a file fetch: gap_register.md was archived and does not exist. The register
+# is the `gaps` table, and reading it needs no PAT and no partial-fetch trick:
+python3 scripts/db.py gaps --status OPEN --priority P1
 
 # Connection register — PENDING HIGH only
 curl -sL -H "Authorization: token ${PAT}" \

@@ -204,7 +204,7 @@ requiring a follow-up pass with `cross-reference-resolver`:
 - [ ] toc.md updated on GitHub
 - [ ] Change Order committed to GitHub
 - [ ] project-standards.md rule appended (if operation establishes a new standing rule)
-- [ ] gap_register.md updated if operation resolves or creates a gap
+- [ ] gap recorded in the `gaps` table if the operation resolves or creates one
 ```
 
 PUT the Change Order to GitHub. Commit: `toc-editor: CO-{NNNN} [{YYYY-MM-DD HH:MM}]`
@@ -226,12 +226,28 @@ GET + SHA → append → PUT. Commit: `toc-editor: append rule [{YYYY-MM-DD HH:M
 
 ---
 
-## Step 6 — Update gap_register.md (conditional)
+## Step 6 — Update the gap register (conditional)
 
-If the operation resolves an existing gap: mark CLOSED.  
-If the operation creates a new structural gap (e.g. content removed but replacement not yet written): append new P1 gap item.
+The gap register is the **`gaps` table** in `data/guidebook.db`. It is not a file.
+This step used to say "GET `gap_register.md` + SHA → update → PUT" — there is no
+`gap_register.md` anywhere in the repository, so the step could not be followed as
+written.
 
-GET `gap_register.md` + SHA → update → PUT. Commit: `workplan-orchestrator: {gap update} [{YYYY-MM-DD HH:MM}]`
+If the operation resolves an existing gap:
+
+```bash
+python3 scripts/db.py close-gap --gap-id GAP-NNN \
+    --status CLOSED-FIXED --session {session}
+```
+
+If it creates a new structural gap (content removed, replacement not yet written):
+
+```bash
+python3 scripts/db.py add-gap --category AUDT --priority P1 \
+    --description "{what is missing and why}" --session {session}
+```
+
+To read the register: `python3 scripts/db.py gaps --status OPEN`.
 
 ---
 
@@ -241,7 +257,7 @@ GET `gap_register.md` + SHA → update → PUT. Commit: `workplan-orchestrator: 
 ✓ toc.md updated (SHA: {sha})
 ✓ CO-{NNNN} committed
 {✓ / —} project-standards.md rule appended
-{✓ / —} gap_register.md updated
+{✓ / —} gaps table updated (GAP-NNN)
 
 NEXT STEPS:
 1. Run find-and-replace using CO-{NNNN} instructions (P1 items first)

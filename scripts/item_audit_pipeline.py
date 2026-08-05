@@ -112,6 +112,31 @@ def db_get_item(conn, item_code):
     ).fetchone()
 
 
+def db_get_item_populations(conn, item_code):
+    """Population codes linked to an item, with their applicability.
+
+    Replaces `items.applicable_groups`, a CSV of codes packed into one column  # [RETIRED-VOCAB-OK]
+    that was dropped when `item_population_links` took over. Reading the old
+    column crashed this script on line 243 for every real run — `--status` was
+    the only path that never touched it, which is why the breakage survived.
+
+    The junction records something the CSV could not: an `applicability` per
+    link. The schema permits five values — `applies`, `applies_strictly`,
+    `applies_loosely`, `context_dependent`, `does_not_apply` — of which only the
+    first and fourth are populated today. Read the CHECK constraint, not the
+    current data: `does_not_apply` in particular inverts the meaning of a row,
+    so a caller that counts links without excluding it counts populations the
+    item explicitly does NOT serve.
+    """
+    return [
+        (r["population_code"], r["applicability"])
+        for r in conn.execute(
+            "SELECT population_code, applicability FROM item_population_links "
+            "WHERE item_code=? ORDER BY population_code", (item_code,)
+        )
+    ]
+
+
 # ─── Validation ─────────────────────────────────────────────────────────────
 
 def validate_step_args(skip_steps, force_rerun):
@@ -159,10 +184,26 @@ def should_skip_evidence_mode(item):
     return not item["bpc_source_slug"]
 
 
-def should_skip_conflict_mapper(item):
-    ag = item["applicable_groups"] or ""
-    pops = [p.strip() for p in ag.split(",") if p.strip()]
-    return len(pops) < 2
+def should_skip_conflict_mapper(conn, item_code):
+    """Skip conflict-mapping when fewer than two populations share the item.
+
+    Counts every applicability EXCEPT `does_not_apply`. The CSV this replaced
+    could not express the distinction, so the choice has to be made explicitly:
+
+      * conditional forms (`context_dependent`, `applies_loosely`) COUNT — a
+        conflict between a population that definitely occupies the space and one
+        that conditionally does is still a conflict, and excluding them would
+        silently narrow the audit relative to the behaviour being replaced;
+      * `does_not_apply` does NOT count — it records the opposite of a claim to
+        the space, and counting it would manufacture conflicts between an item's
+        occupants and the populations it was explicitly found not to serve.
+
+    No `does_not_apply` row exists today. The exclusion is written against the
+    schema's CHECK constraint rather than against the current data, because the
+    day the first one lands is the day this gate would otherwise start lying.
+    """
+    pops = db_get_item_populations(conn, item_code)
+    return len([c for c, a in pops if a != "does_not_apply"]) < 2
 
 
 # ─── force_rerun cleanup ────────────────────────────────────────────────────
@@ -240,7 +281,16 @@ def run_pipeline(item_code, session, skip_steps=None, force_rerun=None, dry_run=
         print(f"ERROR: {item_code} not found in items table. Run migrate_items.py first.", file=sys.stderr)
         return 1
     print(f"Item: {item['item_code']} — {item['name']}")
-    print(f"Applicable groups: {item['applicable_groups']}")
+    pops = db_get_item_populations(conn, item_code)
+    if pops:
+        applies = [c for c, a in pops if a == "applies"]
+        ctx     = [c for c, a in pops if a != "applies"]
+        line = ", ".join(applies) or "none"
+        if ctx:
+            line += f"  (context-dependent: {', '.join(ctx)})"
+        print(f"Populations: {line}")
+    else:
+        print("Populations: none linked")
     print(f"BPC slug: {item['bpc_source_slug'] or 'None'}")
 
     # ── PF-2: Get or create run ──────────────────────────────────────────────
@@ -325,8 +375,8 @@ def run_pipeline(item_code, session, skip_steps=None, force_rerun=None, dry_run=
                 steps_comp  = step_complete(conn, run_id, session, steps_comp, step)
             continue
 
-        if step == "conflict-mapper" and should_skip_conflict_mapper(item):
-            print(f"    AUTO-SKIP: fewer than 2 populations in applicable_groups")
+        if step == "conflict-mapper" and should_skip_conflict_mapper(conn, item_code):
+            print(f"    AUTO-SKIP: fewer than 2 populations linked to {item_code}")
             if not dry_run:
                 steps_start = step_started(conn, run_id, session, steps_start, step)
                 steps_comp  = step_complete(conn, run_id, session, steps_comp, step)

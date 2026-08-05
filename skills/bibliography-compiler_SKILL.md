@@ -16,10 +16,36 @@ description: >
 
 ## Schema Reference
 
-### evidence_sources columns (Phase 1)
-`ref_id, authors, year, title, doi, doi_less_key, pmid, tier, evidence_type, jurisdiction, metadata_quality, verification_status, notes`
+### evidence_sources columns
 
-**No** `surname`, `language`, `journal`, `evidence_tier` columns. Use `authors` and `tier`.
+**Read the live schema before writing a query — do not trust a column list in
+prose, including this one:**
+
+```python
+import sqlite3
+con = sqlite3.connect('file:data/guidebook.db?mode=ro', uri=True)
+print([r[1] for r in con.execute("PRAGMA table_info(evidence_sources)")])
+```
+
+The list that stood here named four columns that **do not exist** — `authors`,
+`year`, `title`, `doi_less_key` — and told you to "use `authors` and `tier`". Any  <!-- [RETIRED-VOCAB-OK] -->
+query written from it failed. The names that matter for a bibliography:
+
+| You want | The column is |
+|---|---|
+| author string | `author_display` (structured authors live in `evidence_source_authors`) |
+| year | `pub_year` |
+| title | `pub_title` (plus `pub_subtitle`, `chapter_title`, `book_title`) |
+| journal | `journal_name`, `journal_abbrev` |
+| locator | `volume`, `issue`, `pages_start`, `pages_end`, `article_number` |
+| identifiers | `doi`, `pmid`, `pmcid`, `isbn`, `issn`, `handle`, `url` |
+
+`tier` and `evidence_type` are as named and are **orthogonal** — a tier is not a
+type. There is no `surname`, `journal` or `evidence_tier` column.
+
+`doi_less_key` was a derived dedup key; it was dropped from the schema and has no  <!-- [RETIRED-VOCAB-OK] -->
+successor column. Deduplicate by DOI first, then by any other stable identifier,
+then by normalised title.
 
 ### source_slug_links columns
 `ref_id, slug, local_ref_id`

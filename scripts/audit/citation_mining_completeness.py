@@ -38,6 +38,16 @@ import sys
 
 DEFAULT_DB = os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db")
 
+def _latest_hint():
+    """What sessions/LATEST currently names — for the mis-scoped-session error."""
+    try:
+        repo = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        with open(os.path.join(repo, "sessions", "LATEST")) as f:
+            return f.read().strip().splitlines()[0]
+    except Exception:
+        return "unreadable"
+
+
 def audit(db_path, session=None, tier_max=2, output_json=False):
     if not os.path.exists(db_path):
         print(f"ERROR: DB not found at {db_path}", file=sys.stderr)
@@ -49,6 +59,58 @@ def audit(db_path, session=None, tier_max=2, output_json=False):
     except Exception as e:
         print(f"ERROR: cannot open DB: {e}", file=sys.stderr)
         return 2, None
+
+    # A --session naming a session that does not EXIST must ERROR, not report
+    # compliance.
+    #
+    # This gate is BLOCKING, and scoped to a session it reports "Outstanding: 0"
+    # whenever the scope selects nothing. Demonstrated 2026-08-04: `--session
+    # no-such-session-xyz.md` printed "Total with citation_mining row: 9 (4.7%) /
+    # Outstanding: 0" and exited 0 — a typo was indistinguishable from compliance.
+    # This closes that: an unresolvable session name is an operator error (exit 2),
+    # distinct from the backlog the gate exists to report (exit 1).
+    #
+    # WHAT THIS DELIBERATELY DOES NOT DO — and it is the bigger half.
+    # It validates that the session RECORD exists, not that the scope selects rows.
+    # A stricter row-count test was written first and reverted before commit,
+    # because `sessions/LATEST` currently names a real session that added ZERO
+    # evidence_sources rows: the strict form turns this blocking gate red on main
+    # for a pointer defect, not a mining defect. That pointer is being asked to
+    # mean both "most recent session" and "most recent RESEARCH session"; left
+    # stale it validates a closed set, advanced it reports nothing in scope, and
+    # BOTH states are meaningless (CLAUDE.md §10). The fix is the W4.1 LATEST split
+    # and it is owner-gated. Until then this gate cannot be made to mean what its
+    # name implies, and pretending otherwise by reddening main would not help.
+    # A session is RESOLVABLE if it has a record OR it logged rows. Requiring a
+    # `.md` file alone was wrong and was caught by the compliance check before it
+    # could bite: 22 of the 33 distinct `created_by_session` values in
+    # evidence_sources have no file under sessions/ — including every
+    # `session_2026-07-19-*` citation-mining batch, i.e. exactly the research
+    # sessions this gate exists to audit. File-only resolution is latent today
+    # (the registered check is fed sessions/LATEST, which is a real file) and
+    # would have turned this blocking gate red with a spurious "operator error"
+    # the moment W4.1 pointed it at a research session.
+    if session:
+        repo = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        sdir = os.path.join(repo, "sessions")
+        stem = session[:-3] if session.endswith(".md") else session
+        known = set()
+        for root, _dirs, files in os.walk(sdir):
+            for fn in files:
+                if fn.endswith(".md"):
+                    known.add(fn)
+                    known.add(fn[:-3])
+        logged = con.execute(
+            "SELECT EXISTS (SELECT 1 FROM evidence_sources "
+            "WHERE created_by_session IN (?, ?))", (stem, stem + ".md")).fetchone()[0]
+        if not logged and known and stem not in known and session not in known:
+            print(f"ERROR: --session {session!r} names no session record under "
+                  f"sessions/. A scope that selects nothing reports 'Outstanding: 0' "
+                  f"and passes, which is indistinguishable from compliance — so an "
+                  f"unresolvable name is refused rather than answered. "
+                  f"sessions/LATEST currently holds {_latest_hint()!r}.",
+                  file=sys.stderr)
+            return 2, None
 
     # Outstanding = Tier 1..tier_max source in evidence_sources, linked to some slug,
     # with no citation_mining row referencing its ref_id, and (if --session given)

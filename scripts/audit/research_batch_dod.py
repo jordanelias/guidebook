@@ -525,6 +525,14 @@ def selftest():
                "0,0,0,0,?,'t')", (T,))   # exec_id 2 absent => append-only violation for R8
     cx.execute("INSERT INTO evidence_sources (ref_id,tier,evidence_type,verification_status,"
                "notes,created_by_session) VALUES ('REF-ST1',6,'code','VERIFIED','250 lbf',?)", (T,))
+    # A tier-1..3 anchor, so that "zero citation_mining rows" is actually an R2
+    # VIOLATION. Added 2026-08-04: the corpus previously seeded only the tier-6
+    # row above, so R2's `admitted > 0` precondition was never met and the rule
+    # reported OK on a corpus its own comment claimed violated it. The old
+    # `rc == 1`-only assertion could not see the difference; the per-rule
+    # assertion added in the same commit surfaced it on the first run.
+    cx.execute("INSERT INTO evidence_sources (ref_id,tier,evidence_type,verification_status,"
+               "notes,created_by_session) VALUES ('REF-ST2',2,'sr_meta','VERIFIED','anchor',?)", (T,))
     cx.execute("INSERT INTO term_aliases (term_id,alias,language,alias_type,notes,created_at,"
                "created_by_session,updated_at,updated_by_session) "
                "VALUES ('TERM-001','x','id','TRANSLATION','','t',?,'t',?)", (T, T))
@@ -533,18 +541,44 @@ def selftest():
     # such that this corpus can no longer be built, the selftest must CRASH LOUDLY rather than
     # quietly stop testing — silent rot is the exact failure this guard exists to catch.
 
+    # Capture WHICH rules fired, not just that something did.
+    #
+    # Until 2026-08-04 this asserted `rc == 1` alone. `expected` was built, printed
+    # in the success line, and never compared — so the selftest certified nine
+    # rules while proving one. If detection for R2..R11 had all rotted, R1 alone
+    # kept it green, and this check is BLOCKING. The capture hook already existed
+    # in audit(); it simply was not used here.
+    caught = {}
     real, DB_PATH = DB_PATH, Path(fd.name)
     try:
-        rc = audit(session=T)
+        rc = audit(session=T, capture=caught)
     finally:
         DB_PATH = real
         os.unlink(fd.name)
-    expected = {"R1", "R2", "R3", "R4", "R5", "R6", "R8", "R10", "R11"}
+    # Every rule the corpus PROVABLY fires must be asserted, not just the nine the
+    # original comment named. R7, R13 and R14 were fired by this corpus all along
+    # and went unasserted — the same blind spot this selftest was hardened to
+    # close, left open for three rules that were already being exercised. R13
+    # fires because of REF-ST2 ("no population match row"), so it arrived with the
+    # R2 fix in the same commit. If a rule here stops firing, that is either
+    # detection rot or a corpus change; both need a human, so both fail.
+    expected = {"R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8",
+                "R10", "R11", "R13", "R14"}
+    fired = {c for c, n in caught.items() if n}
+    missed = expected - fired
     print()
-    if rc == 1:
-        print(f"SELFTEST: PASS — gate rejected a corpus violating {sorted(expected)}")
+    for rule in sorted(expected):
+        print(f"  {'FIRED' if rule in fired else '**SILENT — RULE NOT DETECTED**'}: {rule}")
+    if rc == 1 and not missed:
+        print(f"SELFTEST: PASS — gate rejected the corpus AND all {len(expected)} "
+              f"seeded rules fired")
         return 0
-    print("SELFTEST: FAIL — gate did NOT reject a knowingly-violating corpus")
+    if rc != 1:
+        print("SELFTEST: FAIL — gate did NOT reject a knowingly-violating corpus")
+    if missed:
+        print(f"SELFTEST: FAIL — the gate rejected the corpus, but {len(missed)} seeded "
+              f"rule(s) did not fire: {sorted(missed)}. Detection for those rules has "
+              f"rotted; exit 1 alone would have hidden it.")
     return 1
 
 

@@ -13,6 +13,42 @@ description: >
 **Model:** Opus-class (questions must be epistemically tested)
 **SQLite:** `data/guidebook.db`
 
+> ## ⚠ INOPERATIVE — every SQL statement below targets a table that does not exist
+>
+> **Checked 2026-08-05 against all 67 tables and all 18 views in `data/guidebook.db`:
+> there is no `specification` table, and no column named `question_heading`
+> anywhere in the database.**
+>
+> This skill's §3 and §4 issue four statements — one `UPDATE specification SET
+> question_heading`, three `SELECT … FROM specification` — and each raises
+> `sqlite3.OperationalError: no such table: specification`. The C10 validation it
+> cites ("every active specification MUST have a non-null `question_heading`")
+> cannot run either. There is no partial path: the skill has no other output.
+>
+> **Where the table went.** It was never built here. `specification` appears only
+> in `scripts/migrate/init_database.py` and `scripts/db/init_db.py`, which
+> initialise `data/db/guidebook.db` — the *legacy* file CLAUDE.md §7 flags as "a
+> different, legacy file", and which does not exist on disk. `schemas/specification.py`
+> still models the table, `question_heading` and all, so this is also a live
+> schemas↔SQLite mirror gap: a Pydantic model with no table behind it (CLAUDE.md
+> §10 — that drift is a bug, not a convention).
+>
+> **What would make this operative**, in order: a schema migration creating the
+> table (or adding `question_heading` to whatever table should own it — a
+> D-SCHEMA decision, Change-Order gated); reconciling `schemas/specification.py`
+> against it; then rewriting §3–§4 to route writes through
+> `scripts/emit_data_migration.py`, since the canonical DB takes writes only
+> through migrations (CLAUDE.md §0 rule 4) and a direct `UPDATE` would be wrong
+> even once the table exists.
+>
+> **The question-heading STANDARD in §1–§2 is unaffected and still good.** It is
+> editorial doctrine about what makes a question answerable from inspection, and
+> it does not depend on where the answer is stored. Read it; do not run the SQL.
+>
+> Not retired, because retirement is owner-gated (CLAUDE.md §9 guardrail 4) and
+> the standard is worth keeping. Banner-first, per the correction
+> `item-specification-writer_SKILL.md` §6 already carries for the same table.
+
 ---
 
 ## 1. Question Heading Standard

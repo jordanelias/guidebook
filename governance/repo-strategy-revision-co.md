@@ -6,6 +6,21 @@
 **Decision delegation:** D-OP / DG-REVIEW per A12 §2 (D-0140 PENDING)
 **Doctrinal anchor:** D-0138 (storage form = SQLite, PROVISIONAL); `architecture/storage-derivation.md` §5
 
+> **OUTCOME BANNER — added 2026-08-05. Read before quoting any path below.**
+> This is a **proposal of record from 2026-05-02**, preserved as written. On one
+> point execution diverged from the proposal: it proposes the operative database
+> at **`data/db/guidebook.db`**, and the canonical database is in fact
+> **`data/guidebook.db`**. `data/db/guidebook.db` has never existed in this tree.
+> The only thing that targets that path is `scripts/db/**`, which CLAUDE.md §7
+> flags as a *different, legacy* file, and which the `GUIDEBOOK_DB_PATH` contract
+> deliberately excludes.
+>
+> The proposal text is **not corrected below** — rewriting a proposal to match its
+> own outcome destroys the record of what was actually proposed, which is the same
+> principle DR-2026-07-21 §4 invoked when refusing to rewrite `E-##` in past
+> records. This banner is the correction. The path is registered as RV-008 in
+> `governance/retired-vocabulary.yaml`.
+
 ---
 
 ## 1. Purpose

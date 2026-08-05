@@ -3,7 +3,7 @@
 #
 # This is now a thin wrapper over scripts/run_checks.py, which reads
 # governance/check-registry.yaml. It used to be a second hand-kept list of checks
-# alongside ci.yml, audit.yml and research-contract.yml — and the four lists had
+# alongside ci.yml, audit.yml and research-contract.yml — and the four lists had  [RETIRED-VOCAB-OK]
 # already drifted: preflight ran validate_axes and validate_verification_consistency
 # that no workflow ran, ci.yml ran validate_jurisdiction and validate_temporal that
 # preflight didn't, and the migration-reproducibility invariant existed as two

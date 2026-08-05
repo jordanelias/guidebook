@@ -18,8 +18,12 @@ sources in basis"), for every `stated`/`provisional` cell:
 Also flags governing_refs that do not resolve to an evidence_sources row (dangling).
 
 Read-only. Exit 0 = consistent, 1 = violations. GUIDEBOOK_DB_PATH honored.
-Standalone stdlib (no pydantic). Intended for scripts/preflight.sh and, once owner
-approves, promotion into the audit.yml battery.
+Standalone stdlib (no pydantic). Registered in governance/check-registry.yaml,
+which is the only thing that wires a check — both CI and scripts/preflight.sh
+call scripts/run_checks.py against it. Promotion to `blocking` is a one-word
+change to this check's `level:` in that registry, once the owner approves.
+(This line previously named a workflow battery that was folded into ci.yml on
+2026-08-01, i.e. it described a promotion path that no longer existed.)
 """
 import json
 import os

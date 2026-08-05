@@ -824,7 +824,13 @@ def main():
     p_ai.add_argument("--item-code", required=True)
     p_ai.add_argument("--category", required=True)
     p_ai.add_argument("--name", required=True)
-    p_ai.add_argument("--applicable-groups")
+    # RETIRED. `items.applicable_groups` was a CSV of population codes packed into  # [RETIRED-VOCAB-OK]
+    # one column; it was replaced by the `item_population_links` junction and
+    # dropped from the schema. The flag is kept rather than deleted so the failure
+    # says where populations went — insert_item builds its INSERT from the dict
+    # keys, so passing this used to produce a bare `no such column` from SQLite.
+    p_ai.add_argument("--applicable-groups",
+                      help=argparse.SUPPRESS)   # [RETIRED-VOCAB-OK]
     p_ai.add_argument("--bpc-source-slug")
     p_ai.add_argument("--status", default="draft",
                       choices=list(_VALID_ITEM_STATUS))
@@ -1166,7 +1172,18 @@ def main():
             "name":      args.name,
             "status":    args.status,
         }
-        if args.applicable_groups: data["applicable_groups"] = args.applicable_groups
+        if args.applicable_groups:                          # [RETIRED-VOCAB-OK]
+            raise SystemExit(
+                "--applicable-groups is retired: items.applicable_groups was dropped "  # [RETIRED-VOCAB-OK]
+                "from the schema when the packed CSV column was replaced by the "
+                "item_population_links junction.\n"
+                "Populations attach to an item as one row per (item_code, "
+                "population_code), carrying subtype, applicability and rationale_ref "
+                "— none of which a CSV could hold.\n"
+                "Create the item first, then add the links via a data migration "
+                "(scripts/emit_data_migration.py); the canonical DB takes writes only "
+                "through migrations (CLAUDE.md §0 rule 4)."
+            )
         if args.bpc_source_slug:   data["bpc_source_slug"]   = args.bpc_source_slug
         if args.item_id:           data["item_id"]           = args.item_id
         insert_item(data, session=args.session, dry_run=args.dry_run)

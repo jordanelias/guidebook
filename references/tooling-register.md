@@ -38,7 +38,7 @@ already drifted apart:
 | `validate_axes` | — | — | — | ✓ |
 | `validate_verification_consistency` | — | — | — | ✓ |
 | `validate_jurisdiction` | ✓ | — | — | — |
-| `validate_temporal` | ✓ | — | — | — |
+| ~~`validate_temporal`~~ | — | — | — | — | *(QUARANTINED 2026-08-04 — it was blocking while examining zero records; `data/temporal/` does not exist. See `check-registry.yaml`.)* |
 | `check_rendered_docs` | — | — | — | ✓ |
 | `render_audit.js` | — | — | — | ✓ |
 | migration reproducibility | — | ✓ *(inline heredoc)* | — | ✓ *(second inline heredoc)* |

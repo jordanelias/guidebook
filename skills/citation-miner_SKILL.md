@@ -127,7 +127,13 @@ Backward mining is **not blocked by the absence of a DOI**. It requires only the
 
 **Exclude** if ANY:
 - Pure clinical without built environment application
-- Duplicate: check `doi_less_key` = `lower(first_author_surname + year + first3_title_words)`
+- Duplicate: pre-check the DOI against `evidence_sources.doi` (rule R9 — if it
+  exists, cross-file the existing `ref_id`, never duplicate). With no DOI, try the
+  other stable identifiers (`pmid`, `pmcid`, `isbn`, `issn`, `handle`, `url`),
+  then normalised title + `pub_year` + `first_author_last`.
+  *There is no dedup-key column.* This line named `doi_less_key`, which was  <!-- [RETIRED-VOCAB-OK] -->
+  dropped from the schema — as §4 of this same file already says, two screens
+  down. Two answers to one question is the disease; the §4 note is the true one.
 
 ---
 
@@ -138,7 +144,7 @@ The `db.py add-source` CLI takes **logical** fields that map to the real columns
 `--authors → author_display`, `--year → pub_year`, `--title → pub_title`, plus
 `--doi, --pmid, --tier, --evidence-type, --jurisdiction, --slug, --local-ref-id`.
 
-**Note:** the live `evidence_sources` table has **no** `authors`/`year`/`title`/`doi_less_key`
+**Note:** the live `evidence_sources` table has **no** `authors`/`year`/`title`/`doi_less_key`  <!-- [RETIRED-VOCAB-OK] -->
 columns (it uses `author_display`, `pub_year`, `pub_title`, …; structured authors live in
 the separate `evidence_source_authors` table). Run `.schema evidence_sources` for the full
 layout. The CLI mapping was restored 2026-06-22 (audit F-17) — earlier it crashed with

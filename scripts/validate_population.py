@@ -1,343 +1,247 @@
 #!/usr/bin/env python3
 """
-scripts/validate_population.py — Validate population codes across the corpus.
+scripts/validate_population.py — Validate population codes against the live taxonomy.
 
-Per governance/population-taxonomy.md (A7):
-- All population codes resolve to PopulationCode enum
-- BAR/CHD/LPA/EXH only in supplementary files
-- VIS/DEAF as compound code is rejected
-- ALL never combined with specific codes
-- IntD does not appear as a population code
-- One slug, one population (warning)
-- Sub-code range containment (warning, where data exists)
+WHAT THIS WAS, AND WHY IT WAS REPLACED (2026-08-05)
+---------------------------------------------------
+This is a `blocking` check in governance/check-registry.yaml. Run before this
+rewrite, it printed:
+
+    No files with population codes found to validate.
+
+and exited 0. It had never validated a single file, for two independent reasons,
+either of which alone was fatal:
+
+1. **Its subject did not exist.** It scanned `references/bpc/**/*.md` for a
+   `population:` key in YAML front matter. *No BPC file has YAML front matter* —
+   0 of 102 — so the extractor returned empty for every file and the scan fell
+   through to the zero-subject branch. Population lives in `bpc_metadata`, in the
+   file body, and in a dozen DB columns; it has never lived in front matter.
+2. **Its rules were the superseded taxonomy.** DR-2026-07-23 (ADOPTED, DG-NON)
+   retired the whole parent/slash code scheme and replaced it with a flat 23-code
+   set. This script still enforced the old model: a `SUBCODE_PARENTS` map of
+   `MOB/UPL`, `NEU/PCS`, `OFS/POTS` and friends — codes that no longer exist; a
+   `SUPPLEMENTARY_CODES` set containing `EXH` (retired to `TALL`) while treating
+   `LPA`/`BAR` as supplementary-only when both are now first-class populations;
+   and an explicit rule that "IntD is not a standalone population code — proxy
+   through DEM + NDV", which sub-decision 4 of that DR specifically overturned.
+   Had the extractor ever found a file, the check would have rejected valid codes
+   and accepted retired ones.
+
+**A check that examines zero subjects now FAILS.** That is the general lesson,
+and it is why the vacuity guard below is not optional politeness: a gate that
+passes by having nothing in scope is indistinguishable, in CI, from a gate that
+passed on the merits, and it is worse than no gate because it reads as assurance.
+
+WHAT IT CHECKS NOW
+------------------
+P1  schemas/enums.py `PopulationCode` and the `populations` table agree, in both
+    directions. CLAUDE.md §10: schema-mirror drift is a bug, not a convention.
+P2  every population-bearing column in the database resolves to a live code.
+    The column list is DISCOVERED, not transcribed — every column named exactly
+    `population` or `population_code`, in every table but the two excluded below.
+    New tables are covered the day they land; a hardcoded list would have to be
+    remembered, and this file is a case study in what happens when it is not.
+P3  no retired code appears in those columns, reported with the DR-2026-07-23
+    crosswalk so the message says what to write instead.
+P4  no code column holds a comma-joined list. That is the packed-CSV defect
+    `items.applicable_groups` was dropped for, and it hides retired codes from a
+    whole-string match. Each packed element is graded individually.
+P5  no unregistered scope marker. `ALL` is a populations row doing exactly that
+    job; anything else claiming it resolves nowhere.
 
 Usage:
-    python3 scripts/validate_population.py                 # full scan
-    python3 scripts/validate_population.py --quick          # sample 5 per directory
-    python3 scripts/validate_population.py --bpc-only       # BPC files only
-    python3 scripts/validate_population.py path/to/file.md  # single file
+    python3 scripts/validate_population.py
+    python3 scripts/validate_population.py --verbose
 
-Exit codes:
-    0 = all checks pass
-    1 = errors found
-    2 = configuration error
+Exit codes: 0 = pass, 1 = errors found (including zero subjects)
 """
 
 import argparse
-import glob
 import os
-import re
+import sqlite3
 import sys
+from pathlib import Path
 
-import yaml
+REPO = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO))
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from schemas.enums import PopulationCode          # noqa: E402
 
-from schemas.enums import PopulationCode
+DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", REPO / "data" / "guidebook.db"))
 
-
-# Canonical code values from enum
-VALID_CODES = {member.value for member in PopulationCode}
-
-# Supplementary-only codes
-SUPPLEMENTARY_CODES = {"CHD", "LPA", "EXH", "BAR"}
-
-# Sub-code lookup (child → parent)
-SUBCODE_PARENTS = {
-    "MOB/AMB": "MOB",
-    "MOB/UPL": "MOB",
-    "NDV/AUT": "NDV",
-    "NDV/ADHD": "NDV",
-    "NDV/SENS": "NDV",
-    "NEU/PCS": "NEU",
-    "OFS/ME": "OFS",
-    "OFS/POTS": "OFS",
-    "OFS/MCAS": "OFS",
+# The crosswalk from DR-2026-07-23. Kept here so an error message can say what to
+# write instead of merely that something is wrong: a validator reporting "unknown
+# code: UPL" sends the reader off to find the DR; one reporting "UPL is retired
+# -> LMB" does not.
+RETIRED_CROSSWALK = {
+    "VIS":  "BLIND",
+    "UPL":  "LMB",
+    "DBL":  "DEAFBLIND",
+    "NEU":  "BRAIN",
+    "PCS":  "BRAIN",
+    "OFS":  "COM",
+    "CFS":  "COM",
+    "MCAS": "COM",
+    "POTS": "COM",
+    "LCOV": "COM",
+    "SENS": "NDV",
+    "EXH":  "TALL",
+    "IntD": "ID",
+    "ABI":  "BRAIN",
 }
 
-# Known sub-codes (for distinguishing sub-code slash from multi-pop slash)
-KNOWN_SUBCODES = set(SUBCODE_PARENTS.keys())
+# Tables excluded from the scan, each for a reason that is about MEANING, not
+# convenience. Both were found by running the first draft of this scan and reading
+# what it flagged, rather than assumed in advance.
+EXCLUDED_TABLES = {
+    # The authority itself, not a subject.
+    "populations",
+    # The reclassification map. Its whole purpose is to hold the OLD codes
+    # alongside their canonical replacements, so retired codes there are the
+    # table working correctly. Flagging them would be flagging the crosswalk for
+    # containing the crosswalk.
+    "population_reclass",
+}
 
-# Invalid compound codes
-INVALID_COMPOUNDS = {"VIS/DEAF", "DEAF/VIS"}
-
-
-def is_supplementary_path(path: str) -> bool:
-    """Check if a file path is in the supplementary section."""
-    p = path.lower()
-    return "supp" in p or "supplementary" in p
-
-
-def extract_population_from_yaml_frontmatter(text: str) -> list:
-    """Extract population field from YAML front matter in markdown."""
-    # Match YAML front matter between ---
-    m = re.match(r"^---\s*\n(.*?)\n---", text, re.DOTALL)
-    if not m:
-        return []
-
-    try:
-        fm = yaml.safe_load(m.group(1))
-    except yaml.YAMLError:
-        return []
-
-    if not isinstance(fm, dict):
-        return []
-
-    pop = fm.get("population") or fm.get("populations") or fm.get("pop")
-    if pop is None:
-        return []
-
-    if isinstance(pop, str):
-        return [pop.strip()]
-    if isinstance(pop, list):
-        return [str(p).strip() for p in pop]
-    return []
+# Column names that hold a code. Deliberately EXACT, not suffix-matched: the
+# first draft matched `*_population` too, which swept in
+# `evidence_population_match.study_population` and `.target_population`. Those are
+# PROSE BY DESIGN — research-contract rule R13 requires grading the
+# population-of-study against the population-served, and the graded values are
+# sentences ("Women with rheumatoid arthritis (N=20)"). Sixty-odd of them were
+# reported as invalid codes, which was the scan being wrong, not the data.
+CODE_COLUMNS = {"population", "population_code"}
 
 
-def extract_population_from_yaml_file(path: str) -> list:
-    """Extract populations from a YAML data file."""
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            data = yaml.safe_load(f)
-    except Exception:
-        return []
-
-    if not isinstance(data, dict):
-        return []
-
-    pops = data.get("populations") or data.get("population") or []
-    if isinstance(pops, str):
-        return [pops.strip()]
-    if isinstance(pops, list):
-        return [str(p).strip() for p in pops]
-    return []
-
-
-def validate_codes(codes: list, path: str) -> tuple:
-    """Validate a list of population codes. Returns (errors, warnings)."""
-    errors = []
-    warnings = []
-
-    for code in codes:
-        # Check for invalid compounds
-        if code in INVALID_COMPOUNDS:
-            errors.append(
-                f"Invalid compound code '{code}' — "
-                f"VIS, DEAF, DBL are three distinct independent codes"
-            )
+def discover_population_columns(conn):
+    """Every (table, column) in the DB that should hold a population code."""
+    out = []
+    for (table,) in conn.execute(
+        "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name"
+    ):
+        if table in EXCLUDED_TABLES:
             continue
+        for row in conn.execute(f'PRAGMA table_info("{table}")'):
+            if row[1].lower() in CODE_COLUMNS:
+                out.append((table, row[1]))
+    return out
 
-        # Check IntD
-        if code == "IntD":
-            errors.append(
-                f"IntD is not a standalone population code — "
-                f"proxy through DEM + NDV per project-standards"
-            )
-            continue
 
-        # Check valid code
-        if code not in VALID_CODES:
-            errors.append(f"Unknown population code: '{code}'")
-            continue
+def validate(verbose=False):
+    if not DB_PATH.exists():
+        print(f"ERROR: {DB_PATH} not found.", file=sys.stderr)
+        return 1
 
-        # Check supplementary containment
-        if code in SUPPLEMENTARY_CODES and not is_supplementary_path(path):
-            errors.append(
-                f"Supplementary code '{code}' found outside "
-                f"supplementary files: {path}"
-            )
+    conn = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
+    errors, notes = [], []
 
-    # Check ALL exclusivity
-    if "ALL" in codes and len(codes) > 1:
+    enum_codes = {m.value for m in PopulationCode}
+    db_codes = {r[0] for r in conn.execute("SELECT population_code FROM populations")}
+
+    # --- P1: enum <-> table parity, both directions -------------------------
+    for c in sorted(enum_codes - db_codes):
+        errors.append(f"P1: '{c}' is in schemas/enums.py PopulationCode but not in the populations table")
+    for c in sorted(db_codes - enum_codes):
+        errors.append(f"P1: '{c}' is in the populations table but not in schemas/enums.py PopulationCode")
+    if enum_codes == db_codes:
+        notes.append(f"P1 PASS: enum and populations table agree on {len(db_codes)} codes")
+
+    # --- P2/P3: every population-bearing column resolves --------------------
+    columns = discover_population_columns(conn)
+    checked_rows = 0
+    for table, col in columns:
+        n = conn.execute(
+            f'SELECT COUNT(*) FROM "{table}" WHERE "{col}" IS NOT NULL AND "{col}" != ""'
+        ).fetchone()[0]
+        checked_rows += n
+        value_counts = dict(conn.execute(
+            f'SELECT "{col}", COUNT(*) FROM "{table}" '
+            f'WHERE "{col}" IS NOT NULL AND "{col}" != "" GROUP BY 1'
+        ))
+        values = list(value_counts)
+        if verbose and n:
+            print(f"  checking {table}.{col}: {n} row(s), {len(values)} distinct")
+        for v in values:
+            if v in db_codes:
+                continue
+
+            # A code column holding a comma-joined list is the packed-CSV defect
+            # that items.applicable_groups was dropped for: one column, several
+            # facts, no way to join on it. Report the packing AND grade each
+            # element, because the elements are where the retired codes hide —
+            # spec_value_probes carries "AUT, PCS, DEM, MH, PAIN, OFS", of which
+            # two are retired and would be invisible to a whole-string match.
+            parts = [p.strip() for p in v.split(",") if p.strip()]
+            if len(parts) > 1:
+                errors.append(
+                    f"P4: {table}.{col} holds {v!r} — several codes packed into one "
+                    f"column. A code column must hold one code; use a junction row "
+                    f"per population (the defect items.applicable_groups was dropped for)."
+                )
+                for part in parts:
+                    if part in RETIRED_CROSSWALK:
+                        errors.append(
+                            f"P3: {table}.{col} packs '{part}', retired by "
+                            f"DR-2026-07-23 — write '{RETIRED_CROSSWALK[part]}'"
+                        )
+                    elif part not in db_codes:
+                        errors.append(
+                            f"P2: {table}.{col} packs '{part}', not a live population code"
+                        )
+                continue
+
+            if v in RETIRED_CROSSWALK:
+                errors.append(
+                    f"P3: {table}.{col} holds '{v}', retired by DR-2026-07-23 "
+                    f"— write '{RETIRED_CROSSWALK[v]}'"
+                )
+            elif v == "MULTI":
+                errors.append(
+                    f"P5: {table}.{col} holds 'MULTI' ({value_counts[v]} row(s)) — an unregistered "
+                    f"scope marker. `ALL` is registered as a row in the populations "
+                    f"table with exactly this job; `MULTI` is not, so it resolves "
+                    f"nowhere. Either register it the same way, or resolve the rows "
+                    f"to the populations they actually cover."
+                )
+            else:
+                errors.append(
+                    f"P2: {table}.{col} holds '{v}', which is not a live population code"
+                )
+
+    # --- vacuity guard ------------------------------------------------------
+    # The reason this file exists in its current form. See the module docstring.
+    if not columns:
         errors.append(
-            f"ALL combined with specific codes: {codes} — "
-            f"ALL must be sole population code"
+            "VACUOUS: no population-bearing column found in the database. This "
+            "check examined nothing, so a green result would have meant nothing."
+        )
+    elif checked_rows == 0:
+        errors.append(
+            f"VACUOUS: found {len(columns)} population-bearing column(s), all "
+            "empty. This check examined no values."
         )
 
-    # Check one-slug-one-population for BPC files
-    if "/bpc/" in path.lower() and len(codes) > 1:
-        warnings.append(
-            f"BPC file has multiple population codes: {codes} — "
-            f"each slug should cover exactly one population"
-        )
+    conn.close()
 
-    return errors, warnings
-
-
-def scan_markdown_files(patterns: list, quick: bool = False) -> tuple:
-    """Scan markdown files for population codes."""
-    total_errors = 0
-    total_warnings = 0
-    total_files = 0
-
-    for pattern in patterns:
-        files = sorted(glob.glob(pattern, recursive=True))
-        if quick:
-            import random
-            files = random.sample(files, min(5, len(files)))
-
-        for path in files:
-            try:
-                with open(path, "r", encoding="utf-8") as f:
-                    text = f.read()
-            except Exception as e:
-                print(f"  READ ERROR {path}: {e}", file=sys.stderr)
-                continue
-
-            codes = extract_population_from_yaml_frontmatter(text)
-            if not codes:
-                continue
-
-            total_files += 1
-            errors, warnings = validate_codes(codes, path)
-
-            if errors:
-                total_errors += len(errors)
-                for e in errors:
-                    print(f"ERROR {os.path.basename(path)}: {e}")
-
-            if warnings:
-                total_warnings += len(warnings)
-                for w in warnings:
-                    print(f"WARN  {os.path.basename(path)}: {w}")
-
-    return total_files, total_errors, total_warnings
-
-
-def scan_yaml_files(directory: str, quick: bool = False) -> tuple:
-    """Scan YAML data files for population codes."""
-    total_errors = 0
-    total_warnings = 0
-    total_files = 0
-
-    if not os.path.isdir(directory):
-        return 0, 0, 0
-
-    files = sorted(glob.glob(os.path.join(directory, "*.yaml")))
-    if quick:
-        import random
-        files = random.sample(files, min(5, len(files)))
-
-    for path in files:
-        codes = extract_population_from_yaml_file(path)
-        if not codes:
-            continue
-
-        total_files += 1
-        errors, warnings = validate_codes(codes, path)
-
-        if errors:
-            total_errors += len(errors)
-            for e in errors:
-                print(f"ERROR {os.path.basename(path)}: {e}")
-
-        if warnings:
-            total_warnings += len(warnings)
-            for w in warnings:
-                print(f"WARN  {os.path.basename(path)}: {w}")
-
-    return total_files, total_errors, total_warnings
+    if errors:
+        print(f"population validation: {len(errors)} error(s)")
+        for e in errors:
+            print(f"  {e}")
+        return 1
+    for note in notes:
+        print(f"  {note}")
+    print(f"population validation: PASS ({len(db_codes)} live codes; "
+          f"{checked_rows} value(s) across {len(columns)} column(s) all resolve)")
+    return 0
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Validate population codes across the corpus"
-    )
-    parser.add_argument(
-        "files",
-        nargs="*",
-        help="Specific files to validate",
-    )
-    parser.add_argument(
-        "--quick",
-        action="store_true",
-        help="Sample 5 files from each directory",
-    )
-    parser.add_argument(
-        "--bpc-only",
-        action="store_true",
-        help="Only validate BPC files",
-    )
-    parser.add_argument(
-        "--verbose",
-        action="store_true",
-        help="Print all files checked",
-    )
-    args = parser.parse_args()
-
-    repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-    grand_files = 0
-    grand_errors = 0
-    grand_warnings = 0
-
-    if args.files:
-        # Validate specific files
-        for path in args.files:
-            if not os.path.exists(path):
-                print(f"  NOT FOUND: {path}", file=sys.stderr)
-                grand_errors += 1
-                continue
-
-            if path.endswith(".yaml") or path.endswith(".yml"):
-                codes = extract_population_from_yaml_file(path)
-            else:
-                with open(path, "r", encoding="utf-8") as f:
-                    codes = extract_population_from_yaml_frontmatter(f.read())
-
-            if not codes:
-                continue
-
-            grand_files += 1
-            errors, warnings = validate_codes(codes, path)
-            grand_errors += len(errors)
-            grand_warnings += len(warnings)
-            for e in errors:
-                print(f"ERROR {path}: {e}")
-            for w in warnings:
-                print(f"WARN  {path}: {w}")
-    else:
-        # Full scan
-        md_patterns = []
-        if not args.bpc_only:
-            md_patterns.extend([
-                os.path.join(repo_root, "references", "bpc", "**", "*.md"),
-                os.path.join(repo_root, "references", "search-log", "**", "*.md"),
-                os.path.join(repo_root, "references", "connections", "**", "*.md"),
-            ])
-        else:
-            md_patterns.append(
-                os.path.join(repo_root, "references", "bpc", "**", "*.md")
-            )
-
-        f, e, w = scan_markdown_files(md_patterns, quick=args.quick)
-        grand_files += f
-        grand_errors += e
-        grand_warnings += w
-
-        # YAML data files
-        if not args.bpc_only:
-            spec_dir = os.path.join(repo_root, "data", "specifications")
-            f2, e2, w2 = scan_yaml_files(spec_dir, quick=args.quick)
-            grand_files += f2
-            grand_errors += e2
-            grand_warnings += w2
-
-    # Summary
-    if grand_files == 0:
-        print(
-            "No files with population codes found to validate.",
-            file=sys.stderr,
-        )
-        return 0
-
-    status = "PASS" if grand_errors == 0 else "FAIL"
-    print(
-        f"\n{status}: {grand_files} files checked, "
-        f"{grand_errors} errors, {grand_warnings} warnings",
-        file=sys.stderr,
-    )
-    return 1 if grand_errors > 0 else 0
+    ap = argparse.ArgumentParser(
+        description="Validate population codes against the live taxonomy")
+    ap.add_argument("--verbose", action="store_true",
+                    help="print each column as it is checked")
+    return validate(verbose=ap.parse_args().verbose)
 
 
 if __name__ == "__main__":

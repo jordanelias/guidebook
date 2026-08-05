@@ -26,7 +26,7 @@ The project already had Option B infrastructure for **schema** migrations (`scri
 | Bootstrap data migration | `scripts/migrations/data_20260511000000_2026-05-11g-citation-mining.sql` | Snapshots current production data state as baseline |
 | Extended runner | `scripts/migrate_db.py` | Now applies both schema and data migrations; `--rebuild` recreates DB from scratch |
 | Emit helper | `scripts/emit_data_migration.py` | Generates timestamped data-migration files from SQL or stdin |
-| CI check | `.github/workflows/audit.yml` | Migration-reproducibility step rebuilds DB from history and diffs against committed binary |
+| CI check | `governance/check-registry.yaml` → `migration_reproducibility` | Rebuilds the DB from migration history and compares it against the committed binary |
 
 ## How sessions write to the DB now
 
@@ -72,11 +72,22 @@ A future cleanup pass should refactor `db.py` to emit migration files internally
 
 ## CI check explained
 
-`.github/workflows/audit.yml` includes a **migration-reproducibility** step:
+The check is `migration_reproducibility`, declared in `governance/check-registry.yaml`
+and run by `scripts/run_checks.py` — which is the only thing that invokes a check,
+and which both `.github/workflows/ci.yml` and `scripts/preflight.sh` call. It was an
+inline step in `audit.yml` when this document was written; that workflow was folded <!-- [RETIRED-VOCAB-OK] -->
+into `ci.yml` on 2026-08-01, and the step became `scripts/audit/migration_reproducibility.py`.
 
 1. Apply every migration in order to build a fresh DB from scratch (`migrate_db.py --rebuild /tmp/rebuilt.db`)
-2. Compare row counts and `user_version` against the committed `data/guidebook.db`
+2. Compare `PRAGMA user_version` and `COUNT(*)` **on six tables** against the committed `data/guidebook.db`
 3. FAIL the build if they diverge
+
+**Scope caveat, added 2026-08-05.** Step 2 above originally read "compare row counts",
+which reads as a full comparison and is not one. It compares counts on six tables, so
+an `UPDATE` changes nothing it can see, and neither does anything in the other 55
+tables. The migrations-only rule (CLAUDE.md §0 rule 4) is absolute; this gate is its
+detection floor, not its full extent. The complete comparison exists as
+`migration_reproducibility_deep`, advisory pending an owner decision.
 
 What this catches: a session that wrote to the DB directly (e.g., via `db.py add-source`) without also emitting a corresponding migration. The migration history would then no longer reproduce the committed DB. The check blocks the push and surfaces the diff.
 

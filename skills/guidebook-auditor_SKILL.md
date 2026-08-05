@@ -152,7 +152,9 @@ Usage: append after the closing punctuation of the claim — e.g. `The corridor 
 ### 4.3 Citation Format
 - Inline: Author Year (doi:xx.xxxx/xxxxx)
 - Unverified: append `[UNVERIFIED — DOI/URL required before publication]`
-- After two failed independent search attempts: delete value; log CLOSED-DELETED in gap_register.md
+- After two failed independent search attempts: delete the value and close its gap —
+  `python3 scripts/db.py close-gap --gap-id GAP-NNN --status CLOSED-DELETED --session {session}`.
+  (Was "log CLOSED-DELETED in gap_register.md"; that file does not exist — the register is the `gaps` table.)
 
 ---
 

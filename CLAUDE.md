@@ -138,8 +138,13 @@ con = sqlite3.connect('file:data/guidebook.db?mode=ro', uri=True)
 (`ref_id` `REF-NNNNN`; `tier` 1–6 and `evidence_type` are orthogonal) and attaches through
 `source_slug_links` → `slugs` (research units) and directly via `evidence_population_match`,
 `reasoning_doc_citations`, `spec_value_probes`, `source_value_extractions`,
-`jurisdictional_values`. `gaps` is the gap register. `decisions` in the DB is **empty
-scaffolding** — canonical decisions live in `data/decisions/decision_register.yaml`.
+`jurisdictional_values`. `gaps` is the gap register. **`decisions` holds the governance
+decision records** — imported from `data/decisions/decision_register.yaml` on 2026-08-04
+(`a28e4eec`). The two stores are currently **dual**: the YAML is still opened by four scripts —
+the blocking `decision_capture.py`, `doctrine_recheck.py`, `test_db_integrity` (L01) and the
+legacy `migrate/migrate_decisions.py` — and L01 holds the two equal in both directions. (Two
+further scripts name the path only as a selftest fixture and never read it.) Per §2 the DB is canonical; retiring the YAML needs a caller sweep and owner
+sign-off. (This line said the table was "empty scaffolding" until the import.)
 
 **Changing the data model:**
 
@@ -282,11 +287,17 @@ The individual commands still work if you want one in isolation:
 | `python3 scripts/decision_capture.py` · `doctrine_recheck.py --cross-ref` | governance audits | pydantic |
 | `python3 scripts/audit/db_path_env_audit.py` | `GUIDEBOOK_DB_PATH` contract | stdlib |
 
-Tests are **standalone scripts, not pytest** (`python3 scripts/tests/<name>.py`, each prints a
-`RESULTS: X/Y` line and exits 0/1). Only `test_db_integrity.py` is in the registry; eight more
-pass and are wired to nothing (`references/tooling-register.md` §6.7). Prefer it over the older
+Tests are **standalone scripts, not pytest** (`python3 scripts/tests/<name>.py`, exiting 0/1).
+Only three print a `RESULTS: X/Y` line — `test_db_integrity`, `test_url_verifier`,
+`test_verification_pipeline`; the rest print `RESULT: PASS`, `ALL PASS`, or (in
+`test_assess_cell_pilot`) `PASS: …`. Read the exit code, not the wording. **Ten of the twelve
+are registered** — `test_db_integrity` blocking, nine advisory in the `tests` battery. The two
+unregistered are `test_adjudication_integrity.py` (its subject audit is quarantined on a content
+backlog) and `test_generate_parts_4_2.py` (which currently exits 0 having asserted nothing: its
+fixture DB `/tmp/work14.db` does not exist). Prefer `test_db_integrity` over the older
 `validate_db.py`, which is **broken** against the current schema (`no such column: doi_less_key`)
-and is quarantined.
+and is quarantined. (Until 2026-08-04 this paragraph said only `test_db_integrity` was registered
+and that eight more were "wired to nothing" — the `tests` battery landed since.)
 
 **CI workflows** — four, since the 2026-08-01 consolidation (was eight):
 

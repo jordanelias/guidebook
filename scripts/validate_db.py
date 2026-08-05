@@ -20,7 +20,30 @@ import sys
 from pathlib import Path
 
 DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db"))
-EXPECTED_SCHEMA_VERSION = 5
+MIGRATIONS_DIR = Path(__file__).resolve().parent / "migrations"
+
+
+def expected_schema_version():
+    """Highest schema-migration number on disk.
+
+    This was the literal `5`, written when migration 005 was the newest. Schema
+    migrations are forward-only and each bumps `user_version`, so the expected
+    version is a FACT ABOUT THE MIGRATIONS DIRECTORY, not a constant — and as a
+    constant it was wrong by 47 and had C3 failing on every run of a correctly
+    migrated database. CLAUDE.md §4 says to read `PRAGMA user_version` from the
+    DB rather than trust a number written down; the same applies to what it is
+    compared against.
+
+    Data migrations (`data_*.sql`) are deliberately excluded: they are tracked in
+    the `data_migrations` table and do not touch `user_version`.
+    """
+    versions = []
+    for path in MIGRATIONS_DIR.glob("[0-9][0-9][0-9]_*.sql"):
+        try:
+            versions.append(int(path.name[:3]))
+        except ValueError:                                    # pragma: no cover
+            continue
+    return max(versions) if versions else 0
 
 
 def validate(verbose: bool = False):
@@ -57,12 +80,15 @@ def validate(verbose: bool = False):
 
     # C3: PRAGMA user_version
     uv = conn.execute("PRAGMA user_version").fetchone()[0]
-    if uv != EXPECTED_SCHEMA_VERSION:
+    expected = expected_schema_version()
+    if uv != expected:
         errors.append(
-            f"C3 FAIL: user_version={uv}, expected {EXPECTED_SCHEMA_VERSION}"
+            f"C3 FAIL: user_version={uv}, but the highest schema migration on "
+            f"disk is {expected:03d} — run `python3 scripts/migrate_db.py` to "
+            f"apply what is pending"
         )
     else:
-        infos.append(f"C3 PASS: user_version={uv}")
+        infos.append(f"C3 PASS: user_version={uv}, matching migration {expected:03d}")
 
     # C4: connections with 0 targets
     orphan_conns = conn.execute("""
@@ -78,18 +104,38 @@ def validate(verbose: bool = False):
     else:
         infos.append("C4 PASS: all connections have >=1 target")
 
-    # C5: evidence_sources without doi or doi_less_key
+    # C5: evidence_sources with no stable identifier to deduplicate on.
+    #
+    # Rewritten 2026-08-05. This read `doi_less_key`, a derived dedup key that was  # [RETIRED-VOCAB-OK]
+    # dropped from the schema, so the whole script died here with
+    # `sqlite3.OperationalError: no such column: doi_less_key` — and it is invoked  # [RETIRED-VOCAB-OK]
+    # as a subprocess by `scripts/db.py validate`, so that CLI command had been a
+    # guaranteed traceback rather than a validation.
+    #
+    # There is no successor column. Dedup is now by DOI first, then by any other
+    # stable identifier, then by normalised title (rule R9: pre-check the DOI, and
+    # cross-file an existing ref_id rather than duplicating). C5 therefore asks the
+    # question the old key was standing in for: is there ANY durable handle on this
+    # source, or can it only be matched on its title?
     no_dedup = conn.execute("""
         SELECT ref_id FROM evidence_sources
-        WHERE doi IS NULL AND doi_less_key IS NULL
+        WHERE COALESCE(doi, '')             = ''
+          AND COALESCE(pmid, '')            = ''
+          AND COALESCE(pmcid, '')           = ''
+          AND COALESCE(isbn, '')            = ''
+          AND COALESCE(issn, '')            = ''
+          AND COALESCE(handle, '')          = ''
+          AND COALESCE(standard_number, '') = ''
+          AND COALESCE(url, '')             = ''
     """).fetchall()
     if no_dedup:
         warnings.append(
-            f"C5 WARN: {len(no_dedup)} evidence source(s) with no doi or "
-            "doi_less_key (incomplete dedup data)"
+            f"C5 WARN: {len(no_dedup)} evidence source(s) carry no stable "
+            "identifier (doi/pmid/pmcid/isbn/issn/handle/standard_number/url) — "
+            "these can only be deduplicated on normalised title"
         )
     else:
-        infos.append("C5 PASS: all evidence sources have dedup key")
+        infos.append("C5 PASS: every evidence source carries a stable identifier")
 
     # C6: citation_mining mined both directions but no connections
     both_mined_empty = conn.execute("""

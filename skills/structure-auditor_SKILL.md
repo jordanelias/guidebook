@@ -106,4 +106,5 @@ Severity:
 
 **Scope boundary:** Structural extraction and violation flagging only — no rewrites. Content/framing/citations → separate skills. Heading wording → `prose-style-checker`. Table/figure numbering → `guidebook-auditor` Mode A.
 **GitHub backend:** `jordanelias/guidebook` · `main` · Protocol → Project Instructions §GitHub API
-**Escalation:** ≥3 🔴 violations → GET `gap_register.md` + SHA, append REVIEW item, PUT back (Project Instructions §GitHub API)
+**Escalation:** ≥3 🔴 violations → `python3 scripts/db.py add-gap --category AUDT --priority P1 --description "…" --session {session}`.
+(This said "GET `gap_register.md` + SHA … PUT back"; that file does not exist — the register is the `gaps` table.)
