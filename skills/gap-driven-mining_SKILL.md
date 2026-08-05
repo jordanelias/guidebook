@@ -195,7 +195,25 @@ For each gap, after running the matrix:
 
 ### 4.1 Five-outcome decision rules
 
-**`closure_evidence_found`**: at least one candidate is verified-grade evidence (`metadata_quality ∈ {COMPLETE, COMPLETE-STATUTORY}`, `verification_status ∈ {VERIFIED, UNVERIFIED-1}`) AND addresses the gap's parameter × population × outcome AND (if a numerical-spec gap) has cleared the PMP walk under `progressive-measurement` AND the four rule #7 fields (`falsification_condition`, `confidence_interval`, `shift_conditions`, `named_dissenter`) populate before the gap moves to `CLOSED-FIXED`.
+**`closure_evidence_found`**: at least one candidate is verified-grade evidence (`metadata_quality ∈ {COMPLETE, COMPLETE-STATUTORY}`, `verification_status = 'VERIFIED'`) AND addresses the gap's parameter × population × outcome AND (if a numerical-spec gap) has cleared the PMP walk under `progressive-measurement` AND the four rule #7 fields (`falsification_condition`, `confidence_interval`, `shift_conditions`, `named_dissenter`) populate before the gap moves to `CLOSED-FIXED`.
+
+> **D-0157 translation note (2026-08-05).** This gate previously read
+> `verification_status ∈ {VERIFIED, UNVERIFIED-1}`. That vocabulary was retired by
+> DR-2026-08-04 and the migration ran on 2026-08-04, so the rule had been matching
+> **nothing** on the `UNVERIFIED-1` limb ever since.
+>
+> It is not a find-and-replace. `UNVERIFIED-1` mapped to `UNVERIFIED` +
+> `verification_disposition='OPEN'`, and in the live corpus status and disposition are
+> 1:1 (VERIFIED/CLOSED 752, UNVERIFIED/OPEN 111) — so the mechanical translation would
+> admit **every source in the corpus**, which cannot be the intent of an eligibility gate.
+>
+> Resolved in the CONSERVATIVE direction, faithful to the ratified decision: the owner's
+> ruling in D-0157 was that suffixed values "are not verified properly", so `UNVERIFIED`
+> means *not established* and does not clear an evidence-eligibility gate. **This narrows
+> the gate** — sources that were eligible as `UNVERIFIED-1` are no longer. That is a
+> deliberate, flagged change, not a silent one; if the intent was "not yet exhausted"
+> rather than "established", the successor test is `verification_attempt_count`, which is
+> the column that actually tracks attempts. Raise a DR if this reading is wrong.
 
 **`partial_evidence_found`**: candidates exist but none alone closes the gap. Common cases: (a) Co-1 evidence below the worked-example threshold for the slug; (b) numerical-spec gap where the PMP walk is queued but not complete; (c) cross-population-invisibility gap where some BPCs gained coverage but others did not. The `notes` field enumerates the remaining shortfall.
 

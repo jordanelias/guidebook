@@ -63,7 +63,25 @@ FROM evidence_sources
 WHERE ref_id = :source_ref_id;
 ```
 
-Required: `metadata_quality IN ('COMPLETE', 'COMPLETE-STATUTORY')` AND `verification_status IN ('VERIFIED', 'UNVERIFIED-1')`.
+Required: `metadata_quality IN ('COMPLETE', 'COMPLETE-STATUTORY')` AND `verification_status = 'VERIFIED'`.
+
+> **D-0157 translation note (2026-08-05).** This gate previously read
+> `verification_status ∈ {VERIFIED, UNVERIFIED-1}`. That vocabulary was retired by
+> DR-2026-08-04 and the migration ran on 2026-08-04, so the rule had been matching
+> **nothing** on the `UNVERIFIED-1` limb ever since.
+>
+> It is not a find-and-replace. `UNVERIFIED-1` mapped to `UNVERIFIED` +
+> `verification_disposition='OPEN'`, and in the live corpus status and disposition are
+> 1:1 (VERIFIED/CLOSED 752, UNVERIFIED/OPEN 111) — so the mechanical translation would
+> admit **every source in the corpus**, which cannot be the intent of an eligibility gate.
+>
+> Resolved in the CONSERVATIVE direction, faithful to the ratified decision: the owner's
+> ruling in D-0157 was that suffixed values "are not verified properly", so `UNVERIFIED`
+> means *not established* and does not clear an evidence-eligibility gate. **This narrows
+> the gate** — sources that were eligible as `UNVERIFIED-1` are no longer. That is a
+> deliberate, flagged change, not a silent one; if the intent was "not yet exhausted"
+> rather than "established", the successor test is `verification_attempt_count`, which is
+> the column that actually tracks attempts. Raise a DR if this reading is wrong.
 (`COMPLETE-STATUTORY` admitted per PI rule #10 / DR-2026-05-18: statutory documents are complete via issuing-body / edition-year / jurisdiction / standard-number, not academic fields. `AUTHOR-TITLE-ONLY` and NULL/`UNVERIFIED-CLOSED`/`CLOSED-DELETED` `verification_status` remain ineligible.)
 
 If the source fails the gate:

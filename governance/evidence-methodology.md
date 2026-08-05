@@ -1,4 +1,20 @@
 # Evidence Methodology
+
+> **D-0157 amendment, 2026-08-05.** `verification_status` is a **binary standing**,
+> not a history. DR-2026-08-04 split the old five-value enum, and its migration ran
+> on 2026-08-04 (`data_20260804164915`): the live column now holds only `VERIFIED`
+> (752) and `UNVERIFIED` (111). The retired values encoded three orthogonal facts in
+> one column — standing, *method* (the `-1`/`-2` suffix), and *history*
+> (`WITH-CORRECTION`) — the same conflation migration 041 was written to end
+> elsewhere. Method now lives in `verification_method`, history in
+> `verification_note` and `verification_attempt_count`, and "closed as unverifiable"
+> in `verification_disposition` + `verification_closure_reason`.
+>
+> Where a rule below said "flag `UNVERIFIED-1` for re-search", the successor test is
+> `verification_disposition='OPEN'` — or `verification_attempt_count`, if what was
+> meant was "not yet exhausted". Where it said `∈ {VERIFIED, VERIFIED-WITH-CORRECTION}`,
+> the successor is `= 'VERIFIED'`: the owner's ruling was that a correction is history
+> and the source "is merely verified".
 **Status:** CANONICAL — A6 complete (Sessions 1–3)
 **Phase:** Stage A Phase 6 — Evidence methodology
 **Created:** 2026-04-29 17:35 UTC · **S2:** 2026-04-29 18:05 · **Closed:** 2026-04-29 19:06
@@ -45,7 +61,7 @@ Per A5 (`governance/co1-operational.md`, CANONICAL), every Co-1 citation carries
 | `evidence_type` | enum | `co1` |
 | `co1_provenance` | enum | `published_corpus` (pre-launch all) or `participatory_synthesis` (post-launch contingent) |
 | `co1_source_type` | enum | `peer_reviewed_literature`, `dpo_research`, `advocacy_position`, `academic_narrative`, `validated_tool` |
-| `verification_status` | enum | `VERIFIED`, `VERIFIED-WITH-CORRECTION`, `UNVERIFIED-1`, `UNVERIFIED-CLOSED`, `CLOSED-DELETED` |
+| `verification_status` | enum | `VERIFIED`, `UNVERIFIED` — plus `verification_disposition` (OPEN/CLOSED), `verification_method`, `verification_closure_reason`, `verification_attempt_count` |
 | `synthesis_attribution_required` | bool | `true` if the guidebook substantially synthesizes from this source (A5 §3.4 Tier 2 obligation) |
 
 Co-2 records carry `tier: 2, evidence_type: co2`. They do not require the Co-1-specific fields (`co1_provenance`, `co1_source_type`, `synthesis_attribution_required`). Co-2 records do require `verification_status`.
@@ -112,7 +128,7 @@ A cell reaches `stated` when it has **at least one anchoring source meeting any 
 
 1. **Tier 1 clinical evidence** with direct parameter relevance — primary research with intervention-level or biomechanical control addressing the design parameter for the target population.
 2. **Tier 2 synthesis evidence** with direct parameter relevance — either stream: a systematic review / meta-analysis (`sr_meta`), or a named-organisation evidence-based standard (`standard_eb` at Tier 2) addressing the parameter (G7: this stream anchored under §1.6 but was unreachable under this section's previous literal wording).
-3. **Co-1 evidence** with direct parameter relevance — a Co-1 source (per §1.3 requirements, with `verification_status ∈ {VERIFIED, VERIFIED-WITH-CORRECTION}`) that addresses the design parameter for the target population.
+3. **Co-1 evidence** with direct parameter relevance — a Co-1 source (per §1.3 requirements, with `verification_status = 'VERIFIED'`) that addresses the design parameter for the target population.
 4. **Co-2 evidence** with direct parameter guidance — an OT professional body CPG that addresses the design parameter.
 
 The OR clause is deliberate: Co-1 alone is sufficient for `stated`, as is Co-2 alone, as is Tier 2 alone. **Tier 3 alone is not** (tier3-stated-threshold DR): T3-clinical-alone yields `provisional`; T3-grey-alone yields `pending`; Tier 3 contributes to `stated` only through convergence (≥2 evidence axes, one of which may be T3-clinical). This follows from the doctrinal commitments that Co-1 is co-primary with Tier 1 — a best-practice claim grounded solely in strong Co-1 evidence is a legitimate evidence-based claim, not a provisional one — and that Tier 3 is "rarely the sole basis" (`tier-system.md` §1).
@@ -125,7 +141,7 @@ The OR clause is deliberate: Co-1 alone is sufficient for `stated`, as is Co-2 a
 
 **Resolution:** A cell is `provisional` when it has evidence that is **rich enough to synthesize** but does not meet the `stated` threshold — meaning it has no Tier 1 or Tier 2 source, no Co-1 source, and no Co-2 source with direct parameter relevance (amended per the tier3-stated-threshold DR, ACCEPTED 2026-07-13: a Tier 3-clinical source alone does not raise a cell to `stated`, but its presence is what keeps the cell at `provisional` rather than `pending` — see case (a) below).
 
-Concretely, `provisional` applies in two cases (per the tier3-stated-threshold DR and unification-DR item G1b, ACCEPTED 2026-07-13): (a) **T3-clinical-alone** — lower-control primary clinical evidence with direct relevance but no anchoring corroboration; and (b) the evidence basis is **Tier 4–6 only** (international standards, national frameworks, or statutory codes) rich enough to produce a qualified synthesis. **Scale-tagging (G1b):** a T4–6-only determination is a *Universal-Mode regulatory determination* — `design_scale='universal'`, flagged `regulatory_stratum_only` (extending `code_floor_only` from the T6-only case). Per owner directive 2026-07-21 (Option A, `decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md`) it is a best-practice determination at the weak band (○): rendered in every register only flagged weak/code-derived with the convergence-not-evidence caveat, never unflagged and never above the weak band (amended invariant I3, `governance/evidence-architecture.md` §6); it becomes a queryably distinct weak-band row of `v_best_practice` once the DR-2026-07-21 §5 engine follow-up lands — until then the view still excludes it. Its state remains `provisional`, never `stated`. For the T4–6 case, "rich enough" means:
+Concretely, `provisional` applies in two cases (per the tier3-stated-threshold DR and unification-DR item G1b, ACCEPTED 2026-07-13): (a) **T3-clinical-alone** — lower-control primary clinical evidence with direct relevance but no anchoring corroboration; and (b) the evidence basis is **Tier 4–6 only** (international standards, national frameworks, or statutory codes) rich enough to produce a qualified synthesis. **Scale-tagging (G1b):** a T4–6-only determination is a *Universal-Mode regulatory determination* — `design_scale='universal'`, flagged `regulatory_stratum_only` (extending `code_floor_only` from the T6-only case). Per owner directive 2026-07-21 (Option A, `decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md`) it is a best-practice determination at the weak band (○): rendered in every register only flagged weak/code-derived with the convergence-not-evidence caveat, never unflagged and never above the weak band (amended invariant I3, `governance/evidence-architecture.md` §6); it is a queryably distinct weak-band row of `v_best_practice`: the DR-2026-07-21 §5 engine follow-up **landed** (commit `ab53f9d5`), the view carries a `strength_band` column, and 3 weak-band rows are queryable today. *This sentence said "until then the view still excludes it" until 2026-08-05 — doctrine understating its own engine, which is the same class of error as doctrine overstating it.* Its state remains `provisional`, never `stated`. For the T4–6 case, "rich enough" means:
 
 - **≥2 Tier 4–5 sources** from different jurisdictions with convergent findings on the parameter, OR
 - **≥1 Tier 4 international standard** (ISO, IEC, EN) with an evidence-based value directly addressing the parameter, OR
@@ -200,12 +216,12 @@ Per A5 §6.3: validators block migration of cells whose only Co-1 source has `ve
 
 | Verification status of the cell's sources | State-machine effect |
 |---|---|
-| All cited sources `VERIFIED` or `VERIFIED-WITH-CORRECTION` | No effect — state determined by tier/type per §§2.2–2.5 |
-| At least one source `UNVERIFIED-1` (one search attempt, not yet retried) | Cell retains its state but carries an `[UNVERIFIED-PENDING]` flag. The flag triggers a re-search before the cell's state can be used in downstream synthesis (ISW, Part 4 specification). Migration is not blocked — the cell exists in the corpus — but final synthesis is gated. |
+| All cited sources `VERIFIED` | No effect — state determined by tier/type per §§2.2–2.5 |
+| At least one source `UNVERIFIED` with `verification_disposition='OPEN'` | Cell retains its state but carries an `[UNVERIFIED-PENDING]` flag. The flag triggers a re-search before the cell's state can be used in downstream synthesis (ISW, Part 4 specification). Migration is not blocked — the cell exists in the corpus — but final synthesis is gated. |
 | Cell's only qualifying source(s) are `UNVERIFIED-CLOSED` or `CLOSED-DELETED` | Cell state downgrades to `pending`. The evidence that supported the prior state has been disqualified. A gap-register entry is created if one does not exist. |
 | Cell has both verified and unverified sources, and the verified sources alone still meet the state threshold | Cell retains its state. Unverified sources are flagged but do not downgrade the cell. |
 
-This resolves the Q8 partial identified in the A6 handoff. Full Q8 resolution (implementation details for the validator's handling of `UNVERIFIED-1` re-search triggering) is deferred to Session 2 code implementation.
+This resolves the Q8 partial identified in the A6 handoff. Full Q8 resolution (implementation details for the validator's handling of OPEN-disposition re-search triggering) is deferred to Session 2 code implementation.
 
 ---
 
@@ -461,7 +477,7 @@ The skill is prose-only (no Python validator). Its quality depends on the author
 | Q5 — Values-criteria mechanism | Three-step assessment: classify conflict type (function/values/conflation) → broadest-benefit assessment (population breadth, irreversibility, supplementary feasibility) → documentation with Person-Mode handoff. Applies at Population Mode only. | high — extends existing harm-asymmetry framework to values-based conflicts without overriding it | §4 |
 | Q6 — Design-pedagogy tier classification | Meta-methodological: outside the seven-tier hierarchy. Pedagogy literature supports the guidebook's method, not design parameters. Cited in Part 1 / mission, not in specification cells. No evidence marker. | high — clean separation of "what should the parameter be?" from "how should the guidebook present parameters?" | §5 |
 | Q7 — Epistemic-defense skill specification | Seven challenge categories with response patterns; five-step decision sequence; voice conventions; C2 skill build forward spec. Requirements only — C2 builds implementation. | high — direct application of advocacy identity + evidence hierarchy + framing standards | §6 |
-| Q8 — Verification status interaction (partial) | `UNVERIFIED-1`: flag but don't downgrade. `UNVERIFIED-CLOSED`/`CLOSED-DELETED` as sole qualifying sources: downgrade to `pending`. Full implementation deferred to Session 2. | high — extends A5 §6.3 rule to state-machine level | §2.8 |
+| Q8 — Verification status interaction (partial) | `UNVERIFIED`/OPEN: flag but don't downgrade. `UNVERIFIED-CLOSED`/`CLOSED-DELETED` as sole qualifying sources: downgrade to `pending`. Full implementation deferred to Session 2. | high — extends A5 §6.3 rule to state-machine level | §2.8 |
 
 ---
 
