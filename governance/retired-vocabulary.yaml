@@ -372,6 +372,8 @@ entries:
       - "scripts/generate/spec_page.py"
       - "scripts/generate/population_page.py"
       - "tools/regenerate_vetting_surface.py"
+      - "governance/evidence-methodology.md"      # carries the D-0157 amendment banner
+      - "governance/co1-operational.md"           # ditto
       - "skills/integrity-protocol_SKILL.md"      # narrates the incident as a lesson
       - "skills/evidence-metadata-rehabilitation_SKILL.md"
       - "skills/gap-driven-mining_SKILL.md"
@@ -401,6 +403,8 @@ entries:
       - "scripts/generate/spec_page.py"
       - "scripts/generate/population_page.py"
       - "tools/regenerate_vetting_surface.py"
+      - "governance/evidence-methodology.md"      # carries the D-0157 amendment banner
+      - "governance/co1-operational.md"           # ditto
       - "skills/integrity-protocol_SKILL.md"      # narrates the incident as a lesson
       - "skills/evidence-metadata-rehabilitation_SKILL.md"
       - "skills/gap-driven-mining_SKILL.md"
@@ -433,6 +437,8 @@ entries:
       - "scripts/generate/spec_page.py"
       - "scripts/generate/population_page.py"
       - "tools/regenerate_vetting_surface.py"
+      - "governance/evidence-methodology.md"      # carries the D-0157 amendment banner
+      - "governance/co1-operational.md"           # ditto
       - "skills/integrity-protocol_SKILL.md"      # narrates the incident as a lesson
       - "skills/evidence-metadata-rehabilitation_SKILL.md"
       - "skills/gap-driven-mining_SKILL.md"
@@ -462,6 +468,8 @@ entries:
       - "scripts/generate/spec_page.py"
       - "scripts/generate/population_page.py"
       - "tools/regenerate_vetting_surface.py"
+      - "governance/evidence-methodology.md"      # carries the D-0157 amendment banner
+      - "governance/co1-operational.md"           # ditto
       - "skills/integrity-protocol_SKILL.md"      # narrates the incident as a lesson
       - "skills/evidence-metadata-rehabilitation_SKILL.md"
       - "skills/gap-driven-mining_SKILL.md"
@@ -495,6 +503,8 @@ entries:
       - "scripts/generate/spec_page.py"
       - "scripts/generate/population_page.py"
       - "tools/regenerate_vetting_surface.py"
+      - "governance/evidence-methodology.md"      # carries the D-0157 amendment banner
+      - "governance/co1-operational.md"           # ditto
       - "skills/integrity-protocol_SKILL.md"      # narrates the incident as a lesson
       - "skills/evidence-metadata-rehabilitation_SKILL.md"
       - "skills/gap-driven-mining_SKILL.md"

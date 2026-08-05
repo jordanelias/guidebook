@@ -1,4 +1,20 @@
 # Co-1 Operational Specification
+
+> **D-0157 amendment, 2026-08-05.** `verification_status` is a **binary standing**,
+> not a history. DR-2026-08-04 split the old five-value enum, and its migration ran
+> on 2026-08-04 (`data_20260804164915`): the live column now holds only `VERIFIED`
+> (752) and `UNVERIFIED` (111). The retired values encoded three orthogonal facts in
+> one column — standing, *method* (the `-1`/`-2` suffix), and *history*
+> (`WITH-CORRECTION`) — the same conflation migration 041 was written to end
+> elsewhere. Method now lives in `verification_method`, history in
+> `verification_note` and `verification_attempt_count`, and "closed as unverifiable"
+> in `verification_disposition` + `verification_closure_reason`.
+>
+> Where a rule below said "flag `UNVERIFIED-1` for re-search", the successor test is
+> `verification_disposition='OPEN'` — or `verification_attempt_count`, if what was
+> meant was "not yet exhausted". Where it said `∈ {VERIFIED, VERIFIED-WITH-CORRECTION}`,
+> the successor is `= 'VERIFIED'`: the owner's ruling was that a correction is history
+> and the source "is merely verified".
 **Status:** CANONICAL — A5 complete (Session 2 of 2)
 **Phase:** Stage A Phase 5 — Co-1 operational specification
 **Created:** 2026-04-29 14:30 UTC (S1) · **Closed:** 2026-04-29 15:50 UTC (S2)
@@ -200,7 +216,7 @@ But the link is operational, not definitional. Audience-priority is about who re
 
 1. **Full attribution.** Author/organization name, year, title, publisher/journal, DOI or URL. The format already in use across the corpus (per `references/co1-verified-sources.json`) is the operative format.
 2. **Source-type identification.** Whether the source is peer-reviewed literature, DPO research, organizational position, or academic narrative — per the four-type taxonomy in §1.1.
-3. **Verification status.** The 2026-04-23 verification report established a status taxonomy (`VERIFIED`, `VERIFIED-WITH-CORRECTION`, `UNVERIFIED-1`, `UNVERIFIED-CLOSED`, `CLOSED-DELETED`). Any cited Co-1 source must hold one of these statuses; cells citing `UNVERIFIED-CLOSED` or `CLOSED-DELETED` sources are themselves removed or marked `[BEST-PRACTICE-PENDING]` per T-04.
+3. **Verification status.** The status vocabulary is `VERIFIED`, `UNVERIFIED` — plus `verification_disposition` (OPEN/CLOSED), `verification_method`, `verification_closure_reason`, `verification_attempt_count`. (The 2026-04-23 verification report's five-value taxonomy was retired by D-0157.) Any cited Co-1 source must hold one of these statuses; cells citing `UNVERIFIED-CLOSED` or `CLOSED-DELETED` sources are themselves removed or marked `[BEST-PRACTICE-PENDING]` per T-04.
 
 **Tier 2 obligation — Co-1 sources whose work the guidebook substantially synthesizes.** Where the guidebook draws on a Co-1 source for multiple cells or builds significant synthesis from a single source, an additional obligation applies:
 
@@ -395,7 +411,7 @@ Every Co-1 citation in the corpus carries (in the underlying evidence record, ev
 | `evidence_type` | Schema | `co1` |
 | `co1_provenance` | Schema (new, per A5) | `published_corpus` (pre-launch all) or `participatory_synthesis` (post-launch contingent) |
 | `co1_source_type` | A5-defined | One of: `peer_reviewed_literature`, `dpo_research`, `advocacy_position`, `academic_narrative`, `validated_tool` |
-| `verification_status` | Per 2026-04-23 verification report | `VERIFIED`, `VERIFIED-WITH-CORRECTION`, `UNVERIFIED-1`, `UNVERIFIED-CLOSED`, `CLOSED-DELETED` |
+| `verification_status` | Per DR-2026-08-04 (D-0157) | `VERIFIED`, `UNVERIFIED` — plus `verification_disposition` (OPEN/CLOSED), `verification_method`, `verification_closure_reason`, `verification_attempt_count` |
 | `authors` | Source | Full attribution |
 | `year` | Source | Publication year |
 | `title` | Source | Full title |
@@ -420,7 +436,7 @@ Not all underlying fields surface in every citation. Three contexts:
 Post-A6 evidence-state validator (per A6 governance + code phase) should:
 
 - Reject any citation lacking required schema fields
-- Flag citations with `verification_status: UNVERIFIED-1` for re-search
+- Flag citations with `verification_disposition = 'OPEN'` for re-search
 - Block migration of cells whose only Co-1 source is `UNVERIFIED-CLOSED` or `CLOSED-DELETED`
 - Surface `synthesis_attribution_required: true` cells for editorial review of front-matter attribution
 
@@ -442,7 +458,7 @@ Per §6.1, the EvidenceSource entity (already specified at A3 conceptual model l
 | `evidence_type` | enum | T-03 (Stage 0.5) | Unchanged; values include `co1` |
 | `co1_provenance` | enum | **A5 (new)** | `published_corpus` or `participatory_synthesis` |
 | `co1_source_type` | enum | **A5 (new)** | `peer_reviewed_literature`, `dpo_research`, `advocacy_position`, `academic_narrative`, `validated_tool` |
-| `verification_status` | enum | 2026-04-23 verification | `VERIFIED`, `VERIFIED-WITH-CORRECTION`, `UNVERIFIED-1`, `UNVERIFIED-CLOSED`, `CLOSED-DELETED` |
+| `verification_status` | enum | DR-2026-08-04 (D-0157) | `VERIFIED`, `UNVERIFIED` — plus `verification_disposition` (OPEN/CLOSED), `verification_method`, `verification_closure_reason`, `verification_attempt_count` |
 | `synthesis_attribution_required` | bool | A5 (new) | Per Tier 2 obligation §3.4 |
 
 B1 schema design integrates these as part of the EvidenceSource specification. No new entity is required; these are EvidenceSource fields.
@@ -452,7 +468,7 @@ B1 schema design integrates these as part of the EvidenceSource specification. N
 Per §6.3, validator behavior:
 
 - Schema-level: required-field check on all six A5-affected fields above
-- Cross-entity: parameter cells citing Co-1 sources must verify `verification_status ∈ {VERIFIED, VERIFIED-WITH-CORRECTION}`
+- Cross-entity: parameter cells citing Co-1 sources must verify `verification_status = 'VERIFIED'`
 - State-machine integration: cells with only `UNVERIFIED-CLOSED` or `CLOSED-DELETED` Co-1 sources route to T-04 `pending` state
 
 ### 7.3 Voice-style skill integration
