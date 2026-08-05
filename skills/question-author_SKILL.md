@@ -27,7 +27,7 @@ description: >
 >
 > **Where the table went.** It was never built here. `specification` appears only
 > in `scripts/migrate/init_database.py` and `scripts/db/init_db.py`, which
-> initialise `data/db/guidebook.db` — the *legacy* file CLAUDE.md §7 flags as "a
+> initialise `data/db/guidebook.db` — the *legacy* file CLAUDE.md §7 flags as "a  <!-- [RETIRED-VOCAB-OK] -->
 > different, legacy file", and which does not exist on disk. `schemas/specification.py`
 > still models the table, `question_heading` and all, so this is also a live
 > schemas↔SQLite mirror gap: a Pydantic model with no table behind it (CLAUDE.md

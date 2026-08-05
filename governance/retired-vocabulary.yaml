@@ -41,10 +41,21 @@
 # The inline escape is deliberately noisy to type. Reaching for it often is a
 # signal the entry is wrong, not that the file is special.
 #
-# THE ONLY LICENSED MENTION — read this before adding an exemption
-# ---------------------------------------------------------------
-#   An entry may exempt THE DOCUMENTS THAT RECORD ITS OWN RETIREMENT.
-#   It may not exempt anything else.
+# THE TWO LICENSED MENTIONS — read this before adding an exemption
+# ----------------------------------------------------------------
+#   A. THE DOCUMENTS THAT RECORD THE RETIREMENT. The paper trail cannot
+#      describe a retirement without naming what was retired.
+#   B. FILES WHERE THE TOKEN IS STILL CORRECT. A crosswalk that maps the old
+#      value to the new one must hold the old value; a scratch-path default is
+#      the right use of a scratch path; a test fixture may legitimately seed a
+#      retired value to prove the checker catches it.
+#   Nothing else. In particular, NOT "this file has too many hits to fix".
+#
+#   Category B was added 2026-08-05 after an adversarial review pointed out that
+#   RV-009 already exempted `scripts/tests/**` and `bootstrap.sh` on exactly this
+#   ground, while the rule text admitted only category A — so the stated rule and
+#   the actual exemption set disagreed. Declaring the category is the honest fix;
+#   quietly widening category A would have been the dishonest one.
 #
 # So `ci.yml`'s header may say what it absorbed; `check-registry.yaml`'s header
 # may say which four lists it replaced; CLAUDE.md may narrate the 2026-08-01
@@ -303,6 +314,194 @@ entries:
       scripts/tests/** are fixture paths for scratch DBs, which is the correct use —
       hence `severity: stale-pointer`, and read the hit before editing it.
 
+  # --- D-0157 verification vocabulary (RV-012..RV-016) ----------------------
+  # PROMOTED FROM `deferred:` ON 2026-08-05, AND THE DEFERRAL WAS WRONG.
+  #
+  # The deferral asserted that the DR §5 migration "has NOT RUN" and that "863
+  # evidence_sources rows still carry this vocabulary". Both false. The migration
+  # ran on 2026-08-04 — `scripts/migrations/data_20260804164915_2026-08-04-d0157-
+  # corrections.sql`, preceded by two remap migrations the same afternoon — and the
+  # live column holds exactly two values: VERIFIED (752) and UNVERIFIED (111).
+  #
+  # HOW THE ERROR HAPPENED, because the mechanism matters more than the fact: the
+  # deferral was written by copying the DR's own status block, which still reads
+  # "Ratified != executed ... B01/B02/B05 stay red until it does". That line was
+  # true when the DR was drafted and is frozen there correctly — decisions/ is an
+  # append-only record. The register is NOT. Reading a frozen document for a
+  # volatile fact, instead of querying the database, is the precise failure this
+  # whole file exists to catch, committed by this file. CLAUDE.md's standing
+  # instruction covers it in one line: when a fact is volatile, derive it from the
+  # live repo rather than trusting a number written down.
+  #
+  # The cost was not hypothetical. The deferral also said "Do not promote one
+  # without checking its precondition", so an obedient session would have TRUSTED
+  # it and left the largest wrong-answer class on the surface unswept.
+  #
+  # Substring trap, pre-solved: `match: identifier` is required, not optional — a
+  # literal search for VERIFIED-1 also matches UNVERIFIED-1, and for
+  # VERIFIED-WITH-CORRECTION it would double-count. See build_pattern().
+
+  - id: RV-012
+    token: UNVERIFIED-1
+    match: identifier
+    severity: broken
+    retired_by: "DR-2026-08-04 (D-0157), executed by migration data_20260804164915"
+    replacement: >-
+      UNVERIFIED, plus verification_disposition='OPEN'. The suffix claimed to mean
+      "one attempt, not yet retried"; verification_attempt_count already records
+      attempts, and contradicted the suffix on 26 of 31 rows.
+    note: >-
+      The highest-volume member of this family and the one that does live damage:
+      skills/gap-driven-mining_SKILL.md gates closure on
+      `verification_status IN ('VERIFIED','UNVERIFIED-1')`, which since 2026-08-04
+      matches nothing. A gate that silently matches nothing is the same defect
+      class as a gate with nothing in scope.
+    exempt_paths:
+      # A — the paper trail for this retirement
+      - "CLAUDE.md"
+      - "governance/check-registry.yaml"
+      - "references/tooling-register.md"
+      - "governance/migration-survival.md"
+      - "architecture/schema-spec.md"
+      - "schemas/enums.py"
+      - "schemas/evidence_state.py"
+      - "scripts/tests/test_db_integrity.py"
+      - "scripts/validate_verification_consistency.py"
+      - "scripts/verify_resolved_dois.py"
+      - "scripts/audit_evidence_metadata.py"
+      - "scripts/generate/spec_page.py"
+      - "scripts/generate/population_page.py"
+      - "tools/regenerate_vetting_surface.py"
+      - "skills/integrity-protocol_SKILL.md"      # narrates the incident as a lesson
+      - "skills/evidence-metadata-rehabilitation_SKILL.md"
+      - "skills/gap-driven-mining_SKILL.md"
+      - "skills/reasoning-doc-citations_SKILL.md"
+      # B — the token is still correct here
+      - "scripts/convert/convert_sources.py"      # the old->new crosswalk itself
+
+  - id: RV-013
+    token: VERIFIED-1
+    match: identifier
+    severity: broken
+    retired_by: "DR-2026-08-04 (D-0157), executed by migration data_20260804164915"
+    replacement: "VERIFIED, plus verification_method recording HOW it was established"
+    exempt_paths:
+      # A — the paper trail for this retirement
+      - "CLAUDE.md"
+      - "governance/check-registry.yaml"
+      - "references/tooling-register.md"
+      - "governance/migration-survival.md"
+      - "architecture/schema-spec.md"
+      - "schemas/enums.py"
+      - "schemas/evidence_state.py"
+      - "scripts/tests/test_db_integrity.py"
+      - "scripts/validate_verification_consistency.py"
+      - "scripts/verify_resolved_dois.py"
+      - "scripts/audit_evidence_metadata.py"
+      - "scripts/generate/spec_page.py"
+      - "scripts/generate/population_page.py"
+      - "tools/regenerate_vetting_surface.py"
+      - "skills/integrity-protocol_SKILL.md"      # narrates the incident as a lesson
+      - "skills/evidence-metadata-rehabilitation_SKILL.md"
+      - "skills/gap-driven-mining_SKILL.md"
+      - "skills/reasoning-doc-citations_SKILL.md"
+      # B — the token is still correct here
+      - "scripts/convert/convert_sources.py"      # the old->new crosswalk itself
+
+  - id: RV-014
+    token: VERIFIED-2
+    match: identifier
+    severity: broken
+    retired_by: "DR-2026-08-04 (D-0157), executed by migration data_20260804164915"
+    replacement: "VERIFIED, plus verification_method"
+    note: >-
+      The -1/-2 suffix encoded METHOD in a column that holds STANDING — the
+      one-column-three-domains conflation migration 041 was written to end.
+    exempt_paths:
+      # A — the paper trail for this retirement
+      - "CLAUDE.md"
+      - "governance/check-registry.yaml"
+      - "references/tooling-register.md"
+      - "governance/migration-survival.md"
+      - "architecture/schema-spec.md"
+      - "schemas/enums.py"
+      - "schemas/evidence_state.py"
+      - "scripts/tests/test_db_integrity.py"
+      - "scripts/validate_verification_consistency.py"
+      - "scripts/verify_resolved_dois.py"
+      - "scripts/audit_evidence_metadata.py"
+      - "scripts/generate/spec_page.py"
+      - "scripts/generate/population_page.py"
+      - "tools/regenerate_vetting_surface.py"
+      - "skills/integrity-protocol_SKILL.md"      # narrates the incident as a lesson
+      - "skills/evidence-metadata-rehabilitation_SKILL.md"
+      - "skills/gap-driven-mining_SKILL.md"
+      - "skills/reasoning-doc-citations_SKILL.md"
+      # B — the token is still correct here
+      - "scripts/convert/convert_sources.py"      # the old->new crosswalk itself
+
+  - id: RV-015
+    token: UNVERIFIED-2
+    match: identifier
+    severity: broken
+    retired_by: "DR-2026-08-04 (D-0157), executed by migration data_20260804164915"
+    replacement: "UNVERIFIED, plus verification_disposition and verification_closure_reason"
+    exempt_paths:
+      # A — the paper trail for this retirement
+      - "CLAUDE.md"
+      - "governance/check-registry.yaml"
+      - "references/tooling-register.md"
+      - "governance/migration-survival.md"
+      - "architecture/schema-spec.md"
+      - "schemas/enums.py"
+      - "schemas/evidence_state.py"
+      - "scripts/tests/test_db_integrity.py"
+      - "scripts/validate_verification_consistency.py"
+      - "scripts/verify_resolved_dois.py"
+      - "scripts/audit_evidence_metadata.py"
+      - "scripts/generate/spec_page.py"
+      - "scripts/generate/population_page.py"
+      - "tools/regenerate_vetting_surface.py"
+      - "skills/integrity-protocol_SKILL.md"      # narrates the incident as a lesson
+      - "skills/evidence-metadata-rehabilitation_SKILL.md"
+      - "skills/gap-driven-mining_SKILL.md"
+      - "skills/reasoning-doc-citations_SKILL.md"
+      # B — the token is still correct here
+      - "scripts/convert/convert_sources.py"      # the old->new crosswalk itself
+
+  - id: RV-016
+    token: VERIFIED-WITH-CORRECTION
+    match: identifier
+    severity: broken
+    retired_by: "DR-2026-08-04 (D-0157), executed by migration data_20260804164915"
+    replacement: "VERIFIED, with the correction recorded in verification_note"
+    note: >-
+      The owner's ruling was that this value is "meaningless. it's merely
+      verified" — the correction is history, and history belongs in the note
+      column, not in the standing.
+    exempt_paths:
+      # A — the paper trail for this retirement
+      - "CLAUDE.md"
+      - "governance/check-registry.yaml"
+      - "references/tooling-register.md"
+      - "governance/migration-survival.md"
+      - "architecture/schema-spec.md"
+      - "schemas/enums.py"
+      - "schemas/evidence_state.py"
+      - "scripts/tests/test_db_integrity.py"
+      - "scripts/validate_verification_consistency.py"
+      - "scripts/verify_resolved_dois.py"
+      - "scripts/audit_evidence_metadata.py"
+      - "scripts/generate/spec_page.py"
+      - "scripts/generate/population_page.py"
+      - "tools/regenerate_vetting_surface.py"
+      - "skills/integrity-protocol_SKILL.md"      # narrates the incident as a lesson
+      - "skills/evidence-metadata-rehabilitation_SKILL.md"
+      - "skills/gap-driven-mining_SKILL.md"
+      - "skills/reasoning-doc-citations_SKILL.md"
+      # B — the token is still correct here
+      - "scripts/convert/convert_sources.py"      # the old->new crosswalk itself
+
   - id: RV-010
     token: physically disabled
     match: phrase
@@ -341,22 +540,6 @@ entries:
 # today would flag accurate descriptions of live data. Each records the precondition
 # that would promote it. Do not promote one without checking its precondition.
 deferred:
-
-  - tokens: [VERIFIED-1, VERIFIED-2, UNVERIFIED-1, UNVERIFIED-2, VERIFIED-WITH-CORRECTION]
-    retired_by: "DR-2026-08-04-verification-status-is-a-standing-not-a-history (D-0157)"
-    precondition: >-
-      The migration implementing DR §5 has NOT RUN. That DR says so itself, in its
-      own status block: "Ratified != executed ... B01/B02/B05 stay red until it
-      does." 863 evidence_sources rows still carry this vocabulary, so every
-      document describing it is currently describing the database accurately.
-      Promote these to `entries:` in the SAME commit that lands the §5 migration,
-      not before and not after — before is noise, after leaves a window where the
-      docs and the data disagree with nothing watching.
-    note: >-
-      Measured 2026-08-05, repo-wide: VERIFIED-1 89 files, UNVERIFIED-1 85,
-      VERIFIED-2 35, VERIFIED-WITH-CORRECTION 26. Note the substring trap — a
-      literal search for VERIFIED-1 also matches UNVERIFIED-1, so these need
-      `match: identifier` (word-boundary) and the counts above are upper bounds.
 
   - tokens: [VIS, UPL, DBL, NEU, PCS, OFS, CFS, MCAS, POTS, LCOV, SENS, EXH, IntD, ABI]
     retired_by: >-

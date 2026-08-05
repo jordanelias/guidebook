@@ -117,7 +117,10 @@ Statutory rows do not have a single-call resolver. Per-row research is mandatory
 1. Standard number + jurisdiction usually identifies the issuing body unambiguously (e.g., `HTM 08-01` + `UK` → NHS England / Dept of Health). Establish via web search.
 2. Edition year is established via the issuing body's own portal where retrievable. Where commercial paywall prevents retrieval, route `verification_status='IS-PAYWALL'` and KEEP `metadata_quality='AUTHOR-TITLE-ONLY'` (the row is not COMPLETE-STATUTORY without year).
 3. Title coherence: confirm stored `pub_title` matches the standard number's documented content. Statutory equivalents of the note-as-title pattern (programme name in `standard_number`, topic in `pub_title`) route to `MISMATCH-MULTI`.
-4. Non-EN primary text with EN secondary corroboration (WHO MiNDbank, official translations) → `verification_status='UNVERIFIED-1'`, not VERIFIED.
+4. Non-EN primary text with EN secondary corroboration (WHO MiNDbank, official translations) →
+   `verification_status='UNVERIFIED'` with `verification_disposition='OPEN'`, not VERIFIED.
+   (Was `UNVERIFIED-1`, retired by D-0157 and migrated 2026-08-04. The "one attempt so far"
+   sense the suffix carried now lives in `verification_attempt_count`.)
 
 ## Worked example: clean MATCH
 
@@ -176,7 +179,25 @@ Rescue actions:
 Before claiming a citation supports a rule #10 synthesis claim, confirm:
 
 1. `metadata_quality ∈ {COMPLETE, COMPLETE-STATUTORY}` AND
-2. `verification_status ∈ {VERIFIED, UNVERIFIED-1}` AND
+2. `verification_status = 'VERIFIED'` AND
+
+> **D-0157 translation note (2026-08-05).** This gate previously read
+> `verification_status ∈ {VERIFIED, UNVERIFIED-1}`. That vocabulary was retired by
+> DR-2026-08-04 and the migration ran on 2026-08-04, so the rule had been matching
+> **nothing** on the `UNVERIFIED-1` limb ever since.
+>
+> It is not a find-and-replace. `UNVERIFIED-1` mapped to `UNVERIFIED` +
+> `verification_disposition='OPEN'`, and in the live corpus status and disposition are
+> 1:1 (VERIFIED/CLOSED 752, UNVERIFIED/OPEN 111) — so the mechanical translation would
+> admit **every source in the corpus**, which cannot be the intent of an eligibility gate.
+>
+> Resolved in the CONSERVATIVE direction, faithful to the ratified decision: the owner's
+> ruling in D-0157 was that suffixed values "are not verified properly", so `UNVERIFIED`
+> means *not established* and does not clear an evidence-eligibility gate. **This narrows
+> the gate** — sources that were eligible as `UNVERIFIED-1` are no longer. That is a
+> deliberate, flagged change, not a silent one; if the intent was "not yet exhausted"
+> rather than "established", the successor test is `verification_attempt_count`, which is
+> the column that actually tracks attempts. Raise a DR if this reading is wrong.
 3. `metadata_integrity_status ∈ {OK, RESOLVED}` AND
 4. `verification_note` contains the probe timestamp from this protocol.
 

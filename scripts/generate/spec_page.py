@@ -114,7 +114,7 @@ def source_caveats(cell):
     """§2.8 source-quality flags, rendered plainly rather than silently dropped."""
     flags = []
     if cell["has_unverified_sources"]:
-        flags.append("UNVERIFIED-1")
+        flags.append("UNVERIFIED")        # D-0157: the -1 suffix was retired 2026-08-04
     if cell["all_sources_disqualified"]:
         flags.append("ALL-DISQUALIFIED")
     return ", ".join(flags) if flags else "—"

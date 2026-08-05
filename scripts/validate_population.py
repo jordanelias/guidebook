@@ -45,7 +45,7 @@ P2  every population-bearing column in the database resolves to a live code.
 P3  no retired code appears in those columns, reported with the DR-2026-07-23
     crosswalk so the message says what to write instead.
 P4  no code column holds a comma-joined list. That is the packed-CSV defect
-    `items.applicable_groups` was dropped for, and it hides retired codes from a
+    `items.applicable_groups` was dropped for, and it hides retired codes from a  # [RETIRED-VOCAB-OK]
     whole-string match. Each packed element is graded individually.
 P5  no unregistered scope marker. `ALL` is a populations row doing exactly that
     job; anything else claiming it resolves nowhere.
@@ -167,7 +167,7 @@ def validate(verbose=False):
                 continue
 
             # A code column holding a comma-joined list is the packed-CSV defect
-            # that items.applicable_groups was dropped for: one column, several
+            # that items.applicable_groups was dropped for: one column, several  # [RETIRED-VOCAB-OK]
             # facts, no way to join on it. Report the packing AND grade each
             # element, because the elements are where the retired codes hide —
             # spec_value_probes carries "AUT, PCS, DEM, MH, PAIN, OFS", of which
@@ -177,7 +177,7 @@ def validate(verbose=False):
                 errors.append(
                     f"P4: {table}.{col} holds {v!r} — several codes packed into one "
                     f"column. A code column must hold one code; use a junction row "
-                    f"per population (the defect items.applicable_groups was dropped for)."
+                    f"per population (the defect items.applicable_groups was dropped for)."  # [RETIRED-VOCAB-OK]
                 )
                 for part in parts:
                     if part in RETIRED_CROSSWALK:

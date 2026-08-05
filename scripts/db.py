@@ -371,7 +371,7 @@ def get_unmined_sources(slug: str) -> list[dict]:
     with connect() as conn:
         rows = conn.execute("""
             SELECT ssl.local_ref_id,
-                   es.doi, es.title,
+                   es.doi, es.pub_title,
                    COALESCE(cm.backward, 0) AS backward,
                    COALESCE(cm.forward,  0) AS forward
             FROM source_slug_links ssl
@@ -764,10 +764,11 @@ def main():
                            "COMPLETE if DOI/full metadata confirmed via CrossRef/PubMed/Semantic Scholar; "
                            "AUTHOR-TITLE-ONLY if only single-source (citing-document) attestation.")
     p_as.add_argument("--verification-status",
-                      choices=["VERIFIED", "UNVERIFIED", "UNVERIFIED"],
+                      choices=["VERIFIED", "UNVERIFIED"],
                       help="REQUIRED in practice. VERIFIED requires an independent connector/registry hit "
                            "(CrossRef, PubMed, Semantic Scholar, a second citing source). A source found only "
-                           "in one citing document's bibliography, with no independent hit, is UNVERIFIED-1, "
+                           "in one citing document's bibliography, with no independent hit, is UNVERIFIED "
+                           "with disposition OPEN, "
                            "not VERIFIED — do not upgrade it because the citing document looks authoritative.")
     p_as.add_argument("--slug", help="Link to slug (requires --local-ref-id)")
     p_as.add_argument("--local-ref-id", help="Local ref ID within slug")

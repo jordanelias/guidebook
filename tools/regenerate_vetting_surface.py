@@ -202,7 +202,13 @@ def fetch_backbone(db_path: Path) -> dict:
             mq = s.get("metadata_quality") or ""
             vs = s.get("verification_status") or ""
             mq_ok = mq in ("COMPLETE", "COMPLETE-STATUTORY")
-            vs_ok = vs in ("VERIFIED", "UNVERIFIED-1")
+            # D-0157 (migrated 2026-08-04) replaced the suffixed vocabulary with a binary
+            # standing. This read `vs in ("VERIFIED", "UNVERIFIED-1")`, whose second limb
+            # has matched nothing since. Not a substitution: UNVERIFIED-1 mapped to
+            # UNVERIFIED+OPEN, and status/disposition are 1:1 in the corpus, so the
+            # mechanical translation would mark every source ok. Narrowed to VERIFIED,
+            # faithful to the ruling that unsuffixed-or-nothing means established.
+            vs_ok = vs == "VERIFIED"
             if mq == "AUTHOR-TITLE-ONLY" or not vs_ok:
                 v = "weak"
             elif has_id and mq_ok:
