@@ -30,6 +30,7 @@ Run:
 
 import sys
 import os
+import re as _re
 import sqlite3
 import argparse
 
@@ -1109,6 +1110,60 @@ def run_checks(db_path):
                f"with `db.py log-search` and read coverage from v_coverage_jurisdiction / "
                f"v_coverage_language. If the change is deliberate, say so in the PR and "
                f"update the constant." if not _ok else "")
+
+    # ── L04: sessions/LATEST-RESEARCH vs what the DB says research did ────────
+    #
+    # Folded in from a standalone audit on 2026-08-06 rather than kept as its own
+    # file. It is the same species as L01/L02/L03 — a file store checked against
+    # the DB — and this repo's standing constraint is that every extra enforcer
+    # file is another thing to drift.
+    #
+    # The pointer feeds the BLOCKING citation_mining_session gate. Its contract is
+    # "newest session with evidence_sources rows"; the gate scopes to slug-linked
+    # Tier 1-2. Those diverge, and when they do the gate examines nothing and
+    # passes.
+    #
+    # This FAILS when that happens, and the earlier draft of this comment said it
+    # would not — a gate examining nothing IS a defect, and recording it as a pass
+    # would be the exact vacuity the check exists to name. What it deliberately
+    # does not do is redden citation_mining_session ITSELF, which would block
+    # every PR on a content backlog the owner has deferred. The condition lands
+    # here instead, in a suite already carrying an owner-gated backlog, where it
+    # is visible and costs no new blockage. It clears when the owner either
+    # advances the pointer or demotes that gate to advisory.
+    _ptr_path = os.path.join(REPO, "sessions", "LATEST-RESEARCH")
+    if os.path.exists(_ptr_path):
+        _ptr = open(_ptr_path).read().strip().splitlines()[0]
+        _stem = _ptr[:-3] if _ptr.endswith(".md") else _ptr
+        _dated = lambda n: (_re.match(r"session_(\d{4}-\d{2}-\d{2})", n or "") or [None])
+        _in_scope = [r[0] for r in conn.execute(
+            "SELECT DISTINCT es.created_by_session FROM evidence_sources es "
+            "JOIN source_slug_links ssl ON es.ref_id = ssl.ref_id "
+            "WHERE es.tier BETWEEN 1 AND 2 AND es.created_by_session IS NOT NULL")]
+        _pairs = [(m.group(1), n) for n in _in_scope
+                  if (m := _re.match(r"session_(\d{4}-\d{2}-\d{2})", n))]
+        _newest = max(_pairs)[1] if _pairs else None
+        _pd = (_re.match(r"session_(\d{4}-\d{2}-\d{2})", _stem) or None)
+        _pd = _pd.group(1) if _pd else None
+        _nd = (_re.match(r"session_(\d{4}-\d{2}-\d{2})", _newest).group(1)
+               if _newest else None)
+        _drifted = bool(_newest and _pd and _nd and _pd != _nd)
+        # Whether the POINTED session itself has subjects — queried, not assumed.
+        # The standalone version asserted "holds no slug-linked T1-2 sources" from
+        # a date comparison alone, so the message was true only by luck.
+        _own = conn.execute(
+            "SELECT COUNT(DISTINCT es.ref_id) FROM evidence_sources es "
+            "JOIN source_slug_links ssl ON es.ref_id = ssl.ref_id "
+            "WHERE es.tier BETWEEN 1 AND 2 AND es.created_by_session IN (?, ?)",
+            (_stem, _stem + ".md")).fetchone()[0]
+        record("L04", "sessions/LATEST-RESEARCH gives citation_mining_session a subject",
+               not (_drifted and _own == 0),
+               f"pointer names {_ptr!r}, which holds {_own} slug-linked Tier 1-2 "
+               f"source(s); the newest session inside the gate's scope is "
+               f"{_newest!r}. With 0 subjects that BLOCKING gate examines nothing "
+               f"and passes. Advance the pointer (and expect it to go red on a "
+               f"real backlog), or demote the gate to advisory until it has work."
+               if (_drifted and _own == 0) else "")
 
     # ── Summary ───────────────────────────────────────────────────────────────
     conn.close()

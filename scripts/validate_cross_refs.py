@@ -7,6 +7,10 @@ Checks:
   2. CON-IDs (CON-NNNN) resolve via SQLite connections table (was: _index.md)
   3. Part section references (§X.Y) resolve to existing headings in correct part file
   4. BPC ↔ search-log co-existence (every BPC has matching search-log, vice versa)
+  5. sessions/handoff-next-session.md — its named session record, workplan, and
+     HEAD all resolve (added 2026-08-06; folded in from a standalone audit rather
+     than given a file of its own — a dangling path in the handoff is a broken
+     cross-reference, which is this script's whole subject)
 
 Phase 1-D update 2026-05-05: checks 1 and 2 now query SQLite (data/guidebook.db)
 instead of parsing markdown register files. Markdown files are archived sources only.
@@ -196,6 +200,7 @@ def run(repo_root: str = ".", fast: bool = False, warn_only: bool = False) -> in
 
     print("Checking BPC ↔ search-log co-existence...", file=sys.stderr)
     errors.extend(check_bpc_searchlog_coexistence(bpc_slugs, sl_slugs))
+    errors.extend(check_handoff(repo_root))
 
     label = "WARN" if warn_only else "FAIL"
     if errors:
@@ -210,6 +215,54 @@ def run(repo_root: str = ".", fast: bool = False, warn_only: bool = False) -> in
     print(f"{'='*60}", file=sys.stderr)
 
     return 0 if (warn_only or not errors) else 1
+
+
+HANDOFF_FIELDS = {
+    "HEAD at handoff": re.compile(r"\*\*HEAD at handoff:\*\*\s*`([0-9a-f]{7,40})`"),
+    "Last session record": re.compile(r"\*\*Last session record:\*\*\s*`([^`]+)`"),
+    "The plan to work from": re.compile(r"\*\*The plan to work from:\*\*\s*`([^`]+)`"),
+}
+
+
+def check_handoff(repo_root: str) -> list[tuple[str, str]]:
+    """The handoff is the first file a fresh session reads. Nothing checked it,
+    and it spent eleven weeks naming a May HEAD and a merged branch.
+
+    A dangling PATH is an error: it sends the next session to a file that is not
+    there. A stale HEAD is reported as a WARN — it is misleading prose, and
+    failing a blocking gate over unrewritten prose makes the gate something to
+    route around.
+    """
+    import subprocess
+    rel = "sessions/handoff-next-session.md"
+    path = os.path.join(repo_root, rel)
+    if not os.path.exists(path):
+        return [(rel, "handoff is missing — a fresh session has no entry point")]
+
+    text = open(path, encoding="utf-8").read()
+    out = []
+    for label, pattern in HANDOFF_FIELDS.items():
+        m = pattern.search(text)
+        if not m:
+            out.append((rel, f"WARN: no `{label}:` line — the header format "
+                             f"changed, so nothing can check it"))
+            continue
+        value = m.group(1).strip()
+        if label == "HEAD at handoff":
+            ok = subprocess.run(["git", "cat-file", "-e", f"{value}^{{commit}}"],
+                                cwd=repo_root, capture_output=True).returncode == 0
+            if not ok:
+                out.append((rel, f"WARN: names HEAD {value}, not a commit in this "
+                                 f"clone — the handoff describes other history"))
+                continue
+            anc = subprocess.run(["git", "merge-base", "--is-ancestor", value, "HEAD"],
+                                 cwd=repo_root, capture_output=True).returncode == 0
+            if not anc:
+                out.append((rel, f"WARN: names HEAD {value}, which is NOT an "
+                                 f"ancestor of the current HEAD"))
+        elif not os.path.exists(os.path.join(repo_root, value)):
+            out.append((rel, f"`{label}` names {value!r}, which does not exist"))
+    return out
 
 
 def main():

@@ -218,6 +218,22 @@ def run_check(check, session, env, github=False):
     subject = session if pointer == DEFAULT_SESSION_POINTER else read_pointer(pointer)
     cmd = expand(check["cmd"], subject)
     if check.get("requires_session") and not subject:
+        # A BLOCKING check with no subject FAILS. It used to SKIP, and SKIP is
+        # excluded from the verdict even at blocking level — so deleting one
+        # 60-byte pointer file silently switched off a blocking gate, and the run
+        # still reported green. That is the disarming-by-omission this repo has
+        # now produced five times, and it was living inside the dispatcher that
+        # every other check depends on.
+        #
+        # Advisory checks still SKIP: an advisory result changes no verdict, so
+        # failing one only adds noise. The severity of a missing subject is the
+        # severity of the check that wanted it.
+        if check.get("level", "blocking") == "blocking":
+            return "FAIL", 0.0, (
+                f"no sessions/{pointer} pointer, and this check is BLOCKING. "
+                f"Its subject is missing, so it cannot report on anything — "
+                f"which is a failure, not a pass. Restore the pointer or point "
+                f"it at a session that exists.")
         return "SKIP", 0.0, (f"no sessions/{pointer} pointer — session-scoped check "
                              f"skipped")
     exe = cmd[1] if cmd[0] in ("python3", "python", "node") else cmd[0]

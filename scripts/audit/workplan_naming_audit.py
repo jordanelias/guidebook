@@ -14,12 +14,15 @@ reads a superseded plan. Several already have, which is why §9 warns that
 The convention (W4.3): `YYYY-MM-DD-slug.md` at the top level of `workplan/`.
 
 FORWARD-ONLY, AND THAT IS A COMPROMISE, NOT A DESIGN.
-The ~45 pre-convention names are GRANDFATHERED — listed in this file, checked for
+The 57 pre-convention names are GRANDFATHERED — listed in this file, checked for
 existence, and not otherwise judged. Renaming them is a bulk file move, which
 CLAUDE.md §9 guardrail 4 puts under owner sign-off, and the sweep would have to
 repoint every caller (guardrail: a rename is not done until the caller sweep is).
 So this check stops the problem GROWING and does not pretend to have solved it.
-The grandfathered list is the backlog, in the open, with a count.
+The grandfathered list is the backlog, in the open, with a count — and the
+count is stated once, here, because the first version of this file shipped three
+disagreeing counts of its own list on one day (docstring, registry note, handoff)
+while being the artifact built against exactly that drift.
 
 The list is checked for existence in both directions: an entry naming a file that
 no longer exists is stale and reported, and a NEW file is anything on disk that is
@@ -43,7 +46,12 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent.parent
 WORKPLAN = REPO / "workplan"
 
-CONVENTION = re.compile(r"^\d{4}-\d{2}-\d{2}-.+\.md$")
+# Real dates only. The first version accepted \d{2}-\d{2}, so `2026-99-99-x.md`
+# passed — and an impossible date sorts ABOVE every real plan, which defeats the
+# one thing this check exists to protect: CLAUDE.md §9's "sort by date, read the
+# newest". A check that admits the exact value that breaks its own purpose is
+# worse than none.
+CONVENTION = re.compile(r"^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])-.+\.md$")
 
 # Files predating the convention, captured 2026-08-06. Do not add to this list to
 # make a new file pass — that is the one thing it must not become. Entries leave

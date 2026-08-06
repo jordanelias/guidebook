@@ -409,27 +409,6 @@ checks:
       the backlog visible with a number on it. The list is validated in both
       directions, so it cannot quietly become a waiver queue.
 
-  - id: session_pointer_resolvable
-    cmd: [python3, scripts/audit/session_pointer_audit.py]
-    battery: data
-    kinds: [always]
-    level: blocking
-    basis: unattributed
-    cost: fast
-    note: >-
-      Guards the resolution step every session-scoped check depends on. A pointer
-      that is missing, empty, or names a nonexistent record does not FAIL the
-      checks that read it — `run_checks.py` treats it as "no session" and SKIPs
-      them, so deleting one 60-byte file silently disarms the BLOCKING
-      `citation_mining_session` gate with nothing in the output to say so. That
-      is why this is blocking and `kinds: [always]`: the disarming is invisible
-      and available from any work kind.
-      It also REPORTS (without failing) LATEST-RESEARCH drifting behind the
-      newest session that logged evidence_sources rows — the exact condition W4
-      found and fixed by hand on 2026-08-06. Advancing the pointer is a judgment
-      call, so drift is surfaced rather than enforced; the point is that the
-      hand-fix is now watched instead of trusted to stay done.
-
   - id: citation_mining_session
     cmd: [python3, scripts/audit/citation_mining_completeness.py, --session, "@SESSION@", --tier-max, "2"]
     battery: data
@@ -453,7 +432,13 @@ checks:
       reports zero because that session did no research.
       LATEST-RESEARCH names the newest session with rows in citation_mining /
       search_executions / evidence_sources, so the gate has a real subject.
-      `session_pointer_resolvable` keeps both pointers honest.
+      Pointer honesty is enforced in three existing places rather than a fourth
+      file: `run_checks.py` FAILS a blocking check whose pointer does not resolve
+      (it used to SKIP, which disarmed this gate in silence); `validate_cross_refs`
+      checks the handoff's named record and plan; `test_db_integrity` L04 reports
+      when this pointer drifts out of the gate's Tier 1-2 scope. The standalone
+      `session_pointer_audit.py` was deleted on 2026-08-06 — it patrolled a hazard
+      whose root cause was a five-line fix in the dispatcher it was watching.
       The split was necessary and not sufficient. Pointing the gate at the right
       session still returned `Outstanding: 0`, because the pointer files hold a
       FILENAME (`….md`) while `evidence_sources.created_by_session` holds the bare

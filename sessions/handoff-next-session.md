@@ -45,7 +45,7 @@ W1 is complete (PR #78). **W4 is complete** (this branch). W2, W3 and parts of W
 | W4.5 close the `research-contract-baseline.json` self-amnesty | done |
 | W4.6 promote `research_contract_sync` to blocking | done |
 | W4.7 drop `db_meta.schema_version` | done |
-| W4.3 enforce `YYYY-MM-DD-slug.md` in `workplan/` | forward-only check; the ~45-file rename is owner-gated |
+| W4.3 enforce `YYYY-MM-DD-slug.md` in `workplan/` | forward-only check; the 57-file rename is owner-gated |
 | W4.4 collapse three connection registers to one | reconciled + callers swept; **the retirement itself is owner-gated** |
 
 **The finding worth carrying forward from W4.1.** The pointer split was necessary and *not
@@ -71,7 +71,7 @@ five rival (c)-layer tables · ⚑3 `room_page.py` fix-or-archive · ⚑4
 
 **Added by W4:**
 
-- **The `workplan/` rename.** ~45 of ~60 files do not sort chronologically by name, so CLAUDE.md
+- **The `workplan/` rename.** 57 of 60 top-level files do not sort chronologically by name, so CLAUDE.md
   §9's instruction — "sort `workplan/` by date and read the newest" — is unfollowable for most of
   the directory. The forward-only check stops it growing; fixing it is a bulk file move, which is
   owner-gated (§9 guardrail 4).
