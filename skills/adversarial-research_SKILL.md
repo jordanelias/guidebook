@@ -97,7 +97,12 @@ Before claiming a citation supports a recommendation:
 1. Search for the citation directly (web_search with author + year + title keywords)
 2. Confirm via INDEPENDENT sources (PubMed, publisher, indexing service, citing reviews)
 3. Note in evidence_sources.notes: "Verified [date] via [list sources]"
-4. If unverifiable: do NOT claim citation supports the recommendation. Mark verification_status as 'UNVERIFIABLE' and treat as no evidence.
+4. If unverifiable: do NOT claim citation supports the recommendation. Set
+   `verification_status='UNVERIFIED'` with `verification_disposition='CLOSED'` and a
+   `verification_closure_reason` (`not-found-after-search` or `disputed-existence`), and
+   treat as no evidence. (`UNVERIFIABLE` was never in the vocabulary — before D-0157 or
+   after it. The binary is VERIFIED / UNVERIFIED; why the pursuit stopped goes in the
+   reason column.)
 
 Pattern that catches fabrication: I generate a plausible-sounding citation (right author style, right year range, right journal) that does not exist. The verification step is the ONLY way to catch this.
 

@@ -121,8 +121,10 @@ a rule up the spectrum only when it's mechanically checkable and drift is costly
 
 `data/guidebook.db` — SQLite, committed as a binary blob (`.gitattributes`, **not** Git-LFS).
 **`PRAGMA user_version` is the authoritative schema version** — read it from the DB; don't
-rely on a number written here. (Ignore the `db_meta.schema_version` row — it's a stale
-init-time artifact that never tracked migrations.) There is **no `sqlite3` CLI** in this
+rely on a number written here. It is now the *only* schema-version marker: `db_meta.schema_version`
+was a second one that never tracked migrations, sat forty-one versions stale, and was retired on
+2026-08-06 — if you find it in an old DB or an old document, it is not a rival authority.
+There is **no `sqlite3` CLI** in this
 environment — use Python, read-only:
 
 ```python
@@ -392,7 +394,8 @@ attestation logic.
 
 - **A root `.ignore` deliberately hides frozen-record directories from ripgrep-based
   SEARCH.** Covered: `_archived/`, `workplan/_superseded/`, `audits/`, `references/audits/`,
-  `sessions/` (except `sessions/LATEST`), `references/search-log/`, `versions/`. This is
+  `sessions/` (except `sessions/LATEST` and `sessions/LATEST-RESEARCH`),
+  `references/search-log/`, `versions/`. This is
   intentional — those hold text that was true on its date and is preserved unedited, so a hit
   from one answers a *current* question wrongly (§9 guardrail 1 records a stale anchor causing
   a real error). Four consequences, all verified rather than assumed:
@@ -411,14 +414,25 @@ attestation logic.
   every future session can see. Rationale in `decisions/DR-2026-08-06-cold-storage-search-scope.md`.
 - **Prose counts are stale everywhere** (`index.html`, `parts/*/manifest.md`, older audits
   disagree with each other and with the DB). Query the DB; never trust a hardcoded number.
-- **Stale pointers:** `sessions/LATEST` and `sessions/handoff-next-session.md` may both point at
-  old sessions; find the current handoff via §9 (the newest `workplan/` file). **`sessions/LATEST`
-  is read by the *blocking* `citation_mining_session` check** (via `run_checks.py`, not `audit.yml`,
-  which was retired 2026-08-01). This is a live defect, not a wrinkle to leave alone: the pointer is
-  being asked to mean both "most recent session" and "most recent *research* session", and those are
-  different objects. Left stale the gate validates a closed set; advanced to the current session it
-  reports `Outstanding: 0` and passes by having nothing in scope. **Both states are meaningless.**
-  The fix is to split the pointer — see W4.1 of `workplan/2026-08-02-architecture-decision-and-execution-plan.md`.
+- **Two session pointers, and they mean different things.** `sessions/LATEST` is continuity —
+  "where did work leave off" — and is the default subject for session-scoped checks.
+  `sessions/LATEST-RESEARCH` names the newest session that actually logged research, and is the
+  subject of the *blocking* `citation_mining_session` gate. A check picks one by declaring
+  `session_pointer:` in `governance/check-registry.yaml`. **Update the research pointer when you
+  close a research session; update `LATEST` when you close any session.** Split 2026-08-06 (W4)
+  because one name serving both meanings had drifted them six weeks apart and pointed a blocking
+  gate at a session that had done no research. `session_pointer_resolvable` (blocking) now fails
+  if either pointer dangles — an unresolvable pointer makes `run_checks.py` SKIP the checks that
+  read it, which disarms a blocking gate silently — and reports drift when `LATEST-RESEARCH` falls
+  behind the DB. `sessions/handoff-next-session.md` is *not* a pointer and may still be stale; find
+  the current handoff via §9 (the newest `workplan/` file).
+- **A gate reporting zero may have examined zero.** `citation_mining_completeness.py` prints an
+  `Examined` count and a verdict of `OUTSTANDING` / `CLEAN` / `NOTHING-IN-SCOPE` precisely so the
+  two cannot be confused. It could not always: session names reach it with a `.md` extension while
+  `evidence_sources.created_by_session` stores the bare stem, so its scoping predicate matched
+  nothing for every session until 2026-08-06. **When a check passes, check that it had a subject** —
+  this repo has now produced that failure mode four separate times, and it looks exactly like
+  success in CI.
 - **PI versioning is intentional:** the numbered `project-instructions-v*.md` files are
   historical snapshots; the highest-numbered one is the deployed copy. The PI is not
   API-writable — the owner pastes it into claude.ai — so the repo PI legitimately lags current

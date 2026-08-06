@@ -57,7 +57,26 @@ except ImportError:
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REGISTRY = os.path.join(REPO_ROOT, "governance", "check-registry.yaml")
-SESSION_POINTER = os.path.join(REPO_ROOT, "sessions", "LATEST")
+# Two pointers, because one name was being asked to mean two different objects.
+#
+# `LATEST` answered "where did work leave off" (continuity) AND "which session's
+# research should the mining gate check". Those diverge: on 2026-08-06 LATEST named
+# a June continuity session while the most recent session that actually mined
+# citations was 2026-07-26. The blocking `citation_mining_session` gate therefore
+# scoped itself to a session that touched no sources and reported
+# `Outstanding: 0` at 4.7% coverage — passing by having nothing in scope.
+# CLAUDE.md §10 called both states meaningless, and it was right: left stale the
+# gate validates a closed set, advanced to the newest session it reports zero by
+# having nothing to check.
+#
+# A check declares which pointer it means via `session_pointer:` in the registry;
+# the default is LATEST.
+SESSION_POINTERS = {
+    "LATEST":          os.path.join(REPO_ROOT, "sessions", "LATEST"),
+    "LATEST-RESEARCH": os.path.join(REPO_ROOT, "sessions", "LATEST-RESEARCH"),
+}
+DEFAULT_SESSION_POINTER = "LATEST"
+SESSION_POINTER = SESSION_POINTERS[DEFAULT_SESSION_POINTER]   # back-compat alias
 
 LEVELS = ("blocking", "advisory", "informational")
 
@@ -146,12 +165,18 @@ def changed_paths(base):
     return [p for p in (result.stdout + untracked).splitlines() if p.strip()]
 
 
-def current_session():
+def read_pointer(name=DEFAULT_SESSION_POINTER):
+    """Session named by one of the pointers, or '' when it is absent."""
     try:
-        with open(SESSION_POINTER, encoding="utf-8") as fh:
+        with open(SESSION_POINTERS[name], encoding="utf-8") as fh:
             return fh.read().strip()
-    except OSError:
+    except (OSError, KeyError):
         return ""
+
+
+def current_session():
+    """The continuity pointer. Kept for callers that mean 'where did work stop'."""
+    return read_pointer(DEFAULT_SESSION_POINTER)
 
 
 def select(reg, kinds, batteries=None, levels=None, run_all=False):
@@ -183,10 +208,34 @@ def expand(cmd, session):
 
 def run_check(check, session, env, github=False):
     """Run one check. Returns (status, seconds, output) with status in
-    PASS / FAIL / SKIP / ERROR."""
-    cmd = expand(check["cmd"], session)
-    if check.get("requires_session") and not session:
-        return "SKIP", 0.0, "no sessions/LATEST pointer — session-scoped check skipped"
+    PASS / FAIL / SKIP / ERROR.
+
+    `session` is the continuity pointer. A check that means a different one
+    declares `session_pointer:` in the registry and gets that instead — see the
+    SESSION_POINTERS comment for why one name could not serve both.
+    """
+    pointer = check.get("session_pointer", DEFAULT_SESSION_POINTER)
+    subject = session if pointer == DEFAULT_SESSION_POINTER else read_pointer(pointer)
+    cmd = expand(check["cmd"], subject)
+    if check.get("requires_session") and not subject:
+        # A BLOCKING check with no subject FAILS. It used to SKIP, and SKIP is
+        # excluded from the verdict even at blocking level — so deleting one
+        # 60-byte pointer file silently switched off a blocking gate, and the run
+        # still reported green. That is the disarming-by-omission this repo has
+        # now produced five times, and it was living inside the dispatcher that
+        # every other check depends on.
+        #
+        # Advisory checks still SKIP: an advisory result changes no verdict, so
+        # failing one only adds noise. The severity of a missing subject is the
+        # severity of the check that wanted it.
+        if check.get("level", "blocking") == "blocking":
+            return "FAIL", 0.0, (
+                f"no sessions/{pointer} pointer, and this check is BLOCKING. "
+                f"Its subject is missing, so it cannot report on anything — "
+                f"which is a failure, not a pass. Restore the pointer or point "
+                f"it at a session that exists.")
+        return "SKIP", 0.0, (f"no sessions/{pointer} pointer — session-scoped check "
+                             f"skipped")
     exe = cmd[1] if cmd[0] in ("python3", "python", "node") else cmd[0]
     if not os.path.exists(os.path.join(REPO_ROOT, exe)):
         return "ERROR", 0.0, f"executable not found: {exe}"
@@ -215,7 +264,12 @@ def run_check(check, session, env, github=False):
     return "FAIL", elapsed, output
 
 
-EXAMINED_RE = re.compile(r"^EXAMINED:\s*(\d+)\b", re.MULTILINE)
+# Leading whitespace allowed. The anchor was column 0, which silently excluded
+# every check that prints an indented summary block — `source_slug_links_
+# duplicates` declared min_items, printed `  EXAMINED: 1011`, and was failed for
+# "printing no EXAMINED line". A formatting convention is not what this contract
+# is about; still anchored to line start so a mid-sentence "examined" cannot match.
+EXAMINED_RE = re.compile(r"^\s*EXAMINED:\s*(\d+)\b", re.MULTILINE)
 
 
 def vacuity_failure(check, output):

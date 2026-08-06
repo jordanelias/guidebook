@@ -512,6 +512,79 @@ entries:
       # B — the token is still correct here
       - "scripts/convert/convert_sources.py"      # the old->new crosswalk itself
 
+  - id: RV-018
+    token: IS-PAYWALL
+    match: identifier
+    severity: broken
+    retired_by: "DR-2026-08-04 (D-0157) §, executed by migration data_20260804164915"
+    replacement: >-
+      verification_status='UNVERIFIED' with verification_disposition='CLOSED'
+      and verification_closure_reason='paywalled'
+    note: >-
+      A paywall is why a pursuit STOPPED, not a standing a source holds. D-0157
+      collapsed it into the binary and gave the reason its own column.
+      Found live 2026-08-06 in `skills/evidence-metadata-rehabilitation_SKILL.md`,
+      which is the worst place for it: a live INSTRUCTION to write a value the
+      schema no longer recognises, in the skill whose whole job is metadata
+      rehabilitation, four lines above that same file's correct narration of the
+      D-0157 change. It half-updated itself and nothing noticed. Sibling tokens
+      RV-012..RV-016 were swept the same day and this one was missed because the
+      sweep worked from the DR's list of values WITH ROWS — `IS-PAYWALL` had zero
+      rows, so it survived the data sweep and stayed in the prose that tells the
+      next session to create some.
+    exempt_paths:
+      # A — the paper trail for this retirement
+      - "decisions/DR-2026-08-04-verification-status-is-a-standing-not-a-history.md"
+      - "skills/evidence-metadata-rehabilitation_SKILL.md"   # names it to correct it
+      # B — the token is still correct here
+      - "references/tooling-register.md"   # cites DR-2026-05-19 admitting it, as
+                                           # the worked example of the ratification
+                                           # pattern; the history is accurate
+
+  - id: RV-019
+    token: es.authors
+    match: identifier
+    severity: broken
+    retired_by: "the author normalisation that created evidence_source_authors"
+    replacement: "es.author_display, or es.first_author_last for sorting"
+    note: >-
+      Same species as RV-001/RV-002: a column that does not exist, named in a
+      query that therefore raises `no such column`. Authors are normalised into
+      `evidence_source_authors` (1,478 rows); the denormalised conveniences on
+      `evidence_sources` are `author_display` and `first_author_last`.
+      Registered as the `es.`-QUALIFIED form on purpose. The bare word `authors`
+      is ordinary English and appears legitimately across the corpus, so it fails
+      admission test 4; `es.authors` can only be a query against a dropped column.
+      Found 2026-08-06 in `bibliography-compiler` and `citation-miner`, both of
+      which are skills whose queries had never been executed — the sampling result
+      that motivated the W2 skills sweep, still true.
+
+  - id: RV-017
+    token: db_meta.schema_version
+    match: identifier
+    severity: stale-pointer
+    retired_by: >-
+      W4.7 of workplan/2026-08-02-architecture-decision-and-execution-plan.md,
+      executed by migration data_20260806070009_2026-08-06-w4-continuity.sql
+    replacement: "PRAGMA user_version"
+    note: >-
+      A second schema-version marker that stopped tracking migrations after 005.
+      It read 11 against a `user_version` of 52 — forty-one versions of drift,
+      naming a schema that has not existed since May. Nothing read it, so it cost
+      nothing at runtime and everything in legibility: CLAUDE.md §4 had to carry
+      a standing "ignore this row" instruction, which is what a defect looks like
+      when it has been documented instead of fixed. The row is gone from the
+      committed DB and `init_db.py` no longer seeds it into new ones.
+      Registered because deleting a value does not delete the SENTENCES about it,
+      and this one appears in enough plans and audits that a session could still
+      grep it up and treat it as an authority. Two markers is one too many
+      whatever they say; two markers that DISAGREE is the wrong-answer machine
+      this register exists to dismantle.
+    exempt_paths:
+      # A — the paper trail for this retirement
+      - "CLAUDE.md"
+      - "scripts/init_db.py"
+
   - id: RV-010
     token: physically disabled
     match: phrase

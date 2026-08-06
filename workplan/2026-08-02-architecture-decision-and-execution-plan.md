@@ -306,7 +306,7 @@ against a source row. Extend that mechanism to doctrine rather than migrating do
 | `scripts/audit/table_connectivity.py` | **BUILT**, not registered | measures the walk; register once its six missing-feature findings are resolved |
 | W2 repair gates that cannot fire | open | — |
 | W3 prune | open | — |
-| W4 continuity | open | — |
+| W4 continuity | **DONE** 2026-08-06, except the two owner-gated moves | the pointers and the handoff are where a session starts the walk |
 | W5.3–5.5, W6, W7, W8 | open | — |
 
 **Corrections to this plan's own diagnosis**, recorded rather than rewritten:
@@ -377,6 +377,22 @@ repoint `run_checks.py:494`. Rewrite the handoff at every session close and chec
 is an ancestor of current HEAD. Enforce `YYYY-MM-DD-slug.md` in `workplan/`. Collapse three connection
 registers to one. Close the `research-contract-baseline.json` self-amnesty (baseline increases fail).
 Promote `research_contract_sync` to blocking. Drop `db_meta.schema_version` (11 vs `user_version` 38).
+
+**W4 outcome, 2026-08-06.** W4.1, 4.2, 4.5, 4.6 and 4.7 landed. W4.3 landed as a forward-only
+check (57 pre-convention names grandfathered in a validated list — the bulk rename is a file move
+and owner-gated). W4.4's reconciliation and caller sweep landed; the retirement itself is
+owner-gated. New checks: `session_pointer_resolvable` and `workplan_naming` (both blocking),
+`research_contract_baseline_ratchet` (blocking), and `research_contract_sync` promoted to blocking.
+
+**The correction this plan owes itself.** W4.1 was diagnosed as a pointer-staleness problem, and
+it was one, but that was not why the gate was vacuous. Pointed at the correct research session the
+blocking `citation_mining_session` gate still reported `Outstanding: 0`, because the pointer files
+hold a filename ending in `.md` while `evidence_sources.created_by_session` holds the bare stem on
+32 of its 33 values. The scoping predicate had matched nothing for every session under either
+pointer since `--session` was added. **Splitting the pointer would have fixed the diagnosis and
+left the defect.** The gate now reports an `Examined` count and a verdict of `OUTSTANDING` /
+`CLEAN` / `NOTHING-IN-SCOPE`, which is the generalisable half: four gates in this stretch of work
+have passed by having nothing in scope, and none of them said so.
 
 ### W5 — Schema: make the handshakes into keys *(≈6 h)*
 

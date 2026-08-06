@@ -115,7 +115,13 @@ A row may be probed via DOI AND PMID in sequence (DOI first per priority order).
 Statutory rows do not have a single-call resolver. Per-row research is mandatory:
 
 1. Standard number + jurisdiction usually identifies the issuing body unambiguously (e.g., `HTM 08-01` + `UK` → NHS England / Dept of Health). Establish via web search.
-2. Edition year is established via the issuing body's own portal where retrievable. Where commercial paywall prevents retrieval, route `verification_status='IS-PAYWALL'` and KEEP `metadata_quality='AUTHOR-TITLE-ONLY'` (the row is not COMPLETE-STATUTORY without year).
+2. Edition year is established via the issuing body's own portal where retrievable. Where commercial paywall prevents retrieval, route
+   `verification_status='UNVERIFIED'` with `verification_disposition='CLOSED'` and
+   `verification_closure_reason='paywalled'`, and KEEP
+   `metadata_quality='AUTHOR-TITLE-ONLY'` (the row is not COMPLETE-STATUTORY without year).
+   (Was `IS-PAYWALL`, retired by D-0157 and migrated 2026-08-04 — the paywall is the
+   *reason* a pursuit stopped, not a standing of its own. Same correction as item 4 below,
+   which this file already carried while this line still instructed the retired value.)
 3. Title coherence: confirm stored `pub_title` matches the standard number's documented content. Statutory equivalents of the note-as-title pattern (programme name in `standard_number`, topic in `pub_title`) route to `MISMATCH-MULTI`.
 4. Non-EN primary text with EN secondary corroboration (WHO MiNDbank, official translations) →
    `verification_status='UNVERIFIED'` with `verification_disposition='OPEN'`, not VERIFIED.

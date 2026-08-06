@@ -49,6 +49,31 @@ class JurisdictionalValueRecord(GuidebookEntity):
     is_code_minimum: Optional[int] = None
     evidence_tier: Optional[int] = None
     source_section: Optional[str] = None
+
+    # ── Pinpoint locator (schema 053) ────────────────────────────────────────
+    # A code or standard is cited at a hierarchical position inside it. These
+    # mirror the DB columns 1:1; most are NULL on most rows, because a level a
+    # document does not have is not missing data. `locator_scheme` records which
+    # family's naming applies (ISO's top numbered level is a CLAUSE, ADA's is a
+    # SECTION), so a reader knows whether to render '§404.2' or 'clause 12.3'.
+    # The `_end` companions carry spans -- 'ADA 2010 §604-608' is live data.
+    locator_scheme: Optional[str] = None
+    loc_division: Optional[str] = None
+    loc_part: Optional[str] = None
+    loc_section: Optional[str] = None
+    loc_subsection: Optional[str] = None
+    loc_paragraph: Optional[str] = None
+    loc_clause: Optional[str] = None
+    loc_subclause: Optional[str] = None
+    loc_division_end: Optional[str] = None
+    loc_part_end: Optional[str] = None
+    loc_section_end: Optional[str] = None
+    loc_subsection_end: Optional[str] = None
+    loc_paragraph_end: Optional[str] = None
+    loc_clause_end: Optional[str] = None
+    loc_subclause_end: Optional[str] = None
+    loc_note: Optional[str] = None
+
     notes: Optional[str] = None
 
     @field_validator("evidence_tier")

@@ -92,13 +92,21 @@ def validate_source_co1_fields(path: str) -> list:
     if et != "co1":
         return []
 
-    # Co-1 source: check verification status
+    # Co-1 source: is the pursuit closed without the source being established?
+    #
+    # Two bugs here, both dormant only because `data/sources/*.yaml` does not
+    # exist. First, `r` was never defined in this function — a NameError, not a
+    # failed check, for any Co-1 source whose status is UNVERIFIED. Second, the
+    # two named statuses are D-0157 retirees: the vocabulary is binary now, so
+    # `UNVERIFIED-CLOSED` and `CLOSED-DELETED` can no longer occur and testing
+    # for them matches nothing. The live terminal test is the disposition.
     vs = data.get("verification_status")
-    if vs in ("UNVERIFIED-CLOSED", "CLOSED-DELETED") or (
-                vs == "UNVERIFIED" and (r.get("verification_disposition") or "") == "CLOSED"):
+    disp = (data.get("verification_disposition") or "").upper()
+    if vs == "UNVERIFIED" and disp == "CLOSED":
+        reason = data.get("verification_closure_reason") or "no reason recorded"
         errors.append(
-            f"Co-1 source {data.get('ref_id', '?')} has "
-            f"verification_status={vs} — cells citing this source "
+            f"Co-1 source {data.get('ref_id', '?')} is UNVERIFIED with "
+            f"disposition CLOSED ({reason}) — cells citing this source "
             f"as sole Co-1 evidence must downgrade to pending (A6 §2.8)"
         )
 

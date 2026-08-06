@@ -55,7 +55,7 @@ literature-review-planner confirms a Tier 1–3 source:
      --slug {slug} \
      --ref {local_ref_id} \
      --direction backward \
-     --connections '["CON-0247","CON-0248"]' \
+     --connections '["CON-NNNN","CON-NNNN"]' \   # the ids you actually created
      --session {session_filename} \
      --doi {doi}
    ```
@@ -181,7 +181,7 @@ python3 scripts/db.py add-source \
 
 Query for bibliography generation:
 ```sql
-SELECT es.ref_id, es.authors, es.year, es.title, es.doi, es.tier,
+SELECT es.ref_id, es.author_display, es.pub_year, es.pub_title, es.doi, es.tier,
        es.jurisdiction,
        GROUP_CONCAT(DISTINCT ssl.slug) as slugs,
        cm.backward, cm.forward
@@ -189,7 +189,7 @@ FROM evidence_sources es
 LEFT JOIN source_slug_links ssl ON es.ref_id = ssl.ref_id
 LEFT JOIN citation_mining cm ON cm.local_ref_id = ssl.local_ref_id AND cm.slug = ssl.slug
 GROUP BY es.ref_id
-ORDER BY es.authors COLLATE NOCASE, es.year
+ORDER BY es.first_author_last COLLATE NOCASE, es.pub_year
 ```
 
 Format:

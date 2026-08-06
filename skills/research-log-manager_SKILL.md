@@ -63,27 +63,46 @@ After multilingual-research completes:
 
 1. **Update search-log file on GitHub:** Append search results, new sources, coverage data.
 
-2. **Update SQLite coverage (per jurisdiction searched):**
+2. **Log every search you ran — one row per query, verbatim (R8):**
    ```bash
-   python3 scripts/db.py upsert-coverage \
-     --slug {slug} \
-     --jurisdiction {jur_code} \
-     --status searched \
-     --co1-attempted {0|1} \
-     --session {session_filename}
-   ```
-   Run once per jurisdiction attempted. Repeat for each.
-
-3. **Update SQLite language coverage (per language searched):**
-   ```bash
-   python3 scripts/db.py upsert-language \
+   python3 scripts/db.py log-search \
      --slug {slug} \
      --language {lang_code} \
-     --status searched \
-     --results-count {N} \
+     --jurisdiction {jur_code} \        # omit if the search was not jurisdiction-scoped
+     --query-text '{the query, exactly as fired}' \
+     --terms-used '["alias1","MeSH term","alias2"]' \   # JSON array — the column is json_valid-checked
+     --engine {pubmed|crossref|web|...} \
+     --depth-method {scoping|systematic} \             # only two; a citation chase is --mining-direction
+     --target-tier {1..6} --target-evidence-type {co1|clinical|code|...} \
+     --results-found {N} --results-screened {N} --results-admitted {N} \
+     --admitted-ref-id REF-NNNNN \      # repeatable; writes the admission junction too
      --session {session_filename}
    ```
-   Run once per language attempted.
+   Once per query. **Keep the empties** — a zero-yield search with a well-formed
+   query is a completed unit of work and evidence about the world (R8, R14).
+   Never delete one, never backfill one silently.
+
+3. **A search you deliberately did NOT run is also a row:**
+   ```bash
+   python3 scripts/db.py log-search \
+     --slug {slug} --language {lang_code} \
+     --query-text 'n/a' --engine {engine} --depth-method scoping \
+     --deferred-reason 'why — e.g. no controlled vocabulary for AR (0 aliases); \
+                        a query would be back-translation, forbidden by R11' \
+     --session {session_filename}
+   ```
+   `deferred_reason` is what makes **"not looked for"** different from
+   **"nothing found"**. That distinction is the thing the whole pipeline exists
+   to preserve; a missing row erases it.
+
+   > **`upsert-coverage` and `upsert-language` are gone.** `search_coverage` and
+   > `search_languages` were hand-kept grids that drifted from the search log in
+   > both directions — 634 cells claimed SEARCHED against 15 with a matching
+   > logged search, while 31 logged searches landed on cells the grid called
+   > NOT-RUN. They are frozen as historical artifacts; coverage is now DERIVED
+   > from the log via `v_coverage_jurisdiction` / `v_coverage_language`, so it
+   > cannot claim more than was logged. Read it with
+   > `python3 scripts/db.py coverage --slug {slug}`.
 
 4. **Add new evidence sources:**
    ```bash
@@ -102,9 +121,16 @@ After multilingual-research completes:
 
 5. **Update BPC file on GitHub:** Append new findings to BPC synthesis sections.
 
-6. **Invoke citation-miner inline — MANDATORY for every confirmed Tier 1–2 source, ALSO for Tier 3 unless explicitly deferred.** Failure to invoke is a protocol violation (GAP-283).
+6. **Invoke citation-miner inline — MANDATORY for every confirmed Tier 1–2 source.** Failure to invoke is a protocol violation (GAP-283).
 
-   For each new evidence_sources row with `tier IN (1, 2, 3)`:
+   For each new evidence_sources row with `tier IN (1, 2)`:
+
+   > Tier 3 is **not** mandatory. This said "ALSO for Tier 3 unless explicitly
+   > deferred", which `governance/research-contract.yaml` R2 corrected on
+   > 2026-08-01: the operative RULE says "every confirmed Tier 1-2 source", and
+   > the wider reading "had been obliging work on a tier band the rule ledger
+   > does not require — a real cost silently imposed on every session." Mine T3
+   > when it is worth mining, not because a skill said you must.
 
    a. Check mining status:
    ```bash

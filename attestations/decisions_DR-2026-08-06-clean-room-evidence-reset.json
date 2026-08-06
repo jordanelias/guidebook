@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-08-06-clean-room-reset",
+  "artifact": "decisions/DR-2026-08-06-clean-room-evidence-reset.md",
+  "doctrine_sha": "0f2f525",
+  "rules_in_scope": [
+    "decision-protocol",
+    "evidence-architecture",
+    "tier-system",
+    "migration-discipline",
+    "retire-not-delete"
+  ],
+  "per_rule_status": {
+    "decision-protocol": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-08-06-clean-room-evidence-reset.md"
+    },
+    "migration-discipline": {
+      "status": "FIRED",
+      "evidence_path": "scripts/migrations/data_20260806222208_2026-08-06-clean-room-reset.sql"
+    },
+    "retire-not-delete": {
+      "status": "FIRED",
+      "evidence_path": "_archived/data/corpus-pre-reset-2026-08-06.db"
+    },
+    "evidence-architecture": {
+      "status": "SKIPPED",
+      "reason": "No determination was made or altered; the reset removes cells rather than judging them."
+    },
+    "tier-system": {
+      "status": "SKIPPED",
+      "reason": "No tier was assigned or changed. The DR records a class-relative sourcing finding but ratifies no tier rule."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "migration-discipline",
+      "reason": "Two migrations were folded into one before commit. A two-step fix-forward left an intermediate state with 3 FK violations that migrate_db refused on replay; immutability binds committed migrations, and neither was committed."
+    }
+  ],
+  "bias_direction": "Toward executing a large owner-directed deletion quickly rather than pausing on scope. I had already over-reached once on this decision and been stopped, so the risk was repeating it under the momentum of a clear instruction. Mitigated by archiving before deleting and by generating the table partition from the live schema rather than typing it, which caught three tables I had mis-filed by hand.",
+  "independent_reviewer_counterclaim": "A reviewer could argue the reset was premature: the corpus was recoverable and the 863 sources represent real labour, so demoting them removes the only evidence base the project has and makes the walk trivially perfect by having nothing to walk. The answer is that the walk was already zero and the corpus could not show its work; the counterclaim has force only if someone intends to rehabilitate provenance for 824 unadmitted sources, which is archaeology no one has scoped.",
+  "verdict": "DEVIATION-LOGGED"
+}

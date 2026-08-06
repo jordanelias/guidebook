@@ -336,6 +336,16 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
+    note: >-
+      EXAMINED line added 2026-08-06: "0 duplicate sets in 1011 rows" and "0 in 0
+      rows" printed byte-identically, and this is blocking, so the pass carried no
+      information about whether the table was intact or gone.
+      `min_items: 1` was declared alongside it and RETIRED the same day by the
+      clean-room reset, which emptied source_slug_links by decision. The guard
+      exists to catch a check passing on an ACCIDENTALLY empty subject; an empty
+      subject that is the declared state of the project is not that, and leaving
+      the guard would have made a blocking gate red for telling the truth. The
+      EXAMINED line stays, so the emptiness is still visible rather than inferred.
 
   - id: validate_items
     cmd: [python3, scripts/validate_items.py]
@@ -384,6 +394,25 @@ checks:
     basis: unattributed
     cost: fast
 
+  - id: workplan_naming
+    cmd: [python3, scripts/audit/workplan_naming_audit.py]
+    battery: structure
+    kinds: [always]
+    level: blocking
+    basis: unattributed
+    cost: fast
+    note: >-
+      W4.3, 2026-08-06. CLAUDE.md §9 tells every session to find the current plan
+      by sorting `workplan/` by date. 57 of 60 top-level names do not sort that
+      way, so the documented procedure returns a March file above an August one —
+      §9 warns that "several dated workplans coexist" rather than naming the
+      current plan, which is that defect showing through the documentation.
+      FORWARD-ONLY. The 57 are grandfathered in a list inside the script; the
+      bulk rename is a file move and therefore owner-gated (§9 guardrail 4), and
+      would need a caller sweep besides. This stops the count growing and keeps
+      the backlog visible with a number on it. The list is validated in both
+      directions, so it cannot quietly become a waiver queue.
+
   - id: citation_mining_session
     cmd: [python3, scripts/audit/citation_mining_completeness.py, --session, "@SESSION@", --tier-max, "2"]
     battery: data
@@ -392,7 +421,36 @@ checks:
     basis: unattributed
     cost: fast
     requires_session: true
-    note: "@SESSION@ is substituted from sessions/LATEST; skipped when absent."
+    session_pointer: LATEST-RESEARCH
+    note: >-
+      @SESSION@ is substituted from **sessions/LATEST-RESEARCH**, not LATEST.
+      W4, 2026-08-06. This gate previously read LATEST, which was simultaneously
+      the continuity pointer ("where did work leave off") and this gate's subject
+      ("whose research should be checked"). Those are different objects and they
+      had drifted six weeks apart: LATEST named a June continuity session while
+      the newest session that actually mined citations was 2026-07-26. The gate
+      therefore scoped itself to a session that touched no sources and reported
+      `Outstanding: 0` at 4.7% coverage — a BLOCKING check passing by having
+      nothing in scope. CLAUDE.md §10 called both states meaningless and was
+      right: stale, it validates a closed set; advanced to the newest session, it
+      reports zero because that session did no research.
+      LATEST-RESEARCH names the newest session with rows in citation_mining /
+      search_executions / evidence_sources, so the gate has a real subject.
+      Pointer honesty is enforced in three existing places rather than a fourth
+      file: `run_checks.py` FAILS a blocking check whose pointer does not resolve
+      (it used to SKIP, which disarmed this gate in silence); `validate_cross_refs`
+      checks the handoff's named record and plan; `test_db_integrity` L04 reports
+      when this pointer drifts out of the gate's Tier 1-2 scope. The standalone
+      `session_pointer_audit.py` was deleted on 2026-08-06 — it patrolled a hazard
+      whose root cause was a five-line fix in the dispatcher it was watching.
+      The split was necessary and not sufficient. Pointing the gate at the right
+      session still returned `Outstanding: 0`, because the pointer files hold a
+      FILENAME (`….md`) while `evidence_sources.created_by_session` holds the bare
+      stem on 32 of its 33 values — so `created_by_session = :session` had been
+      selecting nothing under either pointer, for every session, since the flag
+      was added. Both halves were fixed together; the audit now normalises the
+      name and reports an `Examined` count so an empty scope is visible as
+      `NOTHING-IN-SCOPE` rather than as a pass.
 
   - id: citation_mining_backlog_t2
     cmd: [python3, scripts/audit/citation_mining_completeness.py, --tier-max, "2"]
@@ -667,15 +725,45 @@ checks:
     note: Surfaces NON-COMPLIANT verdicts. Never blocking by design.
 
   # ===== research contract ==================================================
+  - id: research_contract_baseline_ratchet
+    cmd: [python3, scripts/audit/research_batch_dod.py, --check-baseline, origin/main]
+    battery: research
+    kinds: [always]
+    level: blocking
+    basis: hygiene
+    cost: fast
+    note: >-
+      W4.5, 2026-08-06. `governance/research-contract-baseline.json` forgives
+      inherited research-contract debt so `research_batch_dod --all` is not
+      permanently red — a gate that is always red is a gate people stop reading.
+      The amnesty was self-administered: `--write-baseline` ratchets down only,
+      but that discipline lived in the WRITER, and the file is a text file.
+      Editing `R13: 494` to `R13: 600` forgave 106 fresh violations, left the
+      gate green, and left no trace — a cleaner defeat of the check than
+      deleting it, since deleting it is visible.
+      This compares the committed file against origin/main and fails on any
+      count that rose or any code that vanished. Lowering always passes; that is
+      debt being paid. `kinds: [always]` because the file can be edited from any
+      work kind and an edit is exactly when it needs watching. An unreadable
+      base ref exits 2 rather than passing — absent is not innocent.
+
   - id: research_contract_sync
     cmd: [python3, scripts/generate/research_contract_hook.py, --check]
     battery: research
     kinds: [governance, tooling]
-    level: advisory
+    level: blocking
     basis: hygiene
     cost: fast
     min_items: 10
     note: >-
+      PROMOTED advisory -> blocking 2026-08-06 (W4.6). It has been green since it
+      landed, it carries a `min_items: 10` vacuity guard so it cannot pass by
+      examining nothing, and what it protects is a contract that is INJECTED INTO
+      EVERY SESSION at start. Drift here does not produce a wrong file, it
+      produces a wrong instruction delivered to every future session before it
+      reads anything else — which is the highest-leverage place in the repo for
+      a silent disagreement to sit, and it had one (R1, R2 and R3 had drifted
+      across the two hand-transcribed copies).
       The R1-R15 contract had TWO hand-transcribed copies with no comparator — the
       SessionStart hook in .claude/settings.json and the rule table in
       research_batch_dod.py — and they had drifted on R1, R2 and R3, two of which
@@ -929,7 +1017,19 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
-    note: DR-2026-07-25 rendered-document integrity gate.
+    note: >-
+      DR-2026-07-25 rendered-document integrity gate.
+      `min_items: 1` was added and RETIRED on 2026-08-06. It was added because the
+      script returned 0 on an empty specs/ glob, so a blocking gate went green if
+      specs/ was renamed or the render step never ran. It was retired hours later
+      by the clean-room reset, which made specs/ reference-only: those briefs cite
+      REF-ids the reset removed, deliberately, so `--all` now examines nothing BY
+      DECISION.
+      The distinction the guard exists for still holds — a check passing on an
+      ACCIDENTALLY empty subject is worthless — and it does not apply to a subject
+      that is empty because the owner said so. The EXAMINED line stays and names
+      the reason, so the emptiness is stated rather than inferred. Re-declare
+      `min_items` the day specs/ is regenerated against the live DB.
 
   - id: register_integrity_check
     cmd: [python3, scripts/audit/register_integrity_check.py, --selftest]
@@ -974,6 +1074,25 @@ checks:
 # deleted: retirement is owner-gated (CLAUDE.md §9 guardrail 4), and these are
 # recorded for that decision, not pre-judged.
 quarantine:
+
+  - id: table_connectivity
+    cmd: [python3, scripts/audit/table_connectivity.py]
+    status: quarantined
+    reason: >-
+      NOT A GATE, and registered here so that fact is recorded rather than
+      inferred from its absence. It measures the pipeline walk — how far a
+      published best practice can be traced backwards — and reports independent
+      vs. in-sequence counts per stage. Its headline is the plan's headline
+      (fully-evidenced walks, currently 0), which is a project state to report,
+      not a condition to fail a diff on.
+      Registered 2026-08-06 after an audit found it was the one enforcer script
+      under `scripts/audit/` appearing in neither the active nor the quarantine
+      list. That omission class is exactly what this registry was built for: the
+      2026-07-24 finding that 28 enforcers were wired to nothing was possible
+      only because nothing enumerated them. An unlisted script re-opens the hole
+      on principle even when the individual script is harmless.
+      Promote it if and when a target is set for the walk — then it becomes a
+      ratchet with a number, which is the only form in which it could block.
 
   - id: validate_db
     cmd: [python3, scripts/validate_db.py]
