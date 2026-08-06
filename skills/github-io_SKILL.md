@@ -193,10 +193,13 @@ For files >50 KB where only a subset of lines is needed. Avoids loading full con
 # is the `gaps` table, and reading it needs no PAT and no partial-fetch trick:
 python3 scripts/db.py gaps --status OPEN --priority P1
 
-# Connection register — PENDING HIGH only
-curl -sL -H "Authorization: token ${PAT}" \
-  "https://api.github.com/repos/jordanelias/guidebook/contents/references/connection-register-active.md" \
-  | python3 -c "import sys,json,base64; d=json.load(sys.stdin); c=base64.b64decode(d['content']).decode(); [print(l) for l in c.split('\n') if 'HIGH' in l and 'PENDING' in l]"
+# Connection register — PENDING HIGH only.
+# NOT a file fetch, for the same reason as the gap register above:
+# connection-register-active.md was archived in April 2026 and carries a banner
+# saying so. The register is the `connections` table, which holds 273 rows
+# against that file's 112 — fetching the file would have returned a stale
+# subset, over the network, with a PAT, and looked like it worked:
+python3 scripts/db.py connections --status PENDING --confidence HIGH
 ```
 
 ---

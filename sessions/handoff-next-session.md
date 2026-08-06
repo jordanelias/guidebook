@@ -46,7 +46,7 @@ W1 is complete (PR #78). **W4 is complete** (this branch). W2, W3 and parts of W
 | W4.6 promote `research_contract_sync` to blocking | done |
 | W4.7 drop `db_meta.schema_version` | done |
 | W4.3 enforce `YYYY-MM-DD-slug.md` in `workplan/` | forward-only check; the ~45-file rename is owner-gated |
-| W4.4 collapse three connection registers to one | **not done** — a retirement, owner-gated |
+| W4.4 collapse three connection registers to one | reconciled + callers swept; **the retirement itself is owner-gated** |
 
 **The finding worth carrying forward from W4.1.** The pointer split was necessary and *not
 sufficient*. Pointed at the correct research session, the blocking `citation_mining_session` gate
@@ -75,11 +75,16 @@ five rival (c)-layer tables · ⚑3 `room_page.py` fix-or-archive · ⚑4
   §9's instruction — "sort `workplan/` by date and read the newest" — is unfollowable for most of
   the directory. The forward-only check stops it growing; fixing it is a bulk file move, which is
   owner-gated (§9 guardrail 4).
-- **Three connection registers** (`references/connection-register.md`,
-  `-active.md`, `-archive.md`) plus `references/connections/**` and
-  `references/connection-network.json`. W4.4 calls for one. Retirement is owner-gated, and the
-  reconciliation must run before the retirement, not after — treat disagreements between them as
-  findings (§9 guardrail 5).
+- **Retire the three connection registers to `_archived/references/`.** W4.4. The
+  prerequisites are done and the answer is clean: the two split files hold 113 distinct CON ids,
+  `references/connections/**` holds 246, the `connections` table holds 273, and **every id in the
+  split files appears in both of the others**. They are a strict subset carrying nothing unique
+  and missing 160 rows the DB has, so the retirement loses nothing (§9 guardrail 5 satisfied).
+  The caller sweep found one live caller — `github-io_SKILL.md` told sessions to fetch
+  `connection-register-active.md` over the API with a PAT — now repointed at
+  `scripts/db.py connections`. `connection-register.md`'s redirect stub, which had been sending
+  readers to the two archived files for four months, now points at the DB and carries the
+  reconciliation. **All that remains is the file move, which is owner-gated.**
 - **The advisory `retired_vocabulary` failures are a real backlog, not noise.** 71 occurrences,
   concentrated in `references/tier*-verified-sources.json` (D-0157 vocabulary in a JSON store whose
   status vs. the DB is unruled) and `governance/project-instructions-v10_14.md` (a PI snapshot
