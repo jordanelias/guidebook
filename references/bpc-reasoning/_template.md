@@ -1,7 +1,7 @@
 # Reasoning: <slug>
 
 <!--
-Source template: audits/bpc-rewrite-workplan-2026-05-11.md §2
+Source template: workplan/bpc-rewrite-workplan-2026-05-11.md §2
 One file per slug. Located in references/bpc-reasoning/<slug>.md.
 ACTIVE slugs only initially; MERGED/STUB slugs require redirect-only stubs.
 Validates against scripts/validate_reasoning.py.

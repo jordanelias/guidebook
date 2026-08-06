@@ -1,0 +1,26 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-08-06-cold-storage-search-scope",
+ "doctrine_sha": "0f2f525",
+ "rules_in_scope": [
+  "structure-auditor",
+  "adherence-logging-and-attestation"
+ ],
+ "bias_direction": "The bias is toward treating this as beneath attestation. It is a one-token path correction with no evidentiary content, and the temptation was to argue the rule is over-broad for mechanical edits rather than satisfy it. That argument may even be right, but it is a rule change and belongs in a DR, not in a session's convenience. Attesting is the cheap, honest option; arguing the gate away in the commit that trips it is not.",
+ "independent_reviewer_counterclaim": "A reviewer could object that three near-identical attestations for a find-and-replace are ceremony that devalues the attestation record -- if everything is attested, the signal in an attestation drops. That objection has force and the honest answer is that the remedy is to narrow the rule deliberately (a D-OP decision on whether mechanical path corrections in synthesis paths require attestation), not to skip the gate silently this once.",
+ "verdict": "CLEAN",
+ "deviations": [],
+ "artifact": "references/bpc-reasoning/room-acoustic-performance.md",
+ "per_rule_status": {
+  "structure-auditor": {
+   "status": "FIRED",
+   "evidence_path": "references/bpc-reasoning/room-acoustic-performance.md",
+   "reason": "The only edit to this file is a path correction: the active content workplan moved from audits/ to workplan/ on owner direction, because audits/ held ten dated audit reports and exactly one workplan. No evidentiary claim, citation, value, marker or reasoning in this document was read, altered or re-derived. Verified by diff: one line, one token, `audits/bpc-rewrite-workplan-2026-05-11` -> `workplan/bpc-rewrite-workplan-2026-05-11`."
+  },
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "attestations/bpc-reasoning_room-acoustic-performance.json",
+   "reason": "Attestation exists because the file sits on a synthesis path and the commit touched it, which is the rule regardless of how small the edit is. It was written only after CI caught its absence: the local run used `--battery attestation` WITHOUT `--changed-from`, so the changed-file set was empty and the gate passed on nothing -- a vacuous pass of exactly the kind this session spent the day removing from other checks."
+  }
+ }
+}

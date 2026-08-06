@@ -1,0 +1,69 @@
+# .ignore — cold storage. Hides frozen records from ripgrep-based SEARCH only.
+#
+# READ THIS BEFORE CONCLUDING A FILE DOES NOT EXIST.
+#
+# WHAT THIS DOES AND DOES NOT DO
+# ------------------------------
+# Honours it (file becomes unsearchable):   ripgrep, and Claude Code's Grep tool.
+# Ignores it (file stays fully visible):    git, `grep -r`, `git grep`, `ls`,
+#                                           Claude Code's Glob tool, and ALL of
+#                                           this repo's own Python tooling, which
+#                                           walks with glob/pathlib and never
+#                                           reads this file.
+#
+# So: nothing is deleted, untracked, moved, or hidden from code. Every path below
+# is still committed, still versioned, still on disk, still opened by whatever
+# opened it before. `scripts/validate_cross_refs.py` still globs
+# references/search-log/; `scripts/item_audit_pipeline.py` still reads
+# versions/current/. This file separates "visible to code" from "visible to agent
+# search", which is why it can cover directories that could never be physically
+# moved.
+#
+# WHY
+# ---
+# The repo's operative problem is not disk. It is that a session greps for a fact,
+# gets several answers, and cannot tell which is current — CLAUDE.md §9 guardrail 1
+# records that a stale anchor in an old document caused a real error. Every
+# directory below holds FROZEN RECORDS: text that was true on its date and is
+# preserved unedited on purpose. A hit from one answers a current question wrongly.
+#
+# The scope is not invented here. Every entry is already on the global
+# `exempt_paths` list in governance/retired-vocabulary.yaml, i.e. already
+# adjudicated, entry by entry with reasons, as an immutable record whose retired
+# vocabulary is licensed rather than a defect. This file mechanises a judgement the
+# repo had already made in prose.
+#
+# NOT hidden, deliberately: decisions/ (the governance changelog §9 tells sessions
+# to read), dated workplan/ files (they ARE the current plan), attestations/, and
+# scripts/migrations/ — a migration answers "which change dropped this column?"
+# with a TRUE hit, so hiding it would remove a right answer, not a wrong one.
+#
+# SYNTAX NOTE, verified 2026-08-06 rather than assumed: a bare `dir/` entry cannot
+# be re-included by a later `!dir/keepthis` line — gitignore semantics do not
+# re-include a file whose parent directory is excluded. The `dir/**` form CAN be
+# negated. Both negations below therefore use `**`, and both were tested with a
+# planted token before this file was committed.
+#
+# Changing this file is OWNER-GATED, same as a retirement (CLAUDE.md §9 guardrail
+# 4): it shapes what every future session is able to see. See CLAUDE.md §10 and
+# decisions/DR-2026-08-06-cold-storage-search-scope.md.
+
+# --- retired-but-preserved -------------------------------------------------
+_archived/
+workplan/_superseded/
+
+# --- dated reports, frozen at their date -----------------------------------
+audits/
+references/audits/
+
+# --- append-only research and session records ------------------------------
+# sessions/LATEST stays visible: it is read by the BLOCKING citation_mining_session
+# check, and a session debugging that gate must be able to find the pointer it
+# resolves. Add !sessions/LATEST-RESEARCH here when the W4 pointer split lands.
+sessions/**
+!sessions/LATEST
+
+references/search-log/
+
+# --- superseded spec snapshots ---------------------------------------------
+versions/

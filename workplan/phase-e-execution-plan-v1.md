@@ -29,7 +29,7 @@ This plan defines: gate closure (§3), the per-BPC protocol with exact schema bi
 
 ## 2. Ground truth (preflight, 2026-06-10, repo @ `95e5466`, DB v24)
 
-`[READ: audits/bpc-rewrite-workplan-2026-05-11.md — §§5–13 + Appendix A in full this session; §§0–4 prior sessions]`
+`[READ: workplan/bpc-rewrite-workplan-2026-05-11.md — §§5–13 + Appendix A in full this session; §§0–4 prior sessions]`
 `[READ: skills/adversarial-research_SKILL.md — full, 222 lines]` `[READ: skills/progressive-measurement_SKILL.md — full, 222 lines]`
 `[READ: skills/reasoning-doc-citations_SKILL.md — full, 271 lines]` `[READ: skills/multilingual-research_SKILL.md — full, 582 lines]`
 `[READ: references/bpc-reasoning/room-acoustic-performance.md — header + pilot scoping]` `[READ: scripts/validate_reasoning.py — status semantics]`

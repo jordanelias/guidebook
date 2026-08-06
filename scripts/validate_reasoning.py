@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate BPC and connection reasoning documents against the workplan templates.
 
-Per Phase A.9 of audits/bpc-rewrite-workplan-2026-05-11.md.
+Per Phase A.9 of workplan/bpc-rewrite-workplan-2026-05-11.md.
 PI v10.8 §hooks_status records this as level-2 enforcement (validator runs but is
 not yet a hard hook; promotion to hook follows Phase 1 calibration).
 
