@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """
-scripts/audit/session_pointer_audit.py — keep the session pointers honest.
+scripts/audit/session_pointer_audit.py — keep the continuity surface honest.
+
+Three files tell a fresh session where to start: `sessions/LATEST`,
+`sessions/LATEST-RESEARCH`, and `sessions/handoff-next-session.md`. All three are
+hand-maintained, none of them was checked, and each has been wrong for weeks at a
+time. This audits all three.
 
 `sessions/LATEST` and `sessions/LATEST-RESEARCH` are one-line files naming a
 session record. Session-scoped checks in `governance/check-registry.yaml` resolve
@@ -41,6 +46,7 @@ Usage:
 import os
 import re
 import sqlite3
+import subprocess
 import sys
 from pathlib import Path
 
@@ -57,6 +63,81 @@ POINTERS = {
 }
 
 DATE_RE = re.compile(r"session_(\d{4}-\d{2}-\d{2})")
+
+HANDOFF = SESSIONS / "handoff-next-session.md"
+
+# The handoff's header is a set of `**Label:** value` lines. These three name
+# things on disk or in history; a dangling one sends the next session nowhere.
+HANDOFF_FIELDS = {
+    "HEAD at handoff": re.compile(r"\*\*HEAD at handoff:\*\*\s*`([0-9a-f]{7,40})`"),
+    "Last session record": re.compile(r"\*\*Last session record:\*\*\s*`([^`]+)`"),
+    "The plan to work from": re.compile(r"\*\*The plan to work from:\*\*\s*`([^`]+)`"),
+}
+
+
+def git(*args):
+    """(ok, stdout). Never raises — git absence is a condition to report, not crash on."""
+    try:
+        p = subprocess.run(["git", *args], cwd=REPO, capture_output=True, text=True)
+    except FileNotFoundError:                                  # pragma: no cover
+        return False, ""
+    return p.returncode == 0, p.stdout.strip()
+
+
+def audit_handoff():
+    """(problems, drift, lines) for sessions/handoff-next-session.md.
+
+    A dangling PATH is a problem: the handoff is where a fresh session is told
+    what to read, so a named file that does not exist costs the next session its
+    first twenty minutes. A stale HEAD or session name is DRIFT: it is wrong but
+    it is prose, and failing CI over unrewritten prose would make the check
+    something to route around. The distinction is the same one drawn for the
+    pointers above — enforce what silently breaks machinery, report what merely
+    misleads a reader, and never let the second masquerade as the first.
+
+    This file went eleven weeks naming a HEAD from May and a branch that had been
+    merged. Nothing was wrong with the repo; the map was wrong, and the map is
+    what a session reads first.
+    """
+    problems, drift, lines = [], [], []
+    if not HANDOFF.exists():
+        drift.append("sessions/handoff-next-session.md is missing — a fresh session "
+                     "has no entry point but §9's 'sort workplan/ by date'.")
+        return problems, drift, lines
+
+    text = HANDOFF.read_text(encoding="utf-8")
+    for label, pattern in HANDOFF_FIELDS.items():
+        m = pattern.search(text)
+        if not m:
+            drift.append(f"handoff has no `{label}:` line — the header format changed "
+                         f"or the field was dropped; nothing can check it.")
+            continue
+        value = m.group(1).strip()
+
+        if label == "HEAD at handoff":
+            ok, _ = git("cat-file", "-e", f"{value}^{{commit}}")
+            if not ok:
+                drift.append(f"handoff names HEAD {value}, which is not a commit in this "
+                             f"clone — the handoff describes history this branch does not "
+                             f"have.")
+                continue
+            anc, _ = git("merge-base", "--is-ancestor", value, "HEAD")
+            if not anc:
+                drift.append(f"handoff names HEAD {value}, which is NOT an ancestor of the "
+                             f"current HEAD — it was written on a different line of history.")
+                continue
+            ok, behind = git("rev-list", "--count", f"{value}..HEAD")
+            lines.append(f"  ok      handoff HEAD {value} is an ancestor"
+                         + (f", {behind} commit(s) back" if ok else ""))
+        else:
+            target = REPO / value
+            if not target.exists():
+                problems.append(f"handoff's `{label}` names {value!r}, which does not exist")
+                lines.append(f"  FAIL    handoff {label} -> {value} (no such file)")
+            else:
+                lines.append(f"  ok      handoff {label} -> {value}")
+
+    return problems, drift, lines
 
 
 def session_date(name):
@@ -136,6 +217,11 @@ def audit():
         elif not newest:
             db_note = "no session in evidence_sources carries a parseable date"
 
+    hp, hd, hl = audit_handoff()
+    problems += hp
+    drift += hd
+    lines += hl
+
     return (1 if problems else 0), problems, drift, lines + ([f"  note    {db_note}"]
                                                              if db_note else [])
 
@@ -176,7 +262,7 @@ def main():
 
     code, problems, drift, lines = audit()
     print("=" * 70)
-    print("session_pointer_audit.py — session pointers resolve to real records")
+    print("session_pointer_audit.py — the continuity surface points at real things")
     print("=" * 70)
     for ln in lines:
         print(ln)
@@ -188,14 +274,17 @@ def main():
 
     if problems:
         print()
-        print(f"{len(problems)} pointer problem(s). A pointer that does not resolve "
-              f"does not fail the checks that read it — run_checks.py SKIPs them, so "
-              f"the blocking citation_mining_session gate turns itself off in "
-              f"silence. Restore the pointer or update it to a session that exists.")
+        print(f"{len(problems)} unresolvable reference(s) on the continuity surface.")
+        print("  A POINTER that does not resolve does not fail the checks that read "
+              "it — run_checks.py SKIPs them, so the blocking citation_mining_session "
+              "gate turns itself off in silence.")
+        print("  A HANDOFF path that does not resolve sends the next session to a file "
+              "that is not there, which is the first thing it reads.")
+        print("  Point them at something that exists.")
         return 1
 
     print()
-    print(f"RESULTS: {len(POINTERS)}/{len(POINTERS)} pointers resolve"
+    print(f"RESULTS: {len(POINTERS)}/{len(POINTERS)} pointers resolve, handoff paths resolve"
           + (f", {len(drift)} drift warning(s)" if drift else ""))
     return 0
 

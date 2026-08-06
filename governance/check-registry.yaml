@@ -384,6 +384,25 @@ checks:
     basis: unattributed
     cost: fast
 
+  - id: workplan_naming
+    cmd: [python3, scripts/audit/workplan_naming_audit.py]
+    battery: structure
+    kinds: [always]
+    level: blocking
+    basis: unattributed
+    cost: fast
+    note: >-
+      W4.3, 2026-08-06. CLAUDE.md §9 tells every session to find the current plan
+      by sorting `workplan/` by date. 57 of 60 top-level names do not sort that
+      way, so the documented procedure returns a March file above an August one —
+      §9 warns that "several dated workplans coexist" rather than naming the
+      current plan, which is that defect showing through the documentation.
+      FORWARD-ONLY. The 57 are grandfathered in a list inside the script; the
+      bulk rename is a file move and therefore owner-gated (§9 guardrail 4), and
+      would need a caller sweep besides. This stops the count growing and keeps
+      the backlog visible with a number on it. The list is validated in both
+      directions, so it cannot quietly become a waiver queue.
+
   - id: session_pointer_resolvable
     cmd: [python3, scripts/audit/session_pointer_audit.py]
     battery: data
