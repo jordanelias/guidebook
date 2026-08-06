@@ -55,7 +55,7 @@ literature-review-planner confirms a Tier 1–3 source:
      --slug {slug} \
      --ref {local_ref_id} \
      --direction backward \
-     --connections '["CON-0247","CON-0248"]' \
+     --connections '["CON-NNNN","CON-NNNN"]' \   # the ids you actually created
      --session {session_filename} \
      --doi {doi}
    ```

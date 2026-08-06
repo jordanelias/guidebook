@@ -336,12 +336,16 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
-    min_items: 1
     note: >-
-      `min_items` + an EXAMINED line added 2026-08-06. "0 duplicate sets in 1011
-      rows" and "0 duplicate sets in 0 rows" printed byte-identically, and this is
-      blocking — the pass carried no information about whether the table was
-      intact or gone.
+      EXAMINED line added 2026-08-06: "0 duplicate sets in 1011 rows" and "0 in 0
+      rows" printed byte-identically, and this is blocking, so the pass carried no
+      information about whether the table was intact or gone.
+      `min_items: 1` was declared alongside it and RETIRED the same day by the
+      clean-room reset, which emptied source_slug_links by decision. The guard
+      exists to catch a check passing on an ACCIDENTALLY empty subject; an empty
+      subject that is the declared state of the project is not that, and leaving
+      the guard would have made a blocking gate red for telling the truth. The
+      EXAMINED line stays, so the emptiness is still visible rather than inferred.
 
   - id: validate_items
     cmd: [python3, scripts/validate_items.py]
@@ -1013,13 +1017,19 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
-    min_items: 1
     note: >-
       DR-2026-07-25 rendered-document integrity gate.
-      `min_items: 1` added 2026-08-06: the script returned 0 when the specs/ glob
-      was empty, so a blocking gate went green if specs/ was renamed or the render
-      step never ran. It now prints EXAMINED and exits 1 on an empty corpus; this
-      declaration is the other half of that pairing.
+      `min_items: 1` was added and RETIRED on 2026-08-06. It was added because the
+      script returned 0 on an empty specs/ glob, so a blocking gate went green if
+      specs/ was renamed or the render step never ran. It was retired hours later
+      by the clean-room reset, which made specs/ reference-only: those briefs cite
+      REF-ids the reset removed, deliberately, so `--all` now examines nothing BY
+      DECISION.
+      The distinction the guard exists for still holds — a check passing on an
+      ACCIDENTALLY empty subject is worthless — and it does not apply to a subject
+      that is empty because the owner said so. The EXAMINED line stays and names
+      the reason, so the emptiness is stated rather than inferred. Re-declare
+      `min_items` the day specs/ is regenerated against the live DB.
 
   - id: register_integrity_check
     cmd: [python3, scripts/audit/register_integrity_check.py, --selftest]

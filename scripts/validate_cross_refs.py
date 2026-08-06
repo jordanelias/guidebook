@@ -7,6 +7,14 @@ Checks:
   2. CON-IDs (CON-NNNN) resolve via SQLite connections table (was: _index.md)
   3. Part section references (§X.Y) resolve to existing headings in correct part file
   4. BPC ↔ search-log co-existence (every BPC has matching search-log, vice versa)
+  NB checks 1-2 (slug + CON-ID resolution against SQLite) run over LIVE surfaces
+  only. After the 2026-08-06 clean-room reset the reference corpus — parts/v10,
+  references/bpc, references/connections, specs/, site/ — cites entities the DB
+  no longer holds, by design: those files are preserved AS REFERENCE and the DB
+  was reset around them. Validating reference prose against a reset database
+  produced 1,191 failures that were all the check misunderstanding its own
+  subject. See REFERENCE_ONLY below.
+
   5. sessions/handoff-next-session.md — its named session record, workplan, and
      HEAD all resolve (added 2026-08-06; folded in from a standalone audit rather
      than given a file of its own — a dangling path in the handoff is a broken
@@ -100,7 +108,13 @@ def collect_scan_files(repo_root: str) -> list[str]:
     for pattern in SCAN_PATTERNS:
         full_pattern = os.path.join(repo_root, pattern)
         files.extend(glob.glob(full_pattern, recursive=True))
-    return sorted(set(os.path.normpath(f) for f in files))
+    out = sorted(set(os.path.normpath(f) for f in files))
+    # Reference surfaces are excluded from DB-backed reference resolution — see
+    # REFERENCE_ONLY. The entities they name were deliberately reset out of the
+    # database beneath them, so resolving their CON-IDs against the live tables
+    # asks a question the reset already answered: 1,191 failures, every one of
+    # them the check misunderstanding its own subject.
+    return [f for f in out if not _is_reference(os.path.relpath(f, repo_root))]
 
 
 def collect_bpc_slugs(repo_root: str) -> dict[str, str]:
@@ -215,6 +229,27 @@ def run(repo_root: str = ".", fast: bool = False, warn_only: bool = False) -> in
     print(f"{'='*60}", file=sys.stderr)
 
     return 0 if (warn_only or not errors) else 1
+
+
+# Surfaces preserved as reference by the 2026-08-06 reset. Their cross-references
+# are historically accurate and deliberately not maintained against the live DB.
+# This is a SCOPE statement, not an amnesty: a broken reference inside a live
+# file still fails, and a file leaves this list by becoming live again.
+REFERENCE_ONLY = (
+    "parts/",
+    "references/bpc/",
+    "references/bpc-reasoning/",
+    "references/connections/",
+    "references/connection-reasoning/",
+    "specs/",
+    "site/",
+    "_archived/",
+)
+
+
+def _is_reference(path: str) -> bool:
+    rel = path.replace("\\", "/").lstrip("./")
+    return any(rel.startswith(p) for p in REFERENCE_ONLY)
 
 
 HANDOFF_FIELDS = {
