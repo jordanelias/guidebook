@@ -57,11 +57,15 @@ audits/
 references/audits/
 
 # --- append-only research and session records ------------------------------
-# sessions/LATEST stays visible: it is read by the BLOCKING citation_mining_session
-# check, and a session debugging that gate must be able to find the pointer it
-# resolves. Add !sessions/LATEST-RESEARCH here when the W4 pointer split lands.
+# Both pointers stay visible. LATEST-RESEARCH is read by the BLOCKING
+# citation_mining_session check and LATEST by everything session-scoped that is
+# not that gate (W4, 2026-08-06); a session debugging either must be able to find
+# the file it resolves. The session RECORDS behind them stay hidden — those are
+# append-only history, and a grep that surfaces forty of them to answer one
+# question is the cost this file exists to remove.
 sessions/**
 !sessions/LATEST
+!sessions/LATEST-RESEARCH
 
 references/search-log/
 

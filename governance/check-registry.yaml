@@ -384,6 +384,27 @@ checks:
     basis: unattributed
     cost: fast
 
+  - id: session_pointer_resolvable
+    cmd: [python3, scripts/audit/session_pointer_audit.py]
+    battery: data
+    kinds: [always]
+    level: blocking
+    basis: unattributed
+    cost: fast
+    note: >-
+      Guards the resolution step every session-scoped check depends on. A pointer
+      that is missing, empty, or names a nonexistent record does not FAIL the
+      checks that read it — `run_checks.py` treats it as "no session" and SKIPs
+      them, so deleting one 60-byte file silently disarms the BLOCKING
+      `citation_mining_session` gate with nothing in the output to say so. That
+      is why this is blocking and `kinds: [always]`: the disarming is invisible
+      and available from any work kind.
+      It also REPORTS (without failing) LATEST-RESEARCH drifting behind the
+      newest session that logged evidence_sources rows — the exact condition W4
+      found and fixed by hand on 2026-08-06. Advancing the pointer is a judgment
+      call, so drift is surfaced rather than enforced; the point is that the
+      hand-fix is now watched instead of trusted to stay done.
+
   - id: citation_mining_session
     cmd: [python3, scripts/audit/citation_mining_completeness.py, --session, "@SESSION@", --tier-max, "2"]
     battery: data
@@ -392,7 +413,30 @@ checks:
     basis: unattributed
     cost: fast
     requires_session: true
-    note: "@SESSION@ is substituted from sessions/LATEST; skipped when absent."
+    session_pointer: LATEST-RESEARCH
+    note: >-
+      @SESSION@ is substituted from **sessions/LATEST-RESEARCH**, not LATEST.
+      W4, 2026-08-06. This gate previously read LATEST, which was simultaneously
+      the continuity pointer ("where did work leave off") and this gate's subject
+      ("whose research should be checked"). Those are different objects and they
+      had drifted six weeks apart: LATEST named a June continuity session while
+      the newest session that actually mined citations was 2026-07-26. The gate
+      therefore scoped itself to a session that touched no sources and reported
+      `Outstanding: 0` at 4.7% coverage — a BLOCKING check passing by having
+      nothing in scope. CLAUDE.md §10 called both states meaningless and was
+      right: stale, it validates a closed set; advanced to the newest session, it
+      reports zero because that session did no research.
+      LATEST-RESEARCH names the newest session with rows in citation_mining /
+      search_executions / evidence_sources, so the gate has a real subject.
+      `session_pointer_resolvable` keeps both pointers honest.
+      The split was necessary and not sufficient. Pointing the gate at the right
+      session still returned `Outstanding: 0`, because the pointer files hold a
+      FILENAME (`….md`) while `evidence_sources.created_by_session` holds the bare
+      stem on 32 of its 33 values — so `created_by_session = :session` had been
+      selecting nothing under either pointer, for every session, since the flag
+      was added. Both halves were fixed together; the audit now normalises the
+      name and reports an `Examined` count so an empty scope is visible as
+      `NOTHING-IN-SCOPE` rather than as a pass.
 
   - id: citation_mining_backlog_t2
     cmd: [python3, scripts/audit/citation_mining_completeness.py, --tier-max, "2"]
