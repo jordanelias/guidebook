@@ -158,15 +158,23 @@ def read_pointer(name):
     return lines[0], None
 
 
-def newest_research_session(conn):
-    """The latest-dated session that logged an evidence_sources row.
+def newest_session(conn, gate_scope=False):
+    """The latest-dated session that logged evidence_sources rows.
+
+    `gate_scope=True` narrows to the predicate the citation_mining_session gate
+    actually scopes by: slug-linked sources at Tier 1-2. The two answers differ,
+    and the difference is the point — see drift_report().
 
     Ordered by the date in the name, not by rowid or insertion order: sessions are
     imported and backfilled out of order, so "last written" is not "most recent".
     """
+    sql = ("SELECT DISTINCT es.created_by_session FROM evidence_sources es "
+           "JOIN source_slug_links ssl ON es.ref_id = ssl.ref_id "
+           "WHERE es.tier BETWEEN 1 AND 2" if gate_scope else
+           "SELECT DISTINCT created_by_session FROM evidence_sources es "
+           "WHERE 1=1")
     names = [r[0] for r in conn.execute(
-        "SELECT DISTINCT created_by_session FROM evidence_sources "
-        "WHERE created_by_session IS NOT NULL AND created_by_session != ''"
+        sql + " AND es.created_by_session IS NOT NULL AND es.created_by_session != ''"
     )]
     dated = [(session_date(n), n) for n in names if session_date(n)]
     return max(dated)[1] if dated else None
@@ -202,7 +210,8 @@ def audit():
             conn = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
         except sqlite3.Error as exc:                            # pragma: no cover
             return 2, [f"cannot open {DB_PATH}: {exc}"], [], []
-        newest = newest_research_session(conn)
+        newest = newest_session(conn)
+        newest_in_gate_scope = newest_session(conn, gate_scope=True)
         conn.close()
         pointed = resolved.get("LATEST-RESEARCH")
         if newest and pointed:
@@ -216,6 +225,35 @@ def audit():
                     f"the subject.")
         elif not newest:
             db_note = "no session in evidence_sources carries a parseable date"
+
+        # The pointer's contract and the gate's predicate are not the same
+        # predicate, and when they diverge the blocking gate has no subject.
+        #
+        # LATEST-RESEARCH means "newest session with evidence_sources rows".
+        # citation_mining_session scopes to SLUG-LINKED sources at TIER 1-2,
+        # because that is what RULE 124 makes mining mandatory for. A session that
+        # admitted only Tier 3 satisfies the first and offers the second nothing,
+        # so the gate reports NOTHING-IN-SCOPE and passes — correctly, and without
+        # having checked anything.
+        #
+        # That is the state on 2026-08-06 and it is not obviously wrong: the
+        # newest research session genuinely has nothing to mine. What is wrong is
+        # that it was INVISIBLE. Reported rather than failed, because advancing
+        # the pointer to the newest session with subjects would point a BLOCKING
+        # gate at a real 8-source backlog and redden main for content work that is
+        # deliberately deferred — a permanently-red gate is one people learn to
+        # ignore, which is how this whole class of defect survives.
+        if newest_in_gate_scope and pointed:
+            pd, gd = session_date(pointed), session_date(newest_in_gate_scope)
+            if pd and gd and pd != gd:
+                drift.append(
+                    f"sessions/LATEST-RESEARCH names {pointed!r}, which holds no "
+                    f"slug-linked Tier 1-2 sources — so citation_mining_session, "
+                    f"which is BLOCKING, examines nothing and passes. The newest "
+                    f"session inside that gate's scope is "
+                    f"{newest_in_gate_scope!r} ({gd}). Repointing there is a "
+                    f"judgment call with a consequence: run the gate against it "
+                    f"first and see what it reports.")
 
     hp, hd, hl = audit_handoff()
     problems += hp

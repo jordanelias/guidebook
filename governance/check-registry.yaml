@@ -336,6 +336,12 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
+    min_items: 1
+    note: >-
+      `min_items` + an EXAMINED line added 2026-08-06. "0 duplicate sets in 1011
+      rows" and "0 duplicate sets in 0 rows" printed byte-identically, and this is
+      blocking — the pass carried no information about whether the table was
+      intact or gone.
 
   - id: validate_items
     cmd: [python3, scripts/validate_items.py]
@@ -1022,7 +1028,13 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
-    note: DR-2026-07-25 rendered-document integrity gate.
+    min_items: 1
+    note: >-
+      DR-2026-07-25 rendered-document integrity gate.
+      `min_items: 1` added 2026-08-06: the script returned 0 when the specs/ glob
+      was empty, so a blocking gate went green if specs/ was renamed or the render
+      step never ran. It now prints EXAMINED and exits 1 on an empty corpus; this
+      declaration is the other half of that pairing.
 
   - id: register_integrity_check
     cmd: [python3, scripts/audit/register_integrity_check.py, --selftest]
@@ -1067,6 +1079,25 @@ checks:
 # deleted: retirement is owner-gated (CLAUDE.md §9 guardrail 4), and these are
 # recorded for that decision, not pre-judged.
 quarantine:
+
+  - id: table_connectivity
+    cmd: [python3, scripts/audit/table_connectivity.py]
+    status: quarantined
+    reason: >-
+      NOT A GATE, and registered here so that fact is recorded rather than
+      inferred from its absence. It measures the pipeline walk — how far a
+      published best practice can be traced backwards — and reports independent
+      vs. in-sequence counts per stage. Its headline is the plan's headline
+      (fully-evidenced walks, currently 0), which is a project state to report,
+      not a condition to fail a diff on.
+      Registered 2026-08-06 after an audit found it was the one enforcer script
+      under `scripts/audit/` appearing in neither the active nor the quarantine
+      list. That omission class is exactly what this registry was built for: the
+      2026-07-24 finding that 28 enforcers were wired to nothing was possible
+      only because nothing enumerated them. An unlisted script re-opens the hole
+      on principle even when the individual script is harmless.
+      Promote it if and when a target is set for the walk — then it becomes a
+      ratchet with a number, which is the only form in which it could block.
 
   - id: validate_db
     cmd: [python3, scripts/validate_db.py]

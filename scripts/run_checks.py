@@ -248,7 +248,12 @@ def run_check(check, session, env, github=False):
     return "FAIL", elapsed, output
 
 
-EXAMINED_RE = re.compile(r"^EXAMINED:\s*(\d+)\b", re.MULTILINE)
+# Leading whitespace allowed. The anchor was column 0, which silently excluded
+# every check that prints an indented summary block — `source_slug_links_
+# duplicates` declared min_items, printed `  EXAMINED: 1011`, and was failed for
+# "printing no EXAMINED line". A formatting convention is not what this contract
+# is about; still anchored to line start so a mid-sentence "examined" cannot match.
+EXAMINED_RE = re.compile(r"^\s*EXAMINED:\s*(\d+)\b", re.MULTILINE)
 
 
 def vacuity_failure(check, output):

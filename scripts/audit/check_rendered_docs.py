@@ -226,9 +226,18 @@ def main():
     if args.all or not docs:
         docs = sorted((REPO / "specs").glob("*.html"))
     docs = [d for d in docs if d.exists()]
+    print(f"EXAMINED: {len(docs)} rendered document(s)")
     if not docs:
-        print("No rendered documents found under specs/.")
-        return 0
+        # Exit 1, not 0. This is a BLOCKING check and it used to return 0 here,
+        # so deleting or renaming specs/ turned it green — a gate certifying an
+        # empty set is indistinguishable from a gate certifying a clean one, and
+        # this repo has produced that failure mode six times. `min_items: 1` in
+        # the registry enforces the pairing from the other side.
+        print("FAIL: no rendered documents found under specs/. This check has "
+              "nothing to check, which is not the same as having found nothing "
+              "wrong. Either specs/ moved, or the render step did not run.",
+              file=sys.stderr)
+        return 1
 
     c = conn()
     for doc in docs:
