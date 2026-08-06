@@ -189,14 +189,29 @@ def check_baseline(ref="origin/main"):
     import subprocess
 
     rel = BASELINE_PATH.relative_to(REPO)
-    try:
-        prior_raw = subprocess.run(
-            ["git", "show", f"{ref}:{rel.as_posix()}"], cwd=REPO,
-            capture_output=True, text=True, check=True).stdout
-    except (subprocess.CalledProcessError, FileNotFoundError) as exc:
-        print(f"ERROR: cannot read {rel} at {ref}: {exc}. The ratchet has no "
-              f"witness without it, and passing on an unreadable baseline would "
-              f"be exactly the amnesty this check closes.", file=sys.stderr)
+
+    def _show(spec):
+        p = subprocess.run(["git", "show", f"{spec}:{rel.as_posix()}"], cwd=REPO,
+                           capture_output=True, text=True)
+        return p.stdout if p.returncode == 0 else None
+
+    # CI checks out at depth 1, so `origin/main` is simply ABSENT on a PR — the
+    # one context where this ratchet means anything. Shipped without this, the
+    # check exited 2 on every pull request: a blocking gate that could not pass,
+    # which is the mirror image of the gate-that-cannot-fail this repo keeps
+    # finding. Fetch the base ref before concluding it is unreachable.
+    prior_raw = _show(ref)
+    if prior_raw is None:
+        remote_ref = ref.split("/", 1)[1] if ref.startswith("origin/") else ref
+        subprocess.run(["git", "fetch", "--quiet", "--depth", "1",
+                        "origin", remote_ref], cwd=REPO, capture_output=True)
+        prior_raw = _show(ref) or _show("FETCH_HEAD")
+    if prior_raw is None:
+        print(f"ERROR: cannot read {rel} at {ref}, and fetching it failed. The "
+              f"ratchet has no witness without it, and passing on an unreadable "
+              f"baseline would be exactly the amnesty this check closes. In CI "
+              f"this means the job needs `fetch-depth: 0` or network access to "
+              f"origin.", file=sys.stderr)
         return 2
 
     if not BASELINE_PATH.exists():

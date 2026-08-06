@@ -103,9 +103,22 @@ def gather(con: sqlite3.Connection) -> dict:
             "SELECT COUNT(*) FROM (SELECT DISTINCT slug, jurisdiction "
             "FROM search_executions "
             "WHERE deferred_reason IS NULL AND jurisdiction IS NOT NULL)"),
+        # CROSS JOIN, said out loud. This was a bare `JOIN … WHERE` with no ON
+        # clause — a cross join by accident rather than by intent, which is the
+        # one shape a reader cannot distinguish from a forgotten join condition.
+        # It is genuinely a cross product here: every ACTIVE slug owes coverage
+        # in every in-scope jurisdiction, so 80 × 48 = 3,840 is the right
+        # denominator and the join is not a bug. Only its silence was.
+        #
+        # ONE denominator. `scripts/db.py get_coverage_completeness` hardcoded 24
+        # required jurisdictions while this computed against 48, so the same
+        # question had two answers differing 2× — shipped the same day as a commit
+        # about exterminating unattributed numbers. `lang_jur_map` is the bridge
+        # that declares which jurisdictions are in scope, so it is the source for
+        # both; db.py now reads it too.
         coverage_total=scalar(
-            "SELECT COUNT(*) FROM (SELECT DISTINCT s.slug, ljm.jurisdiction "
-            "FROM slugs s JOIN lang_jur_map ljm WHERE s.status='ACTIVE')"),
+            "SELECT (SELECT COUNT(*) FROM slugs WHERE status='ACTIVE') * "
+            "(SELECT COUNT(DISTINCT jurisdiction) FROM lang_jur_map)"),
         coverage_deferred=scalar(
             "SELECT COUNT(*) FROM search_executions WHERE deferred_reason IS NOT NULL"),
         gaps_closed=scalar("SELECT COUNT(*) FROM gaps WHERE status LIKE 'CLOSED%'"),

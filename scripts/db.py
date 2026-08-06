@@ -21,8 +21,8 @@ CLI usage:
     python3 scripts/db.py add-connection --con-id CON-0001 --confidence HIGH --connection-type CROSS-POPULATION --filed-in sensory-environment --description "..." --source-skill connection-scout --targets '["item:A-02"]' --session SESSION
     python3 scripts/db.py update-connection --con-id CON-0001 --status CONSUMED --session SESSION
     python3 scripts/db.py unmined [--slug SLUG] [--tier-max 3]
-    python3 scripts/db.py upsert-coverage --slug SLUG --jurisdiction AU --session SESSION
-    python3 scripts/db.py upsert-language --slug SLUG --language FR --results-count 4 --session SESSION
+    python3 scripts/db.py log-search --slug SLUG --language EN --query-text '...' --engine pubmed \
+        --depth-method scoping --session SESSION      (upsert-coverage/-language are frozen; see log_search)
     python3 scripts/db.py update-bpc --slug SLUG --citation-mining-complete 1 --session SESSION
     python3 scripts/db.py add-source --ref-id REF-001 --authors "Smith J" --year 2022 --title "..." --tier 1 --session SESSION [--slug SLUG --local-ref-id LR-001]
     python3 scripts/db.py validate
@@ -349,6 +349,30 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
     indistinguishable from contemporaneous logging; it is currently 0 on every
     row.
     """
+    # Refuse what H05/H07 forbid, at write time, with a named cause.
+    #
+    # The first version accepted all of this and let the blocking gate find it
+    # later: duplicate ids (H07), results_admitted disagreeing with the number of
+    # admitted ids (H05), and a junction written with INSERT OR IGNORE — the same
+    # silent no-op this file denounces at length twenty lines up in
+    # insert_evidence_source. One file, one diff, two opposite doctrines. A gate
+    # that catches a bad write after it lands is strictly worse than a write path
+    # that cannot make it.
+    ids = list(admitted_ref_ids or [])
+    if len(set(ids)) != len(ids):
+        dupes = sorted({r for r in ids if ids.count(r) > 1})
+        raise ValueError(
+            f"--admitted-ref-id repeated: {', '.join(dupes)}. One admission edge "
+            f"per (search, source); a repeat is a miscount, not two admissions "
+            f"(invariant H07).")
+    if ids and results_admitted and results_admitted != len(ids):
+        raise ValueError(
+            f"--results-admitted {results_admitted} disagrees with "
+            f"{len(ids)} --admitted-ref-id value(s). The count and the edges are "
+            f"the same fact; they may not differ (invariant H05).")
+    if ids and not results_admitted:
+        results_admitted = len(ids)
+
     ts = now()
     row = {
         "slug": slug, "jurisdiction": jurisdiction, "language": language,
@@ -359,7 +383,7 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
         "results_found": results_found, "results_screened": results_screened,
         "results_admitted": results_admitted,
         "saturation_signal": saturation_signal,
-        "admitted_ref_ids": json.dumps(admitted_ref_ids) if admitted_ref_ids else None,
+        "admitted_ref_ids": json.dumps(ids) if ids else None,
         "deferred_reason": deferred_reason, "backfill": backfill,
         "session": session, "executed_at": ts,
         "findings_note": findings_note, "harm_finding": harm_finding,
@@ -377,9 +401,17 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
         # other is a guaranteed check failure — and worse, a silent disagreement
         # about which sources a search actually produced, at the seam where the
         # research phase hands off to collection.
-        for ref_id in (admitted_ref_ids or []):
+        for ref_id in ids:
+            if not conn.execute("SELECT 1 FROM evidence_sources WHERE ref_id=?",
+                                [ref_id]).fetchone():
+                # Named, not a bare FOREIGN KEY constraint failed. The whole
+                # transaction rolls back, execution row included.
+                raise ValueError(
+                    f"--admitted-ref-id {ref_id} is not in evidence_sources. "
+                    f"File the source first (`db.py add-source`), then log the "
+                    f"search that admitted it.")
             conn.execute(
-                "INSERT OR IGNORE INTO search_admissions "
+                "INSERT INTO search_admissions "
                 "(exec_id, ref_id, created_at, created_by_session) "
                 "VALUES (?, ?, ?, ?)", [exec_id, ref_id, ts, session])
         return exec_id
@@ -496,14 +528,22 @@ def get_coverage_completeness(slug: str) -> dict:
         g_lang = conn.execute(
             "SELECT COUNT(*) AS n FROM search_languages "
             "WHERE slug=? AND status != 'NOT-RUN'", [slug]).fetchone()["n"]
+        # Required scope comes from lang_jur_map, the bridge that declares it —
+        # not from a literal. These were hardcoded 24 and 14 while
+        # tools/pipeline_completeness.py computed against 48, so "how much
+        # coverage is owed" had two answers differing 2x, shipped the same day.
+        req_jur = conn.execute(
+            "SELECT COUNT(DISTINCT jurisdiction) AS n FROM lang_jur_map").fetchone()["n"]
+        req_lang = conn.execute(
+            "SELECT COUNT(DISTINCT language) AS n FROM lang_jur_map").fetchone()["n"]
     return {
         "slug": slug,
         "jurisdictions_searched": jur,
-        "jurisdictions_required": 24,
+        "jurisdictions_required": req_jur,
         "languages_searched": lang,
-        "languages_required": 14,
+        "languages_required": req_lang,
         "searches_deferred_with_reason": deferred,
-        "complete": jur >= 24 and lang >= 14,
+        "complete": jur >= req_jur and lang >= req_lang,
         "legacy_grid": {
             "jurisdictions": g_jur,
             "languages": g_lang,
@@ -924,6 +964,14 @@ def main():
                       help="REQUIRED in practice, not just schema — see adversarial-research skill. "
                            "COMPLETE if DOI/full metadata confirmed via CrossRef/PubMed/Semantic Scholar; "
                            "AUTHOR-TITLE-ONLY if only single-source (citing-document) attestation.")
+    p_as.add_argument("--verification-method",
+                      choices=["tool", "corroborated-not-retrieved",
+                               "co1-attestation", "citing-bibliography"],
+                      help="REQUIRED when --verification-status VERIFIED. How the "
+                           "standing was established (D-0157).")
+    p_as.add_argument("--verified-by-tool",
+                      help="REQUIRED when --verification-method tool: which tool "
+                           "(crossref, pubmed, semantic-scholar, ...). Invariant I4b.")
     p_as.add_argument("--verification-status",
                       choices=["VERIFIED", "UNVERIFIED"],
                       help="REQUIRED in practice. VERIFIED requires an independent connector/registry hit "
@@ -1291,6 +1339,10 @@ def main():
             data["metadata_quality"] = args.metadata_quality
         if args.verification_status:
             data["verification_status"] = args.verification_status
+        if args.verification_method:
+            data["verification_method"] = args.verification_method
+        if args.verified_by_tool:
+            data["verified_by_tool"] = args.verified_by_tool
         ref_id = insert_evidence_source(data, session=args.session, dry_run=args.dry_run)
         if args.slug and args.local_ref_id:
             insert_source_slug_link(ref_id, args.slug, args.local_ref_id,
@@ -1555,15 +1607,36 @@ def insert_evidence_source(data: dict, session: str,
         # one the skills tell sessions to use.
         "verification_disposition", "verification_method",
         "verification_closure_reason", "verification_attempt_count",
-        "verification_note",
+        "verification_note", "verified_by_tool",
     })
     _validate_cols(data.keys(), _ES_COLS, "insert_evidence_source")
 
-    # A verification standing implies its evidence. Fill what the caller left out
-    # rather than writing a row the blocking invariants reject.
+    # A verification standing implies its evidence — so REFUSE the write when the
+    # evidence is absent. Do not fill it in.
+    #
+    # The first version of this defaulted verification_method='tool' and
+    # attempt_count=1 for any VERIFIED row, reasoning that it was avoiding a row
+    # the blocking invariants reject. It did the opposite twice over: `tool`
+    # carries the contract "verified_by_tool names which", so the row failed I4b
+    # anyway — and, worse, the defaults were INVENTED FACTS. No tool ran; no
+    # attempt happened. A write path that manufactures an audit trail to satisfy
+    # an audit is a doctrine violation in a project whose stated epistemics are
+    # "I don't know" over invention, and it would have laundered fabricated
+    # provenance into the one column that exists to record how a standing was
+    # reached. Refusal is symmetrical with the R9 duplicate errors below.
     vs = data.get("verification_status")
     if vs == "VERIFIED":
-        data.setdefault("verification_method", "tool")
+        if not data.get("verification_method"):
+            raise ValueError(
+                "VERIFIED requires --verification-method (how it was established: "
+                "tool / corroborated-not-retrieved / co1-attestation / "
+                "citing-bibliography). D-0157: a standing without its method is "
+                "not a standing. Filing it as UNVERIFIED with disposition OPEN is "
+                "the honest move if you have not established it.")
+        if data["verification_method"] == "tool" and not data.get("verified_by_tool"):
+            raise ValueError(
+                "verification_method='tool' requires --verified-by-tool naming "
+                "which tool established it (invariant I4b).")
         data.setdefault("verification_attempt_count", 1)
     elif vs == "UNVERIFIED":
         data.setdefault("verification_disposition", "OPEN")

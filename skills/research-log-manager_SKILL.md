@@ -70,9 +70,9 @@ After multilingual-research completes:
      --language {lang_code} \
      --jurisdiction {jur_code} \        # omit if the search was not jurisdiction-scoped
      --query-text '{the query, exactly as fired}' \
-     --terms-used '{aliases/MeSH actually used}' \
+     --terms-used '["alias1","MeSH term","alias2"]' \   # JSON array — the column is json_valid-checked
      --engine {pubmed|crossref|web|...} \
-     --depth-method {scoping|systematic|citation-chase|targeted} \
+     --depth-method {scoping|systematic} \             # only two; a citation chase is --mining-direction
      --target-tier {1..6} --target-evidence-type {co1|clinical|code|...} \
      --results-found {N} --results-screened {N} --results-admitted {N} \
      --admitted-ref-id REF-NNNNN \      # repeatable; writes the admission junction too
@@ -121,9 +121,16 @@ After multilingual-research completes:
 
 5. **Update BPC file on GitHub:** Append new findings to BPC synthesis sections.
 
-6. **Invoke citation-miner inline — MANDATORY for every confirmed Tier 1–2 source, ALSO for Tier 3 unless explicitly deferred.** Failure to invoke is a protocol violation (GAP-283).
+6. **Invoke citation-miner inline — MANDATORY for every confirmed Tier 1–2 source.** Failure to invoke is a protocol violation (GAP-283).
 
-   For each new evidence_sources row with `tier IN (1, 2, 3)`:
+   For each new evidence_sources row with `tier IN (1, 2)`:
+
+   > Tier 3 is **not** mandatory. This said "ALSO for Tier 3 unless explicitly
+   > deferred", which `governance/research-contract.yaml` R2 corrected on
+   > 2026-08-01: the operative RULE says "every confirmed Tier 1-2 source", and
+   > the wider reading "had been obliging work on a tier band the rule ledger
+   > does not require — a real cost silently imposed on every session." Mine T3
+   > when it is worth mining, not because a skill said you must.
 
    a. Check mining status:
    ```bash

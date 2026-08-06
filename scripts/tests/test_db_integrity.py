@@ -1076,14 +1076,30 @@ def run_checks(db_path):
     # is fifteen more chances to drift; DB invariants live in this file.
     FROZEN_GRIDS = {
         # table: (row count, sha256 of the sorted full contents)
-        "search_coverage":  (4960, "11cd189fd91b333078ed4b9048f52eab4c9233ee856defe4aa2bb86e9ef22f35"),
-        "search_languages": (1558, "03548ae0f2ebce68caba28245672ae9a766776ff6e6b095499a2d1a397b305cf"),
+        "search_coverage":  (4960, "f279875883ab6bfa272f7753d0bb55baff743128be3530193812d85a97944e21"),
+        "search_languages": (1558, "b2d288a79ea4dd3280e43945615b0501d42fa7ae420845e2402e01b1d4859d3b"),
     }
     import hashlib as _hl
     for _tbl, (_want_n, _want_d) in FROZEN_GRIDS.items():
-        _rows = conn.execute(f"SELECT * FROM {_tbl}").fetchall()
+        try:
+            _rows = conn.execute(f"SELECT * FROM {_tbl}").fetchall()
+        except sqlite3.OperationalError as _exc:
+            # A dropped table must FAIL this check, not abort the suite. The
+            # first version let the OperationalError escape, so `DROP TABLE
+            # search_coverage` killed all 71 checks with a traceback instead of
+            # reporting the one that noticed — and dropping these tables is an
+            # active proposal, so the crash was on the roadmap.
+            record("L03", f"{_tbl} is frozen (hand-kept grid superseded by "
+                          f"search_executions)", False,
+                   f"table is unreadable ({_exc}). If it was retired, that is an "
+                   f"owner-gated move and this constant retires with it.")
+            continue
+        # NUL sentinel for NULL. `"" if v is None else str(v)` mapped NULL and
+        # the empty string to the same byte, so `UPDATE search_coverage SET
+        # notes='' WHERE notes IS NULL` changed 4,950 rows and the digest did not
+        # move — a content freeze that a table-wide UPDATE walked through.
         _digest = _hl.sha256(
-            "\n".join(sorted("\x1f".join("" if v is None else str(v) for v in r)
+            "\n".join(sorted("\x1f".join("\x00" if v is None else str(v) for v in r)
                              for r in _rows)).encode()).hexdigest()
         _ok = len(_rows) == _want_n and _digest == _want_d
         record("L03", f"{_tbl} is frozen (hand-kept grid superseded by search_executions)",
