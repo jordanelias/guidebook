@@ -121,8 +121,10 @@ a rule up the spectrum only when it's mechanically checkable and drift is costly
 
 `data/guidebook.db` — SQLite, committed as a binary blob (`.gitattributes`, **not** Git-LFS).
 **`PRAGMA user_version` is the authoritative schema version** — read it from the DB; don't
-rely on a number written here. (Ignore the `db_meta.schema_version` row — it's a stale
-init-time artifact that never tracked migrations.) There is **no `sqlite3` CLI** in this
+rely on a number written here. It is now the *only* schema-version marker: `db_meta.schema_version`
+was a second one that never tracked migrations, sat forty-one versions stale, and was retired on
+2026-08-06 — if you find it in an old DB or an old document, it is not a rival authority.
+There is **no `sqlite3` CLI** in this
 environment — use Python, read-only:
 
 ```python

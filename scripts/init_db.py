@@ -50,12 +50,20 @@ def init_db(force: bool = False):
     print(f"Applying {schema_file.name}...")
     conn.executescript(sql)
 
-    # Seed db_meta
+    # Seed db_meta.
+    #
+    # No `schema_version` row. It was seeded here in May 2026, updated by
+    # migrations up to 005, and then left behind — every later migration bumps
+    # `PRAGMA user_version` and nothing bumped this. By August it read 11 against
+    # a user_version of 52, and CLAUDE.md §4 carried a standing instruction to
+    # ignore it. Retired from the committed DB by
+    # data_20260806070009_2026-08-06-w4-continuity.sql; not reintroduced here,
+    # because a fresh DB born with it would put the drift straight back.
+    # `PRAGMA user_version` is the only schema-version marker.
     ts = now_utc()
     conn.executemany(
         "INSERT INTO db_meta (key, value) VALUES (?, ?)",
         [
-            ("schema_version", "1"),
             ("created_at", ts),
             ("project", "jordanelias/guidebook"),
         ],

@@ -512,6 +512,32 @@ entries:
       # B — the token is still correct here
       - "scripts/convert/convert_sources.py"      # the old->new crosswalk itself
 
+  - id: RV-017
+    token: db_meta.schema_version
+    match: identifier
+    severity: stale-pointer
+    retired_by: >-
+      W4.7 of workplan/2026-08-02-architecture-decision-and-execution-plan.md,
+      executed by migration data_20260806070009_2026-08-06-w4-continuity.sql
+    replacement: "PRAGMA user_version"
+    note: >-
+      A second schema-version marker that stopped tracking migrations after 005.
+      It read 11 against a `user_version` of 52 — forty-one versions of drift,
+      naming a schema that has not existed since May. Nothing read it, so it cost
+      nothing at runtime and everything in legibility: CLAUDE.md §4 had to carry
+      a standing "ignore this row" instruction, which is what a defect looks like
+      when it has been documented instead of fixed. The row is gone from the
+      committed DB and `init_db.py` no longer seeds it into new ones.
+      Registered because deleting a value does not delete the SENTENCES about it,
+      and this one appears in enough plans and audits that a session could still
+      grep it up and treat it as an authority. Two markers is one too many
+      whatever they say; two markers that DISAGREE is the wrong-answer machine
+      this register exists to dismantle.
+    exempt_paths:
+      # A — the paper trail for this retirement
+      - "CLAUDE.md"
+      - "scripts/init_db.py"
+
   - id: RV-010
     token: physically disabled
     match: phrase
