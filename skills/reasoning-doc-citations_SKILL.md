@@ -287,4 +287,4 @@ Beyond the pilot:
 - `skills/progressive-measurement_SKILL.md` — companion: numerical-value boundary probing
 - `skills/citation-miner_SKILL.md` — upstream: source existence verification (Phase B)
 - `references/keyword-compendiums/<lang>.md` — multilingual term references (Phase A.11)
-- `audits/bpc-rewrite-workplan-2026-05-11.md` — Phase E.1 execution context
+- `workplan/bpc-rewrite-workplan-2026-05-11.md` — Phase E.1 execution context

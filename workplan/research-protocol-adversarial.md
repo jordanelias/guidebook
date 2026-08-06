@@ -1,5 +1,5 @@
 <!-- SUBORDINATE 2026-05-11 -->
-> **SUBORDINATE PROTOCOL:** This document is the operating protocol for PI v10.8 standing rule #7 (Adversarial Research Protocol). It is NOT superseded by `audits/bpc-rewrite-workplan-2026-05-11.md`; it operates underneath that workplan as a sub-protocol. Remains in force until a future PI revision modifies rule #7.
+> **SUBORDINATE PROTOCOL:** This document is the operating protocol for PI v10.8 standing rule #7 (Adversarial Research Protocol). It is NOT superseded by `workplan/bpc-rewrite-workplan-2026-05-11.md`; it operates underneath that workplan as a sub-protocol. Remains in force until a future PI revision modifies rule #7.
 
 ---
 

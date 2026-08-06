@@ -1,0 +1,47 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-08-06-cold-storage-search-scope",
+ "artifact": "decisions/DR-2026-08-06-cold-storage-search-scope.md",
+ "doctrine_sha": "0f2f525",
+ "rules_in_scope": [
+  "structure-auditor",
+  "guidebook-auditor",
+  "audit-consolidator",
+  "adherence-logging-and-attestation"
+ ],
+ "per_rule_status": {
+  "structure-auditor": {
+   "status": "FIRED",
+   "evidence_path": ".ignore",
+   "reason": "Every mechanical claim was measured before it was written down, because the whole design rests on which tools read .ignore and which do not. A unique token was planted in each of the seven hidden directories and searched for repo-wide: all seven returned nothing via ripgrep while raw grep found them. Two control probes in decisions/ and workplan/ stayed visible. The negation syntax was tested rather than assumed and the first form FAILED -- a bare `sessions/` cannot be re-included by `!sessions/LATEST`, because gitignore semantics do not re-include a file whose parent directory is excluded; only the `sessions/**` form can be negated. That test is why the shipped file uses `**` and why sessions/LATEST is still searchable."
+  },
+  "guidebook-auditor": {
+   "status": "FIRED",
+   "evidence_path": "CLAUDE.md",
+   "reason": "An undocumented ignore file is a deception rather than a filter: a session whose greps are silently narrowed, with nothing explaining why, has been misled by the repo. So the mechanism is documented in three places at once -- a self-explaining header inside .ignore, a CLAUDE.md section 10 gotcha stating all four consequences, and a section 3 note on the _archived row. The section 10 entry says explicitly that `no matches` does not mean absent, and that `grep -r` and `git grep` will report higher counts than ripgrep, so the discrepancy reads as a known tool property rather than corruption."
+  },
+  "audit-consolidator": {
+   "status": "FIRED",
+   "evidence_path": "governance/retired-vocabulary.yaml",
+   "reason": "The scope was not invented for this change. The admission rule is that a directory qualifies only if it already sits on the global exempt_paths list in the retired-vocabulary register -- already adjudicated, entry by entry with written reasons, as an immutable record. That list was treated as necessary but NOT sufficient: it also exempts decisions/, project-standards.md and dated workplans, which are exempt for being append-only rather than historical, and those stay searchable. scripts/migrations/ stays searchable on the same logic inverted -- a migration answers `which change dropped this column` with a TRUE hit, so hiding it would remove a right answer."
+  },
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "attestations/decisions_DR-2026-08-06-cold-storage-search-scope.json",
+   "reason": "This attestation, bound to the doctrine SHA the commit carries, recording the two deviations below rather than presenting the change as unqualified."
+  }
+ },
+ "deviations": [
+  {
+   "rule": "guidebook-auditor",
+   "reason": "The owner ruled the archive fork (flag 1) on 2026-08-05, before this mechanism was known. This change supersedes that ruling's legibility rationale and exceeds its reach, but does NOT overturn it -- sessions propose, owners decide (CLAUDE.md section 5). The DR records the recommendation to downgrade the fork to optional and leaves the 2026-08-05 workplan in place, since its HELD-directory analysis stays operative for any future physical removal."
+  },
+  {
+   "rule": "audit-consolidator",
+   "reason": "The DR is an orphan in data/decisions/decision_register.yaml -- decision_capture C9 flags it, alongside two pre-existing orphans from 2026-07-25 and 2026-08-01. Registering it properly requires BOTH a YAML entry and a data migration, because test_db_integrity L01 holds the YAML and the decisions table equal in both directions, and a YAML-only edit would redden that check. Deferred to the owner memo rather than half-done."
+  }
+ ],
+ "bias_direction": "The bias runs toward overstating the win. This hides roughly 630 files from search, which feels like a large cleanup, but it removes zero wrong text from the repository -- every stale sentence still exists and is still reachable by ls, Glob, git grep and every Python tool here. It narrows what a session trips over; it does not make anything true. The larger legibility gains this week came from making registers stop lying, not from hiding files, and this change should not be read as a substitute for that work.",
+ "independent_reviewer_counterclaim": "The strongest objection is that this trades readable-and-wrong for invisible-and-wrong: a session greps for an archived path, finds nothing, and concludes it does not exist. That is real. Three things bound it -- CLAUDE.md section 0 rule 5 already scopes caller sweeps to non-archived callers, so the filter matches the sweep norm rather than departing from it; the discovery flow section 9 prescribes is date-sorting via ls, which is unaffected; and the two failure modes are asymmetric, since invisible-and-wrong is falsifiable in one command while readable-and-wrong fails silently and confidently. A reviewer could still reasonably argue the scope is too wide at sessions/ (279 files), and that argument is not fully answered here -- it rests on the judgement that session records are read by date, not by search.",
+ "verdict": "DEVIATION-LOGGED"
+}

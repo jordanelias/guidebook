@@ -114,7 +114,7 @@ a rule up the spectrum only when it's mechanically checkable and drift is costly
 | `parts/` | The guidebook as chaptered markdown (`parts/v10/part00–13`), machine-generated stubs — do not hand-edit. |
 | `site/` | Generated static site (`specs/`, `populations/`, `rooms/`). Generated — do not hand-edit. |
 | `audits/`, `workplan/`, `sessions/` | Dated audit reports; active + superseded workplans; per-session records. |
-| `_archived/` | Retired-but-preserved content (mirrors origin paths). Retire *here*, don't delete. |
+| `_archived/` | Retired-but-preserved content (mirrors origin paths). Retire *here*, don't delete. **Hidden from ripgrep/Grep by the root `.ignore` (§10)** — enumerate with `ls` or Glob, not Grep. |
 | `.github/workflows/` | CI (see §7). CODEOWNERS-protected. |
 
 ## 4. The data layer (how to change data safely)
@@ -227,7 +227,7 @@ Every substantive change is a governed act. The pieces:
 
 **Pipeline** (`governance/pipeline-contract.yaml`, PROPOSED/advisory): research → collection →
 judgment → synthesis → render, over the spine EvidenceSource → BPC entry → Specification → Item
-→ render. The content workplan (`audits/bpc-rewrite-workplan-2026-05-11.md`) runs phases **A–G**
+→ render. The content workplan (`workplan/bpc-rewrite-workplan-2026-05-11.md`) runs phases **A–G**
 with a **strict "B before E"** gate: no BPC is rewritten (Phase E) until its linked sources pass
 Phase B verification.
 
@@ -390,6 +390,25 @@ attestation logic.
 
 ## 10. Gotchas / trip-hazards
 
+- **A root `.ignore` deliberately hides frozen-record directories from ripgrep-based
+  SEARCH.** Covered: `_archived/`, `workplan/_superseded/`, `audits/`, `references/audits/`,
+  `sessions/` (except `sessions/LATEST`), `references/search-log/`, `versions/`. This is
+  intentional — those hold text that was true on its date and is preserved unedited, so a hit
+  from one answers a *current* question wrongly (§9 guardrail 1 records a stale anchor causing
+  a real error). Four consequences, all verified rather than assumed:
+  1. **"No matches" from Grep does NOT mean the path is absent.** Confirm with `ls` or Glob —
+     neither reads `.ignore`.
+  2. **`grep -r` and `git grep` do NOT honour it**, so their counts will exceed ripgrep's. That
+     gap is this mechanism, not corruption.
+  3. **Nothing is hidden from code.** git, and every Python tool in this repo (they walk with
+     glob/pathlib), see all of it. `validate_cross_refs.py` still globs `references/search-log/`;
+     `item_audit_pipeline.py` still reads `versions/current/`. That is precisely why `.ignore`
+     can cover directories that could never be physically moved.
+  4. **When doing history-aware work** — building a retirement's paper trail, writing a DR,
+     checking what an old session actually did — search those directories explicitly by path,
+     which overrides the ignore.
+  Editing `.ignore` is **owner-gated**, like a retirement (§9 guardrail 4): it changes what
+  every future session can see. Rationale in `decisions/DR-2026-08-06-cold-storage-search-scope.md`.
 - **Prose counts are stale everywhere** (`index.html`, `parts/*/manifest.md`, older audits
   disagree with each other and with the DB). Query the DB; never trust a hardcoded number.
 - **Stale pointers:** `sessions/LATEST` and `sessions/handoff-next-session.md` may both point at
@@ -434,7 +453,7 @@ attestation logic.
 | Decision process | `governance/decision-protocol.md`; recent `decisions/DR-2026-07-*.md` |
 | Attestation / re-attestation | `schemas/attestation.schema.json`; `governance/doctrine-recheck.md`; `governance/doctrine-deltas.json` |
 | Data-model / schema reconciliation | `architecture/schema-spec.md`, `architecture/schema-reconciliation.md`, `architecture/sqlite-data-layer.md` |
-| Content pipeline / phases A–G | `audits/bpc-rewrite-workplan-2026-05-11.md`; `governance/pipeline-contract.yaml` |
+| Content pipeline / phases A–G | `workplan/bpc-rewrite-workplan-2026-05-11.md`; `governance/pipeline-contract.yaml` |
 | Skill roster | `references/skill-registry.md` |
 | What to do next | the newest dated file(s) in `workplan/` (several coexist — sort by date) |
 
