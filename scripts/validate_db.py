@@ -51,7 +51,7 @@ def validate(verbose: bool = False):
         print(f"ERROR: {DB_PATH} not found.", file=sys.stderr)
         sys.exit(1)
 
-    conn = sqlite3.connect(str(DB_PATH))
+    conn = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys=ON")
 

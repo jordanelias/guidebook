@@ -231,7 +231,7 @@ td a {{ color: var(--accent); text-decoration: none; font-family: var(--font-mon
 
 
 def generate(code, output_path=None):
-    conn = sqlite3.connect(str(DB_PATH))
+    conn = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
     pop = query_population(conn, code)
     conn.close()
     if not pop:
