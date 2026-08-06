@@ -251,6 +251,12 @@ def compute(db_path):
         search_langs[r["slug"]][0] += 1
         if (r["results_count"] or 0) > 0:
             search_langs[r["slug"]][1] += 1
+    # search_languages / search_coverage are FROZEN hand-kept grids (see
+    # test_db_integrity L03). They drifted from the search log in both
+    # directions, so they are not an answer to "was this searched" — but they
+    # are the ONLY record of pre-log work, whose query terms are unrecoverable.
+    # Kept, and labelled as history everywhere they surface in prose. The
+    # live-coverage answer is the log: v_coverage_jurisdiction / _language.
     search_cov = defaultdict(int)
     for r in q("SELECT slug FROM search_coverage"):
         search_cov[r["slug"]] += 1
@@ -476,7 +482,9 @@ def build_markdown(records, items, f):
     w("# Per-Slice Evidentiary Audit")
     w(f"**Data as of:** {f['as_of']} · **Scope:** all {N} ACTIVE research slices (slugs) in "
       "`data/guidebook.db` · **Method:** read-only aggregation over "
-      "`source_slug_links → evidence_sources`, `search_languages`, `search_coverage`, `bpc_metadata`.")
+      "`source_slug_links → evidence_sources`, `bpc_metadata`, and the frozen pre-log grids "
+      "`search_languages` / `search_coverage` (labelled as history wherever used — live coverage "
+      "comes from `search_executions` via `v_coverage_*`).")
     w("")
     w("This audit scores every research slice on the six requested dimensions — (1) amount of "
       "evidence, (2) tiers of evidence, (3) jurisdictions sourced, (4) languages sourced, "
@@ -537,7 +545,8 @@ def build_markdown(records, items, f):
       f"({round(100 * en_tot / tot_src)}%) of linked sources are English-language**; only {nonen_tot} "
       f"are non-English. By jurisdiction, {anglo_core} instances are native-Anglophone (US/UK/AU/CA/NZ/IE), "
       f"{supra} supranational (INT/EU/ISO), {nonanglo} other, {null_jur_tot} unrecorded.")
-    w(f"- **Search breadth ≠ evidentiary yield.** Slices were searched across **{f['n_search_langs']} "
+    w(f"- **Search breadth ≠ evidentiary yield.** Per the frozen pre-log coverage grids, slices were "
+      f"searched across **{f['n_search_langs']} "
       f"languages** and ~{round(f['n_search_jurs'])} jurisdictions, but {len(f['zero_yield_langs'])} "
       f"searched languages ({zero_str}) returned **zero** usable sources in **every** slice. The bias "
       "lives in what converted to evidence, not in search effort.")
@@ -706,8 +715,9 @@ def build_markdown(records, items, f):
     w(f"- **{len(heavy)} slices are doubly-concentrated** (≥90% English *and* ≥50% "
       "native-Anglophone jurisdiction): " + ", ".join(f"`{r['slug']}`" for r in heavy) + ".")
     w(f"- **Process counter-evidence:** non-English/Global-South *searches were run* "
-      f"({f['n_search_langs']} languages across {f['slugs_in_search_langs']} of {N} slices in "
-      f"`search_languages`) but {zero_str} yielded nothing linkable in any slice. The gap is a "
+      f"({f['n_search_langs']} languages across {f['slugs_in_search_langs']} of {N} slices per the "
+      f"frozen `search_languages` grid — a pre-log record, not a logged search) but {zero_str} "
+      f"yielded nothing linkable in any slice. The gap is a "
       "*yield/recovery* gap, not a *search-effort* gap.")
     w("")
 
@@ -811,7 +821,8 @@ def build_markdown(records, items, f):
       "DPO-standard recovery on the partial/weak slices to lift them to full-strength anchoring"
       + (f", and replace the {disputed_tot} DISPUTED sources (§4) with verifiable citations"
          if disputed_tot else "") + ".")
-    w(f"2. **Convert non-English search into non-English evidence.** Searches ran in {f['n_search_langs']} "
+    w(f"2. **Convert non-English search into non-English evidence.** The pre-log grids record searches in "
+      f"{f['n_search_langs']} "
       f"languages but the corpus is ~{round(100 * en_tot / tot_src)}% English. Target the languages "
       f"already searched-with-results but under-linked, and the zero-yield languages ({zero_str}) "
       "explicitly.")

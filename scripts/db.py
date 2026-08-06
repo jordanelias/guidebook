@@ -842,21 +842,37 @@ def main():
     p_ls.add_argument("--query-text", required=True,
                       help="the query VERBATIM (R8: log it before screening)")
     p_ls.add_argument("--engine", required=True, help="pubmed, crossref, web, ...")
+    # Every choices= list below is copied from the STRICT table's own CHECK
+    # constraints, verified against the DDL. The first draft of this command
+    # invented `citation-chase` and `targeted` for --depth-method; the column
+    # allows only scoping|systematic, so the very first citation-chase search a
+    # session logged would have died on `CHECK constraint failed` — a write path
+    # that is unexecutable on the day it replaces the one being closed.
+    # A citation chase is `--mining-direction backward|forward|both`, which is
+    # the column that already means it; the depth axis is scoping vs systematic.
     p_ls.add_argument("--depth-method", required=True,
-                      choices=["scoping", "systematic", "citation-chase", "targeted"])
+                      choices=["scoping", "systematic"])
     p_ls.add_argument("--session", required=True)
     p_ls.add_argument("--jurisdiction", help="omit for a search not scoped to one")
-    p_ls.add_argument("--target-tier", type=int)
-    p_ls.add_argument("--target-evidence-type")
-    p_ls.add_argument("--target-scope")
-    p_ls.add_argument("--terms-used")
-    p_ls.add_argument("--mining-direction", choices=["backward", "forward", "none"])
+    p_ls.add_argument("--target-tier", type=int, choices=range(1, 7))
+    p_ls.add_argument("--target-evidence-type",
+                      choices=["clinical", "sr_meta", "standard_eb", "national_fw",
+                               "code", "co1", "co2", "grey"])
+    p_ls.add_argument("--target-scope",
+                      choices=["intrinsic", "lower_control", "high_control",
+                               "national", "international"])
+    p_ls.add_argument("--terms-used",
+                      help="JSON array of the aliases actually fired — the column "
+                           "is json_valid-checked, and it is 0%% populated today, "
+                           "so no logged search can yet show which terms it used")
+    p_ls.add_argument("--mining-direction",
+                      choices=["none", "backward", "forward", "both"])
     p_ls.add_argument("--results-found", type=int, default=0)
     p_ls.add_argument("--results-screened", type=int, default=0)
     p_ls.add_argument("--results-admitted", type=int, default=0)
     p_ls.add_argument("--admitted-ref-id", action="append", dest="admitted_ref_ids",
                       help="repeatable; also written to the search_admissions junction")
-    p_ls.add_argument("--saturation-signal")
+    p_ls.add_argument("--saturation-signal", choices=["none", "partial", "saturated"])
     p_ls.add_argument("--findings-note")
     p_ls.add_argument("--harm-finding", type=int, default=0,
                       help="R7: failure/harm/inadequacy is first-class evidence")
@@ -899,7 +915,12 @@ def main():
                       help="How --lang-detected was determined, e.g. 'native_title_verified', "
                            "'journal_family_inference', 'citing_document_language'")
     p_as.add_argument("--metadata-quality",
-                      choices=["COMPLETE", "PMID-ONLY", "GREY", "AUTHOR-TITLE-ONLY"],
+                      # COMPLETE-STATUTORY was missing and it is 333 of 863 rows
+                      # (39% of the corpus) — the whole T4-T6 regulatory stratum.
+                      # A session filing a standard or code via the documented
+                      # path had to either mislabel it COMPLETE or omit the field.
+                      choices=["COMPLETE", "COMPLETE-STATUTORY", "PMID-ONLY",
+                               "GREY", "AUTHOR-TITLE-ONLY"],
                       help="REQUIRED in practice, not just schema — see adversarial-research skill. "
                            "COMPLETE if DOI/full metadata confirmed via CrossRef/PubMed/Semantic Scholar; "
                            "AUTHOR-TITLE-ONLY if only single-source (citing-document) attestation.")
@@ -1524,15 +1545,57 @@ def insert_evidence_source(data: dict, session: str,
         "pmid", "tier", "evidence_type", "jurisdiction", "metadata_quality",
         "verification_status", "co1_provenance", "co1_source_type",
         "synthesis_attribution_required", "notes", "lang_detected",
-        "lang_detection_method"
+        "lang_detection_method",
+        # D-0157's other three columns. Their absence here was not cosmetic: the
+        # CLI could write verification_status='VERIFIED' and nothing else, which
+        # is a row with a standing and no evidence of how it was reached. That
+        # violates I1 (VERIFIED needs a method) and I2 (VERIFIED needs a recorded
+        # attempt) the moment it lands — both blocking checks. The two scheduled
+        # jobs were swept for D-0157; this third writer was not, and it is the
+        # one the skills tell sessions to use.
+        "verification_disposition", "verification_method",
+        "verification_closure_reason", "verification_attempt_count",
+        "verification_note",
     })
     _validate_cols(data.keys(), _ES_COLS, "insert_evidence_source")
+
+    # A verification standing implies its evidence. Fill what the caller left out
+    # rather than writing a row the blocking invariants reject.
+    vs = data.get("verification_status")
+    if vs == "VERIFIED":
+        data.setdefault("verification_method", "tool")
+        data.setdefault("verification_attempt_count", 1)
+    elif vs == "UNVERIFIED":
+        data.setdefault("verification_disposition", "OPEN")
+        data.setdefault("verification_attempt_count", 1)
+
     row = {**data, **audit(session)}
     with connect(dry_run) as conn:
+        # NOT `INSERT OR IGNORE`. That silently no-opped on a colliding ref_id
+        # and still returned the ref_id as though the write had happened — so a
+        # session could file a source, be told it succeeded, and have written
+        # nothing. R9 says pre-check the DOI and cross-file an existing ref_id
+        # rather than duplicating; a silent no-op is neither.
+        existing = conn.execute(
+            "SELECT ref_id FROM evidence_sources WHERE ref_id = ?",
+            [data["ref_id"]]).fetchone()
+        if existing:
+            raise ValueError(
+                f"{data['ref_id']} already exists. R9: cross-file the existing "
+                f"ref_id rather than duplicating. To amend it, ship a migration.")
+        if data.get("doi"):
+            dupe = conn.execute(
+                "SELECT ref_id FROM evidence_sources WHERE doi = ? "
+                "AND COALESCE(superseded_by_ref_id,'') = ''", [data["doi"]]).fetchone()
+            if dupe:
+                raise ValueError(
+                    f"DOI {data['doi']} is already filed as {dupe[0]} (R9: "
+                    f"pre-check the DOI, cross-file rather than duplicate). "
+                    f"Link that ref_id to your slug instead.")
         cols = ", ".join(row)
         ph = ", ".join(["?"] * len(row))
         conn.execute(
-            f"INSERT OR IGNORE INTO evidence_sources ({cols}) VALUES ({ph})",
+            f"INSERT INTO evidence_sources ({cols}) VALUES ({ph})",
             list(row.values())
         )
     return data["ref_id"]

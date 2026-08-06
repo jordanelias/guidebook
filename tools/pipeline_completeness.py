@@ -83,11 +83,31 @@ def gather(con: sqlite3.Connection) -> dict:
     F["research"] = dict(
         search_complete=scalar("SELECT COALESCE(SUM(search_complete),0) FROM bpc_metadata"),
         pico_complete=scalar("SELECT COALESCE(SUM(pico_complete),0) FROM bpc_metadata"),
+        # Coverage comes from the LOG, not the frozen grid.
+        #
+        # These three read `search_coverage`, a hand-kept grid that drifted from
+        # the search log in both directions — 634 cells claimed SEARCHED against
+        # 15 with a matching logged search, while 31 logged searches landed on
+        # cells the grid called NOT-RUN. It is frozen as pre-log history
+        # (test_db_integrity L03) and is not an answer to "was this searched".
+        # A completeness dashboard sourced from it published the one number in
+        # the repo that could not be contradicted.
+        #
+        # Denominator is the required-coverage bridge (lang_jur_map), not the
+        # grid's cell count, so "done" is measured against what the project says
+        # it owes rather than against the size of a legacy matrix.
         coverage_slugs=scalar(
-            "SELECT COUNT(DISTINCT slug) FROM search_coverage WHERE status IN ('SEARCHED','THIN')"),
+            "SELECT COUNT(DISTINCT slug) FROM search_executions "
+            "WHERE deferred_reason IS NULL"),
         coverage_done=scalar(
-            "SELECT COUNT(*) FROM search_coverage WHERE status IN ('SEARCHED','THIN')"),
-        coverage_total=scalar("SELECT COUNT(*) FROM search_coverage"),
+            "SELECT COUNT(*) FROM (SELECT DISTINCT slug, jurisdiction "
+            "FROM search_executions "
+            "WHERE deferred_reason IS NULL AND jurisdiction IS NOT NULL)"),
+        coverage_total=scalar(
+            "SELECT COUNT(*) FROM (SELECT DISTINCT s.slug, ljm.jurisdiction "
+            "FROM slugs s JOIN lang_jur_map ljm WHERE s.status='ACTIVE')"),
+        coverage_deferred=scalar(
+            "SELECT COUNT(*) FROM search_executions WHERE deferred_reason IS NOT NULL"),
         gaps_closed=scalar("SELECT COUNT(*) FROM gaps WHERE status LIKE 'CLOSED%'"),
         gaps_total=scalar("SELECT COUNT(*) FROM gaps"),
     )
@@ -515,8 +535,9 @@ def render_body(F: dict, enf: dict) -> str:
           <div class="entry">Entry: an open gap or a parameter lacking sufficient evidence.</div></div>
         <div class="sb-right">
 {metric("Slugs with search complete", f'{r["search_complete"]} / {slugs} · {pct(r["search_complete"], slugs)}%', r["search_complete"], slugs)}
-{metric("Slugs touched by search coverage", f'{r["coverage_slugs"]} / {slugs} · {pct(r["coverage_slugs"], slugs)}%', r["coverage_slugs"], slugs)}
-{metric("Slug × jurisdiction cells searched", f'{r["coverage_done"]} / {r["coverage_total"]} · {pct(r["coverage_done"], r["coverage_total"])}%', r["coverage_done"], r["coverage_total"])}
+{metric("Slugs with a logged search", f'{r["coverage_slugs"]} / {slugs} · {pct(r["coverage_slugs"], slugs)}%', r["coverage_slugs"], slugs)}
+{metric("Slug × jurisdiction cells with a logged search", f'{r["coverage_done"]} / {r["coverage_total"]} · {pct(r["coverage_done"], r["coverage_total"])}%', r["coverage_done"], r["coverage_total"])}
+{metric("Searches deliberately not run (with reason)", f'{r["coverage_deferred"]}', r["coverage_deferred"], r["coverage_deferred"])}
 {metric("PICO formalized", f'{r["pico_complete"]} / {slugs} · {pct(r["pico_complete"], slugs)}%', r["pico_complete"], slugs)}
 {metric("Gaps closed (register)", f'{r["gaps_closed"]} / {r["gaps_total"]} · {pct(r["gaps_closed"], r["gaps_total"])}%', r["gaps_closed"], r["gaps_total"])}
           <div class="gate-label">Integrity gates</div>

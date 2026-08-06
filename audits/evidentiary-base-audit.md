@@ -1,5 +1,5 @@
 # Per-Slice Evidentiary Audit
-**Data as of:** 2026-08-04 · **Scope:** all 80 ACTIVE research slices (slugs) in `data/guidebook.db` · **Method:** read-only aggregation over `source_slug_links → evidence_sources`, `search_languages`, `search_coverage`, `bpc_metadata`.
+**Data as of:** 2026-08-04 · **Scope:** all 80 ACTIVE research slices (slugs) in `data/guidebook.db` · **Method:** read-only aggregation over `source_slug_links → evidence_sources`, `bpc_metadata`, and the frozen pre-log grids `search_languages` / `search_coverage` (labelled as history wherever used — live coverage comes from `search_executions` via `v_coverage_*`).
 
 This audit scores every research slice on the six requested dimensions — (1) amount of evidence, (2) tiers of evidence, (3) jurisdictions sourced, (4) languages sourced, (5) English/Anglophone bias, and (6) overall quality of the evidentiary base — and rolls them into a transparent 0–100 composite grade. It audits the **raw evidence linked to each slice**, i.e. the material available for (re-)derivation; it does not re-judge synthesis prose.
 
@@ -14,7 +14,7 @@ This audit scores every research slice on the six requested dimensions — (1) a
 - **Tier profile is code-and-clinical heavy, synthesis-light.** Of linked instances: T1=100, T2=110, T3=377, T4=83, T5=172, T6=145. Only **110 Tier-2 (systematic-review / evidence-based-standard) instances** exist across the whole corpus — the synthesis tier that best anchors best-practice claims is the thinnest.
 - **Anchoring strength, banded.** Under the weighted-strength model (§8) every tier can anchor a best-practice claim, weighted by tier: **515/987 (52%)** of instances anchor at ● full strength (T1/Co-1/T2/Co-2/T3-clinical, adjudicated), 255 at ◐ partial (T4/T5 standards practice), 207 at ○ weak (T3-grey/T6/grey floor). **10 DISPUTED instances anchor at no band** (§4). By slice: **69 full · 11 partial · 0 weak-only** (of 80 evidenced). Every evidenced slice anchors at ● full or ◐ partial strength — none rests on a weak-only base.
 - **Anglophone concentration is the dominant quality risk.** **739/987 (75%) of linked sources are English-language**; only 248 are non-English. By jurisdiction, 381 instances are native-Anglophone (US/UK/AU/CA/NZ/IE), 206 supranational (INT/EU/ISO), 315 other, 85 unrecorded.
-- **Search breadth ≠ evidentiary yield.** Slices were searched across **19 languages** and ~48 jurisdictions, but 4 searched languages (`ar`, `bn`, `hi`, `sw`) returned **zero** usable sources in **every** slice. The bias lives in what converted to evidence, not in search effort.
+- **Search breadth ≠ evidentiary yield.** Per the frozen pre-log coverage grids, slices were searched across **19 languages** and ~48 jurisdictions, but 4 searched languages (`ar`, `bn`, `hi`, `sw`) returned **zero** usable sources in **every** slice. The bias lives in what converted to evidence, not in search effort.
 
 ## 2. Method & definitions
 
@@ -110,7 +110,7 @@ Distinct source languages: **18** (`en`/`eng` merged; raw ISO codes may be one m
 - **Language axis:** 75% English. 35 slices 100% English.
 - **Jurisdiction axis (all 987 instances):** native-Anglophone (US/UK/AU/CA/NZ/IE) **381** · supranational/English-medium (INT/EU/ISO) **206** · English-official + other non-Anglophone **315** · **no jurisdiction recorded 85**. (These four sum to 987 = all instances.)
 - **19 slices are doubly-concentrated** (≥90% English *and* ≥50% native-Anglophone jurisdiction): `accessibility-feature-market-value-uplift-framing`, `economics-sources`, `manoeuvring-footprint-vs-turning-radius-methodology`, `sensory-relief-space-design`, `ndv-aut-built-environment-quantified-thresholds`, `ot-built-environment-interface`, `neurodivergent-built-environment`, `ot-frameworks-built-environment`, `sensory-processing-model-design-application`, `residential-accessible-home-case-studies`, `government-grant-programmes`, `ot-cpg-built-environment`, `luminance-contrast-lrv-evidence-base`, `ofs-built-environment`, `bariatric-turning-radius-built-environment`, `cross-population-case-studies`, `accessible-design-failures-poor-performance`, `case-study-economics-financial-data`, `residential-dar-provisions-priority-register`.
-- **Process counter-evidence:** non-English/Global-South *searches were run* (19 languages across 82 of 80 slices in `search_languages`) but `ar`, `bn`, `hi`, `sw` yielded nothing linkable in any slice. The gap is a *yield/recovery* gap, not a *search-effort* gap.
+- **Process counter-evidence:** non-English/Global-South *searches were run* (19 languages across 82 of 80 slices per the frozen `search_languages` grid — a pre-log record, not a logged search) but `ar`, `bn`, `hi`, `sw` yielded nothing linkable in any slice. The gap is a *yield/recovery* gap, not a *search-effort* gap.
 
 ### (6) Overall quality of the evidentiary base
 | Grade | Slices | Meaning |
@@ -220,7 +220,7 @@ Every ACTIVE slice carries at least one linked source-instance — no evidence-e
 ## 6. Findings & recommended remediation
 
 1. **Strengthen the ◐ partial and ○ weak bases toward ● full.** 11 slices anchor only at ◐ partial (T4/T5 standards practice) and none rest on a ○ weak-only base. With only 110 systematic-review/evidence-based-standard instances corpus-wide, the ● full synthesis tier is the thinnest. Prioritise SR/meta-analysis + DPO-standard recovery on the partial/weak slices to lift them to full-strength anchoring, and replace the 10 DISPUTED sources (§4) with verifiable citations.
-2. **Convert non-English search into non-English evidence.** Searches ran in 19 languages but the corpus is ~75% English. Target the languages already searched-with-results but under-linked, and the zero-yield languages (`ar`, `bn`, `hi`, `sw`) explicitly.
+2. **Convert non-English search into non-English evidence.** The pre-log grids record searches in 19 languages but the corpus is ~75% English. Target the languages already searched-with-results but under-linked, and the zero-yield languages (`ar`, `bn`, `hi`, `sw`) explicitly.
 3. **De-risk monojurisdictional slices.** 3 evidenced slices rest on ≤1 jurisdiction; flag their numeric thresholds as non-transferable until a second regime is sourced.
 4. **Keep the corpus free of silent gaps.** No ACTIVE slice is currently un-started or evidence-empty; hold that line as new slices are added.
 5. **Treat the doubly-concentrated slices as citation-risk.** The 19 ≥90%-English-and-≥50%-Anglophone slices are where global-applicability claims are weakest.
