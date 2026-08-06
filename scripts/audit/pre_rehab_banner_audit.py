@@ -58,7 +58,7 @@ def scan_files():
 
 
 def db_state():
-    con = sqlite3.connect(DB_PATH)
+    con = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
     rows = set(
         r[0] for r in con.execute(
             "SELECT slug FROM bpc_metadata WHERE evidence_state = 'RETRACTED-PRE-REHAB'"

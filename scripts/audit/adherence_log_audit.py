@@ -333,7 +333,7 @@ def check_5_cross_reference(changed, issues):
     import sqlite3
     if not DB_PATH.exists():
         return
-    db = sqlite3.connect(str(DB_PATH))
+    db = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
     for f in _attestations_in_changeset(changed):
         data = _load_json(REPO / f)
         if data is None:

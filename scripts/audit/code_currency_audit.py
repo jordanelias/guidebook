@@ -56,7 +56,7 @@ VALID_STATUS = {
 
 
 def audit():
-    db = sqlite3.connect(str(DB))
+    db = sqlite3.connect(f"file:{DB}?mode=ro", uri=True)
     db.row_factory = sqlite3.Row
     issues = []
     now_year = datetime.now(timezone.utc).year

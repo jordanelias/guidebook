@@ -324,7 +324,7 @@ def main(limit=0):
     import urllib.parse as _up
     globals()["urllib"].parse = _up  # ensure quote() available
 
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
     conn.row_factory = sqlite3.Row
     rows = conn.execute("""
         SELECT * FROM evidence_sources

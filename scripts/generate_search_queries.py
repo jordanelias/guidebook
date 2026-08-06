@@ -193,7 +193,7 @@ def main():
     adversarial = '--adversarial' in sys.argv
     harm = '--harm' in sys.argv
     
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
     conn.row_factory = sqlite3.Row
     
     # Find items linked to this slug
