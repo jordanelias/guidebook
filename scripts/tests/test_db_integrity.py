@@ -1050,6 +1050,50 @@ def run_checks(db_path):
                n_yaml == n_db,
                f"{n_yaml} YAML records vs {n_db} table rows" if n_yaml != n_db else "")
 
+    # ── L03: the legacy coverage grids are frozen ─────────────────────────────
+    #
+    # search_coverage (slug × jurisdiction) and search_languages (slug × language)
+    # are hand-kept STATE grids. search_executions is the event LOG that replaced
+    # them. State and log are both worth having, but only if the state is DERIVED
+    # from the log — these were written independently, so the grid asserted
+    # coverage the log could not corroborate and nothing could contradict it.
+    #
+    # It drifted in BOTH directions (measured 2026-08-06): of 634 cells marked
+    # SEARCHED, 15 had an execution logged for that exact (slug, jurisdiction);
+    # meanwhile 31 executions landed on cells the grid still called NOT-RUN.
+    #
+    # workplan/search-coverage-completion-workplan.md already ruled these "frozen
+    # read-only as historical artifacts", and ruled that the pre-log rows are NOT
+    # to be reconstructed — they record real work whose query terms are gone, and
+    # inventing executions for them would be worse than leaving them. The log and
+    # the derived views were built; the freeze was not, because db.py's
+    # upsert-coverage was the live write path and a skill told every research
+    # session to call it. That path is closed; this is what keeps it closed.
+    #
+    # A DIGEST, not a row count. A count-only freeze passes any UPDATE — the same
+    # detection floor that lets the reproducibility gate miss an in-place edit.
+    # Checked here rather than in a new script because a fifteenth enforcer file
+    # is fifteen more chances to drift; DB invariants live in this file.
+    FROZEN_GRIDS = {
+        # table: (row count, sha256 of the sorted full contents)
+        "search_coverage":  (4960, "11cd189fd91b333078ed4b9048f52eab4c9233ee856defe4aa2bb86e9ef22f35"),
+        "search_languages": (1558, "03548ae0f2ebce68caba28245672ae9a766776ff6e6b095499a2d1a397b305cf"),
+    }
+    import hashlib as _hl
+    for _tbl, (_want_n, _want_d) in FROZEN_GRIDS.items():
+        _rows = conn.execute(f"SELECT * FROM {_tbl}").fetchall()
+        _digest = _hl.sha256(
+            "\n".join(sorted("\x1f".join("" if v is None else str(v) for v in r)
+                             for r in _rows)).encode()).hexdigest()
+        _ok = len(_rows) == _want_n and _digest == _want_d
+        record("L03", f"{_tbl} is frozen (hand-kept grid superseded by search_executions)",
+               _ok,
+               f"{len(_rows)} rows / digest {_digest[:12]} — expected {_want_n} rows / "
+               f"{_want_d[:12]}. This grid is history, not state: log the search itself "
+               f"with `db.py log-search` and read coverage from v_coverage_jurisdiction / "
+               f"v_coverage_language. If the change is deliberate, say so in the PR and "
+               f"update the constant." if not _ok else "")
+
     # ── Summary ───────────────────────────────────────────────────────────────
     conn.close()
     print("\n" + "=" * 70)

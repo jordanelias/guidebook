@@ -248,62 +248,141 @@ def log_mining(slug: str, ref_id: str, direction: str,
             )
 
 
+class FrozenGridError(RuntimeError):
+    """Raised on any attempt to write a legacy coverage grid. See _FROZEN_MSG."""
+
+
+# ---------------------------------------------------------------------------
+# THE LEGACY COVERAGE GRIDS ARE FROZEN.
+#
+# `search_coverage` (slug x jurisdiction) and `search_languages` (slug x
+# language) are hand-kept STATE matrices. `search_executions` is an event LOG:
+# one row per query actually run, with its text, terms, engine, depth, results
+# and admissions. State and log are different kinds of statement and both are
+# worth having — but only if the state is DERIVED from the log. These were
+# written independently, so the grid could assert coverage the log could not
+# corroborate, and nothing could contradict it.
+#
+# It did, in both directions, measured 2026-08-06:
+#   * 634 cells say SEARCHED. 15 have an execution logged for that exact
+#     (slug, jurisdiction); 172 have any execution on the slug at all.
+#   * 31 executions land on cells the grid still calls NOT-RUN — the log
+#     records work the grid denies.
+# The grid simultaneously over-claims and under-claims. It is not a coverage
+# map; it is an artifact of whoever last remembered to update it.
+#
+# THIS IS NOT A NEW DECISION. `workplan/search-coverage-completion-workplan.md`
+# already ruled it: replace the placeholder grids with a single logged event
+# table and "derive every coverage matrix as a VIEW over that log"; the legacy
+# grids are "frozen read-only as historical artifacts". It also ruled that the
+# pre-log history is NOT to be reconstructed — the 617 SEARCHED rows written
+# 2026-05-09 record real work whose query terms are unrecoverable, and inventing
+# executions for them would be worse than leaving them.
+#
+# The log was built. The views were built (v_coverage_jurisdiction,
+# v_coverage_language, v_coverage_branch). The FREEZE was not — because this
+# function was the live write path and `research-log-manager_SKILL.md` still
+# told every research session to call it. That is how six cells were marked
+# SEARCHED on 2026-07-24, after the log existed, against two logged searches
+# with different jurisdiction scoping.
+#
+# So the grids stop accepting writes here, which is the freeze, and `log_search`
+# below gives the successor the write path it never had. A store cannot be
+# retired while it is the only one that is easy to write to.
+# ---------------------------------------------------------------------------
+_FROZEN_MSG = (
+    "{table} is FROZEN as a historical artifact and no longer accepts writes.\n"
+    "\n"
+    "It is a hand-kept grid that drifted from the search log in both directions;\n"
+    "workplan/search-coverage-completion-workplan.md replaced it with the\n"
+    "search_executions log plus derived views, and this closes the write path\n"
+    "that kept it alive.\n"
+    "\n"
+    "Log the search itself instead — it carries what the grid could not (the\n"
+    "query text, the terms, the engine, the depth, what came back):\n"
+    "\n"
+    "  python3 scripts/db.py log-search --slug SLUG --language EN \\\n"
+    "      --jurisdiction AU --query-text '...' --engine pubmed \\\n"
+    "      --depth-method scoping --results-found N --results-screened N \\\n"
+    "      --session SESSION\n"
+    "\n"
+    "A search you deliberately did NOT run is also a logged row — pass\n"
+    "--deferred-reason and say why. Coverage then reads out of\n"
+    "v_coverage_jurisdiction / v_coverage_language, which cannot claim more\n"
+    "than was logged."
+)
+
+
 def upsert_search_coverage(slug: str, jurisdiction: str,
                            data: dict, session: str,
                            dry_run: bool = False):
-    _validate_cols(data.keys(), _COVERAGE_COLS, "upsert_search_coverage")
-    ts = now()
-    with connect(dry_run) as conn:
-        exists = conn.execute(
-            "SELECT 1 FROM search_coverage WHERE slug=? AND jurisdiction=?",
-            [slug, jurisdiction]
-        ).fetchone()
-        if exists:
-            sets = ", ".join(f"{k}=?" for k in data)
-            conn.execute(
-                f"UPDATE search_coverage SET {sets}, "
-                "updated_at=?, updated_by_session=? "
-                "WHERE slug=? AND jurisdiction=?",
-                [*data.values(), ts, session, slug, jurisdiction]
-            )
-        else:
-            row = {"slug": slug, "jurisdiction": jurisdiction,
-                   **data, **audit(session)}
-            cols = ", ".join(row)
-            ph = ", ".join(["?"] * len(row))
-            conn.execute(
-                f"INSERT INTO search_coverage ({cols}) VALUES ({ph})",
-                list(row.values())
-            )
+    raise FrozenGridError(_FROZEN_MSG.format(table="search_coverage"))
 
 
 def upsert_search_language(slug: str, language: str,
                            data: dict, session: str,
                            dry_run: bool = False):
-    _validate_cols(data.keys(), _LANGUAGE_COLS, "upsert_search_language")
+    raise FrozenGridError(_FROZEN_MSG.format(table="search_languages"))
+
+
+def log_search(slug: str, language: str, query_text: str, engine: str,
+               depth_method: str, session: str,
+               jurisdiction: str = None, target_tier: int = None,
+               target_evidence_type: str = None, target_scope: str = None,
+               terms_used: str = None, mining_direction: str = None,
+               results_found: int = 0, results_screened: int = 0,
+               results_admitted: int = 0, saturation_signal: str = None,
+               admitted_ref_ids=None, deferred_reason: str = None,
+               backfill: int = 0, findings_note: str = None,
+               harm_finding: int = 0, dry_run: bool = False) -> int:
+    """Append one row to search_executions. Returns its exec_id.
+
+    The successor to upsert-coverage/upsert-language. A row here is a completed
+    unit of work whether or not it found anything: R8 says keep the empties, and
+    a zero-yield search with a well-formed query is evidence about the world,
+    not a failure to record. A search deliberately not run is also a row —
+    `deferred_reason` is what makes "not looked for" different from "nothing
+    found", which is the distinction the whole pipeline is built on.
+
+    `backfill=1` marks a row reconstructed after the fact rather than logged as
+    it happened. It exists so honest reconstruction is possible without being
+    indistinguishable from contemporaneous logging; it is currently 0 on every
+    row.
+    """
     ts = now()
+    row = {
+        "slug": slug, "jurisdiction": jurisdiction, "language": language,
+        "target_tier": target_tier, "target_evidence_type": target_evidence_type,
+        "target_scope": target_scope, "query_text": query_text,
+        "terms_used": terms_used, "engine": engine, "depth_method": depth_method,
+        "mining_direction": mining_direction,
+        "results_found": results_found, "results_screened": results_screened,
+        "results_admitted": results_admitted,
+        "saturation_signal": saturation_signal,
+        "admitted_ref_ids": json.dumps(admitted_ref_ids) if admitted_ref_ids else None,
+        "deferred_reason": deferred_reason, "backfill": backfill,
+        "session": session, "executed_at": ts,
+        "findings_note": findings_note, "harm_finding": harm_finding,
+    }
+    cols = ", ".join(row)
+    ph = ", ".join(["?"] * len(row))
     with connect(dry_run) as conn:
-        exists = conn.execute(
-            "SELECT 1 FROM search_languages WHERE slug=? AND language=?",
-            [slug, language]
-        ).fetchone()
-        if exists:
-            sets = ", ".join(f"{k}=?" for k in data)
+        cur = conn.execute(
+            f"INSERT INTO search_executions ({cols}) VALUES ({ph})",
+            list(row.values()))
+        exec_id = cur.lastrowid
+        # BOTH carriers, in one transaction. admitted_ref_ids (JSON, on the row)
+        # and search_admissions (the junction) hold the same fact, and checks
+        # H03/H04 assert they agree in both directions. Writing one without the
+        # other is a guaranteed check failure — and worse, a silent disagreement
+        # about which sources a search actually produced, at the seam where the
+        # research phase hands off to collection.
+        for ref_id in (admitted_ref_ids or []):
             conn.execute(
-                f"UPDATE search_languages SET {sets}, "
-                "updated_at=?, updated_by_session=? "
-                "WHERE slug=? AND language=?",
-                [*data.values(), ts, session, slug, language]
-            )
-        else:
-            row = {"slug": slug, "language": language,
-                   **data, **audit(session)}
-            cols = ", ".join(row)
-            ph = ", ".join(["?"] * len(row))
-            conn.execute(
-                f"INSERT INTO search_languages ({cols}) VALUES ({ph})",
-                list(row.values())
-            )
+                "INSERT OR IGNORE INTO search_admissions "
+                "(exec_id, ref_id, created_at, created_by_session) "
+                "VALUES (?, ?, ?, ?)", [exec_id, ref_id, ts, session])
+        return exec_id
 
 
 def next_term_id() -> str:
@@ -387,24 +466,51 @@ def get_unmined_sources(slug: str) -> list[dict]:
 
 
 def get_coverage_completeness(slug: str) -> dict:
+    """Coverage for a slug, answered from the search LOG.
+
+    This used to count non-NOT-RUN cells in the frozen grids, which is how a slug
+    could report 14 jurisdictions searched against 0 logged searches. The grids
+    are hand-kept and were never reconciled against the log; the log is the only
+    store that can show its work.
+
+    The grid's numbers are still returned, under `legacy_grid`, because they are
+    the record of pre-log work that genuinely happened and is genuinely
+    unrecoverable in query terms. They are labelled, not deleted — an
+    unattributed number is what caused this. Nothing computes `complete` from
+    them any more.
+    """
     with connect() as conn:
         jur = conn.execute(
-            "SELECT COUNT(*) AS n FROM search_coverage "
-            "WHERE slug=? AND status != 'NOT-RUN'",
-            [slug]
-        ).fetchone()["n"]
+            "SELECT COUNT(DISTINCT jurisdiction) AS n FROM search_executions "
+            "WHERE slug=? AND jurisdiction IS NOT NULL AND deferred_reason IS NULL",
+            [slug]).fetchone()["n"]
         lang = conn.execute(
+            "SELECT COUNT(DISTINCT language) AS n FROM search_executions "
+            "WHERE slug=? AND deferred_reason IS NULL", [slug]).fetchone()["n"]
+        deferred = conn.execute(
+            "SELECT COUNT(*) AS n FROM search_executions "
+            "WHERE slug=? AND deferred_reason IS NOT NULL", [slug]).fetchone()["n"]
+        g_jur = conn.execute(
+            "SELECT COUNT(*) AS n FROM search_coverage "
+            "WHERE slug=? AND status != 'NOT-RUN'", [slug]).fetchone()["n"]
+        g_lang = conn.execute(
             "SELECT COUNT(*) AS n FROM search_languages "
-            "WHERE slug=? AND status != 'NOT-RUN'",
-            [slug]
-        ).fetchone()["n"]
+            "WHERE slug=? AND status != 'NOT-RUN'", [slug]).fetchone()["n"]
     return {
         "slug": slug,
         "jurisdictions_searched": jur,
         "jurisdictions_required": 24,
         "languages_searched": lang,
         "languages_required": 14,
+        "searches_deferred_with_reason": deferred,
         "complete": jur >= 24 and lang >= 14,
+        "legacy_grid": {
+            "jurisdictions": g_jur,
+            "languages": g_lang,
+            "note": "frozen hand-kept grids; pre-log work, query terms "
+                    "unrecoverable. Not evidence of a search — see "
+                    "workplan/search-coverage-completion-workplan.md",
+        },
     }
 
 
@@ -726,6 +832,40 @@ def main():
     p_ul.add_argument("--results-count", type=int, default=0)
     p_ul.add_argument("--session", required=True)
     p_ul.add_argument("--dry-run", action="store_true")
+
+    # log-search — the successor to the two frozen grids above.
+    p_ls = sub.add_parser(
+        "log-search",
+        help="Append one row to search_executions (replaces upsert-coverage/-language)")
+    p_ls.add_argument("--slug", required=True)
+    p_ls.add_argument("--language", required=True, help="ISO 639-1, uppercase (EN, FR)")
+    p_ls.add_argument("--query-text", required=True,
+                      help="the query VERBATIM (R8: log it before screening)")
+    p_ls.add_argument("--engine", required=True, help="pubmed, crossref, web, ...")
+    p_ls.add_argument("--depth-method", required=True,
+                      choices=["scoping", "systematic", "citation-chase", "targeted"])
+    p_ls.add_argument("--session", required=True)
+    p_ls.add_argument("--jurisdiction", help="omit for a search not scoped to one")
+    p_ls.add_argument("--target-tier", type=int)
+    p_ls.add_argument("--target-evidence-type")
+    p_ls.add_argument("--target-scope")
+    p_ls.add_argument("--terms-used")
+    p_ls.add_argument("--mining-direction", choices=["backward", "forward", "none"])
+    p_ls.add_argument("--results-found", type=int, default=0)
+    p_ls.add_argument("--results-screened", type=int, default=0)
+    p_ls.add_argument("--results-admitted", type=int, default=0)
+    p_ls.add_argument("--admitted-ref-id", action="append", dest="admitted_ref_ids",
+                      help="repeatable; also written to the search_admissions junction")
+    p_ls.add_argument("--saturation-signal")
+    p_ls.add_argument("--findings-note")
+    p_ls.add_argument("--harm-finding", type=int, default=0,
+                      help="R7: failure/harm/inadequacy is first-class evidence")
+    p_ls.add_argument("--deferred-reason",
+                      help="a search DELIBERATELY not run. This is what makes "
+                           "'not looked for' different from 'nothing found'.")
+    p_ls.add_argument("--backfill", type=int, default=0,
+                      help="1 = reconstructed after the fact, not logged as it happened")
+    p_ls.add_argument("--dry-run", action="store_true")
 
     # update-bpc
     p_ubpc = sub.add_parser("update-bpc", help="Update bpc_metadata for a slug")
@@ -1053,19 +1193,34 @@ def main():
             rows = get_unmined_for_all_slugs(tier_max=args.tier_max)
         _emit(rows)
 
-    elif args.command == "upsert-coverage":
-        data = {"status": args.status, "co1_attempted": args.co1_attempted}
-        upsert_search_coverage(args.slug, args.jurisdiction,
-                               data=data, session=args.session,
-                               dry_run=args.dry_run)
-        _emit({"updated": True, "slug": args.slug, "jurisdiction": args.jurisdiction})
+    elif args.command in ("upsert-coverage", "upsert-language"):
+        # Kept as commands rather than deleted, so the skills and sessions that
+        # still reach for them get the redirect instead of "invalid choice".
+        table = ("search_coverage" if args.command == "upsert-coverage"
+                 else "search_languages")
+        print(_FROZEN_MSG.format(table=table), file=sys.stderr)
+        sys.exit(2)
 
-    elif args.command == "upsert-language":
-        data = {"status": args.status, "results_count": args.results_count}
-        upsert_search_language(args.slug, args.language,
-                               data=data, session=args.session,
-                               dry_run=args.dry_run)
-        _emit({"updated": True, "slug": args.slug, "language": args.language})
+    elif args.command == "log-search":
+        exec_id = log_search(
+            slug=args.slug, language=args.language, query_text=args.query_text,
+            engine=args.engine, depth_method=args.depth_method,
+            session=args.session, jurisdiction=args.jurisdiction,
+            target_tier=args.target_tier,
+            target_evidence_type=args.target_evidence_type,
+            target_scope=args.target_scope, terms_used=args.terms_used,
+            mining_direction=args.mining_direction,
+            results_found=args.results_found,
+            results_screened=args.results_screened,
+            results_admitted=args.results_admitted,
+            saturation_signal=args.saturation_signal,
+            admitted_ref_ids=args.admitted_ref_ids,
+            deferred_reason=args.deferred_reason, backfill=args.backfill,
+            findings_note=args.findings_note, harm_finding=args.harm_finding,
+            dry_run=args.dry_run)
+        _emit({"exec_id": exec_id, "slug": args.slug,
+               "admitted": len(args.admitted_ref_ids or []),
+               "dry_run": args.dry_run})
 
     elif args.command == "update-bpc":
         data = {}
