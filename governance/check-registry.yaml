@@ -711,15 +711,45 @@ checks:
     note: Surfaces NON-COMPLIANT verdicts. Never blocking by design.
 
   # ===== research contract ==================================================
+  - id: research_contract_baseline_ratchet
+    cmd: [python3, scripts/audit/research_batch_dod.py, --check-baseline, origin/main]
+    battery: research
+    kinds: [always]
+    level: blocking
+    basis: hygiene
+    cost: fast
+    note: >-
+      W4.5, 2026-08-06. `governance/research-contract-baseline.json` forgives
+      inherited research-contract debt so `research_batch_dod --all` is not
+      permanently red — a gate that is always red is a gate people stop reading.
+      The amnesty was self-administered: `--write-baseline` ratchets down only,
+      but that discipline lived in the WRITER, and the file is a text file.
+      Editing `R13: 494` to `R13: 600` forgave 106 fresh violations, left the
+      gate green, and left no trace — a cleaner defeat of the check than
+      deleting it, since deleting it is visible.
+      This compares the committed file against origin/main and fails on any
+      count that rose or any code that vanished. Lowering always passes; that is
+      debt being paid. `kinds: [always]` because the file can be edited from any
+      work kind and an edit is exactly when it needs watching. An unreadable
+      base ref exits 2 rather than passing — absent is not innocent.
+
   - id: research_contract_sync
     cmd: [python3, scripts/generate/research_contract_hook.py, --check]
     battery: research
     kinds: [governance, tooling]
-    level: advisory
+    level: blocking
     basis: hygiene
     cost: fast
     min_items: 10
     note: >-
+      PROMOTED advisory -> blocking 2026-08-06 (W4.6). It has been green since it
+      landed, it carries a `min_items: 10` vacuity guard so it cannot pass by
+      examining nothing, and what it protects is a contract that is INJECTED INTO
+      EVERY SESSION at start. Drift here does not produce a wrong file, it
+      produces a wrong instruction delivered to every future session before it
+      reads anything else — which is the highest-leverage place in the repo for
+      a silent disagreement to sit, and it had one (R1, R2 and R3 had drifted
+      across the two hand-transcribed copies).
       The R1-R15 contract had TWO hand-transcribed copies with no comparator — the
       SessionStart hook in .claude/settings.json and the rule table in
       research_batch_dod.py — and they had drifted on R1, R2 and R3, two of which
