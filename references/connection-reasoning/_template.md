@@ -1,7 +1,7 @@
 # Reasoning: CON-NNNN
 
 <!--
-Source template: audits/bpc-rewrite-workplan-2026-05-11.md §3
+Source template: workplan/bpc-rewrite-workplan-2026-05-11.md §3
 One file per CON-NNNN. Located in references/connection-reasoning/<con-id>.md.
 245 connections to be processed.
 Validates against scripts/validate_reasoning.py (--mode=connection).

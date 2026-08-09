@@ -48,7 +48,7 @@ SESSION=$(tr -d '\n\r ' </tmp/latest.txt)
 _GET "sessions/$SESSION" /tmp/session.md                          || { echo "HALT: sessions/$SESSION"; exit 1; }
 _GET "references/project-standards.md" /tmp/standards.md          || { echo "HALT: project-standards.md"; exit 1; }
 _GET "references/skill-registry.md" /tmp/registry.md              || { echo "HALT: skill-registry.md"; exit 1; }
-_GET "audits/bpc-rewrite-workplan-2026-05-11.md" /tmp/workplan.md || { echo "HALT: bpc-rewrite-workplan"; exit 1; }
+_GET "workplan/bpc-rewrite-workplan-2026-05-11.md" /tmp/workplan.md || { echo "HALT: bpc-rewrite-workplan"; exit 1; }
 
 # ---------------------------------------------------------------------------
 # State queries from SQLite

@@ -576,7 +576,7 @@ These are not workplans and are not subject to supersession. They are decision r
 
 ### E.5 Forward-work rule
 
-For any session opening under PI v10.8, the operative workplan is **this document** (`audits/bpc-rewrite-workplan-2026-05-11.md`). Do not consult the files in E.1 except for historical context. The files in E.2 remain operative for their specific protocols and must be honoured. The files in E.3 and E.4 are records; consult only when investigating prior decisions.
+For any session opening under PI v10.8, the operative workplan is **this document** (`workplan/bpc-rewrite-workplan-2026-05-11.md`). Do not consult the files in E.1 except for historical context. The files in E.2 remain operative for their specific protocols and must be honoured. The files in E.3 and E.4 are records; consult only when investigating prior decisions.
 
 If a session discovers a workplan-like file not classified above (created after 2026-05-11 11:00 UTC), default to: NOT-AUTHORITATIVE pending explicit adoption in a future PI revision.
 

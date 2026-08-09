@@ -11,7 +11,7 @@
 
 ## Pilot scoping note
 
-This reasoning doc is being authored as the **first BPC reasoning doc** under the Phase E.1 workflow per `audits/bpc-rewrite-workplan-2026-05-11.md` and the rule-#10 sub-rules 2/3 verification gate per DR-2026-05-13.
+This reasoning doc is being authored as the **first BPC reasoning doc** under the Phase E.1 workflow per `workplan/bpc-rewrite-workplan-2026-05-11.md` and the rule-#10 sub-rules 2/3 verification gate per DR-2026-05-13.
 
 **Pilot unit:** one rule-#9 walk per parameter, all populations covered by the parent BPC. Multiple parameters in scope (RT60, NC, dB(A), STI, NRC) → multiple walks within this single reasoning doc.
 
