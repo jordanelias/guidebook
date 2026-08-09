@@ -58,7 +58,7 @@ then by normalised title.
 ## 1. Full Bibliography
 
 ```sql
-SELECT es.ref_id, es.authors, es.year, es.title, es.doi, es.tier,
+SELECT es.ref_id, es.author_display, es.pub_year, es.pub_title, es.doi, es.tier,
        es.evidence_type, es.jurisdiction, es.verification_status,
        GROUP_CONCAT(DISTINCT ssl.slug) as slugs,
        MAX(cm.backward) as cm_b, MAX(cm.forward) as cm_f
@@ -66,7 +66,7 @@ FROM evidence_sources es
 LEFT JOIN source_slug_links ssl ON es.ref_id = ssl.ref_id
 LEFT JOIN citation_mining cm ON cm.local_ref_id = ssl.local_ref_id AND cm.slug = ssl.slug
 GROUP BY es.ref_id
-ORDER BY es.authors COLLATE NOCASE, es.year
+ORDER BY es.first_author_last COLLATE NOCASE, es.pub_year
 ```
 
 ### Markdown output format
@@ -87,11 +87,11 @@ ORDER BY es.authors COLLATE NOCASE, es.year
 ## 2. Per-Slug Bibliography
 
 ```sql
-SELECT es.ref_id, es.authors, es.year, es.title, es.doi, es.tier
+SELECT es.ref_id, es.author_display, es.pub_year, es.pub_title, es.doi, es.tier
 FROM evidence_sources es
 JOIN source_slug_links ssl ON es.ref_id = ssl.ref_id
 WHERE ssl.slug = '{slug}'
-ORDER BY es.tier ASC, es.authors COLLATE NOCASE
+ORDER BY es.tier ASC, es.first_author_last COLLATE NOCASE
 ```
 
 Use `python3 scripts/db.py coverage --slug {slug}` for coverage summary first.
@@ -107,7 +107,10 @@ SELECT
   SUM(CASE WHEN tier = 2 THEN 1 ELSE 0 END) as tier2,
   SUM(CASE WHEN tier = 3 THEN 1 ELSE 0 END) as tier3,
   SUM(CASE WHEN doi IS NOT NULL AND doi != '' THEN 1 ELSE 0 END) as has_doi,
-  SUM(CASE WHEN verification_status = 'verified' THEN 1 ELSE 0 END) as verified
+  -- Uppercase. SQLite `=` is case-sensitive and the column holds VERIFIED /
+  -- UNVERIFIED (D-0157), so the lowercase form matched 0 of 863 rows and
+  -- reported every source as unverified.
+  SUM(CASE WHEN verification_status = 'VERIFIED' THEN 1 ELSE 0 END) as verified
 FROM evidence_sources
 ```
 

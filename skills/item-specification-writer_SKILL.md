@@ -163,8 +163,28 @@ Ranges are not uncertainty — they bridge Mode P and Mode S.
 **Retrofit:** [HIGH / MODERATE / LOW penalty]
 ```
 
-**Evidence markers:** ● = evidence-based (Tier 1–6 source); ○ = inferred (gap disclosed).
+**Evidence markers — THREE, per `governance/tier-system.md` §5 (OPERATIVE):**
+
+| Marker | Means | Licensed by |
+|---|---|---|
+| **●** | confirmed evidence base | T1 / Co-1 / T2 / Co-2, or T3-clinical |
+| **◐** | policy or standards basis only | T4 / T5 |
+| **○** | weak band — grey, expert consensus, thin, or code-consensus | T3-grey, T6, or a regulatory-stratum claim under Option A |
+
+Every prescriptive sentence carries exactly one. Unmarked is an error.
 Non-prescriptive sentences carry no marker.
+
+> **This section used to read "● = evidence-based (Tier 1–6 source); ○ = inferred."**
+> That is the retired two-marker scheme, and it is not merely out of date — it
+> inverts the doctrine. Under it a T6 code-consensus claim earns a full-strength
+> ●, which `tier-system.md` §3/§8 and the Option A amendment
+> (DR-2026-07-21) exist specifically to forbid: **code convergence is not
+> evidence.** A code-consensus claim may anchor best practice *only* at the
+> flagged weak band ○ ("best practice as currently known"); rendered at ●, ◐, or
+> unflagged, it is in error. `mission-and-epistemics.md` still describes the old
+> scheme too — a known reconciliation drift; `tier-system.md` is operative and
+> wins. Corrected 2026-08-06, found by a read-only audit of this phase.
+> The marker must not exceed what the cell's `tier_basis` licenses.
 
 ---
 

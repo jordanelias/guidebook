@@ -120,12 +120,11 @@ CREATE TABLE db_meta (
 );
 
 -- Seed on init:
-INSERT INTO db_meta VALUES ('schema_version', '1');
 INSERT INTO db_meta VALUES ('created_at', '2026-05-05 00:00');
 INSERT INTO db_meta VALUES ('project', 'jordanelias/guidebook');
 ```
 
-Schema version also tracked via `PRAGMA user_version = 1` — SQLite's native mechanism, atomic, requires no table read. Migration runner checks `PRAGMA user_version` first; `db_meta.schema_version` is human-readable backup.
+**Schema version lives in `PRAGMA user_version` and nowhere else** — SQLite's native mechanism, atomic, requires no table read. This spec originally seeded a second marker in `db_meta` as a "human-readable backup"; the backup was never updated after migration 005 and by August 2026 read 11 against a `user_version` of 52. A backup that silently stops tracking is not a backup, it is a second answer to a question that has one. Row retired 2026-08-06 (W4.7, migration `data_20260806070009`), and registered in `governance/retired-vocabulary.yaml` as RV-017 so the sentences about it do not outlive it.
 
 ### 4.2 connections + connection_targets
 

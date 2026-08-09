@@ -26,7 +26,13 @@ Usage:
 Exit codes:
     0 — clean (no outstanding sources, or warnings only)
     1 — outstanding sources found (use as session-close blocker)
-    2 — DB error / unable to read
+    2 — DB error, or --session names no resolvable session
+
+Every run reports an `Examined` count and one of three verdicts: OUTSTANDING,
+CLEAN, or NOTHING-IN-SCOPE. The third exists because "no violations found" and
+"no subjects to find violations in" both used to print `Outstanding: 0` and exit
+0, which made the pass carry no information — the gate could not say whether it
+had done its job or merely been pointed somewhere empty.
 
 Author: written 2026-05-11 in session_2026-05-11g-citation-mining.md per GAP-283 P1.
 """
@@ -39,13 +45,40 @@ import sys
 DEFAULT_DB = os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db")
 
 def _latest_hint():
-    """What sessions/LATEST currently names — for the mis-scoped-session error."""
-    try:
-        repo = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-        with open(os.path.join(repo, "sessions", "LATEST")) as f:
-            return f.read().strip().splitlines()[0]
-    except Exception:
-        return "unreadable"
+    """What the session pointers currently name — for the mis-scoped-session error.
+
+    Reports BOTH pointers since the W4 split. This gate is fed LATEST-RESEARCH;
+    quoting LATEST alone in its error would send the reader to the wrong file.
+    """
+    repo = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    out = []
+    for name in ("LATEST-RESEARCH", "LATEST"):
+        try:
+            with open(os.path.join(repo, "sessions", name)) as f:
+                out.append(f"sessions/{name}={f.read().strip().splitlines()[0]!r}")
+        except Exception:
+            out.append(f"sessions/{name}=unreadable")
+    return "; ".join(out)
+
+
+def session_keys(session):
+    """Both spellings of a session name, because the DB holds both.
+
+    `evidence_sources.created_by_session` stores the bare stem on 32 of its 33
+    distinct values and `...11g-citation-mining.md` on the 33rd. The pointer
+    files under sessions/ hold the FILENAME, with the extension. So the scoping
+    predicate `created_by_session = :session` compared a name ending in `.md`
+    against values that do not, and selected nothing — for every session, under
+    either pointer.
+
+    That is the mechanism behind the vacuous pass this gate was cited for. It
+    was read as a pointer-staleness problem (CLAUDE.md §10) and the W4.1 pointer
+    split was expected to fix it; the split is correct and necessary, but on its
+    own it moved the gate from one name that matched nothing to another name
+    that matched nothing. Normalising here is what actually puts rows in scope.
+    """
+    stem = session[:-3] if session.endswith(".md") else session
+    return stem, stem + ".md"
 
 
 def audit(db_path, session=None, tier_max=2, output_json=False):
@@ -70,17 +103,14 @@ def audit(db_path, session=None, tier_max=2, output_json=False):
     # This closes that: an unresolvable session name is an operator error (exit 2),
     # distinct from the backlog the gate exists to report (exit 1).
     #
-    # WHAT THIS DELIBERATELY DOES NOT DO — and it is the bigger half.
-    # It validates that the session RECORD exists, not that the scope selects rows.
-    # A stricter row-count test was written first and reverted before commit,
-    # because `sessions/LATEST` currently names a real session that added ZERO
-    # evidence_sources rows: the strict form turns this blocking gate red on main
-    # for a pointer defect, not a mining defect. That pointer is being asked to
-    # mean both "most recent session" and "most recent RESEARCH session"; left
-    # stale it validates a closed set, advanced it reports nothing in scope, and
-    # BOTH states are meaningless (CLAUDE.md §10). The fix is the W4.1 LATEST split
-    # and it is owner-gated. Until then this gate cannot be made to mean what its
-    # name implies, and pretending otherwise by reddening main would not help.
+    # This validates that the session RECORD exists, not that the scope selects
+    # rows. A scope selecting nothing is reported instead of refused — see the
+    # `examined` count and the NOTHING-IN-SCOPE verdict below, added by W4 on
+    # 2026-08-06. An earlier draft made the empty scope an error and was reverted:
+    # a session that legitimately logged only Tier 3 sources has nothing this gate
+    # is entitled to demand, and failing it would redden main for doing nothing
+    # wrong. Naming the empty scope is what the situation needed; punishing it was
+    # not. The `.md` normalisation landed in the same pass — see session_keys().
     # A session is RESOLVABLE if it has a record OR it logged rows. Requiring a
     # `.md` file alone was wrong and was caught by the compliance check before it
     # could bite: 22 of the 33 distinct `created_by_session` values in
@@ -93,7 +123,7 @@ def audit(db_path, session=None, tier_max=2, output_json=False):
     if session:
         repo = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
         sdir = os.path.join(repo, "sessions")
-        stem = session[:-3] if session.endswith(".md") else session
+        stem, stem_md = session_keys(session)
         known = set()
         for root, _dirs, files in os.walk(sdir):
             for fn in files:
@@ -102,20 +132,23 @@ def audit(db_path, session=None, tier_max=2, output_json=False):
                     known.add(fn[:-3])
         logged = con.execute(
             "SELECT EXISTS (SELECT 1 FROM evidence_sources "
-            "WHERE created_by_session IN (?, ?))", (stem, stem + ".md")).fetchone()[0]
+            "WHERE created_by_session IN (?, ?))", (stem, stem_md)).fetchone()[0]
         if not logged and known and stem not in known and session not in known:
             print(f"ERROR: --session {session!r} names no session record under "
                   f"sessions/. A scope that selects nothing reports 'Outstanding: 0' "
                   f"and passes, which is indistinguishable from compliance — so an "
                   f"unresolvable name is refused rather than answered. "
-                  f"sessions/LATEST currently holds {_latest_hint()!r}.",
+                  f"Pointers: {_latest_hint()}.",
                   file=sys.stderr)
             return 2, None
 
     # Outstanding = Tier 1..tier_max source in evidence_sources, linked to some slug,
     # with no citation_mining row referencing its ref_id, and (if --session given)
     # was added in that session.
-    where_session = "AND es.created_by_session = :session" if session else ""
+    skey, skey_md = session_keys(session) if session else (None, None)
+    where_session = ("AND es.created_by_session IN (:session, :session_md)"
+                     if session else "")
+    params = {"session": skey, "session_md": skey_md, "tier_max": tier_max}
     rows = con.execute(f"""
         SELECT DISTINCT es.ref_id, es.tier, es.author_display AS authors, es.pub_year AS year, es.pub_title AS title, es.doi,
                         es.created_by_session, es.verification_status,
@@ -140,7 +173,23 @@ def audit(db_path, session=None, tier_max=2, output_json=False):
           {where_session}
         GROUP BY es.ref_id
         ORDER BY es.tier, es.ref_id
-    """, {"session": session, "tier_max": tier_max}).fetchall()
+    """, params).fetchall()
+
+    # EXAMINED — the denominator the "Outstanding" count is a fraction of.
+    #
+    # Same shape as the query above minus the two mining joins: slug-linked
+    # sources inside the tier scope, inside the session scope if one was given.
+    # Without this the gate could print "Outstanding: 0" over a scope holding
+    # nothing and there was no line in the output to tell the two apart. That is
+    # the vacuity CLAUDE.md §10 names: passing on merits and passing for want of
+    # subjects render identically, so the pass carries no information either way.
+    examined = con.execute(f"""
+        SELECT COUNT(DISTINCT es.ref_id)
+        FROM evidence_sources es
+        JOIN source_slug_links ssl ON es.ref_id = ssl.ref_id
+        WHERE es.tier BETWEEN 1 AND :tier_max
+          {where_session}
+    """, params).fetchone()[0]
 
     # Also report rows where cm exists but both backward=0 AND forward=0 AND no deferred_reason
     bad_cm = con.execute(f"""
@@ -168,7 +217,7 @@ def audit(db_path, session=None, tier_max=2, output_json=False):
           AND cm.backward = 0 AND cm.forward = 0
           AND (cm.deferred_reason IS NULL OR cm.deferred_reason = '')
     """, (tier_max,)).fetchall():
-        if session and (cm["es_session"] != session and cm["cm_session"] != session):
+        if session and not ({cm["es_session"], cm["cm_session"]} & {skey, skey_md}):
             continue
         bad_cm.append(dict(cm))
 
@@ -184,10 +233,19 @@ def audit(db_path, session=None, tier_max=2, output_json=False):
     """, (tier_max,)).fetchone()[0]
     coverage_pct = (total_with_cm / total_t12 * 100) if total_t12 else 0.0
 
+    # A session-scoped run that selects no subjects is CLEAN in the sense that it
+    # found no violation, and empty in the sense that it looked at nothing. It
+    # gets its own word so the two never share one.
+    verdict = ("OUTSTANDING" if (rows or bad_cm)
+               else "NOTHING-IN-SCOPE" if examined == 0
+               else "CLEAN")
+
     result = {
         "db_path": db_path,
         "session_scope": session,
         "tier_max": tier_max,
+        "examined": examined,
+        "verdict": verdict,
         "total_tier_in_scope": total_t12,
         "total_with_citation_mining": total_with_cm,
         "coverage_pct": round(coverage_pct, 1),
@@ -204,9 +262,25 @@ def audit(db_path, session=None, tier_max=2, output_json=False):
         print(f"  DB: {db_path}")
         print(f"  Session scope: {session or '(all)'}")
         print(f"  Tier scope: 1..{tier_max}")
-        print(f"  Total in scope: {total_t12}")
-        print(f"  Total with citation_mining row: {total_with_cm} ({coverage_pct:.1f}%)")
+        print(f"  Examined (slug-linked T1-{tier_max} sources in scope): {examined}")
         print(f"  Outstanding (no citation_mining row): {len(rows)}")
+        print(f"  VERDICT: {verdict}")
+        if session:
+            # Repo-wide, and labelled as such. These used to be printed under a
+            # session-scoped run as "Total in scope" / a coverage percentage,
+            # which read as though the session had been measured — the run that
+            # examined zero of its own sources still reported "9 (4.7%)".
+            print(f"  (repo-wide, not this session: {total_with_cm}/{total_t12} "
+                  f"T1-{tier_max} sources mined, {coverage_pct:.1f}%)")
+        else:
+            print(f"  Total in scope: {total_t12}")
+            print(f"  Total with citation_mining row: {total_with_cm} ({coverage_pct:.1f}%)")
+        if verdict == "NOTHING-IN-SCOPE":
+            print()
+            print(f"  Nothing was checked. {session!r} logged no slug-linked "
+                  f"Tier 1-{tier_max} sources, so this run found no violation by "
+                  f"having no subject — which is not the same as compliance. If "
+                  f"that session did research, the scope or the pointer is wrong.")
         if rows:
             print()
             print(f"  {'REF-ID':12} {'T':2} {'SESS':40} {'STATUS':12} {'AUTHORS':30} {'YEAR':6}")
