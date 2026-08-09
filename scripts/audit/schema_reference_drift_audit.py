@@ -144,7 +144,7 @@ def audit():
         return 1
 
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
         tables = live_tables(conn)
     except sqlite3.DatabaseError as e:
         print(f"ERROR: {DB_PATH} is not a readable SQLite database: {e}", file=sys.stderr)

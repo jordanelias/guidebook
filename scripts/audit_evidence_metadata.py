@@ -395,7 +395,7 @@ def main():
         print(f"ERROR: DB not found at {DB_PATH}", file=sys.stderr)
         return 2
 
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
     conn.row_factory = sqlite3.Row
 
     health = overall_health(conn)

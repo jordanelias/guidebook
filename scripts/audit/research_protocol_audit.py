@@ -28,7 +28,7 @@ DB = Path(os.environ.get("GUIDEBOOK_DB_PATH", REPO / "data" / "guidebook.db"))
 
 
 def audit():
-    db = sqlite3.connect(str(DB))
+    db = sqlite3.connect(f"file:{DB}?mode=ro", uri=True)
     issues = []
 
     # CHECK 1: Research-closed gaps without protocol fields

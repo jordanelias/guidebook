@@ -365,6 +365,37 @@ checks:
       duplicate of validate_item.py; it is not — that one validates the markdown
       and YAML corpus, this one validates the table.
 
+  - id: readonly_db_open_audit
+    cmd: [python3, scripts/audit/readonly_db_open_audit.py]
+    battery: data
+    kinds: [data, tooling]
+    level: advisory
+    basis: unattributed
+    cost: fast
+    note: >-
+      A script that only reads must open the canonical DB read-only. Sibling of
+      db_path_env_audit — same scope filter, same EXCLUDE_PARTS, so "legacy" means
+      one thing repo-wide — but a different contract: that one asks WHICH database
+      a script opens, this one asks HOW.
+      The cost is not the `-wal`/`-shm` sidecars, though those are real enough that
+      .gitignore already carries an entry for them. It is that a read-write handle
+      is a write the reproducibility gate CANNOT SEE: migration_reproducibility
+      compares PRAGMA user_version plus COUNT(*) on six tables, so a checkpoint or
+      a stray mutation changes nothing it looks at. The migrations-only rule
+      (CLAUDE.md §0 rule 4) is absolute; its detection floor is not. Every
+      unnecessary rw handle is another way for the canonical DB to change without a
+      migration.
+      A writer is OUT OF SCOPE, not an offender — write status is decided by AST,
+      inspecting only string literals actually passed to an execute call. A
+      whole-file keyword scan reports UPDATE and DROP from prose in comments; the
+      first draft of the sweep did exactly that and produced 35 false writers
+      including pure readers. Scratch opens (lower-case `db_path`, `:memory:`, a
+      rebuilt copy) stay allowed: only connects naming a canonical constant count.
+      Carries a vacuity guard — zero read-only consumers found means the scope
+      filter is broken, and FAILS rather than passing on an empty set.
+      Measured 2026-08-06: 39/39 green after the sweep; 16 of 43 before it.
+      Advisory per house norm; promote once the false-positive rate is known.
+
   - id: db_path_env_audit
     cmd: [python3, scripts/audit/db_path_env_audit.py]
     battery: data
