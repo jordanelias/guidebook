@@ -250,7 +250,7 @@ def render_html(room):
 
 
 def generate(room_id, output_path=None):
-    conn = sqlite3.connect(str(DB_PATH))
+    conn = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
     room = query_room(conn, room_id)
     conn.close()
     if not room:

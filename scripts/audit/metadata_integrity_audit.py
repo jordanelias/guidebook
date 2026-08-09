@@ -35,7 +35,7 @@ def audit():
         print(f"ERROR: DB not found at {DB_PATH}", file=sys.stderr)
         return 1
 
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
     c = conn.cursor()
 
     print("=" * 70)

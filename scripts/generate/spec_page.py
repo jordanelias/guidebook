@@ -326,7 +326,7 @@ td a {{ color: var(--accent); text-decoration: none; font-family: var(--font-mon
 
 
 def generate(item_code, output_path=None):
-    conn = sqlite3.connect(str(DB_PATH))
+    conn = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
     item = query_item(conn, item_code)
     conn.close()
     if not item:

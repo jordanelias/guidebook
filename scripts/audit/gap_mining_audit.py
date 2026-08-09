@@ -64,7 +64,7 @@ def audit():
         print(f"FAIL: DB not found at {DB_PATH}", file=sys.stderr)
         return 1
 
-    db = sqlite3.connect(str(DB_PATH))
+    db = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
     db.row_factory = sqlite3.Row
 
     # Verify migration 017 applied
