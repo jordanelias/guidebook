@@ -21,8 +21,8 @@ CLI usage:
     python3 scripts/db.py add-connection --con-id CON-0001 --confidence HIGH --connection-type CROSS-POPULATION --filed-in sensory-environment --description "..." --source-skill connection-scout --targets '["item:A-02"]' --session SESSION
     python3 scripts/db.py update-connection --con-id CON-0001 --status CONSUMED --session SESSION
     python3 scripts/db.py unmined [--slug SLUG] [--tier-max 3]
-    python3 scripts/db.py upsert-coverage --slug SLUG --jurisdiction AU --session SESSION
-    python3 scripts/db.py upsert-language --slug SLUG --language FR --results-count 4 --session SESSION
+    python3 scripts/db.py log-search --slug SLUG --language EN --query-text '...' --engine pubmed \
+        --depth-method scoping --session SESSION      (upsert-coverage/-language are frozen; see log_search)
     python3 scripts/db.py update-bpc --slug SLUG --citation-mining-complete 1 --session SESSION
     python3 scripts/db.py add-source --ref-id REF-001 --authors "Smith J" --year 2022 --title "..." --tier 1 --session SESSION [--slug SLUG --local-ref-id LR-001]
     python3 scripts/db.py validate
@@ -248,62 +248,173 @@ def log_mining(slug: str, ref_id: str, direction: str,
             )
 
 
+class FrozenGridError(RuntimeError):
+    """Raised on any attempt to write a legacy coverage grid. See _FROZEN_MSG."""
+
+
+# ---------------------------------------------------------------------------
+# THE LEGACY COVERAGE GRIDS ARE FROZEN.
+#
+# `search_coverage` (slug x jurisdiction) and `search_languages` (slug x
+# language) are hand-kept STATE matrices. `search_executions` is an event LOG:
+# one row per query actually run, with its text, terms, engine, depth, results
+# and admissions. State and log are different kinds of statement and both are
+# worth having — but only if the state is DERIVED from the log. These were
+# written independently, so the grid could assert coverage the log could not
+# corroborate, and nothing could contradict it.
+#
+# It did, in both directions, measured 2026-08-06:
+#   * 634 cells say SEARCHED. 15 have an execution logged for that exact
+#     (slug, jurisdiction); 172 have any execution on the slug at all.
+#   * 31 executions land on cells the grid still calls NOT-RUN — the log
+#     records work the grid denies.
+# The grid simultaneously over-claims and under-claims. It is not a coverage
+# map; it is an artifact of whoever last remembered to update it.
+#
+# THIS IS NOT A NEW DECISION. `workplan/search-coverage-completion-workplan.md`
+# already ruled it: replace the placeholder grids with a single logged event
+# table and "derive every coverage matrix as a VIEW over that log"; the legacy
+# grids are "frozen read-only as historical artifacts". It also ruled that the
+# pre-log history is NOT to be reconstructed — the 617 SEARCHED rows written
+# 2026-05-09 record real work whose query terms are unrecoverable, and inventing
+# executions for them would be worse than leaving them.
+#
+# The log was built. The views were built (v_coverage_jurisdiction,
+# v_coverage_language, v_coverage_branch). The FREEZE was not — because this
+# function was the live write path and `research-log-manager_SKILL.md` still
+# told every research session to call it. That is how six cells were marked
+# SEARCHED on 2026-07-24, after the log existed, against two logged searches
+# with different jurisdiction scoping.
+#
+# So the grids stop accepting writes here, which is the freeze, and `log_search`
+# below gives the successor the write path it never had. A store cannot be
+# retired while it is the only one that is easy to write to.
+# ---------------------------------------------------------------------------
+_FROZEN_MSG = (
+    "{table} is FROZEN as a historical artifact and no longer accepts writes.\n"
+    "\n"
+    "It is a hand-kept grid that drifted from the search log in both directions;\n"
+    "workplan/search-coverage-completion-workplan.md replaced it with the\n"
+    "search_executions log plus derived views, and this closes the write path\n"
+    "that kept it alive.\n"
+    "\n"
+    "Log the search itself instead — it carries what the grid could not (the\n"
+    "query text, the terms, the engine, the depth, what came back):\n"
+    "\n"
+    "  python3 scripts/db.py log-search --slug SLUG --language EN \\\n"
+    "      --jurisdiction AU --query-text '...' --engine pubmed \\\n"
+    "      --depth-method scoping --results-found N --results-screened N \\\n"
+    "      --session SESSION\n"
+    "\n"
+    "A search you deliberately did NOT run is also a logged row — pass\n"
+    "--deferred-reason and say why. Coverage then reads out of\n"
+    "v_coverage_jurisdiction / v_coverage_language, which cannot claim more\n"
+    "than was logged."
+)
+
+
 def upsert_search_coverage(slug: str, jurisdiction: str,
                            data: dict, session: str,
                            dry_run: bool = False):
-    _validate_cols(data.keys(), _COVERAGE_COLS, "upsert_search_coverage")
-    ts = now()
-    with connect(dry_run) as conn:
-        exists = conn.execute(
-            "SELECT 1 FROM search_coverage WHERE slug=? AND jurisdiction=?",
-            [slug, jurisdiction]
-        ).fetchone()
-        if exists:
-            sets = ", ".join(f"{k}=?" for k in data)
-            conn.execute(
-                f"UPDATE search_coverage SET {sets}, "
-                "updated_at=?, updated_by_session=? "
-                "WHERE slug=? AND jurisdiction=?",
-                [*data.values(), ts, session, slug, jurisdiction]
-            )
-        else:
-            row = {"slug": slug, "jurisdiction": jurisdiction,
-                   **data, **audit(session)}
-            cols = ", ".join(row)
-            ph = ", ".join(["?"] * len(row))
-            conn.execute(
-                f"INSERT INTO search_coverage ({cols}) VALUES ({ph})",
-                list(row.values())
-            )
+    raise FrozenGridError(_FROZEN_MSG.format(table="search_coverage"))
 
 
 def upsert_search_language(slug: str, language: str,
                            data: dict, session: str,
                            dry_run: bool = False):
-    _validate_cols(data.keys(), _LANGUAGE_COLS, "upsert_search_language")
+    raise FrozenGridError(_FROZEN_MSG.format(table="search_languages"))
+
+
+def log_search(slug: str, language: str, query_text: str, engine: str,
+               depth_method: str, session: str,
+               jurisdiction: str = None, target_tier: int = None,
+               target_evidence_type: str = None, target_scope: str = None,
+               terms_used: str = None, mining_direction: str = None,
+               results_found: int = 0, results_screened: int = 0,
+               results_admitted: int = 0, saturation_signal: str = None,
+               admitted_ref_ids=None, deferred_reason: str = None,
+               backfill: int = 0, findings_note: str = None,
+               harm_finding: int = 0, dry_run: bool = False) -> int:
+    """Append one row to search_executions. Returns its exec_id.
+
+    The successor to upsert-coverage/upsert-language. A row here is a completed
+    unit of work whether or not it found anything: R8 says keep the empties, and
+    a zero-yield search with a well-formed query is evidence about the world,
+    not a failure to record. A search deliberately not run is also a row —
+    `deferred_reason` is what makes "not looked for" different from "nothing
+    found", which is the distinction the whole pipeline is built on.
+
+    `backfill=1` marks a row reconstructed after the fact rather than logged as
+    it happened. It exists so honest reconstruction is possible without being
+    indistinguishable from contemporaneous logging; it is currently 0 on every
+    row.
+    """
+    # Refuse what H05/H07 forbid, at write time, with a named cause.
+    #
+    # The first version accepted all of this and let the blocking gate find it
+    # later: duplicate ids (H07), results_admitted disagreeing with the number of
+    # admitted ids (H05), and a junction written with INSERT OR IGNORE — the same
+    # silent no-op this file denounces at length twenty lines up in
+    # insert_evidence_source. One file, one diff, two opposite doctrines. A gate
+    # that catches a bad write after it lands is strictly worse than a write path
+    # that cannot make it.
+    ids = list(admitted_ref_ids or [])
+    if len(set(ids)) != len(ids):
+        dupes = sorted({r for r in ids if ids.count(r) > 1})
+        raise ValueError(
+            f"--admitted-ref-id repeated: {', '.join(dupes)}. One admission edge "
+            f"per (search, source); a repeat is a miscount, not two admissions "
+            f"(invariant H07).")
+    if ids and results_admitted and results_admitted != len(ids):
+        raise ValueError(
+            f"--results-admitted {results_admitted} disagrees with "
+            f"{len(ids)} --admitted-ref-id value(s). The count and the edges are "
+            f"the same fact; they may not differ (invariant H05).")
+    if ids and not results_admitted:
+        results_admitted = len(ids)
+
     ts = now()
+    row = {
+        "slug": slug, "jurisdiction": jurisdiction, "language": language,
+        "target_tier": target_tier, "target_evidence_type": target_evidence_type,
+        "target_scope": target_scope, "query_text": query_text,
+        "terms_used": terms_used, "engine": engine, "depth_method": depth_method,
+        "mining_direction": mining_direction,
+        "results_found": results_found, "results_screened": results_screened,
+        "results_admitted": results_admitted,
+        "saturation_signal": saturation_signal,
+        "admitted_ref_ids": json.dumps(ids) if ids else None,
+        "deferred_reason": deferred_reason, "backfill": backfill,
+        "session": session, "executed_at": ts,
+        "findings_note": findings_note, "harm_finding": harm_finding,
+    }
+    cols = ", ".join(row)
+    ph = ", ".join(["?"] * len(row))
     with connect(dry_run) as conn:
-        exists = conn.execute(
-            "SELECT 1 FROM search_languages WHERE slug=? AND language=?",
-            [slug, language]
-        ).fetchone()
-        if exists:
-            sets = ", ".join(f"{k}=?" for k in data)
+        cur = conn.execute(
+            f"INSERT INTO search_executions ({cols}) VALUES ({ph})",
+            list(row.values()))
+        exec_id = cur.lastrowid
+        # BOTH carriers, in one transaction. admitted_ref_ids (JSON, on the row)
+        # and search_admissions (the junction) hold the same fact, and checks
+        # H03/H04 assert they agree in both directions. Writing one without the
+        # other is a guaranteed check failure — and worse, a silent disagreement
+        # about which sources a search actually produced, at the seam where the
+        # research phase hands off to collection.
+        for ref_id in ids:
+            if not conn.execute("SELECT 1 FROM evidence_sources WHERE ref_id=?",
+                                [ref_id]).fetchone():
+                # Named, not a bare FOREIGN KEY constraint failed. The whole
+                # transaction rolls back, execution row included.
+                raise ValueError(
+                    f"--admitted-ref-id {ref_id} is not in evidence_sources. "
+                    f"File the source first (`db.py add-source`), then log the "
+                    f"search that admitted it.")
             conn.execute(
-                f"UPDATE search_languages SET {sets}, "
-                "updated_at=?, updated_by_session=? "
-                "WHERE slug=? AND language=?",
-                [*data.values(), ts, session, slug, language]
-            )
-        else:
-            row = {"slug": slug, "language": language,
-                   **data, **audit(session)}
-            cols = ", ".join(row)
-            ph = ", ".join(["?"] * len(row))
-            conn.execute(
-                f"INSERT INTO search_languages ({cols}) VALUES ({ph})",
-                list(row.values())
-            )
+                "INSERT INTO search_admissions "
+                "(exec_id, ref_id, created_at, created_by_session) "
+                "VALUES (?, ?, ?, ?)", [exec_id, ref_id, ts, session])
+        return exec_id
 
 
 def next_term_id() -> str:
@@ -387,24 +498,59 @@ def get_unmined_sources(slug: str) -> list[dict]:
 
 
 def get_coverage_completeness(slug: str) -> dict:
+    """Coverage for a slug, answered from the search LOG.
+
+    This used to count non-NOT-RUN cells in the frozen grids, which is how a slug
+    could report 14 jurisdictions searched against 0 logged searches. The grids
+    are hand-kept and were never reconciled against the log; the log is the only
+    store that can show its work.
+
+    The grid's numbers are still returned, under `legacy_grid`, because they are
+    the record of pre-log work that genuinely happened and is genuinely
+    unrecoverable in query terms. They are labelled, not deleted — an
+    unattributed number is what caused this. Nothing computes `complete` from
+    them any more.
+    """
     with connect() as conn:
         jur = conn.execute(
-            "SELECT COUNT(*) AS n FROM search_coverage "
-            "WHERE slug=? AND status != 'NOT-RUN'",
-            [slug]
-        ).fetchone()["n"]
+            "SELECT COUNT(DISTINCT jurisdiction) AS n FROM search_executions "
+            "WHERE slug=? AND jurisdiction IS NOT NULL AND deferred_reason IS NULL",
+            [slug]).fetchone()["n"]
         lang = conn.execute(
+            "SELECT COUNT(DISTINCT language) AS n FROM search_executions "
+            "WHERE slug=? AND deferred_reason IS NULL", [slug]).fetchone()["n"]
+        deferred = conn.execute(
+            "SELECT COUNT(*) AS n FROM search_executions "
+            "WHERE slug=? AND deferred_reason IS NOT NULL", [slug]).fetchone()["n"]
+        g_jur = conn.execute(
+            "SELECT COUNT(*) AS n FROM search_coverage "
+            "WHERE slug=? AND status != 'NOT-RUN'", [slug]).fetchone()["n"]
+        g_lang = conn.execute(
             "SELECT COUNT(*) AS n FROM search_languages "
-            "WHERE slug=? AND status != 'NOT-RUN'",
-            [slug]
-        ).fetchone()["n"]
+            "WHERE slug=? AND status != 'NOT-RUN'", [slug]).fetchone()["n"]
+        # Required scope comes from lang_jur_map, the bridge that declares it —
+        # not from a literal. These were hardcoded 24 and 14 while
+        # tools/pipeline_completeness.py computed against 48, so "how much
+        # coverage is owed" had two answers differing 2x, shipped the same day.
+        req_jur = conn.execute(
+            "SELECT COUNT(DISTINCT jurisdiction) AS n FROM lang_jur_map").fetchone()["n"]
+        req_lang = conn.execute(
+            "SELECT COUNT(DISTINCT language) AS n FROM lang_jur_map").fetchone()["n"]
     return {
         "slug": slug,
         "jurisdictions_searched": jur,
-        "jurisdictions_required": 24,
+        "jurisdictions_required": req_jur,
         "languages_searched": lang,
-        "languages_required": 14,
-        "complete": jur >= 24 and lang >= 14,
+        "languages_required": req_lang,
+        "searches_deferred_with_reason": deferred,
+        "complete": jur >= req_jur and lang >= req_lang,
+        "legacy_grid": {
+            "jurisdictions": g_jur,
+            "languages": g_lang,
+            "note": "frozen hand-kept grids; pre-log work, query terms "
+                    "unrecoverable. Not evidence of a search — see "
+                    "workplan/search-coverage-completion-workplan.md",
+        },
     }
 
 
@@ -727,6 +873,56 @@ def main():
     p_ul.add_argument("--session", required=True)
     p_ul.add_argument("--dry-run", action="store_true")
 
+    # log-search — the successor to the two frozen grids above.
+    p_ls = sub.add_parser(
+        "log-search",
+        help="Append one row to search_executions (replaces upsert-coverage/-language)")
+    p_ls.add_argument("--slug", required=True)
+    p_ls.add_argument("--language", required=True, help="ISO 639-1, uppercase (EN, FR)")
+    p_ls.add_argument("--query-text", required=True,
+                      help="the query VERBATIM (R8: log it before screening)")
+    p_ls.add_argument("--engine", required=True, help="pubmed, crossref, web, ...")
+    # Every choices= list below is copied from the STRICT table's own CHECK
+    # constraints, verified against the DDL. The first draft of this command
+    # invented `citation-chase` and `targeted` for --depth-method; the column
+    # allows only scoping|systematic, so the very first citation-chase search a
+    # session logged would have died on `CHECK constraint failed` — a write path
+    # that is unexecutable on the day it replaces the one being closed.
+    # A citation chase is `--mining-direction backward|forward|both`, which is
+    # the column that already means it; the depth axis is scoping vs systematic.
+    p_ls.add_argument("--depth-method", required=True,
+                      choices=["scoping", "systematic"])
+    p_ls.add_argument("--session", required=True)
+    p_ls.add_argument("--jurisdiction", help="omit for a search not scoped to one")
+    p_ls.add_argument("--target-tier", type=int, choices=range(1, 7))
+    p_ls.add_argument("--target-evidence-type",
+                      choices=["clinical", "sr_meta", "standard_eb", "national_fw",
+                               "code", "co1", "co2", "grey"])
+    p_ls.add_argument("--target-scope",
+                      choices=["intrinsic", "lower_control", "high_control",
+                               "national", "international"])
+    p_ls.add_argument("--terms-used",
+                      help="JSON array of the aliases actually fired — the column "
+                           "is json_valid-checked, and it is 0%% populated today, "
+                           "so no logged search can yet show which terms it used")
+    p_ls.add_argument("--mining-direction",
+                      choices=["none", "backward", "forward", "both"])
+    p_ls.add_argument("--results-found", type=int, default=0)
+    p_ls.add_argument("--results-screened", type=int, default=0)
+    p_ls.add_argument("--results-admitted", type=int, default=0)
+    p_ls.add_argument("--admitted-ref-id", action="append", dest="admitted_ref_ids",
+                      help="repeatable; also written to the search_admissions junction")
+    p_ls.add_argument("--saturation-signal", choices=["none", "partial", "saturated"])
+    p_ls.add_argument("--findings-note")
+    p_ls.add_argument("--harm-finding", type=int, default=0,
+                      help="R7: failure/harm/inadequacy is first-class evidence")
+    p_ls.add_argument("--deferred-reason",
+                      help="a search DELIBERATELY not run. This is what makes "
+                           "'not looked for' different from 'nothing found'.")
+    p_ls.add_argument("--backfill", type=int, default=0,
+                      help="1 = reconstructed after the fact, not logged as it happened")
+    p_ls.add_argument("--dry-run", action="store_true")
+
     # update-bpc
     p_ubpc = sub.add_parser("update-bpc", help="Update bpc_metadata for a slug")
     p_ubpc.add_argument("--slug", required=True)
@@ -759,10 +955,23 @@ def main():
                       help="How --lang-detected was determined, e.g. 'native_title_verified', "
                            "'journal_family_inference', 'citing_document_language'")
     p_as.add_argument("--metadata-quality",
-                      choices=["COMPLETE", "PMID-ONLY", "GREY", "AUTHOR-TITLE-ONLY"],
+                      # COMPLETE-STATUTORY was missing and it is 333 of 863 rows
+                      # (39% of the corpus) — the whole T4-T6 regulatory stratum.
+                      # A session filing a standard or code via the documented
+                      # path had to either mislabel it COMPLETE or omit the field.
+                      choices=["COMPLETE", "COMPLETE-STATUTORY", "PMID-ONLY",
+                               "GREY", "AUTHOR-TITLE-ONLY"],
                       help="REQUIRED in practice, not just schema — see adversarial-research skill. "
                            "COMPLETE if DOI/full metadata confirmed via CrossRef/PubMed/Semantic Scholar; "
                            "AUTHOR-TITLE-ONLY if only single-source (citing-document) attestation.")
+    p_as.add_argument("--verification-method",
+                      choices=["tool", "corroborated-not-retrieved",
+                               "co1-attestation", "citing-bibliography"],
+                      help="REQUIRED when --verification-status VERIFIED. How the "
+                           "standing was established (D-0157).")
+    p_as.add_argument("--verified-by-tool",
+                      help="REQUIRED when --verification-method tool: which tool "
+                           "(crossref, pubmed, semantic-scholar, ...). Invariant I4b.")
     p_as.add_argument("--verification-status",
                       choices=["VERIFIED", "UNVERIFIED"],
                       help="REQUIRED in practice. VERIFIED requires an independent connector/registry hit "
@@ -1053,19 +1262,34 @@ def main():
             rows = get_unmined_for_all_slugs(tier_max=args.tier_max)
         _emit(rows)
 
-    elif args.command == "upsert-coverage":
-        data = {"status": args.status, "co1_attempted": args.co1_attempted}
-        upsert_search_coverage(args.slug, args.jurisdiction,
-                               data=data, session=args.session,
-                               dry_run=args.dry_run)
-        _emit({"updated": True, "slug": args.slug, "jurisdiction": args.jurisdiction})
+    elif args.command in ("upsert-coverage", "upsert-language"):
+        # Kept as commands rather than deleted, so the skills and sessions that
+        # still reach for them get the redirect instead of "invalid choice".
+        table = ("search_coverage" if args.command == "upsert-coverage"
+                 else "search_languages")
+        print(_FROZEN_MSG.format(table=table), file=sys.stderr)
+        sys.exit(2)
 
-    elif args.command == "upsert-language":
-        data = {"status": args.status, "results_count": args.results_count}
-        upsert_search_language(args.slug, args.language,
-                               data=data, session=args.session,
-                               dry_run=args.dry_run)
-        _emit({"updated": True, "slug": args.slug, "language": args.language})
+    elif args.command == "log-search":
+        exec_id = log_search(
+            slug=args.slug, language=args.language, query_text=args.query_text,
+            engine=args.engine, depth_method=args.depth_method,
+            session=args.session, jurisdiction=args.jurisdiction,
+            target_tier=args.target_tier,
+            target_evidence_type=args.target_evidence_type,
+            target_scope=args.target_scope, terms_used=args.terms_used,
+            mining_direction=args.mining_direction,
+            results_found=args.results_found,
+            results_screened=args.results_screened,
+            results_admitted=args.results_admitted,
+            saturation_signal=args.saturation_signal,
+            admitted_ref_ids=args.admitted_ref_ids,
+            deferred_reason=args.deferred_reason, backfill=args.backfill,
+            findings_note=args.findings_note, harm_finding=args.harm_finding,
+            dry_run=args.dry_run)
+        _emit({"exec_id": exec_id, "slug": args.slug,
+               "admitted": len(args.admitted_ref_ids or []),
+               "dry_run": args.dry_run})
 
     elif args.command == "update-bpc":
         data = {}
@@ -1115,6 +1339,10 @@ def main():
             data["metadata_quality"] = args.metadata_quality
         if args.verification_status:
             data["verification_status"] = args.verification_status
+        if args.verification_method:
+            data["verification_method"] = args.verification_method
+        if args.verified_by_tool:
+            data["verified_by_tool"] = args.verified_by_tool
         ref_id = insert_evidence_source(data, session=args.session, dry_run=args.dry_run)
         if args.slug and args.local_ref_id:
             insert_source_slug_link(ref_id, args.slug, args.local_ref_id,
@@ -1369,15 +1597,78 @@ def insert_evidence_source(data: dict, session: str,
         "pmid", "tier", "evidence_type", "jurisdiction", "metadata_quality",
         "verification_status", "co1_provenance", "co1_source_type",
         "synthesis_attribution_required", "notes", "lang_detected",
-        "lang_detection_method"
+        "lang_detection_method",
+        # D-0157's other three columns. Their absence here was not cosmetic: the
+        # CLI could write verification_status='VERIFIED' and nothing else, which
+        # is a row with a standing and no evidence of how it was reached. That
+        # violates I1 (VERIFIED needs a method) and I2 (VERIFIED needs a recorded
+        # attempt) the moment it lands — both blocking checks. The two scheduled
+        # jobs were swept for D-0157; this third writer was not, and it is the
+        # one the skills tell sessions to use.
+        "verification_disposition", "verification_method",
+        "verification_closure_reason", "verification_attempt_count",
+        "verification_note", "verified_by_tool",
     })
     _validate_cols(data.keys(), _ES_COLS, "insert_evidence_source")
+
+    # A verification standing implies its evidence — so REFUSE the write when the
+    # evidence is absent. Do not fill it in.
+    #
+    # The first version of this defaulted verification_method='tool' and
+    # attempt_count=1 for any VERIFIED row, reasoning that it was avoiding a row
+    # the blocking invariants reject. It did the opposite twice over: `tool`
+    # carries the contract "verified_by_tool names which", so the row failed I4b
+    # anyway — and, worse, the defaults were INVENTED FACTS. No tool ran; no
+    # attempt happened. A write path that manufactures an audit trail to satisfy
+    # an audit is a doctrine violation in a project whose stated epistemics are
+    # "I don't know" over invention, and it would have laundered fabricated
+    # provenance into the one column that exists to record how a standing was
+    # reached. Refusal is symmetrical with the R9 duplicate errors below.
+    vs = data.get("verification_status")
+    if vs == "VERIFIED":
+        if not data.get("verification_method"):
+            raise ValueError(
+                "VERIFIED requires --verification-method (how it was established: "
+                "tool / corroborated-not-retrieved / co1-attestation / "
+                "citing-bibliography). D-0157: a standing without its method is "
+                "not a standing. Filing it as UNVERIFIED with disposition OPEN is "
+                "the honest move if you have not established it.")
+        if data["verification_method"] == "tool" and not data.get("verified_by_tool"):
+            raise ValueError(
+                "verification_method='tool' requires --verified-by-tool naming "
+                "which tool established it (invariant I4b).")
+        data.setdefault("verification_attempt_count", 1)
+    elif vs == "UNVERIFIED":
+        data.setdefault("verification_disposition", "OPEN")
+        data.setdefault("verification_attempt_count", 1)
+
     row = {**data, **audit(session)}
     with connect(dry_run) as conn:
+        # NOT `INSERT OR IGNORE`. That silently no-opped on a colliding ref_id
+        # and still returned the ref_id as though the write had happened — so a
+        # session could file a source, be told it succeeded, and have written
+        # nothing. R9 says pre-check the DOI and cross-file an existing ref_id
+        # rather than duplicating; a silent no-op is neither.
+        existing = conn.execute(
+            "SELECT ref_id FROM evidence_sources WHERE ref_id = ?",
+            [data["ref_id"]]).fetchone()
+        if existing:
+            raise ValueError(
+                f"{data['ref_id']} already exists. R9: cross-file the existing "
+                f"ref_id rather than duplicating. To amend it, ship a migration.")
+        if data.get("doi"):
+            dupe = conn.execute(
+                "SELECT ref_id FROM evidence_sources WHERE doi = ? "
+                "AND COALESCE(superseded_by_ref_id,'') = ''", [data["doi"]]).fetchone()
+            if dupe:
+                raise ValueError(
+                    f"DOI {data['doi']} is already filed as {dupe[0]} (R9: "
+                    f"pre-check the DOI, cross-file rather than duplicate). "
+                    f"Link that ref_id to your slug instead.")
         cols = ", ".join(row)
         ph = ", ".join(["?"] * len(row))
         conn.execute(
-            f"INSERT OR IGNORE INTO evidence_sources ({cols}) VALUES ({ph})",
+            f"INSERT INTO evidence_sources ({cols}) VALUES ({ph})",
             list(row.values())
         )
     return data["ref_id"]

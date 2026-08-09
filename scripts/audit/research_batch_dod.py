@@ -165,6 +165,96 @@ def _rows(cx, sql, args=()):
     return cx.execute(sql, args).fetchall()
 
 
+def check_baseline(ref="origin/main"):
+    """Fail if the committed baseline forgives more debt than REF's did.
+
+    The baseline exists so inherited debt does not hold this gate permanently red
+    — a red-forever gate is ignored, which is the failure this whole script is
+    against. That amnesty was self-administered: `--write-baseline` ratchets
+    numbers down only, but nothing checked the FILE, and the file is editable.
+    Raising `R13: 494` to `R13: 600` in a text editor forgives 106 fresh
+    violations and leaves a green gate and no trace, which is a more thorough
+    defeat of the check than deleting it — deleting it is at least visible.
+
+    The ratchet needs a witness outside the file. Git is that witness: the
+    baseline at REF is what the branch inherited, and a count above it is new
+    amnesty being claimed in this diff. Lowering is always allowed, that is debt
+    being paid. Dropping a code entirely is refused too — a removed key forgives
+    the rule outright and reads, in a diff, like tidying.
+
+    Exit 0 when the file only ratchets down, 1 on any increase or removal, 2 when
+    REF cannot be read (unknown ref, shallow clone) — absent is not innocent.
+    """
+    import json
+    import subprocess
+
+    rel = BASELINE_PATH.relative_to(REPO)
+
+    def _show(spec):
+        p = subprocess.run(["git", "show", f"{spec}:{rel.as_posix()}"], cwd=REPO,
+                           capture_output=True, text=True)
+        return p.stdout if p.returncode == 0 else None
+
+    # CI checks out at depth 1, so `origin/main` is simply ABSENT on a PR — the
+    # one context where this ratchet means anything. Shipped without this, the
+    # check exited 2 on every pull request: a blocking gate that could not pass,
+    # which is the mirror image of the gate-that-cannot-fail this repo keeps
+    # finding. Fetch the base ref before concluding it is unreachable.
+    prior_raw = _show(ref)
+    if prior_raw is None:
+        remote_ref = ref.split("/", 1)[1] if ref.startswith("origin/") else ref
+        subprocess.run(["git", "fetch", "--quiet", "--depth", "1",
+                        "origin", remote_ref], cwd=REPO, capture_output=True)
+        prior_raw = _show(ref) or _show("FETCH_HEAD")
+    if prior_raw is None:
+        print(f"ERROR: cannot read {rel} at {ref}, and fetching it failed. The "
+              f"ratchet has no witness without it, and passing on an unreadable "
+              f"baseline would be exactly the amnesty this check closes. In CI "
+              f"this means the job needs `fetch-depth: 0` or network access to "
+              f"origin.", file=sys.stderr)
+        return 2
+
+    if not BASELINE_PATH.exists():
+        print(f"ERROR: {rel} exists at {ref} but not here — removing the baseline "
+              f"forgives every rule in it.", file=sys.stderr)
+        return 1
+
+    prior = json.loads(prior_raw).get("counts", {})
+    now = json.loads(BASELINE_PATH.read_text()).get("counts", {})
+
+    raised = [(c, prior[c], now[c]) for c in prior if c in now and now[c] > prior[c]]
+    dropped = sorted(set(prior) - set(now))
+    lowered = [(c, prior[c], now[c]) for c in prior if c in now and now[c] < prior[c]]
+    added = sorted(set(now) - set(prior))
+
+    print(f"research-contract baseline ratchet — {rel} vs {ref}")
+    print(f"  EXAMINED: {len(prior)} baselined rule(s) at {ref}, {len(now)} here")
+    for c, b, n in lowered:
+        print(f"  ok      {c}: {b} -> {n} (debt paid down)")
+    for c in added:
+        # New keys are allowed: a rule can start failing for reasons that predate
+        # this branch, and refusing them would mean the baseline could never
+        # record a newly-discovered inheritance. They are printed, not passed
+        # over, because "new inherited debt" and "debt I just created" look the
+        # same in a file and differ only in the PR that carries them.
+        print(f"  NEW     {c}: {now[c]} — newly baselined; confirm this is inherited, "
+              f"not introduced by this branch")
+    for c, b, n in raised:
+        print(f"  FAIL    {c}: {b} -> {n} — {n - b} additional violation(s) forgiven")
+    for c in dropped:
+        print(f"  FAIL    {c}: removed (was {prior[c]}) — the rule is forgiven outright")
+
+    if raised or dropped:
+        print(f"\n{len(raised) + len(dropped)} baseline entr(ies) forgive more than "
+              f"{ref} did. Remediate the violations, or say in the PR why the "
+              f"amnesty is correct and have it reviewed — do not raise a number to "
+              f"make a batch pass.")
+        return 1
+    print(f"\nRESULTS: baseline ratchets down only ({len(lowered)} lowered, "
+          f"{len(added)} newly recorded)")
+    return 0
+
+
 def audit(session=None, allmode=False, capture=None, use_baseline=True):
     cx = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
     scope = "" if allmode else " AND session = ?"
@@ -589,9 +679,14 @@ if __name__ == "__main__":
     p.add_argument("--selftest", action="store_true", help="prove the checks fire")
     p.add_argument("--write-baseline", action="store_true",
                    help="snapshot current INHERITED debt so the gate fails only on regressions")
+    p.add_argument("--check-baseline", metavar="REF", nargs="?", const="origin/main",
+                   help="fail if the committed baseline raises any count above REF "
+                        "(default origin/main). Closes the hand-edit amnesty.")
     a = p.parse_args()
     if a.selftest:
         sys.exit(selftest())
+    if a.check_baseline:
+        sys.exit(check_baseline(a.check_baseline))
     if a.write_baseline:
         import json, datetime
         caught = {}
@@ -614,18 +709,26 @@ if __name__ == "__main__":
             else:
                 merged[code] = n
         caught = merged
-        if raised:
-            print("REGRESSION (baseline NOT raised; remediate instead): " + "; ".join(raised))
         BASELINE_PATH.parent.mkdir(parents=True, exist_ok=True)
         BASELINE_PATH.write_text(json.dumps({
             "_comment": "Inherited research-contract debt at baseline. The gate fails only on "
                         "counts EXCEEDING these — a permanently-red gate teaches people to "
                         "ignore it. Lower these numbers as debt is remediated; never raise them "
-                        "to make a batch pass.",
-            "captured_at": "2026-07-24",
+                        "to make a batch pass. Enforced by `--check-baseline`, which compares "
+                        "this file against origin/main and fails on any increase or removal: "
+                        "the ratchet lives in git, not in this comment.",
+            "captured_at": datetime.date.today().isoformat(),
             "counts": caught,
         }, indent=2) + "\n")
         print(f"\nwrote baseline: {BASELINE_PATH} -> {caught}")
+        if raised:
+            # Exit NONZERO. This printed the regression and exited 0, so the one
+            # line that says "your debt grew" scrolled past inside a successful
+            # command. The ratchet held — the numbers were not raised — but the
+            # operator was told nothing they had to act on.
+            print("\nREGRESSION (baseline NOT raised; remediate instead): "
+                  + "; ".join(raised))
+            sys.exit(1)
         sys.exit(0)
     if not a.session and not a.all:
         p.error("give --session <id> or --all")

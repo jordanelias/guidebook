@@ -7,6 +7,18 @@ Checks:
   2. CON-IDs (CON-NNNN) resolve via SQLite connections table (was: _index.md)
   3. Part section references (§X.Y) resolve to existing headings in correct part file
   4. BPC ↔ search-log co-existence (every BPC has matching search-log, vice versa)
+  NB checks 1-2 (slug + CON-ID resolution against SQLite) run over LIVE surfaces
+  only. After the 2026-08-06 clean-room reset the reference corpus — parts/v10,
+  references/bpc, references/connections, specs/, site/ — cites entities the DB
+  no longer holds, by design: those files are preserved AS REFERENCE and the DB
+  was reset around them. Validating reference prose against a reset database
+  produced 1,191 failures that were all the check misunderstanding its own
+  subject. See REFERENCE_ONLY below.
+
+  5. sessions/handoff-next-session.md — its named session record, workplan, and
+     HEAD all resolve (added 2026-08-06; folded in from a standalone audit rather
+     than given a file of its own — a dangling path in the handoff is a broken
+     cross-reference, which is this script's whole subject)
 
 Phase 1-D update 2026-05-05: checks 1 and 2 now query SQLite (data/guidebook.db)
 instead of parsing markdown register files. Markdown files are archived sources only.
@@ -96,7 +108,13 @@ def collect_scan_files(repo_root: str) -> list[str]:
     for pattern in SCAN_PATTERNS:
         full_pattern = os.path.join(repo_root, pattern)
         files.extend(glob.glob(full_pattern, recursive=True))
-    return sorted(set(os.path.normpath(f) for f in files))
+    out = sorted(set(os.path.normpath(f) for f in files))
+    # Reference surfaces are excluded from DB-backed reference resolution — see
+    # REFERENCE_ONLY. The entities they name were deliberately reset out of the
+    # database beneath them, so resolving their CON-IDs against the live tables
+    # asks a question the reset already answered: 1,191 failures, every one of
+    # them the check misunderstanding its own subject.
+    return [f for f in out if not _is_reference(os.path.relpath(f, repo_root))]
 
 
 def collect_bpc_slugs(repo_root: str) -> dict[str, str]:
@@ -196,6 +214,14 @@ def run(repo_root: str = ".", fast: bool = False, warn_only: bool = False) -> in
 
     print("Checking BPC ↔ search-log co-existence...", file=sys.stderr)
     errors.extend(check_bpc_searchlog_coexistence(bpc_slugs, sl_slugs))
+    handoff_errors, handoff_warnings = check_handoff(repo_root)
+    errors.extend(handoff_errors)
+
+    # Warnings are printed, never counted. They describe prose that has gone
+    # stale, or a question this clone cannot answer — neither is a reason to
+    # fail a blocking gate.
+    for path, msg in sorted(handoff_warnings):
+        print(f"WARN [{path}]: {msg}")
 
     label = "WARN" if warn_only else "FAIL"
     if errors:
@@ -210,6 +236,107 @@ def run(repo_root: str = ".", fast: bool = False, warn_only: bool = False) -> in
     print(f"{'='*60}", file=sys.stderr)
 
     return 0 if (warn_only or not errors) else 1
+
+
+# Surfaces preserved as reference by the 2026-08-06 reset. Their cross-references
+# are historically accurate and deliberately not maintained against the live DB.
+# This is a SCOPE statement, not an amnesty: a broken reference inside a live
+# file still fails, and a file leaves this list by becoming live again.
+REFERENCE_ONLY = (
+    "parts/",
+    "references/bpc/",
+    "references/bpc-reasoning/",
+    "references/connections/",
+    "references/connection-reasoning/",
+    "specs/",
+    "site/",
+    "_archived/",
+)
+
+
+def _is_reference(path: str) -> bool:
+    rel = path.replace("\\", "/").lstrip("./")
+    return any(rel.startswith(p) for p in REFERENCE_ONLY)
+
+
+HANDOFF_FIELDS = {
+    "HEAD at handoff": re.compile(r"\*\*HEAD at handoff:\*\*\s*`([0-9a-f]{7,40})`"),
+    "Last session record": re.compile(r"\*\*Last session record:\*\*\s*`([^`]+)`"),
+    "The plan to work from": re.compile(r"\*\*The plan to work from:\*\*\s*`([^`]+)`"),
+}
+
+
+def _is_shallow(repo_root: str) -> bool:
+    import subprocess
+    r = subprocess.run(["git", "rev-parse", "--is-shallow-repository"],
+                       cwd=repo_root, capture_output=True, text=True)
+    return r.stdout.strip() == "true"
+
+
+def check_handoff(repo_root: str) -> tuple[list[tuple[str, str]], list[tuple[str, str]]]:
+    """The handoff is the first file a fresh session reads. Nothing checked it,
+    and it spent eleven weeks naming a May HEAD and a merged branch.
+
+    Returns (errors, warnings) — and the split is the point.
+
+    A dangling PATH is an ERROR: it sends the next session to a file that is not
+    there, and that is mechanically true in any clone. A stale HEAD is a
+    WARNING: it is misleading prose, and failing a blocking gate over unrewritten
+    prose makes the gate something to route around. This function used to say so
+    in its docstring while returning both in one list, so every "WARN:" string it
+    produced failed a blocking check anyway. It now returns them separately.
+
+    THE SHALLOW-CLONE RULE. Both HEAD assertions are answerable only from
+    history, and CI checks out `fetch-depth: 1`, where there is none: `cat-file`
+    misses every real commit and `merge-base --is-ancestor` reports a false
+    negative. Absence of a commit from a truncated clone is a fact about the
+    clone, not about the handoff. So in a shallow clone the verdict is
+    UNDETERMINED, and it is PRINTED rather than skipped — a check that quietly
+    examines nothing is indistinguishable from one that passed on merits, which
+    this repo has now produced four separate times.
+    """
+    import subprocess
+    rel = "sessions/handoff-next-session.md"
+    path = os.path.join(repo_root, rel)
+    if not os.path.exists(path):
+        return [(rel, "handoff is missing — a fresh session has no entry point")], []
+
+    text = open(path, encoding="utf-8").read()
+    errors: list[tuple[str, str]] = []
+    warnings: list[tuple[str, str]] = []
+    shallow = _is_shallow(repo_root)
+
+    for label, pattern in HANDOFF_FIELDS.items():
+        m = pattern.search(text)
+        if not m:
+            warnings.append((rel, f"no `{label}:` line — the header format "
+                                  f"changed, so nothing can check it"))
+            continue
+        value = m.group(1).strip()
+        if label == "HEAD at handoff":
+            ok = subprocess.run(["git", "cat-file", "-e", f"{value}^{{commit}}"],
+                                cwd=repo_root, capture_output=True).returncode == 0
+            if not ok:
+                if shallow:
+                    warnings.append((rel, f"UNDETERMINED: HEAD {value} is not in this "
+                                          f"clone, but the clone is SHALLOW — history "
+                                          f"cannot answer whether it is stale"))
+                else:
+                    warnings.append((rel, f"names HEAD {value}, not a commit in this "
+                                          f"clone — the handoff describes other history"))
+                continue
+            if shallow:
+                warnings.append((rel, f"UNDETERMINED: HEAD {value} is present, but the "
+                                      f"clone is SHALLOW — ancestry is unanswerable here"))
+                continue
+            anc = subprocess.run(["git", "merge-base", "--is-ancestor", value, "HEAD"],
+                                 cwd=repo_root, capture_output=True).returncode == 0
+            if not anc:
+                warnings.append((rel, f"names HEAD {value}, which is NOT an "
+                                      f"ancestor of the current HEAD"))
+        elif not os.path.exists(os.path.join(repo_root, value)):
+            errors.append((rel, f"`{label}` names {value!r}, which does not exist"))
+    return errors, warnings
 
 
 def main():

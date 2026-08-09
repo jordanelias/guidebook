@@ -226,9 +226,28 @@ def main():
     if args.all or not docs:
         docs = sorted((REPO / "specs").glob("*.html"))
     docs = [d for d in docs if d.exists()]
-    if not docs:
-        print("No rendered documents found under specs/.")
+    # specs/*.html are hand-authored briefs preserved as REFERENCE by the
+    # 2026-08-06 clean-room reset. They cite REF-ids the reset removed from the
+    # database beneath them — by design, not by breakage. Checking a reference
+    # document's citations against a reset corpus asks a question the reset
+    # already answered. They come back into scope when a brief is regenerated
+    # against the live DB, which is what `--doc` is for.
+    if args.all:
+        print("EXAMINED: 0 rendered document(s) — specs/ is reference-only since "
+              "the 2026-08-06 reset; pass --doc to check a live one")
         return 0
+    print(f"EXAMINED: {len(docs)} rendered document(s)")
+    if not docs:
+        # Exit 1, not 0. This is a BLOCKING check and it used to return 0 here,
+        # so deleting or renaming specs/ turned it green — a gate certifying an
+        # empty set is indistinguishable from a gate certifying a clean one, and
+        # this repo has produced that failure mode six times. `min_items: 1` in
+        # the registry enforces the pairing from the other side.
+        print("FAIL: no rendered documents found under specs/. This check has "
+              "nothing to check, which is not the same as having found nothing "
+              "wrong. Either specs/ moved, or the render step did not run.",
+              file=sys.stderr)
+        return 1
 
     c = conn()
     for doc in docs:

@@ -87,6 +87,10 @@ def audit(db_path, slug_filter=None, output_json=False):
         })
 
     # Summary stats
+    examined = con.execute(
+        "SELECT COUNT(*) FROM source_slug_links" +
+        (" WHERE slug = ?" if slug_filter else ""),
+        (slug_filter,) if slug_filter else ()).fetchone()[0]
     total_duplicates = sum(r["count"] - 1 for r in results)  # excess rows
     by_slug = defaultdict(int)
     for r in results:
@@ -104,6 +108,10 @@ def audit(db_path, slug_filter=None, output_json=False):
         print(f"=== source_slug_links duplicate audit ===")
         print(f"  DB: {db_path}")
         print(f"  Slug filter: {slug_filter or '(all)'}")
+        # EXAMINED, because "0 duplicates in 1011 rows" and "0 duplicates in 0
+        # rows" printed identically, and this check is BLOCKING. Paired with
+        # `min_items` in the registry, which fails the check if this drops to 0.
+        print(f"  EXAMINED: {examined} source_slug_links row(s)")
         print(f"  Total duplicate (slug, local_ref_id) sets: {len(results)}")
         print(f"  Total excess rows: {total_duplicates}")
         print()
