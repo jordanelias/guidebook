@@ -214,7 +214,14 @@ def run(repo_root: str = ".", fast: bool = False, warn_only: bool = False) -> in
 
     print("Checking BPC ↔ search-log co-existence...", file=sys.stderr)
     errors.extend(check_bpc_searchlog_coexistence(bpc_slugs, sl_slugs))
-    errors.extend(check_handoff(repo_root))
+    handoff_errors, handoff_warnings = check_handoff(repo_root)
+    errors.extend(handoff_errors)
+
+    # Warnings are printed, never counted. They describe prose that has gone
+    # stale, or a question this clone cannot answer — neither is a reason to
+    # fail a blocking gate.
+    for path, msg in sorted(handoff_warnings):
+        print(f"WARN [{path}]: {msg}")
 
     label = "WARN" if warn_only else "FAIL"
     if errors:
@@ -259,45 +266,77 @@ HANDOFF_FIELDS = {
 }
 
 
-def check_handoff(repo_root: str) -> list[tuple[str, str]]:
+def _is_shallow(repo_root: str) -> bool:
+    import subprocess
+    r = subprocess.run(["git", "rev-parse", "--is-shallow-repository"],
+                       cwd=repo_root, capture_output=True, text=True)
+    return r.stdout.strip() == "true"
+
+
+def check_handoff(repo_root: str) -> tuple[list[tuple[str, str]], list[tuple[str, str]]]:
     """The handoff is the first file a fresh session reads. Nothing checked it,
     and it spent eleven weeks naming a May HEAD and a merged branch.
 
-    A dangling PATH is an error: it sends the next session to a file that is not
-    there. A stale HEAD is reported as a WARN — it is misleading prose, and
-    failing a blocking gate over unrewritten prose makes the gate something to
-    route around.
+    Returns (errors, warnings) — and the split is the point.
+
+    A dangling PATH is an ERROR: it sends the next session to a file that is not
+    there, and that is mechanically true in any clone. A stale HEAD is a
+    WARNING: it is misleading prose, and failing a blocking gate over unrewritten
+    prose makes the gate something to route around. This function used to say so
+    in its docstring while returning both in one list, so every "WARN:" string it
+    produced failed a blocking check anyway. It now returns them separately.
+
+    THE SHALLOW-CLONE RULE. Both HEAD assertions are answerable only from
+    history, and CI checks out `fetch-depth: 1`, where there is none: `cat-file`
+    misses every real commit and `merge-base --is-ancestor` reports a false
+    negative. Absence of a commit from a truncated clone is a fact about the
+    clone, not about the handoff. So in a shallow clone the verdict is
+    UNDETERMINED, and it is PRINTED rather than skipped — a check that quietly
+    examines nothing is indistinguishable from one that passed on merits, which
+    this repo has now produced four separate times.
     """
     import subprocess
     rel = "sessions/handoff-next-session.md"
     path = os.path.join(repo_root, rel)
     if not os.path.exists(path):
-        return [(rel, "handoff is missing — a fresh session has no entry point")]
+        return [(rel, "handoff is missing — a fresh session has no entry point")], []
 
     text = open(path, encoding="utf-8").read()
-    out = []
+    errors: list[tuple[str, str]] = []
+    warnings: list[tuple[str, str]] = []
+    shallow = _is_shallow(repo_root)
+
     for label, pattern in HANDOFF_FIELDS.items():
         m = pattern.search(text)
         if not m:
-            out.append((rel, f"WARN: no `{label}:` line — the header format "
-                             f"changed, so nothing can check it"))
+            warnings.append((rel, f"no `{label}:` line — the header format "
+                                  f"changed, so nothing can check it"))
             continue
         value = m.group(1).strip()
         if label == "HEAD at handoff":
             ok = subprocess.run(["git", "cat-file", "-e", f"{value}^{{commit}}"],
                                 cwd=repo_root, capture_output=True).returncode == 0
             if not ok:
-                out.append((rel, f"WARN: names HEAD {value}, not a commit in this "
-                                 f"clone — the handoff describes other history"))
+                if shallow:
+                    warnings.append((rel, f"UNDETERMINED: HEAD {value} is not in this "
+                                          f"clone, but the clone is SHALLOW — history "
+                                          f"cannot answer whether it is stale"))
+                else:
+                    warnings.append((rel, f"names HEAD {value}, not a commit in this "
+                                          f"clone — the handoff describes other history"))
+                continue
+            if shallow:
+                warnings.append((rel, f"UNDETERMINED: HEAD {value} is present, but the "
+                                      f"clone is SHALLOW — ancestry is unanswerable here"))
                 continue
             anc = subprocess.run(["git", "merge-base", "--is-ancestor", value, "HEAD"],
                                  cwd=repo_root, capture_output=True).returncode == 0
             if not anc:
-                out.append((rel, f"WARN: names HEAD {value}, which is NOT an "
-                                 f"ancestor of the current HEAD"))
+                warnings.append((rel, f"names HEAD {value}, which is NOT an "
+                                      f"ancestor of the current HEAD"))
         elif not os.path.exists(os.path.join(repo_root, value)):
-            out.append((rel, f"`{label}` names {value!r}, which does not exist"))
-    return out
+            errors.append((rel, f"`{label}` names {value!r}, which does not exist"))
+    return errors, warnings
 
 
 def main():
