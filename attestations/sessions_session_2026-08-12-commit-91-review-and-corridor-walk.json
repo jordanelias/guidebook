@@ -5,7 +5,7 @@
   "doctrine_sha": "0f2f525",
   "rules_in_scope": [
     "adversarial-research",
-    "integrity-protocol",
+    "structure-auditor",
     "relational-integrity-checker",
     "cell-curator",
     "evidence-auditor",
@@ -19,7 +19,7 @@
       "status": "FIRED",
       "evidence_path": "workplan/2026-08-12-commit-91-adversarial-review.md"
     },
-    "integrity-protocol": {
+    "structure-auditor": {
       "status": "FIRED",
       "evidence_path": "workplan/2026-08-12-pipeline-walk-trial-log.md"
     },
@@ -54,7 +54,7 @@
   },
   "deviations": [
     {
-      "rule": "integrity-protocol",
+      "rule": "structure-auditor",
       "reason": "Two migration files were deleted from the scratch tree's scripts/migrations/ to escape a deadlocked queue. Data migrations are immutable once committed, so in the canonical repository this would have been an owner-gated act under guardrail 4. The deletions occurred only in the disposable scratch copy and are recorded in the trial log as Incidents A-4 and A-5; that the walk could not proceed without breaking the rule is itself reported as the finding."
     },
     {
@@ -70,7 +70,16 @@
       "reason": "The trial's stage-9 input encodes a T6-only determination as state='stated' at the flagged weak band, which is my reading of Option A as amended 2026-07-21. If the owner reads a code-only basis as 'provisional' instead, the render findings R1-R4 are unaffected but the trial's stage-9 premise changes."
     }
   ],
-  "bias_direction": "My strongest bias in this review runs toward finding the audited document wrong, because a review that confirms everything reads as having done no work, and because commit #91 is unusually well-written and therefore unusually satisfying to catch out. I have tried to correct for it by confirming loudly where it reproduced — the deep comparison, 70/70, the vacuity census, the malformed YAML, the graph_audit crash and the three unguarded writers all held exactly — and by recording that its context_map_fresh work is the best-executed part of the commit. A second bias runs the other way: the trial is my own work, and I found its results more interesting than the review's, which risks overweighting four breaks discovered in one afternoon against a document built over a full session. A third: I chose E-08 partly because I suspected the regulatory-stratum path was weak, so the walk was not a neutral sample of items. A fourth, narrower: having caught one wrong-mechanism error in myself, I may have become over-cautious in Part 4 and understated how much genuine theory the directness matrix encodes.",
-  "independent_reviewer_counterclaim": "A reviewer defending commit #91 would say the four breaks are not breaks in the sense its walk meant, because it explicitly scoped itself to whether the schema can carry a row and explicitly flagged the sanctioned write path as untested — so I tested what it said was untested and am reporting the answer as a refutation of a claim it did not make. That is a fair objection to the framing, and the honest position is that its scope note is accurate while the sentence the handoff leads with ('BREAK POINT: none') is not, and readers act on the headline. The same reviewer would add that Break 3 was triggered twice by my own authoring errors, one of which was inventing a column name, and that a pipeline is not obliged to be robust against invalid SQL; the reply is that the defect is not the rejection but the silent voiding of four correct migrations queued behind it, and that a real session will make exactly this class of mistake. On Part 4 a reviewer could argue I have understated the pipeline: determining a state and a tier basis is the hard epistemic work, value selection is downstream arithmetic, and calling the absent value stage 'the most important structural fact' overstates a gap the Opus floor may deliberately reserve for a human. I think that is partly right, which is why recommendation 9 asks for a ruling rather than a fix.",
-  "verdict": "DEVIATION-LOGGED"
+  "bias_direction": "My strongest bias in this review runs toward finding the audited document wrong, because a review that confirms everything reads as having done no work, and because commit #91 is unusually well-written and therefore unusually satisfying to catch out. I have tried to correct for it by confirming loudly where it reproduced \u2014 the deep comparison, 70/70, the vacuity census, the malformed YAML, the graph_audit crash and the three unguarded writers all held exactly \u2014 and by recording that its context_map_fresh work is the best-executed part of the commit. A second bias runs the other way: the trial is my own work, and I found its results more interesting than the review's, which risks overweighting four breaks discovered in one afternoon against a document built over a full session. A third: I chose E-08 partly because I suspected the regulatory-stratum path was weak, so the walk was not a neutral sample of items. A fourth, narrower: having caught one wrong-mechanism error in myself, I may have become over-cautious in Part 4 and understated how much genuine theory the directness matrix encodes.",
+  "independent_reviewer_counterclaim": "A reviewer defending commit #91 would say the four breaks are not breaks in the sense its walk meant, because it explicitly scoped itself to whether the schema can carry a row and explicitly flagged the sanctioned write path as untested \u2014 so I tested what it said was untested and am reporting the answer as a refutation of a claim it did not make. That is a fair objection to the framing, and the honest position is that its scope note is accurate while the sentence the handoff leads with ('BREAK POINT: none') is not, and readers act on the headline. The same reviewer would add that Break 3 was triggered twice by my own authoring errors, one of which was inventing a column name, and that a pipeline is not obliged to be robust against invalid SQL; the reply is that the defect is not the rejection but the silent voiding of four correct migrations queued behind it, and that a real session will make exactly this class of mistake. On Part 4 a reviewer could argue I have understated the pipeline: determining a state and a tier basis is the hard epistemic work, value selection is downstream arithmetic, and calling the absent value stage 'the most important structural fact' overstates a gap the Opus floor may deliberately reserve for a human. I think that is partly right, which is why recommendation 9 asks for a ruling rather than a fix.",
+  "verdict": "DEVIATION-LOGGED",
+  "reattestation": [
+    {
+      "prior_doctrine_sha": "0f2f525",
+      "new_doctrine_sha": "0f2f525",
+      "delta_ref": "workplan/2026-08-12-work-log-audit-four-directions.md",
+      "materiality": "IMMATERIAL",
+      "reason": "Four-direction audit of the session's own work log, at owner direction. Doctrine is unchanged; this re-grounds the record against two corrected figures and one disclosed gap. The log was cited as 3,865 lines and is 3,875 (my own quarantine banner invalidated the citation). '23 migrations were emitted' was wrong: 25 were emitted and 23 survived, the two missing being exactly the files deleted to escape the deadlocked queue - so the figure reported concealed the interventions logged as deviations in this attestation. Both are corrected in the merged documents. The disclosed gap is that the log covers the trial and not the review: the review's 13 factual-lens verdicts and 6 self-corrections were produced by direct shell calls whose outputs were never recorded, so by the standard the review imports from commit #91 those 19 claims are unaudited. Forward reproduction and backward traceability both passed. Also corrects an invalid rule identifier this attestation shipped with: 'integrity-protocol' is not in references/skill-registry.md, though skills/integrity-protocol_SKILL.md exists on disk. Replaced with 'structure-auditor'. The underlying drift is recorded as a finding."
+    }
+  ]
 }

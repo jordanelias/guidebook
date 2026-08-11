@@ -16,7 +16,7 @@ documents it adds. No fix executed, no migration applied to the canonical DB, no
 **Method:** the audited document's own protocol (its Part 3) turned back on it — lens-separated,
 default verdict REFUTED, CONFIRMED only on personal reproduction, four verdicts.
 **Companions:** `workplan/2026-08-12-pipeline-walk-trial-log.md` (the complete action/IO log of
-the trial, 3,865 lines) · `workplan/2026-08-12-pipeline-phase-state-map.md` (what the data looks
+the trial, 3,875 lines) · `workplan/2026-08-12-pipeline-phase-state-map.md` (what the data looks
 like at each phase and how it moves between them).
 **Doctrine SHA:** `0f2f525`.
 
@@ -268,7 +268,7 @@ identifiers in a scratch database.
 
 The walk ran in a byte copy of the repository at
 `/tmp/…/scratchpad/walk`, through `emit_data_migration.py` → `migrate_db.py`, the sanctioned
-write path. 23 migrations were emitted. **The canonical clone was never written** —
+write path. 25 migrations were emitted, of which 23 survived (two were deleted to escape the deadlocked queue — Incidents A-4 and A-5). **The canonical clone was never written** —
 `git status` clean throughout, verified at the end.
 
 E-08 was chosen for reasons that are not arbitrary: it is a real item, it is the only exemplar
