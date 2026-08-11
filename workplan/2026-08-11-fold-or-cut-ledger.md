@@ -17,14 +17,18 @@ cost without benefit. Every fold below moves in that direction.
 
 | Category | Now | After the folds | Net | Confidence |
 |---|---|---|---|---|
-| **Tables** | 66 | **57** | **−9** | high — 7 of the 9 are empty and free to move today |
+| **Tables** | 66 | **63** | **−3** | low-to-medium — **two of five folds were refuted by my own adversarial pass** (§2.1, §2.3). What survives: §2.2 (−1) and the two Part-3 cuts (−2). |
 | **Views** | 18 | **16** | **−2** | high (a further 11 need a wire-or-retire ruling) |
 | **Duplicated columns** | 48 locator columns across 3 tables | **16 in one place** | **−32** | high |
 | **Executables** | 132 | **~106** | **−26** | high for 19, medium for 7 |
 | **Skills** | 49 | **49** | **0** | high — *no skill is cuttable on any test I ran* |
 
-**The headline is not the count.** It is that **one fold is simultaneously the fix for a broken
-structural hop** (§2.1), and it is free today because all four tables involved are empty.
+**The headline is a retraction.** §2.1 originally claimed a fold that was simultaneously a fix
+for a broken structural hop. **It was wrong** — the fold would have destroyed three working
+foreign keys to create one, and the obvious alternative fails against the archived data. The
+retraction is in place, and it is the most useful thing in this document: *identical column
+shape is not identical meaning*, and I applied a structural test where a semantic one was
+needed.
 
 ---
 
@@ -50,7 +54,7 @@ readers, and mention in any governance document. **No object is cut on phase-cou
 
 ## Part 2 — The folds
 
-### 2.1 Four population-link tables → one. *This fold is also a correctness fix.*
+### 2.1 Four population-link tables → one — ~~a fold that is also a correctness fix~~ **RETRACTED**
 
 | Table | Cols | Shape | FK to `populations` |
 |---|---|---|---|
@@ -67,21 +71,44 @@ The fourth is the graded one, and it is **hop 4 of the seven-hop walk, which the
 register records as BROKEN**: *"`target_population` has no FK; recovered by a regex over prose
 (`assess_cell.py:180`); three scripts treat the column as three different types."*
 
-**So the schema already contains the fix for its own broken hop, three times over.** The three
-stage-local siblings all key population correctly. A single
-
-```
-population_links(parent_kind, parent_id, population_code REFERENCES populations,
-                 match_grade, study_population, sample_size, note, created_at, created_by_session)
-```
-
-collapses **4 tables → 1** and makes the FK on hop 4 true by construction, rather than as a
-separate migration nobody has scheduled. All four tables hold **0 rows** in both the live and the
-pre-reset database, so the migration is pure DDL with no data movement — the cheapest it will
-ever be, and it gets monotonically more expensive once determinations start being written.
-
-**Net: −3 tables. Also closes one of the two "cannot be recorded at all" legs of the project's
-constitutive claim.**
+> ## ⚠ RETRACTED 2026-08-11 — this fold was wrong, and so was its replacement
+>
+> **What I proposed:** collapse the four into one
+> `population_links(parent_kind, parent_id, population_code REFERENCES populations, match_grade, …)`,
+> on the argument that it fixes hop 4's missing FK by construction. **Net −3 tables.**
+>
+> **Why it is refuted.** A foreign key can only reference one fixed table. A `parent_id` column
+> that holds a `citation_id` on one row and a `probe_id` on the next **cannot be constrained at
+> all** — verified: SQLite rejects the mismatched row, so the constraint has to be dropped
+> entirely. The trade is therefore:
+>
+> | | Today | After the proposed fold |
+> |---|---|---|
+> | population FK | 3 of 4 tables have it | 1 table has it |
+> | parent FK | **3 real, enforced** | **0 — unenforceable by construction** |
+>
+> **I proposed trading three working foreign keys for one**, in a repository whose stated
+> problem is that its most important relationships are not schema-enforced. The three sibling
+> tables are not duplication to be collapsed; they are three correctly-keyed tables that happen
+> to share a column list. **Identical shape is not identical meaning.**
+>
+> **The obvious replacement is also wrong.** "Just add the FK to
+> `evidence_population_match.target_population`" fails on inspection of the pre-reset data:
+> **22 of its 30 distinct values would violate that FK** — they are prose, not codes
+> (*"Autistic students in school built environments"*, *"DEAF/HoH adults relying on
+> lipreading"*). The column was never used as a code column. Adding the FK while the table is
+> empty would pass trivially and silently redefine the column's meaning, so the next writer —
+> following the only precedent that exists — would immediately break it.
+>
+> **What the finding actually is.** `target_population` is not a code column missing a
+> constraint; it is a **prose column that three scripts read as three different types**. The
+> fix is a D-SCHEMA decision to split it — `target_population_code` (FK'd, nullable) plus
+> `target_population_note` (free text) — and to migrate the 64 archived rows by hand, since no
+> parser will do it. That is more work than either shortcut and it is the only version that
+> survives contact with the data.
+>
+> **Net: 0 tables. The −3 is withdrawn**; Part 0's table count is corrected from −9 to −6
+> (66 → 60).
 
 ### 2.2 Two coverage tables → one
 
@@ -103,11 +130,28 @@ databases, both duplicating concepts the parent already has columns for.
 Same shape in economics: `economics_entry_populations` is a 2-column junction named by no phase,
 on a parent with 25 columns and 5 pre-reset rows.
 
-Fold `case_study_outcomes`, `case_study_strategies`, `economics_entry_populations` into their
-parents. **Keep `case_study_populations`, `case_study_specs` and `economics_entry_specs`** — those
-are true many-to-many junctions onto the `populations` and `items` spine, and the register's
-§1.4c specifically names `case_study_specs` as the junction that would exercise the item spine
-when the 26-entry compendium is loaded. **Net: −3.**
+> **⚠ CORRECTED 2026-08-11 — the fold direction was backwards.** I proposed folding
+> `case_study_outcomes` *into* `case_studies.outcome_data`. But `case_study_outcomes` is
+> **1:N structured data** — `(metric, value, source, tier)` per outcome, with a real FK to the
+> parent — while `outcome_data` is a single TEXT column. Folding N structured rows into one
+> text blob destroys the structure and the tier grading, which is exactly the evidence metadata
+> this project exists to preserve. Same for `case_study_strategies` (N strategies per study).
+>
+> **The duplication is real; the resolution runs the other way.** Keep the child tables, and
+> **drop the parent's unstructured rival columns** — `outcome_data`, and audit `roi_data`,
+> `funding_sources`, `sources` for the same overlap. That removes the shadow store without
+> losing a key or a grade. `case_studies` is 37 columns wide precisely because prose fields
+> were added beside the structured children rather than instead of them.
+>
+> `economics_entry_populations` also survives: it carries a **real FK to `populations`**, which
+> is the constraint §2.1 just established is the scarce thing here.
+>
+> **Net: 0 tables — but −1 to −4 unstructured columns, which is the actual defect.**
+
+The remaining junctions — `case_study_populations`, `case_study_specs`, `economics_entry_specs` —
+are true many-to-many links onto the `populations` and `items` spine. The register's §1.4c names
+`case_study_specs` as the junction that would exercise the item spine when the 26-entry
+compendium is loaded. All stay.
 
 > **This makes the register's own recommendation cheaper, not harder.** §1.4c says load the
 > compendium (~26 entries) and the economics corpus as the first content work, because they are
@@ -242,10 +286,12 @@ Every fold in Part 2 touches a table that is **empty in both the live and the ar
 except the locator block (§2.5, which is DDL-only) and `search_executions.admitted_ref_ids`
 (§2.4, one column drop). There is no data migration to write for any of them.
 
-1. **§2.1 population links (4→1).** First, because it is the only one that also fixes a broken
-   hop, and because `evidence_population_match` is spine (4 phases) — every day of content work
-   makes it costlier.
-2. **§2.3 case-study and economics folds (−3).** Before loading the compendium, not after.
+1. **§2.1 — do not fold. RETRACTED.** What remains is a D-SCHEMA decision to split
+   `evidence_population_match.target_population` into a code column and a note column. Still
+   first in the ordering, because `evidence_population_match` is spine (4 phases) and the 64
+   archived rows need hand migration — but it is a decision to take, not a fold to execute.
+2. **§2.3 — do not fold. CORRECTED.** Drop the parent's unstructured rival columns instead,
+   keeping the structured children. Before loading the compendium, not after.
 3. **§2.2 coverage axes (−1)** and **§2.4 shadow store (−1 column).**
 4. **§2.5 locator block.** Needs the owner's choice of shape (table vs shared block) first.
 5. **Part 4 one-shot retirement (−16 executables).** Independent of all the above; also closes
@@ -267,3 +313,70 @@ argument DR-2026-08-06 made about migrations, applied to the schema the reset le
 Part 2; row counts from `data/guidebook.db` and `_archived/data/corpus-pre-reset-2026-08-06.db`;
 reader/writer reachability from SQL-pattern and plain-name scans over all non-archived code,
 excluding `scripts/migrations/`. Re-derive before acting — Part 1 states the method's own limit.*
+
+---
+
+## Part 7 — Adversarial review of this ledger, and the differential-code-audit question
+
+### 7.1 What the review killed
+
+Run on 2026-08-11 against this document's own claims, default verdict REFUTED.
+
+| Claim | Verdict | Test that killed it |
+|---|---|---|
+| §2.1 fold 4 population-link tables → 1, "also fixes hop 4" | **REFUTED** | A FK targets one fixed table. A polymorphic `parent_id` cannot be constrained — verified in SQLite. The fold trades **3 working parent FKs for 1 population FK.** |
+| The replacement — "just add the FK to `target_population`" | **REFUTED** | 22 of 30 distinct pre-reset values are prose, not codes. The FK would pass trivially on an empty table and break the first real writer. |
+| §2.3 fold `case_study_outcomes` into `case_studies.outcome_data` | **REFUTED, direction backwards** | The child is 1:N structured `(metric, value, source, tier)`; the parent column is one TEXT blob. The fold destroys the tier grading. Drop the parent's prose columns instead. |
+| §2.2 coverage fold, Part 3 cuts, Part 4 tooling, Part 5 skills | **SURVIVE** | `search_coverage`/`search_languages` FK only to `slugs`, which the fold preserves; the two cuts are 0-rows-in-both-databases; the tooling and skill findings were unaffected. |
+
+**Table net falls from −9 to −3.** Two of five folds were wrong, and both failed the same way:
+**I tested column shape and inferred meaning from it.** Identical shape, different semantics —
+three correctly-keyed sibling tables read as duplication; a structured child read as a
+duplicate of a prose column. The phase-multiplicity test in Part 1 is structural too, which is
+why Part 1's stated limit should be read as applying to the folds, not only the cuts.
+
+### 7.2 Is a differential code audit worth running?
+
+**Yes, but not as a style survey — and I know that because I ran one and two of its five
+dimensions dissolved on inspection.** Measured across the 132 executables, normalised to the
+scripts that actually face each decision:
+
+| Dimension | Consistency | Has a registered check? |
+|---|---|---|
+| DB path resolution (`GUIDEBOOK_DB_PATH`) | **74%** honour it, **0%** hardcode | **yes** — `db_path_env_audit.py` |
+| Read-only opens among read-only scripts | **76%** use `mode=ro` | **yes** — added 2026-08-06 |
+| Path handling (`pathlib` vs `os.path`) | 54% / 50%, **18 files use both** | no |
+| Exit convention | 83% `sys.exit`, 47% also return codes | no |
+| SQL parameter style | 39% f-string / 34% bound | no |
+
+**The pattern is the finding: every dimension with an enforcer sits at ~75%; every dimension
+without one sits at ~50%, which is indistinguishable from no convention at all.** That is the
+repo's own five-level enforcement spectrum (CLAUDE.md §2) measured from the outside, and it
+says the spectrum works.
+
+**But the last row is a warning about the audit's own output.** The f-string SQL split looks
+like a finding and is not: inspecting all 135 interpolations shows they are safe idioms —
+`UPDATE {table} SET {', '.join(sets)} WHERE ref_id = ?`, `IN ({placeholders})`, `PRAGMA
+user_version = {version}` — where identifiers are interpolated because they *cannot* be bound
+and the values are still parameterised. **A style-dispersion metric flagged a security-shaped
+problem that does not exist.** Had I reported the raw numbers, that is what would have shipped.
+
+**So the recommendation is narrow.** Do not commission a general "how consistent is our code"
+audit; its output is mostly noise requiring per-hit adjudication, and this repo has already
+recorded five occurrences of a check that looks like success while examining nothing. Commission
+instead the specific version that earns its keep:
+
+> **A convention-vs-enforcement gap detector.** For each convention the repo has *stated*
+> anywhere — in `CLAUDE.md`, `references/project-standards.md`, a skill, or a docstring — ask
+> whether a registered check enforces it. Report the stated-but-unenforced set.
+
+That is a bounded question with an actionable answer, it reuses the existing check registry
+rather than adding a register (guardrail 3), and it is the same shape as the finding that
+`run_checks.py` never reads the `deps:` field the registry has always declared. The general
+style audit answers "are we consistent?", which nobody needs. This one answers "which of our
+own rules are we not checking?", which is the question every finding in the reconciled register
+turned out to be an instance of.
+
+**Cost note, stated because the ledger is about pruning:** the detector is one script against
+the existing registry. It should not become a fourth register, and if it cannot be expressed as
+a check in `governance/check-registry.yaml`, that is evidence it should not be built.
