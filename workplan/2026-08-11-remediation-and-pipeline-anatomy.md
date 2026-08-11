@@ -67,6 +67,49 @@ survives is the one neither proposed alone.
 
 ## Part 1 — Remediation register
 
+### 1.0 The answer to the owner's question
+
+**Does the structure work, before content?** Partly — and the part that does not work cannot be
+fixed by writing content.
+
+A backward trace of the seven hops from a rendered page to the evidence beneath it, read at
+code level against the live schema, returns:
+
+| # | Hop | Verdict |
+|---|---|---|
+| 1 | rendered page → determination | PASSABLE-BUT-WEAK — the page prints `item_code` + `population_code`, never `cell_id`; recovery relies on the `UNIQUE(item_code, population_code)` constraint. `parts/` renders no determination at all. |
+| 2 | determination → governing sources | PASSABLE-BUT-WEAK — the renderer reads the FK junction; three *blocking* validators read the un-FK'd JSON; blocking H01/H02 hold the two equal, **but the only writer emits JSON only** |
+| 3 | source → the value it supports | PASSABLE-BUT-WEAK — the `item_code` FK is real, but `reasoning_doc_citations` has no `item_code`, so promotion falls back to free-text `parameter` |
+| 4 | source → population served | **BROKEN** — `target_population` has no FK; recovered by a regex over prose (`assess_cell.py:180`); three scripts treat the column as three different types |
+| 5 | source → the search that found it | PASSABLE — the junction is authoritative and `v_source_admission` returns the verbatim query in one hop. The strongest hop on the walk |
+| 6 | determination → doctrine | **BROKEN** — no doctrine column exists anywhere in the DB; `attestation.schema.json` pattern-restricts `artifact` to `.md` paths, so no attestation can name a row |
+| 7 | code value → anything | **BROKEN** — one FK (`item_code`); no `ref_id`; `spec_id` keys a table that has never existed |
+
+**DR-2026-08-06 §1 states the project's constitutive claim in four legs:** a published best
+practice must walk back to *the values it rests on*, *the sources those came from*, **the
+population it serves**, and **the doctrine that governed the judgement**.
+
+The narrow walk — page → determination → governing source → verbatim search query — **is
+possible in principle**: four hops, all declared FKs, and the SQL parses against the live schema
+today (returning zero rows, because every table is empty). That is the good news, and it is
+real.
+
+**But two of the four named legs cannot be recorded at all.** "The population it serves" has no
+key — it is free text matched by regex. "The doctrine that governed the judgement" has no
+column anywhere in the database. **No quantity of new rows fixes either. Both require a
+migration.**
+
+This is the finding that most directly answers the goal. The reset was executed because 0 of
+306 topics could show their work; a project that resumes content now would still be unable to
+show two of the four things it promises — not through neglect, but because there is nowhere to
+put them. **Both migrations are free today and get more expensive with every row written.**
+
+They are N1-adjacent but distinct, and they belong at the top of the pre-content list:
+1. Give `evidence_population_match.target_population` a real FK to `populations`.
+2. Give `evidence_cell_state` a doctrine binding (a `doctrine_sha` column, mirroring what
+   `attestations/*.json` already does for documents), or widen `attestation.schema.json`'s
+   `artifact` pattern so an attestation can name a row rather than only a file.
+
 ### 1.1 The governing finding
 
 **The clean-room reset changed the subject of every check in the repository, in one commit,
@@ -229,10 +272,16 @@ detector, which is the thing that would catch C2's bug.
 - **B4 `research_dod --all` R1** — 14 rules PASS, R1 NON-COMPLIANT: "0 searches targeted
   co1/co2 and 0 co1/co2 sources admitted." R1 is the only rule of fifteen requiring positive
   evidence, and its stated remedy — record `CO1-NOT-APPLICABLE` in `findings_note` — has
-  nowhere to live with 0 `search_executions`. **It is currently unsatisfiable without
-  fabricating a search.** Promoting `research_dod` to blocking (W6) would redden every diff
-  for a reason no diff can fix. **Method:** R1 returns `NOTHING-IN-SCOPE` on an empty batch;
-  the other fourteen already do, which is the inconsistency to remove.
+  nowhere to live with 0 `search_executions`. **Corrected:** an earlier draft called R1
+  "unsatisfiable" — it is not. `co1_src` reads `evidence_sources`, so admitting a single
+  Co-1/Co-2 source turns R1 green with no `search_executions` row at all. Only the *waiver*
+  path is genuinely unreachable. The finding survives in weaker form: R1 is **vacuous but
+  satisfiable**, and promoting `research_dod` to blocking (W6) would still redden every diff
+  until the first source is admitted. **Method:** R1 returns `NOTHING-IN-SCOPE` on an empty
+  batch; the other fourteen already do, and that inconsistency is the defect.
+  Note the ordering trap: `research_batch_dod` prints no `EXAMINED:` line, and
+  `run_checks.vacuity_failure()` hard-fails any check declaring `min_items` without one — so
+  the `EXAMINED:` line must land first.
 
 ### 1.4 Class C — real defects
 
@@ -246,6 +295,32 @@ the tamper on `if db_path:`, which tests a path *string* rather than a subject.
 **This is the cleanest available demonstration of the whole Part 1 thesis**: the invariant is
 correct, the harness is correct, and the report is still wrong, because nothing distinguishes
 "could not test" from "tested and passed".
+
+**And it costs more than the failing line.** A synthesis pass claimed `--selftest` "`sys.exit`s
+before `check()` runs, so no document is ever evaluated". **That mechanism is wrong** — the code
+exits only *if the selftest fails* (`main():389-392`), and the flag's own help says
+"mutation-test the checker itself, **then** check the real document". But the conclusion holds
+for today, by a different route, and execution settles it:
+
+```
+$ python3 scripts/audit/register_integrity_check.py --selftest ; echo $?    # the REGISTERED cmd
+SELFTEST FAILED — a tampered invariant went undetected
+1
+$ python3 scripts/audit/register_integrity_check.py ; echo $?               # plain
+PASS: I1–I5 hold across 15 cells × 6 registers (DB cross-check on)
+0
+```
+
+So the real document check **works and passes**, and the registered invocation never reaches
+it, because the empty-subject selftest short-circuits first. **Fixing C1 restores a working
+check that is currently unreachable** — which raises its priority above "tidy a confusing
+message". The distinction also matters for the fix: this needs no change to `main()`'s control
+flow, only to how the selftest classifies an untestable leg.
+
+One caveat on that passing plain run, because it is the same disease: it reports
+`(DB cross-check on)` while `evidence_cell_state` holds 0 rows, and the cross-check body is
+guarded by `if db_rows:`. The doc→DB leg is therefore skipped, silently, inside a line that
+announces it as on.
 **Method:** gate on the subject, and report `NOT-TESTABLE (subject empty)`. Then the harder
 half: the overall selftest must still refuse to report a clean pass while any leg is
 NOT-TESTABLE. "I could not test this" is not "this passed" — which is the whole thesis of §1.1.
@@ -378,6 +453,26 @@ missed by the first pass:
   — when that is the hazard that was **fixed**. The onboarding document warns about a live
   danger that no longer exists, in the same breath as naming a checker that never existed.
 **Method:** correct all three call sites to name the three real enforcers. **Gate:** none.
+
+**C10b · No blocking check covers generated render output.**
+`scripts/audit/check_rendered_docs.py:227` globs `REPO / "specs"` — the **top-level** `specs/`
+directory, which holds 2 hand-authored briefs. The 93 generated pages under `site/specs/` have
+never been in its scope.
+
+**That scoping is deliberate, not a bug.** `DR-2026-07-25-rendered-document-integrity-gate.md`
+sets the gate's subject as hand-authored pages under `specs/`, anticipates the objection "this
+is a gate for one page", and provides for new hand-authored pages entering scope automatically.
+An adversarial pass reported this as a misdirected glob; that reading is wrong and is recorded
+here so it is not re-found as a bug.
+
+**The consequence survives the correction, and is sharper than the bug would have been.** The
+only *blocking* rendered-document gate covers 2 hand-authored pages by design, and examines 0
+of them today. The 93 generated pages are covered only by the **advisory** `site_pages_fresh`.
+So generated output — the thing an actual reader sees — has no blocking coverage at all, which
+is precisely why the 12 stale pages publishing deleted determinations (C3) can ship.
+**Method:** this is the same owner ruling as C3 and C7 — settle the committed-vs-generated
+policy, then decide whether `site_pages_fresh` becomes blocking. Do not widen
+`check_rendered_docs`; its DR-defined subject is a different thing.
 
 **C11 · The most doctrinally important relationships are the ones the schema cannot enforce.**
 A sweep of every identifier-shaped column (`*_id`, `*_ids`, `*_ref`, `*_refs`, `*_code`,
@@ -578,7 +673,27 @@ Five, run against the **review**, not the work:
   repo at write time, never copied from an input document (guardrail 1).
 - **AQ5 · Correction log.** Corrections are recorded, not absorbed. §0.2 is this document's.
 
-### 3.7 Failure modes of the protocol, stated up front
+### 3.7 What this run taught about the method itself
+
+**Reviewers are far better at detecting that something is wrong than at diagnosing why.**
+Three times in this run, a pass reported a real defect with a false mechanism, and each time the
+consequence survived adjudication while the explanation did not:
+
+| Claim | Mechanism | Consequence |
+|---|---|---|
+| `register_integrity_check --selftest` never checks the document | **wrong** — it exits only if the selftest *fails* | **right** — today's failing selftest short-circuits it, and fixing C1 restores a working check |
+| `check_rendered_docs` globs the wrong directory | **wrong** — the scope is set by DR-2026-07-25 | **right** — no *blocking* check covers generated output |
+| FK constraints "fail outright" under `PRAGMA foreign_keys = OFF` | **wrong** — a differential check raises on new violations | **right** — the spectrum has no rung for DDL, so every acceptance row was mislabelled |
+
+**The operational lesson: never accept a proposed mechanism without re-deriving it, even when
+the finding is obviously correct.** A right conclusion with a wrong cause produces the wrong
+fix — and in the first row above, the wrong cause would have sent someone rewriting `main()`'s
+control flow rather than the eight lines that actually matter.
+
+This is why the adjudicator role is not ceremonial, and why AQ4 (re-derive every number at write
+time) should extend to re-deriving every *causal claim*, not just every count.
+
+### 3.8 Failure modes of the protocol, stated up front
 
 - **Antagonist theatre.** A reviewer rewarded for finding things will find things. AQ3 guards
   the empty case, not the inflated one; adjudication must be willing to reject an objection as
