@@ -110,6 +110,64 @@ They are N1-adjacent but distinct, and they belong at the top of the pre-content
    `attestations/*.json` already does for documents), or widen `attestation.schema.json`'s
    `artifact` pattern so an attestation can name a row rather than only a file.
 
+### 1.0b The structural walk — result
+
+One synthetic topic (`zz-walk-test`, `REF-99001`) was pushed through all twelve stages in a
+scratch copy of the database, alongside three deliberately illegal rows.
+
+**BREAK POINT: none. The row traversed all twelve stages.** The chain joins by key end to end,
+the foreign keys are real in the production path, and `spec_page.py` round-trips a
+determination back to REF-99001 — while honestly flagging a `stated` cell with no governing
+sources, because it deliberately reads the `cell_source_links` junction rather than the
+`governing_refs` JSON. **It is the one component that anticipated this exact failure**, and it
+is the model the rest should copy.
+
+**The verdict is not "it works". It is: the structure can carry content today, and that is the
+problem.** Enforcement is strong exactly where a foreign key happens to exist, and absent
+everywhere the evidence actually lives. Concretely, in the walk:
+
+- `tier=99` and `evidence_type='not-a-real-evidence-type'` **propagated untouched into
+  `part13.md` as a fabricated tier band "T99" in the published bibliography.**
+- The determined value itself (`value_min=1200.0`, `value_unit='mm'`) **does not render at all
+  — no generator reads those columns.** The number the whole pipeline exists to produce is
+  the one thing that does not reach the page.
+- Of three illegal rows, only one was caught: a `stated` cell whose `governing_refs` named a
+  nonexistent REF-ID, stopped cleanly by two independent blocking gates. That is the
+  anti-hallucination gate working, and it is genuinely good news.
+
+**Seven validators stayed silent, four of them blocking:**
+
+| Validator | Level | What it passed |
+|---|---|---|
+| `validate_axes` | blocking | never reads `serves_axes`; accepted `banana not even json` with 0 errors |
+| `validate_schema` | blocking | examines 20 YAML files and never opens a research table — so the Pydantic tier and enum validators never execute against a DB row |
+| `test_db_integrity` | blocking | catches `verification_status`/`metadata_quality`/`source_type`; has **zero checks on `tier` or `evidence_type`** |
+| `check_rendered_docs` | blocking | rc=0 on EXAMINED 0 (C8) |
+| migration-053 locator hierarchy | — | **no enforcer anywhere in the repo** |
+| `validate_reasoning --strict` | advisory | passed a document whose entire evidence inventory cites `REF-00000-NONEXISTENT` |
+| `metadata_integrity_audit` | advisory | printed "1/1 eligible rows lack a cross-check record (100.0%)" and returned PASS |
+
+**Two ordering defects surfaced that no static reading had found:**
+
+1. **The documented stage order is unsatisfiable.** `search_admissions.ref_id REFERENCES
+   evidence_sources(ref_id)`, so stage 4 (admission) cannot complete before stage 5 (the source
+   exists). The real order is 4a → 5 → 4b, and getting it wrong fails with a bare
+   `IntegrityError: FOREIGN KEY constraint failed` that names nothing useful.
+2. **Validation is inverted at stage 7.** The *well-formed* extraction — full locator
+   hierarchy, claim text, `full-read` provenance — was **rejected** for one wrong population
+   code, while the *malformed* one (`claimed_value='9999'`, `extraction_status='verified'`, all
+   sixteen `loc_*` columns NULL) was **accepted**.
+
+**The single highest-value fix follows directly:** point the existing Pydantic models at DB rows
+instead of only at 20 YAML files. The models are already correct — they encode the tier and
+enum vocabularies the walk violated. Wiring them to the database closes two of the four blocking
+gaps by itself, and needs no new validation logic.
+
+**Scope note, stated because it matters:** the walk did not exercise
+`scripts/emit_data_migration.py` (it writes into tracked `scripts/migrations/`), so the
+sanctioned write path itself remains untested end to end. A real topic must also pass through
+it.
+
 ### 1.1 The governing finding
 
 **The clean-room reset changed the subject of every check in the repository, in one commit,
