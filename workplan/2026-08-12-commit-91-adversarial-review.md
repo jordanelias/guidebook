@@ -553,3 +553,208 @@ retirement after D2.
 - The trial's `state='stated'` for a T6-only cell is my reading of Option A as amended
   (a T4–T6-only determination *is* rendered as weak-band best practice rather than suppressed).
   If the owner reads it as `provisional`, R1–R4 are unaffected but the trial's stage-9 input is.
+
+---
+
+## Part 6 — Assessed against a real adjudication: swept path → corridor width
+
+Added 2026-08-12 at owner direction. The owner put a substantive chain to the apparatus:
+
+> *Wheelchair swept path is better than wheelchair turning radius. Wheelchair users do not turn
+> in perfect circles. Following from that, different kinds of wheelchairs have different swept
+> paths. Finally, the swept path of the wheelchair determines the ideal corridor width — a
+> wheelchair user should be able to turn around in a corridor just like anyone else could.*
+
+This is not one claim. It is four operations, and they fail against four different parts of the
+apparatus. Assessing them is a better test of the tools than any synthetic walk, because it is
+the actual work the project exists to do.
+
+**A refinement that sharpens the assessment rather than softening the claim.** Turning around
+*in a corridor* is a rotation, and its footprint depends on drive-wheel configuration — a
+mid-wheel-drive power chair rotates near its own axis, a rear-wheel-drive chair sweeps a much
+larger envelope, and a manual chair pivots differentially. So the governing paradigm is not
+globally "swept path"; it is *the envelope of the manoeuvre the claim is about*. The schema
+records `measurement_paradigm` as a property of the **source**. **There is no field anywhere for
+the manoeuvre the claim concerns.** That absence is upstream of all four operations below.
+
+### 6.1 Operation 1 — adjudicate one measurement paradigm over another
+
+**What it requires:** a way to say "for this claim, a static turning circle is a less valid
+measurement of the demand than a rotational sweep envelope", and a mechanism that acts on it.
+
+| capability | state |
+|---|---|
+| record the paradigm | **YES** — `source_value_extractions.measurement_paradigm`, nine-value CHECK |
+| record that two values are in tension | **YES** — `contested` flag; `echo_of` for derivative values |
+| record which is *better* | **NO** — no ranking, no preference, no per-claim validity column |
+| act on it in determination | **NO** — `classify()` buckets on `tier` and `evidence_type` only |
+
+**The structural reason is worth stating precisely.** `schemas/directness.py` is the conditioning
+layer, and it has exactly three dimensions:
+
+1. **population-directness** ← `evidence_population_match.match_grade` — *was it measured on the
+   people the claim serves?*
+2. **value-directness** ← `reasoning_doc_citations.value_match` — *does the source actually say
+   this number?*
+3. **scale-directness** ← grain × claim scale — *is it the right kind of evidence for this scale
+   of claim?*
+
+The owner's argument is a **fourth dimension the model does not have: construct validity** —
+*did the measurement measure the thing the claim is about?* A static-circle study and a
+swept-path study are both `specific` grain at `population` scale, so `scale_directness` returns
+**DIRECT for both**. Two T1 sources measuring different constructs are, to every tool in the
+repository, two equally direct anchors.
+
+**Verdict: representable as an annotation, inert as a judgement.** The paradigm can be recorded
+and nothing consumes it. The trial demonstrated this — 1500 mm and 1830 mm both anchored, every
+blocking gate green, `contested` at 0.
+
+### 6.2 Operation 2 — different wheelchairs have different swept paths
+
+**What it requires:** a determination stratified by device class.
+
+`source_value_extractions.device_class` exists with a nine-value CHECK —
+`manual_self_propelled`, `manual_attendant`, `power_chair`, `scooter`, `bariatric_manual`,
+`bariatric_power`, `walker_rollator`, `mixed`, `not_device_scoped`. It is a good vocabulary and
+it is exactly the right axis for this claim.
+
+**It cannot reach a determination.** `evidence_cell_state` is keyed `UNIQUE(item_code,
+population_code)`. There is no `device_class` column and no third key dimension. A cell can hold
+one answer for `E-08 × MOB` and cannot hold "1830 mm for rear-wheel-drive power chairs, 1500 mm
+for mid-wheel-drive, 1400 mm for manual".
+
+The available escapes are all wrong:
+
+- **Coin a population per device class.** A category error — a device is equipment, not a
+  community — and precisely the umbrella-coining the 2026-07-22 work-from-axes rule and
+  `governance/functional-taxonomy.md` §3.3 exist to prevent.
+- **Use `design_scale`.** The trichotomy is `universal` / `population` / `person`. Device class
+  sits *between* population (MOB is too coarse) and person (this is not individual OT
+  co-design). **The Design Mode ladder has no rung for equipment-stratified specification**, and
+  that is a doctrinal gap, not just a schema one.
+- **Use the axis layer.** `AX-WHM` — "Wheeled movement & transfer", mechanism *"Turning,
+  clearance, transfer geometry — independent and assisted"* — is `ESTABLISHED` and is the right
+  concept. It is a single axis with no device stratification and `item_axis_links` carries only
+  `strength_band` and a `mechanism_note`.
+
+**Verdict: recordable at extraction, unrepresentable at determination.** This is the
+phase 7 → 9 drop documented in the phase-state map, and it is the boundary where the owner's
+second claim dies.
+
+### 6.3 Operation 3 — swept path determines corridor width
+
+**What it requires:** a value in one item derived from a value in another, with the dependency
+recorded so that changing the upstream value invalidates the downstream one.
+
+| capability | state |
+|---|---|
+| mark a *source-level* value as derived | **YES** — `source_value_extractions.root_type = 'derived_calculation'`, plus `root_ref_id`, `echo_of` |
+| mark a *determination* as derived | **NO** — no such column on `evidence_cell_state` |
+| record cell → cell or item → item dependency | **NO** — nothing anywhere |
+| represent the relation itself (`E-08 ≥ f(swept_path)`) | **NO** — no formula, no operator, no unit algebra |
+| invalidate downstream when upstream changes | **NO** — `derivation_sha` hashes `governing_refs + rule_version`, not upstream cells |
+
+The only cross-item construct is `connections` typed `CROSS-ITEM`, whose `connection_targets.target`
+is un-keyed `TEXT` (the trial inserted `item:E-99-DOES-NOT-EXIST` successfully), whose table
+holds 0 rows, and whose reasoning corpus `references/connection-reasoning/` holds one template
+and zero documents against a target of 245.
+
+And no value would be computed regardless: `assess_cell.py` writes `value_min`, `value_max` and
+`value_unit` as `None` unconditionally, and it is the only writer of `evidence_cell_state`.
+**There is no arithmetic anywhere in this pipeline.**
+
+**Verdict: entirely unrepresentable**, at every one of five levels.
+
+### 6.4 Operation 4 — the premise that licenses the derivation
+
+*"A wheelchair user should be able to turn around in a corridor just like anyone else could"* is
+not an empirical finding. It is a **normative premise** — a parity claim — and it is what turns a
+measured envelope into a specification. Without it, the swept path is a fact about chairs, not a
+requirement about corridors.
+
+The repository has exactly one column shaped to hold a statement like this:
+**`access_needs.design_obligation`** — 17 rows of normative prose, e.g. *"Be perceivable and
+operable without sight; text alternatives … never colour alone as a carrier of meaning."* That is
+the right shape.
+
+Two problems.
+
+1. **There is no access-need code for space to manoeuvre.** The 17 codes are `A-AT`, `A-CALM`,
+   `A-EFFORT`, `A-LOWLOAD`, `A-NOSIGHT`, `A-NOSOUND`, `A-NOSPEECH`, `A-PLAIN`, `A-PRECISION`,
+   `A-REACH`, `A-SELFCARE`, `A-SIZE`, `A-STABLE`, `A-STIMULUS`, `A-TACTILE`, `A-TIME`,
+   `A-TRIGGER`. `A-SIZE` is body size; `A-REACH` is reach. **Wheeled manoeuvring space has no
+   access-need code at all** — it exists only as the axis `AX-WHM`.
+2. **`access_needs` does not link to items.** The only tables carrying `need_code` are
+   `access_needs`, `access_need_axis_map` and `access_need_icf`. The design obligation reaches an
+   axis and an ICF anchor; it never reaches an item, a cell, or a rendered specification.
+
+Compounding both: **there is no doctrine column anywhere in the database.** That is leg 4 of
+`DR-2026-08-06 §1`'s four-leg promise, and commit #91 identified it correctly. The premise that
+licenses this derivation is exactly the kind of thing that leg was meant to carry.
+
+**Verdict: the right column shape exists, unattached to anything the claim touches.**
+
+### 6.5 The doctrinal hazard the chain exposes
+
+Suppose all four operations were implemented and the synthesis were performed. **What tier is the
+resulting corridor width?**
+
+Its input is a T1 measurement. Its derivation step is an argument. The tier system grades *how
+well evidenced* a value is, and the marker bands are:
+
+- **●** T1, Co-1, T2, Co-2, T3-clinical — "anchors outright (adjudicated evidence)"
+- **◐** T4, T5 — "standards basis, not primary evidence"
+- **○** T3-grey, T6, expert-consensus, thin base — "best available given current
+  regulation/practice, NOT academically adjudicated"
+
+A value **derived by sound argument from strong evidence** fits none of them. Rendering it `●`
+overclaims — no one measured a corridor. Rendering it `○` misdescribes it — the band means grey
+or thin, and this is neither. There is no band for *"strong evidence, plus a reasoning step that
+is the project's own."*
+
+**This is the most interesting thing the owner's chain exposes**, and it is not a bug in the
+schema — it is an unfilled position in the doctrine. It is also unavoidable: a guidebook whose
+stated purpose is "to get people to ask the right questions" will derive most of its
+specifications this way, because primary studies measure people and chairs, not corridors. The
+apparatus is built to grade *citations*. The project's actual product is *derivations from
+citations*, and derivation has no tier.
+
+### 6.6 Scorecard
+
+| operation | represent | compute | check | render | invalidate |
+|---|---|---|---|---|---|
+| 1 · adjudicate paradigm | partial (annotation only) | **no** | **no** | **no** | **no** |
+| 2 · stratify by device class | at extraction only | **no** | **no** | **no** | **no** |
+| 3 · derive corridor width from swept path | **no** | **no** | **no** | **no** | **no** |
+| 4 · attach the parity premise | shape exists, unlinked | n/a | **no** | **no** | **no** |
+
+**The apparatus can carry the evidence for this chain and cannot carry the chain.** Every one of
+the four operations is a *reasoning* step, and the twelve stages are built to move *citations*.
+That is the honest answer to "does the structure work before content": for provenance and for
+grading how well evidenced a cell is, largely yes. For the synthesis the guidebook exists to
+publish, the stages do not exist yet.
+
+### 6.7 What would close it, cheapest first
+
+Each is constructible today because every table named is empty.
+
+1. **A fourth directness dimension: construct-directness.** Add
+   `source_value_extractions.claim_manoeuvre` (or, more generally, `claim_construct`) and a
+   `construct_directness(source_paradigm, claim_construct)` function beside the existing three in
+   `schemas/directness.py`, with its doctrine table transcribed into
+   `matrix_consistency.py` so the two cannot drift. This is the operation-1 fix and it reuses a
+   pattern the repo already executes well.
+2. **A device-class dimension on determinations.** Either a third key column on
+   `evidence_cell_state` or an explicit ruling that device stratification belongs at Person
+   Mode. The second is cheaper and probably wrong — a rear-wheel-drive envelope is a population-
+   level fact about a class of equipment, not an individual assessment.
+3. **`evidence_cell_state.derived_from_cell_id` + `derivation_rule`**, with `derivation_sha`
+   extended to hash upstream cell ids so a change upstream reddens the downstream cell. This is
+   the operation-3 fix and it is the one that makes the guidebook's actual product auditable.
+4. **An access-need code for wheeled manoeuvring space**, and a `need_code` link from
+   `access_needs` to `items` — so `design_obligation` can reach a specification. Curated *from*
+   `AX-WHM`, per the work-from-axes rule, not coined as an umbrella.
+5. **A doctrine binding on determinations** — already recommended as Part 2.3, and the parity
+   premise is the concrete case for it.
+6. **An owner ruling on the tier of a derived value** (§6.5). This is D-DOCT, owner-only, and it
+   gates the honest rendering of every specification the project will publish.
