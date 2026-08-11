@@ -1,0 +1,555 @@
+# 2026-08-12 — Adversarial review of commit #91, and a content walk on corridor width
+
+**Status:** REVIEW — nothing in the repository was changed by this session other than the
+documents it adds. No fix executed, no migration applied to the canonical DB, no promotion.
+**Subject:** PR #91, merged at `356efda` — 13 commits, 8 files, +9,005 / −112.
+**Method:** the audited document's own protocol (its Part 3) turned back on it — lens-separated,
+default verdict REFUTED, CONFIRMED only on personal reproduction, four verdicts.
+**Companions:** `workplan/2026-08-12-pipeline-walk-trial-log.md` (the complete action/IO log of
+the trial, 3,865 lines) · `workplan/2026-08-12-pipeline-phase-state-map.md` (what the data looks
+like at each phase and how it moves between them).
+**Doctrine SHA:** `0f2f525`.
+
+---
+
+## Part 0 — What this review found, in one page
+
+Commit #91 is a serious piece of work and most of it survives adversarial re-derivation. Of the
+load-bearing measurements I re-ran, the great majority reproduced exactly, including the ones
+that carry its biggest recommendations. **Its central conclusion is nonetheless wrong**, and the
+trial is what shows it.
+
+The audited document concludes: *"BREAK POINT: none. The row traversed all twelve stages… the
+structure can carry content today, and that is the problem."*
+
+I ran a real item — **E-08, Corridor Clear Width**, with the seven real code values the database
+already holds — from stage 1 to stage 12, through the sanctioned write path. It did not
+traverse. **It broke four times, and three of the four breaks are in the write path the audited
+document names as the strongest component in the repository.**
+
+| # | Break | Where |
+|---|---|---|
+| 1 | A migration that violates a foreign key is **committed, ledgered, and then reported as an error** | `migrate_db.py:161-183` |
+| 2 | The word **"bootstrap"** appearing anywhere in a migration's comment header disables foreign-key enforcement for that migration | `migrate_db.py:174` |
+| 3 | Any *other* failed migration **wedges the queue permanently** — every migration behind it is silently never attempted, and the documented remedy cannot run | `migrate_db.py:150-187` |
+| 4 | **Stage 9 has no writer.** The only determination engine is a fixed-list pilot script that cannot complete a run | `scripts/assess/assess_cell.py` |
+
+The audited walk did not find these because it wrote its rows directly into a scratch database.
+Inserting a row into a table is not the same as the pipeline being able to produce it. Its own
+§1.0b records the scope limit honestly — *"the walk did not exercise
+`scripts/emit_data_migration.py`… the sanctioned write path itself remains untested end to
+end"* — and the later §1.0f closes that gap with a **one-row payload in a table with no
+downstream readers**, which is the happy path. Every break above is off the happy path.
+
+The other headline: the trial surfaced **a wrong number in the canonical database today** —
+`jurisdictional_values.value_numeric = 81.0 mm` for E-12 manoeuvring space, parsed out of the
+standard designation **"EN 81-41"** in the value text. It was found in seconds by putting three
+category-E items side by side, which is the one comparison nothing in the repository performs.
+
+---
+
+## Part 1 — The adversarial review
+
+Verdict vocabulary is the audited document's own: **CONFIRMED / REFUTED / OVERSTATED /
+UNVERIFIABLE**.
+
+### 1.1 Factual lens — re-running the measurements
+
+Every row below was re-executed on 2026-08-11 against `356efda`.
+
+| # | Claim | Verdict | What I got |
+|---|---|---|---|
+| F1 | Deep comparison: 63 of 66 tables identical, 2 exempt, `slugs` timestamps-only, VERDICT PASS | **CONFIRMED** | Reproduced verbatim, including the `slugs` line |
+| F2 | `test_db_integrity` 70/70 | **CONFIRMED** | `RESULTS: 70/70 checks passed` |
+| F3 | 5 of 28 blocking checks declare a vacuity floor | **CONFIRMED** | 28 blocking; 5 with `min_items`, 23 without — which also confirms K10's "23" |
+| F4 | 66 tables, 39 empty | **CONFIRMED** | 67 in `sqlite_master`, of which one is SQLite's internal `sqlite_sequence`; 39 empty |
+| F5 | `deps:` declared in the registry, never read by `run_checks.py` | **CONFIRMED** | `grep -n deps scripts/run_checks.py` → nothing |
+| F6 | The `governance` battery entry is malformed YAML — unquoted commas produce two junk keys and a truncated description | **CONFIRMED, precisely** | Parses to `{'deps': ['pydantic'], 'description': 'Decision protocol', 'doctrine recheck': None, 'adversarial-use.': None}` |
+| F7 | `graph_audit.py:277` dereferences `None` on an empty `connections` table | **CONFIRMED** | `TypeError: 'NoneType' object is not subscriptable`, at line 277 |
+| F8 | `session_pointer_resolvable` does not exist in the registry or in code | **CONFIRMED** | No hit anywhere under `governance/` or `scripts/`. CLAUDE.md §10 is wrong, as the handoff says |
+| F9 | Three unguarded direct writers; seven of nine siblings import `_legacy_guard` | **CONFIRMED** | Exactly `session_2026_05_11g_replay.py`, `init_database.py`, `phase_jv_appendix_a.py`; 7 importers |
+| F10 | `pip install -r requirements.txt` fails; `jsonschema` is omitted while the header claims only two dependencies | **CONFIRMED** | `ERROR: Cannot uninstall PyYAML 6.0.1, RECORD file not found` |
+| F11 | "**345 SQL migrations** reproduce the committed database, in fifteen seconds" | **OVERSTATED** | 345 `.sql` files exist (53 schema + 292 data). The rebuild applies **331** — 42 schema + 289 data — because the baseline convention skips 11 pre-baseline schema files and 3 pre-cutoff data files. The reviewable replay set is 331, not 345 |
+| F12 | `run_checks.py --all` → `PASS — 55 green, 9 advisory` | **SUPERSEDED BY ITS OWN COMMIT** | Now `56 green, 9 advisory`. The commit added `context_map_fresh`, which passes. The document states a total its own diff invalidates |
+| F13 | The replay script's payload is "64 pre-reset rows", 45 KB | **CONFIRMED (approx.)** | 45,944 bytes; I count 66 insert/update operations across seven payload keys. The 88 in `source_slug_links_to_delete_orphans_pattern` is an 88-character *string*, not 88 rows — a natural miscount the document did not make |
+
+**One additional factual finding of my own, not in the document.** The `data_migrations` ledger
+holds **314 rows**, of which **23 correspond to no migration file at all** (e.g.
+`cutover_evidence_sources_v2_2026-05-11`, `metadata_enrichment_columns_2026-05-12`). This is
+direct evidence for §1.0c's own argument that 16 scripts have written the DB outside the
+migration system — and it is a real qualification on that section's recommendation. If the
+committed binary is retired on the grounds that "the SQL migrations are the reviewable form",
+23 historical writes have no reviewable form; they survive only because migration 012's baseline
+dump froze their effects. That should be said explicitly in the D2 package.
+
+**And one hazard the document does not name.** `migrate_db.py:111` carries
+`BASELINE_DATA_CUTOFF_TS = "20260515000000"`, a hand-maintained constant that must be refreshed
+whenever a new baseline is committed. Which migrations replay is therefore decided by a literal
+in code, reconciled against the baseline file by nobody. That is a dual representation of
+exactly the class C11 catalogues, sitting inside the mechanism §1.0c proposes to make the sole
+source of truth.
+
+### 1.2 Method / logic lens
+
+**M1 — "No break point" does not follow from the walk that was run. REFUTED.**
+The claim is that a synthetic row traversed all twelve stages. It did — but stages 4, 5, 7, 8
+and 9 were traversed by direct `INSERT` into a scratch database, not by the pipeline. The
+document knows this and says so in a scope note, then draws a whole-structure conclusion from
+it anyway, and that conclusion is the first line of the handoff. Part 3 is running the
+trial that tests this claim; it broke four times.
+
+**M2 — The "free today" window argument is sound in general and has a counter-example. OVERSTATED.**
+The argument — every migration is cheapest with the tables empty — is correct for the two
+migrations §1.0 names, and I verified both are constructible today. But **empty is not
+neutral**, and the trial found the case that proves it: `assess_cell.py:426-429` computes the
+next gap id as `max(existing)+1` with `default=0`, so with `gaps` at zero rows it returns
+`GAP-1`, and `schemas/evidence_state.py:164-169` requires three or four digits. **The clean-room
+reset broke the determination writer.** Before the reset the counter was in the three hundreds
+and produced valid ids. The document's framing — empty state as pure opportunity — misses that
+emptiness is also a state the code was never tested in, and the failure is invisible precisely
+because nothing runs.
+
+**M3 — The binary-retirement recommendation is well-argued and its blocker is understated. CONFIRMED with a caveat.**
+§1.0c's case is strong and the measurements behind it reproduce. The caveat is F11 plus the 23
+ledger-only migrations: after retiring the blob, the rebuilt DB is defined by 331 replayable
+files plus a hand-maintained cutoff constant, and 23 historical writes exist only inside a
+baseline dump. That is still far better than an opaque binary. It should be stated in the
+proposal rather than discovered afterwards.
+
+**M4 — §0.2 is titled for a stronger claim than it makes. OVERSTATED (presentational).**
+The heading is "Correction log — what the antagonist pass **killed**", and the preamble says
+"**Four** of this document's own first-draft proposals were killed". The table lists **eleven**
+rows, of which four are FATAL, one REFUTED, and six OVERSTATED — that is, six were corrected,
+not killed. The session record and handoff both then quote "eleven … corrected or killed",
+which is right. The document's own front matter undersells and mislabels its best feature.
+
+**M5 — Structural degradation in the deliverable itself. CONFIRMED.**
+Heading levels are consistent as `### 2.1` … `### 2.9` for stages 1–9, then collapse: stage 10
+onward emits bare `## (a) Tools, tables, methodology` and two `# STAGE 11` / `# STAGE 12` H1s
+inside a document whose H1 is the title. In a 6,775-line document that is the difference between
+a navigable outline and a wall.
+
+### 1.3 Vacuity lens — applied to the commit's new apparatus
+
+**V1 — `context_map_fresh` is honestly built and honestly registered. CONFIRMED.**
+It passes at HEAD, it is advisory, it declares `min_items: 1`, and the registry note's
+justification for that floor ("the subject is one file that always exists, so an empty subject
+is a real failure and not a ratified-empty state") is exactly the distinction the repo
+adjudicated on 2026-08-06. The three defects the commit message says were caught in the
+generator before it shipped — the `HEAD` sha, `DELETE FROM` counted as a writer, set-iteration
+key order — are all real classes of defect and all genuinely absent from the shipped file. This
+is the best-executed part of the commit.
+
+**V2 — `register_integrity_check` still reports `SELFTEST FAILED`. CONFIRMED, consistent with the document.**
+`--all` shows `**SILENT — MUTATION MISSED**: COMPLETENESS: a whole cell section deleted`. The
+document's correction log item 11 settles this by experiment as an empty subject rather than a
+logic bug, and item 9 records that at HEAD no document is evaluated. Both hold. Worth noting
+that the check therefore reports a red selftest on every run for a reason a reader cannot infer
+from the output.
+
+**V3 — `site_pages_fresh` lists `site/specs/e-08.html` as stale.** Confirmed, and directly
+relevant: the corridor page in the repository does not match what the generator produces from
+the current database.
+
+### 1.4 Doctrine lens — the segments the session left unreviewed
+
+The session record states that stage segments **1–3 and 7–9 were never doctrine-reviewed** and
+should be assumed to carry similar defects. I ran that pass. It does not need to be inferred —
+the trial exercised those exact stages, and the doctrinal defects are in the code, not the prose.
+
+**D1 — Stage 8 is where doctrine is least defended, and the document understates it.**
+`evidence_population_match.target_population` has no key. The document says so. What it does not
+say is *what shape the un-keyed value takes*. I inserted `WHEELCHAIR-USERS-GENERALLY` and it was
+accepted — a broad umbrella of precisely the kind `governance/functional-taxonomy.md` §3.3, the
+2026-07-22 work-from-axes rule and `DR-2026-07-22-work-from-axes` prohibit. Worse, it is
+**silently ignored** rather than rejected: `assess_cell.py:180` attributes a match by
+`re.search(rf"\b{population}\b", target, re.I)`, so a string containing no population code
+matches nothing and reads as *absent* rather than as *malformed*. The one column that most needs
+the taxonomy's discipline is the only one that enforces none of it, and its failure mode is
+invisibility.
+
+**D2 — Stage 9's marker band has no renderer at all.** Covered in Part 3; the short form is
+that Option A's flagged weak band `○` is required for a code-consensus determination, and the
+rendered page carries no `●`, `◐` or `○` anywhere.
+
+**D3 — Co-1 co-primacy: the document's finding is right and its remedy is available.**
+`evidence_type='co1' ⇒ tier=1` has no CHECK. I confirm `validate_source_co1_fields()` scans
+`data/sources/*.yaml`, which does not exist. The remedy is cheap and the document does not name
+it: this is a one-line table CHECK, in the `D` enforcement rung the document itself proposes
+adding to CLAUDE.md §2's spectrum. With `evidence_sources` at zero rows it is constructible
+today with no backfill.
+
+### 1.5 Cross-artefact consistency
+
+| # | Finding | Verdict |
+|---|---|---|
+| X1 | `sessions/handoff-next-session.md` header still reads `HEAD at handoff: 804a4bf` and `PR: #91 (open)`; the final commit is `006a8e8` and the PR is merged | **CONFIRMED** — the handoff was edited by `006a8e8` without updating its own header |
+| X2 | The session record cites `attestations/sessions_session_2026-08-11-structural-integrity-audit.json` | **CORRECT** — that is the file that shipped |
+| X3 | The commit message for `006a8e8` says "doctrine passes complete"; the handoff it ships still lists "Doctrine-lens passes on stage segments 1–3 and 7–9" as outstanding | **NOT A CONTRADICTION** — the completed passes are on 4–6 and 10–12, and both texts say so. Reads as one on a skim; worth a clause |
+
+---
+
+## Part 2 — The questions the handoff raises
+
+### 2.1 The one question it puts to the owner directly
+
+> *"if the intent is that `site/` shows only determined cells and coverage lives elsewhere, the
+> fix is wrong and the doctrine text needs amending instead."*
+
+**The premise is false, so the question does not need answering as posed.** §1.0h says a
+population linked to an item but holding no determination is "absent from the rendered table
+entirely — not marked thin, not marked pending, not there."
+
+I rendered E-08 with thirteen linked populations and determinations for two. **All thirteen
+render**, in an `Applicable populations (13)` table drawn from `item_population_links`, each with
+its applicability. LPA, BLIND, DEM and the rest are present on the page. They are absent from the
+*determinations* table, which is correct — they have no determination.
+
+So the erasure §1.0h names is not happening. What *is* happening is worse and different, and
+Part 3 documents it: the determination that exists renders **without its value, without its
+evidence marker, without its governing sources, and — for the pending cell — without its gap
+link**. The populations survive; everything that would let a reader check the claim does not.
+
+**Recommendation:** withdraw §1.0h as stated, keep its doctrinal reasoning, and re-aim it at the
+four render gaps in Part 3.4. Do not amend the doctrine text; the doctrine is right and the
+renderer is behind it.
+
+### 2.2 The decision table (D1 / D2 / deep gate / binary DB)
+
+The sequencing logic holds and I would not change it. Two amendments:
+
+- **D2 should absorb F11 and the 23 ledger-only migrations** before it is ruled on. The
+  exemption question is larger than `url_verification_runs`: it is "what fraction of this
+  database's history exists as reviewable SQL", and the honest answer is 331 files plus a
+  baseline dump plus a hand-maintained cutoff constant.
+- **The deep-gate promotion should be paired with a fix to `migrate_db.py`'s FK handling**, not
+  just with D2. Promoting `migration_reproducibility_deep` closes the *fabrication* hole. It does
+  nothing about Break 1, where a foreign-key violation is committed and ledgered — because after
+  that commit, the rebuilt DB and the committed DB agree. They agree on the bad row.
+
+### 2.3 The two "free today" migrations
+
+Both verified constructible. `evidence_population_match` is at 0 rows, so the FK on
+`target_population` can be added with no backfill and no orphan sweep. `evidence_cell_state` is
+at 0 rows, so a `doctrine_sha` column is free. **Do both.** The trial gives the population FK a
+sharper justification than the document's: without it, the column accepts umbrellas that
+doctrine prohibits, and they fail silently rather than loudly.
+
+### 2.4 The three no-decision items
+
+All three verified real (F5, F7, F9) and all three should ship. I would add a fourth of equal
+cost and greater consequence: **`migrate_db.py`'s FK check must run before `commit()`, not
+after.** It is a re-ordering of four lines.
+
+---
+
+## Part 3 — The corridor-width walk
+
+Full action/IO log: `workplan/2026-08-12-pipeline-walk-trial-log.md`. Data-state-per-phase:
+`workplan/2026-08-12-pipeline-phase-state-map.md`.
+
+### 3.0 Method and evidentiary status
+
+**This is a structural trial, not a research batch.** The values are copied from
+`jurisdictional_values` rows the repository already holds for E-08; they were not independently
+re-retrieved, no DOI was pre-checked, no locator re-verified. Under R3/R9/R10 **nothing in the
+walk is admissible as evidence** and none of it may be promoted. `REF-9xxxx` are trial
+identifiers in a scratch database.
+
+The walk ran in a byte copy of the repository at
+`/tmp/…/scratchpad/walk`, through `emit_data_migration.py` → `migrate_db.py`, the sanctioned
+write path. 23 migrations were emitted. **The canonical clone was never written** —
+`git status` clean throughout, verified at the end.
+
+E-08 was chosen for reasons that are not arbitrary: it is a real item, it is the only exemplar
+wired in `index.html`, and it carries seven real code values, every one `tier=6`,
+`is_code_minimum=1`. That makes it the exact case where Option A bites.
+
+### 3.1 The four breaks
+
+**Break 1 — the foreign-key guard is a post-commit alarm.**
+`migrate_db.py:161-183` runs: `PRAGMA foreign_keys = OFF` → `executescript(sql)` → insert the
+ledger row → **`conn.commit()`** → `PRAGMA foreign_keys = ON` → `foreign_key_check` → raise. The
+`except` calls `conn.rollback()`, which by then rolls back nothing.
+
+Observed: a `search_admissions` row referencing a nonexistent source. Exit code 1, a traceback,
+`ERROR: 1 new FK violations` — and `search_admissions` 0 → 1, `data_migrations` 318 → 319. The
+operator is told the migration failed. The row is in the database and the ledger says it was
+applied.
+
+**Break 2 — the word "bootstrap" disables foreign-key enforcement.**
+`migrate_db.py:174`: `is_bootstrap = "BOOTSTRAP" in body[:500].decode(...).upper()`. When true,
+FK violations are downgraded from `ERROR` to `WARNING` and the migration is accepted with exit
+code 0. `emit_data_migration.py` writes the session name and the `--summary` string into a
+comment header inside those first 500 bytes. I re-submitted the identical violating insert,
+changing only the summary wording to *"bootstrap the trial admissions table"*. It was accepted.
+**Whether the database enforces referential integrity is decided by the prose a session types
+into `--summary`.** It is documented nowhere and `emit_data_migration.py` does not warn.
+
+**Break 3 — one failed migration voids every migration behind it.**
+Twice, from two independent authoring mistakes. A migration that fails for any reason other than
+an FK violation writes no ledger row, so it stays pending; `apply_data_migrations` iterates in
+timestamp order and re-raises on the first failure. Four correct migrations behind it were
+emitted, queued, and **never attempted**, while the transcript recorded apparent progress.
+
+Two consequences. First, **the documented remedy cannot execute**: "fix forward with a new
+compensating migration" is impossible when the compensating migration is queued behind the
+failure. All three available escapes — delete the file, edit the file, hand-write the ledger row
+— break a stated rule. I took the first, twice, and recorded it as a deviation. Second, the
+error names the *wrong* migration: a session that emits a migration, runs the applier, and reads
+an error about a file from two stages ago has every reason to think its own write is fine.
+
+The asymmetry is the sharp part. **The failure mode that corrupts data lets the queue proceed;
+the failure mode that writes nothing stops everything.**
+
+**Break 4 — stage 9 has no writer.**
+`scripts/assess/assess_cell.py` is the only determination engine. Its cells are a module-level
+literal, `PILOT_CELLS`, holding seven hardcoded `(item, population, slug)` triples — so the
+`item_bpc_links` bridge is never consulted, the slug is supplied by hand, and **E-08 × MOB
+cannot be reached**. Then the run aborts anyway, on `GAP-1` (see M2).
+
+*A correction to my own first pass:* I attributed the abort to the retired population code `NEU`
+in `PILOT_CELLS[6]`. The traceback shows it dying at `PILOT_CELLS[0]` on the gap-id pattern. My
+conclusion held and my mechanism was wrong — which is the failure the audited document's Part 3
+§3.7 names as its main methodological lesson, recurring inside a review of that document, on the
+first prediction I made without reading the traceback. The `NEU` entry is a real latent defect;
+the run never reaches it.
+
+### 3.2 What the render actually does
+
+With the determinations hand-written (the only remaining route), `build_site.py --only E-08`
+exits 0 and produces a page that gets several hard things right:
+
+- all thirteen populations, with applicability;
+- a determinations table carrying **State**, **Tier basis**, **Code floor only**, **Regulatory
+  stratum only** and **Falsification condition** — so the Option A flag *does* have a reader,
+  and it rendered `yes`;
+- an honest-banner fallback where a determination has no governing sources.
+
+And four things wrong:
+
+| # | Missing | Why it matters |
+|---|---|---|
+| R1 | **The value.** The determinations table has no column for `value_min`/`value_max`/`value_unit`. `1200` and `1500` appear on the page only inside the free-text falsification condition, and inside the item's own title string | The number the pipeline exists to produce never reaches the page as a value |
+| R2 | **The evidence marker.** No `●`, `◐` or `○` anywhere. Option A requires a T6-only determination to render at the flagged weak band `○`; `tier-system.md` §5 and CLAUDE.md §6 say unmarked is an error | The doctrinal band system has no renderer |
+| R3 | **The gap link.** The DEAFBLIND cell renders `pending` with em-dashes. `GAP-901`, which it points to, does not appear, and neither does `[BEST-PRACTICE-PENDING]` | Doctrine requires the pending token plus a gap link |
+| R4 | **The governing sources.** Seven refs in `governing_refs`; zero rows in `cell_source_links`; the renderer reads the junction, so the page states the determination has **no governing sources** | The honest banner makes a false statement — C11 confirmed, with the sting that the honesty mechanism is what misreports |
+
+R4 deserves emphasis. `spec_page.py`'s own comment says the junction exists because the JSON
+array meant "every page it produced cited nothing at all while presenting a confident
+determination". The junction fixed the reader. Nothing fixed the writer, so the first real
+determination reproduces the original defect through the new mechanism.
+
+### 3.3 Trial B — turning radius and swept path
+
+**These are not two opinions about one number. They are two measurement paradigms for one
+demand.** A static turning circle is the diameter a chair rotates within, stationary. A swept
+path is the envelope traced while moving through a turn, and varies with approach angle, speed,
+device class and technique. A value from one is not commensurable with a value from the other
+without stating which question is being asked.
+
+**The schema knows this.** `source_value_extractions` carries `measurement_paradigm` with a
+CHECK vocabulary including `static_turning_circle`, `swept_path_dynamic`, `static_clearance`
+and `anthropometric_percentile`, plus `device_class`, `root_type`, `echo_of` and a `contested`
+flag. This is the most sophisticated part of the data model.
+
+**Nothing reads it.** I filed two T1 clinical sources, one per paradigm — 1500 mm static circle,
+1830 mm dynamic swept path, same parameter, same population, same item. Then:
+
+- `classify()` in `assess_cell.py` buckets sources by `tier` and `evidence_type` **and nothing
+  else**. Grepping the whole file for `measurement_paradigm`, `device_class`, `claimed_value`,
+  `contested` or `echo_of` returns only comments. The engine never opens
+  `source_value_extractions` at all.
+- Both sources land in `b["t1"]` and both become anchors. 1500 and 1830 are not reconciled,
+  ranked or flagged — they are **counted**.
+- `test_db_integrity` (blocking), `validate_evidence_state` and `pmp_audit` all pass with the
+  contradiction in place. A single `GROUP BY` makes it visible: `n_values 2, n_paradigms 2,
+  lo 1500.0, hi 1830.0, flagged_contested 0`.
+
+### 3.4 Connecting the concepts, and testing them against each other
+
+I recorded the real incompatibility as a connection: *a corridor built at E-08's 1200 mm minimum
+cannot accommodate either turning value, so a wheelchair user can enter a compliant corridor and
+be unable to turn around in it.*
+
+- It stores as prose in `connections.description`. There is **no numeric representation** of
+  "1200 < 1500" — no operator, no unit, nothing to evaluate.
+- `connection_targets.target` is `TEXT NOT NULL` with **no foreign key**. I attached
+  `item:E-99-DOES-NOT-EXIST` alongside the two real items and it was accepted.
+- `references/connection-reasoning/` holds one file, `_template.md`, and zero real documents
+  against a workplan target of 245.
+
+**And nothing compares two items to each other.** The comparison axes that exist are:
+
+| axis | mechanism | state |
+|---|---|---|
+| population × population, **within one item** | `conflicts` (`item_code`, `pop_a`, `pop_b`), `cross-population-conflict-mapper` skill, `references/conflict-matrices/*.md` | schema real; table **0 rows**; matrices are markdown, unlinked to the DB |
+| one item over time | `spec_value_probes`, `progressive-measurement` skill, `pmp_audit.py` | schema real; table **0 rows** |
+| one item across eight audit steps | `item_audit_pipeline.py` — signature `--item I-01`, strictly singular | wired; `item_audit_runs` **0 rows** |
+| item × item | `connections.connection_type='CROSS-ITEM'` | **0 rows**, un-keyed target, no writer, no reasoning docs |
+| item consolidation | `item-consolidation-analyzer` skill | merges/splits redundant items — a *taxonomy* operation, not value reconciliation |
+
+`items.category` is used for grouping in renders and for the `A-01…K-NN` code space. **It is
+never a comparison scope.**
+
+**What that costs, measured.** One query putting E-04, E-08 and E-12 side by side returned:
+
+```
+E-12 | Entrance Landing and Manoeuvring Space… | ISO | 81.0 | mm
+```
+
+`value_text` reads *"Min. Platform (W×D): References EN 81-41; Notes: Defers to regional
+standards"*. **The numeric extractor pulled `81` out of the standard designation "EN 81-41".**
+A physically absurd millimetre value sits in the canonical database, presented as a
+manoeuvring-space dimension, and the first cross-item comparison anyone ran found it.
+
+A second observation from the same query, flagged for owner review rather than asserted as a
+defect: E-12's six jurisdictional values are all **platform-lift** specifications (ADA §410 /
+ASME A18.1, BS 6440, EN 81-41, AS 1735.12) while the item is named *Entrance Landing and
+Manoeuvring Space for Power Wheelchair Users*. "Min. Platform (W×D)" for a lift is not
+manoeuvring space. If that binding is wrong, E-12's values cannot be compared with E-08's as
+like quantities at all.
+
+**A third, which no process would surface.** E-08's own title asserts **≥1200 mm**.
+`references/conflict-matrices/CORRIDOR-W.md` — an Opus disposition dated 2026-03-30 — rules that
+DEAF signing pairs require **≥2440 mm** and directs that this be specified as **Universal Mode**.
+Same parameter, factor of two, coexisting for over four months. The matrix is markdown; the item
+title is a database string; no check reads both.
+
+---
+
+## Part 4 — How the tools understand best practice
+
+This answers four questions directly, because the trial produced the evidence for them.
+
+### 4.1 Do the tools distinguish code-derived best practice from academically-derived best practice?
+
+**Yes, and the distinction is genuinely encoded — more carefully than most of the apparatus.**
+
+`schemas/directness.py` models a source by its **grain** and a claim by its **design scale**, and
+`scale_directness(grain, scale)` returns a conditioning verdict.
+`scripts/audit/matrix_consistency.py` transcribes the doctrine table and diffs it against the
+code, so the two cannot drift silently:
+
+| source grain | universal | population | person |
+|---|---|---|---|
+| `code` (T4/T5/T6 — standards, national frameworks, codes) | **DIRECT** | **NON-ANCHORING** | **NON-ANCHORING** |
+| `aggregate` (SR/meta-analysis; Co-2) | ADJACENT | **DIRECT** | DOWN-WEIGHTED |
+| `specific` (T1 clinical; Co-1; grey) | ADJACENT | **DIRECT** | **DIRECT** |
+
+That table is the answer in one object. **A code value is DIRECT evidence for a Universal-Mode
+claim and NON-ANCHORING for a population claim.** A code tells you what a jurisdiction decided to
+require of everyone; it does not tell you what any population needs. Academic and Co-1 evidence
+is the reverse: DIRECT at population and person scale, merely ADJACENT at universal.
+
+So no, they are not the same, and the model's reason is precise: not "codes are worse", but
+**codes answer a different question**, and using one to answer the other is a grain mismatch.
+
+Downstream, `assess_cell.py` carries this into the determination: a T4–T6-only basis sets
+`regulatory_stratum_only = 1`, `code_floor_only = 1` where T6-only, and stamps
+`tier_basis = 'T6-only(regulatory_stratum_only)'`. The `v_best_practice` view then excludes those
+cells from best practice outright.
+
+### 4.2 Is consensus the same as best practice?
+
+**No — and this is the sharpest thing the doctrine says.**
+`governance/mission-and-epistemics.md` §2, as amended 2026-07-21:
+
+> *Convergence is informative (it tells us multiple jurisdictions adopted a value) but is not
+> itself strong evidence: the jurisdictions may be wrong together, or reading from a shared
+> pre-evidence floor that none has updated — which is exactly why the claim sits at the weak
+> band, not why it is excluded.*
+
+Seven jurisdictions agreeing is seven observations of **what regulators decided**, and if they
+copied one another, or copied a common ancestor, it may be one observation wearing seven hats.
+E-08 is a live illustration: 915, 1000, 1200, 1200, 1500, 1500 mm across seven codes is not
+convergence at all — it is a 64% spread that the phrase "code consensus" would conceal.
+
+The roles consensus does play are three, and they are different from each other:
+
+1. **Regulatory convergence (T4–T6)** — the weak band `○`. Anchors "best practice as currently
+   known", **only when flagged**, never unflagged and never above `○`.
+2. **Synthesis consensus (T2)** — a systematic review or a named-organisation evidence-based
+   standard. Full band `●`. The move is aggregating *primary evidence*, not aggregating
+   *decisions*.
+3. **Professional-clinical consensus (Co-2)** and **community consensus (Co-1
+   `dpo_research` / `advocacy_position`)** — co-primary, full band, and by CRPD Art. 4.3 Co-1 is
+   co-primary with T1, not subordinate to it.
+
+The word "consensus" covers all four. The tier system's entire job is to keep them apart.
+
+### 4.3 So how *will* the pipeline adjudicate turning radius against swept path?
+
+**On the evidence of the trial: it will not, at three levels.**
+
+1. **Paradigm.** The distinction is recorded in `measurement_paradigm` and read by nothing. Two
+   T1 sources measuring different things are two anchors.
+2. **Value.** `assess_cell.py:557-570` writes `value_min, value_max, value_unit` as
+   `None, None, None`, unconditionally, and it is the only writer of `evidence_cell_state`.
+   **There is no code anywhere in the repository that goes from N extracted values to one
+   determined value.** The pipeline determines a *state* — `stated` / `provisional` / `pending` /
+   `not_applicable`, on a tier basis — which is a real and carefully built judgement. It never
+   determines a *number*. That step exists only as prose a human writes into the BPC synthesis,
+   and as the parenthesis in the item's title.
+3. **Cross-item.** Nothing compares two items (§3.4).
+
+This is, I think, the most important structural fact the two trials establish, and it reframes
+the audited document's governing question. "Does the structure work before content?" assumes the
+structure's job is to carry a determination. For *state* it largely can. **For the value, there
+is no stage** — not a broken one, an absent one. Twelve stages carry evidence to a judgement
+about how well-evidenced a cell is, and then the number is written by hand.
+
+Which is defensible! Value determination may be exactly the judgement that should stay human,
+under the Opus floor. But if so it should be *named as a deliberate boundary* in the pipeline
+contract, with the human step as a first-class stage that has an input contract, an acceptance
+condition and an attestation — rather than appearing as three `None`s in a column list.
+
+---
+
+## Part 5 — Recommendations, in the order I would take them
+
+**No decision required, and cheap:**
+
+1. **Move the FK check before `commit()` in `migrate_db.py`.** Four lines. Closes Break 1.
+2. **Delete the `is_bootstrap` prose bypass**, or key it to an explicit `--allow-fk-violations`
+   flag that must be typed by a human. Closes Break 2.
+3. **Give `migrate_db.py` a quarantine path** — `--skip <id>` recording an abandonment row, or a
+   `migrations/failed/` directory — so a failed migration cannot void the queue behind it, and
+   print `N migrations not attempted` when it aborts. Closes Break 3.
+4. **Fix `next_gap_id`** to zero-pad to three digits. One line. Unblocks the determination writer.
+5. The handoff's existing three: guard the three unguarded writers; wire `deps:`; fix the
+   `graph_audit.py:277` crash. Plus repair the malformed `governance` battery YAML.
+
+**Needs a decision, and the trial sharpens it:**
+
+6. **The two free migrations** — population FK, doctrine binding. Do both now.
+7. **A `CHECK` for Co-1 co-primacy** (`evidence_type='co1' ⇒ tier=1`), free at 0 rows.
+8. **Render the value, the marker band, and the gap link** (R1–R3), and **make `assess_cell.py`
+   write `cell_source_links`** (R4). These are implementing ratified doctrine.
+9. **Rule on whether value determination is a machine stage or a human stage.** If human, write
+   it into `governance/pipeline-contract.yaml` as a stage with an acceptance condition. This is
+   the D-METH question the trials expose and it is upstream of most of the rest.
+10. **Correct the E-12 ISO `81.0 mm` row**, and rule on whether E-12's platform-lift values
+    belong to that item at all.
+11. **Reconcile `CORRIDOR-W.md`'s ≥2440 mm against E-08's ≥1200 mm title.** Two stated values for
+    one parameter, four months apart, neither aware of the other.
+
+**Deferred, unchanged from the audited document's own sequencing:** branch protection alone in
+its own window; the deep-gate promotion paired with D2 *and* with recommendation 1; the binary
+retirement after D2.
+
+---
+
+## Residual uncertainty
+
+- `[UNCERTAIN: whether E-12's jurisdictional values were always platform-lift specifications]` —
+  I read the six rows and their `standard_name` fields; I did not trace the migration that
+  wrote them or the session that decided the binding.
+- `[UNCERTAIN: whether any renderer other than spec_page.py drops linked populations]` — §1.0h's
+  claim is refuted for `spec_page.py`, which is the live generator for `site/specs/`. I did not
+  test `population_page.py`, `room_page.py` or `generate_parts.py` against the same state.
+- The 23 ledger-only `data_migrations` rows: I established that they exist and that they do not
+  affect reproducibility. I did not trace what each one did.
+- The trial's `state='stated'` for a T6-only cell is my reading of Option A as amended
+  (a T4–T6-only determination *is* rendered as weak-band best practice rather than suppressed).
+  If the owner reads it as `provisional`, R1–R4 are unaffected but the trial's stage-9 input is.
