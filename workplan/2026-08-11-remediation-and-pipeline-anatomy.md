@@ -13,7 +13,21 @@
 
 ## Part 0 — What this is, and what it got wrong
 
-### 0.1 Scope
+### 0.1 Scope and governing question
+
+**The owner's stated goal is to "ensure that our structure actually works before we do
+content."** That sets the bar for this document: description is not the deliverable, and a
+defect list is not an answer. The question is whether the machine can carry a row from topic
+creation to a rendered, walkable claim — and the only honest way to answer it is to try.
+
+So Part 2 is validated by an **end-to-end structural walk**: one synthetic topic pushed through
+all twelve stages in a scratch copy of the database, recording at each stage whether the insert
+was accepted, which validators fired, and whether the row remained reachable from the previous
+stage. Three deliberately illegal rows are pushed alongside it, because **a gate that passes a
+bad row is worse news than a gate that blocks a good one.** §2.13 reports the result.
+
+This is the cheapest moment such a test will ever have: the reset emptied the corpus, so a
+synthetic walk collides with nothing and every table starts from a known state.
 
 Three parts:
 
@@ -224,10 +238,14 @@ detector, which is the thing that would catch C2's bug.
 
 **C1 · `register_integrity_check --selftest` reports a missed mutation.**
 `**SILENT — MUTATION MISSED**: COMPLETENESS: a whole cell section deleted`.
-**Causally tested, not merely reproduced:** an adversarial pass copied the DB to a scratch
-path, replayed the pilot backfill (7 rows), and the mutation **fired**, with the whole selftest
-passing. So this is emptiness, not a logic bug — the completeness arm reads `evidence_cell_state`
-(0 rows) and the selftest gates the tamper on `if db_path:` — a path *string*, not a subject.
+**Settled by experiment, twice, independently.** Two adversarial passes each copied the DB to a
+scratch path and populated `evidence_cell_state` with the 15 pilot rows; the mutation then
+**fired**, the selftest reported **12/12** and exited 0. So this is an empty subject, not a
+logic bug — the completeness arm reads `evidence_cell_state` (0 rows), and the selftest gates
+the tamper on `if db_path:`, which tests a path *string* rather than a subject.
+**This is the cleanest available demonstration of the whole Part 1 thesis**: the invariant is
+correct, the harness is correct, and the report is still wrong, because nothing distinguishes
+"could not test" from "tested and passed".
 **Method:** gate on the subject, and report `NOT-TESTABLE (subject empty)`. Then the harder
 half: the overall selftest must still refuse to report a clean pass while any leg is
 NOT-TESTABLE. "I could not test this" is not "this passed" — which is the whole thesis of §1.1.
@@ -298,12 +316,111 @@ owner. Widen *after* C3 is ruled, not before, or the redness lands on an unratif
 
 **C8 · `check_rendered_docs`, blocking, certifies nothing.** See §1.1. **Method:** part of A4.
 
+**C8b · The enforcement spectrum has no rung for schema constraints — so every acceptance
+condition in this repo has been mislabelled, in both directions.**
+CLAUDE.md §2 defines five levels: text rule → audit script → CI non-blocking → CI blocking →
+pre-commit hook. **A SQLite `CHECK`, `UNIQUE` or `FOREIGN KEY` is none of them.** Two
+independent adversarial passes, working on different pipeline segments, arrived at this
+finding separately — which is the strongest signal available here that it is real.
+
+The consequence runs both ways, and the second direction is the dangerous one:
+
+- **`CHECK` and `UNIQUE` are stronger than the spectrum can express.** SQLite enforces them at
+  write time on every connection, including a migration. Labelling one "level 2 audit script"
+  understates a constraint that cannot be bypassed at all.
+- **`FOREIGN KEY` is weaker than it looks.** SQLite leaves FK enforcement **off** per
+  connection unless `PRAGMA foreign_keys=ON`, and `scripts/migrate_db.py` sets it explicitly
+  `OFF` (lines 164, 251) before every migration script. A `REFERENCES` clause in the DDL
+  therefore does not, by itself, stop a migration writing an orphan.
+- **But FK constraints are not unenforced, and saying so would be its own error.**
+  `migrate_db.py:162-183` runs a *differential* check: snapshot `PRAGMA foreign_key_check`,
+  disable FKs for the bulk load, re-enable, diff the violation sets, and raise
+  `sqlite3.IntegrityError` on **new** violations. Three caveats belong with that: a
+  pre-existing violation baseline is permanently grandfathered (the code comments it as ~18),
+  any migration whose first 500 bytes contain `BOOTSTRAP` downgrades the failure to a
+  warning, and its CI reach is indirect — through the blocking `migration_reproducibility`,
+  which rebuilds from migration history.
+
+**Method:** add a **D (schema constraint)** rung to CLAUDE.md §2's spectrum, distinguishing
+`D` (write-time, absolute) from `D(fk)` (deferred differential, with the three caveats). Part 2
+uses this rung throughout; it is proposed here because the spectrum is doctrine, not tooling.
+**Gate:** CLAUDE.md is a derived map, so amending it is not a doctrine change — but §2's
+spectrum is quoted from `architecture/project-architecture-guidebook-v2.3.md`, so confirm the
+source before editing the map.
+
 **C9 · `parts/v10/` is stale in all 15 files and entirely ungated.** Fingerprint
 `3d7fb5d50de6` (user_version 25, against a live 53); `part13.md` still publishes "640 sources"
 with a full tier distribution — a corpus that no longer exists. `generate_parts.py` appears in
 no workflow and no registry entry.
 **This is C3's problem without C3's advisory check.** Method: regenerate with C3, and register
 a freshness check.
+
+**C10 · Three of the repo's own orientation documents describe a check that does not exist.**
+`session_pointer_resolvable` is named as "registered blocking" in `CLAUDE.md:424` and
+`sessions/handoff-next-session.md:12`. It appears in **no registry entry and no code**, and
+`scripts/audit/session_pointer_audit.py` does not exist.
+
+**The alarming reading is wrong, and was tested.** The script was *deliberately* deleted on
+2026-08-06 — the registry records that it "patrolled a hazard whose root cause was a five-line
+fix in the dispatcher it was watching" — and its function was redistributed to `run_checks.py`,
+`validate_cross_refs` and `test_db_integrity` L04. An adversarial pass proved by execution that
+the redistribution holds in **both** failure modes: a missing pointer file FAILs
+(`run_checks.py:217-232`), and a *dangling* pointer target FAILs inside
+`citation_mining_completeness.py`. **No gate is disarmed.**
+
+So this is a documentation defect — but a compounding one, and the two worst instances were
+missed by the first pass:
+- `sessions/handoff-next-session.md:12` asserts the check is "registered blocking", which will
+  be read as authoritative by the next session, because the handoff is where CLAUDE.md §9 sends
+  it to start.
+- `CLAUDE.md:425` still describes the **SKIP** behaviour as current — *"an unresolvable pointer
+  makes `run_checks.py` SKIP the checks that read it, which disarms a blocking gate silently"*
+  — when that is the hazard that was **fixed**. The onboarding document warns about a live
+  danger that no longer exists, in the same breath as naming a checker that never existed.
+**Method:** correct all three call sites to name the three real enforcers. **Gate:** none.
+
+**C11 · The most doctrinally important relationships are the ones the schema cannot enforce.**
+A sweep of every identifier-shaped column (`*_id`, `*_ids`, `*_ref`, `*_refs`, `*_code`,
+`*_slug`, `*_sha`) that is neither a primary key nor covered by a foreign key returns **19**:
+
+```
+$ python3 -c "…PRAGMA foreign_key_list / table_info sweep…"
+IDENTIFIER-SHAPED COLUMNS WITH NO FK AND NOT A PK: 19
+```
+
+Most are benign (`content_sha`, `item_id`). Seven are load-bearing — relationships the schema
+*models* but cannot *check*:
+
+| Column | The relationship it carries |
+|---|---|
+| `evidence_cell_state.governing_refs` | determination → its governing sources — **the anti-hallucination field** |
+| `search_executions.admitted_ref_ids` | search → the sources it admitted |
+| `evidence_population_match.source_ref` | a *second* source key beside the real FK `ref_id` |
+| `evidence_sources.superseded_by_ref_id` | the supersession chain |
+| `supersession_check.superseding_ref_ids` | the same chain again, as a JSON array |
+| `jurisdictional_values.spec_id` | points at a `specification` table that has never existed |
+| `source_value_extractions.root_id` | the value-genealogy root |
+
+**Two findings, and the second is the sharper one.**
+
+First: `governing_refs` is a JSON array, so SQLite cannot resolve it. That is *why* the blocking
+`validate_evidence_state` can accept a `stated` cell whose governing refs name nothing — there
+is no key to resolve them against. The field that makes a claim answerable is the field the
+database cannot check.
+
+Second: **three relationships are stored twice** — `governing_refs` beside the proper junction
+`cell_source_links`; `admitted_ref_ids` beside `search_admissions`; `superseding_ref_ids`
+beside the `supersession_check` row itself. In each pair one side is FK-checkable and one is
+not, **and nothing checks that the two agree.** CLAUDE.md §9 guardrail 5 already rules on this
+shape — when two stores disagree, reconcile then retire the shadow. Here the shadow is the JSON
+column and the canonical form is the junction.
+
+**Method:** for each of the three pairs, make the junction authoritative, have code read it,
+and add a consistency assertion to `test_db_integrity` for as long as both exist. **Do this
+before content, not after** — every row written in the meantime doubles the reconciliation.
+The junctions are empty today, so the migration is free.
+**Gate:** owner — retiring a column is a schema decision (D-SCHEMA), and the JSON columns are
+read by existing code that must be swept first (§0 rule 5).
 
 ### 1.5 Class D — owner decisions, with a recommendation each
 
