@@ -258,6 +258,12 @@ after.** It is a re-ordering of four lines.
 Full action/IO log: `workplan/2026-08-12-pipeline-walk-trial-log.md`. Data-state-per-phase:
 `workplan/2026-08-12-pipeline-phase-state-map.md`.
 
+> **Traceability.** Each Break and each R-row below carries the log identifier of the action
+> that produced it, so a reader can walk from a claim to its verbatim command and output.
+> Added 2026-08-12 after `workplan/2026-08-12-work-log-audit-four-directions.md` direction 2
+> found that this document cited **no** log identifier and joined its claims to its evidence by
+> prose correspondence alone — the defect it faults elsewhere in the corpus.
+
 ### 3.0 Method and evidentiary status
 
 **This is a structural trial, not a research batch.** The values are copied from
@@ -277,7 +283,7 @@ wired in `index.html`, and it carries seven real code values, every one `tier=6`
 
 ### 3.1 The four breaks
 
-**Break 1 — the foreign-key guard is a post-commit alarm.**
+**Break 1 — the foreign-key guard is a post-commit alarm.** *(log: Incident A-1, actions [018]–[020])*
 `migrate_db.py:161-183` runs: `PRAGMA foreign_keys = OFF` → `executescript(sql)` → insert the
 ledger row → **`conn.commit()`** → `PRAGMA foreign_keys = ON` → `foreign_key_check` → raise. The
 `except` calls `conn.rollback()`, which by then rolls back nothing.
@@ -287,7 +293,7 @@ Observed: a `search_admissions` row referencing a nonexistent source. Exit code 
 operator is told the migration failed. The row is in the database and the ledger says it was
 applied.
 
-**Break 2 — the word "bootstrap" disables foreign-key enforcement.**
+**Break 2 — the word "bootstrap" disables foreign-key enforcement.** *(log: Probe A-3)*
 `migrate_db.py:174`: `is_bootstrap = "BOOTSTRAP" in body[:500].decode(...).upper()`. When true,
 FK violations are downgraded from `ERROR` to `WARNING` and the migration is accepted with exit
 code 0. `emit_data_migration.py` writes the session name and the `--summary` string into a
@@ -296,7 +302,7 @@ changing only the summary wording to *"bootstrap the trial admissions table"*. I
 **Whether the database enforces referential integrity is decided by the prose a session types
 into `--summary`.** It is documented nowhere and `emit_data_migration.py` does not warn.
 
-**Break 3 — one failed migration voids every migration behind it.**
+**Break 3 — one failed migration voids every migration behind it.** *(log: Incidents A-4 and A-5)*
 Twice, from two independent authoring mistakes. A migration that fails for any reason other than
 an FK violation writes no ledger row, so it stays pending; `apply_data_migrations` iterates in
 timestamp order and re-raises on the first failure. Four correct migrations behind it were
@@ -312,7 +318,7 @@ an error about a file from two stages ago has every reason to think its own writ
 The asymmetry is the sharp part. **The failure mode that corrupts data lets the queue proceed;
 the failure mode that writes nothing stops everything.**
 
-**Break 4 — stage 9 has no writer.**
+**Break 4 — stage 9 has no writer.** *(log: findings A-S9-a, A-S9-b, A-S9-c and its correction)*
 `scripts/assess/assess_cell.py` is the only determination engine. Its cells are a module-level
 literal, `PILOT_CELLS`, holding seven hardcoded `(item, population, slug)` triples — so the
 `item_bpc_links` bridge is never consulted, the slug is supplied by hand, and **E-08 × MOB
@@ -340,10 +346,10 @@ And four things wrong:
 
 | # | Missing | Why it matters |
 |---|---|---|
-| R1 | **The value.** The determinations table has no column for `value_min`/`value_max`/`value_unit`. `1200` and `1500` appear on the page only inside the free-text falsification condition, and inside the item's own title string | The number the pipeline exists to produce never reaches the page as a value |
-| R2 | **The evidence marker.** No `●`, `◐` or `○` anywhere. Option A requires a T6-only determination to render at the flagged weak band `○`; `tier-system.md` §5 and CLAUDE.md §6 say unmarked is an error | The doctrinal band system has no renderer |
-| R3 | **The gap link.** The DEAFBLIND cell renders `pending` with em-dashes. `GAP-901`, which it points to, does not appear, and neither does `[BEST-PRACTICE-PENDING]` | Doctrine requires the pending token plus a gap link |
-| R4 | **The governing sources.** Seven refs in `governing_refs`; zero rows in `cell_source_links`; the renderer reads the junction, so the page states the determination has **no governing sources** | The honest banner makes a false statement — C11 confirmed, with the sting that the honesty mechanism is what misreports |
+| R1 *(log: Stage 12.2)* | **The value.** The determinations table has no column for `value_min`/`value_max`/`value_unit`. `1200` and `1500` appear on the page only inside the free-text falsification condition, and inside the item's own title string | The number the pipeline exists to produce never reaches the page as a value |
+| R2 *(log: Stage 12.2)* | **The evidence marker.** No `●`, `◐` or `○` anywhere. Option A requires a T6-only determination to render at the flagged weak band `○`; `tier-system.md` §5 and CLAUDE.md §6 say unmarked is an error | The doctrinal band system has no renderer |
+| R3 *(log: Stage 12.2)* | **The gap link.** The DEAFBLIND cell renders `pending` with em-dashes. `GAP-901`, which it points to, does not appear, and neither does `[BEST-PRACTICE-PENDING]` | Doctrine requires the pending token plus a gap link |
+| R4 *(log: A-S9-d, Stage 12.2)* | **The governing sources.** Seven refs in `governing_refs`; zero rows in `cell_source_links`; the renderer reads the junction, so the page states the determination has **no governing sources** | The honest banner makes a false statement — C11 confirmed, with the sting that the honesty mechanism is what misreports |
 
 R4 deserves emphasis. `spec_page.py`'s own comment says the junction exists because the JSON
 array meant "every page it produced cited nothing at all while presenting a confident

@@ -18,9 +18,39 @@ import textwrap
 from datetime import datetime, timezone
 from pathlib import Path
 
-TREE = Path(os.environ.get("WALK_TREE", Path(__file__).resolve().parent.parent.parent))
-DB = TREE / "data" / "guidebook.db"
-TRANSCRIPT = Path(__file__).resolve().parent / "transcript.md"
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
+CANONICAL_DB = REPO_ROOT / "data" / "guidebook.db"
+
+# The selftest imports this module in subprocesses to prove the guards fire. It must
+# therefore be able to load the file itself without tripping them — so the guards run at
+# import for every normal use, and are deferred only for the `--selftest` entry point.
+_SELFTEST_ENTRY = __name__ == "__main__" and "--selftest" in sys.argv
+
+
+def _resolve_tree():
+    """Resolve the walk tree, refusing anything that would write the real repository."""
+    tree = os.environ.get("WALK_TREE")
+    if not tree:
+        raise RuntimeError(
+            "WALK_TREE is not set. This harness runs a walk against a DISPOSABLE COPY of the "
+            "repository and refuses to default to the working tree, because emit_and_apply() "
+            "writes migrations into <tree>/scripts/migrations/ and applies them to "
+            "<tree>/data/guidebook.db. Set WALK_TREE=/path/to/scratch/copy."
+        )
+    tree = Path(tree).resolve()
+    if (tree / "data" / "guidebook.db") == CANONICAL_DB.resolve():
+        raise RuntimeError(
+            f"REFUSING: WALK_TREE resolves to the canonical repository ({REPO_ROOT}). "
+            "CLAUDE.md §4: never write data/guidebook.db directly. Point WALK_TREE at a copy."
+        )
+    return tree
+
+
+TREE = None if _SELFTEST_ENTRY else _resolve_tree()
+DB = None if TREE is None else TREE / "data" / "guidebook.db"
+
+TRANSCRIPT = None if TREE is None else Path(
+    os.environ.get("WALK_TRANSCRIPT", TREE / "walk-transcript.md"))
 
 _seq = 0
 
@@ -194,3 +224,49 @@ def emit_and_apply(session, summary, sql, label, expect_fail=False):
 def finding(tag, verdict, text):
     _w(f"\n> **{tag} — {verdict}**\n>\n" +
        "\n".join(f"> {ln}" for ln in textwrap.dedent(text).strip().splitlines()) + "\n")
+
+
+def _selftest():
+    """Verify the guards and the logging path. Exits 0/1 per house convention.
+
+    Run:  python3 scripts/tests/walk_harness.py --selftest
+    """
+    import subprocess as _sp
+    here = Path(__file__).resolve()
+    root = here.parent.parent.parent
+    checks = []
+
+    def _import_with(env):
+        e = dict(os.environ); e.pop("WALK_TREE", None); e.update(env)
+        return _sp.run([sys.executable, "-c",
+                        f"import sys; sys.path.insert(0, {str(here.parent)!r}); import walk_harness"],
+                       capture_output=True, text=True, env=e)
+
+    r = _import_with({})
+    checks.append(("refuses when WALK_TREE is unset",
+                   r.returncode != 0 and "WALK_TREE is not set" in r.stderr))
+
+    r = _import_with({"WALK_TREE": str(root)})
+    checks.append(("refuses when WALK_TREE is the canonical repository",
+                   r.returncode != 0 and "REFUSING" in r.stderr))
+
+    import tempfile
+    with tempfile.TemporaryDirectory() as td:
+        (Path(td) / "data").mkdir()
+        import sqlite3 as _s
+        c = _s.connect(str(Path(td) / "data" / "guidebook.db"))
+        c.execute("CREATE TABLE t (x INTEGER)"); c.commit(); c.close()
+        r = _import_with({"WALK_TREE": td})
+        checks.append(("accepts a disposable tree", r.returncode == 0))
+
+    for name, ok in checks:
+        print(f"  [{'PASS' if ok else 'FAIL'}] {name}")
+    bad = sum(1 for _, ok in checks if not ok)
+    print(f"RESULTS: {len(checks) - bad}/{len(checks)} checks passed")
+    return 1 if bad else 0
+
+
+if __name__ == "__main__":
+    if "--selftest" in sys.argv:
+        sys.exit(_selftest())
+    sys.exit("walk_harness is a library; run a walk script that imports it, or --selftest")

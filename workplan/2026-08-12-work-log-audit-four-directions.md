@@ -1,6 +1,6 @@
 # 2026-08-12 — Audit of the work log, in four directions
 
-**Subject:** `workplan/2026-08-12-pipeline-walk-trial-log.md` (3,875 lines, 130 logged actions),
+**Subject:** `workplan/2026-08-12-pipeline-walk-trial-log.md` (3,875 lines, 105 logged actions),
 and the two documents that rest on it — `2026-08-12-commit-91-adversarial-review.md` and
 `2026-08-12-pipeline-phase-state-map.md`. All three merged at `1f15381` (PR #92).
 **Question:** does the log actually support what was built on it, and does it record what happened?
@@ -16,9 +16,10 @@ number discrepancies, one of which conceals evidence, and both fixed in this com
 
 | | |
 |---|---|
-| Logged actions | **130** — 66 COMMAND, 39 QUERY, 25 SQL-EMIT |
+| Logged actions | **105** — 66 COMMAND, 39 QUERY |
+| SQL-EMIT payload previews | 25 — *not separate actions*: each shares its sequence number with the emit command that follows it, so the 130 `### [` headers in the file resolve to 105 distinct actions |
 | Exit codes recorded | 66, of which **19 non-zero** |
-| Table-delta blocks | 66 — one per command, across all 67 tables |
+| Table-delta blocks | 66 — one per command. Each compares a snapshot of all 67 `sqlite_master` tables (66 real + SQLite's internal `sqlite_sequence`) and prints only those that changed |
 | Emitted migration files, quoted verbatim | 25 |
 | Findings recorded inline | 27 |
 | Predictions scored | 14 — **10 as predicted, 4 not** |
@@ -82,11 +83,17 @@ rather than trusting the first number.
 `trial_b.py`) exist **only in the ephemeral scratch tree**. `git ls-files` returns nothing for
 any of them.
 
-The log records every SQL payload verbatim, so the *inputs* survive. What does not survive is the
-code that decided which payloads to submit, in what order, with which probes interleaved — and
-the ordering is load-bearing, since Breaks 1, 3 and 5 are all ordering phenomena. When the
-scratch tree is reclaimed, the trial is reproducible only by reconstructing the drivers from the
-log.
+The log records **66 argv lines, 25 verbatim SQL payloads and 25 emitted migration files quoted
+in full**, in execution order, so replaying the trial from the log alone is largely mechanical.
+What is lost is thinner than it first appears: the driver code, and with it the *intent* behind
+the probe interleaving. That matters because Break 1 (Incident A-1), Break 3 (Incidents A-4 and
+A-5) and the ordering probe at stage 4a are all ordering phenomena, and the log preserves the
+order without preserving the reasoning that chose it.
+
+*(An earlier draft of this section said the trial would be "reproducible only by reconstructing
+the drivers" and attributed the ordering phenomena to "Breaks 1, 3 and 5". There is no Break 5 —
+the review names four Breaks and the log names Incidents A-1, A-2, A-4 and A-5, and I conflated
+the two numbering schemes. Both corrected.)*
 
 **Closed in this commit** for the reusable half: `scripts/tests/walk_harness.py` is added, since
 it is pure logging infrastructure carrying no content and is the thing the next clean-room test
@@ -118,7 +125,7 @@ recorded**. What survives of them is my summary of what I saw.
 The asymmetry is stark and it is the wrong way round:
 
 - The **trial** — whose findings are structural, reproducible on demand, and were re-derived in
-  direction 1 above — has a 130-action verbatim log with per-table deltas.
+  direction 1 above — has a 105-action verbatim log with per-table deltas.
 - The **review** — which is where CONFIRMED, OVERSTATED and REFUTED are pronounced on another
   session's work — has none.
 
@@ -146,7 +153,13 @@ Small, and worth recording precisely because of what it is: a derived number, ha
 invalidated by a later commit in the same session, in a repository whose CLAUDE.md opens by
 warning that *"every count, value, status, or list in prose (including here) may be stale"* and
 whose review found the same defect in commit #91 (F12, where `55 green` was invalidated by that
-commit's own diff). **Third instance of one defect class, in three consecutive documents.**
+commit's own diff). **Two instances of one defect class in one session's document set** — mine
+and commit #91's.
+
+*(An earlier draft called this the "third instance, in three consecutive documents" and named
+only two. The intensifier was unsupported and is withdrawn. The pattern is real and older than
+either instance — CLAUDE.md §0 documents its own TL;DR having contradicted §7 about `audit.yml`
+for a day — but a claim of three requires naming three.)*
 
 ### D4-2 — "23 migrations were emitted" conceals the interventions
 
@@ -212,7 +225,7 @@ Measured, the drift is small and real:
 
 | | |
 |---|---|
-| `skills/*_SKILL.md` files on disk | **49** |
+| active `skills/*_SKILL.md` files | **49** (a further 12 sit under `skills/deprecated/` and are correctly out of scope; `find skills -name '*_SKILL.md'` returns 61) |
 | absent from `references/skill-registry.md` | **2** — `integrity-protocol`, `supersession-audit` |
 
 So two skills exist as authored protocols that no attestation may cite, and nothing flags the
@@ -228,3 +241,73 @@ examines attestations in the changeset, so the 74-attestation corpus has never b
 this. The review's F-row analysis noted the same shape for `attestation_schema` (blocking **and**
 diff-scoped, so whole-corpus validity is established by no registered check). The same is true
 of rule-identifier validity, and this is the first instance of it actually biting.
+
+---
+
+## Addendum 2 — adversarial critique of this audit, and what it fixed
+
+At owner direction, this audit was itself critiqued for factuality, logic and method. **Six
+defects, one of them mine and serious.** All are fixed above and in this commit; recorded here
+rather than absorbed.
+
+### The serious one: I shipped `walk_harness.py` without running it
+
+Direction 3 recommended preserving the harness so review-lens work could be logged. I committed
+it having run `ast.parse()` on it — a syntax check — and nothing else. Two consequences, found
+only when I finally executed it:
+
+**It defaulted to the canonical database.** The relocation from `_trial/harness.py` to
+`scripts/tests/walk_harness.py` moved `Path(__file__).parent.parent` up one level, so `TREE`
+resolved to `/home/user/guidebook` and `DB` to `/home/user/guidebook/data/guidebook.db`. Any
+session importing it and calling `emit_and_apply()` would have emitted migrations into the real
+`scripts/migrations/` and applied them to the real database.
+
+**That is the exact defect class this session spent three documents cataloguing**, introduced by
+the fix for one of its own findings, in a file added to a CODEOWNERS-protected directory, in a
+commit whose preflight passed. It is also the fourth occurrence in this session of *a check that
+passes without examining anything* — `ast.parse` on a module is `EXAMINED: 0` wearing a green tick.
+
+**And my first fix for it was itself untestable.** I added guards that raise at import, then a
+`--selftest` entry point — which could never run, because the guard fired before `__main__` was
+reached. A check that cannot fire, added to fix a check that examined nothing.
+
+Now: `WALK_TREE` is mandatory, a tree resolving to the canonical repository is refused by name,
+the guards are deferred only for the selftest entry point that must import the module to prove
+they fire, and `python3 scripts/tests/walk_harness.py --selftest` returns **3/3**, verified
+against a real disposable tree.
+
+### The other five
+
+| # | Defect | Class | Fix |
+|---|---|---|---|
+| 1 | **"130 logged actions"** — the file has 130 `### [` headers, but 25 are SQL-EMIT payload previews sharing a sequence number with the emit command that follows. Distinct actions: **105**. The headline inventory number was inflated 24% | factual | corrected in the inventory, the subject line and Direction 3.2 |
+| 2 | **"Breaks 1, 3 and 5 are all ordering phenomena"** — there is no Break 5. The review names four Breaks; the log names Incidents A-1, A-2, A-4, A-5. I conflated two numbering schemes while writing the section that faults the review for having no shared identifiers | factual / ironic | corrected to the incident ids |
+| 3 | **"reproducible only by reconstructing the drivers"** — overstated. The log holds 66 argv lines, 25 verbatim payloads and 25 full migration files in execution order; replay is largely mechanical. What is lost is the *intent* behind the probe ordering, not the ordering | logic | rewritten |
+| 4 | **"Third instance of one defect class, in three consecutive documents"** — I named two. The intensifier was unsupported | logic | reduced to two, named; the older CLAUDE.md case cited as prior art rather than counted |
+| 5 | **"2 of 49 skill files"** — true for active skills, but `find skills -name '*_SKILL.md'` returns **61**; twelve sit under `skills/deprecated/`. Correct to exclude them, wrong to leave a reader unable to reconcile 49 against 61 | precision | scope stated |
+
+### What survives unchanged
+
+Direction 1's five re-derivations, direction 2's substance-versus-citation split, direction 3.2
+(the review's 19 verdicts are unlogged), and both direction 4 discrepancies — the log line count
+and the 25-versus-23 migration count. Those were the findings; none depended on the numbers
+corrected here.
+
+### The pattern across the whole session
+
+Counting only errors I made and caught:
+
+| # | Error | Caught by |
+|---|---|---|
+| 1 | A-S9-c blamed the retired `NEU` code; the traceback said the gap-id pattern | reading the traceback |
+| 2 | Guessed `source_slug_links.link_id`; wedged the queue | the migration failing |
+| 3 | "23 migrations emitted"; 25 were | direction 4 |
+| 4 | Ten "orphaned" findings; a proxy measuring citation, not coverage | re-deriving |
+| 5 | A false negative from a grep that could not match markdown emphasis | re-deriving |
+| 6 | `walk_harness.py` defaulting to the canonical DB, shipped on a syntax check | finally running it |
+| 7 | The fix for #6 being untestable by construction | running the selftest |
+
+**Six of the seven were caught by executing something rather than by re-reading.** The one
+exception, #3, was caught by a cross-document count — also execution. Not one was caught by
+proofreading, which is the argument for routing review-lens work through the harness rather than
+through ad-hoc shell calls whose output is never recorded.
