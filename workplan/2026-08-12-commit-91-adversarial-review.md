@@ -758,3 +758,207 @@ Each is constructible today because every table named is empty.
    premise is the concrete case for it.
 6. **An owner ruling on the tier of a derived value** (§6.5). This is D-DOCT, owner-only, and it
    gates the honest rendering of every specification the project will publish.
+
+---
+
+## Part 7 — Adversarial critique of Part 6, and the four-dimension adjudication
+
+Added 2026-08-12 at owner direction, after the owner corrected a factual claim in §6.5. Part 6
+is left standing above and corrected here rather than edited in place, per AQ5 — a document that
+quietly absorbs its own corrections teaches the next session nothing.
+
+### 7.1 Methodology critique of Part 6
+
+**C1 — §6.5 inferred a doctrinal absence from a repository search. WRONG, and the error class is
+one this repo has a rule against.**
+
+§6.5 concluded that "a value derived by sound argument from strong evidence fits none of
+[the bands]" and that "derivation has no tier". The owner states the marker scheme in fact
+carries a **triangle for derived values, with the same fill scheme** — so ▲ / ◭ / △ parallel to
+● / ◐ / ○, the fill carrying evidence strength and the shape carrying derivation.
+
+I searched for `▲ △ ◭ ◮` and for the word "triangle" across `governance/`, `schemas/`,
+`scripts/`, `decisions/`, `references/`, `skills/`, `versions/`, `parts/`, `_archived/`, `site/`
+and `index.html`. **Zero hits.** The two "triangle" matches are unrelated (a three-way document
+disagreement).
+
+So the correct statement is not "doctrine has no band for derived values". It is:
+
+> **The derived-value marker is doctrine with no repository presence.** No glyph, no column, no
+> validator, no renderer, no mention in `tier-system.md` §5, `mission-and-epistemics.md` §136,
+> `project-standards.md`, or any DR. CLAUDE.md §10 records that the PI is not API-writable and
+> legitimately lags, and that `userPreferences-v*.md` lives in claude.ai and not in the repo —
+> so an absence here was never evidence of an absence in doctrine.
+
+I made exactly the inference the research contract's R14 prohibits: *a zero-yield search is
+evidence of absence only if the query was well-formed and the index was right.* My query was
+well-formed; my index was wrong. §6.5's conclusion — that the guidebook's actual product has no
+honest rendering path — **survives**, but its cause changes completely, and with it the fix. It
+is not a doctrinal gap to be ruled on. It is a **ratified marker that has never been
+implemented**, which is a Class C defect and needs no owner decision at all.
+
+**C2 — §6.4 asserted two absences that are both false. WRONG on the evidence already in the DB.**
+
+I wrote that "there is no access-need code for wheeled manoeuvring space at all" and that
+"`access_needs` does not link to items". Both are refuted by a two-hop join I did not attempt:
+
+```sql
+access_needs → access_need_axis_map → axes → item_axis_links → items
+```
+
+It resolves, and it resolves for exactly the items in question:
+
+| need | axis | item | strength |
+|---|---|---|---|
+| `A-SIZE` | `AX-WHM` | **E-08** | full |
+| `A-SIZE` | `AX-WHM` | **E-12** | full |
+| `A-REACH` | `AX-WHM` | E-08 / E-12 | full |
+| `A-REACH` | `AX-AMB` | E-08 | partial |
+| `A-STABLE` | `AX-BAL` | E-08 | weak |
+
+And `access_need_axis_map` annotates `A-SIZE spans AX-WHM` with the single word **`envelope`**.
+That *is* the wheeled-manoeuvring-space concept, named, keyed, and already attached to corridor
+width. Both join tables are populated (21 and 158 rows).
+
+I searched `sqlite_master` for tables carrying `need_code`, found three, and concluded no path to
+items existed — without checking whether any of those three reached items *through another
+table*. That is a one-hop search reported as a reachability result.
+
+**C3 — "There is no arithmetic anywhere in this pipeline" is wrong, and it dismissed the
+repo's actual value-determination protocol in a subordinate clause.**
+
+The **Progressive Measurement Probe** (`workplan/progressive-measurement-protocol.md`,
+`skills/progressive-measurement_SKILL.md`, `spec_value_probes`, `probe_population_links`,
+`scripts/audit/pmp_audit.py`, `DR-2026-05-10`) is a real value-determination protocol: take V₀,
+an accessibility direction D, and a claim type; walk the value toward the more accessible end;
+re-centre after each supported step; halt when evidence stops validating. **Its output is "the
+empirically-supported range, not a single point"**, and the gap between the stated value and the
+empirical ceiling is the finding it exists to surface. It is enforced at Level 2 by an audit that
+flags any item asserting a numerical spec without a walk.
+
+More pointedly for this assessment: **PMP's own direction table already contains the owner's
+parameter.**
+
+| Spec type | Direction | Rationale |
+|---|---|---|
+| Turning radius / clear floor space | `up` | larger radius accommodates more devices |
+
+So the project has already reasoned about turning space, already decided that more is more
+accessible, and already built the protocol that would establish the empirical range. What it has
+not done is run it (`spec_value_probes` = 0 rows) or connect it to `evidence_cell_state` (no
+column, no join). **The correct finding is not "no arithmetic exists" but "the value-determination
+protocol exists, is unrun, and is unwired to the determination it should produce."**
+
+**C4 — The scorecard inflates six observations into twenty. OVERSTATED (presentational).**
+
+The §6.6 table is 4 operations × 5 capabilities, nearly all "no". But "cannot render" and
+"cannot invalidate" are *entailments* of "cannot represent", not independent findings. Twenty
+cells implies twenty observations where there are roughly six. Same defect in "unrepresentable at
+five levels" (§6.3): those five are one missing concept — derivation — with five surface
+manifestations.
+
+**C5 — I under-credited `root_type`. OVERSTATED.**
+
+§6.1 said the model has no construct-validity dimension. `source_value_extractions.root_type`
+∈ `measurement_primary` / `participatory_finding` / `committee_assertion` /
+`derived_calculation` / `untraced` **is construct validity in embryo** — it distinguishes a
+measurement from a committee's assertion from a calculation. The accurate claim is narrower and
+still holds: **it exists at extraction level and never reaches the conditioning layer**, because
+`schemas/directness.py` conditions on grain × scale and `assess_cell.py` never opens the
+extractions table.
+
+**C6 — The drive-wheel refinement was load-bearing in the prose and unverified in fact.**
+
+I flagged the kinematics claim as unverified, then wrote "that gap is upstream of everything
+below". The structural point — nothing anywhere records *the manoeuvre a claim concerns* —
+does not depend on the kinematics and should not have been hung on it. Restated: the paradigm
+question is a property of the claim, and the schema records it only as a property of the source.
+
+**What survives Part 6 unchanged:** §6.2 in full (device class dies at the
+`UNIQUE(item_code, population_code)` boundary; the Design Mode ladder has no equipment rung);
+§6.3's core (no cell→cell dependency, no invalidation on upstream change); §6.1's core (the
+conditioning layer has no construct axis); and the trial evidence that two paradigms both
+anchored with every gate green.
+
+### 7.2 The adjudication as the owner frames it
+
+> *Wheelchair swept path versus turning radius requires an understanding of category, access
+> needs, potential to harm, equipment as they relate to one another. If conflicts or
+> contradictions exist, then adjudication is required.*
+
+This is a better decomposition than mine. Mine treated paradigm and device class and stopped.
+The owner's names four dimensions and a trigger. Assessed:
+
+| dimension | where it lives | populated? | reaches a determination? |
+|---|---|---|---|
+| **Category** | `items.category` (A–K); E-04, E-08, E-12 all category E | yes, 93 items | **no** — category is a grouping label, never a comparison scope (§3.4) |
+| **Access needs** | `access_needs` (17 codes, `design_obligation`, `family`, `absorbs`) → axes → items | yes; `A-SIZE`/`AX-WHM` annotated `envelope`, `full` strength on E-08 and E-12 | **no** — the join reaches the *item*, never the *cell*; no determination reads it |
+| **Potential to harm** | `access_stakes` — `safety-critical` ("Harm if violated"), `exclusion` ("Locks people out"), `friction` ("Degrades the experience"); carried per-need by `access_needs.typical_stakes` | **16 of 17 NULL.** Only `A-TRIGGER` is graded. `A-SIZE` and `A-REACH` — the two that reach corridor width — are both **NULL** | **no** |
+| **Equipment** | `source_value_extractions.device_class`, nine-value CHECK | vocabulary yes, rows 0 | **no** — dies at phase 7→9 (§6.2) |
+| **Adjudication on conflict** | `conflicts` (`item_code`, `pop_a`, `pop_b`, `status`), `cross-population-conflict-mapper`, `references/conflict-matrices/` | table 0 rows; 13 markdown matrices unlinked to the DB | **no row shape fits** — see below |
+
+**The harm dimension is the one that would decide this adjudication, and it is the emptiest.**
+
+A corridor too narrow to turn around in is not a comfort defect. Under the repository's own
+three-value vocabulary it is **`exclusion` — "Locks people out"** — and arguably
+`safety-critical`, since a user who cannot reverse in a corridor cannot self-evacuate. That
+grading is what converts the owner's parity premise from a preference into a threshold: an
+`exclusion`-stakes parameter must be specified at the accommodating end of the empirical range,
+not at its median or its code floor.
+
+`access_stakes` exists precisely to carry that judgement. `access_needs.typical_stakes` is the
+column that would attach it to `A-SIZE`. **It is NULL.** So the dimension that would decide the
+adjudication is present in the schema, ratified in vocabulary, and unpopulated exactly where the
+question is being asked.
+
+**The adjudication row shape does not exist.** `conflicts` is keyed `(item_code, pop_a, pop_b)` —
+it can express *two populations disagreeing about one item*. The owner's conflict is none of
+those shapes:
+
+- swept path vs turning radius is **paradigm vs paradigm** within one item;
+- power chair vs manual chair is **equipment vs equipment** within one population;
+- E-08's 1200 mm vs E-12's turning envelope is **item vs item**.
+
+All three would have to be forced into `pop_a`/`pop_b`, which is a category error, or into
+`connections.description` free text with an un-keyed target. The repository has exactly one
+conflict shape and the question generates three the shape cannot hold.
+
+**Note also the live contradiction this framing exposes**, already recorded in §3.4:
+`references/conflict-matrices/CORRIDOR-W.md` was **RECLASSIFIED — NOT A CONFLICT DOMAIN** on
+2026-03-30, on the reasoning that width and sensory load are independent variables. That
+disposition is correct on the axis it examined (DEAF width vs NDV/AUT sensory load) and it
+retired the domain entirely — *"Remove from conflict domain table"*. The conflict the owner is
+now raising is a different one on the same parameter, and the retirement means there is no open
+domain to file it against. A conflict domain closed on one axis was closed for all axes.
+
+### 7.3 Corrected closure list
+
+Replacing §6.7. Ordered by cost, and re-scoped by what §7.1 corrected.
+
+1. **Implement the derived-value triangle.** No longer an owner ruling — it is ratified doctrine
+   with zero implementation. Needs: the glyph and fill semantics written into
+   `governance/tier-system.md` §5 beside ●/◐/○; a `synthesis_method` column on
+   `evidence_cell_state` (`direct` / `inferred` / `consensus`, the vocabulary
+   `governance/armature_v4_resolutions.md:23` already specifies, together with its
+   `inference_basis` companion for non-direct); and a renderer that emits it. Free today at 0 rows.
+2. **Populate `access_needs.typical_stakes`.** 17 rows, three-value vocabulary, already ratified.
+   This is the dimension that decides accommodating-end specification, and it is 94% empty.
+   `A-SIZE` and `A-REACH` first, since they carry corridor width.
+3. **Run PMP on turning space.** The protocol exists, the direction is already decided (`up`), the
+   audit exists, and `spec_value_probes` is empty. This is the closest existing mechanism to the
+   owner's synthesis and it has never been exercised.
+4. **A construct/manoeuvre field on the claim**, plus lifting `root_type` into the conditioning
+   layer as a fourth directness dimension — `construct_directness(source_paradigm,
+   claim_manoeuvre)` beside the existing three, with its table transcribed into
+   `matrix_consistency.py` so the two cannot drift.
+5. **A device-class dimension on determinations**, or an explicit doctrinal ruling that
+   equipment stratification sits at Population Mode with a sub-key. The Design Mode ladder
+   currently has no rung for it and that is a doctrine gap, not a schema one.
+6. **A conflict shape that is not population×population** — minimally `conflict_kind ∈
+   {population, paradigm, equipment, item}` with a target pair that is FK-keyed per kind.
+   Reopening `CORRIDOR-W` needs this.
+7. **`evidence_cell_state.derived_from_cell_id` + `derivation_rule`**, with `derivation_sha`
+   extended to hash upstream cell ids so an upstream change reddens the downstream cell.
+8. **Wire `access_needs` to cells, not only to items** — the `design_obligation` prose is the
+   normative premise, and it currently stops one hop short of the determination it should
+   license.
