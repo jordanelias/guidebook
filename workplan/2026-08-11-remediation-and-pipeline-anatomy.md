@@ -697,10 +697,38 @@ database cannot check.
 
 Second: **three relationships are stored twice** — `governing_refs` beside the proper junction
 `cell_source_links`; `admitted_ref_ids` beside `search_admissions`; `superseding_ref_ids`
-beside the `supersession_check` row itself. In each pair one side is FK-checkable and one is
-not, **and nothing checks that the two agree.** CLAUDE.md §9 guardrail 5 already rules on this
-shape — when two stores disagree, reconcile then retire the shadow. Here the shadow is the JSON
-column and the canonical form is the junction.
+beside the `supersession_check` row itself.
+
+> **CORRECTED.** An earlier draft said "nothing checks that the two agree." **That is false.**
+> `scripts/tests/test_db_integrity.py:776-870` carries an `[H] JSON-array ↔ junction parity`
+> section that checks two of the three pairs **in both directions**, plus H05 (a third store,
+> `results_admitted`), H06 (a valid-JSON-scalar guard) and H07 (duplicates) — and it is
+> **blocking**. The parity machinery exists and is good.
+
+**What survives the correction is worse than the original claim.** Three things compound:
+
+1. **The parity checks are vacuous at 0/0.** They compare two empty stores and pass.
+2. **The only writer is asymmetric.** `assess_cell.py` — the sole determination engine — writes
+   `governing_refs` and **never** `cell_source_links`.
+3. **Three renderers read only the junction.**
+
+So the parity gate is green, the writer fills one side, and the readers read the other. **The
+first real determination will render with no governing sources at all**, and the blocking
+parity check will pass while it happens, because it was green when both sides were empty and
+will fire only after the damage is visible. That `db.py:398-414` writes *both* sides of the
+sibling pair is the tell: the asymmetry is an accident, not a design.
+
+CLAUDE.md §9 guardrail 5 rules on this shape — when two stores disagree, reconcile then retire
+the shadow. Here the shadow is the JSON column and the canonical form is the junction.
+
+**And one instance of this pattern is already a live doctrine breach in waiting.**
+`evidence_cell_state.regulatory_stratum_only` is **never written** — `assess_cell.py` computes it
+and then encodes the fact as a `"(regulatory_stratum_only)"` *suffix string* inside `tier_basis`.
+But `v_best_practice` and four other readers read **the column**. Under DR-2026-07-21 Option A a
+code-derived claim may render only at the flagged weak band (○); with the column unset, **every
+code-derived cell renders as anchored ●**. That is not a tidiness issue — it is the exact
+misrepresentation the weighted-strength model exists to prevent, wired in and waiting for its
+first row.
 
 **Method:** for each of the three pairs, make the junction authoritative, have code read it,
 and add a consistency assertion to `test_db_integrity` for as long as both exist. **Do this
