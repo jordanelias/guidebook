@@ -847,6 +847,61 @@ Three findings from that layer belong in the pre-content list:
 - **Ten ordering assumptions are neither declared nor guaranteed by the runner** — checks that
   presuppose another check has run, share a fixture, or read state a sibling may rebuild.
 
+### 1.4c Rooms, economics, case studies — all three have content, none has a writer
+
+The owner asked directly whether these subsystems exist. All three are the **shadow-store
+pattern of C11 in its purest form: the content is written, in markdown, beside an empty table
+that nothing can fill.**
+
+| Subsystem | Schema | Content that exists | Writer | Reader | Renderer | Check |
+|---|---|---|---|---|---|---|
+| **Rooms** | `rooms` 17 rows, `room_items` 0 | `_archived/scripts/db/seed_room_items.py` — **a seed script holding 142 room↔item pairs, already written** | none — `room_items` has zero DML in repo history | none | `room_page.py`, crashes on 6 phantom tables | none |
+| **Economics** | STRICT schema, real CHECK constraints, Pydantic model, 2 skills | `references/economics-sources.md` + `references/economics/` | **none at all** | none | none | R12, vacuous |
+| **Case studies** | reconciled 2026-07-25; 16 `ALTER TABLE`s | `references/case-study-compendium.md` — **56 KB, ~26 entries** | none | none | none | none |
+
+**Verdicts.**
+
+- **ROOMS: partially-live.** 17 name-only rows, a renderer pointed at a schema that never
+  existed, and — the useful find — **the missing writer already exists, archived**.
+  `_archived/scripts/db/seed_room_items.py` carries the 142 pairs. *Minimum path:* replay those
+  pairs as a data migration, repoint `room_page.py`'s four resolvable table names at the live
+  plural schema. Then an owner decision on the three phantom tables with no live substitute
+  (`room_item_population`, `room_dar_provision`, `room_conflict`).
+  **Note `convert_rooms.py` is NOT the missing writer** — it has no `import sqlite3`, parses
+  nothing, writes to a `data/rooms/` that does not exist, and its roster carries 7 `NR-*` codes
+  absent from the DB. It is a building-*typology* vocabulary, which is the job migration 043
+  reassigns to it.
+- **ECONOMICS: designed-awaiting-content.** The most complete *schema* of the three — STRICT,
+  real constraints, a model, two skills, and a named research-contract obligation (R12:
+  "Economics → `economics_entries`. Never leave them in prose notes"). **And no write path
+  whatsoever**, so R12 instructs a session to do something no tool can do. Its enforcer is also
+  vacuous: the denominator is `search_executions` (0 rows), so it reports
+  `PASS — economics_entries=0 for 0 prose findings`, and it never queries `case_studies` or
+  `jurisdictional_values` despite naming both.
+- **CASE STUDIES: designed-awaiting-content.** Schema reconciled 2026-07-25 against a real
+  compendium, then **16 `ALTER TABLE` migrations against a table that has never held a row**.
+  *Minimum path:* load the ~26 compendium entries via one emitted data migration, then add any
+  reader — a table no code reads is invisible to every check that could protect it.
+
+**The pattern, stated once.** In each case the *evidence* was gathered and written into
+markdown, the *schema* was designed and migrated, and the *bridge between them was never
+built*. This is why 11 tables have no writer while the repo contains their content in prose.
+It is also why "do we have rooms?" has no yes-or-no answer: the guidebook has rooms, the
+database does not, and nothing reconciles the two.
+
+**Recommendation:** treat these as the *first* content work after the structural fixes, not
+last. Each is a bounded, verifiable exercise — a known corpus, a known target table, one
+migration — which makes them the ideal way to prove the pipeline end-to-end on real data before
+committing to research at scale. Rooms is cheapest (the writer exists); case studies is the
+highest-value proof (a real 26-entry corpus, a reconciled schema, and a `case_study_specs`
+junction that would exercise the item spine).
+
+**Tool-correspondence totals** across 186 audited tools (137 executables + 49 skills):
+**9 PHANTOM** (referencing tables that do not exist), **30 ORPHAN** (invoked by nothing — of
+which 21 are unregistered and unreferenced), **11 STALE-CONTRACT** (running code whose docstring
+describes different behaviour, including `build_site.py` blaming a missing `rooms` table that
+has existed since migration 042).
+
 ### 1.5 Class D — owner decisions, with a recommendation each
 
 | # | Decision | Recommendation |
