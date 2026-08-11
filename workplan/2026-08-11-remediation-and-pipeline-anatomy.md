@@ -191,9 +191,27 @@ tables only in rebuilt  : none
 ROW-COUNT DIVERGENCE: 0 table(s) of 66
 ```
 
-**345 SQL migrations reproduce the committed database exactly, in fifteen seconds.** Every one
-of them is plain text, diffable, and reviewable on GitHub. The binary is not the source of
-truth — it is a **cache of the source of truth**, and today it is a faithful one.
+**345 SQL migrations reproduce the committed database, in fifteen seconds.** Every one of them
+is plain text, diffable, and reviewable on GitHub. The binary is not the source of truth — it
+is a **cache of the source of truth**, and today it is a faithful one.
+
+**Precisely how faithful, because "exactly" would be an overstatement** — the row-count
+comparison above is not a content comparison. The full one is
+`migration_reproducibility.py --deep`, run 2026-08-11:
+
+```
+--- deep comparison: every table, every row ---
+evidence_source_authors    EXEMPT       job-owned per DR-2026-05-28
+pipeline_runs              EXEMPT       job-owned per DR-2026-05-28
+slugs                      TIMESTAMPS   1 rows; created_at(1), updated_at(1)
+(63 tables identical, not listed)
+VERDICT: PASS
+```
+
+**63 of 66 tables are identical row-for-row.** Two are exempt from comparison entirely, and one
+differs only in timestamps on a single row — caused by a `datetime('now')` in a migration, which
+should be removed so the rebuild is deterministic. That is the honest measure, and it is still
+strong enough to carry the recommendation.
 
 **Recommendation: stop committing `data/guidebook.db`. Make it a build artifact.**
 
@@ -301,6 +319,57 @@ redirect rather than delete, so leave a stub naming the branch and the hash.
 **Ordering:** finding 1 needs no decision and should ship immediately. Finding 3 is owner-gated
 but the evidence is airtight. §1.0c's proposal for the live database is the larger change and
 depends on the D2 exemption ruling.
+
+### 1.0e External verifiability: a fabricated measurement passes every blocking gate
+
+**The owner's requirement:** the project must be verifiable through GitHub, concretely, without
+risk of hallucinated content passing as real.
+
+**The test, run 2026-08-11 against scratch copies of the committed database:** a corridor width
+was rewritten from **1200 mm to 1800 mm**, and a jurisdictional value to **9999**. Then both
+blocking data gates were run.
+
+```
+migration_reproducibility   VERDICT: PASS
+test_db_integrity           RESULTS: 70/70 checks passed
+```
+
+**Both passed on fabricated measurements.** This is not a hypothetical about AI: *any* silent
+edit to the binary — by a model, a script, or a slip of the hand — survives every blocking
+check the repository has. The blocking gate compares `PRAGMA user_version` plus six `COUNT(*)`s,
+and an `UPDATE` changes no count.
+
+**The fix is one word, and it is free today.** `migration_reproducibility_deep` performs the
+full comparison, is currently **advisory**, and **passes on the live repo** (§1.0c: 63 of 66
+tables identical). Promoting it to `blocking` in `governance/check-registry.yaml` closes the
+fabrication hole at zero cost — *provided* `url_verification_runs` is exempted in the same
+change (D2), or the next fortnightly bot run turns it red for a legitimate write.
+
+**This is the single highest-value change in this document.** It converts the project's central
+claim — that a published value can be trusted — from an assertion into a check.
+
+**Other findings from the verifiability audit:** 14 claim-classes verifiable today, 17
+trust-only, 6 hard boundaries. Notably:
+
+- **7 of the last 30 `ci.yml` runs on `main` were red and merged.** Without branch protection,
+  every `blocking` level in the registry is decorative. This is D1, and it is now measured
+  rather than argued.
+- `index.html` advertises **661 evidence sources**; the database holds **0**. Nothing checks it.
+- 58 `REF-` ids across 11 site pages resolve to **nothing** in `evidence_sources`.
+- 49 of 53 decision records have no row in the `decisions` table, and `decision_capture` exits
+  **0** on that.
+- Counterclaim uniqueness would fire on **13 attestation pairs**, including a ratio-1.0
+  duplicate between the template and the only real BPC-reasoning attestation — i.e. an
+  "independent counterclaim" copied from a template, which is precisely the failure mode
+  Part 3 §3.5 predicts when one author writes both sides.
+- **Zero AI-authored commits sit on `main`'s first-parent chain** — every one is an owner
+  merge. That is a stronger accountability fact than the repo currently claims for itself, and
+  it should be stated in the open.
+
+**Recommended, and cheap: commit an `EXTERNAL-VERIFICATION.md`** — the handful of commands a
+stranger runs, what each proves, and the six hard boundaries stated plainly (chief among them:
+the deployed Project Instructions and the adherence-log stage list are not in git, so no
+in-repo check can reach them).
 
 ### 1.1 The governing finding
 

@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-08-11-structural-integrity-audit",
+  "artifact": "sessions/session_2026-08-11-structural-integrity-audit.md",
+  "doctrine_sha": "0f2f525",
+  "rules_in_scope": [
+    "adherence-logging-and-attestation",
+    "doctrine-check",
+    "canonical-workplan",
+    "adversarial-research-protocol",
+    "source-discipline",
+    "best-practice-synthesis-routing"
+  ],
+  "per_rule_status": {
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/sessions_session_2026-08-11-structural-integrity-audit.json"
+    },
+    "doctrine-check": {
+      "status": "FIRED",
+      "evidence_path": "workplan/2026-08-11-remediation-and-pipeline-anatomy.md"
+    },
+    "canonical-workplan": {
+      "status": "FIRED",
+      "evidence_path": "workplan/2026-08-11-remediation-and-pipeline-anatomy.md"
+    },
+    "adversarial-research-protocol": {
+      "status": "FIRED",
+      "evidence_path": "workplan/2026-08-11-remediation-and-pipeline-anatomy.md"
+    },
+    "source-discipline": {
+      "status": "SKIPPED",
+      "reason": "No source was admitted, cited or verified. evidence_sources holds 0 rows after the 2026-08-06 reset and this session performed no research; every claim here is about repository state and is evidenced by a quoted command, not by a bibliographic source."
+    },
+    "best-practice-synthesis-routing": {
+      "status": "SKIPPED",
+      "reason": "No best_practice_synthesis was authored. The session produced tooling and governance analysis only; the Opus-class floor was not engaged because no determination or synthesis text was written."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "adversarial-research-protocol",
+      "reason": "Two of the twelve pipeline stage segments received one antagonist lens rather than two, because the segments' agonist passes landed at different times and the synthesis was scheduled against the owner's request to consolidate. The affected segments are stages 4-6 and 10-12, both of which received the factual and vacuity lenses but not the doctrine lens. Recorded rather than silently absorbed; a doctrine-lens pass on those two segments is outstanding work, listed for the next session."
+    },
+    {
+      "rule": "canonical-workplan",
+      "reason": "The deliverable was committed incrementally across nine commits while adversarial passes were still returning, so intermediate states of the document on this branch contain claims that later commits correct. The correction log at section 0.2 is authoritative over any earlier commit's text."
+    }
+  ],
+  "bias_direction": "Toward finding defects, and toward dramatising them. The session was framed as an audit, ten agents were briefed to hunt problems, and antagonists were told their default verdict was REFUTED - a set-up that rewards volume of findings and punishes 'this is fine'. Three specific over-reaches were caught and corrected in-session: I called a source comment false when it was merely stale, called R1 unsatisfiable when admitting one Co-1 source satisfies it, and wrote that the migrations reproduce the DB 'exactly' when the row-count comparison I had run does not establish content identity. A fourth risk I could not fully mitigate: I proposed the agonist-antagonist protocol in the same document that showcases its results, so the evidence for the method and the advocacy for it share an author.",
+  "independent_reviewer_counterclaim": "A reviewer could argue this session mistook an empty database for a broken one. Most findings reduce to 'a check passes over zero rows', which is the expected and ratified consequence of DR-2026-08-06 - the reset deliberately emptied 38 tables, so of course the gates guarding them have nothing to guard, and calling that a defect inflates a design decision into a fault. On this reading the honest report is one paragraph long: the corpus is empty by decision, refill it and the gates resume working. The answer is that the walk test distinguishes the two cases and was run precisely because assertion could not: a fabricated corridor width and a tier value of 99 passed every blocking gate on a populated scratch database, which is not a property of emptiness. But the counterclaim lands on the periphery - several individual findings in the register are indeed vacuity artefacts dressed as defects, and the register marks them as such less consistently than it should.",
+  "verdict": "DEVIATION-LOGGED"
+}
