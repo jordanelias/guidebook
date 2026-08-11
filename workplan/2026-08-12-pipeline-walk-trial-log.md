@@ -1,6 +1,16 @@
 
 # Trial transcript — corridor clear width, turning radius, swept path
 
+**CONTENT VALIDITY:** NOT CONTENT — STRUCTURAL TEST ARTEFACT, NOT ADMISSIBLE AS EVIDENCE
+(Owner directive 2026-08-12: pre-existing items must not seed content research. Every numeric
+value, `REF-9xxxx` identifier, standard name and locator below was used to exercise the machine,
+not to establish a fact. Values were copied from rows already in `jurisdictional_values`; none
+was independently re-retrieved, no DOI was pre-checked, no locator re-verified — so R3, R9 and
+R10 are unsatisfied by construction. **Nothing here may be mined, promoted, cited, or treated as
+a starting point for a corridor-width, turning-space or swept-path determination.** The findings
+this document reports are about structure and stand independently of the values used to reach
+them.)
+
 **Generated:** 2026-08-11 05:40:24Z
 **Scratch tree:** `/tmp/claude-0/-home-user-guidebook/e8130109-6970-51cf-a915-4db9f72964f4/scratchpad/walk` (a byte copy of the repo; the canonical clone is never written)
 **Scratch DB:** `/tmp/claude-0/-home-user-guidebook/e8130109-6970-51cf-a915-4db9f72964f4/scratchpad/walk/data/guidebook.db`

@@ -1,5 +1,15 @@
 # 2026-08-12 — Adversarial review of commit #91, and a content walk on corridor width
 
+**CONTENT VALIDITY:** NOT CONTENT — STRUCTURAL TEST ARTEFACT, NOT ADMISSIBLE AS EVIDENCE
+(Owner directive 2026-08-12: pre-existing items must not seed content research. Every numeric
+value, `REF-9xxxx` identifier, standard name and locator below was used to exercise the machine,
+not to establish a fact. Values were copied from rows already in `jurisdictional_values`; none
+was independently re-retrieved, no DOI was pre-checked, no locator re-verified — so R3, R9 and
+R10 are unsatisfied by construction. **Nothing here may be mined, promoted, cited, or treated as
+a starting point for a corridor-width, turning-space or swept-path determination.** The findings
+this document reports are about structure and stand independently of the values used to reach
+them.)
+
 **Status:** REVIEW — nothing in the repository was changed by this session other than the
 documents it adds. No fix executed, no migration applied to the canonical DB, no promotion.
 **Subject:** PR #91, merged at `356efda` — 13 commits, 8 files, +9,005 / −112.
