@@ -1761,8 +1761,17 @@ rather than a tooling inconvenience.
 
 **Mission commitment 5** — "Universal design is co-extensive with code compliance — the floor, not
 an aspiration" — **forbids** scoping an item at the code floor and calling the result best practice.
-`governance/tier-system.md` §3 ("Best-practice ≠ convergence") makes it operative at this stage:
-T4–T6 are the regulatory stratum and code convergence is **not evidence**.
+`governance/tier-system.md` makes it operative at this stage — **but state the current rule, not
+the repealed one.** §3's binary ("best-practice ≠ convergence", full stop) was **superseded** on
+2026-07-20; the file's own status line reads *"amended 2026-07-20 (§3 binary rule superseded)"*
+and its T6 row carries *"⚠ Superseded by §8 + Option A"*. Under the weighted-strength model (§8)
+plus Option A (`DR-2026-07-21-evidence-architecture-option-a-execution.md`), a T4–T6-only basis
+**does** anchor a best-practice claim — at the flagged weak band (○), "best practice as currently
+known", carrying the convergence-not-evidence caveat, and never unflagged or above that band.
+
+What commitment 5 forbids at this stage is therefore not admitting the code, but **laundering**
+it: scoping an item at the code floor and rendering the result as though it were evidence-anchored.
+Convergence-not-evidence survives as the *honesty rule within the weak band*, not as an exclusion.
 
 **Mission commitment 6**, with `governance/audience-priority.md`, requires the project's distinctive
 epistemic claim to be "acknowledged as a claim, not asserted as established" — which **forbids**
@@ -2123,9 +2132,11 @@ default", with the Cochrane absence-of-evidence / evidence-of-absence yardstick 
 1995, DOI 10.1136/bmj.311.7003.485) honoured at cell level — **this is the doctrinal source of both
 R14 and `deferred_reason`.**
 
-**`governance/tier-system.md`** §2 places `sr_meta` at **T2, not T3**; §3 ("Best-practice ≠
-convergence") walls T4–T6 off from full-strength anchoring; §4 makes the code-currency check part of
-citing T4–T6, so a stage-3 search that retrieves a code must also target that code's currency.
+**`governance/tier-system.md`** §2 places `sr_meta` at **T2, not T3**; §3 walls T4–T6 off from
+**full-strength (●/◐) anchoring** — note §3's *binary* form ("best-practice ≠ convergence", full
+stop) is superseded by §8 + Option A, under which a T4–T6-only basis anchors at the flagged weak
+band (○) rather than not at all; §4 makes the code-currency check part of citing T4–T6, so a
+stage-3 search that retrieves a code must also target that code's currency.
 
 **`decisions/DR-2026-05-09-adversarial-research-protocol.md`** **forbids** closing a research gap
 without a prior expectation, the search queries used, a numerical confidence interval with shift
@@ -2619,8 +2630,13 @@ most important doctrinal commitment had the weakest check."*
 
 **Doctrinal commitment 2 — best practice is graded by the evidence hierarchy; code consensus
 anchors it only at the weak band.** At stage 4 this bears on `tier_guess` and `tier`: T4–T6 is the
-regulatory stratum, and admitting a code as though it were evidence is the error the tier system
-exists to prevent. `governance/tier-system.md` §3 ("Best-practice ≠ convergence") is operative;
+regulatory stratum. **But state the current rule.** A code source *is* admitted as evidence — and
+properly so: under the weighted-strength anchor model (`tier-system.md` §8, amended 2026-07-20)
+plus Option A (2026-07-21), every tier anchors at a strength weighted by its tier. §3's binary is
+**superseded** — the file's status line says so, and its T6 row carries "⚠ Superseded by §8 +
+Option A". What the tier system prevents is not the admission but the **laundering**: a T4–T6-only
+basis rendered unflagged, or above the weak (○) band. Convergence-not-evidence survives from §3 as
+the honesty rule *within* the weak band, not as an exclusion.
 §4 additionally requires that citing a T4–T6 source confirm the cited edition is the current
 legally-in-force edition — a stage-4 obligation discharged by stage-5 machinery
 (`code_currency_audit.py`, currently quarantined; §2.5).
