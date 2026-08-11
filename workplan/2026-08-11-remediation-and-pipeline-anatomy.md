@@ -371,6 +371,118 @@ stranger runs, what each proves, and the six hard boundaries stated plainly (chi
 the deployed Project Instructions and the adherence-log stage list are not in git, so no
 in-repo check can reach them).
 
+### 1.0f The sanctioned write path, tested end to end
+
+The twelve-stage walk deliberately excluded `scripts/emit_data_migration.py`, because it writes
+into tracked `scripts/migrations/`. That left the project's **only permitted route for changing
+data** untested. It has now been exercised, and it works.
+
+Method: emit a real migration carrying one synthetic `terms` row, apply it to a **copy** of the
+database via `GUIDEBOOK_DB_PATH`, verify the row landed in the copy and not in the canonical
+file, then delete the emitted migration. Safety was established before running anything —
+`scripts/migrate_db.py:44` reads `GUIDEBOOK_DB_PATH`, and `db_path_env_audit` reports
+`53/55 honour GUIDEBOOK_DB_PATH directly, 2 documented exemption(s)`.
+
+```
+EMITTED: scripts/migrations/data_20260811024332_2026-08-11-structural-integrity-audit.sql
+  Pending data migrations: 1
+    Applying data_20260811024332_…sql...
+  Done. Schema at version 53; 1 data migration(s) applied.
+
+  SCRATCH    TERM-ZZTEST=1  data_migrations=315
+  CANONICAL  TERM-ZZTEST=0  data_migrations=314
+```
+
+**Every property the path promises held.** The filename carries a sortable UTC timestamp so
+concurrent sessions cannot collide; the body is wrapped in `BEGIN`/`COMMIT` so partial failure
+rolls back; the header states forward-only immutability and directs corrections to a
+compensating migration; `migrate_db.py` detected it as pending without being told; the
+`data_migrations` ledger incremented in the copy only; and the canonical database was untouched
+throughout. Working tree clean before and after.
+
+**This is the one part of the pipeline that behaves exactly as documented**, and it is worth
+saying plainly in a document otherwise full of gaps. The migration system is the project's
+strongest component. Which sharpens §1.0b rather than softening it: the discipline is sound and
+**the enforcement around it is what fails** — an `UPDATE` still bypasses the blocking gate
+(§1.0e), and three unguarded scripts still write the canonical database without passing through
+this path at all (§1.0a).
+
+One limitation, stated so it is not over-read: this proves the *mechanism*. It does not prove
+that a **real** content change survives it, because the payload was one row in a table with no
+downstream readers. A genuine topic must still pass through the emitter with its cell,
+determination and render attached — that is the first thing the next session should do with
+real data.
+
+### 1.0g The fabrication finding, correctly diagnosed — values are stored without the words that license them
+
+**Owner correction, 2026-08-11, and it reframes §1.0e.** An earlier draft treated "a corridor
+width rewritten 1200 mm → 1800 mm passed every blocking gate" as a *tampering* finding. That
+framing is wrong, and the owner's objection is decisive: **1800 mm is a perfectly plausible
+corridor width.** If it were recorded from a source, walking the pipeline is the pipeline
+*working*. No checker can be expected to know that 1800 is the wrong number, because 1800 is
+not a wrong-looking number.
+
+**The real defect is that the value is stored detached from the text that licenses it.** Nothing
+can check a figure against its source, because the source's own words are nowhere in the row.
+
+Measured across every value-bearing table:
+
+| Table | Rows | Locator fields | **Verbatim-text field** |
+|---|---|---|---|
+| `jurisdictional_values` | **109** | 16 | **NONE** |
+| `source_value_extractions` | 0 | 17 | `claim_text` |
+| `reasoning_doc_citations` | 0 | 16 | `claim_text` |
+| `spec_value_probes` | 0 | 0 | NONE |
+| `evidence_cell_state` | 0 | 0 | NONE |
+
+**The one table that actually holds values has sixteen ways to say where the figure came from
+and no way to say what the source said.** Migration 053 built a seven-level pinpoint locator
+hierarchy — division → part → section → subsection → paragraph → clause → subclause — for a
+table that cannot quote. It can tell you to look at §404.2.5. It cannot tell you that §404.2.5
+reads "1200 mm minimum".
+
+That is why the tamper passed: **there was nothing for it to contradict.**
+
+**The remedy, and it is cheap and mechanical.** Every row carrying a quantified value carries
+the passage in which that value appears — not a paraphrase, not a summary, the source's own
+sentence or paragraph. Then the check writes itself:
+
+> **The claimed value must appear in the quoted text.**
+
+A one-line predicate — does the normalised `value_numeric` occur in `claim_text`? — turns an
+unverifiable assertion into a checkable one, and it *would* have caught the 1800 mm edit,
+because the quote would still have read 1200. It also catches the far more common real-world
+error: transcription slips, unit confusion, and a figure lifted from the wrong row of a table.
+
+**Proposed acceptance condition (Stage 7), superseding the locator-only form:**
+
+> A row asserting a quantified value is acceptable only if it carries **(i)** the value,
+> **(ii)** a decomposed locator, and **(iii)** the verbatim passage in which the value appears,
+> long enough to carry its qualifying conditions — and the value must be findable in the
+> passage. Absent (iii), the row is `[UNVERIFIED-QUANT]` regardless of how precise its locator is.
+
+**Why "long quote" and not "the sentence".** Doctrine commitment 1 requires every parameter to
+expose within-population variability, and code values almost never stand alone — they are
+bounded by scope, exceptions and conditions in the surrounding text ("1200 mm minimum, except
+where the corridor serves fewer than N occupants"). A one-line excerpt reproduces the number
+while discarding exactly the qualifications that make it answerable. The excerpt should be the
+smallest passage that carries the value *and its conditions*.
+
+**This is also the missing half of the backward walk.** DR-2026-08-06 §1 requires that a
+published claim walk back to the values it rests on and the sources those came from. With a
+locator alone, the walk terminates at a citation a reader must go and buy. With the passage
+stored, the walk terminates at **evidence** — which is what the constitutive claim actually
+promises.
+
+**Method:** add a `claim_text` (and `claim_text_lang`, per R11 — no back-translation) to
+`jurisdictional_values`, matching the column that already exists on the two extraction tables;
+add the value-in-quote check; make it blocking once the corpus is non-trivial. **Cost today:
+109 rows, all of which need revisiting anyway because none carries a `ref_id` (N1).** Doing both
+in one migration is strictly cheaper than doing either later.
+
+**Gate:** owner (D-SCHEMA), but it is additive and nullable, so the migration is safe; the
+acceptance rule is the part that needs ratifying.
+
 ### 1.1 The governing finding
 
 **The clean-room reset changed the subject of every check in the repository, in one commit,
