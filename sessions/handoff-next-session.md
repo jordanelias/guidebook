@@ -2,7 +2,7 @@
 
 **Repo:** `jordanelias/guidebook`
 **Branch:** `claude/status-check-12728x` · **PR:** #91 (open)
-**HEAD at handoff:** `331f59a`
+**HEAD at handoff:** `804a4bf`
 **Last session record:** `sessions/session_2026-08-11-structural-integrity-audit.md`
 **Latest PI in repo:** `governance/project-instructions-v10_14.md` (the repo PI legitimately lags — the owner pastes it into claude.ai)
 **Doctrine SHA:** `0f2f525`
@@ -51,6 +51,21 @@ value never rendered at all.
 
 **Nothing has been executed.** The register proposes; it does not act.
 
+## The one finding to read before anything else
+
+**The renderer makes evidence-thin populations disappear** (`§1.0h` of the plan). A population
+linked to an item but holding no determination is absent from the rendered table entirely — not
+marked thin, not marked pending, not there. `[BEST-PRACTICE-PENDING]` is emitted by one
+unexercised file and appears in **no** rendered page; neither live generator selects
+`gap_register_id`.
+
+Doctrine is explicit that silence on evidence-thin populations is not the default. This has
+shipped no wrong pages only because `evidence_cell_state` is empty — **the moment determinations
+land, the populations with the thinnest evidence are the ones that will not appear.** No gate is
+needed to fix it; it is implementing ratified doctrine. One question for the owner first: if the
+intent is that `site/` shows only determined cells and coverage lives elsewhere, the fix is wrong
+and the doctrine text needs amending instead.
+
 ## Do these first — no decision required
 
 1. **Guard the three unguarded direct writers.** `scripts/migrations/session_2026_05_11g_replay.py`,
@@ -97,9 +112,15 @@ are trivial now.
 
 ## Outstanding from this session
 
-- A doctrine-lens antagonist pass on pipeline stages 4–6 and 10–12 (logged as a deviation in
-  the attestation).
-- The migration emitter was never exercised end to end; the sanctioned write path remains
-  untested.
+- **Doctrine-lens passes on stage segments 1–3 and 7–9.** The passes on 4–6 and 10–12 ran and
+  found 3 breaches and 8 erosions — and one of those breaches had also propagated into segment
+  1–3, found only by transfer. Assume 1–3 and 7–9 carry similar defects.
+- **Co-1 co-primacy is enforced by nothing.** `evidence_type='co1' ⇒ tier=1` has no CHECK, no
+  test, no registry entry; `validate_source_co1_fields()` has never run because it scans
+  `data/sources/*.yaml`, which does not exist. Doctrine's most distinctive commitment is the
+  least defended.
+- The migration emitter is now tested end to end and works; but only on a one-row payload with
+  no downstream readers. A real topic must still pass through it with cell, determination and
+  render attached.
 - `governance/context-map.yaml` is new — regenerate it, never edit it
   (`python3 scripts/generate/context_map.py`).

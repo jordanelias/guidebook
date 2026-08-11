@@ -483,6 +483,91 @@ in one migration is strictly cheaper than doing either later.
 **Gate:** owner (D-SCHEMA), but it is additive and nullable, so the migration is safe; the
 acceptance rule is the part that needs ratifying.
 
+### 1.0h The renderer makes evidence-thin populations disappear — a doctrinal breach in shipped code
+
+**This is the most serious finding in this document, and it is not a tooling defect.**
+
+Doctrine, `governance/mission-and-epistemics.md` §Evidence-state machine, in its own words:
+
+> **Silence on evidence-thin populations is not the default.** The Cochrane yardstick
+> distinguishing absence-of-evidence from evidence-of-absence … is honored at the cell level.
+
+The mechanism doctrine specifies: a `pending` cell renders as **`[BEST-PRACTICE-PENDING]`
+plus a gap-register link**, so that a population the evidence has not reached is *visible as
+unreached* rather than absent.
+
+**No shipped renderer implements it.** Measured:
+
+```
+$ grep -n "gap_register_id\|BEST-PRACTICE-PENDING" scripts/generate/spec_page.py \
+      scripts/generate/population_page.py
+(no match in either file)
+
+$ grep -rln "BEST-PRACTICE-PENDING" scripts/ tools/
+scripts/generate/pilot_renderings.py          # BUILT+UNEXERCISED
+
+$ grep -rl "BEST-PRACTICE-PENDING" site/ parts/
+(no output)
+```
+
+Three consequences, in increasing severity:
+
+1. Neither live generator ever selects `gap_register_id`, so **the gap link cannot be rendered**
+   even when one exists.
+2. A `pending` cell renders as the bare word "pending" — a status, not the flagged claim
+   doctrine requires.
+3. **A population linked to an item but holding no cell is absent from the determination table
+   entirely.** Not marked thin. Not marked pending. Simply not there.
+
+The third is the breach. Doctrine's whole point is that an evidence gap for a disability
+population must appear *as a gap*, because a population that silently vanishes from a table
+reads to every user as a population the parameter does not concern. **That is the erasure this
+project exists to prevent, implemented in the renderer**, and it sits directly against
+commitment 1 (population codes are organising scaffolding, and within-population variability is
+first-class) and against the project's stance as an advocacy instrument centred on disabled
+people.
+
+It has shipped no wrong pages *yet* only because `evidence_cell_state` is empty. **The moment
+the first determinations land, the populations with the thinnest evidence — which, for this
+project, means the most marginalised communities in the taxonomy — are the ones that will not
+appear.**
+
+**Method:** both generators select `gap_register_id` and render `pending` as
+`[BEST-PRACTICE-PENDING]` with its gap link; and the determination table is built from the
+item's **linked populations** (`item_population_links`), left-joined to cells, so a population
+with no cell renders an explicit "no determination — evidence not yet gathered" row rather than
+vanishing. Then a render check asserts that every linked population appears in the table.
+**Gate:** none — this is implementing ratified doctrine, not deciding it.
+
+**Falsification:** if the owner's intent is that `site/` shows only determined cells and
+coverage is communicated elsewhere, the fix is wrong and the doctrine text needs amending
+instead. Ask before building.
+
+### 1.0i Two symmetric errors about Option A, one in each direction
+
+Worth stating together, because this document made **both** and they look like opposites:
+
+- §1.0f's earlier draft (and two other passages) stated §3's repealed binary — *code
+  convergence is not evidence, full stop* — which under-states: it would suppress a claim
+  doctrine says to state-and-flag.
+- The stage-10 analysis stated **only Option A's ceiling** ("never above the weak band"),
+  which restores the repealed absolute I3 **by omission** — the same suppression, arrived at by
+  saying nothing rather than by saying the wrong thing.
+
+**The rule cuts both ways and both directions are errors.** It forbids reading a T4–T6
+convergence as a best-practice claim at ●/◐, unflagged, or with the caveat dropped. It *equally*
+forbids suppressing such a determination, withholding the phrase "best practice" from it, or
+demoting it to "regulatory floor only" when nothing stronger exists — DR-2026-07-21 repealed
+I3's absolute form precisely because **suppression was itself the failure**.
+
+A related correction, because it is the same confusion in the marker layer: an earlier framing
+counted "how many spec sentences carry ●" as a compliance measure. **That is backwards.** The
+doctrinal deficit is an *unmarked* sentence; a document marked ○ throughout is fully compliant,
+and adding ● to a code-derived or thin-base claim is exactly the laundering failure
+`references/project-standards.md` L26 names — "the prior two-marker rule graded T4–6-only as ●,
+the convergence-laundering failure mode in its oldest form". Unmarked-sentence coverage across
+the corpus is **unmeasured**, which is the real gap.
+
 ### 1.1 The governing finding
 
 **The clean-room reset changed the subject of every check in the repository, in one commit,

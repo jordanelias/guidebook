@@ -114,15 +114,53 @@ instructing sessions to file into `economics_entries`, and **no write path at al
 - A `D` / `D(fk)` enforcement rung proposed for CLAUDE.md §2's spectrum, which has no rung for
   schema constraints — the systematic error two independent antagonists found separately.
 
+## The doctrine lens, run last, found what four other lenses missed
+
+Both outstanding doctrine passes were completed before close. They returned **3 doctrinal
+breaches and 8 erosions** across stages 4-6 and 10-12, and one breach transferred to the
+stages 1-3 segment that no doctrine lens ever covered.
+
+- **The renderer makes evidence-thin populations disappear.** Doctrine: "Silence on
+  evidence-thin populations is not the default"; a `pending` cell renders as
+  `[BEST-PRACTICE-PENDING]` plus a gap link. Neither live generator selects `gap_register_id`;
+  the token is emitted by one unexercised file and appears in **no** rendered page; and a
+  population linked to an item but holding no cell is **absent from the determination table
+  entirely**. That is the erasure this project exists to prevent, in shipped code. It has
+  produced no wrong pages only because `evidence_cell_state` is empty.
+- **Three passages of the deliverable stated a repealed rule as operative** —
+  `tier-system.md` §3's binary, superseded 2026-07-20 by §8 + Option A.
+- **And the mirror-image error elsewhere**: stating only Option A's ceiling, which restores the
+  repealed absolute I3 by omission. Both directions are errors; suppression was itself the
+  original failure.
+- **Co-1 co-primacy is enforced by nothing.** `evidence_type='co1' ⇒ tier=1` has no CHECK, no
+  test, no registry entry, and `validate_source_co1_fields()` has never run — it scans
+  `data/sources/*.yaml`, which does not exist.
+
+The lens's structural observation is the one to carry forward: no clinical-first *assertion*
+anywhere, but a clinical-first *shape* — four of five erosions are omissions from acceptance
+lists, and each omits a condition a Co-1, non-English or regulatory-stratum row would need and
+a DOI-bearing English journal article would not.
+
+## The sanctioned write path, now tested
+
+`scripts/emit_data_migration.py` was exercised end to end against a scratch copy: emit → detect
+as pending → apply → ledger increments in the copy only → canonical untouched → tree clean.
+Every property held. **The migration system is the strongest component in the repository**, which
+sharpens rather than softens the enforcement findings: the discipline is sound and the gates
+around it are what fail.
+
+It proves the mechanism, not that a real content change survives it — the payload was one row in
+a table with no downstream readers.
+
 ## What was NOT done, deliberately
 
 **Nothing in the remediation register has been executed.** No fix, no promotion, no migration,
 no retirement, no file move. The deliverable proposes; it does not act. Every owner-gated item
 is marked as such with a recommendation and its evidence.
 
-The migration emitter (`scripts/emit_data_migration.py`) was not exercised by the walk, because
-it writes into tracked `scripts/migrations/`. **The sanctioned write path is therefore still
-untested end to end** — a real topic must also pass through it.
+**Stage segments 1-3 and 7-9 were never doctrine-reviewed.** Given that the one doctrine pass
+which did run found a breach that had also propagated into segment 1-3 undetected, those two
+segments should be assumed to carry similar defects.
 
 ## Bias and counterclaim
 
