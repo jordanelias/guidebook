@@ -22,7 +22,7 @@ The audited document's own protocol (its Part 3), turned back on it: lens-separa
 factual, method/logic, vacuity, doctrine, cross-artefact — with the default verdict REFUTED and
 CONFIRMED requiring personal reproduction. Every quoted measurement was re-executed rather than
 read. The trial ran in a byte copy of the repository through the sanctioned write path
-(`emit_data_migration.py` → `migrate_db.py`), 23 migrations emitted; **the canonical clone was
+(`emit_data_migration.py` → `migrate_db.py`), 25 migrations emitted (23 surviving; two deleted to escape the deadlocked queue); **the canonical clone was
 never written**, verified clean at close.
 
 ## What was delivered
@@ -31,7 +31,7 @@ never written**, verified clean at close.
   handoff's questions, and the four owner questions on how the tools understand best practice.
 - `workplan/2026-08-12-pipeline-walk-trial-log.md` — the complete action/IO log: every command,
   every SQL payload verbatim, every emitted migration file, every stdout/stderr, exit code, and
-  the row-count delta on all 67 tables per action (3,865 lines).
+  the row-count delta on all 67 tables per action (3,875 lines).
 - `workplan/2026-08-12-pipeline-phase-state-map.md` — what the data looks like at each of the
   twelve phases, what key carries the work forward, and what is dropped at each boundary.
 
@@ -137,3 +137,36 @@ Read the review's Part 5. Recommendations 1–4 are one-to-four-line changes to 
 doing while a foreign-key violation can commit and a failed migration can silently void the
 queue behind it. Recommendation 9 — ruling whether value determination is a machine stage or a
 human one — is upstream of most of the rest.
+
+---
+
+## Addendum 2026-08-12 — four-direction audit of the work log
+
+At owner direction, the work log was audited forward, backward, for completeness, and for
+internal consistency. Full report: `workplan/2026-08-12-work-log-audit-four-directions.md`.
+
+**Forward and backward pass.** Five load-bearing results re-derived against the surviving scratch
+database match the log exactly, and all ten log-level findings are carried into the review with
+none dropped. But the review cites **no log identifier at all** — claims join to their evidence
+by prose correspondence, which is the same defect the review faults elsewhere in the corpus.
+
+**Completeness found the real gap.** The log covers the trial and not the review: probing it for
+`migration_reproducibility`, `run_checks`, `check-registry`, `graph_audit`, `_legacy_guard`,
+`requirements.txt` and `70/70` returns zero for every one. The review's **19 load-bearing
+verdicts** — 13 factual-lens rows and 6 self-corrections — were produced by direct shell calls
+whose commands are quoted in prose and whose outputs were never recorded. The trial has a
+130-action verbatim log; the review that pronounces CONFIRMED and OVERSTATED on another session's
+work has none. By the standard the review imports from commit #91 — *"where a claim has no
+command, treat it as unaudited"* — it sits one rung below the document it audits.
+
+The trial driver scripts existed only in an ephemeral scratch tree. The reusable half is now
+preserved as `scripts/tests/walk_harness.py`; the content-laden stage scripts are deliberately
+not, since they carry the pre-existing material the owner has ruled must not seed content
+research, and their payloads are already in the log verbatim.
+
+**Two number discrepancies, both fixed in this commit.** The log was cited as 3,865 lines and is
+3,875 — my own quarantine banner added ten and invalidated two citations, the third instance of
+that defect class in three consecutive documents. And **"23 migrations were emitted" was wrong:
+25 were.** The two missing are precisely the files deleted to escape the deadlocked queue, so the
+figure reported was the one that makes the interventions invisible. Not deliberate — the count
+came from an `ls` of survivors — but the direction of the error is unlucky and it is corrected.
