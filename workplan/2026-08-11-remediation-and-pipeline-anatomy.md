@@ -517,6 +517,64 @@ The junctions are empty today, so the migration is free.
 **Gate:** owner — retiring a column is a schema decision (D-SCHEMA), and the JSON columns are
 read by existing code that must be swept first (§0 rule 5).
 
+**C12 · An unguarded replay script can silently undo the clean-room reset. Fix this first.**
+
+`scripts/migrations/session_2026_05_11g_replay.py` writes `evidence_sources`,
+`source_slug_links`, `citation_mining` and `gaps` **directly to the canonical database**. Every
+property below was verified:
+
+```
+$ grep -n "DEFAULT_DB\|add_argument" scripts/migrations/session_2026_05_11g_replay.py
+33:DEFAULT_DB = os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db")
+38:    p.add_argument("--db", default=DEFAULT_DB)      # no required args
+$ ls -la scripts/migrations/session_2026_05_11g_data.json
+-rw-r--r-- 1 root root 45944 …                          # the payload is present
+```
+
+Its payload holds **14 new `evidence_sources`, 14 `source_slug_links`, 21 `citation_mining`
+rows, 5 source updates, 8 new gaps and 2 gap closures** — 64 pre-reset rows.
+
+Four properties compound into the hazard:
+1. **It runs with no arguments** and defaults to the canonical DB.
+2. **Its payload is committed and present**, so it would succeed, not fail safe.
+3. **It lives in `scripts/migrations/`** — the directory CLAUDE.md §0 rule 4 names as *the*
+   sanctioned write path — so it reads as blessed.
+4. **`migrate_db.py` globs `*.sql`**, so running it leaves **no `data_migrations` row**. The
+   write would be invisible to the ledger that exists to record writes.
+
+**It would reintroduce, without a trace, precisely the corpus DR-2026-08-06 deliberately set
+aside** — and the blocking `migration_reproducibility` gate compares `COUNT(*)` on six tables,
+so it *would* catch this one (the counts change). That is luck, not design: the same script
+shape doing `UPDATE`s would pass.
+
+**Its seven siblings are already guarded.** `scripts/migrate/` carries `_legacy_guard.py`, added
+2026-08-04, and seven of nine scripts there import it. **Three writers were missed:**
+```
+$ for f in scripts/migrate/*.py scripts/migrations/*.py; do grep -q _legacy_guard "$f" || echo "$f"; done
+scripts/migrate/init_database.py
+scripts/migrate/phase_jv_appendix_a.py
+scripts/migrations/session_2026_05_11g_replay.py
+```
+**Method:** import `_legacy_guard` into all three. It is a five-line change, it needs no
+decision, and it should land before anything else in this document. Then consider whether a
+`.py` file belongs in `scripts/migrations/` at all — the directory's contract is `*.sql`.
+**Gate:** none. **Falsification:** if `_legacy_guard` does not in fact refuse the canonical DB,
+this fix is theatre — read it before relying on it.
+
+**The wider finding:** a write-map of all 67 tables classifies **16 scripts as TOOL writers** —
+direct writers of the canonical DB, contrary to §0 rule 4. `scripts/db.py` alone carries 22
+write statements across 15 tables, while CLAUDE.md §4 describes it as the tool to "use to *read*
+freely". The rule is real and the practice diverged from it long ago; the honest options are to
+enforce the rule or to amend it, not to keep asserting it.
+
+**Also surfaced: 11 tables have no writer at all** — `case_studies` and its four satellites,
+two `economics_entry_*` junctions, `external_root_registry`, `extraction_population_links`,
+`situations`, and `room_items` (which has never had a single DML statement in repo history,
+only `CREATE TABLE`). Two views, `v_unregistered_roots` and `v_root_id_conflicts`, read
+`external_root_registry` and can therefore only ever return the trivial answer. **A table
+nothing can fill and a table waiting for unwritten code look identical in a schema dump** —
+which is exactly the ambiguity the pre-content review exists to resolve.
+
 ### 1.5 Class D — owner decisions, with a recommendation each
 
 | # | Decision | Recommendation |
