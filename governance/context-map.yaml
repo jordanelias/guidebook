@@ -102,14 +102,14 @@ directories:
     authority: canonical
     hidden_from_ripgrep: false
 pointers:
-  sessions_latest: session_2026-08-11-structural-integrity-audit.md
+  sessions_latest: session_2026-08-12-commit-91-review-and-corridor-walk.md
   sessions_latest_resolves: true
   sessions_latest_research: session_2026-07-26-energy-conservation-rest-points-seating-b3.md
   sessions_latest_research_resolves: true
   doctrine_sha: 0f2f525
   doctrine_file: governance/mission-and-epistemics.md
   newest_workplan:
-  - 2026-08-11-remediation-and-pipeline-anatomy.md
+  - 2026-08-12-pipeline-walk-trial-log.md
   live_project_instructions:
   - project-instructions-v10_9.md
 database:
