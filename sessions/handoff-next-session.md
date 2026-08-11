@@ -1,125 +1,126 @@
-# Handoff — infrastructure legibility work, W4 landed
+# Handoff — structural integrity audit complete, remediation not started
 
 **Repo:** `jordanelias/guidebook`
-**Branch:** `claude/w4-continuity`
-**HEAD at handoff:** `2585e1a0`
-**Last session record:** `sessions/session_2026-08-01-tooling-second-pass.md`
+**Branch:** `claude/status-check-12728x` · **PR:** #91 (open)
+**HEAD at handoff:** `804a4bf`
+**Last session record:** `sessions/session_2026-08-11-structural-integrity-audit.md`
 **Latest PI in repo:** `governance/project-instructions-v10_14.md` (the repo PI legitimately lags — the owner pastes it into claude.ai)
 **Doctrine SHA:** `0f2f525`
-**The plan to work from:** `workplan/2026-08-02-architecture-decision-and-execution-plan.md`
+**The plan to work from:** `workplan/2026-08-11-remediation-and-pipeline-anatomy.md`
 
-> **The header fields above are now checked.** `scripts/audit/session_pointer_audit.py`
-> (registered blocking as `session_pointer_resolvable`) fails if `Last session record` or
-> `The plan to work from` names a file that does not exist, and reports drift if
-> `HEAD at handoff` is not an ancestor of the current HEAD. The previous handoff went eleven
-> weeks naming a May HEAD and a merged branch; the fix for that was to rewrite it, and the fix
-> for the fix is that a rewrite is no longer the only thing standing between this file and
-> being wrong. **Keep rewriting it at session close** — the check catches dangling, not stale.
-
----
-
-## The frame this work is under
-
-The owner's stated goal, in their words: *"a very clean working tree that doesn't get bogged down
-by Claude Code constantly pulling up stale information or getting confused when scanning because
-too much context."*
-
-The operative metric is **agent legibility**: when a session greps for a fact, how many answers
-come back, and how many are wrong. "Stale" means **readable and wrong**, not merely old — an
-archived record with a date on it is fine; a live-looking sentence describing a dropped column is
-not. Infrastructure only, by explicit instruction. Content and research work are deferred.
+> **The header fields above are checked** by `validate_cross_refs` (blocking) for the named
+> record and plan, and reported by `test_db_integrity` L04 for pointer drift. Note that
+> `session_pointer_resolvable` — named in CLAUDE.md §10 and in the previous handoff as a
+> registered blocking check — **does not exist**, in the registry or in code. The audit it named
+> was deliberately deleted on 2026-08-06 and its function redistributed; pointer honesty is
+> genuinely enforced, by three other mechanisms, verified by execution. CLAUDE.md §10 needs
+> correcting on this and still describes the *fixed* SKIP hazard as current.
 
 ---
+
+## Start here
+
+**Read `workplan/2026-08-11-remediation-and-pipeline-anatomy.md` §0.2 first** — eleven of that
+document's own first-draft proposals were corrected or killed by its adversarial passes, and the
+correction log tells you which conclusions are load-bearing and which were withdrawn. Then §1.6,
+the sequencing, which exists because `tooling-register.md` §6 already withdrew as unwise the
+exact bundle the first draft proposed.
+
+**Then run the environment setup, because the documented one fails:**
+
+```
+pip install --ignore-installed pydantic jsonschema      # NOT `pip install -r requirements.txt`
+```
+
+`requirements.txt` pins `PyYAML==6.0.3` against a container-installed 6.0.1 that pip cannot
+uninstall, and omits `jsonschema` while asserting in its header that only two dependencies
+exist. Without these, five *blocking* checks fail with `ModuleNotFoundError` and the repo looks
+broken when it is not.
 
 ## Where things stand
 
-**One plan supersedes the rest.** `workplan/2026-08-02-architecture-decision-and-execution-plan.md`.
-W1 is complete (PR #78). **W4 is complete** (this branch). W2, W3 and parts of W5–W8 are open.
+**The apparatus is green and the green is not load-bearing.** `run_checks.py --all` reports
+`PASS — 55 green, 9 advisory`; `test_db_integrity` reports 70/70. Meanwhile a fabricated
+corridor width passes every blocking gate, at least eleven representations are measurably out of
+agreement, and 7 of the last 30 `ci.yml` runs on `main` were red and merged.
 
-### What landed in W4
+**The structural question is answered.** A synthetic topic traversed all twelve stages with no
+break point — so the structure *can* carry content. That is the problem, not the reassurance:
+`tier=99` reached the published bibliography as a fabricated band "T99", and the determined
+value never rendered at all.
 
-| Item | State |
-|---|---|
-| W4.1 split `sessions/LATEST` into `LATEST` + `LATEST-RESEARCH` | done |
-| W4.2 handoff rewritten, and its named HEAD / paths now checked | done |
-| W4.5 close the `research-contract-baseline.json` self-amnesty | done |
-| W4.6 promote `research_contract_sync` to blocking | done |
-| W4.7 drop `db_meta.schema_version` | done |
-| W4.3 enforce `YYYY-MM-DD-slug.md` in `workplan/` | forward-only check; the 57-file rename is owner-gated |
-| W4.4 collapse three connection registers to one | reconciled + callers swept; **the retirement itself is owner-gated** |
+**Nothing has been executed.** The register proposes; it does not act.
 
-**The finding worth carrying forward from W4.1.** The pointer split was necessary and *not
-sufficient*. Pointed at the correct research session, the blocking `citation_mining_session` gate
-still reported `Outstanding: 0` — because the pointer files hold a filename ending in `.md` while
-`evidence_sources.created_by_session` holds the bare stem on 32 of its 33 values. The scoping
-predicate had been selecting nothing, for every session, under either pointer, since `--session`
-was added. The diagnosis in CLAUDE.md §10 was right about the pointer and blind to the join.
+## The one finding to read before anything else
 
-That is the fourth vacuous gate found in this stretch of work. **When a check passes, check that
-it had a subject.** `citation_mining_completeness.py` now prints an `Examined` count and a verdict
-of `OUTSTANDING` / `CLEAN` / `NOTHING-IN-SCOPE`; the same treatment is owed to any gate that can
-be pointed at an empty scope.
+**The renderer makes evidence-thin populations disappear** (`§1.0h` of the plan). A population
+linked to an item but holding no determination is absent from the rendered table entirely — not
+marked thin, not marked pending, not there. `[BEST-PRACTICE-PENDING]` is emitted by one
+unexercised file and appears in **no** rendered page; neither live generator selects
+`gap_register_id`.
 
----
+Doctrine is explicit that silence on evidence-thin populations is not the default. This has
+shipped no wrong pages only because `evidence_cell_state` is empty — **the moment determinations
+land, the populations with the thinnest evidence are the ones that will not appear.** No gate is
+needed to fix it; it is implementing ratified doctrine. One question for the owner first: if the
+intent is that `site/` shows only determined cells and coverage lives elsewhere, the fix is wrong
+and the doctrine text needs amending instead.
 
-## Decision queue — surface to the owner, do not auto-execute
+## Do these first — no decision required
 
-⚑1 branch protection (with the `DB integrity` carve-out until W7 completes) · ⚑2 consolidate the
-five rival (c)-layer tables · ⚑3 `room_page.py` fix-or-archive · ⚑4
-`test_adjudication_integrity` · ⚑5 `test_generate_parts_4_2` (recommend keep + re-fixture) ·
-⚑6 `citation_mining_pipeline.py` · ⚑7 ratify the 11 vocabulary values.
+1. **Guard the three unguarded direct writers.** `scripts/migrations/session_2026_05_11g_replay.py`,
+   `scripts/migrate/init_database.py`, `scripts/migrate/phase_jv_appendix_a.py` — import
+   `_legacy_guard` as their seven siblings already do. The first takes no arguments, defaults to
+   the canonical DB, has its 64-row payload committed and present, and would leave no
+   `data_migrations` record. **This is the one item that can undo the clean-room reset.**
+2. **Wire the registry's existing `deps:` field.** `governance/check-registry.yaml` declares
+   per-battery dependencies; `grep -n "deps" scripts/run_checks.py` returns nothing. Two entries
+   are also wrong: `tests: {deps: []}` is false, and the `governance` entry at line 174 is
+   malformed YAML — unquoted commas in a flow mapping produce two junk keys and a truncated
+   description, which `check_yaml` passes because it is valid YAML.
+3. **Fix the `test_graph_audit` crash.** `graph_audit.py:277` dereferences `None` on an empty
+   `connections` table, hiding every assertion behind it.
 
-**Added by W4:**
+## The owner decisions that unblock the rest
 
-- **The `workplan/` rename.** 57 of 60 top-level files do not sort chronologically by name, so CLAUDE.md
-  §9's instruction — "sort `workplan/` by date and read the newest" — is unfollowable for most of
-  the directory. The forward-only check stops it growing; fixing it is a bulk file move, which is
-  owner-gated (§9 guardrail 4).
-- **Retire the three connection registers to `_archived/references/`.** W4.4. The
-  prerequisites are done and the answer is clean: the two split files hold 113 distinct CON ids,
-  `references/connections/**` holds 246, the `connections` table holds 273, and **every id in the
-  split files appears in both of the others**. They are a strict subset carrying nothing unique
-  and missing 160 rows the DB has, so the retirement loses nothing (§9 guardrail 5 satisfied).
-  The caller sweep found one live caller — `github-io_SKILL.md` told sessions to fetch
-  `connection-register-active.md` over the API with a PAT — now repointed at
-  `scripts/db.py connections`. `connection-register.md`'s redirect stub, which had been sending
-  readers to the two archived files for four months, now points at the DB and carries the
-  reconciliation. **All that remains is the file move, which is owner-gated.**
-- **The advisory `retired_vocabulary` failures are a real backlog, not noise.** 71 occurrences,
-  concentrated in `references/tier*-verified-sources.json` (D-0157 vocabulary in a JSON store whose
-  status vs. the DB is unruled) and `governance/project-instructions-v10_14.md` (a PI snapshot
-  naming `audit.yml`). Both need a classification ruling before a sweep.
+| # | Decision | Why it is first |
+|---|---|---|
+| **D2** | The migration exemption list — `url_verification_runs` and `evidence_sources`-by-DOI are legitimate out-of-migration writers that are not exempt | Blocks the deep-gate promotion *and* the binary-retirement question |
+| **Deep gate** | Promote `migration_reproducibility_deep` to blocking | One word; it passes today (63 of 66 tables identical); closes the fabrication hole. Must land with D2 or the next fortnightly bot run reddens it |
+| **D1** | Branch protection on `main` | Without it every `blocking` level is decorative. Alone, in its own window — never bundled with check promotions |
+| **Binary DB** | Stop committing `data/guidebook.db`; make it a build artifact | The 345 SQL migrations are the reviewable form and rebuild it in 15 s. Gated on D2 |
 
----
+## Two migrations that are free today and never will be again
 
-## Working rules that bit during this work
+DR-2026-08-06 §1 promises a walk back to values, sources, **the population served**, and **the
+doctrine that governed the judgement**. Two of those four cannot be recorded at all:
+`evidence_population_match.target_population` has no FK, and no doctrine column exists anywhere
+in the database. **No quantity of rows fixes either.** With every table empty, both migrations
+are trivial now.
 
-- **The DB is a ~7 MB binary blob with no merge driver.** Two branches both touching it produce an
-  unresolvable conflict. Serialize anything that writes it. The resolution protocol is to discard
-  both blobs and `migrate_db.py --rebuild` — except `evidence_source_authors` and `pipeline_runs`,
-  which are written outside migrations and would be lost.
-- **Reproduce a CI check the way CI invokes it.** An `attestation` battery run *without*
-  `--changed-from` passed on an empty diff and was reported green; CI then failed. Running a gate
-  over nothing is the same defect as the gates being fixed.
-- **Use a quoted heredoc for commit messages** (`<<'EOF'`), or write the message to a file. An
-  unquoted heredoc command-substituted backticked terms out of a message.
-- **`$?` after a pipeline is the last command's status.** Use `${PIPESTATUS[0]}`.
-- **Verify by execution, not by reading**, and fault-inject every new check — the population
-  validator's first draft could not even write the bad value it claimed to catch.
+## Working rules that bit during this session
 
----
+- **Use a heredoc written to a file for commit messages, and substitute the timestamp before
+  writing.** A quoted heredoc (`<<'EOF'`) does not expand `$TS`, and a commit landed with the
+  literal string `[TIMESTAMP]`, failing the format check until amended.
+- **Re-derive a causal claim, not just a count.** Three times this session a pass reported a real
+  defect with a false mechanism. A right conclusion with a wrong cause produces the wrong fix.
+- **Check that a check had a subject.** Five of 28 blocking checks declare a vacuity floor.
+- **`min_items` is not the remedy for a subject that is empty by ratified decision** — the repo
+  adjudicated that on 2026-08-06 and retired a floor it had just added. Use a warranted,
+  self-lifting suppression in the shape of `scripts/audit/graph/known_debt.yaml`.
 
-## Tools and access
+## Outstanding from this session
 
-`scripts/preflight.sh` gates a diff; `python3 scripts/run_checks.py --changed-from origin/main
---explain` says why each check ran or didn't. Install deps first: `pip install -r requirements.txt`,
-then `pip install jsonschema`.
-
-Expect **pre-existing** failures unrelated to your diff: `test_db_integrity` at 63/69 (content
-backlog), and six advisories including `retired_vocabulary`. Read the run before assuming your
-change caused a red — two blocking gates are red on `main` today for owner-gated reasons
-(`references/tooling-register.md` §4).
-
-Never write `data/guidebook.db` directly. All changes ship as migrations
-(`scripts/emit_data_migration.py` → `scripts/migrate_db.py`), verified with
-`python3 scripts/migrate_db.py --rebuild /tmp/rebuilt.db` before pushing.
+- **Doctrine-lens passes on stage segments 1–3 and 7–9.** The passes on 4–6 and 10–12 ran and
+  found 3 breaches and 8 erosions — and one of those breaches had also propagated into segment
+  1–3, found only by transfer. Assume 1–3 and 7–9 carry similar defects.
+- **Co-1 co-primacy is enforced by nothing.** `evidence_type='co1' ⇒ tier=1` has no CHECK, no
+  test, no registry entry; `validate_source_co1_fields()` has never run because it scans
+  `data/sources/*.yaml`, which does not exist. Doctrine's most distinctive commitment is the
+  least defended.
+- The migration emitter is now tested end to end and works; but only on a one-row payload with
+  no downstream readers. A real topic must still pass through it with cell, determination and
+  render attached.
+- `governance/context-map.yaml` is new — regenerate it, never edit it
+  (`python3 scripts/generate/context_map.py`).

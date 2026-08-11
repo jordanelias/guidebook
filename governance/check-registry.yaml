@@ -1025,6 +1025,38 @@ checks:
       do not match a fresh regeneration from the DB. Fix with
       scripts/regenerate_derived.sh, not by demoting the check.
 
+  - id: context_map_fresh
+    cmd: [python3, scripts/generate/context_map.py, --check]
+    battery: render
+    kinds: [data, schema, tooling, governance]
+    level: advisory
+    basis: render/render-freshness
+    cost: fast
+    min_items: 1
+    note: >-
+      Regenerates `governance/context-map.yaml` and compares it to the committed
+      file. The map is the machine-readable orientation index — directories and
+      their authority class, every table with its row count and foreign keys,
+      which scripts write which tables, every registered check with its level and
+      vacuity floor, the session/doctrine pointers, and which directories the root
+      `.ignore` hides from ripgrep. It exists so a fresh session can answer "what
+      is this and can I trust it?" from one query instead of by grepping a tree
+      that hides six directories from search.
+      GENERATED, NEVER WRITTEN, and that is the whole design. A hand-maintained
+      orientation document in this repo becomes readable-and-wrong within a month —
+      the register whose five-of-twenty stated reasons failed their first audit, the
+      source comment asserting a `min_items` that had been retired hours earlier.
+      Every volatile field is derived at generation time, so the only way this file
+      can lie is if nobody regenerates it, which is exactly what this check catches.
+      Output is deterministic: a pure function of the DB and the filesystem, carrying
+      a content-derived `db_fingerprint` and NO HEAD sha — an earlier draft recorded
+      `git rev-parse HEAD`, which would have made the check permanently red, because
+      committing the map changes the sha it records.
+      Advisory while it earns trust; it is mechanically checkable and cheap, so it is
+      a candidate for promotion once it has survived a few regenerations.
+      `min_items: 1` is honest here: the subject is one file that always exists, so
+      an empty subject is a real failure and not a ratified-empty state.
+
   - id: site_pages_fresh
     cmd: [python3, scripts/generate/build_site.py, --check]
     battery: render
