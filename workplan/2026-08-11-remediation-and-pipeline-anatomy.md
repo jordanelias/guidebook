@@ -575,6 +575,58 @@ only `CREATE TABLE`). Two views, `v_unregistered_roots` and `v_root_id_conflicts
 nothing can fill and a table waiting for unwritten code look identical in a schema dump** —
 which is exactly the ambiguity the pre-content review exists to resolve.
 
+**C13 · Attestation validity is checked one commit at a time; the 74-file corpus is checked by
+nothing.**
+
+```
+$ grep -n "base=" scripts/audit/adherence_log_audit.py
+551:def audit(check_filter=None, base="HEAD~1", head="HEAD"):
+$ ls attestations/*.json | wc -l
+74
+```
+
+Both blocking attestation checks — `attestation_presence` and `attestation_schema` — are
+registered without a `--base` override, so each examines only the files changed in the last
+commit. Of the four registered `--check` groups, only one reads all 74 attestations at HEAD.
+
+**Half of this is correct design and must not be "fixed".** *Presence* is a property of a
+change: the question "did this commit's synthesis-path edit bring an attestation?" is only
+answerable against a diff, and widening it would be meaningless.
+
+**The other half is a real hole.** *Schema validity* is a property of a file. An attestation
+that was schema-invalid when committed stays invalid forever and is never re-examined, because
+the only check that would catch it looks at one commit's diff. The corpus-wide validity figure
+(74/74 today, established by hand during this review) rests on no registered check.
+
+**Method:** keep `attestation_presence` diff-scoped. Add a corpus-scoped schema pass — either a
+second registered entry with `--base` widened, or the existing `--check` group that already
+reads all 74, registered in its own right. Cheap, no decision required.
+
+### 1.4b The handshake layer — what the stage contracts actually assert
+
+`governance/pipeline-contract.yaml` declares **19 criteria** across five stages plus six
+cross-stage. Its own auditor reports 14 VERIFIABLE / 5 INCOMPLETE / 0 BROKEN. An independent
+reconciliation finds **11 of the 19 overstate reality** — six because their subject is empty,
+two because the named enforcer checks a different artifact, one because the registered
+invocation exits before the check runs (C1), one because the contract and the registry disagree
+about whether an enforcer exists, and two because the enforcer is narrower than the prose.
+
+Three findings from that layer belong in the pre-content list:
+
+- **The `[ADHERENCE-LOG — stage N]` boundary emits nothing.** The numbered stage list it keys
+  on lives only in the deployed claude.ai preferences, which are not in the repo — so the
+  contract's stage ids are a repo-side reconstruction, and its enforcer cannot see the artifact
+  it names. This also blocks ratification: `DR-2026-07-13-pipeline-contract.md` reads
+  ACCEPTED-with-outstanding-precondition while the YAML still says `PROPOSED / ratified: false`,
+  and **the ratifying act requires a document that does not exist in git.**
+- **The B-before-E phase gate exists only in prose.** The workplan's strict "no BPC is rewritten
+  until its linked sources pass Phase B verification" is attributed to `validate_reasoning.py`,
+  which **never opens the database** — so it cannot evaluate the condition. This is the gate
+  protecting the project's primary deliverable from being written on unverified evidence, and
+  it is a sentence.
+- **Ten ordering assumptions are neither declared nor guaranteed by the runner** — checks that
+  presuppose another check has run, share a fixture, or read state a sibling may rebuild.
+
 ### 1.5 Class D — owner decisions, with a recommendation each
 
 | # | Decision | Recommendation |
