@@ -252,12 +252,14 @@ holds: fix the substrate, then rule on the boundary, then build.**
 reaches 0% uptake (**D1**). Each seam lands with a registered check that fails a new script
 rolling its own.
 
+**Revised against the owner's file constraint (§5.2). Two seams, not four — both landing in
+`db.py`, both enforced by editing an existing audit. Zero new files.**
+
 | Order | Seam | Replaces | Enforcer | Rationale |
 |---|---|---|---|---|
-| 1 | **id allocators** — `next_gap_id`, `next_con_id`, `next_term_id` | the **D3** class | check: no module defines a `next_*_id` outside `db.py` | This is where a variant becomes a **schema violation**, not a style difference. B4 is the proof |
+| 1 | **id allocators** — `next_gap_id`, `next_con_id`, `next_term_id` | the **D3** class | extend `db_path_env_audit.py`: no module defines a `next_*_id` outside `db.py` | This is where a variant becomes a **schema violation**, not a style difference. B4 is the proof |
 | 2 | **`connect(readonly=)`** | 4 idioms (**D2**) | extend `db_path_env_audit.py`, which already gets 74% on the env half and 76% on read-only | Prevents a writable handle where read-only was intended |
-| 3 | **`report(name, examined, failures)`** | 7 verdict formats (**D2**) | check: every registered check emits `EXAMINED: <n>` | Removes the hazard CLAUDE.md §7 documents as "read the exit code, not the wording", and feeds `run_checks.vacuity_failure()` |
-| 4 | **`repo_root()`** | 4 idioms | — | **No correctness argument. Last, or not at all.** Named so it is not smuggled in with the other three |
+| — | ~~`report()`~~ · ~~`repo_root()`~~ | 7 verdict formats, 4 path idioms | — | **DROPPED.** Each needs a new module and a new check — four files for two style conventions with no defect history. `report()`'s one verdict-changing convention (`EXAMINED:`) is already enforced by `run_checks.vacuity_failure()` |
 
 ### 3.3 Centralisation
 
@@ -343,12 +345,40 @@ Injection is a **consistency** measure, exactly as the owner framed it, and it s
 for on the two correctness grounds this review established — the B4/D3 schema violation, and the
 read-only handle — never on volume. Anyone who justifies it by line count is selling it wrong.
 
-### 5.2 The caveat does not apply here: injection adds **zero** files
+### 5.2 The caveat applies, and applying it drops two of the four seams — CORRECTED
 
-The owner's exemption anticipates centralisation increasing file count. In this repository it
-does not. **`db.py` already exists, already provides `connect()`, `now()`, `next_gap_id()`,
-`insert_gap()`, `log_search()` and 38 more — and has zero importers.** All four seams in §3.2
-belong in that file. The cost was paid in April; nothing has drawn on it since.
+**An earlier draft of this section claimed injection adds zero files because `db.py` already
+exists. That reasoning was wrong twice**, and the owner caught it:
+
+1. **Two of the four seams do not belong in `db.py`.** `report()` and `repo_root()` are not
+   database concerns. Putting them there is precisely the grab-bag habit that produced an
+   1,889-line module with no importers. They would each need a file.
+2. **I omitted the enforcers.** §3.2 proposes four seams "each shipping with a registered check."
+   Those checks are files too, and they were never counted.
+
+**Re-done with the constraint actually applied.** Two facts narrow the cost, both verified:
+
+- `run_checks.py:272` already carries `EXAMINED_RE` and `vacuity_failure()` — the only reporting
+  convention that changes a verdict is **already enforced by the dispatcher**.
+- `db_path_env_audit.py` already audits exactly the scope a connect-idiom check needs: scripts
+  that call `sqlite3.connect` and name `guidebook.db` in code, with legacy directories excluded.
+
+| Seam | Home | Enforcer | New files |
+|---|---|---|---|
+| **id allocators** (`next_gap_id`, `next_con_id`, `next_term_id`) | `db.py` — already has them | edit `db_path_env_audit.py` | **0** |
+| **`connect(readonly=)`** | `db.py` — already has it | edit `db_path_env_audit.py` | **0** |
+| ~~`report()`~~ | needs a new module | already covered by `vacuity_failure()` | **DROPPED** |
+| ~~`repo_root()`~~ | needs a new module | — | **DROPPED** |
+
+**Net new files: 0 — for a different and better reason than the draft gave.** Not "the library
+already exists", which held for only half the seams. Rather: **once the enforcer files are
+counted, only the two seams carrying a correctness argument survive the constraint — and both
+are database operations that belong in the file that already has them.** The two style seams are
+dropped rather than smuggled in behind the two that matter.
+
+**What this costs.** The 7 verdict formats and 4 repo-root idioms stay. That is the honest price
+of the constraint, and it is the right price: CLAUDE.md §7's "read the exit code, not the
+wording" is a workable rule, and no repo-root idiom has ever produced a defect.
 
 ### 5.3 The either/or this forces
 
@@ -371,14 +401,14 @@ nothing), C1 (`deps:` declared and never read), and E7 (a ratified marker with n
 | Action | Files | Lines | Reversible? |
 |---|---|---|---|
 | **F5** retire the one-shot importer layer | **−18** | **−5,850** | yes — `_archived/`, and it closes **B5** |
-| §3.2 injection (all four seams) | **0** | ~−350 | yes |
+| §3.2 injection (**two** seams, §5.2 corrected) | **0** | ~−150 | yes |
 | **F2** cut 2 tables + 2 views | — | — | **no** — owner-gated, last |
 | **F1** fold two coverage tables | — | — | yes, DDL only |
 | **F3** one locator block instead of three | — | −32 columns | yes |
 | `db.py` if §3.2 is rejected | −1 | −1,889 | yes |
 
-**Net if the plan runs: 133 → 115 executables, ~40,171 → ~34,000 lines (−15%), 66 → 63 tables,
-18 → 16 views.** One action — F5 — delivers **94% of the line reduction**, and it is the same
+**Net if the plan runs (revised in §6): 133 → ~106 executables, ~40,171 → ~33,000 lines (−18%),
+66 → 58 tables, 18 → 16 views.** One action — F5 — delivers **94% of the line reduction**, and it is the same
 action that closes the unguarded-writer finding. If only one thing is done for volume, it is
 that one.
 
@@ -386,3 +416,81 @@ that one.
 §6.5 makes quarantine-with-reason terminal, and **A2 has just demonstrated why the list has
 value** — the detector that names five bad rows is on it. The fix is to make quarantine mean
 something more precise (§3.3, C6), not to empty it.
+
+---
+
+## Part 6 — Revised consolidation: I was too conservative, by 5 tables and 7 executables
+
+*Owner's challenge: interrogate by **type** as well as by phase — there is more overlap than I
+credited. Correct. After the two retractions in §1.3 I generalised "do not fold" from two bad
+folds, which is its own error. The retractions had a **specific** cause, and it yields a test.*
+
+### 6.1 The test the retractions actually imply
+
+Both bad folds destroyed a key. So the principled question is not "do these look alike" but:
+**do the tables share the same foreign-key parent set?** If yes, folding preserves every key. If
+no, folding destroys one and is refused. Applied across all 66 tables, this partitions them
+cleanly: **27 have a unique parent set (fold would lose a key — refuse); the rest fall into six
+same-parent groups.** Same parents is *necessary, not sufficient* — `items` and `case_studies`
+share parent `slugs` and are obviously different entities — so each group is then read for role.
+
+### 6.2 Five folds I missed, all FK-safe and all verified
+
+| # | Fold | Evidence | Net |
+|---|---|---|---|
+| **G1** | **`bpc_metadata` → `slugs`** | **Both PK = `slug`. Strictly 1:1.** `slugs` carries `bpc_path`, `sl_path`, `status`; `bpc_metadata` carries completion flags for the same slug. Its only FK is to `slugs`, which disappears into the merge. Textbook 1:1 extension, kept apart for no reason width no longer justifies | **−1** |
+| **G2** | **`citation_mining` → `source_slug_links`** | Same grain, **two key spellings**: PKs `(ref_id, slug)` vs `(slug, local_ref_id)` — and `source_slug_links` *also* carries `local_ref_id`. One (source × slug) relation addressed two ways, which is a defect before it is a duplication | **−1** |
+| **G3** | **`access_duration` + `access_stakes` + `life_stage_modifiers` → one `vocabulary(kind, code, label, definition)`** | `access_duration` and `access_stakes` are **column-for-column identical** (`code, definition, created_at, created_by_session`), 3 rows each; `life_stage_modifiers` adds `label`. **No FKs to lose — none has any.** 8 rows in 3 tables | **−2** |
+| **G4** | **`case_study_outcomes` + `case_study_strategies` → one child table** | Both FK **only** to `case_studies`, so folding them *together* loses nothing — unlike folding them *into the parent*, which §1.3 correctly refused because it destroys the per-row tier grade. **My retraction considered only the wrong direction** | **−1** |
+| **G5** | `search_coverage` + `search_languages` → one axis column | Already held (F1): same parent `slugs`, differ only in axis | −1 |
+
+**Excluded on inspection, so the rule is visible:** `weighting_profile` (PK `audience`+`use_pattern`,
+carries `tier_weights` — not a code/label vocabulary, and separately it is the 3-phase/0-code
+table) and `db_meta` (key–value config, and the home of the authoritative schema marker).
+
+### 6.3 Executables: the overlap is scaffolding, not logic — except in one place
+
+**`scripts/audit/` is 30 files and 8,129 lines.** Read by what they examine: 15 DB-query, 9 other,
+4 file-scan, 2 mixed. **They are not duplicates of one another** — each encodes a distinct
+invariant. Folding 15 domain audits into one parameterised checker would be a rewrite producing
+exactly the monolith `db.py` already is. **Refused.**
+
+But **10 of the 30 are ≤175 lines and check a single invariant each** — `matrix_consistency` (58),
+`table_connectivity` (82), `metadata_integrity_audit` (114), `pre_rehab_banner_audit` (123),
+`source_slug_links_duplicates` (154), `alias_provenance_audit` (156), `population_integrity_audit`
+(157), `reasoning_doc_citations_audit` (169), `db_path_env_audit` (171), `workplan_naming_audit`
+(173) — **1,357 lines in ten files, each a file per assertion.**
+
+They merge into one `scripts/audit/invariants.py --check <id>`. **The registry already dispatches
+by argument in 27 of its 65 entries** (`--deep`, `--session @SESSION@`, `--tier-max 2`), so every
+one stays individually registered, individually gated and individually quarantinable. Nothing about
+the check registry changes. **−9 files**, and it is where the injection seams land for free, since
+ten scaffolds become one.
+
+**Caveat, and it is the owner's own constraint pointing the other way:** this yields one ~1,000-line
+file. That is the shape `db.py` has, and `db.py` has zero importers. The difference is that a
+registered check *is* invoked by id, so the merged module has 10 guaranteed callers on day one —
+but if that argument feels thin, **G6 is the one item here to drop first.**
+
+### 6.4 Revised totals
+
+| | Before | §6 revision | Was (conservative) |
+|---|---|---|---|
+| Tables | 66 | **58** (−8) | 63 (−3) |
+| Views | 18 | **16** (−2) | 16 |
+| Executables | 133 | **~106** (−27: −18 one-shot, −9 merged audits) | ~115 (−18) |
+| Lines | 40,171 | **~33,000** (−18%) | ~34,000 |
+
+**−8 tables, not −3. −27 executables, not −18.** The correction came from applying the
+retractions' *specific* lesson (a fold must not destroy a key) rather than their *mood*.
+
+### 6.5 What still does not fold, and why the list is not longer
+
+- **27 tables have a unique FK-parent set.** Folding any of them destroys a key — the §1.3 error.
+- **The 4 population/axis mapping tables** (`citation_/extraction_/probe_population_links`,
+  plus `population_axis_map` / `access_need_axis_map` / `item_axis_links`) look identical and are
+  **not** foldable for exactly this reason: different parents, three enforced keys each.
+- **The 15 substantive audit scripts** encode different invariants. Merging them is a rewrite.
+- **The 16 quarantined scripts** stay (§3.6), and **A2 is the argument** — the detector naming five
+  bad rows is on that list.
+- **The 49 skills** remain untouched. Three tests, no cuts (§F8).
