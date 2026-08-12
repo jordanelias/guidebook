@@ -1,5 +1,35 @@
 # 2026-08-12 — Resolution plan for everything the trials, the sweep and the audits found
 
+> ## SUPERSEDED IN PART — owner rulings of 2026-08-12, and what has since been executed
+>
+> Revision 5 was authored at 00:47Z. The owner ruled after it, and **where they conflict the
+> rulings win.** Executed changes are in the repo at the commits named; this plan has not been
+> rewritten around them, so read this table first.
+>
+> | Owner ruling | Effect on this plan |
+> |---|---|
+> | **All evidence-stage data cleared; starting fresh** (`7a7bebe`) | **M2 is dead.** W5.1 (all twelve rows), W0.1/W0.2/W0.3 and W5.2 correct values that no longer exist. The shadow-YAML reconciliation is done — 517 value fields cleared across 20 files |
+> | **`jurisdictional_values` retired to reference-only**, for search terminology and document sourcing only | Value columns cleared; the sourcing triple (`item_code`, `jurisdiction`, `standard_name`) survives. `jurisdictional_divergence` now has **no subject** — Part I §I.4's quantity constraints have nothing to constrain |
+> | **DOIs and URLs are kept** (`6dd0cd3`) | 835 locators recovered from the pre-reset corpus into a reference-only `source_locators`. **`user_version` is now 54**, so W3.9 and Part I must re-derive their migration numbers |
+> | **Economics, DAR and case studies are secondary — "tackled far later"** | **M6's content is not the case-study compendium or `references/economics/`**, and Q3's recommendation is superseded. Note also: `case_studies` has *never* held a row, live or archived, and **DAR has no table or column anywhere** |
+> | **Schema and connectivity are kept — "we WILL populate these tables"** | Part I stands in full. Nothing is dropped; legacy *data* was cleared, structure was not |
+> | **(item × population) is renamed `specification`** | `evidence_cell_state` → `specifications`, `cell_source_links` → `specification_source_links`, `cell_id` → `specification_id`. **Sequence this before Part I's rebuilds**, or every constraint is written against a name about to change |
+> | **Resolve all issues, with attention to walking forwards and backwards** | Full-direction probe committed at `7e8319b`: `audits/2026-08-12-pipeline-probe-log.md`, script at `scripts/tests/probe_pipeline.py` |
+>
+> **The probe adds three findings Part I does not cover:**
+>
+> 1. **There is no edge at all between `evidence_cell_state` and `source_value_extractions`.** The
+>    only available join is improvised on `(ref_id, item_code)` where `item_code` is nullable — so
+>    with it NULL, as every live row had, **the backward walk returns zero rows silently.** Part I's
+>    two triggers secure specification→source; they do not secure specification→extraction. A
+>    `specification_extraction_links` junction is needed for the walkback to reach a clause.
+> 2. **Under `foreign_keys=OFF` — the apply path at `migrate_db.py:164` — all 80 FK edges accept
+>    and commit an orphan.** Measured, not argued. This is why Part II precedes Part I: until the
+>    write path enforces, every constraint Part I adds is bypassable by the sanctioned writer.
+> 3. **`source_locators` is itself a dual store** — it duplicates eleven `evidence_sources` columns
+>    keyed by `ref_id` with no FK. Rule: consumed and retired as sources are admitted.
+>
+
 **Status:** PROPOSED. Nothing below is executed. Three items are marked DONE because the sessions
 that found them fixed them while fixing their own defects; everything else is a proposal with a
 gate.
