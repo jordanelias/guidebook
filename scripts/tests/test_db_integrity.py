@@ -18,7 +18,7 @@ Checks performed:
       PRAGMA foreign_keys honoured)
   F — Pipeline run health (no regressions, all started runs completed)
   G — Evidence chain integrity (source_slug_links → evidence_sources → authors)
-  H — JSON-array ↔ junction parity (cell_source_links, search_admissions), held
+  H — JSON-array ↔ junction parity (specification_source_links, search_admissions), held
       in both directions while the JSON columns await their caller sweep
   I — D-0157 verification-standing invariants (status × disposition × method ×
       attempt count)
@@ -118,8 +118,8 @@ def run_checks(db_path):
     # its JSON column, not against the tables the ids point at. A ref present in
     # BOTH stores but absent from evidence_sources would pass every H check.
     for tid, junction, col, parent, pcol in (
-        ("A10", "cell_source_links",  "cell_id", "evidence_cell_state", "cell_id"),
-        ("A11", "cell_source_links",  "ref_id",  "evidence_sources",    "ref_id"),
+        ("A10", "specification_source_links",  "specification_id", "specifications", "specification_id"),
+        ("A11", "specification_source_links",  "ref_id",  "evidence_sources",    "ref_id"),
         ("A12", "search_admissions",  "exec_id", "search_executions",   "exec_id"),
         ("A13", "search_admissions",  "ref_id",  "evidence_sources",    "ref_id"),
     ):
@@ -404,14 +404,14 @@ def run_checks(db_path):
     try:
         ph = ",".join("?" * len(OK_VSTATUS))
         unsound = conn.execute(f"""
-            SELECT COUNT(DISTINCT c.cell_id)
-            FROM evidence_cell_state c
+            SELECT COUNT(DISTINCT c.specification_id)
+            FROM specifications c
             JOIN json_each(c.governing_refs) j
             JOIN evidence_sources e ON e.ref_id = j.value
             WHERE c.state IN ('stated','provisional')
               AND COALESCE(e.verification_status,'') NOT IN ({ph})""",
             OK_VSTATUS).fetchone()[0]
-        total_cells = conn.execute("""SELECT COUNT(*) FROM evidence_cell_state
+        total_cells = conn.execute("""SELECT COUNT(*) FROM specifications
             WHERE state IN ('stated','provisional')""").fetchone()[0]
         record("C10", "no published cell rests on an unverified or disputed source",
                unsound == 0,
@@ -792,7 +792,7 @@ def run_checks(db_path):
     ARRAY_ROWS = ("{t}.{c} IS NOT NULL AND {t}.{c} != '' "
                   "AND json_valid({t}.{c}) AND json_type({t}.{c}) = 'array'")
 
-    EDGE_JSON = (("evidence_cell_state", "governing_refs"),
+    EDGE_JSON = (("specifications", "governing_refs"),
                  ("search_executions",   "admitted_ref_ids"))
 
     def _parity(tid_a, tid_b, label, junction, jcols, table, tcol, key):
@@ -813,9 +813,9 @@ def run_checks(db_path):
         record(tid_b, f"{label}: every JSON entry is in the junction", missing == 0,
                f"{missing} {tcol} entries with no {junction} row" if missing else "")
 
-    _parity("H01", "H02", "cell_source_links ↔ governing_refs",
-            "cell_source_links", ("cell_id", "ref_id"),
-            "evidence_cell_state", "governing_refs", "cell_id")
+    _parity("H01", "H02", "specification_source_links ↔ governing_refs",
+            "specification_source_links", ("specification_id", "ref_id"),
+            "specifications", "governing_refs", "specification_id")
 
     _parity("H03", "H04", "search_admissions ↔ admitted_ref_ids",
             "search_admissions", ("exec_id", "ref_id"),
@@ -854,8 +854,8 @@ def run_checks(db_path):
     # contains it and every entry is found. Only a count comparison sees it.
     dup = []
     for junction, jk, rk, table, tcol, key in (
-        ("cell_source_links", "cell_id", "ref_id",
-         "evidence_cell_state", "governing_refs", "cell_id"),
+        ("specification_source_links", "specification_id", "ref_id",
+         "specifications", "governing_refs", "specification_id"),
         ("search_admissions", "exec_id", "ref_id",
          "search_executions", "admitted_ref_ids", "exec_id"),
     ):
@@ -953,8 +953,8 @@ def run_checks(db_path):
     import json as _json
     stale, unattested = [], 0
     for cid, ic, pc, gr, rv, sha_rec in conn.execute(
-            "SELECT cell_id, item_code, population_code, governing_refs, rule_version, "
-            "derivation_sha FROM evidence_cell_state"):
+            "SELECT specification_id, item_code, population_code, governing_refs, rule_version, "
+            "derivation_sha FROM specifications"):
         if not sha_rec or not rv:
             unattested += 1
             continue

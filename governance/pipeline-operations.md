@@ -25,7 +25,7 @@ and untouched in another.
 | 2 | **Citation mining** *(anchor-driven discovery)* | one confirmed source, as an anchor | further candidate **sources** | `search_candidates` / new `evidence_sources` | `citation_mining` (per slug × local ref) + `evidence_sources.citation_mining_status` |
 | 3 | **Gap-driven mining** *(gap-driven discovery)* | one open row in `gaps` | further candidate **sources** | `search_candidates` | `gap_mining` |
 | 4 | **Data extraction** *(value capture)* | one source we hold | **values**, with locator and population grain | `source_value_extractions`, `spec_value_probes`, `jurisdictional_values`, `economics_entries` | `evidence_sources.data_capture_status` |
-| 5 | **Synthesis** | extracted values across sources for one (item × population) | a **best-practice statement** with an evidence marker | `evidence_cell_state` + `convergence_assessment` | `evidence_cell_state.derivation_sha`, attestations |
+| 5 | **Synthesis** | extracted values across sources for one (item × population) | a **best-practice statement** with an evidence marker | `specifications` + `convergence_assessment` | `specifications.derivation_sha`, attestations |
 
 Adjudication (does this source qualify for admission, at which tier) is not a sixth operation —
 it is the gate between 1–3 and 4, recorded on the source itself
@@ -64,7 +64,7 @@ Measured 2026-08-02; derive current numbers rather than trusting these.
 | Citation mining | 100 sources mined, 67 deferred, **696 pending**. Tier 1–2, where R2 obliges the work: **134 pending, 23 deferred, 34 mined of 191** |
 | Gap-driven mining | `gap_mining` **0 rows** — the table exists and has never been written to; 50 gaps OPEN |
 | Data extraction | **11 of 863** sources have a joinable capture row; 852 pending |
-| Synthesis | `evidence_cell_state` 15 cells of a 93 × 23 grid |
+| Synthesis | `specifications` 15 rows of a 93 × 23 grid (0 after the 2026-08-12 evidence reset) |
 
 ---
 

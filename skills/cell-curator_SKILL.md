@@ -15,8 +15,9 @@ description: >
 > **Schema note (corrected 2026-08-02):** `specification`, `specification_population`, and
 > `population` (singular) **do not exist** in `data/guidebook.db` — verified against
 > `sqlite_master`. The canonical tables are **`items`** (93, all `status='active'`),
-> **`populations`** (23), and **`evidence_cell_state`** (the per-(item × population) cell this
-> skill exists to populate — 15 rows today, of a 93 × 23 grid). Queries below are repointed.
+> **`populations`** (23), and **`specifications`** (the per-(item × population) specification this
+> skill exists to populate — 0 rows today, of a 93 × 23 grid; renamed from
+> `evidence_cell_state` by migration 055 on 2026-08-12). Queries below are repointed.
 >
 > Do **not** run `scripts/db/migrate_all.py`; it targets a legacy path that does not exist.
 > All cell writes ship as migrations (`emit_data_migration.py` → `migrate_db.py`).
@@ -51,7 +52,7 @@ For a given spec, assess evidence state across all 11+ populations:
    ```
 
 2. For each population: classify evidence state based on what's available
-3. Write cell records to **`evidence_cell_state`** — one row per (`item_code`,
+3. Write specification records to **`specifications`** — one row per (`item_code`,
    `population_code`), `state` ∈ `stated` / `provisional` / `pending` / `not_applicable`.
    `stated` and `provisional` require non-empty `governing_refs`. Ships as a migration.
 
@@ -63,7 +64,7 @@ For a given spec, assess evidence state across all 11+ populations:
    CROSS JOIN populations p
    WHERE i.status = 'active'
    AND NOT EXISTS (
-     SELECT 1 FROM evidence_cell_state ecs
+     SELECT 1 FROM specifications ecs
      WHERE ecs.item_code = i.item_code AND ecs.population_code = p.population_code
    )
    ```
@@ -80,7 +81,7 @@ FROM items i
 CROSS JOIN populations p
 WHERE i.status = 'active'
 AND NOT EXISTS (
-  SELECT 1 FROM evidence_cell_state ecs
+  SELECT 1 FROM specifications ecs
   WHERE ecs.item_code = i.item_code AND ecs.population_code = p.population_code
 )
 ```

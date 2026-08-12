@@ -655,7 +655,7 @@ for (t, c, pt, sql) in undeclared:
         "orphan query on a reference column that has NO declared FK",
         "0 dangling", f"{len(rows)} dangling: {rows[:20]}", v, sql=sql)
 
-for (t, c) in [("evidence_cell_state", "governing_refs"), ("search_executions", "admitted_ref_ids")]:
+for (t, c) in [("specifications", "governing_refs"), ("search_executions", "admitted_ref_ids")]:
     a2_examined += 1
     sql = (f"SELECT t.rowid, j.value FROM {t} t, json_each(t.{c}) j "
            f"LEFT JOIN evidence_sources s ON j.value = s.ref_id "
@@ -997,7 +997,7 @@ md(f"\n**SWEEP A EXAMINED:** {len(EDGES)}/80 edges enumerated · {a2_examined} o
 md("\n\n---\n\n## SWEEP B — the pipeline spine, forward\n")
 md("Spine: slugs → search_executions → search_admissions → evidence_sources → "
    "(source_slug_links, source_value_extractions, evidence_population_match) → "
-   "evidence_cell_state → cell_source_links → render. Scratch copy `probe-spine.db`, "
+   "specifications → specification_source_links → render. Scratch copy `probe-spine.db`, "
    "foreign_keys=ON, synthetic rows PROBE-prefixed.\n")
 
 spine_db = fresh_copy("probe-spine.db")
@@ -1099,8 +1099,8 @@ b_step("evidence_population_match", "match row with source_ref garbage + ref_id 
        ["PROBE-MATCH-1", "PROBE-TOTALLY-FAKE-REF", "PROBE-POP-X", "EXACT", TS, SES],
        "should be rejected — source_ref AND target_population both dangle", expect_reject=True)
 
-b_step("evidence_cell_state (OUT OF ORDER)", "cell for an item that does not exist",
-       "INSERT INTO evidence_cell_state (item_code, population_code, state) VALUES (?,?,?)",
+b_step("specifications (OUT OF ORDER)", "cell for an item that does not exist",
+       "INSERT INTO specifications (item_code, population_code, state) VALUES (?,?,?)",
        ["PROBE-K-99", "PROBE-POP", "pending"], "rejected — item FK", expect_reject=True)
 b_step("items", "synthetic item K-99 (category K)",
        "INSERT INTO items (item_code, category, name, status, created_at, created_by_session, updated_at, updated_by_session) VALUES (?,?,?,?,?,?,?,?)",
@@ -1109,31 +1109,31 @@ b_step("populations", "synthetic population PROBE-POP",
        "INSERT INTO populations (population_code, display_name) VALUES (?,?)",
        ["PROBE-POP", "PROBE population"], "accepted",
        note="category, parent_code, status all optional — a population can be created outside the taxonomy")
-b_step("evidence_cell_state", "STATED cell with NULL governing_refs (doctrine: stated requires non-empty governing_refs)",
-       "INSERT INTO evidence_cell_state (item_code, population_code, state, governing_refs, created_at, created_by_session) VALUES (?,?,?,?,?,?)",
+b_step("specifications", "STATED cell with NULL governing_refs (doctrine: stated requires non-empty governing_refs)",
+       "INSERT INTO specifications (item_code, population_code, state, governing_refs, created_at, created_by_session) VALUES (?,?,?,?,?,?)",
        ["K-99", "PROBE-POP", "stated", None, TS, SES],
        "should be rejected per the evidence-state machine", expect_reject=True)
-cell_row = scon.execute("SELECT cell_id FROM evidence_cell_state WHERE item_code='K-99'").fetchone()
+cell_row = scon.execute("SELECT specification_id FROM specifications WHERE item_code='K-99'").fetchone()
 if cell_row:
-    cell_id = cell_row[0]
+    specification_id = cell_row[0]
 else:
-    scon.execute("INSERT INTO evidence_cell_state (item_code, population_code, state, created_at) VALUES ('K-99','PROBE-POP','stated',?)", [TS])
+    scon.execute("INSERT INTO specifications (item_code, population_code, state, created_at) VALUES ('K-99','PROBE-POP','stated',?)", [TS])
     scon.commit()
-    cell_id = scon.execute("SELECT cell_id FROM evidence_cell_state WHERE item_code='K-99'").fetchone()[0]
-b_step("evidence_cell_state.governing_refs", "point governing_refs at one PROBE ref and one dangling ref",
-       "UPDATE evidence_cell_state SET governing_refs = ? WHERE cell_id = ?",
-       [json.dumps(["PROBE-REF-99901", "REF-DANGLING-00000"]), cell_id],
+    specification_id = scon.execute("SELECT specification_id FROM specifications WHERE item_code='K-99'").fetchone()[0]
+b_step("specifications.governing_refs", "point governing_refs at one PROBE ref and one dangling ref",
+       "UPDATE specifications SET governing_refs = ? WHERE specification_id = ?",
+       [json.dumps(["PROBE-REF-99901", "REF-DANGLING-00000"]), specification_id],
        "the dangling entry should be rejected", expect_reject=True)
 
-b_step("cell_source_links (OUT OF ORDER)", "link a nonexistent cell",
-       "INSERT INTO cell_source_links (cell_id, ref_id, role, created_at, created_by_session) VALUES (?,?,?,?,?)",
+b_step("specification_source_links (OUT OF ORDER)", "link a nonexistent cell",
+       "INSERT INTO specification_source_links (specification_id, ref_id, role, created_at, created_by_session) VALUES (?,?,?,?,?)",
        [999999902, "PROBE-REF-99901", "governing", TS, SES], "rejected — cell FK", expect_reject=True)
-b_step("cell_source_links", "governing link cell → PROBE-REF-99901",
-       "INSERT INTO cell_source_links (cell_id, ref_id, role, created_at, created_by_session) VALUES (?,?,?,?,?)",
-       [cell_id, "PROBE-REF-99901", "governing", TS, SES], "accepted",
-       note="key carried: cell_id + ref_id; role CHECK admits only 'governing'")
-rec("B", "cell_source_links vs governing_refs",
-    "the JSON now names 2 refs while cell_source_links holds 1",
+b_step("specification_source_links", "governing link cell → PROBE-REF-99901",
+       "INSERT INTO specification_source_links (specification_id, ref_id, role, created_at, created_by_session) VALUES (?,?,?,?,?)",
+       [specification_id, "PROBE-REF-99901", "governing", TS, SES], "accepted",
+       note="key carried: specification_id + ref_id; role CHECK admits only 'governing'")
+rec("B", "specification_source_links vs governing_refs",
+    "the JSON now names 2 refs while specification_source_links holds 1",
     "the two representations should be forced equal",
     "both writes accepted; the stores disagree and nothing reconciles them (compare Sweep C)",
     "SILENT-PASS")
@@ -1226,12 +1226,12 @@ def c_rec(*a, **kw):
 
 
 refs = [r[0] for r in scon.execute(
-    "SELECT ref_id FROM cell_source_links WHERE cell_id=?", [cell_id])]
-c_rec("cell → cell_source_links", f"resolve links for PROBE cell {cell_id}",
+    "SELECT ref_id FROM specification_source_links WHERE specification_id=?", [specification_id])]
+c_rec("cell → specification_source_links", f"resolve links for PROBE cell {specification_id}",
       "≥1 governing ref", f"refs via csl: {refs}", "OK" if refs else "ERROR")
 srcs = [tuple(r) for r in scon.execute(
     f"SELECT ref_id, tier, pub_title FROM evidence_sources WHERE ref_id IN ({','.join('?'*len(refs))})", refs)]
-c_rec("cell_source_links → evidence_sources", "resolve refs to sources",
+c_rec("specification_source_links → evidence_sources", "resolve refs to sources",
       "all resolve", f"{srcs}", "OK" if len(srcs) == len(refs) else "ORPHAN")
 sql = ("SELECT e.extraction_id, e.ref_id, e.item_code, e.population_code, e.loc_section, e.loc_clause "
        "FROM source_value_extractions e WHERE e.ref_id = ? AND e.item_code = ?")
@@ -1240,7 +1240,7 @@ c_rec("evidence_sources → source_value_extractions (structured join on ref_id+
       "find the extraction backing this cell's value",
       "the extraction row",
       f"{len(rows)} rows — the extraction exists but its item_code is NULL, so the only structured join "
-      "from cell to extraction returns nothing. BROKEN JOINT: no table links evidence_cell_state to "
+      "from cell to extraction returns nothing. BROKEN JOINT: no table links specifications to "
       "source_value_extractions; the join must be improvised on (ref_id, item_code) and item_code is nullable",
       "ORPHAN" if not rows else "OK", sql=sql)
 rows2 = scon.execute("SELECT extraction_id, loc_section, loc_clause, source_section FROM source_value_extractions WHERE ref_id=?", [refs[0]]).fetchall()
@@ -1252,37 +1252,37 @@ c_rec("source_value_extractions → loc_* → clause", "read the decomposed loca
       f"loc_section={rows2[0][1]!r}, loc_clause={rows2[0][2]!r} (set by the probe; live-data density below)",
       "OK")
 
-gr = scon.execute("SELECT governing_refs FROM evidence_cell_state WHERE cell_id=?", [cell_id]).fetchone()[0]
+gr = scon.execute("SELECT governing_refs FROM specifications WHERE specification_id=?", [specification_id]).fetchone()[0]
 gr_refs = json.loads(gr or "[]")
 resolved = [r[0] for r in scon.execute(
     f"SELECT ref_id FROM evidence_sources WHERE ref_id IN ({','.join('?'*len(gr_refs))})", gr_refs)] if gr_refs else []
 dangling = [x for x in gr_refs if x not in resolved]
 c_rec("cell → governing_refs (JSON dual store)", "parse JSON and resolve to evidence_sources",
-      "all resolve, and match cell_source_links",
+      "all resolve, and match specification_source_links",
       f"JSON names {gr_refs}; resolved {resolved}; DANGLING {dangling}; csl says {refs} — the two "
       "representations disagree and nothing reconciles them",
       "ORPHAN" if dangling or set(resolved) != set(refs) else "OK")
 
 con = ro()
-det = con.execute("SELECT COUNT(*) FROM evidence_cell_state WHERE state IN ('stated','provisional')").fetchone()[0]
-have_csl = con.execute("SELECT COUNT(DISTINCT c.cell_id) FROM evidence_cell_state c JOIN cell_source_links l ON l.cell_id=c.cell_id WHERE c.state IN ('stated','provisional')").fetchone()[0]
-have_gr = con.execute("SELECT COUNT(*) FROM evidence_cell_state WHERE state IN ('stated','provisional') AND governing_refs IS NOT NULL AND json_array_length(governing_refs)>0").fetchone()[0]
+det = con.execute("SELECT COUNT(*) FROM specifications WHERE state IN ('stated','provisional')").fetchone()[0]
+have_csl = con.execute("SELECT COUNT(DISTINCT c.specification_id) FROM specifications c JOIN specification_source_links l ON l.specification_id=c.specification_id WHERE c.state IN ('stated','provisional')").fetchone()[0]
+have_gr = con.execute("SELECT COUNT(*) FROM specifications WHERE state IN ('stated','provisional') AND governing_refs IS NOT NULL AND json_array_length(governing_refs)>0").fetchone()[0]
 disagree = con.execute("""
-    SELECT COUNT(*) FROM evidence_cell_state c WHERE c.state IN ('stated','provisional') AND
+    SELECT COUNT(*) FROM specifications c WHERE c.state IN ('stated','provisional') AND
       (SELECT COALESCE(json_group_array(value),'[]') FROM (SELECT value FROM json_each(COALESCE(c.governing_refs,'[]')) ORDER BY value))
-      <> (SELECT COALESCE(json_group_array(ref_id),'[]') FROM (SELECT ref_id FROM cell_source_links l WHERE l.cell_id=c.cell_id ORDER BY ref_id))
+      <> (SELECT COALESCE(json_group_array(ref_id),'[]') FROM (SELECT ref_id FROM specification_source_links l WHERE l.specification_id=c.specification_id ORDER BY ref_id))
 """).fetchone()[0]
 c_rec("canonical: determined cells, dual-store agreement",
-      "compare sorted governing_refs JSON vs sorted cell_source_links per determined cell",
+      "compare sorted governing_refs JSON vs sorted specification_source_links per determined cell",
       "0 disagreements",
       f"determined cells: {det}; with csl links: {have_csl}; with non-empty governing_refs: {have_gr}; "
       f"cells where the two stores DISAGREE: {disagree}",
       "OK" if disagree == 0 else "ORPHAN")
 funnel = con.execute("""
     SELECT
-      (SELECT COUNT(DISTINCT l.ref_id) FROM cell_source_links l JOIN evidence_cell_state c ON c.cell_id=l.cell_id WHERE c.state IN ('stated','provisional')),
-      (SELECT COUNT(DISTINCT e.ref_id) FROM source_value_extractions e JOIN cell_source_links l ON l.ref_id=e.ref_id),
-      (SELECT COUNT(*) FROM source_value_extractions e JOIN cell_source_links l ON l.ref_id=e.ref_id JOIN evidence_cell_state c ON c.cell_id=l.cell_id AND c.item_code=e.item_code),
+      (SELECT COUNT(DISTINCT l.ref_id) FROM specification_source_links l JOIN specifications c ON c.specification_id=l.specification_id WHERE c.state IN ('stated','provisional')),
+      (SELECT COUNT(DISTINCT e.ref_id) FROM source_value_extractions e JOIN specification_source_links l ON l.ref_id=e.ref_id),
+      (SELECT COUNT(*) FROM source_value_extractions e JOIN specification_source_links l ON l.ref_id=e.ref_id JOIN specifications c ON c.specification_id=l.specification_id AND c.item_code=e.item_code),
       (SELECT COUNT(*) FROM source_value_extractions WHERE item_code IS NOT NULL),
       (SELECT COUNT(*) FROM source_value_extractions),
       (SELECT COUNT(*) FROM source_value_extractions WHERE loc_section IS NOT NULL OR loc_clause IS NOT NULL OR loc_part IS NOT NULL OR loc_division IS NOT NULL OR loc_subsection IS NOT NULL OR loc_paragraph IS NOT NULL OR loc_subclause IS NOT NULL),
@@ -1313,7 +1313,7 @@ con.close()
 c_rec("renderers: which representation is read",
       "static inspection (verified again by the Sweep D matrix)",
       "one canonical representation",
-      "cell_source_links (role='governing') read by: scripts/generate/build_site.py, scripts/generate/spec_page.py; "
+      "specification_source_links (role='governing') read by: scripts/generate/build_site.py, scripts/generate/spec_page.py; "
       "governing_refs JSON read by: scripts/generate/pilot_renderings.py (parses the JSON, recomputes derivation_sha, "
       "cross-counts csl); both read by: scripts/validate_evidence_state.py, scripts/tests/test_db_integrity.py, "
       "scripts/assess/assess_cell.py, tools/pipeline_completeness.py",

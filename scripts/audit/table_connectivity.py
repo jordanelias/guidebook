@@ -42,9 +42,9 @@ STAGES = [
     ("5 population match", "SELECT 1 FROM source_slug_links l JOIN evidence_population_match m ON m.ref_id=l.ref_id "
                            "WHERE l.slug=:s AND m.target_population IN (SELECT population_code FROM populations) LIMIT 1"),
     ("6 has a spec",       "SELECT 1 FROM items i WHERE i.bpc_source_slug=:s LIMIT 1"),
-    ("7 spec has a cell",  "SELECT 1 FROM items i JOIN evidence_cell_state c ON c.item_code=i.item_code "
+    ("7 spec has a cell",  "SELECT 1 FROM items i JOIN specifications c ON c.item_code=i.item_code "
                            "WHERE i.bpc_source_slug=:s LIMIT 1"),
-    ("8 BEST PRACTICE",    "SELECT 1 FROM items i JOIN evidence_cell_state c ON c.item_code=i.item_code "
+    ("8 BEST PRACTICE",    "SELECT 1 FROM items i JOIN specifications c ON c.item_code=i.item_code "
                            "WHERE i.bpc_source_slug=:s AND c.state IN ('stated','provisional') LIMIT 1"),
 ]
 

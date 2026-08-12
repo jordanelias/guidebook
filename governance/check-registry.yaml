@@ -306,7 +306,7 @@ checks:
       Every table, every row — the comparison the core invariants cannot make.
       Added 2026-08-01 after an adversarial trace showed the blocking check above
       passes on a tampered DB: editing a row's tier and title, and inserting a
-      forged `stated` cell into evidence_cell_state, both leave all seven
+      forged `stated` row into specifications (then `evidence_cell_state`), both leave all seven
       invariants identical.
       RED, and the two findings look like an incomplete exemption list rather than
       a hand-edited DB: evidence_sources diverges on 277 rows (subtype,

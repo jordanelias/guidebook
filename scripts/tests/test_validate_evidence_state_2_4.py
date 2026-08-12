@@ -39,6 +39,12 @@ def schema_ddl():
             continue  # data_*.sql are rows, not shape
         text = open(os.path.join(MIGRATIONS, fn)).read()
         body = "\n".join(ln for ln in text.splitlines() if not ln.strip().startswith("--"))
+        # Matched against the migrations' own text, which is immutable and
+        # therefore still says `evidence_cell_state` — the table was renamed to
+        # `specifications` by schema version 055, applied below by _apply_055().
+        # Selecting on the new name here would silently pick a different file set
+        # (only `convergence_assessment` would still match) and the fixture would
+        # build the wrong schema.
         if "evidence_cell_state" in body or "convergence_assessment" in body:
             out.append((int(m.group(1)), text))
     return [text for _, text in sorted(out)]
@@ -54,13 +60,60 @@ def fresh():
     c = sqlite3.connect(DBP)
     c.execute("CREATE TABLE items(item_code TEXT PRIMARY KEY)")
     c.execute("CREATE TABLE populations(population_code TEXT PRIMARY KEY)")
-    c.execute("CREATE TABLE gaps(gap_id TEXT PRIMARY KEY)")
+    # description/category/priority are stubbed because v_pending selects them.
+    # A bare gap_id survived only while nothing re-parsed the views; the 055
+    # rename does re-parse them, and the view then fails to compile.
+    c.execute("CREATE TABLE gaps(gap_id TEXT PRIMARY KEY, category TEXT, "
+              "priority TEXT, description TEXT)")
     c.executemany("INSERT INTO items VALUES(?)", [(x,) for x in ("A-02", "A-03", "A-04", "A-05", "A-06", "A-07")])
     c.executemany("INSERT INTO populations VALUES(?)", [(x,) for x in ("AUT", "MOB", "DEAF")])
-    c.execute("INSERT INTO gaps VALUES('GAP-001')")
+    c.execute("INSERT INTO gaps(gap_id,category,priority,description) "
+              "VALUES('GAP-001','RP','P2','fixture gap')")
     for step in DDL:
         c.executescript(step)
+    _apply_055(c)
     return c
+
+
+def _apply_055(c):
+    """Replay schema version 055's rename onto the fixture.
+
+    The numbered migrations above are immutable and correctly create the
+    historical names (`evidence_cell_state`, `cell_source_links`, `cell_id`).
+    Migration 055 renamed them; the physical DDL ships in the paired data
+    migration because the runner applies all schema migrations before any data
+    migration. `schema_ddl()` only collects numbered files, so the rename has to
+    be replayed here or the fixture builds a pre-055 schema.
+
+    Renames are applied only for objects the collected DDL actually created, so
+    this stays correct if `schema_ddl()`'s file set changes.
+    """
+    # The fixture builds a partial schema — several shipped views reference
+    # tables it never creates (v_item_provenance needs evidence_sources, and so
+    # on), so they cannot compile here and never could. A rename re-parses every
+    # view, which turns those pre-existing non-compiling stubs into hard errors,
+    # so they are dropped first. They are not the subject of this test; the
+    # validator under test reads tables, and dropping them keeps the fixture from
+    # carrying view definitions that still name the pre-055 tables.
+    for (v,) in c.execute("SELECT name FROM sqlite_master WHERE type='view'").fetchall():
+        c.execute(f'DROP VIEW "{v}"')
+    names = {r[0] for r in c.execute("SELECT name FROM sqlite_master")}
+    if "evidence_cell_state" in names:
+        c.execute("ALTER TABLE evidence_cell_state RENAME TO specifications")
+        c.execute("ALTER TABLE specifications RENAME COLUMN cell_id TO specification_id")
+    if "cell_source_links" in names:
+        c.execute("ALTER TABLE cell_source_links RENAME TO specification_source_links")
+        c.execute("ALTER TABLE specification_source_links RENAME COLUMN cell_id TO specification_id")
+    for old, new, tbl, col in (
+        ("idx_cell_state_item", "idx_specifications_item", "specifications", "item_code"),
+        ("idx_cell_state_pop", "idx_specifications_pop", "specifications", "population_code"),
+        ("idx_cell_state_state", "idx_specifications_state", "specifications", "state"),
+        ("idx_cell_source_links_ref", "idx_spec_source_links_ref", "specification_source_links", "ref_id"),
+    ):
+        if old in names:
+            c.execute(f"DROP INDEX {old}")
+            c.execute(f"CREATE INDEX {new} ON {tbl}({col})")
+    c.commit()
 
 
 def assert_fixture_current():
@@ -73,14 +126,14 @@ def assert_fixture_current():
     had, when in fact the DB had moved on and the fixture had not.
     """
     c = fresh()
-    present = {r[1] for r in c.execute("PRAGMA table_info(evidence_cell_state)")}
+    present = {r[1] for r in c.execute("PRAGMA table_info(specifications)")}
     c.close()
     # Imported, not restated. A second hardcoded copy of the validator's column
     # list would silently stop covering any column added there — the guard would
     # keep passing while checking less, which is the failure it exists to catch.
     missing = sorted(set(CELL_STATE_REQUIRED) - present)
     if missing:
-        print(f"  [FAIL] fixture schema is stale — evidence_cell_state lacks {missing}.\n"
+        print(f"  [FAIL] fixture schema is stale — specifications lacks {missing}.\n"
               f"         A migration changed the table and schema_ddl() did not pick it up.")
         print(f"\nFAILURES: stale fixture  (1 failed)")
         sys.exit(1)
@@ -114,7 +167,7 @@ def clean(c):
               "VALUES (1,'convergent','[\"REF-1\"]','[\"REF-2\"]')")
     # governing_refs is required on 'stated' (anti-hallucination gate, §2.7). The
     # baseline predated that rule, so it was not clean once the fixture caught up.
-    c.execute("INSERT INTO evidence_cell_state(cell_id,item_code,population_code,state,design_scale,convergence_id,governing_refs) "
+    c.execute("INSERT INTO specifications(specification_id,item_code,population_code,state,design_scale,convergence_id,governing_refs) "
               "VALUES (1,'A-02','AUT','stated','population',1,'[\"REF-1\"]')")
 check("clean stated+convergent → 0 errors", run(clean) == [])
 
@@ -124,33 +177,33 @@ check("stated without governing_refs caught (anti-hallucination gate)",
       has(run(lambda c: (
           c.execute("INSERT INTO convergence_assessment(convergence_id,status,clinical_sources,co1_sources) "
                     "VALUES (1,'convergent','[\"REF-1\"]','[\"REF-2\"]')"),
-          c.execute("INSERT INTO evidence_cell_state(cell_id,item_code,population_code,state,design_scale,convergence_id) "
+          c.execute("INSERT INTO specifications(specification_id,item_code,population_code,state,design_scale,convergence_id) "
                     "VALUES (1,'A-07','MOB','stated','population',1)"))),
           "stated", "governing_refs"))
 
 # pending without gap
 check("pending without gap_register_id caught",
-      has(run(lambda c: c.execute("INSERT INTO evidence_cell_state(cell_id,item_code,population_code,state) "
+      has(run(lambda c: c.execute("INSERT INTO specifications(specification_id,item_code,population_code,state) "
                                   "VALUES (1,'A-03','MOB','pending')")), "pending", "requires gap_register_id"))
 
 # pending with gap not in gaps table (FK off to construct the row)
 check("pending with unknown gap caught (defense-in-depth vs FK)",
-      has(run(lambda c: c.execute("INSERT INTO evidence_cell_state(cell_id,item_code,population_code,state,gap_register_id) "
+      has(run(lambda c: c.execute("INSERT INTO specifications(specification_id,item_code,population_code,state,gap_register_id) "
                                   "VALUES (1,'A-03','MOB','pending','GAP-999')"), fk=False), "not in gaps table"))
 
 # provisional without confidence flag
 check("provisional without confidence flag caught",
-      has(run(lambda c: c.execute("INSERT INTO evidence_cell_state(cell_id,item_code,population_code,state,convergence_id) "
+      has(run(lambda c: c.execute("INSERT INTO specifications(specification_id,item_code,population_code,state,convergence_id) "
                                   "VALUES (1,'A-04','AUT','provisional',NULL)")), "provisional", "confidence flag"))
 
 # not_applicable without rationale
 check("not_applicable without rationale caught",
-      has(run(lambda c: c.execute("INSERT INTO evidence_cell_state(cell_id,item_code,population_code,state) "
+      has(run(lambda c: c.execute("INSERT INTO specifications(specification_id,item_code,population_code,state) "
                                   "VALUES (1,'A-05','DEAF','not_applicable')")), "not_applicable", "rationale"))
 
 # stated without convergence
 check("stated without convergence caught",
-      has(run(lambda c: c.execute("INSERT INTO evidence_cell_state(cell_id,item_code,population_code,state) "
+      has(run(lambda c: c.execute("INSERT INTO specifications(specification_id,item_code,population_code,state) "
                                   "VALUES (1,'A-06','AUT','stated')")), "stated", "convergence"))
 
 # convergent with <2 axes

@@ -4,7 +4,7 @@ scripts/generate/spec_page.py — Static page generator for item (specification)
 pages.
 
 Queries the LIVE schema (items, item_population_links, item_bpc_links,
-bpc_metadata, evidence_cell_state) for a given item_code and produces a single
+bpc_metadata, specifications) for a given item_code and produces a single
 self-contained HTML file, following the same pattern as
 tools/regenerate_vetting_surface.py.
 
@@ -71,14 +71,14 @@ def query_item(conn, item_code):
                           "evidence_state": r[3]} for r in links]
 
     cells = conn.execute(
-        "SELECT cell_id, population_code, state, tier_basis, code_floor_only, "
+        "SELECT specification_id, population_code, state, tier_basis, code_floor_only, "
         "falsification_condition, regulatory_stratum_only, confidence_synthesis_basis, "
         "has_unverified_sources, all_sources_disqualified "
-        "FROM evidence_cell_state WHERE item_code = ? ORDER BY population_code",
+        "FROM specifications WHERE item_code = ? ORDER BY population_code",
         (item_code,),
     ).fetchall()
     item["cells"] = [
-        {"cell_id": r[0], "population_code": r[1], "state": r[2], "tier_basis": r[3],
+        {"specification_id": r[0], "population_code": r[1], "state": r[2], "tier_basis": r[3],
          "code_floor_only": r[4], "falsification_condition": r[5],
          "regulatory_stratum_only": r[6], "confidence_synthesis_basis": r[7],
          "has_unverified_sources": r[8], "all_sources_disqualified": r[9]}
@@ -86,19 +86,19 @@ def query_item(conn, item_code):
     ]
 
     # The governing sources behind each cell. Until migration 044 this edge
-    # lived only as a JSON array in evidence_cell_state.governing_refs, which
+    # lived only as a JSON array in specifications.governing_refs, which
     # this generator never read -- so every page it produced cited nothing at
-    # all while presenting a confident determination. cell_source_links makes
+    # all while presenting a confident determination. specification_source_links makes
     # it a join.
     for c in item["cells"]:
         rows = conn.execute(
             "SELECT csl.ref_id, e.author_display, e.author_display_note, e.pub_year, "
             "e.pub_title, e.tier, e.verification_status "
-            "FROM cell_source_links csl "
+            "FROM specification_source_links csl "
             "JOIN evidence_sources e ON e.ref_id = csl.ref_id "
-            "WHERE csl.cell_id = ? AND csl.role = 'governing' "
+            "WHERE csl.specification_id = ? AND csl.role = 'governing' "
             "ORDER BY e.tier, e.pub_year, csl.ref_id",
-            (c["cell_id"],),
+            (c["specification_id"],),
         ).fetchall()
         c["sources"] = [
             {"ref_id": r[0], "author_display": r[1], "author_display_note": r[2],
@@ -233,7 +233,7 @@ def render_html(item):
         <h2>Governing sources</h2>
         <p>Every source below governs the determination for its population.
         Walk the other direction — every specification a source justifies —
-        through <code>cell_source_links</code>.</p>
+        through <code>specification_source_links</code>.</p>
         {sources_section}"""
     else:
         bp_section = ('<p class="honest-banner">Best-practice determination: '

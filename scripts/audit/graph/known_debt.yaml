@@ -24,11 +24,13 @@ entries:
     lift_when_sql: "SELECT COUNT(*) FROM source_value_extractions"
     lift_when_ge: 1
 
+  # id kept stable across the 2026-08-12 rename (migration 055) so the entry's
+  # paper trail survives; the table it suppresses is now `specifications`.
   - id: c1-evidence-cell-state-pilot-only
     check_id: table.empty_mission_critical
-    table: evidence_cell_state
-    warrant: "DR-2026-07-12 A2 + C1 determination backfill pending (7 pilot rows today)"
-    lift_when_sql: "SELECT COUNT(*) FROM evidence_cell_state"
+    table: specifications
+    warrant: "DR-2026-07-12 A2 + C1 determination backfill pending (0 rows today — pilot rows cleared 2026-08-12 with the evidence-stage reset)"
+    lift_when_sql: "SELECT COUNT(*) FROM specifications"
     lift_when_ge: 20
 
   - id: conflicts-empty-awaiting-migration

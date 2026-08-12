@@ -35,7 +35,7 @@ would consolidate a ghost.
 BOUNDARY
 --------
 This module is the model. Storage of the consolidated directness — including a
-scale_directness column — is Stage 2.3's evidence_cell_state / convergence_assessment
+scale_directness column — is Stage 2.3's specifications / convergence_assessment
 tables; they apply this model. The conditioning is CATEGORICAL, not a number
 (no false-precision confidence score; cf. the convergence assessment, §convergence).
 """

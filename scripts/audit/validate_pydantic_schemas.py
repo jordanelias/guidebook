@@ -63,7 +63,7 @@ MODEL_TABLE_MAP = {
     "decision.Decision": "decisions",
     "evidence_source.EvidenceSource": "evidence_sources",
     "evidence_state.ConvergenceAssessment": "convergence_assessment",
-    "evidence_state.EvidenceStateRecord": "evidence_cell_state",
+    "evidence_state.EvidenceStateRecord": "specifications",
     "gap.Gap": "gaps",
     "item.Item": "items",
     # Migration 053 put 16 locator columns into three tables. Two of the three

@@ -63,7 +63,7 @@ SITE_DIR = REPO_ROOT / "site"
 # enrichment columns diverge. It is a cheap label for a build, not evidence
 # that two builds are equivalent. The sha256 of the output is that.
 FP_TABLES = (
-    "items", "populations", "evidence_cell_state", "cell_source_links",
+    "items", "populations", "specifications", "specification_source_links",
     "evidence_sources", "item_bpc_links", "item_population_links",
 )
 
@@ -87,15 +87,15 @@ def governing_refs(conn, item_code):
 
     Used only to tell the operator how many pages actually show evidence. The
     durable answer to "what justifies this page?" belongs in the provenance
-    views over cell_source_links, which work identically under static or
+    views over specification_source_links, which work identically under static or
     dynamic rendering.
     """
     # role='governing' matches spec_page.py's own filter. Without it the two
     # definitions agree only while 'governing' is the sole role in the table,
     # and diverge silently the day a second one exists.
     return [r[0] for r in conn.execute(
-        "SELECT DISTINCT csl.ref_id FROM cell_source_links csl "
-        "JOIN evidence_cell_state ecs USING (cell_id) "
+        "SELECT DISTINCT csl.ref_id FROM specification_source_links csl "
+        "JOIN specifications ecs USING (specification_id) "
         "WHERE ecs.item_code = ? AND csl.role = 'governing' "
         "ORDER BY csl.ref_id", (item_code,))]
 

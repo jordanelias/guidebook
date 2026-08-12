@@ -4,7 +4,7 @@ scripts/validate_evidence_state.py — Validate evidence state records.
 
 Per governance/evidence-methodology.md (A6), §2 (cell states), §3 (convergence),
 and §1.4/§1.6/§1.7 (scale + directness); decision D-D. Stage 2.4 wires this to
-the real DB tables built in Stage 2.3 (evidence_cell_state +
+the real DB tables built in Stage 2.3 (specifications +
 convergence_assessment) — the canonical source under DB-as-truth — in addition
 to the original YAML-file path.
 
@@ -194,14 +194,14 @@ def _ref_tiers(conn, ref_ids):
     return {r[0]: r[1] for r in rows}
 
 
-# The evidence_cell_state columns this validator selects. Module-level so the
+# The specifications columns this validator selects. Module-level so the
 # regression test's stale-fixture guard can assert against THIS list rather than
 # keeping a second copy of it — a hand-maintained duplicate would silently stop
 # covering any column added here, weakening the tripwire without failing it.
 # tier_basis is appended unconditionally by the query below;
 # regulatory_stratum_only is probed at runtime (pre-027 DBs stay validatable), so
 # it is deliberately not part of the required set.
-CELL_STATE_COLUMNS = ("cell_id,item_code,population_code,state,design_scale,convergence_id,"
+CELL_STATE_COLUMNS = ("specification_id,item_code,population_code,state,design_scale,convergence_id,"
                       "confidence_dimensions_present,confidence_dimensions_absent,"
                       "confidence_synthesis_basis,gap_register_id,not_applicable_rationale,"
                       "governing_refs,code_floor_only")
@@ -209,7 +209,7 @@ CELL_STATE_REQUIRED = tuple(CELL_STATE_COLUMNS.split(",")) + ("tier_basis",)
 
 
 def validate_cell_states_db(conn, gap_ids: set):
-    """Validate evidence_cell_state rows against the §2 state machine, scale-aware.
+    """Validate specifications rows against the §2 state machine, scale-aware.
     Mirrors schemas.evidence_state.EvidenceStateRecord's state-field rules at the
     data layer, plus pending⇒gap-link against the gaps table. Returns (errors, n).
 
@@ -231,16 +231,16 @@ def validate_cell_states_db(conn, gap_ids: set):
     # migration-027 schema; select it where present, marker-check `tier_basis`
     # everywhere (pre-027 DBs stay validatable).
     have_rso = any(r[1] == "regulatory_stratum_only"
-                   for r in conn.execute("PRAGMA table_info(evidence_cell_state)"))
+                   for r in conn.execute("PRAGMA table_info(specifications)"))
     cols += ",tier_basis" + (",regulatory_stratum_only" if have_rso else "")
     n = 0
-    for row in conn.execute(f"SELECT {cols} FROM evidence_cell_state"):
-        (cell_id, item_code, pop, state, design_scale, conv_id,
+    for row in conn.execute(f"SELECT {cols} FROM specifications"):
+        (specification_id, item_code, pop, state, design_scale, conv_id,
          cdp, cda, csb, gap_id, na_rat,
          governing_refs, code_floor_only, tier_basis) = row[:14]
         rso = row[14] if have_rso else 0
         n += 1
-        tag = f"cell {cell_id} ({item_code}×{pop})"
+        tag = f"cell {specification_id} ({item_code}×{pop})"
         # scale-aware: design_scale vocabulary (§1.4/§1.6)
         if design_scale is not None and design_scale not in ALL_SCALES:
             errors.append(f"{tag}: design_scale {design_scale!r} not in {sorted(ALL_SCALES)}")
@@ -349,7 +349,7 @@ def validate_db(db_path: str):
     conn = sqlite3.connect(db_path)
     try:
         tabs = {r[0] for r in conn.execute("SELECT name FROM sqlite_master WHERE type='table'")}
-        missing = {"evidence_cell_state", "convergence_assessment"} - tabs
+        missing = {"specifications", "convergence_assessment"} - tabs
         if missing:
             return [f"tables absent (run migration 024): {sorted(missing)}"], 0, 0
         gap_ids = load_gap_ids_db(conn)
@@ -388,7 +388,7 @@ def main():
         "--db",
         default=None,
         help="Path to guidebook.db (default: $GUIDEBOOK_DB_PATH or data/guidebook.db). "
-             "The cell-state machine (evidence_cell_state + convergence_assessment) is "
+             "The cell-state machine (specifications + convergence_assessment) is "
              "validated from the DB — the canonical source — unless explicit files are given.",
     )
     args = parser.parse_args()
@@ -441,7 +441,7 @@ def main():
             total_files += n_cells + n_conv
             if db_errors:
                 total_errors += len(db_errors)
-                print(f"FAIL evidence_cell_state machine ({os.path.basename(db_path)}):")
+                print(f"FAIL specifications machine ({os.path.basename(db_path)}):")
                 for e in db_errors:
                     print(f"  {e}")
             else:

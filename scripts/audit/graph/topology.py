@@ -30,7 +30,7 @@ MISSION_CRITICAL = {
     "gap_mining": 1,
     "extraction_population_links": 1,
     "lang_jur_map": 1,
-    "evidence_cell_state": 20,   # 7 pilot rows today; full backfill is ~ hundreds
+    "specifications": 20,   # 7 pilot rows today; full backfill is ~ hundreds
 }
 
 STATE_DIST = {
@@ -39,7 +39,7 @@ STATE_DIST = {
     "gaps": "status",
     "slugs": "status",
     "evidence_sources": "verification_status",
-    "evidence_cell_state": "state",
+    "specifications": "state",
     "convergence_assessment": "status",
 }
 

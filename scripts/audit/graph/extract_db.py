@@ -36,7 +36,7 @@ STATE_COLS = {
     "slugs": ["status"],
     "populations": ["status"],
     "evidence_sources": ["verification_status", "metadata_quality", "metadata_integrity_status"],
-    "evidence_cell_state": ["state", "design_scale"],
+    "specifications": ["state", "design_scale"],
     "convergence_assessment": ["status"],
     "conflicts": ["status"],
 }
