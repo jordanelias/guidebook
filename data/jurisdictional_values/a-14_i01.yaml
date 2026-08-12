@@ -1,49 +1,56 @@
+# RETIRED TO REFERENCE-ONLY (owner ruling 2026-08-12).
+# All claimed values are cleared. What remains -- item_code, jurisdiction,
+# standard_name -- is retained ONLY to support search terminology and document
+# sourcing: it names which document to go and get, never what it says.
+# These records were a machine parse of parts/v10/appendix-a-jurisdiction-comparison.md,
+# a file that no longer exists, with no provenance, no evidence links, and a
+# verification checklist that was never ticked. Mirrors data/guidebook.db.
 section: A.14
 title: Door Opening Force
 item_code: I-01
-spec_id: SPEC-0054
+spec_id: null
 records:
-- spec_id: SPEC-0054
+- spec_id: null
   item_code: I-01
   jurisdiction: AU
   standard_name: AS 1428.1:2021
-  value_text: 'Interior Doors: ≤20N; Fire Doors: Per fire code'
-  value_numeric: 20.0
-  unit: N
-  is_code_minimum: 1
-  evidence_tier: 6
-  source_section: A.14
+  value_text: null
+  value_numeric: null
+  unit: null
+  is_code_minimum: null
+  evidence_tier: null
+  source_section: null
   notes: null
-- spec_id: SPEC-0054
+- spec_id: null
   item_code: I-01
   jurisdiction: US
   standard_name: ADA 2010 §404.2.9
-  value_text: 'Interior Doors: ≤22N; Exterior Doors: ≤38N; Fire Doors: ≤67N'
-  value_numeric: 22.0
-  unit: N
-  is_code_minimum: 1
-  evidence_tier: 6
-  source_section: A.14
+  value_text: null
+  value_numeric: null
+  unit: null
+  is_code_minimum: null
+  evidence_tier: null
+  source_section: null
   notes: null
-- spec_id: SPEC-0054
+- spec_id: null
   item_code: I-01
   jurisdiction: ISO
   standard_name: ISO 21542:2021
-  value_text: ≤25N
-  value_numeric: 25.0
-  unit: N
-  is_code_minimum: 1
-  evidence_tier: 6
-  source_section: A.14
+  value_text: null
+  value_numeric: null
+  unit: null
+  is_code_minimum: null
+  evidence_tier: null
+  source_section: null
   notes: null
-- spec_id: SPEC-0054
+- spec_id: null
   item_code: I-01
   jurisdiction: GB
   standard_name: BS 8300-2:2018
-  value_text: 'Interior Doors: ≤30N (code) / ≤20N (BP); Fire Doors: Per BS 8300'
-  value_numeric: 30.0
-  unit: N
-  is_code_minimum: 1
-  evidence_tier: 6
-  source_section: A.14
+  value_text: null
+  value_numeric: null
+  unit: null
+  is_code_minimum: null
+  evidence_tier: null
+  source_section: null
   notes: null

@@ -1,3 +1,10 @@
+# RETIRED TO REFERENCE-ONLY (owner ruling 2026-08-12).
+# All claimed values are cleared. What remains -- item_code, jurisdiction,
+# standard_name -- is retained ONLY to support search terminology and document
+# sourcing: it names which document to go and get, never what it says.
+# These records were a machine parse of parts/v10/appendix-a-jurisdiction-comparison.md,
+# a file that no longer exists, with no provenance, no evidence links, and a
+# verification checklist that was never ticked. Mirrors data/guidebook.db.
 section: A.16
 title: Classroom Acoustic Standards
 item_code: A-04
@@ -7,55 +14,54 @@ records:
   item_code: A-04
   jurisdiction: US
   standard_name: ANSI/ASA S12.60-2010
-  value_text: 'RT (general): ≤0.6s (<283m³); RT (hearing-impaired): ≤0.3s; Background Noise: ≤35 dBA; Mandatory: Via IBC/A117.1'
-  value_numeric: 0.6
-  unit: s
-  is_code_minimum: 1
-  evidence_tier: 6
-  source_section: A.16
+  value_text: null
+  value_numeric: null
+  unit: null
+  is_code_minimum: null
+  evidence_tier: null
+  source_section: null
   notes: null
 - spec_id: null
   item_code: A-04
   jurisdiction: GB
   standard_name: BB93
-  value_text: 'RT (general): By room type; RT (hearing-impaired): Lower targets; Background Noise: By room type; Mandatory:
-    Yes (England)'
+  value_text: null
   value_numeric: null
-  unit: s
-  is_code_minimum: 1
-  evidence_tier: 6
-  source_section: A.16
+  unit: null
+  is_code_minimum: null
+  evidence_tier: null
+  source_section: null
   notes: null
 - spec_id: null
   item_code: A-04
   jurisdiction: DE
   standard_name: DIN 18041:2016
-  value_text: 'RT (general): By room type/use; Background Noise: By classification; Mandatory: Via Landesbauordnung'
+  value_text: null
   value_numeric: null
-  unit: s
-  is_code_minimum: 1
-  evidence_tier: 6
-  source_section: A.16
+  unit: null
+  is_code_minimum: null
+  evidence_tier: null
+  source_section: null
   notes: null
 - spec_id: null
   item_code: A-04
   jurisdiction: 'NO'
   standard_name: NS 8175:2019
-  value_text: 'RT (general): Acoustic classification; Background Noise: By class (A–D)'
+  value_text: null
   value_numeric: null
-  unit: s
-  is_code_minimum: 1
-  evidence_tier: 6
-  source_section: A.16
+  unit: null
+  is_code_minimum: null
+  evidence_tier: null
+  source_section: null
   notes: null
 - spec_id: null
   item_code: A-04
   jurisdiction: AU
   standard_name: AS/NZS 2107:2016
-  value_text: 'RT (general): Recommended levels; Background Noise: By space type'
+  value_text: null
   value_numeric: null
-  unit: s
-  is_code_minimum: 1
-  evidence_tier: 6
-  source_section: A.16
+  unit: null
+  is_code_minimum: null
+  evidence_tier: null
+  source_section: null
   notes: null
