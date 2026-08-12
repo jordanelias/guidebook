@@ -109,7 +109,7 @@ def render_html(pop):
     status = e(pop["status"] or "")
 
     item_rows = "".join(
-        f'<tr><td><a href="/specs/{e(it["item_code"].lower())}.html">{e(it["item_code"])}</a></td>'
+        f'<tr><td><a href="/site/specs/{e(it["item_code"].lower())}.html">{e(it["item_code"])}</a></td>'
         f'<td>{e(it["name"])}</td><td>{e(it["category"] or "")}</td>'
         f'<td>{e(it["applicability"] or "")}</td></tr>\n'
         for it in pop["items"]
@@ -130,7 +130,7 @@ def render_html(pop):
 
     if pop["cells"]:
         cell_rows = "".join(
-            f'<tr><td><a href="/specs/{e(c["item_code"].lower())}.html">{e(c["item_code"])}</a></td>'
+            f'<tr><td><a href="/site/specs/{e(c["item_code"].lower())}.html">{e(c["item_code"])}</a></td>'
             f'<td>{e(c["state"])}</td>'
             f'<td>{e(c["tier_basis"] or "—")}</td>'
             f'<td>{"yes" if c["code_floor_only"] else "no"}</td>'

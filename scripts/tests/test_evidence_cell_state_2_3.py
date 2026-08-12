@@ -60,10 +60,18 @@ check("pending with real gap id accepted",
       EvidenceStateRecord(item_code="A-08", population="MOB", state="pending", gap_register_id="GAP-001").gap_register_id == "GAP-001")
 
 # ----------------------------------------------------------------------------
-# Part 2 — table DDL constraints (shipped migration-024 SQL, stub parents)
+# Part 2 — table DDL constraints (schema taken from the baseline, stub parents)
 # ----------------------------------------------------------------------------
-SQL_PATH = os.path.join(os.path.dirname(__file__), "..", "migrations", "024_evidence_cell_state.sql")
-ddl = open(SQL_PATH).read()
+# This used to read migration 024 and then replay the 055 rename by hand, because
+# 024 is immutable and creates the historical names. Since the history was frozen
+# behind 057_baseline_2026-08-12.sql there is one file holding the CURRENT schema,
+# so the fixture reads that and the replay is gone.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from _baseline_ddl import ddl_for  # noqa: E402
+
+ddl = ddl_for("specifications", "convergence_assessment",
+              "idx_specifications_item", "idx_specifications_pop",
+              "idx_specifications_state")
 
 db = sqlite3.connect(":memory:")
 db.execute("PRAGMA foreign_keys=ON")
@@ -75,21 +83,6 @@ db.executemany("INSERT INTO items VALUES (?)", [("A-02",), ("A-03",), ("A-08",)]
 db.executemany("INSERT INTO populations VALUES (?)", [("AUT",), ("MOB",), ("DEAF",)])
 db.execute("INSERT INTO gaps VALUES ('GAP-001')")
 db.executescript(ddl)
-
-# Migration 024 is immutable and correctly creates the historical names
-# (evidence_cell_state / cell_id). Migration 055 renamed them to
-# specifications / specification_id, so the fixture replays that rename here to
-# match the current schema the Pydantic models and callers are written against.
-db.executescript("""
-ALTER TABLE evidence_cell_state RENAME TO specifications;
-ALTER TABLE specifications RENAME COLUMN cell_id TO specification_id;
-DROP INDEX idx_cell_state_item;
-DROP INDEX idx_cell_state_pop;
-DROP INDEX idx_cell_state_state;
-CREATE INDEX idx_specifications_item  ON specifications(item_code);
-CREATE INDEX idx_specifications_pop   ON specifications(population_code);
-CREATE INDEX idx_specifications_state ON specifications(state);
-""")
 
 check("both tables created from shipped DDL",
       {r[0] for r in db.execute("SELECT name FROM sqlite_master WHERE type='table'")} >=

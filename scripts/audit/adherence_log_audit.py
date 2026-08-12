@@ -101,6 +101,14 @@ EXTRA_RULE_IDS = {
     "adversarial-research-protocol",             # alias of skill `adversarial-research`
     "citation-mining",                           # alias of skill `citation-miner`
     "progressive-measurement-probe",             # alias of skill `progressive-measurement`
+    # Category C — RENAMED predecessors. Unlike Category B these are not variants:
+    # the skill really was renamed, and the registry's rename process step 2 calls for a
+    # migration rewriting every past attestation to the new name. That step is deliberately
+    # NOT taken -- rewriting a committed adherence log to cite a name that did not exist on
+    # its date would falsify the record. Registering the predecessor here keeps check #3
+    # resolving those citations without touching them. See references/skill-registry.md
+    # "Renames performed".
+    "cell-curator",                              # renamed to `specification-curator` 2026-08-12
 }
 
 
@@ -325,6 +333,15 @@ def check_4_evidence_path(changed, issues):
                     continue
                 except subprocess.CalledProcessError:
                     pass
+            # A path RETIRED to _archived/ still resolves. The archive deliberately
+            # mirrors origin paths (CLAUDE.md §3: "Retire *here*, don't delete"), and
+            # an attestation is an append-only record of what was true on its date --
+            # rewriting one because a cited file was later archived would falsify the
+            # adherence log to keep a check green. Found 2026-08-12, when the
+            # migration history was frozen and an attestation citing migration 056
+            # started failing this check without anything having gone wrong.
+            if (REPO / "_archived" / ep_file).exists():
+                continue
             issues.append(f"CHECK 4: {f} rule={rule} evidence_path missing: {ep}")
 
 

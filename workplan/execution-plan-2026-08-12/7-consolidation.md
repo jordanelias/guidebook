@@ -57,7 +57,7 @@ reads. The plan flags the 20th file in Wave 1 and never absorbs it into W7.1 or 
 `governance/evidence-methodology.md:494` · `governance/repo-strategy-revision-co.md:14` ·
 `architecture/schema-spec.md:572` · `architecture/schema-reconciliation.md:308` ·
 `references/project-standards.md:488,626` (append-only — add a clarifying RULE, do not edit) ·
-`skills/cell-curator_SKILL.md:21` · `schemas/directness.py:31`.
+`skills/specification-curator_SKILL.md:21` · `schemas/directness.py:31`.
 **Forward-only, `deliberately_not_swept`:** four DRs, `decision_register.yaml:2194`, two
 migrations, one data migration.
 

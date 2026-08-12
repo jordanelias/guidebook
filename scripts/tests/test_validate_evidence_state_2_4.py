@@ -14,40 +14,29 @@ import tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(os.path.dirname(HERE))
-MIGRATIONS = os.path.join(REPO, "scripts", "migrations")
 sys.path.insert(0, os.path.join(REPO, "scripts"))
 from validate_evidence_state import CELL_STATE_REQUIRED, validate_db  # noqa: E402
 
 fails = []
 
 
-def schema_ddl():
-    """The cell-state DDL, discovered from the migrations rather than pinned to one.
+sys.path.insert(0, HERE)
+from _baseline_ddl import ddl_for  # noqa: E402
 
-    The fixture used to read 024 alone. 026 then rebuilt the table (adding
-    governing_refs et al.) and 027 added regulatory_stratum_only, so the fixture
-    fell behind a validator that selects those columns and the whole file died
-    with `no such column: governing_refs` before asserting anything. Collecting
-    every schema migration that touches these two tables keeps the fixture
-    tracking the schema instead of re-pinning it to a newer number that will
-    rot the same way. Verified to reproduce the live table definitions exactly.
+
+def schema_ddl():
+    """The specification/convergence DDL, read from the current baseline.
+
+    This used to scan every numbered migration for a literal table name and then
+    replay the 055 rename onto the result. That selector had to match the
+    migrations' immutable text, so a token sweep rewrote it and silently built the
+    wrong schema; then the history was frozen behind a baseline and the files were
+    gone entirely. One baseline file holds the current schema, so both problems
+    disappear along with the hand-copied replay they required.
     """
-    out = []
-    for fn in sorted(os.listdir(MIGRATIONS)):
-        m = re.match(r"^(\d{3})_.*\.sql$", fn)
-        if not m:
-            continue  # data_*.sql are rows, not shape
-        text = open(os.path.join(MIGRATIONS, fn)).read()
-        body = "\n".join(ln for ln in text.splitlines() if not ln.strip().startswith("--"))
-        # Matched against the migrations' own text, which is immutable and
-        # therefore still says `evidence_cell_state` — the table was renamed to
-        # `specifications` by schema version 055, applied below by _apply_055().
-        # Selecting on the new name here would silently pick a different file set
-        # (only `convergence_assessment` would still match) and the fixture would
-        # build the wrong schema.
-        if "evidence_cell_state" in body or "convergence_assessment" in body:
-            out.append((int(m.group(1)), text))
-    return [text for _, text in sorted(out)]
+    return [ddl_for("specifications", "convergence_assessment",
+                    "idx_specifications_item", "idx_specifications_pop",
+                    "idx_specifications_state")]
 
 
 DDL = schema_ddl()
@@ -61,8 +50,8 @@ def fresh():
     c.execute("CREATE TABLE items(item_code TEXT PRIMARY KEY)")
     c.execute("CREATE TABLE populations(population_code TEXT PRIMARY KEY)")
     # description/category/priority are stubbed because v_pending selects them.
-    # A bare gap_id survived only while nothing re-parsed the views; the 055
-    # rename does re-parse them, and the view then fails to compile.
+    # Not needed while nothing re-parses the views, but a stub parent that matches
+    # the real column set is the honest fixture either way.
     c.execute("CREATE TABLE gaps(gap_id TEXT PRIMARY KEY, category TEXT, "
               "priority TEXT, description TEXT)")
     c.executemany("INSERT INTO items VALUES(?)", [(x,) for x in ("A-02", "A-03", "A-04", "A-05", "A-06", "A-07")])
@@ -71,76 +60,7 @@ def fresh():
               "VALUES('GAP-001','RP','P2','fixture gap')")
     for step in DDL:
         c.executescript(step)
-    _apply_055(c)
     return c
-
-
-RENAME_MIGRATION = os.path.join(
-    MIGRATIONS, "data_20260812075349_2026-08-12-rename-cell-to-specification.sql")
-
-
-def _assert_rename_replay_matches_migration():
-    """Refuse to run if _apply_055 has drifted from the migration it replays.
-
-    _apply_055 is a hand-copy, and a hand-copy that nothing checks is exactly the
-    stale-fixture failure this file's own docstring exists to prevent — one level
-    up. Every RENAME statement in the shipped migration must appear in the replay
-    below, so a compensating follow-up migration cannot land without this failing.
-    """
-    def norm(s):
-        return re.sub(r"\s+", " ", s).strip().rstrip(";")
-
-    ddl = open(RENAME_MIGRATION).read()
-    src = norm(open(__file__).read())
-    wanted = [norm(ln) for ln in ddl.splitlines()
-              if " RENAME " in ln.upper() and not ln.strip().startswith("--")]
-    missing = [w for w in wanted if w not in src]
-    if not wanted or missing:
-        print(f"  [FAIL] rename replay has drifted from {os.path.basename(RENAME_MIGRATION)}.\n"
-              f"         missing from _apply_055: {missing or '(migration had no RENAME lines)'}")
-        print("\nFAILURES: stale rename replay  (1 failed)")
-        sys.exit(1)
-
-
-def _apply_055(c):
-    """Replay schema version 055's rename onto the fixture.
-
-    The numbered migrations above are immutable and correctly create the
-    historical names (`evidence_cell_state`, `cell_source_links`, `cell_id`).
-    Migration 055 renamed them; the physical DDL ships in the paired data
-    migration because the runner applies all schema migrations before any data
-    migration. `schema_ddl()` only collects numbered files, so the rename has to
-    be replayed here or the fixture builds a pre-055 schema.
-
-    Renames are applied only for objects the collected DDL actually created, so
-    this stays correct if `schema_ddl()`'s file set changes.
-    """
-    # The fixture builds a partial schema — several shipped views reference
-    # tables it never creates (v_item_provenance needs evidence_sources, and so
-    # on), so they cannot compile here and never could. A rename re-parses every
-    # view, which turns those pre-existing non-compiling stubs into hard errors,
-    # so they are dropped first. They are not the subject of this test; the
-    # validator under test reads tables, and dropping them keeps the fixture from
-    # carrying view definitions that still name the pre-055 tables.
-    for (v,) in c.execute("SELECT name FROM sqlite_master WHERE type='view'").fetchall():
-        c.execute(f'DROP VIEW "{v}"')
-    names = {r[0] for r in c.execute("SELECT name FROM sqlite_master")}
-    if "evidence_cell_state" in names:
-        c.execute("ALTER TABLE evidence_cell_state RENAME TO specifications")
-        c.execute("ALTER TABLE specifications RENAME COLUMN cell_id TO specification_id")
-    if "cell_source_links" in names:
-        c.execute("ALTER TABLE cell_source_links RENAME TO specification_source_links")
-        c.execute("ALTER TABLE specification_source_links RENAME COLUMN cell_id TO specification_id")
-    for old, new, tbl, col in (
-        ("idx_cell_state_item", "idx_specifications_item", "specifications", "item_code"),
-        ("idx_cell_state_pop", "idx_specifications_pop", "specifications", "population_code"),
-        ("idx_cell_state_state", "idx_specifications_state", "specifications", "state"),
-        ("idx_cell_source_links_ref", "idx_spec_source_links_ref", "specification_source_links", "ref_id"),
-    ):
-        if old in names:
-            c.execute(f"DROP INDEX {old}")
-            c.execute(f"CREATE INDEX {new} ON {tbl}({col})")
-    c.commit()
 
 
 def assert_fixture_current():
@@ -166,7 +86,6 @@ def assert_fixture_current():
         sys.exit(1)
 
 
-_assert_rename_replay_matches_migration()
 assert_fixture_current()
 
 

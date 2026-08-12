@@ -108,7 +108,13 @@ def discover_data_migrations() -> list:
     The cutoff is encoded as `BASELINE_DATA_CUTOFF_TS`, refreshed whenever a
     new baseline is committed.
     """
-    BASELINE_DATA_CUTOFF_TS = "20260515000000"  # 2026-05-15: data baked into 012_baseline
+    # 2026-08-12: 057_baseline_2026-08-12.sql bakes in the FULL schema and data, and
+    # every earlier migration is frozen at _archived/scripts/migrations/. The cutoff
+    # sits past the last archived data migration (20260812083254) so nothing
+    # pre-baseline is looked for. It stays as a guard rather than being deleted: if a
+    # pre-baseline file is ever restored to this directory by mistake, it is skipped
+    # instead of replayed on top of a database that already contains its effect.
+    BASELINE_DATA_CUTOFF_TS = "20260812083255"
     out = []
     bv = baseline_version()
     for path in sorted(MIGRATIONS_DIR.glob("data_*.sql")):

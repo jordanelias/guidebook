@@ -1,5 +1,5 @@
 register_version: 1
-last_updated: 2026-08-12 08:40
+last_updated: 2026-08-12 20:50
 decisions:
 - decision_id: D-0001
   category: D-DOCT
@@ -5289,5 +5289,123 @@ decisions:
     in governance/retired-vocabulary.yaml at severity `broken`, so the residual sweep is a standing check.
     cell_id is recorded in that file''s `rejected:` section - it fails admission test 4 because architecture/schema-spec.md''s
     aspirational `cell` table declares its own cell_id and no regex separates the two.
+
+    '
+- decision_id: D-0159
+  category: D-OP
+  delegation: DG-NON
+  summary: 'Rename the skill `cell-curator` to `specification-curator`, following the schema rename in
+    D-0158.
+
+    '
+  outcome: 'ADOPTED by owner instruction 2026-08-12 ("correct skill file"). Skill file, identifier, effort-guide
+    row and vocabulary exemption updated. The registry''s rename step 2 -- a migration rewriting every
+    past attestation -- is deliberately NOT performed; `cell-curator` is registered in EXTRA_RULE_IDS
+    as a new Category C (renamed predecessor) so the two committed attestations citing it still resolve
+    untouched.
+
+    '
+  rationale: 'The skill exists to populate the per-(item x population) record, which is now a specification.
+    As an instruction file it was the last live surface teaching the retired word as a directive rather
+    than as history: a skill saying "write cell records" produces a query against a table that does not
+    exist. Rewriting committed attestations to cite a name that did not exist on their date would falsify
+    the adherence log -- the same class of act this session was pulled up for earlier in the day when
+    it overwrote a dated audit with a false as-of stamp.
+
+    '
+  alternatives_considered:
+  - 'Follow the registry''s rename step 2 as written and rewrite the two attestations -- refused; it falsifies
+    an append-only record to keep a check green.
+
+    '
+  - 'Leave the skill named cell-curator -- refused; it is an instruction file and would keep producing
+    queries against a table that does not exist.
+
+    '
+  - 'Rename the file but keep the identifier -- refused; the identifier is the thing cited, and a file
+    whose name and `name:` field disagree is a new trap.
+
+    '
+  - 'Amend the registry to make attestation-rewriting optional in general -- not done here; that is a
+    broader governance change about record immutability and deserves its own record.
+
+    '
+  decision_date: 2026-08-12 20:45
+  decided_by: owner_jordanelias_directive_2026-08-12
+  model_routing: opus/200/arbitrate
+  effort_level: 200
+  decision_artifacts:
+  - decisions/DR-2026-08-12-specification-curator-rename.md
+  predecessors:
+  - D-0158
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: 'Verified by running scripts/audit/adherence_log_audit.py -- No issues. The registry''s new "Renames
+    performed" table records the departure so the next session reads the exception rather than re-deriving
+    it.
+
+    '
+- decision_id: D-0160
+  category: D-SCHEMA
+  delegation: DG-NON
+  summary: 'Freeze and archive the entire 355-file migration history; compress it into one full schema+data
+    baseline (057_baseline_2026-08-12.sql). Retire five orphaned population pages and the hand-authored
+    e-08 exemplar under the same instruction.
+
+    '
+  outcome: 'ADOPTED by owner instruction 2026-08-12 ("freeze and archive existing change history then
+    compress change history for fresh start"). One baseline holds 67 tables, 18 views, 77 indexes, 5,072
+    rows. All 355 prior files frozen at _archived/scripts/migrations/ with a README. BASELINE_DATA_CUTOFF_TS
+    moved past the last archived data migration. Closes the alternative D-0158 section 4(5) deferred to
+    the owner.
+
+    '
+  rationale: 'Replaying the history was the only proof the committed database had not been hand-edited;
+    that property is kept, since the baseline is still replayed and compared by the blocking reproducibility
+    gate. What is shed is the cost: immutable data migrations pinned retired names forever (the specifications
+    rename collided with 19 of them and forced the AFTER_DATA mechanism into existence); 297 data migrations
+    replayed rows that later migrations deleted after the 2026-08-06 and 2026-08-12 clearances; and two
+    test fixtures reconstructed schema by scanning migration files for literal table names, a selector
+    that broke during the rename. The corpus is at its smallest right now -- 5,072 rows, about 91 percent
+    controlled vocabulary -- which is the cheapest this operation will ever be.
+
+    '
+  alternatives_considered:
+  - 'Keep replaying the full history -- refused; it is what forced AFTER_DATA into existence and would
+    force a comparable workaround at every future rename.
+
+    '
+  - 'Schema-only baseline, keeping the 297 data migrations -- refused; it leaves the retired names, the
+    deleted-row churn and the fixture fragility untouched.
+
+    '
+  - 'Delete the superseded files rather than archive them -- refused; they are the record of what was
+    done and when (guardrail 2: retire, never delete).
+
+    '
+  - 'Defer until the corpus is repopulated -- refused on cost; every row added between now and then makes
+    the freeze larger and more disruptive.
+
+    '
+  decision_date: 2026-08-12 20:50
+  decided_by: owner_jordanelias_directive_2026-08-12
+  model_routing: opus/200/arbitrate
+  effort_level: 200
+  decision_artifacts:
+  - decisions/DR-2026-08-12-migration-history-baseline.md
+  - _archived/scripts/migrations/README.md
+  - _archived/site/populations/README.md
+  - _archived/specs/README.md
+  predecessors:
+  - D-0158
+  - D-0159
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: 'The 319-row data_migrations ledger is baked into the baseline, so every historical migration_id
+    and content hash stays queryable. Archiving migration 056 broke adherence_log_audit check 4 (an attestation
+    cited it as an evidence path); the attestation was NOT rewritten -- the check now resolves paths retired
+    to _archived/, verified in both directions.
 
     '

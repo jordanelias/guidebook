@@ -1,14 +1,20 @@
 ---
-name: cell-curator
+name: specification-curator
 description: >
-  Populate evidence state per (specification × population) pair. Each cell represents
-  whether a specific spec has evidence for a specific population, classified as:
+  Populate evidence state per (item × population) pair. Each specification records
+  whether a given item has evidence for a given population, classified as:
   stated (direct evidence), provisional (inferred from adjacent evidence),
   pending (gap identified, no evidence), or not_applicable. ALWAYS use when:
-  populating cell records, assessing evidence state for population pages, or
-  auditing coverage across the spec×population matrix. Trigger on: "cell state",
-  "evidence state", "population coverage", "spec coverage matrix", "cell curation".
+  populating specification records, assessing evidence state for population pages, or
+  auditing coverage across the item × population matrix. Trigger on: "specification state",
+  "evidence state", "population coverage", "item coverage matrix", "specification curation".
 ---
+
+<!-- Renamed from `cell-curator` on 2026-08-12 by owner instruction, following the
+     schema rename of `evidence_cell_state` to `specifications`. Two committed
+     attestations cite the identifier `cell-curator`; they are NOT rewritten, and
+     `cell-curator` is registered in adherence_log_audit.py's EXTRA_RULE_IDS so
+     they still resolve. See DR-2026-08-12-specification-curator-rename. -->
 
 **Model:** Opus-class (evidence state classification requires judgment)
 **SQLite:** `data/guidebook.db`
@@ -22,7 +28,7 @@ description: >
 > `evidence_cell_state` at schema version 055 on 2026-08-12). Queries below are repointed.
 >
 > Do **not** run `scripts/db/migrate_all.py`; it targets a legacy path that does not exist.
-> All cell writes ship as migrations (`emit_data_migration.py` → `migrate_db.py`).
+> All specification writes ship as migrations (`emit_data_migration.py` → `migrate_db.py`).
 
 
 ---
@@ -59,7 +65,7 @@ For a given spec, assess evidence state across all 11+ populations:
    `stated` and `provisional` require non-empty `governing_refs`. Ships as a migration.
 
 ### Batch curation
-1. Query uncurated cells:
+1. Query uncurated specifications:
    ```sql
    SELECT i.item_code, p.population_code
    FROM items i

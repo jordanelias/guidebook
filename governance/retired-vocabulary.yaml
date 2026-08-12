@@ -638,7 +638,7 @@ entries:
     exempt_paths:
       # A — the paper trail for this retirement
       - "CLAUDE.md"                                        # §4 names the old name once, as a pointer
-      - "skills/cell-curator_SKILL.md"                     # ditto, in its repointing note
+      - "skills/specification-curator_SKILL.md"            # ditto, in its repointing note
       - "governance/check-registry.yaml"                   # a check note quotes the pre-rename tamper trace
       - "workplan/2026-08-12-step-R-rename-execution-record.md"
       # B — fixtures that must name it because they replay the rename onto an

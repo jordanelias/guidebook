@@ -99,6 +99,27 @@ INDEX idx_evidence_source_year (year)
 
 ### 2.2 EvidenceStateRecord (`schemas/evidence_state.py`)
 
+> **WHAT SHIPPED IS NOT THIS. Do not read the DDL below as a description of the database.**
+> Checked against `data/guidebook.db` on 2026-08-12: **none of `cell`, `cell_state_transition`,
+> `cell_provisional_flag`, `cell_convergence`, `cell_evidence_source` or `specification` exists.**
+> The concept below was built as **`specifications`** (migration 024, reshaped by 026/027, renamed
+> from `evidence_cell_state` at schema version 055), and it diverges from this proposal in four
+> load-bearing ways:
+>
+> | This proposal | What shipped |
+> |---|---|
+> | Grain is **specification × population** (`spec_id` → a `specification` entity table) | Grain is **item × population** (`item_code` → `items`) |
+> | Text key `CELL-{spec_id}-{population_code}` | Integer `specification_id` |
+> | Four states `stated / provisional / silent / contested` | Four states `stated / provisional / **pending** / **not_applicable**` — a different vocabulary, not a renaming |
+> | Five tables (state + transition + provisional-flag + convergence + source join) | Two (`specifications`, `convergence_assessment`) plus the `specification_source_links` junction. **There is no state-transition audit table and no provisional-flag table at all.** |
+>
+> This document is `PROVISIONAL` and dated 2026-05-02, pending a storage-form adoption (D-0138)
+> that the built system reached by another route. It is preserved as the proposal-of-record.
+> **The old names are deliberately NOT renamed here** — renaming them would assert that this
+> describes the shipped table, which is the one thing it does not do. Reconciliation belongs in
+> `architecture/schema-reconciliation.md`, which still carries `cell_evidence_source` in two
+> rendering-query rows (§22, p25) that need the same treatment.
+
 **Three tables: `cell` (the EvidenceStateRecord), `cell_provisional_flag`, `cell_convergence`. The Pydantic nested models become joined tables.**
 
 ```
