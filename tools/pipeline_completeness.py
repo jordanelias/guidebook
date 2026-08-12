@@ -574,9 +574,9 @@ def render_body(F: dict, enf: dict) -> str:
 
     judgment_block = f"""      <div class="stage-block">
         <div class="sb-left"><div class="n">STAGE 3</div><div class="t">Judgment</div>
-          <div class="entry">Entry: verified sources linked to an item × population cell.</div></div>
+          <div class="entry">Entry: verified sources linked to an item × population specification.</div></div>
         <div class="sb-right">
-{metric("Cells determined (of applicable pairs)", f'{j["cells"]} / {pairs} · {pct(j["cells"], pairs)}%', j["cells"], pairs)}
+{metric("Specifications determined (of applicable pairs)", f'{j["cells"]} / {pairs} · {pct(j["cells"], pairs)}%', j["cells"], pairs)}
 {metric("Items with any determination", f'{j["items_judged"]} / {items} · {pct(j["items_judged"], items)}%', j["items_judged"], items)}
 {metric("State split", f'{j["stated"]} stated · {j["provisional"]} prov · {j["pending"]} pend')}
 {metric("Determinations with governing_refs", f'{j["govrefs_ok"]} / {j["govrefs_denom"]} · {pct(j["govrefs_ok"], j["govrefs_denom"])}%', j["govrefs_ok"], j["govrefs_denom"])}

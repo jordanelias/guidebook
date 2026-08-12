@@ -13,11 +13,13 @@ description: >
 **Model:** Opus-class (evidence state classification requires judgment)
 **SQLite:** `data/guidebook.db`
 > **Schema note (corrected 2026-08-02):** `specification`, `specification_population`, and
-> `population` (singular) **do not exist** in `data/guidebook.db` — verified against
+> `population` — all SINGULAR — **do not exist**
+> (note the plural `specifications` below: the singular is a different, legacy name and
+> `scripts/generate/room_page.py:51` still reads it) in `data/guidebook.db` — verified against
 > `sqlite_master`. The canonical tables are **`items`** (93, all `status='active'`),
 > **`populations`** (23), and **`specifications`** (the per-(item × population) specification this
 > skill exists to populate — 0 rows today, of a 93 × 23 grid; renamed from
-> `evidence_cell_state` by migration 055 on 2026-08-12). Queries below are repointed.
+> `evidence_cell_state` at schema version 055 on 2026-08-12). Queries below are repointed.
 >
 > Do **not** run `scripts/db/migrate_all.py`; it targets a legacy path that does not exist.
 > All cell writes ship as migrations (`emit_data_migration.py` → `migrate_db.py`).

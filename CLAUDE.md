@@ -135,7 +135,8 @@ con = sqlite3.connect('file:data/guidebook.db?mode=ro', uri=True)
 
 **Backbone.** Two axes — `items` (design parameters, `item_code` `A-01…K-NN`) × `populations`
 (disability population codes, self-referencing `parent_code`) — meet in
-**`specifications`** (named `evidence_cell_state` before migration 055), the per-(item×population) synthesis record (`state` ∈
+**`specifications`** (named `evidence_cell_state` before schema version 055, whose DDL ships in
+`scripts/migrations/data_20260812075349_*.sql` — see that file and 055's header for why), the per-(item×population) synthesis record (`state` ∈
 `stated`/`provisional`/`pending`/`not_applicable`). Evidence lives in **`evidence_sources`**
 (`ref_id` `REF-NNNNN`; `tier` 1–6 and `evidence_type` are orthogonal) and attaches through
 `source_slug_links` → `slugs` (research units) and directly via `evidence_population_match`,

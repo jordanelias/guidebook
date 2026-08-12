@@ -57,7 +57,7 @@ def _check(con) -> list:
     ).fetchall()
     errors = []
     for specification_id, item, pop, state, gref, hus in rows:
-        tag = f"cell {specification_id} ({item}×{pop}, {state})"
+        tag = f"specification {specification_id} ({item}×{pop}, {state})"
         refs = _jlist(gref)
         for r in [r for r in refs if r not in status]:
             errors.append(f"{tag}: governing_ref {r} not in evidence_sources (dangling)")
@@ -104,7 +104,7 @@ def selftest() -> int:
         status = "OK" if got == expect else "**MISSED**"
         if got != expect:
             ok = False
-        print(f"  [{status}] cell {row[0]}: {why} -> violation={got} (expected {expect})")
+        print(f"  [{status}] specification {row[0]}: {why} -> violation={got} (expected {expect})")
     print("selftest:", "PASS" if ok else "FAIL")
     return 0 if ok else 1
 
@@ -118,9 +118,9 @@ def main() -> int:
         print(f"FAIL verification-consistency ({DB}):")
         for e in errors:
             print(f"  {e}")
-        print(f"\nFAIL: {n} cells checked, {len(errors)} violations")
+        print(f"\nFAIL: {n} specifications checked, {len(errors)} violations")
         return 1
-    print(f"OK verification-consistency: {n} stated/provisional cells consistent ({DB})")
+    print(f"OK verification-consistency: {n} stated/provisional specification(s) consistent ({DB})")
     return 0
 
 

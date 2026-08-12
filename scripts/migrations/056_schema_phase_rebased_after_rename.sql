@@ -1,0 +1,36 @@
+-- 056_schema_phase_rebased_after_rename.sql
+-- Reopen the numbered schema phase on the POST-rename names.
+--
+-- THE PROBLEM THIS CLOSES.
+-- 055 renamed evidence_cell_state -> specifications and cell_source_links ->
+-- specification_source_links, but had to put the DDL in a data migration
+-- (data_20260812075349_*) because 19 immutable data migrations still write to
+-- the old names and the runner replayed all schema migrations before any data
+-- migration. That fixed replay backwards and broke it forwards: from 056 on,
+-- any numbered schema migration touching these two tables would run BEFORE the
+-- rename existed and die with `no such table: specifications`. The next planned
+-- migration is exactly that statement -- W3.3's
+-- `ALTER TABLE ... ADD COLUMN doctrine_sha TEXT` -- and it was broken in both
+-- spellings: the old name is gone from the live DB, and the new name breaks
+-- `migrate_db.py --rebuild`.
+--
+-- THE FIX.
+-- The AFTER_DATA marker below tells the runner (scripts/migrate_db.py,
+-- build_plan) that this migration and every migration numbered after it applies
+-- only once the data migrations up to that timestamp have replayed. Replay
+-- order becomes: schema 001-055, all data through the rename, then schema 056+.
+-- That is the true chronology; the numbered/timestamped split simply had no way
+-- to say it.
+--
+-- CONSEQUENCE FOR FUTURE WORK, STATED PLAINLY: from 057 onward, ordinary
+-- numbered schema migrations may reference `specifications` and
+-- `specification_source_links` normally. No further marker is needed -- this one
+-- covers every migration after it. Part I's constraints and triggers can be
+-- written as normal schema migrations.
+--
+-- No committed file is edited to achieve this: 055 and the data migration are
+-- immutable and stay exactly as they are.
+
+-- AFTER_DATA: 20260812075349
+
+PRAGMA user_version = 56;

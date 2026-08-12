@@ -33,7 +33,7 @@ rename.**
 | **(n)** | **4** | The digit is a **metric or standard designation**, not a determination — the H4 permitted-set class |
 | **mixed** | **2** | E-03 and H-01 — part (a), part (b) |
 
-**No class (c) exists** — with `evidence_sources`, `evidence_cell_state` and
+**No class (c) exists** — with `evidence_sources`, `specifications` and
 `source_value_extractions` all at 0 rows, nothing in the repository is "correctly evidenced," so
 **H3's falsifier cannot fire today.** Re-check immediately before cutting the migration (W6.11).
 
@@ -80,7 +80,7 @@ H-01), so the act strips **~35 distinct determinations**, not 28.
 
 **For the 17 (b) rows:** if the owner wants the values preserved pending evidence, the vehicle is
 a `gaps` row per item ("parameter has no recorded jurisdictional value") — **not**
-`jurisdictional_values` (they are not code values) and **not** `evidence_cell_state` (0 rows, and
+`jurisdictional_values` (they are not code values) and **not** `specifications` (0 rows, and
 D-A is unruled).
 
 ---

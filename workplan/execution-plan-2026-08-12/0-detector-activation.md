@@ -53,7 +53,7 @@ weak and would mislead the session that ran it.** At HEAD the detector names:
 | `within_jurisdiction_divergence` | 2 | WARN | E-06/DE (10 vs 20 mm), G-04/DE (4.7 vs 5.3 m²) |
 | `candidate_conflation_or_error` | 3 | WARN | B-10 (2.0–54.0 Hz, ×27), E-12 (81.0–1400.0 mm, ×17), G-04 (4.2–1500.0 m², ×357) |
 | `cross_jurisdiction_divergence` | 9 | INFO | D-08, E-01, E-03, E-06, E-08, H-01, I-01, I-02, I-03 |
-| `unadjudicated_divergence` | 12 | WARN | all diverging items — "no `evidence_cell_state` determination exists to adjudicate (judgment stage unbuilt)" |
+| `unadjudicated_divergence` | 12 | WARN | all diverging items — "no `specifications` determination exists to adjudicate (judgment stage unbuilt)" |
 | `convergence_not_evidence` | 0 | INFO | — |
 
 **The true statement is: it names 26 findings and cannot name the 8 that matter most.**

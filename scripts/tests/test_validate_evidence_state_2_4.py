@@ -75,6 +75,33 @@ def fresh():
     return c
 
 
+RENAME_MIGRATION = os.path.join(
+    MIGRATIONS, "data_20260812075349_2026-08-12-rename-cell-to-specification.sql")
+
+
+def _assert_rename_replay_matches_migration():
+    """Refuse to run if _apply_055 has drifted from the migration it replays.
+
+    _apply_055 is a hand-copy, and a hand-copy that nothing checks is exactly the
+    stale-fixture failure this file's own docstring exists to prevent — one level
+    up. Every RENAME statement in the shipped migration must appear in the replay
+    below, so a compensating follow-up migration cannot land without this failing.
+    """
+    def norm(s):
+        return re.sub(r"\s+", " ", s).strip().rstrip(";")
+
+    ddl = open(RENAME_MIGRATION).read()
+    src = norm(open(__file__).read())
+    wanted = [norm(ln) for ln in ddl.splitlines()
+              if " RENAME " in ln.upper() and not ln.strip().startswith("--")]
+    missing = [w for w in wanted if w not in src]
+    if not wanted or missing:
+        print(f"  [FAIL] rename replay has drifted from {os.path.basename(RENAME_MIGRATION)}.\n"
+              f"         missing from _apply_055: {missing or '(migration had no RENAME lines)'}")
+        print("\nFAILURES: stale rename replay  (1 failed)")
+        sys.exit(1)
+
+
 def _apply_055(c):
     """Replay schema version 055's rename onto the fixture.
 
@@ -139,6 +166,7 @@ def assert_fixture_current():
         sys.exit(1)
 
 
+_assert_rename_replay_matches_migration()
 assert_fixture_current()
 
 

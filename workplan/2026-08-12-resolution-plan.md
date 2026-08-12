@@ -13,12 +13,12 @@
 > | **DOIs and URLs are kept** (`6dd0cd3`) | 835 locators recovered from the pre-reset corpus into a reference-only `source_locators`. **`user_version` is now 54**, so W3.9 and Part I must re-derive their migration numbers |
 > | **Economics, DAR and case studies are secondary — "tackled far later"** | **M6's content is not the case-study compendium or `references/economics/`**, and Q3's recommendation is superseded. Note also: `case_studies` has *never* held a row, live or archived, and **DAR has no table or column anywhere** |
 > | **Schema and connectivity are kept — "we WILL populate these tables"** | Part I stands in full. Nothing is dropped; legacy *data* was cleared, structure was not |
-> | **(item × population) is renamed `specification`** | `evidence_cell_state` → `specifications`, `cell_source_links` → `specification_source_links`, `cell_id` → `specification_id`. **Sequence this before Part I's rebuilds**, or every constraint is written against a name about to change. **EXECUTED** — schema 055 plus the paired data migration `data_20260812075349`; caller sweep, deliberate non-sweeps, two latent fixture defects and five orphaned population pages recorded in `workplan/2026-08-12-step-R-rename-execution-record.md`. Part I may now be written against the final names |
+> | **(item × population) is renamed `specification`** | `specifications` → `specifications`, `specification_source_links` → `specification_source_links`, `specification_id` → `specification_id`. **Sequence this before Part I's rebuilds**, or every constraint is written against a name about to change. **EXECUTED** — schema 055 plus the paired data migration `data_20260812075349`; caller sweep, deliberate non-sweeps, two latent fixture defects and five orphaned population pages recorded in `workplan/2026-08-12-step-R-rename-execution-record.md`. Part I may now be written against the final names |
 > | **Resolve all issues, with attention to walking forwards and backwards** | Full-direction probe committed at `7e8319b`: `audits/2026-08-12-pipeline-probe-log.md`, script at `scripts/tests/probe_pipeline.py` |
 >
 > **The probe adds three findings Part I does not cover:**
 >
-> 1. **There is no edge at all between `evidence_cell_state` and `source_value_extractions`.** The
+> 1. **There is no edge at all between `specifications` and `source_value_extractions`.** The
 >    only available join is improvised on `(ref_id, item_code)` where `item_code` is nullable — so
 >    with it NULL, as every live row had, **the backward walk returns zero rows silently.** Part I's
 >    two triggers secure specification→source; they do not secure specification→extraction. A
@@ -94,7 +94,7 @@ against `fd4c09d` by executing the command beside it. Re-derive again before act
 Five statements, and the plan follows from their order:
 
 1. **Hard-coding has entered the frame the reset preserved.** 28 of 93 item names carry
-   determined numeric values; `evidence_cell_state` holds 0 determinations. The vocabulary states
+   determined numeric values; `specifications` holds 0 determinations. The vocabulary states
    the answers the pipeline has not derived. **Owner ruling, 2026-08-11: this should not be the
    case; hard-coding undermines the entire project.** (§0.1, Wave H.)
 2. **The write path is not safe to use** — and the fix everyone specified does not work. A
@@ -141,7 +141,7 @@ During revision 4's re-derivation the owner examined the `items` table and ruled
 |---|---|
 | item names containing a digit | **28 of 93** |
 | item names carrying a prescriptive condition clause | **23 of 93** |
-| `evidence_cell_state` rows (determinations) | **0** |
+| `specifications` rows (determinations) | **0** |
 | `evidence_sources` rows | **0** |
 
 Examples: `E-08 Corridor Clear Width (≥1200 mm Minimum on All Primary Routes)` ·
@@ -175,7 +175,7 @@ independently sufficient:
 
 **And the fix is cheap, which is the one piece of good news.** `items.name` **is not a key.** All
 14 inbound foreign keys target `item_code` (`case_study_specs`, `conflicts`,
-`economics_entry_specs`, `evidence_cell_state`, `item_audit_runs`, `item_axis_links`,
+`economics_entry_specs`, `specifications`, `item_audit_runs`, `item_axis_links`,
 `item_bpc_links`, `item_population_elaborations`, `item_population_links`,
 `jurisdictional_values`, `room_items`, `source_value_extractions`, `spec_value_probes`,
 `term_item_links`). This is **not** K3's FATAL 278-file rename. See Wave H.
@@ -289,7 +289,7 @@ because of a fact no prior revision stated crisply:
 `:250` does the same in the rebuild path. **So the repository's schema leans almost entirely on
 the one mechanism its own writer disables**, checks after commit, and downgrades to a warning on
 a substring. Verified at HEAD: the canonical database contains **0 triggers**
-(`SELECT COUNT(*) FROM sqlite_master WHERE type='trigger'`), and `evidence_cell_state` carries
+(`SELECT COUNT(*) FROM sqlite_master WHERE type='trigger'`), and `specifications` carries
 only enum CHECKs and one `json_valid` — not one of its state-machine implications.
 
 The constraint architecture below therefore uses **CHECK and TRIGGER as the primary carriers**
@@ -302,7 +302,7 @@ in-row and whose columns already exist. Not one is constrained. Each line below 
 sentence* that becomes unwritable-when-false:
 
 ```sql
--- evidence_cell_state, added by table rebuild (SQLite has no ADD CONSTRAINT).
+-- specifications, added by table rebuild (SQLite has no ADD CONSTRAINT).
 -- Free at 0 rows. Permanently expensive after the first content batch.
 
 CHECK (state <> 'pending'         OR gap_register_id IS NOT NULL)
@@ -392,26 +392,26 @@ The constitutive claim ("any published best practice walks backwards to its evid
 **cross-row** implication, so CHECK cannot express it. It needs the mechanism this database has
 zero of.
 
-The insertion-order objection — `cell_source_links.cell_id` references `evidence_cell_state`, so
+The insertion-order objection — `specification_source_links.specification_id` references `specifications`, so
 the cell must exist before its links — has a clean resolution that is *also* the epistemically
 honest shape: **cells are born `pending`, and promotion is a separate act.**
 
 ```sql
 CREATE TRIGGER trg_cell_birth_pending
-BEFORE INSERT ON evidence_cell_state
+BEFORE INSERT ON specifications
 WHEN NEW.state IN ('stated','provisional')
 BEGIN
   SELECT RAISE(ABORT,
-    'a cell is created pending; promote it after attaching evidence via cell_source_links');
+    'a cell is created pending; promote it after attaching evidence via specification_source_links');
 END;
 
 CREATE TRIGGER trg_cell_promotion_requires_evidence
-BEFORE UPDATE OF state ON evidence_cell_state
+BEFORE UPDATE OF state ON specifications
 WHEN NEW.state IN ('stated','provisional')
- AND NOT EXISTS (SELECT 1 FROM cell_source_links WHERE cell_id = NEW.cell_id)
+ AND NOT EXISTS (SELECT 1 FROM specification_source_links WHERE specification_id = NEW.specification_id)
 BEGIN
   SELECT RAISE(ABORT,
-    'stated/provisional requires at least one row in cell_source_links');
+    'stated/provisional requires at least one row in specification_source_links');
 END;
 ```
 
@@ -436,10 +436,10 @@ trial produced a determination with **7 governing refs and 0 junction rows** —
 unevidenced."* The honesty mechanism reported the cell as unevidenced **because the evidence was
 in a string.**
 
-W3.5 as written adds a `cell_source_links` write *beside* the blob. That leaves two truths, which
+W3.5 as written adds a `specification_source_links` write *beside* the blob. That leaves two truths, which
 is the dual-store class Wave 7 exists to clear and guardrail 5 exists to forbid. **Specification:**
 
-1. `cell_source_links` becomes the **sole** carrier of the cell→source edge.
+1. `specification_source_links` becomes the **sole** carrier of the cell→source edge.
 2. `governing_refs` becomes **derived** — regenerated from the junction by the writer, or dropped
    entirely and replaced by a `v_cell_governing_refs` view. Prefer dropping: a cache with no
    invalidation rule is how the two diverge again.
@@ -692,7 +692,7 @@ standard-designation set; the 51 rendered files regenerate clean.
   contract Part I §I.3 now *enforces* rather than declares.
 - **AE-4 adopted as sequenced:** the migration path is the writer for stage-7 outputs. Declare it
   in the contract for five of six; build only **W3.5** (the one real code writer — `assess_cell.py`
-  must insert `cell_source_links` after line 573), and fold Part I §I.7's demotion into the same
+  must insert `specification_source_links` after line 573), and fold Part I §I.7's demotion into the same
   change so the junction is the *sole* carrier, not a second one.
 - **W3.2** — split `target_population` into code + note **before any rows**; 22 of 30 pre-reset
   values were prose, so a bare FK would forbid the majority of the column's historical use.
@@ -708,7 +708,7 @@ standard-designation set; the 51 rendered files regenerate clean.
 - **Part I §I.3, §I.5, §I.6 land here** — the table rebuilds, in one migration, while empty.
 - **Part IV's `work_log`** table + generated view + the two registered checks.
 
-**Exit:** inserting a `stated` cell with no `cell_source_links` row raises; inserting a `pending`
+**Exit:** inserting a `stated` cell with no `specification_source_links` row raises; inserting a `pending`
 cell with no gap raises; `governing_refs` no longer exists as an independent carrier.
 
 ### M5 — Stop the repository lying to its next session. Minutes, no gate.
@@ -1009,7 +1009,7 @@ owner-only, and the owner has ruled. What remains is execution shape, which is p
 
 | # | Action | Evidence | Falsified if |
 |---|---|---|---|
-| **H1** | **Strip the determinations from the 28 value-bearing item names.** `E-08 Corridor Clear Width (≥1200 mm Minimum on All Primary Routes)` → `Corridor Clear Width`; `E-07 Slip Resistance (PTV ≥36 Wet Throughout All Circulation and Entry)` → `Slip Resistance`; `A-02 Acoustic Ceiling Panels (NRC ≥0.85) in Occupied Spaces` → `Acoustic Absorption at Ceiling`; and so through the list. A name states **what parameter is being determined**, never **what it was determined to be** | 28 of 93 names contain a digit; `evidence_cell_state` = 0 rows | An item name is shown to be the only carrier of a value nothing else records — then the value moves to a cell or a gap first, and the rename follows |
+| **H1** | **Strip the determinations from the 28 value-bearing item names.** `E-08 Corridor Clear Width (≥1200 mm Minimum on All Primary Routes)` → `Corridor Clear Width`; `E-07 Slip Resistance (PTV ≥36 Wet Throughout All Circulation and Entry)` → `Slip Resistance`; `A-02 Acoustic Ceiling Panels (NRC ≥0.85) in Occupied Spaces` → `Acoustic Absorption at Ceiling`; and so through the list. A name states **what parameter is being determined**, never **what it was determined to be** | 28 of 93 names contain a digit; `specifications` = 0 rows | An item name is shown to be the only carrier of a value nothing else records — then the value moves to a cell or a gap first, and the rename follows |
 | **H2** | **Strip the prescriptive condition clauses from the 23 that carry them.** `E-02 Platform Lift (Where Full Passenger Lift Not Achievable)` → `Platform Lift`; `A-05 Carpet in Corridors and Occupied Spaces (Where VIS Navigation Maintained)` → `Floor Covering: Carpet`. A condition of use is a determination about *when* the provision applies — a cell's judgement, not a parameter's identity | `CLAUDE.md` §1: "not a prescription manual" | The owner rules that scope clauses are part of a parameter's identity |
 | **H3** | **Record every stripped value before it is stripped.** Each of the 28 numbers is either (a) already in `jurisdictional_values` under its jurisdiction — E-08's ≥1200 is GB/ISO, already rows 72 and 77 — in which case the name was a duplicate of a correctly-held value and stripping loses nothing; or (b) **held nowhere else**, in which case it is an unevidenced assertion and its removal is the point. Classify all 28 into (a)/(b) **in the migration's own comment block**, so the act is auditable | E-04's "3600 mm" has zero backing rows — an instance of (b) | Any value is found to be (c): correctly evidenced, and held only in the name |
 | **H4** | **Add the standing gate.** A registered check asserting no `items.name` matches `\d` outside a permitted set (ISO/EN/DIN standard designations in a name like `E-09 Tactile Walking Surface Indicators (ISO 23599:2019)` are a citation, not a determination — decide whether they stay). Level `advisory` on arrival, per house norm | The defect entered because nothing looked | The check cannot express the permitted set without an unbounded exception list |
@@ -1145,14 +1145,14 @@ be rejected *with nothing written*, and `assess_cell.py` must complete.
 
 `assess_cell.py:559` writes the literal `None, None, None` for `value_min`, `value_max`,
 `value_unit`, unconditionally, on every path; it is the only corpus writer of
-`evidence_cell_state`. No code path runs from N extracted values to one value —
+`specifications`. No code path runs from N extracted values to one value —
 `source_value_extractions` has zero writers, and convergence status is hard-coded
 `pending_assessment` with the comment *"no rule exists for grading value-level convergence."*
 
 **Recommendation: human, declared** — in `governance/pipeline-contract.yaml` under `judgment`,
 with an input contract (a value row is written only by data migration, only onto a cell whose
 state is `stated`/`provisional` with non-empty `governing_refs`, and only when every extraction
-it rests on is reachable via `cell_source_links`), an acceptance condition (`value_unit` non-NULL
+it rests on is reachable via `specification_source_links`), an acceptance condition (`value_unit` non-NULL
 wherever `value_min`/`value_max` is; `value_min <= value_max`), and an attestation naming the
 cell and the `doctrine_sha` it was judged under. `check: null` — the file's own
 DECLARED-BUT-UNENFORCED convention. **Note the dependency:** naming a cell as an attestation
@@ -1214,12 +1214,12 @@ Every table named is empty. **Target order:** `source_value_extractions` →
 |---|---|---|
 | **W3.1** | **Implement the derived-value triangle.** Glyph and fill semantics into `tier-system.md` §5; **a `synthesis_method_indicator` column** — *not* `synthesis_method`: `armature_v4_resolutions.md:104` reserves that exact name for a **different** ratified vocabulary (`narrative`/`quantitative`/`mixed`) and gives `synthesis_method_indicator` at :110 for `direct`/`inferred`/`consensus` — plus `inference_basis`; a renderer that emits it; **and the DR that ratifies it** | Ratified doctrine, zero implementation |
 | **W3.2** | **Split `evidence_population_match.target_population`** into `target_population_code` (FK, nullable) and `target_population_note` (free text, `NOT NULL` retained — R13 needs richness on the served side). **Correction: the 64 archived rows cannot be "hand-migrated"** — importing them violates the FK to an empty `evidence_sources` and contradicts DR-2026-08-06 §4.1 (*"Research resuming does not restore these rows"*). Instead: hand-classify them into a `(code, note)` worksheet committed as a DR appendix, proving the split carries all 30 values | **22 of 30 distinct pre-reset values are prose**, re-verified — e.g. *"Hardware operating force threshold for UPL/PAIN populations including RA"*, which is not even a population. A bare FK passes trivially on 0 rows and forbids 22 of 30 historical values |
-| **W3.3** | **Doctrine binding on `evidence_cell_state`** — a `doctrine_sha TEXT` column with a 7-hex GLOB check, stamped by `assess_cell.py` — **or** widen `attestation.schema.json:13`'s `artifact` pattern so an attestation can name a row | Leg 4 of DR-2026-08-06's four-leg promise. Legs 1–3 have columns; leg 4 has nothing |
+| **W3.3** | **Doctrine binding on `specifications`** — a `doctrine_sha TEXT` column with a 7-hex GLOB check, stamped by `assess_cell.py` — **or** widen `attestation.schema.json:13`'s `artifact` pattern so an attestation can name a row | Leg 4 of DR-2026-08-06's four-leg promise. Legs 1–3 have columns; leg 4 has nothing |
 | **W3.4** | **`CHECK (evidence_type='co1' → tier=1)`** by table rebuild (SQLite cannot `ADD CONSTRAINT`), or a BEFORE INSERT/UPDATE trigger | Doctrine's most distinctive commitment is defended by nothing. `validate_source_co1_fields()` at `validate_evidence_state.py:76-121` scans `data/sources/*.yaml`, which does not exist — and its own comment admits two dormant bugs. **Check first:** `SELECT COUNT(*) FROM evidence_sources WHERE evidence_type='co1' AND tier<>1` on the archived DB |
-| **W3.5** | **`assess_cell.py` must write `cell_source_links`.** Exact insertion point: **after line 573**, before line 575, where `cell_id` and `det["governing_refs"]` are both in scope. `role='governing'` is the only value the DDL's CHECK admits | The trial's first determination carried 7 governing refs and 0 junction rows, and `spec_page.py:217-223` therefore rendered *"records no governing sources … treat it as unevidenced."* **The honesty mechanism misreports** |
+| **W3.5** | **`assess_cell.py` must write `specification_source_links`.** Exact insertion point: **after line 573**, before line 575, where `specification_id` and `det["governing_refs"]` are both in scope. `role='governing'` is the only value the DDL's CHECK admits | The trial's first determination carried 7 governing refs and 0 junction rows, and `spec_page.py:217-223` therefore rendered *"records no governing sources … treat it as unevidenced."* **The honesty mechanism misreports** |
 | **W3.6** | **Render the value, the marker band, and the gap link.** `spec_page.py:74-77` omits `value_min`, `value_max`, `value_unit` **and** `gap_register_id`. Refinement: the absence of *per-source* markers is deliberate and doctrinally argued (`citation()` docstring, :134-138) — the marker belongs at **cell level**, where the live `v_best_practice.strength_band` already supplies the band | Depends on **W3.1** and **D-A** |
 | **W3.7** | **Populate `access_needs.typical_stakes`** — 16 of 17 NULL; only `A-TRIGGER` is graded. The three ratified values are `safety-critical` / `exclusion` / `friction` | `A-SIZE` and `A-REACH`, the two that reach corridor width, are both NULL. **The sixteen grades are judgment acts** — they set which parameters must be specified at the accommodating end — and need owner review plus an attestation |
-| **W3.8** | **Give the six remaining stage-7 outputs a writer, or declare them hand-authored** in `pipeline-contract.yaml`: `spec_value_probes`, `item_bpc_links`, `cell_source_links` (discharged by W3.5), `extraction_population_links`, `case_studies`, `economics_entries` | **R12 instructs sessions to write `economics_entries` and no tool can.** (Correction: the contract is R1–**R15**, not R1–R13) |
+| **W3.8** | **Give the six remaining stage-7 outputs a writer, or declare them hand-authored** in `pipeline-contract.yaml`: `spec_value_probes`, `item_bpc_links`, `specification_source_links` (discharged by W3.5), `extraction_population_links`, `case_studies`, `economics_entries` | **R12 instructs sessions to write `economics_entries` and no tool can.** (Correction: the contract is R1–**R15**, not R1–R13) |
 | **W3.9** | **One locator representation instead of three** — the identical 16-column block in `jurisdictional_values` (16 of 32), `source_value_extractions` (16 of 49), `reasoning_doc_citations` (16 of 34). **Recommendation reversed to Candidate B** — see below | Free while empty, except `jurisdictional_values`' 109 rows |
 
 ### W3.9 — the shape decision, resolved against the plan's own test
@@ -1261,8 +1261,8 @@ FK-keyed target pair per kind.
 | **W5.3** | `CORRIDOR-W.md:9,16,18` asserts **≥2440 mm** for DEAF signing pairs; E-08's *name* asserts **≥1200 mm**. **Wave H dissolves this as stated:** the ≥1200 exists only in an item name, and the 2440 carries **no source citation anywhere in its 23-line file** — `[UNVERIFIED-QUANT]`-shaped | Reconcile as two unevidenced assertions, not two rival claims. Second-order ruling stands: CORRIDOR-W was reclassified NOT-A-CONFLICT solely on the DEAF-vs-NDV/AUT sensory-load axis (:9-16) then declared retired as a **domain** (:20,:23). **Retirement verdicts should be per-axis**, and a domain file's banner should name the axis it adjudicated. Depends on **W4.5** |
 | **W5.4** | **STALE AT REVISION 3's OWN SUBJECT.** Running the real `check_3_rule_resolution` over all 76 attestations at HEAD: **4 failures, 8 distinct unknown identifiers, and `integrity-protocol` is cited by ZERO attestations.** Commit `bb1a836` replaced it with `structure-auditor` and logged a forward-only `reattestation[]` entry — and `git merge-base --is-ancestor bb1a836 adfb675` returns **true**. The register's "4 committed attestations cite it" was a whole-file string grep hitting artifact paths and `bias_direction` prose; the real count was **1** | **(a)** The schema question is **already answered**: `references/skill-registry.md:22-35` states that CHECK 3 resolves against the registry **or** `EXTRA_RULE_IDS`, which is *"the ratified extension point"* per DR-2026-07-13. The live decision is only whether the 8 residual governance-rule names are admitted there (recommended — 6 of 8 name real governance objects) or corrected forward. **(b)** Register `integrity-protocol` and `supersession-audit` in `skill-registry.md` — but on **completeness grounds, not to clear a red check**: at HEAD it clears zero failures. **(c)** Add `--corpus` to `adherence_log_audit.py` and register `attestation_corpus` advisory with `EXAMINED:` — today every attestation check is diff-scoped (`:551-553`) and corpus validity is established by nothing (W6.4) |
 | **W5.5** | `weighting_profile`: 5 rows, named by three pipeline stages, **touched by no code** — and `governance/evidence-architecture.md` I3 binds renders *"under any weighting profile"* | Owner ruling. **Retiring it is a doctrine edit** (amend I3), not dead-code removal; wiring it grows the renderer an audience dimension. Pair with the **11 unread views**: `v_code_floor_only`, `v_coverage_priority` (**7,210 rows, no reader**), `v_item_extractions`, `v_item_provenance`, `v_pending`, `v_pmp_latest_walk`, `v_registry_duplicate_descriptions`, `v_source_admission`, `v_source_reach`, `v_source_reach_all`, `v_value_independence` — **wire-or-retire ruling, not a cut**; several are declared query paths and `v_value_independence` is contract-cited |
-| **W5.7** | **RE-DERIVED AND CONFIRMED** — the one entry the register never verified. `spec_page.py:73-79` and `population_page.py:75-81` both omit `gap_register_id`; a `pending` cell renders as the bare word (`spec_page.py:197`) with no `[BEST-PRACTICE-PENDING]` and no gap link; both determination tables iterate cell rows only, so **a population linked to the item with no cell is absent and unmarked**. `governance/mission-and-epistemics.md:120`: *"Silence on evidence-thin populations is not the default."* A working implementation exists at `pilot_renderings.py:214-236` and is **wired to nothing** | Add `gap_register_id` to both SELECTs; render pending with marker and link; build the table from `item_population_links LEFT JOIN evidence_cell_state`. **Refinements:** the population is not erased from the *page* (a separate "Applicable populations" table renders it); the all-empty case is honestly bannered; so the breach is **latent and fires on the first partial determination**, in exactly the thinnest-evidence populations |
-| **W5.8** | **The nine standing advisory failures**, each re-derived, each with its resolution level. **Do not clear by silencing** | `validate_reasoning` — content (**and the registry note understates: ~14 findings, not one missing section**) · `validate_pydantic_schemas` — owner decision (does `schemas/*.py` mirror SQLite or the YAML layer?) · `retired_vocabulary` 69 — text fixes · `site_pages_fresh` 12 — regenerate · `research_dod` R1 — R-15 warrant · `test_verification_pipeline` 15/18 — R-15 warrant on the three G-legs · `test_directness_2_2` — **green standalone, red dispatched**: `run_checks.py:389` sets `GUIDEBOOK_DB_PATH`, so the live-smoke leg runs against the empty canonical table instead of skipping; the registry note's *"(it is, in CI)"* is wrong · `test_graph_audit` — R-13 · `register_integrity_check` — R-14, **cause now derived**: `evidence_cell_state` = 0 rows makes the completeness set-diff vacuous and `:182`'s `if db_rows:` disables the doc→DB direction. Plus `parts/v10` **stale in all 15 files with no `--check` mode to gate it** (the one place a *new* check is the resolution) and `room_page.py` querying **four** non-existent tables (not six) |
+| **W5.7** | **RE-DERIVED AND CONFIRMED** — the one entry the register never verified. `spec_page.py:73-79` and `population_page.py:75-81` both omit `gap_register_id`; a `pending` cell renders as the bare word (`spec_page.py:197`) with no `[BEST-PRACTICE-PENDING]` and no gap link; both determination tables iterate cell rows only, so **a population linked to the item with no cell is absent and unmarked**. `governance/mission-and-epistemics.md:120`: *"Silence on evidence-thin populations is not the default."* A working implementation exists at `pilot_renderings.py:214-236` and is **wired to nothing** | Add `gap_register_id` to both SELECTs; render pending with marker and link; build the table from `item_population_links LEFT JOIN specifications`. **Refinements:** the population is not erased from the *page* (a separate "Applicable populations" table renders it); the all-empty case is honestly bannered; so the breach is **latent and fires on the first partial determination**, in exactly the thinnest-evidence populations |
+| **W5.8** | **The nine standing advisory failures**, each re-derived, each with its resolution level. **Do not clear by silencing** | `validate_reasoning` — content (**and the registry note understates: ~14 findings, not one missing section**) · `validate_pydantic_schemas` — owner decision (does `schemas/*.py` mirror SQLite or the YAML layer?) · `retired_vocabulary` 69 — text fixes · `site_pages_fresh` 12 — regenerate · `research_dod` R1 — R-15 warrant · `test_verification_pipeline` 15/18 — R-15 warrant on the three G-legs · `test_directness_2_2` — **green standalone, red dispatched**: `run_checks.py:389` sets `GUIDEBOOK_DB_PATH`, so the live-smoke leg runs against the empty canonical table instead of skipping; the registry note's *"(it is, in CI)"* is wrong · `test_graph_audit` — R-13 · `register_integrity_check` — R-14, **cause now derived**: `specifications` = 0 rows makes the completeness set-diff vacuous and `:182`'s `if db_rows:` disables the doc→DB direction. Plus `parts/v10` **stale in all 15 files with no `--check` mode to gate it** (the one place a *new* check is the resolution) and `room_page.py` querying **four** non-existent tables (not six) |
 
 ---
 
@@ -1630,9 +1630,9 @@ carried, not stated.
 | Claim | Command | Result |
 |---|---|---|
 | The canonical DB has zero triggers | `SELECT COUNT(*) FROM sqlite_master WHERE type='trigger'` | **0** |
-| `evidence_cell_state` carries no state-machine CHECKs | `SELECT sql FROM sqlite_master WHERE name='evidence_cell_state'` | Confirmed — enum CHECKs and one `json_valid` only; **no `doctrine_sha` column** |
+| `specifications` carries no state-machine CHECKs | `SELECT sql FROM sqlite_master WHERE name='specifications'` | Confirmed — enum CHECKs and one `json_valid` only; **no `doctrine_sha` column** |
 | `governing_refs` is an FK-unreachable JSON blob | same | Confirmed: `governing_refs TEXT CHECK (… json_valid(…))` |
-| `cell_source_links` exists with real FKs | `SELECT sql FROM sqlite_master WHERE name='cell_source_links'` | Confirmed — PK `(cell_id, ref_id)`, both FK'd, `role` CHECK admits only `'governing'` |
+| `specification_source_links` exists with real FKs | `SELECT sql FROM sqlite_master WHERE name='specification_source_links'` | Confirmed — PK `(specification_id, ref_id)`, both FK'd, `role` CHECK admits only `'governing'` |
 | FKs are disabled during every migration | `migrate_db.py` | Confirmed at **:161** (apply) and **:250** (rebuild) |
 | The commit precedes the FK check | `migrate_db.py` | Confirmed — `conn.commit()` **:171**, `foreign_key_check` **:174** |
 | The `except`'s rollback is inert | `migrate_db.py:183-184` | Confirmed — follows the commit at :171 |
@@ -1648,7 +1648,7 @@ carried, not stated.
 | Check register composition | same | 65 checks — **28 blocking, 34 advisory, 3 informational**; 16 quarantine entries |
 | `locator_scheme` is unpopulated | `SELECT locator_scheme, COUNT(*) … GROUP BY 1` | **NULL on all 109 rows** — the 16-column block is free to reshape |
 | `evidence_sources` width and Co-1 columns | `PRAGMA table_info(evidence_sources)` | 97 columns including `tier`, `evidence_type`, `co1_provenance`, `co1_source_type` |
-| Empty-table count | `COUNT(*)` over every table | **39 of 67 empty**; `evidence_cell_state` 0, `evidence_sources` 0, `jurisdictional_values` 109, `items` 93 |
+| Empty-table count | `COUNT(*)` over every table | **39 of 67 empty**; `specifications` 0, `evidence_sources` 0, `jurisdictional_values` 109, `items` 93 |
 | `test_db_integrity` is green | `python3 scripts/tests/test_db_integrity.py` | **RESULTS: 70/70**, exit 0 |
 | `main` is branch-protected | GitHub API branch listing | **`{"name":"main", …, "protected":true}`** — the only protected branch. CLAUDE.md §0/§7 remain stale |
 | 28 of 93 item names carry digits | `SELECT name FROM items` + regex | **28 of 93** confirmed |

@@ -56,7 +56,11 @@ and only synthesis is gated to Opus-class authorship (PI rule #2, DR-2026-06-10)
 
 ## 3. Where each operation stands today
 
-Measured 2026-08-02; derive current numbers rather than trusting these.
+Measured 2026-08-02 and left at that vintage on purpose — every row below predates the
+2026-08-12 evidence-stage clearance, after which `search_executions`, `evidence_sources`,
+`gaps`, `source_value_extractions` and `specifications` are all **0 rows**. Derive current
+numbers rather than trusting these; a row here is a record of the 08-02 state, not a claim
+about today.
 
 | Operation | State |
 |---|---|
@@ -64,7 +68,7 @@ Measured 2026-08-02; derive current numbers rather than trusting these.
 | Citation mining | 100 sources mined, 67 deferred, **696 pending**. Tier 1–2, where R2 obliges the work: **134 pending, 23 deferred, 34 mined of 191** |
 | Gap-driven mining | `gap_mining` **0 rows** — the table exists and has never been written to; 50 gaps OPEN |
 | Data extraction | **11 of 863** sources have a joinable capture row; 852 pending |
-| Synthesis | `specifications` 15 rows of a 93 × 23 grid (0 after the 2026-08-12 evidence reset) |
+| Synthesis | `specifications` 15 rows of a 93 × 23 grid |
 
 ---
 

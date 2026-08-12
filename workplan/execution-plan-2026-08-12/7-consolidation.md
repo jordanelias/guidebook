@@ -119,7 +119,7 @@ amending it silently breaks a blocking gate's contract. Note `source_slug_links`
 **G3 is one schema migration plus one 8-row data migration.** **G1 widens `slugs`, the frame's
 anchor table** — keep the DR-2026-08-06 frame enumeration in sync.
 
-**Sweep note:** `CLAUDE.md:74` tells sessions to "query `bpc_metadata`/`evidence_cell_state`" —
+**Sweep note:** `CLAUDE.md:74` tells sessions to "query `bpc_metadata`/`specifications`" —
 **must be re-pointed after G1.**
 
 ---

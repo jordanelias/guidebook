@@ -12,7 +12,7 @@ Denominators (verified against the live schema before this run):
   80 FK edges (62 on NOT NULL/PK cols, 18 nullable) · 127 CHECK clauses on 47
   tables · 267 non-PK NOT NULL columns · 5 UNIQUE indexes (origin=u)
   → rejectable-write surface = 479. 66 user tables (39 empty), 18 views,
-  0 triggers, 167 .py scripts under scripts/ tools/ schemas/.
+  0 triggers, and every .py script under scripts/ tools/ schemas/ (count derived, not pinned).
 """
 import ast
 import json
@@ -44,6 +44,13 @@ assert BASE.resolve() != CANON.resolve()
 shutil.copy(CANON, BASE)
 SNAP_HEAD = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=REPO,
                            capture_output=True, text=True).stdout.strip()
+# A commit id alone is a FALSE provenance stamp whenever the tree is dirty: the
+# 2026-08-12 run was taken against an uncommitted rename and stamped itself with
+# the pre-rename HEAD, so the log named a subject it had not read. Say so.
+_DIRTY = bool(subprocess.run(["git", "status", "--porcelain"], cwd=REPO,
+                             capture_output=True, text=True).stdout.strip())
+if _DIRTY:
+    SNAP_HEAD += "+dirty"
 
 _seq = 0
 records = []
@@ -535,8 +542,9 @@ def violation_for_check(table, expr):
 N_NOTNULL = sum(1 for t in TABLES for c in COLS[t] if c[3] and not c[5])
 SURFACE_DENOM = len(EDGES) + N_CHECKS + N_NOTNULL + len(UNIQUE_IDX)
 md("# Pipeline probe log — AGONIST full-direction probe\n")
-md(f"Generated {now()}Z. Subject: atomic snapshot `{BASE.name}` of `data/guidebook.db` at repo HEAD "
-   f"`{SNAP_HEAD}` (the repo received two data commits MID-SESSION — 7a7bebe evidence-stage clear, "
+md(f"Generated {now()}Z. Subject: atomic snapshot `{BASE.name}` of the WORKING-TREE "
+   f"`data/guidebook.db`; repo HEAD `{SNAP_HEAD}` "
+   f"({'the working tree carried uncommitted changes, so the DB read here is NOT the one at that commit; ' if _DIRTY else ''}the repo received two data commits MID-SESSION — 7a7bebe evidence-stage clear, "
    f"6dd0cd3 source_locators recovery — so every sweep reads this one snapshot; the canonical file was "
    f"only ever opened read-only, for copying).")
 md(f"Schema: {len(TABLES)} user tables ({sum(1 for t in TABLES if ROWCOUNT[t]==0)} empty), "
@@ -1560,7 +1568,7 @@ for f in mig_files:
                 continue
             mig_writers.setdefault(name, set()).add((f.name, verb))
 
-rec("D", "scan", f"AST-parsed {scripts_scanned}/167 .py files under scripts/, tools/, schemas/ "
+rec("D", "scan", f"AST-parsed {scripts_scanned}/{len(py_files)} .py files under scripts/, tools/, schemas/ "
     f"(+ {len(mig_files)} migration .sql files scanned for writers); "
     f"{len(scripts_failed)} unparseable",
     "all files parse", f"failed: {scripts_failed}" if scripts_failed else "all parsed",
@@ -1636,7 +1644,7 @@ rec("D", "legacy scripts", "scripts under scripts/db, scripts/migrate, scripts/c
     "marked", f"{len(legacy_files)} legacy scripts included in the matrix: {legacy_files}", "OK",
     extra={"legacy_scripts": legacy_files})
 
-md(f"\n**SWEEP D EXAMINED: {scripts_scanned}/167 scripts AST-parsed · "
+md(f"\n**SWEEP D EXAMINED: {scripts_scanned}/{len(py_files)} scripts AST-parsed · "
    f"{prepare_stats['statements_total']} SQL statements PREPARE-checked "
    f"({prepare_stats['prepared_ok']} prepared, {prepare_stats['dynamic']} dynamic, "
    f"{prepare_stats['fragment']} fragments) · {len(TABLES)} tables in matrix · "
@@ -1659,7 +1667,7 @@ md(f"- Rejectable-write surface probed (FK=ON): **{surface_attempted}/{SURFACE_D
 md(f"- Sweep A: edges {len(EDGES)}/80 · orphan queries {a2_examined} · reverse map 66/66 tables; "
    f"isolated={isolated}; referenced-but-empty={ref_empty}")
 md(f"- Sweep B: {b_examined} handoff probes · Sweep V: {v_examined}/18 views · Sweep C: {c_examined} joints")
-md(f"- Sweep D: {scripts_scanned}/167 scripts; {prepare_stats['statements_total']} statements prepared; "
+md(f"- Sweep D: {scripts_scanned}/{len(py_files)} scripts; {prepare_stats['statements_total']} statements prepared; "
    f"unwritable={unwritable}; unread={unread}; phantom tables={sorted(pt_sorted)}; "
    f"phantom column refs={len(pc)}")
 md(f"\n**SILENT-PASS total: {len(silent)}** — seqs {[r['seq'] for r in silent]}")
@@ -1676,7 +1684,7 @@ summary = {
                      "rejectable_surface": SURFACE_DENOM,
                      "user_tables": len(TABLES),
                      "empty_tables": sum(1 for t in TABLES if ROWCOUNT[t] == 0),
-                     "views": len(VIEWS), "scripts": 167,
+                     "views": len(VIEWS), "scripts": len(py_files),
                      "note": "pre-054 verified denominators were 80/127/267/5=479; "
                              "migration 054 (source_locators) added +1 CHECK, +1 NOT NULL"},
     "examined": {

@@ -59,20 +59,47 @@ spanning two months.**
   future 056 is not silently skipped by the runner's version-based pending detection.
 - `scripts/migrations/data_20260812075349_2026-08-12-rename-cell-to-specification.sql` — the DDL,
   timestamped after all 19, so it renames only once they have replayed.
+- `scripts/migrations/056_schema_phase_rebased_after_rename.sql` — **added after the adversarial
+  review**, because the split above fixed replay backwards and broke it forwards. See §4c.
 
 DDL inside a data migration has precedent: `data_20260525013000_supersession_v1_stamp_correction.sql`
 runs `ALTER TABLE ... ADD/DROP/RENAME COLUMN` for the same class of reason (a schema constraint
 blocking a data correction).
 
-**Verified after the split:** rebuild succeeds; committed DB and rebuilt DB agree on
-`PRAGMA user_version` (55), on every `sqlite_master` object *including its SQL text* (0 differences
-either direction), and on row counts across every shared table (0 divergences).
+### 2b. What `056` adds, and the invariant that now holds
+
+Because the DDL is data-phase, **any future numbered schema migration touching these two tables
+would run before the rename existed.** `056` carries a marker read by `migrate_db.py:build_plan()`:
+
+```
+-- AFTER_DATA: 20260812075349
+```
+
+meaning *this migration, and every migration numbered after it, applies only once the data
+migrations up to that timestamp have replayed.* Replay becomes: schema 001–055 → all data through
+the rename → schema 056+. That is the true chronology; the numbered/timestamped split simply had no
+way to say it. Both the rebuild path and the apply-pending path walk **one** plan, so they cannot
+disagree — a divergence there would surface in the blocking reproducibility gate as a mystery
+rather than as this bug.
+
+**From 057 onward, ordinary numbered schema migrations may reference `specifications` and
+`specification_source_links` normally.** Part I's constraints and triggers need no special handling.
+No committed file was edited to achieve this: 055 and the data migration are immutable and unchanged.
+
+**Verified:** rebuild succeeds; committed DB and rebuilt DB agree on `PRAGMA user_version` (56), on
+every `sqlite_master` object *including its SQL text* (0 differences either direction), and on row
+counts across every shared table (0 divergences). The reviewer's own falsifier — a scratch `057`
+running `ALTER TABLE specifications ADD COLUMN doctrine_sha TEXT`, a `CREATE INDEX` and a
+`CREATE VIEW` on the renamed table — now rebuilds green at `user_version` 57.
 
 ---
 
 ## 3. Callers swept
 
-**23 live `.py` files, 221 token replacements** across `schemas/`, `scripts/`, `tools/`. All parse.
+**23 live `.py` files** across `schemas/`, `scripts/`, `tools/`. All parse. (An earlier draft
+claimed "221 token replacements"; the figure came from a sed run count and is not reproducible by
+any counting rule — 222 old-name occurrences existed across those files at `df64417`, of which a
+number were deliberately retained. The file count is exact; the replacement count is withdrawn.)
 
 **Configuration and prose (live surfaces):**
 
@@ -126,6 +153,43 @@ Neither is caused by the rename; both were invisible until a rename forced SQLit
    recorded in the file.
 
 ---
+
+## 4c. What the adversarial review found — and what changed because of it
+
+Two antagonist reviews ran against `84cdac0`. **Ten findings survived**; the material ones are
+below, with what was done. This section exists because a review whose findings are not enumerated
+is indistinguishable from a review that found nothing.
+
+### Fixed
+
+| Finding | What was wrong | Fix |
+|---|---|---|
+| **Replay order broke forwards** | Moving the DDL to the data phase fixed replay backwards and broke it forwards: any *future* numbered schema migration touching these tables runs before the rename exists. The reviewer proved it by writing the exact next planned statement — W3.3's `ALTER TABLE ... ADD COLUMN doctrine_sha` — into a scratch migrations dir and watching `--rebuild` die. **`055`'s claim that the sequencing rule was "discharged" was false.** | `AFTER_DATA` marker in `migrate_db.py:build_plan()`, carried by `056`. Both the rebuild path and the apply-pending path walk one plan, so they cannot disagree. Verified with the reviewer's own probe: rebuilds green at `user_version` 57 with the column present and a dependent view compiling |
+| **A frozen audit record was overwritten, with a forged as-of stamp** | The probe re-run overwrote `audits/2026-08-12-pipeline-probe-*` — **the very thing §5 below forbids** — and its header stamped `repo HEAD df64417`, where the table is `evidence_cell_state`, while the body says `specifications` 161 times. The subject was the uncommitted working tree | Originals restored from `7e8319b`. The probe now appends `+dirty` to the stamp and names the working tree as the subject, so the stamp cannot be true of a commit it did not read. The new run ships under its own dated name |
+| **No Decision Record for a D-SCHEMA change** | Migrations 036/037/038 each have a register entry; a rename of the central synthesis table had neither a DR nor a register row. A `workplan/` execution record is not a decision record and `decision_capture` C9 will never see it | `decisions/DR-2026-08-12-specification-rename-and-replay-order.md`, register row **D-0158**, a mirroring row in the canonical `decisions` table, and an attestation. C9 orphans and total warnings are unchanged from baseline at 49 and 54 |
+| **The retired-vocabulary register was not updated** | The repo's purpose-built mechanism for exactly this residue — a token that is readable and wrong — was untouched, so nothing would stop a future session reintroducing the old name | **RV-020** and **RV-021** at severity `broken`, with `exempt_paths` naming every legitimate carrier. `cell_id` recorded in `rejected:` with its reasoning (it fails admission test 4 against `schema-spec.md`'s own `cell_id`). The register found 43 live occurrences; they are now **1** — `specs/e-08.html`, under a separate owner instruction |
+| **Live plans still carried old-name DDL** | `workplan/2026-08-12-resolution-plan.md` and the `execution-plan-2026-08-12/` set held copy-pasteable `BEFORE INSERT ON evidence_cell_state` and `SELECT ... FROM sqlite_master WHERE name='cell_source_links'` for work not yet done. The "frozen record" defence was unavailable — this commit had already edited one of those files | Swept. The undated `best-practices-assessment-system.md` and `phase-e-execution-plan-v1.md` swept too: the register's own rule is that undated workplans read as standing instructions |
+| **The fixture replay was an unlinked hand-copy** | Nothing tied `_apply_055()` to the migration it replays, so a compensating migration would not propagate and the fixture would silently build a schema the DB no longer has | `_assert_rename_replay_matches_migration()` parses the shipped migration's `RENAME` lines and refuses to run if any is missing from the replay. **Verified by tampering with it and watching it fire**, not by assuming it would |
+| **Prose the sweep made false or mixed-vintage** | `pipeline-operations.md`'s table was stamped "Measured 2026-08-02" but one row had been updated to 2026-08-12 — worse than uniformly stale. `intra-category-cross-test-methodology.md` claimed three items are "already live in `specifications`" against 0 rows. `CLAUDE.md` and the skill pointed readers at "migration 055", which carries no DDL. Four live gate strings still printed "cell" | All corrected. The `pipeline-operations.md` table is restored to one vintage, with the reset stated once above it |
+| **`168/167` scripts in the probe log** | A hardcoded denominator | Derived from the file list |
+
+### Recorded, not fixed
+
+- **86% of `84cdac0` is not the rename.** Regenerating `parts/` and `site/` folded a large,
+  product-visible content deletion into a commit titled "rename": `parts/v10/part05.md` goes from
+  273 recorded connections to 0 and drops the whole pending-connection table;
+  `site/specs/a-18.html` loses its four-population determination table and eight governing-source
+  citations. **This is not data loss** — those tables were already 0 rows *at baseline*, so the
+  generated files were simply stale and the regeneration made them honest. It is a scope failure:
+  a reviewer of a rename would not look there, and reverting the rename now also reverts the
+  content. Disclosed rather than rewritten, because the history is pushed and the content is
+  correct; the lesson is that a regeneration belongs in its own commit.
+- **`PRAGMA user_version` 55 does not by itself imply the renamed names**, since the DDL is
+  data-phase. **56 does.** `--schema-only` now refuses to cross the gate and says so, rather than
+  applying a later schema migration out of order and claiming a schema the DB does not have.
+- **`scripts/generate/room_page.py:51` reads a table literally named `specification`** (singular),
+  which does not exist. It was obviously phantom before the rename; now it looks like a typo for a
+  real table. Called out in `skills/cell-curator_SKILL.md`'s disambiguation note.
 
 ## 5. Deliberately not swept
 
@@ -181,6 +245,14 @@ failure is the same one and not a new failure wearing the same name:
 ## 8. What this unblocks
 
 Part I's constraints, Part I §I.3/§I.5/§I.6/§I.7 and the `specification_extraction_links` junction
-(M4′) can now be written against the final names. The plan's own sequencing rule — *"sequence this
-before Part I's rebuilds, or every constraint is written against a name about to change"* — is
+(M4′) can now be written against the final names, **as ordinary numbered schema migrations from 057
+onward** — which was true only after `056`; the first version of this section claimed it while the
+schema phase could not see the renamed tables at all. The plan's own sequencing rule — *"sequence
+this before Part I's rebuilds, or every constraint is written against a name about to change"* — is
 discharged.
+
+**Still open, and owner-gated:** the deferred alternative in D-0158 §4(5) — a schema *and data*
+baseline squashing the migration history. It is the larger clean answer to replay order, it needs a
+runner change for data-migration supersession that does not exist today, and the corpus is at its
+smallest right now, which is the cheapest moment it will ever have. `AFTER_DATA` does not foreclose
+it.

@@ -55,7 +55,7 @@ decomposition re-ran them again. What follows is what was observed, not what was
 |---|---|
 | 28 of 93 `items.name` carry a numeric determination | **CONFIRMED** — list at `H-hard-coding-remediation.md` |
 | `items.name` is not a key; all 14 inbound FKs target `item_code` | **CONFIRMED** |
-| `evidence_cell_state` = 0 rows; `evidence_sources` = 0 rows | **CONFIRMED** |
+| `specifications` = 0 rows; `evidence_sources` = 0 rows | **CONFIRMED** |
 | Emitted migration bodies self-commit (`emit_data_migration.py:201`) | **CONFIRMED** — so W1.1's four-line reorder cannot work |
 | FK check runs *after* `commit()` | **CONFIRMED** at `migrate_db.py:162 / :171 / :174` |
 | `is_bootstrap` substring test exists twice | **CONFIRMED** at `:176` and `:261` |

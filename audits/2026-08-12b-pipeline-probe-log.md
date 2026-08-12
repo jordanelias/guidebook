@@ -1,5 +1,5 @@
 # Pipeline probe log — AGONIST full-direction probe
-Generated 2026-08-12 05:22:48Z. Subject: atomic snapshot `probe.db` of `data/guidebook.db` at repo HEAD `6dd0cd3` (the repo received two data commits MID-SESSION — 7a7bebe evidence-stage clear, 6dd0cd3 source_locators recovery — so every sweep reads this one snapshot; the canonical file was only ever opened read-only, for copying).
+Generated 2026-08-12 08:35:27Z. Subject: atomic snapshot `probe.db` of the WORKING-TREE `data/guidebook.db`; repo HEAD `84cdac0+dirty` (the working tree carried uncommitted changes, so the DB read here is NOT the one at that commit; the repo received two data commits MID-SESSION — 7a7bebe evidence-stage clear, 6dd0cd3 source_locators recovery — so every sweep reads this one snapshot; the canonical file was only ever opened read-only, for copying).
 Schema: 67 user tables (42 empty), 18 views, 0 triggers, PRAGMA user_version as committed.
 Denominators (live-derived from the snapshot): **80 FK edges** (62 NOT NULL/PK, 18 nullable) · **128 CHECK clauses** · **268 non-PK NOT NULL columns** · **5 UNIQUE indexes** → rejectable-write surface = 481. (The independently verified pre-054 denominators were 80/127/267/5 = 479; migration 054 added source_locators: +1 CHECK, +1 NOT NULL.)
 
@@ -24,587 +24,587 @@ Verdict legend: `OK` correct behaviour · `ERROR` defect/unexpected failure · `
 | 9 | `case_study_specs` | `item_code` | `items` | `item_code` | NO ACTION | no |
 | 10 | `case_study_specs` | `case_study_id` | `case_studies` | `case_study_id` | NO ACTION | no |
 | 11 | `case_study_strategies` | `case_study_id` | `case_studies` | `case_study_id` | NO ACTION | no |
-| 12 | `cell_source_links` | `ref_id` | `evidence_sources` | `ref_id` | NO ACTION | no |
-| 13 | `cell_source_links` | `cell_id` | `evidence_cell_state` | `cell_id` | NO ACTION | no |
-| 14 | `citation_mining` | `global_ref_id` | `evidence_sources` | `ref_id` | NO ACTION | YES — NULL-bypassable |
-| 15 | `citation_mining` | `slug` | `slugs` | `slug` | NO ACTION | no |
-| 16 | `citation_population_links` | `population_code` | `populations` | `population_code` | NO ACTION | no |
-| 17 | `citation_population_links` | `citation_id` | `reasoning_doc_citations` | `citation_id` | NO ACTION | no |
-| 18 | `conflicts` | `item_code` | `items` | `item_code` | NO ACTION | YES — NULL-bypassable |
-| 19 | `connection_targets` | `con_id` | `connections` | `con_id` | NO ACTION | no |
-| 20 | `economics_entries` | `ref_id` | `evidence_sources` | `ref_id` | NO ACTION | YES — NULL-bypassable |
-| 21 | `economics_entry_populations` | `population_code` | `populations` | `population_code` | NO ACTION | no |
-| 22 | `economics_entry_populations` | `entry_id` | `economics_entries` | `entry_id` | NO ACTION | no |
-| 23 | `economics_entry_specs` | `item_code` | `items` | `item_code` | NO ACTION | no |
-| 24 | `economics_entry_specs` | `entry_id` | `economics_entries` | `entry_id` | NO ACTION | no |
-| 25 | `evidence_cell_state` | `gap_register_id` | `gaps` | `gap_id` | NO ACTION | YES — NULL-bypassable |
-| 26 | `evidence_cell_state` | `convergence_id` | `convergence_assessment` | `convergence_id` | NO ACTION | YES — NULL-bypassable |
-| 27 | `evidence_cell_state` | `population_code` | `populations` | `population_code` | NO ACTION | no |
-| 28 | `evidence_cell_state` | `item_code` | `items` | `item_code` | NO ACTION | no |
-| 29 | `evidence_population_match` | `gap_id` | `gaps` | `gap_id` | NO ACTION | YES — NULL-bypassable |
-| 30 | `evidence_population_match` | `ref_id` | `evidence_sources` | `ref_id` | NO ACTION | YES — NULL-bypassable |
-| 31 | `evidence_source_authors` | `ref_id` | `evidence_sources` | `ref_id` | NO ACTION | no |
-| 32 | `extraction_population_links` | `population_code` | `populations` | `population_code` | NO ACTION | no |
-| 33 | `extraction_population_links` | `extraction_id` | `source_value_extractions` | `extraction_id` | NO ACTION | no |
-| 34 | `gap_mining` | `gap_id` | `gaps` | `gap_id` | NO ACTION | no |
-| 35 | `item_audit_runs` | `item_code` | `items` | `item_code` | NO ACTION | no |
-| 36 | `item_axis_links` | `axis_code` | `axes` | `axis_code` | NO ACTION | no |
-| 37 | `item_axis_links` | `item_code` | `items` | `item_code` | NO ACTION | no |
-| 38 | `item_bpc_links` | `slug` | `slugs` | `slug` | NO ACTION | no |
-| 39 | `item_bpc_links` | `item_code` | `items` | `item_code` | NO ACTION | no |
-| 40 | `item_population_elaborations` | `evidence_ref_id` | `evidence_sources` | `ref_id` | NO ACTION | YES — NULL-bypassable |
-| 41 | `item_population_elaborations` | `population_code` | `populations` | `population_code` | NO ACTION | no |
-| 42 | `item_population_elaborations` | `item_code` | `items` | `item_code` | CASCADE | no |
-| 43 | `item_population_links` | `item_code` | `items` | `item_code` | CASCADE | no |
-| 44 | `item_population_links` | `population_code` | `populations` | `population_code` | NO ACTION | no |
-| 45 | `items` | `bpc_source_slug` | `slugs` | `slug` | NO ACTION | YES — NULL-bypassable |
-| 46 | `jurisdictional_values` | `item_code` | `items` | `item_code` | NO ACTION | no |
-| 47 | `population_axis_map` | `axis_code` | `axes` | `axis_code` | NO ACTION | no |
-| 48 | `population_axis_map` | `population_code` | `populations` | `population_code` | NO ACTION | no |
-| 49 | `populations` | `parent_code` | `populations` | `population_code` | NO ACTION | YES — NULL-bypassable |
-| 50 | `probe_population_links` | `population_code` | `populations` | `population_code` | NO ACTION | no |
-| 51 | `probe_population_links` | `probe_id` | `spec_value_probes` | `probe_id` | NO ACTION | no |
-| 52 | `reasoning_doc_citations` | `source_ref_id` | `evidence_sources` | `ref_id` | NO ACTION | no |
-| 53 | `reasoning_doc_citations` | `reasoning_doc_slug` | `slugs` | `slug` | NO ACTION | no |
-| 54 | `room_items` | `item_code` | `items` | `item_code` | NO ACTION | no |
-| 55 | `room_items` | `room_code` | `rooms` | `room_code` | NO ACTION | no |
-| 56 | `search_admissions` | `ref_id` | `evidence_sources` | `ref_id` | NO ACTION | no |
-| 57 | `search_admissions` | `exec_id` | `search_executions` | `exec_id` | NO ACTION | no |
-| 58 | `search_candidates` | `suggested_slug` | `slugs` | `slug` | NO ACTION | YES — NULL-bypassable |
-| 59 | `search_candidates` | `found_under_slug` | `slugs` | `slug` | NO ACTION | no |
-| 60 | `search_candidates` | `exec_id` | `search_executions` | `exec_id` | NO ACTION | YES — NULL-bypassable |
-| 61 | `search_coverage` | `slug` | `slugs` | `slug` | NO ACTION | no |
-| 62 | `search_executions` | `slug` | `slugs` | `slug` | NO ACTION | no |
-| 63 | `search_languages` | `slug` | `slugs` | `slug` | NO ACTION | no |
-| 64 | `slugs` | `merged_into` | `slugs` | `slug` | NO ACTION | YES — NULL-bypassable |
-| 65 | `source_slug_links` | `slug` | `slugs` | `slug` | NO ACTION | no |
-| 66 | `source_slug_links` | `ref_id` | `evidence_sources` | `ref_id` | NO ACTION | no |
-| 67 | `source_value_extractions` | `promoted_to_rdc_id` | `reasoning_doc_citations` | `citation_id` | NO ACTION | YES — NULL-bypassable |
-| 68 | `source_value_extractions` | `population_code` | `populations` | `population_code` | NO ACTION | YES — NULL-bypassable |
-| 69 | `source_value_extractions` | `ref_id` | `evidence_sources` | `ref_id` | NO ACTION | no |
-| 70 | `source_value_extractions` | `item_code` | `items` | `item_code` | NO ACTION | YES — NULL-bypassable |
-| 71 | `source_value_extractions` | `root_ref_id` | `evidence_sources` | `ref_id` | NO ACTION | YES — NULL-bypassable |
-| 72 | `source_value_extractions` | `slug` | `slugs` | `slug` | NO ACTION | no |
-| 73 | `spec_value_probes` | `ref_id` | `evidence_sources` | `ref_id` | NO ACTION | YES — NULL-bypassable |
-| 74 | `spec_value_probes` | `item_code` | `items` | `item_code` | NO ACTION | no |
-| 75 | `spec_value_probes` | `slug` | `slugs` | `slug` | NO ACTION | no |
+| 12 | `citation_mining` | `global_ref_id` | `evidence_sources` | `ref_id` | NO ACTION | YES — NULL-bypassable |
+| 13 | `citation_mining` | `slug` | `slugs` | `slug` | NO ACTION | no |
+| 14 | `citation_population_links` | `population_code` | `populations` | `population_code` | NO ACTION | no |
+| 15 | `citation_population_links` | `citation_id` | `reasoning_doc_citations` | `citation_id` | NO ACTION | no |
+| 16 | `conflicts` | `item_code` | `items` | `item_code` | NO ACTION | YES — NULL-bypassable |
+| 17 | `connection_targets` | `con_id` | `connections` | `con_id` | NO ACTION | no |
+| 18 | `economics_entries` | `ref_id` | `evidence_sources` | `ref_id` | NO ACTION | YES — NULL-bypassable |
+| 19 | `economics_entry_populations` | `population_code` | `populations` | `population_code` | NO ACTION | no |
+| 20 | `economics_entry_populations` | `entry_id` | `economics_entries` | `entry_id` | NO ACTION | no |
+| 21 | `economics_entry_specs` | `item_code` | `items` | `item_code` | NO ACTION | no |
+| 22 | `economics_entry_specs` | `entry_id` | `economics_entries` | `entry_id` | NO ACTION | no |
+| 23 | `evidence_population_match` | `gap_id` | `gaps` | `gap_id` | NO ACTION | YES — NULL-bypassable |
+| 24 | `evidence_population_match` | `ref_id` | `evidence_sources` | `ref_id` | NO ACTION | YES — NULL-bypassable |
+| 25 | `evidence_source_authors` | `ref_id` | `evidence_sources` | `ref_id` | NO ACTION | no |
+| 26 | `extraction_population_links` | `population_code` | `populations` | `population_code` | NO ACTION | no |
+| 27 | `extraction_population_links` | `extraction_id` | `source_value_extractions` | `extraction_id` | NO ACTION | no |
+| 28 | `gap_mining` | `gap_id` | `gaps` | `gap_id` | NO ACTION | no |
+| 29 | `item_audit_runs` | `item_code` | `items` | `item_code` | NO ACTION | no |
+| 30 | `item_axis_links` | `axis_code` | `axes` | `axis_code` | NO ACTION | no |
+| 31 | `item_axis_links` | `item_code` | `items` | `item_code` | NO ACTION | no |
+| 32 | `item_bpc_links` | `slug` | `slugs` | `slug` | NO ACTION | no |
+| 33 | `item_bpc_links` | `item_code` | `items` | `item_code` | NO ACTION | no |
+| 34 | `item_population_elaborations` | `evidence_ref_id` | `evidence_sources` | `ref_id` | NO ACTION | YES — NULL-bypassable |
+| 35 | `item_population_elaborations` | `population_code` | `populations` | `population_code` | NO ACTION | no |
+| 36 | `item_population_elaborations` | `item_code` | `items` | `item_code` | CASCADE | no |
+| 37 | `item_population_links` | `item_code` | `items` | `item_code` | CASCADE | no |
+| 38 | `item_population_links` | `population_code` | `populations` | `population_code` | NO ACTION | no |
+| 39 | `items` | `bpc_source_slug` | `slugs` | `slug` | NO ACTION | YES — NULL-bypassable |
+| 40 | `jurisdictional_values` | `item_code` | `items` | `item_code` | NO ACTION | no |
+| 41 | `population_axis_map` | `axis_code` | `axes` | `axis_code` | NO ACTION | no |
+| 42 | `population_axis_map` | `population_code` | `populations` | `population_code` | NO ACTION | no |
+| 43 | `populations` | `parent_code` | `populations` | `population_code` | NO ACTION | YES — NULL-bypassable |
+| 44 | `probe_population_links` | `population_code` | `populations` | `population_code` | NO ACTION | no |
+| 45 | `probe_population_links` | `probe_id` | `spec_value_probes` | `probe_id` | NO ACTION | no |
+| 46 | `reasoning_doc_citations` | `source_ref_id` | `evidence_sources` | `ref_id` | NO ACTION | no |
+| 47 | `reasoning_doc_citations` | `reasoning_doc_slug` | `slugs` | `slug` | NO ACTION | no |
+| 48 | `room_items` | `item_code` | `items` | `item_code` | NO ACTION | no |
+| 49 | `room_items` | `room_code` | `rooms` | `room_code` | NO ACTION | no |
+| 50 | `search_admissions` | `ref_id` | `evidence_sources` | `ref_id` | NO ACTION | no |
+| 51 | `search_admissions` | `exec_id` | `search_executions` | `exec_id` | NO ACTION | no |
+| 52 | `search_candidates` | `suggested_slug` | `slugs` | `slug` | NO ACTION | YES — NULL-bypassable |
+| 53 | `search_candidates` | `found_under_slug` | `slugs` | `slug` | NO ACTION | no |
+| 54 | `search_candidates` | `exec_id` | `search_executions` | `exec_id` | NO ACTION | YES — NULL-bypassable |
+| 55 | `search_coverage` | `slug` | `slugs` | `slug` | NO ACTION | no |
+| 56 | `search_executions` | `slug` | `slugs` | `slug` | NO ACTION | no |
+| 57 | `search_languages` | `slug` | `slugs` | `slug` | NO ACTION | no |
+| 58 | `slugs` | `merged_into` | `slugs` | `slug` | NO ACTION | YES — NULL-bypassable |
+| 59 | `source_slug_links` | `slug` | `slugs` | `slug` | NO ACTION | no |
+| 60 | `source_slug_links` | `ref_id` | `evidence_sources` | `ref_id` | NO ACTION | no |
+| 61 | `source_value_extractions` | `promoted_to_rdc_id` | `reasoning_doc_citations` | `citation_id` | NO ACTION | YES — NULL-bypassable |
+| 62 | `source_value_extractions` | `population_code` | `populations` | `population_code` | NO ACTION | YES — NULL-bypassable |
+| 63 | `source_value_extractions` | `ref_id` | `evidence_sources` | `ref_id` | NO ACTION | no |
+| 64 | `source_value_extractions` | `item_code` | `items` | `item_code` | NO ACTION | YES — NULL-bypassable |
+| 65 | `source_value_extractions` | `root_ref_id` | `evidence_sources` | `ref_id` | NO ACTION | YES — NULL-bypassable |
+| 66 | `source_value_extractions` | `slug` | `slugs` | `slug` | NO ACTION | no |
+| 67 | `spec_value_probes` | `ref_id` | `evidence_sources` | `ref_id` | NO ACTION | YES — NULL-bypassable |
+| 68 | `spec_value_probes` | `item_code` | `items` | `item_code` | NO ACTION | no |
+| 69 | `spec_value_probes` | `slug` | `slugs` | `slug` | NO ACTION | no |
+| 70 | `specification_source_links` | `ref_id` | `evidence_sources` | `ref_id` | NO ACTION | no |
+| 71 | `specification_source_links` | `specification_id` | `specifications` | `specification_id` | NO ACTION | no |
+| 72 | `specifications` | `gap_register_id` | `gaps` | `gap_id` | NO ACTION | YES — NULL-bypassable |
+| 73 | `specifications` | `convergence_id` | `convergence_assessment` | `convergence_id` | NO ACTION | YES — NULL-bypassable |
+| 74 | `specifications` | `population_code` | `populations` | `population_code` | NO ACTION | no |
+| 75 | `specifications` | `item_code` | `items` | `item_code` | NO ACTION | no |
 | 76 | `supersession_check` | `ref_id` | `evidence_sources` | `ref_id` | NO ACTION | no |
 | 77 | `supersession_check` | `slug` | `slugs` | `slug` | NO ACTION | no |
 | 78 | `term_aliases` | `term_id` | `terms` | `term_id` | NO ACTION | no |
 | 79 | `term_item_links` | `item_code` | `items` | `item_code` | NO ACTION | no |
 | 80 | `term_item_links` | `term_id` | `terms` | `term_id` | NO ACTION | no |
 
-### [0001] A1 — all tables   `2026-08-12 05:22:48Z`
+### [0001] A1 — all tables   `2026-08-12 08:35:27Z`
 **Action:** Enumerate FK edges via PRAGMA foreign_key_list over 67 user tables
 **Expected:** complete edge list
 **Actual:** 80 FK edges, all single-column; 18 on NULLABLE columns (NULL-bypassable); DEFERRABLE clauses present in: []
 **Verdict:** `OK`
 
-### [0002] A2 — canonical DB   `2026-08-12 05:22:48Z`
+### [0002] A2 — canonical DB   `2026-08-12 08:35:27Z`
 **Action:** PRAGMA foreign_key_check (whole DB)
 **Expected:** 0 violations
 **Actual:** 0 violations
 **Verdict:** `OK`
 
-### [0003] A2 — scripts/migrate_db.py:161   `2026-08-12 05:22:48Z`
+### [0003] A2 — scripts/migrate_db.py:161   `2026-08-12 08:35:27Z`
 **Action:** compare the code comment '~18 pre-existing violations' against reality
 **Expected:** comment matches the DB
 **Actual:** comment claims '~18 violations' of production drift; PRAGMA foreign_key_check returns 0. The comment is STALE — the tolerance it justifies (only NEW violations fail an apply) remains in the code
 **Verdict:** `ERROR`
 
-### [0004] A2 — access_need_axis_map.axis_code → axes   `2026-08-12 05:22:48Z`
+### [0004] A2 — access_need_axis_map.axis_code → axes   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0005] A2 — access_need_axis_map.need_code → access_needs   `2026-08-12 05:22:48Z`
+### [0005] A2 — access_need_axis_map.need_code → access_needs   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0006] A2 — access_need_icf.need_code → access_needs   `2026-08-12 05:22:48Z`
+### [0006] A2 — access_need_icf.need_code → access_needs   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0007] A2 — bpc_metadata.slug → slugs   `2026-08-12 05:22:48Z`
+### [0007] A2 — bpc_metadata.slug → slugs   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0008] A2 — case_studies.slug → slugs   `2026-08-12 05:22:48Z`
+### [0008] A2 — case_studies.slug → slugs   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0009] A2 — case_study_outcomes.case_study_id → case_studies   `2026-08-12 05:22:48Z`
+### [0009] A2 — case_study_outcomes.case_study_id → case_studies   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0010] A2 — case_study_populations.population_code → populations   `2026-08-12 05:22:48Z`
+### [0010] A2 — case_study_populations.population_code → populations   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0011] A2 — case_study_populations.case_study_id → case_studies   `2026-08-12 05:22:48Z`
+### [0011] A2 — case_study_populations.case_study_id → case_studies   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0012] A2 — case_study_specs.item_code → items   `2026-08-12 05:22:48Z`
+### [0012] A2 — case_study_specs.item_code → items   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0013] A2 — case_study_specs.case_study_id → case_studies   `2026-08-12 05:22:48Z`
+### [0013] A2 — case_study_specs.case_study_id → case_studies   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0014] A2 — case_study_strategies.case_study_id → case_studies   `2026-08-12 05:22:48Z`
+### [0014] A2 — case_study_strategies.case_study_id → case_studies   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0015] A2 — cell_source_links.ref_id → evidence_sources   `2026-08-12 05:22:48Z`
+### [0015] A2 — citation_mining.global_ref_id → evidence_sources   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0016] A2 — cell_source_links.cell_id → evidence_cell_state   `2026-08-12 05:22:48Z`
+### [0016] A2 — citation_mining.slug → slugs   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0017] A2 — citation_mining.global_ref_id → evidence_sources   `2026-08-12 05:22:48Z`
+### [0017] A2 — citation_population_links.population_code → populations   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0018] A2 — citation_mining.slug → slugs   `2026-08-12 05:22:48Z`
+### [0018] A2 — citation_population_links.citation_id → reasoning_doc_citations   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0019] A2 — citation_population_links.population_code → populations   `2026-08-12 05:22:48Z`
+### [0019] A2 — conflicts.item_code → items   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0020] A2 — citation_population_links.citation_id → reasoning_doc_citations   `2026-08-12 05:22:48Z`
+### [0020] A2 — connection_targets.con_id → connections   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0021] A2 — conflicts.item_code → items   `2026-08-12 05:22:48Z`
+### [0021] A2 — economics_entries.ref_id → evidence_sources   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0022] A2 — connection_targets.con_id → connections   `2026-08-12 05:22:48Z`
+### [0022] A2 — economics_entry_populations.population_code → populations   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0023] A2 — economics_entries.ref_id → evidence_sources   `2026-08-12 05:22:48Z`
+### [0023] A2 — economics_entry_populations.entry_id → economics_entries   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0024] A2 — economics_entry_populations.population_code → populations   `2026-08-12 05:22:48Z`
+### [0024] A2 — economics_entry_specs.item_code → items   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0025] A2 — economics_entry_populations.entry_id → economics_entries   `2026-08-12 05:22:48Z`
+### [0025] A2 — economics_entry_specs.entry_id → economics_entries   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0026] A2 — economics_entry_specs.item_code → items   `2026-08-12 05:22:48Z`
+### [0026] A2 — evidence_population_match.gap_id → gaps   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0027] A2 — economics_entry_specs.entry_id → economics_entries   `2026-08-12 05:22:48Z`
+### [0027] A2 — evidence_population_match.ref_id → evidence_sources   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0028] A2 — evidence_cell_state.gap_register_id → gaps   `2026-08-12 05:22:48Z`
+### [0028] A2 — evidence_source_authors.ref_id → evidence_sources   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0029] A2 — evidence_cell_state.convergence_id → convergence_assessment   `2026-08-12 05:22:48Z`
+### [0029] A2 — extraction_population_links.population_code → populations   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0030] A2 — evidence_cell_state.population_code → populations   `2026-08-12 05:22:48Z`
+### [0030] A2 — extraction_population_links.extraction_id → source_value_extractions   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0031] A2 — evidence_cell_state.item_code → items   `2026-08-12 05:22:48Z`
+### [0031] A2 — gap_mining.gap_id → gaps   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0032] A2 — evidence_population_match.gap_id → gaps   `2026-08-12 05:22:48Z`
+### [0032] A2 — item_audit_runs.item_code → items   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0033] A2 — evidence_population_match.ref_id → evidence_sources   `2026-08-12 05:22:48Z`
+### [0033] A2 — item_axis_links.axis_code → axes   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0034] A2 — evidence_source_authors.ref_id → evidence_sources   `2026-08-12 05:22:48Z`
+### [0034] A2 — item_axis_links.item_code → items   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0035] A2 — extraction_population_links.population_code → populations   `2026-08-12 05:22:48Z`
+### [0035] A2 — item_bpc_links.slug → slugs   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0036] A2 — extraction_population_links.extraction_id → source_value_extractions   `2026-08-12 05:22:48Z`
+### [0036] A2 — item_bpc_links.item_code → items   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0037] A2 — gap_mining.gap_id → gaps   `2026-08-12 05:22:48Z`
+### [0037] A2 — item_population_elaborations.evidence_ref_id → evidence_sources   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0038] A2 — item_audit_runs.item_code → items   `2026-08-12 05:22:48Z`
+### [0038] A2 — item_population_elaborations.population_code → populations   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0039] A2 — item_axis_links.axis_code → axes   `2026-08-12 05:22:48Z`
+### [0039] A2 — item_population_elaborations.item_code → items   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0040] A2 — item_axis_links.item_code → items   `2026-08-12 05:22:48Z`
+### [0040] A2 — item_population_links.item_code → items   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0041] A2 — item_bpc_links.slug → slugs   `2026-08-12 05:22:48Z`
+### [0041] A2 — item_population_links.population_code → populations   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0042] A2 — item_bpc_links.item_code → items   `2026-08-12 05:22:48Z`
+### [0042] A2 — items.bpc_source_slug → slugs   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0043] A2 — item_population_elaborations.evidence_ref_id → evidence_sources   `2026-08-12 05:22:48Z`
+### [0043] A2 — jurisdictional_values.item_code → items   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0044] A2 — item_population_elaborations.population_code → populations   `2026-08-12 05:22:48Z`
+### [0044] A2 — population_axis_map.axis_code → axes   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0045] A2 — item_population_elaborations.item_code → items   `2026-08-12 05:22:48Z`
+### [0045] A2 — population_axis_map.population_code → populations   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0046] A2 — item_population_links.item_code → items   `2026-08-12 05:22:48Z`
+### [0046] A2 — populations.parent_code → populations   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0047] A2 — item_population_links.population_code → populations   `2026-08-12 05:22:48Z`
+### [0047] A2 — probe_population_links.population_code → populations   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0048] A2 — items.bpc_source_slug → slugs   `2026-08-12 05:22:48Z`
+### [0048] A2 — probe_population_links.probe_id → spec_value_probes   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0049] A2 — jurisdictional_values.item_code → items   `2026-08-12 05:22:48Z`
+### [0049] A2 — reasoning_doc_citations.source_ref_id → evidence_sources   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0050] A2 — population_axis_map.axis_code → axes   `2026-08-12 05:22:48Z`
+### [0050] A2 — reasoning_doc_citations.reasoning_doc_slug → slugs   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0051] A2 — population_axis_map.population_code → populations   `2026-08-12 05:22:48Z`
+### [0051] A2 — room_items.item_code → items   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0052] A2 — populations.parent_code → populations   `2026-08-12 05:22:48Z`
+### [0052] A2 — room_items.room_code → rooms   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0053] A2 — probe_population_links.population_code → populations   `2026-08-12 05:22:48Z`
+### [0053] A2 — search_admissions.ref_id → evidence_sources   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0054] A2 — probe_population_links.probe_id → spec_value_probes   `2026-08-12 05:22:48Z`
+### [0054] A2 — search_admissions.exec_id → search_executions   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0055] A2 — reasoning_doc_citations.source_ref_id → evidence_sources   `2026-08-12 05:22:48Z`
+### [0055] A2 — search_candidates.suggested_slug → slugs   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0056] A2 — reasoning_doc_citations.reasoning_doc_slug → slugs   `2026-08-12 05:22:48Z`
+### [0056] A2 — search_candidates.found_under_slug → slugs   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0057] A2 — room_items.item_code → items   `2026-08-12 05:22:48Z`
+### [0057] A2 — search_candidates.exec_id → search_executions   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0058] A2 — room_items.room_code → rooms   `2026-08-12 05:22:48Z`
+### [0058] A2 — search_coverage.slug → slugs   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0059] A2 — search_admissions.ref_id → evidence_sources   `2026-08-12 05:22:48Z`
+### [0059] A2 — search_executions.slug → slugs   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0060] A2 — search_admissions.exec_id → search_executions   `2026-08-12 05:22:48Z`
+### [0060] A2 — search_languages.slug → slugs   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0061] A2 — search_candidates.suggested_slug → slugs   `2026-08-12 05:22:48Z`
+### [0061] A2 — slugs.merged_into → slugs   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0062] A2 — search_candidates.found_under_slug → slugs   `2026-08-12 05:22:48Z`
+### [0062] A2 — source_slug_links.slug → slugs   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0063] A2 — search_candidates.exec_id → search_executions   `2026-08-12 05:22:48Z`
+### [0063] A2 — source_slug_links.ref_id → evidence_sources   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0064] A2 — search_coverage.slug → slugs   `2026-08-12 05:22:48Z`
+### [0064] A2 — source_value_extractions.promoted_to_rdc_id → reasoning_doc_citations   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0065] A2 — search_executions.slug → slugs   `2026-08-12 05:22:48Z`
+### [0065] A2 — source_value_extractions.population_code → populations   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0066] A2 — search_languages.slug → slugs   `2026-08-12 05:22:48Z`
+### [0066] A2 — source_value_extractions.ref_id → evidence_sources   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0067] A2 — slugs.merged_into → slugs   `2026-08-12 05:22:48Z`
+### [0067] A2 — source_value_extractions.item_code → items   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0068] A2 — source_slug_links.slug → slugs   `2026-08-12 05:22:48Z`
+### [0068] A2 — source_value_extractions.root_ref_id → evidence_sources   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0069] A2 — source_slug_links.ref_id → evidence_sources   `2026-08-12 05:22:48Z`
+### [0069] A2 — source_value_extractions.slug → slugs   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0070] A2 — source_value_extractions.promoted_to_rdc_id → reasoning_doc_citations   `2026-08-12 05:22:48Z`
+### [0070] A2 — spec_value_probes.ref_id → evidence_sources   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0071] A2 — source_value_extractions.population_code → populations   `2026-08-12 05:22:48Z`
+### [0071] A2 — spec_value_probes.item_code → items   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0072] A2 — source_value_extractions.ref_id → evidence_sources   `2026-08-12 05:22:48Z`
+### [0072] A2 — spec_value_probes.slug → slugs   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0073] A2 — source_value_extractions.item_code → items   `2026-08-12 05:22:48Z`
+### [0073] A2 — specification_source_links.ref_id → evidence_sources   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0074] A2 — source_value_extractions.root_ref_id → evidence_sources   `2026-08-12 05:22:48Z`
+### [0074] A2 — specification_source_links.specification_id → specifications   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0075] A2 — source_value_extractions.slug → slugs   `2026-08-12 05:22:48Z`
+### [0075] A2 — specifications.gap_register_id → gaps   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0076] A2 — spec_value_probes.ref_id → evidence_sources   `2026-08-12 05:22:48Z`
+### [0076] A2 — specifications.convergence_id → convergence_assessment   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0077] A2 — spec_value_probes.item_code → items   `2026-08-12 05:22:48Z`
+### [0077] A2 — specifications.population_code → populations   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0078] A2 — spec_value_probes.slug → slugs   `2026-08-12 05:22:48Z`
+### [0078] A2 — specifications.item_code → items   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0079] A2 — supersession_check.ref_id → evidence_sources   `2026-08-12 05:22:48Z`
+### [0079] A2 — supersession_check.ref_id → evidence_sources   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0080] A2 — supersession_check.slug → slugs   `2026-08-12 05:22:48Z`
+### [0080] A2 — supersession_check.slug → slugs   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0081] A2 — term_aliases.term_id → terms   `2026-08-12 05:22:48Z`
+### [0081] A2 — term_aliases.term_id → terms   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0082] A2 — term_item_links.item_code → items   `2026-08-12 05:22:48Z`
+### [0082] A2 — term_item_links.item_code → items   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0083] A2 — term_item_links.term_id → terms   `2026-08-12 05:22:48Z`
+### [0083] A2 — term_item_links.term_id → terms   `2026-08-12 08:35:27Z`
 **Action:** LEFT JOIN orphan query
 **Expected:** 0 orphans
 **Actual:** 0 orphans
 **Verdict:** `OK`
 
-### [0084] A2 — canonical DB — mid-session change of subject   `2026-08-12 05:22:48Z`
+### [0084] A2 — canonical DB — mid-session change of subject   `2026-08-12 08:35:27Z`
 **Action:** compare row counts observed at session start against the current canonical
 **Expected:** stable subject
 **Actual:** TWO commits landed in the repo DURING this probe session: 7a7bebe ('clear all evidence-stage data; preserve schema for repopulation', 05:15Z) cleared item_population_elaborations (3 rows), pipeline_runs (6), url_verification_runs (5), items.pmp_* residue, 75 jurisdictional_values values and sqlite_sequence marks; 6dd0cd3 ('recover 835 document locators from the pre-reset corpus', 05:19Z) added the source_locators table (835 rows, user_version 53→54, +1 CHECK, +1 NOT NULL). This run's snapshot postdates both; all sweeps read the snapshot atomically
 **Verdict:** `OK`
 
-### [0085] A2 — item_population_elaborations.evidence_ref_id (live NULL-bypass)   `2026-08-12 05:22:48Z`
+### [0085] A2 — item_population_elaborations.evidence_ref_id (live NULL-bypass)   `2026-08-12 08:35:27Z`
 **Action:** check whether live data takes the NULL path around a declared FK
 **Expected:** rows carry provenance
 **Actual:** post-clear: 0 rows (0 NULL). PRE-clear (verified at session start, before commit 7a7bebe): 3 rows, ALL 3 with evidence_ref_id NULL against an EMPTY evidence_sources parent — live data had already taken the NULL-bypass path this sweep demonstrates synthetically in A3b. The clearing commit removed the rows; the structural hole remains (see A3b seq for this edge)
 **Verdict:** `ORPHAN`
 
-### [0086] A2 — evidence_population_match.source_ref →(undeclared) evidence_sources   `2026-08-12 05:22:48Z`
+### [0086] A2 — evidence_population_match.source_ref →(undeclared) evidence_sources   `2026-08-12 08:35:27Z`
 **Action:** orphan query on a reference column that has NO declared FK
 **SQL:**
 ```sql
@@ -614,7 +614,7 @@ SELECT m.match_id, m.source_ref FROM evidence_population_match m LEFT JOIN evide
 **Actual:** 0 dangling: []
 **Verdict:** `OK`
 
-### [0087] A2 — evidence_population_match.target_population →(undeclared) populations   `2026-08-12 05:22:48Z`
+### [0087] A2 — evidence_population_match.target_population →(undeclared) populations   `2026-08-12 08:35:27Z`
 **Action:** orphan query on a reference column that has NO declared FK
 **SQL:**
 ```sql
@@ -624,7 +624,7 @@ SELECT m.match_id, m.target_population FROM evidence_population_match m LEFT JOI
 **Actual:** 0 dangling: []
 **Verdict:** `OK`
 
-### [0088] A2 — source_value_extractions.echo_of →(undeclared) source_value_extractions   `2026-08-12 05:22:48Z`
+### [0088] A2 — source_value_extractions.echo_of →(undeclared) source_value_extractions   `2026-08-12 08:35:27Z`
 **Action:** orphan query on a reference column that has NO declared FK
 **SQL:**
 ```sql
@@ -634,17 +634,17 @@ SELECT e.extraction_id, e.echo_of FROM source_value_extractions e LEFT JOIN sour
 **Actual:** 0 dangling: []
 **Verdict:** `OK`
 
-### [0089] A2 — evidence_cell_state.governing_refs (JSON) → evidence_sources   `2026-08-12 05:22:48Z`
+### [0089] A2 — specifications.governing_refs (JSON) → evidence_sources   `2026-08-12 08:35:27Z`
 **Action:** every ref named in the JSON array must exist in evidence_sources (no FK can enforce a JSON payload)
 **SQL:**
 ```sql
-SELECT t.rowid, j.value FROM evidence_cell_state t, json_each(t.governing_refs) j LEFT JOIN evidence_sources s ON j.value = s.ref_id WHERE t.governing_refs IS NOT NULL AND s.ref_id IS NULL
+SELECT t.rowid, j.value FROM specifications t, json_each(t.governing_refs) j LEFT JOIN evidence_sources s ON j.value = s.ref_id WHERE t.governing_refs IS NOT NULL AND s.ref_id IS NULL
 ```
 **Expected:** 0 dangling
 **Actual:** 0 dangling ref(s): []
 **Verdict:** `OK`
 
-### [0090] A2 — search_executions.admitted_ref_ids (JSON) → evidence_sources   `2026-08-12 05:22:48Z`
+### [0090] A2 — search_executions.admitted_ref_ids (JSON) → evidence_sources   `2026-08-12 08:35:27Z`
 **Action:** every ref named in the JSON array must exist in evidence_sources (no FK can enforce a JSON payload)
 **SQL:**
 ```sql
@@ -656,7 +656,7 @@ SELECT t.rowid, j.value FROM search_executions t, json_each(t.admitted_ref_ids) 
 
 ### A3 — bad-value FK probes, `PRAGMA foreign_keys=ON` (80/80 edges)
 
-### [0091] A3 — access_need_axis_map.axis_code → axes.axis_code   `2026-08-12 05:22:48Z`
+### [0091] A3 — access_need_axis_map.axis_code → axes.axis_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
@@ -667,7 +667,7 @@ INSERT INTO "access_need_axis_map" ("axis_code", "need_code", "relationship") VA
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0092] A3 — access_need_axis_map.need_code → access_needs.need_code   `2026-08-12 05:22:48Z`
+### [0092] A3 — access_need_axis_map.need_code → access_needs.need_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
@@ -678,7 +678,7 @@ INSERT INTO "access_need_axis_map" ("need_code", "axis_code", "relationship") VA
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0093] A3 — access_need_icf.need_code → access_needs.need_code   `2026-08-12 05:22:48Z`
+### [0093] A3 — access_need_icf.need_code → access_needs.need_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
@@ -689,7 +689,7 @@ INSERT INTO "access_need_icf" ("need_code", "icf_code", "icf_type", "confidence"
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0094] A3 — bpc_metadata.slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0094] A3 — bpc_metadata.slug → slugs.slug   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
@@ -700,7 +700,7 @@ INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_sess
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0095] A3 — case_studies.slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0095] A3 — case_studies.slug → slugs.slug   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
@@ -711,7 +711,7 @@ INSERT INTO "case_studies" ("slug", "case_study_id", "title", "building_type", "
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0096] A3 — case_study_outcomes.case_study_id → case_studies.case_study_id   `2026-08-12 05:22:48Z`
+### [0096] A3 — case_study_outcomes.case_study_id → case_studies.case_study_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
@@ -722,7 +722,7 @@ INSERT INTO "case_study_outcomes" ("case_study_id", "metric") VALUES (?, ?)  -- 
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0097] A3 — case_study_populations.population_code → populations.population_code   `2026-08-12 05:22:48Z`
+### [0097] A3 — case_study_populations.population_code → populations.population_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
@@ -733,7 +733,7 @@ INSERT INTO "case_study_populations" ("population_code", "case_study_id") VALUES
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0098] A3 — case_study_populations.case_study_id → case_studies.case_study_id   `2026-08-12 05:22:48Z`
+### [0098] A3 — case_study_populations.case_study_id → case_studies.case_study_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
@@ -744,7 +744,7 @@ INSERT INTO "case_study_populations" ("case_study_id", "population_code") VALUES
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0099] A3 — case_study_specs.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0099] A3 — case_study_specs.item_code → items.item_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
@@ -755,7 +755,7 @@ INSERT INTO "case_study_specs" ("item_code", "case_study_id") VALUES (?, ?)  -- 
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0100] A3 — case_study_specs.case_study_id → case_studies.case_study_id   `2026-08-12 05:22:48Z`
+### [0100] A3 — case_study_specs.case_study_id → case_studies.case_study_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
@@ -766,7 +766,7 @@ INSERT INTO "case_study_specs" ("case_study_id", "item_code") VALUES (?, ?)  -- 
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0101] A3 — case_study_strategies.case_study_id → case_studies.case_study_id   `2026-08-12 05:22:48Z`
+### [0101] A3 — case_study_strategies.case_study_id → case_studies.case_study_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
@@ -777,711 +777,711 @@ INSERT INTO "case_study_strategies" ("case_study_id", "strategy") VALUES (?, ?) 
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0102] A3 — cell_source_links.ref_id → evidence_sources.ref_id   `2026-08-12 05:22:48Z`
+### [0102] A3 — citation_mining.global_ref_id → evidence_sources.ref_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "cell_source_links" ("ref_id", "cell_id") VALUES (?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-12", "cell_id": 1}
+INSERT INTO "citation_mining" ("global_ref_id", "slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"global_ref_id": "PROBE-NO-SUCH-PARENT-12", "slug": "aac-speech-production-environments", "local_ref_id": "PROBE-LOCAL_REF_ID", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0103] A3 — cell_source_links.cell_id → evidence_cell_state.cell_id   `2026-08-12 05:22:48Z`
+### [0103] A3 — citation_mining.slug → slugs.slug   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "cell_source_links" ("cell_id", "ref_id") VALUES (?, ?)  -- {"cell_id": 999999913, "ref_id": "PROBE-PK-14"}
+INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-13", "local_ref_id": "PROBE-LOCAL_REF_ID", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0104] A3 — citation_mining.global_ref_id → evidence_sources.ref_id   `2026-08-12 05:22:48Z`
+### [0104] A3 — citation_population_links.population_code → populations.population_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "citation_mining" ("global_ref_id", "slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"global_ref_id": "PROBE-NO-SUCH-PARENT-15", "slug": "aac-speech-production-environments", "local_ref_id": "PROBE-LOCAL_REF_ID", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
+INSERT INTO "citation_population_links" ("population_code", "citation_id") VALUES (?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-14", "citation_id": "PROBE-PK-15"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0105] A3 — citation_mining.slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0105] A3 — citation_population_links.citation_id → reasoning_doc_citations.citation_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-16", "local_ref_id": "PROBE-LOCAL_REF_ID", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
+INSERT INTO "citation_population_links" ("citation_id", "population_code") VALUES (?, ?)  -- {"citation_id": "PROBE-NO-SUCH-PARENT-17", "population_code": "ADHD"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0106] A3 — citation_population_links.population_code → populations.population_code   `2026-08-12 05:22:48Z`
+### [0106] A3 — conflicts.item_code → items.item_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "citation_population_links" ("population_code", "citation_id") VALUES (?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-17", "citation_id": "PROBE-PK-18"}
+INSERT INTO "conflicts" ("item_code", "conflict_id", "domain", "pop_a", "pop_b", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-18", "conflict_id": "PROBE-PK-19", "domain": "PROBE-DOMAIN", "pop_a": "PROBE-POP_A", "pop_b": "PROBE-POP_B", "status": "RESOLVED-EVIDENCE", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0107] A3 — citation_population_links.citation_id → reasoning_doc_citations.citation_id   `2026-08-12 05:22:48Z`
+### [0107] A3 — connection_targets.con_id → connections.con_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "citation_population_links" ("citation_id", "population_code") VALUES (?, ?)  -- {"citation_id": "PROBE-NO-SUCH-PARENT-20", "population_code": "ADHD"}
+INSERT INTO "connection_targets" ("con_id", "target") VALUES (?, ?)  -- {"con_id": "PROBE-NO-SUCH-PARENT-20", "target": "PROBE-TARGET"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0108] A3 — conflicts.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0108] A3 — economics_entries.ref_id → evidence_sources.ref_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "conflicts" ("item_code", "conflict_id", "domain", "pop_a", "pop_b", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-21", "conflict_id": "PROBE-PK-22", "domain": "PROBE-DOMAIN", "pop_a": "PROBE-POP_A", "pop_b": "PROBE-POP_B", "status": "RESOLVED-EVIDENCE", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
+INSERT INTO "economics_entries" ("ref_id", "entry_id", "pillar", "entry_type", "source", "finding", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-21", "entry_id": "PROBE-ENTRY_ID", "pillar": "health", "entry_type": "cost_premium", "source": "PROBE-SOURCE", "finding": "PROBE-FINDING", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0109] A3 — connection_targets.con_id → connections.con_id   `2026-08-12 05:22:48Z`
+### [0109] A3 — economics_entry_populations.population_code → populations.population_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "connection_targets" ("con_id", "target") VALUES (?, ?)  -- {"con_id": "PROBE-NO-SUCH-PARENT-23", "target": "PROBE-TARGET"}
+INSERT INTO "economics_entry_populations" ("population_code", "entry_id") VALUES (?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-22", "entry_id": "PROBE-ENTRY_ID"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0110] A3 — economics_entries.ref_id → evidence_sources.ref_id   `2026-08-12 05:22:48Z`
+### [0110] A3 — economics_entry_populations.entry_id → economics_entries.entry_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "economics_entries" ("ref_id", "entry_id", "pillar", "entry_type", "source", "finding", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-24", "entry_id": "PROBE-ENTRY_ID", "pillar": "health", "entry_type": "cost_premium", "source": "PROBE-SOURCE", "finding": "PROBE-FINDING", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
+INSERT INTO "economics_entry_populations" ("entry_id", "population_code") VALUES (?, ?)  -- {"entry_id": "PROBE-NO-SUCH-PARENT-23", "population_code": "ADHD"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0111] A3 — economics_entry_populations.population_code → populations.population_code   `2026-08-12 05:22:48Z`
+### [0111] A3 — economics_entry_specs.item_code → items.item_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "economics_entry_populations" ("population_code", "entry_id") VALUES (?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-25", "entry_id": "PROBE-ENTRY_ID"}
+INSERT INTO "economics_entry_specs" ("item_code", "entry_id") VALUES (?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-24", "entry_id": "PROBE-ENTRY_ID"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0112] A3 — economics_entry_populations.entry_id → economics_entries.entry_id   `2026-08-12 05:22:48Z`
+### [0112] A3 — economics_entry_specs.entry_id → economics_entries.entry_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "economics_entry_populations" ("entry_id", "population_code") VALUES (?, ?)  -- {"entry_id": "PROBE-NO-SUCH-PARENT-26", "population_code": "ADHD"}
+INSERT INTO "economics_entry_specs" ("entry_id", "item_code") VALUES (?, ?)  -- {"entry_id": "PROBE-NO-SUCH-PARENT-25", "item_code": "A-01"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0113] A3 — economics_entry_specs.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0113] A3 — evidence_population_match.gap_id → gaps.gap_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "economics_entry_specs" ("item_code", "entry_id") VALUES (?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-27", "entry_id": "PROBE-ENTRY_ID"}
+INSERT INTO "evidence_population_match" ("gap_id", "match_id", "source_ref", "target_population", "match_grade", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"gap_id": "PROBE-NO-SUCH-PARENT-26", "match_id": "PROBE-PK-27", "source_ref": "PROBE-SOURCE_REF", "target_population": "PROBE-TARGET_POPULATION", "match_grade": "EXACT", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0114] A3 — economics_entry_specs.entry_id → economics_entries.entry_id   `2026-08-12 05:22:48Z`
+### [0114] A3 — evidence_population_match.ref_id → evidence_sources.ref_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "economics_entry_specs" ("entry_id", "item_code") VALUES (?, ?)  -- {"entry_id": "PROBE-NO-SUCH-PARENT-28", "item_code": "A-01"}
+INSERT INTO "evidence_population_match" ("ref_id", "match_id", "source_ref", "target_population", "match_grade", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-28", "match_id": "PROBE-PK-29", "source_ref": "PROBE-SOURCE_REF", "target_population": "PROBE-TARGET_POPULATION", "match_grade": "EXACT", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0115] A3 — evidence_cell_state.gap_register_id → gaps.gap_id   `2026-08-12 05:22:48Z`
+### [0115] A3 — evidence_source_authors.ref_id → evidence_sources.ref_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "evidence_cell_state" ("gap_register_id", "item_code", "population_code", "state") VALUES (?, ?, ?, ?)  -- {"gap_register_id": "PROBE-NO-SUCH-PARENT-29", "item_code": "A-01", "population_code": "ADHD", "state": "stated"}
+INSERT INTO "evidence_source_authors" ("ref_id", "position") VALUES (?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-30", "position": 1}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0116] A3 — evidence_cell_state.convergence_id → convergence_assessment.convergence_id   `2026-08-12 05:22:48Z`
+### [0116] A3 — extraction_population_links.population_code → populations.population_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "evidence_cell_state" ("convergence_id", "item_code", "population_code", "state") VALUES (?, ?, ?, ?)  -- {"convergence_id": 999999930, "item_code": "A-01", "population_code": "ADHD", "state": "stated"}
+INSERT INTO "extraction_population_links" ("population_code", "extraction_id") VALUES (?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-31", "extraction_id": 1}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0117] A3 — evidence_cell_state.population_code → populations.population_code   `2026-08-12 05:22:48Z`
+### [0117] A3 — extraction_population_links.extraction_id → source_value_extractions.extraction_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "evidence_cell_state" ("population_code", "item_code", "state") VALUES (?, ?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-31", "item_code": "A-01", "state": "stated"}
+INSERT INTO "extraction_population_links" ("extraction_id", "population_code") VALUES (?, ?)  -- {"extraction_id": 999999933, "population_code": "ADHD"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0118] A3 — evidence_cell_state.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0118] A3 — gap_mining.gap_id → gaps.gap_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state") VALUES (?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-32", "population_code": "ADHD", "state": "stated"}
+INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "search_strategy_record", "outcome", "check_method", "discoveries_logged") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"gap_id": "PROBE-NO-SUCH-PARENT-34", "attempt_at": "PROBE-ATTEMPT_AT", "attempted_by_session": "PROBE-ATTEMPTED_BY_SESSION", "search_strategy_record": "PROBE-SEARCH_STRATEGY_RECORD", "outcome": "closure_evidence_found", "check_method": "pubmed_cluster", "discoveries_logged": "PROBE-DISCOVERIES_LOGGED"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0119] A3 — evidence_population_match.gap_id → gaps.gap_id   `2026-08-12 05:22:48Z`
+### [0119] A3 — item_audit_runs.item_code → items.item_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "evidence_population_match" ("gap_id", "match_id", "source_ref", "target_population", "match_grade", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"gap_id": "PROBE-NO-SUCH-PARENT-33", "match_id": "PROBE-PK-34", "source_ref": "PROBE-SOURCE_REF", "target_population": "PROBE-TARGET_POPULATION", "match_grade": "EXACT", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
+INSERT INTO "item_audit_runs" ("item_code", "run_id", "session", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-35", "run_id": "PROBE-PK-36", "session": "PROBE-SESSION", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0120] A3 — evidence_population_match.ref_id → evidence_sources.ref_id   `2026-08-12 05:22:48Z`
+### [0120] A3 — item_axis_links.axis_code → axes.axis_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "evidence_population_match" ("ref_id", "match_id", "source_ref", "target_population", "match_grade", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-35", "match_id": "PROBE-PK-36", "source_ref": "PROBE-SOURCE_REF", "target_population": "PROBE-TARGET_POPULATION", "match_grade": "EXACT", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
+INSERT INTO "item_axis_links" ("axis_code", "item_code") VALUES (?, ?)  -- {"axis_code": "PROBE-NO-SUCH-PARENT-37", "item_code": "A-01"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0121] A3 — evidence_source_authors.ref_id → evidence_sources.ref_id   `2026-08-12 05:22:48Z`
+### [0121] A3 — item_axis_links.item_code → items.item_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "evidence_source_authors" ("ref_id", "position") VALUES (?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-37", "position": 1}
+INSERT INTO "item_axis_links" ("item_code", "axis_code") VALUES (?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-38", "axis_code": "AX-AMB"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0122] A3 — extraction_population_links.population_code → populations.population_code   `2026-08-12 05:22:48Z`
+### [0122] A3 — item_bpc_links.slug → slugs.slug   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "extraction_population_links" ("population_code", "extraction_id") VALUES (?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-38", "extraction_id": 1}
+INSERT INTO "item_bpc_links" ("slug", "item_code", "link_type", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-39", "item_code": "A-01", "link_type": "primary", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0123] A3 — extraction_population_links.extraction_id → source_value_extractions.extraction_id   `2026-08-12 05:22:48Z`
+### [0123] A3 — item_bpc_links.item_code → items.item_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "extraction_population_links" ("extraction_id", "population_code") VALUES (?, ?)  -- {"extraction_id": 999999940, "population_code": "ADHD"}
+INSERT INTO "item_bpc_links" ("item_code", "slug", "link_type", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-40", "slug": "aac-speech-production-environments", "link_type": "primary", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0124] A3 — gap_mining.gap_id → gaps.gap_id   `2026-08-12 05:22:48Z`
+### [0124] A3 — item_population_elaborations.evidence_ref_id → evidence_sources.ref_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "search_strategy_record", "outcome", "check_method", "discoveries_logged") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"gap_id": "PROBE-NO-SUCH-PARENT-41", "attempt_at": "PROBE-ATTEMPT_AT", "attempted_by_session": "PROBE-ATTEMPTED_BY_SESSION", "search_strategy_record": "PROBE-SEARCH_STRATEGY_RECORD", "outcome": "closure_evidence_found", "check_method": "pubmed_cluster", "discoveries_logged": "PROBE-DISCOVERIES_LOGGED"}
+INSERT INTO "item_population_elaborations" ("evidence_ref_id", "item_code", "population_code") VALUES (?, ?, ?)  -- {"evidence_ref_id": "PROBE-NO-SUCH-PARENT-41", "item_code": "A-01", "population_code": "ADHD"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0125] A3 — item_audit_runs.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0125] A3 — item_population_elaborations.population_code → populations.population_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "item_audit_runs" ("item_code", "run_id", "session", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-42", "run_id": "PROBE-PK-43", "session": "PROBE-SESSION", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
+INSERT INTO "item_population_elaborations" ("population_code", "item_code") VALUES (?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-42", "item_code": "A-01"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0126] A3 — item_axis_links.axis_code → axes.axis_code   `2026-08-12 05:22:48Z`
+### [0126] A3 — item_population_elaborations.item_code → items.item_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "item_axis_links" ("axis_code", "item_code") VALUES (?, ?)  -- {"axis_code": "PROBE-NO-SUCH-PARENT-44", "item_code": "A-01"}
+INSERT INTO "item_population_elaborations" ("item_code", "population_code") VALUES (?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-43", "population_code": "ADHD"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0127] A3 — item_axis_links.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0127] A3 — item_population_links.item_code → items.item_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "item_axis_links" ("item_code", "axis_code") VALUES (?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-45", "axis_code": "AX-AMB"}
+INSERT INTO "item_population_links" ("item_code", "population_code", "subtype") VALUES (?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-44", "population_code": "ADHD", "subtype": "PROBE-PK-45"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0128] A3 — item_bpc_links.slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0128] A3 — item_population_links.population_code → populations.population_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "item_bpc_links" ("slug", "item_code", "link_type", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-46", "item_code": "A-01", "link_type": "primary", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
+INSERT INTO "item_population_links" ("population_code", "item_code", "subtype") VALUES (?, ?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-46", "item_code": "A-01", "subtype": "PROBE-PK-47"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0129] A3 — item_bpc_links.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0129] A3 — items.bpc_source_slug → slugs.slug   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "item_bpc_links" ("item_code", "slug", "link_type", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-47", "slug": "aac-speech-production-environments", "link_type": "primary", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
+INSERT INTO "items" ("bpc_source_slug", "item_code", "category", "name", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"bpc_source_slug": "PROBE-NO-SUCH-PARENT-48", "item_code": "PROBE-PK-49", "category": "A", "name": "PROBE-NAME", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0130] A3 — item_population_elaborations.evidence_ref_id → evidence_sources.ref_id   `2026-08-12 05:22:48Z`
+### [0130] A3 — jurisdictional_values.item_code → items.item_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "item_population_elaborations" ("evidence_ref_id", "item_code", "population_code") VALUES (?, ?, ?)  -- {"evidence_ref_id": "PROBE-NO-SUCH-PARENT-48", "item_code": "A-01", "population_code": "ADHD"}
+INSERT INTO "jurisdictional_values" ("item_code", "jurisdiction") VALUES (?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-50", "jurisdiction": "PROBE-JURISDICTION"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0131] A3 — item_population_elaborations.population_code → populations.population_code   `2026-08-12 05:22:48Z`
+### [0131] A3 — population_axis_map.axis_code → axes.axis_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "item_population_elaborations" ("population_code", "item_code") VALUES (?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-49", "item_code": "A-01"}
+INSERT INTO "population_axis_map" ("axis_code", "population_code", "role") VALUES (?, ?, ?)  -- {"axis_code": "PROBE-NO-SUCH-PARENT-51", "population_code": "ADHD", "role": "ALIAS"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0132] A3 — item_population_elaborations.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0132] A3 — population_axis_map.population_code → populations.population_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "item_population_elaborations" ("item_code", "population_code") VALUES (?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-50", "population_code": "ADHD"}
+INSERT INTO "population_axis_map" ("population_code", "axis_code", "role") VALUES (?, ?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-52", "axis_code": "AX-AMB", "role": "ALIAS"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0133] A3 — item_population_links.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0133] A3 — populations.parent_code → populations.population_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "item_population_links" ("item_code", "population_code", "subtype") VALUES (?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-51", "population_code": "ADHD", "subtype": "PROBE-PK-52"}
+INSERT INTO "populations" ("parent_code", "population_code", "display_name") VALUES (?, ?, ?)  -- {"parent_code": "PROBE-NO-SUCH-PARENT-53", "population_code": "PROBE-PK-54", "display_name": "PROBE-DISPLAY_NAME"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0134] A3 — item_population_links.population_code → populations.population_code   `2026-08-12 05:22:48Z`
+### [0134] A3 — probe_population_links.population_code → populations.population_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "item_population_links" ("population_code", "item_code", "subtype") VALUES (?, ?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-53", "item_code": "A-01", "subtype": "PROBE-PK-54"}
+INSERT INTO "probe_population_links" ("population_code", "probe_id") VALUES (?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-55", "probe_id": "PROBE-PK-56"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0135] A3 — items.bpc_source_slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0135] A3 — probe_population_links.probe_id → spec_value_probes.probe_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "items" ("bpc_source_slug", "item_code", "category", "name", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"bpc_source_slug": "PROBE-NO-SUCH-PARENT-55", "item_code": "PROBE-PK-56", "category": "A", "name": "PROBE-NAME", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
+INSERT INTO "probe_population_links" ("probe_id", "population_code") VALUES (?, ?)  -- {"probe_id": "PROBE-NO-SUCH-PARENT-57", "population_code": "ADHD"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0136] A3 — jurisdictional_values.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0136] A3 — reasoning_doc_citations.source_ref_id → evidence_sources.ref_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "jurisdictional_values" ("item_code", "jurisdiction") VALUES (?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-57", "jurisdiction": "PROBE-JURISDICTION"}
+INSERT INTO "reasoning_doc_citations" ("source_ref_id", "citation_id", "reasoning_doc_slug", "parameter", "claim_type", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"source_ref_id": "PROBE-NO-SUCH-PARENT-58", "citation_id": "PROBE-PK-59", "reasoning_doc_slug": "aac-speech-production-environments", "parameter": "PROBE-PARAMETER", "claim_type": "numerical_spec", "verified_at": "PROBE-VERIFIED_AT", "verified_by_session": "PROBE-VERIFIED_BY_SESSION", "value_match": "EXACT", "claim_match": "SUPPORTED", "claimed_value": "PROBE-CLAIMED_VALUE", "claim_text": "PROBE-CLAIM_TEXT"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0137] A3 — population_axis_map.axis_code → axes.axis_code   `2026-08-12 05:22:48Z`
+### [0137] A3 — reasoning_doc_citations.reasoning_doc_slug → slugs.slug   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "population_axis_map" ("axis_code", "population_code", "role") VALUES (?, ?, ?)  -- {"axis_code": "PROBE-NO-SUCH-PARENT-58", "population_code": "ADHD", "role": "ALIAS"}
+INSERT INTO "reasoning_doc_citations" ("reasoning_doc_slug", "citation_id", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"reasoning_doc_slug": "PROBE-NO-SUCH-PARENT-60", "citation_id": "PROBE-PK-61", "parameter": "PROBE-PARAMETER", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-62", "verified_at": "PROBE-VERIFIED_AT", "verified_by_session": "PROBE-VERIFIED_BY_SESSION", "value_match": "EXACT", "claim_match": "SUPPORTED", "claimed_value": "PROBE-CLAIMED_VALUE", "claim_text": "PROBE-CLAIM_TEXT"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0138] A3 — population_axis_map.population_code → populations.population_code   `2026-08-12 05:22:48Z`
+### [0138] A3 — room_items.item_code → items.item_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "population_axis_map" ("population_code", "axis_code", "role") VALUES (?, ?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-59", "axis_code": "AX-AMB", "role": "ALIAS"}
+INSERT INTO "room_items" ("item_code", "room_code") VALUES (?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-63", "room_code": "R-ASM"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0139] A3 — populations.parent_code → populations.population_code   `2026-08-12 05:22:48Z`
+### [0139] A3 — room_items.room_code → rooms.room_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "populations" ("parent_code", "population_code", "display_name") VALUES (?, ?, ?)  -- {"parent_code": "PROBE-NO-SUCH-PARENT-60", "population_code": "PROBE-PK-61", "display_name": "PROBE-DISPLAY_NAME"}
+INSERT INTO "room_items" ("room_code", "item_code") VALUES (?, ?)  -- {"room_code": "PROBE-NO-SUCH-PARENT-64", "item_code": "A-01"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0140] A3 — probe_population_links.population_code → populations.population_code   `2026-08-12 05:22:48Z`
+### [0140] A3 — search_admissions.ref_id → evidence_sources.ref_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "probe_population_links" ("population_code", "probe_id") VALUES (?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-62", "probe_id": "PROBE-PK-63"}
+INSERT INTO "search_admissions" ("ref_id", "exec_id") VALUES (?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-65", "exec_id": 1}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0141] A3 — probe_population_links.probe_id → spec_value_probes.probe_id   `2026-08-12 05:22:48Z`
+### [0141] A3 — search_admissions.exec_id → search_executions.exec_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "probe_population_links" ("probe_id", "population_code") VALUES (?, ?)  -- {"probe_id": "PROBE-NO-SUCH-PARENT-64", "population_code": "ADHD"}
+INSERT INTO "search_admissions" ("exec_id", "ref_id") VALUES (?, ?)  -- {"exec_id": 999999966, "ref_id": "PROBE-PK-67"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0142] A3 — reasoning_doc_citations.source_ref_id → evidence_sources.ref_id   `2026-08-12 05:22:48Z`
+### [0142] A3 — search_candidates.suggested_slug → slugs.slug   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("source_ref_id", "citation_id", "reasoning_doc_slug", "parameter", "claim_type", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"source_ref_id": "PROBE-NO-SUCH-PARENT-65", "citation_id": "PROBE-PK-66", "reasoning_doc_slug": "aac-speech-production-environments", "parameter": "PROBE-PARAMETER", "claim_type": "numerical_spec", "verified_at": "PROBE-VERIFIED_AT", "verified_by_session": "PROBE-VERIFIED_BY_SESSION", "value_match": "EXACT", "claim_match": "SUPPORTED", "claim_text": "PROBE-CLAIM_TEXT", "claimed_value": "PROBE-CLAIMED_VALUE"}
+INSERT INTO "search_candidates" ("suggested_slug", "found_under_slug", "disposition", "title", "session", "created_at") VALUES (?, ?, ?, ?, ?, ?)  -- {"suggested_slug": "PROBE-NO-SUCH-PARENT-68", "found_under_slug": "aac-speech-production-environments", "disposition": "REHOME", "title": "PROBE-TITLE", "session": "PROBE-SESSION", "created_at": "PROBE-CREATED_AT"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0143] A3 — reasoning_doc_citations.reasoning_doc_slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0143] A3 — search_candidates.found_under_slug → slugs.slug   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("reasoning_doc_slug", "citation_id", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"reasoning_doc_slug": "PROBE-NO-SUCH-PARENT-67", "citation_id": "PROBE-PK-68", "parameter": "PROBE-PARAMETER", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-69", "verified_at": "PROBE-VERIFIED_AT", "verified_by_session": "PROBE-VERIFIED_BY_SESSION", "value_match": "EXACT", "claim_match": "SUPPORTED", "claim_text": "PROBE-CLAIM_TEXT", "claimed_value": "PROBE-CLAIMED_VALUE"}
+INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "session", "created_at") VALUES (?, ?, ?, ?, ?)  -- {"found_under_slug": "PROBE-NO-SUCH-PARENT-69", "disposition": "REHOME", "title": "PROBE-TITLE", "session": "PROBE-SESSION", "created_at": "PROBE-CREATED_AT"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0144] A3 — room_items.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0144] A3 — search_candidates.exec_id → search_executions.exec_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "room_items" ("item_code", "room_code") VALUES (?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-70", "room_code": "R-ASM"}
+INSERT INTO "search_candidates" ("exec_id", "found_under_slug", "disposition", "title", "session", "created_at") VALUES (?, ?, ?, ?, ?, ?)  -- {"exec_id": 999999970, "found_under_slug": "aac-speech-production-environments", "disposition": "REHOME", "title": "PROBE-TITLE", "session": "PROBE-SESSION", "created_at": "PROBE-CREATED_AT"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0145] A3 — room_items.room_code → rooms.room_code   `2026-08-12 05:22:48Z`
+### [0145] A3 — search_coverage.slug → slugs.slug   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "room_items" ("room_code", "item_code") VALUES (?, ?)  -- {"room_code": "PROBE-NO-SUCH-PARENT-71", "item_code": "A-01"}
+INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-71", "jurisdiction": "PROBE-JURISDICTION", "status": "SEARCHED", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0146] A3 — search_admissions.ref_id → evidence_sources.ref_id   `2026-08-12 05:22:48Z`
+### [0146] A3 — search_executions.slug → slugs.slug   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "search_admissions" ("ref_id", "exec_id") VALUES (?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-72", "exec_id": 1}
+INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-72", "language": "PROBE-LANGUAGE", "query_text": "PROBE-QUERY_TEXT", "engine": "PROBE-ENGINE", "depth_method": "scoping", "session": "PROBE-SESSION", "executed_at": "PROBE-EXECUTED_AT"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0147] A3 — search_admissions.exec_id → search_executions.exec_id   `2026-08-12 05:22:48Z`
+### [0147] A3 — search_languages.slug → slugs.slug   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "search_admissions" ("exec_id", "ref_id") VALUES (?, ?)  -- {"exec_id": 999999973, "ref_id": "PROBE-PK-74"}
+INSERT INTO "search_languages" ("slug", "language", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-73", "language": "PROBE-LANGUAGE", "status": "SEARCHED", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0148] A3 — search_candidates.suggested_slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0148] A3 — slugs.merged_into → slugs.slug   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "search_candidates" ("suggested_slug", "found_under_slug", "disposition", "title", "session", "created_at") VALUES (?, ?, ?, ?, ?, ?)  -- {"suggested_slug": "PROBE-NO-SUCH-PARENT-75", "found_under_slug": "aac-speech-production-environments", "disposition": "REHOME", "title": "PROBE-TITLE", "session": "PROBE-SESSION", "created_at": "PROBE-CREATED_AT"}
+INSERT INTO "slugs" ("merged_into", "slug", "topic_directory", "sl_path", "bpc_path", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"merged_into": "PROBE-NO-SUCH-PARENT-74", "slug": "PROBE-PK-75", "topic_directory": "PROBE-TOPIC_DIRECTORY", "sl_path": "PROBE-SL_PATH", "bpc_path": "PROBE-BPC_PATH", "status": "ACTIVE", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0149] A3 — search_candidates.found_under_slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0149] A3 — source_slug_links.slug → slugs.slug   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "session", "created_at") VALUES (?, ?, ?, ?, ?)  -- {"found_under_slug": "PROBE-NO-SUCH-PARENT-76", "disposition": "REHOME", "title": "PROBE-TITLE", "session": "PROBE-SESSION", "created_at": "PROBE-CREATED_AT"}
+INSERT INTO "source_slug_links" ("slug", "ref_id", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-76", "ref_id": "PROBE-PK-77", "local_ref_id": "PROBE-LOCAL_REF_ID", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0150] A3 — search_candidates.exec_id → search_executions.exec_id   `2026-08-12 05:22:48Z`
+### [0150] A3 — source_slug_links.ref_id → evidence_sources.ref_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "search_candidates" ("exec_id", "found_under_slug", "disposition", "title", "session", "created_at") VALUES (?, ?, ?, ?, ?, ?)  -- {"exec_id": 999999977, "found_under_slug": "aac-speech-production-environments", "disposition": "REHOME", "title": "PROBE-TITLE", "session": "PROBE-SESSION", "created_at": "PROBE-CREATED_AT"}
+INSERT INTO "source_slug_links" ("ref_id", "slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-78", "slug": "aac-speech-production-environments", "local_ref_id": "PROBE-LOCAL_REF_ID", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0151] A3 — search_coverage.slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0151] A3 — source_value_extractions.promoted_to_rdc_id → reasoning_doc_citations.citation_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-78", "jurisdiction": "PROBE-JURISDICTION", "status": "SEARCHED", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
+INSERT INTO "source_value_extractions" ("promoted_to_rdc_id", "ref_id", "slug", "parameter", "claim_type", "extraction_method", "created_at", "updated_at", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"promoted_to_rdc_id": "PROBE-NO-SUCH-PARENT-79", "ref_id": "PROBE-PK-80", "slug": "aac-speech-production-environments", "parameter": "PROBE-PARAMETER", "claim_type": "numerical", "extraction_method": "skim", "created_at": "PROBE-CREATED_AT", "updated_at": "PROBE-UPDATED_AT", "claimed_value": "PROBE-CLAIMED_VALUE"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0152] A3 — search_executions.slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0152] A3 — source_value_extractions.population_code → populations.population_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-79", "language": "PROBE-LANGUAGE", "query_text": "PROBE-QUERY_TEXT", "engine": "PROBE-ENGINE", "depth_method": "scoping", "session": "PROBE-SESSION", "executed_at": "PROBE-EXECUTED_AT"}
+INSERT INTO "source_value_extractions" ("population_code", "ref_id", "slug", "parameter", "claim_type", "extraction_method", "created_at", "updated_at", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-81", "ref_id": "PROBE-PK-82", "slug": "aac-speech-production-environments", "parameter": "PROBE-PARAMETER", "claim_type": "numerical", "extraction_method": "skim", "created_at": "PROBE-CREATED_AT", "updated_at": "PROBE-UPDATED_AT", "claimed_value": "PROBE-CLAIMED_VALUE"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0153] A3 — search_languages.slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0153] A3 — source_value_extractions.ref_id → evidence_sources.ref_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "search_languages" ("slug", "language", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-80", "language": "PROBE-LANGUAGE", "status": "SEARCHED", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
+INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_type", "extraction_method", "created_at", "updated_at", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-83", "slug": "aac-speech-production-environments", "parameter": "PROBE-PARAMETER", "claim_type": "numerical", "extraction_method": "skim", "created_at": "PROBE-CREATED_AT", "updated_at": "PROBE-UPDATED_AT", "claimed_value": "PROBE-CLAIMED_VALUE"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0154] A3 — slugs.merged_into → slugs.slug   `2026-08-12 05:22:48Z`
+### [0154] A3 — source_value_extractions.item_code → items.item_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "slugs" ("merged_into", "slug", "topic_directory", "sl_path", "bpc_path", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"merged_into": "PROBE-NO-SUCH-PARENT-81", "slug": "PROBE-PK-82", "topic_directory": "PROBE-TOPIC_DIRECTORY", "sl_path": "PROBE-SL_PATH", "bpc_path": "PROBE-BPC_PATH", "status": "ACTIVE", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
+INSERT INTO "source_value_extractions" ("item_code", "ref_id", "slug", "parameter", "claim_type", "extraction_method", "created_at", "updated_at", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-84", "ref_id": "PROBE-PK-85", "slug": "aac-speech-production-environments", "parameter": "PROBE-PARAMETER", "claim_type": "numerical", "extraction_method": "skim", "created_at": "PROBE-CREATED_AT", "updated_at": "PROBE-UPDATED_AT", "claimed_value": "PROBE-CLAIMED_VALUE"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0155] A3 — source_slug_links.slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0155] A3 — source_value_extractions.root_ref_id → evidence_sources.ref_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "source_slug_links" ("slug", "ref_id", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-83", "ref_id": "PROBE-PK-84", "local_ref_id": "PROBE-LOCAL_REF_ID", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
+INSERT INTO "source_value_extractions" ("root_ref_id", "ref_id", "slug", "parameter", "claim_type", "extraction_method", "created_at", "updated_at", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"root_ref_id": "PROBE-NO-SUCH-PARENT-86", "ref_id": "PROBE-PK-87", "slug": "aac-speech-production-environments", "parameter": "PROBE-PARAMETER", "claim_type": "numerical", "extraction_method": "skim", "created_at": "PROBE-CREATED_AT", "updated_at": "PROBE-UPDATED_AT", "claimed_value": "PROBE-CLAIMED_VALUE"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0156] A3 — source_slug_links.ref_id → evidence_sources.ref_id   `2026-08-12 05:22:48Z`
+### [0156] A3 — source_value_extractions.slug → slugs.slug   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "source_slug_links" ("ref_id", "slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-85", "slug": "aac-speech-production-environments", "local_ref_id": "PROBE-LOCAL_REF_ID", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
+INSERT INTO "source_value_extractions" ("slug", "ref_id", "parameter", "claim_type", "extraction_method", "created_at", "updated_at", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-88", "ref_id": "PROBE-PK-89", "parameter": "PROBE-PARAMETER", "claim_type": "numerical", "extraction_method": "skim", "created_at": "PROBE-CREATED_AT", "updated_at": "PROBE-UPDATED_AT", "claimed_value": "PROBE-CLAIMED_VALUE"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0157] A3 — source_value_extractions.promoted_to_rdc_id → reasoning_doc_citations.citation_id   `2026-08-12 05:22:48Z`
+### [0157] A3 — spec_value_probes.ref_id → evidence_sources.ref_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "source_value_extractions" ("promoted_to_rdc_id", "ref_id", "slug", "parameter", "claim_type", "extraction_method", "created_at", "updated_at", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"promoted_to_rdc_id": "PROBE-NO-SUCH-PARENT-86", "ref_id": "PROBE-PK-87", "slug": "aac-speech-production-environments", "parameter": "PROBE-PARAMETER", "claim_type": "numerical", "extraction_method": "skim", "created_at": "PROBE-CREATED_AT", "updated_at": "PROBE-UPDATED_AT", "claimed_value": "PROBE-CLAIMED_VALUE"}
+INSERT INTO "spec_value_probes" ("ref_id", "probe_id", "walk_id", "slug", "item_code", "spec_value_origin", "spec_unit", "direction", "population", "claim_type", "step_index", "phase", "step_value", "step_value_unit", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-90", "probe_id": "PROBE-PK-91", "walk_id": "PROBE-WALK_ID", "slug": "aac-speech-production-environments", "item_code": "A-01", "spec_value_origin": 1.0, "spec_unit": "PROBE-SPEC_UNIT", "direction": "up", "population": "PROBE-POPULATION", "claim_type": "minimum", "step_index": 1, "phase": "outer-pass-1st", "step_value": 1.0, "step_value_unit": "PROBE-STEP_VALUE_UNIT", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0158] A3 — source_value_extractions.population_code → populations.population_code   `2026-08-12 05:22:48Z`
+### [0158] A3 — spec_value_probes.item_code → items.item_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "source_value_extractions" ("population_code", "ref_id", "slug", "parameter", "claim_type", "extraction_method", "created_at", "updated_at", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-88", "ref_id": "PROBE-PK-89", "slug": "aac-speech-production-environments", "parameter": "PROBE-PARAMETER", "claim_type": "numerical", "extraction_method": "skim", "created_at": "PROBE-CREATED_AT", "updated_at": "PROBE-UPDATED_AT", "claimed_value": "PROBE-CLAIMED_VALUE"}
+INSERT INTO "spec_value_probes" ("item_code", "probe_id", "walk_id", "slug", "spec_value_origin", "spec_unit", "direction", "population", "claim_type", "step_index", "phase", "step_value", "step_value_unit", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-92", "probe_id": "PROBE-PK-93", "walk_id": "PROBE-WALK_ID", "slug": "aac-speech-production-environments", "spec_value_origin": 1.0, "spec_unit": "PROBE-SPEC_UNIT", "direction": "up", "population": "PROBE-POPULATION", "claim_type": "minimum", "step_index": 1, "phase": "outer-pass-1st", "step_value": 1.0, "step_value_unit": "PROBE-STEP_VALUE_UNIT", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0159] A3 — source_value_extractions.ref_id → evidence_sources.ref_id   `2026-08-12 05:22:48Z`
+### [0159] A3 — spec_value_probes.slug → slugs.slug   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_type", "extraction_method", "created_at", "updated_at", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-90", "slug": "aac-speech-production-environments", "parameter": "PROBE-PARAMETER", "claim_type": "numerical", "extraction_method": "skim", "created_at": "PROBE-CREATED_AT", "updated_at": "PROBE-UPDATED_AT", "claimed_value": "PROBE-CLAIMED_VALUE"}
+INSERT INTO "spec_value_probes" ("slug", "probe_id", "walk_id", "item_code", "spec_value_origin", "spec_unit", "direction", "population", "claim_type", "step_index", "phase", "step_value", "step_value_unit", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-94", "probe_id": "PROBE-PK-95", "walk_id": "PROBE-WALK_ID", "item_code": "A-01", "spec_value_origin": 1.0, "spec_unit": "PROBE-SPEC_UNIT", "direction": "up", "population": "PROBE-POPULATION", "claim_type": "minimum", "step_index": 1, "phase": "outer-pass-1st", "step_value": 1.0, "step_value_unit": "PROBE-STEP_VALUE_UNIT", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0160] A3 — source_value_extractions.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0160] A3 — specification_source_links.ref_id → evidence_sources.ref_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "source_value_extractions" ("item_code", "ref_id", "slug", "parameter", "claim_type", "extraction_method", "created_at", "updated_at", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-91", "ref_id": "PROBE-PK-92", "slug": "aac-speech-production-environments", "parameter": "PROBE-PARAMETER", "claim_type": "numerical", "extraction_method": "skim", "created_at": "PROBE-CREATED_AT", "updated_at": "PROBE-UPDATED_AT", "claimed_value": "PROBE-CLAIMED_VALUE"}
+INSERT INTO "specification_source_links" ("ref_id", "specification_id") VALUES (?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-96", "specification_id": 1}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0161] A3 — source_value_extractions.root_ref_id → evidence_sources.ref_id   `2026-08-12 05:22:48Z`
+### [0161] A3 — specification_source_links.specification_id → specifications.specification_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "source_value_extractions" ("root_ref_id", "ref_id", "slug", "parameter", "claim_type", "extraction_method", "created_at", "updated_at", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"root_ref_id": "PROBE-NO-SUCH-PARENT-93", "ref_id": "PROBE-PK-94", "slug": "aac-speech-production-environments", "parameter": "PROBE-PARAMETER", "claim_type": "numerical", "extraction_method": "skim", "created_at": "PROBE-CREATED_AT", "updated_at": "PROBE-UPDATED_AT", "claimed_value": "PROBE-CLAIMED_VALUE"}
+INSERT INTO "specification_source_links" ("specification_id", "ref_id") VALUES (?, ?)  -- {"specification_id": 999999997, "ref_id": "PROBE-PK-98"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0162] A3 — source_value_extractions.slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0162] A3 — specifications.gap_register_id → gaps.gap_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "source_value_extractions" ("slug", "ref_id", "parameter", "claim_type", "extraction_method", "created_at", "updated_at", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-95", "ref_id": "PROBE-PK-96", "parameter": "PROBE-PARAMETER", "claim_type": "numerical", "extraction_method": "skim", "created_at": "PROBE-CREATED_AT", "updated_at": "PROBE-UPDATED_AT", "claimed_value": "PROBE-CLAIMED_VALUE"}
+INSERT INTO "specifications" ("gap_register_id", "item_code", "population_code", "state") VALUES (?, ?, ?, ?)  -- {"gap_register_id": "PROBE-NO-SUCH-PARENT-99", "item_code": "A-01", "population_code": "ADHD", "state": "stated"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0163] A3 — spec_value_probes.ref_id → evidence_sources.ref_id   `2026-08-12 05:22:48Z`
+### [0163] A3 — specifications.convergence_id → convergence_assessment.convergence_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "spec_value_probes" ("ref_id", "probe_id", "walk_id", "slug", "item_code", "spec_value_origin", "spec_unit", "direction", "population", "claim_type", "step_index", "phase", "step_value", "step_value_unit", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-97", "probe_id": "PROBE-PK-98", "walk_id": "PROBE-WALK_ID", "slug": "aac-speech-production-environments", "item_code": "A-01", "spec_value_origin": 1.0, "spec_unit": "PROBE-SPEC_UNIT", "direction": "up", "population": "PROBE-POPULATION", "claim_type": "minimum", "step_index": 1, "phase": "outer-pass-1st", "step_value": 1.0, "step_value_unit": "PROBE-STEP_VALUE_UNIT", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
+INSERT INTO "specifications" ("convergence_id", "item_code", "population_code", "state") VALUES (?, ?, ?, ?)  -- {"convergence_id": 1000000000, "item_code": "A-01", "population_code": "ADHD", "state": "stated"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0164] A3 — spec_value_probes.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0164] A3 — specifications.population_code → populations.population_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "spec_value_probes" ("item_code", "probe_id", "walk_id", "slug", "spec_value_origin", "spec_unit", "direction", "population", "claim_type", "step_index", "phase", "step_value", "step_value_unit", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-99", "probe_id": "PROBE-PK-100", "walk_id": "PROBE-WALK_ID", "slug": "aac-speech-production-environments", "spec_value_origin": 1.0, "spec_unit": "PROBE-SPEC_UNIT", "direction": "up", "population": "PROBE-POPULATION", "claim_type": "minimum", "step_index": 1, "phase": "outer-pass-1st", "step_value": 1.0, "step_value_unit": "PROBE-STEP_VALUE_UNIT", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
+INSERT INTO "specifications" ("population_code", "item_code", "state") VALUES (?, ?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-101", "item_code": "A-01", "state": "stated"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0165] A3 — spec_value_probes.slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0165] A3 — specifications.item_code → items.item_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "spec_value_probes" ("slug", "probe_id", "walk_id", "item_code", "spec_value_origin", "spec_unit", "direction", "population", "claim_type", "step_index", "phase", "step_value", "step_value_unit", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-101", "probe_id": "PROBE-PK-102", "walk_id": "PROBE-WALK_ID", "item_code": "A-01", "spec_value_origin": 1.0, "spec_unit": "PROBE-SPEC_UNIT", "direction": "up", "population": "PROBE-POPULATION", "claim_type": "minimum", "step_index": 1, "phase": "outer-pass-1st", "step_value": 1.0, "step_value_unit": "PROBE-STEP_VALUE_UNIT", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
+INSERT INTO "specifications" ("item_code", "population_code", "state") VALUES (?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-102", "population_code": "ADHD", "state": "stated"}
 ```
 **Expected:** insert rejected with FOREIGN KEY constraint failed
 **Actual:** rejected with FK error
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0166] A3 — supersession_check.ref_id → evidence_sources.ref_id   `2026-08-12 05:22:48Z`
+### [0166] A3 — supersession_check.ref_id → evidence_sources.ref_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
@@ -1492,7 +1492,7 @@ INSERT INTO "supersession_check" ("ref_id", "check_id", "slug", "local_ref_id", 
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0167] A3 — supersession_check.slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0167] A3 — supersession_check.slug → slugs.slug   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
@@ -1503,7 +1503,7 @@ INSERT INTO "supersession_check" ("slug", "check_id", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0168] A3 — term_aliases.term_id → terms.term_id   `2026-08-12 05:22:48Z`
+### [0168] A3 — term_aliases.term_id → terms.term_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
@@ -1514,7 +1514,7 @@ INSERT INTO "term_aliases" ("term_id", "alias", "language", "alias_type", "creat
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0169] A3 — term_item_links.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0169] A3 — term_item_links.item_code → items.item_code   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
@@ -1525,7 +1525,7 @@ INSERT INTO "term_item_links" ("item_code", "term_id", "created_at", "created_by
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [0170] A3 — term_item_links.term_id → terms.term_id   `2026-08-12 05:22:48Z`
+### [0170] A3 — term_item_links.term_id → terms.term_id   `2026-08-12 08:35:27Z`
 **Action:** insert child with nonexistent parent value (FK=ON)
 **SQL:**
 ```sql
@@ -1538,7 +1538,7 @@ INSERT INTO "term_item_links" ("term_id", "item_code", "created_at", "created_by
 
 ### A3b — NULL-path probes for the 18 nullable FK edges (FK never evaluated on NULL)
 
-### [0171] A3b — citation_mining.global_ref_id → evidence_sources (NULL path)   `2026-08-12 05:22:48Z`
+### [0171] A3b — citation_mining.global_ref_id → evidence_sources (NULL path)   `2026-08-12 08:35:27Z`
 **Action:** insert child row with the FK column explicitly NULL (FK=ON)
 **SQL:**
 ```sql
@@ -1548,7 +1548,7 @@ INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by
 **Actual:** row ACCEPTED with no parent linkage — SQL NULL-bypass: the FK exists but is never evaluated. Any writer can skip provenance on this edge
 **Verdict:** **`SILENT-PASS`**
 
-### [0172] A3b — conflicts.item_code → items (NULL path)   `2026-08-12 05:22:48Z`
+### [0172] A3b — conflicts.item_code → items (NULL path)   `2026-08-12 08:35:27Z`
 **Action:** insert child row with the FK column explicitly NULL (FK=ON)
 **SQL:**
 ```sql
@@ -1558,7 +1558,7 @@ INSERT INTO "conflicts" ("conflict_id", "domain", "pop_a", "pop_b", "status", "c
 **Actual:** row ACCEPTED with no parent linkage — SQL NULL-bypass: the FK exists but is never evaluated. Any writer can skip provenance on this edge
 **Verdict:** **`SILENT-PASS`**
 
-### [0173] A3b — economics_entries.ref_id → evidence_sources (NULL path)   `2026-08-12 05:22:48Z`
+### [0173] A3b — economics_entries.ref_id → evidence_sources (NULL path)   `2026-08-12 08:35:27Z`
 **Action:** insert child row with the FK column explicitly NULL (FK=ON)
 **SQL:**
 ```sql
@@ -1568,27 +1568,7 @@ INSERT INTO "economics_entries" ("entry_id", "pillar", "entry_type", "source", "
 **Actual:** row ACCEPTED with no parent linkage — SQL NULL-bypass: the FK exists but is never evaluated. Any writer can skip provenance on this edge
 **Verdict:** **`SILENT-PASS`**
 
-### [0174] A3b — evidence_cell_state.gap_register_id → gaps (NULL path)   `2026-08-12 05:22:48Z`
-**Action:** insert child row with the FK column explicitly NULL (FK=ON)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state", "gap_register_id") VALUES (?, ?, ?, ?)  -- {"item_code": "D-03", "population_code": "ALL", "state": "stated", "gap_register_id": null}
-```
-**Expected:** if the reference is semantically required, some constraint should reject it
-**Actual:** row ACCEPTED with no parent linkage — SQL NULL-bypass: the FK exists but is never evaluated. Any writer can skip provenance on this edge
-**Verdict:** **`SILENT-PASS`**
-
-### [0175] A3b — evidence_cell_state.convergence_id → convergence_assessment (NULL path)   `2026-08-12 05:22:48Z`
-**Action:** insert child row with the FK column explicitly NULL (FK=ON)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state", "convergence_id") VALUES (?, ?, ?, ?)  -- {"item_code": "B-04", "population_code": "NDV", "state": "stated", "convergence_id": null}
-```
-**Expected:** if the reference is semantically required, some constraint should reject it
-**Actual:** row ACCEPTED with no parent linkage — SQL NULL-bypass: the FK exists but is never evaluated. Any writer can skip provenance on this edge
-**Verdict:** **`SILENT-PASS`**
-
-### [0176] A3b — evidence_population_match.gap_id → gaps (NULL path)   `2026-08-12 05:22:48Z`
+### [0174] A3b — evidence_population_match.gap_id → gaps (NULL path)   `2026-08-12 08:35:27Z`
 **Action:** insert child row with the FK column explicitly NULL (FK=ON)
 **SQL:**
 ```sql
@@ -1598,7 +1578,7 @@ INSERT INTO "evidence_population_match" ("match_id", "source_ref", "target_popul
 **Actual:** row ACCEPTED with no parent linkage — SQL NULL-bypass: the FK exists but is never evaluated. Any writer can skip provenance on this edge
 **Verdict:** **`SILENT-PASS`**
 
-### [0177] A3b — evidence_population_match.ref_id → evidence_sources (NULL path)   `2026-08-12 05:22:48Z`
+### [0175] A3b — evidence_population_match.ref_id → evidence_sources (NULL path)   `2026-08-12 08:35:27Z`
 **Action:** insert child row with the FK column explicitly NULL (FK=ON)
 **SQL:**
 ```sql
@@ -1608,7 +1588,7 @@ INSERT INTO "evidence_population_match" ("match_id", "source_ref", "target_popul
 **Actual:** row ACCEPTED with no parent linkage — SQL NULL-bypass: the FK exists but is never evaluated. Any writer can skip provenance on this edge
 **Verdict:** **`SILENT-PASS`**
 
-### [0178] A3b — item_population_elaborations.evidence_ref_id → evidence_sources (NULL path)   `2026-08-12 05:22:48Z`
+### [0176] A3b — item_population_elaborations.evidence_ref_id → evidence_sources (NULL path)   `2026-08-12 08:35:27Z`
 **Action:** insert child row with the FK column explicitly NULL (FK=ON)
 **SQL:**
 ```sql
@@ -1618,7 +1598,7 @@ INSERT INTO "item_population_elaborations" ("item_code", "population_code", "evi
 **Actual:** row ACCEPTED with no parent linkage — SQL NULL-bypass: the FK exists but is never evaluated. Any writer can skip provenance on this edge
 **Verdict:** **`SILENT-PASS`**
 
-### [0179] A3b — items.bpc_source_slug → slugs (NULL path)   `2026-08-12 05:22:48Z`
+### [0177] A3b — items.bpc_source_slug → slugs (NULL path)   `2026-08-12 08:35:27Z`
 **Action:** insert child row with the FK column explicitly NULL (FK=ON)
 **SQL:**
 ```sql
@@ -1628,7 +1608,7 @@ INSERT INTO "items" ("item_code", "category", "name", "created_at", "created_by_
 **Actual:** row ACCEPTED with no parent linkage — SQL NULL-bypass: the FK exists but is never evaluated. Any writer can skip provenance on this edge
 **Verdict:** **`SILENT-PASS`**
 
-### [0180] A3b — populations.parent_code → populations (NULL path)   `2026-08-12 05:22:48Z`
+### [0178] A3b — populations.parent_code → populations (NULL path)   `2026-08-12 08:35:27Z`
 **Action:** insert child row with the FK column explicitly NULL (FK=ON)
 **SQL:**
 ```sql
@@ -1638,7 +1618,7 @@ INSERT INTO "populations" ("population_code", "display_name", "parent_code") VAL
 **Actual:** row ACCEPTED with no parent linkage — SQL NULL-bypass: the FK exists but is never evaluated. Any writer can skip provenance on this edge
 **Verdict:** **`SILENT-PASS`**
 
-### [0181] A3b — search_candidates.suggested_slug → slugs (NULL path)   `2026-08-12 05:22:48Z`
+### [0179] A3b — search_candidates.suggested_slug → slugs (NULL path)   `2026-08-12 08:35:28Z`
 **Action:** insert child row with the FK column explicitly NULL (FK=ON)
 **SQL:**
 ```sql
@@ -1648,7 +1628,7 @@ INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "se
 **Actual:** row ACCEPTED with no parent linkage — SQL NULL-bypass: the FK exists but is never evaluated. Any writer can skip provenance on this edge
 **Verdict:** **`SILENT-PASS`**
 
-### [0182] A3b — search_candidates.exec_id → search_executions (NULL path)   `2026-08-12 05:22:48Z`
+### [0180] A3b — search_candidates.exec_id → search_executions (NULL path)   `2026-08-12 08:35:28Z`
 **Action:** insert child row with the FK column explicitly NULL (FK=ON)
 **SQL:**
 ```sql
@@ -1658,7 +1638,7 @@ INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "se
 **Actual:** row ACCEPTED with no parent linkage — SQL NULL-bypass: the FK exists but is never evaluated. Any writer can skip provenance on this edge
 **Verdict:** **`SILENT-PASS`**
 
-### [0183] A3b — slugs.merged_into → slugs (NULL path)   `2026-08-12 05:22:48Z`
+### [0181] A3b — slugs.merged_into → slugs (NULL path)   `2026-08-12 08:35:28Z`
 **Action:** insert child row with the FK column explicitly NULL (FK=ON)
 **SQL:**
 ```sql
@@ -1668,7 +1648,7 @@ INSERT INTO "slugs" ("slug", "topic_directory", "sl_path", "bpc_path", "status",
 **Actual:** row ACCEPTED with no parent linkage — SQL NULL-bypass: the FK exists but is never evaluated. Any writer can skip provenance on this edge
 **Verdict:** **`SILENT-PASS`**
 
-### [0184] A3b — source_value_extractions.promoted_to_rdc_id → reasoning_doc_citations (NULL path)   `2026-08-12 05:22:48Z`
+### [0182] A3b — source_value_extractions.promoted_to_rdc_id → reasoning_doc_citations (NULL path)   `2026-08-12 08:35:28Z`
 **Action:** insert child row with the FK column explicitly NULL (FK=ON)
 **SQL:**
 ```sql
@@ -1678,7 +1658,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Actual:** row ACCEPTED with no parent linkage — SQL NULL-bypass: the FK exists but is never evaluated. Any writer can skip provenance on this edge
 **Verdict:** **`SILENT-PASS`**
 
-### [0185] A3b — source_value_extractions.population_code → populations (NULL path)   `2026-08-12 05:22:48Z`
+### [0183] A3b — source_value_extractions.population_code → populations (NULL path)   `2026-08-12 08:35:28Z`
 **Action:** insert child row with the FK column explicitly NULL (FK=ON)
 **SQL:**
 ```sql
@@ -1688,7 +1668,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Actual:** row ACCEPTED with no parent linkage — SQL NULL-bypass: the FK exists but is never evaluated. Any writer can skip provenance on this edge
 **Verdict:** **`SILENT-PASS`**
 
-### [0186] A3b — source_value_extractions.item_code → items (NULL path)   `2026-08-12 05:22:48Z`
+### [0184] A3b — source_value_extractions.item_code → items (NULL path)   `2026-08-12 08:35:28Z`
 **Action:** insert child row with the FK column explicitly NULL (FK=ON)
 **SQL:**
 ```sql
@@ -1698,7 +1678,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Actual:** row ACCEPTED with no parent linkage — SQL NULL-bypass: the FK exists but is never evaluated. Any writer can skip provenance on this edge
 **Verdict:** **`SILENT-PASS`**
 
-### [0187] A3b — source_value_extractions.root_ref_id → evidence_sources (NULL path)   `2026-08-12 05:22:48Z`
+### [0185] A3b — source_value_extractions.root_ref_id → evidence_sources (NULL path)   `2026-08-12 08:35:28Z`
 **Action:** insert child row with the FK column explicitly NULL (FK=ON)
 **SQL:**
 ```sql
@@ -1708,7 +1688,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Actual:** row ACCEPTED with no parent linkage — SQL NULL-bypass: the FK exists but is never evaluated. Any writer can skip provenance on this edge
 **Verdict:** **`SILENT-PASS`**
 
-### [0188] A3b — spec_value_probes.ref_id → evidence_sources (NULL path)   `2026-08-12 05:22:48Z`
+### [0186] A3b — spec_value_probes.ref_id → evidence_sources (NULL path)   `2026-08-12 08:35:28Z`
 **Action:** insert child row with the FK column explicitly NULL (FK=ON)
 **SQL:**
 ```sql
@@ -1718,7 +1698,27 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Actual:** row ACCEPTED with no parent linkage — SQL NULL-bypass: the FK exists but is never evaluated. Any writer can skip provenance on this edge
 **Verdict:** **`SILENT-PASS`**
 
-### [0189] A3c — evidence_population_match.source_ref vs ref_id (dual identity columns)   `2026-08-12 05:22:48Z`
+### [0187] A3b — specifications.gap_register_id → gaps (NULL path)   `2026-08-12 08:35:28Z`
+**Action:** insert child row with the FK column explicitly NULL (FK=ON)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state", "gap_register_id") VALUES (?, ?, ?, ?)  -- {"item_code": "G-07", "population_code": "MOB", "state": "stated", "gap_register_id": null}
+```
+**Expected:** if the reference is semantically required, some constraint should reject it
+**Actual:** row ACCEPTED with no parent linkage — SQL NULL-bypass: the FK exists but is never evaluated. Any writer can skip provenance on this edge
+**Verdict:** **`SILENT-PASS`**
+
+### [0188] A3b — specifications.convergence_id → convergence_assessment (NULL path)   `2026-08-12 08:35:28Z`
+**Action:** insert child row with the FK column explicitly NULL (FK=ON)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state", "convergence_id") VALUES (?, ?, ?, ?)  -- {"item_code": "A-11", "population_code": "MOB", "state": "stated", "convergence_id": null}
+```
+**Expected:** if the reference is semantically required, some constraint should reject it
+**Actual:** row ACCEPTED with no parent linkage — SQL NULL-bypass: the FK exists but is never evaluated. Any writer can skip provenance on this edge
+**Verdict:** **`SILENT-PASS`**
+
+### [0189] A3c — evidence_population_match.source_ref vs ref_id (dual identity columns)   `2026-08-12 08:35:28Z`
 **Action:** satisfy NOT NULL with free text in source_ref while leaving the FK'd ref_id NULL
 **SQL:**
 ```sql
@@ -1730,7 +1730,7 @@ INSERT INTO "evidence_population_match" ("match_id", "source_ref", "target_popul
 
 ### A4 — bad-value FK probes, `PRAGMA foreign_keys=OFF` (the migrate_db.py apply mode)
 
-### [0190] A4 — access_need_axis_map.axis_code → axes.axis_code   `2026-08-12 05:22:48Z`
+### [0190] A4 — access_need_axis_map.axis_code → axes.axis_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
@@ -1740,7 +1740,7 @@ INSERT INTO "access_need_axis_map" ("axis_code", "need_code", "relationship") VA
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0191] A4 — access_need_axis_map.need_code → access_needs.need_code   `2026-08-12 05:22:48Z`
+### [0191] A4 — access_need_axis_map.need_code → access_needs.need_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
@@ -1750,7 +1750,7 @@ INSERT INTO "access_need_axis_map" ("need_code", "axis_code", "relationship") VA
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0192] A4 — access_need_icf.need_code → access_needs.need_code   `2026-08-12 05:22:48Z`
+### [0192] A4 — access_need_icf.need_code → access_needs.need_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
@@ -1760,7 +1760,7 @@ INSERT INTO "access_need_icf" ("need_code", "icf_code", "icf_type", "confidence"
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0193] A4 — bpc_metadata.slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0193] A4 — bpc_metadata.slug → slugs.slug   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
@@ -1770,7 +1770,7 @@ INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_sess
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0194] A4 — case_studies.slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0194] A4 — case_studies.slug → slugs.slug   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
@@ -1780,7 +1780,7 @@ INSERT INTO "case_studies" ("slug", "case_study_id", "title", "building_type", "
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0195] A4 — case_study_outcomes.case_study_id → case_studies.case_study_id   `2026-08-12 05:22:48Z`
+### [0195] A4 — case_study_outcomes.case_study_id → case_studies.case_study_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
@@ -1790,7 +1790,7 @@ INSERT INTO "case_study_outcomes" ("case_study_id", "metric") VALUES (?, ?)  -- 
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0196] A4 — case_study_populations.population_code → populations.population_code   `2026-08-12 05:22:48Z`
+### [0196] A4 — case_study_populations.population_code → populations.population_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
@@ -1800,7 +1800,7 @@ INSERT INTO "case_study_populations" ("population_code", "case_study_id") VALUES
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0197] A4 — case_study_populations.case_study_id → case_studies.case_study_id   `2026-08-12 05:22:48Z`
+### [0197] A4 — case_study_populations.case_study_id → case_studies.case_study_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
@@ -1810,7 +1810,7 @@ INSERT INTO "case_study_populations" ("case_study_id", "population_code") VALUES
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0198] A4 — case_study_specs.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0198] A4 — case_study_specs.item_code → items.item_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
@@ -1820,7 +1820,7 @@ INSERT INTO "case_study_specs" ("item_code", "case_study_id") VALUES (?, ?)  -- 
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0199] A4 — case_study_specs.case_study_id → case_studies.case_study_id   `2026-08-12 05:22:48Z`
+### [0199] A4 — case_study_specs.case_study_id → case_studies.case_study_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
@@ -1830,7 +1830,7 @@ INSERT INTO "case_study_specs" ("case_study_id", "item_code") VALUES (?, ?)  -- 
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0200] A4 — case_study_strategies.case_study_id → case_studies.case_study_id   `2026-08-12 05:22:48Z`
+### [0200] A4 — case_study_strategies.case_study_id → case_studies.case_study_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
@@ -1840,667 +1840,667 @@ INSERT INTO "case_study_strategies" ("case_study_id", "strategy") VALUES (?, ?) 
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0201] A4 — cell_source_links.ref_id → evidence_sources.ref_id   `2026-08-12 05:22:48Z`
+### [0201] A4 — citation_mining.global_ref_id → evidence_sources.ref_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "cell_source_links" ("ref_id", "cell_id") VALUES (?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-207", "cell_id": 1}
+INSERT INTO "citation_mining" ("global_ref_id", "slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"global_ref_id": "PROBE-NO-SUCH-PARENT-207", "slug": "aac-speech-production-environments", "local_ref_id": "PROBE-LOCAL_REF_ID", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0202] A4 — cell_source_links.cell_id → evidence_cell_state.cell_id   `2026-08-12 05:22:48Z`
+### [0202] A4 — citation_mining.slug → slugs.slug   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "cell_source_links" ("cell_id", "ref_id") VALUES (?, ?)  -- {"cell_id": 1000000108, "ref_id": "PROBE-PK-209"}
+INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-208", "local_ref_id": "PROBE-LOCAL_REF_ID", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0203] A4 — citation_mining.global_ref_id → evidence_sources.ref_id   `2026-08-12 05:22:48Z`
+### [0203] A4 — citation_population_links.population_code → populations.population_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "citation_mining" ("global_ref_id", "slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"global_ref_id": "PROBE-NO-SUCH-PARENT-210", "slug": "aac-speech-production-environments", "local_ref_id": "PROBE-LOCAL_REF_ID", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
+INSERT INTO "citation_population_links" ("population_code", "citation_id") VALUES (?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-209", "citation_id": "PROBE-PK-210"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0204] A4 — citation_mining.slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0204] A4 — citation_population_links.citation_id → reasoning_doc_citations.citation_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-211", "local_ref_id": "PROBE-LOCAL_REF_ID", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
+INSERT INTO "citation_population_links" ("citation_id", "population_code") VALUES (?, ?)  -- {"citation_id": "PROBE-NO-SUCH-PARENT-212", "population_code": "ADHD"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0205] A4 — citation_population_links.population_code → populations.population_code   `2026-08-12 05:22:48Z`
+### [0205] A4 — conflicts.item_code → items.item_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "citation_population_links" ("population_code", "citation_id") VALUES (?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-212", "citation_id": "PROBE-PK-213"}
+INSERT INTO "conflicts" ("item_code", "conflict_id", "domain", "pop_a", "pop_b", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-213", "conflict_id": "PROBE-PK-214", "domain": "PROBE-DOMAIN", "pop_a": "PROBE-POP_A", "pop_b": "PROBE-POP_B", "status": "RESOLVED-EVIDENCE", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0206] A4 — citation_population_links.citation_id → reasoning_doc_citations.citation_id   `2026-08-12 05:22:48Z`
+### [0206] A4 — connection_targets.con_id → connections.con_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "citation_population_links" ("citation_id", "population_code") VALUES (?, ?)  -- {"citation_id": "PROBE-NO-SUCH-PARENT-214", "population_code": "ADHD"}
+INSERT INTO "connection_targets" ("con_id", "target") VALUES (?, ?)  -- {"con_id": "PROBE-NO-SUCH-PARENT-215", "target": "PROBE-TARGET"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0207] A4 — conflicts.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0207] A4 — economics_entries.ref_id → evidence_sources.ref_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "conflicts" ("item_code", "conflict_id", "domain", "pop_a", "pop_b", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-215", "conflict_id": "PROBE-PK-216", "domain": "PROBE-DOMAIN", "pop_a": "PROBE-POP_A", "pop_b": "PROBE-POP_B", "status": "RESOLVED-EVIDENCE", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
+INSERT INTO "economics_entries" ("ref_id", "entry_id", "pillar", "entry_type", "source", "finding", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-216", "entry_id": "PROBE-ENTRY_ID", "pillar": "health", "entry_type": "cost_premium", "source": "PROBE-SOURCE", "finding": "PROBE-FINDING", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0208] A4 — connection_targets.con_id → connections.con_id   `2026-08-12 05:22:48Z`
+### [0208] A4 — economics_entry_populations.population_code → populations.population_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "connection_targets" ("con_id", "target") VALUES (?, ?)  -- {"con_id": "PROBE-NO-SUCH-PARENT-217", "target": "PROBE-TARGET"}
+INSERT INTO "economics_entry_populations" ("population_code", "entry_id") VALUES (?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-217", "entry_id": "PROBE-ENTRY_ID"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0209] A4 — economics_entries.ref_id → evidence_sources.ref_id   `2026-08-12 05:22:48Z`
+### [0209] A4 — economics_entry_populations.entry_id → economics_entries.entry_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "economics_entries" ("ref_id", "entry_id", "pillar", "entry_type", "source", "finding", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-218", "entry_id": "PROBE-ENTRY_ID", "pillar": "health", "entry_type": "cost_premium", "source": "PROBE-SOURCE", "finding": "PROBE-FINDING", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
+INSERT INTO "economics_entry_populations" ("entry_id", "population_code") VALUES (?, ?)  -- {"entry_id": "PROBE-NO-SUCH-PARENT-218", "population_code": "ADHD"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0210] A4 — economics_entry_populations.population_code → populations.population_code   `2026-08-12 05:22:48Z`
+### [0210] A4 — economics_entry_specs.item_code → items.item_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "economics_entry_populations" ("population_code", "entry_id") VALUES (?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-219", "entry_id": "PROBE-ENTRY_ID"}
+INSERT INTO "economics_entry_specs" ("item_code", "entry_id") VALUES (?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-219", "entry_id": "PROBE-ENTRY_ID"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0211] A4 — economics_entry_populations.entry_id → economics_entries.entry_id   `2026-08-12 05:22:48Z`
+### [0211] A4 — economics_entry_specs.entry_id → economics_entries.entry_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "economics_entry_populations" ("entry_id", "population_code") VALUES (?, ?)  -- {"entry_id": "PROBE-NO-SUCH-PARENT-220", "population_code": "ADHD"}
+INSERT INTO "economics_entry_specs" ("entry_id", "item_code") VALUES (?, ?)  -- {"entry_id": "PROBE-NO-SUCH-PARENT-220", "item_code": "A-01"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0212] A4 — economics_entry_specs.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0212] A4 — evidence_population_match.gap_id → gaps.gap_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "economics_entry_specs" ("item_code", "entry_id") VALUES (?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-221", "entry_id": "PROBE-ENTRY_ID"}
+INSERT INTO "evidence_population_match" ("gap_id", "match_id", "source_ref", "target_population", "match_grade", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"gap_id": "PROBE-NO-SUCH-PARENT-221", "match_id": "PROBE-PK-222", "source_ref": "PROBE-SOURCE_REF", "target_population": "PROBE-TARGET_POPULATION", "match_grade": "EXACT", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0213] A4 — economics_entry_specs.entry_id → economics_entries.entry_id   `2026-08-12 05:22:48Z`
+### [0213] A4 — evidence_population_match.ref_id → evidence_sources.ref_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "economics_entry_specs" ("entry_id", "item_code") VALUES (?, ?)  -- {"entry_id": "PROBE-NO-SUCH-PARENT-222", "item_code": "A-01"}
+INSERT INTO "evidence_population_match" ("ref_id", "match_id", "source_ref", "target_population", "match_grade", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-223", "match_id": "PROBE-PK-224", "source_ref": "PROBE-SOURCE_REF", "target_population": "PROBE-TARGET_POPULATION", "match_grade": "EXACT", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0214] A4 — evidence_cell_state.gap_register_id → gaps.gap_id   `2026-08-12 05:22:48Z`
+### [0214] A4 — evidence_source_authors.ref_id → evidence_sources.ref_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "evidence_cell_state" ("gap_register_id", "item_code", "population_code", "state") VALUES (?, ?, ?, ?)  -- {"gap_register_id": "PROBE-NO-SUCH-PARENT-223", "item_code": "E-02", "population_code": "PAIN", "state": "stated"}
+INSERT INTO "evidence_source_authors" ("ref_id", "position") VALUES (?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-225", "position": 1}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0215] A4 — evidence_cell_state.convergence_id → convergence_assessment.convergence_id   `2026-08-12 05:22:48Z`
+### [0215] A4 — extraction_population_links.population_code → populations.population_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "evidence_cell_state" ("convergence_id", "item_code", "population_code", "state") VALUES (?, ?, ?, ?)  -- {"convergence_id": 1000000124, "item_code": "C-01", "population_code": "MOB", "state": "stated"}
+INSERT INTO "extraction_population_links" ("population_code", "extraction_id") VALUES (?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-226", "extraction_id": 1}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0216] A4 — evidence_cell_state.population_code → populations.population_code   `2026-08-12 05:22:48Z`
+### [0216] A4 — extraction_population_links.extraction_id → source_value_extractions.extraction_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "evidence_cell_state" ("population_code", "item_code", "state") VALUES (?, ?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-225", "item_code": "A-01", "state": "stated"}
+INSERT INTO "extraction_population_links" ("extraction_id", "population_code") VALUES (?, ?)  -- {"extraction_id": 1000000127, "population_code": "ADHD"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0217] A4 — evidence_cell_state.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0217] A4 — gap_mining.gap_id → gaps.gap_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state") VALUES (?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-226", "population_code": "ADHD", "state": "stated"}
+INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "search_strategy_record", "outcome", "check_method", "discoveries_logged") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"gap_id": "PROBE-NO-SUCH-PARENT-228", "attempt_at": "PROBE-ATTEMPT_AT", "attempted_by_session": "PROBE-ATTEMPTED_BY_SESSION", "search_strategy_record": "PROBE-SEARCH_STRATEGY_RECORD", "outcome": "closure_evidence_found", "check_method": "pubmed_cluster", "discoveries_logged": "PROBE-DISCOVERIES_LOGGED"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0218] A4 — evidence_population_match.gap_id → gaps.gap_id   `2026-08-12 05:22:48Z`
+### [0218] A4 — item_audit_runs.item_code → items.item_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "evidence_population_match" ("gap_id", "match_id", "source_ref", "target_population", "match_grade", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"gap_id": "PROBE-NO-SUCH-PARENT-227", "match_id": "PROBE-PK-228", "source_ref": "PROBE-SOURCE_REF", "target_population": "PROBE-TARGET_POPULATION", "match_grade": "EXACT", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
+INSERT INTO "item_audit_runs" ("item_code", "run_id", "session", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-229", "run_id": "PROBE-PK-230", "session": "PROBE-SESSION", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0219] A4 — evidence_population_match.ref_id → evidence_sources.ref_id   `2026-08-12 05:22:48Z`
+### [0219] A4 — item_axis_links.axis_code → axes.axis_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "evidence_population_match" ("ref_id", "match_id", "source_ref", "target_population", "match_grade", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-229", "match_id": "PROBE-PK-230", "source_ref": "PROBE-SOURCE_REF", "target_population": "PROBE-TARGET_POPULATION", "match_grade": "EXACT", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
+INSERT INTO "item_axis_links" ("axis_code", "item_code") VALUES (?, ?)  -- {"axis_code": "PROBE-NO-SUCH-PARENT-231", "item_code": "A-01"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0220] A4 — evidence_source_authors.ref_id → evidence_sources.ref_id   `2026-08-12 05:22:48Z`
+### [0220] A4 — item_axis_links.item_code → items.item_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "evidence_source_authors" ("ref_id", "position") VALUES (?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-231", "position": 1}
+INSERT INTO "item_axis_links" ("item_code", "axis_code") VALUES (?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-232", "axis_code": "AX-AMB"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0221] A4 — extraction_population_links.population_code → populations.population_code   `2026-08-12 05:22:48Z`
+### [0221] A4 — item_bpc_links.slug → slugs.slug   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "extraction_population_links" ("population_code", "extraction_id") VALUES (?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-232", "extraction_id": 1}
+INSERT INTO "item_bpc_links" ("slug", "item_code", "link_type", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-233", "item_code": "A-01", "link_type": "primary", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0222] A4 — extraction_population_links.extraction_id → source_value_extractions.extraction_id   `2026-08-12 05:22:48Z`
+### [0222] A4 — item_bpc_links.item_code → items.item_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "extraction_population_links" ("extraction_id", "population_code") VALUES (?, ?)  -- {"extraction_id": 1000000133, "population_code": "ADHD"}
+INSERT INTO "item_bpc_links" ("item_code", "slug", "link_type", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-234", "slug": "aac-speech-production-environments", "link_type": "primary", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0223] A4 — gap_mining.gap_id → gaps.gap_id   `2026-08-12 05:22:48Z`
+### [0223] A4 — item_population_elaborations.evidence_ref_id → evidence_sources.ref_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "search_strategy_record", "outcome", "check_method", "discoveries_logged") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"gap_id": "PROBE-NO-SUCH-PARENT-234", "attempt_at": "PROBE-ATTEMPT_AT", "attempted_by_session": "PROBE-ATTEMPTED_BY_SESSION", "search_strategy_record": "PROBE-SEARCH_STRATEGY_RECORD", "outcome": "closure_evidence_found", "check_method": "pubmed_cluster", "discoveries_logged": "PROBE-DISCOVERIES_LOGGED"}
+INSERT INTO "item_population_elaborations" ("evidence_ref_id", "item_code", "population_code") VALUES (?, ?, ?)  -- {"evidence_ref_id": "PROBE-NO-SUCH-PARENT-235", "item_code": "A-01", "population_code": "ADHD"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0224] A4 — item_audit_runs.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0224] A4 — item_population_elaborations.population_code → populations.population_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "item_audit_runs" ("item_code", "run_id", "session", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-235", "run_id": "PROBE-PK-236", "session": "PROBE-SESSION", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
+INSERT INTO "item_population_elaborations" ("population_code", "item_code") VALUES (?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-236", "item_code": "A-01"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0225] A4 — item_axis_links.axis_code → axes.axis_code   `2026-08-12 05:22:48Z`
+### [0225] A4 — item_population_elaborations.item_code → items.item_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "item_axis_links" ("axis_code", "item_code") VALUES (?, ?)  -- {"axis_code": "PROBE-NO-SUCH-PARENT-237", "item_code": "A-01"}
+INSERT INTO "item_population_elaborations" ("item_code", "population_code") VALUES (?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-237", "population_code": "ADHD"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0226] A4 — item_axis_links.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0226] A4 — item_population_links.item_code → items.item_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "item_axis_links" ("item_code", "axis_code") VALUES (?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-238", "axis_code": "AX-AMB"}
+INSERT INTO "item_population_links" ("item_code", "population_code", "subtype") VALUES (?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-238", "population_code": "ADHD", "subtype": "PROBE-PK-239"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0227] A4 — item_bpc_links.slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0227] A4 — item_population_links.population_code → populations.population_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "item_bpc_links" ("slug", "item_code", "link_type", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-239", "item_code": "A-01", "link_type": "primary", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
+INSERT INTO "item_population_links" ("population_code", "item_code", "subtype") VALUES (?, ?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-240", "item_code": "A-01", "subtype": "PROBE-PK-241"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0228] A4 — item_bpc_links.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0228] A4 — items.bpc_source_slug → slugs.slug   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "item_bpc_links" ("item_code", "slug", "link_type", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-240", "slug": "aac-speech-production-environments", "link_type": "primary", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
+INSERT INTO "items" ("bpc_source_slug", "item_code", "category", "name", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"bpc_source_slug": "PROBE-NO-SUCH-PARENT-242", "item_code": "PROBE-PK-243", "category": "A", "name": "PROBE-NAME", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0229] A4 — item_population_elaborations.evidence_ref_id → evidence_sources.ref_id   `2026-08-12 05:22:48Z`
+### [0229] A4 — jurisdictional_values.item_code → items.item_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "item_population_elaborations" ("evidence_ref_id", "item_code", "population_code") VALUES (?, ?, ?)  -- {"evidence_ref_id": "PROBE-NO-SUCH-PARENT-241", "item_code": "A-01", "population_code": "ADHD"}
+INSERT INTO "jurisdictional_values" ("item_code", "jurisdiction") VALUES (?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-244", "jurisdiction": "PROBE-JURISDICTION"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0230] A4 — item_population_elaborations.population_code → populations.population_code   `2026-08-12 05:22:48Z`
+### [0230] A4 — population_axis_map.axis_code → axes.axis_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "item_population_elaborations" ("population_code", "item_code") VALUES (?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-242", "item_code": "A-01"}
+INSERT INTO "population_axis_map" ("axis_code", "population_code", "role") VALUES (?, ?, ?)  -- {"axis_code": "PROBE-NO-SUCH-PARENT-245", "population_code": "ADHD", "role": "ALIAS"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0231] A4 — item_population_elaborations.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0231] A4 — population_axis_map.population_code → populations.population_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "item_population_elaborations" ("item_code", "population_code") VALUES (?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-243", "population_code": "ADHD"}
+INSERT INTO "population_axis_map" ("population_code", "axis_code", "role") VALUES (?, ?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-246", "axis_code": "AX-AMB", "role": "ALIAS"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0232] A4 — item_population_links.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0232] A4 — populations.parent_code → populations.population_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "item_population_links" ("item_code", "population_code", "subtype") VALUES (?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-244", "population_code": "ADHD", "subtype": "PROBE-PK-245"}
+INSERT INTO "populations" ("parent_code", "population_code", "display_name") VALUES (?, ?, ?)  -- {"parent_code": "PROBE-NO-SUCH-PARENT-247", "population_code": "PROBE-PK-248", "display_name": "PROBE-DISPLAY_NAME"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0233] A4 — item_population_links.population_code → populations.population_code   `2026-08-12 05:22:48Z`
+### [0233] A4 — probe_population_links.population_code → populations.population_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "item_population_links" ("population_code", "item_code", "subtype") VALUES (?, ?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-246", "item_code": "A-01", "subtype": "PROBE-PK-247"}
+INSERT INTO "probe_population_links" ("population_code", "probe_id") VALUES (?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-249", "probe_id": "PROBE-PK-250"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0234] A4 — items.bpc_source_slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0234] A4 — probe_population_links.probe_id → spec_value_probes.probe_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "items" ("bpc_source_slug", "item_code", "category", "name", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"bpc_source_slug": "PROBE-NO-SUCH-PARENT-248", "item_code": "PROBE-PK-249", "category": "A", "name": "PROBE-NAME", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
+INSERT INTO "probe_population_links" ("probe_id", "population_code") VALUES (?, ?)  -- {"probe_id": "PROBE-NO-SUCH-PARENT-251", "population_code": "ADHD"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0235] A4 — jurisdictional_values.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0235] A4 — reasoning_doc_citations.source_ref_id → evidence_sources.ref_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "jurisdictional_values" ("item_code", "jurisdiction") VALUES (?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-250", "jurisdiction": "PROBE-JURISDICTION"}
+INSERT INTO "reasoning_doc_citations" ("source_ref_id", "citation_id", "reasoning_doc_slug", "parameter", "claim_type", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"source_ref_id": "PROBE-NO-SUCH-PARENT-252", "citation_id": "PROBE-PK-253", "reasoning_doc_slug": "aac-speech-production-environments", "parameter": "PROBE-PARAMETER", "claim_type": "numerical_spec", "verified_at": "PROBE-VERIFIED_AT", "verified_by_session": "PROBE-VERIFIED_BY_SESSION", "value_match": "EXACT", "claim_match": "SUPPORTED", "claimed_value": "PROBE-CLAIMED_VALUE", "claim_text": "PROBE-CLAIM_TEXT"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0236] A4 — population_axis_map.axis_code → axes.axis_code   `2026-08-12 05:22:48Z`
+### [0236] A4 — reasoning_doc_citations.reasoning_doc_slug → slugs.slug   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "population_axis_map" ("axis_code", "population_code", "role") VALUES (?, ?, ?)  -- {"axis_code": "PROBE-NO-SUCH-PARENT-251", "population_code": "ADHD", "role": "ALIAS"}
+INSERT INTO "reasoning_doc_citations" ("reasoning_doc_slug", "citation_id", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"reasoning_doc_slug": "PROBE-NO-SUCH-PARENT-254", "citation_id": "PROBE-PK-255", "parameter": "PROBE-PARAMETER", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-211", "verified_at": "PROBE-VERIFIED_AT", "verified_by_session": "PROBE-VERIFIED_BY_SESSION", "value_match": "EXACT", "claim_match": "SUPPORTED", "claimed_value": "PROBE-CLAIMED_VALUE", "claim_text": "PROBE-CLAIM_TEXT"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0237] A4 — population_axis_map.population_code → populations.population_code   `2026-08-12 05:22:48Z`
+### [0237] A4 — room_items.item_code → items.item_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "population_axis_map" ("population_code", "axis_code", "role") VALUES (?, ?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-252", "axis_code": "AX-AMB", "role": "ALIAS"}
+INSERT INTO "room_items" ("item_code", "room_code") VALUES (?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-256", "room_code": "R-ASM"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0238] A4 — populations.parent_code → populations.population_code   `2026-08-12 05:22:48Z`
+### [0238] A4 — room_items.room_code → rooms.room_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "populations" ("parent_code", "population_code", "display_name") VALUES (?, ?, ?)  -- {"parent_code": "PROBE-NO-SUCH-PARENT-253", "population_code": "PROBE-PK-254", "display_name": "PROBE-DISPLAY_NAME"}
+INSERT INTO "room_items" ("room_code", "item_code") VALUES (?, ?)  -- {"room_code": "PROBE-NO-SUCH-PARENT-257", "item_code": "A-01"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0239] A4 — probe_population_links.population_code → populations.population_code   `2026-08-12 05:22:48Z`
+### [0239] A4 — search_admissions.ref_id → evidence_sources.ref_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "probe_population_links" ("population_code", "probe_id") VALUES (?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-255", "probe_id": "PROBE-PK-256"}
+INSERT INTO "search_admissions" ("ref_id", "exec_id") VALUES (?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-258", "exec_id": 1}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0240] A4 — probe_population_links.probe_id → spec_value_probes.probe_id   `2026-08-12 05:22:48Z`
+### [0240] A4 — search_admissions.exec_id → search_executions.exec_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "probe_population_links" ("probe_id", "population_code") VALUES (?, ?)  -- {"probe_id": "PROBE-NO-SUCH-PARENT-257", "population_code": "ADHD"}
+INSERT INTO "search_admissions" ("exec_id", "ref_id") VALUES (?, ?)  -- {"exec_id": 1000000159, "ref_id": "PROBE-PK-211"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0241] A4 — reasoning_doc_citations.source_ref_id → evidence_sources.ref_id   `2026-08-12 05:22:48Z`
+### [0241] A4 — search_candidates.suggested_slug → slugs.slug   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("source_ref_id", "citation_id", "reasoning_doc_slug", "parameter", "claim_type", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"source_ref_id": "PROBE-NO-SUCH-PARENT-258", "citation_id": "PROBE-PK-259", "reasoning_doc_slug": "aac-speech-production-environments", "parameter": "PROBE-PARAMETER", "claim_type": "numerical_spec", "verified_at": "PROBE-VERIFIED_AT", "verified_by_session": "PROBE-VERIFIED_BY_SESSION", "value_match": "EXACT", "claim_match": "SUPPORTED", "claim_text": "PROBE-CLAIM_TEXT", "claimed_value": "PROBE-CLAIMED_VALUE"}
+INSERT INTO "search_candidates" ("suggested_slug", "found_under_slug", "disposition", "title", "session", "created_at") VALUES (?, ?, ?, ?, ?, ?)  -- {"suggested_slug": "PROBE-NO-SUCH-PARENT-260", "found_under_slug": "aac-speech-production-environments", "disposition": "REHOME", "title": "PROBE-TITLE", "session": "PROBE-SESSION", "created_at": "PROBE-CREATED_AT"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0242] A4 — reasoning_doc_citations.reasoning_doc_slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0242] A4 — search_candidates.found_under_slug → slugs.slug   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("reasoning_doc_slug", "citation_id", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"reasoning_doc_slug": "PROBE-NO-SUCH-PARENT-260", "citation_id": "PROBE-PK-261", "parameter": "PROBE-PARAMETER", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-209", "verified_at": "PROBE-VERIFIED_AT", "verified_by_session": "PROBE-VERIFIED_BY_SESSION", "value_match": "EXACT", "claim_match": "SUPPORTED", "claim_text": "PROBE-CLAIM_TEXT", "claimed_value": "PROBE-CLAIMED_VALUE"}
+INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "session", "created_at") VALUES (?, ?, ?, ?, ?)  -- {"found_under_slug": "PROBE-NO-SUCH-PARENT-261", "disposition": "REHOME", "title": "PROBE-TITLE", "session": "PROBE-SESSION", "created_at": "PROBE-CREATED_AT"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0243] A4 — room_items.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0243] A4 — search_candidates.exec_id → search_executions.exec_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "room_items" ("item_code", "room_code") VALUES (?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-262", "room_code": "R-ASM"}
+INSERT INTO "search_candidates" ("exec_id", "found_under_slug", "disposition", "title", "session", "created_at") VALUES (?, ?, ?, ?, ?, ?)  -- {"exec_id": 1000000162, "found_under_slug": "aac-speech-production-environments", "disposition": "REHOME", "title": "PROBE-TITLE", "session": "PROBE-SESSION", "created_at": "PROBE-CREATED_AT"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0244] A4 — room_items.room_code → rooms.room_code   `2026-08-12 05:22:48Z`
+### [0244] A4 — search_coverage.slug → slugs.slug   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "room_items" ("room_code", "item_code") VALUES (?, ?)  -- {"room_code": "PROBE-NO-SUCH-PARENT-263", "item_code": "A-01"}
+INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-263", "jurisdiction": "PROBE-JURISDICTION", "status": "SEARCHED", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0245] A4 — search_admissions.ref_id → evidence_sources.ref_id   `2026-08-12 05:22:48Z`
+### [0245] A4 — search_executions.slug → slugs.slug   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "search_admissions" ("ref_id", "exec_id") VALUES (?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-264", "exec_id": 1}
+INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-264", "language": "PROBE-LANGUAGE", "query_text": "PROBE-QUERY_TEXT", "engine": "PROBE-ENGINE", "depth_method": "scoping", "session": "PROBE-SESSION", "executed_at": "PROBE-EXECUTED_AT"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0246] A4 — search_admissions.exec_id → search_executions.exec_id   `2026-08-12 05:22:48Z`
+### [0246] A4 — search_languages.slug → slugs.slug   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "search_admissions" ("exec_id", "ref_id") VALUES (?, ?)  -- {"exec_id": 1000000165, "ref_id": "PROBE-PK-209"}
+INSERT INTO "search_languages" ("slug", "language", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-265", "language": "PROBE-LANGUAGE", "status": "SEARCHED", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0247] A4 — search_candidates.suggested_slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0247] A4 — slugs.merged_into → slugs.slug   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "search_candidates" ("suggested_slug", "found_under_slug", "disposition", "title", "session", "created_at") VALUES (?, ?, ?, ?, ?, ?)  -- {"suggested_slug": "PROBE-NO-SUCH-PARENT-266", "found_under_slug": "aac-speech-production-environments", "disposition": "REHOME", "title": "PROBE-TITLE", "session": "PROBE-SESSION", "created_at": "PROBE-CREATED_AT"}
+INSERT INTO "slugs" ("merged_into", "slug", "topic_directory", "sl_path", "bpc_path", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"merged_into": "PROBE-NO-SUCH-PARENT-266", "slug": "PROBE-PK-267", "topic_directory": "PROBE-TOPIC_DIRECTORY", "sl_path": "PROBE-SL_PATH", "bpc_path": "PROBE-BPC_PATH", "status": "ACTIVE", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0248] A4 — search_candidates.found_under_slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0248] A4 — source_slug_links.slug → slugs.slug   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "session", "created_at") VALUES (?, ?, ?, ?, ?)  -- {"found_under_slug": "PROBE-NO-SUCH-PARENT-267", "disposition": "REHOME", "title": "PROBE-TITLE", "session": "PROBE-SESSION", "created_at": "PROBE-CREATED_AT"}
+INSERT INTO "source_slug_links" ("slug", "ref_id", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-268", "ref_id": "PROBE-PK-211", "local_ref_id": "PROBE-LOCAL_REF_ID", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0249] A4 — search_candidates.exec_id → search_executions.exec_id   `2026-08-12 05:22:48Z`
+### [0249] A4 — source_slug_links.ref_id → evidence_sources.ref_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "search_candidates" ("exec_id", "found_under_slug", "disposition", "title", "session", "created_at") VALUES (?, ?, ?, ?, ?, ?)  -- {"exec_id": 1000000168, "found_under_slug": "aac-speech-production-environments", "disposition": "REHOME", "title": "PROBE-TITLE", "session": "PROBE-SESSION", "created_at": "PROBE-CREATED_AT"}
+INSERT INTO "source_slug_links" ("ref_id", "slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-269", "slug": "PROBE-PK-267", "local_ref_id": "PROBE-LOCAL_REF_ID", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0250] A4 — search_coverage.slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0250] A4 — source_value_extractions.promoted_to_rdc_id → reasoning_doc_citations.citation_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-269", "jurisdiction": "PROBE-JURISDICTION", "status": "SEARCHED", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
+INSERT INTO "source_value_extractions" ("promoted_to_rdc_id", "ref_id", "slug", "parameter", "claim_type", "extraction_method", "created_at", "updated_at", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"promoted_to_rdc_id": "PROBE-NO-SUCH-PARENT-270", "ref_id": "PROBE-PK-211", "slug": "PROBE-PK-267", "parameter": "PROBE-PARAMETER", "claim_type": "numerical", "extraction_method": "skim", "created_at": "PROBE-CREATED_AT", "updated_at": "PROBE-UPDATED_AT", "claimed_value": "PROBE-CLAIMED_VALUE"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0251] A4 — search_executions.slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0251] A4 — source_value_extractions.population_code → populations.population_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-270", "language": "PROBE-LANGUAGE", "query_text": "PROBE-QUERY_TEXT", "engine": "PROBE-ENGINE", "depth_method": "scoping", "session": "PROBE-SESSION", "executed_at": "PROBE-EXECUTED_AT"}
+INSERT INTO "source_value_extractions" ("population_code", "ref_id", "slug", "parameter", "claim_type", "extraction_method", "created_at", "updated_at", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-271", "ref_id": "PROBE-PK-211", "slug": "PROBE-PK-267", "parameter": "PROBE-PARAMETER", "claim_type": "numerical", "extraction_method": "skim", "created_at": "PROBE-CREATED_AT", "updated_at": "PROBE-UPDATED_AT", "claimed_value": "PROBE-CLAIMED_VALUE"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0252] A4 — search_languages.slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0252] A4 — source_value_extractions.ref_id → evidence_sources.ref_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "search_languages" ("slug", "language", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-271", "language": "PROBE-LANGUAGE", "status": "SEARCHED", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
+INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_type", "extraction_method", "created_at", "updated_at", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-272", "slug": "PROBE-PK-267", "parameter": "PROBE-PARAMETER", "claim_type": "numerical", "extraction_method": "skim", "created_at": "PROBE-CREATED_AT", "updated_at": "PROBE-UPDATED_AT", "claimed_value": "PROBE-CLAIMED_VALUE"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0253] A4 — slugs.merged_into → slugs.slug   `2026-08-12 05:22:48Z`
+### [0253] A4 — source_value_extractions.item_code → items.item_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "slugs" ("merged_into", "slug", "topic_directory", "sl_path", "bpc_path", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"merged_into": "PROBE-NO-SUCH-PARENT-272", "slug": "PROBE-PK-273", "topic_directory": "PROBE-TOPIC_DIRECTORY", "sl_path": "PROBE-SL_PATH", "bpc_path": "PROBE-BPC_PATH", "status": "ACTIVE", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
+INSERT INTO "source_value_extractions" ("item_code", "ref_id", "slug", "parameter", "claim_type", "extraction_method", "created_at", "updated_at", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-273", "ref_id": "PROBE-PK-211", "slug": "PROBE-PK-267", "parameter": "PROBE-PARAMETER", "claim_type": "numerical", "extraction_method": "skim", "created_at": "PROBE-CREATED_AT", "updated_at": "PROBE-UPDATED_AT", "claimed_value": "PROBE-CLAIMED_VALUE"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0254] A4 — source_slug_links.slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0254] A4 — source_value_extractions.root_ref_id → evidence_sources.ref_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "source_slug_links" ("slug", "ref_id", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-274", "ref_id": "PROBE-PK-209", "local_ref_id": "PROBE-LOCAL_REF_ID", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
+INSERT INTO "source_value_extractions" ("root_ref_id", "ref_id", "slug", "parameter", "claim_type", "extraction_method", "created_at", "updated_at", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"root_ref_id": "PROBE-NO-SUCH-PARENT-274", "ref_id": "PROBE-PK-211", "slug": "PROBE-PK-267", "parameter": "PROBE-PARAMETER", "claim_type": "numerical", "extraction_method": "skim", "created_at": "PROBE-CREATED_AT", "updated_at": "PROBE-UPDATED_AT", "claimed_value": "PROBE-CLAIMED_VALUE"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0255] A4 — source_slug_links.ref_id → evidence_sources.ref_id   `2026-08-12 05:22:48Z`
+### [0255] A4 — source_value_extractions.slug → slugs.slug   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "source_slug_links" ("ref_id", "slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-275", "slug": "PROBE-PK-273", "local_ref_id": "PROBE-LOCAL_REF_ID", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION", "updated_at": "PROBE-UPDATED_AT", "updated_by_session": "PROBE-UPDATED_BY_SESSION"}
+INSERT INTO "source_value_extractions" ("slug", "ref_id", "parameter", "claim_type", "extraction_method", "created_at", "updated_at", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-275", "ref_id": "PROBE-PK-211", "parameter": "PROBE-PARAMETER", "claim_type": "numerical", "extraction_method": "skim", "created_at": "PROBE-CREATED_AT", "updated_at": "PROBE-UPDATED_AT", "claimed_value": "PROBE-CLAIMED_VALUE"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0256] A4 — source_value_extractions.promoted_to_rdc_id → reasoning_doc_citations.citation_id   `2026-08-12 05:22:48Z`
+### [0256] A4 — spec_value_probes.ref_id → evidence_sources.ref_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "source_value_extractions" ("promoted_to_rdc_id", "ref_id", "slug", "parameter", "claim_type", "extraction_method", "created_at", "updated_at", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"promoted_to_rdc_id": "PROBE-NO-SUCH-PARENT-276", "ref_id": "PROBE-PK-209", "slug": "PROBE-PK-273", "parameter": "PROBE-PARAMETER", "claim_type": "numerical", "extraction_method": "skim", "created_at": "PROBE-CREATED_AT", "updated_at": "PROBE-UPDATED_AT", "claimed_value": "PROBE-CLAIMED_VALUE"}
+INSERT INTO "spec_value_probes" ("ref_id", "probe_id", "walk_id", "slug", "item_code", "spec_value_origin", "spec_unit", "direction", "population", "claim_type", "step_index", "phase", "step_value", "step_value_unit", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-276", "probe_id": "PROBE-PK-277", "walk_id": "PROBE-WALK_ID", "slug": "PROBE-PK-267", "item_code": "A-01", "spec_value_origin": 1.0, "spec_unit": "PROBE-SPEC_UNIT", "direction": "up", "population": "PROBE-POPULATION", "claim_type": "minimum", "step_index": 1, "phase": "outer-pass-1st", "step_value": 1.0, "step_value_unit": "PROBE-STEP_VALUE_UNIT", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0257] A4 — source_value_extractions.population_code → populations.population_code   `2026-08-12 05:22:48Z`
+### [0257] A4 — spec_value_probes.item_code → items.item_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "source_value_extractions" ("population_code", "ref_id", "slug", "parameter", "claim_type", "extraction_method", "created_at", "updated_at", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-277", "ref_id": "PROBE-PK-209", "slug": "PROBE-PK-273", "parameter": "PROBE-PARAMETER", "claim_type": "numerical", "extraction_method": "skim", "created_at": "PROBE-CREATED_AT", "updated_at": "PROBE-UPDATED_AT", "claimed_value": "PROBE-CLAIMED_VALUE"}
+INSERT INTO "spec_value_probes" ("item_code", "probe_id", "walk_id", "slug", "spec_value_origin", "spec_unit", "direction", "population", "claim_type", "step_index", "phase", "step_value", "step_value_unit", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-278", "probe_id": "PROBE-PK-279", "walk_id": "PROBE-WALK_ID", "slug": "PROBE-PK-267", "spec_value_origin": 1.0, "spec_unit": "PROBE-SPEC_UNIT", "direction": "up", "population": "PROBE-POPULATION", "claim_type": "minimum", "step_index": 1, "phase": "outer-pass-1st", "step_value": 1.0, "step_value_unit": "PROBE-STEP_VALUE_UNIT", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0258] A4 — source_value_extractions.ref_id → evidence_sources.ref_id   `2026-08-12 05:22:48Z`
+### [0258] A4 — spec_value_probes.slug → slugs.slug   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_type", "extraction_method", "created_at", "updated_at", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-278", "slug": "PROBE-PK-273", "parameter": "PROBE-PARAMETER", "claim_type": "numerical", "extraction_method": "skim", "created_at": "PROBE-CREATED_AT", "updated_at": "PROBE-UPDATED_AT", "claimed_value": "PROBE-CLAIMED_VALUE"}
+INSERT INTO "spec_value_probes" ("slug", "probe_id", "walk_id", "item_code", "spec_value_origin", "spec_unit", "direction", "population", "claim_type", "step_index", "phase", "step_value", "step_value_unit", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-280", "probe_id": "PROBE-PK-281", "walk_id": "PROBE-WALK_ID", "item_code": "A-01", "spec_value_origin": 1.0, "spec_unit": "PROBE-SPEC_UNIT", "direction": "up", "population": "PROBE-POPULATION", "claim_type": "minimum", "step_index": 1, "phase": "outer-pass-1st", "step_value": 1.0, "step_value_unit": "PROBE-STEP_VALUE_UNIT", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0259] A4 — source_value_extractions.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0259] A4 — specification_source_links.ref_id → evidence_sources.ref_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "source_value_extractions" ("item_code", "ref_id", "slug", "parameter", "claim_type", "extraction_method", "created_at", "updated_at", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-279", "ref_id": "PROBE-PK-209", "slug": "PROBE-PK-273", "parameter": "PROBE-PARAMETER", "claim_type": "numerical", "extraction_method": "skim", "created_at": "PROBE-CREATED_AT", "updated_at": "PROBE-UPDATED_AT", "claimed_value": "PROBE-CLAIMED_VALUE"}
+INSERT INTO "specification_source_links" ("ref_id", "specification_id") VALUES (?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-282", "specification_id": 1}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0260] A4 — source_value_extractions.root_ref_id → evidence_sources.ref_id   `2026-08-12 05:22:48Z`
+### [0260] A4 — specification_source_links.specification_id → specifications.specification_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "source_value_extractions" ("root_ref_id", "ref_id", "slug", "parameter", "claim_type", "extraction_method", "created_at", "updated_at", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"root_ref_id": "PROBE-NO-SUCH-PARENT-280", "ref_id": "PROBE-PK-209", "slug": "PROBE-PK-273", "parameter": "PROBE-PARAMETER", "claim_type": "numerical", "extraction_method": "skim", "created_at": "PROBE-CREATED_AT", "updated_at": "PROBE-UPDATED_AT", "claimed_value": "PROBE-CLAIMED_VALUE"}
+INSERT INTO "specification_source_links" ("specification_id", "ref_id") VALUES (?, ?)  -- {"specification_id": 1000000183, "ref_id": "PROBE-PK-211"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0261] A4 — source_value_extractions.slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0261] A4 — specifications.gap_register_id → gaps.gap_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "source_value_extractions" ("slug", "ref_id", "parameter", "claim_type", "extraction_method", "created_at", "updated_at", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-281", "ref_id": "PROBE-PK-209", "parameter": "PROBE-PARAMETER", "claim_type": "numerical", "extraction_method": "skim", "created_at": "PROBE-CREATED_AT", "updated_at": "PROBE-UPDATED_AT", "claimed_value": "PROBE-CLAIMED_VALUE"}
+INSERT INTO "specifications" ("gap_register_id", "item_code", "population_code", "state") VALUES (?, ?, ?, ?)  -- {"gap_register_id": "PROBE-NO-SUCH-PARENT-284", "item_code": "A-17", "population_code": "LPA", "state": "stated"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0262] A4 — spec_value_probes.ref_id → evidence_sources.ref_id   `2026-08-12 05:22:48Z`
+### [0262] A4 — specifications.convergence_id → convergence_assessment.convergence_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "spec_value_probes" ("ref_id", "probe_id", "walk_id", "slug", "item_code", "spec_value_origin", "spec_unit", "direction", "population", "claim_type", "step_index", "phase", "step_value", "step_value_unit", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-282", "probe_id": "PROBE-PK-283", "walk_id": "PROBE-WALK_ID", "slug": "PROBE-PK-273", "item_code": "A-01", "spec_value_origin": 1.0, "spec_unit": "PROBE-SPEC_UNIT", "direction": "up", "population": "PROBE-POPULATION", "claim_type": "minimum", "step_index": 1, "phase": "outer-pass-1st", "step_value": 1.0, "step_value_unit": "PROBE-STEP_VALUE_UNIT", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
+INSERT INTO "specifications" ("convergence_id", "item_code", "population_code", "state") VALUES (?, ?, ?, ?)  -- {"convergence_id": 1000000185, "item_code": "A-10", "population_code": "PROBE-PK-248", "state": "stated"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0263] A4 — spec_value_probes.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0263] A4 — specifications.population_code → populations.population_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "spec_value_probes" ("item_code", "probe_id", "walk_id", "slug", "spec_value_origin", "spec_unit", "direction", "population", "claim_type", "step_index", "phase", "step_value", "step_value_unit", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-284", "probe_id": "PROBE-PK-285", "walk_id": "PROBE-WALK_ID", "slug": "PROBE-PK-273", "spec_value_origin": 1.0, "spec_unit": "PROBE-SPEC_UNIT", "direction": "up", "population": "PROBE-POPULATION", "claim_type": "minimum", "step_index": 1, "phase": "outer-pass-1st", "step_value": 1.0, "step_value_unit": "PROBE-STEP_VALUE_UNIT", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
+INSERT INTO "specifications" ("population_code", "item_code", "state") VALUES (?, ?, ?)  -- {"population_code": "PROBE-NO-SUCH-PARENT-286", "item_code": "A-01", "state": "stated"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0264] A4 — spec_value_probes.slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0264] A4 — specifications.item_code → items.item_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "spec_value_probes" ("slug", "probe_id", "walk_id", "item_code", "spec_value_origin", "spec_unit", "direction", "population", "claim_type", "step_index", "phase", "step_value", "step_value_unit", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-286", "probe_id": "PROBE-PK-287", "walk_id": "PROBE-WALK_ID", "item_code": "A-01", "spec_value_origin": 1.0, "spec_unit": "PROBE-SPEC_UNIT", "direction": "up", "population": "PROBE-POPULATION", "claim_type": "minimum", "step_index": 1, "phase": "outer-pass-1st", "step_value": 1.0, "step_value_unit": "PROBE-STEP_VALUE_UNIT", "created_at": "PROBE-CREATED_AT", "created_by_session": "PROBE-CREATED_BY_SESSION"}
+INSERT INTO "specifications" ("item_code", "population_code", "state") VALUES (?, ?, ?)  -- {"item_code": "PROBE-NO-SUCH-PARENT-287", "population_code": "ADHD", "state": "stated"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0265] A4 — supersession_check.ref_id → evidence_sources.ref_id   `2026-08-12 05:22:48Z`
+### [0265] A4 — supersession_check.ref_id → evidence_sources.ref_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "supersession_check" ("ref_id", "check_id", "slug", "local_ref_id", "anchor_tier", "anchor_evidence_type", "outcome", "search_strategy_record", "checked_at", "checked_by_session", "check_method") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-288", "check_id": "PROBE-PK-289", "slug": "PROBE-PK-273", "local_ref_id": "PROBE-LOCAL_REF_ID", "anchor_tier": 1, "anchor_evidence_type": "PROBE-ANCHOR_EVIDENCE_TYPE", "outcome": "current_best", "search_strategy_record": "PROBE-SEARCH_STRATEGY_RECORD", "checked_at": "PROBE-CHECKED_AT", "checked_by_session": "PROBE-CHECKED_BY_SESSION", "check_method": "pubmed_search"}
+INSERT INTO "supersession_check" ("ref_id", "check_id", "slug", "local_ref_id", "anchor_tier", "anchor_evidence_type", "outcome", "search_strategy_record", "checked_at", "checked_by_session", "check_method") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-NO-SUCH-PARENT-288", "check_id": "PROBE-PK-289", "slug": "PROBE-PK-267", "local_ref_id": "PROBE-LOCAL_REF_ID", "anchor_tier": 1, "anchor_evidence_type": "PROBE-ANCHOR_EVIDENCE_TYPE", "outcome": "current_best", "search_strategy_record": "PROBE-SEARCH_STRATEGY_RECORD", "checked_at": "PROBE-CHECKED_AT", "checked_by_session": "PROBE-CHECKED_BY_SESSION", "check_method": "pubmed_search"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0266] A4 — supersession_check.slug → slugs.slug   `2026-08-12 05:22:48Z`
+### [0266] A4 — supersession_check.slug → slugs.slug   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
-INSERT INTO "supersession_check" ("slug", "check_id", "local_ref_id", "ref_id", "anchor_tier", "anchor_evidence_type", "outcome", "search_strategy_record", "checked_at", "checked_by_session", "check_method") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-290", "check_id": "PROBE-PK-291", "local_ref_id": "PROBE-LOCAL_REF_ID", "ref_id": "PROBE-PK-209", "anchor_tier": 1, "anchor_evidence_type": "PROBE-ANCHOR_EVIDENCE_TYPE", "outcome": "current_best", "search_strategy_record": "PROBE-SEARCH_STRATEGY_RECORD", "checked_at": "PROBE-CHECKED_AT", "checked_by_session": "PROBE-CHECKED_BY_SESSION", "check_method": "pubmed_search"}
+INSERT INTO "supersession_check" ("slug", "check_id", "local_ref_id", "ref_id", "anchor_tier", "anchor_evidence_type", "outcome", "search_strategy_record", "checked_at", "checked_by_session", "check_method") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-NO-SUCH-PARENT-290", "check_id": "PROBE-PK-291", "local_ref_id": "PROBE-LOCAL_REF_ID", "ref_id": "PROBE-PK-211", "anchor_tier": 1, "anchor_evidence_type": "PROBE-ANCHOR_EVIDENCE_TYPE", "outcome": "current_best", "search_strategy_record": "PROBE-SEARCH_STRATEGY_RECORD", "checked_at": "PROBE-CHECKED_AT", "checked_by_session": "PROBE-CHECKED_BY_SESSION", "check_method": "pubmed_search"}
 ```
 **Expected:** would be rejected under FK=ON
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0267] A4 — term_aliases.term_id → terms.term_id   `2026-08-12 05:22:48Z`
+### [0267] A4 — term_aliases.term_id → terms.term_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
@@ -2510,7 +2510,7 @@ INSERT INTO "term_aliases" ("term_id", "alias", "language", "alias_type", "creat
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0268] A4 — term_item_links.item_code → items.item_code   `2026-08-12 05:22:48Z`
+### [0268] A4 — term_item_links.item_code → items.item_code   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
@@ -2520,7 +2520,7 @@ INSERT INTO "term_item_links" ("item_code", "term_id", "created_at", "created_by
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0269] A4 — term_item_links.term_id → terms.term_id   `2026-08-12 05:22:48Z`
+### [0269] A4 — term_item_links.term_id → terms.term_id   `2026-08-12 08:35:28Z`
 **Action:** insert child with nonexistent parent value (FK=OFF, migrate_db.py apply mode)
 **SQL:**
 ```sql
@@ -2530,7 +2530,7 @@ INSERT INTO "term_item_links" ("term_id", "item_code", "created_at", "created_by
 **Actual:** insert COMMITTED — violation persists in the file
 **Verdict:** **`SILENT-PASS`**
 
-### [0270] A4 — probe-a-off.db   `2026-08-12 05:22:48Z`
+### [0270] A4 — probe-a-off.db   `2026-08-12 08:35:28Z`
 **Action:** PRAGMA foreign_key_check after committing all FK=OFF probes
 **Expected:** 80 violations visible
 **Actual:** 80 violation rows persisted. migrate_db.py COMMITS the migration BEFORE running this check, tolerates any violation already in `pre_violations`, and skips the failure entirely when the migration body contains 'BOOTSTRAP' in its first 500 bytes — so every one of these edges is a committable write-path defect
@@ -2551,40 +2551,38 @@ INSERT INTO "term_item_links" ("term_id", "item_code", "created_at", "created_by
 | `case_study_populations` | 0 | — | case_studies, populations |
 | `case_study_specs` | 0 | — | case_studies, items |
 | `case_study_strategies` | 0 | — | case_studies |
-| `cell_source_links` | 0 | — | evidence_cell_state, evidence_sources |
 | `citation_mining` | 0 | — | evidence_sources, slugs |
 | `citation_population_links` | 0 | — | populations, reasoning_doc_citations |
 | `conflicts` | 0 | — | items |
 | `connection_targets` | 0 | — | connections |
 | `connections` | 0 | connection_targets | — |
-| `convergence_assessment` | 0 | evidence_cell_state | — |
-| `data_migrations` | 316 | — | — |
+| `convergence_assessment` | 0 | specifications | — |
+| `data_migrations` | 319 | — | — |
 | `db_meta` | 2 | — | — |
-| `decisions` | 157 | — | — |
+| `decisions` | 158 | — | — |
 | `economics_entries` | 0 | economics_entry_populations, economics_entry_specs | evidence_sources |
 | `economics_entry_populations` | 0 | — | economics_entries, populations |
 | `economics_entry_specs` | 0 | — | economics_entries, items |
-| `evidence_cell_state` | 0 | cell_source_links | convergence_assessment, gaps, items, populations |
 | `evidence_population_match` | 0 | — | evidence_sources, gaps |
 | `evidence_source_authors` | 0 | — | evidence_sources |
-| `evidence_sources` | 0 | cell_source_links, citation_mining, economics_entries, evidence_population_match, evidence_source_authors, item_population_elaborations, reasoning_doc_citations, search_admissions, source_slug_links, source_value_extractions, spec_value_probes, supersession_check | — |
+| `evidence_sources` | 0 | citation_mining, economics_entries, evidence_population_match, evidence_source_authors, item_population_elaborations, reasoning_doc_citations, search_admissions, source_slug_links, source_value_extractions, spec_value_probes, specification_source_links, supersession_check | — |
 | `external_root_registry` | 0 | — | — |
 | `extraction_population_links` | 0 | — | populations, source_value_extractions |
 | `gap_mining` | 0 | — | gaps |
-| `gaps` | 0 | evidence_cell_state, evidence_population_match, gap_mining | — |
+| `gaps` | 0 | evidence_population_match, gap_mining, specifications | — |
 | `item_audit_runs` | 0 | — | items |
 | `item_axis_links` | 158 | — | axes, items |
 | `item_bpc_links` | 0 | — | items, slugs |
 | `item_population_elaborations` | 0 | — | evidence_sources, items, populations |
 | `item_population_links` | 372 | — | items, populations |
-| `items` | 93 | case_study_specs, conflicts, economics_entry_specs, evidence_cell_state, item_audit_runs, item_axis_links, item_bpc_links, item_population_elaborations, item_population_links, jurisdictional_values, room_items, source_value_extractions, spec_value_probes, term_item_links | slugs |
+| `items` | 93 | case_study_specs, conflicts, economics_entry_specs, item_audit_runs, item_axis_links, item_bpc_links, item_population_elaborations, item_population_links, jurisdictional_values, room_items, source_value_extractions, spec_value_probes, specifications, term_item_links | slugs |
 | `jurisdictional_values` | 109 | — | items |
 | `lang_jur_map` | 70 | — | — |
 | `life_stage_modifiers` | 2 | — | — |
 | `pipeline_runs` | 0 | — | — |
 | `population_axis_map` | 53 | — | axes, populations |
 | `population_reclass` | 29 | — | — |
-| `populations` | 23 | case_study_populations, citation_population_links, economics_entry_populations, evidence_cell_state, extraction_population_links, item_population_elaborations, item_population_links, population_axis_map, populations, probe_population_links, source_value_extractions | populations |
+| `populations` | 23 | case_study_populations, citation_population_links, economics_entry_populations, extraction_population_links, item_population_elaborations, item_population_links, population_axis_map, populations, probe_population_links, source_value_extractions, specifications | populations |
 | `probe_population_links` | 0 | — | populations, spec_value_probes |
 | `reasoning_doc_citations` | 0 | citation_population_links, source_value_extractions | evidence_sources, slugs |
 | `room_items` | 0 | — | items, rooms |
@@ -2600,6 +2598,8 @@ INSERT INTO "term_item_links" ("term_id", "item_code", "created_at", "created_by
 | `source_slug_links` | 0 | — | evidence_sources, slugs |
 | `source_value_extractions` | 0 | extraction_population_links | evidence_sources, items, populations, reasoning_doc_citations, slugs |
 | `spec_value_probes` | 0 | probe_population_links | evidence_sources, items, slugs |
+| `specification_source_links` | 0 | — | evidence_sources, specifications |
+| `specifications` | 0 | specification_source_links | convergence_assessment, gaps, items, populations |
 | `supersession_check` | 0 | — | evidence_sources, slugs |
 | `term_aliases` | 2382 | — | terms |
 | `term_item_links` | 147 | — | items, terms |
@@ -2607,15 +2607,15 @@ INSERT INTO "term_item_links" ("term_id", "item_code", "created_at", "created_by
 | `url_verification_runs` | 0 | — | — |
 | `weighting_profile` | 5 | — | — |
 
-### [0271] A5 — all tables   `2026-08-12 05:22:48Z`
+### [0271] A5 — all tables   `2026-08-12 08:35:28Z`
 **Action:** reverse-direction analysis: inbound edges, isolated tables, referenced-but-empty
 **Expected:** connected schema
-**Actual:** isolated (no inbound AND no outbound FK): ['access_duration', 'access_stakes', 'data_migrations', 'db_meta', 'decisions', 'external_root_registry', 'lang_jur_map', 'life_stage_modifiers', 'pipeline_runs', 'population_reclass', 'situations', 'source_locators', 'url_verification_runs', 'weighting_profile'] · referenced-but-EMPTY parent tables: ['case_studies', 'connections', 'convergence_assessment', 'economics_entries', 'evidence_cell_state', 'evidence_sources', 'gaps', 'reasoning_doc_citations', 'search_executions', 'source_value_extractions', 'spec_value_probes'] · empty tables total: 42/66
+**Actual:** isolated (no inbound AND no outbound FK): ['access_duration', 'access_stakes', 'data_migrations', 'db_meta', 'decisions', 'external_root_registry', 'lang_jur_map', 'life_stage_modifiers', 'pipeline_runs', 'population_reclass', 'situations', 'source_locators', 'url_verification_runs', 'weighting_profile'] · referenced-but-EMPTY parent tables: ['case_studies', 'connections', 'convergence_assessment', 'economics_entries', 'evidence_sources', 'gaps', 'reasoning_doc_citations', 'search_executions', 'source_value_extractions', 'spec_value_probes', 'specifications'] · empty tables total: 42/66
 **Verdict:** `ORPHAN`
 
 ### A6 — CHECK-constraint battery (127 clauses), FK=ON and FK=OFF
 
-### [0272] A6/ON — access_duration CHECK(code IN ('permanent','temporary','situational'))   `2026-08-12 05:22:48Z`
+### [0272] A6/ON — access_duration CHECK(code IN ('permanent','temporary','situational'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (code outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2626,7 +2626,7 @@ INSERT INTO "access_duration" ("code", "definition") VALUES (?, ?)  -- {"code": 
 **Exception:** `IntegrityError: CHECK constraint failed: code IN ('permanent','temporary','situational')`
 **Verdict:** `OK`
 
-### [0273] A6/ON — access_need_axis_map CHECK(relationship IN ('primary','partial','spans'))   `2026-08-12 05:22:48Z`
+### [0273] A6/ON — access_need_axis_map CHECK(relationship IN ('primary','partial','spans'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (relationship outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2637,7 +2637,7 @@ INSERT INTO "access_need_axis_map" ("need_code", "axis_code", "relationship") VA
 **Exception:** `IntegrityError: CHECK constraint failed: relationship IN ('primary','partial','spans')`
 **Verdict:** `OK`
 
-### [0274] A6/ON — access_need_icf CHECK(icf_type IN ('b','d','e','s'))   `2026-08-12 05:22:48Z`
+### [0274] A6/ON — access_need_icf CHECK(icf_type IN ('b','d','e','s'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (icf_type outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2648,7 +2648,7 @@ INSERT INTO "access_need_icf" ("need_code", "icf_code", "icf_type", "confidence"
 **Exception:** `IntegrityError: CHECK constraint failed: icf_type IN ('b','d','e','s')`
 **Verdict:** `OK`
 
-### [0275] A6/ON — access_need_icf CHECK(confidence IN ('confirmed','proposed'))   `2026-08-12 05:22:48Z`
+### [0275] A6/ON — access_need_icf CHECK(confidence IN ('confirmed','proposed'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (confidence outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2659,7 +2659,7 @@ INSERT INTO "access_need_icf" ("need_code", "icf_code", "icf_type", "confidence"
 **Exception:** `IntegrityError: CHECK constraint failed: confidence IN ('confirmed','proposed')`
 **Verdict:** `OK`
 
-### [0276] A6/ON — access_needs CHECK(family IN ('perceiving','communicating','operating','pacing','environment_safety'))   `2026-08-12 05:22:48Z`
+### [0276] A6/ON — access_needs CHECK(family IN ('perceiving','communicating','operating','pacing','environment_safety'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (family outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2671,7 +2671,7 @@ INSERT INTO "access_needs" ("need_code", "family", "design_obligation") VALUES (
                     ('perceiving','communicating','operating','pacing','environment_safety')`
 **Verdict:** `OK`
 
-### [0277] A6/ON — access_needs CHECK(typical_stakes IN ('safety-critical','exclusion','friction'))   `2026-08-12 05:22:48Z`
+### [0277] A6/ON — access_needs CHECK(typical_stakes IN ('safety-critical','exclusion','friction'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (typical_stakes outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2682,7 +2682,7 @@ INSERT INTO "access_needs" ("need_code", "family", "design_obligation", "typical
 **Exception:** `IntegrityError: CHECK constraint failed: typical_stakes IN ('safety-critical','exclusion','friction')`
 **Verdict:** `OK`
 
-### [0278] A6/ON — access_stakes CHECK(code IN ('safety-critical','exclusion','friction'))   `2026-08-12 05:22:48Z`
+### [0278] A6/ON — access_stakes CHECK(code IN ('safety-critical','exclusion','friction'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (code outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2693,7 +2693,7 @@ INSERT INTO "access_stakes" ("code", "definition") VALUES (?, ?)  -- {"code": "P
 **Exception:** `IntegrityError: CHECK constraint failed: code IN ('safety-critical','exclusion','friction')`
 **Verdict:** `OK`
 
-### [0279] A6/ON — axes CHECK(coverage_status IN ('ESTABLISHED','PARTIAL','STUB'))   `2026-08-12 05:22:48Z`
+### [0279] A6/ON — axes CHECK(coverage_status IN ('ESTABLISHED','PARTIAL','STUB'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (coverage_status outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2704,7 +2704,7 @@ INSERT INTO "axes" ("axis_code", "name", "mechanism", "coverage_status", "falsif
 **Exception:** `IntegrityError: CHECK constraint failed: coverage_status IN ('ESTABLISHED','PARTIAL','STUB')`
 **Verdict:** `OK`
 
-### [0280] A6/ON — bpc_metadata CHECK(pico_complete IN (0,1))   `2026-08-12 05:22:48Z`
+### [0280] A6/ON — bpc_metadata CHECK(pico_complete IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (pico_complete outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2715,7 +2715,7 @@ INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_sess
 **Exception:** `IntegrityError: CHECK constraint failed: pico_complete IN (0,1)`
 **Verdict:** `OK`
 
-### [0281] A6/ON — bpc_metadata CHECK(search_complete IN (0,1))   `2026-08-12 05:22:48Z`
+### [0281] A6/ON — bpc_metadata CHECK(search_complete IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (search_complete outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2726,7 +2726,7 @@ INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_sess
 **Exception:** `IntegrityError: CHECK constraint failed: search_complete IN (0,1)`
 **Verdict:** `OK`
 
-### [0282] A6/ON — bpc_metadata CHECK(bpc_complete IN (0,1))   `2026-08-12 05:22:48Z`
+### [0282] A6/ON — bpc_metadata CHECK(bpc_complete IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (bpc_complete outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2737,7 +2737,7 @@ INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_sess
 **Exception:** `IntegrityError: CHECK constraint failed: bpc_complete IN (0,1)`
 **Verdict:** `OK`
 
-### [0283] A6/ON — bpc_metadata CHECK(citation_mining_complete IN (0,1))   `2026-08-12 05:22:48Z`
+### [0283] A6/ON — bpc_metadata CHECK(citation_mining_complete IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (citation_mining_complete outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2748,7 +2748,7 @@ INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_sess
 **Exception:** `IntegrityError: CHECK constraint failed: citation_mining_complete IN (0,1)`
 **Verdict:** `OK`
 
-### [0284] A6/ON — bpc_metadata CHECK(supersession_check_complete IN (0, 1))   `2026-08-12 05:22:48Z`
+### [0284] A6/ON — bpc_metadata CHECK(supersession_check_complete IN (0, 1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (supersession_check_complete outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2759,7 +2759,7 @@ INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_sess
 **Exception:** `IntegrityError: CHECK constraint failed: supersession_check_complete IN (0, 1)`
 **Verdict:** `OK`
 
-### [0285] A6/ON — bpc_metadata CHECK(closure_definition_version IS NULL OR closure_definition_version IN ('v1', 'v2'))   `2026-08-12 05:22:48Z`
+### [0285] A6/ON — bpc_metadata CHECK(closure_definition_version IS NULL OR closure_definition_version IN ('v1', 'v2'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (closure_definition_version outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2770,7 +2770,7 @@ INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_sess
 **Exception:** `IntegrityError: CHECK constraint failed: closure_definition_version IS NULL OR closure_definition_version IN ('v1', 'v2')`
 **Verdict:** `OK`
 
-### [0286] A6/ON — case_studies CHECK(evidence_quality_tier IS NULL OR evidence_quality_tier BETWEEN 1 AND 3)   `2026-08-12 05:22:48Z`
+### [0286] A6/ON — case_studies CHECK(evidence_quality_tier IS NULL OR evidence_quality_tier BETWEEN 1 AND 3)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (evidence_quality_tier above range; FK=ON)
 **SQL:**
 ```sql
@@ -2782,7 +2782,7 @@ INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "
                                         OR evidence_quality_tier BETWEEN 1 AND 3`
 **Verdict:** `OK`
 
-### [0287] A6/ON — case_studies CHECK(cost_data_quality IS NULL OR cost_data_quality IN ('VERIFIED','PROVISIONAL','GREY'))   `2026-08-12 05:22:48Z`
+### [0287] A6/ON — case_studies CHECK(cost_data_quality IS NULL OR cost_data_quality IN ('VERIFIED','PROVISIONAL','GREY'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (cost_data_quality outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2794,7 +2794,7 @@ INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "
                      ('VERIFIED','PROVISIONAL','GREY')`
 **Verdict:** `OK`
 
-### [0288] A6/ON — case_studies CHECK(harm_finding IN (0,1))   `2026-08-12 05:22:48Z`
+### [0288] A6/ON — case_studies CHECK(harm_finding IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (harm_finding outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2805,7 +2805,7 @@ INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "
 **Exception:** `IntegrityError: CHECK constraint failed: harm_finding IN (0,1)`
 **Verdict:** `OK`
 
-### [0289] A6/ON — case_study_outcomes CHECK(tier IS NULL OR tier BETWEEN 1 AND 3)   `2026-08-12 05:22:48Z`
+### [0289] A6/ON — case_study_outcomes CHECK(tier IS NULL OR tier BETWEEN 1 AND 3)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (tier above range; FK=ON)
 **SQL:**
 ```sql
@@ -2816,18 +2816,7 @@ INSERT INTO "case_study_outcomes" ("case_study_id", "metric", "tier") VALUES (?,
 **Exception:** `IntegrityError: CHECK constraint failed: tier IS NULL OR tier BETWEEN 1 AND 3`
 **Verdict:** `OK`
 
-### [0290] A6/ON — cell_source_links CHECK(role IN ('governing'))   `2026-08-12 05:22:48Z`
-**Action:** insert row violating the CHECK (role outside enum; FK=ON)
-**SQL:**
-```sql
-INSERT INTO "cell_source_links" ("ref_id", "cell_id", "role") VALUES (?, ?, ?)  -- {"ref_id": "PROBE-PK-167", "cell_id": 1, "role": "PROBE-INVALID-ENUM"}
-```
-**Expected:** CHECK constraint failed
-**Actual:** rejected by CHECK
-**Exception:** `IntegrityError: CHECK constraint failed: role IN ('governing')`
-**Verdict:** `OK`
-
-### [0291] A6/ON — citation_mining CHECK(backward IN (0,1))   `2026-08-12 05:22:48Z`
+### [0290] A6/ON — citation_mining CHECK(backward IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (backward outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2838,7 +2827,7 @@ INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by
 **Exception:** `IntegrityError: CHECK constraint failed: backward IN (0,1)`
 **Verdict:** `OK`
 
-### [0292] A6/ON — citation_mining CHECK(forward IN (0,1))   `2026-08-12 05:22:48Z`
+### [0291] A6/ON — citation_mining CHECK(forward IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (forward outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2849,7 +2838,7 @@ INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by
 **Exception:** `IntegrityError: CHECK constraint failed: forward IN (0,1)`
 **Verdict:** `OK`
 
-### [0293] A6/ON — conflicts CHECK(status IN ( 'RESOLVED-EVIDENCE', 'RESOLVED-CONSENSUS', 'RESOLUTION-PROPOSED', 'UNRESOLVED', 'MODE-S-ONLY' ))   `2026-08-12 05:22:48Z`
+### [0292] A6/ON — conflicts CHECK(status IN ( 'RESOLVED-EVIDENCE', 'RESOLVED-CONSENSUS', 'RESOLUTION-PROPOSED', 'UNRESOLVED', 'MODE-S-ONLY' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (status outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2866,7 +2855,7 @@ INSERT INTO "conflicts" ("conflict_id", "domain", "pop_a", "pop_b", "status", "c
                         )`
 **Verdict:** `OK`
 
-### [0294] A6/ON — connections CHECK(status IN ( 'PENDING','CONSUMED','CONSUMED-DEFERRED','CLOSED' ))   `2026-08-12 05:22:48Z`
+### [0293] A6/ON — connections CHECK(status IN ( 'PENDING','CONSUMED','CONSUMED-DEFERRED','CLOSED' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (status outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2879,7 +2868,7 @@ INSERT INTO "connections" ("con_id", "status", "confidence", "filed_in", "create
                         )`
 **Verdict:** `OK`
 
-### [0295] A6/ON — connections CHECK(confidence IN ('HIGH','MODERATE','SPECULATIVE'))   `2026-08-12 05:22:48Z`
+### [0294] A6/ON — connections CHECK(confidence IN ('HIGH','MODERATE','SPECULATIVE'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (confidence outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2890,7 +2879,7 @@ INSERT INTO "connections" ("con_id", "status", "confidence", "filed_in", "create
 **Exception:** `IntegrityError: CHECK constraint failed: confidence IN ('HIGH','MODERATE','SPECULATIVE')`
 **Verdict:** `OK`
 
-### [0296] A6/ON — connections CHECK(connection_type IN ( 'CROSS-POPULATION','CROSS-ITEM', 'COMPOUND-INTERACTION','METHODOLOGY' ))   `2026-08-12 05:22:48Z`
+### [0295] A6/ON — connections CHECK(connection_type IN ( 'CROSS-POPULATION','CROSS-ITEM', 'COMPOUND-INTERACTION','METHODOLOGY' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (connection_type outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2904,7 +2893,7 @@ INSERT INTO "connections" ("con_id", "status", "confidence", "filed_in", "create
                         )`
 **Verdict:** `OK`
 
-### [0297] A6/ON — connections CHECK(opus_reviewed IN (0,1))   `2026-08-12 05:22:48Z`
+### [0296] A6/ON — connections CHECK(opus_reviewed IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (opus_reviewed outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2915,7 +2904,7 @@ INSERT INTO "connections" ("con_id", "status", "confidence", "filed_in", "create
 **Exception:** `IntegrityError: CHECK constraint failed: opus_reviewed IN (0,1)`
 **Verdict:** `OK`
 
-### [0298] A6/ON — convergence_assessment CHECK(status IN ('convergent', 'divergent', 'single_axis', 'pending_assessment'))   `2026-08-12 05:22:48Z`
+### [0297] A6/ON — convergence_assessment CHECK(status IN ('convergent', 'divergent', 'single_axis', 'pending_assessment'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (status outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2927,7 +2916,7 @@ INSERT INTO "convergence_assessment" ("status") VALUES (?)  -- {"status": "PROBE
                                               'single_axis', 'pending_assessment')`
 **Verdict:** `OK`
 
-### [0299] A6/ON — decisions CHECK(category IN ( 'D-DOCT','D-METH','D-SCHEMA','D-OP','D-PRES' ))   `2026-08-12 05:22:48Z`
+### [0298] A6/ON — decisions CHECK(category IN ( 'D-DOCT','D-METH','D-SCHEMA','D-OP','D-PRES' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (category outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2940,7 +2929,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
                         )`
 **Verdict:** `OK`
 
-### [0300] A6/ON — decisions CHECK(delegation IN ('DG-NON','DG-REVIEW','DG-AUTO'))   `2026-08-12 05:22:48Z`
+### [0299] A6/ON — decisions CHECK(delegation IN ('DG-NON','DG-REVIEW','DG-AUTO'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (delegation outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2951,7 +2940,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: CHECK constraint failed: delegation IN ('DG-NON','DG-REVIEW','DG-AUTO')`
 **Verdict:** `OK`
 
-### [0301] A6/ON — decisions CHECK(status IN ( 'ACTIVE','SUPERSEDED','WITHDRAWN','PROPOSED','PROVISIONAL' ))   `2026-08-12 05:22:48Z`
+### [0300] A6/ON — decisions CHECK(status IN ( 'ACTIVE','SUPERSEDED','WITHDRAWN','PROPOSED','PROVISIONAL' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (status outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2964,7 +2953,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
                         )`
 **Verdict:** `OK`
 
-### [0302] A6/ON — economics_entries CHECK(pillar IN ('health','inaction','construction','market'))   `2026-08-12 05:22:48Z`
+### [0301] A6/ON — economics_entries CHECK(pillar IN ('health','inaction','construction','market'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (pillar outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2975,7 +2964,7 @@ INSERT INTO "economics_entries" ("entry_id", "pillar", "entry_type", "source", "
 **Exception:** `IntegrityError: CHECK constraint failed: pillar IN ('health','inaction','construction','market')`
 **Verdict:** `OK`
 
-### [0303] A6/ON — economics_entries CHECK(entry_type IN ('cost_premium','retrofit_multiplier','grant_programme','health_outcome', 'market_value','housin)   `2026-08-12 05:22:48Z`
+### [0302] A6/ON — economics_entries CHECK(entry_type IN ('cost_premium','retrofit_multiplier','grant_programme','health_outcome', 'market_value','housin)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (entry_type outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -2988,7 +2977,7 @@ INSERT INTO "economics_entries" ("entry_id", "pillar", "entry_type", "source", "
                      'market_value','housing_deficit','research_gap')`
 **Verdict:** `OK`
 
-### [0304] A6/ON — economics_entries CHECK(evidence_tier IS NULL OR evidence_tier BETWEEN 1 AND 6)   `2026-08-12 05:22:48Z`
+### [0303] A6/ON — economics_entries CHECK(evidence_tier IS NULL OR evidence_tier BETWEEN 1 AND 6)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (evidence_tier above range; FK=ON)
 **SQL:**
 ```sql
@@ -2999,7 +2988,7 @@ INSERT INTO "economics_entries" ("entry_id", "pillar", "entry_type", "source", "
 **Exception:** `IntegrityError: CHECK constraint failed: evidence_tier IS NULL OR evidence_tier BETWEEN 1 AND 6`
 **Verdict:** `OK`
 
-### [0305] A6/ON — economics_entries CHECK(confidence IS NULL OR confidence IN ('HIGH','MODERATE','LOW'))   `2026-08-12 05:22:48Z`
+### [0304] A6/ON — economics_entries CHECK(confidence IS NULL OR confidence IN ('HIGH','MODERATE','LOW'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (confidence outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3010,7 +2999,7 @@ INSERT INTO "economics_entries" ("entry_id", "pillar", "entry_type", "source", "
 **Exception:** `IntegrityError: CHECK constraint failed: confidence IS NULL OR confidence IN ('HIGH','MODERATE','LOW')`
 **Verdict:** `OK`
 
-### [0306] A6/ON — economics_entries CHECK(quant_status IS NULL OR quant_status IN ('VERIFIED-QUANT','UNVERIFIED-QUANT'))   `2026-08-12 05:22:48Z`
+### [0305] A6/ON — economics_entries CHECK(quant_status IS NULL OR quant_status IN ('VERIFIED-QUANT','UNVERIFIED-QUANT'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (quant_status outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3022,85 +3011,7 @@ INSERT INTO "economics_entries" ("entry_id", "pillar", "entry_type", "source", "
                     ('VERIFIED-QUANT','UNVERIFIED-QUANT')`
 **Verdict:** `OK`
 
-### [0307] A6/ON — evidence_cell_state CHECK(state IN ('stated', 'provisional', 'pending', 'not_applicable'))   `2026-08-12 05:22:48Z`
-**Action:** insert row violating the CHECK (state outside enum; FK=ON)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state") VALUES (?, ?, ?)  -- {"item_code": "A-01", "population_code": "ADHD", "state": "PROBE-INVALID-ENUM"}
-```
-**Expected:** CHECK constraint failed
-**Actual:** rejected by CHECK
-**Exception:** `IntegrityError: CHECK constraint failed: state IN ('stated', 'provisional',
-                                                    'pending', 'not_applicable')`
-**Verdict:** `OK`
-
-### [0308] A6/ON — evidence_cell_state CHECK(design_scale IN ('universal', 'population', 'person'))   `2026-08-12 05:22:48Z`
-**Action:** insert row violating the CHECK (design_scale outside enum; FK=ON)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state", "design_scale") VALUES (?, ?, ?, ?)  -- {"item_code": "A-01", "population_code": "ADHD", "state": "stated", "design_scale": "PROBE-INVALID-ENUM"}
-```
-**Expected:** CHECK constraint failed
-**Actual:** rejected by CHECK
-**Exception:** `IntegrityError: CHECK constraint failed: design_scale IN ('universal', 'population', 'person')`
-**Verdict:** `OK`
-
-### [0309] A6/ON — evidence_cell_state CHECK(governing_refs IS NULL OR json_valid(governing_refs))   `2026-08-12 05:22:48Z`
-**Action:** insert row violating the CHECK (invalid JSON in governing_refs; FK=ON)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state", "governing_refs") VALUES (?, ?, ?, ?)  -- {"item_code": "A-01", "population_code": "ADHD", "state": "stated", "governing_refs": "{not-json"}
-```
-**Expected:** CHECK constraint failed
-**Actual:** rejected by CHECK
-**Exception:** `IntegrityError: CHECK constraint failed: governing_refs IS NULL OR json_valid(governing_refs)`
-**Verdict:** `OK`
-
-### [0310] A6/ON — evidence_cell_state CHECK(code_floor_only IN (0, 1))   `2026-08-12 05:22:48Z`
-**Action:** insert row violating the CHECK (code_floor_only outside enum; FK=ON)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state", "code_floor_only") VALUES (?, ?, ?, ?)  -- {"item_code": "A-01", "population_code": "ADHD", "state": "stated", "code_floor_only": 987654321}
-```
-**Expected:** CHECK constraint failed
-**Actual:** rejected by CHECK
-**Exception:** `IntegrityError: CHECK constraint failed: code_floor_only IN (0, 1)`
-**Verdict:** `OK`
-
-### [0311] A6/ON — evidence_cell_state CHECK(has_unverified_sources IN (0, 1))   `2026-08-12 05:22:48Z`
-**Action:** insert row violating the CHECK (has_unverified_sources outside enum; FK=ON)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state", "has_unverified_sources") VALUES (?, ?, ?, ?)  -- {"item_code": "A-01", "population_code": "ADHD", "state": "stated", "has_unverified_sources": 987654321}
-```
-**Expected:** CHECK constraint failed
-**Actual:** rejected by CHECK
-**Exception:** `IntegrityError: CHECK constraint failed: has_unverified_sources IN (0, 1)`
-**Verdict:** `OK`
-
-### [0312] A6/ON — evidence_cell_state CHECK(all_sources_disqualified IN (0, 1))   `2026-08-12 05:22:48Z`
-**Action:** insert row violating the CHECK (all_sources_disqualified outside enum; FK=ON)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state", "all_sources_disqualified") VALUES (?, ?, ?, ?)  -- {"item_code": "A-01", "population_code": "ADHD", "state": "stated", "all_sources_disqualified": 987654321}
-```
-**Expected:** CHECK constraint failed
-**Actual:** rejected by CHECK
-**Exception:** `IntegrityError: CHECK constraint failed: all_sources_disqualified IN (0, 1)`
-**Verdict:** `OK`
-
-### [0313] A6/ON — evidence_cell_state CHECK(regulatory_stratum_only IN (0, 1))   `2026-08-12 05:22:48Z`
-**Action:** insert row violating the CHECK (regulatory_stratum_only outside enum; FK=ON)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state", "regulatory_stratum_only") VALUES (?, ?, ?, ?)  -- {"item_code": "A-01", "population_code": "ADHD", "state": "stated", "regulatory_stratum_only": 987654321}
-```
-**Expected:** CHECK constraint failed
-**Actual:** rejected by CHECK
-**Exception:** `IntegrityError: CHECK constraint failed: regulatory_stratum_only IN (0, 1)`
-**Verdict:** `OK`
-
-### [0314] A6/ON — evidence_population_match CHECK(match_grade IN ('EXACT','PARTIAL','PROXY','MISMATCH'))   `2026-08-12 05:22:48Z`
+### [0306] A6/ON — evidence_population_match CHECK(match_grade IN ('EXACT','PARTIAL','PROXY','MISMATCH'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (match_grade outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3111,7 +3022,7 @@ INSERT INTO "evidence_population_match" ("match_id", "source_ref", "target_popul
 **Exception:** `IntegrityError: CHECK constraint failed: match_grade IN ('EXACT','PARTIAL','PROXY','MISMATCH')`
 **Verdict:** `OK`
 
-### [0315] A6/ON — evidence_sources CHECK(scope IS NULL OR scope IN ( 'high_control', 'lower_control', 'national', 'international', 'intrinsic' ))   `2026-08-12 05:22:48Z`
+### [0307] A6/ON — evidence_sources CHECK(scope IS NULL OR scope IN ( 'high_control', 'lower_control', 'national', 'international', 'intrinsic' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (scope outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3124,7 +3035,7 @@ INSERT INTO "evidence_sources" ("ref_id", "scope") VALUES (?, ?)  -- {"ref_id": 
   )`
 **Verdict:** `OK`
 
-### [0316] A6/ON — evidence_sources CHECK(data_capture_status IN ('pending','captured','none-extractable','deferred'))   `2026-08-12 05:22:48Z`
+### [0308] A6/ON — evidence_sources CHECK(data_capture_status IN ('pending','captured','none-extractable','deferred'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (data_capture_status outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3135,7 +3046,7 @@ INSERT INTO "evidence_sources" ("ref_id", "data_capture_status") VALUES (?, ?)  
 **Exception:** `IntegrityError: CHECK constraint failed: data_capture_status IN ('pending','captured','none-extractable','deferred')`
 **Verdict:** `OK`
 
-### [0317] A6/ON — evidence_sources CHECK(citation_mining_status IN ('pending','mined','deferred','not-applicable'))   `2026-08-12 05:22:48Z`
+### [0309] A6/ON — evidence_sources CHECK(citation_mining_status IN ('pending','mined','deferred','not-applicable'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (citation_mining_status outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3146,7 +3057,7 @@ INSERT INTO "evidence_sources" ("ref_id", "citation_mining_status") VALUES (?, ?
 **Exception:** `IntegrityError: CHECK constraint failed: citation_mining_status IN ('pending','mined','deferred','not-applicable')`
 **Verdict:** `OK`
 
-### [0318] A6/ON — evidence_sources CHECK(processing_blocked_reason IS NULL OR processing_blocked_reason IN ( 'no-full-text', 'paywalled', 'no-doi', 'no)   `2026-08-12 05:22:48Z`
+### [0310] A6/ON — evidence_sources CHECK(processing_blocked_reason IS NULL OR processing_blocked_reason IN ( 'no-full-text', 'paywalled', 'no-doi', 'no)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (processing_blocked_reason outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3167,7 +3078,7 @@ INSERT INTO "evidence_sources" ("ref_id", "processing_blocked_reason") VALUES (?
   )`
 **Verdict:** `OK`
 
-### [0319] A6/ON — evidence_sources CHECK(verification_disposition IS NULL OR verification_disposition IN ('OPEN','CLOSED'))   `2026-08-12 05:22:48Z`
+### [0311] A6/ON — evidence_sources CHECK(verification_disposition IS NULL OR verification_disposition IN ('OPEN','CLOSED'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (verification_disposition outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3179,7 +3090,7 @@ INSERT INTO "evidence_sources" ("ref_id", "verification_disposition") VALUES (?,
          OR verification_disposition IN ('OPEN','CLOSED')`
 **Verdict:** `OK`
 
-### [0320] A6/ON — evidence_sources CHECK(verification_method IS NULL OR verification_method IN ( 'direct-render', 'co1-attestation', 'corroborated-not-)   `2026-08-12 05:22:48Z`
+### [0312] A6/ON — evidence_sources CHECK(verification_method IS NULL OR verification_method IN ( 'direct-render', 'co1-attestation', 'corroborated-not-)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (verification_method outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3196,7 +3107,7 @@ INSERT INTO "evidence_sources" ("ref_id", "verification_method") VALUES (?, ?)  
   )`
 **Verdict:** `OK`
 
-### [0321] A6/ON — evidence_sources CHECK(verification_closure_reason IS NULL OR verification_closure_reason IN ( 'paywalled', 'print-only', 'access-den)   `2026-08-12 05:22:48Z`
+### [0313] A6/ON — evidence_sources CHECK(verification_closure_reason IS NULL OR verification_closure_reason IN ( 'paywalled', 'print-only', 'access-den)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (verification_closure_reason outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3214,7 +3125,7 @@ INSERT INTO "evidence_sources" ("ref_id", "verification_closure_reason") VALUES 
   )`
 **Verdict:** `OK`
 
-### [0322] A6/ON — external_root_registry CHECK(root_type IN ( 'measurement_primary', 'participatory_finding', 'committee_assertion', 'derived_calculation', ')   `2026-08-12 05:22:48Z`
+### [0314] A6/ON — external_root_registry CHECK(root_type IN ( 'measurement_primary', 'participatory_finding', 'committee_assertion', 'derived_calculation', ')   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (root_type outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3228,7 +3139,7 @@ INSERT INTO "external_root_registry" ("root_id", "description", "root_type") VAL
                               'untraced')`
 **Verdict:** `OK`
 
-### [0323] A6/ON — gap_mining CHECK(outcome IN ( 'closure_evidence_found', 'partial_evidence_found', 'null_result', 'gap_recategorized', 'deferred)   `2026-08-12 05:22:48Z`
+### [0315] A6/ON — gap_mining CHECK(outcome IN ( 'closure_evidence_found', 'partial_evidence_found', 'null_result', 'gap_recategorized', 'deferred)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (outcome outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3245,7 +3156,7 @@ INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "searc
     )`
 **Verdict:** `OK`
 
-### [0324] A6/ON — gap_mining CHECK(check_method IN ( 'pubmed_cluster', 'scholar_gateway_lived_experience', 'cochrane_direct', 'standards_body_dir)   `2026-08-12 05:22:48Z`
+### [0316] A6/ON — gap_mining CHECK(check_method IN ( 'pubmed_cluster', 'scholar_gateway_lived_experience', 'cochrane_direct', 'standards_body_dir)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (check_method outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3263,7 +3174,7 @@ INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "searc
     )`
 **Verdict:** `OK`
 
-### [0325] A6/ON — gap_mining CHECK( outcome != 'closure_evidence_found' OR (discoveries_logged IS NOT NULL AND discoveries_logged != '[]') )   `2026-08-12 05:22:48Z`
+### [0317] A6/ON — gap_mining CHECK( outcome != 'closure_evidence_found' OR (discoveries_logged IS NOT NULL AND discoveries_logged != '[]') )   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (outcome='closure_evidence_found' with discoveries_logged NULL; FK=ON)
 **SQL:**
 ```sql
@@ -3275,7 +3186,7 @@ INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "searc
         OR (discoveries_logged IS NOT NULL AND discoveries_logged != '[]')`
 **Verdict:** `OK`
 
-### [0326] A6/ON — gap_mining CHECK( outcome != 'gap_recategorized' OR (notes IS NOT NULL AND length(notes) >= 20) )   `2026-08-12 05:22:48Z`
+### [0318] A6/ON — gap_mining CHECK( outcome != 'gap_recategorized' OR (notes IS NOT NULL AND length(notes) >= 20) )   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (outcome='gap_recategorized' with notes NULL; FK=ON)
 **SQL:**
 ```sql
@@ -3287,7 +3198,7 @@ INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "searc
         OR (notes IS NOT NULL AND length(notes) >= 20)`
 **Verdict:** `OK`
 
-### [0327] A6/ON — gap_mining CHECK( outcome != 'deferred' OR (notes IS NOT NULL AND length(notes) >= 10) )   `2026-08-12 05:22:48Z`
+### [0319] A6/ON — gap_mining CHECK( outcome != 'deferred' OR (notes IS NOT NULL AND length(notes) >= 10) )   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (outcome='deferred' with notes NULL; FK=ON)
 **SQL:**
 ```sql
@@ -3299,7 +3210,7 @@ INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "searc
         OR (notes IS NOT NULL AND length(notes) >= 10)`
 **Verdict:** `OK`
 
-### [0328] A6/ON — gaps CHECK(category IN ( 'RP','SW','CR','ST','MX','CD','EC','EG', 'CI','DEC','CONF','AUDT' ))   `2026-08-12 05:22:48Z`
+### [0320] A6/ON — gaps CHECK(category IN ( 'RP','SW','CR','ST','MX','CD','EC','EG', 'CI','DEC','CONF','AUDT' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (category outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3313,7 +3224,7 @@ INSERT INTO "gaps" ("gap_id", "category", "priority", "status", "description", "
                         )`
 **Verdict:** `OK`
 
-### [0329] A6/ON — gaps CHECK(priority IN ('P1','P2','P3'))   `2026-08-12 05:22:48Z`
+### [0321] A6/ON — gaps CHECK(priority IN ('P1','P2','P3'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (priority outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3324,7 +3235,7 @@ INSERT INTO "gaps" ("gap_id", "category", "priority", "status", "description", "
 **Exception:** `IntegrityError: CHECK constraint failed: priority IN ('P1','P2','P3')`
 **Verdict:** `OK`
 
-### [0330] A6/ON — gaps CHECK(status LIKE 'OPEN%' OR status LIKE 'CLOSED%')   `2026-08-12 05:22:48Z`
+### [0322] A6/ON — gaps CHECK(status LIKE 'OPEN%' OR status LIKE 'CLOSED%')   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (status fails LIKE; FK=ON)
 **SQL:**
 ```sql
@@ -3335,7 +3246,7 @@ INSERT INTO "gaps" ("gap_id", "category", "priority", "status", "description", "
 **Exception:** `IntegrityError: CHECK constraint failed: status LIKE 'OPEN%' OR status LIKE 'CLOSED%'`
 **Verdict:** `OK`
 
-### [0331] A6/ON — gaps CHECK(mining_addressability IS NULL OR mining_addressability IN ( 'ADDRESSABLE', 'NOT-ADDRESSABLE', 'TRIAGE-NEEDED' )   `2026-08-12 05:22:48Z`
+### [0323] A6/ON — gaps CHECK(mining_addressability IS NULL OR mining_addressability IN ( 'ADDRESSABLE', 'NOT-ADDRESSABLE', 'TRIAGE-NEEDED' )   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (mining_addressability outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3350,7 +3261,7 @@ INSERT INTO "gaps" ("gap_id", "category", "priority", "status", "description", "
     )`
 **Verdict:** `OK`
 
-### [0332] A6/ON — item_audit_runs CHECK(status IN ('IN-PROGRESS','COMPLETE','HANDED-OFF'))   `2026-08-12 05:22:48Z`
+### [0324] A6/ON — item_audit_runs CHECK(status IN ('IN-PROGRESS','COMPLETE','HANDED-OFF'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (status outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3361,7 +3272,7 @@ INSERT INTO "item_audit_runs" ("run_id", "item_code", "session", "created_at", "
 **Exception:** `IntegrityError: CHECK constraint failed: status IN ('IN-PROGRESS','COMPLETE','HANDED-OFF')`
 **Verdict:** `OK`
 
-### [0333] A6/ON — item_axis_links CHECK(strength_band IN ('full','partial','weak'))   `2026-08-12 05:22:48Z`
+### [0325] A6/ON — item_axis_links CHECK(strength_band IN ('full','partial','weak'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (strength_band outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3372,7 +3283,7 @@ INSERT INTO "item_axis_links" ("item_code", "axis_code", "strength_band") VALUES
 **Exception:** `IntegrityError: CHECK constraint failed: strength_band IN ('full','partial','weak')`
 **Verdict:** `OK`
 
-### [0334] A6/ON — item_axis_links CHECK(use_mode IN ('independent','assisted','collective') OR use_mode IS NULL)   `2026-08-12 05:22:48Z`
+### [0326] A6/ON — item_axis_links CHECK(use_mode IN ('independent','assisted','collective') OR use_mode IS NULL)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (use_mode outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3383,7 +3294,7 @@ INSERT INTO "item_axis_links" ("item_code", "axis_code", "use_mode") VALUES (?, 
 **Exception:** `IntegrityError: CHECK constraint failed: use_mode IN ('independent','assisted','collective') OR use_mode IS NULL`
 **Verdict:** `OK`
 
-### [0335] A6/ON — item_bpc_links CHECK(link_type IN ( 'primary','parameter','context','secondary' ))   `2026-08-12 05:22:48Z`
+### [0327] A6/ON — item_bpc_links CHECK(link_type IN ( 'primary','parameter','context','secondary' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (link_type outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3396,7 +3307,7 @@ INSERT INTO "item_bpc_links" ("item_code", "slug", "link_type", "created_at", "c
     )`
 **Verdict:** `OK`
 
-### [0336] A6/ON — item_population_links CHECK(applicability IN ( 'applies', 'applies_strictly', 'applies_loosely', 'context_dependent', 'does_not_apply' ))   `2026-08-12 05:22:48Z`
+### [0328] A6/ON — item_population_links CHECK(applicability IN ( 'applies', 'applies_strictly', 'applies_loosely', 'context_dependent', 'does_not_apply' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (applicability outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3410,7 +3321,7 @@ INSERT INTO "item_population_links" ("item_code", "population_code", "subtype", 
                       )`
 **Verdict:** `OK`
 
-### [0337] A6/ON — items CHECK(category IN ( 'A','B','C','D','E','F','G','H','I','J','K' ))   `2026-08-12 05:22:48Z`
+### [0329] A6/ON — items CHECK(category IN ( 'A','B','C','D','E','F','G','H','I','J','K' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (category outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3423,7 +3334,7 @@ INSERT INTO "items" ("item_code", "category", "name", "created_at", "created_by_
                         )`
 **Verdict:** `OK`
 
-### [0338] A6/ON — items CHECK(status IN ('draft','active','merged','retired'))   `2026-08-12 05:22:48Z`
+### [0330] A6/ON — items CHECK(status IN ('draft','active','merged','retired'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (status outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3434,7 +3345,7 @@ INSERT INTO "items" ("item_code", "category", "name", "created_at", "created_by_
 **Exception:** `IntegrityError: CHECK constraint failed: status IN ('draft','active','merged','retired')`
 **Verdict:** `OK`
 
-### [0339] A6/ON — jurisdictional_values CHECK(is_code_minimum IS NULL OR is_code_minimum IN (0, 1))   `2026-08-12 05:22:48Z`
+### [0331] A6/ON — jurisdictional_values CHECK(is_code_minimum IS NULL OR is_code_minimum IN (0, 1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (is_code_minimum outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3445,7 +3356,7 @@ INSERT INTO "jurisdictional_values" ("item_code", "jurisdiction", "is_code_minim
 **Exception:** `IntegrityError: CHECK constraint failed: is_code_minimum IS NULL OR is_code_minimum IN (0, 1)`
 **Verdict:** `OK`
 
-### [0340] A6/ON — lang_jur_map CHECK(role IN ('PRIMARY', 'SECONDARY'))   `2026-08-12 05:22:48Z`
+### [0332] A6/ON — lang_jur_map CHECK(role IN ('PRIMARY', 'SECONDARY'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (role outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3456,7 +3367,7 @@ INSERT INTO "lang_jur_map" ("language", "jurisdiction", "role") VALUES (?, ?, ?)
 **Exception:** `IntegrityError: CHECK constraint failed: role IN ('PRIMARY', 'SECONDARY')`
 **Verdict:** `OK`
 
-### [0341] A6/ON — life_stage_modifiers CHECK(code IN ('SEN','CHD'))   `2026-08-12 05:22:48Z`
+### [0333] A6/ON — life_stage_modifiers CHECK(code IN ('SEN','CHD'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (code outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3467,7 +3378,7 @@ INSERT INTO "life_stage_modifiers" ("code", "label", "definition") VALUES (?, ?,
 **Exception:** `IntegrityError: CHECK constraint failed: code IN ('SEN','CHD')`
 **Verdict:** `OK`
 
-### [0342] A6/ON — population_axis_map CHECK(role IN ('ALIAS','PRIMARY','SECONDARY','SITUATIONAL'))   `2026-08-12 05:22:48Z`
+### [0334] A6/ON — population_axis_map CHECK(role IN ('ALIAS','PRIMARY','SECONDARY','SITUATIONAL'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (role outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3478,7 +3389,7 @@ INSERT INTO "population_axis_map" ("population_code", "axis_code", "role") VALUE
 **Exception:** `IntegrityError: CHECK constraint failed: role IN ('ALIAS','PRIMARY','SECONDARY','SITUATIONAL')`
 **Verdict:** `OK`
 
-### [0343] A6/ON — population_reclass CHECK(row_kind IN ('EXISTING-POP','NEW-PROFILE'))   `2026-08-12 05:22:48Z`
+### [0335] A6/ON — population_reclass CHECK(row_kind IN ('EXISTING-POP','NEW-PROFILE'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (row_kind outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3489,7 +3400,7 @@ INSERT INTO "population_reclass" ("population_code", "row_kind", "layer", "ratio
 **Exception:** `IntegrityError: CHECK constraint failed: row_kind IN ('EXISTING-POP','NEW-PROFILE')`
 **Verdict:** `OK`
 
-### [0344] A6/ON — population_reclass CHECK(layer IN ('AXIS-ALIAS','PROFILE','QUALIFIER','SPLIT'))   `2026-08-12 05:22:48Z`
+### [0336] A6/ON — population_reclass CHECK(layer IN ('AXIS-ALIAS','PROFILE','QUALIFIER','SPLIT'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (layer outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3500,7 +3411,7 @@ INSERT INTO "population_reclass" ("population_code", "row_kind", "layer", "ratio
 **Exception:** `IntegrityError: CHECK constraint failed: layer IN ('AXIS-ALIAS','PROFILE','QUALIFIER','SPLIT')`
 **Verdict:** `OK`
 
-### [0345] A6/ON — population_reclass CHECK(profile_kind IN ('diagnostic','identity-cultural','demographic','anthropometric','compound','umbrella'))   `2026-08-12 05:22:48Z`
+### [0337] A6/ON — population_reclass CHECK(profile_kind IN ('diagnostic','identity-cultural','demographic','anthropometric','compound','umbrella'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (profile_kind outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3512,7 +3423,7 @@ INSERT INTO "population_reclass" ("population_code", "row_kind", "layer", "ratio
                      ('diagnostic','identity-cultural','demographic','anthropometric','compound','umbrella')`
 **Verdict:** `OK`
 
-### [0346] A6/ON — population_reclass CHECK(mapping_confidence IN ('high','moderate','low','minimal','TO-ASSESS') OR mapping_confidence IS NULL)   `2026-08-12 05:22:48Z`
+### [0338] A6/ON — population_reclass CHECK(mapping_confidence IN ('high','moderate','low','minimal','TO-ASSESS') OR mapping_confidence IS NULL)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (mapping_confidence outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3524,7 +3435,7 @@ INSERT INTO "population_reclass" ("population_code", "row_kind", "layer", "ratio
                      ('high','moderate','low','minimal','TO-ASSESS') OR mapping_confidence IS NULL`
 **Verdict:** `OK`
 
-### [0347] A6/ON — population_reclass CHECK(fluctuating IN ('yes','no') OR fluctuating IS NULL)   `2026-08-12 05:22:48Z`
+### [0339] A6/ON — population_reclass CHECK(fluctuating IN ('yes','no') OR fluctuating IS NULL)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (fluctuating outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3535,7 +3446,7 @@ INSERT INTO "population_reclass" ("population_code", "row_kind", "layer", "ratio
 **Exception:** `IntegrityError: CHECK constraint failed: fluctuating IN ('yes','no') OR fluctuating IS NULL`
 **Verdict:** `OK`
 
-### [0348] A6/ON — populations CHECK(category IN ( 'mobility', 'sensory', 'cognitive', 'mental_health', 'pain_fatigue', 'neurological', 'developmen)   `2026-08-12 05:22:48Z`
+### [0340] A6/ON — populations CHECK(category IN ( 'mobility', 'sensory', 'cognitive', 'mental_health', 'pain_fatigue', 'neurological', 'developmen)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (category outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3550,7 +3461,7 @@ INSERT INTO "populations" ("population_code", "display_name", "category") VALUES
                       )`
 **Verdict:** `OK`
 
-### [0349] A6/ON — populations CHECK(is_compound IN (0,1))   `2026-08-12 05:22:48Z`
+### [0341] A6/ON — populations CHECK(is_compound IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (is_compound outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3561,7 +3472,7 @@ INSERT INTO "populations" ("population_code", "display_name", "is_compound") VAL
 **Exception:** `IntegrityError: CHECK constraint failed: is_compound IN (0,1)`
 **Verdict:** `OK`
 
-### [0350] A6/ON — populations CHECK(status IN ('active', 'deprecated'))   `2026-08-12 05:22:48Z`
+### [0342] A6/ON — populations CHECK(status IN ('active', 'deprecated'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (status outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3572,11 +3483,11 @@ INSERT INTO "populations" ("population_code", "display_name", "status") VALUES (
 **Exception:** `IntegrityError: CHECK constraint failed: status IN ('active', 'deprecated')`
 **Verdict:** `OK`
 
-### [0351] A6/ON — reasoning_doc_citations CHECK(claim_type IN ( 'numerical_spec','jurisdiction_value','qualitative','definitional' ))   `2026-08-12 05:22:48Z`
+### [0343] A6/ON — reasoning_doc_citations CHECK(claim_type IN ( 'numerical_spec','jurisdiction_value','qualitative','definitional' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (claim_type outside enum; FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-588", "reasoning_doc_slug": "PROBE-PK-158", "parameter": "PROBE-589", "claim_type": "PROBE-INVALID-ENUM", "source_ref_id": "PROBE-PK-167", "verified_at": "PROBE-590", "verified_by_session": "PROBE-591", "value_match": "EXACT", "claim_match": "SUPPORTED", "claim_text": "PROBE-592", "claimed_value": "PROBE-593"}
+INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-588", "reasoning_doc_slug": "PROBE-PK-158", "parameter": "PROBE-589", "claim_type": "PROBE-INVALID-ENUM", "source_ref_id": "PROBE-PK-167", "verified_at": "PROBE-590", "verified_by_session": "PROBE-591", "value_match": "EXACT", "claim_match": "SUPPORTED", "claimed_value": "PROBE-592", "claim_text": "PROBE-593"}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
@@ -3585,11 +3496,11 @@ INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "par
     )`
 **Verdict:** `OK`
 
-### [0352] A6/ON — reasoning_doc_citations CHECK(value_match IN ( 'EXACT','WITHIN-TOLERANCE','DIFFERENT','NOT-FOUND','PAYWALL','SUPERSEDED' ))   `2026-08-12 05:22:48Z`
+### [0344] A6/ON — reasoning_doc_citations CHECK(value_match IN ( 'EXACT','WITHIN-TOLERANCE','DIFFERENT','NOT-FOUND','PAYWALL','SUPERSEDED' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (value_match outside enum; FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-594", "reasoning_doc_slug": "PROBE-PK-158", "parameter": "PROBE-595", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-167", "verified_at": "PROBE-596", "verified_by_session": "PROBE-597", "value_match": "PROBE-INVALID-ENUM", "claim_match": "SUPPORTED", "claim_text": "PROBE-598", "claimed_value": "PROBE-599"}
+INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-594", "reasoning_doc_slug": "PROBE-PK-158", "parameter": "PROBE-595", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-167", "verified_at": "PROBE-596", "verified_by_session": "PROBE-597", "value_match": "PROBE-INVALID-ENUM", "claim_match": "SUPPORTED", "claimed_value": "PROBE-598", "claim_text": "PROBE-599"}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
@@ -3598,11 +3509,11 @@ INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "par
     )`
 **Verdict:** `OK`
 
-### [0353] A6/ON — reasoning_doc_citations CHECK(claim_match IN ( 'SUPPORTED','PARTIAL','NOT-FOUND','PAYWALL','CONTRADICTED' ))   `2026-08-12 05:22:48Z`
+### [0345] A6/ON — reasoning_doc_citations CHECK(claim_match IN ( 'SUPPORTED','PARTIAL','NOT-FOUND','PAYWALL','CONTRADICTED' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (claim_match outside enum; FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-600", "reasoning_doc_slug": "PROBE-PK-158", "parameter": "PROBE-601", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-167", "verified_at": "PROBE-602", "verified_by_session": "PROBE-603", "value_match": "EXACT", "claim_match": "PROBE-INVALID-ENUM", "claim_text": "PROBE-604", "claimed_value": "PROBE-605"}
+INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-600", "reasoning_doc_slug": "PROBE-PK-158", "parameter": "PROBE-601", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-167", "verified_at": "PROBE-602", "verified_by_session": "PROBE-603", "value_match": "EXACT", "claim_match": "PROBE-INVALID-ENUM", "claimed_value": "PROBE-604", "claim_text": "PROBE-605"}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
@@ -3611,22 +3522,22 @@ INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "par
     )`
 **Verdict:** `OK`
 
-### [0354] A6/ON — reasoning_doc_citations CHECK(paywall_purchase_candidate IN (0,1))   `2026-08-12 05:22:48Z`
+### [0346] A6/ON — reasoning_doc_citations CHECK(paywall_purchase_candidate IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (paywall_purchase_candidate outside enum; FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value", "paywall_purchase_candidate") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-606", "reasoning_doc_slug": "PROBE-PK-158", "parameter": "PROBE-607", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-167", "verified_at": "PROBE-608", "verified_by_session": "PROBE-609", "value_match": "EXACT", "claim_match": "SUPPORTED", "claim_text": "PROBE-610", "claimed_value": "PROBE-611", "paywall_purchase_candidate": 987654321}
+INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text", "paywall_purchase_candidate") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-606", "reasoning_doc_slug": "PROBE-PK-158", "parameter": "PROBE-607", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-167", "verified_at": "PROBE-608", "verified_by_session": "PROBE-609", "value_match": "EXACT", "claim_match": "SUPPORTED", "claimed_value": "PROBE-610", "claim_text": "PROBE-611", "paywall_purchase_candidate": 987654321}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
 **Exception:** `IntegrityError: CHECK constraint failed: paywall_purchase_candidate IN (0,1)`
 **Verdict:** `OK`
 
-### [0355] A6/ON — reasoning_doc_citations CHECK( (claim_type IN ('numerical_spec','jurisdiction_value') AND claimed_value IS NOT NULL AND value_match IS NOT N)   `2026-08-12 05:22:48Z`
+### [0347] A6/ON — reasoning_doc_citations CHECK( (claim_type IN ('numerical_spec','jurisdiction_value') AND claimed_value IS NOT NULL AND value_match IS NOT N)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (claim_type outside enum; FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-612", "reasoning_doc_slug": "PROBE-PK-158", "parameter": "PROBE-613", "claim_type": "PROBE-INVALID-ENUM", "source_ref_id": "PROBE-PK-167", "verified_at": "PROBE-614", "verified_by_session": "PROBE-615", "value_match": "EXACT", "claim_match": "SUPPORTED", "claim_text": "PROBE-616", "claimed_value": "PROBE-617"}
+INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-612", "reasoning_doc_slug": "PROBE-PK-158", "parameter": "PROBE-613", "claim_type": "PROBE-INVALID-ENUM", "source_ref_id": "PROBE-PK-167", "verified_at": "PROBE-614", "verified_by_session": "PROBE-615", "value_match": "EXACT", "claim_match": "SUPPORTED", "claimed_value": "PROBE-616", "claim_text": "PROBE-617"}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
@@ -3635,7 +3546,7 @@ INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "par
     )`
 **Verdict:** `OK`
 
-### [0356] A6/ON — room_items CHECK(applicability IN ('applies','conditional','not-applicable'))   `2026-08-12 05:22:48Z`
+### [0348] A6/ON — room_items CHECK(applicability IN ('applies','conditional','not-applicable'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (applicability outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3646,7 +3557,7 @@ INSERT INTO "room_items" ("room_code", "item_code", "applicability") VALUES (?, 
 **Exception:** `IntegrityError: CHECK constraint failed: applicability IN ('applies','conditional','not-applicable')`
 **Verdict:** `OK`
 
-### [0357] A6/ON — rooms CHECK(status IN ('active','draft','retired'))   `2026-08-12 05:22:48Z`
+### [0349] A6/ON — rooms CHECK(status IN ('active','draft','retired'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (status outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3657,7 +3568,7 @@ INSERT INTO "rooms" ("room_code", "name", "status") VALUES (?, ?, ?)  -- {"room_
 **Exception:** `IntegrityError: CHECK constraint failed: status IN ('active','draft','retired')`
 **Verdict:** `OK`
 
-### [0358] A6/ON — search_candidates CHECK(disposition IN ('REHOME','MISCELLANEOUS','PENDING-VERIFICATION','OUT-OF-SCOPE','ADMITTED'))   `2026-08-12 05:22:48Z`
+### [0350] A6/ON — search_candidates CHECK(disposition IN ('REHOME','MISCELLANEOUS','PENDING-VERIFICATION','OUT-OF-SCOPE','ADMITTED'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (disposition outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3669,7 +3580,7 @@ INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "se
                      ('REHOME','MISCELLANEOUS','PENDING-VERIFICATION','OUT-OF-SCOPE','ADMITTED')`
 **Verdict:** `OK`
 
-### [0359] A6/ON — search_candidates CHECK(locator_status IS NULL OR locator_status IN ('UNVERIFIED','RESOLVED','DEAD'))   `2026-08-12 05:22:48Z`
+### [0351] A6/ON — search_candidates CHECK(locator_status IS NULL OR locator_status IN ('UNVERIFIED','RESOLVED','DEAD'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (locator_status outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3681,7 +3592,7 @@ INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "se
                      ('UNVERIFIED','RESOLVED','DEAD')`
 **Verdict:** `OK`
 
-### [0360] A6/ON — search_candidates CHECK(tier_guess IS NULL OR tier_guess BETWEEN 1 AND 6)   `2026-08-12 05:22:48Z`
+### [0352] A6/ON — search_candidates CHECK(tier_guess IS NULL OR tier_guess BETWEEN 1 AND 6)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (tier_guess above range; FK=ON)
 **SQL:**
 ```sql
@@ -3692,7 +3603,7 @@ INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "se
 **Exception:** `IntegrityError: CHECK constraint failed: tier_guess IS NULL OR tier_guess BETWEEN 1 AND 6`
 **Verdict:** `OK`
 
-### [0361] A6/ON — search_candidates CHECK(harm_finding IN (0,1))   `2026-08-12 05:22:48Z`
+### [0353] A6/ON — search_candidates CHECK(harm_finding IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (harm_finding outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3703,7 +3614,7 @@ INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "se
 **Exception:** `IntegrityError: CHECK constraint failed: harm_finding IN (0,1)`
 **Verdict:** `OK`
 
-### [0362] A6/ON — search_coverage CHECK(status IN ('SEARCHED','THIN','NO-DATA','NOT-RUN'))   `2026-08-12 05:22:48Z`
+### [0354] A6/ON — search_coverage CHECK(status IN ('SEARCHED','THIN','NO-DATA','NOT-RUN'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (status outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3714,7 +3625,7 @@ INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "
 **Exception:** `IntegrityError: CHECK constraint failed: status IN ('SEARCHED','THIN','NO-DATA','NOT-RUN')`
 **Verdict:** `OK`
 
-### [0363] A6/ON — search_coverage CHECK(co1_attempted IN (0,1))   `2026-08-12 05:22:48Z`
+### [0355] A6/ON — search_coverage CHECK(co1_attempted IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (co1_attempted outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3725,7 +3636,7 @@ INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "
 **Exception:** `IntegrityError: CHECK constraint failed: co1_attempted IN (0,1)`
 **Verdict:** `OK`
 
-### [0364] A6/ON — search_coverage CHECK(tier5_attempted IN (0,1))   `2026-08-12 05:22:48Z`
+### [0356] A6/ON — search_coverage CHECK(tier5_attempted IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (tier5_attempted outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3736,7 +3647,7 @@ INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "
 **Exception:** `IntegrityError: CHECK constraint failed: tier5_attempted IN (0,1)`
 **Verdict:** `OK`
 
-### [0365] A6/ON — search_coverage CHECK(tier6_attempted IN (0,1))   `2026-08-12 05:22:48Z`
+### [0357] A6/ON — search_coverage CHECK(tier6_attempted IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (tier6_attempted outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3747,7 +3658,7 @@ INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "
 **Exception:** `IntegrityError: CHECK constraint failed: tier6_attempted IN (0,1)`
 **Verdict:** `OK`
 
-### [0366] A6/ON — search_executions CHECK(target_tier IS NULL OR target_tier BETWEEN 1 AND 6)   `2026-08-12 05:22:48Z`
+### [0358] A6/ON — search_executions CHECK(target_tier IS NULL OR target_tier BETWEEN 1 AND 6)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (target_tier above range; FK=ON)
 **SQL:**
 ```sql
@@ -3758,7 +3669,7 @@ INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "de
 **Exception:** `IntegrityError: CHECK constraint failed: target_tier IS NULL OR target_tier BETWEEN 1 AND 6`
 **Verdict:** `OK`
 
-### [0367] A6/ON — search_executions CHECK(target_evidence_type IS NULL OR target_evidence_type IN ('clinical','sr_meta','standard_eb','national_fw','cod)   `2026-08-12 05:22:48Z`
+### [0359] A6/ON — search_executions CHECK(target_evidence_type IS NULL OR target_evidence_type IN ('clinical','sr_meta','standard_eb','national_fw','cod)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (target_evidence_type outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3770,7 +3681,7 @@ INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "de
      ('clinical','sr_meta','standard_eb','national_fw','code','co1','co2','grey')`
 **Verdict:** `OK`
 
-### [0368] A6/ON — search_executions CHECK(target_scope IS NULL OR target_scope IN ('intrinsic','lower_control','high_control','national','international')   `2026-08-12 05:22:48Z`
+### [0360] A6/ON — search_executions CHECK(target_scope IS NULL OR target_scope IN ('intrinsic','lower_control','high_control','national','international')   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (target_scope outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3782,7 +3693,7 @@ INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "de
      ('intrinsic','lower_control','high_control','national','international')`
 **Verdict:** `OK`
 
-### [0369] A6/ON — search_executions CHECK(depth_method IN ('scoping','systematic'))   `2026-08-12 05:22:48Z`
+### [0361] A6/ON — search_executions CHECK(depth_method IN ('scoping','systematic'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (depth_method outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3793,7 +3704,7 @@ INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "de
 **Exception:** `IntegrityError: CHECK constraint failed: depth_method IN ('scoping','systematic')`
 **Verdict:** `OK`
 
-### [0370] A6/ON — search_executions CHECK(mining_direction IS NULL OR mining_direction IN ('none','backward','forward','both'))   `2026-08-12 05:22:48Z`
+### [0362] A6/ON — search_executions CHECK(mining_direction IS NULL OR mining_direction IN ('none','backward','forward','both'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (mining_direction outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3805,7 +3716,7 @@ INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "de
      ('none','backward','forward','both')`
 **Verdict:** `OK`
 
-### [0371] A6/ON — search_executions CHECK(saturation_signal IS NULL OR saturation_signal IN ('none','partial','saturated'))   `2026-08-12 05:22:48Z`
+### [0363] A6/ON — search_executions CHECK(saturation_signal IS NULL OR saturation_signal IN ('none','partial','saturated'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (saturation_signal outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3817,7 +3728,7 @@ INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "de
      ('none','partial','saturated')`
 **Verdict:** `OK`
 
-### [0372] A6/ON — search_executions CHECK(backfill IN (0,1))   `2026-08-12 05:22:48Z`
+### [0364] A6/ON — search_executions CHECK(backfill IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (backfill outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3828,7 +3739,7 @@ INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "de
 **Exception:** `IntegrityError: CHECK constraint failed: backfill IN (0,1)`
 **Verdict:** `OK`
 
-### [0373] A6/ON — search_executions CHECK(terms_used IS NULL OR json_valid(terms_used))   `2026-08-12 05:22:48Z`
+### [0365] A6/ON — search_executions CHECK(terms_used IS NULL OR json_valid(terms_used))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (invalid JSON in terms_used; FK=ON)
 **SQL:**
 ```sql
@@ -3839,7 +3750,7 @@ INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "de
 **Exception:** `IntegrityError: CHECK constraint failed: terms_used IS NULL OR json_valid(terms_used)`
 **Verdict:** `OK`
 
-### [0374] A6/ON — search_executions CHECK(admitted_ref_ids IS NULL OR json_valid(admitted_ref_ids))   `2026-08-12 05:22:48Z`
+### [0366] A6/ON — search_executions CHECK(admitted_ref_ids IS NULL OR json_valid(admitted_ref_ids))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (invalid JSON in admitted_ref_ids; FK=ON)
 **SQL:**
 ```sql
@@ -3850,7 +3761,7 @@ INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "de
 **Exception:** `IntegrityError: CHECK constraint failed: admitted_ref_ids IS NULL OR json_valid(admitted_ref_ids)`
 **Verdict:** `OK`
 
-### [0375] A6/ON — search_languages CHECK(status IN ('SEARCHED','PARTIAL','NOT-RUN'))   `2026-08-12 05:22:48Z`
+### [0367] A6/ON — search_languages CHECK(status IN ('SEARCHED','PARTIAL','NOT-RUN'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (status outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3861,7 +3772,7 @@ INSERT INTO "search_languages" ("slug", "language", "status", "created_at", "cre
 **Exception:** `IntegrityError: CHECK constraint failed: status IN ('SEARCHED','PARTIAL','NOT-RUN')`
 **Verdict:** `OK`
 
-### [0376] A6/ON — situations CHECK(operational_access IN ('yes','no') OR operational_access IS NULL)   `2026-08-12 05:22:48Z`
+### [0368] A6/ON — situations CHECK(operational_access IN ('yes','no') OR operational_access IS NULL)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (operational_access outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3872,7 +3783,7 @@ INSERT INTO "situations" ("situation_id", "title", "account_language", "account_
 **Exception:** `IntegrityError: CHECK constraint failed: operational_access IN ('yes','no') OR operational_access IS NULL`
 **Verdict:** `OK`
 
-### [0377] A6/ON — slugs CHECK(status IN ( 'ACTIVE','MERGED','STUB','PROVISIONAL' ))   `2026-08-12 05:22:48Z`
+### [0369] A6/ON — slugs CHECK(status IN ( 'ACTIVE','MERGED','STUB','PROVISIONAL' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (status outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3885,11 +3796,11 @@ INSERT INTO "slugs" ("slug", "topic_directory", "sl_path", "bpc_path", "status",
                         )`
 **Verdict:** `OK`
 
-### [0378] A6/ON — source_locators CHECK(doi IS NOT NULL OR url IS NOT NULL OR pmid IS NOT NULL OR pmcid IS NOT NULL OR isbn IS NOT NULL OR issn IS NOT)   `2026-08-12 05:22:48Z`
+### [0370] A6/ON — source_locators CHECK(doi IS NOT NULL OR url IS NOT NULL OR pmid IS NOT NULL OR pmcid IS NOT NULL OR isbn IS NOT NULL OR issn IS NOT)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (all of ['doi', 'url', 'pmid', 'pmcid', 'isbn', 'issn', 'standard_number'] NULL; FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "source_locators" ("ref_id", "pmcid", "doi", "issn", "isbn", "standard_number", "url", "pmid") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-717", "pmcid": null, "doi": null, "issn": null, "isbn": null, "standard_number": null, "url": null, "pmid": null}
+INSERT INTO "source_locators" ("ref_id", "pmcid", "pmid", "url", "standard_number", "doi", "isbn", "issn") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-717", "pmcid": null, "pmid": null, "url": null, "standard_number": null, "doi": null, "isbn": null, "issn": null}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
@@ -3898,7 +3809,7 @@ INSERT INTO "source_locators" ("ref_id", "pmcid", "doi", "issn", "isbn", "standa
         OR standard_number IS NOT NULL`
 **Verdict:** `OK`
 
-### [0379] A6/ON — source_value_extractions CHECK(claim_type IN ('numerical','range','qualitative','framework','absent'))   `2026-08-12 05:22:48Z`
+### [0371] A6/ON — source_value_extractions CHECK(claim_type IN ('numerical','range','qualitative','framework','absent'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (claim_type outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3909,7 +3820,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Exception:** `IntegrityError: CHECK constraint failed: claim_type IN ('numerical','range','qualitative','framework','absent')`
 **Verdict:** `OK`
 
-### [0380] A6/ON — source_value_extractions CHECK(extraction_method IN ('skim','full-read','re-read','auto-mined'))   `2026-08-12 05:22:48Z`
+### [0372] A6/ON — source_value_extractions CHECK(extraction_method IN ('skim','full-read','re-read','auto-mined'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (extraction_method outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3920,7 +3831,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Exception:** `IntegrityError: CHECK constraint failed: extraction_method IN ('skim','full-read','re-read','auto-mined')`
 **Verdict:** `OK`
 
-### [0381] A6/ON — source_value_extractions CHECK(extraction_status IN ('preliminary','reviewed','verified','contradicted','absent-confirmed'))   `2026-08-12 05:22:48Z`
+### [0373] A6/ON — source_value_extractions CHECK(extraction_status IN ('preliminary','reviewed','verified','contradicted','absent-confirmed'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (extraction_status outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3931,7 +3842,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Exception:** `IntegrityError: CHECK constraint failed: extraction_status IN ('preliminary','reviewed','verified','contradicted','absent-confirmed')`
 **Verdict:** `OK`
 
-### [0382] A6/ON — source_value_extractions CHECK(root_type IN ( 'measurement_primary', 'participatory_finding', 'committee_assertion', 'derived_calculation', ')   `2026-08-12 05:22:48Z`
+### [0374] A6/ON — source_value_extractions CHECK(root_type IN ( 'measurement_primary', 'participatory_finding', 'committee_assertion', 'derived_calculation', ')   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (root_type outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3944,7 +3855,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
             'committee_assertion', 'derived_calculation', 'untraced')`
 **Verdict:** `OK`
 
-### [0383] A6/ON — source_value_extractions CHECK(measurement_paradigm IN ( 'swept_path_dynamic', 'static_turning_circle', 'static_clearance', 'anthropometric_p)   `2026-08-12 05:22:48Z`
+### [0375] A6/ON — source_value_extractions CHECK(measurement_paradigm IN ( 'swept_path_dynamic', 'static_turning_circle', 'static_clearance', 'anthropometric_p)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (measurement_paradigm outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3959,7 +3870,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
             'stated_unmeasured')`
 **Verdict:** `OK`
 
-### [0384] A6/ON — source_value_extractions CHECK(device_class IN ( 'manual_self_propelled', 'manual_attendant', 'power_chair', 'scooter', 'bariatric_manual', ')   `2026-08-12 05:22:48Z`
+### [0376] A6/ON — source_value_extractions CHECK(device_class IN ( 'manual_self_propelled', 'manual_attendant', 'power_chair', 'scooter', 'bariatric_manual', ')   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (device_class outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3973,7 +3884,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
             'mixed', 'not_device_scoped')`
 **Verdict:** `OK`
 
-### [0385] A6/ON — source_value_extractions CHECK(contested IN (0, 1))   `2026-08-12 05:22:48Z`
+### [0377] A6/ON — source_value_extractions CHECK(contested IN (0, 1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (contested outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -3984,7 +3895,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Exception:** `IntegrityError: CHECK constraint failed: contested IN (0, 1)`
 **Verdict:** `OK`
 
-### [0386] A6/ON — source_value_extractions CHECK( (claim_type = 'absent' AND claimed_value IS NULL) OR (claim_type <> 'absent' AND claimed_value IS NOT NULL) )   `2026-08-12 05:22:48Z`
+### [0378] A6/ON — source_value_extractions CHECK( (claim_type = 'absent' AND claimed_value IS NULL) OR (claim_type <> 'absent' AND claimed_value IS NOT NULL) )   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (claim_type='absent' with claimed_value non-NULL; FK=ON)
 **SQL:**
 ```sql
@@ -3996,7 +3907,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
     (claim_type <> 'absent' AND claimed_value IS NOT NULL)`
 **Verdict:** `OK`
 
-### [0387] A6/ON — spec_value_probes CHECK(direction IN ('up','down'))   `2026-08-12 05:22:48Z`
+### [0379] A6/ON — spec_value_probes CHECK(direction IN ('up','down'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (direction outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -4007,7 +3918,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: CHECK constraint failed: direction IN ('up','down')`
 **Verdict:** `OK`
 
-### [0388] A6/ON — spec_value_probes CHECK(claim_type IN ( 'minimum','maximum','target','range_low','range_high' ))   `2026-08-12 05:22:48Z`
+### [0380] A6/ON — spec_value_probes CHECK(claim_type IN ( 'minimum','maximum','target','range_low','range_high' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (claim_type outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -4020,7 +3931,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
                         )`
 **Verdict:** `OK`
 
-### [0389] A6/ON — spec_value_probes CHECK(phase IN ( 'outer-pass-1st','outer-pass-2nd','outer-stop', 'refinement-pass-1st','refinement-pass-2nd','refine)   `2026-08-12 05:22:48Z`
+### [0381] A6/ON — spec_value_probes CHECK(phase IN ( 'outer-pass-1st','outer-pass-2nd','outer-stop', 'refinement-pass-1st','refinement-pass-2nd','refine)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (phase outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -4035,7 +3946,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
                         )`
 **Verdict:** `OK`
 
-### [0390] A6/ON — spec_value_probes CHECK(passes_strict IN (0,1))   `2026-08-12 05:22:48Z`
+### [0382] A6/ON — spec_value_probes CHECK(passes_strict IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (passes_strict outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -4046,7 +3957,96 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: CHECK constraint failed: passes_strict IN (0,1)`
 **Verdict:** `OK`
 
-### [0391] A6/ON — supersession_check CHECK(anchor_tier BETWEEN 1 AND 6)   `2026-08-12 05:22:48Z`
+### [0383] A6/ON — specification_source_links CHECK(role IN ('governing'))   `2026-08-12 08:35:28Z`
+**Action:** insert row violating the CHECK (role outside enum; FK=ON)
+**SQL:**
+```sql
+INSERT INTO "specification_source_links" ("ref_id", "specification_id", "role") VALUES (?, ?, ?)  -- {"ref_id": "PROBE-PK-167", "specification_id": 1, "role": "PROBE-INVALID-ENUM"}
+```
+**Expected:** CHECK constraint failed
+**Actual:** rejected by CHECK
+**Exception:** `IntegrityError: CHECK constraint failed: role IN ('governing')`
+**Verdict:** `OK`
+
+### [0384] A6/ON — specifications CHECK(state IN ('stated', 'provisional', 'pending', 'not_applicable'))   `2026-08-12 08:35:28Z`
+**Action:** insert row violating the CHECK (state outside enum; FK=ON)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state") VALUES (?, ?, ?)  -- {"item_code": "A-01", "population_code": "ADHD", "state": "PROBE-INVALID-ENUM"}
+```
+**Expected:** CHECK constraint failed
+**Actual:** rejected by CHECK
+**Exception:** `IntegrityError: CHECK constraint failed: state IN ('stated', 'provisional',
+                                                    'pending', 'not_applicable')`
+**Verdict:** `OK`
+
+### [0385] A6/ON — specifications CHECK(design_scale IN ('universal', 'population', 'person'))   `2026-08-12 08:35:28Z`
+**Action:** insert row violating the CHECK (design_scale outside enum; FK=ON)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state", "design_scale") VALUES (?, ?, ?, ?)  -- {"item_code": "A-01", "population_code": "ADHD", "state": "stated", "design_scale": "PROBE-INVALID-ENUM"}
+```
+**Expected:** CHECK constraint failed
+**Actual:** rejected by CHECK
+**Exception:** `IntegrityError: CHECK constraint failed: design_scale IN ('universal', 'population', 'person')`
+**Verdict:** `OK`
+
+### [0386] A6/ON — specifications CHECK(governing_refs IS NULL OR json_valid(governing_refs))   `2026-08-12 08:35:28Z`
+**Action:** insert row violating the CHECK (invalid JSON in governing_refs; FK=ON)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state", "governing_refs") VALUES (?, ?, ?, ?)  -- {"item_code": "A-01", "population_code": "ADHD", "state": "stated", "governing_refs": "{not-json"}
+```
+**Expected:** CHECK constraint failed
+**Actual:** rejected by CHECK
+**Exception:** `IntegrityError: CHECK constraint failed: governing_refs IS NULL OR json_valid(governing_refs)`
+**Verdict:** `OK`
+
+### [0387] A6/ON — specifications CHECK(code_floor_only IN (0, 1))   `2026-08-12 08:35:28Z`
+**Action:** insert row violating the CHECK (code_floor_only outside enum; FK=ON)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state", "code_floor_only") VALUES (?, ?, ?, ?)  -- {"item_code": "A-01", "population_code": "ADHD", "state": "stated", "code_floor_only": 987654321}
+```
+**Expected:** CHECK constraint failed
+**Actual:** rejected by CHECK
+**Exception:** `IntegrityError: CHECK constraint failed: code_floor_only IN (0, 1)`
+**Verdict:** `OK`
+
+### [0388] A6/ON — specifications CHECK(has_unverified_sources IN (0, 1))   `2026-08-12 08:35:28Z`
+**Action:** insert row violating the CHECK (has_unverified_sources outside enum; FK=ON)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state", "has_unverified_sources") VALUES (?, ?, ?, ?)  -- {"item_code": "A-01", "population_code": "ADHD", "state": "stated", "has_unverified_sources": 987654321}
+```
+**Expected:** CHECK constraint failed
+**Actual:** rejected by CHECK
+**Exception:** `IntegrityError: CHECK constraint failed: has_unverified_sources IN (0, 1)`
+**Verdict:** `OK`
+
+### [0389] A6/ON — specifications CHECK(all_sources_disqualified IN (0, 1))   `2026-08-12 08:35:28Z`
+**Action:** insert row violating the CHECK (all_sources_disqualified outside enum; FK=ON)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state", "all_sources_disqualified") VALUES (?, ?, ?, ?)  -- {"item_code": "A-01", "population_code": "ADHD", "state": "stated", "all_sources_disqualified": 987654321}
+```
+**Expected:** CHECK constraint failed
+**Actual:** rejected by CHECK
+**Exception:** `IntegrityError: CHECK constraint failed: all_sources_disqualified IN (0, 1)`
+**Verdict:** `OK`
+
+### [0390] A6/ON — specifications CHECK(regulatory_stratum_only IN (0, 1))   `2026-08-12 08:35:28Z`
+**Action:** insert row violating the CHECK (regulatory_stratum_only outside enum; FK=ON)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state", "regulatory_stratum_only") VALUES (?, ?, ?, ?)  -- {"item_code": "A-01", "population_code": "ADHD", "state": "stated", "regulatory_stratum_only": 987654321}
+```
+**Expected:** CHECK constraint failed
+**Actual:** rejected by CHECK
+**Exception:** `IntegrityError: CHECK constraint failed: regulatory_stratum_only IN (0, 1)`
+**Verdict:** `OK`
+
+### [0391] A6/ON — supersession_check CHECK(anchor_tier BETWEEN 1 AND 6)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (anchor_tier above range; FK=ON)
 **SQL:**
 ```sql
@@ -4057,7 +4057,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: CHECK constraint failed: anchor_tier BETWEEN 1 AND 6`
 **Verdict:** `OK`
 
-### [0392] A6/ON — supersession_check CHECK(outcome IN ( 'current_best', 'superseded_by', 'refined_by', 'divergent_no_supersession', 'co1_addition_logged')   `2026-08-12 05:22:48Z`
+### [0392] A6/ON — supersession_check CHECK(outcome IN ( 'current_best', 'superseded_by', 'refined_by', 'divergent_no_supersession', 'co1_addition_logged')   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (outcome outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -4075,7 +4075,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
     )`
 **Verdict:** `OK`
 
-### [0393] A6/ON — supersession_check CHECK(check_method IN ( 'pubmed_search', 'scholar_gateway', 'cochrane_direct', 'standards_body_direct', 'multilingua)   `2026-08-12 05:22:48Z`
+### [0393] A6/ON — supersession_check CHECK(check_method IN ( 'pubmed_search', 'scholar_gateway', 'cochrane_direct', 'standards_body_direct', 'multilingua)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (check_method outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -4090,7 +4090,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
     )`
 **Verdict:** `OK`
 
-### [0394] A6/ON — supersession_check CHECK( (outcome IN ('superseded_by','refined_by','divergent_no_supersession') AND (superseding_ref_ids IS NOT NULL O)   `2026-08-12 05:22:48Z`
+### [0394] A6/ON — supersession_check CHECK( (outcome IN ('superseded_by','refined_by','divergent_no_supersession') AND (superseding_ref_ids IS NOT NULL O)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (outcome outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -4108,7 +4108,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
     )`
 **Verdict:** `OK`
 
-### [0395] A6/ON — supersession_check CHECK( outcome != 'refined_by' OR refinement_dimension IS NOT NULL )   `2026-08-12 05:22:48Z`
+### [0395] A6/ON — supersession_check CHECK( outcome != 'refined_by' OR refinement_dimension IS NOT NULL )   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (outcome='refined_by' with refinement_dimension NULL; FK=ON)
 **SQL:**
 ```sql
@@ -4123,7 +4123,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
         outcome IN ('current_best','co1_addition_logged','pending')`
 **Verdict:** `OK`
 
-### [0396] A6/ON — supersession_check CHECK( outcome != 'divergent_no_supersession' OR divergence_notes IS NOT NULL )   `2026-08-12 05:22:48Z`
+### [0396] A6/ON — supersession_check CHECK( outcome != 'divergent_no_supersession' OR divergence_notes IS NOT NULL )   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (outcome='divergent_no_supersession' with divergence_notes NULL; FK=ON)
 **SQL:**
 ```sql
@@ -4138,13 +4138,13 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
         outcome IN ('current_best','co1_addition_logged','pending')`
 **Verdict:** `OK`
 
-### [0397] A6/ON — supersession_check CHECK( outcome != 'co1_addition_logged' OR anchor_evidence_type = 'co1' )   `2026-08-12 05:22:48Z`
+### [0397] A6/ON — supersession_check CHECK( outcome != 'co1_addition_logged' OR anchor_evidence_type = 'co1' )   `2026-08-12 08:35:28Z`
 **Action:** construct a violating row (FK=ON)
 **Expected:** CHECK fires
 **Actual:** no mechanical violation constructible for this expression (cross-column/complex predicate)
 **Verdict:** `BLOCKED`
 
-### [0398] A6/ON — term_aliases CHECK(alias_type IN ( 'SYNONYM','TRANSLATION','NARROWER', 'BROADER','DEPRECATED','DOMAIN' ))   `2026-08-12 05:22:48Z`
+### [0398] A6/ON — term_aliases CHECK(alias_type IN ( 'SYNONYM','TRANSLATION','NARROWER', 'BROADER','DEPRECATED','DOMAIN' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (alias_type outside enum; FK=ON)
 **SQL:**
 ```sql
@@ -4158,7 +4158,7 @@ INSERT INTO "term_aliases" ("term_id", "alias", "language", "alias_type", "creat
                         )`
 **Verdict:** `OK`
 
-### [0399] A6/ON — weighting_profile CHECK(json_valid(tier_weights))   `2026-08-12 05:22:48Z`
+### [0399] A6/ON — weighting_profile CHECK(json_valid(tier_weights))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (invalid JSON in tier_weights; FK=ON)
 **SQL:**
 ```sql
@@ -4169,7 +4169,7 @@ INSERT INTO "weighting_profile" ("audience", "use_pattern", "tier_weights") VALU
 **Exception:** `IntegrityError: CHECK constraint failed: json_valid(tier_weights)`
 **Verdict:** `OK`
 
-### [0400] A6/OFF — access_duration CHECK(code IN ('permanent','temporary','situational'))   `2026-08-12 05:22:48Z`
+### [0400] A6/OFF — access_duration CHECK(code IN ('permanent','temporary','situational'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (code outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4180,7 +4180,7 @@ INSERT INTO "access_duration" ("code", "definition") VALUES (?, ?)  -- {"code": 
 **Exception:** `IntegrityError: CHECK constraint failed: code IN ('permanent','temporary','situational')`
 **Verdict:** `OK`
 
-### [0401] A6/OFF — access_need_axis_map CHECK(relationship IN ('primary','partial','spans'))   `2026-08-12 05:22:48Z`
+### [0401] A6/OFF — access_need_axis_map CHECK(relationship IN ('primary','partial','spans'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (relationship outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4191,7 +4191,7 @@ INSERT INTO "access_need_axis_map" ("need_code", "axis_code", "relationship") VA
 **Exception:** `IntegrityError: CHECK constraint failed: relationship IN ('primary','partial','spans')`
 **Verdict:** `OK`
 
-### [0402] A6/OFF — access_need_icf CHECK(icf_type IN ('b','d','e','s'))   `2026-08-12 05:22:48Z`
+### [0402] A6/OFF — access_need_icf CHECK(icf_type IN ('b','d','e','s'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (icf_type outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4202,7 +4202,7 @@ INSERT INTO "access_need_icf" ("need_code", "icf_code", "icf_type", "confidence"
 **Exception:** `IntegrityError: CHECK constraint failed: icf_type IN ('b','d','e','s')`
 **Verdict:** `OK`
 
-### [0403] A6/OFF — access_need_icf CHECK(confidence IN ('confirmed','proposed'))   `2026-08-12 05:22:48Z`
+### [0403] A6/OFF — access_need_icf CHECK(confidence IN ('confirmed','proposed'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (confidence outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4213,7 +4213,7 @@ INSERT INTO "access_need_icf" ("need_code", "icf_code", "icf_type", "confidence"
 **Exception:** `IntegrityError: CHECK constraint failed: confidence IN ('confirmed','proposed')`
 **Verdict:** `OK`
 
-### [0404] A6/OFF — access_needs CHECK(family IN ('perceiving','communicating','operating','pacing','environment_safety'))   `2026-08-12 05:22:48Z`
+### [0404] A6/OFF — access_needs CHECK(family IN ('perceiving','communicating','operating','pacing','environment_safety'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (family outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4225,7 +4225,7 @@ INSERT INTO "access_needs" ("need_code", "family", "design_obligation") VALUES (
                     ('perceiving','communicating','operating','pacing','environment_safety')`
 **Verdict:** `OK`
 
-### [0405] A6/OFF — access_needs CHECK(typical_stakes IN ('safety-critical','exclusion','friction'))   `2026-08-12 05:22:48Z`
+### [0405] A6/OFF — access_needs CHECK(typical_stakes IN ('safety-critical','exclusion','friction'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (typical_stakes outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4236,7 +4236,7 @@ INSERT INTO "access_needs" ("need_code", "family", "design_obligation", "typical
 **Exception:** `IntegrityError: CHECK constraint failed: typical_stakes IN ('safety-critical','exclusion','friction')`
 **Verdict:** `OK`
 
-### [0406] A6/OFF — access_stakes CHECK(code IN ('safety-critical','exclusion','friction'))   `2026-08-12 05:22:48Z`
+### [0406] A6/OFF — access_stakes CHECK(code IN ('safety-critical','exclusion','friction'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (code outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4247,7 +4247,7 @@ INSERT INTO "access_stakes" ("code", "definition") VALUES (?, ?)  -- {"code": "P
 **Exception:** `IntegrityError: CHECK constraint failed: code IN ('safety-critical','exclusion','friction')`
 **Verdict:** `OK`
 
-### [0407] A6/OFF — axes CHECK(coverage_status IN ('ESTABLISHED','PARTIAL','STUB'))   `2026-08-12 05:22:48Z`
+### [0407] A6/OFF — axes CHECK(coverage_status IN ('ESTABLISHED','PARTIAL','STUB'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (coverage_status outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4258,77 +4258,77 @@ INSERT INTO "axes" ("axis_code", "name", "mechanism", "coverage_status", "falsif
 **Exception:** `IntegrityError: CHECK constraint failed: coverage_status IN ('ESTABLISHED','PARTIAL','STUB')`
 **Verdict:** `OK`
 
-### [0408] A6/OFF — bpc_metadata CHECK(pico_complete IN (0,1))   `2026-08-12 05:22:48Z`
+### [0408] A6/OFF — bpc_metadata CHECK(pico_complete IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (pico_complete outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session", "pico_complete") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "population": "PROBE-849", "created_at": "PROBE-850", "created_by_session": "PROBE-851", "updated_at": "PROBE-852", "updated_by_session": "PROBE-853", "pico_complete": 987654321}
+INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session", "pico_complete") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "population": "PROBE-849", "created_at": "PROBE-850", "created_by_session": "PROBE-851", "updated_at": "PROBE-852", "updated_by_session": "PROBE-853", "pico_complete": 987654321}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
 **Exception:** `IntegrityError: CHECK constraint failed: pico_complete IN (0,1)`
 **Verdict:** `OK`
 
-### [0409] A6/OFF — bpc_metadata CHECK(search_complete IN (0,1))   `2026-08-12 05:22:48Z`
+### [0409] A6/OFF — bpc_metadata CHECK(search_complete IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (search_complete outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session", "search_complete") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "population": "PROBE-854", "created_at": "PROBE-855", "created_by_session": "PROBE-856", "updated_at": "PROBE-857", "updated_by_session": "PROBE-858", "search_complete": 987654321}
+INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session", "search_complete") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "population": "PROBE-854", "created_at": "PROBE-855", "created_by_session": "PROBE-856", "updated_at": "PROBE-857", "updated_by_session": "PROBE-858", "search_complete": 987654321}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
 **Exception:** `IntegrityError: CHECK constraint failed: search_complete IN (0,1)`
 **Verdict:** `OK`
 
-### [0410] A6/OFF — bpc_metadata CHECK(bpc_complete IN (0,1))   `2026-08-12 05:22:48Z`
+### [0410] A6/OFF — bpc_metadata CHECK(bpc_complete IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (bpc_complete outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session", "bpc_complete") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "population": "PROBE-859", "created_at": "PROBE-860", "created_by_session": "PROBE-861", "updated_at": "PROBE-862", "updated_by_session": "PROBE-863", "bpc_complete": 987654321}
+INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session", "bpc_complete") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "population": "PROBE-859", "created_at": "PROBE-860", "created_by_session": "PROBE-861", "updated_at": "PROBE-862", "updated_by_session": "PROBE-863", "bpc_complete": 987654321}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
 **Exception:** `IntegrityError: CHECK constraint failed: bpc_complete IN (0,1)`
 **Verdict:** `OK`
 
-### [0411] A6/OFF — bpc_metadata CHECK(citation_mining_complete IN (0,1))   `2026-08-12 05:22:48Z`
+### [0411] A6/OFF — bpc_metadata CHECK(citation_mining_complete IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (citation_mining_complete outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session", "citation_mining_complete") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "population": "PROBE-864", "created_at": "PROBE-865", "created_by_session": "PROBE-866", "updated_at": "PROBE-867", "updated_by_session": "PROBE-868", "citation_mining_complete": 987654321}
+INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session", "citation_mining_complete") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "population": "PROBE-864", "created_at": "PROBE-865", "created_by_session": "PROBE-866", "updated_at": "PROBE-867", "updated_by_session": "PROBE-868", "citation_mining_complete": 987654321}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
 **Exception:** `IntegrityError: CHECK constraint failed: citation_mining_complete IN (0,1)`
 **Verdict:** `OK`
 
-### [0412] A6/OFF — bpc_metadata CHECK(supersession_check_complete IN (0, 1))   `2026-08-12 05:22:48Z`
+### [0412] A6/OFF — bpc_metadata CHECK(supersession_check_complete IN (0, 1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (supersession_check_complete outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session", "supersession_check_complete") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "population": "PROBE-869", "created_at": "PROBE-870", "created_by_session": "PROBE-871", "updated_at": "PROBE-872", "updated_by_session": "PROBE-873", "supersession_check_complete": 987654321}
+INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session", "supersession_check_complete") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "population": "PROBE-869", "created_at": "PROBE-870", "created_by_session": "PROBE-871", "updated_at": "PROBE-872", "updated_by_session": "PROBE-873", "supersession_check_complete": 987654321}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
 **Exception:** `IntegrityError: CHECK constraint failed: supersession_check_complete IN (0, 1)`
 **Verdict:** `OK`
 
-### [0413] A6/OFF — bpc_metadata CHECK(closure_definition_version IS NULL OR closure_definition_version IN ('v1', 'v2'))   `2026-08-12 05:22:48Z`
+### [0413] A6/OFF — bpc_metadata CHECK(closure_definition_version IS NULL OR closure_definition_version IN ('v1', 'v2'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (closure_definition_version outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session", "closure_definition_version") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "population": "PROBE-874", "created_at": "PROBE-875", "created_by_session": "PROBE-876", "updated_at": "PROBE-877", "updated_by_session": "PROBE-878", "closure_definition_version": "PROBE-INVALID-ENUM"}
+INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session", "closure_definition_version") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "population": "PROBE-874", "created_at": "PROBE-875", "created_by_session": "PROBE-876", "updated_at": "PROBE-877", "updated_by_session": "PROBE-878", "closure_definition_version": "PROBE-INVALID-ENUM"}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
 **Exception:** `IntegrityError: CHECK constraint failed: closure_definition_version IS NULL OR closure_definition_version IN ('v1', 'v2')`
 **Verdict:** `OK`
 
-### [0414] A6/OFF — case_studies CHECK(evidence_quality_tier IS NULL OR evidence_quality_tier BETWEEN 1 AND 3)   `2026-08-12 05:22:48Z`
+### [0414] A6/OFF — case_studies CHECK(evidence_quality_tier IS NULL OR evidence_quality_tier BETWEEN 1 AND 3)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (evidence_quality_tier above range; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "location", "created_at", "created_by_session", "evidence_quality_tier") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"case_study_id": "PROBE-880", "slug": "PROBE-PK-273", "title": "PROBE-881", "building_type": "PROBE-882", "location": "PROBE-883", "created_at": "PROBE-884", "created_by_session": "PROBE-885", "evidence_quality_tier": 4}
+INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "location", "created_at", "created_by_session", "evidence_quality_tier") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"case_study_id": "PROBE-880", "slug": "PROBE-PK-267", "title": "PROBE-881", "building_type": "PROBE-882", "location": "PROBE-883", "created_at": "PROBE-884", "created_by_session": "PROBE-885", "evidence_quality_tier": 4}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
@@ -4336,11 +4336,11 @@ INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "
                                         OR evidence_quality_tier BETWEEN 1 AND 3`
 **Verdict:** `OK`
 
-### [0415] A6/OFF — case_studies CHECK(cost_data_quality IS NULL OR cost_data_quality IN ('VERIFIED','PROVISIONAL','GREY'))   `2026-08-12 05:22:48Z`
+### [0415] A6/OFF — case_studies CHECK(cost_data_quality IS NULL OR cost_data_quality IN ('VERIFIED','PROVISIONAL','GREY'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (cost_data_quality outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "location", "created_at", "created_by_session", "cost_data_quality") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"case_study_id": "PROBE-886", "slug": "PROBE-PK-273", "title": "PROBE-887", "building_type": "PROBE-888", "location": "PROBE-889", "created_at": "PROBE-890", "created_by_session": "PROBE-891", "cost_data_quality": "PROBE-INVALID-ENUM"}
+INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "location", "created_at", "created_by_session", "cost_data_quality") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"case_study_id": "PROBE-886", "slug": "PROBE-PK-267", "title": "PROBE-887", "building_type": "PROBE-888", "location": "PROBE-889", "created_at": "PROBE-890", "created_by_session": "PROBE-891", "cost_data_quality": "PROBE-INVALID-ENUM"}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
@@ -4348,18 +4348,18 @@ INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "
                      ('VERIFIED','PROVISIONAL','GREY')`
 **Verdict:** `OK`
 
-### [0416] A6/OFF — case_studies CHECK(harm_finding IN (0,1))   `2026-08-12 05:22:48Z`
+### [0416] A6/OFF — case_studies CHECK(harm_finding IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (harm_finding outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "location", "created_at", "created_by_session", "harm_finding") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"case_study_id": "PROBE-892", "slug": "PROBE-PK-273", "title": "PROBE-893", "building_type": "PROBE-894", "location": "PROBE-895", "created_at": "PROBE-896", "created_by_session": "PROBE-897", "harm_finding": 987654321}
+INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "location", "created_at", "created_by_session", "harm_finding") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"case_study_id": "PROBE-892", "slug": "PROBE-PK-267", "title": "PROBE-893", "building_type": "PROBE-894", "location": "PROBE-895", "created_at": "PROBE-896", "created_by_session": "PROBE-897", "harm_finding": 987654321}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
 **Exception:** `IntegrityError: CHECK constraint failed: harm_finding IN (0,1)`
 **Verdict:** `OK`
 
-### [0417] A6/OFF — case_study_outcomes CHECK(tier IS NULL OR tier BETWEEN 1 AND 3)   `2026-08-12 05:22:48Z`
+### [0417] A6/OFF — case_study_outcomes CHECK(tier IS NULL OR tier BETWEEN 1 AND 3)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (tier above range; FK=OFF)
 **SQL:**
 ```sql
@@ -4370,40 +4370,29 @@ INSERT INTO "case_study_outcomes" ("case_study_id", "metric", "tier") VALUES (?,
 **Exception:** `IntegrityError: CHECK constraint failed: tier IS NULL OR tier BETWEEN 1 AND 3`
 **Verdict:** `OK`
 
-### [0418] A6/OFF — cell_source_links CHECK(role IN ('governing'))   `2026-08-12 05:22:48Z`
-**Action:** insert row violating the CHECK (role outside enum; FK=OFF)
-**SQL:**
-```sql
-INSERT INTO "cell_source_links" ("ref_id", "cell_id", "role") VALUES (?, ?, ?)  -- {"ref_id": "PROBE-PK-209", "cell_id": 1, "role": "PROBE-INVALID-ENUM"}
-```
-**Expected:** CHECK constraint failed
-**Actual:** rejected by CHECK
-**Exception:** `IntegrityError: CHECK constraint failed: role IN ('governing')`
-**Verdict:** `OK`
-
-### [0419] A6/OFF — citation_mining CHECK(backward IN (0,1))   `2026-08-12 05:22:48Z`
+### [0418] A6/OFF — citation_mining CHECK(backward IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (backward outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session", "backward") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "local_ref_id": "PROBE-899", "created_at": "PROBE-900", "created_by_session": "PROBE-901", "updated_at": "PROBE-902", "updated_by_session": "PROBE-903", "backward": 987654321}
+INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session", "backward") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "local_ref_id": "PROBE-899", "created_at": "PROBE-900", "created_by_session": "PROBE-901", "updated_at": "PROBE-902", "updated_by_session": "PROBE-903", "backward": 987654321}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
 **Exception:** `IntegrityError: CHECK constraint failed: backward IN (0,1)`
 **Verdict:** `OK`
 
-### [0420] A6/OFF — citation_mining CHECK(forward IN (0,1))   `2026-08-12 05:22:48Z`
+### [0419] A6/OFF — citation_mining CHECK(forward IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (forward outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session", "forward") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "local_ref_id": "PROBE-904", "created_at": "PROBE-905", "created_by_session": "PROBE-906", "updated_at": "PROBE-907", "updated_by_session": "PROBE-908", "forward": 987654321}
+INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session", "forward") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "local_ref_id": "PROBE-904", "created_at": "PROBE-905", "created_by_session": "PROBE-906", "updated_at": "PROBE-907", "updated_by_session": "PROBE-908", "forward": 987654321}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
 **Exception:** `IntegrityError: CHECK constraint failed: forward IN (0,1)`
 **Verdict:** `OK`
 
-### [0421] A6/OFF — conflicts CHECK(status IN ( 'RESOLVED-EVIDENCE', 'RESOLVED-CONSENSUS', 'RESOLUTION-PROPOSED', 'UNRESOLVED', 'MODE-S-ONLY' ))   `2026-08-12 05:22:48Z`
+### [0420] A6/OFF — conflicts CHECK(status IN ( 'RESOLVED-EVIDENCE', 'RESOLVED-CONSENSUS', 'RESOLUTION-PROPOSED', 'UNRESOLVED', 'MODE-S-ONLY' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (status outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4420,7 +4409,7 @@ INSERT INTO "conflicts" ("conflict_id", "domain", "pop_a", "pop_b", "status", "c
                         )`
 **Verdict:** `OK`
 
-### [0422] A6/OFF — connections CHECK(status IN ( 'PENDING','CONSUMED','CONSUMED-DEFERRED','CLOSED' ))   `2026-08-12 05:22:48Z`
+### [0421] A6/OFF — connections CHECK(status IN ( 'PENDING','CONSUMED','CONSUMED-DEFERRED','CLOSED' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (status outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4433,7 +4422,7 @@ INSERT INTO "connections" ("con_id", "status", "confidence", "filed_in", "create
                         )`
 **Verdict:** `OK`
 
-### [0423] A6/OFF — connections CHECK(confidence IN ('HIGH','MODERATE','SPECULATIVE'))   `2026-08-12 05:22:48Z`
+### [0422] A6/OFF — connections CHECK(confidence IN ('HIGH','MODERATE','SPECULATIVE'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (confidence outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4444,7 +4433,7 @@ INSERT INTO "connections" ("con_id", "status", "confidence", "filed_in", "create
 **Exception:** `IntegrityError: CHECK constraint failed: confidence IN ('HIGH','MODERATE','SPECULATIVE')`
 **Verdict:** `OK`
 
-### [0424] A6/OFF — connections CHECK(connection_type IN ( 'CROSS-POPULATION','CROSS-ITEM', 'COMPOUND-INTERACTION','METHODOLOGY' ))   `2026-08-12 05:22:48Z`
+### [0423] A6/OFF — connections CHECK(connection_type IN ( 'CROSS-POPULATION','CROSS-ITEM', 'COMPOUND-INTERACTION','METHODOLOGY' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (connection_type outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4458,7 +4447,7 @@ INSERT INTO "connections" ("con_id", "status", "confidence", "filed_in", "create
                         )`
 **Verdict:** `OK`
 
-### [0425] A6/OFF — connections CHECK(opus_reviewed IN (0,1))   `2026-08-12 05:22:48Z`
+### [0424] A6/OFF — connections CHECK(opus_reviewed IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (opus_reviewed outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4469,7 +4458,7 @@ INSERT INTO "connections" ("con_id", "status", "confidence", "filed_in", "create
 **Exception:** `IntegrityError: CHECK constraint failed: opus_reviewed IN (0,1)`
 **Verdict:** `OK`
 
-### [0426] A6/OFF — convergence_assessment CHECK(status IN ('convergent', 'divergent', 'single_axis', 'pending_assessment'))   `2026-08-12 05:22:48Z`
+### [0425] A6/OFF — convergence_assessment CHECK(status IN ('convergent', 'divergent', 'single_axis', 'pending_assessment'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (status outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4481,7 +4470,7 @@ INSERT INTO "convergence_assessment" ("status") VALUES (?)  -- {"status": "PROBE
                                               'single_axis', 'pending_assessment')`
 **Verdict:** `OK`
 
-### [0427] A6/OFF — decisions CHECK(category IN ( 'D-DOCT','D-METH','D-SCHEMA','D-OP','D-PRES' ))   `2026-08-12 05:22:48Z`
+### [0426] A6/OFF — decisions CHECK(category IN ( 'D-DOCT','D-METH','D-SCHEMA','D-OP','D-PRES' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (category outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4494,7 +4483,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
                         )`
 **Verdict:** `OK`
 
-### [0428] A6/OFF — decisions CHECK(delegation IN ('DG-NON','DG-REVIEW','DG-AUTO'))   `2026-08-12 05:22:48Z`
+### [0427] A6/OFF — decisions CHECK(delegation IN ('DG-NON','DG-REVIEW','DG-AUTO'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (delegation outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4505,7 +4494,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: CHECK constraint failed: delegation IN ('DG-NON','DG-REVIEW','DG-AUTO')`
 **Verdict:** `OK`
 
-### [0429] A6/OFF — decisions CHECK(status IN ( 'ACTIVE','SUPERSEDED','WITHDRAWN','PROPOSED','PROVISIONAL' ))   `2026-08-12 05:22:48Z`
+### [0428] A6/OFF — decisions CHECK(status IN ( 'ACTIVE','SUPERSEDED','WITHDRAWN','PROPOSED','PROVISIONAL' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (status outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4518,7 +4507,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
                         )`
 **Verdict:** `OK`
 
-### [0430] A6/OFF — economics_entries CHECK(pillar IN ('health','inaction','construction','market'))   `2026-08-12 05:22:48Z`
+### [0429] A6/OFF — economics_entries CHECK(pillar IN ('health','inaction','construction','market'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (pillar outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4529,7 +4518,7 @@ INSERT INTO "economics_entries" ("entry_id", "pillar", "entry_type", "source", "
 **Exception:** `IntegrityError: CHECK constraint failed: pillar IN ('health','inaction','construction','market')`
 **Verdict:** `OK`
 
-### [0431] A6/OFF — economics_entries CHECK(entry_type IN ('cost_premium','retrofit_multiplier','grant_programme','health_outcome', 'market_value','housin)   `2026-08-12 05:22:48Z`
+### [0430] A6/OFF — economics_entries CHECK(entry_type IN ('cost_premium','retrofit_multiplier','grant_programme','health_outcome', 'market_value','housin)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (entry_type outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4542,7 +4531,7 @@ INSERT INTO "economics_entries" ("entry_id", "pillar", "entry_type", "source", "
                      'market_value','housing_deficit','research_gap')`
 **Verdict:** `OK`
 
-### [0432] A6/OFF — economics_entries CHECK(evidence_tier IS NULL OR evidence_tier BETWEEN 1 AND 6)   `2026-08-12 05:22:48Z`
+### [0431] A6/OFF — economics_entries CHECK(evidence_tier IS NULL OR evidence_tier BETWEEN 1 AND 6)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (evidence_tier above range; FK=OFF)
 **SQL:**
 ```sql
@@ -4553,7 +4542,7 @@ INSERT INTO "economics_entries" ("entry_id", "pillar", "entry_type", "source", "
 **Exception:** `IntegrityError: CHECK constraint failed: evidence_tier IS NULL OR evidence_tier BETWEEN 1 AND 6`
 **Verdict:** `OK`
 
-### [0433] A6/OFF — economics_entries CHECK(confidence IS NULL OR confidence IN ('HIGH','MODERATE','LOW'))   `2026-08-12 05:22:48Z`
+### [0432] A6/OFF — economics_entries CHECK(confidence IS NULL OR confidence IN ('HIGH','MODERATE','LOW'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (confidence outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4564,7 +4553,7 @@ INSERT INTO "economics_entries" ("entry_id", "pillar", "entry_type", "source", "
 **Exception:** `IntegrityError: CHECK constraint failed: confidence IS NULL OR confidence IN ('HIGH','MODERATE','LOW')`
 **Verdict:** `OK`
 
-### [0434] A6/OFF — economics_entries CHECK(quant_status IS NULL OR quant_status IN ('VERIFIED-QUANT','UNVERIFIED-QUANT'))   `2026-08-12 05:22:48Z`
+### [0433] A6/OFF — economics_entries CHECK(quant_status IS NULL OR quant_status IN ('VERIFIED-QUANT','UNVERIFIED-QUANT'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (quant_status outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4576,85 +4565,7 @@ INSERT INTO "economics_entries" ("entry_id", "pillar", "entry_type", "source", "
                     ('VERIFIED-QUANT','UNVERIFIED-QUANT')`
 **Verdict:** `OK`
 
-### [0435] A6/OFF — evidence_cell_state CHECK(state IN ('stated', 'provisional', 'pending', 'not_applicable'))   `2026-08-12 05:22:48Z`
-**Action:** insert row violating the CHECK (state outside enum; FK=OFF)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state") VALUES (?, ?, ?)  -- {"item_code": "A-11", "population_code": "DEM", "state": "PROBE-INVALID-ENUM"}
-```
-**Expected:** CHECK constraint failed
-**Actual:** rejected by CHECK
-**Exception:** `IntegrityError: CHECK constraint failed: state IN ('stated', 'provisional',
-                                                    'pending', 'not_applicable')`
-**Verdict:** `OK`
-
-### [0436] A6/OFF — evidence_cell_state CHECK(design_scale IN ('universal', 'population', 'person'))   `2026-08-12 05:22:48Z`
-**Action:** insert row violating the CHECK (design_scale outside enum; FK=OFF)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state", "design_scale") VALUES (?, ?, ?, ?)  -- {"item_code": "A-11", "population_code": "DEM", "state": "stated", "design_scale": "PROBE-INVALID-ENUM"}
-```
-**Expected:** CHECK constraint failed
-**Actual:** rejected by CHECK
-**Exception:** `IntegrityError: CHECK constraint failed: design_scale IN ('universal', 'population', 'person')`
-**Verdict:** `OK`
-
-### [0437] A6/OFF — evidence_cell_state CHECK(governing_refs IS NULL OR json_valid(governing_refs))   `2026-08-12 05:22:48Z`
-**Action:** insert row violating the CHECK (invalid JSON in governing_refs; FK=OFF)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state", "governing_refs") VALUES (?, ?, ?, ?)  -- {"item_code": "A-11", "population_code": "DEM", "state": "stated", "governing_refs": "{not-json"}
-```
-**Expected:** CHECK constraint failed
-**Actual:** rejected by CHECK
-**Exception:** `IntegrityError: CHECK constraint failed: governing_refs IS NULL OR json_valid(governing_refs)`
-**Verdict:** `OK`
-
-### [0438] A6/OFF — evidence_cell_state CHECK(code_floor_only IN (0, 1))   `2026-08-12 05:22:48Z`
-**Action:** insert row violating the CHECK (code_floor_only outside enum; FK=OFF)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state", "code_floor_only") VALUES (?, ?, ?, ?)  -- {"item_code": "A-11", "population_code": "DEM", "state": "stated", "code_floor_only": 987654321}
-```
-**Expected:** CHECK constraint failed
-**Actual:** rejected by CHECK
-**Exception:** `IntegrityError: CHECK constraint failed: code_floor_only IN (0, 1)`
-**Verdict:** `OK`
-
-### [0439] A6/OFF — evidence_cell_state CHECK(has_unverified_sources IN (0, 1))   `2026-08-12 05:22:48Z`
-**Action:** insert row violating the CHECK (has_unverified_sources outside enum; FK=OFF)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state", "has_unverified_sources") VALUES (?, ?, ?, ?)  -- {"item_code": "A-11", "population_code": "DEM", "state": "stated", "has_unverified_sources": 987654321}
-```
-**Expected:** CHECK constraint failed
-**Actual:** rejected by CHECK
-**Exception:** `IntegrityError: CHECK constraint failed: has_unverified_sources IN (0, 1)`
-**Verdict:** `OK`
-
-### [0440] A6/OFF — evidence_cell_state CHECK(all_sources_disqualified IN (0, 1))   `2026-08-12 05:22:48Z`
-**Action:** insert row violating the CHECK (all_sources_disqualified outside enum; FK=OFF)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state", "all_sources_disqualified") VALUES (?, ?, ?, ?)  -- {"item_code": "A-11", "population_code": "DEM", "state": "stated", "all_sources_disqualified": 987654321}
-```
-**Expected:** CHECK constraint failed
-**Actual:** rejected by CHECK
-**Exception:** `IntegrityError: CHECK constraint failed: all_sources_disqualified IN (0, 1)`
-**Verdict:** `OK`
-
-### [0441] A6/OFF — evidence_cell_state CHECK(regulatory_stratum_only IN (0, 1))   `2026-08-12 05:22:48Z`
-**Action:** insert row violating the CHECK (regulatory_stratum_only outside enum; FK=OFF)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state", "regulatory_stratum_only") VALUES (?, ?, ?, ?)  -- {"item_code": "A-11", "population_code": "DEM", "state": "stated", "regulatory_stratum_only": 987654321}
-```
-**Expected:** CHECK constraint failed
-**Actual:** rejected by CHECK
-**Exception:** `IntegrityError: CHECK constraint failed: regulatory_stratum_only IN (0, 1)`
-**Verdict:** `OK`
-
-### [0442] A6/OFF — evidence_population_match CHECK(match_grade IN ('EXACT','PARTIAL','PROXY','MISMATCH'))   `2026-08-12 05:22:48Z`
+### [0434] A6/OFF — evidence_population_match CHECK(match_grade IN ('EXACT','PARTIAL','PROXY','MISMATCH'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (match_grade outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4665,7 +4576,7 @@ INSERT INTO "evidence_population_match" ("match_id", "source_ref", "target_popul
 **Exception:** `IntegrityError: CHECK constraint failed: match_grade IN ('EXACT','PARTIAL','PROXY','MISMATCH')`
 **Verdict:** `OK`
 
-### [0443] A6/OFF — evidence_sources CHECK(scope IS NULL OR scope IN ( 'high_control', 'lower_control', 'national', 'international', 'intrinsic' ))   `2026-08-12 05:22:48Z`
+### [0435] A6/OFF — evidence_sources CHECK(scope IS NULL OR scope IN ( 'high_control', 'lower_control', 'national', 'international', 'intrinsic' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (scope outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4678,7 +4589,7 @@ INSERT INTO "evidence_sources" ("ref_id", "scope") VALUES (?, ?)  -- {"ref_id": 
   )`
 **Verdict:** `OK`
 
-### [0444] A6/OFF — evidence_sources CHECK(data_capture_status IN ('pending','captured','none-extractable','deferred'))   `2026-08-12 05:22:48Z`
+### [0436] A6/OFF — evidence_sources CHECK(data_capture_status IN ('pending','captured','none-extractable','deferred'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (data_capture_status outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4689,7 +4600,7 @@ INSERT INTO "evidence_sources" ("ref_id", "data_capture_status") VALUES (?, ?)  
 **Exception:** `IntegrityError: CHECK constraint failed: data_capture_status IN ('pending','captured','none-extractable','deferred')`
 **Verdict:** `OK`
 
-### [0445] A6/OFF — evidence_sources CHECK(citation_mining_status IN ('pending','mined','deferred','not-applicable'))   `2026-08-12 05:22:48Z`
+### [0437] A6/OFF — evidence_sources CHECK(citation_mining_status IN ('pending','mined','deferred','not-applicable'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (citation_mining_status outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4700,7 +4611,7 @@ INSERT INTO "evidence_sources" ("ref_id", "citation_mining_status") VALUES (?, ?
 **Exception:** `IntegrityError: CHECK constraint failed: citation_mining_status IN ('pending','mined','deferred','not-applicable')`
 **Verdict:** `OK`
 
-### [0446] A6/OFF — evidence_sources CHECK(processing_blocked_reason IS NULL OR processing_blocked_reason IN ( 'no-full-text', 'paywalled', 'no-doi', 'no)   `2026-08-12 05:22:48Z`
+### [0438] A6/OFF — evidence_sources CHECK(processing_blocked_reason IS NULL OR processing_blocked_reason IN ( 'no-full-text', 'paywalled', 'no-doi', 'no)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (processing_blocked_reason outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4721,7 +4632,7 @@ INSERT INTO "evidence_sources" ("ref_id", "processing_blocked_reason") VALUES (?
   )`
 **Verdict:** `OK`
 
-### [0447] A6/OFF — evidence_sources CHECK(verification_disposition IS NULL OR verification_disposition IN ('OPEN','CLOSED'))   `2026-08-12 05:22:48Z`
+### [0439] A6/OFF — evidence_sources CHECK(verification_disposition IS NULL OR verification_disposition IN ('OPEN','CLOSED'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (verification_disposition outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4733,7 +4644,7 @@ INSERT INTO "evidence_sources" ("ref_id", "verification_disposition") VALUES (?,
          OR verification_disposition IN ('OPEN','CLOSED')`
 **Verdict:** `OK`
 
-### [0448] A6/OFF — evidence_sources CHECK(verification_method IS NULL OR verification_method IN ( 'direct-render', 'co1-attestation', 'corroborated-not-)   `2026-08-12 05:22:48Z`
+### [0440] A6/OFF — evidence_sources CHECK(verification_method IS NULL OR verification_method IN ( 'direct-render', 'co1-attestation', 'corroborated-not-)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (verification_method outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4750,7 +4661,7 @@ INSERT INTO "evidence_sources" ("ref_id", "verification_method") VALUES (?, ?)  
   )`
 **Verdict:** `OK`
 
-### [0449] A6/OFF — evidence_sources CHECK(verification_closure_reason IS NULL OR verification_closure_reason IN ( 'paywalled', 'print-only', 'access-den)   `2026-08-12 05:22:48Z`
+### [0441] A6/OFF — evidence_sources CHECK(verification_closure_reason IS NULL OR verification_closure_reason IN ( 'paywalled', 'print-only', 'access-den)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (verification_closure_reason outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4768,7 +4679,7 @@ INSERT INTO "evidence_sources" ("ref_id", "verification_closure_reason") VALUES 
   )`
 **Verdict:** `OK`
 
-### [0450] A6/OFF — external_root_registry CHECK(root_type IN ( 'measurement_primary', 'participatory_finding', 'committee_assertion', 'derived_calculation', ')   `2026-08-12 05:22:48Z`
+### [0442] A6/OFF — external_root_registry CHECK(root_type IN ( 'measurement_primary', 'participatory_finding', 'committee_assertion', 'derived_calculation', ')   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (root_type outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4782,7 +4693,7 @@ INSERT INTO "external_root_registry" ("root_id", "description", "root_type") VAL
                               'untraced')`
 **Verdict:** `OK`
 
-### [0451] A6/OFF — gap_mining CHECK(outcome IN ( 'closure_evidence_found', 'partial_evidence_found', 'null_result', 'gap_recategorized', 'deferred)   `2026-08-12 05:22:48Z`
+### [0443] A6/OFF — gap_mining CHECK(outcome IN ( 'closure_evidence_found', 'partial_evidence_found', 'null_result', 'gap_recategorized', 'deferred)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (outcome outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4799,7 +4710,7 @@ INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "searc
     )`
 **Verdict:** `OK`
 
-### [0452] A6/OFF — gap_mining CHECK(check_method IN ( 'pubmed_cluster', 'scholar_gateway_lived_experience', 'cochrane_direct', 'standards_body_dir)   `2026-08-12 05:22:48Z`
+### [0444] A6/OFF — gap_mining CHECK(check_method IN ( 'pubmed_cluster', 'scholar_gateway_lived_experience', 'cochrane_direct', 'standards_body_dir)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (check_method outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4817,7 +4728,7 @@ INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "searc
     )`
 **Verdict:** `OK`
 
-### [0453] A6/OFF — gap_mining CHECK( outcome != 'closure_evidence_found' OR (discoveries_logged IS NOT NULL AND discoveries_logged != '[]') )   `2026-08-12 05:22:48Z`
+### [0445] A6/OFF — gap_mining CHECK( outcome != 'closure_evidence_found' OR (discoveries_logged IS NOT NULL AND discoveries_logged != '[]') )   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (outcome='closure_evidence_found' with discoveries_logged NULL; FK=OFF)
 **SQL:**
 ```sql
@@ -4829,7 +4740,7 @@ INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "searc
         OR (discoveries_logged IS NOT NULL AND discoveries_logged != '[]')`
 **Verdict:** `OK`
 
-### [0454] A6/OFF — gap_mining CHECK( outcome != 'gap_recategorized' OR (notes IS NOT NULL AND length(notes) >= 20) )   `2026-08-12 05:22:48Z`
+### [0446] A6/OFF — gap_mining CHECK( outcome != 'gap_recategorized' OR (notes IS NOT NULL AND length(notes) >= 20) )   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (outcome='gap_recategorized' with notes NULL; FK=OFF)
 **SQL:**
 ```sql
@@ -4841,7 +4752,7 @@ INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "searc
         OR (notes IS NOT NULL AND length(notes) >= 20)`
 **Verdict:** `OK`
 
-### [0455] A6/OFF — gap_mining CHECK( outcome != 'deferred' OR (notes IS NOT NULL AND length(notes) >= 10) )   `2026-08-12 05:22:48Z`
+### [0447] A6/OFF — gap_mining CHECK( outcome != 'deferred' OR (notes IS NOT NULL AND length(notes) >= 10) )   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (outcome='deferred' with notes NULL; FK=OFF)
 **SQL:**
 ```sql
@@ -4853,7 +4764,7 @@ INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "searc
         OR (notes IS NOT NULL AND length(notes) >= 10)`
 **Verdict:** `OK`
 
-### [0456] A6/OFF — gaps CHECK(category IN ( 'RP','SW','CR','ST','MX','CD','EC','EG', 'CI','DEC','CONF','AUDT' ))   `2026-08-12 05:22:48Z`
+### [0448] A6/OFF — gaps CHECK(category IN ( 'RP','SW','CR','ST','MX','CD','EC','EG', 'CI','DEC','CONF','AUDT' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (category outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4867,7 +4778,7 @@ INSERT INTO "gaps" ("gap_id", "category", "priority", "status", "description", "
                         )`
 **Verdict:** `OK`
 
-### [0457] A6/OFF — gaps CHECK(priority IN ('P1','P2','P3'))   `2026-08-12 05:22:48Z`
+### [0449] A6/OFF — gaps CHECK(priority IN ('P1','P2','P3'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (priority outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4878,7 +4789,7 @@ INSERT INTO "gaps" ("gap_id", "category", "priority", "status", "description", "
 **Exception:** `IntegrityError: CHECK constraint failed: priority IN ('P1','P2','P3')`
 **Verdict:** `OK`
 
-### [0458] A6/OFF — gaps CHECK(status LIKE 'OPEN%' OR status LIKE 'CLOSED%')   `2026-08-12 05:22:48Z`
+### [0450] A6/OFF — gaps CHECK(status LIKE 'OPEN%' OR status LIKE 'CLOSED%')   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (status fails LIKE; FK=OFF)
 **SQL:**
 ```sql
@@ -4889,7 +4800,7 @@ INSERT INTO "gaps" ("gap_id", "category", "priority", "status", "description", "
 **Exception:** `IntegrityError: CHECK constraint failed: status LIKE 'OPEN%' OR status LIKE 'CLOSED%'`
 **Verdict:** `OK`
 
-### [0459] A6/OFF — gaps CHECK(mining_addressability IS NULL OR mining_addressability IN ( 'ADDRESSABLE', 'NOT-ADDRESSABLE', 'TRIAGE-NEEDED' )   `2026-08-12 05:22:48Z`
+### [0451] A6/OFF — gaps CHECK(mining_addressability IS NULL OR mining_addressability IN ( 'ADDRESSABLE', 'NOT-ADDRESSABLE', 'TRIAGE-NEEDED' )   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (mining_addressability outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4904,7 +4815,7 @@ INSERT INTO "gaps" ("gap_id", "category", "priority", "status", "description", "
     )`
 **Verdict:** `OK`
 
-### [0460] A6/OFF — item_audit_runs CHECK(status IN ('IN-PROGRESS','COMPLETE','HANDED-OFF'))   `2026-08-12 05:22:48Z`
+### [0452] A6/OFF — item_audit_runs CHECK(status IN ('IN-PROGRESS','COMPLETE','HANDED-OFF'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (status outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4915,7 +4826,7 @@ INSERT INTO "item_audit_runs" ("run_id", "item_code", "session", "created_at", "
 **Exception:** `IntegrityError: CHECK constraint failed: status IN ('IN-PROGRESS','COMPLETE','HANDED-OFF')`
 **Verdict:** `OK`
 
-### [0461] A6/OFF — item_axis_links CHECK(strength_band IN ('full','partial','weak'))   `2026-08-12 05:22:48Z`
+### [0453] A6/OFF — item_axis_links CHECK(strength_band IN ('full','partial','weak'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (strength_band outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4926,7 +4837,7 @@ INSERT INTO "item_axis_links" ("item_code", "axis_code", "strength_band") VALUES
 **Exception:** `IntegrityError: CHECK constraint failed: strength_band IN ('full','partial','weak')`
 **Verdict:** `OK`
 
-### [0462] A6/OFF — item_axis_links CHECK(use_mode IN ('independent','assisted','collective') OR use_mode IS NULL)   `2026-08-12 05:22:48Z`
+### [0454] A6/OFF — item_axis_links CHECK(use_mode IN ('independent','assisted','collective') OR use_mode IS NULL)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (use_mode outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4937,11 +4848,11 @@ INSERT INTO "item_axis_links" ("item_code", "axis_code", "use_mode") VALUES (?, 
 **Exception:** `IntegrityError: CHECK constraint failed: use_mode IN ('independent','assisted','collective') OR use_mode IS NULL`
 **Verdict:** `OK`
 
-### [0463] A6/OFF — item_bpc_links CHECK(link_type IN ( 'primary','parameter','context','secondary' ))   `2026-08-12 05:22:48Z`
+### [0455] A6/OFF — item_bpc_links CHECK(link_type IN ( 'primary','parameter','context','secondary' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (link_type outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "item_bpc_links" ("item_code", "slug", "link_type", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?)  -- {"item_code": "A-10b", "slug": "PROBE-PK-273", "link_type": "PROBE-INVALID-ENUM", "created_at": "PROBE-1075", "created_by_session": "PROBE-1076"}
+INSERT INTO "item_bpc_links" ("item_code", "slug", "link_type", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?)  -- {"item_code": "I-04", "slug": "PROBE-PK-267", "link_type": "PROBE-INVALID-ENUM", "created_at": "PROBE-1075", "created_by_session": "PROBE-1076"}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
@@ -4950,7 +4861,7 @@ INSERT INTO "item_bpc_links" ("item_code", "slug", "link_type", "created_at", "c
     )`
 **Verdict:** `OK`
 
-### [0464] A6/OFF — item_population_links CHECK(applicability IN ( 'applies', 'applies_strictly', 'applies_loosely', 'context_dependent', 'does_not_apply' ))   `2026-08-12 05:22:48Z`
+### [0456] A6/OFF — item_population_links CHECK(applicability IN ( 'applies', 'applies_strictly', 'applies_loosely', 'context_dependent', 'does_not_apply' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (applicability outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4964,7 +4875,7 @@ INSERT INTO "item_population_links" ("item_code", "population_code", "subtype", 
                       )`
 **Verdict:** `OK`
 
-### [0465] A6/OFF — items CHECK(category IN ( 'A','B','C','D','E','F','G','H','I','J','K' ))   `2026-08-12 05:22:48Z`
+### [0457] A6/OFF — items CHECK(category IN ( 'A','B','C','D','E','F','G','H','I','J','K' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (category outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4977,7 +4888,7 @@ INSERT INTO "items" ("item_code", "category", "name", "created_at", "created_by_
                         )`
 **Verdict:** `OK`
 
-### [0466] A6/OFF — items CHECK(status IN ('draft','active','merged','retired'))   `2026-08-12 05:22:48Z`
+### [0458] A6/OFF — items CHECK(status IN ('draft','active','merged','retired'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (status outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4988,7 +4899,7 @@ INSERT INTO "items" ("item_code", "category", "name", "created_at", "created_by_
 **Exception:** `IntegrityError: CHECK constraint failed: status IN ('draft','active','merged','retired')`
 **Verdict:** `OK`
 
-### [0467] A6/OFF — jurisdictional_values CHECK(is_code_minimum IS NULL OR is_code_minimum IN (0, 1))   `2026-08-12 05:22:48Z`
+### [0459] A6/OFF — jurisdictional_values CHECK(is_code_minimum IS NULL OR is_code_minimum IN (0, 1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (is_code_minimum outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -4999,7 +4910,7 @@ INSERT INTO "jurisdictional_values" ("item_code", "jurisdiction", "is_code_minim
 **Exception:** `IntegrityError: CHECK constraint failed: is_code_minimum IS NULL OR is_code_minimum IN (0, 1)`
 **Verdict:** `OK`
 
-### [0468] A6/OFF — lang_jur_map CHECK(role IN ('PRIMARY', 'SECONDARY'))   `2026-08-12 05:22:48Z`
+### [0460] A6/OFF — lang_jur_map CHECK(role IN ('PRIMARY', 'SECONDARY'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (role outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5010,7 +4921,7 @@ INSERT INTO "lang_jur_map" ("language", "jurisdiction", "role") VALUES (?, ?, ?)
 **Exception:** `IntegrityError: CHECK constraint failed: role IN ('PRIMARY', 'SECONDARY')`
 **Verdict:** `OK`
 
-### [0469] A6/OFF — life_stage_modifiers CHECK(code IN ('SEN','CHD'))   `2026-08-12 05:22:48Z`
+### [0461] A6/OFF — life_stage_modifiers CHECK(code IN ('SEN','CHD'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (code outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5021,7 +4932,7 @@ INSERT INTO "life_stage_modifiers" ("code", "label", "definition") VALUES (?, ?,
 **Exception:** `IntegrityError: CHECK constraint failed: code IN ('SEN','CHD')`
 **Verdict:** `OK`
 
-### [0470] A6/OFF — population_axis_map CHECK(role IN ('ALIAS','PRIMARY','SECONDARY','SITUATIONAL'))   `2026-08-12 05:22:48Z`
+### [0462] A6/OFF — population_axis_map CHECK(role IN ('ALIAS','PRIMARY','SECONDARY','SITUATIONAL'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (role outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5032,7 +4943,7 @@ INSERT INTO "population_axis_map" ("population_code", "axis_code", "role") VALUE
 **Exception:** `IntegrityError: CHECK constraint failed: role IN ('ALIAS','PRIMARY','SECONDARY','SITUATIONAL')`
 **Verdict:** `OK`
 
-### [0471] A6/OFF — population_reclass CHECK(row_kind IN ('EXISTING-POP','NEW-PROFILE'))   `2026-08-12 05:22:48Z`
+### [0463] A6/OFF — population_reclass CHECK(row_kind IN ('EXISTING-POP','NEW-PROFILE'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (row_kind outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5043,7 +4954,7 @@ INSERT INTO "population_reclass" ("population_code", "row_kind", "layer", "ratio
 **Exception:** `IntegrityError: CHECK constraint failed: row_kind IN ('EXISTING-POP','NEW-PROFILE')`
 **Verdict:** `OK`
 
-### [0472] A6/OFF — population_reclass CHECK(layer IN ('AXIS-ALIAS','PROFILE','QUALIFIER','SPLIT'))   `2026-08-12 05:22:48Z`
+### [0464] A6/OFF — population_reclass CHECK(layer IN ('AXIS-ALIAS','PROFILE','QUALIFIER','SPLIT'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (layer outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5054,7 +4965,7 @@ INSERT INTO "population_reclass" ("population_code", "row_kind", "layer", "ratio
 **Exception:** `IntegrityError: CHECK constraint failed: layer IN ('AXIS-ALIAS','PROFILE','QUALIFIER','SPLIT')`
 **Verdict:** `OK`
 
-### [0473] A6/OFF — population_reclass CHECK(profile_kind IN ('diagnostic','identity-cultural','demographic','anthropometric','compound','umbrella'))   `2026-08-12 05:22:48Z`
+### [0465] A6/OFF — population_reclass CHECK(profile_kind IN ('diagnostic','identity-cultural','demographic','anthropometric','compound','umbrella'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (profile_kind outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5066,7 +4977,7 @@ INSERT INTO "population_reclass" ("population_code", "row_kind", "layer", "ratio
                      ('diagnostic','identity-cultural','demographic','anthropometric','compound','umbrella')`
 **Verdict:** `OK`
 
-### [0474] A6/OFF — population_reclass CHECK(mapping_confidence IN ('high','moderate','low','minimal','TO-ASSESS') OR mapping_confidence IS NULL)   `2026-08-12 05:22:48Z`
+### [0466] A6/OFF — population_reclass CHECK(mapping_confidence IN ('high','moderate','low','minimal','TO-ASSESS') OR mapping_confidence IS NULL)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (mapping_confidence outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5078,7 +4989,7 @@ INSERT INTO "population_reclass" ("population_code", "row_kind", "layer", "ratio
                      ('high','moderate','low','minimal','TO-ASSESS') OR mapping_confidence IS NULL`
 **Verdict:** `OK`
 
-### [0475] A6/OFF — population_reclass CHECK(fluctuating IN ('yes','no') OR fluctuating IS NULL)   `2026-08-12 05:22:48Z`
+### [0467] A6/OFF — population_reclass CHECK(fluctuating IN ('yes','no') OR fluctuating IS NULL)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (fluctuating outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5089,7 +5000,7 @@ INSERT INTO "population_reclass" ("population_code", "row_kind", "layer", "ratio
 **Exception:** `IntegrityError: CHECK constraint failed: fluctuating IN ('yes','no') OR fluctuating IS NULL`
 **Verdict:** `OK`
 
-### [0476] A6/OFF — populations CHECK(category IN ( 'mobility', 'sensory', 'cognitive', 'mental_health', 'pain_fatigue', 'neurological', 'developmen)   `2026-08-12 05:22:48Z`
+### [0468] A6/OFF — populations CHECK(category IN ( 'mobility', 'sensory', 'cognitive', 'mental_health', 'pain_fatigue', 'neurological', 'developmen)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (category outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5104,7 +5015,7 @@ INSERT INTO "populations" ("population_code", "display_name", "category") VALUES
                       )`
 **Verdict:** `OK`
 
-### [0477] A6/OFF — populations CHECK(is_compound IN (0,1))   `2026-08-12 05:22:48Z`
+### [0469] A6/OFF — populations CHECK(is_compound IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (is_compound outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5115,7 +5026,7 @@ INSERT INTO "populations" ("population_code", "display_name", "is_compound") VAL
 **Exception:** `IntegrityError: CHECK constraint failed: is_compound IN (0,1)`
 **Verdict:** `OK`
 
-### [0478] A6/OFF — populations CHECK(status IN ('active', 'deprecated'))   `2026-08-12 05:22:48Z`
+### [0470] A6/OFF — populations CHECK(status IN ('active', 'deprecated'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (status outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5126,11 +5037,11 @@ INSERT INTO "populations" ("population_code", "display_name", "status") VALUES (
 **Exception:** `IntegrityError: CHECK constraint failed: status IN ('active', 'deprecated')`
 **Verdict:** `OK`
 
-### [0479] A6/OFF — reasoning_doc_citations CHECK(claim_type IN ( 'numerical_spec','jurisdiction_value','qualitative','definitional' ))   `2026-08-12 05:22:48Z`
+### [0471] A6/OFF — reasoning_doc_citations CHECK(claim_type IN ( 'numerical_spec','jurisdiction_value','qualitative','definitional' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (claim_type outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-1121", "reasoning_doc_slug": "PROBE-PK-273", "parameter": "PROBE-1122", "claim_type": "PROBE-INVALID-ENUM", "source_ref_id": "PROBE-PK-1012", "verified_at": "PROBE-1123", "verified_by_session": "PROBE-1124", "value_match": "EXACT", "claim_match": "SUPPORTED", "claim_text": "PROBE-1125", "claimed_value": "PROBE-1126"}
+INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-1121", "reasoning_doc_slug": "PROBE-PK-267", "parameter": "PROBE-1122", "claim_type": "PROBE-INVALID-ENUM", "source_ref_id": "PROBE-PK-1012", "verified_at": "PROBE-1123", "verified_by_session": "PROBE-1124", "value_match": "EXACT", "claim_match": "SUPPORTED", "claimed_value": "PROBE-1125", "claim_text": "PROBE-1126"}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
@@ -5139,11 +5050,11 @@ INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "par
     )`
 **Verdict:** `OK`
 
-### [0480] A6/OFF — reasoning_doc_citations CHECK(value_match IN ( 'EXACT','WITHIN-TOLERANCE','DIFFERENT','NOT-FOUND','PAYWALL','SUPERSEDED' ))   `2026-08-12 05:22:48Z`
+### [0472] A6/OFF — reasoning_doc_citations CHECK(value_match IN ( 'EXACT','WITHIN-TOLERANCE','DIFFERENT','NOT-FOUND','PAYWALL','SUPERSEDED' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (value_match outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-1127", "reasoning_doc_slug": "PROBE-PK-273", "parameter": "PROBE-1128", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-1012", "verified_at": "PROBE-1129", "verified_by_session": "PROBE-1130", "value_match": "PROBE-INVALID-ENUM", "claim_match": "SUPPORTED", "claim_text": "PROBE-1131", "claimed_value": "PROBE-1132"}
+INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-1127", "reasoning_doc_slug": "PROBE-PK-267", "parameter": "PROBE-1128", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-1012", "verified_at": "PROBE-1129", "verified_by_session": "PROBE-1130", "value_match": "PROBE-INVALID-ENUM", "claim_match": "SUPPORTED", "claimed_value": "PROBE-1131", "claim_text": "PROBE-1132"}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
@@ -5152,11 +5063,11 @@ INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "par
     )`
 **Verdict:** `OK`
 
-### [0481] A6/OFF — reasoning_doc_citations CHECK(claim_match IN ( 'SUPPORTED','PARTIAL','NOT-FOUND','PAYWALL','CONTRADICTED' ))   `2026-08-12 05:22:48Z`
+### [0473] A6/OFF — reasoning_doc_citations CHECK(claim_match IN ( 'SUPPORTED','PARTIAL','NOT-FOUND','PAYWALL','CONTRADICTED' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (claim_match outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-1133", "reasoning_doc_slug": "PROBE-PK-273", "parameter": "PROBE-1134", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-1012", "verified_at": "PROBE-1135", "verified_by_session": "PROBE-1136", "value_match": "EXACT", "claim_match": "PROBE-INVALID-ENUM", "claim_text": "PROBE-1137", "claimed_value": "PROBE-1138"}
+INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-1133", "reasoning_doc_slug": "PROBE-PK-267", "parameter": "PROBE-1134", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-1012", "verified_at": "PROBE-1135", "verified_by_session": "PROBE-1136", "value_match": "EXACT", "claim_match": "PROBE-INVALID-ENUM", "claimed_value": "PROBE-1137", "claim_text": "PROBE-1138"}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
@@ -5165,22 +5076,22 @@ INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "par
     )`
 **Verdict:** `OK`
 
-### [0482] A6/OFF — reasoning_doc_citations CHECK(paywall_purchase_candidate IN (0,1))   `2026-08-12 05:22:48Z`
+### [0474] A6/OFF — reasoning_doc_citations CHECK(paywall_purchase_candidate IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (paywall_purchase_candidate outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value", "paywall_purchase_candidate") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-1139", "reasoning_doc_slug": "PROBE-PK-273", "parameter": "PROBE-1140", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-1012", "verified_at": "PROBE-1141", "verified_by_session": "PROBE-1142", "value_match": "EXACT", "claim_match": "SUPPORTED", "claim_text": "PROBE-1143", "claimed_value": "PROBE-1144", "paywall_purchase_candidate": 987654321}
+INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text", "paywall_purchase_candidate") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-1139", "reasoning_doc_slug": "PROBE-PK-267", "parameter": "PROBE-1140", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-1012", "verified_at": "PROBE-1141", "verified_by_session": "PROBE-1142", "value_match": "EXACT", "claim_match": "SUPPORTED", "claimed_value": "PROBE-1143", "claim_text": "PROBE-1144", "paywall_purchase_candidate": 987654321}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
 **Exception:** `IntegrityError: CHECK constraint failed: paywall_purchase_candidate IN (0,1)`
 **Verdict:** `OK`
 
-### [0483] A6/OFF — reasoning_doc_citations CHECK( (claim_type IN ('numerical_spec','jurisdiction_value') AND claimed_value IS NOT NULL AND value_match IS NOT N)   `2026-08-12 05:22:48Z`
+### [0475] A6/OFF — reasoning_doc_citations CHECK( (claim_type IN ('numerical_spec','jurisdiction_value') AND claimed_value IS NOT NULL AND value_match IS NOT N)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (claim_type outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-1145", "reasoning_doc_slug": "PROBE-PK-273", "parameter": "PROBE-1146", "claim_type": "PROBE-INVALID-ENUM", "source_ref_id": "PROBE-PK-1012", "verified_at": "PROBE-1147", "verified_by_session": "PROBE-1148", "value_match": "EXACT", "claim_match": "SUPPORTED", "claim_text": "PROBE-1149", "claimed_value": "PROBE-1150"}
+INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-1145", "reasoning_doc_slug": "PROBE-PK-267", "parameter": "PROBE-1146", "claim_type": "PROBE-INVALID-ENUM", "source_ref_id": "PROBE-PK-1012", "verified_at": "PROBE-1147", "verified_by_session": "PROBE-1148", "value_match": "EXACT", "claim_match": "SUPPORTED", "claimed_value": "PROBE-1149", "claim_text": "PROBE-1150"}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
@@ -5189,7 +5100,7 @@ INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "par
     )`
 **Verdict:** `OK`
 
-### [0484] A6/OFF — room_items CHECK(applicability IN ('applies','conditional','not-applicable'))   `2026-08-12 05:22:48Z`
+### [0476] A6/OFF — room_items CHECK(applicability IN ('applies','conditional','not-applicable'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (applicability outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5200,7 +5111,7 @@ INSERT INTO "room_items" ("room_code", "item_code", "applicability") VALUES (?, 
 **Exception:** `IntegrityError: CHECK constraint failed: applicability IN ('applies','conditional','not-applicable')`
 **Verdict:** `OK`
 
-### [0485] A6/OFF — rooms CHECK(status IN ('active','draft','retired'))   `2026-08-12 05:22:48Z`
+### [0477] A6/OFF — rooms CHECK(status IN ('active','draft','retired'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (status outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5211,11 +5122,11 @@ INSERT INTO "rooms" ("room_code", "name", "status") VALUES (?, ?, ?)  -- {"room_
 **Exception:** `IntegrityError: CHECK constraint failed: status IN ('active','draft','retired')`
 **Verdict:** `OK`
 
-### [0486] A6/OFF — search_candidates CHECK(disposition IN ('REHOME','MISCELLANEOUS','PENDING-VERIFICATION','OUT-OF-SCOPE','ADMITTED'))   `2026-08-12 05:22:48Z`
+### [0478] A6/OFF — search_candidates CHECK(disposition IN ('REHOME','MISCELLANEOUS','PENDING-VERIFICATION','OUT-OF-SCOPE','ADMITTED'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (disposition outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "session", "created_at") VALUES (?, ?, ?, ?, ?)  -- {"found_under_slug": "PROBE-PK-273", "disposition": "PROBE-INVALID-ENUM", "title": "PROBE-1154", "session": "PROBE-1155", "created_at": "PROBE-1156"}
+INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "session", "created_at") VALUES (?, ?, ?, ?, ?)  -- {"found_under_slug": "PROBE-PK-267", "disposition": "PROBE-INVALID-ENUM", "title": "PROBE-1154", "session": "PROBE-1155", "created_at": "PROBE-1156"}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
@@ -5223,11 +5134,11 @@ INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "se
                      ('REHOME','MISCELLANEOUS','PENDING-VERIFICATION','OUT-OF-SCOPE','ADMITTED')`
 **Verdict:** `OK`
 
-### [0487] A6/OFF — search_candidates CHECK(locator_status IS NULL OR locator_status IN ('UNVERIFIED','RESOLVED','DEAD'))   `2026-08-12 05:22:48Z`
+### [0479] A6/OFF — search_candidates CHECK(locator_status IS NULL OR locator_status IN ('UNVERIFIED','RESOLVED','DEAD'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (locator_status outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "session", "created_at", "locator_status") VALUES (?, ?, ?, ?, ?, ?)  -- {"found_under_slug": "PROBE-PK-273", "disposition": "REHOME", "title": "PROBE-1157", "session": "PROBE-1158", "created_at": "PROBE-1159", "locator_status": "PROBE-INVALID-ENUM"}
+INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "session", "created_at", "locator_status") VALUES (?, ?, ?, ?, ?, ?)  -- {"found_under_slug": "PROBE-PK-267", "disposition": "REHOME", "title": "PROBE-1157", "session": "PROBE-1158", "created_at": "PROBE-1159", "locator_status": "PROBE-INVALID-ENUM"}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
@@ -5235,88 +5146,88 @@ INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "se
                      ('UNVERIFIED','RESOLVED','DEAD')`
 **Verdict:** `OK`
 
-### [0488] A6/OFF — search_candidates CHECK(tier_guess IS NULL OR tier_guess BETWEEN 1 AND 6)   `2026-08-12 05:22:48Z`
+### [0480] A6/OFF — search_candidates CHECK(tier_guess IS NULL OR tier_guess BETWEEN 1 AND 6)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (tier_guess above range; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "session", "created_at", "tier_guess") VALUES (?, ?, ?, ?, ?, ?)  -- {"found_under_slug": "PROBE-PK-273", "disposition": "REHOME", "title": "PROBE-1160", "session": "PROBE-1161", "created_at": "PROBE-1162", "tier_guess": 7}
+INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "session", "created_at", "tier_guess") VALUES (?, ?, ?, ?, ?, ?)  -- {"found_under_slug": "PROBE-PK-267", "disposition": "REHOME", "title": "PROBE-1160", "session": "PROBE-1161", "created_at": "PROBE-1162", "tier_guess": 7}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
 **Exception:** `IntegrityError: CHECK constraint failed: tier_guess IS NULL OR tier_guess BETWEEN 1 AND 6`
 **Verdict:** `OK`
 
-### [0489] A6/OFF — search_candidates CHECK(harm_finding IN (0,1))   `2026-08-12 05:22:48Z`
+### [0481] A6/OFF — search_candidates CHECK(harm_finding IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (harm_finding outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "session", "created_at", "harm_finding") VALUES (?, ?, ?, ?, ?, ?)  -- {"found_under_slug": "PROBE-PK-273", "disposition": "REHOME", "title": "PROBE-1163", "session": "PROBE-1164", "created_at": "PROBE-1165", "harm_finding": 987654321}
+INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "session", "created_at", "harm_finding") VALUES (?, ?, ?, ?, ?, ?)  -- {"found_under_slug": "PROBE-PK-267", "disposition": "REHOME", "title": "PROBE-1163", "session": "PROBE-1164", "created_at": "PROBE-1165", "harm_finding": 987654321}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
 **Exception:** `IntegrityError: CHECK constraint failed: harm_finding IN (0,1)`
 **Verdict:** `OK`
 
-### [0490] A6/OFF — search_coverage CHECK(status IN ('SEARCHED','THIN','NO-DATA','NOT-RUN'))   `2026-08-12 05:22:48Z`
+### [0482] A6/OFF — search_coverage CHECK(status IN ('SEARCHED','THIN','NO-DATA','NOT-RUN'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (status outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "jurisdiction": "PROBE-1166", "status": "PROBE-INVALID-ENUM", "created_at": "PROBE-1167", "created_by_session": "PROBE-1168", "updated_at": "PROBE-1169", "updated_by_session": "PROBE-1170"}
+INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "jurisdiction": "PROBE-1166", "status": "PROBE-INVALID-ENUM", "created_at": "PROBE-1167", "created_by_session": "PROBE-1168", "updated_at": "PROBE-1169", "updated_by_session": "PROBE-1170"}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
 **Exception:** `IntegrityError: CHECK constraint failed: status IN ('SEARCHED','THIN','NO-DATA','NOT-RUN')`
 **Verdict:** `OK`
 
-### [0491] A6/OFF — search_coverage CHECK(co1_attempted IN (0,1))   `2026-08-12 05:22:48Z`
+### [0483] A6/OFF — search_coverage CHECK(co1_attempted IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (co1_attempted outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session", "co1_attempted") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "jurisdiction": "PROBE-1171", "status": "SEARCHED", "created_at": "PROBE-1172", "created_by_session": "PROBE-1173", "updated_at": "PROBE-1174", "updated_by_session": "PROBE-1175", "co1_attempted": 987654321}
+INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session", "co1_attempted") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "jurisdiction": "PROBE-1171", "status": "SEARCHED", "created_at": "PROBE-1172", "created_by_session": "PROBE-1173", "updated_at": "PROBE-1174", "updated_by_session": "PROBE-1175", "co1_attempted": 987654321}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
 **Exception:** `IntegrityError: CHECK constraint failed: co1_attempted IN (0,1)`
 **Verdict:** `OK`
 
-### [0492] A6/OFF — search_coverage CHECK(tier5_attempted IN (0,1))   `2026-08-12 05:22:48Z`
+### [0484] A6/OFF — search_coverage CHECK(tier5_attempted IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (tier5_attempted outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session", "tier5_attempted") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "jurisdiction": "PROBE-1176", "status": "SEARCHED", "created_at": "PROBE-1177", "created_by_session": "PROBE-1178", "updated_at": "PROBE-1179", "updated_by_session": "PROBE-1180", "tier5_attempted": 987654321}
+INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session", "tier5_attempted") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "jurisdiction": "PROBE-1176", "status": "SEARCHED", "created_at": "PROBE-1177", "created_by_session": "PROBE-1178", "updated_at": "PROBE-1179", "updated_by_session": "PROBE-1180", "tier5_attempted": 987654321}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
 **Exception:** `IntegrityError: CHECK constraint failed: tier5_attempted IN (0,1)`
 **Verdict:** `OK`
 
-### [0493] A6/OFF — search_coverage CHECK(tier6_attempted IN (0,1))   `2026-08-12 05:22:48Z`
+### [0485] A6/OFF — search_coverage CHECK(tier6_attempted IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (tier6_attempted outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session", "tier6_attempted") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "jurisdiction": "PROBE-1181", "status": "SEARCHED", "created_at": "PROBE-1182", "created_by_session": "PROBE-1183", "updated_at": "PROBE-1184", "updated_by_session": "PROBE-1185", "tier6_attempted": 987654321}
+INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session", "tier6_attempted") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "jurisdiction": "PROBE-1181", "status": "SEARCHED", "created_at": "PROBE-1182", "created_by_session": "PROBE-1183", "updated_at": "PROBE-1184", "updated_by_session": "PROBE-1185", "tier6_attempted": 987654321}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
 **Exception:** `IntegrityError: CHECK constraint failed: tier6_attempted IN (0,1)`
 **Verdict:** `OK`
 
-### [0494] A6/OFF — search_executions CHECK(target_tier IS NULL OR target_tier BETWEEN 1 AND 6)   `2026-08-12 05:22:48Z`
+### [0486] A6/OFF — search_executions CHECK(target_tier IS NULL OR target_tier BETWEEN 1 AND 6)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (target_tier above range; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at", "target_tier") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": "PROBE-1186", "query_text": "PROBE-1187", "engine": "PROBE-1188", "depth_method": "scoping", "session": "PROBE-1189", "executed_at": "PROBE-1190", "target_tier": 7}
+INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at", "target_tier") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": "PROBE-1186", "query_text": "PROBE-1187", "engine": "PROBE-1188", "depth_method": "scoping", "session": "PROBE-1189", "executed_at": "PROBE-1190", "target_tier": 7}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
 **Exception:** `IntegrityError: CHECK constraint failed: target_tier IS NULL OR target_tier BETWEEN 1 AND 6`
 **Verdict:** `OK`
 
-### [0495] A6/OFF — search_executions CHECK(target_evidence_type IS NULL OR target_evidence_type IN ('clinical','sr_meta','standard_eb','national_fw','cod)   `2026-08-12 05:22:48Z`
+### [0487] A6/OFF — search_executions CHECK(target_evidence_type IS NULL OR target_evidence_type IN ('clinical','sr_meta','standard_eb','national_fw','cod)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (target_evidence_type outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at", "target_evidence_type") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": "PROBE-1191", "query_text": "PROBE-1192", "engine": "PROBE-1193", "depth_method": "scoping", "session": "PROBE-1194", "executed_at": "PROBE-1195", "target_evidence_type": "PROBE-INVALID-ENUM"}
+INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at", "target_evidence_type") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": "PROBE-1191", "query_text": "PROBE-1192", "engine": "PROBE-1193", "depth_method": "scoping", "session": "PROBE-1194", "executed_at": "PROBE-1195", "target_evidence_type": "PROBE-INVALID-ENUM"}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
@@ -5324,11 +5235,11 @@ INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "de
      ('clinical','sr_meta','standard_eb','national_fw','code','co1','co2','grey')`
 **Verdict:** `OK`
 
-### [0496] A6/OFF — search_executions CHECK(target_scope IS NULL OR target_scope IN ('intrinsic','lower_control','high_control','national','international')   `2026-08-12 05:22:48Z`
+### [0488] A6/OFF — search_executions CHECK(target_scope IS NULL OR target_scope IN ('intrinsic','lower_control','high_control','national','international')   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (target_scope outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at", "target_scope") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": "PROBE-1196", "query_text": "PROBE-1197", "engine": "PROBE-1198", "depth_method": "scoping", "session": "PROBE-1199", "executed_at": "PROBE-1200", "target_scope": "PROBE-INVALID-ENUM"}
+INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at", "target_scope") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": "PROBE-1196", "query_text": "PROBE-1197", "engine": "PROBE-1198", "depth_method": "scoping", "session": "PROBE-1199", "executed_at": "PROBE-1200", "target_scope": "PROBE-INVALID-ENUM"}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
@@ -5336,22 +5247,22 @@ INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "de
      ('intrinsic','lower_control','high_control','national','international')`
 **Verdict:** `OK`
 
-### [0497] A6/OFF — search_executions CHECK(depth_method IN ('scoping','systematic'))   `2026-08-12 05:22:48Z`
+### [0489] A6/OFF — search_executions CHECK(depth_method IN ('scoping','systematic'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (depth_method outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": "PROBE-1201", "query_text": "PROBE-1202", "engine": "PROBE-1203", "depth_method": "PROBE-INVALID-ENUM", "session": "PROBE-1204", "executed_at": "PROBE-1205"}
+INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": "PROBE-1201", "query_text": "PROBE-1202", "engine": "PROBE-1203", "depth_method": "PROBE-INVALID-ENUM", "session": "PROBE-1204", "executed_at": "PROBE-1205"}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
 **Exception:** `IntegrityError: CHECK constraint failed: depth_method IN ('scoping','systematic')`
 **Verdict:** `OK`
 
-### [0498] A6/OFF — search_executions CHECK(mining_direction IS NULL OR mining_direction IN ('none','backward','forward','both'))   `2026-08-12 05:22:48Z`
+### [0490] A6/OFF — search_executions CHECK(mining_direction IS NULL OR mining_direction IN ('none','backward','forward','both'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (mining_direction outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at", "mining_direction") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": "PROBE-1206", "query_text": "PROBE-1207", "engine": "PROBE-1208", "depth_method": "scoping", "session": "PROBE-1209", "executed_at": "PROBE-1210", "mining_direction": "PROBE-INVALID-ENUM"}
+INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at", "mining_direction") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": "PROBE-1206", "query_text": "PROBE-1207", "engine": "PROBE-1208", "depth_method": "scoping", "session": "PROBE-1209", "executed_at": "PROBE-1210", "mining_direction": "PROBE-INVALID-ENUM"}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
@@ -5359,11 +5270,11 @@ INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "de
      ('none','backward','forward','both')`
 **Verdict:** `OK`
 
-### [0499] A6/OFF — search_executions CHECK(saturation_signal IS NULL OR saturation_signal IN ('none','partial','saturated'))   `2026-08-12 05:22:48Z`
+### [0491] A6/OFF — search_executions CHECK(saturation_signal IS NULL OR saturation_signal IN ('none','partial','saturated'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (saturation_signal outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at", "saturation_signal") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": "PROBE-1211", "query_text": "PROBE-1212", "engine": "PROBE-1213", "depth_method": "scoping", "session": "PROBE-1214", "executed_at": "PROBE-1215", "saturation_signal": "PROBE-INVALID-ENUM"}
+INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at", "saturation_signal") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": "PROBE-1211", "query_text": "PROBE-1212", "engine": "PROBE-1213", "depth_method": "scoping", "session": "PROBE-1214", "executed_at": "PROBE-1215", "saturation_signal": "PROBE-INVALID-ENUM"}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
@@ -5371,51 +5282,51 @@ INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "de
      ('none','partial','saturated')`
 **Verdict:** `OK`
 
-### [0500] A6/OFF — search_executions CHECK(backfill IN (0,1))   `2026-08-12 05:22:48Z`
+### [0492] A6/OFF — search_executions CHECK(backfill IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (backfill outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at", "backfill") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": "PROBE-1216", "query_text": "PROBE-1217", "engine": "PROBE-1218", "depth_method": "scoping", "session": "PROBE-1219", "executed_at": "PROBE-1220", "backfill": 987654321}
+INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at", "backfill") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": "PROBE-1216", "query_text": "PROBE-1217", "engine": "PROBE-1218", "depth_method": "scoping", "session": "PROBE-1219", "executed_at": "PROBE-1220", "backfill": 987654321}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
 **Exception:** `IntegrityError: CHECK constraint failed: backfill IN (0,1)`
 **Verdict:** `OK`
 
-### [0501] A6/OFF — search_executions CHECK(terms_used IS NULL OR json_valid(terms_used))   `2026-08-12 05:22:48Z`
+### [0493] A6/OFF — search_executions CHECK(terms_used IS NULL OR json_valid(terms_used))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (invalid JSON in terms_used; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at", "terms_used") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": "PROBE-1221", "query_text": "PROBE-1222", "engine": "PROBE-1223", "depth_method": "scoping", "session": "PROBE-1224", "executed_at": "PROBE-1225", "terms_used": "{not-json"}
+INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at", "terms_used") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": "PROBE-1221", "query_text": "PROBE-1222", "engine": "PROBE-1223", "depth_method": "scoping", "session": "PROBE-1224", "executed_at": "PROBE-1225", "terms_used": "{not-json"}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
 **Exception:** `IntegrityError: CHECK constraint failed: terms_used IS NULL OR json_valid(terms_used)`
 **Verdict:** `OK`
 
-### [0502] A6/OFF — search_executions CHECK(admitted_ref_ids IS NULL OR json_valid(admitted_ref_ids))   `2026-08-12 05:22:48Z`
+### [0494] A6/OFF — search_executions CHECK(admitted_ref_ids IS NULL OR json_valid(admitted_ref_ids))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (invalid JSON in admitted_ref_ids; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at", "admitted_ref_ids") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": "PROBE-1226", "query_text": "PROBE-1227", "engine": "PROBE-1228", "depth_method": "scoping", "session": "PROBE-1229", "executed_at": "PROBE-1230", "admitted_ref_ids": "{not-json"}
+INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at", "admitted_ref_ids") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": "PROBE-1226", "query_text": "PROBE-1227", "engine": "PROBE-1228", "depth_method": "scoping", "session": "PROBE-1229", "executed_at": "PROBE-1230", "admitted_ref_ids": "{not-json"}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
 **Exception:** `IntegrityError: CHECK constraint failed: admitted_ref_ids IS NULL OR json_valid(admitted_ref_ids)`
 **Verdict:** `OK`
 
-### [0503] A6/OFF — search_languages CHECK(status IN ('SEARCHED','PARTIAL','NOT-RUN'))   `2026-08-12 05:22:48Z`
+### [0495] A6/OFF — search_languages CHECK(status IN ('SEARCHED','PARTIAL','NOT-RUN'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (status outside enum; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_languages" ("slug", "language", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": "PROBE-1231", "status": "PROBE-INVALID-ENUM", "created_at": "PROBE-1232", "created_by_session": "PROBE-1233", "updated_at": "PROBE-1234", "updated_by_session": "PROBE-1235"}
+INSERT INTO "search_languages" ("slug", "language", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": "PROBE-1231", "status": "PROBE-INVALID-ENUM", "created_at": "PROBE-1232", "created_by_session": "PROBE-1233", "updated_at": "PROBE-1234", "updated_by_session": "PROBE-1235"}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
 **Exception:** `IntegrityError: CHECK constraint failed: status IN ('SEARCHED','PARTIAL','NOT-RUN')`
 **Verdict:** `OK`
 
-### [0504] A6/OFF — situations CHECK(operational_access IN ('yes','no') OR operational_access IS NULL)   `2026-08-12 05:22:48Z`
+### [0496] A6/OFF — situations CHECK(operational_access IN ('yes','no') OR operational_access IS NULL)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (operational_access outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5426,7 +5337,7 @@ INSERT INTO "situations" ("situation_id", "title", "account_language", "account_
 **Exception:** `IntegrityError: CHECK constraint failed: operational_access IN ('yes','no') OR operational_access IS NULL`
 **Verdict:** `OK`
 
-### [0505] A6/OFF — slugs CHECK(status IN ( 'ACTIVE','MERGED','STUB','PROVISIONAL' ))   `2026-08-12 05:22:48Z`
+### [0497] A6/OFF — slugs CHECK(status IN ( 'ACTIVE','MERGED','STUB','PROVISIONAL' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (status outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5439,11 +5350,11 @@ INSERT INTO "slugs" ("slug", "topic_directory", "sl_path", "bpc_path", "status",
                         )`
 **Verdict:** `OK`
 
-### [0506] A6/OFF — source_locators CHECK(doi IS NOT NULL OR url IS NOT NULL OR pmid IS NOT NULL OR pmcid IS NOT NULL OR isbn IS NOT NULL OR issn IS NOT)   `2026-08-12 05:22:48Z`
+### [0498] A6/OFF — source_locators CHECK(doi IS NOT NULL OR url IS NOT NULL OR pmid IS NOT NULL OR pmcid IS NOT NULL OR isbn IS NOT NULL OR issn IS NOT)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (all of ['doi', 'url', 'pmid', 'pmcid', 'isbn', 'issn', 'standard_number'] NULL; FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "source_locators" ("ref_id", "pmcid", "doi", "issn", "isbn", "standard_number", "url", "pmid") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-1251", "pmcid": null, "doi": null, "issn": null, "isbn": null, "standard_number": null, "url": null, "pmid": null}
+INSERT INTO "source_locators" ("ref_id", "pmcid", "pmid", "url", "standard_number", "doi", "isbn", "issn") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-1251", "pmcid": null, "pmid": null, "url": null, "standard_number": null, "doi": null, "isbn": null, "issn": null}
 ```
 **Expected:** CHECK constraint failed
 **Actual:** rejected by CHECK
@@ -5452,7 +5363,7 @@ INSERT INTO "source_locators" ("ref_id", "pmcid", "doi", "issn", "isbn", "standa
         OR standard_number IS NOT NULL`
 **Verdict:** `OK`
 
-### [0507] A6/OFF — source_value_extractions CHECK(claim_type IN ('numerical','range','qualitative','framework','absent'))   `2026-08-12 05:22:48Z`
+### [0499] A6/OFF — source_value_extractions CHECK(claim_type IN ('numerical','range','qualitative','framework','absent'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (claim_type outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5463,7 +5374,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Exception:** `IntegrityError: CHECK constraint failed: claim_type IN ('numerical','range','qualitative','framework','absent')`
 **Verdict:** `OK`
 
-### [0508] A6/OFF — source_value_extractions CHECK(extraction_method IN ('skim','full-read','re-read','auto-mined'))   `2026-08-12 05:22:48Z`
+### [0500] A6/OFF — source_value_extractions CHECK(extraction_method IN ('skim','full-read','re-read','auto-mined'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (extraction_method outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5474,7 +5385,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Exception:** `IntegrityError: CHECK constraint failed: extraction_method IN ('skim','full-read','re-read','auto-mined')`
 **Verdict:** `OK`
 
-### [0509] A6/OFF — source_value_extractions CHECK(extraction_status IN ('preliminary','reviewed','verified','contradicted','absent-confirmed'))   `2026-08-12 05:22:48Z`
+### [0501] A6/OFF — source_value_extractions CHECK(extraction_status IN ('preliminary','reviewed','verified','contradicted','absent-confirmed'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (extraction_status outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5485,7 +5396,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Exception:** `IntegrityError: CHECK constraint failed: extraction_status IN ('preliminary','reviewed','verified','contradicted','absent-confirmed')`
 **Verdict:** `OK`
 
-### [0510] A6/OFF — source_value_extractions CHECK(root_type IN ( 'measurement_primary', 'participatory_finding', 'committee_assertion', 'derived_calculation', ')   `2026-08-12 05:22:48Z`
+### [0502] A6/OFF — source_value_extractions CHECK(root_type IN ( 'measurement_primary', 'participatory_finding', 'committee_assertion', 'derived_calculation', ')   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (root_type outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5498,7 +5409,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
             'committee_assertion', 'derived_calculation', 'untraced')`
 **Verdict:** `OK`
 
-### [0511] A6/OFF — source_value_extractions CHECK(measurement_paradigm IN ( 'swept_path_dynamic', 'static_turning_circle', 'static_clearance', 'anthropometric_p)   `2026-08-12 05:22:48Z`
+### [0503] A6/OFF — source_value_extractions CHECK(measurement_paradigm IN ( 'swept_path_dynamic', 'static_turning_circle', 'static_clearance', 'anthropometric_p)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (measurement_paradigm outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5513,7 +5424,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
             'stated_unmeasured')`
 **Verdict:** `OK`
 
-### [0512] A6/OFF — source_value_extractions CHECK(device_class IN ( 'manual_self_propelled', 'manual_attendant', 'power_chair', 'scooter', 'bariatric_manual', ')   `2026-08-12 05:22:48Z`
+### [0504] A6/OFF — source_value_extractions CHECK(device_class IN ( 'manual_self_propelled', 'manual_attendant', 'power_chair', 'scooter', 'bariatric_manual', ')   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (device_class outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5527,7 +5438,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
             'mixed', 'not_device_scoped')`
 **Verdict:** `OK`
 
-### [0513] A6/OFF — source_value_extractions CHECK(contested IN (0, 1))   `2026-08-12 05:22:48Z`
+### [0505] A6/OFF — source_value_extractions CHECK(contested IN (0, 1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (contested outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5538,7 +5449,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Exception:** `IntegrityError: CHECK constraint failed: contested IN (0, 1)`
 **Verdict:** `OK`
 
-### [0514] A6/OFF — source_value_extractions CHECK( (claim_type = 'absent' AND claimed_value IS NULL) OR (claim_type <> 'absent' AND claimed_value IS NOT NULL) )   `2026-08-12 05:22:48Z`
+### [0506] A6/OFF — source_value_extractions CHECK( (claim_type = 'absent' AND claimed_value IS NULL) OR (claim_type <> 'absent' AND claimed_value IS NOT NULL) )   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (claim_type='absent' with claimed_value non-NULL; FK=OFF)
 **SQL:**
 ```sql
@@ -5550,7 +5461,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
     (claim_type <> 'absent' AND claimed_value IS NOT NULL)`
 **Verdict:** `OK`
 
-### [0515] A6/OFF — spec_value_probes CHECK(direction IN ('up','down'))   `2026-08-12 05:22:48Z`
+### [0507] A6/OFF — spec_value_probes CHECK(direction IN ('up','down'))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (direction outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5561,7 +5472,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: CHECK constraint failed: direction IN ('up','down')`
 **Verdict:** `OK`
 
-### [0516] A6/OFF — spec_value_probes CHECK(claim_type IN ( 'minimum','maximum','target','range_low','range_high' ))   `2026-08-12 05:22:48Z`
+### [0508] A6/OFF — spec_value_probes CHECK(claim_type IN ( 'minimum','maximum','target','range_low','range_high' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (claim_type outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5574,7 +5485,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
                         )`
 **Verdict:** `OK`
 
-### [0517] A6/OFF — spec_value_probes CHECK(phase IN ( 'outer-pass-1st','outer-pass-2nd','outer-stop', 'refinement-pass-1st','refinement-pass-2nd','refine)   `2026-08-12 05:22:48Z`
+### [0509] A6/OFF — spec_value_probes CHECK(phase IN ( 'outer-pass-1st','outer-pass-2nd','outer-stop', 'refinement-pass-1st','refinement-pass-2nd','refine)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (phase outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5589,7 +5500,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
                         )`
 **Verdict:** `OK`
 
-### [0518] A6/OFF — spec_value_probes CHECK(passes_strict IN (0,1))   `2026-08-12 05:22:48Z`
+### [0510] A6/OFF — spec_value_probes CHECK(passes_strict IN (0,1))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (passes_strict outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5600,7 +5511,96 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: CHECK constraint failed: passes_strict IN (0,1)`
 **Verdict:** `OK`
 
-### [0519] A6/OFF — supersession_check CHECK(anchor_tier BETWEEN 1 AND 6)   `2026-08-12 05:22:48Z`
+### [0511] A6/OFF — specification_source_links CHECK(role IN ('governing'))   `2026-08-12 08:35:28Z`
+**Action:** insert row violating the CHECK (role outside enum; FK=OFF)
+**SQL:**
+```sql
+INSERT INTO "specification_source_links" ("ref_id", "specification_id", "role") VALUES (?, ?, ?)  -- {"ref_id": "PROBE-PK-1012", "specification_id": 1, "role": "PROBE-INVALID-ENUM"}
+```
+**Expected:** CHECK constraint failed
+**Actual:** rejected by CHECK
+**Exception:** `IntegrityError: CHECK constraint failed: role IN ('governing')`
+**Verdict:** `OK`
+
+### [0512] A6/OFF — specifications CHECK(state IN ('stated', 'provisional', 'pending', 'not_applicable'))   `2026-08-12 08:35:28Z`
+**Action:** insert row violating the CHECK (state outside enum; FK=OFF)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state") VALUES (?, ?, ?)  -- {"item_code": "I-03", "population_code": "BLIND", "state": "PROBE-INVALID-ENUM"}
+```
+**Expected:** CHECK constraint failed
+**Actual:** rejected by CHECK
+**Exception:** `IntegrityError: CHECK constraint failed: state IN ('stated', 'provisional',
+                                                    'pending', 'not_applicable')`
+**Verdict:** `OK`
+
+### [0513] A6/OFF — specifications CHECK(design_scale IN ('universal', 'population', 'person'))   `2026-08-12 08:35:28Z`
+**Action:** insert row violating the CHECK (design_scale outside enum; FK=OFF)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state", "design_scale") VALUES (?, ?, ?, ?)  -- {"item_code": "I-03", "population_code": "BLIND", "state": "stated", "design_scale": "PROBE-INVALID-ENUM"}
+```
+**Expected:** CHECK constraint failed
+**Actual:** rejected by CHECK
+**Exception:** `IntegrityError: CHECK constraint failed: design_scale IN ('universal', 'population', 'person')`
+**Verdict:** `OK`
+
+### [0514] A6/OFF — specifications CHECK(governing_refs IS NULL OR json_valid(governing_refs))   `2026-08-12 08:35:28Z`
+**Action:** insert row violating the CHECK (invalid JSON in governing_refs; FK=OFF)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state", "governing_refs") VALUES (?, ?, ?, ?)  -- {"item_code": "I-03", "population_code": "BLIND", "state": "stated", "governing_refs": "{not-json"}
+```
+**Expected:** CHECK constraint failed
+**Actual:** rejected by CHECK
+**Exception:** `IntegrityError: CHECK constraint failed: governing_refs IS NULL OR json_valid(governing_refs)`
+**Verdict:** `OK`
+
+### [0515] A6/OFF — specifications CHECK(code_floor_only IN (0, 1))   `2026-08-12 08:35:28Z`
+**Action:** insert row violating the CHECK (code_floor_only outside enum; FK=OFF)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state", "code_floor_only") VALUES (?, ?, ?, ?)  -- {"item_code": "I-03", "population_code": "BLIND", "state": "stated", "code_floor_only": 987654321}
+```
+**Expected:** CHECK constraint failed
+**Actual:** rejected by CHECK
+**Exception:** `IntegrityError: CHECK constraint failed: code_floor_only IN (0, 1)`
+**Verdict:** `OK`
+
+### [0516] A6/OFF — specifications CHECK(has_unverified_sources IN (0, 1))   `2026-08-12 08:35:28Z`
+**Action:** insert row violating the CHECK (has_unverified_sources outside enum; FK=OFF)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state", "has_unverified_sources") VALUES (?, ?, ?, ?)  -- {"item_code": "I-03", "population_code": "BLIND", "state": "stated", "has_unverified_sources": 987654321}
+```
+**Expected:** CHECK constraint failed
+**Actual:** rejected by CHECK
+**Exception:** `IntegrityError: CHECK constraint failed: has_unverified_sources IN (0, 1)`
+**Verdict:** `OK`
+
+### [0517] A6/OFF — specifications CHECK(all_sources_disqualified IN (0, 1))   `2026-08-12 08:35:28Z`
+**Action:** insert row violating the CHECK (all_sources_disqualified outside enum; FK=OFF)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state", "all_sources_disqualified") VALUES (?, ?, ?, ?)  -- {"item_code": "I-03", "population_code": "BLIND", "state": "stated", "all_sources_disqualified": 987654321}
+```
+**Expected:** CHECK constraint failed
+**Actual:** rejected by CHECK
+**Exception:** `IntegrityError: CHECK constraint failed: all_sources_disqualified IN (0, 1)`
+**Verdict:** `OK`
+
+### [0518] A6/OFF — specifications CHECK(regulatory_stratum_only IN (0, 1))   `2026-08-12 08:35:28Z`
+**Action:** insert row violating the CHECK (regulatory_stratum_only outside enum; FK=OFF)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state", "regulatory_stratum_only") VALUES (?, ?, ?, ?)  -- {"item_code": "I-03", "population_code": "BLIND", "state": "stated", "regulatory_stratum_only": 987654321}
+```
+**Expected:** CHECK constraint failed
+**Actual:** rejected by CHECK
+**Exception:** `IntegrityError: CHECK constraint failed: regulatory_stratum_only IN (0, 1)`
+**Verdict:** `OK`
+
+### [0519] A6/OFF — supersession_check CHECK(anchor_tier BETWEEN 1 AND 6)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (anchor_tier above range; FK=OFF)
 **SQL:**
 ```sql
@@ -5611,7 +5611,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: CHECK constraint failed: anchor_tier BETWEEN 1 AND 6`
 **Verdict:** `OK`
 
-### [0520] A6/OFF — supersession_check CHECK(outcome IN ( 'current_best', 'superseded_by', 'refined_by', 'divergent_no_supersession', 'co1_addition_logged')   `2026-08-12 05:22:48Z`
+### [0520] A6/OFF — supersession_check CHECK(outcome IN ( 'current_best', 'superseded_by', 'refined_by', 'divergent_no_supersession', 'co1_addition_logged')   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (outcome outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5629,7 +5629,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
     )`
 **Verdict:** `OK`
 
-### [0521] A6/OFF — supersession_check CHECK(check_method IN ( 'pubmed_search', 'scholar_gateway', 'cochrane_direct', 'standards_body_direct', 'multilingua)   `2026-08-12 05:22:48Z`
+### [0521] A6/OFF — supersession_check CHECK(check_method IN ( 'pubmed_search', 'scholar_gateway', 'cochrane_direct', 'standards_body_direct', 'multilingua)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (check_method outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5644,7 +5644,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
     )`
 **Verdict:** `OK`
 
-### [0522] A6/OFF — supersession_check CHECK( (outcome IN ('superseded_by','refined_by','divergent_no_supersession') AND (superseding_ref_ids IS NOT NULL O)   `2026-08-12 05:22:48Z`
+### [0522] A6/OFF — supersession_check CHECK( (outcome IN ('superseded_by','refined_by','divergent_no_supersession') AND (superseding_ref_ids IS NOT NULL O)   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (outcome outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5662,7 +5662,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
     )`
 **Verdict:** `OK`
 
-### [0523] A6/OFF — supersession_check CHECK( outcome != 'refined_by' OR refinement_dimension IS NOT NULL )   `2026-08-12 05:22:48Z`
+### [0523] A6/OFF — supersession_check CHECK( outcome != 'refined_by' OR refinement_dimension IS NOT NULL )   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (outcome='refined_by' with refinement_dimension NULL; FK=OFF)
 **SQL:**
 ```sql
@@ -5677,7 +5677,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
         outcome IN ('current_best','co1_addition_logged','pending')`
 **Verdict:** `OK`
 
-### [0524] A6/OFF — supersession_check CHECK( outcome != 'divergent_no_supersession' OR divergence_notes IS NOT NULL )   `2026-08-12 05:22:48Z`
+### [0524] A6/OFF — supersession_check CHECK( outcome != 'divergent_no_supersession' OR divergence_notes IS NOT NULL )   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (outcome='divergent_no_supersession' with divergence_notes NULL; FK=OFF)
 **SQL:**
 ```sql
@@ -5692,13 +5692,13 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
         outcome IN ('current_best','co1_addition_logged','pending')`
 **Verdict:** `OK`
 
-### [0525] A6/OFF — supersession_check CHECK( outcome != 'co1_addition_logged' OR anchor_evidence_type = 'co1' )   `2026-08-12 05:22:48Z`
+### [0525] A6/OFF — supersession_check CHECK( outcome != 'co1_addition_logged' OR anchor_evidence_type = 'co1' )   `2026-08-12 08:35:28Z`
 **Action:** construct a violating row (FK=OFF)
 **Expected:** CHECK fires
 **Actual:** no mechanical violation constructible for this expression (cross-column/complex predicate)
 **Verdict:** `BLOCKED`
 
-### [0526] A6/OFF — term_aliases CHECK(alias_type IN ( 'SYNONYM','TRANSLATION','NARROWER', 'BROADER','DEPRECATED','DOMAIN' ))   `2026-08-12 05:22:48Z`
+### [0526] A6/OFF — term_aliases CHECK(alias_type IN ( 'SYNONYM','TRANSLATION','NARROWER', 'BROADER','DEPRECATED','DOMAIN' ))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (alias_type outside enum; FK=OFF)
 **SQL:**
 ```sql
@@ -5712,7 +5712,7 @@ INSERT INTO "term_aliases" ("term_id", "alias", "language", "alias_type", "creat
                         )`
 **Verdict:** `OK`
 
-### [0527] A6/OFF — weighting_profile CHECK(json_valid(tier_weights))   `2026-08-12 05:22:48Z`
+### [0527] A6/OFF — weighting_profile CHECK(json_valid(tier_weights))   `2026-08-12 08:35:28Z`
 **Action:** insert row violating the CHECK (invalid JSON in tier_weights; FK=OFF)
 **SQL:**
 ```sql
@@ -5725,7 +5725,7 @@ INSERT INTO "weighting_profile" ("audience", "use_pattern", "tier_weights") VALU
 
 ### A7 — NOT NULL battery (267 non-PK NOT NULL columns), FK=ON and FK=OFF
 
-### [0528] A7/ON — access_duration.definition   `2026-08-12 05:22:48Z`
+### [0528] A7/ON — access_duration.definition   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -5736,7 +5736,7 @@ INSERT INTO "access_duration" ("definition", "code") VALUES (?, ?)  -- {"definit
 **Exception:** `IntegrityError: NOT NULL constraint failed: access_duration.definition`
 **Verdict:** `OK`
 
-### [0529] A7/ON — access_need_axis_map.relationship   `2026-08-12 05:22:48Z`
+### [0529] A7/ON — access_need_axis_map.relationship   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -5747,7 +5747,7 @@ INSERT INTO "access_need_axis_map" ("need_code", "axis_code", "relationship") VA
 **Exception:** `IntegrityError: NOT NULL constraint failed: access_need_axis_map.relationship`
 **Verdict:** `OK`
 
-### [0530] A7/ON — access_need_icf.icf_type   `2026-08-12 05:22:48Z`
+### [0530] A7/ON — access_need_icf.icf_type   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -5758,7 +5758,7 @@ INSERT INTO "access_need_icf" ("need_code", "icf_code", "icf_type", "confidence"
 **Exception:** `IntegrityError: NOT NULL constraint failed: access_need_icf.icf_type`
 **Verdict:** `OK`
 
-### [0531] A7/ON — access_need_icf.confidence   `2026-08-12 05:22:48Z`
+### [0531] A7/ON — access_need_icf.confidence   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -5769,7 +5769,7 @@ INSERT INTO "access_need_icf" ("need_code", "icf_code", "icf_type", "confidence"
 **Exception:** `IntegrityError: NOT NULL constraint failed: access_need_icf.confidence`
 **Verdict:** `OK`
 
-### [0532] A7/ON — access_needs.family   `2026-08-12 05:22:48Z`
+### [0532] A7/ON — access_needs.family   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -5780,7 +5780,7 @@ INSERT INTO "access_needs" ("need_code", "family", "design_obligation") VALUES (
 **Exception:** `IntegrityError: NOT NULL constraint failed: access_needs.family`
 **Verdict:** `OK`
 
-### [0533] A7/ON — access_needs.design_obligation   `2026-08-12 05:22:48Z`
+### [0533] A7/ON — access_needs.design_obligation   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -5791,7 +5791,7 @@ INSERT INTO "access_needs" ("need_code", "family", "design_obligation") VALUES (
 **Exception:** `IntegrityError: NOT NULL constraint failed: access_needs.design_obligation`
 **Verdict:** `OK`
 
-### [0534] A7/ON — access_needs.source_version   `2026-08-12 05:22:48Z`
+### [0534] A7/ON — access_needs.source_version   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -5802,7 +5802,7 @@ INSERT INTO "access_needs" ("need_code", "family", "design_obligation", "source_
 **Exception:** `IntegrityError: NOT NULL constraint failed: access_needs.source_version`
 **Verdict:** `OK`
 
-### [0535] A7/ON — access_stakes.definition   `2026-08-12 05:22:48Z`
+### [0535] A7/ON — access_stakes.definition   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -5813,7 +5813,7 @@ INSERT INTO "access_stakes" ("definition", "code") VALUES (?, ?)  -- {"definitio
 **Exception:** `IntegrityError: NOT NULL constraint failed: access_stakes.definition`
 **Verdict:** `OK`
 
-### [0536] A7/ON — axes.name   `2026-08-12 05:22:48Z`
+### [0536] A7/ON — axes.name   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -5824,7 +5824,7 @@ INSERT INTO "axes" ("axis_code", "name", "mechanism", "coverage_status", "falsif
 **Exception:** `IntegrityError: NOT NULL constraint failed: axes.name`
 **Verdict:** `OK`
 
-### [0537] A7/ON — axes.mechanism   `2026-08-12 05:22:48Z`
+### [0537] A7/ON — axes.mechanism   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -5835,7 +5835,7 @@ INSERT INTO "axes" ("axis_code", "name", "mechanism", "coverage_status", "falsif
 **Exception:** `IntegrityError: NOT NULL constraint failed: axes.mechanism`
 **Verdict:** `OK`
 
-### [0538] A7/ON — axes.coverage_status   `2026-08-12 05:22:48Z`
+### [0538] A7/ON — axes.coverage_status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -5846,7 +5846,7 @@ INSERT INTO "axes" ("axis_code", "name", "mechanism", "coverage_status", "falsif
 **Exception:** `IntegrityError: NOT NULL constraint failed: axes.coverage_status`
 **Verdict:** `OK`
 
-### [0539] A7/ON — axes.falsification_condition   `2026-08-12 05:22:48Z`
+### [0539] A7/ON — axes.falsification_condition   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -5857,7 +5857,7 @@ INSERT INTO "axes" ("axis_code", "name", "mechanism", "coverage_status", "falsif
 **Exception:** `IntegrityError: NOT NULL constraint failed: axes.falsification_condition`
 **Verdict:** `OK`
 
-### [0540] A7/ON — bpc_metadata.population   `2026-08-12 05:22:48Z`
+### [0540] A7/ON — bpc_metadata.population   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -5868,7 +5868,7 @@ INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_sess
 **Exception:** `IntegrityError: NOT NULL constraint failed: bpc_metadata.population`
 **Verdict:** `OK`
 
-### [0541] A7/ON — bpc_metadata.pico_complete   `2026-08-12 05:22:48Z`
+### [0541] A7/ON — bpc_metadata.pico_complete   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -5879,7 +5879,7 @@ INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_sess
 **Exception:** `IntegrityError: NOT NULL constraint failed: bpc_metadata.pico_complete`
 **Verdict:** `OK`
 
-### [0542] A7/ON — bpc_metadata.search_complete   `2026-08-12 05:22:48Z`
+### [0542] A7/ON — bpc_metadata.search_complete   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -5890,7 +5890,7 @@ INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_sess
 **Exception:** `IntegrityError: NOT NULL constraint failed: bpc_metadata.search_complete`
 **Verdict:** `OK`
 
-### [0543] A7/ON — bpc_metadata.bpc_complete   `2026-08-12 05:22:48Z`
+### [0543] A7/ON — bpc_metadata.bpc_complete   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -5901,7 +5901,7 @@ INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_sess
 **Exception:** `IntegrityError: NOT NULL constraint failed: bpc_metadata.bpc_complete`
 **Verdict:** `OK`
 
-### [0544] A7/ON — bpc_metadata.citation_mining_complete   `2026-08-12 05:22:48Z`
+### [0544] A7/ON — bpc_metadata.citation_mining_complete   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -5912,7 +5912,7 @@ INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_sess
 **Exception:** `IntegrityError: NOT NULL constraint failed: bpc_metadata.citation_mining_complete`
 **Verdict:** `OK`
 
-### [0545] A7/ON — bpc_metadata.created_at   `2026-08-12 05:22:48Z`
+### [0545] A7/ON — bpc_metadata.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -5923,7 +5923,7 @@ INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_sess
 **Exception:** `IntegrityError: NOT NULL constraint failed: bpc_metadata.created_at`
 **Verdict:** `OK`
 
-### [0546] A7/ON — bpc_metadata.created_by_session   `2026-08-12 05:22:48Z`
+### [0546] A7/ON — bpc_metadata.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -5934,7 +5934,7 @@ INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_sess
 **Exception:** `IntegrityError: NOT NULL constraint failed: bpc_metadata.created_by_session`
 **Verdict:** `OK`
 
-### [0547] A7/ON — bpc_metadata.updated_at   `2026-08-12 05:22:48Z`
+### [0547] A7/ON — bpc_metadata.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -5945,7 +5945,7 @@ INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_sess
 **Exception:** `IntegrityError: NOT NULL constraint failed: bpc_metadata.updated_at`
 **Verdict:** `OK`
 
-### [0548] A7/ON — bpc_metadata.updated_by_session   `2026-08-12 05:22:48Z`
+### [0548] A7/ON — bpc_metadata.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -5956,7 +5956,7 @@ INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_sess
 **Exception:** `IntegrityError: NOT NULL constraint failed: bpc_metadata.updated_by_session`
 **Verdict:** `OK`
 
-### [0549] A7/ON — bpc_metadata.supersession_check_complete   `2026-08-12 05:22:48Z`
+### [0549] A7/ON — bpc_metadata.supersession_check_complete   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -5967,7 +5967,7 @@ INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_sess
 **Exception:** `IntegrityError: NOT NULL constraint failed: bpc_metadata.supersession_check_complete`
 **Verdict:** `OK`
 
-### [0550] A7/ON — case_studies.slug   `2026-08-12 05:22:48Z`
+### [0550] A7/ON — case_studies.slug   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -5978,7 +5978,7 @@ INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: case_studies.slug`
 **Verdict:** `OK`
 
-### [0551] A7/ON — case_studies.title   `2026-08-12 05:22:48Z`
+### [0551] A7/ON — case_studies.title   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -5989,7 +5989,7 @@ INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: case_studies.title`
 **Verdict:** `OK`
 
-### [0552] A7/ON — case_studies.building_type   `2026-08-12 05:22:48Z`
+### [0552] A7/ON — case_studies.building_type   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6000,7 +6000,7 @@ INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: case_studies.building_type`
 **Verdict:** `OK`
 
-### [0553] A7/ON — case_studies.location   `2026-08-12 05:22:48Z`
+### [0553] A7/ON — case_studies.location   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6011,7 +6011,7 @@ INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: case_studies.location`
 **Verdict:** `OK`
 
-### [0554] A7/ON — case_studies.harm_finding   `2026-08-12 05:22:48Z`
+### [0554] A7/ON — case_studies.harm_finding   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6022,7 +6022,7 @@ INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: case_studies.harm_finding`
 **Verdict:** `OK`
 
-### [0555] A7/ON — case_studies.status   `2026-08-12 05:22:48Z`
+### [0555] A7/ON — case_studies.status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6033,7 +6033,7 @@ INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: case_studies.status`
 **Verdict:** `OK`
 
-### [0556] A7/ON — case_studies.created_at   `2026-08-12 05:22:48Z`
+### [0556] A7/ON — case_studies.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6044,7 +6044,7 @@ INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: case_studies.created_at`
 **Verdict:** `OK`
 
-### [0557] A7/ON — case_studies.created_by_session   `2026-08-12 05:22:48Z`
+### [0557] A7/ON — case_studies.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6055,7 +6055,7 @@ INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: case_studies.created_by_session`
 **Verdict:** `OK`
 
-### [0558] A7/ON — case_study_outcomes.case_study_id   `2026-08-12 05:22:48Z`
+### [0558] A7/ON — case_study_outcomes.case_study_id   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6066,7 +6066,7 @@ INSERT INTO "case_study_outcomes" ("case_study_id", "metric") VALUES (?, ?)  -- 
 **Exception:** `IntegrityError: NOT NULL constraint failed: case_study_outcomes.case_study_id`
 **Verdict:** `OK`
 
-### [0559] A7/ON — case_study_outcomes.metric   `2026-08-12 05:22:48Z`
+### [0559] A7/ON — case_study_outcomes.metric   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6077,7 +6077,7 @@ INSERT INTO "case_study_outcomes" ("case_study_id", "metric") VALUES (?, ?)  -- 
 **Exception:** `IntegrityError: NOT NULL constraint failed: case_study_outcomes.metric`
 **Verdict:** `OK`
 
-### [0560] A7/ON — case_study_strategies.case_study_id   `2026-08-12 05:22:48Z`
+### [0560] A7/ON — case_study_strategies.case_study_id   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6088,7 +6088,7 @@ INSERT INTO "case_study_strategies" ("case_study_id", "strategy") VALUES (?, ?) 
 **Exception:** `IntegrityError: NOT NULL constraint failed: case_study_strategies.case_study_id`
 **Verdict:** `OK`
 
-### [0561] A7/ON — case_study_strategies.strategy   `2026-08-12 05:22:48Z`
+### [0561] A7/ON — case_study_strategies.strategy   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6099,18 +6099,7 @@ INSERT INTO "case_study_strategies" ("case_study_id", "strategy") VALUES (?, ?) 
 **Exception:** `IntegrityError: NOT NULL constraint failed: case_study_strategies.strategy`
 **Verdict:** `OK`
 
-### [0562] A7/ON — cell_source_links.role   `2026-08-12 05:22:48Z`
-**Action:** insert explicit NULL into NOT NULL column (FK=ON)
-**SQL:**
-```sql
-INSERT INTO "cell_source_links" ("ref_id", "cell_id", "role") VALUES (?, ?, ?)  -- {"ref_id": "PROBE-PK-167", "cell_id": 1, "role": null}
-```
-**Expected:** NOT NULL constraint failed
-**Actual:** rejected
-**Exception:** `IntegrityError: NOT NULL constraint failed: cell_source_links.role`
-**Verdict:** `OK`
-
-### [0563] A7/ON — citation_mining.backward   `2026-08-12 05:22:48Z`
+### [0562] A7/ON — citation_mining.backward   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6121,7 +6110,7 @@ INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by
 **Exception:** `IntegrityError: NOT NULL constraint failed: citation_mining.backward`
 **Verdict:** `OK`
 
-### [0564] A7/ON — citation_mining.forward   `2026-08-12 05:22:48Z`
+### [0563] A7/ON — citation_mining.forward   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6132,7 +6121,7 @@ INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by
 **Exception:** `IntegrityError: NOT NULL constraint failed: citation_mining.forward`
 **Verdict:** `OK`
 
-### [0565] A7/ON — citation_mining.connections_produced   `2026-08-12 05:22:48Z`
+### [0564] A7/ON — citation_mining.connections_produced   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6143,7 +6132,7 @@ INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by
 **Exception:** `IntegrityError: NOT NULL constraint failed: citation_mining.connections_produced`
 **Verdict:** `OK`
 
-### [0566] A7/ON — citation_mining.created_at   `2026-08-12 05:22:48Z`
+### [0565] A7/ON — citation_mining.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6154,7 +6143,7 @@ INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by
 **Exception:** `IntegrityError: NOT NULL constraint failed: citation_mining.created_at`
 **Verdict:** `OK`
 
-### [0567] A7/ON — citation_mining.created_by_session   `2026-08-12 05:22:48Z`
+### [0566] A7/ON — citation_mining.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6165,7 +6154,7 @@ INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by
 **Exception:** `IntegrityError: NOT NULL constraint failed: citation_mining.created_by_session`
 **Verdict:** `OK`
 
-### [0568] A7/ON — citation_mining.updated_at   `2026-08-12 05:22:48Z`
+### [0567] A7/ON — citation_mining.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6176,7 +6165,7 @@ INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by
 **Exception:** `IntegrityError: NOT NULL constraint failed: citation_mining.updated_at`
 **Verdict:** `OK`
 
-### [0569] A7/ON — citation_mining.updated_by_session   `2026-08-12 05:22:48Z`
+### [0568] A7/ON — citation_mining.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6187,7 +6176,7 @@ INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by
 **Exception:** `IntegrityError: NOT NULL constraint failed: citation_mining.updated_by_session`
 **Verdict:** `OK`
 
-### [0570] A7/ON — conflicts.domain   `2026-08-12 05:22:48Z`
+### [0569] A7/ON — conflicts.domain   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6198,7 +6187,7 @@ INSERT INTO "conflicts" ("conflict_id", "domain", "pop_a", "pop_b", "status", "c
 **Exception:** `IntegrityError: NOT NULL constraint failed: conflicts.domain`
 **Verdict:** `OK`
 
-### [0571] A7/ON — conflicts.pop_a   `2026-08-12 05:22:48Z`
+### [0570] A7/ON — conflicts.pop_a   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6209,7 +6198,7 @@ INSERT INTO "conflicts" ("conflict_id", "domain", "pop_a", "pop_b", "status", "c
 **Exception:** `IntegrityError: NOT NULL constraint failed: conflicts.pop_a`
 **Verdict:** `OK`
 
-### [0572] A7/ON — conflicts.pop_b   `2026-08-12 05:22:48Z`
+### [0571] A7/ON — conflicts.pop_b   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6220,7 +6209,7 @@ INSERT INTO "conflicts" ("conflict_id", "domain", "pop_a", "pop_b", "status", "c
 **Exception:** `IntegrityError: NOT NULL constraint failed: conflicts.pop_b`
 **Verdict:** `OK`
 
-### [0573] A7/ON — conflicts.status   `2026-08-12 05:22:48Z`
+### [0572] A7/ON — conflicts.status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6231,7 +6220,7 @@ INSERT INTO "conflicts" ("conflict_id", "domain", "pop_a", "pop_b", "status", "c
 **Exception:** `IntegrityError: NOT NULL constraint failed: conflicts.status`
 **Verdict:** `OK`
 
-### [0574] A7/ON — conflicts.source_skill   `2026-08-12 05:22:48Z`
+### [0573] A7/ON — conflicts.source_skill   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6242,7 +6231,7 @@ INSERT INTO "conflicts" ("conflict_id", "domain", "pop_a", "pop_b", "status", "c
 **Exception:** `IntegrityError: NOT NULL constraint failed: conflicts.source_skill`
 **Verdict:** `OK`
 
-### [0575] A7/ON — conflicts.created_at   `2026-08-12 05:22:48Z`
+### [0574] A7/ON — conflicts.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6253,7 +6242,7 @@ INSERT INTO "conflicts" ("conflict_id", "domain", "pop_a", "pop_b", "status", "c
 **Exception:** `IntegrityError: NOT NULL constraint failed: conflicts.created_at`
 **Verdict:** `OK`
 
-### [0576] A7/ON — conflicts.created_by_session   `2026-08-12 05:22:48Z`
+### [0575] A7/ON — conflicts.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6264,7 +6253,7 @@ INSERT INTO "conflicts" ("conflict_id", "domain", "pop_a", "pop_b", "status", "c
 **Exception:** `IntegrityError: NOT NULL constraint failed: conflicts.created_by_session`
 **Verdict:** `OK`
 
-### [0577] A7/ON — conflicts.updated_at   `2026-08-12 05:22:48Z`
+### [0576] A7/ON — conflicts.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6275,7 +6264,7 @@ INSERT INTO "conflicts" ("conflict_id", "domain", "pop_a", "pop_b", "status", "c
 **Exception:** `IntegrityError: NOT NULL constraint failed: conflicts.updated_at`
 **Verdict:** `OK`
 
-### [0578] A7/ON — conflicts.updated_by_session   `2026-08-12 05:22:48Z`
+### [0577] A7/ON — conflicts.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6286,7 +6275,7 @@ INSERT INTO "conflicts" ("conflict_id", "domain", "pop_a", "pop_b", "status", "c
 **Exception:** `IntegrityError: NOT NULL constraint failed: conflicts.updated_by_session`
 **Verdict:** `OK`
 
-### [0579] A7/ON — connections.status   `2026-08-12 05:22:48Z`
+### [0578] A7/ON — connections.status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6297,7 +6286,7 @@ INSERT INTO "connections" ("con_id", "status", "confidence", "filed_in", "create
 **Exception:** `IntegrityError: NOT NULL constraint failed: connections.status`
 **Verdict:** `OK`
 
-### [0580] A7/ON — connections.confidence   `2026-08-12 05:22:48Z`
+### [0579] A7/ON — connections.confidence   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6308,7 +6297,7 @@ INSERT INTO "connections" ("con_id", "status", "confidence", "filed_in", "create
 **Exception:** `IntegrityError: NOT NULL constraint failed: connections.confidence`
 **Verdict:** `OK`
 
-### [0581] A7/ON — connections.filed_in   `2026-08-12 05:22:48Z`
+### [0580] A7/ON — connections.filed_in   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6319,7 +6308,7 @@ INSERT INTO "connections" ("con_id", "status", "confidence", "filed_in", "create
 **Exception:** `IntegrityError: NOT NULL constraint failed: connections.filed_in`
 **Verdict:** `OK`
 
-### [0582] A7/ON — connections.opus_reviewed   `2026-08-12 05:22:48Z`
+### [0581] A7/ON — connections.opus_reviewed   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6330,7 +6319,7 @@ INSERT INTO "connections" ("con_id", "status", "confidence", "filed_in", "create
 **Exception:** `IntegrityError: NOT NULL constraint failed: connections.opus_reviewed`
 **Verdict:** `OK`
 
-### [0583] A7/ON — connections.created_at   `2026-08-12 05:22:48Z`
+### [0582] A7/ON — connections.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6341,7 +6330,7 @@ INSERT INTO "connections" ("con_id", "status", "confidence", "filed_in", "create
 **Exception:** `IntegrityError: NOT NULL constraint failed: connections.created_at`
 **Verdict:** `OK`
 
-### [0584] A7/ON — connections.created_by_session   `2026-08-12 05:22:48Z`
+### [0583] A7/ON — connections.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6352,7 +6341,7 @@ INSERT INTO "connections" ("con_id", "status", "confidence", "filed_in", "create
 **Exception:** `IntegrityError: NOT NULL constraint failed: connections.created_by_session`
 **Verdict:** `OK`
 
-### [0585] A7/ON — connections.updated_at   `2026-08-12 05:22:48Z`
+### [0584] A7/ON — connections.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6363,7 +6352,7 @@ INSERT INTO "connections" ("con_id", "status", "confidence", "filed_in", "create
 **Exception:** `IntegrityError: NOT NULL constraint failed: connections.updated_at`
 **Verdict:** `OK`
 
-### [0586] A7/ON — connections.updated_by_session   `2026-08-12 05:22:48Z`
+### [0585] A7/ON — connections.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6374,7 +6363,7 @@ INSERT INTO "connections" ("con_id", "status", "confidence", "filed_in", "create
 **Exception:** `IntegrityError: NOT NULL constraint failed: connections.updated_by_session`
 **Verdict:** `OK`
 
-### [0587] A7/ON — convergence_assessment.status   `2026-08-12 05:22:48Z`
+### [0586] A7/ON — convergence_assessment.status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6385,7 +6374,7 @@ INSERT INTO "convergence_assessment" ("status") VALUES (?)  -- {"status": null}
 **Exception:** `IntegrityError: NOT NULL constraint failed: convergence_assessment.status`
 **Verdict:** `OK`
 
-### [0588] A7/ON — data_migrations.applied_at   `2026-08-12 05:22:48Z`
+### [0587] A7/ON — data_migrations.applied_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6396,7 +6385,7 @@ INSERT INTO "data_migrations" ("migration_id", "applied_at", "content_sha") VALU
 **Exception:** `IntegrityError: NOT NULL constraint failed: data_migrations.applied_at`
 **Verdict:** `OK`
 
-### [0589] A7/ON — data_migrations.content_sha   `2026-08-12 05:22:48Z`
+### [0588] A7/ON — data_migrations.content_sha   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6407,7 +6396,7 @@ INSERT INTO "data_migrations" ("migration_id", "applied_at", "content_sha") VALU
 **Exception:** `IntegrityError: NOT NULL constraint failed: data_migrations.content_sha`
 **Verdict:** `OK`
 
-### [0590] A7/ON — db_meta.value   `2026-08-12 05:22:48Z`
+### [0589] A7/ON — db_meta.value   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6418,7 +6407,7 @@ INSERT INTO "db_meta" ("key", "value") VALUES (?, ?)  -- {"key": "PROBE-1615", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: db_meta.value`
 **Verdict:** `OK`
 
-### [0591] A7/ON — decisions.category   `2026-08-12 05:22:48Z`
+### [0590] A7/ON — decisions.category   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6429,7 +6418,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.category`
 **Verdict:** `OK`
 
-### [0592] A7/ON — decisions.delegation   `2026-08-12 05:22:48Z`
+### [0591] A7/ON — decisions.delegation   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6440,7 +6429,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.delegation`
 **Verdict:** `OK`
 
-### [0593] A7/ON — decisions.summary   `2026-08-12 05:22:48Z`
+### [0592] A7/ON — decisions.summary   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6451,7 +6440,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.summary`
 **Verdict:** `OK`
 
-### [0594] A7/ON — decisions.outcome   `2026-08-12 05:22:48Z`
+### [0593] A7/ON — decisions.outcome   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6462,7 +6451,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.outcome`
 **Verdict:** `OK`
 
-### [0595] A7/ON — decisions.rationale   `2026-08-12 05:22:48Z`
+### [0594] A7/ON — decisions.rationale   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6473,7 +6462,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.rationale`
 **Verdict:** `OK`
 
-### [0596] A7/ON — decisions.decision_date   `2026-08-12 05:22:48Z`
+### [0595] A7/ON — decisions.decision_date   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6484,7 +6473,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.decision_date`
 **Verdict:** `OK`
 
-### [0597] A7/ON — decisions.decided_by   `2026-08-12 05:22:48Z`
+### [0596] A7/ON — decisions.decided_by   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6495,7 +6484,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.decided_by`
 **Verdict:** `OK`
 
-### [0598] A7/ON — decisions.model_routing   `2026-08-12 05:22:48Z`
+### [0597] A7/ON — decisions.model_routing   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6506,7 +6495,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.model_routing`
 **Verdict:** `OK`
 
-### [0599] A7/ON — decisions.effort_level   `2026-08-12 05:22:48Z`
+### [0598] A7/ON — decisions.effort_level   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6517,7 +6506,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.effort_level`
 **Verdict:** `OK`
 
-### [0600] A7/ON — decisions.status   `2026-08-12 05:22:48Z`
+### [0599] A7/ON — decisions.status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6528,7 +6517,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.status`
 **Verdict:** `OK`
 
-### [0601] A7/ON — decisions.review_status   `2026-08-12 05:22:48Z`
+### [0600] A7/ON — decisions.review_status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6539,7 +6528,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.review_status`
 **Verdict:** `OK`
 
-### [0602] A7/ON — decisions.supersedes   `2026-08-12 05:22:48Z`
+### [0601] A7/ON — decisions.supersedes   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6550,7 +6539,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.supersedes`
 **Verdict:** `OK`
 
-### [0603] A7/ON — decisions.predecessors   `2026-08-12 05:22:48Z`
+### [0602] A7/ON — decisions.predecessors   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6561,7 +6550,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.predecessors`
 **Verdict:** `OK`
 
-### [0604] A7/ON — decisions.decision_artifacts   `2026-08-12 05:22:48Z`
+### [0603] A7/ON — decisions.decision_artifacts   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6572,7 +6561,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.decision_artifacts`
 **Verdict:** `OK`
 
-### [0605] A7/ON — decisions.alternatives_considered   `2026-08-12 05:22:48Z`
+### [0604] A7/ON — decisions.alternatives_considered   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6583,7 +6572,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.alternatives_considered`
 **Verdict:** `OK`
 
-### [0606] A7/ON — decisions.created_at   `2026-08-12 05:22:48Z`
+### [0605] A7/ON — decisions.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6594,7 +6583,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.created_at`
 **Verdict:** `OK`
 
-### [0607] A7/ON — decisions.created_by_session   `2026-08-12 05:22:48Z`
+### [0606] A7/ON — decisions.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6605,7 +6594,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.created_by_session`
 **Verdict:** `OK`
 
-### [0608] A7/ON — decisions.updated_at   `2026-08-12 05:22:48Z`
+### [0607] A7/ON — decisions.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6616,7 +6605,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.updated_at`
 **Verdict:** `OK`
 
-### [0609] A7/ON — decisions.updated_by_session   `2026-08-12 05:22:48Z`
+### [0608] A7/ON — decisions.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6627,7 +6616,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.updated_by_session`
 **Verdict:** `OK`
 
-### [0610] A7/ON — economics_entries.pillar   `2026-08-12 05:22:48Z`
+### [0609] A7/ON — economics_entries.pillar   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6638,7 +6627,7 @@ INSERT INTO "economics_entries" ("entry_id", "pillar", "entry_type", "source", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: economics_entries.pillar`
 **Verdict:** `OK`
 
-### [0611] A7/ON — economics_entries.entry_type   `2026-08-12 05:22:48Z`
+### [0610] A7/ON — economics_entries.entry_type   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6649,7 +6638,7 @@ INSERT INTO "economics_entries" ("entry_id", "pillar", "entry_type", "source", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: economics_entries.entry_type`
 **Verdict:** `OK`
 
-### [0612] A7/ON — economics_entries.source   `2026-08-12 05:22:48Z`
+### [0611] A7/ON — economics_entries.source   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6660,7 +6649,7 @@ INSERT INTO "economics_entries" ("entry_id", "pillar", "entry_type", "source", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: economics_entries.source`
 **Verdict:** `OK`
 
-### [0613] A7/ON — economics_entries.finding   `2026-08-12 05:22:48Z`
+### [0612] A7/ON — economics_entries.finding   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6671,7 +6660,7 @@ INSERT INTO "economics_entries" ("entry_id", "pillar", "entry_type", "source", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: economics_entries.finding`
 **Verdict:** `OK`
 
-### [0614] A7/ON — economics_entries.status   `2026-08-12 05:22:48Z`
+### [0613] A7/ON — economics_entries.status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6682,7 +6671,7 @@ INSERT INTO "economics_entries" ("entry_id", "pillar", "entry_type", "source", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: economics_entries.status`
 **Verdict:** `OK`
 
-### [0615] A7/ON — economics_entries.created_at   `2026-08-12 05:22:48Z`
+### [0614] A7/ON — economics_entries.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6693,7 +6682,7 @@ INSERT INTO "economics_entries" ("entry_id", "pillar", "entry_type", "source", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: economics_entries.created_at`
 **Verdict:** `OK`
 
-### [0616] A7/ON — economics_entries.created_by_session   `2026-08-12 05:22:48Z`
+### [0615] A7/ON — economics_entries.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6704,84 +6693,7 @@ INSERT INTO "economics_entries" ("entry_id", "pillar", "entry_type", "source", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: economics_entries.created_by_session`
 **Verdict:** `OK`
 
-### [0617] A7/ON — evidence_cell_state.item_code   `2026-08-12 05:22:48Z`
-**Action:** insert explicit NULL into NOT NULL column (FK=ON)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state") VALUES (?, ?, ?)  -- {"item_code": null, "population_code": "ADHD", "state": "stated"}
-```
-**Expected:** NOT NULL constraint failed
-**Actual:** rejected
-**Exception:** `IntegrityError: NOT NULL constraint failed: evidence_cell_state.item_code`
-**Verdict:** `OK`
-
-### [0618] A7/ON — evidence_cell_state.population_code   `2026-08-12 05:22:48Z`
-**Action:** insert explicit NULL into NOT NULL column (FK=ON)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state") VALUES (?, ?, ?)  -- {"item_code": "A-01", "population_code": null, "state": "stated"}
-```
-**Expected:** NOT NULL constraint failed
-**Actual:** rejected
-**Exception:** `IntegrityError: NOT NULL constraint failed: evidence_cell_state.population_code`
-**Verdict:** `OK`
-
-### [0619] A7/ON — evidence_cell_state.state   `2026-08-12 05:22:48Z`
-**Action:** insert explicit NULL into NOT NULL column (FK=ON)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state") VALUES (?, ?, ?)  -- {"item_code": "A-01", "population_code": "ADHD", "state": null}
-```
-**Expected:** NOT NULL constraint failed
-**Actual:** rejected
-**Exception:** `IntegrityError: NOT NULL constraint failed: evidence_cell_state.state`
-**Verdict:** `OK`
-
-### [0620] A7/ON — evidence_cell_state.code_floor_only   `2026-08-12 05:22:48Z`
-**Action:** insert explicit NULL into NOT NULL column (FK=ON)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state", "code_floor_only") VALUES (?, ?, ?, ?)  -- {"item_code": "A-01", "population_code": "ADHD", "state": "stated", "code_floor_only": null}
-```
-**Expected:** NOT NULL constraint failed
-**Actual:** rejected
-**Exception:** `IntegrityError: NOT NULL constraint failed: evidence_cell_state.code_floor_only`
-**Verdict:** `OK`
-
-### [0621] A7/ON — evidence_cell_state.has_unverified_sources   `2026-08-12 05:22:48Z`
-**Action:** insert explicit NULL into NOT NULL column (FK=ON)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state", "has_unverified_sources") VALUES (?, ?, ?, ?)  -- {"item_code": "A-01", "population_code": "ADHD", "state": "stated", "has_unverified_sources": null}
-```
-**Expected:** NOT NULL constraint failed
-**Actual:** rejected
-**Exception:** `IntegrityError: NOT NULL constraint failed: evidence_cell_state.has_unverified_sources`
-**Verdict:** `OK`
-
-### [0622] A7/ON — evidence_cell_state.all_sources_disqualified   `2026-08-12 05:22:48Z`
-**Action:** insert explicit NULL into NOT NULL column (FK=ON)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state", "all_sources_disqualified") VALUES (?, ?, ?, ?)  -- {"item_code": "A-01", "population_code": "ADHD", "state": "stated", "all_sources_disqualified": null}
-```
-**Expected:** NOT NULL constraint failed
-**Actual:** rejected
-**Exception:** `IntegrityError: NOT NULL constraint failed: evidence_cell_state.all_sources_disqualified`
-**Verdict:** `OK`
-
-### [0623] A7/ON — evidence_cell_state.regulatory_stratum_only   `2026-08-12 05:22:48Z`
-**Action:** insert explicit NULL into NOT NULL column (FK=ON)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state", "regulatory_stratum_only") VALUES (?, ?, ?, ?)  -- {"item_code": "A-01", "population_code": "ADHD", "state": "stated", "regulatory_stratum_only": null}
-```
-**Expected:** NOT NULL constraint failed
-**Actual:** rejected
-**Exception:** `IntegrityError: NOT NULL constraint failed: evidence_cell_state.regulatory_stratum_only`
-**Verdict:** `OK`
-
-### [0624] A7/ON — evidence_population_match.source_ref   `2026-08-12 05:22:48Z`
+### [0616] A7/ON — evidence_population_match.source_ref   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6792,7 +6704,7 @@ INSERT INTO "evidence_population_match" ("match_id", "source_ref", "target_popul
 **Exception:** `IntegrityError: NOT NULL constraint failed: evidence_population_match.source_ref`
 **Verdict:** `OK`
 
-### [0625] A7/ON — evidence_population_match.target_population   `2026-08-12 05:22:48Z`
+### [0617] A7/ON — evidence_population_match.target_population   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6803,7 +6715,7 @@ INSERT INTO "evidence_population_match" ("match_id", "source_ref", "target_popul
 **Exception:** `IntegrityError: NOT NULL constraint failed: evidence_population_match.target_population`
 **Verdict:** `OK`
 
-### [0626] A7/ON — evidence_population_match.match_grade   `2026-08-12 05:22:48Z`
+### [0618] A7/ON — evidence_population_match.match_grade   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6814,7 +6726,7 @@ INSERT INTO "evidence_population_match" ("match_id", "source_ref", "target_popul
 **Exception:** `IntegrityError: NOT NULL constraint failed: evidence_population_match.match_grade`
 **Verdict:** `OK`
 
-### [0627] A7/ON — evidence_population_match.created_at   `2026-08-12 05:22:48Z`
+### [0619] A7/ON — evidence_population_match.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6825,7 +6737,7 @@ INSERT INTO "evidence_population_match" ("match_id", "source_ref", "target_popul
 **Exception:** `IntegrityError: NOT NULL constraint failed: evidence_population_match.created_at`
 **Verdict:** `OK`
 
-### [0628] A7/ON — evidence_population_match.created_by_session   `2026-08-12 05:22:48Z`
+### [0620] A7/ON — evidence_population_match.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6836,7 +6748,7 @@ INSERT INTO "evidence_population_match" ("match_id", "source_ref", "target_popul
 **Exception:** `IntegrityError: NOT NULL constraint failed: evidence_population_match.created_by_session`
 **Verdict:** `OK`
 
-### [0629] A7/ON — evidence_source_authors.ref_id   `2026-08-12 05:22:48Z`
+### [0621] A7/ON — evidence_source_authors.ref_id   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6847,7 +6759,7 @@ INSERT INTO "evidence_source_authors" ("ref_id", "position") VALUES (?, ?)  -- {
 **Exception:** `IntegrityError: NOT NULL constraint failed: evidence_source_authors.ref_id`
 **Verdict:** `OK`
 
-### [0630] A7/ON — evidence_source_authors.position   `2026-08-12 05:22:48Z`
+### [0622] A7/ON — evidence_source_authors.position   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6858,7 +6770,7 @@ INSERT INTO "evidence_source_authors" ("ref_id", "position") VALUES (?, ?)  -- {
 **Exception:** `IntegrityError: NOT NULL constraint failed: evidence_source_authors.position`
 **Verdict:** `OK`
 
-### [0631] A7/ON — evidence_source_authors.is_corporate   `2026-08-12 05:22:48Z`
+### [0623] A7/ON — evidence_source_authors.is_corporate   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6869,7 +6781,7 @@ INSERT INTO "evidence_source_authors" ("ref_id", "position", "is_corporate") VAL
 **Exception:** `IntegrityError: NOT NULL constraint failed: evidence_source_authors.is_corporate`
 **Verdict:** `OK`
 
-### [0632] A7/ON — evidence_source_authors.role   `2026-08-12 05:22:48Z`
+### [0624] A7/ON — evidence_source_authors.role   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6880,7 +6792,7 @@ INSERT INTO "evidence_source_authors" ("ref_id", "position", "role") VALUES (?, 
 **Exception:** `IntegrityError: NOT NULL constraint failed: evidence_source_authors.role`
 **Verdict:** `OK`
 
-### [0633] A7/ON — evidence_sources.data_capture_status   `2026-08-12 05:22:48Z`
+### [0625] A7/ON — evidence_sources.data_capture_status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6891,7 +6803,7 @@ INSERT INTO "evidence_sources" ("ref_id", "data_capture_status") VALUES (?, ?)  
 **Exception:** `IntegrityError: NOT NULL constraint failed: evidence_sources.data_capture_status`
 **Verdict:** `OK`
 
-### [0634] A7/ON — evidence_sources.citation_mining_status   `2026-08-12 05:22:48Z`
+### [0626] A7/ON — evidence_sources.citation_mining_status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6902,7 +6814,7 @@ INSERT INTO "evidence_sources" ("ref_id", "citation_mining_status") VALUES (?, ?
 **Exception:** `IntegrityError: NOT NULL constraint failed: evidence_sources.citation_mining_status`
 **Verdict:** `OK`
 
-### [0635] A7/ON — external_root_registry.description   `2026-08-12 05:22:48Z`
+### [0627] A7/ON — external_root_registry.description   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6913,7 +6825,7 @@ INSERT INTO "external_root_registry" ("root_id", "description") VALUES (?, ?)  -
 **Exception:** `IntegrityError: NOT NULL constraint failed: external_root_registry.description`
 **Verdict:** `OK`
 
-### [0636] A7/ON — gap_mining.gap_id   `2026-08-12 05:22:48Z`
+### [0628] A7/ON — gap_mining.gap_id   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6924,7 +6836,7 @@ INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "searc
 **Exception:** `IntegrityError: NOT NULL constraint failed: gap_mining.gap_id`
 **Verdict:** `OK`
 
-### [0637] A7/ON — gap_mining.attempt_at   `2026-08-12 05:22:48Z`
+### [0629] A7/ON — gap_mining.attempt_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6935,7 +6847,7 @@ INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "searc
 **Exception:** `IntegrityError: NOT NULL constraint failed: gap_mining.attempt_at`
 **Verdict:** `OK`
 
-### [0638] A7/ON — gap_mining.attempted_by_session   `2026-08-12 05:22:48Z`
+### [0630] A7/ON — gap_mining.attempted_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6946,7 +6858,7 @@ INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "searc
 **Exception:** `IntegrityError: NOT NULL constraint failed: gap_mining.attempted_by_session`
 **Verdict:** `OK`
 
-### [0639] A7/ON — gap_mining.search_strategy_record   `2026-08-12 05:22:48Z`
+### [0631] A7/ON — gap_mining.search_strategy_record   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6957,7 +6869,7 @@ INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "searc
 **Exception:** `IntegrityError: NOT NULL constraint failed: gap_mining.search_strategy_record`
 **Verdict:** `OK`
 
-### [0640] A7/ON — gap_mining.candidates_returned   `2026-08-12 05:22:48Z`
+### [0632] A7/ON — gap_mining.candidates_returned   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6968,7 +6880,7 @@ INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "searc
 **Exception:** `IntegrityError: NOT NULL constraint failed: gap_mining.candidates_returned`
 **Verdict:** `OK`
 
-### [0641] A7/ON — gap_mining.candidates_reviewed   `2026-08-12 05:22:48Z`
+### [0633] A7/ON — gap_mining.candidates_reviewed   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6979,7 +6891,7 @@ INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "searc
 **Exception:** `IntegrityError: NOT NULL constraint failed: gap_mining.candidates_reviewed`
 **Verdict:** `OK`
 
-### [0642] A7/ON — gap_mining.outcome   `2026-08-12 05:22:48Z`
+### [0634] A7/ON — gap_mining.outcome   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -6990,7 +6902,7 @@ INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "searc
 **Exception:** `IntegrityError: NOT NULL constraint failed: gap_mining.outcome`
 **Verdict:** `OK`
 
-### [0643] A7/ON — gap_mining.check_method   `2026-08-12 05:22:48Z`
+### [0635] A7/ON — gap_mining.check_method   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7001,7 +6913,7 @@ INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "searc
 **Exception:** `IntegrityError: NOT NULL constraint failed: gap_mining.check_method`
 **Verdict:** `OK`
 
-### [0644] A7/ON — gaps.category   `2026-08-12 05:22:48Z`
+### [0636] A7/ON — gaps.category   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7012,7 +6924,7 @@ INSERT INTO "gaps" ("gap_id", "category", "priority", "status", "description", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: gaps.category`
 **Verdict:** `OK`
 
-### [0645] A7/ON — gaps.priority   `2026-08-12 05:22:48Z`
+### [0637] A7/ON — gaps.priority   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7023,7 +6935,7 @@ INSERT INTO "gaps" ("gap_id", "category", "priority", "status", "description", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: gaps.priority`
 **Verdict:** `OK`
 
-### [0646] A7/ON — gaps.status   `2026-08-12 05:22:48Z`
+### [0638] A7/ON — gaps.status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7034,7 +6946,7 @@ INSERT INTO "gaps" ("gap_id", "category", "priority", "status", "description", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: gaps.status`
 **Verdict:** `OK`
 
-### [0647] A7/ON — gaps.description   `2026-08-12 05:22:48Z`
+### [0639] A7/ON — gaps.description   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7045,7 +6957,7 @@ INSERT INTO "gaps" ("gap_id", "category", "priority", "status", "description", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: gaps.description`
 **Verdict:** `OK`
 
-### [0648] A7/ON — gaps.created_at   `2026-08-12 05:22:48Z`
+### [0640] A7/ON — gaps.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7056,7 +6968,7 @@ INSERT INTO "gaps" ("gap_id", "category", "priority", "status", "description", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: gaps.created_at`
 **Verdict:** `OK`
 
-### [0649] A7/ON — gaps.created_by_session   `2026-08-12 05:22:48Z`
+### [0641] A7/ON — gaps.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7067,7 +6979,7 @@ INSERT INTO "gaps" ("gap_id", "category", "priority", "status", "description", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: gaps.created_by_session`
 **Verdict:** `OK`
 
-### [0650] A7/ON — gaps.updated_at   `2026-08-12 05:22:48Z`
+### [0642] A7/ON — gaps.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7078,7 +6990,7 @@ INSERT INTO "gaps" ("gap_id", "category", "priority", "status", "description", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: gaps.updated_at`
 **Verdict:** `OK`
 
-### [0651] A7/ON — gaps.updated_by_session   `2026-08-12 05:22:48Z`
+### [0643] A7/ON — gaps.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7089,7 +7001,7 @@ INSERT INTO "gaps" ("gap_id", "category", "priority", "status", "description", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: gaps.updated_by_session`
 **Verdict:** `OK`
 
-### [0652] A7/ON — item_audit_runs.item_code   `2026-08-12 05:22:48Z`
+### [0644] A7/ON — item_audit_runs.item_code   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7100,7 +7012,7 @@ INSERT INTO "item_audit_runs" ("run_id", "item_code", "session", "created_at", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_audit_runs.item_code`
 **Verdict:** `OK`
 
-### [0653] A7/ON — item_audit_runs.session   `2026-08-12 05:22:48Z`
+### [0645] A7/ON — item_audit_runs.session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7111,7 +7023,7 @@ INSERT INTO "item_audit_runs" ("run_id", "item_code", "session", "created_at", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_audit_runs.session`
 **Verdict:** `OK`
 
-### [0654] A7/ON — item_audit_runs.steps_complete   `2026-08-12 05:22:48Z`
+### [0646] A7/ON — item_audit_runs.steps_complete   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7122,7 +7034,7 @@ INSERT INTO "item_audit_runs" ("run_id", "item_code", "session", "created_at", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_audit_runs.steps_complete`
 **Verdict:** `OK`
 
-### [0655] A7/ON — item_audit_runs.steps_started   `2026-08-12 05:22:48Z`
+### [0647] A7/ON — item_audit_runs.steps_started   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7133,7 +7045,7 @@ INSERT INTO "item_audit_runs" ("run_id", "item_code", "session", "created_at", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_audit_runs.steps_started`
 **Verdict:** `OK`
 
-### [0656] A7/ON — item_audit_runs.status   `2026-08-12 05:22:48Z`
+### [0648] A7/ON — item_audit_runs.status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7144,7 +7056,7 @@ INSERT INTO "item_audit_runs" ("run_id", "item_code", "session", "created_at", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_audit_runs.status`
 **Verdict:** `OK`
 
-### [0657] A7/ON — item_audit_runs.created_at   `2026-08-12 05:22:48Z`
+### [0649] A7/ON — item_audit_runs.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7155,7 +7067,7 @@ INSERT INTO "item_audit_runs" ("run_id", "item_code", "session", "created_at", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_audit_runs.created_at`
 **Verdict:** `OK`
 
-### [0658] A7/ON — item_audit_runs.created_by_session   `2026-08-12 05:22:48Z`
+### [0650] A7/ON — item_audit_runs.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7166,7 +7078,7 @@ INSERT INTO "item_audit_runs" ("run_id", "item_code", "session", "created_at", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_audit_runs.created_by_session`
 **Verdict:** `OK`
 
-### [0659] A7/ON — item_audit_runs.updated_at   `2026-08-12 05:22:48Z`
+### [0651] A7/ON — item_audit_runs.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7177,7 +7089,7 @@ INSERT INTO "item_audit_runs" ("run_id", "item_code", "session", "created_at", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_audit_runs.updated_at`
 **Verdict:** `OK`
 
-### [0660] A7/ON — item_audit_runs.updated_by_session   `2026-08-12 05:22:48Z`
+### [0652] A7/ON — item_audit_runs.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7188,7 +7100,7 @@ INSERT INTO "item_audit_runs" ("run_id", "item_code", "session", "created_at", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_audit_runs.updated_by_session`
 **Verdict:** `OK`
 
-### [0661] A7/ON — item_bpc_links.link_type   `2026-08-12 05:22:48Z`
+### [0653] A7/ON — item_bpc_links.link_type   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7199,7 +7111,7 @@ INSERT INTO "item_bpc_links" ("item_code", "slug", "link_type", "created_at", "c
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_bpc_links.link_type`
 **Verdict:** `OK`
 
-### [0662] A7/ON — item_bpc_links.created_at   `2026-08-12 05:22:48Z`
+### [0654] A7/ON — item_bpc_links.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7210,7 +7122,7 @@ INSERT INTO "item_bpc_links" ("item_code", "slug", "link_type", "created_at", "c
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_bpc_links.created_at`
 **Verdict:** `OK`
 
-### [0663] A7/ON — item_bpc_links.created_by_session   `2026-08-12 05:22:48Z`
+### [0655] A7/ON — item_bpc_links.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7221,7 +7133,7 @@ INSERT INTO "item_bpc_links" ("item_code", "slug", "link_type", "created_at", "c
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_bpc_links.created_by_session`
 **Verdict:** `OK`
 
-### [0664] A7/ON — item_population_elaborations.item_code   `2026-08-12 05:22:48Z`
+### [0656] A7/ON — item_population_elaborations.item_code   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7232,7 +7144,7 @@ INSERT INTO "item_population_elaborations" ("item_code", "population_code") VALU
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_population_elaborations.item_code`
 **Verdict:** `OK`
 
-### [0665] A7/ON — item_population_elaborations.population_code   `2026-08-12 05:22:48Z`
+### [0657] A7/ON — item_population_elaborations.population_code   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7243,7 +7155,7 @@ INSERT INTO "item_population_elaborations" ("item_code", "population_code") VALU
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_population_elaborations.population_code`
 **Verdict:** `OK`
 
-### [0666] A7/ON — item_population_links.applicability   `2026-08-12 05:22:48Z`
+### [0658] A7/ON — item_population_links.applicability   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7254,7 +7166,7 @@ INSERT INTO "item_population_links" ("item_code", "population_code", "subtype", 
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_population_links.applicability`
 **Verdict:** `OK`
 
-### [0667] A7/ON — items.category   `2026-08-12 05:22:48Z`
+### [0659] A7/ON — items.category   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7265,7 +7177,7 @@ INSERT INTO "items" ("item_code", "category", "name", "created_at", "created_by_
 **Exception:** `IntegrityError: NOT NULL constraint failed: items.category`
 **Verdict:** `OK`
 
-### [0668] A7/ON — items.name   `2026-08-12 05:22:48Z`
+### [0660] A7/ON — items.name   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7276,7 +7188,7 @@ INSERT INTO "items" ("item_code", "category", "name", "created_at", "created_by_
 **Exception:** `IntegrityError: NOT NULL constraint failed: items.name`
 **Verdict:** `OK`
 
-### [0669] A7/ON — items.status   `2026-08-12 05:22:48Z`
+### [0661] A7/ON — items.status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7287,7 +7199,7 @@ INSERT INTO "items" ("item_code", "category", "name", "created_at", "created_by_
 **Exception:** `IntegrityError: NOT NULL constraint failed: items.status`
 **Verdict:** `OK`
 
-### [0670] A7/ON — items.created_at   `2026-08-12 05:22:48Z`
+### [0662] A7/ON — items.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7298,7 +7210,7 @@ INSERT INTO "items" ("item_code", "category", "name", "created_at", "created_by_
 **Exception:** `IntegrityError: NOT NULL constraint failed: items.created_at`
 **Verdict:** `OK`
 
-### [0671] A7/ON — items.created_by_session   `2026-08-12 05:22:48Z`
+### [0663] A7/ON — items.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7309,7 +7221,7 @@ INSERT INTO "items" ("item_code", "category", "name", "created_at", "created_by_
 **Exception:** `IntegrityError: NOT NULL constraint failed: items.created_by_session`
 **Verdict:** `OK`
 
-### [0672] A7/ON — items.updated_at   `2026-08-12 05:22:48Z`
+### [0664] A7/ON — items.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7320,7 +7232,7 @@ INSERT INTO "items" ("item_code", "category", "name", "created_at", "created_by_
 **Exception:** `IntegrityError: NOT NULL constraint failed: items.updated_at`
 **Verdict:** `OK`
 
-### [0673] A7/ON — items.updated_by_session   `2026-08-12 05:22:48Z`
+### [0665] A7/ON — items.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7331,7 +7243,7 @@ INSERT INTO "items" ("item_code", "category", "name", "created_at", "created_by_
 **Exception:** `IntegrityError: NOT NULL constraint failed: items.updated_by_session`
 **Verdict:** `OK`
 
-### [0674] A7/ON — jurisdictional_values.item_code   `2026-08-12 05:22:48Z`
+### [0666] A7/ON — jurisdictional_values.item_code   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7342,7 +7254,7 @@ INSERT INTO "jurisdictional_values" ("item_code", "jurisdiction") VALUES (?, ?) 
 **Exception:** `IntegrityError: NOT NULL constraint failed: jurisdictional_values.item_code`
 **Verdict:** `OK`
 
-### [0675] A7/ON — jurisdictional_values.jurisdiction   `2026-08-12 05:22:48Z`
+### [0667] A7/ON — jurisdictional_values.jurisdiction   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7353,7 +7265,7 @@ INSERT INTO "jurisdictional_values" ("item_code", "jurisdiction") VALUES (?, ?) 
 **Exception:** `IntegrityError: NOT NULL constraint failed: jurisdictional_values.jurisdiction`
 **Verdict:** `OK`
 
-### [0676] A7/ON — jurisdictional_values.evidence_tier   `2026-08-12 05:22:48Z`
+### [0668] A7/ON — jurisdictional_values.evidence_tier   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7364,7 +7276,7 @@ INSERT INTO "jurisdictional_values" ("item_code", "jurisdiction", "evidence_tier
 **Exception:** `IntegrityError: NOT NULL constraint failed: jurisdictional_values.evidence_tier`
 **Verdict:** `OK`
 
-### [0677] A7/ON — lang_jur_map.role   `2026-08-12 05:22:48Z`
+### [0669] A7/ON — lang_jur_map.role   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7375,7 +7287,7 @@ INSERT INTO "lang_jur_map" ("language", "jurisdiction", "role") VALUES (?, ?, ?)
 **Exception:** `IntegrityError: NOT NULL constraint failed: lang_jur_map.role`
 **Verdict:** `OK`
 
-### [0678] A7/ON — life_stage_modifiers.label   `2026-08-12 05:22:48Z`
+### [0670] A7/ON — life_stage_modifiers.label   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7386,7 +7298,7 @@ INSERT INTO "life_stage_modifiers" ("label", "code", "definition") VALUES (?, ?,
 **Exception:** `IntegrityError: NOT NULL constraint failed: life_stage_modifiers.label`
 **Verdict:** `OK`
 
-### [0679] A7/ON — life_stage_modifiers.definition   `2026-08-12 05:22:48Z`
+### [0671] A7/ON — life_stage_modifiers.definition   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7397,7 +7309,7 @@ INSERT INTO "life_stage_modifiers" ("definition", "code", "label") VALUES (?, ?,
 **Exception:** `IntegrityError: NOT NULL constraint failed: life_stage_modifiers.definition`
 **Verdict:** `OK`
 
-### [0680] A7/ON — pipeline_runs.started_at   `2026-08-12 05:22:48Z`
+### [0672] A7/ON — pipeline_runs.started_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7408,7 +7320,7 @@ INSERT INTO "pipeline_runs" ("run_id", "started_at") VALUES (?, ?)  -- {"run_id"
 **Exception:** `IntegrityError: NOT NULL constraint failed: pipeline_runs.started_at`
 **Verdict:** `OK`
 
-### [0681] A7/ON — population_axis_map.role   `2026-08-12 05:22:48Z`
+### [0673] A7/ON — population_axis_map.role   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7419,7 +7331,7 @@ INSERT INTO "population_axis_map" ("population_code", "axis_code", "role") VALUE
 **Exception:** `IntegrityError: NOT NULL constraint failed: population_axis_map.role`
 **Verdict:** `OK`
 
-### [0682] A7/ON — population_reclass.row_kind   `2026-08-12 05:22:48Z`
+### [0674] A7/ON — population_reclass.row_kind   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7430,7 +7342,7 @@ INSERT INTO "population_reclass" ("population_code", "row_kind", "layer", "ratio
 **Exception:** `IntegrityError: NOT NULL constraint failed: population_reclass.row_kind`
 **Verdict:** `OK`
 
-### [0683] A7/ON — population_reclass.layer   `2026-08-12 05:22:48Z`
+### [0675] A7/ON — population_reclass.layer   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7441,7 +7353,7 @@ INSERT INTO "population_reclass" ("population_code", "row_kind", "layer", "ratio
 **Exception:** `IntegrityError: NOT NULL constraint failed: population_reclass.layer`
 **Verdict:** `OK`
 
-### [0684] A7/ON — population_reclass.rationale   `2026-08-12 05:22:48Z`
+### [0676] A7/ON — population_reclass.rationale   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7452,7 +7364,7 @@ INSERT INTO "population_reclass" ("population_code", "row_kind", "layer", "ratio
 **Exception:** `IntegrityError: NOT NULL constraint failed: population_reclass.rationale`
 **Verdict:** `OK`
 
-### [0685] A7/ON — populations.display_name   `2026-08-12 05:22:48Z`
+### [0677] A7/ON — populations.display_name   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7463,84 +7375,84 @@ INSERT INTO "populations" ("population_code", "display_name") VALUES (?, ?)  -- 
 **Exception:** `IntegrityError: NOT NULL constraint failed: populations.display_name`
 **Verdict:** `OK`
 
-### [0686] A7/ON — reasoning_doc_citations.reasoning_doc_slug   `2026-08-12 05:22:48Z`
+### [0678] A7/ON — reasoning_doc_citations.reasoning_doc_slug   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-2065", "reasoning_doc_slug": null, "parameter": "PROBE-2066", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-167", "verified_at": "PROBE-2067", "verified_by_session": "PROBE-2068", "value_match": "EXACT", "claim_match": "SUPPORTED", "claim_text": "PROBE-2069", "claimed_value": "PROBE-2070"}
+INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-2065", "reasoning_doc_slug": null, "parameter": "PROBE-2066", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-167", "verified_at": "PROBE-2067", "verified_by_session": "PROBE-2068", "value_match": "EXACT", "claim_match": "SUPPORTED", "claimed_value": "PROBE-2069", "claim_text": "PROBE-2070"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: reasoning_doc_citations.reasoning_doc_slug`
 **Verdict:** `OK`
 
-### [0687] A7/ON — reasoning_doc_citations.parameter   `2026-08-12 05:22:48Z`
+### [0679] A7/ON — reasoning_doc_citations.parameter   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-2071", "reasoning_doc_slug": "PROBE-PK-158", "parameter": null, "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-167", "verified_at": "PROBE-2072", "verified_by_session": "PROBE-2073", "value_match": "EXACT", "claim_match": "SUPPORTED", "claim_text": "PROBE-2074", "claimed_value": "PROBE-2075"}
+INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-2071", "reasoning_doc_slug": "PROBE-PK-158", "parameter": null, "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-167", "verified_at": "PROBE-2072", "verified_by_session": "PROBE-2073", "value_match": "EXACT", "claim_match": "SUPPORTED", "claimed_value": "PROBE-2074", "claim_text": "PROBE-2075"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: reasoning_doc_citations.parameter`
 **Verdict:** `OK`
 
-### [0688] A7/ON — reasoning_doc_citations.claim_type   `2026-08-12 05:22:48Z`
+### [0680] A7/ON — reasoning_doc_citations.claim_type   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-2076", "reasoning_doc_slug": "PROBE-PK-158", "parameter": "PROBE-2077", "claim_type": null, "source_ref_id": "PROBE-PK-167", "verified_at": "PROBE-2078", "verified_by_session": "PROBE-2079", "value_match": "EXACT", "claim_match": "SUPPORTED", "claim_text": "PROBE-2080", "claimed_value": "PROBE-2081"}
+INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-2076", "reasoning_doc_slug": "PROBE-PK-158", "parameter": "PROBE-2077", "claim_type": null, "source_ref_id": "PROBE-PK-167", "verified_at": "PROBE-2078", "verified_by_session": "PROBE-2079", "value_match": "EXACT", "claim_match": "SUPPORTED", "claimed_value": "PROBE-2080", "claim_text": "PROBE-2081"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: reasoning_doc_citations.claim_type`
 **Verdict:** `OK`
 
-### [0689] A7/ON — reasoning_doc_citations.source_ref_id   `2026-08-12 05:22:48Z`
+### [0681] A7/ON — reasoning_doc_citations.source_ref_id   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-2082", "reasoning_doc_slug": "PROBE-PK-158", "parameter": "PROBE-2083", "claim_type": "numerical_spec", "source_ref_id": null, "verified_at": "PROBE-2084", "verified_by_session": "PROBE-2085", "value_match": "EXACT", "claim_match": "SUPPORTED", "claim_text": "PROBE-2086", "claimed_value": "PROBE-2087"}
+INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-2082", "reasoning_doc_slug": "PROBE-PK-158", "parameter": "PROBE-2083", "claim_type": "numerical_spec", "source_ref_id": null, "verified_at": "PROBE-2084", "verified_by_session": "PROBE-2085", "value_match": "EXACT", "claim_match": "SUPPORTED", "claimed_value": "PROBE-2086", "claim_text": "PROBE-2087"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: reasoning_doc_citations.source_ref_id`
 **Verdict:** `OK`
 
-### [0690] A7/ON — reasoning_doc_citations.verified_at   `2026-08-12 05:22:48Z`
+### [0682] A7/ON — reasoning_doc_citations.verified_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-2088", "reasoning_doc_slug": "PROBE-PK-158", "parameter": "PROBE-2089", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-167", "verified_at": null, "verified_by_session": "PROBE-2090", "value_match": "EXACT", "claim_match": "SUPPORTED", "claim_text": "PROBE-2091", "claimed_value": "PROBE-2092"}
+INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-2088", "reasoning_doc_slug": "PROBE-PK-158", "parameter": "PROBE-2089", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-167", "verified_at": null, "verified_by_session": "PROBE-2090", "value_match": "EXACT", "claim_match": "SUPPORTED", "claimed_value": "PROBE-2091", "claim_text": "PROBE-2092"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: reasoning_doc_citations.verified_at`
 **Verdict:** `OK`
 
-### [0691] A7/ON — reasoning_doc_citations.verified_by_session   `2026-08-12 05:22:48Z`
+### [0683] A7/ON — reasoning_doc_citations.verified_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-2093", "reasoning_doc_slug": "PROBE-PK-158", "parameter": "PROBE-2094", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-167", "verified_at": "PROBE-2095", "verified_by_session": null, "value_match": "EXACT", "claim_match": "SUPPORTED", "claim_text": "PROBE-2096", "claimed_value": "PROBE-2097"}
+INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-2093", "reasoning_doc_slug": "PROBE-PK-158", "parameter": "PROBE-2094", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-167", "verified_at": "PROBE-2095", "verified_by_session": null, "value_match": "EXACT", "claim_match": "SUPPORTED", "claimed_value": "PROBE-2096", "claim_text": "PROBE-2097"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: reasoning_doc_citations.verified_by_session`
 **Verdict:** `OK`
 
-### [0692] A7/ON — reasoning_doc_citations.paywall_purchase_candidate   `2026-08-12 05:22:48Z`
+### [0684] A7/ON — reasoning_doc_citations.paywall_purchase_candidate   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value", "paywall_purchase_candidate") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-2098", "reasoning_doc_slug": "PROBE-PK-158", "parameter": "PROBE-2099", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-167", "verified_at": "PROBE-2100", "verified_by_session": "PROBE-2101", "value_match": "EXACT", "claim_match": "SUPPORTED", "claim_text": "PROBE-2102", "claimed_value": "PROBE-2103", "paywall_purchase_candidate": null}
+INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text", "paywall_purchase_candidate") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-2098", "reasoning_doc_slug": "PROBE-PK-158", "parameter": "PROBE-2099", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-167", "verified_at": "PROBE-2100", "verified_by_session": "PROBE-2101", "value_match": "EXACT", "claim_match": "SUPPORTED", "claimed_value": "PROBE-2102", "claim_text": "PROBE-2103", "paywall_purchase_candidate": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: reasoning_doc_citations.paywall_purchase_candidate`
 **Verdict:** `OK`
 
-### [0693] A7/ON — room_items.applicability   `2026-08-12 05:22:48Z`
+### [0685] A7/ON — room_items.applicability   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7551,7 +7463,7 @@ INSERT INTO "room_items" ("room_code", "item_code", "applicability") VALUES (?, 
 **Exception:** `IntegrityError: NOT NULL constraint failed: room_items.applicability`
 **Verdict:** `OK`
 
-### [0694] A7/ON — rooms.name   `2026-08-12 05:22:48Z`
+### [0686] A7/ON — rooms.name   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7562,7 +7474,7 @@ INSERT INTO "rooms" ("room_code", "name") VALUES (?, ?)  -- {"room_code": "PROBE
 **Exception:** `IntegrityError: NOT NULL constraint failed: rooms.name`
 **Verdict:** `OK`
 
-### [0695] A7/ON — rooms.status   `2026-08-12 05:22:48Z`
+### [0687] A7/ON — rooms.status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7573,7 +7485,7 @@ INSERT INTO "rooms" ("room_code", "name", "status") VALUES (?, ?, ?)  -- {"room_
 **Exception:** `IntegrityError: NOT NULL constraint failed: rooms.status`
 **Verdict:** `OK`
 
-### [0696] A7/ON — search_candidates.found_under_slug   `2026-08-12 05:22:48Z`
+### [0688] A7/ON — search_candidates.found_under_slug   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7584,7 +7496,7 @@ INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "se
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_candidates.found_under_slug`
 **Verdict:** `OK`
 
-### [0697] A7/ON — search_candidates.disposition   `2026-08-12 05:22:48Z`
+### [0689] A7/ON — search_candidates.disposition   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7595,7 +7507,7 @@ INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "se
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_candidates.disposition`
 **Verdict:** `OK`
 
-### [0698] A7/ON — search_candidates.title   `2026-08-12 05:22:48Z`
+### [0690] A7/ON — search_candidates.title   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7606,7 +7518,7 @@ INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "se
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_candidates.title`
 **Verdict:** `OK`
 
-### [0699] A7/ON — search_candidates.harm_finding   `2026-08-12 05:22:48Z`
+### [0691] A7/ON — search_candidates.harm_finding   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7617,7 +7529,7 @@ INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "se
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_candidates.harm_finding`
 **Verdict:** `OK`
 
-### [0700] A7/ON — search_candidates.session   `2026-08-12 05:22:48Z`
+### [0692] A7/ON — search_candidates.session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7628,7 +7540,7 @@ INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "se
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_candidates.session`
 **Verdict:** `OK`
 
-### [0701] A7/ON — search_candidates.created_at   `2026-08-12 05:22:48Z`
+### [0693] A7/ON — search_candidates.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7639,7 +7551,7 @@ INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "se
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_candidates.created_at`
 **Verdict:** `OK`
 
-### [0702] A7/ON — search_coverage.status   `2026-08-12 05:22:48Z`
+### [0694] A7/ON — search_coverage.status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7650,7 +7562,7 @@ INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_coverage.status`
 **Verdict:** `OK`
 
-### [0703] A7/ON — search_coverage.co1_attempted   `2026-08-12 05:22:48Z`
+### [0695] A7/ON — search_coverage.co1_attempted   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7661,7 +7573,7 @@ INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_coverage.co1_attempted`
 **Verdict:** `OK`
 
-### [0704] A7/ON — search_coverage.tier5_attempted   `2026-08-12 05:22:48Z`
+### [0696] A7/ON — search_coverage.tier5_attempted   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7672,7 +7584,7 @@ INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_coverage.tier5_attempted`
 **Verdict:** `OK`
 
-### [0705] A7/ON — search_coverage.tier6_attempted   `2026-08-12 05:22:48Z`
+### [0697] A7/ON — search_coverage.tier6_attempted   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7683,7 +7595,7 @@ INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_coverage.tier6_attempted`
 **Verdict:** `OK`
 
-### [0706] A7/ON — search_coverage.created_at   `2026-08-12 05:22:48Z`
+### [0698] A7/ON — search_coverage.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7694,7 +7606,7 @@ INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_coverage.created_at`
 **Verdict:** `OK`
 
-### [0707] A7/ON — search_coverage.created_by_session   `2026-08-12 05:22:48Z`
+### [0699] A7/ON — search_coverage.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7705,7 +7617,7 @@ INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_coverage.created_by_session`
 **Verdict:** `OK`
 
-### [0708] A7/ON — search_coverage.updated_at   `2026-08-12 05:22:48Z`
+### [0700] A7/ON — search_coverage.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7716,7 +7628,7 @@ INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_coverage.updated_at`
 **Verdict:** `OK`
 
-### [0709] A7/ON — search_coverage.updated_by_session   `2026-08-12 05:22:48Z`
+### [0701] A7/ON — search_coverage.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7727,7 +7639,7 @@ INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_coverage.updated_by_session`
 **Verdict:** `OK`
 
-### [0710] A7/ON — search_executions.slug   `2026-08-12 05:22:48Z`
+### [0702] A7/ON — search_executions.slug   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7738,7 +7650,7 @@ INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "de
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_executions.slug`
 **Verdict:** `OK`
 
-### [0711] A7/ON — search_executions.language   `2026-08-12 05:22:48Z`
+### [0703] A7/ON — search_executions.language   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7749,7 +7661,7 @@ INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "de
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_executions.language`
 **Verdict:** `OK`
 
-### [0712] A7/ON — search_executions.query_text   `2026-08-12 05:22:48Z`
+### [0704] A7/ON — search_executions.query_text   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7760,7 +7672,7 @@ INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "de
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_executions.query_text`
 **Verdict:** `OK`
 
-### [0713] A7/ON — search_executions.engine   `2026-08-12 05:22:48Z`
+### [0705] A7/ON — search_executions.engine   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7771,7 +7683,7 @@ INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "de
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_executions.engine`
 **Verdict:** `OK`
 
-### [0714] A7/ON — search_executions.depth_method   `2026-08-12 05:22:48Z`
+### [0706] A7/ON — search_executions.depth_method   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7782,7 +7694,7 @@ INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "de
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_executions.depth_method`
 **Verdict:** `OK`
 
-### [0715] A7/ON — search_executions.results_found   `2026-08-12 05:22:48Z`
+### [0707] A7/ON — search_executions.results_found   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7793,7 +7705,7 @@ INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "de
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_executions.results_found`
 **Verdict:** `OK`
 
-### [0716] A7/ON — search_executions.results_screened   `2026-08-12 05:22:48Z`
+### [0708] A7/ON — search_executions.results_screened   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7804,7 +7716,7 @@ INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "de
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_executions.results_screened`
 **Verdict:** `OK`
 
-### [0717] A7/ON — search_executions.results_admitted   `2026-08-12 05:22:48Z`
+### [0709] A7/ON — search_executions.results_admitted   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7815,7 +7727,7 @@ INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "de
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_executions.results_admitted`
 **Verdict:** `OK`
 
-### [0718] A7/ON — search_executions.backfill   `2026-08-12 05:22:48Z`
+### [0710] A7/ON — search_executions.backfill   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7826,7 +7738,7 @@ INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "de
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_executions.backfill`
 **Verdict:** `OK`
 
-### [0719] A7/ON — search_executions.session   `2026-08-12 05:22:48Z`
+### [0711] A7/ON — search_executions.session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7837,7 +7749,7 @@ INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "de
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_executions.session`
 **Verdict:** `OK`
 
-### [0720] A7/ON — search_executions.executed_at   `2026-08-12 05:22:48Z`
+### [0712] A7/ON — search_executions.executed_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7848,7 +7760,7 @@ INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "de
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_executions.executed_at`
 **Verdict:** `OK`
 
-### [0721] A7/ON — search_executions.harm_finding   `2026-08-12 05:22:48Z`
+### [0713] A7/ON — search_executions.harm_finding   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7859,7 +7771,7 @@ INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "de
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_executions.harm_finding`
 **Verdict:** `OK`
 
-### [0722] A7/ON — search_languages.status   `2026-08-12 05:22:48Z`
+### [0714] A7/ON — search_languages.status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7870,7 +7782,7 @@ INSERT INTO "search_languages" ("slug", "language", "status", "created_at", "cre
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_languages.status`
 **Verdict:** `OK`
 
-### [0723] A7/ON — search_languages.results_count   `2026-08-12 05:22:48Z`
+### [0715] A7/ON — search_languages.results_count   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7881,7 +7793,7 @@ INSERT INTO "search_languages" ("slug", "language", "status", "created_at", "cre
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_languages.results_count`
 **Verdict:** `OK`
 
-### [0724] A7/ON — search_languages.created_at   `2026-08-12 05:22:48Z`
+### [0716] A7/ON — search_languages.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7892,7 +7804,7 @@ INSERT INTO "search_languages" ("slug", "language", "status", "created_at", "cre
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_languages.created_at`
 **Verdict:** `OK`
 
-### [0725] A7/ON — search_languages.created_by_session   `2026-08-12 05:22:48Z`
+### [0717] A7/ON — search_languages.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7903,7 +7815,7 @@ INSERT INTO "search_languages" ("slug", "language", "status", "created_at", "cre
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_languages.created_by_session`
 **Verdict:** `OK`
 
-### [0726] A7/ON — search_languages.updated_at   `2026-08-12 05:22:48Z`
+### [0718] A7/ON — search_languages.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7914,7 +7826,7 @@ INSERT INTO "search_languages" ("slug", "language", "status", "created_at", "cre
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_languages.updated_at`
 **Verdict:** `OK`
 
-### [0727] A7/ON — search_languages.updated_by_session   `2026-08-12 05:22:48Z`
+### [0719] A7/ON — search_languages.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7925,7 +7837,7 @@ INSERT INTO "search_languages" ("slug", "language", "status", "created_at", "cre
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_languages.updated_by_session`
 **Verdict:** `OK`
 
-### [0728] A7/ON — situations.title   `2026-08-12 05:22:48Z`
+### [0720] A7/ON — situations.title   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7936,7 +7848,7 @@ INSERT INTO "situations" ("situation_id", "title", "account_language", "account_
 **Exception:** `IntegrityError: NOT NULL constraint failed: situations.title`
 **Verdict:** `OK`
 
-### [0729] A7/ON — situations.account_language   `2026-08-12 05:22:48Z`
+### [0721] A7/ON — situations.account_language   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7947,7 +7859,7 @@ INSERT INTO "situations" ("situation_id", "title", "account_language", "account_
 **Exception:** `IntegrityError: NOT NULL constraint failed: situations.account_language`
 **Verdict:** `OK`
 
-### [0730] A7/ON — situations.account_text_ref   `2026-08-12 05:22:48Z`
+### [0722] A7/ON — situations.account_text_ref   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7958,7 +7870,7 @@ INSERT INTO "situations" ("situation_id", "title", "account_language", "account_
 **Exception:** `IntegrityError: NOT NULL constraint failed: situations.account_text_ref`
 **Verdict:** `OK`
 
-### [0731] A7/ON — slugs.topic_directory   `2026-08-12 05:22:48Z`
+### [0723] A7/ON — slugs.topic_directory   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7969,7 +7881,7 @@ INSERT INTO "slugs" ("slug", "topic_directory", "sl_path", "bpc_path", "status",
 **Exception:** `IntegrityError: NOT NULL constraint failed: slugs.topic_directory`
 **Verdict:** `OK`
 
-### [0732] A7/ON — slugs.sl_path   `2026-08-12 05:22:48Z`
+### [0724] A7/ON — slugs.sl_path   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7980,7 +7892,7 @@ INSERT INTO "slugs" ("slug", "topic_directory", "sl_path", "bpc_path", "status",
 **Exception:** `IntegrityError: NOT NULL constraint failed: slugs.sl_path`
 **Verdict:** `OK`
 
-### [0733] A7/ON — slugs.bpc_path   `2026-08-12 05:22:48Z`
+### [0725] A7/ON — slugs.bpc_path   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -7991,7 +7903,7 @@ INSERT INTO "slugs" ("slug", "topic_directory", "sl_path", "bpc_path", "status",
 **Exception:** `IntegrityError: NOT NULL constraint failed: slugs.bpc_path`
 **Verdict:** `OK`
 
-### [0734] A7/ON — slugs.status   `2026-08-12 05:22:48Z`
+### [0726] A7/ON — slugs.status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8002,7 +7914,7 @@ INSERT INTO "slugs" ("slug", "topic_directory", "sl_path", "bpc_path", "status",
 **Exception:** `IntegrityError: NOT NULL constraint failed: slugs.status`
 **Verdict:** `OK`
 
-### [0735] A7/ON — slugs.created_at   `2026-08-12 05:22:48Z`
+### [0727] A7/ON — slugs.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8013,7 +7925,7 @@ INSERT INTO "slugs" ("slug", "topic_directory", "sl_path", "bpc_path", "status",
 **Exception:** `IntegrityError: NOT NULL constraint failed: slugs.created_at`
 **Verdict:** `OK`
 
-### [0736] A7/ON — slugs.created_by_session   `2026-08-12 05:22:48Z`
+### [0728] A7/ON — slugs.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8024,7 +7936,7 @@ INSERT INTO "slugs" ("slug", "topic_directory", "sl_path", "bpc_path", "status",
 **Exception:** `IntegrityError: NOT NULL constraint failed: slugs.created_by_session`
 **Verdict:** `OK`
 
-### [0737] A7/ON — slugs.updated_at   `2026-08-12 05:22:48Z`
+### [0729] A7/ON — slugs.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8035,7 +7947,7 @@ INSERT INTO "slugs" ("slug", "topic_directory", "sl_path", "bpc_path", "status",
 **Exception:** `IntegrityError: NOT NULL constraint failed: slugs.updated_at`
 **Verdict:** `OK`
 
-### [0738] A7/ON — slugs.updated_by_session   `2026-08-12 05:22:48Z`
+### [0730] A7/ON — slugs.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8046,18 +7958,18 @@ INSERT INTO "slugs" ("slug", "topic_directory", "sl_path", "bpc_path", "status",
 **Exception:** `IntegrityError: NOT NULL constraint failed: slugs.updated_by_session`
 **Verdict:** `OK`
 
-### [0739] A7/ON — source_locators.recovered_from   `2026-08-12 05:22:48Z`
+### [0731] A7/ON — source_locators.recovered_from   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "source_locators" ("ref_id", "pmcid", "doi", "issn", "isbn", "standard_number", "url", "pmid", "recovered_from") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-2305", "pmcid": "PROBE-2306", "doi": "PROBE-2307", "issn": "PROBE-2308", "isbn": "PROBE-2309", "standard_number": "PROBE-2310", "url": "PROBE-2311", "pmid": "PROBE-2312", "recovered_from": null}
+INSERT INTO "source_locators" ("ref_id", "pmcid", "pmid", "url", "standard_number", "doi", "isbn", "issn", "recovered_from") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-2305", "pmcid": "PROBE-2306", "pmid": "PROBE-2307", "url": "PROBE-2308", "standard_number": "PROBE-2309", "doi": "PROBE-2310", "isbn": "PROBE-2311", "issn": "PROBE-2312", "recovered_from": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_locators.recovered_from`
 **Verdict:** `OK`
 
-### [0740] A7/ON — source_slug_links.local_ref_id   `2026-08-12 05:22:48Z`
+### [0732] A7/ON — source_slug_links.local_ref_id   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8068,7 +7980,7 @@ INSERT INTO "source_slug_links" ("ref_id", "slug", "local_ref_id", "created_at",
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_slug_links.local_ref_id`
 **Verdict:** `OK`
 
-### [0741] A7/ON — source_slug_links.created_at   `2026-08-12 05:22:48Z`
+### [0733] A7/ON — source_slug_links.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8079,7 +7991,7 @@ INSERT INTO "source_slug_links" ("ref_id", "slug", "local_ref_id", "created_at",
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_slug_links.created_at`
 **Verdict:** `OK`
 
-### [0742] A7/ON — source_slug_links.created_by_session   `2026-08-12 05:22:48Z`
+### [0734] A7/ON — source_slug_links.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8090,7 +8002,7 @@ INSERT INTO "source_slug_links" ("ref_id", "slug", "local_ref_id", "created_at",
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_slug_links.created_by_session`
 **Verdict:** `OK`
 
-### [0743] A7/ON — source_slug_links.updated_at   `2026-08-12 05:22:48Z`
+### [0735] A7/ON — source_slug_links.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8101,7 +8013,7 @@ INSERT INTO "source_slug_links" ("ref_id", "slug", "local_ref_id", "created_at",
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_slug_links.updated_at`
 **Verdict:** `OK`
 
-### [0744] A7/ON — source_slug_links.updated_by_session   `2026-08-12 05:22:48Z`
+### [0736] A7/ON — source_slug_links.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8112,7 +8024,7 @@ INSERT INTO "source_slug_links" ("ref_id", "slug", "local_ref_id", "created_at",
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_slug_links.updated_by_session`
 **Verdict:** `OK`
 
-### [0745] A7/ON — source_value_extractions.ref_id   `2026-08-12 05:22:48Z`
+### [0737] A7/ON — source_value_extractions.ref_id   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8123,7 +8035,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_value_extractions.ref_id`
 **Verdict:** `OK`
 
-### [0746] A7/ON — source_value_extractions.slug   `2026-08-12 05:22:48Z`
+### [0738] A7/ON — source_value_extractions.slug   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8134,7 +8046,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_value_extractions.slug`
 **Verdict:** `OK`
 
-### [0747] A7/ON — source_value_extractions.parameter   `2026-08-12 05:22:48Z`
+### [0739] A7/ON — source_value_extractions.parameter   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8145,7 +8057,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_value_extractions.parameter`
 **Verdict:** `OK`
 
-### [0748] A7/ON — source_value_extractions.claim_type   `2026-08-12 05:22:48Z`
+### [0740] A7/ON — source_value_extractions.claim_type   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8156,7 +8068,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_value_extractions.claim_type`
 **Verdict:** `OK`
 
-### [0749] A7/ON — source_value_extractions.extraction_method   `2026-08-12 05:22:48Z`
+### [0741] A7/ON — source_value_extractions.extraction_method   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8167,7 +8079,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_value_extractions.extraction_method`
 **Verdict:** `OK`
 
-### [0750] A7/ON — source_value_extractions.extraction_status   `2026-08-12 05:22:48Z`
+### [0742] A7/ON — source_value_extractions.extraction_status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8178,7 +8090,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_value_extractions.extraction_status`
 **Verdict:** `OK`
 
-### [0751] A7/ON — source_value_extractions.created_at   `2026-08-12 05:22:48Z`
+### [0743] A7/ON — source_value_extractions.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8189,7 +8101,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_value_extractions.created_at`
 **Verdict:** `OK`
 
-### [0752] A7/ON — source_value_extractions.updated_at   `2026-08-12 05:22:48Z`
+### [0744] A7/ON — source_value_extractions.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8200,7 +8112,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_value_extractions.updated_at`
 **Verdict:** `OK`
 
-### [0753] A7/ON — source_value_extractions.contested   `2026-08-12 05:22:48Z`
+### [0745] A7/ON — source_value_extractions.contested   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8211,7 +8123,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_value_extractions.contested`
 **Verdict:** `OK`
 
-### [0754] A7/ON — spec_value_probes.walk_id   `2026-08-12 05:22:48Z`
+### [0746] A7/ON — spec_value_probes.walk_id   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8222,7 +8134,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.walk_id`
 **Verdict:** `OK`
 
-### [0755] A7/ON — spec_value_probes.slug   `2026-08-12 05:22:48Z`
+### [0747] A7/ON — spec_value_probes.slug   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8233,7 +8145,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.slug`
 **Verdict:** `OK`
 
-### [0756] A7/ON — spec_value_probes.item_code   `2026-08-12 05:22:48Z`
+### [0748] A7/ON — spec_value_probes.item_code   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8244,7 +8156,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.item_code`
 **Verdict:** `OK`
 
-### [0757] A7/ON — spec_value_probes.spec_value_origin   `2026-08-12 05:22:48Z`
+### [0749] A7/ON — spec_value_probes.spec_value_origin   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8255,7 +8167,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.spec_value_origin`
 **Verdict:** `OK`
 
-### [0758] A7/ON — spec_value_probes.spec_unit   `2026-08-12 05:22:48Z`
+### [0750] A7/ON — spec_value_probes.spec_unit   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8266,7 +8178,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.spec_unit`
 **Verdict:** `OK`
 
-### [0759] A7/ON — spec_value_probes.direction   `2026-08-12 05:22:48Z`
+### [0751] A7/ON — spec_value_probes.direction   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8277,7 +8189,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.direction`
 **Verdict:** `OK`
 
-### [0760] A7/ON — spec_value_probes.population   `2026-08-12 05:22:48Z`
+### [0752] A7/ON — spec_value_probes.population   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8288,7 +8200,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.population`
 **Verdict:** `OK`
 
-### [0761] A7/ON — spec_value_probes.claim_type   `2026-08-12 05:22:48Z`
+### [0753] A7/ON — spec_value_probes.claim_type   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8299,7 +8211,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.claim_type`
 **Verdict:** `OK`
 
-### [0762] A7/ON — spec_value_probes.step_index   `2026-08-12 05:22:48Z`
+### [0754] A7/ON — spec_value_probes.step_index   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8310,7 +8222,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.step_index`
 **Verdict:** `OK`
 
-### [0763] A7/ON — spec_value_probes.phase   `2026-08-12 05:22:48Z`
+### [0755] A7/ON — spec_value_probes.phase   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8321,7 +8233,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.phase`
 **Verdict:** `OK`
 
-### [0764] A7/ON — spec_value_probes.step_value   `2026-08-12 05:22:48Z`
+### [0756] A7/ON — spec_value_probes.step_value   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8332,7 +8244,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.step_value`
 **Verdict:** `OK`
 
-### [0765] A7/ON — spec_value_probes.step_value_unit   `2026-08-12 05:22:48Z`
+### [0757] A7/ON — spec_value_probes.step_value_unit   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8343,7 +8255,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.step_value_unit`
 **Verdict:** `OK`
 
-### [0766] A7/ON — spec_value_probes.created_at   `2026-08-12 05:22:48Z`
+### [0758] A7/ON — spec_value_probes.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8354,7 +8266,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.created_at`
 **Verdict:** `OK`
 
-### [0767] A7/ON — spec_value_probes.created_by_session   `2026-08-12 05:22:48Z`
+### [0759] A7/ON — spec_value_probes.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8365,7 +8277,95 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.created_by_session`
 **Verdict:** `OK`
 
-### [0768] A7/ON — supersession_check.slug   `2026-08-12 05:22:48Z`
+### [0760] A7/ON — specification_source_links.role   `2026-08-12 08:35:28Z`
+**Action:** insert explicit NULL into NOT NULL column (FK=ON)
+**SQL:**
+```sql
+INSERT INTO "specification_source_links" ("ref_id", "specification_id", "role") VALUES (?, ?, ?)  -- {"ref_id": "PROBE-PK-167", "specification_id": 1, "role": null}
+```
+**Expected:** NOT NULL constraint failed
+**Actual:** rejected
+**Exception:** `IntegrityError: NOT NULL constraint failed: specification_source_links.role`
+**Verdict:** `OK`
+
+### [0761] A7/ON — specifications.item_code   `2026-08-12 08:35:28Z`
+**Action:** insert explicit NULL into NOT NULL column (FK=ON)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state") VALUES (?, ?, ?)  -- {"item_code": null, "population_code": "ADHD", "state": "stated"}
+```
+**Expected:** NOT NULL constraint failed
+**Actual:** rejected
+**Exception:** `IntegrityError: NOT NULL constraint failed: specifications.item_code`
+**Verdict:** `OK`
+
+### [0762] A7/ON — specifications.population_code   `2026-08-12 08:35:28Z`
+**Action:** insert explicit NULL into NOT NULL column (FK=ON)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state") VALUES (?, ?, ?)  -- {"item_code": "A-01", "population_code": null, "state": "stated"}
+```
+**Expected:** NOT NULL constraint failed
+**Actual:** rejected
+**Exception:** `IntegrityError: NOT NULL constraint failed: specifications.population_code`
+**Verdict:** `OK`
+
+### [0763] A7/ON — specifications.state   `2026-08-12 08:35:28Z`
+**Action:** insert explicit NULL into NOT NULL column (FK=ON)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state") VALUES (?, ?, ?)  -- {"item_code": "A-01", "population_code": "ADHD", "state": null}
+```
+**Expected:** NOT NULL constraint failed
+**Actual:** rejected
+**Exception:** `IntegrityError: NOT NULL constraint failed: specifications.state`
+**Verdict:** `OK`
+
+### [0764] A7/ON — specifications.code_floor_only   `2026-08-12 08:35:28Z`
+**Action:** insert explicit NULL into NOT NULL column (FK=ON)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state", "code_floor_only") VALUES (?, ?, ?, ?)  -- {"item_code": "A-01", "population_code": "ADHD", "state": "stated", "code_floor_only": null}
+```
+**Expected:** NOT NULL constraint failed
+**Actual:** rejected
+**Exception:** `IntegrityError: NOT NULL constraint failed: specifications.code_floor_only`
+**Verdict:** `OK`
+
+### [0765] A7/ON — specifications.has_unverified_sources   `2026-08-12 08:35:28Z`
+**Action:** insert explicit NULL into NOT NULL column (FK=ON)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state", "has_unverified_sources") VALUES (?, ?, ?, ?)  -- {"item_code": "A-01", "population_code": "ADHD", "state": "stated", "has_unverified_sources": null}
+```
+**Expected:** NOT NULL constraint failed
+**Actual:** rejected
+**Exception:** `IntegrityError: NOT NULL constraint failed: specifications.has_unverified_sources`
+**Verdict:** `OK`
+
+### [0766] A7/ON — specifications.all_sources_disqualified   `2026-08-12 08:35:28Z`
+**Action:** insert explicit NULL into NOT NULL column (FK=ON)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state", "all_sources_disqualified") VALUES (?, ?, ?, ?)  -- {"item_code": "A-01", "population_code": "ADHD", "state": "stated", "all_sources_disqualified": null}
+```
+**Expected:** NOT NULL constraint failed
+**Actual:** rejected
+**Exception:** `IntegrityError: NOT NULL constraint failed: specifications.all_sources_disqualified`
+**Verdict:** `OK`
+
+### [0767] A7/ON — specifications.regulatory_stratum_only   `2026-08-12 08:35:28Z`
+**Action:** insert explicit NULL into NOT NULL column (FK=ON)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state", "regulatory_stratum_only") VALUES (?, ?, ?, ?)  -- {"item_code": "A-01", "population_code": "ADHD", "state": "stated", "regulatory_stratum_only": null}
+```
+**Expected:** NOT NULL constraint failed
+**Actual:** rejected
+**Exception:** `IntegrityError: NOT NULL constraint failed: specifications.regulatory_stratum_only`
+**Verdict:** `OK`
+
+### [0768] A7/ON — supersession_check.slug   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8376,7 +8376,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: NOT NULL constraint failed: supersession_check.slug`
 **Verdict:** `OK`
 
-### [0769] A7/ON — supersession_check.local_ref_id   `2026-08-12 05:22:48Z`
+### [0769] A7/ON — supersession_check.local_ref_id   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8387,7 +8387,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: NOT NULL constraint failed: supersession_check.local_ref_id`
 **Verdict:** `OK`
 
-### [0770] A7/ON — supersession_check.ref_id   `2026-08-12 05:22:48Z`
+### [0770] A7/ON — supersession_check.ref_id   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8398,7 +8398,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: NOT NULL constraint failed: supersession_check.ref_id`
 **Verdict:** `OK`
 
-### [0771] A7/ON — supersession_check.anchor_tier   `2026-08-12 05:22:48Z`
+### [0771] A7/ON — supersession_check.anchor_tier   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8409,7 +8409,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: NOT NULL constraint failed: supersession_check.anchor_tier`
 **Verdict:** `OK`
 
-### [0772] A7/ON — supersession_check.anchor_evidence_type   `2026-08-12 05:22:48Z`
+### [0772] A7/ON — supersession_check.anchor_evidence_type   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8420,7 +8420,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: NOT NULL constraint failed: supersession_check.anchor_evidence_type`
 **Verdict:** `OK`
 
-### [0773] A7/ON — supersession_check.outcome   `2026-08-12 05:22:48Z`
+### [0773] A7/ON — supersession_check.outcome   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8431,7 +8431,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: NOT NULL constraint failed: supersession_check.outcome`
 **Verdict:** `OK`
 
-### [0774] A7/ON — supersession_check.search_strategy_record   `2026-08-12 05:22:48Z`
+### [0774] A7/ON — supersession_check.search_strategy_record   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8442,7 +8442,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: NOT NULL constraint failed: supersession_check.search_strategy_record`
 **Verdict:** `OK`
 
-### [0775] A7/ON — supersession_check.candidates_returned   `2026-08-12 05:22:48Z`
+### [0775] A7/ON — supersession_check.candidates_returned   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8453,7 +8453,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: NOT NULL constraint failed: supersession_check.candidates_returned`
 **Verdict:** `OK`
 
-### [0776] A7/ON — supersession_check.candidates_reviewed   `2026-08-12 05:22:48Z`
+### [0776] A7/ON — supersession_check.candidates_reviewed   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8464,7 +8464,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: NOT NULL constraint failed: supersession_check.candidates_reviewed`
 **Verdict:** `OK`
 
-### [0777] A7/ON — supersession_check.checked_at   `2026-08-12 05:22:48Z`
+### [0777] A7/ON — supersession_check.checked_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8475,7 +8475,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: NOT NULL constraint failed: supersession_check.checked_at`
 **Verdict:** `OK`
 
-### [0778] A7/ON — supersession_check.checked_by_session   `2026-08-12 05:22:48Z`
+### [0778] A7/ON — supersession_check.checked_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8486,7 +8486,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: NOT NULL constraint failed: supersession_check.checked_by_session`
 **Verdict:** `OK`
 
-### [0779] A7/ON — supersession_check.check_method   `2026-08-12 05:22:48Z`
+### [0779] A7/ON — supersession_check.check_method   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8497,7 +8497,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: NOT NULL constraint failed: supersession_check.check_method`
 **Verdict:** `OK`
 
-### [0780] A7/ON — term_aliases.alias_type   `2026-08-12 05:22:48Z`
+### [0780] A7/ON — term_aliases.alias_type   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8508,7 +8508,7 @@ INSERT INTO "term_aliases" ("term_id", "alias", "language", "alias_type", "creat
 **Exception:** `IntegrityError: NOT NULL constraint failed: term_aliases.alias_type`
 **Verdict:** `OK`
 
-### [0781] A7/ON — term_aliases.created_at   `2026-08-12 05:22:48Z`
+### [0781] A7/ON — term_aliases.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8519,7 +8519,7 @@ INSERT INTO "term_aliases" ("term_id", "alias", "language", "alias_type", "creat
 **Exception:** `IntegrityError: NOT NULL constraint failed: term_aliases.created_at`
 **Verdict:** `OK`
 
-### [0782] A7/ON — term_aliases.created_by_session   `2026-08-12 05:22:48Z`
+### [0782] A7/ON — term_aliases.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8530,7 +8530,7 @@ INSERT INTO "term_aliases" ("term_id", "alias", "language", "alias_type", "creat
 **Exception:** `IntegrityError: NOT NULL constraint failed: term_aliases.created_by_session`
 **Verdict:** `OK`
 
-### [0783] A7/ON — term_aliases.updated_at   `2026-08-12 05:22:48Z`
+### [0783] A7/ON — term_aliases.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8541,7 +8541,7 @@ INSERT INTO "term_aliases" ("term_id", "alias", "language", "alias_type", "creat
 **Exception:** `IntegrityError: NOT NULL constraint failed: term_aliases.updated_at`
 **Verdict:** `OK`
 
-### [0784] A7/ON — term_aliases.updated_by_session   `2026-08-12 05:22:48Z`
+### [0784] A7/ON — term_aliases.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8552,7 +8552,7 @@ INSERT INTO "term_aliases" ("term_id", "alias", "language", "alias_type", "creat
 **Exception:** `IntegrityError: NOT NULL constraint failed: term_aliases.updated_by_session`
 **Verdict:** `OK`
 
-### [0785] A7/ON — term_item_links.created_at   `2026-08-12 05:22:48Z`
+### [0785] A7/ON — term_item_links.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8563,7 +8563,7 @@ INSERT INTO "term_item_links" ("term_id", "item_code", "created_at", "created_by
 **Exception:** `IntegrityError: NOT NULL constraint failed: term_item_links.created_at`
 **Verdict:** `OK`
 
-### [0786] A7/ON — term_item_links.created_by_session   `2026-08-12 05:22:48Z`
+### [0786] A7/ON — term_item_links.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8574,7 +8574,7 @@ INSERT INTO "term_item_links" ("term_id", "item_code", "created_at", "created_by
 **Exception:** `IntegrityError: NOT NULL constraint failed: term_item_links.created_by_session`
 **Verdict:** `OK`
 
-### [0787] A7/ON — term_item_links.updated_at   `2026-08-12 05:22:48Z`
+### [0787] A7/ON — term_item_links.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8585,7 +8585,7 @@ INSERT INTO "term_item_links" ("term_id", "item_code", "created_at", "created_by
 **Exception:** `IntegrityError: NOT NULL constraint failed: term_item_links.updated_at`
 **Verdict:** `OK`
 
-### [0788] A7/ON — term_item_links.updated_by_session   `2026-08-12 05:22:48Z`
+### [0788] A7/ON — term_item_links.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8596,7 +8596,7 @@ INSERT INTO "term_item_links" ("term_id", "item_code", "created_at", "created_by
 **Exception:** `IntegrityError: NOT NULL constraint failed: term_item_links.updated_by_session`
 **Verdict:** `OK`
 
-### [0789] A7/ON — terms.canonical_en   `2026-08-12 05:22:48Z`
+### [0789] A7/ON — terms.canonical_en   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8607,7 +8607,7 @@ INSERT INTO "terms" ("term_id", "canonical_en", "created_at", "created_by_sessio
 **Exception:** `IntegrityError: NOT NULL constraint failed: terms.canonical_en`
 **Verdict:** `OK`
 
-### [0790] A7/ON — terms.created_at   `2026-08-12 05:22:48Z`
+### [0790] A7/ON — terms.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8618,7 +8618,7 @@ INSERT INTO "terms" ("term_id", "canonical_en", "created_at", "created_by_sessio
 **Exception:** `IntegrityError: NOT NULL constraint failed: terms.created_at`
 **Verdict:** `OK`
 
-### [0791] A7/ON — terms.created_by_session   `2026-08-12 05:22:48Z`
+### [0791] A7/ON — terms.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8629,7 +8629,7 @@ INSERT INTO "terms" ("term_id", "canonical_en", "created_at", "created_by_sessio
 **Exception:** `IntegrityError: NOT NULL constraint failed: terms.created_by_session`
 **Verdict:** `OK`
 
-### [0792] A7/ON — terms.updated_at   `2026-08-12 05:22:48Z`
+### [0792] A7/ON — terms.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8640,7 +8640,7 @@ INSERT INTO "terms" ("term_id", "canonical_en", "created_at", "created_by_sessio
 **Exception:** `IntegrityError: NOT NULL constraint failed: terms.updated_at`
 **Verdict:** `OK`
 
-### [0793] A7/ON — terms.updated_by_session   `2026-08-12 05:22:48Z`
+### [0793] A7/ON — terms.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8651,7 +8651,7 @@ INSERT INTO "terms" ("term_id", "canonical_en", "created_at", "created_by_sessio
 **Exception:** `IntegrityError: NOT NULL constraint failed: terms.updated_by_session`
 **Verdict:** `OK`
 
-### [0794] A7/ON — url_verification_runs.started_at   `2026-08-12 05:22:48Z`
+### [0794] A7/ON — url_verification_runs.started_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8662,7 +8662,7 @@ INSERT INTO "url_verification_runs" ("run_id", "started_at") VALUES (?, ?)  -- {
 **Exception:** `IntegrityError: NOT NULL constraint failed: url_verification_runs.started_at`
 **Verdict:** `OK`
 
-### [0795] A7/ON — weighting_profile.tier_weights   `2026-08-12 05:22:48Z`
+### [0795] A7/ON — weighting_profile.tier_weights   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=ON)
 **SQL:**
 ```sql
@@ -8673,7 +8673,7 @@ INSERT INTO "weighting_profile" ("audience", "use_pattern", "tier_weights") VALU
 **Exception:** `IntegrityError: NOT NULL constraint failed: weighting_profile.tier_weights`
 **Verdict:** `OK`
 
-### [0796] A7/OFF — access_duration.definition   `2026-08-12 05:22:48Z`
+### [0796] A7/OFF — access_duration.definition   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -8684,7 +8684,7 @@ INSERT INTO "access_duration" ("definition", "code") VALUES (?, ?)  -- {"definit
 **Exception:** `IntegrityError: NOT NULL constraint failed: access_duration.definition`
 **Verdict:** `OK`
 
-### [0797] A7/OFF — access_need_axis_map.relationship   `2026-08-12 05:22:48Z`
+### [0797] A7/OFF — access_need_axis_map.relationship   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -8695,7 +8695,7 @@ INSERT INTO "access_need_axis_map" ("need_code", "axis_code", "relationship") VA
 **Exception:** `IntegrityError: NOT NULL constraint failed: access_need_axis_map.relationship`
 **Verdict:** `OK`
 
-### [0798] A7/OFF — access_need_icf.icf_type   `2026-08-12 05:22:48Z`
+### [0798] A7/OFF — access_need_icf.icf_type   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -8706,7 +8706,7 @@ INSERT INTO "access_need_icf" ("need_code", "icf_code", "icf_type", "confidence"
 **Exception:** `IntegrityError: NOT NULL constraint failed: access_need_icf.icf_type`
 **Verdict:** `OK`
 
-### [0799] A7/OFF — access_need_icf.confidence   `2026-08-12 05:22:48Z`
+### [0799] A7/OFF — access_need_icf.confidence   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -8717,7 +8717,7 @@ INSERT INTO "access_need_icf" ("need_code", "icf_code", "icf_type", "confidence"
 **Exception:** `IntegrityError: NOT NULL constraint failed: access_need_icf.confidence`
 **Verdict:** `OK`
 
-### [0800] A7/OFF — access_needs.family   `2026-08-12 05:22:48Z`
+### [0800] A7/OFF — access_needs.family   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -8728,7 +8728,7 @@ INSERT INTO "access_needs" ("need_code", "family", "design_obligation") VALUES (
 **Exception:** `IntegrityError: NOT NULL constraint failed: access_needs.family`
 **Verdict:** `OK`
 
-### [0801] A7/OFF — access_needs.design_obligation   `2026-08-12 05:22:48Z`
+### [0801] A7/OFF — access_needs.design_obligation   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -8739,7 +8739,7 @@ INSERT INTO "access_needs" ("need_code", "family", "design_obligation") VALUES (
 **Exception:** `IntegrityError: NOT NULL constraint failed: access_needs.design_obligation`
 **Verdict:** `OK`
 
-### [0802] A7/OFF — access_needs.source_version   `2026-08-12 05:22:48Z`
+### [0802] A7/OFF — access_needs.source_version   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -8750,7 +8750,7 @@ INSERT INTO "access_needs" ("need_code", "family", "design_obligation", "source_
 **Exception:** `IntegrityError: NOT NULL constraint failed: access_needs.source_version`
 **Verdict:** `OK`
 
-### [0803] A7/OFF — access_stakes.definition   `2026-08-12 05:22:48Z`
+### [0803] A7/OFF — access_stakes.definition   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -8761,7 +8761,7 @@ INSERT INTO "access_stakes" ("definition", "code") VALUES (?, ?)  -- {"definitio
 **Exception:** `IntegrityError: NOT NULL constraint failed: access_stakes.definition`
 **Verdict:** `OK`
 
-### [0804] A7/OFF — axes.name   `2026-08-12 05:22:48Z`
+### [0804] A7/OFF — axes.name   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -8772,7 +8772,7 @@ INSERT INTO "axes" ("axis_code", "name", "mechanism", "coverage_status", "falsif
 **Exception:** `IntegrityError: NOT NULL constraint failed: axes.name`
 **Verdict:** `OK`
 
-### [0805] A7/OFF — axes.mechanism   `2026-08-12 05:22:48Z`
+### [0805] A7/OFF — axes.mechanism   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -8783,7 +8783,7 @@ INSERT INTO "axes" ("axis_code", "name", "mechanism", "coverage_status", "falsif
 **Exception:** `IntegrityError: NOT NULL constraint failed: axes.mechanism`
 **Verdict:** `OK`
 
-### [0806] A7/OFF — axes.coverage_status   `2026-08-12 05:22:48Z`
+### [0806] A7/OFF — axes.coverage_status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -8794,7 +8794,7 @@ INSERT INTO "axes" ("axis_code", "name", "mechanism", "coverage_status", "falsif
 **Exception:** `IntegrityError: NOT NULL constraint failed: axes.coverage_status`
 **Verdict:** `OK`
 
-### [0807] A7/OFF — axes.falsification_condition   `2026-08-12 05:22:48Z`
+### [0807] A7/OFF — axes.falsification_condition   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -8805,117 +8805,117 @@ INSERT INTO "axes" ("axis_code", "name", "mechanism", "coverage_status", "falsif
 **Exception:** `IntegrityError: NOT NULL constraint failed: axes.falsification_condition`
 **Verdict:** `OK`
 
-### [0808] A7/OFF — bpc_metadata.population   `2026-08-12 05:22:48Z`
+### [0808] A7/OFF — bpc_metadata.population   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "population": null, "created_at": "PROBE-2615", "created_by_session": "PROBE-2616", "updated_at": "PROBE-2617", "updated_by_session": "PROBE-2618"}
+INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "population": null, "created_at": "PROBE-2615", "created_by_session": "PROBE-2616", "updated_at": "PROBE-2617", "updated_by_session": "PROBE-2618"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: bpc_metadata.population`
 **Verdict:** `OK`
 
-### [0809] A7/OFF — bpc_metadata.pico_complete   `2026-08-12 05:22:48Z`
+### [0809] A7/OFF — bpc_metadata.pico_complete   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session", "pico_complete") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "population": "PROBE-2619", "created_at": "PROBE-2620", "created_by_session": "PROBE-2621", "updated_at": "PROBE-2622", "updated_by_session": "PROBE-2623", "pico_complete": null}
+INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session", "pico_complete") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "population": "PROBE-2619", "created_at": "PROBE-2620", "created_by_session": "PROBE-2621", "updated_at": "PROBE-2622", "updated_by_session": "PROBE-2623", "pico_complete": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: bpc_metadata.pico_complete`
 **Verdict:** `OK`
 
-### [0810] A7/OFF — bpc_metadata.search_complete   `2026-08-12 05:22:48Z`
+### [0810] A7/OFF — bpc_metadata.search_complete   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session", "search_complete") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "population": "PROBE-2624", "created_at": "PROBE-2625", "created_by_session": "PROBE-2626", "updated_at": "PROBE-2627", "updated_by_session": "PROBE-2628", "search_complete": null}
+INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session", "search_complete") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "population": "PROBE-2624", "created_at": "PROBE-2625", "created_by_session": "PROBE-2626", "updated_at": "PROBE-2627", "updated_by_session": "PROBE-2628", "search_complete": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: bpc_metadata.search_complete`
 **Verdict:** `OK`
 
-### [0811] A7/OFF — bpc_metadata.bpc_complete   `2026-08-12 05:22:48Z`
+### [0811] A7/OFF — bpc_metadata.bpc_complete   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session", "bpc_complete") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "population": "PROBE-2629", "created_at": "PROBE-2630", "created_by_session": "PROBE-2631", "updated_at": "PROBE-2632", "updated_by_session": "PROBE-2633", "bpc_complete": null}
+INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session", "bpc_complete") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "population": "PROBE-2629", "created_at": "PROBE-2630", "created_by_session": "PROBE-2631", "updated_at": "PROBE-2632", "updated_by_session": "PROBE-2633", "bpc_complete": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: bpc_metadata.bpc_complete`
 **Verdict:** `OK`
 
-### [0812] A7/OFF — bpc_metadata.citation_mining_complete   `2026-08-12 05:22:48Z`
+### [0812] A7/OFF — bpc_metadata.citation_mining_complete   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session", "citation_mining_complete") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "population": "PROBE-2634", "created_at": "PROBE-2635", "created_by_session": "PROBE-2636", "updated_at": "PROBE-2637", "updated_by_session": "PROBE-2638", "citation_mining_complete": null}
+INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session", "citation_mining_complete") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "population": "PROBE-2634", "created_at": "PROBE-2635", "created_by_session": "PROBE-2636", "updated_at": "PROBE-2637", "updated_by_session": "PROBE-2638", "citation_mining_complete": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: bpc_metadata.citation_mining_complete`
 **Verdict:** `OK`
 
-### [0813] A7/OFF — bpc_metadata.created_at   `2026-08-12 05:22:48Z`
+### [0813] A7/OFF — bpc_metadata.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "population": "PROBE-2639", "created_at": null, "created_by_session": "PROBE-2640", "updated_at": "PROBE-2641", "updated_by_session": "PROBE-2642"}
+INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "population": "PROBE-2639", "created_at": null, "created_by_session": "PROBE-2640", "updated_at": "PROBE-2641", "updated_by_session": "PROBE-2642"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: bpc_metadata.created_at`
 **Verdict:** `OK`
 
-### [0814] A7/OFF — bpc_metadata.created_by_session   `2026-08-12 05:22:48Z`
+### [0814] A7/OFF — bpc_metadata.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "population": "PROBE-2643", "created_at": "PROBE-2644", "created_by_session": null, "updated_at": "PROBE-2645", "updated_by_session": "PROBE-2646"}
+INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "population": "PROBE-2643", "created_at": "PROBE-2644", "created_by_session": null, "updated_at": "PROBE-2645", "updated_by_session": "PROBE-2646"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: bpc_metadata.created_by_session`
 **Verdict:** `OK`
 
-### [0815] A7/OFF — bpc_metadata.updated_at   `2026-08-12 05:22:48Z`
+### [0815] A7/OFF — bpc_metadata.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "population": "PROBE-2647", "created_at": "PROBE-2648", "created_by_session": "PROBE-2649", "updated_at": null, "updated_by_session": "PROBE-2650"}
+INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "population": "PROBE-2647", "created_at": "PROBE-2648", "created_by_session": "PROBE-2649", "updated_at": null, "updated_by_session": "PROBE-2650"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: bpc_metadata.updated_at`
 **Verdict:** `OK`
 
-### [0816] A7/OFF — bpc_metadata.updated_by_session   `2026-08-12 05:22:48Z`
+### [0816] A7/OFF — bpc_metadata.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "population": "PROBE-2651", "created_at": "PROBE-2652", "created_by_session": "PROBE-2653", "updated_at": "PROBE-2654", "updated_by_session": null}
+INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "population": "PROBE-2651", "created_at": "PROBE-2652", "created_by_session": "PROBE-2653", "updated_at": "PROBE-2654", "updated_by_session": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: bpc_metadata.updated_by_session`
 **Verdict:** `OK`
 
-### [0817] A7/OFF — bpc_metadata.supersession_check_complete   `2026-08-12 05:22:48Z`
+### [0817] A7/OFF — bpc_metadata.supersession_check_complete   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session", "supersession_check_complete") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "population": "PROBE-2655", "created_at": "PROBE-2656", "created_by_session": "PROBE-2657", "updated_at": "PROBE-2658", "updated_by_session": "PROBE-2659", "supersession_check_complete": null}
+INSERT INTO "bpc_metadata" ("slug", "population", "created_at", "created_by_session", "updated_at", "updated_by_session", "supersession_check_complete") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "population": "PROBE-2655", "created_at": "PROBE-2656", "created_by_session": "PROBE-2657", "updated_at": "PROBE-2658", "updated_by_session": "PROBE-2659", "supersession_check_complete": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: bpc_metadata.supersession_check_complete`
 **Verdict:** `OK`
 
-### [0818] A7/OFF — case_studies.slug   `2026-08-12 05:22:48Z`
+### [0818] A7/OFF — case_studies.slug   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -8926,84 +8926,84 @@ INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: case_studies.slug`
 **Verdict:** `OK`
 
-### [0819] A7/OFF — case_studies.title   `2026-08-12 05:22:48Z`
+### [0819] A7/OFF — case_studies.title   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "location", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"case_study_id": "PROBE-2666", "slug": "PROBE-PK-273", "title": null, "building_type": "PROBE-2667", "location": "PROBE-2668", "created_at": "PROBE-2669", "created_by_session": "PROBE-2670"}
+INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "location", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"case_study_id": "PROBE-2666", "slug": "PROBE-PK-267", "title": null, "building_type": "PROBE-2667", "location": "PROBE-2668", "created_at": "PROBE-2669", "created_by_session": "PROBE-2670"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: case_studies.title`
 **Verdict:** `OK`
 
-### [0820] A7/OFF — case_studies.building_type   `2026-08-12 05:22:48Z`
+### [0820] A7/OFF — case_studies.building_type   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "location", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"case_study_id": "PROBE-2671", "slug": "PROBE-PK-273", "title": "PROBE-2672", "building_type": null, "location": "PROBE-2673", "created_at": "PROBE-2674", "created_by_session": "PROBE-2675"}
+INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "location", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"case_study_id": "PROBE-2671", "slug": "PROBE-PK-267", "title": "PROBE-2672", "building_type": null, "location": "PROBE-2673", "created_at": "PROBE-2674", "created_by_session": "PROBE-2675"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: case_studies.building_type`
 **Verdict:** `OK`
 
-### [0821] A7/OFF — case_studies.location   `2026-08-12 05:22:48Z`
+### [0821] A7/OFF — case_studies.location   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "location", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"case_study_id": "PROBE-2676", "slug": "PROBE-PK-273", "title": "PROBE-2677", "building_type": "PROBE-2678", "location": null, "created_at": "PROBE-2679", "created_by_session": "PROBE-2680"}
+INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "location", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"case_study_id": "PROBE-2676", "slug": "PROBE-PK-267", "title": "PROBE-2677", "building_type": "PROBE-2678", "location": null, "created_at": "PROBE-2679", "created_by_session": "PROBE-2680"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: case_studies.location`
 **Verdict:** `OK`
 
-### [0822] A7/OFF — case_studies.harm_finding   `2026-08-12 05:22:48Z`
+### [0822] A7/OFF — case_studies.harm_finding   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "location", "created_at", "created_by_session", "harm_finding") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"case_study_id": "PROBE-2681", "slug": "PROBE-PK-273", "title": "PROBE-2682", "building_type": "PROBE-2683", "location": "PROBE-2684", "created_at": "PROBE-2685", "created_by_session": "PROBE-2686", "harm_finding": null}
+INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "location", "created_at", "created_by_session", "harm_finding") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"case_study_id": "PROBE-2681", "slug": "PROBE-PK-267", "title": "PROBE-2682", "building_type": "PROBE-2683", "location": "PROBE-2684", "created_at": "PROBE-2685", "created_by_session": "PROBE-2686", "harm_finding": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: case_studies.harm_finding`
 **Verdict:** `OK`
 
-### [0823] A7/OFF — case_studies.status   `2026-08-12 05:22:48Z`
+### [0823] A7/OFF — case_studies.status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "location", "created_at", "created_by_session", "status") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"case_study_id": "PROBE-2687", "slug": "PROBE-PK-273", "title": "PROBE-2688", "building_type": "PROBE-2689", "location": "PROBE-2690", "created_at": "PROBE-2691", "created_by_session": "PROBE-2692", "status": null}
+INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "location", "created_at", "created_by_session", "status") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"case_study_id": "PROBE-2687", "slug": "PROBE-PK-267", "title": "PROBE-2688", "building_type": "PROBE-2689", "location": "PROBE-2690", "created_at": "PROBE-2691", "created_by_session": "PROBE-2692", "status": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: case_studies.status`
 **Verdict:** `OK`
 
-### [0824] A7/OFF — case_studies.created_at   `2026-08-12 05:22:48Z`
+### [0824] A7/OFF — case_studies.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "location", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"case_study_id": "PROBE-2693", "slug": "PROBE-PK-273", "title": "PROBE-2694", "building_type": "PROBE-2695", "location": "PROBE-2696", "created_at": null, "created_by_session": "PROBE-2697"}
+INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "location", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"case_study_id": "PROBE-2693", "slug": "PROBE-PK-267", "title": "PROBE-2694", "building_type": "PROBE-2695", "location": "PROBE-2696", "created_at": null, "created_by_session": "PROBE-2697"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: case_studies.created_at`
 **Verdict:** `OK`
 
-### [0825] A7/OFF — case_studies.created_by_session   `2026-08-12 05:22:48Z`
+### [0825] A7/OFF — case_studies.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "location", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"case_study_id": "PROBE-2698", "slug": "PROBE-PK-273", "title": "PROBE-2699", "building_type": "PROBE-2700", "location": "PROBE-2701", "created_at": "PROBE-2702", "created_by_session": null}
+INSERT INTO "case_studies" ("case_study_id", "slug", "title", "building_type", "location", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"case_study_id": "PROBE-2698", "slug": "PROBE-PK-267", "title": "PROBE-2699", "building_type": "PROBE-2700", "location": "PROBE-2701", "created_at": "PROBE-2702", "created_by_session": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: case_studies.created_by_session`
 **Verdict:** `OK`
 
-### [0826] A7/OFF — case_study_outcomes.case_study_id   `2026-08-12 05:22:48Z`
+### [0826] A7/OFF — case_study_outcomes.case_study_id   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9014,7 +9014,7 @@ INSERT INTO "case_study_outcomes" ("case_study_id", "metric") VALUES (?, ?)  -- 
 **Exception:** `IntegrityError: NOT NULL constraint failed: case_study_outcomes.case_study_id`
 **Verdict:** `OK`
 
-### [0827] A7/OFF — case_study_outcomes.metric   `2026-08-12 05:22:48Z`
+### [0827] A7/OFF — case_study_outcomes.metric   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9025,7 +9025,7 @@ INSERT INTO "case_study_outcomes" ("case_study_id", "metric") VALUES (?, ?)  -- 
 **Exception:** `IntegrityError: NOT NULL constraint failed: case_study_outcomes.metric`
 **Verdict:** `OK`
 
-### [0828] A7/OFF — case_study_strategies.case_study_id   `2026-08-12 05:22:48Z`
+### [0828] A7/OFF — case_study_strategies.case_study_id   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9036,7 +9036,7 @@ INSERT INTO "case_study_strategies" ("case_study_id", "strategy") VALUES (?, ?) 
 **Exception:** `IntegrityError: NOT NULL constraint failed: case_study_strategies.case_study_id`
 **Verdict:** `OK`
 
-### [0829] A7/OFF — case_study_strategies.strategy   `2026-08-12 05:22:48Z`
+### [0829] A7/OFF — case_study_strategies.strategy   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9047,95 +9047,84 @@ INSERT INTO "case_study_strategies" ("case_study_id", "strategy") VALUES (?, ?) 
 **Exception:** `IntegrityError: NOT NULL constraint failed: case_study_strategies.strategy`
 **Verdict:** `OK`
 
-### [0830] A7/OFF — cell_source_links.role   `2026-08-12 05:22:48Z`
+### [0830] A7/OFF — citation_mining.backward   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "cell_source_links" ("ref_id", "cell_id", "role") VALUES (?, ?, ?)  -- {"ref_id": "PROBE-PK-209", "cell_id": 1, "role": null}
-```
-**Expected:** NOT NULL constraint failed
-**Actual:** rejected
-**Exception:** `IntegrityError: NOT NULL constraint failed: cell_source_links.role`
-**Verdict:** `OK`
-
-### [0831] A7/OFF — citation_mining.backward   `2026-08-12 05:22:48Z`
-**Action:** insert explicit NULL into NOT NULL column (FK=OFF)
-**SQL:**
-```sql
-INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session", "backward") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "local_ref_id": "PROBE-2705", "created_at": "PROBE-2706", "created_by_session": "PROBE-2707", "updated_at": "PROBE-2708", "updated_by_session": "PROBE-2709", "backward": null}
+INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session", "backward") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "local_ref_id": "PROBE-2705", "created_at": "PROBE-2706", "created_by_session": "PROBE-2707", "updated_at": "PROBE-2708", "updated_by_session": "PROBE-2709", "backward": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: citation_mining.backward`
 **Verdict:** `OK`
 
-### [0832] A7/OFF — citation_mining.forward   `2026-08-12 05:22:48Z`
+### [0831] A7/OFF — citation_mining.forward   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session", "forward") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "local_ref_id": "PROBE-2710", "created_at": "PROBE-2711", "created_by_session": "PROBE-2712", "updated_at": "PROBE-2713", "updated_by_session": "PROBE-2714", "forward": null}
+INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session", "forward") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "local_ref_id": "PROBE-2710", "created_at": "PROBE-2711", "created_by_session": "PROBE-2712", "updated_at": "PROBE-2713", "updated_by_session": "PROBE-2714", "forward": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: citation_mining.forward`
 **Verdict:** `OK`
 
-### [0833] A7/OFF — citation_mining.connections_produced   `2026-08-12 05:22:48Z`
+### [0832] A7/OFF — citation_mining.connections_produced   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session", "connections_produced") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "local_ref_id": "PROBE-2715", "created_at": "PROBE-2716", "created_by_session": "PROBE-2717", "updated_at": "PROBE-2718", "updated_by_session": "PROBE-2719", "connections_produced": null}
+INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session", "connections_produced") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "local_ref_id": "PROBE-2715", "created_at": "PROBE-2716", "created_by_session": "PROBE-2717", "updated_at": "PROBE-2718", "updated_by_session": "PROBE-2719", "connections_produced": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: citation_mining.connections_produced`
 **Verdict:** `OK`
 
-### [0834] A7/OFF — citation_mining.created_at   `2026-08-12 05:22:48Z`
+### [0833] A7/OFF — citation_mining.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "local_ref_id": "PROBE-2720", "created_at": null, "created_by_session": "PROBE-2721", "updated_at": "PROBE-2722", "updated_by_session": "PROBE-2723"}
+INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "local_ref_id": "PROBE-2720", "created_at": null, "created_by_session": "PROBE-2721", "updated_at": "PROBE-2722", "updated_by_session": "PROBE-2723"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: citation_mining.created_at`
 **Verdict:** `OK`
 
-### [0835] A7/OFF — citation_mining.created_by_session   `2026-08-12 05:22:48Z`
+### [0834] A7/OFF — citation_mining.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "local_ref_id": "PROBE-2724", "created_at": "PROBE-2725", "created_by_session": null, "updated_at": "PROBE-2726", "updated_by_session": "PROBE-2727"}
+INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "local_ref_id": "PROBE-2724", "created_at": "PROBE-2725", "created_by_session": null, "updated_at": "PROBE-2726", "updated_by_session": "PROBE-2727"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: citation_mining.created_by_session`
 **Verdict:** `OK`
 
-### [0836] A7/OFF — citation_mining.updated_at   `2026-08-12 05:22:48Z`
+### [0835] A7/OFF — citation_mining.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "local_ref_id": "PROBE-2728", "created_at": "PROBE-2729", "created_by_session": "PROBE-2730", "updated_at": null, "updated_by_session": "PROBE-2731"}
+INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "local_ref_id": "PROBE-2728", "created_at": "PROBE-2729", "created_by_session": "PROBE-2730", "updated_at": null, "updated_by_session": "PROBE-2731"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: citation_mining.updated_at`
 **Verdict:** `OK`
 
-### [0837] A7/OFF — citation_mining.updated_by_session   `2026-08-12 05:22:48Z`
+### [0836] A7/OFF — citation_mining.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "local_ref_id": "PROBE-2732", "created_at": "PROBE-2733", "created_by_session": "PROBE-2734", "updated_at": "PROBE-2735", "updated_by_session": null}
+INSERT INTO "citation_mining" ("slug", "local_ref_id", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "local_ref_id": "PROBE-2732", "created_at": "PROBE-2733", "created_by_session": "PROBE-2734", "updated_at": "PROBE-2735", "updated_by_session": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: citation_mining.updated_by_session`
 **Verdict:** `OK`
 
-### [0838] A7/OFF — conflicts.domain   `2026-08-12 05:22:48Z`
+### [0837] A7/OFF — conflicts.domain   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9146,7 +9135,7 @@ INSERT INTO "conflicts" ("conflict_id", "domain", "pop_a", "pop_b", "status", "c
 **Exception:** `IntegrityError: NOT NULL constraint failed: conflicts.domain`
 **Verdict:** `OK`
 
-### [0839] A7/OFF — conflicts.pop_a   `2026-08-12 05:22:48Z`
+### [0838] A7/OFF — conflicts.pop_a   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9157,7 +9146,7 @@ INSERT INTO "conflicts" ("conflict_id", "domain", "pop_a", "pop_b", "status", "c
 **Exception:** `IntegrityError: NOT NULL constraint failed: conflicts.pop_a`
 **Verdict:** `OK`
 
-### [0840] A7/OFF — conflicts.pop_b   `2026-08-12 05:22:48Z`
+### [0839] A7/OFF — conflicts.pop_b   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9168,7 +9157,7 @@ INSERT INTO "conflicts" ("conflict_id", "domain", "pop_a", "pop_b", "status", "c
 **Exception:** `IntegrityError: NOT NULL constraint failed: conflicts.pop_b`
 **Verdict:** `OK`
 
-### [0841] A7/OFF — conflicts.status   `2026-08-12 05:22:48Z`
+### [0840] A7/OFF — conflicts.status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9179,7 +9168,7 @@ INSERT INTO "conflicts" ("conflict_id", "domain", "pop_a", "pop_b", "status", "c
 **Exception:** `IntegrityError: NOT NULL constraint failed: conflicts.status`
 **Verdict:** `OK`
 
-### [0842] A7/OFF — conflicts.source_skill   `2026-08-12 05:22:48Z`
+### [0841] A7/OFF — conflicts.source_skill   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9190,7 +9179,7 @@ INSERT INTO "conflicts" ("conflict_id", "domain", "pop_a", "pop_b", "status", "c
 **Exception:** `IntegrityError: NOT NULL constraint failed: conflicts.source_skill`
 **Verdict:** `OK`
 
-### [0843] A7/OFF — conflicts.created_at   `2026-08-12 05:22:48Z`
+### [0842] A7/OFF — conflicts.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9201,7 +9190,7 @@ INSERT INTO "conflicts" ("conflict_id", "domain", "pop_a", "pop_b", "status", "c
 **Exception:** `IntegrityError: NOT NULL constraint failed: conflicts.created_at`
 **Verdict:** `OK`
 
-### [0844] A7/OFF — conflicts.created_by_session   `2026-08-12 05:22:48Z`
+### [0843] A7/OFF — conflicts.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9212,7 +9201,7 @@ INSERT INTO "conflicts" ("conflict_id", "domain", "pop_a", "pop_b", "status", "c
 **Exception:** `IntegrityError: NOT NULL constraint failed: conflicts.created_by_session`
 **Verdict:** `OK`
 
-### [0845] A7/OFF — conflicts.updated_at   `2026-08-12 05:22:48Z`
+### [0844] A7/OFF — conflicts.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9223,7 +9212,7 @@ INSERT INTO "conflicts" ("conflict_id", "domain", "pop_a", "pop_b", "status", "c
 **Exception:** `IntegrityError: NOT NULL constraint failed: conflicts.updated_at`
 **Verdict:** `OK`
 
-### [0846] A7/OFF — conflicts.updated_by_session   `2026-08-12 05:22:48Z`
+### [0845] A7/OFF — conflicts.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9234,7 +9223,7 @@ INSERT INTO "conflicts" ("conflict_id", "domain", "pop_a", "pop_b", "status", "c
 **Exception:** `IntegrityError: NOT NULL constraint failed: conflicts.updated_by_session`
 **Verdict:** `OK`
 
-### [0847] A7/OFF — connections.status   `2026-08-12 05:22:48Z`
+### [0846] A7/OFF — connections.status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9245,7 +9234,7 @@ INSERT INTO "connections" ("con_id", "status", "confidence", "filed_in", "create
 **Exception:** `IntegrityError: NOT NULL constraint failed: connections.status`
 **Verdict:** `OK`
 
-### [0848] A7/OFF — connections.confidence   `2026-08-12 05:22:48Z`
+### [0847] A7/OFF — connections.confidence   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9256,7 +9245,7 @@ INSERT INTO "connections" ("con_id", "status", "confidence", "filed_in", "create
 **Exception:** `IntegrityError: NOT NULL constraint failed: connections.confidence`
 **Verdict:** `OK`
 
-### [0849] A7/OFF — connections.filed_in   `2026-08-12 05:22:48Z`
+### [0848] A7/OFF — connections.filed_in   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9267,7 +9256,7 @@ INSERT INTO "connections" ("con_id", "status", "confidence", "filed_in", "create
 **Exception:** `IntegrityError: NOT NULL constraint failed: connections.filed_in`
 **Verdict:** `OK`
 
-### [0850] A7/OFF — connections.opus_reviewed   `2026-08-12 05:22:48Z`
+### [0849] A7/OFF — connections.opus_reviewed   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9278,7 +9267,7 @@ INSERT INTO "connections" ("con_id", "status", "confidence", "filed_in", "create
 **Exception:** `IntegrityError: NOT NULL constraint failed: connections.opus_reviewed`
 **Verdict:** `OK`
 
-### [0851] A7/OFF — connections.created_at   `2026-08-12 05:22:48Z`
+### [0850] A7/OFF — connections.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9289,7 +9278,7 @@ INSERT INTO "connections" ("con_id", "status", "confidence", "filed_in", "create
 **Exception:** `IntegrityError: NOT NULL constraint failed: connections.created_at`
 **Verdict:** `OK`
 
-### [0852] A7/OFF — connections.created_by_session   `2026-08-12 05:22:48Z`
+### [0851] A7/OFF — connections.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9300,7 +9289,7 @@ INSERT INTO "connections" ("con_id", "status", "confidence", "filed_in", "create
 **Exception:** `IntegrityError: NOT NULL constraint failed: connections.created_by_session`
 **Verdict:** `OK`
 
-### [0853] A7/OFF — connections.updated_at   `2026-08-12 05:22:48Z`
+### [0852] A7/OFF — connections.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9311,7 +9300,7 @@ INSERT INTO "connections" ("con_id", "status", "confidence", "filed_in", "create
 **Exception:** `IntegrityError: NOT NULL constraint failed: connections.updated_at`
 **Verdict:** `OK`
 
-### [0854] A7/OFF — connections.updated_by_session   `2026-08-12 05:22:48Z`
+### [0853] A7/OFF — connections.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9322,7 +9311,7 @@ INSERT INTO "connections" ("con_id", "status", "confidence", "filed_in", "create
 **Exception:** `IntegrityError: NOT NULL constraint failed: connections.updated_by_session`
 **Verdict:** `OK`
 
-### [0855] A7/OFF — convergence_assessment.status   `2026-08-12 05:22:48Z`
+### [0854] A7/OFF — convergence_assessment.status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9333,7 +9322,7 @@ INSERT INTO "convergence_assessment" ("status") VALUES (?)  -- {"status": null}
 **Exception:** `IntegrityError: NOT NULL constraint failed: convergence_assessment.status`
 **Verdict:** `OK`
 
-### [0856] A7/OFF — data_migrations.applied_at   `2026-08-12 05:22:48Z`
+### [0855] A7/OFF — data_migrations.applied_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9344,7 +9333,7 @@ INSERT INTO "data_migrations" ("migration_id", "applied_at", "content_sha") VALU
 **Exception:** `IntegrityError: NOT NULL constraint failed: data_migrations.applied_at`
 **Verdict:** `OK`
 
-### [0857] A7/OFF — data_migrations.content_sha   `2026-08-12 05:22:48Z`
+### [0856] A7/OFF — data_migrations.content_sha   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9355,7 +9344,7 @@ INSERT INTO "data_migrations" ("migration_id", "applied_at", "content_sha") VALU
 **Exception:** `IntegrityError: NOT NULL constraint failed: data_migrations.content_sha`
 **Verdict:** `OK`
 
-### [0858] A7/OFF — db_meta.value   `2026-08-12 05:22:48Z`
+### [0857] A7/OFF — db_meta.value   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9366,7 +9355,7 @@ INSERT INTO "db_meta" ("key", "value") VALUES (?, ?)  -- {"key": "PROBE-2850", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: db_meta.value`
 **Verdict:** `OK`
 
-### [0859] A7/OFF — decisions.category   `2026-08-12 05:22:48Z`
+### [0858] A7/OFF — decisions.category   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9377,7 +9366,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.category`
 **Verdict:** `OK`
 
-### [0860] A7/OFF — decisions.delegation   `2026-08-12 05:22:48Z`
+### [0859] A7/OFF — decisions.delegation   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9388,7 +9377,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.delegation`
 **Verdict:** `OK`
 
-### [0861] A7/OFF — decisions.summary   `2026-08-12 05:22:48Z`
+### [0860] A7/OFF — decisions.summary   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9399,7 +9388,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.summary`
 **Verdict:** `OK`
 
-### [0862] A7/OFF — decisions.outcome   `2026-08-12 05:22:48Z`
+### [0861] A7/OFF — decisions.outcome   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9410,7 +9399,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.outcome`
 **Verdict:** `OK`
 
-### [0863] A7/OFF — decisions.rationale   `2026-08-12 05:22:48Z`
+### [0862] A7/OFF — decisions.rationale   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9421,7 +9410,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.rationale`
 **Verdict:** `OK`
 
-### [0864] A7/OFF — decisions.decision_date   `2026-08-12 05:22:48Z`
+### [0863] A7/OFF — decisions.decision_date   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9432,7 +9421,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.decision_date`
 **Verdict:** `OK`
 
-### [0865] A7/OFF — decisions.decided_by   `2026-08-12 05:22:48Z`
+### [0864] A7/OFF — decisions.decided_by   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9443,7 +9432,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.decided_by`
 **Verdict:** `OK`
 
-### [0866] A7/OFF — decisions.model_routing   `2026-08-12 05:22:48Z`
+### [0865] A7/OFF — decisions.model_routing   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9454,7 +9443,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.model_routing`
 **Verdict:** `OK`
 
-### [0867] A7/OFF — decisions.effort_level   `2026-08-12 05:22:48Z`
+### [0866] A7/OFF — decisions.effort_level   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9465,7 +9454,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.effort_level`
 **Verdict:** `OK`
 
-### [0868] A7/OFF — decisions.status   `2026-08-12 05:22:48Z`
+### [0867] A7/OFF — decisions.status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9476,7 +9465,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.status`
 **Verdict:** `OK`
 
-### [0869] A7/OFF — decisions.review_status   `2026-08-12 05:22:48Z`
+### [0868] A7/OFF — decisions.review_status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9487,7 +9476,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.review_status`
 **Verdict:** `OK`
 
-### [0870] A7/OFF — decisions.supersedes   `2026-08-12 05:22:48Z`
+### [0869] A7/OFF — decisions.supersedes   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9498,7 +9487,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.supersedes`
 **Verdict:** `OK`
 
-### [0871] A7/OFF — decisions.predecessors   `2026-08-12 05:22:48Z`
+### [0870] A7/OFF — decisions.predecessors   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9509,7 +9498,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.predecessors`
 **Verdict:** `OK`
 
-### [0872] A7/OFF — decisions.decision_artifacts   `2026-08-12 05:22:48Z`
+### [0871] A7/OFF — decisions.decision_artifacts   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9520,7 +9509,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.decision_artifacts`
 **Verdict:** `OK`
 
-### [0873] A7/OFF — decisions.alternatives_considered   `2026-08-12 05:22:48Z`
+### [0872] A7/OFF — decisions.alternatives_considered   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9531,7 +9520,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.alternatives_considered`
 **Verdict:** `OK`
 
-### [0874] A7/OFF — decisions.created_at   `2026-08-12 05:22:48Z`
+### [0873] A7/OFF — decisions.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9542,7 +9531,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.created_at`
 **Verdict:** `OK`
 
-### [0875] A7/OFF — decisions.created_by_session   `2026-08-12 05:22:48Z`
+### [0874] A7/OFF — decisions.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9553,7 +9542,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.created_by_session`
 **Verdict:** `OK`
 
-### [0876] A7/OFF — decisions.updated_at   `2026-08-12 05:22:48Z`
+### [0875] A7/OFF — decisions.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9564,7 +9553,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.updated_at`
 **Verdict:** `OK`
 
-### [0877] A7/OFF — decisions.updated_by_session   `2026-08-12 05:22:48Z`
+### [0876] A7/OFF — decisions.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9575,7 +9564,7 @@ INSERT INTO "decisions" ("decision_id", "category", "delegation", "summary", "ou
 **Exception:** `IntegrityError: NOT NULL constraint failed: decisions.updated_by_session`
 **Verdict:** `OK`
 
-### [0878] A7/OFF — economics_entries.pillar   `2026-08-12 05:22:48Z`
+### [0877] A7/OFF — economics_entries.pillar   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9586,7 +9575,7 @@ INSERT INTO "economics_entries" ("entry_id", "pillar", "entry_type", "source", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: economics_entries.pillar`
 **Verdict:** `OK`
 
-### [0879] A7/OFF — economics_entries.entry_type   `2026-08-12 05:22:48Z`
+### [0878] A7/OFF — economics_entries.entry_type   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9597,7 +9586,7 @@ INSERT INTO "economics_entries" ("entry_id", "pillar", "entry_type", "source", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: economics_entries.entry_type`
 **Verdict:** `OK`
 
-### [0880] A7/OFF — economics_entries.source   `2026-08-12 05:22:48Z`
+### [0879] A7/OFF — economics_entries.source   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9608,7 +9597,7 @@ INSERT INTO "economics_entries" ("entry_id", "pillar", "entry_type", "source", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: economics_entries.source`
 **Verdict:** `OK`
 
-### [0881] A7/OFF — economics_entries.finding   `2026-08-12 05:22:48Z`
+### [0880] A7/OFF — economics_entries.finding   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9619,7 +9608,7 @@ INSERT INTO "economics_entries" ("entry_id", "pillar", "entry_type", "source", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: economics_entries.finding`
 **Verdict:** `OK`
 
-### [0882] A7/OFF — economics_entries.status   `2026-08-12 05:22:48Z`
+### [0881] A7/OFF — economics_entries.status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9630,7 +9619,7 @@ INSERT INTO "economics_entries" ("entry_id", "pillar", "entry_type", "source", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: economics_entries.status`
 **Verdict:** `OK`
 
-### [0883] A7/OFF — economics_entries.created_at   `2026-08-12 05:22:48Z`
+### [0882] A7/OFF — economics_entries.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9641,7 +9630,7 @@ INSERT INTO "economics_entries" ("entry_id", "pillar", "entry_type", "source", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: economics_entries.created_at`
 **Verdict:** `OK`
 
-### [0884] A7/OFF — economics_entries.created_by_session   `2026-08-12 05:22:48Z`
+### [0883] A7/OFF — economics_entries.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9652,84 +9641,7 @@ INSERT INTO "economics_entries" ("entry_id", "pillar", "entry_type", "source", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: economics_entries.created_by_session`
 **Verdict:** `OK`
 
-### [0885] A7/OFF — evidence_cell_state.item_code   `2026-08-12 05:22:48Z`
-**Action:** insert explicit NULL into NOT NULL column (FK=OFF)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state") VALUES (?, ?, ?)  -- {"item_code": null, "population_code": "DEM", "state": "stated"}
-```
-**Expected:** NOT NULL constraint failed
-**Actual:** rejected
-**Exception:** `IntegrityError: NOT NULL constraint failed: evidence_cell_state.item_code`
-**Verdict:** `OK`
-
-### [0886] A7/OFF — evidence_cell_state.population_code   `2026-08-12 05:22:48Z`
-**Action:** insert explicit NULL into NOT NULL column (FK=OFF)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state") VALUES (?, ?, ?)  -- {"item_code": "A-11", "population_code": null, "state": "stated"}
-```
-**Expected:** NOT NULL constraint failed
-**Actual:** rejected
-**Exception:** `IntegrityError: NOT NULL constraint failed: evidence_cell_state.population_code`
-**Verdict:** `OK`
-
-### [0887] A7/OFF — evidence_cell_state.state   `2026-08-12 05:22:48Z`
-**Action:** insert explicit NULL into NOT NULL column (FK=OFF)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state") VALUES (?, ?, ?)  -- {"item_code": "A-11", "population_code": "DEM", "state": null}
-```
-**Expected:** NOT NULL constraint failed
-**Actual:** rejected
-**Exception:** `IntegrityError: NOT NULL constraint failed: evidence_cell_state.state`
-**Verdict:** `OK`
-
-### [0888] A7/OFF — evidence_cell_state.code_floor_only   `2026-08-12 05:22:48Z`
-**Action:** insert explicit NULL into NOT NULL column (FK=OFF)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state", "code_floor_only") VALUES (?, ?, ?, ?)  -- {"item_code": "A-11", "population_code": "DEM", "state": "stated", "code_floor_only": null}
-```
-**Expected:** NOT NULL constraint failed
-**Actual:** rejected
-**Exception:** `IntegrityError: NOT NULL constraint failed: evidence_cell_state.code_floor_only`
-**Verdict:** `OK`
-
-### [0889] A7/OFF — evidence_cell_state.has_unverified_sources   `2026-08-12 05:22:48Z`
-**Action:** insert explicit NULL into NOT NULL column (FK=OFF)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state", "has_unverified_sources") VALUES (?, ?, ?, ?)  -- {"item_code": "A-11", "population_code": "DEM", "state": "stated", "has_unverified_sources": null}
-```
-**Expected:** NOT NULL constraint failed
-**Actual:** rejected
-**Exception:** `IntegrityError: NOT NULL constraint failed: evidence_cell_state.has_unverified_sources`
-**Verdict:** `OK`
-
-### [0890] A7/OFF — evidence_cell_state.all_sources_disqualified   `2026-08-12 05:22:48Z`
-**Action:** insert explicit NULL into NOT NULL column (FK=OFF)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state", "all_sources_disqualified") VALUES (?, ?, ?, ?)  -- {"item_code": "A-11", "population_code": "DEM", "state": "stated", "all_sources_disqualified": null}
-```
-**Expected:** NOT NULL constraint failed
-**Actual:** rejected
-**Exception:** `IntegrityError: NOT NULL constraint failed: evidence_cell_state.all_sources_disqualified`
-**Verdict:** `OK`
-
-### [0891] A7/OFF — evidence_cell_state.regulatory_stratum_only   `2026-08-12 05:22:48Z`
-**Action:** insert explicit NULL into NOT NULL column (FK=OFF)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state", "regulatory_stratum_only") VALUES (?, ?, ?, ?)  -- {"item_code": "A-11", "population_code": "DEM", "state": "stated", "regulatory_stratum_only": null}
-```
-**Expected:** NOT NULL constraint failed
-**Actual:** rejected
-**Exception:** `IntegrityError: NOT NULL constraint failed: evidence_cell_state.regulatory_stratum_only`
-**Verdict:** `OK`
-
-### [0892] A7/OFF — evidence_population_match.source_ref   `2026-08-12 05:22:48Z`
+### [0884] A7/OFF — evidence_population_match.source_ref   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9740,7 +9652,7 @@ INSERT INTO "evidence_population_match" ("match_id", "source_ref", "target_popul
 **Exception:** `IntegrityError: NOT NULL constraint failed: evidence_population_match.source_ref`
 **Verdict:** `OK`
 
-### [0893] A7/OFF — evidence_population_match.target_population   `2026-08-12 05:22:48Z`
+### [0885] A7/OFF — evidence_population_match.target_population   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9751,7 +9663,7 @@ INSERT INTO "evidence_population_match" ("match_id", "source_ref", "target_popul
 **Exception:** `IntegrityError: NOT NULL constraint failed: evidence_population_match.target_population`
 **Verdict:** `OK`
 
-### [0894] A7/OFF — evidence_population_match.match_grade   `2026-08-12 05:22:48Z`
+### [0886] A7/OFF — evidence_population_match.match_grade   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9762,7 +9674,7 @@ INSERT INTO "evidence_population_match" ("match_id", "source_ref", "target_popul
 **Exception:** `IntegrityError: NOT NULL constraint failed: evidence_population_match.match_grade`
 **Verdict:** `OK`
 
-### [0895] A7/OFF — evidence_population_match.created_at   `2026-08-12 05:22:48Z`
+### [0887] A7/OFF — evidence_population_match.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9773,7 +9685,7 @@ INSERT INTO "evidence_population_match" ("match_id", "source_ref", "target_popul
 **Exception:** `IntegrityError: NOT NULL constraint failed: evidence_population_match.created_at`
 **Verdict:** `OK`
 
-### [0896] A7/OFF — evidence_population_match.created_by_session   `2026-08-12 05:22:48Z`
+### [0888] A7/OFF — evidence_population_match.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9784,7 +9696,7 @@ INSERT INTO "evidence_population_match" ("match_id", "source_ref", "target_popul
 **Exception:** `IntegrityError: NOT NULL constraint failed: evidence_population_match.created_by_session`
 **Verdict:** `OK`
 
-### [0897] A7/OFF — evidence_source_authors.ref_id   `2026-08-12 05:22:48Z`
+### [0889] A7/OFF — evidence_source_authors.ref_id   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9795,7 +9707,7 @@ INSERT INTO "evidence_source_authors" ("ref_id", "position") VALUES (?, ?)  -- {
 **Exception:** `IntegrityError: NOT NULL constraint failed: evidence_source_authors.ref_id`
 **Verdict:** `OK`
 
-### [0898] A7/OFF — evidence_source_authors.position   `2026-08-12 05:22:48Z`
+### [0890] A7/OFF — evidence_source_authors.position   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9806,7 +9718,7 @@ INSERT INTO "evidence_source_authors" ("ref_id", "position") VALUES (?, ?)  -- {
 **Exception:** `IntegrityError: NOT NULL constraint failed: evidence_source_authors.position`
 **Verdict:** `OK`
 
-### [0899] A7/OFF — evidence_source_authors.is_corporate   `2026-08-12 05:22:48Z`
+### [0891] A7/OFF — evidence_source_authors.is_corporate   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9817,7 +9729,7 @@ INSERT INTO "evidence_source_authors" ("ref_id", "position", "is_corporate") VAL
 **Exception:** `IntegrityError: NOT NULL constraint failed: evidence_source_authors.is_corporate`
 **Verdict:** `OK`
 
-### [0900] A7/OFF — evidence_source_authors.role   `2026-08-12 05:22:48Z`
+### [0892] A7/OFF — evidence_source_authors.role   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9828,7 +9740,7 @@ INSERT INTO "evidence_source_authors" ("ref_id", "position", "role") VALUES (?, 
 **Exception:** `IntegrityError: NOT NULL constraint failed: evidence_source_authors.role`
 **Verdict:** `OK`
 
-### [0901] A7/OFF — evidence_sources.data_capture_status   `2026-08-12 05:22:48Z`
+### [0893] A7/OFF — evidence_sources.data_capture_status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9839,7 +9751,7 @@ INSERT INTO "evidence_sources" ("ref_id", "data_capture_status") VALUES (?, ?)  
 **Exception:** `IntegrityError: NOT NULL constraint failed: evidence_sources.data_capture_status`
 **Verdict:** `OK`
 
-### [0902] A7/OFF — evidence_sources.citation_mining_status   `2026-08-12 05:22:48Z`
+### [0894] A7/OFF — evidence_sources.citation_mining_status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9850,7 +9762,7 @@ INSERT INTO "evidence_sources" ("ref_id", "citation_mining_status") VALUES (?, ?
 **Exception:** `IntegrityError: NOT NULL constraint failed: evidence_sources.citation_mining_status`
 **Verdict:** `OK`
 
-### [0903] A7/OFF — external_root_registry.description   `2026-08-12 05:22:48Z`
+### [0895] A7/OFF — external_root_registry.description   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9861,7 +9773,7 @@ INSERT INTO "external_root_registry" ("root_id", "description") VALUES (?, ?)  -
 **Exception:** `IntegrityError: NOT NULL constraint failed: external_root_registry.description`
 **Verdict:** `OK`
 
-### [0904] A7/OFF — gap_mining.gap_id   `2026-08-12 05:22:48Z`
+### [0896] A7/OFF — gap_mining.gap_id   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9872,7 +9784,7 @@ INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "searc
 **Exception:** `IntegrityError: NOT NULL constraint failed: gap_mining.gap_id`
 **Verdict:** `OK`
 
-### [0905] A7/OFF — gap_mining.attempt_at   `2026-08-12 05:22:48Z`
+### [0897] A7/OFF — gap_mining.attempt_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9883,7 +9795,7 @@ INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "searc
 **Exception:** `IntegrityError: NOT NULL constraint failed: gap_mining.attempt_at`
 **Verdict:** `OK`
 
-### [0906] A7/OFF — gap_mining.attempted_by_session   `2026-08-12 05:22:48Z`
+### [0898] A7/OFF — gap_mining.attempted_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9894,7 +9806,7 @@ INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "searc
 **Exception:** `IntegrityError: NOT NULL constraint failed: gap_mining.attempted_by_session`
 **Verdict:** `OK`
 
-### [0907] A7/OFF — gap_mining.search_strategy_record   `2026-08-12 05:22:48Z`
+### [0899] A7/OFF — gap_mining.search_strategy_record   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9905,7 +9817,7 @@ INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "searc
 **Exception:** `IntegrityError: NOT NULL constraint failed: gap_mining.search_strategy_record`
 **Verdict:** `OK`
 
-### [0908] A7/OFF — gap_mining.candidates_returned   `2026-08-12 05:22:48Z`
+### [0900] A7/OFF — gap_mining.candidates_returned   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9916,7 +9828,7 @@ INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "searc
 **Exception:** `IntegrityError: NOT NULL constraint failed: gap_mining.candidates_returned`
 **Verdict:** `OK`
 
-### [0909] A7/OFF — gap_mining.candidates_reviewed   `2026-08-12 05:22:48Z`
+### [0901] A7/OFF — gap_mining.candidates_reviewed   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9927,7 +9839,7 @@ INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "searc
 **Exception:** `IntegrityError: NOT NULL constraint failed: gap_mining.candidates_reviewed`
 **Verdict:** `OK`
 
-### [0910] A7/OFF — gap_mining.outcome   `2026-08-12 05:22:48Z`
+### [0902] A7/OFF — gap_mining.outcome   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9938,7 +9850,7 @@ INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "searc
 **Exception:** `IntegrityError: NOT NULL constraint failed: gap_mining.outcome`
 **Verdict:** `OK`
 
-### [0911] A7/OFF — gap_mining.check_method   `2026-08-12 05:22:48Z`
+### [0903] A7/OFF — gap_mining.check_method   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9949,7 +9861,7 @@ INSERT INTO "gap_mining" ("gap_id", "attempt_at", "attempted_by_session", "searc
 **Exception:** `IntegrityError: NOT NULL constraint failed: gap_mining.check_method`
 **Verdict:** `OK`
 
-### [0912] A7/OFF — gaps.category   `2026-08-12 05:22:48Z`
+### [0904] A7/OFF — gaps.category   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9960,7 +9872,7 @@ INSERT INTO "gaps" ("gap_id", "category", "priority", "status", "description", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: gaps.category`
 **Verdict:** `OK`
 
-### [0913] A7/OFF — gaps.priority   `2026-08-12 05:22:48Z`
+### [0905] A7/OFF — gaps.priority   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9971,7 +9883,7 @@ INSERT INTO "gaps" ("gap_id", "category", "priority", "status", "description", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: gaps.priority`
 **Verdict:** `OK`
 
-### [0914] A7/OFF — gaps.status   `2026-08-12 05:22:48Z`
+### [0906] A7/OFF — gaps.status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9982,7 +9894,7 @@ INSERT INTO "gaps" ("gap_id", "category", "priority", "status", "description", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: gaps.status`
 **Verdict:** `OK`
 
-### [0915] A7/OFF — gaps.description   `2026-08-12 05:22:48Z`
+### [0907] A7/OFF — gaps.description   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -9993,7 +9905,7 @@ INSERT INTO "gaps" ("gap_id", "category", "priority", "status", "description", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: gaps.description`
 **Verdict:** `OK`
 
-### [0916] A7/OFF — gaps.created_at   `2026-08-12 05:22:48Z`
+### [0908] A7/OFF — gaps.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10004,7 +9916,7 @@ INSERT INTO "gaps" ("gap_id", "category", "priority", "status", "description", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: gaps.created_at`
 **Verdict:** `OK`
 
-### [0917] A7/OFF — gaps.created_by_session   `2026-08-12 05:22:48Z`
+### [0909] A7/OFF — gaps.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10015,7 +9927,7 @@ INSERT INTO "gaps" ("gap_id", "category", "priority", "status", "description", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: gaps.created_by_session`
 **Verdict:** `OK`
 
-### [0918] A7/OFF — gaps.updated_at   `2026-08-12 05:22:48Z`
+### [0910] A7/OFF — gaps.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10026,7 +9938,7 @@ INSERT INTO "gaps" ("gap_id", "category", "priority", "status", "description", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: gaps.updated_at`
 **Verdict:** `OK`
 
-### [0919] A7/OFF — gaps.updated_by_session   `2026-08-12 05:22:48Z`
+### [0911] A7/OFF — gaps.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10037,7 +9949,7 @@ INSERT INTO "gaps" ("gap_id", "category", "priority", "status", "description", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: gaps.updated_by_session`
 **Verdict:** `OK`
 
-### [0920] A7/OFF — item_audit_runs.item_code   `2026-08-12 05:22:48Z`
+### [0912] A7/OFF — item_audit_runs.item_code   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10048,7 +9960,7 @@ INSERT INTO "item_audit_runs" ("run_id", "item_code", "session", "created_at", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_audit_runs.item_code`
 **Verdict:** `OK`
 
-### [0921] A7/OFF — item_audit_runs.session   `2026-08-12 05:22:48Z`
+### [0913] A7/OFF — item_audit_runs.session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10059,7 +9971,7 @@ INSERT INTO "item_audit_runs" ("run_id", "item_code", "session", "created_at", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_audit_runs.session`
 **Verdict:** `OK`
 
-### [0922] A7/OFF — item_audit_runs.steps_complete   `2026-08-12 05:22:48Z`
+### [0914] A7/OFF — item_audit_runs.steps_complete   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10070,7 +9982,7 @@ INSERT INTO "item_audit_runs" ("run_id", "item_code", "session", "created_at", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_audit_runs.steps_complete`
 **Verdict:** `OK`
 
-### [0923] A7/OFF — item_audit_runs.steps_started   `2026-08-12 05:22:48Z`
+### [0915] A7/OFF — item_audit_runs.steps_started   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10081,7 +9993,7 @@ INSERT INTO "item_audit_runs" ("run_id", "item_code", "session", "created_at", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_audit_runs.steps_started`
 **Verdict:** `OK`
 
-### [0924] A7/OFF — item_audit_runs.status   `2026-08-12 05:22:48Z`
+### [0916] A7/OFF — item_audit_runs.status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10092,7 +10004,7 @@ INSERT INTO "item_audit_runs" ("run_id", "item_code", "session", "created_at", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_audit_runs.status`
 **Verdict:** `OK`
 
-### [0925] A7/OFF — item_audit_runs.created_at   `2026-08-12 05:22:48Z`
+### [0917] A7/OFF — item_audit_runs.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10103,7 +10015,7 @@ INSERT INTO "item_audit_runs" ("run_id", "item_code", "session", "created_at", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_audit_runs.created_at`
 **Verdict:** `OK`
 
-### [0926] A7/OFF — item_audit_runs.created_by_session   `2026-08-12 05:22:48Z`
+### [0918] A7/OFF — item_audit_runs.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10114,7 +10026,7 @@ INSERT INTO "item_audit_runs" ("run_id", "item_code", "session", "created_at", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_audit_runs.created_by_session`
 **Verdict:** `OK`
 
-### [0927] A7/OFF — item_audit_runs.updated_at   `2026-08-12 05:22:48Z`
+### [0919] A7/OFF — item_audit_runs.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10125,7 +10037,7 @@ INSERT INTO "item_audit_runs" ("run_id", "item_code", "session", "created_at", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_audit_runs.updated_at`
 **Verdict:** `OK`
 
-### [0928] A7/OFF — item_audit_runs.updated_by_session   `2026-08-12 05:22:48Z`
+### [0920] A7/OFF — item_audit_runs.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10136,40 +10048,40 @@ INSERT INTO "item_audit_runs" ("run_id", "item_code", "session", "created_at", "
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_audit_runs.updated_by_session`
 **Verdict:** `OK`
 
-### [0929] A7/OFF — item_bpc_links.link_type   `2026-08-12 05:22:48Z`
+### [0921] A7/OFF — item_bpc_links.link_type   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "item_bpc_links" ("item_code", "slug", "link_type", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?)  -- {"item_code": "A-10b", "slug": "PROBE-PK-273", "link_type": null, "created_at": "PROBE-3244", "created_by_session": "PROBE-3245"}
+INSERT INTO "item_bpc_links" ("item_code", "slug", "link_type", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?)  -- {"item_code": "I-04", "slug": "PROBE-PK-267", "link_type": null, "created_at": "PROBE-3244", "created_by_session": "PROBE-3245"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_bpc_links.link_type`
 **Verdict:** `OK`
 
-### [0930] A7/OFF — item_bpc_links.created_at   `2026-08-12 05:22:48Z`
+### [0922] A7/OFF — item_bpc_links.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "item_bpc_links" ("item_code", "slug", "link_type", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?)  -- {"item_code": "A-10b", "slug": "PROBE-PK-273", "link_type": "primary", "created_at": null, "created_by_session": "PROBE-3246"}
+INSERT INTO "item_bpc_links" ("item_code", "slug", "link_type", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?)  -- {"item_code": "I-04", "slug": "PROBE-PK-267", "link_type": "primary", "created_at": null, "created_by_session": "PROBE-3246"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_bpc_links.created_at`
 **Verdict:** `OK`
 
-### [0931] A7/OFF — item_bpc_links.created_by_session   `2026-08-12 05:22:48Z`
+### [0923] A7/OFF — item_bpc_links.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "item_bpc_links" ("item_code", "slug", "link_type", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?)  -- {"item_code": "A-10b", "slug": "PROBE-PK-273", "link_type": "primary", "created_at": "PROBE-3247", "created_by_session": null}
+INSERT INTO "item_bpc_links" ("item_code", "slug", "link_type", "created_at", "created_by_session") VALUES (?, ?, ?, ?, ?)  -- {"item_code": "I-04", "slug": "PROBE-PK-267", "link_type": "primary", "created_at": "PROBE-3247", "created_by_session": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_bpc_links.created_by_session`
 **Verdict:** `OK`
 
-### [0932] A7/OFF — item_population_elaborations.item_code   `2026-08-12 05:22:48Z`
+### [0924] A7/OFF — item_population_elaborations.item_code   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10180,7 +10092,7 @@ INSERT INTO "item_population_elaborations" ("item_code", "population_code") VALU
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_population_elaborations.item_code`
 **Verdict:** `OK`
 
-### [0933] A7/OFF — item_population_elaborations.population_code   `2026-08-12 05:22:48Z`
+### [0925] A7/OFF — item_population_elaborations.population_code   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10191,7 +10103,7 @@ INSERT INTO "item_population_elaborations" ("item_code", "population_code") VALU
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_population_elaborations.population_code`
 **Verdict:** `OK`
 
-### [0934] A7/OFF — item_population_links.applicability   `2026-08-12 05:22:48Z`
+### [0926] A7/OFF — item_population_links.applicability   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10202,7 +10114,7 @@ INSERT INTO "item_population_links" ("item_code", "population_code", "subtype", 
 **Exception:** `IntegrityError: NOT NULL constraint failed: item_population_links.applicability`
 **Verdict:** `OK`
 
-### [0935] A7/OFF — items.category   `2026-08-12 05:22:48Z`
+### [0927] A7/OFF — items.category   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10213,7 +10125,7 @@ INSERT INTO "items" ("item_code", "category", "name", "created_at", "created_by_
 **Exception:** `IntegrityError: NOT NULL constraint failed: items.category`
 **Verdict:** `OK`
 
-### [0936] A7/OFF — items.name   `2026-08-12 05:22:48Z`
+### [0928] A7/OFF — items.name   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10224,7 +10136,7 @@ INSERT INTO "items" ("item_code", "category", "name", "created_at", "created_by_
 **Exception:** `IntegrityError: NOT NULL constraint failed: items.name`
 **Verdict:** `OK`
 
-### [0937] A7/OFF — items.status   `2026-08-12 05:22:48Z`
+### [0929] A7/OFF — items.status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10235,7 +10147,7 @@ INSERT INTO "items" ("item_code", "category", "name", "created_at", "created_by_
 **Exception:** `IntegrityError: NOT NULL constraint failed: items.status`
 **Verdict:** `OK`
 
-### [0938] A7/OFF — items.created_at   `2026-08-12 05:22:48Z`
+### [0930] A7/OFF — items.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10246,7 +10158,7 @@ INSERT INTO "items" ("item_code", "category", "name", "created_at", "created_by_
 **Exception:** `IntegrityError: NOT NULL constraint failed: items.created_at`
 **Verdict:** `OK`
 
-### [0939] A7/OFF — items.created_by_session   `2026-08-12 05:22:48Z`
+### [0931] A7/OFF — items.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10257,7 +10169,7 @@ INSERT INTO "items" ("item_code", "category", "name", "created_at", "created_by_
 **Exception:** `IntegrityError: NOT NULL constraint failed: items.created_by_session`
 **Verdict:** `OK`
 
-### [0940] A7/OFF — items.updated_at   `2026-08-12 05:22:48Z`
+### [0932] A7/OFF — items.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10268,7 +10180,7 @@ INSERT INTO "items" ("item_code", "category", "name", "created_at", "created_by_
 **Exception:** `IntegrityError: NOT NULL constraint failed: items.updated_at`
 **Verdict:** `OK`
 
-### [0941] A7/OFF — items.updated_by_session   `2026-08-12 05:22:48Z`
+### [0933] A7/OFF — items.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10279,7 +10191,7 @@ INSERT INTO "items" ("item_code", "category", "name", "created_at", "created_by_
 **Exception:** `IntegrityError: NOT NULL constraint failed: items.updated_by_session`
 **Verdict:** `OK`
 
-### [0942] A7/OFF — jurisdictional_values.item_code   `2026-08-12 05:22:48Z`
+### [0934] A7/OFF — jurisdictional_values.item_code   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10290,7 +10202,7 @@ INSERT INTO "jurisdictional_values" ("item_code", "jurisdiction") VALUES (?, ?) 
 **Exception:** `IntegrityError: NOT NULL constraint failed: jurisdictional_values.item_code`
 **Verdict:** `OK`
 
-### [0943] A7/OFF — jurisdictional_values.jurisdiction   `2026-08-12 05:22:48Z`
+### [0935] A7/OFF — jurisdictional_values.jurisdiction   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10301,7 +10213,7 @@ INSERT INTO "jurisdictional_values" ("item_code", "jurisdiction") VALUES (?, ?) 
 **Exception:** `IntegrityError: NOT NULL constraint failed: jurisdictional_values.jurisdiction`
 **Verdict:** `OK`
 
-### [0944] A7/OFF — jurisdictional_values.evidence_tier   `2026-08-12 05:22:48Z`
+### [0936] A7/OFF — jurisdictional_values.evidence_tier   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10312,7 +10224,7 @@ INSERT INTO "jurisdictional_values" ("item_code", "jurisdiction", "evidence_tier
 **Exception:** `IntegrityError: NOT NULL constraint failed: jurisdictional_values.evidence_tier`
 **Verdict:** `OK`
 
-### [0945] A7/OFF — lang_jur_map.role   `2026-08-12 05:22:48Z`
+### [0937] A7/OFF — lang_jur_map.role   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10323,7 +10235,7 @@ INSERT INTO "lang_jur_map" ("language", "jurisdiction", "role") VALUES (?, ?, ?)
 **Exception:** `IntegrityError: NOT NULL constraint failed: lang_jur_map.role`
 **Verdict:** `OK`
 
-### [0946] A7/OFF — life_stage_modifiers.label   `2026-08-12 05:22:48Z`
+### [0938] A7/OFF — life_stage_modifiers.label   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10334,7 +10246,7 @@ INSERT INTO "life_stage_modifiers" ("label", "code", "definition") VALUES (?, ?,
 **Exception:** `IntegrityError: NOT NULL constraint failed: life_stage_modifiers.label`
 **Verdict:** `OK`
 
-### [0947] A7/OFF — life_stage_modifiers.definition   `2026-08-12 05:22:48Z`
+### [0939] A7/OFF — life_stage_modifiers.definition   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10345,7 +10257,7 @@ INSERT INTO "life_stage_modifiers" ("definition", "code", "label") VALUES (?, ?,
 **Exception:** `IntegrityError: NOT NULL constraint failed: life_stage_modifiers.definition`
 **Verdict:** `OK`
 
-### [0948] A7/OFF — pipeline_runs.started_at   `2026-08-12 05:22:48Z`
+### [0940] A7/OFF — pipeline_runs.started_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10356,7 +10268,7 @@ INSERT INTO "pipeline_runs" ("run_id", "started_at") VALUES (?, ?)  -- {"run_id"
 **Exception:** `IntegrityError: NOT NULL constraint failed: pipeline_runs.started_at`
 **Verdict:** `OK`
 
-### [0949] A7/OFF — population_axis_map.role   `2026-08-12 05:22:48Z`
+### [0941] A7/OFF — population_axis_map.role   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10367,7 +10279,7 @@ INSERT INTO "population_axis_map" ("population_code", "axis_code", "role") VALUE
 **Exception:** `IntegrityError: NOT NULL constraint failed: population_axis_map.role`
 **Verdict:** `OK`
 
-### [0950] A7/OFF — population_reclass.row_kind   `2026-08-12 05:22:48Z`
+### [0942] A7/OFF — population_reclass.row_kind   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10378,7 +10290,7 @@ INSERT INTO "population_reclass" ("population_code", "row_kind", "layer", "ratio
 **Exception:** `IntegrityError: NOT NULL constraint failed: population_reclass.row_kind`
 **Verdict:** `OK`
 
-### [0951] A7/OFF — population_reclass.layer   `2026-08-12 05:22:48Z`
+### [0943] A7/OFF — population_reclass.layer   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10389,7 +10301,7 @@ INSERT INTO "population_reclass" ("population_code", "row_kind", "layer", "ratio
 **Exception:** `IntegrityError: NOT NULL constraint failed: population_reclass.layer`
 **Verdict:** `OK`
 
-### [0952] A7/OFF — population_reclass.rationale   `2026-08-12 05:22:48Z`
+### [0944] A7/OFF — population_reclass.rationale   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10400,7 +10312,7 @@ INSERT INTO "population_reclass" ("population_code", "row_kind", "layer", "ratio
 **Exception:** `IntegrityError: NOT NULL constraint failed: population_reclass.rationale`
 **Verdict:** `OK`
 
-### [0953] A7/OFF — populations.display_name   `2026-08-12 05:22:48Z`
+### [0945] A7/OFF — populations.display_name   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10411,84 +10323,84 @@ INSERT INTO "populations" ("population_code", "display_name") VALUES (?, ?)  -- 
 **Exception:** `IntegrityError: NOT NULL constraint failed: populations.display_name`
 **Verdict:** `OK`
 
-### [0954] A7/OFF — reasoning_doc_citations.reasoning_doc_slug   `2026-08-12 05:22:48Z`
+### [0946] A7/OFF — reasoning_doc_citations.reasoning_doc_slug   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-3300", "reasoning_doc_slug": null, "parameter": "PROBE-3301", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-1012", "verified_at": "PROBE-3302", "verified_by_session": "PROBE-3303", "value_match": "EXACT", "claim_match": "SUPPORTED", "claim_text": "PROBE-3304", "claimed_value": "PROBE-3305"}
+INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-3300", "reasoning_doc_slug": null, "parameter": "PROBE-3301", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-1012", "verified_at": "PROBE-3302", "verified_by_session": "PROBE-3303", "value_match": "EXACT", "claim_match": "SUPPORTED", "claimed_value": "PROBE-3304", "claim_text": "PROBE-3305"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: reasoning_doc_citations.reasoning_doc_slug`
 **Verdict:** `OK`
 
-### [0955] A7/OFF — reasoning_doc_citations.parameter   `2026-08-12 05:22:48Z`
+### [0947] A7/OFF — reasoning_doc_citations.parameter   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-3306", "reasoning_doc_slug": "PROBE-PK-273", "parameter": null, "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-1012", "verified_at": "PROBE-3307", "verified_by_session": "PROBE-3308", "value_match": "EXACT", "claim_match": "SUPPORTED", "claim_text": "PROBE-3309", "claimed_value": "PROBE-3310"}
+INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-3306", "reasoning_doc_slug": "PROBE-PK-267", "parameter": null, "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-1012", "verified_at": "PROBE-3307", "verified_by_session": "PROBE-3308", "value_match": "EXACT", "claim_match": "SUPPORTED", "claimed_value": "PROBE-3309", "claim_text": "PROBE-3310"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: reasoning_doc_citations.parameter`
 **Verdict:** `OK`
 
-### [0956] A7/OFF — reasoning_doc_citations.claim_type   `2026-08-12 05:22:48Z`
+### [0948] A7/OFF — reasoning_doc_citations.claim_type   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-3311", "reasoning_doc_slug": "PROBE-PK-273", "parameter": "PROBE-3312", "claim_type": null, "source_ref_id": "PROBE-PK-1012", "verified_at": "PROBE-3313", "verified_by_session": "PROBE-3314", "value_match": "EXACT", "claim_match": "SUPPORTED", "claim_text": "PROBE-3315", "claimed_value": "PROBE-3316"}
+INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-3311", "reasoning_doc_slug": "PROBE-PK-267", "parameter": "PROBE-3312", "claim_type": null, "source_ref_id": "PROBE-PK-1012", "verified_at": "PROBE-3313", "verified_by_session": "PROBE-3314", "value_match": "EXACT", "claim_match": "SUPPORTED", "claimed_value": "PROBE-3315", "claim_text": "PROBE-3316"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: reasoning_doc_citations.claim_type`
 **Verdict:** `OK`
 
-### [0957] A7/OFF — reasoning_doc_citations.source_ref_id   `2026-08-12 05:22:48Z`
+### [0949] A7/OFF — reasoning_doc_citations.source_ref_id   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-3317", "reasoning_doc_slug": "PROBE-PK-273", "parameter": "PROBE-3318", "claim_type": "numerical_spec", "source_ref_id": null, "verified_at": "PROBE-3319", "verified_by_session": "PROBE-3320", "value_match": "EXACT", "claim_match": "SUPPORTED", "claim_text": "PROBE-3321", "claimed_value": "PROBE-3322"}
+INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-3317", "reasoning_doc_slug": "PROBE-PK-267", "parameter": "PROBE-3318", "claim_type": "numerical_spec", "source_ref_id": null, "verified_at": "PROBE-3319", "verified_by_session": "PROBE-3320", "value_match": "EXACT", "claim_match": "SUPPORTED", "claimed_value": "PROBE-3321", "claim_text": "PROBE-3322"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: reasoning_doc_citations.source_ref_id`
 **Verdict:** `OK`
 
-### [0958] A7/OFF — reasoning_doc_citations.verified_at   `2026-08-12 05:22:48Z`
+### [0950] A7/OFF — reasoning_doc_citations.verified_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-3323", "reasoning_doc_slug": "PROBE-PK-273", "parameter": "PROBE-3324", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-1012", "verified_at": null, "verified_by_session": "PROBE-3325", "value_match": "EXACT", "claim_match": "SUPPORTED", "claim_text": "PROBE-3326", "claimed_value": "PROBE-3327"}
+INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-3323", "reasoning_doc_slug": "PROBE-PK-267", "parameter": "PROBE-3324", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-1012", "verified_at": null, "verified_by_session": "PROBE-3325", "value_match": "EXACT", "claim_match": "SUPPORTED", "claimed_value": "PROBE-3326", "claim_text": "PROBE-3327"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: reasoning_doc_citations.verified_at`
 **Verdict:** `OK`
 
-### [0959] A7/OFF — reasoning_doc_citations.verified_by_session   `2026-08-12 05:22:48Z`
+### [0951] A7/OFF — reasoning_doc_citations.verified_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-3328", "reasoning_doc_slug": "PROBE-PK-273", "parameter": "PROBE-3329", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-1012", "verified_at": "PROBE-3330", "verified_by_session": null, "value_match": "EXACT", "claim_match": "SUPPORTED", "claim_text": "PROBE-3331", "claimed_value": "PROBE-3332"}
+INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-3328", "reasoning_doc_slug": "PROBE-PK-267", "parameter": "PROBE-3329", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-1012", "verified_at": "PROBE-3330", "verified_by_session": null, "value_match": "EXACT", "claim_match": "SUPPORTED", "claimed_value": "PROBE-3331", "claim_text": "PROBE-3332"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: reasoning_doc_citations.verified_by_session`
 **Verdict:** `OK`
 
-### [0960] A7/OFF — reasoning_doc_citations.paywall_purchase_candidate   `2026-08-12 05:22:48Z`
+### [0952] A7/OFF — reasoning_doc_citations.paywall_purchase_candidate   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claim_text", "claimed_value", "paywall_purchase_candidate") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-3333", "reasoning_doc_slug": "PROBE-PK-273", "parameter": "PROBE-3334", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-1012", "verified_at": "PROBE-3335", "verified_by_session": "PROBE-3336", "value_match": "EXACT", "claim_match": "SUPPORTED", "claim_text": "PROBE-3337", "claimed_value": "PROBE-3338", "paywall_purchase_candidate": null}
+INSERT INTO "reasoning_doc_citations" ("citation_id", "reasoning_doc_slug", "parameter", "claim_type", "source_ref_id", "verified_at", "verified_by_session", "value_match", "claim_match", "claimed_value", "claim_text", "paywall_purchase_candidate") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"citation_id": "PROBE-3333", "reasoning_doc_slug": "PROBE-PK-267", "parameter": "PROBE-3334", "claim_type": "numerical_spec", "source_ref_id": "PROBE-PK-1012", "verified_at": "PROBE-3335", "verified_by_session": "PROBE-3336", "value_match": "EXACT", "claim_match": "SUPPORTED", "claimed_value": "PROBE-3337", "claim_text": "PROBE-3338", "paywall_purchase_candidate": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: reasoning_doc_citations.paywall_purchase_candidate`
 **Verdict:** `OK`
 
-### [0961] A7/OFF — room_items.applicability   `2026-08-12 05:22:48Z`
+### [0953] A7/OFF — room_items.applicability   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10499,7 +10411,7 @@ INSERT INTO "room_items" ("room_code", "item_code", "applicability") VALUES (?, 
 **Exception:** `IntegrityError: NOT NULL constraint failed: room_items.applicability`
 **Verdict:** `OK`
 
-### [0962] A7/OFF — rooms.name   `2026-08-12 05:22:48Z`
+### [0954] A7/OFF — rooms.name   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10510,7 +10422,7 @@ INSERT INTO "rooms" ("room_code", "name") VALUES (?, ?)  -- {"room_code": "PROBE
 **Exception:** `IntegrityError: NOT NULL constraint failed: rooms.name`
 **Verdict:** `OK`
 
-### [0963] A7/OFF — rooms.status   `2026-08-12 05:22:48Z`
+### [0955] A7/OFF — rooms.status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10521,7 +10433,7 @@ INSERT INTO "rooms" ("room_code", "name", "status") VALUES (?, ?, ?)  -- {"room_
 **Exception:** `IntegrityError: NOT NULL constraint failed: rooms.status`
 **Verdict:** `OK`
 
-### [0964] A7/OFF — search_candidates.found_under_slug   `2026-08-12 05:22:48Z`
+### [0956] A7/OFF — search_candidates.found_under_slug   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10532,150 +10444,150 @@ INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "se
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_candidates.found_under_slug`
 **Verdict:** `OK`
 
-### [0965] A7/OFF — search_candidates.disposition   `2026-08-12 05:22:48Z`
+### [0957] A7/OFF — search_candidates.disposition   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "session", "created_at") VALUES (?, ?, ?, ?, ?)  -- {"found_under_slug": "PROBE-PK-273", "disposition": null, "title": "PROBE-3345", "session": "PROBE-3346", "created_at": "PROBE-3347"}
+INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "session", "created_at") VALUES (?, ?, ?, ?, ?)  -- {"found_under_slug": "PROBE-PK-267", "disposition": null, "title": "PROBE-3345", "session": "PROBE-3346", "created_at": "PROBE-3347"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_candidates.disposition`
 **Verdict:** `OK`
 
-### [0966] A7/OFF — search_candidates.title   `2026-08-12 05:22:48Z`
+### [0958] A7/OFF — search_candidates.title   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "session", "created_at") VALUES (?, ?, ?, ?, ?)  -- {"found_under_slug": "PROBE-PK-273", "disposition": "REHOME", "title": null, "session": "PROBE-3348", "created_at": "PROBE-3349"}
+INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "session", "created_at") VALUES (?, ?, ?, ?, ?)  -- {"found_under_slug": "PROBE-PK-267", "disposition": "REHOME", "title": null, "session": "PROBE-3348", "created_at": "PROBE-3349"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_candidates.title`
 **Verdict:** `OK`
 
-### [0967] A7/OFF — search_candidates.harm_finding   `2026-08-12 05:22:48Z`
+### [0959] A7/OFF — search_candidates.harm_finding   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "session", "created_at", "harm_finding") VALUES (?, ?, ?, ?, ?, ?)  -- {"found_under_slug": "PROBE-PK-273", "disposition": "REHOME", "title": "PROBE-3350", "session": "PROBE-3351", "created_at": "PROBE-3352", "harm_finding": null}
+INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "session", "created_at", "harm_finding") VALUES (?, ?, ?, ?, ?, ?)  -- {"found_under_slug": "PROBE-PK-267", "disposition": "REHOME", "title": "PROBE-3350", "session": "PROBE-3351", "created_at": "PROBE-3352", "harm_finding": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_candidates.harm_finding`
 **Verdict:** `OK`
 
-### [0968] A7/OFF — search_candidates.session   `2026-08-12 05:22:48Z`
+### [0960] A7/OFF — search_candidates.session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "session", "created_at") VALUES (?, ?, ?, ?, ?)  -- {"found_under_slug": "PROBE-PK-273", "disposition": "REHOME", "title": "PROBE-3353", "session": null, "created_at": "PROBE-3354"}
+INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "session", "created_at") VALUES (?, ?, ?, ?, ?)  -- {"found_under_slug": "PROBE-PK-267", "disposition": "REHOME", "title": "PROBE-3353", "session": null, "created_at": "PROBE-3354"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_candidates.session`
 **Verdict:** `OK`
 
-### [0969] A7/OFF — search_candidates.created_at   `2026-08-12 05:22:48Z`
+### [0961] A7/OFF — search_candidates.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "session", "created_at") VALUES (?, ?, ?, ?, ?)  -- {"found_under_slug": "PROBE-PK-273", "disposition": "REHOME", "title": "PROBE-3355", "session": "PROBE-3356", "created_at": null}
+INSERT INTO "search_candidates" ("found_under_slug", "disposition", "title", "session", "created_at") VALUES (?, ?, ?, ?, ?)  -- {"found_under_slug": "PROBE-PK-267", "disposition": "REHOME", "title": "PROBE-3355", "session": "PROBE-3356", "created_at": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_candidates.created_at`
 **Verdict:** `OK`
 
-### [0970] A7/OFF — search_coverage.status   `2026-08-12 05:22:48Z`
+### [0962] A7/OFF — search_coverage.status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "jurisdiction": "PROBE-3357", "status": null, "created_at": "PROBE-3358", "created_by_session": "PROBE-3359", "updated_at": "PROBE-3360", "updated_by_session": "PROBE-3361"}
+INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "jurisdiction": "PROBE-3357", "status": null, "created_at": "PROBE-3358", "created_by_session": "PROBE-3359", "updated_at": "PROBE-3360", "updated_by_session": "PROBE-3361"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_coverage.status`
 **Verdict:** `OK`
 
-### [0971] A7/OFF — search_coverage.co1_attempted   `2026-08-12 05:22:48Z`
+### [0963] A7/OFF — search_coverage.co1_attempted   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session", "co1_attempted") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "jurisdiction": "PROBE-3362", "status": "SEARCHED", "created_at": "PROBE-3363", "created_by_session": "PROBE-3364", "updated_at": "PROBE-3365", "updated_by_session": "PROBE-3366", "co1_attempted": null}
+INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session", "co1_attempted") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "jurisdiction": "PROBE-3362", "status": "SEARCHED", "created_at": "PROBE-3363", "created_by_session": "PROBE-3364", "updated_at": "PROBE-3365", "updated_by_session": "PROBE-3366", "co1_attempted": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_coverage.co1_attempted`
 **Verdict:** `OK`
 
-### [0972] A7/OFF — search_coverage.tier5_attempted   `2026-08-12 05:22:48Z`
+### [0964] A7/OFF — search_coverage.tier5_attempted   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session", "tier5_attempted") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "jurisdiction": "PROBE-3367", "status": "SEARCHED", "created_at": "PROBE-3368", "created_by_session": "PROBE-3369", "updated_at": "PROBE-3370", "updated_by_session": "PROBE-3371", "tier5_attempted": null}
+INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session", "tier5_attempted") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "jurisdiction": "PROBE-3367", "status": "SEARCHED", "created_at": "PROBE-3368", "created_by_session": "PROBE-3369", "updated_at": "PROBE-3370", "updated_by_session": "PROBE-3371", "tier5_attempted": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_coverage.tier5_attempted`
 **Verdict:** `OK`
 
-### [0973] A7/OFF — search_coverage.tier6_attempted   `2026-08-12 05:22:48Z`
+### [0965] A7/OFF — search_coverage.tier6_attempted   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session", "tier6_attempted") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "jurisdiction": "PROBE-3372", "status": "SEARCHED", "created_at": "PROBE-3373", "created_by_session": "PROBE-3374", "updated_at": "PROBE-3375", "updated_by_session": "PROBE-3376", "tier6_attempted": null}
+INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session", "tier6_attempted") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "jurisdiction": "PROBE-3372", "status": "SEARCHED", "created_at": "PROBE-3373", "created_by_session": "PROBE-3374", "updated_at": "PROBE-3375", "updated_by_session": "PROBE-3376", "tier6_attempted": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_coverage.tier6_attempted`
 **Verdict:** `OK`
 
-### [0974] A7/OFF — search_coverage.created_at   `2026-08-12 05:22:48Z`
+### [0966] A7/OFF — search_coverage.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "jurisdiction": "PROBE-3377", "status": "SEARCHED", "created_at": null, "created_by_session": "PROBE-3378", "updated_at": "PROBE-3379", "updated_by_session": "PROBE-3380"}
+INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "jurisdiction": "PROBE-3377", "status": "SEARCHED", "created_at": null, "created_by_session": "PROBE-3378", "updated_at": "PROBE-3379", "updated_by_session": "PROBE-3380"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_coverage.created_at`
 **Verdict:** `OK`
 
-### [0975] A7/OFF — search_coverage.created_by_session   `2026-08-12 05:22:48Z`
+### [0967] A7/OFF — search_coverage.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "jurisdiction": "PROBE-3381", "status": "SEARCHED", "created_at": "PROBE-3382", "created_by_session": null, "updated_at": "PROBE-3383", "updated_by_session": "PROBE-3384"}
+INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "jurisdiction": "PROBE-3381", "status": "SEARCHED", "created_at": "PROBE-3382", "created_by_session": null, "updated_at": "PROBE-3383", "updated_by_session": "PROBE-3384"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_coverage.created_by_session`
 **Verdict:** `OK`
 
-### [0976] A7/OFF — search_coverage.updated_at   `2026-08-12 05:22:48Z`
+### [0968] A7/OFF — search_coverage.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "jurisdiction": "PROBE-3385", "status": "SEARCHED", "created_at": "PROBE-3386", "created_by_session": "PROBE-3387", "updated_at": null, "updated_by_session": "PROBE-3388"}
+INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "jurisdiction": "PROBE-3385", "status": "SEARCHED", "created_at": "PROBE-3386", "created_by_session": "PROBE-3387", "updated_at": null, "updated_by_session": "PROBE-3388"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_coverage.updated_at`
 **Verdict:** `OK`
 
-### [0977] A7/OFF — search_coverage.updated_by_session   `2026-08-12 05:22:48Z`
+### [0969] A7/OFF — search_coverage.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "jurisdiction": "PROBE-3389", "status": "SEARCHED", "created_at": "PROBE-3390", "created_by_session": "PROBE-3391", "updated_at": "PROBE-3392", "updated_by_session": null}
+INSERT INTO "search_coverage" ("slug", "jurisdiction", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "jurisdiction": "PROBE-3389", "status": "SEARCHED", "created_at": "PROBE-3390", "created_by_session": "PROBE-3391", "updated_at": "PROBE-3392", "updated_by_session": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_coverage.updated_by_session`
 **Verdict:** `OK`
 
-### [0978] A7/OFF — search_executions.slug   `2026-08-12 05:22:48Z`
+### [0970] A7/OFF — search_executions.slug   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10686,194 +10598,194 @@ INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "de
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_executions.slug`
 **Verdict:** `OK`
 
-### [0979] A7/OFF — search_executions.language   `2026-08-12 05:22:48Z`
+### [0971] A7/OFF — search_executions.language   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": null, "query_text": "PROBE-3398", "engine": "PROBE-3399", "depth_method": "scoping", "session": "PROBE-3400", "executed_at": "PROBE-3401"}
+INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": null, "query_text": "PROBE-3398", "engine": "PROBE-3399", "depth_method": "scoping", "session": "PROBE-3400", "executed_at": "PROBE-3401"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_executions.language`
 **Verdict:** `OK`
 
-### [0980] A7/OFF — search_executions.query_text   `2026-08-12 05:22:48Z`
+### [0972] A7/OFF — search_executions.query_text   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": "PROBE-3402", "query_text": null, "engine": "PROBE-3403", "depth_method": "scoping", "session": "PROBE-3404", "executed_at": "PROBE-3405"}
+INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": "PROBE-3402", "query_text": null, "engine": "PROBE-3403", "depth_method": "scoping", "session": "PROBE-3404", "executed_at": "PROBE-3405"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_executions.query_text`
 **Verdict:** `OK`
 
-### [0981] A7/OFF — search_executions.engine   `2026-08-12 05:22:48Z`
+### [0973] A7/OFF — search_executions.engine   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": "PROBE-3406", "query_text": "PROBE-3407", "engine": null, "depth_method": "scoping", "session": "PROBE-3408", "executed_at": "PROBE-3409"}
+INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": "PROBE-3406", "query_text": "PROBE-3407", "engine": null, "depth_method": "scoping", "session": "PROBE-3408", "executed_at": "PROBE-3409"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_executions.engine`
 **Verdict:** `OK`
 
-### [0982] A7/OFF — search_executions.depth_method   `2026-08-12 05:22:48Z`
+### [0974] A7/OFF — search_executions.depth_method   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": "PROBE-3410", "query_text": "PROBE-3411", "engine": "PROBE-3412", "depth_method": null, "session": "PROBE-3413", "executed_at": "PROBE-3414"}
+INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": "PROBE-3410", "query_text": "PROBE-3411", "engine": "PROBE-3412", "depth_method": null, "session": "PROBE-3413", "executed_at": "PROBE-3414"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_executions.depth_method`
 **Verdict:** `OK`
 
-### [0983] A7/OFF — search_executions.results_found   `2026-08-12 05:22:48Z`
+### [0975] A7/OFF — search_executions.results_found   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at", "results_found") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": "PROBE-3415", "query_text": "PROBE-3416", "engine": "PROBE-3417", "depth_method": "scoping", "session": "PROBE-3418", "executed_at": "PROBE-3419", "results_found": null}
+INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at", "results_found") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": "PROBE-3415", "query_text": "PROBE-3416", "engine": "PROBE-3417", "depth_method": "scoping", "session": "PROBE-3418", "executed_at": "PROBE-3419", "results_found": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_executions.results_found`
 **Verdict:** `OK`
 
-### [0984] A7/OFF — search_executions.results_screened   `2026-08-12 05:22:48Z`
+### [0976] A7/OFF — search_executions.results_screened   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at", "results_screened") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": "PROBE-3420", "query_text": "PROBE-3421", "engine": "PROBE-3422", "depth_method": "scoping", "session": "PROBE-3423", "executed_at": "PROBE-3424", "results_screened": null}
+INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at", "results_screened") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": "PROBE-3420", "query_text": "PROBE-3421", "engine": "PROBE-3422", "depth_method": "scoping", "session": "PROBE-3423", "executed_at": "PROBE-3424", "results_screened": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_executions.results_screened`
 **Verdict:** `OK`
 
-### [0985] A7/OFF — search_executions.results_admitted   `2026-08-12 05:22:48Z`
+### [0977] A7/OFF — search_executions.results_admitted   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at", "results_admitted") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": "PROBE-3425", "query_text": "PROBE-3426", "engine": "PROBE-3427", "depth_method": "scoping", "session": "PROBE-3428", "executed_at": "PROBE-3429", "results_admitted": null}
+INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at", "results_admitted") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": "PROBE-3425", "query_text": "PROBE-3426", "engine": "PROBE-3427", "depth_method": "scoping", "session": "PROBE-3428", "executed_at": "PROBE-3429", "results_admitted": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_executions.results_admitted`
 **Verdict:** `OK`
 
-### [0986] A7/OFF — search_executions.backfill   `2026-08-12 05:22:48Z`
+### [0978] A7/OFF — search_executions.backfill   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at", "backfill") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": "PROBE-3430", "query_text": "PROBE-3431", "engine": "PROBE-3432", "depth_method": "scoping", "session": "PROBE-3433", "executed_at": "PROBE-3434", "backfill": null}
+INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at", "backfill") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": "PROBE-3430", "query_text": "PROBE-3431", "engine": "PROBE-3432", "depth_method": "scoping", "session": "PROBE-3433", "executed_at": "PROBE-3434", "backfill": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_executions.backfill`
 **Verdict:** `OK`
 
-### [0987] A7/OFF — search_executions.session   `2026-08-12 05:22:48Z`
+### [0979] A7/OFF — search_executions.session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": "PROBE-3435", "query_text": "PROBE-3436", "engine": "PROBE-3437", "depth_method": "scoping", "session": null, "executed_at": "PROBE-3438"}
+INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": "PROBE-3435", "query_text": "PROBE-3436", "engine": "PROBE-3437", "depth_method": "scoping", "session": null, "executed_at": "PROBE-3438"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_executions.session`
 **Verdict:** `OK`
 
-### [0988] A7/OFF — search_executions.executed_at   `2026-08-12 05:22:48Z`
+### [0980] A7/OFF — search_executions.executed_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": "PROBE-3439", "query_text": "PROBE-3440", "engine": "PROBE-3441", "depth_method": "scoping", "session": "PROBE-3442", "executed_at": null}
+INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": "PROBE-3439", "query_text": "PROBE-3440", "engine": "PROBE-3441", "depth_method": "scoping", "session": "PROBE-3442", "executed_at": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_executions.executed_at`
 **Verdict:** `OK`
 
-### [0989] A7/OFF — search_executions.harm_finding   `2026-08-12 05:22:48Z`
+### [0981] A7/OFF — search_executions.harm_finding   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at", "harm_finding") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": "PROBE-3443", "query_text": "PROBE-3444", "engine": "PROBE-3445", "depth_method": "scoping", "session": "PROBE-3446", "executed_at": "PROBE-3447", "harm_finding": null}
+INSERT INTO "search_executions" ("slug", "language", "query_text", "engine", "depth_method", "session", "executed_at", "harm_finding") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": "PROBE-3443", "query_text": "PROBE-3444", "engine": "PROBE-3445", "depth_method": "scoping", "session": "PROBE-3446", "executed_at": "PROBE-3447", "harm_finding": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_executions.harm_finding`
 **Verdict:** `OK`
 
-### [0990] A7/OFF — search_languages.status   `2026-08-12 05:22:48Z`
+### [0982] A7/OFF — search_languages.status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_languages" ("slug", "language", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": "PROBE-3448", "status": null, "created_at": "PROBE-3449", "created_by_session": "PROBE-3450", "updated_at": "PROBE-3451", "updated_by_session": "PROBE-3452"}
+INSERT INTO "search_languages" ("slug", "language", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": "PROBE-3448", "status": null, "created_at": "PROBE-3449", "created_by_session": "PROBE-3450", "updated_at": "PROBE-3451", "updated_by_session": "PROBE-3452"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_languages.status`
 **Verdict:** `OK`
 
-### [0991] A7/OFF — search_languages.results_count   `2026-08-12 05:22:48Z`
+### [0983] A7/OFF — search_languages.results_count   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_languages" ("slug", "language", "status", "created_at", "created_by_session", "updated_at", "updated_by_session", "results_count") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": "PROBE-3453", "status": "SEARCHED", "created_at": "PROBE-3454", "created_by_session": "PROBE-3455", "updated_at": "PROBE-3456", "updated_by_session": "PROBE-3457", "results_count": null}
+INSERT INTO "search_languages" ("slug", "language", "status", "created_at", "created_by_session", "updated_at", "updated_by_session", "results_count") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": "PROBE-3453", "status": "SEARCHED", "created_at": "PROBE-3454", "created_by_session": "PROBE-3455", "updated_at": "PROBE-3456", "updated_by_session": "PROBE-3457", "results_count": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_languages.results_count`
 **Verdict:** `OK`
 
-### [0992] A7/OFF — search_languages.created_at   `2026-08-12 05:22:48Z`
+### [0984] A7/OFF — search_languages.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_languages" ("slug", "language", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": "PROBE-3458", "status": "SEARCHED", "created_at": null, "created_by_session": "PROBE-3459", "updated_at": "PROBE-3460", "updated_by_session": "PROBE-3461"}
+INSERT INTO "search_languages" ("slug", "language", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": "PROBE-3458", "status": "SEARCHED", "created_at": null, "created_by_session": "PROBE-3459", "updated_at": "PROBE-3460", "updated_by_session": "PROBE-3461"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_languages.created_at`
 **Verdict:** `OK`
 
-### [0993] A7/OFF — search_languages.created_by_session   `2026-08-12 05:22:48Z`
+### [0985] A7/OFF — search_languages.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_languages" ("slug", "language", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": "PROBE-3462", "status": "SEARCHED", "created_at": "PROBE-3463", "created_by_session": null, "updated_at": "PROBE-3464", "updated_by_session": "PROBE-3465"}
+INSERT INTO "search_languages" ("slug", "language", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": "PROBE-3462", "status": "SEARCHED", "created_at": "PROBE-3463", "created_by_session": null, "updated_at": "PROBE-3464", "updated_by_session": "PROBE-3465"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_languages.created_by_session`
 **Verdict:** `OK`
 
-### [0994] A7/OFF — search_languages.updated_at   `2026-08-12 05:22:48Z`
+### [0986] A7/OFF — search_languages.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_languages" ("slug", "language", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": "PROBE-3466", "status": "SEARCHED", "created_at": "PROBE-3467", "created_by_session": "PROBE-3468", "updated_at": null, "updated_by_session": "PROBE-3469"}
+INSERT INTO "search_languages" ("slug", "language", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": "PROBE-3466", "status": "SEARCHED", "created_at": "PROBE-3467", "created_by_session": "PROBE-3468", "updated_at": null, "updated_by_session": "PROBE-3469"}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_languages.updated_at`
 **Verdict:** `OK`
 
-### [0995] A7/OFF — search_languages.updated_by_session   `2026-08-12 05:22:48Z`
+### [0987] A7/OFF — search_languages.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "search_languages" ("slug", "language", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-273", "language": "PROBE-3470", "status": "SEARCHED", "created_at": "PROBE-3471", "created_by_session": "PROBE-3472", "updated_at": "PROBE-3473", "updated_by_session": null}
+INSERT INTO "search_languages" ("slug", "language", "status", "created_at", "created_by_session", "updated_at", "updated_by_session") VALUES (?, ?, ?, ?, ?, ?, ?)  -- {"slug": "PROBE-PK-267", "language": "PROBE-3470", "status": "SEARCHED", "created_at": "PROBE-3471", "created_by_session": "PROBE-3472", "updated_at": "PROBE-3473", "updated_by_session": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: search_languages.updated_by_session`
 **Verdict:** `OK`
 
-### [0996] A7/OFF — situations.title   `2026-08-12 05:22:48Z`
+### [0988] A7/OFF — situations.title   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10884,7 +10796,7 @@ INSERT INTO "situations" ("situation_id", "title", "account_language", "account_
 **Exception:** `IntegrityError: NOT NULL constraint failed: situations.title`
 **Verdict:** `OK`
 
-### [0997] A7/OFF — situations.account_language   `2026-08-12 05:22:48Z`
+### [0989] A7/OFF — situations.account_language   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10895,7 +10807,7 @@ INSERT INTO "situations" ("situation_id", "title", "account_language", "account_
 **Exception:** `IntegrityError: NOT NULL constraint failed: situations.account_language`
 **Verdict:** `OK`
 
-### [0998] A7/OFF — situations.account_text_ref   `2026-08-12 05:22:48Z`
+### [0990] A7/OFF — situations.account_text_ref   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10906,7 +10818,7 @@ INSERT INTO "situations" ("situation_id", "title", "account_language", "account_
 **Exception:** `IntegrityError: NOT NULL constraint failed: situations.account_text_ref`
 **Verdict:** `OK`
 
-### [0999] A7/OFF — slugs.topic_directory   `2026-08-12 05:22:48Z`
+### [0991] A7/OFF — slugs.topic_directory   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10917,7 +10829,7 @@ INSERT INTO "slugs" ("slug", "topic_directory", "sl_path", "bpc_path", "status",
 **Exception:** `IntegrityError: NOT NULL constraint failed: slugs.topic_directory`
 **Verdict:** `OK`
 
-### [1000] A7/OFF — slugs.sl_path   `2026-08-12 05:22:48Z`
+### [0992] A7/OFF — slugs.sl_path   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10928,7 +10840,7 @@ INSERT INTO "slugs" ("slug", "topic_directory", "sl_path", "bpc_path", "status",
 **Exception:** `IntegrityError: NOT NULL constraint failed: slugs.sl_path`
 **Verdict:** `OK`
 
-### [1001] A7/OFF — slugs.bpc_path   `2026-08-12 05:22:48Z`
+### [0993] A7/OFF — slugs.bpc_path   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10939,7 +10851,7 @@ INSERT INTO "slugs" ("slug", "topic_directory", "sl_path", "bpc_path", "status",
 **Exception:** `IntegrityError: NOT NULL constraint failed: slugs.bpc_path`
 **Verdict:** `OK`
 
-### [1002] A7/OFF — slugs.status   `2026-08-12 05:22:48Z`
+### [0994] A7/OFF — slugs.status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10950,7 +10862,7 @@ INSERT INTO "slugs" ("slug", "topic_directory", "sl_path", "bpc_path", "status",
 **Exception:** `IntegrityError: NOT NULL constraint failed: slugs.status`
 **Verdict:** `OK`
 
-### [1003] A7/OFF — slugs.created_at   `2026-08-12 05:22:48Z`
+### [0995] A7/OFF — slugs.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10961,7 +10873,7 @@ INSERT INTO "slugs" ("slug", "topic_directory", "sl_path", "bpc_path", "status",
 **Exception:** `IntegrityError: NOT NULL constraint failed: slugs.created_at`
 **Verdict:** `OK`
 
-### [1004] A7/OFF — slugs.created_by_session   `2026-08-12 05:22:48Z`
+### [0996] A7/OFF — slugs.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10972,7 +10884,7 @@ INSERT INTO "slugs" ("slug", "topic_directory", "sl_path", "bpc_path", "status",
 **Exception:** `IntegrityError: NOT NULL constraint failed: slugs.created_by_session`
 **Verdict:** `OK`
 
-### [1005] A7/OFF — slugs.updated_at   `2026-08-12 05:22:48Z`
+### [0997] A7/OFF — slugs.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10983,7 +10895,7 @@ INSERT INTO "slugs" ("slug", "topic_directory", "sl_path", "bpc_path", "status",
 **Exception:** `IntegrityError: NOT NULL constraint failed: slugs.updated_at`
 **Verdict:** `OK`
 
-### [1006] A7/OFF — slugs.updated_by_session   `2026-08-12 05:22:48Z`
+### [0998] A7/OFF — slugs.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -10994,18 +10906,18 @@ INSERT INTO "slugs" ("slug", "topic_directory", "sl_path", "bpc_path", "status",
 **Exception:** `IntegrityError: NOT NULL constraint failed: slugs.updated_by_session`
 **Verdict:** `OK`
 
-### [1007] A7/OFF — source_locators.recovered_from   `2026-08-12 05:22:48Z`
+### [0999] A7/OFF — source_locators.recovered_from   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
-INSERT INTO "source_locators" ("ref_id", "pmcid", "doi", "issn", "isbn", "standard_number", "url", "pmid", "recovered_from") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-3540", "pmcid": "PROBE-3541", "doi": "PROBE-3542", "issn": "PROBE-3543", "isbn": "PROBE-3544", "standard_number": "PROBE-3545", "url": "PROBE-3546", "pmid": "PROBE-3547", "recovered_from": null}
+INSERT INTO "source_locators" ("ref_id", "pmcid", "pmid", "url", "standard_number", "doi", "isbn", "issn", "recovered_from") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  -- {"ref_id": "PROBE-3540", "pmcid": "PROBE-3541", "pmid": "PROBE-3542", "url": "PROBE-3543", "standard_number": "PROBE-3544", "doi": "PROBE-3545", "isbn": "PROBE-3546", "issn": "PROBE-3547", "recovered_from": null}
 ```
 **Expected:** NOT NULL constraint failed
 **Actual:** rejected
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_locators.recovered_from`
 **Verdict:** `OK`
 
-### [1008] A7/OFF — source_slug_links.local_ref_id   `2026-08-12 05:22:48Z`
+### [1000] A7/OFF — source_slug_links.local_ref_id   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11016,7 +10928,7 @@ INSERT INTO "source_slug_links" ("ref_id", "slug", "local_ref_id", "created_at",
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_slug_links.local_ref_id`
 **Verdict:** `OK`
 
-### [1009] A7/OFF — source_slug_links.created_at   `2026-08-12 05:22:48Z`
+### [1001] A7/OFF — source_slug_links.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11027,7 +10939,7 @@ INSERT INTO "source_slug_links" ("ref_id", "slug", "local_ref_id", "created_at",
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_slug_links.created_at`
 **Verdict:** `OK`
 
-### [1010] A7/OFF — source_slug_links.created_by_session   `2026-08-12 05:22:48Z`
+### [1002] A7/OFF — source_slug_links.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11038,7 +10950,7 @@ INSERT INTO "source_slug_links" ("ref_id", "slug", "local_ref_id", "created_at",
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_slug_links.created_by_session`
 **Verdict:** `OK`
 
-### [1011] A7/OFF — source_slug_links.updated_at   `2026-08-12 05:22:48Z`
+### [1003] A7/OFF — source_slug_links.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11049,7 +10961,7 @@ INSERT INTO "source_slug_links" ("ref_id", "slug", "local_ref_id", "created_at",
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_slug_links.updated_at`
 **Verdict:** `OK`
 
-### [1012] A7/OFF — source_slug_links.updated_by_session   `2026-08-12 05:22:48Z`
+### [1004] A7/OFF — source_slug_links.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11060,7 +10972,7 @@ INSERT INTO "source_slug_links" ("ref_id", "slug", "local_ref_id", "created_at",
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_slug_links.updated_by_session`
 **Verdict:** `OK`
 
-### [1013] A7/OFF — source_value_extractions.ref_id   `2026-08-12 05:22:48Z`
+### [1005] A7/OFF — source_value_extractions.ref_id   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11071,7 +10983,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_value_extractions.ref_id`
 **Verdict:** `OK`
 
-### [1014] A7/OFF — source_value_extractions.slug   `2026-08-12 05:22:48Z`
+### [1006] A7/OFF — source_value_extractions.slug   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11082,7 +10994,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_value_extractions.slug`
 **Verdict:** `OK`
 
-### [1015] A7/OFF — source_value_extractions.parameter   `2026-08-12 05:22:48Z`
+### [1007] A7/OFF — source_value_extractions.parameter   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11093,7 +11005,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_value_extractions.parameter`
 **Verdict:** `OK`
 
-### [1016] A7/OFF — source_value_extractions.claim_type   `2026-08-12 05:22:48Z`
+### [1008] A7/OFF — source_value_extractions.claim_type   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11104,7 +11016,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_value_extractions.claim_type`
 **Verdict:** `OK`
 
-### [1017] A7/OFF — source_value_extractions.extraction_method   `2026-08-12 05:22:48Z`
+### [1009] A7/OFF — source_value_extractions.extraction_method   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11115,7 +11027,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_value_extractions.extraction_method`
 **Verdict:** `OK`
 
-### [1018] A7/OFF — source_value_extractions.extraction_status   `2026-08-12 05:22:48Z`
+### [1010] A7/OFF — source_value_extractions.extraction_status   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11126,7 +11038,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_value_extractions.extraction_status`
 **Verdict:** `OK`
 
-### [1019] A7/OFF — source_value_extractions.created_at   `2026-08-12 05:22:48Z`
+### [1011] A7/OFF — source_value_extractions.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11137,7 +11049,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_value_extractions.created_at`
 **Verdict:** `OK`
 
-### [1020] A7/OFF — source_value_extractions.updated_at   `2026-08-12 05:22:48Z`
+### [1012] A7/OFF — source_value_extractions.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11148,7 +11060,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_value_extractions.updated_at`
 **Verdict:** `OK`
 
-### [1021] A7/OFF — source_value_extractions.contested   `2026-08-12 05:22:48Z`
+### [1013] A7/OFF — source_value_extractions.contested   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11159,7 +11071,7 @@ INSERT INTO "source_value_extractions" ("ref_id", "slug", "parameter", "claim_ty
 **Exception:** `IntegrityError: NOT NULL constraint failed: source_value_extractions.contested`
 **Verdict:** `OK`
 
-### [1022] A7/OFF — spec_value_probes.walk_id   `2026-08-12 05:22:48Z`
+### [1014] A7/OFF — spec_value_probes.walk_id   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11170,7 +11082,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.walk_id`
 **Verdict:** `OK`
 
-### [1023] A7/OFF — spec_value_probes.slug   `2026-08-12 05:22:48Z`
+### [1015] A7/OFF — spec_value_probes.slug   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11181,7 +11093,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.slug`
 **Verdict:** `OK`
 
-### [1024] A7/OFF — spec_value_probes.item_code   `2026-08-12 05:22:48Z`
+### [1016] A7/OFF — spec_value_probes.item_code   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11192,7 +11104,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.item_code`
 **Verdict:** `OK`
 
-### [1025] A7/OFF — spec_value_probes.spec_value_origin   `2026-08-12 05:22:48Z`
+### [1017] A7/OFF — spec_value_probes.spec_value_origin   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11203,7 +11115,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.spec_value_origin`
 **Verdict:** `OK`
 
-### [1026] A7/OFF — spec_value_probes.spec_unit   `2026-08-12 05:22:48Z`
+### [1018] A7/OFF — spec_value_probes.spec_unit   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11214,7 +11126,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.spec_unit`
 **Verdict:** `OK`
 
-### [1027] A7/OFF — spec_value_probes.direction   `2026-08-12 05:22:48Z`
+### [1019] A7/OFF — spec_value_probes.direction   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11225,7 +11137,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.direction`
 **Verdict:** `OK`
 
-### [1028] A7/OFF — spec_value_probes.population   `2026-08-12 05:22:48Z`
+### [1020] A7/OFF — spec_value_probes.population   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11236,7 +11148,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.population`
 **Verdict:** `OK`
 
-### [1029] A7/OFF — spec_value_probes.claim_type   `2026-08-12 05:22:48Z`
+### [1021] A7/OFF — spec_value_probes.claim_type   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11247,7 +11159,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.claim_type`
 **Verdict:** `OK`
 
-### [1030] A7/OFF — spec_value_probes.step_index   `2026-08-12 05:22:48Z`
+### [1022] A7/OFF — spec_value_probes.step_index   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11258,7 +11170,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.step_index`
 **Verdict:** `OK`
 
-### [1031] A7/OFF — spec_value_probes.phase   `2026-08-12 05:22:48Z`
+### [1023] A7/OFF — spec_value_probes.phase   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11269,7 +11181,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.phase`
 **Verdict:** `OK`
 
-### [1032] A7/OFF — spec_value_probes.step_value   `2026-08-12 05:22:48Z`
+### [1024] A7/OFF — spec_value_probes.step_value   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11280,7 +11192,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.step_value`
 **Verdict:** `OK`
 
-### [1033] A7/OFF — spec_value_probes.step_value_unit   `2026-08-12 05:22:48Z`
+### [1025] A7/OFF — spec_value_probes.step_value_unit   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11291,7 +11203,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.step_value_unit`
 **Verdict:** `OK`
 
-### [1034] A7/OFF — spec_value_probes.created_at   `2026-08-12 05:22:48Z`
+### [1026] A7/OFF — spec_value_probes.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11302,7 +11214,7 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.created_at`
 **Verdict:** `OK`
 
-### [1035] A7/OFF — spec_value_probes.created_by_session   `2026-08-12 05:22:48Z`
+### [1027] A7/OFF — spec_value_probes.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11313,7 +11225,95 @@ INSERT INTO "spec_value_probes" ("probe_id", "walk_id", "slug", "item_code", "sp
 **Exception:** `IntegrityError: NOT NULL constraint failed: spec_value_probes.created_by_session`
 **Verdict:** `OK`
 
-### [1036] A7/OFF — supersession_check.slug   `2026-08-12 05:22:48Z`
+### [1028] A7/OFF — specification_source_links.role   `2026-08-12 08:35:28Z`
+**Action:** insert explicit NULL into NOT NULL column (FK=OFF)
+**SQL:**
+```sql
+INSERT INTO "specification_source_links" ("ref_id", "specification_id", "role") VALUES (?, ?, ?)  -- {"ref_id": "PROBE-PK-1012", "specification_id": 1, "role": null}
+```
+**Expected:** NOT NULL constraint failed
+**Actual:** rejected
+**Exception:** `IntegrityError: NOT NULL constraint failed: specification_source_links.role`
+**Verdict:** `OK`
+
+### [1029] A7/OFF — specifications.item_code   `2026-08-12 08:35:28Z`
+**Action:** insert explicit NULL into NOT NULL column (FK=OFF)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state") VALUES (?, ?, ?)  -- {"item_code": null, "population_code": "BLIND", "state": "stated"}
+```
+**Expected:** NOT NULL constraint failed
+**Actual:** rejected
+**Exception:** `IntegrityError: NOT NULL constraint failed: specifications.item_code`
+**Verdict:** `OK`
+
+### [1030] A7/OFF — specifications.population_code   `2026-08-12 08:35:28Z`
+**Action:** insert explicit NULL into NOT NULL column (FK=OFF)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state") VALUES (?, ?, ?)  -- {"item_code": "I-03", "population_code": null, "state": "stated"}
+```
+**Expected:** NOT NULL constraint failed
+**Actual:** rejected
+**Exception:** `IntegrityError: NOT NULL constraint failed: specifications.population_code`
+**Verdict:** `OK`
+
+### [1031] A7/OFF — specifications.state   `2026-08-12 08:35:28Z`
+**Action:** insert explicit NULL into NOT NULL column (FK=OFF)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state") VALUES (?, ?, ?)  -- {"item_code": "I-03", "population_code": "BLIND", "state": null}
+```
+**Expected:** NOT NULL constraint failed
+**Actual:** rejected
+**Exception:** `IntegrityError: NOT NULL constraint failed: specifications.state`
+**Verdict:** `OK`
+
+### [1032] A7/OFF — specifications.code_floor_only   `2026-08-12 08:35:28Z`
+**Action:** insert explicit NULL into NOT NULL column (FK=OFF)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state", "code_floor_only") VALUES (?, ?, ?, ?)  -- {"item_code": "I-03", "population_code": "BLIND", "state": "stated", "code_floor_only": null}
+```
+**Expected:** NOT NULL constraint failed
+**Actual:** rejected
+**Exception:** `IntegrityError: NOT NULL constraint failed: specifications.code_floor_only`
+**Verdict:** `OK`
+
+### [1033] A7/OFF — specifications.has_unverified_sources   `2026-08-12 08:35:28Z`
+**Action:** insert explicit NULL into NOT NULL column (FK=OFF)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state", "has_unverified_sources") VALUES (?, ?, ?, ?)  -- {"item_code": "I-03", "population_code": "BLIND", "state": "stated", "has_unverified_sources": null}
+```
+**Expected:** NOT NULL constraint failed
+**Actual:** rejected
+**Exception:** `IntegrityError: NOT NULL constraint failed: specifications.has_unverified_sources`
+**Verdict:** `OK`
+
+### [1034] A7/OFF — specifications.all_sources_disqualified   `2026-08-12 08:35:28Z`
+**Action:** insert explicit NULL into NOT NULL column (FK=OFF)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state", "all_sources_disqualified") VALUES (?, ?, ?, ?)  -- {"item_code": "I-03", "population_code": "BLIND", "state": "stated", "all_sources_disqualified": null}
+```
+**Expected:** NOT NULL constraint failed
+**Actual:** rejected
+**Exception:** `IntegrityError: NOT NULL constraint failed: specifications.all_sources_disqualified`
+**Verdict:** `OK`
+
+### [1035] A7/OFF — specifications.regulatory_stratum_only   `2026-08-12 08:35:28Z`
+**Action:** insert explicit NULL into NOT NULL column (FK=OFF)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state", "regulatory_stratum_only") VALUES (?, ?, ?, ?)  -- {"item_code": "I-03", "population_code": "BLIND", "state": "stated", "regulatory_stratum_only": null}
+```
+**Expected:** NOT NULL constraint failed
+**Actual:** rejected
+**Exception:** `IntegrityError: NOT NULL constraint failed: specifications.regulatory_stratum_only`
+**Verdict:** `OK`
+
+### [1036] A7/OFF — supersession_check.slug   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11324,7 +11324,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: NOT NULL constraint failed: supersession_check.slug`
 **Verdict:** `OK`
 
-### [1037] A7/OFF — supersession_check.local_ref_id   `2026-08-12 05:22:48Z`
+### [1037] A7/OFF — supersession_check.local_ref_id   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11335,7 +11335,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: NOT NULL constraint failed: supersession_check.local_ref_id`
 **Verdict:** `OK`
 
-### [1038] A7/OFF — supersession_check.ref_id   `2026-08-12 05:22:48Z`
+### [1038] A7/OFF — supersession_check.ref_id   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11346,7 +11346,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: NOT NULL constraint failed: supersession_check.ref_id`
 **Verdict:** `OK`
 
-### [1039] A7/OFF — supersession_check.anchor_tier   `2026-08-12 05:22:48Z`
+### [1039] A7/OFF — supersession_check.anchor_tier   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11357,7 +11357,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: NOT NULL constraint failed: supersession_check.anchor_tier`
 **Verdict:** `OK`
 
-### [1040] A7/OFF — supersession_check.anchor_evidence_type   `2026-08-12 05:22:48Z`
+### [1040] A7/OFF — supersession_check.anchor_evidence_type   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11368,7 +11368,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: NOT NULL constraint failed: supersession_check.anchor_evidence_type`
 **Verdict:** `OK`
 
-### [1041] A7/OFF — supersession_check.outcome   `2026-08-12 05:22:48Z`
+### [1041] A7/OFF — supersession_check.outcome   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11379,7 +11379,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: NOT NULL constraint failed: supersession_check.outcome`
 **Verdict:** `OK`
 
-### [1042] A7/OFF — supersession_check.search_strategy_record   `2026-08-12 05:22:48Z`
+### [1042] A7/OFF — supersession_check.search_strategy_record   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11390,7 +11390,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: NOT NULL constraint failed: supersession_check.search_strategy_record`
 **Verdict:** `OK`
 
-### [1043] A7/OFF — supersession_check.candidates_returned   `2026-08-12 05:22:48Z`
+### [1043] A7/OFF — supersession_check.candidates_returned   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11401,7 +11401,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: NOT NULL constraint failed: supersession_check.candidates_returned`
 **Verdict:** `OK`
 
-### [1044] A7/OFF — supersession_check.candidates_reviewed   `2026-08-12 05:22:48Z`
+### [1044] A7/OFF — supersession_check.candidates_reviewed   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11412,7 +11412,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: NOT NULL constraint failed: supersession_check.candidates_reviewed`
 **Verdict:** `OK`
 
-### [1045] A7/OFF — supersession_check.checked_at   `2026-08-12 05:22:48Z`
+### [1045] A7/OFF — supersession_check.checked_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11423,7 +11423,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: NOT NULL constraint failed: supersession_check.checked_at`
 **Verdict:** `OK`
 
-### [1046] A7/OFF — supersession_check.checked_by_session   `2026-08-12 05:22:48Z`
+### [1046] A7/OFF — supersession_check.checked_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11434,7 +11434,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: NOT NULL constraint failed: supersession_check.checked_by_session`
 **Verdict:** `OK`
 
-### [1047] A7/OFF — supersession_check.check_method   `2026-08-12 05:22:48Z`
+### [1047] A7/OFF — supersession_check.check_method   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11445,7 +11445,7 @@ INSERT INTO "supersession_check" ("check_id", "slug", "local_ref_id", "ref_id", 
 **Exception:** `IntegrityError: NOT NULL constraint failed: supersession_check.check_method`
 **Verdict:** `OK`
 
-### [1048] A7/OFF — term_aliases.alias_type   `2026-08-12 05:22:48Z`
+### [1048] A7/OFF — term_aliases.alias_type   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11456,7 +11456,7 @@ INSERT INTO "term_aliases" ("term_id", "alias", "language", "alias_type", "creat
 **Exception:** `IntegrityError: NOT NULL constraint failed: term_aliases.alias_type`
 **Verdict:** `OK`
 
-### [1049] A7/OFF — term_aliases.created_at   `2026-08-12 05:22:48Z`
+### [1049] A7/OFF — term_aliases.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11467,7 +11467,7 @@ INSERT INTO "term_aliases" ("term_id", "alias", "language", "alias_type", "creat
 **Exception:** `IntegrityError: NOT NULL constraint failed: term_aliases.created_at`
 **Verdict:** `OK`
 
-### [1050] A7/OFF — term_aliases.created_by_session   `2026-08-12 05:22:48Z`
+### [1050] A7/OFF — term_aliases.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11478,7 +11478,7 @@ INSERT INTO "term_aliases" ("term_id", "alias", "language", "alias_type", "creat
 **Exception:** `IntegrityError: NOT NULL constraint failed: term_aliases.created_by_session`
 **Verdict:** `OK`
 
-### [1051] A7/OFF — term_aliases.updated_at   `2026-08-12 05:22:48Z`
+### [1051] A7/OFF — term_aliases.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11489,7 +11489,7 @@ INSERT INTO "term_aliases" ("term_id", "alias", "language", "alias_type", "creat
 **Exception:** `IntegrityError: NOT NULL constraint failed: term_aliases.updated_at`
 **Verdict:** `OK`
 
-### [1052] A7/OFF — term_aliases.updated_by_session   `2026-08-12 05:22:48Z`
+### [1052] A7/OFF — term_aliases.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11500,7 +11500,7 @@ INSERT INTO "term_aliases" ("term_id", "alias", "language", "alias_type", "creat
 **Exception:** `IntegrityError: NOT NULL constraint failed: term_aliases.updated_by_session`
 **Verdict:** `OK`
 
-### [1053] A7/OFF — term_item_links.created_at   `2026-08-12 05:22:48Z`
+### [1053] A7/OFF — term_item_links.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11511,7 +11511,7 @@ INSERT INTO "term_item_links" ("term_id", "item_code", "created_at", "created_by
 **Exception:** `IntegrityError: NOT NULL constraint failed: term_item_links.created_at`
 **Verdict:** `OK`
 
-### [1054] A7/OFF — term_item_links.created_by_session   `2026-08-12 05:22:48Z`
+### [1054] A7/OFF — term_item_links.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11522,7 +11522,7 @@ INSERT INTO "term_item_links" ("term_id", "item_code", "created_at", "created_by
 **Exception:** `IntegrityError: NOT NULL constraint failed: term_item_links.created_by_session`
 **Verdict:** `OK`
 
-### [1055] A7/OFF — term_item_links.updated_at   `2026-08-12 05:22:48Z`
+### [1055] A7/OFF — term_item_links.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11533,7 +11533,7 @@ INSERT INTO "term_item_links" ("term_id", "item_code", "created_at", "created_by
 **Exception:** `IntegrityError: NOT NULL constraint failed: term_item_links.updated_at`
 **Verdict:** `OK`
 
-### [1056] A7/OFF — term_item_links.updated_by_session   `2026-08-12 05:22:48Z`
+### [1056] A7/OFF — term_item_links.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11544,7 +11544,7 @@ INSERT INTO "term_item_links" ("term_id", "item_code", "created_at", "created_by
 **Exception:** `IntegrityError: NOT NULL constraint failed: term_item_links.updated_by_session`
 **Verdict:** `OK`
 
-### [1057] A7/OFF — terms.canonical_en   `2026-08-12 05:22:48Z`
+### [1057] A7/OFF — terms.canonical_en   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11555,7 +11555,7 @@ INSERT INTO "terms" ("term_id", "canonical_en", "created_at", "created_by_sessio
 **Exception:** `IntegrityError: NOT NULL constraint failed: terms.canonical_en`
 **Verdict:** `OK`
 
-### [1058] A7/OFF — terms.created_at   `2026-08-12 05:22:48Z`
+### [1058] A7/OFF — terms.created_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11566,7 +11566,7 @@ INSERT INTO "terms" ("term_id", "canonical_en", "created_at", "created_by_sessio
 **Exception:** `IntegrityError: NOT NULL constraint failed: terms.created_at`
 **Verdict:** `OK`
 
-### [1059] A7/OFF — terms.created_by_session   `2026-08-12 05:22:48Z`
+### [1059] A7/OFF — terms.created_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11577,7 +11577,7 @@ INSERT INTO "terms" ("term_id", "canonical_en", "created_at", "created_by_sessio
 **Exception:** `IntegrityError: NOT NULL constraint failed: terms.created_by_session`
 **Verdict:** `OK`
 
-### [1060] A7/OFF — terms.updated_at   `2026-08-12 05:22:48Z`
+### [1060] A7/OFF — terms.updated_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11588,7 +11588,7 @@ INSERT INTO "terms" ("term_id", "canonical_en", "created_at", "created_by_sessio
 **Exception:** `IntegrityError: NOT NULL constraint failed: terms.updated_at`
 **Verdict:** `OK`
 
-### [1061] A7/OFF — terms.updated_by_session   `2026-08-12 05:22:48Z`
+### [1061] A7/OFF — terms.updated_by_session   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11599,7 +11599,7 @@ INSERT INTO "terms" ("term_id", "canonical_en", "created_at", "created_by_sessio
 **Exception:** `IntegrityError: NOT NULL constraint failed: terms.updated_by_session`
 **Verdict:** `OK`
 
-### [1062] A7/OFF — url_verification_runs.started_at   `2026-08-12 05:22:48Z`
+### [1062] A7/OFF — url_verification_runs.started_at   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11610,7 +11610,7 @@ INSERT INTO "url_verification_runs" ("run_id", "started_at") VALUES (?, ?)  -- {
 **Exception:** `IntegrityError: NOT NULL constraint failed: url_verification_runs.started_at`
 **Verdict:** `OK`
 
-### [1063] A7/OFF — weighting_profile.tier_weights   `2026-08-12 05:22:48Z`
+### [1063] A7/OFF — weighting_profile.tier_weights   `2026-08-12 08:35:28Z`
 **Action:** insert explicit NULL into NOT NULL column (FK=OFF)
 **SQL:**
 ```sql
@@ -11623,18 +11623,7 @@ INSERT INTO "weighting_profile" ("audience", "use_pattern", "tier_weights") VALU
 
 ### A8 — UNIQUE battery (5 UNIQUE indexes), FK=ON and FK=OFF
 
-### [1064] A8/ON — evidence_cell_state UNIQUE(item_code, population_code)   `2026-08-12 05:22:48Z`
-**Action:** insert second row duplicating the unique key (FK=ON)
-**SQL:**
-```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state") VALUES (?, ?, ?)  -- {"item_code": "A-01", "population_code": "ADHD", "state": "stated"}
-```
-**Expected:** UNIQUE constraint failed
-**Actual:** rejected
-**Exception:** `IntegrityError: UNIQUE constraint failed: evidence_cell_state.item_code, evidence_cell_state.population_code`
-**Verdict:** `OK`
-
-### [1065] A8/ON — evidence_source_authors UNIQUE(ref_id, position, role)   `2026-08-12 05:22:48Z`
+### [1064] A8/ON — evidence_source_authors UNIQUE(ref_id, position, role)   `2026-08-12 08:35:28Z`
 **Action:** insert second row duplicating the unique key (FK=ON)
 **SQL:**
 ```sql
@@ -11645,7 +11634,7 @@ INSERT INTO "evidence_source_authors" ("ref_id", "position", "role") VALUES (?, 
 **Exception:** `IntegrityError: UNIQUE constraint failed: evidence_source_authors.ref_id, evidence_source_authors.position, evidence_source_authors.role`
 **Verdict:** `OK`
 
-### [1066] A8/ON — item_population_elaborations UNIQUE(item_code, population_code, variant_distinction)   `2026-08-12 05:22:48Z`
+### [1065] A8/ON — item_population_elaborations UNIQUE(item_code, population_code, variant_distinction)   `2026-08-12 08:35:28Z`
 **Action:** insert second row duplicating the unique key (FK=ON)
 **SQL:**
 ```sql
@@ -11656,7 +11645,7 @@ INSERT INTO "item_population_elaborations" ("item_code", "population_code", "var
 **Exception:** `IntegrityError: UNIQUE constraint failed: item_population_elaborations.item_code, item_population_elaborations.population_code, item_population_elaborations.variant_distinction`
 **Verdict:** `OK`
 
-### [1067] A8/ON — items UNIQUE(item_id)   `2026-08-12 05:22:48Z`
+### [1066] A8/ON — items UNIQUE(item_id)   `2026-08-12 08:35:28Z`
 **Action:** insert second row duplicating the unique key (FK=ON)
 **SQL:**
 ```sql
@@ -11667,7 +11656,7 @@ INSERT INTO "items" ("item_code", "category", "name", "created_at", "created_by_
 **Exception:** `IntegrityError: UNIQUE constraint failed: items.item_id`
 **Verdict:** `OK`
 
-### [1068] A8/ON — jurisdictional_values UNIQUE(item_code, jurisdiction, standard_name)   `2026-08-12 05:22:48Z`
+### [1067] A8/ON — jurisdictional_values UNIQUE(item_code, jurisdiction, standard_name)   `2026-08-12 08:35:28Z`
 **Action:** insert second row duplicating the unique key (FK=ON)
 **SQL:**
 ```sql
@@ -11678,18 +11667,18 @@ INSERT INTO "jurisdictional_values" ("item_code", "jurisdiction", "standard_name
 **Exception:** `IntegrityError: UNIQUE constraint failed: jurisdictional_values.item_code, jurisdictional_values.jurisdiction, jurisdictional_values.standard_name`
 **Verdict:** `OK`
 
-### [1069] A8/OFF — evidence_cell_state UNIQUE(item_code, population_code)   `2026-08-12 05:22:48Z`
-**Action:** insert second row duplicating the unique key (FK=OFF)
+### [1068] A8/ON — specifications UNIQUE(item_code, population_code)   `2026-08-12 08:35:28Z`
+**Action:** insert second row duplicating the unique key (FK=ON)
 **SQL:**
 ```sql
-INSERT INTO "evidence_cell_state" ("item_code", "population_code", "state") VALUES (?, ?, ?)  -- {"item_code": "A-11", "population_code": "DEM", "state": "stated"}
+INSERT INTO "specifications" ("item_code", "population_code", "state") VALUES (?, ?, ?)  -- {"item_code": "A-01", "population_code": "ADHD", "state": "stated"}
 ```
 **Expected:** UNIQUE constraint failed
 **Actual:** rejected
-**Exception:** `IntegrityError: UNIQUE constraint failed: evidence_cell_state.item_code, evidence_cell_state.population_code`
+**Exception:** `IntegrityError: UNIQUE constraint failed: specifications.item_code, specifications.population_code`
 **Verdict:** `OK`
 
-### [1070] A8/OFF — evidence_source_authors UNIQUE(ref_id, position, role)   `2026-08-12 05:22:48Z`
+### [1069] A8/OFF — evidence_source_authors UNIQUE(ref_id, position, role)   `2026-08-12 08:35:28Z`
 **Action:** insert second row duplicating the unique key (FK=OFF)
 **SQL:**
 ```sql
@@ -11700,7 +11689,7 @@ INSERT INTO "evidence_source_authors" ("ref_id", "position", "role") VALUES (?, 
 **Exception:** `IntegrityError: UNIQUE constraint failed: evidence_source_authors.ref_id, evidence_source_authors.position, evidence_source_authors.role`
 **Verdict:** `OK`
 
-### [1071] A8/OFF — item_population_elaborations UNIQUE(item_code, population_code, variant_distinction)   `2026-08-12 05:22:48Z`
+### [1070] A8/OFF — item_population_elaborations UNIQUE(item_code, population_code, variant_distinction)   `2026-08-12 08:35:28Z`
 **Action:** insert second row duplicating the unique key (FK=OFF)
 **SQL:**
 ```sql
@@ -11711,7 +11700,7 @@ INSERT INTO "item_population_elaborations" ("item_code", "population_code", "var
 **Exception:** `IntegrityError: UNIQUE constraint failed: item_population_elaborations.item_code, item_population_elaborations.population_code, item_population_elaborations.variant_distinction`
 **Verdict:** `OK`
 
-### [1072] A8/OFF — items UNIQUE(item_id)   `2026-08-12 05:22:48Z`
+### [1071] A8/OFF — items UNIQUE(item_id)   `2026-08-12 08:35:28Z`
 **Action:** insert second row duplicating the unique key (FK=OFF)
 **SQL:**
 ```sql
@@ -11722,7 +11711,7 @@ INSERT INTO "items" ("item_code", "category", "name", "created_at", "created_by_
 **Exception:** `IntegrityError: UNIQUE constraint failed: items.item_id`
 **Verdict:** `OK`
 
-### [1073] A8/OFF — jurisdictional_values UNIQUE(item_code, jurisdiction, standard_name)   `2026-08-12 05:22:48Z`
+### [1072] A8/OFF — jurisdictional_values UNIQUE(item_code, jurisdiction, standard_name)   `2026-08-12 08:35:28Z`
 **Action:** insert second row duplicating the unique key (FK=OFF)
 **SQL:**
 ```sql
@@ -11733,15 +11722,26 @@ INSERT INTO "jurisdictional_values" ("item_code", "jurisdiction", "standard_name
 **Exception:** `IntegrityError: UNIQUE constraint failed: jurisdictional_values.item_code, jurisdictional_values.jurisdiction, jurisdictional_values.standard_name`
 **Verdict:** `OK`
 
+### [1073] A8/OFF — specifications UNIQUE(item_code, population_code)   `2026-08-12 08:35:28Z`
+**Action:** insert second row duplicating the unique key (FK=OFF)
+**SQL:**
+```sql
+INSERT INTO "specifications" ("item_code", "population_code", "state") VALUES (?, ?, ?)  -- {"item_code": "I-03", "population_code": "BLIND", "state": "stated"}
+```
+**Expected:** UNIQUE constraint failed
+**Actual:** rejected
+**Exception:** `IntegrityError: UNIQUE constraint failed: specifications.item_code, specifications.population_code`
+**Verdict:** `OK`
+
 **SWEEP A EXAMINED:** 80/80 edges enumerated · 89 orphan queries · FK bad-value ON 80/80 {'OK': 80, 'SILENT-PASS': 0, 'BLOCKED': 0} · NULL-path 18/18 {'SILENT-PASS': 18, 'BLOCKED': 0, 'OK': 0} · FK bad-value OFF 80/80 {'SILENT-PASS': 80, 'BLOCKED': 0, 'OK': 0} · CHECK ON 128/127 {'OK': 127, 'SILENT-PASS': 0, 'BLOCKED': 1} · CHECK OFF 128/127 {'OK': 127, 'SILENT-PASS': 0, 'BLOCKED': 1} · NOT NULL ON 268/267 {'OK': 268, 'SILENT-PASS': 0, 'BLOCKED': 0} · NOT NULL OFF 268/267 {'OK': 268, 'SILENT-PASS': 0, 'BLOCKED': 0} · UNIQUE ON 5/5 {'OK': 5, 'SILENT-PASS': 0, 'BLOCKED': 0} · UNIQUE OFF 5/5 {'OK': 5, 'SILENT-PASS': 0, 'BLOCKED': 0}
 
 
 ---
 
 ## SWEEP B — the pipeline spine, forward
-Spine: slugs → search_executions → search_admissions → evidence_sources → (source_slug_links, source_value_extractions, evidence_population_match) → evidence_cell_state → cell_source_links → render. Scratch copy `probe-spine.db`, foreign_keys=ON, synthetic rows PROBE-prefixed.
+Spine: slugs → search_executions → search_admissions → evidence_sources → (source_slug_links, source_value_extractions, evidence_population_match) → specifications → specification_source_links → render. Scratch copy `probe-spine.db`, foreign_keys=ON, synthetic rows PROBE-prefixed.
 
-### [1074] B — search_executions (OUT OF ORDER)   `2026-08-12 05:22:48Z`
+### [1074] B — search_executions (OUT OF ORDER)   `2026-08-12 08:35:28Z`
 **Action:** insert execution for a slug that does not exist yet
 **SQL:**
 ```sql
@@ -11752,7 +11752,7 @@ INSERT INTO search_executions (slug, language, query_text, engine, depth_method,
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [1075] B — slugs   `2026-08-12 05:22:48Z`
+### [1075] B — slugs   `2026-08-12 08:35:28Z`
 **Action:** create spine root PROBE-slug-a
 **SQL:**
 ```sql
@@ -11762,7 +11762,7 @@ INSERT INTO slugs (slug, topic_directory, sl_path, bpc_path, status, created_at,
 **Actual:** accepted (rowid 107) — key carried forward: slug (TEXT). Nothing forces sl_path/bpc_path to exist on disk — dangling paths accepted silently
 **Verdict:** `OK`
 
-### [1076] B — search_executions   `2026-08-12 05:22:48Z`
+### [1076] B — search_executions   `2026-08-12 08:35:28Z`
 **Action:** insert execution against PROBE-slug-a, admitted_ref_ids naming a ref that does not exist
 **SQL:**
 ```sql
@@ -11772,13 +11772,13 @@ INSERT INTO search_executions (slug, language, query_text, engine, depth_method,
 **Actual:** accepted (rowid 1) — key carried: exec_id (INTEGER PK). admitted_ref_ids is JSON — json_valid() is the only check; the dangling ref is accepted
 **Verdict:** `OK`
 
-### [1077] B — search_executions.admitted_ref_ids   `2026-08-12 05:22:48Z`
+### [1077] B — search_executions.admitted_ref_ids   `2026-08-12 08:35:28Z`
 **Action:** verify the dangling JSON ref was accepted
 **Expected:** a ref named in admitted_ref_ids should exist in evidence_sources
 **Actual:** accepted with PROBE-REF-99901 not existing anywhere — the JSON leg of the dual store is unconstrained
 **Verdict:** **`SILENT-PASS`**
 
-### [1078] B — search_admissions (OUT OF ORDER)   `2026-08-12 05:22:48Z`
+### [1078] B — search_admissions (OUT OF ORDER)   `2026-08-12 08:35:28Z`
 **Action:** admit a ref before the evidence source exists
 **SQL:**
 ```sql
@@ -11789,7 +11789,7 @@ INSERT INTO search_admissions (exec_id, ref_id, created_at, created_by_session) 
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [1079] B — search_admissions (OUT OF ORDER)   `2026-08-12 05:22:48Z`
+### [1079] B — search_admissions (OUT OF ORDER)   `2026-08-12 08:35:28Z`
 **Action:** admit under a nonexistent exec_id
 **SQL:**
 ```sql
@@ -11800,7 +11800,7 @@ INSERT INTO search_admissions (exec_id, ref_id, created_at, created_by_session) 
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [1080] B — evidence_sources   `2026-08-12 05:22:48Z`
+### [1080] B — evidence_sources   `2026-08-12 08:35:28Z`
 **Action:** create PROBE evidence source with NOTHING but a ref_id
 **SQL:**
 ```sql
@@ -11810,7 +11810,7 @@ INSERT INTO evidence_sources (ref_id) VALUES (?)  -- params: ["PROBE-REF-99901"]
 **Actual:** accepted (rowid 1) — every other column is nullable: no tier, no title, no verification_status, no type required. A source can enter the corpus completely empty — silently lost: everything about it
 **Verdict:** `OK`
 
-### [1081] B — evidence_sources   `2026-08-12 05:22:48Z`
+### [1081] B — evidence_sources   `2026-08-12 08:35:28Z`
 **Action:** second source for the backward walk
 **SQL:**
 ```sql
@@ -11820,7 +11820,7 @@ INSERT INTO evidence_sources (ref_id, tier, pub_title, verification_status) VALU
 **Actual:** accepted (rowid 2)
 **Verdict:** `OK`
 
-### [1082] B — search_admissions   `2026-08-12 05:22:48Z`
+### [1082] B — search_admissions   `2026-08-12 08:35:28Z`
 **Action:** admit PROBE-REF-99901 under the real exec_id
 **SQL:**
 ```sql
@@ -11830,7 +11830,7 @@ INSERT INTO search_admissions (exec_id, ref_id, created_at, created_by_session) 
 **Actual:** accepted (rowid 1) — key carried: (exec_id, ref_id). Nothing reconciles this table with search_executions.admitted_ref_ids / results_admitted
 **Verdict:** `OK`
 
-### [1083] B — search_executions ↔ search_admissions dual store   `2026-08-12 05:22:48Z`
+### [1083] B — search_executions ↔ search_admissions dual store   `2026-08-12 08:35:28Z`
 **Action:** set results_admitted=0 while a search_admissions row exists for the same exec
 **SQL:**
 ```sql
@@ -11840,7 +11840,7 @@ UPDATE search_executions SET results_admitted = 0 WHERE exec_id = ?
 **Actual:** accepted: results_admitted=0 while search_admissions holds 1 row(s). No trigger, no check — divergence is silent
 **Verdict:** **`SILENT-PASS`**
 
-### [1084] B — source_slug_links (OUT OF ORDER)   `2026-08-12 05:22:48Z`
+### [1084] B — source_slug_links (OUT OF ORDER)   `2026-08-12 08:35:28Z`
 **Action:** link a nonexistent ref to the slug
 **SQL:**
 ```sql
@@ -11851,7 +11851,7 @@ INSERT INTO source_slug_links (ref_id, slug, local_ref_id, created_at, created_b
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [1085] B — source_slug_links   `2026-08-12 05:22:48Z`
+### [1085] B — source_slug_links   `2026-08-12 08:35:28Z`
 **Action:** link PROBE-REF-99901 ↔ PROBE-slug-a
 **SQL:**
 ```sql
@@ -11861,7 +11861,7 @@ INSERT INTO source_slug_links (ref_id, slug, local_ref_id, created_at, created_b
 **Actual:** accepted (rowid 1) — key carried: ref_id + slug. An evidence source needs NO search_execution and NO admission to acquire links — the whole search stage is bypassable, silently
 **Verdict:** `OK`
 
-### [1086] B — source_value_extractions   `2026-08-12 05:22:48Z`
+### [1086] B — source_value_extractions   `2026-08-12 08:35:28Z`
 **Action:** extraction from PROBE-REF-99901 with full locator, item_code left NULL
 **SQL:**
 ```sql
@@ -11871,7 +11871,7 @@ INSERT INTO source_value_extractions (ref_id, slug, parameter, claim_type, claim
 **Actual:** accepted (rowid 1) — item_code and population_code are NULLABLE and left NULL — the extraction is now unreachable from any cell by structured join; only ref_id carries forward
 **Verdict:** `OK`
 
-### [1087] B — evidence_population_match   `2026-08-12 05:22:48Z`
+### [1087] B — evidence_population_match   `2026-08-12 08:35:28Z`
 **Action:** match row with source_ref garbage + ref_id NULL (dual identity)
 **SQL:**
 ```sql
@@ -11881,18 +11881,18 @@ INSERT INTO evidence_population_match (match_id, source_ref, target_population, 
 **Actual:** accepted (rowid 1)
 **Verdict:** **`SILENT-PASS`**
 
-### [1088] B — evidence_cell_state (OUT OF ORDER)   `2026-08-12 05:22:48Z`
+### [1088] B — specifications (OUT OF ORDER)   `2026-08-12 08:35:28Z`
 **Action:** cell for an item that does not exist
 **SQL:**
 ```sql
-INSERT INTO evidence_cell_state (item_code, population_code, state) VALUES (?,?,?)  -- params: ["PROBE-K-99", "PROBE-POP", "pending"]
+INSERT INTO specifications (item_code, population_code, state) VALUES (?,?,?)  -- params: ["PROBE-K-99", "PROBE-POP", "pending"]
 ```
 **Expected:** rejected — item FK
 **Actual:** rejected
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [1089] B — items   `2026-08-12 05:22:48Z`
+### [1089] B — items   `2026-08-12 08:35:28Z`
 **Action:** synthetic item K-99 (category K)
 **SQL:**
 ```sql
@@ -11902,7 +11902,7 @@ INSERT INTO items (item_code, category, name, status, created_at, created_by_ses
 **Actual:** accepted (rowid 94)
 **Verdict:** `OK`
 
-### [1090] B — populations   `2026-08-12 05:22:48Z`
+### [1090] B — populations   `2026-08-12 08:35:28Z`
 **Action:** synthetic population PROBE-POP
 **SQL:**
 ```sql
@@ -11912,95 +11912,95 @@ INSERT INTO populations (population_code, display_name) VALUES (?,?)  -- params:
 **Actual:** accepted (rowid 34) — category, parent_code, status all optional — a population can be created outside the taxonomy
 **Verdict:** `OK`
 
-### [1091] B — evidence_cell_state   `2026-08-12 05:22:48Z`
+### [1091] B — specifications   `2026-08-12 08:35:28Z`
 **Action:** STATED cell with NULL governing_refs (doctrine: stated requires non-empty governing_refs)
 **SQL:**
 ```sql
-INSERT INTO evidence_cell_state (item_code, population_code, state, governing_refs, created_at, created_by_session) VALUES (?,?,?,?,?,?)  -- params: ["K-99", "PROBE-POP", "stated", null, "2026-08-12T00:00:00+00:00", "PROBE-session"]
+INSERT INTO specifications (item_code, population_code, state, governing_refs, created_at, created_by_session) VALUES (?,?,?,?,?,?)  -- params: ["K-99", "PROBE-POP", "stated", null, "2026-08-12T00:00:00+00:00", "PROBE-session"]
 ```
 **Expected:** should be rejected per the evidence-state machine
 **Actual:** accepted (rowid 1)
 **Verdict:** **`SILENT-PASS`**
 
-### [1092] B — evidence_cell_state.governing_refs   `2026-08-12 05:22:48Z`
+### [1092] B — specifications.governing_refs   `2026-08-12 08:35:28Z`
 **Action:** point governing_refs at one PROBE ref and one dangling ref
 **SQL:**
 ```sql
-UPDATE evidence_cell_state SET governing_refs = ? WHERE cell_id = ?  -- params: ["[\"PROBE-REF-99901\", \"REF-DANGLING-00000\"]", 1]
+UPDATE specifications SET governing_refs = ? WHERE specification_id = ?  -- params: ["[\"PROBE-REF-99901\", \"REF-DANGLING-00000\"]", 1]
 ```
 **Expected:** the dangling entry should be rejected
 **Actual:** accepted (rowid 1)
 **Verdict:** **`SILENT-PASS`**
 
-### [1093] B — cell_source_links (OUT OF ORDER)   `2026-08-12 05:22:48Z`
+### [1093] B — specification_source_links (OUT OF ORDER)   `2026-08-12 08:35:28Z`
 **Action:** link a nonexistent cell
 **SQL:**
 ```sql
-INSERT INTO cell_source_links (cell_id, ref_id, role, created_at, created_by_session) VALUES (?,?,?,?,?)  -- params: [999999902, "PROBE-REF-99901", "governing", "2026-08-12T00:00:00+00:00", "PROBE-session"]
+INSERT INTO specification_source_links (specification_id, ref_id, role, created_at, created_by_session) VALUES (?,?,?,?,?)  -- params: [999999902, "PROBE-REF-99901", "governing", "2026-08-12T00:00:00+00:00", "PROBE-session"]
 ```
 **Expected:** rejected — cell FK
 **Actual:** rejected
 **Exception:** `IntegrityError: FOREIGN KEY constraint failed`
 **Verdict:** `OK`
 
-### [1094] B — cell_source_links   `2026-08-12 05:22:48Z`
+### [1094] B — specification_source_links   `2026-08-12 08:35:28Z`
 **Action:** governing link cell → PROBE-REF-99901
 **SQL:**
 ```sql
-INSERT INTO cell_source_links (cell_id, ref_id, role, created_at, created_by_session) VALUES (?,?,?,?,?)  -- params: [1, "PROBE-REF-99901", "governing", "2026-08-12T00:00:00+00:00", "PROBE-session"]
+INSERT INTO specification_source_links (specification_id, ref_id, role, created_at, created_by_session) VALUES (?,?,?,?,?)  -- params: [1, "PROBE-REF-99901", "governing", "2026-08-12T00:00:00+00:00", "PROBE-session"]
 ```
 **Expected:** accepted
-**Actual:** accepted (rowid 1) — key carried: cell_id + ref_id; role CHECK admits only 'governing'
+**Actual:** accepted (rowid 1) — key carried: specification_id + ref_id; role CHECK admits only 'governing'
 **Verdict:** `OK`
 
-### [1095] B — cell_source_links vs governing_refs   `2026-08-12 05:22:48Z`
-**Action:** the JSON now names 2 refs while cell_source_links holds 1
+### [1095] B — specification_source_links vs governing_refs   `2026-08-12 08:35:28Z`
+**Action:** the JSON now names 2 refs while specification_source_links holds 1
 **Expected:** the two representations should be forced equal
 **Actual:** both writes accepted; the stores disagree and nothing reconciles them (compare Sweep C)
 **Verdict:** **`SILENT-PASS`**
 
-### [1096] B — render/build_site.py --only K-99   `2026-08-12 05:22:49Z`
+### [1096] B — render/build_site.py --only K-99   `2026-08-12 08:35:29Z`
 **Action:** RENDER stage: python3 scripts/generate/build_site.py --only K-99
 **Expected:** renders the PROBE item's spec page from the scratch DB
-**Actual:** rc=0; output (trunc): Built 1 page(s) at DB fingerprint 8d8b180f0bda.
+**Actual:** rc=0; output (trunc): Built 1 page(s) at DB fingerprint 20e7def9d212.
 Pages citing at least one governing source: 1 of 1.
 **Verdict:** `OK`
 
-### [1097] B — render/build_site.py (full)   `2026-08-12 05:22:49Z`
+### [1097] B — render/build_site.py (full)   `2026-08-12 08:35:29Z`
 **Action:** RENDER stage: python3 scripts/generate/build_site.py
 **Expected:** renders all spec pages incl. the PROBE cell
-**Actual:** rc=0; output (trunc): Built 94 page(s) at DB fingerprint 8d8b180f0bda.
+**Actual:** rc=0; output (trunc): Built 94 page(s) at DB fingerprint 20e7def9d212.
 Pages citing at least one governing source: 1 of 94.
 **Verdict:** `OK`
 
-### [1098] B — render/room_page.py R-BA   `2026-08-12 05:22:49Z`
+### [1098] B — render/room_page.py R-BA   `2026-08-12 08:35:29Z`
 **Action:** RENDER stage: python3 scripts/generate/room_page.py R-BA
 **Expected:** expected to FAIL: queries phantom tables (room, room_item, …) — the live table is `rooms` keyed by room_code
 **Actual:** rc=1; output (trunc): Traceback (most recent call last):
-  File "/tmp/claude-0/-home-user-guidebook/1020731d-bba2-594c-9ca2-0d2b78825e52/scratchpad/probe/tree/scripts/generate/room_page.py", line 282, in <module>
+  File "/tmp/claude-0/-home-user-guidebook/1020731d-bba2-594c-9ca2-0d2b78825e52/scratchpad/probe2/tree/scripts/generate/room_page.py", line 282, in <module>
     main()
-  File "/tmp/claude-0/-home-user-guidebook/1020731d-bba2-594c-9ca2-0d2b78825e52/scratchpad/probe/tree/scripts/generate/room_page.py", line 278, in main
+  File "/tmp/claude-0/-home-user-guidebook/1020731d-bba2-594c-9ca2-0d2b78825e52/scratchpad/probe2/tree/scripts/generate/room_page.py", line 278, in main
     generate(room_id, output_path)
-  File "/tmp/claude-0/-home-user-guidebook/1020731d-bba2-594c-9ca2-0d2b78825e52/scratchpad/probe/tree/scripts/generate/room_page.py", line 254, in generate
+  File "/tmp/claude-0/-home-user-guidebook/1020731d-bba2-594c-9ca2-0d2b78825e52/scratchpad/probe2/tree/scripts/generate/room_page.py", line 254, in generate
     room = query_room(conn, room_id)
            ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/tmp/claude-0/-home-user-guidebook/1020731d-bba2-594c-9ca2-0d2b78825e52/scratchpad/probe/tree/scripts/generate/room_page.py", line 26, in query_room
+  File "/tmp/claude-0/-home-user-guidebook/1020731d-bba2-594c-9ca2-0d2b78825e52/scratchpad/probe2/tree/scripts/generate/room_page.py", line 26, in query_room
     room = conn.execute("SELECT * FROM room WHERE room_id = ?", (room_id,)).fetchone()
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 sqlite3.OperationalError: no such table: room
-**Exception:** `e/tree/scripts/generate/room_page.py", line 254, in generate
+**Exception:** `/tree/scripts/generate/room_page.py", line 254, in generate
     room = query_room(conn, room_id)
            ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/tmp/claude-0/-home-user-guidebook/1020731d-bba2-594c-9ca2-0d2b78825e52/scratchpad/probe/tree/scripts/generate/room_page.py", line 26, in query_room
+  File "/tmp/claude-0/-home-user-guidebook/1020731d-bba2-594c-9ca2-0d2b78825e52/scratchpad/probe2/tree/scripts/generate/room_page.py", line 26, in query_room
     room = conn.execute("SELECT * FROM room WHERE room_id = ?", (room_id,)).fetchone()
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 sqlite3.OperationalError: no such table: room`
 **Verdict:** `ERROR`
 
-### [1099] B — render/population_page.py ALL   `2026-08-12 05:22:49Z`
+### [1099] B — render/population_page.py ALL   `2026-08-12 08:35:29Z`
 **Action:** RENDER stage: python3 scripts/generate/population_page.py ALL
 **Expected:** population page for code ALL from scratch DB
-**Actual:** rc=0; output (trunc): Generated: /tmp/claude-0/-home-user-guidebook/1020731d-bba2-594c-9ca2-0d2b78825e52/scratchpad/probe/tree/site/populations/all.html (4758 bytes)
+**Actual:** rc=0; output (trunc): Generated: /tmp/claude-0/-home-user-guidebook/1020731d-bba2-594c-9ca2-0d2b78825e52/scratchpad/probe2/tree/site/populations/all.html (4753 bytes)
 **Verdict:** `OK`
 
 **SWEEP B EXAMINED: 26 handoff probes**
@@ -12010,109 +12010,109 @@ sqlite3.OperationalError: no such table: room`
 
 ## SWEEP V — the 18 views (canonical AND PROBE-populated spine copy)
 
-### [1100] V — v_best_practice   `2026-08-12 05:22:49Z`
+### [1100] V — v_best_practice   `2026-08-12 08:35:29Z`
 **Action:** execute view on canonical and on the PROBE-populated spine copy
 **Expected:** executes and returns rows
 **Actual:** canonical: 0 rows; spine+PROBE: 1 rows; sample: [(1, 'K-99', 'PROBE-POP', 'stated', None, None, None, None, None, None, None, None, '["PROBE-REF-99901", "REF-DANGLING-00000"]', None, None, 0, None, None, None, None, 0, 0, '2026-08-12T00:00:00+00:00', 'PROBE-session', None, None, 0, 'anchored')]
 **Verdict:** `OK`
 
-### [1101] V — v_code_floor_only   `2026-08-12 05:22:49Z`
+### [1101] V — v_code_floor_only   `2026-08-12 08:35:29Z`
 **Action:** execute view on canonical and on the PROBE-populated spine copy
 **Expected:** executes and returns rows
 **Actual:** EXECUTES-EMPTY on both — proves schema validity only; the view's semantics remain unverified (its base tables are empty even after the PROBE spine)
 **Verdict:** `BLOCKED`
 
-### [1102] V — v_coverage_branch   `2026-08-12 05:22:49Z`
+### [1102] V — v_coverage_branch   `2026-08-12 08:35:29Z`
 **Action:** execute view on canonical and on the PROBE-populated spine copy
 **Expected:** executes and returns rows
 **Actual:** canonical: 0 rows; spine+PROBE: 1 rows; sample: [('PROBE-slug-a', None, None, None, None, 1, 0)]
 **Verdict:** `OK`
 
-### [1103] V — v_coverage_jurisdiction   `2026-08-12 05:22:49Z`
+### [1103] V — v_coverage_jurisdiction   `2026-08-12 08:35:29Z`
 **Action:** execute view on canonical and on the PROBE-populated spine copy
 **Expected:** executes and returns rows
 **Actual:** canonical: 0 rows; spine+PROBE: 1 rows; sample: [('PROBE-slug-a', None, 1, 0, 0, None)]
 **Verdict:** `OK`
 
-### [1104] V — v_coverage_language   `2026-08-12 05:22:49Z`
+### [1104] V — v_coverage_language   `2026-08-12 08:35:29Z`
 **Action:** execute view on canonical and on the PROBE-populated spine copy
 **Expected:** executes and returns rows
 **Actual:** canonical: 0 rows; spine+PROBE: 1 rows; sample: [('PROBE-slug-a', 'en', 1, 0)]
 **Verdict:** `OK`
 
-### [1105] V — v_coverage_priority   `2026-08-12 05:22:49Z`
+### [1105] V — v_coverage_priority   `2026-08-12 08:35:29Z`
 **Action:** execute view on canonical and on the PROBE-populated spine copy
 **Expected:** executes and returns rows
 **Actual:** canonical: 7210 rows; spine+PROBE: 7280 rows; sample: [('intellectual-disability-built-environment-design', 'AR', 'ES', 'PRIMARY', 5, 0), ('intellectual-disability-built-environment-design', 'AT', 'DE', 'PRIMARY', 5, 0)]
 **Verdict:** `OK`
 
-### [1106] V — v_divergence   `2026-08-12 05:22:49Z`
+### [1106] V — v_divergence   `2026-08-12 08:35:29Z`
 **Action:** execute view on canonical and on the PROBE-populated spine copy
 **Expected:** executes and returns rows
 **Actual:** EXECUTES-EMPTY on both — proves schema validity only; the view's semantics remain unverified (its base tables are empty even after the PROBE spine)
 **Verdict:** `BLOCKED`
 
-### [1107] V — v_item_extractions   `2026-08-12 05:22:49Z`
+### [1107] V — v_item_extractions   `2026-08-12 08:35:29Z`
 **Action:** execute view on canonical and on the PROBE-populated spine copy
 **Expected:** executes and returns rows
 **Actual:** EXECUTES-EMPTY on both — proves schema validity only; the view's semantics remain unverified (its base tables are empty even after the PROBE spine)
 **Verdict:** `BLOCKED`
 
-### [1108] V — v_item_provenance   `2026-08-12 05:22:49Z`
+### [1108] V — v_item_provenance   `2026-08-12 08:35:29Z`
 **Action:** execute view on canonical and on the PROBE-populated spine copy
 **Expected:** executes and returns rows
 **Actual:** canonical: 0 rows; spine+PROBE: 1 rows; sample: [('K-99', 'PROBE item', 'K', 1, 'PROBE-POP', 'stated', None, 0, 'governing', 'PROBE-REF-99901', None, None, None, None, None, None, None)]
 **Verdict:** `OK`
 
-### [1109] V — v_pending   `2026-08-12 05:22:49Z`
+### [1109] V — v_pending   `2026-08-12 08:35:29Z`
 **Action:** execute view on canonical and on the PROBE-populated spine copy
 **Expected:** executes and returns rows
 **Actual:** EXECUTES-EMPTY on both — proves schema validity only; the view's semantics remain unverified (its base tables are empty even after the PROBE spine)
 **Verdict:** `BLOCKED`
 
-### [1110] V — v_pmp_latest_walk   `2026-08-12 05:22:49Z`
+### [1110] V — v_pmp_latest_walk   `2026-08-12 08:35:29Z`
 **Action:** execute view on canonical and on the PROBE-populated spine copy
 **Expected:** executes and returns rows
 **Actual:** EXECUTES-EMPTY on both — proves schema validity only; the view's semantics remain unverified (its base tables are empty even after the PROBE spine)
 **Verdict:** `BLOCKED`
 
-### [1111] V — v_registry_duplicate_descriptions   `2026-08-12 05:22:49Z`
+### [1111] V — v_registry_duplicate_descriptions   `2026-08-12 08:35:29Z`
 **Action:** execute view on canonical and on the PROBE-populated spine copy
 **Expected:** executes and returns rows
 **Actual:** EXECUTES-EMPTY on both — proves schema validity only; the view's semantics remain unverified (its base tables are empty even after the PROBE spine)
 **Verdict:** `BLOCKED`
 
-### [1112] V — v_root_id_conflicts   `2026-08-12 05:22:49Z`
+### [1112] V — v_root_id_conflicts   `2026-08-12 08:35:29Z`
 **Action:** execute view on canonical and on the PROBE-populated spine copy
 **Expected:** executes and returns rows
 **Actual:** EXECUTES-EMPTY on both — proves schema validity only; the view's semantics remain unverified (its base tables are empty even after the PROBE spine)
 **Verdict:** `BLOCKED`
 
-### [1113] V — v_source_admission   `2026-08-12 05:22:49Z`
+### [1113] V — v_source_admission   `2026-08-12 08:35:29Z`
 **Action:** execute view on canonical and on the PROBE-populated spine copy
 **Expected:** executes and returns rows
 **Actual:** canonical: 0 rows; spine+PROBE: 1 rows; sample: [('PROBE-REF-99901', None, None, None, None, None, 1, 'PROBE-slug-a', 'PROBE query text', 'manual', 'en', None, 'scoping', None, None, 0, 'PROBE-session', '2026-08-12T00:00:00+00:00')]
 **Verdict:** `OK`
 
-### [1114] V — v_source_reach   `2026-08-12 05:22:49Z`
+### [1114] V — v_source_reach   `2026-08-12 08:35:29Z`
 **Action:** execute view on canonical and on the PROBE-populated spine copy
 **Expected:** executes and returns rows
 **Actual:** canonical: 0 rows; spine+PROBE: 1 rows; sample: [('PROBE-REF-99901', None, None, None, 1, 'K-99', 'PROBE item', 'PROBE-POP', 'stated', 'PROBE-slug-a')]
 **Verdict:** `OK`
 
-### [1115] V — v_source_reach_all   `2026-08-12 05:22:49Z`
+### [1115] V — v_source_reach_all   `2026-08-12 08:35:29Z`
 **Action:** execute view on canonical and on the PROBE-populated spine copy
 **Expected:** executes and returns rows
 **Actual:** canonical: 0 rows; spine+PROBE: 2 rows; sample: [('PROBE-REF-99901', None, None, None, 1, 1, 'K-99', 'PROBE item', 'PROBE-POP', 'stated', 'PROBE-slug-a'), ('PROBE-REF-99902', 'PROBE Building Code', 6, 'verified', 0, None, None, None, None, None, None)]
 **Verdict:** `OK`
 
-### [1116] V — v_unregistered_roots   `2026-08-12 05:22:49Z`
+### [1116] V — v_unregistered_roots   `2026-08-12 08:35:29Z`
 **Action:** execute view on canonical and on the PROBE-populated spine copy
 **Expected:** executes and returns rows
 **Actual:** EXECUTES-EMPTY on both — proves schema validity only; the view's semantics remain unverified (its base tables are empty even after the PROBE spine)
 **Verdict:** `BLOCKED`
 
-### [1117] V — v_value_independence   `2026-08-12 05:22:49Z`
+### [1117] V — v_value_independence   `2026-08-12 08:35:29Z`
 **Action:** execute view on canonical and on the PROBE-populated spine copy
 **Expected:** executes and returns rows
 **Actual:** EXECUTES-EMPTY on both — proves schema validity only; the view's semantics remain unverified (its base tables are empty even after the PROBE spine)
@@ -12125,68 +12125,68 @@ sqlite3.OperationalError: no such table: room`
 
 ## SWEEP C — the backward walk
 
-### [1118] C — cell → cell_source_links   `2026-08-12 05:22:49Z`
+### [1118] C — cell → specification_source_links   `2026-08-12 08:35:29Z`
 **Action:** resolve links for PROBE cell 1
 **Expected:** ≥1 governing ref
 **Actual:** refs via csl: ['PROBE-REF-99901']
 **Verdict:** `OK`
 
-### [1119] C — cell_source_links → evidence_sources   `2026-08-12 05:22:49Z`
+### [1119] C — specification_source_links → evidence_sources   `2026-08-12 08:35:29Z`
 **Action:** resolve refs to sources
 **Expected:** all resolve
 **Actual:** [('PROBE-REF-99901', None, None)]
 **Verdict:** `OK`
 
-### [1120] C — evidence_sources → source_value_extractions (structured join on ref_id+item_code)   `2026-08-12 05:22:49Z`
+### [1120] C — evidence_sources → source_value_extractions (structured join on ref_id+item_code)   `2026-08-12 08:35:29Z`
 **Action:** find the extraction backing this cell's value
 **SQL:**
 ```sql
 SELECT e.extraction_id, e.ref_id, e.item_code, e.population_code, e.loc_section, e.loc_clause FROM source_value_extractions e WHERE e.ref_id = ? AND e.item_code = ?
 ```
 **Expected:** the extraction row
-**Actual:** 0 rows — the extraction exists but its item_code is NULL, so the only structured join from cell to extraction returns nothing. BROKEN JOINT: no table links evidence_cell_state to source_value_extractions; the join must be improvised on (ref_id, item_code) and item_code is nullable
+**Actual:** 0 rows — the extraction exists but its item_code is NULL, so the only structured join from cell to extraction returns nothing. BROKEN JOINT: no table links specifications to source_value_extractions; the join must be improvised on (ref_id, item_code) and item_code is nullable
 **Verdict:** `ORPHAN`
 
-### [1121] C — … fallback join on ref_id alone   `2026-08-12 05:22:49Z`
+### [1121] C — … fallback join on ref_id alone   `2026-08-12 08:35:29Z`
 **Action:** extractions for the ref regardless of item
 **Expected:** ≥1
 **Actual:** [(1, '5', '5.7', '§5.7')] — reachable only by dropping the item join entirely
 **Verdict:** `OK`
 
-### [1122] C — source_value_extractions → loc_* → clause   `2026-08-12 05:22:49Z`
+### [1122] C — source_value_extractions → loc_* → clause   `2026-08-12 08:35:29Z`
 **Action:** read the decomposed locator
 **Expected:** loc_section/loc_clause populated
 **Actual:** loc_section='5', loc_clause='5.7' (set by the probe; live-data density below)
 **Verdict:** `OK`
 
-### [1123] C — cell → governing_refs (JSON dual store)   `2026-08-12 05:22:49Z`
+### [1123] C — cell → governing_refs (JSON dual store)   `2026-08-12 08:35:29Z`
 **Action:** parse JSON and resolve to evidence_sources
-**Expected:** all resolve, and match cell_source_links
+**Expected:** all resolve, and match specification_source_links
 **Actual:** JSON names ['PROBE-REF-99901', 'REF-DANGLING-00000']; resolved ['PROBE-REF-99901']; DANGLING ['REF-DANGLING-00000']; csl says ['PROBE-REF-99901'] — the two representations disagree and nothing reconciles them
 **Verdict:** `ORPHAN`
 
-### [1124] C — canonical: determined cells, dual-store agreement   `2026-08-12 05:22:49Z`
-**Action:** compare sorted governing_refs JSON vs sorted cell_source_links per determined cell
+### [1124] C — canonical: determined cells, dual-store agreement   `2026-08-12 08:35:29Z`
+**Action:** compare sorted governing_refs JSON vs sorted specification_source_links per determined cell
 **Expected:** 0 disagreements
 **Actual:** determined cells: 0; with csl links: 0; with non-empty governing_refs: 0; cells where the two stores DISAGREE: 0
 **Verdict:** `OK`
 
-### [1125] C — canonical: backward funnel cell→ref→extraction→locator   `2026-08-12 05:22:49Z`
+### [1125] C — canonical: backward funnel cell→ref→extraction→locator   `2026-08-12 08:35:29Z`
 **Action:** count survivors at each joint of the backward walk
 **Expected:** every determined cell walks back to a clause
 **Actual:** governing refs on determined cells: 0 · of those refs, with ANY extraction: 0 · extractions joinable back to their cell via (ref_id,item_code): 0 · extractions with item_code set: 0/0 · extractions with ANY loc_* level populated: 0/0 · with legacy prose source_section: 0/0
 **Verdict:** `ORPHAN`
 
-### [1126] C — canonical: jurisdictional_values locator decomposition   `2026-08-12 05:22:49Z`
+### [1126] C — canonical: jurisdictional_values locator decomposition   `2026-08-12 08:35:29Z`
 **Action:** how many rows have decomposed loc_* vs packed standard_name; does the table carry a ref FK at all
 **Expected:** decomposed locators, ref-linked
 **Actual:** rows: 109; with loc_section/clause: 0; ref_id column present: False (migration 053 notes the table 'has never had' the ref_id FK)
 **Verdict:** `ORPHAN`
 
-### [1127] C — renderers: which representation is read   `2026-08-12 05:22:49Z`
+### [1127] C — renderers: which representation is read   `2026-08-12 08:35:29Z`
 **Action:** static inspection (verified again by the Sweep D matrix)
 **Expected:** one canonical representation
-**Actual:** cell_source_links (role='governing') read by: scripts/generate/build_site.py, scripts/generate/spec_page.py; governing_refs JSON read by: scripts/generate/pilot_renderings.py (parses the JSON, recomputes derivation_sha, cross-counts csl); both read by: scripts/validate_evidence_state.py, scripts/tests/test_db_integrity.py, scripts/assess/assess_cell.py, tools/pipeline_completeness.py
+**Actual:** specification_source_links (role='governing') read by: scripts/generate/build_site.py, scripts/generate/spec_page.py; governing_refs JSON read by: scripts/generate/pilot_renderings.py (parses the JSON, recomputes derivation_sha, cross-counts csl); both read by: scripts/validate_evidence_state.py, scripts/tests/test_db_integrity.py, scripts/assess/assess_cell.py, tools/pipeline_completeness.py
 **Verdict:** `OK`
 
 **SWEEP C EXAMINED: 10 joints walked**
@@ -12196,19 +12196,19 @@ SELECT e.extraction_id, e.ref_id, e.item_code, e.population_code, e.loc_section,
 
 ## SWEEP D — table × script matrix (AST scan + PREPARE verification)
 
-### [1128] D — scan   `2026-08-12 05:22:51Z`
-**Action:** AST-parsed 167/167 .py files under scripts/, tools/, schemas/ (+ 348 migration .sql files scanned for writers); 0 unparseable
+### [1128] D — scan   `2026-08-12 08:35:32Z`
+**Action:** AST-parsed 168/168 .py files under scripts/, tools/, schemas/ (+ 353 migration .sql files scanned for writers); 0 unparseable
 **Expected:** all files parse
 **Actual:** all parsed
 **Verdict:** `OK`
 
-### [1129] D — PREPARE verification   `2026-08-12 05:22:51Z`
-**Action:** every complete SQL literal prepared (EXPLAIN) against the scratch schema: 1265 statements
+### [1129] D — PREPARE verification   `2026-08-12 08:35:32Z`
+**Action:** every complete SQL literal prepared (EXPLAIN) against the scratch schema: 1424 statements
 **Expected:** all prepare
-**Actual:** {'prepared_ok': 721, 'dynamic': 182, 'fragment': 167, 'no_such_table': 139, 'no_such_column': 2, 'other_error': 54, 'statements_total': 1265} · failures: scripts/assess/assess_cell.py:597 view v_best_practice already exists; scripts/audit/graph/extract_content.py:58 no such table: nodes; scripts/audit/graph/model.py:38 no such table: nodes; scripts/audit/graph/model.py:46 no such table: edges; scripts/audit/graph/model.py:53 no such table: edges; scripts/audit/graph/model.py:59 no such table: findings; scripts/audit/graph/model.py:67 no such table: build_meta; scripts/audit/graph/model.py:73 no such table: nodes; scripts/audit/graph/model.py:74 no such table: edges; scripts/audit/graph/model.py:75 no such table: edges; scripts/audit/graph/model.py:76 no such table: findings; scripts/audit/graph/topology.py:209 no such table: nodes; scripts/audit/graph/topology.py:219 no such table: edges; scripts/audit/graph/topology.py:265 no such table: nodes; scripts/audit/graph/topology.py:267 no such table: edges; scripts/audit/graph/topology.py:64 no such table: nodes; scripts/audit/graph/topology.py:80 no such table: edges; scripts/audit/graph/topology.py:94 no such table: edges; scripts/audit/graph/topology.py:124 no such table: edges; scripts/audit/graph/topology.py:149 no such table: edges; scripts/audit/graph/topology.py:168 no such table: edges; scripts/audit/graph/topology.py:187 no such table: nodes; scripts/audit/graph_audit.py:223 no such table: findings; scripts/audit/graph_audit.py:424 table connections already exists; scripts/audit/graph_audit.py:424 table connection_targets already exists; scripts/audit/graph_audit.py:424 table connections has 13 columns but 3 values were supplied; scripts/audit/graph_audit.py:128 no such table: findings; scripts/audit/graph_audit.py:145 no such table: build_meta; scripts/audit/graph_audit.py:181 no such table: findings; scripts/audit/graph_audit.py:190 no such table: findings; scripts/audit/graph_audit.py:342 no such table: zzz_phantom; scripts/audit/graph_audit.py:115 no such table: findings; scripts/audit/graph_audit.py:138 no such table: findings; scripts/audit/graph_audit.py:166 no such table: findings; scripts/audit/graph_audit.py:318 no such table: no_such_table; scripts/audit/graph_audit.py:163 no such table: findings; scripts/audit/graph_audit.py:285 no such table: findings; scripts/audit/graph_audit.py:368 no such table: findings; scripts/audit/graph_audit.py:369 no such table: findings; scripts/audit/jurisdictional_divergence.py:213 table jurisdictional_values already exists
+**Actual:** {'prepared_ok': 772, 'dynamic': 216, 'fragment': 210, 'no_such_table': 142, 'no_such_column': 3, 'other_error': 81, 'statements_total': 1424} · failures: scripts/assess/assess_cell.py:597 view v_best_practice already exists; scripts/audit/graph/extract_content.py:58 no such table: nodes; scripts/audit/graph/model.py:38 no such table: nodes; scripts/audit/graph/model.py:46 no such table: edges; scripts/audit/graph/model.py:53 no such table: edges; scripts/audit/graph/model.py:59 no such table: findings; scripts/audit/graph/model.py:67 no such table: build_meta; scripts/audit/graph/model.py:73 no such table: nodes; scripts/audit/graph/model.py:74 no such table: edges; scripts/audit/graph/model.py:75 no such table: edges; scripts/audit/graph/model.py:76 no such table: findings; scripts/audit/graph/topology.py:209 no such table: nodes; scripts/audit/graph/topology.py:219 no such table: edges; scripts/audit/graph/topology.py:265 no such table: nodes; scripts/audit/graph/topology.py:267 no such table: edges; scripts/audit/graph/topology.py:64 no such table: nodes; scripts/audit/graph/topology.py:80 no such table: edges; scripts/audit/graph/topology.py:94 no such table: edges; scripts/audit/graph/topology.py:124 no such table: edges; scripts/audit/graph/topology.py:149 no such table: edges; scripts/audit/graph/topology.py:168 no such table: edges; scripts/audit/graph/topology.py:187 no such table: nodes; scripts/audit/graph_audit.py:223 no such table: findings; scripts/audit/graph_audit.py:424 table connections already exists; scripts/audit/graph_audit.py:424 table connection_targets already exists; scripts/audit/graph_audit.py:424 table connections has 13 columns but 3 values were supplied; scripts/audit/graph_audit.py:128 no such table: findings; scripts/audit/graph_audit.py:145 no such table: build_meta; scripts/audit/graph_audit.py:181 no such table: findings; scripts/audit/graph_audit.py:190 no such table: findings; scripts/audit/graph_audit.py:342 no such table: zzz_phantom; scripts/audit/graph_audit.py:115 no such table: findings; scripts/audit/graph_audit.py:138 no such table: findings; scripts/audit/graph_audit.py:166 no such table: findings; scripts/audit/graph_audit.py:318 no such table: no_such_table; scripts/audit/graph_audit.py:163 no such table: findings; scripts/audit/graph_audit.py:285 no such table: findings; scripts/audit/graph_audit.py:368 no such table: findings; scripts/audit/graph_audit.py:369 no such table: findings; scripts/audit/jurisdictional_divergence.py:213 table jurisdictional_values already exists
 **Verdict:** `ERROR`
 
-### [1130] D — method blind spots (stated explicitly)   `2026-08-12 05:22:51Z`
+### [1130] D — method blind spots (stated explicitly)   `2026-08-12 08:35:32Z`
 **Action:** what this scan CANNOT see
 **Expected:** n/a
 **Actual:** (1) SQL assembled by string concatenation across variables or .join() of fragments; (2) table/column names arriving from runtime data (registry YAML, argv, config) — f-string statements are counted as DYNAMIC, not verified; (3) SQL embedded in non-Python (scripts/audit/render_audit.js, shell scripts); (4) executescript bodies — split naively on ';', quoted semicolons inside migrations could mis-split; (5) %-formatted SQL counted DYNAMIC; (6) columns consumed via SELECT * then dict access are invisible to the phantom-column check; (7) migration .sql files are scanned for writers but not PREPAREd (they demonstrably ran — the DB was rebuilt from them)
@@ -12229,23 +12229,21 @@ SELECT e.extraction_id, e.ref_id, e.item_code, e.population_code, e.loc_section,
 | `case_study_populations` | 0 | — | — | 2 stmt-kind(s) |
 | `case_study_specs` | 0 | — | — | 2 stmt-kind(s) |
 | `case_study_strategies` | 0 | — | — | 2 stmt-kind(s) |
-| `cell_source_links` | 0 | scripts/generate/build_site.py<br>scripts/generate/pilot_renderings.py<br>scripts/generate/spec_page.py | — | 4 stmt-kind(s) |
 | `citation_mining` | 0 | scripts/audit/citation_mining_completeness.py<br>scripts/audit/migration_reproducibility.py<br>scripts/audit/research_batch_dod.py<br>scripts/audit_consolidator.py<br>scripts/db.py<br>scripts/migrations/session_2026_05_11g_replay.py<br>scripts/tests/test_db_integrity.py<br>scripts/validate_db.py | scripts/db.py (INSERT)<br>scripts/db.py (UPDATE)<br>scripts/migrations/session_2026_05_11g_replay.py (INSERT) | 27 stmt-kind(s) |
 | `citation_population_links` | 0 | tools/regenerate_vetting_surface.py | — | 5 stmt-kind(s) |
 | `conflicts` | 0 | scripts/audit_consolidator.py<br>scripts/db.py<br>scripts/generate_parts.py<br>scripts/item_audit_pipeline.py<br>scripts/validate_conflicts.py | scripts/db.py (INSERT)<br>scripts/db.py (UPDATE)<br>scripts/item_audit_pipeline.py (DELETE) | 3 stmt-kind(s) |
 | `connection_targets` | 0 | scripts/audit/graph/extract_db.py<br>scripts/audit_consolidator.py<br>scripts/db.py<br>scripts/item_audit_pipeline.py<br>scripts/migrate/migrate_connections.py<br>scripts/validate_db.py | scripts/audit/graph_audit.py (CREATE)<br>scripts/audit/graph_audit.py (INSERT)<br>scripts/db.py (DELETE)<br>scripts/db.py (INSERT)<br>scripts/item_audit_pipeline.py (DELETE)<br>scripts/migrate/migrate_connections.py (INSERT) | 5 stmt-kind(s) |
 | `connections` | 0 | scripts/audit/graph_audit.py<br>scripts/audit/migration_reproducibility.py<br>scripts/audit_consolidator.py<br>scripts/db.py<br>scripts/generate_parts.py<br>scripts/item_audit_pipeline.py<br>scripts/migrate/migrate_connections.py<br>scripts/validate_cross_refs.py<br>scripts/validate_db.py | scripts/audit/graph_audit.py (CREATE)<br>scripts/audit/graph_audit.py (INSERT)<br>scripts/db.py (DELETE)<br>scripts/db.py (INSERT)<br>scripts/db.py (UPDATE)<br>scripts/item_audit_pipeline.py (DELETE)<br>scripts/migrate/_legacy_guard.py (INSERT)<br>scripts/migrate/migrate_connections.py (INSERT) | 6 stmt-kind(s) |
 | `convergence_assessment` | 0 | scripts/audit/adjudication_integrity.py<br>scripts/audit/check_rendered_docs.py<br>scripts/generate/pilot_renderings.py<br>scripts/validate_evidence_state.py<br>tools/pipeline_completeness.py | scripts/assess/assess_cell.py (INSERT)<br>scripts/tests/test_evidence_cell_state_2_3.py (INSERT)<br>scripts/tests/test_validate_evidence_state_2_4.py (INSERT) | 7 stmt-kind(s) |
-| `data_migrations` | 316 | scripts/migrate_db.py<br>scripts/tests/test_db_integrity.py<br>tools/pipeline_completeness.py | scripts/migrate_db.py (INSERT) | 13 stmt-kind(s) |
+| `data_migrations` | 319 | scripts/migrate_db.py<br>scripts/tests/test_db_integrity.py<br>tools/pipeline_completeness.py | scripts/migrate_db.py (INSERT) | 13 stmt-kind(s) |
 | `db_meta` | 2 | — | scripts/init_db.py (INSERT) | 10 stmt-kind(s) |
-| `decisions` | 157 | scripts/migrate/migrate_decisions.py<br>scripts/tests/test_db_integrity.py | scripts/migrate/migrate_decisions.py (INSERT) | 4 stmt-kind(s) |
+| `decisions` | 158 | scripts/migrate/migrate_decisions.py<br>scripts/tests/test_db_integrity.py | scripts/migrate/migrate_decisions.py (INSERT) | 6 stmt-kind(s) |
 | `economics_entries` | 0 | scripts/audit/research_batch_dod.py<br>scripts/tests/test_db_integrity.py | — | 3 stmt-kind(s) |
 | `economics_entry_populations` | 0 | — | — | 2 stmt-kind(s) |
 | `economics_entry_specs` | 0 | — | — | 2 stmt-kind(s) |
-| `evidence_cell_state` | 0 | scripts/assess/assess_cell.py<br>scripts/audit/adjudication_integrity.py<br>scripts/audit/check_rendered_docs.py<br>scripts/audit/jurisdictional_divergence.py<br>scripts/audit/register_integrity_check.py<br>scripts/audit/table_connectivity.py<br>scripts/generate/build_site.py<br>scripts/generate/pilot_renderings.py<br>scripts/generate/population_page.py<br>scripts/generate/spec_page.py<br>scripts/tests/test_db_integrity.py<br>scripts/tests/test_evidence_cell_state_2_3.py<br>scripts/validate_evidence_state.py<br>scripts/validate_verification_consistency.py<br>tools/pipeline_completeness.py | scripts/assess/assess_cell.py (INSERT)<br>scripts/audit/jurisdictional_divergence.py (CREATE)<br>scripts/audit/jurisdictional_divergence.py (INSERT)<br>scripts/tests/test_evidence_cell_state_2_3.py (INSERT)<br>scripts/tests/test_validate_evidence_state_2_4.py (INSERT)<br>scripts/validate_verification_consistency.py (CREATE)<br>scripts/validate_verification_consistency.py (DELETE)<br>scripts/validate_verification_consistency.py (INSERT) | 18 stmt-kind(s) |
-| `evidence_population_match` | 0 | scripts/assess/assess_cell.py<br>scripts/audit/research_batch_dod.py<br>scripts/audit/research_protocol_audit.py<br>scripts/audit/table_connectivity.py<br>scripts/tests/test_db_integrity.py<br>scripts/tests/test_directness_2_2.py | scripts/tests/test_assess_cell_pilot.py (CREATE) | 21 stmt-kind(s) |
+| `evidence_population_match` | 0 | scripts/assess/assess_cell.py<br>scripts/audit/research_batch_dod.py<br>scripts/audit/research_protocol_audit.py<br>scripts/audit/table_connectivity.py<br>scripts/tests/probe_pipeline.py<br>scripts/tests/test_db_integrity.py<br>scripts/tests/test_directness_2_2.py | scripts/tests/probe_pipeline.py (INSERT)<br>scripts/tests/test_assess_cell_pilot.py (CREATE) | 21 stmt-kind(s) |
 | `evidence_source_authors` | 0 | scripts/migrate_evidence_sources_v2.py<br>scripts/resolve_dois.py<br>scripts/tests/test_db_integrity.py<br>scripts/tests/test_verification_pipeline.py | scripts/migrate_evidence_sources_v2.py (CREATE)<br>scripts/migrate_evidence_sources_v2.py (INSERT)<br>scripts/resolve_dois.py (DELETE)<br>scripts/resolve_dois.py (INSERT)<br>scripts/tests/test_verification_pipeline.py (INSERT) | 28 stmt-kind(s) |
-| `evidence_sources` | 0 | scripts/assess/assess_cell.py<br>scripts/audit/adjudication_integrity.py<br>scripts/audit/check_rendered_docs.py<br>scripts/audit/citation_mining_completeness.py<br>scripts/audit/code_currency_audit.py<br>scripts/audit/full_db_metadata_verification.py<br>scripts/audit/gap_mining_audit.py<br>scripts/audit/metadata_integrity_audit.py<br>scripts/audit/migration_reproducibility.py<br>scripts/audit/pmp_audit.py<br>scripts/audit/reasoning_doc_citations_audit.py<br>scripts/audit/register_integrity_check.py<br>scripts/audit/research_batch_dod.py<br>scripts/audit/research_protocol_audit.py<br>scripts/audit/source_slug_links_duplicates.py<br>scripts/audit/table_connectivity.py<br>scripts/audit_evidence_metadata.py<br>scripts/db.py<br>scripts/generate/pilot_renderings.py<br>scripts/generate/spec_page.py<br>scripts/generate_parts.py<br>scripts/migrate/migrate_evidence_sources.py<br>scripts/migrate_evidence_sources_v2.py<br>scripts/migrations/session_2026_05_11g_replay.py<br>scripts/probes/citation_mining_pipeline.py<br>scripts/resolve_dois.py<br>scripts/tests/test_db_integrity.py<br>scripts/tests/test_url_verifier.py<br>scripts/tests/test_verification_pipeline.py<br>scripts/validate_db.py<br>scripts/validate_evidence_state.py<br>scripts/validate_verification_consistency.py<br>tools/evidentiary_audit.py<br>tools/pipeline_completeness.py<br>tools/regenerate_vetting_surface.py | scripts/audit/research_batch_dod.py (INSERT)<br>scripts/db.py (INSERT)<br>scripts/migrate/migrate_evidence_sources.py (INSERT)<br>scripts/migrations/session_2026_05_11g_replay.py (INSERT)<br>scripts/migrations/session_2026_05_11g_replay.py (UPDATE)<br>scripts/resolve_dois.py (UPDATE)<br>scripts/tests/test_assess_cell_pilot.py (CREATE)<br>scripts/tests/test_assess_cell_pilot.py (INSERT)<br>scripts/tests/test_db_integrity.py (UPDATE)<br>scripts/tests/test_url_verifier.py (INSERT)<br>scripts/tests/test_verification_pipeline.py (INSERT)<br>scripts/validate_verification_consistency.py (CREATE)<br>scripts/validate_verification_consistency.py (INSERT) | 222 stmt-kind(s) |
+| `evidence_sources` | 0 | scripts/assess/assess_cell.py<br>scripts/audit/adjudication_integrity.py<br>scripts/audit/check_rendered_docs.py<br>scripts/audit/citation_mining_completeness.py<br>scripts/audit/code_currency_audit.py<br>scripts/audit/full_db_metadata_verification.py<br>scripts/audit/gap_mining_audit.py<br>scripts/audit/metadata_integrity_audit.py<br>scripts/audit/migration_reproducibility.py<br>scripts/audit/pmp_audit.py<br>scripts/audit/reasoning_doc_citations_audit.py<br>scripts/audit/register_integrity_check.py<br>scripts/audit/research_batch_dod.py<br>scripts/audit/research_protocol_audit.py<br>scripts/audit/source_slug_links_duplicates.py<br>scripts/audit/table_connectivity.py<br>scripts/audit_evidence_metadata.py<br>scripts/db.py<br>scripts/generate/pilot_renderings.py<br>scripts/generate/spec_page.py<br>scripts/generate_parts.py<br>scripts/migrate/migrate_evidence_sources.py<br>scripts/migrate_evidence_sources_v2.py<br>scripts/migrations/session_2026_05_11g_replay.py<br>scripts/probes/citation_mining_pipeline.py<br>scripts/resolve_dois.py<br>scripts/tests/probe_pipeline.py<br>scripts/tests/test_db_integrity.py<br>scripts/tests/test_url_verifier.py<br>scripts/tests/test_verification_pipeline.py<br>scripts/validate_db.py<br>scripts/validate_evidence_state.py<br>scripts/validate_verification_consistency.py<br>tools/evidentiary_audit.py<br>tools/pipeline_completeness.py<br>tools/regenerate_vetting_surface.py | scripts/audit/research_batch_dod.py (INSERT)<br>scripts/db.py (INSERT)<br>scripts/migrate/migrate_evidence_sources.py (INSERT)<br>scripts/migrations/session_2026_05_11g_replay.py (INSERT)<br>scripts/migrations/session_2026_05_11g_replay.py (UPDATE)<br>scripts/resolve_dois.py (UPDATE)<br>scripts/tests/probe_pipeline.py (INSERT)<br>scripts/tests/test_assess_cell_pilot.py (CREATE)<br>scripts/tests/test_assess_cell_pilot.py (INSERT)<br>scripts/tests/test_db_integrity.py (UPDATE)<br>scripts/tests/test_url_verifier.py (INSERT)<br>scripts/tests/test_verification_pipeline.py (INSERT)<br>scripts/validate_verification_consistency.py (CREATE)<br>scripts/validate_verification_consistency.py (INSERT) | 222 stmt-kind(s) |
 | `external_root_registry` | 0 | — | — | 2 stmt-kind(s) |
 | `extraction_population_links` | 0 | tools/regenerate_vetting_surface.py | — | 2 stmt-kind(s) |
 | `gap_mining` | 0 | scripts/audit/gap_mining_audit.py<br>scripts/db.py | scripts/audit/graph_audit.py (DROP)<br>scripts/db.py (INSERT) | 2 stmt-kind(s) |
@@ -12253,31 +12251,33 @@ SELECT e.extraction_id, e.ref_id, e.item_code, e.population_code, e.loc_section,
 | `item_audit_runs` | 0 | scripts/audit_consolidator.py<br>scripts/db.py<br>scripts/item_audit_pipeline.py<br>scripts/validate_audit_runs.py | scripts/audit_consolidator.py (UPDATE)<br>scripts/db.py (INSERT)<br>scripts/db.py (UPDATE)<br>scripts/item_audit_pipeline.py (INSERT)<br>scripts/item_audit_pipeline.py (UPDATE) | 5 stmt-kind(s) |
 | `item_axis_links` | 158 | scripts/validate_axes.py | — | 9 stmt-kind(s) |
 | `item_bpc_links` | 0 | scripts/generate/spec_page.py<br>scripts/tests/test_db_integrity.py<br>tools/pipeline_completeness.py | — | 4 stmt-kind(s) |
-| `item_population_elaborations` | 0 | scripts/tests/test_db_integrity.py | — | 8 stmt-kind(s) |
+| `item_population_elaborations` | 0 | scripts/tests/probe_pipeline.py<br>scripts/tests/test_db_integrity.py | — | 8 stmt-kind(s) |
 | `item_population_links` | 372 | scripts/audit/check_rendered_docs.py<br>scripts/audit/graph/extract_db.py<br>scripts/generate/population_page.py<br>scripts/generate/spec_page.py<br>scripts/item_audit_pipeline.py<br>scripts/tests/test_db_integrity.py<br>scripts/validate_items.py<br>tools/pipeline_completeness.py<br>tools/regenerate_vetting_surface.py | — | 7 stmt-kind(s) |
-| `items` | 93 | scripts/audit/graph/extract_db.py<br>scripts/audit/graph_audit.py<br>scripts/audit/migration_reproducibility.py<br>scripts/audit/pmp_audit.py<br>scripts/audit/table_connectivity.py<br>scripts/audit_consolidator.py<br>scripts/db.py<br>scripts/generate/build_site.py<br>scripts/generate/pilot_renderings.py<br>scripts/generate/population_page.py<br>scripts/generate/spec_page.py<br>scripts/generate_parts.py<br>scripts/generate_search_queries.py<br>scripts/item_audit_pipeline.py<br>scripts/tests/test_db_integrity.py<br>scripts/validate_audit_runs.py<br>scripts/validate_db.py<br>scripts/validate_items.py<br>tools/evidentiary_audit.py<br>tools/pipeline_completeness.py<br>tools/regenerate_vetting_surface.py | scripts/audit/graph_audit.py (UPDATE)<br>scripts/audit/migration_reproducibility.py (INSERT)<br>scripts/db.py (INSERT)<br>scripts/migrate/migrate_items.py (INSERT)<br>scripts/tests/test_evidence_cell_state_2_3.py (CREATE)<br>scripts/tests/test_evidence_cell_state_2_3.py (INSERT)<br>scripts/tests/test_validate_evidence_state_2_4.py (CREATE)<br>scripts/tests/test_validate_evidence_state_2_4.py (INSERT) | 10 stmt-kind(s) |
-| `jurisdictional_values` | 109 | scripts/audit/jurisdictional_divergence.py<br>scripts/generate/pilot_renderings.py<br>scripts/tests/test_db_integrity.py<br>scripts/validate_schema.py | scripts/audit/jurisdictional_divergence.py (CREATE)<br>scripts/audit/jurisdictional_divergence.py (INSERT) | 4 stmt-kind(s) |
+| `items` | 93 | scripts/audit/graph/extract_db.py<br>scripts/audit/graph_audit.py<br>scripts/audit/migration_reproducibility.py<br>scripts/audit/pmp_audit.py<br>scripts/audit/table_connectivity.py<br>scripts/audit_consolidator.py<br>scripts/db.py<br>scripts/generate/build_site.py<br>scripts/generate/pilot_renderings.py<br>scripts/generate/population_page.py<br>scripts/generate/spec_page.py<br>scripts/generate_parts.py<br>scripts/generate_search_queries.py<br>scripts/item_audit_pipeline.py<br>scripts/tests/test_db_integrity.py<br>scripts/validate_audit_runs.py<br>scripts/validate_db.py<br>scripts/validate_items.py<br>tools/evidentiary_audit.py<br>tools/pipeline_completeness.py<br>tools/regenerate_vetting_surface.py | scripts/audit/graph_audit.py (UPDATE)<br>scripts/audit/migration_reproducibility.py (INSERT)<br>scripts/db.py (INSERT)<br>scripts/migrate/migrate_items.py (INSERT)<br>scripts/tests/probe_pipeline.py (INSERT)<br>scripts/tests/test_evidence_cell_state_2_3.py (CREATE)<br>scripts/tests/test_evidence_cell_state_2_3.py (INSERT)<br>scripts/tests/test_validate_evidence_state_2_4.py (CREATE)<br>scripts/tests/test_validate_evidence_state_2_4.py (INSERT) | 10 stmt-kind(s) |
+| `jurisdictional_values` | 109 | scripts/audit/jurisdictional_divergence.py<br>scripts/generate/pilot_renderings.py<br>scripts/tests/probe_pipeline.py<br>scripts/tests/test_db_integrity.py<br>scripts/validate_schema.py | scripts/audit/jurisdictional_divergence.py (CREATE)<br>scripts/audit/jurisdictional_divergence.py (INSERT) | 4 stmt-kind(s) |
 | `lang_jur_map` | 70 | scripts/audit/alias_provenance_audit.py<br>scripts/db.py<br>scripts/generate_alias_chart.py<br>tools/pipeline_completeness.py | — | 4 stmt-kind(s) |
 | `life_stage_modifiers` | 2 | — | — | 3 stmt-kind(s) |
 | `pipeline_runs` | 0 | scripts/tests/test_db_integrity.py<br>scripts/tests/test_verification_pipeline.py | scripts/resolve_dois.py (CREATE)<br>scripts/resolve_dois.py (INSERT)<br>scripts/resolve_dois.py (REPLACE)<br>scripts/resolve_dois.py (UPDATE) | 3 stmt-kind(s) |
 | `population_axis_map` | 53 | scripts/validate_axes.py | scripts/validate_axes.py (CREATE)<br>scripts/validate_axes.py (DELETE)<br>scripts/validate_axes.py (INSERT) | 7 stmt-kind(s) |
 | `population_reclass` | 29 | — | — | 3 stmt-kind(s) |
-| `populations` | 23 | scripts/assess/assess_cell.py<br>scripts/audit/graph/extract_db.py<br>scripts/audit/graph_audit.py<br>scripts/audit/population_integrity_audit.py<br>scripts/audit/table_connectivity.py<br>scripts/generate/population_page.py<br>scripts/generate/spec_page.py<br>scripts/generate_parts.py<br>scripts/tests/test_db_integrity.py<br>scripts/validate_axes.py<br>scripts/validate_items.py<br>scripts/validate_population.py<br>tools/pipeline_completeness.py<br>tools/regenerate_vetting_surface.py | scripts/audit/graph_audit.py (UPDATE)<br>scripts/tests/test_evidence_cell_state_2_3.py (CREATE)<br>scripts/tests/test_evidence_cell_state_2_3.py (INSERT)<br>scripts/tests/test_validate_evidence_state_2_4.py (CREATE)<br>scripts/tests/test_validate_evidence_state_2_4.py (INSERT)<br>scripts/validate_axes.py (CREATE)<br>scripts/validate_axes.py (INSERT) | 5 stmt-kind(s) |
+| `populations` | 23 | scripts/assess/assess_cell.py<br>scripts/audit/graph/extract_db.py<br>scripts/audit/graph_audit.py<br>scripts/audit/population_integrity_audit.py<br>scripts/audit/table_connectivity.py<br>scripts/generate/population_page.py<br>scripts/generate/spec_page.py<br>scripts/generate_parts.py<br>scripts/tests/probe_pipeline.py<br>scripts/tests/test_db_integrity.py<br>scripts/validate_axes.py<br>scripts/validate_items.py<br>scripts/validate_population.py<br>tools/pipeline_completeness.py<br>tools/regenerate_vetting_surface.py | scripts/audit/graph_audit.py (UPDATE)<br>scripts/tests/probe_pipeline.py (INSERT)<br>scripts/tests/test_evidence_cell_state_2_3.py (CREATE)<br>scripts/tests/test_evidence_cell_state_2_3.py (INSERT)<br>scripts/tests/test_validate_evidence_state_2_4.py (CREATE)<br>scripts/tests/test_validate_evidence_state_2_4.py (INSERT)<br>scripts/validate_axes.py (CREATE)<br>scripts/validate_axes.py (INSERT) | 5 stmt-kind(s) |
 | `probe_population_links` | 0 | tools/regenerate_vetting_surface.py | — | 5 stmt-kind(s) |
 | `reasoning_doc_citations` | 0 | scripts/audit/adherence_log_audit.py<br>scripts/audit/reasoning_doc_citations_audit.py<br>scripts/tests/test_db_integrity.py<br>tools/pipeline_completeness.py<br>tools/regenerate_vetting_surface.py | — | 10 stmt-kind(s) |
 | `room_items` | 0 | — | — | 1 stmt-kind(s) |
 | `rooms` | 17 | — | — | 2 stmt-kind(s) |
-| `search_admissions` | 0 | scripts/tests/test_db_integrity.py | scripts/db.py (INSERT) | 3 stmt-kind(s) |
+| `search_admissions` | 0 | scripts/tests/probe_pipeline.py<br>scripts/tests/test_db_integrity.py | scripts/db.py (INSERT)<br>scripts/tests/probe_pipeline.py (INSERT) | 3 stmt-kind(s) |
 | `search_candidates` | 0 | scripts/audit/research_batch_dod.py | — | 11 stmt-kind(s) |
 | `search_coverage` | 0 | scripts/db.py<br>tools/evidentiary_audit.py | — | 9 stmt-kind(s) |
-| `search_executions` | 0 | scripts/audit/research_batch_dod.py<br>scripts/db.py<br>scripts/tests/test_db_integrity.py<br>tools/pipeline_completeness.py | scripts/audit/research_batch_dod.py (INSERT)<br>scripts/db.py (INSERT) | 26 stmt-kind(s) |
+| `search_executions` | 0 | scripts/audit/research_batch_dod.py<br>scripts/db.py<br>scripts/tests/probe_pipeline.py<br>scripts/tests/test_db_integrity.py<br>tools/pipeline_completeness.py | scripts/audit/research_batch_dod.py (INSERT)<br>scripts/db.py (INSERT)<br>scripts/tests/probe_pipeline.py (INSERT)<br>scripts/tests/probe_pipeline.py (UPDATE) | 26 stmt-kind(s) |
 | `search_languages` | 0 | scripts/audit/research_protocol_audit.py<br>scripts/db.py<br>tools/evidentiary_audit.py | — | 8 stmt-kind(s) |
 | `situations` | 0 | — | — | 2 stmt-kind(s) |
-| `slugs` | 106 | scripts/audit/graph/extract_db.py<br>scripts/audit/graph_audit.py<br>scripts/audit/table_connectivity.py<br>scripts/audit_evidence_metadata.py<br>scripts/generate_search_queries.py<br>scripts/migrate/migrate_bpc_metadata.py<br>scripts/migrate/migrate_evidence_sources.py<br>scripts/migrate/migrate_items.py<br>scripts/migrate/migrate_slugs.py<br>scripts/tests/test_db_integrity.py<br>scripts/validate_cross_refs.py<br>tools/evidentiary_audit.py<br>tools/pipeline_completeness.py | scripts/migrate/migrate_slugs.py (INSERT) | 12 stmt-kind(s) |
+| `slugs` | 106 | scripts/audit/graph/extract_db.py<br>scripts/audit/graph_audit.py<br>scripts/audit/table_connectivity.py<br>scripts/audit_evidence_metadata.py<br>scripts/generate_search_queries.py<br>scripts/migrate/migrate_bpc_metadata.py<br>scripts/migrate/migrate_evidence_sources.py<br>scripts/migrate/migrate_items.py<br>scripts/migrate/migrate_slugs.py<br>scripts/tests/test_db_integrity.py<br>scripts/validate_cross_refs.py<br>tools/evidentiary_audit.py<br>tools/pipeline_completeness.py | scripts/migrate/migrate_slugs.py (INSERT)<br>scripts/tests/probe_pipeline.py (INSERT) | 12 stmt-kind(s) |
 | `source_locators` | 835 | — | — | 2 stmt-kind(s) |
-| `source_slug_links` | 0 | scripts/assess/assess_cell.py<br>scripts/audit/citation_mining_completeness.py<br>scripts/audit/code_currency_audit.py<br>scripts/audit/migration_reproducibility.py<br>scripts/audit/source_slug_links_duplicates.py<br>scripts/audit/table_connectivity.py<br>scripts/audit_evidence_metadata.py<br>scripts/db.py<br>scripts/migrate/migrate_evidence_sources.py<br>scripts/migrations/session_2026_05_11g_replay.py<br>scripts/tests/test_db_integrity.py<br>scripts/validate_db.py<br>tools/evidentiary_audit.py<br>tools/regenerate_vetting_surface.py | scripts/db.py (INSERT)<br>scripts/migrate/migrate_evidence_sources.py (INSERT)<br>scripts/migrations/session_2026_05_11g_replay.py (DELETE)<br>scripts/migrations/session_2026_05_11g_replay.py (INSERT)<br>scripts/migrations/session_2026_05_11g_replay.py (UPDATE)<br>scripts/tests/test_assess_cell_pilot.py (CREATE)<br>scripts/tests/test_assess_cell_pilot.py (INSERT) | 71 stmt-kind(s) |
-| `source_value_extractions` | 0 | scripts/audit/adjudication_integrity.py<br>scripts/generate/pilot_renderings.py<br>scripts/tests/test_db_integrity.py<br>tools/pipeline_completeness.py<br>tools/regenerate_vetting_surface.py | — | 12 stmt-kind(s) |
+| `source_slug_links` | 0 | scripts/assess/assess_cell.py<br>scripts/audit/citation_mining_completeness.py<br>scripts/audit/code_currency_audit.py<br>scripts/audit/migration_reproducibility.py<br>scripts/audit/source_slug_links_duplicates.py<br>scripts/audit/table_connectivity.py<br>scripts/audit_evidence_metadata.py<br>scripts/db.py<br>scripts/migrate/migrate_evidence_sources.py<br>scripts/migrations/session_2026_05_11g_replay.py<br>scripts/tests/test_db_integrity.py<br>scripts/validate_db.py<br>tools/evidentiary_audit.py<br>tools/regenerate_vetting_surface.py | scripts/db.py (INSERT)<br>scripts/migrate/migrate_evidence_sources.py (INSERT)<br>scripts/migrations/session_2026_05_11g_replay.py (DELETE)<br>scripts/migrations/session_2026_05_11g_replay.py (INSERT)<br>scripts/migrations/session_2026_05_11g_replay.py (UPDATE)<br>scripts/tests/probe_pipeline.py (INSERT)<br>scripts/tests/test_assess_cell_pilot.py (CREATE)<br>scripts/tests/test_assess_cell_pilot.py (INSERT) | 71 stmt-kind(s) |
+| `source_value_extractions` | 0 | scripts/audit/adjudication_integrity.py<br>scripts/generate/pilot_renderings.py<br>scripts/tests/probe_pipeline.py<br>scripts/tests/test_db_integrity.py<br>tools/pipeline_completeness.py<br>tools/regenerate_vetting_surface.py | scripts/tests/probe_pipeline.py (INSERT) | 12 stmt-kind(s) |
 | `spec_value_probes` | 0 | scripts/audit/adherence_log_audit.py<br>scripts/audit/gap_mining_audit.py<br>scripts/audit/pmp_audit.py<br>scripts/tests/test_db_integrity.py<br>tools/regenerate_vetting_surface.py | — | 13 stmt-kind(s) |
+| `specification_source_links` | 0 | scripts/generate/build_site.py<br>scripts/generate/pilot_renderings.py<br>scripts/generate/spec_page.py<br>scripts/tests/probe_pipeline.py | scripts/tests/probe_pipeline.py (INSERT)<br>scripts/tests/test_validate_evidence_state_2_4.py (ALTER) | 1 stmt-kind(s) |
+| `specifications` | 0 | scripts/assess/assess_cell.py<br>scripts/audit/adjudication_integrity.py<br>scripts/audit/check_rendered_docs.py<br>scripts/audit/jurisdictional_divergence.py<br>scripts/audit/register_integrity_check.py<br>scripts/audit/table_connectivity.py<br>scripts/generate/build_site.py<br>scripts/generate/pilot_renderings.py<br>scripts/generate/population_page.py<br>scripts/generate/spec_page.py<br>scripts/tests/probe_pipeline.py<br>scripts/tests/test_db_integrity.py<br>scripts/tests/test_evidence_cell_state_2_3.py<br>scripts/validate_evidence_state.py<br>scripts/validate_verification_consistency.py<br>tools/pipeline_completeness.py | scripts/assess/assess_cell.py (INSERT)<br>scripts/audit/jurisdictional_divergence.py (CREATE)<br>scripts/audit/jurisdictional_divergence.py (INSERT)<br>scripts/tests/probe_pipeline.py (INSERT)<br>scripts/tests/probe_pipeline.py (UPDATE)<br>scripts/tests/test_evidence_cell_state_2_3.py (ALTER)<br>scripts/tests/test_evidence_cell_state_2_3.py (INSERT)<br>scripts/tests/test_validate_evidence_state_2_4.py (ALTER)<br>scripts/tests/test_validate_evidence_state_2_4.py (INSERT)<br>scripts/validate_verification_consistency.py (CREATE)<br>scripts/validate_verification_consistency.py (DELETE)<br>scripts/validate_verification_consistency.py (INSERT) | 1 stmt-kind(s) |
 | `supersession_check` | 0 | scripts/audit/code_currency_audit.py | scripts/db.py (INSERT) | 16 stmt-kind(s) |
 | `term_aliases` | 2382 | scripts/audit/alias_provenance_audit.py<br>scripts/audit/graph/extract_db.py<br>scripts/audit/research_batch_dod.py<br>scripts/db.py<br>scripts/generate_alias_chart.py<br>scripts/generate_search_queries.py | scripts/audit/research_batch_dod.py (INSERT) | 13 stmt-kind(s) |
 | `term_item_links` | 147 | scripts/audit/graph/extract_db.py<br>scripts/db.py<br>scripts/generate_alias_chart.py<br>scripts/generate_search_queries.py | — | 6 stmt-kind(s) |
@@ -12285,52 +12285,52 @@ SELECT e.extraction_id, e.ref_id, e.item_code, e.population_code, e.loc_section,
 | `url_verification_runs` | 0 | scripts/tests/test_db_integrity.py | scripts/verify_urls.py (CREATE)<br>scripts/verify_urls.py (INSERT)<br>scripts/verify_urls.py (REPLACE)<br>scripts/verify_urls.py (UPDATE) | 3 stmt-kind(s) |
 | `weighting_profile` | 5 | — | — | 2 stmt-kind(s) |
 
-### [1131] D — unwritable outputs   `2026-08-12 05:22:51Z`
+### [1131] D — unwritable outputs   `2026-08-12 08:35:32Z`
 **Action:** tables read by code but with NO .py writer AND NO data-migration INSERT/UPDATE/DELETE
 **Expected:** none
 **Actual:** []
 **Verdict:** `OK`
 
-### [1132] D — unread inputs   `2026-08-12 05:22:51Z`
+### [1132] D — unread inputs   `2026-08-12 08:35:32Z`
 **Action:** tables written (py or migrations) but read by no scanned .py
 **Expected:** none
 **Actual:** ['access_duration', 'access_need_icf', 'access_needs', 'access_stakes', 'case_studies', 'case_study_outcomes', 'case_study_populations', 'case_study_specs', 'case_study_strategies', 'db_meta', 'economics_entry_populations', 'economics_entry_specs', 'external_root_registry', 'life_stage_modifiers', 'population_reclass', 'rooms', 'situations', 'source_locators', 'weighting_profile']
 **Verdict:** `ERROR`
 
-### [1133] D — phantom tables   `2026-08-12 05:22:51Z`
+### [1133] D — phantom tables   `2026-08-12 08:35:32Z`
 **Action:** table names referenced in code that do not exist in the schema
 **Expected:** known set from room_page.py
-**Actual:** conflict ← [('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'READ'), ('scripts/db/migrate_all.py', 'REPLACE')]; connection_endpoint ← [('scripts/db/enrich_all_c_stage.py', 'INSERT'), ('scripts/db/enrich_all_c_stage.py', 'READ'), ('scripts/db/enrich_all_c_stage.py', 'REPLACE')]; doctrine ← [('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'REPLACE'), ('scripts/db/migrate_all.py', 'UPDATE')]; economics_entry ← [('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'REPLACE')]; evidence_source ← [('scripts/db/enrich_all_c_stage.py', 'READ'), ('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'REPLACE')]; evidence_sources_v1_legacy ← [('scripts/tests/test_db_integrity.py', 'READ')]; jurisdictional_value ← [('scripts/db/enrich_all_c_stage.py', 'READ'), ('scripts/db/migrate_all.py', 'DELETE'), ('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'READ')]; measurement ← [('scripts/db/enrich_all_c_stage.py', 'READ'), ('scripts/db/migrate_all.py', 'INSERT')]; population ← [('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'READ'), ('scripts/db/migrate_all.py', 'REPLACE')]; room ← [('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'REPLACE'), ('scripts/db/migrate_all.py', 'UPDATE'), ('scripts/generate/room_page.py', 'READ')]; room_conflict ← [('scripts/db/enrich_all_c_stage.py', 'INSERT'), ('scripts/db/enrich_all_c_stage.py', 'READ'), ('scripts/db/enrich_all_c_stage.py', 'REPLACE'), ('scripts/db/migrate_all.py', 'INSERT'), ('scripts/generate/room_page.py', 'READ')]; room_dar_provision ← [('scripts/db/enrich_all_c_stage.py', 'INSERT'), ('scripts/db/enrich_all_c_stage.py', 'READ'), ('scripts/db/enrich_all_c_stage.py', 'REPLACE'), ('scripts/db/migrate_all.py', 'INSERT'), ('scripts/generate/room_page.py', 'READ')]; room_item ← [('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'REPLACE'), ('scripts/generate/room_page.py', 'READ')]; room_item_population ← [('scripts/db/enrich_all_c_stage.py', 'INSERT'), ('scripts/db/enrich_all_c_stage.py', 'READ'), ('scripts/db/enrich_all_c_stage.py', 'REPLACE'), ('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'REPLACE'), ('scripts/generate/room_page.py', 'READ')]; specialist ← [('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'REPLACE')]; specialist_population ← [('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'REPLACE')]; specialist_trigger ← [('scripts/db/migrate_all.py', 'INSERT')]; specification ← [('scripts/db/enrich_all_c_stage.py', 'READ'), ('scripts/db/enrich_all_c_stage.py', 'UPDATE'), ('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'READ'), ('scripts/db/migrate_all.py', 'REPLACE'), ('scripts/db/migrate_all.py', 'UPDATE'), ('scripts/generate/room_page.py', 'READ')]; specification_population ← [('scripts/db/enrich_all_c_stage.py', 'READ'), ('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'READ'), ('scripts/db/migrate_all.py', 'REPLACE')]; specification_source ← [('scripts/db/enrich_all_c_stage.py', 'INSERT'), ('scripts/db/enrich_all_c_stage.py', 'READ'), ('scripts/db/enrich_all_c_stage.py', 'REPLACE')]; t ← [('scripts/audit/readonly_db_open_audit.py', 'INSERT')]; throughline ← [('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'REPLACE')]; throughline_specification ← [('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'REPLACE')]
+**Actual:** cell_source_links ← [('scripts/tests/test_validate_evidence_state_2_4.py', 'ALTER')]; conflict ← [('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'READ'), ('scripts/db/migrate_all.py', 'REPLACE')]; connection_endpoint ← [('scripts/db/enrich_all_c_stage.py', 'INSERT'), ('scripts/db/enrich_all_c_stage.py', 'READ'), ('scripts/db/enrich_all_c_stage.py', 'REPLACE')]; doctrine ← [('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'REPLACE'), ('scripts/db/migrate_all.py', 'UPDATE')]; economics_entry ← [('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'REPLACE')]; evidence_cell_state ← [('scripts/tests/test_evidence_cell_state_2_3.py', 'ALTER'), ('scripts/tests/test_validate_evidence_state_2_4.py', 'ALTER')]; evidence_source ← [('scripts/db/enrich_all_c_stage.py', 'READ'), ('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'REPLACE')]; evidence_sources_v1_legacy ← [('scripts/tests/test_db_integrity.py', 'READ')]; jurisdictional_value ← [('scripts/db/enrich_all_c_stage.py', 'READ'), ('scripts/db/migrate_all.py', 'DELETE'), ('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'READ')]; measurement ← [('scripts/db/enrich_all_c_stage.py', 'READ'), ('scripts/db/migrate_all.py', 'INSERT')]; population ← [('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'READ'), ('scripts/db/migrate_all.py', 'REPLACE')]; room ← [('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'REPLACE'), ('scripts/db/migrate_all.py', 'UPDATE'), ('scripts/generate/room_page.py', 'READ')]; room_conflict ← [('scripts/db/enrich_all_c_stage.py', 'INSERT'), ('scripts/db/enrich_all_c_stage.py', 'READ'), ('scripts/db/enrich_all_c_stage.py', 'REPLACE'), ('scripts/db/migrate_all.py', 'INSERT'), ('scripts/generate/room_page.py', 'READ')]; room_dar_provision ← [('scripts/db/enrich_all_c_stage.py', 'INSERT'), ('scripts/db/enrich_all_c_stage.py', 'READ'), ('scripts/db/enrich_all_c_stage.py', 'REPLACE'), ('scripts/db/migrate_all.py', 'INSERT'), ('scripts/generate/room_page.py', 'READ')]; room_item ← [('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'REPLACE'), ('scripts/generate/room_page.py', 'READ')]; room_item_population ← [('scripts/db/enrich_all_c_stage.py', 'INSERT'), ('scripts/db/enrich_all_c_stage.py', 'READ'), ('scripts/db/enrich_all_c_stage.py', 'REPLACE'), ('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'REPLACE'), ('scripts/generate/room_page.py', 'READ')]; specialist ← [('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'REPLACE')]; specialist_population ← [('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'REPLACE')]; specialist_trigger ← [('scripts/db/migrate_all.py', 'INSERT')]; specification ← [('scripts/db/enrich_all_c_stage.py', 'READ'), ('scripts/db/enrich_all_c_stage.py', 'UPDATE'), ('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'READ'), ('scripts/db/migrate_all.py', 'REPLACE'), ('scripts/db/migrate_all.py', 'UPDATE'), ('scripts/generate/room_page.py', 'READ')]; specification_population ← [('scripts/db/enrich_all_c_stage.py', 'READ'), ('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'READ'), ('scripts/db/migrate_all.py', 'REPLACE')]; specification_source ← [('scripts/db/enrich_all_c_stage.py', 'INSERT'), ('scripts/db/enrich_all_c_stage.py', 'READ'), ('scripts/db/enrich_all_c_stage.py', 'REPLACE')]; t ← [('scripts/audit/readonly_db_open_audit.py', 'INSERT')]; throughline ← [('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'REPLACE')]; throughline_specification ← [('scripts/db/migrate_all.py', 'INSERT'), ('scripts/db/migrate_all.py', 'REPLACE')]
 **Verdict:** `ERROR`
 
-### [1134] D — separate-DB tables (graph audit module)   `2026-08-12 05:22:51Z`
+### [1134] D — separate-DB tables (graph audit module)   `2026-08-12 08:35:32Z`
 **Action:** table names used by scripts/audit/graph/* + graph_audit.py — these target a STANDALONE graph database file, not data/guidebook.db
 **Expected:** classified separately, not as guidebook phantoms
 **Actual:** __DYN__ ← ['scripts/audit/graph/model.py', 'scripts/audit/graph_audit.py']; build_meta ← ['scripts/audit/graph/model.py', 'scripts/audit/graph_audit.py']; edges ← ['scripts/audit/graph/model.py', 'scripts/audit/graph/topology.py']; findings ← ['scripts/audit/graph/model.py', 'scripts/audit/graph_audit.py']; no_such_table ← ['scripts/audit/graph_audit.py']; nodes ← ['scripts/audit/graph/extract_content.py', 'scripts/audit/graph/model.py', 'scripts/audit/graph/topology.py']; real_table ← ['scripts/audit/graph/extract_code.py']; zzz_phantom ← ['scripts/audit/graph_audit.py']
 **Verdict:** `OK`
 
-### [1135] D — phantom columns (static)   `2026-08-12 05:22:51Z`
+### [1135] D — phantom columns (static)   `2026-08-12 08:35:32Z`
 **Action:** columns referenced in SQL that do not exist on their (real) table
 **Expected:** none
 **Actual:** scripts/audit/migration_reproducibility.py:440 items.id [INSERT column list]; scripts/migrate/migrate_evidence_sources.py:307 evidence_sources.authors [INSERT column list]; scripts/migrate/migrate_evidence_sources.py:307 evidence_sources.year [INSERT column list]; scripts/migrate/migrate_evidence_sources.py:307 evidence_sources.title [INSERT column list]; scripts/migrate/migrate_evidence_sources.py:307 evidence_sources.doi_less_key [INSERT column list]; scripts/migrate/migrate_items.py:158 items.applicable_groups [INSERT column list]
 **Verdict:** `ERROR`
 
-### [1136] D — legacy scripts   `2026-08-12 05:22:51Z`
+### [1136] D — legacy scripts   `2026-08-12 08:35:32Z`
 **Action:** scripts under scripts/db, scripts/migrate, scripts/convert — marked, not excluded
 **Expected:** marked
 **Actual:** 29 legacy scripts included in the matrix: ['scripts/convert/convert_bpc_metadata.py', 'scripts/convert/convert_conflicts.py', 'scripts/convert/convert_connections.py', 'scripts/convert/convert_doctrines.py', 'scripts/convert/convert_gaps.py', 'scripts/convert/convert_jurisdictions.py', 'scripts/convert/convert_populations.py', 'scripts/convert/convert_rooms.py', 'scripts/convert/convert_slugs.py', 'scripts/convert/convert_sources.py', 'scripts/convert/convert_spec_db.py', 'scripts/convert/convert_specialists.py', 'scripts/convert/version_retrofit.py', 'scripts/db.py', 'scripts/db/enrich_all_c_stage.py', 'scripts/db/init_db.py', 'scripts/db/migrate_all.py', 'scripts/migrate/_legacy_guard.py', 'scripts/migrate/init_database.py', 'scripts/migrate/migrate_bpc_metadata.py', 'scripts/migrate/migrate_connections.py', 'scripts/migrate/migrate_decisions.py', 'scripts/migrate/migrate_evidence_sources.py', 'scripts/migrate/migrate_gaps.py', 'scripts/migrate/migrate_items.py', 'scripts/migrate/migrate_slugs.py', 'scripts/migrate/phase_jv_appendix_a.py', 'scripts/migrate_db.py', 'scripts/migrate_evidence_sources_v2.py']
 **Verdict:** `OK`
 
-**SWEEP D EXAMINED: 167/167 scripts AST-parsed · 1265 SQL statements PREPARE-checked (721 prepared, 182 dynamic, 167 fragments) · 67 tables in matrix · 23 phantom tables · 6 phantom column refs**
+**SWEEP D EXAMINED: 168/168 scripts AST-parsed · 1424 SQL statements PREPARE-checked (772 prepared, 216 dynamic, 210 fragments) · 67 tables in matrix · 25 phantom tables · 6 phantom column refs**
 
 
 ---
 
 ## EXECUTIVE SUMMARY
 - Rejectable-write surface probed (FK=ON): **481/481** (80 FK bad-value + 128 CHECK + 268 NOT NULL + 5 UNIQUE); same surface re-probed under FK=OFF; plus 18/18 NULL-path probes and 1 dual-identity probe.
-- Sweep A: edges 80/80 · orphan queries 89 · reverse map 66/66 tables; isolated=['access_duration', 'access_stakes', 'data_migrations', 'db_meta', 'decisions', 'external_root_registry', 'lang_jur_map', 'life_stage_modifiers', 'pipeline_runs', 'population_reclass', 'situations', 'source_locators', 'url_verification_runs', 'weighting_profile']; referenced-but-empty=['case_studies', 'connections', 'convergence_assessment', 'economics_entries', 'evidence_cell_state', 'evidence_sources', 'gaps', 'reasoning_doc_citations', 'search_executions', 'source_value_extractions', 'spec_value_probes']
+- Sweep A: edges 80/80 · orphan queries 89 · reverse map 66/66 tables; isolated=['access_duration', 'access_stakes', 'data_migrations', 'db_meta', 'decisions', 'external_root_registry', 'lang_jur_map', 'life_stage_modifiers', 'pipeline_runs', 'population_reclass', 'situations', 'source_locators', 'url_verification_runs', 'weighting_profile']; referenced-but-empty=['case_studies', 'connections', 'convergence_assessment', 'economics_entries', 'evidence_sources', 'gaps', 'reasoning_doc_citations', 'search_executions', 'source_value_extractions', 'spec_value_probes', 'specifications']
 - Sweep B: 26 handoff probes · Sweep V: 18/18 views · Sweep C: 10 joints
-- Sweep D: 167/167 scripts; 1265 statements prepared; unwritable=[]; unread=['access_duration', 'access_need_icf', 'access_needs', 'access_stakes', 'case_studies', 'case_study_outcomes', 'case_study_populations', 'case_study_specs', 'case_study_strategies', 'db_meta', 'economics_entry_populations', 'economics_entry_specs', 'external_root_registry', 'life_stage_modifiers', 'population_reclass', 'rooms', 'situations', 'source_locators', 'weighting_profile']; phantom tables=['conflict', 'connection_endpoint', 'doctrine', 'economics_entry', 'evidence_source', 'evidence_sources_v1_legacy', 'jurisdictional_value', 'measurement', 'population', 'room', 'room_conflict', 'room_dar_provision', 'room_item', 'room_item_population', 'specialist', 'specialist_population', 'specialist_trigger', 'specification', 'specification_population', 'specification_source', 't', 'throughline', 'throughline_specification']; phantom column refs=6
+- Sweep D: 168/168 scripts; 1424 statements prepared; unwritable=[]; unread=['access_duration', 'access_need_icf', 'access_needs', 'access_stakes', 'case_studies', 'case_study_outcomes', 'case_study_populations', 'case_study_specs', 'case_study_strategies', 'db_meta', 'economics_entry_populations', 'economics_entry_specs', 'external_root_registry', 'life_stage_modifiers', 'population_reclass', 'rooms', 'situations', 'source_locators', 'weighting_profile']; phantom tables=['cell_source_links', 'conflict', 'connection_endpoint', 'doctrine', 'economics_entry', 'evidence_cell_state', 'evidence_source', 'evidence_sources_v1_legacy', 'jurisdictional_value', 'measurement', 'population', 'room', 'room_conflict', 'room_dar_provision', 'room_item', 'room_item_population', 'specialist', 'specialist_population', 'specialist_trigger', 'specification', 'specification_population', 'specification_source', 't', 'throughline', 'throughline_specification']; phantom column refs=6
 
 **SILENT-PASS total: 106** — seqs [171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 1077, 1083, 1087, 1091, 1092, 1095]
 **ORPHAN total: 6** — seqs [85, 271, 1120, 1123, 1125, 1126]

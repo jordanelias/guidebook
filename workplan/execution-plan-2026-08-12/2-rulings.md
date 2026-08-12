@@ -21,7 +21,7 @@ an undeclared boundary to declare?
 | Fact | Location |
 |---|---|
 | The engine writes the literal `None, None, None` for `value_min, value_max, value_unit`, unconditionally, on every path | `assess_cell.py:559`; column list at `:566-567` |
-| It is the **only corpus writer** of `evidence_cell_state` | Writer sweep: `:570,:572` are the engine; the five other INSERT sites (`validate_verification_consistency.py:101`, three test fixtures, `jurisdictional_divergence.py:263`) all build their own fixture DDL |
+| It is the **only corpus writer** of `specifications` | Writer sweep: `:570,:572` are the engine; the five other INSERT sites (`validate_verification_consistency.py:101`, three test fixtures, `jurisdictional_divergence.py:263`) all build their own fixture DDL |
 | `source_value_extractions` has **zero writers** anywhere in non-legacy `.py` | Every mention is a read |
 | Convergence status is hard-coded | `assess_cell.py:337`, under the comment at `:326-336`: *"no rule exists for grading value-level convergence, so nothing here can grade it"* |
 
@@ -45,10 +45,10 @@ DECLARED-BUT-UNENFORCED convention defined at `:19-23`:
         criterion: >
           Value determination is a declared human judgment act, not a machine
           stage. A value row (value_min / value_max / value_unit on
-          evidence_cell_state) is written ONLY by data migration; ONLY onto a
+          specifications) is written ONLY by data migration; ONLY onto a
           cell whose state is 'stated' or 'provisional' with non-empty
           governing_refs; and ONLY when every extraction the value rests on is
-          reachable from the cell via cell_source_links. Acceptance:
+          reachable from the cell via specification_source_links. Acceptance:
           value_unit IS NOT NULL wherever value_min or value_max IS NOT NULL;
           value_min <= value_max. The writing migration names the cell and the
           doctrine_sha it was judged under.
@@ -66,7 +66,7 @@ DECLARED-BUT-UNENFORCED convention defined at `:19-23`:
 Until W3.3 lands, the criterion must name **the migration file** as the attested artifact.
 
 ### Open sub-questions
-1. The input contract's *"every extraction reachable via `cell_source_links`"* is not checkable
+1. The input contract's *"every extraction reachable via `specification_source_links`"* is not checkable
    until W3.5 gives that junction a writer.
 2. Does the human act also grade convergence? `assess_cell.py:326-336` says grading is a judgment
    act — the DR should say **whose**.
