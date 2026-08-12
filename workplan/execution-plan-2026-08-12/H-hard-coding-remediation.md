@@ -70,9 +70,9 @@ H-01), so the act strips **~35 distinct determinations**, not 28.
 | E-08 | ≥1200 mm | 7 | **(a)** | jv 72 (GB) and jv 77 (ISO) at 1200; **US 915 (jv 71) and AU 1000 (jv 74) below; DE 1500 (jv 73) and NO 1500 (jv 75) above** |
 | E-09 | ISO 23599:2019 | 7 | **(n)** | standard designation — **but jv 56–62 record seven different national standards with incompatible dome geometries** (JIS T 9251, ADA §705/PROWAG, DfT 2021, AS/NZS 1428.4.1, DIN 32984, ISO 23599, BCA 2019). Naming ISO privileges one exactly as E-07/E-08 do — an argument for stripping citations too |
 | F-04 | MERV 13+ | 0 | **(b)** | — |
-| G-05 | 650–870 mm | 0 | **(b)** | — |
-| G-06 | 760–860 mm | 0 | **(b)** | — |
-| H-01 | 400–1100 mm | 6 | **mixed** | lower bound 400 has **no row** (US 380, GB 750, DE 850, AU 900, FR 900, ISO 800) → (b); upper bound 1100 is (a)-partial |
+| G-05 | `650--870 mm` | 0 | **(b)** | — |
+| G-06 | `760--860 mm` | 0 | **(b)** | — |
+| H-01 | `400--1100 mm` | 6 | **mixed** | lower bound 400 has **no row** (US 380, GB 750, DE 850, AU 900, FR 900, ISO 800) → (b); upper bound 1100 is (a)-partial |
 | I-01 | ≤22 N | 4 | **(a)** | jv 19 only (US, ADA §404.2.9). GB 30 N, AU 20 N, ISO 25 N — **adopts the US value; a fourth single-jurisdiction promotion** |
 
 **Transcribe this table into the migration's own comment block**, per H3's instruction — and
@@ -139,6 +139,14 @@ G-03, I-02.
 that **evades H4's `\d` gate entirely.** Add it to H2's list and to H4's note.
 
 ### Mechanism
+
+> **⚠ GUARD STRINGS MUST BE COPIED FROM THE DATABASE, NEVER FROM THIS DOCUMENT.**
+> Cycle-1 verification found this document had rendered `650--870`, `760--860` and
+> `400--1100` with **en-dashes** where the database stores **double hyphens**. A
+> `WHERE name='…'` guard transcribed from prose would have matched **zero rows and
+> reported success** — three renames silently not happening. The names also mix
+> `—` em-dash (G-06, E-03), `×` (E-01, E-05), `≥`/`≤`, and `²` (A-16).
+> **Build every guard with `SELECT item_code, name FROM items` and never by hand.**
 
 1. Ledger entry (`plan_item: H1`), intent written first.
 2. `changes.sql`, 28–45 statements with a **current-value guard** (the W5.1 idempotence pattern):
@@ -242,6 +250,27 @@ definitionally prose, not names, and were out of scope.
 **but verify, do not assume**). And check **which** `test_db_integrity` assertion references the
 table, so the delete does not flip a check verdict unnoticed — record it in the ledger's `breaks`
 block.
+
+---
+
+## Cycle-1 verification: **NO-GO**. Six blockers before any migration is emitted.
+
+An adversarial verification pass on 2026-08-12 returned no-go. Each of these independently
+produces a silent no-op, a failed migration, or a half-executed ruling.
+
+| # | Blocker | Correction |
+|---|---|---|
+| **B1** | **Guard-string byte mismatch** — this document rendered en-dashes where the DB stores double hyphens (G-05, G-06, H-01) | Corrected above; build every guard from `SELECT name FROM items` |
+| **B2** | **`jurisdictional_values.evidence_tier` is `INTEGER NOT NULL DEFAULT 6`** — it cannot be nulled; an `UPDATE … SET evidence_tier=NULL` aborts the migration | State its disposition explicitly: leave at the meaningless default with a comment, or relax the constraint by table rebuild |
+| **B3** | **Skills sweep incomplete** — `question-author_SKILL.md:68` carries `B-01 Circadian Lighting (≥150 EML)`, missed by the 65/66/71 enumeration. Six further skill files carry determinations: `cross-population-conflict-mapper` (≥300 lux, ≤3000K, ≥2400 mm, ≥30 LRV as live population requirements), `adversarial-research`, `functional-deficit-auditor`, `progressive-measurement`, `markdown-formatter`, `prose-style-checker` | Enumerate all with per-line dispositions; the meta-exemplar class (detectors teaching detection) needs an owner call |
+| **B4** | **`item_axis_links` row 162 (E-08/AX-BAL)** — a 1,093-character evidence note carrying `fall rate 0.81 CI 0.68-0.97`, six REF-IDs, and the claim *"registered as GAP-300 (P2, OPEN), with GAP-301"* while `gaps` holds **0 rows** | Add to the clear census; do not leave a live claim that unregistered gaps are registered |
+| **B5** | **Gap allocator emits an id the validation layer rejects** — `assess_cell.py:429` yields `GAP-1`; the `gaps` DDL has no format CHECK so it writes, but `schemas/evidence_state.py:166-169` requires `^GAP-\d{3,4}$` and will reject it later | Allocate via `db.py`'s zero-padded scheme; fix `:429` to `GAP-{mx+1:03d}` before any repopulation |
+| **B6** | **YAML dual store keeps every retired value alive** — `data/jurisdictional_values/*.yaml` holds 109 records with full values, and `test_db_integrity` L02 compares **counts only**, so clearing the DB leaves the determinations in-repo with a green check | Clear the YAML mirror in the same PR; extend L02 to compare what survives, not row counts |
+
+**Sequencing finding:** once jv values are cleared, "held in `jurisdictional_values`" is true of
+nothing, so **every** stripped name value becomes class (b). Either run the name strip **before**
+the jv clear, or freeze this classification in the migration comment as an explicit pre-clear
+snapshot. As written it would be false at execution time.
 
 ---
 
