@@ -176,7 +176,7 @@
       stage's own denominator, then broken down by category, item, and population class.</p>
     <div class="meta-row">
       <span><b>Source</b> data/guidebook.db (read-only)</span>
-      <span><b>Schema</b> user_version 53</span>
+      <span><b>Schema</b> user_version 57</span>
       <span><b>Data as of</b> 2026-07-13</span>
       <span><b>Auto-generated</b> tools/pipeline_completeness.py</span>
     </div>
@@ -289,9 +289,9 @@
       </div>
       <div class="stage-block">
         <div class="sb-left"><div class="n">STAGE 3</div><div class="t">Judgment</div>
-          <div class="entry">Entry: verified sources linked to an item × population cell.</div></div>
+          <div class="entry">Entry: verified sources linked to an item × population specification.</div></div>
         <div class="sb-right">
-          <div class="metric-row"><span class="lbl">Cells determined (of applicable pairs)</span><span class="val">0 / 372 · 0%</span>
+          <div class="metric-row"><span class="lbl">Specifications determined (of applicable pairs)</span><span class="val">0 / 372 · 0%</span>
           <span class="mini-bar"><i class="b0-bg-solid" style="width:2%"></i></span></div>
           <div class="metric-row"><span class="lbl">Items with any determination</span><span class="val">0 / 93 · 0%</span>
           <span class="mini-bar"><i class="b0-bg-solid" style="width:2%"></i></span></div>
@@ -597,11 +597,11 @@
   <footer>
     <div class="two-col">
       <div><strong style="color:var(--ink-2)">How these numbers were derived</strong><br>
-        Read-only queries against <code>data/guidebook.db</code> (<code>user_version 53</code>,
-        314 data migrations). Denominators: research/synthesis over 0
+        Read-only queries against <code>data/guidebook.db</code> (<code>user_version 57</code>,
+        320 data migrations). Denominators: research/synthesis over 0
         <code>bpc_metadata</code> slugs; collection over 0 <code>evidence_sources</code>; judgment/render over
         372 applicable item×population pairs (<code>item_population_links</code>). Determinations from
-        <code>evidence_cell_state</code>; synthesis from <code>reasoning_doc_citations</code>; enforcement coverage
+        <code>specifications</code>; synthesis from <code>reasoning_doc_citations</code>; enforcement coverage
         from <code>governance/pipeline-contract.yaml</code>.</div>
       <div><strong style="color:var(--ink-2)">Two things to keep in mind</strong><br>
         (1) "Completeness" here means throughput, not correctness — a <code>stated</code> cell has cleared the gate,

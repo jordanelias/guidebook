@@ -82,7 +82,7 @@ description: >
    |---|---|
    | `items` | `name`, `category`, `status`, `bpc_source_slug`, the `pmp_*` walk fields |
    | `item_population_links` | `population_code`, `applicability`, `subtype`, `rationale_ref` |
-   | `evidence_cell_state` | the per-(item × population) synthesis cell and its `governing_refs` |
+   | `specifications` | the per-(item × population) synthesis record and its `governing_refs` |
 
    ⚑ **Open question for the owner:** whether the spec template's prose fields should have a
    home in the schema at all, or remain file-canonical. Today they are file-canonical by

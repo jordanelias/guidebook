@@ -288,7 +288,7 @@ is not the default."*
 1. Add the four columns to both SELECTs and their dict-mappings.
 2. Render `pending` as `[BEST-PRACTICE-PENDING]` with an anchor to `gap_register_id`; honest
    banner when the gap link is NULL.
-3. Rebuild the determination table from `item_population_links LEFT JOIN evidence_cell_state`,
+3. Rebuild the determination table from `item_population_links LEFT JOIN specifications`,
    emitting an explicit "no determination recorded" row.
 4. Port `pilot_renderings.py`'s marker text — **do not** duplicate its audience-register
    machinery, which is W3.6/D-A scope.
@@ -319,7 +319,7 @@ exists to purge.** Render only what a cell actually holds.
 | 6 | `test_verification_pipeline` | exit 1 — `RESULTS: 15/18` | The three failures are exactly the G-legs: G01 language ≥50 sources, G02 ORCID ≥30 authors, G03 COMPLETE ≥100 — production floors asserted against a 0-row table. R-15 warrant |
 | 7 | `test_directness_2_2` | **standalone exit 0 / dispatched exit 1** | `run_checks.py:389-390` sets `GUIDEBOOK_DB_PATH`, so the live-smoke leg runs against the empty canonical table instead of skipping. **The registry note's "(it is, in CI)" at `:1002-1004` is wrong.** Make the leg SKIP loudly when its subject table is empty |
 | 8 | `test_graph_audit` | exit 1 — `TypeError: 'NoneType' object is not subscriptable` at `graph_audit.py:277` | **Selftest-path-only** — the same run prints `[PASS] graph_audit clean run exits 0`. Guard leg 3 with `[SKIP] NOT-TESTABLE`, never a fabricated pass |
-| 9 | `register_integrity_check` | exit 1 — five mutations FIRED, then `SILENT — MUTATION MISSED: COMPLETENESS: a whole cell section deleted` | `evidence_cell_state` = 0 makes the set-diff vacuous, and **`:182`'s `if db_rows:` disables the doc→DB direction entirely on an empty table**. Make the empty-DB case an explicit NOT-TESTABLE in both selftest and live check |
+| 9 | `register_integrity_check` | exit 1 — five mutations FIRED, then `SILENT — MUTATION MISSED: COMPLETENESS: a whole cell section deleted` | `specifications` = 0 makes the set-diff vacuous, and **`:182`'s `if db_rows:` disables the doc→DB direction entirely on an empty table**. Make the empty-DB case an explicit NOT-TESTABLE in both selftest and live check |
 
 ### Plus the two adjacent items
 

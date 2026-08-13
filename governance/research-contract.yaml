@@ -117,7 +117,7 @@ rules:
     title: "Combinatorial dimension"
     hook: >-
       Cross slug x population / access-need / ICF / axis. Cells are (item x population).
-    anchor: "governance/conceptual-model.md; governance/functional-taxonomy.md; evidence_cell_state"
+    anchor: "governance/conceptual-model.md; governance/functional-taxonomy.md; specifications"
     enforcer: R4
 
   - id: R5

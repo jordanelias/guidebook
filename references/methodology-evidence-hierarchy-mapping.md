@@ -166,7 +166,7 @@ Two v1 rules survive unchanged and are restated so they are not lost in the mark
 
 ### 7.2 The four-state determination machine
 
-Markers annotate sources; determinations live in `evidence_cell_state` (`stated` / `provisional` / `pending` / `not_applicable`, `evidence-methodology.md` §2), produced by a pure, versioned assessment function with mandatory `governing_refs` (anti-hallucination) and a falsification condition per determination. Tier-3-alone does not reach `stated` (`decisions/DR-2026-07-12-tier3-stated-threshold.md`, PROPOSED): T3-clinical-alone ⇒ `provisional`; T3-grey-alone ⇒ `pending`.
+Markers annotate sources; determinations live in `specifications` (`stated` / `provisional` / `pending` / `not_applicable`, `evidence-methodology.md` §2), produced by a pure, versioned assessment function with mandatory `governing_refs` (anti-hallucination) and a falsification condition per determination. Tier-3-alone does not reach `stated` (`decisions/DR-2026-07-12-tier3-stated-threshold.md`, PROPOSED): T3-clinical-alone ⇒ `provisional`; T3-grey-alone ⇒ `pending`.
 
 ### 7.3 Recommendation strength ↔ design mode
 

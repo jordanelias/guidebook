@@ -88,7 +88,7 @@ def check_citation_fidelity(html, doc, c):
     code = item_code_for(doc)
     if code:
         for (gr,) in c.execute(
-                "SELECT governing_refs FROM evidence_cell_state "
+                "SELECT governing_refs FROM specifications "
                 "WHERE item_code=? AND governing_refs IS NOT NULL", (code,)):
             gov = set(re.findall(r"REF-\d{5}", gr or ""))
             if not gov:
@@ -188,7 +188,7 @@ def check_grade_preconditions(html, doc, c):
         return
     txt = re.sub(r"<[^>]+>", " ", html).lower()
     for cid, in c.execute(
-            "SELECT convergence_id FROM evidence_cell_state "
+            "SELECT convergence_id FROM specifications "
             "WHERE item_code=? AND convergence_id IS NOT NULL", (code,)):
         row = c.execute("SELECT status, down_weighted_sources FROM convergence_assessment "
                         "WHERE convergence_id=?", (cid,)).fetchone()
@@ -204,7 +204,7 @@ def check_grade_preconditions(html, doc, c):
             fail("C4-grade", doc,
                  f"{code}: ● rendered while all governing sources are recorded as "
                  f"down-weighted, undisclosed")
-    for (gr,) in c.execute("SELECT governing_refs FROM evidence_cell_state "
+    for (gr,) in c.execute("SELECT governing_refs FROM specifications "
                            "WHERE item_code=? AND governing_refs IS NOT NULL", (code,)):
         for ref in re.findall(r"REF-\d{5}", gr or ""):
             t = c.execute("SELECT tier FROM evidence_sources WHERE ref_id=?", (ref,)).fetchone()

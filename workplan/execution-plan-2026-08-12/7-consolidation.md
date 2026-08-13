@@ -57,7 +57,7 @@ reads. The plan flags the 20th file in Wave 1 and never absorbs it into W7.1 or 
 `governance/evidence-methodology.md:494` · `governance/repo-strategy-revision-co.md:14` ·
 `architecture/schema-spec.md:572` · `architecture/schema-reconciliation.md:308` ·
 `references/project-standards.md:488,626` (append-only — add a clarifying RULE, do not edit) ·
-`skills/cell-curator_SKILL.md:21` · `schemas/directness.py:31`.
+`skills/specification-curator_SKILL.md:21` · `schemas/directness.py:31`.
 **Forward-only, `deliberately_not_swept`:** four DRs, `decision_register.yaml:2194`, two
 migrations, one data migration.
 
@@ -119,7 +119,7 @@ amending it silently breaks a blocking gate's contract. Note `source_slug_links`
 **G3 is one schema migration plus one 8-row data migration.** **G1 widens `slugs`, the frame's
 anchor table** — keep the DR-2026-08-06 frame enumeration in sync.
 
-**Sweep note:** `CLAUDE.md:74` tells sessions to "query `bpc_metadata`/`evidence_cell_state`" —
+**Sweep note:** `CLAUDE.md:74` tells sessions to "query `bpc_metadata`/`specifications`" —
 **must be re-pointed after G1.**
 
 ---

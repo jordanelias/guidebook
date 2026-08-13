@@ -8,7 +8,7 @@ actually exists. It reads the (item_code x jurisdiction -> value) matrix from
 DIFFERENT numeric values for the same parameter. This automates
 `references/item-jurisdiction-divergence-matrix.md` (hand-authored today) and is
 NOT covered by the `v_divergence` view (which is determination-level over
-`evidence_cell_state`, and currently empty).
+`specifications`, and currently empty).
 
 Doctrine framing (read-only, flags-only — proposes nothing):
   - Cross-jurisdiction divergence is EXPECTED, not a defect: different jurisdictions
@@ -34,7 +34,7 @@ Checks:
   3. candidate_conflation_or_error    (WARN) same item+unit spanning >=10x — likely different
                                       quantities sharing a unit, or a data error
   4. convergence_not_evidence         (INFO) same item+unit, >=3 jurisdictions agree — not best practice
-  5. unadjudicated_divergence         (WARN) a divergent item with no evidence_cell_state determination
+  5. unadjudicated_divergence         (WARN) a divergent item with no specifications determination
 
 This is a DESCRIPTIVE / surfacing tool: everything it finds is a CANDIDATE for
 human adjudication (a within-jurisdiction divergence may be a genuine contradiction,
@@ -86,7 +86,7 @@ def analyze(conn):
 
     # items that have any best-practice determination (adjudicator present)
     adjudicated = {r[0] for r in conn.execute(
-        "SELECT DISTINCT item_code FROM evidence_cell_state "
+        "SELECT DISTINCT item_code FROM specifications "
         "WHERE state IN ('stated','provisional')").fetchall()}
 
     findings = []
@@ -155,7 +155,7 @@ def analyze(conn):
         if item not in adjudicated:
             findings.append((
                 "unadjudicated_divergence", "WARN",
-                f"{item}: jurisdictions diverge on {unit} but no evidence_cell_state "
+                f"{item}: jurisdictions diverge on {unit} but no specifications "
                 f"best-practice determination exists to adjudicate (judgment stage unbuilt).",
             ))
     return findings
@@ -213,7 +213,7 @@ def _mem_db():
     conn.execute("""CREATE TABLE jurisdictional_values (
         item_code TEXT, jurisdiction TEXT, unit TEXT, value_numeric REAL,
         is_code_minimum INTEGER, standard_name TEXT, evidence_tier INTEGER)""")
-    conn.execute("CREATE TABLE evidence_cell_state (item_code TEXT, state TEXT)")
+    conn.execute("CREATE TABLE specifications (item_code TEXT, state TEXT)")
     return conn
 
 
@@ -260,7 +260,7 @@ def selftest():
     # unadjudicated flag lifts when a best-practice cell exists
     c = _mem_db()
     _ins(c, "V-01", "US", "mm", 10); _ins(c, "V-01", "UK", "mm", 20)
-    c.execute("INSERT INTO evidence_cell_state VALUES('V-01','stated')")
+    c.execute("INSERT INTO specifications VALUES('V-01','stated')")
     ids = {f[0] for f in analyze(c)}
     results.append(("adjudicated divergence is not flagged unadjudicated",
                     "cross_jurisdiction_divergence" in ids and "unadjudicated_divergence" not in ids))

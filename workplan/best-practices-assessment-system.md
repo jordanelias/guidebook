@@ -2,7 +2,7 @@
 
 **Status:** Design (authored directly, 2026-06-22, single-author; multi-agent panel deferred — monthly spend limit).
 **Authority:** `governance/mission-PROVISIONAL.md` doctrine #2/#3/#4 + the 7-point test. This system *operationalizes* that doctrine; it does not invent a competing methodology.
-**Core gap it closes:** the mission defines a per-cell best-practice determination, but `evidence_cell_state` is **empty (0 rows)** — the determination engine is unbuilt.
+**Core gap it closes:** the mission defines a per-cell best-practice determination, but `specifications` is **empty (0 rows)** — the determination engine is unbuilt.
 
 ---
 
@@ -48,15 +48,15 @@ The function is **pure**: same evidence + same `rule_version` ⇒ same state. Th
 
 ---
 
-## 4. The data model — fill `evidence_cell_state` (clean data, S4)
+## 4. The data model — fill `specifications` (clean data, S4)
 
-**SUPERSEDED (2026-07-13):** the sketch below is superseded by the actual migration, per `decisions/DR-2026-07-12-evidence-cell-state-schema-reconciliation.md`'s own "Consequences if ratified" section: *"`workplan/best-practices-assessment-system.md` §4's SQL sketch is superseded by the actual migration; its phasing plan (§8) is otherwise unaffected."* The live schema (`scripts/migrations/026_reconcile_evidence_cell_state.sql`, `027_regulatory_stratum_only.sql`) keeps `evidence_cell_state`'s identity as `(item_code, population_code)` — not `(slug, population, jurisdiction)` as sketched below — and structures the within-population range as `value_min`/`value_max`/`value_unit` rather than a free-text `value_range`. Jurisdiction-specific values live in the separate `jurisdictional_values` table, deliberately not folded into this one (conflating a jurisdiction-agnostic best-practice determination with a jurisdiction-specific code floor is exactly the failure mode this schema exists to prevent — see `governance/tier-system.md` §3). The sketch is left below for the phasing-plan context (§8, unaffected); do not implement against it — implement against the live migrations.
+**SUPERSEDED (2026-07-13):** the sketch below is superseded by the actual migration, per `decisions/DR-2026-07-12-evidence-cell-state-schema-reconciliation.md`'s own "Consequences if ratified" section: *"`workplan/best-practices-assessment-system.md` §4's SQL sketch is superseded by the actual migration; its phasing plan (§8) is otherwise unaffected."* The live schema (`scripts/migrations/026_reconcile_specifications.sql`, `027_regulatory_stratum_only.sql`) keeps `specifications`'s identity as `(item_code, population_code)` — not `(slug, population, jurisdiction)` as sketched below — and structures the within-population range as `value_min`/`value_max`/`value_unit` rather than a free-text `value_range`. Jurisdiction-specific values live in the separate `jurisdictional_values` table, deliberately not folded into this one (conflating a jurisdiction-agnostic best-practice determination with a jurisdiction-specific code floor is exactly the failure mode this schema exists to prevent — see `governance/tier-system.md` §3). The sketch is left below for the phasing-plan context (§8, unaffected); do not implement against it — implement against the live migrations.
 
 Replace the empty table with a STRICT, CHECK-constrained, **derived** table (written by the assessment function, never by hand):
 
 ```sql
 -- sketch; finalize as migration 026 -- SUPERSEDED, see note above; kept for phasing-plan context only
-CREATE TABLE evidence_cell_state (
+CREATE TABLE specifications (
   slug            TEXT NOT NULL,
   population      TEXT NOT NULL,
   jurisdiction    TEXT,                       -- NULL = jurisdiction-agnostic determination
@@ -108,7 +108,7 @@ CREATE TABLE weighting_profile (
   notes TEXT, PRIMARY KEY (audience, use_pattern)
 ) STRICT;
 ```
-The site queries `evidence_cell_state` through the active profile to render a user-conditioned view — this is the "dynamically interpret the table per user requirements" mechanism, made sound.
+The site queries `specifications` through the active profile to render a user-conditioned view — this is the "dynamically interpret the table per user requirements" mechanism, made sound.
 
 ---
 
@@ -130,7 +130,7 @@ Encode doctrine + the 7-point test as an audit script (`scripts/audit/best_pract
 ```
 trigger (new admitted evidence | supersession event | scheduled re-assess)
   → for each affected (slug, population):
-       gather evidence → run determination fn → upsert evidence_cell_state (via migration/controlled writer)
+       gather evidence → run determination fn → upsert specifications (via migration/controlled writer)
        → run §6 gates → route diverge/pending to human synthesis queue
   → views refresh automatically
 ```
@@ -140,7 +140,7 @@ Integrates downstream of the **search-coverage pipeline** (coverage admits evide
 
 ## 8. Phasing
 
-- **Phase 0 — schema:** migration 026 = STRICT `evidence_cell_state` + `weighting_profile` + the four views + CHECK/json_valid. (low risk)
+- **Phase 0 — schema:** migration 026 = STRICT `specifications` + `weighting_profile` + the four views + CHECK/json_valid. (low risk)
 - **Phase 1 — engine + backfill:** implement the pure determination function; nail the slug→population→evidence join; backfill all `(slug × population)` cells that have evidence; emit `pending`+gap for the rest. This is where the *first real best-practice table* comes into existence.
 - **Phase 2 — gates:** `best_practice_integrity.py` audit → blocking CI.
 - **Phase 3 — dynamic weighting:** seed `weighting_profile` for the 4 audience use-patterns; parameterized rendering view.

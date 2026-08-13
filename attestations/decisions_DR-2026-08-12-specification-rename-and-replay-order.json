@@ -1,0 +1,47 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-08-12-specification-rename",
+ "artifact": "decisions/DR-2026-08-12-specification-rename-and-replay-order.md",
+ "doctrine_sha": "0f2f525",
+ "rules_in_scope": [
+  "structure-auditor",
+  "guidebook-auditor",
+  "audit-consolidator",
+  "adherence-logging-and-attestation"
+ ],
+ "per_rule_status": {
+  "structure-auditor": {
+   "status": "FIRED",
+   "evidence_path": "scripts/migrations/056_schema_phase_rebased_after_rename.sql",
+   "reason": "The mechanism was measured, not assumed, and the first design was WRONG. The rename shipped as an ordinary numbered schema migration whose own comment asserted that replay is chronological; `migrate_db.py --rebuild` refuted that in one command with `no such table: evidence_cell_state`, because the runner applies every schema migration before any data migration and 19 immutable data migrations still write the old names. Moving the DDL into a data migration fixed replay backwards and broke it forwards -- proven by writing the exact next planned statement (W3.3's `ALTER TABLE ... ADD COLUMN doctrine_sha`) into a scratch migrations directory and watching the rebuild die again. The AFTER_DATA marker in 056 is what makes both directions pass, and the same probe now rebuilds green at user_version 57 with the column present and a dependent view compiling."
+  },
+  "guidebook-auditor": {
+   "status": "FIRED",
+   "evidence_path": "governance/retired-vocabulary.yaml",
+   "reason": "A rename is not finished when the database is renamed; it is finished when the old name stops returning wrong answers. Rather than a one-off grep, the two retired identifiers are registered as RV-020 and RV-021 at severity `broken` in the standing register, with exempt_paths naming each legitimate historical carrier -- including two test fixtures whose use of the old name is LOAD-BEARING, because their selector must match the immutable migrations' own text. The register then enumerated 43 live occurrences, which were driven to 1 (specs/e-08.html, already under a separate owner instruction). `cell_id` is recorded in the register's `rejected:` section with its reasoning instead of being registered, because architecture/schema-spec.md's aspirational `cell` table declares its own cell_id and no regex separates the two."
+  },
+  "audit-consolidator": {
+   "status": "FIRED",
+   "evidence_path": "data/decisions/decision_register.yaml",
+   "reason": "The decision is recorded in all three stores the repo holds equal, not one: the DR, the register YAML as D-0158, and the canonical `decisions` table via data migration -- because test_db_integrity L01 compares YAML and table in both directions and a YAML-only edit reddens it. The first attempt was caught by running the audit rather than trusting the edit: decision_capture C1 refused to load the register at all because alternatives_considered was written as prose where the model types a list, and it was fixed forward with a compensating migration. C9 orphan count and total warnings are unchanged from baseline at 49 and 54."
+  },
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "attestations/decisions_DR-2026-08-12-specification-rename-and-replay-order.json",
+   "reason": "This attestation, bound to the doctrine SHA the commit carries, recording the two deviations below rather than presenting the change as unqualified."
+  }
+ },
+ "deviations": [
+  {
+   "rule": "audit-consolidator",
+   "reason": "The DR is written AFTER the rename it records, not before. Commit 84cdac0 executed a D-SCHEMA change with no Decision Record and no register row; an adversarial review found that, and this DR closes it retroactively. The record is therefore accurate but not contemporaneous, and the sequencing was wrong: the analogous prior rename (DR-2026-07-21-entity-code-namespace-rename) had its DR in hand."
+  },
+  {
+   "rule": "structure-auditor",
+   "reason": "The larger and cleaner answer to the replay-order problem -- a schema plus data baseline squashing the migration history -- is DEFERRED, not refused. It needs a runner change for data-migration supersession that does not exist today and is a separate owner decision. AFTER_DATA is the smaller mechanism that does not foreclose it, but it does add a second ordering rule to a load-bearing script, and a reader of migrate_db.py must now know that replay order is not simply schema-then-data."
+  }
+ ],
+ "bias_direction": "The bias runs toward presenting a self-inflicted defect as an architectural improvement. The AFTER_DATA mechanism exists because this session shipped a rename that broke the reproducibility gate in one direction and then, when patched, broke it in the other -- and neither break was caught by the change's own author. The mechanism is genuinely more faithful than schema-then-data, and would have been the right design whenever a rename first collided with immutable replay, but it was not sought as an improvement; it was forced. A reader should weight the improvement claim down accordingly, and should note that the whole episode is an argument for baselining the migration history rather than for adding ordering rules to it.",
+ "independent_reviewer_counterclaim": "The strongest objection is that AFTER_DATA adds a second, easily-missed ordering rule to the one script whose determinism the blocking reproducibility gate depends on, and that nothing yet FAILS if a future session writes a schema migration that needs a marker and omits one -- they simply get a broken rebuild, which is how this defect presented in the first place. That is fair and unanswered: the mechanism converts a silent trap into a loud one only because 056 covers everything numbered after it, and a future rename would need its own marker with nothing to remind the author. A reviewer could also reasonably argue that the deferred baseline squash is the real fix and that shipping the smaller mechanism reduces the pressure to do it. The counter-argument is only that the squash cannot be done unilaterally: it retires replay history and needs owner sign-off.",
+ "verdict": "DEVIATION-LOGGED"
+}

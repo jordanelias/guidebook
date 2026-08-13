@@ -142,7 +142,7 @@ def check(doc, db_path=None):
         for ic, pc, st, tb, cfo, sha, rv, rso, gr in conn.execute(
                 "SELECT item_code, population_code, state, tier_basis, code_floor_only, "
                 "derivation_sha, rule_version, regulatory_stratum_only, governing_refs "
-                "FROM evidence_cell_state"):
+                "FROM specifications"):
             refs = _json.loads(gr) if gr else []
             n_jur = 0
             if rso and refs:
@@ -164,7 +164,7 @@ def check(doc, db_path=None):
         # suppressed) and G8 (pending cells render with disclosure).
         for cell in sorted(set(db_rows) - set(cells)):
             errors.append(
-                f"{cell}: COMPLETENESS VIOLATION — evidence_cell_state row exists but no "
+                f"{cell}: COMPLETENESS VIOLATION — specifications row exists but no "
                 f"rendering appears in the document; suppression of a determination is an "
                 f"integrity failure (Option A: weak-band cells render flagged, never "
                 f"suppressed; G8: pending_assessment cells render with disclosure)")
@@ -182,7 +182,7 @@ def check(doc, db_path=None):
         if db_rows:
             row = db_rows.get(cell)
             if row is None:
-                errors.append(f"{cell}: rendered but no evidence_cell_state row exists")
+                errors.append(f"{cell}: rendered but no specifications row exists")
             else:
                 for r in renders[:1]:
                     a = r["attrs"]
@@ -379,7 +379,7 @@ def main():
     ap.add_argument("html", nargs="?", default=DEFAULT_DOC,
                     help=f"rendered pilot HTML (default: {DEFAULT_DOC})")
     ap.add_argument("--db", default=os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db"),
-                    help="cross-check rendered tuples against evidence_cell_state in this DB "
+                    help="cross-check rendered tuples against specifications in this DB "
                          "(defeats self-reported-attribute bypasses). Pass --db '' to disable, "
                          "for fixture use. Honours GUIDEBOOK_DB_PATH.")
     ap.add_argument("--selftest", action="store_true",

@@ -231,12 +231,12 @@ CO1_LIMIT = ("Co-1 engagement is at evidence level (published corpus), not parti
 
 def fetch_cells(conn):
     cells = []
-    q = ("SELECT cell_id,item_code,population_code,state,design_scale,convergence_id,"
+    q = ("SELECT specification_id,item_code,population_code,state,design_scale,convergence_id,"
          "tier_basis,governing_refs,rule_version,derivation_sha,code_floor_only,"
          "confidence_synthesis_basis,gap_register_id,falsification_condition "
-         "FROM evidence_cell_state ORDER BY cell_id")
+         "FROM specifications ORDER BY specification_id")
     for r in conn.execute(q):
-        c = dict(zip(("cell_id", "item_code", "population", "state", "design_scale",
+        c = dict(zip(("specification_id", "item_code", "population", "state", "design_scale",
                       "convergence_id", "tier_basis", "governing_refs", "rule_version",
                       "derivation_sha", "code_floor_only", "synthesis_basis",
                       "gap_id", "falsification"), r))
@@ -260,7 +260,7 @@ def fetch_cells(conn):
         # ref_id alone attributes four RT60-in-seconds extractions to cells for
         # A-02 (NRC) and A-08 (NC), parameters in different units entirely.
         # role='governing' is filtered explicitly rather than relied on: it is
-        # the only value cell_source_links admits today, and a second role
+        # the only value specification_source_links admits today, and a second role
         # arriving must not silently widen what this counts.
         # Breadth of the regulatory basis, for the weak-band split. Drawn from
         # evidence_sources.jurisdiction over the governing set — the fact is
@@ -299,11 +299,11 @@ def fetch_cells(conn):
         else:
             c["sha_stale"] = False
         c["extractions"] = conn.execute(
-            "SELECT COUNT(*) FROM cell_source_links l "
+            "SELECT COUNT(*) FROM specification_source_links l "
             "JOIN source_value_extractions x "
             "  ON x.ref_id = l.ref_id AND x.item_code = ? "
-            "WHERE l.cell_id = ? AND l.role = 'governing'",
-            (c["item_code"], c["cell_id"])).fetchone()[0]
+            "WHERE l.specification_id = ? AND l.role = 'governing'",
+            (c["item_code"], c["specification_id"])).fetchone()[0]
         cells.append(c)
     return cells
 

@@ -195,7 +195,7 @@ as good as Wave 1's fix.**
 
 ---
 
-## W3.3 — Doctrine binding on `evidence_cell_state` (056)
+## W3.3 — Doctrine binding on `specifications` (056)
 
 **Leg 4 of DR-2026-08-06's four-leg promise. Legs 1–3 have columns (`rule_version`,
 `derivation_sha`, `governing_refs`); leg 4 has nothing** — there is no doctrine-SHA column
@@ -203,7 +203,7 @@ anywhere in the cell's 27 columns.
 
 ```sql
 -- 056_cell_doctrine_binding.sql
-ALTER TABLE evidence_cell_state ADD COLUMN doctrine_sha TEXT
+ALTER TABLE specifications ADD COLUMN doctrine_sha TEXT
   CHECK (doctrine_sha IS NULL OR (
     length(doctrine_sha) = 7 AND NOT doctrine_sha GLOB '*[^0-9a-f]*'));
 PRAGMA user_version = 56;
@@ -270,7 +270,7 @@ PRAGMA user_version = 57;
 1. Doctrine: extend `governance/tier-system.md` §5 after `:73` — ▲ derived/full · ◭ derived/partial
    · △ derived/weak; shape = derivation, fill = strength per D-B; cross-reference §8's band table.
 2. Migration `058_derived_value_marker.sql`: add `synthesis_method_indicator TEXT CHECK (… IN
-   ('direct','inferred','consensus'))` and `inference_basis TEXT` to `evidence_cell_state`, plus
+   ('direct','inferred','consensus'))` and `inference_basis TEXT` to `specifications`, plus
    **BEFORE INSERT/UPDATE triggers enforcing that `inferred` requires a non-empty
    `inference_basis`** (SQLite cannot add a table-level CHECK).
    **The column name is load-bearing** — `synthesis_method` is reserved by
@@ -290,29 +290,29 @@ spec layer exists.**
 
 ---
 
-## W3.5 — `assess_cell.py` must write `cell_source_links`
+## W3.5 — `assess_cell.py` must write `specification_source_links`
 
 **Insertion point re-verified exactly as the plan states: after `:573`, before `:575`.**
 `:570-573` is the cell INSERT and its `sql_lines.append`; `:575` begins `report.append`. Both
-`cell_id` and `det["governing_refs"]` are in scope between them.
+`specification_id` and `det["governing_refs"]` are in scope between them.
 
 ```python
         # W3.5: the junction IS the readable edge (spec_page.py reads it, never
         # the JSON). role='governing' is the only value the DDL CHECK admits.
         for ref in det["governing_refs"]:
-            csl = (cell_id, ref, "governing", STAMP, SESSION)
+            csl = (specification_id, ref, "governing", STAMP, SESSION)
             conn.execute(
-                "INSERT INTO cell_source_links "
-                "(cell_id, ref_id, role, created_at, created_by_session) "
+                "INSERT INTO specification_source_links "
+                "(specification_id, ref_id, role, created_at, created_by_session) "
                 "VALUES (?,?,?,?,?)", csl)
             sql_lines.append(
-                "INSERT INTO cell_source_links "
-                "(cell_id, ref_id, role, created_at, created_by_session) VALUES ("
+                "INSERT INTO specification_source_links "
+                "(specification_id, ref_id, role, created_at, created_by_session) VALUES ("
                 + ", ".join(q(v) for v in csl) + ");")
 ```
 
 **DDL constraint confirmed:** `role TEXT NOT NULL DEFAULT 'governing' CHECK (role IN
-('governing'))`, PK `(cell_id, ref_id)`. `det["governing_refs"]` is distinct by construction
+('governing'))`, PK `(specification_id, ref_id)`. `det["governing_refs"]` is distinct by construction
 (built by `sorted(...)` at `:314`/`:358`/`:378`) — assert uniqueness anyway.
 
 **One decision to record:** `supporting_refs` (`:321`) cannot junction — the CHECK admits only
@@ -329,7 +329,7 @@ so `spec_page.py:217-223` rendered *"records no governing sources … treat it a
 **Gated on W3.1 and D-A.** The gap-link half is ungated and overlaps W5.7 — cross-reference the
 ledger entries rather than fixing half of it in each wave.
 
-`spec_page.py:73-77` selects exactly `cell_id, population_code, state, tier_basis,
+`spec_page.py:73-77` selects exactly `specification_id, population_code, state, tier_basis,
 code_floor_only, falsification_condition, regulatory_stratum_only, confidence_synthesis_basis,
 has_unverified_sources, all_sources_disqualified` — **omitting `value_min`, `value_max`,
 `value_unit` and `gap_register_id`.**
@@ -397,8 +397,8 @@ the existing A-TRIGGER pattern.
 ## W3.8 — The six stage-7 outputs: writer or declaration
 
 **Writer sweep re-run: `spec_value_probes`, `item_bpc_links`, `extraction_population_links`,
-`case_studies`, `economics_entries`, `cell_source_links` — zero writers, all six.**
-(`cell_source_links` is discharged by W3.5.)
+`case_studies`, `economics_entries`, `specification_source_links` — zero writers, all six.**
+(`specification_source_links` is discharged by W3.5.)
 
 **The urgency is a contract conflict:** `governance/research-contract.yaml:186-193` (R12)
 instructs sessions to route *"Case studies → case_studies. Economics → economics_entries"* — and
@@ -430,7 +430,7 @@ contract instructing an impossible act.
 | co1 rows with tier≠1 in the archive | **CONFIRMED — zero** | 29 co1 rows, all tier 1 |
 | `validate_source_co1_fields` scans a non-existent path and admits two bugs | **CONFIRMED** | `:76-121`, comment `:97-102` |
 | W3.5 insertion point "after 573, before 575" | **CONFIRMED exactly** | — |
-| `cell_source_links.role` CHECK admits only `'governing'` | **CONFIRMED** | so `supporting_refs` cannot junction |
+| `specification_source_links.role` CHECK admits only `'governing'` | **CONFIRMED** | so `supporting_refs` cannot junction |
 | W3.6's four omissions | **CONFIRMED** | `spec_page.py:73-77` |
 | 16 of 17 `typical_stakes` NULL; three ratified values | **CONFIRMED** | full dump |
 | Six stage-7 outputs have no writer | **CONFIRMED** | writer sweep |

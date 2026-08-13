@@ -1,0 +1,47 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-08-12-baseline-and-retirements",
+ "artifact": "decisions/DR-2026-08-12-migration-history-baseline.md",
+ "doctrine_sha": "0f2f525",
+ "rules_in_scope": [
+  "structure-auditor",
+  "guidebook-auditor",
+  "audit-consolidator",
+  "adherence-logging-and-attestation"
+ ],
+ "per_rule_status": {
+  "structure-auditor": {
+   "status": "FIRED",
+   "evidence_path": "scripts/migrations/057_baseline_2026-08-12.sql",
+   "reason": "Equivalence was MEASURED before the history was archived, not asserted after. The baseline was applied to an empty database and compared against the pre-baseline committed DB on four axes: every sqlite_master object by name, type AND sql text (0 differences either direction); row counts across all 67 tables (0); full content row-by-row INCLUDING rowid, so integer keys reproduce exactly (0); and foreign_key_check, integrity_check and all 18 views. Only then were the 355 files moved. Row order is pinned by explicit rowid and the AUTOINCREMENT high-water marks are restored, because a baseline that reproduces content but not keys would pass a count comparison and break every foreign key."
+  },
+  "guidebook-auditor": {
+   "status": "FIRED",
+   "evidence_path": "_archived/scripts/migrations/README.md",
+   "reason": "Compression removes files a future session would otherwise search, so each archive carries a README stating what was frozen, why, what was preserved rather than discarded, and the one thing that must not be done (restoring a file into scripts/migrations/, whose effect the baseline already contains). The three retirements are the same act at content scale, and their READMEs say the substantive reason rather than the mechanical one: two of the five population pages are the banned umbrella framing in the project's own words, and the e-08 exemplar rested on an anchor a prior audit had already shown does not resolve."
+  },
+  "audit-consolidator": {
+   "status": "FIRED",
+   "evidence_path": "data/decisions/decision_register.yaml",
+   "reason": "Both decisions are recorded in all three stores the repo holds equal -- the DRs, the register YAML as D-0159/D-0160, and the canonical decisions table via data migration -- because test_db_integrity L01 compares YAML and table in both directions. This closes the alternative D-0158 section 4(5) explicitly deferred to the owner rather than quietly reversing it. The one consequence found by running the checks (archiving migration 056 broke adherence_log_audit check #4, which cited it as an evidence path) was fixed by teaching the check that a path retired to _archived/ still resolves -- verified in both directions, since a genuinely missing path still fails."
+  },
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "attestations/decisions_DR-2026-08-12-migration-history-baseline.json",
+   "reason": "This attestation, bound to the doctrine SHA the commit carries, recording the deviations below rather than presenting the compression as costless."
+  }
+ },
+ "deviations": [
+  {
+   "rule": "structure-auditor",
+   "reason": "The AFTER_DATA mechanism added to scripts/migrate_db.py hours earlier is now UNUSED -- no pre-baseline data migration remains for it to order around. It is kept rather than removed, which leaves a documented but currently exercised-by-nothing code path in the one script the blocking reproducibility gate depends on. The judgement is that removing it would reopen the trap D-0158 closed and that the next rename would have to rediscover it; a reviewer could reasonably call that speculative and ask for its deletion."
+  },
+  {
+   "rule": "audit-consolidator",
+   "reason": "The compression narrows what a future session can reconstruct by replay. The archived files and the 319-row data_migrations ledger both survive, so the history is readable -- but it is no longer EXECUTABLE, and no check now proves that the baseline's content equals what 355 replayed migrations would have produced. That equivalence was measured once, by this session, and is not re-provable after the fact."
+  }
+ ],
+ "bias_direction": "The bias runs toward presenting a large irreversible simplification as obviously correct because the numbers came out clean. Four zero-difference comparisons are genuinely strong evidence of equivalence AT THIS INSTANT, and they say nothing about whether compressing was the right call -- a session that wanted to compress would have run exactly these checks and reported exactly these results. The honest framing is that the owner directed the compression, the timing argument (5,072 rows, about 91 percent vocabulary) is real and was already recorded in D-0158 as the deferred alternative, and the verification proves faithfulness rather than wisdom.",
+ "independent_reviewer_counterclaim": "The strongest objection is that this trades a self-proving property for a once-proved one. Before, any session could run the runner and watch 355 migrations reproduce the database; the proof was standing and repeatable. Now the baseline reproduces only itself, and the claim that it equals the old history rests entirely on one comparison run by the session that had an interest in it passing. Nothing catches an error in the dump generator that happened to be symmetric -- a column omitted from both the CREATE and the comparison would compare equal and be silently gone. Against that: the comparison read sqlite_master sql text directly from the source database rather than from the generator's model, so a dropped column would surface as an object-text difference. A reviewer could still fairly argue the freeze should have waited for an independent adversarial pass rather than shipping in the same turn as the instruction.",
+ "verdict": "DEVIATION-LOGGED"
+}

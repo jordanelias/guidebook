@@ -200,7 +200,7 @@ worse than a missing one: it reads as noise rather than as a finding.
 - `validate_db.py` (`no such column: doi_less_key`) and `validate_items.py`
   (`IndexError: No item with that key`) expect a schema the DB no longer has. Genuinely stale.
 - `scripts/tests/test_validate_evidence_state_2_4.py` (`no such column: governing_refs`) is the
-  **opposite** case. `governing_refs` *does* exist on `evidence_cell_state`; the crash happens
+  **opposite** case. `governing_refs` *does* exist on `specifications`; the crash happens
   inside `scripts/validate_evidence_state.py` when it runs against the test's **fixture** DB,
   which predates the column. The script is current and the fixture is behind it — a one-column
   fixture update, not a stale tool.
@@ -309,8 +309,8 @@ scalars.** `migration_reproducibility.py` compares `PRAGMA user_version` plus
 `COUNT(*)` on six tables, while CLAUDE.md §0 rule 4 says CI "fails on any
 divergence". An `UPDATE` changes no count, so value-level edits are invisible, as is
 everything in the other 55 tables — demonstrated by tampering with a scratch copy
-(a row's `tier` and title rewritten, and a forged `stated` cell inserted into
-`evidence_cell_state`) and watching it return `VERDICT: PASS`. `EXEMPT_TABLES` was
+(a row's `tier` and title rewritten, and a forged `stated` row inserted into
+`specifications`) and watching it return `VERDICT: PASS`. `EXEMPT_TABLES` was
 decorative: the comparator never enumerated tables, so it was printed and never
 applied.
 

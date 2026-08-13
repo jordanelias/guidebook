@@ -1,0 +1,37 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-08-12-baseline-and-retirements",
+ "artifact": "decisions/DR-2026-08-12-specification-curator-rename.md",
+ "doctrine_sha": "0f2f525",
+ "rules_in_scope": [
+  "structure-auditor",
+  "guidebook-auditor",
+  "adherence-logging-and-attestation"
+ ],
+ "per_rule_status": {
+  "structure-auditor": {
+   "status": "FIRED",
+   "evidence_path": "scripts/audit/adherence_log_audit.py",
+   "reason": "The rename was executed against the registry's own stated process rather than by feel, and the one step it departs from is named in the record instead of skipped quietly. EXTRA_RULE_IDS gained a THIRD category rather than the predecessor being filed under an existing one: Category A is cross-cutting rules and Category B says in its own comment 'variants, NOT renamed', so filing a genuine rename under either would have made the allowlist lie about what it contains. Verified by running the audit, not by reading it: check #3 resolves cell-curator in both committed attestations and the run reports No issues."
+  },
+  "guidebook-auditor": {
+   "status": "FIRED",
+   "evidence_path": "references/skill-registry.md",
+   "reason": "A skill file is an instruction, not a description, so a stale name there produces a query against a table that does not exist -- which is the concrete cost this rename removes. The registry now carries a 'Renames performed' table recording both the rename and the departure from step 2, so the next session reads the exception instead of re-deriving it and adding a migration that would falsify the adherence log."
+  },
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "attestations/decisions_DR-2026-08-12-specification-curator-rename.json",
+   "reason": "This attestation, bound to the doctrine SHA the commit carries, recording the deviation below rather than presenting the rename as unqualified compliance."
+  }
+ },
+ "deviations": [
+  {
+   "rule": "structure-auditor",
+   "reason": "Step 2 of the registry's own rename process -- a timestamped migration rewriting every existing attestations/*.json to the new identifier -- is deliberately NOT performed. Two committed attestations cite cell-curator; rewriting them would make an append-only adherence log claim a session invoked a name that did not exist on its date. The exception is taken for this rename only and is not generalised, because amending the registry's step 2 across the board is a broader decision about record immutability that deserves its own record."
+  }
+ ],
+ "bias_direction": "The bias runs toward dressing a convenient shortcut as a principled stand. Not rewriting the attestations is genuinely less work than writing and testing a migration that edits JSON, and a reader should weigh that against the immutability argument rather than accepting the argument at face value. Two things push back: the registry itself already provides EXTRA_RULE_IDS and describes it as the way to accept an identifier without rewriting past attestations, so the route taken is the one the file names; and this session had already been caught overwriting a dated audit with a false as-of stamp hours earlier, which makes the immutability reasoning a correction of its own recent behaviour rather than a convenient principle discovered on demand.",
+ "independent_reviewer_counterclaim": "The strongest objection is that EXTRA_RULE_IDS now accumulates every retired skill name forever, and an allowlist that only grows eventually accepts anything -- the registry's own check #3 becomes weaker with each rename, which is the opposite of what a rename process should do. That is unanswered here. A reviewer could also argue the departure should have been an amendment to the registry rather than a per-rename exception, since a rule that will be broken every time it is invoked is not a rule; the counter is only that amending it is a governance change about record immutability which should not ride along inside a skill rename.",
+ "verdict": "DEVIATION-LOGGED"
+}

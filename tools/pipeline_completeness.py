@@ -61,7 +61,7 @@ def gather(con: sqlite3.Connection) -> dict:
         "SELECT MAX(d) FROM ("
         " SELECT MAX(updated_at) d FROM items"
         " UNION ALL SELECT MAX(updated_at) FROM evidence_sources"
-        " UNION ALL SELECT MAX(updated_at) FROM evidence_cell_state"
+        " UNION ALL SELECT MAX(updated_at) FROM specifications"
         " UNION ALL SELECT MAX(updated_at) FROM bpc_metadata"
         " UNION ALL SELECT MAX(updated_at) FROM gaps)"
     ) or "")[:10]
@@ -138,21 +138,21 @@ def gather(con: sqlite3.Connection) -> dict:
     )
 
     # Stage 3 -- judgment ------------------------------------------------------
-    cells_total = scalar("SELECT COUNT(*) FROM evidence_cell_state")
+    cells_total = scalar("SELECT COUNT(*) FROM specifications")
     state_counts = {s: n for s, n in rows(
-        "SELECT state, COUNT(*) FROM evidence_cell_state GROUP BY state")}
+        "SELECT state, COUNT(*) FROM specifications GROUP BY state")}
     F["judgment"] = dict(
         cells=cells_total,
-        items_judged=scalar("SELECT COUNT(DISTINCT item_code) FROM evidence_cell_state"),
+        items_judged=scalar("SELECT COUNT(DISTINCT item_code) FROM specifications"),
         stated=state_counts.get("stated", 0),
         provisional=state_counts.get("provisional", 0),
         pending=state_counts.get("pending", 0),
         not_applicable=state_counts.get("not_applicable", 0),
         govrefs_ok=scalar(
-            "SELECT COUNT(*) FROM evidence_cell_state WHERE state IN ('stated','provisional') "
+            "SELECT COUNT(*) FROM specifications WHERE state IN ('stated','provisional') "
             "AND governing_refs IS NOT NULL AND TRIM(governing_refs)<>''"),
         govrefs_denom=scalar(
-            "SELECT COUNT(*) FROM evidence_cell_state WHERE state IN ('stated','provisional')"),
+            "SELECT COUNT(*) FROM specifications WHERE state IN ('stated','provisional')"),
         convergence=scalar("SELECT COUNT(*) FROM convergence_assessment"),
         value_extractions=scalar("SELECT COUNT(*) FROM source_value_extractions"),
     )
@@ -175,10 +175,10 @@ def gather(con: sqlite3.Connection) -> dict:
     # Stage 5 -- render (render-readiness of determinations) -------------------
     F["render"] = dict(
         render_ready=scalar(
-            "SELECT COUNT(*) FROM evidence_cell_state WHERE state IN ('stated','provisional') "
+            "SELECT COUNT(*) FROM specifications WHERE state IN ('stated','provisional') "
             "AND design_scale IS NOT NULL AND TRIM(design_scale)<>''"),
         design_scales=scalar(
-            "SELECT COUNT(*) FROM (SELECT DISTINCT design_scale FROM evidence_cell_state "
+            "SELECT COUNT(*) FROM (SELECT DISTINCT design_scale FROM specifications "
             "WHERE design_scale IS NOT NULL)"),
     )
 
@@ -192,7 +192,7 @@ def gather(con: sqlite3.Connection) -> dict:
                 "SELECT COUNT(*) FROM items WHERE category=? AND bpc_source_slug IS NOT NULL "
                 "AND bpc_source_slug<>''", cat),
             judged=scalar(
-                "SELECT COUNT(DISTINCT item_code) FROM evidence_cell_state WHERE item_code IN "
+                "SELECT COUNT(DISTINCT item_code) FROM specifications WHERE item_code IN "
                 "(SELECT item_code FROM items WHERE category=?)", cat),
             pop_breadth=scalar(
                 "SELECT COUNT(DISTINCT population_code) FROM item_population_links WHERE item_code IN "
@@ -212,7 +212,7 @@ def gather(con: sqlite3.Connection) -> dict:
             "SELECT population_code, COALESCE(category,''), COALESCE(display_name,'') FROM populations"):
         applies = scalar(
             "SELECT COUNT(DISTINCT item_code) FROM item_population_links WHERE population_code=?", code)
-        det = scalar("SELECT COUNT(*) FROM evidence_cell_state WHERE population_code=?", code)
+        det = scalar("SELECT COUNT(*) FROM specifications WHERE population_code=?", code)
         if applies or det:
             pops.append(dict(code=code, cls=cat, name=name, applies=applies, det=det))
     pops.sort(key=lambda p: (-p["applies"], -p["det"], p["code"]))
@@ -223,10 +223,10 @@ def gather(con: sqlite3.Connection) -> dict:
     # slug(s) an item is bound to, via bpc_source_slug or item_bpc_links
     frontier = []
     judged_items = [r[0] for r in rows(
-        "SELECT DISTINCT item_code FROM evidence_cell_state ORDER BY item_code")]
+        "SELECT DISTINCT item_code FROM specifications ORDER BY item_code")]
     for item in judged_items:
         cells = rows(
-            "SELECT population_code, state FROM evidence_cell_state WHERE item_code=? "
+            "SELECT population_code, state FROM specifications WHERE item_code=? "
             "ORDER BY CASE state WHEN 'stated' THEN 0 WHEN 'provisional' THEN 1 "
             "WHEN 'pending' THEN 2 ELSE 3 END, population_code", item)
         item_slugs = {r[0] for r in rows(
@@ -574,9 +574,9 @@ def render_body(F: dict, enf: dict) -> str:
 
     judgment_block = f"""      <div class="stage-block">
         <div class="sb-left"><div class="n">STAGE 3</div><div class="t">Judgment</div>
-          <div class="entry">Entry: verified sources linked to an item × population cell.</div></div>
+          <div class="entry">Entry: verified sources linked to an item × population specification.</div></div>
         <div class="sb-right">
-{metric("Cells determined (of applicable pairs)", f'{j["cells"]} / {pairs} · {pct(j["cells"], pairs)}%', j["cells"], pairs)}
+{metric("Specifications determined (of applicable pairs)", f'{j["cells"]} / {pairs} · {pct(j["cells"], pairs)}%', j["cells"], pairs)}
 {metric("Items with any determination", f'{j["items_judged"]} / {items} · {pct(j["items_judged"], items)}%', j["items_judged"], items)}
 {metric("State split", f'{j["stated"]} stated · {j["provisional"]} prov · {j["pending"]} pend')}
 {metric("Determinations with governing_refs", f'{j["govrefs_ok"]} / {j["govrefs_denom"]} · {pct(j["govrefs_ok"], j["govrefs_denom"])}%', j["govrefs_ok"], j["govrefs_denom"])}
@@ -772,7 +772,7 @@ def render_body(F: dict, enf: dict) -> str:
         {F["migrations"]} data migrations). Denominators: research/synthesis over {slugs}
         <code>bpc_metadata</code> slugs; collection over {srcs} <code>evidence_sources</code>; judgment/render over
         {pairs} applicable item×population pairs (<code>item_population_links</code>). Determinations from
-        <code>evidence_cell_state</code>; synthesis from <code>reasoning_doc_citations</code>; enforcement coverage
+        <code>specifications</code>; synthesis from <code>reasoning_doc_citations</code>; enforcement coverage
         from <code>governance/pipeline-contract.yaml</code>.</div>
       <div><strong style="color:var(--ink-2)">Two things to keep in mind</strong><br>
         (1) "Completeness" here means throughput, not correctness — a <code>stated</code> cell has cleared the gate,

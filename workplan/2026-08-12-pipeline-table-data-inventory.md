@@ -46,7 +46,7 @@ phases 3 through 10 — holds zero rows in every table.**
   PHASE 6   citation_mining                                       0   EMPTY
   PHASE 7   source_value_extractions                              0   EMPTY
   PHASE 8   evidence_population_match                             0   EMPTY
-  PHASE 9   evidence_cell_state                                   0   EMPTY  ◀── the product
+  PHASE 9   specifications                                   0   EMPTY  ◀── the product
   PHASE 10  reasoning_doc_citations                               0   EMPTY
   PHASE 11  pipeline_runs 6 · url_verification_runs 5             residue of a corpus that no longer exists
   PHASE 12  (reads only)
@@ -280,7 +280,7 @@ one, then cleared.
 |---|---|---|
 | `spec_value_probes` | 21 | The Progressive Measurement Protocol's output. The protocol exists, is unrun and is unwired. |
 | `extraction_population_links` | 5 | Junction; no writer. |
-| `cell_source_links` | 5 | The junction three renderers read and `assess_cell.py` never writes. |
+| `specification_source_links` | 5 | The junction three renderers read and `assess_cell.py` never writes. |
 | `item_bpc_links` | 6 | (also phase 1) |
 | `case_studies` | 37 | Plus `case_study_outcomes`, `_populations`, `_specs`, `_strategies` — all 0. |
 | `economics_entries` | 25 | Plus `economics_entry_populations`, `_specs` — all 0. R12 instructs sessions to write this table and no tool can. |
@@ -303,7 +303,7 @@ one, then cleared.
 
 ## Phase 9 — Cell determination
 
-### `evidence_cell_state` — **0 rows**, 27 columns
+### `specifications` — **0 rows**, 27 columns
 
 The product of the entire pipeline: one row per `(item_code, population_code)`, UNIQUE on the
 pair. **Zero determinations exist.**
@@ -381,7 +381,7 @@ Per-item audit pipeline state. Empty.
 ## Phase 12 — Render
 
 Writes files, not rows. Reads `items`, `item_population_links`, `item_bpc_links`,
-`bpc_metadata`, `evidence_cell_state`, `cell_source_links` — **five of those six are empty**,
+`bpc_metadata`, `specifications`, `specification_source_links` — **five of those six are empty**,
 so every generated page currently renders from `items` and `item_population_links` alone, behind
 "not yet computed" banners.
 
@@ -588,8 +588,8 @@ likewise). The permitted-set question is open.
 | 7 | `economics_entry_populations` | **0** | 2 |
 | 7 | `economics_entry_specs` | **0** | 2 |
 | 8 | `evidence_population_match` | **0** | 11 |
-| 9 | `evidence_cell_state` | **0** | 27 |
-| 9 | `cell_source_links` | **0** | 5 |
+| 9 | `specifications` | **0** | 27 |
+| 9 | `specification_source_links` | **0** | 5 |
 | 9 | `convergence_assessment` | **0** | 13 |
 | 9 | `gaps` | **0** | 16 |
 | 10 | `reasoning_doc_citations` | **0** | 34 |

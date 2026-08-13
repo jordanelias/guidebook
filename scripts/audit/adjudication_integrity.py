@@ -24,7 +24,7 @@ Check (the additive one):
      (type × scope) → tier ladder. Exit 1 on any violation.
 
 Readiness (INFO — honest coverage, not a green light): the determination field is
-largely unbuilt pre-C1 (evidence_cell_state is pilot-only; source_value_extractions
+largely unbuilt pre-C1 (specifications is pilot-only; source_value_extractions
 is empty), so value-level convergence and most per-cell invariants cannot yet bite.
 This reports exactly what is and is not assessable today rather than implying full
 coverage.
@@ -74,16 +74,16 @@ def _col_exists(cur, table, col):
 
 def _readiness(cur):
     lines = []
-    n_cells = cur.execute("SELECT COUNT(*) FROM evidence_cell_state").fetchone()[0]
-    lines.append(f"evidence_cell_state: {n_cells} determination cell(s)")
+    n_cells = cur.execute("SELECT COUNT(*) FROM specifications").fetchone()[0]
+    lines.append(f"specifications: {n_cells} determination(s)")
     if n_cells:
         dist = {str(s): n for s, n in cur.execute(
-            "SELECT state, COUNT(*) FROM evidence_cell_state GROUP BY state ORDER BY state")}
+            "SELECT state, COUNT(*) FROM specifications GROUP BY state ORDER BY state")}
         lines.append(f"    state distribution: {dist}")
-        if _col_exists(cur, "evidence_cell_state", "regulatory_stratum_only"):
-            rso = cur.execute("SELECT COUNT(*) FROM evidence_cell_state "
+        if _col_exists(cur, "specifications", "regulatory_stratum_only"):
+            rso = cur.execute("SELECT COUNT(*) FROM specifications "
                               "WHERE regulatory_stratum_only=1").fetchone()[0]
-            cfo = cur.execute("SELECT COUNT(*) FROM evidence_cell_state "
+            cfo = cur.execute("SELECT COUNT(*) FROM specifications "
                               "WHERE code_floor_only=1").fetchone()[0]
             lines.append(f"    excluded from best-practice: regulatory_stratum_only={rso}, "
                          f"code_floor_only={cfo}")

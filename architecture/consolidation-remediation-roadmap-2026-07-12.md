@@ -44,7 +44,7 @@ Ten handoff files scattered across four directories. Proposed rule: `sessions/ha
 ## Prioritized roadmap
 
 **P0 — data-correctness risk (already has draft DRs from the prior session; ratify or reject, don't leave open):**
-- `evidence_cell_state` dual schema — `decisions/DR-2026-07-12-evidence-cell-state-schema-reconciliation.md`
+- `specifications` dual schema — `decisions/DR-2026-07-12-evidence-cell-state-schema-reconciliation.md`
 - Tier-3 `stated` threshold — `decisions/DR-2026-07-12-tier3-stated-threshold.md`
 - `data/guidebook.db` vs `jurisdictional_values/*.yaml` split
 - **`scripts/generate/room_page.py` is broken against the live schema** — references 6 tables absent from the live schema, found by the new drift-check script (see `audits/consolidation-sweep-2026-07-12.md` finding 8b). Currently dormant (not invoked by CI or any other script, so the existing static `site/rooms/*.html` output is unaffected today) but would fail the moment anyone next tries to regenerate room pages. Unlike the other P0 items this one has no draft DR because it's a mechanical fix, not a judgment call: apply the same table-name correction already made in `spec_page.py`/`population_page.py`.

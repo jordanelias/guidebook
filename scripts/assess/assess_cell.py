@@ -504,7 +504,7 @@ def main():
     ]
     report = []
     conv_id = CELL_ID_BASE
-    cell_id = CELL_ID_BASE
+    specification_id = CELL_ID_BASE
     for item_code, population, slug, note in PILOT_CELLS:
         validate_population(conn, population)
         det = determine(conn, item_code, population, slug, note)
@@ -545,9 +545,9 @@ def main():
                 "synthesis_approach, created_at, created_by_session) VALUES (" +
                 ", ".join(q(v) for v in vals) + ");")
 
-        cell_id += 1
+        specification_id += 1
         conf = det["confidence"]
-        vals = (cell_id, det["item_code"], det["population"], det["state"], det["design_scale"],
+        vals = (specification_id, det["item_code"], det["population"], det["state"], det["design_scale"],
                 this_conv,
                 json.dumps(conf["present"]) if conf else None,
                 json.dumps(conf["absent"]) if conf else None,
@@ -560,16 +560,16 @@ def main():
                 det["falsification"],
                 det["has_unverified_sources"], det["all_sources_disqualified"],
                 STAMP, SESSION, STAMP, SESSION)
-        cols = ("cell_id, item_code, population_code, state, design_scale, convergence_id, "
+        cols = ("specification_id, item_code, population_code, state, design_scale, convergence_id, "
                 "confidence_dimensions_present, confidence_dimensions_absent, "
                 "confidence_synthesis_basis, gap_register_id, not_applicable_rationale, "
                 "tier_basis, governing_refs, rule_version, derivation_sha, code_floor_only, "
                 "value_min, value_max, value_unit, falsification_condition, "
                 "has_unverified_sources, all_sources_disqualified, "
                 "created_at, created_by_session, updated_at, updated_by_session")
-        conn.execute(f"INSERT INTO evidence_cell_state ({cols}) VALUES ("
+        conn.execute(f"INSERT INTO specifications ({cols}) VALUES ("
                      + ",".join("?" * 26) + ")", vals)
-        sql_lines.append(f"INSERT INTO evidence_cell_state ({cols}) VALUES (" +
+        sql_lines.append(f"INSERT INTO specifications ({cols}) VALUES (" +
                          ", ".join(q(v) for v in vals) + ");")
 
         report.append({k: det[k] for k in
@@ -579,7 +579,7 @@ def main():
                         "all_sources_disqualified", "derivation_sha", "n_sources",
                         "needs_population_assessment", "tier_inconsistent", "falsification")}
                       | {"convergence": det["convergence"], "confidence": det["confidence"],
-                         "gap_register_id": gap_id, "cell_id": cell_id,
+                         "gap_register_id": gap_id, "specification_id": specification_id,
                          "convergence_id": this_conv,
                          "source_records": [{k2: r[k2] for k2 in
                                              ("ref_id", "tier", "evidence_type", "grain",
@@ -596,7 +596,7 @@ def main():
     view_sql = (
         "DROP VIEW IF EXISTS v_best_practice;\n"
         "CREATE VIEW v_best_practice AS\n"
-        "    SELECT * FROM evidence_cell_state\n"
+        "    SELECT * FROM specifications\n"
         "    WHERE state IN ('stated', 'provisional') AND code_floor_only = 0\n"
         "      AND (tier_basis IS NULL OR tier_basis NOT LIKE '%(regulatory_stratum_only)');")
     sql_lines.append(view_sql)

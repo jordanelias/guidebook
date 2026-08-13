@@ -1,3 +1,10 @@
+# RETIRED TO REFERENCE-ONLY (owner ruling 2026-08-12).
+# All claimed values are cleared. What remains -- item_code, jurisdiction,
+# standard_name -- is retained ONLY to support search terminology and document
+# sourcing: it names which document to go and get, never what it says.
+# These records were a machine parse of parts/v10/appendix-a-jurisdiction-comparison.md,
+# a file that no longer exists, with no provenance, no evidence links, and a
+# verification checklist that was never ticked. Mirrors data/guidebook.db.
 section: A.13
 title: Slip Resistance Test Methods
 item_code: E-07
@@ -7,43 +14,43 @@ records:
   item_code: E-07
   jurisdiction: US
   standard_name: ANSI A326.3
-  value_text: 'Test Method: Wet DCOF; Threshold: ≥0.42; Metric: Dynamic Coefficient of Friction'
-  value_numeric: 0.42
+  value_text: null
+  value_numeric: null
   unit: null
-  is_code_minimum: 1
-  evidence_tier: 6
-  source_section: A.13
+  is_code_minimum: null
+  evidence_tier: null
+  source_section: null
   notes: null
 - spec_id: null
   item_code: E-07
   jurisdiction: GB
   standard_name: BS 7976-2 / HSE
-  value_text: 'Test Method: Pendulum test; Threshold: PTV ≥36 wet; Metric: Pendulum Test Value'
-  value_numeric: 36.0
+  value_text: null
+  value_numeric: null
   unit: null
-  is_code_minimum: 1
-  evidence_tier: 6
-  source_section: A.13
+  is_code_minimum: null
+  evidence_tier: null
+  source_section: null
   notes: null
 - spec_id: null
   item_code: E-07
   jurisdiction: DE
   standard_name: DIN 51130
-  value_text: 'Test Method: Ramp test; Threshold: R9–R13; Metric: Inclination angle class'
-  value_numeric: 9.0
+  value_text: null
+  value_numeric: null
   unit: null
-  is_code_minimum: 1
-  evidence_tier: 6
-  source_section: A.13
+  is_code_minimum: null
+  evidence_tier: null
+  source_section: null
   notes: null
 - spec_id: null
   item_code: E-07
   jurisdiction: AU
   standard_name: AS 4586:2013
-  value_text: 'Test Method: Pendulum + Ramp; Threshold: P3–P5 / R9–R13; Metric: Dual system'
-  value_numeric: 3.0
+  value_text: null
+  value_numeric: null
   unit: null
-  is_code_minimum: 1
-  evidence_tier: 6
-  source_section: A.13
+  is_code_minimum: null
+  evidence_tier: null
+  source_section: null
   notes: null

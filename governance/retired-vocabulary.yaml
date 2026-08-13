@@ -618,6 +618,63 @@ entries:
       Named in CLAUDE.md §10 alongside RV-010 as the second worked example of the
       umbrella failure. Measured 2026-08-05: 5 files repo-wide.
 
+  - id: RV-020
+    token: evidence_cell_state
+    match: identifier
+    severity: broken
+    retired_by: >-
+      Owner ruling 2026-08-12 ((item x population) is a SPECIFICATION, not a
+      "cell"), executed by schema version 055 whose DDL ships in
+      scripts/migrations/data_20260812075349_2026-08-12-rename-cell-to-specification.sql
+    replacement: "specifications"
+    note: >-
+      Same species as RV-001/RV-002/RV-019: a name that no longer exists, so a
+      query naming it raises `no such table`. Registered rather than swept
+      because the sweep cannot be finished by hand — the 19 immutable data
+      migrations, the frozen audits and the dated workplans all name it
+      correctly and forever, and only a standing check can tell those apart from
+      a live surface that has drifted back. Admission test 4 is satisfiable
+      precisely because it is an identifier that can only ever have been a table.
+    exempt_paths:
+      # A — the paper trail for this retirement
+      - "CLAUDE.md"                                        # §4 names the old name once, as a pointer
+      - "skills/specification-curator_SKILL.md"            # ditto, in its repointing note
+      - "governance/check-registry.yaml"                   # a check note quotes the pre-rename tamper trace
+      - "workplan/2026-08-12-step-R-rename-execution-record.md"
+      # B — fixtures that must name it because they replay the rename onto an
+      # immutable pre-055 migration's DDL. Renaming these WOULD BREAK THEM: the
+      # selector must match the migration's own text. This is not a licensed
+      # mention, it is a load-bearing use of the historical name.
+      - "scripts/tests/test_evidence_cell_state_2_3.py"
+      - "scripts/tests/test_validate_evidence_state_2_4.py"
+      # C — the aspirational design spec, which describes a `cell` table that
+      # never shipped. Its reconciliation is architecture/schema-reconciliation.md,
+      # not this register.
+      - "architecture/schema-spec.md"
+      # D — working records of a COMPLETED pre-rename exercise: the July
+      # evidence-migration derivations and verifier verdicts, the pilot manifest,
+      # and a copy of an already-committed migration. Same class as audits/ —
+      # they record what was done on their date and are not instructions. They
+      # are not hidden by .ignore, which is why they are named here rather than
+      # left to be re-derived by whoever greps next.
+      - "working/evidence-migration/**"
+      - "working/pilot/**"
+      - "working/claims-docket.md"
+
+  - id: RV-021
+    token: cell_source_links
+    match: identifier
+    severity: broken
+    retired_by: "as RV-020"
+    replacement: "specification_source_links"
+    note: >-
+      The (specification x source) junction. Registered with RV-020 because a
+      half-renamed pair is worse than either name alone: a session that finds the
+      new table and the old junction concludes the junction was dropped.
+    exempt_paths:
+      - "scripts/tests/test_validate_evidence_state_2_4.py"
+      - "workplan/2026-08-12-step-R-rename-execution-record.md"
+
 # --- deferred: correct to retire, NOT YET SAFE TO FLAG ----------------------
 # These fail admission test 2 — the replacement has not landed — so flagging them
 # today would flag accurate descriptions of live data. Each records the precondition
@@ -680,6 +737,20 @@ deferred:
 # Adding any of these would flood the check and train readers to ignore it. Each
 # was considered against the admission test on 2026-08-05 and failed.
 rejected:
+
+  - tokens: [cell_id]
+    reason: >-
+      Retired with RV-020/RV-021 (renamed to `specification_id` by schema 055) but
+      fails admission test 4. `cell_id` is a bare column name, and
+      architecture/schema-spec.md's aspirational `cell` table — a design that never
+      shipped and is reconciled elsewhere — declares its own `cell_id TEXT PRIMARY
+      KEY` fourteen times. No regex separates a stale reference to the renamed
+      column from a correct reference to a design document's own field; only
+      reading the surrounding block does. RV-020 and RV-021 already catch every
+      case that matters, because a stale `cell_id` can only ever appear in a query
+      that also names one of the two renamed tables. Adding it would flag the
+      design spec on every run and train the reader to ignore the check — the exact
+      outcome this section exists to prevent.
 
   - tokens: ["E-01 .. E-20 (entity codes)"]
     reason: >-

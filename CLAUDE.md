@@ -71,7 +71,7 @@ design-for-everyone framing.)
   most BPCs are retracted-pre-rehabilitation or partial, and the per-BPC reasoning docs (the
   primary deliverable) are barely started. The project is parked mid-rehabilitation (Phase B /
   pilot Phase E — see §9). Treat it as scaffolding under active construction, not a finished
-  book; query `bpc_metadata` / `evidence_cell_state` for the current populated state.
+  book; query `bpc_metadata` / `specifications` for the current populated state.
 - **Repo:** `jordanelias/guidebook`, default branch `main` (protected by CI).
 - **Two product front-ends exist and are different things:** the hand-authored mockup
   (`index.html` + `assets/guidebook.css`, showing the *intended* end-state — most provision
@@ -135,7 +135,8 @@ con = sqlite3.connect('file:data/guidebook.db?mode=ro', uri=True)
 
 **Backbone.** Two axes — `items` (design parameters, `item_code` `A-01…K-NN`) × `populations`
 (disability population codes, self-referencing `parent_code`) — meet in
-**`evidence_cell_state`**, the per-(item×population) synthesis cell (`state` ∈
+**`specifications`** (named `evidence_cell_state` before schema version 055, whose DDL ships in
+`scripts/migrations/data_20260812075349_*.sql` — see that file and 055's header for why), the per-(item×population) synthesis record (`state` ∈
 `stated`/`provisional`/`pending`/`not_applicable`). Evidence lives in **`evidence_sources`**
 (`ref_id` `REF-NNNNN`; `tier` 1–6 and `evidence_type` are orthogonal) and attaches through
 `source_slug_links` → `slugs` (research units) and directly via `evidence_population_match`,

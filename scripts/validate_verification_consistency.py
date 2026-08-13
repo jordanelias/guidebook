@@ -51,13 +51,13 @@ def _check(con) -> list:
         for r in c.execute("SELECT ref_id, verification_status FROM evidence_sources")
     }
     rows = c.execute(
-        "SELECT cell_id,item_code,population_code,state,governing_refs,"
-        "has_unverified_sources FROM evidence_cell_state "
+        "SELECT specification_id,item_code,population_code,state,governing_refs,"
+        "has_unverified_sources FROM specifications "
         "WHERE state IN ('stated','provisional')"
     ).fetchall()
     errors = []
-    for cell_id, item, pop, state, gref, hus in rows:
-        tag = f"cell {cell_id} ({item}×{pop}, {state})"
+    for specification_id, item, pop, state, gref, hus in rows:
+        tag = f"specification {specification_id} ({item}×{pop}, {state})"
         refs = _jlist(gref)
         for r in [r for r in refs if r not in status]:
             errors.append(f"{tag}: governing_ref {r} not in evidence_sources (dangling)")
@@ -83,7 +83,7 @@ def selftest() -> int:
     con = sqlite3.connect(":memory:")
     con.executescript(
         "CREATE TABLE evidence_sources(ref_id TEXT, verification_status TEXT);"
-        "CREATE TABLE evidence_cell_state(cell_id INT, item_code TEXT, population_code TEXT,"
+        "CREATE TABLE specifications(specification_id INT, item_code TEXT, population_code TEXT,"
         " state TEXT, governing_refs TEXT, has_unverified_sources INT);"
         "INSERT INTO evidence_sources VALUES('R1','VERIFIED'),('R2','UNVERIFIED');"
     )
@@ -97,14 +97,14 @@ def selftest() -> int:
     ]
     ok = True
     for row, expect, why in cases:
-        con.execute("DELETE FROM evidence_cell_state")
-        con.execute("INSERT INTO evidence_cell_state VALUES(?,?,?,?,?,?)", row)
+        con.execute("DELETE FROM specifications")
+        con.execute("INSERT INTO specifications VALUES(?,?,?,?,?,?)", row)
         errs, _ = _check(con)
         got = len(errs) > 0
         status = "OK" if got == expect else "**MISSED**"
         if got != expect:
             ok = False
-        print(f"  [{status}] cell {row[0]}: {why} -> violation={got} (expected {expect})")
+        print(f"  [{status}] specification {row[0]}: {why} -> violation={got} (expected {expect})")
     print("selftest:", "PASS" if ok else "FAIL")
     return 0 if ok else 1
 
@@ -118,9 +118,9 @@ def main() -> int:
         print(f"FAIL verification-consistency ({DB}):")
         for e in errors:
             print(f"  {e}")
-        print(f"\nFAIL: {n} cells checked, {len(errors)} violations")
+        print(f"\nFAIL: {n} specifications checked, {len(errors)} violations")
         return 1
-    print(f"OK verification-consistency: {n} stated/provisional cells consistent ({DB})")
+    print(f"OK verification-consistency: {n} stated/provisional specification(s) consistent ({DB})")
     return 0
 
 

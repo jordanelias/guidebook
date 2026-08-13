@@ -25,7 +25,7 @@ The evidence side already exists: `source_value_extractions.measurement_paradigm
 nothing.**
 
 ### Steps
-1. Schema migration adding to `evidence_cell_state`: `claim_manoeuvre TEXT` (what manoeuvre the
+1. Schema migration adding to `specifications`: `claim_manoeuvre TEXT` (what manoeuvre the
    parameter is about — `pass`, `turn_180`, `transfer`) and `claim_construct TEXT CHECK (… IN
    (<the same paradigm vocabulary>))`. Mirror in `EvidenceStateRecord`.
 2. `schemas/directness.py` gains Dimension 4 beside the three existing (population `:89-107`,
@@ -69,10 +69,10 @@ bariatric into one range.
 Population-taxonomy adjacency is DG-NON, and the work-from-axes rule prohibits umbrellas.
 
 ### Two shapes, and the recommendation
-- **Widen the cell key** — `evidence_cell_state.device_class` plus
+- **Widen the cell key** — `specifications.device_class` plus
   `UNIQUE(item_code, population_code)` → `UNIQUE(item_code, population_code, device_class)`.
   UNIQUE cannot be altered, so this is a **table rebuild** — free now at 0 rows, and only now.
-- **A child table** — `cell_device_strata(cell_id FK, device_class, value_min, value_max,
+- **A child table** — `cell_device_strata(specification_id FK, device_class, value_min, value_max,
   value_unit)`, keeping the cell singular.
 
 **Recommend the child table.** It leaves the cell key untouched (14 inbound FKs on `item_code`
@@ -99,11 +99,11 @@ Record when a cell's value derives from other cells, with the rule named and sta
 mechanically checkable.
 
 ### Steps
-1. `ALTER TABLE evidence_cell_state ADD COLUMN derived_from_cell_id INTEGER REFERENCES
-   evidence_cell_state(cell_id);` and `ADD COLUMN derivation_rule TEXT;` — a self-FK is legal in
+1. `ALTER TABLE specifications ADD COLUMN derived_from_cell_id INTEGER REFERENCES
+   specifications(specification_id);` and `ADD COLUMN derivation_rule TEXT;` — a self-FK is legal in
    SQLite `ADD COLUMN` with a NULL default.
-   **But recommend the junction from the start:** `cell_derivations(cell_id, upstream_cell_id,
-   PRIMARY KEY(cell_id, upstream_cell_id))`. The corridor case — width derived from turning space
+   **But recommend the junction from the start:** `cell_derivations(specification_id, upstream_cell_id,
+   PRIMARY KEY(specification_id, upstream_cell_id))`. The corridor case — width derived from turning space
    **and** swept path — is already multi-parent, so a single-parent column is wrong on its first
    real use.
 2. **Extend `derivation_sha`.** Current implementation at `assess_cell.py:277-281` hashes
@@ -139,9 +139,9 @@ circles, clear widths, hoist clearances; ICF anchors b730, b710 / d465, d420, d4
 ESTABLISHED.
 
 ### Steps
-1. Junction `cell_access_needs(cell_id INTEGER NOT NULL REFERENCES evidence_cell_state(cell_id),
+1. Junction `cell_access_needs(specification_id INTEGER NOT NULL REFERENCES specifications(specification_id),
    need_code TEXT NOT NULL REFERENCES access_needs(need_code), obligation_note TEXT,
-   PRIMARY KEY(cell_id, need_code))`.
+   PRIMARY KEY(specification_id, need_code))`.
    **Not a copied prose column** — `design_obligation` stays on `access_needs`, whose 17 rows are
    the canonical obligations. **A cell links; it never re-states.**
 2. **`access_needs` has no Pydantic model** (confirmed; `design_obligation` has zero `.py`

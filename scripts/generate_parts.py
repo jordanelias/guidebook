@@ -63,7 +63,7 @@ PARTS = [
 
 # Tables whose counts form the deterministic fingerprint (existence-guarded).
 FP_TABLES = ["items", "populations", "bpc_metadata", "slugs", "connections",
-             "conflicts", "evidence_sources", "gaps", "evidence_cell_state",
+             "conflicts", "evidence_sources", "gaps", "specifications",
              "convergence_assessment", "terms"]
 
 
@@ -124,9 +124,9 @@ def full_mode_ready(conn):
         reasons.append(
             f"{len(incomplete)}/{len(rows)} BPCs not COMPLETE "
             f"(evidence_state NULL/RETRACTED-PRE-REHAB or bpc_complete=0)")
-    cells = count(conn, "evidence_cell_state") or 0
+    cells = count(conn, "specifications") or 0
     if cells == 0:
-        reasons.append("evidence_cell_state is empty (no synthesised cells; Phase E / 4.3)")
+        reasons.append("specifications is empty (no synthesised cells; Phase E / 4.3)")
     return (not reasons), reasons
 
 
@@ -233,12 +233,12 @@ def build_part04(conn, fp):
                   f"{('`'+slug+'`') if slug else '—'} |")
     # synthesis state
     md.append("\n### Specification detail\n")
-    cells = count(conn, "evidence_cell_state") or 0
+    cells = count(conn, "specifications") or 0
     md.append(stub("Per-item specification values pending",
                    f"The cell-state machine holds {cells} cells. Each item's "
                    "Universal / population / person-specific value rows, "
                    "jurisdiction matrix, and ●◐○ evidence markers render here "
-                   "once 4.3 populates evidence_cell_state + convergence_assessment."))
+                   "once 4.3 populates specifications + convergence_assessment."))
     return "\n".join(md)
 
 

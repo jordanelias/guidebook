@@ -3,7 +3,7 @@
 scripts/generate/population_page.py — Static page generator for population pages.
 
 Queries the LIVE schema (populations, item_population_links, items,
-bpc_metadata, evidence_cell_state) and produces a single self-contained HTML
+bpc_metadata, specifications) and produces a single self-contained HTML
 file for a given population code, following the same pattern as
 tools/regenerate_vetting_surface.py: query real tables, inline data as JSON,
 no framework, no server, no network dependency.
@@ -18,7 +18,7 @@ this script, which queried the non-existent `population`, `specification`,
 and `conflict` tables and failed on every invocation.
 
 Honesty requirement (workplan/website-v0-path-forward-2026-07-12.md): if
-evidence_cell_state has no rows for this population, the page says so plainly
+specifications has no rows for this population, the page says so plainly
 rather than omitting the section or implying a determination exists.
 
 Usage:
@@ -76,7 +76,7 @@ def query_population(conn, code):
         "SELECT item_code, state, tier_basis, code_floor_only, falsification_condition, "
         "regulatory_stratum_only, confidence_synthesis_basis, has_unverified_sources, "
         "all_sources_disqualified "
-        "FROM evidence_cell_state WHERE population_code = ? ORDER BY item_code",
+        "FROM specifications WHERE population_code = ? ORDER BY item_code",
         (code,),
     ).fetchall()
     pop["cells"] = [
@@ -109,7 +109,7 @@ def render_html(pop):
     status = e(pop["status"] or "")
 
     item_rows = "".join(
-        f'<tr><td><a href="/specs/{e(it["item_code"].lower())}.html">{e(it["item_code"])}</a></td>'
+        f'<tr><td><a href="/site/specs/{e(it["item_code"].lower())}.html">{e(it["item_code"])}</a></td>'
         f'<td>{e(it["name"])}</td><td>{e(it["category"] or "")}</td>'
         f'<td>{e(it["applicability"] or "")}</td></tr>\n'
         for it in pop["items"]
@@ -130,7 +130,7 @@ def render_html(pop):
 
     if pop["cells"]:
         cell_rows = "".join(
-            f'<tr><td><a href="/specs/{e(c["item_code"].lower())}.html">{e(c["item_code"])}</a></td>'
+            f'<tr><td><a href="/site/specs/{e(c["item_code"].lower())}.html">{e(c["item_code"])}</a></td>'
             f'<td>{e(c["state"])}</td>'
             f'<td>{e(c["tier_basis"] or "—")}</td>'
             f'<td>{"yes" if c["code_floor_only"] else "no"}</td>'
@@ -150,7 +150,7 @@ def render_html(pop):
     else:
         bp_section = ('<p class="honest-banner">Best-practice determination: '
                        '<strong>not yet computed</strong> for any item × this population. '
-                       'The evidence_cell_state table exists but is empty pending the Phase E '
+                       'The specifications table exists but is empty pending the Phase E '
                        'evidence re-synthesis and best-practice engine build '
                        '(see workplan/best-practices-assessment-system.md). '
                        'This is not a data-loading bug — see the gap register for tracked status.</p>')

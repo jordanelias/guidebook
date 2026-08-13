@@ -1,0 +1,33 @@
+-- 055_rename_cell_to_specification.sql
+-- VERSION MARKER ONLY. The DDL for this schema change lives in the paired data
+-- migration data_20260812*_2026-08-12-rename-cell-to-specification.sql. Read the
+-- ordering note below before assuming that is a mistake.
+--
+-- Owner ruling 2026-08-12: the (item x population) determination is a
+-- SPECIFICATION, not a "cell". "Cell" was the matrix framing; it collided with
+-- the vocabulary this repo already used everywhere else -- spec_page.py,
+-- spec_value_probes, case_study_specs, economics_entry_specs, specs/ -- and with
+-- armature_v4_resolutions.md, which reserves the Specification layer by name.
+--
+-- WHY THE DDL IS NOT HERE.
+-- scripts/migrate_db.py applies ALL schema migrations first, then ALL data
+-- migrations in timestamp order -- it does not interleave the two by date. An
+-- earlier draft of this file carried the ALTER TABLE statements and made exactly
+-- that wrong assumption in its own comment; `migrate_db.py --rebuild` failed with
+-- `no such table: evidence_cell_state` on the first of the 19 committed data
+-- migrations that write to the old names. Those 19 are immutable, so the rename
+-- has to happen AFTER they replay, which means it has to happen in the data phase.
+-- Migration 025 records the same collision from the other side ("the CHECK cannot
+-- be tightened while that migration's COLONIAL inserts remain in replay (CI
+-- rebuilds schema-before-data)") and resolved it by withdrawing a single same-day
+-- migration; withdrawal is not available across 19 migrations spanning two months.
+-- DDL inside a data migration has precedent at
+-- data_20260525013000_supersession_v1_stamp_correction.sql, which runs
+-- ALTER TABLE ... ADD/DROP/RENAME COLUMN for the same class of reason.
+--
+-- This file keeps PRAGMA user_version honest as the authoritative schema-version
+-- marker (CLAUDE.md 4) and reserves 055 so a future 056 is not silently skipped.
+-- The runner sets user_version from the filename number; the PRAGMA below is
+-- explicit so a reader of the file alone can see the intended version.
+
+PRAGMA user_version = 55;

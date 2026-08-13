@@ -60,10 +60,18 @@ check("pending with real gap id accepted",
       EvidenceStateRecord(item_code="A-08", population="MOB", state="pending", gap_register_id="GAP-001").gap_register_id == "GAP-001")
 
 # ----------------------------------------------------------------------------
-# Part 2 — table DDL constraints (shipped migration-024 SQL, stub parents)
+# Part 2 — table DDL constraints (schema taken from the baseline, stub parents)
 # ----------------------------------------------------------------------------
-SQL_PATH = os.path.join(os.path.dirname(__file__), "..", "migrations", "024_evidence_cell_state.sql")
-ddl = open(SQL_PATH).read()
+# This used to read migration 024 and then replay the 055 rename by hand, because
+# 024 is immutable and creates the historical names. Since the history was frozen
+# behind 057_baseline_2026-08-12.sql there is one file holding the CURRENT schema,
+# so the fixture reads that and the replay is gone.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from _baseline_ddl import ddl_for  # noqa: E402
+
+ddl = ddl_for("specifications", "convergence_assessment",
+              "idx_specifications_item", "idx_specifications_pop",
+              "idx_specifications_state")
 
 db = sqlite3.connect(":memory:")
 db.execute("PRAGMA foreign_keys=ON")
@@ -78,29 +86,29 @@ db.executescript(ddl)
 
 check("both tables created from shipped DDL",
       {r[0] for r in db.execute("SELECT name FROM sqlite_master WHERE type='table'")} >=
-      {"evidence_cell_state", "convergence_assessment"})
+      {"specifications", "convergence_assessment"})
 
 db.execute("INSERT INTO convergence_assessment(convergence_id,status,clinical_sources) VALUES (1,'convergent','[\"REF-001\"]')")
-db.execute("INSERT INTO evidence_cell_state(cell_id,item_code,population_code,state,design_scale,convergence_id) VALUES (1,'A-02','AUT','stated','population',1)")
-db.execute("INSERT INTO evidence_cell_state(cell_id,item_code,population_code,state,gap_register_id) VALUES (2,'A-08','MOB','pending','GAP-001')")
-check("valid stated + pending cells inserted", db.execute("SELECT COUNT(*) FROM evidence_cell_state").fetchone()[0] == 2)
+db.execute("INSERT INTO specifications(specification_id,item_code,population_code,state,design_scale,convergence_id) VALUES (1,'A-02','AUT','stated','population',1)")
+db.execute("INSERT INTO specifications(specification_id,item_code,population_code,state,gap_register_id) VALUES (2,'A-08','MOB','pending','GAP-001')")
+check("valid stated + pending cells inserted", db.execute("SELECT COUNT(*) FROM specifications").fetchone()[0] == 2)
 
 reject("FK: non-existent item_code",
-       lambda: db.execute("INSERT INTO evidence_cell_state(cell_id,item_code,population_code,state) VALUES (3,'Z-99','AUT','stated')"))
+       lambda: db.execute("INSERT INTO specifications(specification_id,item_code,population_code,state) VALUES (3,'Z-99','AUT','stated')"))
 reject("FK: non-existent population_code",
-       lambda: db.execute("INSERT INTO evidence_cell_state(cell_id,item_code,population_code,state) VALUES (4,'A-02','NOPE','stated')"))
+       lambda: db.execute("INSERT INTO specifications(specification_id,item_code,population_code,state) VALUES (4,'A-02','NOPE','stated')"))
 reject("FK: non-existent gap_id",
-       lambda: db.execute("INSERT INTO evidence_cell_state(cell_id,item_code,population_code,state,gap_register_id) VALUES (5,'A-03','AUT','pending','GAP-99999')"))
+       lambda: db.execute("INSERT INTO specifications(specification_id,item_code,population_code,state,gap_register_id) VALUES (5,'A-03','AUT','pending','GAP-99999')"))
 reject("CHECK: bad state",
-       lambda: db.execute("INSERT INTO evidence_cell_state(cell_id,item_code,population_code,state) VALUES (6,'A-03','AUT','halfbaked')"))
+       lambda: db.execute("INSERT INTO specifications(specification_id,item_code,population_code,state) VALUES (6,'A-03','AUT','halfbaked')"))
 reject("CHECK: bad design_scale",
-       lambda: db.execute("INSERT INTO evidence_cell_state(cell_id,item_code,population_code,state,design_scale) VALUES (7,'A-03','AUT','stated','galactic')"))
+       lambda: db.execute("INSERT INTO specifications(specification_id,item_code,population_code,state,design_scale) VALUES (7,'A-03','AUT','stated','galactic')"))
 reject("CHECK: bad convergence status",
        lambda: db.execute("INSERT INTO convergence_assessment(convergence_id,status) VALUES (2,'bogus')"))
 reject("CHECK: non-boolean has_unverified_sources",
-       lambda: db.execute("INSERT INTO evidence_cell_state(cell_id,item_code,population_code,state,has_unverified_sources) VALUES (8,'A-03','AUT','stated',7)"))
+       lambda: db.execute("INSERT INTO specifications(specification_id,item_code,population_code,state,has_unverified_sources) VALUES (8,'A-03','AUT','stated',7)"))
 reject("UNIQUE: duplicate (item_code,population)",
-       lambda: db.execute("INSERT INTO evidence_cell_state(cell_id,item_code,population_code,state) VALUES (9,'A-02','AUT','stated')"))
+       lambda: db.execute("INSERT INTO specifications(specification_id,item_code,population_code,state) VALUES (9,'A-02','AUT','stated')"))
 check("PRAGMA foreign_key_check clean", not db.execute("PRAGMA foreign_key_check").fetchall())
 db.close()
 

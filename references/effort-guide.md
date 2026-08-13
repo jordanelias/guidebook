@@ -70,7 +70,7 @@ Per-skill effort overrides for the `/effort` parameter. `/effort` sets Claude's 
 | structure-auditor | Structural integrity judgment; orphan detection |
 | audit-consolidator | Cross-audit synthesis; finding deduplication |
 | item-audit-pipeline | Multi-stage audit pipeline coordination |
-| cell-curator | Per-cell evidence curation in jurisdiction comparison tables |
+| specification-curator | Per-specification evidence curation in jurisdiction comparison tables |
 | reasoning-doc-citations | Per-cell verification recording for synthesis claims (skill placeholder) |
 | connection-discovery | Identify candidate cross-BPC connections |
 | connection-auditor | Audit existing connections for validity and currency |

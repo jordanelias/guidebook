@@ -34,6 +34,21 @@ point for such identifiers (per
 process governs renaming a skill going forward; `EXTRA_RULE_IDS` accepts a non-skill
 or historical-alias identifier without rewriting past attestations.
 
+### Renames performed
+
+| Former identifier | Current identifier | Date | Record |
+|---|---|---|---|
+| `cell-curator` | `specification-curator` | 2026-08-12 | `decisions/DR-2026-08-12-specification-curator-rename.md` |
+
+**Past attestations citing a former identifier are NOT rewritten.** Step 2 of the process above
+calls for a migration that rewrites every `attestations/*.json`; that step is deliberately not taken
+here, and the departure is recorded in the DR. Rewriting a committed adherence log to say a session
+invoked a name that did not exist on its date would falsify the record — the same class of act as
+editing a dated audit. The former identifier is instead registered in `EXTRA_RULE_IDS`
+(`scripts/audit/adherence_log_audit.py`, Category B), which the file above already describes as the
+ratified way to accept a historical identifier **without rewriting past attestations**. Check #3
+therefore still resolves every existing citation.
+
 ---
 
 ## Conventions
@@ -52,7 +67,7 @@ Each active skill's effort level is in `references/effort-guide.md`. Triggers an
 adversarial-research              cross-reference-resolver         literature-review-planner        research-log-manager
 audit-consolidator                doctrine-recheck                 markdown-formatter               sensory-coherence-checker
 bibliography-compiler             economics-auditor                multilingual-research            session-consolidator
-cell-curator                      economics-researcher             practice-note-generator          structure-auditor
+specification-curator             economics-researcher             practice-note-generator          structure-auditor
 citation-miner                    evidence-auditor                 progressive-measurement          supplemental-integrator
 citation-verifier                 evidence-metadata-rehabilitation prose-style-checker              table-formatter
 connection-auditor                find-and-replace                 question-author                  toc-editor

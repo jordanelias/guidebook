@@ -2,7 +2,9 @@
 
 **Status:** OPERATIVE methodology demonstration (companion to `decisions/DR-2026-07-20-intra-category-cross-test.md`, PROPOSED). Authored on owner directive 2026-07-20. This document *demonstrates* the intra-category cross-test (ICCT) on one cluster; like the corridor value-genealogy worked example, **it does not itself change any determination** — its verdicts are recorded as falsifiable predictions binding to their inputs, to be confirmed or overturned by the built pass.
 
-**Why this cluster:** the corridor case demonstrated the ICCT relationships on a *spatial* parameter (swept-path width). This one demonstrates the identical method on an *acoustic* one — three items that read, by title, as three unrelated specifications but are in fact one coupled system. It is the cleanest available proof that "silos by title" and "too-specific topics" (the owner's words) hide the real determination. All three items are already live in `evidence_cell_state`.
+**Why this cluster:** the corridor case demonstrated the ICCT relationships on a *spatial* parameter (swept-path width). This one demonstrates the identical method on an *acoustic* one — three items that read, by title, as three unrelated specifications but are in fact one coupled system. It is the cleanest available proof that "silos by title" and "too-specific topics" (the owner's words) hide the real determination. All three items were live in `specifications` when this was written; the 2026-08-12
+evidence-stage clearance took that table to 0 rows, so the worked example describes the
+method, not the current contents.
 
 ---
 
