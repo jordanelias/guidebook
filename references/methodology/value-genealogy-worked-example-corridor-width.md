@@ -70,12 +70,18 @@ Top-down and bottom-up derivations already exist for this parameter and **have n
 ## 7. Integrity findings this genealogy surfaced (owner attention)
 
 1. **`specs/e-08.html` (public page) rests on an unregistered anchor.**
-   > **RESOLVED 2026-08-12 — the page is retired, the question is not.** By owner
+   > **CLOSED 2026-08-13 — page retired, and the citation is not a lead.** By owner
    > instruction the page is frozen at `_archived/specs/e-08.html` and the root
-   > `index.html` now opens the DB-generated `site/specs/e-08.html` instead. Retiring the
-   > page removes the unsourced *surface*; it does not answer whether Koontz 2017 exists.
-   > That stays queued: if the study is real it would be the corpus's only passing-width
-   > cohort study and must be mined and registered. See `_archived/specs/README.md`.
+   > `index.html` now opens the DB-generated `site/specs/e-08.html` instead.
+   >
+   > A note added here on 2026-08-12 said the page was retired but "does Koontz 2017 exist?"
+   > stayed queued. **That was wrong and is withdrawn.** Under the clean slate the corpus starts
+   > empty and every source enters through the research contract — DOI pre-checked (R9), every
+   > locator re-retrieved (R10). Inheriting a citation from a retired page whose six REF-IDs all
+   > collided with unrelated rows would let a deleted artifact seed the new corpus, which is the
+   > circularity the reset exists to break. If such a study exists, a well-formed search finds it on
+   > its own evidence. The finding below stands as a record of what the page contained, not as a
+   > research lead. See `_archived/specs/README.md`.
    >
    > Original finding, left as written: It cites "Koontz 2017, DOI 10.1080/17483107.2016.1278470, n=42 two-pass corridor" + a metabolic-cost claim — **absent from `evidence_sources` and the entire corpus** (the registered Koontz rows are propulsion-biomechanics papers). **All six** of its REF-IDs collide with unrelated canonical rows (page REF-00237 "Koontz 2017" = DB Boverket BFS 2024:12; REF-00500 "ISO 21542" = DB Korean daylighting paper; REF-00114 "BS 8300-2" = DB CAN/ASC 2.8:2025; REF-00200 "CSA B651-18" = DB IEC 60118-4; REF-00610 "NBR 9050" = DB Property Council AU; REF-00390 "Steinfeld & Maisel 2012" = DB Lord 1993), and it claims sourcing from `data/specifications/e-08.yaml`, **which does not exist**. Either the Koontz 2017 study exists and must be mined/registered (it would be the corpus's only passing-width cohort study), or the page carries a fabricated anchor and must be purged. Un-adjudicated here; queued.
 2. **Four coexisting "Guidebook values" for E-08:** tier-system §3 canon (2440 best practice) · item-jurisdiction-divergence-matrix (target 1800, no 2440 row) · live v10 item name (≥1200 minimum) · specs/e-08.html (≥1200/1500, Koontz-anchored). Each has a different genealogy; only one chain is multi-root. This is the scattered-information problem *as a data defect*, and the extraction layer is its cure.

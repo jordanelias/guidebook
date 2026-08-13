@@ -25,10 +25,16 @@ the page **rests on an unregistered anchor**:
   "NBR 9050" is Property Council AU; REF-00390 "Steinfeld & Maisel 2012" is Lord 1993.
 - It claims sourcing from `data/specifications/e-08.yaml`, **which does not exist**.
 
-That audit left the question open — either the Koontz study is real and must be mined and
-registered, or the page carries a fabricated anchor. It is unresolved either way, and the page was
-the project's most prominent public surface while carrying values whose provenance had already been
-shown not to resolve. The same document records **four coexisting "Guidebook values" for E-08**
+**That question is closed, and closing it is the point of the clean slate.** An earlier draft of
+this README kept "is Koontz 2017 real?" as a queued lead. That was wrong. The corpus starts empty;
+every source enters through the research contract, which pre-checks the DOI (R9) and re-retrieves
+every locator (R10). A citation inherited from a retired, unprovenanced page is not a lead — it is
+the unprovenanced artifact the reset exists to remove, and carrying it forward would let a deleted
+page seed the new corpus. If a passing-width cohort study exists, an honest search finds it on its
+own evidence. If it does not, we should not be holding a note that half-implies it does.
+
+The page was the project's most prominent public surface while carrying values whose provenance had
+already been shown not to resolve. The same document records **four coexisting "Guidebook values" for E-08**
 (2440 best practice · 1800 divergence-matrix target · ≥1200 live item name · ≥1200/1500 on this
 page), each with a different genealogy.
 
@@ -50,7 +56,8 @@ page. Note that `scripts/audit/check_rendered_docs.py` globs `specs/*.html` and 
 
 `architecture/page-templates.md` cites `site/specs/e-08.html` (the generated page), not this one.
 `references/methodology/value-genealogy-worked-example-corridor-width.md` names this page as its
-subject; that is the retirement's paper trail and is left as written, with a status note added.
+subject; that is the retirement's paper trail and is left as written, with a status note added. Its
+§7 finding stands as a record of what the page contained — not as a research lead.
 
 ### Reading this directory
 

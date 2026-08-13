@@ -71,6 +71,17 @@ rendered where it can be read as current.
 Retiring the page does **not** answer whether Koontz 2017 exists; that question stays queued and is
 recorded in `_archived/specs/README.md` and in the genealogy document itself.
 
+> **CORRECTION, 2026-08-13 (owner instruction).** The sentence above is **withdrawn**. Keeping
+> "does Koontz 2017 exist?" as a queued lead contradicts the clean slate this project has been
+> operating under since the 2026-08-06 reset: the corpus starts empty, and every source enters
+> through the research contract with its DOI pre-checked (R9) and every locator re-retrieved (R10).
+> A citation inherited from a retired page — one whose six REF-IDs all collided with unrelated
+> canonical rows — is not a lead. Carrying it forward would let a deleted artifact seed the new
+> corpus, which is the circularity the reset exists to break. **There is no queued question.** The
+> §7 finding in the genealogy document stands as a record of what the page contained. Corrected in
+> `_archived/specs/README.md` and in that document; this DR keeps the original sentence visible
+> rather than rewriting it, per the protocol's forward-only rule.
+
 ## 6. One consequence found by running the checks, and how it was resolved
 
 Archiving migration 056 broke `adherence_log_audit` check #4: an attestation written hours earlier
