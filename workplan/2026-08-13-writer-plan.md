@@ -3,6 +3,10 @@
 **Owner instruction:** *"Plan out writers within the context of our existing infrastructure under
 the maxim of less code, more centralization."*
 
+> **REVISION 3 — owner rulings of 2026-08-13 recorded at §10-11: split by confidence, uniform
+> sink, and a backend vetting surface showing the extract behind each determination.** The two
+> rulings compose into a better design than the one offered to them; §10 says how.
+>
 > **REVISION 2, after an adversarial read-only review against three owner axes — long-term
 > integrity, clean slate, and walking the pipeline in all directions with per-cell validation.**
 > Revision 1's core idea survived; **two of its specific claims did not, and one of them was
@@ -254,5 +258,81 @@ the contract enforcement this inherits is real rather than assumed.
 3. **Phase 2 items 1–2** — the gated tables. `research_batch_dod.py` is the acceptance test.
 4. **M4's junction**, then **Phase 2 items 3–9** in stage order.
 
-Open for owner ruling: **who writes `specifications`**, and whether Phase 1's sink auto-applies or
-stops at emit for owner-gated stages.
+---
+
+## 10. Owner rulings, 2026-08-13 — and how they compose
+
+**Ruling 1 — split by confidence.** A session may freely record `pending`, `provisional` and
+`not_applicable`. A **`stated`** determination — the confident claim, the guidebook's own voice —
+requires owner ratification.
+
+**Ruling 2 — uniform.** The sink behaves the same for every stage: emit and apply. No approval
+queue, no out-tray, no per-stage mode.
+
+### These compose better than the framing I offered
+
+I said that if determinations needed sign-off, ruling 2 would answer itself — the machinery would
+have to hold a change back for that one stage. **Taken together the rulings say something better:
+the gate is not a held-back change, it is a refused one.**
+
+Uniform apply forces the confidence split *out of the workflow and into the schema*. A session
+cannot write a `stated` determination because a **constraint refuses it**, not because a slip is
+waiting in a queue for attention. That is a promotion up this repo's own enforcement spectrum — a
+constraint cannot be un-run, cannot examine nothing, and cannot be advisory — and it is **less**
+code than a two-mode sink, not more.
+
+Mechanism: a trigger on `specifications` that refuses `state='stated'` unless a matching
+ratification row exists. SQLite `CHECK` cannot reference another table; a trigger can. This belongs
+with the resolution plan's Part I, which already promotes invariants from prose into DDL.
+
+**Consequence for Phase 0:** the ratification record and its trigger join the schema migration in
+§2. Still cheap — `specifications` is at 0 rows.
+
+### Ruling 1's second half: the vetting surface
+
+*"Show text extracts or screenshots from the source where the determination is recorded, on a
+backend version of the page, so I can easily vet the determinations."*
+
+**Most of this exists.** `tools/spec-curation-vetting-surface.html` (40 KB) is regenerated from the
+database by `tools/regenerate_vetting_surface.py`, lives in `tools/` rather than `site/` — so it is
+already backend, not public — and already renders per-source extractions, synthesis-verified values,
+selection walks and evidence spread. It is the right surface. Three things are missing, and they are
+specific:
+
+| Gap | Status | Work |
+|---|---|---|
+| **The verbatim extract is stored but not shown.** `source_value_extractions.claim_text` and `reasoning_doc_citations.claim_text` exist, with a full locator scheme beside them (`loc_division` … `loc_subclause`). The generator renders **zero** occurrences of `claim_text` — it shows values, not the words they came from | Data modelled, not rendered | Small. Render `claim_text` + locator next to each value |
+| **The surface does not show the determination at all.** Its queries read `evidence_sources`, `items`, `populations`, `source_slug_links` and the three population junctions — **not `specifications`**. It shows the evidence, not what the evidence concluded | Blocked | Needs §5's `specification_extraction_links`. **This promotes M4 from "do it while the tables are empty" to a hard prerequisite of the ratification workflow** — you cannot vet a determination against its sources while nothing joins them |
+| **Screenshots have no home anywhere in the schema.** Checked every table: no column matching screenshot / image / snapshot / scan / attachment / excerpt. Nothing | Not modelled | New. See below |
+
+**On screenshots, one decision made and one concern raised.**
+
+*Decided, as routine engineering:* images live as files under a versioned directory with a path
+column referencing them — **not** as blobs in the database. The database is committed as a binary
+and compared byte-for-byte by the reproducibility gate; page images would bloat it by orders of
+magnitude and make every comparison slower for no gain.
+
+*Raised, not decided:* a large share of the sources this project must vet are **paywalled
+standards** — BS, ISO, CSA, national codes. Storing page images of those in the repository is a
+copyright question, not a technical one, and the repository is intended to become public. A
+**locator plus verbatim short extract** carries the same vetting power with far less exposure: it
+tells you exactly where to look and what it says, which is what vetting needs. I would suggest
+screenshots be reserved for sources that are freely licensed or for figures that cannot be conveyed
+as text, with the locator-plus-extract path as the default. **Your call — I am flagging it, not
+narrowing the request.** Both routes are built the same way.
+
+---
+
+## 11. Sequence, as ruled
+
+0. **Phase 0** — one schema migration, while every affected table is empty: the two CHECK
+   vocabularies, the `UNIQUE` on `doi`, **and** the ratification record plus the `stated` trigger.
+1. **Phase 1** — the uniform sink, with apply-time re-validation, atomic snapshot and the
+   serialization decision made explicitly. Round-trip verified, not assumed.
+2. **Phase 3 deletions**, once Phase 0 and 1 have landed.
+3. **Phase 2 items 1–2** — the gated research tables.
+4. **M4's `specification_extraction_links`** — now a prerequisite of vetting, not a nicety.
+5. **Phase 2 items 3–9**, and the vetting-surface work: render `claim_text` and the locator, then
+   add the determination and its backward walk once the junction exists.
+
+Still open, and narrowed to one question: **the screenshot scope above.** Everything else is ruled.
