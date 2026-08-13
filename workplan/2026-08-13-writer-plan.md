@@ -305,21 +305,68 @@ specific:
 | **The surface does not show the determination at all.** Its queries read `evidence_sources`, `items`, `populations`, `source_slug_links` and the three population junctions — **not `specifications`**. It shows the evidence, not what the evidence concluded | Blocked | Needs §5's `specification_extraction_links`. **This promotes M4 from "do it while the tables are empty" to a hard prerequisite of the ratification workflow** — you cannot vet a determination against its sources while nothing joins them |
 | **Screenshots have no home anywhere in the schema.** Checked every table: no column matching screenshot / image / snapshot / scan / attachment / excerpt. Nothing | Not modelled | New. See below |
 
-**On screenshots, one decision made and one concern raised.**
+### On screenshots — my recommendation was wrong, and it is withdrawn
 
-*Decided, as routine engineering:* images live as files under a versioned directory with a path
-column referencing them — **not** as blobs in the database. The database is committed as a binary
-and compared byte-for-byte by the reproducibility gate; page images would bloat it by orders of
-magnitude and make every comparison slower for no gain.
+I suggested a locator plus a short verbatim extract as the default, with screenshots reserved for
+figures. **Owner response: the whole point is that navigating to the source and finding the location
+is onerous — the context must be on the surface.** That is right, and it exposes two errors in what
+I wrote.
 
-*Raised, not decided:* a large share of the sources this project must vet are **paywalled
-standards** — BS, ISO, CSA, national codes. Storing page images of those in the repository is a
-copyright question, not a technical one, and the repository is intended to become public. A
-**locator plus verbatim short extract** carries the same vetting power with far less exposure: it
-tells you exactly where to look and what it says, which is what vetting needs. I would suggest
-screenshots be reserved for sources that are freely licensed or for figures that cannot be conveyed
-as text, with the locator-plus-extract path as the default. **Your call — I am flagging it, not
-narrowing the request.** Both routes are built the same way.
+**First, a locator does not remove the navigation.** "§7.3.2, p.44" *is* an instruction to go and
+look. Half my proposal was the very thing the surface exists to eliminate.
+
+**Second, and more seriously — a typed extract is not independent evidence.** If a session types a
+quotation into `claim_text`, that quotation is another unverified assertion **by the same session
+that produced the determination**. It can be fabricated exactly as easily as the value can, and this
+project has the receipts: the retired `e-08` page carried a citation absent from the entire corpus
+and **six reference IDs that all resolved to unrelated records**. A typed quote would have looked
+just as convincing on that page.
+
+**A screenshot is the one artifact in the chain a session cannot invent.** It is evidence *about the
+extraction*, not merely *from* it. For a vetting surface — whose whole job is letting you check
+whether I derived the determination correctly — that is the difference between reviewing my work and
+re-reading my own claims back to myself.
+
+There are also cases text simply cannot carry: **dimensional tables**, where the value's meaning is
+its row and column; **figures and clearance diagrams**, which are spatial; and multi-column standards
+layouts where a section number is ambiguous on the page.
+
+**So: build screenshots, as the primary vetting artifact, alongside the extract rather than instead
+of it.** Both, on the surface, next to the value.
+
+### How the copyright concern is handled — by design, not by omission
+
+The concern was real; the answer is not to weaken the surface but to keep the images out of the
+publishable artifact. Verified: `tools/spec-curation-vetting-surface.html` is referenced only by the
+regeneration workflow — **not by `site/`, not by `index.html`, and there is no publish or deploy
+workflow in the repository at all.** The surface is already backend in fact, not just by convention.
+
+So:
+
+- **The image files are excluded from the repository** (`.gitignore`, which the repo already uses for
+  exactly this class of local-only artifact). They exist on your machine, render on your surface, and
+  never enter the publishable history.
+- **The database records that the excerpt exists** — its path, the locator it corresponds to, a
+  caption, and a checksum. The *paper trail* is committed and mechanically checkable even though the
+  *image* is not. An audit can confirm every `stated` determination has a captured excerpt without
+  the excerpt itself being public.
+- **Publication becomes a per-row flag, not a re-architecture.** If a source is freely licensed and
+  you later want its excerpt public, that is one column, not a redesign.
+- **Crop to the clause, not the page.** Smaller, more legible on the surface, and a materially
+  better position than reproducing whole pages.
+
+### Capture should be mechanized, not manual
+
+Chromium is present in this environment (`/opt/pw-browsers/chromium`). For web-hosted sources a
+capture step can navigate, locate the clause and crop it automatically; for PDFs, a page render
+cropped to the region. **Manual screenshotting would not survive contact with a real research batch**
+— it is exactly the kind of step that gets skipped under time pressure and then gets recorded in
+prose as a lesson. The capture belongs in the same write path as everything else, so that the
+excerpt arrives with the extraction rather than being chased afterwards.
+
+**What this adds to Phase 0:** an excerpt table — path, checksum, locator, caption, publishable flag
+— linked to the extraction and, through §5's junction, to the determination it supports. Still cheap:
+every affected table is empty.
 
 ---
 
@@ -332,7 +379,12 @@ narrowing the request.** Both routes are built the same way.
 2. **Phase 3 deletions**, once Phase 0 and 1 have landed.
 3. **Phase 2 items 1–2** — the gated research tables.
 4. **M4's `specification_extraction_links`** — now a prerequisite of vetting, not a nicety.
-5. **Phase 2 items 3–9**, and the vetting-surface work: render `claim_text` and the locator, then
-   add the determination and its backward walk once the junction exists.
+5. **Phase 2 items 3–9**, and the vetting-surface work in three steps: render `claim_text` and the
+   locator (data already exists); add the captured excerpt image beside it; then add the
+   determination and its backward walk once the junction lands — at which point the surface shows,
+   in one place, the claim, the words behind it, the image proving those words, and the
+   determination they support.
 
-Still open, and narrowed to one question: **the screenshot scope above.** Everything else is ruled.
+**Nothing is open.** The screenshot question is ruled: screenshots are primary, alongside the
+extract, with the image files excluded from the repository and their existence recorded in the
+database.
