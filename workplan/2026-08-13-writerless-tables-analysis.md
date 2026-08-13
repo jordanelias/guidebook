@@ -16,6 +16,20 @@ writer somewhere, so they were not flagged: `source_value_extractions`, `evidenc
 
 ---
 
+> **CORRECTION, 2026-08-13 — the count is nine, not eleven.** `search_coverage` and
+> `search_languages` are **deliberately writerless**: `scripts/db.py:316-326` raises
+> `FrozenGridError` on any write to either. They were frozen on 2026-08-06 as hand-kept state grids
+> that had drifted from the search log in both directions (634 cells claimed SEARCHED with 15
+> corroborated; 31 executions landed on cells the grid called NOT-RUN), and
+> `workplan/search-coverage-completion-workplan.md` replaced them with `search_executions` plus
+> derived views. **Building writers for them would un-freeze a retirement.**
+>
+> The table below also calls `search_languages` "GATED — R11". That is wrong:
+> `research_batch_dod.py` reads `search_executions`, not the grid, so R11 is already satisfied by
+> the log. Both errors come from checking readers without checking whether a writer was *absent* or
+> *removed on purpose* — the two look identical to a counter. The plan is
+> `workplan/2026-08-13-writer-plan.md`.
+
 ## 1. Required? — yes; every one has readers, and three are gated
 
 | Table | Read by | Status |
@@ -90,9 +104,12 @@ which then pinned retired table names and had to be frozen.
 
 **Recommended sequence, for the owner to rule on:**
 
-1. **Write-path first, content second.** One emitter per pipeline stage, each producing a migration
-   rather than touching the DB — smallest useful unit is the research stage, since R7/R11/R12 are
-   already gated there.
+1. **Write-path first, content second.** *Superseded 2026-08-13 by
+   `workplan/2026-08-13-writer-plan.md`, which found the sequencing right and the shape wrong:*
+   **there should be no per-stage emitters at all.** `scripts/db.py` already holds 20 write
+   functions of one shape; what it lacks is a sink, because it commits to the canonical DB rather
+   than emitting a migration. Redirecting that one context manager legitimises all twenty; the
+   nine missing tables then need one six-line function each, not a subsystem each.
 2. **Let the gates specify the tools.** `research_batch_dod.py` already states what a complete
    research batch must contain. Those requirements are the spec for the first three emitters.
 3. **Do not widen the schema first.** Every table needed already exists, with FKs and Pydantic
