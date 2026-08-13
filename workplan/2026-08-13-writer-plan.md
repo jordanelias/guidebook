@@ -3,188 +3,256 @@
 **Owner instruction:** *"Plan out writers within the context of our existing infrastructure under
 the maxim of less code, more centralization."*
 
-**The plan is subtraction, not addition.** The centralized writer already exists. It is
-`scripts/db.py` — 1,889 lines, 20 write functions, all of one shape. What it lacks is not
-functions; it is a **sink**. It commits to `data/guidebook.db` directly, which `CLAUDE.md` §4
-forbids, so its entire write layer is unusable against the canonical database. The migration
-emitter it should be feeding exists too, and so does the glue — in a test harness.
+> **REVISION 2, after an adversarial read-only review against three owner axes — long-term
+> integrity, clean slate, and walking the pipeline in all directions with per-cell validation.**
+> Revision 1's core idea survived; **two of its specific claims did not, and one of them was
+> disqualifying.** What changed is listed at §8 rather than quietly absorbed. In particular:
+> revision 1 said this plan **deletes** `ENUM_GUARDS` and proposes **no schema change**. Both are
+> now reversed — the deletion was unsafe, and it is unsafe *because* the schema change was refused.
 
-Three pieces, built separately, never joined:
+**The plan is still mostly subtraction.** The centralized writer already exists: `scripts/db.py`,
+20 write functions, all one shape. What it lacks is not functions but a **sink** — it commits to
+`data/guidebook.db` directly, which `CLAUDE.md` §4 forbids, so the whole layer is unusable against
+the canonical database. The emitter exists. So does the glue, in a test harness.
 
-| Piece | Where | What it does | Why it is not enough alone |
-|---|---|---|---|
-| The write layer | `scripts/db.py` | 20 functions writing 12 tables, every one shaped `with connect() as conn: conn.execute(sql, params)` | Commits straight to the canonical DB — the one thing the write discipline forbids |
-| The emitter | `scripts/emit_data_migration.py` | Wraps SQL in a timestamped, transaction-bounded migration | Takes **text**. Someone must hand-write the SQL |
-| The glue | `scripts/tests/walk_harness.py:183` `emit_and_apply()` | Runs emitter → `migrate_db.py`, the sanctioned two-step | Lives in a test harness and **refuses to run outside a disposable tree** |
-
-Joining them is one change. Everything else in this plan follows from it.
-
----
-
-## 1. First, a correction to my own count
-
-`workplan/2026-08-13-writerless-tables-analysis.md` and PR #99 say **eleven** tables need writers.
-**Two of the eleven must not get one**, and I did not check before writing that.
-
-`search_coverage` and `search_languages` were **deliberately frozen on 2026-08-06**.
-`scripts/db.py:316-326` raises `FrozenGridError` on any write, with a 37-line comment explaining
-why: they were hand-kept state grids that drifted from the search log **in both directions** —
-634 cells claimed SEARCHED with 15 corroborated by an execution, while 31 executions landed on
-cells the grid called NOT-RUN. `workplan/search-coverage-completion-workplan.md` replaced them with
-the `search_executions` log plus derived views (`v_coverage_jurisdiction`, `v_coverage_language`,
-`v_coverage_branch`).
-
-I also wrote that `search_languages` is *"GATED — R11"*, implying a tool is needed for the gate to
-pass. **That is wrong on both counts.** `research_batch_dod.py` reads `search_executions`, not the
-grid. The gate is already satisfied by the log.
-
-**Building writers for those two would un-freeze a retirement and re-open the drift.** They are
-correctly writerless, and the probe should keep reporting them — a table with no writer *by design*
-looks identical to one with no writer *by omission*, which is exactly why the distinction has to be
-written down rather than inferred from a count.
-
-**Corrected: nine tables need a writer, not eleven.**
+| Piece | Where | Why not enough alone |
+|---|---|---|
+| The write layer | `scripts/db.py` | Commits straight to the canonical DB |
+| The emitter | `scripts/emit_data_migration.py` | Takes **text** — someone must hand-write the SQL |
+| The glue | `walk_harness.py:183` `emit_and_apply()` | Lives in a test harness; refuses to run outside a disposable tree |
 
 ---
 
-## 2. Phase 1 — Redirect the sink. One function. No new writers.
+## 1. A correction to the count this plan rests on
 
-Today, every `db.py` write does this:
+`workplan/2026-08-13-writerless-tables-analysis.md` and PR #99 said **eleven** tables need writers.
+**Nine do.**
+
+`search_coverage` and `search_languages` are **deliberately writerless** — `scripts/db.py:316-326`
+raises `FrozenGridError` on either. They were frozen on 2026-08-06 as hand-kept state grids that
+had drifted from the search log **in both directions**: 634 cells claimed SEARCHED with 15
+corroborated by an execution, while 31 executions landed on cells the grid called NOT-RUN.
+`workplan/search-coverage-completion-workplan.md` replaced them with `search_executions` plus
+derived views. **Building writers for them would un-freeze a retirement.**
+
+The analysis also called `search_languages` *"GATED — R11"*. Wrong: `research_batch_dod.py` reads
+`search_executions`, not the grid. R11 is already satisfied by the log.
+
+Both errors came from checking readers without checking whether a writer was *absent* or *removed
+on purpose*. **Those look identical to a counter** — the same failure mode as the probe's own count.
+
+---
+
+## 2. Phase 0 — The one schema migration, and why it must come first
+
+**Revision 1 claimed Phase 1 would let us delete `ENUM_GUARDS` (`emit_data_migration.py:66-108`)
+because "every CHECK constraint on every column enforces itself" once parameters are bound against
+a real schema. That claim is false, and it was checked and found false:**
+
+```
+evidence_sources.doi_resolution_outcome  →  TEXT          (no CHECK)
+evidence_sources.url_resolution_outcome  →  TEXT          (no CHECK)
+source_locators .doi_resolution_outcome  →  TEXT          (no CHECK)
+source_locators .url_resolution_outcome  →  TEXT          (no CHECK)
+evidence_sources CHECK'd columns: citation_mining_status, data_capture_status,
+    processing_blocked_reason, scope, verification_closure_reason,
+    verification_disposition, verification_method     ← neither outcome column
+grep -rn 'resolution_outcome' schemas/                →  no matches
+```
+
+The emitter's own comment says so plainly (`emit_data_migration.py:55-56`): these vocabularies are
+*"enforced by an AUDIT rather than by a table CHECK, so SQLite accepts a bad value silently."*
+Binding parameters against the real schema therefore enforces **nothing** for exactly these two
+columns. Deleting the guards would have regressed to post-hoc detection by
+`test_db_integrity.py` [B03]/[B04] — **the precise mode whose documented failure created the guard**
+(the same wrong value written in two consecutive batches on 2026-07-25, after the lesson had been
+recorded in prose three times).
+
+**So the constraint gets built rather than assumed.** One schema migration, before Phase 1:
+
+- `CHECK` on `doi_resolution_outcome` ∈ {RESOLVED, NO-MATCH, REVERTED} and
+  `url_resolution_outcome` ∈ its eleven values, on **both** `evidence_sources` and
+  `source_locators`.
+- `UNIQUE` on `evidence_sources.doi` where non-null. There is **no unique index on `doi` today** —
+  only the `ref_id` autoindex and `idx_evidence_sources_standing`. R9's duplicate-DOI pre-check
+  (`db.py:1648-1668`) is therefore a *read*, not a constraint, and two concurrent sessions defeat it
+  (§3).
+
+**This is cheap only now.** SQLite has no `ADD CONSTRAINT`; adding a CHECK means rebuilding the
+table. `evidence_sources` and `source_value_extractions` are at **0 rows** today, so the rebuild is
+free. Every row admitted from here makes it more expensive. **Revision 1's "no schema change
+proposed" was not conservatism — it was the thing that made the deletion unsafe.**
+
+Only after this migration lands does the `ENUM_GUARDS` deletion become true rather than aspirational.
+
+---
+
+## 3. Phase 1 — Redirect the sink. One function. No new writers.
+
+Every `db.py` write is shaped:
 
 ```python
 with connect(dry_run) as conn:
     conn.execute(f"INSERT INTO gaps ({cols}) VALUES ({ph})", list(row.values()))
 ```
 
-`connect()` (`db.py:55-72`) opens the canonical DB and commits. Change **that one context manager**
-so a write can be *recorded and emitted* instead of committed:
+`connect()` (`db.py:55-72`) opens the canonical DB and commits. Change **that one context manager**:
+open a scratch copy, record each `(sql, params)` pair, and on clean exit emit a migration through
+the sanctioned two-step instead of committing. Reads inside the function still work; every FK,
+CHECK and UNIQUE in the real schema validates the write before it is emitted; a failed write emits
+nothing.
 
-- Open a **scratch copy** of the canonical DB, not the canonical file. Reads inside the function
-  still work, `lastrowid` still works, and — critically — **every FK, CHECK and UNIQUE constraint
-  in the real schema validates the write before it is emitted.**
-- Record each `(sql, params)` pair as it executes.
-- On clean exit, render the recorded pairs as literal SQL and hand them to
-  `emit_data_migration.py`, then apply with `migrate_db.py`. That is `emit_and_apply()`, moved out
-  of the test harness into `db.py` where production callers can reach it.
-- On exception, emit nothing. A failed write leaves no migration.
+**All 20 existing writers become legitimate against the canonical database for the first time, and
+not one is rewritten.** `dry_run` keeps its meaning: emit nothing.
 
-**What this costs:** one rewritten context manager, one small recording proxy, and a function moved
-(not copied) out of `walk_harness.py`. Call it 120 lines net, with a deletion on the other side.
+### 3a. The design problem revision 1 got wrong: this is time-of-check/time-of-use
 
-**What this buys:** all 20 existing write functions become legitimate against the canonical
-database for the first time — `insert_gap`, `insert_connection`, `insert_conflict`, `insert_item`,
-`add-source`, `log_search`, `log_mining`, `update-bpc`, `insert_audit_run` and the rest. Not one of
-them is rewritten. The `dry_run` flag they already accept keeps its meaning: emit nothing.
+Revision 1 filed snapshot drift as "Risk 1" and said the reproducibility gate would catch it.
+**Both halves were wrong**, and the real surface is worse:
 
-**This is the highest-leverage change available and it writes none of the nine tables.** It should
-land and be exercised on its own, before any new table is touched.
+- **ID allocation and dedup read the snapshot, not the canonical.** `next_gap_id`
+  (`db.py:149-156`), `next_con_id` (`:110-117`) and the R9 duplicate-DOI check (`:1648-1668`) all
+  validate against whatever was copied. Two concurrent sessions both compute `GAP-042` and both
+  pass. Because `gap_id` is a PK, the second migration fails **at apply, inside an
+  already-committed immutable file** — which breaks every future rebuild and cannot be amended, only
+  compensated. For `doi` it is worse: with no UNIQUE index (§2), the duplicate **applies cleanly and
+  silently**, defeating R9 by way of the machinery built to serve it.
+- **`lastrowid` drift across a junction.** `log_search` (`db.py:394-417`) takes
+  `exec_id = cur.lastrowid` from `search_executions` and writes it into `search_admissions` in the
+  same block. Rendered as a literal from the scratch's autoincrement and replayed against a
+  canonical that moved, the junction row dangles.
+- **The blocking gate does not cover either.** `migration_reproducibility.py:56-62` compares
+  `PRAGMA user_version` plus `COUNT(*)` on six tables, committed against rebuilt. A *bad but
+  applicable* migration reproduces identically on both sides and the gate stays green. A
+  *non-applicable* one does not produce "a mystery one commit later" — it produces a permanently red
+  rebuild inside an immutable file.
+- **Multi-block operations are not atomic.** `add-source --slug` (`db.py:1346-1349`) is two
+  `connect()` blocks — `insert_evidence_source` then `insert_source_slug_link` — so it is two
+  migrations. "Emit nothing on exception" holds *per block*: block 1 applied plus block 2 failed is
+  an immutable half-write.
 
-### Why the scratch copy rather than emitting SQL blind
+**Therefore Phase 1 is not "copy, record, emit". It is:**
 
-Because the alternative is what we have now. `emit_data_migration.py:66-108` carries `ENUM_GUARDS`
-— fifty lines of **regex over SQL text**, scanning for `col='VALUE'` patterns, with a comment
-recording that the same bad value was written twice in one day and that prose did not stop the
-repeat. It guards **two columns**. It cannot guard more, because guessing a column's value from
-positional INSERT text is not decidable by regex.
+1. **Snapshot atomically**, inheriting the probe's mechanism (`probe_pipeline.py:40-44`) rather than
+   a naive `shutil.copy` — `connect()` sets `PRAGMA journal_mode=WAL` (`db.py:61`), so a copy that
+   ignores the `-wal` sidecar is a copy of the wrong database, and a read helper against canonical
+   dirties the committed blob's header.
+2. **Re-validate at apply time, not only at snapshot time.** Immediately before emit, replay the
+   recorded parameters against a *fresh* copy of canonical. If the canonical moved underneath —
+   an id taken, a DOI now present — fail loudly and emit nothing, rather than emitting a file that
+   will break replay forever.
+3. **Serialize the writer, or allocate ids from the canonical at emit time.** A single-writer
+   discipline is the smaller change; id-at-emit is the more robust one. This is a real decision and
+   the plan does not pretend otherwise.
+4. **Give multi-block operations one transaction**, or state explicitly that they emit N migrations
+   and provide the compensating path.
 
-Bind the parameters and apply them to a real schema instead, and every CHECK constraint on every
-column of every table enforces itself — for free, with no list to maintain. **That is the
-centralization: not one more validator, but the one that already exists doing the work.**
+That is more than revision 1 costed. The honest estimate is **not "120 lines net"** — the re-validate
+step and the snapshot mechanism are the bulk of it, and `emit_and_apply()` cannot simply be moved:
+it is coupled to the harness's `TREE` global, its transcript writer and its `run()` wrapper
+(`walk_harness.py:30-49, 183-221`). Treat it as a rewrite that the harness then imports.
 
 ---
 
-## 3. Phase 2 — Nine functions, one shape, no new files
+## 4. Phase 2 — Nine functions, one shape, no new files
 
-Each missing table gets one function following the shape already used twenty times:
+Each missing table gets one function in the shape used twenty times already, plus one `add_parser`
+line. **No new module, no new abstraction.**
 
-```python
-def insert_<table>(data: dict, session: str, dry_run: bool = False) -> str:
-    row = {**data, **audit(session)}
-    with connect(dry_run) as conn:
-        cols, ph = ", ".join(row), ", ".join(["?"] * len(row))
-        conn.execute(f"INSERT INTO <table> ({cols}) VALUES ({ph})", list(row.values()))
-    return row["<pk>"]
-```
-
-Plus one `add_parser` line each on the existing CLI. **No new module, no new abstraction, no
-per-stage emitter.** Ordered by what the gates already demand:
-
-| # | Table | Stage | Pydantic model | Notes |
+| # | Table | Stage | Model | Notes |
 |---|---|---|---|---|
-| 1 | `search_candidates` | research | — | **Gated (R7)**: off-slug material must land here, not in prose |
-| 2 | `economics_entries` | research | `schemas/economics.py` | **Gated (R12)**: economic data must land here, not in prose |
-| 3 | `source_value_extractions` | extraction | `schemas/source_value_extraction.py` | Not in the eleven — has a writer somewhere, still 0 rows. See §5 |
-| 4 | `extraction_population_links` | extraction | `schemas/population_links.py` | R13 |
+| 1 | `search_candidates` | research | — | **Gated (R7)** |
+| 2 | `economics_entries` | research | `schemas/economics.py` | **Gated (R12)** |
+| 3 | `source_value_extractions` | extraction | `schemas/source_value_extraction.py` | **Blocked on M4 — see §5** |
+| 4 | `extraction_population_links` | extraction | `schemas/population_links.py` | R13; blocked with 3 |
 | 5 | `spec_value_probes` | probing | `schemas/directness.py` et al. | Named in the PI |
 | 6 | `probe_population_links` | probing | `schemas/population_links.py` | R13 |
-| 7 | `reasoning_doc_citations` | verification | `schemas/reasoning_doc_citation.py` | Named in the PI; 34 columns incl. a full locator scheme |
+| 7 | `reasoning_doc_citations` | verification | `schemas/reasoning_doc_citation.py` | 34 cols incl. locator scheme |
 | 8 | `citation_population_links` | verification | `schemas/population_links.py` | R13 |
-| 9 | `item_bpc_links` · `item_population_elaborations` | linkage | — | Render path; smallest, do last |
+| 9 | `item_bpc_links` · `item_population_elaborations` | linkage | — | Render path; smallest, last |
 
-Six of the nine already have a Pydantic model. **Where one exists, validate through it** — the
-model is the vocabulary, and duplicating its rules in a `_validate_cols` whitelist is the second
-copy that stops covering the first. Where none exists, the table's own CHECK constraints do the
-work via the scratch copy; a model can follow when the shape settles.
+Where a Pydantic model exists, validate through it — duplicating its rules in a `_validate_cols`
+whitelist is the second copy that stops covering the first.
 
 ---
 
-## 4. Phase 3 — What gets deleted
+## 5. Sequencing against M4, and the two tables this plan does not write
 
-A plan that only adds has not centralized anything.
+Revision 1 said "no schema change proposed" and never mentioned the junction. That was not a
+position; it was an omission. Stating it now:
+
+**`specification_extraction_links` must land before Phase 2 items 3–4.** The probe's central
+backward-walk finding is verbatim (`audits/2026-08-12c-pipeline-probe-log.md:12147`): *"0 rows — …
+BROKEN JOINT: no table links specifications to source_value_extractions; the join must be improvised
+on (ref_id, item_code) and item_code is nullable."* `workplan/2026-08-12-resolution-plan.md` §M4
+schedules the junction among the **now-or-never** reshapes — now-or-never precisely because SQLite
+has no `ADD CONSTRAINT` and both tables are empty **today**. Phase 2 items 3–4 write into exactly
+the tables M4 wants to rebuild while empty. **Writers landing first either close that free window or
+force copy-rebuild migrations later.** So: items 1–2 may proceed independently; items 3–4 wait on
+M4.
+
+**No writer for `specifications` is proposed here, and that is a gap, not a scope line.** It is the
+table every walk terminates in. `assess_cell.py` is the only engine that computes a determination
+and it refuses the canonical DB by design (`:487-492`). Who legitimately writes a determination is
+an **owner question** (§6), not a tooling one — but a write path for the pipeline that cannot write
+a determination is not finished, and revision 1 implied otherwise by listing nine tables and calling
+that the set.
+
+---
+
+## 6. Phase 3 — What gets deleted, and one thing that must not be
 
 | Delete | Because |
 |---|---|
-| `ENUM_GUARDS` + `check_enum_guards()` (`emit_data_migration.py`, ~50 lines) | Superseded by real constraints on the scratch copy, for every column rather than two. **Keep the emitter's risky-pattern warnings** — those guard hand-written SQL, which stays legal |
-| `emit_and_apply()` in `walk_harness.py` | Moved into `db.py`, not copied. The harness imports it |
-| `db.py`'s `_validate_cols` whitelists, where a Pydantic model covers the same table | Two vocabularies for one table is how they drift |
-| `scripts/assess/assess_cell.py`'s separate write path | It re-implemented `next_gap_id` and got the format wrong (`GAP-1` against `^GAP-\d{3,4}$`) while `db.py:149` already held the correct one. It should call the library, not carry a second one |
+| `ENUM_GUARDS` + `check_enum_guards()` (~50 lines) | **Only after Phase 0 lands.** Until the CHECKs exist, this is the sole point-of-write guard on those vocabularies |
+| `db.py`'s `_validate_cols` whitelists where a Pydantic model covers the table | Two vocabularies for one table is how they drift |
+| **`assess_cell.py`'s `next_gap_id` re-implementation only** (`:426-429`, `f"GAP-{mx + 1}"` → `GAP-1`, against `^GAP-\d{3,4}$`; `db.py:156` has the correct zero-padded one) | The bug is real. **But revision 1 said "stops carrying its own write path", and that is wrong.** `assess_cell.py`'s separate path is a deliberate **owner-ratification boundary** — it emits a replay artifact headed *"Replayable onto the canonical DB ONLY after owner ratification"* (`:498-501`). Routing it through an auto-applying sink would push DG-NON-adjacent synthesis writes to canonical with no owner step. It is also one of `db_path_env_audit.py`'s two documented exemptions (`CLAUDE.md` §7). **Scope the deletion to the id allocator; the refusal stays** |
 
 ---
 
-## 5. What this plan does **not** claim
+## 7. What this plan does **not** claim
 
-- **It does not fix the four tables the probe cannot see.** `source_value_extractions`,
-  `evidence_population_match`, `source_slug_links` and `case_studies` sit at 0 rows and were never
-  flagged, because the probe detects write *statements*, not write *paths*. Phase 2 covers the
-  first; the other three need the same audit this document did for the nine — **do not assume they
-  are fine because a counter did not name them.**
-- **It does not make the probe go green**, and should not. Until Phase 2 lands, the count is a true
-  measurement of an absence. Silencing it would restore the mask the baseline removed.
-- **It proposes no schema change.** Every table exists with its FKs; six have models. This is a
-  tooling gap, not a modelling gap — and a plan that widened the schema first would be solving the
-  wrong problem twice.
-
----
-
-## 6. Risks, named
-
-1. **The scratch copy must be a copy of the *committed* DB, and the emitted migration must apply
-   cleanly to it afterwards.** If the two diverge, the reproducibility gate catches it — but as a
-   mystery, one commit later. Phase 1 must therefore verify round-trip on its first run: emit,
-   apply, rebuild, compare. Not "it should work."
-2. **Recording `(sql, params)` and rendering literals is a serialisation boundary.** Byte values,
-   NULLs and floats each have a wrong rendering that looks right. The renderer needs a test with
-   those three cases before it carries a real write, and the test should tamper with it and watch
-   it fail — a serialiser nobody has watched break is not verified.
-3. **Every write becomes a migration, so migration count grows with research volume.** That is the
-   design working, and the baseline mechanism now exists to compress it (D-0160). It is worth
-   saying out loud that the freeze we just performed is the pressure valve for this plan.
-4. **`db.py` is 1,889 lines and this makes it more central, not less.** The maxim says
-   centralization, and I am taking it at its word — but the honest cost is that one file becomes
-   more load-bearing. The mitigation is that it gains a sink and nine six-line functions, not
-   nine subsystems.
+- **It does not give on-demand, any-time, both-directions cell validation.** Phase 1 validates a row
+  *at the instant it is written*. That is a different capability from taking one
+  `(item × population)` specification, one extraction or one citation and re-deriving its standing
+  on demand. Nothing here provides the latter, and **the backward direction is impossible for any
+  tooling until §5's junction exists.** The read-side views (`v_item_provenance`, `v_source_reach`,
+  `v_best_practice`) survive untouched — but by accident of the no-schema-change stance, not by
+  design. Naming this as a separate, unbuilt capability rather than letting "validated" cover both.
+- **It does not fix the four tables the probe cannot see** — `source_value_extractions`,
+  `evidence_population_match`, `source_slug_links`, `case_studies` sit at 0 rows and were never
+  flagged, because the probe detects write *statements*, not write *paths*.
+- **It does not make the probe go green**, and should not until Phase 2 lands.
 
 ---
 
-## 7. Sequence
+## 8. What the review overturned
 
-1. **Phase 1 alone**, exercised on an existing writer (`insert_gap` is the smallest), with the
-   round-trip verification of risk 1 and the serialiser test of risk 2. Nothing new is writable
-   yet; the twenty that exist become legitimate.
-2. **Phase 2 items 1–2** — the two gated tables. `research_batch_dod.py` already states what a
-   complete research batch must contain, so it is the acceptance test, not a new one to write.
-3. **Phase 3 deletions**, once Phase 1 has carried a real write.
-4. **Phase 2 items 3–9**, in stage order, as the pipeline reaches each.
+| Revision 1 said | Corrected to |
+|---|---|
+| Deleting `ENUM_GUARDS` is safe — "superseded by real constraints on the scratch copy" | **False.** Neither column has a CHECK on either table, and no Pydantic model covers them. The deletion is gated behind a new Phase 0 that builds the constraints |
+| "It proposes no schema change" | **Reversed.** One migration is required *first*, and it is cheap only while the tables are empty |
+| Snapshot drift is "Risk 1", mitigated by the reproducibility gate | **The gate covers neither branch.** Promoted from a risk to a design requirement: apply-time re-validation, atomic snapshot, and a writer-serialization decision (§3a) |
+| `assess_cell.py` "stops carrying its own write path" | **Scoped to the id allocator.** Its canonical-refusal is an owner-ratification boundary, not duplication |
+| `emit_and_apply()` is "moved (not copied)"; "120 lines net" | Understated. It is coupled to the harness's globals; treat as a rewrite the harness imports |
+| Nine tables is the set | Nine plus **`specifications`**, whose writer is an owner question and is not proposed here |
 
-Phases 1 and 3 are the "less code" half; phase 2 is nine six-line functions. **No new file is
-proposed anywhere in this plan.**
+**What survived unchanged:** the diagnosis that the centralization already exists and lacks only a
+sink; the 11→9 frozen-grid correction; that Phase 1 legitimizes twenty writers without rewriting
+one; and that the existing write layer already enforces R9, R8 and R13 at the point of writing, so
+the contract enforcement this inherits is real rather than assumed.
+
+---
+
+## 9. Sequence
+
+0. **Phase 0** — the CHECK and UNIQUE migration, while the tables are empty.
+1. **Phase 1** — the sink, with apply-time re-validation, the atomic snapshot, and the
+   serialization decision made explicitly. Exercised on `insert_gap` first. Round-trip verified —
+   emit, apply, rebuild, compare — not assumed.
+2. **Phase 3 deletions**, once Phase 0 and 1 have both landed.
+3. **Phase 2 items 1–2** — the gated tables. `research_batch_dod.py` is the acceptance test.
+4. **M4's junction**, then **Phase 2 items 3–9** in stage order.
+
+Open for owner ruling: **who writes `specifications`**, and whether Phase 1's sink auto-applies or
+stops at emit for owner-gated stages.
