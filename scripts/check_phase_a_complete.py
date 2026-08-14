@@ -72,7 +72,7 @@ def check_a4_part4_items(repo_root: str) -> tuple[bool, str]:
         return False, "part04.md not found"
     with open(path, encoding="utf-8") as f:
         content = f.read()
-    codes = re.findall(r"^### ([A-K]-\d+)\b", content, re.MULTILINE)
+    codes = re.findall(r"^### ([A-K]-\d+[a-z]?)\b", content, re.MULTILINE)
     from collections import Counter
     counts = Counter(codes)
     dups = {c: n for c, n in counts.items() if n > 1 and c not in ("E-10",)}  # E-10 redirect is known

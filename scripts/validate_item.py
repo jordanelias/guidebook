@@ -3,7 +3,7 @@
 scripts/validate_item.py — Validate item entities across the corpus.
 
 Checks:
-- Item codes match [A-K]-NN format
+- Item codes match [A-K]-NN[a-z]? format
 - Category letter matches item code prefix
 - Category names resolve to known categories
 - No duplicate item codes across all sources
@@ -65,7 +65,7 @@ class ValidationResult:
 def validate_item_code(code: str, source: str, result: ValidationResult):
     """Validate a single item code."""
     if not ITEM_CODE_RE.match(code):
-        result.error(source, f"Invalid item code format: '{code}' (expected [A-K]-NN)")
+        result.error(source, f"Invalid item code format: '{code}' (expected [A-K]-NN[a-z]?)")
         return False
     return True
 
@@ -175,7 +175,7 @@ def validate_part4_codes(part4_path: str, result: ValidationResult):
         content = f.read()
 
     # Find all item code references
-    codes = set(re.findall(r"\b([A-K]-\d{2})\b", content))
+    codes = set(re.findall(r"\b([A-K]-\d{2}[a-z]?)\b", content))
     for code in sorted(codes):
         category = code[0]
         if category not in VALID_CATEGORIES:
