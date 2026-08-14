@@ -37,8 +37,8 @@ DEFAULT_OUT = REPO_ROOT / "tools" / "spec-curation-vetting-surface.html"
 
 
 def fetch_backbone(db_path: Path) -> dict:
-    """Build the per-topic data backbone from the DB. Read-only."""
-    c = sqlite3.connect(str(db_path))
+    """Build the per-topic data backbone from the DB. Read-only (opened mode=ro)."""
+    c = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
     c.row_factory = sqlite3.Row
     c.execute("PRAGMA foreign_keys = ON")
     q = lambda s, *a: [dict(r) for r in c.execute(s, a).fetchall()]

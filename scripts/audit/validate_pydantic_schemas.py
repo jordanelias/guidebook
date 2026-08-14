@@ -168,7 +168,7 @@ def check_pair(model_cls, table: str, conn) -> dict:
 
 
 def run(db_path: Path, strict: bool) -> int:
-    conn = sqlite3.connect(str(db_path))
+    conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
     live_tables = {r[0] for r in conn.execute(
         "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
     ).fetchall()}

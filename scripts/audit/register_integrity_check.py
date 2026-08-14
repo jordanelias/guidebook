@@ -138,7 +138,7 @@ def check(doc, db_path=None):
     if db_path:
         import json as _json
         import sqlite3
-        conn = sqlite3.connect(db_path)
+        conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
         for ic, pc, st, tb, cfo, sha, rv, rso, gr in conn.execute(
                 "SELECT item_code, population_code, state, tier_basis, code_floor_only, "
                 "derivation_sha, rule_version, regulatory_stratum_only, governing_refs "

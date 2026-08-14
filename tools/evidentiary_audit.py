@@ -234,7 +234,7 @@ def score(rec):
 
 # ----------------------------------------------------------------- compute pass
 def compute(db_path):
-    con = sqlite3.connect(str(db_path))
+    con = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
     con.row_factory = sqlite3.Row
     q = lambda s, *a: [dict(r) for r in con.execute(s, a).fetchall()]
     one = lambda s: con.execute(s).fetchone()[0]

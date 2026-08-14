@@ -432,7 +432,7 @@ def main():
     if not os.path.exists(db_path):
         print(f"DB not found: {db_path}", file=sys.stderr)
         return 2
-    conn = sqlite3.connect(db_path)
+    conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
     try:
         if args.mode == "full":
             ok, reasons = full_mode_ready(conn)
