@@ -238,7 +238,7 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
-    no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
+    no_floor: not-instrumented — despite the test_ name this is a live-corpus gate, not a selftest; it prints no whole-check EXAMINED count, so no floor is declarable yet
     note: >-
       RED on main (63/69 checks pass as of 2026-08-04). Pre-existing, owner-gated
       debt — see references/tooling-register.md §4. Level left as declared rather

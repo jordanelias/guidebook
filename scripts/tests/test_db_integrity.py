@@ -8,7 +8,9 @@ exits 0 on clean, 1 on any failure.
 Checks performed:
   A — Foreign key referential integrity (all declared relationships)
   B — Enum column constraint validation (verification_status, metadata_quality,
-      doi_resolution_outcome, url_resolution_outcome, source_type)
+      doi_resolution_outcome, url_resolution_outcome, source_type, gaps.status)
+      plus the evidence_sources.tier integer-range check (B10/B11, 1-6, NULL
+      permitted)
   C — Consistency invariants (VERIFIED audit trail, pre-pipeline backfill,
       COMPLETE criteria, run record completeness)
   D — Duplicate / collision detection (duplicate DOIs excluding known intentional
@@ -211,6 +213,54 @@ def run_checks(db_path):
     """, VALID_GAP_STATUS).fetchone()[0]
     record("B06", "gaps.status values", bad == 0,
            f"{bad} invalid values" if bad else "")
+
+    # evidence_sources.tier is a bare INTEGER: no CHECK constraint, and
+    # ENUM_GUARDS in scripts/emit_data_migration.py only scans quoted string
+    # literals, so it structurally cannot see an unquoted out-of-range integer
+    # there either. tier is the T1-T6 anchoring tier the whole evidence-
+    # strength doctrine runs on (governance/tier-system.md); it had zero
+    # coverage of any kind before this pair of checks. NULL is permitted
+    # (schemas/evidence_source.py:42 — a null tier is valid, not an error);
+    # only present values are range-checked. 1-6 is the already-ratified
+    # boundary (schemas/evidence_source.py:85) — Co-1/Co-2 map onto tier 1/2
+    # (schemas/evidence_source.py:129-131), they are not separate integer
+    # values, and this does not invent, extend, or reinterpret the vocabulary.
+    # Split into two checks (lower / upper bound), mirroring the two-sided
+    # RANGE_GUARDS entry emit_data_migration.py enforces at write time.
+    #
+    # Numbered B10/B11, not B07/B08: the B-series is non-contiguous — it
+    # resumes (verification_disposition/method/closure_reason) as B07-B09
+    # after the I-series below, so B07/B08 are already taken. B10/B11 are the
+    # next free B-series ids.
+    tier_examined = conn.execute(
+        "SELECT COUNT(*) FROM evidence_sources WHERE tier IS NOT NULL").fetchone()[0]
+    # evidence_sources is 0 rows as of this writing, so this — correctly —
+    # examines nothing today. Printed unconditionally (not gated on failure,
+    # unlike the enum checks above) so a 0-row pass reads as "nothing to
+    # examine yet", not as silent, unearned coverage.
+    #
+    # Deliberately NOT the literal token `EXAMINED:`. That token is a
+    # WHOLE-CHECK contract read by scripts/run_checks.py: a check whose
+    # EXAMINED lines are all zero is rendered NOTHING-IN-SCOPE. This file runs
+    # 72 checks over the live DB — 160 decisions, 109 jurisdictional values,
+    # 93 items — so emitting `EXAMINED: 0` for ONE subject relabelled the
+    # entire blocking gate as having examined nothing. A sub-check reports its
+    # own subject in its own words; only a count of what the whole check
+    # examined may claim the token.
+    print(f"  B10/B11 subject: {tier_examined} evidence_sources row(s) "
+          f"with a non-null tier")
+
+    bad = conn.execute(
+        "SELECT COUNT(*) FROM evidence_sources WHERE tier IS NOT NULL AND tier < 1"
+    ).fetchone()[0]
+    record("B10", "evidence_sources.tier lower bound (>=1, NULL permitted)", bad == 0,
+           f"{bad} row(s) with tier < 1" if bad else "")
+
+    bad = conn.execute(
+        "SELECT COUNT(*) FROM evidence_sources WHERE tier IS NOT NULL AND tier > 6"
+    ).fetchone()[0]
+    record("B11", "evidence_sources.tier upper bound (<=6, NULL permitted)", bad == 0,
+           f"{bad} row(s) with tier > 6" if bad else "")
 
     # ── D-0157 standing invariants (I1–I4) ────────────────────────────────────
     # The point of splitting one column into three is that they can now be

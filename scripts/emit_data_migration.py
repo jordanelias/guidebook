@@ -72,6 +72,31 @@ ENUM_GUARDS = [
      "test_db_integrity.py [B04]"),
 ]
 
+# Closed *integer ranges* enforced by an AUDIT rather than a table CHECK —
+# same gap as ENUM_GUARDS above, but ENUM_GUARDS structurally cannot cover
+# them: it scans for `'QUOTED VALUE'` literals, and an out-of-range integer
+# literal (e.g. `tier = 7`) is unquoted, so it never matches ENUM_GUARDS' regex
+# at all. evidence_sources.tier is the T1-T6 (+ Co-1/Co-2 co-primary, mapped
+# onto tier 1/2 — see schemas/evidence_source.py:129-131, NOT separate integer
+# values) anchoring tier the whole evidence-strength doctrine
+# (governance/tier-system.md) runs on, and had zero coverage of any kind before
+# this guard: no CHECK constraint, no ENUM_GUARDS entry, no B-series vocabulary
+# check. NULL is permitted (schemas/evidence_source.py:42); this guards values
+# that are *present*, not presence itself. 1-6 is the already-ratified boundary
+# (schemas/evidence_source.py:85) — this does not invent, extend, or
+# reinterpret the tier vocabulary.
+#
+# Shape: (column, min, max, enforced_by). `column` is matched bare (like
+# ENUM_GUARDS), not table-qualified: `case_study_outcomes.tier` is a distinct
+# column with its own, stricter DB-level CHECK (1-3, see
+# scripts/migrations/057_baseline_2026-08-12.sql:918) that this guard's wider
+# 1-6 band cannot false-positive against, since 1-3 is a strict subset of 1-6.
+#
+# BLOCKING, same as ENUM_GUARDS — not a warning.
+RANGE_GUARDS = [
+    ("tier", 1, 6, "test_db_integrity.py [B10/B11]"),
+]
+
 
 def check_enum_guards(sql: str) -> list:
     """Return violations of the audit-enforced closed vocabularies.
@@ -99,6 +124,105 @@ def check_enum_guards(sql: str) -> list:
                 v = m.group(1).strip()
                 if v in suspicious and v not in allowed:
                     violations.append((col, v, allowed, enforced_by))
+    # de-duplicate while preserving order
+    seen, out = set(), []
+    for v in violations:
+        if v[:2] not in seen:
+            seen.add(v[:2])
+            out.append(v)
+    return out
+
+
+def _split_sql_values(tuple_body: str) -> list:
+    """Split a `VALUES (a, b, c)` tuple body on top-level commas.
+
+    A plain `.split(',')` breaks on a comma inside a quoted string field
+    (e.g. an authors field `'Smith, J.'`). This is a small state machine that
+    tracks single-quoted-string state, including the doubled `''` escape, so
+    such a comma is not mistaken for a field separator. It assumes no nested
+    parentheses inside a field, which holds for the plain literal VALUES
+    tuples this repo's migrations write.
+    """
+    fields = []
+    buf = []
+    in_str = False
+    i = 0
+    while i < len(tuple_body):
+        c = tuple_body[i]
+        if in_str:
+            if c == "'":
+                if i + 1 < len(tuple_body) and tuple_body[i + 1] == "'":
+                    buf.append("''")
+                    i += 2
+                    continue
+                in_str = False
+            buf.append(c)
+        else:
+            if c == "'":
+                in_str = True
+                buf.append(c)
+            elif c == ",":
+                fields.append("".join(buf))
+                buf = []
+            else:
+                buf.append(c)
+        i += 1
+    fields.append("".join(buf))
+    return fields
+
+
+def check_range_guards(sql: str) -> list:
+    """Return violations of the audit-enforced closed integer ranges.
+
+    Two forms, mirroring check_enum_guards:
+
+    Form 1 — direct assignment (`UPDATE ... SET col = N`, or any bare
+    `col = N`): a simple regex on the literal integer.
+
+    Form 2 — positional INSERT (`INSERT INTO t (a, col, b) VALUES (1, N, 2)`):
+    unlike check_enum_guards' Form 2, this maps the guarded column's actual
+    position in the declared column list to the same position in each VALUES
+    tuple, rather than scanning the whole statement for suspicious literals —
+    an integer column list nearly always contains *other* unrelated integers
+    (years, attempt counts, ids), so a same-statement heuristic would
+    false-positive constantly. Positional mapping avoids that.
+
+    NULL is always permitted at either form — these ranges bound values that
+    are *present*, not presence itself.
+    """
+    violations = []
+    for col, lo, hi, enforced_by in RANGE_GUARDS:
+        if col not in sql:
+            continue
+
+        # Form 1: direct assignment.
+        for m in re.finditer(rf"\b{col}\b\s*=\s*(-?\d+)\b", sql, re.I):
+            val = int(m.group(1))
+            if val < lo or val > hi:
+                violations.append((col, val, lo, hi, enforced_by))
+
+        # Form 2: positional INSERT.
+        for insert_m in re.finditer(
+                r"INSERT\s+INTO\s+\w+\s*\(([^)]*)\)\s*VALUES\s*(.+?);",
+                sql, re.I | re.S):
+            collist = [c.strip().strip('"').strip("`")
+                       for c in insert_m.group(1).split(",")]
+            collist_lower = [c.lower() for c in collist]
+            if col.lower() not in collist_lower:
+                continue
+            idx = collist_lower.index(col.lower())
+            for tuple_m in re.finditer(r"\(([^()]*)\)", insert_m.group(2)):
+                fields = _split_sql_values(tuple_m.group(1))
+                if idx >= len(fields):
+                    continue
+                field = fields[idx].strip()
+                if field.upper() == "NULL" or field == "":
+                    continue
+                if re.fullmatch(r"-?\d+", field):
+                    val = int(field)
+                    if val < lo or val > hi:
+                        violations.append((col, val, lo, hi, enforced_by))
+
     # de-duplicate while preserving order
     seen, out = set(), []
     for v in violations:
@@ -165,6 +289,21 @@ def main():
                   file=sys.stderr)
             print(f"      If the value is genuinely inapplicable (e.g. a source with no DOI), "
                   f"use NULL — not a sentinel string.", file=sys.stderr)
+        sys.exit(1)
+
+    # Audit-enforced integer ranges — BLOCKING (see RANGE_GUARDS rationale).
+    range_violations = check_range_guards(sql)
+    if range_violations:
+        print("  ERROR: value outside an audit-enforced range — migration NOT emitted.",
+              file=sys.stderr)
+        for col, val, lo, hi, enforced_by in range_violations:
+            print(f"    {col}: {val} is not permitted. Allowed range: {lo}-{hi} inclusive.",
+                  file=sys.stderr)
+            print(f"      Enforced by {enforced_by}. SQLite has no CHECK on this column, so a "
+                  f"bad value applies silently and only shows up as a lost integrity check.",
+                  file=sys.stderr)
+            print(f"      If the value is genuinely unknown, use NULL — not a placeholder "
+                  f"integer.", file=sys.stderr)
         sys.exit(1)
 
     if args.force_timestamp:

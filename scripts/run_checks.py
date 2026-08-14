@@ -271,6 +271,13 @@ def run_check(check, session, env, github=False):
 # duplicates` declared min_items, printed `  EXAMINED: 1011`, and was failed for
 # "printing no EXAMINED line". A formatting convention is not what this contract
 # is about; still anchored to line start so a mid-sentence "examined" cannot match.
+# `EXAMINED: <n>` is a WHOLE-CHECK contract, not a per-subject one. It says how
+# many items THIS CHECK looked at; a check whose EXAMINED lines are all zero is
+# rendered NOTHING-IN-SCOPE. So a multi-subject check must never spend the token
+# on one of its subjects: test_db_integrity runs 72 checks over the live DB and
+# briefly printed `EXAMINED: 0` for the one subject that is empty
+# (evidence_sources.tier), which relabelled the whole blocking gate as vacuous.
+# A sub-check reports its subject in its own words.
 EXAMINED_RE = re.compile(r"^\s*EXAMINED:\s*(\d+)\b", re.MULTILINE)
 
 # Anchored to line start for the reason in `nothing_in_scope`: the phrase is
