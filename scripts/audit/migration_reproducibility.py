@@ -93,7 +93,15 @@ def migrations_fingerprint():
     """
     import hashlib
     digest = hashlib.sha256()
-    migrations = os.path.join(REPO_ROOT, "scripts", "migrations")
+    # Must be the SAME directory the rebuild replays. This fingerprinted the
+    # repository's migrations unconditionally while the rebuild it guards honours
+    # GUIDEBOOK_MIGRATIONS_DIR (scripts/migrate_db.py:42) — so pointing that
+    # variable anywhere produced a cache key describing one input set and a
+    # rebuild performed from another, and the mismatch surfaces as a spurious
+    # FAIL on a BLOCKING gate. Found by the 2026-08-14 retirement planning pass
+    # (remediation workplan §6, "a trap found in passing").
+    migrations = os.environ.get(
+        "GUIDEBOOK_MIGRATIONS_DIR", os.path.join(REPO_ROOT, "scripts", "migrations"))
     for name in sorted(os.listdir(migrations)):
         if not name.endswith(".sql"):
             continue
