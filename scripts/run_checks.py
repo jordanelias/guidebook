@@ -258,6 +258,8 @@ def run_check(check, session, env, github=False):
         vacuity = vacuity_failure(check, output)
         if vacuity:
             return "FAIL", elapsed, f"{output}\n\nVACUITY GUARD: {vacuity}"
+        if nothing_in_scope(output):
+            return "NONE", elapsed, output
         return "PASS", elapsed, output
     if proc.returncode == 2 and check.get("optional_exit2"):
         return "SKIP", elapsed, output
@@ -270,6 +272,12 @@ def run_check(check, session, env, github=False):
 # "printing no EXAMINED line". A formatting convention is not what this contract
 # is about; still anchored to line start so a mid-sentence "examined" cannot match.
 EXAMINED_RE = re.compile(r"^\s*EXAMINED:\s*(\d+)\b", re.MULTILINE)
+
+# Anchored to line start for the reason in `nothing_in_scope`: the phrase is
+# discussed in prose all over this repo, and a check that merely *mentions* it
+# must not be relabelled by it. Allows a `VERDICT: ` prefix, which is the form
+# `citation_mining_completeness.py` and `verify_urls.py` print.
+NOTHING_IN_SCOPE_RE = re.compile(r"^\s*(?:VERDICT:\s*)?NOTHING-IN-SCOPE\b", re.MULTILINE)
 
 
 def vacuity_failure(check, output):
@@ -301,9 +309,38 @@ def vacuity_failure(check, output):
     return None
 
 
+def nothing_in_scope(output):
+    """True when a check exited 0 having examined nothing.
+
+    Such a check has not passed — it abstained. `vacuity_failure` already turns
+    that into a FAIL for the checks that declared a floor; this is the other half,
+    for checks whose corpus is *legitimately* empty. They are correct, and they are
+    still not evidence. Rendering them `[PASS]` is how a green run overstates its
+    own coverage: 13 of 65 checks examine zero records today, five of them BLOCKING,
+    and the runner reported all thirteen as earned green.
+
+    The signal is the `EXAMINED:` line the checks already print — this adds no new
+    convention and requires no script to change. `NOTHING-IN-SCOPE` is accepted as
+    an equivalent verdict because `citation_mining_completeness.py` already speaks
+    it, and it must be anchored to line start: the phrase appears in prose (this
+    docstring included) and a mid-sentence mention must never relabel a result.
+
+    Deliberately requires EVERY `EXAMINED:` line to be zero, not just the first.
+    A check that examined 0 of one thing and 500 of another examined something,
+    and calling that vacuous would be the same overstatement in the other
+    direction. Narrower than `vacuity_failure`'s first-match rule on purpose: this
+    predicate can only ever move a result out of PASS, so it must not guess.
+    """
+    counts = [int(m) for m in EXAMINED_RE.findall(output or "")]
+    if counts:
+        return max(counts) == 0
+    return bool(NOTHING_IN_SCOPE_RE.search(output or ""))
+
+
 def report_line(check, status, elapsed):
     level = check.get("level", "blocking")
-    mark = {"PASS": "[PASS]", "FAIL": "[FAIL]", "SKIP": "[SKIP]", "ERROR": "[ERR ]"}[status]
+    mark = {"PASS": "[PASS]", "FAIL": "[FAIL]", "SKIP": "[SKIP]",
+            "ERROR": "[ERR ]", "NONE": "[NONE]"}[status]
     suffix = "" if level == "blocking" else f"  ({level})"
     return f"{mark} {check['id']:38} {elapsed:6.1f}s{suffix}"
 
@@ -429,7 +466,7 @@ def main():
         return 0
 
     # --- run ----------------------------------------------------------------
-    failures, errors, skips = [], [], []
+    failures, errors, skips, vacuous = [], [], [], []
     for check in active:
         if args.github:
             print(f"::group::{check['id']}")
@@ -446,11 +483,16 @@ def main():
             if status in ("FAIL", "ERROR"):
                 for tail in output.splitlines()[-8:]:
                     print(f"         {tail}")
-            elif status == "SKIP":
+            elif status in ("SKIP", "NONE"):
                 print(f"         {output.splitlines()[-1] if output else 'skipped'}")
 
         if status == "SKIP":
             skips.append(check["id"])
+        elif status == "NONE":
+            vacuous.append((check["id"], level))
+            if args.github:
+                print(f"::notice::{check['id']} examined nothing ({level}) — "
+                      f"clean, but not coverage")
         elif status == "ERROR":
             errors.append((check["id"], level))
         elif status == "FAIL":
@@ -467,13 +509,28 @@ def main():
     if skips:
         print(f"SKIPPED ({len(skips)}): {', '.join(skips)}")
         print("  A skipped check did NOT run. It is not a pass.")
+    if vacuous:
+        blocking_vacuous = [i for i, lv in vacuous if lv == "blocking"]
+        print(f"NOTHING-IN-SCOPE ({len(vacuous)}): {', '.join(i for i, _ in vacuous)}")
+        print("  These ran clean and examined nothing. They are not evidence of anything.")
+        if blocking_vacuous:
+            # The distinction the summary exists to make: a BLOCKING gate that
+            # abstained let everything through. Whether that is fine (an empty
+            # corpus) or a disarmed gate (a scoping predicate that matches
+            # nothing) is a judgement, and it cannot be made if the line reads
+            # [PASS]. Declaring `min_items` is how a check says which it is.
+            print(f"  BLOCKING and vacuous ({len(blocking_vacuous)}): "
+                  f"{', '.join(blocking_vacuous)} — a gate that examined nothing "
+                  f"gated nothing.")
     if other_bad:
         print(f"NON-BLOCKING failures ({len(other_bad)}): {', '.join(other_bad)}")
     if blocking_bad:
         print(f"BLOCKING failures ({len(blocking_bad)}): {', '.join(blocking_bad)}")
         print("RESULT: FAIL")
         return 1
-    print(f"RESULT: PASS — {len(active) - len(skips) - len(other_bad)} check(s) green"
+    print(f"RESULT: PASS — "
+          f"{len(active) - len(skips) - len(other_bad) - len(vacuous)} check(s) green"
+          f"{', ' + str(len(vacuous)) + ' nothing-in-scope' if vacuous else ''}"
           f"{', ' + str(len(other_bad)) + ' advisory failure(s)' if other_bad else ''}")
     return 0
 
@@ -495,7 +552,7 @@ def do_list(reg):
 # ----------------------------------------------------------------- selftest ---
 
 def selftest(reg):
-    """C1-C5. Proves the registry is coherent and the classifier does what the
+    """C1-C8. Proves the registry is coherent and the classifier does what the
     comments claim — the repo's "passes count only after demonstrated firing" norm."""
     failures = []
 
@@ -698,6 +755,39 @@ def selftest(reg):
               f"{len(unclaimed)} of {len(contract_ids)}")
         for cid in unclaimed:
             print(f"           {cid}")
+
+    # --- C8: every check declares its vacuity regime -------------------------
+    # A6's sweep declares `min_items` or `no_floor` on all 65 checks. Without this
+    # assertion that sweep is a snapshot: check 66 is added with neither, reports
+    # [PASS] on an empty corpus, and the repo runs its named recurring failure mode
+    # a fifth time. C8 is the structural half — it makes the declaration a
+    # condition of registration rather than a thing someone remembered.
+    #
+    # `no_floor` carries a REASON, not `true`. "This corpus is legitimately empty"
+    # is a claim about the world that someone should have to write down and a
+    # reviewer should be able to disagree with; a bare boolean is unfalsifiable.
+    undeclared = [c["id"] for c in reg["checks"]
+                  if "min_items" not in c and "no_floor" not in c]
+    check("C8 every check declares min_items or no_floor", not undeclared,
+          f"{len(undeclared)} undeclared: {undeclared[:5]}")
+
+    both = [c["id"] for c in reg["checks"] if "min_items" in c and "no_floor" in c]
+    check("C8 no check declares both a floor and no_floor", not both, str(both[:5]))
+
+    # Must be a STRING with something in it. `no_floor: true` is the failure this
+    # assertion exists for, and the first version of it passed `true` — YAML parses
+    # it to a bool, `str(True)` is a non-empty string, and the guard waved it
+    # through while its own comment said it would not. Caught by mutation-testing
+    # the assertion rather than by reading it.
+    bare = [c["id"] for c in reg["checks"]
+            if "no_floor" in c
+            and (not isinstance(c["no_floor"], str) or len(c["no_floor"].strip()) < 12)]
+    check("C8 every no_floor states a reason, not a bare true", not bare, str(bare[:5]))
+
+    floored = [c for c in reg["checks"] if "min_items" in c]
+    print(f"  [INFO] checks with a real floor: {len(floored)} of "
+          f"{len(reg['checks'])} — every no_floor is a corpus that cannot yet "
+          f"falsify its check; ratchet this up as the corpus fills")
 
     unattributed = [c["id"] for c in reg["checks"] if c.get("basis") == "unattributed"]
     print(f"  [INFO] checks with no stated authority: {len(unattributed)} of "
