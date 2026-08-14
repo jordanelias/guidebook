@@ -464,7 +464,6 @@ database:
   - source_locators
   - term_item_links
   - terms
-  - weighting_profile
   tables_written_directly_by_code:
   - axes
   - bpc_metadata
@@ -497,6 +496,7 @@ database:
   - supersession_check
   - term_aliases
   - url_verification_runs
+  - weighting_profile
   tables_with_no_writer_at_all:
   - case_studies
   - case_study_outcomes
@@ -561,6 +561,10 @@ writers:
     - search_executions
     - source_slug_links
     - supersession_check
+    scripts/emit_data_migration.py:
+    - evidence_sources
+    - gaps
+    - weighting_profile
     scripts/init_db.py:
     - db_meta
     scripts/item_audit_pipeline.py:
