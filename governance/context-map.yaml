@@ -706,7 +706,7 @@ checks:
     kinds:
     - data
     - synthesis
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit_evidence_metadata.py
   - id: claims_docket
     level: advisory
@@ -714,7 +714,7 @@ checks:
     kinds:
     - governance
     - synthesis
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/claims_docket.py check
   - id: context_map_fresh
     level: advisory
@@ -740,7 +740,7 @@ checks:
     kinds:
     - data
     - synthesis
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/graph_audit.py
   - id: matrix_consistency
     level: advisory
@@ -748,7 +748,7 @@ checks:
     kinds:
     - governance
     - schema
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/matrix_consistency.py
   - id: metadata_integrity_audit
     level: advisory
@@ -764,7 +764,7 @@ checks:
     kinds:
     - data
     - schema
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/migration_reproducibility.py --deep
   - id: pipeline_contract_audit
     level: advisory
@@ -796,7 +796,7 @@ checks:
     kinds:
     - data
     - tooling
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/readonly_db_open_audit.py
   - id: reasoning_doc_citations_audit
     level: advisory
@@ -843,7 +843,7 @@ checks:
     battery: governance
     kinds:
     - always
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/retired_vocabulary_audit.py
   - id: site_pages_fresh
     level: advisory
@@ -929,7 +929,7 @@ checks:
     kinds:
     - data
     - schema
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/validate_items.py
   - id: validate_population
     level: advisory
@@ -937,7 +937,7 @@ checks:
     kinds:
     - schema
     - data
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/validate_population.py
   - id: validate_pydantic_schemas
     level: advisory
@@ -945,14 +945,14 @@ checks:
     kinds:
     - schema
     - data
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/validate_pydantic_schemas.py --strict
   - id: validate_reasoning
     level: advisory
     battery: research
     kinds:
     - synthesis
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/validate_reasoning.py --strict
   - id: validate_schema_cross_check
     level: advisory
@@ -967,7 +967,7 @@ checks:
     battery: data
     kinds:
     - data
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/alias_provenance_audit.py
   - id: attestation_presence
     level: blocking
@@ -991,7 +991,7 @@ checks:
     kinds:
     - governance
     - data
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit_adversarial_use.py --catalog-only
   - id: check_json
     level: blocking
@@ -1037,7 +1037,7 @@ checks:
     kinds:
     - data
     - tooling
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/db_path_env_audit.py
   - id: decision_capture
     level: blocking
@@ -1123,7 +1123,7 @@ checks:
     kinds:
     - schema
     - data
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/validate_axes.py
   - id: validate_bpc
     level: blocking
@@ -1154,7 +1154,7 @@ checks:
     kinds:
     - schema
     - data
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/validate_jurisdiction.py
   - id: validate_schema
     level: blocking
