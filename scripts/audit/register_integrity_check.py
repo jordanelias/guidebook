@@ -359,8 +359,40 @@ def selftest(doc, db_path=None):
     # Completeness (DB → doc). Needs a DB; announce the skip rather than
     # passing quietly, or an absent DB would make this look covered.
     if db_path:
-        bad_complete = re.sub(r"<section class='cell'.*?</section>", "", doc, count=1, flags=re.S)
-        fired = len(check(bad_complete, db_path)) > 0
+        # specifications is 0 rows in the live corpus (pre-launch, unpopulated), so
+        # db_rows is always empty and set(db_rows) - set(cells) can never be
+        # non-empty — this sub-test would pass vacuously against the real DB no
+        # matter what gets deleted from the document. Work on a temp copy and
+        # inject one ghost specifications row, matching the first rendered cell's
+        # own attributes exactly, so deleting that cell's section gives the
+        # DB->doc completeness comparison an actual subject to notice missing.
+        import shutil
+        import sqlite3
+        import tempfile
+        first_div = re.search(r"<div class='rendering' ([^>]*)>", doc)
+        attrs0 = dict(ATTR_RE.findall(first_div.group(1)))
+        item_code, population_code = attrs0["cell"].split("×")
+        tmpd = tempfile.mkdtemp(prefix="register_integrity_selftest_")
+        try:
+            ghost_db = os.path.join(tmpd, "gb.db")
+            shutil.copy(db_path, ghost_db)
+            gcon = sqlite3.connect(ghost_db)
+            gcon.execute(
+                "INSERT INTO specifications (item_code, population_code, state, "
+                "tier_basis, governing_refs, rule_version, derivation_sha, "
+                "code_floor_only, regulatory_stratum_only) "
+                "VALUES (?, ?, ?, ?, '[]', ?, ?, ?, ?)",
+                (item_code, population_code, attrs0["state"], attrs0["tier-basis"],
+                 attrs0["rule-version"], attrs0["sha"], int(attrs0["cfo"]),
+                 int(attrs0["rso"])))
+            gcon.commit()
+            gcon.close()
+            bad_complete = re.sub(r"<section class='cell'.*?</section>", "", doc,
+                                  count=1, flags=re.S)
+            errs = check(bad_complete, ghost_db)
+            fired = any("COMPLETENESS VIOLATION" in e for e in errs)
+        finally:
+            shutil.rmtree(tmpd, ignore_errors=True)
         ok &= fired
         print(f"{'FIRED' if fired else '**SILENT — MUTATION MISSED**'}: "
               f"COMPLETENESS: a whole cell section deleted")
