@@ -178,7 +178,20 @@ def audit():
                     len(verified_no_prior) + len(verified_no_queries) +
                     len(unmarked_langs))
     
+    # EXAMINED: the corpus rows actually queried across checks 1-9, not the
+    # issue counts above (an issue count of 0 is ambiguous between "checked
+    # and clean" and "nothing to check" — this disambiguates). Four source
+    # tables feed these nine checks; summing their row counts is unambiguous
+    # here because every one of them is presently empty (2026-08-06 clean-room
+    # reset), so no combination could read as anything but zero.
+    n_gaps = db.execute("SELECT COUNT(*) FROM gaps").fetchone()[0]
+    n_sources = db.execute("SELECT COUNT(*) FROM evidence_sources").fetchone()[0]
+    n_matches = db.execute("SELECT COUNT(*) FROM evidence_population_match").fetchone()[0]
+    n_langs = db.execute("SELECT COUNT(*) FROM search_languages").fetchone()[0]
+    n_examined = n_gaps + n_sources + n_matches + n_langs
+
     print(f"\n--- TOTAL ISSUES: {total_issues} ---")
+    print(f"EXAMINED: {n_examined}")
     if total_issues == 0:
         print("Audit clean. Reminder: protocol creates audit trails, not truth.")
         print("Human spot-check is the actual control mechanism.")

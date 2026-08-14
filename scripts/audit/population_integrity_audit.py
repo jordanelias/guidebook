@@ -145,9 +145,14 @@ def audit():
         summary = ", ".join(f"{r['population_code']}:{r['c']}" for r in dist) or "(empty)"
         print(f"  {jt}: {summary}")
 
+    n_examined = sum(
+        db.execute(f"SELECT COUNT(*) c FROM {jt}").fetchone()["c"] for jt, _, _, _ in JUNCTIONS
+    )
+
     print()
     print("=" * 64)
     print(f"ISSUES: {issues}")
+    print(f"EXAMINED: {n_examined}")
     print("=" * 64)
     db.close()
     return 0 if issues == 0 else 1

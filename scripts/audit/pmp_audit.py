@@ -173,9 +173,12 @@ def audit():
         print("\n[CHECK 7] Skipped — items table does not carry spec_value_origin; "
               "drift detection requires reasoning-doc parsing (future work)")
 
+    n_probes = db.execute("SELECT COUNT(*) FROM spec_value_probes").fetchone()[0]
+
     print()
     print("=" * 60)
     print(f"ISSUES: {issues}")
+    print(f"EXAMINED: {n_probes}")
     print("=" * 60)
     return 0 if issues == 0 else 1
 

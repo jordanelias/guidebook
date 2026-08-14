@@ -325,6 +325,7 @@ def main():
             f"\nSummary: {len(clean)} clean, {len(warn_files)} with warnings, "
             f"{len(err_files)} with errors, {skipped} skipped (templates)"
         )
+        print(f"EXAMINED: {len(results)}")
 
     if args.strict and err_files:
         return 1

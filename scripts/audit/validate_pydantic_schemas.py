@@ -211,6 +211,7 @@ def run(db_path: Path, strict: bool) -> int:
     conn.close()
     print(f"\n{'='*60}\nTotal drift findings: {total_drift} "
           f"(informational -- per-table accept/reject policy is separate future work)")
+    print(f"EXAMINED: {len(MODEL_TABLE_MAP)}")
     if strict and total_drift:
         return 1
     return 0

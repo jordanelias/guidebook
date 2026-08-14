@@ -215,10 +215,14 @@ checks:
     level: blocking
     basis: hygiene
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    min_items: 1
     note: >-
       Cheap enough that gating it would buy nothing and risk a misclassified diff
       slipping a malformed BPC through. Deliberately ungated.
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the references/bpc/**/*.md
+      file count (102 today). File-glob-derived, so min_items:1 — a run that
+      finds zero files means the glob broke, not that BPCs were legitimately
+      retired to none.
 
   - id: validate_cross_refs
     cmd: [python3, scripts/validate_cross_refs.py, --repo-root, .]
@@ -227,8 +231,14 @@ checks:
     level: blocking
     basis: hygiene
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
-    note: Cross-references span every corpus, so no path filter is correct here.
+    no_floor: not-instrumented — several distinct subjects (slugs, CON-IDs, BPC
+      files, search-logs, scan files, the handoff pointer), each with its own
+      count and no single one honestly speaks for the whole check; instrumenting
+      any one of them would misrepresent the others. Left uninstrumented on
+      2026-08-14 (A5) rather than invent a combined figure — see CLAUDE.md
+      guardrail 1.
+    note: >-
+      Cross-references span every corpus, so no path filter is correct here.
 
   # ===== data — DB integrity and reproducibility ============================
   - id: test_db_integrity
@@ -289,8 +299,12 @@ checks:
     level: blocking
     basis: cross_stage/reproducibility-invariant
     cost: slow
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    min_items: 1
     note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the count of core invariants
+      compared (7 today: schema_version + six table COUNT(*)s). A fixed,
+      code-declared list — zero would mean the comparator itself broke, not
+      that the DB shrank, so min_items:1.
       GAP-290 enforcement — the gate that actually stops direct DB writes. Was two
       hand-kept inline heredocs (audit.yml and preflight.sh); now one script.
       SCOPE, recorded 2026-08-01 because the description above overstates it: this
@@ -306,8 +320,11 @@ checks:
     level: advisory
     basis: cross_stage/reproducibility-invariant
     cost: slow
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    min_items: 1
     note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the count of tables walked
+      by the deep comparison (67 today: every user table plus the two
+      DR-2026-05-28 exemptions). Fixed by the schema, not the data — min_items:1.
       Every table, every row — the comparison the core invariants cannot make.
       Added 2026-08-01 after an adversarial trace showed the blocking check above
       passes on a tampered DB: editing a row's tier and title, and inserting a
@@ -360,8 +377,12 @@ checks:
     level: advisory
     basis: unattributed
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    min_items: 1
     note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the items-table row count
+      (93 today) — the table this validator is named for. min_items:1: an
+      empty items table would mean the DB or the query broke, not a legitimate
+      state.
       REPAIRED AND WIRED 2026-08-05; was quarantined `broken`. It crashed with
       `IndexError: No item with that key` reading `items.applicable_groups`, a CSV  # [RETIRED-VOCAB-OK]
       of population codes packed into one column and dropped when
@@ -389,8 +410,11 @@ checks:
     level: advisory
     basis: unattributed
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    min_items: 1
     note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the read-only-consumer
+      count (39 today). min_items:1 matches the check's own vacuity guard,
+      which already FAILS outright on zero readers found.
       A script that only reads must open the canonical DB read-only. Sibling of
       db_path_env_audit — same scope filter, same EXCLUDE_PARTS, so "legacy" means
       one thing repo-wide — but a different contract: that one asks WHICH database
@@ -421,7 +445,7 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: instrumented, floor not yet declared — subject is non-empty today; setting a floor is a separate ratchet, tracked by the C8 INFO line
     note: >-
       Triggers on `tooling` too: the contract it enforces is a property of the
       SCRIPTS, so a scripts-only diff is exactly when it can regress.
@@ -433,7 +457,7 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: instrumented, floor not yet declared — subject is non-empty today; setting a floor is a separate ratchet, tracked by the C8 INFO line
 
   - id: workplan_naming
     cmd: [python3, scripts/audit/workplan_naming_audit.py]
@@ -540,7 +564,7 @@ checks:
     level: blocking
     basis: [judgment/governing-refs-nonempty, judgment/no-regulatory-stratum-stated, judgment/tier3-alone-threshold]
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
     note: >-
       `synthesis` added per the 2026-07-23 enforcement plan F2: a synthesis PR that
       asserts a determination must trigger the judgment-stage check. It previously
@@ -553,7 +577,7 @@ checks:
     level: advisory
     basis: unattributed
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: instrumented, floor not yet declared — subject is non-empty today; setting a floor is a separate ratchet, tracked by the C8 INFO line
     note: >-
       REWRITTEN AND DOWNGRADED blocking -> advisory, 2026-08-05. It was blocking
       and green, and it had never validated anything. It printed "No files with
@@ -591,7 +615,7 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: instrumented, floor not yet declared — subject is non-empty today; setting a floor is a separate ratchet, tracked by the C8 INFO line
 
   - id: validate_axes
     cmd: [python3, scripts/validate_axes.py]
@@ -600,7 +624,7 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: instrumented, floor not yet declared — subject is non-empty today; setting a floor is a separate ratchet, tracked by the C8 INFO line
     note: Ran in preflight only; no workflow invoked it. Now both do.
 
   - id: validate_verification_consistency
@@ -610,7 +634,7 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
     note: Ran in preflight only; no workflow invoked it. Now both do.
 
   - id: audit_evidence_metadata
@@ -620,7 +644,7 @@ checks:
     level: advisory
     basis: unattributed
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: instrumented, floor not yet declared — subject is non-empty today; setting a floor is a separate ratchet, tracked by the C8 INFO line
     note: Rule-#10 evidence-eligibility gate. Newly wired — advisory during shakedown.
 
   - id: validate_pydantic_schemas
@@ -630,7 +654,7 @@ checks:
     level: advisory
     basis: unattributed
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: instrumented, floor not yet declared — subject is non-empty today; setting a floor is a separate ratchet, tracked by the C8 INFO line
     note: >-
       The schemas/*.py <-> SQLite parity check CLAUDE.md §10 calls "a bug, not a
       convention" — and the only tool that checks it. De-quarantined 2026-08-01
@@ -655,7 +679,7 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: instrumented, floor not yet declared — subject is non-empty today; setting a floor is a separate ratchet, tracked by the C8 INFO line
 
   - id: decision_capture
     cmd: [python3, scripts/decision_capture.py]
@@ -682,7 +706,7 @@ checks:
     level: advisory
     basis: unattributed
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: instrumented, floor not yet declared — subject is non-empty today; setting a floor is a separate ratchet, tracked by the C8 INFO line
     note: >-
       Flags text that is READABLE AND WRONG — a dropped column, a folded
       workflow, a database path that never existed, a banned population umbrella.
@@ -709,7 +733,7 @@ checks:
     level: advisory
     basis: render/mode-stratum-matrix-consistency
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: instrumented, floor not yet declared — subject is non-empty today; setting a floor is a separate ratchet, tracked by the C8 INFO line
     note: >-
       Mode-stratum matrix vs evidence-architecture.md §3. Named by the 2026-07-23
       plan (WS1) and green on main; wired here, advisory during shakedown.
@@ -733,7 +757,7 @@ checks:
     level: advisory
     basis: cross_stage/definition-of-done
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: instrumented, floor not yet declared — subject is non-empty today; setting a floor is a separate ratchet, tracked by the C8 INFO line
     note: >-
       Mode-2 claims docket (skills/integrity-protocol_SKILL.md): every triggered
       claim must carry a warrant annotation. De-quarantined 2026-08-01 by adding
@@ -755,7 +779,7 @@ checks:
     level: blocking
     basis: cross_stage/adherence-log
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
 
   - id: attestation_schema
     cmd: [python3, scripts/audit/adherence_log_audit.py, --check, schema]
@@ -764,7 +788,7 @@ checks:
     level: blocking
     basis: cross_stage/adherence-log
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
 
   - id: attestation_evidence
     cmd: [python3, scripts/audit/adherence_log_audit.py, --check, evidence]
@@ -785,7 +809,7 @@ checks:
     level: informational
     basis: cross_stage/adherence-log
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
     note: Surfaces NON-COMPLIANT verdicts. Never blocking by design.
 
   # ===== research contract ==================================================
@@ -872,7 +896,7 @@ checks:
     level: advisory
     basis: research/adversarial-fields-complete
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
     note: RED on main. Advisory, as it was in research-contract.yml.
 
   - id: metadata_integrity_audit
@@ -882,7 +906,7 @@ checks:
     level: advisory
     basis: collection/evidence-verification-gate
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
     note: RED on main. Advisory, as it was in research-contract.yml.
 
   - id: gap_mining_audit
@@ -892,7 +916,7 @@ checks:
     level: advisory
     basis: unattributed
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
 
   - id: population_integrity_audit
     cmd: [python3, scripts/audit/population_integrity_audit.py]
@@ -901,7 +925,7 @@ checks:
     level: advisory
     basis: unattributed
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
     note: RED on main (31 issues). Advisory, as it was in research-contract.yml.
 
   - id: graph_audit
@@ -911,7 +935,7 @@ checks:
     level: advisory
     basis: unattributed
     cost: slow
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: instrumented, floor not yet declared — subject is non-empty today; setting a floor is a separate ratchet, tracked by the C8 INFO line
     note: ~2s locally; resolves its DB path via graph/build.py (documented exemption).
 
   - id: validate_reasoning
@@ -921,7 +945,7 @@ checks:
     level: advisory
     basis: synthesis/nine-step-synthesis
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: instrumented, floor not yet declared — subject is non-empty today; setting a floor is a separate ratchet, tracked by the C8 INFO line
     note: >-
       The NINE-STEP-SYNTHESIS contract — the check the 2026-07-23 enforcement plan
       (F2) identified as the one whose absence let PR #56 pass green.
@@ -938,7 +962,7 @@ checks:
     level: advisory
     basis: research/pmp-strict-termination
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
     note: >-
       Rule #8 / #10.1 — numerical-spec claims must cite an active PMP walk.
       De-quarantined 2026-08-01 after triage: the 3 issues are content (walks
@@ -952,7 +976,7 @@ checks:
     level: advisory
     basis: unattributed
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
     note: >-
       Track 3 of DR-2026-05-13 — citation integrity behind reasoning docs.
       De-quarantined 2026-08-01: the 2 issues are content (NOT-FOUND rows
@@ -1074,7 +1098,7 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: instrumented, floor not yet declared — subject is non-empty today; setting a floor is a separate ratchet, tracked by the C8 INFO line
     note: >-
       STALE on main as of 2026-08-01 — the committed evidentiary-base-audit outputs
       do not match a fresh regeneration from the DB. Fix with
@@ -1119,7 +1143,7 @@ checks:
     level: advisory
     basis: render/render-freshness
     cost: fast
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: instrumented, floor not yet declared — subject is non-empty today; setting a floor is a separate ratchet, tracked by the C8 INFO line
     note: >-
       Re-renders every site/specs page from the committed DB and compares against
       what is on disk. Catches two things nothing else did: generated output that
@@ -1179,7 +1203,7 @@ checks:
     level: advisory
     basis: unattributed
     cost: slow
-    no_floor: not-instrumented — prints no EXAMINED line, so no floor is declarable; instrument it, then declare one
+    no_floor: instrumented, floor not yet declared — subject is non-empty today; setting a floor is a separate ratchet, tracked by the C8 INFO line
     optional_exit2: true
     note: >-
       Exit 2 means "node/browser unavailable here", which is reported as SKIP —

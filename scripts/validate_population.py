@@ -228,11 +228,13 @@ def validate(verbose=False):
         print(f"population validation: {len(errors)} error(s)")
         for e in errors:
             print(f"  {e}")
+        print(f"EXAMINED: {checked_rows}")
         return 1
     for note in notes:
         print(f"  {note}")
     print(f"population validation: PASS ({len(db_codes)} live codes; "
           f"{checked_rows} value(s) across {len(columns)} column(s) all resolve)")
+    print(f"EXAMINED: {checked_rows}")
     return 0
 
 

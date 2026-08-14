@@ -350,6 +350,7 @@ def main():
     # coverage; it is coverage of the files this audit can see.
     print(f"excluded as writers (NOT examined, see the comment in audit()): "
           f"{len(writers)}")
+    print(f"EXAMINED: {len(readers)}")
 
     if not readers:
         # The vacuity guard. A gate passing because nothing is in scope is

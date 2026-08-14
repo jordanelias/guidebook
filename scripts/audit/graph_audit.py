@@ -197,6 +197,7 @@ def report(store):
     live = _live_errors(store)
     print(SEP)
     print(f"VERDICT: {'PASS' if live == 0 else 'FAIL'}   (live errors={live})")
+    print(f"EXAMINED: {counts['nodes']}")
     print(SEP)
     return 0 if live == 0 else 1
 

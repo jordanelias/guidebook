@@ -66,12 +66,12 @@ def resolve_jurisdiction(raw) -> str | None:
 
 
 def validate_registry(path: str) -> tuple:
-    """Validate standards-registry.md entries. Returns (errors, warnings)."""
+    """Validate standards-registry.md entries. Returns (errors, warnings, n_examined)."""
     errors = []
     warnings = []
 
     if not os.path.exists(path):
-        return [f"Standards registry not found: {path}"], []
+        return [f"Standards registry not found: {path}"], [], 0
 
     with open(path, "r", encoding="utf-8") as f:
         content = f.read()
@@ -80,6 +80,7 @@ def validate_registry(path: str) -> tuple:
     blocks = re.findall(r"```yaml\s*\n(.*?)```", content, re.DOTALL)
 
     seen_pairs = set()
+    n_examined = 0
     for i, block in enumerate(blocks):
         try:
             data = yaml.safe_load(block)
@@ -95,6 +96,8 @@ def validate_registry(path: str) -> tuple:
         raw_jur = data.get("jurisdiction", "")
         if not isinstance(raw_jur, str) or (isinstance(raw_jur, str) and raw_jur.startswith("[")):
             continue  # template placeholder — not a real registry entry
+
+        n_examined += 1
 
         # Check required fields
         missing = REQUIRED_REGISTRY_FIELDS - set(data.keys())
@@ -148,17 +151,18 @@ def validate_registry(path: str) -> tuple:
             )
         seen_pairs.add(pair_key)
 
-    return errors, warnings
+    return errors, warnings, n_examined
 
 
 def validate_source_jurisdictions(repo_root: str) -> tuple:
-    """Check jurisdiction fields on EvidenceSource YAML files."""
+    """Check jurisdiction fields on EvidenceSource YAML files. Returns (errors, warnings, n_examined)."""
     errors = []
     warnings = []
+    n_examined = 0
     source_dir = os.path.join(repo_root, "data", "sources")
 
     if not os.path.isdir(source_dir):
-        return [], []
+        return [], [], 0
 
     for path in sorted(glob.glob(os.path.join(source_dir, "*.yaml"))):
         try:
@@ -174,6 +178,7 @@ def validate_source_jurisdictions(repo_root: str) -> tuple:
         if jur is None:
             continue
 
+        n_examined += 1
         if jur == "GB":
             errors.append(
                 f"{os.path.basename(path)}: 'GB' must be 'UK'"
@@ -183,7 +188,7 @@ def validate_source_jurisdictions(repo_root: str) -> tuple:
                 f"{os.path.basename(path)}: unrecognized jurisdiction '{jur}'"
             )
 
-    return errors, warnings
+    return errors, warnings, n_examined
 
 
 def main():
@@ -200,23 +205,26 @@ def main():
     repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     total_errors = 0
     total_warnings = 0
+    total_examined = 0
 
     if not args.sources:
         registry_path = os.path.join(
             repo_root, "references", "standards-registry.md"
         )
-        e, w = validate_registry(registry_path)
+        e, w, n = validate_registry(registry_path)
         total_errors += len(e)
         total_warnings += len(w)
+        total_examined += n
         for err in e:
             print(f"ERROR registry: {err}")
         for warn in w:
             print(f"WARN  registry: {warn}")
 
     if not args.registry:
-        e2, w2 = validate_source_jurisdictions(repo_root)
+        e2, w2, n2 = validate_source_jurisdictions(repo_root)
         total_errors += len(e2)
         total_warnings += len(w2)
+        total_examined += n2
         for err in e2:
             print(f"ERROR source: {err}")
         for warn in w2:
@@ -227,6 +235,7 @@ def main():
         f"\n{status}: {total_errors} errors, {total_warnings} warnings",
         file=sys.stderr,
     )
+    print(f"EXAMINED: {total_examined}", file=sys.stderr)
     return 1 if total_errors > 0 else 0
 
 

@@ -835,6 +835,14 @@ def main() -> int:
     out_path = Path(args.out)
 
     if args.check:
+        # Deliberately NOT instrumented with an EXAMINED line. This dashboard
+        # aggregates scalar counts from many unrelated tables (items, BPC
+        # slugs, evidence sources, judgment cells, gaps, ...) with no single
+        # subject the freshness comparison "iterates" — picking any one of
+        # them (e.g. slugs_total, which happens to be 0 today because
+        # bpc_metadata is empty post clean-room-reset) would misrepresent a
+        # multi-metric dashboard as a single-corpus scan. See the same call
+        # made for validate_cross_refs.py and decision_capture.py.
         current = out_path.read_text(encoding="utf-8") if out_path.exists() else None
         if current == html_out:
             print(f"OK: {out_path.name} is current.")

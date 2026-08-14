@@ -369,6 +369,7 @@ def audit(rebuilt_to=None, deep=False):
             print(f"  {label:30} {status}")
         else:
             print(f"  {label:30} committed={c:>8}  rebuilt={r:>8}  {status}")
+    print(f"  EXAMINED: {len(rows)}")
 
     deep_substantive = deep_volatile = None
     if deep:
@@ -381,6 +382,7 @@ def audit(rebuilt_to=None, deep=False):
             print(f"  {table:32} {verdict:20} {detail}")
         n_ok = sum(1 for _, v, _ in deep_rows if v == "OK")
         print(f"  ({n_ok} tables identical, not listed)")
+        print(f"  EXAMINED: {len(deep_rows)}")
 
     if cleanup:
         try:

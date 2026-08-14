@@ -210,8 +210,10 @@ def main():
                 print(f"STALE: {path} — {why}", file=sys.stderr)
             print(f"\n{len(stale)} staleness finding(s). "
                   f"Run: python3 scripts/generate/build_site.py", file=sys.stderr)
+            print(f"EXAMINED: {len(rows)}", file=sys.stderr)
             sys.exit(1)
         print(f"FRESH: {len(rows)} page(s) match a fresh render.")
+        print(f"EXAMINED: {len(rows)}")
         return
 
     if args.dry_run:

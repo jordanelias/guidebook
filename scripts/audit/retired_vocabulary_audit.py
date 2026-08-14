@@ -263,8 +263,10 @@ def main(argv=None):
         print("Each is a wrong answer waiting for whoever greps next. Fix the text, or —")
         print("if the occurrence is a licensed mention rather than a use — add the path to")
         print(f"that entry's exempt_paths, or append {ESCAPE} to the line.")
+        print(f"EXAMINED: {len(ordered)}")
         return 1
     print(f"RESULTS: {len(ordered)}/{len(ordered)} register entries clean on the live surface.")
+    print(f"EXAMINED: {len(ordered)}")
     return 0
 
 

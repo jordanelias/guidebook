@@ -501,6 +501,7 @@ def main():
         f"{total_errors} errors, {total_warnings} warnings",
         file=sys.stderr,
     )
+    print(f"EXAMINED: {total_files}", file=sys.stderr)
     return 1 if total_errors > 0 else 0
 
 

@@ -142,6 +142,7 @@ def cmd_generate(base, docket_path):
 def cmd_check(docket_path):
     if not os.path.exists(docket_path):
         print(f"no docket at {docket_path} — run generate first (or nothing to check)")
+        print("EXAMINED: 0")
         return 0
     bad = []
     n = 0
@@ -156,8 +157,10 @@ def cmd_check(docket_path):
     if bad:
         print(f"FAIL: {len(bad)}/{n} docket claims lack a valid warrant annotation:")
         print("\n".join(bad))
+        print(f"EXAMINED: {n}")
         return 1
     print(f"PASS: {n}/{n} docket claims carry warrant annotations")
+    print(f"EXAMINED: {n}")
     return 0
 
 

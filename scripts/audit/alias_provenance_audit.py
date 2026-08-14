@@ -94,7 +94,8 @@ def main():
     print("alias_provenance_audit.py — controlled-vocabulary provenance")
     print("=" * 74)
     print(f"database: {DB_PATH}")
-    print(f"aliases:  {len(rows)}\n")
+    print(f"aliases:  {len(rows)}")
+    print(f"EXAMINED: {len(rows)}\n")
 
     hdr = f"{'lang':<6}{'total':>7}{'verified':>10}{'model-gen':>11}{'curated':>9}{'code':>6}{'UNKNOWN':>9}"
     print(hdr)

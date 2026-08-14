@@ -1651,8 +1651,10 @@ def main():
             print("DRIFT: outputs are stale, re-run tools/evidentiary_audit.py:")
             for d in drifted:
                 print("  -", d)
+            print(f"EXAMINED: {len(records)}")
             sys.exit(1)
         print("OK: all audit outputs are up to date.")
+        print(f"EXAMINED: {len(records)}")
         return
 
     changed = [p for p, c in outputs.items() if write_if_changed(p, c)]

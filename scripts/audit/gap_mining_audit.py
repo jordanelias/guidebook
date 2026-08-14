@@ -245,10 +245,12 @@ def audit():
     print("Gap-driven mining protocol audit (DR-2026-05-26)")
     print("=" * 68)
     print()
+    n_gap_mining = db.execute('SELECT COUNT(*) FROM gap_mining').fetchone()[0]
     print(f"schema version: {user_version}")
-    print(f"gap_mining rows: {db.execute('SELECT COUNT(*) FROM gap_mining').fetchone()[0]}")
+    print(f"gap_mining rows: {n_gap_mining}")
     print(f"gaps with mining_addressability set: "
           f"{db.execute('SELECT COUNT(*) FROM gaps WHERE mining_addressability IS NOT NULL').fetchone()[0]}")
+    print(f"EXAMINED: {n_gap_mining}")
     print()
 
     if issues_failure:
