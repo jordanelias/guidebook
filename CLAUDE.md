@@ -19,8 +19,11 @@ apparatus. **Read it fully before your first edit.**
 
 One GitHub Actions workflow gates `main` (`.github/workflows/ci.yml`); three more run on
 schedules (§7). `audit.yml` was folded into `ci.yml` on 2026-08-01 — this line said otherwise
-until 2026-08-02, contradicting §7 two hundred lines below it. Note also that **`main` is not
-branch-protected**, so a failing blocking check paints a red X and stops nothing (§7).
+until 2026-08-02, contradicting §7 two hundred lines below it. Note also that **`main` IS
+branch-protected** — confirmed against the GitHub API (`"protected": true`); this line, §1, and
+§7 said the opposite until corrected 2026-08-14. Protection being *on* does not by itself say
+which checks are *required* — that set is an open owner decision, so do not assume a red blocking
+check blocks anything until you have checked it (§7).
 Before you commit or push, know these five rules. Details in §7–§8.
 
 1. **Commit message format.** `{skill-name}: {action} [YYYY-MM-DD HH:MM]` — the timestamp
@@ -72,7 +75,10 @@ design-for-everyone framing.)
   primary deliverable) are barely started. The project is parked mid-rehabilitation (Phase B /
   pilot Phase E — see §9). Treat it as scaffolding under active construction, not a finished
   book; query `bpc_metadata` / `specifications` for the current populated state.
-- **Repo:** `jordanelias/guidebook`, default branch `main` (protected by CI).
+- **Repo:** `jordanelias/guidebook`, default branch `main` (branch-protected — confirmed against
+  the GitHub API, `"protected": true`; this doesn't by itself say which checks are required, see
+  §7. Corrected 2026-08-14 — this line previously said "protected by CI," which conflated
+  branch protection with CI merely running).
 - **Two product front-ends exist and are different things:** the hand-authored mockup
   (`index.html` + `assets/guidebook.css`, showing the *intended* end-state — most provision
   links are dead, wired only for a lone exemplar) versus the actually-generated static site
@@ -161,7 +167,11 @@ sign-off. (This line said the table was "empty scaffolding" until the import.)
   ```
   Data migrations are **append-only and immutable once committed** — fix forward with a new
   compensating migration. They're tracked in the `data_migrations` table; schema migrations by
-  `user_version`. `012_baseline_2026-05-15.sql` is a baseline that supersedes 001–011.
+  `user_version`. `057_baseline_2026-08-12.sql` is the current baseline — a full schema-and-data
+  snapshot that supersedes every earlier migration; new schema migrations resume from 058.
+  (Corrected 2026-08-14 — this line previously named `012_baseline_2026-05-15.sql` as the
+  baseline; that file is itself now superseded and lives at
+  `_archived/scripts/migrations/012_baseline_2026-05-15.sql`.)
 - **Verify reproducibility** before pushing DB changes:
   `python3 scripts/migrate_db.py --rebuild /tmp/rebuilt.db` (this is what CI does).
 - **Exempt tables** (written by scheduled jobs outside migrations, per DR-2026-05-28):
@@ -319,11 +329,13 @@ gated on `contains(github.event.pull_request.changed_files, 'data/')` — but `c
 an *integer count*, so that expression was always false and those jobs never ran on any PR.
 They now run on the PRs that warrant them.
 
-> **`main` is not branch-protected** (checked 2026-08-01), so a `blocking` check paints a red
-> X and stops nothing. Turning protection on is an owner action in repo Settings — the
-> recommended required-check set, and the three traps that make the naive version deadlock the
-> repo, are in `references/tooling-register.md` §6.7. Do **not** require the `DB integrity`
-> job until its content backlog is cleared, or no data-touching PR will ever merge.
+> **`main` IS branch-protected** — confirmed against the GitHub API (`"protected": true`).
+> This section previously said the opposite ("checked 2026-08-01"); corrected 2026-08-14.
+> Branch protection alone doesn't say *which* checks are required to merge — confirm the
+> required-check set matches the recommendation in `references/tooling-register.md` §6.7, which
+> also lists the three traps that make the naive version deadlock the repo. Do **not** require
+> the `DB integrity` job until its content backlog is cleared, or no data-touching PR will ever
+> merge.
 
 > **Before assuming a red `main` or a failing check was caused by your change, read the actual
 > run.** `main` can carry pre-existing, owner-gated failures unrelated to your work — two
@@ -354,9 +366,14 @@ For a **synthesis-path** change (`references/bpc-reasoning/`, `references/connec
 1. **Add the doctrine token before the timestamp:**
    `SHA=$(git rev-parse HEAD:governance/mission-and-epistemics.md | cut -c1-7)` →
    `{skill}: {action} [DOCTRINE: $SHA] [YYYY-MM-DD HH:MM]`.
-   Exempt when the commit itself modifies `governance/mission-and-epistemics.md` (then
-   re-attest affected downstream artifacts within `RE_ATTESTATION_WINDOW` = 5 commits or by
-   next session close). Bots and merge commits are exempt.
+   Exempt when the commit itself modifies `governance/mission-and-epistemics.md` — the live
+   model (DR-2026-07-21) is **materiality-scoped**, not a flat commit window: an attestation
+   owes re-grounding only when a doctrine delta adopted after its grounding is material to it
+   (path/rule-id intersection against `governance/doctrine-deltas.json`); immaterial artifacts
+   never trip the check. (Corrected 2026-08-14 — this line previously named
+   `RE_ATTESTATION_WINDOW` = 5 commits; that constant is still defined in
+   `scripts/audit/adherence_log_audit.py` but is dead — `check_7_reattestation_window` reads
+   `governance/doctrine-deltas.json` and never references it.) Bots and merge commits are exempt.
 2. **Add/update `attestations/<artifact-slug>.json`** against `schemas/attestation.schema.json`.
    Required fields: `schema_version`, `session`, `artifact`, `doctrine_sha`, `rules_in_scope`
    (stable rule identifiers from `references/skill-registry.md`, not numbers), `per_rule_status`
@@ -422,11 +439,15 @@ attestation logic.
   `session_pointer:` in `governance/check-registry.yaml`. **Update the research pointer when you
   close a research session; update `LATEST` when you close any session.** Split 2026-08-06 (W4)
   because one name serving both meanings had drifted them six weeks apart and pointed a blocking
-  gate at a session that had done no research. `session_pointer_resolvable` (blocking) now fails
-  if either pointer dangles — an unresolvable pointer makes `run_checks.py` SKIP the checks that
-  read it, which disarms a blocking gate silently — and reports drift when `LATEST-RESEARCH` falls
-  behind the DB. `sessions/handoff-next-session.md` is *not* a pointer and may still be stale; find
-  the current handoff via §9 (the newest `workplan/` file).
+  gate at a session that had done no research. There is no check named `session_pointer_resolvable`
+  (corrected 2026-08-14 — zero hits across `governance/`, `scripts/`, `.github/`; this line
+  named one that doesn't exist). The real protection lives in the dispatcher: `run_check()` in
+  `scripts/run_checks.py` now FAILs a BLOCKING check whose session pointer is missing, instead
+  of SKIPping it — SKIP would otherwise disarm a blocking gate silently, which is the exact
+  failure mode this paragraph is about. The second capability this line used to attribute to
+  `session_pointer_resolvable` — reporting drift when `LATEST-RESEARCH` falls behind the DB —
+  has no implementation anywhere in the repo. `sessions/handoff-next-session.md` is *not* a
+  pointer and may still be stale; find the current handoff via §9 (the newest `workplan/` file).
 - **A gate reporting zero may have examined zero.** `citation_mining_completeness.py` prints an
   `Examined` count and a verdict of `OUTSTANDING` / `CLEAN` / `NOTHING-IN-SCOPE` precisely so the
   two cannot be confused. It could not always: session names reach it with a `.md` extension while
