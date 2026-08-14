@@ -220,20 +220,33 @@ is Change-Order gated).
 
 ### Tier 4 — cull (owner-gated)
 
-**Tables** — no reader, no writer, no content:
-`rooms`, `room_items`; the case-study family (`case_studies` + 4 junctions); the economics family
-(`economics_entries` + 2 junctions); `situations`, `life_stage_modifiers`, `access_duration`,
-`access_need_icf`, `access_needs`, `access_stakes`, `weighting_profile`, `population_reclass`,
-`external_root_registry`, `db_meta`. Migrations are forward-only; re-adding when a renderer exists is
-cheap, and carrying dead tables costs census confusion every audit cycle.
+> **CORRECTED 2026-08-14 — this list was too aggressive.** The retirement planning pass re-verified
+> every candidate with `git grep` and rescued five: the **`economics_entries` family** and
+> **`search_candidates`** are read by *blocking* gates (`test_db_integrity` C06 and the
+> definition-of-done rules R12/R7) — a table a gate refuses to pass without is not dead;
+> **`access_needs`** and **`access_need_icf`** are reset-preserved frame carrying a live FK from
+> `access_need_axis_map`, which nothing proposed culling; **`weighting_profile`** is cited by
+> ratified doctrine; and **`source_locators`** is the reset's deliberate recovery stash, to be wired
+> rather than retired. Three further corrections: `scripts/db/**` is **3** files, not 13;
+> `validate_db.py` is **repaired**, not broken; and nine candidates called "no content" do hold rows.
+> The error was mine — the reviews flagged gate-readership as the dead-vs-load-bearing criterion and
+> this list did not apply it. The verified sequencing is in
+> `workplan/2026-08-14-remediation-workplan.md` §6.
+
+**Tables** — safe now, after the correction above: `db_meta`, `population_reclass` (its retirement
+already sanctioned by a ratified DR), and the `v_source_reach` view. Blocked on a named prerequisite,
+not free: `rooms`/`room_items`, the case-study family, the frozen search grids, `access_duration`,
+`access_stakes`. On hold with a blocker: `situations` (DG-NON), `external_root_registry`,
+`life_stage_modifiers`. Migrations are forward-only; re-adding when a renderer exists is cheap, and
+carrying genuinely dead tables costs census confusion every audit cycle.
 Finish the `search_coverage` / `search_languages` freeze with a `DROP TABLE` so the retirement is
 structural rather than behavioural. **Do not build writers for those two** — it would un-freeze a
 retirement.
 
-**Scripts:** `scripts/db/**` (13 files, targets a database that does not exist); `scripts/migrate/**`
+**Scripts:** `scripts/db/**` (3 files, targets a database that does not exist); `scripts/migrate/**`
 (keep `migrate_decisions.py` while the dual store lives); `scripts/convert/**` (13 files, 2,669 lines,
 no legacy status and absent from the shared `EXCLUDE_PARTS` convention); `init_db.py`;
-`migrate_evidence_sources_v2.py`; `validate_db.py` (quarantined, broken);
+`migrate_evidence_sources_v2.py`; `validate_db.py` (quarantined; repaired but unselected);
 `test_generate_parts_4_2.py` (exits 0 having asserted nothing — a test that cannot fail is worse than
 no test); `verify_resolved_dois.py` (wire it into `resolve-dois.yml` or archive it — do not leave it);
 `generate/room_page.py` + `population_page.py` (crash-by-construction against six phantom table names,
