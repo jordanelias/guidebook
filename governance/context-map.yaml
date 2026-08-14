@@ -109,7 +109,7 @@ pointers:
   doctrine_sha: 0f2f525
   doctrine_file: governance/mission-and-epistemics.md
   newest_workplan:
-  - 2026-08-13-writerless-tables-analysis.md
+  - 2026-08-14-remediation-workplan.md
   live_project_instructions:
   - project-instructions-v10_9.md
 database:
@@ -538,6 +538,8 @@ writers:
     - specifications
     scripts/audit/migration_reproducibility.py:
     - items
+    scripts/audit/register_integrity_check.py:
+    - specifications
     scripts/audit/research_batch_dod.py:
     - evidence_sources
     - search_executions
@@ -770,7 +772,7 @@ checks:
     kinds:
     - governance
     - tooling
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/pipeline_contract_audit.py
   - id: pmp_audit
     level: advisory
@@ -958,7 +960,7 @@ checks:
     kinds:
     - schema
     - data
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/validate_schema.py --cross-check
   - id: alias_provenance_audit
     level: blocking
@@ -1083,7 +1085,7 @@ checks:
     battery: research
     kinds:
     - always
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/research_batch_dod.py --check-baseline origin/main
   - id: research_contract_sync
     level: blocking
@@ -1176,7 +1178,7 @@ checks:
     battery: structure
     kinds:
     - always
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/workplan_naming_audit.py
   - id: attestation_verdict
     level: informational
