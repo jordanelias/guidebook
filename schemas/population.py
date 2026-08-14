@@ -95,9 +95,9 @@ class Population(GuidebookEntity):
     def valid_item_codes(cls, v: list[str]) -> list[str]:
         """Key parameters must be valid item codes."""
         for code in v:
-            if not re.match(r"^[A-K]-\d{2}$", code):
+            if not re.match(r"^[A-K]-\d{2}[a-z]?$", code):
                 raise ValueError(
-                    f"key_parameter must be item code [A-K]-NN, got: '{code}'"
+                    f"key_parameter must be item code [A-K]-NN[a-z]?, got: '{code}'"
                 )
         return v
 

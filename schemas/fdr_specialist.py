@@ -88,8 +88,8 @@ class FDRScenario(GuidebookEntity):
     @classmethod
     def valid_spec_refs(cls, v: list[str]) -> list[str]:
         for ref in v:
-            if not re.match(r"^[A-K]-\d{2}$", ref):
-                raise ValueError(f"spec ref must be item code [A-K]-NN, got: '{ref}'")
+            if not re.match(r"^[A-K]-\d{2}[a-z]?$", ref):
+                raise ValueError(f"spec ref must be item code [A-K]-NN[a-z]?, got: '{ref}'")
         return v
 
 

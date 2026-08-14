@@ -29,7 +29,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-ITEM_CODE_RE = re.compile(r"^[A-K]-\d{2}$")
+ITEM_CODE_RE = re.compile(r"^[A-K]-\d{2}[a-z]?$")
 
 VALID_CATEGORIES = {
     "A": "Acoustics",
