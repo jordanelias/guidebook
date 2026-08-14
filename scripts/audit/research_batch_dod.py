@@ -227,8 +227,21 @@ def check_baseline(ref="origin/main"):
     lowered = [(c, prior[c], now[c]) for c in prior if c in now and now[c] < prior[c]]
     added = sorted(set(now) - set(prior))
 
+    # EXAMINED must carry exactly ONE number — run_checks.py's EXAMINED_RE
+    # takes only the first \d+ after the prefix, and the two-number form
+    # printed here (`len(prior)` first, `len(now)` second) meant a genuinely
+    # populated "here" count was silently reported as `len(prior)`. On a fresh
+    # branch with no prior baseline entries (len(prior)==0, e.g. before the
+    # file existed at origin/main) this check — BLOCKING with min_items:1 —
+    # read as EXAMINED: 0 and failed vacuity, even though the comparison below
+    # is real and covers every rule code either snapshot names. Report the
+    # union of codes actually compared as the single honest whole-check count,
+    # and put the prior/now breakdown in separate prose that does not start
+    # with "EXAMINED:".
+    all_codes = sorted(set(prior) | set(now))
     print(f"research-contract baseline ratchet — {rel} vs {ref}")
-    print(f"  EXAMINED: {len(prior)} baselined rule(s) at {ref}, {len(now)} here")
+    print(f"  EXAMINED: {len(all_codes)}")
+    print(f"  ({len(prior)} baselined rule(s) at {ref}, {len(now)} here)")
     for c, b, n in lowered:
         print(f"  ok      {c}: {b} -> {n} (debt paid down)")
     for c in added:
