@@ -647,6 +647,10 @@ entries:
       # mention, it is a load-bearing use of the historical name.
       - "scripts/tests/test_evidence_cell_state_2_3.py"
       - "scripts/tests/test_validate_evidence_state_2_4.py"
+      # The helper that REPLACED their migration-scanning fixtures. Its docstring
+      # names the old table to explain the two failures that motivated it; that is
+      # a licensed mention of the retirement, category A.
+      - "scripts/tests/_baseline_ddl.py"
       # C — the aspirational design spec, which describes a `cell` table that
       # never shipped. Its reconciliation is architecture/schema-reconciliation.md,
       # not this register.
