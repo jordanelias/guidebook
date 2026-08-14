@@ -423,6 +423,17 @@ def main():
         )
     """, (cutoff_iso,)).fetchone()[0]
 
+    # Empty pool: return before the INSERT below. `url_verification_runs` is not
+    # in migration_reproducibility's EXEMPT_TABLES (only evidence_source_authors
+    # and pipeline_runs, per DR-2026-05-28), so a run record for zero candidates
+    # would still break the migrations-only rebuild for no work done. No row,
+    # no other write; convention per citation_mining_completeness.py.
+    if pool_size == 0:
+        print("EXAMINED: 0")
+        print("VERDICT: NOTHING-IN-SCOPE — no candidate URLs in the pool; nothing to verify.")
+        conn.close()
+        return 0
+
     # Insert run record
     run_id = now_iso
     conn.execute("""
