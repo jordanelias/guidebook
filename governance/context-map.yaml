@@ -109,7 +109,7 @@ pointers:
   doctrine_sha: 0f2f525
   doctrine_file: governance/mission-and-epistemics.md
   newest_workplan:
-  - 2026-08-13-writerless-tables-analysis.md
+  - 2026-08-14-remediation-workplan.md
   live_project_instructions:
   - project-instructions-v10_9.md
 database:
@@ -464,7 +464,6 @@ database:
   - source_locators
   - term_item_links
   - terms
-  - weighting_profile
   tables_written_directly_by_code:
   - axes
   - bpc_metadata
@@ -497,6 +496,7 @@ database:
   - supersession_check
   - term_aliases
   - url_verification_runs
+  - weighting_profile
   tables_with_no_writer_at_all:
   - case_studies
   - case_study_outcomes
@@ -538,6 +538,8 @@ writers:
     - specifications
     scripts/audit/migration_reproducibility.py:
     - items
+    scripts/audit/register_integrity_check.py:
+    - specifications
     scripts/audit/research_batch_dod.py:
     - evidence_sources
     - search_executions
@@ -559,6 +561,10 @@ writers:
     - search_executions
     - source_slug_links
     - supersession_check
+    scripts/emit_data_migration.py:
+    - evidence_sources
+    - gaps
+    - weighting_profile
     scripts/init_db.py:
     - db_meta
     scripts/item_audit_pipeline.py:
@@ -704,7 +710,7 @@ checks:
     kinds:
     - data
     - synthesis
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit_evidence_metadata.py
   - id: claims_docket
     level: advisory
@@ -712,7 +718,7 @@ checks:
     kinds:
     - governance
     - synthesis
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/claims_docket.py check
   - id: context_map_fresh
     level: advisory
@@ -738,7 +744,7 @@ checks:
     kinds:
     - data
     - synthesis
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/graph_audit.py
   - id: matrix_consistency
     level: advisory
@@ -746,7 +752,7 @@ checks:
     kinds:
     - governance
     - schema
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/matrix_consistency.py
   - id: metadata_integrity_audit
     level: advisory
@@ -762,7 +768,7 @@ checks:
     kinds:
     - data
     - schema
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/migration_reproducibility.py --deep
   - id: pipeline_contract_audit
     level: advisory
@@ -770,7 +776,7 @@ checks:
     kinds:
     - governance
     - tooling
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/pipeline_contract_audit.py
   - id: pmp_audit
     level: advisory
@@ -794,7 +800,7 @@ checks:
     kinds:
     - data
     - tooling
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/readonly_db_open_audit.py
   - id: reasoning_doc_citations_audit
     level: advisory
@@ -818,7 +824,7 @@ checks:
     battery: render
     kinds:
     - render
-    min_items: null
+    min_items: 1
     cmd: node scripts/audit/render_audit.js
   - id: research_dod
     level: advisory
@@ -841,7 +847,7 @@ checks:
     battery: governance
     kinds:
     - always
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/retired_vocabulary_audit.py
   - id: site_pages_fresh
     level: advisory
@@ -849,7 +855,7 @@ checks:
     kinds:
     - data
     - render
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/generate/build_site.py --check
   - id: test_assess_cell_pilot
     level: advisory
@@ -927,7 +933,7 @@ checks:
     kinds:
     - data
     - schema
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/validate_items.py
   - id: validate_population
     level: advisory
@@ -935,7 +941,7 @@ checks:
     kinds:
     - schema
     - data
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/validate_population.py
   - id: validate_pydantic_schemas
     level: advisory
@@ -943,14 +949,14 @@ checks:
     kinds:
     - schema
     - data
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/validate_pydantic_schemas.py --strict
   - id: validate_reasoning
     level: advisory
     battery: research
     kinds:
     - synthesis
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/validate_reasoning.py --strict
   - id: validate_schema_cross_check
     level: advisory
@@ -958,14 +964,14 @@ checks:
     kinds:
     - schema
     - data
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/validate_schema.py --cross-check
   - id: alias_provenance_audit
     level: blocking
     battery: data
     kinds:
     - data
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/alias_provenance_audit.py
   - id: attestation_presence
     level: blocking
@@ -989,7 +995,7 @@ checks:
     kinds:
     - governance
     - data
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit_adversarial_use.py --catalog-only
   - id: check_json
     level: blocking
@@ -1035,7 +1041,7 @@ checks:
     kinds:
     - data
     - tooling
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/db_path_env_audit.py
   - id: decision_capture
     level: blocking
@@ -1060,7 +1066,7 @@ checks:
     kinds:
     - data
     - render
-    min_items: null
+    min_items: 1
     cmd: python3 tools/evidentiary_audit.py --check
   - id: migration_reproducibility
     level: blocking
@@ -1068,7 +1074,7 @@ checks:
     kinds:
     - data
     - schema
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/migration_reproducibility.py
   - id: pipeline_completeness_fresh
     level: blocking
@@ -1083,7 +1089,7 @@ checks:
     battery: research
     kinds:
     - always
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/research_batch_dod.py --check-baseline origin/main
   - id: research_contract_sync
     level: blocking
@@ -1121,14 +1127,14 @@ checks:
     kinds:
     - schema
     - data
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/validate_axes.py
   - id: validate_bpc
     level: blocking
     battery: structure
     kinds:
     - always
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/validate_bpc.py --all
   - id: validate_cross_refs
     level: blocking
@@ -1152,7 +1158,7 @@ checks:
     kinds:
     - schema
     - data
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/validate_jurisdiction.py
   - id: validate_schema
     level: blocking
@@ -1176,7 +1182,7 @@ checks:
     battery: structure
     kinds:
     - always
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/workplan_naming_audit.py
   - id: attestation_verdict
     level: informational

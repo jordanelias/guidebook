@@ -168,7 +168,7 @@ def check_pair(model_cls, table: str, conn) -> dict:
 
 
 def run(db_path: Path, strict: bool) -> int:
-    conn = sqlite3.connect(str(db_path))
+    conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
     live_tables = {r[0] for r in conn.execute(
         "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
     ).fetchall()}
@@ -211,6 +211,7 @@ def run(db_path: Path, strict: bool) -> int:
     conn.close()
     print(f"\n{'='*60}\nTotal drift findings: {total_drift} "
           f"(informational -- per-table accept/reject policy is separate future work)")
+    print(f"EXAMINED: {len(MODEL_TABLE_MAP)}")
     if strict and total_drift:
         return 1
     return 0

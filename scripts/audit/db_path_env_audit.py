@@ -135,6 +135,7 @@ def main():
     print(f"db_path_env_audit.py — {ENV_VAR} contract (CLAUDE.md §7)")
     print("=" * 70)
     print(f"in-scope scripts (connect to the canonical DB): {len(in_scope)}")
+    print(f"EXAMINED: {len(in_scope)}")
     for rel in in_scope:
         key = str(rel)
         if rel in real:

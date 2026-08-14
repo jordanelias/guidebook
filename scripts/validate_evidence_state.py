@@ -346,7 +346,7 @@ def validate_db(db_path: str):
     """Validate the cell-state machine in the DB. Returns (errors, n_cells, n_conv)."""
     if not os.path.exists(db_path):
         return [f"DB not found: {db_path}"], 0, 0
-    conn = sqlite3.connect(db_path)
+    conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
     try:
         tabs = {r[0] for r in conn.execute("SELECT name FROM sqlite_master WHERE type='table'")}
         missing = {"specifications", "convergence_assessment"} - tabs
@@ -501,6 +501,7 @@ def main():
         f"{total_errors} errors, {total_warnings} warnings",
         file=sys.stderr,
     )
+    print(f"EXAMINED: {total_files}", file=sys.stderr)
     return 1 if total_errors > 0 else 0
 
 

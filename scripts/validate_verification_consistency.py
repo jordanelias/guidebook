@@ -119,8 +119,10 @@ def main() -> int:
         for e in errors:
             print(f"  {e}")
         print(f"\nFAIL: {n} specifications checked, {len(errors)} violations")
+        print(f"EXAMINED: {n}")
         return 1
     print(f"OK verification-consistency: {n} stated/provisional specification(s) consistent ({DB})")
+    print(f"EXAMINED: {n}")
     return 0
 
 

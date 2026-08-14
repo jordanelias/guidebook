@@ -250,8 +250,10 @@ def main() -> int:
             f"Adversarial-use audit: catalogue v{catalog.catalog_version} — "
             f"{active} ACTIVE / {retired} RETIRED vectors"
         )
+        print(f"EXAMINED: {len(catalog.vectors)}")
     else:
         print("Adversarial-use audit: catalogue not loaded")
+        print("EXAMINED: 0")
 
     if all_errors:
         print(f"\nERRORS ({len(all_errors)}):")

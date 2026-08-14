@@ -73,7 +73,7 @@ def load_slug_registry(repo_root: str) -> set[str]:
     if not os.path.exists(db_path):
         print("  WARNING: guidebook.db not found — slug check skipped", file=sys.stderr)
         return set()
-    conn = sqlite3.connect(db_path)
+    conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
     conn.row_factory = sqlite3.Row
     rows = conn.execute(
         "SELECT slug FROM slugs WHERE status IN ('ACTIVE', 'PROVISIONAL')"
@@ -88,7 +88,7 @@ def load_con_ids(repo_root: str) -> set[str]:
     if not os.path.exists(db_path):
         print("  WARNING: guidebook.db not found — CON-ID check skipped", file=sys.stderr)
         return set()
-    conn = sqlite3.connect(db_path)
+    conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
     conn.row_factory = sqlite3.Row
     rows = conn.execute("SELECT con_id FROM connections").fetchall()
     conn.close()

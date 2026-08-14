@@ -134,9 +134,9 @@ class Specification(GuidebookEntity):
     @field_validator("item_code")
     @classmethod
     def valid_item_code(cls, v: Optional[str]) -> Optional[str]:
-        if v is not None and not re.match(r"^[A-K]-\d{2}$", v):
+        if v is not None and not re.match(r"^[A-K]-\d{2}[a-z]?$", v):
             raise ValueError(
-                f"item_code must match [A-K]-NN (bare code, no prefix), got: {v}"
+                f"item_code must match [A-K]-NN[a-z]? (bare code, no prefix), got: {v}"
             )
         return v
 

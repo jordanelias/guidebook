@@ -35,9 +35,16 @@ def _has_table(c, t):
 
 
 def _check(con):
-    """Returns (errors, warnings, summary_lines)."""
+    """Returns (errors, warnings, summary_lines, n_examined).
+
+    n_examined is the count of rows actually walked for referential integrity —
+    every population_axis_map / item_axis_links / access_need_axis_map row, not
+    the axis vocabulary size (which would be non-zero even if every mapping
+    table were empty and nothing was actually checked).
+    """
     c = con.cursor()
     errors, warnings, summary = [], [], []
+    n_examined = 0
     axis_codes = {r[0] for r in c.execute("SELECT axis_code FROM axes")}
     pop_codes = {r[0] for r in c.execute("SELECT population_code FROM populations")}
     summary.append(f"axes defined: {len(axis_codes)}")
@@ -48,6 +55,7 @@ def _check(con):
         for pop, ax, role in c.execute(
             "SELECT population_code, axis_code, role FROM population_axis_map"
         ):
+            n_examined += 1
             if ax not in axis_codes:
                 errors.append(f"population_axis_map: axis_code {ax!r} (pop {pop}) not in axes")
             else:
@@ -63,6 +71,7 @@ def _check(con):
     covered_by_item = set()
     if _has_table(c, "item_axis_links"):
         for (ax,) in c.execute("SELECT axis_code FROM item_axis_links"):
+            n_examined += 1
             if ax not in axis_codes:
                 errors.append(f"item_axis_links: axis_code {ax!r} not in axes")
             else:
@@ -71,6 +80,7 @@ def _check(con):
     # --- INTEGRITY: access_need_axis_map ---
     if _has_table(c, "access_need_axis_map"):
         for (ax,) in c.execute("SELECT axis_code FROM access_need_axis_map"):
+            n_examined += 1
             if ax not in axis_codes:
                 errors.append(f"access_need_axis_map: axis_code {ax!r} not in axes")
 
@@ -85,7 +95,7 @@ def _check(con):
         )
     summary.append(f"axes with ≥1 population mapping: {len(covered_by_pop)}/{len(axis_codes)}")
     summary.append(f"axes with ≥1 item link: {len(covered_by_item)}/{len(axis_codes)}")
-    return errors, warnings, summary
+    return errors, warnings, summary, n_examined
 
 
 def selftest():
@@ -108,7 +118,7 @@ def selftest():
     for why, sql, expect in cases:
         con.execute("DELETE FROM population_axis_map")
         con.execute(sql)
-        errs, _, _ = _check(con)
+        errs, _, _, _ = _check(con)
         got = len(errs) > 0
         status = "OK" if got == expect else "**MISSED**"
         if got != expect:
@@ -122,7 +132,7 @@ def main():
     if "--selftest" in sys.argv:
         return selftest()
     con = sqlite3.connect(f"file:{DB}?mode=ro", uri=True)
-    errors, warnings, summary = _check(con)
+    errors, warnings, summary, n_examined = _check(con)
     for s in summary:
         print(f"  {s}")
     for w in warnings:
@@ -132,8 +142,10 @@ def main():
         for e in errors:
             print(f"  {e}")
         print(f"\nFAIL: {len(errors)} integrity errors, {len(warnings)} coverage warnings")
+        print(f"EXAMINED: {n_examined}")
         return 1
     print(f"\nOK axis-layer integrity ({DB}): 0 errors, {len(warnings)} coverage warnings (non-fatal)")
+    print(f"EXAMINED: {n_examined}")
     return 0
 
 

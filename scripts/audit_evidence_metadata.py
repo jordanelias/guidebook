@@ -312,6 +312,7 @@ def render_report(health: dict, slugs: list, qw: dict, args) -> None:
     print(f"PHASE E READINESS (thresholds: ≥{args.min_eligible} eligible sources, ≥{args.min_tiers} tier categories)")
     print("-" * 76)
     print(f"  Total slugs:                   {len(slugs)}")
+    print(f"  EXAMINED: {len(slugs)}")
     print(f"  READY for Phase E:             {len(ready)}")
     print(f"  BLOCKED (have sources but insufficient eligible): {len(blocked)}")
     print(f"  EMPTY (no linked sources):     {len(empty)}")

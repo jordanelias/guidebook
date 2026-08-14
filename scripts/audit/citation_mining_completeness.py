@@ -87,7 +87,7 @@ def audit(db_path, session=None, tier_max=2, output_json=False):
         return 2, None
 
     try:
-        con = sqlite3.connect(db_path)
+        con = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
         con.row_factory = sqlite3.Row
     except Exception as e:
         print(f"ERROR: cannot open DB: {e}", file=sys.stderr)

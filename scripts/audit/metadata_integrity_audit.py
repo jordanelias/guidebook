@@ -103,9 +103,12 @@ def audit():
     for status, n in queue:
         print(f"      {status:25s} {n}")
 
+    total_sources = c.execute("SELECT COUNT(*) FROM evidence_sources").fetchone()[0]
+
     print()
     print("=" * 70)
     print(f"VERDICT: {'PASS' if exit_code == 0 else 'FAIL'}")
+    print(f"EXAMINED: {total_sources}")
     print("=" * 70)
     return exit_code
 

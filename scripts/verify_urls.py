@@ -423,6 +423,51 @@ def main():
         )
     """, (cutoff_iso,)).fetchone()[0]
 
+    # The pool query above has no LIMIT; the candidates query below does
+    # (LIMIT MAX_VERIFY). The guard must fire on the EFFECTIVE candidate set
+    # actually about to be attempted, not the raw pool: MAX_VERIFY=0 (or every
+    # candidate resolving transient) left pool_size > 0 while zero verification
+    # work would ever be attempted, and the pool_size==0 guard let a
+    # `url_verification_runs` row get written for that zero-work run anyway —
+    # exactly the outcome the guard exists to prevent. So compute the
+    # LIMIT-bounded candidate set FIRST and guard on it.
+    candidates = conn.execute(f"""
+        SELECT ref_id, url, pub_title
+        FROM {TABLE}
+        WHERE url IS NOT NULL AND url != ''
+        AND verification_status IS NULL
+        AND (
+          url_resolution_outcome IS NULL
+          OR (url_resolution_outcome = 'NO-MATCH' AND last_verified_at < ?)
+        )
+        ORDER BY ref_id
+        LIMIT ?
+    """, (cutoff_iso, MAX_VERIFY)).fetchall()
+
+    # Empty candidate set: return before the INSERT below. `url_verification_runs`
+    # is not in migration_reproducibility's EXEMPT_TABLES (only
+    # evidence_source_authors and pipeline_runs, per DR-2026-05-28), so a run
+    # record for zero attempted candidates would still break the
+    # migrations-only rebuild for no work done. Convention per
+    # citation_mining_completeness.py.
+    #
+    # Scope of the promise, stated precisely rather than generously: no ROW is
+    # written. `ensure_schema(conn)` still runs earlier and can ALTER/CREATE and
+    # commit, so on a database that has never seen this script an empty run
+    # still leaves DDL behind. That is inert against the canonical DB, where
+    # those objects exist — but the earlier version of this comment said "no
+    # other write", which was true only by that accident. The ALTERs cannot move
+    # later (the pool and candidate queries read the columns they add); the
+    # url_verification_runs CREATE could move below this guard, and is left for
+    # the owner alongside decision #5 rather than changed in a scheduled writer
+    # hours before its cron fires.
+    if len(candidates) == 0:
+        print("EXAMINED: 0")
+        print("VERDICT: NOTHING-IN-SCOPE — no candidate URLs to verify "
+              f"(candidates_pool={pool_size}, MAX_VERIFY={MAX_VERIFY}).")
+        conn.close()
+        return 0
+
     # Insert run record
     run_id = now_iso
     conn.execute("""
@@ -437,19 +482,6 @@ def main():
     print("=" * 60)
     print("Channel 2 — Generic URL verifier")
     print("=" * 60)
-
-    candidates = conn.execute(f"""
-        SELECT ref_id, url, pub_title
-        FROM {TABLE}
-        WHERE url IS NOT NULL AND url != ''
-        AND verification_status IS NULL
-        AND (
-          url_resolution_outcome IS NULL
-          OR (url_resolution_outcome = 'NO-MATCH' AND last_verified_at < ?)
-        )
-        ORDER BY ref_id
-        LIMIT ?
-    """, (cutoff_iso, MAX_VERIFY)).fetchall()
 
     print(f"  Candidates: {len(candidates)}\n")
 

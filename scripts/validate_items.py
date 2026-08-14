@@ -118,9 +118,11 @@ def validate():
         print(f"items validation: {len(errors)} issue(s) across {total} items")
         for e in errors:
             print(f"  {e}")
+        print(f"EXAMINED: {total}")
         sys.exit(1)
     print(f"items validation: PASS ({total} items, {len(links)} population links "
           f"across {linked} items, all codes valid)")
+    print(f"EXAMINED: {total}")
     sys.exit(0)
 
 

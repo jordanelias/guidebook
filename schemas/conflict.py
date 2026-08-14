@@ -124,9 +124,9 @@ class Conflict(GuidebookEntity):
     def valid_spec_refs(cls, v: list[str]) -> list[str]:
         """Specifications must be valid item codes."""
         for code in v:
-            if not re.match(r"^[A-K]-\d{2}$", code):
+            if not re.match(r"^[A-K]-\d{2}[a-z]?$", code):
                 raise ValueError(
-                    f"specification must be item code [A-K]-NN, got: '{code}'"
+                    f"specification must be item code [A-K]-NN[a-z]?, got: '{code}'"
                 )
         return v
 

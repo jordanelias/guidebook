@@ -26,8 +26,12 @@
 #   scripts/ci_helpers/        the commit-message and doctrine-token gates, plus
 #                              the shared exemption definition they now both use.
 #
-# Note this is a deliberateness gate, not a merge gate: `main` is not
-# branch-protected, so CODEOWNERS produces a review request rather than a block.
+# Note this is a deliberateness gate first: CODEOWNERS produces a review request.
+# Whether it also blocks a merge depends on the branch-protection settings —
+# `main` IS branch-protected (GitHub API reports "protected": true; corrected
+# 2026-08-14, this line previously said it was not), but protection being ON does
+# not by itself say which checks or reviews are REQUIRED. That required set is
+# open owner decision #10; see references/tooling-register.md §6.7.
 /.claude/settings.json      @jordanelias
 /references/project-standards.md @jordanelias
 /scripts/ci_helpers/        @jordanelias

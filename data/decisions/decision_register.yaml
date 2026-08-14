@@ -5228,6 +5228,9 @@ decisions:
 - decision_id: D-0158
   category: D-SCHEMA
   delegation: DG-NON
+  delegation_rationale: Owner directive of 2026-08-12 named the rename outright; the session captured
+    owner-directed naming rather than originating it. The replay-order half is mechanism forced by that
+    naming, recorded in the same decision.
   summary: 'Rename the (item x population) determination from `cell` to `specification` (evidence_cell_state
     -> specifications, cell_source_links -> specification_source_links, cell_id -> specification_id),
     and give migration replay a way to express the real chronology so the rename does not permanently
@@ -5294,6 +5297,8 @@ decisions:
 - decision_id: D-0159
   category: D-OP
   delegation: DG-NON
+  delegation_rationale: Owner instruction of 2026-08-12 ("correct skill file") named the change
+    outright; the session captured owner-directed naming rather than originating it.
   summary: 'Rename the skill `cell-curator` to `specification-curator`, following the schema rename in
     D-0158.
 
@@ -5349,6 +5354,9 @@ decisions:
 - decision_id: D-0160
   category: D-SCHEMA
   delegation: DG-NON
+  delegation_rationale: Owner instruction of 2026-08-12 named the freeze, the archive and the
+    compression outright, and D-0158 had already recorded a baseline as the deferred alternative
+    awaiting owner sign-off.
   summary: 'Freeze and archive the entire 355-file migration history; compress it into one full schema+data
     baseline (057_baseline_2026-08-12.sql). Retire five orphaned population pages and the hand-authored
     e-08 exemplar under the same instruction.

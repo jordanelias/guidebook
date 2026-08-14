@@ -41,7 +41,7 @@ STATE_COLS = {
     "conflicts": ["status"],
 }
 
-ITEM_CODE_RE = re.compile(r"^[A-K]-\d{2}$")
+ITEM_CODE_RE = re.compile(r"^[A-K]-\d{2}[a-z]?$")
 AUDIT_COLS = {"created_at", "created_by_session", "updated_at", "updated_by_session"}
 
 

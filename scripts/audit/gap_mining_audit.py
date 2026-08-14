@@ -245,10 +245,23 @@ def audit():
     print("Gap-driven mining protocol audit (DR-2026-05-26)")
     print("=" * 68)
     print()
+    n_gap_mining = db.execute('SELECT COUNT(*) FROM gap_mining').fetchone()[0]
+    # EXAMINED is a WHOLE-CHECK contract (scripts/run_checks.py), not a
+    # per-subject one. CHECK 1 and CHECK 5 scan the `gaps` table; CHECK 2, 3,
+    # 4, 6 and 7 scan `gap_mining`. Reporting only n_gap_mining left CHECK 1/5
+    # invisible to the contract: a DB with gaps rows but zero gap_mining rows
+    # printed `EXAMINED: 0` even while CHECK 5 (and potentially CHECK 1)
+    # produced real findings over the gaps table, and run_checks.py renders
+    # every-EXAMINED-line-zero as `[NONE] NOTHING-IN-SCOPE` — "ran clean and
+    # examined nothing" — which was false. Sum both subjects so the printed
+    # count is honest for the check as a whole.
+    n_gaps = db.execute('SELECT COUNT(*) FROM gaps').fetchone()[0]
     print(f"schema version: {user_version}")
-    print(f"gap_mining rows: {db.execute('SELECT COUNT(*) FROM gap_mining').fetchone()[0]}")
+    print(f"gaps rows: {n_gaps}")
+    print(f"gap_mining rows: {n_gap_mining}")
     print(f"gaps with mining_addressability set: "
           f"{db.execute('SELECT COUNT(*) FROM gaps WHERE mining_addressability IS NOT NULL').fetchone()[0]}")
+    print(f"EXAMINED: {n_gaps + n_gap_mining}")
     print()
 
     if issues_failure:

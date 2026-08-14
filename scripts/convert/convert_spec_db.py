@@ -116,7 +116,7 @@ def normalize_item_code(raw: str) -> tuple:
     if raw == "[CROSS-CUTTING]":
         return (None, ItemAssignmentStatus.CROSS_CUTTING)
     # Validate format
-    if re.match(r"^[A-K]-\d{2}$", raw):
+    if re.match(r"^[A-K]-\d{2}[a-z]?$", raw):
         return (raw, ItemAssignmentStatus.ASSIGNED)
     # Non-standard but not sentinel — keep as-is, flag
     print(f"  WARNING: non-standard item_code: '{raw}'", file=sys.stderr)

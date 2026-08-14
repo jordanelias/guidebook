@@ -30,8 +30,8 @@ class RoomItemEntry(GuidebookEntity):
     @field_validator("item_code")
     @classmethod
     def valid_item_code(cls, v: str) -> str:
-        if not re.match(r"^[A-K]-\d{2}$", v):
-            raise ValueError(f"item_code must match [A-K]-NN, got: '{v}'")
+        if not re.match(r"^[A-K]-\d{2}[a-z]?$", v):
+            raise ValueError(f"item_code must match [A-K]-NN[a-z]?, got: '{v}'")
         return v
 
 

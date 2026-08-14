@@ -37,7 +37,7 @@ def audit(db_path, slug_filter=None, output_json=False):
         print(f"ERROR: DB not found at {db_path}", file=sys.stderr)
         return 2
 
-    con = sqlite3.connect(db_path)
+    con = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
     con.row_factory = sqlite3.Row
 
     where = "WHERE slug = ?" if slug_filter else ""

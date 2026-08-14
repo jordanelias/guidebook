@@ -31,7 +31,7 @@ EXCLUDE_SUBSTR = ("/_archived/", "/deprecated/", "/_superseded/", "/versions/",
 # (kind, compiled pattern). Item pattern uses boundaries that reject alphanumerics
 # and hyphens on both sides, so "COVID-19" / "ISO-9001" / "x-A-01" do not match.
 PATTERNS = (
-    ("item", re.compile(r"(?<![A-Za-z0-9/\-])[A-K]-\d{2}(?![0-9A-Za-z])")),
+    ("item", re.compile(r"(?<![A-Za-z0-9/\-])[A-K]-\d{2}[a-z]?(?![0-9A-Za-z])")),
     ("source", re.compile(r"\bREF-VERIFIED-\d{3}\b")),   # tried before REF-\d{5} (disjoint anyway)
     ("source", re.compile(r"\bREF-\d{5}\b")),
     ("source", re.compile(r"\bCo[12]-\d{2,}\b")),

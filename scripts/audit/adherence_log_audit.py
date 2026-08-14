@@ -588,6 +588,16 @@ def audit(check_filter=None, base="HEAD~1", head="HEAD"):
           f"attestations: {len(_attestations_in_changeset(changed))}; "
           f"synthesis: {len(_synthesis_in_changeset(changed))}")
     print("=" * 60)
+    # EXAMINED reflects the actual subject of THIS filter, not the raw
+    # changed-file count — "presence" walks synthesis files in the changeset,
+    # "schema"/"verdict" walk attestation files in the changeset. "evidence"
+    # is deliberately left uninstrumented: it bundles checks 2-6 (changeset
+    # attestations) with check 7 (every attestation on disk, regardless of the
+    # changeset), which are two different subjects with no single honest count.
+    if check_filter == "presence":
+        print(f"EXAMINED: {len(_synthesis_in_changeset(changed))}")
+    elif check_filter in ("schema", "verdict"):
+        print(f"EXAMINED: {len(_attestations_in_changeset(changed))}")
     if issues:
         for i in issues:
             print(i)

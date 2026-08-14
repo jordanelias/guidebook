@@ -233,8 +233,15 @@ def main():
     # already answered. They come back into scope when a brief is regenerated
     # against the live DB, which is what `--doc` is for.
     if args.all:
-        print("EXAMINED: 0 rendered document(s) — specs/ is reference-only since "
-              "the 2026-08-06 reset; pass --doc to check a live one")
+        # EXAMINED is 0 and that is true — none are checked. But print the count
+        # PRESENT beside it, because "specs/ is empty" and "specs/ holds N
+        # documents this check declines to read" are different facts and a bare
+        # zero conflates them. A reader who cannot tell the two apart cannot tell
+        # a policy exclusion from a missing directory, which is the same
+        # confusion the EXAMINED contract exists to end.
+        print(f"EXAMINED: 0 rendered document(s) — {len(docs)} present under "
+              f"specs/, reference-only since the 2026-08-06 reset; pass --doc "
+              f"to check a live one")
         return 0
     print(f"EXAMINED: {len(docs)} rendered document(s)")
     if not docs:

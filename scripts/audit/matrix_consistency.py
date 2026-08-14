@@ -47,11 +47,14 @@ def main():
         failures.append(("specific(generalizing)", "population", EXPECTED_GENERALIZING, got))
     print(f"  {'specific*':>10} × {'population':<11} doc={EXPECTED_GENERALIZING:<14} "
           f"code={got:<14} {status}   (*generalizes_beyond_measured)")
+    total = len(EXPECTED) + 1
     if failures:
         print(f"\nFAIL: {len(failures)} doctrine/code mismatches")
+        print(f"EXAMINED: {total}")
         sys.exit(1)
-    print(f"\nPASS: {len(EXPECTED) + 1}/{len(EXPECTED) + 1} outcomes match "
+    print(f"\nPASS: {total}/{total} outcomes match "
           f"evidence-architecture.md §3")
+    print(f"EXAMINED: {total}")
 
 
 if __name__ == "__main__":

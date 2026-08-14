@@ -269,6 +269,7 @@ def run(files: list[str], verbose: bool = False, warn_only: bool = False) -> int
     passed = total - failed
     mode = " (warn-only mode — exit 0 regardless)" if warn_only else ""
     print(f"\n{'='*60}", file=sys.stderr)
+    print(f"EXAMINED: {total}", file=sys.stderr)
     print(f"validate_bpc.py: {passed}/{total} files passed{mode}", file=sys.stderr)
     if failed:
         print(f"  {failed} file(s) with issues — see output above", file=sys.stderr)
@@ -292,6 +293,7 @@ def main():
     if args.all:
         files = collect_bpc_files()
         if not files:
+            print("EXAMINED: 0", file=sys.stderr)
             print("No BPC files found under references/bpc/", file=sys.stderr)
             sys.exit(0)
     elif args.changed:

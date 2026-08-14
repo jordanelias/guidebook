@@ -266,7 +266,11 @@ async function auditDoc(browser, file) {
       : [];
   }
   docs = docs.filter(d => fs.existsSync(d));
-  if (!docs.length) { console.log('No rendered documents found under specs/.'); process.exit(0); }
+  if (!docs.length) {
+    console.log('No rendered documents found under specs/.');
+    console.log('EXAMINED: 0');
+    process.exit(0);
+  }
 
   const browser = await chromium.launch();
   let total = 0;
@@ -286,6 +290,7 @@ async function auditDoc(browser, file) {
   const failedChecks = new Set(fails.map(f => f[1] + '|' + f[2])).size;
   console.log(`\nRESULTS: ${total - failedChecks}/${total} checks passed ` +
               `(${docs.length} document(s), ${fails.length} failure(s), ${warns.length} warning(s))`);
+  console.log(`EXAMINED: ${docs.length}`);
   process.exit(fails.length ? 1 : 0);
 })().catch(e => {
   // Exit 3, NOT 2. Exit 2 is claimed above for "playwright is not installed here",

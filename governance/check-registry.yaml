@@ -215,9 +215,14 @@ checks:
     level: blocking
     basis: hygiene
     cost: fast
+    min_items: 1
     note: >-
       Cheap enough that gating it would buy nothing and risk a misclassified diff
       slipping a malformed BPC through. Deliberately ungated.
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the references/bpc/**/*.md
+      file count (102 today). File-glob-derived, so min_items:1 — a run that
+      finds zero files means the glob broke, not that BPCs were legitimately
+      retired to none.
 
   - id: validate_cross_refs
     cmd: [python3, scripts/validate_cross_refs.py, --repo-root, .]
@@ -226,7 +231,14 @@ checks:
     level: blocking
     basis: hygiene
     cost: fast
-    note: Cross-references span every corpus, so no path filter is correct here.
+    no_floor: not-instrumented — several distinct subjects (slugs, CON-IDs, BPC
+      files, search-logs, scan files, the handoff pointer), each with its own
+      count and no single one honestly speaks for the whole check; instrumenting
+      any one of them would misrepresent the others. Left uninstrumented on
+      2026-08-14 (A5) rather than invent a combined figure — see CLAUDE.md
+      guardrail 1.
+    note: >-
+      Cross-references span every corpus, so no path filter is correct here.
 
   # ===== data — DB integrity and reproducibility ============================
   - id: test_db_integrity
@@ -236,6 +248,7 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
+    no_floor: not-instrumented — despite the test_ name this is a live-corpus gate, not a selftest; it prints no whole-check EXAMINED count, so no floor is declarable yet
     note: >-
       RED on main (63/69 checks pass as of 2026-08-04). Pre-existing, owner-gated
       debt — see references/tooling-register.md §4. Level left as declared rather
@@ -286,7 +299,12 @@ checks:
     level: blocking
     basis: cross_stage/reproducibility-invariant
     cost: slow
+    min_items: 1
     note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the count of core invariants
+      compared (7 today: schema_version + six table COUNT(*)s). A fixed,
+      code-declared list — zero would mean the comparator itself broke, not
+      that the DB shrank, so min_items:1.
       GAP-290 enforcement — the gate that actually stops direct DB writes. Was two
       hand-kept inline heredocs (audit.yml and preflight.sh); now one script.
       SCOPE, recorded 2026-08-01 because the description above overstates it: this
@@ -302,7 +320,11 @@ checks:
     level: advisory
     basis: cross_stage/reproducibility-invariant
     cost: slow
+    min_items: 1
     note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the count of tables walked
+      by the deep comparison (67 today: every user table plus the two
+      DR-2026-05-28 exemptions). Fixed by the schema, not the data — min_items:1.
       Every table, every row — the comparison the core invariants cannot make.
       Added 2026-08-01 after an adversarial trace showed the blocking check above
       passes on a tampered DB: editing a row's tier and title, and inserting a
@@ -336,6 +358,7 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
+    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
     note: >-
       EXAMINED line added 2026-08-06: "0 duplicate sets in 1011 rows" and "0 in 0
       rows" printed byte-identically, and this is blocking, so the pass carried no
@@ -354,7 +377,12 @@ checks:
     level: advisory
     basis: unattributed
     cost: fast
+    min_items: 1
     note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the items-table row count
+      (93 today) — the table this validator is named for. min_items:1: an
+      empty items table would mean the DB or the query broke, not a legitimate
+      state.
       REPAIRED AND WIRED 2026-08-05; was quarantined `broken`. It crashed with
       `IndexError: No item with that key` reading `items.applicable_groups`, a CSV  # [RETIRED-VOCAB-OK]
       of population codes packed into one column and dropped when
@@ -382,7 +410,11 @@ checks:
     level: advisory
     basis: unattributed
     cost: fast
+    min_items: 1
     note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the read-only-consumer
+      count (39 today). min_items:1 matches the check's own vacuity guard,
+      which already FAILS outright on zero readers found.
       A script that only reads must open the canonical DB read-only. Sibling of
       db_path_env_audit — same scope filter, same EXCLUDE_PARTS, so "legacy" means
       one thing repo-wide — but a different contract: that one asks WHICH database
@@ -413,7 +445,11 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
+    min_items: 1
     note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the count of in-scope
+      scripts audited (55 today, direct + exempt). min_items:1 — a run that
+      finds zero in-scope scripts means the scope filter broke.
       Triggers on `tooling` too: the contract it enforces is a property of the
       SCRIPTS, so a scripts-only diff is exactly when it can regress.
 
@@ -424,6 +460,11 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
+    min_items: 1
+    note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the term_aliases row count
+      (2382 today). min_items:1 — the controlled vocabulary is populated repo
+      content, not a corpus that could legitimately empty out.
 
   - id: workplan_naming
     cmd: [python3, scripts/audit/workplan_naming_audit.py]
@@ -432,6 +473,7 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
+    min_items: 1
     note: >-
       W4.3, 2026-08-06. CLAUDE.md §9 tells every session to find the current plan
       by sorting `workplan/` by date. 57 of 60 top-level names do not sort that
@@ -451,6 +493,7 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
+    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
     requires_session: true
     session_pointer: LATEST-RESEARCH
     note: >-
@@ -490,6 +533,7 @@ checks:
     level: informational
     basis: unattributed
     cost: fast
+    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
 
   - id: citation_mining_backlog_t3
     cmd: [python3, scripts/audit/citation_mining_completeness.py, --tier-max, "3"]
@@ -498,6 +542,7 @@ checks:
     level: informational
     basis: unattributed
     cost: fast
+    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
 
   # ===== schema — entity and evidence-state validators ======================
   - id: validate_schema
@@ -516,6 +561,7 @@ checks:
     level: advisory
     basis: unattributed
     cost: fast
+    min_items: 1
     note: "Was `continue-on-error: true` in ci.yml; advisory is the same thing, declared."
 
   - id: validate_evidence_state
@@ -525,7 +571,13 @@ checks:
     level: blocking
     basis: [judgment/governing-refs-nonempty, judgment/no-regulatory-stratum-stated, judgment/tier3-alone-threshold]
     cost: fast
+    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
     note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints n_cells+n_conv (specifications
+      + convergence_assessment row counts). Both are 0 today — the
+      `specifications` table (per-item×population synthesis record, CLAUDE.md §4)
+      is genuinely unpopulated pre-Phase-E per CLAUDE.md §1/§9, not a broken
+      sweep, so empty-by-decision rather than min_items.
       `synthesis` added per the 2026-07-23 enforcement plan F2: a synthesis PR that
       asserts a determination must trigger the judgment-stage check. It previously
       could not, because the path filter never evaluated true.
@@ -537,7 +589,12 @@ checks:
     level: advisory
     basis: unattributed
     cost: fast
+    min_items: 1
     note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints checked_rows (425 today,
+      the same denominator the PASS line already reports). min_items:1 — the
+      script's own vacuity guard already FAILS at 0 checked rows, so the
+      registry floor just makes that visible to run_checks.py too.
       REWRITTEN AND DOWNGRADED blocking -> advisory, 2026-08-05. It was blocking
       and green, and it had never validated anything. It printed "No files with
       population codes found to validate" and exited 0, because it scanned
@@ -574,6 +631,12 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
+    min_items: 1
+    note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the count of real registry
+      blocks + source-jurisdiction fields actually resolved (111 today).
+      min_items:1 — standards-registry.md and data/sources/ are repo content,
+      not a corpus that legitimately empties.
 
   - id: validate_axes
     cmd: [python3, scripts/validate_axes.py]
@@ -582,7 +645,13 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
-    note: Ran in preflight only; no workflow invoked it. Now both do.
+    min_items: 1
+    note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the sum of
+      population_axis_map + item_axis_links + access_need_axis_map rows walked
+      (232 today), not the axis vocabulary size (17) which would stay non-zero
+      even if every mapping table were empty. min_items:1.
+      Ran in preflight only; no workflow invoked it. Now both do.
 
   - id: validate_verification_consistency
     cmd: [python3, scripts/validate_verification_consistency.py]
@@ -591,7 +660,13 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
-    note: Ran in preflight only; no workflow invoked it. Now both do.
+    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
+    note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints n (the count of
+      stated/provisional `specifications` rows queried). 0 today, for the same
+      reason as validate_evidence_state above: the specifications table is
+      genuinely unpopulated pre-Phase-E, not a broken sweep — empty-by-decision.
+      Ran in preflight only; no workflow invoked it. Now both do.
 
   - id: audit_evidence_metadata
     cmd: [python3, scripts/audit_evidence_metadata.py]
@@ -600,7 +675,13 @@ checks:
     level: advisory
     basis: unattributed
     cost: fast
-    note: Rule-#10 evidence-eligibility gate. Newly wired — advisory during shakedown.
+    min_items: 1
+    note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the total slug count from
+      the `slugs` table (106 today, not the empty `bpc_metadata` table).
+      min_items:1 — `slugs` is populated repo content (CLAUDE.md §1), not a
+      corpus that legitimately empties.
+      Rule-#10 evidence-eligibility gate. Newly wired — advisory during shakedown.
 
   - id: validate_pydantic_schemas
     cmd: [python3, scripts/audit/validate_pydantic_schemas.py, --strict]
@@ -609,7 +690,11 @@ checks:
     level: advisory
     basis: unattributed
     cost: fast
+    min_items: 1
     note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints len(MODEL_TABLE_MAP), the
+      count of model<->table pairs checked (17 today). Code-declared, not
+      data-derived — min_items:1: zero would mean the mapping itself broke.
       The schemas/*.py <-> SQLite parity check CLAUDE.md §10 calls "a bug, not a
       convention" — and the only tool that checks it. De-quarantined 2026-08-01
       on two corrections. First, --strict exists (verified: bare exits 0, --strict
@@ -633,6 +718,13 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
+    min_items: 1
+    note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints len(catalog.vectors), the
+      full adversarial-use vector count validated by C1 (9 today, all ACTIVE).
+      Registry-file-derived — min_items:1: zero vectors would mean
+      data/adversarial_use/catalog.yaml broke, not that misuse vectors were
+      legitimately retired to none.
 
   - id: decision_capture
     cmd: [python3, scripts/decision_capture.py]
@@ -641,6 +733,12 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
+    no_floor: not-instrumented — C1-C9 each examine a different subject
+      (decisions-register rows, DR files on disk, canonical rules extracted
+      from prose, rationale sentence counts) with no single honest count
+      across them. Genuinely non-vacuous today (C9 reports 49 orphan DRs on
+      live data), so there's no urgency, but any one combined figure would
+      misrepresent the others. Left uninstrumented on 2026-08-14 (A5).
 
   - id: doctrine_recheck
     cmd: [python3, scripts/doctrine_recheck.py, --cross-ref]
@@ -649,6 +747,12 @@ checks:
     level: blocking
     basis: cross_stage/doctrine-recheck
     cost: fast
+    no_floor: not-instrumented — the snapshot line alone reports four distinct
+      subjects (CANONICAL governance docs, CANONICAL rules, ACTIVE decisions,
+      BPC files), each with its own count and no single one honestly speaks
+      for cross-reference + decision-register + drift checking as a whole.
+      Genuinely non-vacuous today (11/8/158/102 respectively). Left
+      uninstrumented on 2026-08-14 (A5) rather than invent a combined figure.
 
   - id: retired_vocabulary
     cmd: [python3, scripts/audit/retired_vocabulary_audit.py]
@@ -657,7 +761,12 @@ checks:
     level: advisory
     basis: unattributed
     cost: fast
+    min_items: 1
     note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the count of retired-
+      vocabulary register entries checked against the live surface (21 today).
+      min_items:1 — the register (governance/retired-vocabulary.yaml) is
+      hand-kept content, not a corpus that legitimately empties.
       Flags text that is READABLE AND WRONG — a dropped column, a folded
       workflow, a database path that never existed, a banned population umbrella.
       Register and admission test in `governance/retired-vocabulary.yaml`.
@@ -683,7 +792,13 @@ checks:
     level: advisory
     basis: render/mode-stratum-matrix-consistency
     cost: fast
+    min_items: 1
     note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the outcome count checked
+      (10 today — len(EXPECTED)+1, the hardcoded doctrine table transcribed
+      from evidence-architecture.md §3). min_items:1: this can only reach 0 if
+      the hardcoded EXPECTED table itself is emptied, which is breakage, not a
+      legitimate state.
       Mode-stratum matrix vs evidence-architecture.md §3. Named by the 2026-07-23
       plan (WS1) and green on main; wired here, advisory during shakedown.
 
@@ -694,6 +809,7 @@ checks:
     level: advisory
     basis: unattributed
     cost: fast
+    min_items: 1
     note: >-
       The meta-check (plan F3). `tooling` matters most: it detects a contract whose
       named enforcer has been renamed or deleted.
@@ -705,7 +821,12 @@ checks:
     level: advisory
     basis: cross_stage/definition-of-done
     cost: fast
+    min_items: 1
     note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints n, the docket-claim count
+      read from the committed docket file (68 today). min_items:1 — matches the
+      note below's own warning that an absent docket currently reads as
+      vacuous PASS; the floor now catches that instead of hiding it.
       Mode-2 claims docket (skills/integrity-protocol_SKILL.md): every triggered
       claim must carry a warrant annotation. De-quarantined 2026-08-01 by adding
       the `check` subcommand the registered command was missing — the entry had
@@ -726,6 +847,19 @@ checks:
     level: blocking
     basis: cross_stage/adherence-log
     cost: fast
+    no_floor: changeset-scoped — examines the SYNTHESIS files in HEAD~1..HEAD, not the 79
+      attestations on disk, so 0 means this commit touched no synthesis path. Not an
+      emptied corpus, and a floor would fail every non-synthesis commit.
+    note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the synthesis-path file
+      count in the HEAD~1..HEAD diff (this check's actual subject — check_0
+      walks _synthesis_in_changeset, not the raw changed-file count printed
+      above it). 0 today because the last commit touched no synthesis path.
+      empty-by-decision, not min_items: this check is scoped to ONE commit's
+      diff by design (adherence_log_audit.py --base/--head), so a commit that
+      never touches references/bpc-reasoning/, references/connection-reasoning/,
+      decisions/, or sessions/ legitimately has nothing for it to examine —
+      that is not the sweep breaking, it is the diff being out of scope.
 
   - id: attestation_schema
     cmd: [python3, scripts/audit/adherence_log_audit.py, --check, schema]
@@ -734,6 +868,15 @@ checks:
     level: blocking
     basis: cross_stage/adherence-log
     cost: fast
+    no_floor: changeset-scoped — examines the ATTESTATION files in HEAD~1..HEAD, not the 79
+      on disk, so 0 means this commit added or changed none. Not an emptied corpus, and a
+      floor would fail every commit that owes no attestation.
+    note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the attestations/*.json
+      file count in the HEAD~1..HEAD diff (check_1's actual subject). 0 today
+      for the same reason as attestation_presence above — the last commit
+      touched no attestation file. empty-by-decision: diff-scoped by design,
+      not a corpus that can "break" the way a repo-wide glob can.
 
   - id: attestation_evidence
     cmd: [python3, scripts/audit/adherence_log_audit.py, --check, evidence]
@@ -742,6 +885,13 @@ checks:
     level: advisory
     basis: [cross_stage/adherence-log, cross_stage/attestation-doctrine-binding]
     cost: fast
+    no_floor: not-instrumented — this filter bundles checks 2-6 (attestations in
+      the HEAD~1..HEAD diff, 0 today) with check 7 (every attestation on disk,
+      79 today, for re-attestation-window materiality) — two different
+      subjects with no single honest count. Left uninstrumented on 2026-08-14
+      (A5) rather than invent a combined figure. See attestation_presence /
+      attestation_schema for the diff-scoped instrumentation this one can't
+      honestly share.
     note: >-
       Level-2 shakedown per audit.yml's original comment; flip to blocking once the
       Day-7 gate is met. Needs full git history — see ci.yml fetch-depth.
@@ -753,7 +903,13 @@ checks:
     level: informational
     basis: cross_stage/adherence-log
     cost: fast
-    note: Surfaces NON-COMPLIANT verdicts. Never blocking by design.
+    no_floor: changeset-scoped — same subject as attestation_schema, namely attestation files
+      in HEAD~1..HEAD, not the 79 on disk. 0 means none in this commit, not an empty corpus.
+    note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the attestations/*.json
+      file count in the HEAD~1..HEAD diff (check_8's subject, same as
+      attestation_schema). 0 today — diff-scoped by design, not a broken sweep.
+      Surfaces NON-COMPLIANT verdicts. Never blocking by design.
 
   # ===== research contract ==================================================
   - id: research_contract_baseline_ratchet
@@ -763,6 +919,7 @@ checks:
     level: blocking
     basis: hygiene
     cost: fast
+    min_items: 1
     note: >-
       W4.5, 2026-08-06. `governance/research-contract-baseline.json` forgives
       inherited research-contract debt so `research_batch_dod --all` is not
@@ -813,6 +970,7 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
+    no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
     note: >-
       BLOCKING from day one and deliberately ungated. It builds a knowingly-
       violating corpus and asserts the gate rejects it, so it has no false-positive
@@ -828,6 +986,11 @@ checks:
     level: advisory
     basis: unattributed
     cost: fast
+    no_floor: not-instrumented — R1-R15 each read a different table (searches,
+      sources, admissions, DOIs, ...) with no single honest count across them.
+      Genuinely non-vacuous today (R1 fails NON-COMPLIANT on live data), so
+      there is no urgency, but a combined figure would still misrepresent
+      which rule examined what. Left uninstrumented on 2026-08-14 (A5).
 
   - id: research_protocol_audit
     cmd: [python3, scripts/audit/research_protocol_audit.py]
@@ -836,7 +999,16 @@ checks:
     level: advisory
     basis: research/adversarial-fields-complete
     cost: fast
-    note: RED on main. Advisory, as it was in research-contract.yml.
+    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
+    note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED sums COUNT(*) over the four source
+      tables checks 1-9 read (gaps, evidence_sources, evidence_population_match,
+      search_languages) — all four are 0 rows today post clean-room-reset
+      (2026-08-06), so the sum is unambiguous regardless of how it's combined.
+      empty-by-decision, not min_items — these tables are the same ones
+      research_dod/metadata_integrity_audit/gap_mining_audit/
+      population_integrity_audit already found empty.
+      RED on main. Advisory, as it was in research-contract.yml.
 
   - id: metadata_integrity_audit
     cmd: [python3, scripts/audit/metadata_integrity_audit.py]
@@ -845,7 +1017,12 @@ checks:
     level: advisory
     basis: collection/evidence-verification-gate
     cost: fast
-    note: RED on main. Advisory, as it was in research-contract.yml.
+    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
+    note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints COUNT(*) FROM
+      evidence_sources — the single table all three checks in this script
+      read. 0 today (clean-room reset, 2026-08-06). empty-by-decision.
+      RED on main. Advisory, as it was in research-contract.yml.
 
   - id: gap_mining_audit
     cmd: [python3, scripts/audit/gap_mining_audit.py]
@@ -854,6 +1031,11 @@ checks:
     level: advisory
     basis: unattributed
     cost: fast
+    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
+    note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints COUNT(*) FROM gap_mining,
+      the table this whole audit walks (already printed as "gap_mining rows"
+      above it). 0 today (clean-room reset). empty-by-decision.
 
   - id: population_integrity_audit
     cmd: [python3, scripts/audit/population_integrity_audit.py]
@@ -862,7 +1044,13 @@ checks:
     level: advisory
     basis: unattributed
     cost: fast
-    note: RED on main (31 issues). Advisory, as it was in research-contract.yml.
+    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
+    note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED sums COUNT(*) over the three
+      JUNCTIONS tables (citation_population_links, probe_population_links,
+      extraction_population_links) — all three are 0 rows today post
+      clean-room-reset, unambiguous regardless of combination. empty-by-decision.
+      RED on main (31 issues). Advisory, as it was in research-contract.yml.
 
   - id: graph_audit
     cmd: [python3, scripts/audit/graph_audit.py]
@@ -871,7 +1059,12 @@ checks:
     level: advisory
     basis: unattributed
     cost: slow
-    note: ~2s locally; resolves its DB path via graph/build.py (documented exemption).
+    min_items: 1
+    note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the graph node count
+      (847 today). min_items:1 — items/connections/sources feed the graph, so
+      0 nodes would mean the graph builder broke, not a legitimate DB state.
+      ~2s locally; resolves its DB path via graph/build.py (documented exemption).
 
   - id: validate_reasoning
     cmd: [python3, scripts/validate_reasoning.py, --strict]
@@ -880,7 +1073,11 @@ checks:
     level: advisory
     basis: synthesis/nine-step-synthesis
     cost: fast
+    min_items: 1
     note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints len(results), the count of
+      reasoning docs walked under references/bpc-reasoning/ (3 today).
+      min_items:1 — file-glob-derived.
       The NINE-STEP-SYNTHESIS contract — the check the 2026-07-23 enforcement plan
       (F2) identified as the one whose absence let PR #56 pass green.
       It must be run with --strict. Without the flag it prints its errors and
@@ -896,7 +1093,12 @@ checks:
     level: advisory
     basis: research/pmp-strict-termination
     cost: fast
+    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
     note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints COUNT(*) FROM
+      spec_value_probes, the table checks 2-6 all walk. 0 today (clean-room
+      reset, 2026-08-06) — the "3 issues" figure below predates that reset and
+      no longer describes the live table. empty-by-decision.
       Rule #8 / #10.1 — numerical-spec claims must cite an active PMP walk.
       De-quarantined 2026-08-01 after triage: the 3 issues are content (walks
       PMP-A08-001/A18-003/A18-004 have no passing strict step), not tool defects,
@@ -909,7 +1111,13 @@ checks:
     level: advisory
     basis: unattributed
     cost: fast
+    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
     note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints COUNT(*) FROM
+      reasoning_doc_citations, printed by the script itself as "Total rows: 0".
+      0 today (clean-room reset, 2026-08-06) — the "14 rows" / "2 issues"
+      figures below predate that reset and no longer describe the live table.
+      empty-by-decision.
       Track 3 of DR-2026-05-13 — citation integrity behind reasoning docs.
       De-quarantined 2026-08-01: the 2 issues are content (NOT-FOUND rows
       RDC-RAP-PAS-UK-001 / RDC-RAP-RT60-IT-001); the other checks are clean
@@ -926,6 +1134,7 @@ checks:
     level: advisory
     basis: hygiene
     cost: slow
+    no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
     note: ~27s — carries graph_audit's mutation harness. The slowest test by far.
 
   - id: test_jurisdictional_divergence
@@ -935,6 +1144,7 @@ checks:
     level: advisory
     basis: hygiene
     cost: fast
+    no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
 
   - id: test_pipeline_contract
     cmd: [python3, scripts/tests/test_pipeline_contract.py]
@@ -943,6 +1153,7 @@ checks:
     level: advisory
     basis: hygiene
     cost: fast
+    no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
 
   - id: test_url_verifier
     cmd: [python3, scripts/tests/test_url_verifier.py]
@@ -951,6 +1162,7 @@ checks:
     level: advisory
     basis: hygiene
     cost: fast
+    no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
     note: 25/25 assertions.
 
   - id: test_verification_pipeline
@@ -960,6 +1172,7 @@ checks:
     level: advisory
     basis: hygiene
     cost: fast
+    no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
     note: 18/18 assertions.
 
   - id: test_assess_cell_pilot
@@ -969,6 +1182,7 @@ checks:
     level: advisory
     basis: hygiene
     cost: fast
+    no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
 
   - id: test_evidence_cell_state_2_3
     cmd: [python3, scripts/tests/test_evidence_cell_state_2_3.py]
@@ -977,6 +1191,7 @@ checks:
     level: advisory
     basis: hygiene
     cost: fast
+    no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
 
   - id: test_validate_evidence_state_2_4
     cmd: [python3, scripts/tests/test_validate_evidence_state_2_4.py]
@@ -985,6 +1200,7 @@ checks:
     level: advisory
     basis: hygiene
     cost: fast
+    no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
     note: >-
       12/12 assertions; regression cover for the blocking validate_evidence_state
       check. Was unregistered entirely — neither active nor quarantined — while its
@@ -999,6 +1215,7 @@ checks:
     level: advisory
     basis: hygiene
     cost: fast
+    no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
     note: >-
       Partially vacuous by design: its live-smoke leg SKIPs when /tmp/work14.db is
       absent (it is, in CI) and the rest still asserts. Recorded so the pass is not
@@ -1012,6 +1229,15 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
+    no_floor: not-instrumented — this dashboard aggregates scalar counts from
+      many unrelated tables (items, BPC slugs, evidence sources, judgment
+      cells, gaps, ...) with no single subject the freshness comparison
+      "iterates" the way a file-glob or row-scan check does; picking any one
+      metric (e.g. slugs_total, which happens to be 0 today because
+      bpc_metadata is empty post clean-room-reset) would misrepresent a
+      multi-metric dashboard as a single-corpus scan. Considered and reverted
+      on 2026-08-14 (A5) — see tools/pipeline_completeness.py's --check branch
+      for the reasoning left in the source.
 
   - id: evidentiary_audit_fresh
     cmd: [python3, tools/evidentiary_audit.py, --check]
@@ -1020,7 +1246,12 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
+    min_items: 1
     note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints len(records), one row per
+      ACTIVE slug actually walked by compute() (80 today) — unlike
+      pipeline_completeness_fresh, this genuinely is a single per-slice loop,
+      not a bag of unrelated scalars. min_items:1.
       STALE on main as of 2026-08-01 — the committed evidentiary-base-audit outputs
       do not match a fresh regeneration from the DB. Fix with
       scripts/regenerate_derived.sh, not by demoting the check.
@@ -1064,7 +1295,11 @@ checks:
     level: advisory
     basis: render/render-freshness
     cost: fast
+    min_items: 1
     note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints len(rows), the page count
+      built from `items` (93 today). min_items:1 — items is populated repo
+      content (CLAUDE.md §1), not a corpus that legitimately empties.
       Re-renders every site/specs page from the committed DB and compares against
       what is on disk. Catches two things nothing else did: generated output that
       drifted from its source, and generated output that was hand-edited (which
@@ -1080,6 +1315,9 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
+    no_floor: examines-none-by-policy — specs/ holds 1 document, and --all deliberately
+      declines to check it — the briefs there are REFERENCE, citing REF-ids the 2026-08-06
+      reset removed. 0 is a policy exclusion, not an empty directory; --doc checks a live one.
     note: >-
       DR-2026-07-25 rendered-document integrity gate.
       `min_items: 1` was added and RETIRED on 2026-08-06. It was added because the
@@ -1101,6 +1339,7 @@ checks:
     level: advisory
     basis: render/register-invariants
     cost: fast
+    no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
     note: >-
       Amended I1–I5 (DR-2026-07-21 Option A) over working/pilot/pilot-renderings.html,
       with the DB cross-check and the DB→doc completeness direction on by default.
@@ -1121,8 +1360,14 @@ checks:
     level: advisory
     basis: unattributed
     cost: slow
+    min_items: 1
     optional_exit2: true
     note: >-
+      INSTRUMENTED 2026-08-14 (A5): EXAMINED prints docs.length, the count of
+      rendered specs/*.html documents audited (1 today). min_items:1 —
+      file-glob-derived: zero documents means nothing was ever rendered under
+      specs/, which is the failure mode the pre-existing "No rendered
+      documents found" branch already treats as worth printing loudly.
       Exit 2 means "node/browser unavailable here", which is reported as SKIP —
       loudly. A gate that quietly does nothing is worse than no gate.
       Corrected 2026-08-01: the script's top-level catch also exited 2, so any

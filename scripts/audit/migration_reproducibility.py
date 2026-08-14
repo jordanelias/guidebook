@@ -93,7 +93,15 @@ def migrations_fingerprint():
     """
     import hashlib
     digest = hashlib.sha256()
-    migrations = os.path.join(REPO_ROOT, "scripts", "migrations")
+    # Must be the SAME directory the rebuild replays. This fingerprinted the
+    # repository's migrations unconditionally while the rebuild it guards honours
+    # GUIDEBOOK_MIGRATIONS_DIR (scripts/migrate_db.py:42) — so pointing that
+    # variable anywhere produced a cache key describing one input set and a
+    # rebuild performed from another, and the mismatch surfaces as a spurious
+    # FAIL on a BLOCKING gate. Found by the 2026-08-14 retirement planning pass
+    # (remediation workplan §6, "a trap found in passing").
+    migrations = os.environ.get(
+        "GUIDEBOOK_MIGRATIONS_DIR", os.path.join(REPO_ROOT, "scripts", "migrations"))
     for name in sorted(os.listdir(migrations)):
         if not name.endswith(".sql"):
             continue
@@ -361,6 +369,7 @@ def audit(rebuilt_to=None, deep=False):
             print(f"  {label:30} {status}")
         else:
             print(f"  {label:30} committed={c:>8}  rebuilt={r:>8}  {status}")
+    print(f"  EXAMINED: {len(rows)}")
 
     deep_substantive = deep_volatile = None
     if deep:
@@ -373,6 +382,7 @@ def audit(rebuilt_to=None, deep=False):
             print(f"  {table:32} {verdict:20} {detail}")
         n_ok = sum(1 for _, v, _ in deep_rows if v == "OK")
         print(f"  ({n_ok} tables identical, not listed)")
+        print(f"  EXAMINED: {len(deep_rows)}")
 
     if cleanup:
         try:

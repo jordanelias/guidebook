@@ -197,6 +197,7 @@ def report(store):
     live = _live_errors(store)
     print(SEP)
     print(f"VERDICT: {'PASS' if live == 0 else 'FAIL'}   (live errors={live})")
+    print(f"EXAMINED: {counts['nodes']}")
     print(SEP)
     return 0 if live == 0 else 1
 
@@ -274,7 +275,22 @@ def selftest():
         # 3. phantom connection target WARN fires
         shutil.copy(canonical, copy)
         con = sqlite3.connect(copy)
-        cid = con.execute("SELECT con_id FROM connections LIMIT 1").fetchone()[0]
+        row = con.execute("SELECT con_id FROM connections LIMIT 1").fetchone()
+        if row is None:
+            # connections is 0 rows in the live corpus (pre-launch, unpopulated) — a bare
+            # fetchone()[0] here would TypeError on None and make this sub-test meaningless.
+            # Synthesize a ghost connection so the phantom-target check still has a subject.
+            cid = "SELFTEST-CON-GHOST"
+            _insert_row(con, "connections", {
+                "con_id": cid, "status": "PENDING", "confidence": "SPECULATIVE",
+                "filed_in": "selftest", "created_at": "selftest",
+                "created_by_session": "selftest", "updated_at": "selftest",
+                "updated_by_session": "selftest",
+            })
+            print("  (connections table empty — synthesized ghost row "
+                  f"{cid!r} so this sub-test has a subject)")
+        else:
+            cid = row[0]
         # A-99 is in category [A-K] so it exercises the phantom-ITEM branch (Z-99 would
         # only ever hit the unresolved-identifier branch).
         _insert_row(con, "connection_targets", {"con_id": cid, "target": "item:A-99"})

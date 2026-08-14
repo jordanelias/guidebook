@@ -57,6 +57,7 @@ def audit():
     if total == 0:
         print("Table is empty (Phase E.1 has not begun for any BPC). No claim-level audit possible yet.")
         print("\n[CHECK 0] Confirmed table + indexes + constraints present from migration 011.")
+        print(f"\nEXAMINED: {total}")
         return 0
 
     # CHECK 1: NOT-FOUND outcomes
@@ -161,6 +162,7 @@ def audit():
     print()
     print("=" * 60)
     print(f"ISSUES: {issues}")
+    print(f"EXAMINED: {total}")
     print("=" * 60)
     return 0 if issues == 0 else 1
 
