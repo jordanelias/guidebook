@@ -847,7 +847,9 @@ checks:
     level: blocking
     basis: cross_stage/adherence-log
     cost: fast
-    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
+    no_floor: changeset-scoped — examines the SYNTHESIS files in HEAD~1..HEAD, not the 79
+      attestations on disk, so 0 means this commit touched no synthesis path. Not an
+      emptied corpus, and a floor would fail every non-synthesis commit.
     note: >-
       INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the synthesis-path file
       count in the HEAD~1..HEAD diff (this check's actual subject — check_0
@@ -866,7 +868,9 @@ checks:
     level: blocking
     basis: cross_stage/adherence-log
     cost: fast
-    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
+    no_floor: changeset-scoped — examines the ATTESTATION files in HEAD~1..HEAD, not the 79
+      on disk, so 0 means this commit added or changed none. Not an emptied corpus, and a
+      floor would fail every commit that owes no attestation.
     note: >-
       INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the attestations/*.json
       file count in the HEAD~1..HEAD diff (check_1's actual subject). 0 today
@@ -899,7 +903,8 @@ checks:
     level: informational
     basis: cross_stage/adherence-log
     cost: fast
-    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
+    no_floor: changeset-scoped — same subject as attestation_schema, namely attestation files
+      in HEAD~1..HEAD, not the 79 on disk. 0 means none in this commit, not an empty corpus.
     note: >-
       INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the attestations/*.json
       file count in the HEAD~1..HEAD diff (check_8's subject, same as
@@ -1310,7 +1315,9 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
-    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
+    no_floor: examines-none-by-policy — specs/ holds 1 document, and --all deliberately
+      declines to check it — the briefs there are REFERENCE, citing REF-ids the 2026-08-06
+      reset removed. 0 is a policy exclusion, not an empty directory; --doc checks a live one.
     note: >-
       DR-2026-07-25 rendered-document integrity gate.
       `min_items: 1` was added and RETIRED on 2026-08-06. It was added because the

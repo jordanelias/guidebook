@@ -280,11 +280,15 @@ def run_check(check, session, env, github=False):
 # A sub-check reports its subject in its own words.
 EXAMINED_RE = re.compile(r"^\s*EXAMINED:\s*(\d+)\b", re.MULTILINE)
 
-# Anchored to line start for the reason in `nothing_in_scope`: the phrase is
-# discussed in prose all over this repo, and a check that merely *mentions* it
-# must not be relabelled by it. Allows a `VERDICT: ` prefix, which is the form
-# `citation_mining_completeness.py` and `verify_urls.py` print.
-NOTHING_IN_SCOPE_RE = re.compile(r"^\s*(?:VERDICT:\s*)?NOTHING-IN-SCOPE\b", re.MULTILINE)
+# The `VERDICT:` prefix is REQUIRED, not optional. Line-start anchoring alone
+# only stopped mid-sentence mentions: a line *beginning* with the phrase still
+# matched, so "NOTHING-IN-SCOPE is what we avoid here" relabelled a check that
+# examined 900 rows — and worse, this runner's own summary line reads
+# "NOTHING-IN-SCOPE (5): a, b, c", so nesting a run inside a check, or a check
+# quoting a transcript, relabelled itself. Both live emitters
+# (citation_mining_completeness.py, verify_urls.py) print the verdict form, so
+# requiring it costs nothing and closes the whole class.
+NOTHING_IN_SCOPE_RE = re.compile(r"^\s*VERDICT:\s*NOTHING-IN-SCOPE\b", re.MULTILINE)
 
 
 def vacuity_failure(check, output):
@@ -305,6 +309,15 @@ def vacuity_failure(check, output):
     minimum = check.get("min_items")
     if not minimum:
         return None
+    if not isinstance(minimum, int) or isinstance(minimum, bool) or minimum < 1:
+        # C8 rejects these at registration; this is the runtime backstop, because
+        # `min_items: "lots"` used to reach the `seen < minimum` comparison below
+        # and raise TypeError, aborting the entire run and losing every check
+        # after the offending one. A malformed floor is a registry defect, so it
+        # is reported as a failure of the check that declares it — never a crash,
+        # and never a silent pass.
+        return (f"declares a malformed min_items ({minimum!r}); a floor must be a "
+                "positive integer, so this check's vacuity guard is not armed")
     match = EXAMINED_RE.search(output or "")
     if not match:
         return (f"declares min_items={minimum} but printed no 'EXAMINED: <n>' line, "
@@ -790,6 +803,17 @@ def selftest(reg):
             if "no_floor" in c
             and (not isinstance(c["no_floor"], str) or len(c["no_floor"].strip()) < 12)]
     check("C8 every no_floor states a reason, not a bare true", not bare, str(bare[:5]))
+
+    # `min_items: 0` satisfies "declares a floor" while `vacuity_failure`'s
+    # `if not minimum` treats it as no floor at all — a declaration that looks
+    # like one and is inert, which defeats the exact purpose of C8 and inflates
+    # the ratchet metric below. `-5` is meaningless and `"lots"` used to crash
+    # the runner. A floor is a positive integer or it is not a floor.
+    bad_floor = [c["id"] for c in reg["checks"] if "min_items" in c
+                 and (not isinstance(c["min_items"], int)
+                      or isinstance(c["min_items"], bool)
+                      or c["min_items"] < 1)]
+    check("C8 every min_items is a positive integer", not bad_floor, str(bad_floor[:5]))
 
     floored = [c for c in reg["checks"] if "min_items" in c]
     print(f"  [INFO] checks with a real floor: {len(floored)} of "

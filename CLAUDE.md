@@ -444,9 +444,14 @@ attestation logic.
   named one that doesn't exist). The real protection lives in the dispatcher: `run_check()` in
   `scripts/run_checks.py` now FAILs a BLOCKING check whose session pointer is missing, instead
   of SKIPping it — SKIP would otherwise disarm a blocking gate silently, which is the exact
-  failure mode this paragraph is about. The second capability this line used to attribute to
-  `session_pointer_resolvable` — reporting drift when `LATEST-RESEARCH` falls behind the DB —
-  has no implementation anywhere in the repo. `sessions/handoff-next-session.md` is *not* a
+  failure mode this paragraph is about. The second capability — reporting drift when
+  `LATEST-RESEARCH` falls behind the DB — **is** implemented, as check **L04** in
+  `scripts/tests/test_db_integrity.py`: it compares the pointer's session date against the
+  newest session inside the gate's scope and fails when they diverge *and* the pointed session
+  has no subjects. (This sentence claimed the opposite for a few hours on 2026-08-14. The
+  correction was made by grepping for the check *name*, finding zero hits, and concluding the
+  *behaviour* was absent — searching for one thing and reporting the absence of another, which
+  is the failure mode this very section warns about.) `sessions/handoff-next-session.md` is *not* a
   pointer and may still be stale; find the current handoff via §9 (the newest `workplan/` file).
 - **A gate reporting zero may have examined zero.** `citation_mining_completeness.py` prints an
   `Examined` count and a verdict of `OUTSTANDING` / `CLEAN` / `NOTHING-IN-SCOPE` precisely so the

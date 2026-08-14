@@ -1082,66 +1082,125 @@ def run_checks(db_path):
             compare_cols = [c for c in db_cols
                             if c != "decision_id" and c not in AUDIT_STAMP_COLS]
 
-            y = {d["decision_id"]: d for d in _yaml.safe_load(open(reg))["decisions"]}
-            dbrows = {r["decision_id"]: r for r in conn.execute(
-                f"SELECT {', '.join(db_cols)} FROM decisions")}
-            only_y = sorted(set(y) - set(dbrows))
-            only_d = sorted(set(dbrows) - set(y))
+            # The register is hand-edited; a malformed document (missing the
+            # top-level "decisions" list, or an entry with no decision_id) is
+            # itself a divergence to REPORT, not a reason for the whole test
+            # process to die mid-run.
+            try:
+                _y_doc = _yaml.safe_load(open(reg))
+                if not isinstance(_y_doc, dict) or "decisions" not in _y_doc:
+                    raise ValueError("no top-level 'decisions' list in the register")
+                y = {d["decision_id"]: d for d in _y_doc["decisions"]}
+                _y_parse_err = None
+            except Exception as e:
+                y = {}
+                _y_parse_err = f"{type(e).__name__}: {e}"
 
-            drift, field_hits = [], []
-            for did in sorted(set(y) & set(dbrows)):
-                d, r = y[did], dbrows[did]
-                row_bad = False
-                for col in compare_cols:
-                    has_y = col in d
-                    db_val = r[col]
-                    if col in LIST_COLS:
-                        db_norm = _js.loads(db_val) if db_val not in (None, "") else []
-                        y_norm = d.get(col) or [] if has_y else []
-                        # A key genuinely absent from the YAML is only a
-                        # non-divergence when the DB side is the equivalent
-                        # empty list — an absent key next to a populated DB
-                        # array is exactly D-0158-shaped and must fire.
-                        if not has_y and not db_norm:
-                            continue
-                        same = has_y and db_norm == y_norm
-                    else:
-                        y_val = d.get(col) if has_y else None
-                        db_norm = None if db_val is None else (
-                            int(db_val) if col == "effort_level" else db_val)
-                        y_norm = None if not has_y else (
-                            int(y_val) if col == "effort_level" and y_val is not None else y_val)
-                        # A key absent from the YAML and a DB NULL are the
-                        # same fact ("no value recorded") in both directions;
-                        # anything else — absent-vs-populated in either
-                        # direction, or two populated values that disagree —
-                        # is a real divergence.
-                        if not has_y and db_norm is None:
-                            continue
-                        same = has_y and db_norm == y_norm
-                    if not same:
-                        row_bad = True
-                        field_hits.append(f"{did}.{col}")
-                if row_bad:
-                    drift.append(did)
+            if _y_parse_err:
+                record("L01", "decision register: YAML ↔ decisions table", False,
+                       f"register at {reg} could not be parsed: {_y_parse_err}")
+            else:
+                dbrows = {r["decision_id"]: r for r in conn.execute(
+                    f"SELECT {', '.join(db_cols)} FROM decisions")}
+                only_y = sorted(set(y) - set(dbrows))
+                only_d = sorted(set(dbrows) - set(y))
 
-            detail = []
-            if only_y:
-                detail.append(f"{len(only_y)} in YAML only ({', '.join(only_y[:5])})")
-            if only_d:
-                detail.append(f"{len(only_d)} in DB only ({', '.join(only_d[:5])})")
-            if drift:
-                detail.append(f"{len(drift)} row(s) disagree on {len(field_hits)} field(s) "
-                               f"({', '.join(field_hits[:8])}"
-                               + (", ..." if len(field_hits) > 8 else "") + ")")
-            record("L01", "decision register: YAML ↔ decisions table "
-                   f"({len(compare_cols)} columns compared, "
-                   f"{len(AUDIT_STAMP_COLS)} DB-only audit columns excluded)",
-                   not (only_y or only_d or drift),
-                   "; ".join(detail) + " — reconcile in a migration; the DB is canonical "
-                   "(CLAUDE.md §2), so a YAML-only entry is an import gap and a "
-                   "disagreement is a finding, not something to overwrite"
-                   if detail else "")
+                # A value that fails to coerce (DB or YAML side) is a
+                # divergence in its own right — neither `effort_level` nor
+                # any LIST_COLS column has a DB-level CHECK constraint, so a
+                # hand-edit or a bad migration can leave either store holding
+                # something the other side's shape can't parse. Recording
+                # that as a normal field mismatch (rather than letting the
+                # int()/json.loads() call raise) is what keeps L02-L04 and
+                # the summary line reachable.
+                drift, field_hits = [], []
+                for did in sorted(set(y) & set(dbrows)):
+                    d, r = y[did], dbrows[did]
+                    row_bad = False
+                    for col in compare_cols:
+                        has_y = col in d
+                        db_val = r[col]
+                        bad = None
+                        if col in LIST_COLS:
+                            if db_val in (None, ""):
+                                db_norm = []
+                            else:
+                                try:
+                                    db_norm = _js.loads(db_val)
+                                except (TypeError, ValueError) as e:
+                                    bad = f"DB {col} is not valid JSON: {db_val!r} ({e})"
+                                    db_norm = None
+                            y_raw = d.get(col) if has_y else None
+                            y_norm = (y_raw or []) if has_y else []
+                            if bad:
+                                row_bad = True
+                                field_hits.append(f"{did}.{col} ({bad})")
+                                continue
+                            # A key genuinely absent from the YAML is only a
+                            # non-divergence when the DB side is the equivalent
+                            # empty list — an absent key next to a populated DB
+                            # array is exactly D-0158-shaped and must fire.
+                            if not has_y and not db_norm:
+                                continue
+                            same = has_y and db_norm == y_norm
+                        else:
+                            y_val = d.get(col) if has_y else None
+                            if db_val is None:
+                                db_norm = None
+                            elif col == "effort_level":
+                                try:
+                                    db_norm = int(db_val)
+                                except (TypeError, ValueError) as e:
+                                    bad = f"DB {col} is not an int: {db_val!r} ({e})"
+                                    db_norm = None
+                            else:
+                                db_norm = db_val
+                            if not has_y or y_val is None:
+                                y_norm = None
+                            elif col == "effort_level":
+                                try:
+                                    y_norm = int(y_val)
+                                except (TypeError, ValueError) as e:
+                                    bad = ((bad + "; ") if bad else "") + \
+                                        f"YAML {col} is not an int: {y_val!r} ({e})"
+                                    y_norm = None
+                            else:
+                                y_norm = y_val
+                            if bad:
+                                row_bad = True
+                                field_hits.append(f"{did}.{col} ({bad})")
+                                continue
+                            # A key absent from the YAML and a DB NULL are the
+                            # same fact ("no value recorded") in both directions;
+                            # anything else — absent-vs-populated in either
+                            # direction, or two populated values that disagree —
+                            # is a real divergence.
+                            if not has_y and db_norm is None:
+                                continue
+                            same = has_y and db_norm == y_norm
+                        if not same:
+                            row_bad = True
+                            field_hits.append(f"{did}.{col}")
+                    if row_bad:
+                        drift.append(did)
+
+                detail = []
+                if only_y:
+                    detail.append(f"{len(only_y)} in YAML only ({', '.join(only_y[:5])})")
+                if only_d:
+                    detail.append(f"{len(only_d)} in DB only ({', '.join(only_d[:5])})")
+                if drift:
+                    detail.append(f"{len(drift)} row(s) disagree on {len(field_hits)} field(s) "
+                                   f"({', '.join(field_hits[:8])}"
+                                   + (", ..." if len(field_hits) > 8 else "") + ")")
+                record("L01", "decision register: YAML ↔ decisions table "
+                       f"({len(compare_cols)} columns compared, "
+                       f"{len(AUDIT_STAMP_COLS)} DB-only audit columns excluded)",
+                       not (only_y or only_d or drift),
+                       "; ".join(detail) + " — reconcile in a migration; the DB is canonical "
+                       "(CLAUDE.md §2), so a YAML-only entry is an import gap and a "
+                       "disagreement is a finding, not something to overwrite"
+                       if detail else "")
 
     # jurisdictional_values has a YAML mirror too, held equal by
     # validate_schema.py --cross-check. Asserted here as well because that
