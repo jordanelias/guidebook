@@ -714,11 +714,18 @@ entries:
       - "scripts/db.py"                  # comment on the new set
       - "schemas/conflict.py"            # docstring explaining the rehomed rule
     note: >-
-      Retired twice over, which is why it is worth a tripwire. "Mode S" was
-      normalized to "Person Mode" on 2026-07-21
-      (governance/evidence-architecture.md §7) and the status word survived that
-      sweep in the database CHECK, the file-layer validator, the skill, and five
-      conflict matrices. The 2026-08-14 ruling then retired it as a status.
+      Retired twice over, which is why it is worth a tripwire — and the first
+      retirement is the instructive one. Item V of RATIFICATION-PACKAGE-2026-07-12
+      normalized "Mode P/S" to Population/Person Mode and was ratified IN FULL by
+      owner directive on 2026-07-13 (RATIFICATION-RECORD-2026-07-13, A5). Item V
+      named its own implementation: "96 files; one real data migration:
+      conflicts.status CHECK". That migration did not run. The status word then
+      survived a month in the database CHECK, both validators, the skill and five
+      conflict matrices, until the 2026-08-14 ruling retired it as a status and
+      migration 058 finally changed the constraint Item V had named.
+      (This note said "normalized on 2026-07-21, §7 of evidence-architecture"
+      until 2026-08-15. That cited a DR-gated PROPOSAL section and the wrong date;
+      corrected on re-derivation.)
       The distinction it carried is NOT lost and a reader should not treat this as
       a pure rename: MODE-S-ONLY meant "irreconcilable at population scale,
       requires individual co-design", which UNRESOLVED alone does not say. That

@@ -5432,9 +5432,11 @@ decisions:
   rationale: 'The two layers disagreed: the database accepted WITHDRAWN and rejected RETIRED while schemas/enums.py
     did the reverse, so which word was legal depended on whether the write went through Python or SQL.
     On conflicts the two sets shared two words of five. Zero rows used any contested value, which is why
-    nothing had failed yet and why the fix cost one migration. MODE-S-ONLY was retired twice over: Mode
-    S became Person Mode on 2026-07-21 and the status spelling outlived that sweep in the CHECK, two validators,
-    the skill and five matrices.'
+    nothing had failed yet and why the fix cost one migration. MODE-S-ONLY was retired twice over: Item
+    V of RATIFICATION-PACKAGE-2026-07-12 normalized Mode P/S to Population/Person Mode and was ratified
+    in full on 2026-07-13, naming its own single implementation step -- "one real data migration: conflicts.status
+    CHECK" -- which was never run. The status spelling then survived a month in that CHECK, both validators,
+    the skill and five matrices until 058.'
   alternatives_considered:
   - 'Per-field subsets rather than one shared list -- refused on reversibility: a superset narrows by
     forward migration once usage shows which words a field never takes, while a too-narrow CHECK refuses
@@ -5457,10 +5459,13 @@ decisions:
   status: ACTIVE
   review_status: NA
   notes: 'SUPERSEDED was retired on a reading rather than an instruction: the ruling did not name it,
-    the reading was put to the owner before implementation, and it rests on zero rows using it plus decisions.supersedes
-    already carrying the relation on all 160 rows. Reversal is one line in each of the CHECK and the enum.
-    The mode_s_trigger FIELD name remains retired vocabulary and is deliberately not renamed here -- that
-    is a structural change with its own caller sweep. The deferral counter the owner raised is not built.'
+    and the reading was put to the owner before implementation. One leg of that reading was FALSE and
+    is corrected here -- decisions.supersedes does NOT carry the successor relation; it is ''[]'' on all
+    162 rows and has never been written to, while its inverse predecessors is populated on 51. The surviving
+    ground is that zero rows ever used the SUPERSEDED status. Reversal is one line in each of the CHECK
+    and the enum, and this is the item in D-0161 most worth overturning, being the only one the owner
+    did not word. The mode_s_trigger FIELD name remains retired vocabulary and is deliberately not renamed
+    -- a structural change with its own caller sweep. The deferral counter the owner raised is not built.'
 - decision_id: D-0162
   category: D-OP
   delegation: DG-NON

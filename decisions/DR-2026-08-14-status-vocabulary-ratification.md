@@ -1,6 +1,19 @@
 # DR-2026-08-14 — One ratified status vocabulary for decisions and conflicts
 
 **Status:** OPERATIVE — 2026-08-14 (implemented 2026-08-15 by schema migration 058).
+
+> **CORRECTED 2026-08-15, on a re-derivation of this record's own claims.** Two statements below
+> were wrong when first written, and both are corrected in place with the error named rather than
+> quietly amended:
+>
+> 1. **`decisions.supersedes` does not carry the successor relation on "all 160 rows".** It is `'[]'`
+>    on **all 162 rows** — nothing has ever been written to it. The original check tested
+>    `supersedes != ''`, and `'[]'` is a non-empty *string*: it measured string emptiness and
+>    reported array population. This **weakens the stated grounds for retiring `SUPERSEDED`** (§3).
+> 2. **The Mode-S vocabulary retirement is dated 2026-07-13, not 2026-07-21**, and its authority is
+>    Item V of `RATIFICATION-PACKAGE-2026-07-12`, ratified in full by owner directive
+>    (`RATIFICATION-RECORD-2026-07-13` A5). The corrected fact is worse than the original claim, not
+>    better — see §3.
 **Decision by:** Owner ruling 2026-08-14, given in five parts across two messages.
 **Category:** D-SCHEMA (enum birth and retirement — Change-Order gated).
 **Delegation:** DG-NON — owner-originated and owner-worded; captured here, not proposed.
@@ -78,11 +91,20 @@ divergence was waiting for the first real write, and the corpus will never be th
 | `MODE-S-ONLY` | `UNRESOLVED` | **Not a pure rename.** See below. |
 | `UNRESOLVABLE-MODE-S` | `UNRESOLVED` | The file layer's spelling of the same state. |
 
-**`SUPERSEDED` was retired on a reading, not on an instruction.** The ruling did not name it. It was
-put back to the owner before implementation with the reasoning, and implemented on that reading:
-zero rows use it, and the relation it encoded is already carried by `decisions.supersedes`, which
-every one of the 160 rows populates. A successor is a pointer; the status word was a second spelling
-of a fact the table already held. Reversing this is one line in the CHECK and one in the enum.
+**`SUPERSEDED` was retired on a reading, not on an instruction — and one leg of that reading was
+false.** The ruling did not name the word. It was put back to the owner before implementation and
+implemented in the same turn on two grounds: that zero rows used the status, and that the relation it
+encoded was already carried by `decisions.supersedes`.
+
+**The first ground holds. The second does not.** `supersedes` is `'[]'` on all 162 rows — the column
+has never been written to. What *is* populated is its inverse, `predecessors`, on **51 rows**. So the
+successor relation is recorded in this table, but by the backward pointer, and the column I cited as
+the status word's replacement is empty everywhere.
+
+The corrected position: retiring `SUPERSEDED` costs nothing today (no row used it, and the relation
+is recoverable from `predecessors`), but the claim that a populated pointer already did the job was
+wrong. **Reversal remains one line in the CHECK and one in the enum**, and this is the item in this
+DR most worth the owner overturning, because it is the only one the owner did not word.
 
 **`MODE-S-ONLY` carried information that `UNRESOLVED` alone does not.** It meant *irreconcilable at
 population scale, requires individual co-design* — not merely *unresolved*. Collapsing the two words
@@ -93,12 +115,23 @@ say it in words beside the status rather than losing it. `schemas/conflict.py`'s
 required `mode_s_trigger` whenever the status was `UNRESOLVABLE-MODE-S`, now keys on `UNRESOLVED` —
 the rule is unchanged, only the word it watches.
 
-This word was retired twice over, which is why it survived: "Mode S" became "Person Mode" on
-2026-07-21 (`governance/evidence-architecture.md` §7), and the status spelling outlived that sweep
-in the database CHECK, in two validators, in the skill and in five matrices. That is this repo's
-characteristic defect — a rule ratified, one location amended, co-located rules left asserting the
-repealed position — and it is the reason the sweep here was run to completion before the migration
-was committed rather than after.
+**This word's survival is a sharper finding than "it outlived a sweep", and the re-derivation is what
+sharpened it.** The authority is **Item V of `RATIFICATION-PACKAGE-2026-07-12`**, ratified *in full*
+by owner directive on **2026-07-13** (`RATIFICATION-RECORD-2026-07-13`, A5: "G1–G8, Item V, Item R,
+in full"). Item V does not merely deprecate "Mode P/S" in prose. It names the work in its own words:
+
+> vocabulary normalization: Universal/Population/Person Mode as sole design-scale names; "Tier N"
+> reserved for evidence; "Mode P/S" deprecated (96 files; **one real data migration:
+> `conflicts.status` CHECK**).
+
+So the ratified decision **enumerated the single migration it required, and that migration was never
+run** — for a month, until migration 058 finally changed that CHECK, by a different route than Item V
+anticipated (collapsing to `UNRESOLVED` rather than coining a Person-Mode spelling, per the
+2026-08-14 ruling).
+
+That is this repo's characteristic defect in its most literal form: not a sweep that missed a file,
+but a ratified decision that *listed* its one migration and did not execute it. It is the reason the
+sweep here was run to completion before the migration was committed rather than after.
 
 ## 4. One shared list rather than per-field subsets
 

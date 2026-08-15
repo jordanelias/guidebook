@@ -147,9 +147,12 @@ class Conflict(GuidebookEntity):
         """UNRESOLVED conflicts must name the Person-Mode handoff.
 
         The rule is unchanged; only the status it keys on is. It used to key on
-        UNRESOLVABLE-MODE-S, a spelling retired on 2026-07-21 when "Mode S"
-        became "Person Mode" (governance/evidence-architecture.md §7) and
-        retired again as a status word by the 2026-08-14 ruling. A conflict that
+        UNRESOLVABLE-MODE-S, a spelling deprecated on 2026-07-13 when "Mode S"
+        became "Person Mode" (Item V of RATIFICATION-PACKAGE-2026-07-12, ratified
+        in full per RATIFICATION-RECORD-2026-07-13 A5 — which named the
+        conflicts.status CHECK as the one migration it needed, and that migration
+        did not run until 058), and retired as a status word by the 2026-08-14
+        ruling. A conflict that
         cannot be resolved at population scale still owes the reader what the
         assessment turns on, which is exactly what mode_s_trigger holds.
         """

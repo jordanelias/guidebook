@@ -63,6 +63,22 @@ Recorded because this repo's audits keep finding that the corrections matter mor
    (plural — a second registered validator) and `audit_consolidator.py`, where "resolved" was defined
    as *not* `UNRESOLVED`, so widening the vocabulary would have silently counted `ACTIVE`, `PROPOSED`
    and `DEFERRED` conflicts as resolved.
+5. **Two false claims shipped into the record, found only on the owner asking me to re-derive.**
+   Neither was caught by any gate — all five commits were green and pushed.
+   - **`decisions.supersedes` does not carry the successor relation.** I wrote that "every one of
+     the 160 rows populates it". It is `'[]'` on all 162 and has never been written to; the inverse
+     column `predecessors` is populated on 51. The check that produced the claim tested
+     `supersedes != ''` — and `'[]'` is a non-empty *string*. **I queried string emptiness and
+     reported array population**, which is the same shape as the failure `CLAUDE.md` §10 warns about
+     and the same shape as the F4 error one session earlier (grepping for a name, concluding about a
+     behaviour). This weakens the stated grounds for retiring `SUPERSEDED`; the surviving ground is
+     that no row ever used the status.
+   - **The Mode-S retirement is dated 2026-07-13, not 2026-07-21**, and its authority is Item V of
+     `RATIFICATION-PACKAGE-2026-07-12`, ratified in full (`RATIFICATION-RECORD-2026-07-13`, A5) —
+     not a `[NEW — DR-gated]` proposal section of `evidence-architecture.md`, which is what I cited.
+     **The corrected fact is worse than the claim it replaces.** Item V named its own implementation
+     — *"96 files; one real data migration: `conflicts.status` CHECK"* — and that migration was never
+     run. A ratified decision enumerated its single step and did not take it, for a month, until 058.
 
 ## 5. State at close
 
