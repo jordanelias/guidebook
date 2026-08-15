@@ -5461,3 +5461,51 @@ decisions:
     already carrying the relation on all 160 rows. Reversal is one line in each of the CHECK and the enum.
     The mode_s_trigger FIELD name remains retired vocabulary and is deliberately not renamed here -- that
     is a structural change with its own caller sweep. The deferral counter the owner raised is not built.'
+- decision_id: D-0162
+  category: D-OP
+  delegation: DG-NON
+  delegation_rationale: File moves and retirements are owner-gated per CLAUDE.md section 9 guardrail 4.
+    The owner approved the batch outright ("APPROVE WHOLE TIER-1 BATCH") after being shown its contents
+    and its reversal cost.
+  summary: 'Retire the Tier-1 batch: 28 Python modules and 4 probe-log artefacts archived to _archived/
+    at their origin paths, plus db_meta, population_reclass and the v_source_reach view dropped by migration
+    059.'
+  outcome: 'ADOPTED by owner approval 2026-08-14, scoped by workplan/2026-08-14-remediation-workplan.md
+    section 6. Nothing deleted. Three things deliberately kept: migrate_decisions.py and its guard (the
+    dual decision store is still pending owner decision #2), the newest probe log (cited by line number
+    from the live writer plan), and the validate_db registry entry at status: retired, because it carries
+    that script''s one unresolved content finding — 31 connections with zero targets.'
+  rationale: 'Carrying dead tooling costs census confusion at every audit cycle. It also makes the opposite
+    error more likely: the 2026-08-14 synthesis produced a cull list whose own retirement pass had to
+    rescue five load-bearing items, two of them read by blocking gates. Reachability was therefore tested
+    six ways — registry or CI selection, gate-readership, contract or doctrine citation, operator CLI
+    paths, transitive imports, and scheduled jobs — rather than by CI-reachability alone, which would
+    have deleted emit_data_migration.py, the only sanctioned write path.'
+  alternatives_considered:
+  - Delete rather than archive -- refused; guardrail 2 is retire, never delete, and archiving at the origin
+    path keeps git log --follow working.
+  - Scripts only, holding the three database objects -- offered to the owner as the smaller first bite
+    and not taken; the owner approved the whole batch.
+  - Hold everything until the schema round -- refused on the owner's approval; the material does not become
+    more alive by waiting, and each audit cycle re-censuses it.
+  - Delete the validate_db registry entry with the script -- refused; it carries an unresolved content
+    finding that would have been buried by a tooling cleanup.
+  decision_date: 2026-08-14 23:55
+  decided_by: owner_jordanelias_directive_2026-08-14
+  model_routing: opus/200/arbitrate
+  effort_level: 200
+  decision_artifacts:
+  - decisions/DR-2026-08-14-tier-1-retirement-batch.md
+  - scripts/migrations/059_tier1_retirements.sql
+  - _archived/scripts/README.md
+  - _archived/audits/README.md
+  predecessors:
+  - D-0161
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: 'Two live CLI paths were retired with the batch rather than left as tracebacks: db.py init and
+    db.py validate. Six live references to retired names proved to be false positives and are recorded
+    in the DR so the next sweep does not re-derive them -- three were a FUNCTION named validate_db rather
+    than the script, two were path-part exclusion sets that cost nothing to keep, and one was an EXCLUDED_TABLES
+    entry rather than a read.'

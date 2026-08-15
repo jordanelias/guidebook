@@ -1,0 +1,48 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-08-15-owner-decisions-group-1",
+ "artifact": "decisions/DR-2026-08-14-tier-1-retirement-batch.md",
+ "doctrine_sha": "0f2f525",
+ "rules_in_scope": [
+  "structure-auditor",
+  "guidebook-auditor",
+  "audit-consolidator",
+  "adherence-logging-and-attestation"
+ ],
+ "per_rule_status": {
+  "structure-auditor": {
+   "status": "FIRED",
+   "evidence_path": "scripts/migrations/059_tier1_retirements.sql",
+   "reason": "The two claims that could have made this drop unsafe were checked rather than assumed, and both were checks a naive scan gets wrong. v_source_reach_all matched a dependency scan for v_source_reach only because one name contains the other; reading the view SQL showed them to be independent SELECTs over base tables, so dropping the INNER-JOIN view cannot orphan the LEFT-JOIN one that supersedes it. And the population_reclass crosswalk was traced to three surviving locations before the table was dropped -- the 057 baseline's INSERTs, the retired-vocabulary deferred entry that spells the mapping out, and DR-2026-07-22, which cites the column by name. A scratch rebuild then reached user_version 59 with all three objects absent, 18 views executing, no FK violations and integrity ok, before anything was applied to the canonical database."
+  },
+  "guidebook-auditor": {
+   "status": "FIRED",
+   "evidence_path": "_archived/audits/README.md",
+   "reason": "Three things were held back from an approved batch because taking them would have broken something the batch was not asked to touch: migrate_decisions.py, whose dual store is pending an open owner decision; the newest probe log, which the live writer plan cites BY LINE NUMBER; and the validate_db registry entry, which carries that script's one unresolved content finding -- 31 connections with zero targets -- that deleting the entry would have buried inside a tooling cleanup. Each archive carries a README stating what was frozen, what stayed live and why, and the one thing that must not be done: restoring a file to satisfy a stale reference in a dated record, which is correct for its date."
+  },
+  "audit-consolidator": {
+   "status": "FIRED",
+   "evidence_path": "data/decisions/decision_register.yaml",
+   "reason": "D-0162 is written to both stores the repo holds equal, with the YAML entry generated FROM the committed database row rather than hand-typed beside it. The DR also records the sweep's six false positives -- three were a FUNCTION named validate_db rather than the script, two were path-part exclusion sets, one was an EXCLUDED_TABLES entry rather than a read -- so the next sweep does not re-derive them and, more importantly, does not mistake them for evidence that something was missed."
+  },
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "attestations/decisions_DR-2026-08-14-tier-1-retirement-batch.json",
+   "reason": "This attestation, bound to the doctrine SHA the commit carries, recording below what the verification does not establish."
+  }
+ },
+ "deviations": [
+  {
+   "rule": "structure-auditor",
+   "reason": "The evidence that these 28 modules are dead is the ABSENCE of callers, and an absence is only as good as the search that looked for it -- the audit's own Lesson 2, which four of four analyses violated in the work that produced this batch. Six-way reachability and git grep are stronger than what produced the original over-aggressive cull list, but they remain a search I designed and ran, over a repo whose root .ignore hides seven directories from the tool most sessions reach for first. Nothing here is proven unreachable; it is unreachable by six named tests."
+  },
+  {
+   "rule": "audit-consolidator",
+   "reason": "Archiving 28 modules into _archived/ moves 2,669-plus lines of Python from a directory no tool scans by convention into one that Python tools CAN walk, since .ignore binds ripgrep and not code. No new check failure appeared, so nothing scans it today. That is an observation about today's checks, not a property of the layout, and a future audit that globs from the repo root will find this material unless it excludes _archived/ explicitly."
+  }
+ ],
+ "bias_direction": "The bias runs toward treating an owner approval as closing the question. It closes whether to retire; it does not close whether my package list matched what was approved, and I both proposed the list and executed it. The second pull is subtler and shows in the numbers: --all went from 43 green to 46, which reads as improvement in a summary and is nothing of the kind -- three changeset-scoped attestation checks stopped being vacuous because the preceding commit handed them a subject. They were fed, not fixed, and the DR and commit both say so because a green count that rises for an unrelated reason is exactly how a session talks itself into believing a cleanup worked.",
+ "independent_reviewer_counterclaim": "The strongest objection is that retirement was executed in the same turn as the approval, with no independent pass over the package list. A reviewer would reasonably ask which of the 28 files someone other than the proposer confirmed dead -- the answer is none, and the mitigating fact is only that the list had already survived one adversarial correction, when the retirement planning pass rescued five load-bearing items from the synthesis's version of it. A second objection has more force on the database half: dropping population_reclass is forward-only, and its crosswalk now survives only in places nothing verifies -- an immutable migration's INSERTs, a YAML note, and a DR's prose. No check asserts that the mapping is still recoverable, so if all three drift or are themselves retired, the population rename map is gone with no gate noticing. Re-adding the table is cheap; noticing that it should be re-added is not covered."
+ ,
+ "verdict": "DEVIATION-LOGGED"
+}
