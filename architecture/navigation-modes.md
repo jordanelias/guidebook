@@ -181,7 +181,7 @@ ORDER BY sp.role, s.item_code;
 4. Governing principle
 5. Resolution strategy (with strategy code badges)
 6. Unresolvable residual (if UNRESOLVED)
-7. Mode S trigger and mitigation
+7. Mode S trigger and mitigation  [RETIRED-VOCAB-OK]
 8. Specifications involved (linked)
 9. Citations
 
@@ -317,7 +317,7 @@ Per the unified-data-schema ethics review, the following rendering constraints a
 | D-NAV-009 | Evidence markers descriptive only (ethics rule 4) | D-NAV | DG-MANDATORY |
 | D-NAV-010 | Jurisdiction matrix neutral colours (ethics rule 5) | D-NAV | DG-MANDATORY |
 | D-NAV-011 | Co-1 evidence dedicated visibility (ethics rule 6) | D-NAV | DG-MANDATORY |
-| D-NAV-012 | Mode S framed as expansion (ethics rule 7) | D-NAV | DG-MANDATORY |
+| D-NAV-012 | Mode S framed as expansion (ethics rule 7) | D-NAV | DG-MANDATORY |  [RETIRED-VOCAB-OK]
 | D-NAV-013 | Specialist entity routes at /specialists/ | D-NAV | DG-AUTO |
 | D-NAV-014 | Question mode section reordering (why-first) | D-NAV | DG-REVIEW |
 

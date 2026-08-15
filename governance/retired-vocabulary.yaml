@@ -756,11 +756,6 @@ entries:
       directive 2026-07-13 (RATIFICATION-RECORD-2026-07-13, A5)
     replacement: "Population Mode (and 'Population-Mode range' / 'Population-Mode default')"
     exempt_paths:
-      - "governance/evidence-architecture.md"    # §7 IS the mapping table that retires it
-      - "schemas/enums.py"                       # docstring naming the retired spellings
-      - "schemas/conflict.py"                    # docstring explaining the rehomed rule
-      - "architecture/page-templates.md"         # names the mode_s_trigger COLUMN, not the mode
-      - "architecture/navigation-modes.md"       # ditto, plus the D-NAV-012 decision id
       - "workplan/ratification-execution-register-2026-07-13.md"  # the row that tracks the debt
     note: >-
       Registered 2026-08-15, and the gap it closes is the point. RV-023 already
@@ -790,11 +785,6 @@ entries:
     retired_by: "as RV-025"
     replacement: "Person Mode (and 'Person-Mode handoff')"
     exempt_paths:
-      - "governance/evidence-architecture.md"    # §7 mapping table; §5 armature cross-ref
-      - "schemas/enums.py"
-      - "schemas/conflict.py"
-      - "architecture/page-templates.md"         # `c.mode_s_trigger` is a live column name
-      - "architecture/navigation-modes.md"
       - "workplan/ratification-execution-register-2026-07-13.md"
     note: >-
       The Person-Mode half of RV-025, registered separately so the two can be

@@ -215,7 +215,7 @@ path, that path is named rather than the row being silently ticked.
 | **Q3** | **PARTIAL.** The vocabulary half is done (Q1 above, all eight skills). The **doctrinal-content** half is not: the OLD stated-threshold and OLD-ladder text in `evidence-auditor`, `item-specification-writer` (● rule), `literature-review-planner` and `supersession-audit` is unswept. Note the row's first named target, `cell-curator`, no longer exists — renamed `specification-curator` per DR-2026-08-12. | `ls skills/`; row text vs live files |
 | **Q5** | **H1 BUILT; H2–H4 OWED.** `source_value_extractions` carries every genealogy field; `external_root_registry` and `v_value_independence` exist, the view encoding all three anti-gaming disciplines. **H2** (`functional_basis`, `derivation_paths`) and **H3** (`population_icf_links`) do not exist; `assess_cell.py` has no H4 gate. The DR's cost argument is **still intact and still expiring**: `specifications` is 0 rows, so the columns remain cheap. See the collision warning below. | `PRAGMA table_info`; `sqlite_master` |
 | **Q6** | **OWED — and the live data is worse than the row records.** `jurisdictional_values` has no `instrument_status` column across **109 rows**. The ratification package described those rows as `evidence_tier=6` / `is_code_minimum=1`; in fact `is_code_minimum` is **NULL on all 109**, and *every* row sits at `evidence_tier=6` — including ISO 21542 (×9), BS 8300 (×4+), DIN 18040, EN 81-70, AS/NZS, CSA B651 and ANSI, which are voluntary standards, not statutory codes. So the surface cannot distinguish "the law requires X" from "a voluntary standard suggests X" *and* the tier field misgrades the instrument class. The standing caveat on every rendering surface is still load-bearing. | `SELECT standard_name, MIN/MAX(is_code_minimum), evidence_tier … GROUP BY` |
-| **Q7** | **CLOSED 2026-08-15.** `schemas/fdr_specialist.py` → `schemas/failure_demand_recovery.py`, executing A6-H6. No imports existed; the four live callers were swept (`schemas/specialist.py`, `scripts/audit/validate_pydantic_schemas.py`, `architecture/schema-spec.md`, `workplan/2026-08-14-execution-plan.md`). Module import re-verified. Left as-is deliberately: the DR itself and `working/pilot/PILOT-MANIFEST.md` — dated records of what was true when written, annotated rather than falsified. | `git mv`; import check |
+| **Q7** | **CLOSED 2026-08-15.** `schemas/fdr_specialist.py` → `schemas/failure_demand_recovery.py`, executing A6-H6. No imports existed; the four live callers were swept (`schemas/specialist.py`, `scripts/audit/validate_pydantic_schemas.py`, `architecture/schema-spec.md`, `workplan/2026-08-14-execution-plan.md`). Module import re-verified. Left as-is deliberately: the DR itself, `working/pilot/PILOT-MANIFEST.md`, and `audits/2026-08-12c-pipeline-probe-findings.json` (a JSON key in a frozen dated artifact, read by nothing; `audits/**` is globally exempt) — dated records of what was true when written, annotated rather than falsified. *(The third was missing from this list until the adversarial pass; session record §8 F1.)* | `git mv`; import check |
 | **Q8** | **CLOSED — not owed.** The Koontz-2017 lead was withdrawn (`6489bec`) and the E-08 exemplar retired to `_archived/specs/e-08.html` (`3996a02`); the live surface is `specs/e-08-brief.html`. No live Koontz-2017 anchor remains. | `git log`; `ls`; `grep` |
 | **Q9** | **CLOSED.** PI archival executed: `v10_7`–`v10_13` hold full content under `_archived/governance/`, with redirect stubs at the origin paths (guardrail 2 form), `v10_14` live. | file sizes: 440 B stub vs 16–24 KB archived |
 | **Q10** | **CLOSED 2026-08-15**, in the shape the DR specified. Item 1's Decisions-vs-Decision-Records clause added to `<reference_files_pattern>`; the currency-header requirement for future schema docs added to `<migration_and_growth>`; `schema-spec.md` filled **"NO — historical record"** (the fill the ratification record authorised for that file on its documented drift). `schema-reconciliation.md` carries the header **deliberately unfilled** as `[OWNER-TO-DETERMINE]` — the DR declined to make that call and the ratification record left it "pending its own review". An unfilled marker is visible; a guessed one is not. Its stale "ACTIVE — governs all downstream schema work" line is annotated rather than removed. | the three files |
@@ -236,6 +236,23 @@ the backfill that makes it expensive. This session did **not** author that migra
 are D-SCHEMA/Change-Order gated, the numbering is already spoken for, and slipping a seventh
 migration into a batch queued for owner decision would be exactly the unilateral structural move
 `CLAUDE.md` §5 says to propose rather than execute. It is raised, not done.
+
+### Adversarial pass, 2026-08-15 (owner-directed)
+
+Run against this reconciliation the same day, by the author — **not** the fresh-context pass P3
+requires, and Q22's own condition is therefore still undischarged. Five findings; full text in
+`sessions/session_2026-08-15-ratified-unimplemented-sweep.md` §8. Two mattered:
+
+- **F2 (medium, fixed).** The RV-025/026 tripwire hid a genuine *use* of retired vocabulary at
+  `schemas/conflict.py:85` behind a file-level exemption. Five file exemptions replaced with six
+  line-scoped `[RETIRED-VOCAB-OK]` escapes; the real use swept. A tripwire whose exemptions hide
+  real uses is worse than none, because it reports clean.
+- **F3 (medium, fixed).** The published occurrence count was stale — 38, measured before a later
+  sweep in the same session. True committed count is **33**.
+
+Everything else held: all schema objects named in the new doctrine resolve against the live DB, the
+vocabularies match the DR and the live CHECK verbatim, the matcher survived 14 boundary probes, and
+`--all` is 46 green / 0 blocking with no advisory failure not already present on clean `main`.
 
 ### Ratified items still owed after this pass
 

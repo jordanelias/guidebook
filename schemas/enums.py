@@ -330,7 +330,7 @@ class DesignMode(int, Enum):
         own need, informed by but not bounded by the Population-Mode range).
     DAR mandatory at all modes.
 
-    "Mode P" / "Mode S" are retired spellings (DR-2026-07-12-evidence-architecture-
+    "Mode P" / "Mode S" are retired spellings (DR-2026-07-12-evidence-architecture-  [RETIRED-VOCAB-OK]
     unification Item V, ratified 2026-07-13): "Tier N" is reserved for the evidence
     ladder, and the design scales are named Universal / Population / Person only.
     """

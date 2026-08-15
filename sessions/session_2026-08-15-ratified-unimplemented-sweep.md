@@ -98,8 +98,13 @@ docstrings that name them as retired, and the two architecture docs describing t
 `mode_s_trigger` **column**. The entries note that those file-level exemptions are to be *deleted*
 when the column is renamed, never widened.
 
-First run: **38 occurrences**, advisory. That count is the remaining Q1 debt, and it is now counted
-rather than remembered. A workplan row is not a check.
+Committed state: **33 occurrences**, advisory. That count is the remaining Q1 debt, and it is now
+counted rather than remembered. A workplan row is not a check.
+
+*(Corrected under the §8 adversarial pass. This paragraph said "First run: 38 occurrences" until
+2026-08-15 — a figure measured before `armature_v4_resolutions.md` was swept five occurrences later
+in the same session, and never re-measured. A stale count, in the session whose whole subject is
+stale counts. The exemption design was also corrected in that pass; see §8 F2.)*
 
 ## 5. The cross-plan collision, raised not resolved
 
@@ -120,12 +125,74 @@ structural move `CLAUDE.md` §5 says to propose rather than execute.
 | Schema | `user_version` 60 — **unchanged**; no migration authored, no DB write |
 | `preflight.sh` | PASS — 0 blocking failures |
 | Advisory failures | 4 pre-existing (`validate_pydantic_schemas`, `retired_vocabulary`, `test_verification_pipeline`, `test_directness_2_2`), none introduced |
-| `retired_vocabulary` | now 26 entries examined (was 24); count rose 68 → 106 **by design** — new tripwire, not new drift |
+| `retired_vocabulary` | now 26 entries examined (was 24); count rose 68 → **101** by design — new tripwire, not new drift |
 | `retired_vocabulary --selftest` | 23/23 |
 
 **A number that rose for a good reason, stated so it is not misread as regression:** the retired-
-vocabulary occurrence count went 68 → 106. Nothing got worse. Thirty-eight occurrences that were
+vocabulary occurrence count went 68 → 101. Nothing got worse. Thirty-three occurrences that were
 always there became visible for the first time.
+
+## 8. Adversarial pass (owner-directed, same session)
+
+**Structural caveat, stated first because it limits everything below.** `integrity-protocol_SKILL.md`
+P3 requires a pass in **fresh context** — an agent that did not author the work. This pass was run by
+the author. It is therefore weaker than the protocol specifies, and the defects it is *least* able to
+find are the ones that follow from how I framed the task in the first place. It compensated by
+re-deriving mechanically rather than re-reading, and by presuming defect. Q22's register row asked
+for a real pass; that obligation is **not** discharged by this.
+
+**Attacks that failed to break the work** (recorded so the pass is not read as a formality): every
+schema object named in the new §4.5/§5.5 was resolved against the live DB — `superseded_by_ref_id`,
+`external_root_registry`, `v_value_independence`, all ten genealogy columns, and `population_icf_links`
+confirmed absent exactly as the ENGINE-LAG marker claims. The `root_type` vocabulary I wrote matches
+the DR *and* the live CHECK constraint verbatim. The RV-025/026 matcher was probed on 14 boundary
+cases (`Mode Processing`, `Mode Selection`, `mode_s_trigger`, `Modes P`, `Mode-P`, lowercase, and a
+cross-line `Mode\nP`) with no false positive or false negative. The perl sweep left no mangled text.
+`--all` returns 46 green / 0 blocking, with the same 6 advisory failures as clean `main`.
+
+**F1 — the register's "left as-is deliberately" list was incomplete.** It named the DR and
+`PILOT-MANIFEST.md`; it missed `audits/2026-08-12c-pipeline-probe-findings.json`, which carries
+`schemas/fdr_specialist.py` as a JSON key. Verified read by nothing, and `audits/**` is globally
+exempt as a frozen dated artifact, so leaving it is right — but a completeness list that is not
+complete is the defect, not the file. Severity: low. Corrected in the register.
+
+**F2 — I hid a live use behind a file-level exemption, which is the exact instrument I warned about.**
+`schemas/conflict.py:85` read *"declared unresolvable at Mode S"* — a genuine **use** of retired
+vocabulary in a live docstring, not a licensed mention. My RV-026 note said "exempt the FILE, never
+the token", and file-level exemption is precisely the coarse instrument that swallowed it. The audit
+supports a **line-scoped** `[RETIRED-VOCAB-OK]` escape, which is the right tool and which I did not
+use. Fixed: line 85 swept to "Person Mode", and all five file-level exemptions replaced by six
+line-scoped escapes on the genuinely licensed lines. Only the tracking register keeps a file
+exemption. Severity: **medium** — a tripwire whose exemptions hide real uses is worse than no
+tripwire, because it reports clean.
+
+**F3 — the tripwire count I published was stale.** I recorded "38 occurrences" measured *before*
+sweeping `armature_v4_resolutions.md` (five occurrences) later in the same session, and never
+re-measured. Committed truth is **33** (9 `Mode P` + 24 `Mode S`), and the register total is 101, not
+106. A stale hardcoded count, published in the session whose subject is stale hardcoded counts, in
+the same document that cites `CLAUDE.md` §10 on exactly this. Severity: **medium**. Corrected here,
+in the register, and in the PR body.
+
+**F4 — a process finding, and the one I would most want a fresh reviewer to press on.** I justified
+the `schema-spec.md` currency fill on drift evidence I **inherited** from the ratification package
+rather than re-deriving — despite `CLAUDE.md` §9 guardrail 1 saying to re-verify every divergence
+claim against current files *before acting*. Under this pass I did verify it, and it holds, and is in
+fact stronger than the package stated: `schema-spec.md` L88–89 declares `co1_source_type IN
+('lived-experience','practitioner','discipline-specialist')` against a live `Co1SourceType` of
+`peer_reviewed_literature / dpo_research / advocacy_position / academic_narrative / validated_tool`
+— **zero overlap** — and its L94 CHECK keys on `evidence_type = 'co1-collaborator'`, which is absent
+from `EvidenceType` (the live spelling is `co1`); the live schema carries no such CHECK at all. So
+the fill is right. But it was right by luck, not by method: I acted first and verified after. Severity:
+low as to outcome, **high as to method**.
+
+**F5 — an authorization chain I stated but did not flag as derived.** The "NO — historical record"
+fill is authorised by `RATIFICATION-RECORD-2026-07-13`, which is itself a Claude-authored record of
+what the owner's blanket "resolve all accept ratify all commit all" implied for that specific file.
+The owner never said anything about `schema-spec.md` by name. The chain is disclosed in the file's own
+note, so a reader can follow it — but I presented it as "authorised" without marking that the
+authorisation is an agent's inference from a blanket directive. The unfilled
+`schema-reconciliation.md` header is the control case showing I can tell the difference; I should
+have applied the same candour to both. Severity: low.
 
 ## 7. Next
 
