@@ -46,12 +46,12 @@ The genuine conflict is between **automated dynamic CCT** (which DEM and NDV/MH 
   - **Spatial:** DEM-primary zones (dining, lounge, corridors) use automated circadian programme. NDV/AUT-primary zones (sensory rooms, bedrooms, quiet areas) use manual control with predictable defaults.
   - **Temporal:** In aged care facilities where NDV/AUT and DEM residents co-occur, circadian programme governs ambient lighting (harm asymmetry: circadian disruption causes measurable health deterioration for DEM; static CCT causes discomfort but not measurable harm for NDV/AUT). NDV/AUT residents have individual control in personal spaces.
 - Harm asymmetry: DEM circadian disruption → increased agitation, sleep-wake cycle deterioration, medication burden. NDV/AUT CCT shift exposure → discomfort, anxiety, but manageable via predictable scheduling + personal space retreat. DEM harm > NDV/AUT harm → circadian programme as default in shared ambient spaces.
-- Status: **RESOLUTION-PROPOSED** (harm asymmetry logic is sound but untested in co-occurrence settings)
+- Status: **PROPOSED** (harm asymmetry logic is sound but untested in co-occurrence settings)
 
 **Resolution 3 — Graduated transition:**
 - Where automated CCT programmes operate: transition rate ≤50K/hour. No step-changes. NDV/AUT sensitivity is to SUDDEN change, not to gradual drift. Predictable, gradual transitions may be tolerable.
 - Evidence: NDV/AUT BPC — "predictability" is the core need, not static-ness per se. A perfectly predictable, slow, clock-synchronised transition may satisfy predictability requirements.
-- Status: **RESOLUTION-PROPOSED** (clinical plausibility, no direct evidence)
+- Status: **PROPOSED** (clinical plausibility, no direct evidence)
 
 ### Guidebook Specification Implications
 

@@ -4399,7 +4399,7 @@ decisions:
   - D-0132
   - D-0138
   supersedes: []
-  status: PROVISIONAL
+  status: PROPOSED
   review_status: PENDING
   notes: '[RATIFICATION 2026-08-04] HELD, NOT ratified under the owner directive of 2026-08-04 ("ratify
     all"), and the reason is recorded rather than the decision quietly skipped. architecture/schema-spec.md

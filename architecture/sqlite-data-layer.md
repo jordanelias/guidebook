@@ -395,8 +395,10 @@ CREATE TABLE decisions (
     model_routing       TEXT NOT NULL,
     effort_level        INTEGER NOT NULL,
     status              TEXT NOT NULL DEFAULT 'ACTIVE'
+                        -- the ratified vocabulary, owner ruling 2026-08-14 (migration 058)
                         CHECK(status IN (
-                            'ACTIVE','SUPERSEDED','WITHDRAWN','PROPOSED'
+                            'ACTIVE','PROPOSED','DEFERRED','RESOLVED-EVIDENCE',
+                            'RESOLVED-CONSENSUS','UNRESOLVED','CLOSED','RETIRED'
                         )),
     review_status       TEXT NOT NULL,
     -- JSON arrays (SQLite has no native array type; TEXT+JSON is the standard pattern)

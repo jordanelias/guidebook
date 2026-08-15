@@ -101,6 +101,15 @@ exempt_paths:
   # workplan/workplan-item-audit-pipeline-co0009.md is the worked example — it
   # names both a retired column and a database path that does not exist.
   - "workplan/*20??-??-??*.md"
+  # Same rule, same reasoning, for a plan split across a DATED DIRECTORY rather
+  # than one dated file — workplan/execution-plan-2026-08-12/** is the live
+  # example, and its member files carry undated names (4-adjudication-apparatus.md)
+  # so the glob above never reached them. Added 2026-08-14 when three new entries
+  # flagged that directory; it silences one pre-existing RV-008 hit there too,
+  # which on reading is a licensed mention (it names the bad path to report it).
+  # A superseded proposal inside such a plan gets a dated forward note in the
+  # document — the reader is protected by the note, not by the grep.
+  - "workplan/*20??-??-??*/**"
   - "versions/**"                  # historical version snapshots
   # The two documented legacy script directories. CLAUDE.md §7 places both
   # outside the GUIDEBOOK_DB_PATH contract, and scripts/migrate/** is disarmed by
@@ -679,11 +688,96 @@ entries:
       - "scripts/tests/test_validate_evidence_state_2_4.py"
       - "workplan/2026-08-12-step-R-rename-execution-record.md"
 
+  - id: RV-022
+    token: RESOLUTION-PROPOSED
+    match: literal
+    severity: broken
+    retired_by: "owner ruling 2026-08-14; schema migration 058 — CHECK no longer admits it"
+    replacement: "PROPOSED"
+    exempt_paths:
+      - "scripts/validate_conflict.py"   # the enforcer; its map names what it rejects
+      - "scripts/db.py"                  # comment on the line carrying the new set
+    note: >-
+      A direct synonym retirement: nothing about the conflict's meaning moved, only
+      the spelling. `severity: broken` rather than `stale-pointer` because the value
+      is now refused by a CHECK constraint — a write carrying it raises IntegrityError
+      rather than storing a dated word.
+
+  - id: RV-023
+    token: MODE-S-ONLY
+    match: literal
+    severity: broken
+    retired_by: "owner ruling 2026-08-14; schema migration 058"
+    replacement: "UNRESOLVED, with the Person-Mode handoff named in mode_s_trigger"
+    exempt_paths:
+      - "scripts/validate_conflict.py"   # the enforcer
+      - "scripts/db.py"                  # comment on the new set
+      - "schemas/conflict.py"            # docstring explaining the rehomed rule
+    note: >-
+      Retired twice over, which is why it is worth a tripwire. "Mode S" was
+      normalized to "Person Mode" on 2026-07-21
+      (governance/evidence-architecture.md §7) and the status word survived that
+      sweep in the database CHECK, the file-layer validator, the skill, and five
+      conflict matrices. The 2026-08-14 ruling then retired it as a status.
+      The distinction it carried is NOT lost and a reader should not treat this as
+      a pure rename: MODE-S-ONLY meant "irreconcilable at population scale,
+      requires individual co-design", which UNRESOLVED alone does not say. That
+      half now lives in `mode_s_trigger` / `unresolvable_residual`, and the swept
+      matrices say it in words beside the status.
+
+  - id: RV-024
+    token: UNRESOLVABLE-MODE-S
+    match: literal
+    severity: broken
+    retired_by: "as RV-023"
+    replacement: "UNRESOLVED"
+    exempt_paths:
+      - "scripts/validate_conflict.py"   # the enforcer
+      - "schemas/conflict.py"            # docstring explaining the rehomed rule
+    note: >-
+      The file layer's spelling of RV-023 — registered separately because the two
+      layers spelled the same state differently, which is the divergence the
+      ruling closed. `schemas/conflict.py` keyed its mode_s_trigger requirement on
+      this string; that validator now keys on UNRESOLVED.
+
 # --- deferred: correct to retire, NOT YET SAFE TO FLAG ----------------------
 # These fail admission test 2 — the replacement has not landed — so flagging them
 # today would flag accurate descriptions of live data. Each records the precondition
 # that would promote it. Do not promote one without checking its precondition.
 deferred:
+
+  - tokens: [WITHDRAWN, PROVISIONAL, SUPERSEDED, OPEN]
+    retired_by: >-
+      Owner ruling 2026-08-14 and schema migration 058, as STATUS VALUES on
+      decisions and conflicts. WITHDRAWN->RETIRED, PROVISIONAL->PROPOSED,
+      SUPERSEDED->CLOSED (the relation lives in decisions.supersedes),
+      OPEN->ACTIVE.
+    precondition: >-
+      Fails admission test 4 outright, and unlike RV-022/023/024 there is no
+      spelling that separates the retired use from live correct ones. Each word
+      is load-bearing elsewhere in this repo under a DIFFERENT vocabulary that
+      nobody retired:
+        WITHDRAWN    schemas/enums.py StandardStatus — a standards body withdrew
+                     an edition. Also VerificationClosureReason.WITHDRAWN.
+        PROVISIONAL  the cost_data_quality vocabulary (VERIFIED/PROVISIONAL/GREY),
+                     architecture/schema-spec.md's own document status, and
+                     governance/mission-PROVISIONAL.md, a filename CLAUDE.md §9-2
+                     names as a redirect stub.
+        SUPERSEDED   the whole supersession model — governance/time-model.md §4,
+                     SupersedenceType, StandardStatus, and every DR that
+                     supersedes another.
+        OPEN         verification_disposition is literally OPEN|CLOSED (D-0157),
+                     plus the SPATIAL-OPEN conflict domain and ordinary English.
+      A literal match on any of the four would fire on hundreds of correct lines.
+      Promoting one would need a match form this register does not have: scoped
+      to a status assignment rather than to the word.
+    note: >-
+      Recorded rather than dropped because the retirement itself is real and the
+      next session to grep `WITHDRAWN` will find the standards vocabulary and may
+      conclude the decision word survived. The enforcement that does exist is
+      better than a text match anyway: the CHECK constraints on both tables refuse
+      all four, so a bad write fails at the database rather than being noticed by
+      a grep. Verified 2026-08-14 against the live DB, both directions.
 
   - tokens: [VIS, UPL, DBL, NEU, PCS, OFS, CFS, MCAS, POTS, LCOV, SENS, EXH, IntD, ABI]
     retired_by: >-

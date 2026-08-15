@@ -296,7 +296,7 @@ economics.research_gaps → all economics sub-entities (pillar linkage)
   "conflict_id": "CONF-UNRESOLV-01",
   "conflict_label": "Ambient temperature in non-zoned shared sleeping space",
   "resolution": {
-    "status": "UNRESOLVABLE-MODE-S",
+    "status": "UNRESOLVED",
     "description": "Non-zoned shared sleeping space where ambient temperature is truly shared and individual supplemental heating is not operationally feasible"
   },
   "tier_2_trigger": "Building or space simultaneously serves MS-spectrum diagnosis and fibromyalgia/cold-aggravated pain in shared non-zoned sleeping space",

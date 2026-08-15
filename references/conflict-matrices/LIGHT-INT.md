@@ -3,15 +3,15 @@
 **Domain:** LIGHT-INT — Daytime illuminance (lux / melanopic EDI)
 **Populations served:** DEM, NEU, NDV/AUT, NDV/SENS, NDV/MH, PAIN, OFS, VIS, DEAF
 **Classification:** [BOTH] — inter-group AND intra-individual
-**Overall status:** UNRESOLVED at Universal Mode · RESOLUTION-PROPOSED at Tier 1 (zoning + individual control) · MODE-S-ONLY for intra-individual co-occurrence
+**Overall status:** UNRESOLVED at Universal Mode · PROPOSED at Tier 1 (zoning + individual control) · UNRESOLVED for intra-individual co-occurrence (Person-Mode handoff)
 
 ### Active Conflicts
 
 | Domain | Pop A | Pop B | A spec | B spec | Resolution | Status | Evidence |
 |---|---|---|---|---|---|---|---|
-| LIGHT-INT (daytime) | DEM, VIS, DEAF | NDV/AUT, NDV/SENS, NEU(migraine), PAIN(fibro), OFS/MCAS | ≥300 lux / ≥250 melanopic EDI / ≥4000 K | ≤200 lux ambient preferred; user-controlled to 0 lux; ≤3000 K; no fluorescent | Zoning + individual control + temporal dosing | RESOLUTION-PROPOSED (Tier 1) | ◐ |
+| LIGHT-INT (daytime) | DEM, VIS, DEAF | NDV/AUT, NDV/SENS, NEU(migraine), PAIN(fibro), OFS/MCAS | ≥300 lux / ≥250 melanopic EDI / ≥4000 K | ≤200 lux ambient preferred; user-controlled to 0 lux; ≤3000 K; no fluorescent | Zoning + individual control + temporal dosing | PROPOSED (Tier 1) | ◐ |
 | LIGHT-INT (evening) | DEM | NDV/AUT, NEU, PAIN, OFS | ≤2700 K / ≤10 melanopic EDI | ≤2700 K / dim | Non-conflicting — parameters aligned | RESOLVED-CONSENSUS | ● |
-| LIGHT-INT (intra-individual) | NEU/MH/OFS circadian need | NEU/MH/OFS photosensitivity | ≥250 melanopic EDI for sleep-wake | Blue-enriched spectrum (480nm) triggers pain via shared ipRGC pathway | Temporal dosing; Mode S OT assessment | MODE-S-ONLY | ◐ |
+| LIGHT-INT (intra-individual) | NEU/MH/OFS circadian need | NEU/MH/OFS photosensitivity | ≥250 melanopic EDI for sleep-wake | Blue-enriched spectrum (480nm) triggers pain via shared ipRGC pathway | Temporal dosing; Person-Mode OT assessment | UNRESOLVED | ◐ |
 
 ### Mechanistic Finding
 
@@ -53,7 +53,7 @@ The ipRGC/melanopsin pathway (peak ~480nm) mediates BOTH circadian entrainment A
 - Mechanism: Morning circadian dose (≥250 melanopic EDI, ≥4000 K) for defined 30–60 min window when therapeutic benefit highest and interictal photosensitivity may be lower. Remainder of day at lower, controllable levels.
 - Outcome data: No RCT for built-environment implementation of timed dosing in photosensitive populations.
 - Guidebook implication: Tier 2 — OT assessment determines individual tolerance and dosing window. Guidebook provides range and protocol framework; clinician resolves individual.
-- Status: **RESOLUTION-PROPOSED** · Confidence: **LOW** — clinical plausibility without built-environment evidence
+- Status: **PROPOSED** · Confidence: **LOW** — clinical plausibility without built-environment evidence
 
 **Resolution 6 — Spectral separation (narrow-band green, 520nm)**
 - Source: Noseda et al. 2016 (Brain, DOI:10.1093/brain/aww119, n=69); Lipton et al. 2023 (Frontiers Neurology, DOI:10.3389/fneur.2023.1282236, open-label)
@@ -65,7 +65,7 @@ The ipRGC/melanopsin pathway (peak ~480nm) mediates BOTH circadian entrainment A
 **Resolution 7 — Tier escalation**
 - The conflict is irreconcilable at Universal Mode for shared ambient spaces. At Mode P, architect zones based on identified populations. At Mode S, OT assessment resolves individual placement.
 - For intra-individual co-occurrence (NEU/MH/OFS): circadian lighting and photosensitivity management are competing clinical objectives. The guidebook states the trade-off explicitly; neither takes priority without individual assessment.
-- Status: **MODE-S-ONLY** for intra-individual · Confidence: **HIGH** — this is the honest answer
+- Status: **UNRESOLVED** for intra-individual, requiring a Person-Mode handoff · Confidence: **HIGH** — this is the honest answer
 
 ### Universal Mode Default Specification
 

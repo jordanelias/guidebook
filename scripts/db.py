@@ -576,9 +576,11 @@ def get_synonyms(item_code: str, language: str = None) -> list[dict]:
 
 import re as _re
 
+# The ratified status vocabulary — owner ruling 2026-08-14, migration 058.
+# RESOLUTION-PROPOSED became PROPOSED; MODE-S-ONLY became UNRESOLVED.
 _VALID_CONFLICT_STATUS = frozenset({
-    "RESOLVED-EVIDENCE", "RESOLVED-CONSENSUS",
-    "RESOLUTION-PROPOSED", "UNRESOLVED", "MODE-S-ONLY",
+    "ACTIVE", "PROPOSED", "DEFERRED", "RESOLVED-EVIDENCE",
+    "RESOLVED-CONSENSUS", "UNRESOLVED", "CLOSED", "RETIRED",
 })
 _VALID_ITEM_STATUS   = frozenset({"draft", "active", "merged", "retired"})
 _VALID_RUN_STATUS    = frozenset({"IN-PROGRESS", "COMPLETE", "HANDED-OFF"})

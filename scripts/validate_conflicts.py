@@ -3,7 +3,7 @@ scripts/validate_conflicts.py — CI validator for conflicts table.
 
 Checks:
   V1: conflict_id matches CONF-NNNN
-  V2: status is one of the five valid values
+  V2: status is one of the ratified values
   V3: pop_a < pop_b (alphabetical; wrapper must normalise before insert)
   V4: domain is non-empty
   V5: gap_id references an existing gap (if set)
@@ -21,9 +21,11 @@ from pathlib import Path
 DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db"))
 
 CONF_ID_RE    = re.compile(r"^CONF-\d{4}$")
+# The ratified status vocabulary — owner ruling 2026-08-14, migration 058.
+# Mirrors the SQL CHECK on conflicts and schemas.conflict.RATIFIED_STATUSES.
 VALID_STATUS  = {
-    "RESOLVED-EVIDENCE", "RESOLVED-CONSENSUS",
-    "RESOLUTION-PROPOSED", "UNRESOLVED", "MODE-S-ONLY",
+    "ACTIVE", "PROPOSED", "DEFERRED", "RESOLVED-EVIDENCE",
+    "RESOLVED-CONSENSUS", "UNRESOLVED", "CLOSED", "RETIRED",
 }
 
 

@@ -91,9 +91,12 @@ For each active conflict:
 |---|---|
 | RESOLVED-EVIDENCE | Published resolution with outcome data (e.g., truncated dome sizing) |
 | RESOLVED-CONSENSUS | Expert/standards consensus without outcome data (e.g., zoned lighting) |
-| RESOLUTION-PROPOSED | Resolution exists in guidelines but untested (e.g., adjustable everything) |
-| UNRESOLVED | No resolution found; populations cannot share identical specification |
-| MODE-S-ONLY | Conflict irreconcilable at Universal Mode–1; requires individual co-design |
+| PROPOSED | Resolution exists in guidelines but untested (e.g., adjustable everything) |
+| UNRESOLVED | No resolution found at population scale. Covers both "no resolution yet" and "irreconcilable here — requires individual co-design". Where it is the latter, name the Person-Mode handoff in `mode_s_trigger`; the status says the conflict does not resolve at this scale, the handoff field says what the OT assessment turns on |
+| CLOSED | Finished without an evidence resolution — the question was withdrawn, or infrastructure settled it |
+| DEFERRED | Deliberately not addressed this pass. Distinct from UNRESOLVED: nobody worked it |
+| ACTIVE | Live, in hand, not yet closed or resolved |
+| RETIRED | Removed from force without a successor |
 
 ### Step 4: Log to SQLite
 
@@ -112,13 +115,13 @@ python3 scripts/db.py add-conflict \
   --domain [LIGHT-INT|ACOUSTIC-LVL|...] \
   --pop-a [alphabetically first population] \
   --pop-b [alphabetically second population] \
-  --status [RESOLVED-EVIDENCE|RESOLVED-CONSENSUS|RESOLUTION-PROPOSED|UNRESOLVED|MODE-S-ONLY] \
+  --status [ACTIVE|PROPOSED|DEFERRED|RESOLVED-EVIDENCE|RESOLVED-CONSENSUS|UNRESOLVED|CLOSED|RETIRED] \
   --resolution "[mechanism if resolved]" \
   --evidence "[source citation if resolved]" \
   --session [session-name]
 ```
 
-**For UNRESOLVED and MODE-S-ONLY conflicts only:** also log a gap, then link:
+**For UNRESOLVED conflicts only:** also log a gap, then link:
 
 ```bash
 # Log gap first
@@ -162,7 +165,7 @@ python3 scripts/db.py conflicts --item [item_code] --summary
 
 ### Resolution Evidence Register
 
-For each RESOLVED or RESOLUTION-PROPOSED conflict:
+For each RESOLVED or PROPOSED conflict:
 - Source(s) with citation
 - Resolution mechanism
 - Outcome data (if any)
@@ -171,7 +174,7 @@ For each RESOLVED or RESOLUTION-PROPOSED conflict:
 
 ### Unresolved Conflicts
 
-For each UNRESOLVED or MODE-S-ONLY conflict:
+For each UNRESOLVED conflict:
 - CONF-ID (tracking DB)
 - GAP-ID (tracking DB, category CONF)
 - Populations affected
@@ -216,7 +219,7 @@ Known resolution archetypes (apply where evidence supports):
 - `item-specification-writer` (conflict matrix informs spec ranges and DAR)
 - `sensory-coherence-checker` (pre-populates known conflicts for Phase 5 QA)
 - SQLite `conflicts` table (all conflicts via `db.py add-conflict`)
-- SQLite `gaps` table (UNRESOLVED/MODE-S-ONLY only via `db.py add-gap --category CONF`)
+- SQLite `gaps` table (UNRESOLVED only via `db.py add-gap --category CONF`)
 - Part 8 §8.4 (conflict resolution guidance)
 
 **Do NOT write to:**

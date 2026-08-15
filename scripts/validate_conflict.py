@@ -6,7 +6,7 @@ Checks:
 - Conflict IDs match uppercase hyphenated format ([A-Z][-A-Z0-9]+)
 - Population codes in conflict parties are valid
 - Resolution status is a known value
-- UNRESOLVABLE-MODE-S conflicts have mode_s_trigger set
+- UNRESOLVED conflicts have mode_s_trigger set (the Person-Mode handoff)
 - Conflict matrix .md files have consistent structure
 - YAML files validate against schemas/conflict.py
 
@@ -30,12 +30,17 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 CONFLICT_ID_RE = re.compile(r"^[A-Z][-A-Z0-9]+$")
 
+# The ratified status vocabulary — owner ruling 2026-08-14, migration 058.
+# Mirrors schemas.conflict.RATIFIED_STATUSES and the SQL CHECK on conflicts.
 VALID_RESOLUTION_STATUSES = {
+    "ACTIVE",
+    "PROPOSED",
+    "DEFERRED",
     "RESOLVED-EVIDENCE",
     "RESOLVED-CONSENSUS",
-    "UNRESOLVABLE-MODE-S",
-    "DEFERRED",
-    "OPEN",
+    "UNRESOLVED",
+    "CLOSED",
+    "RETIRED",
 }
 
 VALID_STRATEGY_CODES = {
@@ -96,11 +101,25 @@ def validate_matrices(matrix_dir: str, result: ValidationResult):
         for status in VALID_RESOLUTION_STATUSES:
             if status in content:
                 found_statuses.add(status)
-        # Also check for legacy status
-        if "UNRESOLVABLE-TIER-2" in content:
-            result.error(source, "Legacy status UNRESOLVABLE-TIER-2 found — rename to UNRESOLVABLE-MODE-S")
-        if "TIER-2-ONLY" in content:
-            result.error(source, "Legacy status TIER-2-ONLY found — rename to MODE-S-ONLY")
+        # Also check for retired spellings. Each maps to a ratified word; the two
+        # TIER-2 forms used to be redirected to MODE-S spellings, which the
+        # 2026-08-14 ruling then retired in turn, so those messages were pointing
+        # readers at a word that is no longer legal anywhere.
+        # "OPEN" is deliberately absent: it is retired in favour of ACTIVE, but a
+        # bare substring match would fire on the SPATIAL-OPEN domain code and on
+        # ordinary prose. A substring check is only safe for distinctive spellings.
+        for retired, ratified in (
+            ("UNRESOLVABLE-TIER-2", "UNRESOLVED"),
+            ("TIER-2-ONLY", "UNRESOLVED"),
+            ("UNRESOLVABLE-MODE-S", "UNRESOLVED"),
+            ("MODE-S-ONLY", "UNRESOLVED"),
+            ("RESOLUTION-PROPOSED", "PROPOSED"),
+        ):
+            if retired in content:
+                result.error(
+                    source,
+                    f"Retired status {retired} found — rename to {ratified}"
+                )
 
         # Check population codes in table rows
         pop_pattern = re.compile(

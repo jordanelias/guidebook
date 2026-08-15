@@ -203,6 +203,14 @@ CREATE TABLE conflicts_new (
 Change-Order gated.** If it is not ruled, **keep the old literal and file the rename separately**;
 do not smuggle a vocabulary change inside a structural rebuild.
 
+> **SUPERSEDED 2026-08-14 — the rename was ruled, and not this way.** The owner ratified one
+> status vocabulary across `decisions` and `conflicts`, and `MODE-S-ONLY` became **`UNRESOLVED`**,
+> not `PERSON-MODE-ONLY`. Migration 058 landed it; the `conflicts` CHECK now refuses both old
+> spellings. Do not implement the DDL above as written — its `status` list is three words out of
+> date. The rest of this section (the missing `pop_a`/`pop_b` FKs, the un-FK'd `gap_id`) stands
+> and is still unbuilt. The instruction not to smuggle a vocabulary change into a structural
+> rebuild also stands, and was followed: 058 changes vocabulary only.
+
 ### Six nullable columns for three kinds is deliberate
 A polymorphic `target_a`/`target_b` pair could not be FK'd — **the same ground on which W3.9
 rejected Candidate A.** State the symmetry in the migration comment.

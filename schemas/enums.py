@@ -504,24 +504,42 @@ class DelegationCategory(str, Enum):
 
 
 class DecisionStatus(str, Enum):
-    """Lifecycle status of a Decision record.
+    """Status of a Decision record. The project's one ratified status
+    vocabulary, shared with ConflictStatus — owner ruling 2026-08-14,
+    migration 058.
 
-    PROPOSED:    decision drafted; not yet provisionally accepted
-    PROVISIONAL: decision tentatively in force pending owner adoption
-    ACTIVE:      decision adopted and in force
-    SUPERSEDED:  replaced by a later decision (named successor)
-    RETIRED:     removed without a named successor
+    ACTIVE:             live; adopted and in force (replaces OPEN)
+    PROPOSED:           put forward, not yet in force (absorbs PROVISIONAL)
+    DEFERRED:           deliberately not addressed this pass — countable
+    RESOLVED-EVIDENCE:  resolved by direct evidence
+    RESOLVED-CONSENSUS: resolved by claims directly derived from direct evidence
+    UNRESOLVED:         worked and could not be resolved at this scale
+    CLOSED:             finished without an evidence resolution
+    RETIRED:            removed from force without a successor (replaces WITHDRAWN)
 
-    Lifecycle: PROPOSED → PROVISIONAL → ACTIVE → (SUPERSEDED | RETIRED).
-    PROPOSED and PROVISIONAL were added 2026-05-15 to match the
-    project's actual decision protocol (see governance/decision-protocol.md
-    §3 lifecycle and DR-2026-05-13's adoption pattern of "PROPOSED by Claude,
-    PENDING project-owner adoption" then promoted to ACTIVE on directive).
+    RESOLVED-EVIDENCE and RESOLVED-CONSENSUS are reserved: they are for direct
+    evidence or claims directly derived from it, never for an administrative
+    close. A finished infrastructure item is CLOSED.
+
+    Four spellings were retired by the same ruling. PROVISIONAL collapsed into
+    PROPOSED ("PROPOSED = PROVISIONAL for me in this project") — the one row
+    carrying it, D-0139, was remapped by migration 058. WITHDRAWN became
+    RETIRED. OPEN became ACTIVE. SUPERSEDED is gone because the relation it
+    named is already carried by decisions.supersedes, which every row
+    populates; a successor is a pointer, not a status.
+
+    The docstring this replaces cited "governance/decision-protocol.md §3
+    lifecycle" as the authority for PROVISIONAL. That file has never contained
+    the word — checked with git grep, zero hits — so the citation was
+    decorative from the day it was written.
     """
-    PROPOSED = "PROPOSED"
-    PROVISIONAL = "PROVISIONAL"
     ACTIVE = "ACTIVE"
-    SUPERSEDED = "SUPERSEDED"
+    PROPOSED = "PROPOSED"
+    DEFERRED = "DEFERRED"
+    RESOLVED_EVIDENCE = "RESOLVED-EVIDENCE"
+    RESOLVED_CONSENSUS = "RESOLVED-CONSENSUS"
+    UNRESOLVED = "UNRESOLVED"
+    CLOSED = "CLOSED"
     RETIRED = "RETIRED"
 
 

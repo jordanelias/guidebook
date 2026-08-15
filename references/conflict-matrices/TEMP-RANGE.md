@@ -33,12 +33,12 @@ Rationale (harm asymmetry):
 - PAIN/MOB harm from cool: discomfort, increased pain, increased spasticity. CAN be locally warmed at the individual level.
 - Harm is asymmetric: NEU/MS damage > PAIN/MOB discomfort. The population that cannot self-remedy takes priority in the ambient setting.
 
-Status: **RESOLUTION-PROPOSED** (clinically sound; no POE data from facilities implementing this strategy)
+Status: **PROPOSED** (clinically sound; no POE data from facilities implementing this strategy)
 
 **Resolution — High-performance envelope:**
 Passivhaus-grade envelope (U ≤0.15 W/m²K wall; Uw ≤0.8 W/m²K glazing; thermal bridges eliminated) delivers passive thermal stability (≤3°C diurnal variation without active HVAC). This reduces the severity of temperature fluctuations that trigger NEU/MS and OFS symptoms.
 
-Status: **RESOLUTION-PROPOSED** (engineering best practice; no disability-specific outcome data)
+Status: **PROPOSED** (engineering best practice; no disability-specific outcome data)
 
 **Resolution — Individual zone control:**
 Per-desk/seat thermostat or radiant panel. Minimum: accessible thermostat within reach of each primary seat. No forced air heating as sole source (acoustic + airborne trigger concern for NDV/OFS).
