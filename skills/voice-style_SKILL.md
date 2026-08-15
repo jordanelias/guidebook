@@ -226,21 +226,21 @@ The blanket "shall be" convention is retired (project-standards 2026-04-26). Spe
 | Tier | Authority | Canonical construction |
 |---|---|---|
 | **Universal Mode** (Universal Design / Code Compliance) | The code | "Code requires [value] per [standard]" · "[Standard] specifies [value]" |
-| **Mode P** (Population-Informed Inclusive Design) | The evidence | "[Evidence tier] evidence supports [value]" · "Best practice based on [N] jurisdictions and [evidence tier] evidence is [value]" · "The Mode P range is [value]–[value]; the population-informed median is [value]" |
-| **Mode S** (Person-Specific Co-Design) | The OT and the individual | "OT assessment determines position within [range] based on [functional parameter]" · "Resolved through co-design with the OT and the occupant against the Mode P range" |
+| **Population Mode** (Population-Informed Inclusive Design) | The evidence | "[Evidence tier] evidence supports [value]" · "Best practice based on [N] jurisdictions and [evidence tier] evidence is [value]" · "The Population-Mode range is [value]–[value]; the population-informed median is [value]" |
+| **Person Mode** (Person-Specific Co-Design) | The OT and the individual | "OT assessment resolves the individual's own need, informed by the [range]" · "Resolved through co-design with the OT and the occupant, scaffolded by — not bounded by — the Population-Mode range" |
 
 **Worked examples:**
 
 | Bad (authority-asserting blanket) | Good (mode-located) |
 |---|---|
-| "Grab bar diameter shall be 32–35 mm." | *Mode P:* "Tier 3 evidence (Sanford 2010; AOTA 2018) supports a grab bar diameter of 32–35 mm. Mode P default: 33 mm. Mode S: OT assessment resolves position within range based on grip aperture and pinch strength." |
-| "Threshold height shall not exceed 6 mm." | *Universal Mode:* "Codes across all 24 jurisdictions reviewed require maximum threshold height ≤13 mm; ISO 21542 specifies ≤6 mm. *Mode P:* Tier 3 evidence (Pavol et al. 2001) shows thresholds above 6 mm intercept gait trajectory in older adults; this guidebook recommends ≤6 mm." |
-| "Acoustic absorption shall be installed in all dining areas." | *Mode P:* "Tier 3 evidence supports STI ≥ 0.60 in dining areas serving older adults and HoH populations. Acoustic absorption is the primary delivery mechanism; specific product selection resolves to Mode S against the room's acoustic envelope and the operator's maintenance regime." |
-| "DAR shall be incorporated at construction stage." | "This guidebook treats DAR as mandatory at every mode — Universal Mode through Mode S — because construction-stage provisions preserve future capacity at negligible cost, whereas retrofit costs are 5–20× higher (see Part 11). The mandate is the guidebook's; it is not external." |
+| "Grab bar diameter shall be 32–35 mm." | *Population Mode:* "Tier 3 evidence (Sanford 2010; AOTA 2018) supports a grab bar diameter of 32–35 mm. Population-Mode default: 33 mm. Person Mode: OT assessment resolves the individual's own need, informed by that range, based on grip aperture and pinch strength." |
+| "Threshold height shall not exceed 6 mm." | *Universal Mode:* "Codes across all 24 jurisdictions reviewed require maximum threshold height ≤13 mm; ISO 21542 specifies ≤6 mm. *Population Mode:* Tier 3 evidence (Pavol et al. 2001) shows thresholds above 6 mm intercept gait trajectory in older adults; this guidebook recommends ≤6 mm." |
+| "Acoustic absorption shall be installed in all dining areas." | *Population Mode:* "Tier 3 evidence supports STI ≥ 0.60 in dining areas serving older adults and HoH populations. Acoustic absorption is the primary delivery mechanism; specific product selection resolves at Person Mode against the room's acoustic envelope and the operator's maintenance regime." |
+| "DAR shall be incorporated at construction stage." | "This guidebook treats DAR as mandatory at every mode — Universal Mode through Person Mode — because construction-stage provisions preserve future capacity at negligible cost, whereas retrofit costs are 5–20× higher (see Part 11). The mandate is the guidebook's; it is not external." |
 
 **The tier-located voice is not a length penalty.** It is a precision gain: the reader knows where the value comes from and how much weight to place on it. In tabular Part 4 specifications, the tier locator can be terse — `[Tier 3, GRADE moderate]` after the value, with prose framing in the surrounding text.
 
-**When mode location can be implicit:** within a sustained Mode P passage where every value is Mode-P-evidence-located, the construction can compress: "Mode P best practice for corridor width is 1500 mm; the population envelope is 1200–1800 mm." The first sentence locates the mode; subsequent sentences can omit the locator without ambiguity.
+**When mode location can be implicit:** within a sustained Population Mode passage where every value is Population-Mode-evidence-located, the construction can compress: "Population Mode best practice for corridor width is 1500 mm; the population envelope is 1200–1800 mm." The first sentence locates the mode; subsequent sentences can omit the locator without ambiguity.
 
 ### §8.2 Voice Convention Patterns
 
@@ -293,7 +293,7 @@ Co-1 evidence (lived experience and participatory design research; co-primary wi
 
 **Pattern Co-1-D — Tier 1 / Co-1 divergence.** Use when Tier 1 and Co-1 diverge. Both are presented; divergence is documented; synthesis approach is specified per parameter.
 
-> "Tier 1 OT evidence ([source]) shows [finding-1]. Co-1 sources ([sources]) document [finding-2]. The Mode P design range encompasses both: [range]. [Synthesis approach.]"
+> "Tier 1 OT evidence ([source]) shows [finding-1]. Co-1 sources ([sources]) document [finding-2]. The Population-Mode design range encompasses both: [range]. [Synthesis approach.]"
 
 **Pattern selection rule.** Apply in order; if multiple patterns apply, the one furthest down the list governs (Co-1-D > Co-1-C > Co-1-B > Co-1-A).
 
@@ -395,7 +395,7 @@ Use "(1)…(2)…(3)" in parenthetical form within prose, or — for three or mo
 | BAR_IN_VOLUME_I | BAR reference outside Supplementary Volume | Any BAR, bariatric, or large body size reference in Parts 1–12 or core matrices |
 | MARKER_FRAMING | Evidence marker misuse | ● with no citation; ○ without gap disclosure; marker on non-prescriptive text |
 | AUTHORITY_CLAIM | Guidebook asserts authority it lacks | "mandatory" *(unlocated)*, "non-negotiable", "this document governs" *(over external)*, "shall be" *(blanket)*, "operates above the code floor", "resolution protocol" *(as self-description)*, "X is mandatory" *(no external citation, no Guidebook attribution)* |
-| TIER_VOICE | Specification voice does not locate mode | "Grab bar diameter shall be 32–35 mm" *(no tier locator)*; mixing Universal Mode and Mode P voice in one sentence |
+| TIER_VOICE | Specification voice does not locate mode | "Grab bar diameter shall be 32–35 mm" *(no tier locator)*; mixing Universal Mode and Population Mode voice in one sentence |
 
 Do not flag: "people who use wheelchairs" · population codes (MOB, VIS, etc.) · identity-first language (autistic, Deaf) · "mandatory" when citing external mandates · internal document hierarchy references · "shall" when quoting code text directly · "must be" describing design requirements (not Guidebook self-mandates) · negative-example "shall be" used to criticize a vague brief · negative-example "non-negotiable" used in scare quotes or to criticize an over-claim · "mandatory" when followed by an explicit cross-reference to another guidebook section that locates the mandate (e.g. "OT assessment mandatory (Part 9 §9.10)") · "mandatory" when describing a determination or selection process rather than a mandate (e.g. "which Part 4 items are mandatory") · "mandatory" in jurisdictional comparison table cells alongside a jurisdiction code · "mandatory" inside a properly-applied Pattern B umbrella scope (see §8.2).
 
@@ -530,5 +530,5 @@ Where a passage reasons about a code, standard, bylaw, or definition:
 
 - **Advocacy identity** — Core Doctrine 2026-04-26 19:25. The guidebook is an advocacy project, not an authority. See `references/project-standards.md`.
 - **Tier-appropriate specification language** — Core Doctrine 2026-04-26 19:25. Blanket "shall be" retired. See §8.1 above and `references/project-standards.md`.
-- **Design Modes** — Core Doctrine pre-session. Universal Mode / Mode P / Mode S with DAR mandatory at every mode (mandate located in this guidebook).
+- **Design Modes** — Core Doctrine pre-session. Universal Mode / Population Mode / Person Mode with DAR mandatory at every mode (mandate located in this guidebook).
 - **Seven-Tier Evidence Hierarchy** — Core Doctrine 2026-03-19; elevated 2026-04-24. Tier 1 + Co-1 co-primary.

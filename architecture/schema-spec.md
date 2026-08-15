@@ -1,4 +1,14 @@
 # Schema Specification — B1 Session 9
+
+**Governs schema work:** NO — historical record; see `scripts/migrations/` for the current schema.
+
+> Filled 2026-08-15 per DR-2026-07-12-decision-tracking-naming-and-schema-doc-currency item 2
+> (ratified 2026-07-13; the value "NO — historical record" is the fill the ratification record
+> authorised for *this* file on the evidence of its documented drift — §3's `co1_source_type` enum
+> and its `co1-collaborator` evidence type do not match the live schema). This document records how
+> the SQLite storage form was originally designed on 2026-05-02; it is not normative for schema
+> changes today. The authoritative schema is `scripts/migrations/` + `PRAGMA user_version`.
+
 **Status:** PROVISIONAL — pending D-0138 (storage form selection) project-owner adoption
 **Created:** 2026-05-02 02:50 UTC
 **Operative storage form (PROPOSED):** Candidate B / SQLite — per `architecture/storage-derivation.md` (D-0138 D-DOCT/DG-NON, PENDING adoption)
@@ -718,7 +728,10 @@ TABLE question_specification (
 
 **Note:** B3 owns Question entity specification details; this schema is the storage-form's representation for whatever B3 specifies.
 
-### 3.5 FDR Scenario + Specialist Handoff (`schemas/fdr_specialist.py` — new module)
+### 3.5 FDR Scenario + Specialist Handoff (`schemas/failure_demand_recovery.py` — new module)
+
+*(Named `schemas/fdr_specialist.py` when this document was written; renamed 2026-08-15 per
+DR-2026-07-13 H6, to end the collision with Functional Deficit Research in `references/fdr/`.)*
 
 A3 §1.9 FDR Scenarios — Failure-Demand-Recovery scenarios for resilience analysis. A3 §1.10 Specialist Handoffs — points where specialist consultation is required.
 

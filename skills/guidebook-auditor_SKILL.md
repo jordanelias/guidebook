@@ -165,11 +165,13 @@ Usage: append after the closing punctuation of the claim — e.g. `The corridor 
 - Median stated explicitly: `(median {value} {unit})`
 - Tier context stated: Tier 1 → use median; Tier 2 → resolve through co-design
 
-### 5.2 Three-Tier Identification
-Each item must state which tier(s) it addresses:
+### 5.2 Three-Mode Identification
+Each item must state which design mode(s) it addresses ("Tier N" is reserved for the evidence
+ladder — see DR-2026-07-12-evidence-architecture-unification Item V):
 - Universal Mode: fixed value, no range
-- Mode P: range with stated median
-- Mode S: co-designed; resolves within Mode P range; DAR note mandatory
+- Population Mode: range with stated median
+- Person Mode: co-designed; resolves the individual's own need, informed by — not bounded by —
+  the Population-Mode range; DAR note mandatory
 
 ---
 

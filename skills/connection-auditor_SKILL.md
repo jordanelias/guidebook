@@ -133,8 +133,8 @@ item specification from GitHub via GraphQL and read it in full.
 
 For each CONSUMED connection, verify:
 
-- The connection's core finding appears in the item specification (Mode P note,
-  population annotation, Mode S handoff, or evidence citation)
+- The connection's core finding appears in the item specification (Population Mode note,
+  population annotation, Person-Mode handoff, or evidence citation)
 - The evidence tier claimed in the connection is consistent with what landed in the spec
 - No contradictions between the connection description and the spec text
 

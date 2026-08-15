@@ -294,9 +294,9 @@ These are metadata extensions to existing entity types, not new entities.
 
 **"Disability populations are not uniform."** The two-layer architecture respects this: population categories organize the research base, functional axes capture individual variation within populations.
 
-**"The guidebook is a starting framework for professional judgment, not a substitute for it."** The armature surfaces specifications and evidence; Mode S handoff flags where individual assessment is required. The tool does not replace OT assessment, designer judgment, or co-design.
+**"The guidebook is a starting framework for professional judgment, not a substitute for it."** The armature surfaces specifications and evidence; the Person-Mode handoff flags where individual assessment is required. The tool does not replace OT assessment, designer judgment, or co-design.
 
-**"The purpose of this guidebook is to get people to ask the right questions."** The armature surfaces the questions (via Mode S handoff flags, conflict notes, and gap disclosures), not just the answers. Each Tier 2 flag names the functional parameter that drives the assessment and the range within which resolution occurs.
+**"The purpose of this guidebook is to get people to ask the right questions."** The armature surfaces the questions (via Person-Mode handoff flags, conflict notes, and gap disclosures), not just the answers. Each Person-Mode flag names the functional parameter that drives the assessment and the range the assessment starts from.
 
 **"The guidebook is an advocacy project, not an authority."** Specification language throughout is tier-appropriate: "Tier 1 evidence supports..." not "the specification is..." The armature presents evidence and surfaces questions — it does not prescribe.
 

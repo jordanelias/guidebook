@@ -55,7 +55,7 @@ class Specialist(GuidebookEntity):
     # Relationships
     specification_refs: list[str] = []  # Item codes requiring this specialist
     population_codes: list[str] = []  # Populations this specialist serves
-    handoff_ids: list[str] = []  # SH-NNNN references from fdr_specialist.py
+    handoff_ids: list[str] = []  # SH-NNNN references from failure_demand_recovery.py
 
     # Guidebook relationship
     guidebook_relationship: Optional[str] = None  # How this role relates to the guidebook

@@ -1,5 +1,12 @@
 """
-schemas/fdr_specialist.py — FDR Scenario and Specialist Handoff models.
+schemas/failure_demand_recovery.py — FDR Scenario and Specialist Handoff models.
+
+Renamed from `schemas/fdr_specialist.py` on 2026-08-15, executing H6 of
+DR-2026-07-13-value-genealogy-and-derivation-handshake (ratified 2026-07-13;
+tracked as Q7 in workplan/ratification-execution-register-2026-07-13.md).
+"FDR" collided: Functional Deficit Research in `references/fdr/` versus
+Failure-Demand-Recovery here. The reference corpus keeps the acronym it prints
+in 38 filenames; this module spells its expansion out instead.
 
 FDR (Failure-Demand-Recovery) scenarios capture resilience analysis:
 what happens when a design element fails, when demand exceeds capacity,

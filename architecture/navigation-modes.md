@@ -298,7 +298,7 @@ Per the unified-data-schema ethics review, the following rendering constraints a
 4. **Evidence markers are descriptive, not evaluative.** ● = stated evidence, ◐ = provisional evidence, ○ = pending review. No "strong/weak" language.
 5. **Jurisdiction matrix uses neutral colours.** Green = value present, red = no requirement, grey = not searched. No implication that "red" jurisdictions are inferior.
 6. **Co-1 evidence gets dedicated visibility.** Co-primary (lived experience) evidence is never subordinated to academic evidence in display order.
-7. **Person-specific mode (Mode S) is an expansion, not a fallback.** Language frames Mode S as "resolves to the person's own needs" not "requires specialist intervention."
+7. **Person Mode is an expansion, not a fallback.** Language frames Person Mode as "resolves to the person's own needs" not "requires specialist intervention."
 
 ---
 

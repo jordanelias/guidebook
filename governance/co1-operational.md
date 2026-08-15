@@ -153,7 +153,7 @@ The handoff document `workplan/a5-handoff.md` §4 surfaced five substantive judg
 
 The voice convention for convergence: "Co-1 and Tier 1 evidence converge on [value]: Tier 1 ([source]) shows [Tier 1 finding]; Co-1 ([source/list]) document [Co-1 finding]; the converged best-practice value is [value]."
 
-The voice convention for divergence: "Co-1 and Tier 1 evidence diverge on [parameter]. Tier 1 ([source]) shows [Tier 1 finding]. Co-1 ([source/list]) document [Co-1 finding]. The Tier 1 range encompasses both findings: [range]. Per Part 1 §1.5, both are presented; OT assessment resolves the individual's own functional needs — informed by, but not bounded by, that range — based on individual functional and lived-experience profile."
+The voice convention for divergence: "Co-1 and Tier 1 evidence diverge on [parameter]. Tier 1 ([source]) shows [Tier 1 finding]. Co-1 ([source/list]) document [Co-1 finding]. The Population-Mode range encompasses both findings: [range]. Per Part 1 §1.5, both are presented; OT assessment resolves the individual's own functional needs — informed by, but not bounded by, that range — based on individual functional and lived-experience profile."
 
 [CONFIDENCE: high — Part A is the schematic correlate of D-03 revised, directly entailed; Part B follows from voice-style §8.1 pattern; Part C is direct application of mission §3.]
 
@@ -240,7 +240,7 @@ But the link is operational, not definitional. Audience-priority is about who re
 
 **Resolution:** Co-1 status operates alongside the Design Modes, not within it. The two are orthogonal axes that co-locate authority for any given specification.
 
-**The Design Modes** locates *the kind of design decision*: Universal Mode (universal, code-compliant); Tier 1 (population-informed); Tier 2 (person-specific, OT-resolved). It answers: *what kind of design problem is this?*
+**The Design Modes** locates *the kind of design decision*: Universal Mode (universal, code-compliant); Population Mode (population-informed); Person Mode (person-specific, OT-resolved). It answers: *what kind of design problem is this?*
 
 **The Seven-Tier Evidence Hierarchy** locates *what evidence supports the value*: Tier 1 primary research (OT-prioritized but not OT-exclusive, per D-E), Co-1 lived experience, Tier 2 synthesis (systematic reviews / meta-analyses and named-organisation evidence-based standards), Co-2 OT CPGs, Tier 3 lower-control primary clinical and grey-literature primary research, Tier 4 international standards, Tier 5 national frameworks, Tier 6 codes. It answers: *what is the basis for this number/range/specification?*
 
@@ -253,14 +253,14 @@ But the link is operational, not definitional. Audience-priority is about who re
 
 **Voice convention for handling the interaction.** Per A4 voice-style §8.1, specification voice locates authority. For specifications where Co-1 evidence is the basis (alone or alongside Tier 1):
 
-- **Tier 1 design + Tier 1 OT evidence (no Co-1):** "Tier 1 evidence supports a grab bar diameter of 32–35 mm (Sanford 2010; AOTA 2018). Mode P default: 33 mm."
-- **Tier 1 design + Co-1 evidence (no Tier 1 clinical):** "Co-1 sources document a signing-space corridor width of 2440 mm (DSDG, Gallaudet 2010; DeafScape, Vaughn 2018). The Mode P default for DEAF-primary corridors is 2440 mm. *Note: this width is derived from ASL proxemics at Gallaudet; signed-language proxemics vary across BSL, DGS, NGT, LSF, and LIS — see DEAF BPC for jurisdictional variation.*"
-- **Tier 1 design + both Tier 1 OT + Co-1 evidence (convergent):** "Tier 1 OT evidence (Murgia 2023, Iglehart 2020) and Co-1 sources (DSDG; PVA Accessible Home Design 2021) converge on RT60 ≤0.6 s for shared-use teaching spaces. Mode P default: 0.5 s."
-- **Tier 1 design + both, divergent:** "Tier 1 OT evidence (Smith 2022) supports threshold height ≤ 6 mm. Co-1 sources (Concrete Change 1987; PVA 2021) document zero-step preference at primary entrances for visitability and aging-in-place. The Tier 1 range is 0–6 mm; the population-informed default for residential primary entrances is 0 mm (zero-step) per Co-1 visitability framework, with the 6 mm Tier 1 OT clinical maximum applying where structural constraints prevent zero-step."
+- **Population-Mode design + Tier 1 OT evidence (no Co-1):** "Tier 1 evidence supports a grab bar diameter of 32–35 mm (Sanford 2010; AOTA 2018). Population-Mode default: 33 mm."
+- **Population-Mode design + Co-1 evidence (no Tier 1 clinical):** "Co-1 sources document a signing-space corridor width of 2440 mm (DSDG, Gallaudet 2010; DeafScape, Vaughn 2018). The Population-Mode default for DEAF-primary corridors is 2440 mm. *Note: this width is derived from ASL proxemics at Gallaudet; signed-language proxemics vary across BSL, DGS, NGT, LSF, and LIS — see DEAF BPC for jurisdictional variation.*"
+- **Population-Mode design + both Tier 1 OT + Co-1 evidence (convergent):** "Tier 1 OT evidence (Murgia 2023, Iglehart 2020) and Co-1 sources (DSDG; PVA Accessible Home Design 2021) converge on RT60 ≤0.6 s for shared-use teaching spaces. Population-Mode default: 0.5 s."
+- **Population-Mode design + both, divergent:** "Tier 1 OT evidence (Smith 2022) supports threshold height ≤ 6 mm. Co-1 sources (Concrete Change 1987; PVA 2021) document zero-step preference at primary entrances for visitability and aging-in-place. The Population-Mode range is 0–6 mm; the population-informed default for residential primary entrances is 0 mm (zero-step) per Co-1 visitability framework, with the 6 mm Tier 1 OT clinical maximum applying where structural constraints prevent zero-step."
 
-**Tier 2 (person-specific) and Co-1 evidence.** Tier 2 specifications are resolved by OT assessment of the named individual, against the Tier 1 range. Co-1 evidence informs the Tier 1 range but does not override Tier 2 individual assessment. The OT, working with the individual at Tier 2, may consult Co-1 sources as part of clinical reasoning — but the resolution at Tier 2 is the OT's professional judgment plus the individual's assessed values, not a re-application of population-level Co-1 evidence.
+**Person Mode (person-specific) and Co-1 evidence.** Person-Mode specifications are resolved by OT assessment of the named individual, informed by — not bounded by — the Population-Mode range. Co-1 evidence informs the Population-Mode range but does not override Person-Mode individual assessment. The OT, working with the individual at Person Mode, may consult Co-1 sources as part of clinical reasoning — but the resolution at Person Mode is the OT's professional judgment plus the individual's assessed values, not a re-application of population-level Co-1 evidence.
 
-**This means:** Co-1 governs at Tier 1 (population-informed) and contributes at Universal Mode (where universal-design choices reflect cumulative Co-1-grounded evidence). Co-1 does not override Tier 2 individual assessment. An individual's clinical-and-lived-experience profile may differ from any single Co-1 source's reported population pattern; that is exactly what Mode S OT co-design exists to resolve.
+**This means:** Co-1 governs at Population Mode (population-informed) and contributes at Universal Mode (where universal-design choices reflect cumulative Co-1-grounded evidence). Co-1 does not override Person-Mode individual assessment. An individual's clinical-and-lived-experience profile may differ from any single Co-1 source's reported population pattern; that is exactly what Person-Mode OT co-design exists to resolve.
 
 [CONFIDENCE: high — direct entailment of mission §3 (Co-1 co-primary with Tier 1) + Design Modes + voice-style §8.1. Worked examples are derived from existing corpus (DEAF BPC + Co-1-verified-sources.json).]
 

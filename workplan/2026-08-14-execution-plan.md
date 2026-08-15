@@ -201,7 +201,8 @@ collision — survived independent re-derivation. Four findings did not, and all
 
 1. **A2's caller sweep covered 2 of 8 sites.** The plan scoped the `item_code` grammar fix to the two
    graph extractors on the reasoning that the other narrow matches guarded "different concepts". They
-   do not: `schemas/{specification,room,conflict,population,fdr_specialist}.py`,
+   do not: `schemas/{specification,room,conflict,population,failure_demand_recovery}.py`,
+   (the last was named `fdr_specialist.py` on the date of this sweep; renamed 2026-08-15 per DR-2026-07-13 H6)
    `scripts/validate_item.py` and `scripts/convert/convert_spec_db.py` all guard item codes, and all
    rejected the live `A-10b`. `schemas/specification.py` is on the core spine — it would have refused
    a specification for an item its own item schema accepts. Swept in full; `git grep` now returns zero

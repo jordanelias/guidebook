@@ -137,7 +137,7 @@ Read the full item specification. Extract:
 - **Applicable Groups** field (as stated in spec)
 - **Description/specification** body
 - **Evidence basis** markers (●/○) and cited sources
-- **Mode S** notes (if present)
+- **Person Mode** notes (if present)
 - Any explicit population caveats
 
 ```bash

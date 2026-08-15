@@ -1,8 +1,20 @@
 # Schema Reconciliation — B2.1
+
+**Governs schema work:** `[OWNER-TO-DETERMINE]` — YES, or NO — historical record; see `scripts/migrations/` for the current schema.
+
+> Header mechanism added 2026-08-15 per DR-2026-07-12-decision-tracking-naming-and-schema-doc-currency
+> item 2 (ratified 2026-07-13). The DR ratified the *mechanism*; the value for this file is a
+> substantive call the DR explicitly declined to make and the ratification record left "pending its
+> own review". It is deliberately left unfilled rather than guessed — an unfilled marker is visible,
+> a wrong one is not. Until it is filled, treat `scripts/migrations/` + `PRAGMA user_version` as
+> authoritative where this document and the live schema disagree (`<data_layer_pattern>`).
+
 **Created:** 2026-05-03 22:55 UTC
 **Model:** Opus 4.6
 **Inputs:** 5 schema representations + Amendment 8 + website IA
-**Status:** ACTIVE — governs all downstream schema work
+**Status:** ACTIVE — governs all downstream schema work *(as written 2026-05-03; this line is the
+very claim DR-2026-07-12 flagged as unverified — it predates the migration history that is now
+authoritative. Read it against the currency header above, which supersedes it once filled.)*
 
 ---
 

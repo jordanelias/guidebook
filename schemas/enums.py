@@ -325,9 +325,14 @@ class DesignMode(int, Enum):
     """Design Modes per project-standards §Core Doctrine.
 
     Universal Mode = Universal Design / Code Compliance (population-agnostic, fixed).
-    Mode P = Population-Informed Inclusive Design (ranges; median default).
-    Mode S = Person-Specific Co-Design (OT assessment resolves range).
+    Population Mode = Population-Informed Inclusive Design (ranges; median default).
+    Person Mode = Person-Specific Co-Design (OT assessment resolves the individual's
+        own need, informed by but not bounded by the Population-Mode range).
     DAR mandatory at all modes.
+
+    "Mode P" / "Mode S" are retired spellings (DR-2026-07-12-evidence-architecture-
+    unification Item V, ratified 2026-07-13): "Tier N" is reserved for the evidence
+    ladder, and the design scales are named Universal / Population / Person only.
     """
     UNIVERSAL = 0
     POPULATION_BASED = 1
