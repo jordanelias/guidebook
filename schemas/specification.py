@@ -69,7 +69,7 @@ class Specification(GuidebookEntity):
     jurisdictions_divergent: list[str] = []
     divergence_note: Optional[str] = None
 
-    # Mode S handoff
+    # Person-Mode handoff
     person_specific_note: Optional[str] = None
 
     # Conditional values

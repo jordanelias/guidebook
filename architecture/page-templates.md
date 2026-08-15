@@ -259,7 +259,7 @@ SELECT c.* FROM conflict c WHERE c.conflict_id = :domain;
 | 5 | Governing principle | `c.governing_principle` | Callout block |
 | 6 | Resolution | `c.resolution.strategy_codes`, `c.resolution.description` | Strategy badges + prose |
 | 7 | Unresolvable residual | `c.unresolvable_residual` (if UNRESOLVED) | Warning block |
-| 8 | Mode S trigger | `c.mode_s_trigger`, `c.mitigation` | Trigger + mitigation prose |
+| 8 | Mode S trigger | `c.mode_s_trigger`, `c.mitigation` | Trigger + mitigation prose |  [RETIRED-VOCAB-OK]
 | 9 | Specifications | `c.specifications_involved` | C-04 links |
 | 10 | Citations | `c.citations` | Reference list |
 

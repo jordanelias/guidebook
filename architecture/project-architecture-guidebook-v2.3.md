@@ -39,6 +39,8 @@ Conventional locations:
 | `_archived/` | Files removed from active circulation but preserved for git history |
 
 When a reference file accumulates session-specific notes, dated commentary, or resolved-item logs, that content is extracted to the appropriate directory above. Reference files should read the same six months from now as they do today.
+
+**Decisions vs. Decision Records — two systems, different granularities.** `data/decisions/decision_register.yaml` (mirrored into the canonical `decisions` table) tracks granular in-session decisions with `D-NNNN` identifiers, schema-validated per `governance/decision-protocol.md` and checked by `scripts/decision_capture.py`. `decisions/DR-YYYY-MM-DD-slug.md` are standalone Decision Records, analogous to ADRs. The two are related but distinct, and **neither supersedes the other**: a DR typically records the reasoning behind one or more register decisions, and a register decision may exist with no DR at all. The naming is close enough that they have been mistaken for two representations of one dataset — they are not. *(Added 2026-08-15 per DR-2026-07-12-decision-tracking-naming-and-schema-doc-currency item 1, ratified 2026-07-13.)*
 </reference_files_pattern>
 
 <skill_registry_pattern>
@@ -123,6 +125,8 @@ When bootstrap grows past these budgets, extract the heaviest portion (typically
 **Shipping a new audit script.** Place at `scripts/audit/<name>.py` following the style in `<enforcement_spectrum>`. Reference from the corresponding PI standing rule. If blocking-in-CI, add a job to the appropriate workflow.
 
 **Adopting a new DR.** File at `decisions/DR-YYYY-MM-DD-<slug>.md`. If the DR sharpens or adds a standing rule, draft the corresponding PI bump in `governance/project-instructions-v<next>.md` and queue via `decisions/PI-update-needed.md`. The PI bump goes live only when the owner manually pastes the new content into claude.ai project settings — this layer is not API-writable.
+
+**Creating an `architecture/*.md` document that describes schema content.** It carries a currency header from creation: `**Governs schema work:** YES` or `**Governs schema work:** NO — historical record; see scripts/migrations/ for the current schema`. `scripts/migrations/` plus `PRAGMA user_version` are the authoritative schema source (`<data_layer_pattern>`); a prose description of the schema is normative only where it says so. Without the header, a reader cannot tell whether a dated design document still governs, and a generator or a future session may treat stale description as current — the phantom-table pattern. *(Added 2026-08-15 per DR-2026-07-12-decision-tracking-naming-and-schema-doc-currency item 2, ratified 2026-07-13.)*
 
 **Retiring content.** Move to `_archived/` rather than delete. Preserves git history while reducing namespace noise. Subdirectories under `_archived/` mirror the origin location.
 

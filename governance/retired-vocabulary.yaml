@@ -747,6 +747,55 @@ entries:
       ruling closed. `schemas/conflict.py` keyed its mode_s_trigger requirement on
       this string; that validator now keys on UNRESOLVED.
 
+  - id: RV-025
+    token: Mode P
+    match: phrase
+    severity: doctrine
+    retired_by: >-
+      Item V of RATIFICATION-PACKAGE-2026-07-12, ratified IN FULL by owner
+      directive 2026-07-13 (RATIFICATION-RECORD-2026-07-13, A5)
+    replacement: "Population Mode (and 'Population-Mode range' / 'Population-Mode default')"
+    exempt_paths:
+      - "workplan/ratification-execution-register-2026-07-13.md"  # the row that tracks the debt
+    note: >-
+      Registered 2026-08-15, and the gap it closes is the point. RV-023 already
+      told the Item V story — a ratified decision that named its own single
+      implementation step and did not take it for a month — but registered only
+      the `conflicts.status` TOKEN. The design-mode SPELLING that Item V actually
+      retired had no tripwire at all, which is precisely why the sweep could sit
+      at "canonical core done, ~90 files remaining" from 2026-07-13 to 2026-08-15
+      with every gate green. Prose does not check itself, and a workplan row is
+      not a check.
+
+      Not cosmetic. `governance/co1-operational.md` (swept 2026-08-15) defined the
+      design modes AS "Tier 1" and "Tier 2" two paragraphs from sentences using
+      "Tier 1" in its evidence-ladder sense — the collision Item V exists to end,
+      in a governance document.
+
+      Expect a non-zero count on first run: the `references/` corpus (BPC,
+      conflict-matrices, fdr, connection registers, throughline docs) is unswept.
+      That count IS the remaining Q1 debt, and it is meant to be visible rather
+      than remembered. `severity: doctrine` not `broken`: nothing raises on read,
+      the text is simply wrong about what the project calls its own design scales.
+
+  - id: RV-026
+    token: Mode S
+    match: phrase
+    severity: doctrine
+    retired_by: "as RV-025"
+    replacement: "Person Mode (and 'Person-Mode handoff')"
+    exempt_paths:
+      - "workplan/ratification-execution-register-2026-07-13.md"
+    note: >-
+      The Person-Mode half of RV-025, registered separately so the two can be
+      exempted independently — "Mode S" survives in more licensed places than
+      "Mode P" does, because the DB column `mode_s_trigger` still carries the
+      retired word in its NAME. That column rename is a structural change with its
+      own caller sweep and Change-Order, explicitly deferred on 2026-08-15; until
+      it happens, a document naming the column is describing live data correctly
+      and must not be flagged. Exempt the FILE, never the token — when the column
+      is renamed, delete these exemptions rather than widening them.
+
 # --- deferred: correct to retire, NOT YET SAFE TO FLAG ----------------------
 # These fail admission test 2 — the replacement has not landed — so flagging them
 # today would flag accurate descriptions of live data. Each records the precondition

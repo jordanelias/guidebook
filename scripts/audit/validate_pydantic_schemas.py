@@ -20,7 +20,7 @@ decision this script does not make). Exit code is always 0 unless run with
 MODEL_TABLE_MAP is a curated, versioned mapping (same convention as
 claims_docket.py's TRIGGERS / EXTRA_RULE_IDS) -- not every schemas/*.py model
 has a live table (many are output/analysis shapes, not DB entities: doctrine,
-doctrine_recheck, economics, fdr_specialist, question, throughline, temporal,
+doctrine_recheck, economics, failure_demand_recovery, question, throughline, temporal,
 specialist, case_study, adversarial_use). Two models are deliberately *not*
 mapped despite having plausible name matches, because the underlying concept
 is a confirmed-absent phantom table, not a drift case:

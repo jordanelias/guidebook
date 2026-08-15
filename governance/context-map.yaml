@@ -102,14 +102,14 @@ directories:
     authority: canonical
     hidden_from_ripgrep: false
 pointers:
-  sessions_latest: session_2026-08-15-owner-decisions-group-1.md
+  sessions_latest: session_2026-08-15-ratified-unimplemented-sweep.md
   sessions_latest_resolves: true
   sessions_latest_research: session_2026-07-26-energy-conservation-rest-points-seating-b3.md
   sessions_latest_research_resolves: true
   doctrine_sha: 0f2f525
   doctrine_file: governance/mission-and-epistemics.md
   newest_workplan:
-  - 2026-08-14-remediation-workplan.md
+  - 2026-08-15-instrument-status-backfill-plan.md
   live_project_instructions:
   - project-instructions-v10_9.md
 database:

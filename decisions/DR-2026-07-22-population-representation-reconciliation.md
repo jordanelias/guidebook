@@ -1,6 +1,17 @@
 # DR-2026-07-22 — Population-representation reconciliation: one canonical code set across enum, DB, and the axis layer
 
-- Status: **PROPOSED — pending owner ratification.** States and does not execute
+- **SUPERSEDED — 2026-07-23, recorded 2026-08-15.** `DR-2026-07-23-population-schema-replace`
+  (owner directive, DG-NON) retired the population code scheme this DR proposed to reconcile:
+  the slash notation and `parent_code` nesting were replaced wholesale by the flat 23-code
+  Access-Taxonomy Axis-2 set. That DR names this one in its `Supersedes:` line. **This DR is
+  therefore not owed work.** Its bug-finding stands as a historical record — the enum↔DB drift
+  it documented was real — but its *proposed resolution* (align the DB to the slash enum) was
+  answered in the opposite direction one day later. Recorded during the 2026-08-15
+  ratified-but-unimplemented sweep, using the `SUPERSEDED` status retained by D-0163.
+  Status text reconciled per the merge-implies-ratification rule (`project-standards.md`,
+  2026-07-24), ACTION 2 — with the note that merge did **not** ratify this DR's substance,
+  because a later owner decision resolved the same question differently.
+- Status: ~~**PROPOSED — pending owner ratification.**~~ **SUPERSEDED** (above). States and does not execute
   (posture per `DR-2026-07-21-product-posture-thinking-tool-not-authority`). No enum,
   DB row, or migration changes with this commit; it lays out the reconciliation and
   its forks for ratification. The rename/add migration is written **after** the

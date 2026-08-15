@@ -120,13 +120,13 @@ The built environment creates barriers. People are not the problem.
 | Mode | Context | Specification standard |
 |---|---|---|
 | Universal Mode | No particular population predominant | Above code minimum, allows tailoring |
-| Mode P | Identified population(s) most likely to use building | Ranges; median is population-informed default |
-| Mode S | Named client/person; specific building | Co-design: OT + client resolve specific value |
+| Population Mode | Identified population(s) most likely to use building | Ranges; median is population-informed default |
+| Person Mode | Named client/person; specific building | Co-design: OT + client resolve specific value |
 
 ### Specification Range Doctrine
-Ranges are not uncertainty — they bridge Mode P and Mode S.
-- Mode P: use median as population-informed default
-- Mode S: position within range determined through co-design (OT + client)
+Ranges are not uncertainty — they bridge Population Mode and Person Mode.
+- Population Mode: use median as population-informed default
+- Person Mode: position within range determined through co-design (OT + client)
 - Never "between X and Y" without specifying which end at which mode
 
 ---

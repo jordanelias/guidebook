@@ -116,7 +116,7 @@ connection_type as an existing entry is a duplicate — skip it.
 ## Step 1 — Read source material (mode-dependent)
 
 ### spec mode
-1. Item specification — full item text (Mode P + Mode S notes + population annotations)
+1. Item specification — full item text (Population Mode + Person Mode notes + population annotations)
 2. Cross-reference tables in the spec (explicit cross-refs already noted by the author)
 3. `item_population_links` — population scope of the item, one row per
    (`item_code`, `population_code`), each carrying an `applicability`. Read the

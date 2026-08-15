@@ -82,7 +82,7 @@ class Conflict(GuidebookEntity):
 
     Each record captures where two or more populations have opposing
     design requirements on the same physical parameter, and how the
-    conflict is resolved (or declared unresolvable at Mode S).
+    conflict is resolved (or declared unresolvable at Person Mode).
     """
 
     # Identity
@@ -147,7 +147,7 @@ class Conflict(GuidebookEntity):
         """UNRESOLVED conflicts must name the Person-Mode handoff.
 
         The rule is unchanged; only the status it keys on is. It used to key on
-        UNRESOLVABLE-MODE-S, a spelling deprecated on 2026-07-13 when "Mode S"
+        UNRESOLVABLE-MODE-S, a spelling deprecated on 2026-07-13 when "Mode S"  [RETIRED-VOCAB-OK]
         became "Person Mode" (Item V of RATIFICATION-PACKAGE-2026-07-12, ratified
         in full per RATIFICATION-RECORD-2026-07-13 A5 — which named the
         conflicts.status CHECK as the one migration it needed, and that migration
