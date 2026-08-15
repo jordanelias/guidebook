@@ -1,7 +1,17 @@
 # DR-2026-07-25 — Rendered-document integrity gate, and four rules the E-08 audits earned
 
-- Status: **PROPOSED — DG-REVIEW for §2–§4 (agent decides, owner reviews); §5 is
-  DG-NON and is raised, not decided.**
+- **RATIFIED BY MERGE — §2–§4, recorded 2026-08-15.** Merged to `main` with no contrary
+  note, which ratifies it per the standing rule (`references/project-standards.md`,
+  2026-07-24: "always assume I Ratify if I merge it unless I explicitly note otherwise").
+  Its four rules are live in the operative ledger dated 2026-07-25, and both gates it
+  specifies are built and wired into `preflight.sh`: `scripts/audit/check_rendered_docs.py`
+  (C1–C4) and `scripts/audit/render_audit.js` (R1–R5). Execution is therefore complete,
+  not merely authorized. **§5 remains DG-NON and undecided** — per limit (4) of the same
+  rule, merge ratifies what the owner decided; it does not manufacture a decision the
+  owner never made. Reconciled during the 2026-08-15 ratified-but-unimplemented sweep,
+  under that rule's ACTION 2.
+- Status: ~~**PROPOSED**~~ → **RATIFIED BY MERGE — DG-REVIEW §2–§4 (above); §5 is
+  DG-NON and remains raised, not decided.**
 - Date: 2026-07-25
 - Category: **D-METH** (how a derived surface is validated) with a **D-PRES** component
   (what a rendered page must show) and one **D-OP** item (§3.4, model-routing notation).

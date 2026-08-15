@@ -189,3 +189,59 @@ The owner identified — after "trying to explain this for months," and stating 
 | Q23 | **DRAFTED as `decisions/DR-2026-07-13-attestation-rule-identifier-registry-gap.md` (PROPOSED)**, re-scoped from 4 to 8 identifiers / 20 files on full investigation. Awaiting ratification by the owner or an independent reviewer — not this session, which authored the attestation content that surfaced it | Contradiction sweep item 1; PR #6 CI failure 2026-07-13 | See "Execution of accept all and fix" above |
 | Q24 | ~~STI acoustic-threshold conflict~~ **CLOSED (flagged, not point-fixed)** — cross-reference notes added to the 3 live files, this session; resolution itself still depends on Phase E.2g reverification | Contradiction sweep item 6 | Mirrors GAP-269's tracking pattern for the corridor-width conflict |
 | Q25 | ~~Pydantic↔SQLite parity checker~~ **CLOSED (built)** — `scripts/audit/validate_pydantic_schemas.py`, this session; first run found 230 drift findings, per-finding accept/reject policy is separate future work | Contradiction sweep item 7 | See "Execution of accept all and fix" above |
+
+---
+
+## 2026-08-15 reconciliation — the ratified-but-unimplemented sweep
+
+**Why this pass ran.** The 2026-08-15 owner-decisions session closed on a finding that deserved a
+sweep rather than a footnote: Item V of `RATIFICATION-PACKAGE-2026-07-12` *named its own single
+implementation step* — "96 files; one real data migration: `conflicts.status` CHECK" — and that step
+was not taken for a month. A ratified decision that enumerates its own execution and then does not
+execute is a class, not an incident. This pass re-derived the disposition of every open row below
+against the live repo, and closed the ones that were owed, still relevant, and executable without
+owner input.
+
+**Method note, stated because this repo keeps catching the opposite.** Every status below was
+verified against current files, the live DB, or `git log` — not inherited from the row's own text.
+Three rows turned out to be **not owed** on re-derivation (Q2, Q8, Q21), and one turned out to be
+owed for a *different* reason than recorded (Q1). Where a row was already closed by a superseding
+path, that path is named rather than the row being silently ticked.
+
+| # | Verified disposition, 2026-08-15 | Evidence |
+|---|---|---|
+| **Q1** | **PARTIAL — canonical layer swept this session.** Governance (`co1-operational.md`, `armature_v4.md`), schemas (`enums.py`, `specification.py`), architecture prose (`navigation-modes.md`) and **all eight skills** normalized to Universal / Population / Person Mode. `co1-operational.md` was the worst case and was not merely "Mode P/S": its §Design Modes defined the modes *as* "Tier 1" and "Tier 2", the exact collision Item V was ratified to end, two paragraphs from sentences using "Tier 1" in its evidence-ladder sense. **Still open:** the `references/` corpus (BPC, conflict-matrices, fdr, connection registers, throughline docs). Deliberately untouched: `versions/` (frozen v9 corpus, per the impact appendix), `audits/` + `sessions/` (dated records true on their date), `site/` (generated), and the DB column `mode_s_trigger` (a structural rename with its own Change-Order, explicitly deferred 2026-08-15). | `grep` before/after; `git diff` |
+| **Q2** | **CLOSED — by superseding path, not as written.** The row specified `MODE-S-ONLY` → `PERSON-MODE-ONLY`. What shipped was `MODE-S-ONLY` → **`UNRESOLVED`** under D-0161 (migration 058), with the Person-Mode handoff meaning moved to `mode_s_trigger` / `unresolvable_residual` rather than carried in the status word. The row's *intent* — retire the vocabulary from the CHECK — is discharged. | `schemas/conflict.py:150`, `scripts/validate_conflict.py:116`, migration 058 |
+| **Q3** | **PARTIAL.** The vocabulary half is done (Q1 above, all eight skills). The **doctrinal-content** half is not: the OLD stated-threshold and OLD-ladder text in `evidence-auditor`, `item-specification-writer` (● rule), `literature-review-planner` and `supersession-audit` is unswept. Note the row's first named target, `cell-curator`, no longer exists — renamed `specification-curator` per DR-2026-08-12. | `ls skills/`; row text vs live files |
+| **Q5** | **H1 BUILT; H2–H4 OWED.** `source_value_extractions` carries every genealogy field; `external_root_registry` and `v_value_independence` exist, the view encoding all three anti-gaming disciplines. **H2** (`functional_basis`, `derivation_paths`) and **H3** (`population_icf_links`) do not exist; `assess_cell.py` has no H4 gate. The DR's cost argument is **still intact and still expiring**: `specifications` is 0 rows, so the columns remain cheap. See the collision warning below. | `PRAGMA table_info`; `sqlite_master` |
+| **Q6** | **OWED — and the live data is worse than the row records.** `jurisdictional_values` has no `instrument_status` column across **109 rows**. The ratification package described those rows as `evidence_tier=6` / `is_code_minimum=1`; in fact `is_code_minimum` is **NULL on all 109**, and *every* row sits at `evidence_tier=6` — including ISO 21542 (×9), BS 8300 (×4+), DIN 18040, EN 81-70, AS/NZS, CSA B651 and ANSI, which are voluntary standards, not statutory codes. So the surface cannot distinguish "the law requires X" from "a voluntary standard suggests X" *and* the tier field misgrades the instrument class. The standing caveat on every rendering surface is still load-bearing. | `SELECT standard_name, MIN/MAX(is_code_minimum), evidence_tier … GROUP BY` |
+| **Q7** | **CLOSED 2026-08-15.** `schemas/fdr_specialist.py` → `schemas/failure_demand_recovery.py`, executing A6-H6. No imports existed; the four live callers were swept (`schemas/specialist.py`, `scripts/audit/validate_pydantic_schemas.py`, `architecture/schema-spec.md`, `workplan/2026-08-14-execution-plan.md`). Module import re-verified. Left as-is deliberately: the DR itself and `working/pilot/PILOT-MANIFEST.md` — dated records of what was true when written, annotated rather than falsified. | `git mv`; import check |
+| **Q8** | **CLOSED — not owed.** The Koontz-2017 lead was withdrawn (`6489bec`) and the E-08 exemplar retired to `_archived/specs/e-08.html` (`3996a02`); the live surface is `specs/e-08-brief.html`. No live Koontz-2017 anchor remains. | `git log`; `ls`; `grep` |
+| **Q9** | **CLOSED.** PI archival executed: `v10_7`–`v10_13` hold full content under `_archived/governance/`, with redirect stubs at the origin paths (guardrail 2 form), `v10_14` live. | file sizes: 440 B stub vs 16–24 KB archived |
+| **Q10** | **CLOSED 2026-08-15**, in the shape the DR specified. Item 1's Decisions-vs-Decision-Records clause added to `<reference_files_pattern>`; the currency-header requirement for future schema docs added to `<migration_and_growth>`; `schema-spec.md` filled **"NO — historical record"** (the fill the ratification record authorised for that file on its documented drift). `schema-reconciliation.md` carries the header **deliberately unfilled** as `[OWNER-TO-DETERMINE]` — the DR declined to make that call and the ratification record left it "pending its own review". An unfilled marker is visible; a guessed one is not. Its stale "ACTIVE — governs all downstream schema work" line is annotated rather than removed. | the three files |
+| **Q21** | **DISSOLVED by a later decision — not owed as written.** The row's premise was "`gap_mining` is empty, all 297 gaps untriaged". `gaps` is now **0 rows**: the clean-room evidence reset (DR-2026-08-06) cleared the register. There is no longer a backlog of 297 gaps to mine one of. B5's adoption gate should be re-stated against the post-reset gap register when gaps exist again, not carried forward against a corpus that no longer exists. | `SELECT COUNT(*) FROM gaps` / `gap_mining` |
+| **Q22** | **CLOSED 2026-08-15 — the flagship of this sweep.** `governance/evidence-architecture.md` gained **§4.5 (genealogy)** and **§5.5 (the derivation handshake)**, executing that document's own "Affects" line verbatim. The gap mattered: H2's **cultural-claim protection** — that community-rooted claims are fully assertable as `population_only`, that no functional derivation may flatten or override a community claim, and that the protection is anchored by Co-1/participatory provenance rather than self-declared — was ratified 2026-07-13 **as a named owner commitment**, in a package whose own adversarial pass then found it absent from the document declared CANONICAL at the same moment. It stayed absent for a month. Build state is marked in place: H1 built, H2–H4 flagged `[ENGINE-LAG]`, with the honest consequence stated — until `derivation_paths` exists, a `population_only` determination cannot be told apart by query from an unexamined one, so the protection binds authors as doctrine but is not yet machine-checkable. | `governance/evidence-architecture.md` §4.5, §5.5, Status block |
+| **Q23** | **CLOSED.** Ratified by owner directive 2026-07-21 and executed by a later session; `EXTRA_RULE_IDS` grown 5→13, no historical attestation content rewritten. | DR status header |
+| Q4, Q13, Q15, Q19 | **Open, unchanged, not re-derived this pass** — flagged as such rather than reported clean. Q15 is owner-external by construction. | — |
+
+### One cross-plan collision, surfaced here because nothing else would catch it
+
+`workplan/2026-08-14-remediation-workplan.md` §1 allocates migrations 058–066, and its **Group 3**
+— the next owner-decision group — is the six prototyped schema migrations, two of which
+(**061** `determination_provenance`, **062** `specification_claim_links`) touch `specifications`.
+**Q5's H2 columns (`functional_basis`, `derivation_paths`) are not in that batch.** They are ratified,
+owed, and touch the same table, so they should be considered *with* Group 3 rather than after it —
+one pass over a 0-row table instead of two, before the backfill that makes the column cheap becomes
+the backfill that makes it expensive. This session did **not** author that migration: schema changes
+are D-SCHEMA/Change-Order gated, the numbering is already spoken for, and slipping a seventh
+migration into a batch queued for owner decision would be exactly the unilateral structural move
+`CLAUDE.md` §5 says to propose rather than execute. It is raised, not done.
+
+### Ratified items still owed after this pass
+
+**Executable without owner input:** Q1 remainder (`references/` corpus), Q3 doctrinal-content half,
+Q5-H2/H3/H4 (schema — see collision above), Q6 `instrument_status` (schema + a per-row instrument
+classification that is judgment, not lookup), E10 ICCT (`cross_test_pairs` — unbuilt), Q13, Q19.
+**Owner-gated, unchanged:** E9 (pipeline stage-ids — needs the deployed `<audit_trail>` list),
+E11 (product-posture doctrine edit — SHA cascade, run with the materiality triage), Q15 (C3/C4),
+`schema-reconciliation.md`'s currency value, and §5 of DR-2026-07-25 (DG-NON).
