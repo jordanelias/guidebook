@@ -260,10 +260,12 @@ Live DB-aware scripts under `scripts/` and `tools/` honour `GUIDEBOOK_DB_PATH` (
 `data/guidebook.db`), enforced by `python3 scripts/audit/db_path_env_audit.py`. Two documented
 exemptions live in that script: `assess_cell.py` (requires `--db` and deliberately refuses the
 canonical DB) and `graph_audit.py` (resolves the path via `graph/build.py`). **One-time/legacy
-code does *not* honour it** — `scripts/{db,migrate,probes,test}/**` is out of scope, and note
-that `scripts/db/**` targets `data/db/guidebook.db`, a *different, legacy* file that is not the
-canonical database. If you point the variable at a scratch copy and run something under those
-paths, it will read the committed DB regardless.
+code does *not* honour it** — `scripts/{migrate,probes,test}/**` is out of scope. If you point the
+variable at a scratch copy and run something under those paths, it will read the committed DB
+regardless. (`scripts/db/**` was the fourth directory here, and the one that targeted
+`data/db/guidebook.db` — a *different, legacy* file that was never the canonical database. It was
+archived 2026-08-15 with the Tier-1 batch; `scripts/migrate/**` is now two files, the decision-register
+importer and its guard.)
 
 **Run checks through the registry, not one at a time.** Every check lives in
 `governance/check-registry.yaml`; `scripts/run_checks.py` is the only thing that invokes one,
@@ -303,14 +305,14 @@ The individual commands still work if you want one in isolation:
 Tests are **standalone scripts, not pytest** (`python3 scripts/tests/<name>.py`, exiting 0/1).
 Only three print a `RESULTS: X/Y` line — `test_db_integrity`, `test_url_verifier`,
 `test_verification_pipeline`; the rest print `RESULT: PASS`, `ALL PASS`, or (in
-`test_assess_cell_pilot`) `PASS: …`. Read the exit code, not the wording. **Ten of the twelve
-are registered** — `test_db_integrity` blocking, nine advisory in the `tests` battery. The two
-unregistered are `test_adjudication_integrity.py` (its subject audit is quarantined on a content
-backlog) and `test_generate_parts_4_2.py` (which currently exits 0 having asserted nothing: its
-fixture DB `/tmp/work14.db` does not exist). Prefer `test_db_integrity` over the older
-`validate_db.py`, which is **broken** against the current schema (`no such column: doi_less_key`)
-and is quarantined. (Until 2026-08-04 this paragraph said only `test_db_integrity` was registered
-and that eight more were "wired to nothing" — the `tests` battery landed since.)
+`test_assess_cell_pilot`) `PASS: …`. Read the exit code, not the wording. **Ten of the eleven
+are registered** — `test_db_integrity` blocking, nine advisory in the `tests` battery. The one
+unregistered is `test_adjudication_integrity.py` (its subject audit is quarantined on a content
+backlog). `test_generate_parts_4_2.py` was the twelfth and was archived 2026-08-15: it exited 0
+having asserted nothing, because its fixture DB `/tmp/work14.db` does not exist. `validate_db.py`
+was archived in the same batch — `test_db_integrity` supersedes it at 72 checks to 9. (It was
+*repaired* on 2026-08-05, not broken as this paragraph claimed until 2026-08-15; the
+`doi_less_key` crash was fixed then, and it was retired for redundancy rather than for being ill.)
 
 **CI workflows** — four, since the 2026-08-01 consolidation (was eight):
 
@@ -473,8 +475,10 @@ attestation logic.
   `references/skill-registry.md`), *not* Claude Code harness skills. Renaming one is a governed
   event (attestations reference the stable identifiers).
 - **Don't run `scripts/bootstrap.sh`** (PAT-gated, remote-fetching; for the claude.ai surface).
-- **Don't run `scripts/init_db.py`** expecting a working DB (it applies only migration 001) —
-  use `migrate_db.py --rebuild`.
+- **`scripts/init_db.py` is gone** — archived 2026-08-15 because it applied only migration 001 and
+  so never produced a working DB. Use `migrate_db.py --rebuild`. The `db.py init` and `db.py validate`
+  subcommands were retired with it and with `validate_db.py`; both are absent from `--help` rather
+  than left as tracebacks.
 - **Work from axes, not population umbrellas.** When adding, scoping, or reasoning about
   population/profile codes, curate *from* the functional axes (the specific, non-erasing demand
   layer) — never coin broad umbrellas ("physically disabled", "energy-limiting chronic illness").

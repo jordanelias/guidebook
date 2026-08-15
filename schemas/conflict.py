@@ -19,6 +19,20 @@ from pydantic import field_validator, model_validator
 
 from schemas.base import GuidebookEntity
 
+# The project's one ratified status vocabulary — owner ruling 2026-08-14,
+# enforced in SQL by migration 058 and mirrored here. Kept as a literal set
+# rather than an import of DecisionStatus so this module stays importable
+# standalone, which validate_conflict.py relies on; the two are compared by
+# test_db_integrity rather than by trust.
+#
+# RESOLVED-EVIDENCE and RESOLVED-CONSENSUS are reserved for direct evidence or
+# claims directly derived from it. A conflict closed for any other reason —
+# infrastructure finished, question withdrawn — is CLOSED.
+RATIFIED_STATUSES = frozenset({
+    "ACTIVE", "PROPOSED", "DEFERRED", "RESOLVED-EVIDENCE",
+    "RESOLVED-CONSENSUS", "UNRESOLVED", "CLOSED", "RETIRED", "SUPERSEDED",
+})
+
 
 class ConflictParty(GuidebookEntity):
     """One side of a conflict — populations and their specification."""
@@ -30,7 +44,7 @@ class ConflictParty(GuidebookEntity):
 class ConflictResolution(GuidebookEntity):
     """Resolution details for a conflict domain."""
 
-    status: str  # RESOLVED-EVIDENCE, RESOLVED-CONSENSUS, UNRESOLVABLE-MODE-S, DEFERRED
+    status: str  # the ratified vocabulary — see RATIFIED_STATUSES
     strategy_codes: list[str] = []  # e.g. ["SZ", "PP"] — Sensory Zoning, Parallel Provision
     strategy_labels: list[str] = []  # human-readable strategy names
     description: str  # prose resolution description
@@ -39,12 +53,10 @@ class ConflictResolution(GuidebookEntity):
     @field_validator("status")
     @classmethod
     def valid_status(cls, v: str) -> str:
-        valid = {
-            "RESOLVED-EVIDENCE", "RESOLVED-CONSENSUS",
-            "UNRESOLVABLE-MODE-S", "DEFERRED", "OPEN",
-        }
-        if v not in valid:
-            raise ValueError(f"Invalid resolution status: '{v}'. Valid: {sorted(valid)}")
+        if v not in RATIFIED_STATUSES:
+            raise ValueError(
+                f"Invalid resolution status: '{v}'. Valid: {sorted(RATIFIED_STATUSES)}"
+            )
         return v
 
 
@@ -95,7 +107,7 @@ class Conflict(GuidebookEntity):
     specifications_involved: list[str] = []  # item codes
     connection_ids: list[str] = []  # CON-NNNN references
 
-    # Unresolvable residual (for UNRESOLVABLE-MODE-S conflicts)
+    # Unresolvable residual (for UNRESOLVED conflicts — the Person-Mode handoff)
     unresolvable_residual: Optional[str] = None
     mode_s_trigger: Optional[str] = None
     mitigation: Optional[str] = None
@@ -132,10 +144,22 @@ class Conflict(GuidebookEntity):
 
     @model_validator(mode="after")
     def unresolvable_consistency(self) -> "Conflict":
-        """UNRESOLVABLE-MODE-S conflicts must have mode_s_trigger."""
-        if self.resolution.status == "UNRESOLVABLE-MODE-S":
+        """UNRESOLVED conflicts must name the Person-Mode handoff.
+
+        The rule is unchanged; only the status it keys on is. It used to key on
+        UNRESOLVABLE-MODE-S, a spelling deprecated on 2026-07-13 when "Mode S"
+        became "Person Mode" (Item V of RATIFICATION-PACKAGE-2026-07-12, ratified
+        in full per RATIFICATION-RECORD-2026-07-13 A5 — which named the
+        conflicts.status CHECK as the one migration it needed, and that migration
+        did not run until 058), and retired as a status word by the 2026-08-14
+        ruling. A conflict that
+        cannot be resolved at population scale still owes the reader what the
+        assessment turns on, which is exactly what mode_s_trigger holds.
+        """
+        if self.resolution.status == "UNRESOLVED":
             if not self.mode_s_trigger:
                 raise ValueError(
-                    "UNRESOLVABLE-MODE-S conflict must specify mode_s_trigger"
+                    "UNRESOLVED conflict must specify mode_s_trigger "
+                    "(the Person-Mode handoff parameter)"
                 )
         return self

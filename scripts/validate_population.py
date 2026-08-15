@@ -97,11 +97,11 @@ RETIRED_CROSSWALK = {
 EXCLUDED_TABLES = {
     # The authority itself, not a subject.
     "populations",
-    # The reclassification map. Its whole purpose is to hold the OLD codes
-    # alongside their canonical replacements, so retired codes there are the
-    # table working correctly. Flagging them would be flagging the crosswalk for
-    # containing the crosswalk.
-    "population_reclass",
+    # `population_reclass` sat here until 2026-08-15, excluded because holding
+    # retired codes was the crosswalk working correctly rather than a defect. The
+    # table was retired by migration 059 (the follow-up DR-2026-07-23 called for),
+    # so the exclusion is removed with it: the scan walks live tables, and naming
+    # one that no longer exists is dead reasoning that reads as live.
 }
 
 # Column names that hold a code. Deliberately EXACT, not suffix-matched: the

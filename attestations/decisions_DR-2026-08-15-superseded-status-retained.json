@@ -1,0 +1,38 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-08-15-owner-decisions-group-1",
+ "artifact": "decisions/DR-2026-08-15-superseded-status-retained.md",
+ "doctrine_sha": "0f2f525",
+ "rules_in_scope": [
+  "structure-auditor",
+  "audit-consolidator",
+  "adherence-logging-and-attestation"
+ ],
+ "per_rule_status": {
+  "structure-auditor": {
+   "status": "FIRED",
+   "evidence_path": "scripts/migrations/060_restore_superseded_status.sql",
+   "reason": "Migration 060 restores the word to both CHECK constraints and makes no data change, because widening a CHECK cannot invalidate an existing row and zero rows carry SUPERSEDED -- so unlike 058 the table copy is a straight SELECT *. Verified on a scratch rebuild before touching the canonical database: user_version 60, all 17 surviving views execute (18 minus the one migration 059 dropped), no FK violations, integrity ok, and the constraint proven in both directions -- SUPERSEDED, RETIRED and ACTIVE accepted; WITHDRAWN, PROVISIONAL and OPEN still refused. The claim that no view or FK depends on either table was RE-VERIFIED against the live schema rather than inherited from 058's header."
+  },
+  "audit-consolidator": {
+   "status": "FIRED",
+   "evidence_path": "decisions/DR-2026-08-14-status-vocabulary-ratification.md",
+   "reason": "The amendment is recorded in three places that must agree: a new DR (D-0163) carrying the decision, a forward note plus corrected vocabulary table in the DR it amends, and both register stores with the YAML generated from the committed DB row. The superseded-vocabulary register entry is corrected too -- SUPERSEDED is removed from the deferred retirements, and the note says why the old reasoning was sound but is now moot rather than deleting it silently."
+  },
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "attestations/decisions_DR-2026-08-15-superseded-status-retained.json",
+   "reason": "This attestation. The deviation logged against D-0161 -- that SUPERSEDED was retired on an implementer's reading -- is now resolved by owner ruling rather than left standing, and the resolution went AGAINST the implementer."
+  }
+ },
+ "deviations": [
+  {
+   "rule": "audit-consolidator",
+   "reason": "This is the second correction to the same decision in one session, and the sequence deserves recording as a pattern rather than as two incidents: an inference shipped in the same turn as the ruling it attached to; a false premise underneath it; five green commits and a PR; a re-derivation only on request; and now a reversal. The DR keeps that sequence rather than presenting a clean amendment, which is the honest form -- but it is also the second document I have written about my own error in this session, and a reviewer could reasonably say the ratio of self-narration to delivered work is climbing."
+  }
+ ],
+ "bias_direction": "The bias runs toward making the reversal look like a system working. It partly is -- the owner asked, I re-derived, the error surfaced, the word came back -- but that framing flatters a sequence in which nothing mechanical caught anything: every gate passed at every step, and the correction is entirely downstream of a human asking a question. There is a second pull, toward over-arguing the merits of keeping SUPERSEDED now that the owner has ruled for it, which would convert a decision I got wrong into a decision I secretly agreed with. The DR argues the merits because the distinction between 'replaced by a named successor' and 'removed with none' is real and I did not weigh it the first time -- not because I anticipated the ruling.",
+ "independent_reviewer_counterclaim": "The strongest objection is that this DR does work D-0161 should have done: if the SUPERSEDED/RETIRED distinction is as load-bearing as §2 now argues, that argument was available before the retirement and I did not make it -- I reached for a column-population claim instead, and got it wrong. So the merits reasoning here is post-hoc, however sound it reads. A second objection is procedural: two schema migrations (058, 060) now bracket a word that never moved in the data, which leaves the migration ledger recording an implementer's round trip as if it were two decisions. The defence is that both are real Change-Order-gated enum changes and forward-only history is the house rule -- but a reviewer would be right that the cheaper path was to not retire it in the first place, and that no verification I ran would have prevented that."
+ ,
+ "verdict": "DEVIATION-LOGGED"
+}

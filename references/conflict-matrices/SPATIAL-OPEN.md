@@ -19,9 +19,9 @@
 
 | Domain | Pop A | Pop B | A spec | B spec | Resolution | Status | Evidence |
 |---|---|---|---|---|---|---|---|
-| Open-plan vs compartmentalised | DEAF | NDV/AUT, NDV/SENS | Open visual connectivity; no opaque barriers; conversation circles with sightlines | Compartmentalised activity zones; enclosed sequential spaces; transition alcoves | Prospect-refuge zoning (see below) | RESOLUTION-PROPOSED | ◐ |
-| Glazed junctions | DEAF | VIS, DEM, NDV/AUT | Glass corners for collision avoidance and visual advance warning | Glare, reflective confusion, visual complexity | Anti-reflective glazing + etched lower band + matte adjacent flooring | RESOLUTION-PROPOSED | ○ |
-| DEAF+NDV/AUT co-occurrence (intra-individual) | DEAF signing need | NDV/AUT sensory withdrawal need | Signing requires visual openness, sightlines, social space | Sensory overload requires enclosed withdrawal | Environmental refuge with visual communication capability | RESOLUTION-PROPOSED | ○ |
+| Open-plan vs compartmentalised | DEAF | NDV/AUT, NDV/SENS | Open visual connectivity; no opaque barriers; conversation circles with sightlines | Compartmentalised activity zones; enclosed sequential spaces; transition alcoves | Prospect-refuge zoning (see below) | PROPOSED | ◐ |
+| Glazed junctions | DEAF | VIS, DEM, NDV/AUT | Glass corners for collision avoidance and visual advance warning | Glare, reflective confusion, visual complexity | Anti-reflective glazing + etched lower band + matte adjacent flooring | PROPOSED | ○ |
+| DEAF+NDV/AUT co-occurrence (intra-individual) | DEAF signing need | NDV/AUT sensory withdrawal need | Signing requires visual openness, sightlines, social space | Sensory overload requires enclosed withdrawal | Environmental refuge with visual communication capability | PROPOSED | ○ |
 
 ### Resolution Evidence Register
 
@@ -31,20 +31,20 @@
 - Assessment: This is the spatial equivalent of the LIGHT-INT three-zone model. Zone 1 (social/prospect): open, visually connected, ≥2440 mm paths, conversation circles, ≥300 lux. Zone 2 (transition): graduated sensory change (≥0.2 s RT60 change, ≥50 lux change, ≥30 LRV change between zones per detectable-gradient-protocol BPC). Zone 3 (refuge): enclosed, compartmentalised, user-controlled sensory environment (A-16 spec).
 - Outcome data: No POE of integrated prospect-refuge zoning in a multi-population facility. Individual components have evidence: DeafSpace at Gallaudet (Co-1), ASPECTSS with POE data (Mostafa 2021, Tier 3), sensory relief spaces (Unwin 2022/2023, Tier 3), prospect-refuge validation for NDV museum visitors (Granland et al. 2025, Tier 3).
 - Guidebook implication: Universal Mode requires BOTH open/prospect AND enclosed/refuge zones on every floor plate. Neither alone is sufficient. The building must provide equivalent functional access in both zone types — a building with only open-plan spaces excludes NDV/AUT; a building with only enclosed spaces excludes DEAF signing communication.
-- Status: **RESOLUTION-PROPOSED** · Confidence: **MEDIUM** — theoretical framework is strong (prospect-refuge); individual components have evidence; integrated system untested
+- Status: **PROPOSED** · Confidence: **MEDIUM** — theoretical framework is strong (prospect-refuge); individual components have evidence; integrated system untested
 
 **Resolution 2 — Anti-reflective glazed junctions (for glazing conflict)**
 - Source: CON-0030 (connection register); DeafSpace Guidelines (glass corners); Studio Twenty Seven Architecture (Gallaudet implementation)
 - Mechanism: Replace opaque corners with glazed panels using: (a) anti-reflective coating to eliminate VIS glare; (b) etched/frosted lower band (0–1200 mm AFF) to eliminate floor reflections confusing DEM users while maintaining upper sightline for DEAF signing; (c) matte floor finish adjacent to junction to eliminate specular reflections.
 - Outcome data: Gallaudet implemented glass corners but reported curved-corner design caused more collisions (DeafSpace design iteration — NEA article). Glass corners were the corrective. No POE measuring VIS/DEM/NDV response to glazed junctions.
-- Status: **RESOLUTION-PROPOSED** · Confidence: **LOW** — design logic is sound; no controlled evaluation
+- Status: **PROPOSED** · Confidence: **LOW** — design logic is sound; no controlled evaluation
 
 **Resolution 3 — Environmental refuge with visual communication capability (for DEAF+NDV intra-individual)**
 - Source: Session 7 observation (Gallaudet sensory room request by neurodivergent deaf students); A-16 sensory relief space spec; DeafSpace visual communication requirements
 - Mechanism: Environmental refuge room (A-16 spec) with optional transparent/translucent partition or sidelight to adjacent signing space, operable blackout. Allows deaf neurodivergent user to withdraw from sensory overload while maintaining visual communication access when ready. Blackout option provides full sensory withdrawal when needed.
 - Outcome data: None. Gallaudet has no formal POE of this configuration. The need is documented (session 7 observation) but no built solution has been evaluated.
 - Guidebook implication: Specification note for A-16 in DEAF-serving facilities: sensory relief spaces to include operable transparent panel or sidelight to adjacent communication space, with full blackout option. Tagged [INTRA-INDIVIDUAL] resolution.
-- Status: **RESOLUTION-PROPOSED** · Confidence: **LOW** — no evidence; design logic only
+- Status: **PROPOSED** · Confidence: **LOW** — no evidence; design logic only
 
 ### Corridor Width Analysis
 

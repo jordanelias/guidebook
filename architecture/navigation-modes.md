@@ -180,7 +180,7 @@ ORDER BY sp.role, s.item_code;
 3. Decision tree (interactive, collapsible)
 4. Governing principle
 5. Resolution strategy (with strategy code badges)
-6. Unresolvable residual (if MODE-S-ONLY)
+6. Unresolvable residual (if UNRESOLVED)
 7. Mode S trigger and mitigation
 8. Specifications involved (linked)
 9. Citations

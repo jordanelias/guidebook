@@ -181,8 +181,13 @@ def build_brief(item_code, item, run, gaps, conflicts, connections, deferred,
     # Conflicts
     lines.append("## Active Conflicts")
     lines.append("")
-    resolved_c   = [c for c in conflicts if c["status"] not in ("UNRESOLVED", "MODE-S-ONLY")]
-    unresolved_c = [c for c in conflicts if c["status"] in ("UNRESOLVED", "MODE-S-ONLY")]
+    # Resolved is now named positively rather than as "not unresolved". Under the
+    # 2026-08-14 vocabulary the old exclusion would have counted ACTIVE, PROPOSED
+    # and DEFERRED conflicts as resolved — three words that did not exist on this
+    # table when it was written.
+    _RESOLVED = ("RESOLVED-EVIDENCE", "RESOLVED-CONSENSUS", "CLOSED")
+    resolved_c   = [c for c in conflicts if c["status"] in _RESOLVED]
+    unresolved_c = [c for c in conflicts if c["status"] not in _RESOLVED]
     if conflicts:
         lines.append("| Conflict ID | Domain | Pop A | Pop B | Status | Gap ID |")
         lines.append("|---|---|---|---|---|---|")

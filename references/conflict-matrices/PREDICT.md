@@ -64,7 +64,7 @@ Status: **RESOLVED-CONSENSUS** (MOB BPC: adequate space is the provision; reconf
 **Resolution 2 — Consistent configuration protocol for multi-use spaces:**
 Multi-use clinic/community rooms: establish a standard layout and reset to it after each use. Document the standard layout visually (wall-mounted room plan). NDV/AUT and DEM users can orient to the standard layout; MOB equipment needs are met within it.
 
-Status: **RESOLUTION-PROPOSED** (clinical plausibility; no direct evidence)
+Status: **PROPOSED** (clinical plausibility; no direct evidence)
 
 **Resolution 3 — DAR as latent adaptability:**
 DAR provisions (Part 10) provide future adaptability without altering current spatial experience. Reinforced walls, service voids, removable cabinetry are INVISIBLE to occupants until activated. They support MOB future adaptation needs without compromising NDV/DEM predictability.

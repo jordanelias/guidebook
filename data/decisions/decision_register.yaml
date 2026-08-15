@@ -4399,7 +4399,7 @@ decisions:
   - D-0132
   - D-0138
   supersedes: []
-  status: PROVISIONAL
+  status: PROPOSED
   review_status: PENDING
   notes: '[RATIFICATION 2026-08-04] HELD, NOT ratified under the owner directive of 2026-08-04 ("ratify
     all"), and the reason is recorded rather than the decision quietly skipped. architecture/schema-spec.md
@@ -5417,3 +5417,142 @@ decisions:
     to _archived/, verified in both directions.
 
     '
+- decision_id: D-0161
+  category: D-SCHEMA
+  delegation: DG-NON
+  delegation_rationale: Owner originated and worded the vocabulary across two messages of 2026-08-14,
+    including the arbitration that OPEN and ACTIVE are one concept. Captured, not proposed.
+  summary: Ratify one status vocabulary of eight words shared by decisions.status and conflicts.status;
+    retire seven spellings across the two layers that policed them.
+  outcome: ADOPTED by owner ruling 2026-08-14. The ratified words are ACTIVE, PROPOSED, DEFERRED, RESOLVED-EVIDENCE,
+    RESOLVED-CONSENSUS, UNRESOLVED, CLOSED, RETIRED. RESOLVED-EVIDENCE and RESOLVED-CONSENSUS are reserved
+    for direct evidence or claims directly derived from it; anything else that finishes is CLOSED. DEFERRED
+    stays distinct from ACTIVE because it records a choice not to act. Implemented by schema migration
+    058 (both CHECK constraints rebuilt, D-0139 remapped PROVISIONAL to PROPOSED inline).
+  rationale: 'The two layers disagreed: the database accepted WITHDRAWN and rejected RETIRED while schemas/enums.py
+    did the reverse, so which word was legal depended on whether the write went through Python or SQL.
+    On conflicts the two sets shared two words of five. Zero rows used any contested value, which is why
+    nothing had failed yet and why the fix cost one migration. MODE-S-ONLY was retired twice over: Item
+    V of RATIFICATION-PACKAGE-2026-07-12 normalized Mode P/S to Population/Person Mode and was ratified
+    in full on 2026-07-13, naming its own single implementation step -- "one real data migration: conflicts.status
+    CHECK" -- which was never run. The status spelling then survived a month in that CHECK, both validators,
+    the skill and five matrices until 058.'
+  alternatives_considered:
+  - 'Per-field subsets rather than one shared list -- refused on reversibility: a superset narrows by
+    forward migration once usage shows which words a field never takes, while a too-narrow CHECK refuses
+    a legitimate write the first time someone makes one.'
+  - Adopt WITHDRAWN and edit Python instead -- refused by owner ruling 1; RETIRED matches the lifecycle
+    the schema documentation already described.
+  - Treat the file layer DEFERRED/OPEN as a distinct concept needing a distinct name -- refused; the owner
+    ruled OPEN and ACTIVE are one concept and only one survives.
+  - Build the deferral counter now -- offered and not taken up; recorded as a small forward migration
+    for when it is wanted.
+  decision_date: 2026-08-14 23:50
+  decided_by: owner_jordanelias_directive_2026-08-14
+  model_routing: opus/200/arbitrate
+  effort_level: 200
+  decision_artifacts:
+  - decisions/DR-2026-08-14-status-vocabulary-ratification.md
+  - scripts/migrations/058_status_vocabulary_ratification.sql
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: 'SUPERSEDED was retired on a reading rather than an instruction: the ruling did not name it,
+    and the reading was put to the owner before implementation. One leg of that reading was FALSE and
+    is corrected here -- decisions.supersedes does NOT carry the successor relation; it is ''[]'' on all
+    162 rows and has never been written to, while its inverse predecessors is populated on 51. The surviving
+    ground is that zero rows ever used the SUPERSEDED status. Reversal is one line in each of the CHECK
+    and the enum, and this is the item in D-0161 most worth overturning, being the only one the owner
+    did not word. The mode_s_trigger FIELD name remains retired vocabulary and is deliberately not renamed
+    -- a structural change with its own caller sweep. The deferral counter the owner raised is not built.'
+- decision_id: D-0162
+  category: D-OP
+  delegation: DG-NON
+  delegation_rationale: File moves and retirements are owner-gated per CLAUDE.md section 9 guardrail 4.
+    The owner approved the batch outright ("APPROVE WHOLE TIER-1 BATCH") after being shown its contents
+    and its reversal cost.
+  summary: 'Retire the Tier-1 batch: 28 Python modules and 4 probe-log artefacts archived to _archived/
+    at their origin paths, plus db_meta, population_reclass and the v_source_reach view dropped by migration
+    059.'
+  outcome: 'ADOPTED by owner approval 2026-08-14, scoped by workplan/2026-08-14-remediation-workplan.md
+    section 6. Nothing deleted. Three things deliberately kept: migrate_decisions.py and its guard (the
+    dual decision store is still pending owner decision #2), the newest probe log (cited by line number
+    from the live writer plan), and the validate_db registry entry at status: retired, because it carries
+    that script''s one unresolved content finding — 31 connections with zero targets.'
+  rationale: 'Carrying dead tooling costs census confusion at every audit cycle. It also makes the opposite
+    error more likely: the 2026-08-14 synthesis produced a cull list whose own retirement pass had to
+    rescue five load-bearing items, two of them read by blocking gates. Reachability was therefore tested
+    six ways — registry or CI selection, gate-readership, contract or doctrine citation, operator CLI
+    paths, transitive imports, and scheduled jobs — rather than by CI-reachability alone, which would
+    have deleted emit_data_migration.py, the only sanctioned write path.'
+  alternatives_considered:
+  - Delete rather than archive -- refused; guardrail 2 is retire, never delete, and archiving at the origin
+    path keeps git log --follow working.
+  - Scripts only, holding the three database objects -- offered to the owner as the smaller first bite
+    and not taken; the owner approved the whole batch.
+  - Hold everything until the schema round -- refused on the owner's approval; the material does not become
+    more alive by waiting, and each audit cycle re-censuses it.
+  - Delete the validate_db registry entry with the script -- refused; it carries an unresolved content
+    finding that would have been buried by a tooling cleanup.
+  decision_date: 2026-08-14 23:55
+  decided_by: owner_jordanelias_directive_2026-08-14
+  model_routing: opus/200/arbitrate
+  effort_level: 200
+  decision_artifacts:
+  - decisions/DR-2026-08-14-tier-1-retirement-batch.md
+  - scripts/migrations/059_tier1_retirements.sql
+  - _archived/scripts/README.md
+  - _archived/audits/README.md
+  predecessors:
+  - D-0161
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: 'Two live CLI paths were retired with the batch rather than left as tracebacks: db.py init and
+    db.py validate. Six live references to retired names proved to be false positives and are recorded
+    in the DR so the next sweep does not re-derive them -- three were a FUNCTION named validate_db rather
+    than the script, two were path-part exclusion sets that cost nothing to keep, and one was an EXCLUDED_TABLES
+    entry rather than a read.'
+- decision_id: D-0163
+  category: D-SCHEMA
+  delegation: DG-NON
+  delegation_rationale: Owner ruling of 2026-08-15 ("yes we keep superseded"), overturning an implementer
+    inference that D-0161 had carried. Captured, not proposed.
+  summary: Retain SUPERSEDED as a status value on decisions.status and conflicts.status, amending D-0161.
+    The ratified vocabulary is nine words, not eight.
+  outcome: 'ADOPTED by owner ruling 2026-08-15. Migration 060 restores SUPERSEDED to both CHECK constraints
+    and nine call sites are swept back. No data change: widening a CHECK cannot invalidate a row and zero
+    rows carry the value.'
+  rationale: 'Migration 058 retired SUPERSEDED on an inference the owner had not made, resting on a premise
+    that was false -- that decisions.supersedes already carried the successor relation on every row. It
+    is ''[]'' on all 162 rows and has never been written to; the check that produced the claim tested
+    `supersedes != ''''` and ''[]'' is a non-empty STRING. The reversal is right on the merits independently
+    of that error: SUPERSEDED and RETIRED are not synonyms. The first says a successor exists, the second
+    says none does, and with supersedes empty everywhere the status word was carrying that signal ALONE
+    -- so the retirement would have deleted the last carrier of the fact rather than a redundant copy.'
+  alternatives_considered:
+  - 'Leave SUPERSEDED retired and record the successor in decisions.supersedes -- refused by the owner
+    ruling, and unsupportable anyway: that column is empty on all 162 rows, so nothing would carry the
+    relation.'
+  - Collapse SUPERSEDED into CLOSED -- refused; CLOSED says finished without an evidence resolution and
+    is silent on whether a successor exists.
+  - Re-add the word without a DR, as a correction rather than a decision -- refused; enum membership is
+    D-SCHEMA and Change-Order gated whichever direction it moves.
+  decision_date: 2026-08-15 01:40
+  decided_by: owner_jordanelias_directive_2026-08-15
+  model_routing: opus/200/arbitrate
+  effort_level: 200
+  decision_artifacts:
+  - decisions/DR-2026-08-15-superseded-status-retained.md
+  - scripts/migrations/060_restore_superseded_status.sql
+  predecessors:
+  - D-0161
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: 'The process finding is kept rather than tidied away: the defect was not the inference but acting
+    on it in the same turn as the ruling it attached to, on a number I had measured wrongly, and then
+    carrying that premise into a DR, an attestation, two register stores, five commit messages and a PR
+    description -- all of which passed every gate. No gate reads reasoning. It surfaced only when the
+    owner asked for a re-derivation.'

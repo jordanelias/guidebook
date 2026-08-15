@@ -576,9 +576,11 @@ def get_synonyms(item_code: str, language: str = None) -> list[dict]:
 
 import re as _re
 
+# The ratified status vocabulary — owner ruling 2026-08-14, migration 058.
+# RESOLUTION-PROPOSED became PROPOSED; MODE-S-ONLY became UNRESOLVED.
 _VALID_CONFLICT_STATUS = frozenset({
-    "RESOLVED-EVIDENCE", "RESOLVED-CONSENSUS",
-    "RESOLUTION-PROPOSED", "UNRESOLVED", "MODE-S-ONLY",
+    "ACTIVE", "PROPOSED", "DEFERRED", "RESOLVED-EVIDENCE",
+    "RESOLVED-CONSENSUS", "UNRESOLVED", "CLOSED", "RETIRED", "SUPERSEDED",
 })
 _VALID_ITEM_STATUS   = frozenset({"draft", "active", "merged", "retired"})
 _VALID_RUN_STATUS    = frozenset({"IN-PROGRESS", "COMPLETE", "HANDED-OFF"})
@@ -761,9 +763,10 @@ def main():
     )
     sub = parser.add_subparsers(dest="command")
 
-    # init
-    p_init = sub.add_parser("init", help="Initialize database")
-    p_init.add_argument("--force", action="store_true")
+    # init — RETIRED 2026-08-15 with scripts/init_db.py (owner approval of the
+    # Tier-1 batch). It applied migration 001 only, so it never produced a
+    # working database; `migrate_db.py --rebuild` is the real path and is what
+    # CLAUDE.md §10 already told readers to use instead.
 
     # migrate
     sub.add_parser("migrate", help="Run pending schema migrations")
@@ -984,8 +987,9 @@ def main():
     p_as.add_argument("--session", required=True)
     p_as.add_argument("--dry-run", action="store_true")
 
-    # validate
-    sub.add_parser("validate", help="Run DB validation checks")
+    # validate — RETIRED 2026-08-15 with scripts/validate_db.py. That script was
+    # quarantined in the check registry (it queries doi_less_key, a column no
+    # live table has) and superseded by scripts/tests/test_db_integrity.py.
 
     # ── CO-0009 Phase 1 Session 1b ─────────────────────────────────────────
 
@@ -1156,13 +1160,6 @@ def main():
     if not args.command:
         parser.print_help()
         sys.exit(1)
-
-    if args.command == "init":
-        import subprocess
-        cmd = [sys.executable, str(Path(__file__).parent / "init_db.py")]
-        if args.force:
-            cmd.append("--force")
-        sys.exit(subprocess.call(cmd))
 
     if args.command == "migrate":
         import subprocess
@@ -1349,11 +1346,6 @@ def main():
                                     session=args.session, dry_run=args.dry_run)
         _emit({"ref_id": ref_id, "linked_slug": args.slug, "dry_run": args.dry_run})
 
-    elif args.command == "validate":
-        import subprocess
-        sys.exit(subprocess.call(
-            [sys.executable, str(Path(__file__).parent / "validate_db.py")]
-        ))
 
     # ── CO-0009 Phase 1 Session 1b ─────────────────────────────────────────
 

@@ -19,9 +19,13 @@ Scope. A script is IN SCOPE when all three hold:
   3. it names guidebook.db somewhere other than a docstring — i.e. in code.
 
 Condition 3 is what keeps false positives out: several modules discuss the
-database in prose but never build a path to it. Condition 1 is what excludes
-scripts/db/**, which points at data/db/guidebook.db — a different, legacy file
-that is not the canonical database and must not be redirected by this variable.
+database in prose but never build a path to it. Condition 1 excludes the
+one-time and legacy directories named in EXCLUDE_PARTS. "db" is kept in that
+set although scripts/db/** was archived on 2026-08-15: the exclusion is by path
+PART, so it costs nothing and it still catches a directory of that name if one
+reappears. What it used to exclude pointed at data/db/guidebook.db — a
+different, legacy file that is not the canonical database and must not be
+redirected by this variable.
 
 Exit 0 when every in-scope script honours the variable; exit 1 with the
 offending list otherwise.

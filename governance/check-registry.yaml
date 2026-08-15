@@ -1403,28 +1403,22 @@ quarantine:
       ratchet with a number, which is the only form in which it could block.
 
   - id: validate_db
-    cmd: [python3, scripts/validate_db.py]
-    status: quarantined
+    cmd: [python3, _archived/scripts/validate_db.py]
+    status: retired
     reason: >-
-      REPAIRED 2026-08-05 — no longer `broken`, but still not selected. Two stale
-      facts were killing it, both of the same species: C5 queried `doi_less_key`,
-      a column dropped from the schema, which crashed the whole script with
-      `sqlite3.OperationalError`; and C3 compared `PRAGMA user_version` against
-      the literal `5`, written when 005 was the newest migration, so it failed on
-      every correctly-migrated database. C5 now asks the question the dropped key
-      stood in for (does this source carry ANY stable identifier), and C3 derives
-      the expected version from the migrations directory.
-      This mattered beyond the check: `scripts/db.py validate` invokes the script
-      as a subprocess, so that CLI command was a guaranteed traceback rather than
-      a validation. It now runs.
-      STILL QUARANTINED, deliberately. test_db_integrity.py supersedes it (69
-      checks vs 9) and CLAUDE.md §7 already says to prefer that one; wiring both
-      would mean two overlapping gates to keep in step. The repair was to unbreak
-      a live CLI path and to stop the file reading as a working gate that
-      crashes — not to argue for selection. Retirement stays owner-gated.
-      Its one substantive finding on the live DB — C4, 31 connections with zero
-      targets — is a CONTENT defect, not a tooling one, and is recorded here so
-      the repair does not bury it.
+      RETIRED 2026-08-15 by owner approval of the Tier-1 batch. Archived to
+      _archived/scripts/validate_db.py, mirroring its origin path; the entry is
+      kept rather than deleted so a session that finds the id knows where the
+      script went and why, instead of concluding the gate was silently dropped.
+      It was quarantined-but-repaired, not broken. The retirement is not about
+      its health: test_db_integrity.py supersedes it (72 checks vs 9), CLAUDE.md
+      §7 already directed readers to that one, and wiring both would mean two
+      overlapping gates to keep in step. Its `scripts/db.py validate` CLI path
+      was retired with it in the same commit, so nothing invokes it.
+      ITS ONE UNRESOLVED SUBSTANTIVE FINDING SURVIVES THE RETIREMENT: C4 found
+      31 connections with zero targets. That is a CONTENT defect, not a tooling
+      one, and it is recorded here — and only here — so archiving the script
+      does not bury the finding with it.
 
   - id: validate_temporal
     cmd: [python3, scripts/validate_temporal.py]
