@@ -5514,3 +5514,45 @@ decisions:
     in the DR so the next sweep does not re-derive them -- three were a FUNCTION named validate_db rather
     than the script, two were path-part exclusion sets that cost nothing to keep, and one was an EXCLUDED_TABLES
     entry rather than a read.'
+- decision_id: D-0163
+  category: D-SCHEMA
+  delegation: DG-NON
+  delegation_rationale: Owner ruling of 2026-08-15 ("yes we keep superseded"), overturning an implementer
+    inference that D-0161 had carried. Captured, not proposed.
+  summary: Retain SUPERSEDED as a status value on decisions.status and conflicts.status, amending D-0161.
+    The ratified vocabulary is nine words, not eight.
+  outcome: 'ADOPTED by owner ruling 2026-08-15. Migration 060 restores SUPERSEDED to both CHECK constraints
+    and nine call sites are swept back. No data change: widening a CHECK cannot invalidate a row and zero
+    rows carry the value.'
+  rationale: 'Migration 058 retired SUPERSEDED on an inference the owner had not made, resting on a premise
+    that was false -- that decisions.supersedes already carried the successor relation on every row. It
+    is ''[]'' on all 162 rows and has never been written to; the check that produced the claim tested
+    `supersedes != ''''` and ''[]'' is a non-empty STRING. The reversal is right on the merits independently
+    of that error: SUPERSEDED and RETIRED are not synonyms. The first says a successor exists, the second
+    says none does, and with supersedes empty everywhere the status word was carrying that signal ALONE
+    -- so the retirement would have deleted the last carrier of the fact rather than a redundant copy.'
+  alternatives_considered:
+  - 'Leave SUPERSEDED retired and record the successor in decisions.supersedes -- refused by the owner
+    ruling, and unsupportable anyway: that column is empty on all 162 rows, so nothing would carry the
+    relation.'
+  - Collapse SUPERSEDED into CLOSED -- refused; CLOSED says finished without an evidence resolution and
+    is silent on whether a successor exists.
+  - Re-add the word without a DR, as a correction rather than a decision -- refused; enum membership is
+    D-SCHEMA and Change-Order gated whichever direction it moves.
+  decision_date: 2026-08-15 01:40
+  decided_by: owner_jordanelias_directive_2026-08-15
+  model_routing: opus/200/arbitrate
+  effort_level: 200
+  decision_artifacts:
+  - decisions/DR-2026-08-15-superseded-status-retained.md
+  - scripts/migrations/060_restore_superseded_status.sql
+  predecessors:
+  - D-0161
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: 'The process finding is kept rather than tidied away: the defect was not the inference but acting
+    on it in the same turn as the ruling it attached to, on a number I had measured wrongly, and then
+    carrying that premise into a DR, an attestation, two register stores, five commit messages and a PR
+    description -- all of which passed every gate. No gate reads reasoning. It surfaced only when the
+    owner asked for a re-derivation.'

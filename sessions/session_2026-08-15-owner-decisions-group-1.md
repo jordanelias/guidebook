@@ -27,10 +27,11 @@ out in the brief.
 
 ## 2. What I decided, and flagged as mine
 
-- **`SUPERSEDED` retired on a reading, not an instruction.** The ratified list did not name it. The
-  reading was put to the owner before implementing and implemented in the same turn: zero rows use
-  it, and `decisions.supersedes` carries the relation on all 160 rows. One line to reverse in each
-  layer. Logged as a deviation in the D-0161 attestation.
+- **`SUPERSEDED` retired on a reading, not an instruction — and the owner overturned it.** The
+  ratified list did not name the word. I flagged the reading, then implemented it in the same turn,
+  on two grounds: zero rows used it, and `decisions.supersedes` carried the relation. The second was
+  false (see §4-5). The owner ruled **"yes we keep superseded"** on 2026-08-15; migration 060
+  restored it and **D-0163** records the amendment. The vocabulary is **nine words**, not eight.
 - **One shared list on both tables** rather than per-field subsets, on reversibility grounds.
 - **`MODE-S-ONLY` → `UNRESOLVED` is not a pure rename**, so the meaning it carried was moved rather
   than dropped — the Person-Mode handoff lives in `mode_s_trigger` / `unresolvable_residual`, and the
@@ -84,8 +85,9 @@ Recorded because this repo's audits keep finding that the corrections matter mor
 
 | | |
 |---|---|
-| Schema | `user_version` 59 |
-| Decisions | 162 rows, both stores in full-field agreement (L01) |
+| Schema | `user_version` 60 |
+| Decisions | 163 rows, both stores in full-field agreement (L01) |
+| Status vocabulary | nine words (`SUPERSEDED` restored by owner ruling, D-0163) |
 | `--all` | 43 green, 16 nothing-in-scope, 6 advisory failures, **0 blocking** |
 | Baseline comparison | identical to a clean `origin/main` — same six advisory failures, none added, none cleared |
 | Reproducibility | shallow and `--deep` both PASS |

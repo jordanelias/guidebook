@@ -753,12 +753,19 @@ entries:
 # that would promote it. Do not promote one without checking its precondition.
 deferred:
 
-  - tokens: [WITHDRAWN, PROVISIONAL, SUPERSEDED, OPEN]
+  - tokens: [WITHDRAWN, PROVISIONAL, OPEN]
     retired_by: >-
       Owner ruling 2026-08-14 and schema migration 058, as STATUS VALUES on
       decisions and conflicts. WITHDRAWN->RETIRED, PROVISIONAL->PROPOSED,
-      SUPERSEDED->CLOSED (the relation lives in decisions.supersedes),
       OPEN->ACTIVE.
+      SUPERSEDED was listed here until 2026-08-15 and IS NOT RETIRED. Migration
+      058 dropped it on an implementer's reading that the owner had not made,
+      justified by a claim that decisions.supersedes already carried the
+      relation -- which was false; that column is '[]' on all 162 rows. The
+      owner overturned the retirement ("yes we keep superseded") and migration
+      060 restored the word, so it is a LIVE status value and must not be
+      flagged. It remains in this entry's prose only as the record of a
+      retirement that was reversed.
     precondition: >-
       Fails admission test 4 outright, and unlike RV-022/023/024 there is no
       spelling that separates the retired use from live correct ones. Each word
@@ -770,12 +777,14 @@ deferred:
                      architecture/schema-spec.md's own document status, and
                      governance/mission-PROVISIONAL.md, a filename CLAUDE.md §9-2
                      names as a redirect stub.
-        SUPERSEDED   the whole supersession model — governance/time-model.md §4,
-                     SupersedenceType, StandardStatus, and every DR that
-                     supersedes another.
         OPEN         verification_disposition is literally OPEN|CLOSED (D-0157),
                      plus the SPATIAL-OPEN conflict domain and ordinary English.
-      A literal match on any of the four would fire on hundreds of correct lines.
+      (SUPERSEDED was a fourth token here, on the grounds that the supersession
+      model — governance/time-model.md §4, SupersedenceType, StandardStatus and
+      every DR that supersedes another — uses the word legitimately everywhere.
+      That reasoning was sound and is now moot: the status value itself was
+      restored on 2026-08-15, so the word is not retired in ANY sense.)
+      A literal match on any of the three would fire on hundreds of correct lines.
       Promoting one would need a match form this register does not have: scoped
       to a status assignment rather than to the word.
     note: >-

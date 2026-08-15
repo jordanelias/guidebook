@@ -97,6 +97,7 @@ For each active conflict:
 | DEFERRED | Deliberately not addressed this pass. Distinct from UNRESOLVED: nobody worked it |
 | ACTIVE | Live, in hand, not yet closed or resolved |
 | RETIRED | Removed from force without a successor |
+| SUPERSEDED | Replaced by a NAMED successor — distinct from RETIRED, which names none |
 
 ### Step 4: Log to SQLite
 
@@ -115,7 +116,7 @@ python3 scripts/db.py add-conflict \
   --domain [LIGHT-INT|ACOUSTIC-LVL|...] \
   --pop-a [alphabetically first population] \
   --pop-b [alphabetically second population] \
-  --status [ACTIVE|PROPOSED|DEFERRED|RESOLVED-EVIDENCE|RESOLVED-CONSENSUS|UNRESOLVED|CLOSED|RETIRED] \
+  --status [ACTIVE|PROPOSED|DEFERRED|RESOLVED-EVIDENCE|RESOLVED-CONSENSUS|UNRESOLVED|CLOSED|RETIRED|SUPERSEDED] \
   --resolution "[mechanism if resolved]" \
   --evidence "[source citation if resolved]" \
   --session [session-name]

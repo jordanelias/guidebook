@@ -516,17 +516,26 @@ class DecisionStatus(str, Enum):
     UNRESOLVED:         worked and could not be resolved at this scale
     CLOSED:             finished without an evidence resolution
     RETIRED:            removed from force without a successor (replaces WITHDRAWN)
+    SUPERSEDED:         replaced by a NAMED successor
+
+    SUPERSEDED and RETIRED are not synonyms, which is why both are kept: the
+    first says a successor exists, the second says none does. Collapsing them
+    makes "was it replaced, and by what?" unanswerable from the status.
 
     RESOLVED-EVIDENCE and RESOLVED-CONSENSUS are reserved: they are for direct
     evidence or claims directly derived from it, never for an administrative
     close. A finished infrastructure item is CLOSED.
 
-    Four spellings were retired by the same ruling. PROVISIONAL collapsed into
-    PROPOSED ("PROPOSED = PROVISIONAL for me in this project") — the one row
-    carrying it, D-0139, was remapped by migration 058. WITHDRAWN became
-    RETIRED. OPEN became ACTIVE. SUPERSEDED is gone because the relation it
-    named is already carried by decisions.supersedes, which every row
-    populates; a successor is a pointer, not a status.
+    Three spellings were retired. PROVISIONAL collapsed into PROPOSED
+    ("PROPOSED = PROVISIONAL for me in this project") — the one row carrying it,
+    D-0139, was remapped by migration 058. WITHDRAWN became RETIRED. OPEN
+    became ACTIVE.
+
+    SUPERSEDED was briefly a fourth. Migration 058 retired it on the claim that
+    decisions.supersedes already carried the relation on every row. That claim
+    was false — the column is '[]' on all 162 rows and has never been written
+    to; its inverse, predecessors, is populated on 51. The owner overturned the
+    retirement on 2026-08-15 and migration 060 restored the word.
 
     The docstring this replaces cited "governance/decision-protocol.md §3
     lifecycle" as the authority for PROVISIONAL. That file has never contained
@@ -541,6 +550,7 @@ class DecisionStatus(str, Enum):
     UNRESOLVED = "UNRESOLVED"
     CLOSED = "CLOSED"
     RETIRED = "RETIRED"
+    SUPERSEDED = "SUPERSEDED"
 
 
 class DecisionReviewStatus(str, Enum):

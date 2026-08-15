@@ -10,6 +10,10 @@
 >    on **all 162 rows** — nothing has ever been written to it. The original check tested
 >    `supersedes != ''`, and `'[]'` is a non-empty *string*: it measured string emptiness and
 >    reported array population. This **weakens the stated grounds for retiring `SUPERSEDED`** (§3).
+>
+> **AMENDED 2026-08-15 — the owner overturned the `SUPERSEDED` retirement** ("yes we keep
+> superseded"). It is a live status value again; the vocabulary is **nine words**, not eight.
+> Restored by schema migration 060 and recorded as **D-0163**. §1 and §3 below carry the amendment.
 > 2. **The Mode-S vocabulary retirement is dated 2026-07-13, not 2026-07-21**, and its authority is
 >    Item V of `RATIFICATION-PACKAGE-2026-07-12`, ratified in full by owner directive
 >    (`RATIFICATION-RECORD-2026-07-13` A5). The corrected fact is worse than the original claim, not
@@ -39,6 +43,7 @@ Eight words, one list, both tables:
 | `UNRESOLVED` | worked, and does not resolve at this scale |
 | `CLOSED` | finished without an evidence resolution |
 | `RETIRED` | removed from force without a successor |
+| `SUPERSEDED` | replaced by a **named** successor — restored 2026-08-15 (D-0163, migration 060) |
 
 The owner's words, verbatim, because three of the five parts carry reasoning that the word list
 alone does not:
@@ -101,10 +106,17 @@ has never been written to. What *is* populated is its inverse, `predecessors`, o
 successor relation is recorded in this table, but by the backward pointer, and the column I cited as
 the status word's replacement is empty everywhere.
 
-The corrected position: retiring `SUPERSEDED` costs nothing today (no row used it, and the relation
-is recoverable from `predecessors`), but the claim that a populated pointer already did the job was
-wrong. **Reversal remains one line in the CHECK and one in the enum**, and this is the item in this
-DR most worth the owner overturning, because it is the only one the owner did not word.
+**OVERTURNED 2026-08-15 — the owner kept `SUPERSEDED`** ("yes we keep superseded"), restored by
+migration 060 and recorded as **D-0163**. That is the right outcome independent of my arithmetic
+error: `SUPERSEDED` and `RETIRED` are not synonyms. The first says a successor exists; the second
+says none does. Collapsing them makes *"was it replaced, and by what?"* unanswerable from the status
+alone — which is exactly what the empty `supersedes` column already fails to answer, so the retirement
+would have removed the only surviving signal rather than a redundant one.
+
+The episode is left in this record rather than tidied away, because the sequence is the lesson: an
+implementer's inference, shipped in the same turn as the ruling it attached itself to, resting on a
+column reported as populated that was empty everywhere, surviving five green commits and every gate,
+and reversed only after the owner asked for a re-derivation.
 
 **`MODE-S-ONLY` carried information that `UNRESOLVED` alone does not.** It meant *irreconcilable at
 population scale, requires individual co-design* — not merely *unresolved*. Collapsing the two words

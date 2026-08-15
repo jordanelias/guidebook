@@ -30,7 +30,7 @@ from schemas.base import GuidebookEntity
 # infrastructure finished, question withdrawn — is CLOSED.
 RATIFIED_STATUSES = frozenset({
     "ACTIVE", "PROPOSED", "DEFERRED", "RESOLVED-EVIDENCE",
-    "RESOLVED-CONSENSUS", "UNRESOLVED", "CLOSED", "RETIRED",
+    "RESOLVED-CONSENSUS", "UNRESOLVED", "CLOSED", "RETIRED", "SUPERSEDED",
 })
 
 
