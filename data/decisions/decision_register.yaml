@@ -5417,3 +5417,47 @@ decisions:
     to _archived/, verified in both directions.
 
     '
+- decision_id: D-0161
+  category: D-SCHEMA
+  delegation: DG-NON
+  delegation_rationale: Owner originated and worded the vocabulary across two messages of 2026-08-14,
+    including the arbitration that OPEN and ACTIVE are one concept. Captured, not proposed.
+  summary: Ratify one status vocabulary of eight words shared by decisions.status and conflicts.status;
+    retire seven spellings across the two layers that policed them.
+  outcome: ADOPTED by owner ruling 2026-08-14. The ratified words are ACTIVE, PROPOSED, DEFERRED, RESOLVED-EVIDENCE,
+    RESOLVED-CONSENSUS, UNRESOLVED, CLOSED, RETIRED. RESOLVED-EVIDENCE and RESOLVED-CONSENSUS are reserved
+    for direct evidence or claims directly derived from it; anything else that finishes is CLOSED. DEFERRED
+    stays distinct from ACTIVE because it records a choice not to act. Implemented by schema migration
+    058 (both CHECK constraints rebuilt, D-0139 remapped PROVISIONAL to PROPOSED inline).
+  rationale: 'The two layers disagreed: the database accepted WITHDRAWN and rejected RETIRED while schemas/enums.py
+    did the reverse, so which word was legal depended on whether the write went through Python or SQL.
+    On conflicts the two sets shared two words of five. Zero rows used any contested value, which is why
+    nothing had failed yet and why the fix cost one migration. MODE-S-ONLY was retired twice over: Mode
+    S became Person Mode on 2026-07-21 and the status spelling outlived that sweep in the CHECK, two validators,
+    the skill and five matrices.'
+  alternatives_considered:
+  - 'Per-field subsets rather than one shared list -- refused on reversibility: a superset narrows by
+    forward migration once usage shows which words a field never takes, while a too-narrow CHECK refuses
+    a legitimate write the first time someone makes one.'
+  - Adopt WITHDRAWN and edit Python instead -- refused by owner ruling 1; RETIRED matches the lifecycle
+    the schema documentation already described.
+  - Treat the file layer DEFERRED/OPEN as a distinct concept needing a distinct name -- refused; the owner
+    ruled OPEN and ACTIVE are one concept and only one survives.
+  - Build the deferral counter now -- offered and not taken up; recorded as a small forward migration
+    for when it is wanted.
+  decision_date: 2026-08-14 23:50
+  decided_by: owner_jordanelias_directive_2026-08-14
+  model_routing: opus/200/arbitrate
+  effort_level: 200
+  decision_artifacts:
+  - decisions/DR-2026-08-14-status-vocabulary-ratification.md
+  - scripts/migrations/058_status_vocabulary_ratification.sql
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: 'SUPERSEDED was retired on a reading rather than an instruction: the ruling did not name it,
+    the reading was put to the owner before implementation, and it rests on zero rows using it plus decisions.supersedes
+    already carrying the relation on all 160 rows. Reversal is one line in each of the CHECK and the enum.
+    The mode_s_trigger FIELD name remains retired vocabulary and is deliberately not renamed here -- that
+    is a structural change with its own caller sweep. The deferral counter the owner raised is not built.'

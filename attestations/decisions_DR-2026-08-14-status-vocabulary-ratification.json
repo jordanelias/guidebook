@@ -1,0 +1,47 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-08-15-owner-decisions-group-1",
+ "artifact": "decisions/DR-2026-08-14-status-vocabulary-ratification.md",
+ "doctrine_sha": "0f2f525",
+ "rules_in_scope": [
+  "structure-auditor",
+  "guidebook-auditor",
+  "audit-consolidator",
+  "adherence-logging-and-attestation"
+ ],
+ "per_rule_status": {
+  "structure-auditor": {
+   "status": "FIRED",
+   "evidence_path": "scripts/migrations/058_status_vocabulary_ratification.sql",
+   "reason": "The constraint change was proven in both directions before it was committed, not asserted after. On a scratch rebuild: all eight ratified words accepted and all four retired decision words refused by the live CHECK; 18 views execute; zero row-count drift across 67 tables; foreign_key_check and integrity_check clean; and the full replay reproduces the committed database on both the shallow and --deep comparators. The one row that had to move -- D-0139's PROVISIONAL -- is remapped inside the table copy rather than by a paired data migration, because migrate_db.py replays all schema migrations before any data migration and the value originates in the 057 baseline; a data migration would have replayed after the CHECK existed, by which point the rebuild has already failed. Migrations 055 and 025 record the same collision from the other side."
+  },
+  "guidebook-auditor": {
+   "status": "FIRED",
+   "evidence_path": "references/conflict-matrices/LIGHT-INT.md",
+   "reason": "MODE-S-ONLY was not treated as a synonym of UNRESOLVED, because it is not one: it meant irreconcilable at population scale, requiring individual co-design. Collapsing the words without moving that meaning would have destroyed a distinction the conflict matrices carry. The status now says the conflict does not resolve at this scale and the Person-Mode handoff lives in mode_s_trigger / unresolvable_residual, with the five swept matrices stating it in words beside the status. The validator that required mode_s_trigger was rehomed onto UNRESOLVED so the rule survives the rename intact."
+  },
+  "audit-consolidator": {
+   "status": "FIRED",
+   "evidence_path": "data/decisions/decision_register.yaml",
+   "reason": "D-0161 is written to both stores the repo holds equal -- the YAML register and the canonical decisions table via data migration -- and the YAML entry is generated FROM the committed database row rather than hand-typed beside it, so the two cannot drift at birth. This is the omission that produced the live delegation_rationale divergence L01 was widened to catch last session. L01 then caught this session's own divergence during the work (the database moved D-0139 while the YAML still said PROVISIONAL) and it was reconciled toward the database per CLAUDE.md section 9-5."
+  },
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "attestations/decisions_DR-2026-08-14-status-vocabulary-ratification.json",
+   "reason": "This attestation, bound to the doctrine SHA the commit carries, recording below the one decision that was mine rather than the owner's."
+  }
+ },
+ "deviations": [
+  {
+   "rule": "audit-consolidator",
+   "reason": "SUPERSEDED was retired on my reading, not on an instruction. The owner's ratified list did not name it; I flagged the reading before implementing and implemented it in the same turn rather than waiting for confirmation. The grounds are real -- zero rows use it, and decisions.supersedes carries the relation on all 160 rows -- but a reviewer could fairly say a status word was retired by an implementer's inference inside a decision the owner had just worded precisely, and that the correct move was to ship the seven ruled retirements and hold the eighth. Reversal is one line in the CHECK and one in the enum."
+  },
+  {
+   "rule": "structure-auditor",
+   "reason": "The mode_s_trigger FIELD name is still retired vocabulary and is left in place. The sweep is therefore complete for status VALUES and incomplete for the Mode-S vocabulary as a whole, which is the exact shape of this repo's characteristic partial-correction defect -- committed inside a change whose own DR names that defect. The mitigating fact is that renaming a schema field is a structural change with its own caller sweep and Change-Order, and doing it unasked inside a vocabulary ruling would smuggle a second schema decision into the first. It is named in the DR and in the commit rather than left to be discovered."
+  }
+ ],
+ "bias_direction": "The bias runs toward reporting a clean sweep. Every number here came out green, and a session that wanted to ship this change would have run exactly these checks and reported exactly these results -- so the verification proves faithfulness to the ruling, not that the ruling's implementation was well judged. There is a second, sharper pull: the owner worded this vocabulary tightly, which makes it tempting to present my one inferential addition (retiring SUPERSEDED) as though it carried the same authority as the seven words that were actually ruled. It does not, and the DR and this log both say so rather than letting the reader assume the whole list came from the owner.",
+ "independent_reviewer_counterclaim": "The strongest objection is that the sweep's completeness claim rests on a search whose scope I chose. git grep was used rather than ripgrep precisely because .ignore hides seven directories, and two call sites turned up that I had not predicted -- a second registered validator spelled with a plural, and a consolidator whose definition of resolved was an exclusion that silently widened when the vocabulary did. That two surprises surfaced is evidence the search worked; it is equally evidence that the pre-sweep estimate was wrong, and a third surprise may sit in a path neither the grep nor the checks reach, since conflicts has zero rows and every conflict-side change is therefore untested against data. A reviewer could also argue the shared eight-word list on both tables is too permissive -- a decision can now be marked RESOLVED-EVIDENCE, which means nothing for a decision record. The defence is reversibility, not correctness: a superset narrows by forward migration once usage shows what a field never takes, while a too-narrow CHECK refuses a legitimate write the first time someone makes one.",
+ "verdict": "DEVIATION-LOGGED"
+}
