@@ -102,7 +102,7 @@ directories:
     authority: canonical
     hidden_from_ripgrep: false
 pointers:
-  sessions_latest: session_2026-08-12-commit-91-review-and-corridor-walk.md
+  sessions_latest: session_2026-08-15-owner-decisions-group-1.md
   sessions_latest_resolves: true
   sessions_latest_research: session_2026-07-26-energy-conservation-rest-points-seating-b3.md
   sessions_latest_research_resolves: true

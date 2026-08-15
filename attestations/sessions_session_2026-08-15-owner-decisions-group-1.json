@@ -1,0 +1,38 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-08-15-owner-decisions-group-1",
+ "artifact": "sessions/session_2026-08-15-owner-decisions-group-1.md",
+ "doctrine_sha": "0f2f525",
+ "rules_in_scope": [
+  "session-consolidator",
+  "audit-consolidator",
+  "adherence-logging-and-attestation"
+ ],
+ "per_rule_status": {
+  "session-consolidator": {
+   "status": "FIRED",
+   "evidence_path": "sessions/session_2026-08-15-owner-decisions-group-1.md",
+   "reason": "The record separates what the owner ruled from what I decided, and names the second as mine in its own section rather than folding both into one narrative of the session's output. It also carries the four errors made and caught in sequence, including one where a gate widened last session caught this session's own dual-store divergence, and it states plainly that a green count which rose mid-session did so because three changeset-scoped checks were fed a subject rather than because anything improved."
+  },
+  "audit-consolidator": {
+   "status": "FIRED",
+   "evidence_path": "sessions/LATEST",
+   "reason": "sessions/LATEST is updated because a session closed; sessions/LATEST-RESEARCH is deliberately NOT, because no research was done. The 2026-08-06 split of those two pointers exists precisely because one name serving both meanings had drifted them six weeks apart and left a BLOCKING citation-mining gate pointed at a session that had logged no research. Advancing the research pointer here to keep the two tidy would reproduce that failure on purpose."
+  },
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "attestations/sessions_session_2026-08-15-owner-decisions-group-1.json",
+   "reason": "This attestation, bound to the doctrine SHA the commit carries. Two sibling attestations cover the substantive artifacts of this session (D-0161 and D-0162); this one covers the session record itself, and its deviations are about the record's own honesty rather than the work it describes."
+  }
+ },
+ "deviations": [
+  {
+   "rule": "session-consolidator",
+   "reason": "The session record is written by the session it assesses, immediately after the work, with no independent read. Every error it lists is one I found and fixed, which is the only category a self-written record can contain -- an error I did not notice cannot appear in it, and the four listed create an impression of thoroughness that is really an impression of what my attention happened to reach. The repo's own audits have caught this session's predecessors making exactly that inference."
+  }
+ ],
+ "bias_direction": "The bias runs toward writing the session record as a good report card. Listing four caught errors reads as candour and functions as reassurance -- a reader finishes the list feeling the session was well policed, when what the list actually shows is that four defects were shipped into a working tree in one sitting and that three of them were caught by machinery rather than by me. There is a second pull toward implying the owner's five-part ruling and my inferences carry equal authority because they arrived in the same commits; the record separates them into distinct sections for that reason, and the D-0161 attestation logs the SUPERSEDED inference as a deviation rather than as an implementation detail.",
+ "independent_reviewer_counterclaim": "The strongest objection is that this session executed two owner decisions in the same turn they were given, with no pause between ruling and implementation, and wrote its own account of having done so well. A reviewer could fairly say the SUPERSEDED retirement is the visible instance of a general pattern -- the implementer resolving an ambiguity in the direction that lets work proceed -- and that the correct discipline was to ship the seven ruled retirements and hold the eighth for one more exchange, exactly as decision #3 was held for the owner's own hands. Against that: the ambiguity was surfaced in writing before it was acted on, the reasoning was stated, zero rows were affected, and reversal is one line in each layer. A second objection is that this record's 'state at close' numbers were produced by the same commands whose output it reports; nothing independent re-ran them."
+ ,
+ "verdict": "DEVIATION-LOGGED"
+}
