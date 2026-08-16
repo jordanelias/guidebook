@@ -18,7 +18,7 @@
 
 **Most inclusive provision:** All operable controls (switches, sockets, door hardware, intercoms, letterbox controls, security panels) within the reach zone 400–1100mm above finished floor (AFH). **The 1100mm upper bound is internally derived from clinical reasoning ("design should eliminate the need for trunk displacement") rather than direct Tier 1/Co-1 evidence; mark with ○. Co-1 evidence base is 0/24 — represents a gap at this scope.** The 1220mm side-reach maximum is Co-1-driven (LPA advocacy → ANSI A117.1 lowering from 1370mm) ●. This zone accommodates the documented forward and side reach limits of the most constrained WC users including users with upper-limb impairment and limited trunk stability. It also accommodates standing users and children.
 
-**[GAP — REACH-Co1-COVERAGE]** Co-1 verification of the 1100mm constrained-user upper bound has not been performed in any of 24 jurisdictions. The value is plausible but not lived-experience-validated. Treat as Mode P starting point pending Co-1 work.
+**[GAP — REACH-Co1-COVERAGE]** Co-1 verification of the 1100mm constrained-user upper bound has not been performed in any of 24 jurisdictions. The value is plausible but not lived-experience-validated. Treat as Population Mode starting point pending Co-1 work.
 
 **Most targeted provision for MOB/UPL (upper limb impairment):** Controls positioned at 900–1050mm AFH — the upper-mid zone — with lever-form hardware operable with a closed fist (no pinching, no gripping, no wrist twist required), activation force ≤22.2N, control body ≥25mm in at least one dimension, located ≥400mm from any corner or wall obstruction to allow side approach.
 

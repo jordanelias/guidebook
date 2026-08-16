@@ -3352,7 +3352,7 @@ Guidebook gap: No Part 4 item specifies smart-home-ready infrastructure (wiring,
 | Lee et al. 2025 (Disability & Rehab AT) | 2 | Not cited | Part 9 §9.5 — population-differentiated technology prescription |
 
 ### Proposed synthesis direction
-Create DAR provision for smart-home-ready infrastructure: (1) conduit from distribution board to all primary occupied rooms, (2) Wi-Fi AP position at ceiling level in circulation hub, (3) power outlet at smart speaker mounting height (1200 mm AFF) in kitchen, bedroom, living room, (4) structured cabling to entrance intercom position for future video door integration. Tier 1 evidence supports OT-led prescription model. Infrastructure is architectural; devices are Mode S OT-prescribed.
+Create DAR provision for smart-home-ready infrastructure: (1) conduit from distribution board to all primary occupied rooms, (2) Wi-Fi AP position at ceiling level in circulation hub, (3) power outlet at smart speaker mounting height (1200 mm AFF) in kitchen, bedroom, living room, (4) structured cabling to entrance intercom position for future video door integration. Tier 1 evidence supports OT-led prescription model. Infrastructure is architectural; devices are Person Mode OT-prescribed.
 
 ### Disposition
 - [x] HIGH → item-specification-writer briefing (H-02, Part 10 DAR)

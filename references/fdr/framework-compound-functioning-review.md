@@ -84,7 +84,7 @@ This review identifies frameworks that address these gaps and assesses their imp
 - **Built environment as multimorbidity mediator** — Clarke et al. (PMC2727170) demonstrated a 4.52× interaction effect: poor street conditions amplified the disability impact of lower-extremity impairment. The built environment is not additive with impairment — it is multiplicative.
 - **Adults aging with disability (AAwPD)** — PMC10961975 (2024) identifies that age-related secondary conditions compound with primary disability, producing accelerated functional decline. The guidebook's population codes do not capture this temporal dimension.
 
-**Guidebook implication:** Part 3 §3.8 needs a compound functioning principle: when multiple population codes apply to a single occupant, the specification response is not the union of individual population specifications but a compound assessment (Mode S OT) that addresses interaction effects. Part 5 should state explicitly that pairwise conflict resolution is necessary but insufficient — compound profiles require holistic assessment.
+**Guidebook implication:** Part 3 §3.8 needs a compound functioning principle: when multiple population codes apply to a single occupant, the specification response is not the union of individual population specifications but a compound assessment (Person Mode OT) that addresses interaction effects. Part 5 should state explicitly that pairwise conflict resolution is necessary but insufficient — compound profiles require holistic assessment.
 
 ### 2.5 Mitra & Shakespeare (2019) — Remodelling the ICF
 

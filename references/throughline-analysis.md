@@ -95,7 +95,7 @@ Co-occurring conditions produce effects that exceed the sum of individual impair
 - FDR registry §C — 7 compound scenarios (DEM+VIS wayfinding, MOB+PAIN grab bar, DEM+DEAF communication, etc.)
 - CON-0187 — FDR-CMP-04 sequential wayfinding: DEM+VIS+IntD compound is qualitatively different from any pairwise combination
 - CON-0182 — circadian lighting compound: DEM+MH vs NDV+OFS produce different interaction effects on the same lighting specification
-- Project standards — "Pairwise population conflict resolution is necessary but insufficient for intra-individual compound profiles. Compound profiles route to Mode S OT co-design."
+- Project standards — "Pairwise population conflict resolution is necessary but insufficient for intra-individual compound profiles. Compound profiles route to Person Mode OT co-design."
 
 **Implication for the guidebook:** The pairwise conflict resolution framework in Part 3 §3.8 and Part 5 handles inter-population conflicts (different people in the same space). Compound functioning (multiple conditions in the same person) is acknowledged but not yet operationalised beyond "route to Tier 2." The FDR compound scenarios provide the evidence basis for a more structured compound assessment protocol.
 
@@ -107,11 +107,11 @@ Ranges in specifications are not expressions of uncertainty — they are the des
 
 **Where it appears:**
 - Project standards — explicit doctrine
-- Opus divergence synthesis §4 (reach range) — 900-1100mm functional target with "Mode P default: median. Mode S: OT assessment resolves position within range"
+- Opus divergence synthesis §4 (reach range) — 900-1100mm functional target with "Population-Mode default: median. Person Mode: OT assessment resolves position within range"
 - Opus §9 (grab bar height) — no single height optimal; composite specification (700-800mm horizontal + 900mm vertical) needed because optimal height depends on transfer type
 - Turning space (E-01) — graduated values by device type (1500mm manual, 1700mm powered, 2100mm complex)
 
-**Implication for the guidebook:** This principle is stated in project standards and applied in the opus synthesis. The Part 4 format rule (every range carries a Mode S handoff flag) exists but has not been systematically applied across all items.
+**Implication for the guidebook:** This principle is stated in project standards and applied in the opus synthesis. The Part 4 format rule (every range carries a Person-Mode handoff flag) exists but has not been systematically applied across all items.
 
 ---
 
@@ -285,7 +285,7 @@ The guidebook is not an alternative to codes. It is not a wish list. It is the s
 
 ### For Part 4 (Item Specifications)
 - Systematic application of population operability notes to all "adjustable" items
-- Systematic application of Mode S handoff flags to all range specifications
+- Systematic application of Person-Mode handoff flags to all range specifications
 - Convergence labels where 3+ populations independently require the same specification
 - Test-method specification for all quantified performance criteria
 

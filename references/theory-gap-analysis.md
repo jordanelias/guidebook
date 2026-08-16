@@ -111,7 +111,7 @@ Scoping review to identify theoretical frameworks missing from or underweight in
 **Finding:** Different dementia subtypes have different patterns of bottom-up (primitive) vs. top-down (schema-based) auditory processing deficits. AD primarily loses bottom-up/primitive processing (sound source segregation, spatial processing) through temporoparietal hub disruption; FTD loses top-down/schema-based processing through frontal network degradation; PCA has severe segregation/grouping impairments exceeding typical AD. [CORRECTED 2026-05-06 — original §4.3 had AD/FTD direction inverted; §10.3 had correct version]
 **Current gap:** Generic "DEM" acoustic specs (STI ≥ 0.60) don't differentiate by subtype.
 **Integration target:** A-category acoustic specs; Part 5 conflict resolution
-**What it adds:** Subtype-specific acoustic specification at Mode P; flags subtype as Mode S resolution parameter.
+**What it adds:** Subtype-specific acoustic specification at Population Mode; flags subtype as Person Mode resolution parameter.
 
 ### 4.4 Sensory Design Quality Taxonomy (6 qualities)
 **Sources:** 2025 Tandfonline taxonomy; 2026 ScienceDirect scoping review (11 environmental factors × 6 design qualities)
@@ -154,7 +154,7 @@ Scoping review to identify theoretical frameworks missing from or underweight in
 **Recommendation:** Do not add.
 
 ### 5.7 Matching Person & Technology (Scherer 1986)
-**Assessment:** Validated for assistive technology selection, not built environment specification. Overlaps with Mode S/OT pathway.
+**Assessment:** Validated for assistive technology selection, not built environment specification. Overlaps with Person Mode/OT pathway.
 **Recommendation:** Do not add.
 
 ## 6. Colour/Contrast Research (Confirming Signifier Theory)
