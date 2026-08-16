@@ -37,6 +37,24 @@ This is a bridge, not the resolution. The durable answer is owner decision **#5*
 
 ## 1. How the four tracks interlock
 
+> ## ⚠ The allocation below is STALE — corrected 2026-08-16, do not use it as written
+>
+> Slots **058, 059 and 060 were consumed by other work** after this plan was written, and are on
+> `main` now: `058_status_vocabulary_ratification.sql`, `059_tier1_retirements.sql`,
+> `060_restore_superseded_status.sql`. A session following the table below would collide on the first
+> migration it wrote. `workplan/2026-08-15-instrument-status-backfill-plan.md` §6 already noted
+> "058–060 are used" without correcting the table it was reading from — so the stale allocation
+> survived the one pass that spotted it.
+>
+> **Re-allocation, to be confirmed when the Group 3 batch is ratified (owner decision #4):** the six
+> prototyped schema migrations shift **058→061, 059→062, 060→063, 061→064, 062→065, 063→066**; the
+> ratification trigger, the Tier-1 retirement and the Tier-2 retirements follow at **067, 068, 069**.
+> The prototypes were tested at their old numbers; renumbering is mechanical (the filename and the
+> `user_version` target), but it has **not** been re-prototyped at the new numbers, and the row-level
+> content is unchanged. Note that the retirement track's 065 is *already partly executed* —
+> `059_tier1_retirements.sql` on `main` is the Tier-1 batch that this table listed at 065 — so that
+> row needs re-deriving against what actually shipped, not just renumbering.
+
 **Migration numbering — reconciled.** The schema and retirement plans both claimed 058 and 059.
 Allocation, chosen so the six prototyped schema migrations keep their tested numbers:
 

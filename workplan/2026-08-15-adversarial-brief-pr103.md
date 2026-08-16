@@ -5,6 +5,27 @@ condition that Q22's own register row set and that the authoring session did **n
 
 **Status:** OPEN — awaiting execution by a session that did not author the work.
 
+> **Deferred once, deliberately, 2026-08-16.** A session offered to run this pass but had already
+> read the authoring session's record — including its §8 self-review — while orienting, which is the
+> one thing §0 says not to do. Rather than run a pass whose independence was already spent on exactly
+> the surfaces the brief calls hardest (A1 doctrine wording, A5 framing/selection), the owner chose to
+> hold it for a session that starts cold. **This brief is unchanged and still binding.** One finding
+> was produced anyway and is handed forward below, so A2 does not spend effort rediscovering it.
+>
+> **Handed to A2 — the tripwire under-counts, and nobody had measured that.** RV-025/026 use
+> `match: phrase`, so the hyphenated adjectival forms **`Mode-P` / `Mode-S`** match nothing at all. A
+> live use sat uncounted in a BPC file
+> (`references/bpc/kitchens-and-workspaces/residential-kitchen-and-task-surfaces.md`: *"Mode-S
+> co-design assesses the user's specific chair geometry"*), and two more in a file the audit saw only
+> for its unhyphenated hits. The authoring session's 14 boundary probes **included `Mode-P`** and
+> recorded "no false positive or false negative" — so the probe was run and its result read as
+> confirming the matcher, when what it actually showed was a blind spot. That is a finding about the
+> probe design, not only the regex, and it belongs to A2's question of whether the escape mechanism
+> lets real drift stay quiet. The uses were swept 2026-08-16; **the tripwire itself was left
+> unchanged**, because adding the variants requires a file-level exemption for an immutable committed
+> migration comment — the coarse instrument F2 warned about — and that is a design call this pass
+> should weigh, not one an executing session should pre-empt.
+
 ---
 
 ## 0. The one rule that makes this worth doing
