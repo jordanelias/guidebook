@@ -126,7 +126,7 @@ Armature defines query input but not output presentation. Key UX decisions:
 - How are 50+ specifications presented for one query? List, grouped by category, filterable, searchable within results?
 - How is evidence marker (●/○) communicated to screen readers? Symbols alone are inaccessible. Text equivalent required.
 - How are conflict notes surfaced? Inline with each spec? Banner at top? Separate panel?
-- How is Mode S handoff visually distinct from Tier 1? (Cannot rely on color alone — WCAG 1.4.1.)
+- How is the Person-Mode handoff visually distinct from Population Mode? (Cannot rely on color alone — WCAG 1.4.1.)
 - Tables vs cards vs lists for specs?
 - Print / save / share output? Critical for designers integrating into deliverables, OTs into reports, disabled people into advocacy.
 

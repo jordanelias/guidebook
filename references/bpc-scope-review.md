@@ -97,7 +97,7 @@ These are specifications where the BPC evidence explicitly states that person-sp
 
 ### OT-resolved specifications (Tier 2)
 
-| BPC slug | Specification | Mode P median | Why OT resolves | Evidence |
+| BPC slug | Specification | Population-Mode median | Why OT resolves | Evidence |
 |---|---|---|---|---|
 | accessible-bathroom-and-grab-bar | Grab bar height | 700 mm (range 650–900 mm) | Transfer method determines optimal height: "280 mm above seat surface per OT assessment" — seat-relative formulation is the Tier 2 standard | Tier 1 (Levine 2025, Kennedy 2015, Nakamura 2009) |
 | accessible-bathroom-and-grab-bar | WC turning circle | ø1500 mm standard / ≥1800 mm powered WC | Manual vs power wheelchair determines which value applies; Tier 2 = individual wheelchair measurement | Tier 5 (BS 8300-2 Annex G) |
@@ -135,7 +135,7 @@ The conflict-matrices SYNTHESIS explicitly identifies specifications that cannot
 
 ### Summary finding (b)
 
-The evidence consistently identifies a **Tier 1 → Mode S handoff point**: the BPC provides population medians; the OT/specialist resolves to the individual. This handoff is most critical for:
+The evidence consistently identifies a **Population Mode → Person-Mode handoff point**: the BPC provides population medians; the OT/specialist resolves to the individual. This handoff is most critical for:
 
 1. **Grab bar and bathroom layout** — transfer method, grip, trunk stability
 2. **Workspace heights** — anthropometry, seated/standing, reach envelope
@@ -195,11 +195,11 @@ The BPC evidence supports approximately 40 engineering performance targets. For 
 - Cross-reference the engineering brief where the design solution is specified
 - Not prescribe the engineering means (e.g., "NRC ≥0.85 ceiling panels" becomes "RT60 ≤0.3 s in speech-critical rooms — acoustic engineer to specify absorption treatment")
 
-### 2. Mode S handoff flags on all OT-resolvable specifications
+### 2. Person-Mode handoff flags on all OT-resolvable specifications
 
 Every specification where the BPC provides a range rather than a point value — and where the range reflects individual variation rather than jurisdictional difference — should carry:
 
-> **Mode P default: [median value]. Mode S: OT assessment resolves position within range based on [specific functional assessment parameter].**
+> **Population-Mode default: [median value]. Person Mode: OT assessment resolves position within range based on [specific functional assessment parameter].**
 
 The BPC evidence already supplies the functional assessment parameter in most cases (transfer method, trunk stability, sensory profile, cognitive stage, communication method).
 

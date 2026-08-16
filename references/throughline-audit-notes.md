@@ -18,7 +18,7 @@ M-02 states the guidebook "has not yet articulated [convergence as epistemologic
 ## Missing Throughlines (3)
 
 ### T-12: OT as Universal Resolution Mechanism
-OT assessment is the Tier 2 resolution for every conflict, range, and compound scenario. Appears in Part 1, Housing Enabler (CON-0027), grab bars (Opus §9), project standards (thermal OT CPG gap), every Mode S handoff flag. Its absence leaves a structural gap: the analysis describes what Tier 2 resolves but not who resolves it and how. Maps to Part 9.
+OT assessment is the Person-Mode resolution for every conflict, range, and compound scenario. Appears in Part 1, Housing Enabler (CON-0027), grab bars (Opus §9), project standards (thermal OT CPG gap), every Person-Mode handoff flag. Its absence leaves a structural gap: the analysis describes what Person Mode resolves but not who resolves it and how. Maps to Part 9.
 
 ### T-13: Subsumption as Conflict Pre-Resolution
 Where the stricter population specification automatically satisfies the weaker one, apparent conflict dissolves. CON-0122 (DEAF 2440mm corridor subsumes MOB 1800mm), CON-0183 (RT60 ≤0.3s for DEAF subsumes general ≤0.6s). Distinct from convergence (T-02): convergence = same spec independently; subsumption = one spec contains another. Convergence elevates to Universal Mode; subsumption governs by stricter requirement.

@@ -56,9 +56,11 @@ Cluster name: [term A OR term B] AND [term C OR term D] NOT [term E]
 - Quality appraisal tools: RCT → PEDro; Observational → NOS; Systematic review → AMSTAR-2; Standards → AGREE-II
 
 ### Section 4 — Evidence Hierarchy (project-specific)
-Per guidebook §1.5. Co-1 (lived experience) = Tier 1 (OT clinical) in authority. Both precede Tier 2 (NGO/advocacy) → Co-2 (OT CPGs — CAOT, AOTA, RCOT, COTEC, WFOT, national equivalents) → Tier 3 (systematic reviews / meta-analyses) → Tier 4 (international standards with evidence basis) → Tier 5 (national beyond-code frameworks) → Tier 6 (statutory codes).
+Per `governance/tier-system.md` §1 (OPERATIVE — the canonical ladder). Co-1 (disability-led lived experience) ranks alongside Tier 1 (primary research with intervention-level or biomechanical control): the two are non-substitutable on different claim types, not interchangeable. Both precede Tier 2 (community-consensus synthesis — systematic reviews / meta-analyses, and named-organisation evidence-based standards) → Co-2 (OT professional-body CPGs — CAOT, AOTA, RCOT, COTEC, WFOT, national equivalents) → Tier 3 (lower-control primary clinical research plus grey-literature primary research) → Tier 4 (international standards) → Tier 5 (national beyond-code frameworks) → Tier 6 (statutory codes).
 
-Tiers 5–6 are authority sources, not evidence of effect. Tiers 1–4, Co-1, and Co-2 provide empirical evidence of effect. Both types are needed; they must not be conflated.
+**Systematic reviews and meta-analyses are Tier 2, not Tier 3** (`tier-system.md` §2, owner directive 2026-05-25 "t2>t3 this is enshrined"; `sr_meta` → 2 in `schemas/tier_derivation.py`). Scoping reviews and conceptual/framework papers are **Tier 3**, not Tier 2 (§2, DR-2026-07-21).
+
+Tier number reflects **what kind of claim a source can anchor, not how good the source is**. Tiers 4–6 are the regulatory stratum: authority sources, not evidence of effect, and their convergence is not evidence (§3). Tiers 1–3, Co-1 and Co-2 carry empirical evidence of effect. Both kinds are needed; they must not be conflated. Under the weighted-strength model (§8) every tier can anchor a best-practice claim, but a T4–T6-only determination anchors only at the flagged weak band (○).
 
 ### Section 5 — Priority Research Agenda
 

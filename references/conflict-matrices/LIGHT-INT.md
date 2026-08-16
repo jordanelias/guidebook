@@ -63,7 +63,7 @@ The ipRGC/melanopsin pathway (peak ~480nm) mediates BOTH circadian entrainment A
 - Status: **EMERGING** · Confidence: **LOW** — Tier 3, pre-commercial, single-pathway
 
 **Resolution 7 — Tier escalation**
-- The conflict is irreconcilable at Universal Mode for shared ambient spaces. At Mode P, architect zones based on identified populations. At Mode S, OT assessment resolves individual placement.
+- The conflict is irreconcilable at Universal Mode for shared ambient spaces. At Population Mode, architect zones based on identified populations. At Person Mode, OT assessment resolves individual placement.
 - For intra-individual co-occurrence (NEU/MH/OFS): circadian lighting and photosensitivity management are competing clinical objectives. The guidebook states the trade-off explicitly; neither takes priority without individual assessment.
 - Status: **UNRESOLVED** for intra-individual, requiring a Person-Mode handoff · Confidence: **HIGH** — this is the honest answer
 

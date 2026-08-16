@@ -54,8 +54,8 @@ This BPC resolves spatial conflicts where two or more population codes have evid
 
 **Residual divergence (not yet resolved):**
 - Some DEM design literature recommends "single-corridor or continuous-loop floor plan" — interpretable as implying a *narrow* defined corridor. The DEM clinical evidence (Marquardt & Schmieg 2009) is about *loop topology*, not corridor narrowness. Vestigial framing assumption rather than clinical requirement. DEM BPC update owed: clarify "loop plan" ≠ "narrow corridor."
-- Cost: 2440mm primary corridor uses more floor area than 1800mm. This is a Mode-P trade-off (best practice vs code floor). Cost-driven reductions are Mode-6 / Tier-7 arguments, not best-practice arguments.
-- Residential applications: domestic dwellings rarely have 2440mm corridors. Resolution applies to non-residential / care / healthcare / educational settings where mixed populations are anticipated. Domestic single-occupancy → Mode S occupant-co-designed.
+- Cost: 2440mm primary corridor uses more floor area than 1800mm. This is a Population-Mode trade-off (best practice vs code floor). Cost-driven reductions are Mode-6 / Tier-7 arguments, not best-practice arguments.
+- Residential applications: domestic dwellings rarely have 2440mm corridors. Resolution applies to non-residential / care / healthcare / educational settings where mixed populations are anticipated. Domestic single-occupancy → Person Mode occupant-co-designed.
 
 **Synthesis approach:** convergent (variables disambiguated; same physical recommendation satisfies all populations).
 
@@ -109,7 +109,7 @@ This BPC resolves spatial conflicts where two or more population codes have evid
 | Domain | Reason |
 |---|---|
 | Co-1 cross-cultural validation of 2440mm | DSDG ASL-derived; BSL/DGS/LSF/LIS/Auslan spatial grammars not measured |
-| Cost-benefit Mode-P primary corridor 2440mm vs 1800mm | No published lifecycle costing |
+| Cost-benefit Population-Mode primary corridor 2440mm vs 1800mm | No published lifecycle costing |
 | Loop-plan topology + 2440mm interaction with DEM cohort outcomes | No POE comparing 1800 vs 2440 within loop-plan facilities |
 
 ### Citation mining

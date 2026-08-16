@@ -929,8 +929,8 @@ These programme models demonstrate that the highest-quality national systems sti
 **Filed:** frameworks-and-methodology
 
 **Connection type:** CROSS-DOMAIN
-**Connection:** Part 9 §9.5 likely covers OT assessment protocols. G-03 grab bar positioning requires OT assessment for Mode S (280mm above seat surface per individual user). This connection links the OT assessment protocol to the grab bar specification.
-**ISW action:** Part 9 §9.5: verify grab bar positioning is included in OT assessment checklist. G-03: add Part 9 §9.5 cross-reference for Mode S assessment.
+**Connection:** Part 9 §9.5 likely covers OT assessment protocols. G-03 grab bar positioning requires OT assessment for Person Mode (280mm above seat surface per individual user). This connection links the OT assessment protocol to the grab bar specification.
+**ISW action:** Part 9 §9.5: verify grab bar positioning is included in OT assessment checklist. G-03: add Part 9 §9.5 cross-reference for Person Mode assessment.
 
 ---
 

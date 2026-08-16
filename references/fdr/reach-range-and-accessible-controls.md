@@ -31,7 +31,7 @@ No built environment literature identified specifying laterality-sensitive switc
 
 The design problem cannot be resolved at a population level: the functional side varies per individual and is not predictable at design stage. This is a Tier 2 individual-assessment problem, not a Tier 5/6 architectural specification problem.
 
-[GAP: laterality-specific control positioning — inherently individualized; architectural standardisation not possible without individual assessment; Mode S OT prescription only]
+[GAP: laterality-specific control positioning — inherently individualized; architectural standardisation not possible without individual assessment; Person Mode OT prescription only]
 
 ---
 
