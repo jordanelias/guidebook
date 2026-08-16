@@ -26,7 +26,7 @@ description: >
 
 Before any supersession-audit pass, probe connector availability:
 
-- **PubMed** — required for clinical (Tier 1) and SR/meta (Tier 3) supersession searches. If unavailable, ABORT the pass and log `[GAP — PubMed connector unavailable]`.
+- **PubMed** — required for clinical (Tier 1) and SR/meta (Tier 2) supersession searches. If unavailable, ABORT the pass and log `[GAP — PubMed connector unavailable]`.
 - **Scholar Gateway** — required for design literature, OT evidence, and Co-1. If unavailable, mark each affected source's outcome as `pending` with explicit `deferred_reason` and skip the slug closure flag. Do NOT substitute PubMed for Scholar Gateway on Co-1 — they index different corpora.
 - **CrossRef** (via web_fetch) — used to fetch publication metadata on candidates returned by PubMed/Scholar Gateway when the source DOI is needed for the candidate record.
 - **Standards bodies** (ISO, IEC, EN, ANSI, BSI) — Tier 4-5 supersession checks fetch directly from the publication catalog. Web_fetch acceptable.
@@ -75,7 +75,23 @@ For each anchor source, the search strategy depends on `evidence_type`:
 
 **Co-1 outcome rule:** unless the candidate explicitly invalidates the anchor (e.g., DPO retraction notice, position-paper update by the same organization), the default outcome is `co1_addition_logged` — the candidate is added to the slug's Co-1 corpus and the original anchor remains current. Co-1 evidence accumulates rather than supersedes.
 
-### Tier 2 (NGO/DPO guideline; evidence_type = 'national_fw' or 'grey')
+### Tier 2 (a) — systematic review / meta-analysis (evidence_type = 'sr_meta')
+
+**Primary:** PubMed search. Query:
+- Parameter+population+outcome AND `(Systematic Review[Publication Type] OR Meta-Analysis[Publication Type])`
+- Filter: `pdat:{anchor_year+1}:3000`
+- Sort: relevance
+
+**Secondary:** Cochrane Library direct.
+
+**Tertiary:** Scholar Gateway, scoped to SR/meta corpus.
+
+> `sr_meta` sits at **Tier 2**, not Tier 3 (`governance/tier-system.md` §2, owner directive
+> 2026-05-25; `schemas/tier_derivation.py` maps `sr_meta` → 2). A **scoping** review or a
+> conceptual/framework paper is Tier 3, not Tier 2 (§2, DR-2026-07-21) — check which species the
+> anchor is before using this strategy.
+
+### Tier 2 (b) — named-organisation evidence-based standard (DPO / professional-body guideline; evidence_type = 'standard_eb', occasionally 'co2')
 
 **Primary:** Direct organizational publication catalog (organization-specific URL).
 
@@ -87,16 +103,22 @@ For each anchor source, the search strategy depends on `evidence_type`:
 
 **Secondary:** PubMed filtered to `Practice Guideline[Publication Type]`.
 
-### Tier 3 (SR/meta-analysis; evidence_type = 'sr_meta')
+### Tier 3 (lower-control primary clinical, and grey-literature primary; evidence_type = 'clinical' or 'grey')
 
-**Primary:** PubMed search. Query:
-- Parameter+population+outcome AND `(Systematic Review[Publication Type] OR Meta-Analysis[Publication Type])`
-- Filter: `pdat:{anchor_year+1}:3000`
-- Sort: relevance
+**Clinical species — primary:** PubMed search as for Tier 1, *without* the RCT/Clinical-Trial
+publication-type preference (T3 is cross-sectional, observational, qualitative, single-centre work).
 
-**Secondary:** Cochrane Library direct.
+**Grey species — primary:** direct organizational / repository catalog for the issuing body, then web
+search for a superseding edition.
 
-**Tertiary:** Scholar Gateway, scoped to SR/meta corpus.
+**Secondary (both):** Scholar Gateway, scoped to the parameter.
+
+> **This section was created by the ladder correction, not inherited.** The skill previously labelled
+> `sr_meta` as Tier 3 and carried no strategy for the tier that actually holds `clinical`-at-lower-
+> control and `grey`. Correcting the label without adding this section would have silently dropped
+> every genuine T3 anchor out of supersession scope. The two strategies above are derived from the
+> skill's own existing T1 and organizational-catalog strategies rather than researched fresh — open
+> to owner revision on that basis.
 
 ### Tier 4 (international standard; evidence_type = 'standard_eb')
 

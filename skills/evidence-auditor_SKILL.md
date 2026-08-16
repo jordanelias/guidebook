@@ -5,13 +5,14 @@ description: >
   levels claimed match the actual evidence quality. ALWAYS use this skill when asked to: audit
   evidence claims, check if evidence is overclaimed, review evidence stratification, assess
   confidence ratings, check whether research quality matches stated conclusions, or verify
-  evidence marker (●/○) accuracy.
+  evidence marker (●/◐/○) accuracy.
   Trigger on: "evidence audit", "overclaiming check", "stratification review", "is this
-  evidence strong enough", "confidence level check", "marker verification", "●/○ audit".
+  evidence strong enough", "confidence level check", "marker verification", "marker audit",
+  "●/◐/○ audit", "●/○ audit".
   DISTINCT from citation-verifier: this skill asks "does the confidence level match the evidence?"
   Citation-verifier asks "does the citation exist?"
   DISTINCT from evidence-marker: this skill assesses whether the stratum is correct.
-  Evidence-marker classifies and places ●/○ markers.
+  Evidence-marker classifies and places ●/◐/○ markers.
 ---
 
 **Intake:** ≤500 lines only. Full document → haiku-chunker first.
@@ -24,31 +25,34 @@ description: >
 **Model:** Sonnet-class (extraction, marker counting) · Opus-class (overclaiming judgment, evidence sufficiency)
 **Opus routing:** Sonnet extracts markers and evidence tiers → Opus determines whether evidence supports claims.
 
-Per §1.5 (Volume 1) — canonical hierarchy. Strata map to §1.5 tiers as follows:
+Per `governance/tier-system.md` §1 (OPERATIVE — the canonical ladder). Strata map to the ladder as follows:
 
-| Stratum | Definition | §1.5 Tier(s) |
+| Stratum | Definition | Tier(s) |
 |---|---|---|
-| STRONG | OT clinical research (intervention-tested) or lived experience research, replicated, aligned with §1.5 Tier 1 / Co-1 | 1, Co-1 |
-| MODERATE | NGO/advocacy guidelines or OT clinical practice guidelines or systematic reviews with clear methodology | 2, 3 |
-| EMERGING | Single international standard, single-jurisdiction regulatory source, or expert consensus only | 4, 5 |
+| STRONG | Primary research with intervention-level or biomechanical control on the parameter, or disability-led lived-experience research; replicated | T1, Co-1 |
+| MODERATE | Systematic reviews / meta-analyses, named-organisation evidence-based standards, OT professional-body CPGs, or lower-control primary clinical research (cross-sectional, observational, qualitative, single-centre) | T2, Co-2, T3-clinical |
+| EMERGING | International standards, national beyond-code frameworks, statutory code, grey-literature primary, or expert consensus only | T4, T5, T6, T3-grey |
 | ABSENT | No empirical basis; design principle only; requires author caveat | — |
 
-Note: a claim citing only a systematic review or RCT without OT clinical grounding is MODERATE, not STRONG. Lived experience evidence co-primary with OT research elevates confidence; its absence where feasible is a gap.
+Note: systematic reviews and meta-analyses are **Tier 2, not Tier 3** (`tier-system.md` §2, owner directive 2026-05-25); scoping reviews and conceptual/framework papers are Tier 3 (§2, DR-2026-07-21). Lived-experience evidence is co-primary with primary research on the claim types it governs — non-substitutable, not merely confidence-elevating — and its absence where feasible is a gap.
 
 ## Evidence Marker Verification Mode (v10.1 addition)
 
-When run in marker verification mode (triggered by "marker verification" or "●/○ audit"), this skill cross-checks evidence markers against evidence strata:
+When run in marker verification mode (triggered by "marker verification" or "marker audit" / "●/○ audit"), this skill cross-checks evidence markers against evidence strata. **The scheme is three markers, not two** (`governance/tier-system.md` §5, and §8 for the anchoring bands) — a ●/○-only audit is auditing a retired scheme:
 
-| Marker | Expected stratum | Flag if mismatch |
-|---|---|---|
-| ● (evidence-based) | STRONG or MODERATE | 🔴 if stratum is ABSENT; 🟡 if stratum is EMERGING with single source |
-| ○ (inferred) | EMERGING or ABSENT | 🟡 UPGRADEABLE if stratum is actually MODERATE or STRONG |
+| Marker | Meaning | Expected stratum / basis | Flag if mismatch |
+|---|---|---|---|
+| **●** | confirmed evidence base | STRONG or MODERATE — basis includes T1, Co-1, T2, Co-2 or T3-clinical | 🔴 if stratum is ABSENT; 🔴 if the basis is T4/T5 only (should be ◐); 🔴 if the basis is T6 / T3-grey / expert consensus only (should be ○) |
+| **◐** | policy or standards basis only, not primary evidence | EMERGING, where the basis is T4 or T5 | 🔴 if the basis reaches T1/Co-1/T2/Co-2/T3-clinical (should be ●); 🔴 if the basis is T6 / T3-grey / consensus only (should be ○) |
+| **○** | weak band — grey, expert consensus, thin base, code-floor | EMERGING on T6 / T3-grey / consensus, or ABSENT with caveat | 🟡 UPGRADEABLE if the stratum is actually MODERATE or STRONG |
 
 Additional marker checks:
+- Any spec sentence carrying **no** marker → 🔴 UNMARKED (unmarked is an error, per `tier-system.md` §5)
 - ● with no citation in evidence table → 🔴 UNSUPPORTED-MARKER
 - ○ with evidence in BPC but not cited in item → 🟡 EVIDENCE-AVAILABLE (may warrant upgrade)
 - ● citing only expert consensus or clinical reasoning → 🔴 MARKER-STRATUM-MISMATCH (should be ○)
-- ○ citing a Tier 1–3 source that directly supports the value → 🔴 MARKER-STRATUM-MISMATCH (should be ●)
+- ○ citing a T1 / Co-1 / T2 / Co-2 / T3-clinical source that directly supports the value → 🔴 MARKER-STRATUM-MISMATCH (should be ●)
+- A determination whose **entire** basis is T4–T6 rendered above the weak band → 🔴 MARKER-STRATUM-MISMATCH (should be ○, flagged code-derived: `tier-system.md` §8 Option A, DR-2026-07-21 §2.3)
 
 Output for marker verification mode:
 
@@ -66,8 +70,8 @@ For OFS and PAIN populations: where evidence stratum is EMERGING or ABSENT and t
 Flag any OFS or PAIN specification at EMERGING/ABSENT stratum without this disclosure as 🔴 UNDISCLOSED-CONSENSUS.
 
 ## Steps
-1. Extract all empirical claims (exclude: definitions, procedural statements, pure standards citations). For each: text · location · stated stratum · cited source · evidence marker (● or ○ if present).
-2. Propose stratum based on: source type per §1.5 hierarchy · independent replications · peer-review status · recency (flag pre-2000 sole evidence) · language coverage (single-language for cross-jurisdictional claim → flag) · presence/absence of OT clinical grounding · presence/absence of lived experience evidence.
+1. Extract all empirical claims (exclude: definitions, procedural statements, pure standards citations). For each: text · location · stated stratum · cited source · evidence marker (●, ◐ or ○ if present).
+2. Propose stratum based on: source type per the `governance/tier-system.md` §1 ladder · independent replications · peer-review status · recency (flag pre-2000 sole evidence) · language coverage (single-language for cross-jurisdictional claim → flag) · presence/absence of OT clinical grounding · presence/absence of lived experience evidence.
 3. Compare and flag:
 
 | Result | Code |
