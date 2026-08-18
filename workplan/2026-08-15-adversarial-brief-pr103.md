@@ -3,7 +3,13 @@
 **Authority:** owner directive 2026-08-15 ("call for adversarial pass"). Discharges the P3 gate
 condition that Q22's own register row set and that the authoring session did **not** meet.
 
-**Status:** OPEN — awaiting execution by a session that did not author the work.
+**Status:** **DISCHARGED 2026-08-16** — `sessions/session_2026-08-16-pr103-adversarial-pass.md`.
+Six findings (2 high, 4 medium); four attacked claims survived and are recorded as surviving. The
+executing session's independence was *partly* spent and it says so per surface: A1 and A4 cold, A5
+compromised and its verdict recorded as opinion rather than finding. Run under owner direction after
+two deferrals. **Note the brief's remedies are stale:** PR #103 merged 2026-08-15T22:00:38Z with this
+gate undischarged, so §2's "is a revert" and §4's "before push" no longer apply — every finding is a
+fix-forward on `main`.
 
 > **Deferred once, deliberately, 2026-08-16.** A session offered to run this pass but had already
 > read the authoring session's record — including its §8 self-review — while orienting, which is the

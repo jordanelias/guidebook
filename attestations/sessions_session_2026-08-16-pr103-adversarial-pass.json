@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-08-16-pr103-adversarial-pass",
+  "artifact": "sessions/session_2026-08-16-pr103-adversarial-pass.md",
+  "doctrine_sha": "0f2f525",
+  "rules_in_scope": [
+    "canonical-workplan",
+    "doctrine-check",
+    "structure-auditor",
+    "integrity-protocol",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "canonical-workplan": {
+      "status": "FIRED",
+      "evidence_path": "workplan/2026-08-15-adversarial-brief-pr103.md",
+      "reason": "The pass was run against the existing brief's five named attack surfaces and its eight listed author claims, rather than against a scope I invented. No new register was created, per CLAUDE.md section 9 guardrail 3. The brief's own definition of done governed the output shape: a finding list carrying, per item, the claim attacked, the test applied, the verdict and the severity."
+    },
+    "doctrine-check": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-07-13-value-genealogy-and-derivation-handshake.md",
+      "reason": "The two new doctrine sections were diffed clause by clause against the ratified DR rather than checked for whether their named objects resolve, which is the weaker test the brief warned about. That is how P1 was found: the phrase 'structural rather than editorial' is absent from the DR and is the author's own upgrade of the claim. The same method cleared the cultural-claim protection and cleared 'precedent counts documents; evidence counts roots' of being smuggled doctrine."
+    },
+    "structure-auditor": {
+      "status": "FIRED",
+      "evidence_path": "governance/evidence-architecture.md",
+      "reason": "Every structural claim the doctrine makes was tested against the live DDL and against the code, not against the prose. sqlite_master was read directly for the CHECK constraints, foreign keys and the v_value_independence body; git grep across scripts/ established that no audit, validator or registry entry references external_root_registry, root_type or v_value_independence outside the baseline migration that created them."
+    },
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "sessions/session_2026-08-16-pr103-adversarial-pass.md",
+      "reason": "Presumption of defect was held throughout, and the four claims that survived attack are recorded as surviving with the evidence that cleared them, so a zero on those surfaces means something. My own near-miss is recorded in section 5: I nearly filed a HIGH finding about a missing CHECK constraint from a regex that had dropped a line of DDL, and verified against the raw DDL before writing it down."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/sessions_session_2026-08-16-pr103-adversarial-pass.json",
+      "reason": "This attestation, authored in the same commit as the session record it attests, carrying the live doctrine SHA 0f2f525 and logging the independence deficit as a deviation rather than claiming a clean pass."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "integrity-protocol",
+      "reason": "I ran a pass whose independence was partly spent. Before starting I had read the brief itself, including the F1 finding handed forward into it on 2026-08-16, and the ratification register's summary of the author's own self-review. The brief's section 0 makes reading the author's reasoning first the one thing not to do, on the grounds that it reproduces the frame most likely to be wrong. Why anyway: the previous session declined this pass on the same grounds and the owner held it for a cold session; the owner has now directed it run, and two deferrals is the point at which the cost of the gate staying open exceeds the cost of imperfect independence. The deficit is unevenly distributed and is declared per surface rather than in general -- A1 and A4 are genuinely cold, because I had not read the doctrine sections, the ratified DR, or the retired rows before forming my own view; A5, framing and selection, is the surface the contamination actually touches, and my verdict there is recorded as an opinion rather than as a finding."
+    },
+    {
+      "rule": "canonical-workplan",
+      "reason": "The brief is written for an open pull request -- its section 2 says an owner-gated hit 'is a revert' and its section 4 puts findings 'before push'. PR #103 merged on 2026-08-15 at 22:00:38Z with this gate undischarged, so none of those remedies exist and every finding is a fix-forward on main. Recorded rather than silently re-scoped: the brief was a gate condition that did not gate, and that is a fact about the process worth one line in the record. Either P3 is binding, in which case the merge is a deviation someone should log, or it is advisory and should stop describing itself in blocking language. I did not decide which -- that is an owner call, and it is raised in the session record's section 5 rather than resolved."
+    }
+  ],
+  "bias_direction": "Toward finding fault, and specifically toward finding the kind of fault I already believe this repository produces -- obligations parked in prose with no mechanical tracker. Two of my six findings, P4 and P6, are exactly that shape, and a reader should discount them for the fact that I went looking for them. The counter-check I applied is that both are stated as reproducible greps rather than as impressions: the DR-2026-07-14 tracking claim is a single git grep anyone can re-run, and it returns one file. A second bias runs the other way and is worth naming: having declined this pass once for independence reasons, I had an incentive to justify running it now by producing findings, which is a reason to weigh the four surviving claims in section 2 as heavily as the six findings.",
+  "independent_reviewer_counterclaim": "A reviewer could reasonably say P1 and P2 attack the wrong target. The commit under review is a doctrine-text integration explicitly scoped as 'doctrine text only -- no engine or schema change rides with this edit', and the missing constraints I found were built by migration 057 under a different decision. On that reading the author cannot be faulted for constraints someone else did not add, and P1 collapses to a four-word quibble about the phrase 'structural rather than editorial'. I think the reading is wrong but not unreasonable: the author chose to characterise the build state in place, marked it twice with BUILD STATE and ENGINE-LAG blocks, and got the row-count half right while asserting an enforcement half that is not there -- so the defect is in the characterisation, which is exactly what a doctrine-text commit is responsible for. A second and sharper counterclaim: P3 and P4 concern DR-2026-07-14, which appears nowhere in the brief's five attack surfaces or its eight audited claims, so a reviewer could call them out of scope and say I widened the brief to find something. My answer is that A3 asks in terms whether the substitution 'got applied consistently, or only where the author noticed', and the honest answer to that question is not reachable without asking what the substitution sits on top of -- but I concede the brief did not send me there.",
+  "verdict": "DEVIATION-LOGGED"
+}
