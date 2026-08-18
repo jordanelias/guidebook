@@ -141,6 +141,32 @@ Four further owner rulings, all executed by Opus.
 **Left undone.** Bucket-4/5 scheduling; the municipality selection criterion; the slug × lens
 ordering rule (still).
 
+## 4d. HANDBACK — 2026-08-18, Fable 5 quota resumed
+
+**Owner ruling:** *"Fable 5 available; return suspended work for its use."* The debt in §4, §4b and
+§4c is returned to Fable 5 as of this entry. Two read-only passes were dispatched in parallel, split
+by subject rather than by debt block, because the JUDGMENT verdicts in §4b/§4c depend on the frame
+documents and those in §4 depend on the cull documents — a single pass would carry both frames at
+once, which is the contamination this log exists to prevent.
+
+| Pass | Subject | Debt discharged |
+|---|---|---|
+| **A** | The cull execution plan and the substituted critique of it | §4 items 1–3 (item 9 of the §1 ledger) |
+| **B** | The research frame proposal §9–§12 | §4b, §4c, and the still-open §7.1 / §7.2 / §10.6 |
+
+**Both passes are read-only.** They report findings; they do not edit, commit, or fix. That mirrors
+`workplan/2026-08-15-adversarial-brief-pr103.md` §4 — *findings first, so the record shows what was
+wrong before it shows what was done about it* — and it keeps the handback from becoming a second
+substitution.
+
+**What discharges the debt.** A JUDGMENT verdict is discharged when Fable states whether it upholds,
+overturns or amends it, with its own reasoning. Silence on an item is **not** discharge, and a pass
+that returns "no findings" must say what it examined and what it did differently from the Opus
+substitute, per the same brief's §4. MECHANICAL verdicts need re-running only if a figure is disputed.
+
+**Standing after this entry:** the §1 ledger's item 9 stays SUBSTITUTED until pass A reports. Nothing
+in §4b/§4c changes status until pass B reports. **The handback is the dispatch, not the discharge.**
+
 ## 5. Standing rule
 
 Any future Fable-assigned task performed by another model is appended to §1 with the same columns,
