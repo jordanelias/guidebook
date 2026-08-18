@@ -77,6 +77,7 @@ critique-report-writer            gap-driven-mining                             
 cross-population-conflict-mapper  github-filing
                                   github-io
                                   guidebook-auditor
+                                  integrity-protocol
                                   item-audit-pipeline
                                   item-consolidation-analyzer
                                   item-specification-writer
