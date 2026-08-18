@@ -11,6 +11,13 @@ lenses, multilingual aliases, and jurisdictions; research is polynomial search a
 **§10** answers §7.3 by adopting three prioritised jurisdiction buckets, with four corrections. §8
 is rewritten to match. The superseded text is struck rather than deleted.
 
+**Revised again 2026-08-18** on four further owner rulings: **§10.1** is resolved — buckets 4 and 5
+hold the remainder and the five buckets partition the scope exactly; **§10.1.2** amends the
+PROVISIONAL gate so it no longer waits for buckets 4–5 (**the one ruling here that is a genuine
+doctrine amendment and needs a DR**); **§11** splits the jurisdictions table in two so the country
+itself, NGOs, advocacy bodies and municipalities are searchable entities; **§12** promotes the
+academic-database register out of a skill file and into the schema.
+
 ---
 
 ## 1. The ruling, and what it replaces
@@ -87,7 +94,13 @@ demands the one-to-many, extracted from `jurisdictional_values.standard_name`:
 | **CA** | **CSA only** — the National Building Code is absent, exactly as the ruling anticipates |
 | CH · JP · NO · SG · EU · ISO | SIA · JIS · NS/TEK · BCA · EN · ISO/IEC |
 
-**Proposed shape — one table, one row per (country × standard or code):**
+> **Superseded 2026-08-18 by §11.** The owner ruled that the country itself, NGOs, advocacy groups
+> and leading municipalities must also be searchable entities. That splits this one table into
+> `jurisdictions` (geo-political scope) + `research_bodies` (searchable entities within it) — and in
+> doing so removes the `languages` repetition cost this section concedes below. **The schema in §11
+> is the live proposal; the block immediately following is kept as the record of what it replaced.**
+
+**Proposed shape (SUPERSEDED — see §11) — one table, one row per (country × standard or code):**
 
 ```
 jurisdictions(
@@ -126,9 +139,10 @@ distinction later needs to be queryable, it is one nullable `entity_type` column
 **The one honest cost of a single table:** `languages` is a property of the *country*, not of the
 standard, so it repeats on every row for that country and the copies can drift. At this scale — tens
 of countries — that is a real but small risk, and a three-line audit comparing languages across rows
-sharing a `country_code` closes it. **I recommend accepting the repetition rather than normalising into
-three tables**; the second table earns its keep only if country-level attributes multiply beyond
-languages.
+sharing a `country_code` closes it. ~~**I recommend accepting the repetition rather than normalising into
+three tables**~~ — **withdrawn: §11.2.** Country-level attributes did multiply (the `bucket` column
+arrived with §10, the country-generic row with §11), so the second table now earns its keep and
+`languages` lives exactly once.
 
 `lang_jur_map` (70 rows, 19 languages, 48 jurisdictions) is the seed for the `languages` column. It
 already carries the multi-language cases the search must respect — **CH: de/fr/it · BE: de/fr/nl ·
@@ -249,20 +263,24 @@ MERGED` and a `merged_into` column built for it.
 
 ## 8. Sequence
 
-**Revised 2026-08-18 after the two owner rulings in §9 and §10.** The change from the first draft is
-that steps 5 and 6 are no longer "decide the prioritisation rule" and "first batch" — the rule is
-decided, and the terminal steps of the *pipeline* (derive categories, then specify) are pushed out
-past the end of this frame's work entirely.
+**Revised twice on 2026-08-18, after the owner rulings in §9–§12.** The pipeline's terminal steps
+(derive categories, then specify) are pushed out past the end of this frame's work entirely; the
+prioritisation rule is decided; and three new tables join the migration because the registers they
+hold already exist in prose and only need promoting.
 
 | # | Step | Gate |
 |---|---|---|
-| 1 | Settle §7.1 (e-codes), §7.4 (jurisdiction scope — but see §10.4, the buckets largely settle it) | **owner, DG-NON** |
-| 2 | Reconcile the buckets against `governance/jurisdiction-philosophy.md` §1.2 (§10.1) | **owner, DG-NON** |
-| 3 | Build `icf_codes`, `jurisdictions`; rename `term_item_links` → `term_slug_links` | D-SCHEMA, one migration |
-| 4 | Convert 93 items → slugs by hand; dedup 199 → *n* | research judgment, not mechanical |
-| 5 | Expand `population_axis_map` → population↔ICF; retire `axes`, `item_axis_links`; archive `items` | same migration batch |
-| 6 | Seed `search_coverage` with `NOT-RUN` for bucket 1 (slug × bucket-1 jurisdiction) | D-OP, no new schema (§10.5) |
-| 7 | First batch, per `workplan/2026-08-18-research-restart-plan.md`, acceptance criterion per §9.5 | R1–R15 DoD gate |
+| 1 | Settle §7.1 (e-codes) | **owner, DG-NON** |
+| 2 | Ratify the five-bucket fill order (§10.1.1) | owner — **D-OP**, §1.2 untouched |
+| 2b | **Amend `jurisdiction-philosophy.md` §2.3** — PROVISIONAL gates on declared-bucket scope, not a fixed count; ≥9-language floor retained (§10.1.2) | **owner, DG-NON — a real D-DOCT amendment, needs a DR** |
+| 3 | Fix the `GB` / `UK` split before any FK is created (§10.4) | one data migration |
+| 4 | Build `icf_codes`, `jurisdictions`, `research_bodies`, `research_indexes`, `research_index_coverage`; add `jurisdictions.bucket`; make `search_executions.engine` an FK; rename `term_item_links` → `term_slug_links` | D-SCHEMA, one migration |
+| 5 | Seed `research_bodies` and `research_indexes` from `skills/multilingual-research_SKILL.md` Steps 2a/2b/3 (§11.1, §12.1) | transcription, not authorship |
+| 6 | Convert 93 items → slugs by hand; dedup 199 → *n* | research judgment, not mechanical |
+| 7 | Expand `population_axis_map` → population↔ICF; retire `axes`, `item_axis_links`; archive `items` | same migration batch |
+| 8 | Seed `search_coverage` `NOT-RUN` for bucket 1; seed `research_index_coverage` likewise | D-OP, no new schema (§10.5) |
+| 9 | First batch, per `workplan/2026-08-18-research-restart-plan.md`, acceptance criterion per §9.5 | R1–R15 DoD gate |
+| — | *Municipality rows deferred until buckets 1–2 are under way* | §11.4 — selection is a finding, not a guess |
 | — | *Stage 6 (derive categories) and stage 7 (specify) are **not** in this sequence* | §9.3 — they have no mechanism and no input yet |
 
 **Nothing in the cull plan blocks any of this.** They are independent, and this one is upstream of
@@ -383,33 +401,109 @@ prioritise by a property you can only measure *after* searching, which makes the
 order. The buckets prioritise by a property known in advance, and they are stable — the queue does not
 re-sort itself as results arrive. Four corrections follow, in descending order of consequence.
 
-### 10.1 J1 — the buckets conflict with a CANONICAL selection criterion (owner decision required)
+### 10.1 J1 — RESOLVED by owner ruling, 2026-08-18: buckets 4 and 5
 
-`governance/jurisdiction-philosophy.md` is **CANONICAL**. Its §1.2 lists four coverage criteria for the
-canonical jurisdiction set; criterion 1 is *"Geographic diversity — all inhabited continents
-represented; **Global South ≥8 jurisdictions**."* The canonical table selects BD, EG, ID, IN, KE, NG,
-ZA and BR on exactly that ground, each with a stated rationale (`KE — Sub-Saharan representation`,
-`IN — Harmonised Guidelines; 1.4B population`, and so on).
+**Original finding (kept for the record).** `governance/jurisdiction-philosophy.md` is CANONICAL. Its
+§1.2 criterion 1 is *"Geographic diversity — all inhabited continents represented; **Global South ≥8
+jurisdictions**"*, and the canonical table selects BD, EG, ID, IN, KE, NG, ZA and BR on that ground.
+Buckets 1–3 as proposed contained BR alone. I flagged the conflict and declined to resolve it.
 
-**The three buckets contain BR alone, in bucket 3.** BD, EG, ID, IN, KE, NG and ZA appear in no
-bucket. Seven of the eight jurisdictions the canonical doctrine selected *for* Global South coverage
-are absent from all thirty slots.
+**Owner ruling:** *"Override canonical doctrine. Buckets 4 and 5 can be all the other ones from Global
+South or otherwise missing."*
 
-This is not a defect in the buckets as a *sequencing* device — deferring a jurisdiction is not
-dropping it. It becomes a doctrine conflict only if the buckets are read as the new jurisdiction
-*list*. **Which of the two they are is a DG-NON call and I am not making it.** The two readings:
+**On the buckets alone, this is sequence and not selection.** Criterion 1 governs *which*
+jurisdictions are in the set; buckets govern *what order* they are filled. With buckets 4 and 5
+holding the remainder, nothing is dropped from the set, so §1.2 stands unamended.
 
-- **Sequencing (recommended).** Buckets 1–3 are the first thirty in fill order; the canonical set is
-  unchanged; the seven Global South jurisdictions sit in an unnumbered bucket 4 and are `NOT-RUN`
-  until reached. Costs nothing doctrinally. Costs honesty only if bucket 4 is never written down —
-  so **write it down**, or the deferral is indistinguishable from a silent reversal.
-- **Replacement.** The canonical set is amended, criterion 1 is withdrawn or restated, and that
-  requires a DR. In a project whose doctrine centres disabled people and holds a CRPD posture, quietly
-  dropping Global South coverage from a coverage strategy that named it as a reason is the kind of
-  change that should be argued in the open, not absorbed as a staging decision.
+**But a second ruling followed and it does change the bar — see §10.1.2.** My first pass at this
+paragraph concluded the ruling "costs nothing doctrinally" and that the buckets "change the order of
+work, not the bar for finishing it." **That is no longer true and the correction is recorded rather
+than silently overwritten**, because the difference between the two rulings is exactly the thing a
+future reader needs to be able to see.
 
-I recommend the first reading and recommend writing bucket 4 explicitly in the same commit that adopts
-buckets 1–3.
+### 10.1.2 Second ruling — the completeness gate no longer waits for buckets 4–5
+
+**Owner ruling, 2026-08-18:** *"no longer need global South to move from provisional."*
+
+**This one is a real doctrine amendment, and unlike §10.1 it needs a DR.** The rule it changes is
+`governance/jurisdiction-philosophy.md` §2.3:
+
+> *"A BPC entry is PROVISIONAL until all 24 jurisdictions are recorded AND the Co-1 pass covers
+> ≥9 languages."*
+
+**Only the first conjunct changes. The second survives untouched**, and that is worth checking rather
+than assuming: buckets 1–3 supply **14 primary languages**, so the ≥9-language Co-1 floor is
+clearable without buckets 4–5. The amendment is therefore narrower than the ruling's wording implies
+— it releases the jurisdiction count, not the language floor.
+
+**Proposed replacement, parameterised rather than re-numbered:**
+
+> A BPC entry is PROVISIONAL until **every jurisdiction in the buckets it declares in scope** is
+> recorded, AND the Co-1 pass covers ≥9 languages. **The entry states the buckets it covers on its
+> face.**
+
+Three reasons for that shape over the obvious alternative (*"all bucket 1–3 jurisdictions"*):
+
+1. **It does not need re-amending when scope moves.** A fixed number is what produced the current
+   problem — §2.3 says "24" while the enum holds 25 countries and the buckets now hold 50.
+2. **It keeps the gate non-vacuous.** A rule that drops the jurisdiction conjunct entirely would let
+   an entry reach non-PROVISIONAL on one jurisdiction. The gate still bites; it bites against a
+   declared scope.
+3. **It forces disclosure, which is the doctrinal point.** The guidebook's stated purpose is *"to get
+   people to ask the right questions,"* and it is not an authority. An entry that reached
+   non-PROVISIONAL without searching the Global South should say so where a reader can see it — not
+   because the omission is illegitimate, but because an undisclosed narrowing reads as coverage. That
+   is the same failure this repository has produced four times in its own gates (CLAUDE.md §10), now
+   pointed at the reader instead of at CI.
+
+**What the amendment actually costs, stated once.** Buckets 4–5 hold every jurisdiction the canonical
+§1.2 selected for Global South coverage. Releasing the gate means those twenty are no longer required
+for any entry to be considered complete, so in practice they become optional rather than deferred.
+§1.2's *selection* is untouched on paper; its *effect* is not. **This is the owner's call to make and
+it is made** — recorded here so that the DR states what it is doing rather than describing itself as
+a scope clarification.
+
+**Consequence for the buckets themselves:** they are now genuinely open-ended. Buckets 1–3 are the
+working set, 4–5 are declared and unscheduled. That is a coherent position, and it is more honest
+than a five-bucket plan nobody intends to finish.
+
+**Unchanged by this ruling:** §9.5's first-batch criterion (it never depended on the jurisdiction
+count), §10.2's rule that `co1_attempted` is not bucket-gated (R1 outranks a jurisdiction queue
+regardless of where the completeness bar sits), and §10.3's finding that bucket 1 alone is 6 languages
+— **below the ≥9 floor that survives**, so bucket 1 alone still lifts nothing out of PROVISIONAL.
+
+### 10.1.1 The five buckets close exactly over the scope
+
+Assigning the remainder produces an exact partition, which is a stronger result than the ruling asked
+for:
+
+| Bucket | Members | n |
+|---|---|---|
+| **1** | UN · ISO · CA · US · UK · DE · NO · SE · JP · AU | 10 |
+| **2** | EU · SG · NZ · IE · FR · ES · PT · FI · NL · KR | 10 |
+| **3** | BR · CN · IT · DK · CH · MX · AT · BE · CO · CL | 10 |
+| **4** *(proposed)* | **BD · EG · ET · GH · ID · IN · KE · NG · TZ · ZA** | 10 |
+| **5** *(proposed)* | **AR · CR · CY · EC · GT · MA · PE · PH · TH · UY** | 10 |
+
+**Verified:** 50 slots, 50 unique members, and the set is *identical* to `lang_jur_map` (48) plus the
+two meta-codes ISO and UN — **zero in the buckets that are outside the scope, zero in the scope that
+are unbucketed**. The partition is exact.
+
+**Bucket 4 is the canonical Global South set plus three the apparatus is already prepared for.** It
+contains all seven canonical jurisdictions that buckets 1–3 omitted (BD, EG, ID, IN, KE, NG, ZA) and
+adds ET, GH, TZ — which `skills/multilingual-research_SKILL.md` already carries organisation lists for
+(ECDD/AASTU, GFD/KNUST, CCBRT/UDSM) and which African Journals Online already serves. Bucket 5 is the
+Latin American Spanish-language remainder plus PH, CY, TH and MA.
+
+**Language cost of buckets 4–5:** five new primary languages — **AR, BN, HI, ID, SW**. The full curve
+across all five buckets is **6 → +5 → +3 → +5 → 0**; bucket 5 introduces no new language capability
+at all.
+
+**One known limitation, already flagged in the data and not a new finding.** Four members carry
+`[PRIMARY-LANGUAGE-GAP]` notes in `lang_jur_map` because their official languages fall outside the
+project's 19 research languages: **ZA and ET** (bucket 4) and **CY and TH** (bucket 5) are searchable
+in English only — Amharic, Thai, Greek and Turkish are out of scope. Per R14 a zero-yield search in
+those four is an *indexing* fact, not evidence of absence, and must be recorded as such.
 
 ### 10.2 J2 — the buckets sequence only the tier stratum that cannot anchor best practice
 
@@ -436,7 +530,8 @@ adopting DR, because the flags make it enforceable rather than aspirational.
 ### 10.3 J3 — bucket 1 alone cannot lift any entry out of PROVISIONAL
 
 `jurisdiction-philosophy.md` §2.3: *"A BPC entry is PROVISIONAL until all 24 jurisdictions are recorded
-AND the Co-1 pass covers ≥9 languages."*
+AND the Co-1 pass covers ≥9 languages."* **The first conjunct is amended by §10.1.2; the ≥9-language
+floor below is the half that survives, which is why this finding still stands.**
 
 Measured against `lang_jur_map`, counting **primary** languages only:
 
@@ -507,3 +602,231 @@ it reveals that I flagged the wrong dimension.
 What would order slug × lens is a genuinely different kind of rule, and it is the next thing to decide
 after this frame lands. It is left open here deliberately, and marked for Fable 5 alongside §7.1 and
 §7.2.
+
+---
+
+## 11. Research bodies — the country itself, NGOs, municipalities, advocacy groups
+
+**Owner ruling, 2026-08-18:** *"I also need to be including the country itself as a jurisdiction for
+generic searching as well as identify all relevant nongovernmental organizations and leading
+municipalities and advocacy groups."*
+
+### 11.1 This is not a new register — it exists, in prose, in a skill
+
+Per CLAUDE.md §9 guardrail 3 (*don't spin up a new register — extend the existing apparatus*), the
+first question is whether this already exists. **It does.**
+`skills/multilingual-research_SKILL.md` carries **three prose registers**:
+
+- **Step 2a** — per-jurisdiction codes and instruments, ~30 jurisdictions
+  (`FR | Arrêté du 8 décembre 2014; Code de la Construction (CCH)`).
+- **Step 2b** — per-jurisdiction beyond-code / Tier 5 bodies, ~30 jurisdictions. **This is already
+  the NGO and advocacy register the ruling asks for:** Habinteg (UK), Rick Hansen Foundation (CA),
+  Procap (CH), ONCE (ES), IBDD (BR), Invalidiliitto (FI), CCS Disability Action (NZ), EDF and EIDD
+  (EU), CEUD/NDA (IE), KDA (DE).
+- **A leading-municipality entry already exists too** — `KR | Seoul Universal Design Guidelines 2022`.
+
+So the ruling is not *"build a register"*; it is **"promote three prose registers into a table so the
+DB is canonical and coverage is queryable."** That is the same move §2 of CLAUDE.md prescribes
+generally, and it is much cheaper than inventing the content.
+
+### 11.2 The ruling removes the one defect I had conceded in §3
+
+§3 proposed a single `jurisdictions` table keyed one row per (country × standard/code), and I flagged
+its one honest cost: `languages` is a property of the *country* but would repeat on every standards
+row and could drift. I recommended accepting the repetition.
+
+**Adding the country itself as a searchable entity makes that recommendation obsolete, and in the
+right direction.** Once the country is its own row, the natural shape is two tables, and `languages`
+lives exactly once:
+
+```
+jurisdictions            -- geo-political scope. ~50 rows, one per bucket member.
+  jurisdiction_code  PK  -- DE, CA, ISO, EU, UN
+  name                   -- Germany, Canada
+  kind                   -- country | supranational | international
+  languages              -- de   |   en,fr        <- ONE row per jurisdiction, no repetition
+  bucket                 -- 1..5, nullable        <- the fill order as data, not prose (§10.5)
+  notes
+
+research_bodies          -- the searchable entities WITHIN a jurisdiction
+  body_id            PK
+  jurisdiction_code  FK -> jurisdictions
+  body_type              -- country_generic | standards_body | government
+                         -- | ngo | advocacy_org | municipality | research_institute
+  level                  -- national | subnational | supranational | international
+  acronym                -- CSA · NBC · DIN · ONCE          <- the short form
+  full_name              -- Canadian Standards Association
+                         -- Organización Nacional de Ciegos Españoles
+  instrument             -- CSA B651 / DIN 18040 (nullable; NGOs often have none)
+  language_override      -- nullable; a body publishing outside its country's languages
+  notes
+```
+
+`acronym` and `full_name` remain **two separate columns, never one** — the earlier ruling is
+unchanged and applies with more force to advocacy bodies, whose full names are frequently
+non-English (*Organización Nacional de Ciegos Españoles*, *Specialpedagogiska skolmyndigheten*).
+
+**`body_type = 'country_generic'` is the row the ruling asks for**: one per jurisdiction, `acronym`
+= the country code, `full_name` = the country's own name in its own language, `instrument` NULL. It
+is what a generic search targets when no specific body is named.
+
+**Canada, worked through:**
+
+| jurisdiction | body_type | acronym | full_name | instrument |
+|---|---|---|---|---|
+| CA | country_generic | CA | Canada | — |
+| CA | standards_body | CSA | Canadian Standards Association | CSA B651 |
+| CA | government | NBC | National Building Code of Canada | NBC Section 3.8 |
+| CA | ngo | RHF | Rick Hansen Foundation | RHFAC v4.2 |
+| CA | government | CMHC | Canada Mortgage and Housing Corporation | Universal Design Guide |
+
+### 11.3 Why advocacy organisations are the highest-value part of this ruling
+
+Co-1 — lived experience and participatory design — is **co-primary with T1** under CRPD Art. 4.3, and
+R1 puts it first in the admission order, *before* anything else. But the project has **no register of
+where Co-1 evidence comes from.** Disabled people's organisations and advocacy bodies are the
+principal publishers of it.
+
+`search_coverage.co1_attempted` is a boolean per (slug, jurisdiction). It can record *that* Co-1 was
+attempted; it cannot record *where*, and therefore cannot distinguish a thorough Co-1 pass from a
+cursory one. **`research_bodies` filtered to `body_type IN ('ngo','advocacy_org')` supplies the
+denominator that flag has been missing** — which is the same "a gate reporting zero may have examined
+zero" problem CLAUDE.md §10 says this repository has produced four times.
+
+**Recommendation:** build `research_bodies` in the same migration as `jurisdictions`, and treat the
+advocacy rows as the priority fill, not an afterthought — they are the ones that serve the tier the
+doctrine ranks highest and the apparatus currently cannot measure.
+
+### 11.4 Municipalities need a level, not a table
+
+A leading municipality (Seoul, and whichever others survive selection) is a `research_bodies` row with
+`level = 'subnational'` and `jurisdiction_code = 'KR'`. It does **not** need its own table, and it
+must **not** become its own `jurisdictions` row — a city is not a jurisdiction in the sense the
+buckets partition, and admitting one would break the exact 50-member closure in §10.1.1.
+
+**Open, and genuinely a research-strategy question I am not answering:** what makes a municipality
+"leading" enough to include. Unlike standards bodies, there is no enumerable set — every country has
+thousands of municipalities and no external list ranks them by accessibility practice. Selecting them
+is the same *curate-from-the-specific-layer* problem §1.1 describes, and picking them by reputation is
+exactly how an umbrella gets coined. **Suggest deferring municipality rows until buckets 1–2 are under
+way**, at which point the research itself will have surfaced which cities the literature keeps naming
+— which is a finding, not a guess.
+
+---
+
+## 12. Academic indexes — the search infrastructure
+
+**Owner ruling, 2026-08-18:** *"I should also create a table for academic
+repositories/databases/etc or at least some framework so that our research phase also includes
+searching academia."*
+
+### 12.1 Half of this is already built, and the half that is missing is the measurable half
+
+**Already built:** `search_executions.engine` is `TEXT NOT NULL` and its comment enumerates
+`pubmed|crossref|scholar|biorxiv|medrxiv|consensus|web|registry|manual`. Every query already records
+which index it ran against.
+
+**Already written:** `skills/multilingual-research_SKILL.md` Step 3 carries a **21-database register**
+with language coverage and run priority — PubMed · OTseeker · Consensus · Scholar Gateway · CINAHL ·
+EMBASE · SCOPUS · REHADAT (DE) · J-STAGE · CiNii (JA) · CNKI (ZH) · RISS (KO) · BDTD (PT) ·
+OpenEdition (FR) · BASE (multi) — plus a second "additional databases" table keyed by jurisdictions
+served: AJOL, IndMED/NLM India, LILACS, EMRO Index Medicus, WPRIM, SciELO. It even carries the
+governing doctrine: *"No database priority implies evidence priority… A Tier 1 study in J-STAGE
+governs over a Tier 3 study in PubMed."*
+
+**Missing:** the two are not connected. `engine` is free text with the enumeration in a *comment*, not
+a CHECK or a foreign key, and the 21-database register is prose in a skill file. Consequently
+**nothing can compute which indexes were searched for a slug and which were not** — there is no
+denominator, so an academic channel that was never opened is indistinguishable from one that was
+opened and yielded nothing.
+
+### 12.2 The measurement that shows why this matters
+
+The pre-reset corpus (`_archived/data/corpus-pre-reset-2026-08-06.db`) recorded **84 search
+executions**:
+
+| engine | n |
+|---|---|
+| web | 30 |
+| manual | 19 |
+| pubmed | 15 |
+| scholar | 12 |
+| crossref | 3 |
+| consensus | 3 |
+| registry | 2 |
+
+**`web` + `manual` = 49 of 84 — 58% of all recorded search effort was general web search or
+unspecified manual work.** Of the 21 registered databases, **exactly two** (PubMed, Consensus) appear
+at all. J-STAGE, CNKI, RISS, REHADAT, BDTD, OpenEdition, SciELO, LILACS, AJOL — every non-English
+academic index in the register — recorded **zero** executions.
+
+That is the concrete answer to the ruling. The research phase did not include searching academia in
+any systematic sense, the register that would have said so existed the whole time, and nothing could
+compare the two because one was prose and the other was a free-text column. **This is the same failure
+shape as the 824-of-863 no-admission-edge finding** — effort recorded, coverage unmeasurable.
+
+### 12.3 Indexes are not bodies — two tables, not one
+
+An index and a publisher are different objects and must not share a table, or the frame commits the
+umbrella error one more time:
+
+- A **research body** (§11) *publishes* documents you may cite — DIN, Habinteg, Seoul.
+- A **research index** *is infrastructure you search through* to find documents — PubMed, SciELO, CNKI.
+
+A single search execution has both: *"searched J-STAGE (index) for MLIT guidance (body)."* They are
+orthogonal, and the same body's output is reachable through several indexes.
+
+```
+research_indexes
+  index_code        PK   -- pubmed, jstage, cnki, scielo, ajol, web, manual
+  full_name              -- 科学技術情報発信・流通総合システム (J-STAGE)
+  index_type             -- bibliographic | preprint | repository | citation_graph
+                         -- | specialist | web | manual
+  languages              -- indexing language coverage (NOT evidence weight -- §12.4)
+  jurisdictions_served   -- nullable; SciELO/LILACS/AJOL/WPRIM are regional
+  tool_reachable         -- 0/1: reachable by this session's tooling vs. manual/browser only
+  access                 -- open | subscription | institutional
+  run_priority           -- all_runs | language_conditional | jurisdiction_conditional
+  notes
+
+research_index_coverage  -- the denominator, mirroring search_coverage's shape
+  slug, index_code, status IN ('SEARCHED','THIN','NO-DATA','NOT-RUN'), ...
+  PRIMARY KEY (slug, index_code)
+```
+
+Then **`search_executions.engine` becomes a foreign key to `research_indexes.index_code`.** That one
+change converts a free-text label into a measurable coverage dimension, and it is the smallest edit
+that would have made the 58%-web finding visible while it was happening rather than in an archive
+three months later.
+
+**`tool_reachable` is worth carrying explicitly** because this session has PubMed, Consensus, bioRxiv
+and Scholar Gateway available as tools, while J-STAGE, CNKI, RISS and SciELO are browser-only. A
+register that does not distinguish them will silently over-weight the four that are easy to reach —
+which is precisely how the 58% happened.
+
+### 12.4 One doctrine line must be carried across, not left in the skill
+
+Step 3's warning is load-bearing and belongs in the table's own documentation, because it is the exact
+claim a coverage metric will invite someone to violate:
+
+> **No database priority implies evidence priority.** The list reflects indexing *language coverage*,
+> not evidence weight. A Tier 1 study in J-STAGE governs over a Tier 3 study in PubMed.
+
+This is R5 in the research contract (*non-English peer-reviewed work is ACADEMIC, not grey;
+non-indexation in PubMed/Scopus is an INDEXING fact, not an evidence-quality fact*). Once
+`research_index_coverage` exists, PubMed will be the easiest index to fill and the most tempting to
+treat as sufficient. **`run_priority` and the doctrine note are the guard against that**, and neither
+works unless it sits with the data.
+
+### 12.5 What this adds to the sequence
+
+| Step | Where it goes |
+|---|---|
+| Build `research_indexes`; seed from the skill's 21-database register | §8 step 3, same migration |
+| Build `research_index_coverage`; make `search_executions.engine` an FK | §8 step 3, same migration |
+| Retire the prose register to a generated view of the table | after the table is populated — redirect-stub, do not delete (guardrail 2) |
+
+**Net schema delta across §10–§12:** four new tables (`jurisdictions`, `research_bodies`,
+`research_indexes`, `research_index_coverage`), one FK added to an existing column, one nullable
+`bucket` column. No table is dropped that was not already being dropped, and the staging itself
+(§10.5) still needs no schema at all.

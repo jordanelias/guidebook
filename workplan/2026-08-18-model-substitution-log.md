@@ -103,6 +103,44 @@ should test whether the recommendation is doctrine-respecting or merely convenie
 
 **Left undone.** The slug × lens ordering rule (§10.6) — named, not proposed.
 
+## 4c. Added 2026-08-18 — frame proposal §10.1.1–§10.1.2, §11, §12
+
+Four further owner rulings, all executed by Opus.
+
+| Item | Verdict | Basis | Marking |
+|---|---|---|---|
+| §10.1 resolved — buckets 4 and 5 hold the remainder | Owner ruling | — | — |
+| §10.1.1 — the five buckets partition the scope **exactly**: 50 slots, 50 unique, identical to `lang_jur_map` (48) + ISO + UN, zero over- or under-coverage | Measured | set arithmetic over `lang_jur_map` | **MECHANICAL** |
+| §10.1.1 — *which* members go in bucket 4 vs 5 | Proposed | canonical Global South seven + ET/GH/TZ (already carried by `multilingual-research_SKILL.md`) | **JUDGMENT** — the 10/10 split is mine, not the owner's |
+| §10.1.1 — buckets 4–5 add AR, BN, HI, ID, SW; curve is 6→+5→+3→+5→0 | Measured | PRIMARY-role rows in `lang_jur_map` | **MECHANICAL** |
+| §10.1.1 — ZA, ET, CY, TH searchable in English only | **Corrected mid-draft** | already flagged `[PRIMARY-LANGUAGE-GAP]` in the data; I nearly reported it as a new defect | **MECHANICAL**, and a near-miss worth recording under guardrail 1 |
+| §10.1.2 — PROVISIONAL gate amended; **only the jurisdiction conjunct falls, the ≥9-language floor survives** | Established | buckets 1–3 supply 14 primary languages | **MECHANICAL** on the language count |
+| §10.1.2 — the parameterised replacement wording (*declared-bucket scope + disclosure on the entry's face*) | Proposed | three stated reasons | **JUDGMENT** — the disclosure requirement in particular is mine, not the ruling's |
+| §10.1.2 — classifying this as a real D-DOCT amendment, reversing what I wrote in §10.1 minutes earlier | Self-correction | §1.2 selection vs §2.3 completeness | **JUDGMENT** |
+| §11.1 — the NGO/advocacy/municipality register **already exists in prose** in `skills/multilingual-research_SKILL.md` Steps 2a/2b | Established | direct read; Habinteg, RHF, Procap, ONCE, IBDD, Invalidiliitto, EDF, and `KR \| Seoul Universal Design Guidelines 2022` | **MECHANICAL** |
+| §11.2 — split into `jurisdictions` + `research_bodies`; withdraws my §3 recommendation to accept `languages` repetition | Proposed | follows from the country-generic row | **JUDGMENT** |
+| §11.3 — advocacy bodies are the missing Co-1 denominator | Argued | `search_coverage.co1_attempted` is a bare boolean; R1; CRPD 4.3 | **JUDGMENT** |
+| §11.4 — municipalities deferred; selection criterion is a finding, not a guess | Proposed | §1.1's umbrella argument applied one layer over | **JUDGMENT** |
+| §12.1 — `search_executions.engine` enumerates 9 engines **in a comment, not a CHECK**; the 21-database register is prose in a skill | Established | DDL read + skill read | **MECHANICAL** |
+| §12.2 — pre-reset corpus: 84 executions, `web`+`manual` = **49 (58%)**, only 2 of 21 registered databases used, **zero** non-English academic indexes | Measured | `_archived/data/corpus-pre-reset-2026-08-06.db` | **MECHANICAL** |
+| §12.3 — indexes and bodies are different objects; two tables; `engine` becomes an FK | Proposed | orthogonality argument | **JUDGMENT** |
+| §12.3 — `tool_reachable` column | Proposed | four indexes reachable by session tooling, the rest browser-only | **JUDGMENT** |
+
+**Where a non-Opus reviewer would plausibly differ.** Two surfaces.
+
+1. **§10.1.2's disclosure requirement.** The owner released the gate; I proposed that entries state
+   their bucket scope on their face. That is an addition to the ruling, not a reading of it, and a
+   reviewer could fairly call it my own doctrine smuggled into an execution — the exact defect the
+   PR #103 pass filed as P1 against someone else. It is flagged in-text as proposed wording.
+2. **§12.2's inference.** The 58% figure is mechanical. The claim that it demonstrates the academic
+   channel was never systematically opened is an interpretation of *why* those rows look that way,
+   and the corpus was reset for unrelated reasons. Fable should test whether the register was ever
+   in force during the period those 84 executions were logged — if it was written later, the figure
+   measures something else.
+
+**Left undone.** Bucket-4/5 scheduling; the municipality selection criterion; the slug × lens
+ordering rule (still).
+
 ## 5. Standing rule
 
 Any future Fable-assigned task performed by another model is appended to §1 with the same columns,
