@@ -74,6 +74,35 @@ the surfaces where a non-Opus reviewer would plausibly differ, and anything left
    an Opus census ratified by an Opus critique. Fable should attack it independently.
 4. **Nothing in sweeps 1–8** — Fable's own, no debt.
 
+## 4b. Added 2026-08-18 — frame proposal §9 and §10
+
+The frame proposal is **marked for Fable 5** in its own header, so its §7 items were already Fable's
+debt. Two of those items have now been closed by Opus under owner ruling, which changes their status
+from *open for Fable* to *decided by Opus and owed re-examination*. Logged here rather than only in
+the proposal, per §5.
+
+| Item | Verdict | Basis | Marking |
+|---|---|---|---|
+| §7.6 withdrawn — `specifications` deferred, not re-keyed (§9) | Owner ruling; my prior proposal recorded as a defect | Owner's stage ordering + DDL reads (`parameter` `TEXT NOT NULL`, `parameter_canonical` nullable, `v_value_independence` grouping on `COALESCE`) | **MECHANICAL** on the DDL facts; **JUDGMENT** on §9.3's claim that stage 6 needs those three specific records |
+| §9.4 — the 93 stripped names may carry selection bias even as questions | Flagged, not asserted | Reasoning only, no measurement | **JUDGMENT** — flagged in-text as a claim I decline to assert |
+| §9.5 — first-batch criterion restated as "≥1 bucket with ≥2 independent roots" | Proposed | Follows from stages 6–7 being deferred | **JUDGMENT** — the threshold (≥2) is a choice, not a derivation |
+| §7.3 answered — three jurisdiction buckets adopted (§10) | Adopted with four corrections | Owner proposal | **JUDGMENT** overall |
+| §10.1 — buckets omit 7 of 8 Global South jurisdictions named by CANONICAL doctrine | Conflict raised, **not resolved** | `governance/jurisdiction-philosophy.md` §1.2 criterion 1, vs. bucket membership | **MECHANICAL** on the membership arithmetic; **JUDGMENT** on the sequencing-vs-replacement recommendation. **This is the one Fable should attack first.** |
+| §10.2 — buckets sequence T4–T6 only; `co1_attempted` must not be bucket-gated | Corrective proposed | `jurisdiction-philosophy.md` §1.3 + §2.1, R1, and the 824/863 no-admission-edge figure | **MECHANICAL** on the doctrine citations; **JUDGMENT** on the inference that the plan would reproduce the pre-reset shape |
+| §10.3 — bucket 1 is 6 primary languages, below the ≥9 Co-1 floor | Measured | `lang_jur_map` per-bucket language counts, PRIMARY role only | **MECHANICAL** |
+| §10.4 — UN absent from all three stores; 9 of 30 outside the enum; scope decision #6 settled at 48; GB/UK live inconsistency | Measured | Cross-check against enum, `lang_jur_map`, `jurisdictional_values` | **MECHANICAL** |
+| §10.5 — staging needs no schema change; `NOT-RUN` is the bucket marker | Established | `search_coverage` DDL | **MECHANICAL** on the DDL; **JUDGMENT** on recommending a `jurisdictions.bucket` column |
+| §10.6 — jurisdiction was the wrong dimension to have flagged | Conceded | ~387,000 vs ~12,900 arithmetic | **MECHANICAL** |
+
+**Where a non-Opus reviewer would plausibly differ.** §10.1 is the surface. I raised the Global South
+conflict and recommended the sequencing reading, which is the reading that lets the work proceed
+without a DR — and "the reading that unblocks me" is the reading I am least able to assess. A reviewer
+could reasonably hold that deferring seven jurisdictions behind thirty others, in a project with a
+CRPD posture, *is* the reversal and should be argued as one. I did not decide it; I recommended. Fable
+should test whether the recommendation is doctrine-respecting or merely convenient.
+
+**Left undone.** The slug × lens ordering rule (§10.6) — named, not proposed.
+
 ## 5. Standing rule
 
 Any future Fable-assigned task performed by another model is appended to §1 with the same columns,
