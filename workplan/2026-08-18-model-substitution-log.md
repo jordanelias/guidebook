@@ -30,9 +30,10 @@ is synthesis. The cost is independence, not admissibility.
 | 6 | Cull sweep D — `workplan/` + `working/` | Fable 5 | **Fable 5** | COMPLETE | none |
 | 7 | Cull sweep E — governance / schemas / architecture / decisions / skills | Fable 5 | **Fable 5** | COMPLETE | none |
 | 8 | Cull sweep F — DB / check registry / frozen strata / root | Fable 5 | **Fable 5** | COMPLETE | none |
-| 9 | **Adversarial critique + reconciliation of the merged cull plan** | Fable 5 | **Fable 5 → FAILED (usage limit), re-run on Opus 5** | SUBSTITUTED | **YES — full re-examination owed** |
+| 9 | **Adversarial critique + reconciliation of the merged cull plan** | Fable 5 | **Fable 5 → FAILED (usage limit), re-run on Opus 5** | **DISCHARGED 2026-08-18** | **CLOSED — Fable pass A, cull plan §14** |
 
-Sweeps 1–8 are Fable's own work and carry no substitution debt. **Item 9 is the whole of the debt.**
+Sweeps 1–8 are Fable's own work and carry no substitution debt. **Item 9 was the whole of the debt and
+is now closed** — see §4e.
 
 ## 2. Item 9 — what Fable completed before terminating
 
@@ -167,10 +168,55 @@ substitute, per the same brief's §4. MECHANICAL verdicts need re-running only i
 **Standing after this entry:** the §1 ledger's item 9 stays SUBSTITUTED until pass A reports. Nothing
 in §4b/§4c changes status until pass B reports. **The handback is the dispatch, not the discharge.**
 
+## 4e. DISCHARGED — 2026-08-18, both passes reported
+
+| Pass | Result | Recorded in |
+|---|---|---|
+| **A** — cull plan | 10 findings (1 HIGH, 1 MED-HIGH). §4 items 1–3 all discharged. **Ledger item 9 closes.** | `workplan/2026-08-18-cull-execution-plan.md` §14 |
+| **B** — research frame | 11 findings (2 HIGH). §4b and §4c discharged; §7.1, §7.2 and §10.6 settled. | `workplan/2026-08-18-research-frame-proposal.md` §13 |
+
+Both passes were interrupted by transient API server errors and resumed from their own transcripts —
+**not usage limits, so no new substitution debt was created.** Pass B was interrupted twice.
+
+**The four Opus claims that were overturned**, since that is what the debt existed to find:
+
+1. **The 58% search-effort figure** (frame §12.2) — all 19 `manual` rows are deferrals, not searches.
+   Corrected to 46% of 65 executed searches.
+2. **The PROVISIONAL replacement wording** (frame §10.1.2) — released bucket 3 as well as 4–5, beyond
+   what the owner ruled.
+3. **"The exotic-caller inventory is complete"** (cull §6.1) — an active skill invokes a script Phase
+   4a culls.
+4. **"The next commit turns a blocking gate red"** (cull §2 item 0.7) — the check that resolves rule
+   ids is advisory, not blocking.
+
+### 4e.1 A compliance defect in the substitution terms themselves
+
+§3 of this log required the substitute to produce a **PART 3** marking every verdict MECHANICAL or
+JUDGMENT. **Pass A found that no PART 3 exists anywhere in the repository** — the markings appear only
+in this log, which demands them. The Opus substitute for ledger item 9 did not produce the artifact
+its own substitution terms required, and this log recorded the debt as owed without recording that its
+required form was never delivered. Fable reconstructed the verdicts from the plan and ruled on each
+anyway.
+
+**This is the failure mode this repository documents against itself** — an obligation discharged in
+name, unrecorded — and it occurred *inside the mechanism built to prevent it*. §5's standing rule is
+amended below accordingly.
+
+### 4e.2 The shape shared by three of the frame findings
+
+Pass B's F1, F3 and F9 are the same error: **a count read without reading the rows it counted.** The
+58% figure, the false claim that Canada lacked language rows, and the "built for it" merge machinery
+that has three rows ever. Each was correct as arithmetic and wrong as a claim. **That is
+`CLAUDE.md` §10's "a gate reporting zero may have examined zero", committed by an author rather than a
+gate**, three times in one document.
+
 ## 5. Standing rule
 
 Any future Fable-assigned task performed by another model is appended to §1 with the same columns,
-and carries the same PART 3 requirement. A substitution that is not logged here has not been
+and carries the same PART 3 requirement. **Amended 2026-08-18 per §4e.1: the PART 3 must exist as a
+committed artifact at a stated path, and the ledger row records that path.** A debt logged as owed
+without its required form having been delivered is a weaker record than no log at all, because it
+reads as compliance. A substitution that is not logged here has not been
 disclosed, and an undisclosed substitution is a stronger defect than the independence loss itself —
 it is the repository's own recurring failure mode (an obligation discharged in name, unrecorded)
 applied to the review apparatus.

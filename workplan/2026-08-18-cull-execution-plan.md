@@ -6,8 +6,15 @@ owner may decide.
 **Provenance.** Six exhaustive read-only sweeps (Fable 5) over all 2,133 tracked files, merged by
 Opus 5 into a 20-claim digest, then adversarially critiqued by a cold Opus 5 agent that had not
 authored the digest. Model-substitution debt is recorded in
-`workplan/2026-08-18-model-substitution-log.md` — the critique was Fable's task and **Fable is owed a
-re-examination of every `JUDGMENT`-marked verdict.**
+`workplan/2026-08-18-model-substitution-log.md`.
+
+> **DEBT DISCHARGED 2026-08-18 — Fable 5 re-examination complete. See §14.**
+> **Phase 4a must not be executed as written.** It culls `scripts/audit_consolidator.py`, which an
+> **active skill invokes** — `skills/item-audit-pipeline_SKILL.md:252` runs
+> `python3 scripts/audit_consolidator.py` as Step 8, "always runs last". The reachability analysis
+> could not see it, because a caller written in skill prose is invisible to a call-graph by
+> construction. Verified independently. Eleven further findings, four of them overturning claims
+> this plan makes, are recorded in §14.
 
 **The goal this plan is measured against**, in the owner's words: *minimize code infrastructure so we
 can focus on proper content generation from research; as little code as possible without sacrificing
@@ -279,6 +286,11 @@ reachability, not under-attributed it.**
 
 ### 6.2 What to cull, and what to leave
 
+> **BLOCKED — Fable 5 pass, A1 (HIGH).** `audit_consolidator.py` below is **not unreachable**:
+> `skills/item-audit-pipeline_SKILL.md:252` invokes it directly and no skill edit is scheduled. Remove
+> it from this set, or schedule the skill edit first. **Re-audit the rest of 4a for prose callers
+> before executing** — the whole set was selected by a method blind to this channel.
+
 **4a — cull (14 non-quarantined unreachable files, ~4,648 lines):** `audit_consolidator.py` ·
 `generate_alias_chart.py` · `item_audit_pipeline.py` · `probes/citation_mining_pipeline.py` ·
 `tests/probe_pipeline.py` · `tests/test_adjudication_integrity.py` · `verify_resolved_dois.py` ·
@@ -444,3 +456,69 @@ files**. The synthesis core stays at **0 rows**. `table_connectivity.py` still r
 - The 21 `references/` attestation-pinned paths — counted, not cross-referenced against Phase 2's list.
 - The writer/reader table census — regex-based, not AST-based. Directionally right, numerically soft.
 - **The recovery path from the pre-reset stash — unaddressed by every sweep and by this plan.**
+
+---
+
+## 14. Fable 5 adversarial pass — 2026-08-18
+
+**Authority:** owner ruling, *"Fable 5 available; return suspended work for its use."* Discharges §4
+items 1–3 of `workplan/2026-08-18-model-substitution-log.md` — ledger item 9, the whole substitution
+debt. Read-only. Interrupted once by a transient API error and resumed from its own transcript.
+
+### 14.1 Findings
+
+| # | Severity | Verdict | Finding |
+|---|---|---|---|
+| **A1** | **HIGH** | **OVERTURNED** | §6.1's "exotic-caller inventory is complete" is false. `skills/item-audit-pipeline_SKILL.md:252` invokes `python3 scripts/audit_consolidator.py` as Step 8, "always runs last"; Phase 4a culls it with no skill edit scheduled. **A caller written in skill prose is invisible to a call-graph by construction** — so the defect is the method, not one missed file. |
+| **A2** | MED-HIGH | **OVERTURNED** | §2 item 0.7's "the next commit touching that file turns a blocking gate red" is wrong on enforcement level. The five unregistered rule ids are real, but rule resolution runs under `attestation_evidence` (**advisory**); the blocking `attestation_schema` runs jsonschema only, and the file passes it cleanly. Fix still worth doing; the urgency was invented. |
+| **A3** | MEDIUM | AMEND | §1.1's "ten-line FK gate replaces ~283 lines of `validate_items` + `validate_axes`" contradicts **this plan's own §9.2**. `validate_axes` is nearly fully replaceable; `validate_items` V1 (item_code regex — the column is bare `TEXT PRIMARY KEY`) and V4 (`name NOT NULL` permits `''`) are not. An executor following §1.1 verbatim commits the mistake §9.2 forbids. |
+| **A4** | MEDIUM | **OVERTURNED as a universal** | §7 constraint 1's "no current evidence_path carries an anchor" — **38 anchored paths exist** across 86 attestations. None point into `workplan/`, so the narrow conclusion for the 9 pinned files survives. But "CLAUDE.md §9 guardrail 2 is wrong" overreaches: the guardrail is *inapplicable to this file class*, not wrong. |
+| **A5** | MEDIUM | AMEND | §6.2's 4b counts are wrong (quarantine is 16 entries / 15 live scripts / 3,383 lines, not "nine files / ~2,000"), and §6.5's terminality ground **already dissolved** — `validate_db.py` was archived 2026-08-15 and its quarantine `cmd` now points into `_archived/`. ~3k lines is ~8–9% of the live executable surface: material against the owner's goal. |
+| **A6** | MEDIUM | AMEND | §0.1's precedence rule ("census governs where it covers") is **silently overridden twice** — Phase 1 hides `workplan/deprecated/` in place where census 4a.3 says move it; 4b keeps `validate_commits`/`validate_audit_runs` where census 4a.10/4a.12 cull them. The executor faces contradictory instructions. |
+| **A7** | MED-LOW | AMEND | The Phase 1 `.ignore` edit breaks that file's own header invariant — neither `workplan/deprecated/` nor `skills/deprecated/` is on `retired-vocabulary.yaml`'s `exempt_paths`. Needs a paired addition or an explicit invariant amendment. All Phase 1 budget figures verified exact. |
+| **A8** | LOW | AMEND | §8's "50,775 chars, 85.1% prose" is not reproducible as stated — `note`+`reason`+`basis` = 44,666 chars (54.4%); 50,775 requires adding `no_floor`, which §8 does not say. Direction correct, figure wrong. |
+| **A9** | LOW | — | §0.1's *corrected* DDL counts (80/123/7) re-ran as **80/128/9** — a fourth answer from a fourth agent. Corroborates this plan's own instruction never to cite these counts, and shows the correction was itself method-underspecified. |
+| **A10** | LOW | AMEND | Phase-4 partition prose is sloppy: "14 non-quarantined unreachable files" enumerates 14–16 depending on reading, and ~4,648 lines requires including files the 4a/4b text holds separately. Headline roughly right. |
+
+**Verified clean, no defect found:** the §1 FK mechanism end to end (FK OFF at `migrate_db.py:191/:325`, grandfathering set-difference, BOOTSTRAP hatch, 057's 5,072 INSERTs, schema path never FK-checked) · §0.2's re-run gates (`test_db_integrity` 72/72, deep repro PASS, `validate_population` 425/0, selftest 31-of-65 floor) · Phase 2 budgets (32,733) · Phase 3 (19 files / 2,363) · the pre-reset stash (313/273/863) · connectivity 0 of 80 · live surface ~432k lines.
+
+**New work the plan listed as undone:** zero of the 21 `references/`-pinned attestation paths touch the six Phase-2 targets. That prerequisite is now discharged.
+
+### 14.2 Discharge of the §4 debt
+
+**Item 1 — the JUDGMENT verdicts. AMEND, with a compliance defect noted.** §3 of the substitution log
+required the substitute to produce a **PART 3** marking every verdict MECHANICAL or JUDGMENT. **No
+PART 3 exists anywhere in the repository** — grepping for the markings finds only the log that demands
+them. The substitute did not produce the artifact its own terms required, and nobody noticed for two
+days. Fable reconstructed the judgment-shaped verdicts from the plan and ruled on each: **upheld**
+§0.2, §0.3, the §1 consequence, Phase 3, §9.2–9.4, D2, D3, D7; **overturned** 0.7's urgency, §6.1's
+completeness, §7's universal-anchor claim; **amended** §0.1 precedence, §1.1 remedy scope, the Phase 1
+invariant, 4b, §8's figures.
+
+**Item 2 — applicability. AMEND, and this is the answer to the owner's actual question.** The cull is
+*not* furniture-rearranging: `workplan/` and the search surface are exactly where sessions get hurt.
+But measured against *"minimize code infrastructure"* —
+
+- **only ~5,000 of the plan's ~101,300 lines are code** — about **14%** of the 35,444-line executable
+  surface;
+- **the plan retires zero active registered checks**;
+- **no phase routes from the 65-check reality to §11's own 9-check / 6-script minimum.**
+
+§0.3's "recovery plan before Phase 5" survives re-test as **the single highest-value item in the
+plan**. The residual timidity did not go away when the too-timid finding was refuted — **it relocated
+to the active stratum**, which is the one the owner's goal is about.
+
+**Item 3 — the too-timid finding. UPHOLD both the refutation and the correction, independently.** The
+poisoning is real: **108 of 112 live basenames appear in the 23,974-line audit file**, re-measured.
+Fable then built its own reachability closure from registry `cmd`s, workflows, settings hooks and
+preflight, excluding all frozen strata: **88 reachable / 24 unreachable of 112 (6,490 lines)** against
+the substitute's 87/23/6,358. **Same answer by a method that does not share the defect.** Sweep A's
+original 601-line proposal was ~10× under.
+
+### 14.3 What the pass examined that the substitute did not
+
+The **skills/ prose-caller channel** — which is where A1 came from; the actual enforcement level of
+CHECK 3 versus the blocking schema gate, including validating the attestation against the JSON schema;
+a full anchored-`evidence_path` scan (38 hits); the Phase-2 × attestation cross-reference the plan
+itself listed as undone; `exempt_paths` against the proposed `.ignore` edit; and a from-scratch
+reachability closure rather than inheriting 87/23.

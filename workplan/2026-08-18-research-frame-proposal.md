@@ -18,6 +18,12 @@ doctrine amendment and needs a DR**); **§11** splits the jurisdictions table in
 itself, NGOs, advocacy bodies and municipalities are searchable entities; **§12** promotes the
 academic-database register out of a skill file and into the schema.
 
+**Reviewed 2026-08-18 by a Fable 5 adversarial pass — §13.** Eleven findings, two HIGH. **The 58%
+search-effort statistic in §12.2 was wrong and is corrected**; the PROVISIONAL replacement wording
+released more than the owner ruled and is pinned back; a false claim about Canada's language rows is
+struck; and §7.1, §7.2 and §10.6 — open since the first draft — are settled. Corrections are made at
+their own sites, superseded text struck rather than deleted.
+
 ---
 
 ## 1. The ruling, and what it replaces
@@ -146,8 +152,14 @@ arrived with §10, the country-generic row with §11), so the second table now e
 
 `lang_jur_map` (70 rows, 19 languages, 48 jurisdictions) is the seed for the `languages` column. It
 already carries the multi-language cases the search must respect — **CH: de/fr/it · BE: de/fr/nl ·
-SG: en/zh · MA: ar/fr · EU: 10 languages.** *(Canada is not currently in that map with both en and fr
-— a gap to fill, and the ruling's own example.)*
+SG: en/zh · MA: ar/fr · EU: 10 languages.**
+
+> **CORRECTED 2026-08-18 by the Fable 5 pass (§13, finding F3).** This sentence used to read
+> *"Canada is not currently in that map with both en and fr — a gap to fill, and the ruling's own
+> example."* **That is false.** `lang_jur_map` has carried `(EN, CA, PRIMARY)` and `(FR, CA, PRIMARY)`
+> since 2026-07-24. Worse, §10.3's bucket-1 language count silently *depends* on the FR row, which is
+> sourced only from Canada — so this document asserted a gap and then counted the row it claimed was
+> missing. Struck; there was no gap.
 
 
 **Three incompatible jurisdiction counts exist today and one must be chosen:** 12 with recorded values,
@@ -229,7 +241,10 @@ finding.
 **And zero of the 93 stripped names match an existing slug exactly** — 106 + 93 = 199 topics with no
 dedup. `carpet-in-corridors-and-occupied-spaces` almost certainly overlaps an existing acoustics slug.
 This is the "hallway vs corridor" problem in its first instance, and `slugs` already carries `status =
-MERGED` and a `merged_into` column built for it.
+MERGED` and a `merged_into` column. **Fable 5 pass, F9:** the columns exist, but **three rows have
+ever used them** (80 ACTIVE, 23 STUB, 3 MERGED). The schema claim stands; the phrase "built for it"
+was doing work the evidence does not support. Unexercised machinery at 199-row scale is a schema
+affordance, not a solved problem.
 
 **93 hand re-namings and a 199-row dedup pass. There is no shortcut.**
 
@@ -237,14 +252,21 @@ MERGED` and a `merged_into` column built for it.
 
 ## 7. Marked for Fable 5 — what I could not settle
 
-1. **Do `e`-codes belong in the ICF dimension?** `access_need_icf` carries e150/e155/e240
-   (environmental factors — building design, light). Those describe *the building*, not the person, so
-   they may be a different kind of object from `b`/`d` and may not belong on the same axis. **This
-   decides whether the ICF dimension is 46 codes or ~61.**
-2. **Is 46 the right expansion?** I took the union of the 17 axes' anchors. The ICF `b` and `d`
-   chapters hold far more codes than 46; the axes were a *selection*, and inheriting their selection
-   inherits their bias at finer grain. The alternative — enumerate the relevant ICF chapters from the
-   source classification — is more work and less contaminated.
+1. ~~**Do `e`-codes belong in the ICF dimension?**~~ **SETTLED by the Fable 5 pass — see §13, F6.
+   They do not.** Two corrections to how I posed it: `access_need_icf` carries **ten** e-codes, not
+   the three I listed (e115, e120, e125, e1251, e150, e155, e240, e250, e260, e340), spanning
+   assistive products, building design, ambient qualities *and* human support. As lens members they
+   would **duplicate lens 3** — a search for `slug × e150` is a search for design standards *by*
+   design standard. **The ICF dimension is `b`/`d` only; e-codes stay as crosswalk rows and search
+   vocabulary.**
+2. ~~**Is 46 the right expansion?**~~ **SETTLED by the Fable 5 pass — see §13, F7. It is not, and the
+   repo's own data proves it.** `access_need_icf` names **five `b`/`d` codes outside the axes' union**
+   — b164, b765, d510, d540, d550 — which means **the entire d5 self-care chapter is missing from a
+   built-environment guidebook's demand lens.** Washing, toileting and dressing are absent from the
+   dimension meant to describe functional demand on buildings. **Interim floor is 51, not 46**, and
+   the correct method is chapter-level enumeration from the source classification, owner-ratified.
+   This is the clearest available demonstration that inheriting the axes' selection inherits their
+   bias at finer grain.
 3. ~~**The prioritisation rule (§4).**~~ **ANSWERED by owner, 2026-08-18 — see §10.** Three
    prioritised jurisdiction buckets of ten were supplied. They are adopted as the *jurisdiction*
    dimension's fill order, subject to four corrections recorded in §10.1–§10.4. The slug and lens
@@ -275,7 +297,7 @@ hold already exist in prose and only need promoting.
 | 2b | **Amend `jurisdiction-philosophy.md` §2.3** — PROVISIONAL gates on declared-bucket scope, not a fixed count; ≥9-language floor retained (§10.1.2) | **owner, DG-NON — a real D-DOCT amendment, needs a DR** |
 | 3 | Fix the `GB` / `UK` split before any FK is created (§10.4) | one data migration |
 | 4 | Build `icf_codes`, `jurisdictions`, `research_bodies`, `research_indexes`, `research_index_coverage`; add `jurisdictions.bucket`; make `search_executions.engine` an FK; rename `term_item_links` → `term_slug_links` | D-SCHEMA, one migration |
-| 5 | Seed `research_bodies` and `research_indexes` from `skills/multilingual-research_SKILL.md` Steps 2a/2b/3 (§11.1, §12.1) | transcription, not authorship |
+| 5 | Seed `research_bodies` and `research_indexes` from `skills/multilingual-research_SKILL.md` Steps 2a/2b/3 — **excluding `body_type = 'municipality'` (§11.4, F5), and after reconciling the skill's 46-jurisdiction scope against the 50-member bucket scope (F4: AT, CY, UN absent)** | transcription, not authorship |
 | 6 | Convert 93 items → slugs by hand; dedup 199 → *n* | research judgment, not mechanical |
 | 7 | Expand `population_axis_map` → population↔ICF; retire `axes`, `item_axis_links`; archive `items` | same migration batch |
 | 8 | Seed `search_coverage` `NOT-RUN` for bucket 1; seed `research_index_coverage` likewise | D-OP, no new schema (§10.5) |
@@ -382,6 +404,12 @@ determination can be recorded until substantial research is done.** Therefore:
 - That criterion is measurable on day one, it exercises stages 1–4 end to end, and it does not require
   inventing a determination to prove the pipeline works — which is exactly the failure the clean-room
   reset was called for.
+- **Amended by the Fable 5 pass, F10.** `v_value_independence` was confirmed able to report
+  `independent_root_count >= 2` directly, so the threshold is measurable. But PR #103's P1 finding
+  stands: **no FK, CHECK or audit enforces root registration**, so a typo in a root id silently
+  *under*-counts independence. **The DoD must assert root-registration validity alongside the
+  threshold**, or the criterion can be failed by a spelling mistake and passed by two rows pointing at
+  the same unregistered root.
 
 ---
 
@@ -438,9 +466,16 @@ clearable without buckets 4–5. The amendment is therefore narrower than the ru
 
 **Proposed replacement, parameterised rather than re-numbered:**
 
-> A BPC entry is PROVISIONAL until **every jurisdiction in the buckets it declares in scope** is
-> recorded, AND the Co-1 pass covers ≥9 languages. **The entry states the buckets it covers on its
-> face.**
+> A BPC entry is PROVISIONAL until every jurisdiction in **buckets 1–3** is recorded, AND the Co-1
+> pass covers ≥9 languages. An entry may declare a **narrower** scope only on an explicit owner
+> ruling, and **states the buckets it covers on its face** either way.
+
+> **CORRECTED 2026-08-18 by the Fable 5 pass (§13, finding F2).** My first wording was *"every
+> jurisdiction in the buckets it declares in scope"* — which lets an entry declare buckets 1–2 alone,
+> or bucket 1 alone, and reach non-PROVISIONAL on twenty jurisdictions or ten. **The ruling released
+> buckets 4–5. My wording released bucket 3 as well**, and did so silently, under the appearance of
+> merely parameterising what the owner said. Floor pinned at buckets 1–3 above; narrowing is now an
+> explicit owner act rather than an author's default.
 
 Three reasons for that shape over the obvious alternative (*"all bucket 1–3 jurisdictions"*):
 
@@ -599,9 +634,23 @@ per §10.2 it only governs T4–T6 anyway. **The slug × lens product (~12,900 c
 and it still has no ordering rule.** The buckets answer the question I flagged in §7.3, and answering
 it reveals that I flagged the wrong dimension.
 
-What would order slug × lens is a genuinely different kind of rule, and it is the next thing to decide
-after this frame lands. It is left open here deliberately, and marked for Fable 5 alongside §7.1 and
-§7.2.
+**Answered by the Fable 5 pass — see §13, F8.** Any *importance*-based ordering is circular before
+searching, which is the same argument that killed the three candidates above. The only non-circular
+rule is **readiness**: order slugs by (a) whether the alias vocabulary exists, since R11 hard-gates
+non-English search, and (b) whether leads already exist (`source_slug_links` in the archived lead
+list, `jurisdictional_values`, prior reasoning docs).
+
+**The lens dimension needs no ordering rule at all.** R1 already fixes it — Co-1 / T2 / Co-2 first,
+before any admission. So §10.6 reduces from a two-dimensional queue to a **slug queue**, which is a
+materially smaller problem than the one I named.
+
+**Independent corroboration, from the correction in §12.2.** All 19 deferrals in the pre-reset corpus
+give the same reason: *no controlled alias vocabulary* for HI, AR, ID, SW and BN. Those are precisely
+the five languages buckets 4–5 introduce. **Buckets 4–5 are not merely deprioritised — they are
+vocabulary-blocked**, and the corpus recorded that at the moment it hit it. Readiness ordering is not
+a theory here; it is what the last attempt actually ran into.
+
+**Adopting readiness over importance is a trajectory call — owner, DG-NON.**
 
 ---
 
@@ -628,6 +677,13 @@ first question is whether this already exists. **It does.**
 So the ruling is not *"build a register"*; it is **"promote three prose registers into a table so the
 DB is canonical and coverage is queryable."** That is the same move §2 of CLAUDE.md prescribes
 generally, and it is much cheaper than inventing the content.
+
+> **Seeding caveat — Fable 5 pass, F4.** The skill enumerates **47 jurisdiction codes and declares its
+> own scope as "46 jurisdictions"**, with numeric gates written against that figure (23/46, 31/46).
+> **That is a fourth jurisdiction count**, and §10.4's "12 / 27 / 48" landscape missed it. Concretely:
+> the skill **omits AT and CY**, both bucket members, and has no UN row. Seeding `research_bodies`
+> straight from it will silently under-seed three of the fifty. **Reconcile the skill's 46 against the
+> bucket scope before step 5, not after.**
 
 ### 11.2 The ruling removes the one defect I had conceded in §3
 
@@ -704,6 +760,11 @@ A leading municipality (Seoul, and whichever others survive selection) is a `res
 must **not** become its own `jurisdictions` row — a city is not a jurisdiction in the sense the
 buckets partition, and admitting one would break the exact 50-member closure in §10.1.1.
 
+> **Contradiction — Fable 5 pass, F5.** §8 step 5 seeds `research_bodies` "from Steps 2a/2b", and
+> Step 2b contains `KR | Seoul Universal Design Guidelines 2022` — a municipality row. As written the
+> sequence transcribes the very row this section defers. **The seed step must exclude
+> `body_type = 'municipality'`**, or this deferral is prose only. Fixed in §8 step 5.
+
 **Open, and genuinely a research-strategy question I am not answering:** what makes a municipality
 "leading" enough to include. Unlike standards bodies, there is no enumerable set — every country has
 thousands of municipalities and no external list ranks them by accessibility practice. Selecting them
@@ -742,28 +803,49 @@ opened and yielded nothing.
 
 ### 12.2 The measurement that shows why this matters
 
-The pre-reset corpus (`_archived/data/corpus-pre-reset-2026-08-06.db`) recorded **84 search
-executions**:
+> **CORRECTED 2026-08-18 by the Fable 5 pass (§13, finding F1). The original claim was wrong and is
+> struck below rather than deleted.** I reported *"`web` + `manual` = 49 of 84 — 58% of all recorded
+> search effort was general web search or unspecified manual work."* I never read the rows. **All 19
+> `manual` rows are deferral records, not searches** — every one carries an explicit
+> `deferred_reason` and a `[DEFERRED]` query stub. Counting them as search effort was the error, and
+> it is the same error this repository documents four times over: a count read without checking what
+> it counted.
 
-| engine | n |
-|---|---|
-| web | 30 |
-| manual | 19 |
-| pubmed | 15 |
-| scholar | 12 |
-| crossref | 3 |
-| consensus | 3 |
-| registry | 2 |
+The pre-reset corpus (`_archived/data/corpus-pre-reset-2026-08-06.db`) holds **84 `search_executions`
+rows — 65 executed searches and 19 logged deferrals**:
 
-**`web` + `manual` = 49 of 84 — 58% of all recorded search effort was general web search or
-unspecified manual work.** Of the 21 registered databases, **exactly two** (PubMed, Consensus) appear
-at all. J-STAGE, CNKI, RISS, REHADAT, BDTD, OpenEdition, SciELO, LILACS, AJOL — every non-English
-academic index in the register — recorded **zero** executions.
+| engine | executed | note |
+|---|---|---|
+| web | 30 | |
+| pubmed | 15 | |
+| scholar | 12 | |
+| crossref | 3 | |
+| consensus | 3 | |
+| registry | 2 | |
+| **manual** | **0** | **19 rows, all deferrals with a stated reason** |
 
-That is the concrete answer to the ruling. The research phase did not include searching academia in
-any systematic sense, the register that would have said so existed the whole time, and nothing could
-compare the two because one was prose and the other was a free-text column. **This is the same failure
-shape as the 824-of-863 no-admission-edge finding** — effort recorded, coverage unmeasurable.
+**Corrected figure: web = 30 of 65 executed searches, 46%.** Not 58%, and the second-largest category
+does not exist.
+
+**What survives, and it still answers the ruling.** Of the 21 registered databases, **exactly two**
+(PubMed, Consensus) were used. CINAHL, EMBASE, SCOPUS and OTseeker — the *English* specialist
+databases the register marks "All runs" — recorded **zero**. So did every non-English index.
+
+**What does not survive.** My sentence *"nothing could compare the two because one was prose and the
+other was a free-text column"* is contradicted by the corpus itself. The 19 deferrals each state why,
+in the field built for it: **no controlled alias vocabulary for HI, AR, ID, SW or BN.** Those are not
+unexplained gaps — they are R11 working as designed, and someone recorded the blocker at the moment
+they hit it.
+
+**And the 84 rows cannot characterise the phase.** `search_coverage` in the same archive holds
+**4,960 rows, 634 of them `SEARCHED`** — so the majority of recorded coverage has no execution log at
+all. The execution table covers a three-day window (2026-07-24 → 07-26) of a months-long effort.
+**A conclusion about "the research phase" drawn from it is a conclusion about three days.**
+
+**The finding that remains, stated at its true size:** in the only window with query-level logs, the
+registered specialist databases went unused and the register could not have told anyone, because
+`engine` is free text and the register is prose in a skill file. That is a real gap and it is what
+§12.3 fixes. It is not the 58% claim, and it is not a verdict on the whole phase.
 
 ### 12.3 Indexes are not bodies — two tables, not one
 
@@ -799,10 +881,12 @@ change converts a free-text label into a measurable coverage dimension, and it i
 that would have made the 58%-web finding visible while it was happening rather than in an archive
 three months later.
 
-**`tool_reachable` is worth carrying explicitly** because this session has PubMed, Consensus, bioRxiv
-and Scholar Gateway available as tools, while J-STAGE, CNKI, RISS and SciELO are browser-only. A
-register that does not distinguish them will silently over-weight the four that are easy to reach —
-which is precisely how the 58% happened.
+**`tool_reachable` is worth carrying explicitly** because a session may have PubMed, Consensus,
+bioRxiv and Scholar Gateway available as tools while J-STAGE, CNKI, RISS and SciELO are browser-only.
+A register that does not distinguish them will silently over-weight the ones that are easy to reach.
+**Amended per the Fable 5 pass, F11:** this encodes a property of *a session's tooling*, which is
+volatile — MCP servers connect and disconnect between sessions. Pair the column with a
+`tool_reachable_checked_at` date, or it will assert as durable fact something that was true once.
 
 ### 12.4 One doctrine line must be carried across, not left in the skill
 
@@ -830,3 +914,63 @@ works unless it sits with the data.
 `research_indexes`, `research_index_coverage`), one FK added to an existing column, one nullable
 `bucket` column. No table is dropped that was not already being dropped, and the staging itself
 (§10.5) still needs no schema at all.
+
+---
+
+## 13. Fable 5 adversarial pass — 2026-08-18
+
+**Authority:** owner ruling, *"Fable 5 available; return suspended work for its use."* Discharges the
+§4b/§4c debt in `workplan/2026-08-18-model-substitution-log.md`. Read-only; findings only.
+
+**Why it was owed.** This document was authored by Opus 5 and every subsequent owner ruling was
+executed by Opus. Fable was assigned for **model-family independence**. The pass was interrupted
+twice by transient API server errors and resumed from its own transcript; it marks each finding
+VERIFIED (re-derived this session) or ASSERTED (reasoned). **I independently re-ran F1 and F3 against
+the live and archived databases before accepting them**, because both overturn claims I had written.
+
+### 13.1 Findings
+
+| # | Severity | Finding | Site |
+|---|---|---|---|
+| **F1** | **HIGH** | The 58% statistic is wrong. All 19 `manual` rows are **deferrals, not searches**, each carrying an explicit `deferred_reason`. Executed searches = 65; web = 30 = **46%**. The claim "nothing could compare the two" is contradicted by the corpus's own deferral reasons. And 84 rows cannot characterise a months-long phase — `search_coverage` holds 4,960 rows, 634 `SEARCHED`, with no execution log. | §12.2 |
+| **F2** | **HIGH** | The parameterised PROVISIONAL wording **over-releases beyond the ruling**. The owner released buckets 4–5; "the buckets it declares in scope" also releases bucket 3, silently, under the appearance of parameterising. The disclosure clause itself is sound and properly flagged as proposed. | §10.1.2 |
+| **F3** | MEDIUM | *"Canada is not currently in that map with both en and fr"* is **false** — both PRIMARY rows exist since 2026-07-24. §10.3's bucket-1 count depends on the FR row it declared missing. | §3 |
+| **F4** | MEDIUM | The skill enumerates 47 codes and declares a **"46 jurisdictions"** scope with numeric gates against it — **a fourth jurisdiction count** the "12/27/48" landscape missed. Omits AT and CY, both bucket members. Seeding will under-seed. | §11.1 |
+| **F5** | LOW | §8 step 5 seeds from Steps 2a/2b, which contains the Seoul municipality row §11.4 defers. Contradiction. | §11.4, §8 |
+| **F6** | — | **§7.1 settled: e-codes stay off the lens.** There are **ten**, not the three I listed; as lens members they duplicate lens 3. | §7.1 |
+| **F7** | — | **§7.2 settled: 46 is wrong.** `access_need_icf` names five `b`/`d` codes outside the union — **the whole d5 self-care chapter is missing**. Interim floor 51. | §7.2 |
+| **F8** | — | **§10.6 answered: readiness, not importance.** Importance is circular pre-search; R1 already fixes lens order, so the problem reduces to a slug queue. | §10.6 |
+| **F9** | LOW | The `MERGED` / `merged_into` machinery has **three rows ever**. "Built for it" overstated. | §6 |
+| **F10** | — | §9.5's threshold is measurable, but unenforced root registration means a typo silently under-counts. DoD must assert root-registration validity. | §9.5 |
+| **F11** | — | `tool_reachable` encodes a volatile property of a session's tooling; pair it with a checked-date. | §12.3 |
+
+**All eleven are corrected in place above**, each at its own site, with the superseded text struck
+rather than deleted.
+
+### 13.2 Two conclusions upheld but re-based
+
+Fable upheld §11.2 (splitting `jurisdictions` from `research_bodies`) and §12.3 (separating indexes
+from bodies) — **but rejected the argument I gave for them.** I argued both from "conflating them
+would be the umbrella error." Fable's verdict: that is a repo shibboleth applied where it does not
+fit, and the real justifications are ordinary ones —
+
+- **§11.2** rests on **functional dependency**: `languages` and `bucket` depend on the jurisdiction
+  alone, so they belong in a table keyed by it. That is third normal form, not doctrine.
+- **§12.3** rests on **disjoint columns and different FK shape** — `jurisdictions_served` on an index
+  versus a single `jurisdiction` FK on a body.
+
+**Recorded because the distinction matters for the DR.** A structural decision justified by doctrine
+invites a doctrinal challenge; the same decision justified by normalisation does not. Reaching for the
+umbrella argument where a plain one would do is a habit worth naming, and this document did it twice.
+
+### 13.3 What the pass examined that I did not
+
+The **content** of the 84 execution rows — `query_text` and `deferred_reason`, which is what overturned
+F1; the register's git provenance against the execution timestamps; the skill's own declared
+jurisdiction scope; the `lang_jur_map` rows for Canada; and the ruled-versus-proposed boundary of the
+§10.1.2 replacement wording.
+
+**The common shape of F1, F3 and F9: I read counts and did not read rows.** Every one of the three is
+a number that was correct as arithmetic and wrong as a claim, because I never opened what it counted.
+That is the failure mode CLAUDE.md §10 names — *a gate reporting zero may have examined zero* — and it
+recurred here three times in one document.
