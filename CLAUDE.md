@@ -17,6 +17,13 @@ apparatus. **Read it fully before your first edit.**
 
 ## 0. TL;DR — the non-negotiables
 
+> **START HERE — `decisions/DR-2026-08-19-research-restart-operative-instrument.md`.** Once ratified
+> it is the operative instrument: it supersedes every planning document in `workplan/`, carries the
+> execution order and the runbook, and is meant to be run rather than consulted. This file remains
+> the mechanical map (write path, gates, traps); where the two disagree, the instrument wins and this
+> file is the thing to correct.
+
+
 One GitHub Actions workflow gates `main` (`.github/workflows/ci.yml`); three more run on
 schedules (§7). `audit.yml` was folded into `ci.yml` on 2026-08-01 — this line said otherwise
 until 2026-08-02, contradicting §7 two hundred lines below it. Note also that **`main` IS
