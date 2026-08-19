@@ -15,34 +15,31 @@ caught this repository's actual failures had **zero** enforcing code.
 
 ## 0. What will actually stop you
 
-Five rules. Everything else in this file is orientation.
+Four rules. Everything else in this file is orientation.
 
 1. **Commit format.** `{skill-name}: {action} [YYYY-MM-DD HH:MM]`, timestamp last.
    `date -u '+%Y-%m-%d %H:%M'`. Use `governance` when no project skill fits.
-2. **Doctrine token on synthesis paths.** Touching `references/bpc-reasoning/`,
+2. **Attestation on synthesis paths.** Touching `references/bpc-reasoning/`,
    `references/connection-reasoning/`, `decisions/` or `sessions/` needs
-   `[DOCTRINE: <7-hex>] ` before the timestamp:
-   `git rev-parse HEAD:governance/mission-and-epistemics.md | cut -c1-7`.
-3. **Attestation on the same paths.** `attestations/<slug>.json` against
-   `schemas/attestation.schema.json`.
-4. **Never write `data/guidebook.db` directly.** Migrations only, via
+   `attestations/<slug>.json` against `schemas/attestation.schema.json`.
+3. **Never write `data/guidebook.db` directly.** Migrations only, via
    `scripts/emit_data_migration.py` → `scripts/migrate_db.py`. Append-only and immutable once
    committed: fix forward with a compensating migration. CI rebuilds and compares.
-5. **A rename or removal is not done until the callers are swept.** Search every non-archived
+4. **A rename or removal is not done until the callers are swept.** Search every non-archived
    caller and fix each one. A sweep that stops at the filename is not a sweep — that exact
    shortcut left two dangling paths inside an attestation on 2026-08-19.
 
-Rules 2 and 3 are a **tax on the deliverable**, inverted against rule-free `workplan/` files
-which cost nothing at all. They are described here because they are still enforced — not because
-they are defensible. Two facts a reader should have:
+**The doctrine token is gone.** OD-10 was signed 2026-08-19 and the instrument's §10 item 4 is
+executed: the `[DOCTRINE: <sha>]` commit token, its CI step, its enforcing script, the frozen
+recheck counter and the "any doctrinal revision" recheck trigger are all removed. It never caught
+any of the three failures in §2, and its own gate was push-only — skipped on every PR, with merge
+commits exempt — so on the path the workflow actually uses it was never more than convention.
 
-- The commit-message and doctrine-token check is `if: github.event_name == 'push'`, so it is
-  **skipped on every PR**, and merge commits are exempt. On the PR path §0.2 is pure convention.
-- **The doctrine-token apparatus is already queued for abolition** by the ratified instrument's
-  §10 item 4, pending owner signature on **OD-10**. Nothing needs re-arguing; it needs signing.
+Rule 2 is a **tax on the deliverable**, inverted against rule-free `workplan/` files which cost
+nothing at all. It is kept because attestations have caught real deviations — in their free text,
+which no gate reads for meaning. It is the next candidate if the ceremony is cut further.
 
-Neither rule has ever caught any of the three failures in §2. Attestations have caught real
-deviations — in their free text, which no gate reads for meaning.
+The commit-message format check remains, and is still `if: github.event_name == 'push'`.
 
 ---
 
@@ -56,8 +53,11 @@ itself.
 - **Code, checks, scripts, dead tables and views: delete them.** No owner gate. You need
   *evidence* — that it is unreferenced, or vacuous after a real batch, or superseded — not
   permission. Record the evidence in the commit.
-- **Git history is the archive.** Do not copy files to `_archived/` to "preserve" them; git
-  already did. `_archived/` exists for content retired before this rule and is not to grow.
+- **Git history is the archive for CODE.** Do not copy scripts or checks to `_archived/` to
+  "preserve" them; git already did — delete them. **Owner ruling 2026-08-19: `_archived/` IS
+  allowed to grow**, and is the right home for retired *content* — superseded plans, prose and
+  records a reader may want to find without a git archaeology session. The distinction is
+  reader-facing content versus executable surface, not preservation.
 - **Owner sign-off is still required for content and doctrine**: mission, audience, CRPD
   posture, population taxonomy, evidence-tier definitions, jurisdiction and work-product
   inclusion, licensing, trajectory (the DG-NON class in `governance/decision-protocol.md`).
@@ -65,7 +65,7 @@ itself.
 - **Adding apparatus carries the burden of proof**, not removing it. Before adding a check,
   script or table, state what wrong thing reaches the *guidebook* if it does not exist. If the
   answer is about the apparatus rather than the book, do not add it.
-- **Nothing is added without naming what reads it.** This is the mirror of rule §0.5, which taxes
+- **Nothing is added without naming what reads it.** This is the mirror of rule §0.4, which taxes
   removal only. An unread field, an uncalled script and an unregistered check are the same defect.
 - **A specific, ratified authorisation beats a blanket caution.** On 2026-08-19 a session left 521
   lines of dead code in place, citing a six-word guardrail, when the code's own docstring and

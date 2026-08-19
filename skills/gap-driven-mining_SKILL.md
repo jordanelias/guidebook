@@ -312,7 +312,7 @@ When this skill is invoked, the audit trail must include:
 - At least one `[STAGE: gap-driven-mining-{GAP-NNN}]` boundary per gap attempted.
 - For BATCH mode: a session-end summary `[STAGE: gap-driven-mining-batch-summary]` enumerating outcomes by category, deferred connector blockers (if any), and remaining queue size.
 
-Per-session attestation requirement: when this skill writes any `gap_mining` rows whose outcome is `closure_evidence_found` (which involves synthesis-bearing writes per §4.3), the session's commit message carries `[DOCTRINE: <sha>]` and the relevant `attestations/sessions_<file>.json` includes `gap-driven-mining` in `rules_in_scope` with status `FIRED` and an `evidence_path` pointing to the `gap_mining` rows written (use `db://gap_mining/GAP-NNN` token form).
+Per-session attestation requirement: when this skill writes any `gap_mining` rows whose outcome is `closure_evidence_found` (which involves synthesis-bearing writes per §4.3), the relevant `attestations/sessions_<file>.json` includes `gap-driven-mining` in `rules_in_scope` with status `FIRED` and an `evidence_path` pointing to the `gap_mining` rows written (use `db://gap_mining/GAP-NNN` token form).
 
 ---
 

@@ -310,7 +310,10 @@ CS1 (cross-stage 1) per `workplan/workplan-co0007-v3.md`: doctrine-recheck caden
 
 - Every 25th working session triggers a periodic recheck (cadence enforced by session-consolidator)
 - Every stage transition triggers a stage-transition recheck (the transitioning phase's close commit references the recheck record)
-- Every doctrinal-rule revision triggers a targeted recheck (tracked at session close)
+- ~~Every doctrinal-rule revision triggers a targeted recheck (tracked at session close)~~
+  **ABOLISHED 2026-08-19 by OD-10 item 4.** This trigger made governance edits self-breeding:
+  each doctrinal revision owed a recheck, whose record was itself a governance edit. The
+  periodic and stage-transition cadences remain; the revision trigger does not.
 
 ### 8.2 Operational integration
 

@@ -531,13 +531,21 @@ A fresh session reads exactly four. Everything else is reached by citation.
 | **OD-7** | D2 retire the decisions YAML · D5 schemas mirror SQLite · D7 add the blocking `PRAGMA foreign_key_check` gate | **Yes × 3.** D7 especially — nothing blocking observes referential integrity | Kills a dual store; makes later FK work safe |
 | **OD-8** | D1 workplan keep-set (census answer: 1 active + 9 attestation-pinned; 77 move) | **Approve now, execute after the batch** | Phase 5 |
 | **OD-9** | Required-check set on `main` + D3 (merge the two reproducibility gates, deep as blocking) | **Approve in principle, wire AFTER the batch** — the gate needs non-zero subjects first | The repo's entire real access control |
-| **OD-10** | The close-out DR of §10 | **Sign** | Removes every zombie obligation |
+| **OD-10** | The close-out DR of §10 | **SIGNED 2026-08-19.** Item 4 executed the same day; items 1-3 and 5-9 are recorded closed; item 10 proceeds under the owner's ruling that `_archived/` may grow | Removes every zombie obligation |
 | **OD-11** | G6/I-45 — the Universal/Population doctrine tension, invisible since 2026-07-13 | **Explicit deferral**, recorded — never silently dropped again | Prevents a seventh invisible week |
 | **OD-12** | Step 8 / `jurisdictional_values` disposition (§1.5) | **Defer, recorded.** Items-archival SUSPENDED pending post-batch re-pricing against F1 | Makes the schema track safe to reopen |
 
 OD-1 through OD-7 are yes/no against drafted text. Under an hour.
 
 ## §10 Abandonment — one close-out DR
+
+> **SIGNED by the owner 2026-08-19 (OD-10).** Item 4 is EXECUTED: the `[DOCTRINE: <sha>]` commit
+> token, its CI step, `scripts/ci_helpers/check_doctrine_token.py`, the frozen recheck counter
+> `data/doctrine_recheck/working_session_counter.yaml` and the "any doctrinal revision" recheck
+> trigger are removed. The `doctrine_recheck --cross-ref` CHECK is deliberately **retained** — it
+> validates doctrinal_basis cross-references, which is a different thing from the commit token and
+> is not named by item 4. Item 10 proceeds under the owner's ruling that `_archived/` may grow.
+> This is the first use of the supersession mechanism in 163 decisions.
 
 Killed together, each with a reopen condition. This also breaks the **0-of-163-ever-superseded**
 pattern by *using* the supersession mechanism the protocol has never once employed.
