@@ -108,7 +108,13 @@ def registry_ids(ref):
     """The set of check ids in the registry at `ref`, or None if unreadable."""
     import yaml
     if ref is None:
-        text = Path(REGISTRY).read_text(encoding="utf-8")
+        # Guard the working-tree read too. An absent registry used to raise
+        # FileNotFoundError out of the check, so a blocking gate reported a Python
+        # traceback instead of a sentence naming what was wrong.
+        try:
+            text = Path(REGISTRY).read_text(encoding="utf-8")
+        except OSError:
+            return None
     else:
         rc, out, _ = git("show", f"{ref}:{REGISTRY}")
         if rc != 0:
@@ -170,9 +176,15 @@ def audit(base, head):
         print("  EXAMINED: 0")
         return 1
     if base_ids is None:
-        # The registry did not exist at base, or did not parse. Treat every id as
-        # new rather than waving it through.
-        base_ids = set()
+        # Unreadable or unparseable at the base. Treating it as empty would make
+        # every registered check read as ADDED and bury the real problem under a
+        # wall of ~65 false violations — a diagnostic worse than useless. Say what
+        # actually happened instead.
+        print(f"  ERROR: {REGISTRY} could not be read or parsed at {diff_from}.")
+        print("  EXAMINED: 0")
+        print("\n  The freeze cannot tell an added check from an existing one without a")
+        print("  readable base. Fix the base ref or the file; this is not a freeze breach.")
+        return 1
     added_checks = sorted((head_ids - base_ids) - SELF_EXEMPT)
 
     examined = len(added_workplan) + len(head_ids)
@@ -203,7 +215,7 @@ def audit(base, head):
 
 def selftest():
     """Prove the three behaviours, in a throwaway git repo."""
-    import tempfile, shutil, textwrap
+    import tempfile, shutil
     global DB_PATH
     results, failures = [], 0
 
@@ -258,6 +270,16 @@ def selftest():
         check("uncommitted workplan file refused", audit("HEAD", "HEAD") == 1)
         os.unlink("workplan/uncommitted.md")
         check("clean again once removed", audit("HEAD", "HEAD") == 0)
+
+        # An unreadable registry must produce ONE clear error, not a traceback and
+        # not 65 false violations from treating the base as empty.
+        git("rm", "-q", REGISTRY); git("commit", "-qm", "registry gone")
+        check("missing registry in the working tree fails cleanly, no traceback",
+              audit("HEAD", "HEAD") == 1)
+        git("revert", "-q", "--no-edit", "HEAD")
+        check("unreadable registry AT THE BASE fails with one clear error",
+              audit("HEAD~1", "HEAD") == 1)
+
 
 
         con = sqlite3.connect(str(db)); con.execute("INSERT INTO evidence_sources VALUES ('REF-1')")

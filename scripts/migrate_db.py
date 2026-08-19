@@ -195,7 +195,14 @@ def _apply_atomically(conn, statements, *, label, ledger=None, user_version=None
                 print(f"      {v}", file=sys.stderr)
         return new
     finally:
-        conn.execute("PRAGMA foreign_keys = ON")
+        # Restoring the pragma must not be able to REPLACE the exception that got
+        # us here. If the connection is already unusable, the original error is
+        # the one worth seeing.
+        try:
+            conn.execute("PRAGMA foreign_keys = ON")
+        except sqlite3.Error as e:
+            print(f"    WARNING: could not restore PRAGMA foreign_keys after {label}: {e}",
+                  file=sys.stderr)
 
 
 def data_migrations_table_exists(conn) -> bool:
@@ -481,7 +488,6 @@ def selftest() -> int:
     Each case states the defect it pins. Run: python3 scripts/migrate_db.py --selftest
     """
     import tempfile
-    global MIGRATIONS_DIR, DB_PATH
     results, failures = [], 0
 
     def check(name, cond, detail=""):

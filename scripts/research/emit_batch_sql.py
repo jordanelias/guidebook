@@ -203,7 +203,12 @@ def selftest():
         con.commit(); con.close()
 
         out = os.path.join(tmp, "batch.sql")
-        globals()["TABLES"] = ["evidence_sources", "source_slug_links"]
+        # Narrow the walk to the fixture's two tables, and RESTORE it afterwards --
+        # a module-global mutated by a test and left changed is a trap for any
+        # caller that imports this module and runs selftest() before emit().
+        global TABLES
+        _real_tables = TABLES
+        TABLES = ["evidence_sources", "source_slug_links"]
         emit(scratch, canon, out)
         sql = open(out).read()
         check("insert emitted", "INSERT INTO \"evidence_sources\"" in sql)
@@ -251,6 +256,7 @@ def selftest():
             check("deletion refused with a reason", "additive" in str(e), str(e))
         check("deletion refused", rc == 1)
 
+    TABLES = _real_tables
     print("\n--- emit_batch_sql selftest ---")
     for name, ok, detail in results:
         print("  %s: %s%s" % ("PASS" if ok else "**FAIL**", name,
