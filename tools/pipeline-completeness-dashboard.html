@@ -177,7 +177,7 @@
     <div class="meta-row">
       <span><b>Source</b> data/guidebook.db (read-only)</span>
       <span><b>Schema</b> user_version 60</span>
-      <span><b>Data as of</b> 2026-07-13</span>
+      <span><b>Data as of</b> 2026-08-19</span>
       <span><b>Auto-generated</b> tools/pipeline_completeness.py</span>
     </div>
   </header>
@@ -195,10 +195,10 @@
       </div>
       <div class="gauge">
         <div class="stage-idx">STAGE 2</div><div class="stage-name">Collection</div>
-        <div class="pct b0-fg">0<small>%</small></div>
-        <div class="denom">0 / 0<br>metadata-complete sources</div>
-        <div class="bar"><i class="b0-bg-solid" style="width:2%"></i></div>
-        <span class="stage-tag b0-tag">None</span>
+        <div class="pct b4-fg">100<small>%</small></div>
+        <div class="denom">5 / 5<br>metadata-complete sources</div>
+        <div class="bar"><i class="b4-bg-solid" style="width:100%"></i></div>
+        <span class="stage-tag b4-tag">High</span>
       </div>
       <div class="gauge">
         <div class="stage-idx">STAGE 3</div><div class="stage-name">Judgment</div>
@@ -223,7 +223,7 @@
       </div>
     </div>
     <div class="pattern"><b>The shape is front-loaded, then it collapses.</b> Sourcing (collection) is essentially
-      finished — 0/0 sources verified, metadata near-complete — but almost nothing has been
+      finished — 5/5 sources verified, metadata near-complete — but almost nothing has been
       <i>adjudicated</i> into determinations (judgment, 0%) and only
       0 parameters has a real synthesis reasoning
       doc (synthesis, 0%). Render faithfully mirrors that emptiness: it can only
@@ -255,12 +255,12 @@
         <div class="sb-right">
           <div class="metric-row"><span class="lbl">Slugs with search complete</span><span class="val">0 / 0 · 0%</span>
           <span class="mini-bar"><i class="b0-bg-solid" style="width:2%"></i></span></div>
-          <div class="metric-row"><span class="lbl">Slugs with a logged search</span><span class="val">0 / 0 · 0%</span>
+          <div class="metric-row"><span class="lbl">Slugs with a logged search</span><span class="val">1 / 0 · 0%</span>
           <span class="mini-bar"><i class="b0-bg-solid" style="width:2%"></i></span></div>
-          <div class="metric-row"><span class="lbl">Slug × jurisdiction cells with a logged search</span><span class="val">0 / 3840 · 0%</span>
+          <div class="metric-row"><span class="lbl">Slug × jurisdiction cells with a logged search</span><span class="val">1 / 3840 · 0%</span>
           <span class="mini-bar"><i class="b0-bg-solid" style="width:2%"></i></span></div>
-          <div class="metric-row"><span class="lbl">Searches deliberately not run (with reason)</span><span class="val">0</span>
-          <span class="mini-bar"><i class="b0-bg-solid" style="width:2%"></i></span></div>
+          <div class="metric-row"><span class="lbl">Searches deliberately not run (with reason)</span><span class="val">1</span>
+          <span class="mini-bar"><i class="b4-bg-solid" style="width:100%"></i></span></div>
           <div class="metric-row"><span class="lbl">PICO formalized</span><span class="val">0 / 0 · 0%</span>
           <span class="mini-bar"><i class="b0-bg-solid" style="width:2%"></i></span></div>
           <div class="metric-row"><span class="lbl">Gaps closed (register)</span><span class="val">0 / 0 · 0%</span>
@@ -273,13 +273,13 @@
         <div class="sb-left"><div class="n">STAGE 2</div><div class="t">Collection</div>
           <div class="entry">Entry: sources discovered for the topic under research.</div></div>
         <div class="sb-right">
-          <div class="metric-row"><span class="lbl">Sources verified</span><span class="val">0 / 0 · 0%</span>
-          <span class="mini-bar"><i class="b0-bg-solid" style="width:2%"></i></span></div>
-          <div class="metric-row"><span class="lbl">Metadata complete</span><span class="val">0 / 0 · 0%</span>
-          <span class="mini-bar"><i class="b0-bg-solid" style="width:2%"></i></span></div>
+          <div class="metric-row"><span class="lbl">Sources verified</span><span class="val">5 / 5 · 100%</span>
+          <span class="mini-bar"><i class="b4-bg-solid" style="width:100%"></i></span></div>
+          <div class="metric-row"><span class="lbl">Metadata complete</span><span class="val">5 / 5 · 100%</span>
+          <span class="mini-bar"><i class="b4-bg-solid" style="width:100%"></i></span></div>
           <div class="metric-row"><span class="lbl">Author-title-only (rule&nbsp;#10 blockers)</span><span class="val">0 · 0%</span>
           <span class="mini-bar"><i class="b0-bg-solid" style="width:2%"></i></span></div>
-          <div class="metric-row"><span class="lbl">Discovery provenance recorded</span><span class="val">0 / 0 · 0%</span>
+          <div class="metric-row"><span class="lbl">Discovery provenance recorded</span><span class="val">0 / 5 · 0%</span>
           <span class="mini-bar"><i class="b0-bg-solid" style="width:2%"></i></span></div>
           <div class="metric-row"><span class="lbl">Citation-mining complete (slugs)</span><span class="val">0 / 0 · 0%</span>
           <span class="mini-bar"><i class="b0-bg-solid" style="width:2%"></i></span></div>
@@ -598,8 +598,8 @@
     <div class="two-col">
       <div><strong style="color:var(--ink-2)">How these numbers were derived</strong><br>
         Read-only queries against <code>data/guidebook.db</code> (<code>user_version 60</code>,
-        324 data migrations). Denominators: research/synthesis over 0
-        <code>bpc_metadata</code> slugs; collection over 0 <code>evidence_sources</code>; judgment/render over
+        328 data migrations). Denominators: research/synthesis over 0
+        <code>bpc_metadata</code> slugs; collection over 5 <code>evidence_sources</code>; judgment/render over
         372 applicable item×population pairs (<code>item_population_links</code>). Determinations from
         <code>specifications</code>; synthesis from <code>reasoning_doc_citations</code>; enforcement coverage
         from <code>governance/pipeline-contract.yaml</code>.</div>
