@@ -382,9 +382,13 @@ Four clauses, **signed together by the owner on 2026-08-19** (OD-1):
   mechanism, not replaced. A future session must not read this succession as loosening ratified
   doctrine.
 
-**Signed 2026-08-19.** The blocking check clause (c) requires is `meta_work_freeze`
-(`scripts/audit/meta_work_freeze.py`, registered blocking, kinds `[always]`), landed in the
-same commit as this ratification. The 2026-07-14 freeze is discharged from this date; the
+**Signed 2026-08-19.** Clause (c)'s blocking check was `meta_work_freeze`
+(`scripts/audit/meta_work_freeze.py`, blocking, kinds `[always]`), landed in the same commit as
+this ratification. **CORRECTION, same day:** that check has since been RETIRED and deleted. It
+discharged itself exactly as designed — its exit condition `evidence_sources >= 1` was met when
+the first batch landed, after which it passed unconditionally and forever while still executing
+on every changeset. Clause (c) is therefore SATISFIED AND SPENT, not repealed: the freeze it
+enforced ended by its own terms. §11 property 3 below is corrected to match. The 2026-07-14 freeze is discharged from this date; the
 five-week breach is amnestied as to artifact validity and is not re-litigated per artifact.
 
 ## §6 The identifier stash — every DOI this project has ever held
@@ -574,9 +578,12 @@ This is the last plan **iff** all five hold. Each is checkable.
    structurally absent.
 2. **Externalised acceptance.** §4's criterion cannot be met by any script, check, register, DR, or
    plan. Apparatus stops being a locally valid move the moment this is the metric.
-3. **Mechanical successor-prohibition.** The §2.2 check fails any commit adding a `workplan/` file or
-   a registry entry while `evidence_sources` is empty. A successor plan is not discouraged — it is
-   **build-rejected**.
+3. **Mechanical successor-prohibition.** ~~The §2.2 check fails any commit adding a `workplan/`
+   file or a registry entry while `evidence_sources` is empty.~~ **SPENT 2026-08-19.** It held
+   until the first batch landed and then self-expired at `evidence_sources >= 1`, which is what it
+   was built to do; the check was retired the same day. This property was true while it mattered
+   and is now historical. **A successor plan is no longer build-rejected** — nothing mechanical
+   prevents one, and a reader should not assume otherwise.
 4. **A monotone document set.** Via §10 this instrument only *closes*. Every outstanding obligation
    is exactly one of: done, in the §9 batch, or killed. It opens zero new DEFERRED/PENDING markers —
    inverting the 318 → 389 → 418 curve for the first time.

@@ -65,7 +65,7 @@ For each file below that was modified or referenced this session: GET current co
 - If PI is stale → flag as BLOCKER with specific section(s) requiring update. Do not auto-edit PI — flag for author action.
 
 **sessions/ directory**
-- No prior session's `next_action` is being skipped without explanation in the current session YAML.
+- `next_action` is **OPTIONAL** (OD-10 item 4). It may be omitted, or set to "none — resume the operative instrument". A mandatory next_action makes every session close manufacture the next session's work, which is the recursion in miniature. If present and a prior one is being skipped, explain it; if absent, that is a valid close.
 - No duplicate filename for the current session timestamp.
 - Fix: add explanation to `next_action` field; suffix `-b` if collision.
 
@@ -94,9 +94,15 @@ For each file below that was modified or referenced this session: GET current co
 Run after Step 1b — before pattern extraction.
 
 **Working-session counter.** A "working session" produces or substantively modifies project content. Sessions that only adjust skills, fix typos, or rebase commits do not count.
-- GET `data/doctrine_recheck/working_session_counter.yaml`. If absent, treat counter = 0.
-- If this session is a working session: increment by 1; PUT back.
-- If counter % 25 == 0: include `recheck_due: PERIODIC` in session close YAML (next session's first action runs `scripts/doctrine_recheck.py`).
+- **RETIRED 2026-08-19 (OD-10 item 4, per DR-2026-08-19 §2.3 "retire the dead recheck counter").**
+  `data/doctrine_recheck/working_session_counter.yaml` is deleted. Do not read it, do not
+  recreate it, and do not emit `recheck_due: PERIODIC` from a counter.
+  The odometer had been frozen at 12 since 2026-05-02 with its own note reading "next periodic
+  recheck at counter == 25" — an obligation that could never fire and could always be cited as
+  owed. Note the trap in the old text: it said "if absent, treat counter = 0", and `0 % 25 == 0`,
+  so deleting the file would have made every subsequent session emit a spurious PERIODIC.
+  A periodic cadence needs a clock that runs. If one is wanted, derive it from something that
+  moves on its own — commit dates, or `evidence_sources` growth — not from a hand-incremented file.
 - If this session closed a stage transition: include `recheck_due: STAGE_TRANSITION` in session close YAML.
 
 **Decision capture.** For each decision made this session in any of the 5 categories (D-DOCT / D-METH / D-SCHEMA / D-OP / D-PRES per A12 §1):

@@ -639,3 +639,17 @@ RULE: Adversarial review is a truth-instrument bound to evidence, never a plan-i
 CONDITION: Any proposal — by owner prompt, session initiative, plan clause, or a prior pass's own finding — to run an "adversarial pass", "critique", "cold review", or fresh-session audit of any artifact.
 ACTION: (1) Test the target against (a)/(b). If it fails, decline in one line of the session log; no critique document may be written. (2) A qualifying pass records each finding as claim-attacked / method / verdict / severity, and records SURVIVED claims as well as SUSTAINED ones — a zero-finding pass must be able to show what it attacked, or it is indistinguishable from a pass that never ran. (3) Close each sustained finding by row correction, in the same pass, via migration; where the authoring session disputes it, cap the affected cell at `provisional` and record the dispute. Never schedule remediation — a pass emits data plus one session record, and may not create or modify a workplan. (4) To contest a plan, append a single objection of at most one page to the plan file itself, naming the clause and the evidence, and flag the owner. No standalone contest document, and no counter-critique of the objection. (5) Budget: at most one adversarial pass per research batch. A pass on a pass is forbidden — defects in a pass are the next batch's pass's business.
 DATE: 2026-08-19 — owner directive ("the plan will require adversarial reviews to ensure accuracy and factuality, and it may need to be agonist-antagonist in manner")
+
+RULE 2026-08-19 · CONDITION: any commit touching a synthesis path (`references/bpc-reasoning/`,
+`references/connection-reasoning/`, `decisions/`, `sessions/`) · ACTION: do NOT add a
+`[DOCTRINE: <sha>]` token. The doctrine-token apparatus was ABOLISHED by OD-10 item 4, signed
+2026-08-19: the token, its CI step, `scripts/ci_helpers/check_doctrine_token.py`,
+`check_2_doctrine_sha`, the `RE_ATTESTATION_WINDOW` constant and the frozen working-session
+counter are all deleted, and `governance/doctrine-recheck.md` §1.3's RULE_REVISION trigger is
+struck. The attestation requirement is UNCHANGED and still binds. This RULE supersedes standing
+rule #11(a) of `governance/project-instructions-v10_14.md`, which is marked superseded in place
+but, per CLAUDE.md §7, legitimately lags — read this ledger, not the PI. It also supersedes the
+"3 cadence triggers (PERIODIC / STAGE_TRANSITION / RULE_REVISION)" line recorded against RULE A13:
+two cadences remain, RULE_REVISION does not. The `RecheckTrigger.RULE_REVISION` enum value is
+retained so the historical 2026-07-24 recheck record is not orphaned; new records must not use it.
+· DATE: 2026-08-19

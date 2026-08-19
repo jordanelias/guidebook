@@ -729,3 +729,40 @@ references rather than by declaring them unreferenced.
    stem — CLAUDE.md §7's standing trap, walked into on the check's first day.
    Fixed by normalising in `_session_stem()`; recorded because the trap caught a
    session that had just finished writing about the trap.
+
+### §16.1 — adversarial review of the deletion pass (2026-08-19)
+
+Twelve findings against the OD-10 execution. Ten fixed in the same pass; two logged.
+
+| # | Finding | Severity | Disposition |
+|---|---|---|---|
+| 1 | `author_fidelity` red on day one — `@SESSION@` expands with `.md`, the log dir uses the bare stem | BREAKS-NOW | **FIXED** (`_session_stem`) |
+| 2 | Same check read `LATEST`, not `LATEST-RESEARCH`; no `requires_session`; `cost: slow` on a 0.0s offline check | BREAKS-LATER | **FIXED** |
+| 3 | Its registry note stated an unsatisfiable promotion condition — the network rationale described the *deleted* variant | BREAKS-LATER | **FIXED** |
+| 4 | Ratified §2.5 signature clause and §11 property 3 still named the deleted `meta_work_freeze` | BREAKS-LATER (doctrinal) | **FIXED** — recorded as satisfied-and-spent, and property 3 marked no longer true |
+| 5 | Deleting the counter broke a cadence OD-10 KEPT; skill said "if absent, treat 0", and `0 % 25 == 0` → spurious `recheck_due: PERIODIC` every session | BREAKS-LATER | **FIXED** — counter retired in the skill per DR §2.3 |
+| 6 | `doctrine-recheck.md` contradicted itself: DR §2.3 named §1.3, the branch struck §8.1 | BREAKS-LATER | **FIXED** at §1.3 and the "three triggers" count |
+| 7 | Live PI still mandated the token that `integrity-protocol_SKILL` now forbids | BREAKS-LATER | **FIXED** — superseded in place + a superseding RULE in the operative ledger |
+| 8 | `pipeline_contract_audit` resolves enforcers at FILE granularity, so it could not see `attestation-doctrine-binding` go vacuous | BREAKS-LATER | **PARTIALLY FIXED** — basis dropped; the granularity defect remains (remedy below) |
+| 9 | Newly dead code left in the PR arguing against dead code | COSMETIC | **FIXED** — 5 functions removed, AST-verified zero uncalled |
+| 10 | Stale CI comments; both `fetch-depth: 0` justifications named deleted checks | COSMETIC | **FIXED** — depths RE-DERIVED from which scripts still shell out to git, not from the comments |
+| 11 | Rewritten CLAUDE.md hardcoded counts in the same file that forbids hardcoded counts | COSMETIC | **FIXED** — replaced with derivation commands |
+| 12 | `retrieval-log/` is a new frozen-record store on the ripgrep search surface | BREAKS-LATER | **LOGGED** — see below |
+
+**REMEDIES LOGGED, NOT FIXED**
+
+6. **`retrieval-log/` should be added to `.ignore` and to `retired-vocabulary.yaml` `exempt_paths`**,
+   on the same reasoning as `references/search-log/`: it is append-only, immutable, never read
+   except when auditing fidelity, and it carries arbitrary bibliographic text that
+   `retired_vocabulary_audit` will eventually scan. `.ignore` edits are owner-gated. Note the
+   CLAUDE.md §7 cost caveat: anything hidden there stops answering greps, which is how the
+   project's own search logs became invisible.
+7. **`pipeline_contract_audit.classify_check()` resolves enforcers at FILE granularity.** It
+   reports a criterion VERIFIABLE whenever the *file* exists and is registered, so a check gutted
+   to a bare `return` still counts. That is failure mode §2(a) inside the audit built to prevent
+   it. Remedy: resolve the `--check <group>` argument, not just the path.
+8. **OD-10 item 4 was only ~60% executed on first pass.** The token, CI step, script and constant
+   went; the mandatory `next_action` and the counter retirement did not, and DR §2.3's named
+   target (§1.3) was missed for a different section. All now done — but the lesson is that a
+   close-out with four named sub-targets needs each one checked off individually, not a
+   general sweep.

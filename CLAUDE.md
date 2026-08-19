@@ -47,8 +47,9 @@ The commit-message format check remains, and is still `if: github.event_name == 
 
 **This replaces the old "owner-gate file moves and retirements" guardrail, which was the
 pathology.** Adding a check cost a commit; removing one cost an owner decision. A system with
-that gradient can only accrete, and it did: 65 checks, ~35k executable LOC, most of it policing
-itself.
+that gradient can only accrete, and it did — to sixty-odd registered checks and ~35k executable
+LOC, most of it policing itself. (Derive the live figures:
+`python3 -c "import yaml;print(len(yaml.safe_load(open('governance/check-registry.yaml'))['checks']))"`.)
 
 - **Code, checks, scripts, dead tables and views: delete them.** No owner gate. You need
   *evidence* — that it is unreferenced, or vacuous after a real batch, or superseded — not
@@ -130,7 +131,7 @@ con = sqlite3.connect('file:data/guidebook.db?mode=ro', uri=True)
 **Backbone.** `items` (design parameters) × `populations` meet in `specifications`, the
 per-(item × population) synthesis record. Evidence lives in `evidence_sources` and attaches via
 `source_slug_links`, `evidence_population_match`, `search_admissions`. `source_locators` is a
-**lead index of ~835 identifiers, not evidence** — the R9 duplicate gate currently cannot see it,
+**lead index of identifiers, not evidence** (`SELECT COUNT(*) FROM source_locators`) — the R9 duplicate gate currently cannot see it,
 which is a known live defect (OD-5).
 
 **Changing it.** Schema → new `scripts/migrations/NNN_slug.sql`, bump `user_version`, mirror the

@@ -165,35 +165,6 @@ def _synthesis_in_changeset(changed):
     return [f for f in changed if SYNTHESIS_PATH_RE.match(f)]
 
 
-def _last_doctrine_sha():
-    try:
-        return _git("log", "-1", "--format=%H", "--", DOCTRINE_PATH)
-    except subprocess.CalledProcessError:
-        return ""
-
-
-def _commits_since(sha):
-    if not sha:
-        return 0
-    try:
-        return int(_git("rev-list", "--count", f"{sha}..HEAD"))
-    except subprocess.CalledProcessError:
-        return 0
-
-
-def _commit_msg(sha):
-    try:
-        return _git("log", "-1", "--format=%B", sha)
-    except subprocess.CalledProcessError:
-        return ""
-
-
-def _last_commit_for(path):
-    try:
-        return _git("log", "-1", "--format=%H", "--", str(path))
-    except subprocess.CalledProcessError:
-        return ""
-
 
 def _load_json(path):
     try:
@@ -243,20 +214,6 @@ def check_1_schema(changed, issues):
         except ValidationError as e:
             issues.append(f"CHECK 1: {f} schema violation -- {e.message}")
 
-
-def check_2_doctrine_sha(changed, issues):
-    """RETIRED 2026-08-19 by OD-10 item 4.
-
-    This validated attestation.doctrine_sha against the [DOCTRINE: <sha>] token in
-    the commit that last modified the attestation. That token is abolished, so the
-    check could only ever fail from now on -- an advisory gate guaranteed to be red,
-    which is how a repository learns to ignore its own output.
-
-    The doctrine_sha FIELD is kept: it records which doctrine version an artifact was
-    grounded against, which is meaningful independently of any commit convention. What
-    is gone is the cross-check against a token that no longer exists.
-    """
-    return
 
 
 def check_3_rule_resolution(changed, issues):

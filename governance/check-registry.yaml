@@ -730,9 +730,11 @@ checks:
     cmd: [python3, scripts/research/retrieval_log.py, --session, '@SESSION@', --verify-authors]
     battery: research
     kinds: [data, synthesis]
+    session_pointer: LATEST-RESEARCH
+    requires_session: true
     level: advisory
     basis: DR-2026-08-19 §7 adversarial pass, lens L1 (2026-08-19)
-    cost: slow
+    cost: fast
     min_items: 1
     note: >-
       Compares STORED author surnames against the Crossref record for every
@@ -755,11 +757,23 @@ checks:
       deleted and academics substituted. The Co-1 tier was claimed while the
       evidence of co-production was erased.
 
-      ADVISORY, not blocking, and deliberately so: it needs network egress to
-      api.crossref.org, which the PR gate has not been proven to have. Promote to
-      blocking once a run has demonstrated reachability in CI. It fails rather than
-      passes when a DOI cannot be retrieved, so an unreachable API cannot be
-      mistaken for a clean result.
+      LEVEL RATIONALE, CORRECTED 2026-08-19. The original text here justified
+      advisory on the grounds that the check "needs network egress to
+      api.crossref.org" — true of the re-fetching variant that was deleted, false of
+      the offline verifier this entry now points at, which reads persisted payloads
+      and needs no network at all. The stated promotion condition ("once a run has
+      demonstrated reachability in CI") was therefore unsatisfiable by irrelevance,
+      and would have left the check advisory forever.
+
+      Real rationale: it is advisory only until it has demonstrated a NON-VACUOUS
+      subject across more than the one session that created the log. Promote to
+      blocking after the second research batch. It fails rather than passes when a
+      source has no logged retrieval, so an unlogged corpus cannot read as clean.
+
+      session_pointer is LATEST-RESEARCH, not the default LATEST: LATEST moves on
+      every session close, so a governance-only session would point this check at a
+      session that never did research and was never supposed to have a log.
+      citation_mining_session is the precedent for the same reason.
 
       RETIRED the re-fetching variant 2026-08-19. Two verifiers of one property
       shipped in the same commit and DISAGREED — one folded accents, one did not,
@@ -925,7 +939,7 @@ checks:
     battery: attestation
     kinds: [synthesis, governance]
     level: advisory
-    basis: [cross_stage/adherence-log, cross_stage/attestation-doctrine-binding]
+    basis: cross_stage/adherence-log   # attestation-doctrine-binding dropped 2026-08-19: its enforcer (check_2_doctrine_sha) was retired with the doctrine token, and pipeline_contract_audit resolves enforcers at FILE granularity so it could not see the gate go vacuous
     cost: fast
     no_floor: not-instrumented — this filter bundles checks 2-6 (attestations in
       the HEAD~1..HEAD diff, 0 today) with check 7 (every attestation on disk,

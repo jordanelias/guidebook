@@ -192,13 +192,11 @@ jobs:
     if: contains(format(',{0},', needs.classify.outputs.batteries), ',governance,')
     runs-on: ubuntu-latest
     steps:
-      # History required, for the same reason the attestation job below declares it:
-      # this battery carries a CHANGESET-SCOPED check. meta_work_freeze compares the
-      # files and check ids this branch ADDS against a base, and the default shallow
-      # checkout has no base to resolve — no origin/main, no main, and with depth 1
-      # not even HEAD~1. The check FAILS rather than passing when it cannot see its
-      # subject, which is correct behaviour and made this job red until the depth was
-      # declared here.
+      # History required. RE-DERIVED 2026-08-19: the original justification named
+      # meta_work_freeze, which has since been retired and deleted. Depth 0 is still
+      # correct, for a different reason — claims_docket.py is the remaining script in
+      # this battery that shells out to git. Verified by scanning every governance
+      # battery cmd for a git subprocess call rather than by trusting this comment.
       - uses: actions/checkout@v4
         with: {fetch-depth: 0}
       - uses: actions/setup-python@v5
@@ -212,10 +210,13 @@ jobs:
     if: contains(format(',{0},', needs.classify.outputs.batteries), ',attestation,')
     runs-on: ubuntu-latest
     steps:
-      # Full history required: the evidence check resolves each attestation's
-      # last-modifying commit via `git log -1 -- <file>`, which can be arbitrarily
-      # far back. A shallow checkout misattributes the file to the PR-head commit
-      # and produces spurious doctrine_sha mismatches.
+      # Full history required. RE-DERIVED 2026-08-19: the original justification was
+      # check_2_doctrine_sha resolving each attestation's last-modifying commit — that
+      # check was retired with the doctrine token, and check_7 states it is "not
+      # history-depth sensitive". Depth 0 is retained because adherence_log_audit.py
+      # still resolves changesets via git (--base/--head), and a shallow checkout would
+      # scope the attestation gates to nothing — a gate examining zero subjects while
+      # reporting PASS is this repo's signature failure.
       - uses: actions/checkout@v4
         with: {fetch-depth: 0}
       - uses: actions/setup-python@v5
