@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-08-19-ratification-and-write-path-fixes",
+  "artifact": "sessions/session_2026-08-19-ratification-and-write-path-fixes.md",
+  "doctrine_sha": "0f2f525",
+  "rules_in_scope": [
+    "canonical-workplan",
+    "integrity-protocol",
+    "structure-auditor",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "canonical-workplan": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-08-19-research-restart-operative-instrument.md",
+      "reason": "The ratified instrument is the operative plan and no new planning document was written. The execution order came from its section 3 and the procedure from its section 12; the session record states outcomes and departures rather than proposing further work. Section 3 steps 1 to 3 are marked done in the instrument itself so the next session reads live state rather than re-deriving it, and step 4 is marked as the next act."
+    },
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "scripts/migrate_db.py",
+      "reason": "Every load-bearing claim in the instrument was re-derived from the live repository before acting on it, and every fix was proved by execution against throwaway copies rather than by reading the source. The F5 defect was reproduced under the old code path before the fix was written, and the reproduction showed the instrument's own description of it was incomplete: the data_migrations ledger row was committed too, not merely the body, which makes a re-run skip the migration and the FK violation permanent. That correction is recorded in the session record and the commit message rather than silently absorbed. One error of my own is recorded in the same place: my first reading of the definition-of-done gate's exit code was tail's rather than the gate's, because the command was piped, and it was re-measured."
+    },
+    "structure-auditor": {
+      "status": "FIRED",
+      "evidence_path": "governance/check-registry.yaml",
+      "reason": "The section 2.2 check was registered with kinds [always] rather than the [governance] the instrument drafted. workplan/** matches no work kind in check-registry.yaml, so a commit that only adds a plan classifies to the empty set and a governance-gated check would never run — silent on precisely the commit it exists to refuse. This was established by running run_checks.classify() on a workplan path, not inferred from reading the file. The departure and its reason are recorded in the registry entry, the session record and the commit message."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/decisions_DR-2026-08-19-research-restart-operative-instrument.json",
+      "reason": "This attestation, plus the correction of two dangling evidence_path values in the instrument's own attestation. The 2026-08-19 rename recorded a caller sweep of 'one file, the attestation'; it moved the file and updated the artifact field but not the two paths inside it, both of which named the pre-rename slug and pointed at files that no longer existed. No reattestation entry was added to either file: the doctrine SHA has not moved, so there is no delta to re-ground against, and the schema's reattestation shape requires a prior_doctrine_sha, a delta_ref and a materiality verdict that would all have had to be invented."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "structure-auditor",
+      "reason": "The registered check departs from the instrument's drafted kinds value, as described above. It is a departure from ratified text made on evidence, in the direction of the text's own purpose, and disclosed in three places rather than absorbed silently. An owner who prefers the literal [governance] can revert one line, at the cost of the check never firing on a plan-only commit."
+    },
+    {
+      "rule": "integrity-protocol",
+      "reason": "The context map now lists both new scripts under direct_python, a field whose note said such scripts write the canonical database outside the migration path. Neither does: emit_batch_sql.py opens every connection mode=ro and the attribution comes from selftest fixtures against temporary databases. Rather than reclassify entries belonging to scripts I did not write, I corrected the field's note to say that membership is textual and is a prompt to check rather than a finding. The underlying detection is unchanged and still over-reports."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "Five advisory checks remain red. Four were confirmed pre-existing by running them against a clean stash of main. The fifth, test_directness_2_2, is order-dependent on a /tmp/work14.db fixture that is absent and that CLAUDE.md already records as never having existed; it passes standalone. None was fixed, because none is in this changeset's scope and widening the PR to chase them is the behaviour the freeze exists to stop."
+    }
+  ],
+  "bias_direction": "I am biased toward finding the instrument correct, because I read it in full before verifying it and then set out to execute it rather than to test it. That ordering is the wrong way round for independence, and the one substantive error I did find in it — the F5 description — surfaced only because reproducing the defect was a step in fixing it, not because I went looking. I am also biased toward my own fixes: I wrote every selftest that certifies them, so each proves what I thought to ask, and a rule I did not think of is invisible to all of them. Against this, a bias in the other direction: I had an incentive to declare the write path clear and move to the batch, and each additional defect found delayed that, so treat the absence of further findings as weak evidence.",
+  "independent_reviewer_counterclaim": "A reviewer could argue this commit is itself the failure mode the instrument names. Termination property 5 says the first session after ratification should commit the section 3 fixes, a record correction, search logs, migrations or the rendered determination — and this commit is four of those five categories with the fifth, the actual research, still absent. It adds roughly 490 lines of apparatus, one more blocking check and one more script to a repository diagnosed with too much of all three, and it does so while adding zero rows to evidence_sources. The stronger form of the objection is that F4 and F5 were latent for months without visible harm, so fixing them first was optional and the honest move was to run the batch and repair what actually broke. The counter-counterclaim is that F4 specifically destroys the sha256 evidence the batch's own runbook depends on at steps 0 and 11, so it could not be deferred without making the batch unverifiable — but a reviewer is entitled to say that is a small tail wagging a large dog.",
+  "verdict": "DEVIATION-LOGGED"
+}

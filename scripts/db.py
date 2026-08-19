@@ -55,15 +55,35 @@ _BPC_META_COLS = frozenset({
 
 
 @contextmanager
-def connect(dry_run: bool = False):
-    conn = sqlite3.connect(str(DB_PATH), timeout=10)
+def connect(dry_run: bool = False, readonly: bool = False):
+    """Open the database at GUIDEBOOK_DB_PATH.
+
+    `readonly=True` opens the file with URI mode=ro and sets PRAGMA query_only,
+    so a read cannot write. Every caller that only SELECTs passes it.
+
+    PRAGMA journal_mode is deliberately NOT set here. journal_mode is persisted
+    in the database header, so setting it rewrote the committed blob on EVERY
+    invocation of this module -- including pure reads and including --dry-run.
+    That made `git status` dirty after a query and defeated the sha256 check
+    the research runbook uses to prove the canonical database was untouched.
+    The default (delete) is what the committed file already carries.
+    """
+    if readonly:
+        conn = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True, timeout=10)
+    else:
+        conn = sqlite3.connect(str(DB_PATH), timeout=10)
     conn.row_factory = sqlite3.Row
-    conn.execute("PRAGMA journal_mode=WAL")
-    conn.execute("PRAGMA synchronous=NORMAL")
     conn.execute("PRAGMA foreign_keys=ON")
+    if readonly:
+        # After foreign_keys: query_only blocks further schema-affecting pragmas.
+        conn.execute("PRAGMA query_only=ON")
+    else:
+        conn.execute("PRAGMA synchronous=NORMAL")
     try:
         yield conn
-        if not dry_run:
+        if readonly:
+            pass          # nothing to commit; mode=ro would refuse anyway
+        elif not dry_run:
             conn.commit()
         else:
             conn.rollback()
@@ -108,7 +128,7 @@ def _emit(data):
 
 
 def next_con_id() -> str:
-    with connect() as conn:
+    with connect(readonly=True) as conn:
         row = conn.execute(
             "SELECT con_id FROM connections ORDER BY con_id DESC LIMIT 1"
         ).fetchone()
@@ -147,7 +167,7 @@ def update_connection_status(con_id: str, status: str,
 
 
 def next_gap_id() -> str:
-    with connect() as conn:
+    with connect(readonly=True) as conn:
         row = conn.execute(
             "SELECT gap_id FROM gaps "
             "WHERE gap_id GLOB 'GAP-[0-9]*' "
@@ -200,7 +220,7 @@ _VALID_DIRECTIONS = frozenset({"backward", "forward"})
 
 
 def is_mined(slug: str, ref_id: str) -> dict | None:
-    with connect() as conn:
+    with connect(readonly=True) as conn:
         row = conn.execute(
             "SELECT backward, forward, connections_produced "
             "FROM citation_mining WHERE slug=? AND local_ref_id=?",
@@ -418,7 +438,7 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
 
 
 def next_term_id() -> str:
-    with connect() as conn:
+    with connect(readonly=True) as conn:
         row = conn.execute(
             "SELECT term_id FROM terms ORDER BY term_id DESC LIMIT 1"
         ).fetchone()
@@ -437,7 +457,7 @@ def get_open_gaps(priority: str = None) -> list[dict]:
         q += " AND priority=?"
         params.append(priority)
     q += " ORDER BY priority, gap_id"
-    with connect() as conn:
+    with connect(readonly=True) as conn:
         return [dict(r) for r in conn.execute(q, params).fetchall()]
 
 
@@ -454,7 +474,7 @@ def get_connections(status: str = None, confidence: str = None,
             q += " AND status=?"
             params.append(status)
         q += " GROUP BY confidence"
-        with connect() as conn:
+        with connect(readonly=True) as conn:
             rows = conn.execute(q, params).fetchall()
         result = {r["confidence"]: r["cnt"] for r in rows}
         result["total"] = sum(result.values())
@@ -474,12 +494,12 @@ def get_connections(status: str = None, confidence: str = None,
         q += " AND c.confidence=?"
         params.append(confidence)
     q += " GROUP BY c.con_id ORDER BY c.confidence DESC"
-    with connect() as conn:
+    with connect(readonly=True) as conn:
         return [dict(r) for r in conn.execute(q, params).fetchall()]
 
 
 def get_unmined_sources(slug: str) -> list[dict]:
-    with connect() as conn:
+    with connect(readonly=True) as conn:
         rows = conn.execute("""
             SELECT ssl.local_ref_id,
                    es.doi, es.pub_title,
@@ -511,7 +531,7 @@ def get_coverage_completeness(slug: str) -> dict:
     unattributed number is what caused this. Nothing computes `complete` from
     them any more.
     """
-    with connect() as conn:
+    with connect(readonly=True) as conn:
         jur = conn.execute(
             "SELECT COUNT(DISTINCT jurisdiction) AS n FROM search_executions "
             "WHERE slug=? AND jurisdiction IS NOT NULL AND deferred_reason IS NULL",
@@ -568,7 +588,7 @@ def get_synonyms(item_code: str, language: str = None) -> list[dict]:
         q += " AND ta.language=?"
         params.append(language)
     q += " ORDER BY t.canonical_en, ta.language, ta.alias"
-    with connect() as conn:
+    with connect(readonly=True) as conn:
         return [dict(r) for r in conn.execute(q, params).fetchall()]
 
 
@@ -594,7 +614,7 @@ _PIPELINE_STEPS      = frozenset({
 
 
 def next_conf_id() -> str:
-    with connect() as conn:
+    with connect(readonly=True) as conn:
         row = conn.execute(
             "SELECT conflict_id FROM conflicts "
             "WHERE conflict_id GLOB 'CONF-[0-9]*' "
@@ -658,7 +678,7 @@ def get_conflicts(item_code: str = None, domain: str = None,
     if status:
         q += " AND status=?";    params.append(status)
     q += " ORDER BY conflict_id"
-    with connect() as conn:
+    with connect(readonly=True) as conn:
         rows = [dict(r) for r in conn.execute(q, params).fetchall()]
     if summary:
         from collections import Counter
@@ -696,7 +716,7 @@ def get_items(category: str = None, status: str = None) -> list:
     if status:
         q += " AND status=?";   params.append(status)
     q += " ORDER BY item_code"
-    with connect() as conn:
+    with connect(readonly=True) as conn:
         return [dict(r) for r in conn.execute(q, params).fetchall()]
 
 
@@ -750,7 +770,7 @@ def get_audit_runs(item_code: str = None, status: str = None) -> list:
     if status:
         q += " AND status=?";    params.append(status)
     q += " ORDER BY created_at DESC"
-    with connect() as conn:
+    with connect(readonly=True) as conn:
         return [dict(r) for r in conn.execute(q, params).fetchall()]
 
 
@@ -1685,7 +1705,7 @@ def get_unmined_for_all_slugs(tier_max: int = 3) -> list[dict]:
     Non-English sources (lang_detected/language not in {'en', NULL}) sort first
     within each tier, per the citation-mining non-English priority ordering.
     """
-    with connect() as conn:
+    with connect(readonly=True) as conn:
         rows = conn.execute("""
             SELECT ssl.local_ref_id, ssl.slug,
                    es.doi, es.tier, es.pub_title AS title,
@@ -1858,7 +1878,7 @@ def get_unmined_gaps(*, gap_id: str | None = None,
          WHERE {where_sql}
     """
     rows = []
-    with connect() as conn:
+    with connect(readonly=True) as conn:
         conn.row_factory = sqlite3.Row
         for r in conn.execute(sql, params):
             d = dict(r)

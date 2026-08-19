@@ -192,7 +192,15 @@ jobs:
     if: contains(format(',{0},', needs.classify.outputs.batteries), ',governance,')
     runs-on: ubuntu-latest
     steps:
+      # History required, for the same reason the attestation job below declares it:
+      # this battery carries a CHANGESET-SCOPED check. meta_work_freeze compares the
+      # files and check ids this branch ADDS against a base, and the default shallow
+      # checkout has no base to resolve — no origin/main, no main, and with depth 1
+      # not even HEAD~1. The check FAILS rather than passing when it cannot see its
+      # subject, which is correct behaviour and made this job red until the depth was
+      # declared here.
       - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
       - uses: actions/setup-python@v5
         with: {python-version: "3.11"}
       - run: pip install -r requirements.txt --quiet

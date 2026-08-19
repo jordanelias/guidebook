@@ -16,19 +16,19 @@
     },
     "structure-auditor": {
       "status": "FIRED",
-      "evidence_path": "decisions/DR-2026-08-19-items-as-leads-and-meta-work-freeze.md",
-      "reason": "Filed as a Decision Record rather than a workplan document, because the diagnosis in section 0 is that decisions recorded in plan prose are re-derived and re-litigated by every subsequent session. Filing this as a 92nd workplan file would have instantiated the failure it describes. Status is PROPOSED and the delegation is DG-NON throughout: both decisions are work-product inclusion and trajectory calls that are owner-only, so this document proposes and does not decide."
+      "evidence_path": "decisions/DR-2026-08-19-research-restart-operative-instrument.md",
+      "reason": "Filed as a Decision Record rather than a workplan document, because the diagnosis in section 0 is that decisions recorded in plan prose are re-derived and re-litigated by every subsequent session. Filing this as a 92nd workplan file would have instantiated the failure it describes. Status is PROPOSED and the delegation is DG-NON throughout: both decisions are work-product inclusion and trajectory calls that are owner-only, so this document proposes and does not decide. CORRECTED 2026-08-19 at ratification: this evidence_path, and the one on adherence-logging-and-attestation, still named the pre-rename slug items-as-leads-and-meta-work-freeze. Both files had ceased to exist. The rename commit recorded a caller sweep of 'one file, the attestation' — it moved the file and updated the artifact field, but not the paths inside it. A caller sweep that stops at the filename is the failure mode CLAUDE.md §0 rule 5 names."
     },
     "adherence-logging-and-attestation": {
       "status": "FIRED",
-      "evidence_path": "attestations/decisions_DR-2026-08-19-items-as-leads-and-meta-work-freeze.json",
-      "reason": "This attestation. The doctrine SHA was derived at authoring time by git rev-parse against governance/mission-and-epistemics.md and matches the token carried in the commit message."
+      "evidence_path": "attestations/decisions_DR-2026-08-19-research-restart-operative-instrument.json",
+      "reason": "This attestation. The doctrine SHA was derived at authoring time by git rev-parse against governance/mission-and-epistemics.md and matches the token carried in the commit message. Path corrected at ratification; see the structure-auditor note."
     }
   },
   "deviations": [
     {
       "rule": "adherence-logging-and-attestation",
-      "reason": "No session record was written under sessions/ for this session. The DR names a session id that has no file behind it yet. This is a real gap, disclosed rather than papered over: writing the session record is itself synthesis-path work owing a second attestation, and the freeze proposed in section 2 argues against generating further governance artifacts before a research batch lands."
+      "reason": "DISCHARGED 2026-08-19: a session record for the ratification session is written under sessions/ in the same commit. No session record was written under sessions/ for this session. The DR names a session id that has no file behind it yet. This is a real gap, disclosed rather than papered over: writing the session record is itself synthesis-path work owing a second attestation, and the freeze proposed in section 2 argues against generating further governance artifacts before a research batch lands."
     },
     {
       "rule": "integrity-protocol",
