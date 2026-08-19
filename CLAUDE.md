@@ -1,513 +1,231 @@
-# CLAUDE.md — Guidebook working guide for Claude Code
+# CLAUDE.md — working guide for the Accessible Built Environments Guidebook
 
-This file orients a fresh Claude Code session to this repository: what it is, how it is
-governed, what will block your commits, and how to do work here without breaking the
-apparatus. **Read it fully before your first edit.**
+**Rewritten 2026-08-19** to comply with the mission of the preceding fortnight, after an audit
+found this file was itself a recursion engine: it made apparatus **cheap to add and expensive to
+remove**, taxed the project's real deliverable more heavily than its cheapest busywork, and
+enforced by machine only the rule that blocked deletion. The three guardrails that would have
+caught this repository's actual failures had **zero** enforcing code.
 
-> **This file is a derived map, not a source of truth.** The authoritative sources are
-> `references/project-standards.md`, the governance docs under `governance/`, and the
-> Decision Records under `decisions/`. Where this file disagrees with them, *they win* —
-> and this file should be corrected. The single canonical data source is the SQLite
-> database `data/guidebook.db`; every count, value, status, or list in prose (including
-> here) may be stale. **When a fact is volatile — a row count, a schema version, the CI
-> status, the doctrine SHA, the current plan — derive it from the live repo rather than
-> trusting a number written here.** This guide deliberately avoids hardcoding such values.
+> **Read `decisions/DR-2026-08-19-research-restart-operative-instrument.md` first.** It is
+> RATIFIED and operative: it carries the execution order, the runbook, and the acceptance
+> criterion. It is meant to be **run**, not consulted. This file is the mechanical map — write
+> path, gates, traps. Where they disagree, the instrument wins and this file is what to correct.
 
 ---
 
-## 0. TL;DR — the non-negotiables
+## 0. What will actually stop you
 
-> **START HERE — `decisions/DR-2026-08-19-research-restart-operative-instrument.md`.** Once ratified
-> it is the operative instrument: it supersedes every planning document in `workplan/`, carries the
-> execution order and the runbook, and is meant to be run rather than consulted. This file remains
-> the mechanical map (write path, gates, traps); where the two disagree, the instrument wins and this
-> file is the thing to correct.
+Five rules. Everything else in this file is orientation.
 
-
-One GitHub Actions workflow gates `main` (`.github/workflows/ci.yml`); three more run on
-schedules (§7). `audit.yml` was folded into `ci.yml` on 2026-08-01 — this line said otherwise
-until 2026-08-02, contradicting §7 two hundred lines below it. Note also that **`main` IS
-branch-protected** — confirmed against the GitHub API (`"protected": true`); this line, §1, and
-§7 said the opposite until corrected 2026-08-14. Protection being *on* does not by itself say
-which checks are *required* — that set is an open owner decision, so do not assume a red blocking
-check blocks anything until you have checked it (§7).
-Before you commit or push, know these five rules. Details in §7–§8.
-
-1. **Commit message format.** `{skill-name}: {action} [YYYY-MM-DD HH:MM]` — the timestamp
-   must be the **last** bracket on the line. Get it with `date -u '+%Y-%m-%d %H:%M'`.
-   For work with no specific project skill, use `governance` as the skill-name.
-2. **Doctrine token.** Any commit touching a *synthesis path* — `references/bpc-reasoning/`,
-   `references/connection-reasoning/`, `decisions/`, or `sessions/` — must add
-   `[DOCTRINE: <7-hex>]` **before** the timestamp, matching the current doctrine SHA:
+1. **Commit format.** `{skill-name}: {action} [YYYY-MM-DD HH:MM]`, timestamp last.
+   `date -u '+%Y-%m-%d %H:%M'`. Use `governance` when no project skill fits.
+2. **Doctrine token on synthesis paths.** Touching `references/bpc-reasoning/`,
+   `references/connection-reasoning/`, `decisions/` or `sessions/` needs
+   `[DOCTRINE: <7-hex>] ` before the timestamp:
    `git rev-parse HEAD:governance/mission-and-epistemics.md | cut -c1-7`.
-   Canonical form: `{skill}: {action} [DOCTRINE: <sha>] [YYYY-MM-DD HH:MM]`.
-3. **Attestation.** The same synthesis-path commits must add/update
-   `attestations/<artifact-slug>.json`, valid against `schemas/attestation.schema.json`
-   (backfill-on-touch: the first edit of a grandfathered artifact creates its attestation).
-4. **Never write `data/guidebook.db` directly.** All DB changes ship as migrations via
-   `scripts/emit_data_migration.py`; CI rebuilds the DB from migration history and compares
-   it against the committed one (§6). Direct writes (including ad-hoc `scripts/db.py` writes
-   to the committed DB) break the reproducibility gate.
-   **The rule is absolute; the enforcement is not — do not rely on CI to catch you.** The
-   blocking gate compares `PRAGMA user_version` and `COUNT(*)` on six tables, so an `UPDATE`
-   passes it untouched, as does anything in the other 55 tables (this line used to claim CI
-   "fails on any divergence"; corrected 2026-08-01). The full comparison exists as
-   `migration_reproducibility_deep`, advisory while an owner decision is pending — see
-   `references/tooling-register.md` §4.2.
-5. **Structural renames/removals aren't done until the caller sweep is done.** Renaming or
-   deleting any identifier, path, tag, heading, schema column, table, or skill name requires
-   searching all non-archived callers and fixing every one (per
-   `architecture/project-architecture-guidebook-v2.3.md` `<migration_and_growth>`).
+3. **Attestation on the same paths.** `attestations/<slug>.json` against
+   `schemas/attestation.schema.json`.
+4. **Never write `data/guidebook.db` directly.** Migrations only, via
+   `scripts/emit_data_migration.py` → `scripts/migrate_db.py`. Append-only and immutable once
+   committed: fix forward with a compensating migration. CI rebuilds and compares.
+5. **A rename or removal is not done until the callers are swept.** Search every non-archived
+   caller and fix each one. A sweep that stops at the filename is not a sweep — that exact
+   shortcut left two dangling paths inside an attestation on 2026-08-19.
 
-**You are Claude Code operating on a local clone.** The repo's Project Instructions and
-`scripts/bootstrap.sh` target a *different* surface (claude.ai chat + Code Interpreter) and
-are **PAT-gated / fetch from the remote** — do **not** run the bootstrap. Orient locally
-instead: read the current plan (§9), query the DB, run the validators (§7).
+Rules 2 and 3 are a **tax on the deliverable**, inverted against rule-free `workplan/` files
+which cost nothing at all. They are described here because they are still enforced — not because
+they are defensible. Two facts a reader should have:
+
+- The commit-message and doctrine-token check is `if: github.event_name == 'push'`, so it is
+  **skipped on every PR**, and merge commits are exempt. On the PR path §0.2 is pure convention.
+- **The doctrine-token apparatus is already queued for abolition** by the ratified instrument's
+  §10 item 4, pending owner signature on **OD-10**. Nothing needs re-arguing; it needs signing.
+
+Neither rule has ever caught any of the three failures in §2. Attestations have caught real
+deviations — in their free text, which no gate reads for meaning.
 
 ---
 
-## 1. What this project is
+## 1. Symmetry: deleting is as cheap as adding
 
-The **Accessible Built Environments Guidebook** — a reference on architecture, accessibility,
-and built-environment standards centred on **disabled people**. Its stance is fixed doctrine:
-it is a **thinking tool and advocacy project, not an authority** — "the purpose of this
-guidebook is to get people to ask the right questions." It is not a prescription manual, not
-a legal authority, and not a substitute for professional judgment. ("Inclusive / accessible /
-universal" in this repo always means *inclusion of persons with disabilities* — no
-design-for-everyone framing.)
+**This replaces the old "owner-gate file moves and retirements" guardrail, which was the
+pathology.** Adding a check cost a commit; removing one cost an owner decision. A system with
+that gradient can only accrete, and it did: 65 checks, ~35k executable LOC, most of it policing
+itself.
 
-- **Maturity:** pre-launch, single primary author (`@jordanelias`). The governance, schema,
-  and tooling are elaborate and real; **the synthesized content is largely unpopulated** —
-  most BPCs are retracted-pre-rehabilitation or partial, and the per-BPC reasoning docs (the
-  primary deliverable) are barely started. The project is parked mid-rehabilitation (Phase B /
-  pilot Phase E — see §9). Treat it as scaffolding under active construction, not a finished
-  book; query `bpc_metadata` / `specifications` for the current populated state.
-- **Repo:** `jordanelias/guidebook`, default branch `main` (branch-protected — confirmed against
-  the GitHub API, `"protected": true`; this doesn't by itself say which checks are required, see
-  §7. Corrected 2026-08-14 — this line previously said "protected by CI," which conflated
-  branch protection with CI merely running).
-- **Two product front-ends exist and are different things:** the hand-authored mockup
-  (`index.html` + `assets/guidebook.css`, showing the *intended* end-state — most provision
-  links are dead, wired only for a lone exemplar) versus the actually-generated static site
-  under `site/` (thin, real, full of honest "not yet computed" banners). Don't confuse the
-  mockup for output.
+- **Code, checks, scripts, dead tables and views: delete them.** No owner gate. You need
+  *evidence* — that it is unreferenced, or vacuous after a real batch, or superseded — not
+  permission. Record the evidence in the commit.
+- **Git history is the archive.** Do not copy files to `_archived/` to "preserve" them; git
+  already did. `_archived/` exists for content retired before this rule and is not to grow.
+- **Owner sign-off is still required for content and doctrine**: mission, audience, CRPD
+  posture, population taxonomy, evidence-tier definitions, jurisdiction and work-product
+  inclusion, licensing, trajectory (the DG-NON class in `governance/decision-protocol.md`).
+  Those are judgements about the book. Code is not.
+- **Adding apparatus carries the burden of proof**, not removing it. Before adding a check,
+  script or table, state what wrong thing reaches the *guidebook* if it does not exist. If the
+  answer is about the apparatus rather than the book, do not add it.
+- **Nothing is added without naming what reads it.** This is the mirror of rule §0.5, which taxes
+  removal only. An unread field, an uncalled script and an unregistered check are the same defect.
+- **A specific, ratified authorisation beats a blanket caution.** On 2026-08-19 a session left 521
+  lines of dead code in place, citing a six-word guardrail, when the code's own docstring and
+  registry note already authorised its retirement. Blanket removal-friction winning ties against
+  specific removal-permission is exactly how this file became a ratchet.
 
-## 2. Mental model: the layers
+---
 
-From `architecture/project-architecture-guidebook-v2.3.md`. Outer layer wins unless an inner
-layer names an explicit override; code-enforced checks trump text rules for the matching
-invariant.
+## 2. The three failure modes that are real
 
-| Layer | Where | Scope |
-|---|---|---|
-| User preferences | `userPreferences-v*.md` (not in repo; lives in claude.ai) | cross-project |
-| Project Instructions (PI) | `governance/project-instructions-v*.md` | this project |
-| Skills + hooks + CI | `skills/`, `.github/workflows/`, `scripts/audit/` | execution mechanics |
-| **Data layer (beneath all)** | `data/guidebook.db` + `schemas/` + `scripts/migrations/` | source of truth |
+Derived from what has actually gone wrong here, not from what might.
 
-**The DB is authoritative.** Markdown "parts", the HTML site, JSON/YAML registries, and
-reasoning docs *derive from or feed* the DB; they never outrank it. When two stores disagree,
-the DB is canonical and the other is the thing to reconcile/retire.
+**(a) A gate that passes having examined nothing.** Produced four separate times. Every check
+must print `EXAMINED: <n>`; `scripts/run_checks.py` reports zero-subject passes as
+NOTHING-IN-SCOPE and escalates blocking-and-vacuous ones. **When a check passes, confirm it had a
+subject.** A blocking check whose session pointer is missing FAILs rather than SKIPs, deliberately.
 
-Rules live on a 5-level **enforcement spectrum**: (1) text rule → (2) audit script → (3) CI
-non-blocking → (4) CI blocking → (5) pre-commit hook (none installed; single author). Promote
-a rule up the spectrum only when it's mechanically checkable and drift is costly.
+**(b) Prose that contradicts the database.** *Rule: no hand-written counts in derived documents.
+Generate them from the DB, or stamp the document with its generation date and a drift warning.* Counts in this file, in `index.html`, in manifests
+and in audits have all drifted. **Derive every volatile fact — row counts, schema version, CI
+status, the doctrine SHA, the active plan — from the live repo.** This file hardcodes none.
+On 2026-08-19 a rendered search log claimed "three cells are EXACT" while the DB said two, made
+stale within the hour by the same session's own correction.
 
-## 3. Repository map
+**(c) A fabricated citation passing green gates.** On 2026-08-19 all five sources in the first
+research batch were stored with **invented co-authors** — including the deletion of autistic
+community co-authors from a Co-1 paper whose Co-1 warrant *is* their co-authorship. Six gates
+passed it, because each asked whether the author fields were *populated*, never whether they were
+*true*, while `verified_by_tool='crossref'` asserted the very property that had failed.
 
-| Path | Contents |
-|---|---|
-| `governance/` | Doctrine + protocols. `mission-and-epistemics.md` (**the doctrine**, SHA-tracked), `evidence-architecture.md`, `tier-system.md`, `conceptual-model.md`, `decision-protocol.md`, `doctrine-recheck.md`, `pipeline-contract.yaml`, `project-instructions-v*.md` (the highest-numbered is the live PI). CODEOWNERS-protected. |
-| `references/` | Working corpus (hundreds of files). `project-standards.md` + `skill-registry.md` are the two most-loaded files. Also `bpc/`, `bpc-reasoning/`, `connection-reasoning/`, `fdr/`, `search-log/`, `audit-briefs/`, `conflict-matrices/`, registries. |
-| `decisions/` | Decision Records `DR-YYYY-MM-DD-slug.md` — the governance changelog. Read the recent ones (§9). |
-| `attestations/` | `*.json` adherence-log attestations (see §8). |
-| `schemas/` | Pydantic v2 models mirroring the SQLite layout + `attestation.schema.json`. CODEOWNERS-protected. |
-| `scripts/` | Tooling. `migrations/` (canonical schema+data SQL), `audit/` (enforcers), `validate_*.py`, `db.py`, `generate/`. Both protected subdirs. |
-| `data/` | `guidebook.db` (canonical) + entity YAML subdirs (`decisions/`, `adversarial_use/`, `doctrine_recheck/`, `jurisdictional_values/`). |
-| `parts/` | The guidebook as chaptered markdown (`parts/v10/part00–13`), machine-generated stubs — do not hand-edit. |
-| `site/` | Generated static site (`specs/`, `populations/`, `rooms/`). Generated — do not hand-edit. |
-| `audits/`, `workplan/`, `sessions/` | Dated audit reports; active + superseded workplans; per-session records. |
-| `_archived/` | Retired-but-preserved content (mirrors origin paths). Retire *here*, don't delete. **Hidden from ripgrep/Grep by the root `.ignore` (§10)** — enumerate with `ls` or Glob, not Grep. |
-| `.github/workflows/` | CI (see §7). CODEOWNERS-protected. |
+The fix, and the general principle: **verification must leave an artefact.**
+`scripts/research/retrieval_log.py` persists every retrieved payload under `retrieval-log/`, and
+`--verify-authors` diffs stored data against the bytes actually received — offline, no network,
+no drift. Storage is cheap; the log is read only when auditing fidelity, which is exactly when it
+is irreplaceable. **Never write a bibliographic field from memory when a payload is in hand.**
 
-## 4. The data layer (how to change data safely)
+---
 
-`data/guidebook.db` — SQLite, committed as a binary blob (`.gitattributes`, **not** Git-LFS).
-**`PRAGMA user_version` is the authoritative schema version** — read it from the DB; don't
-rely on a number written here. It is now the *only* schema-version marker: `db_meta.schema_version`
-was a second one that never tracked migrations, sat forty-one versions stale, and was retired on
-2026-08-06 — if you find it in an old DB or an old document, it is not a rival authority.
-There is **no `sqlite3` CLI** in this
-environment — use Python, read-only:
+## 3. What this project is
+
+A reference on architecture, accessibility and built-environment standards centred on **disabled
+people**. Fixed doctrine: a **thinking tool and advocacy project, not an authority** — "the
+purpose of this guidebook is to get people to ask the right questions." Not a prescription
+manual, not a legal authority, not a substitute for professional judgment. "Inclusive /
+accessible / universal" here always means *inclusion of persons with disabilities*.
+
+Pre-launch, single author (`@jordanelias`). The governance and tooling are elaborate; **the
+content is barely started**. Query the DB for the real state.
+
+---
+
+## 4. The data layer
+
+`data/guidebook.db`, SQLite, committed as a binary blob. `PRAGMA user_version` is the schema
+version. **There is no `sqlite3` CLI** — use Python, read-only:
 
 ```python
 import sqlite3
 con = sqlite3.connect('file:data/guidebook.db?mode=ro', uri=True)
-# enumerate the schema: SELECT name, type FROM sqlite_master WHERE type IN ('table','view')
 ```
 
-**Backbone.** Two axes — `items` (design parameters, `item_code` `A-01…K-NN`) × `populations`
-(disability population codes, self-referencing `parent_code`) — meet in
-**`specifications`** (named `evidence_cell_state` before schema version 055, whose DDL ships in
-`scripts/migrations/data_20260812075349_*.sql` — see that file and 055's header for why), the per-(item×population) synthesis record (`state` ∈
-`stated`/`provisional`/`pending`/`not_applicable`). Evidence lives in **`evidence_sources`**
-(`ref_id` `REF-NNNNN`; `tier` 1–6 and `evidence_type` are orthogonal) and attaches through
-`source_slug_links` → `slugs` (research units) and directly via `evidence_population_match`,
-`reasoning_doc_citations`, `spec_value_probes`, `source_value_extractions`,
-`jurisdictional_values`. `gaps` is the gap register. **`decisions` holds the governance
-decision records** — imported from `data/decisions/decision_register.yaml` on 2026-08-04
-(`a28e4eec`). The two stores are currently **dual**: the YAML is still opened by four scripts —
-the blocking `decision_capture.py`, `doctrine_recheck.py`, `test_db_integrity` (L01) and the
-legacy `migrate/migrate_decisions.py` — and L01 holds the two equal in both directions. (Two
-further scripts name the path only as a selftest fixture and never read it.) Per §2 the DB is canonical; retiring the YAML needs a caller sweep and owner
-sign-off. (This line said the table was "empty scaffolding" until the import.)
+**Backbone.** `items` (design parameters) × `populations` meet in `specifications`, the
+per-(item × population) synthesis record. Evidence lives in `evidence_sources` and attaches via
+`source_slug_links`, `evidence_population_match`, `search_admissions`. `source_locators` is a
+**lead index of ~835 identifiers, not evidence** — the R9 duplicate gate currently cannot see it,
+which is a known live defect (OD-5).
 
-**Changing the data model:**
+**Changing it.** Schema → new `scripts/migrations/NNN_slug.sql`, bump `user_version`, mirror the
+Pydantic model. Data → `emit_data_migration.py --input` then `migrate_db.py`. Verify with
+`migrate_db.py --rebuild /tmp/rebuilt.db`. `057_baseline_2026-08-12.sql` is the baseline.
 
-- **Schema change** → new `scripts/migrations/NNN_slug.sql` (forward-only, bump
-  `user_version`) **and** mirror it in the matching `schemas/*.py` Pydantic model (drift is a
-  CI-caught bug). Enum changes are a schema **Decision** (D-SCHEMA) — Change-Order gated.
-- **Data change** → generate a migration, never hand-edit the DB or an existing `data_*.sql`:
-  ```
-  python3 scripts/emit_data_migration.py --session <session-id> --summary "<what>" --input changes.sql
-  python3 scripts/migrate_db.py            # apply pending
-  ```
-  Data migrations are **append-only and immutable once committed** — fix forward with a new
-  compensating migration. They're tracked in the `data_migrations` table; schema migrations by
-  `user_version`. `057_baseline_2026-08-12.sql` is the current baseline — a full schema-and-data
-  snapshot that supersedes every earlier migration; new schema migrations resume from 058.
-  (Corrected 2026-08-14 — this line previously named `012_baseline_2026-05-15.sql` as the
-  baseline; that file is itself now superseded and lives at
-  `_archived/scripts/migrations/012_baseline_2026-05-15.sql`.)
-- **Verify reproducibility** before pushing DB changes:
-  `python3 scripts/migrate_db.py --rebuild /tmp/rebuilt.db` (this is what CI does).
-- **Exempt tables** (written by scheduled jobs outside migrations, per DR-2026-05-28):
-  `evidence_source_authors`, `pipeline_runs`. Don't add to that list without a DR.
+**Research writes go to a scratch copy first.** `cp data/guidebook.db $SCRATCH`, point
+`GUIDEBOOK_DB_PATH` at it inline on every call (the harness resets env between shells), then
+capture the delta with `scripts/research/emit_batch_sql.py` and ship it as a migration. Every
+write-time refusal stays live and the canonical DB's sha256 must not move until the migration is
+applied.
 
-`scripts/db.py` is the read/query workhorse (library + multi-subcommand CLI). Use it to *read*
-freely; route any *write* to the committed DB through a migration.
+`scripts/db.py` reads freely and has write subcommands for some tables — but **not** for
+`search_candidates`, `evidence_population_match`, `economics_entries`, `case_studies` or
+`jurisdictional_values` values, and `add-source` cannot write `doi_resolution_outcome`, `url`,
+`pages`, `first_author_last` or author rows. Those need hand-written SQL against the scratch, and
+that gap is where the fabrication of 2026-08-19 entered. There is no `next_ref_id` allocator;
+mint above the `source_locators` high-water mark or you will collide with a held identifier.
 
-## 5. Governance & doctrine (the crux of this repo)
+---
 
-Every substantive change is a governed act. The pieces:
-
-- **Doctrine:** `governance/mission-and-epistemics.md` — CANONICAL, amended in place (its SHA
-  is what commit tokens and attestations bind to). `references/project-standards.md` is the
-  **append-only operative rule ledger** (managed by the `session-consolidator` skill) and is
-  usually *ahead of* the PI on doctrine — prefer it and the recent DRs over older PI text.
-- **Decision Records:** `decisions/DR-*.md`, protocol in `governance/decision-protocol.md`.
-  Categories D-DOCT / D-METH / D-SCHEMA / D-OP / D-PRES; delegation DG-NON / DG-REVIEW /
-  DG-AUTO. **DG-NON (owner-only, you propose — you do not decide):** mission/audience/CRPD
-  posture, population taxonomy, evidence-tier definitions, jurisdiction and work-product
-  inclusion/exclusion, Co-1 corpus, licensing, trajectory. Validator: `scripts/decision_capture.py`.
-- **Attestations:** `attestations/*.json` (§8).
-- **Doctrine recheck:** `governance/doctrine-recheck.md` — fires every 25 working sessions, at
-  stage transitions, and on any doctrinal-rule revision. `scripts/doctrine_recheck.py`.
-- **Owner-gating:** file moves/retirements and all DG-NON decisions need owner sign-off.
-  "When you know better, you do better" — but for irreversible or structural moves, **propose;
-  don't unilaterally execute.**
-
-## 6. Evidence & content model (brief — read the governance docs for depth)
-
-- **Evidence hierarchy** (`governance/tier-system.md`, OPERATIVE): **T1** primary controlled
-  research · **Co-1** lived experience/participatory design (co-primary with T1, CRPD Art. 4.3)
-  · **T2** synthesis (systematic reviews/meta-analyses + named-org evidence-based standards) ·
-  **Co-2** OT professional-body CPGs (co-primary with T2) · **T3** lower-control/grey primary
-  (supporting; T3-alone never reaches `stated`) · **T4** international standards · **T5**
-  national frameworks · **T6** statutory codes. **T4–T6 are the "regulatory stratum":** code
-  convergence is *not evidence*, so it is walled off from **full-strength (●/◐)** anchoring —
-  but per the weighted-strength model (2026-07-20) + "Option A" (2026-07-21) a code-consensus
-  claim *can* anchor best practice **only at the flagged weak band (○)** ("best practice as
-  currently known"); rendered unflagged, or at ●/◐/above the weak band, it is *in error*.
-- **Evidence markers** (tier-system §5): **●** confirmed evidence base · **◐** policy/standards
-  basis only (T4/T5) · **○** grey/expert-consensus/thin/T6. Every spec sentence carries one;
-  unmarked = error. (Note: `mission-and-epistemics.md` still describes a two-marker ●/○ scheme —
-  a known reconciliation drift; `tier-system.md` is operative.)
-- **Design Modes:** Universal (code compliance, fixed values) / Population (ranges, median
-  default) / Person (OT co-design; population informs but does not bound the individual). DAR
-  (Design for Adaptable Readiness) is mandatory at all modes.
-- **Evidence-state machine** (per cell): `stated` / `provisional` / `pending`
-  (`[BEST-PRACTICE-PENDING]` + gap link) / `not_applicable`. `stated`/`provisional` require
-  non-empty `governing_refs`.
-- **Item codes** `A-01…K-NN` (category J deliberately struck) are **distinct** from entity-type
-  codes `ENT-01…ENT-20` in `governance/conceptual-model.md` — those were renamed from `E-##` on
-  2026-07-21 precisely to end the collision (`ENT-08` = the *Item* entity type; `E-08` = the
-  *Corridor Clear Width* parameter). Don't conflate them.
-- **BPC** = Best Practice Compendium. Per-slug synthesis at `references/bpc/<topic>/<slug>.md`;
-  the audit-trail/reasoning behind it at `references/bpc-reasoning/<slug>.md` (the workplan's
-  primary deliverable — barely started); connection reasoning at
-  `references/connection-reasoning/<con-id>.md`.
-- **Synthesis routing (hard floor, PI rule #2 + DR-2026-06-10):** only **Opus-class** models
-  write `best_practice_synthesis`. Lower-tier models do inventories, verification, multilingual
-  search, and 9-step comparison tables, then queue the doc for an Opus session. If you're not
-  Opus-class and asked to author synthesis, say so and stop at the queue boundary.
-- **Citation discipline:** sources confirmed real ("I don't know" > invention); two failed
-  searches → `CLOSED-DELETED`; quantified claims need DOI + page/table (or direct URL) else
-  `[UNVERIFIED-QUANT]`.
-
-**Pipeline** (`governance/pipeline-contract.yaml`, PROPOSED/advisory): research → collection →
-judgment → synthesis → render, over the spine EvidenceSource → BPC entry → Specification → Item
-→ render. The content workplan (`workplan/bpc-rewrite-workplan-2026-05-11.md`) runs phases **A–G**
-with a **strict "B before E"** gate: no BPC is rewritten (Phase E) until its linked sources pass
-Phase B verification.
-
-## 7. Running things (setup, validators, tests)
-
-**Environment setup (do this first).** The schema/governance validators import `schemas/*.py`,
-so they need `pydantic` (and the attestation audits need `jsonschema`) — which may not be
-preinstalled. Install deps before running them or they'll `ModuleNotFoundError`; CI installs
-them per-job:
+## 5. Running checks
 
 ```
-pip install -r requirements.txt      # pydantic + PyYAML (the only pinned deps)
-pip install jsonschema                # only needed for attestation audits
+scripts/preflight.sh                                    # gate your diff vs origin/main
+python3 scripts/run_checks.py --changed-from origin/main --explain
+python3 scripts/run_checks.py --list                    # registry + quarantine
 ```
 
-Live DB-aware scripts under `scripts/` and `tools/` honour `GUIDEBOOK_DB_PATH` (default
-`data/guidebook.db`), enforced by `python3 scripts/audit/db_path_env_audit.py`. Two documented
-exemptions live in that script: `assess_cell.py` (requires `--db` and deliberately refuses the
-canonical DB) and `graph_audit.py` (resolves the path via `graph/build.py`). **One-time/legacy
-code does *not* honour it** — `scripts/{migrate,probes,test}/**` is out of scope. If you point the
-variable at a scratch copy and run something under those paths, it will read the committed DB
-regardless. (`scripts/db/**` was the fourth directory here, and the one that targeted
-`data/db/guidebook.db` — a *different, legacy* file that was never the canonical database. It was
-archived 2026-08-15 with the Tier-1 batch; `scripts/migrate/**` is now two files, the decision-register
-importer and its guard.)
+`governance/check-registry.yaml` is the single inventory; `run_checks.py` is the only thing that
+invokes a check; CI and preflight both call it. Adding a check means editing the registry —
+never a workflow — and now carries the burden of proof in §1.
 
-**Run checks through the registry, not one at a time.** Every check lives in
-`governance/check-registry.yaml`; `scripts/run_checks.py` is the only thing that invokes one,
-and both CI and `preflight.sh` call it. It gates on **what kind of work you did** — it
-classifies your diff into work kinds (`data` / `schema` / `synthesis` / `governance` / `render`
-/ `tooling`) and runs the checks those kinds warrant.
+CI is four workflows (`ci.yml` gates `main`; three scheduled). **Before assuming a red check is
+yours, read the run and reproduce it locally** — this file deliberately does not record which
+gates are currently red, because that claim went stale twice and was still being cited after the
+backlog it described had cleared.
 
-| Command | Purpose |
-|---|---|
-| `scripts/preflight.sh` | **start here** — gate your diff vs `origin/main` |
-| `scripts/preflight.sh --all` | every registered check |
-| `python3 scripts/run_checks.py --changed-from origin/main --explain` | show why each check ran or didn't |
-| `python3 scripts/run_checks.py --kinds data --battery schema` | one battery, one kind |
-| `python3 scripts/run_checks.py --list` | the registry, plus what's quarantined and why |
-| `python3 scripts/run_checks.py --selftest` | verify the registry is coherent |
+---
 
-`run_checks.py` exits non-zero only when a **blocking** check fails; `advisory` and
-`informational` results are reported but don't fail. Levels are declared in the registry.
-Adding a check means editing the registry — never a workflow. See
-`references/tooling-register.md` for the full assessment, the quarantine list, and the
-owner-gated proposals.
+## 6. Evidence model, briefly
 
-The individual commands still work if you want one in isolation:
+`governance/tier-system.md` is operative. **T1** primary controlled research · **Co-1** lived
+experience / participatory design, **co-primary with T1** under CRPD Art 4.3 · **T2** synthesis ·
+**Co-2** OT professional-body CPGs · **T3** grey primary · **T4–T6** the regulatory stratum,
+walled off from full-strength anchoring.
 
-| Command | Purpose | Deps |
-|---|---|---|
-| `python3 scripts/validate_bpc.py --all --verbose` | BPC file structure | stdlib |
-| `python3 scripts/validate_cross_refs.py --repo-root .` | cross-reference integrity | stdlib |
-| `python3 scripts/tests/test_db_integrity.py` | DB integrity checks (FK/enum/consistency) | stdlib |
-| `python3 scripts/migrate_db.py --rebuild /tmp/rebuilt.db` | rebuild DB from migrations (repro check) | stdlib |
-| `python3 scripts/validate_schema.py --verbose` (`--cross-check`) | entity YAML vs Pydantic | pydantic |
-| `python3 scripts/validate_evidence_state.py` | cell-state machine + Co-1 fields | pydantic |
-| `python3 scripts/audit_evidence_metadata.py` | rule-#10 evidence-eligibility gate | pydantic |
-| `python3 scripts/decision_capture.py` · `doctrine_recheck.py --cross-ref` | governance audits | pydantic |
-| `python3 scripts/audit/db_path_env_audit.py` | `GUIDEBOOK_DB_PATH` contract | stdlib |
+Markers: **●** confirmed · **◐** policy/standards only · **○** grey/thin. Unmarked is an error.
+Cell states: `stated` / `provisional` / `pending` / `not_applicable`.
 
-Tests are **standalone scripts, not pytest** (`python3 scripts/tests/<name>.py`, exiting 0/1).
-Only three print a `RESULTS: X/Y` line — `test_db_integrity`, `test_url_verifier`,
-`test_verification_pipeline`; the rest print `RESULT: PASS`, `ALL PASS`, or (in
-`test_assess_cell_pilot`) `PASS: …`. Read the exit code, not the wording. **Ten of the eleven
-are registered** — `test_db_integrity` blocking, nine advisory in the `tests` battery. The one
-unregistered is `test_adjudication_integrity.py` (its subject audit is quarantined on a content
-backlog). `test_generate_parts_4_2.py` was the twelfth and was archived 2026-08-15: it exited 0
-having asserted nothing, because its fixture DB `/tmp/work14.db` does not exist. `validate_db.py`
-was archived in the same batch — `test_db_integrity` supersedes it at 72 checks to 9. (It was
-*repaired* on 2026-08-05, not broken as this paragraph claimed until 2026-08-15; the
-`doi_less_key` crash was fixed then, and it was retired for redundancy rather than for being ill.)
+**Co-1's warrant is co-production.** When you cite lived-experience work, the disabled people who
+produced it are part of the evidence, not metadata. Erasing them while claiming the tier is the
+worst failure available here.
 
-**CI workflows** — four, since the 2026-08-01 consolidation (was eight):
+**Synthesis routing:** only Opus-class models write `best_practice_synthesis`. **Citation
+discipline:** confirmed real sources only — "I don't know" beats invention; quantified claims need
+a locator or `[UNVERIFIED-QUANT]`.
 
-| Workflow | Trigger | What it does |
-|---|---|---|
-| `ci.yml` | push `main`, PR → `main` | The gate. A `classify` job maps the diff to work kinds, then the battery jobs (`syntax`, `structure`, `data`, `db_integrity`, `schema`, `governance`, `attestation`, `research`, `render`, `tests`) run the registry checks those kinds warrant. `commit-msg` (format + doctrine token) stays push-only. |
-| `regenerate-derived.yml` | push `main` (DB/generator paths), weekly, dispatch | 3-leg matrix rebuilding the vetting surface, evidentiary audit and pipeline-completeness dashboard, committed back by the bot. |
-| `resolve-dois.yml` | weekly Mon 06:00 UTC | Source-verification Channel 1. |
-| `verify-urls.yml` | bi-weekly | URL-verification Channel 2. |
+Work from the **ICF/access-need frame with codes AND names**, never from bare axis codes and never
+from population umbrellas. On 2026-08-19 a frame pulled as bare `axis_code` hid that a slug spanned
+two demand mechanisms, and four of five searches were framed on one of them.
 
-`audit.yml` and `research-contract.yml` were folded into `ci.yml`; the three `regenerate-*.yml`
-became the matrix. All five are preserved in `_archived/workflows/` with a mapping README.
+---
 
-**The old PR trigger asymmetry is fixed.** `schema`/`db_integrity`/`governance` used to be
-gated on `contains(github.event.pull_request.changed_files, 'data/')` — but `changed_files` is
-an *integer count*, so that expression was always false and those jobs never ran on any PR.
-They now run on the PRs that warrant them.
+## 7. Traps
 
-> **`main` IS branch-protected** — confirmed against the GitHub API (`"protected": true`).
-> This section previously said the opposite ("checked 2026-08-01"); corrected 2026-08-14.
-> Branch protection alone doesn't say *which* checks are required to merge — confirm the
-> required-check set matches the recommendation in `references/tooling-register.md` §6.7, which
-> also lists the three traps that make the naive version deadlock the repo. Do **not** require
-> the `DB integrity` job until its content backlog is cleared, or no data-touching PR will ever
-> merge.
+- **`.ignore` hides frozen records from ripgrep** — `_archived/`, `audits/`, `sessions/`,
+  `references/search-log/`, `versions/`, `workplan/_superseded/`. "No matches" ≠ absent: confirm
+  with `ls` or Glob. `grep -r` and `git grep` ignore it; Python tools see everything. Search those
+  paths explicitly when doing history work. **Note the cost:** rendered search logs live under an
+  ignored path, so the project's own research output is invisible to search.
+- **Two session pointers.** `sessions/LATEST` is continuity; `sessions/LATEST-RESEARCH` is the
+  subject of the blocking citation-mining gate. Update `LATEST` on any session close; update
+  `LATEST-RESEARCH` only when the session actually did research.
+- **Session ids: bare stem in the DB, `.md` in pointers and `emit_data_migration --session`.**
+  Getting it wrong scopes a gate to nothing and it passes green.
+- **Don't hand-edit generated output** (`parts/`, `site/`, `audits/`, `tools/*.html`) — regenerate
+  with `scripts/regenerate_derived.sh`. A DB change makes them stale and two blocking checks red.
+- **`schemas/*.py` ↔ SQLite drift is a bug**, not a convention.
+- **PI versioning is intentional** — highest-numbered `governance/project-instructions-v*.md` is
+  live, and it legitimately lags doctrine. Prefer `references/project-standards.md` and recent DRs.
+- **Don't run `scripts/bootstrap.sh`** — PAT-gated, for the claude.ai surface.
 
-> **Before assuming a red `main` or a failing check was caused by your change, read the actual
-> run.** `main` can carry pre-existing, owner-gated failures unrelated to your work — two
-> blocking gates are red on `main` today (`references/tooling-register.md` §4). Current CI
-> status lives in the repo's **Actions** tab for your commit;
-> reproduce any check locally with its command from the table above (e.g.
-> `python3 scripts/tests/test_db_integrity.py`) and read its `RESULTS:` line / exit code.
-> Diagnose from that output — this file deliberately doesn't transcribe which checks are
-> currently green or red, because that goes stale.
+---
 
-## 8. The commit + attestation workflow (walkthrough)
-
-For a routine, non-synthesis change (docs, tooling, a script):
-
-```
-{skill-name}: {action} [YYYY-MM-DD HH:MM]
-# e.g.  governance: add CLAUDE.md onboarding guide [2026-07-21 18:40]
-```
-
-The format check (`scripts/ci_helpers/check_commit_msg.py`) requires:
-`^[a-z][a-z0-9_-]+:\s+.+\s+\[\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}\]$` — lowercase-hyphenated prefix,
-timestamp as the **final** bracket. (This check is push-only; skipped on PRs, so it won't gate
-your PR — but keep the format anyway, it's the house convention.)
-
-For a **synthesis-path** change (`references/bpc-reasoning/`, `references/connection-reasoning/`,
-`decisions/`, `sessions/`) you additionally must:
-
-1. **Add the doctrine token before the timestamp:**
-   `SHA=$(git rev-parse HEAD:governance/mission-and-epistemics.md | cut -c1-7)` →
-   `{skill}: {action} [DOCTRINE: $SHA] [YYYY-MM-DD HH:MM]`.
-   Exempt when the commit itself modifies `governance/mission-and-epistemics.md` — the live
-   model (DR-2026-07-21) is **materiality-scoped**, not a flat commit window: an attestation
-   owes re-grounding only when a doctrine delta adopted after its grounding is material to it
-   (path/rule-id intersection against `governance/doctrine-deltas.json`); immaterial artifacts
-   never trip the check. (Corrected 2026-08-14 — this line previously named
-   `RE_ATTESTATION_WINDOW` = 5 commits; that constant is still defined in
-   `scripts/audit/adherence_log_audit.py` but is dead — `check_7_reattestation_window` reads
-   `governance/doctrine-deltas.json` and never references it.) Bots and merge commits are exempt.
-2. **Add/update `attestations/<artifact-slug>.json`** against `schemas/attestation.schema.json`.
-   Required fields: `schema_version`, `session`, `artifact`, `doctrine_sha`, `rules_in_scope`
-   (stable rule identifiers from `references/skill-registry.md`, not numbers), `per_rule_status`
-   (each `FIRED` needs an `evidence_path`; each `SKIPPED` needs a `reason`), `deviations`,
-   `bias_direction` (≥30 chars), `independent_reviewer_counterclaim` (≥30 chars), `verdict`
-   (`CLEAN`/`DEVIATION-LOGGED`/`NON-COMPLIANT`/`REVERT`). The optional `reattestation[]` log is
-   forward-only — never rewrite a prior entry.
-
-**Push protocol:** develop on your assigned branch, `git push -u origin <branch>`, then open a
-PR against `main` (ready for review). Never commit secrets — a redacted PAT lives in the PI's
-repo-side copy and GitHub push-protection is on.
-
-## 9. Current state, active work & guardrails
-
-**To find where things stand right now**, don't trust a date in this file — sort `workplan/`,
-`sessions/`, and `audits/` by date and read the newest, skim recent `git log`, and scan the
-latest `decisions/DR-*`. Expect **several dated workplans to coexist** (consolidation,
-coverage-completion, de-grade/remediation, dedup, …) rather than one canonical "current plan";
-pick the newest that matches your task. The most recent doctrine motion (entity-code rename,
-evidence-architecture "Option A", weighted-strength anchoring, product-posture, re-attestation
-materiality) is captured in the 2026-07 DRs — read those before touching evidence/tier/
-attestation logic.
-
-**Standing guardrails (from the recent consolidation work; they encode failure modes already hit):**
-
-1. **Re-verify every "divergence" claim against *current* files before acting.** Older audits
-   describe a moving repo; a prior doc's stale anchor caused a real error.
-2. **Redirect-stub, never delete, anything still referenced** (e.g. `mission-PROVISIONAL.md`,
-   connection registers). Retire to `_archived/`, mirroring the origin path.
-3. **Don't spin up a new register/sweep** — extend the existing 2026-07-12 apparatus.
-4. **Owner-gate file moves and retirements.**
-5. **Prefer the DB.** When two stores disagree, the DB is canonical; reconcile then retire the
-   shadow (treat disagreements as findings, not silent overwrites).
-
-## 10. Gotchas / trip-hazards
-
-- **A root `.ignore` deliberately hides frozen-record directories from ripgrep-based
-  SEARCH.** Covered: `_archived/`, `workplan/_superseded/`, `audits/`, `references/audits/`,
-  `sessions/` (except `sessions/LATEST` and `sessions/LATEST-RESEARCH`),
-  `references/search-log/`, `versions/`. This is
-  intentional — those hold text that was true on its date and is preserved unedited, so a hit
-  from one answers a *current* question wrongly (§9 guardrail 1 records a stale anchor causing
-  a real error). Four consequences, all verified rather than assumed:
-  1. **"No matches" from Grep does NOT mean the path is absent.** Confirm with `ls` or Glob —
-     neither reads `.ignore`.
-  2. **`grep -r` and `git grep` do NOT honour it**, so their counts will exceed ripgrep's. That
-     gap is this mechanism, not corruption.
-  3. **Nothing is hidden from code.** git, and every Python tool in this repo (they walk with
-     glob/pathlib), see all of it. `validate_cross_refs.py` still globs `references/search-log/`;
-     `item_audit_pipeline.py` still reads `versions/current/`. That is precisely why `.ignore`
-     can cover directories that could never be physically moved.
-  4. **When doing history-aware work** — building a retirement's paper trail, writing a DR,
-     checking what an old session actually did — search those directories explicitly by path,
-     which overrides the ignore.
-  Editing `.ignore` is **owner-gated**, like a retirement (§9 guardrail 4): it changes what
-  every future session can see. Rationale in `decisions/DR-2026-08-06-cold-storage-search-scope.md`.
-- **Prose counts are stale everywhere** (`index.html`, `parts/*/manifest.md`, older audits
-  disagree with each other and with the DB). Query the DB; never trust a hardcoded number.
-- **Two session pointers, and they mean different things.** `sessions/LATEST` is continuity —
-  "where did work leave off" — and is the default subject for session-scoped checks.
-  `sessions/LATEST-RESEARCH` names the newest session that actually logged research, and is the
-  subject of the *blocking* `citation_mining_session` gate. A check picks one by declaring
-  `session_pointer:` in `governance/check-registry.yaml`. **Update the research pointer when you
-  close a research session; update `LATEST` when you close any session.** Split 2026-08-06 (W4)
-  because one name serving both meanings had drifted them six weeks apart and pointed a blocking
-  gate at a session that had done no research. There is no check named `session_pointer_resolvable`
-  (corrected 2026-08-14 — zero hits across `governance/`, `scripts/`, `.github/`; this line
-  named one that doesn't exist). The real protection lives in the dispatcher: `run_check()` in
-  `scripts/run_checks.py` now FAILs a BLOCKING check whose session pointer is missing, instead
-  of SKIPping it — SKIP would otherwise disarm a blocking gate silently, which is the exact
-  failure mode this paragraph is about. The second capability — reporting drift when
-  `LATEST-RESEARCH` falls behind the DB — **is** implemented, as check **L04** in
-  `scripts/tests/test_db_integrity.py`: it compares the pointer's session date against the
-  newest session inside the gate's scope and fails when they diverge *and* the pointed session
-  has no subjects. (This sentence claimed the opposite for a few hours on 2026-08-14. The
-  correction was made by grepping for the check *name*, finding zero hits, and concluding the
-  *behaviour* was absent — searching for one thing and reporting the absence of another, which
-  is the failure mode this very section warns about.) `sessions/handoff-next-session.md` is *not* a
-  pointer and may still be stale; find the current handoff via §9 (the newest `workplan/` file).
-- **A gate reporting zero may have examined zero.** `citation_mining_completeness.py` prints an
-  `Examined` count and a verdict of `OUTSTANDING` / `CLEAN` / `NOTHING-IN-SCOPE` precisely so the
-  two cannot be confused. It could not always: session names reach it with a `.md` extension while
-  `evidence_sources.created_by_session` stores the bare stem, so its scoping predicate matched
-  nothing for every session until 2026-08-06. **When a check passes, check that it had a subject** —
-  this repo has now produced that failure mode four separate times, and it looks exactly like
-  success in CI.
-- **PI versioning is intentional:** the numbered `project-instructions-v*.md` files are
-  historical snapshots; the highest-numbered one is the deployed copy. The PI is not
-  API-writable — the owner pastes it into claude.ai — so the repo PI legitimately lags current
-  doctrine. Don't "fix" the multiple versions; don't treat PI text as more current than
-  `references/project-standards.md` + recent DRs.
-- **`schemas/*.py` ↔ SQLite drift is a bug, not a convention** — keep them in sync when you
-  change either.
-- **Don't hand-edit generated output** (`parts/`, `site/`) — edit the DB / reasoning docs and
-  regenerate (`scripts/generate_parts.py`, `scripts/generate/*.py`).
-- **`skills/*_SKILL.md` are project-domain skills** (authoring protocols keyed by
-  `references/skill-registry.md`), *not* Claude Code harness skills. Renaming one is a governed
-  event (attestations reference the stable identifiers).
-- **Don't run `scripts/bootstrap.sh`** (PAT-gated, remote-fetching; for the claude.ai surface).
-- **`scripts/init_db.py` is gone** — archived 2026-08-15 because it applied only migration 001 and
-  so never produced a working DB. Use `migrate_db.py --rebuild`. The `db.py init` and `db.py validate`
-  subcommands were retired with it and with `validate_db.py`; both are absent from `--help` rather
-  than left as tracebacks.
-- **Work from axes, not population umbrellas.** When adding, scoping, or reasoning about
-  population/profile codes, curate *from* the functional axes (the specific, non-erasing demand
-  layer) — never coin broad umbrellas ("physically disabled", "energy-limiting chronic illness").
-  They collapse opposed demands and erase specific communities (a repeatedly-caught failure mode).
-  Profiles are specific self-identified communities, co-produced. See `governance/functional-taxonomy.md`
-  §3.3, `references/project-standards.md` (RULE 2026-07-22), and `DR-2026-07-22-work-from-axes`.
-
-## 11. Where to read for depth
+## 8. Where to read for depth
 
 | Question | Read |
 |---|---|
-| The whole architecture / where things belong | `architecture/project-architecture-guidebook-v2.3.md` |
-| The doctrine (mission, epistemics, evidence commitments) | `governance/mission-and-epistemics.md` |
-| Current operative rules (append-only ledger) | `references/project-standards.md` |
-| Evidence tiers, markers, weighted strength | `governance/tier-system.md`, `governance/evidence-architecture.md` |
-| Entity model / ENT-## codes | `governance/conceptual-model.md` |
-| Decision process | `governance/decision-protocol.md`; recent `decisions/DR-2026-07-*.md` |
-| Attestation / re-attestation | `schemas/attestation.schema.json`; `governance/doctrine-recheck.md`; `governance/doctrine-deltas.json` |
-| Data-model / schema reconciliation | `architecture/schema-spec.md`, `architecture/schema-reconciliation.md`, `architecture/sqlite-data-layer.md` |
-| Content pipeline / phases A–G | `workplan/bpc-rewrite-workplan-2026-05-11.md`; `governance/pipeline-contract.yaml` |
-| Skill roster | `references/skill-registry.md` |
-| What to do next | the newest dated file(s) in `workplan/` (several coexist — sort by date) |
+| What to do now | `decisions/DR-2026-08-19-research-restart-operative-instrument.md` |
+| Doctrine | `governance/mission-and-epistemics.md` |
+| Current operative rules | `references/project-standards.md` |
+| Tiers, markers, weighting | `governance/tier-system.md`, `governance/evidence-architecture.md` |
+| Entity model, ICF frame | `governance/conceptual-model.md`, `governance/functional-taxonomy.md` |
+| Decision process | `governance/decision-protocol.md` + recent `decisions/DR-*` |
+| Architecture | `architecture/project-architecture-guidebook-v2.3.md` |
 
-*Volatile facts — doctrine SHA, DB counts, schema version, CI status, the active plan — are
-deliberately not hardcoded above; derive them from the live repo with the commands in this guide.*
+*Volatile facts are deliberately absent above. Derive them from the repo.*

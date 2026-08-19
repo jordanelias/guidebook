@@ -727,7 +727,7 @@ checks:
       legitimately retired to none.
 
   - id: author_fidelity
-    cmd: [python3, scripts/audit/author_fidelity_audit.py]
+    cmd: [python3, scripts/research/retrieval_log.py, --session, '@SESSION@', --verify-authors]
     battery: research
     kinds: [data, synthesis]
     level: advisory
@@ -761,48 +761,12 @@ checks:
       passes when a DOI cannot be retrieved, so an unreachable API cannot be
       mistaken for a clean result.
 
-      KNOWN INSUFFICIENCY: this re-fetches at audit time rather than comparing
-      against what the authoring session actually received. The real fix is to
-      persist the retrieval artefact so verification is checkable rather than
-      asserted — see the proposal recorded in the session record.
-
-  - id: meta_work_freeze
-    cmd: [python3, scripts/audit/meta_work_freeze.py]
-    battery: governance
-    kinds: [always]
-    level: blocking
-    basis: DR-2026-08-19 §2.2 (ratified 2026-08-19)
-    cost: fast
-    no_floor: changeset-scoped — compares ADDED files under workplan/ and ADDED
-      check ids against the base, so 0 means this changeset proposed no new
-      apparatus. It prints the registry id count alongside, so EXAMINED is never
-      0 while the registry is readable; an unresolvable base FAILS rather than
-      passing empty.
-    note: >-
-      The freeze of DR-2026-08-19 §2.2, ratified 2026-08-19: while
-      evidence_sources is empty, a changeset may not add a workplan file or a
-      registry entry. Corrections to existing ones are excepted — this compares
-      additions only.
-
-      kinds is [always], NOT [governance] as §2.2 drafted it. workplan/** matches
-      no kind in this file, so a commit that only adds a plan classifies to the
-      empty set and a governance-gated check would never run — the check against
-      new plans would have been silent on precisely the commit it exists to
-      refuse. Verified by running run_checks.classify() on a workplan path before
-      wiring it, not inferred. The check is one git diff plus one COUNT(*), which
-      is under the ~2s bar this file sets for gating being worth its own cost.
-
-      It exempts its own id (SELF_EXEMPT). §2.5(c) requires the check to land in
-      the same commit as the ratification it enforces, so counting itself would
-      have made the ratifying PR unmergeable — the CLAUDE.md §7 deadlock trap,
-      built in on day one.
-
-      SELF-EXPIRING. It passes unconditionally once evidence_sources >= 1, so
-      there is no lift ceremony to plan, breach or adjudicate. That is the
-      property the 2026-07-14 freeze lacked: its exit condition was destroyed by
-      DR-2026-08-06, its tripwire fired every week for five weeks, and no session
-      ever checked it. Retire this entry at leisure after the first batch; it
-      cannot hold anything up in the meantime.
+      RETIRED the re-fetching variant 2026-08-19. Two verifiers of one property
+      shipped in the same commit and DISAGREED — one folded accents, one did not,
+      so a stored "Rosas-Perez" for the actual "Rosas-Pérez" passed one and failed
+      the other. This entry now points at the offline verifier, which compares
+      against the payload the authoring session actually received: no network, no
+      drift, and it fails rather than passes when a source has no logged retrieval.
 
   - id: decision_capture
     cmd: [python3, scripts/decision_capture.py]

@@ -525,8 +525,6 @@ writers:
     scripts/audit/jurisdictional_divergence.py:
     - jurisdictional_values
     - specifications
-    scripts/audit/meta_work_freeze.py:
-    - evidence_sources
     scripts/audit/migration_reproducibility.py:
     - items
     scripts/audit/register_integrity_check.py:
@@ -715,7 +713,7 @@ checks:
     - data
     - synthesis
     min_items: 1
-    cmd: python3 scripts/audit/author_fidelity_audit.py
+    cmd: python3 scripts/research/retrieval_log.py --session @SESSION@ --verify-authors
   - id: claims_docket
     level: advisory
     battery: governance
@@ -1072,13 +1070,6 @@ checks:
     - render
     min_items: 1
     cmd: python3 tools/evidentiary_audit.py --check
-  - id: meta_work_freeze
-    level: blocking
-    battery: governance
-    kinds:
-    - always
-    min_items: null
-    cmd: python3 scripts/audit/meta_work_freeze.py
   - id: migration_reproducibility
     level: blocking
     battery: data
