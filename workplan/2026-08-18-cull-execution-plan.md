@@ -661,3 +661,71 @@ The route exists so that the apparatus stops growing, not because shrinking it p
 
 **Nothing in §15 is a prerequisite for research.** If only one item on this page is ever executed,
 it should be item 2.
+
+---
+
+## §16 — Item 10 execution record and the remedy log (2026-08-19)
+
+Appended here rather than filed as a new document: the freeze that forbade new
+workplan files has lifted, but the reason for it has not, and this is the plan
+this work belongs to.
+
+### What Item 10 actually was, versus what the census said
+
+`DR-2026-08-19` §10 item 10 said: *"The workplan backlog beyond the D1 keep-set
+(77 files) — ARCHIVED post-batch, never stubbed where attestation-pinned."*
+The census behind it said **1 active + 9 attestation-pinned, 77 move.**
+
+Measured against the live tree before touching anything:
+
+| | census | actual |
+|---|---|---|
+| top-level `workplan/*.md` | — | **92** |
+| attestation-pinned | 9 | **13** |
+| referenced from a LIVE surface (governance, decisions, skills, `scripts/`) | — | **47 existing** |
+| keep (pinned ∪ live-referenced) | 10 | **54** |
+| safe to move | 77 | **38** |
+
+**Moving 77 would have created roughly 39 dangling references from live
+governance, decision records, skills and executable code** — including from
+`validate_pydantic_schemas.py`, `readonly_db_open_audit.py`,
+`research_batch_dod.py`, `db.py`, `contamination_sampler.py`,
+`validate_reasoning.py` and `claims_docket.py`. The census counted files; it did
+not count edges.
+
+### What was executed
+
+38 files moved to `_archived/workplan/` under the owner's 2026-08-19 ruling that
+`_archived/` may grow, with a **caller sweep of 35 references across 12 files**
+(CLAUDE.md §0.4). Verified afterwards: **zero new dangling references.**
+`workplan/*.md` 92 → 54.
+
+Note the strict-test figure, because it is the more honest one: only **9** files
+were movable without touching anything else. The other 29 were reachable only
+from other workplan files that stay, and were moved by *sweeping* those
+references rather than by declaring them unreferenced.
+
+### REMEDY LOG — found, not fixed
+
+1. **68 dangling references to workplan files that do not exist**, all
+   pre-existing; 18 are from live surfaces (`governance/migration-survival.md`,
+   `governance/workplan-adoption.md`, `governance/decision-protocol.md`,
+   `scripts/audit/claims_docket.py`, `scripts/contamination_sampler.py`). At
+   least 11 name files that **never existed in git at all**. Remedy: sweep each
+   live surface and either restore the target from history or strike the
+   reference. Not done here — it is a separate, larger correction than Item 10.
+2. **`workplan/_superseded/README.md` is referenced and absent.** Remedy: create
+   it or strike the reference in `2026-08-05-archive-fork-execution.md`.
+3. **The remaining 54 cannot be archived until their referents are re-pointed.**
+   Remedy: for each, decide whether the *referencing* document is itself
+   superseded; many references come from DRs that the operative instrument's §B
+   already lists as HISTORICAL, so the reference dies with the referrer.
+4. **The census is not a safe input for a second pass.** It undercounted pinned
+   files by 4 and did not model references at all. Any future cull phase should
+   compute the edge set at execution time, as this one did.
+5. **`author_fidelity` was registered with the wrong session-id spelling.**
+   `run_checks.py` expands `@SESSION@` from `sessions/LATEST`, which carries the
+   `.md` suffix, while `retrieval_log.py` keyed its log directory on the bare
+   stem — CLAUDE.md §7's standing trap, walked into on the check's first day.
+   Fixed by normalising in `_session_stem()`; recorded because the trap caught a
+   session that had just finished writing about the trap.

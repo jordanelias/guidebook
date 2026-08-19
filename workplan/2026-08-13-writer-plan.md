@@ -29,7 +29,7 @@ the canonical database. The emitter exists. So does the glue, in a test harness.
 
 ## 1. A correction to the count this plan rests on
 
-`workplan/2026-08-13-writerless-tables-analysis.md` and PR #99 said **eleven** tables need writers.
+`_archived/workplan/2026-08-13-writerless-tables-analysis.md` and PR #99 said **eleven** tables need writers.
 **Nine do.**
 
 `search_coverage` and `search_languages` are **deliberately writerless** — `scripts/db.py:316-326`
@@ -188,7 +188,7 @@ position; it was an omission. Stating it now:
 **`specification_extraction_links` must land before Phase 2 items 3–4.** The probe's central
 backward-walk finding is verbatim (`audits/2026-08-12c-pipeline-probe-log.md:12147`): *"0 rows — …
 BROKEN JOINT: no table links specifications to source_value_extractions; the join must be improvised
-on (ref_id, item_code) and item_code is nullable."* `workplan/2026-08-12-resolution-plan.md` §M4
+on (ref_id, item_code) and item_code is nullable."* `_archived/workplan/2026-08-12-resolution-plan.md` §M4
 schedules the junction among the **now-or-never** reshapes — now-or-never precisely because SQLite
 has no `ADD CONSTRAINT` and both tables are empty **today**. Phase 2 items 3–4 write into exactly
 the tables M4 wants to rebuild while empty. **Writers landing first either close that free window or

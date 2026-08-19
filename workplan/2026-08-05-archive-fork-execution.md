@@ -2,7 +2,7 @@
 
 **Date:** 2026-08-05 · **Status:** BLOCKED on one owner action, then ready
 **Owner ruling:** ⚑1 fork trajectory = **archive fork** (2026-08-05). This closes the
-DG-NON gate that `workplan/2026-08-03-fork-cut-walkable-graph-execution-plan.md` line 662
+DG-NON gate that `_archived/workplan/2026-08-03-fork-cut-walkable-graph-execution-plan.md` line 662
 left open ("Whether to fork at all — owner only"). ⚑2 and ⚑3 remain open and are **not**
 required for the archive reading.
 **Owner parameters:** archive is **private**; prune scope is **safe set only**.

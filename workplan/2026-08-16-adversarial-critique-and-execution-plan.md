@@ -87,7 +87,7 @@ then lists all six under that header. One of the two numbers is wrong.
 
 ### C3 — MEDIUM-HIGH. The instrument-status plan's compound-name rule is under-specified, its taxonomy is missing a class, and its count reproduces from no rule it states.
 
-**The claim** (`workplan/2026-08-15-instrument-status-backfill-plan.md` §4):
+**The claim** (`_archived/workplan/2026-08-15-instrument-status-backfill-plan.md` §4):
 
 > Rows that must not be silently "improved": **all 22 rows** whose `standard_name` joins two entities
 > in one string. **No organisation has a `/` in its name** — the delimiter always separates two
@@ -303,7 +303,7 @@ recorded, and this document is that record. Wave 0 is one commit, no DB change, 
 |---|---|---|
 | 0.1 | `workplan/2026-08-15-adversarial-brief-pr103.md` — strike the "requires a file-level exemption" premise; state that `scripts/migrations/**` is already globally exempt and the widening is a zero-flag edit; restate the brief as a **post-merge audit** with fix-forward remedies; correct "still-open PR #103" | C1, C7 |
 | 0.2 | `workplan/ratification-execution-register-2026-07-13.md` — move Q5-H2/H3/H4, Q6 and E10 out of "executable without owner input"; re-derive the Q19 row against 23 populations / 93 items / 0 items-without-page / 17 populations-without-page, and note the DR-2026-07-22 taxonomy turnover as the cause | C5, C6 |
-| 0.3 | `workplan/2026-08-15-instrument-status-backfill-plan.md` §4 — replace the delimiter rule with the enumerated 22 `jv_id`s; add the third class (instrument-beside-non-instrument: jv 13, 15); name jv 38 (`+`, genuine compound) and jv 84 (`+`, **not** a compound) explicitly. §7 — name `ISO` in test 6; add the `lang_jur_map` drift as D5 | C3, C4 |
+| 0.3 | `_archived/workplan/2026-08-15-instrument-status-backfill-plan.md` §4 — replace the delimiter rule with the enumerated 22 `jv_id`s; add the third class (instrument-beside-non-instrument: jv 13, 15); name jv 38 (`+`, genuine compound) and jv 84 (`+`, **not** a compound) explicitly. §7 — name `ISO` in test 6; add the `lang_jur_map` drift as D5 | C3, C4 |
 | 0.4 | `sessions/session_2026-08-16-ladder-and-vocabulary-sweeps.md` — forward-note on F1 (premise false) and F3 (already firing as RV-012; see decision #9). Append-only; the record is not rewritten | C1, C2 |
 | 0.5 | `CLAUDE.md` §3 — add `working/` to the repository map with its actual status (live, tracked, cited by two register rows, undisposed) | C8 |
 

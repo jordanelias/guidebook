@@ -89,7 +89,7 @@ def fetch(url, session, purpose="", timeout=40, stamp=None):
     r = subprocess.run(["curl", "-sS", "--max-time", str(timeout), url],
                        capture_output=True, text=True)
     body = r.stdout
-    d = LOG_ROOT / session
+    d = LOG_ROOT / _session_stem(session)
     d.mkdir(parents=True, exist_ok=True)
     sha = hashlib.sha256(body.encode("utf-8")).hexdigest()
     (d / f"{sha[:16]}.json").write_text(body, encoding="utf-8")
@@ -107,8 +107,22 @@ def fetch(url, session, purpose="", timeout=40, stamp=None):
         return None
 
 
+def _session_stem(session):
+    """Accept both spellings of a session id.
+
+    The DB stores the BARE STEM; sessions/LATEST and emit_data_migration --session
+    take the `.md` form; and run_checks.py expands @SESSION@ from the pointer, so a
+    registered check receives the `.md` form. CLAUDE.md §7 lists this as a standing
+    trap — "getting it wrong scopes a gate to nothing and it passes green" — and
+    this module was registered with the wrong one on its first day. Normalise here
+    rather than requiring every caller to remember.
+    """
+    return session[:-3] if session.endswith(".md") else session
+
+
 def _logged_payloads(session):
     """Every payload logged for a session, newest last, keyed by URL."""
+    session = _session_stem(session)
     man = LOG_ROOT / session / "manifest.jsonl"
     if not man.exists():
         return {}
@@ -128,6 +142,7 @@ def _logged_payloads(session):
 
 def verify_authors(session):
     """Diff stored authors against the LOGGED payload. Offline. No network."""
+    session = _session_stem(session)
     payloads = _logged_payloads(session)
     if not payloads:
         print(f"  no retrieval log for session {session!r} under {LOG_ROOT}/")

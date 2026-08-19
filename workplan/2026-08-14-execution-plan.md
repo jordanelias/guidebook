@@ -1,7 +1,7 @@
 # 2026-08-14 — Execution plan for the remediation workplan
 
 **Executes** `workplan/2026-08-14-remediation-workplan.md` (the plan) against
-`workplan/2026-08-14-pipeline-audit-synthesis.md` (the findings). This document says *who does
+`_archived/workplan/2026-08-14-pipeline-audit-synthesis.md` (the findings). This document says *who does
 what, in what order, at what tier*, and — first — *what is not ours to execute*.
 
 **Baseline, re-derived at HEAD `058d729` rather than inherited** (guardrail §9-1). The workplan's

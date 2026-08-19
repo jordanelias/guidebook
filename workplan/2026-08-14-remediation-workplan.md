@@ -1,6 +1,6 @@
 # 2026-08-14 — Remediation workplan for the six-agent audit
 
-**Companion to** `workplan/2026-08-14-pipeline-audit-synthesis.md`. The synthesis said what is wrong;
+**Companion to** `_archived/workplan/2026-08-14-pipeline-audit-synthesis.md`. The synthesis said what is wrong;
 this says what to do, in what order, and what only the owner can decide.
 
 **Provenance.** Four read-only planning passes — governance, schema/provenance, executable-layer,
@@ -42,7 +42,7 @@ This is a bridge, not the resolution. The durable answer is owner decision **#5*
 > Slots **058, 059 and 060 were consumed by other work** after this plan was written, and are on
 > `main` now: `058_status_vocabulary_ratification.sql`, `059_tier1_retirements.sql`,
 > `060_restore_superseded_status.sql`. A session following the table below would collide on the first
-> migration it wrote. `workplan/2026-08-15-instrument-status-backfill-plan.md` §6 already noted
+> migration it wrote. `_archived/workplan/2026-08-15-instrument-status-backfill-plan.md` §6 already noted
 > "058–060 are used" without correcting the table it was reading from — so the stale allocation
 > survived the one pass that spotted it.
 >
