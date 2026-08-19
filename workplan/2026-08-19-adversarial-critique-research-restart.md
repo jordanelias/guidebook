@@ -424,7 +424,7 @@ I tried to break these and could not.
 | `workplan/` | **3.9 MB, 91 documents** |
 | `references/bpc-reasoning/` (the primary deliverable) | **56 KB, 2 files — one is the template** |
 | Python scripts / audit scripts / registered checks | **104 / 30 / 65** |
-| Database tables empty | **43 of 66** |
+| Database tables empty | **42 of 65** — corrected 2026-08-19; the earlier figure counted `sqlite_sequence`, an internal SQLite table, as both a user table and an empty one |
 | `evidence_sources`, `specifications`, `gaps`, `search_executions` | **0, 0, 0, 0** |
 
 **The apparatus outweighs the deliverable it exists to produce by roughly 70:1 by volume, and
