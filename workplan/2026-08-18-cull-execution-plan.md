@@ -522,3 +522,142 @@ CHECK 3 versus the blocking schema gate, including validating the attestation ag
 a full anchored-`evidence_path` scan (38 hits); the Phase-2 × attestation cross-reference the plan
 itself listed as undone; `exempt_paths` against the proposed `.ignore` edit; and a from-scratch
 reachability closure rather than inheriting 87/23.
+
+---
+
+## 15. The route from 65 to the minimum — appended 2026-08-19
+
+**Why this section exists.** §11 declares a minimum viable infrastructure — 9 checks, 6 scripts,
+5 documents — and §§2–8 contain no action that reaches it. The 2026-08-18 adversarial pass named
+the gap (§14.1, objection 3) and did not close it. This section closes it, and is appended here
+rather than filed as a new plan because `references/project-standards.md` RULE 2026-08-19 requires
+extending existing work instead of restating it, and because `DR-2026-08-19` §2.2.1 would forbid
+a new `workplan/` file.
+
+**Method.** Five read-only audit passes on 2026-08-19. One **ran all 65 active checks live**; one
+inventoried all 107 executables with caller analysis; one audited the non-code compliance regime;
+one recovered this plan's own execution status; one checked the new findings against prior art.
+Every check below was classified by a single test: **if this were deleted tomorrow, what wrong
+thing could reach the guidebook?**
+
+### 15.1 The classification that supplies the route
+
+| Class | Active | Quarantine | Total | Share |
+|---|---:|---:|---:|---:|
+| PROTECTS-CONTENT | 7 | 2 | 9 | 11% |
+| PROTECTS-DATA | 13 | 0 | 13 | 16% |
+| CODE-ABOUT-CODE | 26 | 2 | 28 | 35% |
+| CEREMONIAL | 3 | 0 | 3 | 4% |
+| VACUOUS | 16 | 12 | 28 | 35% |
+
+**59 of 81 (73%) protect nothing, or protect only the apparatus from itself.** 32 of 65 active
+entries declare `basis: unattributed` — the registry's own field for "authority not established."
+
+### 15.2 The route — 81 entries to ~35
+
+- **DELETE (13).** `validate_temporal` (reads a directory that has never existed) · `validate_item`
+  · `validate_conflicts` · `schema_reference_drift_audit` (coverage owned by `graph_audit`; its own
+  registry entry proposed retirement on 2026-08-01) · `validate_commits` (registry concedes
+  `check_commit_msg.py` "is the wired one") · `validate_audit_runs` (0 runs; its own wiring
+  condition unmet for 17+ days) · `check_phase_a_complete` · `contamination_sampler` (writes files;
+  a category error the entry admits) · `jurisdictional_divergence` (registry: "Belongs in a report,
+  not a gate") · `table_connectivity` · `citation_mining_backlog_t3` · `workplan_naming` ·
+  `full_db_metadata_verification` (298s of network against 0 rows).
+- **DEMOTE or SUSPEND-EMPTY-SUBJECT (7).** The runner's own "BLOCKING and vacuous" five —
+  `source_slug_links_duplicates`, `citation_mining_session`, `validate_evidence_state`,
+  `validate_verification_consistency`, `check_rendered_docs` — plus `decision_capture` and
+  `doctrine_recheck`. Auto-repromote when `EXAMINED > 0`. Better: give `run_checks.py` a
+  first-class `SUSPENDED-EMPTY-SUBJECT` state, so a gate cannot report assurance it did not perform.
+- **MERGE (5 merges, −7 entries).** attestation ×4→2 · `validate_schema`+`_cross_check`→1 ·
+  `readonly_db_open_audit`+`db_path_env_audit`→1 (same AST walk, same `EXCLUDE_PARTS`) ·
+  `migration_reproducibility`+`_deep`→1, **running deep as the blocking form** (this also
+  discharges D3 and closes R-17b) · `citation_mining_backlog` t2+t3→1.
+- **KEEP (~20).** The three syntax gates, `validate_bpc`, `validate_cross_refs`,
+  `migration_reproducibility` (merged), `test_db_integrity`, `alias_provenance_audit`,
+  `validate_schema` (merged), `validate_items`, `validate_population`, `validate_jurisdiction`,
+  `validate_axes`, `graph_audit`, `audit_adversarial_use`, `evidentiary_audit_fresh`,
+  `site_pages_fresh`, `research_dod_selftest`, and **`validate_reasoning`**.
+
+**`validate_reasoning` is the finding this whole exercise turns on.** It is advisory. It is one of
+only two checks currently red on real content. Run today it reports **15 errors on
+`references/bpc-reasoning/room-acoustic-performance.md`** — the repository's single real
+deliverable and the restart plan's first slug — missing every required section A through F, with a
+status value (`PILOT`) outside its own permitted vocabulary. It exits 0.
+
+**Five blocking gates examine nothing while the only real content fails silently.** That sentence
+is the state of the apparatus, and no cull is needed to see it.
+
+### 15.3 The executable route — 35,442 LOC to ~21,000
+
+Measured: **9,898 LOC (28%) is code-about-code** and **10,595 LOC (30%) operates on empty tables**;
+the sets are disjoint, so **58% of the executable surface polices the apparatus or polices nothing.**
+
+- **Archive outright (~5,000 LOC, no caller and no subject):** `tests/probe_pipeline.py` (1,718) +
+  `walk_harness.py` (272, closing D4) · `item_audit_pipeline.py` (496) · `verify_resolved_dois.py`
+  (287) · `generate_search_queries.py` (309) · `probes/citation_mining_pipeline.py` (254) ·
+  `check_phase_a_complete.py` (234) · `migrate/migrate_decisions.py` + `_legacy_guard.py` (214,
+  after D2) · `generate_alias_chart.py` (95) · `validate_commits.py` (247) · `validate_item.py`
+  (239) + `validate_conflict.py` (220).
+- **Freeze until `evidence_sources > 0` (~7,500 LOC):** the research-protocol five behind
+  `research_batch_dod`, the evidence-metadata trio behind `full_db_metadata_verification`, the two
+  verification test suites, the evidence-cell demo layer. Keep `resolve_dois`/`verify_urls` as the
+  restart kit; disable their cron workflows meanwhile.
+- **Merge (~2,000 LOC):** the two AST hygiene auditors → one; three HTML dashboards → one; the four
+  selftest wrappers → `run_checks --selftest`.
+- **Two corrections to Phase 4a, which remains BLOCKED as written.** `audit_consolidator.py` is
+  invoked by `skills/item-audit-pipeline_SKILL.md:252` — prose callers are invisible to a call
+  graph by construction, so the defect is the method. And **`generate_parts.py` (463 LOC) is an
+  orphan by call graph that assembles the actual deliverable** — it must be registered, never culled.
+  Note also that the only referencing file for the two largest dead scripts is
+  `governance/context-map.yaml`: the sole caller of the dead code is the generated map of the code.
+
+### 15.4 The compliance route
+
+- **Abolish.** The doctrine token and its apparatus (`check_doctrine_token.py`, the commit-msg
+  doctrine step, `doctrine-deltas.json`, adherence checks 2 and 7, the dead `RE_ATTESTATION_WINDOW`):
+  push-only, merge-exempt, PR-skipped, so it binds only the path the workflow forbids; every
+  recorded firing was a false positive. A 7-hex checksum evidences copy-paste, not comprehension.
+  Also abolish the dual decision store (drift is zero *today*, so retirement is free), the frozen
+  working-session counter and the "any doctrinal-rule revision" recheck trigger, the
+  `next_action`-pivot→D-OP rule, and the 13 never-invoked skills.
+- **Suspend until content exists.** The attestation requirement on `decisions/` and `sessions/`.
+  **84 of 87 attestations attest to governance artifacts; exactly 1 covers real content.** Keep the
+  counterclaim only for `references/bpc-reasoning/` and `references/connection-reasoning/`, the one
+  place it could earn its cost. Gate the Stop hook's FAIL print on `EXAMINED > 0`.
+- **Keep.** R1–R15 and `research_batch_dod.py` — all 15 rules have real enforcers, hardened twice
+  after being caught passing on substring matches. Migrations-only writes and the reproducibility
+  rebuild. The DG-NON list and DR files as single-store read-once records.
+
+### 15.5 Reconciliation with this plan as it stood
+
+**Confirms:** Phase 2, Phase 3, Phase 6.2, D2, D5, and the census rows on `validate_commits`,
+`validate_audit_runs`, `schema_reference_drift_audit`, `probe_pipeline.py` — all independently
+re-derived from live state.
+
+**Resolves three of the recorded contradictions.** (7→) `workplan/deprecated/` — **move**, per
+census 4a.3: hiding in place breaks the `.ignore` invariant and leaves the files citable.
+(2→) `validate_commits` / `validate_audit_runs` — **cull**, per census: quarantine is not terminal,
+as the `validate_db.py` archiving of 2026-08-15 already established. (8→) §1.1 vs §9.2 — **keep
+`validate_items`, add the FK gate anyway**; the gate covers referential integrity, V1/V4 cover
+constraints the DDL does not express. They are not substitutes.
+
+**Adds what no prior pass covered:** the compliance regime (§15.4) and the 87 attestations, which
+every earlier cull document listed as must-not-cut without measuring what they attest to.
+
+**Concedes what §0.3 already said, and it still governs:** *"This program removes roughly 101,000
+lines of attention cost. It adds zero rows to `evidence_sources`."* Nothing in §15 changes that.
+The route exists so that the apparatus stops growing, not because shrinking it produces research.
+
+### 15.6 Sequence
+
+1. **Phase 0 of this plan** — 8 record corrections, no owner gate, ~40 lines. Planned twice
+   (2026-08-16 Wave 0, 2026-08-17 Wave 0) and skipped twice; still undone. Add `check-registry.yaml:174`,
+   whose unquoted flow-mapping commas have been producing junk keys since R-12 was filed on 2026-08-11.
+2. **The first research batch** — unchanged, per the restart plan and `DR-2026-08-19` §3. It is not
+   downstream of any of this.
+3. **§15.2 and §15.3**, which need only that the batch has established which checks have subjects.
+4. **§15.4**, owner-gated throughout.
+5. **Phase 5**, still blocked on D1 and still sequenced behind the batch.
+
+**Nothing in §15 is a prerequisite for research.** If only one item on this page is ever executed,
+it should be item 2.
