@@ -639,6 +639,39 @@ def selftest():
     cx.execute("INSERT INTO term_aliases (term_id,alias,language,alias_type,notes,created_at,"
                "created_by_session,updated_at,updated_by_session) "
                "VALUES ('TERM-001','x','id','TRANSLATION','','t',?,'t',?)", (T, T))
+    # --- R9, R12, R15: implemented since inception, never once OBSERVED to fire -------------
+    # (DR-2026-08-19 §12.0, F9.) Three of fifteen rules were asserted by nobody: the selftest
+    # certified twelve and the corpus exercised twelve, so detection for these three could have
+    # rotted to a no-op and every run would still have printed PASS. That is this repository's
+    # signature failure -- a green gate that examined nothing -- reproduced inside the very
+    # script written to prevent it. Each seed below is shaped to fire ONE rule and to leave the
+    # others' arithmetic untouched.
+    #
+    # R9: two rows sharing a DOI, one from a PRIOR session, so the rule's batch-scoped subquery
+    # finds this batch's row and the corpus-wide count reaches 2. Tier 6 keeps them out of R13
+    # (tier 1..3 only); article_number keeps them out of R3 (tier >= 4 needs a clause cite);
+    # verification_status left NULL keeps them out of R10 (VERIFIED only).
+    cx.execute("INSERT INTO evidence_sources (ref_id,tier,evidence_type,doi,article_number,"
+               "created_by_session) VALUES ('REF-ST3',6,'code','10.9999/dup','§5.2',?)", (T,))
+    cx.execute("INSERT INTO evidence_sources (ref_id,tier,evidence_type,doi,article_number,"
+               "created_by_session) VALUES ('REF-ST4',6,'code','10.9999/dup','§5.2',"
+               "'PRIOR-SESSION')")
+    # R12: an economic finding left in prose with economics_entries empty. findings_note is the
+    # correct channel (R6 forbids using deferred_reason for it), and results_found > 0 keeps it
+    # out of R14's zero-yield check. exec_id 4 preserves the exec_id-2 gap that R8 detects.
+    cx.execute("INSERT INTO search_executions (exec_id,slug,language,query_text,engine,"
+               "depth_method,mining_direction,results_found,results_screened,results_admitted,"
+               "findings_note,backfill,session,executed_at) VALUES (4,'s','en','q','web',"
+               "'scoping','none',50,50,0,'lifetime cost of retrofit vs new build',0,?,'t')", (T,))
+    # R15: a candidate marked ADMITTED whose description was never re-checked against the source.
+    cx.execute("INSERT INTO search_candidates (candidate_id,found_under_slug,disposition,title,"
+               "session,created_at) VALUES (1,'s','ADMITTED','a staged hypothesis',?,'t')", (T,))
+    #
+    # R7 INTERACTION, stated rather than discovered: the R15 candidate raises `cand` to 1, and R7
+    # fires only while cand < max(1, screened // 25). The R12 fixture takes total screened from 5
+    # to 55, so expected becomes 2 and 1 < 2 -- R7 still fires. Lower that fixture below 50 and
+    # expected falls to 1, R7 goes silent, and this selftest fails on the missing rule. That is
+    # the correct outcome: the arithmetic is load-bearing and must not be edited casually.
     cx.commit(); cx.close()
     # NOTE: inserts above are deliberately NOT wrapped in try/except. If the live schema changes
     # such that this corpus can no longer be built, the selftest must CRASH LOUDLY rather than
@@ -666,7 +699,7 @@ def selftest():
     # R2 fix in the same commit. If a rule here stops firing, that is either
     # detection rot or a corpus change; both need a human, so both fail.
     expected = {"R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8",
-                "R10", "R11", "R13", "R14"}
+                "R9", "R10", "R11", "R12", "R13", "R14", "R15"}
     fired = {c for c, n in caught.items() if n}
     missed = expected - fired
     print()

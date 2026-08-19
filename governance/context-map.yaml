@@ -102,7 +102,7 @@ directories:
     authority: canonical
     hidden_from_ripgrep: false
 pointers:
-  sessions_latest: session_2026-08-16-ladder-and-vocabulary-sweeps.md
+  sessions_latest: session_2026-08-19-ratification-and-write-path-fixes.md
   sessions_latest_resolves: true
   sessions_latest_research: session_2026-07-26-energy-conservation-rest-points-seating-b3.md
   sessions_latest_research_resolves: true
@@ -482,6 +482,7 @@ database:
   - population_axis_map
   - populations
   - search_admissions
+  - search_candidates
   - search_executions
   - slugs
   - source_slug_links
@@ -509,15 +510,17 @@ database:
   - probe_population_links
   - reasoning_doc_citations
   - room_items
-  - search_candidates
   - search_coverage
   - search_languages
   - situations
   - spec_value_probes
 writers:
-  _note: direct_python writers write the canonical DB outside the migration path, which CLAUDE.md §0 rule
-    4 forbids; they are listed so the divergence between the rule and the practice is visible rather than
-    asserted.
+  _note: 'direct_python lists every .py under scripts/ or tools/ containing an INSERT/UPDATE/DELETE naming
+    the table. Where such a script writes the CANONICAL DB it is outside the migration path, which CLAUDE.md
+    §0 rule 4 forbids, and it is listed so the divergence between rule and practice is visible rather
+    than asserted. READ THE SCRIPT BEFORE CONCLUDING THAT: the detection is textual, so a script whose
+    only INSERTs build a throwaway selftest fixture, or which emits SQL as text while opening every connection
+    mode=ro, is listed here too and violates nothing. Membership is a prompt to check, not a finding.'
   direct_python:
     scripts/assess/assess_cell.py:
     - convergence_assessment
@@ -531,12 +534,15 @@ writers:
     scripts/audit/jurisdictional_divergence.py:
     - jurisdictional_values
     - specifications
+    scripts/audit/meta_work_freeze.py:
+    - evidence_sources
     scripts/audit/migration_reproducibility.py:
     - items
     scripts/audit/register_integrity_check.py:
     - specifications
     scripts/audit/research_batch_dod.py:
     - evidence_sources
+    - search_candidates
     - search_executions
     - term_aliases
     scripts/audit_consolidator.py:
@@ -572,6 +578,9 @@ writers:
     - decisions
     scripts/migrate_db.py:
     - data_migrations
+    scripts/research/emit_batch_sql.py:
+    - evidence_sources
+    - source_slug_links
     scripts/resolve_dois.py:
     - evidence_source_authors
     - evidence_sources
@@ -1044,6 +1053,13 @@ checks:
     - render
     min_items: 1
     cmd: python3 tools/evidentiary_audit.py --check
+  - id: meta_work_freeze
+    level: blocking
+    battery: governance
+    kinds:
+    - always
+    min_items: null
+    cmd: python3 scripts/audit/meta_work_freeze.py
   - id: migration_reproducibility
     level: blocking
     battery: data

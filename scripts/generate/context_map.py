@@ -293,9 +293,15 @@ def build():
         },
         "writers": {
             "_note": (
-                "direct_python writers write the canonical DB outside the migration path, "
-                "which CLAUDE.md §0 rule 4 forbids; they are listed so the divergence "
-                "between the rule and the practice is visible rather than asserted."
+                "direct_python lists every .py under scripts/ or tools/ containing an "
+                "INSERT/UPDATE/DELETE naming the table. Where such a script writes the "
+                "CANONICAL DB it is outside the migration path, which CLAUDE.md §0 rule 4 "
+                "forbids, and it is listed so the divergence between rule and practice is "
+                "visible rather than asserted. READ THE SCRIPT BEFORE CONCLUDING THAT: the "
+                "detection is textual, so a script whose only INSERTs build a throwaway "
+                "selftest fixture, or which emits SQL as text while opening every connection "
+                "mode=ro, is listed here too and violates nothing. Membership is a prompt to "
+                "check, not a finding."
             ),
             "direct_python": py_writers,
             "by_migration": sql_writers,

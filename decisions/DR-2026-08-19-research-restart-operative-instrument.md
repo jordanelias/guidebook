@@ -70,7 +70,11 @@ Everything else is superseded.
 
 **Category:** D-OP, with D-DOCT consequences · **Delegation:** DG-NON — work-product
 inclusion/exclusion and trajectory are owner-only
-**Status:** **PROPOSED** — this document proposes; the owner decides. Nothing here is executed.
+**Status:** **RATIFIED 2026-08-19** by the owner (@jordanelias), as OD-1 of §9 — freeze
+supersession, amnesty, items-as-leads, the §3 order, the §4 acceptance criterion and the
+mechanical check, adopted together. §2.5 (a)–(d) are signed below. The remaining owner
+decisions OD-2 through OD-12 are **still open**; nothing gated behind them is executed.
+(This line read PROPOSED until ratification.)
 **Relates to:** extends `DR-2026-08-06-clean-room-evidence-reset.md` §4.1 to the `items` table;
 records, for the first time in a Decision Record, the substance of owner rulings R1–R6 of
 2026-08-18, which currently exist only as prose in `workplan/2026-08-18-research-frame-proposal.md`.
@@ -285,11 +289,18 @@ extends that: **no schema phase is a prerequisite either.** Every input the firs
 live today — `slugs` 106, `term_aliases` 2,382, `axes`/`access_needs` and their 232 mapping rows,
 `jurisdictional_values` 109. Every table it writes exists and is empty.
 
-1. Owner adopts or rejects this DR. *(Owner act. ~1 hour with R5/R6/O1.)*
-2. Fix the write path, the read path and the two transaction defects — F3–F6 of the adversarial
-   critique. *(Agent. Bounded; no schema change.)*
-3. Seed the three missing DoD selftest cases (R9, R12, R15). *(Agent.)*
+1. ~~Owner adopts or rejects this DR.~~ **DONE 2026-08-19 — RATIFIED (OD-1).**
+2. ~~Fix the write path, the read path and the two transaction defects — F3–F6.~~ **DONE
+   2026-08-19.** `db.py connect()` no longer sets `journal_mode`, and 16 pure-read call sites
+   pass `readonly=True` (F4); `migrate_db.py` applies body, FK verdict and ledger row in one
+   transaction with the pragmas hoisted (F5/F6); `emit_data_migration.py` no longer wraps bodies;
+   `scripts/research/emit_batch_sql.py` is the capture path (F3). Proved by
+   `migrate_db.py --selftest` (14 cases) and `emit_batch_sql.py --selftest` (9 cases), and by a
+   rebuild that reproduces every table count identically.
+3. ~~Seed the three missing DoD selftest cases (R9, R12, R15).~~ **DONE 2026-08-19** —
+   `research_batch_dod.py --selftest` now asserts all fifteen rules and prints 15/15.
 4. **Run the first research batch** — restart plan §§2–3, unchanged, under the §1.4 quarantine.
+   **← THIS IS THE NEXT ACT.** Nothing above it remains.
 5. Render the determination and read it.
 6. Only then: re-key or retire `jurisdictional_values`; re-scope handoff step 8 with its full
    dependency cascade; re-arm the retired `min_items` guards.
@@ -355,7 +366,7 @@ pathology this DR §2.1 names in the recheck counter: *it can never fire, and ca
 owed.* Amending it produces the same instrument wearing the old name; two documents where one
 suffices is the disease.
 
-Four clauses, to be signed together:
+Four clauses, **signed together by the owner on 2026-08-19** (OD-1):
 
 - **(a) Discharge.** The 2026-07-14 freeze is discharged as unsatisfiable, its exit condition and
   metric having been destroyed by ratified `DR-2026-08-06`.
@@ -370,6 +381,11 @@ Four clauses, to be signed together:
 - **(d) Non-repeal.** `DR-2026-07-21` consequence 2 remains in force and is **implemented by** this
   mechanism, not replaced. A future session must not read this succession as loosening ratified
   doctrine.
+
+**Signed 2026-08-19.** The blocking check clause (c) requires is `meta_work_freeze`
+(`scripts/audit/meta_work_freeze.py`, registered blocking, kinds `[always]`), landed in the
+same commit as this ratification. The 2026-07-14 freeze is discharged from this date; the
+five-week breach is amnestied as to artifact validity and is not re-litigated per artifact.
 
 ## §6 The identifier stash — every DOI this project has ever held
 
@@ -506,7 +522,7 @@ A fresh session reads exactly four. Everything else is reached by citation.
 
 | # | Question | Recommended | Unblocks |
 |---|---|---|---|
-| **OD-1** | Ratify this DR as amended — freeze supersession + amnesty + items-as-leads + §3 order + §4 criterion + the mechanical check | **RATIFY.** Every clause extends a ruling already made; the only novelty is enforcement and a reachable exit | Everything |
+| **OD-1** | Ratify this DR as amended — freeze supersession + amnesty + items-as-leads + §3 order + §4 criterion + the mechanical check | **RATIFIED 2026-08-19.** Every clause extends a ruling already made; the only novelty is enforcement and a reachable exit | Everything — §3 steps 2 and 3 executed; step 4 (the batch) is now the next act |
 | **OD-2** | R5 bucket fill order (D-OP) + R6 §2.3 amendment (D-DOCT, needs its own DR; keep ruling and disclosure clause separate) | **Ratify as drafted**, noting the bucket 4/5 split is authored, not the owner's words | Scale-out past batch 1 |
 | **OD-3** | O1 — ICF expansion by chapter-level enumeration, interim floor 51 | **Chapter-level.** The axes' 46 omits the entire d5 self-care chapter | The demand lens |
 | **OD-4** | O2 — slug queue by readiness (aliases exist, leads exist) vs importance | **Readiness.** Importance is circular before searching | Queue for batch 2+ |
