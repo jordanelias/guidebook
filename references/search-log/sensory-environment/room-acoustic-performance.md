@@ -1,7 +1,7 @@
 ```yaml
 slug: room-acoustic-performance
 query: "room acoustic performance RT60 reverberation disability hearing impairment autism dementia"
-last_searched: 2026-03-19 00:00
+last_searched: 2026-08-19 00:00
 last_bpc_update: 2026-03-29 00:00
 early_close_triggered: false
 
@@ -98,9 +98,10 @@ jurisdiction_summary: >
 
 # Search log — room-acoustic-performance — batch 01 (2026-08-19)
 
-**Rendered from the database**, not hand-written: every row below is generated from
+**Generated from the database on 2026-08-19**, not hand-written: every row below was produced from
 `search_executions`, `evidence_sources`, `evidence_population_match` and `search_candidates`
 for session `session_2026-08-19-research-batch-01-room-acoustic-performance`.
+**No renderer is committed**, so this is a point-in-time generation, not an auto-regenerating view: it can drift from the database and once already did (see §2). Verify against the database, not against this file. A renderer was deliberately NOT added — the same session is under a mandate to minimise code, and one more script to keep one document honest is a bad trade against simply keeping the document short enough to check.
 
 This document exists because DR-2026-08-19 §4 requires *one answered question, published* —
 "rendered and readable as output, not as a row count and not as a green check" — and because
@@ -148,7 +149,9 @@ literature sizes.
 | `REF-00968` | Wright J et al. 2026, *Cogent Social Sciences* | T1 | co1 |
 
 **Population grading (R13) — population-of-STUDY against population-SERVED.**
-Only three cells are EXACT. This table is the honest measure of what this batch can and cannot say.
+Only **2** of 12 cells are EXACT. This table is the honest measure of what this batch can and cannot say.
+
+*(This sentence said "three" until 2026-08-19, when a read-only audit caught it against the database. It was made stale by this session's own blind re-grade, which downgraded one EXACT to PARTIAL — a prose count contradicting the rows, inside the artifact whose entire purpose was database fidelity. Recorded rather than silently corrected, because it is the repository's signature failure reproducing itself in the fix for it.)*
 
 | grade | n | meaning |
 |---|---|---|

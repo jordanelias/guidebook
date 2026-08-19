@@ -54,8 +54,23 @@ import os
 import sqlite3
 import subprocess
 import sys
+import unicodedata
 from datetime import datetime, timezone
 from pathlib import Path
+
+
+def _norm(s):
+    """Fold accents and case before comparing surnames.
+
+    A stored "Rosas-Perez" against an actual "Rosas-Pérez" is the SAME PERSON
+    differently encoded; the failure this module detects is a DIFFERENT person.
+    A plain .lower() compare called that a mismatch, which meant this verifier
+    and scripts/audit/author_fidelity_audit.py — two checks of one property,
+    shipped in the same commit — returned opposite answers on REF-00965. Two
+    verifiers with divergent match rules is a defect, not depth.
+    """
+    s = unicodedata.normalize("NFKD", (s or "").strip().lower())
+    return "".join(ch for ch in s if not unicodedata.combining(ch))
 
 LOG_ROOT = Path(os.environ.get("GUIDEBOOK_RETRIEVAL_LOG", "retrieval-log"))
 DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db"))
@@ -141,7 +156,7 @@ def verify_authors(session):
         stored = [r[0] for r in cx.execute(
             "SELECT last_name FROM evidence_source_authors WHERE ref_id=? ORDER BY position",
             (ref_id,))]
-        if [x.strip().lower() for x in real] != [x.strip().lower() for x in stored]:
+        if [_norm(x) for x in real] != [_norm(x) for x in stored]:
             bad.append((ref_id, real, stored))
 
     print("=" * 74)
