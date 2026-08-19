@@ -63,7 +63,19 @@ def resolve_base(base):
     missing subject is how this repository has repeatedly shipped a green check
     that examined nothing (CLAUDE.md §10).
     """
-    candidates = [base] if base else ["origin/main", "main", "HEAD~1"]
+    if base:
+        candidates = [base]
+    else:
+        candidates = []
+        # On a pull_request event CI sets GITHUB_BASE_REF to the target branch.
+        # Prefer it: it names the branch this changeset is actually proposed
+        # against, rather than assuming main.
+        ci_base = os.environ.get("GITHUB_BASE_REF")
+        if ci_base:
+            candidates += [f"origin/{ci_base}", ci_base]
+        # HEAD~1 last, and it is the right answer on a PR merge ref, where HEAD
+        # is the merge of the PR head into its base and HEAD~1 IS the base tip.
+        candidates += ["origin/main", "main", "HEAD~1"]
     for candidate in candidates + ["origin/main", "main"]:
         if not candidate:
             continue
@@ -139,14 +151,19 @@ def audit(base, head):
         print("  In CI this usually means the clone is too shallow: fetch more depth.")
         return 1
 
-    rc, out, err = git("diff", "--diff-filter=A", "--name-only", resolved, head, "--", "workplan/")
+    # Diff from the MERGE BASE, not the base tip — the same thing
+    # run_checks.changed_paths() does. Otherwise anything that landed on the base
+    # branch after this branch diverged reads as something this branch added.
+    rc, mb, _ = git("merge-base", resolved, head)
+    diff_from = mb.strip() if rc == 0 and mb.strip() else resolved
+    rc, out, err = git("diff", "--diff-filter=A", "--name-only", diff_from, head, "--", "workplan/")
     if rc != 0:
         print(f"  ERROR: git diff failed: {err.strip()}")
         print("  EXAMINED: 0")
         return 1
     added_workplan = [p for p in out.splitlines() if p.strip()] + worktree_added_workplan()
 
-    base_ids = registry_ids(resolved)
+    base_ids = registry_ids(diff_from)
     head_ids = registry_ids(None)
     if head_ids is None:
         print(f"  ERROR: {REGISTRY} is unreadable at the working tree.")
