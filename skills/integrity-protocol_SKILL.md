@@ -28,7 +28,7 @@ A running docket processed as work happens — the failure mode of end-of-sessio
 3. **Live triggers beyond the scanner** (author-processed, docket-logged):
    - Favouring a conclusion → log the strictest test applied *to the favoured conclusion specifically* (scrutiny allocation inverts naturally; invert it back — the MEXT-root lesson).
    - Quoting any figure from the corpus → grep for retraction/UNVERIFIED markers on that figure before it travels (the De Hogeweyk lesson: the retraction lived elsewhere in the corpus and the distiller picked the unretracted rendering).
-   - Touching decisions/ or synthesis-path files → attestation authored in the same commit; `[DOCTRINE: <sha>]` token on every commit that will be PR HEAD.
+   - Touching decisions/ or synthesis-path files → attestation authored in the same commit. (The `[DOCTRINE: <sha>]` token was ABOLISHED 2026-08-19 by OD-10 item 4; do not add it.)
 4. **No silent fixes:** every mid-session correction of one's own earlier claim lands in a changelog/revision-history entry as it happens. Corrections are integrity capital only if visible.
 
 ## Mode 3 — Post-processing integrity check (before any ratification request)

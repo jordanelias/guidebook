@@ -382,9 +382,13 @@ Four clauses, **signed together by the owner on 2026-08-19** (OD-1):
   mechanism, not replaced. A future session must not read this succession as loosening ratified
   doctrine.
 
-**Signed 2026-08-19.** The blocking check clause (c) requires is `meta_work_freeze`
-(`scripts/audit/meta_work_freeze.py`, registered blocking, kinds `[always]`), landed in the
-same commit as this ratification. The 2026-07-14 freeze is discharged from this date; the
+**Signed 2026-08-19.** Clause (c)'s blocking check was `meta_work_freeze`
+(`scripts/audit/meta_work_freeze.py`, blocking, kinds `[always]`), landed in the same commit as
+this ratification. **CORRECTION, same day:** that check has since been RETIRED and deleted. It
+discharged itself exactly as designed — its exit condition `evidence_sources >= 1` was met when
+the first batch landed, after which it passed unconditionally and forever while still executing
+on every changeset. Clause (c) is therefore SATISFIED AND SPENT, not repealed: the freeze it
+enforced ended by its own terms. §11 property 3 below is corrected to match. The 2026-07-14 freeze is discharged from this date; the
 five-week breach is amnestied as to artifact validity and is not re-litigated per artifact.
 
 ## §6 The identifier stash — every DOI this project has ever held
@@ -531,13 +535,21 @@ A fresh session reads exactly four. Everything else is reached by citation.
 | **OD-7** | D2 retire the decisions YAML · D5 schemas mirror SQLite · D7 add the blocking `PRAGMA foreign_key_check` gate | **Yes × 3.** D7 especially — nothing blocking observes referential integrity | Kills a dual store; makes later FK work safe |
 | **OD-8** | D1 workplan keep-set (census answer: 1 active + 9 attestation-pinned; 77 move) | **Approve now, execute after the batch** | Phase 5 |
 | **OD-9** | Required-check set on `main` + D3 (merge the two reproducibility gates, deep as blocking) | **Approve in principle, wire AFTER the batch** — the gate needs non-zero subjects first | The repo's entire real access control |
-| **OD-10** | The close-out DR of §10 | **Sign** | Removes every zombie obligation |
+| **OD-10** | The close-out DR of §10 | **SIGNED 2026-08-19.** Item 4 executed the same day; items 1-3 and 5-9 are recorded closed; item 10 proceeds under the owner's ruling that `_archived/` may grow | Removes every zombie obligation |
 | **OD-11** | G6/I-45 — the Universal/Population doctrine tension, invisible since 2026-07-13 | **Explicit deferral**, recorded — never silently dropped again | Prevents a seventh invisible week |
 | **OD-12** | Step 8 / `jurisdictional_values` disposition (§1.5) | **Defer, recorded.** Items-archival SUSPENDED pending post-batch re-pricing against F1 | Makes the schema track safe to reopen |
 
 OD-1 through OD-7 are yes/no against drafted text. Under an hour.
 
 ## §10 Abandonment — one close-out DR
+
+> **SIGNED by the owner 2026-08-19 (OD-10).** Item 4 is EXECUTED: the `[DOCTRINE: <sha>]` commit
+> token, its CI step, `scripts/ci_helpers/check_doctrine_token.py`, the frozen recheck counter
+> `data/doctrine_recheck/working_session_counter.yaml` and the "any doctrinal revision" recheck
+> trigger are removed. The `doctrine_recheck --cross-ref` CHECK is deliberately **retained** — it
+> validates doctrinal_basis cross-references, which is a different thing from the commit token and
+> is not named by item 4. Item 10 proceeds under the owner's ruling that `_archived/` may grow.
+> This is the first use of the supersession mechanism in 163 decisions.
 
 Killed together, each with a reopen condition. This also breaks the **0-of-163-ever-superseded**
 pattern by *using* the supersession mechanism the protocol has never once employed.
@@ -566,9 +578,12 @@ This is the last plan **iff** all five hold. Each is checkable.
    structurally absent.
 2. **Externalised acceptance.** §4's criterion cannot be met by any script, check, register, DR, or
    plan. Apparatus stops being a locally valid move the moment this is the metric.
-3. **Mechanical successor-prohibition.** The §2.2 check fails any commit adding a `workplan/` file or
-   a registry entry while `evidence_sources` is empty. A successor plan is not discouraged — it is
-   **build-rejected**.
+3. **Mechanical successor-prohibition.** ~~The §2.2 check fails any commit adding a `workplan/`
+   file or a registry entry while `evidence_sources` is empty.~~ **SPENT 2026-08-19.** It held
+   until the first batch landed and then self-expired at `evidence_sources >= 1`, which is what it
+   was built to do; the check was retired the same day. This property was true while it mattered
+   and is now historical. **A successor plan is no longer build-rejected** — nothing mechanical
+   prevents one, and a reader should not assume otherwise.
 4. **A monotone document set.** Via §10 this instrument only *closes*. Every outstanding obligation
    is exactly one of: done, in the §9 batch, or killed. It opens zero new DEFERRED/PENDING markers —
    inverting the 318 → 389 → 418 curve for the first time.

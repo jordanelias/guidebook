@@ -661,3 +661,108 @@ The route exists so that the apparatus stops growing, not because shrinking it p
 
 **Nothing in §15 is a prerequisite for research.** If only one item on this page is ever executed,
 it should be item 2.
+
+---
+
+## §16 — Item 10 execution record and the remedy log (2026-08-19)
+
+Appended here rather than filed as a new document: the freeze that forbade new
+workplan files has lifted, but the reason for it has not, and this is the plan
+this work belongs to.
+
+### What Item 10 actually was, versus what the census said
+
+`DR-2026-08-19` §10 item 10 said: *"The workplan backlog beyond the D1 keep-set
+(77 files) — ARCHIVED post-batch, never stubbed where attestation-pinned."*
+The census behind it said **1 active + 9 attestation-pinned, 77 move.**
+
+Measured against the live tree before touching anything:
+
+| | census | actual |
+|---|---|---|
+| top-level `workplan/*.md` | — | **92** |
+| attestation-pinned | 9 | **13** |
+| referenced from a LIVE surface (governance, decisions, skills, `scripts/`) | — | **47 existing** |
+| keep (pinned ∪ live-referenced) | 10 | **54** |
+| safe to move | 77 | **38** |
+
+**Moving 77 would have created roughly 39 dangling references from live
+governance, decision records, skills and executable code** — including from
+`validate_pydantic_schemas.py`, `readonly_db_open_audit.py`,
+`research_batch_dod.py`, `db.py`, `contamination_sampler.py`,
+`validate_reasoning.py` and `claims_docket.py`. The census counted files; it did
+not count edges.
+
+### What was executed
+
+38 files moved to `_archived/workplan/` under the owner's 2026-08-19 ruling that
+`_archived/` may grow, with a **caller sweep of 35 references across 12 files**
+(CLAUDE.md §0.4). Verified afterwards: **zero new dangling references.**
+`workplan/*.md` 92 → 54.
+
+Note the strict-test figure, because it is the more honest one: only **9** files
+were movable without touching anything else. The other 29 were reachable only
+from other workplan files that stay, and were moved by *sweeping* those
+references rather than by declaring them unreferenced.
+
+### REMEDY LOG — found, not fixed
+
+1. **68 dangling references to workplan files that do not exist**, all
+   pre-existing; 18 are from live surfaces (`governance/migration-survival.md`,
+   `governance/workplan-adoption.md`, `governance/decision-protocol.md`,
+   `scripts/audit/claims_docket.py`, `scripts/contamination_sampler.py`). At
+   least 11 name files that **never existed in git at all**. Remedy: sweep each
+   live surface and either restore the target from history or strike the
+   reference. Not done here — it is a separate, larger correction than Item 10.
+2. **`workplan/_superseded/README.md` is referenced and absent.** Remedy: create
+   it or strike the reference in `2026-08-05-archive-fork-execution.md`.
+3. **The remaining 54 cannot be archived until their referents are re-pointed.**
+   Remedy: for each, decide whether the *referencing* document is itself
+   superseded; many references come from DRs that the operative instrument's §B
+   already lists as HISTORICAL, so the reference dies with the referrer.
+4. **The census is not a safe input for a second pass.** It undercounted pinned
+   files by 4 and did not model references at all. Any future cull phase should
+   compute the edge set at execution time, as this one did.
+5. **`author_fidelity` was registered with the wrong session-id spelling.**
+   `run_checks.py` expands `@SESSION@` from `sessions/LATEST`, which carries the
+   `.md` suffix, while `retrieval_log.py` keyed its log directory on the bare
+   stem — CLAUDE.md §7's standing trap, walked into on the check's first day.
+   Fixed by normalising in `_session_stem()`; recorded because the trap caught a
+   session that had just finished writing about the trap.
+
+### §16.1 — adversarial review of the deletion pass (2026-08-19)
+
+Twelve findings against the OD-10 execution. Ten fixed in the same pass; two logged.
+
+| # | Finding | Severity | Disposition |
+|---|---|---|---|
+| 1 | `author_fidelity` red on day one — `@SESSION@` expands with `.md`, the log dir uses the bare stem | BREAKS-NOW | **FIXED** (`_session_stem`) |
+| 2 | Same check read `LATEST`, not `LATEST-RESEARCH`; no `requires_session`; `cost: slow` on a 0.0s offline check | BREAKS-LATER | **FIXED** |
+| 3 | Its registry note stated an unsatisfiable promotion condition — the network rationale described the *deleted* variant | BREAKS-LATER | **FIXED** |
+| 4 | Ratified §2.5 signature clause and §11 property 3 still named the deleted `meta_work_freeze` | BREAKS-LATER (doctrinal) | **FIXED** — recorded as satisfied-and-spent, and property 3 marked no longer true |
+| 5 | Deleting the counter broke a cadence OD-10 KEPT; skill said "if absent, treat 0", and `0 % 25 == 0` → spurious `recheck_due: PERIODIC` every session | BREAKS-LATER | **FIXED** — counter retired in the skill per DR §2.3 |
+| 6 | `doctrine-recheck.md` contradicted itself: DR §2.3 named §1.3, the branch struck §8.1 | BREAKS-LATER | **FIXED** at §1.3 and the "three triggers" count |
+| 7 | Live PI still mandated the token that `integrity-protocol_SKILL` now forbids | BREAKS-LATER | **FIXED** — superseded in place + a superseding RULE in the operative ledger |
+| 8 | `pipeline_contract_audit` resolves enforcers at FILE granularity, so it could not see `attestation-doctrine-binding` go vacuous | BREAKS-LATER | **PARTIALLY FIXED** — basis dropped; the granularity defect remains (remedy below) |
+| 9 | Newly dead code left in the PR arguing against dead code | COSMETIC | **FIXED** — 5 functions removed, AST-verified zero uncalled |
+| 10 | Stale CI comments; both `fetch-depth: 0` justifications named deleted checks | COSMETIC | **FIXED** — depths RE-DERIVED from which scripts still shell out to git, not from the comments |
+| 11 | Rewritten CLAUDE.md hardcoded counts in the same file that forbids hardcoded counts | COSMETIC | **FIXED** — replaced with derivation commands |
+| 12 | `retrieval-log/` is a new frozen-record store on the ripgrep search surface | BREAKS-LATER | **LOGGED** — see below |
+
+**REMEDIES LOGGED, NOT FIXED**
+
+6. **`retrieval-log/` should be added to `.ignore` and to `retired-vocabulary.yaml` `exempt_paths`**,
+   on the same reasoning as `references/search-log/`: it is append-only, immutable, never read
+   except when auditing fidelity, and it carries arbitrary bibliographic text that
+   `retired_vocabulary_audit` will eventually scan. `.ignore` edits are owner-gated. Note the
+   CLAUDE.md §7 cost caveat: anything hidden there stops answering greps, which is how the
+   project's own search logs became invisible.
+7. **`pipeline_contract_audit.classify_check()` resolves enforcers at FILE granularity.** It
+   reports a criterion VERIFIABLE whenever the *file* exists and is registered, so a check gutted
+   to a bare `return` still counts. That is failure mode §2(a) inside the audit built to prevent
+   it. Remedy: resolve the `--check <group>` argument, not just the path.
+8. **OD-10 item 4 was only ~60% executed on first pass.** The token, CI step, script and constant
+   went; the mandatory `next_action` and the counter retirement did not, and DR §2.3's named
+   target (§1.3) was missed for a different section. All now done — but the lesson is that a
+   close-out with four named sub-targets needs each one checked off individually, not a
+   general sweep.

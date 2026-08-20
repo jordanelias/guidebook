@@ -14,7 +14,7 @@ last six push runs, while all PR runs were green.
 
 Two consequences made that worse than cosmetic:
 
-  * The `Doctrine-SHA token` step runs after this one in the same job. A failing
+  * (Historical: a `Doctrine-SHA token` step used to run after this one in the same job. It was abolished 2026-08-19, OD-10 item 4.) A failing
     step skips the rest, so the blocking doctrine gate was never reached on the
     pushes it exists to police.
   * A permanently-red `main` is how the F1 class of bug survives: once red is

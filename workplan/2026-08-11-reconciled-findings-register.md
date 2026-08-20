@@ -29,7 +29,7 @@ evidence stay where they are, and this register cites into them.
 | `workplan/2026-08-12-pipeline-walk-trial-log.md` | 3,875 | the four write-path breaks, the trial's IO log |
 | `workplan/2026-08-12-commit-91-adversarial-review.md` | 974 | F1–F13, M1–M5, and its own corrections |
 | `references/tooling-register.md` | 627 | F1–F12 (a *different* F-series), §4 red gates, §6 proposals |
-| `workplan/2026-08-11-consolidation-sweep-and-adversarial-pass.md` | 499 | §1.1–§1.9, X1–X4 |
+| `_archived/workplan/2026-08-11-consolidation-sweep-and-adversarial-pass.md` | 499 | §1.1–§1.9, X1–X4 |
 | `workplan/2026-08-09-locator-hierarchy-and-enforcement-probes.md` | 415 | C1–C17, D1–D7 (a *third* C-series) |
 | `workplan/2026-08-12-pipeline-phase-state-map.md` | 360 | per-stage state, no independent findings |
 | **Total** | **13,525** | |

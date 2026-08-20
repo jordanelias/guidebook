@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-08-19-research-batch-01-room-acoustic-performance",
+  "artifact": "sessions/session_2026-08-19-research-batch-01-room-acoustic-performance.md",
+  "doctrine_sha": "0f2f525",
+  "rules_in_scope": [
+    "multilingual-research",
+    "citation-miner",
+    "integrity-protocol",
+    "structure-auditor",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "multilingual-research": {
+      "status": "FIRED",
+      "evidence_path": "sessions/session_2026-08-19-research-batch-01-room-acoustic-performance.md",
+      "reason": "Co-1 was run FIRST and genuinely, not waived: 4 co1-targeted searches and 3 co1 sources admitted before any tier-1 or tier-2 admission was made. Nine queries were logged verbatim with results_screened=0 before any screening judgment was recorded. One non-English search (DE, DIN 18041) was run and produced a located but unquantified lead; no value was taken from it because R3 requires a clause and I never held one."
+    },
+    "citation-miner": {
+      "status": "FIRED",
+      "evidence_path": "scripts/migrations/data_20260819134709_2026-08-19-research-batch-01-room-acoustic-performance.sql",
+      "reason": "Five backward chases run against Crossref, one per confirmed tier-1..2 source, recovering 145 plus 190 DOI-bearing references. R2's floor is admissions//4 and the blocking citation_mining_session gate demands a row per confirmed source; the batch initially met the first and failed the second, and the gap was closed with real chases rather than deferred_reason rows."
+    },
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "scripts/tests/test_db_integrity.py",
+      "reason": "The batch regressed test_db_integrity from 72/72 to 67/72 and that is disclosed rather than absorbed: I1, C03, C08 and G02 failed because add-source cannot write first_author_last, evidence_source_authors, verification_disposition or citation_mining_status. Two compensating migrations restored 72/72, fixing forward without editing an immutable migration. The canonical database was untouched until step 11; its sha256 was verified unchanged after every phase up to that point."
+    },
+    "structure-auditor": {
+      "status": "FIRED",
+      "evidence_path": "scripts/migrations/data_20260819134359_2026-08-19-research-batch-01-room-acoustic-performance.sql",
+      "reason": "All writes went to a session scratch copy under GUIDEBOOK_DB_PATH and reached the canonical database only as committed migrations via emit_data_migration and migrate_db. Rebuild from migration history reproduces every affected table count, proving the migration carries the rows rather than a direct write. Identifiers were minted above the stash high-water mark after discovering the runbook's own example collides with held ids."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/sessions_session_2026-08-19-research-batch-01-room-acoustic-performance.json",
+      "reason": "This attestation. The session record states the divergence from the predecessor reasoning doc as a contest rather than resolving it, and names the three instrument defects found by execution."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "multilingual-research",
+      "reason": "R8 and R14 passed WITHOUT A SUBJECT. No search returned results_found=0 this batch. The SCI query returned 20 rows of which none addressed the targeted intersection, and I recorded it honestly as 20/20/0 rather than encoding it as a zero-yield to give those two rules something to examine. Section 12.2 lists a kept zero-yield as part of minimum-viable scope; I did not manufacture one. A gate that passes on zero subjects is this repository's signature failure and it is better disclosed than dressed."
+    },
+    {
+      "rule": "multilingual-research",
+      "reason": "The jurisdictional_values backfill that section 12.2 anticipated did not happen. DIN 18041 is paywalled and every numeric value reaching me came from secondary commentary, so R3 forbids recording it. The search is logged with [UNVERIFIED-QUANT] and no value crossed."
+    },
+    {
+      "rule": "integrity-protocol",
+      "reason": "I was exposed to three quarantined item values before searching, because DR-2026-08-19 section 1.1 quotes them as examples of the contamination it is establishing. Reading the ratified instrument therefore breaches the blind-first condition the instrument imposes. I kept every such value out of queries, candidates, admitted fields and notes, but the exposure is real and cannot be undone by care alone; it is disclosed so a reader can weight my framing accordingly."
+    },
+    {
+      "rule": "structure-auditor",
+      "reason": "Four of the first five searches were framed on a single axis because I pulled the frame as bare axis codes rather than ICF codes with names, contrary to the declared frame. The owner caught it. The corrected pull opened the AX-SPR seam which produced two of five admissions and the batch's central finding, so the defect materially shaped what was nearly missed."
+    }
+  ],
+  "bias_direction": "I am biased toward finding this batch successful, because I built the write path it runs on and fixed the four defects that were supposed to make it safe; a failure here would have impugned the previous PR as much as this one. That bias is strongest exactly where I am least able to see it — in what I did NOT search. I chose the queries, so the shape of the absence I report is partly the shape of my own framing, and the owner's ICF correction proved that concern is not theoretical: one intervention moved a whole axis from invisible to central. I am also biased toward the divergence finding in section 5, because a batch that merely confirmed the predecessor would have been a duller result, and I should be read as having had an incentive to find the contest I found.",
+  "independent_reviewer_counterclaim": "A reviewer could argue this batch bought its compliance too cheaply. Five admissions and 77 screened is a thin evidentiary base on which to contest a determination the predecessor built from a documented multi-population walk with tier-1 anchors, and the divergence in section 5 rests substantially on ONE 2026 IPA study with six participants and zero citations, plus a 12-participant interview study. Six participants cannot overturn a threshold; at most they reframe the question, and the session record arguably states the reframing more confidently than n=6 and n=12 support. A second objection is that the batch reports absence of room-side tier-1 evidence after nine queries by one agent in one session, which is weak grounds for a claim about a literature — R14 licenses 'genuine absence' only for a well-formed query, and well-formed is my own judgment of my own queries. The strongest version: the honest output of this batch is five admitted sources and a hypothesis about requirement class, and the session record should perhaps have stopped at hypothesis.",
+  "verdict": "DEVIATION-LOGGED"
+}

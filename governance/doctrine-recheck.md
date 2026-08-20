@@ -18,7 +18,8 @@ The document does not duplicate adversarial-use review (A10 / CS9), which examin
 
 ## 1. Recheck triggers (cadence)
 
-Per Amendment 6, three triggers schedule a recheck:
+Per Amendment 6, three triggers scheduled a recheck. **Two remain**: the third (§1.3,
+doctrinal-rule revision) was ABOLISHED 2026-08-19 by OD-10 item 4.
 
 ### 1.1 Periodic — every 25 working sessions
 
@@ -28,7 +29,13 @@ A working session is one that produces or substantively modifies project content
 
 When the project transitions between stages, a pre-transition recheck establishes the doctrinal baseline. The transitioning stage's final session and the recheck session may be the same session (recheck-then-transition); a separate recheck session is preferred when the transitioning stage's final session is dense.
 
-### 1.3 Doctrinal-rule revision
+### 1.3 Doctrinal-rule revision — ~~TRIGGER~~ **ABOLISHED 2026-08-19 (OD-10 item 4)**
+
+> Retained below as the record of what was abolished, not as an instruction. It made governance
+> edits self-breeding: each doctrinal revision owed a recheck whose record was itself a
+> doctrinal-adjacent edit. The `RecheckTrigger.RULE_REVISION` enum value STAYS — the historical
+> record `data/doctrine_recheck/recheck_2026-07-24_population-schema-supersession.yaml` uses it,
+> and removing the value would orphan a real record. New records must not use it.
 
 When a CANONICAL governance document or a project-standards RULE is revised — added, materially edited, superseded, or retired — a targeted recheck runs against the revised rule. The recheck examines: are downstream work-products still consistent with the revised rule? are there governance documents that depended on the prior version? The targeted recheck is narrower in scope than periodic and stage-transition rechecks; it is sized to the revision.
 
@@ -310,7 +317,10 @@ CS1 (cross-stage 1) per `workplan/workplan-co0007-v3.md`: doctrine-recheck caden
 
 - Every 25th working session triggers a periodic recheck (cadence enforced by session-consolidator)
 - Every stage transition triggers a stage-transition recheck (the transitioning phase's close commit references the recheck record)
-- Every doctrinal-rule revision triggers a targeted recheck (tracked at session close)
+- ~~Every doctrinal-rule revision triggers a targeted recheck (tracked at session close)~~
+  **ABOLISHED 2026-08-19 by OD-10 item 4.** This trigger made governance edits self-breeding:
+  each doctrinal revision owed a recheck, whose record was itself a governance edit. The
+  periodic and stage-transition cadences remain; the revision trigger does not.
 
 ### 8.2 Operational integration
 

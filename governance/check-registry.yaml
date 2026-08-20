@@ -726,43 +726,61 @@ checks:
       data/adversarial_use/catalog.yaml broke, not that misuse vectors were
       legitimately retired to none.
 
-  - id: meta_work_freeze
-    cmd: [python3, scripts/audit/meta_work_freeze.py]
-    battery: governance
-    kinds: [always]
-    level: blocking
-    basis: DR-2026-08-19 §2.2 (ratified 2026-08-19)
+  - id: author_fidelity
+    cmd: [python3, scripts/research/retrieval_log.py, --session, '@SESSION@', --verify-authors]
+    battery: research
+    kinds: [data, synthesis]
+    session_pointer: LATEST-RESEARCH
+    requires_session: true
+    level: advisory
+    basis: DR-2026-08-19 §7 adversarial pass, lens L1 (2026-08-19)
     cost: fast
-    no_floor: changeset-scoped — compares ADDED files under workplan/ and ADDED
-      check ids against the base, so 0 means this changeset proposed no new
-      apparatus. It prints the registry id count alongside, so EXAMINED is never
-      0 while the registry is readable; an unresolvable base FAILS rather than
-      passing empty.
+    min_items: 1
     note: >-
-      The freeze of DR-2026-08-19 §2.2, ratified 2026-08-19: while
-      evidence_sources is empty, a changeset may not add a workplan file or a
-      registry entry. Corrections to existing ones are excepted — this compares
-      additions only.
+      Compares STORED author surnames against the Crossref record for every
+      DOI-bearing source. Added because the first research batch after the restart
+      stored FABRICATED author lists on all five of its admissions — 12 of 19
+      evidence_source_authors rows named people who did not write the cited paper —
+      and NOTHING caught it: C03, G02, R9, R10, test_db_integrity 72/72,
+      research_protocol_audit 0 issues and fully green CI all passed it.
 
-      kinds is [always], NOT [governance] as §2.2 drafted it. workplan/** matches
-      no kind in this file, so a commit that only adds a plan classifies to the
-      empty set and a governance-gated check would never run — the check against
-      new plans would have been silent on precisely the commit it exists to
-      refuse. Verified by running run_checks.classify() on a workplan path before
-      wiring it, not inferred. The check is one git diff plus one COUNT(*), which
-      is under the ~2s bar this file sets for gating being worth its own cost.
+      The reason is exact and worth keeping in front of whoever reads this next:
+      every pre-existing check asks whether the author fields are POPULATED. None
+      asked whether they are TRUE. A presence check cannot detect confabulation;
+      only a comparison against the authoritative payload can. The rows were
+      simultaneously stamped verified_by_tool='crossref' — the flag asserted
+      precisely the property that failed, so nothing downstream would ever revisit
+      them.
 
-      It exempts its own id (SELF_EXEMPT). §2.5(c) requires the check to land in
-      the same commit as the ratification it enforces, so counting itself would
-      have made the ratifying PR unmergeable — the CLAUDE.md §7 deadlock trap,
-      built in on day one.
+      Worst instance was doctrinal, not clerical: a Co-1 source — lived experience,
+      co-primary with T1 under CRPD Art 4.3 — had its autistic community co-authors
+      deleted and academics substituted. The Co-1 tier was claimed while the
+      evidence of co-production was erased.
 
-      SELF-EXPIRING. It passes unconditionally once evidence_sources >= 1, so
-      there is no lift ceremony to plan, breach or adjudicate. That is the
-      property the 2026-07-14 freeze lacked: its exit condition was destroyed by
-      DR-2026-08-06, its tripwire fired every week for five weeks, and no session
-      ever checked it. Retire this entry at leisure after the first batch; it
-      cannot hold anything up in the meantime.
+      LEVEL RATIONALE, CORRECTED 2026-08-19. The original text here justified
+      advisory on the grounds that the check "needs network egress to
+      api.crossref.org" — true of the re-fetching variant that was deleted, false of
+      the offline verifier this entry now points at, which reads persisted payloads
+      and needs no network at all. The stated promotion condition ("once a run has
+      demonstrated reachability in CI") was therefore unsatisfiable by irrelevance,
+      and would have left the check advisory forever.
+
+      Real rationale: it is advisory only until it has demonstrated a NON-VACUOUS
+      subject across more than the one session that created the log. Promote to
+      blocking after the second research batch. It fails rather than passes when a
+      source has no logged retrieval, so an unlogged corpus cannot read as clean.
+
+      session_pointer is LATEST-RESEARCH, not the default LATEST: LATEST moves on
+      every session close, so a governance-only session would point this check at a
+      session that never did research and was never supposed to have a log.
+      citation_mining_session is the precedent for the same reason.
+
+      RETIRED the re-fetching variant 2026-08-19. Two verifiers of one property
+      shipped in the same commit and DISAGREED — one folded accents, one did not,
+      so a stored "Rosas-Perez" for the actual "Rosas-Pérez" passed one and failed
+      the other. This entry now points at the offline verifier, which compares
+      against the payload the authoring session actually received: no network, no
+      drift, and it fails rather than passes when a source has no logged retrieval.
 
   - id: decision_capture
     cmd: [python3, scripts/decision_capture.py]
@@ -921,7 +939,7 @@ checks:
     battery: attestation
     kinds: [synthesis, governance]
     level: advisory
-    basis: [cross_stage/adherence-log, cross_stage/attestation-doctrine-binding]
+    basis: cross_stage/adherence-log   # attestation-doctrine-binding dropped 2026-08-19: its enforcer (check_2_doctrine_sha) was retired with the doctrine token, and pipeline_contract_audit resolves enforcers at FILE granularity so it could not see the gate go vacuous
     cost: fast
     no_floor: not-instrumented — this filter bundles checks 2-6 (attestations in
       the HEAD~1..HEAD diff, 0 today) with check 7 (every attestation on disk,

@@ -112,7 +112,6 @@ GRANDFATHERED = {
     "website-preparation.md",
     "website-v0-path-forward-2026-07-12.md",
     "workplan-item-audit-pipeline-co0009.md",
-    "workplan-jurisdiction-sweep.md",
     "workplan-reconciliation-2026-05-08.md",
 }
 

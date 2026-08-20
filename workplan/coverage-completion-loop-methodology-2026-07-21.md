@@ -8,7 +8,7 @@ PR merge). Execution proceeds under the guardrails in §3–§5; no guardrail is
 
 **Relation to existing plans.** This is not a third competing plan. It supplies the *execution
 model* that `workplan/search-coverage-completion-workplan.md` (the "what": event-log substrate +
-priority queue + §5 loop) and `workplan/de-grade-remediation-and-coverage-extension-2026-07-21.md`
+priority queue + §5 loop) and `_archived/workplan/de-grade-remediation-and-coverage-extension-2026-07-21.md`
 (the "payload": batch cadence, no-new-process, migrations-only) already describe but never
 operationalized. It reconciles the one point on which they conflict (§6) and answers the owner's
 question — *"maybe this needs to be a looping routine"* — with a concrete, doctrine-bounded loop.

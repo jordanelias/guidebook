@@ -145,7 +145,7 @@ Mandatory reads (full file unless noted):
 
 Reference reads (headers + relevant sections):
 8. `skills/voice-style_SKILL.md` §8.1 — tier-appropriate construction; will inform Co-1 voice convention
-9. `workplan/a4-part01-audit-2026-04-27.md` — A4 final state for context
+9. `_archived/workplan/a4-part01-audit-2026-04-27.md` — A4 final state for context
 10. `gap_register.md` — surface any open Co-1-representation gaps that should be addressed
 
 External research reads (only if Q3 requires depth):

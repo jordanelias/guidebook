@@ -87,7 +87,7 @@ and forgetting the fourth.
   core invariants, same DR-2026-05-28 exemptions (`evidence_source_authors`, `pipeline_runs`),
   verified to produce an identical PASS. Has a `--selftest` that builds two DBs differing by
   one row and asserts the comparator fires.
-- `scripts/ci_helpers/check_doctrine_token.py` — was ~45 lines of inline bash in `ci.yml`
+- ~~`scripts/ci_helpers/check_doctrine_token.py`~~ — **DELETED 2026-08-19 (OD-10 item 4).** Was ~45 lines of inline bash in `ci.yml`
   that could not be run or tested locally. Same four exemptions (E1 non-synthesis, E2
   doctrine self-modification, E3 bot author, E4 merge commit), now with a 9-case `--selftest`.
 

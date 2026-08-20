@@ -147,8 +147,8 @@ cross_stage:
     references: "PI rule #11; userPreferences-v6.2-deltas.md <adherence_logging>"
     check: scripts/audit/adherence_log_audit.py
   - id: attestation-doctrine-binding
-    criterion: "Commits touching synthesis paths carry a `[DOCTRINE:<7-sha>]` token and a schema-valid attestations/<slug>.json."
-    references: "PI rule #11; schemas/attestation.schema.json; ci.yml doctrine gate"
+    criterion: "Commits touching synthesis paths carry a schema-valid attestations/<slug>.json. (The [DOCTRINE:<7-sha>] token half was abolished 2026-08-19 by OD-10 item 4.)"
+    references: "PI rule #11; schemas/attestation.schema.json; ci.yml commit-msg job (the doctrine gate it also cited was abolished 2026-08-19)"
     check: scripts/audit/adherence_log_audit.py
   - id: definition-of-done
     criterion: "No ratification request / 'done' / ready-for-review PR while the integrity-protocol Mode-3 mechanical battery is unrun OR an independent adversarial pass is unrun/unapplied."

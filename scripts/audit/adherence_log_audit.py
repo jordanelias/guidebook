@@ -38,7 +38,7 @@ Checks performed (per PI v10.12 rule #11):
 
 7. Re-attestation window. Read git history for last commit touching
    governance/mission-and-epistemics.md (no sidecar state file).
-   Count commits since that SHA. If > RE_ATTESTATION_WINDOW and any
+   Count commits since that SHA. If a MATERIAL doctrine delta intervened and any
    synthesis artifact has not been re-attested (attestation
    last-modified-SHA postdates last_doctrine_sha), FAIL.
 
@@ -52,7 +52,10 @@ Exit codes: 0 = pass (or NON-COMPLIANT verdicts present but logged);
            1 = any other check failed.
 DB path: data/guidebook.db (override via GUIDEBOOK_DB_PATH).
 Repo root: resolved relative to __file__.
-Constants: RE_ATTESTATION_WINDOW = 5 (default; configurable per workplan §5).
+(RE_ATTESTATION_WINDOW was removed 2026-08-19 with OD-10 item 4: it was a dead
+   constant, defined and documented but read by no code. It existed only as the
+   doctrine-token's re-attestation exemption window. check_7 is materiality-scoped
+   per DR-2026-07-21 and never used it.)
 """
 import argparse
 import json
@@ -75,7 +78,6 @@ SYNTHESIS_PATH_RE = re.compile(
     r"^(references/bpc-reasoning|references/connection-reasoning|decisions|sessions)/.+\.md$"
 )
 
-RE_ATTESTATION_WINDOW = 5
 LEVENSHTEIN_THRESHOLD = 0.85
 LEVENSHTEIN_WINDOW = 10
 
@@ -163,35 +165,6 @@ def _synthesis_in_changeset(changed):
     return [f for f in changed if SYNTHESIS_PATH_RE.match(f)]
 
 
-def _last_doctrine_sha():
-    try:
-        return _git("log", "-1", "--format=%H", "--", DOCTRINE_PATH)
-    except subprocess.CalledProcessError:
-        return ""
-
-
-def _commits_since(sha):
-    if not sha:
-        return 0
-    try:
-        return int(_git("rev-list", "--count", f"{sha}..HEAD"))
-    except subprocess.CalledProcessError:
-        return 0
-
-
-def _commit_msg(sha):
-    try:
-        return _git("log", "-1", "--format=%B", sha)
-    except subprocess.CalledProcessError:
-        return ""
-
-
-def _last_commit_for(path):
-    try:
-        return _git("log", "-1", "--format=%H", "--", str(path))
-    except subprocess.CalledProcessError:
-        return ""
-
 
 def _load_json(path):
     try:
@@ -241,28 +214,6 @@ def check_1_schema(changed, issues):
         except ValidationError as e:
             issues.append(f"CHECK 1: {f} schema violation -- {e.message}")
 
-
-def check_2_doctrine_sha(changed, issues):
-    """attestation.doctrine_sha must match the [DOCTRINE: ...] token in the
-    commit that introduced or last modified the attestation."""
-    for f in _attestations_in_changeset(changed):
-        data = _load_json(REPO / f)
-        if data is None:
-            continue
-        att_sha = data.get("doctrine_sha", "")
-        last_sha = _last_commit_for(f) or _git("rev-parse", "HEAD")
-        msg = _commit_msg(last_sha)
-        m = re.search(r"\[DOCTRINE: ([a-f0-9]{7})\]", msg)
-        if not m:
-            issues.append(
-                f"CHECK 2: {f} doctrine_sha={att_sha} but commit "
-                f"{last_sha[:7]} has no [DOCTRINE: ...] token"
-            )
-            continue
-        if att_sha != m.group(1):
-            issues.append(
-                f"CHECK 2: {f} doctrine_sha={att_sha} but commit token={m.group(1)}"
-            )
 
 
 def check_3_rule_resolution(changed, issues):
@@ -536,7 +487,6 @@ CHECK_GROUPS = {
     "presence":  [check_0_presence],
     "schema":    [check_1_schema],
     "evidence":  [
-        check_2_doctrine_sha,
         check_3_rule_resolution,
         check_4_evidence_path,
         check_5_cross_reference,
@@ -545,7 +495,6 @@ CHECK_GROUPS = {
     ],
     "verdict":   [check_8_verdict_evidence],
     # Individual checks for local debugging:
-    "doctrine":  [check_2_doctrine_sha],
     "rules":     [check_3_rule_resolution],
     "path":      [check_4_evidence_path],
     "cross-ref": [check_5_cross_reference],
