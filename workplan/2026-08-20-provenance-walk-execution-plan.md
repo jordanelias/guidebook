@@ -19,7 +19,7 @@ finessed.
 ## 0. What rev 1 got wrong
 
 Rev 1 was accurate on its census and its Class-A/Class-B sort — re-measured, it holds. It failed
-on the parts that touch execution. All six corrections below were verified live at `83b5b40`,
+on the parts that touch execution. All seven corrections below were verified live at `83b5b40`,
 canonical sha256 `ebab426f…8c692b`, `user_version` 60.
 
 **0.1 — There is a determination engine, and it is not usable for this cell.**
@@ -43,7 +43,7 @@ It anchors on REF-00607 — a systematic review of *predominantly normal-hearing
 graded PROXY for AUT at MB1-008 — as a second "clinical" axis, and has no input for the
 chain-of-one lineage or the DR §7 dispute cap. **New defect, not previously recorded: a cell in
 which every anchoring source is down-weighted still returns `stated`.** That is an engine bug and
-is logged in §7 as B6-a; it is not fixed here.
+is logged in §1 as B6-a; it is not fixed here.
 
 **Consequence: the walk cell is written by hand SQL.** Not by `assess_cell.py`, not by a new
 CLI. Using the engine would require editing its hardcoded `PILOT_CELLS` roster (`:114-129`) —
@@ -85,7 +85,37 @@ plan that says "read them in full" without it becomes, on contact, "author from 
   (PRIMARY). DEM maps to AX-COG-O/AX-ARO/AX-VIS-L/AX-AMB. **DEM reaches this slug via
   `item_population_links` (8 of 13 items), not the axis map.**
 
-**0.6 — Corrections to rev 1's record.** `gap_mining_audit` is **not** NOTHING-IN-SCOPE: it
+**0.6 — B5-f, found during execution: the provenance mechanism fails the project's own syntax
+gate the moment it retrieves anything that is not JSON.**
+
+`scripts/research/retrieval_log.py:96` writes every artefact as `<sha16>.json` regardless of
+content type:
+
+```python
+(d / f"{sha[:16]}.json").write_text(body, encoding="utf-8")
+```
+
+`check_json` (registry `:192`, battery `syntax`, **`kinds: [always]`, `level: blocking`**) parses
+every `*.json` file in the repo. So retrieving an HTML full text, an XML stub, a Cloudflare
+challenge page or an empty body produces a file that is invalid JSON with a `.json` extension,
+and CI goes red. Proved on this branch: the first commit of real retrieval artefacts turned
+`Syntax (UTF-8, JSON, YAML)` red at `047d3b7`, with 6 of 15 artefacts unparseable.
+
+**This is a structural reason the project has never held a full text.** Every prior artefact was
+Crossref metadata, which happens to be JSON, so the contradiction stayed invisible. The two
+mechanisms the repository relies on — persist what you received, and validate what you committed —
+are in direct conflict, and the conflict surfaces exactly when research starts working.
+
+*Interim repair applied here (data only, no apparatus change):* each artefact was given its true
+extension and `manifest.jsonl`'s `artefact` field updated to match. The `sha[:16]` stem is
+unchanged, so every sha256 linkage still resolves, and `_logged_payloads()` already tolerates a
+non-JSON artefact (it parses inside a `try`). `check_json` now passes with `EXAMINED: 144`.
+
+*Real fix, Phase 5, ~3 lines:* sniff the body and choose the extension at write time. **Not done
+here** — §9 forbid 1 bars apparatus changes before Phase 5, and §10's phase gate says unpredicted
+apparatus is a finding, not a task. This is that finding, recorded rather than quietly built.
+
+**0.7 — Corrections to rev 1's record.** `gap_mining_audit` is **not** NOTHING-IN-SCOPE: it
 prints `EXAMINED: 4, PASS` with an actionable informational (4 OPEN gaps lack
 `mining_addressability`). "Triggers zero of the 66 checks" is not literal — 9 registry entries
 carry `kinds: [always]` and do run on the file; the fair claim is *unchecked for meaning*.
@@ -116,7 +146,9 @@ A vacuous check means content is missing, never that a check is missing.**
 
 **Class B — genuine defects.** Carried forward from rev 1 §1 unchanged and re-verified: B1-a…f
 (write-path gaps), B2-a…e (orphans and stale hardcoded facts), B3-a…e (blind spots), B4-a…d
-(rendering edge), B5-a…e (provenance). Plus **B6-a**, new in rev 2: `assess_cell.py` returns
+(rendering edge), B5-a…e (provenance). Plus **B5-f** (§0.7, found during execution: every
+retrieval artefact is written `.json` regardless of content type, so a blocking always-on gate
+fails the moment a non-JSON payload is retrieved) and **B6-a**, new in rev 2: `assess_cell.py` returns
 `stated` for a cell whose every anchoring source is down-weighted (§0.1).
 
 ---
