@@ -574,18 +574,6 @@ writers:
     - evidence_source_authors
     - evidence_sources
     - pipeline_runs
-    scripts/tests/probe_pipeline.py:
-    - evidence_population_match
-    - evidence_sources
-    - items
-    - populations
-    - search_admissions
-    - search_executions
-    - slugs
-    - source_slug_links
-    - source_value_extractions
-    - specification_source_links
-    - specifications
     scripts/tests/test_assess_cell_pilot.py:
     - evidence_sources
     - source_slug_links

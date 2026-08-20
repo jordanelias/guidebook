@@ -173,6 +173,46 @@ licensing, trajectory. And `.ignore` edits.
 
 ---
 
+## 2b. The cull, executed 2026-08-20 — apparatus does not leave by being planned
+
+`workplan/2026-08-18-cull-execution-plan.md:595` already authorised this, on 2026-08-18:
+*"Archive outright (~5,000 LOC, no caller and no subject): `tests/probe_pipeline.py` (1,718) + …"*
+It was still in the tree two days later. **A cull that becomes another document is the ratchet
+in its purest form**, and it is the reason this plan's §9 forbid 1 alone cannot break the
+recursion: refusing to add is only half of it.
+
+Deleted, with evidence, per CLAUDE.md §1 (git history is the archive for CODE — deleted, not
+copied to `_archived/`):
+
+| File | LOC | Evidence |
+|---|---|---|
+| `scripts/tests/probe_pipeline.py` | 1,718 | unregistered; no caller in `scripts/`, `tools/`, `.github/` or the registry; last touched 2026-08-12; already authorised for removal on 2026-08-18 |
+| `scripts/probes/citation_mining_pipeline.py` | 254 | **zero** references anywhere in the repo; last touched 2026-07-25, before the 2026-08-06 clean-room evidence reset; superseded by the live path (`citation_mining_completeness.py`, `research_batch_dod.py`, `db.py log-mining`). Its directory `scripts/probes/` held nothing else and is gone |
+
+**1,972 LOC removed. Callers swept** (`governance/context-map.yaml`'s `probe_pipeline` block);
+both YAMLs still parse; the registry still resolves 66 checks.
+
+**Consequence worth recording: nothing reads `source_locators` at all any more.** `probe_pipeline.py`
+was the last live script that touched it, and it never ran. The 835 held identifiers are now
+formally unread by any executable surface — which sharpens OD-5 rather than softening it, and
+should be stated that way rather than discovered again later.
+
+**Four candidates were investigated and NOT culled**, recorded so the work is not repeated:
+`validate_commits.py`, `full_db_metadata_verification.py` and `test_adjudication_integrity.py` are
+all **registered checks**; `scripts/audit/graph/__init__.py` is a live package marker. An initial
+census flagged all four as orphans and was wrong — the registry parse missed them. **The caller
+sweep is what caught it**, which is exactly the failure §0 rule 4 of CLAUDE.md exists to prevent.
+
+Also investigated and **rejected**: culling `scripts/assess/assess_cell.py` and the pilot
+apparatus. It looked like the strongest candidate — §0.1 proves the engine returns a wrong
+determination — but `governance/evidence-architecture.md` is **CANONICAL, ratified 2026-07-13**,
+and `scripts/generate/pilot_renderings.py` is the single source of truth for `REGISTER_MAP`,
+`ROLES` and `tuple_class`, imported by the live `register_integrity_check.py`. Deleting it would
+have destroyed a ratified doctrine's only implementation. **Evidence governs deletion in both
+directions.**
+
+---
+
 ## 3. Definitions — so the acceptance test cannot be passed by wording
 
 - **"The batch"** = the commits of one R1–R15 admission-to-determination walk. Phases A and 5–7
@@ -201,6 +241,16 @@ licensing, trajectory. And `.ignore` edits.
   files and `emit_data_migration --session`. `SCRATCH` derived from the live scratchpad path at
   runtime. **Never hardcode a session UUID** — rev 1 did, and it was a dead path.
 - **P5.** `python3 scripts/audit/research_batch_dod.py --selftest` → 15/15.
+
+### Phase A — the scratchpad hook, first — LANDED 2026-08-20
+
+**Provenance is not only about citations. It governs tier grading too.** A tier is a
+*judgement*; a judgement with no recorded derivation is an assertion. `co1_provenance` and
+`co1_source_type` are NULL on all three Co-1-tiered rows, so the project's strongest evidential
+claim — CRPD Art 4.3 co-primacy — currently rests on nothing a reader can audit. That is the same
+defect class as a bibliographic field written from memory, one level up. **No tier is graded or
+re-graded in this project without its warrant recorded in the row and its derivation in the
+scratchpad.**
 
 ### Phase A — the scratchpad hook, first
 
