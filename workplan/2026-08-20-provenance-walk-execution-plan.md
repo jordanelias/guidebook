@@ -244,6 +244,19 @@ is in hand.** REF-00965 has no issue number — do not invent one.
 
 ### 4.3 Author the determination
 
+> **HALTED 2026-08-20. The determination was not authored, and must not be until §8 of
+> `workplan/2026-08-20-adversarial-adjudication-a18-aut.md` is worked.** The agonist/antagonist
+> pass refuted the determination's core claim before it was written: on-parameter,
+> population-justified reverberation criteria for learning spaces **exist** and the batch's nine
+> searches did not reach them — not one paired a reverberation term with a learning-space term and
+> a neurodivergent population. One of the missed sources, **REF-00561** (`10.3390/app11093942`,
+> "Indoor Acoustic Requirements for Autism-Friendly Spaces"), has been held in `source_locators`
+> since 2026-08-06, invisible to the R9 gate. That is OD-5's **second** witness. Authoring "the
+> evidence distinguishes neither" on this search frame would have rendered a coverage failure as
+> an epistemic finding. The steps below stand; their input does not yet exist.
+
+
+
 **This is the only act in the plan that apparatus cannot perform**, and §0.1 sharpens why: the
 engine *can* compute a state mechanically, and what it computes is wrong. The judgment is the work.
 
