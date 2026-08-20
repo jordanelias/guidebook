@@ -129,7 +129,7 @@ Stratification: by topic group, proportional to topic-group population, rounded 
 
 Selection: deterministic — first-alphabetical filename within each topic group's stratum. Determinism enables reproducibility (the same sample is selected if the recheck is rerun against the same HEAD).
 
-The `contamination_sampler.py` tool (§7) implements selection mechanically.
+The `contamination_sampler.py` tool (§7) implemented selection mechanically; it was deleted 2026-08-20 and selection is manual until a recheck justifies rebuilding it.
 
 ### 3.2 Classification rubric
 
@@ -276,7 +276,12 @@ The validator does not perform contamination sampling (that is `contamination_sa
 
 ---
 
-## 7. Sampler: `scripts/contamination_sampler.py`
+## 7. Sampler: `scripts/contamination_sampler.py` — DELETED 2026-08-20
+
+> **This tool no longer exists.** It was quarantined as a category error — it WROTE
+> `data/doctrine_recheck/sample_<date>.yaml` as a side effect of being run, so it could never
+> sit in a check battery — and deleted by the 2026-08-20 cull. The method below stands as the
+> specification; the mechanism must be rebuilt if a recheck needs it.
 
 ### 7.1 Scope
 

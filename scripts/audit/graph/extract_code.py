@@ -8,7 +8,8 @@ to a relation that does not exist in guidebook.db surfaces as a dangling `table_
 edge — i.e. a phantom-table reference (e.g. scripts/generate/room_page.py querying
 `room`, `room_item`, ... which were never migrated).
 
-This complements scripts/audit/schema_reference_drift_audit.py, lifting it from
+This SUPERSEDES scripts/audit/schema_reference_drift_audit.py (deleted 2026-08-20;
+its coverage is owned here), lifting it from
 whole-file regex to AST string constants. Noise controls REDUCE (not eliminate)
 false positives: uppercase SQL-keyword gating, AST-string-only scanning (skips
 comments), a stopword set, and subtraction of locally-defined CTE / CREATE VIEW /
@@ -22,7 +23,7 @@ detected.
 Deliberately EXCLUDED from the scan (one-time / legacy / different-schema code),
 matching the predecessor's EXCLUDE_DIRS plus the audit graph package:
   scripts/{migrations,db,migrate,probes,test,tests}/**, scripts/audit/graph/**,
-  scripts/audit/graph_audit.py, scripts/audit/schema_reference_drift_audit.py,
+  scripts/audit/graph_audit.py,
   **/__pycache__/**
 """
 import ast
@@ -58,7 +59,7 @@ _LOCAL_DEF = re.compile(
 # graph package itself (operates on audit_graph.db) and __pycache__.
 EXCLUDE_PARTS = {"migrations", "db", "migrate", "probes", "test", "tests",
                  "__pycache__", "graph"}
-EXCLUDE_NAMES = {"graph_audit.py", "schema_reference_drift_audit.py"}
+EXCLUDE_NAMES = {"graph_audit.py"}  # schema_reference_drift_audit.py deleted 2026-08-20
 
 
 def _table_tokens(text):

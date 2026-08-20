@@ -31,7 +31,7 @@ is a confirmed-absent phantom table, not a drift case:
     decisions/DR-2026-07-12-website-architecture-lock.md Context section --
     confirmed absent, page-templates.md's SQL against it never worked).
 Tables with no corresponding model at all are listed separately (informational
-only, same "not a failure" framing as schema_reference_drift_audit.py's
+only, same "not a failure" framing as the (deleted) drift audit's
 unreferenced-tables check) -- some are populated by migrations/jobs only and
 were never meant to round-trip through a Pydantic model.
 

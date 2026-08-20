@@ -197,6 +197,60 @@ was the last live script that touched it, and it never ran. The 835 held identif
 formally unread by any executable surface — which sharpens OD-5 rather than softening it, and
 should be stated that way rather than discovered again later.
 
+### The rest of the cull, executed the same day — 6,716 LOC
+
+The owner directed the 2026-08-18 plan be performed **in its entirety**. Its §15.2 (DELETE 13
+registry entries) and §15.3 (archive outright ~5,000 LOC) were then executed.
+
+**What the census found on contact: the cull had already been half-done, in the worse direction.**
+Twelve of the thirteen §15.2 registry entries were *already gone* — and every script they invoked
+was still on disk. Deregistering a check and leaving its code is the same accretion in a quieter
+form: the apparatus stops being watched but does not stop existing. A further 3,612 LOC sat in a
+16-entry `quarantine` section, every file present.
+
+**Deleted: 21 files, 4,744 LOC** — `walk_harness.py` (closing D4) · `item_audit_pipeline.py` ·
+`verify_resolved_dois.py` · `generate_search_queries.py` · `generate_alias_chart.py` ·
+`check_phase_a_complete.py` · `validate_commits.py` · `validate_item.py` · `validate_conflict.py` ·
+`validate_conflicts.py` · `validate_temporal.py` · `validate_audit_runs.py` ·
+`contamination_sampler.py` · `table_connectivity.py` · `schema_reference_drift_audit.py` ·
+`jurisdictional_divergence.py` + its wrapper test · `full_db_metadata_verification.py` ·
+`workplan_naming_audit.py` · `migrate/migrate_decisions.py` + `_legacy_guard.py` (closing D2).
+With the earlier pass: **6,716 LOC and 23 files.**
+
+**Registry: 66 → 63 checks; quarantine 16 → 4.** Fifteen entries removed. Zero registry entries
+now point at a missing file.
+
+**Kept deliberately:** `adjudication_integrity.py` — quarantined, but its wrapper
+`test_adjudication_integrity` is a *live registered check*, so the code is reachable. `code_currency_audit.py`
+and `pre_rehab_banner_audit.py` — quarantined but not named for deletion by §15.2; deleting
+unnamed things because they sit nearby is how a cull becomes a purge. `generate_parts.py` — a
+call-graph orphan that assembles the actual deliverable, which §15.3 flags must **never** be culled.
+
+**The sweep, which is where the real work was** (CLAUDE.md §0.4 — *"a sweep that stops at the
+filename is not a sweep"*):
+
+- `pipeline_contract_audit.py`'s selftest fixture named `validate_conflicts.py` and began
+  reporting BROKEN instead of QUARANTINED. **This is the second time that one fixture has been
+  broken by a change to its subject**, and its own comment records the first. Re-pointed, with a
+  note: if it breaks a third time, derive the path from the registry instead — the hardcoded name
+  is the defect.
+- `graph/extract_code.py` excluded `schema_reference_drift_audit.py` by name and documented itself
+  as *complementing* it. It **supersedes** it; corrected, and the dead exclusion removed.
+- `doctrine_recheck.py` instructed the reader to run a sampler that no longer exists.
+- `alias_provenance_audit.py`, `validate_pydantic_schemas.py`, two skills, `time-model.md` §6 and
+  `doctrine-recheck.md` §7 all swept. The two governance sections are kept as *specifications* with
+  a banner saying the code is gone — deleting the spec would have destroyed the design record.
+
+**A method error of my own, corrected:** I hand-edited `governance/context-map.yaml`, which is
+**generated output** (CLAUDE.md §7). Regenerating it dropped 52 lines and swept every dead
+reference automatically — which is precisely why hand-editing it was wrong.
+
+**Verification.** `preflight.sh` **PASS**, 27 green (was 25 before the cull). `run_checks --selftest`
+PASS. `graph_audit` PASS, EXAMINED 821. `test_pipeline_contract` restored to PASS. The two
+remaining advisory failures — `retired_vocabulary` (65 occurrences) and `test_verification_pipeline`
+(14/18) — were measured **identical on `origin/main`** in a worktree and are pre-existing debt, not
+this cull's. Canonical DB sha256 unchanged.
+
 **Four candidates were investigated and NOT culled**, recorded so the work is not repeated:
 `validate_commits.py`, `full_db_metadata_verification.py` and `test_adjudication_integrity.py` are
 all **registered checks**; `scripts/audit/graph/__init__.py` is a live package marker. An initial

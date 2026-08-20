@@ -466,25 +466,6 @@ checks:
       (2382 today). min_items:1 — the controlled vocabulary is populated repo
       content, not a corpus that could legitimately empty out.
 
-  - id: workplan_naming
-    cmd: [python3, scripts/audit/workplan_naming_audit.py]
-    battery: structure
-    kinds: [always]
-    level: blocking
-    basis: unattributed
-    cost: fast
-    min_items: 1
-    note: >-
-      W4.3, 2026-08-06. CLAUDE.md §9 tells every session to find the current plan
-      by sorting `workplan/` by date. 57 of 60 top-level names do not sort that
-      way, so the documented procedure returns a March file above an August one —
-      §9 warns that "several dated workplans coexist" rather than naming the
-      current plan, which is that defect showing through the documentation.
-      FORWARD-ONLY. The 57 are grandfathered in a list inside the script; the
-      bulk rename is a file move and therefore owner-gated (§9 guardrail 4), and
-      would need a caller sweep besides. This stops the count growing and keeps
-      the backlog visible with a number on it. The list is validated in both
-      directions, so it cannot quietly become a waiver queue.
 
   - id: citation_mining_session
     cmd: [python3, scripts/audit/citation_mining_completeness.py, --session, "@SESSION@", --tier-max, "2"]
@@ -535,16 +516,6 @@ checks:
     cost: fast
     no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
 
-  - id: citation_mining_backlog_t3
-    cmd: [python3, scripts/audit/citation_mining_completeness.py, --tier-max, "3"]
-    battery: data
-    kinds: [data]
-    level: informational
-    basis: unattributed
-    cost: fast
-    no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
-
-  # ===== schema — entity and evidence-state validators ======================
   - id: validate_schema
     cmd: [python3, scripts/validate_schema.py, --verbose]
     battery: schema
@@ -1193,14 +1164,6 @@ checks:
     no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
     note: ~27s — carries graph_audit's mutation harness. The slowest test by far.
 
-  - id: test_jurisdictional_divergence
-    cmd: [python3, scripts/tests/test_jurisdictional_divergence.py]
-    battery: tests
-    kinds: [tooling]
-    level: advisory
-    basis: hygiene
-    cost: fast
-    no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
 
   - id: test_pipeline_contract
     cmd: [python3, scripts/tests/test_pipeline_contract.py]
@@ -1439,24 +1402,6 @@ checks:
 # recorded for that decision, not pre-judged.
 quarantine:
 
-  - id: table_connectivity
-    cmd: [python3, scripts/audit/table_connectivity.py]
-    status: quarantined
-    reason: >-
-      NOT A GATE, and registered here so that fact is recorded rather than
-      inferred from its absence. It measures the pipeline walk — how far a
-      published best practice can be traced backwards — and reports independent
-      vs. in-sequence counts per stage. Its headline is the plan's headline
-      (fully-evidenced walks, currently 0), which is a project state to report,
-      not a condition to fail a diff on.
-      Registered 2026-08-06 after an audit found it was the one enforcer script
-      under `scripts/audit/` appearing in neither the active nor the quarantine
-      list. That omission class is exactly what this registry was built for: the
-      2026-07-24 finding that 28 enforcers were wired to nothing was possible
-      only because nothing enumerated them. An unlisted script re-opens the hole
-      on principle even when the individual script is harmless.
-      Promote it if and when a target is set for the walk — then it becomes a
-      ratchet with a number, which is the only form in which it could block.
 
   - id: validate_db
     cmd: [python3, _archived/scripts/validate_db.py]
@@ -1476,93 +1421,10 @@ quarantine:
       one, and it is recorded here — and only here — so archiving the script
       does not bury the finding with it.
 
-  - id: validate_temporal
-    cmd: [python3, scripts/validate_temporal.py]
-    status: vacuous
-    reason: >-
-      QUARANTINED 2026-08-04 — it was `blocking` on `kinds: [schema, data]` while
-      examining ZERO records. It loads rules, standards, versions and supersedence
-      links from `data/temporal/`, and that directory DOES NOT EXIST; the run prints
-      "Temporal validation: 0 rules, 0 standards, 0 versions, 0 supersedence links /
-      All checks passed" and exits 0. Every schema and data change in this repo has
-      been passing a temporal-integrity gate that inspects nothing.
-      It has no `min_items` floor — the exact defect the 2026-08-01 rework fixed in
-      validate_schema.py and did not sweep for elsewhere. Only T-05 (a filename
-      pattern over `versions/`) touches real files.
-      NOT given a hard-fail guard instead: with the directory absent, failing on
-      empty input would turn a blocking check red on every data/schema diff, which
-      trades a silent lie for a loud blockage. Quarantine states the truth without
-      that cost.
-      RE-REGISTER when the `data/temporal/` corpus lands (its generator,
-      scripts/convert/version_retrofit.py, still exists) — and only with a
-      `min_items` floor so it can never again pass by having nothing in scope.
-      Owner ratification requested: fund the dataset, or retire the check and its
-      generator together.
 
-  - id: validate_item
-    cmd: [python3, scripts/validate_item.py]
-    status: quarantined
-    reason: >-
-      Green, but its YAML corpus (data/items) does not exist, so it validates only
-      the markdown surface and passes with 21 warnings. Wire once the item corpus
-      lands, or fold into validate_schema. Not wired on a pass that proves nothing.
 
-  - id: validate_conflict
-    cmd: [python3, scripts/validate_conflict.py]
-    status: quarantined
-    reason: >-
-      RED — 11 errors, all unknown population codes in references/conflict-matrices/
-      ('IntD', 'VIS'). That is either stale matrices or a stale code list; it is a
-      real finding needing adjudication, not a gate to switch on. Overlaps
-      validate_conflicts.py (DB-side, green, 0 rows).
 
-  - id: validate_conflicts
-    cmd: [python3, scripts/validate_conflicts.py]
-    status: quarantined
-    reason: >-
-      Green but vacuous — the conflicts table has 0 rows, so it asserts nothing.
-      Wire when the table is populated.
 
-  # claims_docket, pmp_audit and reasoning_doc_citations_audit were de-quarantined
-  # on 2026-08-01 after triage; they are now active advisory checks above.
-  # register_integrity_check was de-quarantined on 2026-08-04: both of its stated
-  # blockers were cleared by the DR-2026-07-21 Option A rework — it now defaults
-  # its document path and DB, and enforces amended I3 instead of the repealed
-  # absolute form. It is an active advisory check in the render battery above.
-
-  - id: schema_reference_drift_audit
-    cmd: [python3, scripts/audit/schema_reference_drift_audit.py]
-    status: quarantined
-    reason: >-
-      RED (~7 real findings; the raw hit count is unstable — see below, and do not
-      write a number here). CORRECTED 2026-08-01 — this entry previously said it
-      "detects schemas/*.py vs SQLite drift". It does not, and the script's own
-      docstring disclaims exactly that ("Does not parse schemas/*.py Pydantic
-      models against column definitions... checks table-name reachability only").
-      What it actually does is lexically scan scripts/**/*.py for SQL table
-      references and flag identifiers absent from the live DB. Pydantic-vs-SQLite
-      parity belongs to validate_pydantic_schemas, now wired; these two never
-      overlapped, so the "one of the two should own schema drift" framing was
-      false on both sides.
-      Held because the signal has been overtaken by lexical false positives: 14 of
-      them are prose words in docstrings (THE, of, table), selftest fixture
-      literals (no_such_table, zzz_phantom) and tables of a DIFFERENT database
-      (build_meta/edges/findings/nodes live in the gitignored audit_graph.db).
-      DO NOT WRITE A FIXED NUMBER HERE — re-run it. This entry said 19, then 21,
-      then 22, across three commits of a single session, and each move was caused
-      by the session's own prose and test fixtures rather than by any change to the
-      code being audited: a docstring reading "an UPDATE changes no count" made it
-      report `changes` as a missing table, and selftest fixtures named `t` and `vf`
-      added two more. Writing English about SQL manufactures findings in this tool.
-      That is the strongest available evidence that its lexical scan has stopped
-      being a signal, and a demonstration that a count written into a register can
-      be falsified by the next commit rather than the next year. The
-      ~7 real hits are room_page.py's 6 phantom tables — an already-tracked,
-      owner-gated gap (workplan/website-v0-path-forward-2026-07-12.md) — plus
-      evidence_sources_v2 in a legacy script.
-      Its one gating check is also carried, with better precision, by the already
-      wired graph_audit (code.phantom_table, CTE/view-aware). Retiring it is
-      therefore proposed but NOT executed here: retirement is owner-gated.
 
   - id: adjudication_integrity
     cmd: [python3, scripts/audit/adjudication_integrity.py]
@@ -1596,60 +1458,7 @@ quarantine:
       owner call on which side is canonical — after which this becomes a genuine,
       permanently-meaningful anti-drift gate rather than a permanent red.
 
-  - id: jurisdictional_divergence
-    cmd: [python3, scripts/audit/jurisdictional_divergence.py]
-    status: quarantined
-    reason: >-
-      Green, but it is a SURFACING tool ("SURFACED: 2 candidate contradictions"),
-      not a pass/fail gate. Its exit code carries no verdict. Belongs in a report,
-      not a gate.
 
-  # validate_pydantic_schemas was de-quarantined 2026-08-01 with --strict; it is
-  # now an active advisory check in the schema battery above.
 
-  - id: full_db_metadata_verification
-    cmd: [python3, scripts/audit/full_db_metadata_verification.py]
-    status: quarantined
-    reason: >-
-      Takes ~298 seconds (network-bound). Correct as a scheduled job, never as a
-      PR gate. Candidate for the source-verification schedule.
 
-  - id: contamination_sampler
-    cmd: [python3, scripts/contamination_sampler.py]
-    status: quarantined
-    reason: >-
-      NOT a check — it WRITES data/doctrine_recheck/sample_<date>.yaml as a side
-      effect of being run. Per doctrine-recheck §2.6 it needs human judgment and
-      runs at scheduled rechecks only. Must never be in a check battery.
 
-  - id: check_phase_a_complete
-    cmd: [python3, scripts/check_phase_a_complete.py]
-    status: quarantined
-    reason: >-
-      RED, and correctly so — it reports Phase B cannot begin. A workplan status
-      report, not a regression gate.
-
-  - id: validate_commits
-    cmd: [python3, scripts/validate_commits.py]
-    status: quarantined
-    reason: >-
-      RED, and CORRECTED 2026-08-01: not merely "against history". It fails every commit in the recent
-      window, including current, convention-compliant ones (23 flags across the
-      last 7 days at the time of writing; re-run rather than trusting that count).
-      Its own token lists have rotted, so what it reports is its staleness, not the
-      commits':
-        - V2 rejects the `governance:` prefix that CLAUDE.md §0 mandates for
-          non-skill work — every governance commit reads as V2_UNKNOWN_SKILL.
-        - V5's author pattern is `^Claude \(.+\)$`, which does not match the
-          current bot author, so V5_UNKNOWN_AUTHOR fires on nearly everything.
-        - V1 has no merge-commit or bot exemption, unlike the wired
-          ci_helpers/check_commit_msg.py, so every "Merge pull request #NN" fails.
-      Still correctly quarantined — it overlaps check_commit_msg.py, which checks
-      HEAD only and is the wired one — but its output must not be read as evidence
-      about the commits until those three lists are refreshed. Repairing it is a
-      real if low-priority task, not a matter of triaging findings.
-
-  - id: validate_audit_runs
-    cmd: [python3, scripts/validate_audit_runs.py]
-    status: quarantined
-    reason: Green (87 runs) but unreferenced by any contract. Wire only with a stated owner.
