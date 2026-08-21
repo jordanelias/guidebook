@@ -135,11 +135,21 @@ Unchanged from rev 1 and re-verified. **Class A resolves by doing research; Clas
 resolve no matter how much research is done.** Confusing them is how apparatus became the work.
 
 **Class A — empty because the content does not exist yet.** `specifications`,
-`specification_source_links`, `convergence_assessment`, `item_bpc_links`, `bpc_metadata`,
+`specification_source_links`, `convergence_assessment`, `bpc_metadata`,
 `reasoning_doc_citations`, `spec_value_probes`, `source_value_extractions`, `gap_mining`,
 `connections` — all 0 rows. `jurisdictional_values` 109 rows, 0 with a stored value. 93
 `site/specs/*.html` reading "Best-practice determination: **not yet computed**". Five checks
 reporting `EXAMINED: 0`.
+
+> **`item_bpc_links` is removed from Class A by D-1 (§2c).** It is scaffolding, not an answer-side
+> table, and its emptiness is not a content gap a determination fills. It is 0 rows and should
+> **stay** 0 rows unless and until an item↔slug bridge is earned by evidence rather than asserted.
+>
+> **`reasoning_doc_citations` is Class A only in appearance.** Its `source_ref_id` is
+> `NOT NULL REFERENCES evidence_sources(ref_id)`, so it cannot receive the one reasoning document
+> that exists until that document's 11 cited sources are admitted — and they cannot be admitted
+> while R9 is blind to `source_locators`. Its emptiness is **FK-blocked by OD-5**, which makes it a
+> Class-B dependency wearing a Class-A face. See D-2.
 
 **Rule: report as NOTHING-IN-SCOPE, never as a failure, and never build apparatus to observe it.
 A vacuous check means content is missing, never that a check is missing.**
@@ -264,6 +274,82 @@ and `scripts/generate/pilot_renderings.py` is the single source of truth for `RE
 `ROLES` and `tuple_class`, imported by the live `register_integrity_check.py`. Deleting it would
 have destroyed a ratified doctrine's only implementation. **Evidence governs deletion in both
 directions.**
+
+---
+
+## 2c. Owner directives, 2026-08-21 — three standing rules
+
+Recorded verbatim in substance because each changes what this plan may do, and one of them
+invalidates part of it. **All three are doctrine (the DG-NON class) and should be lifted into a DR;
+a workplan is the wrong home for a standing rule.** Flagged for the owner.
+
+### D-1. Scaffolding is research-support only. It must not cross into any other stage.
+
+*Owner:* *"scaffolding is to strictly be used in support of conducting research… I do not want any
+links, maps, etc from scaffolding to be imported into any other stage due to contamination. Instead,
+I want these quarantined and digested into slugs/sources to read/research leads."*
+
+**Measured warrant of the scaffolding, 2026-08-21 — the directive is evidenced, not precautionary:**
+
+| Table | Rows | Evidence borne |
+|---|---|---|
+| `item_population_links` | 372 | `rationale_ref` **NULL on all 372** |
+| `item_axis_links` | 158 | `source` populated 158/158, but its content is authorship provenance (*"E3 harvest from item function + FDA audit-briefs"*), not citation |
+| `population_axis_map` | 53 | **no evidence-bearing column exists in the schema** |
+
+**Zero REF-ids appear in any scaffolding rationale or source column.** These 583 rows are
+judgement-seeded mappings from 2026-05-11, 2026-07-21 and 2026-07-24 sessions carrying no
+evidential warrant.
+
+**This is a change, not a confirmation.** The scaffolding is currently wired into downstream stages:
+`item_bpc_links` and `item_population_links` are read by `scripts/generate/build_site.py` and
+`scripts/generate/spec_page.py` (render); `scripts/assess/assess_cell.py` reads `item_bpc_links`,
+`slugs` and `axes` (determination). **§4.4 of this plan instructed writing `item_bpc_links` as part
+of the walk, and §4.6's sideways walk traverses `item_axis_links` → `population_axis_map`. Both are
+withdrawn.** Nothing has been contaminated yet only because the answer side is 0 rows — no import
+has occurred. The directive arrived before the damage.
+
+**Operative rule.** Scaffolding may orient a search and nominate what to read. It may not supply,
+imply or stand in for an evidential link in `specifications`, `specification_source_links`,
+`convergence_assessment`, or any rendered determination. Where it suggests a relationship, that
+relationship is digested into a slug or a source as a **read/research lead** — the treatment
+`source_locators` already receives — and must be earned by admission before it carries weight.
+
+### D-2. Prose is a supplement, never the body of reasoning.
+
+*Owner:* *"prose should only be a supplement if it is ever used, never as the body which contains
+our reasoning itself because it means that our research and reasoning isn't being ingested by
+relevant tables."*
+
+Correct, and the schema already agrees: **`reasoning_doc_citations`** exists for exactly this —
+`claim_type`, `claimed_value`, `source_ref_id`, `value_match`, `claim_match`, and fourteen locator
+columns for clause-level citation. It holds **0 rows** and has never been written to, while a
+registered audit watches it and reports `EXAMINED: 0`.
+
+**The structural reason, which closes a loop.** `source_ref_id` is
+`NOT NULL REFERENCES evidence_sources(ref_id)`. The reasoning doc's claims therefore **cannot be
+filed** until its 11 cited sources are admitted — and they cannot be admitted because the R9 gate
+cannot see `source_locators`, where all 11 sit. Two of those 11 are the OD-5 witnesses themselves
+(REF-00561 `10.3390/app11093942`; REF-00578 `10.1044/2016_AJA-15-0064`). The prose is not
+un-ingested through indiscipline; the ingestion path is FK-blocked by the exact defect OD-5 names.
+**OD-5 unblocks D-2.**
+
+### D-3. Blocking-and-vacuous is three different conditions, not one.
+
+The five blocking gates reporting `EXAMINED: 0` do so for three distinct reasons, per the registry's
+own `no_floor` notes. **Blocking is a configured level; it is not caused by absence of data.**
+
+| Check | Why it examines nothing | Will data alone fix it? |
+|---|---|---|
+| `validate_evidence_state` | corpus emptied by decision | **yes** |
+| `validate_verification_consistency` | corpus emptied by decision | **yes** |
+| `attestation_presence` | changeset-scoped to `HEAD~1..HEAD`, **not** the 79 attestations on disk | no |
+| `attestation_schema` | changeset-scoped; 0 means this commit changed none | no |
+| `check_rendered_docs` | `--all` deliberately declines the 1 document present (REFERENCE-only since the 2026-08-06 reset) | no |
+
+The two attestation gates would read 0 on a fully populated project whenever a commit touches no
+synthesis path. Do not treat "vacuous" as a single condition, and do not expect content alone to
+retire all five.
 
 ---
 
@@ -396,8 +482,12 @@ chain-dependent, no regulatory baseline). Requires non-empty `confidence_synthes
 **genuinely valid JSON arrays** in both confidence-dimension columns. `design_scale='population'`,
 `tier_basis='Co-1'`, `governing_refs` = the three Co-1 refs, all four flags 0.
 
-Then `specification_source_links` (three `governing` rows) and `item_bpc_links`
-(`A-18` → `room-acoustic-performance`, `primary`).
+Then `specification_source_links` (three `governing` rows).
+
+> **`item_bpc_links` is NOT written — withdrawn by D-1 (§2c).** It is scaffolding: an
+> item↔slug bridge carrying no evidential warrant. Writing it as part of a determination would
+> import an unevidenced mapping into the answer side, which is exactly the contamination D-1
+> forbids. The cell's link to its evidence runs through `specification_source_links` alone.
 
 `specification_id=1`/`convergence_id=1` collide with nothing — both tables are empty, and
 `assess_cell.py`'s `CELL_ID_BASE 9000` reserves a disjoint range. **No `BEGIN;`/`COMMIT;`
@@ -418,9 +508,12 @@ migration is fixed **forward** with a compensating migration, never by hand-reve
   `specification_source_links(1)` → `specifications(1)` → `site/specs/a-18.html`.
 - **BACKWARD** page → cell → links → REF-00965/966/968 → `search_admissions` **exec 1 (965, 966)
   and exec 6 (968)** → two query texts → three artefacts → three DOIs.
-- **SIDEWAYS** A-18 → `item_axis_links` → AX-AUD + AX-SPR → `population_axis_map` → AUT/NDV/ADHD,
-  DEAF/DEAFBLIND. **DEM via `item_population_links` (8 of 13), not the axis map.** GAP-B01-002
-  (DEM) and GAP-B01-003 (MH, BRAIN) named as still OPEN.
+- **SIDEWAYS — withdrawn by D-1 (§2c).** The former hop traversed `item_axis_links` →
+  `population_axis_map`, both scaffolding with zero REF-ids in any rationale or source column. A
+  walk that resolves through them would present an unevidenced mapping as pipeline provenance.
+  Scaffolding may still *orient* the next search; it may not appear as a hop in a provenance walk.
+  GAP-B01-002 (DEM) and GAP-B01-003 (MH, BRAIN) are named as still OPEN from the `gaps` table
+  directly.
 
 Transcript into `scratchpad/<session>/notes.md`, every hop resolving to a real row or file.
 
