@@ -5,25 +5,25 @@
 # whether the hop is performed by CODE or by HAND. This file states that.
 #
 # HOW IT WAS BUILT. Four read-only agonist surveys (substrate · acquisition ·
-# synthesis · render+meta), each evidence-first against the live repo, then
-# adjudicated. The `fk` edges below are GENERATED from the live schema
-# (PRAGMA foreign_key_list) and are not hand-asserted. The `convention` and
-# `absent` edges are hand-curated from the surveys — each was evidenced, and
-# each is the kind of hop that fails silently.
+# synthesis · render+meta), each evidence-first against the live repo, then TWO
+# antagonist passes — one refuting every `breaks:` entry independently, one
+# testing whether the pipeline can be walked forward, backward and sideways.
+# Every entry below now carries a `verdict:` recording what survived.
+#
+# The `fk` relationships are read from the live schema (PRAGMA
+# foreign_key_list). The `convention` and `absent` edges are hand-curated from
+# the surveys — each was evidenced, and each is the kind of hop that fails
+# silently.
 #
 # STATUS: DESCRIPTIVE, not normative. It records the pipeline as it IS on
-# 2026-08-21, defects included. It is not a design. Regenerate the `fk` section
-# from the schema; re-derive the rest when the surveys are re-run.
+# 2026-08-21, defects included. It is not a design.
 #
-# !! PENDING ADVERSARIAL VERIFICATION (2026-08-21). Two antagonist passes are
-# !! attacking this file as written — one refuting every `breaks:` entry
-# !! independently, one testing whether the pipeline can actually be walked
-# !! forward, backward and sideways. Entries below are AGONIST CLAIMS that have
-# !! not yet survived refutation. Do not cite a BRK id as settled until this
-# !! banner is removed and each entry carries a verdict. The agonist surveys
-# !! were evidence-first, but this session has already seen two agonist claims
-# !! overturned on contact (assess_cell "dissolves the capture problem", and the
-# !! container stop-hook fix "holds for this session") — both were wrong.
+# ADVERSARIAL VERIFICATION COMPLETE (2026-08-21). Of the 20 agonist claims, 19
+# were sustained on the substance and 1 (BRK-15) was cut back. But SIX of the
+# supporting `guard:` and island assertions were WRONG, and the four-stage
+# linear model was refuted outright. Those corrections are applied below and
+# marked. The lesson is the one this session kept relearning: an agonist claim
+# is a hypothesis until something independent attacks it.
 #
 # THE RULE THIS FILE EXISTS TO SERVE: a hop that is CONVENTION or ABSENT cannot
 # be trusted by a sequencer. Every defect found in the 2026-08-19/21 sessions
@@ -31,22 +31,49 @@
 
 meta:
   generated: "2026-08-21"
+  verification: "agonist surveys + 2 antagonist passes, adjudicated 2026-08-21"
   user_version: 60
   tables: 65
+  views: 17
   fk_edges: 80
   canonical_db_sha256_at_generation: f70c48d792662a59d1656e57904686bde6301c875798f3893381c460fbe03c2c
   # CORRECTED 2026-08-21: this field first held c4ad6cc3 — the sha AFTER the
   # first digestion migration but BEFORE the compensating one. A stale volatile
   # fact hardcoded inside the file meant to be authoritative, i.e. exactly the
   # CLAUDE.md 2(b) failure. Re-derive this field; never carry it forward.
+  readers_today: 0
+  readers_note: |
+    Stated plainly because CLAUDE.md 1 requires it: NOTHING READS THIS FILE.
+    Repo-wide grep for "pipeline-map" outside the file itself returns nothing.
+    Its named reader is the sequencer/wrapper it was commissioned for, which
+    does not exist yet. Until that reader lands, this file is documentation and
+    should be judged as documentation — which means CLAUDE.md 2(b) applies to
+    it in full: every volatile fact in it (row counts, reader counts, sha,
+    step counts) is a hand-written count in a derived document and WILL drift.
+    The `verification_record` at the bottom exists because it already did.
+    Candidate, not yet added: a check comparing `layers:` against sqlite_master
+    would catch BRK-23-class drift mechanically. Not added here, because
+    CLAUDE.md 1 puts the burden of proof on the addition and the sequencer that
+    would consume it is not built.
   authority: |
-    FK edges are generated. Everything else is evidenced by survey and should be
-    re-verified rather than trusted. Row counts drift; re-derive them.
+    FK relationships are read from the schema. Everything else is evidenced by
+    survey and adversarial pass, and should be re-verified rather than trusted.
+    Row counts drift; re-derive them.
 
 # ---------------------------------------------------------------------------
-# STAGES. The sequencer's outer loop.
+# LAYERS (formerly "stages"). The sequencer's outer loop is NOT a traversal.
+#
+# REFUTED 2026-08-21: the first draft of this file modelled the pipeline as
+# four sequential stages, entered once each, in order. The antagonist's finding:
+# "the stages are table buckets, not phases." The evidence is this session's own
+# work — digesting a reasoning document (a layer-3 artefact) produced research
+# LEADS (layer-2 rows). That is a 3 -> 2 edge, and it is normal, not an anomaly.
+#
+# So: these are LAYERS a walk re-enters, not phases it passes through. A
+# sequencer must be re-entrant and must not assume a table's layer tells it when
+# the table is written. `loops:` below names the backward edges that are real.
 # ---------------------------------------------------------------------------
-stages:
+layers:
   - id: 1-substrate
     name: Substrate and controlled vocabularies
     entered_by: migration only
@@ -69,8 +96,15 @@ stages:
              citation_mining, url_verification_runs, supersession_check,
              search_coverage]
     exit_condition: an evidence_sources row exists, admitted via search_admissions
-    steps_total: 14
-    steps_with_no_code: [1, 3, 4, 5, 9, 12]
+    # CORRECTED 2026-08-21: the first draft said `steps_total: 14` with six
+    # step numbers listed as having no code. The operative instrument
+    # (DR-2026-08-19 §"runbook") has Steps 0 THROUGH 12 — thirteen steps — and
+    # Steps 3 and 9 are coded CLI (`db.py log-search`, `db.py log-mining`), not
+    # hand SQL. Step 4 is the one that says "No CLI" in its own text.
+    steps_total: 13            # Steps 0-12 of the operative instrument
+    steps_that_are_hand_sql: [4, 5, 8, 10]
+    steps_with_coded_cli: [3, 9]
+    steps_verified_against: decisions/DR-2026-08-19-research-restart-operative-instrument.md
 
   - id: 3-synthesis
     name: Attachment, grading, determination
@@ -89,31 +123,95 @@ stages:
     name: Render
     outputs: [site/specs, site/populations, site/rooms, parts/, tools/*.html, audits/]
     exit_condition: rendered output cites a chaseable identifier
-    note: currently unreachable — specifications is 0 rows
+    # CORRECTED 2026-08-21: the first draft said "currently unreachable —
+    # specifications is 0 rows". OVERSTATED. site/specs/ holds 93 live pages,
+    # one per `items` row, rendered today. What is unreachable is the
+    # SPECIFICATION-BACKED render — the determination layer — not the render
+    # layer as such. The distinction matters to a sequencer: layer 4 runs, it
+    # just renders substrate rather than answers.
+    reachable: partial
+    reachable_detail: >
+      93 item pages render from `items` (layer 1). `specifications` is 0 rows,
+      so every population-and-evidence-backed surface renders empty. The
+      root index.html renders from nothing at all (BRK-10).
+
+loops:
+  # Backward and sideways edges that are NORMAL, not defects. A sequencer that
+  # assumes 1->2->3->4 will mis-sequence all of these.
+  - {from: 3-synthesis, to: 2-acquisition, edge: "reasoning prose digested into research leads / search_candidates",
+     witness: "workplan/2026-08-21-reasoning-doc-digestion.md — 27 leads produced from a layer-3 document"}
+  - {from: 2-acquisition, to: 1-substrate, edge: "an admitted source introduces terms/aliases (R11) and jurisdictional_values reference rows (R12)"}
+  - {from: 3-synthesis, to: 2-acquisition, edge: "gaps / gap_mining drive the next search round (R2)"}
+  - {from: 4-render, to: 1-substrate, edge: "audits/ read the DB and are themselves committed artefacts checked by layer-1-kind gates"}
+  - {from: 3-synthesis, to: 3-synthesis, edge: "citation_mining re-enters admission from an already-admitted source (R2, depth 2-3)"}
+
+# ---------------------------------------------------------------------------
+# VIEWS. Omitted entirely from the first draft — a 17-object blind spot in a
+# file whose whole purpose is to say who reads what.
+#
+# Views matter to a sequencer for two reasons: they are READ PATHS that no
+# table-level survey sees, and at least one carries a SEMANTIC GUARD in its
+# WHERE clause that is invisible to anything reading the base table.
+# ---------------------------------------------------------------------------
+views:
+  count: 17
+  with_code_readers:
+    - {name: v_best_practice, readers: 3}
+    - {name: v_coverage_jurisdiction, readers: 2}
+    - {name: v_coverage_branch, readers: 1}
+    - {name: v_coverage_language, readers: 1}
+    - {name: v_divergence, readers: 1}
+    - {name: v_pending, readers: 1}
+  with_zero_code_readers:
+    [v_code_floor_only, v_coverage_priority, v_item_extractions,
+     v_item_provenance, v_pmp_latest_walk, v_registry_duplicate_descriptions,
+     v_root_id_conflicts, v_source_admission, v_source_reach_all,
+     v_unregistered_roots, v_value_independence]
+  semantic_guard_in_view:
+    view: v_best_practice
+    clause: "WHERE state IN ('stated','provisional') AND code_floor_only = 0"
+    why_it_matters: >
+      The rule "a code floor is not a best practice, and a pending cell is not
+      an answer" is enforced HERE, in view SQL, and nowhere else. Anything that
+      queries `specifications` directly bypasses it silently. A sequencer
+      reading the base table gets a different — and wrong — answer set.
+  note: >
+    v_coverage_priority is the counter-example that corrects the first draft's
+    islands list: it reads lang_jur_map, which the draft called unread.
 
 # ---------------------------------------------------------------------------
 # THE BREAKS. What a sequencer must not assume works.
-# Every entry was evidenced; `witness` says how it is known.
+# Every entry was evidenced; `witness` says how it is known; `verdict` records
+# what the antagonist passes did to it.
 # ---------------------------------------------------------------------------
 breaks:
 
   - id: BRK-01
     severity: critical
+    verdict: SUSTAINED (guard line corrected)
     edge: "evidence_sources.ref_id -> source_locators.ref_id"
     kind: ABSENT
     detail: >
-      source_locators (835 rows) is a SCHEMA ISLAND: no FK in, no FK out, and
-      zero live code readers repo-wide. There is no promotion path from a held
-      locator to an admitted source, in code or in schema.
+      source_locators (835 rows) is a SCHEMA ISLAND: no FK in, no FK out. There
+      is no promotion path from a held locator to an admitted source, in code or
+      in schema.
     consequence: >
       The R9 duplicate gate cannot see 835 held identifiers. This is OD-5. Two
       of them (REF-00561, REF-00578) were independently re-discovered by an
       adversarial pass that did not know the project already held them.
     witness: FK graph + repo-wide grep including .ignore'd paths
-    guard: none
+    guard: >
+      CORRECTED — the first draft said "zero live code readers repo-wide", which
+      is true of readers that INTERPRET the table but not of readers as such.
+      migration_reproducibility --deep walks all 65 tables generically, so
+      source_locators is compared row-for-row on rebuild. That is a fidelity
+      guard, not a semantic one: it proves the rows survive migration replay and
+      says nothing about whether anything uses them. No SEMANTIC reader exists,
+      in code or in view SQL. And the deep check is ADVISORY.
 
   - id: BRK-02
     severity: critical
+    verdict: SUSTAINED (guard line corrected)
     edge: "jurisdictional_values.jurisdiction -> (no jurisdictions table)"
     kind: ABSENT
     detail: >
@@ -128,10 +226,19 @@ breaks:
       violation of the project's own GB->UK rule, permanently uncaught. On
       2026-08-21 a session invented AU-NZ, DK-NO-SE-FI and INT and every
       validator passed.
-    guard: none that reads the DB
+    guard: >
+      CORRECTED — the first draft said "none that reads the DB", which is false.
+      test_db_integrity L02 ("jurisdictional_values: YAML record count matches
+      the table") is BLOCKING, opens the DB, and FIRED on 2026-08-21, catching a
+      109-vs-121 mismatch that forced a compensating migration. What L02 guards
+      is CARDINALITY against a YAML manifest — it will catch rows appearing or
+      vanishing. It does not read the jurisdiction VALUE, so an invented code
+      substituted for a real one at constant row count still passes. The break
+      is real; the phrasing was not.
 
   - id: BRK-03
     severity: critical
+    verdict: SUSTAINED (guard line corrected)
     edge: "specifications <- specification_source_links"
     kind: NO_WRITER
     detail: >
@@ -139,10 +246,19 @@ breaks:
       JSON array. It has no writer anywhere in the repo. assess_cell writes the
       JSON convention edge instead.
     consequence: the enforced edge is unwritable; the trusted edge is unenforced
-    guard: none
+    guard: >
+      CORRECTED — the first draft said "none". test_db_integrity carries a
+      BLOCKING parity pair, H01/H02, "specification_source_links <->
+      governing_refs" (and H03/H04 for search_admissions <-> admitted_ref_ids).
+      So divergence between the two forms IS caught. But parity between an
+      unwritten table and a JSON array is satisfied trivially while
+      specifications is 0 rows — the guard is blocking AND currently vacuous,
+      which is failure mode 2(a) of CLAUDE.md. It will start doing work on the
+      first determination, and that is exactly when the missing writer bites.
 
   - id: BRK-04
     severity: critical
+    verdict: SUSTAINED
     edge: "reasoning_doc_citations.source_ref_id -> evidence_sources.ref_id"
     kind: FK_BLOCKED
     detail: >
@@ -156,6 +272,7 @@ breaks:
 
   - id: BRK-05
     severity: high
+    verdict: SUSTAINED
     edge: "two divergent answer chains"
     kind: DESIGN_SPLIT
     detail: >
@@ -169,17 +286,27 @@ breaks:
 
   - id: BRK-06
     severity: high
+    verdict: SUSTAINED (sharpened)
     edge: "retrieval-log artefact -> evidence_sources"
     kind: CONVENTION
     detail: >
       No column binds an artefact to a source. Three conventions exist; the only
       one code uses is DOI matching inside verify_authors. Tested: 20 of 22
-      manifest lines resolve. Breaks for DOI-less sources and non-JSON payloads.
+      manifest lines resolve.
+    sharpened_2026_08_21: >
+      The exclusion is not incidental — verify_authors selects its subject set
+      with `WHERE COALESCE(doi,'') <> ''`. A DOI-less source is not
+      under-verified, it is NOT A SUBJECT AT ALL. The check prints CLEAN having
+      examined nothing of it. Grey literature, standards documents and
+      non-indexed non-English work — the R5 stratum this project explicitly
+      admits — are precisely the DOI-less classes, so the fabrication defence is
+      weakest exactly where fabrication is easiest to commit.
     consequence: the fabrication defence rests on a free-text convention
     guard: author_fidelity (advisory)
 
   - id: BRK-07
     severity: high
+    verdict: SUSTAINED
     path: "retrieval-log/**"
     kind: UNCLASSIFIED_PATH
     detail: >
@@ -192,6 +319,7 @@ breaks:
 
   - id: BRK-08
     severity: high
+    verdict: SUSTAINED
     table: item_bpc_links
     kind: NO_WRITER
     detail: >
@@ -205,6 +333,7 @@ breaks:
 
   - id: BRK-09
     severity: high
+    verdict: SUSTAINED
     generator: scripts/generate/room_page.py
     kind: PHANTOM_TABLES
     detail: >
@@ -216,6 +345,7 @@ breaks:
 
   - id: BRK-10
     severity: high
+    verdict: SUSTAINED
     file: index.html
     kind: NO_GENERATOR_HARDCODED_COUNTS
     detail: >
@@ -230,6 +360,7 @@ breaks:
 
   - id: BRK-11
     severity: medium
+    verdict: SUSTAINED
     edge: "term_aliases.language <-> lang_jur_map.language"
     kind: CONVENTION_CASE_BROKEN
     detail: >
@@ -243,6 +374,7 @@ breaks:
 
   - id: BRK-12
     severity: medium
+    verdict: SUSTAINED
     edge: "search_executions.terms_used -> terms/term_aliases"
     kind: ABSENT
     detail: free text, NULL in all 9 live rows
@@ -253,16 +385,25 @@ breaks:
 
   - id: BRK-13
     severity: medium
+    verdict: SUSTAINED (softened)
     edge: "citation_mining.connections_produced -> connections.con_id"
-    kind: CONVENTION_DEAD
+    kind: CONVENTION_PROMOTION_DEAD
     detail: >
-      No reader parses it into connections. test_db_integrity records that in
-      the pre-reset corpus 13 of 25 non-empty values held bare integers (counts)
-      rather than id lists — the contract was broken before the table emptied.
+      CORRECTED — the first draft called the whole convention "DEAD". Precisely:
+      the WRITE side is alive — `db.py log-mining` is the coded CLI for Step 9
+      and populates the column. What is dead is the PROMOTION edge: no reader
+      anywhere parses connections_produced into `connections` rows.
+      test_db_integrity records that in the pre-reset corpus 13 of 25 non-empty
+      values held bare integers (counts) rather than id lists — the contract was
+      broken before the table emptied.
+    consequence: >
+      A sequencer can log mining and believe connections were produced. They
+      were recorded as a string and never became rows.
     guard: none
 
   - id: BRK-14
     severity: medium
+    verdict: SUSTAINED
     edge: "jurisdictional_values.spec_id -> specifications.spec_id"
     kind: ABSENT_DANGLING
     detail: >
@@ -271,25 +412,35 @@ breaks:
     guard: none
 
   - id: BRK-15
-    severity: medium
+    severity: low        # was medium
+    verdict: OVERSTATED — cut back
     scope: check surface
     kind: UNGUARDED_TABLES
     detail: >
-      22 tables have no active registered check reading their content:
-      access_duration, access_need_icf, access_needs, access_stakes,
-      case_studies, case_study_outcomes, case_study_populations,
-      case_study_specs, case_study_strategies, conflicts,
-      economics_entry_populations, economics_entry_specs,
-      external_root_registry, item_audit_runs, life_stage_modifiers, rooms,
-      room_items, situations, source_locators, supersession_check, terms,
-      weighting_profile.
-    note: >
-      source_locators (835 rows) is the largest populated unguarded table.
-      migration_reproducibility_deep walks them but tests rebuild-equality only,
-      not content, and is advisory.
+      CORRECTED — the first draft listed 22 tables as having "no active
+      registered check reading their content". That over-counted, because
+      validate_population.py does NOT hold a hard-coded table list: it calls
+      discover_population_columns(conn), which walks sqlite_master and claims
+      every (table, column) whose column name is `population` or
+      `population_code`. Fifteen tables match today, INCLUDING
+      case_study_populations and economics_entry_populations, both of which the
+      draft listed as unguarded. Any new table with a population column is
+      guarded on that column the moment it exists, with no registry edit.
+    remaining_truly_unguarded: >
+      The claim that survives is narrower and still worth stating:
+      source_locators (835 rows) has no check that reads its CONTENT, and is the
+      largest populated table in that condition — which is BRK-01 seen from the
+      check surface rather than the schema. The rest of the original list is a
+      mix of empty tables (where "unguarded" is not yet a defect) and tables
+      guarded on one column but not their others.
+    caveat: >
+      validate_population is ADVISORY, and guards the population CODE column
+      only. A table can be fully guarded on population and completely unguarded
+      on everything else it holds.
 
   - id: BRK-16
     severity: medium
+    verdict: SUSTAINED
     scope: regeneration
     kind: DOC_CONTRADICTS_CODE
     detail: >
@@ -302,18 +453,22 @@ breaks:
 
   - id: BRK-17
     severity: medium
+    verdict: SUSTAINED
     scope: reproducibility
     kind: SHALLOW_GUARD
     detail: >
       The BLOCKING migration_reproducibility checks user_version plus COUNT(*)
-      on six tables. It cannot see UPDATEs or content changes. The variant that
-      walks every table and row (migration_reproducibility_deep) is ADVISORY.
+      on six tables (EXAMINED: 7). It cannot see UPDATEs or content changes. The
+      variant that walks every table and row (migration_reproducibility_deep,
+      EXAMINED: 65) is ADVISORY.
     consequence: >
       A migration that alters values without changing row counts passes the
-      blocking reproducibility gate.
+      blocking reproducibility gate. See BRK-21 for the code path that would
+      produce exactly that.
 
   - id: BRK-18
     severity: low
+    verdict: SUSTAINED
     table: weighting_profile
     kind: NO_READER
     detail: 5 rows, zero code readers, no guard
@@ -321,6 +476,7 @@ breaks:
 
   - id: BRK-19
     severity: low
+    verdict: SUSTAINED
     script: scripts/audit/adjudication_integrity.py
     kind: UNREGISTERED
     detail: reads stage-3 tables, is not in check-registry.yaml (quarantined entry only)
@@ -328,6 +484,7 @@ breaks:
 
   - id: BRK-20
     severity: critical
+    verdict: SUSTAINED
     edge: "A-18 -> populations"
     kind: NO_PERMITTED_ROUTE
     detail: >
@@ -348,6 +505,96 @@ breaks:
       items: 180 item-population pairs exist only in item_population_links, 341
       only via the axis route.
 
+  # --- Added 2026-08-21 by the antagonist passes. Omitted from the first draft.
+
+  - id: BRK-21
+    severity: high
+    verdict: NEW — sustained as a code path, LATENT in effect
+    edge: "resolve_dois.py -> evidence_sources (outside the migration path)"
+    kind: SANCTIONED_PATH_BYPASS
+    detail: >
+      scripts/resolve_dois.py:590 executes
+      `UPDATE evidence_sources SET {...} WHERE ref_id = ?` directly. CLAUDE.md
+      3 says the DB is written by migrations only. evidence_sources is a
+      layer-2 core table and is NOT on migration_reproducibility's
+      EXEMPT_TABLES list (which holds only evidence_source_authors and
+      pipeline_runs, per DR-2026-05-28).
+    consequence: >
+      Running the enrichment phase against the canonical DB would put committed
+      bytes out of correspondence with the migration history. Because the
+      BLOCKING reproducibility check compares COUNT(*) only (BRK-17), an UPDATE
+      changes no count and the blocking gate stays green; only the ADVISORY
+      deep check would see it.
+    latency_note: >
+      IMPORTANT — this is a live code path, not a live divergence. Verified
+      2026-08-21: `migration_reproducibility.py --deep` PASSES, 63 tables
+      identical, only the two DR-exempt tables excluded. An earlier draft of
+      this entry asserted a "277-row divergence, RED in the deep check". That
+      was WRONG and is retracted here; it was carried from an unverified
+      report. Re-derive before repeating it.
+
+  - id: BRK-22
+    severity: medium
+    verdict: NEW
+    table: jurisdictional_values
+    kind: RULING_NOT_ENFORCED_IN_SCHEMA
+    detail: >
+      The 2026-08-12 owner ruling made this table REFERENCE-ONLY: it names which
+      document to go and get, never what the document says. The live data honours
+      it — 109 rows, and value_text, value_numeric and spec_id are NULL on all
+      109. But the schema still carries value_text, value_numeric, unit and
+      is_code_minimum with no constraint, no trigger and no check forbidding a
+      write.
+    consequence: >
+      On 2026-08-21 a session wrote 12 rows of claimed values into it. The
+      violation was caught by L02's CARDINALITY parity (109 YAML vs 121 table),
+      not by anything reading the value columns. A write that replaced values
+      in place, at constant row count, would pass every gate.
+    guard: test_db_integrity L02 (blocking, cardinality only)
+    note: >
+      Owner-gated rename pending: if the table catalogues jurisdictions it should
+      be called `jurisdictions`, and the value columns should go with the rename.
+
+  - id: BRK-23
+    severity: medium
+    verdict: NEW
+    scope: map coverage
+    kind: TABLES_IN_NO_LAYER
+    detail: >
+      13 of the 65 live tables appear in no layer above:
+      case_study_outcomes, case_study_populations, case_study_specs,
+      case_study_strategies, citation_population_links, data_migrations,
+      decisions, economics_entry_populations, economics_entry_specs,
+      extraction_population_links, item_audit_runs, pipeline_runs,
+      probe_population_links.
+    consequence: >
+      A sequencer driven from this file would never visit them. Two classes:
+      the *_populations / *_specs / *_links join tables are the SECOND HOP of
+      layer-3 entities the map named only at their head table (case_studies,
+      economics_entries, source_value_extractions, spec_value_probes,
+      citation_mining) — so the map records the entity and drops its
+      attachments, which is the same shape as BRK-03. data_migrations and
+      decisions are standalone by design. pipeline_runs and item_audit_runs are
+      job-owned run records.
+    guard: none — no check compares this file against sqlite_master
+
+  - id: BRK-24
+    severity: medium
+    verdict: NEW
+    scope: read surface
+    kind: VIEWS_UNREAD_AND_UNMAPPED
+    detail: >
+      The first draft of this file did not mention views at all. 17 exist; 11
+      have zero code readers (see `views:` above). One, v_best_practice, holds a
+      SEMANTIC GUARD in its WHERE clause — the "code floors and pending cells
+      are not best practice" rule — enforced there and nowhere else.
+    consequence: >
+      Two failures in one. A reader that queries `specifications` directly gets
+      an answer set the project's own rule excludes, with nothing to warn it.
+      And 11 views are unread apparatus by CLAUDE.md 1's own test — the same
+      defect class as BRK-18, eleven times over, on the read side.
+    guard: none
+
 # ---------------------------------------------------------------------------
 # UNENFORCED CONTRACT CRITERIA. Declared in governance/pipeline-contract.yaml
 # with `check: null`. The sequencer must treat these transitions as unguarded.
@@ -357,7 +604,17 @@ unenforced_transitions:
   - {stage: judgment,   criterion: derivation-handshake}
   - {stage: judgment,   criterion: convergence-independence}
   - {stage: synthesis,  criterion: opus-routing}
-  - {stage: render,     criterion: render-freshness}
+  - stage: render
+    criterion: render-freshness
+    qualification: >
+      QUALIFIED 2026-08-21. The contract declares `check: null`, and the
+      criterion's own text says "parts/ has no committed fingerprint gate" —
+      both true. But four registered freshness checks DO exist and run on the
+      render kind: site_pages_fresh, evidentiary_audit_fresh,
+      pipeline_completeness_fresh and context_map_fresh. All four are ADVISORY,
+      and none covers parts/. So this transition is unenforced in the sense the
+      contract means (nothing BLOCKS on staleness) but not unwatched. Reading it
+      as "no check exists" would be wrong.
 
 # ---------------------------------------------------------------------------
 # PATHS THAT SELECT NO CHECK BATTERY (run_checks.classify() -> no kind).
@@ -381,13 +638,76 @@ unclassified_paths:
 
 # ---------------------------------------------------------------------------
 # ISLANDS. No FK in, no FK out.
+# CORRECTED 2026-08-21 — the first draft's `populated_and_unread` and
+# `empty_and_unwritten` lists were both wrong, in the same direction: they
+# asserted absence of readers/writers without checking view SQL or job scripts.
 # ---------------------------------------------------------------------------
 islands:
-  populated_and_unread: [source_locators, lang_jur_map, weighting_profile,
-                         access_duration, access_stakes, life_stage_modifiers]
-  empty_and_unwritten:  [situations, external_root_registry, pipeline_runs,
-                         url_verification_runs]
+  populated_and_unread: [source_locators, weighting_profile, access_duration,
+                         access_stakes, life_stage_modifiers]
+    # REMOVED: lang_jur_map. It has 70 rows and at least four readers —
+    # scripts/audit/alias_provenance_audit.py (BLOCKING), scripts/db.py,
+    # tools/pipeline_completeness.py, and the view v_coverage_priority. It is
+    # not an island; it is the required-coverage bridge those readers denominate
+    # against. The draft asserted "unread" without grepping.
+  empty_and_unwritten:  [situations, external_root_registry]
+  island_detail:
+    - {table: access_duration,       rows: 3, code_readers: 0, view_readers: 0}
+    - {table: access_stakes,         rows: 3, code_readers: 0, view_readers: 0}
+    - {table: life_stage_modifiers,  rows: 2, code_readers: 0, view_readers: 0}
+    - {table: weighting_profile,     rows: 5, code_readers: 0, view_readers: 0,
+       note: "one grep hit exists at scripts/emit_data_migration.py:603 — it is an
+              EXAMPLE STRING inside a docstring, not a reader. Counted as zero."}
+    - {table: source_locators,       rows: 835, code_readers: 0, view_readers: 0, see: BRK-01}
+    - {table: situations,            rows: 0, code_readers: 0, view_readers: 0}
+    - table: external_root_registry
+      rows: 0
+      code_readers: 0
+      view_readers: 3
+      views: [v_registry_duplicate_descriptions, v_unregistered_roots, v_value_independence]
+      note: >
+        The one genuinely interesting island. It is empty and has no code
+        reader, but three views query it — and all three are in the
+        `with_zero_code_readers` list above. So it is read by apparatus that
+        nothing reads: an unread table behind unread views. Two layers of
+        CLAUDE.md 1's "nothing is added without naming what reads it", stacked.
+    # REMOVED: pipeline_runs and url_verification_runs. Both are EMPTY but both
+    # have code writers — scripts/resolve_dois.py:681/726/1013 and
+    # scripts/verify_urls.py:377/474/515 respectively. They are job-owned run
+    # records that no job has run against the canonical DB, which is a different
+    # condition from unwritten and carries a different remedy (run the job, not
+    # write the writer). pipeline_runs is additionally EXEMPT from
+    # migration_reproducibility by DR-2026-05-28, precisely because it IS
+    # job-written.
   standalone_by_design: [decisions, data_migrations]
   in_practice: >
     `rooms` (17 rows) has FK edges but is an island in practice: its only bridge
     (room_items) is empty and its only would-be reader queries phantom tables.
+
+# ---------------------------------------------------------------------------
+# WHAT THE ANTAGONIST PASSES CHANGED. Kept so the next reader can calibrate how
+# much to trust an unrefuted survey.
+# ---------------------------------------------------------------------------
+verification_record:
+  claims_tested: 20
+  sustained_on_substance: 19
+  cut_back: [BRK-15]
+  supporting_assertions_found_wrong: 6
+  wrong_assertions:
+    - "BRK-01 guard: 'zero live code readers' — true semantically, false literally (deep check walks it)"
+    - "BRK-02 guard: 'none that reads the DB' — L02 is blocking, reads the DB, and fired"
+    - "BRK-03 guard: 'none' — H01/H02 blocking parity exists (though vacuous today)"
+    - "islands: lang_jur_map listed unread — it has 4+ readers including a blocking check"
+    - "islands: pipeline_runs / url_verification_runs listed unwritten — both have code writers"
+    - "stage 2 steps_total: 14 — the instrument has 13 steps (0-12), two of them coded CLI"
+  models_refuted:
+    - "the four-stage linear model — stages are re-entrant layers, not phases; see `loops:`"
+    - "stage 4 'unreachable' — 93 item pages render today; the SPECIFICATION-backed surface is what is empty"
+  omissions_found: [BRK-21, BRK-22, BRK-23, BRK-24]
+  retracted_claims:
+    - "a 277-row evidence_sources divergence RED in migration_reproducibility_deep — the deep check PASSES; see BRK-21 latency_note"
+  lesson: >
+    Nineteen of twenty headline claims held, and six of the supporting details
+    under them did not. The survey was right about WHAT is broken and wrong
+    about WHO WOULD CATCH IT — which is the more dangerous half to be wrong
+    about, because a sequencer trusts the guard line, not the prose.
