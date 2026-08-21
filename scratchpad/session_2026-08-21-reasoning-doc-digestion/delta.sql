@@ -1,0 +1,177 @@
+-- Source leads digested from references/bpc-reasoning/room-acoustic-performance.md
+-- (Pass-1 pilot reasoning doc, authored 2026-05-15/17, pre-dating the 2026-08-06
+-- clean-room evidence reset which removed every evidence_sources row it cited).
+--
+-- These are LEADS, not admissions (R15: a staged candidate description is a
+-- HYPOTHESIS; re-describe from the source on resolution). Tier values are the
+-- reasoning doc's own guesses, carried forward as guesses. exec_id is NULL
+-- because no search execution surfaced these — a document did.
+INSERT INTO search_candidates
+ (candidate_id, exec_id, found_under_slug, suggested_slug, disposition, title, locator,
+  locator_status, tier_guess, harm_finding, why_not_admitted, notes, session, created_at)
+VALUES
+ (4,NULL,'room-acoustic-performance','room-acoustic-performance','PENDING-VERIFICATION',
+  'Iglehart 2020 — RT60 and speech perception, hearing-aid users (primary validation of 0.3 s, N=10)',
+  '10.1044/2019_AJA-19-0010','RESOLVED',1,0,
+  'Cited by the pilot reasoning doc as the Tier-1 anchor for the DEAF 0.3 s target and for PMP-A18-001 strict termination; orphaned by the 2026-08-06 clean-room reset. Never re-admitted.',
+  'Held as source_locators REF-00325. Doc step 5 names it "primary validation of 0.3 s with hearing-aid users, N=10".',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50'),
+ (5,NULL,'room-acoustic-performance','room-acoustic-performance','PENDING-VERIFICATION',
+  'Iglehart 2016 — reverberation and speech recognition',
+  '10.1044/2016_AJA-15-0064','RESOLVED',1,0,
+  'Tier-1 DEAF anchor in the pilot doc; orphaned by the 2026-08-06 reset. Also the witness named in the exec-5 retraction of 2026-08-19 — the second OD-5 witness.',
+  'Held as source_locators REF-00578. Manipulates RT at 0.3/0.6/0.9 s per GAP-B01-004.',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50'),
+ (6,NULL,'room-acoustic-performance','room-acoustic-performance','PENDING-VERIFICATION',
+  'Bettarello, Caniato, Scavuzzo & Gasparella 2021 — Indoor Acoustic Requirements for Autism-Friendly Spaces',
+  '10.3390/app11093942','RESOLVED',3,0,
+  'The pilot doc records it as proposing an aspirational 0.4-0.7 s range from a single Italian daily-care facility (n=7 rooms) — a quantified design recommendation, NOT a Tier-1 threshold. Orphaned by the 2026-08-06 reset.',
+  'Held as source_locators REF-00561. Independently re-found 2026-08-21 by the adversarial pass via OpenAlex, which did not know the project already held it. FIRST OD-5 witness.',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50'),
+ (7,NULL,'room-acoustic-performance','room-acoustic-performance','PENDING-VERIFICATION',
+  'Marzi 2025 (Scientific Reports) — autism-friendly acoustic design, primary',
+  '10.1038/s41598-025-02358-4','RESOLVED',1,0,
+  'Cited as independent corroboration that no Tier-1 quantified RT60 threshold exists for autistic occupants. Orphaned by the 2026-08-06 reset.',
+  'Held as source_locators REF-00727. Doc quotes it verbatim: "In the absence of specific quantitative data on sound levels tailored to autistic users, a study on neurotypical students was referenced." This is an ABSENCE finding (R7) and is first-class evidence.',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50'),
+ (8,NULL,'room-acoustic-performance','room-acoustic-performance','PENDING-VERIFICATION',
+  'Marzi 2024 (Building and Environment) — review',
+  '10.1016/j.buildenv.2024.112254','RESOLVED',1,0,
+  'NDV/AUT evidence base in the pilot doc; orphaned by the 2026-08-06 reset.',
+  'Held as source_locators REF-00726.',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50'),
+ (9,NULL,'room-acoustic-performance','room-acoustic-performance','PENDING-VERIFICATION',
+  'Neuman 2010 — reverberation and speech perception in children',
+  '10.1097/AUD.0b013e3181d3d514','RESOLVED',1,0,
+  'Tier-1 DEAF anchor in the pilot doc; orphaned by the 2026-08-06 reset.',
+  'Held as source_locators REF-00577.',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50'),
+ (10,NULL,'room-acoustic-performance','room-acoustic-performance','PENDING-VERIFICATION',
+  'Wroblewski 2012 — reverberation and speech recognition, children with hearing loss',
+  '10.1097/AUD.0b013e31825aecad','RESOLVED',1,0,
+  'Tier-1 DEAF anchor in the pilot doc; orphaned by the 2026-08-06 reset.',
+  'Held as source_locators REF-00576.',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50'),
+ (11,NULL,'room-acoustic-performance','room-acoustic-performance','PENDING-VERIFICATION',
+  'Devos 2019 (Frontiers in Neurology) — acoustic environment and dementia',
+  '10.3389/fneur.2019.01286','RESOLVED',3,0,
+  'The only DEM-population source with a REF-id in the pilot doc; orphaned by the 2026-08-06 reset. DEM carries 8 of 13 items on this slug and no admission above PROXY.',
+  'Held as source_locators REF-00571. Bears directly on GAP-B01-002.',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50'),
+ (12,NULL,'room-acoustic-performance','room-acoustic-performance','PENDING-VERIFICATION',
+  'Black 2022 (Autism) — autistic sensory experience',
+  '10.1177/13623613221102753','RESOLVED',3,0,
+  'NDV/AUT evidence base in the pilot doc; orphaned by the 2026-08-06 reset.',
+  'Held as source_locators REF-00589.',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50'),
+ (13,NULL,'room-acoustic-performance','room-acoustic-performance','PENDING-VERIFICATION',
+  'Amlani & Russo 2016 (J Am Acad Audiol)','10.3766/jaaa.15096','RESOLVED',NULL,0,
+  'Cited in the pilot doc without an inline tier descriptor; orphaned by the 2026-08-06 reset. Tier unknown — must be graded from the source, not guessed.',
+  'Held as source_locators REF-00580.',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50'),
+ (14,NULL,'room-acoustic-performance','room-acoustic-performance','PENDING-VERIFICATION',
+  'REF-00335 — cited in the pilot reasoning doc with no inline descriptor and no DOI in source_locators',
+  NULL,NULL,NULL,0,
+  'Identity unknown. Appears as a bare REF-id in the pilot doc; source_locators holds the id but no DOI/URL/PMID. Cannot be re-admitted until identified.',
+  'This is the weakest of the eleven orphans and may be unrecoverable. Recorded so it is not silently dropped.',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50'),
+ (15,NULL,'room-acoustic-performance',NULL,'PENDING-VERIFICATION',
+  'BrainXchange Canada — dementia acoustic guidance (Tier 2 Co-1 per the pilot doc)',
+  NULL,NULL,2,0,
+  'Named in the pilot doc DEM row as "ref not yet linked" — never had a REF-id at all. No locator recorded.',
+  'Co-1 candidate for DEM. Locator must be found before any grading.',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50'),
+ (16,NULL,'room-acoustic-performance',NULL,'PENDING-VERIFICATION',
+  'Lyngby-Taarbaek post-occupancy evaluation — dementia care (Tier 2 case study per the pilot doc)',
+  NULL,NULL,2,0,
+  'Named in the pilot doc DEM row as "ref not yet linked" — never had a REF-id. No locator recorded.',
+  'Case-study candidate for DEM; on resolution belongs in case_studies (R12), not prose.',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50');
+
+-- Two entries from the step-3 table that are NOT jurisdictions and therefore do
+-- not belong in jurisdictional_values. Filed as standards leads rather than
+-- inventing a jurisdiction code (controlled-vocabulary drift).
+INSERT INTO search_candidates
+ (candidate_id, exec_id, found_under_slug, suggested_slug, disposition, title, locator,
+  locator_status, tier_guess, harm_finding, why_not_admitted, notes, session, created_at)
+VALUES
+ (17,NULL,'room-acoustic-performance','room-acoustic-performance','PENDING-VERIFICATION',
+  'Nordic school-acoustics codes (DK/NO/SE/FI) referencing ISO 3382 / NS-EN 16798 — classroom RT60 0.4-0.6 s',
+  NULL,NULL,6,0,
+  'The pilot doc records this as a single composite "DK/NO/SE/FI" cell. It is four jurisdictions, not one, and only NO is in this table established vocabulary. Cannot be filed as a jurisdictional_value until split per country with a retrieved clause each.',
+  '[UNVERIFIED-QUANT] typical classroom RT60 0.4-0.6 s. Coverage described as thin, with some references to assistive-listening infrastructure.',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50'),
+ (18,NULL,'room-acoustic-performance','room-acoustic-performance','PENDING-VERIFICATION',
+  'WELL Building Standard — reverberation <= 0.6 s for <= 280 m3',
+  NULL,NULL,6,0,
+  'A private rating system, not a jurisdiction; has no valid jurisdiction code in this table. Named in the pilot doc step 4 as the nearest thing to a DEM-relevant reverberation target, and it is not dementia-specific.',
+  '[UNVERIFIED-QUANT] reverberation <= 0.6 s for <= 280 m3, not population-specific.',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50');
+-- A-18 (RT60 in Occupied Learning and Listening Spaces) jurisdictional values,
+-- digested from the pilot reasoning doc's rule-#9 step-3 comparison table.
+--
+-- R12: code values belong in jurisdictional_values, never in prose notes.
+-- R3:  every quantified value carries [UNVERIFIED-QUANT] because the doc itself
+--      states "Citation-grade verification of this table is PENDING" — no cell
+--      has been checked against the standard's own text.
+-- value_numeric is deliberately left NULL throughout: that column is for a
+-- verified scalar, and asserting one here would claim a verification that has
+-- not happened. The value lives in value_text with its marker.
+-- A-18 had ZERO rows in this table before this migration.
+INSERT INTO jurisdictional_values
+ (jv_id,item_code,jurisdiction,standard_name,value_text,value_numeric,unit,is_code_minimum,
+  evidence_tier,source_section,notes,created_at,created_by_session,updated_at,updated_by_session)
+VALUES
+ (110,'A-18','US','ANSI/ASA S12.60-2010/Part 1',
+  '[UNVERIFIED-QUANT] general RT60 <= 0.6 s (core learning space <= 283 m3); <= 0.7 s (283-566 m3). Hearing-aid/CI users: RT60 <= 0.3 s (<= 283 m3).',
+  NULL,'s',1,6,'Footnote e; Commentary 5.3.1',
+  'Comparator type: volume-based. The 0.3 s figure is the DEAF-population differentiator and the pilot doc treats it as the lowest-barrier code in the surveyed set.',
+  '2026-08-21 18:50','session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50','session_2026-08-21-reasoning-doc-digestion'),
+ (111,'A-18','GB','BB93 (Building Bulletin 93, 2015)',
+  '[UNVERIFIED-QUANT] general RT60 <= 0.4-0.8 s by room type; hearing-impaired "specially resourced provision" RT60 <= 0.4 s.',
+  NULL,'s',1,6,NULL,
+  'Comparator type: room-type-based. Statutory under the Education (School Premises) Regulations. Next-lowest barrier after ANSI/ASA in the room-type family.',
+  '2026-08-21 18:50','session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50','session_2026-08-21-reasoning-doc-digestion'),
+ (112,'A-18','GB','PAS 6463:2022',
+  'No quantified RT60. Qualitative only ("acoustic calm in sensory-sensitive spaces"); references BB93.',
+  NULL,NULL,0,6,NULL,
+  'The ONLY standards-body publication in the surveyed set explicitly addressing neurodivergent occupant acoustic needs, and it stays qualitative. Not statutory. This absence is a first-class finding (R7), not a coverage gap.',
+  '2026-08-21 18:50','session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50','session_2026-08-21-reasoning-doc-digestion'),
+ (113,'A-18','DE','DIN 18041:2016',
+  '[UNVERIFIED-QUANT] volume-dependent target curve, typically 0.4-0.8 s by room type.',
+  NULL,'s',1,6,'Annex — "Hoersamkeit bei Behinderung"',
+  'Comparator type: formula-based. The disability annex is qualitative; NDV/AUT not quantified. Exec 4 of batch-01 searched this standard and could not retrieve the clause — held as [UNVERIFIED-QUANT] there too.',
+  '2026-08-21 18:50','session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50','session_2026-08-21-reasoning-doc-digestion'),
+ (114,'A-18','IT','UNI 11532-2:2020',
+  '[UNVERIFIED-QUANT] RT60 by room class A1-A4; class A4 (high-criticality educational) approx 0.5 s. Classes A3.1/A4 address students with hearing deficit at lower RT targets.',
+  NULL,'s',1,6,NULL,
+  'Comparator type: room-class-based. Mandatory citation in IT acoustic design. Category A4 considers cognitive accessibility qualitatively; NDV/AUT not quantified.',
+  '2026-08-21 18:50','session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50','session_2026-08-21-reasoning-doc-digestion'),
+ (115,'A-18','FR','NF S 31-080 (2006)',
+  '[UNVERIFIED-QUANT] RT60 <= 0.4-0.8 s by room category.',
+  NULL,'s',1,6,NULL,'Comparator type: room-category-based. Not differentiated for hearing impairment.',
+  '2026-08-21 18:50','session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50','session_2026-08-21-reasoning-doc-digestion'),
+ (116,'A-18','AU','AS/NZS 2107:2016',
+  '[UNVERIFIED-QUANT] RT60 by space type; typical classroom 0.4-0.6 s.',
+  NULL,'s',1,6,NULL,'Comparator type: space-type table. AS/NZS 2107 is the joint Australia/New Zealand standard; filed under AU because NZ is not in this table established jurisdiction vocabulary. References but does not quantify hearing-impaired-specific targets.',
+  '2026-08-21 18:50','session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50','session_2026-08-21-reasoning-doc-digestion'),
+ (117,'A-18','CN','GB 50118-2010',
+  '[UNVERIFIED-QUANT] classroom RT60 <= 0.7-0.9 s by volume.',
+  NULL,'s',1,6,NULL,'Comparator type: volume-based. Not differentiated by population. Highest (least inclusive) general target in the surveyed set.',
+  '2026-08-21 18:50','session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50','session_2026-08-21-reasoning-doc-digestion'),
+ (118,'A-18','NL','NEN 3088',
+  '[UNVERIFIED-QUANT] RT60 <= 0.5-0.8 s.',
+  NULL,'s',1,6,NULL,'Comparator type: room-type-based. Not differentiated.',
+  '2026-08-21 18:50','session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50','session_2026-08-21-reasoning-doc-digestion'),
+ (119,'A-18','BE','NBN S 01-400-2',
+  '[UNVERIFIED-QUANT] typical classroom RT60 <= 0.8 s.',
+  NULL,'s',1,6,NULL,'Comparator type: room-type-based. Not differentiated.',
+  '2026-08-21 18:50','session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50','session_2026-08-21-reasoning-doc-digestion'),
+ (120,'A-18','ES','DB-HR (CTE)',
+  '[UNVERIFIED-QUANT] typical classroom RT60 <= 0.7 s.',
+  NULL,'s',1,6,NULL,'Comparator type: room-type-based. Sound protection under the technical building code. Not differentiated.',
+  '2026-08-21 18:50','session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50','session_2026-08-21-reasoning-doc-digestion'),
+ (122,'A-18','JP','JIS Z 8731 + Barrier-Free Law',
+  'No quantified RT60 target in the acoustic standard. Barrier-Free Law addresses physical access; acoustic provisions not quantified per population.',
+  NULL,NULL,0,6,NULL,'Measurement-method standard, not a target-setting one. Absence recorded as a finding (R7).',
+  '2026-08-21 18:50','session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:50','session_2026-08-21-reasoning-doc-digestion');

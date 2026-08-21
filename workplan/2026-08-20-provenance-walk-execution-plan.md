@@ -334,6 +334,46 @@ cannot see `source_locators`, where all 11 sit. Two of those 11 are the OD-5 wit
 un-ingested through indiscipline; the ingestion path is FK-blocked by the exact defect OD-5 names.
 **OD-5 unblocks D-2.**
 
+### D-2a. Clarification, 2026-08-21: prose is *never* the body, and the narrative belongs in columns
+
+*Owner:* *"prose as body, we never do that. prose is always a supplement to our data tables, and I
+would prefer having THAT digested into lengthy table columns to keep it on same surface… but only
+as a supplement."*
+
+Sharper than D-2 as first recorded. The rule is not "get the claims into tables and keep the
+narrative in Markdown". **The narrative itself goes into long-text columns on the same surface as
+the data it reasons about.** A `.md` reasoning document is at most a rendered supplement of those
+columns — never their source, and never the only place a piece of reasoning exists.
+
+### D-4. Stage 1 is the substrate, and two of its vocabularies do not exist
+
+*Owner:* stage 1 sets up the tables for research slugs/sources/leads · populations/ICF/access
+needs · built environment/typologies/rooms/spaces · jurisdictions/languages · terms/aliases/
+concepts/translations.
+
+Audited against the live DB 2026-08-21. The frame is right; three corrections:
+
+1. **The ICF/access-need layer is more developed than "populations/axes" suggests** and should be
+   named explicitly: `access_needs` (17), `access_need_icf` (43), `access_need_axis_map` (21),
+   `access_duration` (3), `access_stakes` (3), `life_stage_modifiers` (2), `situations` (0).
+2. **The built-environment layer is one table and an unbuilt bridge.** `rooms` holds 17 rows;
+   `room_items` holds **0**, so nothing connects a room to an item. There is no building-typology,
+   spaces, architecture or interior-design table at all.
+3. **`jurisdictions` and `languages` DO NOT EXIST as tables.** Jurisdiction is free text inside
+   `jurisdictional_values`, constrained by nothing. This is not academic: on 2026-08-21 this
+   session invented the codes `AU-NZ`, `DK-NO-SE-FI` and `INT` and **every validator passed**.
+   `lang_jur_map` (70) and `search_languages` (0) are not that vocabulary.
+
+**On the name.** With all values cleared by the 2026-08-12 ruling, `jurisdictional_values` holds
+`item_code + jurisdiction + standard_name` — the name is now false. But it cannot simply become
+`jurisdictions`: it is **item-scoped**, so it is a per-item standard-sourcing index
+(`jurisdictional_standards` / `standard_sourcing_index`). The jurisdiction *catalogue* is a
+separate, missing table.
+
+Also unnamed in the stage-1 list but real: `weighting_profile` (5), `conflicts` (0),
+`external_root_registry` (0), and `term_aliases` — **2,382 rows, the largest vocabulary asset in
+the project.**
+
 ### D-3. Blocking-and-vacuous is three different conditions, not one.
 
 The five blocking gates reporting `EXAMINED: 0` do so for three distinct reasons, per the registry's

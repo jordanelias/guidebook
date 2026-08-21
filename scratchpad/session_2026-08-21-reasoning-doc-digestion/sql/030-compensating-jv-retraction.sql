@@ -1,0 +1,78 @@
+-- COMPENSATING MIGRATION.
+-- The preceding migration (data_20260821185244) wrote 12 rows carrying claimed
+-- values into jurisdictional_values. That table was RETIRED TO REFERENCE-ONLY by
+-- owner ruling 2026-08-12: "All claimed values are cleared... it names which
+-- document to go and get, never what it says." Marking the cells
+-- [UNVERIFIED-QUANT] does not cure that — the ruling is about the table holding
+-- contents at all, not about their confidence. The write also had no YAML mirror,
+-- which the blocking test_db_integrity L02 check caught.
+--
+-- Fix forward (the DB is append-only): the 12 rows are removed and their content
+-- is re-filed as search_candidates leads, which is where owner directive D-1
+-- (2026-08-21) places digested scaffolding and prose claims in any case.
+DELETE FROM jurisdictional_values WHERE item_code='A-18';
+
+INSERT INTO search_candidates
+ (candidate_id, exec_id, found_under_slug, suggested_slug, disposition, title, locator,
+  locator_status, tier_guess, harm_finding, why_not_admitted, notes, session, created_at)
+VALUES
+ (19,NULL,'room-acoustic-performance','room-acoustic-performance','PENDING-VERIFICATION',
+  'ANSI/ASA S12.60-2010/Part 1 (US) — standard to retrieve for A-18 RT60',NULL,NULL,6,0,
+  'Digested from the pilot reasoning doc step-3 table. Not filed as a jurisdictional_value: that table is REFERENCE-ONLY per owner ruling 2026-08-12 and names documents, not contents. Requires clause-level retrieval before any value is asserted.',
+  '[UNVERIFIED-QUANT] general RT60 <= 0.6 s (core learning space <= 283 m3); <= 0.7 s (283-566 m3). Hearing-aid/CI users: RT60 <= 0.3 s (<= 283 m3). Locator named by the doc: Footnote e; Commentary 5.3.1. Comparator type: volume-based. The 0.3 s figure is the DEAF-population differentiator and the pilot doc treats it as the lowest-barrier code in the surveyed set.',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:55'),
+ (20,NULL,'room-acoustic-performance','room-acoustic-performance','PENDING-VERIFICATION',
+  'BB93 (Building Bulletin 93, 2015) (GB) — standard to retrieve for A-18 RT60',NULL,NULL,6,0,
+  'Digested from the pilot reasoning doc step-3 table. Not filed as a jurisdictional_value: that table is REFERENCE-ONLY per owner ruling 2026-08-12 and names documents, not contents. Requires clause-level retrieval before any value is asserted.',
+  '[UNVERIFIED-QUANT] general RT60 <= 0.4-0.8 s by room type; hearing-impaired "specially resourced provision" RT60 <= 0.4 s. Comparator type: room-type-based. Statutory under the Education (School Premises) Regulations. Next-lowest barrier after ANSI/ASA in the room-type family.',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:55'),
+ (21,NULL,'room-acoustic-performance','room-acoustic-performance','PENDING-VERIFICATION',
+  'PAS 6463:2022 (GB) — standard to retrieve for A-18 RT60',NULL,NULL,6,0,
+  'Digested from the pilot reasoning doc step-3 table. Not filed as a jurisdictional_value: that table is REFERENCE-ONLY per owner ruling 2026-08-12 and names documents, not contents. Requires clause-level retrieval before any value is asserted.',
+  'No quantified RT60. Qualitative only ("acoustic calm in sensory-sensitive spaces"); references BB93. The ONLY standards-body publication in the surveyed set explicitly addressing neurodivergent occupant acoustic needs, and it stays qualitative. Not statutory. This absence is a first-class finding (R7), not a coverage gap.',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:55'),
+ (22,NULL,'room-acoustic-performance','room-acoustic-performance','PENDING-VERIFICATION',
+  'DIN 18041:2016 (DE) — standard to retrieve for A-18 RT60',NULL,NULL,6,0,
+  'Digested from the pilot reasoning doc step-3 table. Not filed as a jurisdictional_value: that table is REFERENCE-ONLY per owner ruling 2026-08-12 and names documents, not contents. Requires clause-level retrieval before any value is asserted.',
+  '[UNVERIFIED-QUANT] volume-dependent target curve, typically 0.4-0.8 s by room type. Locator named by the doc: Annex — "Hoersamkeit bei Behinderung". Comparator type: formula-based. The disability annex is qualitative; NDV/AUT not quantified. Exec 4 of batch-01 searched this standard and could not retrieve the clause — held as [UNVERIFIED-QUANT] there too.',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:55'),
+ (23,NULL,'room-acoustic-performance','room-acoustic-performance','PENDING-VERIFICATION',
+  'UNI 11532-2:2020 (IT) — standard to retrieve for A-18 RT60',NULL,NULL,6,0,
+  'Digested from the pilot reasoning doc step-3 table. Not filed as a jurisdictional_value: that table is REFERENCE-ONLY per owner ruling 2026-08-12 and names documents, not contents. Requires clause-level retrieval before any value is asserted.',
+  '[UNVERIFIED-QUANT] RT60 by room class A1-A4; class A4 (high-criticality educational) approx 0.5 s. Classes A3.1/A4 address students with hearing deficit at lower RT targets. Comparator type: room-class-based. Mandatory citation in IT acoustic design. Category A4 considers cognitive accessibility qualitatively; NDV/AUT not quantified.',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:55'),
+ (24,NULL,'room-acoustic-performance','room-acoustic-performance','PENDING-VERIFICATION',
+  'NF S 31-080 (2006) (FR) — standard to retrieve for A-18 RT60',NULL,NULL,6,0,
+  'Digested from the pilot reasoning doc step-3 table. Not filed as a jurisdictional_value: that table is REFERENCE-ONLY per owner ruling 2026-08-12 and names documents, not contents. Requires clause-level retrieval before any value is asserted.',
+  '[UNVERIFIED-QUANT] RT60 <= 0.4-0.8 s by room category. Comparator type: room-category-based. Not differentiated for hearing impairment.',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:55'),
+ (25,NULL,'room-acoustic-performance','room-acoustic-performance','PENDING-VERIFICATION',
+  'AS/NZS 2107:2016 (AU) — standard to retrieve for A-18 RT60',NULL,NULL,6,0,
+  'Digested from the pilot reasoning doc step-3 table. Not filed as a jurisdictional_value: that table is REFERENCE-ONLY per owner ruling 2026-08-12 and names documents, not contents. Requires clause-level retrieval before any value is asserted.',
+  '[UNVERIFIED-QUANT] RT60 by space type; typical classroom 0.4-0.6 s. Comparator type: space-type table. AS/NZS 2107 is the joint Australia/New Zealand standard; filed under AU because NZ is not in this table established jurisdiction vocabulary. References but does not quantify hearing-impaired-specific targets.',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:55'),
+ (26,NULL,'room-acoustic-performance','room-acoustic-performance','PENDING-VERIFICATION',
+  'GB 50118-2010 (CN) — standard to retrieve for A-18 RT60',NULL,NULL,6,0,
+  'Digested from the pilot reasoning doc step-3 table. Not filed as a jurisdictional_value: that table is REFERENCE-ONLY per owner ruling 2026-08-12 and names documents, not contents. Requires clause-level retrieval before any value is asserted.',
+  '[UNVERIFIED-QUANT] classroom RT60 <= 0.7-0.9 s by volume. Comparator type: volume-based. Not differentiated by population. Highest (least inclusive) general target in the surveyed set.',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:55'),
+ (27,NULL,'room-acoustic-performance','room-acoustic-performance','PENDING-VERIFICATION',
+  'NEN 3088 (NL) — standard to retrieve for A-18 RT60',NULL,NULL,6,0,
+  'Digested from the pilot reasoning doc step-3 table. Not filed as a jurisdictional_value: that table is REFERENCE-ONLY per owner ruling 2026-08-12 and names documents, not contents. Requires clause-level retrieval before any value is asserted.',
+  '[UNVERIFIED-QUANT] RT60 <= 0.5-0.8 s. Comparator type: room-type-based. Not differentiated.',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:55'),
+ (28,NULL,'room-acoustic-performance','room-acoustic-performance','PENDING-VERIFICATION',
+  'NBN S 01-400-2 (BE) — standard to retrieve for A-18 RT60',NULL,NULL,6,0,
+  'Digested from the pilot reasoning doc step-3 table. Not filed as a jurisdictional_value: that table is REFERENCE-ONLY per owner ruling 2026-08-12 and names documents, not contents. Requires clause-level retrieval before any value is asserted.',
+  '[UNVERIFIED-QUANT] typical classroom RT60 <= 0.8 s. Comparator type: room-type-based. Not differentiated.',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:55'),
+ (29,NULL,'room-acoustic-performance','room-acoustic-performance','PENDING-VERIFICATION',
+  'DB-HR (CTE) (ES) — standard to retrieve for A-18 RT60',NULL,NULL,6,0,
+  'Digested from the pilot reasoning doc step-3 table. Not filed as a jurisdictional_value: that table is REFERENCE-ONLY per owner ruling 2026-08-12 and names documents, not contents. Requires clause-level retrieval before any value is asserted.',
+  '[UNVERIFIED-QUANT] typical classroom RT60 <= 0.7 s. Comparator type: room-type-based. Sound protection under the technical building code. Not differentiated.',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:55'),
+ (30,NULL,'room-acoustic-performance','room-acoustic-performance','PENDING-VERIFICATION',
+  'JIS Z 8731 + Barrier-Free Law (JP) — standard to retrieve for A-18 RT60',NULL,NULL,6,0,
+  'Digested from the pilot reasoning doc step-3 table. Not filed as a jurisdictional_value: that table is REFERENCE-ONLY per owner ruling 2026-08-12 and names documents, not contents. Requires clause-level retrieval before any value is asserted.',
+  'No quantified RT60 target in the acoustic standard. Barrier-Free Law addresses physical access; acoustic provisions not quantified per population. Measurement-method standard, not a target-setting one. Absence recorded as a finding (R7).',
+  'session_2026-08-21-reasoning-doc-digestion','2026-08-21 18:55');
