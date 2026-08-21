@@ -26,6 +26,26 @@ try:
     ti=d.get("tool_input") or {}
     c=ti.get("command")
     if not c: sys.exit(0)
+    # Do not record commands that COMMIT or PUSH. Two reasons, and the second is
+    # the one that matters.
+    #
+    # (1) Convergence. This file is tracked, so appending to it dirties the
+    #     worktree. The stop hook demands a clean tree. Recording the very
+    #     command that commits the record leaves a new uncommitted line every
+    #     time — a livelock with no fixed point, observed 2026-08-21 across four
+    #     consecutive turns. The record of an action is always written after the
+    #     action, so no ordering fixes this; only not recording it does.
+    #
+    # (2) It loses nothing. A commit's provenance is ALREADY in git — message,
+    #     author, timestamp, tree sha, full diff — which is a stronger and more
+    #     durable record than a sha256 of stdout. The scratchpad exists for the
+    #     commands git does NOT record: queries, probes, retrievals, gate runs.
+    #     Skipping the one class git already covers is narrowing the apparatus
+    #     to what it is for.
+    #
+    # Deliberately loose: a compound command containing a commit is skipped
+    # whole. Whatever else it did is visible in that commit's own diff.
+    if "git commit" in c or "git push" in c: sys.exit(0)
     tr=d.get("tool_response")
     out=""
     if isinstance(tr,dict):
