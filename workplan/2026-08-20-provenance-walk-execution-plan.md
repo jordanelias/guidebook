@@ -374,6 +374,40 @@ Also unnamed in the stage-1 list but real: `weighting_profile` (5), `conflicts` 
 `external_root_registry` (0), and `term_aliases` — **2,382 rows, the largest vocabulary asset in
 the project.**
 
+### D-5. `items` is the question, `specifications` is the answer — and 21 items answer themselves
+
+*Owner, 2026-08-21:* *"But what even are 'items'? Aren't we using the term 'specifications'?"*
+
+They are different layers, and the question is well-aimed. Per
+`DR-2026-08-12-specification-rename-and-replay-order`, the rename was
+`evidence_cell_state` → `specifications` — **not** `items` → `specifications`:
+
+- **`items`** (93 rows) — the design *parameter*. One axis of the grid. The question.
+- **`specifications`** (0 rows) — the per-(item × population) determination, carrying `value_min`,
+  `value_max`, `value_unit`, `governing_refs`, `tier_basis`, `falsification_condition`. The answer.
+
+**But the boundary is already broken. Measured 2026-08-21: 21 of 93 item NAMES embed a quantified
+specification value** — `NRC ≥0.85` (A-02), `STC ≥35` (A-03), `STC ≥50` (A-14), `≥8 m²` (A-16),
+`≥150 EML` (B-01), `≥5 m` (B-05), `≥300 Lux` (B-06), `≤30 Gloss Units` (B-08), `≤2700 K` (B-11),
+`≥30 LRV` (C-04), `1400×1100 mm` (E-01), `≤1:20` (E-03), `3600 mm` (E-04), `3000×2000 mm` (E-05),
+`PTV ≥36` (E-07), `≥1200 mm` (E-08), `650–870 mm` (G-05), and four more.
+
+**The answers are in the question layer, unevidenced, while the answer table is empty.** Each such
+name asserts a threshold with no evidence link, no population scoping, no locator and no tier —
+and a name is not a field, so nothing validates it. This is D-1 and D-2's failure in a third
+place: content living outside the table built to hold it, beyond reach of every gate.
+
+It also pre-empts the determinations that have not been made. `E-08 Corridor Clear Width
+(≥1200 mm)` is the pilot's canonical Co-1 corridor case; the figure is baked into the item's
+identity before any determination for any population exists, so a determination concluding
+otherwise would contradict the name of the thing it determines.
+
+**Operative consequence.** An item name states *what is being specified*, never *what the
+specification is*. The 21 embedded values are unevidenced claims and must be treated as such:
+extracted as leads, and the names reduced to their parameter. Renaming 21 items touches item
+identity across `item_population_links`, `item_axis_links`, `term_item_links`, the renderers and
+the YAML mirrors — a sweep, not an edit, and owner-gated because item identity is content.
+
 ### D-3. Blocking-and-vacuous is three different conditions, not one.
 
 The five blocking gates reporting `EXAMINED: 0` do so for three distinct reasons, per the registry's
