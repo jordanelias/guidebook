@@ -34,7 +34,11 @@ meta:
   user_version: 60
   tables: 65
   fk_edges: 80
-  canonical_db_sha256_at_generation: c4ad6cc3e57a698fce365bebfd5fc40418b33b5dc2c9a0cc1f9fd91ea766cfc9
+  canonical_db_sha256_at_generation: f70c48d792662a59d1656e57904686bde6301c875798f3893381c460fbe03c2c
+  # CORRECTED 2026-08-21: this field first held c4ad6cc3 — the sha AFTER the
+  # first digestion migration but BEFORE the compensating one. A stale volatile
+  # fact hardcoded inside the file meant to be authoritative, i.e. exactly the
+  # CLAUDE.md 2(b) failure. Re-derive this field; never carry it forward.
   authority: |
     FK edges are generated. Everything else is evidenced by survey and should be
     re-verified rather than trusted. Row counts drift; re-derive them.
@@ -321,6 +325,28 @@ breaks:
     kind: UNREGISTERED
     detail: reads stage-3 tables, is not in check-registry.yaml (quarantined entry only)
     consequence: same defect class the repo's own 1 names — an unregistered check
+
+  - id: BRK-20
+    severity: critical
+    edge: "A-18 -> populations"
+    kind: NO_PERMITTED_ROUTE
+    detail: >
+      A-18 has ZERO item_population_links rows — the ONLY item on its slug
+      without them (the other 12 items hold 42 rows between them). The sole
+      route from A-18 to any population is item_axis_links -> population_axis_map,
+      which yields 9 populations (ADHD, AUT, BRAIN, DEAF, DEAFBLIND, EPI, MH,
+      NDV, VES) — and that route is SCAFFOLDING, quarantined by owner directive
+      D-1 (2026-08-21) because it carries no evidential warrant.
+    consequence: >
+      The demonstration cell the provenance-walk plan is built around, A-18 x
+      AUT, cannot establish that AUT applies to A-18 by any PERMITTED route.
+      The render layer reads item_population_links only, which is why the live
+      page shows "Applicable populations (0)". Choosing A-18 selected the one
+      item on the slug where the applicability question has no lawful answer.
+    guard: >
+      none — and no check compares the two routes. They disagree on 89 of 93
+      items: 180 item-population pairs exist only in item_population_links, 341
+      only via the axis route.
 
 # ---------------------------------------------------------------------------
 # UNENFORCED CONTRACT CRITERIA. Declared in governance/pipeline-contract.yaml

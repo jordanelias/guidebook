@@ -506,6 +506,15 @@ sources.
 Read the values off the payloads. **Never write a bibliographic field from memory when a payload
 is in hand.** REF-00965 has no issue number — do not invent one.
 
+> **CELL INVALIDATED 2026-08-21 (BRK-20).** A-18 has **zero `item_population_links`
+> rows** — the only item on its slug without them; the other twelve hold 42 between
+> them. Its sole route to any population is `item_axis_links -> population_axis_map`,
+> which D-1 quarantines as unwarranted scaffolding. **A-18 x AUT cannot establish
+> that AUT applies to A-18 by any permitted route**, which is also why the live page
+> reads "Applicable populations (0)". Rev 1 chose this cell for its two EXACT Co-1
+> matches and never checked whether the item-population edge existed at all. A
+> successor cell must be selected on the applicability edge FIRST, then on evidence.
+
 ### 4.3 Author the determination
 
 > **HALTED 2026-08-20. The determination was not authored, and must not be until §8 of
