@@ -1,0 +1,367 @@
+# pipeline-map.yaml — the walkable map of the Guidebook pipeline
+#
+# PURPOSE. A sequencer/wrapper needs to know, for every hop between tables:
+# whether the edge is enforced, who writes it, who reads it, what guards it, and
+# whether the hop is performed by CODE or by HAND. This file states that.
+#
+# HOW IT WAS BUILT. Four read-only agonist surveys (substrate · acquisition ·
+# synthesis · render+meta), each evidence-first against the live repo, then
+# adjudicated. The `fk` edges below are GENERATED from the live schema
+# (PRAGMA foreign_key_list) and are not hand-asserted. The `convention` and
+# `absent` edges are hand-curated from the surveys — each was evidenced, and
+# each is the kind of hop that fails silently.
+#
+# STATUS: DESCRIPTIVE, not normative. It records the pipeline as it IS on
+# 2026-08-21, defects included. It is not a design. Regenerate the `fk` section
+# from the schema; re-derive the rest when the surveys are re-run.
+#
+# !! PENDING ADVERSARIAL VERIFICATION (2026-08-21). Two antagonist passes are
+# !! attacking this file as written — one refuting every `breaks:` entry
+# !! independently, one testing whether the pipeline can actually be walked
+# !! forward, backward and sideways. Entries below are AGONIST CLAIMS that have
+# !! not yet survived refutation. Do not cite a BRK id as settled until this
+# !! banner is removed and each entry carries a verdict. The agonist surveys
+# !! were evidence-first, but this session has already seen two agonist claims
+# !! overturned on contact (assess_cell "dissolves the capture problem", and the
+# !! container stop-hook fix "holds for this session") — both were wrong.
+#
+# THE RULE THIS FILE EXISTS TO SERVE: a hop that is CONVENTION or ABSENT cannot
+# be trusted by a sequencer. Every defect found in the 2026-08-19/21 sessions
+# was a convention or absent edge failing quietly.
+
+meta:
+  generated: "2026-08-21"
+  user_version: 60
+  tables: 65
+  fk_edges: 80
+  canonical_db_sha256_at_generation: c4ad6cc3e57a698fce365bebfd5fc40418b33b5dc2c9a0cc1f9fd91ea766cfc9
+  authority: |
+    FK edges are generated. Everything else is evidenced by survey and should be
+    re-verified rather than trusted. Row counts drift; re-derive them.
+
+# ---------------------------------------------------------------------------
+# STAGES. The sequencer's outer loop.
+# ---------------------------------------------------------------------------
+stages:
+  - id: 1-substrate
+    name: Substrate and controlled vocabularies
+    entered_by: migration only
+    tables: [slugs, items, populations, axes, access_needs, access_need_icf,
+             access_need_axis_map, access_duration, access_stakes,
+             life_stage_modifiers, situations, rooms, room_items, terms,
+             term_aliases, term_item_links, lang_jur_map, search_languages,
+             jurisdictional_values, weighting_profile, external_root_registry,
+             item_axis_links, item_population_links, item_population_elaborations,
+             population_axis_map, item_bpc_links]
+    exit_condition: >
+      A slug exists with items, populations and axes resolvable. NOTE: this is
+      satisfiable today for room-acoustic-performance and nothing downstream
+      enforces it.
+
+  - id: 2-acquisition
+    name: Evidence acquisition and admission
+    tables: [search_executions, search_candidates, search_admissions,
+             evidence_sources, evidence_source_authors, source_locators,
+             citation_mining, url_verification_runs, supersession_check,
+             search_coverage]
+    exit_condition: an evidence_sources row exists, admitted via search_admissions
+    steps_total: 14
+    steps_with_no_code: [1, 3, 4, 5, 9, 12]
+
+  - id: 3-synthesis
+    name: Attachment, grading, determination
+    tables: [source_slug_links, evidence_population_match, gaps, gap_mining,
+             convergence_assessment, specifications, specification_source_links,
+             spec_value_probes, source_value_extractions, bpc_metadata,
+             reasoning_doc_citations, conflicts, connections, connection_targets,
+             case_studies, economics_entries]
+    exit_condition: a specifications row exists with governing_refs
+    fully_coded_hops: [assess_cell]
+    note: >
+      assess_cell is the ONLY fully-coded hop on the answer side and it REFUSES
+      the canonical DB by design. Every hop feeding it is hand SQL.
+
+  - id: 4-render
+    name: Render
+    outputs: [site/specs, site/populations, site/rooms, parts/, tools/*.html, audits/]
+    exit_condition: rendered output cites a chaseable identifier
+    note: currently unreachable — specifications is 0 rows
+
+# ---------------------------------------------------------------------------
+# THE BREAKS. What a sequencer must not assume works.
+# Every entry was evidenced; `witness` says how it is known.
+# ---------------------------------------------------------------------------
+breaks:
+
+  - id: BRK-01
+    severity: critical
+    edge: "evidence_sources.ref_id -> source_locators.ref_id"
+    kind: ABSENT
+    detail: >
+      source_locators (835 rows) is a SCHEMA ISLAND: no FK in, no FK out, and
+      zero live code readers repo-wide. There is no promotion path from a held
+      locator to an admitted source, in code or in schema.
+    consequence: >
+      The R9 duplicate gate cannot see 835 held identifiers. This is OD-5. Two
+      of them (REF-00561, REF-00578) were independently re-discovered by an
+      adversarial pass that did not know the project already held them.
+    witness: FK graph + repo-wide grep including .ignore'd paths
+    guard: none
+
+  - id: BRK-02
+    severity: critical
+    edge: "jurisdictional_values.jurisdiction -> (no jurisdictions table)"
+    kind: ABSENT
+    detail: >
+      No `jurisdictions` table exists. No `languages` table exists. The blocking
+      check validate_jurisdiction.py NEVER OPENS THE DB — it reads
+      references/standards-registry.md and data/sources/*.yaml (which does not
+      exist).
+    consequence: >
+      An invented jurisdiction code is rejected by nothing. Proven empirically
+      (INSERT jurisdiction='XX' accepted, foreign_key_check clean, pydantic
+      accepts plain str). Standing witness: 20 live rows hold 'GB' in direct
+      violation of the project's own GB->UK rule, permanently uncaught. On
+      2026-08-21 a session invented AU-NZ, DK-NO-SE-FI and INT and every
+      validator passed.
+    guard: none that reads the DB
+
+  - id: BRK-03
+    severity: critical
+    edge: "specifications <- specification_source_links"
+    kind: NO_WRITER
+    detail: >
+      specification_source_links is the FK-ENFORCED form of the governing_refs
+      JSON array. It has no writer anywhere in the repo. assess_cell writes the
+      JSON convention edge instead.
+    consequence: the enforced edge is unwritable; the trusted edge is unenforced
+    guard: none
+
+  - id: BRK-04
+    severity: critical
+    edge: "reasoning_doc_citations.source_ref_id -> evidence_sources.ref_id"
+    kind: FK_BLOCKED
+    detail: >
+      NOT NULL FK. The one real reasoning document cites 11 REF-ids, 0 of which
+      resolve in evidence_sources; all 11 live in source_locators.
+    consequence: >
+      The prose cannot be ingested until its sources are admitted, and they
+      cannot be admitted while BRK-01 stands. OD-5 gates the prose-into-tables
+      rule (owner directive D-2).
+    guard: reasoning_doc_citations_audit (advisory, passes vacuously)
+
+  - id: BRK-05
+    severity: high
+    edge: "two divergent answer chains"
+    kind: DESIGN_SPLIT
+    detail: >
+      The documented chain is source_slug_links -> source_value_extractions ->
+      reasoning_doc_citations -> spec_value_probes -> items.pmp_* and terminates
+      in ITEM COLUMNS. `specifications` is a PARALLEL consumer whose value
+      dimension should be graded from source_value_extractions, but no rule
+      exists so that edge is absent in code. Only promoted_to_rdc_id is FK-enforced.
+    consequence: a sequencer would not know which chain is authoritative
+    guard: none
+
+  - id: BRK-06
+    severity: high
+    edge: "retrieval-log artefact -> evidence_sources"
+    kind: CONVENTION
+    detail: >
+      No column binds an artefact to a source. Three conventions exist; the only
+      one code uses is DOI matching inside verify_authors. Tested: 20 of 22
+      manifest lines resolve. Breaks for DOI-less sources and non-JSON payloads.
+    consequence: the fabrication defence rests on a free-text convention
+    guard: author_fidelity (advisory)
+
+  - id: BRK-07
+    severity: high
+    path: "retrieval-log/**"
+    kind: UNCLASSIFIED_PATH
+    detail: >
+      run_checks.classify() maps retrieval-log/** to NO KIND. A change to a
+      stored payload selects no kind-scoped battery.
+    consequence: >
+      The artefact store that exists to defend against fabrication can be
+      altered without triggering the check that reads it.
+    guard: none kind-scoped
+
+  - id: BRK-08
+    severity: high
+    table: item_bpc_links
+    kind: NO_WRITER
+    detail: >
+      0 rows, no writer. The slug->item cell mapping is therefore manual;
+      assess_cell hard-codes PILOT_CELLS. build_site's docstring still claims
+      "two primary item_bpc_links" — stale against a live 0.
+    note: >
+      Owner directive D-1 (2026-08-21) additionally FORBIDS writing this as part
+      of a determination: it is scaffolding and carries no evidential warrant.
+      The break is therefore a break in the OLD design, not work to be done.
+
+  - id: BRK-09
+    severity: high
+    generator: scripts/generate/room_page.py
+    kind: PHANTOM_TABLES
+    detail: >
+      Queries room, room_item, room_item_population, specification,
+      room_dar_provision, room_conflict — NONE exist in the live schema (which
+      has rooms, room_items, specifications). Crashes on contact.
+    consequence: site/rooms/ holds 17 stale files that cannot be regenerated
+    guard: none
+
+  - id: BRK-10
+    severity: high
+    file: index.html
+    kind: NO_GENERATOR_HARDCODED_COUNTS
+    detail: >
+      Root index.html has no generator anywhere in scripts/ or tools/. It
+      hardcodes "91 provisions, 661 evidence sources, 10 categories" against a
+      live DB holding 93 items and 5 evidence_sources.
+    consequence: >
+      A direct violation of CLAUDE.md 2(b) (no hand-written counts in derived
+      documents), on a render-kind path, with no freshness check. The evidence
+      figure is wrong by two orders of magnitude.
+    guard: none
+
+  - id: BRK-11
+    severity: medium
+    edge: "term_aliases.language <-> lang_jur_map.language"
+    kind: CONVENTION_CASE_BROKEN
+    detail: >
+      Aliases store lowercase ('de'); lang_jur_map stores uppercase ('DE').
+      alias_provenance_audit joins with lower(); db.py get_synonyms does NOT.
+    consequence: >
+      `db.py synonyms --item A-08 --language DE` — the form the operative
+      instrument's own runbook prescribes — returns []. `--language de` works.
+      The documented terminology step silently yields nothing.
+    guard: none
+
+  - id: BRK-12
+    severity: medium
+    edge: "search_executions.terms_used -> terms/term_aliases"
+    kind: ABSENT
+    detail: free text, NULL in all 9 live rows
+    consequence: >
+      term -> search -> source has ZERO relational trace. The terminology layer
+      (88 terms, 2382 aliases) cannot be shown to have influenced any search.
+    guard: none
+
+  - id: BRK-13
+    severity: medium
+    edge: "citation_mining.connections_produced -> connections.con_id"
+    kind: CONVENTION_DEAD
+    detail: >
+      No reader parses it into connections. test_db_integrity records that in
+      the pre-reset corpus 13 of 25 non-empty values held bare integers (counts)
+      rather than id lists — the contract was broken before the table emptied.
+    guard: none
+
+  - id: BRK-14
+    severity: medium
+    edge: "jurisdictional_values.spec_id -> specifications.spec_id"
+    kind: ABSENT_DANGLING
+    detail: >
+      All 109 values NULL, and `specifications` has no spec_id column at all
+      (its PK is specification_id). The column points at nothing that exists.
+    guard: none
+
+  - id: BRK-15
+    severity: medium
+    scope: check surface
+    kind: UNGUARDED_TABLES
+    detail: >
+      22 tables have no active registered check reading their content:
+      access_duration, access_need_icf, access_needs, access_stakes,
+      case_studies, case_study_outcomes, case_study_populations,
+      case_study_specs, case_study_strategies, conflicts,
+      economics_entry_populations, economics_entry_specs,
+      external_root_registry, item_audit_runs, life_stage_modifiers, rooms,
+      room_items, situations, source_locators, supersession_check, terms,
+      weighting_profile.
+    note: >
+      source_locators (835 rows) is the largest populated unguarded table.
+      migration_reproducibility_deep walks them but tests rebuild-equality only,
+      not content, and is advisory.
+
+  - id: BRK-16
+    severity: medium
+    scope: regeneration
+    kind: DOC_CONTRADICTS_CODE
+    detail: >
+      CLAUDE.md 7 says regenerate parts/, site/, audits/, tools/*.html via
+      scripts/regenerate_derived.sh. The script regenerates only the audits/ +
+      tools/*.html trio. parts/ and site/ have NO sanctioned regeneration path
+      in it; generate_parts.py is invoked by nothing and parts/ has no freshness
+      check; site/populations/ has no driver at all.
+    guard: site_pages_fresh (advisory, site/specs only)
+
+  - id: BRK-17
+    severity: medium
+    scope: reproducibility
+    kind: SHALLOW_GUARD
+    detail: >
+      The BLOCKING migration_reproducibility checks user_version plus COUNT(*)
+      on six tables. It cannot see UPDATEs or content changes. The variant that
+      walks every table and row (migration_reproducibility_deep) is ADVISORY.
+    consequence: >
+      A migration that alters values without changing row counts passes the
+      blocking reproducibility gate.
+
+  - id: BRK-18
+    severity: low
+    table: weighting_profile
+    kind: NO_READER
+    detail: 5 rows, zero code readers, no guard
+    consequence: violates CLAUDE.md 1 ("nothing is added without naming what reads it")
+
+  - id: BRK-19
+    severity: low
+    script: scripts/audit/adjudication_integrity.py
+    kind: UNREGISTERED
+    detail: reads stage-3 tables, is not in check-registry.yaml (quarantined entry only)
+    consequence: same defect class the repo's own 1 names — an unregistered check
+
+# ---------------------------------------------------------------------------
+# UNENFORCED CONTRACT CRITERIA. Declared in governance/pipeline-contract.yaml
+# with `check: null`. The sequencer must treat these transitions as unguarded.
+# ---------------------------------------------------------------------------
+unenforced_transitions:
+  - {stage: collection, criterion: discovery-provenance}
+  - {stage: judgment,   criterion: derivation-handshake}
+  - {stage: judgment,   criterion: convergence-independence}
+  - {stage: synthesis,  criterion: opus-routing}
+  - {stage: render,     criterion: render-freshness}
+
+# ---------------------------------------------------------------------------
+# PATHS THAT SELECT NO CHECK BATTERY (run_checks.classify() -> no kind).
+# A change here runs only the 8 `always` checks.
+# ---------------------------------------------------------------------------
+unclassified_paths:
+  - path: "retrieval-log/**"
+    why_it_matters: the fabrication-defence artefact store (BRK-07)
+  - path: "working/**"
+    why_it_matters: >
+      contains working/claims-docket.md and working/pilot/pilot-renderings.html,
+      both SUBJECTS of registered checks whose kinds a working/-only diff never
+      selects
+  - path: "references/standards-registry.md"
+    why_it_matters: the subject of the BLOCKING validate_jurisdiction check
+  - path: "skills/**"
+  - path: "references/search-log/**"
+  - path: "workplan/**"
+  - path: "audits/** (except evidentiary-base-audit*)"
+  - path: "CLAUDE.md, README.md, .ignore"
+
+# ---------------------------------------------------------------------------
+# ISLANDS. No FK in, no FK out.
+# ---------------------------------------------------------------------------
+islands:
+  populated_and_unread: [source_locators, lang_jur_map, weighting_profile,
+                         access_duration, access_stakes, life_stage_modifiers]
+  empty_and_unwritten:  [situations, external_root_registry, pipeline_runs,
+                         url_verification_runs]
+  standalone_by_design: [decisions, data_migrations]
+  in_practice: >
+    `rooms` (17 rows) has FK edges but is an island in practice: its only bridge
+    (room_items) is empty and its only would-be reader queries phantom tables.
