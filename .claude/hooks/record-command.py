@@ -71,11 +71,27 @@ try:
         # MEASURED 2026-08-22 by recording response_keys for one turn. This
         # harness's Bash tool_response carries exactly:
         #   interrupted, isImage, noOutputExpected, stderr, stdout
-        # No exit_code and no is_error — hence the correction above. But `stderr`
-        # IS carried and was being thrown away, which is why the log could not
-        # distinguish a gate that passed from a gate that raised. Record its size
-        # and digest (not its body: same storage argument as stdout), and record
-        # `interrupted`, which is the one real liveness signal the payload has.
+        # No exit_code and no is_error — hence the correction above.
+        #
+        # SECOND MEASUREMENT, SAME DAY, CORRECTING THE FIRST. When these fields
+        # were added the comment here claimed `stderr` "IS carried and was being
+        # thrown away, which is why the log could not distinguish a gate that
+        # passed from a gate that raised." That inferred a capability from the
+        # PRESENCE OF A KEY. Measured over 88 real events in
+        # scratchpad/session_2026-08-22-research-batch-02-.../commands.jsonl:
+        # stderr_bytes is 0 on EVERY line, including two commands that raised
+        # Python tracebacks (an IntegrityError on a column type and another on a
+        # CHECK constraint). The key exists and is empty; the error text reaches
+        # the caller by some other route.
+        #
+        # So the honest statement is the uncomfortable one: THIS LOG STILL CANNOT
+        # TELL YOU WHETHER A COMMAND SUCCEEDED. exit and is_error are absent,
+        # stderr is present-but-empty, and the only real signals are `interrupted`
+        # and the size of stdout. The fields are kept because recording a measured
+        # empty is worth more than recording nothing — a future harness may
+        # populate stderr, and then these lines become comparable — but no gate,
+        # session record or attestation may cite a line in this file as evidence
+        # that a command WORKED. It proves a command was ISSUED.
         errout=tr.get("stderr") or ""
         interrupted=tr.get("interrupted")
     else:

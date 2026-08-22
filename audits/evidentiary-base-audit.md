@@ -12,7 +12,7 @@ This audit scores every research slice on the six requested dimensions — (1) a
 - **10 source-instances** are linked across **1 of 80 slices**; **79 slices carry zero linked evidence**.
 - **Grade distribution:** A=0 · B=0 · C=0 · D=1 · E=0 · F=79  (A≥80, B≥65, C≥50, D≥35, E>0, F=empty).
 - **Tier profile is code-and-clinical heavy, synthesis-light.** Of linked instances: T1=5, T2=1, T3=4, T4=0, T5=0, T6=0. Only **1 Tier-2 (systematic-review / evidence-based-standard) instances** exist across the whole corpus — the synthesis tier that best anchors best-practice claims is the thinnest.
-- **Anchoring strength, banded.** Under the weighted-strength model (§8) every tier can anchor a best-practice claim, weighted by tier: **9/10 (90%)** of instances anchor at ● full strength (T1/Co-1/T2/Co-2/T3-clinical, adjudicated), 0 at ◐ partial (T4/T5 standards practice), 1 at ○ weak (T3-grey/T6/grey floor). By slice: **1 full · 0 partial · 0 weak-only** (of 1 evidenced). Every evidenced slice anchors at ● full or ◐ partial strength — none rests on a weak-only base.
+- **Anchoring strength, banded.** Under the weighted-strength model (§8) every tier can anchor a best-practice claim, weighted by tier: **10/10 (100%)** of instances anchor at ● full strength (T1/Co-1/T2/Co-2/T3-clinical, adjudicated), 0 at ◐ partial (T4/T5 standards practice), 0 at ○ weak (T3-grey/T6/grey floor). By slice: **1 full · 0 partial · 0 weak-only** (of 1 evidenced). Every evidenced slice anchors at ● full or ◐ partial strength — none rests on a weak-only base.
 - **Anglophone concentration is the dominant quality risk.** **10/10 (100%) of linked sources are English-language**; only 0 are non-English. By jurisdiction, 0 instances are native-Anglophone (US/UK/AU/CA/NZ/IE), 0 supranational (INT/EU/ISO), 0 other, 10 unrecorded.
 - **Search breadth ≠ evidentiary yield.** Per the frozen pre-log coverage grids, slices were searched across **0 languages** and ~0 jurisdictions, but 0 searched languages () returned **zero** usable sources in **every** slice. The bias lives in what converted to evidence, not in search effort.
 
@@ -73,7 +73,7 @@ Median linked sources among non-empty slices: **10**. Largest bases: `room-acous
 | T5 | 0 | ···················· 0% |
 | T6 | 0 | ···················· 0% |
 
-**Strength-band split of instances:** **9/10 (90%)** anchor at ● full (T1/Co-1/T2/Co-2/T3-clinical), 0 (0%) at ◐ partial (T4/T5 standards), and 1 (10%) at ○ weak (T3-grey/T6/grey floor). No evidenced slice rests on a ○ weak-only base — every slice anchors at ● full or ◐ partial strength (see the band breakdown in §4).
+**Strength-band split of instances:** **10/10 (100%)** anchor at ● full (T1/Co-1/T2/Co-2/T3-clinical), 0 (0%) at ◐ partial (T4/T5 standards), and 0 (0%) at ○ weak (T3-grey/T6/grey floor). No evidenced slice rests on a ○ weak-only base — every slice anchors at ● full or ◐ partial strength (see the band breakdown in §4).
 
 ### (3) Jurisdictions sourced
 Distinct jurisdiction strings across the corpus: **0**, none mis-filed as language codes in the `jurisdiction` column. Top: .
@@ -111,7 +111,7 @@ Legend: **N** linked sources · **Band** strongest anchoring band (● full / �
 
 | # | Grade | Score | Slice | Topic | N | Band | ● | ◐ | ○ | ⊘ | Tiers | JUR | LNG | %EN | %ANG | A·B·C·D·E |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | **D** | 44.0 | `room-acoustic-performance` | sensory-environment | 10 | ● | 9 | 0 | 1 | 0 | T1×5,T2×1,T3×4 | 0 | 1 | 100.0 | — | 16·28.0·0·0·0.0 |
+| 1 | **D** | 46.0 | `room-acoustic-performance` | sensory-environment | 10 | ● | 10 | 0 | 0 | 0 | T1×5,T2×1,T3×4 | 0 | 1 | 100.0 | — | 16·30·0·0·0.0 |
 | 2 | **F** | 0 | `accessibility-feature-market-value-uplift-framing` | economics | 0 | — | 0 | 0 | 0 | 0 | — | 0 | 0 | — | — | 0·0·0·0·0 |
 | 3 | **F** | 0 | `accessible-bathroom-and-grab-bar` | bathrooms-and-wet-areas | 0 | — | 0 | 0 | 0 | 0 | — | 0 | 0 | — | — | 0·0·0·0·0 |
 | 4 | **F** | 0 | `accessible-circulation-geometry` | entrances-and-circulation | 0 | — | 0 | 0 | 0 | 0 | — | 0 | 0 | — | — | 0·0·0·0·0 |

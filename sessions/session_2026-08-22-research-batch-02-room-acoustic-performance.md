@@ -118,7 +118,56 @@ The generalisable one is the first: **a bibliographic claim written from anythin
 bytes**. That is the failure this whole line of work exists to close, and it recurred in the session
 auditing it. It was caught only because R10 forces a re-retrieval before admission.
 
-## 5. HANDOFF
+## 5. The adversarial pass — it sustained four findings against me
+
+Run blind-then-compare per DR-2026-08-19 §7, by a fresh context that re-derived tiers and population
+grades from the payload bytes **before** reading any of my notes. This is the **one** pass this batch
+gets, and its subject is a diff that wrote research rows — so unlike the 2026-08-22 review, it is
+lawful under `references/project-standards.md`.
+
+**Divergence log.** Tiers: no divergence on any of the five — the antagonist's blind derivation
+matched every stored tier, and `check_tier_consistency()` returns True for all five triples.
+Population grades diverged on three rows, and **the antagonist was right on all three**:
+
+| row | I graded | blind grade | outcome |
+|---|---|---|---|
+| MB2-001 / MB2-002 — REF-00561 → AUT/NDV | PARTIAL | **PROXY** | **corrected.** R13's ratified hook says *"no-participants = PROXY"*, and this study has no autistic participants — it measures seven rooms. My own mismatch_note said exactly that and then graded a step above the rubric anyway: a grade contradicting its own stated reason |
+| MB2-012 — REF-00970 → DEM | PARTIAL | **PROXY** | **corrected.** Participation is not established in the retrieved record, and my note admitted it. The antagonist named the motive precisely: `GAP-B01-002` wants a DEM admission *above* PROXY, which is the incentive to round up |
+| MB2-004 / MB2-007 — Iglehart → COM | PROXY | PARTIAL-vs-DEAF | **resolved against the antagonist.** DEAF is not in the served set, so there is nothing to grade against; PROXY-vs-COM is the honest encoding |
+
+Two more sustained, both corrected in the same pass by migration:
+- **Venue typing was inconsistent.** REF-00969 and REF-00970 are both conference proceedings and were
+  typed differently within minutes — so no stable rule was being applied. Rule now written down and
+  applied to both: **evidence_type follows the study design; `grey_flag` records the venue.** Tier is
+  unchanged at 3 either way. Note the trap avoided: Crossref types one `proceedings-article` and the
+  other `journal-article` though both are proceedings, so typing off the payload's `type` field would
+  have produced the opposite and equally unstable answer.
+- **`target_scope='national'` on exec 15 is not a ratified pair** — `national_fw` admits only
+  `intrinsic`. Corrected. The `target_*` columns are not covered by the CHECK constraint that guards
+  `evidence_sources.scope`, so an unratified literal was accepted silently. That validation gap is a
+  finding in its own right.
+
+Grades after correction: **1 EXACT · 1 PARTIAL · 5 PROXY · 6 MISMATCH** — materially more
+conservative than what I wrote. `research_batch_dod` still COMPLIANT, `test_db_integrity` 72/72,
+`adjudication_integrity` PASS.
+
+**Two findings deliberately NOT actioned in this session, and why:**
+- **The DoD gate prints PASS over empty subject sets.** The antagonist measured 4–5 of the 15 rules as
+  gating nothing this batch (R3 saw 0 regulatory sources, R11 0 aliases, R12 0 economics findings,
+  R14 0 zero-yield rows). *"COMPLIANT — all rules met"* is therefore stronger than what was tested.
+  This is CLAUDE.md §2(a)'s signature failure living inside the research gate itself. The fix is not
+  cosmetic: `ok(code, msg)` takes no subject count, so instrumenting it means threading one through
+  all fifteen rules of a **blocking** gate whose selftest asserts 15/15. **Next act, done deliberately
+  with the selftest in front of you — not hastily at the end of a long session.**
+- **A-18 has zero `item_population_links`**, which is a structural defect *distinct* from the DEAF
+  question and belongs in the D-0165 packet explicitly. The flagship item of this slug serves no one
+  in the item layer.
+
+The antagonist's own summary is worth keeping: *"a batch that mostly out-audited its auditor"* — and
+the single best judgement in it was mine only by refusal, the BRAIN call that vulnerability evidence
+is not performance evidence.
+
+## 6. HANDOFF
 
 **Still blocked on the owner:** the population-taxonomy pass (**D-0165**) — no cell on this slug is
 authorable until it lands, and this batch has now made the cost concrete: the best Tier-1 evidence on
