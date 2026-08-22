@@ -653,3 +653,36 @@ but, per CLAUDE.md §7, legitimately lags — read this ledger, not the PI. It a
 two cadences remain, RULE_REVISION does not. The `RecheckTrigger.RULE_REVISION` enum value is
 retained so the historical 2026-07-24 recheck record is not orphaned; new records must not use it.
 · DATE: 2026-08-19
+
+RULE 2026-08-22 · **Establish facts about this repository from its structure, never from a text
+search.** · CONDITION: any claim about what the repository contains, counts, reads, writes, calls,
+enforces or leaves unenforced — a check inventory, a reader or caller count, a table's consumers,
+whether a path selects a battery, whether a rule has enforcing code, whether a source is already
+held. · ACTION: derive it from the authoritative structure, and say which one you used: SQL and
+`PRAGMA` against `data/guidebook.db`; `governance/check-registry.yaml`; `run_checks.classify()`
+imported and run; the Python AST or import graph; `git ls-files`; `governance/pipeline-map.yaml` for
+the wiring. **Do NOT use grep, ripgrep, `git grep`, or a regex over the tree to establish it, and do
+not report a hit count as a finding.**
+
+**EXCEPTION, and it is the only one: precise editing.** Locating a known literal string in a known
+file in order to change it is a mechanical aid, not a claim about the repository. Exact-match
+replacement with an assertion that the match count is what you expected is the *preferred* editing
+technique and is unaffected by this rule. The line is: **finding a place to edit is fine; deciding
+what is true is not.**
+
+The rule is earned by measurement, repeatedly, in this repository's own records. `sessions/session_2026-08-20-provenance-walk.md`
+§6: *"Claims derived from `PRAGMA`/`sqlite_master` and from SQL against live data held exactly, every
+time. Claims about code behaviour derived from grep hit counts failed every time."* The
+`governance/pipeline-map.yaml` view-reader counts came from `grep -rl <name>`, which counts files
+containing a string and conflates a query with a `DROP VIEW` and with a comment — the corrected
+figure was **zero of seventeen**, not eleven. Its `readers_today` paragraph asserted *"repo-wide grep
+returns nothing"* inside the very paragraph about epistemic hygiene; four files contain the string.
+Its `unclassified_paths` block listed eight corners and named a `README.md` that does not exist; run
+through `classify()` the real figure is **1,232 of 2,174 tracked files**. And on 2026-08-22 a session
+accepted `grep … || echo "none — clean"` as proof that a DDL string was absent when the grep had in
+fact failed on a *missing file* — a tool that could not have seen the thing is not evidence of its
+absence.
+
+The failure mode is always the same shape and it is why a hit count must never stand as a finding: a
+text match cannot distinguish a use from a mention, a reader from a writer, live code from a
+docstring, or an absent string from an absent file. · DATE: 2026-08-22
