@@ -11,7 +11,7 @@ This audit scores every research slice on the six requested dimensions — (1) a
 
 - **5 source-instances** are linked across **1 of 80 slices**; **79 slices carry zero linked evidence**.
 - **Grade distribution:** A=0 · B=0 · C=0 · D=1 · E=0 · F=79  (A≥80, B≥65, C≥50, D≥35, E>0, F=empty).
-- **Tier profile is code-and-clinical heavy, synthesis-light.** Of linked instances: T1=4, T2=1, T3=0, T4=0, T5=0, T6=0. Only **1 Tier-2 (systematic-review / evidence-based-standard) instances** exist across the whole corpus — the synthesis tier that best anchors best-practice claims is the thinnest.
+- **Tier profile is code-and-clinical heavy, synthesis-light.** Of linked instances: T1=3, T2=1, T3=1, T4=0, T5=0, T6=0. Only **1 Tier-2 (systematic-review / evidence-based-standard) instances** exist across the whole corpus — the synthesis tier that best anchors best-practice claims is the thinnest.
 - **Anchoring strength, banded.** Under the weighted-strength model (§8) every tier can anchor a best-practice claim, weighted by tier: **5/5 (100%)** of instances anchor at ● full strength (T1/Co-1/T2/Co-2/T3-clinical, adjudicated), 0 at ◐ partial (T4/T5 standards practice), 0 at ○ weak (T3-grey/T6/grey floor). By slice: **1 full · 0 partial · 0 weak-only** (of 1 evidenced). Every evidenced slice anchors at ● full or ◐ partial strength — none rests on a weak-only base.
 - **Anglophone concentration is the dominant quality risk.** **5/5 (100%) of linked sources are English-language**; only 0 are non-English. By jurisdiction, 0 instances are native-Anglophone (US/UK/AU/CA/NZ/IE), 0 supranational (INT/EU/ISO), 0 other, 5 unrecorded.
 - **Search breadth ≠ evidentiary yield.** Per the frozen pre-log coverage grids, slices were searched across **0 languages** and ~0 jurisdictions, but 0 searched languages () returned **zero** usable sources in **every** slice. The bias lives in what converted to evidence, not in search effort.
@@ -66,9 +66,9 @@ Median linked sources among non-empty slices: **5**. Largest bases: `room-acoust
 ### (2) Tiers of evidence
 | Tier | Instances | Share |
 |---|---|---|
-| T1 | 4 | ████████████████···· 80% |
+| T1 | 3 | ████████████········ 60% |
 | T2 | 1 | ████················ 20% |
-| T3 | 0 | ···················· 0% |
+| T3 | 1 | ████················ 20% |
 | T4 | 0 | ···················· 0% |
 | T5 | 0 | ···················· 0% |
 | T6 | 0 | ···················· 0% |
@@ -111,7 +111,7 @@ Legend: **N** linked sources · **Band** strongest anchoring band (● full / �
 
 | # | Grade | Score | Slice | Topic | N | Band | ● | ◐ | ○ | ⊘ | Tiers | JUR | LNG | %EN | %ANG | A·B·C·D·E |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | **D** | 42.0 | `room-acoustic-performance` | sensory-environment | 5 | ● | 5 | 0 | 0 | 0 | T1×4,T2×1 | 0 | 1 | 100.0 | — | 12·30·0·0·0.0 |
+| 1 | **D** | 42.0 | `room-acoustic-performance` | sensory-environment | 5 | ● | 5 | 0 | 0 | 0 | T1×3,T2×1,T3×1 | 0 | 1 | 100.0 | — | 12·30·0·0·0.0 |
 | 2 | **F** | 0 | `accessibility-feature-market-value-uplift-framing` | economics | 0 | — | 0 | 0 | 0 | 0 | — | 0 | 0 | — | — | 0·0·0·0·0 |
 | 3 | **F** | 0 | `accessible-bathroom-and-grab-bar` | bathrooms-and-wet-areas | 0 | — | 0 | 0 | 0 | 0 | — | 0 | 0 | — | — | 0·0·0·0·0 |
 | 4 | **F** | 0 | `accessible-circulation-geometry` | entrances-and-circulation | 0 | — | 0 | 0 | 0 | 0 | — | 0 | 0 | — | — | 0·0·0·0·0 |

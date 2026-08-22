@@ -13,10 +13,12 @@ bibliography from payloads held on disk. Stop at the owner gate — acts 4–6 n
 `session_2026-08-19-research-batch-01-room-acoustic-performance`, which has subjects, and `L04`
 passes because of that. This session repaired existing rows; it did not create research subjects.
 
-**The canonical DB changed.** `f70c48d7…03c2c` at open → `3a8828f6…c4716` at close.
+**The canonical DB changed.** `f70c48d7…03c2c` at open → `abc71e24…4d68e` at close, across **six**
+data migrations, all through `emit_batch_sql`/hand-SQL → `emit_data_migration` → `migrate_db`.
 Two data migrations, both through `emit_batch_sql` → `emit_data_migration` → `migrate_db`:
-`data_20260822012151` (the bibliographic repair) and `data_20260822012400` (the tier-derivation
-scope). `user_version` 60 throughout. Rebuild + `migration_reproducibility --deep` PASS;
+`…012151` (bibliographic repair), `…012400` (tier-derivation scope), `…020737` (OD-E), `…021003`
+(decisions D-0164…D-0166) and two compensating fixes to my own field-format errors, `…021049` and
+`…021115`. `user_version` 60 throughout. Rebuild + `migration_reproducibility --deep` PASS;
 `test_db_integrity` **72/72**.
 
 ---
@@ -190,6 +192,7 @@ installing the exclusion naively turns "saved always" into "saved when an agent 
 | Accepted a `grep` that failed on a missing file as proof no DDL remained | The grep printed an error and the `||` branch printed "none — clean". A non-existent file is not an absent string. Re-run after installing pydantic so the artefact actually existed |
 | Corrected "400-line" in one place and left the same figure in the next sentence | Re-grepping the file for `400` after the edit |
 | A pointer-correction edit that split a sentence across a comment | Reading the patched lines back |
+| **Three field formats on D-0164…D-0166 written from memory instead of from the schema** — `model_routing` (must be `model/effort/purpose`), `effort_level` (an integer, not `'standard'`), `decision_date` (`YYYY-MM-DD HH:MM`, not a bare date) | The `status` CHECK constraint rejected the first migration outright, and blocking `test_db_integrity` L01 plus `decision_capture` caught the rest. **Two compensating migrations.** The register has a validator and 163 existing rows; reading either would have given all four formats at once. This is the session's own §1 lesson — *never write a field from memory when the authority is in hand* — failed on the governance table while succeeding on the bibliographic one |
 | **Wrote a placeholder sha256 (`2d5f4e10…`) into this record's own header**, next to the words "derive it; do not read it here" | Deriving it. The real value is `3a8828f6…c4716`. This is §2(b) committed inside the session record correcting other people's §2(b) failures, and it would have been indistinguishable from a real hash to every reader and every gate |
 
 The generalisable one is the third. **A tool that could not have seen the thing is not evidence of
@@ -198,31 +201,90 @@ under a different disguise: not a stale grep, but a grep whose *subject did not 
 
 ---
 
-## 8. HANDOFF — the next act is the owner's
+## 8. The owner ruled, mid-session — what changed
+
+Three of the seven decisions were answered while this session was open. Recorded as **D-0164,
+D-0165, D-0166** in `data/decisions/decision_register.yaml` and the `decisions` table, generated
+from the same dicts so L01 parity holds by construction.
+
+**OD-A → D-0164. `item_population_links` are SUBSTRATE, with a use-time debt.** Any applicability
+edge a determination relies on must be re-derived and given a `rationale_ref` in that
+determination's own migration. This resolves the ambiguity BRK-20 exposed and does it without
+laundering 372 unwarranted assertions into warranted ones by fiat: an edge nobody determines
+against never needs a warrant, and an edge a determination rests on gets one in the same migration
+that rests on it. **Enforcement is nil today**, and the decision's `notes` say so — no registered
+check tests it. The check is deliberately not added, because `specifications` is empty and it would
+be the blocking-and-vacuous gate CLAUDE.md §2(a) records four times. It becomes owed with the first
+determination.
+
+**OD-B/OD-C → D-0165. DEFERRED to a population-taxonomy pass.** The owner declined the framing —
+one item's applicability set — rather than the finding. The finding stands: `DEAF` carries 16
+`item_population_links`, **none on `room-acoustic-performance`**, so the reverberation chapter does
+not apply to deaf or hard-of-hearing people, while the only Tier-1-anchored RT60 value this project
+has ever identified is theirs. Deciding one slug in isolation would set a precedent for 105 others
+by accident.
+
+> **The consequence, stated plainly because a deferral can read as small.** The population-taxonomy
+> pass is now the **critical path for the entire deliverable.** §4's acceptance criterion is one
+> answered question published; no cell on the only slug with admitted evidence can be authored
+> until it lands; and nothing else in the queue substitutes for it.
+
+**OD-E → D-0166. REF-00967 re-graded Tier 1 → Tier 3**, with `scope='lower_control'` written in the
+same act because scope is the derivation *input*: the ratified table maps
+`('clinical','lower_control') → 3`, so the tier is now **derived rather than asserted**.
+`adjudication_integrity.py` went **FAIL (5 of 5) → PASS (0)**. Nothing downstream was invalidated —
+`evidence_population_match` grades population, not tier, and `specifications` is empty.
+**And it sharpens OD-D:** with this row at T3, the only Tier-1 evidence on this slug is the three
+Co-1 rows, whose Co-1 warrant is itself what OD-D disputes. If OD-D sustains, **the slug has no
+Tier-1 anchor at all.**
+
+**Still open: OD-D** (needs full texts this environment cannot reach), **OD-F** (the
+adversarial-subject waiver) and **OD-G** (strike DR §12.1 Step 10's `jurisdictional_values` clause;
+an interim **STOP** notice is in place at that step).
+
+---
+
+## 9. HANDOFF — the next act is the owner's
 
 **Read:** `decisions/DR-2026-08-19-…` (amended §3), then
 `workplan/2026-08-22-agonist-antagonist-execution-plan.md` §2.
 
-**Acts 0–3 are done. Acts 4–6 are blocked, and not on work — on seven decisions.**
+**Acts 0–3 are done. OD-A, OD-B/C and OD-E were answered mid-session (§8).** What that leaves:
 
-- **OD-A** — are `item_population_links` substrate or scaffolding? All **372** carry `rationale_ref`
-  NULL. If scaffolding, D-1 quarantines them and **no cell is determinable anywhere**. If substrate,
-  A-18's absence is a gap to fill. *Recommendation: substrate, provisionally, with any edge a
-  determination relies on re-derived and given a `rationale_ref` in that determination's own migration.*
-- **OD-B** — do deaf and hard-of-hearing people belong on `room-acoustic-performance`? `DEAF` holds
-  16 links, **none on this slug**, while the only Tier-1-anchored value on the parameter is theirs.
-- **OD-C** — A-18's applicability set. *Recommendation: DEAF, AUT, NDV, DEM.*
+**The critical path — owner work, and nothing substitutes for it.**
+- **The population-taxonomy pass** (D-0165). Until it lands, **no cell on this slug is authorable**,
+  and §4's acceptance criterion is unreachable. It is not one item's applicability set; it is
+  slug-level population scope across 106 slugs, of which the DEAF-on-acoustics hole is one instance.
+
+**Still open, and each cheap to answer.**
 - **OD-D** — REF-00965 / REF-00968 Co-1 → T3? Needs full texts this environment cannot reach.
-- **OD-E** — REF-00967 T1 → T3? **Now blocking a live gate**: its `scope` cannot be written until
-  this is answered, and `adjudication_integrity` reports the inconsistency until it is.
-- **OD-F** — ratify or refuse the adversarial-subject waiver.
+  **Sharpened by D-0166:** with REF-00967 now T3, these three Co-1 rows are the *only* Tier-1
+  evidence on the slug. If OD-D sustains, the slug has **no Tier-1 anchor at all**.
+- **OD-F** — ratify or refuse the adversarial-subject waiver (`references/project-standards.md`
+  forbids passes whose subject is a plan, census, handoff or session record; the 2026-08-20 session
+  ran three on a census, and the 2026-08-22 review is the same class).
 - **OD-G** — strike DR §12.1 Step 10's `jurisdictional_values` clause. An interim **STOP** notice is
   in place at that step; the deletion is the owner's.
 
+**Unblocked right now, needing no further decision — and this is the next session's work.**
+Admitting a source needs no applicability edge, so acts 2 and 4 are not gated by D-0165:
+- **Act 2**, the corrected search round: six queries crossing **parameter × setting × population**,
+  including **DEAF, DEM, MH and BRAIN**. `GAP-B01-002` is **P1** — DEM carries 8 of 13 items on this
+  slug and has no admission above PROXY — and it appears in no prior handoff. `GAP-B01-003`: MH was
+  never searched, never deferred, never mentioned; BRAIN appeared only as a conjunct.
+- **Act 4**, promoting the three held OD-5 leads — **REF-00561** (`10.3390/app11093942`) and
+  **REF-00578 / REF-00325** (Iglehart 2016/2020, the only Tier-1 population-differentiated RT
+  threshold the project has identified) — through a full R1–R15 walk. All three are already owned in
+  `source_locators`, which the R9 gate cannot see. Closes `GAP-B01-004`.
+  **Expect PROXY, and do not soften it:** Iglehart's participants are children with hearing aids or
+  cochlear implants. A Tier-1 study with a hard number is still PROXY if its population is not the
+  one served.
+
 **State at handoff.** `user_version` 60 · `evidence_sources` 5 · `specifications` 0 ·
-`search_executions` 9 · `data_migrations` 335 · registry 63 checks / 4 quarantined ·
-`test_db_integrity` 72/72 · reproducibility PASS (`--deep` too) · preflight **PASS**, 50 green,
-9 nothing-in-scope, 4 advisory failures — **all four measured identical on `origin/main`** in a
+`search_executions` 9 · `decisions` 166 · `data_migrations` 339 · registry 63 checks / 4 quarantined ·
+`test_db_integrity` **72/72** · `adjudication_integrity` **PASS (0 inconsistencies**, was FAIL 5 of 5)
+· `decision_capture` exit 0 · reproducibility PASS (`--deep` too) · preflight **PASS**, 4 advisory
+failures — **all four measured identical on `origin/main`** in a
 worktree (`validate_pydantic_schemas` 246 findings both sides; `validate_reasoning` errors on a
 pilot-era reasoning doc this branch never touched; `retired_vocabulary`; `test_verification_pipeline`).
 

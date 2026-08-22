@@ -13,8 +13,9 @@
     "F": 79
   },
   "tier_totals": {
-    "1": 4,
-    "2": 1
+    "1": 3,
+    "2": 1,
+    "3": 1
   },
   "strength_band_slices": {
     "full": 1,
@@ -46,14 +47,15 @@
       "partial": 0,
       "weak": 0,
       "disputed": 0,
-      "t3_clinical": 0,
+      "t3_clinical": 1,
       "practice": 0,
       "code_only": 0,
       "strength_band": "full",
       "weak_only": false,
       "tiers": {
-        "1": 4,
-        "2": 1
+        "1": 3,
+        "2": 1,
+        "3": 1
       },
       "etypes": {
         "sr_meta": 1,

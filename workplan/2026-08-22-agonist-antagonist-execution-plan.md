@@ -592,7 +592,16 @@ else. If OD-D re-grades the Co-1 rows to T3, re-examine whether the check still 
 **Falsification:** `--verify-authors` must run CLEAN with `EXAMINED > 0` after the migration; if it
 prints CLEAN today over NULL fields, its scope is too narrow and *that* is the finding.
 
-### Act 4 — Promote the held leads, blind-first *(needs OD-A, OD-B, OD-C)*
+### Act 4 — Promote the held leads, blind-first *(needs OD-A only — **corrected 2026-08-22**)*
+
+> **Gating corrected.** This header read *"needs OD-A, OD-B, OD-C"*. Wrong: admitting a source touches
+> `evidence_sources`, `source_slug_links` and `evidence_population_match`, and **none of those needs an
+> applicability edge** — population-match rows grade a source against a *population*, not against an
+> item. OD-B/OD-C gate **act 5**, the determination, and nothing earlier. The error mattered the moment
+> it was tested: OD-A was answered **substrate** (D-0164) and OD-B/OD-C **deferred** (D-0165), and
+> under the header as written that combination would have stopped act 4 too — closing none of
+> `GAP-B01-002` (P1), `GAP-B01-003` or `GAP-B01-004` while waiting on a taxonomy pass they do not
+> depend on.
 
 `source_locators` holds **835** leads the R9 gate cannot see. Three matter now, all already staged as
 `search_candidates` and all named in `GAP-B01-004`:
@@ -624,7 +633,13 @@ over-claimed; the doc's tier guesses are recorded as guesses and **re-graded bli
 **Falsification:** if the blind re-grade of REF-00561 does not land at T3, or Iglehart does not land at
 T1-PROXY, the reasoning document is less reliable than this plan assumes and act 5 stops.
 
-### Act 5 — One determination, authored by hand *(needs act 4 and OD-A/B/C)*
+### Act 5 — One determination, authored by hand *(needs act 4 and OD-A/B/C — **BLOCKED 2026-08-22**)*
+
+> **Blocked by D-0165.** OD-B/OD-C was deferred to a population-taxonomy pass, so `A-18 × DEAF` cannot
+> be authored: A-18 still carries zero `item_population_links` and `DEAF` is still absent from this
+> slug. The cell analysis below stands as the argument for *why* that pass matters — it is the only
+> cell on the slug where a numeric value has a Tier-1 anchor — but the act does not run until the
+> taxonomy question is answered. **That pass is now the critical path for the whole deliverable.**
 
 **Cell: A-18 × DEAF** — `RT60 in Occupied Learning and Listening Spaces`, for hearing-aid and
 cochlear-implant users.
