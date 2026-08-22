@@ -30,13 +30,14 @@ Load:
 
 > **[CORRECTED 2026-08-04] There is no single canonical plan.** This step used to
 > name `workplan/workplan-co0007-v4.md` as "canonical operative plan (always
-> load)". **That file does not exist.** Per CLAUDE.md §9, several dated workplans
+> load)". **That file does not exist.** Several dated workplans
 > coexist by design (consolidation, coverage-completion, remediation, fork-cut, …);
 > sort `workplan/` by date and read the newest that matches the task at hand. Do
 > not treat any one of them as authority over the others, and do not trust a date
 > written inside one — derive current state from the DB and `git log`.
 
-> **`sessions/LATEST` is NOT a reliable session pointer** (CLAUDE.md §10). It is
+> **`sessions/LATEST` is NOT a reliable session pointer** (CLAUDE.md §7, "Two session
+> pointers" — pointer corrected 2026-08-22, was §10). It is
 > being asked to mean both "most recent session" and "most recent *research*
 > session", and it currently names a session that logged zero `evidence_sources`
 > rows. Splitting it is W4.1 of `workplan/2026-08-02-architecture-decision-and-execution-plan.md`
@@ -44,7 +45,8 @@ Load:
 
 > **Connection register (Phase 1 SQLite — 2026-05-05):** All connection state is in `data/guidebook.db`. Do NOT load `references/connections/_index.md` (archived). Query connections via `python3 scripts/db.py connections`. Per-topic `connections.md` files are archived — do not read or write.
 
-> ~~**Workplan authority (2026-05-08):** `workplan-co0007-v4.md` is the only operative plan. All other workplan files are either deprecated (with explicit banners) or tactical references subordinate to v4. Do not load or follow any other workplan for session planning.~~ **[SUPERSEDED 2026-08-04 — the named file does not exist and the single-plan model was abandoned; see the correction above and CLAUDE.md §9.]** `workplan/workplan-reconciliation-2026-05-08.md` remains readable as the historical supersession map.
+> ~~**Workplan authority (2026-05-08):** `workplan-co0007-v4.md` is the only operative plan. All other workplan files are either deprecated (with explicit banners) or tactical references subordinate to v4. Do not load or follow any other workplan for session planning.~~ **[SUPERSEDED 2026-08-04 — the named file does not exist and the single-plan model was abandoned; see the correction above; CLAUDE.md §8's table now answers "what to do now" with the
+> operative DR, not with a workplan file. Pointer corrected 2026-08-22, was §9.]** `workplan/workplan-reconciliation-2026-05-08.md` remains readable as the historical supersession map.
 
 ### 1b — Load session file + connection summary (GraphQL + bash — call 2)
 

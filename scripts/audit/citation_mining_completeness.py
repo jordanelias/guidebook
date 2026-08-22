@@ -72,7 +72,8 @@ def session_keys(session):
     either pointer.
 
     That is the mechanism behind the vacuous pass this gate was cited for. It
-    was read as a pointer-staleness problem (CLAUDE.md §10) and the W4.1 pointer
+    was read as a pointer-staleness problem (CLAUDE.md §2(a); pointer corrected
+    2026-08-22, was §10) and the W4.1 pointer
     split was expected to fix it; the split is correct and necessary, but on its
     own it moved the gate from one name that matched nothing to another name
     that matched nothing. Normalising here is what actually puts rows in scope.
@@ -181,7 +182,8 @@ def audit(db_path, session=None, tier_max=2, output_json=False):
     # sources inside the tier scope, inside the session scope if one was given.
     # Without this the gate could print "Outstanding: 0" over a scope holding
     # nothing and there was no line in the output to tell the two apart. That is
-    # the vacuity CLAUDE.md §10 names: passing on merits and passing for want of
+    # the vacuity CLAUDE.md §2(a) names (pointer corrected 2026-08-22, was §10):
+    # passing on merits and passing for want of
     # subjects render identically, so the pass carries no information either way.
     examined = con.execute(f"""
         SELECT COUNT(DISTINCT es.ref_id)

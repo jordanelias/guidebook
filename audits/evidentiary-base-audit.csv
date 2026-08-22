@@ -1,5 +1,5 @@
 rank,slug,topic,evidence_state,grade,score,n_sources,strength_band,full_anchor,partial_anchor,weak_anchor,disputed,t3_clinical,practice,weak_only,tier_profile,n_true_jurisdictions,n_jurisdictions_raw,jurisdictions,n_languages,languages,pct_english,n_nonenglish,pct_anglo_core,anglo_core_instances,supra_instances,non_anglo_instances,null_jurisdiction_instances,comp_volume,comp_tier,comp_jurisdiction,comp_language,comp_anglo_balance,search_langs_run,search_langs_hit
-1,room-acoustic-performance,sensory-environment,,D,42.0,5,full,5,0,0,0,0,0,0,T1:4;T2:1,0,0,,1,en:5,100.0,0,,0,0,0,5,12,30,0,0,0.0,0,0
+1,room-acoustic-performance,sensory-environment,,D,46.0,10,full,10,0,0,0,4,0,0,T1:5;T2:1;T3:4,0,0,,1,en:10,100.0,0,,0,0,0,10,16,30,0,0,0.0,0,0
 2,accessibility-feature-market-value-uplift-framing,economics,,F,0,0,,0,0,0,0,0,0,0,,0,0,,0,,,0,,0,0,0,0,0,0,0,0,0,0,0
 3,accessible-bathroom-and-grab-bar,bathrooms-and-wet-areas,,F,0,0,,0,0,0,0,0,0,0,,0,0,,0,,,0,,0,0,0,0,0,0,0,0,0,0,0
 4,accessible-circulation-geometry,entrances-and-circulation,,F,0,0,,0,0,0,0,0,0,0,,0,0,,0,,,0,,0,0,0,0,0,0,0,0,0,0,0

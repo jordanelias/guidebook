@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-08-22-research-batch-02-room-acoustic-performance",
+  "artifact": "sessions/session_2026-08-22-research-batch-02-room-acoustic-performance.md",
+  "doctrine_sha": "0f2f525",
+  "rules_in_scope": [
+    "source-discipline",
+    "evidence-verification-gate",
+    "integrity-protocol",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "retrieval-log/session_2026-08-22-research-batch-02-room-acoustic-performance",
+      "reason": "Every bibliographic field on all five admissions was written IN CODE from persisted Crossref payload bytes, never typed and never from memory. R9 was run by hand against BOTH evidence_sources and source_locators because the coded gate queries only the first; three of five candidates came back already held and their ref_ids were REUSED rather than minted. R10 ran a real ladder: the first Crossref call for REF-00561 returned an empty body with curl exit 35, which is recorded as a 0-byte artefact rather than hidden, and the rung-1 retry resolved. No numeric value was written into any value column; the 0.4-0.7 s and 0.3 s figures attributed to these sources remain [UNVERIFIED-QUANT] because no full text was read."
+    },
+    "evidence-verification-gate": {
+      "status": "FIRED",
+      "evidence_path": "scripts/audit/research_batch_dod.py",
+      "reason": "research_batch_dod --session returns COMPLIANT, exit 0, all fifteen rules, and every rule that can have a subject has a non-zero one: R1 three co1/co2-targeted searches, R2 mining for 5 anchors, R4 13 population linkages across 8 searches, R7 14 candidates for 109 screened, R13 all 5 tier-1..3 admissions graded. Two BLOCKING gates refused this batch and both refusals were correct and were fixed rather than argued with: citation_mining_completeness caught a confirmed T1 source with no mining row, and test_db_integrity I1 refused five VERIFIED rows carrying verification_disposition NULL. The I1 refusal is what forced GAP-B02-001 to be written rather than assumed."
+    },
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "scratchpad/session_2026-08-22-research-batch-02-room-acoustic-performance/machinery-trace.md",
+      "reason": "The canonical sha256 was verified unchanged at step 0 and again immediately before emit; every write went through emit_batch_sql or hand SQL into emit_data_migration into migrate_db, six migrations, and rebuild plus migration_reproducibility --deep PASS. Where the capture tool REFUSED an emit - re-keying a citation_mining row changes part of the primary key and reads as a deletion to an additive-only path - the refusal was accepted and the write redone as hand SQL, not worked around. Machinery utilisation was measured from the schema, the registry and run_checks.classify(), explicitly NOT from grep, per the rule ratified today."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/sessions_session_2026-08-22-research-batch-02-room-acoustic-performance.json",
+      "reason": "This attestation, plus the session record and two scratchpad artefacts kept under owner directive 2026-08-22: batch-working-notes.md (the step-by-step trace and the decisions taken inside the batch) and machinery-trace.md (what the batch touched and what stayed idle). sessions/LATEST-RESEARCH is moved to this session because it HAS subjects - the first time that pointer has moved to a session that satisfies its own blocking gate."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "source-discipline",
+      "reason": "I wrote a bibliographic claim from something other than the bytes, in the session auditing that exact failure. Exec 14's findings_note asserted that Iglehart's second paper was 2019 and that the reasoning document calling it 2020 was wrong. That was an inference from the DOI slug 2019_AJA-19-0010 plus a search-result listing. The retrieved payload says issued 2020, volume 29, issue 1, pages 6-17 - the slug carries the assignment year. The reasoning document was right and I was wrong. Caught by R10's mandatory re-retrieval BEFORE any admission was written, so no stored field inherited it, and the row was corrected in place with the error described rather than silently overwritten."
+    },
+    {
+      "rule": "evidence-verification-gate",
+      "reason": "Five sources were admitted on METADATA ALONE. No full text was read this batch. That is a real limit on what these admissions support, and it is load-bearing for three specific claims: Bettarello REF-00561 is credited in this project's own reasoning document with a 0.4-0.7 s RT60 recommendation that nobody here has seen in the paper; the Iglehart 0.3 s threshold rests on abstracts; and Markussen REF-00970 is graded PARTIAL for DEM on an abstract that does not establish whether people with dementia were interviewed directly or whether staff spoke as proxies. Recorded as GAP-B02-001, P1, with a falsification condition naming those figures specifically."
+    },
+    {
+      "rule": "integrity-protocol",
+      "reason": "db.py log-mining --ref takes the LOCAL ref id and I passed the GLOBAL one, so two citation_mining rows were written with global_ref_id NULL. The mining had genuinely been performed and the blocking gate still reported a RULE 124 protocol violation - a write path that silently mis-keys a row makes a blocking gate under-report completed work, which is the same defect class as the R9 blindness this batch documented three times. Fixed forward by hand SQL. Recorded as a machinery finding, not a typo."
+    },
+    {
+      "rule": "evidence-verification-gate",
+      "reason": "The blind adversarial pass sustained FOUR findings against this batch and all four were corrected by migration in the same pass, as DR-2026-08-19 section 7 requires. Three population grades were one step too generous - MB2-001, MB2-002 and MB2-012 read PARTIAL where the ratified R13 hook says no-participants caps at PROXY, and in two of the three my own mismatch_note had already stated the fact that forced the lower grade and then graded above it anyway. Venue typing was inconsistent across two proceedings papers written minutes apart, and exec 15 carried a target_scope literal the ratified table does not admit. Post-correction grades are 1 EXACT, 1 PARTIAL, 5 PROXY, 6 MISMATCH. Two findings were deliberately NOT actioned: the DoD gate prints PASS over empty subject sets, which needs a subject count threaded through fifteen rules of a blocking gate and should not be attempted at the tail of a long session, and A-18's empty item_population_links set belongs in the D-0165 packet."
+    }
+  ],
+  "bias_direction": "I am biased toward this batch looking like vindication, because it refutes the previous batch's central claim and it was my own plan that predicted the refutation. The concrete risk: I framed the corrected query, I chose which five of a much larger yield to admit, and I graded them - so the finding that 'the value exists and the earlier batch just did not look' is a finding I was steering toward from the first query. Two things partly check it. The grades went AGAINST my interest where the evidence demanded: the strongest Tier-1 sources are capped at PROXY, REF-00969 is tiered DOWN to avoid compounding a disputed Co-1 grade, and six MISMATCH rows exist specifically to stop the one hard number I found from drifting into populations it does not serve. And no numeric value was written anywhere, which is the claim I would most have liked to make. A second bias worth naming: I have an incentive to report high machinery utilisation because I ran the batch, and the trace says the opposite - 8 tables of 65, zero of 17 views - which is evidence the measurement was not tuned to flatter the run.",
+  "independent_reviewer_counterclaim": "The strongest objection is that this batch bought coverage, not knowledge. Ten sources now sit in evidence_sources and specifications is still 0, so the project's own acceptance criterion - one answered question, published - is exactly as far away as it was this morning, and the batch cannot move it because D-0165 blocks the cell. A reviewer can fairly say the deliverable did not advance and that what advanced was the apparatus's inventory of itself. Worse, five of the ten admissions are metadata-only: the headline result, that a 0.4-0.7 s autism-specific recommendation exists, rests on a paper nobody in this project has read, and the session says so in a gap rather than in the finding. A second objection cuts at the framing: the batch reports OD-5 'demonstrated three times' as though that were a result, but OD-5 was already a known open decision with two witnesses - adding a third witness to an undisputed proposition is confirmation, not progress, and the decision it argues for still has not been taken. The honest counter is narrow. The DEM and MH holes were real, unrecorded and are now closed as coverage failures rather than absence; the PROXY cap on the Iglehart line converts D-0165 from a governance abstraction into a measured cost; and three blocking gates caught three real defects in this batch, which is the first evidence in this repository's history that the research gates work on research rather than on emptiness. AFTER THE ADVERSARIAL PASS: the reviewer's case is stronger than written above, not weaker. Three of thirteen population grades were too generous in the same direction - toward the batch looking more on-population than it is - and one of them sat directly on the gap the batch most wanted to close. That is a bias with a measurable sign, not a hypothetical one, and it was caught by a fresh context rather than by me. The mitigation I claimed in bias_direction, that grades went against my interest where the evidence demanded, is now only partly true: they went against my interest where I noticed, and three times I wrote the disqualifying fact into the note and graded above it anyway.",
+  "verdict": "DEVIATION-LOGGED"
+}

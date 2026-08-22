@@ -250,9 +250,14 @@ checks:
     cost: fast
     no_floor: not-instrumented — despite the test_ name this is a live-corpus gate, not a selftest; it prints no whole-check EXAMINED count, so no floor is declarable yet
     note: >-
-      RED on main (63/69 checks pass as of 2026-08-04). Pre-existing, owner-gated
-      debt — see references/tooling-register.md §4. Level left as declared rather
-      than demoted to hide it, but held in its own battery so enabling branch
+      RE-MEASURED 2026-08-22: 72/72 checks pass. The previous text here read "RED on
+      main (63/69 checks pass as of 2026-08-04)" and was carried unchanged for
+      eighteen days after it stopped being true — a hardcoded volatile fact inside
+      the gate inventory itself, which is the CLAUDE.md §2(b) failure one level up
+      from where that rule is usually applied. Correcting it was scheduled by the
+      2026-08-16, 08-17 and 08-18 plans and skipped three times.
+      Derive it; do not read a number here: `python3 scripts/tests/test_db_integrity.py`.
+      Level left as declared, and held in its own battery so enabling branch
       protection does not deadlock every data-touching PR on a content backlog.
       SUPERSEDED 2026-08-04 — everything below this line about the verification_status
       vocabulary describes a database that no longer exists, and is retained only so
@@ -486,7 +491,8 @@ checks:
       the newest session that actually mined citations was 2026-07-26. The gate
       therefore scoped itself to a session that touched no sources and reported
       `Outstanding: 0` at 4.7% coverage — a BLOCKING check passing by having
-      nothing in scope. CLAUDE.md §10 called both states meaningless and was
+      nothing in scope. CLAUDE.md §2(a) (pointer corrected 2026-08-22, was §10) calls
+      both states meaningless and was
       right: stale, it validates a closed set; advanced to the newest session, it
       reports zero because that session did no research.
       LATEST-RESEARCH names the newest session with rows in citation_mining /
@@ -666,7 +672,8 @@ checks:
       INSTRUMENTED 2026-08-14 (A5): EXAMINED prints len(MODEL_TABLE_MAP), the
       count of model<->table pairs checked (17 today). Code-declared, not
       data-derived — min_items:1: zero would mean the mapping itself broke.
-      The schemas/*.py <-> SQLite parity check CLAUDE.md §10 calls "a bug, not a
+      The schemas/*.py <-> SQLite parity check CLAUDE.md §7 (pointer corrected
+      2026-08-22, was §10) calls "a bug, not a
       convention" — and the only tool that checks it. De-quarantined 2026-08-01
       on two corrections. First, --strict exists (verified: bare exits 0, --strict
       exits 1); its quarantine reason had called it a not-really-a-gate for lacking
@@ -1397,9 +1404,24 @@ checks:
 
 # --- quarantine -------------------------------------------------------------
 # Registered so they stay visible, never selected. Every entry needs a `reason`
-# and, where applicable, the owner-gated action that would resolve it. Nothing is
-# deleted: retirement is owner-gated (CLAUDE.md §9 guardrail 4), and these are
-# recorded for that decision, not pre-judged.
+# and, where applicable, the action that would resolve it.
+#
+# CORRECTED 2026-08-22. This block previously read "Nothing is deleted: retirement
+# is owner-gated (CLAUDE.md §9 guardrail 4), and these are recorded for that
+# decision, not pre-judged." THAT GUARDRAIL NO LONGER EXISTS and §1 of the
+# 2026-08-19 rewrite inverted it: "Code, checks, scripts, dead tables and views:
+# delete them. No owner gate. You need EVIDENCE -- that it is unreferenced, or
+# vacuous after a real batch, or superseded -- not permission." Owner sign-off
+# remains required for content and doctrine (the DG-NON class), not for code.
+#
+# This matters here specifically. Quarantine is a holding pen, not a preservation
+# order, and the stale clause was load-bearing: on 2026-08-20 the cull kept
+# scripts/audit/adjudication_integrity.py (178 LOC) and its unregistered wrapper
+# (42 LOC) partly on this reasoning, and partly on a claim that
+# `test_adjudication_integrity` is "a LIVE registered check" -- it is not; that id
+# appears exactly once in this file, inside the prose of the entry below. An entry
+# whose stated RED reason has since been measured false, and which run_checks.py
+# never selects, meets §1's evidence standard for deletion on its own.
 quarantine:
 
 
@@ -1430,9 +1452,29 @@ quarantine:
     cmd: [python3, scripts/audit/adjudication_integrity.py]
     status: quarantined
     reason: >-
-      RED — 274 tier inconsistencies. Its companion test
-      (scripts/tests/test_adjudication_integrity.py) also fails. Too large a
-      finding to gate on; needs an owner decision on the backlog first.
+      RE-MEASURED 2026-08-22: 1 tier-derivation inconsistency of 5 checked, not 274.
+      The 274 figure predates the 2026-08-06 clean-room reset, which deleted the
+      corpus that produced it; it survived here for sixteen days as a live-sounding
+      justification for a state that no longer existed, and the 2026-08-18 cull plan
+      then measured it again and recorded PASS/0 — also wrong, because the 2026-08-19
+      batch had not yet landed its five sources.
+      WHAT IT ACTUALLY FINDS TODAY, and why this entry is NOT retired: `scope` was
+      NULL on all five admitted sources, and schemas/tier_derivation.py keys the
+      ratified tier table on (evidence_type, scope) — so every stored tier was
+      UNDERIVABLE, asserted with its own derivation input missing. Four were fixed
+      2026-08-22 by recording the one scope their evidence_type admits; no tier
+      changed. The one that remains is REF-00967, where evidence_type='clinical'
+      admits high_control (Tier 1) and lower_control (Tier 3), the stored tier is 1,
+      and choosing IS the disputed tier — owner decision OD-E. The gate is pointing
+      at a real open question, which is what a gate is for.
+      A NOTE ON THE 2026-08-20 KEEP-RATIONALE, because it was false and load-bearing.
+      That cull kept this script and its wrapper on the ground that
+      "test_adjudication_integrity is a LIVE registered check". It is not, and never
+      was: that id appears in this file only inside this prose. The right reason to
+      keep it is the one above — it is not vacuous — and it is worth recording that
+      the correct decision was reached through an incorrect premise.
+      Still quarantined: run_checks.py never selects it, so it does not gate
+      anything. Promotion is owner-gated and waits on OD-E.
 
   - id: code_currency_audit
     cmd: [python3, scripts/audit/code_currency_audit.py]

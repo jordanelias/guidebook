@@ -47,9 +47,19 @@ The commit-message format check remains, and is still `if: github.event_name == 
 
 **This replaces the old "owner-gate file moves and retirements" guardrail, which was the
 pathology.** Adding a check cost a commit; removing one cost an owner decision. A system with
-that gradient can only accrete, and it did — to sixty-odd registered checks and ~35k executable
-LOC, most of it policing itself. (Derive the live figures:
-`python3 -c "import yaml;print(len(yaml.safe_load(open('governance/check-registry.yaml'))['checks']))"`.)
+that gradient can only accrete, and it did. **Derive both live figures; do not read a number here.**
+This file's own §2(b) forbids hardcoded counts in derived documents, and the "sixty-odd registered
+checks and ~35k executable LOC" that stood here until 2026-08-22 was stale from the moment the
+2026-08-20 cull removed 6,716 of those lines:
+
+```
+python3 -c "import yaml;d=yaml.safe_load(open('governance/check-registry.yaml'));print(len(d['checks']),'checks;',len(d['quarantine']),'quarantined')"
+find scripts tools -type f \( -name '*.py' -o -name '*.sh' \) -not -path '*/__pycache__/*' -print0 | xargs -0 cat | wc -l
+```
+
+The shape that matters is not the total but the ratio: **most of the executable surface polices the
+repository rather than producing the book**, and the cull removed dead weight from both sides without
+changing that ratio.
 
 - **Code, checks, scripts, dead tables and views: delete them.** No owner gate. You need
   *evidence* — that it is unreferenced, or vacuous after a real batch, or superseded — not

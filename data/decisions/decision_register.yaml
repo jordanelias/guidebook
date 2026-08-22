@@ -1,5 +1,5 @@
 register_version: 1
-last_updated: 2026-08-12 20:50
+last_updated: 2026-08-22 02:10
 decisions:
 - decision_id: D-0001
   category: D-DOCT
@@ -5297,8 +5297,8 @@ decisions:
 - decision_id: D-0159
   category: D-OP
   delegation: DG-NON
-  delegation_rationale: Owner instruction of 2026-08-12 ("correct skill file") named the change
-    outright; the session captured owner-directed naming rather than originating it.
+  delegation_rationale: Owner instruction of 2026-08-12 ("correct skill file") named the change outright;
+    the session captured owner-directed naming rather than originating it.
   summary: 'Rename the skill `cell-curator` to `specification-curator`, following the schema rename in
     D-0158.
 
@@ -5354,9 +5354,8 @@ decisions:
 - decision_id: D-0160
   category: D-SCHEMA
   delegation: DG-NON
-  delegation_rationale: Owner instruction of 2026-08-12 named the freeze, the archive and the
-    compression outright, and D-0158 had already recorded a baseline as the deferred alternative
-    awaiting owner sign-off.
+  delegation_rationale: Owner instruction of 2026-08-12 named the freeze, the archive and the compression
+    outright, and D-0158 had already recorded a baseline as the deferred alternative awaiting owner sign-off.
   summary: 'Freeze and archive the entire 355-file migration history; compress it into one full schema+data
     baseline (057_baseline_2026-08-12.sql). Retire five orphaned population pages and the hand-authored
     e-08 exemplar under the same instruction.
@@ -5556,3 +5555,132 @@ decisions:
     carrying that premise into a DR, an attestation, two register stores, five commit messages and a PR
     description -- all of which passed every gate. No gate reads reasoning. It surfaced only when the
     owner asked for a re-derivation.'
+- decision_id: D-0164
+  category: D-DOCT
+  delegation: DG-NON
+  delegation_rationale: Population applicability is a judgement about the work-product, not about code.
+    Owner ruling of 2026-08-22, taken as OD-A of workplan/2026-08-22-agonist-antagonist-execution-plan.md
+    section 2. Captured, not proposed.
+  summary: 'item_population_links are SUBSTRATE, not scaffolding -- with a use-time debt: any applicability
+    edge a determination relies on must be re-derived and given a rationale_ref in that determination''s
+    own migration.'
+  outcome: ADOPTED by owner ruling 2026-08-22 (OD-A). D-1's scaffolding quarantine does NOT reach item_population_links.
+    Determinations may rely on these edges, and each one they rely on is warranted at the point of use
+    rather than in bulk.
+  rationale: 'All 372 item_population_links carry rationale_ref NULL -- not one applicability edge in
+    the repository cites evidence -- and 358 of them came from a single 2026-05-11 normalisation session.
+    That made the D-1 boundary genuinely ambiguous: if these edges are scaffolding, D-1 quarantines them
+    and NO cell in this repository is determinable until applicability is rebuilt from evidence. The 2026-08-20
+    BRK-20 finding that A-18 has zero edges was therefore only half the picture: choosing a different
+    item does not buy a LAWFUL edge, it buys an UNEXAMINED one, and the determination inherits it silently.
+    The ruling resolves the ambiguity in the direction that keeps the deliverable reachable, while refusing
+    to launder 372 unwarranted assertions into warranted ones by fiat. The debt is paid where it is used,
+    which is also where it can be judged: an edge nobody determines against never needs a warrant, and
+    an edge a determination rests on gets one in the same migration that rests on it.'
+  alternatives_considered:
+  - 'Substrate as-is, no debt -- rejected: every cell would inherit an unexamined applicability claim
+    from one May 2026 session, with nothing recording that it was never checked.'
+  - 'Scaffolding, quarantine all 372 under D-1 -- honest and rejected on consequence: it stops acts 4-6
+    indefinitely and makes no cell determinable anywhere until applicability is rebuilt from evidence.'
+  - 'Bulk backfill of rationale_ref across all 372 before any determination -- rejected as the accretion
+    pattern: 372 rows of research owed before one question can be answered.'
+  decision_date: 2026-08-22 02:10
+  decided_by: jordanelias
+  model_routing: opus/100/route
+  effort_level: 100
+  decision_artifacts:
+  - workplan/2026-08-22-agonist-antagonist-execution-plan.md
+  - sessions/session_2026-08-22-record-correction-and-biblio-repair.md
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: 'Enforcement: NONE today. No registered check tests whether an edge a determination relies on
+    carries a rationale_ref, so this ruling is convention until one exists. Stated plainly per CLAUDE.md
+    section 2(a): the guardrails that would have caught this repository''s real failures have historically
+    had zero enforcing code, and this is another. The check is not added here because no determination
+    exists yet for it to have a subject -- adding it now would create the blocking-and-vacuous gate CLAUDE.md
+    section 2(a) records four times. It becomes owed with the first determination.'
+- decision_id: D-0165
+  category: D-DOCT
+  delegation: DG-NON
+  delegation_rationale: Population taxonomy and work-product inclusion are both named in the DG-NON list
+    of governance/decision-protocol.md. Owner ruling of 2026-08-22, taken as OD-B/OD-C.
+  summary: 'DEFERRED: whether deaf and hard-of-hearing people belong on room-acoustic-performance, and
+    what A-18''s applicability set should be, are held pending a population-taxonomy pass rather than
+    settled item by item.'
+  outcome: DEFERRED by owner ruling 2026-08-22 (OD-B/OD-C). No population is added to or removed from
+    room-acoustic-performance. A-18 keeps zero item_population_links. The first determination is BLOCKED
+    until the taxonomy pass runs.
+  rationale: 'The question was put as a single item''s applicability set and the owner declined that framing.
+    The finding that prompted it is unchanged and stands on the record: the population DEAF carries 16
+    item_population_links, NONE of them on room-acoustic-performance, so the guidebook''s reverberation
+    chapter does not apply to deaf or hard-of-hearing people -- while the only Tier-1-anchored RT60 value
+    this project has ever identified (Iglehart 2016/2020, held as source_locators leads REF-00578 and
+    REF-00325) is precisely about hearing-aid and cochlear-implant users. The project''s own owner-signed
+    May 2026 reasoning document names DEAF as the worst-case user for this parameter. Deciding that one
+    slug in isolation would set a precedent for 105 others by accident, which is the reason for deferral.'
+  alternatives_considered:
+  - Add DEAF, AUT, NDV, DEM to A-18 now -- would have unblocked the first determination immediately, at
+    the cost of deciding slug-level population scope one item at a time.
+  - 'Leave the slug as-is and author a determination on a different cell -- rejected implicitly: no held
+    source carries a value for any other cell on this slug, so the cell would be a well-documented blank.'
+  decision_date: 2026-08-22 02:10
+  decided_by: jordanelias
+  model_routing: opus/100/route
+  effort_level: 100
+  decision_artifacts:
+  - workplan/2026-08-22-agonist-antagonist-execution-plan.md
+  - sessions/session_2026-08-22-record-correction-and-biblio-repair.md
+  predecessors:
+  - D-0164
+  supersedes: []
+  status: DEFERRED
+  review_status: NA
+  notes: 'CONSEQUENCE, recorded so the deferral is not mistaken for a small one. The population-taxonomy
+    pass is now the CRITICAL PATH for the entire deliverable: DR-2026-08-19 section 4''s acceptance criterion
+    is one answered question published, no cell on the only slug with admitted evidence can be authored
+    until this lands, and nothing else in the queue substitutes for it. Work that remains unblocked meanwhile:
+    admitting held sources (they need no applicability edge), closing GAP-B01-002 (DEM, P1, 8 of 13 items
+    on this slug, no admission above PROXY), GAP-B01-003 (MH never searched; BRAIN only ever a conjunct)
+    and GAP-B01-004 (the OD-5 witnesses).'
+- decision_id: D-0166
+  category: D-DOCT
+  delegation: DG-NON
+  delegation_rationale: Evidence-tier definitions and their application to a specific source are named
+    in the DG-NON list. Owner ruling of 2026-08-22, taken as OD-E.
+  summary: REF-00967 (Bagheri, Good & Alavi 2024, EEG study of visual and acoustic discomfort in adults
+    with and without ADHD) is re-graded from Tier 1 to Tier 3, with scope='lower_control'.
+  outcome: ADOPTED by owner ruling 2026-08-22 (OD-E). Applied by migration data_20260822020737. adjudication_integrity.py
+    went from FAIL (5 tier-derivation inconsistencies of 5) to PASS (0).
+  rationale: 'Two defects in one row. The tier was over-graded: an n=27 single-centre observational EEG
+    study is lower_control, not high_control, and the source''s own stored note already conceded it ''contains
+    no RT60, NRC, STC or NC value'', so independent of population it cannot anchor any room-acoustic figure
+    on this slug. And the tier was UNDERIVABLE: scope was NULL, and schemas/tier_derivation.py keys the
+    ratified table on (evidence_type, scope), so the stored Tier 1 was an assertion no ratified rule could
+    produce. Writing scope=''lower_control'' supplies the derivation input and the ratified table then
+    yields Tier 3 -- the tier is now derived rather than asserted. Raised by the 2026-08-20 adversarial
+    pass under lens L4 and referred rather than corrected, because tier definitions are not a session''s
+    call.'
+  alternatives_considered:
+  - Keep Tier 1 with scope='high_control' -- defensible on the ground that it is a controlled lab study
+    with a comparison group; would have cleared the same gate by confirming the stored tier.
+  - Leave scope NULL until the full text is read -- would have kept the gate reporting one inconsistency,
+    which was the honest interim state and is what the session held before the ruling.
+  decision_date: 2026-08-22 02:10
+  decided_by: jordanelias
+  model_routing: opus/100/arbitrate
+  effort_level: 100
+  decision_artifacts:
+  - scripts/migrations/data_20260822020737_2026-08-22-record-correction-and-biblio-repair.sql
+  - workplan/2026-08-20-adversarial-adjudication-a18-aut.md
+  predecessors: []
+  supersedes: []
+  status: ACTIVE
+  review_status: NA
+  notes: 'OD-D remains OPEN and is the larger half of the same question: the 2026-08-20 pass also graded
+    REF-00965 and REF-00968 as T3 rather than Co-1, on the ground that no co-production, participatory
+    or DPO warrant is visible in the retrieved record. Resolving it needs full texts this environment
+    cannot reach. If sustained, tier_basis=''Co-1'' on this slug rests on ONE source (REF-00966), not
+    three. With REF-00967 now at T3, the only Tier-1 evidence on room-acoustic-performance is those three
+    Co-1 rows -- so OD-D determines whether the slug has any Tier-1 anchor at all.'

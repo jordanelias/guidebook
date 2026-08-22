@@ -786,7 +786,8 @@ def main():
     # init — RETIRED 2026-08-15 with scripts/init_db.py (owner approval of the
     # Tier-1 batch). It applied migration 001 only, so it never produced a
     # working database; `migrate_db.py --rebuild` is the real path and is what
-    # CLAUDE.md §10 already told readers to use instead.
+    # CLAUDE.md §4 already tells readers to use instead. (Pointer corrected
+    # 2026-08-22, was §10.)
 
     # migrate
     sub.add_parser("migrate", help="Run pending schema migrations")

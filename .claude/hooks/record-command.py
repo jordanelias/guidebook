@@ -50,22 +50,66 @@ try:
     out=""
     if isinstance(tr,dict):
         out=tr.get("stdout") or ""
-        # exit_code is absent from this harness's PostToolUse payload; is_error is
-        # what it actually carries. Record both and let the reader see which was
-        # available rather than storing a field that is always null.
+        # MEASURED CORRECTION 2026-08-22. This comment used to read: "exit_code is
+        # absent from this harness's PostToolUse payload; is_error is what it
+        # actually carries." That is FALSE, and its own log falsifies it: of 356
+        # committed lines, exactly one carries a non-null `exit` and one a non-null
+        # `is_error`, and both are hand-fed probes (`echo test`; `cwd: /x`). Across
+        # 354 real harness events BOTH keys are absent, so both `.get()`s return
+        # None every time. The belief came from the synthetic probe, not a payload.
+        #
+        # The fields are KEPT rather than deleted, deliberately: this log is
+        # append-only and 356 lines already carry the schema, so dropping keys
+        # mid-stream would make the old and new records differ for a reason that
+        # has nothing to do with what happened. But READ THEM AS ALWAYS-NULL. A
+        # line in this file proves a command was ISSUED. It does not prove it
+        # SUCCEEDED, and no gate, session record or attestation may cite it as if
+        # it did. `response_keys` below records what the payload actually carried,
+        # so the next auditor measures instead of inferring.
         ec=tr.get("exit_code")
         err=tr.get("is_error")
+        # MEASURED 2026-08-22 by recording response_keys for one turn. This
+        # harness's Bash tool_response carries exactly:
+        #   interrupted, isImage, noOutputExpected, stderr, stdout
+        # No exit_code and no is_error — hence the correction above.
+        #
+        # SECOND MEASUREMENT, SAME DAY, CORRECTING THE FIRST. When these fields
+        # were added the comment here claimed `stderr` "IS carried and was being
+        # thrown away, which is why the log could not distinguish a gate that
+        # passed from a gate that raised." That inferred a capability from the
+        # PRESENCE OF A KEY. Measured over 88 real events in
+        # scratchpad/session_2026-08-22-research-batch-02-.../commands.jsonl:
+        # stderr_bytes is 0 on EVERY line, including two commands that raised
+        # Python tracebacks (an IntegrityError on a column type and another on a
+        # CHECK constraint). The key exists and is empty; the error text reaches
+        # the caller by some other route.
+        #
+        # So the honest statement is the uncomfortable one: THIS LOG STILL CANNOT
+        # TELL YOU WHETHER A COMMAND SUCCEEDED. exit and is_error are absent,
+        # stderr is present-but-empty, and the only real signals are `interrupted`
+        # and the size of stdout. The fields are kept because recording a measured
+        # empty is worth more than recording nothing — a future harness may
+        # populate stderr, and then these lines become comparable — but no gate,
+        # session record or attestation may cite a line in this file as evidence
+        # that a command WORKED. It proves a command was ISSUED.
+        errout=tr.get("stderr") or ""
+        interrupted=tr.get("interrupted")
     else:
-        out=str(tr or ""); ec=None; err=None
+        out=str(tr or ""); ec=None; err=None; errout=""; interrupted=None
     root=pathlib.Path(os.environ.get("CLAUDE_PROJECT_DIR") or ".")
     sf=root/".claude"/"session"
     sess=sf.read_text().strip() if sf.exists() else (d.get("session_id") or "unassigned")
     p=root/"scratchpad"/sess
     p.mkdir(parents=True,exist_ok=True)
     b=out.encode("utf-8","replace")
+    eb=errout.encode("utf-8","replace")
     rec={"ts":datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
          "cwd":d.get("cwd"),"command":c,"exit":ec,"is_error":err,
-         "stdout_sha256":hashlib.sha256(b).hexdigest(),"bytes":len(b)}
+         "interrupted":interrupted,
+         "response_keys":sorted(tr.keys()) if isinstance(tr,dict) else None,
+         "stdout_sha256":hashlib.sha256(b).hexdigest(),"bytes":len(b),
+         "stderr_sha256":hashlib.sha256(eb).hexdigest() if eb else None,
+         "stderr_bytes":len(eb)}
     with open(p/"commands.jsonl","a",encoding="utf-8") as fh:
         fh.write(json.dumps(rec,ensure_ascii=False)+"\n")
 except Exception:

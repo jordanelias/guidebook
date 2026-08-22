@@ -188,7 +188,8 @@ entries:
       - "governance/check-registry.yaml"  # header states which four lists it replaced
       - "references/tooling-register.md"  # the four-list comparison table
       - "CLAUDE.md"                       # §0 and §7 narrate the fold
-      # Historical PI snapshots. CLAUDE.md §10: the numbered files are snapshots and
+      # Historical PI snapshots. CLAUDE.md §7 ("PI versioning is intentional"; pointer
+      # corrected 2026-08-22, was §10): the numbered files are snapshots and
       # the HIGHEST-numbered one is the deployed copy — so v10_14 is deliberately NOT
       # exempt. Its stale workflow names are what a claude.ai session actually loads,
       # which makes them the highest-value occurrence in this whole register. When a
@@ -210,7 +211,8 @@ entries:
 
       KNOWN OWNER-GATED RESIDUE, and the reason this entry is expected to stay red:
       governance/project-instructions-v10_14.md names the retired workflow five
-      times. It is the DEPLOYED PI (highest-numbered wins, CLAUDE.md §10) and so
+      times. It is the DEPLOYED PI (highest-numbered wins, CLAUDE.md §7 — pointer corrected
+      2026-08-22, was §10) and so
       the highest-value occurrence in this register — a claude.ai session loads it
       and is pointed at a workflow that has not existed since 2026-08-01. It is
       deliberately NOT exempted and deliberately NOT edited. The numbered PI files
@@ -233,7 +235,8 @@ entries:
       - "governance/check-registry.yaml"
       - "references/tooling-register.md"
       - "CLAUDE.md"
-      # Historical PI snapshots. CLAUDE.md §10: the numbered files are snapshots and
+      # Historical PI snapshots. CLAUDE.md §7 ("PI versioning is intentional"; pointer
+      # corrected 2026-08-22, was §10): the numbered files are snapshots and
       # the HIGHEST-numbered one is the deployed copy — so v10_14 is deliberately NOT
       # exempt. Its stale workflow names are what a claude.ai session actually loads,
       # which makes them the highest-value occurrence in this whole register. When a
@@ -609,7 +612,8 @@ entries:
       A banned umbrella, not a style preference. Doctrine's objection is that broad
       umbrellas COLLAPSE OPPOSED DEMANDS and erase specific communities — an
       ambulatory wheelchair user and a full-time wheelchair user have conflicting
-      requirements that this phrase renders as one. Recorded in CLAUDE.md §10 as a
+      requirements that this phrase renders as one. Recorded in CLAUDE.md §6 (pointer
+      corrected 2026-08-22, was §10) as a
       repeatedly-caught failure mode, which is the strongest argument for a
       mechanical tripwire rather than another line of prose asking people to
       remember. Measured 2026-08-05: 7 files repo-wide before exemptions.
@@ -624,7 +628,8 @@ entries:
     retired_by: "DR-2026-07-22-work-from-axes"
     replacement: "the specific functional axis (fatigue/stamina demand) or the named profile"
     note: >-
-      Named in CLAUDE.md §10 alongside RV-010 as the second worked example of the
+      Named in CLAUDE.md §6 (pointer corrected 2026-08-22, was §10) alongside RV-010
+      as the second worked example of the
       umbrella failure. Measured 2026-08-05: 5 files repo-wide.
 
   - id: RV-020
@@ -824,8 +829,10 @@ deferred:
                      an edition. Also VerificationClosureReason.WITHDRAWN.
         PROVISIONAL  the cost_data_quality vocabulary (VERIFIED/PROVISIONAL/GREY),
                      architecture/schema-spec.md's own document status, and
-                     governance/mission-PROVISIONAL.md, a filename CLAUDE.md §9-2
-                     names as a redirect stub.
+                     governance/mission-PROVISIONAL.md, a filename the former
+                     CLAUDE.md §9-2 named as a redirect stub (that section was
+                     removed 2026-08-19; §1 now says git history is the archive
+                     for code and stubs are not made for it).
         OPEN         verification_disposition is literally OPEN|CLOSED (D-0157),
                      plus the SPATIAL-OPEN conflict domain and ordinary English.
       (SUPERSEDED was a fourth token here, on the grounds that the supersession

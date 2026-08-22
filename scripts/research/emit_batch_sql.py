@@ -36,6 +36,16 @@ DEFAULT_CANONICAL = os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db")
 # the migration applies cleanly even with foreign_keys enforcement on.
 TABLES = [
     "evidence_sources",
+    # ADDED 2026-08-22. Its absence was not neutral: evidence_source_authors is
+    # where the 2026-08-19 fabrication happened (12 of 19 author rows named
+    # non-authors, including the deletion of the autistic community co-authors
+    # from the paper whose Co-1 warrant IS their co-authorship), and because this
+    # capture path could not see the table, that repair had to be hand-written —
+    # the same hand-SQL channel the fabrication entered through. PK is `id`
+    # (INTEGER PRIMARY KEY AUTOINCREMENT), so the generic PK diff below applies
+    # unchanged. What reads it: this script, invoked by the DR-2026-08-19 runbook
+    # at step 11.
+    "evidence_source_authors",
     "source_slug_links",
     "search_executions",
     "search_admissions",

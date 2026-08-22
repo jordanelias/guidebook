@@ -1453,7 +1453,7 @@ Involuntary motor activity affecting precision, control and sustained positionin
 
 Impairment arising from nervous-system conditions, with variable and often fluctuating presentation
 
-> **Scope:** Named conditions are NARROWER aliases for retrieval only — never a population umbrella (see CLAUDE.md §10, work from axes).
+> **Scope:** Named conditions are NARROWER aliases for retrieval only — never a population umbrella (see CLAUDE.md §6, work from the ICF/access-need frame with codes AND names). [Pointer corrected 2026-08-22: was §10, a section the 2026-08-19 rewrite removed.]
 
 **English group:** `MOVE` *(domain)*, `MS` *(domain)*, `NEU` *(domain)*, `Parkinson's disease` *(narrower)*, `acquired brain injury` *(narrower)*, `cerebral palsy` *(narrower)*, `epilepsy` *(narrower)*, `motor neurone disease` *(narrower)*, `multiple sclerosis` *(narrower)*, `stroke` *(narrower)*, `neurological condition`
 

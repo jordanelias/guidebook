@@ -72,8 +72,10 @@ RULE_VERSION = "pilot-2"  # pilot-1 + adversarial-review corrections (see PILOT-
 #   population-match rows attributed to the cell's population or treated NOT_ASSESSED;
 #   §2.3 richness checks T6 jurisdiction distinctness and names its unchecked clause;
 #   gap descriptions are slug-scoped (absence of a slug-link is not corpus-level absence);
-#   the SQL artifact amends v_best_practice to exclude regulatory-stratum-only rows
-#   (interim, marker-based; migration 027 adds the real column).
+#   ~~the SQL artifact amends v_best_practice to exclude regulatory-stratum-only rows
+#   (interim, marker-based; migration 027 adds the real column).~~ WITHDRAWN
+#   2026-08-22 (BRK-26): the column exists and migration 029 superseded the
+#   exclusion under ratified DR-2026-07-21. See the note at the emit site.
 SESSION = "session_2026-07-12-evidence-architecture-pilot"
 STAMP = "2026-07-12 00:00:00"  # fixed, not wall-clock: determinism (see docstring)
 
@@ -587,20 +589,28 @@ def main():
                                               "population_directness", "conditioning")}
                                             for r in det["source_records"]]})
 
-    # Interim v_best_practice amendment (adversarial finding 1): migration 026's
-    # view excludes only code_floor_only=1, so a T4/T5-anchored regulatory-stratum
-    # cell would surface as best practice — the exact laundering channel G1 closes.
-    # Until migration 027 adds a real regulatory_stratum_only column, exclude by
-    # the tier_basis marker. This amendment ships IN the replayable artifact so
-    # the property holds wherever the rows land.
-    view_sql = (
-        "DROP VIEW IF EXISTS v_best_practice;\n"
-        "CREATE VIEW v_best_practice AS\n"
-        "    SELECT * FROM specifications\n"
-        "    WHERE state IN ('stated', 'provisional') AND code_floor_only = 0\n"
-        "      AND (tier_basis IS NULL OR tier_basis NOT LIKE '%(regulatory_stratum_only)');")
-    sql_lines.append(view_sql)
-    conn.executescript(view_sql)
+    # REMOVED 2026-08-22 (BRK-26). An interim v_best_practice amendment used to sit
+    # here: it DROPped and re-CREATEd the view mid-determination and shipped that DDL
+    # inside the emitted replayable SQL, so the redefinition travelled into whatever
+    # migration carried the rows. Its own comment said it held "until migration 027
+    # adds a real regulatory_stratum_only column".
+    #
+    # That column exists. Migration 027 landed it, and migration 029 then went
+    # further, under RATIFIED DR-2026-07-21-product-posture-thinking-tool-not-authority:
+    # a determination whose entire evidence basis is the regulatory stratum IS a
+    # best-practice determination at the WEAK band — surfaced, flagged with
+    # strength_band, never suppressed. 029 deliberately DROPPED the two 027 guards
+    # this block reproduced.
+    #
+    # So replaying this DDL would not have "restored a guard". It would have reverted
+    # ratified doctrine: dropping the strength_band column and re-imposing an
+    # exclusion the owner's own decision removed — and doing it by a fragile
+    # `tier_basis LIKE '%(regulatory_stratum_only)'` string match rather than the
+    # column test that now exists. Standing proof it travels:
+    # working/pilot/data_20260712_pilot-cell-backfill.sql:23-24 still carries it.
+    #
+    # A determination engine has no business rewriting the schema it writes into.
+    # The view is defined by migration and belongs to the migration layer.
     sql_lines.append("COMMIT;")
     conn.commit()
     with open(args.emit_sql, "w") as f:
