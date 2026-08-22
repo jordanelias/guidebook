@@ -155,29 +155,38 @@ loops:
 # ---------------------------------------------------------------------------
 views:
   count: 17
-  with_code_readers:
-    - {name: v_best_practice, readers: 3}
-    - {name: v_coverage_jurisdiction, readers: 2}
-    - {name: v_coverage_branch, readers: 1}
-    - {name: v_coverage_language, readers: 1}
-    - {name: v_divergence, readers: 1}
-    - {name: v_pending, readers: 1}
-  with_zero_code_readers:
-    [v_code_floor_only, v_coverage_priority, v_item_extractions,
-     v_item_provenance, v_pmp_latest_walk, v_registry_duplicate_descriptions,
-     v_root_id_conflicts, v_source_admission, v_source_reach_all,
-     v_unregistered_roots, v_value_independence]
+  queried_by_code: 0
+  # CORRECTED 2026-08-22. The first version of this section listed six views as
+  # having code readers (v_best_practice: 3, v_coverage_jurisdiction: 2, …).
+  # That was measured with `grep -rl <viewname>` — a count of FILES CONTAINING
+  # THE STRING, which conflates three different things: a query, a DDL
+  # statement, and a mention in a comment or docstring. Re-measured by
+  # classifying each hit, ZERO of the 17 views is queried by any Python file in
+  # scripts/ or tools/. Every non-comment hit is either docstring prose
+  # (db.py:331, migration_reproducibility.py:221) or DDL (assess_cell.py:597).
+  #
+  # This is the same methodological error the `verification_record` below
+  # criticises — asserting a reader without checking what the reference IS —
+  # committed inside the correction to it. Recorded rather than quietly fixed.
+  measurement: >
+    A hit counts as a READER only if it matches FROM/JOIN <view>. DDL
+    (CREATE/DROP VIEW) is a WRITER. A line starting with # or sitting inside a
+    docstring is neither. Re-derive with that rule, not with grep -l.
+  the_only_code_that_touches_a_view:
+    file: scripts/assess/assess_cell.py
+    lines: 590-599
+    action: DROP VIEW + CREATE VIEW v_best_practice
+    kind: WRITER, not reader
+    see: BRK-26
   semantic_guard_in_view:
     view: v_best_practice
-    clause: "WHERE state IN ('stated','provisional') AND code_floor_only = 0"
+    live_clause: "WHERE state IN ('stated','provisional') AND code_floor_only = 0"
     why_it_matters: >
-      The rule "a code floor is not a best practice, and a pending cell is not
-      an answer" is enforced HERE, in view SQL, and nowhere else. Anything that
-      queries `specifications` directly bypasses it silently. A sequencer
-      reading the base table gets a different — and wrong — answer set.
-  note: >
-    v_coverage_priority is the counter-example that corrects the first draft's
-    islands list: it reads lang_jur_map, which the draft called unread.
+      The rule "a pending cell is not an answer and a code floor is not best
+      practice" is enforced HERE, in view SQL, and nowhere else. Anything that
+      queries `specifications` directly bypasses it silently. Since no code
+      queries the view at all, today EVERYTHING bypasses it.
+    but_see: BRK-25 — the guard is narrower than the doctrine it is taken to enforce.
 
 # ---------------------------------------------------------------------------
 # THE BREAKS. What a sequencer must not assume works.
@@ -262,8 +271,11 @@ breaks:
     edge: "reasoning_doc_citations.source_ref_id -> evidence_sources.ref_id"
     kind: FK_BLOCKED
     detail: >
-      NOT NULL FK. The one real reasoning document cites 11 REF-ids, 0 of which
-      resolve in evidence_sources; all 11 live in source_locators.
+      NOT NULL FK. `reasoning_doc_citations` is 0 ROWS — verified 2026-08-22,
+      stated explicitly so "cites 11 REF-ids" is not misread as "holds 11 rows".
+      The one real reasoning document cites 11 REF-ids in its PROSE, 0 of which
+      resolve in evidence_sources (which holds 5 rows); all 11 live in
+      source_locators. The table is empty BECAUSE the FK cannot be satisfied.
     consequence: >
       The prose cannot be ingested until its sources are admitted, and they
       cannot be admitted while BRK-01 stands. OD-5 gates the prose-into-tables
@@ -595,6 +607,54 @@ breaks:
       defect class as BRK-18, eleven times over, on the read side.
     guard: none
 
+  - id: BRK-25
+    severity: high
+    verdict: NEW — found by the 2026-08-22 read-only adversarial pass
+    view: v_best_practice
+    kind: GUARD_NARROWER_THAN_DOCTRINE
+    detail: >
+      `regulatory_stratum_only` is a live column on `specifications` (verified in
+      PRAGMA table_info). In `v_best_practice` it appears ONLY as a label —
+      `CASE WHEN regulatory_stratum_only = 1 THEN 'weak' ELSE 'anchored' END AS
+      strength_band` — and NEVER in the WHERE clause. The WHERE excludes
+      `code_floor_only = 0` and non-stated states, nothing else.
+    consequence: >
+      A cell anchored solely in the T4-T6 regulatory stratum — which
+      CLAUDE.md 6 says is "walled off from full-strength anchoring" — SURFACES
+      in v_best_practice, labelled 'weak' rather than excluded. The doctrine
+      says walled off; the view says annotated. assess_cell.py:590-592 names
+      this in its own comment as "the exact laundering channel G1 closes".
+    guard: none — and the view is the guard
+    latency: >
+      Latent while specifications is 0 rows. It becomes live on the first
+      regulatory-stratum determination.
+
+  - id: BRK-26
+    severity: high
+    verdict: NEW — found by the 2026-08-22 read-only adversarial pass
+    script: scripts/assess/assess_cell.py
+    lines: 590-599
+    kind: STALE_AMENDMENT_REGRESSES_LIVE_SCHEMA
+    detail: >
+      assess_cell DROPs and re-CREATEs `v_best_practice` as part of writing a
+      determination, and ships that DDL INSIDE the emitted replayable SQL
+      artifact. Its comment calls the replacement "interim ... until migration
+      027 adds a real regulatory_stratum_only column". That column EXISTS today.
+      So the amendment is stale, and applying it would REGRESS the live view in
+      two ways: it drops the `strength_band` output column, and it swaps a
+      column test for a string test,
+      `tier_basis NOT LIKE '%(regulatory_stratum_only)'`.
+    consequence: >
+      The one fully-coded hop on the answer side rewrites the project's only
+      semantic guard to an older, weaker form — and because the DDL travels in
+      the emitted artifact, the regression would be carried into a migration and
+      committed. A string-marker test also fails silently the moment tier_basis
+      formatting changes, which a column test cannot.
+    guard: >
+      none. migration_reproducibility.py:221 and :542 both discuss v_best_practice
+      as a guard whose definition matters, but compare ROWS, so a view
+      redefinition is invisible to them by their own admission.
+
 # ---------------------------------------------------------------------------
 # UNENFORCED CONTRACT CRITERIA. Declared in governance/pipeline-contract.yaml
 # with `check: null`. The sequencer must treat these transitions as unguarded.
@@ -704,6 +764,24 @@ verification_record:
     - "the four-stage linear model — stages are re-entrant layers, not phases; see `loops:`"
     - "stage 4 'unreachable' — 93 item pages render today; the SPECIFICATION-backed surface is what is empty"
   omissions_found: [BRK-21, BRK-22, BRK-23, BRK-24]
+  second_pass_2026_08_22:
+    method: read-only adversarial re-derivation of every claim against the live repo
+    claims_re_verified_true: >
+      meta (user_version 60, 65 tables, 80 FK edges, 17 views); BRK-01 island
+      (no FK in, no FK out); BRK-08 (0 rows); BRK-12 (9 of 9 terms_used NULL);
+      BRK-14 (specifications has specification_id, no spec_id);
+      BRK-20 (A-18 has 0 item_population_links; axis route yields exactly the 9
+      named populations; 180 ipl-only / 341 axis-only / 187 both; the two routes
+      disagree on 89 of 93 items — all exact);
+      BRK-11 (aliases lowercase, lang_jur_map uppercase); BRK-09 (room_page.py
+      queries room, room_item, room_item_population, specification,
+      room_dar_provision, room_conflict — none live); BRK-10 (index.html
+      hardcodes 91 provisions / 661 evidence / 10 categories);
+      BRK-19 (adjudication_integrity absent from checks, present in quarantine).
+    own_error_found: >
+      the `views:` reader counts were grep-of-filename and counted comments and
+      DDL as readers. Zero views are queried. Corrected in place above.
+    new_breaks_found: [BRK-25, BRK-26]
   retracted_claims:
     - "a 277-row evidence_sources divergence RED in migration_reproducibility_deep — the deep check PASSES; see BRK-21 latency_note"
   lesson: >
