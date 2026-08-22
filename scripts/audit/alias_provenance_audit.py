@@ -4,7 +4,7 @@ scripts/audit/alias_provenance_audit.py — provenance + verification surface fo
 the controlled vocabulary (terms / term_aliases).
 
 Why this exists. `term_aliases` drives multilingual retrieval via
-scripts/generate_search_queries.py, but nothing recorded *where an alias came
+the (now deleted) query generator, but nothing recorded *where an alias came
 from*. Provenance lived in a freeform `notes` string when it was recorded at
 all, so a reader could not distinguish a term lifted from a national standards
 glossary from one a model produced. On 2026-07-25, 789 non-English aliases
@@ -125,7 +125,7 @@ def main():
         missing = []
     if missing:
         print(f"\nREQUIRED BUT UNSEARCHABLE — no aliases at all: {', '.join(missing)}")
-        print("  lang_jur_map requires these; generate_search_queries.py cannot emit a")
+        print("  lang_jur_map requires these; a per-language query builder cannot emit a")
         print("  query without vocabulary, so their search coverage is structurally zero.")
         print("  Build from published glossaries (references/native-alias-verification.md).")
 

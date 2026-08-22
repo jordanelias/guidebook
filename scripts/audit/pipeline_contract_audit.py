@@ -258,9 +258,11 @@ def selftest():
         # DR-2026-07-21 Option A rework de-quarantined it and the selftest
         # correctly began failing — a fixture that names a specific check is a
         # caller of the registry, and rule #5's sweep applies. validate_conflicts
-        # replaces it: quarantined as vacuous (the `conflicts` table has 0 rows),
-        # which is a status no code change of ours will flip.
-        "quarantined check":         ("scripts/validate_conflicts.py",            "QUARANTINED"),
+        # replaced it, and was itself deleted by the 2026-08-20 cull — the second
+        # time this one fixture has been broken by a change to its subject. If it
+        # breaks a third time, stop re-pointing it and derive the path from the
+        # registry's quarantine list at runtime; the hardcoded name is the defect.
+        "quarantined check":         ("scripts/audit/pre_rehab_banner_audit.py",  "QUARANTINED"),
         "exists but unregistered":   ("scripts/migrate_db.py",                    "UNREGISTERED"),
         "no enforcer named":         (None,                                       "INCOMPLETE"),
     }

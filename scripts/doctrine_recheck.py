@@ -8,7 +8,10 @@ Runs passes 2.2–2.5 mechanically:
   2.4 Drift detection: current vs prior snapshot
   2.5 Decision-register cross-check (post A12 S2)
 
-Pass 2.6 (contamination resampling) is run by contamination_sampler.py + human review.
+Pass 2.6 (contamination resampling) has no tool: contamination_sampler.py was deleted
+by the 2026-08-20 cull (quarantined since 2026-08-04 as a category error — it WROTE
+files as a side effect of being run). Resampling is human review only until a
+replacement is justified by a real recheck.
 
 Usage:
     python3 scripts/doctrine_recheck.py                          # full audit (2.2-2.5)
@@ -361,7 +364,8 @@ def main() -> int:
     if not all_findings:
         print("\nAll mechanical passes clean. Pass 2.6 (contamination resampling) "
               "is the recheck reviewer's responsibility — run "
-              "scripts/contamination_sampler.py and classify each sampled BPC.")
+              "contamination sampling by hand and classify each sampled BPC "
+              "(the sampler was deleted 2026-08-20; see doctrine-recheck.md §7).")
 
     if args.report:
         return 0

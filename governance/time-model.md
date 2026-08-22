@@ -154,7 +154,12 @@ Several A6/A8 rules behave differently across phases. The clearest case: `co1_pr
 
 ---
 
-## 6. Validator specification (`scripts/validate_temporal.py`)
+## 6. Validator specification (`scripts/validate_temporal.py` — DELETED 2026-08-20)
+
+> **The validator described below no longer exists.** It was quarantined 2026-08-04 for
+> passing on zero records against a `data/temporal/` directory that has never existed, and
+> deleted by the 2026-08-20 cull. This section is retained as the specification a future
+> implementation would follow, not as a description of live code.
 
 ### 6.1 Scope
 
