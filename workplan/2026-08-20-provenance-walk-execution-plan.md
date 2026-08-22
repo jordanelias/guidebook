@@ -710,3 +710,61 @@ execution began, which is what §0 is.
 
 **This document retires itself.** When the five conditions hold it is deleted — not archived to
 `_archived/`, since §8.2 concedes it should not have existed. The next artifact is a search log.
+
+---
+
+## 11. Outcome, 2026-08-22 — measured against §10, honestly
+
+Session record: `sessions/session_2026-08-20-provenance-walk.md`. That file is the handoff; this
+section is the plan's own scorecard against the acceptance test it wrote for itself.
+
+| §10 condition | Verdict | Why |
+|---|---|---|
+| 1. A §4-satisfying determination exists | **FAILED** | None authored. §4.3 carries a CELL INVALIDATED banner: BRK-20 established that A-18 has zero `item_population_links` and its only route to a population is scaffolding quarantined by D-1. The demonstration cell had no lawful applicability edge. |
+| 2. Zero apparatus added or modified | **FAILED, in the intended direction** | 6,716 LOC and 15 registry entries **removed**; registry 66 → 63, quarantine 16 → 4. Added: one PostToolUse hook and `governance/pipeline-map.yaml`. The map is the honest charge against this condition — see below. |
+| 3. A GAP-B01 gap closed | **NOT REACHED** | Depends on condition 1. |
+| 4. Survives the adversarial pass without headline retractions | **PASSED, at a cost** | Three passes. 19 of 20 map claims sustained; BRK-15 cut back; **six supporting assertions wrong**, the four-stage model refuted, and one claim (a 277-row divergence) retracted outright. Every retraction is recorded in place rather than absorbed. |
+| 5. The record ends naming the next research question | **PASSED** | The handoff's act 2 is a query, not a governance act: reverberation × learning-space × neurodivergent. |
+
+**Two of five. The plan does not retire.**
+
+### The charge this plan must answer
+
+`governance/pipeline-map.yaml` is 26 breaks of apparatus that **nothing reads** — stated in its own
+`readers_today: 0`. By §10 condition 2 and by owner directive D-2, a document about the machine is
+not the machine. The defence is that it was commissioned to be read by a sequencer that does not
+exist, and that it carried back two defects in the write path the next determination would have
+used. That defence is not self-evidently sufficient, and the attestation records the reviewer's
+counterclaim in full rather than settling it here.
+
+### What the walk actually carried back
+
+Four findings that a determination would have hidden rather than surfaced:
+
+- **BRK-20** — the demonstration cell had no permitted route from item to population, and the two
+  routes that exist disagree on **89 of 93** items (180 pairs link-only, 341 axis-only, 187 both).
+- **BRK-25** — `v_best_practice` never filters on `regulatory_stratum_only`; it labels
+  (`strength_band='weak'`) where doctrine says wall off.
+- **BRK-26** — `assess_cell.py:590-599` rewrites that view mid-determination with a stale
+  "interim" definition, and ships the DDL inside the emitted replayable SQL. **This is a defect in
+  the write path the next act would use, and it is not owner-gated.**
+- **OD-5's second witness** — REF-00561 was owned in `source_locators` since 2026-08-06 and the R9
+  gate could not see it.
+
+### Phase status
+
+- §4.1 retrieve / log refusals — **DONE**. Artefacts under `retrieval-log/`.
+- §4.2 bibliographic backfill — **NOT DONE**, deliberately: it was to ride the same migration as
+  the cell. It is act 4 of the handoff.
+- §4.3 author the determination — **INVALIDATED** (BRK-20).
+- §4.4 write to scratch by hand — withdrawn in part per D-1 (`item_bpc_links` write forbidden).
+- §4.5 emit / apply / verify — exercised on the digestion migration and its compensating
+  retraction, not on a determination.
+- §4.6 render and walk three directions — the axis-map sideways walk withdrawn per D-1.
+- §4.7 acceptance — see the table above.
+
+### Superseding order
+
+The handoff in `sessions/session_2026-08-20-provenance-walk.md` §7 supersedes this plan's §5–7 as
+the next-act list. Where the two disagree, **the session record wins** — it was written against the
+live state at close, and this plan was written before the walk refuted its premise.

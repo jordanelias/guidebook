@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-08-20-provenance-walk",
+  "artifact": "sessions/session_2026-08-20-provenance-walk.md",
+  "doctrine_sha": "8366c28",
+  "rules_in_scope": [
+    "canonical-workplan",
+    "integrity-protocol",
+    "structure-auditor",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "canonical-workplan": {
+      "status": "FIRED",
+      "evidence_path": "workplan/2026-08-20-provenance-walk-execution-plan.md",
+      "reason": "The plan was rewritten as rev 2 before execution rather than alongside it, and the owner directives issued mid-session (D-1 through D-5) were written into its section 2c rather than left in conversation. Where execution departed from the plan the plan was corrected, not the record: phase 4.3 carries a CELL INVALIDATED banner because BRK-20 removed its premise, and sections 4.4 and 4.6 withdrew an item_bpc_links write and an axis-map sideways walk on directive D-1. The handoff in the session record names the next act as a search round, not the determination the plan was built around."
+    },
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "governance/pipeline-map.yaml",
+      "reason": "Every load-bearing claim in the map was re-derived from the live repository, and the file records which passes overturned what. Three adversarial passes ran against it; the third found an error in the correction produced by the first two. The 277-row divergence claim was retracted by running migration_reproducibility --deep rather than by re-reading the code that would have produced it, and the retraction is recorded inside BRK-21 rather than silently dropped. Five of my own errors are tabulated in the session record section 6 with how each was caught, including two the repository's own gates caught rather than I did."
+    },
+    "structure-auditor": {
+      "status": "NOT-FIRED",
+      "reason": "No check was added this session. The opposite: fifteen registry entries and 6,716 lines were removed, and the map deliberately declines to add a check that would compare its layers block against sqlite_master, on the ground that CLAUDE.md section 1 puts the burden of proof on the addition and the sequencer that would consume it is not built."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/sessions_session_2026-08-20-provenance-walk.json",
+      "reason": "This attestation. No reattestation entry is added: the doctrine SHA moved to 8366c28 since the last session attested at 0f2f525, but this session did not re-ground a prior artifact against that delta, so inventing a prior_doctrine_sha and materiality verdict for work that was authored fresh would be fabrication of exactly the kind section 2c of CLAUDE.md names."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "integrity-protocol",
+      "reason": "The canonical DB sha256 moved this session, from ebab426f to f70c48d7, which the plan's own section 9 forbids for a session that authors no determination. Two data migrations caused it: the reasoning-doc digestion, and the compensating retraction of twelve jurisdictional_values rows I should not have written. The second exists only because of the first error. Both went through emit_data_migration and migrate_db, both are append-only, and the retraction fixes forward rather than rewriting, but the honest statement is that the sha moved and one of the two migrations exists to undo my own violation of a standing owner ruling."
+    },
+    {
+      "rule": "canonical-workplan",
+      "reason": "Owner directives D-1 through D-5 are recorded in a workplan file rather than a ratified DR. workplan/** matches no work kind in check-registry.yaml, so a commit touching only a plan classifies to the empty set and selects no battery. That makes the weakest surface in the repository the home of five standing rules. It is flagged as owner-gated work in the handoff rather than resolved here, because ratification is the owner's act and not mine."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "Three advisory checks remain red (validate_pydantic_schemas, retired_vocabulary, test_verification_pipeline). They were measured identical on origin/main in a worktree and are pre-existing debt outside this changeset's scope. None was fixed, because widening the PR to chase them is the accretion this session spent 6,716 lines reversing."
+    }
+  ],
+  "bias_direction": "I am biased toward the map being right, because I commissioned the surveys that produced it, adjudicated their output, and then wrote the file — so every check on it was a check I thought to run. The third adversarial pass demonstrates the cost concretely: it found that my own correction of the reader counts used the same defective instrument as the claim it corrected. I am also biased toward reporting the refusal of the A-18 cell as a success, because refusing is cheaper than determining and produces an artifact that cannot be falsified by later evidence. Against that, a bias the other way: I had a standing incentive to reach a green PR and stop, and every additional break found delayed it, so treat the absence of breaks 27 and 28 as weak evidence rather than as coverage.",
+  "independent_reviewer_counterclaim": "A reviewer could say this session is the pathology it diagnoses. It was commissioned to walk the pipeline and author one cell; it authored none, added a 400-line governance document that nothing reads, and closed with more open owner-gated questions than it opened with. Thirty-one commits and zero rows of evidence. The stronger form: the map is descriptive, self-declares that no code consumes it, and hardcodes volatile facts that CLAUDE.md section 2b says will drift — so by the repository's own doctrine it is prose about the machine rather than machine, and prose about the machine is what D-2 says must never be the body. The counter is that the cull removed 6,716 lines against 400 added, and that BRK-20 and BRK-26 are defects in the write path the next determination would have used, so the walk did carry something back. But a reviewer is entitled to answer that a map which nothing reads is a plan for a sequencer, not a sequencer, and that this project has never been short of plans.",
+  "verdict": "DEVIATION-LOGGED"
+}
