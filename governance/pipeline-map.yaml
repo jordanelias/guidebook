@@ -44,7 +44,13 @@ meta:
   readers_today: 0
   readers_note: |
     Stated plainly because CLAUDE.md 1 requires it: NOTHING READS THIS FILE.
-    Repo-wide grep for "pipeline-map" outside the file itself returns nothing.
+    No CODE reads it. CORRECTED 2026-08-22: this line previously read "Repo-wide
+    grep for 'pipeline-map' outside the file itself returns nothing" — false.
+    Four files contain the string: the provenance-walk attestation (as an
+    evidence_path), that session's execution plan (x2), its session record (x2)
+    and its command log. None is a code reader, so readers_today: 0 stands — but
+    a false grep result inside the paragraph about grep discipline is the same
+    defect this file exists to record.
     Its named reader is the sequencer/wrapper it was commissioned for, which
     does not exist yet. Until that reader lands, this file is documentation and
     should be judged as documentation — which means CLAUDE.md 2(b) applies to
@@ -102,8 +108,16 @@ layers:
     # Steps 3 and 9 are coded CLI (`db.py log-search`, `db.py log-mining`), not
     # hand SQL. Step 4 is the one that says "No CLI" in its own text.
     steps_total: 13            # Steps 0-12 of the operative instrument
-    steps_that_are_hand_sql: [4, 5, 8, 10]
-    steps_with_coded_cli: [3, 9]
+    steps_that_are_hand_sql: [4, 5, "7-partial", 8, 10]
+    steps_with_coded_cli: [3, "7-partial", 9]
+    # CORRECTED 2026-08-22: Step 7 was in neither list, so a sequencer reading
+    # this modelled it as fully coded. It is `db.py add-source` PLUS a MANDATORY
+    # companion UPDATE (`doi_resolution_outcome`, `url`, `pages`) that _ES_COLS
+    # cannot carry, then a three-statement hand transaction over
+    # search_executions / search_admissions / search_candidates. The instrument
+    # bolds it: "Without doi_resolution_outcome='RESOLVED', every VERIFIED
+    # DOI-bearing source fails R10." Step 7 is where the R10 gate is armed, and
+    # its hand half is where H03/H04/H05 parity is won or lost.
     steps_verified_against: decisions/DR-2026-08-19-research-restart-operative-instrument.md
 
   - id: 3-synthesis
@@ -174,7 +188,7 @@ views:
     docstring is neither. Re-derive with that rule, not with grep -l.
   the_only_code_that_touches_a_view:
     file: scripts/assess/assess_cell.py
-    lines: 590-599
+    lines: 590-604   # CORRECTED 2026-08-22: block runs to 604, not 599
     action: DROP VIEW + CREATE VIEW v_best_practice
     kind: WRITER, not reader
     see: BRK-26
@@ -596,44 +610,81 @@ breaks:
     scope: read surface
     kind: VIEWS_UNREAD_AND_UNMAPPED
     detail: >
-      The first draft of this file did not mention views at all. 17 exist; 11
-      have zero code readers (see `views:` above). One, v_best_practice, holds a
-      SEMANTIC GUARD in its WHERE clause — the "code floors and pending cells
-      are not best practice" rule — enforced there and nowhere else.
+      The first draft of this file did not mention views at all. 17 exist and
+      ALL SEVENTEEN have zero code readers (see `views:` above). One,
+      v_best_practice, holds a SEMANTIC GUARD in its WHERE clause — the "code
+      floors and pending cells are not best practice" rule — enforced there and
+      nowhere else.
+      CORRECTED 2026-08-22: this entry read "11 have zero code readers" — the
+      figure from BEFORE the 2026-08-22 `views:` correction, which the
+      correction did not propagate here. A fourth pass re-derived it per-view
+      over the whole tree including the .ignore-hidden strata: no
+      `FROM`/`JOIN <view>` exists in any .py, .sh, .js, .html or .yaml, current
+      or archived. The number is 17.
     consequence: >
       Two failures in one. A reader that queries `specifications` directly gets
       an answer set the project's own rule excludes, with nothing to warn it.
-      And 11 views are unread apparatus by CLAUDE.md 1's own test — the same
-      defect class as BRK-18, eleven times over, on the read side.
+      And all 17 views are unread apparatus by CLAUDE.md 1's own test — the same
+      defect class as BRK-18, seventeen times over, on the read side. Every
+      semantic distinction the views carry — the weak band, the code-floor wall,
+      coverage priority — is dead read-surface today.
     guard: none
 
   - id: BRK-25
-    severity: high
-    verdict: NEW — found by the 2026-08-22 read-only adversarial pass
+    severity: informational   # was: high
+    verdict: >
+      REFUTED AS A BREAK, 2026-08-22, by the fourth adversarial pass. The DDL
+      observation below is correct and is retained; the doctrinal reading built
+      on it is wrong, and the severity it carried was unwarranted. THIS ENTRY IS
+      NOT A DEFECT TO FIX. Acting on it would revert ratified doctrine.
     view: v_best_practice
-    kind: GUARD_NARROWER_THAN_DOCTRINE
+    kind: OBSERVATION_ONLY   # was: GUARD_NARROWER_THAN_DOCTRINE
     detail: >
       `regulatory_stratum_only` is a live column on `specifications` (verified in
       PRAGMA table_info). In `v_best_practice` it appears ONLY as a label —
       `CASE WHEN regulatory_stratum_only = 1 THEN 'weak' ELSE 'anchored' END AS
       strength_band` — and NEVER in the WHERE clause. The WHERE excludes
       `code_floor_only = 0` and non-stated states, nothing else.
-    consequence: >
-      A cell anchored solely in the T4-T6 regulatory stratum — which
-      CLAUDE.md 6 says is "walled off from full-strength anchoring" — SURFACES
-      in v_best_practice, labelled 'weak' rather than excluded. The doctrine
-      says walled off; the view says annotated. assess_cell.py:590-592 names
-      this in its own comment as "the exact laundering channel G1 closes".
-    guard: none — and the view is the guard
-    latency: >
-      Latent while specifications is 0 rows. It becomes live on the first
-      regulatory-stratum determination.
+      SUSTAINED: this is exactly what the live DDL does.
+    why_refuted: >
+      That behaviour is the RATIFIED design, not a gap. It was produced verbatim
+      by `_archived/scripts/migrations/029_best_practice_weak_band.sql`, whose
+      header reads: "under DR-2026-07-21-product-posture-thinking-tool-not-authority
+      (RATIFIED) ... a determination whose entire evidence basis is the regulatory
+      stratum (T4-T6, regulatory_stratum_only) IS a best-practice determination at
+      the WEAK band -- rendered flagged, in every register, never at anchoring
+      strength. The engine contradicted this: migration 027's v_best_practice
+      EXCLUDED those rows outright. This migration reconciles the engine with the
+      ratified doctrine." Migration 029 deliberately DROPPED the two 027 guards and
+      ADDED strength_band so weak rows surface distinctly.
+      The original entry quoted CLAUDE.md 6 as "walled off" and stopped there. The
+      full clause is "walled off from FULL-STRENGTH ANCHORING" — and a row carrying
+      strength_band='weak' is not at full-strength anchoring. The wall the doctrine
+      names is the anchored/weak boundary, which the CASE expression implements.
+      The entry cited neither DR-2026-07-21 nor migration 029, i.e. it re-derived a
+      question the repository had already adjudicated and called the ratified answer
+      a high-severity break — the "false novelty" failure named in
+      references/project-standards.md (RULE, 2026-08-19).
+    internal_contradiction_this_exposed: >
+      BRK-25 faulted the live view for NOT excluding regulatory-stratum rows while
+      BRK-26 faults assess_cell.py for shipping DDL that DOES exclude them. Both
+      cannot be regressions. BRK-26 is the real one: it reverts 029.
+    residual_true_point: >
+      Only that the anchored/weak separation lives solely in view SQL that nothing
+      queries — which is BRK-24's point, not a second finding.
+    guard: not applicable — there is nothing here to guard
+    latency: not applicable
 
   - id: BRK-26
     severity: high
-    verdict: NEW — found by the 2026-08-22 read-only adversarial pass
+    verdict: >
+      SUSTAINED by the fourth adversarial pass, 2026-08-22, with two corrections
+      recorded below (`guard:` and the word "weaker"). FIXED 2026-08-22 — the
+      interim amendment is deleted from assess_cell.py; this entry is retained as
+      the record of why, per the file's own convention of recording rather than
+      quietly repairing. Originally: NEW, found by the 2026-08-22 read-only pass.
     script: scripts/assess/assess_cell.py
-    lines: 590-599
+    lines: 590-604   # CORRECTED 2026-08-22: the block runs to 604, not 599
     kind: STALE_AMENDMENT_REGRESSES_LIVE_SCHEMA
     detail: >
       assess_cell DROPs and re-CREATEs `v_best_practice` as part of writing a
@@ -646,14 +697,34 @@ breaks:
       `tier_basis NOT LIKE '%(regulatory_stratum_only)'`.
     consequence: >
       The one fully-coded hop on the answer side rewrites the project's only
-      semantic guard to an older, weaker form — and because the DDL travels in
-      the emitted artifact, the regression would be carried into a migration and
-      committed. A string-marker test also fails silently the moment tier_basis
-      formatting changes, which a column test cannot.
+      semantic guard to the SUPERSEDED migration-027 form — and because the DDL
+      travels in the emitted artifact, the regression would be carried into a
+      migration and committed. Standing proof that it travels:
+      `working/pilot/data_20260712_pilot-cell-backfill.sql:23-24` contains exactly
+      this DROP/CREATE, and the archived replay migration had to note explicitly
+      that the interim amendment is NOT re-applied. A string-marker test also fails
+      silently the moment tier_basis formatting changes, which a column test cannot.
+      CORRECTED 2026-08-22: the original said "an older, weaker form". Imprecise —
+      the in-code DDL is MORE exclusionary than the live view, not laxer. It is
+      weaker only as apparatus (marker-fragile, band-blind), and what it regresses
+      is the RATIFIED DR-2026-07-21 / migration-029 definition. Say that, not
+      "weaker".
     guard: >
-      none. migration_reproducibility.py:221 and :542 both discuss v_best_practice
-      as a guard whose definition matters, but compare ROWS, so a view
-      redefinition is invisible to them by their own admission.
+      CORRECTED 2026-08-22. This line previously read "none ...
+      migration_reproducibility.py:221 and :542 ... compare ROWS, so a view
+      redefinition is invisible to them by their own admission." That INVERTS the
+      meaning of the code it cites. `deep_compare` explicitly compares view,
+      trigger and index DDL (schema_objects(), lines 218-224 and 311-315), and
+      line 221 is the RATIONALE for doing so, not an admission of blindness — its
+      own selftest at :541-543 builds two DBs differing only in a view's WHERE
+      clause and asserts the difference is flagged.
+      The true guard picture: the BLOCKING shallow check (user_version + COUNT(*)
+      on 6 tables, BRK-17) would not see a view redefinition; the ADVISORY --deep
+      check WOULD see an inconsistent one. The genuine residual gap is narrower
+      than stated — a stale DDL that travels INSIDE a migration changes the
+      committed and rebuilt sides consistently, so even the deep check passes.
+      This entry committed the exact error the file's own `lesson:` names as the
+      dangerous half: being wrong about WHO WOULD CATCH IT.
 
 # ---------------------------------------------------------------------------
 # UNENFORCED CONTRACT CRITERIA. Declared in governance/pipeline-contract.yaml
@@ -681,20 +752,68 @@ unenforced_transitions:
 # A change here runs only the 8 `always` checks.
 # ---------------------------------------------------------------------------
 unclassified_paths:
-  - path: "retrieval-log/**"
-    why_it_matters: the fabrication-defence artefact store (BRK-07)
-  - path: "working/**"
-    why_it_matters: >
-      contains working/claims-docket.md and working/pilot/pilot-renderings.html,
-      both SUBJECTS of registered checks whose kinds a working/-only diff never
-      selects
-  - path: "references/standards-registry.md"
-    why_it_matters: the subject of the BLOCKING validate_jurisdiction check
-  - path: "skills/**"
-  - path: "references/search-log/**"
-  - path: "workplan/**"
-  - path: "audits/** (except evidentiary-base-audit*)"
-  - path: "CLAUDE.md, README.md, .ignore"
+  # RE-DERIVED 2026-08-22, and the picture changed materially. The previous
+  # version of this block was carried from an earlier survey without re-running
+  # run_checks.classify(), listed eight entries under a heading implying it was
+  # THE set, and named README.md — a file that does not exist in this repository
+  # (`git ls-files` has no README at any path).
+  #
+  # Derivation (re-runnable, ~5 lines):
+  #   import sys, yaml, subprocess; sys.path.insert(0, 'scripts'); import run_checks
+  #   reg = yaml.safe_load(open('governance/check-registry.yaml'))
+  #   paths = subprocess.run(['git','ls-files'], capture_output=True, text=True).stdout.split()
+  #   _, attr = run_checks.classify(paths, reg)
+  #   len(attr['(unclassified)'])
+  #
+  # Measured 2026-08-22: 1232 of 2174 tracked files — 57% — select NO kind-scoped
+  # battery. Six kinds exist (data, governance, render, schema, synthesis,
+  # tooling); a commit touching only unclassified paths runs the 8 `always`
+  # checks and nothing else. This is not "eight odd corners". It is most of the
+  # repository.
+  measured_at: 2026-08-22
+  unclassified_files: 1232
+  tracked_files: 2174
+  fraction: 0.57
+  by_top_level_directory:
+    _archived: 610        # the single largest group; omitted entirely before
+    references: 341       # only 2 of these were named before
+    workplan: 107
+    skills: 61
+    working: 39
+    audits: 32
+    retrieval-log: 24
+    scratchpad: 8
+    versions: 3
+    root_files: 4         # CLAUDE.md, .ignore, .gitignore, .gitattributes
+    misc: 1
+    other: 3              # two dated root-level .md files, misc/
+  the_ones_that_bite:
+    - path: "workplan/**"
+      why_it_matters: >
+        THE structural finding. Owner directives D-1 ... D-5 — five DG-NON
+        standing rules — live in workplan/2026-08-20-provenance-walk-execution-plan.md
+        section 2c. A plan-only commit classifies to the empty set, so the
+        weakest-gated surface in the repository is the home of its standing
+        doctrine. Lifting D-1..D-5 into a ratified DR is the fix; it is
+        owner-gated and still open.
+    - path: "references/standards-registry.md"
+      why_it_matters: the subject of the BLOCKING validate_jurisdiction check
+    - path: "references/tooling-register.md"
+      why_it_matters: >
+        a governance-grade register whose edits run only the 8 always checks
+    - path: "working/**"
+      why_it_matters: >
+        contains working/claims-docket.md and working/pilot/pilot-renderings.html,
+        both SUBJECTS of registered checks whose kinds a working/-only diff never
+        selects
+    - path: "retrieval-log/**"
+      why_it_matters: the fabrication-defence artefact store (BRK-07)
+    - path: "audits/** (except evidentiary-base-audit*)"
+      why_it_matters: >
+        the 4 evidentiary-base-audit files classify to `render`; the other 32
+        audits files classify to nothing
+  removed_from_this_block:
+    - "README.md — does not exist in this repository"
 
 # ---------------------------------------------------------------------------
 # ISLANDS. No FK in, no FK out.
@@ -727,10 +846,14 @@ islands:
       views: [v_registry_duplicate_descriptions, v_unregistered_roots, v_value_independence]
       note: >
         The one genuinely interesting island. It is empty and has no code
-        reader, but three views query it — and all three are in the
-        `with_zero_code_readers` list above. So it is read by apparatus that
-        nothing reads: an unread table behind unread views. Two layers of
-        CLAUDE.md 1's "nothing is added without naming what reads it", stacked.
+        reader, but three views query it — and all three are among the
+        seventeen views the `views:` block records as having zero code readers.
+        So it is read by apparatus that nothing reads: an unread table behind
+        unread views. Two layers of CLAUDE.md 1's "nothing is added without
+        naming what reads it", stacked.
+        CORRECTED 2026-08-22: this note pointed at a `with_zero_code_readers`
+        list that the 2026-08-22 `views:` correction had already removed — a
+        stale cross-reference to a list that no longer exists.
     # REMOVED: pipeline_runs and url_verification_runs. Both are EMPTY but both
     # have code writers — scripts/resolve_dois.py:681/726/1013 and
     # scripts/verify_urls.py:377/474/515 respectively. They are job-owned run

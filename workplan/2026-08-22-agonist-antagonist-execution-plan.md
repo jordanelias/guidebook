@@ -725,8 +725,26 @@ that ride along with acts 0–3 because they are corrections, not culls:**
 - **Phase 0 record corrections** — planned and skipped three times. `check-registry.yaml:253` asserts a
   RED state measured 72/72 on 2026-08-18; three quarantine reasons assert RED states measured false.
   A registry that lies about its own health is CLAUDE.md §2(b) inside the gate inventory.
-- **`adjudication_integrity.py` + its wrapper, 220 LOC** — kept on a claim verified false here (F-23a).
-  Delete, with the evidence in the commit, per CLAUDE.md §1.
+- ~~**`adjudication_integrity.py` + its wrapper, 220 LOC** — kept on a claim verified false here
+  (F-23a). Delete, with the evidence in the commit, per CLAUDE.md §1.~~
+  **WITHDRAWN 2026-08-22, on measurement, before acting.** Running it is what changed the answer:
+  it does **not** pass vacuously. It reported **5 tier-derivation inconsistencies of 5 checked** —
+  `scope` was NULL on every admitted source, and `schemas/tier_derivation.py` keys the ratified tier
+  table on `(evidence_type, scope)`, so **every stored tier was underivable, asserted with its own
+  derivation input missing.** That is the same defect class as `co1_provenance` being NULL, and it
+  was invisible to all 63 registered checks because this one is quarantined and never selected.
+  CLAUDE.md §1's evidence standard is *"unreferenced, or vacuous after a real batch, or superseded"*.
+  It is unreferenced in the executable sense and it is **not vacuous**, so the standard is not met and
+  the deletion does not happen. Four rows were repaired (act 3); the fifth, REF-00967, is left failing
+  on purpose because choosing its scope *is* the disputed tier (**OD-E**).
+  **What this plan got wrong, and the shape of it.** F-23a is right that the 2026-08-20 keep-rationale
+  was false — `test_adjudication_integrity` is not a registered check. But this recommendation then
+  inherited the cull plan's *other* claim, that the script measured PASS/0 on 2026-08-18, without
+  re-running it. That claim was true when made and false three days later, because the 2026-08-19
+  batch landed five sources between the measurement and the citation. **A correct finding about a false
+  premise led to a wrong recommendation, and only running the thing caught it** — the same
+  reading-versus-running lesson the previous session recorded in its §6, reproduced here at this
+  plan's expense.
 
 Everything else waits. When it resumes, the ranked list is: the four dead `references/` indexes
 (**32,733 lines** — `claim-reference-join`, `global-reference-registry`, `specification-database`,

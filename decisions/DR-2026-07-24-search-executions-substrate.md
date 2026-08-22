@@ -22,7 +22,10 @@
   `schemas/search_execution.py` (new), `PRAGMA user_version` 32→33. No entity-row
   deltas; the table ships empty. Legacy `search_coverage` / `search_languages` are
   **not** dropped — they are frozen read-only historical artifacts, superseded by the
-  derived views but preserved (redirect-stub discipline, CLAUDE.md §9 guardrail 2).
+  derived views but preserved (redirect-stub discipline — the former CLAUDE.md §9 guardrail 2,
+  removed 2026-08-19; §1 now says git history is the archive for CODE and stubs are not made for
+  it, while frozen reader-facing records may live in `_archived/`. [Pointer corrected 2026-08-22;
+  no part of this DR's ruling is changed.])
 - Related: `workplan/search-coverage-completion-workplan.md` §2.2 (the DDL this
   implements), `workplan/coverage-completion-loop-methodology-2026-07-21.md` §4 (the loop
   this feeds), `DR-2026-05-28-migration-ledger-and-reproducibility-reconciliation`

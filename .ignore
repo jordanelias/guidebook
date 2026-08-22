@@ -22,8 +22,11 @@
 # WHY
 # ---
 # The repo's operative problem is not disk. It is that a session greps for a fact,
-# gets several answers, and cannot tell which is current — CLAUDE.md §9 guardrail 1
-# records that a stale anchor in an old document caused a real error. Every
+# gets several answers, and cannot tell which is current — the former CLAUDE.md §9
+# guardrail 1 recorded that a stale anchor in an old document caused a real error.
+# (That section was removed by the 2026-08-19 rewrite; the reasoning now lives in
+# §2(b) and in §7's trap note about this very file. Pointer corrected 2026-08-22 —
+# COMMENT ONLY, no entry below was added, removed or altered.) Every
 # directory below holds FROZEN RECORDS: text that was true on its date and is
 # preserved unedited on purpose. A hit from one answers a current question wrongly.
 #
@@ -44,9 +47,17 @@
 # negated. Both negations below therefore use `**`, and both were tested with a
 # planted token before this file was committed.
 #
-# Changing this file is OWNER-GATED, same as a retirement (CLAUDE.md §9 guardrail
-# 4): it shapes what every future session is able to see. See CLAUDE.md §10 and
-# decisions/DR-2026-08-06-cold-storage-search-scope.md.
+# Changing the ENTRIES in this file is OWNER-GATED: it shapes what every future
+# session is able to see, and that is a judgement about the work-product, not about
+# code. See decisions/DR-2026-08-06-cold-storage-search-scope.md, which is the
+# ratified authority for this file's scope.
+#
+# Corrected 2026-08-22: this read "same as a retirement (CLAUDE.md §9 guardrail 4)"
+# and pointed at CLAUDE.md §10. BOTH SECTIONS WERE REMOVED by the 2026-08-19
+# rewrite, and guardrail 4 was not merely renumbered — §1 INVERTED it. Retiring
+# code, checks and scripts is no longer owner-gated at all; it needs evidence, not
+# permission. The owner gate on THIS file survives on its own footing (search scope
+# is a work-product judgement), not by analogy to a guardrail that no longer exists.
 
 # --- retired-but-preserved -------------------------------------------------
 _archived/

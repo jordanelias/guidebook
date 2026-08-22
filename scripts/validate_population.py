@@ -36,7 +36,8 @@ passed on the merits, and it is worse than no gate because it reads as assurance
 WHAT IT CHECKS NOW
 ------------------
 P1  schemas/enums.py `PopulationCode` and the `populations` table agree, in both
-    directions. CLAUDE.md §10: schema-mirror drift is a bug, not a convention.
+    directions. CLAUDE.md §7: schema-mirror drift is a bug, not a convention.
+    (Pointer corrected 2026-08-22, was §10.)
 P2  every population-bearing column in the database resolves to a live code.
     The column list is DISCOVERED, not transcribed — every column named exactly
     `population` or `population_code`, in every table but the two excluded below.

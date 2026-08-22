@@ -80,6 +80,41 @@ def _now():
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
+def _extension_for(body):
+    """Name the artefact for what it CONTAINS, not for what we hoped to fetch.
+
+    Fixed 2026-08-22 (defect B5-f, commit e326e46). Every artefact was written as
+    `<sha16>.json` regardless of content type, so a full-text attempt that returned
+    HTML, XML or an empty body landed as an unparseable `.json` — and `check_json`
+    (registry `syntax` battery, kinds `[always]`, **BLOCKING**) parses every .json in
+    the tree. Six of fifteen artefacts failed it on 2026-08-20. That was repaired IN
+    DATA ONLY, by hand-renaming the offending files and hand-editing the manifest, so
+    the gate passed while the cause stayed live: the very next non-JSON retrieval
+    would have re-reddened CI, and "attempt the publisher full text" is exactly the
+    R10 ladder rung that returns HTML.
+
+    Sniff the body rather than trusting the URL: `api.crossref.org` can return an
+    HTML error page, and a repository PDF endpoint can return JSON metadata.
+    """
+    head = body.lstrip()[:512]
+    if not head:
+        return ".txt"                      # a recorded empty response is evidence too
+    if head[0] in "{[":
+        try:
+            json.loads(body)
+            return ".json"
+        except Exception:
+            pass                           # looks like JSON, is not — do not claim .json
+    low = head.lower()
+    if low.startswith("<?xml") or low.startswith("<!doctype xml"):
+        return ".xml"
+    if low.startswith("<!doctype html") or low.startswith("<html") or "<html" in low[:200]:
+        return ".html"
+    if low.startswith("<"):
+        return ".xml"
+    return ".txt"
+
+
 def fetch(url, session, purpose="", timeout=40, stamp=None):
     """Retrieve a URL, PERSIST the raw response, then return the parsed JSON.
 
@@ -92,12 +127,13 @@ def fetch(url, session, purpose="", timeout=40, stamp=None):
     d = LOG_ROOT / _session_stem(session)
     d.mkdir(parents=True, exist_ok=True)
     sha = hashlib.sha256(body.encode("utf-8")).hexdigest()
-    (d / f"{sha[:16]}.json").write_text(body, encoding="utf-8")
+    artefact = f"{sha[:16]}{_extension_for(body)}"
+    (d / artefact).write_text(body, encoding="utf-8")
     with open(d / "manifest.jsonl", "a", encoding="utf-8") as fh:
         fh.write(json.dumps({
             "retrieved_at": stamp or _now(), "url": url, "purpose": purpose,
             "sha256": sha, "bytes": len(body), "exit": r.returncode,
-            "artefact": f"{sha[:16]}.json",
+            "artefact": artefact,
         }, ensure_ascii=False) + "\n")
     if r.returncode != 0 or not body.strip():
         return None
@@ -140,6 +176,67 @@ def _logged_payloads(session):
     return out
 
 
+# Bibliographic fields this verifier can check against a Crossref payload, and the
+# payload key each is derived from. Deliberately NOT exhaustive: only fields where
+# the payload is unambiguously authoritative.
+_BIBLIO_FIELDS = (
+    ("volume",         lambda m: m.get("volume")),
+    ("issue",          lambda m: m.get("issue")),
+    ("article_number", lambda m: m.get("article-number")),
+    ("pages",          lambda m: m.get("page")),
+    ("pub_year",       lambda m: (((m.get("issued") or {}).get("date-parts") or [[]])[0] or [None])[0]),
+)
+
+
+def _biblio_divergences(msg, row):
+    """Return (mismatches, gaps) for one source against its payload.
+
+    The distinction is the whole point, and it is the distinction the 2026-08-19
+    batch collapsed:
+
+      MISMATCH  the DB asserts a value the payload contradicts. That is a FALSE
+                bibliographic field — the same defect class as a fabricated author,
+                one field over. REF-00968 carried `pages = '2645738'` while its
+                payload filed 2645738 as `article-number` with `page` null: a true
+                value in the wrong column, which reads downstream as a page range.
+      GAP       the DB is NULL where the payload has a value. Incompleteness, not
+                falsehood — reported, never failed. But a row stamped
+                metadata_quality='COMPLETE' with gaps is asserting something untrue
+                ABOUT ITSELF, so the count is printed where a reader will see it.
+
+    Added 2026-08-22. Until then this module compared authors only, which is why it
+    printed CLEAN over five rows whose volume, issue, pages_*, article_number and
+    issn were all NULL while the payloads on disk supplied every one of them. A
+    checker that examines one field class and reports on the record as a whole is
+    the vacuity CLAUDE.md 2(a) names, at field granularity.
+    """
+    mismatches, gaps = [], []
+    artno = str(msg.get("article-number") or "").strip()
+    for col, get in _BIBLIO_FIELDS:
+        want = get(msg)
+        have = row[col] if col in row.keys() else None
+        if want in (None, ""):
+            # The payload asserts nothing for this field. Usually nothing to say —
+            # EXCEPT the mis-file signature: the DB holds a value here that the
+            # payload files under a DIFFERENT key. Caught by equality with
+            # article-number, which is provable rather than inferred, so this
+            # cannot fire on a row whose editor simply had a better source than
+            # Crossref. This is the REF-00968 case and the reason this branch
+            # exists: `pages = '2645738'` with `page` null and
+            # `article-number = '2645738'` is a true value in a false column, and
+            # every gate in the repository passed it.
+            if col == "pages" and have not in (None, "") and str(have).strip() == artno and artno:
+                mismatches.append((col, have,
+                                   f"<null>  — the payload files {artno!r} as article-number, "
+                                   f"not as a page range; this is a MIS-FILE, move it"))
+            continue
+        if have in (None, ""):
+            gaps.append((col, want))
+        elif str(have).strip() != str(want).strip():
+            mismatches.append((col, have, want))
+    return mismatches, gaps
+
+
 def verify_authors(session):
     """Diff stored authors against the LOGGED payload. Offline. No network."""
     session = _session_stem(session)
@@ -158,10 +255,13 @@ def verify_authors(session):
             by_doi[msg["DOI"].lower()] = msg
 
     cx = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
-    rows = cx.execute("SELECT ref_id, doi FROM evidence_sources "
+    cx.row_factory = sqlite3.Row
+    rows = cx.execute("SELECT * FROM evidence_sources "
                       "WHERE COALESCE(doi,'') <> '' ORDER BY ref_id").fetchall()
     examined, bad, unlogged = 0, [], []
-    for ref_id, doi in rows:
+    biblio_bad, biblio_gap = [], []
+    for row in rows:
+        ref_id, doi = row["ref_id"], row["doi"]
         msg = by_doi.get((doi or "").lower())
         if msg is None:
             unlogged.append((ref_id, doi))
@@ -173,6 +273,11 @@ def verify_authors(session):
             (ref_id,))]
         if [_norm(x) for x in real] != [_norm(x) for x in stored]:
             bad.append((ref_id, real, stored))
+        mm, gp = _biblio_divergences(msg, row)
+        if mm:
+            biblio_bad.append((ref_id, mm))
+        if gp:
+            biblio_gap.append((ref_id, gp, row["metadata_quality"]))
 
     print("=" * 74)
     print(f"retrieval_log --verify-authors  session={session}")
@@ -185,13 +290,33 @@ def verify_authors(session):
             print(f"      {ref_id}  {doi}")
     for ref_id, real, stored in bad:
         print(f"  ✗ {ref_id}\n      logged: {'; '.join(real)}\n      stored: {'; '.join(stored)}")
-    if bad:
-        print(f"\n  {len(bad)} source(s) disagree with the payload the session received.")
+
+    if biblio_gap:
+        n = sum(len(g) for _, g, _ in biblio_gap)
+        print(f"\n  BIBLIOGRAPHIC GAPS — {n} field(s) NULL in the DB that the payload supplies.")
+        print("  Incompleteness, not falsehood: reported, not failed.")
+        for ref_id, gp, mq in biblio_gap:
+            flag = "  <-- while stamped metadata_quality='COMPLETE'" if mq == "COMPLETE" else ""
+            print(f"      {ref_id}{flag}")
+            for col, want in gp:
+                print(f"          {col} is NULL; payload has {want!r}")
+    for ref_id, mm in biblio_bad:
+        print(f"  ✗ {ref_id} BIBLIOGRAPHIC MISMATCH")
+        for col, have, want in mm:
+            print(f"          {col}: stored {have!r}, payload {want!r}")
+
+    if bad or biblio_bad:
+        if bad:
+            print(f"\n  {len(bad)} source(s) disagree with the payload on AUTHORS.")
+        if biblio_bad:
+            print(f"  {len(biblio_bad)} source(s) assert a bibliographic field the payload contradicts.")
         return 1
     if examined == 0:
         print("\n  INDETERMINATE — nothing verifiable. Not a pass.")
         return 1
-    print("\n  CLEAN — stored authors match the retrieved payloads, byte-for-byte source.")
+    tail = "" if not biblio_gap else " Bibliographic gaps above are reported, not failed."
+    print("\n  CLEAN — stored authors and asserted bibliographic fields match the")
+    print("  retrieved payloads, byte-for-byte source." + tail)
     return 0
 
 

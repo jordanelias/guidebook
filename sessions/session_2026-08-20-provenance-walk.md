@@ -168,8 +168,14 @@ Ordered:
 3. **Promote REF-00561** through a full R1–R15 admission walk. It is already owned.
 4. **Backfill the bibliography from payloads on disk** — `volume`, `issue`, `pages_*`,
    `article_number`, `issn` are NULL on all five rows while the held Crossref payloads supply them,
-   and every row is stamped `metadata_quality='COMPLETE'`, which is false as stored. Also
-   `REF-00968.pages` holds an article number no payload asserts.
+   and every row is stamped `metadata_quality='COMPLETE'`, which is false as stored. ~~Also
+   `REF-00968.pages` holds an article number no payload asserts.~~
+   **CORRECTED 2026-08-22:** the held payload `81980e4f0b1ae87e.json` *does* assert `2645738` — as
+   `"article-number"`, with `"page"` null. The value is **supported but mis-filed**, so the repair is
+   a field move, not a deletion; a session following the sentence as written would delete a true
+   value. `REF-00607` and `REF-00967` carry the same defect (`pages` holding an article number with
+   `volume` NULL), so REF-00968 is not special. `REF-00965.pages='110581'` is *not* an instance —
+   its payload asserts `"page": "110581"` as well as the article number.
 5. **Populate `corporate_name_note` on REF-00966** so the DB explains why "andsensory, Emily" looks
    malformed. **It is correct — she publishes under @21andsensory.** The 2026-08-19 deletion of the
    autistic community co-authors is repaired; without the note the next agent to "tidy" it deletes
@@ -192,3 +198,27 @@ Ordered:
   weakest surface in the repo — `workplan/**` matches no work kind, so a plan-only commit
   classifies to the empty set.
 - **OD-5** now has two witnesses and is the demonstrated cause of a repeated, population-level miss.
+
+---
+
+## 8. CORRECTIONS — applied 2026-08-22, by `session_2026-08-22-record-correction-and-biblio-repair`
+
+Recorded here rather than silently, per §6's own practice. Full derivation:
+`workplan/2026-08-22-agonist-antagonist-execution-plan.md` §1 and its PR.
+
+| Where | Was | Is |
+|---|---|---|
+| §7 act 4 | "`REF-00968.pages` holds an article number no payload asserts" | supported but mis-filed — see the inline correction above |
+| §7 act 1 | "BRK-26 first — it is a defect in the write path you are about to use" | BRK-26 is real and is now **fixed**, but the premise is false: the write path for a determination is hand SQL (DR §12.5 makes `specifications` permanently manual), and `assess_cell.py` addresses seven hardcoded pilot cells, none on this slug |
+| §7 act 1 | "Do BRK-25 in the same pass or record why not" | **Do not.** BRK-25 is **refuted as a break** — the live `v_best_practice` implements ratified `DR-2026-07-21` via migration 029, in which a regulatory-stratum-only cell *is* best practice at the **weak** band. "Fixing" it would revert ratified doctrine. Recorded why, as instructed |
+| §7 act 2 | a corrected AUT search round as the next research act | the frame is right and **incomplete**. It aims at the population this slug's own reasoning document says has *no* Tier-1 threshold, while `GAP-B01-002` — **P1**, DEM, 8 of 13 items, no admission above PROXY — appears nowhere in this handoff, and `GAP-B01-003` (MH never searched, BRAIN a bare conjunct) likewise |
+| §7 act 5 | "Populate `corporate_name_note` on REF-00966" | correct, and the column is on **`evidence_source_authors`**, not `evidence_sources` — row `id=27`, position 3. Done 2026-08-22. Note that the column has **zero code readers**, so the note alone protects nothing |
+| §7 act 6 | the map's two under-evidenced blocks | both closed. `unclassified_paths` re-derived: **1,232 of 2,174 tracked files (57%)** select no kind-scoped battery, not the eight corners listed — and it named `README.md`, which does not exist. `steps_that_are_hand_sql` now `[4, 5, 7-partial, 8, 10]`: Step 7's mandatory companion UPDATEs are hand SQL, and are where the R10 gate is armed |
+| attestation | `doctrine_sha: 8366c28`, and a reason built on "the doctrine SHA moved" | `0f2f525`. It did not move; `8366c28` is the 2026-07-25 merge of PR #71. Corrected in place, with the conclusion (no reattestation owed) surviving its broken premise |
+| §7 order | BRK-26 → search round → promote → backfill | superseded by the DR's amended §3: the **owner decision batch OD-A…OD-G** is the next act, and it is the owner's. **OD-A** is the one that matters — all 372 `item_population_links` carry `rationale_ref` **NULL**, so choosing a different item than A-18 buys an *unexamined* applicability edge, not a lawful one |
+
+**What this record got right, and it is most of it.** Every SQL-derived claim in it held exactly under
+a fourth adversarial pass — the DB state block, the registry shape, A-18's zero links, the 180/341/187
+route split, REF-00561's presence in `source_locators`, the NULL bibliography against held payloads.
+Its §6 method note generalises and is confirmed: claims from `PRAGMA`/SQL held every time; claims from
+grep hit counts failed every time. The corrections above are all of the second kind.

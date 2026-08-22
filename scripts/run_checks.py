@@ -65,9 +65,10 @@ REGISTRY = os.path.join(REPO_ROOT, "governance", "check-registry.yaml")
 # citations was 2026-07-26. The blocking `citation_mining_session` gate therefore
 # scoped itself to a session that touched no sources and reported
 # `Outstanding: 0` at 4.7% coverage — passing by having nothing in scope.
-# CLAUDE.md §10 called both states meaningless, and it was right: left stale the
+# CLAUDE.md §2(a) calls both states meaningless, and it is right: left stale the
 # gate validates a closed set, advanced to the newest session it reports zero by
-# having nothing to check.
+# having nothing to check. (Pointer corrected 2026-08-22: was CLAUDE.md §10,
+# a section the 2026-08-19 rewrite removed.)
 #
 # A check declares which pointer it means via `session_pointer:` in the registry;
 # the default is LATEST.

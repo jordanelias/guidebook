@@ -24,8 +24,10 @@ The owner's stated goal is not disk space:
 So the operative metric is: **when a session greps for a fact, how many answers come back and
 how many are wrong.** ~630 files across seven directories hold *frozen records* — text that was
 true on its date and is preserved unedited on purpose. Every one of them is a candidate wrong
-answer to a current question. CLAUDE.md §9 guardrail 1 exists because a stale anchor in an old
-document already caused a real error.
+answer to a current question. The former CLAUDE.md §9 guardrail 1 existed because a stale anchor in
+an old document already caused a real error; the 2026-08-19 rewrite folded that reasoning into §2(b)
+(*"prose that contradicts the database"*) and §7's `.ignore` trap note. [Pointer corrected 2026-08-22;
+no part of this DR's ruling is changed.]
 
 ## 2. The mechanism, and the distinction that makes it work
 

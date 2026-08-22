@@ -66,7 +66,7 @@ differed only in generator, staged files, commit prefix and trigger paths.
 | `resolve-dois.yml`, `verify-urls.yml` | unchanged — see below |
 
 Retired workflows are in `_archived/workflows/` with a README mapping each to its
-destination. They were moved, not deleted (CLAUDE.md §9 guardrail 2); a workflow cannot be
+destination. They were moved, not deleted; a workflow cannot be
 redirect-stubbed, because a stub left in `.github/workflows/` would still execute.
 
 `resolve-dois.yml` and `verify-urls.yml` were **deliberately left separate**: different

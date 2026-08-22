@@ -299,15 +299,38 @@ live today — `slugs` 106, `term_aliases` 2,382, `axes`/`access_needs` and thei
    rebuild that reproduces every table count identically.
 3. ~~Seed the three missing DoD selftest cases (R9, R12, R15).~~ **DONE 2026-08-19** —
    `research_batch_dod.py --selftest` now asserts all fifteen rules and prints 15/15.
-4. **Run the first research batch** — restart plan §§2–3, unchanged, under the §1.4 quarantine.
-   **← THIS IS THE NEXT ACT.** Nothing above it remains.
-5. Render the determination and read it.
+4. ~~**Run the first research batch** — restart plan §§2–3, unchanged, under the §1.4 quarantine.~~
+   **DONE 2026-08-19** — `session_2026-08-19-research-batch-01-room-acoustic-performance`:
+   9 `search_executions`, 5 `evidence_sources`, 5 `source_slug_links`, 12 `evidence_population_match`.
+   Its five admissions were first written with **fabricated author lists**, corrected the same day
+   against persisted Crossref payloads; `GAP-B01-001` holds the content re-read open.
+4a. **The owner decision batch OD-A … OD-G** —
+   `workplan/2026-08-22-agonist-antagonist-execution-plan.md` §2. **← THIS IS THE NEXT ACT, and it
+   is the owner's, not a session's.** OD-A (are `item_population_links` substrate or scaffolding —
+   all 372 carry `rationale_ref` NULL), OD-B (do deaf and hard-of-hearing people belong on
+   `room-acoustic-performance`), OD-C (A-18's applicability set), OD-D/OD-E (two tier re-grades),
+   OD-F (the adversarial-subject waiver), OD-G (strike step 10's `jurisdictional_values` clause).
+   **Nothing in step 5 can be authored until OD-A, OD-B and OD-C are answered.**
+5. Render **a** determination and read it — for a cell chosen **applicability-edge-first**, not
+   the cell this DR's original framing implied. **AMENDED 2026-08-22.** As written, step 5 pointed
+   at A-18 × AUT; `BRK-20` established that A-18 carries **zero** `item_population_links` and its
+   only route to a population is the axis map, which owner directive D-1 quarantines. Authoring
+   that cell today would render a coverage failure as an epistemic finding — the
+   `workplan/2026-08-20-adversarial-adjudication-a18-aut.md` refusal, which stands.
 6. Only then: re-key or retire `jurisdictional_values`; re-scope handoff step 8 with its full
    dependency cascade; re-arm the retired `min_items` guards.
 
-Step 4 populates `evidence_sources` and `source_slug_links` — two of the six invariant tables the
-blocking reproducibility gate compares. **Running the batch first is what makes the later schema
+Step 4 populated `evidence_sources` and `source_slug_links` — two of the six invariant tables the
+blocking reproducibility gate compares. **Running the batch first is what made the later schema
 work safe to run at all.**
+
+> **AMENDMENT 2026-08-22 — why this section was edited rather than superseded.** Step 4 read
+> *"← THIS IS THE NEXT ACT"* for three days after it was completed, so an agent obeying CLAUDE.md
+> lines 9–12 (*"the instrument wins"*) was directed at step 5, and step 5 pointed at the one cell
+> the project had already refused on evidence. The halt was recorded only in
+> `sessions/session_2026-08-20-provenance-walk.md` §7, which does not bind. That is a defect in
+> this instrument, not in the session record, and §5's reversal clause makes correcting it here
+> the cheaper repair. **No successor DR is written, and none is owed.**
 
 ---
 
@@ -792,9 +815,23 @@ populations are the same.
 **Step 9 — mine (R2).** Floor `admissions//4`, min 1: `db.py log-mining --direction backward|forward`,
 and log the chase itself as a search row with `--mining-direction`.
 
-**Step 10 — route by class (R12).** Code values → `jurisdictional_values` (5 cleared rows on A-04
-await backfill). Economics → `economics_entries`. Case studies → `case_studies`. **If a
+**Step 10 — route by class (R12).** ~~Code values → `jurisdictional_values` (5 cleared rows on A-04
+await backfill).~~ Economics → `economics_entries`. Case studies → `case_studies`. **If a
 `findings_note` contains cost/grant/bcr, a structured row is owed** — that is R12's literal trigger.
+
+> **STOP — 2026-08-22. Do not write a value into `jurisdictional_values`.** The struck clause above
+> instructs a write the owner's **2026-08-12 REFERENCE-ONLY ruling forbids**: the table names which
+> document to go and get, never what it says. On 2026-08-21 a session followed this clause, wrote 12
+> rows marked `[UNVERIFIED-QUANT]`, and was caught by the blocking `test_db_integrity` L02 cardinality
+> parity (109 YAML records vs 121 table rows); `data_20260821185514` retracts them. Live state: 109
+> rows, and `value_text` / `value_numeric` / `unit` / `is_code_minimum` / `spec_id` / `source_section`
+> are **0 non-null of 109**. An `[UNVERIFIED-QUANT]` marker is not a licence to write where writing is
+> forbidden. Code values are staged as **leads** in `search_candidates`, which is where D-1 puts them.
+>
+> **A table emptied by ruling looks identical to a table empty for want of data**, and until OD-G lands
+> the only record of the ruling is a comment in a YAML header. Deleting the clause outright is
+> **OD-G**, an owner decision (`workplan/2026-08-22-agonist-antagonist-execution-plan.md` §2); this
+> notice is the interim guard, not the decision.
 
 **Step 11 — gate, emit, apply.**
 ```

@@ -45,8 +45,13 @@ description: >
 > editorial doctrine about what makes a question answerable from inspection, and
 > it does not depend on where the answer is stored. Read it; do not run the SQL.
 >
-> Not retired, because retirement is owner-gated (CLAUDE.md §9 guardrail 4) and
-> the standard is worth keeping. Banner-first, per the correction
+> Not retired, because the standard is worth keeping — it is editorial doctrine
+> that stands on its own merits. **Corrected 2026-08-22:** this previously read
+> "retirement is owner-gated (CLAUDE.md §9 guardrail 4)". That guardrail was
+> removed by the 2026-08-19 rewrite and §1 inverted it — removing apparatus needs
+> evidence, not permission, and it was the *blanket* removal-friction this clause
+> invoked that §1 names as the ratchet. The substantive reason above is sufficient
+> and does not need the false authority. Banner-first, per the correction
 > `item-specification-writer_SKILL.md` §6 already carries for the same table.
 
 ---
