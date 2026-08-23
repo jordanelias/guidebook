@@ -115,5 +115,15 @@ homes — found for the fourth time in one session, in this session's own proven
 **This session's command log therefore lives under the 08-22 directory and is left there.** Moving it
 would rewrite a record to look like something that did not happen; the record says where it is.
 
+**And a second half of an older fix, found the same way.** The 2026-08-21 commit `e387888` named a
+livelock — the hook records the command that commits the record, so the tree is never clean — and
+closed it for `git commit`/`git push` only. **`git status` was left in**, so the command whose whole
+purpose is to check the tree is clean was dirtying it. Observed across three turns today: commit,
+check, dirty, commit. The skip class now covers read-only queries of git's own state
+(`status`, `diff`, `log`, `rev-parse`, `rev-list`, `ls-files`, `show`, `branch`, `stash list`);
+mutating commands are still recorded. **Recording a query OF git INTO a git-tracked file was the
+purest instance of the recursion this repository exists to resist**, and it sat inside the hook
+written to document that resistance.
+
 **Next:** Phase 2 (research batch 03) is unblocked and untouched — forward mining has never been run
 on any of the seven mined anchors, and B4's content gaps close only by reading the five sources.

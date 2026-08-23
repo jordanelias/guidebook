@@ -45,7 +45,25 @@ try:
     #
     # Deliberately loose: a compound command containing a commit is skipped
     # whole. Whatever else it did is visible in that commit's own diff.
+    #
+    # EXTENDED 2026-08-23. The 2026-08-21 fix named the livelock correctly and
+    # then closed only half of it. The other half is `git status`: the stop hook
+    # demands a clean tree, checking the tree means running git status, and
+    # recording that run dirties the tree again. Observed across three turns
+    # today — commit, check, dirty, commit, check, dirty. Identical fixed-point
+    # problem, identical remedy.
+    #
+    # The class is READ-ONLY QUERIES OF GIT'S OWN STATE. Argument (2) above
+    # applies to them with full force: git already holds everything these
+    # commands read, so recording a query OF git INTO a git-tracked file is the
+    # purest form of the recursion this repository exists to resist. Commands
+    # that MUTATE the tree (add, mv, rm, checkout) are still recorded — they
+    # change something, and what they changed is worth a line.
+    GIT_READONLY = ("git status", "git diff", "git log", "git rev-parse",
+                    "git rev-list", "git ls-files", "git show", "git branch",
+                    "git stash list")
     if "git commit" in c or "git push" in c: sys.exit(0)
+    if any(q in c for q in GIT_READONLY): sys.exit(0)
     tr=d.get("tool_response")
     out=""
     if isinstance(tr,dict):
