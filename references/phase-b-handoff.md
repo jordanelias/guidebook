@@ -247,7 +247,7 @@ For any piece of content on the website:
 1. Load `parts/v10/partNN.md` for specification text
 2. Look up claim in `claim-reference-join.json` by CLAIM-ID
 3. Get `ref_ids` array
-4. Resolve each REF-ID via `global-reference-registry.json`
+4. Resolve each REF-ID via `source_locators` in `data/guidebook.db` (identifiers; 843 rows) — the `.json` twin was DELETED 2026-08-23 after all 531 of its `ref_id`s were absorbed into the DB (491 already there, 40 rescued: 8 to `source_locators`, 32 title-only to `search_candidates`). `global-reference-registry.md` is retained and remains the home of the citation TEXT — authors, titles, years — which `source_locators` does not store.
 5. Render inline `[n]` superscript → footnote with full citation + DOI link
 
 ### Updating the registry

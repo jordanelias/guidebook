@@ -6,7 +6,7 @@
 **Goal:** Populate `ref_ids` for all 1,382 claims in `claim-reference-join.json` so every claim on the website can show a Wikipedia-style footnote linking to a full citation.
 
 **Prerequisites (both complete):**
-- Step 1: `global-reference-registry.md` + `.json` — 531 unique references ✅
+- Step 1: `global-reference-registry.md` — 531 unique references ✅ (the `.json` twin was deleted 2026-08-23; its identifiers live in `source_locators`)
 - Step 3: `claim-reference-join.md` + `.json` — 1,382 claims enumerated with PENDING status ✅
 
 **Workflow per session:**
@@ -97,7 +97,7 @@ When Step 2 is complete, Phase B parsers can:
 1. Read `parts/v10/partNN.md` for specification text
 2. For any claim, look up its `CLAIM-ID` in `claim-reference-join.json`
 3. Get `ref_ids` array
-4. Resolve each REF-ID via `global-reference-registry.json`
+4. Resolve each REF-ID via `source_locators` in `data/guidebook.db` (identifiers; 843 rows) — the `.json` twin was DELETED 2026-08-23 after all 531 of its `ref_id`s were absorbed into the DB (491 already there, 40 rescued: 8 to `source_locators`, 32 title-only to `search_candidates`). `global-reference-registry.md` is retained and remains the home of the citation TEXT — authors, titles, years — which `source_locators` does not store.
 5. Render footnote with full citation + DOI link
 
 **Backend query examples:**

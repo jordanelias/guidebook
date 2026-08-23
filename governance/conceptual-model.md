@@ -104,7 +104,7 @@ Time-Version (ENT-19) ──── attached_to ──── all mutable entities
 ## 3. Schema Priority Order (A3 Sessions 2–8)
 
 ### Session 2: Evidence Source (ENT-02) schema + conversion
-- **Input:** global-reference-registry.md (531 records), verified-sources JSON files
+- **Input:** global-reference-registry.md (531 records; the `.json` twin was deleted 2026-08-23 — identifiers are in `source_locators`), verified-sources JSON files
 - **Schema:** EvidenceSource model with REF-ID, authors, year, title, DOI, PMID, tier, evidence_type (per T-03), jurisdiction, metadata_quality
 - **Conversion:** convert_sources.py — parses markdown table + JSON files → validated YAML under data/sources/
 - **Validator:** validate_sources.py — referential integrity (REF-ID uniqueness, tier validity)
