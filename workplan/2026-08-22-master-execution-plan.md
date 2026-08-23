@@ -44,6 +44,67 @@ seven checkmarks.
 
 ---
 
+## ADJUDICATION FOLD-IN — 2026-08-23, Fable 5 read-only, against this session's own work
+
+A read-only adjudication was run over everything this session did. **It sustained most of it and
+found four things against me that I had not found myself.** They are recorded here before the plan,
+because two of them are still open and one changes what the next session must do first.
+
+### What it found against me
+
+| # | Finding | Status |
+|---|---|---|
+| **1** | **Batch 03 merged with no session record and no attestation.** DB rows cited a session id with no file behind it; `LATEST-RESEARCH` still pointed at batch 02. Every prior batch had both. **No gate caught it.** | **PAID 2026-08-23** — record + attestation written, three deviations logged |
+| **2** | **`reference_stubs` (migration 061) — REVERT.** 499 of its 531 rows duplicated `source_locators` on the same primary key; the other 32 duplicated `search_candidates`. It broke the one-fact-one-home rule *the same session ratified that morning*, and its own migration comment admits "WHAT READS IT: nothing yet" — candour is not compliance with CLAUDE.md §1. | **DONE 2026-08-23** — migration 062 + a data migration merged it away; 875 rows, 875 distinct ref_ids, **duplication zero** |
+| **3** | **"28 `search_executions`" is false — the batch wrote 10.** 28 is the whole-table count including batches 01 and 02. | **CORRECTED** in the batch-03 record. Never entered a tracked file |
+| **4** | **The DoD gate has no posture for non-admitting work.** R9a/R9b fail by design at zero admissions; R4 demands population linkage from searches that admitted nothing. **My own hardening that morning created a state a mining batch can never clear.** | **OPEN — item R4 below** |
+
+### The finding that repeated three times
+
+**Three separate gates assume a research session admits sources**: the DoD contract, the R9a/R9b
+subject checks, and — found while paying finding 1 — `test_db_integrity` L04, which turns red if
+`LATEST-RESEARCH` names a batch holding zero Tier 1–2 sources. That is not three coincidences. **The
+apparatus has one model of a research session, and mining does not fit it.**
+
+### The boundary the adjudication drew, which I could not draw alone
+
+The owner's frame is that pre-reset material is **clues** — *"not stored as usable for any case
+unless it is being read by a researcher."* But `source_locators` is read by a gate. Adjudicated
+verdict: **a gate may read clue material, within a hard boundary** —
+
+> Machine reads of clue material may consult **identifiers and ref_ids only**, may answer only
+> **negative/identity questions** (duplicate, collision), and may **never propagate any other
+> attribute** — title, tier, year, jurisdiction, text — into a gate verdict, a determination, a
+> render, or a count about the book.
+
+**One thing I built does not sit cleanly inside that boundary and I am flagging it rather than
+defending it.** Migration 062 merged the citation *text* (authors, title, tier_claimed) onto
+`source_locators`, the machine-readable table. Storing is not propagating, so no rule is broken
+today — but the adjudication's cleaner shape was identifiers in the table and text in a single
+human-only clues document. **Item R2 below puts that to the owner rather than settling it here.**
+
+### Reconciliation — what remains, in order
+
+| # | Act | Gate |
+|---|---|---|
+| **R1** | **Ratify the clues doctrine as a DR**, including the machine-read boundary verbatim, and record that the evening directive ("clues, never stored as usable") supersedes the morning one ("citation .md → table"). Name **R10 + R15 as the existing, sufficient enforcement — add no check.** | **OWNER** — two owner directives are in tension and only the owner can reconcile them. **This is the highest-value next act:** today shows what unreconciled directives cost — a 531-row table with no reader, wired into three scripts, built in good faith on the older one |
+| **R2** | Decide whether citation text stays on `source_locators` (as built) or moves to a human-only clues document | **OWNER** — follows from R1's boundary |
+| **R3** | Restore the deleted `global-reference-registry.md` from git into the clues surface *if* R2 goes that way — `git show 17e5580^:references/global-reference-registry.md` | session, after R2 |
+| **R4** | **Give the DoD a posture for non-admitting batches**: scope R4 to admissions not searches; let R9a/R9b report NOTHING-IN-SCOPE **without failing** when zero admissions is corroborated structurally (`SUM(results_admitted)=0`); keep FAIL when admissions exist but locators are missing. Update the selftest. Also inspect R2's subject line — it prints *"3 citation_mining rows for 0 anchors"*, which is not a coherent subject statement | session — L2 correcting L2, **no new check** |
+| **R5** | **DOI canonicalization**: one data migration lowercasing the 2 drifted DOI values; `.lower().strip()` at the `emit_batch_sql.py` capture point so drift cannot recur. **Do not build a DOI dimension table** — L2 mass with no reader | session — L0 hygiene |
+| **R6** | **Delete the 11 unread views** — explicitly no owner gate (CLAUDE.md §1: *"dead tables and views: delete them"*). Record the zero-reader evidence in the commit | session — negative L2 mass |
+| **R7** | **Lift D-1 into a ratified DR** — it constrains what may cross into a determination and lives only in a workplan, the weakest surface here. Batch with R1 | **OWNER** — doctrine |
+| **R8** | **Adjudicate the 89-of-93 route divergence.** `item_population_links` carries curated `applicability`/`rationale_ref` and is the candidate for authoritative; the axis route becomes derived-only, or the 89 get reconciled | **OWNER** — DG-NON. **The only item here at L1**, and it must be settled *before the first `specifications` row is written* |
+| **R9** | **`claim-reference-join`: keep, no table.** 1,382 entries, only readers are procedure prose and archived scripts; no machine reader means no table (CLAUDE.md §1). Retire its `.md`/`.json` twin down to one file and mark it clues | session |
+| **R10** | **Leave the 5 blocking-and-vacuous checks alone.** Adjudicated: 3 are dormant Phase-E gates, honestly annotated `no_floor: empty-by-decision`; the 2 attestation checks are **changeset-scoped**, so zero on a non-synthesis commit is correct semantics, not vacuity. The escalation report mis-labels them. Teaching it the difference costs L2 code — **default to not doing it** | none — deliberate no-op |
+
+**Two of my acts were adjudicated KEEP and are not to be re-litigated:** the 40-orphan rescue (the 8
+identifier rows enlarge a stash the gate provably uses; the 32 are single-homed now), and
+`search_candidates.locator` (a pre-identity lead has no `ref_id`, so it cannot key into
+`source_locators` — the real defect was no canonicalization at promotion, which is R5).
+
+---
+
 ## 0. What will stop you
 
 The four rules in CLAUDE.md §0 are unchanged and are what actually blocks a commit. Two matter most
