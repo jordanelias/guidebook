@@ -755,3 +755,34 @@ an *identifier*, so it belongs once — in `source_locators`, keyed by `ref_id` 
 carries `ref_id`, not the string. Then duplication is impossible rather than detected, and
 `R9a`/`R9b` become unnecessary and can be deleted. **Until that lands, no new table may add a DOI
 column**, and any join on a DOI must fold case.
+
+**THE RULE STATED POSITIVELY — owner directive 2026-08-23.** *"The only data I would truly expect to
+see from evidence phase onwards is the REF# for cross-referencing specific rows, and population
+codes / access needs / ICF codes for grouping items."* Downstream of evidence, a row carries **a
+reference and a grouping key. Nothing else about the source.** Titles, DOIs, years, journals, tiers
+and locators are attributes *of the source*; a second copy downstream is a fact with two homes.
+
+**Measured against the live schema the same day — 25 source-attribute columns live downstream of
+evidence.** The three that matter, because they are the tables the guidebook's output will occupy and
+**they are all still empty, so fixing them costs nothing today and a migration over live rows
+tomorrow:**
+
+| Table | Rows | Against the rule |
+|---|---|---|
+| **`specifications`** | **0** | `item_code` and `population_code` are proper **FKs** — the grouping half is right. The reference half is not: **there is no `ref_id` column**, and the link to evidence is `governing_refs TEXT CHECK(json_valid(...))` — **a JSON blob, not a foreign key or a join table.** A typo'd ref inside it is unenforceable and invisible, which is the root-registration defect PR #103 filed and nothing has fixed. **This is the deliverable table.** |
+| `case_studies` | 0 | 37 columns, **no `ref_id` at all**; carries `title`, `architect`, `year`, `cost_data`, and a `sources` blob. |
+| `economics_entries` | 0 | Has `ref_id` — and *also* `source`, `year`, `journal`, `evidence_tier`, `source_section` beside it. The right key and the duplication both. |
+
+Two live tables violate it now: **`search_candidates` (44 rows) has no `ref_id` column at all**, which
+is *why* it copies `title` and `locator` strings — a candidate structurally cannot point at a source
+row. And **`citation_mining.doi` (7 rows) is redundant with its own `global_ref_id`** and is the
+cheapest deletion in the schema.
+
+**Legitimately exempt:** `source_locators` — it *is* the identifier home, so `doi`, `url`, `pmid`,
+`isbn`, `issn`, `standard_number` and their resolution outcomes belong there and nowhere else.
+`search_executions.target_tier` describes what a *search targeted*, not what a source is.
+
+**Order of repair, cheapest first:** drop `citation_mining.doi`; give `search_candidates` a nullable
+`ref_id`; then re-shape the three empty tables **before** they take a first row — `specifications`
+above all, since `governing_refs` becomes a migration over live determinations the moment one exists.
+All four are schema changes and therefore owner-gated (D-SCHEMA).
