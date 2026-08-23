@@ -86,8 +86,11 @@ documents name OD-5; none fixed it. It demonstrated itself three times in a sing
 surfacing Finitzo-Hieber & Tillman 1978 through backward mining after R9 had passed the same DOI
 space clean.
 **Do:** widen the R9 query to `source_locators`; keep `EXAMINED:` printing the true subject count.
-**Falsification:** re-run against batch 02's session — R9's `EXAMINED` must rise above the
-`evidence_sources` figure. Then `--selftest` must still print **15/15**.
+**Falsification — CORRECTED 2026-08-23 during execution.** The original read *"R9's `EXAMINED`
+must rise above the `evidence_sources` figure"*, which is **malformed**: `EXAMINED:` is emitted only
+by `check_baseline()` and counts *rule codes*, not subjects. There is no per-rule EXAMINED to rise.
+The real test is two-sided — seeded violations must fire, **and** the four correct stash-to-corpus
+promotions in the live corpus must NOT.
 **Then:** close `GAP-B01-004` by migration, or record in the gap row why it stays open.
 
 **This is a fix, not apparatus.** Nothing is added. If you find yourself writing a new check here,
