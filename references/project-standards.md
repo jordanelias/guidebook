@@ -686,3 +686,72 @@ absence.
 The failure mode is always the same shape and it is why a hit count must never stand as a finding: a
 text match cannot distinguish a use from a mention, a reader from a writer, live code from a
 docstring, or an absent string from an absent file. · DATE: 2026-08-22
+
+---
+
+**RULE: The database is the only system of record for anything a gate must see.**
+An identifier, decision, value or link that exists only in a tracked FILE is **invisible to every
+check in this repository**, because every check queries `data/guidebook.db`. A file may *mirror* the
+DB, and may hold what no gate reads — prose, reasoning, session records, retrieval payloads. It may
+never be the *sole* home of a fact a gate is supposed to enforce against.
+
+**DATE: 2026-08-23** — established by measurement, not by preference, while preflighting a cull:
+
+- `references/global-reference-registry.json` holds **531** `ref_id`s; `source_locators` holds
+  **835**. **Neither is a superset: 40 exist only in the file, 344 only in the DB.** There is no
+  single system of record for this project's identifiers.
+- Seven of those 40 carry DOIs, and one — `REF-00031`, `10.1097/AUD.0b013e3181d3d514` (Neuman 2010) —
+  is an active promotion lead on the only slug carrying evidence.
+- **The consequence is exact and it lands on a gate fixed the same day.** `R9a`/`R9b` were widened
+  that morning to close OD-5 by querying `source_locators`. They cannot see the 40. **A duplicate-DOI
+  gate is only as complete as the table it reads**, so OD-5 is closed against the DB and still open
+  against the repository.
+
+**The generalisation, which is the reason this is a rule and not a ticket.** A file slated for
+culling that turns out to hold information recorded only partially elsewhere is not a *cull* problem.
+It is evidence that the write path let authoritative data land outside the system of record — and
+that a migration into the DB was run without ever verifying it was complete. **Before deleting any
+file that holds data, diff it against the table that replaced it and migrate the remainder first.**
+Deleting on a referent scan alone proves only that no code *reads* it, never that nothing is *in* it.
+
+**Counter-example, so the rule is not over-applied.** `data/decisions/decision_register.yaml` mirrors
+the `decisions` table at **166 / 166 with zero divergence in either direction**, and
+`scripts/decision_capture.py` and `scripts/doctrine_recheck.py` read it. That is a *consistent
+mirror with live readers* — redundant, not divergent, and **not** a target. Cull item D2, which
+schedules its retirement, is wrong as scoped and is struck.
+
+**COROLLARY, same date — one fact, one home. The evidence phase stores a DOI in FOUR tables.**
+Measured 2026-08-23:
+
+| Site | Non-empty | Kind |
+|---|---|---|
+| `source_locators.doi` | 441 | the identifier index |
+| `evidence_sources.doi` | 10 | copied on admission |
+| `citation_mining.doi` | 7 | copied on mining |
+| `search_candidates.locator` | 27 | copied on staging |
+
+**None of these is a foreign key.** Each is an independently-writable copy of the same string, so
+promoting a lead COPIES the DOI rather than referencing it. **17 distinct DOIs are currently stored
+in more than one table; `10.1044/2019_AJA-19-0010` is stored in all four.**
+
+**They have already drifted.** 4 of the 17 do not match byte-for-byte across their copies —
+`evidence_sources` holds `10.1044/2019_aja-19-0010` while the other three hold
+`10.1044/2019_AJA-19-0010`, and two more differ between `source_locators` and `search_candidates`.
+Case-folded they are the same DOI; to `=` they are not. **Any join written with plain equality
+silently misses them**, and most joins in this repository are written with plain equality.
+
+**So walking the pipeline is not univocal.** "What is this source's DOI" has up to four answers, and
+for four sources the answers differ. The same is true one stage earlier: `item_population_links` and
+the `item_axis_links → population_axis_map` route **disagree on 88 of 93 items and agree on 4**
+(measured 2026-08-23; `pipeline-map.yaml` BRK-20 records the defect and notes no check compares them).
+
+**What this makes of `R9a`/`R9b`, added the same morning: they are a patch on a schema defect, not a
+fix for it.** They compare two of the four sites and normalise with `LOWER(TRIM(...))` so the drift
+above does not fool them — but `citation_mining.doi` and `search_candidates.locator` remain
+unchecked, and a check that reconciles copies is only ever a symptom of copies existing.
+
+**The structural fix, which is owner-gated because it is a schema decision:** a DOI is an attribute of
+an *identifier*, so it belongs once — in `source_locators`, keyed by `ref_id` — and every other table
+carries `ref_id`, not the string. Then duplication is impossible rather than detected, and
+`R9a`/`R9b` become unnecessary and can be deleted. **Until that lands, no new table may add a DOI
+column**, and any join on a DOI must fold case.

@@ -21,6 +21,29 @@ raised both as doctrine-carrying concerns. They are not concerns.
 
 ---
 
+## EXECUTION LOG — 2026-08-23. Acts A1–A7 are DONE; the sections below are kept only for their evidence.
+
+**Phase 1 and Phase 3 are complete.** Per §10.1 this file now carries what remains, and what remains
+is shorter than what was planned.
+
+| Act | Outcome |
+|---|---|
+| **A1** OD-5 | **DONE.** `R9a`/`R9b`. Selftest 15/15 → **17/17**. The naive widening was **refuted** first — all four DOIs held in both tables carry the *same* ref_id, so failing on overlap would have failed correct promotions and blocked B2. |
+| **A2** R-12 | **DONE.** Open 12 days. Also caught this plan telling me to delete a true description: `doctrine_recheck` is a **live registered check**; OD-10 abolished the commit token, not the validator. |
+| **A3** battery line | **DONE.** No count, no status claim. |
+| **A4** archival | **DONE.** 13 files / 4,065 lines archived. Live workplan **72 → 59**. |
+| **A5** `GB`→`UK` | **REFUTED — nothing struck.** `jurisdiction-philosophy.md` §3.3 mandates `UK` at ERROR level; the project overrode ISO deliberately. Blocked by the quarantine, not wrong. **New finding: `validate_jurisdiction.py` never opens the DB**, so the rule is enforced where no violations live. |
+| **A6** DR reconciliation | **DONE.** §8 caveats moved to the citations; §3 step 6 owns all four items; §B is the single index; DR-2026-08-06 annotated. |
+| **A7** scorecard | **DONE.** The 08-22 plan scored **1 of 5** in its own file. Not archived — blocked ≠ finished. |
+
+**Three of seven acts were wrong as written, and all three were wrong because I authored this plan
+from a reading rather than from the primary source.** That is the finding to carry forward, not the
+seven checkmarks.
+
+**What remains: Phase 2 (§4) and Phase 4 items 2–4 (§6.8).** Nothing else in this file is live.
+
+---
+
 ## 0. What will stop you
 
 The four rules in CLAUDE.md §0 are unchanged and are what actually blocks a commit. Two matter most
@@ -382,7 +405,32 @@ three plans have now scheduled something no session could perform.
 **Cull upward from L3. Never downward from L0.**
 
 1. **A4** — the 13-file L3 directory. Referent evidence complete; no owner gate.
-2. **The two dead registries** — 25,979 lines, zero code referents. Sweep the prose, then delete.
+2. **The two dead registries** — 25,979 lines, zero code referents. **BLOCKED 2026-08-23. Do not
+   delete them yet — a preflight found they still hold live identifiers.**
+   `references/global-reference-registry.json` holds **531 `ref_id`s**. 491 of them were absorbed into
+   `source_locators`, which is the stash that replaced it — but **40 exist in NEITHER
+   `source_locators` NOR `evidence_sources`, and 7 of those carry a DOI.** Among them:
+   `REF-00001` (room-acoustic parameters and speech perception in CI users — *the active slug*) and
+   **`REF-00031` = `10.1097/AUD.0b013e3181d3d514`, Neuman 2010 — one of the four B2 promotion leads.**
+   **Deleting the file would destroy 40 held identifiers, which is precisely the harm OD-5 exists to
+   prevent.** The act is therefore two acts, in order:
+   **(a)** migrate the 40 orphans into `source_locators` with `recovered_from` naming the registry;
+   **(b)** re-run the orphan count to zero, sweep the prose, then delete both files.
+   `references/claim-reference-join.json` (1,382 entries) indexes CLAIM-ids to guidebook prose lines
+   demoted by the clean-room reset; it has no such orphan problem, but **`claims_docket` is a live
+   registered check** — read it before assuming the join is unread.
+
+   **THE REAL FINDING, and it is not about culling.** Measured 2026-08-23: the JSON registry holds
+   531 `ref_id`s, `source_locators` holds 835, and **neither is a superset — 40 live only in the file,
+   344 only in the DB.** *This project has no single system of record for its identifiers.* The cull
+   did not create that; it exposed it. And it lands on the gate fixed this morning: **`R9a`/`R9b`
+   query `source_locators`, so the 40 are invisible to them — OD-5 is closed against the DB and still
+   open against the repository.** The standing rule is recorded at
+   `references/project-standards.md` (RULE 2026-08-23): **the DB is the only system of record for
+   anything a gate must see, and no data file is deleted until it has been diffed against the table
+   that replaced it.** Cull item **D2 is struck** by the same measurement — the decisions YAML mirrors
+   its table at 166/166 with zero divergence and has two live code readers, so it is a consistent
+   mirror, not a duplicate store.
 3. **The unread views** — one migration, after reading `skills/*_SKILL.md` for prose callers.
 4. **The empty-subject census** — derive it; it *is* the check cull list.
 5. **Then stop.** Everything below this line is owner-gated (the dormant tables, the decisions
