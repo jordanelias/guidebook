@@ -200,17 +200,42 @@ still names a member, the sweep is incomplete and A4 is not done. **The scan can
 callers** — read `skills/*_SKILL.md` directly, because that exact blindness is what made cull
 Phase 4a unsafe.
 
-### A5 · Strike `GB` → `UK`; do not execute it
-**Locations:** `2026-08-18-handoff-next-session.md` §6 step 4 ·
-`2026-08-19-adversarial-critique-research-restart.md` §7 item 7 ·
-`2026-08-18-research-frame-proposal.md` §10.4.
-**Do:** strike it in each with a dated note. **Write no migration.**
-**Reason — this reverses four in-window plans:** `GB` is the ISO 3166-1 alpha-2 code for the United
-Kingdom; `UK` is not an ISO code. The change was specified to align with a `jurisdictions` table
-that does not exist and is not due until DR §3 step 6. Meanwhile `jurisdictional_values` is under
-the owner's REFERENCE-ONLY quarantine — **a write to it on 2026-08-21 was caught by blocking L02 and
-retracted the same session.** Four plans scheduled it in ten days and not one asked whether it was
-right. It is a naming decision; it goes to the taxonomy pass.
+### A5 · `GB` → `UK` — REFUTED AND REWRITTEN 2026-08-23. Do not strike it; it is blocked, not wrong.
+
+**This act previously read "strike it in three plans, write no migration", on the reasoning that
+`GB` is the ISO 3166-1 alpha-2 code for the United Kingdom and `UK` is not an ISO code. That
+reasoning was true and irrelevant, and the adversarial pass refuted it from primary sources before
+any plan was edited.** Nothing was struck.
+
+`governance/jurisdiction-philosophy.md` §3.3 is explicit and ratified:
+
+> "The project uses `UK` instead of `GB` (ISO 3166-1 alpha-2) per project convention. This is
+> documented in the JurisdictionCode enum docstring and enforced by the validator."
+
+Its §4 table grades `UK not GB` as **ERROR** — *"`GB` appearing as a jurisdiction code is rejected;
+must be `UK`."* `scripts/validate_jurisdiction.py:111` and `:182` enforce exactly that. **The project
+knew `GB` was the ISO code and deliberately overrode it.** So the 20 `GB` rows in
+`jurisdictional_values` are a live violation of an ERROR-level convention, the four plans that
+scheduled the fix were right, and this act was wrong to reverse them.
+
+**Why it still cannot run:** `jurisdictional_values` is under the owner's REFERENCE-ONLY quarantine
+(D-1). A write to it on 2026-08-21 was caught by blocking L02 and retracted the same session. The
+item is **blocked, not wrong** — it clears when OD-G and DR §12.1 step 10 are settled, and it is not
+a naming question for the taxonomy pass.
+
+**The finding that explains why it survived four schedulings — verified 2026-08-23, and it is the
+same defect as OD-5.** `scripts/validate_jurisdiction.py` **never opens the database**: it parses
+YAML registry entries and reasoning-doc front matter only. The ERROR-level rule is therefore
+enforced against a surface with no `GB` rows at all, while all 20 real violations sit in
+`jurisdictional_values` where the validator cannot see them. `2026-08-18-research-frame-proposal.md`
+line 606 suspected this — *"Either the validator is not reaching that table or the rule is not
+enforced there"* — and never checked. It is the first.
+
+**Do NOT wire the validator to the DB yet.** It would go ERROR-red immediately on 20 rows that the
+quarantine forbids fixing, producing a gate that is permanently red for inherited reasons — which
+trains people to ignore it, the failure mode `research_batch_dod.py` documents in its own R9
+comment. **Wire it in the same change that lifts the quarantine and fixes the rows, or not at all.**
+This pairing is the act; it is owner-gated on OD-G.
 
 ### A6 · Reconcile at the DR, not in a new document
 **Location:** `decisions/DR-2026-08-19-research-restart-operative-instrument.md`, amended **in
