@@ -226,7 +226,147 @@ finished, and archiving a blocked plan loses the block.
 
 ---
 
-## 6. The standing state of the workplan surface
+## 6. Phase 4 — the cull program, against the L0–L3 frame
+
+**Culling is not a size exercise and must never be run as one.** It is run against the census's
+level frame (`workplan/2026-08-18-structural-census-and-cull-list.md` §2), which is the operative
+definition and is retained here because that file is otherwise historical:
+
+> **Level is assigned by what the artifact takes as input, not by where it lives.**
+> **L0 substance** — input is the world: evidence, items, populations, BPC content, renders, and the
+> code that reads and writes them. **L1 first-order** — input is L0: *is the guidebook correct?*
+> **L2 second-order** — input is L1: *is the checker correct?* **L3+** — input is L2+: registers
+> tracking audits, plans remediating plans, passes reviewing passes.
+
+**The rule that follows from the frame, and the only one that matters:** an artifact earns its place
+by the level of its input and by having a reader at a lower level. **An L1 check with no L0 subject,
+an L2 check with no L1 subject, and an L3 document with no L2 referent are the same defect** — they
+consume attention and return nothing. Cull upward from L3, never downward from L0.
+
+**The census's own figures are pre-cull and must not be quoted.** Everything below was re-derived
+2026-08-22. Re-derive again before acting.
+
+### 6.1 Where the mass actually is
+
+| Stratum | Files | Lines | Share |
+|---|---|---|---|
+| `_archived/` | 610 | 266,666 | **39%** (28.1 MB) |
+| governance + references + skills | 726 | 156,317 | 22% |
+| generated output | 179 | 84,308 | 12% |
+| sessions + provenance | 336 | 69,066 | 10% |
+| **executable** | 133 | **40,377** | **5.7%** |
+| workplan (live) | 72 | 31,942 | 4.5% |
+| **total tracked** | **2,201** | **712,636** | |
+
+Executable is **29,061 LOC** by CLAUDE.md's derivation, down from ~35.4k before the 2026-08-20 cull.
+
+**Finding: the code cull is finished.** It reached 5.7% of the repository and the last pass took the
+dead weight. **Further code culling is the ratchet running in reverse** — spending L3 sessions on the
+smallest stratum in the building. The remaining mass is `_archived/` at 39%, which the owner ruled on
+2026-08-19 **may grow**. So the repository will not get smaller, and that is settled, not a problem
+to solve. **What costs a session is not size; it is what it trips over while orienting.** Cull for
+attention, not for bytes.
+
+### 6.2 Workstream A — orphans, the sharpest findings in the repository
+
+Derived by scanning all 95 non-migration code files for each object's name. **Limitation, stated
+because it changes what may be concluded: a name match in SQL is the only available signal, and a
+prose caller — a script invoked from skill text — is invisible to it.** That exact blindness is what
+made cull Phase 4a unsafe. **Confirm by reading `skills/*_SKILL.md` before deleting anything here.**
+
+| Orphan | Measured | Act |
+|---|---|---|
+| **11 of 17 database views are read by no non-migration code.** `v_coverage_priority` **computes 7,208 rows that nothing reads** — the single largest piece of dead machinery in the DB. `v_source_admission` and `v_source_reach_all` return 10 rows each, also unread. The other eight return 0 | live query + code scan | **Drop the unread views by migration**, one migration, evidence in the commit. A view is pure derivation — git holds the DDL, so this is free to reverse |
+| **8 empty tables are named by no code at all** — `case_study_populations`, `case_study_specs`, `case_study_strategies`, `economics_entry_populations`, `economics_entry_specs`, `external_root_registry`, `room_items`, `situations`. Never written, never read | live query + code scan | **Distinguish orphan from dormant before dropping.** The case-study and economics children are dormant — R12 routes real content to their parents. `external_root_registry`, `room_items`, `situations` look like true orphans. **Owner call on the dormant set; drop only the true orphans** |
+| **0 triggers exist.** The `stated`-ratification refusal ruled in the writer plan was never built; the bar survives only as prose | live query | **Record it; do not build one.** Adding a trigger is apparatus, and §0's burden of proof applies |
+| **33 of 65 tables are empty**, including `specifications` | live query | Not a defect — it is the deliverable's shape. **Do not "fix" it by seeding** |
+| **The two dead reference registries** — `references/claim-reference-join.json` + `global-reference-registry.json`, **25,979 lines, 0.76 MB, zero code referents**, only prose referrers, most in documents already retiring | referent scan | **Delete. This is the largest genuine deletion left in the repository.** Sweep the five/six prose referrers first — CLAUDE.md §0.4 |
+
+### 6.3 Workstream B — deduplication
+
+| Duplicate | Measured | Act |
+|---|---|---|
+| **The decisions triple store** — 64 `decisions/*.md` files, a 5,686-line `data/decisions/decision_register.yaml`, and **166 DB rows**, held equal in both directions by `test_db_integrity` L01. An L2 check whose whole function is keeping a duplicate alive | live count | **Not deletable as the cull plan assumed.** The YAML has **9 code referents** including `decision_capture.py` and `doctrine_recheck.py`. **Strike cull item D2 as scoped and re-scope it:** the question is which of the three is canonical, and that is a doctrine call — owner |
+| **29 DOIs are held under more than one `source_locators` row** — 441 rows carry 397 distinct DOIs. The stash duplicates itself, and **R9 cannot see this either**, because it is the same blindness Phase 1 fixes | live query | **Fold into Phase 1.** Once R9 reads `source_locators`, point it at intra-stash duplicates too, then dedupe by migration |
+| **Four items, fourteen costumes** (§7.1) — one open item each, specified three or four times | referent audit | **Act A6** folds all four into DR §3 step 6 |
+
+### 6.4 Workstream C — wiring
+
+The pipeline map (`governance/pipeline-map.yaml`) is the instrument and is current — its six false
+assertions were corrected 2026-08-22 and BRK-25 was REFUTED rather than "fixed", which would have
+reverted ratified doctrine via migration 029.
+
+**What wiring work remains is not mapping. It is connecting or cutting.** Every item in §6.2 is a
+wiring verdict: a view with no reader is an unconnected edge, and so is a table with no writer. **Do
+not produce another map.** A third map of the same wiring would be the L3 defect exactly.
+
+### 6.5 Workstream D — the write path
+
+**Ruled and settled, recorded so it is not re-specified a fourth time.** DR §12.0 ruled the write
+path is a **session-scoped scratch DB**, not `--emit-sql`. The nine `db.py` writer helpers were
+specified in the writer plan Phase 2, the walk plan Phase 7 and DR §12.5, and **none exists; batch 2
+ran without them and shipped.** `scripts/db.py` still cannot write `search_candidates`,
+`evidence_population_match`, `economics_entries`, `case_studies` or `jurisdictional_values` values,
+and `add-source` cannot write `doi_resolution_outcome`, `url`, `pages`, `first_author_last` or author
+rows — those need hand SQL against the scratch.
+
+**Do not build the helpers.** That gap is where the 2026-08-19 fabrication entered, but the fix that
+worked was `retrieval_log.py --verify-authors` diffing stored data against the retrieved bytes — an
+**L1 check with a real L0 subject** — not a writer. **If a helper is ever built, it must be because a
+batch was blocked by its absence.** Two batches were not.
+
+### 6.6 Workstream E — checks, and why not to route to a number
+
+**63 active, 4 quarantined, against the cull plan's declared target of 9.** No phase routes from 63
+to 9, which has been true since 2026-08-18 and has not moved.
+
+**Do not write a routing plan.** A document that routes 63 to 9 is an L3 artifact about L1/L2
+artifacts, and producing it is the behaviour this whole program exists to stop. **The method is
+CLAUDE.md §1: delete a check when you have evidence it is vacuous, unreferenced or superseded —
+one at a time, evidence in the commit, no owner gate.** The number falls as a consequence.
+
+**One prerequisite measurement, and it is cheap:** re-run the empty-subject census. The census found
+16 of 65 checks examined nothing, with the blocking ones split between *dormant* (guarding corpora
+the 2026-08-06 reset emptied) and *defective*. **That split is the cull list.** A dormant check
+guarding a corpus batch 3 will populate must stay; a check guarding a corpus that no longer exists
+must go. Derive it with `run_checks.py --explain` over a full scope and read the `EXAMINED:` lines —
+**a blocking check that passes on zero subjects is CLAUDE.md §2(a), the failure mode produced four
+times here.**
+
+### 6.7 Workstream F — L3 prose
+
+The census measured the L3 stratum at ~46,500 lines of live workplan prose against **471 lines of
+primary deliverable**. Live workplan is now **31,942** lines and the deliverable has not grown.
+
+**Acts A4 (13 files, 4,065 lines) and A6 are the whole of the sanctioned L3 reduction**, because they
+are the only parts with referent evidence. The remaining L3 mass retires under OD-8 once its
+referents are re-pointed — **not on this session's authority.** `workplan/deprecated/` remains
+outside `.ignore`, and that edit is **owner-gated by that file's own header and DR-2026-08-06**;
+three plans have now scheduled something no session could perform.
+
+### 6.8 Order, and the one rule that governs it
+
+**Cull upward from L3. Never downward from L0.**
+
+1. **A4** — the 13-file L3 directory. Referent evidence complete; no owner gate.
+2. **The two dead registries** — 25,979 lines, zero code referents. Sweep the prose, then delete.
+3. **The unread views** — one migration, after reading `skills/*_SKILL.md` for prose callers.
+4. **The empty-subject census** — derive it; it *is* the check cull list.
+5. **Then stop.** Everything below this line is owner-gated (the dormant tables, the decisions
+   triple store, OD-8, `.ignore`) or is L0 and must not be touched.
+
+**Acceptance for Phase 4 — every one is a subtraction, and none is a document:**
+- The unread-view count falls from 11, by migration, with the reader scan in the commit.
+- `references/claim-reference-join.json` and `global-reference-registry.json` are gone and no live
+  file names them.
+- The empty-subject census exists as check-registry annotations — **not as a new file**.
+- Cull item D2 is struck and re-scoped as an owner question.
+- **Net lines removed exceed net lines written. If this phase produces more prose than it deletes,
+  it has failed on its own terms and must be abandoned rather than continued.**
+
+---
+
+## 7. The standing state of the workplan surface
 
 So the next session does not re-audit it. **32 live files were authored inside the ten-day window —
 45% of the entire live workplan surface, 11,747 lines, against the window's 132 DB rows.**
@@ -243,7 +383,7 @@ So the next session does not re-audit it. **32 live files were authored inside t
 **The 40 out-of-window files are out of scope.** Eight were touched by sweeps; none was authored or
 advanced. Do not enumerate them again.
 
-### 6.1 Four items, fourteen costumes
+### 7.1 Four items, fourteen costumes
 The finding that justifies A6. Each is **one** open item, specified three or four times, none built
 — and **14 of the 15 citations were written inside the same ten days.** The duplication was not
 inherited; it was manufactured, at speed, by sessions that did not check whether the thing had
@@ -258,7 +398,7 @@ already been specified.
 
 ---
 
-## 7. Owner decisions outstanding
+## 8. Owner decisions outstanding
 
 **Critical path:** the **population-taxonomy pass (D-0165)**. Its packet should carry two things
 this window produced and deliberately did not action: the DoD gate printing PASS over empty subject
@@ -273,7 +413,7 @@ DR-2026-08-06.
 
 ---
 
-## 8. Traps that were hit in this window
+## 9. Traps that were hit in this window
 
 1. **`db.py log-mining --ref` takes the LOCAL id.** Cost: a blocking gate reporting a violation for
    work actually done.
@@ -293,7 +433,7 @@ DR-2026-08-06.
 
 ---
 
-## 9. Acceptance, termination, and how this file ends
+## 10. Acceptance, termination, and how this file ends
 
 **Acceptance.**
 1. `research_batch_dod.py` R9 prints an `EXAMINED` count including `source_locators`, and
@@ -302,17 +442,26 @@ DR-2026-08-06.
 3. **At least one of `GAP-B01-001` / `GAP-B02-001` is closed by an actual read of the sources.**
 4. `governance/check-registry.yaml` parses with no phantom keys and carries no count or status claim
    in any battery description.
-5. In-window live workplan files fall **32 → 19**; total live **72 → 59**; **18 / 58** after §9.1.
-6. §6.1's four items appear **once each**, at DR §3 step 6.
-7. **Zero new checks, scripts, tables or plans exist as a result of executing this document.**
+5. In-window live workplan files fall **32 → 19**; total live **72 → 59**; **18 / 58** after §10.1.
+6. §7.1's four items appear **once each**, at DR §3 step 6.
+7. The unread-view count falls from **11**, by migration, with the reader scan recorded in the
+   commit; the two dead reference registries (**25,979 lines**) are gone and no live file names them;
+   the empty-subject census exists as check-registry annotations and **not** as a new file.
+8. **Zero new checks, scripts, tables or plans exist as a result of executing this document.**
+9. **Phase 4 removes more lines than it writes.** If the cull program produces more prose than it
+   deletes, it has failed on its own terms and is abandoned, not continued.
 
 **Termination — DR §11 property 5.** A session committing anything other than fixes, record
 corrections, search logs, migrations, or a rendered determination has failed. A1 is a fix; Phase 2
-is search logs and migrations; A2–A7 are record corrections and one archival move. **This file is
-the only thing here that is none of those five kinds.**
+is search logs and migrations; A2–A7 and Phase 4 are record corrections, migrations and deletions.
+**This file is the only thing here that is none of those five kinds.**
 
-### 9.1 Self-retirement
-When Phases 1–3 are done, **delete this file** — not to `_archived/`. The durable outputs are the
+**The one rule that outranks the rest of Phase 4:** cull upward from L3, never downward from L0. A
+session that finds itself deleting L0 substance — evidence, items, populations, the code that reads
+and writes them — has inverted the program and must stop.
+
+### 10.1 Self-retirement
+When Phases 1–4 are done, **delete this file** — not to `_archived/`. The durable outputs are the
 widened R9 gate, the batch-03 migrations and session record, the corrected registry, the amended DR
 §3/§8/§B, and the archived directory. **If any act is still open, leave the file and strike the acts
 that are done**, so what remains is visibly shorter than what was planned.
