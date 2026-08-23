@@ -226,7 +226,7 @@ Architecture/design journals not indexed in PubMed:
 
 | Layer | File | Status |
 |---|---|---|
-| 1. Global reference registry | `references/global-reference-registry.md` + `.json` | ✅ COMPLETE — 531 unique refs |
+| 1. Global reference registry | `reference_stubs` (DB table, 531 rows — migration 061) + `.json` | ✅ COMPLETE — 531 unique refs |
 | 2. Claim-to-reference tagging | Populated via `citation-tagging-protocol.md` | ⏳ PENDING — 1,382 claims to tag (GAP-CITE-01) |
 | 3. Claim enumeration + join schema | `references/claim-reference-join.md` + `.json` | ✅ COMPLETE — 1,382 claims enumerated |
 
@@ -247,7 +247,7 @@ For any piece of content on the website:
 1. Load `parts/v10/partNN.md` for specification text
 2. Look up claim in `claim-reference-join.json` by CLAIM-ID
 3. Get `ref_ids` array
-4. Resolve each REF-ID via `source_locators` in `data/guidebook.db` (identifiers; 843 rows) — the `.json` twin was DELETED 2026-08-23 after all 531 of its `ref_id`s were absorbed into the DB (491 already there, 40 rescued: 8 to `source_locators`, 32 title-only to `search_candidates`). `global-reference-registry.md` is retained and remains the home of the citation TEXT — authors, titles, years — which `source_locators` does not store.
+4. Resolve each REF-ID via `source_locators` in `data/guidebook.db` (identifiers; 843 rows) — the `.json` twin was DELETED 2026-08-23 after all 531 of its `ref_id`s were absorbed into the DB (491 already there, 40 rescued: 8 to `source_locators`, 32 title-only to `search_candidates`). `reference_stubs` (DB table, 531 rows — migration 061) is retained and remains the home of the citation TEXT — authors, titles, years — which `source_locators` does not store.
 5. Render inline `[n]` superscript → footnote with full citation + DOI link
 
 ### Updating the registry
@@ -255,3 +255,5 @@ For any piece of content on the website:
 - New references: append next sequential REF-ID to registry
 - Retired references: mark `status: RETIRED`, never delete
 - BPC Key sources tables remain source of truth for per-file context; registry is the global join layer
+
+> **Pointer corrected 2026-08-23.** `references/global-reference-registry.md` and its `.json` twin were deleted. Citation records now live in the `reference_stubs` table (531 rows, migration 061); identifiers live in `source_locators`, joined on `ref_id`. Owner directive: citation data stored in `.md` is to be recorded in a table.

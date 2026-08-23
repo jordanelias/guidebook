@@ -56,6 +56,10 @@ TABLES = [
     # error raised. A table the tooling cannot see is a table the project does not
     # really have. What reads it: this script, invoked by the DR-2026-08-19 runbook.
     "source_locators",
+    # ADDED 2026-08-23 in the same commit that created the table, deliberately: the
+    # defect found hours earlier was a table the capture path could not see, and
+    # creating another one without wiring it would repeat that within a single day.
+    "reference_stubs",
     "source_slug_links",
     "search_executions",
     "search_admissions",

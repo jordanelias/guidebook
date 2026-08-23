@@ -6,7 +6,7 @@
 **Goal:** Populate `ref_ids` for all 1,382 claims in `claim-reference-join.json` so every claim on the website can show a Wikipedia-style footnote linking to a full citation.
 
 **Prerequisites (both complete):**
-- Step 1: `global-reference-registry.md` — 531 unique references ✅ (the `.json` twin was deleted 2026-08-23; its identifiers live in `source_locators`)
+- Step 1: `reference_stubs` (DB table, 531 rows — migration 061) — 531 unique references ✅ (the `.json` twin was deleted 2026-08-23; its identifiers live in `source_locators`)
 - Step 3: `claim-reference-join.md` + `.json` — 1,382 claims enumerated with PENDING status ✅
 
 **Workflow per session:**
@@ -14,7 +14,7 @@
 2. For each claim in that scope:
    a. Identify the BPC file(s) covering the topic
    b. Find the supporting source in that BPC's Key sources table
-   c. Look up the global REF-ID in `global-reference-registry.md`
+   c. Look up the global REF-ID in `reference_stubs` (DB table, 531 rows — migration 061)
    d. Add REF-ID(s) to the claim's `ref_ids` array
    e. Update `status` to `TAGGED`
 3. If no supporting reference found → set `status: ORPHANED` (flag for review)
@@ -97,10 +97,12 @@ When Step 2 is complete, Phase B parsers can:
 1. Read `parts/v10/partNN.md` for specification text
 2. For any claim, look up its `CLAIM-ID` in `claim-reference-join.json`
 3. Get `ref_ids` array
-4. Resolve each REF-ID via `source_locators` in `data/guidebook.db` (identifiers; 843 rows) — the `.json` twin was DELETED 2026-08-23 after all 531 of its `ref_id`s were absorbed into the DB (491 already there, 40 rescued: 8 to `source_locators`, 32 title-only to `search_candidates`). `global-reference-registry.md` is retained and remains the home of the citation TEXT — authors, titles, years — which `source_locators` does not store.
+4. Resolve each REF-ID via `source_locators` in `data/guidebook.db` (identifiers; 843 rows) — the `.json` twin was DELETED 2026-08-23 after all 531 of its `ref_id`s were absorbed into the DB (491 already there, 40 rescued: 8 to `source_locators`, 32 title-only to `search_candidates`). `reference_stubs` (DB table, 531 rows — migration 061) is retained and remains the home of the citation TEXT — authors, titles, years — which `source_locators` does not store.
 5. Render footnote with full citation + DOI link
 
 **Backend query examples:**
 - "All claims citing REF-00234" → filter claim-ref join by ref_ids contains
 - "Orphaned claims in Part 4" → filter by part=4 and status=ORPHANED
 - "Claims without Tier 1 evidence" → join ref_ids to registry, check all tiers >1
+
+> **Pointer corrected 2026-08-23.** `references/global-reference-registry.md` and its `.json` twin were deleted. Citation records now live in the `reference_stubs` table (531 rows, migration 061); identifiers live in `source_locators`, joined on `ref_id`. Owner directive: citation data stored in `.md` is to be recorded in a table.
