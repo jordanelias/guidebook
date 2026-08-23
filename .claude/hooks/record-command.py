@@ -97,8 +97,26 @@ try:
     else:
         out=str(tr or ""); ec=None; err=None; errout=""; interrupted=None
     root=pathlib.Path(os.environ.get("CLAUDE_PROJECT_DIR") or ".")
-    sf=root/".claude"/"session"
-    sess=sf.read_text().strip() if sf.exists() else (d.get("session_id") or "unassigned")
+    # SESSION STEM — sessions/LATEST is the single home for this fact.
+    #
+    # Until 2026-08-23 this read .claude/session, a SECOND pointer to the same
+    # fact that nothing else maintained. It went stale the moment a session
+    # closed without someone hand-editing it, and it did: every Bash call of
+    # session_2026-08-23 was filed under session_2026-08-22's scratchpad, because
+    # LATEST had been updated at close-out and .claude/session had not. The
+    # provenance record for a session landed in the previous session's directory.
+    #
+    # sessions/LATEST has six code readers (run_checks, test_db_integrity,
+    # context_map, retrieval_log, citation_mining_completeness, bootstrap) and is
+    # updated by the documented close-out ritual. .claude/session had exactly one
+    # reader: this hook. So the divergent copy is removed rather than synced -
+    # per references/project-standards.md RULE 2026-08-23, one fact, one home.
+    #
+    # LATEST carries the ".md" suffix; the DB and this path want the BARE STEM.
+    # Getting that wrong scopes a gate to nothing and it passes green (CLAUDE.md 7).
+    lf=root/"sessions"/"LATEST"
+    sess=(lf.read_text().strip().removesuffix(".md") if lf.exists()
+          else (d.get("session_id") or "unassigned"))
     p=root/"scratchpad"/sess
     p.mkdir(parents=True,exist_ok=True)
     b=out.encode("utf-8","replace")

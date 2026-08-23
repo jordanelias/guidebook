@@ -99,5 +99,21 @@ quarantines the axis-map route and is what made A-18 undeterminable, is recorded
 and was never lifted into a ratified DR** — the weakest surface in the repo carrying a load-bearing
 directive.
 
+### 4.1 A defect this session caused and then found in its own record
+
+**Every Bash call of this session was filed under the *previous* session's scratchpad**
+(`scratchpad/session_2026-08-22-research-batch-02-.../commands.jsonl`). The provenance hook resolved
+the session stem from `.claude/session`, a second pointer to a fact that `sessions/LATEST` already
+holds. `LATEST` is updated by the close-out ritual and has **six code readers**; `.claude/session`
+had **one** — the hook — and nothing maintained it, so it went stale the moment a session closed.
+
+Fixed by removing the divergent copy rather than syncing it: the hook now reads `sessions/LATEST`
+and strips the `.md` suffix, and `.claude/session` is deleted. **This is the same defect as the
+identifier registry, the four DOI columns and the two item→population routes — one fact with two
+homes — found for the fourth time in one session, in this session's own provenance record.**
+
+**This session's command log therefore lives under the 08-22 directory and is left there.** Moving it
+would rewrite a record to look like something that did not happen; the record says where it is.
+
 **Next:** Phase 2 (research batch 03) is unblocked and untouched — forward mining has never been run
 on any of the seven mined anchors, and B4's content gaps close only by reading the five sources.
