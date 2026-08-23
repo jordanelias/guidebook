@@ -459,6 +459,15 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     # R9b is not hypothetical: there is no next_ref_id allocator (CLAUDE.md 4), so a batch
     # that mints below the stash high-water mark collides with a held identifier in silence.
     escope = "" if allmode else " AND e.created_by_session = ?"
+
+    # SUBJECT COUNT FIRST. Adversarial pass 2026-08-23 found R9a/R9b printing a bare
+    # "PASS" for a session that admitted nothing -- CLAUDE.md 2(a), a gate that passes
+    # having examined nothing, reproduced inside the fix written for a gate that examined
+    # the WRONG set. Both rules now carry their subject count, and say so when it is zero.
+    n_doi = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources e WHERE COALESCE(e.doi,'') <> ''"
+                      f"{escope}", sargs)[0][0]
+    n_adm = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources e WHERE 1=1{escope}", sargs)[0][0]
+
     split = _rows(cx, f"SELECT e.ref_id, sl.ref_id, e.doi FROM evidence_sources e "
                       f"JOIN source_locators sl ON LOWER(TRIM(sl.doi)) = LOWER(TRIM(e.doi)) "
                       f"WHERE COALESCE(e.doi,'') <> '' AND COALESCE(sl.doi,'') <> '' "
@@ -468,21 +477,40 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
                     f"the identifier stash already holds for the same DOI — one source, two "
                     f"identities. Cross-file the held id instead of minting a second: "
                     + "; ".join(f"{a} vs stash {b} ({d})" for a, b, d in split[:5]), len(split))
+    elif n_doi == 0:
+        fail("R9a", "NOTHING IN SCOPE — this batch admitted no source carrying a DOI, so the "
+                    "stash cross-check examined nothing. A pass here would assert nothing. "
+                    "If the batch admitted sources, they are missing their locators (see R10).")
     else:
-        ok("R9a", "no admitted DOI is held in source_locators under a different ref_id")
+        ok("R9a", f"{n_doi} admitted DOI(s) checked against the stash; none held under a "
+                  f"different ref_id")
 
-    collide = _rows(cx, f"SELECT e.ref_id, e.doi, sl.doi FROM evidence_sources e "
+    # R9b WIDENED 2026-08-23. It compared DOIs only, so it reached 441 of 835 stash rows and
+    # was blind to the other 394 -- yet CLAUDE.md 4's warning ("mint above the high-water mark
+    # or you will collide with a held identifier") is not DOI-conditional. Comparing every
+    # identifier the stash carries reaches 751 of 835. A row with NO identifier at all (84)
+    # cannot be adjudicated either way and is deliberately out of reach, not silently included.
+    ID_COLS = ("doi", "pmid", "pmcid", "isbn", "issn", "standard_number")
+    conflict = " OR ".join(
+        f"(COALESCE(e.{c},'') <> '' AND COALESCE(sl.{c},'') <> '' "
+        f"AND LOWER(TRIM(sl.{c})) <> LOWER(TRIM(e.{c})))" for c in ID_COLS)
+    collide = _rows(cx, f"SELECT e.ref_id, COALESCE(e.doi, e.pmid, e.isbn, e.issn, "
+                        f"e.standard_number), COALESCE(sl.doi, sl.pmid, sl.isbn, sl.issn, "
+                        f"sl.standard_number) FROM evidence_sources e "
                         f"JOIN source_locators sl ON sl.ref_id = e.ref_id "
-                        f"WHERE COALESCE(e.doi,'') <> '' AND COALESCE(sl.doi,'') <> '' "
-                        f"AND LOWER(TRIM(sl.doi)) <> LOWER(TRIM(e.doi)){escope}", sargs)
+                        f"WHERE ({conflict}){escope}", sargs)
     if collide:
         fail("R9b", f"{len(collide)} ref_id(s) admitted by this batch collide with a HELD "
-                    f"identifier in source_locators that points at a different DOI — mint above "
-                    f"the stash high-water mark: "
+                    f"identifier in source_locators that identifies a DIFFERENT source — mint "
+                    f"above the stash high-water mark: "
                     + "; ".join(f"{r} admitted {a}, stash holds {b}" for r, a, b in collide[:5]),
              len(collide))
+    elif n_adm == 0:
+        fail("R9b", "NOTHING IN SCOPE — this batch admitted no sources, so the identifier "
+                    "collision check examined nothing.")
     else:
-        ok("R9b", "no admitted ref_id collides with a differently-identified stash row")
+        ok("R9b", f"{n_adm} admitted ref_id(s) checked against the stash across "
+                  f"{len(ID_COLS)} identifier types; no collision")
 
     # --- R10 locator re-retrieval ----------------------------------------------------------
     # HARDENED: the original accepted ANY non-empty locator field and never checked whether the

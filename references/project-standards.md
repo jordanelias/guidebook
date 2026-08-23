@@ -742,8 +742,10 @@ silently misses them**, and most joins in this repository are written with plain
 
 **So walking the pipeline is not univocal.** "What is this source's DOI" has up to four answers, and
 for four sources the answers differ. The same is true one stage earlier: `item_population_links` and
-the `item_axis_links → population_axis_map` route **disagree on 88 of 93 items and agree on 4**
-(measured 2026-08-23; `pipeline-map.yaml` BRK-20 records the defect and notes no check compares them).
+the `item_axis_links → population_axis_map` route **differ on 89 of 93 items and agree on 4**
+(measured 2026-08-23: 88 disagree outright and 1 exists on the axis route only; `pipeline-map.yaml`
+BRK-20 independently records **89 of 93**, and the two measurements reconcile. An earlier draft of
+this paragraph quoted the narrower "88" without reconciling it against BRK-20 — corrected here.)
 
 **What this makes of `R9a`/`R9b`, added the same morning: they are a patch on a schema defect, not a
 fix for it.** They compare two of the four sites and normalise with `LOWER(TRIM(...))` so the drift
