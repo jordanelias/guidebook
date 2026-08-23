@@ -165,7 +165,12 @@ The description is unquoted YAML containing commas, so it parses as
 `{'deps': ['pydantic'], 'description': 'Decision protocol', 'doctrine recheck': None, 'adversarial-use.': None}`
 — two phantom keys where a description should be. Its content is stale too: it advertises a
 "doctrine recheck" that **OD-10 abolished on 2026-08-19**.
-**Do:** quote it, drop the abolished clause.
+**Do:** quote it. **DO NOT drop the "doctrine recheck" clause — this instruction was WRONG and was
+refuted during execution 2026-08-23.** OD-10 abolished the `[DOCTRINE: <sha>]` commit token, its CI
+step and its enforcing script; it did **not** abolish `scripts/doctrine_recheck.py`, which is alive
+and registered in this very battery as `doctrine_recheck` (`--cross-ref`, passes 2.2–2.3). Dropping
+the clause removed a true description of a live check. All three clauses — decision protocol,
+doctrine recheck, adversarial-use — map to registered checks; verify that before editing the text.
 **Verify:** `python3 -c "import yaml;print(yaml.safe_load(open('governance/check-registry.yaml'))['batteries']['governance'])"`
 prints exactly two keys.
 
