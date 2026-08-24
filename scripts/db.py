@@ -220,10 +220,13 @@ _VALID_DIRECTIONS = frozenset({"backward", "forward"})
 
 
 def is_mined(slug: str, ref_id: str) -> dict | None:
+    # Keyed on the REFERENCE ID. Callers pass a global ref_id; this matched it
+    # against local_ref_id, the per-slug label, which only worked while the two
+    # happened to agree. They stopped agreeing on 2026-08-23.
     with connect(readonly=True) as conn:
         row = conn.execute(
             "SELECT backward, forward, connections_produced "
-            "FROM citation_mining WHERE slug=? AND local_ref_id=?",
+            "FROM citation_mining WHERE slug=? AND global_ref_id=?",
             [slug, ref_id]
         ).fetchone()
     return dict(row) if row else None
@@ -231,7 +234,14 @@ def is_mined(slug: str, ref_id: str) -> dict | None:
 
 def log_mining(slug: str, ref_id: str, direction: str,
                connections: list[str], session: str,
-               doi: str = None, dry_run: bool = False):
+               dry_run: bool = False):
+    """Record a mining pass. Keyed on the global ref_id.
+
+    The `doi` parameter was REMOVED 2026-08-24. It wrote a copy of a value that
+    is reachable through global_ref_id, and 2 of 10 rows had already drifted by
+    case. Accepting it while ignoring it would have been worse than either
+    keeping or dropping it: a caller would believe a DOI had been recorded.
+    """
     if direction not in _VALID_DIRECTIONS:
         raise ValueError(
             f"direction must be 'backward' or 'forward', got '{direction}'"
@@ -240,9 +250,14 @@ def log_mining(slug: str, ref_id: str, direction: str,
     ts = now()
 
     with connect(dry_run) as conn:
+        # THE WRITER IS WHERE THE DRIFT CAME FROM. This took a global ref_id and
+        # wrote it into local_ref_id while leaving global_ref_id NULL, so the
+        # pointer column the readers need was never populated and the label
+        # column carried a value that was not a label. Key on the reference id;
+        # derive the label from source_slug_links, which owns it.
         row = conn.execute(
             "SELECT backward, forward, connections_produced "
-            "FROM citation_mining WHERE slug=? AND local_ref_id=?",
+            "FROM citation_mining WHERE slug=? AND global_ref_id=?",
             [slug, ref_id]
         ).fetchone()
         if row:
@@ -251,17 +266,24 @@ def log_mining(slug: str, ref_id: str, direction: str,
             conn.execute(
                 f"UPDATE citation_mining SET {dir_col}=1, "
                 "connections_produced=?, updated_at=?, updated_by_session=? "
-                "WHERE slug=? AND local_ref_id=?",
+                "WHERE slug=? AND global_ref_id=?",
                 [merged, ts, session, slug, ref_id]
             )
         else:
             conn.execute(
+                # local_ref_id is LOOKED UP, never invented: source_slug_links owns
+                # the per-slug label. doi is NOT written -- it is reachable through
+                # global_ref_id and copying it is what drifted 2 of 10 rows by case.
                 "INSERT INTO citation_mining "
-                "(slug,local_ref_id,doi,backward,forward,"
+                "(slug,local_ref_id,global_ref_id,backward,forward,"
                 " connections_produced,created_at,created_by_session,"
                 " updated_at,updated_by_session) "
                 "VALUES (?,?,?,?,?,?,?,?,?,?)",
-                [slug, ref_id, doi,
+                [slug,
+                 (conn.execute("SELECT local_ref_id FROM source_slug_links "
+                               "WHERE slug=? AND ref_id=?", [slug, ref_id]
+                               ).fetchone() or [None])[0],
+                 ref_id,
                  1 if direction == "backward" else 0,
                  1 if direction == "forward" else 0,
                  json.dumps(connections), ts, session, ts, session]
@@ -508,7 +530,13 @@ def get_unmined_sources(slug: str) -> list[dict]:
             FROM source_slug_links ssl
             JOIN evidence_sources es ON ssl.ref_id = es.ref_id
             LEFT JOIN citation_mining cm
-                ON cm.slug=ssl.slug AND cm.local_ref_id=ssl.local_ref_id
+                -- POINTER, NOT COPY (owner ruling 2026-08-24). This joined on
+                -- local_ref_id, the per-slug LABEL, which is copied into both tables
+                -- and had already drifted: source_slug_links held RAP-06/09/10 while
+                -- citation_mining held RAP-F61/F69/F70 for the same three sources, so
+                -- REF-00561/00969/00970 reported UNMINED after being fully mined. The
+                -- reference id was in every row the whole time; join on it.
+                ON cm.slug=ssl.slug AND cm.global_ref_id=ssl.ref_id
             WHERE ssl.slug=?
             AND (cm.backward IS NULL OR cm.forward IS NULL
                  OR cm.backward=0 OR cm.forward=0)
@@ -817,7 +845,6 @@ def main():
     p_logm.add_argument("--connections", required=True,
                         help="JSON array of CON-IDs")
     p_logm.add_argument("--session", required=True)
-    p_logm.add_argument("--doi")
     p_logm.add_argument("--dry-run", action="store_true")
 
     # next-id
@@ -1211,7 +1238,7 @@ def main():
         log_mining(
             slug=args.slug, ref_id=args.ref,
             direction=args.direction, connections=conns,
-            session=args.session, doi=args.doi,
+            session=args.session,
             dry_run=args.dry_run
         )
         print(json.dumps({"logged": True, "dry_run": args.dry_run}))
@@ -1716,7 +1743,13 @@ def get_unmined_for_all_slugs(tier_max: int = 3) -> list[dict]:
             FROM source_slug_links ssl
             JOIN evidence_sources es ON ssl.ref_id = es.ref_id
             LEFT JOIN citation_mining cm
-                ON cm.slug = ssl.slug AND cm.local_ref_id = ssl.local_ref_id
+                -- POINTER, NOT COPY (owner ruling 2026-08-24). This joined on
+                -- local_ref_id, the per-slug LABEL, which is copied into both tables
+                -- and had already drifted: source_slug_links held RAP-06/09/10 while
+                -- citation_mining held RAP-F61/F69/F70 for the same three sources, so
+                -- REF-00561/00969/00970 reported UNMINED after being fully mined. The
+                -- reference id was in every row the whole time; join on it.
+                ON cm.slug = ssl.slug AND cm.global_ref_id = ssl.ref_id
             WHERE es.tier <= ?
             AND (cm.local_ref_id IS NULL OR cm.backward = 0 OR cm.forward = 0)
             ORDER BY es.tier ASC,

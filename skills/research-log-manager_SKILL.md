@@ -134,7 +134,7 @@ After multilingual-research completes:
 
    a. Check mining status:
    ```bash
-   python3 scripts/db.py is-mined --slug {slug} --ref {local_ref_id}
+   python3 scripts/db.py is-mined --slug {slug} --ref {global_ref_id}   # GLOBAL REF-NNNNN, not the per-slug label (corrected 2026-08-24)
    ```
 
    b. If `mined: false`, invoke citation-miner skill (INLINE mode) with `(slug, local_ref_id, doi)`. Citation-miner will perform backward + forward mining per its own protocol and write a citation_mining row.

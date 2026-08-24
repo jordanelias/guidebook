@@ -44,7 +44,7 @@ literature-review-planner confirms a Tier 1–3 source:
 1. Calling skill passes: `(slug, local_ref_id, doi)`
 2. Citation-miner checks:
    ```bash
-   python3 scripts/db.py is-mined --slug {slug} --ref {local_ref_id}
+   python3 scripts/db.py is-mined --slug {slug} --ref {global_ref_id}   # GLOBAL REF-NNNNN, not the label
    ```
    Returns: `{"mined": false}` or `{"backward": 0/1, "forward": 0/1, ...}`
 3. If already mined (both B+F) → skip, return
@@ -53,12 +53,24 @@ literature-review-planner confirms a Tier 1–3 source:
    ```bash
    python3 scripts/db.py log-mining \
      --slug {slug} \
-     --ref {local_ref_id} \
+     --ref {global_ref_id} \
      --direction backward \
      --connections '["CON-NNNN","CON-NNNN"]' \   # the ids you actually created
-     --session {session_filename} \
-     --doi {doi}
+     --session {session_filename}
    ```
+
+   > **`--ref` TAKES THE GLOBAL `REF-NNNNN`, NOT THE PER-SLUG LABEL. CORRECTED
+   > 2026-08-24, and this instruction is where the defect came from.** It read
+   > `--ref {local_ref_id}`, so `log_mining` wrote a label into the pointer column
+   > and left `global_ref_id` NULL. On 2026-08-23 a batch followed it and
+   > `source_slug_links` ended up holding `RAP-06/09/10` while `citation_mining`
+   > held `RAP-F61/F69/F70` for the same three sources — after which
+   > `get_unmined_sources()` reported REF-00561, REF-00969 and REF-00970 as never
+   > mined, and the next session would have re-mined finished work.
+   >
+   > `--doi` is **removed**. The DOI is reachable through the reference id; copying
+   > it had already drifted 2 of 10 rows by case. The label is looked up from
+   > `source_slug_links`, which owns it — never invented at the call site.
    Run once per direction (backward, then forward as separate calls).
 6. Return discovered sources to calling skill
 
