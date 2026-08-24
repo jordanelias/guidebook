@@ -41,7 +41,23 @@ Everything else is superseded.
 | `workplan/2026-08-19-adversarial-critique-research-restart.md` | **ABSORBED** — F1–F9 are the defect list; §7's inverted order is §3 |
 | `workplan/2026-08-18-model-substitution-log.md` | **SPENT** — debt discharged (§10.9) |
 | `sessions/handoff-next-session.md` | **SUPERSEDED** — was already stale |
-| The remaining ~80 `workplan/*.md` | **HISTORICAL** — archived post-batch under OD-8 |
+| `workplan/2026-08-20-provenance-walk-execution-plan.md` | **PARTIALLY-EXECUTED** — 2 of 5 by its own §11 scorecard; forward sections doubly superseded |
+| `workplan/2026-08-20-adversarial-adjudication-a18-aut.md` | **OPERATIVE as a ruling** — the refusal stands and §3 step 5 was amended to honour it; §8 follow-ons 3.5 of 6 |
+| `workplan/2026-08-21-reasoning-doc-digestion.md` | **RECORD, complete** — 27 leads written, one bad write retracted; its load-bearing next-step (OD-5) closed 2026-08-23 |
+| `workplan/2026-08-22-agonist-antagonist-execution-plan.md` | **OPERATIVE, BLOCKED** — scored **1 of 5** in its own §9 (2026-08-23); acts 5–6 blocked by D-0165. **Not archived: archiving a blocked plan loses the block.** |
+| `workplan/2026-08-22-master-execution-plan.md` | **OPERATIVE** — the live execution document; self-retiring per its §10.1 |
+| `workplan/execution-plan-2026-08-12/**` (13 files) | **ARCHIVED 2026-08-23** — moved to `_archived/workplan/`; referentially closed, 0% executed |
+| `workplan/2026-08-13-writer-plan.md` | **SUPERSEDED** — 0 of 5 phases; its Phase 1 sink was re-decided the other way by §12.0 |
+| `workplan/2026-08-14-execution-plan.md`, `-remediation-workplan.md` | **PARTIALLY-EXECUTED** — Track A and part of D landed; Track C 061–066 **LAPSED** (§10 item 8); `ratification_sweep_audit.py` never built |
+| `workplan/2026-08-15-adversarial-brief-pr103.md` | **SPENT** — DISCHARGED with a recorded deficit: no verdict on claims 2, 5, 6, 7, 8 |
+| `workplan/2026-08-05-archive-fork-execution.md` | **DEAD** — 0 of 5 steps; its premise reversed by the 2026-08-19 ruling that `_archived/` may grow |
+| The remaining pre-window `workplan/*.md` | **HISTORICAL** — archived post-batch under OD-8 |
+
+> **§B EXTENDED 2026-08-23.** The rows above were added so this table is the single index of workplan
+> state, per the master plan's A6. **Dispositions are derived from the repository — migrations, table
+> presence, referent scans, `git log --diff-filter` — never from what a plan claims about itself.**
+> Two entries reverse a plan's self-report: the 08-22 plan called itself executable and scores 1 of 5,
+> and the 08-12 directory called itself PROPOSED and was 0% executed by three independent probes.
 
 **No successor to this document may be written.** §11 makes that mechanical, not aspirational.
 
@@ -320,6 +336,17 @@ live today — `slugs` 106, `term_aliases` 2,382, `axes`/`access_needs` and thei
 6. Only then: re-key or retire `jurisdictional_values`; re-scope handoff step 8 with its full
    dependency cascade; re-arm the retired `min_items` guards.
 
+   **CONSOLIDATED HERE 2026-08-23.** Four items were each specified three or four times across the
+   ten-day window and none was built; fourteen of the fifteen citations were written inside those ten
+   days. **This step now owns all four. Each is ONE open item and is named once, here:**
+
+   | # | Item | Locations that specified it | State |
+   |---|---|---|---|
+   | 6a | `jurisdictions` / `languages` vocabulary tables | frame proposal §3/§11 · handoff §6 step 5 · digestion "Next" 3 (D-4) | Tables absent. Blocked behind this step. |
+   | 6b | `db.py` write helpers (`add-authors`, `next-ref-id`, `add-match`, `finish-search`) | writer plan Phase 2 · walk plan Phase 7 · §12.5 of this DR | Not built; batch 2 ran and did not automate them. Hand SQL is the write path. |
+   | 6c | `GB` → `UK` in `jurisdictional_values` (20 rows) | handoff §6.4 · 08-19 critique §7.7 · frame proposal §10.4 · 08-14 I-20 | **Correct and blocked, not wrong** — `jurisdiction-philosophy.md` §3.3 mandates `UK` at ERROR level and the project overrode ISO deliberately. Blocked by the REFERENCE-ONLY quarantine; clears with **OD-G**. **And its enforcer never opens the DB** (`validate_jurisdiction.py` parses YAML only), which is why it survived four schedulings. Wire the enforcer in the same change that fixes the rows, never before. |
+   | 6d | OD-5 — R9 blind to `source_locators` | digestion · A-18 adjudication §8.6 · walk plan · 08-22 F-18 | **DONE 2026-08-23** — `R9a`/`R9b`. The naive widening was refuted first: all four DOIs held in both tables carry the *same* ref_id, so failing on overlap would have failed correct promotions. |
+
 Step 4 populated `evidence_sources` and `source_slug_links` — two of the six invariant tables the
 blocking reproducibility gate compares. **Running the batch first is what made the later schema
 work safe to run at all.**
@@ -538,10 +565,15 @@ A fresh session reads exactly four. Everything else is reached by citation.
 1. **`CLAUDE.md`** — mechanics, gates, the write path.
 2. **This DR** — the binding instrument: freeze, items quarantine, identifier stash, adversarial
    architecture, execution order, acceptance criterion, and the supersession pointers below.
-3. **`workplan/2026-08-18-research-restart-plan.md`** — the batch procedure, with §4 criterion 6
-   struck and §8's runbook appended.
-4. **`workplan/2026-08-18-handoff-next-session.md`** — orientation, the six settled rulings, the
-   corrected record, the eight traps. **Its §6 sequence is read as history**; this DR §3 supersedes it.
+3. **`workplan/2026-08-18-research-restart-plan.md`** — **SPENT; READ AS HISTORY ONLY.** Its §§2–3
+   and §5 were absorbed into §12 of this instrument and its batch has now run twice, so the live
+   citation points at a procedure the runbook below supersedes. §4 criterion 6 is struck. *Read §12
+   instead; this entry is retained because the batch's original framing is still worth seeing.*
+4. **`workplan/2026-08-18-handoff-next-session.md`** — **HISTORY ONLY: 1 of its 10 steps was ever
+   executed and its §6 spine is overturned by §3 below.** Read it for orientation, the six settled
+   rulings, the corrected record and the eight traps — **never for sequence.** *(Caveat moved to the
+   citation 2026-08-23: it previously sat at the end of this entry, and a session reading a mandatory
+   read-set does not reliably reach the qualifier.)*
 
 **No fifth document may join this set.** That is the termination property, not a preference.
 

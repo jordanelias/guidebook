@@ -45,7 +45,25 @@ try:
     #
     # Deliberately loose: a compound command containing a commit is skipped
     # whole. Whatever else it did is visible in that commit's own diff.
+    #
+    # EXTENDED 2026-08-23. The 2026-08-21 fix named the livelock correctly and
+    # then closed only half of it. The other half is `git status`: the stop hook
+    # demands a clean tree, checking the tree means running git status, and
+    # recording that run dirties the tree again. Observed across three turns
+    # today — commit, check, dirty, commit, check, dirty. Identical fixed-point
+    # problem, identical remedy.
+    #
+    # The class is READ-ONLY QUERIES OF GIT'S OWN STATE. Argument (2) above
+    # applies to them with full force: git already holds everything these
+    # commands read, so recording a query OF git INTO a git-tracked file is the
+    # purest form of the recursion this repository exists to resist. Commands
+    # that MUTATE the tree (add, mv, rm, checkout) are still recorded — they
+    # change something, and what they changed is worth a line.
+    GIT_READONLY = ("git status", "git diff", "git log", "git rev-parse",
+                    "git rev-list", "git ls-files", "git show", "git branch",
+                    "git stash list")
     if "git commit" in c or "git push" in c: sys.exit(0)
+    if any(q in c for q in GIT_READONLY): sys.exit(0)
     tr=d.get("tool_response")
     out=""
     if isinstance(tr,dict):
@@ -97,8 +115,26 @@ try:
     else:
         out=str(tr or ""); ec=None; err=None; errout=""; interrupted=None
     root=pathlib.Path(os.environ.get("CLAUDE_PROJECT_DIR") or ".")
-    sf=root/".claude"/"session"
-    sess=sf.read_text().strip() if sf.exists() else (d.get("session_id") or "unassigned")
+    # SESSION STEM — sessions/LATEST is the single home for this fact.
+    #
+    # Until 2026-08-23 this read .claude/session, a SECOND pointer to the same
+    # fact that nothing else maintained. It went stale the moment a session
+    # closed without someone hand-editing it, and it did: every Bash call of
+    # session_2026-08-23 was filed under session_2026-08-22's scratchpad, because
+    # LATEST had been updated at close-out and .claude/session had not. The
+    # provenance record for a session landed in the previous session's directory.
+    #
+    # sessions/LATEST has six code readers (run_checks, test_db_integrity,
+    # context_map, retrieval_log, citation_mining_completeness, bootstrap) and is
+    # updated by the documented close-out ritual. .claude/session had exactly one
+    # reader: this hook. So the divergent copy is removed rather than synced -
+    # per references/project-standards.md RULE 2026-08-23, one fact, one home.
+    #
+    # LATEST carries the ".md" suffix; the DB and this path want the BARE STEM.
+    # Getting that wrong scopes a gate to nothing and it passes green (CLAUDE.md 7).
+    lf=root/"sessions"/"LATEST"
+    sess=(lf.read_text().strip().removesuffix(".md") if lf.exists()
+          else (d.get("session_id") or "unassigned"))
     p=root/"scratchpad"/sess
     p.mkdir(parents=True,exist_ok=True)
     b=out.encode("utf-8","replace")

@@ -529,7 +529,8 @@ breaks:
     guard: >
       none — and no check compares the two routes. They disagree on 89 of 93
       items: 180 item-population pairs exist only in item_population_links, 341
-      only via the axis route.
+      only via the scaffold route (item_axis_links/population_axis_map).
+      TERM RE-FRAMED 2026-08-24: "axis route" struck by owner ruling.
 
   # --- Added 2026-08-21 by the antagonist passes. Omitted from the first draft.
 
@@ -893,9 +894,13 @@ verification_record:
       meta (user_version 60, 65 tables, 80 FK edges, 17 views); BRK-01 island
       (no FK in, no FK out); BRK-08 (0 rows); BRK-12 (9 of 9 terms_used NULL);
       BRK-14 (specifications has specification_id, no spec_id);
-      BRK-20 (A-18 has 0 item_population_links; axis route yields exactly the 9
-      named populations; 180 ipl-only / 341 axis-only / 187 both; the two routes
-      disagree on 89 of 93 items — all exact);
+      BRK-20 (A-18 has 0 item_population_links; the scaffold route via
+      item_axis_links/population_axis_map yields exactly the 9 named populations;
+      180 ipl-only / 341 scaffold-only / 187 both; the two structures differ on
+      89 of 93 items — all exact. RE-FRAMED 2026-08-24 by owner ruling: "axis
+      route" is struck. That scaffold was never an authority on item-population
+      applicability, so the 89 is a MEASUREMENT of scaffold drift, not two
+      routes disagreeing. item_population_links is the route);
       BRK-11 (aliases lowercase, lang_jur_map uppercase); BRK-09 (room_page.py
       queries room, room_item, room_item_population, specification,
       room_dar_provision, room_conflict — none live); BRK-10 (index.html

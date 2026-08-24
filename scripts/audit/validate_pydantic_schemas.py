@@ -57,6 +57,9 @@ DEFAULT_DB = Path(os.environ.get("GUIDEBOOK_DB_PATH", REPO_ROOT / "data" / "guid
 # model qualified name ("<module>.<ClassName>") -> live table name.
 # Only models with a confident, unambiguous live-table match are listed.
 MODEL_TABLE_MAP = {
+    # Migration 061 created reference_stubs; 062 merged it into source_locators and
+    # dropped it. The model moved with the table.
+    "source_locator.SourceLocator": "source_locators",
     "bpc_metadata.BPCMetadata": "bpc_metadata",
     "connection.Connection": "connections",
     "conflict.Conflict": "conflicts",

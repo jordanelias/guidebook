@@ -842,3 +842,33 @@ charge, and the honest answer is that the question is the owner's, not mine: `DR
 the reset's rationale was contamination, and re-litigating it is DG-NON. What this plan does instead is
 make the destroyed work **recoverable as leads under R15** rather than lost — which is the most that can
 be done without reopening a ratified decision.
+
+
+---
+
+## 9. SCORECARD — appended 2026-08-23, as §6 requires
+
+§6 says *"Scoring is honest or it is nothing… scored the same way, in this file, before it is
+archived."* It went unscored for a day while acts were executed against it. Scored now, from the
+repository rather than from this file's own claims.
+
+| # | Condition | Verdict |
+|---|---|---|
+| 1 | A rendered A-18 × DEAF determination exists and has been read | **FAILED.** `specifications` = 0. Blocked by D-0165, and the A-18 refusal in `2026-08-20-adversarial-adjudication-a18-aut.md` independently stands. |
+| 2 | GAP-B01-002 and GAP-B01-003 closed | **FAILED.** Both still `OPEN`; DEM carries no graded admission, MH and BRAIN carry neither admission nor logged absence. |
+| 3 | GAP-B01-004 closed | **FAILED, one conjunct now met.** The gap is `OPEN` and the OD-5 witnesses are still unadmitted. But *"the R9 blindness is either fixed or recorded"* **was satisfied 2026-08-23**: R9a/R9b widen the gate to `source_locators`, and the naive widening was refuted on evidence first. |
+| 4 | Net apparatus change ≤ 0 | **UNDETERMINABLE AS WRITTEN**, and it should be retired rather than re-scored. Both sides of its ledger dissolved — the check act 3 would have added was never added, and act 5's companion 220-LOC cull was withdrawn in-file when `adjudication_integrity.py` proved non-vacuous. The condition names two quantities that no longer exist. *Measured anyway, for the record:* executable LOC 29,061 → **29,117** (+56, the R9a/R9b branches) against **4,065 lines** moved out of the live surface by A4. |
+| 5 | Antagonist pass runs once, on a qualifying subject, recording SURVIVED as well as SUSTAINED | **PASSED** — commit `98c5f0d`, four findings sustained against the authoring session, SURVIVED recorded. |
+
+**Score: 1 of 5, with one conjunct of a sixth.** The plan does not retire.
+
+**What the score means, stated plainly.** Four of the five conditions were written to be satisfied by
+*authoring a determination*, and every route to one runs through D-0165, which is owner-gated and was
+deferred the same day this plan was written. **This plan set itself an acceptance test it could not
+reach and then spent its acts on the repairs around it.** That is not a scoring artefact; it is the
+shape of the whole week, and condition 4's dissolution is the tell — an apparatus-accounting
+criterion outlived both the apparatus it was counting.
+
+**Not archived.** §7 item 3 says archive when scored, whatever the score. **Overridden deliberately:**
+acts 5–6 are *blocked*, not finished, and archiving a blocked plan loses the block. It retires when
+D-0165 is answered and acts 5–6 either run or are formally abandoned.

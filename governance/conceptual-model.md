@@ -104,7 +104,7 @@ Time-Version (ENT-19) ──── attached_to ──── all mutable entities
 ## 3. Schema Priority Order (A3 Sessions 2–8)
 
 ### Session 2: Evidence Source (ENT-02) schema + conversion
-- **Input:** global-reference-registry.md (531 records), verified-sources JSON files
+- **Input:** `reference_stubs` (DB table, 531 rows — migration 061) (531 records; the `.json` twin was deleted 2026-08-23 — identifiers are in `source_locators`), verified-sources JSON files
 - **Schema:** EvidenceSource model with REF-ID, authors, year, title, DOI, PMID, tier, evidence_type (per T-03), jurisdiction, metadata_quality
 - **Conversion:** convert_sources.py — parses markdown table + JSON files → validated YAML under data/sources/
 - **Validator:** validate_sources.py — referential integrity (REF-ID uniqueness, tier validity)
@@ -211,3 +211,5 @@ The data layer pattern is proven: schema → converter → validator → CI. All
 
 **Next phase:** A4 (Voice). Prose-only phase — no schema co-production. Key task: retire "shall be" convention in Part 4 text per advocacy identity rule (project-standards 2026-04-26).
 DATE: 2026-04-26
+
+> **Pointer corrected 2026-08-23.** `references/global-reference-registry.md` and its `.json` twin were deleted. Citation records now live in the `reference_stubs` table (531 rows, migration 061); identifiers live in `source_locators`, joined on `ref_id`. Owner directive: citation data stored in `.md` is to be recorded in a table.

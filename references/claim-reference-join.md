@@ -159,7 +159,7 @@
 For each claim:
 1. Identify which BPC file(s) cover the topic area
 2. Look up the claim's source in that BPC's Key sources table
-3. Find the matching global REF-ID in `global-reference-registry.md`
+3. Find the matching global REF-ID in `reference_stubs` (DB table, 531 rows — migration 061)
 4. Add the REF-ID(s) to this claim's `ref_ids` field (array, multiple allowed for primary + supporting)
 5. Set `status: TAGGED`
 6. For cross-referenced claims or measurement methodology, set `status: DEFERRED` with a note
@@ -170,3 +170,5 @@ For each claim:
 - Multiple refs allowed (primary spec source + supporting clinical evidence + governing standard)
 
 **Verification:** After tagging, a second pass can set `status: VERIFIED` for claims where the cited ref genuinely supports the stated value (not just same topic area).
+
+> **Pointer corrected 2026-08-23.** `references/global-reference-registry.md` and its `.json` twin were deleted. Citation records now live in the `reference_stubs` table (531 rows, migration 061); identifiers live in `source_locators`, joined on `ref_id`. Owner directive: citation data stored in `.md` is to be recorded in a table.

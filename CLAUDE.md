@@ -15,7 +15,23 @@ caught this repository's actual failures had **zero** enforcing code.
 
 ## 0. What will actually stop you
 
-Four rules. Everything else in this file is orientation.
+Five rules. Everything else in this file is orientation.
+
+0. **A live owner statement supersedes every prior ratified record it touches, on contact.** Your
+   job on hearing one is to **record the supersession, never to weigh the ruling against the
+   paperwork it changes.** A DR, a RULE, an ADOPTED directive — these are what a ruling *changes*.
+   They are never an argument against it, and citing one back at the owner is not diligence.
+   **This rule is numbered 0 because the rest of this file tilts the other way** — §1 says *"a
+   specific, ratified authorisation beats a blanket caution"*, `project-standards.md` says merge
+   ratifies with the force of an explicit directive, and DR-2026-08-19 says *"validity in this
+   repository flows from ratification"*. All true **between records**. None of them reaches the
+   owner.
+   *Added 2026-08-24 after an audit found **nine instances** since 2026-07-13 of paperwork being
+   argued against a live directive. The worst: on 2026-08-18 the owner ruled `axes` a bad coined
+   term and said use ICF codes directly, marked "do not relitigate" — and the **next day** a batch
+   pulled the frame as bare `axis_code`, framing four of five searches on one mechanism and hiding
+   a second. That one changed research output. In the same class, an agent invented an owner
+   directive that was never given and built a 531-row table on it.*
 
 1. **Commit format.** `{skill-name}: {action} [YYYY-MM-DD HH:MM]`, timestamp last.
    `date -u '+%Y-%m-%d %H:%M'`. Use `governance` when no project skill fits.
@@ -25,6 +41,14 @@ Four rules. Everything else in this file is orientation.
 3. **Never write `data/guidebook.db` directly.** Migrations only, via
    `scripts/emit_data_migration.py` → `scripts/migrate_db.py`. Append-only and immutable once
    committed: fix forward with a compensating migration. CI rebuilds and compares.
+4b. **Never report an owner ruling absent from a search that could not have seen it.** `.ignore`
+   hides `sessions/**` from ripgrep and the Grep tool, and **owner rulings live overwhelmingly in
+   `sessions/`**. `grep -r` and `git grep` ignore `.ignore` and find them instantly. On 2026-08-24 I
+   twice told the owner a ruling of theirs did not exist in this repository; it was in `CLAUDE.md`
+   §6 and in a session record, and §7 trap 1 warns of exactly this. **A ruling can be in the
+   repository, in a file the traps name, and still fail to bind — if the search is worse than the
+   record.**
+
 4. **A rename or removal is not done until the callers are swept.** Search every non-archived
    caller and fix each one. A sweep that stops at the filename is not a sweep — that exact
    shortcut left two dangling paths inside an attestation on 2026-08-19.

@@ -102,11 +102,12 @@ exempt_paths:
   # names both a retired column and a database path that does not exist.
   - "workplan/*20??-??-??*.md"
   # Same rule, same reasoning, for a plan split across a DATED DIRECTORY rather
-  # than one dated file — workplan/execution-plan-2026-08-12/** is the live
-  # example, and its member files carry undated names (4-adjudication-apparatus.md)
-  # so the glob above never reached them. Added 2026-08-14 when three new entries
-  # flagged that directory; it silences one pre-existing RV-008 hit there too,
-  # which on reading is a licensed mention (it names the bad path to report it).
+  # than one dated file. The worked example was workplan/execution-plan-2026-08-12/**,
+  # whose member files carry undated names (4-adjudication-apparatus.md) so the glob
+  # above never reached them. Added 2026-08-14 when three new entries flagged that
+  # directory. THE DIRECTORY WAS ARCHIVED 2026-08-23 (act A4) and is now covered by
+  # the _archived/ entry instead; this glob is KEPT deliberately — it is a pattern,
+  # not a path, and removing it would un-exempt the next dated plan directory.
   # A superseded proposal inside such a plan gets a dated forward note in the
   # document — the reader is protected by the note, not by the grep.
   - "workplan/*20??-??-??*/**"

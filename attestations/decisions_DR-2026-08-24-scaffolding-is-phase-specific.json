@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-08-23-execute-master-plan-repairs",
+  "artifact": "decisions/DR-2026-08-24-scaffolding-is-phase-specific.md",
+  "doctrine_sha": "0f2f525",
+  "rules_in_scope": [
+    "canonical-workplan",
+    "source-discipline",
+    "adherence-logging-and-attestation",
+    "integrity-protocol"
+  ],
+  "per_rule_status": {
+    "canonical-workplan": {
+      "status": "FIRED",
+      "evidence_path": "workplan/2026-08-22-master-execution-plan.md",
+      "reason": "The DR records owner rulings that VOID three items of the live plan (R2, R3, R8) and supersede a fourth (R7). Those rows are struck in the plan in the same change, so the plan and the DR cannot disagree."
+    },
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "CLAUDE.md",
+      "reason": "Every ruling is quoted verbatim rather than paraphrased, and each is traced to a primary source: R8 to CLAUDE.md 6 lines 203-205, the axes/ICF structure to PRAGMA table_info on axes/access_needs/access_need_icf, DR-2026-07-22 and DR-2026-07-23 read directly. Where I extend a ruling beyond its words, 2 marks it as INFERENCE, not ruling."
+    },
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "scripts/migrations/061_reference_stubs.sql",
+      "reason": "Migration 061 carries a false attribution and is NOT edited - migrations are append-only once committed (CLAUDE.md 0.3). The correction is recorded in the DR and in schemas/source_locator.py instead. No DB write was made by this DR."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/decisions_DR-2026-08-24-scaffolding-is-phase-specific.json",
+      "reason": "This file."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "source-discipline",
+      "reason": "I WROTE THIS DR'S R8 SECTION WRONG TWICE BEFORE GETTING IT RIGHT. First draft: 'the term axis is retired' - which would have overturned DR-2026-07-22, an ADOPTED owner directive. Second draft: 'axis route is merely my coinage, the axes layer is fine' - closer, but it missed that the ruling is specifically about ICF codes. Only after the owner said they had explicitly addressed the term for ICF codes did I read CLAUDE.md 6 and find it. Three passes on one paragraph, each corrected by the owner rather than by me."
+    },
+    {
+      "rule": "canonical-workplan",
+      "reason": "This DR is PROPOSED, not ratified, and it records doctrine (DG-NON). It should not bind until the owner marks it RATIFIED. Its 2 inferences in particular are my readings, explicitly marked, and I4 records why no enforcing check is proposed until then."
+    }
+  ],
+  "bias_direction": "I am biased toward this DR reading as a clean recovery - four rulings captured, errors owned, doctrine recorded. That framing flatters a session in which the owner had to correct me four times in one exchange, twice on the same paragraph. The honest shape is not recovery but repeated failure to read what was already in front of me: CLAUDE.md 6 was loaded into my context for the entire session.",
+  "independent_reviewer_counterclaim": "The strongest objection is that this DR is itself the failure mode it describes. It is an L3 governance document written in response to L3 governance confusion, in a repository whose CLAUDE.md 1 warns that apparatus is cheap to add and expensive to remove - and it adds 100+ lines of doctrine while specifications remains 0. A reviewer could fairly say the correct response to 'rulings are not reaching the repository' is a two-line entry in project-standards.md, not a new DR with a supersession claim over D-1. The defence is that D-1 already demonstrated the cost of the two-line surface - it sat unratified in a workplan for three days and blocked a determination - and that the R7 ruling is broader than anything project-standards currently carries. That defence is real but it is not decisive, and the owner should weigh it before ratifying.",
+  "verdict": "DEVIATION-LOGGED"
+}

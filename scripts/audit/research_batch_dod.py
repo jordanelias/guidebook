@@ -441,6 +441,77 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     else:
         ok("R9", "this batch introduced no duplicate DOIs")
 
+    # --- R9a / R9b: the stash R9 could not see (OD-5) --------------------------------------
+    # R9 above compares evidence_sources against ITSELF. source_locators -- 835 held
+    # identifiers, 441 of them DOIs -- was invisible to it, so the gate certified "no
+    # duplicate" against about 2% of what this project actually holds. That is OD-5, and
+    # CLAUDE.md 4 records it as a known live defect.
+    #
+    # The NAIVE widening is wrong and was rejected on evidence 2026-08-23: every DOI then
+    # held in both tables (4 of them) carried the SAME ref_id in each, because promoting a
+    # stash lead into the corpus under its held id is the pipeline WORKING. A check that
+    # failed on mere overlap would have failed all four correct promotions, and would fail
+    # the next batch's promotion of REF-00327/576/577/579 as well.
+    #
+    # The real defect is one source wearing two identities, and it runs in both directions:
+    #   R9a  this batch admitted DOI D as ref_id Y, but the stash already holds D as X != Y
+    #   R9b  this batch admitted ref_id R, but the stash holds R against a DIFFERENT DOI
+    # R9b is not hypothetical: there is no next_ref_id allocator (CLAUDE.md 4), so a batch
+    # that mints below the stash high-water mark collides with a held identifier in silence.
+    escope = "" if allmode else " AND e.created_by_session = ?"
+
+    # SUBJECT COUNT FIRST. Adversarial pass 2026-08-23 found R9a/R9b printing a bare
+    # "PASS" for a session that admitted nothing -- CLAUDE.md 2(a), a gate that passes
+    # having examined nothing, reproduced inside the fix written for a gate that examined
+    # the WRONG set. Both rules now carry their subject count, and say so when it is zero.
+    n_doi = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources e WHERE COALESCE(e.doi,'') <> ''"
+                      f"{escope}", sargs)[0][0]
+    n_adm = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources e WHERE 1=1{escope}", sargs)[0][0]
+
+    split = _rows(cx, f"SELECT e.ref_id, sl.ref_id, e.doi FROM evidence_sources e "
+                      f"JOIN source_locators sl ON LOWER(TRIM(sl.doi)) = LOWER(TRIM(e.doi)) "
+                      f"WHERE COALESCE(e.doi,'') <> '' AND COALESCE(sl.doi,'') <> '' "
+                      f"AND sl.ref_id <> e.ref_id{escope}", sargs)
+    if split:
+        fail("R9a", f"{len(split)} source(s) admitted under a ref_id that DIFFERS from the one "
+                    f"the identifier stash already holds for the same DOI — one source, two "
+                    f"identities. Cross-file the held id instead of minting a second: "
+                    + "; ".join(f"{a} vs stash {b} ({d})" for a, b, d in split[:5]), len(split))
+    elif n_doi == 0:
+        fail("R9a", "NOTHING IN SCOPE — this batch admitted no source carrying a DOI, so the "
+                    "stash cross-check examined nothing. A pass here would assert nothing. "
+                    "If the batch admitted sources, they are missing their locators (see R10).")
+    else:
+        ok("R9a", f"{n_doi} admitted DOI(s) checked against the stash; none held under a "
+                  f"different ref_id")
+
+    # R9b WIDENED 2026-08-23. It compared DOIs only, so it reached 441 of 835 stash rows and
+    # was blind to the other 394 -- yet CLAUDE.md 4's warning ("mint above the high-water mark
+    # or you will collide with a held identifier") is not DOI-conditional. Comparing every
+    # identifier the stash carries reaches 751 of 835. A row with NO identifier at all (84)
+    # cannot be adjudicated either way and is deliberately out of reach, not silently included.
+    ID_COLS = ("doi", "pmid", "pmcid", "isbn", "issn", "standard_number")
+    conflict = " OR ".join(
+        f"(COALESCE(e.{c},'') <> '' AND COALESCE(sl.{c},'') <> '' "
+        f"AND LOWER(TRIM(sl.{c})) <> LOWER(TRIM(e.{c})))" for c in ID_COLS)
+    collide = _rows(cx, f"SELECT e.ref_id, COALESCE(e.doi, e.pmid, e.isbn, e.issn, "
+                        f"e.standard_number), COALESCE(sl.doi, sl.pmid, sl.isbn, sl.issn, "
+                        f"sl.standard_number) FROM evidence_sources e "
+                        f"JOIN source_locators sl ON sl.ref_id = e.ref_id "
+                        f"WHERE ({conflict}){escope}", sargs)
+    if collide:
+        fail("R9b", f"{len(collide)} ref_id(s) admitted by this batch collide with a HELD "
+                    f"identifier in source_locators that identifies a DIFFERENT source — mint "
+                    f"above the stash high-water mark: "
+                    + "; ".join(f"{r} admitted {a}, stash holds {b}" for r, a, b in collide[:5]),
+             len(collide))
+    elif n_adm == 0:
+        fail("R9b", "NOTHING IN SCOPE — this batch admitted no sources, so the identifier "
+                    "collision check examined nothing.")
+    else:
+        ok("R9b", f"{n_adm} admitted ref_id(s) checked against the stash across "
+                  f"{len(ID_COLS)} identifier types; no collision")
+
     # --- R10 locator re-retrieval ----------------------------------------------------------
     # HARDENED: the original accepted ANY non-empty locator field and never checked whether the
     # locator actually RESOLVED — 77 VERIFIED sources with unresolved DOIs passed silently.
@@ -656,6 +727,19 @@ def selftest():
     cx.execute("INSERT INTO evidence_sources (ref_id,tier,evidence_type,doi,article_number,"
                "created_by_session) VALUES ('REF-ST4',6,'code','10.9999/dup','§5.2',"
                "'PRIOR-SESSION')")
+    # R9a: the stash holds this DOI under a DIFFERENT ref_id, so the batch has minted a
+    # second identity for a source the project already had a lead on. Distinct DOI from
+    # REF-ST3/ST4 so the original R9 does not also fire on it.
+    cx.execute("INSERT INTO evidence_sources (ref_id,tier,evidence_type,doi,article_number,"
+               "created_by_session) VALUES ('REF-ST5',6,'code','10.9999/split','§5.2',?)", (T,))
+    cx.execute("INSERT INTO source_locators (ref_id,doi) VALUES "
+               "('REF-STASH-A','10.9999/split')")
+    # R9b: the mirror -- the batch minted a ref_id the stash already holds against a
+    # different DOI. Joins on ref_id, not DOI, so it cannot cross-fire with R9a.
+    cx.execute("INSERT INTO evidence_sources (ref_id,tier,evidence_type,doi,article_number,"
+               "created_by_session) VALUES ('REF-ST6',6,'code','10.9999/minted','§5.2',?)", (T,))
+    cx.execute("INSERT INTO source_locators (ref_id,doi) VALUES "
+               "('REF-ST6','10.9999/already-held')")
     # R12: an economic finding left in prose with economics_entries empty. findings_note is the
     # correct channel (R6 forbids using deferred_reason for it), and results_found > 0 keeps it
     # out of R14's zero-yield check. exec_id 4 preserves the exec_id-2 gap that R8 detects.
@@ -699,7 +783,7 @@ def selftest():
     # R2 fix in the same commit. If a rule here stops firing, that is either
     # detection rot or a corpus change; both need a human, so both fail.
     expected = {"R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8",
-                "R9", "R10", "R11", "R12", "R13", "R14", "R15"}
+                "R9", "R9a", "R9b", "R10", "R11", "R12", "R13", "R14", "R15"}
     fired = {c for c, n in caught.items() if n}
     missed = expected - fired
     print()

@@ -46,6 +46,16 @@ TABLES = [
     # unchanged. What reads it: this script, invoked by the DR-2026-08-19 runbook
     # at step 11.
     "evidence_source_authors",
+    # ADDED 2026-08-23, and it is the THIRD tool found blind to this one table in a
+    # single day. source_locators is the identifier stash — 835 rows, 441 DOIs. R9
+    # could not see it (fixed the same morning as R9a/R9b); validate_jurisdiction.py
+    # never opens the DB at all; and this capture path silently DROPPED every
+    # source_locators row a session wrote. That last one was found by counting: a
+    # rescue that inserted 8 locator rows emitted 32 statements, not 40, and the
+    # eight would have been lost between the scratch DB and the migration with no
+    # error raised. A table the tooling cannot see is a table the project does not
+    # really have. What reads it: this script, invoked by the DR-2026-08-19 runbook.
+    "source_locators",
     "source_slug_links",
     "search_executions",
     "search_admissions",

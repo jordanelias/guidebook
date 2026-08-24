@@ -88,6 +88,19 @@ claims: DOI + page/table, or a direct URL."* Two classes, two locator types. A
 standard cited by clause is fully located; demanding a DOI of it imports an
 academic model onto a class that never used one.
 
+> **FORWARD NOTE — appended 2026-08-23. This DR is a record of what was decided on its date and is
+> NOT rewritten; this note sits beside it.** The rescue rationale above rests on *"All 109 rows carry
+> `standard_name` **and** `source_section` — 109/109 on both."* **The second half is no longer true.**
+> Re-derived from the live DB 2026-08-23: `standard_name` **109/109**, `source_section` **0/109**,
+> `value_text` **0/109**, `value_numeric` **0/109**. The 2026-08-12 value-clearing emptied them.
+>
+> **What this does and does not change.** It does not reopen the reset: the rescue was correct on its
+> date and the rows were kept for a reason that held then. It does mean **half the stated warrant for
+> keeping `jurisdictional_values` has since evaporated**, which is exactly why the table now sits
+> under the owner's REFERENCE-ONLY quarantine and why DR-2026-08-19 §3 step 6 owns its re-keying or
+> retirement. `DR-2026-08-19 §1.5` proposed this annotation on 2026-08-19; it was not made until now.
+
+
 This generalises, and it is the doctrinal consequence of this DR. The project's
 sources span at least five classes — English-language academic work; academic work
 in other languages outside the same cataloguing systems; professional-body

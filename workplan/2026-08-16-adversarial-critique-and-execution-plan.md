@@ -52,7 +52,7 @@ exempts:
 |---|---|---|
 | `references/audits/bpc-audit-pass{0,1,2}-2026-05-10.md` | 6 | `references/audits/**` |
 | `scripts/migrations/data_20260815012107_*.sql` | 1 | `scripts/migrations/**` |
-| `workplan/execution-plan-2026-08-12/4-adjudication-apparatus.md` | 1 | `workplan/*20??-??-??*/**` |
+| `_archived/workplan/execution-plan-2026-08-12/4-adjudication-apparatus.md` | 1 | `workplan/*20??-??-??*/**` |
 | `sessions/**`, `decisions/**`, `attestations/**`, `workplan/2026-08-15-*.md` | 12 | their own globs |
 
 **Verdict: CONFIRMED.** Adding `Mode-P` and `Mode-S` to RV-025/026 today is a two-line registry edit

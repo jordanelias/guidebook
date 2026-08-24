@@ -168,10 +168,10 @@ batteries:
   # data-touching PR permanently unmergeable — i.e. it would freeze the project's
   # main activity. It stays BLOCKING and stays visible; it is simply not in the
   # required-check set until the backlog is cleared.
-  db_integrity: {deps: [], description: DB content integrity (35 checks). Red on main - see tooling-register 4.}
+  db_integrity: {deps: [], description: "DB content integrity. Re-run the check for its current state; do not cite a count from here."}
   tests:       {deps: [], description: Regression cover for the audit scripts.}
   schema:      {deps: [pydantic], description: Entity/schema validators.}
-  governance:  {deps: [pydantic], description: Decision protocol, doctrine recheck, adversarial-use.}
+  governance:  {deps: [pydantic], description: "Decision protocol, doctrine recheck, adversarial-use."}
   attestation: {deps: [jsonschema], description: Adherence-log attestations.}
   research:    {deps: [pydantic, jsonschema], description: Research definition-of-done and its enforcers.}
   render:      {deps: [], description: Derived-output freshness and rendered-document integrity.}
