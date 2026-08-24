@@ -8,13 +8,24 @@
 
 ## §0 Why this document exists
 
-**Four owner rulings were given in one exchange on 2026-08-23. None of them existed in this
-repository before now, and one of them I had already contradicted in a committed migration.** That is
-the defect this DR closes first, before any of its content: **owner rulings have been living in chat
-and dying there.** D-1 has sat in a workplan since 2026-08-21 — the weakest surface here — and when
-the owner said *"I already ruled there is no 'axis' route"*, a search of `decisions/` and `sessions/`
-found no written record of it. A ruling that is not in the repository cannot bind a session that did
-not witness it, and this session proved that by acting against one.
+**Four owner rulings were given in one exchange on 2026-08-23, and this document exists because I
+mishandled all four differently.** One I contradicted in a committed migration by inventing an owner
+directive that was never given (§1 R1). One I mis-framed as a choice between storage shapes when it
+was a category error of mine (§1 R2). One I twice reported as *"not found in the repository"* when it
+was in `CLAUDE.md` §6 the whole time (§1 R8). One was given in wider terms than the D-1 directive it
+supersedes, and had never been written down anywhere (§1 R7).
+
+**Two distinct failures sit underneath that, and conflating them would produce the wrong fix.**
+
+1. **Rulings that never reached the repository.** D-1 has sat in
+   `workplan/2026-08-20-provenance-walk-execution-plan.md` since 2026-08-21 — the weakest surface
+   here — and R7's wider form existed nowhere. A ruling not in the repository cannot bind a session
+   that did not witness it. **The fix is to write rulings down**, which is what this DR does.
+2. **A ruling that WAS in the repository and still failed to bind.** R8 is recorded in `CLAUDE.md`
+   §6, the file every session loads, including this one. I searched `decisions/` and `sessions/` for
+   the string "axis" and reported absence. **The record was adequate; my search was not.** This is
+   the more uncomfortable failure, because writing more rulings down does not fix it — and it is why
+   §3 lists a corrections pass rather than only an addition.
 
 **Everything in §1 is recorded verbatim.** Where I extend a ruling beyond its words, §2 says so and
 marks it as inference for the owner to confirm or strike.
@@ -50,37 +61,55 @@ columns on `source_locators` (migration 062). There is no text-blob to place. **
 them back into a markdown clues document is struck** — it would convert structured fields into prose,
 which is the direction this project spent the day reversing.
 
-### R8 — there is no "axis route"
+### R8 — "axis" is a bad term for ICF codes
 > *"I already ruled there is no 'axis' route as per that term being misleading."*
+> *"I literally had a session within past week where I explicitly addressed the term axis as being a
+> bad one to use for ICF codes."*
 
-**Sustained, and my first reading of it was wrong.** I initially took this to retire the term
-"axis". It does not, and retiring it would have overturned ratified doctrine:
-`DR-2026-07-22-work-from-axes` is **ADOPTED — owner directive 2026-07-22** (*"work from axes"*), and
-`DR-2026-07-23-population-schema-replace` explicitly **retains** the axes layer as Layer 1,
-cross-walked from the access-needs layer.
+**Sustained. The ruling IS in the repository, in the one file every session loads, and I missed it
+twice.** `CLAUDE.md` §6, lines 203–205:
 
-**What is misleading is "route", and it is my coinage, not doctrine.** The axes layer exists to keep
-*design demand* irreducible — POTS→STA+THR+BAL, ME/CFS→STA, MCAS→CHM, which is precisely the
-distinction DR-2026-07-22 was written to stop an agent collapsing. It was never a mapping that
-answers *"which populations does this item apply to."* By calling
-`item_axis_links → population_axis_map` "the axis route" I turned a demand-signature layer into a
-rival authority on applicability, and then proposed adjudicating between the two as if both had
-standing.
+> *"Work from the **ICF/access-need frame with codes AND names**, never from bare axis codes and
+> never from population umbrellas. On 2026-08-19 a frame pulled as bare `axis_code` hid that a slug
+> spanned two demand mechanisms, and four of five searches were framed on one of them."*
+
+My first correction to this section was also wrong: I wrote that "axis route" was merely my coinage
+and the axes layer was fine. **The ruling is narrower and sharper than that** — it is about the
+*term* being wrong **for ICF codes**, and the schema shows why. `axes` carries `icf_b_anchors` and
+`icf_d_anchors`: **the table called "axes" holds ICF-anchored demand mechanisms.** Calling them axes
+hides what they are, and CLAUDE.md's worked example is the cost — a frame pulled as bare `axis_code`
+concealed that a slug spanned two mechanisms, and four of five searches were built on one of them.
+
+**The operative vocabulary is access-need + ICF code, with names**, not axis codes.
+
+**A duplication this exposes, measured 2026-08-24 and not previously recorded:**
+
+| Table | Rows | What it is |
+|---|---|---|
+| `axes` | 17 | ICF-anchored demand mechanisms under a misleading name |
+| `access_needs` | 17 | the same cardinality, under the ratified name |
+| `access_need_axis_map` | 21 | a map between two 17-row vocabularies |
+| `access_need_icf` | 43 | need → ICF code, the frame CLAUDE.md §6 actually mandates |
+
+**Two parallel 17-row vocabularies with a 21-row map between them is the one-fact-one-home defect at
+the vocabulary layer.** Whether `axes` is retired into `access_needs` is a schema question and is
+**not decided here** — it is named so it stops being invisible.
 
 **Consequences:**
-1. **The term "axis route" is struck.** `item_population_links` is the route to applicability;
-   the axes layer is not a second answer to that question and never was.
-2. **The "89 of 93 items disagree" finding is re-framed, not discarded.** As a *measurement* it
-   stands: the two structures do produce different population sets. As an *adjudication question* —
-   "which route is authoritative" — it is **void**, because only one of them was ever answering the
-   question. What the divergence actually measures is how far the scaffold drifts from applicability,
-   which is a reason not to read it as applicability, not a tie to break.
+1. **"Axis route" is struck**, and so is the wider habit of framing work on bare `axis_code`.
+   `item_population_links` is the route to applicability; `item_axis_links → population_axis_map` is
+   doubly disqualified — wrong layer *and* the vocabulary CLAUDE.md §6 forbids working from.
+2. **The "89 of 93" finding is re-framed, not discarded.** The measurement stands; the adjudication
+   question — *"which route is authoritative"* — is **void**, because one side was never entitled to
+   answer and was expressed in a forbidden vocabulary besides.
 3. `governance/pipeline-map.yaml` BRK-20 and `workplan/2026-08-22-master-execution-plan.md` carry the
    misleading framing and are corrected.
 
-**I could not locate a prior written ruling in these words** in `decisions/` or `sessions/`. The
-substance is nonetheless recoverable from DR-2026-07-22 and DR-2026-07-23, which is how the error was
-caught. Recorded here so the next session does not have to reconstruct it.
+**The process failure, stated plainly because it is the point of §0.** I twice reported being unable
+to find this ruling. It was in `CLAUDE.md` — loaded into every session including this one — and I
+searched `decisions/` and `sessions/` for the word "axis" instead of reading the file that governs.
+**A ruling can be in the repository and still fail to bind, if the search for it is worse than the
+record.**
 
 ### R7 — scaffolding is phase-specific, and only table data crosses
 > *"Scaffolding has to be phase specific. As soon as any tools/work cross phases, they become
