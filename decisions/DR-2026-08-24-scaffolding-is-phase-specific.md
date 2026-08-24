@@ -1,6 +1,19 @@
 # DR-2026-08-24 — Scaffolding is phase-specific; only table data crosses a stage boundary
 
-**Status:** PROPOSED — awaiting owner ratification.
+**Status:** **RATIFIED BY MERGE 2026-08-24** — PR #114, `main` at `84912b1`, per the merge-implies-
+ratification RULE of 2026-07-24 (`references/project-standards.md`), which directs that stale
+PROPOSED text be flipped on merge. Was PROPOSED when written earlier the same day.
+
+> **§2 IS NOT RATIFIED, AND THE RULE ITSELF SAYS SO.** Limit (4) of that RULE: *"merge ratifies what
+> the owner decided, it does not manufacture a decision the owner never made."* §1 is the owner's own
+> rulings, quoted verbatim — those are ratified. **§2 is four inferences I drew from them and marked
+> as inference; merge does not convert them.** They remain for the owner to confirm or strike. Flipping
+> the whole document would have been the day's own error one more time: paperwork granting itself
+> authority the owner never gave.
+>
+> **What ratification changes in practice**, per the RULE's ACTION (3): the R8 rename — 4 tables,
+> 6 columns, the blocking `validate_axes` check, 297 files — moves from *blocked pending
+> ratification* to **authorized and owed**. It is not silently done, and it is not stalled.
 **Class:** DG-NON (doctrine). **Supersedes in part:** the D-1 directive as recorded in
 `workplan/2026-08-20-provenance-walk-execution-plan.md` §D-1, which this generalises.
 
