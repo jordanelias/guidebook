@@ -648,3 +648,16 @@ that are done**, so what remains is visibly shorter than what was planned.
 session can do moves it, because every determination route runs through the owner-gated
 population-taxonomy pass. **The deliverable is blocked on one decision, and 11,747 lines of live
 workplan is what ten days built while it waited.**
+
+---
+
+## Pointer-discipline queue (PD-0 … PD-8) — added 2026-08-24
+
+The pointer-discipline migration series lives in
+`workplan/2026-08-24-pointer-discipline-queue.md`. It was executed for three items before it was
+ever written down, so `main` carries commits citing `M3` and `M5` that nothing in the repository
+defined; the queue file records the `M<n>` → `PD-<n>` rename (`M4` collided with UK Building Regs
+Part M4(2)/M4(3)) and keeps the old labels as aliases.
+
+**Done:** PD-0, PD-3, PD-5. **Open:** PD-1, PD-2, PD-4, PD-6, PD-7, PD-8.
+Status re-measured against the live DB on 2026-08-24; do not read counts from the audit it cites.

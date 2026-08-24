@@ -1,0 +1,250 @@
+RECOVERED SOURCE — read-only stage-discipline and pointer audit, 2026-08-24
+================================================================================
+Produced by a Fable 5 read-only subagent during session
+session_2026-08-24-pointer-discipline. Recovered VERBATIM from the session
+transcript on 2026-08-24 and committed here because the migration queue it
+defines (M0-M8, renamed PD-0..PD-8) existed ONLY in conversation: three of its
+items shipped to main citing labels -- "M3", "M5" -- that no file in the
+repository defined. A new session could not resolve them.
+
+This is the primary source. Where it disagrees with
+workplan/2026-08-24-pointer-discipline-queue.md, the workplan is the current
+record: it re-measured every figure against the live DB on 2026-08-24 and
+several of this document's counts are now stale (notably citation_mining.doi,
+given as 7, live 10). Read this for the reasoning; read the workplan for status.
+
+Harness envelope stripped; the agent's report is reproduced unaltered below.
+================================================================================
+
+All data gathered. Here is the audit.
+
+---
+
+# READ-ONLY DESIGN AUDIT — `data/guidebook.db` (66 tables, schema read live via `sqlite_master`/`PRAGMA`, 2026-08-24)
+
+**Live-data reality check first, because it scopes everything below:** only ~20 of 66 tables hold rows. The populated core is: `source_locators` (875, clue store), `term_aliases` (2382), `item_population_links` (372), `decisions` (166), `item_axis_links` (158), `term_item_links` (147), `jurisdictional_values` (109), `slugs` (106), `items` (93), `terms` (88), `lang_jur_map` (70), `search_candidates` (60), `population_axis_map` (53), `access_need_icf` (43), `evidence_source_authors` (37), `search_executions` (28), `evidence_population_match` (25), `populations` (23), `access_need_axis_map` (21), plus the 17-row vocabularies and the 10-row pipeline spine (`evidence_sources`, `citation_mining`, `source_slug_links`, `search_admissions`). `specifications`, `case_studies`, `economics_entries`, `conflicts`, `connections`, `convergence_assessment`, `reasoning_doc_citations`, `source_value_extractions` and every other synthesis/spec/render table: **0 rows**. Most recommendations here are shape-only and cost nothing to migrate.
+
+---
+
+## PART 1 — STAGE ASSIGNMENT (all 66)
+
+Legend: **[P]** = pointer-candidate column (restates what an earlier stage holds under the same reference ID); **[X]** = column that does not belong at this stage for another reason (dead, wrong stage, wrong type).
+
+### SUBSTRATE — vocabularies, registries, mappings, ledgers (23 tables)
+
+| # | Table (rows) | Why substrate | Columns that do not belong |
+|---|---|---|---|
+| 1 | `populations` (23) | Population vocabulary; the reference-ID mint for `population_code`. | none |
+| 2 | `slugs` (106) | Topic registry; mints `slug`. | **[X]** `serves_axes` (JSON `'["AX-BAL"]'`, 1 row) — a relationship stored as a string on a registry row instead of a crossing row; also builds on the `axes` vocabulary the owner ruled against 2026-08-18. |
+| 3 | `items` (93) | Item registry; mints `item_code`. Owner names it substrate. | **[X]** `item_id` (`TEXT UNIQUE`) — 0 non-NULL, dead second identifier. **[P]** `pmp_delta_min`, `pmp_direction`, `pmp_last_walk_at`, `pmp_empirical_ceiling`, `pmp_gap_signed` — 0 populated; SPECIFICATION-stage walk results cached on the substrate registry, derivable from `spec_value_probes` (the DB already ships `v_pmp_latest_walk` to derive them). **[P]** `bpc_source_slug` (87 live) — a RESEARCH-stage item↔slug relationship stored as a column while the crossing table `item_bpc_links` (with `link_type='primary'` and index `idx_ibl_primary_per_item`) sits empty. Two homes for one fact; only one is populated. |
+| 4 | `axes` (17) | Coined interaction vocabulary. Owner ruled it a bad coined term (CLAUDE.md §0.0, 2026-08-18: use ICF codes directly, "do not relitigate"). | The whole table is a vocabulary under a standing adverse ruling — see register D9. |
+| 5 | `access_needs` (17) | Access-need vocabulary; mints `need_code`. | **[X]** `typical_stakes` CHECK re-inlines the `access_stakes` code list instead of an FK — harmless, note only. |
+| 6 | `access_need_axis_map` (21) | Crossing row: two IDs + `relationship` + `note`. Exemplary owner-compliant shape — carries nothing but the reference IDs and its own stage-specific fact. | none |
+| 7 | `access_need_icf` (43) | Crossing to the external ICF vocabulary. | none |
+| 8 | `access_duration` (3) | Vocabulary. | none |
+| 9 | `access_stakes` (3) | Vocabulary. | none |
+| 10 | `life_stage_modifiers` (2) | Vocabulary. | none |
+| 11 | `rooms` (17) | Room vocabulary. | none |
+| 12 | `room_items` (0) | Crossing row, compliant shape. | none |
+| 13 | `terms` (88) | Search-term vocabulary. | none |
+| 14 | `term_aliases` (2382) | Alias vocabulary. | none |
+| 15 | `term_item_links` (147) | Crossing row. | **[X]** `population` — 147 rows, **all NULL**; unused column. |
+| 16 | `lang_jur_map` (70) | Language↔jurisdiction vocabulary. | none |
+| 17 | `population_axis_map` (53) | Crossing row. | Built on `axes` (see D9). |
+| 18 | `item_axis_links` (158) | Crossing row (`mechanism_note`, `strength_band` are its own stage-specific facts — compliant). | Built on `axes` (see D9). |
+| 19 | `item_population_links` (372) | Crossing row; `applicability`, `rationale_ref` are its own facts. | **[X]** `rationale_ref INTEGER` FKs nothing — dangling pointer shape, note only. |
+| 20 | `weighting_profile` (5) | Tier-weight config vocabulary. | none |
+| 21 | `data_migrations` (349) | Append-only infrastructure ledger. Off-limits to dedup by definition. | none |
+| 22 | `decisions` (166) | Governance ledger, not stage-bound. | none |
+| 23 | `gaps` (5) | Cross-stage gap register (categories span research to audit). | none — `description`, `falsification_condition` are the gap's own facts. |
+
+### RESEARCH — searching, screening, mining, the clue store (11 tables)
+
+| # | Table (rows) | Why research | Columns that do not belong |
+|---|---|---|---|
+| 24 | `search_executions` (28) | The replayable search record: query, engine, target branch, yield. | **[P]** `admitted_ref_ids` (JSON array of `evidence_sources.ref_id`) — restates `search_admissions` row-for-row (see D2). **[P]** `results_admitted` — derivable as `COUNT(*)` from `search_admissions` (test `test_db_integrity.py` line ~881 already polices the drift). |
+| 25 | `search_candidates` (60) | What a search surfaced, at screening time. | none — `title`/`locator` are legitimate frozen snapshots ("as retrieved", the schema's own comment). See D8. |
+| 26 | `search_admissions` (10) | The research→evidence crossing row: `(exec_id, ref_id)` and nothing else. **This is the owner's ruling already executed in schema.** | none |
+| 27 | `search_coverage` (0) | Coverage grid per slug×jurisdiction. | none |
+| 28 | `search_languages` (0) | Coverage per slug×language. | none |
+| 29 | `bpc_metadata` (0) | Per-slug research-pipeline state. | **[P]** `population TEXT NOT NULL` — a population stored as free text, not `REFERENCES populations(population_code)`. Shape-only fix. |
+| 30 | `citation_mining` (10) | Mining ledger per admitted source. | **[P]** `doi` — restates `evidence_sources.doi` reachable via `global_ref_id`; **2 of 10 rows already drifted by case** (see D1). **[P]** `local_ref_id` used as join key — restates `source_slug_links.local_ref_id`; **3 of 10 rows disagree** (see D1). |
+| 31 | `gap_mining` (0) | Mining attempts against gaps. | none — `candidate_dois` holds DOIs of rows that deliberately do not exist yet (rule #10 gate); a pointer cannot point at a row that hasn't been minted. Legitimate. |
+| 32 | `supersession_check` (0) | Supersession search record. | none — `superseding_dois` same rule-#10 logic; `superseding_ref_ids` is a frozen outcome record. |
+| 33 | `source_locators` (875) | **The clue store.** Pre-reset identifiers + (post-062) bibliography. | **EXEMPT by owner ruling** — duplication between it and `evidence_sources` "simply means the clues table was useful." Its `doi`, `authors`, `pub_year`, `title`, `doi_resolution_outcome` overlap `evidence_sources` on 4 shared ref_ids (REF-00325/00561/00578/00607), including case-drifted DOIs — and that is fine. |
+| 34 | `reference_stubs` (0) | Empty tombstone from migration 061→062; a committed data migration writes into it on replay. | none — untouchable (see NOT-DO list). |
+
+### EVIDENCE — admitted sources, their identity, verification, extraction (10 tables)
+
+| # | Table (rows) | Why evidence | Columns that do not belong |
+|---|---|---|---|
+| 35 | `evidence_sources` (10) | The authoritative bibliographic record per `ref_id`. The table the owner says RENDER points at for citations. | **[P]** Author denorm block — `author_count`, `author_count_is_complete`, `first_author_last`, `first_author_first`, `is_corporate_primary`, `author_display`, `author_display_note` — restates `evidence_source_authors`; **5 of 10 rows already disagree** (`author_count` NULL while author rows exist) (see D3). **[P]** `search_queries_used` — RESEARCH-stage data; 5 rows carry copied query text and **5 rows literally contain the prose pointer "see search_executions exec 10-15 for this batch"** — the data itself is asking to be a join through `search_admissions` (see D4). **[X]** `bpc_shorthand` (0 non-NULL), `bpc_note` — render/BPC-stage annotations parked on the evidence row. |
+| 36 | `evidence_source_authors` (37) | Authoritative author list, positional. | none. (Data-quality flag, not schema: REF-00966 position 3 `last_name='andsensory'` is a parsing artifact — present in *both* the author table and `author_display`, i.e., the copies agree on a wrong value.) |
+| 37 | `evidence_population_match` (25) | Grades how a source's sample matches a target population. | **[P]** `source_ref TEXT NOT NULL` — the *same value* as its own `ref_id` FK column in the same row, 25/25 currently agree (see D5). `study_population` prose is a legitimate snapshot of the study's sample; `target_population` uses codes but lacks the FK clause. |
+| 38 | `source_slug_links` (10) | Evidence↔slug crossing row; **the authoritative home of `local_ref_id`** (the per-slug bibliography label, per migration 062's "locators carry bibliography" lineage). | none — but it must be the *only* home of `local_ref_id` (see D1). |
+| 39 | `situations` (0) | Co-1 lived-experience account intake. | **[X]** `attaches_items`, `attaches_axes`, `attaches_profiles` — CSV code lists in TEXT columns instead of crossing rows. Shape-only. |
+| 40 | `source_value_extractions` (0) | Values extracted from sources. | **[P]** `population_label` next to `population_code` — if it means the code's display name it restates `populations.display_name`; if it means the source's own wording it is a snapshot and should say so in a comment. Ambiguous shape. Everything else (claimed_value, source_section, loc_* block) is the extraction's own frozen fact. |
+| 41 | `extraction_population_links` (0) | Crossing row. | none |
+| 42 | `external_root_registry` (0) | Registry of measurement roots. | none |
+| 43 | `pipeline_runs` (0) | Identifier-resolution run ledger. | none (counters are run facts) |
+| 44 | `url_verification_runs` (0) | URL verification run ledger. | none |
+
+### SYNTHESIS (8 tables)
+
+| # | Table (rows) | Why synthesis | Columns that do not belong |
+|---|---|---|---|
+| 45 | `convergence_assessment` (0) | Weighs evidence convergence for a determination. | **[P-borderline]** `clinical_sources`, `co1_sources`, `co2_sources`, `down_weighted_sources`, `discounted_sources` — five JSON arrays of REF-IDs where junctions would be the pointer form; antagonist (a) applies: an assessment is a frozen record of what it weighed. See D7. |
+| 46 | `connections` (0) | Cross-slug findings. | none |
+| 47 | `connection_targets` (0) | Crossing row. | none |
+| 48 | `conflicts` (0) | Cross-population conflicts. | **[P]** `pop_a`, `pop_b` `TEXT NOT NULL` with no FK to `populations`; `evidence TEXT` prose where ref_ids could point. Shape-only. |
+| 49 | `reasoning_doc_citations` (0) | Verifies claims in synthesis docs against sources. Model table: `source_ref_id` FK + its own frozen `claimed_value`/`value_match`. | **[P]** `population` free TEXT (should be `population_code` FK — `citation_population_links` exists for the many-case, making this column doubly redundant). |
+| 50 | `citation_population_links` (0) | Crossing row. | none |
+| 51 | `item_population_elaborations` (0) | Population-specific spec variants w/ evidence FK. | none |
+| 52 | `item_bpc_links` (0) | Item↔BPC-corpus crossing row. | none in itself — but it is the second home of the fact `items.bpc_source_slug` already holds live (see D6). |
+
+### SPECIFICATION (6 tables)
+
+| # | Table (rows) | Why specification | Columns that do not belong |
+|---|---|---|---|
+| 53 | `specifications` (0) | The determination cell (item × population). | **[P]** `governing_refs` JSON — restates `specification_source_links` row-for-row; the integrity test's own header admits it: *"H — JSON-array ↔ junction parity (specification_source_links, search_admissions)"*. Two homes + a check to keep them equal = the exact pattern the owner condemned (see D2). `tier_basis`, `derivation_sha`, `rule_version` are legitimate frozen determination facts. |
+| 54 | `specification_source_links` (0) | Spec↔evidence crossing row, compliant shape. | none |
+| 55 | `spec_value_probes` (0) | Provenance-walk probes. | **[P]** `population TEXT NOT NULL` — no FK to `populations` (and `probe_population_links` exists for the many-case). |
+| 56 | `probe_population_links` (0) | Crossing row. | none |
+| 57 | `jurisdictional_values` (109) | Tier-6 code/regulatory values per item×jurisdiction. (Arguably EVIDENCE; it feeds specification via `v_code_floor_only`, and its values are its own frozen extractions — assigned here because its unit of record is the item-spec floor.) | **[X]** `spec_id` — 0 non-NULL, and its schema comment is now *false*: `-- informational only (e.g. 'SPEC-0050'); no specification table exists to FK against` — `specifications` exists. Dead column with a stale lie in the DDL. **[P-theoretical]** `standard_name` free text (83 distinct across 109 rows) — standards could be `evidence_sources` rows pointed to by ref_id, but those rows don't exist yet; a pointer to nothing loses to the copy today (antagonist d). |
+| 58 | `item_audit_runs` (0) | Per-item audit ledger. | none |
+
+### RENDER (8 tables)
+
+| # | Table (rows) | Why render | Columns that do not belong |
+|---|---|---|---|
+| 59 | `case_studies` (0) | Guidebook Part-12 content (`part_section` §12.01 etc.). | **[P]** `sources TEXT` (late-added) — prose source list where a junction to `evidence_sources.ref_id` is the ruling's exact target ("for rendering a citation, we point towards the evidence table"). `population_description` prose is acceptable as the case's own framing; `case_study_populations` carries the coded link. |
+| 60 | `case_study_outcomes` (0) | Outcome metrics. | **[P]** `source TEXT` ("how it was verified") — should at least admit a ref_id pointer alongside. |
+| 61 | `case_study_populations` (0) | Crossing row. | none |
+| 62 | `case_study_specs` (0) | Crossing row. | none |
+| 63 | `case_study_strategies` (0) | Prose list. | none |
+| 64 | `economics_entries` (0) | Part-13 economics content. | **[P]** `source TEXT NOT NULL` *and* `ref_id REFERENCES evidence_sources` side by side — dual identity, drift by construction once populated. **[P]** `year`, `journal`, `study_design`, `sample` — restate `evidence_sources.pub_year`/`journal_name`/etc. whenever `ref_id` is set; only legitimate for sources *without* a ref_id. |
+| 65 | `economics_entry_populations` (0) | Crossing row. | none |
+| 66 | `economics_entry_specs` (0) | Crossing row. | none |
+
+---
+
+## PART 2 — POINTER/DEDUP REGISTER (ranked by severity)
+
+Verified counts against the known starting points: normalizing `doi.org/` prefixes and case, **19 DOIs appear in more than one of the four stores** (owner's brief said 17 — the two extra are `10.1097/aud.0b013e3181d3d514` and `...31825aecad`, each in `source_locators` + `search_candidates` with a `https://doi.org/` prefix difference), and **4 have drifted by case** — confirmed: `10.1044/2019_aja-19-0010`, `10.1044/2016_aja-15-0064` (drift between `evidence_sources` and `citation_mining`/`source_locators`/`search_candidates`), and the two `10.1097/AUD` DOIs (between `source_locators` and `search_candidates`). Note migrations 061/062 already prosecuted the four-table DOI problem for the *clue-store* leg; what remains live is the **within-pipeline** leg below.
+
+### D1 — CRITICAL (live rows, live drift, live reader bug)
+**`citation_mining.doi` and `citation_mining.local_ref_id`** | duplicated values: the source's DOI and its per-slug bibliography label | authoritative copies: `evidence_sources.doi` (via `citation_mining.global_ref_id`, populated in **all 10 rows**) and `source_slug_links.local_ref_id` | rows affected: 10 | **AGREE? NO, twice over**: (i) `citation_mining.doi` = `10.1044/2019_AJA-19-0010` / `2016_AJA-15-0064` vs `evidence_sources.doi` lowercase for REF-00325/REF-00578; (ii) `local_ref_id` disagrees on 3/10 rows — ssl `RAP-06`/`RAP-09`/`RAP-10` vs cm `RAP-F61`/`RAP-F69`/`RAP-F70` (REF-00561/00969/00970).
+
+**The drift is not cosmetic — it breaks a reader today.** `scripts/db.py` `get_unmined_sources()` (line ~504) and the tier-priority query (line ~1711) both do:
+```sql
+LEFT JOIN citation_mining cm ON cm.slug=ssl.slug AND cm.local_ref_id=ssl.local_ref_id
+```
+For the 3 divergent rows the join misses, `cm.backward` comes back NULL, and three *already-mined* sources are reported as unmined — an agent following that list re-mines them. The writer is `log_mining()` (line ~245), which takes `local_ref_id` and `doi` as caller-supplied strings.
+
+- **AGONIST:** drift has already happened, in both columns, within one 10-row pipeline, and it already misleads a shipping reader. `global_ref_id` is populated everywhere; the pointer exists and is simply not being dereferenced.
+- **ANTAGONIST:** (a) frozen snapshot? No — a mining ledger's identity column is not a point-in-time citation; the thing mined is the evidence row itself. (d) pointer nothing dereferences? No — the readers exist and are two `db.py` functions; the fix names them.
+- **VERDICT: AGONIST WINS.** Join on `cm.global_ref_id = ssl.ref_id`; stop writing `cm.doi`; `cm.local_ref_id` survives only as the mining session's own label (or is repaired to match ssl), never as a join key.
+
+### D2 — HIGH (dual-write by design, machine-guarded, live rows)
+**`search_executions.admitted_ref_ids` (+ `results_admitted`)** | duplicated value: which refs a search admitted | authoritative copy: `search_admissions` junction | rows: 7 executions / 10 admissions | **AGREE: yes, currently** — because `scripts/db.py` line 418 dual-writes in one transaction (its own comment: *"BOTH carriers... hold the same fact, and checks"*) and `test_db_integrity.py` H03/H04 enforce parity. Same pattern shape-only at **`specifications.governing_refs` vs `specification_source_links`** (0 rows).
+
+- **AGONIST:** this is the owner's ruling verbatim — "it implies the reason is being written across two or more tables." The system currently pays a dual-write plus a parity check to simulate having one home. The pointer path already has a production reader: `v_source_admission` joins through `search_admissions`, not the JSON.
+- **ANTAGONIST:** (a) frozen snapshot? No — admissions are append-only rows with their own `created_at`; the junction *is* the record. (e) reader that must change: `db.py log_search()` (writer), the H03/H04/A-series parity tests (deleted, not changed — CLAUDE.md §1 makes removing apparatus cheap by design), and nothing else — grep shows no reader parsing the JSON except the tests.
+- **VERDICT: AGONIST WINS.** Junction is sole home. Dropping the parity check is a *feature* of this conversion, not a cost.
+
+### D3 — HIGH (live rows, already disagreeing)
+**`evidence_sources` author-denorm block** (`author_count`, `author_count_is_complete`, `first_author_last`, `first_author_first`, `is_corporate_primary`, `author_display`, `author_display_note`) | duplicated value: the author list | authoritative copy: `evidence_source_authors` (37 rows, positional, ORCID-capable) | rows: 10 | **AGREE? NO — 5 of 10** (`author_count` NULL for REF-00325/00561/00578/00969/00970 while their author rows exist; `first_author_last` agrees on all 10; `author_display` restates the full list as a string on all 10).
+
+- **AGONIST:** half the corpus drifted within two weeks of writing. The determination pipeline never needs an author (owner: "We do not need an author name when synthesizing… specifying… rendering — we point towards the evidence table").
+- **ANTAGONIST:** (e) the readers are real: `v_item_provenance` selects `es.author_display`; `tools/spec-curation-vetting-surface.html`, `tools/regenerate_vetting_surface.py`, `scripts/generate/spec_page.py`, and `bibliography-compiler_SKILL` touch these columns. A "pointer" here means recomputing display strings with `GROUP_CONCAT` over `evidence_source_authors` ordered by `position` — perfectly doable in a view, and `v_item_provenance` is a view, so the conversion is *not* theoretical; but it is a multi-reader sweep, and CLAUDE.md §0.4 demands the sweep be complete. (a) is `author_display` a frozen citation-form snapshot? Weak — the display form is derivable and the "snapshot" already contains a corruption (`andsensory`) that the base table shares, so the copy is not protecting anything.
+- **VERDICT: AGONIST WINS, second in line** — but only as a *replace-readers-then-drop* sequence, never a drop-first.
+
+### D4 — MEDIUM (live rows; the data already begs for the pointer)
+**`evidence_sources.search_queries_used`** | duplicated value: the search query that surfaced the source | authoritative copy: `search_executions.query_text`, reachable via `search_admissions` (and already served by `v_source_admission.query_text`) | rows: 10 — **5 carry copied query prose, 5 carry the literal string "see search_executions exec 10-15 for this batch"** | AGREE: not checkable (free prose), which is itself the finding.
+
+- **AGONIST:** half the rows are already hand-written pointers. The column is a prose re-implementation of `search_admissions`.
+- **ANTAGONIST:** (a) a query snapshot at admission time? No — `search_executions.query_text` is itself the verbatim frozen record ("the verbatim, replayable query"). (d) who dereferences? `v_source_admission` already does.
+- **VERDICT: AGONIST WINS.** Stop writing; deprecate the column (data migration NULLing it is optional and low-value; the important half already points).
+
+### D5 — MEDIUM (live rows, in agreement, trivially fixable)
+**`evidence_population_match.source_ref`** | duplicated value: the ref_id — **against its own row's `ref_id` FK column** | rows: 25 | AGREE: 25/25 today, by luck not constraint (`source_ref` is `TEXT NOT NULL`, no FK; `ref_id` was bolted on later).
+
+- **AGONIST:** two columns, one value, one table; a single divergent insert makes the row self-contradictory.
+- **ANTAGONIST:** none survives — this is not even cross-table.
+- **VERDICT: AGONIST WINS.** Rebuild table with `ref_id` FK NOT NULL as the sole column. (Keep `study_population` prose — that is a legitimate frozen snapshot of the study's sample and the stage's own information.)
+
+### D6 — MEDIUM (live rows on one side, empty table on the other)
+**`items.bpc_source_slug` (87 live) vs `item_bpc_links` (0 rows)** | duplicated fact: which BPC corpus an item derives from | AGREE: vacuously (one side empty).
+
+- **AGONIST:** two declared homes; the junction even has a `'primary'` link_type and a dedicated index for exactly the fact the column holds.
+- **ANTAGONIST:** (d) **wins today** — nothing populates or reads `item_bpc_links`; converting 87 live column values into junction rows so that a column can be dropped, when no reader needs multi-link semantics, is apparatus. The cheap symmetric alternative — dropping the empty junction — removes future capability the schema deliberately built.
+- **VERDICT: ANTAGONIST WINS, deferred.** Record the rule (column is authoritative until a non-primary link is needed; at that moment migrate column→junction and drop the column in one step). Do not migrate now.
+
+### D7 — LOW (shape-only, 0 rows)
+**`convergence_assessment.{clinical,co1,co2,down_weighted,discounted}_sources` JSON REF-ID arrays** | authoritative copy would be a junction | rows: 0.
+
+- **AGONIST:** five JSON pointer-lists on one row is the copy-shape.
+- **ANTAGONIST:** (a) **wins** — a convergence assessment is a frozen determination input: it must record what it weighed *at the time*, with per-source roles; and (d) nothing reads them yet. A junction with a `role` column would be equally frozen, so this is stylistic until a reader exists.
+- **VERDICT: ANTAGONIST WINS for now**; revisit when the first synthesis reader is written (the migration is free while rows = 0, so fold it into D-series shape cleanup if Sonnet is already rebuilding the table).
+
+### D8 — EXEMPT / SNAPSHOT (record for completeness)
+- **`search_candidates.title/locator`** vs everything: frozen "as retrieved" screening record (schema's own comment). 33 doi-like locators, 9 overlapping the clue store. **Antagonist (a) wins.** No action.
+- **`source_locators.*` vs `evidence_sources.*`** (4 shared ref_ids; DOIs case-drifted; `doi_resolution_outcome` duplicated, currently both 'RESOLVED'): **clue store — exempt by owner ruling (c).** No action, ever.
+- **`gap_mining.candidate_dois`, `supersession_check.superseding_dois`**: DOIs of rows that must not exist yet (rule-#10 gate). A pointer cannot precede its referent. **Antagonist wins.**
+- **`reference_stubs`**: empty tombstone; replay-critical. Untouchable.
+- **`reasoning_doc_citations.claimed_value/source_section`, `source_value_extractions.claimed_*`, `jurisdictional_values.value_*`, `evidence_population_match.study_population`**: these are each stage's *own* frozen facts (what the claim said, what the code says, what the sample was) keyed to `ref_id`/`item_code`. **Correct under the ruling — the reference ID crosses; the stage-specific fact stays.**
+
+### D9 — VOCABULARY-LEVEL DUPLICATION (flag, do not execute here)
+**`axes`(17) vs `access_needs`(17), joined by `access_need_axis_map`(21), with `access_need_icf`(43) as the ICF bridge.** Two parallel coined vocabularies covering one conceptual space, plus 158+53+21 crossing rows built on the side the owner ruled against on 2026-08-18 ("use ICF codes directly", do-not-relitigate). This is duplication at the taxonomy level, not the cell level — the reference IDs themselves are doubled. **Not a dedup migration; it is a standing owner ruling awaiting its own decision-scoped execution series.** This audit's only obligation is to not build anything new on `axes` (see slugs.serves_axes, D-list in Part 1) and to state that any future "point at the vocabulary" work should point at ICF codes per the ruling.
+
+### D-shape — remaining 0-row pointer fixes (batchable)
+`bpc_metadata.population`→FK; `conflicts.pop_a/pop_b`→FK; `spec_value_probes.population`→FK; `reasoning_doc_citations.population`→FK (or drop in favor of `citation_population_links`); `economics_entries.source`/`year`/`journal` dual-identity rule (`CHECK (ref_id IS NULL OR (year IS NULL AND journal IS NULL))` is *apparatus* — prefer just dropping `year`/`journal` and keeping `source` for the no-ref_id case); `case_studies.sources`→junction; `situations.attaches_*` CSVs→crossing rows; `specifications.governing_refs`→drop (D2); `jurisdictional_values.spec_id`→drop (dead + lying comment); `items.item_id`→drop (dead); `term_item_links.population`→drop (all NULL).
+
+---
+
+## PART 3 — ORDERED EXECUTION PLAN
+
+Ordering constraint honored throughout (it bit the owner today and it bit migration 062 verbatim): **schema migrations replay before all data migrations, so no schema migration may read a data-populated table.** Every step below is either pure-DDL (safe at schema time) or a data migration timestamped after the data that feeds it, plus code changes which are ordinary commits.
+
+**M0 — (code, not a migration) Repoint the citation-mining readers to the reference ID.**
+Job: change the two `db.py` queries (`get_unmined_sources` ~504, tier-priority ~1711) from `cm.local_ref_id = ssl.local_ref_id` to `cm.global_ref_id = ssl.ref_id`; change `is_mined`/`log_mining` (~221–265) to key on `(slug, global_ref_id)` and stop passing `doi`. Tables touched: none (readers only). Live rows moved: none. Falsified by: `get_unmined_sources('room-acoustic-performance')` must return **0** rows for backward+forward-mined sources — today it wrongly returns REF-00561/00969/00970. Depends on: nothing. **This is the fix for the only defect currently producing wrong answers.**
+
+**M1 — (data migration) Repair the two case-drifted DOIs and annotate the three divergent local_ref_ids in `citation_mining`.**
+Job: `UPDATE citation_mining SET doi=(lowercased canonical)` for REF-00325/REF-00578 rows — or, better with M2 in view, leave `doi` alone and let M2 retire it; the mandatory part is deciding the `local_ref_id` question: either `UPDATE` cm's three rows to the ssl labels (RAP-06/09/10) or record that cm's label is session-local and non-joinable (M0 makes it non-load-bearing either way). Tables: `citation_mining`. Live rows: ≤5. Falsified by: `SELECT COUNT(*) FROM citation_mining cm JOIN evidence_sources es ON cm.global_ref_id=es.ref_id WHERE cm.doi IS NOT NULL AND cm.doi &lt;&gt; es.doi` returning nonzero. Depends on: M0 (so nothing joins on the values being changed while they change).
+
+**M2 — (schema migration, pure DDL) Rebuild `citation_mining` without `doi`; PK `(slug, global_ref_id)`.**
+Job: `CREATE TABLE citation_mining_new (...)` without `doi`, `global_ref_id TEXT NOT NULL REFERENCES evidence_sources(ref_id)`, `local_ref_id` retained as a plain label column or dropped; `INSERT ... SELECT` **from the old table within the same schema file is illegal here** — `citation_mining` is populated by data migrations, so (062's lesson, quoted: *"any schema-time read of it sees an empty table on rebuild and a full one live"*) the copy must be: schema migration creates the new shape under a new name and a **data migration timestamped after today's latest data migration** moves the 10 rows and a second one swaps names — or simpler and fully replay-safe: keep the table name, do the column retirement as *reader discipline + a data migration NULLing `doi`*, and fold the physical drop into the next natural rebuild of the table. Recommend the simple form. Live rows: 10 (one UPDATE). Falsified by: `migration_reproducibility` gate on rebuild; any residual reader referencing `cm.doi` (grep must be clean). Depends on: M0, M1.
+
+**M3 — (code + data migration) Single-home the admission fact.**
+Job: `db.py log_search()` stops writing `admitted_ref_ids` (junction only); delete parity tests H03/H04 and the `admit_count_drift` block (~846–910) — deletion is sanctioned by CLAUDE.md §1 symmetry; data migration sets `admitted_ref_ids = NULL` on the 7 rows (optional but honest — a column that half-exists invites new writers); `results_admitted` stays as the search's own yield count *as screened at execution time* (snapshot argument holds for it — it is the search's outcome, not the admission ledger). Tables: `search_executions`. Live rows: 7 UPDATEs. Falsified by: `v_source_admission` row count changing (it must not — it never read the JSON); emit_batch_sql producing JSON writes afterward. Depends on: nothing, but sequence after M0–M2 to keep the register coherent.
+
+**M4 — (schema + code) `evidence_population_match` rebuild: drop `source_ref`, make `ref_id` NOT NULL, FK `target_population` → `populations`.**
+Job: new-shape table + rename. Same replay trap as M2: the 25 rows arrive via data migrations, so the DDL may create the new shape but the row copy must ride a data migration timestamped after the populating ones; or do it as: schema migration rebuilds with both columns' data preserved via the standard SQLite rebuild — **no**: the schema migration cannot SELECT the rows (empty at replay). Cleanest replay-safe pattern (proven by 062): schema file does the `CREATE new / INSERT..SELECT / DROP / RENAME` — this *is* legal because at replay time the copy correctly moves zero rows and the later data migrations insert into the *renamed* table which has the same name. Caveat that falsifies it: the populating data migrations must not reference the dropped `source_ref` column — **they do** (they INSERT it). So the rebuild must keep `source_ref` physically until a compensating pattern exists, or the new shape must accept and ignore it. Verdict: **defer the physical drop; ship only the FK-hygiene** you can add without breaking replayed INSERTs, and record `source_ref` as deprecated-for-readers. Live rows: 25, no movement. Falsified by: rebuild replay of `data_20260822*`/`data_20260823*` failing with "no such column: source_ref". Depends on: none. *(This dependency analysis is exactly why the register says which INSERTs exist in committed migrations — Sonnet must grep `scripts/migrations/data_*` for every column it wants to drop; committed migrations INSERTing a column freeze that column's existence forever. That is the deepest constraint in this whole plan: `citation_mining.doi`, `admitted_ref_ids`, and the author-denorm columns are all written by committed data migrations, so none of them can ever be physically dropped — only writer-retired, reader-retired, and NULLed forward.)*
+
+**M5 — (code sweep) Author display becomes derived.**
+Job: change `v_item_provenance` (a view — DROP/CREATE VIEW is a cheap schema migration) to derive `author_display` via `GROUP_CONCAT` over `evidence_source_authors` ordered by `position`; sweep the four named readers (`tools/regenerate_vetting_surface.py`, `tools/spec-curation-vetting-surface.html`, `scripts/generate/spec_page.py`, bibliography-compiler skill) to read the view or the author table; retire the writer paths (emit_batch_sql templates). Then a data migration NULLs the seven denorm columns on the 10 live rows (again: NULL-forward, never drop — committed migrations INSERT them). Tables: `evidence_sources` (UPDATE 10 rows), 1 view. Falsified by: any reader still selecting `es.author_display` post-sweep (CLAUDE.md §0.4: a sweep that stops at the filename is not a sweep); the vetting surface rendering blank authors. Depends on: none, but it is the widest sweep — schedule after M0–M3.
+
+**M6 — (data migration) NULL `evidence_sources.search_queries_used`; readers use `v_source_admission.query_text`.**
+Live rows: 10 UPDATEs. Falsified by: a session needing the query for REF-00966 and `v_source_admission` not returning exec 1's `query_text`. Depends on: M3 conceptually (same junction is the pointer).
+
+**M7 — (schema migration, pure DDL, 0-row tables only) Shape cleanup batch.**
+Job, one file, all replay-safe because every touched table is empty and populated by *no* committed data migration (verify each by grep first — that grep is the step's gate): `bpc_metadata.population`→FK column; `conflicts.pop_a/pop_b`→FK; `spec_value_probes.population`→FK; `reasoning_doc_citations` drop `population` (junction exists); `specifications` drop `governing_refs` (junction is sole home — also delete its parity test); `economics_entries` drop `year`,`journal` (point via `ref_id`); `jurisdictional_values` — *cannot* rebuild (109 rows arrive via data migrations that INSERT... check which columns they name; `spec_id` is 0-non-null and if no committed migration INSERTs it, it is droppable via table rebuild, else deprecate); `situations.attaches_*` → three crossing tables; `case_studies.sources` → `case_study_sources(case_study_id, ref_id)` junction. Live rows: none move. Falsified by: rebuild replay; any Pydantic model in `scripts/audit/validate_pydantic_schemas.py` still declaring the removed fields. Depends on: nothing; can run any time.
+
+**M8 — (nothing to write yet) `items.bpc_source_slug` / `item_bpc_links` rule.**
+Record in the decision register: column authoritative for the primary link; junction reserved; migrate-and-drop only when a non-primary link is first needed. No migration.
+
+---
+
+## PART 4 — WHAT I RECOMMEND **NOT** DOING
+
+1. **Do not touch `source_locators` ↔ `evidence_sources` duplication in any way** — owner-exempt clue store (ruling c). Its case-drifted DOIs and duplicated `doi_resolution_outcome` are *allowed to be wrong-ish*; normalizing them would spend effort on rows that "no determination may cite" (migration 062's words).
+2. **Do not drop `reference_stubs`** — the empty tombstone is load-bearing for replay: `data_20260823223839` writes into it. 062 already tried the tidy version and failed the reproducibility gate.
+3. **Do not physically drop any column that a committed data migration INSERTs** (`citation_mining.doi`, `search_executions.admitted_ref_ids`, `evidence_sources.author_*`, `evidence_population_match.source_ref`). Append-only + replay makes them permanent as *shapes*; retire writers and readers, NULL forward. A drop that replays before the INSERT that names it breaks `migration_reproducibility` — the exact failure the owner hit today.
+4. **Do not convert `search_candidates`, `gap_mining.candidate_dois`, `supersession_check.superseding_dois`, or `retrieval-log/`** — frozen snapshots and pre-mint DOIs are not duplication; a pointer to a row that may never exist, or that can change under a record of what-was-seen, is worse than the copy.
+5. **Do not add parity checks, triggers, or new CHECK apparatus to police the remaining copies** — CLAUDE.md §1: apparatus carries the burden of proof, and D2 shows where parity checks lead: they make dual-homes *survivable*, which makes them *permanent*. The discipline is fewer homes, not better-guarded homes.
+6. **Do not execute the `axes` retirement inside this dedup series** — it is real duplication (D9) but it is an owner-ruling execution with 232+ live crossing rows and its own blast radius; mixing it into pointer hygiene would hide a doctrinal change inside plumbing.
+7. **Do not build junctions for `convergence_assessment`'s JSON arrays yet** — zero rows, zero readers, and a defensible frozen-assessment semantics; a pointer nothing dereferences is worse than a copy (antagonist d).
+
+## PART 5 — THE SINGLE HIGHEST-VALUE FIRST MIGRATION
+
+**M0: repoint `scripts/db.py`'s two citation-mining joins from `local_ref_id` string equality to `cm.global_ref_id = ssl.ref_id`.** It is the only place in the database where duplicated values have already drifted *and* a shipping reader gives wrong answers because of it — `get_unmined_sources()` currently reports REF-00561, REF-00969 and REF-00970 as unmined when `citation_mining` says they are mined, which sends the next research session off to redo finished work. It moves zero rows, touches zero schema, cannot break replay, is falsifiable in one query, and it is the owner's ruling in its purest form: the reference ID (`global_ref_id`) was already there, in every row, waiting to be pointed at — the system was joining on the copy instead of the pointer.
