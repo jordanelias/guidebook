@@ -24,7 +24,8 @@ CLI usage:
     python3 scripts/db.py log-search --slug SLUG --language EN --query-text '...' --engine pubmed \
         --depth-method scoping --session SESSION      (upsert-coverage/-language are frozen; see log_search)
     python3 scripts/db.py update-bpc --slug SLUG --citation-mining-complete 1 --session SESSION
-    python3 scripts/db.py add-source --ref-id REF-001 --author "Smith|Jane" --author "corp|WHO" --year 2022 --title "..." --tier 1 --session SESSION [--slug SLUG --local-ref-id LR-001]
+    python3 scripts/db.py add-source --ref-id REF-00971 --author "Smith|Jane" --author "corp|WHO" --year 2022 --title "..." --tier 1 --session SESSION [--slug SLUG --local-ref-id RAP-07]
+        (--ref-id is the GLOBAL REF-NNNNN; --local-ref-id is the per-slug label. Different values.)
         (--authors "Smith J; Jones K" still works and is parsed into author rows; --author is preferred because it keeps the given name)
     python3 scripts/db.py validate
     python3 scripts/db.py --help
@@ -1774,6 +1775,35 @@ def insert_evidence_source(data: dict, session: str,
         "verification_note", "verified_by_tool",
     })
     _validate_cols(data.keys(), _ES_COLS, "insert_evidence_source")
+
+    # THE REF_ID MUST BE A GLOBAL REFERENCE ID, and nothing else enforced that.
+    # `evidence_sources.ref_id` is a bare TEXT PRIMARY KEY with no CHECK, so
+    # `add-source --ref-id RAP-04` inserted silently — and until 2026-08-24 the two
+    # skills that document this call told sessions to do exactly that, both writing
+    # `--ref-id {local_ref_id}` beside `--local-ref-id {local_ref_id}`.
+    #
+    # What that costs: a source filed under a per-slug label is invisible to the
+    # source_locators high-water mark that ref_ids are minted above, collides with the
+    # next slug that mints the same label, and renders a citation keyed to a string
+    # that means nothing outside one slug. It is the copy-versus-pointer confusion that
+    # already put RAP-F61/F69/F70 in citation_mining against RAP-06/09/10 in
+    # source_slug_links and reported three fully-mined sources UNMINED.
+    #
+    # Shapes accepted: REF-NNNNN (924 live), REF-VERIFIED-NNN (11 live, human-verified
+    # standards predating the DOI pipeline), Co1-NN/NNN (schemas/evidence_source.py).
+    rid = str(data.get("ref_id", ""))
+    if not re.fullmatch(r"REF-\d{5}|REF-VERIFIED-\d{3}|Co1-\d{2,3}", rid):
+        hint = ""
+        if re.fullmatch(r"[A-Z]{2,6}-[A-Z]?\d{1,4}", rid):
+            hint = (f" {rid!r} looks like a per-slug LOCAL label, which belongs in "
+                    f"--local-ref-id, not --ref-id. They are different values: the "
+                    f"global id is unique across the repository, the label is "
+                    f"meaningful only inside one slug.")
+        raise ValueError(
+            f"--ref-id {rid!r} is not a global reference id.{hint} Expected REF-NNNNN "
+            f"(or REF-VERIFIED-NNN / Co1-NN). There is no allocator: mint above the "
+            f"source_locators high-water mark, or you will collide with a held "
+            f"identifier (CLAUDE.md §4). Nothing was written.")
 
     # A verification standing implies its evidence — so REFUSE the write when the
     # evidence is absent. Do not fill it in.

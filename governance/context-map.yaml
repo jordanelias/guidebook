@@ -1118,7 +1118,7 @@ checks:
     kinds:
     - data
     - schema
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/tests/test_db_integrity.py
   - id: validate_axes
     level: blocking

@@ -188,7 +188,7 @@ crashed with "table evidence_sources has no column named authors".
 ### Adding new sources
 ```bash
 python3 scripts/db.py add-source \
-  --ref-id {local_ref_id} \
+  --ref-id {global_ref_id} \        # REF-NNNNN, minted above the source_locators high-water mark
   --author "{last}|{given}" \      # repeatable, byline order; 'corp|{name}' for a body
   # or, from a display string: --authors "{authors}"   (parsed into rows; refuses ambiguity)
   --year {year} \
@@ -199,9 +199,25 @@ python3 scripts/db.py add-source \
   --lang-detected {iso_639_1_code} \
   --lang-detection-method {native_title_verified|journal_family_inference|citing_document_language} \
   --slug {slug} \
-  --local-ref-id {local_ref_id} \
+  --local-ref-id {local_ref_id} \   # the per-slug LABEL (RAP-04). A different thing.
   --session {session}
 ```
+
+**`--ref-id` and `--local-ref-id` are not the same value, and this block said they were
+until 2026-08-24.** It read `--ref-id {local_ref_id}`, which files the source under its
+per-slug label: `evidence_sources.ref_id='RAP-04'`. There is no CHECK on that column, so
+it inserts silently — and the row is then invisible to the `source_locators` high-water
+mark, collides with the next slug that mints an `RAP-04`, and renders a citation keyed to
+a label that means nothing outside one slug. `db.py add-source` now refuses a ref_id that
+is not a global reference id, and names this confusion when it does.
+
+- `--ref-id` is the **global** reference id, `REF-NNNNN`, unique across the repository.
+  There is no allocator: mint above the `source_locators` high-water mark (CLAUDE.md §4).
+- `--local-ref-id` is the **per-slug label**, `RAP-04`, meaningful only inside `{slug}`.
+
+This is the same copy-versus-pointer confusion that put `RAP-F61/F69/F70` in
+`citation_mining` while `source_slug_links` held `RAP-06/09/10` for the same three
+sources, and reported them UNMINED after they had been fully mined.
 
 **`--lang-detected` is REQUIRED, not optional, for every `add-source` call — not just when the slug's focus is non-English.** Before 2026-07-20 this field was silently unsettable (missing from the CLI/column whitelist entirely), which meant no citation-mining discovery — including genuinely non-English ones — was taggable by language. That makes the source invisible to any future language-prioritized query, silently defeating the point of ever running a non-English-focused pass. Use `native_title_verified` when you've read the actual title/text in that language; `journal_family_inference` when inferring from publishing in the same venue as a confirmed-language source (lower confidence — say so); `citing_document_language` when extracted from a bibliography written in that language.
 
@@ -279,9 +295,11 @@ All research skills MUST invoke citation-miner inline for every confirmed Tier 1
 **Slugs now fully mined:** [{list}]
 **Remaining unmined (Tier 1–3):**
 ```sql
+-- On the REFERENCE ID, not local_ref_id. This query joined on the per-slug label and
+-- was missed by the 2026-08-24 sweep that corrected the other three in this file.
 SELECT COUNT(*), ssl.slug FROM evidence_sources es
 JOIN source_slug_links ssl ON es.ref_id = ssl.ref_id
-LEFT JOIN citation_mining cm ON cm.slug = ssl.slug AND cm.local_ref_id = ssl.local_ref_id
-WHERE es.tier IN (1,2,3) AND (cm.local_ref_id IS NULL OR cm.backward=0 OR cm.forward=0)
+LEFT JOIN citation_mining cm ON cm.slug = ssl.slug AND cm.global_ref_id = es.ref_id
+WHERE es.tier IN (1,2,3) AND (cm.global_ref_id IS NULL OR cm.backward=0 OR cm.forward=0)
 GROUP BY ssl.slug ORDER BY COUNT(*) DESC
 ```

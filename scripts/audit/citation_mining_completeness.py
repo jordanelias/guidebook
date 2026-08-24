@@ -169,6 +169,13 @@ def audit(db_path, session=None, tier_max=2, output_json=False):
         -- pass over that fix; corrected here rather than in a second column.
         LEFT JOIN citation_mining cm
                ON cm.global_ref_id = es.ref_id
+        -- cm2 IS A LEGACY FALLBACK AND IS CURRENTLY DORMANT: measured 2026-08-24,
+        -- 0 of 10 citation_mining rows have a NULL global_ref_id, so this join reaches
+        -- nothing. It is KEPT rather than deleted because its reason is specific and
+        -- its failure direction is safe: a row that only (slug, local_ref_id) can reach
+        -- would otherwise report UNMINED, which is the 48-false-positive bug described
+        -- above. `log_mining` now always writes global_ref_id, so the only way it fires
+        -- again is a legacy import. Delete it once no such row can exist.
         LEFT JOIN citation_mining cm2
                ON cm2.slug = ssl.slug AND cm2.local_ref_id = ssl.local_ref_id
         WHERE es.tier BETWEEN 1 AND :tier_max
