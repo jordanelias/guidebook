@@ -812,3 +812,28 @@ ruling, not authorities against it** — a prior ratification does not outrank t
 
 The rename itself (4 tables, 6 columns, a blocking check, 297 files) is **D-SCHEMA and owner-gated**;
 see `decisions/DR-2026-08-24-scaffolding-is-phase-specific.md` §1 R8.
+
+---
+
+## CORRECTION 2026-08-24 — the duplication table's `citation_mining` row, and its repair order
+
+Appended, not edited: this file is the append-only operative rule ledger.
+
+**The count is stale.** The duplication table above records `citation_mining.doi | 7`. Live today
+it is **10 of 10 rows populated**. CLAUDE.md §2(b) forbids hand-written counts in derived
+documents for exactly this reason; derive it — `SELECT COUNT(*) FROM citation_mining WHERE
+COALESCE(doi,'') <> ''`.
+
+**The prescribed repair is impossible as written.** *"Order of repair, cheapest first: drop
+`citation_mining.doi`"* cannot be executed. Committed data migrations INSERT that column, and
+migrations are append-only and replay from the baseline, so a DROP replaying before the INSERT
+that names it breaks `migration_reproducibility` — the trap migration 062 already sprang and
+documented. The same applies to every other column named for dropping in that passage where a
+committed migration writes it.
+
+**What is actually available**, and it is the shape migrations 063/064 used for the author
+columns: **writer-retire, reader-retire, NULL forward.** The column survives as a tombstone; no
+program writes it; every reader goes to the pointed-to home. Before proposing any drop, grep
+`scripts/migrations/data_*` for the column name — that grep is the gate.
+
+Tracked as **PD-2** in `workplan/2026-08-24-pointer-discipline-queue.md`.
