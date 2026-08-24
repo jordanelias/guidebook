@@ -44,7 +44,7 @@ literature-review-planner confirms a Tier 1–3 source:
 1. Calling skill passes: `(slug, local_ref_id, doi)`
 2. Citation-miner checks:
    ```bash
-   python3 scripts/db.py is-mined --slug {slug} --ref {local_ref_id}
+   python3 scripts/db.py is-mined --slug {slug} --ref {global_ref_id}   # GLOBAL REF-NNNNN, not the label
    ```
    Returns: `{"mined": false}` or `{"backward": 0/1, "forward": 0/1, ...}`
 3. If already mined (both B+F) → skip, return
@@ -53,12 +53,24 @@ literature-review-planner confirms a Tier 1–3 source:
    ```bash
    python3 scripts/db.py log-mining \
      --slug {slug} \
-     --ref {local_ref_id} \
+     --ref {global_ref_id} \
      --direction backward \
      --connections '["CON-NNNN","CON-NNNN"]' \   # the ids you actually created
-     --session {session_filename} \
-     --doi {doi}
+     --session {session_filename}
    ```
+
+   > **`--ref` TAKES THE GLOBAL `REF-NNNNN`, NOT THE PER-SLUG LABEL. CORRECTED
+   > 2026-08-24, and this instruction is where the defect came from.** It read
+   > `--ref {local_ref_id}`, so `log_mining` wrote a label into the pointer column
+   > and left `global_ref_id` NULL. On 2026-08-23 a batch followed it and
+   > `source_slug_links` ended up holding `RAP-06/09/10` while `citation_mining`
+   > held `RAP-F61/F69/F70` for the same three sources — after which
+   > `get_unmined_sources()` reported REF-00561, REF-00969 and REF-00970 as never
+   > mined, and the next session would have re-mined finished work.
+   >
+   > `--doi` is **removed**. The DOI is reachable through the reference id; copying
+   > it had already drifted 2 of 10 rows by case. The label is looked up from
+   > `source_slug_links`, which owns it — never invented at the call site.
    Run once per direction (backward, then forward as separate calls).
 6. Return discovered sources to calling skill
 
@@ -130,7 +142,9 @@ Backward mining is **not blocked by the absence of a DOI**. It requires only the
 - Duplicate: pre-check the DOI against `evidence_sources.doi` (rule R9 — if it
   exists, cross-file the existing `ref_id`, never duplicate). With no DOI, try the
   other stable identifiers (`pmid`, `pmcid`, `isbn`, `issn`, `handle`, `url`),
-  then normalised title + `pub_year` + `first_author_last`.
+  then normalised title + `pub_year` + `v_evidence_authors.first_author_last`
+  (the `evidence_sources` column of that name is a tombstone since migration 063
+  and reads NULL — screen on the view or every source looks new).
   *There is no dedup-key column.* This line named `doi_less_key`, which was  <!-- [RETIRED-VOCAB-OK] -->
   dropped from the schema — as §4 of this same file already says, two screens
   down. Two answers to one question is the disease; the §4 note is the true one.
@@ -141,14 +155,29 @@ Backward mining is **not blocked by the absence of a DOI**. It requires only the
 
 ### evidence_sources — `add-source` logical fields (current schema)
 The `db.py add-source` CLI takes **logical** fields that map to the real columns:
-`--authors → author_display`, `--year → pub_year`, `--title → pub_title`, plus
+`--year → pub_year`, `--title → pub_title`, plus
 `--doi, --pmid, --tier, --evidence-type, --jurisdiction, --slug, --local-ref-id`.
 
+**AUTHORS ARE ROWS, NOT A STRING — changed 2026-08-24, migration 063.** `--authors` no
+longer maps to `author_display`; that column and its four companions
+(`first_author_last`, `first_author_first`, `author_count`, `is_corporate_primary`) are
+**writer-retired tombstones on `evidence_sources` and read NULL**. Who wrote a source has
+one home, `evidence_source_authors`, and `v_evidence_authors` derives the display form
+from it.
+
+- `--author 'Payne|Sarah R.'` — **preferred**, repeatable, in byline order. Keeps the
+  given name. `--author 'corp|World Health Organization'` for a corporate author.
+- `--authors "Payne S; Galbrun L"` — still accepted and parsed into rows, but the display
+  form holds initials where the row holds a given name, so it stores less. Anything it
+  cannot split into surname + initials is **refused, not guessed at**, and nothing is
+  written. Use `--author` for those.
+- A source with no authors is refused outright. There is no display column left to write
+  instead. If the work has no named author, file the issuing body as a corporate author.
+
 **Note:** the live `evidence_sources` table has **no** `authors`/`year`/`title`/`doi_less_key`  <!-- [RETIRED-VOCAB-OK] -->
-columns (it uses `author_display`, `pub_year`, `pub_title`, …; structured authors live in
-the separate `evidence_source_authors` table). Run `.schema evidence_sources` for the full
-layout. The CLI mapping was restored 2026-06-22 (audit F-17) — earlier it crashed with
-"table evidence_sources has no column named authors".
+columns (it uses `pub_year`, `pub_title`, …). Run `.schema evidence_sources` for the full
+layout. The `--year`/`--title` mapping was restored 2026-06-22 (audit F-17) — earlier it
+crashed with "table evidence_sources has no column named authors".
 
 ### source_slug_links columns
 `ref_id, slug, local_ref_id`
@@ -159,8 +188,9 @@ layout. The CLI mapping was restored 2026-06-22 (audit F-17) — earlier it cras
 ### Adding new sources
 ```bash
 python3 scripts/db.py add-source \
-  --ref-id {local_ref_id} \
-  --authors "{authors}" \
+  --ref-id {global_ref_id} \        # REF-NNNNN, minted above the source_locators high-water mark
+  --author "{last}|{given}" \      # repeatable, byline order; 'corp|{name}' for a body
+  # or, from a display string: --authors "{authors}"   (parsed into rows; refuses ambiguity)
   --year {year} \
   --title "{title}" \
   --tier {tier} \
@@ -169,9 +199,25 @@ python3 scripts/db.py add-source \
   --lang-detected {iso_639_1_code} \
   --lang-detection-method {native_title_verified|journal_family_inference|citing_document_language} \
   --slug {slug} \
-  --local-ref-id {local_ref_id} \
+  --local-ref-id {local_ref_id} \   # the per-slug LABEL (RAP-04). A different thing.
   --session {session}
 ```
+
+**`--ref-id` and `--local-ref-id` are not the same value, and this block said they were
+until 2026-08-24.** It read `--ref-id {local_ref_id}`, which files the source under its
+per-slug label: `evidence_sources.ref_id='RAP-04'`. There is no CHECK on that column, so
+it inserts silently — and the row is then invisible to the `source_locators` high-water
+mark, collides with the next slug that mints an `RAP-04`, and renders a citation keyed to
+a label that means nothing outside one slug. `db.py add-source` now refuses a ref_id that
+is not a global reference id, and names this confusion when it does.
+
+- `--ref-id` is the **global** reference id, `REF-NNNNN`, unique across the repository.
+  There is no allocator: mint above the `source_locators` high-water mark (CLAUDE.md §4).
+- `--local-ref-id` is the **per-slug label**, `RAP-04`, meaningful only inside `{slug}`.
+
+This is the same copy-versus-pointer confusion that put `RAP-F61/F69/F70` in
+`citation_mining` while `source_slug_links` held `RAP-06/09/10` for the same three
+sources, and reported them UNMINED after they had been fully mined.
 
 **`--lang-detected` is REQUIRED, not optional, for every `add-source` call — not just when the slug's focus is non-English.** Before 2026-07-20 this field was silently unsettable (missing from the CLI/column whitelist entirely), which meant no citation-mining discovery — including genuinely non-English ones — was taggable by language. That makes the source invisible to any future language-prioritized query, silently defeating the point of ever running a non-English-focused pass. Use `native_title_verified` when you've read the actual title/text in that language; `journal_family_inference` when inferring from publishing in the same venue as a confirmed-language source (lower confidence — say so); `citing_document_language` when extracted from a bibliography written in that language.
 
@@ -181,15 +227,18 @@ python3 scripts/db.py add-source \
 
 Query for bibliography generation:
 ```sql
-SELECT es.ref_id, es.author_display, es.pub_year, es.pub_title, es.doi, es.tier,
+SELECT es.ref_id, va.author_display, es.pub_year, es.pub_title, es.doi, es.tier,
        es.jurisdiction,
        GROUP_CONCAT(DISTINCT ssl.slug) as slugs,
        cm.backward, cm.forward
 FROM evidence_sources es
+LEFT JOIN v_evidence_authors va ON va.ref_id = es.ref_id
 LEFT JOIN source_slug_links ssl ON es.ref_id = ssl.ref_id
-LEFT JOIN citation_mining cm ON cm.local_ref_id = ssl.local_ref_id AND cm.slug = ssl.slug
+-- On the REFERENCE ID, not local_ref_id: that per-slug label is copied into both tables
+-- and has already drifted here (RAP-06/09/10 vs RAP-F61/F69/F70 for the same sources).
+LEFT JOIN citation_mining cm ON cm.global_ref_id = es.ref_id AND cm.slug = ssl.slug
 GROUP BY es.ref_id
-ORDER BY es.first_author_last COLLATE NOCASE, es.pub_year
+ORDER BY va.first_author_last COLLATE NOCASE, es.pub_year
 ```
 
 Format:
@@ -246,9 +295,11 @@ All research skills MUST invoke citation-miner inline for every confirmed Tier 1
 **Slugs now fully mined:** [{list}]
 **Remaining unmined (Tier 1–3):**
 ```sql
+-- On the REFERENCE ID, not local_ref_id. This query joined on the per-slug label and
+-- was missed by the 2026-08-24 sweep that corrected the other three in this file.
 SELECT COUNT(*), ssl.slug FROM evidence_sources es
 JOIN source_slug_links ssl ON es.ref_id = ssl.ref_id
-LEFT JOIN citation_mining cm ON cm.slug = ssl.slug AND cm.local_ref_id = ssl.local_ref_id
-WHERE es.tier IN (1,2,3) AND (cm.local_ref_id IS NULL OR cm.backward=0 OR cm.forward=0)
+LEFT JOIN citation_mining cm ON cm.slug = ssl.slug AND cm.global_ref_id = es.ref_id
+WHERE es.tier IN (1,2,3) AND (cm.global_ref_id IS NULL OR cm.backward=0 OR cm.forward=0)
 GROUP BY ssl.slug ORDER BY COUNT(*) DESC
 ```

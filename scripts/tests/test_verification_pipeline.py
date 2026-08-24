@@ -141,8 +141,8 @@ try:
     conn = fresh()
     rid = "REF-TEST-C01"
     conn.execute("""INSERT OR IGNORE INTO evidence_sources
-        (ref_id,source_type,doi,first_author_last,author_count_is_complete,is_corporate_primary)
-        VALUES (?,?,?,?,?,?)""", (rid,"journal_article","10.x/z","Smith",0,0))
+        (ref_id,source_type,doi,author_count_is_complete)
+        VALUES (?,?,?,?)""", (rid,"journal_article","10.x/z",0))
     conn.execute("""INSERT INTO evidence_source_authors
         (ref_id,position,last_name,first_name,is_corporate,created_at,created_by_session)
         VALUES (?,1,?,?,0,?,?)""", (rid,"Smith","Jane","2026-01-01","test"))
@@ -165,8 +165,8 @@ try:
     conn = fresh()
     rid = "REF-TEST-C02"
     conn.execute("""INSERT OR IGNORE INTO evidence_sources
-        (ref_id,source_type,doi,first_author_last,author_count_is_complete,is_corporate_primary)
-        VALUES (?,?,?,?,?,?)""", (rid,"journal_article","10.x/aa","Anderson",1,0))
+        (ref_id,source_type,doi,author_count_is_complete)
+        VALUES (?,?,?,?)""", (rid,"journal_article","10.x/aa",1))
     conn.execute("""INSERT INTO evidence_source_authors
         (ref_id,position,last_name,first_name,is_corporate,created_at,created_by_session)
         VALUES (?,1,?,?,0,?,?)""", (rid,"Anderson","Alice","2026-01-01","manual"))
@@ -186,8 +186,10 @@ try:
     conn = fresh()
     rid = "REF-TEST-C03"
     conn.execute("""INSERT OR IGNORE INTO evidence_sources
-        (ref_id,source_type,doi,first_author_last,is_corporate_primary)
-        VALUES (?,?,?,?,?)""", (rid,"journal_article","10.x/cc","Smith",0))
+        (ref_id,source_type,doi) VALUES (?,?,?)""", (rid,"journal_article","10.x/cc"))
+    conn.execute("""INSERT INTO evidence_source_authors
+        (ref_id,position,last_name,first_name,is_corporate,created_at,created_by_session)
+        VALUES (?,1,?,?,0,?,?)""", (rid,"Smith","J","2026-01-01","test"))
     conn.commit()
     item = {"DOI":"10.x/cc","title":["T"],"issued":{"date-parts":[[2021]]},
             "author":[{"family":"Smith","given":"J","ORCID":"https://orcid.org/0000-0002-1234-5678"}]}
@@ -288,10 +290,19 @@ try:
     conn = fresh()
     rid = "REF-TEST-F01"
     conn.execute("""INSERT OR IGNORE INTO evidence_sources
-        (ref_id,source_type,doi,first_author_last,is_corporate_primary,metadata_quality,
-         author_count_is_complete)
-        VALUES (?,?,?,?,?,?,?)""",
-        (rid,"journal_article","10.x/f01","Smith",0,"AUTHOR-TITLE-ONLY",1))
+        (ref_id,source_type,doi,metadata_quality,author_count_is_complete)
+        VALUES (?,?,?,?,?)""",
+        (rid,"journal_article","10.x/f01","AUTHOR-TITLE-ONLY",1))
+    # The author has to be a ROW. This fixture used to set evidence_sources
+    # .first_author_last='Smith' with author_count_is_complete=1, which blocks the
+    # enrichment refresh — so the promotion to COMPLETE rested entirely on a copy of
+    # the author list that nothing kept true. Migration 063 retired that column and
+    # enrich_from_crossref now reads v_evidence_authors, so the fixture states the
+    # fact where the fact lives. Without this the row promotes to COMPLETE while
+    # rendering a blank byline, which is the outcome the check exists to prevent.
+    conn.execute("""INSERT INTO evidence_source_authors
+        (ref_id,position,last_name,first_name,is_corporate,created_at,created_by_session)
+        VALUES (?,1,?,?,0,?,?)""", (rid,"Smith","Jane","2026-01-01","test"))
     conn.commit()
     mod.enrich_from_crossref(conn, rid, cr_full)
     conn.commit()
@@ -305,9 +316,12 @@ try:
     conn = fresh()
     rid = "REF-TEST-F02"
     conn.execute("""INSERT OR IGNORE INTO evidence_sources
-        (ref_id,source_type,doi,first_author_last,metadata_quality,is_corporate_primary)
-        VALUES (?,?,?,?,?,?)""",
-        (rid,"journal_article","10.x/f02","Smith","COMPLETE",0))
+        (ref_id,source_type,doi,metadata_quality)
+        VALUES (?,?,?,?)""",
+        (rid,"journal_article","10.x/f02","COMPLETE"))
+    conn.execute("""INSERT INTO evidence_source_authors
+        (ref_id,position,last_name,first_name,is_corporate,created_at,created_by_session)
+        VALUES (?,1,?,?,0,?,?)""", (rid,"Smith","Jane","2026-01-01","test"))
     conn.commit()
     mod.enrich_from_crossref(conn, rid, cr_full)
     conn.commit()

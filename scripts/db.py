@@ -24,13 +24,16 @@ CLI usage:
     python3 scripts/db.py log-search --slug SLUG --language EN --query-text '...' --engine pubmed \
         --depth-method scoping --session SESSION      (upsert-coverage/-language are frozen; see log_search)
     python3 scripts/db.py update-bpc --slug SLUG --citation-mining-complete 1 --session SESSION
-    python3 scripts/db.py add-source --ref-id REF-001 --authors "Smith J" --year 2022 --title "..." --tier 1 --session SESSION [--slug SLUG --local-ref-id LR-001]
+    python3 scripts/db.py add-source --ref-id REF-00971 --author "Smith|Jane" --author "corp|WHO" --year 2022 --title "..." --tier 1 --session SESSION [--slug SLUG --local-ref-id RAP-07]
+        (--ref-id is the GLOBAL REF-NNNNN; --local-ref-id is the per-slug label. Different values.)
+        (--authors "Smith J; Jones K" still works and is parsed into author rows; --author is preferred because it keeps the given name)
     python3 scripts/db.py validate
     python3 scripts/db.py --help
 """
 
 import json
 import os
+import re
 import sqlite3
 import sys
 import argparse
@@ -220,10 +223,13 @@ _VALID_DIRECTIONS = frozenset({"backward", "forward"})
 
 
 def is_mined(slug: str, ref_id: str) -> dict | None:
+    # Keyed on the REFERENCE ID. Callers pass a global ref_id; this matched it
+    # against local_ref_id, the per-slug label, which only worked while the two
+    # happened to agree. They stopped agreeing on 2026-08-23.
     with connect(readonly=True) as conn:
         row = conn.execute(
             "SELECT backward, forward, connections_produced "
-            "FROM citation_mining WHERE slug=? AND local_ref_id=?",
+            "FROM citation_mining WHERE slug=? AND global_ref_id=?",
             [slug, ref_id]
         ).fetchone()
     return dict(row) if row else None
@@ -231,7 +237,14 @@ def is_mined(slug: str, ref_id: str) -> dict | None:
 
 def log_mining(slug: str, ref_id: str, direction: str,
                connections: list[str], session: str,
-               doi: str = None, dry_run: bool = False):
+               dry_run: bool = False):
+    """Record a mining pass. Keyed on the global ref_id.
+
+    The `doi` parameter was REMOVED 2026-08-24. It wrote a copy of a value that
+    is reachable through global_ref_id, and 2 of 10 rows had already drifted by
+    case. Accepting it while ignoring it would have been worse than either
+    keeping or dropping it: a caller would believe a DOI had been recorded.
+    """
     if direction not in _VALID_DIRECTIONS:
         raise ValueError(
             f"direction must be 'backward' or 'forward', got '{direction}'"
@@ -240,9 +253,14 @@ def log_mining(slug: str, ref_id: str, direction: str,
     ts = now()
 
     with connect(dry_run) as conn:
+        # THE WRITER IS WHERE THE DRIFT CAME FROM. This took a global ref_id and
+        # wrote it into local_ref_id while leaving global_ref_id NULL, so the
+        # pointer column the readers need was never populated and the label
+        # column carried a value that was not a label. Key on the reference id;
+        # derive the label from source_slug_links, which owns it.
         row = conn.execute(
             "SELECT backward, forward, connections_produced "
-            "FROM citation_mining WHERE slug=? AND local_ref_id=?",
+            "FROM citation_mining WHERE slug=? AND global_ref_id=?",
             [slug, ref_id]
         ).fetchone()
         if row:
@@ -251,17 +269,24 @@ def log_mining(slug: str, ref_id: str, direction: str,
             conn.execute(
                 f"UPDATE citation_mining SET {dir_col}=1, "
                 "connections_produced=?, updated_at=?, updated_by_session=? "
-                "WHERE slug=? AND local_ref_id=?",
+                "WHERE slug=? AND global_ref_id=?",
                 [merged, ts, session, slug, ref_id]
             )
         else:
             conn.execute(
+                # local_ref_id is LOOKED UP, never invented: source_slug_links owns
+                # the per-slug label. doi is NOT written -- it is reachable through
+                # global_ref_id and copying it is what drifted 2 of 10 rows by case.
                 "INSERT INTO citation_mining "
-                "(slug,local_ref_id,doi,backward,forward,"
+                "(slug,local_ref_id,global_ref_id,backward,forward,"
                 " connections_produced,created_at,created_by_session,"
                 " updated_at,updated_by_session) "
                 "VALUES (?,?,?,?,?,?,?,?,?,?)",
-                [slug, ref_id, doi,
+                [slug,
+                 (conn.execute("SELECT local_ref_id FROM source_slug_links "
+                               "WHERE slug=? AND ref_id=?", [slug, ref_id]
+                               ).fetchone() or [None])[0],
+                 ref_id,
                  1 if direction == "backward" else 0,
                  1 if direction == "forward" else 0,
                  json.dumps(connections), ts, session, ts, session]
@@ -403,7 +428,10 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
         "results_found": results_found, "results_screened": results_screened,
         "results_admitted": results_admitted,
         "saturation_signal": saturation_signal,
-        "admitted_ref_ids": json.dumps(ids) if ids else None,
+        # admitted_ref_ids intentionally NOT written — search_admissions is the
+        # sole home (owner ruling 2026-08-24). Column retained because committed
+        # data migrations INSERT it and migrations are append-only.
+
         "deferred_reason": deferred_reason, "backfill": backfill,
         "session": session, "executed_at": ts,
         "findings_note": findings_note, "harm_finding": harm_finding,
@@ -415,12 +443,15 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
             f"INSERT INTO search_executions ({cols}) VALUES ({ph})",
             list(row.values()))
         exec_id = cur.lastrowid
-        # BOTH carriers, in one transaction. admitted_ref_ids (JSON, on the row)
-        # and search_admissions (the junction) hold the same fact, and checks
-        # H03/H04 assert they agree in both directions. Writing one without the
-        # other is a guaranteed check failure — and worse, a silent disagreement
-        # about which sources a search actually produced, at the seam where the
-        # research phase hands off to collection.
+        # ONE carrier: search_admissions. Until 2026-08-24 this dual-wrote the
+        # same fact into admitted_ref_ids (JSON on the row) and kept the two
+        # honest with parity checks H03/H04. Owner ruling 2026-08-24: "it is
+        # better to have a table cell point to another table cell than to
+        # rewrite" — a fact written into two tables is drift waiting to happen,
+        # and a parity check does not prevent that, it makes it survivable and
+        # therefore permanent. Nothing ever READ the JSON: it was write-only
+        # data guarded by a test. The junction is the record, and it carries its
+        # own created_at.
         for ref_id in ids:
             if not conn.execute("SELECT 1 FROM evidence_sources WHERE ref_id=?",
                                 [ref_id]).fetchone():
@@ -508,7 +539,13 @@ def get_unmined_sources(slug: str) -> list[dict]:
             FROM source_slug_links ssl
             JOIN evidence_sources es ON ssl.ref_id = es.ref_id
             LEFT JOIN citation_mining cm
-                ON cm.slug=ssl.slug AND cm.local_ref_id=ssl.local_ref_id
+                -- POINTER, NOT COPY (owner ruling 2026-08-24). This joined on
+                -- local_ref_id, the per-slug LABEL, which is copied into both tables
+                -- and had already drifted: source_slug_links held RAP-06/09/10 while
+                -- citation_mining held RAP-F61/F69/F70 for the same three sources, so
+                -- REF-00561/00969/00970 reported UNMINED after being fully mined. The
+                -- reference id was in every row the whole time; join on it.
+                ON cm.slug=ssl.slug AND cm.global_ref_id=ssl.ref_id
             WHERE ssl.slug=?
             AND (cm.backward IS NULL OR cm.forward IS NULL
                  OR cm.backward=0 OR cm.forward=0)
@@ -817,7 +854,6 @@ def main():
     p_logm.add_argument("--connections", required=True,
                         help="JSON array of CON-IDs")
     p_logm.add_argument("--session", required=True)
-    p_logm.add_argument("--doi")
     p_logm.add_argument("--dry-run", action="store_true")
 
     # next-id
@@ -966,7 +1002,20 @@ def main():
     # add-source
     p_as = sub.add_parser("add-source", help="Insert an evidence source")
     p_as.add_argument("--ref-id", required=True)
-    p_as.add_argument("--authors", required=True)
+    # AUTHORS ARE ROWS, NOT A STRING (migration 063). evidence_sources.author_display is
+    # writer-retired; who wrote a source has one home, evidence_source_authors, and
+    # v_evidence_authors renders it. Until 2026-08-24 this CLI could write the display
+    # copy and could NOT write the rows at all — the documented filing path wrote the
+    # derived form and left the source of truth empty. Both flags below write rows.
+    p_as.add_argument("--author", action="append", metavar="LAST|GIVEN",
+                      help="Repeatable, in byline order. 'Payne|Sarah R.' for a person, "
+                           "'corp|World Health Organization' for a corporate author. "
+                           "Preferred: it stores the given name, which --authors cannot.")
+    p_as.add_argument("--authors", metavar='"Last I; Last I"',
+                      help="Display form, parsed into author rows. Kept because every "
+                           "skill and runbook writes it. Each part must be a surname "
+                           "followed by initials; anything this cannot parse without "
+                           "guessing is REFUSED rather than approximated.")
     p_as.add_argument("--year", required=True, type=int)
     p_as.add_argument("--title", required=True)
     p_as.add_argument("--tier", required=True, type=int)
@@ -1211,7 +1260,7 @@ def main():
         log_mining(
             slug=args.slug, ref_id=args.ref,
             direction=args.direction, connections=conns,
-            session=args.session, doi=args.doi,
+            session=args.session,
             dry_run=args.dry_run
         )
         print(json.dumps({"logged": True, "dry_run": args.dry_run}))
@@ -1334,9 +1383,13 @@ def main():
         _emit({"updated": True, "slug": args.slug, "fields": list(data.keys())})
 
     elif args.command == "add-source":
+        if not args.author and not args.authors:
+            parser.error("add-source needs --author (repeatable, preferred) or --authors")
+        if args.author and args.authors:
+            parser.error("give --author or --authors, not both: two spellings of the "
+                         "author list is the copy this migration removes")
         data = {
             "ref_id": args.ref_id,
-            "authors": args.authors,
             "year": args.year,
             "title": args.title,
             "tier": args.tier,
@@ -1361,7 +1414,10 @@ def main():
             data["verification_method"] = args.verification_method
         if args.verified_by_tool:
             data["verified_by_tool"] = args.verified_by_tool
-        ref_id = insert_evidence_source(data, session=args.session, dry_run=args.dry_run)
+        authors = (parse_author_flags(args.author) if args.author
+                   else parse_author_display(args.authors))
+        ref_id = insert_evidence_source(data, session=args.session,
+                                        dry_run=args.dry_run, authors=authors)
         if args.slug and args.local_ref_id:
             insert_source_slug_link(ref_id, args.slug, args.local_ref_id,
                                     session=args.session, dry_run=args.dry_run)
@@ -1597,16 +1653,112 @@ def update_bpc_metadata(slug: str, data: dict, session: str,
             )
 
 
+def parse_author_flags(flags: list[str]) -> list[dict]:
+    """Turn repeated --author values into evidence_source_authors rows, in byline order.
+
+    'Payne|Sarah R.'                 -> person, last_name='Payne', first_name='Sarah R.'
+    'corp|World Health Organization' -> corporate author
+    A surname alone is allowed; a given name alone is not, because position in the
+    byline is what a citation renders and a nameless surname cannot be rendered.
+    """
+    out = []
+    for i, raw in enumerate(flags, start=1):
+        part = (raw or "").strip()
+        if not part:
+            raise ValueError("--author was given an empty value")
+        if "|" in part:
+            head, tail = part.split("|", 1)
+        else:
+            head, tail = part, ""
+        head, tail = head.strip(), tail.strip()
+        if head.lower() in ("corp", "corporate"):
+            if not tail:
+                raise ValueError(f"--author {raw!r}: corporate author has no name")
+            out.append({"position": i, "is_corporate": 1, "corporate_name": tail,
+                        "last_name": None, "first_name": None})
+        else:
+            if not head:
+                raise ValueError(f"--author {raw!r}: no surname. Give 'Last|Given'.")
+            out.append({"position": i, "is_corporate": 0, "corporate_name": None,
+                        "last_name": head, "first_name": tail or None})
+    return out
+
+
+# A display part is a surname (which may be hyphenated, accented or multi-word, as in
+# 'van der Meer') followed by initials: 'Payne S', 'Rosas-Perez C', 'MARKUSSEN A'.
+# The initials group is capped at three letters DELIBERATELY. Uncapped, it swallowed a
+# genuine multi-word uppercase surname: 'SENTOP DUMEN' parsed as surname 'SENTOP' with
+# initials 'DUMEN', silently inventing a name split. Three initials is already generous,
+# and anything past it is refused into --author rather than guessed at.
+_DISPLAY_PART = re.compile(
+    r"^(?P<last>.+?)\s+(?P<initials>[A-Z](?:[.\-]?[A-Z]){0,2}\.?)$")
+
+
+def parse_author_display(display: str) -> list[dict]:
+    """Parse the "Last I; Last I" display form back into author rows.
+
+    THIS REFUSES RATHER THAN GUESSES, and that is the point. The display form is lossy:
+    it holds initials where the row holds a given name, so a part it cannot split into
+    surname + initials is not approximated. On 2026-08-19 five sources in this repository
+    were stored with invented co-authors and passed six gates (CLAUDE.md §2(c)); a parser
+    that filled in a plausible reading would be the same failure with a smaller blast
+    radius. Use --author, which needs no parsing, for anything this rejects.
+
+    What is stored: first_name holds exactly the initials supplied and nothing more. It
+    is not expanded into a given name, because the display form does not contain one.
+    """
+    rows, bad = [], []
+    parts = [p.strip() for p in (display or "").split(";")]
+    parts = [p for p in parts if p]
+    if not parts:
+        raise ValueError("--authors is empty")
+    for i, part in enumerate(parts, start=1):
+        m = _DISPLAY_PART.match(part)
+        if m:
+            rows.append({"position": i, "is_corporate": 0, "corporate_name": None,
+                         "last_name": m.group("last").strip(),
+                         "first_name": m.group("initials").strip()})
+        else:
+            bad.append(part)
+    if bad:
+        raise ValueError(
+            "--authors could not be parsed without guessing: "
+            + "; ".join(repr(b) for b in bad)
+            + ". Each part must be a surname followed by initials ('Payne S'). "
+              "For a corporate author or a full given name use the repeatable "
+              "--author flag: --author 'corp|World Health Organization', "
+              "--author 'Payne|Sarah R.'. Nothing was written.")
+    return rows
+
+
 def insert_evidence_source(data: dict, session: str,
-                           dry_run: bool = False) -> str:
-    """Insert a new evidence source. Returns ref_id."""
+                           dry_run: bool = False,
+                           authors: list[dict] | None = None) -> str:
+    """Insert a new evidence source and its author rows. Returns ref_id.
+
+    `authors` is a list of evidence_source_authors rows, from parse_author_flags or
+    parse_author_display. It is written in the SAME transaction as the source, so a
+    source can never exist without the authors it was filed with.
+    """
     # Map legacy logical field names to the real evidence_sources columns and drop
     # doi_less_key (no such column in the current schema). Without this the CLI crashed
     # with "table evidence_sources has no column named authors" (audit F-17, 2026-06-22).
-    _LEGACY = {"authors": "author_display", "year": "pub_year", "title": "pub_title"}
+    _LEGACY = {"year": "pub_year", "title": "pub_title"}
     data = {_LEGACY.get(k, k): v for k, v in data.items() if k != "doi_less_key"}
+
+    # `authors` USED TO MAP TO author_display HERE, and that was the whole defect.
+    # This writer could set the derived display string and had no way to write
+    # evidence_source_authors at all, so the documented filing path populated the copy
+    # and left the source of truth empty. Migration 063 writer-retires the copy; refuse
+    # it explicitly rather than let a caller quietly write a column nothing reads.
+    if "author_display" in data or "authors" in data:
+        raise ValueError(
+            "author_display is writer-retired (migration 063). Authors are rows in "
+            "evidence_source_authors, derived for display by v_evidence_authors. Pass "
+            "the `authors` argument (parse_author_flags / parse_author_display), or on "
+            "the CLI use --author / --authors.")
     _ES_COLS = frozenset({
-        "ref_id", "author_display", "pub_year", "pub_title", "doi",
+        "ref_id", "pub_year", "pub_title", "doi",
         "pmid", "tier", "evidence_type", "jurisdiction", "metadata_quality",
         "verification_status", "co1_provenance", "co1_source_type",
         "synthesis_attribution_required", "notes", "lang_detected",
@@ -1623,6 +1775,35 @@ def insert_evidence_source(data: dict, session: str,
         "verification_note", "verified_by_tool",
     })
     _validate_cols(data.keys(), _ES_COLS, "insert_evidence_source")
+
+    # THE REF_ID MUST BE A GLOBAL REFERENCE ID, and nothing else enforced that.
+    # `evidence_sources.ref_id` is a bare TEXT PRIMARY KEY with no CHECK, so
+    # `add-source --ref-id RAP-04` inserted silently — and until 2026-08-24 the two
+    # skills that document this call told sessions to do exactly that, both writing
+    # `--ref-id {local_ref_id}` beside `--local-ref-id {local_ref_id}`.
+    #
+    # What that costs: a source filed under a per-slug label is invisible to the
+    # source_locators high-water mark that ref_ids are minted above, collides with the
+    # next slug that mints the same label, and renders a citation keyed to a string
+    # that means nothing outside one slug. It is the copy-versus-pointer confusion that
+    # already put RAP-F61/F69/F70 in citation_mining against RAP-06/09/10 in
+    # source_slug_links and reported three fully-mined sources UNMINED.
+    #
+    # Shapes accepted: REF-NNNNN (924 live), REF-VERIFIED-NNN (11 live, human-verified
+    # standards predating the DOI pipeline), Co1-NN/NNN (schemas/evidence_source.py).
+    rid = str(data.get("ref_id", ""))
+    if not re.fullmatch(r"REF-\d{5}|REF-VERIFIED-\d{3}|Co1-\d{2,3}", rid):
+        hint = ""
+        if re.fullmatch(r"[A-Z]{2,6}-[A-Z]?\d{1,4}", rid):
+            hint = (f" {rid!r} looks like a per-slug LOCAL label, which belongs in "
+                    f"--local-ref-id, not --ref-id. They are different values: the "
+                    f"global id is unique across the repository, the label is "
+                    f"meaningful only inside one slug.")
+        raise ValueError(
+            f"--ref-id {rid!r} is not a global reference id.{hint} Expected REF-NNNNN "
+            f"(or REF-VERIFIED-NNN / Co1-NN). There is no allocator: mint above the "
+            f"source_locators high-water mark, or you will collide with a held "
+            f"identifier (CLAUDE.md §4). Nothing was written.")
 
     # A verification standing implies its evidence — so REFUSE the write when the
     # evidence is absent. Do not fill it in.
@@ -1684,6 +1865,24 @@ def insert_evidence_source(data: dict, session: str,
             f"INSERT INTO evidence_sources ({cols}) VALUES ({ph})",
             list(row.values())
         )
+        # A source with no authors renders as a blank byline everywhere, and the
+        # display column that used to paper over that is gone. Refuse the write.
+        if not authors:
+            raise ValueError(
+                f"{data['ref_id']}: no authors given. Every source needs its authors "
+                f"as rows (--author / --authors); there is no display column to write "
+                f"instead. If the work genuinely has no named author, file the issuing "
+                f"body as a corporate author: --author 'corp|<name>'.")
+        stamp = audit(session)
+        for a in authors:
+            conn.execute(
+                "INSERT INTO evidence_source_authors "
+                "(ref_id, position, last_name, first_name, is_corporate, "
+                " corporate_name, role, created_at, created_by_session) "
+                "VALUES (?,?,?,?,?,?,'author',?,?)",
+                [data["ref_id"], a["position"], a.get("last_name"), a.get("first_name"),
+                 a.get("is_corporate", 0), a.get("corporate_name"),
+                 stamp["created_at"], stamp["created_by_session"]])
     return data["ref_id"]
 
 
@@ -1716,7 +1915,13 @@ def get_unmined_for_all_slugs(tier_max: int = 3) -> list[dict]:
             FROM source_slug_links ssl
             JOIN evidence_sources es ON ssl.ref_id = es.ref_id
             LEFT JOIN citation_mining cm
-                ON cm.slug = ssl.slug AND cm.local_ref_id = ssl.local_ref_id
+                -- POINTER, NOT COPY (owner ruling 2026-08-24). This joined on
+                -- local_ref_id, the per-slug LABEL, which is copied into both tables
+                -- and had already drifted: source_slug_links held RAP-06/09/10 while
+                -- citation_mining held RAP-F61/F69/F70 for the same three sources, so
+                -- REF-00561/00969/00970 reported UNMINED after being fully mined. The
+                -- reference id was in every row the whole time; join on it.
+                ON cm.slug = ssl.slug AND cm.global_ref_id = ssl.ref_id
             WHERE es.tier <= ?
             AND (cm.local_ref_id IS NULL OR cm.backward = 0 OR cm.forward = 0)
             ORDER BY es.tier ASC,

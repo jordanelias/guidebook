@@ -248,7 +248,29 @@ checks:
     level: blocking
     basis: unattributed
     cost: fast
-    no_floor: not-instrumented — despite the test_ name this is a live-corpus gate, not a selftest; it prints no whole-check EXAMINED count, so no floor is declarable yet
+    min_items: 1
+    floor_basis: >
+      INSTRUMENTED 2026-08-24. This entry read
+      `no_floor: not-instrumented — ... it prints no whole-check EXAMINED count, so no
+      floor is declarable yet`, and that was accurate: the gate printed 70 green ticks
+      with no denominator anywhere, so a pass could not be told apart from an abstention.
+      Every sub-check now declares its subject and the run prints a whole-check
+      `EXAMINED: <n>` line, so a floor is declarable and this is it.
+
+      min_items:1, not a larger number, and the reason is on the record: the 2026-08-06
+      clean-room reset took evidence_sources from 863 rows to 10. A floor pinned to a
+      corpus size would have gone red on a deliberate decision and stayed red. What this
+      floor asserts is the one thing that must never stop being true — that the gate
+      looked at SOMETHING. Derive the live figure; do not read a number here.
+
+      WHAT THE INSTRUMENTATION FOUND, and it is the reason this was worth doing:
+      29 of the 70 sub-checks currently pass HAVING EXAMINED NOTHING, including all four
+      of section F (pipeline_runs is empty), all of J and K, and D04/D05. They were
+      indistinguishable from real coverage. They are now listed by id at the end of every
+      run under `PASSED HAVING EXAMINED NOTHING`. They are reported, not failed: an empty
+      scope is often simply true — D04/D05 examine DOI-less sources and every live source
+      has a DOI — and failing on it would turn the gate red for a correct state, which is
+      not what CLAUDE.md §2(a) asks for.
     note: >-
       RE-MEASURED 2026-08-22: 72/72 checks pass. The previous text here read "RED on
       main (63/69 checks pass as of 2026-08-04)" and was carried unchanged for

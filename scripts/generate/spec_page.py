@@ -92,10 +92,14 @@ def query_item(conn, item_code):
     # it a join.
     for c in item["cells"]:
         rows = conn.execute(
-            "SELECT csl.ref_id, e.author_display, e.author_display_note, e.pub_year, "
+            # POINTER, NOT COPY (migration 063). author_display is derived from
+            # evidence_source_authors; author_display_note stays on evidence_sources
+            # because it is prose standing in where no name exists, not a copy of one.
+            "SELECT csl.ref_id, va.author_display, e.author_display_note, e.pub_year, "
             "e.pub_title, e.tier, e.verification_status "
             "FROM specification_source_links csl "
             "JOIN evidence_sources e ON e.ref_id = csl.ref_id "
+            "LEFT JOIN v_evidence_authors va ON va.ref_id = csl.ref_id "
             "WHERE csl.specification_id = ? AND csl.role = 'governing' "
             "ORDER BY e.tier, e.pub_year, csl.ref_id",
             (c["specification_id"],),

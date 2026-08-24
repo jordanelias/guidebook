@@ -40,8 +40,12 @@ description: >
 
 2. **Load evidence sources:**
    ```sql
-   SELECT es.ref_id, es.first_author_last, es.pub_year, es.pub_title, es.tier, es.language
+   -- POINTER, NOT COPY (migration 063): author facts come from v_evidence_authors,
+   -- which derives them from evidence_source_authors. The columns of the same name
+   -- on evidence_sources are writer-retired tombstones and read NULL.
+   SELECT es.ref_id, va.first_author_last, es.pub_year, es.pub_title, es.tier, es.language
    FROM evidence_sources es
+   LEFT JOIN v_evidence_authors va ON va.ref_id = es.ref_id
    JOIN source_slug_links ssl ON es.ref_id = ssl.ref_id
    WHERE ssl.slug IN (SELECT bpc_source_slug FROM items WHERE item_code = '{code}')
    ORDER BY es.tier ASC

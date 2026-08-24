@@ -1,6 +1,18 @@
 # DR-2026-08-24 — Scaffolding is phase-specific; only table data crosses a stage boundary
 
-**Status:** PROPOSED — awaiting owner ratification.
+**Status:** **RATIFIED BY MERGE 2026-08-24** — PR #114, `main` at `84912b1`, per the merge-implies-
+ratification RULE of 2026-07-24 (`references/project-standards.md`), which directs that stale
+PROPOSED text be flipped on merge. Was PROPOSED when written earlier the same day.
+
+> **§2 WAS CARVED OUT OF THAT RATIFICATION, AND THE CARVE-OUT WAS WORTH MAKING.** It held four
+> inferences of mine. They were put to the owner on 2026-08-24 and **three of the four were
+> corrected** — §2 is now the owner's rulings, quoted, not my readings. Had I flipped the whole
+> document to RATIFIED on merge, three wrong inferences would have become doctrine, including one
+> (I2) that prescribed the exact copy-don't-point defect this session spent the day cleaning up.
+>
+> **What ratification changes in practice**, per the RULE's ACTION (3): the R8 rename — 4 tables,
+> 6 columns, the blocking `validate_axes` check, 297 files — moves from *blocked pending
+> ratification* to **authorized and owed**. It is not silently done, and it is not stalled.
 **Class:** DG-NON (doctrine). **Supersedes in part:** the D-1 directive as recorded in
 `workplan/2026-08-20-provenance-walk-execution-plan.md` §D-1, which this generalises.
 
@@ -165,18 +177,112 @@ no scaffolding *link* may cross into another stage. This says more:
 
 ---
 
-## §2 What follows — marked as inference, not ruling
+## §2 The architecture — OWNER RULINGS 2026-08-24, replacing my inferences
 
-These are my readings of §1 and are for the owner to confirm or strike. **They are not yet binding.**
+**This section previously held four inferences of mine. All four were put to the owner and three were
+corrected. What follows is the owner's, quoted, and it is a sharper architecture than the one I
+inferred.**
 
-| # | Inference | From |
-|---|---|---|
-| I1 | `item_population_links` is the only route to population applicability. The axes layer answers a different question (design-demand signature), so nothing needs adjudicating between them — the earlier "which route is authoritative" question is void | R8 |
-| I2 | A table crossing a stage boundary must carry its own warrant, because the phase that built it will not be legible later. `rationale_ref` is that warrant, and D-0164's use-time debt is the mechanism | R7 (2),(3) |
-| I3 | `source_locators` may be read across phases **because it is table data** — which resolves the earlier worry that a gate reading clue material breaks the clues rule. What may not cross is the scaffolding, not the table | R7 (3) |
-| I4 | "Highly procedural" implies a named, checkable list of what may cross each boundary. **I have not written one, deliberately** — CLAUDE.md §1 puts the burden of proof on adding apparatus, and this DR should be ratified before anything enforces it | R7 (4) |
+### §2.1 Only the reference ID crosses. Never copy — point.
 
----
+> *"If you have reference identification in tables that allow them to be cross-referenced, then you
+> don't need to duplicate anything from one table to the other aside from that reference identifier
+> because you can point to it. I could literally have a thousand tables. So long as each table has a
+> row with a column that shares the same reference identifier, then you can call up information from
+> any one so long as you point to the correct table and column."*
+>
+> *"Each stage, from research to evidence to synthesis to specifications to render, can have tables
+> with information for a reference item that is specific to that stage only, with the only
+> commonality being the reference ID."*
+>
+> *"A crossing row only takes its reference ID. If it is providing a reason, then that reason is
+> specific to the new table."*
+
+**My inference I2 was WRONG and is struck.** I had read "only table data crosses" as *"a crossing row
+must carry its own warrant with it"*. The owner's correction:
+
+> *"If a crossing row 'carries' its own reason, that introduces the possibility of error and drift
+> because it implies the reason is being written across two or more tables. It is better to have a
+> table cell point to another table cell than to rewrite."*
+
+**This is the general form of the defect this session kept hitting.** Four tables independently
+storing a DOI as a copied string, 17 duplicated and 4 already drifted by case; `reference_stubs`
+duplicating `source_locators` on the same key; the same 32 records in three places. **Every one of
+those was a copy where a pointer belonged.** The rule is not "warrant each crossing row" — it is
+**never write the same fact into a second table.**
+
+### §2.2 "Highly procedural" means pointer discipline, not a checklist
+
+> *"Reference IDs carry from table to table across stages. Data relevant in one stage does not cross
+> to another stage. We do not need an author name in a synthesis table when synthesizing information.
+> We do not need an author name when writing a specification in a specification table. We do not need
+> an author name when rendering in a render table. If we have the same reference ID, then we know
+> that we can just point towards the relevant table in the relevant stage for that information. For
+> rendering a citation, then, we point towards the evidence table for that reference ID. We don't
+> need to rewrite the same thing again and again."*
+
+**My inference I4 was wrong in its premise.** I had read "highly procedural" as implying a named list
+of what may cross each boundary, and asked whether to build one. It means something more mechanical
+and more useful: **each stage's tables hold only that stage's data; anything from an earlier stage is
+reached by pointer on the shared reference ID.** A renderer needing a citation does not receive a
+citation — it looks one up.
+
+**No checklist is needed and none is written.** The rule is structural, so it is enforced by schema
+shape rather than by a gate.
+
+### §2.3 The clue store is a historical artifact, and duplication out of it is the point
+
+> *"The clues table is a historical artifact. The DOIs it contains are expected to be used by the
+> researcher and, if the researcher deems that DOI to be relevant, then it will write that DOI into
+> the new correct evidence sources table. This means that whenever the new correct evidence sources
+> table duplicates the DOI from the clues table, it simply means that the clues table was useful. We
+> do not care about information in the clues table being duplicated. We just want to shortcut
+> research time because we've already found so many sources."*
+
+**My inference I3 was directionally right and framed wrongly.** I had worried that a gate reading
+clue material breached the clues rule, and drew a careful boundary around identifiers. The real
+answer is simpler: **the clue store exists to be copied out of.** A DOI appearing in both the clue
+store and `evidence_sources` is the system working, not a duplication defect.
+
+**This does not contradict §2.1, and the distinction is worth stating precisely:**
+
+| Case | Verdict |
+|---|---|
+| Same DOI in the clue store and in `evidence_sources` | **Fine.** The clue was useful. Not a defect |
+| Same fact written into two tables *within* the live pipeline | **Defect.** Point, do not copy (§2.1) |
+| Same DOI under **different reference IDs** | **Defect** — that is two identities for one source, and it is what `R9a`/`R9b` in `research_batch_dod.py` detect |
+
+**So `R9a`/`R9b` are correct and now better justified than when written:** they enforce §2.1's core —
+that the reference ID is the thing which carries.
+
+### §2.4 Applicability is an OUTPUT of synthesis, never an input to it
+
+> *"Every research slug gets cross-referenced against a population code, access need or ICF code
+> because there is always the chance that there is an unexpected connection between them. If we only
+> link our taxonomy to research slugs by what seems obvious, we may miss evidence."*
+>
+> *"Until we have secured an astounding body of evidence and synthesized that work while
+> cross-referencing against our populations/access needs/ICFs, we are not able to define these
+> connections — we are waiting until we have finished our syntheses to ensure we define them with
+> evidenced justification, not presuppositions."*
+
+**This inverts the model I have been working from all session, and it dissolves the blocker I called
+critical.** I had been treating `item_population_links` as a *prerequisite* — a determination could
+not be authored until the applicability edge existed, so A-18's zero links read as a defect blocking
+the deliverable, and D-0165 read as the gate on everything.
+
+**It is the other way round.** Applicability edges are **findings**, produced by synthesis and
+justified by evidence. Writing them first would be exactly the *"presupposition"* the ruling forbids.
+
+| What I had | What is actually the case |
+|---|---|
+| A-18's zero `item_population_links` is a defect blocking determination | It is the **correct state** before synthesis. Nothing is owed |
+| D-0165 blocks the deliverable | **D-0165 does not block research at all.** It is downstream of it |
+| Research is framed by the populations already linked to a slug | **Every slug is searched against every population / access need / ICF code**, precisely to catch connections nobody predicted |
+
+**The operative consequence for the next research batch:** the frame is not "which populations does
+this slug already link to" — that question presupposes the answer. It is the full cross-product, and
+an unexpected hit is the point of running it.
 
 ## §3 Corrections this DR carries
 

@@ -64,8 +64,13 @@ def check_citation_fidelity(html, doc, c):
     governing_refs (no non-governing ref presented as governing, no silent
     omission of a governing ref)."""
     refs = sorted(set(re.findall(r"REF-\d{5}", html)))
+    # POINTER, NOT COPY (migration 063). This gate exists to catch a rendered surname
+    # that is not the source's author, so it must read the authors of record —
+    # evidence_source_authors — and not evidence_sources.first_author_last, which is
+    # a writer-retired copy that `resolve_dois.py` could leave describing a previous
+    # author list. Checking a copy against a render proves only that two copies agree.
     known = {r[0]: (r[1] or "") for r in c.execute(
-        "SELECT ref_id, first_author_last FROM evidence_sources")}
+        "SELECT ref_id, first_author_last FROM v_evidence_authors")}
     for r in refs:
         if r not in known:
             fail("C1-citation", doc, f"{r} is cited but not in evidence_sources")

@@ -40,10 +40,34 @@ DB_PATH = os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db")
 
 results = []
 
-def record(tid, name, passed, detail=""):
-    results.append({"id": tid, "name": name, "passed": passed})
+
+def record(tid, name, passed, detail="", subject=None):
+    """Record one sub-check. `subject` is its DENOMINATOR: how many rows it looked at.
+
+    WHY EVERY SUB-CHECK MUST DECLARE ONE. A pass here means "the violation count is
+    zero", and zero has two causes that render identically: no violations among N
+    rows, or no rows. CLAUDE.md §2(a) names that failure — a gate that passes having
+    examined nothing — as one of the three that are real here, produced four separate
+    times. Until 2026-08-24 this file printed 70 green ticks with no denominator
+    anywhere, and governance/check-registry.yaml recorded the consequence against it:
+    `no_floor: not-instrumented ... it prints no whole-check EXAMINED count, so no
+    floor is declarable yet`.
+
+    A zero subject is REPORTED, NOT FAILED. scripts/run_checks.py renders a zero-scope
+    pass as NOTHING-IN-SCOPE rather than a failure, and an empty scope is often simply
+    true — D04/D05 examine DOI-less sources and every live source has a DOI. Failing on
+    it would turn the gate red for a correct state. It is surfaced loudly instead, in
+    the summary, so it can never again read as unearned coverage.
+    """
+    results.append({"id": tid, "name": name, "passed": passed, "subject": subject})
     sym = "✓" if passed else "✗"
-    print(f"  [{sym}] {tid}: {name}")
+    if subject is None:
+        scope = "  (subject not declared)"
+    elif subject == 0:
+        scope = "  [examined 0 — NOTHING IN SCOPE]"
+    else:
+        scope = f"  ({subject} examined)"
+    print(f"  [{sym}] {tid}: {name}{scope}")
     if not passed and detail:
         print(f"      {detail}")
 
@@ -53,50 +77,66 @@ def run_checks(db_path):
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON")
 
+    def subj(sql, params=()):
+        """Count the rows a check is about — its subject. One scalar, no side effects.
+
+        Named `subj`, not `n`: several checks below already bind `n` to their own
+        violation count, and shadowing it would have silently broken them.
+        """
+        return conn.execute(sql, params).fetchone()[0]
+
     # ── A: Foreign key referential integrity ─────────────────────────────────
     print("\n[A] Foreign key referential integrity")
 
     record("A01", "source_slug_links → evidence_sources",
         conn.execute("""SELECT COUNT(*) FROM source_slug_links l
             WHERE NOT EXISTS (SELECT 1 FROM evidence_sources e WHERE e.ref_id=l.ref_id)
-        """).fetchone()[0] == 0)
+        """).fetchone()[0] == 0,
+        subject=subj("SELECT COUNT(*) FROM source_slug_links"))
 
     record("A02", "item_population_links → items",
         conn.execute("""SELECT COUNT(*) FROM item_population_links l
             WHERE NOT EXISTS (SELECT 1 FROM items i WHERE i.item_code=l.item_code)
-        """).fetchone()[0] == 0)
+        """).fetchone()[0] == 0,
+        subject=subj("SELECT COUNT(*) FROM item_population_links"))
 
     record("A03", "item_population_links → populations",
         conn.execute("""SELECT COUNT(*) FROM item_population_links l
             WHERE NOT EXISTS (SELECT 1 FROM populations p WHERE p.population_code=l.population_code)
-        """).fetchone()[0] == 0)
+        """).fetchone()[0] == 0,
+        subject=subj("SELECT COUNT(*) FROM item_population_links"))
 
     record("A04", "spec_value_probes → items",
         conn.execute("""SELECT COUNT(*) FROM spec_value_probes p
             WHERE NOT EXISTS (SELECT 1 FROM items i WHERE i.item_code=p.item_code)
-        """).fetchone()[0] == 0)
+        """).fetchone()[0] == 0,
+        subject=subj("SELECT COUNT(*) FROM spec_value_probes"))
 
     record("A05", "evidence_population_match → evidence_sources",
         conn.execute("""SELECT COUNT(*) FROM evidence_population_match m
             WHERE ref_id IS NOT NULL
             AND NOT EXISTS (SELECT 1 FROM evidence_sources e WHERE e.ref_id=m.ref_id)
-        """).fetchone()[0] == 0)
+        """).fetchone()[0] == 0,
+        subject=subj("SELECT COUNT(*) FROM evidence_population_match WHERE ref_id IS NOT NULL"))
 
     record("A06", "bpc_metadata → slugs",
         conn.execute("""SELECT COUNT(*) FROM bpc_metadata b
             WHERE NOT EXISTS (SELECT 1 FROM slugs s WHERE s.slug=b.slug)
-        """).fetchone()[0] == 0)
+        """).fetchone()[0] == 0,
+        subject=subj("SELECT COUNT(*) FROM bpc_metadata"))
 
     record("A07", "citation_mining global_ref_id → source_slug_links",
         conn.execute("""SELECT COUNT(*) FROM citation_mining c
             WHERE global_ref_id IS NOT NULL
             AND NOT EXISTS (SELECT 1 FROM source_slug_links l WHERE l.ref_id=c.global_ref_id)
-        """).fetchone()[0] == 0)
+        """).fetchone()[0] == 0,
+        subject=subj("SELECT COUNT(*) FROM citation_mining WHERE global_ref_id IS NOT NULL"))
 
     record("A08", "item_population_elaborations → items",
         conn.execute("""SELECT COUNT(*) FROM item_population_elaborations e
             WHERE NOT EXISTS (SELECT 1 FROM items i WHERE i.item_code=e.item_code)
-        """).fetchone()[0] == 0)
+        """).fetchone()[0] == 0,
+        subject=subj("SELECT COUNT(*) FROM item_population_elaborations"))
 
     # A09 stands in for a foreign key that migration 039 deliberately did NOT
     # declare. Every other soft edge in that migration became a real FK; this
@@ -111,7 +151,8 @@ def run_checks(db_path):
             AND s.superseded_by_ref_id <> ''
             AND NOT EXISTS (SELECT 1 FROM evidence_sources e
                             WHERE e.ref_id = s.superseded_by_ref_id)
-        """).fetchone()[0] == 0)
+        """).fetchone()[0] == 0,
+        subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE COALESCE(superseded_by_ref_id,'') <> ''"))
 
     # The two normalised edge junctions (migrations 044, 050). Their FKs are
     # declared, but a declared FK only binds writes made with
@@ -129,7 +170,8 @@ def run_checks(db_path):
             WHERE NOT EXISTS (SELECT 1 FROM {parent} p WHERE p.{pcol} = j.{col})
         """).fetchone()[0]
         record(tid, f"{junction}.{col} → {parent}", n == 0,
-               f"{n} rows pointing at a {parent} row that does not exist" if n else "")
+               f"{n} rows pointing at a {parent} row that does not exist" if n else "",
+               subject=subj(f"SELECT COUNT(*) FROM {junction}"))
 
     # ── B: Enum validation ────────────────────────────────────────────────────
     print("\n[B] Enum column validation")
@@ -146,7 +188,8 @@ def run_checks(db_path):
         AND verification_status NOT IN ({','.join('?'*len(VALID_VSTATUS))})
     """, VALID_VSTATUS).fetchone()[0]
     record("B01", "verification_status values", bad == 0,
-           f"{bad} invalid values" if bad else "")
+           f"{bad} invalid values" if bad else "",
+           subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE verification_status IS NOT NULL"))
 
     VALID_MQ = ("COMPLETE","AUTHOR-TITLE-ONLY","GREY","PMID-ONLY","NULL",
                 # DR-2026-05-18 — statutory metadata completeness:
@@ -156,7 +199,8 @@ def run_checks(db_path):
         AND metadata_quality NOT IN ({','.join('?'*len(VALID_MQ))})
     """, VALID_MQ).fetchone()[0]
     record("B02", "metadata_quality values", bad == 0,
-           f"{bad} invalid values" if bad else "")
+           f"{bad} invalid values" if bad else "",
+           subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE metadata_quality IS NOT NULL"))
 
     VALID_DOI_OUT = ("RESOLVED","NO-MATCH","REVERTED")
     bad = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources
@@ -164,7 +208,8 @@ def run_checks(db_path):
         AND doi_resolution_outcome NOT IN ({','.join('?'*len(VALID_DOI_OUT))})
     """, VALID_DOI_OUT).fetchone()[0]
     record("B03", "doi_resolution_outcome values", bad == 0,
-           f"{bad} invalid values" if bad else "")
+           f"{bad} invalid values" if bad else "",
+           subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE doi_resolution_outcome IS NOT NULL"))
 
     # Two URL-resolution vocabularies coexist:
     #   - granular pipeline outputs from scripts/url_verifier.py
@@ -183,7 +228,8 @@ def run_checks(db_path):
         AND url_resolution_outcome NOT IN ({','.join('?'*len(VALID_URL_OUT))})
     """, VALID_URL_OUT).fetchone()[0]
     record("B04", "url_resolution_outcome values", bad == 0,
-           f"{bad} invalid values" if bad else "")
+           f"{bad} invalid values" if bad else "",
+           subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE url_resolution_outcome IS NOT NULL"))
 
     VALID_ST = ("journal_article","book","book_chapter","conference_paper","thesis",
                 "primary_research","case_study","standard","guideline","report",
@@ -199,7 +245,8 @@ def run_checks(db_path):
         AND source_type NOT IN ({','.join('?'*len(VALID_ST))})
     """, VALID_ST).fetchone()[0]
     record("B05", "source_type values", bad == 0,
-           f"{bad} invalid values" if bad else "")
+           f"{bad} invalid values" if bad else "",
+           subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE source_type IS NOT NULL"))
 
     VALID_GAP_STATUS = ("OPEN","IN-PROGRESS","CLOSED-FIXED","CLOSED-RESOLVED",
                          "CLOSED-DELETED","BLOCKED","P1",
@@ -212,7 +259,8 @@ def run_checks(db_path):
         WHERE status NOT IN ({','.join('?'*len(VALID_GAP_STATUS))})
     """, VALID_GAP_STATUS).fetchone()[0]
     record("B06", "gaps.status values", bad == 0,
-           f"{bad} invalid values" if bad else "")
+           f"{bad} invalid values" if bad else "",
+           subject=subj("SELECT COUNT(*) FROM gaps"))
 
     # evidence_sources.tier is a bare INTEGER: no CHECK constraint, and
     # ENUM_GUARDS in scripts/emit_data_migration.py only scans quoted string
@@ -232,35 +280,28 @@ def run_checks(db_path):
     # resumes (verification_disposition/method/closure_reason) as B07-B09
     # after the I-series below, so B07/B08 are already taken. B10/B11 are the
     # next free B-series ids.
-    tier_examined = conn.execute(
-        "SELECT COUNT(*) FROM evidence_sources WHERE tier IS NOT NULL").fetchone()[0]
-    # evidence_sources is 0 rows as of this writing, so this — correctly —
-    # examines nothing today. Printed unconditionally (not gated on failure,
-    # unlike the enum checks above) so a 0-row pass reads as "nothing to
-    # examine yet", not as silent, unearned coverage.
-    #
-    # Deliberately NOT the literal token `EXAMINED:`. That token is a
-    # WHOLE-CHECK contract read by scripts/run_checks.py: a check whose
-    # EXAMINED lines are all zero is rendered NOTHING-IN-SCOPE. This file runs
-    # 72 checks over the live DB — 160 decisions, 109 jurisdictional values,
-    # 93 items — so emitting `EXAMINED: 0` for ONE subject relabelled the
-    # entire blocking gate as having examined nothing. A sub-check reports its
-    # own subject in its own words; only a count of what the whole check
-    # examined may claim the token.
-    print(f"  B10/B11 subject: {tier_examined} evidence_sources row(s) "
-          f"with a non-null tier")
+    # B10/B11 declared their own subject in a bespoke print — the first check in this
+    # file to do so, and the model for the `subject=` argument every check now carries.
+    # The reasoning it recorded still governs and now lives on record() and on the
+    # EXAMINED line in the summary: a sub-check reports its subject in its own words;
+    # only a count of what the WHOLE check examined may claim the EXAMINED token, since
+    # run_checks.py reads that token to decide NOTHING-IN-SCOPE and one sub-check's zero
+    # would relabel the entire blocking gate.
+    _tier_subject = "SELECT COUNT(*) FROM evidence_sources WHERE tier IS NOT NULL"
 
     bad = conn.execute(
         "SELECT COUNT(*) FROM evidence_sources WHERE tier IS NOT NULL AND tier < 1"
     ).fetchone()[0]
     record("B10", "evidence_sources.tier lower bound (>=1, NULL permitted)", bad == 0,
-           f"{bad} row(s) with tier < 1" if bad else "")
+           f"{bad} row(s) with tier < 1" if bad else "",
+           subject=subj(_tier_subject))
 
     bad = conn.execute(
         "SELECT COUNT(*) FROM evidence_sources WHERE tier IS NOT NULL AND tier > 6"
     ).fetchone()[0]
     record("B11", "evidence_sources.tier upper bound (<=6, NULL permitted)", bad == 0,
-           f"{bad} row(s) with tier > 6" if bad else "")
+           f"{bad} row(s) with tier > 6" if bad else "",
+           subject=subj(_tier_subject))
 
     # ── D-0157 standing invariants (I1–I4) ────────────────────────────────────
     # The point of splitting one column into three is that they can now be
@@ -273,21 +314,24 @@ def run_checks(db_path):
           AND COALESCE(verification_disposition,'') <> 'CLOSED'""").fetchone()[0]
     record("I1", "no source is VERIFIED with effort still owed", i1 == 0,
            f"{i1} rows VERIFIED without a CLOSED disposition — verification is "
-           f"finished or it did not happen" if i1 else "")
+           f"finished or it did not happen" if i1 else "",
+           subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE verification_status='VERIFIED'"))
 
     i2 = conn.execute("""SELECT COUNT(*) FROM evidence_sources
         WHERE verification_status='VERIFIED'
           AND COALESCE(verification_attempt_count,0)=0""").fetchone()[0]
     record("I2", "a VERIFIED source records at least one attempt", i2 == 0,
            f"{i2} rows VERIFIED with zero attempts — nobody recorded doing the thing "
-           f"that verified them; adjudication queue, not a backfill" if i2 else "")
+           f"that verified them; adjudication queue, not a backfill" if i2 else "",
+           subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE verification_status='VERIFIED'"))
 
     i3 = conn.execute("""SELECT COUNT(*) FROM evidence_sources
         WHERE verification_disposition='CLOSED'
           AND COALESCE(verification_status,'') <> 'VERIFIED'
           AND COALESCE(verification_closure_reason,'') = ''""").fetchone()[0]
     record("I3", "closure is earned and reasoned", i3 == 0,
-           f"{i3} rows CLOSED without a closure reason" if i3 else "")
+           f"{i3} rows CLOSED without a closure reason" if i3 else "",
+           subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE verification_disposition='CLOSED' AND COALESCE(verification_status,'') <> 'VERIFIED'"))
 
     i3b = conn.execute("""SELECT COUNT(*) FROM evidence_sources
         WHERE verification_disposition='CLOSED'
@@ -295,20 +339,23 @@ def run_checks(db_path):
           AND COALESCE(verification_attempt_count,0) < 2""").fetchone()[0]
     record("I3b", "closure rests on at least two recorded attempts", i3b == 0,
            f"{i3b} rows CLOSED with fewer than 2 attempts — 'cannot be verified "
-           f"after effort spent' requires the effort to be on record" if i3b else "")
+           f"after effort spent' requires the effort to be on record" if i3b else "",
+           subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE verification_disposition='CLOSED' AND COALESCE(verification_status,'') <> 'VERIFIED'"))
 
     i4 = conn.execute("""SELECT COUNT(*) FROM evidence_sources
         WHERE verification_status='VERIFIED'
           AND verification_method IS NOT NULL
           AND verification_method NOT IN ('direct-render','co1-attestation','tool')""").fetchone()[0]
     record("I4", "VERIFIED is reachable only by a method that obtains the artefact", i4 == 0,
-           f"{i4} rows VERIFIED via a method that never obtained the document" if i4 else "")
+           f"{i4} rows VERIFIED via a method that never obtained the document" if i4 else "",
+           subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE verification_status='VERIFIED' AND verification_method IS NOT NULL"))
 
     i4b = conn.execute("""SELECT COUNT(*) FROM evidence_sources
         WHERE verification_method='tool'
           AND COALESCE(verified_by_tool,'') = ''""").fetchone()[0]
     record("I4b", "method='tool' names the tool that established it", i4b == 0,
-           f"{i4b} rows claim a tool established them without naming it" if i4b else "")
+           f"{i4b} rows claim a tool established them without naming it" if i4b else "",
+           subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE verification_method='tool'"))
 
     # The three new columns have CHECK constraints in migration 049, but a
     # pre-049 database or a hand-edited blob would not, and B-checks are where
@@ -319,7 +366,8 @@ def run_checks(db_path):
         AND verification_disposition NOT IN ({','.join('?'*len(VALID_DISP))})""",
         VALID_DISP).fetchone()[0]
     record("B07", "verification_disposition values", bad == 0,
-           f"{bad} invalid values" if bad else "")
+           f"{bad} invalid values" if bad else "",
+           subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE verification_disposition IS NOT NULL"))
 
     VALID_METH = ("direct-render","co1-attestation","corroborated-not-retrieved",
                   "citing-bibliography","tool")
@@ -328,7 +376,8 @@ def run_checks(db_path):
         AND verification_method NOT IN ({','.join('?'*len(VALID_METH))})""",
         VALID_METH).fetchone()[0]
     record("B08", "verification_method values", bad == 0,
-           f"{bad} invalid values" if bad else "")
+           f"{bad} invalid values" if bad else "",
+           subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE verification_method IS NOT NULL"))
 
     VALID_CR = ("paywalled","print-only","access-denied-persistent","withdrawn",
                 "not-found-after-search","disputed-existence")
@@ -337,7 +386,8 @@ def run_checks(db_path):
         AND verification_closure_reason NOT IN ({','.join('?'*len(VALID_CR))})""",
         VALID_CR).fetchone()[0]
     record("B09", "verification_closure_reason values", bad == 0,
-           f"{bad} invalid values" if bad else "")
+           f"{bad} invalid values" if bad else "",
+           subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE verification_closure_reason IS NOT NULL"))
 
     # ── C: Consistency invariants ─────────────────────────────────────────────
     print("\n[C] Consistency invariants")
@@ -352,7 +402,8 @@ def run_checks(db_path):
     """).fetchone()[0]
     record("C01", "VERIFIED rows all have an audit trail (doi/url/pmid or verified_by_tool)",
            mystery == 0,
-           f"{mystery} rows VERIFIED with no audit trail — run backfill migration" if mystery else "")
+           f"{mystery} rows VERIFIED with no audit trail — run backfill migration" if mystery else "",
+           subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE verification_status='VERIFIED'"))
 
     # All pre-pipeline DOIs have been backfilled
     orphan_doi = conn.execute("""SELECT COUNT(*) FROM evidence_sources
@@ -361,17 +412,25 @@ def run_checks(db_path):
     record("C02", "All DOI rows have doi_resolution_outcome set (pre-pipeline backfill applied)",
            orphan_doi == 0,
            f"{orphan_doi} rows — run: UPDATE evidence_sources SET doi_resolution_outcome='RESOLVED' "
-           "WHERE doi IS NOT NULL AND doi_resolution_outcome IS NULL" if orphan_doi else "")
+           "WHERE doi IS NOT NULL AND doi_resolution_outcome IS NULL" if orphan_doi else "",
+           subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE COALESCE(doi,'') <> ''"))
 
     # COMPLETE rows have author
-    bad_complete = conn.execute("""SELECT COUNT(*) FROM evidence_sources
-        WHERE metadata_quality = 'COMPLETE'
-        AND (first_author_last IS NULL OR first_author_last = '')
-        AND (is_corporate_primary IS NULL OR is_corporate_primary = 0)
+    # POINTER, NOT COPY (migration 063). This read evidence_sources.first_author_last
+    # and .is_corporate_primary, which are now writer-retired tombstones holding NULL.
+    # Left alone it would report every COMPLETE row as authorless. Read through
+    # v_evidence_authors and the check gets STRONGER: it now asserts the source has
+    # author ROWS, which is what a citation is rendered from, rather than asserting
+    # that a copy of them is non-empty.
+    bad_complete = conn.execute("""SELECT COUNT(*) FROM evidence_sources e
+        LEFT JOIN v_evidence_authors v ON v.ref_id = e.ref_id
+        WHERE e.metadata_quality = 'COMPLETE'
+        AND (v.first_author_last IS NULL OR v.first_author_last = '')
     """).fetchone()[0]
-    record("C03", "COMPLETE rows all have author (first_author_last or is_corporate_primary)",
+    record("C03", "COMPLETE rows all have author rows (v_evidence_authors)",
            bad_complete == 0,
-           f"{bad_complete} COMPLETE rows lack author" if bad_complete else "")
+           f"{bad_complete} COMPLETE rows lack author" if bad_complete else "",
+           subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE metadata_quality='COMPLETE'"))
 
     # COMPLETE rows have doi UNLESS they were Co-1 manually verified
     # (REF-VERIFIED-* rows are human-verified standards that predate the DOI pipeline)
@@ -383,7 +442,8 @@ def run_checks(db_path):
     """).fetchone()[0]
     record("C04", "COMPLETE rows: either have doi, or co1-verified, or NO-MATCH on record",
            bad_complete_doi == 0,
-           f"{bad_complete_doi} COMPLETE rows lack doi with no acceptable explanation" if bad_complete_doi else "")
+           f"{bad_complete_doi} COMPLETE rows lack doi with no acceptable explanation" if bad_complete_doi else "",
+           subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE metadata_quality='COMPLETE'"))
 
     # C06 — data_capture_status must agree with the joinable evidence tables in
     # BOTH directions. A status that can drift from the rows it summarises is
@@ -401,7 +461,9 @@ def run_checks(db_path):
     record("C06", "data_capture_status='captured' ⟺ a joinable capture row exists",
            claims_not_held == 0 and held_not_claimed == 0,
            f"{claims_not_held} claim capture with no row; {held_not_claimed} have rows but do not claim it"
-           if (claims_not_held or held_not_claimed) else "")
+           if (claims_not_held or held_not_claimed) else "",
+           # Biconditional: BOTH sides are the subject, so the subject is every source.
+           subject=subj("SELECT COUNT(*) FROM evidence_sources"))
 
     # C08 — citation_mining_status must agree with citation_mining in both
     # directions, resolving a row to its source the way the table's own primary
@@ -426,7 +488,8 @@ def run_checks(db_path):
     record("C08", "citation_mining_status='mined' ⟺ a non-deferred mining row resolves to it",
            claims_mined == 0 and mined_not_claimed == 0,
            f"{claims_mined} claim mined with no row; {mined_not_claimed} have a row but do not claim it"
-           if (claims_mined or mined_not_claimed) else "")
+           if (claims_mined or mined_not_claimed) else "",
+           subject=subj("SELECT COUNT(*) FROM evidence_sources"))
 
     # C10 — a published cell may not rest on a source that has not been
     # established as real and usable.
@@ -467,10 +530,11 @@ def run_checks(db_path):
                unsound == 0,
                f"{unsound} of {total_cells} published cells cite a source that is "
                f"not verified (disputed, unverified, or no status)"
-               if unsound else "")
+               if unsound else "",
+               subject=total_cells)
     except sqlite3.OperationalError as exc:
         record("C10", "no published cell rests on an unverified or disputed source",
-               False, f"could not evaluate: {exc}")
+               False, f"could not evaluate: {exc}", subject=None)
 
     # C07 — a value column must hold a value, not a state written as prose.
     # This is not hypothetical: '[author surname pending ...]' strings in
@@ -484,12 +548,18 @@ def run_checks(db_path):
     # a defect rather than a place-of-last-resort.
     PLACEHOLDER = ("{c} LIKE '[%' OR {c} LIKE '%pending%' OR {c} LIKE '%TBD%' "
                    "OR {c} LIKE '%TBC%' OR {c} LIKE '%unknown (%'")
-    VALUE_COLS = [("evidence_sources", "first_author_last"),
-                  ("evidence_sources", "author_display"),
+    # The two evidence_sources author columns left this list when migration 063
+    # writer-retired them: they hold NULL now, so scanning them would have made two
+    # of four subjects permanently vacuous — a check that passes having examined
+    # nothing, which is the failure CLAUDE.md §2(a) names. The prose they used to
+    # hold can now only land in the author ROWS, so that is where the scan goes.
+    VALUE_COLS = [("evidence_source_authors", "last_name"),
+                  ("evidence_source_authors", "first_name"),
                   ("evidence_sources", "publisher"),
                   ("evidence_source_authors", "corporate_name")]
-    placeholder, detail = 0, []
+    placeholder, detail, c07_subject = 0, [], 0
     for tbl, col in VALUE_COLS:
+        c07_subject += subj(f"SELECT COUNT(*) FROM {tbl} WHERE {col} IS NOT NULL")
         n = conn.execute(f"SELECT COUNT(*) FROM {tbl} WHERE "
                          + PLACEHOLDER.format(c=col)).fetchone()[0]
         placeholder += n
@@ -499,7 +569,8 @@ def run_checks(db_path):
            placeholder == 0,
            f"{placeholder} rows hold placeholder prose in a value column "
            f"({', '.join(detail)}) — the prose belongs in the paired _note column"
-           if placeholder else "")
+           if placeholder else "",
+           subject=c07_subject)
 
     # C09 — the states nobody can contradict. C06 binds only 'captured' and C08
     # only 'mined', which leaves every "we looked and decided" state freely
@@ -526,7 +597,8 @@ def run_checks(db_path):
            f"{unreasoned} deferred/none-extractable with no coded reason; "
            f"{orphan_reason} reasons attached to a non-stopped state; "
            f"{bad_deferred} claim mining-deferred with no deferred mining row"
-           if (unreasoned or orphan_reason or bad_deferred) else "")
+           if (unreasoned or orphan_reason or bad_deferred) else "",
+           subject=subj("SELECT COUNT(*) FROM evidence_sources"))
 
     # legacy/v2 row count parity — only when legacy table still exists
     has_legacy = conn.execute("""SELECT COUNT(*) FROM sqlite_master
@@ -536,9 +608,12 @@ def run_checks(db_path):
         v2 = conn.execute("SELECT COUNT(*) FROM evidence_sources").fetchone()[0]
         record("C05", f"evidence_sources row count matches v1_legacy ({v2} == {v1})",
                v1 == v2,
-               f"v1={v1} v2={v2} — {abs(v2-v1)} row delta (new rows added since cutover are expected)" if v1 != v2 else "")
+               f"v1={v1} v2={v2} — {abs(v2-v1)} row delta (new rows added since cutover are expected)" if v1 != v2 else "",
+               subject=v1 + v2)
     else:
-        record("C05", "v1_legacy parity (table dropped, check skipped)", True)
+        # subject=0, stated rather than left undeclared: the table is gone, so this
+        # branch examines nothing. A skip that reads as a pass is the vacuity itself.
+        record("C05", "v1_legacy parity (table dropped, check skipped)", True, subject=0)
 
     # ── D: Duplicate / collision detection ───────────────────────────────────
     print("\n[D] Duplicate and collision detection")
@@ -594,7 +669,8 @@ def run_checks(db_path):
     """, KNOWN_DUP_DOIS).fetchall()
     record("D01", f"No unexpected duplicate DOIs (known IEC 60118-4 triple excluded)",
            len(dup_rows) == 0,
-           f"{len(dup_rows)} unexpected duplicates: {[dict(r) for r in dup_rows]}" if dup_rows else "")
+           f"{len(dup_rows)} unexpected duplicates: {[dict(r) for r in dup_rows]}" if dup_rows else "",
+           subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE COALESCE(doi,'') <> ''"))
 
     # Duplicate ref_ids across evidence_sources and legacy (should be same set)
     if has_legacy:
@@ -604,16 +680,18 @@ def run_checks(db_path):
         only_v1 = refs_v1 - refs_v2
         record("D02", "evidence_sources and v1_legacy have matching ref_id sets",
                len(only_v2) == 0 and len(only_v1) == 0,
-               f"only in v2: {list(only_v2)[:5]}; only in v1: {list(only_v1)[:5]}" if (only_v2 or only_v1) else "")
+               f"only in v2: {list(only_v2)[:5]}; only in v1: {list(only_v1)[:5]}" if (only_v2 or only_v1) else "",
+               subject=len(refs_v1 | refs_v2))
     else:
-        record("D02", "v1_legacy ref_id parity (table dropped, check skipped)", True)
+        record("D02", "v1_legacy ref_id parity (table dropped, check skipped)", True, subject=0)
 
     # Duplicate slugs in bpc_metadata
     dup_slugs = conn.execute("""SELECT slug, COUNT(*) FROM bpc_metadata
         GROUP BY slug HAVING COUNT(*) > 1""").fetchall()
     record("D03", "No duplicate slugs in bpc_metadata",
            len(dup_slugs) == 0,
-           f"duplicates: {[dict(r) for r in dup_slugs]}" if dup_slugs else "")
+           f"duplicates: {[dict(r) for r in dup_slugs]}" if dup_slugs else "",
+           subject=subj("SELECT COUNT(*) FROM bpc_metadata"))
 
     # D04 — the DOI-less half of D01.
     #
@@ -669,35 +747,48 @@ def run_checks(db_path):
     # This narrows the check to "no *live* duplicates", which is what it means;
     # the pointer's own integrity is guarded separately by A09.
     _groups = {}
-    for r in conn.execute("""SELECT ref_id, pub_year, author_display, pub_title
-                             FROM evidence_sources
-                             WHERE (doi IS NULL OR doi = '')
-                             AND (superseded_by_ref_id IS NULL
-                                  OR superseded_by_ref_id = '')"""):
+    # author_display comes from v_evidence_authors (migration 063). Reading the
+    # tombstone column instead would make _norm_author return '' for every row, and
+    # the `if not key[0]: continue` below would then skip EVERY DOI-less source —
+    # D04 would report zero collisions having examined none of them.
+    for r in conn.execute("""SELECT e.ref_id, e.pub_year, v.author_display, e.pub_title
+                             FROM evidence_sources e
+                             LEFT JOIN v_evidence_authors v ON v.ref_id = e.ref_id
+                             WHERE (e.doi IS NULL OR e.doi = '')
+                             AND (e.superseded_by_ref_id IS NULL
+                                  OR e.superseded_by_ref_id = '')"""):
         key = (_norm_author(r[2]), r[1], _norm_title(r[3]))
         if not key[0] or not key[2] or key in KNOWN_DUP_SOURCE_KEYS:
             continue  # no computable key — C03/G02 own missing-author coverage
         _groups.setdefault(key, []).append(r[0])
+    # The subject is the rows that reached the grouping WITH a computable key — not
+    # the rows scanned. A DOI-less source whose key is empty is `continue`d above and
+    # this check never compared it to anything; counting it would claim coverage the
+    # check does not have. (D05 is the check that owns those rows.)
+    d04_subject = sum(len(v) for v in _groups.values())
     dup_sources = {k: v for k, v in _groups.items() if len(v) > 1}
     record("D04", "No duplicate DOI-less sources (author+year+title collision)",
            len(dup_sources) == 0,
            f"{len(dup_sources)} collisions across "
            f"{sum(len(v) for v in dup_sources.values())} rows: "
            + "; ".join("+".join(v) for v in sorted(dup_sources.values()))
-           if dup_sources else "")
+           if dup_sources else "",
+           subject=d04_subject)
 
     # Sources with no DOI and no computable dedup key are invisible to both
     # D01 and D04 — the actual "incomplete dedup data" condition validate_db C5
     # was written to catch.
     undedupable = sum(
-        1 for r in conn.execute("""SELECT author_display, pub_year, pub_title
-                                   FROM evidence_sources
-                                   WHERE doi IS NULL OR doi = ''""")
+        1 for r in conn.execute("""SELECT v.author_display, e.pub_year, e.pub_title
+                                   FROM evidence_sources e
+                                   LEFT JOIN v_evidence_authors v ON v.ref_id = e.ref_id
+                                   WHERE e.doi IS NULL OR e.doi = ''""")
         if not _norm_author(r[0]) or r[1] is None or not _norm_title(r[2]))
     record("D05", "Every DOI-less source has a computable dedup key",
            undedupable == 0,
            f"{undedupable} DOI-less sources lack author, year or title — "
-           f"invisible to both D01 and D04" if undedupable else "")
+           f"invisible to both D01 and D04" if undedupable else "",
+           subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE COALESCE(doi,'') = ''"))
 
     # ── E: Schema contract ────────────────────────────────────────────────────
     print("\n[E] Schema contract")
@@ -714,7 +805,10 @@ def run_checks(db_path):
     missing_cols = required_cols - es_cols
     record("E01", f"evidence_sources has all required columns ({len(required_cols)} checked)",
            len(missing_cols) == 0,
-           f"missing: {missing_cols}" if missing_cols else "")
+           f"missing: {missing_cols}" if missing_cols else "",
+           # A schema check's subject is columns, not rows. Declaring it keeps the
+           # denominator honest across a suite whose other subjects are row counts.
+           subject=len(required_cols))
 
     # pipeline_runs has Phase 4 columns
     pr_cols = {r[1] for r in conn.execute("PRAGMA table_info(pipeline_runs)")}
@@ -723,18 +817,19 @@ def run_checks(db_path):
     missing_p4 = p4_required - pr_cols
     record("E02", "pipeline_runs has Phase 4 tracking columns",
            len(missing_p4) == 0,
-           f"missing: {missing_p4}" if missing_p4 else "")
+           f"missing: {missing_p4}" if missing_p4 else "",
+           subject=len(p4_required))
 
     # url_verification_runs table exists
     has_uvr = conn.execute("""SELECT COUNT(*) FROM sqlite_master
         WHERE type='table' AND name='url_verification_runs'""").fetchone()[0]
     record("E03", "url_verification_runs table exists",
-           has_uvr == 1)
+           has_uvr == 1, subject=1)
 
     # data_migrations is non-empty
     n_mig = conn.execute("SELECT COUNT(*) FROM data_migrations").fetchone()[0]
     record("E04", f"data_migrations log non-empty ({n_mig} entries)",
-           n_mig > 0)
+           n_mig > 0, subject=n_mig)
 
     # Backfill migrations have been applied
     backfills = {r[0] for r in conn.execute(
@@ -746,13 +841,15 @@ def run_checks(db_path):
     missing_bfills = required_backfills - backfills
     record("E05", "Required backfill migrations recorded",
            len(missing_bfills) == 0,
-           f"missing migration records: {missing_bfills}" if missing_bfills else "")
+           f"missing migration records: {missing_bfills}" if missing_bfills else "",
+           subject=len(required_backfills))
 
     # SQLite integrity check
     ic = conn.execute("PRAGMA integrity_check").fetchone()[0]
     record("E06", "SQLite PRAGMA integrity_check = ok",
            ic == "ok",
-           f"integrity_check: {ic}" if ic != "ok" else "")
+           f"integrity_check: {ic}" if ic != "ok" else "",
+           subject=1)
 
     # ── F: Pipeline run health ────────────────────────────────────────────────
     print("\n[F] Pipeline run health")
@@ -763,21 +860,24 @@ def run_checks(db_path):
         AND doi_after < doi_before""").fetchone()[0]
     record("F01", "No DOI regressions in pipeline_runs",
            regressions == 0,
-           f"{regressions} runs show doi_after < doi_before" if regressions else "")
+           f"{regressions} runs show doi_after < doi_before" if regressions else "",
+           subject=subj("SELECT COUNT(*) FROM pipeline_runs WHERE doi_after IS NOT NULL AND doi_before IS NOT NULL"))
 
     # All runs have completed_at set
     incomplete = conn.execute("""SELECT COUNT(*) FROM pipeline_runs
         WHERE completed_at IS NULL""").fetchone()[0]
     record("F02", "All pipeline_runs have completed_at set",
            incomplete == 0,
-           f"{incomplete} runs missing completed_at (interrupted?)" if incomplete else "")
+           f"{incomplete} runs missing completed_at (interrupted?)" if incomplete else "",
+           subject=subj("SELECT COUNT(*) FROM pipeline_runs"))
 
     # All URL runs have completed_at set
     incomplete_url = conn.execute("""SELECT COUNT(*) FROM url_verification_runs
         WHERE completed_at IS NULL""").fetchone()[0]
     record("F03", "All url_verification_runs have completed_at set",
            incomplete_url == 0,
-           f"{incomplete_url} url runs missing completed_at" if incomplete_url else "")
+           f"{incomplete_url} url runs missing completed_at" if incomplete_url else "",
+           subject=subj("SELECT COUNT(*) FROM url_verification_runs"))
 
     # No VERIFIED regressions (verified_after should be >= verified_before per run)
     ver_regression = conn.execute("""SELECT COUNT(*) FROM pipeline_runs
@@ -785,7 +885,8 @@ def run_checks(db_path):
         AND verified_after < verified_before""").fetchone()[0]
     record("F04", "No VERIFIED count regressions in pipeline_runs",
            ver_regression == 0,
-           f"{ver_regression} runs show verified_after < verified_before" if ver_regression else "")
+           f"{ver_regression} runs show verified_after < verified_before" if ver_regression else "",
+           subject=subj("SELECT COUNT(*) FROM pipeline_runs WHERE verified_after IS NOT NULL AND verified_before IS NOT NULL"))
 
     # ── G: Evidence chain integrity ───────────────────────────────────────────
     print("\n[G] Evidence chain integrity")
@@ -796,19 +897,28 @@ def run_checks(db_path):
     """).fetchone()[0]
     record("G01", "evidence_source_authors → evidence_sources (no orphan author rows)",
            orphan_authors == 0,
-           f"{orphan_authors} orphan author rows" if orphan_authors else "")
+           f"{orphan_authors} orphan author rows" if orphan_authors else "",
+           subject=subj("SELECT COUNT(*) FROM evidence_source_authors"))
 
     # Every source marked COMPLETE has ≥1 author row in evidence_source_authors
     # OR is_corporate_primary=1 (which doesn't need individual author rows)
+    # `e.is_corporate_primary = 0` read a tombstone after migration 063. NULL = 0 is
+    # NULL, never true, so the WHERE clause would match no rows and G02 would pass
+    # having examined nothing. The corporate test belongs to the author rows now.
     complete_no_author = conn.execute("""
         SELECT COUNT(*) FROM evidence_sources e
+        LEFT JOIN v_evidence_authors v ON v.ref_id = e.ref_id
         WHERE e.metadata_quality = 'COMPLETE'
-        AND e.is_corporate_primary = 0
+        AND COALESCE(v.is_corporate_primary, 0) = 0
         AND NOT EXISTS (SELECT 1 FROM evidence_source_authors a WHERE a.ref_id = e.ref_id)
     """).fetchone()[0]
     record("G02", "COMPLETE person-authored sources have ≥1 author row",
            complete_no_author == 0,
-           f"{complete_no_author} COMPLETE sources missing author rows" if complete_no_author else "")
+           f"{complete_no_author} COMPLETE sources missing author rows" if complete_no_author else "",
+           subject=subj("SELECT COUNT(*) FROM evidence_sources e "
+                        "LEFT JOIN v_evidence_authors v ON v.ref_id = e.ref_id "
+                        "WHERE e.metadata_quality = 'COMPLETE' "
+                        "AND COALESCE(v.is_corporate_primary, 0) = 0"))
 
     # ORCID format: should be 0000-0000-0000-0000 (no URL prefix)
     bad_orcid = conn.execute("""SELECT COUNT(*) FROM evidence_source_authors
@@ -817,7 +927,9 @@ def run_checks(db_path):
     """).fetchone()[0]
     record("G03", "ORCID values stored as plain identifier (no URL prefix)",
            bad_orcid == 0,
-           f"{bad_orcid} ORCIDs with URL prefix — strip 'https://orcid.org/'" if bad_orcid else "")
+           f"{bad_orcid} ORCIDs with URL prefix — strip 'https://orcid.org/'" if bad_orcid else "",
+           subject=subj("SELECT COUNT(*) FROM evidence_source_authors "
+                        "WHERE COALESCE(orcid,'') <> ''"))
 
     # ── H: JSON-array ↔ junction parity ───────────────────────────────────────
     # Two edges on the walk are being migrated out of JSON TEXT columns and into
@@ -842,8 +954,13 @@ def run_checks(db_path):
     ARRAY_ROWS = ("{t}.{c} IS NOT NULL AND {t}.{c} != '' "
                   "AND json_valid({t}.{c}) AND json_type({t}.{c}) = 'array'")
 
-    EDGE_JSON = (("specifications", "governing_refs"),
-                 ("search_executions",   "admitted_ref_ids"))
+    # search_executions.admitted_ref_ids was REMOVED from this tuple 2026-08-24.
+    # The junction search_admissions is now its sole home (owner ruling: point,
+    # do not rewrite), so the JSON column is no longer written and H03/H04 below
+    # would compare an empty set against a populated junction and pass — a gate
+    # examining nothing. Deleted rather than left green. The column itself
+    # survives because committed data migrations INSERT it.
+    EDGE_JSON = (("specifications", "governing_refs"),)
 
     def _parity(tid_a, tid_b, label, junction, jcols, table, tcol, key):
         jk, rk = jcols
@@ -858,18 +975,27 @@ def run_checks(db_path):
             WHERE {arrays} AND NOT EXISTS (
               SELECT 1 FROM {junction} j WHERE j.{jk} = t.{key} AND j.{rk} = je.value)
         """).fetchone()[0]
+        # Each direction declares the set IT walked, not the union. They differ:
+        # the junction can hold rows the JSON never mentions and vice versa, which
+        # is the whole reason both directions exist.
+        n_junction = conn.execute(f"SELECT COUNT(*) FROM {junction}").fetchone()[0]
+        n_entries = conn.execute(
+            f"SELECT COUNT(*) FROM {table} t, json_each(t.{tcol}) je WHERE {arrays}"
+        ).fetchone()[0]
         record(tid_a, f"{label}: every junction row is in the JSON", extra == 0,
-               f"{extra} rows in {junction} with no matching {tcol} entry" if extra else "")
+               f"{extra} rows in {junction} with no matching {tcol} entry" if extra else "",
+               subject=n_junction)
         record(tid_b, f"{label}: every JSON entry is in the junction", missing == 0,
-               f"{missing} {tcol} entries with no {junction} row" if missing else "")
+               f"{missing} {tcol} entries with no {junction} row" if missing else "",
+               subject=n_entries)
 
     _parity("H01", "H02", "specification_source_links ↔ governing_refs",
             "specification_source_links", ("specification_id", "ref_id"),
             "specifications", "governing_refs", "specification_id")
 
-    _parity("H03", "H04", "search_admissions ↔ admitted_ref_ids",
-            "search_admissions", ("exec_id", "ref_id"),
-            "search_executions", "admitted_ref_ids", "exec_id")
+    # H03/H04 DELETED 2026-08-24 — they policed a dual-write that no longer
+    # happens. A parity check between two homes of one fact does not prevent
+    # drift; it makes the second home survivable, and therefore permanent.
 
     # results_admitted is a third store of the same fact. It was consistent with
     # the JSON on all 84 rows when 050 was written; if it drifts, the junction is
@@ -883,13 +1009,16 @@ def run_checks(db_path):
     record("H05", "results_admitted equals the admission edge count",
            admit_count_drift == 0,
            f"{admit_count_drift} executions whose results_admitted disagrees with "
-           f"search_admissions" if admit_count_drift else "")
+           f"search_admissions" if admit_count_drift else "",
+           subject=subj("SELECT COUNT(*) FROM search_executions"))
 
     # H06 is what makes H01–H04 non-vacuous: they only compare rows that are
     # JSON arrays, so a column drifting into some other shape would quietly
     # shrink the comparison set rather than fail it. This names that drift.
-    nonarray = []
+    nonarray, h06_subject = [], 0
     for table, tcol in EDGE_JSON:
+        h06_subject += subj(f"SELECT COUNT(*) FROM {table} t "
+                            f"WHERE t.{tcol} IS NOT NULL AND t.{tcol} != ''")
         n = conn.execute(f"""SELECT COUNT(*) FROM {table} t
             WHERE t.{tcol} IS NOT NULL AND t.{tcol} != ''
               AND NOT (json_valid(t.{tcol}) AND json_type(t.{tcol}) = 'array')
@@ -897,27 +1026,31 @@ def run_checks(db_path):
         if n:
             nonarray.append(f"{table}.{tcol}: {n}")
     record("H06", "edge JSON columns hold arrays, not scalars or malformed text",
-           not nonarray, "; ".join(nonarray))
+           not nonarray, "; ".join(nonarray), subject=h06_subject)
 
     # A ref repeated inside one array collapses to a single junction row (the
     # PK dedupes it), and both parity directions still pass — the junction
     # contains it and every entry is found. Only a count comparison sees it.
-    dup = []
+    dup, h07_subject = [], 0
     for junction, jk, rk, table, tcol, key in (
         ("specification_source_links", "specification_id", "ref_id",
          "specifications", "governing_refs", "specification_id"),
-        ("search_admissions", "exec_id", "ref_id",
-         "search_executions", "admitted_ref_ids", "exec_id"),
+        # search_admissions/admitted_ref_ids REMOVED 2026-08-24 with H03/H04.
+        # H07 keeps its OWN tuple list rather than reading EDGE_JSON, so
+        # retiring the JSON column from EDGE_JSON alone left this comparing 0
+        # array entries against 10 junction rows and reporting a false repeat.
+        # A second reference, in the same file, missed by the first sweep.
     ):
         arrays = ARRAY_ROWS.format(t="t", c=tcol)
         entries = conn.execute(
             f"SELECT COUNT(*) FROM {table} t, json_each(t.{tcol}) je WHERE {arrays}"
         ).fetchone()[0]
         edges = conn.execute(f"SELECT COUNT(*) FROM {junction}").fetchone()[0]
+        h07_subject += entries + edges
         if entries != edges:
             dup.append(f"{tcol} has {entries} entries but {junction} has {edges} rows")
     record("H07", "no id repeats inside a single JSON edge array", not dup,
-           "; ".join(dup))
+           "; ".join(dup), subject=h07_subject)
 
     # ── J: hop-4 edge coherence (source_value_extractions.item_code) ──────────
     # The column (migration 052) is nullable by design — NULL means the item was
@@ -943,7 +1076,9 @@ def run_checks(db_path):
     record("J01", "an extraction's item belongs to the extraction's slug",
            incoherent == 0,
            f"{incoherent} extractions whose item_code is not linked to their slug"
-           if incoherent else "")
+           if incoherent else "",
+           subject=subj("SELECT COUNT(*) FROM source_value_extractions "
+                        "WHERE item_code IS NOT NULL"))
 
     # Where a row's own basis text names a PMP probe, that probe carries a typed
     # item_code. The two must agree — this is the W1 witness the backfill relied
@@ -957,7 +1092,12 @@ def run_checks(db_path):
     record("J02", "an extraction agrees with the PMP probe its basis text names",
            probe_disagree == 0,
            f"{probe_disagree} extractions disagreeing with their named probe"
-           if probe_disagree else "")
+           if probe_disagree else "",
+           # Only rows whose basis text NAMES a probe are in scope; J02 cannot
+           # speak about the rest, and counting them would overstate its reach.
+           subject=subj("SELECT COUNT(*) FROM source_value_extractions sve "
+                        "JOIN spec_value_probes p ON sve.root_classification_basis "
+                        "LIKE '%' || p.probe_id || '%' WHERE sve.item_code IS NOT NULL"))
 
     # J01 and J02 do NOT hold the judgment the backfill actually made, and an
     # adversarial review proved it by injection: setting extraction 6 to A-10b
@@ -981,7 +1121,12 @@ def run_checks(db_path):
     record("J03", "the 8 adjudicated RT60 extractions still hold their assigned item",
            moved == 0,
            f"{moved} of the 8 rows adjudicated to A-18 by data_20260804175506 no "
-           f"longer carry it — re-adjudicate in a migration, don't drift" if moved else "")
+           f"longer carry it — re-adjudicate in a migration, don't drift" if moved else "",
+           # The subject is the adjudicated rows that ACTUALLY EXIST. Declaring the
+           # literal 8 would claim coverage of rows that may have been deleted —
+           # a pinning check whose pins are gone has pinned nothing.
+           subject=subj("SELECT COUNT(*) FROM source_value_extractions WHERE extraction_id IN "
+                        f"({','.join('?' * len(ADJUDICATED_A18))})", ADJUDICATED_A18))
 
     # ── K: determination attestation (derivation_sha) ─────────────────────────
     # evidence-architecture §10 mechanical check 2: "same evidence + same
@@ -1016,7 +1161,13 @@ def run_checks(db_path):
            not stale,
            f"{len(stale)} stale: {', '.join(stale)} — the row changed after the "
            f"determination was stamped; restamp or clear, don't leave a hash "
-           f"attesting a state that no longer exists" if stale else "")
+           f"attesting a state that no longer exists" if stale else "",
+           # Attested rows only. The unattested ones are counted separately and
+           # reported below; K01 verifies hashes, and a row with no hash gave it
+           # nothing to verify.
+           subject=subj("SELECT COUNT(*) FROM specifications "
+                        "WHERE COALESCE(derivation_sha,'') <> '' "
+                        "AND COALESCE(rule_version,'') <> ''"))
 
     # Reported, not enforced. Whether an unattested determination is acceptable
     # is an owner call — these rows were hand-migrated, not produced by an
@@ -1037,8 +1188,11 @@ def run_checks(db_path):
     try:
         import yaml as _yaml
     except ImportError:
+        # subject=0: PyYAML is absent, so neither store was opened. A skip that
+        # records True without a declared subject is indistinguishable from a
+        # parity check that ran and found nothing wrong.
         record("L01", "decision register: YAML ↔ decisions table", True,
-               "SKIPPED — PyYAML not installed")
+               "SKIPPED — PyYAML not installed", subject=0)
         _yaml = None
 
     # Paths resolve from THIS FILE's location, not from cwd and not from the DB
@@ -1065,7 +1219,7 @@ def run_checks(db_path):
         if not os.path.exists(reg):
             record("L01", "decision register: YAML ↔ decisions table", False,
                    f"register not found at {reg} — four scripts open it, including "
-                   f"the blocking decision_capture.py")
+                   f"the blocking decision_capture.py", subject=0)
         else:
             # Columns written by the DB layer itself (migration apply /
             # session bookkeeping), never by hand and never mirrored in the
@@ -1098,7 +1252,7 @@ def run_checks(db_path):
 
             if _y_parse_err:
                 record("L01", "decision register: YAML ↔ decisions table", False,
-                       f"register at {reg} could not be parsed: {_y_parse_err}")
+                       f"register at {reg} could not be parsed: {_y_parse_err}", subject=0)
             else:
                 dbrows = {r["decision_id"]: r for r in conn.execute(
                     f"SELECT {', '.join(db_cols)} FROM decisions")}
@@ -1200,7 +1354,11 @@ def run_checks(db_path):
                        "; ".join(detail) + " — reconcile in a migration; the DB is canonical "
                        "(CLAUDE.md §2), so a YAML-only entry is an import gap and a "
                        "disagreement is a finding, not something to overwrite"
-                       if detail else "")
+                       if detail else "",
+                       # Every decision id in EITHER store: the check compares the
+                       # union, and an id present in only one is exactly the drift
+                       # it exists to catch, so it belongs in the denominator.
+                       subject=len(set(y) | set(dbrows)))
 
     # jurisdictional_values has a YAML mirror too, held equal by
     # validate_schema.py --cross-check. Asserted here as well because that
@@ -1216,7 +1374,8 @@ def run_checks(db_path):
         n_db = conn.execute("SELECT COUNT(*) FROM jurisdictional_values").fetchone()[0]
         record("L02", "jurisdictional_values: YAML record count matches the table",
                n_yaml == n_db,
-               f"{n_yaml} YAML records vs {n_db} table rows" if n_yaml != n_db else "")
+               f"{n_yaml} YAML records vs {n_db} table rows" if n_yaml != n_db else "",
+               subject=n_yaml + n_db)
 
     # L03 (legacy coverage-grid freeze) was RETIRED by the 2026-08-06 clean-room
     # reset. It digest-guarded search_coverage / search_languages as frozen
@@ -1279,7 +1438,11 @@ def run_checks(db_path):
                f"{_newest!r}. With 0 subjects that BLOCKING gate examines nothing "
                f"and passes. Advance the pointer (and expect it to go red on a "
                f"real backlog), or demote the gate to advisory until it has work."
-               if (_drifted and _own == 0) else "")
+               if (_drifted and _own == 0) else "",
+               # L04 is the check that exists BECAUSE of vacuity: it asks whether
+               # another gate has a subject. Its own subject is the pointer it read
+               # — one, and only when a pointer was found at all.
+               subject=1 if _ptr else 0)
 
     # ── Summary ───────────────────────────────────────────────────────────────
     conn.close()
@@ -1292,6 +1455,39 @@ def run_checks(db_path):
         print("FAILED:")
         for r in failed:
             print(f"  [{r['id']}] {r['name']}")
+
+    # Vacuity and instrumentation, reported separately from pass/fail because they
+    # are a different question: not "did anything break" but "did this gate look at
+    # anything". A green tick over an empty scope is not evidence of anything.
+    vacuous = [r for r in results if r["passed"] and r.get("subject") == 0]
+    undeclared = [r for r in results if r.get("subject") is None]
+    if vacuous:
+        print(f"\nPASSED HAVING EXAMINED NOTHING ({len(vacuous)}): "
+              + ", ".join(r["id"] for r in vacuous))
+        print("  Their scope is empty. They are not evidence that the thing they "
+              "check is true.")
+    if undeclared:
+        print(f"\nSUBJECT NOT DECLARED ({len(undeclared)}): "
+              + ", ".join(r["id"] for r in undeclared))
+        print("  These cannot be told apart from a vacuous pass. Give each a subject "
+              "count (see record()).")
+
+    # The WHOLE-CHECK count, and the only line in this file licensed to use the
+    # EXAMINED token. scripts/run_checks.py reads it to decide NOTHING-IN-SCOPE, so a
+    # sub-check may never emit it: one zero would relabel the entire blocking gate as
+    # having examined nothing. This is the sum across sub-checks that declared a
+    # subject — rows inspected, counting a row once per check that inspected it.
+    #
+    # THE UNIT IS SUBJECT-INSPECTIONS, NOT DISTINCT ROWS, and the difference is not
+    # pedantry: a row is counted once per check that inspected it, and the E-series
+    # subjects are COLUMNS and schema objects rather than rows at all. This number is
+    # therefore an upper bound on work done, never a corpus size — read it as "the gate
+    # looked at something", which is precisely what the min_items floor asserts. For a
+    # corpus size, query the DB.
+    examined = sum(r["subject"] for r in results if r.get("subject"))
+    print(f"EXAMINED: {examined} subject-inspections across "
+          f"{sum(1 for r in results if r.get('subject'))} instrumented check(s) "
+          f"of {total}")
     print("=" * 70)
     return 0 if not failed else 1
 

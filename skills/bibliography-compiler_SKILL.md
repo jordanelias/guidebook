@@ -33,7 +33,7 @@ query written from it failed. The names that matter for a bibliography:
 
 | You want | The column is |
 |---|---|
-| author string | `author_display` (structured authors live in `evidence_source_authors`) |
+| author string | `v_evidence_authors.author_display` — **derived**, never stored. Authors live in `evidence_source_authors`, one row each, and migration 063 writer-retired the `evidence_sources` columns that copied them (`author_display`, `first_author_last`, `first_author_first`, `author_count`, `is_corporate_primary`). Those columns still exist as tombstones and read NULL: select them and you get a blank bibliography. |
 | year | `pub_year` |
 | title | `pub_title` (plus `pub_subtitle`, `chapter_title`, `book_title`) |
 | journal | `journal_name`, `journal_abbrev` |
@@ -58,15 +58,21 @@ then by normalised title.
 ## 1. Full Bibliography
 
 ```sql
-SELECT es.ref_id, es.author_display, es.pub_year, es.pub_title, es.doi, es.tier,
+SELECT es.ref_id, va.author_display, es.pub_year, es.pub_title, es.doi, es.tier,
        es.evidence_type, es.jurisdiction, es.verification_status,
        GROUP_CONCAT(DISTINCT ssl.slug) as slugs,
        MAX(cm.backward) as cm_b, MAX(cm.forward) as cm_f
 FROM evidence_sources es
+LEFT JOIN v_evidence_authors va ON va.ref_id = es.ref_id
 LEFT JOIN source_slug_links ssl ON es.ref_id = ssl.ref_id
-LEFT JOIN citation_mining cm ON cm.local_ref_id = ssl.local_ref_id AND cm.slug = ssl.slug
+-- Join citation_mining on the REFERENCE ID, not on local_ref_id. local_ref_id is a
+-- per-slug label copied into both tables and it has already drifted in this repository:
+-- source_slug_links held RAP-06/09/10 where citation_mining held RAP-F61/F69/F70 for the
+-- same three sources. Corrected in scripts/db.py on 2026-08-24; corrected here too,
+-- because this query is copied by hand.
+LEFT JOIN citation_mining cm ON cm.global_ref_id = es.ref_id AND cm.slug = ssl.slug
 GROUP BY es.ref_id
-ORDER BY es.first_author_last COLLATE NOCASE, es.pub_year
+ORDER BY va.first_author_last COLLATE NOCASE, es.pub_year
 ```
 
 ### Markdown output format
@@ -87,11 +93,12 @@ ORDER BY es.first_author_last COLLATE NOCASE, es.pub_year
 ## 2. Per-Slug Bibliography
 
 ```sql
-SELECT es.ref_id, es.author_display, es.pub_year, es.pub_title, es.doi, es.tier
+SELECT es.ref_id, va.author_display, es.pub_year, es.pub_title, es.doi, es.tier
 FROM evidence_sources es
+LEFT JOIN v_evidence_authors va ON va.ref_id = es.ref_id
 JOIN source_slug_links ssl ON es.ref_id = ssl.ref_id
 WHERE ssl.slug = '{slug}'
-ORDER BY es.tier ASC, es.first_author_last COLLATE NOCASE
+ORDER BY es.tier ASC, va.first_author_last COLLATE NOCASE
 ```
 
 Use `python3 scripts/db.py coverage --slug {slug}` for coverage summary first.

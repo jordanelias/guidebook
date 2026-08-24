@@ -107,17 +107,25 @@ After multilingual-research completes:
 4. **Add new evidence sources:**
    ```bash
    python3 scripts/db.py add-source \
-     --ref-id {local_ref_id} \
-     --authors "{authors}" \
+     --ref-id {global_ref_id} \     # REF-NNNNN, NOT the per-slug label
+     --author "{last}|{given}" \    # repeatable, byline order; 'corp|{name}' for a body
+     # authors are ROWS since migration 063 — evidence_sources.author_display is a
+     # tombstone that reads NULL. --authors "{authors}" still works and is parsed.
      --year {year} \
      --title "{title}" \
      --tier {tier} \
      --doi {doi} \
      --jurisdiction {jur} \
      --slug {slug} \
-     --local-ref-id {local_ref_id} \
+     --local-ref-id {local_ref_id} \ # the per-slug LABEL (RAP-04). A different thing.
      --session {session_filename}
    ```
+
+   **`--ref-id` is the global `REF-NNNNN`; `--local-ref-id` is the per-slug label.** This
+   block read `--ref-id {local_ref_id}` until 2026-08-24, which files a source under a
+   label meaningful only inside one slug. `evidence_sources.ref_id` has no CHECK, so it
+   inserted silently; `add-source` now refuses it. Mint the global id above the
+   `source_locators` high-water mark — there is no allocator (CLAUDE.md §4).
 
 5. **Update BPC file on GitHub:** Append new findings to BPC synthesis sections.
 
@@ -134,7 +142,7 @@ After multilingual-research completes:
 
    a. Check mining status:
    ```bash
-   python3 scripts/db.py is-mined --slug {slug} --ref {local_ref_id}
+   python3 scripts/db.py is-mined --slug {slug} --ref {global_ref_id}   # GLOBAL REF-NNNNN, not the per-slug label (corrected 2026-08-24)
    ```
 
    b. If `mined: false`, invoke citation-miner skill (INLINE mode) with `(slug, local_ref_id, doi)`. Citation-miner will perform backward + forward mining per its own protocol and write a citation_mining row.

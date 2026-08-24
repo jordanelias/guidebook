@@ -93,6 +93,40 @@ human-only clues document. **Item R2 below puts that to the owner rather than se
 | **R4** | **Give the DoD a posture for non-admitting batches**: scope R4 to admissions not searches; let R9a/R9b report NOTHING-IN-SCOPE **without failing** when zero admissions is corroborated structurally (`SUM(results_admitted)=0`); keep FAIL when admissions exist but locators are missing. Update the selftest. Also inspect R2's subject line — it prints *"3 citation_mining rows for 0 anchors"*, which is not a coherent subject statement | session — L2 correcting L2, **no new check** |
 | **R5** | **DOI canonicalization**: one data migration lowercasing the 2 drifted DOI values; `.lower().strip()` at the `emit_batch_sql.py` capture point so drift cannot recur. **Do not build a DOI dimension table** — L2 mass with no reader | session — L0 hygiene |
 | **R6** | **Delete the 11 unread views** — explicitly no owner gate (CLAUDE.md §1: *"dead tables and views: delete them"*). Record the zero-reader evidence in the commit | session — negative L2 mass |
+> ## THE BLOCKER DISSOLVED — owner ruling 2026-08-24
+>
+> **This plan has said all day that D-0165 is the critical path and nothing can be published until it
+> lands. That was my model, and it was backwards.**
+>
+> > *"Every research slug gets cross-referenced against a population code, access need or ICF code
+> > because there is always the chance that there is an unexpected connection between them. If we only
+> > link our taxonomy to research slugs by what seems obvious, we may miss evidence… we are waiting
+> > until we have finished our syntheses to ensure we define them with evidenced justification, not
+> > presuppositions."*
+>
+> **Applicability links are an OUTPUT of synthesis, not an input to it.** A-18 carrying zero
+> `item_population_links` is not a defect blocking a determination — it is the correct state before
+> the evidence exists to define one. Writing those edges first is the presupposition the ruling
+> forbids.
+>
+> **What changes, concretely:**
+> - **D-0165 does not block research.** It is downstream of it. Every "blocked by D-0165" note in
+>   this file is void.
+> - **The research frame is the full cross-product** — every slug against every population, access
+>   need and ICF code — *because* an unexpected connection is what the sweep is for. Not "which
+>   populations does this slug already link to", which assumes the answer.
+> - **The next act is research, not a decision.** Phase 2 (§4) is unblocked and always was.
+>
+> See `decisions/DR-2026-08-24-scaffolding-is-phase-specific.md` §2.4.
+
+> **RATIFIED BY MERGE 2026-08-24.** PR #114 merged to `main` (`84912b1`), which under the
+> merge-implies-ratification RULE ratifies `CLAUDE.md` rule 0 and 4b, `DR-2026-08-24` §1, the axis
+> re-framing, migrations 061/062 and batch 03. **Two things that does NOT do:** it does not ratify
+> DR-2026-08-24 §2, which is my inference and is expressly carved out by that RULE's limit (4); and
+> it does not execute anything. Per the RULE's ACTION (3), the **R8 rename is now authorized and
+> owed** — 4 tables, 6 columns, a blocking check, 297 files — and must be surfaced for progress
+> rather than left tracked as blocked.
+
 | **R7** | **SUPERSEDED BY A WIDER RULING.** *"Scaffolding has to be phase specific. As soon as any tools/work cross phases, they become illegible. This needs to be a highly procedural process where only the data in tables can hop from stage to stage."* That generalises D-1: not just links — **tools, work and scaffolds are all phase-bound, and only table data crosses.** Drafted as `decisions/DR-2026-08-24-scaffolding-is-phase-specific.md` | **OWNER** — ratify the DR |
 | **R8** | **VOID as an adjudication.** *"axis is a bad term to use for ICF codes."* The ruling is in **`CLAUDE.md` §6** — *"work from the ICF/access-need frame with codes AND names, never from bare axis codes"* — and I twice reported it as not found. `axes` carries `icf_b_anchors`/`icf_d_anchors`: it holds ICF-anchored demand mechanisms under a misleading name. `item_axis_links → population_axis_map` is doubly disqualified — wrong layer, and a vocabulary §6 forbids working from. **The 89-of-93 measurement stands; the adjudication does not.** Newly named: `axes` (17) and `access_needs` (17) are parallel vocabularies joined by a 21-row map — one-fact-one-home at the vocabulary layer | **CLOSED** as a question; the vocabulary duplication is **OPEN, unscheduled** |
 | **R9** | **`claim-reference-join`: keep, no table.** 1,382 entries, only readers are procedure prose and archived scripts; no machine reader means no table (CLAUDE.md §1). Retire its `.md`/`.json` twin down to one file and mark it clues | session |

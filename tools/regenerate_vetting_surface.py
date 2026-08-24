@@ -180,13 +180,18 @@ def fetch_backbone(db_path: Path) -> dict:
     bb = {}
     for slug in slugs:
         linked = q(
-            """SELECT e.ref_id, e.author_display, e.author_display_note,
+            """SELECT e.ref_id, va.author_display, e.author_display_note,
                       e.pub_year, e.tier, e.evidence_type,
                       e.jurisdiction, e.doi, e.pmid, e.metadata_quality,
                       e.verification_status, e.doi_resolution_outcome,
                       sl.relevance_note
+               -- POINTER, NOT COPY (migration 063). author_display is derived from
+               -- evidence_source_authors, the one home for who wrote a source.
+               -- author_display_note is NOT derived: it is prose standing in where
+               -- no name exists, which the author rows cannot supply.
                FROM source_slug_links sl
                JOIN evidence_sources e ON e.ref_id = sl.ref_id
+               LEFT JOIN v_evidence_authors va ON va.ref_id = sl.ref_id
                WHERE sl.slug = ?
                ORDER BY e.tier, e.pub_year""",
             slug,
