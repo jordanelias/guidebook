@@ -93,6 +93,32 @@ human-only clues document. **Item R2 below puts that to the owner rather than se
 | **R4** | **Give the DoD a posture for non-admitting batches**: scope R4 to admissions not searches; let R9a/R9b report NOTHING-IN-SCOPE **without failing** when zero admissions is corroborated structurally (`SUM(results_admitted)=0`); keep FAIL when admissions exist but locators are missing. Update the selftest. Also inspect R2's subject line — it prints *"3 citation_mining rows for 0 anchors"*, which is not a coherent subject statement | session — L2 correcting L2, **no new check** |
 | **R5** | **DOI canonicalization**: one data migration lowercasing the 2 drifted DOI values; `.lower().strip()` at the `emit_batch_sql.py` capture point so drift cannot recur. **Do not build a DOI dimension table** — L2 mass with no reader | session — L0 hygiene |
 | **R6** | **Delete the 11 unread views** — explicitly no owner gate (CLAUDE.md §1: *"dead tables and views: delete them"*). Record the zero-reader evidence in the commit | session — negative L2 mass |
+> ## THE BLOCKER DISSOLVED — owner ruling 2026-08-24
+>
+> **This plan has said all day that D-0165 is the critical path and nothing can be published until it
+> lands. That was my model, and it was backwards.**
+>
+> > *"Every research slug gets cross-referenced against a population code, access need or ICF code
+> > because there is always the chance that there is an unexpected connection between them. If we only
+> > link our taxonomy to research slugs by what seems obvious, we may miss evidence… we are waiting
+> > until we have finished our syntheses to ensure we define them with evidenced justification, not
+> > presuppositions."*
+>
+> **Applicability links are an OUTPUT of synthesis, not an input to it.** A-18 carrying zero
+> `item_population_links` is not a defect blocking a determination — it is the correct state before
+> the evidence exists to define one. Writing those edges first is the presupposition the ruling
+> forbids.
+>
+> **What changes, concretely:**
+> - **D-0165 does not block research.** It is downstream of it. Every "blocked by D-0165" note in
+>   this file is void.
+> - **The research frame is the full cross-product** — every slug against every population, access
+>   need and ICF code — *because* an unexpected connection is what the sweep is for. Not "which
+>   populations does this slug already link to", which assumes the answer.
+> - **The next act is research, not a decision.** Phase 2 (§4) is unblocked and always was.
+>
+> See `decisions/DR-2026-08-24-scaffolding-is-phase-specific.md` §2.4.
+
 > **RATIFIED BY MERGE 2026-08-24.** PR #114 merged to `main` (`84912b1`), which under the
 > merge-implies-ratification RULE ratifies `CLAUDE.md` rule 0 and 4b, `DR-2026-08-24` §1, the axis
 > re-framing, migrations 061/062 and batch 03. **Two things that does NOT do:** it does not ratify
