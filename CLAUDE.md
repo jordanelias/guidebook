@@ -212,10 +212,43 @@ mint above the `source_locators` high-water mark or you will collide with a held
 ## 5. Running checks
 
 ```
+python3 -c 'import pydantic' || pip install 'pydantic==2.13.3'   # DO THIS FIRST. See below
 scripts/preflight.sh                                    # gate your diff vs origin/main
 python3 scripts/run_checks.py --changed-from origin/main --explain
 python3 scripts/run_checks.py --list                    # registry + quarantine
 ```
+
+> ### **`pydantic` IS NOT INSTALLED IN A FRESH CONTAINER, AND WITHOUT IT THE REPOSITORY LOOKS BROKEN**
+>
+> `.claude/hooks/ensure-deps.sh` now installs it at `SessionStart`, but it exits 0 on failure by
+> design — offline, or with no pip, you are on your own. **Check before you believe any red result.**
+> Measured on `origin/main` at `d6ef7e9`, 2026-08-25:
+>
+> | | Blocking failures | Advisory | Result |
+> |---|---|---|---|
+> | without `pydantic` | **5** | 10 | **FAIL** |
+> | with `pydantic` | **0** | 4 | **PASS**, 50 green |
+>
+> The five are `validate_schema`, `validate_evidence_state`, `audit_adversarial_use`,
+> `decision_capture`, `doctrine_recheck` — **the entire governance battery**, which
+> `check-registry.yaml` already declares `deps: [pydantic]`.
+>
+> **This is the one place §5's advice below inverts, so read it twice.** "Reproduce it locally
+> before assuming a red check is yours" normally protects you. Here the reproduction *succeeds* —
+> on untouched `main` — and a session that skips the dependency check can spend a day fixing
+> governance failures it did not cause and cannot fix.
+>
+> **Never `pip install -r requirements.txt` in this container.** It pins `PyYAML==6.0.3`; pip
+> refuses to uninstall the Debian-managed `PyYAML 6.0.1` that is present and working
+> (*"Cannot uninstall PyYAML 6.0.1, RECORD file not found"*), the whole install aborts, and
+> `pydantic` never lands. Install `pydantic` alone.
+>
+> **If you add a `SessionStart` hook, APPEND it — never insert at index 0.**
+> `scripts/generate/research_contract_hook.py` reads
+> `SessionStart[0]["hooks"][0]["command"]` **by hardcoded index** and compares it to
+> `governance/research-contract.yaml`. Inserting ahead of the contract turns the blocking
+> `research_contract_sync` check red with a diff that reads as contract drift and is not.
+> Cost me a cycle on 2026-08-25.
 
 `governance/check-registry.yaml` is the single inventory; `run_checks.py` is the only thing that
 invokes a check; CI and preflight both call it. Adding a check means editing the registry —
