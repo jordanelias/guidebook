@@ -15,7 +15,9 @@ caught this repository's actual failures had **zero** enforcing code.
 
 ## 0. What will actually stop you
 
-Five rules. Everything else in this file is orientation.
+**Seven rules.** Everything else in this file is orientation. *(This line read "Five" while the
+list held six, from 2026-08-24 until 2026-08-25 — a hand-written count in a derived document,
+which §2(b) forbids. Count the list, do not trust a prose number.)*
 
 0. **A live owner statement supersedes every prior ratified record it touches, on contact.** Your
    job on hearing one is to **record the supersession, never to weigh the ruling against the
@@ -51,7 +53,27 @@ Five rules. Everything else in this file is orientation.
 
 4. **A rename or removal is not done until the callers are swept.** Search every non-archived
    caller and fix each one. A sweep that stops at the filename is not a sweep — that exact
-   shortcut left two dangling paths inside an attestation on 2026-08-19.
+   shortcut left two dangling paths inside an attestation on 2026-08-19. **A VIEW IS A CALLER**, and so is a
+   skill: migration 064 exists because 063 swept eight Python readers and six skills and missed
+   `v_item_provenance`. Grep `sqlite_master` as well as the tree, and **treat a 0-row object as
+   unproven, not clean** — `specifications` holds 0 rows, so that view rendered nothing, so a
+   byte-exact diff of every regenerated output proved it clean while it was broken.
+
+5. **Never write the same fact into a second table. Point, do not copy.** Owner ruling 2026-08-24
+   (`DR-2026-08-24` §2.1, now in `references/project-standards.md`): *"It is better to have a table
+   cell point to another table cell than to rewrite."* Each stage — research → evidence → synthesis
+   → specification → render — holds only its own data; anything earlier is reached by pointer on the
+   shared reference ID. **A parity check is not a fix** — it makes a dual home survivable, therefore
+   permanent. And **a column a committed data migration INSERTs can never be dropped**: grep
+   `scripts/migrations/data_*` for the name first, then writer-retire, reader-retire, NULL forward.
+
+6. **Commit the scratchpad at every natural break, not at session end.** Owner directive 2026-08-25.
+   A scratchpad that lives only in context is not a review surface; compaction, session end and
+   container reclamation all take it. This repository paid for that twice in two days — the
+   pointer-discipline queue existed only in a conversation while three of its items shipped citing
+   labels no file defined. If no session directory exists, create it and commit into it rather than
+   waiting for a session record. `governance: session command log [YYYY-MM-DD HH:MM]` is a complete
+   commit message.
 
 **The doctrine token is gone.** OD-10 was signed 2026-08-19 and the instrument's §10 item 4 is
 executed: the `[DOCTRINE: <sha>]` commit token, its CI step, its enforcing script, the frozen
@@ -227,6 +249,15 @@ a locator or `[UNVERIFIED-QUANT]`.
 Work from the **ICF/access-need frame with codes AND names**, never from bare axis codes and never
 from population umbrellas. On 2026-08-19 a frame pulled as bare `axis_code` hid that a slug spanned
 two demand mechanisms, and four of five searches were framed on one of them.
+
+**The frame is the FULL CROSS-PRODUCT, and applicability is an OUTPUT of synthesis, not an input.**
+Owner ruling 2026-08-24 (`DR-2026-08-24` §2.4): *"Every research slug gets cross-referenced against a
+population code, access need or ICF code because there is always the chance that there is an
+unexpected connection between them… we are waiting until we have finished our syntheses to ensure we
+define them with evidenced justification, not presuppositions."* So the question is never *"which
+populations does this slug already link to"* — that presupposes the answer. **Zero
+`item_population_links` on a slug is the correct pre-synthesis state, not a defect**, and D-0165 does
+not block research: it is downstream of it.
 
 ---
 

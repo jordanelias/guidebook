@@ -837,3 +837,160 @@ program writes it; every reader goes to the pointed-to home. Before proposing an
 `scripts/migrations/data_*` for the column name — that grep is the gate.
 
 Tracked as **PD-2** in `workplan/2026-08-24-pointer-discipline-queue.md`.
+
+---
+
+## RULES 2026-08-25 — the four owner rulings of 2026-08-24, entered as operative rules
+
+Appended, not edited: this file is the append-only operative rule ledger.
+
+**Why this entry exists, stated plainly because it is the finding.** These four rulings were given
+on 2026-08-24, recorded in `decisions/DR-2026-08-24-scaffolding-is-phase-specific.md` §2 — and
+**reached no operative surface for a day.** They were not in this ledger. They were not in
+`CLAUDE.md`. Meanwhile PD-0, PD-3 and PD-5 all shipped to `main` *citing* §2.1. Work was being
+executed against rulings that no rule surface carried, which is the defect
+`workplan/2026-08-24-pointer-discipline-queue.md` records one level down and `CLAUDE.md` rule 0
+records one level up. **A ruling that governs the work belongs where the work looks.**
+
+They are **not proposals and were never awaiting ratification.** `CLAUDE.md` rule 0: a live owner
+statement supersedes every prior ratified record it touches, on contact.
+
+---
+
+**RULE: Never write the same fact into a second table. Point, do not copy.**
+
+> *"If you have reference identification in tables that allow them to be cross-referenced, then you
+> don't need to duplicate anything from one table to the other aside from that reference identifier
+> because you can point to it. I could literally have a thousand tables. So long as each table has a
+> row with a column that shares the same reference identifier, then you can call up information from
+> any one so long as you point to the correct table and column."*
+>
+> *"If a crossing row 'carries' its own reason, that introduces the possibility of error and drift
+> because it implies the reason is being written across two or more tables. It is better to have a
+> table cell point to another table cell than to rewrite."*
+>
+> *"A crossing row only takes its reference ID. If it is providing a reason, then that reason is
+> specific to the new table."*
+
+**DATE: 2026-08-24** — owner ruling. `DR-2026-08-24` §2.1.
+
+Two corollaries that are not optional, both learned by failing:
+
+- **A parity check is not a fix.** It makes a dual home *survivable*, therefore permanent. Do not add
+  parity checks, triggers or CHECK apparatus to police a copy — remove the copy. (`CLAUDE.md` §1
+  already puts the burden of proof on apparatus. H03/H04 were deleted for this reason, not weakened.)
+- **A column a committed data migration INSERTs can never be physically dropped.** Migrations are
+  append-only and replay from the baseline, so a DROP replaying before the INSERT that names it
+  breaks `migration_reproducibility` — the trap migration 062 sprang. The available shape is
+  **writer-retire, reader-retire, NULL forward**; the column stays as a tombstone. **Grep
+  `scripts/migrations/data_*` for the column name before proposing any drop. That grep is the gate.**
+
+---
+
+**RULE: "Highly procedural" means pointer discipline, not a checklist.**
+
+> *"Reference IDs carry from table to table across stages. Data relevant in one stage does not cross
+> to another stage. We do not need an author name in a synthesis table when synthesizing information.
+> We do not need an author name when writing a specification in a specification table. We do not need
+> an author name when rendering in a render table. If we have the same reference ID, then we know
+> that we can just point towards the relevant table in the relevant stage for that information. For
+> rendering a citation, then, we point towards the evidence table for that reference ID."*
+
+**DATE: 2026-08-24** — owner ruling. `DR-2026-08-24` §2.2.
+
+Each stage — research → evidence → synthesis → specification → render — holds only its own stage's
+data; anything from an earlier stage is reached by pointer on the shared reference ID. A renderer
+needing a citation does not *receive* a citation, it *looks one up*. **No checklist of what may cross
+is written and none is owed**: the rule is structural, enforced by schema shape, not by a gate.
+
+**A view is a caller.** Migration 064 exists because 063 swept eight Python readers and six skills
+and missed `v_item_provenance`. When retiring a copy, grep `sqlite_master` as well as the tree, and
+**treat a 0-row object as unproven rather than clean** — an empty scope hid that defect from a
+byte-exact render diff.
+
+---
+
+**RULE: The clue store exists to be copied out of. Duplication out of it is the point.**
+
+> *"The clues table is a historical artifact. The DOIs it contains are expected to be used by the
+> researcher and, if the researcher deems that DOI to be relevant, then it will write that DOI into
+> the new correct evidence sources table. This means that whenever the new correct evidence sources
+> table duplicates the DOI from the clues table, it simply means that the clues table was useful. We
+> do not care about information in the clues table being duplicated. We just want to shortcut
+> research time because we've already found so many sources."*
+
+**DATE: 2026-08-24** — owner ruling. `DR-2026-08-24` §2.3.
+
+| Case | Verdict |
+|---|---|
+| Same DOI in `source_locators` and in `evidence_sources` | **Fine.** The clue was useful. Not a defect |
+| Same fact written into two tables *within* the live pipeline | **Defect.** Point, do not copy |
+| Same DOI under **different reference IDs** | **Defect** — two identities for one source; `R9a`/`R9b` detect it |
+
+`source_locators` is **exempt, permanently.** Its case-drifted DOIs are allowed to be wrong-ish; do
+not spend effort normalising rows no determination may cite.
+
+---
+
+**RULE: Applicability is an OUTPUT of synthesis, never an input to it. Research the full cross-product.**
+
+> *"Every research slug gets cross-referenced against a population code, access need or ICF code
+> because there is always the chance that there is an unexpected connection between them. If we only
+> link our taxonomy to research slugs by what seems obvious, we may miss evidence."*
+>
+> *"Until we have secured an astounding body of evidence and synthesized that work while
+> cross-referencing against our populations/access needs/ICFs, we are not able to define these
+> connections — we are waiting until we have finished our syntheses to ensure we define them with
+> evidenced justification, not presuppositions."*
+
+**DATE: 2026-08-24** — owner ruling. `DR-2026-08-24` §2.4.
+
+**This inverts the model the project worked from for three days and dissolves the blocker called
+critical.** `item_population_links` edges are **findings**, produced by synthesis and justified by
+evidence. Writing them first is the presupposition the ruling forbids.
+
+| Superseded | Operative |
+|---|---|
+| A-18's zero `item_population_links` is a defect blocking determination | It is the **correct state** before synthesis. Nothing is owed |
+| D-0165 (population-taxonomy pass) blocks the deliverable | **D-0165 does not block research at all.** It is downstream of it. Every "blocked by D-0165" note is void |
+| Frame research by the populations a slug already links to | **Every slug is searched against every population / access need / ICF code** — an unexpected hit is the point of running it |
+
+**The frame is the full cross-product, and it is not optional.** Not *"which populations does this
+slug already link to"*, which assumes the answer. Per `CLAUDE.md` §6 the frame is pulled as **ICF and
+access-need codes WITH names**, never as bare `axis_code`.
+
+**One structural consequence, recorded because it is owed work, not a defect to argue about:**
+`search_executions` carries no population, access-need or ICF column, so a search cannot today
+declare which cell of the cross-product it covered. The ruling is therefore unrecordable and
+ungateable as the schema stands — which is exactly what `GAP-B01-003` already names (*"a population
+that appears only as a conjunct in someone else's query has not been searched"*). The
+pointer-correct shape is a junction on `exec_id`, mirroring `search_admissions`; **never a copied
+code on the row.**
+
+---
+
+## RULE 2026-08-25 — Scratchpads are committed, not accumulated
+
+**DATE: 2026-08-25** — owner directive: *"ensure that we are always committing our scratchpads to
+the repository so that we actually have a surface to review… committed regularly enough that they
+do not [get] impacted [by compaction]."*
+
+A scratchpad that lives only in a session's context is not a review surface — it is a transcript,
+and transcripts are lost to compaction, to session end, and to container reclamation. **This
+repository has already paid for that twice in two days:** the pointer-discipline queue existed only
+in one conversation and three of its items shipped to `main` citing labels (`M3`, `M5`) that no file
+defined; and the Fable audit that designed the queue survived only because it was recovered from a
+transcript before that transcript was gone.
+
+- **Commit the scratchpad at every natural break** — a finished investigation, a batch step, a
+  migration emitted, an answer given to the owner — **not once at session end.** The failure mode is
+  a long uncommitted stretch, so the interval that matters is *elapsed work*, not file size.
+- **Never wait for a session record to exist before committing working notes.** Both 2026-08-24
+  sessions closed with no `sessions/` file, so their scratchpads had no home and their reasoning was
+  nearly lost. If no session directory exists, create it and commit into it.
+- **A scratchpad commit needs no ceremony**: `governance: session command log [YYYY-MM-DD HH:MM]` is
+  a complete commit message. Cost is one commit; the thing it buys is that the work is reviewable at
+  all.
+- **`scratchpad/**/commands.jsonl` is exempt from `retired_vocabulary`** (`retired-vocabulary.yaml`)
+  — it is a verbatim record of what was typed, in the same class as a search log. A session that
+  greps for a retired term to prove it unused must not redden the check by doing so.
