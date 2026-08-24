@@ -108,7 +108,9 @@ After multilingual-research completes:
    ```bash
    python3 scripts/db.py add-source \
      --ref-id {local_ref_id} \
-     --authors "{authors}" \
+     --author "{last}|{given}" \    # repeatable, byline order; 'corp|{name}' for a body
+     # authors are ROWS since migration 063 — evidence_sources.author_display is a
+     # tombstone that reads NULL. --authors "{authors}" still works and is parsed.
      --year {year} \
      --title "{title}" \
      --tier {tier} \

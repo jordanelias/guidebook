@@ -253,10 +253,13 @@ def quick_wins(conn, top_n: int = 20) -> dict:
       - VERIFIED-but-incomplete-metadata: need metadata completion (DOI/CrossRef etc.)
     """
     complete_but_unverified = conn.execute("""
-        SELECT es.ref_id, es.first_author_last, es.pub_year, es.pub_title,
+        SELECT es.ref_id, va.first_author_last, es.pub_year, es.pub_title,
                COUNT(DISTINCT sl.slug) as bpc_uses
         FROM evidence_sources es
         LEFT JOIN source_slug_links sl ON es.ref_id = sl.ref_id
+        -- POINTER, NOT COPY (migration 063): first_author_last is derived from
+        -- evidence_source_authors, the one home for who wrote a source.
+        LEFT JOIN v_evidence_authors va ON va.ref_id = es.ref_id
         WHERE es.metadata_quality IN ('COMPLETE','COMPLETE-STATUTORY')
         AND (es.verification_status IS NULL OR es.verification_status NOT IN ('VERIFIED', 'UNVERIFIED'))
         GROUP BY es.ref_id
@@ -265,10 +268,11 @@ def quick_wins(conn, top_n: int = 20) -> dict:
     """, (top_n,)).fetchall()
 
     verified_but_thin = conn.execute("""
-        SELECT es.ref_id, es.first_author_last, es.pub_year, es.pub_title,
+        SELECT es.ref_id, va.first_author_last, es.pub_year, es.pub_title,
                es.metadata_quality, COUNT(DISTINCT sl.slug) as bpc_uses
         FROM evidence_sources es
         LEFT JOIN source_slug_links sl ON es.ref_id = sl.ref_id
+        LEFT JOIN v_evidence_authors va ON va.ref_id = es.ref_id   -- migration 063
         WHERE es.verification_status IN ('VERIFIED', 'UNVERIFIED')
         AND (es.metadata_quality NOT IN ('COMPLETE','COMPLETE-STATUTORY') OR es.metadata_quality IS NULL)
         GROUP BY es.ref_id

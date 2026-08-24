@@ -32,7 +32,19 @@ class EvidenceSource(GuidebookEntity):
     ref_id: str  # REF-NNNNN (global, stable)
 
     # Bibliographic
-    authors: str
+    #
+    # THERE IS NO AUTHOR FIELD HERE, AND THAT IS CORRECT. A model field `authors: str`
+    # stood here and mirrored nothing: `evidence_sources` has never had an `authors`
+    # column (the CLI's --authors was a logical alias, audit F-17, 2026-06-22), and
+    # since migration 063 the five columns that DID copy the author list —
+    # author_display, first_author_last, first_author_first, author_count,
+    # is_corporate_primary — are writer-retired tombstones that read NULL.
+    #
+    # Authors are rows in `evidence_source_authors`, one per author in byline order,
+    # and `v_evidence_authors` derives the display form from them. A source's authors
+    # are reached by pointer on ref_id, not carried on the source
+    # (DR-2026-08-24-scaffolding-is-phase-specific §2.1: never write the same fact
+    # into a second table).
     year: Optional[str] = None
     title: str
     doi: Optional[str] = None

@@ -142,7 +142,9 @@ Backward mining is **not blocked by the absence of a DOI**. It requires only the
 - Duplicate: pre-check the DOI against `evidence_sources.doi` (rule R9 — if it
   exists, cross-file the existing `ref_id`, never duplicate). With no DOI, try the
   other stable identifiers (`pmid`, `pmcid`, `isbn`, `issn`, `handle`, `url`),
-  then normalised title + `pub_year` + `first_author_last`.
+  then normalised title + `pub_year` + `v_evidence_authors.first_author_last`
+  (the `evidence_sources` column of that name is a tombstone since migration 063
+  and reads NULL — screen on the view or every source looks new).
   *There is no dedup-key column.* This line named `doi_less_key`, which was  <!-- [RETIRED-VOCAB-OK] -->
   dropped from the schema — as §4 of this same file already says, two screens
   down. Two answers to one question is the disease; the §4 note is the true one.
@@ -153,14 +155,29 @@ Backward mining is **not blocked by the absence of a DOI**. It requires only the
 
 ### evidence_sources — `add-source` logical fields (current schema)
 The `db.py add-source` CLI takes **logical** fields that map to the real columns:
-`--authors → author_display`, `--year → pub_year`, `--title → pub_title`, plus
+`--year → pub_year`, `--title → pub_title`, plus
 `--doi, --pmid, --tier, --evidence-type, --jurisdiction, --slug, --local-ref-id`.
 
+**AUTHORS ARE ROWS, NOT A STRING — changed 2026-08-24, migration 063.** `--authors` no
+longer maps to `author_display`; that column and its four companions
+(`first_author_last`, `first_author_first`, `author_count`, `is_corporate_primary`) are
+**writer-retired tombstones on `evidence_sources` and read NULL**. Who wrote a source has
+one home, `evidence_source_authors`, and `v_evidence_authors` derives the display form
+from it.
+
+- `--author 'Payne|Sarah R.'` — **preferred**, repeatable, in byline order. Keeps the
+  given name. `--author 'corp|World Health Organization'` for a corporate author.
+- `--authors "Payne S; Galbrun L"` — still accepted and parsed into rows, but the display
+  form holds initials where the row holds a given name, so it stores less. Anything it
+  cannot split into surname + initials is **refused, not guessed at**, and nothing is
+  written. Use `--author` for those.
+- A source with no authors is refused outright. There is no display column left to write
+  instead. If the work has no named author, file the issuing body as a corporate author.
+
 **Note:** the live `evidence_sources` table has **no** `authors`/`year`/`title`/`doi_less_key`  <!-- [RETIRED-VOCAB-OK] -->
-columns (it uses `author_display`, `pub_year`, `pub_title`, …; structured authors live in
-the separate `evidence_source_authors` table). Run `.schema evidence_sources` for the full
-layout. The CLI mapping was restored 2026-06-22 (audit F-17) — earlier it crashed with
-"table evidence_sources has no column named authors".
+columns (it uses `pub_year`, `pub_title`, …). Run `.schema evidence_sources` for the full
+layout. The `--year`/`--title` mapping was restored 2026-06-22 (audit F-17) — earlier it
+crashed with "table evidence_sources has no column named authors".
 
 ### source_slug_links columns
 `ref_id, slug, local_ref_id`
@@ -172,7 +189,8 @@ layout. The CLI mapping was restored 2026-06-22 (audit F-17) — earlier it cras
 ```bash
 python3 scripts/db.py add-source \
   --ref-id {local_ref_id} \
-  --authors "{authors}" \
+  --author "{last}|{given}" \      # repeatable, byline order; 'corp|{name}' for a body
+  # or, from a display string: --authors "{authors}"   (parsed into rows; refuses ambiguity)
   --year {year} \
   --title "{title}" \
   --tier {tier} \
@@ -193,15 +211,18 @@ python3 scripts/db.py add-source \
 
 Query for bibliography generation:
 ```sql
-SELECT es.ref_id, es.author_display, es.pub_year, es.pub_title, es.doi, es.tier,
+SELECT es.ref_id, va.author_display, es.pub_year, es.pub_title, es.doi, es.tier,
        es.jurisdiction,
        GROUP_CONCAT(DISTINCT ssl.slug) as slugs,
        cm.backward, cm.forward
 FROM evidence_sources es
+LEFT JOIN v_evidence_authors va ON va.ref_id = es.ref_id
 LEFT JOIN source_slug_links ssl ON es.ref_id = ssl.ref_id
-LEFT JOIN citation_mining cm ON cm.local_ref_id = ssl.local_ref_id AND cm.slug = ssl.slug
+-- On the REFERENCE ID, not local_ref_id: that per-slug label is copied into both tables
+-- and has already drifted here (RAP-06/09/10 vs RAP-F61/F69/F70 for the same sources).
+LEFT JOIN citation_mining cm ON cm.global_ref_id = es.ref_id AND cm.slug = ssl.slug
 GROUP BY es.ref_id
-ORDER BY es.first_author_last COLLATE NOCASE, es.pub_year
+ORDER BY va.first_author_last COLLATE NOCASE, es.pub_year
 ```
 
 Format:

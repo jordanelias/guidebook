@@ -24,13 +24,15 @@ CLI usage:
     python3 scripts/db.py log-search --slug SLUG --language EN --query-text '...' --engine pubmed \
         --depth-method scoping --session SESSION      (upsert-coverage/-language are frozen; see log_search)
     python3 scripts/db.py update-bpc --slug SLUG --citation-mining-complete 1 --session SESSION
-    python3 scripts/db.py add-source --ref-id REF-001 --authors "Smith J" --year 2022 --title "..." --tier 1 --session SESSION [--slug SLUG --local-ref-id LR-001]
+    python3 scripts/db.py add-source --ref-id REF-001 --author "Smith|Jane" --author "corp|WHO" --year 2022 --title "..." --tier 1 --session SESSION [--slug SLUG --local-ref-id LR-001]
+        (--authors "Smith J; Jones K" still works and is parsed into author rows; --author is preferred because it keeps the given name)
     python3 scripts/db.py validate
     python3 scripts/db.py --help
 """
 
 import json
 import os
+import re
 import sqlite3
 import sys
 import argparse
@@ -999,7 +1001,20 @@ def main():
     # add-source
     p_as = sub.add_parser("add-source", help="Insert an evidence source")
     p_as.add_argument("--ref-id", required=True)
-    p_as.add_argument("--authors", required=True)
+    # AUTHORS ARE ROWS, NOT A STRING (migration 063). evidence_sources.author_display is
+    # writer-retired; who wrote a source has one home, evidence_source_authors, and
+    # v_evidence_authors renders it. Until 2026-08-24 this CLI could write the display
+    # copy and could NOT write the rows at all — the documented filing path wrote the
+    # derived form and left the source of truth empty. Both flags below write rows.
+    p_as.add_argument("--author", action="append", metavar="LAST|GIVEN",
+                      help="Repeatable, in byline order. 'Payne|Sarah R.' for a person, "
+                           "'corp|World Health Organization' for a corporate author. "
+                           "Preferred: it stores the given name, which --authors cannot.")
+    p_as.add_argument("--authors", metavar='"Last I; Last I"',
+                      help="Display form, parsed into author rows. Kept because every "
+                           "skill and runbook writes it. Each part must be a surname "
+                           "followed by initials; anything this cannot parse without "
+                           "guessing is REFUSED rather than approximated.")
     p_as.add_argument("--year", required=True, type=int)
     p_as.add_argument("--title", required=True)
     p_as.add_argument("--tier", required=True, type=int)
@@ -1367,9 +1382,13 @@ def main():
         _emit({"updated": True, "slug": args.slug, "fields": list(data.keys())})
 
     elif args.command == "add-source":
+        if not args.author and not args.authors:
+            parser.error("add-source needs --author (repeatable, preferred) or --authors")
+        if args.author and args.authors:
+            parser.error("give --author or --authors, not both: two spellings of the "
+                         "author list is the copy this migration removes")
         data = {
             "ref_id": args.ref_id,
-            "authors": args.authors,
             "year": args.year,
             "title": args.title,
             "tier": args.tier,
@@ -1394,7 +1413,10 @@ def main():
             data["verification_method"] = args.verification_method
         if args.verified_by_tool:
             data["verified_by_tool"] = args.verified_by_tool
-        ref_id = insert_evidence_source(data, session=args.session, dry_run=args.dry_run)
+        authors = (parse_author_flags(args.author) if args.author
+                   else parse_author_display(args.authors))
+        ref_id = insert_evidence_source(data, session=args.session,
+                                        dry_run=args.dry_run, authors=authors)
         if args.slug and args.local_ref_id:
             insert_source_slug_link(ref_id, args.slug, args.local_ref_id,
                                     session=args.session, dry_run=args.dry_run)
@@ -1630,16 +1652,112 @@ def update_bpc_metadata(slug: str, data: dict, session: str,
             )
 
 
+def parse_author_flags(flags: list[str]) -> list[dict]:
+    """Turn repeated --author values into evidence_source_authors rows, in byline order.
+
+    'Payne|Sarah R.'                 -> person, last_name='Payne', first_name='Sarah R.'
+    'corp|World Health Organization' -> corporate author
+    A surname alone is allowed; a given name alone is not, because position in the
+    byline is what a citation renders and a nameless surname cannot be rendered.
+    """
+    out = []
+    for i, raw in enumerate(flags, start=1):
+        part = (raw or "").strip()
+        if not part:
+            raise ValueError("--author was given an empty value")
+        if "|" in part:
+            head, tail = part.split("|", 1)
+        else:
+            head, tail = part, ""
+        head, tail = head.strip(), tail.strip()
+        if head.lower() in ("corp", "corporate"):
+            if not tail:
+                raise ValueError(f"--author {raw!r}: corporate author has no name")
+            out.append({"position": i, "is_corporate": 1, "corporate_name": tail,
+                        "last_name": None, "first_name": None})
+        else:
+            if not head:
+                raise ValueError(f"--author {raw!r}: no surname. Give 'Last|Given'.")
+            out.append({"position": i, "is_corporate": 0, "corporate_name": None,
+                        "last_name": head, "first_name": tail or None})
+    return out
+
+
+# A display part is a surname (which may be hyphenated, accented or multi-word, as in
+# 'van der Meer') followed by initials: 'Payne S', 'Rosas-Perez C', 'MARKUSSEN A'.
+# The initials group is capped at three letters DELIBERATELY. Uncapped, it swallowed a
+# genuine multi-word uppercase surname: 'SENTOP DUMEN' parsed as surname 'SENTOP' with
+# initials 'DUMEN', silently inventing a name split. Three initials is already generous,
+# and anything past it is refused into --author rather than guessed at.
+_DISPLAY_PART = re.compile(
+    r"^(?P<last>.+?)\s+(?P<initials>[A-Z](?:[.\-]?[A-Z]){0,2}\.?)$")
+
+
+def parse_author_display(display: str) -> list[dict]:
+    """Parse the "Last I; Last I" display form back into author rows.
+
+    THIS REFUSES RATHER THAN GUESSES, and that is the point. The display form is lossy:
+    it holds initials where the row holds a given name, so a part it cannot split into
+    surname + initials is not approximated. On 2026-08-19 five sources in this repository
+    were stored with invented co-authors and passed six gates (CLAUDE.md §2(c)); a parser
+    that filled in a plausible reading would be the same failure with a smaller blast
+    radius. Use --author, which needs no parsing, for anything this rejects.
+
+    What is stored: first_name holds exactly the initials supplied and nothing more. It
+    is not expanded into a given name, because the display form does not contain one.
+    """
+    rows, bad = [], []
+    parts = [p.strip() for p in (display or "").split(";")]
+    parts = [p for p in parts if p]
+    if not parts:
+        raise ValueError("--authors is empty")
+    for i, part in enumerate(parts, start=1):
+        m = _DISPLAY_PART.match(part)
+        if m:
+            rows.append({"position": i, "is_corporate": 0, "corporate_name": None,
+                         "last_name": m.group("last").strip(),
+                         "first_name": m.group("initials").strip()})
+        else:
+            bad.append(part)
+    if bad:
+        raise ValueError(
+            "--authors could not be parsed without guessing: "
+            + "; ".join(repr(b) for b in bad)
+            + ". Each part must be a surname followed by initials ('Payne S'). "
+              "For a corporate author or a full given name use the repeatable "
+              "--author flag: --author 'corp|World Health Organization', "
+              "--author 'Payne|Sarah R.'. Nothing was written.")
+    return rows
+
+
 def insert_evidence_source(data: dict, session: str,
-                           dry_run: bool = False) -> str:
-    """Insert a new evidence source. Returns ref_id."""
+                           dry_run: bool = False,
+                           authors: list[dict] | None = None) -> str:
+    """Insert a new evidence source and its author rows. Returns ref_id.
+
+    `authors` is a list of evidence_source_authors rows, from parse_author_flags or
+    parse_author_display. It is written in the SAME transaction as the source, so a
+    source can never exist without the authors it was filed with.
+    """
     # Map legacy logical field names to the real evidence_sources columns and drop
     # doi_less_key (no such column in the current schema). Without this the CLI crashed
     # with "table evidence_sources has no column named authors" (audit F-17, 2026-06-22).
-    _LEGACY = {"authors": "author_display", "year": "pub_year", "title": "pub_title"}
+    _LEGACY = {"year": "pub_year", "title": "pub_title"}
     data = {_LEGACY.get(k, k): v for k, v in data.items() if k != "doi_less_key"}
+
+    # `authors` USED TO MAP TO author_display HERE, and that was the whole defect.
+    # This writer could set the derived display string and had no way to write
+    # evidence_source_authors at all, so the documented filing path populated the copy
+    # and left the source of truth empty. Migration 063 writer-retires the copy; refuse
+    # it explicitly rather than let a caller quietly write a column nothing reads.
+    if "author_display" in data or "authors" in data:
+        raise ValueError(
+            "author_display is writer-retired (migration 063). Authors are rows in "
+            "evidence_source_authors, derived for display by v_evidence_authors. Pass "
+            "the `authors` argument (parse_author_flags / parse_author_display), or on "
+            "the CLI use --author / --authors.")
     _ES_COLS = frozenset({
-        "ref_id", "author_display", "pub_year", "pub_title", "doi",
+        "ref_id", "pub_year", "pub_title", "doi",
         "pmid", "tier", "evidence_type", "jurisdiction", "metadata_quality",
         "verification_status", "co1_provenance", "co1_source_type",
         "synthesis_attribution_required", "notes", "lang_detected",
@@ -1717,6 +1835,24 @@ def insert_evidence_source(data: dict, session: str,
             f"INSERT INTO evidence_sources ({cols}) VALUES ({ph})",
             list(row.values())
         )
+        # A source with no authors renders as a blank byline everywhere, and the
+        # display column that used to paper over that is gone. Refuse the write.
+        if not authors:
+            raise ValueError(
+                f"{data['ref_id']}: no authors given. Every source needs its authors "
+                f"as rows (--author / --authors); there is no display column to write "
+                f"instead. If the work genuinely has no named author, file the issuing "
+                f"body as a corporate author: --author 'corp|<name>'.")
+        stamp = audit(session)
+        for a in authors:
+            conn.execute(
+                "INSERT INTO evidence_source_authors "
+                "(ref_id, position, last_name, first_name, is_corporate, "
+                " corporate_name, role, created_at, created_by_session) "
+                "VALUES (?,?,?,?,?,?,'author',?,?)",
+                [data["ref_id"], a["position"], a.get("last_name"), a.get("first_name"),
+                 a.get("is_corporate", 0), a.get("corporate_name"),
+                 stamp["created_at"], stamp["created_by_session"]])
     return data["ref_id"]
 
 

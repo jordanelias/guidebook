@@ -51,11 +51,15 @@ For a given spec, assess evidence state across all 11+ populations:
 
 1. Query existing evidence links:
    ```sql
-   SELECT ipl.population_code, es.tier, es.first_author_last, es.pub_year
+   -- POINTER, NOT COPY (migration 063): first_author_last is derived by
+   -- v_evidence_authors from evidence_source_authors. The evidence_sources
+   -- column of that name is a writer-retired tombstone and reads NULL.
+   SELECT ipl.population_code, es.tier, va.first_author_last, es.pub_year
    FROM item_population_links ipl
    JOIN items i ON ipl.item_code = i.item_code
    LEFT JOIN source_slug_links ssl ON i.bpc_source_slug = ssl.slug
    LEFT JOIN evidence_sources es ON ssl.ref_id = es.ref_id
+   LEFT JOIN v_evidence_authors va ON va.ref_id = es.ref_id
    WHERE i.item_code = '{item_code}'
    ```
 

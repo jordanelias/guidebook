@@ -151,11 +151,14 @@ def audit(db_path, session=None, tier_max=2, output_json=False):
                      if session else "")
     params = {"session": skey, "session_md": skey_md, "tier_max": tier_max}
     rows = con.execute(f"""
-        SELECT DISTINCT es.ref_id, es.tier, es.author_display AS authors, es.pub_year AS year, es.pub_title AS title, es.doi,
+        SELECT DISTINCT es.ref_id, es.tier, va.author_display AS authors, es.pub_year AS year, es.pub_title AS title, es.doi,
                         es.created_by_session, es.verification_status,
                         GROUP_CONCAT(DISTINCT ssl.slug) as slugs
         FROM evidence_sources es
         JOIN source_slug_links ssl ON es.ref_id = ssl.ref_id
+        -- POINTER, NOT COPY (migration 063): the author list has one home,
+        -- evidence_source_authors, and v_evidence_authors renders it.
+        LEFT JOIN v_evidence_authors va ON va.ref_id = es.ref_id
         -- Resolve a mining row to its source the way citation_mining's own
         -- primary key does: global_ref_id when present, otherwise
         -- (slug, local_ref_id) through source_slug_links. global_ref_id is NULL
@@ -193,28 +196,19 @@ def audit(db_path, session=None, tier_max=2, output_json=False):
           {where_session}
     """, params).fetchone()[0]
 
-    # Also report rows where cm exists but both backward=0 AND forward=0 AND no deferred_reason
-    bad_cm = con.execute(f"""
-        SELECT cm.global_ref_id, cm.slug, cm.local_ref_id, cm.backward, cm.forward,
-               cm.deferred_reason, es.tier, es.author_display AS authors, es.pub_year AS year, es.created_by_session
-        FROM citation_mining cm
-        JOIN evidence_sources es ON cm.global_ref_id = es.ref_id
-        WHERE es.tier BETWEEN 1 AND :tier_max
-          AND cm.backward = 0 AND cm.forward = 0
-          AND (cm.deferred_reason IS NULL OR cm.deferred_reason = '')
-          {("AND es.created_by_session = :session" if session else "").replace("es.", "cm.created_by_session = :session OR es.")}
-        ORDER BY cm.global_ref_id
-    """, {"session": session, "tier_max": tier_max}).fetchall() if False else []
-    # ^ disabled the convoluted query — keep simple, do it in Python below
-
+    # A second query stood here, disabled with `if False else []` and annotated
+    # "^ disabled the convoluted query — keep simple, do it in Python below". It was
+    # dead on every path. Removed 2026-08-24 with the author-copy sweep; git is the
+    # archive for code (CLAUDE.md §1). The Python scan below is the live version.
     # Simpler: scan cm rows where both directions are 0 and no defer reason
     bad_cm = []
     for cm in con.execute("""
         SELECT cm.global_ref_id, cm.slug, cm.local_ref_id, cm.backward, cm.forward,
-               cm.deferred_reason, es.tier, es.author_display AS authors, es.pub_year AS year,
+               cm.deferred_reason, es.tier, va.author_display AS authors, es.pub_year AS year,
                es.created_by_session as es_session, cm.created_by_session as cm_session
         FROM citation_mining cm
         JOIN evidence_sources es ON cm.global_ref_id = es.ref_id
+        LEFT JOIN v_evidence_authors va ON va.ref_id = es.ref_id
         WHERE es.tier BETWEEN 1 AND ?
           AND cm.backward = 0 AND cm.forward = 0
           AND (cm.deferred_reason IS NULL OR cm.deferred_reason = '')

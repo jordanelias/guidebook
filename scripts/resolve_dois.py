@@ -505,13 +505,18 @@ def enrich_from_crossref(conn, ref_id, item, ts=None):
         except (ValueError, TypeError):
             cr_cites = None
 
-    # Fetch current row
+    # Fetch current row. The author facts come from v_evidence_authors (migration 063),
+    # NOT from the retired copies on evidence_sources — reading the copies here is what
+    # made the drift invisible: this function DELETEs and reinserts every author row, so
+    # evidence_sources.first_author_last describes the authors it just replaced.
     row = conn.execute("""
-        SELECT pub_title, pub_year, pub_month, journal_abbrev, volume, issue, pages,
-               publisher, issn, language, subtype, citation_count,
-               doi, first_author_last, is_corporate_primary, metadata_quality,
-               author_count, author_count_is_complete
-        FROM evidence_sources WHERE ref_id = ?
+        SELECT e.pub_title, e.pub_year, e.pub_month, e.journal_abbrev, e.volume, e.issue,
+               e.pages, e.publisher, e.issn, e.language, e.subtype, e.citation_count,
+               e.doi, e.metadata_quality, e.author_count_is_complete,
+               v.first_author_last, v.is_corporate_primary
+        FROM evidence_sources e
+        JOIN v_evidence_authors v ON v.ref_id = e.ref_id
+        WHERE e.ref_id = ?
     """, (ref_id,)).fetchone()
     if not row:
         return
@@ -560,8 +565,10 @@ def enrich_from_crossref(conn, ref_id, item, ts=None):
                        is_corporate, created_at, created_by_session)
                     VALUES (?, ?, ?, ?, ?, 0, ?, ?)
                 """, (ref_id, i, a.get("family"), a.get("given"), orcid, ts, SESSION))
-            sets.append("author_count = ?")
-            params.append(len(person_authors))
+            # author_count is NOT written: it was COUNT(*) of the rows just inserted,
+            # a copy of a fact one table away, and v_evidence_authors derives it.
+            # author_count_is_complete IS written — it is a curation assertion about
+            # whether the WHOLE list was obtained, which the rows cannot answer.
             sets.append("author_count_is_complete = ?")
             params.append(1)
             author_refreshed = True
@@ -663,13 +670,21 @@ def main():
 
     # Schema sanity check — V1 requires verified_by_tool and friends
     cols = [r[1] for r in conn.execute(f"PRAGMA table_info({TABLE})")]
-    required = {"first_author_last", "pub_title", "pub_year",
-                "doi_resolution_outcome", "source_type", "is_corporate_primary",
+    required = {"pub_title", "pub_year",
+                "doi_resolution_outcome", "source_type",
                 "pmcid", "verified_by_tool", "last_verified_at",
                 "verification_attempt_count"}
     missing = required - set(cols)
     if missing:
         print(f"ERROR: evidence_sources schema is not V1-extended. Missing: {missing}")
+        return 1
+
+    # first_author_last and is_corporate_primary left this list when migration 063
+    # writer-retired them. They still exist as tombstones, so asserting them would pass
+    # while proving nothing; the thing this run actually depends on is the view.
+    if not conn.execute("SELECT 1 FROM sqlite_master WHERE type='view' "
+                        "AND name='v_evidence_authors'").fetchone():
+        print("ERROR: v_evidence_authors is missing. Apply migration 063 before resolving.")
         return 1
 
     now_iso = time.strftime("%Y-%m-%d %H:%M", time.gmtime())
@@ -813,17 +828,23 @@ def main():
     print("=" * 56)
     placeholders = ",".join(["?"] * len(ELIGIBLE_TYPES))
     p2a_rows = conn.execute(f"""
-        SELECT ref_id, first_author_last, first_author_first, pub_title, pub_year, source_type
-        FROM {TABLE}
-        WHERE (doi IS NULL OR doi = '')
-        AND source_type IN ({placeholders})
-        AND is_corporate_primary = 0
-        AND first_author_last IS NOT NULL AND first_author_last != ''
-        AND pub_title IS NOT NULL AND length(pub_title) > 15
-        AND pub_year IS NOT NULL
-        AND (doi_resolution_outcome IS NULL
-             OR (doi_resolution_outcome = 'NO-MATCH' AND updated_at < ?))
-        ORDER BY pub_year DESC, ref_id
+        -- POINTER, NOT COPY (migration 063). first_author_last and is_corporate_primary
+        -- are writer-retired on evidence_sources; v_evidence_authors derives both from
+        -- evidence_source_authors, which is the only home for who wrote a source. Phase 2b
+        -- below already read the corporate name straight from those rows.
+        -- first_author_first was selected here and never used, so it is gone with the copies.
+        SELECT e.ref_id, v.first_author_last, e.pub_title, e.pub_year, e.source_type
+        FROM {TABLE} e
+        JOIN v_evidence_authors v ON v.ref_id = e.ref_id
+        WHERE (e.doi IS NULL OR e.doi = '')
+        AND e.source_type IN ({placeholders})
+        AND v.is_corporate_primary = 0
+        AND v.first_author_last IS NOT NULL AND v.first_author_last != ''
+        AND e.pub_title IS NOT NULL AND length(e.pub_title) > 15
+        AND e.pub_year IS NOT NULL
+        AND (e.doi_resolution_outcome IS NULL
+             OR (e.doi_resolution_outcome = 'NO-MATCH' AND e.updated_at < ?))
+        ORDER BY e.pub_year DESC, e.ref_id
         LIMIT ?
     """, (*ELIGIBLE_TYPES, cutoff, MAX_RESOLVE)).fetchall()
     print(f"  Candidates: {len(p2a_rows)}")
@@ -860,9 +881,10 @@ def main():
                (SELECT a.corporate_name FROM evidence_source_authors a
                 WHERE a.ref_id = e.ref_id AND a.position = 1) AS corp
         FROM {TABLE} e
+        JOIN v_evidence_authors v ON v.ref_id = e.ref_id
         WHERE (e.doi IS NULL OR e.doi = '')
         AND e.source_type IN ('journal_article','book','book_chapter','conference_paper')
-        AND e.is_corporate_primary = 1
+        AND v.is_corporate_primary = 1
         AND e.pub_title IS NOT NULL AND length(e.pub_title) > 15
         AND e.pub_year IS NOT NULL
         AND (e.doi_resolution_outcome IS NULL

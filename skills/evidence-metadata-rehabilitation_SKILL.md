@@ -64,7 +64,11 @@ NFKD-strip is required: failure to strip combining marks produces false-positive
 
 ### Three checks per row
 - **Title**: shared-token-count between `normalize(canonical_title)` and `normalize(db_pub_title)` ≥ 3, OR db value has fewer than 3 tokens.
-- **Author**: `normalize(canonical_first_author_surname) == normalize(db_first_author_last)`.
+- **Author**: `normalize(canonical_first_author_surname) == normalize(db_first_author_last)`,
+  where `db_first_author_last` is read from **`v_evidence_authors`**, not from
+  `evidence_sources`. Migration 063 writer-retired that column and its companions;
+  they read NULL, and a comparison against NULL passes as "no contradiction" on every
+  row, turning this check vacuous (CLAUDE.md §2(a)).
 - **Year**: `abs(canonical_year - db_pub_year) ≤ 1` (allows online-ahead-of-print drift).
 
 ### Verdict from cross-check
@@ -130,7 +134,8 @@ Statutory rows do not have a single-call resolver. Per-row research is mandatory
 
 ## Worked example: clean MATCH
 
-Stored row: `REF-00012`, DOI `10.1177/19375867231178313`, `first_author_last=NULL`, `pub_title="Housing accessibility and rehabilitation outcomes after stroke"`, `pub_year=2023`, `journal_name=NULL`.
+Stored row: `REF-00012`, DOI `10.1177/19375867231178313`, no author rows (so
+`v_evidence_authors.first_author_last` is NULL), `pub_title="Housing accessibility and rehabilitation outcomes after stroke"`, `pub_year=2023`, `journal_name=NULL`.
 
 Crossref `/works/10.1177/19375867231178313` returns:
 - title: "Housing accessibility and rehabilitation outcomes after stroke"
@@ -145,11 +150,21 @@ Cross-check:
 - author: db NULL, canonical "Elf" — PASS (no contradiction)
 - year: 2023 = 2023 — PASS
 
-Verdict: MATCH. Upgrade path. Write `journal_name`, `volume`, `issue`, `pages_start`, `pages_end`, `publisher`, `issn`, `first_author_last`, `first_author_first`, `author_count`, `author_display`. Set `metadata_quality='COMPLETE'`, `metadata_integrity_status='OK'`.
+Verdict: MATCH. Upgrade path. Write `journal_name`, `volume`, `issue`, `pages_start`,
+`pages_end`, `publisher`, `issn` on `evidence_sources`, and the authors as **rows in
+`evidence_source_authors`** — one row per author, in byline order. Set
+`metadata_quality='COMPLETE'`, `metadata_integrity_status='OK'`.
+
+**Do not write `first_author_last`, `first_author_first`, `author_count`,
+`is_corporate_primary` or `author_display`.** This line instructed exactly that until
+2026-08-24; migration 063 writer-retired all five as copies of the author rows, and
+`v_evidence_authors` derives them. Writing a copy back is how the rendered byline comes
+to disagree with the authors of record.
 
 ## Worked example: HOLD (note-as-title)
 
-Stored row: `REF-00028`, DOI `10.1177/00187208211059860`, `first_author_last="Levine"`, `pub_title="Grab bar placement varies with body height (r=0.67). Human Factors"`, `pub_year=2023`.
+Stored row: `REF-00028`, DOI `10.1177/00187208211059860`, author rows giving
+`v_evidence_authors.first_author_last="Levine"`, `pub_title="Grab bar placement varies with body height (r=0.67). Human Factors"`, `pub_year=2023`.
 
 Crossref returns:
 - title: "Grab Bar Use Influences Fall Hazard During Bathtub Exit"

@@ -110,11 +110,14 @@ def audit():
     """
     flagged_query = f"""
         SELECT es.ref_id, es.tier, es.pub_year, es.jurisdiction,
-               es.first_author_last, es.pub_title, es.code_currency_status,
+               va.first_author_last, es.pub_title, es.code_currency_status,
                es.code_currency_verified_at,
                (SELECT GROUP_CONCAT(ssl.slug)
                   FROM (SELECT DISTINCT slug FROM source_slug_links WHERE ref_id = es.ref_id) ssl) as slugs
           FROM evidence_sources es
+          -- POINTER, NOT COPY (migration 063): first_author_last is derived from
+          -- evidence_source_authors, the one home for who wrote a source.
+          LEFT JOIN v_evidence_authors va ON va.ref_id = es.ref_id
          WHERE es.tier IN (4, 5, 6)
            AND es.pub_year IS NOT NULL
            AND es.pub_year < CASE es.tier
@@ -153,10 +156,11 @@ def audit():
     # CHECK 3: T4–T6 rows explicitly marked SUPERSEDED-PENDING-REPLACEMENT
     # ────────────────────────────────────────────────────────────────────
     superseded = db.execute("""
-        SELECT ref_id, tier, pub_year, jurisdiction, first_author_last, pub_title,
-               code_currency_notes
-          FROM evidence_sources
-         WHERE code_currency_status = 'SUPERSEDED-PENDING-REPLACEMENT'
+        SELECT es.ref_id, es.tier, es.pub_year, es.jurisdiction,
+               va.first_author_last, es.pub_title, es.code_currency_notes
+          FROM evidence_sources es
+          LEFT JOIN v_evidence_authors va ON va.ref_id = es.ref_id   -- migration 063
+         WHERE es.code_currency_status = 'SUPERSEDED-PENDING-REPLACEMENT'
     """).fetchall()
     print(f"\n[CHECK 3] Rows explicitly marked SUPERSEDED-PENDING-REPLACEMENT: {len(superseded)}")
     for r in superseded[:10]:
@@ -187,11 +191,13 @@ def audit():
     # CHECK 5: VERIFIED-CURRENT older than 365 days (re-verification overdue)
     # ────────────────────────────────────────────────────────────────────
     overdue = db.execute("""
-        SELECT ref_id, code_currency_verified_at, first_author_last, pub_year, pub_title
-          FROM evidence_sources
-         WHERE code_currency_status = 'VERIFIED-CURRENT'
-           AND code_currency_verified_at IS NOT NULL
-           AND code_currency_verified_at < date('now','-365 days')
+        SELECT es.ref_id, es.code_currency_verified_at, va.first_author_last,
+               es.pub_year, es.pub_title
+          FROM evidence_sources es
+          LEFT JOIN v_evidence_authors va ON va.ref_id = es.ref_id   -- migration 063
+         WHERE es.code_currency_status = 'VERIFIED-CURRENT'
+           AND es.code_currency_verified_at IS NOT NULL
+           AND es.code_currency_verified_at < date('now','-365 days')
     """).fetchall()
     print(f"\n[CHECK 5] VERIFIED-CURRENT rows overdue for re-verification (>365 days): "
           f"{len(overdue)}")

@@ -57,9 +57,12 @@ def audit(db_path, slug_filter=None, output_json=False):
         members = con.execute("""
             SELECT ssl.ref_id, ssl.local_ref_id, ssl.created_at, ssl.created_by_session,
                    es.tier, es.verification_status,
-                   es.author_display AS authors, es.pub_year AS year, es.pub_title AS title, es.doi
+                   va.author_display AS authors, es.pub_year AS year, es.pub_title AS title, es.doi
             FROM source_slug_links ssl
             LEFT JOIN evidence_sources es ON ssl.ref_id = es.ref_id
+            -- POINTER, NOT COPY (migration 063): author_display is derived from
+            -- evidence_source_authors, the one home for who wrote a source.
+            LEFT JOIN v_evidence_authors va ON va.ref_id = ssl.ref_id
             WHERE ssl.slug = ? AND ssl.local_ref_id = ?
             ORDER BY ssl.created_at
         """, (ds["slug"], ds["local_ref_id"])).fetchall()

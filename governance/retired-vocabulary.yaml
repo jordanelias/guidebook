@@ -93,6 +93,13 @@ exempt_paths:
   - "audits/**"                    # dated reports, frozen at their date
   - "references/audits/**"         # ditto
   - "references/search-log/**"     # verbatim query logs; R8 forbids backfilling
+  # A verbatim log of the shell commands a session ran. Same class as a search
+  # log: it preserves what was typed. Added 2026-08-24, when the M5 author sweep
+  # turned this check red — not because any live surface used `doi_less_key`, but
+  # because the sweep had GREPPED for it to prove no live surface did, and the
+  # grep was logged. Unexempted, the check punishes the act of verifying it, and
+  # every future session that searches for a retired term reddens it again.
+  - "scratchpad/**/commands.jsonl" # verbatim shell-command logs
   - "workplan/_superseded/**"      # superseded by definition
   # A DATED workplan records a plan as it stood on that date, exactly as a dated
   # audit records findings as they stood. Rewriting `audit.yml` inside a

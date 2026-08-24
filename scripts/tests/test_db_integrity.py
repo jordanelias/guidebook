@@ -364,12 +364,18 @@ def run_checks(db_path):
            "WHERE doi IS NOT NULL AND doi_resolution_outcome IS NULL" if orphan_doi else "")
 
     # COMPLETE rows have author
-    bad_complete = conn.execute("""SELECT COUNT(*) FROM evidence_sources
-        WHERE metadata_quality = 'COMPLETE'
-        AND (first_author_last IS NULL OR first_author_last = '')
-        AND (is_corporate_primary IS NULL OR is_corporate_primary = 0)
+    # POINTER, NOT COPY (migration 063). This read evidence_sources.first_author_last
+    # and .is_corporate_primary, which are now writer-retired tombstones holding NULL.
+    # Left alone it would report every COMPLETE row as authorless. Read through
+    # v_evidence_authors and the check gets STRONGER: it now asserts the source has
+    # author ROWS, which is what a citation is rendered from, rather than asserting
+    # that a copy of them is non-empty.
+    bad_complete = conn.execute("""SELECT COUNT(*) FROM evidence_sources e
+        LEFT JOIN v_evidence_authors v ON v.ref_id = e.ref_id
+        WHERE e.metadata_quality = 'COMPLETE'
+        AND (v.first_author_last IS NULL OR v.first_author_last = '')
     """).fetchone()[0]
-    record("C03", "COMPLETE rows all have author (first_author_last or is_corporate_primary)",
+    record("C03", "COMPLETE rows all have author rows (v_evidence_authors)",
            bad_complete == 0,
            f"{bad_complete} COMPLETE rows lack author" if bad_complete else "")
 
@@ -484,8 +490,13 @@ def run_checks(db_path):
     # a defect rather than a place-of-last-resort.
     PLACEHOLDER = ("{c} LIKE '[%' OR {c} LIKE '%pending%' OR {c} LIKE '%TBD%' "
                    "OR {c} LIKE '%TBC%' OR {c} LIKE '%unknown (%'")
-    VALUE_COLS = [("evidence_sources", "first_author_last"),
-                  ("evidence_sources", "author_display"),
+    # The two evidence_sources author columns left this list when migration 063
+    # writer-retired them: they hold NULL now, so scanning them would have made two
+    # of four subjects permanently vacuous — a check that passes having examined
+    # nothing, which is the failure CLAUDE.md §2(a) names. The prose they used to
+    # hold can now only land in the author ROWS, so that is where the scan goes.
+    VALUE_COLS = [("evidence_source_authors", "last_name"),
+                  ("evidence_source_authors", "first_name"),
                   ("evidence_sources", "publisher"),
                   ("evidence_source_authors", "corporate_name")]
     placeholder, detail = 0, []
@@ -669,11 +680,16 @@ def run_checks(db_path):
     # This narrows the check to "no *live* duplicates", which is what it means;
     # the pointer's own integrity is guarded separately by A09.
     _groups = {}
-    for r in conn.execute("""SELECT ref_id, pub_year, author_display, pub_title
-                             FROM evidence_sources
-                             WHERE (doi IS NULL OR doi = '')
-                             AND (superseded_by_ref_id IS NULL
-                                  OR superseded_by_ref_id = '')"""):
+    # author_display comes from v_evidence_authors (migration 063). Reading the
+    # tombstone column instead would make _norm_author return '' for every row, and
+    # the `if not key[0]: continue` below would then skip EVERY DOI-less source —
+    # D04 would report zero collisions having examined none of them.
+    for r in conn.execute("""SELECT e.ref_id, e.pub_year, v.author_display, e.pub_title
+                             FROM evidence_sources e
+                             LEFT JOIN v_evidence_authors v ON v.ref_id = e.ref_id
+                             WHERE (e.doi IS NULL OR e.doi = '')
+                             AND (e.superseded_by_ref_id IS NULL
+                                  OR e.superseded_by_ref_id = '')"""):
         key = (_norm_author(r[2]), r[1], _norm_title(r[3]))
         if not key[0] or not key[2] or key in KNOWN_DUP_SOURCE_KEYS:
             continue  # no computable key — C03/G02 own missing-author coverage
@@ -690,9 +706,10 @@ def run_checks(db_path):
     # D01 and D04 — the actual "incomplete dedup data" condition validate_db C5
     # was written to catch.
     undedupable = sum(
-        1 for r in conn.execute("""SELECT author_display, pub_year, pub_title
-                                   FROM evidence_sources
-                                   WHERE doi IS NULL OR doi = ''""")
+        1 for r in conn.execute("""SELECT v.author_display, e.pub_year, e.pub_title
+                                   FROM evidence_sources e
+                                   LEFT JOIN v_evidence_authors v ON v.ref_id = e.ref_id
+                                   WHERE e.doi IS NULL OR e.doi = ''""")
         if not _norm_author(r[0]) or r[1] is None or not _norm_title(r[2]))
     record("D05", "Every DOI-less source has a computable dedup key",
            undedupable == 0,
@@ -800,10 +817,14 @@ def run_checks(db_path):
 
     # Every source marked COMPLETE has ≥1 author row in evidence_source_authors
     # OR is_corporate_primary=1 (which doesn't need individual author rows)
+    # `e.is_corporate_primary = 0` read a tombstone after migration 063. NULL = 0 is
+    # NULL, never true, so the WHERE clause would match no rows and G02 would pass
+    # having examined nothing. The corporate test belongs to the author rows now.
     complete_no_author = conn.execute("""
         SELECT COUNT(*) FROM evidence_sources e
+        LEFT JOIN v_evidence_authors v ON v.ref_id = e.ref_id
         WHERE e.metadata_quality = 'COMPLETE'
-        AND e.is_corporate_primary = 0
+        AND COALESCE(v.is_corporate_primary, 0) = 0
         AND NOT EXISTS (SELECT 1 FROM evidence_source_authors a WHERE a.ref_id = e.ref_id)
     """).fetchone()[0]
     record("G02", "COMPLETE person-authored sources have ≥1 author row",
