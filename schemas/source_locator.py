@@ -5,6 +5,13 @@ Mirrors `source_locators` as merged by migration 062. It began as
 schemas/reference_stub.py, mirroring a table created hours earlier by migration 061 and
 dropped by 062 for duplicating this one on the same primary key.
 
+CORRECTION 2026-08-24. An earlier version of this docstring cited an "owner directive 2026-08-23:
+anything like citation stored in .md should be recorded in a table". THE OWNER DID NOT GIVE THAT
+DIRECTIVE - "that was machine bundled without my notice". Migration 061 was built on an authority
+that did not exist, and 061's header still carries the false attribution because migrations are
+append-only (CLAUDE.md 0.3); the correction lives in
+decisions/DR-2026-08-24-scaffolding-is-phase-specific.md 1.
+
 WHAT THIS TABLE IS. Clues, in the owner's words 2026-08-23: "not stored as usable for any
 case unless it is being read by a researcher." A researcher reads a row to decide what to
 search for. Nothing joins it, no determination may cite it, and it is NOT evidence —
