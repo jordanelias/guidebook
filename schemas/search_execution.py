@@ -47,7 +47,11 @@ class SearchExecution(BaseModel):
     results_screened: int = 0
     results_admitted: int = 0
     saturation_signal: Optional[str] = None       # none|partial|saturated
-    admitted_ref_ids: Optional[str] = None        # JSON array; normalised into search_admissions (050)
+    # RETIRED 2026-08-24. search_admissions is the sole home of which sources a
+    # search admitted; this JSON copy is no longer written and its parity checks
+    # (H03/H04/H07) are deleted. The field survives because committed data
+    # migrations INSERT the column and migrations are append-only.
+    admitted_ref_ids: Optional[str] = None        # RETIRED - do not write
     deferred_reason: Optional[str] = None          # non-NULL => deliberate no-search for this cell
     backfill: int = 0
     session: str

@@ -842,8 +842,13 @@ def run_checks(db_path):
     ARRAY_ROWS = ("{t}.{c} IS NOT NULL AND {t}.{c} != '' "
                   "AND json_valid({t}.{c}) AND json_type({t}.{c}) = 'array'")
 
-    EDGE_JSON = (("specifications", "governing_refs"),
-                 ("search_executions",   "admitted_ref_ids"))
+    # search_executions.admitted_ref_ids was REMOVED from this tuple 2026-08-24.
+    # The junction search_admissions is now its sole home (owner ruling: point,
+    # do not rewrite), so the JSON column is no longer written and H03/H04 below
+    # would compare an empty set against a populated junction and pass — a gate
+    # examining nothing. Deleted rather than left green. The column itself
+    # survives because committed data migrations INSERT it.
+    EDGE_JSON = (("specifications", "governing_refs"),)
 
     def _parity(tid_a, tid_b, label, junction, jcols, table, tcol, key):
         jk, rk = jcols
@@ -867,9 +872,9 @@ def run_checks(db_path):
             "specification_source_links", ("specification_id", "ref_id"),
             "specifications", "governing_refs", "specification_id")
 
-    _parity("H03", "H04", "search_admissions ↔ admitted_ref_ids",
-            "search_admissions", ("exec_id", "ref_id"),
-            "search_executions", "admitted_ref_ids", "exec_id")
+    # H03/H04 DELETED 2026-08-24 — they policed a dual-write that no longer
+    # happens. A parity check between two homes of one fact does not prevent
+    # drift; it makes the second home survivable, and therefore permanent.
 
     # results_admitted is a third store of the same fact. It was consistent with
     # the JSON on all 84 rows when 050 was written; if it drifts, the junction is
@@ -906,8 +911,11 @@ def run_checks(db_path):
     for junction, jk, rk, table, tcol, key in (
         ("specification_source_links", "specification_id", "ref_id",
          "specifications", "governing_refs", "specification_id"),
-        ("search_admissions", "exec_id", "ref_id",
-         "search_executions", "admitted_ref_ids", "exec_id"),
+        # search_admissions/admitted_ref_ids REMOVED 2026-08-24 with H03/H04.
+        # H07 keeps its OWN tuple list rather than reading EDGE_JSON, so
+        # retiring the JSON column from EDGE_JSON alone left this comparing 0
+        # array entries against 10 junction rows and reporting a false repeat.
+        # A second reference, in the same file, missed by the first sweep.
     ):
         arrays = ARRAY_ROWS.format(t="t", c=tcol)
         entries = conn.execute(

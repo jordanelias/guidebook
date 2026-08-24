@@ -425,7 +425,10 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
         "results_found": results_found, "results_screened": results_screened,
         "results_admitted": results_admitted,
         "saturation_signal": saturation_signal,
-        "admitted_ref_ids": json.dumps(ids) if ids else None,
+        # admitted_ref_ids intentionally NOT written — search_admissions is the
+        # sole home (owner ruling 2026-08-24). Column retained because committed
+        # data migrations INSERT it and migrations are append-only.
+
         "deferred_reason": deferred_reason, "backfill": backfill,
         "session": session, "executed_at": ts,
         "findings_note": findings_note, "harm_finding": harm_finding,
@@ -437,12 +440,15 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
             f"INSERT INTO search_executions ({cols}) VALUES ({ph})",
             list(row.values()))
         exec_id = cur.lastrowid
-        # BOTH carriers, in one transaction. admitted_ref_ids (JSON, on the row)
-        # and search_admissions (the junction) hold the same fact, and checks
-        # H03/H04 assert they agree in both directions. Writing one without the
-        # other is a guaranteed check failure — and worse, a silent disagreement
-        # about which sources a search actually produced, at the seam where the
-        # research phase hands off to collection.
+        # ONE carrier: search_admissions. Until 2026-08-24 this dual-wrote the
+        # same fact into admitted_ref_ids (JSON on the row) and kept the two
+        # honest with parity checks H03/H04. Owner ruling 2026-08-24: "it is
+        # better to have a table cell point to another table cell than to
+        # rewrite" — a fact written into two tables is drift waiting to happen,
+        # and a parity check does not prevent that, it makes it survivable and
+        # therefore permanent. Nothing ever READ the JSON: it was write-only
+        # data guarded by a test. The junction is the record, and it carries its
+        # own created_at.
         for ref_id in ids:
             if not conn.execute("SELECT 1 FROM evidence_sources WHERE ref_id=?",
                                 [ref_id]).fetchone():
