@@ -788,3 +788,27 @@ cheapest deletion in the schema.
 `ref_id`; then re-shape the three empty tables **before** they take a first row — `specifications`
 above all, since `governing_refs` becomes a migration over live determinations the moment one exists.
 All four are schema changes and therefore owner-gated (D-SCHEMA).
+
+---
+
+**RULE: "Axis" is descriptive vocabulary, not a domain identifier.**
+The word is ordinary English for how something is arranged, and it must stay freely available for
+that. **Precisely for that reason it may not name a specific vocabulary layer.** Overloading it costs
+twice: the layer stops saying what it is, and the word stops being usable for plain description.
+
+The layer currently called `axes` carries `icf_b_anchors` and `icf_d_anchors` — it holds
+**ICF-anchored access needs**, and must be named for that. Pull a frame as **ICF codes with names**,
+never as bare codes: a bare `axis_code` pull once framed four of five searches on `AX-AUD` alone and
+hid that the slug also spanned `AX-SPR` (`sessions/session_2026-08-19-research-batch-01-room-acoustic-performance.md` §1(a)).
+
+**DATE: 2026-08-24** — owner ruling: *"I don't want axis to be used"*; *"Axis is a term that we
+should be able to use freely to describe how things are set up."*
+
+**This supersedes the terminology of the RULEs of 2026-07-22/23 and the 2026-08-23 corollary below,
+which frame `item_axis_links → population_axis_map` as one of "two routes".** It was never a route to
+item-population applicability; `item_population_links` is. The 89-of-93 figure stands as a
+measurement of scaffold drift. **Ratified documents that use the old term are superseded by this
+ruling, not authorities against it** — a prior ratification does not outrank the owner.
+
+The rename itself (4 tables, 6 columns, a blocking check, 297 files) is **D-SCHEMA and owner-gated**;
+see `decisions/DR-2026-08-24-scaffolding-is-phase-specific.md` §1 R8.
