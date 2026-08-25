@@ -248,11 +248,31 @@ capture the delta with `scripts/research/emit_batch_sql.py` and ship it as a mig
 write-time refusal stays live and the canonical DB's sha256 must not move until the migration is
 applied.
 
-`scripts/db.py` reads freely and has write subcommands for some tables — but **not** for
+**THE WRITE PATH IS ONE SENTENCE, and as of 2026-08-25 there is no longer a second one:**
+scratch copy → `scripts/db.py` subcommands → `scripts/research/emit_batch_sql.py` →
+`scripts/emit_data_migration.py` → `scripts/migrate_db.py`.
+
+*This paragraph used to end differently. It read: `db.py` has no subcommand for
 `search_candidates`, `evidence_population_match`, `economics_entries`, `case_studies` or
-`jurisdictional_values` values, and `add-source` cannot write `doi_resolution_outcome`, `url`,
-`pages`, `first_author_last` or author rows. Those need hand-written SQL against the scratch, and
-that gap is where the fabrication of 2026-08-19 entered. **There is no ref_id allocator, and the rule this file gave for weeks was WRONG.** It said mint
+`jurisdictional_values`, and `add-source` cannot write `doi_resolution_outcome`, `url` or
+`pages` — so **"those need hand-written SQL against the scratch, and that gap is where the
+fabrication of 2026-08-19 entered."** The gap was the CAUSE, not the setting, and it is closed:
+every one of those tables and columns now has a writer that REFUSES (FK existence, the column's
+own CHECK vocabulary, R3 locators, MISMATCH reasons, duplicate identities). Do not hand-write SQL
+against a table the CLI can reach; if you find one it cannot, that is a coverage bug to fix, not a
+licence to bypass.*
+
+**`db.py` refuses, and that is its whole value.** A writer that merely INSERTs is worse than hand
+SQL because it looks safe. Two refusals are deliberately *absent* and must stay absent:
+`add-population-match` does **not** enforce uniqueness on (ref_id, population) — a dissenting
+adversarial grade lands as a second row (`DR-2026-08-19` §7) and divergent grades read as a
+contest — and `add-source` exposes no `--year`/`--journal` for an entry that carries a `ref_id`,
+because those are reached through the pointer.
+
+**Vocabularies come from the schema, not from a list in the code.** `dbcore.check_values()` reads
+the column's own CHECK. Live rows are a *sample* of a vocabulary, never the vocabulary:
+`search_candidates.disposition` declares `OUT-OF-SCOPE` and no live row uses it, so a
+refusal built from live rows would reject a legitimate value. **There is no ref_id allocator, and the rule this file gave for weeks was WRONG.** It said mint
 above the `source_locators` high-water mark. Measured 2026-08-25: `source_locators` tops out at
 **REF-00964** and `evidence_sources` at **REF-00970**, so that rule yields REF-00965 — a live
 evidence row. **The high-water mark is the UNION of every table holding a ref_id.** Do not compute
