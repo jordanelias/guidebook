@@ -985,3 +985,41 @@ which is the correct order — frame before item.
 
 **Net for the batch: the handrail gap is smaller than reported, and the population gap is far
 larger.**
+
+## C-6 — D-9 refined: the strong wording is the anomaly, not the loser of a tie
+
+F2 checked my freeze finding against word counts rather than against my reading of two clauses, and
+the result changes the remedy. Verified:
+
+**"complete walk" occurs exactly once in the entire repository** in the freeze sense —
+`…instrument.md:261`, §2.2. (`grep -rn "complete walk"` returns three other hits, all PMP
+`incomplete walk`, an unrelated concept in `pmp_audit.py` and the progressive-measurement skill.)
+It is defined nowhere and enforced by nothing.
+
+**The weak exit is stated five times**, one of them in the clause the owner signed:
+
+| line | section |
+|---|---|
+| :71 | §C — the one-page summary of what the instrument decides |
+| :384 | §5 Reversal — *"expires by its own terms the moment `evidence_sources` is non-empty"* |
+| **:430** | **§2.5(c) — the signed succession clause: *"Its exit is reachable and self-executing: `evidence_sources ≥ 1`"*** |
+| :631 | §11 property 1 — *"Self-expiring authority. The freeze dies automatically at `evidence_sources ≥ 1`"* |
+| :638 | §11 — the same, restated |
+
+So my D-9 said the enforcing check "implemented §5's weaker form" as though it had chosen between
+two comparable clauses. **It did not choose.** `evidence_sources ≥ 1` is what the instrument
+ratified, five times over, including in the signed text; "a complete walk" is a single undefined
+phrase in a paragraph that nothing enforces. The check implemented the ratified clause faithfully.
+
+**This flips the remedy, and the flip matters.** If the check had picked the weaker of two equals,
+the fix would be a code change — and CLAUDE.md §1 says code needs evidence, not permission, so I
+could have proposed it. It didn't. The drift is *intra-instrument*, in ratified text, and six
+adjudication passes did not catch it. **Restoring any freeze condition is therefore an owner
+decision (DG-NON), not something a session may fix.**
+
+What survives of D-9 unchanged, and is the part worth acting on: the release condition that fired
+is a **row count in the first evidence table**, and §4's acceptance criterion explicitly rejects
+row counts — *"not as a row count and not as a green check."* The instrument diagnosed the loop
+precisely in §2.1 and then wrote itself an exit satisfiable by the very thing §4 refuses. That is
+worth the owner knowing before deciding whether anything should replace it. It is not worth a
+session quietly re-freezing on its own authority.
