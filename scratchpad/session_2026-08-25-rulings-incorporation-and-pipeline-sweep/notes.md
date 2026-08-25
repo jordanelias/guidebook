@@ -176,3 +176,65 @@ The 3, each referenced in PROSE but invoked by nothing:
 Healthier than feared: 58 of 88 are registry-invoked. The problem is not a mass of dead
 scripts; it is 104 unshared connection idioms and a core module that exists but is
 imported by nothing.
+
+### F7 — pipeline-framework sweep: EIGHTEEN models found (F1..F18)
+
+Full inventory in the agent report. Verified independently before acceptance:
+
+**The eight-stage pipeline EXISTS and the owner's memory is right.** It is
+`scripts/audit/table_connectivity.py`, DELETED 2026-08-20 in cull commit `80a34d1`.
+Recovered verbatim via `git show 80a34d1~1:scripts/audit/table_connectivity.py`:
+
+    STAGES = ["1 topic", "2 has sources", "3 sources mined", "4 values captured",
+              "5 population match", "6 has a spec", "7 item has a spec",
+              "8 BEST PRACTICE"]
+    # "Each hop is required, not optional. A walk that survives only because a
+    #  join is LEFT is not evidence of anything."
+
+This was the repo's ONLY end-to-end PRODUCT metric — "of every ACTIVE topic, how many
+can be walked to a best practice", reported as `FULLY-EVIDENCED WALKS: 0 of 80`. It was
+quarantined, then culled. **And `workplan/2026-08-19-adversarial-critique-research-restart.md:243`
+— a LIVE, un-superseded workplan — still defines the research restart's success criterion
+as this script's metric moving off 0 of 80.** The acceptance test for the current phase of
+work is a script that no longer exists.
+
+A second eight-model exists and is not it: the 8-STEP item-audit pipeline (D-0150,
+2026-05-05, `skills/item-audit-pipeline_SKILL.md`), superseded 2026-05-11 while still
+PROPOSED, orchestrator deleted in the same cull.
+
+**THE LIVE CONFLICT THAT MATTERS.** Two five-stage models, and the machine runs the wrong one:
+  F17 OWNER   research -> evidence -> synthesis -> specifications -> render  (2026-08-24)
+  F9  MACHINE research -> collection -> judgment -> synthesis -> render      (2026-07-13)
+They disagree on 3 of 5 names. F17's "specifications" HAS NO STAGE IN F9 AT ALL.
+Verified `tools/pipeline_completeness.py:37`:
+    STAGES = ["research", "collection", "judgment", "synthesis", "render"]
+hardcoded, and its freshness gate `pipeline_completeness_fresh` is BLOCKING. So the
+blocking check, the dashboard, `pipeline_contract_audit` and `test_pipeline_contract` all
+enforce the agent-authored 2026-07-13 model, while the owner's 2026-08-24 model is enforced
+by nothing. Rule 0 says the owner outranks it. Nothing anywhere records that F9 was
+re-examined against the ruling.
+
+**CORRECTION to the agent report, verified.** It claimed `test_pipeline_contract.py:225`
+asserts `c.status == "PROPOSED"`, mechanically pinning the stale status. IT DOES NOT —
+`grep -n 'PROPOSED\|ratified\|status' scripts/tests/test_pipeline_contract.py` returns
+nothing. So `pipeline-contract.yaml` reading `status: PROPOSED / ratified: false` while
+`decisions/RATIFICATION-RECORD-2026-07-21.md:165` records it ACCEPTED is stale text that
+NOTHING PINS. It is freely fixable — a cheaper repair than the report implied.
+
+**DEAD BUT STILL REFERENCED** (each is a live document pointing at something deleted or superseded):
+  1. `table_connectivity.py` — deleted; still the restart's success criterion (above).
+  2. `skills/item-audit-pipeline_SKILL.md` — superseded 2026-05-11, orchestrator deleted,
+     but live-looking with active trigger phrases; `item_audit_runs` still in schema.
+  3. `skills/workplan-orchestrator_SKILL.md` — still gates tasks against "v4 C-stages" of a
+     workplan superseded 2026-05-11.
+  4. `governance/project-instructions-v10_14.md` — live in `governance/` (v10.8-10.13 are
+     archived) and still says "All work maps to its seven phases A-G", contradicting
+     DR-2026-08-19's "one operative instrument, superseding every planning document".
+  5. `pipeline-contract.yaml` status field (above).
+
+**HARD LIMIT ON THE SWEEP, recorded not smoothed:** git history is truncated at root commit
+`f97dff9` (2026-07-27), so pre-2026-07-27 deletions are unrecoverable. And F10 — the
+deployed claude.ai `<audit_trail>` numbered stage list — is OUTSIDE the repo entirely; its
+stage count is unknown and its reconciliation was made a ratification precondition in 2026-07
+and never confirmed. If the owner's eight-stage memory is neither of the two found, F10 is
+the one place nobody here can look.
