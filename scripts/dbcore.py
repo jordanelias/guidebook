@@ -214,6 +214,133 @@ def next_ref_id(conn) -> str:
 
 
 # ---------------------------------------------------------------------------
+# Refusal helpers — the CLI's value is that it REFUSES, and a refusal is only
+# trustworthy if its vocabulary is the live one.
+# ---------------------------------------------------------------------------
+
+def columns(conn, table: str) -> list:
+    """The table's real column names, read from the live schema."""
+    return [r[1] for r in conn.execute('PRAGMA table_info("%s")' % table)]
+
+
+def stamp_for(conn, table: str, session: str) -> dict:
+    """Audit columns THIS table actually has, filled in.
+
+    NOT every table carries created_at/created_by_session. `source_locators` carries
+    NEITHER -- it is a pre-reset stash whose rows predate the audit convention. A
+    writer that assumes the stamp is universal fails at INSERT with "table X has no
+    column named created_at", which is how this function came to exist: the Act-2
+    rehearsal refused all 8 writes for exactly that reason, and the refusal was mine,
+    not the data's.
+
+    Derive from the schema; never assume the convention holds.
+    """
+    have = set(columns(conn, table))
+    return {k: v for k, v in audit(session).items() if k in have}
+
+
+def exists(conn, table: str, column: str, value) -> bool:
+    """Is `value` a live key in table.column? The FK check a CLI does before writing."""
+    if value is None:
+        return False
+    row = conn.execute(
+        'SELECT 1 FROM "%s" WHERE "%s" = ? LIMIT 1' % (table, column), (value,)
+    ).fetchone()
+    return row is not None
+
+
+def live_vocab(conn, table: str, column: str) -> set:
+    """The set of values a column actually holds today.
+
+    DERIVED, NEVER LISTED IN CODE. A hardcoded vocabulary in the CLI would be a
+    second home for a fact the table already states (rule 5) and would drift the
+    first time doctrine adds a value -- the §2(b) defect. Where a vocabulary has
+    no table (a status enum), point at the guard that owns it in
+    scripts/emit_data_migration.py (ENUM_GUARDS / RANGE_GUARDS) rather than
+    copying its members here.
+
+    A refusal built on this is only as good as the corpus: on an EMPTY table it
+    returns the empty set and would refuse everything. Callers must therefore
+    treat an empty vocabulary as "unconstrained", not as "nothing is valid" --
+    `check_vocab` below does exactly that, and says so.
+    """
+    return {r[0] for r in conn.execute(
+        'SELECT DISTINCT "%s" FROM "%s" WHERE "%s" IS NOT NULL' % (column, table, column)
+    )}
+
+
+def check_values(conn, table: str, column: str) -> set:
+    """The value set a column's own CHECK constraint declares, or empty if none.
+
+    THE SCHEMA IS THE SINGLE HOME OF A CLOSED VOCABULARY. `source_locators.status`
+    declares CHECK(status IN ('REFERENCE-ONLY','PROMOTED','RETIRED')) in the table
+    definition; listing those three in this file would be a second home (rule 5) and
+    would drift the first time a migration changes them. Read the declaration.
+
+    Found by walking into it: the Act-2 rehearsal passed status='UNVERIFIED' -- a
+    legitimate value of a DIFFERENT column (search_candidates.locator_status) -- and
+    got `CHECK constraint failed` from SQLite, which is correct but tells the caller
+    nothing about what WOULD be accepted. A refusal that cannot name the alternative
+    is a worse tool than hand SQL.
+    """
+    row = conn.execute(
+        "SELECT sql FROM sqlite_master WHERE type='table' AND name=?", (table,)
+    ).fetchone()
+    if not row or not row[0]:
+        return set()
+    m = re.search(
+        r"CHECK\s*\(\s*%s\s+IN\s*\(([^)]*)\)" % re.escape(column), row[0], re.I)
+    if not m:
+        return set()
+    return {v.strip().strip("'\"") for v in m.group(1).split(",") if v.strip()}
+
+
+def check_declared(conn, table: str, column: str, value, context: str):
+    """Refuse a value the column's CHECK constraint would reject, naming the set."""
+    allowed = check_values(conn, table, column)
+    if allowed and value not in allowed:
+        raise ValueError(
+            "%s: %s.%s does not accept %r. The schema's own CHECK declares: %s. "
+            "Nothing was written."
+            % (context, table, column, value, sorted(allowed)))
+
+
+def check_vocab(conn, table: str, column: str, value, context: str):
+    """Refuse a value outside the live vocabulary -- unless there is no vocabulary yet.
+
+    THE EMPTY-CORPUS CASE IS THE WHOLE SUBTLETY. `economics_entries` and
+    `case_studies` hold 0 rows, so their vocabularies are empty and every value is
+    "unknown". Refusing on that would make the first legitimate write impossible --
+    the CLI stalling the next batch against its own tooling, which is the failure
+    mode this consolidation was warned about in both directions. So: empty
+    vocabulary means unconstrained, and the write proceeds.
+    """
+    # THE SCHEMA'S CHECK WINS WHERE ONE EXISTS. Live rows are a SAMPLE of a
+    # vocabulary, not the vocabulary. Measured 2026-08-25:
+    # search_candidates.disposition declares OUT-OF-SCOPE in its CHECK and no live
+    # row uses it -- a live-rows refusal would have rejected a legitimate value and
+    # stalled the next batch against its own tooling. Ask the declaration first.
+    declared = check_values(conn, table, column)
+    if declared:
+        if value not in declared:
+            raise ValueError(
+                "%s: %s.%s does not accept %r. The schema's own CHECK declares: %s. "
+                "Nothing was written." % (context, table, column, value, sorted(declared)))
+        return
+
+    vocab = live_vocab(conn, table, column)
+    if not vocab:
+        return          # no corpus yet; the first writer defines the vocabulary
+    if value not in vocab:
+        raise ValueError(
+            "%s: %r is not in the live vocabulary of %s.%s, which is %s. "
+            "If this value is legitimately new, it is a doctrine change -- add it "
+            "in a migration with its justification, not as a CLI argument."
+            % (context, value, table, column, sorted(vocab))
+        )
+
+
+# ---------------------------------------------------------------------------
 # The one list of tables a session may write
 # ---------------------------------------------------------------------------
 # MOVED HERE FROM scripts/research/emit_batch_sql.py 2026-08-25, comments intact.

@@ -819,6 +819,47 @@ def main():
     p_logm.add_argument("--session", required=True)
     p_logm.add_argument("--dry-run", action="store_true")
 
+    # ---- ACT 2 (2026-08-25): the tables the CLI could not write ----
+    p_cand = sub.add_parser("add-candidate", help="Stage a screened candidate (search_candidates)")
+    p_cand.add_argument("--exec-id", type=int)
+    p_cand.add_argument("--found-under-slug", required=True)
+    p_cand.add_argument("--suggested-slug")
+    p_cand.add_argument("--disposition", required=True,
+                        help="Live vocabulary, derived from the table; not a list in this file")
+    p_cand.add_argument("--title", required=True)
+    p_cand.add_argument("--locator")
+    p_cand.add_argument("--locator-status")
+    p_cand.add_argument("--tier-guess", type=int)
+    p_cand.add_argument("--harm-finding", type=int, default=0, choices=[0, 1])
+    p_cand.add_argument("--why-not-admitted")
+    p_cand.add_argument("--notes")
+    p_cand.add_argument("--session", required=True)
+    p_cand.add_argument("--dry-run", action="store_true")
+
+    p_epm = sub.add_parser("add-population-match",
+                           help="Grade population-of-study vs population-served (R13)")
+    p_epm.add_argument("--ref-id", required=True)
+    p_epm.add_argument("--target-population", required=True)
+    p_epm.add_argument("--study-population")
+    p_epm.add_argument("--sample-size", type=int)
+    p_epm.add_argument("--match-grade", required=True)
+    p_epm.add_argument("--mismatch-note")
+    p_epm.add_argument("--gap-id")
+    p_epm.add_argument("--session", required=True)
+    p_epm.add_argument("--dry-run", action="store_true")
+
+    p_loc = sub.add_parser("add-locator", help="Write a lead into the clue store")
+    p_loc.add_argument("--ref-id", required=True)
+    for f in ("doi", "pmid", "pmcid", "isbn", "issn", "url", "standard-number",
+              "title", "authors", "notes", "used-in-bpcs"):
+        p_loc.add_argument("--" + f)
+    p_loc.add_argument("--pub-year", type=int)
+    p_loc.add_argument("--tier-claimed", type=int)
+    p_loc.add_argument("--recovered-from", required=True)
+    p_loc.add_argument("--status", required=True)
+    p_loc.add_argument("--session", required=True)
+    p_loc.add_argument("--dry-run", action="store_true")
+
     # next-id
     p_nid = sub.add_parser("next-id", help="Get next available ID")
     p_nid.add_argument("entity",
@@ -1344,6 +1385,37 @@ def main():
         update_bpc_metadata(args.slug, data,
                             session=args.session, dry_run=args.dry_run)
         _emit({"updated": True, "slug": args.slug, "fields": list(data.keys())})
+
+    elif args.command == "add-candidate":
+        cid = insert_search_candidate({
+            "exec_id": args.exec_id, "found_under_slug": args.found_under_slug,
+            "suggested_slug": args.suggested_slug, "disposition": args.disposition,
+            "title": args.title, "locator": args.locator,
+            "locator_status": args.locator_status, "tier_guess": args.tier_guess,
+            "harm_finding": args.harm_finding, "why_not_admitted": args.why_not_admitted,
+            "notes": args.notes,
+        }, session=args.session, dry_run=args.dry_run)
+        _emit({"candidate_id": cid, "dry_run": args.dry_run})
+
+    elif args.command == "add-population-match":
+        mid = insert_population_match({
+            "ref_id": args.ref_id, "target_population": args.target_population,
+            "study_population": args.study_population, "sample_size": args.sample_size,
+            "match_grade": args.match_grade, "mismatch_note": args.mismatch_note,
+            "gap_id": args.gap_id,
+        }, session=args.session, dry_run=args.dry_run)
+        _emit({"match_id": mid, "dry_run": args.dry_run})
+
+    elif args.command == "add-locator":
+        rid = insert_locator({
+            "ref_id": args.ref_id, "doi": args.doi, "pmid": args.pmid,
+            "pmcid": args.pmcid, "isbn": args.isbn, "issn": args.issn, "url": args.url,
+            "standard_number": args.standard_number, "title": args.title,
+            "authors": args.authors, "pub_year": args.pub_year,
+            "tier_claimed": args.tier_claimed, "recovered_from": args.recovered_from,
+            "status": args.status, "used_in_bpcs": args.used_in_bpcs, "notes": args.notes,
+        }, session=args.session, dry_run=args.dry_run)
+        _emit({"ref_id": rid, "dry_run": args.dry_run})
 
     elif args.command == "add-source":
         if not args.author and not args.authors:
@@ -2066,5 +2138,169 @@ def get_unmined_gaps(*, gap_id: str | None = None,
     return rows
 
 
+# ===========================================================================
+# ACT 2 (2026-08-25) — the five tables the CLI could not write, plus the stash.
+#
+# WHY THESE EXIST AT ALL. CLAUDE.md §4 said, in terms: db.py has no subcommand
+# for search_candidates, evidence_population_match, economics_entries,
+# case_studies or jurisdictional_values, so "those need hand-written SQL against
+# the scratch, and THAT GAP IS WHERE THE FABRICATION OF 2026-08-19 ENTERED."
+# The gap was the cause, not the setting. These writers close it.
+#
+# WHAT THEY ARE FOR IS THE REFUSALS. A writer that merely INSERTs is worse than
+# hand SQL, because it looks safe. Each one below pre-checks its foreign keys,
+# derives its vocabulary from the live table (never a list in this file -- rule 5),
+# and refuses rather than guesses. Every refusal here has a selftest case proving
+# it fires AND a case proving the legitimate shape still passes; a refusal with
+# only the first is a tool that stalls the next batch.
+# ===========================================================================
+
+
+def insert_search_candidate(data: dict, session: str, dry_run: bool = False) -> str:
+    """Stage a screened-but-not-admitted candidate (research stage)."""
+    _COLS = frozenset({
+        "candidate_id", "exec_id", "found_under_slug", "suggested_slug", "disposition",
+        "title", "locator", "locator_status", "tier_guess", "harm_finding",
+        "why_not_admitted", "notes",
+    })
+    dbcore.validate_cols(data.keys(), _COLS, "insert_search_candidate")
+    with dbcore.connect(dry_run) as conn:
+        if data.get("exec_id") is not None and not dbcore.exists(
+                conn, "search_executions", "exec_id", data["exec_id"]):
+            raise ValueError(
+                f"exec_id {data['exec_id']!r} is not a live search_executions row. "
+                f"A candidate is something a SEARCH surfaced; log the search first "
+                f"(db.py log-search), then stage what it found.")
+        if not dbcore.exists(conn, "slugs", "slug", data.get("found_under_slug")):
+            raise ValueError(
+                f"found_under_slug {data.get('found_under_slug')!r} is not in `slugs`.")
+        if data.get("suggested_slug") and not dbcore.exists(
+                conn, "slugs", "slug", data["suggested_slug"]):
+            raise ValueError(f"suggested_slug {data['suggested_slug']!r} is not in `slugs`.")
+        dbcore.check_vocab(conn, "search_candidates", "disposition",
+                           data.get("disposition"), "insert_search_candidate")
+        if data.get("locator_status") is not None:
+            dbcore.check_vocab(conn, "search_candidates", "locator_status",
+                               data["locator_status"], "insert_search_candidate")
+        # R15: a staged description is a HYPOTHESIS. ADMITTED without a resolved
+        # locator is the shape that lets a guess harden into a fact.
+        if data.get("disposition") == "ADMITTED" and data.get("locator_status") != "RESOLVED":
+            raise ValueError(
+                "disposition=ADMITTED requires locator_status=RESOLVED. R15: a staged "
+                "candidate description is a hypothesis, and admitting one whose locator "
+                "was never resolved is how a guess becomes a fact.")
+        row = dict(data)
+        row["session"] = session
+        row.update(dbcore.stamp_for(conn, "search_candidates", session))
+        if row.get("candidate_id") is None:
+            nxt = conn.execute("SELECT COALESCE(MAX(candidate_id),0)+1 FROM search_candidates").fetchone()[0]
+            row["candidate_id"] = nxt
+        cols = ",".join(row)
+        conn.execute(f"INSERT INTO search_candidates ({cols}) VALUES ({','.join('?'*len(row))})",
+                     list(row.values()))
+    return str(row["candidate_id"])
+
+
+def insert_population_match(data: dict, session: str, dry_run: bool = False):
+    """Grade population-of-STUDY against population-SERVED (R13)."""
+    _COLS = frozenset({
+        "match_id", "ref_id", "target_population", "study_population",
+        "sample_size", "match_grade", "mismatch_note", "gap_id",
+    })
+    dbcore.validate_cols(data.keys(), _COLS, "insert_population_match")
+    with dbcore.connect(dry_run) as conn:
+        ref = dbcore.fold_ref(data.get("ref_id"))
+        if not dbcore.exists(conn, "evidence_sources", "ref_id", ref):
+            raise ValueError(
+                f"ref_id {data.get('ref_id')!r} is not an admitted source. Grade the "
+                f"match AFTER admission -- a match row for a source that does not exist "
+                f"is a claim about nothing.")
+        if not dbcore.exists(conn, "populations", "population_code", data.get("target_population")):
+            raise ValueError(
+                f"target_population {data.get('target_population')!r} is not in `populations`.")
+        dbcore.check_vocab(conn, "evidence_population_match", "match_grade",
+                           data.get("match_grade"), "insert_population_match")
+        if data.get("match_grade") == "MISMATCH" and not (data.get("mismatch_note") or "").strip():
+            raise ValueError(
+                "match_grade=MISMATCH requires --mismatch-note. A mismatch that does not "
+                "say WHY cannot stop the source drifting into that population's cells later.")
+
+        # DELIBERATELY NOT REFUSED: a second row for the same (ref_id, target_population).
+        # DR-2026-08-19 §7 rules that a DISSENTING grade from an adversarial pass lands as
+        # a second row distinguished by created_by_session, and that divergent grades read
+        # as a contest. A uniqueness refusal here would silently abolish the adversarial
+        # mechanic -- the CLI quietly overruling doctrine. If a duplicate is unintended the
+        # author sees it in the same session; if it is intended it is the whole point.
+        prior = conn.execute(
+            "SELECT created_by_session FROM evidence_population_match "
+            "WHERE ref_id=? AND target_population=?", (ref, data["target_population"])
+        ).fetchall()
+        if prior:
+            print(f"NOTE: {ref} x {data['target_population']} already graded by "
+                  f"{[r[0] for r in prior]}. Writing a second row -- divergent grades read "
+                  f"as a contest (DR-2026-08-19 §7), not as an error.", file=sys.stderr)
+
+        row = dict(data)
+        row["ref_id"] = ref
+        # source_ref is NOT NULL and holds the same value as ref_id -- a live rule-5 dual
+        # home this CLI CANNOT remove (committed data migrations INSERT it, so it can never
+        # be dropped). What the CLI can do is guarantee the two never disagree: it is
+        # written from ref_id, never accepted as a separate argument.
+        row["source_ref"] = ref
+        row.update(dbcore.stamp_for(conn, "evidence_population_match", session))
+        if row.get("match_id") is None:
+            row["match_id"] = f"{session[:24]}-{ref}-{data['target_population']}"
+        cols = ",".join(row)
+        conn.execute(f"INSERT INTO evidence_population_match ({cols}) "
+                     f"VALUES ({','.join('?'*len(row))})", list(row.values()))
+    return row["match_id"]
+
+
+def insert_locator(data: dict, session: str, dry_run: bool = False) -> str:
+    """Write a lead into the clue store."""
+    _COLS = frozenset({
+        "ref_id", "doi", "pmid", "pmcid", "isbn", "issn", "url", "standard_number",
+        "title", "authors", "pub_year", "tier_claimed", "recovered_from", "status",
+        "used_in_bpcs", "notes",
+    })
+    dbcore.validate_cols(data.keys(), _COLS, "insert_locator")
+    ref = dbcore.fold_ref(data.get("ref_id"))
+    if not ref or not dbcore.REF_ID_SHAPE.fullmatch(ref):
+        raise ValueError(
+            f"--ref-id {data.get('ref_id')!r} is not a global reference id. Expected "
+            f"REF-NNNNN (or REF-VERIFIED-NNN / Co1-NN). Mint with dbcore.next_ref_id().")
+    with dbcore.connect(dry_run) as conn:
+        if dbcore.exists(conn, "source_locators", "ref_id", ref):
+            raise ValueError(f"{ref} already exists in source_locators. Use update-locator.")
+        dbcore.check_vocab(conn, "source_locators", "status", data.get("status"),
+                           "insert_locator")
+        doi = dbcore.norm_doi(data.get("doi"))
+        if doi:
+            # THE DUPLICATE-IDENTITY REFUSAL. Same DOI under a DIFFERENT ref_id is two
+            # identities for one source -- the defect R9a/R9b detect after the fact.
+            # Case-folded, because 10.1044/2019_AJA-19-0010 and ..._aja-19-0010 are the
+            # same DOI and were once stored as two.
+            for table in ("source_locators", "evidence_sources"):
+                hit = conn.execute(
+                    'SELECT ref_id FROM "%s" WHERE LOWER(TRIM(doi))=? AND ref_id<>?' % table,
+                    (doi, ref)).fetchone()
+                if hit:
+                    raise ValueError(
+                        f"DOI {data['doi']!r} is already held as {hit[0]} in {table}. "
+                        f"R9: cross-file the existing ref_id, never mint a second identity "
+                        f"for one source. Nothing was written.")
+            data = dict(data, doi=doi)
+        row = dict(data)
+        row["ref_id"] = ref
+        # Schema-aware: source_locators carries NO audit columns. Assuming the
+        # convention was universal is what refused all 8 rehearsal writes.
+        row.update(dbcore.stamp_for(conn, "source_locators", session))
+        cols = ",".join(row)
+        conn.execute(f"INSERT INTO source_locators ({cols}) VALUES ({','.join('?'*len(row))})",
+                     list(row.values()))
+    return ref
+
+
 if __name__ == "__main__":
     main()
+

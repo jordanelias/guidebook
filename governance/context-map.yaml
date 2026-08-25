@@ -446,7 +446,6 @@ database:
   - access_needs
   - access_stakes
   - decisions
-  - evidence_population_match
   - item_axis_links
   - item_population_links
   - jurisdictional_values
@@ -466,6 +465,7 @@ database:
   - connections
   - convergence_assessment
   - data_migrations
+  - evidence_population_match
   - evidence_source_authors
   - evidence_sources
   - gap_mining
@@ -543,6 +543,7 @@ writers:
     - conflicts
     - connection_targets
     - connections
+    - evidence_population_match
     - evidence_source_authors
     - evidence_sources
     - gap_mining
@@ -550,7 +551,9 @@ writers:
     - item_audit_runs
     - items
     - search_admissions
+    - search_candidates
     - search_executions
+    - source_locators
     - source_slug_links
     - supersession_check
     scripts/dbcore.py:
