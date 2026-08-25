@@ -1091,3 +1091,46 @@ overturned within the session. That is the property the RULE protects, arrived a
 direction. It is not a licence to audit prose.
 
 DATE: 2026-08-25 — owner prompt commissioning the smoke test; recorded the same day.
+
+---
+
+RULE: The person-side demand layer is named `icf_demands`, and it is NOT folded into `access_needs`.
+Owner ruling 2026-08-25, resolving the two items `DR-2026-08-24-scaffolding-is-phase-specific.md`
+§R6 left explicitly NOT DECIDED. The layer presently called `axes` is renamed **`icf_demands`**
+(`icf_demands.demand_code`, and correspondingly `item_demand_links`, `population_demand_map`,
+`access_need_demand_map`, `slugs.serves_demands`, `situations.attaches_demands`). §R6 item 1 —
+"axis" is descriptive vocabulary, never a domain identifier — stands and is now executable; its
+prescribed replacement wording ("ICF-anchored access needs") is superseded by this ruling because
+that name was already taken by a different table, and executing §R6 literally would have created a
+collision between the two layers it is most important to keep apart.
+
+**Why the fold is refused, measured.** `axes` and `access_needs` both hold 17 rows and are joined by
+a 21-row map, which reads as duplication and is not:
+
+| | anchors | carries | side |
+|---|---|---|---|
+| `axes` → `icf_demands` | ICF **b** (body function) + **d** (activity/participation) | `mechanism` | the person's functional demand |
+| `access_needs` | ICF **e** (environmental factors) | `design_obligation` | what the environment must do |
+
+The map is many-to-many (15 distinct codes each side across 21 rows, `A-REACH` fanning to 3). The
+b/d ÷ e split is the social model expressed in the schema: demand on one side, obligation on the
+other. Folding them would collapse person and environment into one table, which is the medical-model
+regression this project's whole taxonomy resists. The 17/17 coincidence is a coincidence.
+
+**A second defect in the retired term, recorded because it outlives the rename.** "Axis" asserts an
+orthogonal scalar dimension. `AX-AMB` (ambulant movement) and `AX-WHM` (wheeled movement) are not
+orthogonal — they are alternatives, simultaneous for part-time wheelchair users, and on ramp gradient
+their demands are **opposed**. The ratified permitted-umbrella test (2026-07-23) turns on precisely
+that distinction — an umbrella is forbidden when it collapses "opposed **or** orthogonal demands" —
+so the metaphor flattened two words the rule depends on keeping apart. The substance of "work from
+axes" is unaffected and survives the rename intact: every clause reads correctly with "ICF-anchored
+demand mechanism" substituted. The word was decorative, not load-bearing.
+
+CONDITION: Any session naming, querying, renaming or reasoning about the person-side demand layer, or
+proposing to reconcile it with `access_needs`.
+ACTION: (1) Use `icf_demands` and its codes WITH names, never bare codes (the 2026-08-18 rule
+stands). (2) Do not fold the two layers; cite this record if asked to. (3) The rename itself is a
+D-SCHEMA migration with a full caller sweep across four tables, six columns, a blocking check
+(`validate_axes.py`) and 297 tracked files — it is scoped and owner-gated, and must not be attempted
+piecemeal (§R6 item 3 stands unchanged).
+DATE: 2026-08-25 — owner ruling, selecting `icf_demands` and refusing the fold.
