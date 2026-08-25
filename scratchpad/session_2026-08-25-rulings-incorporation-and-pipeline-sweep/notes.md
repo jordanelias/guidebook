@@ -567,3 +567,20 @@ argument for mutation-testing a test rather than trusting a green.
 CLAUDE.md §1 asks what wrong thing reaches the guidebook without this check. A provenance
 record that misattributes which session did which work — against a directive stated twice,
 2026-08-20 and 2026-08-25. It guards the review surface itself, not the apparatus.
+
+### F12/F13 confirmed in production, not just in fixtures
+
+Measured on the live logs while CI ran, because a test proves the function and only the
+running hook proves the hook:
+
+```
+scratchpad/session_2026-08-25-rulings-incorporation-and-pipeline-sweep/commands.jsonl
+  12 lines carrying session_id 18f35fa3-4a98-5914-9944-79252bf31b9c   (since F13)
+  12 lines with no session_id                                          (F12..F13 window)
+
+scratchpad/session_2026-08-23-research-batch-03-forward-mining/commands.jsonl
+  last line 2026-08-25T21:59:46Z — stopped growing when F12 landed
+```
+
+Three sessions' worth of misfiling ends at the minute the fix was applied, and every line
+since F13 states which session issued it. Nothing has leaked back into the 08-23 record.
