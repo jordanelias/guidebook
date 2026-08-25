@@ -1046,3 +1046,48 @@ re-enter any stage; each stage's tables still carry only their own facts (rule 5
 `tools/pipeline_completeness.py` and the dashboard. `schemas/pipeline_contract.py` sets
 `extra="forbid"`, so a display-name field cannot simply be added; the rename is a caller sweep
 under `CLAUDE.md` rule 4 and is tracked as such rather than done in the same breath as this record.
+
+---
+
+## SUPERSESSION RECORD — owner directive 2026-08-25, pipeline smoke test
+
+**Recorded, not argued.** `CLAUDE.md` rule 0: *"A live owner statement supersedes every prior
+ratified record it touches, on contact. Your job on hearing one is to record the supersession,
+never to weigh the ruling against the paperwork it changes."* This is that record. It was owed from
+the moment the directive was given and was not written until a read-only auditor pointed out the
+omission — which is itself the failure rule 0 exists to prevent, committed by the session auditing
+for it.
+
+**The directive.** The owner commissioned a full-pipeline smoke test ahead of a mobility research
+batch: *"run a smoke test on the pipeline from start to finish… ensure that you attempt to run all
+skills/tools, including those that may not be explicitly built yet… ensure that you run every
+skill/tool/hook/script/etc by stage"*, and separately *"use Fable 5 read-only to investigate the
+consequences of each step… you are auditing Sonnet 5's output by contextualizing it against the
+repository's doctrine/mission/pipeline."*
+
+**What it touches.** The RULE of 2026-08-19 in this ledger — *"Adversarial review is a
+truth-instrument bound to evidence, never a plan-instrument"* — restricts any commissioned pass to
+a diff that (a) wrote rows to the research tables or (b) authored or amended a synthesis artifact,
+and its ACTION clause (5) states: *"Budget: at most one adversarial pass per research batch. **A
+pass on a pass is forbidden** — defects in a pass are the next batch's pass's business."*
+
+The commissioned work is outside both limbs in letter: its subject is the **apparatus and the write
+path**, not a research or synthesis diff, and its structure is explicitly a pass on a pass — three
+read-only auditors whose subject is six stage traces.
+
+**Scope of the supersession.** For the session
+`session_2026-08-25-pipeline-smoke-test-mobility` only, and for its purpose only — establishing
+whether the pipeline can carry a mobility batch before one is attempted. The 2026-08-19 RULE is
+**not amended**. Its reasoning is undisturbed and its measurement still stands: ten fresh-context
+passes between 2026-07-14 and 2026-08-19 examined no research output, because there was none. A
+future session may not cite this record to authorise a critique of a plan, a census, a register or
+another pass. **The next adversarial pass owed remains the one on batch 1's admitted rows**, under
+the 2026-08-19 RULE unchanged.
+
+**Why the distinction is worth keeping rather than dissolving.** The 2026-08-19 RULE targets passes
+that *cannot be wrong about anything a reader could check* — its own words. This session's subject
+is executable: every claim it makes is a command someone can re-run, and several were re-run and
+overturned within the session. That is the property the RULE protects, arrived at from the other
+direction. It is not a licence to audit prose.
+
+DATE: 2026-08-25 — owner prompt commissioning the smoke test; recorded the same day.

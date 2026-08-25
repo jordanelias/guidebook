@@ -1023,3 +1023,76 @@ row counts — *"not as a row count and not as a green check."* The instrument d
 precisely in §2.1 and then wrote itself an exit satisfiable by the very thing §4 refuses. That is
 worth the owner knowing before deciding whether anything should replace it. It is not worth a
 session quietly re-freezing on its own authority.
+
+---
+
+# PART 11 — F3: one refutation of mine, and the table that answers the actual question
+
+## C-7 — D-5 REFUTED in its mechanism, and the truth is worse
+
+I wrote that a bucket-2 jurisdiction absent from the enum means *"the write would be refused (or,
+worse, coerced) at the point of admission."* **Refuted.** Verified: `JurisdictionCode` is imported
+by exactly one file in the entire tree — `scripts/validate_jurisdiction.py:29` — which never opens
+the database. Everywhere else it appears only as a **comment**:
+
+```
+schemas/specification.py:68     jurisdictions_supporting: list[str] = []  # JurisdictionCode values
+schemas/evidence_source.py:58   jurisdiction: Optional[str] = None  # JurisdictionCode or "INT"…
+schemas/temporal.py:194         jurisdiction: str  # JurisdictionCode
+```
+
+A comment is not a constraint. Nothing on the write path consumes the enum, and
+`insert_jurisdictional_value` makes no `check_vocab` call on the column. **So an `ES`, `PT` or `FI`
+value is not refused — it lands silently**, exactly as the 20 `GB` rows did.
+
+That inverts the practical advice. I had this as "fix the enum before the batch or writes fail."
+The enum is *inert*, so adding members changes nothing by itself; what would change something is a
+`check_vocab` call on that column — and adding one before the enum has the members would start
+refusing the very jurisdictions the batch targets. **Order matters, and it is the same order the
+instrument already prescribes for the GB rows at :347: wire the enforcer in the same change that
+fixes the data, never before.** Twice now that sequencing rule has been the right answer and twice I
+did not reach for it.
+
+## C-8 — the table that answers the question the owner actually asked
+
+The decision-relevant output of this whole exercise is not the finding count. It is: for each stage
+past the halt point, is it blocked by **empty data** (it works once fed) or by **unbuilt wiring**
+(it still fails with perfect data)? F3 derived it:
+
+| Stage | With perfect upstream data |
+|---|---|
+| research | **runs.** Wiring gaps are conveniences, not blockers |
+| evidence collection | **fails its own blocking gate** — but the gaps are *flag-sized*: `--scope`, `verification_disposition`, evidence-type vocabulary, Co-1 flags, the OD-5 dedup half |
+| judgment | **still fails — structural.** No writer for `specifications`; the only engine is hardcoded to 7 pilot cells and crashes twice on live data |
+| synthesis | **still fails — structural.** `update-bpc` crashes on first INSERT; no `reasoning_doc_citations` writer; the anchor table is absent from the schema |
+| render | **runs, but citation-less** — `specification_source_links` is unwritten, so even a correct cell renders with no visible sources |
+| substrate | **runs.** Gaps are *content* — the handrail item, four enum members, the GB rows, missing UN/ISO language rows — plus one small vocabulary-wiring gap |
+
+**Read the second row against the third and fourth.** Evidence collection fails on things that are
+a day's work — half a dozen CLI flags. Judgment and synthesis fail on things that are not: a missing
+writer and a broken engine. That is the difference between "the batch can run once we add flags" and
+"the batch will stop at the hinge whatever we do." Both are true, of different stages, and
+conflating them is how a batch gets started that cannot finish.
+
+## C-9 — F3's third collective miss, which lands on me
+
+> *"nobody cited `project-standards.md:638`, the rule governing the session's own legality — the
+> repository's signature failure (a ruling in the record, invisible to the search) reproduced by
+> the exercise built to catch it."*
+
+Correct, and the sharpest single observation any auditor made. The 2026-08-19 RULE restricts a
+commissioned pass to a diff that wrote research rows or amended a synthesis artifact, and its clause
+(5) states plainly: *"A pass on a pass is forbidden."* This session is an apparatus audit with three
+auditors reading six traces. In letter, outside the rule on both counts.
+
+It is lawful — CLAUDE.md rule 0, a live owner statement supersedes a prior ratified record on
+contact — but rule 0 does not stop at permission. **It says the job on hearing such a statement is
+to RECORD the supersession.** I did not, for the whole session, until an auditor pointed at the
+rule I had never read. The supersession record is now appended to
+`references/project-standards.md`, scoped to this session only, leaving the 2026-08-19 RULE
+unamended and the pass owed on batch 1's rows exactly where it was.
+
+**That is three times in one session that the record held something my search did not reach**
+(D-6's instrument entry, D-5's UN analysis, and now the rule governing whether the session should
+exist). The pattern is not carelessness about any one file; it is that I searched code
+exhaustively and prose opportunistically, in a repository whose binding decisions live in prose.
