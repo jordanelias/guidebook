@@ -225,3 +225,88 @@ citations" are two disconnected activities.
 - **All 10 admitted sources have a complete stage-1→stage-2 walk**: 1 slug link, 2–3 population
   matches, 1 search admission, and a mining row each. Research and evidence collection are not
   theoretical here; they have been run and they hold.
+
+---
+
+# PART 3 — the freeze that released on the wrong condition, and 256 mobility leads nobody can see
+
+## D-9 — The apparatus freeze expired on a weaker condition than the one it was written with
+
+The instrument's §2.2 froze new apparatus **"Until `evidence_sources` holds at least one admitted
+source with a complete walk."** Its §5 states the freeze **"expires by its own terms the moment
+`evidence_sources` is non-empty."** Those are not the same condition, and the enforcing check
+implemented the second: `…instrument.md:435-441` records `meta_work_freeze` as retired because
+*"its exit condition `evidence_sources >= 1` was met when the first batch landed."*
+
+Measured today:
+
+| | |
+|---|---|
+| `evidence_sources` | **10** — freeze released |
+| `specifications` | **0** |
+| `source_value_extractions` | **0** |
+| `bpc_metadata` / `item_bpc_links` | **0** / **0** |
+| `convergence_assessment` | **0** |
+
+Not one walk is complete. All ten sources stop at the same place: each has 1 slug link, 2–3
+population matches, 1 search admission and a mining row — and then nothing. **The gate released on
+row-count in the first evidence table while §4's actual acceptance criterion — "One answered
+question, published… rendered and readable as output, not as a row count and not as a green
+check" — remains unmet.**
+
+This is the cleanest available explanation of why apparatus work resumed immediately (ACTs 1–6 and
+a consolidation plan on 2026-08-25 alone) and it is not a discipline failure by any session: **the
+freeze's own release clause was satisfiable by exactly the kind of row-count success §4 was written
+to reject.** The instrument diagnosed the loop precisely and then handed it a door.
+
+*This is a finding, not a recommendation to re-freeze.* Whether the freeze should return is DG-NON
+doctrine and the owner's call. What the smoke test establishes is that it will not return by itself,
+and that "evidence_sources ≥ 1" must never again be used as a proxy for a walk.
+
+## D-10 — 256 already-mined mobility leads are sitting in a directory ripgrep cannot see
+
+The instrument's own §6 records the shape of this — *"~4,081 distinct DOIs are recoverable across
+the repository. 397 are in the live `source_locators` store — under 10%… `sessions/` is hidden from
+ripgrep by the root `.ignore`, so two-thirds of this project's identifier capital has been invisible
+to every session that searched for it."* Nobody had measured the **mobility** slice. I did:
+
+```
+sessions/artifacts/2026-05-24-b11-mobility-backward-discoveries.json     89 DOIs
+sessions/artifacts/2026-05-24-b11-mobility-forward-discoveries.json     184 DOIs
+                                              distinct, combined:      272
+   already in source_locators (the clue store):                         16
+   already admitted (evidence_sources):                                  0
+   NEW — in neither:                                                   256
+```
+
+Keyed by anchor: `MOB-01`, `MOB-02`, `MOB-05`, `MOB-10`, `MOB-11`, `MOB-12`. Record shape:
+
+```json
+{ "doi": "10.1080/17483107.2022.2111723", "year": 2022, "first_author": "Kapsalis",
+  "title_short": "Disabled-by-design: effects of inaccessible urban public spaces on users of
+                  mobility assistive devices – a systematic re", "in_evidence_sources": false }
+```
+
+Field coverage over the 319 mobility records: **291 carry `year`, 215 carry `first_author`, 0 carry
+a full `title` or `authors`** — `title_short` is truncated mid-word, as the sample shows.
+
+Three consequences for the batch, in order:
+
+1. **The backward-and-forward citation mining the owner asked to test has already been run on
+   mobility, in May 2026.** The anchor blocks carry `openalex_id`, `openalex_cited_by_count`,
+   `citers_fetched`, `relevant_n`, `already_in_es_n`, `new_discovery_n` — a real forward-citation
+   pass via OpenAlex, with its yield counted. The capability existed and was exercised.
+2. **Its output never reached the clue store** — 16 of 272. This is D-8's stranded-yield defect
+   again, one layer further out: mining harvests into artifacts and JSON columns, and nothing
+   promotes a harvest into `source_locators` where R9, R10 and the next frame can reach it.
+3. **`title_short` must never be promoted as `title`.** It is truncated. CLAUDE.md §2(c) — *"Never
+   write a bibliographic field from memory when a payload is in hand"* — extends straightforwardly:
+   never write one from a field you can see is truncated. The DOI, year and first-author are
+   legitimate lead data; the title requires R10 re-retrieval. `source_locators` is defined as *"a
+   lead index of identifiers, not evidence"*, so promoting identifiers is exactly its purpose.
+
+**The single highest-value pre-batch action available is promoting those 256 leads into the clue
+store** — with `doi`, `pub_year`, `authors` (first author only, marked), `recovered_from` naming the
+artifact, `status='REFERENCE-ONLY'`, and `title` left NULL pending re-retrieval. That is one
+migration, it adds no apparatus, and it turns "we would be using our clues table" from 64
+keyword-matched leads into 320.
