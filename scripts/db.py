@@ -41,7 +41,16 @@ from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 
-DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db"))
+# MOVED TO scripts/dbcore.py 2026-08-25. This module now IMPORTS the connection,
+# path, audit-stamp and reference-id mechanics it used to own privately -- it was the
+# only correct implementation in the repository and it had zero importers, so 55 other
+# files re-implemented it 104 times and inherited none of its lessons.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import dbcore                                                      # noqa: E402
+
+# DB_PATH stays a module attribute because callers and tests read it. It is resolved
+# through dbcore so there is one resolution, not two.
+DB_PATH = dbcore.db_path()
 
 # Column whitelists — validated before any f-string SQL construction
 _COVERAGE_COLS = frozenset({
@@ -57,69 +66,23 @@ _BPC_META_COLS = frozenset({
 })
 
 
-@contextmanager
-def connect(dry_run: bool = False, readonly: bool = False):
-    """Open the database at GUIDEBOOK_DB_PATH.
-
-    `readonly=True` opens the file with URI mode=ro and sets PRAGMA query_only,
-    so a read cannot write. Every caller that only SELECTs passes it.
-
-    PRAGMA journal_mode is deliberately NOT set here. journal_mode is persisted
-    in the database header, so setting it rewrote the committed blob on EVERY
-    invocation of this module -- including pure reads and including --dry-run.
-    That made `git status` dirty after a query and defeated the sha256 check
-    the research runbook uses to prove the canonical database was untouched.
-    The default (delete) is what the committed file already carries.
-    """
-    if readonly:
-        conn = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True, timeout=10)
-    else:
-        conn = sqlite3.connect(str(DB_PATH), timeout=10)
-    conn.row_factory = sqlite3.Row
-    conn.execute("PRAGMA foreign_keys=ON")
-    if readonly:
-        # After foreign_keys: query_only blocks further schema-affecting pragmas.
-        conn.execute("PRAGMA query_only=ON")
-    else:
-        conn.execute("PRAGMA synchronous=NORMAL")
-    try:
-        yield conn
-        if readonly:
-            pass          # nothing to commit; mode=ro would refuse anyway
-        elif not dry_run:
-            conn.commit()
-        else:
-            conn.rollback()
-    except Exception:
-        conn.rollback()
-        raise
-    finally:
-        conn.close()
+# connect(), now(), audit(), _upd() and _validate_cols() MOVED to scripts/dbcore.py.
+# They are re-exported here under their original names so that every existing caller
+# and every skill that documents them keeps working unchanged (CLAUDE.md rule 4: a
+# rename is not done until the callers are swept -- so this is not a rename).
+connect = dbcore.connect
+now = dbcore.now
+audit = dbcore.audit
+_upd = dbcore.upd
+_validate_cols = dbcore.validate_cols
 
 
-def now() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M")
 
 
-def audit(session: str) -> dict:
-    ts = now()
-    return {
-        "created_at": ts, "created_by_session": session,
-        "updated_at": ts, "updated_by_session": session,
-    }
 
 
-def _upd(session: str) -> dict:
-    return {"updated_at": now(), "updated_by_session": session}
 
 
-def _validate_cols(data_keys, whitelist: frozenset, context: str):
-    unknown = set(data_keys) - whitelist
-    if unknown:
-        raise ValueError(
-            f"{context}: unknown column(s) {unknown}. "
-            f"Permitted: {whitelist}"
-        )
 
 
 def _emit(data):

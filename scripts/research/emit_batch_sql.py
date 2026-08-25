@@ -25,48 +25,28 @@ import os
 import sqlite3
 import sys
 from datetime import datetime, timezone
+from pathlib import Path
 
 # The canonical DB honours GUIDEBOOK_DB_PATH like every other live script
 # (scripts/audit/db_path_env_audit.py enforces this). The runbook invokes this
 # tool without the variable set -- the scratch is named explicitly by --scratch --
 # so the default resolves to data/guidebook.db in normal use.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import dbcore                                                      # noqa: E402
+
 DEFAULT_CANONICAL = os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db")
 
 # FK order: a parent is always emitted before anything that references it, so
 # the migration applies cleanly even with foreign_keys enforcement on.
-TABLES = [
-    "evidence_sources",
-    # ADDED 2026-08-22. Its absence was not neutral: evidence_source_authors is
-    # where the 2026-08-19 fabrication happened (12 of 19 author rows named
-    # non-authors, including the deletion of the autistic community co-authors
-    # from the paper whose Co-1 warrant IS their co-authorship), and because this
-    # capture path could not see the table, that repair had to be hand-written —
-    # the same hand-SQL channel the fabrication entered through. PK is `id`
-    # (INTEGER PRIMARY KEY AUTOINCREMENT), so the generic PK diff below applies
-    # unchanged. What reads it: this script, invoked by the DR-2026-08-19 runbook
-    # at step 11.
-    "evidence_source_authors",
-    # ADDED 2026-08-23, and it is the THIRD tool found blind to this one table in a
-    # single day. source_locators is the identifier stash — 835 rows, 441 DOIs. R9
-    # could not see it (fixed the same morning as R9a/R9b); validate_jurisdiction.py
-    # never opens the DB at all; and this capture path silently DROPPED every
-    # source_locators row a session wrote. That last one was found by counting: a
-    # rescue that inserted 8 locator rows emitted 32 statements, not 40, and the
-    # eight would have been lost between the scratch DB and the migration with no
-    # error raised. A table the tooling cannot see is a table the project does not
-    # really have. What reads it: this script, invoked by the DR-2026-08-19 runbook.
-    "source_locators",
-    "source_slug_links",
-    "search_executions",
-    "search_admissions",
-    "search_candidates",
-    "evidence_population_match",
-    "citation_mining",
-    "jurisdictional_values",
-    "economics_entries",
-    "case_studies",
-    "gaps",
-]
+# TABLES MOVED TO scripts/dbcore.py 2026-08-25 and is imported below.
+#
+# WHY: this list and db.py's write coverage were two separate homes of one fact --
+# "which tables a session may write" -- and that is exactly how a table became
+# writable-but-invisible to capture. A rescue wrote 8 source_locators rows and this
+# tool emitted 32 statements instead of 40, losing them with NO ERROR RAISED. One
+# constant with two importers means a table can never again be known to one and not
+# the other. The list's own history comments moved with it, unaltered.
+TABLES = dbcore.WRITABLE_TABLES
 
 
 def ro(path):

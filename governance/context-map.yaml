@@ -553,6 +553,9 @@ writers:
     - search_executions
     - source_slug_links
     - supersession_check
+    scripts/dbcore.py:
+    - evidence_sources
+    - source_locators
     scripts/emit_data_migration.py:
     - evidence_sources
     - gaps

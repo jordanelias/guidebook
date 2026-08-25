@@ -252,8 +252,12 @@ applied.
 `search_candidates`, `evidence_population_match`, `economics_entries`, `case_studies` or
 `jurisdictional_values` values, and `add-source` cannot write `doi_resolution_outcome`, `url`,
 `pages`, `first_author_last` or author rows. Those need hand-written SQL against the scratch, and
-that gap is where the fabrication of 2026-08-19 entered. There is no `next_ref_id` allocator;
-mint above the `source_locators` high-water mark or you will collide with a held identifier.
+that gap is where the fabrication of 2026-08-19 entered. **There is no ref_id allocator, and the rule this file gave for weeks was WRONG.** It said mint
+above the `source_locators` high-water mark. Measured 2026-08-25: `source_locators` tops out at
+**REF-00964** and `evidence_sources` at **REF-00970**, so that rule yields REF-00965 — a live
+evidence row. **The high-water mark is the UNION of every table holding a ref_id.** Do not compute
+it by hand: `dbcore.next_ref_id(conn)` IS that rule, computed and never stored — a counter table
+would be a second home for a fact those columns already jointly state (rule 5).
 
 ---
 
