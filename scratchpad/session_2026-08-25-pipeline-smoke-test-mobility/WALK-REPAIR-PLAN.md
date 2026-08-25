@@ -300,3 +300,100 @@ diagnosis survives.
 **The acceptance test does not, and that is the finding.** A plan whose success criterion cannot be
 met, in a repository whose documented failure mode is gates that pass having examined nothing, would
 have been executed to completion and declared done.
+
+---
+
+# AMENDMENT 2 — 2026-08-25, owner directive: fold the outstanding fixes into this plan
+
+Two additions. The first is a live defect actively corrupting the provenance record; the second is a
+sequencing consequence of the population ruling that this plan did not carry and would have got
+wrong.
+
+## P0.3 — The command-log hook misfiles, for the third time, and now pins itself
+
+**Status: LIVE and SELF-REINFORCING.** Measured at the time of writing: of 82 lines in
+`scratchpad/session_2026-08-25-rulings-incorporation-and-pipeline-sweep/commands.jsonl`, **56 are
+this session's commands** — the misfile has overtaken that session's own frozen record. It grows by
+one commit every turn. Full evidence in `HOOK-REGRESSION.md`.
+
+**WHERE** `.claude/hooks/record-command.py`, `open_session()` — the derivation merged in PR #119.
+
+**NOW** — two paths, both failing:
+
+1. **Fast path.** Matches the harness `session_id` against the *last line* of each existing log.
+   This session's own log carries **822 lines and zero `session_id` fields** (written under the
+   pre-#119 schema), so it can never match. **The fast path also cannot bootstrap**: the first call
+   of any new session has no prior line to match, by construction.
+2. **Fallback.** `openp = [n for n in pads if not (root/"sessions"/f"{n}.md").exists()]`, then
+   `openp[-1]`. **A session is treated as closed the moment its record file exists.** This session
+   wrote `sessions/session_2026-08-25-pipeline-smoke-test-mobility.md` at *open* — which
+   `CLAUDE.md` rule 6 explicitly encourages (*"commit the scratchpad at every natural break, not at
+   session end"*) — so it is classified closed while still running, and the newest directory
+   *without* a record wins instead.
+3. **Then it pins.** That wrong log now ends with this session's `session_id`, so the fast path
+   matches it on every subsequent call. The misfile becomes permanent and self-confirming.
+
+**CHANGE** — make the harness `session_id` authoritative and the record file advisory, in this
+order:
+
+```
+1. If a scratchpad dir already contains a line carrying THIS session_id  -> use it.      (unchanged)
+2. Else if exactly one scratchpad dir has no sessions/<stem>.md          -> use it.      (unchanged)
+3. Else write to scratchpad/<session_id>/commands.jsonl.                 (NEW: bootstrap)
+```
+
+Step 3 is the fix. A first call with nothing to match currently falls through to "newest without a
+record", which is a *guess about which session is running*. Writing under the harness id instead is
+a **visibly foreign directory name** — which the hook's own docstring already argues for: *"a wrong
+answer must be loud."* A session that then writes its record can adopt the directory deliberately;
+nothing has to infer it.
+
+**REFUSALS/TESTS** Extend `scripts/tests/test_record_command_session.py` (added by #119) with the
+two cases it does not cover: (a) a session whose record exists **while it is still running** —
+the rule-6 case, which is the live failure; (b) a first call with **no prior line** carrying the
+session id — the bootstrap case. Both currently resolve to another session's directory.
+
+**BLAST RADIUS** The hook only. No table, no gate, no rendered surface. `#119`'s test file is the
+one caller.
+
+**RISK** Low to change, and **the risk of not changing it is the one that compounds**: every turn
+writes another session's provenance into a frozen record, and `CLAUDE.md` §0.4 says a 0-row or
+mis-keyed object is *unproven, not clean*.
+
+**Note on the pattern, because it is the point.** This is the third iteration of one bug:
+`.claude/session` went stale → `sessions/LATEST` went stale → the derivation now mis-classifies any
+session that records itself early. Each fix corrected the mechanism it could see and left the
+question underneath — *which session is running?* — answered by inference. The harness knows. Ask it.
+
+**The misfiled lines are not moved.** Same reasoning as #119's own: re-attributing a frozen
+append-only log by inference is how a provenance record becomes a guess. Each affected directory
+gets the `commands-jsonl-WHERE.md` pointer #119 established.
+
+## S-1 — SEQUENCING: the population split precedes the first cell write
+
+Owner ruling 2026-08-25 splits `MOB` into **ambulatory** and **wheelchair user**. That is content
+and tracked in the ledger, not here — but it imposes a hard ordering on this plan that was not
+stated:
+
+> **The split must land before P1.3 writes the first `specifications` row.**
+
+`specifications` is keyed `(item_code, population_code)`. Every cell written before the split is
+keyed on `MOB` and has to be re-keyed after — and re-keying a *determination* is a different and
+much worse operation than re-pointing substrate, because a cell carries `governing_refs`, a
+convergence assessment and a tier basis that were all reasoned against a population that no longer
+exists.
+
+Measured footprint of the split today: **33 rows** — 31 `item_population_links`, 2
+`population_axis_map`, **zero** `evidence_population_match`, zero everywhere else. Every one of
+those zero tables fills during the batch. The split is cheap exactly once, and this is the window.
+
+Revised critical path:
+
+```
+P0.1 P0.2 P0.3  ──►  [MOB split lands]  ──►  P1.1 ─► P1.2 ─► P1.3 ─► P1.4 ─► P1.5
+                          (content,                                    │
+                           owner-ruled)                       P1.7 P1.8 ─► the value path
+```
+
+P1.1 and P1.2 have no population key and could technically precede the split; P1.3 onward cannot.
+Ordering them all after it costs nothing and removes the chance of a half-migrated cell.
