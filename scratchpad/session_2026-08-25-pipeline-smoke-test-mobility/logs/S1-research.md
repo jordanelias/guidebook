@@ -1063,3 +1063,142 @@ NOTE      : For the mobility batch specifically: this means a real duplicate-ide
   optimistic finding than CLAUDE.md's current text suggests, and worth surfacing to the owner as a
   documentation fix (drop OD-5's "currently cannot see it" framing, or narrow it explicitly to R9).
 
+
+## S1 SUMMARY
+
+**Run integrity:** `data/guidebook.db` sha256 unchanged across the whole run (`30a1066...` at
+start and end — verified). No tracked file touched except this log. All writes went to
+`$SMOKE/s1-research.db` or `$SMOKE/retrieval-log-test/`. No evidence admitted anywhere; external
+probes limited to 1-2 calls each per tool (§6).
+
+### (a) Every skill/script/tool invoked, PASS/FAIL/VACUOUS/ABSENT/BLOCKED
+
+| # | Invoked | Verdict |
+|---|---|---|
+| 1 | items/slugs/axes/access_needs/access_need_icf/access_need_axis_map/item_population_links queries (framing) | PASS, 1 BLOCKING gap (no handrail item) |
+| 2 | `source_locators` column census + jurisdiction/mobility-relevance analysis | PASS (analysis); jurisdiction column FAIL (unusable as filter) |
+| 2 | selector for clue-store leads (list/query-locators) | ABSENT |
+| 2 | `db.py add-locator` — valid write | PASS |
+| 2 | `db.py add-locator` — duplicate ref_id refusal | PASS |
+| 2 | `db.py add-locator` — bad status vocab refusal | PASS |
+| 2 | `db.py add-locator` — duplicate DOI (R9, case-folded) refusal | PASS |
+| 2 | `db.py add-locator` — bad ref_id shape refusal | PASS |
+| 2 | `db.py add-locator` — no-identifier CHECK refusal | PASS (uncurated traceback) |
+| 2 | `db.py add-locator` — bad-FK case | ABSENT (N/A by design, no FK cols on this table) |
+| 2 | `dbcore.next_ref_id` union high-water mark | PASS |
+| 3 | `db.py upsert-coverage` / `upsert-language` | PASS (correctly FROZEN, redirects to log-search) |
+| 3 | `db.py log-search` — real mobility zero-yield query | PASS |
+| 3 | `db.py log-search` — `--deferred-reason ""` empty-string handling | FAIL (silently miscounts as deferred) |
+| 3 | R14 3-way distinction (query-shape/wrong-index/genuine-absence) schema support | ABSENT (expressible in free text, not structured/verified) |
+| 3 | `db.py log-search` — legitimate deferred-reason | PASS |
+| 3 | `db.py coverage` | PASS |
+| 4 | `db.py add-candidate` — disposition CHECK vs live-vocab (`OUT-OF-SCOPE`) | PASS |
+| 4 | `db.py add-candidate` — valid writes incl. `OUT-OF-SCOPE` | PASS |
+| 4 | `db.py add-candidate` — R15 (ADMITTED requires RESOLVED) | PASS |
+| 4 | `db.py add-candidate` — bad disposition/exec_id FK/slug FK refusals | PASS |
+| 5 | executable backward/forward citation retriever | ABSENT |
+| 5 | `citation_mining` table contents (10 rows) | PASS (analysis) — confirms hand-filled ledger, zero mobility rows |
+| 5 | `db.py add-source` (synthetic row, boundary test) | PASS |
+| 5 | `db.py is-mined` / `log-mining` (backward, forward, bad-direction) | PASS |
+| 5 | `db.py unmined` | PASS |
+| 5 | `db.py next-id gaps` / `next_gap_id()` | FAIL (disconnected from live `GAP-B0N-NNN` scheme) |
+| 5 | `db.py add-gap` / `add-gap-mining` / `update-gap-addressability` / `unmined-gaps` | PASS |
+| 5 | `scripts/audit/citation_mining_completeness.py` | PASS |
+| 5 | `scripts/audit/gap_mining_audit.py` | PASS |
+| 6 | WebSearch | PASS (reachable) |
+| 6 | WebFetch (Crossref) | PASS (reachable) |
+| 6 | `mcp__Consensus__search` | PASS (reachable) |
+| 6 | `mcp__Scholar_Gateway__semanticSearch` | PASS (reachable, topical-only, matches skill's own caveat) |
+| 6 | curl → Crossref / OpenAlex / Semantic Scholar (raw reachability) | PASS (all 3, full structured JSON incl. real citations array) |
+| 7 | `scripts/research/retrieval_log.py --help` | PASS |
+| 7 | `fetch()` payload persistence | PASS |
+| 7 | `--verify-authors` (real session, own session) | PASS |
+| 8 | `adversarial-research` skill — required-outputs DB writers | FAIL (no CLI writer, 6 columns) |
+| 8 | `progressive-measurement` skill — required DB writes | FAIL (no CLI writer, `spec_value_probes` + 3 `items.pmp_*`) |
+| 8 | `literature-review-planner`/`multilingual-research`/`functional-deficit-researcher`/`economics-researcher` — shared `coverage {slug}` boilerplate | FAIL (missing `--slug`, cosmetic, ×4) |
+| 8 | `connection-discovery` — `GUIDEBOOK_DB_PATH=data/guidebook.db` in examples + `is_canonical()` dead code | FAIL (highest severity) |
+| 8 | `jurisdiction-tracker` — jurisdiction scope vs bucket-1/2 | FAIL |
+| 8 | `question-author` | ABSENT (self-documented; also mis-scoped to research) |
+| 8 | `research-log-manager`, `content-gap-analyzer`, remaining skill content | PASS |
+| 9 | `scripts/audit/research_protocol_audit.py` | PASS (stale comment only) |
+| 9 | `scripts/audit/pmp_audit.py` | VACUOUS (EXAMINED: 0) |
+| 9 | `scripts/audit/research_batch_dod.py --session ...` | PASS (correctly shows R1 FAIL + R9a/R9b NOTHING-IN-SCOPE) |
+| 9 | `scripts/audit/research_batch_dod.py --all` | PASS (COMPLIANT, real subjects throughout) |
+| 10 | OD-5 / R9 duplicate-gate claim vs code | mechanism FIXED (R9a/R9b, 2026-08-23); CLAUDE.md prose STALE |
+
+### (b) Ranked BLOCKERS for the mobility batch
+
+1. **No `handrail` item_code/slug exists.** `items`/`slugs` tables — `SELECT * FROM items WHERE
+   name LIKE '%handrail%'` = 0 rows. Nearest neighbours G-03/I-03 are bathroom-specific. Blocks
+   framing any handrail-specific evidence until a new item is created (D-SCHEMA-adjacent decision).
+2. **Zero admitted evidence for any mobility slug.** `evidence_sources`/`source_slug_links` — all
+   10 live rows are `room-acoustic-performance`; `citation_mining`/`gaps` likewise 100%
+   room-acoustic-performance. The mobility batch is a cold start on every axis, not an extension.
+3. **No CLI writer for `adversarial-research`'s 5 required fields.**
+   `evidence_sources.prior_expectation`/`search_queries_used`,
+   `gaps.confidence_interval`/`shift_conditions`/`named_dissenter`/`falsification_condition` —
+   `scripts/db.py` (grep confirms zero matches). Forces hand-SQL on the scratch DB for the
+   protocol's own mandatory step, exactly the pattern CLAUDE.md's write-path section claims is
+   closed.
+4. **No CLI writer for `progressive-measurement`'s core table.** `spec_value_probes` (all
+   columns) and `items.pmp_empirical_ceiling`/`pmp_gap_signed`/`pmp_last_walk_at` —
+   `scripts/db.py` (zero matches). E-03/E-08 are exactly the numeric-spec items this walk exists
+   for.
+5. **`connection-discovery_SKILL.md:94,209,219,253` instructs writing to the canonical DB
+   directly**, and `scripts/dbcore.py:65-74` `is_canonical()` — the guard meant to prevent
+   exactly this — is defined, self-tested, and called by nothing in the actual write path
+   (`scripts/db.py`'s `insert_*` functions all go through `dbcore.connect()`, which never checks
+   it; `db_path()` at `scripts/dbcore.py:51-59` defaults to canonical when the env var is unset).
+   Highest-severity finding in this log; not mobility-specific but directly in the batch's path
+   (E-08/E-01/E-04 are natural connection-discovery candidates).
+6. **No tool to select clue-store leads for a batch.** `scripts/db.py` has `add-locator` only, no
+   read/select subcommand; `source_locators.jurisdiction` is unusable as a filter (only 56/875
+   rows carry a clean 2-3-letter code, and even those don't match PROTOCOL's bucket-1/2
+   vocabulary — no row uses "Germany"/"Canada"/"Japan"/"Sweden" cleanly); only 22/875 rows carry
+   both a clean jurisdiction AND a mobility-slug tag, and 0 rows tag the ramp/threshold-biomechanics
+   or luminance-contrast slugs at all.
+7. **No executable backward/forward citation-mining retriever**, though the underlying APIs are
+   trivially reachable (§6.4 confirms Crossref/OpenAlex/Semantic Scholar all return HTTP 200 with
+   full structured JSON, including a real `citations` array, via plain unauthenticated `curl`).
+   `citation_mining`'s 10 rows are a hand-narrated ledger, not tool output. Nothing in
+   `scripts/research/` does this; `scripts/resolve_dois.py` is identity-resolution only.
+8. **`next_gap_id()`/`db.py next-id gaps`** (`scripts/db.py:135-144`) mints `GAP-NNN` while every
+   live gap uses `GAP-B0{n}-NNN` — the allocator is disconnected from the convention actually in
+   use, same shape as the ref_id allocator bug CLAUDE.md §4 already documents as historically
+   wrong.
+9. **`jurisdiction-tracker_SKILL.md:31`'s jurisdiction scope disagrees with the batch's own
+   bucket-1/2 priority order** (mixes bucket-3 members in undistinguished, omits 7 of 20 bucket-1/2
+   jurisdictions) — a session following it literally would verify currency for the wrong set.
+10. **`log_search`'s `deferred_reason=""` (empty string) is silently miscounted as a deferral**
+    (`scripts/db.py:336-410`, `get_coverage_completeness` at `:520-571`) — low practical risk but
+    real, and corrupts exactly the jurisdiction/language coverage counts a mobility batch would
+    use to track progress against the bucket-1/2 requirement.
+11. **R1 (Co-1/Co-2 lived-experience pass) currently FAILs** for a from-scratch batch
+    (`research_batch_dod.py --session ...`) — must be the mobility batch's first research step,
+    not an afterthought, per CRPD Art 4.3 co-primacy.
+
+### (c) ABSENT — what would have to be built
+
+- A `handrail` `item_code` + slug (content/schema decision, not tooling).
+- `scripts/db.py list-locators`/`select-locators` (or equivalent read path) over `source_locators`,
+  filterable by jurisdiction-bucket and `used_in_bpcs`/slug — plus either a data-cleanup migration
+  that stops `jurisdiction` doubling as a notes field, or a new clean jurisdiction column with an
+  FK to `lang_jur_map.jurisdiction`.
+- `scripts/research/crossref_client.py` (backward: `api.crossref.org/works/{doi}` →
+  `.message.reference[]`) and `scripts/research/semantic_scholar_client.py` (forward:
+  `api.semanticscholar.org/graph/v1/paper/DOI:{doi}/citations`), both writing through
+  `retrieval_log.fetch()` before any curation — confirmed technically trivial (§6.4), simply not
+  written yet.
+- CLI writers (`db.py` flags or a new subcommand) for: `evidence_sources.prior_expectation` /
+  `search_queries_used`; `gaps.confidence_interval` / `shift_conditions` / `named_dissenter` /
+  `falsification_condition`; `spec_value_probes` (all columns); `items.pmp_empirical_ceiling` /
+  `pmp_gap_signed` / `pmp_last_walk_at`.
+- The `update-locator` subcommand that `add-locator`'s own duplicate-ref_id refusal message names
+  (scripts/db.py:2504) but that does not exist.
+- A structured (enum or paired-evidence-requirement) mechanism for R14's
+  query-shape/wrong-index/genuine-absence distinction — today it is free text checked only for
+  non-emptiness (`scripts/audit/research_batch_dod.py:583-597`).
+- `is_canonical()` wired into `dbcore.connect()` itself, so the CLI refuses a non-dry-run write to
+  the canonical file regardless of which skill or session sets `GUIDEBOOK_DB_PATH` wrong.
+
+End of S1 log.
