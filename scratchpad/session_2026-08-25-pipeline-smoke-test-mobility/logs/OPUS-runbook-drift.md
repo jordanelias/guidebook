@@ -611,3 +611,45 @@ admitted mobility evidence to anchor it, will face that temptation on every clai
 *The smallest thing that would prevent it:* `reasoning_doc_citations` needs a CLI writer (S4 reports
 it has none, and its skill teaches raw SQL), and the audit needs to read the document's `REF-` ids
 directly rather than waiting for a table nobody can populate through the sanctioned path.
+
+---
+
+# PART 8 — the census, and where the walk stops
+
+Derived 2026-08-25 from the committed DB. Every figure is a live `COUNT(*)`; none is transcribed.
+
+| Stage | Rows | Tables |
+|---|---:|---|
+| **research** | **978** | `source_locators` 875 · `search_candidates` 60 · `search_executions` 28 · `citation_mining` 10 · `gaps` 5 · `gap_mining` 0 · `search_coverage` 0 |
+| **evidence collection** | **92** | `evidence_source_authors` 37 · `evidence_population_match` 25 · `evidence_sources` 10 · `source_slug_links` 10 · `search_admissions` 10 · `source_value_extractions` **0** · `supersession_check` 0 |
+| **judgment** | **0** | `specifications` 0 · `specification_source_links` 0 · `convergence_assessment` 0 · `spec_value_probes` 0 · `conflicts` 0 · `external_root_registry` 0 · `item_audit_runs` 0 |
+| **synthesis** | **0** | `bpc_metadata` 0 · `item_bpc_links` 0 · `connections` 0 · `connection_targets` 0 · `reasoning_doc_citations` 0 · `citation_population_links` 0 |
+| **render** | 126 | `jurisdictional_values` 109 (all REFERENCE-ONLY, `value_text`/`value_numeric` 0 non-null) · `rooms` 17 · `room_items` 0 · `case_studies` 0 · `economics_entries` 0 |
+
+Apparatus, by CLAUDE.md §1's own commands: **63 registered checks** (4 quarantined) and **30,494
+executable lines** across `scripts/` and `tools/`.
+
+**Read the middle two rows.** The pipeline is not slow, or partial, or behind. It is *severed*.
+978 rows of research and 92 of evidence collection, and then two consecutive stages at absolute
+zero, and then a render layer whose 126 rows were never produced by the pipeline at all — 109
+REFERENCE-ONLY leads with every value column null by ruling, plus 17 room stubs.
+
+The `0` that matters most is not `specifications`. It is **`source_value_extractions` = 0**, sitting
+at the end of the evidence row. That is the table that turns an admitted source into a *number* — a
+corridor width, a ramp gradient, a slip-resistance coefficient — attached to a locator. Judgment
+cannot weigh what extraction never produced. So the severance is not between evidence and judgment;
+it is *inside* evidence collection, at its last column. S2 reports that table has **five readers and
+zero writers**.
+
+That is the whole pipeline diagnosis in one line: **this project can find sources and admit them,
+and has never once extracted a value from one.**
+
+Everything downstream follows. `specifications` has no CLI writer (verified: `scripts/db.py`
+contains zero occurrences of the word) — but even if it had one, there would be nothing to write
+into it. And the four judgment/synthesis gates that pass vacuously are not passing because someone
+forgot to run them; they are passing because their subject has never existed.
+
+**For the mobility batch this reframes the ask.** "Corridor widths, door thresholds, sloped
+surfaces, flooring materials, handrails" are *quantities*. The batch's purpose is to get numbers
+with locators attached to disabled people's actual demands. The stage that does exactly that is the
+one stage in the pipeline that has never run.
