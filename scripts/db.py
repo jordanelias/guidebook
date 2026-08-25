@@ -848,6 +848,54 @@ def main():
     p_epm.add_argument("--session", required=True)
     p_epm.add_argument("--dry-run", action="store_true")
 
+    p_jv = sub.add_parser("add-jurisdictional-value",
+                          help="Record a code/regulatory value (T4-T6 stratum)")
+    p_jv.add_argument("--jv-id")
+    p_jv.add_argument("--item-code", required=True)
+    p_jv.add_argument("--jurisdiction", required=True)
+    p_jv.add_argument("--standard-name")
+    p_jv.add_argument("--value-text")
+    p_jv.add_argument("--value-numeric", type=float)
+    p_jv.add_argument("--unit")
+    p_jv.add_argument("--is-code-minimum", type=int, choices=[0, 1])
+    p_jv.add_argument("--evidence-tier", type=int, required=True)
+    p_jv.add_argument("--source-section")
+    p_jv.add_argument("--loc-section")
+    p_jv.add_argument("--loc-clause")
+    p_jv.add_argument("--notes")
+    p_jv.add_argument("--session", required=True)
+    p_jv.add_argument("--dry-run", action="store_true")
+
+    p_econ = sub.add_parser("add-economics-entry", help="Record a Part-13 economics finding")
+    p_econ.add_argument("--entry-id", required=True)
+    p_econ.add_argument("--pillar", required=True)
+    p_econ.add_argument("--entry-type", required=True)
+    p_econ.add_argument("--ref-id", help="Preferred. Bibliographic facts are reached through it")
+    p_econ.add_argument("--source", help="Only for an entry with NO ref_id")
+    p_econ.add_argument("--finding", required=True)
+    p_econ.add_argument("--status", required=True)
+    p_econ.add_argument("--value-numeric", type=float)
+    p_econ.add_argument("--value-unit")
+    p_econ.add_argument("--currency")
+    p_econ.add_argument("--jurisdiction")
+    p_econ.add_argument("--notes")
+    p_econ.add_argument("--session", required=True)
+    p_econ.add_argument("--dry-run", action="store_true")
+
+    p_cs = sub.add_parser("add-case-study", help="Record a Part-12 case study")
+    p_cs.add_argument("--case-study-id", required=True)
+    p_cs.add_argument("--slug", required=True)
+    p_cs.add_argument("--title", required=True)
+    p_cs.add_argument("--building-type", required=True)
+    p_cs.add_argument("--location", required=True)
+    p_cs.add_argument("--year", type=int)
+    p_cs.add_argument("--harm-finding", type=int, default=0, choices=[0, 1])
+    p_cs.add_argument("--status", required=True)
+    p_cs.add_argument("--sources", help="Material with NO ref_id. A REF-NNNNN here is refused")
+    p_cs.add_argument("--notes")
+    p_cs.add_argument("--session", required=True)
+    p_cs.add_argument("--dry-run", action="store_true")
+
     p_loc = sub.add_parser("add-locator", help="Write a lead into the clue store")
     p_loc.add_argument("--ref-id", required=True)
     for f in ("doi", "pmid", "pmcid", "isbn", "issn", "url", "standard-number",
@@ -1405,6 +1453,38 @@ def main():
             "gap_id": args.gap_id,
         }, session=args.session, dry_run=args.dry_run)
         _emit({"match_id": mid, "dry_run": args.dry_run})
+
+    elif args.command == "add-jurisdictional-value":
+        jv = insert_jurisdictional_value({
+            "jv_id": args.jv_id, "item_code": args.item_code,
+            "jurisdiction": args.jurisdiction, "standard_name": args.standard_name,
+            "value_text": args.value_text, "value_numeric": args.value_numeric,
+            "unit": args.unit, "is_code_minimum": args.is_code_minimum,
+            "evidence_tier": args.evidence_tier, "source_section": args.source_section,
+            "loc_section": args.loc_section, "loc_clause": args.loc_clause,
+            "notes": args.notes,
+        }, session=args.session, dry_run=args.dry_run)
+        _emit({"jv_id": jv, "dry_run": args.dry_run})
+
+    elif args.command == "add-economics-entry":
+        eid = insert_economics_entry({
+            "entry_id": args.entry_id, "pillar": args.pillar,
+            "entry_type": args.entry_type, "ref_id": args.ref_id, "source": args.source,
+            "finding": args.finding, "status": args.status,
+            "value_numeric": args.value_numeric, "value_unit": args.value_unit,
+            "currency": args.currency, "jurisdiction": args.jurisdiction,
+            "notes": args.notes,
+        }, session=args.session, dry_run=args.dry_run)
+        _emit({"entry_id": eid, "dry_run": args.dry_run})
+
+    elif args.command == "add-case-study":
+        cs = insert_case_study({
+            "case_study_id": args.case_study_id, "slug": args.slug, "title": args.title,
+            "building_type": args.building_type, "location": args.location,
+            "year": args.year, "harm_finding": args.harm_finding, "status": args.status,
+            "sources": args.sources, "notes": args.notes,
+        }, session=args.session, dry_run=args.dry_run)
+        _emit({"case_study_id": cs, "dry_run": args.dry_run})
 
     elif args.command == "add-locator":
         rid = insert_locator({
@@ -2254,6 +2334,132 @@ def insert_population_match(data: dict, session: str, dry_run: bool = False):
         conn.execute(f"INSERT INTO evidence_population_match ({cols}) "
                      f"VALUES ({','.join('?'*len(row))})", list(row.values()))
     return row["match_id"]
+
+
+def insert_jurisdictional_value(data: dict, session: str, dry_run: bool = False):
+    """Record a code/regulatory value for an item in a jurisdiction (T4-T6 stratum)."""
+    _COLS = frozenset({
+        "jv_id", "item_code", "jurisdiction", "standard_name", "value_text",
+        "value_numeric", "unit", "is_code_minimum", "evidence_tier", "source_section",
+        "notes", "locator_scheme", "loc_division", "loc_part", "loc_section",
+        "loc_subsection", "loc_paragraph", "loc_clause", "loc_subclause", "loc_note",
+    })
+    dbcore.validate_cols(data.keys(), _COLS, "insert_jurisdictional_value")
+    with dbcore.connect(dry_run) as conn:
+        if not dbcore.exists(conn, "items", "item_code", data.get("item_code")):
+            raise ValueError(f"item_code {data.get('item_code')!r} is not in `items`.")
+        tier = data.get("evidence_tier")
+        # RANGE_GUARDS in scripts/emit_data_migration.py owns the 1-6 band and cites
+        # schemas/evidence_source.py:85 as its authority. Not restated here (rule 5) --
+        # the same band is asserted, and the guard remains the place it is DEFINED.
+        if tier is None or not (1 <= int(tier) <= 6):
+            raise ValueError(
+                f"evidence_tier {tier!r} is outside the ratified 1-6 band "
+                f"(RANGE_GUARDS in emit_data_migration.py; governance/tier-system.md).")
+        # R3: a quantified value needs a locator or an explicit unverified marker.
+        loc_fields = [k for k in _COLS if k.startswith("loc_")] + ["source_section"]
+        has_locator = any((data.get(k) or "").strip() for k in loc_fields
+                          if isinstance(data.get(k), str))
+        if data.get("value_numeric") is not None:
+            if not data.get("unit"):
+                raise ValueError("--value-numeric requires --unit. A number without a "
+                                 "unit is not a value.")
+            if not has_locator and "[UNVERIFIED-QUANT]" not in (data.get("notes") or ""):
+                raise ValueError(
+                    "R3: a quantified code value needs a locator (clause/section/page) "
+                    "or an explicit [UNVERIFIED-QUANT] marker in --notes. Nothing written.")
+        row = dict(data)
+        row.update(dbcore.stamp_for(conn, "jurisdictional_values", session))
+        cols = ",".join(row)
+        conn.execute(f"INSERT INTO jurisdictional_values ({cols}) "
+                     f"VALUES ({','.join('?'*len(row))})", list(row.values()))
+    return data.get("jv_id")
+
+
+def insert_economics_entry(data: dict, session: str, dry_run: bool = False):
+    """Record a Part-13 economics finding."""
+    _COLS = frozenset({
+        "entry_id", "pillar", "entry_type", "ref_id", "source", "finding", "status",
+        "value_numeric", "value_unit", "currency", "year", "journal", "jurisdiction",
+        "evidence_tier", "study_design", "sample", "source_section", "notes",
+    })
+    dbcore.validate_cols(data.keys(), _COLS, "insert_economics_entry")
+    with dbcore.connect(dry_run) as conn:
+        dbcore.check_vocab(conn, "economics_entries", "pillar",
+                           data.get("pillar"), "insert_economics_entry")
+        dbcore.check_vocab(conn, "economics_entries", "entry_type",
+                           data.get("entry_type"), "insert_economics_entry")
+        ref = dbcore.fold_ref(data.get("ref_id"))
+        if ref and not dbcore.exists(conn, "evidence_sources", "ref_id", ref):
+            raise ValueError(f"ref_id {data.get('ref_id')!r} is not an admitted source.")
+        # THE DUAL-HOME REFUSAL, and a note on WHICH LAYER ENFORCES IT. The CLI does
+        # not expose --year/--journal/--study-design/--sample at all, so through
+        # `db.py` the restatement is structurally impossible rather than refused --
+        # which is stronger. This guard therefore fires only on the PYTHON API path
+        # (importers, capture tooling, future writers). Verified 2026-08-25 by calling
+        # insert_economics_entry directly; through argparse it is unreachable, and that
+        # is the point, not an oversight. Do not "fix" it by adding the flags.
+        #
+        # `source` is TEXT NOT NULL and sits beside a nullable
+        # `ref_id` -- drift by construction once populated. The table is EMPTY today, so
+        # the pointer discipline can be enforced before the first row rather than
+        # migrated afterwards: when a ref_id is given, the bibliographic facts are
+        # reached through it and must not be restated on this row.
+        if ref:
+            restated = [k for k in ("year", "journal", "study_design", "sample")
+                        if data.get(k) is not None]
+            if restated:
+                raise ValueError(
+                    f"--ref-id was given, so {restated} are reachable through it and must "
+                    f"not be copied onto this row (CLAUDE.md rule 5: point, do not copy). "
+                    f"Omit them; a reader follows ref_id to evidence_sources.")
+            row_source = data.get("source") or ref
+        else:
+            if not (data.get("source") or "").strip():
+                raise ValueError(
+                    "an entry with no --ref-id must name its --source. `source` is "
+                    "NOT NULL and is the only identity a ref-less entry has.")
+            row_source = data["source"]
+        row = dict(data)
+        row["source"] = row_source
+        if ref:
+            row["ref_id"] = ref
+        row.update(dbcore.stamp_for(conn, "economics_entries", session))
+        cols = ",".join(row)
+        conn.execute(f"INSERT INTO economics_entries ({cols}) "
+                     f"VALUES ({','.join('?'*len(row))})", list(row.values()))
+    return data.get("entry_id")
+
+
+def insert_case_study(data: dict, session: str, dry_run: bool = False):
+    """Record a Part-12 case study."""
+    _COLS = frozenset({
+        "case_study_id", "slug", "title", "building_type", "location", "year",
+        "harm_finding", "status", "setting", "population_description", "sources",
+        "tier", "notes", "part_section",
+    })
+    dbcore.validate_cols(data.keys(), _COLS, "insert_case_study")
+    with dbcore.connect(dry_run) as conn:
+        if not dbcore.exists(conn, "slugs", "slug", data.get("slug")):
+            raise ValueError(f"slug {data.get('slug')!r} is not in `slugs`.")
+        if dbcore.exists(conn, "case_studies", "case_study_id", data.get("case_study_id")):
+            raise ValueError(f"case_study_id {data.get('case_study_id')!r} already exists.")
+        # `sources` is prose where a junction to evidence_sources.ref_id is the ruling's
+        # exact target ("for rendering a citation, we point towards the evidence table").
+        # The table is empty, so refuse the copy shape now rather than migrate later:
+        # a REF-NNNNN inside the prose field means a pointer was flattened into text.
+        if dbcore.REF_ID_SHAPE.search(data.get("sources") or ""):
+            raise ValueError(
+                "--sources contains a REF-NNNNN. A reference id in a prose field is a "
+                "flattened pointer (CLAUDE.md rule 5). Link the source through "
+                "case_study_specs / the evidence tables, and keep --sources for material "
+                "that has no ref_id.")
+        row = dict(data)
+        row.update(dbcore.stamp_for(conn, "case_studies", session))
+        cols = ",".join(row)
+        conn.execute(f"INSERT INTO case_studies ({cols}) VALUES ({','.join('?'*len(row))})",
+                     list(row.values()))
+    return data.get("case_study_id")
 
 
 def insert_locator(data: dict, session: str, dry_run: bool = False) -> str:

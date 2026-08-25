@@ -448,7 +448,6 @@ database:
   - decisions
   - item_axis_links
   - item_population_links
-  - jurisdictional_values
   - lang_jur_map
   - life_stage_modifiers
   - reference_stubs
@@ -459,12 +458,14 @@ database:
   tables_written_directly_by_code:
   - axes
   - bpc_metadata
+  - case_studies
   - citation_mining
   - conflicts
   - connection_targets
   - connections
   - convergence_assessment
   - data_migrations
+  - economics_entries
   - evidence_population_match
   - evidence_source_authors
   - evidence_sources
@@ -472,6 +473,7 @@ database:
   - gaps
   - item_audit_runs
   - items
+  - jurisdictional_values
   - pipeline_runs
   - population_axis_map
   - populations
@@ -486,13 +488,11 @@ database:
   - url_verification_runs
   - weighting_profile
   tables_with_no_writer_at_all:
-  - case_studies
   - case_study_outcomes
   - case_study_populations
   - case_study_specs
   - case_study_strategies
   - citation_population_links
-  - economics_entries
   - economics_entry_populations
   - economics_entry_specs
   - external_root_registry
@@ -539,10 +539,12 @@ writers:
     - item_audit_runs
     scripts/db.py:
     - bpc_metadata
+    - case_studies
     - citation_mining
     - conflicts
     - connection_targets
     - connections
+    - economics_entries
     - evidence_population_match
     - evidence_source_authors
     - evidence_sources
@@ -550,6 +552,7 @@ writers:
     - gaps
     - item_audit_runs
     - items
+    - jurisdictional_values
     - search_admissions
     - search_candidates
     - search_executions
