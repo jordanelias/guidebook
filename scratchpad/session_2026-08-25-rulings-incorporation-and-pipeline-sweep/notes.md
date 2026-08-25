@@ -303,3 +303,47 @@ that ~1,900 LOC of L1/L2 has no subject or no runner.**
 whose L1 subject is quarantined), `anchor-correctness-sweep.js` (no invoker), the 11 unread
 views, the `validate_db` quarantine tombstone, `room_page.py`. `population_page.py` ->
 CONSOLIDATE. The L0 write/read tools -> KEEP-AND-FIX into one suite, never deleted.
+
+### F9 — SUITE CONSOLIDATION AUTHORIZED 2026-08-25
+
+Owner: *"fable 5 plan out suite consolidation with shared library and full table CLI
+coverage then Opus to execute carefully agonist-antagonist"*.
+
+Form is this repo's own, per `DR-2026-08-19` §7: the agonist case is the RECORDED
+EVIDENCE, the antagonist is a fresh attack on it, **blind-then-compare**, and there is
+**no third judge** — adding one adds a loop stage. Adjudication: sustained and accepted →
+correct in the same pass; disputed → cap and record the dispute; doctrine-level → the
+owner.
+
+**PRE-EXECUTION BASELINE CAPTURED** under `baseline/`, before any change, so the
+consolidation can be proved to have changed nothing it should not:
+
+  db.sha256          30a106692ab4110fe4e2082018eb256a325b2884d5740d3f62445b52c07dceaf
+                     THE CANONICAL DB MUST NOT MOVE. This whole programme is code-only
+                     until an act explicitly emits a migration. If this sha changes and
+                     no migration was applied, something wrote the DB directly (rule 3).
+  rowcounts.txt      user_version + every table's row count + every view name (85 lines).
+                     Views listed because rule 4 says a view is a caller and a 0-row
+                     object is unproven, not clean.
+  checks-all.txt     run_checks --all: PASS, 50 green, 9 nothing-in-scope, 4 advisory.
+                     Advisory failures to hold constant: validate_pydantic_schemas,
+                     retired_vocabulary, validate_reasoning, test_verification_pipeline.
+                     BLOCKING-and-vacuous at baseline (5): validate_evidence_state,
+                     validate_verification_consistency, attestation_presence,
+                     attestation_schema, check_rendered_docs. If any of these acquires a
+                     subject during the work, that is a CHANGE and must be explained.
+  selftest.txt       SELFTEST: PASS — registry coherent.
+                     Captured because --changed-from does NOT run the selftest and the
+                     selftest is where a rename fails (learned the hard way today).
+  connect-sites.txt  104 raw sqlite3.connect( sites across scripts/ + tools/.
+                     This is the number the consolidation must move. It is the headline
+                     metric, but NOT the acceptance test on its own -- driving it to a
+                     smaller number by shuffling code would satisfy the metric and miss
+                     the point. The acceptance test is Fable's to define (brief item G).
+
+**THE POINT OF THE EXERCISE, kept in front of everything else.** This is not tidying.
+Hand-written SQL exists BECAUSE `db.py` cannot write five tables, and that channel is
+how the 2026-08-19 author fabrication reached committed data -- 12 of 19 author rows
+naming non-authors, past six green gates, through a capture tool that was itself blind.
+Full-table CLI coverage closes the channel. Every act should be judged against whether
+it moves that, not against file counts.
