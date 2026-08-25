@@ -2062,7 +2062,14 @@ def get_unmined_for_all_slugs(tier_max: int = 3) -> list[dict]:
                 -- reference id was in every row the whole time; join on it.
                 ON cm.slug = ssl.slug AND cm.global_ref_id = ssl.ref_id
             WHERE es.tier <= ?
-            AND (cm.local_ref_id IS NULL OR cm.backward = 0 OR cm.forward = 0)
+            -- SENTINEL MUST MATCH THE JOIN KEY. PD-0 repointed the join to
+            -- global_ref_id and left this testing local_ref_id -- the old key. It
+            -- works only while every mining row happens to carry a label, and
+            -- log_mining LOOKS UP that label from source_slug_links, writing NULL
+            -- when no link exists. A mined source with a NULL label would report
+            -- UNMINED: the exact PD-0 false negative, surviving in the WHERE clause
+            -- after the JOIN was fixed. Test the key the join actually uses.
+            AND (cm.global_ref_id IS NULL OR cm.backward = 0 OR cm.forward = 0)
             ORDER BY es.tier ASC,
                      CASE WHEN COALESCE(es.lang_detected, es.language, 'en') = 'en' THEN 1 ELSE 0 END,
                      ssl.slug, ssl.local_ref_id

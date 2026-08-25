@@ -401,3 +401,66 @@ for lack of time — the sweep was run, and it says the premise is wrong.
 
 The cheap part of Act 6 survives and is worth doing separately: per-caller join helpers,
 added only in the commit where a caller adopts them.
+
+---
+
+## F11 — the three fixes the stage ruling forced, executed 2026-08-25
+
+The Acts 4/5/6 interrogation ended with three concrete corrections. All three are made
+and each was verified against the live DB, not against its own diff.
+
+**FIX 1 — `scripts/db.py`, the PD-0 defect that survived in the WHERE clause.**
+PD-0 repointed the unmined-source join from `citation_mining.local_ref_id` to
+`global_ref_id` and left the sentinel testing the *old* key:
+`AND (cm.local_ref_id IS NULL OR ...)`. It reads green only while every mining row
+happens to carry a local label — and `log_mining` LOOKS THAT LABEL UP from
+`source_slug_links`, writing NULL when no link exists. A mined source with a NULL
+label would have reported UNMINED: the exact false negative PD-0 was raised to remove,
+sitting one clause below the line PD-0 fixed. Now tests `cm.global_ref_id`.
+
+**FIX 2 — `scripts/audit/research_protocol_audit.py` CHECK 8, repointed.**
+It read `evidence_sources.search_queries_used` — the copy — to decide whether a
+verified citation had a logged query. Repointed to `v_source_admission`, which is the
+cross-stage pointer (evidence-collection ← research) and the thing the ruling says to
+read. Verified before retirement so the repoint could be proved independently:
+`[CHECK 8] Verified citations lacking search_queries_used: 0`.
+
+**FIX 3 — `skills/adversarial-research_SKILL.md`, the last live writer retired.**
+The skill instructed `UPDATE evidence_sources SET search_queries_used`. That is a
+research-stage fact being written onto an evidence-collection row — the copy the
+ruling forbids, created by instruction. Removed; grep confirms zero live writers.
+
+**Then the migration**, `data_20260825215123_...sql`, emitted and applied through the
+sanctioned path (emit_data_migration → migrate_db → --rebuild). It NULLs
+`evidence_sources.search_queries_used` (10 → 0) and `citation_mining.doi` (10 → 0).
+
+Measured across the migration, and this is the whole point of it:
+
+| | before | after |
+|---|---|---|
+| `evidence_sources.search_queries_used` non-empty | 10 | **0** |
+| `citation_mining.doi` non-empty | 10 | **0** |
+| `v_source_admission.query_text` non-empty (THE POINTER) | 10 | **10** |
+| `cm → es` doi reachable by join (THE POINTER) | 10 | **10** |
+
+Nothing was lost. Both facts are still answerable; they are answered once, from the
+stage that owns them.
+
+**Neither column is dropped and neither can be.** Committed data migrations INSERT
+both, and migrations replay from the baseline, so a DROP would replay *before* the
+INSERT that names it and break `migration_reproducibility` — the trap migration 062
+sprang. Writer-retired, reader-retired, NULLed forward. Tombstones.
+
+**`citation_mining.local_ref_id` is deliberately untouched.** It is also a copy, but
+it still has live readers (the cm2 legacy fallback in `citation_mining_completeness.py`,
+and a display string). Retiring a column whose readers still exist is the sweep failure
+this series keeps paying for — CLAUDE.md rule 4, migration 064's whole reason for
+existing. It waits until they are repointed.
+
+**One collateral fix.** `retired_vocabulary` went red on RV-017 — not because any live
+surface used `db_meta.schema_version`, but because the owner's directive to commit
+scratchpads landed a verbatim capture of `run_checks.py --all` in
+`scratchpad/**/baseline/`, and the check read *its own printed output* as an
+occurrence. Same class as `scratchpad/**/commands.jsonl`, which was exempted 2026-08-24
+for exactly the same reason. Exempted; count returns to the baseline 65, so the
+exemption removed the one occurrence I introduced and nothing else.

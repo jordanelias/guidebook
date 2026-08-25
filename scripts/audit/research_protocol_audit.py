@@ -100,11 +100,23 @@ def audit():
         AND (prior_expectation IS NULL OR prior_expectation = '')
     """).fetchall()
 
-    # CHECK 8 (added 2026-05-10): Verified citations lacking search_queries_used.
+    # CHECK 8 (added 2026-05-10; REPOINTED 2026-08-25).
+    #
+    # The query that surfaced a source is a RESEARCH-stage fact. It was being read off
+    # evidence_sources.search_queries_used -- a research fact copied onto an evidence
+    # row, which is the §2.2 violation the stage ruling forbids. The pointer is
+    # v_source_admission, which reaches search_executions.query_text through
+    # search_admissions on the shared reference id.
+    #
+    # Verified before repointing: all 10 rows holding the copy are reachable through
+    # the pointer WITH a non-empty query_text, so this check loses no subject.
     verified_no_queries = db.execute("""
-        SELECT ref_id, pub_title AS title FROM evidence_sources
-        WHERE verification_status = 'VERIFIED'
-        AND (search_queries_used IS NULL OR search_queries_used = '')
+        SELECT e.ref_id, e.pub_title AS title
+        FROM evidence_sources e
+        LEFT JOIN v_source_admission v ON v.ref_id = e.ref_id
+        WHERE e.verification_status = 'VERIFIED'
+        GROUP BY e.ref_id
+        HAVING COALESCE(MAX(NULLIF(TRIM(v.query_text), '')), '') = ''
     """).fetchall()
 
     # CHECK 9 (added 2026-05-10): search_languages with status=SEARCHED but no

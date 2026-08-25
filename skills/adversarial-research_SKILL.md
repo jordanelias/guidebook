@@ -48,7 +48,13 @@ State what you expected to find before searching, and why. If the search result 
 
 ### 2. Search queries used
 ```sql
-UPDATE evidence_sources SET search_queries_used = ? WHERE ref_id = ?;
+-- RETIRED 2026-08-25. Do NOT write evidence_sources.search_queries_used.
+-- The query that surfaced a source is a RESEARCH-stage fact; writing it onto an
+-- EVIDENCE row copies a fact across a stage boundary, which the owner's ruling of
+-- 2026-08-25 forbids. It is already recorded once, verbatim, in
+-- search_executions.query_text (rule R8 logs every query before screening), and is
+-- reached from a ref_id through v_source_admission.query_text.
+-- Log the search, not the copy:  python3 scripts/db.py log-search ...
 ```
 List the queries you actually ran. This lets the reviewer audit whether queries were genuinely adversarial.
 
@@ -133,7 +139,7 @@ Good (protocol-compliant):
 ```
 Gap closure: "Door force ≤22N supported by ISO 21542; PARTIAL match for RA flare via Björk 1997"
 prior_expectation: "Expected 22N to be well-supported because ADA/ISO/BS converge"
-search_queries_used: "Chaffin grip force rheumatoid arthritis door handle 22N; Björk grip force RA"
+search_queries_used: RETIRED — read v_source_admission.query_text instead (2026-08-25)
 named_dissenter: "Björk et al. 1997 (PMID 9021280) — N=20 women with RA, grip force during pain. Small sample, women only, does not directly test 22N threshold."
 confidence_interval: "40-55%"
 shift_conditions: "Drops to 25-35% if specific Chaffin et al. 2006 citation cannot be verified. Rises to 65-80% if Björk 1997 successor studies confirm 22N within RA flare capacity."
