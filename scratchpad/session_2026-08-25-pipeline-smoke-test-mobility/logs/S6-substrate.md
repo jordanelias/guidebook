@@ -1194,3 +1194,115 @@ FINDING   : Of the facts swept, the JURISDICTION vocabulary (8a) is the one genu
             (jurisdictional_values.jurisdiction has no enforcement AT ALL, which is a
             different defect than "two disagreeing enforcements").
 
+
+---
+
+## S6 SUMMARY
+
+### (a) Verdict table — every hook/script/gate invoked
+
+| # | Invocation | Verdict | Note |
+|---|---|---|---|
+| 1 | `.claude/hooks/ensure-deps.sh` | PASS | single dep-list home confirmed, no-op when deps present |
+| 2 | `requirements.txt` vs registry `batteries:` | FAIL (drift) | latent, not currently executed |
+| 3 | `run_checks.py --all --explain` | FAIL (1 blocking, 5 advisory) | CLAUDE.md's own table is stale within-day (36 commits) |
+| 4 | `db.py add-locator` | PASS | REF-00971 written to scratch |
+| 5 | `db.py add-jurisdictional-value` | PASS | jv_id=110 written to scratch; **exposed 8a/2f gap** |
+| 6 | `emit_batch_sql.py` (real batch) | PASS | 2 inserts captured |
+| 7 | `emit_batch_sql.py` (UPDATE probe) | PASS | column-level diff confirmed empirically |
+| 8 | `emit_batch_sql.py` (DELETE probe) | PASS (refuses by design) | exit 1, no partial output |
+| 9 | `emit_data_migration.py` (bare-stem session) | PASS | accepted silently |
+| 10 | `emit_data_migration.py` (.md session) | PASS | accepted silently, cosmetic header diff only |
+| 11 | `migrate_db.py` (throwaway apply) | PASS | all 3 rows + data_migrations entry landed |
+| 12 | `migrate_db.py --rebuild` (raw sha256) | METHODOLOGICALLY WRONG TEST | SQLite isn't byte-stable; superseded by #13 |
+| 13 | `audit/migration_reproducibility.py` [+ `--deep`] | PASS | 7/7 and 66/66 (2 exempt) |
+| 14 | `run_checks.py --list` | PASS | 63 active + 4 quarantined |
+| 15 | `run_checks.py --selftest` | PASS | C1-C8 all green; C7 confirms clean stage-id rename |
+| 16 | `run_checks.py --changed-from origin/main --explain` | PASS (18 green, 2 advisory fail) | does NOT run selftest — confirmed in code |
+| 17 | `scripts/preflight.sh` | PASS | DOES run selftest first — closes the §5 gap |
+| 18 | CI workflow enumeration (4 files) | n/a (survey) | 1 push-only job (commit-msg) + 2 whole workflows never PR/push-triggered |
+| 19 | `SessionStart` hook ordering | PASS | contract at index 0, ensure-deps appended |
+| 20 | `record-command.py` session resolution | PASS (code matches claim) | reads `sessions/LATEST` only, confirmed |
+| 21 | sessions/LATEST staleness | **FAIL — relocated, not fixed** | 664 lines misfiled, live in this very session |
+| 22 | success-cannot-be-proven claim | PASS (reproduced live) | traceback test: exit/is_error null, stderr_bytes 0 |
+| 23 | `research_contract_hook.py` ordering trap + `research_contract_sync` | PASS | EXAMINED: 51 |
+| 24 | `Stop` hook (`research_batch_dod.py --all`) | PASS | 15/15 rules, corpus-wide |
+| 25 | `adherence_log_audit.py` | PASS | changed:7, attestations:1 |
+| 26 | `claims_docket.py check` | PASS | EXAMINED: 68 |
+| 27 | `doctrine_recheck.py` (bare) | **FAIL — 3 ERRORS** | drift pass only reachable unregistered |
+| 28 | `doctrine_recheck.py --cross-ref` (registered form) | PASS | never runs the pass that failed above |
+| 29 | `decision_capture.py` | PASS (exit 0) despite 56 WARNINGS | C9: 51/61 DRs orphaned from register |
+| 30 | `pipeline_contract_audit.py` | PASS (14V/5I/0B) | **1 of the 14 is a false VERIFIABLE** (7b) |
+| 31 | `graph_audit.py` | PASS | EXAMINED: 825 |
+| 32 | `code_currency_audit.py` | PASS standalone | but QUARANTINED in registry — status conflict noted |
+| 33 | `retired_vocabulary_audit.py` | FAIL | 66 occurrences, EXAMINED: 26 (= registered `retired_vocabulary`) |
+| 34 | `db_path_env_audit.py` | PASS | 43/45 + 2 named exemptions |
+| 35 | `readonly_db_open_audit.py` | PASS | 32/32 |
+| 36 | `register_integrity_check.py` | PASS | 15×6 cells |
+| 37 | `validate_pydantic_schemas.py` | advisory-FAIL | 245 drift findings, informational by design |
+| 38 | `audit_adversarial_use.py` | PASS | EXAMINED: 9, 1 pre-launch-consistent warning |
+| 39 | `audit_consolidator.py` | n/a (not a gate) | E-08 dry-run: "Pipeline steps complete: None" |
+| 40 | `check_commit_msg.py` [+ `commit_gate.py`] | PASS | selftest 9/9, live HEAD PASS, no dangling doctrine-token caller |
+| 41 | attestation vs `schemas/attestation.schema.json` (`jsonschema`) | PASS (valid) / PASS (rejects broken copy) | vestigial `doctrine_sha` field noted |
+| 42 | attestation free-text read for meaning? | **ABSENT, confirmed** | only length/similarity/structural checks exist |
+| 43 | DB substrate readiness (11 mobility items) | PARTIAL | see (d) below |
+| 44 | Rule-5 sweep | 1 severe finding (8a), rest clean or latent | see (d) below |
+
+### (b) Vacuous-gate census (EXAMINED counts, from the `--all` run, §1c)
+NOTHING-IN-SCOPE (8 of 63, ran clean, examined nothing): `validate_evidence_state`,
+`validate_verification_consistency`, `attestation_schema`, `attestation_verdict`,
+`population_integrity_audit`, `pmp_audit`, `reasoning_doc_citations_audit`,
+`check_rendered_docs`. **BLOCKING and vacuous (4)**: `validate_evidence_state`,
+`validate_verification_consistency`, `attestation_schema`, `check_rendered_docs` — these
+four gate nothing on the current tree state and would pass identically on a mobility batch
+that changed nothing they examine. Separately, `decision_capture` and `doctrine_recheck
+--cross-ref` are NOT vacuous by the EXAMINED-count test (both print real subject counts)
+but are **narrower than their own name promises** — §7a is the sharper version of this
+same failure mode: a check that examines real subjects but the WRONG subset of them.
+`attestation_presence` is instructively neither reliably vacuous nor reliably non-vacuous
+in this shared worktree — its scope is exactly "the most recent commit," which changes
+underneath any two consecutive runs (§3d) — record it as VOLATILE, not vacuous.
+
+### (c) Pipeline-contract coverage map (VERIFIABLE / INCOMPLETE / BROKEN), corrected
+See §7c for the full stage table. Headline, corrected for the file-granularity false
+positive found in §7b: **13 VERIFIABLE, 6 INCOMPLETE, 0 BROKEN, out of 19 declared
+criteria** (`pipeline_contract_audit.py` self-reports 14/5/0 before correction).
+Uncovered criteria: `evidence-collection/discovery-provenance`,
+`judgment/derivation-handshake`, `judgment/convergence-independence`,
+`synthesis/opus-routing`, `render/render-freshness`, `cross_stage/attestation-doctrine-binding`
+(the last one only visible after correcting `pipeline_contract_audit.py`'s own blind spot).
+
+### (d) Ranked blockers for a real mobility batch, file:line
+1. **`schemas/enums.py:140-178` `JurisdictionCode` is missing UN, ES, PT, FI** — 4 of the
+   batch's own 20 named jurisdictions cannot be validly represented in the project's one
+   canonical jurisdiction vocabulary. Highest-severity finding in this smoke test (§8a).
+2. **`scripts/db.py:2363-2400` `insert_jurisdictional_value` never calls a vocabulary check
+   on `jurisdiction`** — compounds #1: even the 4 missing codes, or a stray `GB`, would
+   write silently with zero refusal anywhere in the write path (§2f).
+3. **No `items` row for handrails** — verified ABSENT, not assumed (§9a). Blocks any
+   handrail evidence from being filed at all.
+4. **`items.bpc_source_slug @ 'B-08'` is NULL, and `term_item_links` is empty for both
+   `B-08` and `E-11`** — two mobility-adjacent items with no slug and/or no terminology
+   coverage to search against (§9b/9d).
+5. **`scripts/doctrine_recheck.py:332-338` — the registered `--cross-ref` invocation never
+   runs drift detection (pass 2.4)**, which independently caught 3 real missing governance
+   docs when run in its own default mode (§7a). Not mobility-specific, but a real,
+   currently-uncaught doctrinal-loss detector sitting unused.
+6. **`lang_jur_map` has no rows for `UN` or `ISO`** (§9c) — 2 of bucket 1's 10
+   jurisdictions have no language-authority guidance for a researcher to consult.
+7. **`.claude/hooks/record-command.py:127-129` / `sessions/LATEST`** — the provenance
+   pointer is only updated at session close-out, not session start, so a batch's own
+   opening commands can be misfiled into a prior session's directory (§6c) — process risk,
+   not a data-correctness risk, but worth the batch author's awareness.
+
+### (e) Canonical DB integrity
+`sha256sum data/guidebook.db` recorded at run start: `30a106692ab4110fe4e2082018eb256a325b2884d5740d3f62445b52c07dceaf`.
+Re-verified at run end (after the full write-path exercise, 3 full-battery check runs, and
+every audit/hook invocation above): **UNCHANGED — identical hash.**
+`git status --short scripts/migrations/ data/guidebook.db`: clean, no stray files. All
+migration files emitted during §2 were written only under `$SMOKE` and deleted after use
+(§2i); none ever touched the tracked `scripts/migrations/` directory. No tracked file was
+edited by S6 outside this log.
+
+Run ended: 2026-08-25 (see individual entry timestamps for exact times; commands spanned
+~18:19–18:40 UTC per embedded jsonl/attestation timestamps).
