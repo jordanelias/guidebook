@@ -904,3 +904,148 @@ NOTE      : **Answers the item-6 headline question directly: I1 (and I2-I5) CANN
              instance of failure mode (a) than the fully silent ones elsewhere in this log,
              specifically because the author already flagged it in-code — but the flag never
              reached the production code path, only the selftest path.
+
+## 7. Attestations — the synthesis-path tax
+
+### 7a. Mechanism check — how presence/schema actually scope their subject
+INVOKED   : `python3 scripts/audit/adherence_log_audit.py --help`; source read
+             `scripts/audit/adherence_log_audit.py:118-129` (`_changed_files`,
+             `_attestation_path_for`), `:178-186` (`check_0_presence`)
+STAGE     : synthesis (attestation gate spans synthesis + governance kinds)
+EXIT      : n/a
+READS     : scripts/audit/adherence_log_audit.py
+WRITES    : NONE
+EXAMINED  : 1 script
+OUTPUT    : `_changed_files(base, head)` runs `git diff --name-only base head` (default
+             `base=HEAD~1`, `head=HEAD`). There is NO working-tree/untracked-file mode — the
+             checker can only ever see a COMMITTED diff between two refs. `check_0_presence`
+             is genuine backfill-on-touch: a synthesis-path file in the changeset needs a
+             matching `attestations/<slug>.json` EITHER also in the changeset OR already
+             present on disk.
+FINDING   : Confirmed mechanism. Because the protocol forbids committing in this shared
+             worktree, I could not create a NEW commit to trip presence "live" the way the
+             task suggested (dropping a throwaway file under a protected path outside the
+             repo does nothing — the checker never looks at the filesystem outside `git diff`
+             between two refs, so an out-of-repo scratch file is invisible to it by
+             construction, not by oversight). Instead I exercised the real mechanism two ways:
+             (i) against a REAL historical commit boundary that legitimately touched a
+             synthesis-path file (7b), and (ii) by validating the on-disk attestation corpus
+             directly with `jsonschema` (7c), and (iii) by running the live registry
+             invocation against the actual current HEAD (7d) — which produced a live,
+             unprompted instance of exactly the failure mode the task is testing for.
+LOCATION  : scripts/audit/adherence_log_audit.py:118-129, :178-186
+
+### 7b. Real historical exercise: presence + schema against a genuine synthesis-path commit
+INVOKED   : `python3 scripts/audit/adherence_log_audit.py --check presence --base
+             057aff0~1 --head 057aff0` and `--check schema` (same range) — commit 057aff0 is
+             a real prior commit ("governance: ACT 3 — the write path is one sentence now")
+             that touched a `sessions/`-class synthesis path together with its attestation
+STAGE     : synthesis
+EXIT      : 0 (both)   RUNTIME: <1s each
+READS     : git diff 057aff0~1..057aff0 (4 changed files); schemas/attestation.schema.json
+WRITES    : NONE
+EXAMINED  : 1 (printed explicitly: "changed files: 4; attestations: 1; synthesis: 1" then
+             "EXAMINED: 1")
+OUTPUT    : |
+  adherence_log_audit -- check_filter=presence
+  changed files: 4; attestations: 1; synthesis: 1
+  EXAMINED: 1
+  No issues.
+  --
+  adherence_log_audit -- check_filter=schema
+  EXAMINED: 1
+  No issues.
+FINDING   : PASS, and genuinely non-vacuous (EXAMINED:1, real subject, real pass) — this is
+             the checker working correctly on a real commit boundary that had a real subject.
+LOCATION  : scripts/audit/adherence_log_audit.py check_0_presence / check_1_schema
+
+### 7c. Whole-corpus schema validation with `jsonschema` directly (bypassing the diff-scoping)
+INVOKED   : ad-hoc Python: `jsonschema.validate(instance=data, schema=schema)` over every
+             file matching `attestations/*.json` (96 files on disk)
+STAGE     : synthesis
+EXIT      : 0 (script)
+READS     : schemas/attestation.schema.json; all 96 files under attestations/
+WRITES    : NONE
+EXAMINED  : 96 (full corpus, not diff-scoped)
+OUTPUT    : `96 attestation files on disk` / `valid=96 invalid=0`
+FINDING   : PASS — genuinely examined, not vacuous. Every attestation currently on disk is
+             schema-valid. (This does NOT mean every attestation's CONTENT is honest — see
+             7e below on whether the gate reads free text for meaning.)
+LOCATION  : schemas/attestation.schema.json; attestations/*.json (96 files)
+
+### 7d. Live registry invocation against the ACTUAL current HEAD — caught the failure mode live
+INVOKED   : `python3 scripts/run_checks.py --battery attestation --kinds synthesis,governance
+             --explain` (no historical range — the real, current state of this repo, right
+             now); repeated with `--changed-from HEAD~10` to test whether widening the
+             nominal branch scope changes anything
+STAGE     : synthesis + governance
+EXIT      : 0 (both invocations)   RUNTIME: <1s
+READS     : git diff HEAD~1..HEAD (the actual last real commit in this repo, a session-log
+             commit that did not touch a synthesis path)
+WRITES    : NONE
+EXAMINED  : attestation_presence: 0 (self-reported: "[NONE] attestation_presence")
+OUTPUT    : |
+  [NONE] attestation_presence                      0.0s
+  [PASS] attestation_schema                        0.1s
+  [PASS] attestation_evidence                      0.1s  (advisory)
+  [PASS] attestation_verdict                       0.0s  (informational)
+  NOTHING-IN-SCOPE (1): attestation_presence
+    These ran clean and examined nothing. They are not evidence of anything.
+    BLOCKING and vacuous (1): attestation_presence — a gate that examined nothing gated nothing.
+  RESULT: PASS — 3 check(s) green, 1 nothing-in-scope
+FINDING   : **LIVE, UNPROMPTED INSTANCE of CLAUDE.md §2(a).** Right now, on the actual repo
+             HEAD, the BLOCKING `attestation_presence` check is vacuous — and `run_checks.py`
+             itself says so in its own output, unprompted, which is exactly the self-aware
+             behavior CLAUDE.md §2(a) calls for ("Every check must print EXAMINED: <n>;
+             scripts/run_checks.py reports zero-subject passes as NOTHING-IN-SCOPE"). This is
+             the framework working as designed — the vacuity is detected and labeled, not
+             hidden. **BUT**: passing `--changed-from HEAD~10` (asking the runner to reason
+             about a 10-commit range) produced the IDENTICAL "[NONE] 0.0s" result — confirming
+             that `adherence_log_audit.py`'s `--base`/`--head` are never populated from
+             `run_checks.py`'s `--changed-from` at all (the registry `cmd:` line hardcodes
+             `[python3, scripts/audit/adherence_log_audit.py, --check, presence]` with no
+             `--base`/`--head` args — scripts/db.py... no, `governance/check-registry.yaml:900`).
+             So the check's scope is **always HEAD~1..HEAD, regardless of what range is
+             actually being gated.** A branch with 10 commits, where a synthesis-path file was
+             touched in commit N-3 without an attestation but the tip commit N is unrelated
+             (e.g. a trailing "fix typo" commit), would report `attestation_presence` as
+             NOTHING-IN-SCOPE at merge time even though the branch as a whole introduced an
+             un-attested synthesis-path change.
+FINDING   : VACUOUS (live, on real HEAD) + a real scope-decoupling bug (--changed-from ignored)
+LOCATION  : governance/check-registry.yaml:900 (`cmd:` has no `--base`/`--head`);
+             scripts/audit/adherence_log_audit.py:568-574 (`--base`/`--head` default to
+             `HEAD~1`/`HEAD` and are never wired to run_checks.py's `--changed-from`)
+NOTE      : For the mobility batch: **if the batch's PR bundles multiple commits, only the
+             single tip commit is ever checked for attestation presence** — an earlier commit
+             in the same PR that touches `references/bpc-reasoning/` without pairing an
+             attestation will not be caught by this blocking gate unless it happens to also be
+             the last commit. CI's actual push-time behavior should be verified separately
+             (this smoke test only confirms the local `run_checks.py`/`adherence_log_audit.py`
+             behavior), but the registry `cmd:` line is what CI runs too, so the same
+             decoupling applies there.
+
+### 7e. Does the gate read free text for meaning? — confirmed NO, matching CLAUDE.md's own claim
+INVOKED   : source read of `check_1_schema` (7a excerpt above) and `check_8`/verdict-evidence
+             logic already summarized in the script's own docstring (item 2/8 of the
+             docstring, read in 7a)
+STAGE     : synthesis
+EXIT      : n/a
+READS     : scripts/audit/adherence_log_audit.py (schema check = JSON Schema structural
+             validation only: type, pattern, required, minLength — never semantic content);
+             schemas/attestation.schema.json (already read in item 2f — `bias_direction` and
+             `independent_reviewer_counterclaim` are `minLength: 30` STRING LENGTH checks,
+             not content checks)
+WRITES    : NONE
+EXAMINED  : 1 schema + 1 script
+FINDING   : CONFIRMED — no gate reads attestation free text for meaning. `bias_direction`,
+             `independent_reviewer_counterclaim`, and `deviations[].reason` are all validated
+             for PRESENCE and MINIMUM LENGTH only (`minLength: 30`, `minLength: 20`). Check 6
+             in the docstring (Levenshtein-ratio boilerplate detection against the prior 10
+             attestations) is the closest thing to a semantic check, but it only detects
+             TEXTUAL SIMILARITY to past entries, not whether the current entry's content is
+             TRUE — a fabricated-but-novel bias_direction/counterclaim (never before written
+             verbatim) passes cleanly, exactly matching CLAUDE.md §2's own admission: "each
+             asked whether the author fields were *populated*, never whether they were *true*."
+LOCATION  : schemas/attestation.schema.json (bias_direction/independent_reviewer_counterclaim
+             — minLength only); scripts/audit/adherence_log_audit.py docstring item 6
+             (Levenshtein similarity, not truth)

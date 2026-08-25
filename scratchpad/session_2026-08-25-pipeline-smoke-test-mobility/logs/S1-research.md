@@ -904,3 +904,97 @@ NOTE      : Good example of honest self-flagging; no action needed beyond what t
   `add-gap`, `next-id connections`, `update-connection --status CONSUMED`) all check out against
   the real schema and CLI.
 
+
+## 9. Stage gates
+
+### 9.1 `scripts/audit/research_protocol_audit.py`
+INVOKED   : `python3 scripts/audit/research_protocol_audit.py` (no args; canonical DB, read-only)
+EXIT      : 0
+OUTPUT    : 9 checks, all `0` issues; `EXAMINED: 40`; "Audit clean."
+EXAMINED  : 40 (= 5 gaps + 10 evidence_sources + 25 evidence_population_match + 0 search_languages,
+  computed live from `COUNT(*)` on each table at run time — confirmed by independently querying
+  all four tables: 5/10/25/0 = 40, matches exactly)
+FINDING   : PASS — genuinely non-vacuous (40 real rows, not 0), and CHECK 7/8 (verified citations
+  lacking `prior_expectation`/`search_queries_used`) both read `0` **because all 10 VERIFIED
+  sources already have `prior_expectation` populated** — confirmed by direct query
+  (`SELECT COUNT(*) FROM evidence_sources WHERE verification_status='VERIFIED' AND
+  prior_expectation IS NOT NULL AND prior_expectation!=''` = 10 of 10). This corroborates §8.1: the
+  only way those 10 rows got `prior_expectation` populated is the hand-SQL path the skill
+  literally teaches, since `db.py` has no writer for that column — the audit is clean because
+  someone already did the workaround the skill instructs, not because a CLI made it unnecessary.
+LOCATION  : minor stale-comment defect at scripts/audit/research_protocol_audit.py:181-186 — the
+  comment justifying the EXAMINED formula says "every one of them is presently empty (2026-08-06
+  clean-room reset), so no combination could read as anything but zero," which is no longer true:
+  `gaps`=5, `evidence_sources`=10, `evidence_population_match`=25 are all populated today. The
+  CODE still computes EXAMINED correctly by live `COUNT(*)` (confirmed: 40 matches), so this is a
+  stale-comment-only defect, not a functional one — flagged because CLAUDE.md §2(b) treats
+  drifted documentation of DB state as the same failure class as drifted prose.
+NOTE      : Zero of the 40 examined rows touch any mobility slug (all 10 evidence_sources / 25
+  matches / 5 gaps are room-acoustic-performance, per §5.0/§5.4) — this gate will need a genuine
+  re-run once mobility evidence exists; today it says nothing about mobility readiness.
+
+### 9.2 `scripts/audit/pmp_audit.py`
+INVOKED   : `python3 scripts/audit/pmp_audit.py`
+EXIT      : 0
+OUTPUT    : CHECKs 1-6 all `0`; CHECK 7 explicitly SKIPPED with a named reason ("items table does
+  not carry spec_value_origin; drift detection requires reasoning-doc parsing (future work)");
+  `ISSUES: 0` / `EXAMINED: 0`
+EXAMINED  : **0** — printed explicitly, honestly, and confirmed real: `spec_value_probes` has 0
+  rows on the canonical DB (consistent with §8.2's finding that the table has no CLI writer and,
+  unlike `prior_expectation`, nobody appears to have hand-SQL'd it either).
+FINDING   : VACUOUS — a textbook example of CLAUDE.md §2(a)'s failure mode (a), except caught
+  honestly by the script itself rather than hidden: it prints `EXAMINED: 0` plainly instead of
+  a bare "PASS". It does not, however, escalate to a distinct NOTHING-IN-SCOPE verdict the way
+  `citation_mining_completeness.py` does (§5.5) — exit code is still 0, same as a real pass. Per
+  CLAUDE.md's own text, `scripts/run_checks.py` is supposed to be the layer that "reports
+  zero-subject passes as NOTHING-IN-SCOPE and escalates blocking-and-vacuous ones" — I did not
+  independently verify `run_checks.py`'s registry-level handling of this specific script in this
+  smoke test (out of the research-stage scope PROTOCOL assigned me); noting it as a gap between
+  what the individual script prints and what a reader would need to not mistake this for a
+  meaningful pass.
+LOCATION  : scripts/audit/pmp_audit.py CHECK-count summation (0 subjects); root cause is §8.2's
+  ABSENT `spec_value_probes` writer — this gate is vacuous because nothing can write to the table
+  it audits.
+NOTE      : Directly relevant to the mobility batch: E-03 (ramp gradient) and E-08 (corridor width)
+  are exactly the numeric-spec mobility items PMP is meant to walk. A mobility batch running PMP
+  today would get the same `EXAMINED: 0` "clean" result — not because mobility specs have been
+  walked and passed, but because the walk mechanism has never been exercised by anyone, on any
+  item, at all.
+
+### 9.3 `scripts/audit/research_batch_dod.py --session session_2026-08-25-pipeline-smoke-test-mobility`
+INVOKED   : as above (canonical DB — this session has admitted nothing to the canonical DB, so
+  this is a legitimate read-only probe of "what would R1-R15 say about a batch that has done
+  nothing yet")
+EXIT      : 0 (informational; script does not exit nonzero on NON-COMPLIANT — confirmed by the
+  exit code printed despite the "NON-COMPLIANT: 3 rule(s) unmet" verdict)
+OUTPUT    : R1-R8, R10-R15 all PASS (all vacuously — "0 searches", "0 candidates", "0 zero-yield
+  searches", etc., since this session hasn't logged anything against the canonical DB); **R1 FAILS
+  outright** ("NO Co-1/Co-2 pass... Co-1 is CO-PRIMARY with T1 (CRPD Art 4.3)"); **R9a and R9b both
+  report `NOTHING IN SCOPE`** explicitly (not PASS) because the session admitted no sources.
+EXAMINED  : 0 for nearly every rule (correctly unstated as a blanket number — each rule states its
+  own subject count inline, e.g. "0 searches targeted co1/co2 and 0 co1/co2 sources admitted")
+FINDING   : PASS (tool works correctly) — and this is a good demonstration of the CLAUDE.md §2(a)
+  discipline done right: most rules read PASS-with-zero-subjects (arguably should be
+  NOTHING-IN-SCOPE too, same critique as 9.2), but **R9a/R9b explicitly print "NOTHING IN SCOPE"
+  rather than PASS when their subject count is 0** — proving the codebase knows how to make this
+  distinction (see the "SUBJECT COUNT FIRST" comment at scripts/audit/research_batch_dod.py:463-467
+  documenting exactly this fix, dated 2026-08-23) and simply has not applied it uniformly to every
+  rule in the same script.
+NOTE      : R1's FAIL is a real, correct, useful finding for planning the mobility batch: **the
+  batch MUST include a Co-1/Co-2 lived-experience retrieval pass from its first session**, per
+  CRPD Art 4.3 co-primacy — it is not optional or deferrable to a later pass.
+
+### 9.4 `scripts/audit/research_batch_dod.py --all`
+INVOKED   : as above (canonical DB, all sessions)
+EXIT      : 0
+OUTPUT    : R1-R10, R12-R15 all PASS with real, non-zero subject counts (e.g. "R4: 25 population
+  linkages produced across 28 searches"; "R7: 60 candidates for 431 screened; 2 harm/failure
+  flagged"); **R9a: PASS — 10 admitted DOI(s) checked against the stash; none held under a
+  different ref_id**; **R9b: PASS — 10 admitted ref_id(s) checked against the stash across 6
+  identifier types; no collision**; R11 shown separately as `~ R11: 856 (baseline 856) —
+  INHERITED DEBT, not a regression` (a third status, neither PASS nor FAIL, for a pre-existing
+  count that this run neither fixed nor worsened); overall verdict **COMPLIANT**.
+EXAMINED  : stated per-rule inline (see above); not vacuous — real counts throughout.
+FINDING   : PASS
+NOTE      : See §10 below — this run is the direct evidence for the CLAUDE.md OD-5 claim check.
+
