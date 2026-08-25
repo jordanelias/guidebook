@@ -7,8 +7,8 @@ attention degrades as context fills. This runs at the HARNESS level, so the
 record exists whether or not the session remembers to make one.
 
 Appends one JSON line per Bash call to scratchpad/<session>/commands.jsonl.
-The session stem comes from .claude/session (bare stem, as the DB stores it),
-falling back to the harness session_id.
+The session stem is DERIVED (see `open_session` below), never read from a
+pointer that answers a different question.
 
 Fails silently and always exits 0 by design: provenance capture must never block
 or fail the work it is recording. A missing line is a gap in the record; a
@@ -21,6 +21,66 @@ see workplan/2026-08-20-adversarial-adjudication-a18-aut.md §4.
 """
 
 import sys,json,os,hashlib,datetime,pathlib
+
+
+def open_session(root):
+    """Stem of the session running NOW, derived. '' when it cannot be told.
+
+    THE 2026-08-23 FIX WAS WRONG AND THIS RECORDS WHY, because the wrong version
+    is the plausible one and will be reached for again.
+
+    Until 2026-08-23 this hook read `.claude/session`. That pointer went stale and
+    filed one session's commands under the previous session's scratchpad. The fix
+    swapped it for `sessions/LATEST` on the ground that LATEST is "the single home
+    for this fact". IT IS NOT. LATEST answers *which session record is most recent*
+    and is moved BY THE CLOSE-OUT RITUAL — so for the entire life of a session it
+    names the PREVIOUS one. Both pointers were stale in exactly the same way and
+    for exactly the same reason; swapping which stale pointer you read changed
+    nothing. MEASURED 2026-08-25, in the file the fix was supposed to protect:
+
+        scratchpad/session_2026-08-23-research-batch-03-forward-mining/commands.jsonl
+            5 lines dated 2026-08-23   <- its own session
+          405 lines dated 2026-08-24   <- session_2026-08-24-pointer-discipline
+          274 lines dated 2026-08-25   <- session_2026-08-25-rulings-...-sweep
+
+    Three sessions, one file, named after the earliest. The two later sessions have
+    scratchpad directories of their own and NO commands.jsonl in them. That defeats
+    the owner directive the whole hook exists to serve (2026-08-20, "the scratchpad
+    needs to be getting saved always for provenance"; 2026-08-25, "so that we
+    actually have a surface to review") -- a surface filed under another session's
+    name is not a review surface, and it corrupts that session's frozen record too.
+
+    So DERIVE it instead, from a fact already stated once, with no new pointer:
+
+        A SESSION IS CLOSED EXACTLY WHEN ITS RECORD sessions/<stem>.md EXISTS.
+
+    A scratchpad/session_* directory with no record behind it is therefore OPEN,
+    and the newest open one is the session running now (stems are date-prefixed by
+    convention, so lexical order is chronological). Verified against the same three
+    sessions: 08-23 has a record and is closed; 08-24 and 08-25 have none, which is
+    exactly why their lines had nowhere correct to go.
+
+    LIMIT, stated rather than discovered later: stems are date-prefixed, so lexical
+    order is chronological ACROSS days but arbitrary WITHIN one. Two sessions opened
+    on the same UTC day and both left un-closed tie on alphabet. That case resolves
+    by closing sessions out, not by making this cleverer -- 08-21-reasoning-doc-
+    digestion has been OPEN since 2026-08-21 for exactly that want of a close-out.
+
+    Returning '' rather than guessing is deliberate. The caller then files under the
+    harness session id -- a visibly foreign directory name. A WRONG ANSWER MUST BE
+    LOUD. Silently appending to a closed session's log is the failure this function
+    exists to end, and it stayed invisible for three sessions precisely because it
+    produced a plausible-looking file.
+    """
+    try:
+        pads = sorted(q.name for q in (root/"scratchpad").iterdir()
+                      if q.is_dir() and q.name.startswith("session_"))
+        openp = [n for n in pads if not (root/"sessions"/f"{n}.md").exists()]
+        return openp[-1] if openp else ""
+    except OSError:
+        return ""
+
+
 try:
     d=json.load(sys.stdin)
     ti=d.get("tool_input") or {}
@@ -115,26 +175,7 @@ try:
     else:
         out=str(tr or ""); ec=None; err=None; errout=""; interrupted=None
     root=pathlib.Path(os.environ.get("CLAUDE_PROJECT_DIR") or ".")
-    # SESSION STEM — sessions/LATEST is the single home for this fact.
-    #
-    # Until 2026-08-23 this read .claude/session, a SECOND pointer to the same
-    # fact that nothing else maintained. It went stale the moment a session
-    # closed without someone hand-editing it, and it did: every Bash call of
-    # session_2026-08-23 was filed under session_2026-08-22's scratchpad, because
-    # LATEST had been updated at close-out and .claude/session had not. The
-    # provenance record for a session landed in the previous session's directory.
-    #
-    # sessions/LATEST has six code readers (run_checks, test_db_integrity,
-    # context_map, retrieval_log, citation_mining_completeness, bootstrap) and is
-    # updated by the documented close-out ritual. .claude/session had exactly one
-    # reader: this hook. So the divergent copy is removed rather than synced -
-    # per references/project-standards.md RULE 2026-08-23, one fact, one home.
-    #
-    # LATEST carries the ".md" suffix; the DB and this path want the BARE STEM.
-    # Getting that wrong scopes a gate to nothing and it passes green (CLAUDE.md 7).
-    lf=root/"sessions"/"LATEST"
-    sess=(lf.read_text().strip().removesuffix(".md") if lf.exists()
-          else (d.get("session_id") or "unassigned"))
+    sess=open_session(root) or (d.get("session_id") or "unassigned")
     p=root/"scratchpad"/sess
     p.mkdir(parents=True,exist_ok=True)
     b=out.encode("utf-8","replace")

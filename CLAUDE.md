@@ -404,9 +404,18 @@ not block research: it is downstream of it.
   with `ls` or Glob. `grep -r` and `git grep` ignore it; Python tools see everything. Search those
   paths explicitly when doing history work. **Note the cost:** rendered search logs live under an
   ignored path, so the project's own research output is invisible to search.
-- **Two session pointers.** `sessions/LATEST` is continuity; `sessions/LATEST-RESEARCH` is the
-  subject of the blocking citation-mining gate. Update `LATEST` on any session close; update
-  `LATEST-RESEARCH` only when the session actually did research.
+- **Two session pointers, and NEITHER ONE NAMES THE SESSION YOU ARE IN.** `sessions/LATEST` is
+  continuity; `sessions/LATEST-RESEARCH` is the subject of the blocking citation-mining gate.
+  Update `LATEST` on any session close; update `LATEST-RESEARCH` only when the session actually
+  did research. **Because both move at CLOSE, both name the PREVIOUS session for the whole life
+  of the current one** — so anything that needs "the session running now" must DERIVE it, never
+  read a pointer. Measured 2026-08-25: `record-command.py` read `LATEST` and filed three
+  sessions' Bash logs into one file named after the earliest (5 lines + 405 + 274), while the two
+  later sessions' scratchpad directories held no log at all. That was itself a *fix*, applied
+  2026-08-23, for the identical failure under `.claude/session` — swapping one close-out pointer
+  for another changed which stale name was written, not that it was stale. The derivation that
+  works needs no new pointer: **a session is closed exactly when `sessions/<stem>.md` exists**, so
+  a `scratchpad/session_*` directory with no record behind it is open.
 - **Session ids: bare stem in the DB, `.md` in pointers and `emit_data_migration --session`.**
   Getting it wrong scopes a gate to nothing and it passes green.
 - **Don't hand-edit generated output** (`parts/`, `site/`, `audits/`, `tools/*.html`) — regenerate

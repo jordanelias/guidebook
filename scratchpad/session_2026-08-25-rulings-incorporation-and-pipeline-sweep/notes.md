@@ -458,9 +458,64 @@ this series keeps paying for — CLAUDE.md rule 4, migration 064's whole reason 
 existing. It waits until they are repointed.
 
 **One collateral fix.** `retired_vocabulary` went red on RV-017 — not because any live
-surface used `db_meta.schema_version`, but because the owner's directive to commit
+surface used `db_meta.schema_version`, but because the owner's directive to commit  [RETIRED-VOCAB-OK]
 scratchpads landed a verbatim capture of `run_checks.py --all` in
 `scratchpad/**/baseline/`, and the check read *its own printed output* as an
 occurrence. Same class as `scratchpad/**/commands.jsonl`, which was exempted 2026-08-24
 for exactly the same reason. Exempted; count returns to the baseline 65, so the
 exemption removed the one occurrence I introduced and nothing else.
+
+## F12 — the command log had been misfiling for three sessions
+
+Found from `git status` while staging F11, not from a check — nothing checks this.
+
+`.claude/hooks/record-command.py` exists to serve the owner directive of 2026-08-20
+("the scratchpad needs to be getting saved always for provenance") and, restated
+2026-08-25, "so that we actually have a surface to review". It derived the session stem
+from `sessions/LATEST`. **`LATEST` is moved by the CLOSE-OUT ritual, so for the entire
+life of a session it names the previous one.** Measured:
+
+```
+scratchpad/session_2026-08-23-research-batch-03-forward-mining/commands.jsonl
+    5 lines dated 2026-08-23   <- its own session
+  405 lines dated 2026-08-24   <- session_2026-08-24-pointer-discipline
+  274 lines dated 2026-08-25   <- this session
+```
+
+Three sessions, one file, named after the earliest. Both later sessions have scratchpad
+directories and neither had a `commands.jsonl` at all. The review surface the directive
+asked for did not exist, and the 08-23 session's frozen record was being appended to.
+
+**The part that matters: this WAS the fix.** On 2026-08-23 the hook was changed from
+`.claude/session` to `sessions/LATEST` precisely to stop one session's commands landing in
+the previous session's directory — the comment in the file narrates that failure in
+detail. Both pointers are moved at close-out. They were stale in the same way for the same
+reason, and swapping one for the other changed which stale name got written, not that a
+stale name got written. The diagnosis stopped at "this copy went stale" when the finding
+was "this pointer answers a different question."
+
+**Fixed by deriving, with no new pointer.** A session is closed exactly when its record
+`sessions/<stem>.md` exists; so a `scratchpad/session_*` directory with no record behind it
+is OPEN, and the newest open one is current. Checked retrospectively against all three
+misfiling sessions and it resolves each correctly. Stated limit: same-day open sessions tie
+on alphabet — which is a reason to close sessions out, not to add machinery.
+When it cannot tell, it files under the harness session id: **a wrong answer must be
+loud.** This one stayed invisible for three sessions because it produced a plausible file.
+
+**The 679 lines are NOT split back out.** The date column is a description, not a boundary:
+the 08-24 session ran straight through midnight UTC (lines 405–411 are one continuous run,
+23:56:44Z → 00:00:09Z), so carving by date would cut a session in half. Re-attributing a
+frozen log by inference is how a provenance record becomes a guess. Each affected session
+directory gets `commands-jsonl-WHERE.md` — a POINTER to where its lines are. Rule 5.
+
+Also corrected: the hook's own docstring still described reading `.claude/session`, a file
+deleted 2026-08-23. Same defect class as the pointer itself.
+
+**Footnote to F11's collateral fix, because I got it wrong once.** I claimed
+`retired_vocabulary` was "steady at 65" in a commit message and it was at 66 — my own F11
+prose *narrating* the RV-017 exemption named the token and tripped the same entry. The
+`scratchpad/**/baseline/**` exemption I added was correctly narrow, which is exactly why it
+did not cover a prose mention two files over. `governance/retired-vocabulary.yaml`'s own
+guidance says per-file exemptions are too coarse for a file that both uses and discusses a
+token, and the inline `[RETIRED-VOCAB-OK]` is the instrument for a single line. Used it.
+Back to 65.
