@@ -11,13 +11,61 @@ caught this repository's actual failures had **zero** enforcing code.
 > criterion. It is meant to be **run**, not consulted. This file is the mechanical map — write
 > path, gates, traps. Where they disagree, the instrument wins and this file is what to correct.
 
+**The pipeline below is the frame everything else in this file reads against.** It is first
+because rule 5 — never write the same fact into a second table — cannot be applied without it:
+judging whether a column is a legitimate stage-specific fact or a copy requires knowing which
+stage its table belongs to. Owner ruling 2026-08-25.
+
+---
+
+## THE PIPELINE — read this before anything else
+
+**Owner ruling 2026-08-25**, superseding the owner's own list of 2026-08-24:
+
+> **`research → evidence collection → judgment → synthesis → render`**
+
+Rule 5 says each stage holds only its own data and anything earlier is reached by pointer. **That
+is unusable without knowing which stage a table is in** — you cannot tell a legitimate
+stage-specific fact from a copy. So the map is a stopper, not orientation.
+
+**Substrate is not a stage.** The vocabularies and registries — `items`, `populations`, `slugs`,
+`terms`, `access_needs`, the crossing maps, `decisions`, `data_migrations` — are the layer all five
+stages point into.
+
+| Stage | Holds |
+|---|---|
+| **research** | What was searched, screened and mined, plus the clue store |
+| **evidence collection** | What was admitted, its identity, verification and extraction |
+| **judgment** | Determination — grading, population matching, the cell. Writes `specifications` |
+| **synthesis** | Weighing, convergence, cross-slug findings |
+| **render** | Book surfaces — `site/`, `parts/`, `tools/*.html`, and the content tables behind them |
+
+**`specifications` is a TABLE, not a stage** — `judgment` writes it. The 2026-08-24 wording that
+made it a stage is superseded.
+
+**Derive the table-to-stage assignment; do not read one out of a document.** The six-bucket
+assignment in the 2026-08-24 stage-discipline audit is agent-authored, predates this ruling, and
+must be re-derived against these five stages before it is relied on again.
+
+**Re-entrancy still holds and is a different question.** `governance/pipeline-map.yaml` established
+2026-08-21 that a walk **re-enters** stages rather than passing through them once — a layer-3
+artefact legitimately produces layer-2 rows. That answers *write order*. This map answers *what a
+table may hold*. Both are true; do not use one to argue against the other.
+
+**The machine enforces this spine**, and as of 2026-08-25 it enforces it under these names:
+`governance/pipeline-contract.yaml` (the single home of the stage ids),
+`tools/pipeline_completeness.py`, and the blocking `pipeline_completeness_fresh` gate. The id is
+`evidence-collection`; its display form is **derived** by `stage_label()`, never stored beside it.
+
+---
+
 ---
 
 ## 0. What will actually stop you
 
-**Seven rules.** Everything else in this file is orientation. *(This line read "Five" while the
-list held six, from 2026-08-24 until 2026-08-25 — a hand-written count in a derived document,
-which §2(b) forbids. Count the list, do not trust a prose number.)*
+**Count the list.** Everything else in this file is orientation. *(A prose number stood here
+twice and disagreed with the list both times — "Five" over six entries, then "Seven" over eight.
+§2(b) forbids hand-written counts in derived documents, and this was one. There is no number now.)*
 
 0. **A live owner statement supersedes every prior ratified record it touches, on contact.** Your
    job on hearing one is to **record the supersession, never to weigh the ruling against the
@@ -86,46 +134,6 @@ nothing at all. It is kept because attestations have caught real deviations — 
 which no gate reads for meaning. It is the next candidate if the ceremony is cut further.
 
 The commit-message format check remains, and is still `if: github.event_name == 'push'`.
-
----
-
-## 0.5 The five stages — the map rule 5 depends on
-
-**Owner ruling 2026-08-25**, superseding the owner's own list of 2026-08-24:
-
-> **`research → evidence collection → judgment → synthesis → render`**
-
-Rule 5 says each stage holds only its own data and anything earlier is reached by pointer. **That
-is unusable without knowing which stage a table is in** — you cannot tell a legitimate
-stage-specific fact from a copy. So the map is a stopper, not orientation.
-
-**Substrate is not a stage.** The vocabularies and registries — `items`, `populations`, `slugs`,
-`terms`, `access_needs`, the crossing maps, `decisions`, `data_migrations` — are the layer all five
-stages point into.
-
-| Stage | Holds |
-|---|---|
-| **research** | What was searched, screened and mined, plus the clue store |
-| **evidence collection** | What was admitted, its identity, verification and extraction |
-| **judgment** | Determination — grading, population matching, the cell. Writes `specifications` |
-| **synthesis** | Weighing, convergence, cross-slug findings |
-| **render** | Book surfaces — `site/`, `parts/`, `tools/*.html`, and the content tables behind them |
-
-**`specifications` is a TABLE, not a stage** — `judgment` writes it. The 2026-08-24 wording that
-made it a stage is superseded.
-
-**Derive the table-to-stage assignment; do not read one out of a document.** The six-bucket
-assignment in the 2026-08-24 stage-discipline audit is agent-authored, predates this ruling, and
-must be re-derived against these five stages before it is relied on again.
-
-**Re-entrancy still holds and is a different question.** `governance/pipeline-map.yaml` established
-2026-08-21 that a walk **re-enters** stages rather than passing through them once — a layer-3
-artefact legitimately produces layer-2 rows. That answers *write order*. This map answers *what a
-table may hold*. Both are true; do not use one to argue against the other.
-
-**The machine already enforces this spine** — `tools/pipeline_completeness.py` and the blocking
-`pipeline_completeness_fresh` gate. Stage 2's identifier there still reads `collection`; the rename
-to `evidence collection` is owed and is a rule-4 caller sweep.
 
 ---
 

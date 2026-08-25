@@ -49,7 +49,7 @@ stages:
         references: "PI rule #8; DR-2026-05-10 (PMP); pmp_audit.py C2"
         check: scripts/audit/pmp_audit.py
 
-  - id: collection
+  - id: evidence-collection
     anchor: "EvidenceSource corpus (ENT-02); PI rule #2 (Sonnet evidence inventories)"
     entry:
       - "sources discovered for the topic/slug under research"
