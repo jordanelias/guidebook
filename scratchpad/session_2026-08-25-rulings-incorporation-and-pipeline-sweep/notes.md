@@ -238,3 +238,68 @@ deployed claude.ai `<audit_trail>` numbered stage list — is OUTSIDE the repo e
 stage count is unknown and its reconciliation was made a ratification precondition in 2026-07
 and never confirmed. If the owner's eight-stage memory is neither of the two found, F10 is
 the one place nobody here can look.
+
+### F8 — suite/conflicts sweep. Verified claims only.
+
+**TOOLSET — six write channels, one read helper with zero importers.**
+  writes: emit_data_migration->migrate_db (sanctioned) · db.py subcommands (~15) ·
+          HAND SQL · emit_batch_sql (capture) · resolve_dois.py · verify_urls.py
+  reads:  104 raw `sqlite3.connect(` sites across 56 files; `scripts/db.py` HAS a correct
+          shared `connect()` and **0 files import it**; 85 lines re-resolve
+          GUIDEBOOK_DB_PATH; 47 files define their own REPO_ROOT.
+  joins:  no shared helper at all.
+  9 files -> 4-5 in a streamlined suite; ~88 live scripts -> ~70.
+
+**THE HIGHEST-VALUE FIX, and it is causal not cosmetic.** Hand-SQL exists BECAUSE db.py
+cannot write `search_candidates`, `evidence_population_match`, `economics_entries`,
+`case_studies`, `jurisdictional_values`. That channel delivered the 2026-08-19 author
+fabrication into committed data — through a capture tool that was itself blind
+(`emit_batch_sql` gained `evidence_source_authors` only 2026-08-22, and `source_locators`
+2026-08-23 after it SILENTLY DROPPED 8 ROWS, "emitted 32 statements, not 40… with no error
+raised", its own docstring). Every new table without a subcommand re-opens it.
+
+**LATENT GATE COLLISION — verified line by line.**
+  `migration_reproducibility.py:55-63` CORE_INVARIANTS includes
+      ("SELECT COUNT(*) FROM evidence_sources", "evidence_sources count")
+  `migration_reproducibility.py:65` EXEMPT_TABLES = ("evidence_source_authors", "pipeline_runs")
+  `resolve_dois.py:149,597,650` and `verify_urls.py:260` all `UPDATE evidence_sources`.
+`evidence_sources` is a core invariant and is NOT exempt. The normal gate compares COUNTS,
+so an UPDATE is invisible; `--deep` compares columns and would report it as content drift.
+`pipeline_runs` has a row from the 2026-08-24 job, so this is live, not theoretical. The
+remedy is one DR widening or narrowing the exemption — a decision, no new code.
+Also unexempted and uninvarianted: `url_verification_runs`, whose writer has never run.
+
+**VERIFIED BROKEN / DEAD:**
+  · `scripts/generate/room_page.py:26` — `SELECT * FROM room`. The live table is `rooms`.
+    A phantom table: this script cannot have run successfully since the schema existed.
+    Uncalled. L0-shaped but broken -> git is the archive.
+  · `skills/gap-driven-mining_SKILL.md:255` instructs `db.py update-gap-research-fields`
+    — **0 occurrences in db.py's parser.** A skill telling sessions to run a subcommand
+    that does not exist.
+  · `db.py` docstring line 8 documents `db.py init` — also nonexistent.
+  · **18 views live; 11 have zero readers.** Master plan R6 (2026-08-22) ordered
+    *"Delete the 11 unread views — explicitly no owner gate"*. NOT EXECUTED. Includes
+    `v_item_provenance`, repaired at the cost of migration 064 three days ago and read by
+    nothing.
+
+**DUAL HOMES, measured:**
+  AGREE (kept so by parity apparatus — and per rule 5 a parity check makes a dual home
+  permanent): check inventory (registry->context-map, generated, blocking freshness);
+  decisions (66 files / 166 YAML / 166 DB rows, set-diff both directions = 0);
+  research contract (5 homes, 2 blocking checks, PASS).
+  DISAGREE NOW: `schemas/*.py` vs live SQLite — **245 drift findings**, 14 of 18 mapped
+  pairs drift, `EvidenceSource` missing ~80 columns. And the authority relation ITSELF has
+  no home: the registry records an OPEN OWNER QUESTION whether schemas mirror SQLite or the
+  YAML layer. Cannot be triaged until that is answered.
+  NO SYNC AT ALL: tier/weighting (`weighting_profile`, 5 rows, zero readers, encodes the
+  audience-emphasis doctrine and no renderer consumes it); axes vs access_needs; rule text.
+
+**LEVEL RATIO re-derived** across scripts+tools+hooks:
+  L0 9,358 : L1 12,169 : L2 7,556 : L3 725  =  1 : 1.30 : 0.81 : 0.08
+Better than the census's pre-cull 1 : 2.3 : 1. **The residual problem is not the ratio but
+that ~1,900 LOC of L1/L2 has no subject or no runner.**
+
+**CULL LIST (L3->L1, L0 never culled):** ~14 items — `test_adjudication_integrity.py` (L2
+whose L1 subject is quarantined), `anchor-correctness-sweep.js` (no invoker), the 11 unread
+views, the `validate_db` quarantine tombstone, `room_page.py`. `population_page.py` ->
+CONSOLIDATE. The L0 write/read tools -> KEEP-AND-FIX into one suite, never deleted.
