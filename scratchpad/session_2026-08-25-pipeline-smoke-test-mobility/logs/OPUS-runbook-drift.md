@@ -870,3 +870,118 @@ co-production… Erasing them while claiming the tier is the worst failure avail
 2026-08-19 the project fixed the arm that fabricates *authors* and never built the arm that records
 *co-production* — and the mobility batch is the first one whose core evidence is disabled people's
 own accounts of a built environment that excludes them.
+
+---
+
+# PART 10 — what the F2 doctrinal audit found that no machinery trace could
+
+Six stage agents audited the machine. F2 read the doctrine and asked what the machine is *for*.
+Three of its findings outrank anything in PARTS 1–9, and I verified all three.
+
+## D-18 — `MOB` is the umbrella the project's own rule was written to abolish, and it is still the key a mobility cell would use
+
+`populations` holds 23 codes. Three are `category='mobility'`:
+
+| code | display_name | description |
+|---|---|---|
+| `LMB` | people with limb differences; upper-limb disabilities | |
+| `SCI` | people with spinal cord injuries | |
+| **`MOB`** | **disabled people with mobility needs; wheelchair users** | **"General mobility limitation including walking, balance, or wheeled mobility"** |
+
+There is **no code for ambulant disabled people** and **none for part-time wheelchair users.**
+
+Now read the RULE that forbids exactly this, `references/project-standards.md:557`, and read its
+provenance clause in particular:
+
+> Broad umbrellas ("physically disabled"; clinical-cluster relabels…) are forbidden as profile
+> codes: they collapse opposed and orthogonal design demands and erase specific communities…
+> **Provenance: three self-caught erasures in session 2026-07-21/22 — … "physically
+> disabled/wheelchair users" erased the ambulatory and part-time-wheelchair disabled and buried the
+> orthogonal upper-limb/reach axis. In each case the axis layer already held the distinctions the
+> umbrella destroyed.**
+
+The rule names this erasure, by name, as one of the three that caused it to be written. And `MOB` —
+"mobility needs; **wheelchair users**", lumping "walking, balance, or wheeled mobility" — is that
+umbrella, still standing, still the only general mobility population code.
+
+**The axis layer does hold the distinctions, exactly as the rule says.** Verified in `axes`:
+
+```
+AX-AMB  Ambulant movement
+AX-WHM  Wheeled movement & transfer
+AX-BAL  Balance & postural demand
+AX-REA  Reach & manipulation
+```
+
+**And cells are keyed `(item × population)`** — CLAUDE.md §6, R4, `specifications`' own grain. So
+the four distinctions the axis layer preserves are destroyed at the moment a judgment is written,
+because the judgment's key is `MOB`.
+
+For this batch that is not abstract. Take the owner's five item classes:
+
+| Item | Demands `MOB` collapses |
+|---|---|
+| Corridor clear width | a wheelchair user's turning and passing envelope vs an ambulant crutch or walker user's swing width vs a balance-disorder user's need for a wall within reach |
+| **Handrails** | serve **ambulant and balance** users first — the exact groups `MOB` erases — and are an obstruction to some wheeled users |
+| Sloped surfaces | **opposed**: a manual wheelchair user wants a shallower gradient; an ambulant person with fatigue or spasticity often wants a shorter run, i.e. a steeper one |
+| Flooring | firmness for wheeled rolling resistance vs slip resistance for ambulant gait vs low LRV differential for DEM wayfinding |
+| Door thresholds | near-universal, but the tolerance differs by castor size vs toe clearance |
+
+A batch keyed on `MOB` produces cells that average opposed demands and report the average as best
+practice. **That is the failure the whole two-layer taxonomy exists to prevent, and it is one
+`INSERT` away.**
+
+This is DG-NON — population taxonomy is explicitly owner-gated (CLAUDE.md §1) — and it is the
+decision the batch cannot start without. It is also the only finding in this report where the
+*right* answer is not obvious to me: minting codes for communities is co-production work, not a
+schema edit, and "nothing about us without us" governs who may name them.
+
+## D-19 — the project's own worked example for corridor width contradicts what it renders for corridor width
+
+`governance/tier-system.md:45`, the worked example for the convergence-not-evidence trap:
+
+> **The corridor-width worked example.** Multiple Tier 5/6 codes converge on **1800mm**
+> two-wheelchair-passing. Co-1/T2/T3 evidence (DSDG Bauman 2010, DeafScape Vaughn 2018, Cloete &
+> Rout 2025) anchors **2440mm** primary corridors. The 1800mm convergence describes the regulatory
+> floor; the 2440mm Co-1/T2/T3 anchor describes best practice.
+
+`site/specs/e-08.html`, live, rendered, committed:
+
+```html
+<h1>Corridor Clear Width (≥1200 mm Minimum on All Primary Routes)</h1>
+```
+
+**1200 mm** — below the regulatory floor the doctrine names, and half the best-practice anchor the
+doctrine names, on the flagship item of the batch about to run. The same string is the `items.name`
+for `E-08`.
+
+This is DR-2026-08-19 §1.2's "second vector" — *"the determinations are still rendered"* — made
+concrete on the one item where doctrine has already published the right answer. S5 checked that the
+page's *body* honestly says "not yet computed" and never read the `<h1>` above it. F1 found the
+heading; F2 found the doctrine it contradicts. Neither would have been enough alone.
+
+## D-20 — the handrail slug exists, and S1's top blocker is wrong
+
+S1 ranked "no `handrail` item_code/slug exists" as blocker #1. Half right. There is no `items` row —
+but `slugs` holds:
+
+```
+slug          fall-risk-flooring-handrail-design
+topic         entrances-and-circulation
+status        STUB
+sl_path       references/search-log/entrances-and-circulation/fall-risk-flooring-handrail-design.md
+created_at    2026-07-24
+```
+
+A STUB slug covering **flooring and handrails together** — two of the owner's five item classes —
+already framed, in the right topic directory. Every agent, my own log included, accepted PROTOCOL's
+premise that handrails had no home. **PROTOCOL was written by me and it told six agents to verify a
+claim I had already asserted.** Two of them did check the `items` table and stopped there.
+
+The reason it stayed hidden is trap §7 in action: `sl_path` points under
+`references/search-log/`, which the root `.ignore` hides from ripgrep and from the Grep tool. The
+frame-first structure DR-2026-08-19 §1.4 requires already exists; what is missing is the item row,
+which is the correct order — frame before item.
+
+**Net for the batch: the handrail gap is smaller than reported, and the population gap is far
+larger.**
