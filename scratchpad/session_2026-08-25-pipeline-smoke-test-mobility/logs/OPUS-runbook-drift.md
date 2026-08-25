@@ -457,3 +457,80 @@ S2 also reproduced **OD-5** directly rather than by reading about it: `add-sourc
 checks only `evidence_sources`, so a DOI already held as a lead in the 875-row clue store was
 admitted under a second identity with no warning — while `add-locator`'s dedup correctly checks
 both tables. The fix is asymmetric, and the unfixed half is the one on the admission path.
+
+---
+
+# PART 6 — the guard against rule 3, and an apparent contradiction that is not one
+
+## D-14 — `is_canonical()` exists to enforce CLAUDE.md rule 3 and nothing calls it
+
+CLAUDE.md §0.3 is the repository's hardest rule: **"Never write `data/guidebook.db` directly.
+Migrations only."** `scripts/dbcore.py:65-74` implements the guard, and its docstring states the
+purpose exactly:
+
+```python
+def is_canonical(path=None) -> bool:
+    """True when the given path IS the committed database.
+
+    Callers that must never touch the canonical file (CLAUDE.md rule 3: migrations
+    only) use this to refuse, rather than trusting that GUIDEBOOK_DB_PATH was set.
+    """
+```
+
+*"rather than trusting that GUIDEBOOK_DB_PATH was set."* That is the correct design, and the
+correct reason. **Its only two callers are its own selftest** (`dbcore.py:438-439`). `connect()`
+(`dbcore.py:83-101`) — the single door every `db.py` writer goes through since ACT 1 —
+never calls it, and `db_path()` (`dbcore.py:51-59`) **defaults to the canonical file when
+`GUIDEBOOK_DB_PATH` is unset.**
+
+So the sequence is: forget the inline prefix on one call → `db_path()` returns the canonical file →
+`connect()` opens it read-write → the write lands. No refusal fires.
+
+This is not a hypothetical. It is failure mode **#1** in the instrument's own list
+(`…instrument.md` §12.4): *"A `db.py` call lands on canonical — env resets between shell calls…
+prefix inline; sha256 after every phase."* The mitigation offered is discipline plus a checksum
+**after** the fact. The mechanical refusal was written, and left unwired.
+
+**And two skills instruct the canonical path directly**, on write commands:
+
+| Skill | Line | Command |
+|---|---|---|
+| `connection-auditor_SKILL.md` | 185, 192 | `db.py update-connection` |
+| `connection-auditor_SKILL.md` | 199 | `db.py add-gap` |
+| `connection-discovery_SKILL.md` | 219 | `db.py add-connection` |
+
+all prefixed `GUIDEBOOK_DB_PATH=data/guidebook.db`. (Both files carry further occurrences on read
+commands — `connections`, `next-id` — which are harmless now that `connect()` no longer sets
+`journal_mode`, but they teach the habit.) An agent following these skills as written performs a
+direct canonical write, and the guard designed to stop it is inert.
+
+**This is the single most consequential defect the smoke test found**, because it is the one that
+can silently destroy the append-only migration ledger that everything else in this repository
+depends on. It needs no owner decision: CLAUDE.md §1 says code needs *evidence*, not permission, and
+the evidence is `dbcore.py:438-439` being the entire caller list.
+
+## D-15 — S1 and S2 appear to contradict each other on OD-5. They do not; they name different layers
+
+S1 reports CLAUDE.md §4's OD-5 note ("the R9 duplicate gate currently cannot see `source_locators`")
+is **stale**. S2 reports it **reproduced OD-5 live**, admitting a DOI already held as a lead with no
+warning. Both are correct, and the reconciliation is the finding:
+
+- **The gate sees it.** `scripts/audit/research_batch_dod.py:445-504` — R9a/R9b, added 2026-08-23 —
+  join `source_locators` on DOI and on `ref_id` across six identifier types, and pass on the
+  canonical DB today. `:445` even carries the note *"R9 above compares evidence_sources against
+  ITSELF."*
+- **The writer does not.** `scripts/db.py:1992-2000`, inside `add-source`:
+  `SELECT ref_id FROM evidence_sources WHERE doi = ? AND COALESCE(superseded_by_ref_id,'') = ''`.
+  `source_locators` is not in that query. `add-locator` (`db.py:2505-2508`) checks both.
+
+So a duplicate against the clue store is **caught after it lands, by the definition-of-done gate,
+rather than refused at write time.** That is precisely the arrangement `db.py` condemns in its own
+comments (`db.py:362-368`): *"A gate that catches a bad write after it lands is strictly worse than
+a write path that cannot make it."*
+
+**Two corrections follow, one to the repository and one to CLAUDE.md.** CLAUDE.md §4's OD-5
+sentence should be narrowed — the gate half closed on 2026-08-23. And the writer half is a
+coverage bug of exactly the kind §4 tells you to fix rather than bypass. For the mobility batch this
+is live and near-certain: 256 mobility DOIs are about to be promoted into the clue store (D-10), and
+the very next `add-source` for a mobility slug will be checking for duplicates against the one table
+that does not hold them.

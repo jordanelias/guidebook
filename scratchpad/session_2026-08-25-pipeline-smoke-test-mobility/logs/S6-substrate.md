@@ -883,3 +883,125 @@ of which 1 is now reclassified. Exact cross_stage total not independently re-der
 by line in this pass — flagged as a residual gap in this smoke test's own coverage, not
 asserted as precise.
 
+
+## 9. Substrate readiness for mobility — queried read-only against `data/guidebook.db`
+
+INVOKED   : direct Python/sqlite3 read-only queries (`file:data/guidebook.db?mode=ro`)
+            against `items`, `item_axis_links`, `item_population_links`, `term_item_links`,
+            `terms`, `term_aliases`, `slugs`, `lang_jur_map`
+STAGE     : substrate
+EXIT      : 0
+READS     : 8 tables, as above
+WRITES    : NONE
+EXAMINED  : 11 named items × 6 substrate facets, + 20 jurisdiction codes (bucket 1 + 2)
+
+### 9a. Items — all 11 exist and are active; NO handrail item
+| Item | Name | `bpc_source_slug` | status |
+|---|---|---|---|
+| E-08 | Corridor Clear Width (≥1200 mm Minimum on All Primary Routes) | accessible-circulation-geometry | active |
+| E-03 | Ramp Gradient (≤1:20 — MS Fatigue and Temporal Accessibility) | stair-ramp-threshold-biomechanics-accessibility | active |
+| E-11 | Automatic Sliding Entry and Internal Doors | threshold-door-hardware | active |
+| G-04 | Accessible Bathroom (Wet Room Configuration — Zero Threshold) | accessible-bathroom-and-grab-bar | active |
+| B-08 | Matte, Low-Reflectance Floor Finishes (≤30 Gloss Units) | **NULL** | active |
+| C-03 | Pattern Avoidance (Plain Flooring and Walls in Sensitive Environments) | luminance-contrast-lrv-evidence-base | active |
+| C-05 | Low LRV Differential at Adjacent Floor Materials (DEM Inverse Contrast Rule) | luminance-contrast-lrv-evidence-base | active |
+| C-06 | Plain, Low-Contrast Flooring Throughout (No Geometric Patterns) | luminance-contrast-lrv-evidence-base | active |
+| A-05 | Carpet in Corridors and Occupied Spaces (Where VIS Navigation Maintained) | room-acoustic-performance | active |
+| E-01 | Accessible Lift (1400×1100 mm Car, All Floors Served) | accessible-circulation-geometry | active |
+| E-04 | Accessible Parking (3600 mm Width, Covered, Closest to Entry) | accessible-circulation-geometry | active |
+
+`SELECT item_code, name FROM items WHERE name LIKE '%handrail%' OR item_code LIKE '%hand%'`
+→ **empty result set.** `FINDING: ABSENT` — there is no handrail item in `items` under any
+code or name. PROTOCOL.md's own framing ("handrails (**no item exists — verify**)") is
+confirmed correct: verified, not assumed. A mobility batch that researches handrails has
+nowhere in the schema to file a finding until an `add-item` write creates one — this is
+the single largest structural gap in the mobility item set (every other named parameter,
+including door thresholds and flooring, at least has an `item_code` to attach evidence to).
+
+### 9b. Axis / population / terminology coverage, per item
+| Item | `item_axis_links` | `item_population_links` | `term_item_links` (terms, with alias counts) |
+|---|---|---|---|
+| E-08 | 3 | 13 | 6 terms (TERM-002 corridor width/32, TERM-003 turning circle/33, TERM-016 wheelchair user/31, TERM-048 circulation route/53, TERM-059 visitability/31, TERM-079 mobility aid/53) |
+| E-03 | 3 | 4 | 5 terms (ramp gradient/37, wheelchair user/31, fatigue and PEM/38, neurological impairment/50, temporal accessibility/42) |
+| E-11 | 2 | 6 | **0 — no terms linked at all** |
+| G-04 | 2 | 6 | 6 terms (turning circle, grab bar, accessible bathroom, wheelchair user, visitability, toileting provision) |
+| B-08 | 2 | 4 | **0 — no terms linked at all** |
+| C-03 | 2 | 6 | 1 term (vestibular dysfunction/46) |
+| C-05 | 2 | 2 | 1 term (LRV contrast/32) |
+| C-06 | 2 | 5 | 1 term (vestibular dysfunction/46) |
+| A-05 | 2 | 5 | 1 term (circulation route/53) |
+| E-01 | 1 | 4 | 4 terms (accessible lift/32, wheelchair user/31, headroom clearance/37, mobility aid/53) |
+| E-04 | 2 | 5 | 2 terms (wheelchair user/31, mobility aid/53) |
+
+FINDING   : PARTIAL — axis links and population links are present (non-zero) on every one
+            of the 11 items; terminology coverage has two hard gaps.
+LOCATION  : `term_item_links.item_code @ 'E-11'` (0 rows) and `term_item_links.item_code @
+            'B-08'` (0 rows) — both confirmed by direct `COUNT(*)` and by the join-based
+            listing (empty result set, not a query error).
+NOTE      : **`item_population_links` being non-zero on all 11 items is worth flagging
+            against CLAUDE.md §6's own framing**, not as a defect but as a fact a mobility
+            batch should know before starting: DR-2026-08-24 §2.4 (quoted in CLAUDE.md §6)
+            says "zero `item_population_links` on a slug is the correct pre-synthesis
+            state, not a defect" — these items already carry population links (E-08 has
+            13), which means either (a) these are legacy links predating the 2026-08-24
+            full-cross-product ruling, carried forward rather than reset, or (b) synthesis
+            has already run partially on some of these items. This smoke test did not
+            determine which — it is a judgment/synthesis-stage question, out of S6's
+            substrate scope — but a mobility batch should check whether these existing
+            links represent presuppositions the 2026-08-24 ruling says NOT to start from,
+            before treating them as settled.
+
+### 9c. `lang_jur_map` coverage, buckets 1 and 2
+| Bucket | Jurisdiction | Coverage |
+|---|---|---|
+| 1 | UN | **MISSING — 0 rows** |
+| 1 | ISO | **MISSING — 0 rows** |
+| 1 | CA (Canada) | EN/PRIMARY, FR/PRIMARY |
+| 1 | US (USA) | EN/PRIMARY |
+| 1 | UK | EN/PRIMARY |
+| 1 | DE (Germany) | DE/PRIMARY |
+| 1 | NO (Norway) | NO/PRIMARY |
+| 1 | SE (Sweden) | SV/PRIMARY |
+| 1 | JP (Japan) | JA/PRIMARY |
+| 1 | AU (Australia) | EN/PRIMARY |
+| 2 | EU | EN/FR/DE PRIMARY, ES/IT/NL/PT/DA/FI/SV SECONDARY |
+| 2 | SG (Singapore) | EN/PRIMARY, ZH/SECONDARY |
+| 2 | NZ (New Zealand) | EN/PRIMARY |
+| 2 | IE (Ireland) | EN/PRIMARY |
+| 2 | FR (France) | FR/PRIMARY |
+| 2 | ES (Spain) | ES/PRIMARY |
+| 2 | PT (Portugal) | PT/PRIMARY |
+| 2 | FI (Finland) | FI/PRIMARY, SV/SECONDARY |
+| 2 | NL (Netherlands) | NL/PRIMARY |
+| 2 | KR (South Korea) | KO/PRIMARY |
+
+FINDING   : bucket 1 = 8/10 covered, **2 missing (UN, ISO)**; bucket 2 = 10/10 covered
+LOCATION  : `lang_jur_map.jurisdiction @ 'UN'` (0 rows), `lang_jur_map.jurisdiction @
+            'ISO'` (0 rows)
+NOTE      : Ambiguous rather than a clean defect — UN and ISO are standards BODIES, not
+            national jurisdictions with a single authoring language (UN instruments run in
+            6 official languages; ISO standards are typically EN/FR, sometimes RU). The
+            table's own schema (`language, jurisdiction, role` — no accommodation for a
+            body with 3+ co-equal PRIMARY languages and no single country) may simply not
+            model this case, rather than having been forgotten for it. Flagged as a
+            concrete pre-batch gap either way: a researcher hitting UN or ISO in bucket 1
+            has no `lang_jur_map` row to consult for "what language should I search this
+            standard in," and would have to make that call from scratch each time.
+
+### 9d. Ranked substrate gaps for the mobility batch (table.column @ key)
+1. **No item exists for handrails** — `items` has no row matching `%handrail%` in name or
+   code. Blocks any handrail-specific evidence from being filed until `db.py add-item` is
+   run (out of S6's write-testing scope here — not exercised, since PROTOCOL.md's "admit no
+   evidence" rule extends to not fabricating a new item without an owner-approved item
+   definition; item creation is closer to a content/doctrine decision than routine
+   apparatus per CLAUDE.md §1).
+2. **`items.bpc_source_slug @ 'B-08'` is NULL** — the one flooring item with no research
+   slug at all; also zero terms (`term_item_links.item_code @ 'B-08'`, 0 rows).
+3. **`term_item_links.item_code @ 'E-11'`, 0 rows** — door-threshold item with no
+   terminology/alias coverage, despite having a valid slug (`threshold-door-hardware`).
+4. **`lang_jur_map.jurisdiction @ 'UN'` and `@ 'ISO'`, 0 rows each** — 2 of bucket 1's 10
+   jurisdictions have no language-authority record.
+5. **`jurisdictional_values.jurisdiction` vocabulary gap (§2f)** — not item-specific, but a
+   write-path defect that would let a bucket-1 UK value be silently mis-recorded as `GB`
+   with no refusal anywhere in the chain.
+

@@ -1170,3 +1170,243 @@ LOCATION  : scripts/generate/room_page.py:26 (`SELECT * FROM room WHERE room_id 
 NOTE      : Not a mobility-batch blocker directly (the script is unwired), but if anything in
              a future render pass re-wires `room_page.py` without reading the skill's warning
              first, it will crash immediately on both queries.
+
+## 9. Handoff to render
+
+### 9a. What render consumes from synthesis — traced to code
+INVOKED   : read `scripts/generate_parts.py:65,113-129,246-269,290-300` (`FP_TABLES`,
+             `full_mode_ready`, `build_part05`, bpc index builder)
+STAGE     : synthesis → render
+EXIT      : n/a
+READS     : scripts/generate_parts.py
+WRITES    : NONE
+EXAMINED  : 1 script
+OUTPUT    : Render (`scripts/generate_parts.py`, which writes `parts/v10/*.md`) consumes,
+             directly: `items.bpc_source_slug` (pointer from item to owning BPC slug — Part 4
+             item table), `bpc_metadata.{slug, evidence_state, bpc_complete}` (Part 4 BPC
+             index + the `full_mode_ready` gate), `specifications` row COUNT only in stub mode
+             (`count(conn, "specifications")`, used just to print how many cells exist — stub
+             mode never reads individual specification VALUES), and `connections.{con_id,
+             connection_type, status, description}` (Part 5, per item 5b — status alone, no
+             `opus_reviewed` filter).
+FINDING   : PASS (chain identified precisely)
+LOCATION  : scripts/generate_parts.py:65 (FP_TABLES fingerprint list), :116-129
+             (full_mode_ready), :246-266 (build_part05 connections), :290-300 (BPC index)
+
+### 9b. Is there a mechanism enforcing render ↔ synthesis ↔ judgment ↔ admitted-evidence traceability?
+INVOKED   : read `scripts/generate_parts.py:113-129` (`full_mode_ready`) +
+             `scripts/regenerate_derived.sh` (full contents) + grep for `generate_parts` across
+             `governance/check-registry.yaml`, `.github/`, `scripts/`, `tools/`
+STAGE     : render
+EXIT      : n/a
+READS     : scripts/generate_parts.py:113-129, :419-453 (main(), --mode full/stub);
+             scripts/regenerate_derived.sh (full file, 18 lines);
+             grep results for `generate_parts` outside its own file
+WRITES    : NONE
+EXAMINED  : 3 files/greps
+OUTPUT    : |
+  def full_mode_ready(conn):
+      """All ACTIVE BPCs must be at COMPLETE."""
+      ...
+      incomplete = [... bpc_complete=0 or evidence_state NULL/RETRACTED-PRE-REHAB ...]
+      cells = count(conn, "specifications") or 0
+      if cells == 0:
+          reasons.append("specifications is empty (no synthesised cells; Phase E / 4.3)")
+      return (not reasons), reasons
+  # in main(): if args.mode == "full" and not ok: return 3  ("full mode refused")
+FINDING   : **A REAL, WORKING mechanism exists — `full_mode_ready()` — that genuinely refuses
+             to render "full mode" output unless every `bpc_metadata` row is
+             `bpc_complete=1` with a real `evidence_state`, AND `specifications` is non-empty.**
+             This is a legitimate synthesis→judgment gate on render. **BUT it is orphaned from
+             every automated path**: `scripts/regenerate_derived.sh` — the file's own docstring
+             calls it "the single sanctioned regeneration entry point after ANY
+             data/guidebook.db change" and CLAUDE.md §7 cites it as the tool to use, "don't
+             hand-edit generated output... regenerate with scripts/regenerate_derived.sh" —
+             does NOT call `generate_parts.py` at all (it calls only
+             `tools/pipeline_completeness.py`, `tools/evidentiary_audit.py`,
+             `tools/regenerate_vetting_surface.py`). `generate_parts.py` also has ZERO
+             references in `governance/check-registry.yaml` or `.github/` workflows — the only
+             other repo hits are two COMMENTS in `build_site.py`/`context_map.py` noting
+             "same shape as" it, not invocations. `--mode` also **defaults to `stub`**, which
+             carries NO gate at all — `full_mode_ready()` only runs when a caller explicitly
+             passes `--mode full`.
+FINDING   : ABSENT as an ENFORCED gate (present as dead-but-correct code)
+LOCATION  : scripts/generate_parts.py:113-129 (the gate, real and correct);
+             scripts/regenerate_derived.sh (the sanctioned entry point that does NOT call it);
+             governance/check-registry.yaml (zero entries for generate_parts.py or its
+             --mode full gate)
+NOTE      : This is the render-stage mirror of item 2's finding: a real mechanism was built,
+             it is correct, and nothing forces it to run. For the mobility batch: the parts/
+             book output will keep rendering in `stub` mode by default, silently, forever,
+             unless someone manually invokes `generate_parts.py --mode full` — and even then
+             the refusal only proves bpc_metadata/specifications are non-empty and complete,
+             never that they're internally consistent (that's `register_integrity_check.py`,
+             item 6, itself vacuous today) or that the underlying citations are real (item 3).
+
+### 9c. Testing the chain with a query on the committed DB — traced item-by-item, breaks named
+INVOKED   : ad-hoc Python query chain: `items.bpc_source_slug` for E-08 (Corridor Clear
+             Width) → `bpc_metadata` lookup by that slug → `item_bpc_links` lookup by item_code
+             → `specifications` lookup by item_code, plus corpus-wide row counts, on the
+             committed (read-only) `data/guidebook.db`
+STAGE     : full pipeline trace (render → synthesis → judgment)
+EXIT      : 0
+READS     : items, bpc_metadata, item_bpc_links, specifications (all read-only, committed DB)
+WRITES    : NONE
+EXAMINED  : 1 item traced end to end, plus corpus-wide counts for all four tables
+OUTPUT    : |
+  1. items row: ('E-08', 'Corridor Clear Width (>=1200 mm Minimum on All Primary Routes)',
+                 'accessible-circulation-geometry')
+  2. bpc_metadata row for slug 'accessible-circulation-geometry': None
+  3. item_bpc_links rows: []
+  4. specifications rows: []
+  overall counts: bpc_metadata=0  item_bpc_links=0  specifications=0
+FINDING   : **The chain breaks at hop 2 of 4 — immediately after the render-consumed
+             pointer.** `items.bpc_source_slug` (hop 1) IS populated and correct — E-08, E-03,
+             E-04, E-10 point at `accessible-circulation-geometry`; E-11 points at
+             `threshold-door-hardware`; E-01 at `accessible-circulation-geometry`; G-04 at
+             `accessible-bathroom-and-grab-bar` (verified for all seven protocol mobility
+             items via `parts/v10/part04.md`'s already-rendered "Source BPC" column). **But
+             every hop past that pointer is empty**: no `bpc_metadata` row for any of those
+             slugs (synthesis stage — item 2's `update-bpc` INSERT bug, item 2h, is the reason
+             a first write there currently crashes), no `item_bpc_links` row (the bridge table
+             item 4b needed and found empty), no `specifications` row (judgment stage). The
+             evidence-collection stage IS reachable independently — `evidence_sources` has 10
+             admitted rows (confirmed via `adjudication_integrity.py`'s output in item 4) —
+             but nothing links those admitted sources forward to a mobility item today, because
+             synthesis and judgment for mobility have not started.
+LOCATION  : items.bpc_source_slug (populated, correct); bpc_metadata (0 rows — BREAK);
+             item_bpc_links (0 rows — BREAK); specifications (0 rows — BREAK)
+NOTE      : **This is the expected, correct pre-batch state, not a bug** — mobility research
+             genuinely has not run yet. Its value as a smoke-test finding is establishing the
+             BASELINE precisely: render already has a name for where mobility content should
+             go (the slug pointer), and the moment synthesis starts writing `bpc_metadata`
+             for `accessible-circulation-geometry` etc., items 2h (INSERT bug), 4 (no
+             comparative checks), 6c (I1 untestable), and 9b (orphaned full-mode gate) all
+             become live, not hypothetical, concerns for that exact slug.
+
+---
+
+## S4 SUMMARY
+
+**Run bounds:** started 2026-08-25 18:17 UTC, DB sha256 `30a10669...` confirmed unchanged at
+start and end. No tracked file touched except this log. Scratch DB `$SMOKE/s4-synthesis.db`
+carries real test writes (CON-0001/CON-0002, one supersession_check row, one bpc_metadata row);
+committed `data/guidebook.db` opened read-only throughout.
+
+### (a) Verdict table — every skill/script/gate invoked
+
+| # | Surface | Kind | Verdict | Note |
+|---|---|---|---|---|
+| 1 | `scripts/validate_reasoning.py` (default) | script | **VACUOUS-BY-DESIGN** | structural/presence only, never reasoning quality (1c); exits 0 even on real errors unless `--strict` (1e); exits 0 on a nonexistent slug (1f) |
+| 2 | `scripts/validate_reasoning.py --strict` | script | PASS (correctly fires) | registry entry advisory, not blocking (1e) |
+| 3 | `scripts/db.py update-bpc` (first write, no pre-existing row) | CLI | **FAIL — crash** | `population` NOT NULL, no `--population` flag exists (2h) |
+| 4 | `scripts/db.py update-bpc` (row pre-exists) | CLI | PASS | UPDATE branch only (2i) |
+| 5 | `governance/pipeline-contract.yaml` synthesis/opus-routing | contract criterion | **ABSENT** (`check: null`) | confirmed end-to-end, no mechanism anywhere (2) |
+| 6 | `scripts/decision_capture.py` C4 model-routing | validator | PASS but wrong table | format-only, validates `decisions`, not `bpc_metadata` (2e) |
+| 7 | `scripts/audit/reasoning_doc_citations_audit.py` | script | VACUOUS (honestly self-reported) | EXAMINED:0, exit 0 (3b); advertises 8 checks, implements 7 (3c) |
+| 8 | Live cross-check: room-acoustic-performance.md citations vs evidence_sources | ad-hoc query | **FAIL** | 7/11 (64%) cited REF-ids are lead-index-only, not admitted (3d) |
+| 9 | `v_divergence` view | DB object | scoped too narrow | within-cell convergence, not judgment-vs-synthesis (4b) |
+| 10 | `specifications.derivation_sha` / `pilot_renderings.py` sha_stale | mechanism | real but wrong hop | judgment→render, never reaches synthesis (4c) |
+| 11 | `skills/supersession-audit_SKILL.md` + `db.py add-supersession-check` | skill+CLI | PASS (as designed) | source staleness only, not judgment staleness (4d/4e); refusals verified (FK, dup) |
+| 12 | `skills/connection-auditor_SKILL.md` | skill | ABSENT as mechanical tool | agent-judgment workflow, no script (4f) |
+| 13 | `skills/cross-population-conflict-mapper_SKILL.md` + `conflicts` | skill+table | ABSENT as mechanical tool | agent-judgment workflow, 0 rows (4g) |
+| 14 | `db.py add-connection` / `update-connection` / `delete-connection` | CLI | **mixed** | clean refusals (R1,R2,R4,R5); **2 real gaps**: bogus target item accepted (R3), delete on nonexistent id reports success (R6) — item 5a |
+| 15 | `scripts/generate_parts.py build_part05` | render code | **FAIL** | renders CONSUMED connections with zero `opus_reviewed` filter (5b) |
+| 16 | `connections.opus_reviewed` | column | **ABSENT (dead)** | never settable to 1, never read as a gate, anywhere in live code (5c) |
+| 17 | `weighting_profile` read | table | PASS | 5 rows, presentation-layer only, correctly NOT consumed by synthesis (6a/6b) |
+| 18 | `scripts/audit/register_integrity_check.py` (plain) | script | **PASS-BUT-MISLEADING** | "(DB cross-check on)" label fires regardless of whether any comparison ran; `db_rows={}` is falsy so the cross-check silently never executes against the real DB (6c) |
+| 19 | `scripts/audit/register_integrity_check.py --selftest` | script | PASS (mutation-tests fire) | proves the LOGIC works on a temp ghost fixture; does not fix the real invocation (6c) |
+| 20 | `scripts/audit/adjudication_integrity.py` | script | PASS, self-aware | reports readiness honestly: 0 specifications, 0 SVEs (4a) |
+| 21 | `python3 scripts/run_checks.py --battery attestation ...` (live HEAD) | registry run | **VACUOUS, live, unprompted** | `attestation_presence` (BLOCKING) reports NOTHING-IN-SCOPE on the real current HEAD; framework labels this correctly itself (7d) |
+| 22 | same, with `--changed-from HEAD~10` | registry run | **scope-decoupling bug confirmed** | identical NONE result — `--changed-from` never reaches `adherence_log_audit.py`'s `--base`/`--head` (7d) |
+| 23 | `adherence_log_audit.py --check presence/schema` on real historical commit 057aff0 | script | PASS, genuinely non-vacuous | EXAMINED:1, real subject (7b) |
+| 24 | whole-corpus `jsonschema.validate` over 96 attestations | ad-hoc | PASS | EXAMINED:96, all valid structurally (7c) |
+| 25 | attestation schema — reads free text for meaning? | schema | **CONFIRMED NO** | length-only checks; Levenshtein similarity (check 6) detects repetition, not truth (7e) |
+| 26 | 12 synthesis-stage skills | skills | **11 clean / 1 real defect** | `reasoning-doc-citations_SKILL.md` teaches hand-SQL because no CLI writer exists for `reasoning_doc_citations` (8c) |
+| 27 | `scripts/audit_consolidator.py`, `scripts/audit/claims_docket.py`, `scripts/validate_verification_consistency.py` | scripts | ALL EXIST, ALL RUN | verification-consistency VACUOUS (0 rows) but honestly reported (8b) |
+| 28 | `scripts/generate/room_page.py` | render script | **FAIL, dead code** | queries two nonexistent tables (`room`, `specification`-singular); unwired from any pipeline; flagged (correctly) by specification-curator's own skill doc but never fixed (8d) |
+| 29 | `scripts/generate_parts.py full_mode_ready()` | render gate | real, correct, **orphaned** | not called by `regenerate_derived.sh`, not in check-registry.yaml, not in CI; `--mode` defaults to `stub` which carries no gate (9b) |
+| 30 | End-to-end chain query (E-08 → slug → bpc_metadata → item_bpc_links → specifications) | ad-hoc query | **breaks at hop 2 of 4** | pointer (items.bpc_source_slug) is correct; everything past it is 0 rows (9c) |
+
+### (b) Ranked blockers (highest severity / highest mobility-batch impact first)
+
+1. **`db.py update-bpc` cannot create a first `bpc_metadata` row for ANY slug** — `_BPC_META_COLS` whitelists `population` but the `update-bpc` argparse never exposes `--population`, so the INSERT branch always raises `IntegrityError`. Since `bpc_metadata` is 0 rows today, this fires on the very first call the mobility batch makes. `scripts/db.py:1039-1051` (argparse) vs. `:60-65` (whitelist) vs. `:1759-1778` (INSERT branch). — item 2h.
+2. **7 of 11 citations in the only real reasoning doc in the repo cite lead-index-only (unadmitted) sources as flat Tier-1/Tier-3 evidence**, and no tool anywhere cross-checks reasoning-doc prose against `evidence_sources`/`source_locators` admission status. `references/bpc-reasoning/room-acoustic-performance.md:114-115,163,178,211`. — item 3d.
+3. **The Opus-authorship floor (`synthesis/opus-routing`) has zero mechanical enforcement**, confirmed absent at every layer checked (contract, CLI, schema, attestation schema, the one governing DR's own attestation admits it's unfalsifiable). `governance/pipeline-contract.yaml:117` (`check: null`). — item 2.
+4. **All three comparative-analysis capabilities are absent** (judgment-vs-synthesis, synthesis-vs-synthesis, judgment-staleness-vs-synthesis) — the headline item. Nearest surfaces are either scoped one stage too narrow (`v_divergence`, `derivation_sha`) or agent-judgment workflows with no code (`connection-auditor`, `cross-population-conflict-mapper`). — item 4.
+5. **`connections.opus_reviewed` is entirely dead**: hardcoded to 0 on write, no CLI path ever sets it to 1, and render (`build_part05`) applies no filter on it at all — an unreviewed connection reaches the book. `scripts/db.py:1374`; `scripts/generate_parts.py:250-266`. — item 5b/5c.
+6. **`register_integrity_check.py` prints "(DB cross-check on)" while its cross-check code path is unreachable** against the real DB (empty-dict falsiness on 0 `specifications` rows) — a self-diagnosed-but-unfixed instance of failure mode (a), one layer more subtle than a bare `EXAMINED: 0`. `scripts/audit/register_integrity_check.py:159-192`. — item 6c.
+7. **`attestation_presence` (BLOCKING) is live-vacuous on the actual current repo HEAD right now**, and its scope is decoupled from `run_checks.py --changed-from` — it only ever examines `HEAD~1..HEAD`. `governance/check-registry.yaml:900`. — item 7d.
+8. **`reasoning_doc_citations` has no CLI writer** — `reasoning-doc-citations_SKILL.md` teaches raw hand-SQL as the sanctioned path, plausibly why 0 rows exist to back the 20 citations in the one real reasoning doc. — item 8c.
+9. **`connection_targets.target` has no FK/format validation** — a connection can permanently cite a nonexistent item code. `scripts/migrations/057_baseline_2026-08-12.sql` (CREATE TABLE connection_targets). — item 5a, R3.
+10. **`generate_parts.py`'s `full_mode_ready()` gate is correct but orphaned** — not called by the sanctioned `regenerate_derived.sh`, not in the check registry, not in CI; `--mode` defaults to `stub` (no gate). — item 9b.
+11. Minor: `delete-connection` on a nonexistent con_id reports success (no rowcount check) — item 5a, R6. `db.py update-bpc`/`add-supersession-check` refusals surface as raw Python tracebacks rather than clean CLI errors, consistent across items 2h, 4e, 5a.
+
+### (c) The ABSENT list
+
+- `synthesis/opus-routing` mechanical check — ABSENT (item 2)
+- Judgment-vs-synthesis comparison tool — ABSENT (item 4, Q1)
+- Synthesis-vs-synthesis (cross-slug contradiction) comparison tool — ABSENT (item 4, Q2)
+- Judgment-staleness propagation into synthesis — ABSENT (item 4, Q3)
+- CLI writer for `reasoning_doc_citations` — ABSENT (item 8c)
+- FK/format validation on `connection_targets.target` — ABSENT (item 5a)
+- Functioning `connections.opus_reviewed` gate (read or write) — ABSENT (item 5c)
+- CHECK 8 of `reasoning_doc_citations_audit.py` (doc-vs-row cross-reference) — ABSENT, advertised in docstring, never coded (item 3c)
+- `--population` flag on `db.py update-bpc` — ABSENT (item 2h)
+- Enforcement wiring for `generate_parts.py full_mode_ready()` — ABSENT from regeneration/CI path (item 9b)
+
+#### Comparative-analysis subsection (item 4, verbatim verdicts)
+
+- **Q1 (specifications vs. best_practice_synthesis, flag disagreement): ABSENT.** No join exists
+  with live data between `specifications` (item_code×population) and `bpc_metadata`
+  (slug×population) — the bridge `item_bpc_links` is 0 rows. Nearest surface `v_divergence`
+  compares within-cell Tier1/Co-1 convergence, not cross-stage judgment-vs-synthesis. Unenforced
+  boundary: judgment ↔ synthesis.
+- **Q2 (synthesis vs. synthesis across slugs/items, e.g. corridor width vs. DEM wayfinding):
+  ABSENT.** `cross-population-conflict-mapper` + `conflicts` is the designed answer but is an
+  agent-run research/judgment workflow, never machine-computed, and currently unexercised
+  (0 rows). Unenforced boundary: synthesis ↔ synthesis.
+- **Q3 (changed judgment propagated into a synthesis that already cited it): ABSENT.** A real
+  staleness primitive exists (`specifications.derivation_sha` + `pilot_renderings.py`'s
+  `sha_stale`) but stops at render, never reaching `bpc_metadata`/reasoning docs — no pointer
+  records which judgment(s) a synthesis was authored against. `supersession_check` answers a
+  different question (source staleness, not judgment staleness). Unenforced boundary: judgment →
+  synthesis (supersession propagation).
+
+### (d) Vacuous gates today, and which stay vacuous after a successful mobility batch
+
+**Vacuous today (counted):** `validate_reasoning` (unflagged form always; even `--strict` finds
+0 subjects for any mobility slug — item 1f), `reasoning_doc_citations_audit.py` (item 3b),
+`register_integrity_check.py`'s DB-cross-check branch specifically, though the overall script
+prints PASS (item 6c), `adjudication_integrity.py`'s determination-readiness section (item 4a),
+`attestation_presence` on the current live HEAD (item 7d), `validate_verification_consistency.py`
+(item 8b). **That is 6 gates found vacuous during this run**, several with honest self-reporting
+(EXAMINED:0 / NOTHING-IN-SCOPE) and one (`register_integrity_check.py`) that is NOT
+self-reporting — it labels its skipped branch as "on."
+
+**Still vacuous after a successful mobility batch** (i.e., populating `bpc_metadata` +
+`specifications` for the mobility slugs alone does not fix these):
+- `reasoning_doc_citations_audit.py` — stays vacuous unless someone also populates
+  `reasoning_doc_citations` rows, which requires hand-SQL (item 8c) since no CLI writer exists;
+  a mobility batch that writes reasoning docs but skips the (friction-heavy, unenforced)
+  citation-verification pass leaves this check exactly as vacuous as today.
+- `attestation_presence`'s scope-decoupling from `--changed-from` (item 7d) — unaffected by DB
+  content; it is a wiring bug in `run_checks.py`/`adherence_log_audit.py`, not a data-emptiness
+  problem.
+- All three comparative-analysis capabilities (item 4) — even with mobility `specifications` and
+  `bpc_metadata` rows fully populated, item_bpc_links would ALSO need to be populated (a
+  separate, currently-unused table) before `v_divergence`-adjacent machinery could even attempt
+  a join, and no code exists to do the actual comparison regardless.
+- `generate_parts.py full_mode_ready()` (item 9b) — even once it would legitimately PASS for a
+  complete mobility batch, nothing calls it; it stays orphaned from `regenerate_derived.sh`/CI
+  independent of DB state.
+- `connections.opus_reviewed` (item 5c) — dead regardless of how many real mobility connections
+  get filed, because the write path hardcodes 0 and nothing reads it.
+
+**Would become non-vacuous** (genuinely fixed by a successful mobility batch alone): `validate_reasoning.py`
+(once mobility reasoning docs exist to examine — though it would then likely surface real
+structural errors, per item 1d's finding on the one existing doc), `adjudication_integrity.py`'s
+readiness section (would report real specifications/SVE counts instead of 0), and the
+`register_integrity_check.py` DB-cross-check IF `specifications` rows are populated (item 6c) —
+though this one needs verification after the fact, not blind trust in its current "(DB
+cross-check on)" label.
