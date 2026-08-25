@@ -477,12 +477,15 @@ footer{margin-top:72px;padding-top:26px;border-top:2px solid var(--ink);font-siz
   </div>
 
   <div class="col body-stack" style="margin-top:28px">
-    <div class="callout accent">
-      <h3>One test for the whole plan</h3>
-      <p>After Phase 0 and Phase 1, this must be walkable on a scratch copy and produce a page that shows both the value and its sources:</p>
-      <p class="mono" style="font-size:.86rem;color:var(--ink)">one source admitted → one value extracted with a locator → one (item &times; population) cell with governing_refs → one synthesis → one rendered page</p>
-      <p>That is §4&rsquo;s acceptance criterion reduced to a dry run. If it cannot be walked on scratch, Phase 1 is not finished — whatever the checks say.</p>
+    <div class="callout">
+      <h3>The plan&rsquo;s own acceptance test fails by construction</h3>
+      <p>I wrote that after Phase 0 and Phase 1 this would be walkable on a scratch copy: <span class="mono" style="font-size:.86rem">one source admitted → one value extracted with a locator → one cell with governing_refs → one synthesis → one rendered page showing the value and its sources.</span> An adversarial review traced it against the code. It does not complete, and it fails at the last step:</p>
+      <p class="mono" style="font-size:.86rem;color:var(--ink)">$ grep -c "value" scripts/generate/spec_page.py<br>0</p>
+      <p><b>The renderer never selects or shows the value.</b> Its table carries state, tier and sources — no value column. A perfect determination renders a page with no number on it. And the only existing writer, <code>assess_cell.py</code>, binds literal <code>None</code> for <code>value_min</code>, <code>value_max</code> and <code>value_unit</code> — so there is nothing to show even if the page could show it.</p>
+      <p>Nothing in Phases 0&ndash;4 would have caught this, because nothing in the plan read the renderer. Five additions close it, all Phase 1: render the value, bind it, add the convergence and confidence refusals the blocking gate actually demands, write the root fields <code>v_value_independence</code> counts, and reconcile the verification-method choices with invariant I4.</p>
+      <p><b>The one that matters most is the third.</b> A green path that stays unreachable while the gate stays red is precisely the condition that produced the fabrication of 19 August: the writer could not express what the gate demanded, so someone wrote it by hand.</p>
     </div>
+    <p>One item was withdrawn outright. I had claimed stale-synthesis propagation was &ldquo;built and never run&rdquo; because <code>supersession_check</code> exists. Read from its CHECK constraints, that table records <em>literature currency for an anchor source</em> — is this still the best available paper? It cannot express &ldquo;a judgment changed, so the synthesis citing it is stale.&rdquo; The original verdict of ABSENT was right and I overturned it by reading a table name instead of its schema — the exact error the repository&rsquo;s own rule about vocabularies warns against.</p>
     <p>Phases 3 and 4 — render truthfulness and apparatus honesty — are real and none of it blocks a batch. Two of them are minutes: <code>room_page.py</code> queries <code>FROM room</code> where the table is <code>rooms</code>, and <code>index.html</code> hard-codes counts that are wrong today.</p>
     <p><b>The plan adds no check, no table, no register and no workplan file.</b> Every item repairs something that exists or writes a table that exists. Where the honest answer is deletion, that is offered as the equal option — which is the whole reason this repository is allowed to shrink.</p>
   </div>

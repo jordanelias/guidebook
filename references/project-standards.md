@@ -1096,12 +1096,12 @@ DATE: 2026-08-25 — owner prompt commissioning the smoke test; recorded the sam
 
 RULE: The person-side demand layer is named `icf_demands`, and it is NOT folded into `access_needs`.
 Owner ruling 2026-08-25, resolving the two items `DR-2026-08-24-scaffolding-is-phase-specific.md`
-§R6 left explicitly NOT DECIDED. The layer presently called `axes` is renamed **`icf_demands`**
+§R8 left explicitly NOT DECIDED. The layer presently called `axes` is renamed **`icf_demands`**
 (`icf_demands.demand_code`, and correspondingly `item_demand_links`, `population_demand_map`,
-`access_need_demand_map`, `slugs.serves_demands`, `situations.attaches_demands`). §R6 item 1 —
+`access_need_demand_map`, `slugs.serves_demands`, `situations.attaches_demands`). §R8 item 1 —
 "axis" is descriptive vocabulary, never a domain identifier — stands and is now executable; its
 prescribed replacement wording ("ICF-anchored access needs") is superseded by this ruling because
-that name was already taken by a different table, and executing §R6 literally would have created a
+that name was already taken by a different table, and executing §R8 literally would have created a
 collision between the two layers it is most important to keep apart.
 
 **Why the fold is refused, measured.** `axes` and `access_needs` both hold 17 rows and are joined by
@@ -1132,5 +1132,43 @@ ACTION: (1) Use `icf_demands` and its codes WITH names, never bare codes (the 20
 stands). (2) Do not fold the two layers; cite this record if asked to. (3) The rename itself is a
 D-SCHEMA migration with a full caller sweep across four tables, six columns, a blocking check
 (`validate_axes.py`) and 297 tracked files — it is scoped and owner-gated, and must not be attempted
-piecemeal (§R6 item 3 stands unchanged).
+piecemeal (§R8 item 3 stands unchanged).
 DATE: 2026-08-25 — owner ruling, selecting `icf_demands` and refusing the fold.
+
+---
+
+## CORRECTION to the entry above, and a second supersession — both 2026-08-25
+
+**Correction, same day, by adversarial review.** The `icf_demands` entry above cited the governing
+DR section as **§R6** in four places. The section is **§R8** — *"axis" is a descriptive word; it may
+not be a domain identifier* (`decisions/DR-2026-08-24-scaffolding-is-phase-specific.md:89`). There is
+no §R6 in that document. The citations are corrected in place; the ruling itself is unaffected and
+its measurements were re-verified independently (17/17 rows, the 21-row map at 15/15 with `A-REACH`
+fanning to 3, b/d + mechanism versus e + design_obligation). **Recorded rather than silently fixed,
+because a rule record that points at a section which does not exist is exactly the class of defect
+this ledger exists to catch, and I wrote it four hours ago.**
+
+One qualification also earned: that entry says the "axis" metaphor **asserts** orthogonality. It
+does not assert it; it *connotes* it. The substantive point stands — `AX-AMB` and `AX-WHM` are
+opposed on ramp gradient, and the ratified permitted-umbrella test turns on the difference between
+"opposed" and "orthogonal" — but the verb was too strong for what a metaphor can do.
+
+**Second supersession, recorded on contact.** The owner commissioned, 2026-08-25, a *"Fable 5
+read-only adversarial review of plans and contents included for logic, sequence, factuality,
+walkability, correctness."* This falls outside the supersession recorded earlier today on two
+further counts that record did not reach:
+
+1. Its subject is **plans**, which the 2026-08-19 RULE's limbs (a) and (b) exclude, and it is a
+   **pass on a pass** — the review's subjects include six stage traces and three prior audits —
+   which ACTION clause (5) forbids outright.
+2. `scratchpad/…/WALK-REPAIR-PLAN.md`, which that review takes as its primary subject, **schedules
+   remediation** — ACTION clause (3): *"Never schedule remediation — a pass emits data plus one
+   session record, and may not create or modify a workplan."* The plan is deliberately not in
+   `workplan/`, which respects the letter of the second half and not the first.
+
+Both are superseded for this session and this purpose only. **The 2026-08-19 RULE is not amended**,
+and the pass owed on batch 1's admitted rows stands under it unchanged. The review was worth its
+cost and its own finding says why: the repair plan's acceptance test **fails by construction**, and
+nothing in the plan would have noticed.
+
+DATE: 2026-08-25 — owner prompt commissioning the adversarial review; recorded the same day.

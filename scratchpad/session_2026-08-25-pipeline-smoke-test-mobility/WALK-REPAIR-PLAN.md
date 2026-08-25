@@ -187,3 +187,116 @@ new register, and no workplan file. Every item is a repair to something that alr
 writer for a table that already exists. Where the honest answer is "delete it" (P2.5), that is
 offered as the equal option — CLAUDE.md §1's symmetry rule, which is the whole reason this
 repository is allowed to shrink.
+
+---
+
+# AMENDMENT — 2026-08-25, after adversarial review
+
+The plan's **core diagnosis survived** the review. Its **acceptance test did not.** F4's closing
+line is the fair one: *"Like the pipeline it repairs, it currently ends one column earlier than it
+looks."* Every correction below is verified independently before being written here.
+
+## A-1 — THE WALK DOES NOT COMPLETE. Phase 1 as written is insufficient.
+
+I asserted that Phase 0 + Phase 1 makes this walkable:
+*source admitted → value extracted → cell written → synthesis → rendered page showing value AND
+sources.* **It does not, and the failure is at the last step.**
+
+```
+$ grep -c "value" scripts/generate/spec_page.py
+0
+```
+
+**`spec_page.py` never selects and never renders the value tuple.** Its table carries state, tier
+and sources — no value column. So even a perfect `specifications` row with `value_min`,
+`value_max` and `value_unit` populated renders a page with **no value anywhere on it**. The
+acceptance sentence I wrote is unsatisfiable by construction, and nothing in Phases 0–4 would have
+caught it, because nothing in the plan reads the renderer.
+
+Compounding it: `assess_cell.py:565-573` carries `value_min, value_max, value_unit` in its INSERT
+column list and binds literal `None` for all three. So the only existing writer produces valueless
+rows, and the only existing renderer could not show them if it did.
+
+**Five additions, all Phase 1, none optional:**
+
+| # | Addition | Why |
+|---|---|---|
+| **P1.7** | `spec_page.py` selects and renders the value tuple | Without it the walk cannot end |
+| **P1.8** | The judgment writer (P1.3) takes and binds `--value-min/--value-max/--value-unit`; `assess_cell` stops binding `None` | Without it there is nothing to render |
+| **P1.9** | P1.3's refusals must also cover **convergence assessment** (blocking `validate_evidence_state` demands one for `stated` AND `provisional`) and the **confidence flag** for `provisional` — or `assess_cell` is declared the sole sanctioned writer and P1.3 is dropped | Otherwise the first honest cell fails the blocking battery |
+| **P1.10** | `add-extraction` (P1.2) must write `root_type` + `root_ref_id`, and `external_root_registry` needs a writer | `v_value_independence` counts only rows carrying those; without them it still returns 0 and P1.2's stated purpose is unmet |
+| **P1.11** | `--verification-method` choices reconciled with blocking I4 | `corroborated-not-retrieved` and `citing-bibliography` are both offered and both rejected by I4 for VERIFIED rows; `direct-render` is missing |
+
+**P1.9 is the one that matters most.** A green path that is unreachable while the gate stays red is
+precisely the condition that produced the 2026-08-19 fabrication: the writer could not express what
+the gate demanded, so someone wrote it by hand.
+
+Also corrected: the regeneration step in this plan and in `WAVE-H-SCOPE.md` names
+`regenerate_derived.sh`, **which does not touch `site/specs/`** — that is `build_site.py`, and its
+freshness check is advisory.
+
+## A-2 — P2.3 was a category error. Withdrawn and replaced.
+
+I wrote that `supersession_check` is "built and has never run" and needs only wiring. **Wrong.**
+Read from the schema:
+
+```
+outcome      CHECK(outcome IN ('current_best','superseded_by','refined_by',
+                               'divergent_no_supersession','co1_addition_logged','pending'))
+check_method CHECK(check_method IN ('pubmed_search', …))
+```
+
+That is **literature currency for an anchor source** — *is this source still the best available?* It
+cannot express "a judgment changed, so the synthesis citing it is stale." S4's original verdict
+(ABSENT) was right and I overturned it in the wrong direction by reading a table name instead of its
+CHECK constraints — the exact error CLAUDE.md §4 warns about when it says vocabularies come from the
+schema, not from the code or the name.
+
+**Replacement:** judgment-staleness propagation is **ABSENT**. Build it on `derivation_sha`
+(`assess_cell.py` already computes an identity hash per cell) plus the P2.2 comparator: when a
+cell's `derivation_sha` changes, every synthesis citing that cell is flagged. `supersession_check`
+keeps its own job and is not conscripted.
+
+## A-3 — Factual corrections to my own findings
+
+| Claim | Correction |
+|---|---|
+| "no committed migration ever inserted into `source_value_extractions`" | True of the **live tree only**. Two archived migrations do: `_archived/scripts/migrations/data_20260714210000_rap_rt60_extraction_substrate.sql` and `…_20260715050000_rap_rt60_general_genealogy.sql`. The table **has** held rows (the pilot's 8); the clean-room reset destroyed them. "Never written" was too strong — "no live writer, and its only rows were archived away" is right. |
+| `connections_produced` "read by no script" | `db.py:194,230` reads and rewrites it. The true claim is narrower and still holds: **no promotion consumer** — nothing moves a harvested DOI into the clue store. |
+| "134 stranded" | **133.** Two of the 138 are in `evidence_sources`. |
+| `room_page.py` — two wrong table names | **Six** bad references: `room`, `room_item`, `room_item_population`, `room_dar_provision`, `room_conflict`, and `specification` singular, plus `room_id` vs `room_code` keys. The two-rename fix in P3.1 leaves it crashed. |
+| "ten scripts touch both `specifications` and `bpc_metadata`" | **Eight.** |
+| "13 of 19 contract criteria covered" | Not reproducible; independent measure is 14 named / 5 null. **Withdrawn pending a single agreed method.** |
+| "two of the four DG-NON items are now ruled" | Two were answered in conversation; only the `icf_demands` one is in the ledger. The E-08/Wave H answer is recorded as a scope document, not as a ruling. |
+
+## A-4 — Two internal contradictions in this plan
+
+1. The closing paragraph says the plan *"adds no new check"* while **P2.2 says "Add one check."**
+   The closing claim is wrong; P2.2 is the exception and should be stated as one, with §1's
+   burden-of-proof met explicitly: *without it, a synthesis can cite a determination that no longer
+   says what the synthesis says it says, and nothing reports it.*
+2. **P1.1's evidence-type fix cited a list at `db.py:1223`.** `evidence_sources.evidence_type` has
+   **no CHECK constraint**, so there is no schema vocabulary to derive — taking the code list would
+   install a second home for a vocabulary (rule 5). The correct fix is a CHECK migration first, then
+   `dbcore.check_values()`.
+
+## A-5 — Dropped without a recorded deferral
+
+From the S1–S6 traces, absent from the plan and now added to Phase 4 rather than silently lost:
+`add-population-match` crashes on a same-session divergent grade (the very case CLAUDE.md §4 says
+must land as a second row); `adjudication_integrity` never fails on its exit code;
+`source_locators.jurisdiction` holds unusable values in 818 of 875 rows with **no reader at all** —
+which is the filter a bucket-driven batch would run; and `spec_value_probes` / PMP writers are
+absent while the skill teaches raw `INSERT`.
+
+## What survives unchanged
+
+P0 (the canonical-write guard, though "silently destroy" was dramatised — sha discipline and the CI
+rebuild-compare would catch it), P1.1–P1.6 as *necessary* though not sufficient, P2.1, P2.2, P2.4's
+deferral (justified: `bpc_metadata` is 0, and building a comparator now yields another vacuous
+gate), P2.5, and the whole of Phase 3 and Phase 4. The edge-based organisation survives. The
+diagnosis survives.
+
+**The acceptance test does not, and that is the finding.** A plan whose success criterion cannot be
+met, in a repository whose documented failure mode is gates that pass having examined nothing, would
+have been executed to completion and declared done.
