@@ -2040,3 +2040,164 @@ P4.7a match-id suffix                          ── independent; P4.4 (runbook
 Everything else can proceed in parallel or wait. The single most load-bearing edit in the
 repository is P1.1's I1/I4 reconciliation — without it every admission is born failing a
 blocking gate, which is the condition that manufactured the 2026-08-19 fabrication.
+
+---
+
+# THE END-TO-END VERIFICATION SCRIPT
+
+This is the plan's acceptance test, mechanised. **It fails by construction today** (no
+extraction writer; valueless INSERT; valueless renderer; link-less cells) and passing it is
+what "Phase 1 done" MEANS. Ship it as
+`scripts/tests/walk_e2e.sh`, run by hand on demand — deliberately NOT registered as a check
+(it writes a scratch DB and renders a page; the registry is for read-only audits; its verdict
+is consumed by the human finishing Phase 1, and §1's burden-of-proof for a registry entry is
+not met until someone names what would read a green walk nightly).
+
+All fixtures verified live: slug `mobility-built-environment` ∈ slugs; item `E-12`
+("Entrance Landing and Manoeuvring Space for Power Wheelchair Users"); population `MOB`;
+`source_slug_links` for the slug currently 0 rows (clean).
+
+```bash
+#!/usr/bin/env bash
+# walk_e2e.sh — admit → extract → judge → synthesise → render, on scratch,
+# asserting the VALUE and the SOURCES both appear on the rendered page.
+# §4's acceptance criterion ("one answered question, published") as a dry run.
+set -euo pipefail
+cd "$(dirname "$0")/../.."
+
+S="$(mktemp -d)"; DB="$S/walk.db"; SESSION="session_2026-08-25-walk-e2e"
+cp data/guidebook.db "$DB"
+PRE_SHA=$(sha256sum data/guidebook.db)
+
+REF=$(python3 -c "
+import sqlite3,sys; sys.path.insert(0,'scripts'); import dbcore
+print(dbcore.next_ref_id(sqlite3.connect('file:$DB?mode=ro', uri=True)))")
+
+# ── 1. ADMIT (P1.1: scope, VERIFIED⇒CLOSED, I4-lawful method, atomic slug link)
+GUIDEBOOK_DB_PATH="$DB" python3 scripts/db.py add-source \
+  --ref-id "$REF" --author "Koontz|Alicia" --year 2010 \
+  --title "Wheelchair turning space demand in constrained entries (walk fixture)" \
+  --tier 1 --evidence-type clinical --scope high_control \
+  --doi 10.0000/walk-e2e-fixture --metadata-quality COMPLETE \
+  --verification-status VERIFIED --verification-method tool --verified-by-tool crossref \
+  --slug mobility-built-environment --local-ref-id MOBW-01 --session "$SESSION"
+
+# ── 2. GRADE the population match (P1.5's condition-1 gate needs it)
+GUIDEBOOK_DB_PATH="$DB" python3 scripts/db.py add-population-match \
+  --ref-id "$REF" --target-population MOB --study-population "power wheelchair users" \
+  --match-grade EXACT --session "$SESSION"
+
+# ── 3. EXTRACT one value WITH a locator and an independent root (P1.2/P1.10)
+XID=$(GUIDEBOOK_DB_PATH="$DB" python3 scripts/db.py add-extraction \
+  --ref-id "$REF" --slug mobility-built-environment --item-code E-12 \
+  --parameter "manoeuvring_space_min" --population MOB \
+  --claim-type numerical --claimed-value 1500 --claimed-unit mm \
+  --extraction-method full-read --root-type measurement_primary \
+  --root-ref-id "$REF" --loc-section "3.2" --session "$SESSION" \
+  | python3 -c "import json,sys; print(json.load(sys.stdin)['extraction_id'])")
+
+python3 - <<PY   # the independence view must move off zero (P1.2's whole point)
+import sqlite3
+n = sqlite3.connect('file:$DB?mode=ro', uri=True).execute(
+    "SELECT COUNT(*) FROM v_value_independence").fetchone()[0]
+assert n >= 1, "v_value_independence still 0 — P1.10 not honoured"
+PY
+
+# ── 4. JUDGE (P1.4/P1.5/P1.8/P1.3': derived state, bound value, spec links)
+python3 scripts/assess/assess_cell.py --db "$DB" \
+  --item E-12 --population MOB --slug mobility-built-environment \
+  --value-from-extraction "$XID" \
+  --emit-sql "$S/cell.sql" --report-json "$S/cell.json"
+
+python3 - <<PY   # the cell: stated, valued, linked — and gate-clean
+import sqlite3, json
+c = sqlite3.connect('file:$DB?mode=ro', uri=True)
+row = c.execute("SELECT specification_id, state, value_min, value_max, value_unit, "
+                "governing_refs FROM specifications WHERE item_code='E-12' "
+                "AND population_code='MOB'").fetchone()
+assert row, "no cell written"
+sid, state, vmin, vmax, vunit, gr = row
+assert state == 'stated', f"state={state} (T1+EXACT should anchor: P1.5 conds 1)"
+assert (vmin, vmax, vunit) == (1500.0, 1500.0, 'mm'), f"value not bound: {(vmin,vmax,vunit)}"
+links = [r[0] for r in c.execute("SELECT ref_id FROM specification_source_links "
+                                 "WHERE specification_id=?", (sid,))]
+assert links == sorted(json.loads(gr)), f"links {links} != governing_refs {gr}"
+PY
+python3 scripts/validate_evidence_state.py --db "$DB"           # blocking battery: 0 errors
+GUIDEBOOK_DB_PATH="$DB" python3 scripts/tests/test_db_integrity.py   # I1/I4/K01/parity green
+
+# ── 5. SYNTHESISE (P1.6: first bpc_metadata write survives) + witness the link (P2.2)
+GUIDEBOOK_DB_PATH="$DB" python3 scripts/db.py update-bpc \
+  --slug mobility-built-environment --population MOB \
+  --evidence-state DRAFT --session "$SESSION"
+SID=$(python3 -c "import sqlite3; print(sqlite3.connect('file:$DB?mode=ro',uri=True).execute(
+  \"SELECT specification_id FROM specifications WHERE item_code='E-12' AND population_code='MOB'\").fetchone()[0])")
+GUIDEBOOK_DB_PATH="$DB" python3 scripts/db.py link-synthesis-determination \
+  --slug mobility-built-environment --specification-id "$SID" --session "$SESSION"
+GUIDEBOOK_DB_PATH="$DB" python3 scripts/audit/synthesis_determination_sync.py  # EXAMINED: 1, PASS
+
+# ── 6. RENDER (P1.7) and assert the page carries the VALUE and the SOURCES
+GUIDEBOOK_DB_PATH="$DB" python3 scripts/generate/spec_page.py E-12 --output "$S/e-12.html"
+grep -q "1500 mm" "$S/e-12.html"        || { echo "FAIL: value not on page"; exit 1; }
+grep -q "$REF"    "$S/e-12.html"        || { echo "FAIL: governing source not on page"; exit 1; }
+grep -q "MOB"     "$S/e-12.html"        || { echo "FAIL: population row missing"; exit 1; }
+
+# ── 7. The canonical DB never moved
+[ "$PRE_SHA" = "$(sha256sum data/guidebook.db)" ] || { echo "FAIL: CANONICAL DB TOUCHED"; exit 1; }
+
+echo "WALK COMPLETE: admitted -> extracted -> judged (stated, 1500 mm) -> synthesis row"
+echo "-> rendered page carries the value AND the source. Canonical untouched."
+```
+
+Notes for the implementer: (1) `add-extraction` must `_emit({"extraction_id": …})` for step
+3's capture — include that in P1.2's dispatch; (2) the fixture DOI is transparently fake and
+`--verified-by-tool crossref` on it is a FIXTURE assertion — acceptable only because this
+scratch DB is destroyed at script end; the script must `rm -rf "$S"` on exit (add a trap) so
+no fixture row can ever be mistaken for evidence — and this is also why walk_e2e.sh must never
+run against canonical (P0.1 enforces that mechanically); (3) if `update-bpc`'s
+`--evidence-state DRAFT` trips a vocabulary later added to `bpc_metadata.evidence_state`, use
+a declared value — `check_declared` will name the set.
+
+---
+
+# CONTENT OR DOCTRINE WEARING A CODE COSTUME — needs an owner decision
+
+1. **P2.5's "make it real" arm** — whether connections must pass Opus review before rendering
+   in Part 5 is routing doctrine no ratified record states. The DELETE arm (recommended,
+   designed above) is pure code. If the owner wants the gate, it comes back as a ruling with a
+   reader, not a column.
+2. **P1.8's aggregation rule** — "cell value = min/max over the operator-cited governing
+   extractions, single unit, no conversion" is a small piece of judgment doctrine executed as
+   code. It is the narrowest rule that completes the walk, it refuses everything ambiguous,
+   and the cited ids are recorded — but the owner should see it stated as a rule, because a
+   future divergence protocol (§3.3) will want to replace it.
+3. **P4.3's gap-id convention** — flat-numeric vs batch-scoped minting for NEW gaps is
+   register naming, content-adjacent. The code fix is convention-neutral (correct flat mint +
+   a widened pydantic regex so live batch-scoped ids validate); choosing the go-forward format
+   is the owner's.
+4. **P4.4's edit-form on a ratified DR** — marked corrections in place (designed) vs a
+   separate corrections annex. Substance is settled by later owner rulings either way; the
+   form is the owner's call if they consider DR bodies sacrosanct.
+5. **P3.1's dropped page sections** — the Template-3 room matrix (design stages, DAR, conflict
+   register) has no backing schema; rendering it again requires migrating those tables, which
+   is a data-model/content decision (`architecture/page-templates.md` territory), not a
+   renderer fix.
+6. **P1.6 / D-18** — `bpc_metadata.population` FK-validated against `populations` includes the
+   `MOB` umbrella; whether a synthesis may be keyed to an umbrella at all is the standing
+   D-18/R8 question. The code fix is neutral (it validates membership, nothing more).
+7. **NOT flagged:** P1.5 — C-5/F1 settled that the ratified text itself carries the
+   distinction (conditions 1,3 vs 2,4); executing it is code, and the design does exactly and
+   only what the text says.
+
+---
+
+# CLOSING NOTE — what this design deliberately does not do
+
+No new registry check except P2.2's comparator (the plan's stated exception, burden of proof
+in its docstring) and two advisory freshness entries (P3.4 `parts_fresh`; P3.2 rides the
+EXISTING `site_pages_fresh`). One new table (P2.2's witness junction — argued, and the only
+alternative stores the same facts worse). Three migrations: 065 (evidence_type/tier CHECKs),
+066 (witness table), 067 (drop opus_reviewed). Two deletions recommended over repair:
+`opus_reviewed` (P2.5) and room_page's fictional sections (P3.1). Everything else is refusals
+added to writers that exist, columns bound that were computed and dropped, and one renderer
+taught to show the number the whole pipeline exists to produce.
