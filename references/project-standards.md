@@ -1046,3 +1046,262 @@ re-enter any stage; each stage's tables still carry only their own facts (rule 5
 `tools/pipeline_completeness.py` and the dashboard. `schemas/pipeline_contract.py` sets
 `extra="forbid"`, so a display-name field cannot simply be added; the rename is a caller sweep
 under `CLAUDE.md` rule 4 and is tracked as such rather than done in the same breath as this record.
+
+---
+
+## SUPERSESSION RECORD — owner directive 2026-08-25, pipeline smoke test
+
+**Recorded, not argued.** `CLAUDE.md` rule 0: *"A live owner statement supersedes every prior
+ratified record it touches, on contact. Your job on hearing one is to record the supersession,
+never to weigh the ruling against the paperwork it changes."* This is that record. It was owed from
+the moment the directive was given and was not written until a read-only auditor pointed out the
+omission — which is itself the failure rule 0 exists to prevent, committed by the session auditing
+for it.
+
+**The directive.** The owner commissioned a full-pipeline smoke test ahead of a mobility research
+batch: *"run a smoke test on the pipeline from start to finish… ensure that you attempt to run all
+skills/tools, including those that may not be explicitly built yet… ensure that you run every
+skill/tool/hook/script/etc by stage"*, and separately *"use Fable 5 read-only to investigate the
+consequences of each step… you are auditing Sonnet 5's output by contextualizing it against the
+repository's doctrine/mission/pipeline."*
+
+**What it touches.** The RULE of 2026-08-19 in this ledger — *"Adversarial review is a
+truth-instrument bound to evidence, never a plan-instrument"* — restricts any commissioned pass to
+a diff that (a) wrote rows to the research tables or (b) authored or amended a synthesis artifact,
+and its ACTION clause (5) states: *"Budget: at most one adversarial pass per research batch. **A
+pass on a pass is forbidden** — defects in a pass are the next batch's pass's business."*
+
+The commissioned work is outside both limbs in letter: its subject is the **apparatus and the write
+path**, not a research or synthesis diff, and its structure is explicitly a pass on a pass — three
+read-only auditors whose subject is six stage traces.
+
+**Scope of the supersession.** For the session
+`session_2026-08-25-pipeline-smoke-test-mobility` only, and for its purpose only — establishing
+whether the pipeline can carry a mobility batch before one is attempted. The 2026-08-19 RULE is
+**not amended**. Its reasoning is undisturbed and its measurement still stands: ten fresh-context
+passes between 2026-07-14 and 2026-08-19 examined no research output, because there was none. A
+future session may not cite this record to authorise a critique of a plan, a census, a register or
+another pass. **The next adversarial pass owed remains the one on batch 1's admitted rows**, under
+the 2026-08-19 RULE unchanged.
+
+**Why the distinction is worth keeping rather than dissolving.** The 2026-08-19 RULE targets passes
+that *cannot be wrong about anything a reader could check* — its own words. This session's subject
+is executable: every claim it makes is a command someone can re-run, and several were re-run and
+overturned within the session. That is the property the RULE protects, arrived at from the other
+direction. It is not a licence to audit prose.
+
+DATE: 2026-08-25 — owner prompt commissioning the smoke test; recorded the same day.
+
+---
+
+RULE: The person-side demand layer is named `icf_demands`, and it is NOT folded into `access_needs`.
+Owner ruling 2026-08-25, resolving the two items `DR-2026-08-24-scaffolding-is-phase-specific.md`
+§R8 left explicitly NOT DECIDED. The layer presently called `axes` is renamed **`icf_demands`**
+(`icf_demands.demand_code`, and correspondingly `item_demand_links`, `population_demand_map`,
+`access_need_demand_map`, `slugs.serves_demands`, `situations.attaches_demands`). §R8 item 1 —
+"axis" is descriptive vocabulary, never a domain identifier — stands and is now executable; its
+prescribed replacement wording ("ICF-anchored access needs") is superseded by this ruling because
+that name was already taken by a different table, and executing §R8 literally would have created a
+collision between the two layers it is most important to keep apart.
+
+**Why the fold is refused, measured.** `axes` and `access_needs` both hold 17 rows and are joined by
+a 21-row map, which reads as duplication and is not:
+
+| | anchors | carries | side |
+|---|---|---|---|
+| `axes` → `icf_demands` | ICF **b** (body function) + **d** (activity/participation) | `mechanism` | the person's functional demand |
+| `access_needs` | ICF **e** (environmental factors) | `design_obligation` | what the environment must do |
+
+The map is many-to-many (15 distinct codes each side across 21 rows, `A-REACH` fanning to 3). The
+b/d ÷ e split is the social model expressed in the schema: demand on one side, obligation on the
+other. Folding them would collapse person and environment into one table, which is the medical-model
+regression this project's whole taxonomy resists. The 17/17 coincidence is a coincidence.
+
+**A second defect in the retired term, recorded because it outlives the rename.** "Axis" asserts an
+orthogonal scalar dimension. `AX-AMB` (ambulant movement) and `AX-WHM` (wheeled movement) are not
+orthogonal — they are alternatives, simultaneous for part-time wheelchair users, and on ramp gradient
+their demands are **opposed**. The ratified permitted-umbrella test (2026-07-23) turns on precisely
+that distinction — an umbrella is forbidden when it collapses "opposed **or** orthogonal demands" —
+so the metaphor flattened two words the rule depends on keeping apart. The substance of "work from
+axes" is unaffected and survives the rename intact: every clause reads correctly with "ICF-anchored
+demand mechanism" substituted. The word was decorative, not load-bearing.
+
+CONDITION: Any session naming, querying, renaming or reasoning about the person-side demand layer, or
+proposing to reconcile it with `access_needs`.
+ACTION: (1) Use `icf_demands` and its codes WITH names, never bare codes (the 2026-08-18 rule
+stands). (2) Do not fold the two layers; cite this record if asked to. (3) The rename itself is a
+D-SCHEMA migration with a full caller sweep across four tables, six columns, a blocking check
+(`validate_axes.py`) and 297 tracked files — it is scoped and owner-gated, and must not be attempted
+piecemeal (§R8 item 3 stands unchanged).
+DATE: 2026-08-25 — owner ruling, selecting `icf_demands` and refusing the fold.
+
+---
+
+## CORRECTION to the entry above, and a second supersession — both 2026-08-25
+
+**Correction, same day, by adversarial review.** The `icf_demands` entry above cited the governing
+DR section as **§R6** in four places. The section is **§R8** — *"axis" is a descriptive word; it may
+not be a domain identifier* (`decisions/DR-2026-08-24-scaffolding-is-phase-specific.md:89`). There is
+no §R6 in that document. The citations are corrected in place; the ruling itself is unaffected and
+its measurements were re-verified independently (17/17 rows, the 21-row map at 15/15 with `A-REACH`
+fanning to 3, b/d + mechanism versus e + design_obligation). **Recorded rather than silently fixed,
+because a rule record that points at a section which does not exist is exactly the class of defect
+this ledger exists to catch, and I wrote it four hours ago.**
+
+One qualification also earned: that entry says the "axis" metaphor **asserts** orthogonality. It
+does not assert it; it *connotes* it. The substantive point stands — `AX-AMB` and `AX-WHM` are
+opposed on ramp gradient, and the ratified permitted-umbrella test turns on the difference between
+"opposed" and "orthogonal" — but the verb was too strong for what a metaphor can do.
+
+**Second supersession, recorded on contact.** The owner commissioned, 2026-08-25, a *"Fable 5
+read-only adversarial review of plans and contents included for logic, sequence, factuality,
+walkability, correctness."* This falls outside the supersession recorded earlier today on two
+further counts that record did not reach:
+
+1. Its subject is **plans**, which the 2026-08-19 RULE's limbs (a) and (b) exclude, and it is a
+   **pass on a pass** — the review's subjects include six stage traces and three prior audits —
+   which ACTION clause (5) forbids outright.
+2. `scratchpad/…/WALK-REPAIR-PLAN.md`, which that review takes as its primary subject, **schedules
+   remediation** — ACTION clause (3): *"Never schedule remediation — a pass emits data plus one
+   session record, and may not create or modify a workplan."* The plan is deliberately not in
+   `workplan/`, which respects the letter of the second half and not the first.
+
+Both are superseded for this session and this purpose only. **The 2026-08-19 RULE is not amended**,
+and the pass owed on batch 1's admitted rows stands under it unchanged. The review was worth its
+cost and its own finding says why: the repair plan's acceptance test **fails by construction**, and
+nothing in the plan would have noticed.
+
+DATE: 2026-08-25 — owner prompt commissioning the adversarial review; recorded the same day.
+
+---
+
+RULE: `MOB` is split. The mobility population is separated into **ambulatory** and **wheelchair
+user** as the first cut. Owner ruling 2026-08-25, verbatim: *"As to 'mobility', separate out into
+'ambulatory' and 'wheelchair user' to start."* Recorded on contact per `CLAUDE.md` rule 0; this
+settles DG-NON item 1 of the pipeline smoke test and is **not to be relitigated**.
+
+**"To start" is load-bearing.** It marks this as the first split, not the final taxonomy. Part-time
+wheelchair users — named in the work-from-axes RULE's own provenance clause as one of the erased
+groups — are **not** covered by either new code and remain owed. Balance-demand users likewise. The
+schema work must therefore be built to extend, not to close.
+
+**Why the split was owed, in the project's own terms.** `MOB` — *"disabled people with mobility
+needs; wheelchair users"*, described as *"General mobility limitation including walking, balance, or
+wheeled mobility"* — fails clause **(c)** of the ratified permitted-umbrella test (2026-07-23):
+*"no opposed demand between members."* Ramp gradient is opposed between its members (a manual
+wheelchair user wants a shallower gradient; an ambulant person with fatigue or spasticity often
+wants a shorter run, and therefore a steeper one), and handrails serve ambulant and balance users
+first while obstructing some wheeled users. The test that forbids this umbrella has existed since
+2026-07-23; `MOB` was never run through it.
+
+**Footprint, measured 2026-08-25 before any design work:**
+
+| Table | MOB rows | of total |
+|---|---:|---:|
+| `item_population_links` | **31** | 372 |
+| `population_axis_map` | **2** | 53 |
+| `evidence_population_match.target_population` | **0** | 25 (all AUT/COM/DEM/NDV) |
+| `specifications`, `item_population_elaborations`, `probe_population_links`, `extraction_population_links`, `citation_population_links`, `case_study_populations` | **0** | 0 |
+
+**33 rows. The split is a small migration, and it is cheapest now** — every one of those empty tables
+fills during the mobility batch, and the same split after the batch would have to re-grade admitted
+evidence rather than re-point 33 substrate rows.
+
+**Two constraints the execution must respect.** (1) `evidence_population_match.study_population` is
+free text describing *the study's own* participants — a fact about the paper, never fanned out
+across a split. (2) An `item_population_links` row that genuinely applies to both becomes **two**
+links, not one ambiguous one; where it cannot be resolved mechanically it is flagged for review
+rather than guessed.
+
+CONDITION: Any session touching the mobility population codes, the `populations` vocabulary, or any
+(item × population) cell for a mobility item.
+ACTION: (1) Use the two new codes; do not write new `MOB` rows. (2) Whether `MOB` survives as an
+additive cross-cutting tag (permitted) or is retired outright is settled by the design in
+`scratchpad/…/logs/F5-population-split-design.md` plus owner confirmation of the code strings — it
+is **never** a replacement code (permitted-umbrella test, clause on umbrellas as additive tags).
+(3) Part-time wheelchair users and balance remain unrepresented and must be named as a gap in any
+cell that turns on them, not silently absorbed.
+DATE: 2026-08-25 — owner ruling, quoted above.
+
+---
+
+RULE: A specification keys from the judgment object and cross-references all three modes. Owner
+ruling 2026-08-25, verbatim: *"specifications as a synthesis should be keying from a judgment item
+(if we use the word item) and cross-referencing itself against disability populations, access needs
+and ICF, ie all three modes."* Recorded on contact per `CLAUDE.md` rule 0. This settles the grain
+question raised the same day and **supersedes the `(item × population)` cell grain** that
+`DR-2026-08-12-specification-rename-and-replay-order` renamed but did not revisit.
+
+**What changes.** `specifications` is presently keyed `UNIQUE (item_code, population_code)`, both
+`NOT NULL`. Under this ruling the uniqueness key is the **judgment object alone**, and population is
+demoted from *identity* to *cross-reference* — one of three, alongside access needs and ICF.
+
+**Three modes, three junctions.** Only `specification_source_links` exists today. The ruling
+requires a specification to be cross-referenceable against **disability populations**, **access
+needs** and **ICF codes** independently, N:N in each. None of the three can be derived from another:
+`access_need_icf` currently maps 43 need→ICF pairs and is **38 `e`, 3 `d`, 2 `b`** — overwhelmingly
+environmental-factor codes, i.e. the environment side. A specification's ICF cross-reference will
+often be `b`/`d` (the person's functioning), which that table does not carry. **Deriving one mode
+from another would collapse exactly the distinction the ruling exists to preserve.**
+
+**Three things this repairs, each already on the record as broken:**
+1. `governance/conceptual-model.md:76,100` declares Population→Specification **N:N** — *"a
+   specification serves multiple populations"*. The `UNIQUE` constraint made that unimplementable.
+   The ruling restores it.
+2. `governance/research-contract.yaml:119` (R4) reads *"Cross slug x population / access-need / ICF
+   / axis. **Cells are (item x population)**."* Its first sentence becomes implementable and **its
+   second sentence is superseded by this ruling.** R4's text must be amended; a contract injected
+   into every session may not contradict itself.
+3. A `NOT NULL population_code` forced applicability *before* the determination existed, while
+   `DR-2026-08-24` §2.4 and `CLAUDE.md` §6 both hold that **applicability is an OUTPUT of synthesis,
+   not an input**. Presupposition in a primary key is now removed.
+
+**The window is open and closes on first write.** Measured 2026-08-25: `specifications` holds **0
+rows**, `specification_source_links` **0**, and **no committed data migration INSERTs into either** —
+only the baseline's DDL (`057_baseline:6823`, `CREATE INDEX idx_specifications_pop`). So rule 5's own
+drop test passes: `population_code` may be **dropped**, not merely NULLed forward, and the
+replay-order trap that cost migration 062 does not apply. **After the first determination is written
+this becomes a re-reasoning exercise instead of a schema edit.**
+
+**STILL OPEN, and deliberately not decided here: what the judgment object is called.** The owner's
+parenthesis — *"(if we use the word item)"* — is preserved as an open question, not resolved. The
+tension is real and recorded: `conceptual-model.md:92` says *"Many specifications roll up into one
+item… **Item is the Part-4 [rollup]**"*, which makes `items` a **render** aggregate, while this
+ruling needs a **judgment** object to key from. Whether those are one thing under one name, or two
+things needing two, is owed a separate ruling. Until then, no session may assume `items` is the
+judgment object merely because `item_code` is the column that exists.
+
+CONDITION: Any session writing to `specifications`, designing its writer, or reasoning about the
+grain of a determination.
+ACTION: (1) Do not write a determination keyed on a population. (2) Do not build
+`db.py add-specification --state stated`; see the companion RULE on the sole-writer resolution.
+(3) The three cross-reference junctions land in the same migration as the key change, or a
+determination becomes unqualifiable the moment it is written. (4) Amend R4's second sentence in the
+same change; leaving it is a live self-contradiction in the injected contract.
+DATE: 2026-08-25 — owner ruling, quoted above.
+
+---
+
+RULE: The mobility split is ratified as `AMB` / `WHEEL`, and the 31 links fan out to both. Owner
+ruling 2026-08-25: *"yes, AMB and WHEEL to fan out."* Settles the two questions the split design
+(`scratchpad/…/logs/F5-population-split-design.md`) put to the owner.
+
+**The codes.** `AMB` — ambulatory disabled people. `WHEEL` — wheelchair users, in the owner's own
+wording and already the repository's person-term. `MOB` is superseded.
+
+**The fan-out.** All **31** `item_population_links` rows keyed `MOB` (28 plain + 3
+`with-upper-limb-involvement`, across 28 items) become **62** rows — one `AMB` and one `WHEEL` per
+original — carrying each original's fields verbatim. The 31 originals are deleted. Net 372 → 403.
+
+**What the fan-out asserts, stated plainly so it is not mistaken for a finding.** It is a
+**mechanical carry of the umbrella's union**, not a judgement that every demand applies equally to
+both. It is the anti-erasure choice: the alternative — resolving each of the 31 by hand now — would
+decide applicability by inference, before synthesis, which is what `DR-2026-08-24` §2.4 forbids.
+Every fanned row is therefore **pending synthesis re-derivation**, and the migration header must say
+so. The 3 `with-upper-limb-involvement` rows are flagged for review rather than guessed.
+
+**Not fanned out, ever:** `evidence_population_match.study_population` is free text describing *the
+study's own* participants. A grade is a fact about a paper. (Moot in practice — measured **0** MOB
+rows there — but recorded because the next split will not be moot.)
+
+DATE: 2026-08-25 — owner ruling, quoted above.

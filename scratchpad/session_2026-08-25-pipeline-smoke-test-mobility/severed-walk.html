@@ -1,0 +1,578 @@
+<title>The Severed Walk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --ground:#F3F5F6; --surface:#FFFFFF; --surface-2:#EAEEF1;
+  --ink:#191C1F; --ink-2:#59616A; --ink-3:#828B94;
+  --rule:#D8DDE2; --rule-2:#C2C9D0;
+  --accent:#245B82; --accent-soft:#E3EDF4;
+  --halt:#A03227; --halt-soft:#F6E4E1;
+  --ok:#356348; --ok-soft:#E2EDE6;
+  --amber:#7E6118; --amber-soft:#F4EDDC;
+  --shadow:0 1px 2px rgba(25,28,31,.05),0 6px 18px -10px rgba(25,28,31,.18);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#14171A; --surface:#1B2025; --surface-2:#232A30;
+    --ink:#E7EAED; --ink-2:#9AA3AC; --ink-3:#77818B;
+    --rule:#2B3238; --rule-2:#3A434B;
+    --accent:#7BAFD6; --accent-soft:#1C2E3B;
+    --halt:#E4877C; --halt-soft:#33211F;
+    --ok:#84BB99; --ok-soft:#1D2A23;
+    --amber:#D5B463; --amber-soft:#2C2618;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px -10px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#14171A; --surface:#1B2025; --surface-2:#232A30;
+  --ink:#E7EAED; --ink-2:#9AA3AC; --ink-3:#77818B;
+  --rule:#2B3238; --rule-2:#3A434B;
+  --accent:#7BAFD6; --accent-soft:#1C2E3B;
+  --halt:#E4877C; --halt-soft:#33211F;
+  --ok:#84BB99; --ok-soft:#1D2A23;
+  --amber:#D5B463; --amber-soft:#2C2618;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px -10px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:Literata,Georgia,"Times New Roman",serif;
+  font-size:17px; line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px 96px}
+.col{max-width:68ch}
+
+h1,h2,h3,.ui{font-family:Archivo,"Helvetica Neue",Arial,sans-serif}
+h1{font-size:clamp(2.4rem,6vw,3.9rem);line-height:1.02;font-weight:700;letter-spacing:-.025em;margin:0;text-wrap:balance}
+h2{font-size:1.55rem;font-weight:700;letter-spacing:-.012em;margin:0;text-wrap:balance}
+h3{font-size:1.06rem;font-weight:600;letter-spacing:-.005em;margin:0;text-wrap:balance}
+p{margin:0}
+code,.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace}
+code{font-size:.855em;background:var(--surface-2);padding:.1em .34em;border-radius:3px;word-break:break-word}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+
+.eyebrow{
+  font-family:Archivo,sans-serif;font-size:.7rem;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+}
+.lede{font-size:1.22rem;line-height:1.55;color:var(--ink-2)}
+
+/* ---- masthead ---- */
+header.mast{padding:76px 0 40px;border-bottom:2px solid var(--ink);margin-bottom:0}
+.mast .col{display:flex;flex-direction:column;gap:22px}
+.rule-thin{height:1px;background:var(--rule);border:0;margin:0}
+
+.meta{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));
+  gap:1px;background:var(--rule);border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);margin-top:14px;
+}
+.meta div{background:var(--ground);padding:13px 16px 15px}
+.meta dt{font-family:Archivo,sans-serif;font-size:.66rem;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);margin:0 0 5px}
+.meta dd{margin:0;font-family:"IBM Plex Mono",monospace;font-size:.94rem;font-weight:500;font-variant-numeric:tabular-nums}
+
+/* ---- sections ---- */
+section{padding:60px 0 0}
+.sechead{display:flex;flex-direction:column;gap:9px;margin-bottom:26px}
+.body-stack{display:flex;flex-direction:column;gap:19px}
+
+/* ---- census ---- */
+.census{width:100%;border-collapse:collapse;font-family:"IBM Plex Mono",monospace;font-size:.9rem;margin:8px 0 0}
+.census caption{caption-side:bottom;padding-top:14px;font-family:Archivo,sans-serif;font-size:.79rem;color:var(--ink-3);text-align:left;line-height:1.5}
+.census th{
+  text-align:left;font-weight:600;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);padding:0 12px 9px 0;border-bottom:1px solid var(--rule-2);
+}
+.census th.num,.census td.num{text-align:right;font-variant-numeric:tabular-nums}
+.census td{padding:13px 12px 13px 0;border-bottom:1px solid var(--rule);vertical-align:baseline}
+.census tr:last-child td{border-bottom:0}
+.census .stage{font-family:Archivo,sans-serif;font-weight:600;font-size:.98rem;letter-spacing:-.005em}
+.census .count{font-size:1.5rem;font-weight:600;letter-spacing:-.02em}
+.census .detail{color:var(--ink-3);font-size:.79rem;line-height:1.55}
+.zero .count{color:var(--halt)}
+.zero{background:var(--halt-soft)}
+.zero .stage{color:var(--halt)}
+
+/* ---- findings register ---- */
+.reg{display:flex;flex-direction:column;gap:0;margin-top:6px;border-top:1px solid var(--rule-2)}
+.f{
+  display:grid;grid-template-columns:62px 1fr;gap:0 20px;
+  padding:22px 0;border-bottom:1px solid var(--rule);align-items:start;
+}
+.f-id{
+  font-family:"IBM Plex Mono",monospace;font-size:.82rem;font-weight:600;
+  color:var(--accent);padding-top:2px;font-variant-numeric:tabular-nums;
+}
+.f-body{display:flex;flex-direction:column;gap:9px;min-width:0}
+.f-head{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline}
+.f-title{font-family:Archivo,sans-serif;font-weight:600;font-size:1.02rem;letter-spacing:-.008em;line-height:1.32}
+.f p{font-size:.95rem;line-height:1.58;color:var(--ink-2)}
+.f .loc{font-family:"IBM Plex Mono",monospace;font-size:.79rem;color:var(--ink-3);word-break:break-word}
+
+.chip{
+  display:inline-block;font-family:Archivo,sans-serif;font-size:.6rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:2px;
+  white-space:nowrap;line-height:1.5;
+}
+.c-stands{background:var(--halt-soft);color:var(--halt)}
+.c-withdrawn{background:var(--surface-2);color:var(--ink-3);text-decoration:line-through}
+.c-narrowed{background:var(--amber-soft);color:var(--amber)}
+.c-works{background:var(--ok-soft);color:var(--ok)}
+.c-code{background:var(--accent-soft);color:var(--accent)}
+.c-owner{background:var(--halt-soft);color:var(--halt)}
+.c-defer{background:var(--surface-2);color:var(--ink-3)}
+
+/* ---- callout ---- */
+.callout{
+  background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--halt);
+  padding:24px 26px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow);
+}
+.callout.ok{border-left-color:var(--ok)}
+.callout.accent{border-left-color:var(--accent)}
+.callout h3{font-size:1.12rem}
+.callout p{font-size:.98rem;color:var(--ink-2)}
+
+blockquote{
+  margin:0;padding:2px 0 2px 20px;border-left:2px solid var(--rule-2);
+  color:var(--ink-2);font-size:.96rem;line-height:1.58;
+}
+
+/* ---- action columns ---- */
+.acts{display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:20px;margin-top:6px}
+.act{background:var(--surface);border:1px solid var(--rule);padding:22px 22px 24px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow)}
+.act > header{display:flex;flex-direction:column;gap:7px;padding-bottom:13px;border-bottom:1px solid var(--rule)}
+.act h3{font-size:1.02rem}
+.act .note{font-size:.83rem;color:var(--ink-3);line-height:1.5;font-family:Archivo,sans-serif}
+.act ol{margin:0;padding-left:1.15em;display:flex;flex-direction:column;gap:11px}
+.act li{font-size:.92rem;line-height:1.5;color:var(--ink-2)}
+.act li b{color:var(--ink);font-weight:600}
+.act li .loc{display:block;font-family:"IBM Plex Mono",monospace;font-size:.75rem;color:var(--ink-3);margin-top:3px;word-break:break-word}
+
+/* ---- scroll containers ---- */
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+/* ---- small table ---- */
+.mini{width:100%;border-collapse:collapse;font-size:.88rem;min-width:460px}
+.mini th{text-align:left;font-family:Archivo,sans-serif;font-size:.66rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);padding:0 14px 8px 0;border-bottom:1px solid var(--rule-2)}
+.mini td{padding:11px 14px 11px 0;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink-2);line-height:1.5}
+.mini td:first-child{color:var(--ink);font-weight:500}
+.mini .mono{font-size:.82rem}
+
+footer{margin-top:72px;padding-top:26px;border-top:2px solid var(--ink);font-size:.87rem;color:var(--ink-3);line-height:1.6}
+@media (max-width:640px){
+  body{font-size:16px}
+  .wrap{padding:0 18px 64px}
+  .f{grid-template-columns:1fr;gap:8px}
+  .f-id{padding-top:0}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="col">
+    <span class="eyebrow">Pre-batch smoke test &middot; 25 August 2026</span>
+    <h1>The Severed Walk</h1>
+    <p class="lede">The pipeline was run end to end before any mobility research is attempted. It holds for two stages, then stops — and it stops one column earlier than it looks.</p>
+  </div>
+  <dl class="meta">
+    <div><dt>Canonical DB</dt><dd>no diff</dd></div>
+    <div><dt>Stage traces</dt><dd>6</dd></div>
+    <div><dt>Doctrinal audits</dt><dd>3</dd></div>
+    <div><dt>Trace lines</dt><dd>7,122</dd></div>
+    <div><dt>Blocking &amp; vacuous</dt><dd>4 of 63</dd></div>
+    <div><dt>Contract covered</dt><dd>13 of 19</dd></div>
+  </dl>
+</header>
+
+<section>
+  <div class="col sechead">
+    <span class="eyebrow">The census</span>
+    <h2>978, 92, 0, 0</h2>
+  </div>
+  <div class="col body-stack">
+    <p>Every figure is a live <code>COUNT(*)</code> against the committed database, derived at run time. None is transcribed from a document.</p>
+  </div>
+
+  <div class="scroll">
+    <table class="census">
+      <thead>
+        <tr><th scope="col">Stage</th><th scope="col" class="num">Rows</th><th scope="col">Tables</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="stage">research</td>
+          <td class="num count">978</td>
+          <td class="detail"><code>source_locators</code> 875 · <code>search_candidates</code> 60 · <code>search_executions</code> 28 · <code>citation_mining</code> 10 · <code>gaps</code> 5</td>
+        </tr>
+        <tr>
+          <td class="stage">evidence collection</td>
+          <td class="num count">92</td>
+          <td class="detail"><code>evidence_source_authors</code> 37 · <code>evidence_population_match</code> 25 · <code>evidence_sources</code> 10 · <code>source_slug_links</code> 10 · <code>search_admissions</code> 10 · <b>source_value_extractions 0</b></td>
+        </tr>
+        <tr class="zero">
+          <td class="stage">judgment</td>
+          <td class="num count">0</td>
+          <td class="detail"><code>specifications</code> · <code>specification_source_links</code> · <code>convergence_assessment</code> · <code>spec_value_probes</code> · <code>conflicts</code> · <code>external_root_registry</code> · <code>item_audit_runs</code></td>
+        </tr>
+        <tr class="zero">
+          <td class="stage">synthesis</td>
+          <td class="num count">0</td>
+          <td class="detail"><code>bpc_metadata</code> · <code>item_bpc_links</code> · <code>connections</code> · <code>connection_targets</code> · <code>reasoning_doc_citations</code> · <code>citation_population_links</code></td>
+        </tr>
+        <tr>
+          <td class="stage">render</td>
+          <td class="num count">126</td>
+          <td class="detail"><code>jurisdictional_values</code> 109 — all REFERENCE-ONLY, every value column null by ruling · <code>rooms</code> 17 · <code>room_items</code> 0 · <code>case_studies</code> 0 · <code>economics_entries</code> 0</td>
+        </tr>
+      </tbody>
+      <caption>Apparatus, by the repository&rsquo;s own measuring commands: 63 registered checks (4 quarantined) across 30,494 executable lines. Book-producing generators account for roughly 2,630 of those lines — about 8.6%. Audit and test code accounts for 11,476, about 38%.</caption>
+    </table>
+  </div>
+
+  <div class="col body-stack" style="margin-top:34px">
+    <p>The pipeline is not slow, or partial, or behind schedule. It is <em>severed</em>: two stages of real work, two consecutive stages at absolute zero, and a render layer whose 126 rows were never produced by the pipeline at all.</p>
+    <p>But a row count only says a stage is empty. The question that decides what to do is different, and it has to be asked per stage: <b>would this stage work if you handed it perfect data?</b></p>
+  </div>
+
+  <div class="col scroll" style="margin-top:26px">
+    <table class="mini">
+      <thead><tr><th scope="col">Stage</th><th scope="col">Given perfect upstream data</th></tr></thead>
+      <tbody>
+        <tr><td>research</td><td><span class="chip c-works">Runs</span> Wiring gaps are conveniences, not blockers.</td></tr>
+        <tr><td>evidence collection</td><td><span class="chip c-narrowed">Fails — flag-sized</span> Its own blocking gate rejects an honest first admission. The gaps are half a dozen CLI flags: <code>--scope</code>, <code>verification_disposition</code>, evidence-type vocabulary, Co-1 provenance, the unfixed half of the duplicate check.</td></tr>
+        <tr><td>judgment</td><td><span class="chip c-stands">Fails — structural</span> No writer for <code>specifications</code>. The only engine is hardcoded to seven pilot cells and crashes twice on live data.</td></tr>
+        <tr><td>synthesis</td><td><span class="chip c-stands">Fails — structural</span> <code>update-bpc</code> crashes on its first insert for any slug; no writer for <code>reasoning_doc_citations</code>; the anchor table is absent from the schema.</td></tr>
+        <tr><td>render</td><td><span class="chip c-narrowed">Runs, citation-less</span> <code>specification_source_links</code> is unwritten, so even a correct cell renders with no visible sources.</td></tr>
+        <tr><td>substrate</td><td><span class="chip c-works">Runs</span> Gaps are <em>content</em> — the handrail item, four enum members, missing language rows — plus one small vocabulary check.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col body-stack" style="margin-top:26px">
+    <p>Read the second row against the third and fourth. Evidence collection fails on <em>a day&rsquo;s work</em>. Judgment and synthesis fail on a missing writer and a broken engine. That is the difference between &ldquo;the batch runs once we add flags&rdquo; and &ldquo;the batch stops at the hinge whatever we do&rdquo; — and conflating them is how a batch gets started that cannot finish.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col sechead">
+    <span class="eyebrow">Where it actually stops</span>
+    <h2>One column earlier than it looks</h2>
+  </div>
+  <div class="col body-stack">
+    <p>The obvious reading is that the break sits between evidence collection and judgment, because <code>specifications</code> is empty and has no writer. That reading is wrong, and acting on it would fix the wrong thing.</p>
+
+    <div class="callout">
+      <h3><code>source_value_extractions</code> is specified in fourteen places and written by nothing</h3>
+      <p>It has its own Pydantic model. It feeds the value-directness dimension of the conditioning calculation. It is named in the pipeline contract, the pipeline map, the context map, <code>evidence-architecture.md</code>, <code>evidence-methodology.md</code> and <code>project-standards.md</code>. Two views read it. And no script, no CLI subcommand, and no committed migration has ever put a row in it — the three migrations that name it carry DDL only.</p>
+      <p class="loc mono">grep -rlE "INSERT INTO source_value_extractions|UPDATE source_value_extractions" --include='*.py' --include='*.sql' . → no output</p>
+    </div>
+
+    <p>This table is the join between <em>&ldquo;we found a paper&rdquo;</em> and <em>&ldquo;the paper says 1200&nbsp;mm.&rdquo;</em> It sits at the end of the evidence-collection row, not the start of judgment. Until something writes it:</p>
+
+    <ul style="margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:10px;color:var(--ink-2);font-size:.98rem">
+      <li>convergence can only count documents, never independent <em>values</em> — which <code>evidence-methodology.md</code> §3 expressly forbids;</li>
+      <li><code>v_value_independence</code> returns 0, so the research frame&rsquo;s own success criterion (&ldquo;≥1 bucket with ≥2 independent roots&rdquo;) is unreachable by construction rather than by shortfall;</li>
+      <li>a <code>specifications</code> row, if one could be written, would carry a value that no source is recorded as having stated.</li>
+    </ul>
+
+    <p>The project diagnosed this itself on 12 July and wrote the diagnosis into its own data — three <code>convergence_assessment</code> rows carry the rationale <em>&ldquo;Value-level convergence not yet assessable… assessment queued, not assumed.&rdquo;</em> That is exemplary practice: the absence recorded as data rather than papered over. It has been queued ever since.</p>
+
+    <p><b>Corridor widths, door thresholds, sloped surfaces, flooring, handrails — every one is a quantity.</b> The single stage that turns a source into a quantity with a locator attached has never run.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col sechead">
+    <span class="eyebrow">The finding that outranks the machinery</span>
+    <h2>MOB is the umbrella the rule was written to abolish</h2>
+  </div>
+  <div class="col body-stack">
+    <p><code>populations</code> holds 23 codes. Three are mobility: <code>LMB</code> (limb differences), <code>SCI</code> (spinal cord injury), and:</p>
+
+    <blockquote><b>MOB</b> — &ldquo;disabled people with mobility needs; wheelchair users&rdquo;<br><span style="color:var(--ink-3)">&ldquo;General mobility limitation including walking, balance, or wheeled mobility&rdquo;</span></blockquote>
+
+    <p>There is no code for ambulant disabled people, and none for part-time wheelchair users. Now read the provenance clause of the rule that forbids exactly this, in <code>project-standards.md</code>:</p>
+
+    <blockquote>Broad umbrellas… are forbidden as profile codes: they collapse opposed and orthogonal design demands and erase specific communities… <b>Provenance: three self-caught erasures — &ldquo;physically disabled/wheelchair users&rdquo; erased the ambulatory and part-time-wheelchair disabled and buried the orthogonal upper-limb/reach axis. In each case the axis layer already held the distinctions the umbrella destroyed.</b></blockquote>
+
+    <p>The axis layer still holds them — <code>AX-AMB</code>, <code>AX-WHM</code>, <code>AX-BAL</code>, <code>AX-REA</code>. But cells are keyed <code>(item&nbsp;×&nbsp;population)</code>, so all four distinctions collapse at the moment a judgment is written, because the judgment&rsquo;s key is <code>MOB</code>.</p>
+  </div>
+
+  <div class="col scroll" style="margin-top:8px">
+    <table class="mini">
+      <thead><tr><th scope="col">Item</th><th scope="col">Demands <code>MOB</code> collapses</th></tr></thead>
+      <tbody>
+        <tr><td>Corridor clear width</td><td>a wheelchair user&rsquo;s turning and passing envelope; an ambulant crutch or walker user&rsquo;s swing width; a balance-disorder user&rsquo;s need for a wall within reach</td></tr>
+        <tr><td>Handrails</td><td>serve <b>ambulant and balance</b> users first — the exact groups <code>MOB</code> erases — and are an obstruction to some wheeled users</td></tr>
+        <tr><td>Sloped surfaces</td><td><b>opposed:</b> a manual wheelchair user wants a shallower gradient; an ambulant person with fatigue or spasticity often wants a shorter run, and therefore a steeper one</td></tr>
+        <tr><td>Flooring</td><td>firmness for wheeled rolling resistance; slip resistance for ambulant gait; low LRV differential for dementia wayfinding</td></tr>
+        <tr><td>Door thresholds</td><td>near-universal, but tolerance differs by castor size versus toe clearance</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col body-stack" style="margin-top:26px">
+    <p>A batch keyed on <code>MOB</code> averages opposed demands and reports the average as best practice. That is the failure the two-layer taxonomy exists to prevent, and it is one <code>INSERT</code> away.</p>
+    <p>This is the one finding here where the right answer is not obvious to me. Minting codes for communities is co-production work, not a schema edit, and &ldquo;nothing about us without us&rdquo; governs who may name them.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col sechead">
+    <span class="eyebrow">Rendered today</span>
+    <h2>The corridor page contradicts the corridor doctrine</h2>
+  </div>
+  <div class="col body-stack">
+    <p><code>tier-system.md</code> §3 uses corridor width as its worked example for the convergence-not-evidence trap:</p>
+    <blockquote>Multiple Tier 5/6 codes converge on <b>1800&nbsp;mm</b> two-wheelchair-passing. Co-1/T2/T3 evidence anchors <b>2440&nbsp;mm</b> primary corridors. The 1800&nbsp;mm convergence describes the regulatory floor; the 2440&nbsp;mm Co-1/T2/T3 anchor describes best practice.</blockquote>
+    <p>And <code>site/specs/e-08.html</code>, live and committed, headlines:</p>
+    <blockquote class="mono" style="font-size:.9rem">&lt;h1&gt;Corridor Clear Width (≥1200 mm Minimum on All Primary Routes)&lt;/h1&gt;</blockquote>
+    <p><b>1200&nbsp;mm</b> — below the regulatory floor the doctrine names, and half the best-practice anchor it names, on the flagship item of the batch about to run. The page&rsquo;s <em>body</em> correctly says the value is not yet computed; the heading above it asserts a figure. One trace graded the banner and never read the heading; another found the heading; a third found the doctrine it contradicts. No single pass would have caught it.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col sechead">
+    <span class="eyebrow">Co-primary evidence</span>
+    <h2>Four Co-1 mechanisms, none of them live</h2>
+  </div>
+  <div class="col body-stack">
+    <p>Co-1 is lived experience — co-primary with Tier 1 under CRPD Art 4.3. Its warrant is co-production, and the repository is explicit that <em>&ldquo;erasing them while claiming the tier is the worst failure available here.&rdquo;</em></p>
+  </div>
+  <div class="col scroll" style="margin-top:4px">
+    <table class="mini">
+      <thead><tr><th scope="col">Requirement</th><th scope="col">Mechanism</th><th scope="col">State</th></tr></thead>
+      <tbody>
+        <tr><td>Record who co-produced it</td><td class="mono">co1_provenance</td><td>no CLI flag — unenforced</td></tr>
+        <tr><td>Validate the Co-1 record shape</td><td>Pydantic model</td><td>never invoked by the write path</td></tr>
+        <tr><td>Validate Co-1 against doctrine</td><td class="mono">validate_evidence_state.py:76-110</td><td>reads <code>data/sources/</code> — <b>a directory that does not exist</b></td></tr>
+        <tr><td>Require population relevance to anchor</td><td>stated-threshold condition 3</td><td>not implemented in <code>anchoring()</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col body-stack" style="margin-top:26px">
+    <p><code>co1_provenance</code> appears in exactly one executable file: the column whitelist in <code>db.py</code>. After the fabricated-citation incident of 19 August, the project fixed the arm that fabricates <em>authors</em> — verifiably, and it works — and never built the arm that records <em>co-production</em>.</p>
+    <p>This is the batch whose core evidence is disabled people&rsquo;s own accounts of environments that exclude them.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col sechead">
+    <span class="eyebrow">What to do</span>
+    <h2>Before the batch</h2>
+  </div>
+  <div class="acts">
+
+    <div class="act">
+      <header>
+        <span class="chip c-owner">Yours to decide</span>
+        <h3>Owner decisions</h3>
+        <p class="note">Judgements about the book, not the code. The batch should not start without the first.</p>
+      </header>
+      <ol>
+        <li><b>Population taxonomy.</b> Mint codes for ambulant disabled people and part-time wheelchair users, or rule that <code>MOB</code> stands and record why. Co-production question, not a schema edit.</li>
+        <li><b>The 1200&nbsp;mm corridor figure.</b> Disposition for the rendered pre-reset determination on <code>E-08</code> and its <code>items.name</code>.</li>
+        <li><b>Jurisdiction set.</b> Bucket 2 names Spain, Portugal and Finland; <code>JurisdictionCode</code> has no member for any of them, and nothing in the record notices. Note the enum is <em>inert</em> — one script imports it and never opens the database, so today those values land silently rather than being refused. Adding members and adding the check must be the same change, in that order.<span class="loc">schemas/enums.py · db.py:2363-2400</span></li>
+        <li><b>Whether a freeze condition returns.</b> The old one released on a row count; §4 rejects row counts by name. Intra-instrument drift in ratified text — not a session&rsquo;s to fix.</li>
+      </ol>
+    </div>
+
+    <div class="act">
+      <header>
+        <span class="chip c-code">Evidence, not permission</span>
+        <h3>Code fixes</h3>
+        <p class="note">The repository&rsquo;s own symmetry rule: code needs evidence, not permission. Ordered by what the batch hits first.</p>
+      </header>
+      <ol>
+        <li><b>Wire the canonical-write guard.</b> <code>is_canonical()</code> exists to refuse writes to the committed DB and its only callers are its own selftest; <code>connect()</code> never calls it and <code>db_path()</code> defaults to canonical. Four skill lines instruct the canonical path on write commands.<span class="loc">dbcore.py:65-74, :83-101, :438-439</span></li>
+        <li><b>A writer for <code>source_value_extractions</code>.</b> Nothing else on this list matters if the batch cannot record a measured value.</li>
+        <li><b>Promote the 256 stranded mobility leads</b> into the clue store — DOI, year, first author, source artefact. Never the truncated <code>title_short</code> as <code>title</code>.</li>
+        <li><b>Unblock the first admission.</b> <code>add-source</code> has no <code>--scope</code>; <code>VERIFIED</code> never sets <code>verification_disposition</code>; <code>--evidence-type</code> enforces no vocabulary.</li>
+        <li><b>Close the R9 writer gap.</b> <code>add-source</code> dedups DOIs against <code>evidence_sources</code> only, not the clue store — caught after it lands rather than refused.<span class="loc">db.py:1992-2000</span></li>
+        <li><b>Unassessed sources must not anchor</b> via stated-threshold conditions 1 and 3 — doctrine already says so; the code does not implement the sentence. Leave conditions 2 and 4 alone.</li>
+        <li><b>Repair the runbook.</b> A deleted script at step 0; a dual write at step 7 that a ruling abolished, citing two deleted checks; &ldquo;No CLI&rdquo; where a CLI now exists.<span class="loc">instrument.md:794, :830, :856-864</span></li>
+        <li><b>Small, certain:</b> <code>insert_jurisdictional_value</code> vocabulary check · <code>update-bpc --population</code> · <code>room_page.py</code> <code>room</code>→<code>rooms</code> and <code>room_item</code>→<code>room_items</code> · <code>next_gap_id()</code> format · <code>index.html</code> counts.</li>
+      </ol>
+    </div>
+
+    <div class="act">
+      <header>
+        <span class="chip c-defer">Not before the batch</span>
+        <h3>Defer</h3>
+        <p class="note">Real, and none of it blocks a first mobility batch. The instrument&rsquo;s thesis is that apparatus work crowds out research; this is the column that proves it is being resisted.</p>
+      </header>
+      <ol>
+        <li>A writer for <code>reasoning_doc_citations</code> — needed at synthesis, and synthesis is two stages away.</li>
+        <li>The attestation gate&rsquo;s local-versus-CI window split. Annoying, caught by CI, not blocking.</li>
+        <li>The pipeline contract&rsquo;s stale prose about its own enforcer.</li>
+        <li><code>doctrine_recheck --cross-ref</code> never running the drift pass that, run bare, found three vanished governance documents.</li>
+        <li>The R8 ordering gap — no writer updates a logged search after screening. Real, but workable within one batch.</li>
+      </ol>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <div class="col sechead">
+    <span class="eyebrow">The repair plan</span>
+    <h2>Making it walk in both directions</h2>
+  </div>
+  <div class="col body-stack">
+    <p>Code and wiring only — every item below meets the repository&rsquo;s own test that code needs <em>evidence, not permission</em>. Organised by <b>edge</b> rather than by stage, because this pipeline re-enters stages: a stage that works in isolation can still leave the walk unable to come back round.</p>
+    <p><b>The backward edges are the worse half, and none of them show up in a row count.</b> Each is a path by which a later finding should change an earlier record, and does not.</p>
+  </div>
+
+  <div class="acts" style="margin-top:8px">
+    <div class="act">
+      <header>
+        <span class="chip c-stands">Phase 0 — first</span>
+        <h3>Safety</h3>
+        <p class="note">Nothing else runs until this lands. Roughly two hours.</p>
+      </header>
+      <ol>
+        <li><b>Wire the canonical-write guard.</b> <code>is_canonical()</code> refuses writes to the committed database and is called only by its own selftest; <code>connect()</code> never calls it and <code>db_path()</code> defaults to canonical.<span class="loc">dbcore.py:65-74, :83-101, :438-439</span></li>
+        <li><b>Repoint two skills</b> that instruct the canonical path on four write commands.<span class="loc">connection-auditor:185,192,199 · connection-discovery:219</span></li>
+      </ol>
+    </div>
+
+    <div class="act">
+      <header>
+        <span class="chip c-code">Phase 1 — forward</span>
+        <h3>One cell, end to end</h3>
+        <p class="note">Ordered by dependency. Each unblocks the next.</p>
+      </header>
+      <ol>
+        <li><b>Unblock the first admission.</b> <code>add-source</code> has no <code>--scope</code>; VERIFIED never sets <code>verification_disposition</code>; evidence-type enforces no vocabulary; R9 dedups one table of two.</li>
+        <li><b>A writer for <code>source_value_extractions</code>.</b> The break. Refuse on FK, on the column&rsquo;s CHECK, and on a missing locator.</li>
+        <li><b>Writers for <code>specifications</code> and its source links,</b> with the three judgment rules enforced at write time rather than detected after.</li>
+        <li><b>Un-hardcode <code>assess_cell.py</code></b> from its seven pilot cells; fix the two live-data crashes.</li>
+        <li><b>Bar unassessed sources from anchoring</b> via conditions 1 and 3 only — never 2 and 4, which would wrongly demote Tier 2 reviews and OT guidelines.</li>
+        <li><b><code>update-bpc --population</code></b> — without it the first synthesis write for any slug raises an uncaught IntegrityError.</li>
+      </ol>
+    </div>
+
+    <div class="act">
+      <header>
+        <span class="chip c-owner">Phase 2 — backward</span>
+        <h3>The re-entrant edges</h3>
+        <p class="note">What the census cannot show. This is the half that lets the pipeline revise itself.</p>
+      </header>
+      <ol>
+        <li><b>Mining drops its yield.</b> 138 DOIs harvested, 4 in the clue store, 134 stranded — plus 256 mobility leads in an <code>.ignore</code>-hidden directory. <code>connections_produced</code> is written only by migrations and read by nothing. Needs a promotion edge; never promote the truncated <code>title_short</code>.</li>
+        <li><b>Nothing compares a determination to the synthesis citing it.</b> Ten scripts touch both tables; all are renderers or counters. No comparator exists.</li>
+        <li><b>Stale-synthesis propagation is built and has never run.</b> <code>supersession_check</code> has a writer, a subcommand and zero rows. This one needs running, not building — the cheapest item here.</li>
+        <li><b>Cross-slug contradiction: deliberately deferred.</b> It needs two syntheses to have a subject and there are none. Building it now yields another gate that passes having examined nothing.</li>
+        <li><b><code>opus_reviewed</code> is dead</b> — hardcoded 0, never read, while Part 5 renders a pending connection&rsquo;s text verbatim. Make it real or delete it; do not leave a field that looks like a safeguard.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="col body-stack" style="margin-top:28px">
+    <div class="callout">
+      <h3>The plan&rsquo;s own acceptance test fails by construction</h3>
+      <p>I wrote that after Phase 0 and Phase 1 this would be walkable on a scratch copy: <span class="mono" style="font-size:.86rem">one source admitted → one value extracted with a locator → one cell with governing_refs → one synthesis → one rendered page showing the value and its sources.</span> An adversarial review traced it against the code. It does not complete, and it fails at the last step:</p>
+      <p class="mono" style="font-size:.86rem;color:var(--ink)">$ grep -c "value" scripts/generate/spec_page.py<br>0</p>
+      <p><b>The renderer never selects or shows the value.</b> Its table carries state, tier and sources — no value column. A perfect determination renders a page with no number on it. And the only existing writer, <code>assess_cell.py</code>, binds literal <code>None</code> for <code>value_min</code>, <code>value_max</code> and <code>value_unit</code> — so there is nothing to show even if the page could show it.</p>
+      <p>Nothing in Phases 0&ndash;4 would have caught this, because nothing in the plan read the renderer. Five additions close it, all Phase 1: render the value, bind it, add the convergence and confidence refusals the blocking gate actually demands, write the root fields <code>v_value_independence</code> counts, and reconcile the verification-method choices with invariant I4.</p>
+      <p><b>The one that matters most is the third.</b> A green path that stays unreachable while the gate stays red is precisely the condition that produced the fabrication of 19 August: the writer could not express what the gate demanded, so someone wrote it by hand.</p>
+    </div>
+    <p>One item was withdrawn outright. I had claimed stale-synthesis propagation was &ldquo;built and never run&rdquo; because <code>supersession_check</code> exists. Read from its CHECK constraints, that table records <em>literature currency for an anchor source</em> — is this still the best available paper? It cannot express &ldquo;a judgment changed, so the synthesis citing it is stale.&rdquo; The original verdict of ABSENT was right and I overturned it by reading a table name instead of its schema — the exact error the repository&rsquo;s own rule about vocabularies warns against.</p>
+    <p>Phases 3 and 4 — render truthfulness and apparatus honesty — are real and none of it blocks a batch. Two of them are minutes: <code>room_page.py</code> queries <code>FROM room</code> where the table is <code>rooms</code>, and <code>index.html</code> hard-codes counts that are wrong today.</p>
+    <p><b>The plan adds no check, no table, no register and no workplan file.</b> Every item repairs something that exists or writes a table that exists. Where the honest answer is deletion, that is offered as the equal option — which is the whole reason this repository is allowed to shrink.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col sechead">
+    <span class="eyebrow">Fairness</span>
+    <h2>What works, stated as plainly as what does not</h2>
+  </div>
+  <div class="col body-stack">
+    <div class="callout ok">
+      <h3>The anti-fabrication machinery does what it was built to do</h3>
+      <p>A real mobility source was admitted end to end — Sanford, Story &amp; Jones 1997, <em>Ramp Slope on People with Mobility Impairments</em> — retrieved through the logging fetcher with a byte-identical hash to an independent <code>curl</code>, and author verification returned CLEAN. This is the one part of the pipeline designed in response to a real failure and then tested against one.</p>
+    </div>
+    <p>Also genuinely working: the five-link write path, exercised end to end on a scratch copy with a real mobility-shaped batch — the delta capturer sees UPDATEs and refuses whole-batch on any DELETE, and deep reproducibility passes 66/66. The search logger refuses a count that disagrees with its admitted-id list. <code>preflight.sh</code> runs the selftest that <code>--changed-from</code> skips. Citation mining genuinely runs backward and forward. And the attestation gate caught this very session&rsquo;s own omission — correctly, and blocking.</p>
+    <p>The gates are thickest around the database and thinnest exactly where the reader is: <code>index.html</code>, <code>parts/v10</code> and <code>site/rooms</code> are unguarded, and two of the three are measurably wrong today.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col sechead">
+    <span class="eyebrow">Method</span>
+    <h2>How this was run, and what it got wrong</h2>
+  </div>
+  <div class="col body-stack">
+    <p>Six stage agents traced one pipeline stage each — every script, skill, hook and gate they could reach — writing to per-agent scratch copies. Three read-only auditors then contextualised the traces against the repository&rsquo;s own doctrine. Nothing was admitted; the committed database&rsquo;s hash is unchanged.</p>
+    <p>The traces were not taken on trust. Load-bearing claims were re-derived before being repeated, and that changed several of them:</p>
+
+    <div class="reg">
+      <div class="f">
+        <div class="f-id">D-6</div>
+        <div class="f-body">
+          <div class="f-head"><span class="f-title">20 <code>GB</code> rows a blocking validator cannot see</span><span class="chip c-withdrawn">Withdrawn</span></div>
+          <p>Not a discovery. The instrument already records the rows, the blind enforcer, and the disposition — &ldquo;Correct and blocked, not wrong&rdquo;, gated behind an owner decision — <em>and</em> the sequencing I would have got wrong: wire the enforcer in the same change that fixes the rows, never before. I grepped the script, the table and the enum, and never grepped the instrument.</p>
+          <p class="loc">instrument.md:347</p>
+        </div>
+      </div>
+      <div class="f">
+        <div class="f-id">D-5</div>
+        <div class="f-body">
+          <div class="f-head"><span class="f-title">Bucket jurisdictions missing from the enum</span><span class="chip c-narrowed">Narrowed</span></div>
+          <p>The UN half is already recorded, with a better analysis than mine — the UN issues rights obligations, not dimensional values. Spain, Portugal and Finland survive: searched four directories, nothing notices them.</p>
+        </div>
+      </div>
+      <div class="f">
+        <div class="f-id">D-12</div>
+        <div class="f-body">
+          <div class="f-head"><span class="f-title">Unassessed sources anchor a <code>stated</code> cell</span><span class="chip c-narrowed">Reframed</span></div>
+          <p>I nearly reported something worse — that a missing population grade counts as a full match — and found the guard that prevents it. Then I filed the surviving finding as an owner decision; doctrine already settles it, so it is a code fix. And the fix is narrower than the auditor said: conditions 2 and 4 carry no population clause, so a blanket ban would wrongly demote Tier 2 reviews and OT professional-body guidelines.</p>
+        </div>
+      </div>
+      <div class="f">
+        <div class="f-id">D-16</div>
+        <div class="f-body">
+          <div class="f-head"><span class="f-title">The reasoning document&rsquo;s citations</span><span class="chip c-stands">Corrected both ways</span></div>
+          <p>A trace reported &ldquo;7 of 11 cited as flat Tier-1/Tier-3.&rdquo; The true count is 8 unadmitted of 11 — but one is flagged <em>rule-#10-ineligible</em> three times, which is the discipline working perfectly, and five carry tier labels with no flag at all. Same file, same author. That makes it the worse finding, not the milder one: a rule enforced by attention, applied once and missed five times.</p>
+        </div>
+      </div>
+      <div class="f">
+        <div class="f-id">D-20</div>
+        <div class="f-body">
+          <div class="f-head"><span class="f-title">The handrail slug</span><span class="chip c-works">My error</span></div>
+          <p>A trace ranked &ldquo;no handrail slug exists&rdquo; as its top blocker. One exists — a stub covering flooring <em>and</em> handrails together, in the right topic directory. It stayed hidden because its search-log path sits under an <code>.ignore</code>-hidden directory. The premise came from the protocol I wrote, and six agents accepted it.</p>
+        </div>
+      </div>
+
+      <div class="f">
+        <div class="f-id">RULE</div>
+        <div class="f-body">
+          <div class="f-head"><span class="f-title">Whether this session should exist at all</span><span class="chip c-stands">Owed and unwritten</span></div>
+          <p>A standing rule restricts any commissioned pass to a diff that wrote research rows or amended a synthesis artifact, and states plainly that <em>a pass on a pass is forbidden</em>. This is an apparatus audit with three auditors reading six traces — outside the rule on both counts. It is lawful, because a live owner instruction supersedes a prior ratified record on contact. But that same rule says the job on hearing one is to <em>record</em> the supersession, and I did not — for the whole session, until an auditor cited the rule I had never read. The record is now written, scoped to this session alone.</p>
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-top:28px">That is three times in one session that the record held something my search did not reach. The pattern is not carelessness about any one file: I searched code exhaustively and prose opportunistically, in a repository whose binding decisions live in prose.</p>
+
+    <p style="margin-top:12px">The strongest objection to this exercise is that it <em>is</em> the pathology it describes: seven agents, six thousand lines of audit, zero determinations, in a repository whose own diagnosis is that it pays for meta-work and charges for research. That objection holds as a price and fails as a prohibition. It holds because the tax is real and three of these findings merely rediscovered recorded ones. It fails because roughly half are new, verified, and directly de-risk the batch — and because a defect found before a batch costs an afternoon, while the same defect found during one costs the batch.</p>
+    <p>The findings are worth exactly the batch they unblock. If they become the next register instead, they were not worth writing.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="col">
+    Every figure derived from the live repository at run time. Full traces, per-agent logs and the finding register live in the session scratchpad; the reproducing commands are recorded beside each claim.
+  </div>
+</footer>
+
+</div>
