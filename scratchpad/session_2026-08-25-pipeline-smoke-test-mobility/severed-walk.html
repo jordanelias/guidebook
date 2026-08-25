@@ -186,9 +186,9 @@ footer{margin-top:72px;padding-top:26px;border-top:2px solid var(--ink);font-siz
     <div><dt>Canonical DB</dt><dd>unchanged</dd></div>
     <div><dt>Stage traces</dt><dd>6</dd></div>
     <div><dt>Doctrinal audits</dt><dd>3</dd></div>
-    <div><dt>Log lines</dt><dd>5,900+</dd></div>
-    <div><dt>Findings standing</dt><dd>17</dd></div>
-    <div><dt>Withdrawn</dt><dd>3</dd></div>
+    <div><dt>Trace lines</dt><dd>7,122</dd></div>
+    <div><dt>Blocking &amp; vacuous</dt><dd>4 of 63</dd></div>
+    <div><dt>Contract covered</dt><dd>13 of 19</dd></div>
   </dl>
 </header>
 
@@ -239,6 +239,25 @@ footer{margin-top:72px;padding-top:26px;border-top:2px solid var(--ink);font-siz
 
   <div class="col body-stack" style="margin-top:34px">
     <p>The pipeline is not slow, or partial, or behind schedule. It is <em>severed</em>: two stages of real work, two consecutive stages at absolute zero, and a render layer whose 126 rows were never produced by the pipeline at all.</p>
+    <p>But a row count only says a stage is empty. The question that decides what to do is different, and it has to be asked per stage: <b>would this stage work if you handed it perfect data?</b></p>
+  </div>
+
+  <div class="col scroll" style="margin-top:26px">
+    <table class="mini">
+      <thead><tr><th scope="col">Stage</th><th scope="col">Given perfect upstream data</th></tr></thead>
+      <tbody>
+        <tr><td>research</td><td><span class="chip c-works">Runs</span> Wiring gaps are conveniences, not blockers.</td></tr>
+        <tr><td>evidence collection</td><td><span class="chip c-narrowed">Fails — flag-sized</span> Its own blocking gate rejects an honest first admission. The gaps are half a dozen CLI flags: <code>--scope</code>, <code>verification_disposition</code>, evidence-type vocabulary, Co-1 provenance, the unfixed half of the duplicate check.</td></tr>
+        <tr><td>judgment</td><td><span class="chip c-stands">Fails — structural</span> No writer for <code>specifications</code>. The only engine is hardcoded to seven pilot cells and crashes twice on live data.</td></tr>
+        <tr><td>synthesis</td><td><span class="chip c-stands">Fails — structural</span> <code>update-bpc</code> crashes on its first insert for any slug; no writer for <code>reasoning_doc_citations</code>; the anchor table is absent from the schema.</td></tr>
+        <tr><td>render</td><td><span class="chip c-narrowed">Runs, citation-less</span> <code>specification_source_links</code> is unwritten, so even a correct cell renders with no visible sources.</td></tr>
+        <tr><td>substrate</td><td><span class="chip c-works">Runs</span> Gaps are <em>content</em> — the handrail item, four enum members, missing language rows — plus one small vocabulary check.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col body-stack" style="margin-top:26px">
+    <p>Read the second row against the third and fourth. Evidence collection fails on <em>a day&rsquo;s work</em>. Judgment and synthesis fail on a missing writer and a broken engine. That is the difference between &ldquo;the batch runs once we add flags&rdquo; and &ldquo;the batch stops at the hinge whatever we do&rdquo; — and conflating them is how a batch gets started that cannot finish.</p>
   </div>
 </section>
 
@@ -361,7 +380,7 @@ footer{margin-top:72px;padding-top:26px;border-top:2px solid var(--ink);font-siz
       <ol>
         <li><b>Population taxonomy.</b> Mint codes for ambulant disabled people and part-time wheelchair users, or rule that <code>MOB</code> stands and record why. Co-production question, not a schema edit.</li>
         <li><b>The 1200&nbsp;mm corridor figure.</b> Disposition for the rendered pre-reset determination on <code>E-08</code> and its <code>items.name</code>.</li>
-        <li><b>Jurisdiction set.</b> Bucket 2 names Spain, Portugal and Finland; <code>JurisdictionCode</code> has no member for any of them, and nothing in the record notices.<span class="loc">schemas/enums.py</span></li>
+        <li><b>Jurisdiction set.</b> Bucket 2 names Spain, Portugal and Finland; <code>JurisdictionCode</code> has no member for any of them, and nothing in the record notices. Note the enum is <em>inert</em> — one script imports it and never opens the database, so today those values land silently rather than being refused. Adding members and adding the check must be the same change, in that order.<span class="loc">schemas/enums.py · db.py:2363-2400</span></li>
         <li><b>Whether a freeze condition returns.</b> The old one released on a row count; §4 rejects row counts by name. Intra-instrument drift in ratified text — not a session&rsquo;s to fix.</li>
       </ol>
     </div>
@@ -463,9 +482,19 @@ footer{margin-top:72px;padding-top:26px;border-top:2px solid var(--ink);font-siz
           <p>A trace ranked &ldquo;no handrail slug exists&rdquo; as its top blocker. One exists — a stub covering flooring <em>and</em> handrails together, in the right topic directory. It stayed hidden because its search-log path sits under an <code>.ignore</code>-hidden directory. The premise came from the protocol I wrote, and six agents accepted it.</p>
         </div>
       </div>
+
+      <div class="f">
+        <div class="f-id">RULE</div>
+        <div class="f-body">
+          <div class="f-head"><span class="f-title">Whether this session should exist at all</span><span class="chip c-stands">Owed and unwritten</span></div>
+          <p>A standing rule restricts any commissioned pass to a diff that wrote research rows or amended a synthesis artifact, and states plainly that <em>a pass on a pass is forbidden</em>. This is an apparatus audit with three auditors reading six traces — outside the rule on both counts. It is lawful, because a live owner instruction supersedes a prior ratified record on contact. But that same rule says the job on hearing one is to <em>record</em> the supersession, and I did not — for the whole session, until an auditor cited the rule I had never read. The record is now written, scoped to this session alone.</p>
+        </div>
+      </div>
     </div>
 
-    <p style="margin-top:28px">The strongest objection to this exercise is that it <em>is</em> the pathology it describes: seven agents, six thousand lines of audit, zero determinations, in a repository whose own diagnosis is that it pays for meta-work and charges for research. That objection holds as a price and fails as a prohibition. It holds because the tax is real and three of these findings merely rediscovered recorded ones. It fails because roughly half are new, verified, and directly de-risk the batch — and because a defect found before a batch costs an afternoon, while the same defect found during one costs the batch.</p>
+    <p style="margin-top:28px">That is three times in one session that the record held something my search did not reach. The pattern is not carelessness about any one file: I searched code exhaustively and prose opportunistically, in a repository whose binding decisions live in prose.</p>
+
+    <p style="margin-top:12px">The strongest objection to this exercise is that it <em>is</em> the pathology it describes: seven agents, six thousand lines of audit, zero determinations, in a repository whose own diagnosis is that it pays for meta-work and charges for research. That objection holds as a price and fails as a prohibition. It holds because the tax is real and three of these findings merely rediscovered recorded ones. It fails because roughly half are new, verified, and directly de-risk the batch — and because a defect found before a batch costs an afternoon, while the same defect found during one costs the batch.</p>
     <p>The findings are worth exactly the batch they unblock. If they become the next register instead, they were not worth writing.</p>
   </div>
 </section>
