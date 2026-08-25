@@ -89,6 +89,46 @@ The commit-message format check remains, and is still `if: github.event_name == 
 
 ---
 
+## 0.5 The five stages — the map rule 5 depends on
+
+**Owner ruling 2026-08-25**, superseding the owner's own list of 2026-08-24:
+
+> **`research → evidence collection → judgment → synthesis → render`**
+
+Rule 5 says each stage holds only its own data and anything earlier is reached by pointer. **That
+is unusable without knowing which stage a table is in** — you cannot tell a legitimate
+stage-specific fact from a copy. So the map is a stopper, not orientation.
+
+**Substrate is not a stage.** The vocabularies and registries — `items`, `populations`, `slugs`,
+`terms`, `access_needs`, the crossing maps, `decisions`, `data_migrations` — are the layer all five
+stages point into.
+
+| Stage | Holds |
+|---|---|
+| **research** | What was searched, screened and mined, plus the clue store |
+| **evidence collection** | What was admitted, its identity, verification and extraction |
+| **judgment** | Determination — grading, population matching, the cell. Writes `specifications` |
+| **synthesis** | Weighing, convergence, cross-slug findings |
+| **render** | Book surfaces — `site/`, `parts/`, `tools/*.html`, and the content tables behind them |
+
+**`specifications` is a TABLE, not a stage** — `judgment` writes it. The 2026-08-24 wording that
+made it a stage is superseded.
+
+**Derive the table-to-stage assignment; do not read one out of a document.** The six-bucket
+assignment in the 2026-08-24 stage-discipline audit is agent-authored, predates this ruling, and
+must be re-derived against these five stages before it is relied on again.
+
+**Re-entrancy still holds and is a different question.** `governance/pipeline-map.yaml` established
+2026-08-21 that a walk **re-enters** stages rather than passing through them once — a layer-3
+artefact legitimately produces layer-2 rows. That answers *write order*. This map answers *what a
+table may hold*. Both are true; do not use one to argue against the other.
+
+**The machine already enforces this spine** — `tools/pipeline_completeness.py` and the blocking
+`pipeline_completeness_fresh` gate. Stage 2's identifier there still reads `collection`; the rename
+to `evidence collection` is owed and is a rule-4 caller sweep.
+
+---
+
 ## 1. Symmetry: deleting is as cheap as adding
 
 **This replaces the old "owner-gate file moves and retirements" guardrail, which was the
@@ -212,7 +252,7 @@ mint above the `source_locators` high-water mark or you will collide with a held
 ## 5. Running checks
 
 ```
-python3 -c 'import pydantic' || pip install 'pydantic==2.13.3'   # DO THIS FIRST. See below
+bash .claude/hooks/ensure-deps.sh    # pydantic + jsonschema. DO THIS FIRST. See below
 scripts/preflight.sh                                    # gate your diff vs origin/main
 python3 scripts/run_checks.py --changed-from origin/main --explain
 python3 scripts/run_checks.py --list                    # registry + quarantine
@@ -241,7 +281,13 @@ python3 scripts/run_checks.py --list                    # registry + quarantine
 > **Never `pip install -r requirements.txt` in this container.** It pins `PyYAML==6.0.3`; pip
 > refuses to uninstall the Debian-managed `PyYAML 6.0.1` that is present and working
 > (*"Cannot uninstall PyYAML 6.0.1, RECORD file not found"*), the whole install aborts, and
-> `pydantic` never lands. Install `pydantic` alone.
+> nothing lands. Install the individual packages.
+>
+> **The dependency list has ONE home: `governance/check-registry.yaml`'s `batteries:` block.**
+> `requirements.txt` is a second home and it already disagreed — it names `pydantic` and
+> `PyYAML` and omits **`jsonschema`**, which the registry declares for the `research` battery and
+> which attestation validation needs. Found 2026-08-25 by an attestation validating only after a
+> hand install. `ensure-deps.sh` now reads the registry rather than carrying a copy (rule 5).
 >
 > **If you add a `SessionStart` hook, APPEND it — never insert at index 0.**
 > `scripts/generate/research_contract_hook.py` reads

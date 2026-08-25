@@ -226,6 +226,20 @@ those was a copy where a pointer belonged.** The rule is not "warrant each cross
 
 ### §2.2 "Highly procedural" means pointer discipline, not a checklist
 
+> **⚠ THE STAGE LIST IN THIS SECTION WAS SUPERSEDED BY THE OWNER ON 2026-08-25.** The quoted
+> ruling below names the stages *"research to evidence to synthesis to specifications to render"*.
+> The owner's ruling of 2026-08-25 revises that to:
+>
+> **`research → evidence collection → judgment → synthesis → render`**
+>
+> `judgment` is restored as its own stage; `specifications` is **not** a stage but a table that
+> `judgment` writes. Recorded in `references/project-standards.md`, RULE 2026-08-25.
+>
+> **The pointer discipline this section states is UNCHANGED and still binding** — only the list of
+> stage names is superseded. Per `CLAUDE.md` rule 0 this section is kept as written rather than
+> rewritten: a superseded record is evidence of what was ruled when, and editing it would destroy
+> that. Read the ruling above, then the discipline below.
+
 > *"Reference IDs carry from table to table across stages. Data relevant in one stage does not cross
 > to another stage. We do not need an author name in a synthesis table when synthesizing information.
 > We do not need an author name when writing a specification in a specification table. We do not need
