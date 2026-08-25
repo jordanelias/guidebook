@@ -607,3 +607,140 @@ INVOKED   : same against scratch (post GAP-001 write)
 OUTPUT    : `gaps rows: 6 | gap_mining rows: 1 | EXAMINED: 7 | FAILURES: 0` (same informational note)
 FINDING   : PASS
 
+## 6. External reachability probes (1-2 calls each)
+
+### 6.1 WebSearch
+INVOKED   : `WebSearch(query="handrail diameter grip biomechanics wheelchair ramp gradient corridor clear width accessibility standard")`
+EXIT      : n/a (tool call succeeded)
+OUTPUT    : 9 result links (access-board.gov, dimensions.com, several commercial ADA-compliance blogs), plus a synthesized summary citing 1¼–2" handrail diameter, 34-38" height, 1:12 ramp gradient, 36" clear width. **No academic/CrossRef-indexed sources** — all US commercial/government grey-literature pages, consistent with WebSearch being "US-only" per its own tool description.
+FINDING   : PASS (reachable), shape = general web results, US-skewed, no tier-1 academic content
+LOCATION  : n/a (external)
+NOTE      : Reasonable for grey-literature/T4-T6 regulatory-stratum leads (ADA text), useless on
+  its own for T1/Co-1 evidence — matches the project's own doctrine that regulatory sources need
+  separate handling (CLAUDE.md §6 tier system).
+
+### 6.2 WebFetch (Crossref probe)
+INVOKED   : `WebFetch(url="https://api.crossref.org/works/10.1044/2019_AJA-19-0010", prompt="Return the DOI, title, and the first 3 items in the reference list if present, verbatim.")` — this DOI is REF-00325/RAP-08, already in the live `citation_mining` table, chosen so the result is checkable against real prior work.
+EXIT      : reachable
+OUTPUT    : Correctly returned DOI, title ("Speech Perception in Classroom Acoustics by Children
+  With Hearing Loss and Wearing Hearing Aids"), and 3 reference entries.
+FINDING   : PASS (reachable) but with an important shape caveat — see 6.4.
+LOCATION  : n/a (external)
+
+### 6.3 Consensus / Scholar Gateway
+INVOKED   : `mcp__Consensus__search(query="handrail diameter grip force fall risk older adults biomechanics")`
+OUTPUT    : 10 real papers with DOIs, abstracts, citation counts — directly on-topic for the
+  mobility/handrail batch (Gosine 2021, Kose 2020, Komisar 2021/2019/2018, Maki 1998, Reeves 2008,
+  etc.) — several look like strong Tier-1 biomechanical candidates for a real handrail item once
+  one exists (§1).
+FINDING   : PASS (reachable), topical relevance high for this exact batch
+INVOKED   : `mcp__Scholar_Gateway__semanticSearch(query="What is the biomechanical evidence for handrail grip diameter and fall risk reduction in older adults and wheelchair users?", topN=5)`
+OUTPUT    : 5 passages with DOIs/journal metadata (Startzell 2000 stair-negotiation review,
+  Slavens 2015 pediatric wheelchair biomechanics, Koontz 2018 grab bars, Hwangbo 2012 low-floor
+  bus, Swan 2020 handrail perceptions in aged care).
+FINDING   : PASS (reachable); confirms `citation-miner_SKILL.md` §0's own characterization —
+  topically relevant passages, not a citation graph (none of these are framed as "cites/cited-by"
+  relationships, consistent with the skill's warning not to use this for forward mining).
+
+### 6.4 Direct curl reachability — Crossref, OpenAlex, Semantic Scholar (via Bash, proxy-routed)
+INVOKED   :
+```
+curl -sS -m 20 -o /tmp/cr_test.json -w "HTTP_CODE:%{http_code}\n" "https://api.crossref.org/works/10.1044/2019_AJA-19-0010"
+curl -sS -m 20 -o /tmp/oa_test.json -w "HTTP_CODE:%{http_code}\n" "https://api.openalex.org/works/doi:10.1044/2019_AJA-19-0010"
+curl -sS -m 20 -o /tmp/ss_test.json -w "HTTP_CODE:%{http_code}\n" "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1044/2019_AJA-19-0010?fields=title,citations.title"
+```
+EXIT      : 0 for all three; HTTP_CODE:200 for all three
+OUTPUT    :
+- Crossref: full JSON, `"reference-count":52` on the message object (the real reference list is
+  reachable, structured, and countable — NOT just a WebFetch-summarized 3-item excerpt as in 6.2).
+- OpenAlex: full JSON work record (id, doi, title, publication_year, ids incl. pmid) — a second
+  viable backward/identity-resolution source not currently used anywhere in this codebase (grep
+  confirmed zero references to `openalex.org` outside this probe).
+- Semantic Scholar: full JSON **with an actual `citations` array containing real paperId/title
+  pairs** — e.g. "Phoneme Perception in Children With Bilateral Cochlear Implants or Hearing Aids
+  in Quiet, Noise, and Reverberation" — this is exactly the forward-mining "cited by" data
+  `citation-miner_SKILL.md` §0 says is the preferred forward-mining method, retrieved with a
+  single unauthenticated curl call.
+FINDING   : PASS (all three reachable, structured, and directly usable for both directions of
+  citation mining)
+LOCATION  : n/a (external) — confirms the "R10 re-retrieval" and citation-graph capability §5.1
+  says is ABSENT as a checked-in script is NOT blocked by network/connector access. The barrier is
+  entirely that nobody has written
+  `scripts/research/{crossref,openalex,semantic_scholar}_client.py`; the raw capability exists and
+  is trivially reachable, unauthenticated, from this exact sandboxed environment.
+NOTE      : This directly strengthens the §5.1 ABSENT finding: it is not that a retriever is hard
+  to build or blocked by the proxy — it plainly is neither. It simply does not exist yet as
+  checked-in code; every mining pass currently goes through a human/agent manually driving
+  WebFetch/curl and hand-summarizing into `citation_mining.notes`, which is exactly what the 10
+  live rows show (§5.2).
+
+## 7. Retrieval log — `scripts/research/retrieval_log.py`
+### 7.1 `--help`
+INVOKED   : `python3 scripts/research/retrieval_log.py --help`
+OUTPUT    : `usage: retrieval_log.py [-h] --session SESSION [--verify-authors] [--backfill]`
+FINDING   : PASS
+NOTE      : The module's primary interface (`fetch(url, session, purpose)`) is a Python function
+  meant to be imported by a caller that does real retrieval (`scripts/resolve_dois.py` does this
+  — grep confirms `from retrieval_log import fetch` there); the CLI only exposes the
+  after-the-fact `--verify-authors`/`--backfill` audit modes, not a way to fetch-and-log a single
+  URL from the command line. Not a defect — matches its documented USE section — but worth noting
+  for anyone expecting a CLI fetch command.
+
+### 7.2 `fetch()` — persist a probe payload
+INVOKED   :
+```python
+from retrieval_log import fetch   # GUIDEBOOK_RETRIEVAL_LOG redirected to $SMOKE/retrieval-log-test
+                                    # (the real retrieval-log/ is git-tracked; PROTOCOL forbids
+                                    # writing tracked files, so this run never touched it)
+fetch('https://api.crossref.org/works/10.1044/2019_AJA-19-0010',
+      session='session_2026-08-25-pipeline-smoke-test-mobility',
+      purpose='S1 smoke test: probe payload persistence, REF-00325 DOI (already in citation_mining)')
+```
+EXIT      : 0
+WRITES    : `$SMOKE/retrieval-log-test/session_2026-08-25-pipeline-smoke-test-mobility/1eb5a8b8f737a965.json` (11,444 bytes, the real Crossref response body) and `.../manifest.jsonl` (1 line: url, purpose, sha256, byte count, exit code, artefact name, UTC timestamp)
+OUTPUT    : parsed JSON returned correctly (`title` field matched the real Crossref record)
+FINDING   : PASS
+LOCATION  : scripts/research/retrieval_log.py:117-135 `fetch()`
+NOTE      : Confirms the mechanism CLAUDE.md §2(c) describes exactly: the artefact is written to
+  disk BEFORE the caller sees the parsed return value, and the manifest line is a genuine sha256
+  of what was actually received, not a claim. This is real, working infrastructure — the gap is
+  that (per §5.1) nothing in the citation-mining path currently calls `fetch()` at all; the 10
+  live `citation_mining` rows' `notes` are pure hand-narration with no artefact behind them the
+  way a `retrieval-log/` manifest entry would be. `retrieval_log.fetch` and `citation_mining` are
+  two pieces of real, correct, uncombined machinery.
+
+### 7.3 `--verify-authors` — real session (canonical DB, read-only)
+INVOKED   : `python3 scripts/research/retrieval_log.py --verify-authors --session session_2026-08-19-research-batch-01-room-acoustic-performance`
+EXIT      : 0
+OUTPUT    :
+```
+logged payloads: 5   DOI-bearing: 5
+EXAMINED: 5
+NO LOGGED RETRIEVAL for 5 source(s) — not verifiable offline: REF-00325, REF-00561, REF-00578, REF-00969, REF-00970
+CLEAN — stored authors and asserted bibliographic fields match the retrieved payloads, byte-for-byte source.
+```
+FINDING   : PASS — and note this is NOT failure mode (a) despite superficially resembling it.
+  `verify_authors()` (scripts/research/retrieval_log.py:240-318) scans ALL 10 `evidence_sources`
+  rows (global, not scoped to `created_by_session`) and cross-checks each against whatever
+  payloads happen to be logged under THIS session's manifest folder specifically. The 5
+  "unlogged" ref_ids (REF-00325/561/578/969/970) are real — their retrievals were logged under
+  the *later* `session_2026-08-22`/`session_2026-08-23` manifests (batch 2/3), not this one — and
+  the tool says so explicitly rather than silently passing or silently failing on them. `EXAMINED`
+  and the unlogged list are both printed, so a reader can tell exactly what "CLEAN" does and does
+  not cover. Confirmed by cross-referencing `retrieval-log/session_2026-08-19.../manifest.jsonl`
+  directly: its 5 URLs are for REF-00607/965/966/967/968, exactly the 5 counted as EXAMINED.
+LOCATION  : scripts/research/retrieval_log.py:240-318
+NOTE      : Good design worth calling out positively — this is the CLAUDE.md §2(a) discipline
+  ("prove it had a subject") actually implemented, with the unverifiable set surfaced by name
+  rather than folded into a green result.
+
+### 7.4 `--verify-authors` — our smoke session
+INVOKED   : `GUIDEBOOK_DB_PATH=$SMOKE/s1-research.db GUIDEBOOK_RETRIEVAL_LOG=$SMOKE/retrieval-log-test python3 scripts/research/retrieval_log.py --verify-authors --session session_2026-08-25-pipeline-smoke-test-mobility`
+EXIT      : 0
+OUTPUT    : `logged payloads: 1   DOI-bearing: 1 / EXAMINED: 1 / NO LOGGED RETRIEVAL for 10 source(s)... / CLEAN`
+FINDING   : PASS — correctly found and verified the 1 payload persisted in 7.2 against the
+  matching DOI now present in `evidence_sources` on the scratch DB (added in §5.3), and correctly
+  listed the other 10 (9 pre-existing room-acoustic-performance rows + the synthetic REF-00972's
+  own duplicate DOI check) as unverifiable offline from this session's log.
+EXAMINED  : 1
+

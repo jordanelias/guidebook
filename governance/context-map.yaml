@@ -102,7 +102,7 @@ directories:
     authority: canonical
     hidden_from_ripgrep: false
 pointers:
-  sessions_latest: session_2026-08-23-research-batch-03-forward-mining.md
+  sessions_latest: session_2026-08-25-pipeline-smoke-test-mobility.md
   sessions_latest_resolves: true
   sessions_latest_research: session_2026-08-22-research-batch-02-room-acoustic-performance.md
   sessions_latest_research_resolves: true

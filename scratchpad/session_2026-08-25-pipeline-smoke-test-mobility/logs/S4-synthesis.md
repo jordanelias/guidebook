@@ -698,3 +698,209 @@ tying it to a pipeline-contract criterion. For the mobility batch this means: **
 synthesised mobility slugs (e.g. a ramp-gradient BPC and a corridor-width BPC) can reach directly
 opposing conclusions about the same shared-space interaction and nothing will ever surface it
 unless an agent happens to run cross-population-conflict-mapper and happens to look.**
+
+## 5. Cross-slug findings and connections
+
+### 5a. Real mobility connection — refusals provoked, then a clean write
+INVOKED   : sequence of `python3 scripts/db.py add-connection ...` /
+             `update-connection ...` / `delete-connection ...` calls against
+             `$SMOKE/s4-synthesis.db`, targeting `item:E-03` (Ramp Gradient, ≤1:20,
+             MS-fatigue-driven) and `item:E-10` (Rest Seating at Regular Intervals on All
+             Accessible Routes) — a real energy-limiting-condition interaction per the
+             protocol's example.
+STAGE     : synthesis
+EXIT      : mixed, see individual attempts below
+READS     : items.item_code (E-03, E-10 confirmed to exist and be `active`); connections /
+             connection_targets schema (CHECK constraints)
+WRITES    : connections/connection_targets rows on scratch DB (CON-0001 bad-target row,
+             CON-0002 clean row) — enumerated below
+EXAMINED  : 2 items, 7 write attempts
+FINDING   : see sub-rows
+LOCATION  : scripts/db.py (add-connection/update-connection/delete-connection handlers)
+
+| # | Attempt | Result | Note |
+|---|---|---|---|
+| R1 | `--confidence VERY-HIGH` (not in enum) | argparse rejects, EXIT 2, no DB touch | Clean refusal — caught before the DB layer. `db.py:1039` region, `choices=["HIGH","MODERATE","SPECULATIVE"]` |
+| R2 | `--connection-type ENERGY-INTERACTION` (not in `CROSS-POPULATION/CROSS-ITEM/COMPOUND-INTERACTION/METHODOLOGY`) | `sqlite3.IntegrityError: CHECK constraint failed`, EXIT 1, raw traceback | Refuses correctly but via uncaught exception, not a clean CLI message — same pattern as 2h/4e |
+| R3 | `--targets '["item:E-03","item:Z-99"]'` — Z-99 does not exist in `items` | **SUCCEEDED, EXIT 0** — CON-0001 written with `('CON-0001','item:Z-99')` in `connection_targets` | **REAL GAP**: `connection_targets.target` (scripts/migrations/057_baseline_2026-08-12.sql — CREATE TABLE connection_targets) is bare `TEXT NOT NULL`, no FK to `items.item_code`, no format check. A connection can permanently cite a phantom item and nothing refuses it. |
+| R4 | `--con-id CON-0001` again (duplicate PK) | `sqlite3.IntegrityError: UNIQUE constraint failed: connections.con_id`, EXIT 1 | Clean refusal (again via traceback) |
+| — | Clean write: CON-0002, targets `["item:E-03","item:E-10"]`, description names the MS-fatigue/energy-limiting mechanism | EXIT 0, `{"con_id": "CON-0002", "dry_run": false}` | Verified via read-only query: row present with both targets, status=PENDING |
+| R5 | `update-connection --con-id CON-0002 --status APPROVED` (not in `PENDING/CONSUMED/CONSUMED-DEFERRED/CLOSED`) | `sqlite3.IntegrityError: CHECK constraint failed`, EXIT 1, raw traceback | Refuses correctly; note `update-connection`'s argparse has NO `choices=` on `--status` (unlike add-connection's confidence) — the CHECK constraint is the only backstop, and it fires late (post-string-formatting) |
+| — | `update-connection --con-id CON-0002 --status CONSUMED` | EXIT 0 | Verified: `('CON-0002', 'CONSUMED', 0)` — status changed, `opus_reviewed` stayed 0 |
+| R6 | `delete-connection --con-id CON-9999` (id that never existed) | **SUCCEEDED, EXIT 0** — `{"deleted": "CON-9999", "dry_run": false}` | **REAL GAP**: no existence check or rowcount verification before reporting success; a typo'd con_id in a delete call silently no-ops while reporting success |
+
+### 5b. What reads `connections` downstream — reaches render unfiltered
+INVOKED   : `grep -rn "FROM connections" scripts/ tools/` then read
+             `scripts/generate_parts.py:245-267` (`build_part05`)
+STAGE     : synthesis → render
+EXIT      : n/a (code read)
+READS     : scripts/generate_parts.py:245-267
+WRITES    : NONE
+EXAMINED  : 1 render function
+OUTPUT    : |
+  rows = conn.execute("SELECT con_id, connection_type, status, description FROM
+  connections ORDER BY con_id").fetchall()
+  applied = [r for r in rows if r[2] in ("CONSUMED", "CONSUMED-DEFERRED", "CLOSED")]
+  ...
+  md.append("## Applied connections\n")
+  md.append(f"{len(applied)} connections have been consumed into item specs or
+  deferred; full provenance renders with the specification detail in Part 4...")
+FINDING   : **FAIL — an unreviewed connection CAN reach render.** `build_part05` (the
+             function that generates Part 5 "Building-Level Co-Occurrence Resolution" of the
+             actual book) selects on `status` alone. It applies NO filter on `opus_reviewed`
+             — the field intended to record that Opus signed off on the connection before it
+             counts as applied. Combined with 5c below (opus_reviewed can never be set to 1
+             through the live write path), this means: **any connection an agent files with
+             `add-connection` (opus_reviewed hardcoded 0) and then advances to CONSUMED with
+             `update-connection` is IMMEDIATELY render-eligible** — CON-0002, written above by
+             THIS smoke test with no Opus review of any kind, would render into Part 5 as an
+             "applied" connection if this were the live DB.
+LOCATION  : scripts/generate_parts.py:250-266 (build_part05); no `opus_reviewed` filter
+             anywhere in the function or file (confirmed by grep, see 5c)
+
+### 5c. `opus_reviewed` is dead — never settable, never read as a gate, anywhere in live code
+INVOKED   : `grep -rn "opus_reviewed" --include="*.py" .` (repo-wide, including `_archived/`)
+STAGE     : synthesis
+EXIT      : n/a
+READS     : all .py files, sqlite_master (connections schema, `opus_reviewed INTEGER NOT NULL
+             DEFAULT 0`), schemas/connection.py (Pydantic model, `opus_reviewed: bool = False`)
+WRITES    : NONE
+EXAMINED  : whole-repo grep, 11 hits
+OUTPUT    : Live hits: `scripts/db.py:1374` (`"opus_reviewed": 0` — hardcoded, add-connection
+             has no flag to override it and `update-connection` cannot touch it either);
+             `schemas/connection.py:35` (Pydantic default, unused as a gate);
+             `scripts/audit/validate_pydantic_schemas.py:132` (a comment listing it, not code
+             that reads its value). ALL other hits are in `_archived/scripts/convert/` and
+             `_archived/scripts/migrate/` — one-time historical migration scripts, not live.
+FINDING   : **ABSENT as a functioning control.** The column exists in the schema and the
+             Pydantic model, giving the appearance that Opus review of a connection is
+             tracked and gated — it is neither. Nothing in live code can ever write 1 to it,
+             and nothing in live code (including the render path in 5b) ever reads it to
+             decide anything.
+LOCATION  : scripts/migrations/057_baseline_2026-08-12.sql (connections.opus_reviewed column
+             definition, ~line 143); scripts/db.py:1374 (hardcoded write); no reader anywhere
+NOTE      : **For the mobility batch: connection review is unenforced end to end.** A ramp
+             gradient ↔ rest-seating connection (or any other mobility cross-item finding)
+             can be filed, marked CONSUMED, and rendered into the actual book with zero
+             record of any human or Opus-tier review ever having occurred — the schema field
+             that was clearly designed to prevent exactly that is inert.
+
+## 6. Weighting
+
+### 6a. Read `weighting_profile` (5 rows) — what it actually is
+INVOKED   : `SELECT * FROM weighting_profile` on committed DB, read-only
+STAGE     : substrate → render (see 6b for why not synthesis)
+EXIT      : n/a
+READS     : weighting_profile (5 rows)
+WRITES    : NONE
+EXAMINED  : 5 rows
+OUTPUT    : |
+  designer / decision-frame        → foreground T1, CO1, conflict_notes, code_refs; delta=show
+  disabled_person / representation-checking → foreground CO1, variability, co1_limit
+  disabled_person / advocacy-brief → foreground delta, rights, evidence_strength, gaps
+  policymaker / jurisdiction-comparison → foreground T4/T5/T6, delta, anti_laundering;
+                                            delta=floor-vs-anchor
+  ot / specialist-handoff          → foreground T1, ranges, person_mode_handoff; delta=clinical
+FINDING   : PASS (table read successfully; schema is `PRIMARY KEY(audience, use_pattern)`,
+             `tier_weights` a CHECK(json_valid) JSON blob)
+LOCATION  : weighting_profile table (scripts/migrations/057_baseline_2026-08-12.sql:705)
+
+### 6b. How a weighting profile enters synthesis — it does NOT; it's a render-stage concern
+INVOKED   : grep `weighting_profile` across scripts/tools/governance (repo-wide); read
+             `governance/evidence-architecture.md:166,170` (§I1/emphasis re-ranking)
+STAGE     : render (not synthesis)
+EXIT      : n/a
+READS     : governance/evidence-architecture.md:166 ("Emphasis re-ranking (the
+             `weighting_profile` mechanism...) chooses **which cells and columns are
+             foregrounded** per audience; it can never move a rendering to a different row of
+             this map."), :170 ("I1 — Tuple identity. Every rendering of a cell, in every
+             register, carries the identical determination tuple. Different words, same
+             facts.")
+WRITES    : NONE
+EXAMINED  : governance doctrine text (authoritative on this question) + grep confirming no
+             live script reads `weighting_profile` at all (only `emit_data_migration.py`,
+             which merely permits it as a writable table name for migrations, and 4
+             governance docs)
+OUTPUT    : Doctrine states explicitly and unambiguously that weighting_profile is a
+             **presentation-layer foregrounding mechanism**, not a synthesis input. It affects
+             which columns of an ALREADY-DETERMINED cell get emphasized per audience/register.
+             It cannot change what the determination IS.
+FINDING   : ANSWERED BY DOCTRINE, not by code — because no code consumes this table at all
+             yet (grep finds zero readers outside the governance prose and the migration
+             emitter's table whitelist). `bpc_metadata` has NO column pointing at a
+             `weighting_profile` row (confirmed against the schema already read in item 2) —
+             consistent with the doctrine, since a synthesis SHOULDN'T record "which profile
+             it used" if weighting is purely a render-time reader concern applied after the
+             fact, not a synthesis-time input. **This is architecturally sound as designed**
+             — the question "does a synthesis record which profile it used" has the answer
+             "no, and it shouldn't, because the profile is chosen by the READER's audience at
+             render time, not by the AUTHOR at synthesis time." This is the one item-6
+             sub-question where the answer is a clean, doctrinally-consistent "not
+             applicable" rather than a gap.
+LOCATION  : governance/evidence-architecture.md:166,170; bpc_metadata schema (item 2c) has no
+             weighting_profile FK/pointer column, consistent with the design
+
+### 6c. Can I1 (register-invariant) be tested with 0 syntheses? — NO, and the checker documents this itself
+INVOKED   : `python3 scripts/audit/register_integrity_check.py` (default args — real
+             committed DB, `working/pilot/pilot-renderings.html`), then
+             `python3 scripts/audit/register_integrity_check.py --selftest` (the invocation
+             actually wired into `governance/check-registry.yaml:1384`)
+STAGE     : render, cross-checked against judgment (`specifications`)
+EXIT      : 0 both times   RUNTIME: <1s each
+READS     : working/pilot/pilot-renderings.html (a PILOT artifact — NOT the real book's
+             rendered output — containing 15 hand/pilot-authored cells); data/guidebook.db
+             (specifications table, read-only, via default `--db` = `GUIDEBOOK_DB_PATH` or
+             `data/guidebook.db`)
+WRITES    : NONE
+EXAMINED  : 15 cells × 6 registers claimed in the PASS message; **0 specifications rows**
+             actually available to cross-check against (verified independently — see below)
+OUTPUT (plain run): `PASS: I1–I5 hold across 15 cells × 6 registers (DB cross-check on)`
+OUTPUT (--selftest): 12 "FIRED" mutation-test lines (I1 tuple divergence, I3 RSO, I4/I5
+             inflation, completeness-on-deletion, repr-leak, etc.), then
+             `clean pass on untampered document: yes` then the same PASS line.
+FINDING   : **VACUOUS, and independently reproduced.** I re-ran the exact `db_rows`
+             population logic from `scripts/audit/register_integrity_check.py:140-156`
+             directly against the committed DB: `SELECT ... FROM specifications` returns 0
+             rows, so `db_rows = {}` — an EMPTY dict, which is Python-falsy. Both guard sites
+             that gate the actual cross-check logic (`if db_path:` completeness loop at
+             :159-166, and the per-cell `if db_rows:` block at :180-192) test `if db_rows:`
+             or operate on the resulting empty structure — so **the DB→doc completeness check
+             and the per-cell DB-value cross-check never execute a single comparison** on the
+             real invocation. Yet the final print statement emits "(DB cross-check on)" based
+             solely on `args.db` being a non-empty PATH STRING, not on whether `db_rows` ended
+             up populated — so the message actively implies verification that did not happen.
+FINDING   : PASS-BUT-MISLEADING — with an important mitigating fact: **the script's own
+             author already documented exactly this vacuity**, verbatim, at
+             scripts/audit/register_integrity_check.py:362-366: "specifications is 0 rows in
+             the live corpus (pre-launch, unpopulated), so db_rows is always empty and
+             set(db_rows) - set(cells) can never be non-empty — this sub-test would pass
+             vacuously against the real DB no matter what gets deleted from the document." The
+             fix applied is real but PARTIAL: `--selftest` copies the DB to a temp file,
+             INJECTS one ghost `specifications` row matching the pilot doc's first cell, and
+             mutation-tests that the completeness/cross-check logic correctly fires against
+             THAT temp fixture. This proves the CHECKER'S LOGIC is not dead code. It does
+             **not** fix the final `check(doc, db_path=args.db)` call in `main()` (the one
+             whose PASS/FAIL determines the registry gate's exit code) — that call still runs
+             against the real, empty, committed DB and is still vacuous in exactly the way
+             the comment describes.
+LOCATION  : scripts/audit/register_integrity_check.py:140-156 (db_rows population),
+             :159-166 (DB→doc completeness, gated on falsy empty dict),
+             :180-192 (per-cell DB cross-check, gated on falsy empty dict),
+             :428-429 (misleading "(DB cross-check on)" label keyed to `args.db` truthiness,
+             not to whether any row was actually compared),
+             :362-366 (the author's own comment proving this is KNOWN, not accidental)
+NOTE      : **Answers the item-6 headline question directly: I1 (and I2-I5) CANNOT be
+             meaningfully tested against real synthesis output today, because there are 0
+             `specifications` rows and 0 `bpc_metadata` rows to test.** The 15-cell PASS is
+             entirely a statement about a hand-authored PILOT fixture
+             (`working/pilot/pilot-renderings.html`), not the mobility batch's future output,
+             and the part of the check that WOULD catch a real cell silently missing from a
+             real render (`COMPLETENESS VIOLATION`) is proven-working only in `--selftest`'s
+             temp-copy sandbox, never in the real invocation while `specifications` stays
+             empty. **For the mobility batch: once real specifications rows exist, re-run
+             `register_integrity_check.py` and confirm the printed cell count and "(DB
+             cross-check on)" label correspond to actual comparisons — do not trust the label
+             at face value until `specifications` is non-empty.** This is a lower-severity
+             instance of failure mode (a) than the fully silent ones elsewhere in this log,
+             specifically because the author already flagged it in-code — but the flag never
+             reached the production code path, only the selftest path.

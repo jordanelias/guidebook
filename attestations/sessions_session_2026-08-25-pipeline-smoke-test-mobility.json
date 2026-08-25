@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-08-25-pipeline-smoke-test-mobility",
+  "artifact": "sessions/session_2026-08-25-pipeline-smoke-test-mobility.md",
+  "doctrine_sha": "0f2f525",
+  "rules_in_scope": [
+    "integrity-protocol",
+    "source-discipline",
+    "citation-mining",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "data/guidebook.db",
+      "reason": "NO WRITE to the canonical DB. Every access was mode=ro or against a per-agent scratch copy under the harness scratchpad; sha256 recorded at session open and re-checked after every phase, unchanged at 30a106692ab4110fe4e2082018eb256a325b2884d5740d3f62445b52c07dceaf. No migration emitted. Live counts unchanged: evidence_sources 10, specifications 0, source_locators 875. The mechanical battery was run but is not claimed as a full Mode-3 pass: this session's subject is the battery itself."
+    },
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "scratchpad/session_2026-08-25-pipeline-smoke-test-mobility/logs/OPUS-runbook-drift.md",
+      "reason": "Every figure in the findings is derived from the live repository at the moment of writing and carries the command or file:line that produced it — the 27 JurisdictionCode members from the enum, the 875-row jurisdiction breakdown from a query, the 272 mobility DOIs from parsing the artifacts, EXAMINED: 111 from running validate_jurisdiction. No count was carried over from a document. Three of the six stage agents' headline claims were re-verified against the source before being repeated (room_page.py:26 FROM room, index.html:7 counts, pipeline_completeness.py:37 STAGES)."
+    },
+    "citation-mining": {
+      "status": "FIRED",
+      "evidence_path": "scratchpad/session_2026-08-25-pipeline-smoke-test-mobility/logs/OPUS-runbook-drift.md",
+      "reason": "Backward and forward mining were examined as a capability, not exercised to admit anything. Measured: citation_mining holds 10 rows with backward on 7 and forward on 10, harvesting 138 distinct DOIs into connections_produced, of which 4 reached source_locators. A prior OpenAlex mobility pass was found in sessions/artifacts (272 DOIs, 256 in neither store). No new mining was run and no lead was promoted; the promotion edge is reported as ABSENT rather than improvised."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/sessions_session_2026-08-25-pipeline-smoke-test-mobility.json",
+      "reason": "This file. Written because sessions/ was touched. It was written in response to the blocking attestation_presence gate failing on CI at head d4042e6 — not before it — which is itself recorded below as the honest sequence."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "The attestation was written AFTER CI failed, not before the commit that required it. attestation_presence is blocking and caught it correctly at head d4042e6; the local gate did not. Running scripts/run_checks.py --battery attestation --changed-from origin/main on the identical commit reported NOTHING-IN-SCOPE with attestation_presence [NONE] and RESULT: PASS, while CI on the same sha reported 'changed files: 11; synthesis: 1' and FAIL. The local preflight did not predict CI, so the gate that caught this is the one that runs last. Recorded as a deviation rather than quietly fixed, because a local gate that disagrees with CI on the same commit is a defect in the apparatus this session exists to test, and it is now a finding in its own right."
+    },
+    {
+      "rule": "source-discipline",
+      "reason": "I created .claude/session as a session-stem pointer before reading record-command.py, which had DELIBERATELY REMOVED that reader on 2026-08-23 for being a second home for a fact sessions/LATEST already holds. I created a rule-5 violation of exactly the kind this repository has spent a fortnight removing, in the same session whose purpose is to audit that discipline. Caught within minutes by reading the hook's docstring, deleted before any commit, and sessions/LATEST used instead. No artifact carries it; the mistake is recorded because deleting the file is not the same as recording that I made it."
+    },
+    {
+      "rule": "integrity-protocol",
+      "reason": "This session's first ~20 Bash calls were appended to scratchpad/session_2026-08-23-research-batch-03-forward-mining/commands.jsonl, because record-command.py resolves the session stem from sessions/LATEST and LATEST is only advanced at close-out. The provenance record for this session's opening landed in a two-day-old session's directory. Those lines were committed WHERE THEY LANDED rather than moved or deleted: the log is append-only and backfilling it would destroy the evidence of the misfiling. The 2026-08-23 change that moved this pointer from .claude/session to sessions/LATEST did not fix the staleness its own docstring claims it fixed; it relocated it."
+    }
+  ],
+  "bias_direction": "I am biased toward this smoke test producing dramatic findings, because a smoke test that finds nothing reads as wasted effort and I chose the scope. That bias points at two specific behaviours: calling a capability ABSENT when it merely has a different name than I searched for, and repeating a subagent's headline claim because it is striking rather than because I checked it. I mitigated the second by re-verifying three of the sharpest agent claims against the source and by asking every agent to record ABSENT with the nearest existing surface named. I did not fully mitigate the first: the ABSENT list is only as good as the searches behind it, and .ignore hides six directories from ripgrep — a trap this session hit in reverse when it found 256 mobility leads that every prior session's search had missed.",
+  "independent_reviewer_counterclaim": "The strongest objection is that this session is apparatus work, and the instrument's own acceptance criterion — one answered question, published — scores it zero. specifications 0 to 0, evidence_sources 10 to 10, no determination, no synthesis, nothing rendered. A reviewer could fairly say the repository's documented pathology is producing audits of itself, and that a seventh audit is the disease presenting as the cure. Three defences, each narrow. First, the owner asked for this specifically and as a precondition to a real batch, and CLAUDE.md rule 0 puts a live owner statement above prior ratified records. Second, it produces no new apparatus: no workplan file, no registry entry, no new script, no new table — the freeze's five prohibitions are all respected even though the freeze itself lapsed. Third, four of its findings are hard blockers on the batch the owner intends to run next, and three of those are invisible to every existing gate: a blocking check that passes having examined 111 of the wrong things, four bucket jurisdictions absent from the schema enum, and a ratified runbook whose first command names a deleted script. A fourth objection I cannot dismiss: six agents wrote to one worktree concurrently, which no convention in this repository authorises, and the only reason it is safe is that five of them were forbidden to touch tracked files and the sixth restored what it dirtied file-by-file. That worked, and it was not guaranteed to.",
+  "verdict": "DEVIATION-LOGGED"
+}
