@@ -1440,3 +1440,221 @@ at all, that is a one-line status filter added THEN, under the ruling.
 **TESTS:** rebuild green; `add-connection` on scratch lands without the key;
 `validate_pydantic_schemas --strict` green (model and table agree in the new direction).
 **RISK:** none beyond the owner-question above — the delete arm is pure code.
+
+---
+
+# PHASE 3 — RENDER TRUTHFULNESS
+
+## P3.1 — `room_page.py`: six nonexistent objects, one key mismatch — REWRITE, not rename
+
+**WHERE / NOW — every bad reference, measured:**
+
+| Line(s) | References | Live schema says |
+|---|---|---|
+| `:26` | `SELECT * FROM room WHERE room_id = ?` | table is `rooms`, PK is `room_code` |
+| `:29` | `SELECT * FROM room LIMIT 0` | same |
+| `:35` | `FROM room_item ri WHERE ri.room_id = ?` + cols `design_stage, must_appear_on, notes` | table is `room_items` keyed `room_code`; its ONLY payload cols are `applicability, applicability_note` — `design_stage`/`must_appear_on` exist NOWHERE |
+| `:44-45, :84-85` | `room_item_population` | **no such table, and no successor** |
+| `:51` | `SELECT title FROM specification` | `specifications` exists but has NO `title` column and is keyed (item×population), not item; item display name lives in `items.name` |
+| `:66` | `room_dar_provision` | **no such table** |
+| `:75` | `room_conflict` | **no such table** (the live `conflicts` table is item/domain-scoped, no room key) |
+| `render_html` `:95-…` | `room["room_label"]`, `building_type`, `evidence_density`, `criticality_note` | `rooms` columns are `room_code, name, category, description, status, notes` — none of the four exists |
+
+Two renames (the plan's original P3.1) leave the script crashed at `:44`, `:51`, `:66`, `:75`
+and then again in `render_html`. The Template-3 page (design-stage matrix, DAR provisions,
+conflict register, per-room population applicability) has **no backing model in the live
+schema**; only `rooms` (17 rows) and `room_items` (0 rows) exist.
+
+**CHANGE — rewrite thin against what exists** (chosen over deletion because `rooms` now holds
+17 real rows, `site/rooms/` pages exist and are linked, and `build_site.py`'s own docstring
+`:6-9` wants the crash gone; deletion remains the §1-legal fallback if the owner retires the
+room surface):
+
+```python
+def query_room(conn, room_code):
+    room = conn.execute(
+        "SELECT room_code, name, category, description, status, notes "
+        "FROM rooms WHERE room_code = ?", (room_code,)).fetchone()
+    if not room:
+        return None
+    d = dict(zip(("room_code", "name", "category", "description", "status", "notes"), room))
+    d["items"] = [dict(zip(("item_code", "item_name", "applicability",
+                            "applicability_note"), r))
+                  for r in conn.execute(
+            "SELECT ri.item_code, i.name, ri.applicability, ri.applicability_note "
+            "FROM room_items ri JOIN items i ON i.item_code = ri.item_code "
+            "WHERE ri.room_code = ? ORDER BY ri.item_code", (room_code,))]
+    return d
+```
+`render_html` shrinks to: header (`room_code`, `name`, `category`, `status`), description,
+notes, and ONE item table (Code · Item · Applicability · Note) linking each row to
+`/specs/<item_code>.html`; an honest empty-state banner when `room_items` has no rows
+("No items are linked to this room yet — `room_items` is unpopulated; the Template-3 matrix
+(design stages, DAR provisions, conflict register) renders when its backing tables exist").
+Delete the design-stage/DAR/conflict/population-matrix sections and their CSS — git archives
+them; re-adding them without backing tables would be prose contradicting the database, §2(b)'s
+exact defect in HTML form. `generate()`/`main()` keep their shape; variable `room_id` renamed
+`room_code` throughout (`:252-261`).
+
+**REFUSALS/TESTS:** `python3 scripts/generate/room_page.py R-BA --output /tmp/r_ba.html` exits
+0 and the page carries the empty-state banner; a scratch `room_items` row renders one matrix
+line; nonexistent room → the existing not-found error path. **BLAST RADIUS:** `site/rooms/*`
+(17 stale files — regenerate all in the same commit or delete them until driven by
+build_site.py); `build_site.py:6-9` docstring says room_page "crashes against the live schema
+(no `rooms` table)" — now doubly stale; update it. `architecture/page-templates.md` Template 3
+remains the aspiration — nothing in this fix contradicts it; it renders when its tables are
+migrated (owner/content territory, flagged below). **RISK:** low; the deleted sections are the
+recorded loss, named in the commit.
+
+## P3.2 — `index.html` hardcodes its statistics
+
+**WHERE:** `index.html:7` (meta description: "91 provisions, 661 evidence sources, 10
+categories"), `:92` (the sentence *"Every count below is a live COUNT() against
+data/guidebook.db"* — **currently false**), `:94-112` (stat tiles: 91 / 661 / 245 / 32),
+`:117-…` (hand-picked "Recently modified"), `:148` ("All 91 provisions by category") and ten
+per-category `sec-meta` counts (`:156,:256,:326,:366,:431,:511,:556,:611,:646,:676`).
+Live: items = **93** (by category A19 B12 C6 D11 E14 F8 G9 H5 I4 K5), evidence_sources =
+**10**, gaps OPEN = 5, connections = 0.
+
+**CHANGE — make the false sentence true instead of deleting it: generate the page.**
+1. Move `index.html` → `scripts/generate/templates/index.template.html`, with placeholders:
+   `@N_ITEMS@`, `@N_SOURCES@`, `@N_XREFS@`, `@N_GAPS_OPEN@`, `@CATEGORY_SECTIONS@`,
+   `@RECENT_ITEMS@`, `@GENERATED_STAMP@`.
+2. New `scripts/generate/index_page.py` (same DB-path/`--check` conventions as spec_page):
+```python
+COUNTS = {
+    "@N_ITEMS@":     "SELECT COUNT(*) FROM items",
+    "@N_SOURCES@":   "SELECT COUNT(*) FROM evidence_sources",
+    "@N_XREFS@":     "SELECT COUNT(*) FROM connections",
+    "@N_GAPS_OPEN@": "SELECT COUNT(*) FROM gaps WHERE status='OPEN'",
+}
+# @CATEGORY_SECTIONS@: iterate SELECT category, COUNT(*) FROM items GROUP BY
+# category ORDER BY category; within each, SELECT item_code, name FROM items
+# WHERE category=? ORDER BY item_code — the per-category markup block is lifted
+# verbatim from the current hand version so the design does not change.
+# @RECENT_ITEMS@: SELECT item_code, name FROM items ORDER BY updated_at DESC
+# LIMIT 5 (verify items carries updated_at: PRAGMA table_info(items); if it
+# does not, drop the section rather than fake it).
+```
+   Output path `REPO_ROOT / "index.html"`; `--check` renders to memory and byte-compares
+   against the committed file, exit 1 on drift.
+3. Labels adjust to what is actually counted: "661 evidence sources · tiered" becomes the live
+   number with the same label; "Cross-references" counts `connections` (0 today — honest);
+   "Open gaps" counts OPEN gaps (5). The meta description at `:7` is templated from the same
+   numbers. `@GENERATED_STAMP@` + a one-line drift warning satisfy §2(b)'s second arm for any
+   prose that stays hand-written.
+4. Drive + gate: add `index_page.py` to `build_site.py`'s build and to its `--check` sweep —
+   the existing advisory `site_pages_fresh` registry entry (`check-registry.yaml:1359-1360`)
+   then covers it with **no new registry entry**.
+
+**TESTS:** `python3 scripts/generate/index_page.py && python3 scripts/generate/build_site.py
+--check` green; hand-edit a count in index.html → `--check` exits 1 (the CLAUDE.md §7
+"don't hand-edit generated output" trap now has an enforcer for this file). **BLAST RADIUS:**
+index.html becomes generated output — add it to the §7 trap list's mental model; any styling
+edit now goes to the template. **RISK:** template extraction is mechanical but 803 lines —
+byte-compare the first generated output against the current file MINUS the corrected numbers to
+prove nothing else changed.
+
+## P3.3 — `register_integrity_check.py` prints "(DB cross-check on)" while the path never ran
+
+**WHERE:** `scripts/audit/register_integrity_check.py:130-153` (`check()` builds `db_rows` from
+0-row `specifications`), `:182`-region (`if db_rows:` gates every per-cell DB comparison),
+`:362-366` (the selftest's own comment admitting the vacuity), `:425-431` (`main()` prints the
+claim keyed on `args.db` alone).
+
+**NOW** (`:429-431`):
+```python
+    n_cells = len(parse(doc))
+    print(f"PASS: I1–I5 hold across {n_cells} cells × {len(ROLES)} registers"
+          + (" (DB cross-check on)" if args.db else ""))
+```
+
+**CHANGE:** `check()` returns what it examined; the print reports what actually happened.
+```python
+def check(doc, db_path=None):
+    ...
+    return errors, len(db_rows)          # every return path; (errors, 0) for the early one
+```
+```python
+    errors, n_db = check(doc, db_path=args.db or None)
+    ...
+    n_cells = len(parse(doc))
+    if args.db:
+        db_note = (f" (DB cross-check on: {n_db} specifications row(s))" if n_db
+                   else " (DB cross-check REQUESTED BUT VACUOUS: specifications has "
+                        "0 rows — the doc→DB and DB→doc comparisons examined nothing)")
+    else:
+        db_note = ""
+    print(f"PASS: I1–I5 hold across {n_cells} cells × {len(ROLES)} registers{db_note}")
+    print(f"EXAMINED: {n_cells + n_db}")
+```
+Caller sweep for the signature change: `main()` `:424` and `selftest()` (it calls `check()` —
+`grep -n "check(" scripts/audit/register_integrity_check.py` and update each unpacking; the
+selftest's ghost-row harness at `:362-380` then asserts `n_db == 1` on its injected row, which
+turns the vacuity comment at `:362-366` from an admission into a test).
+
+**TESTS:** run against the live DB → the VACUOUS wording appears; run the selftest → ghost-row
+sub-test still FIRES and now also asserts the count. **BLAST RADIUS:** the registry entry for
+this check (basis `render/...`) unchanged; any output-parsing consumer of the PASS line —
+`grep -rn "DB cross-check" scripts/ tools/ .github/` → only this file. **RISK:** none; honesty
+of an output line plus a counted subject.
+
+## P3.4 — `parts/` freshness gate
+
+**WHERE:** `scripts/generate_parts.py` (fingerprint already computed `:83-95` and EMBEDDED in
+every file: `**Source DB fingerprint:** \`<fp>\`` via `header()` `:105-109`; measured in
+`parts/v10/part04.md:5`); `governance/pipeline-contract.yaml:138-142` (`render-freshness`,
+`check: null`); `governance/check-registry.yaml` (new advisory entry).
+
+**CHANGE:**
+1. `generate_parts.py` gains `--check`:
+```python
+    ap.add_argument("--check", action="store_true",
+                    help="verify parts/v10/*.md embed THIS DB state's fingerprint; "
+                         "write nothing; exit 1 on drift")
+```
+```python
+    if args.check:
+        fp, _blob = fingerprint(conn)
+        import re as _re
+        pat = _re.compile(r"\*\*Source DB fingerprint:\*\* `([0-9a-f]{12})`")
+        stale, missing, n = [], [], 0
+        for _key, fn, _l, _t in PARTS + [("manifest", "manifest.md", "", "")]:
+            path = os.path.join(args.out, fn)
+            if not os.path.exists(path):
+                missing.append(fn); continue
+            n += 1
+            m = pat.search(open(path, encoding="utf-8").read())
+            if not m or m.group(1) != fp:
+                stale.append(f"{fn} (embeds {m.group(1) if m else 'NO FINGERPRINT'}, "
+                             f"DB is {fp})")
+        print(f"EXAMINED: {n}")
+        if stale or missing:
+            print("STALE parts/ vs DB:", *stale, *(f"MISSING {f}" for f in missing),
+                  sep="\n  ")
+            print("regenerate: python3 scripts/generate_parts.py")
+            return 1
+        print(f"parts/ fresh at fingerprint {fp}")
+        return 0
+```
+   (PARTS is the module's own file list `:47-62` — reuse it; do not glob, so a stray file
+   cannot fail the gate.)
+2. Registry (advisory — same level as `site_pages_fresh`, same rationale):
+```yaml
+  - id: parts_fresh
+    cmd: [python3, scripts/generate_parts.py, --check]
+    battery: data
+    kinds: [research, governance]
+    level: advisory
+    basis: render/render-freshness
+    cost: fast
+```
+3. `pipeline-contract.yaml:142`: `check: null` → `check: scripts/generate_parts.py --check`,
+   and trim the criterion's now-false clause "parts/ has no committed fingerprint gate".
+   Run `run_checks.py --selftest` (C7: every basis resolves) — the registry-is-a-caller trap.
+
+**Known honest limit, restated not hidden:** the fingerprint hashes COUNTS + user_version
+(`:83-95`'s own comment) — an UPDATE-only change is invisible to it. It is a cheap label, the
+same one `build_site.py` uses; the byte-level truth stays `--check`-by-regeneration.
+**TESTS:** clean tree → EXAMINED: 14, exit 0; apply any data migration on a scratch checkout →
+exit 1 naming each file. **RISK:** none; advisory.
