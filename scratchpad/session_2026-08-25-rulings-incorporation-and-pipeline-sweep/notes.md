@@ -519,3 +519,51 @@ did not cover a prose mention two files over. `governance/retired-vocabulary.yam
 guidance says per-file exemptions are too coarse for a file that both uses and discusses a
 token, and the inline `[RETIRED-VOCAB-OK]` is the instrument for a single line. Used it.
 Back to 65.
+
+## F13 — my own fix for F12 had the same defect, one door over
+
+Found by testing my own change against the next thing I was about to do — write this
+session's close-out record.
+
+F12's derivation was "the newest `scratchpad/session_*` directory with no
+`sessions/<stem>.md` behind it is the session running now."  [RETIRED-VOCAB-OK]
+**The close-out ritual breaks it.** Writing `sessions/<stem>.md` is how a session closes,
+and a session routinely keeps working after that — so at that instant the live session
+stops matching, and the rule falls through to the newest *stale* open session. Measured
+with the record present: it returned `session_2026-08-24-pointer-discipline`, a session
+that ended a day earlier. Same misattribution as F12, reached by a different door.
+
+The pattern across all three versions is the same one: **every signal used so far was
+inferred from filenames, and none of them was the fact.** `.claude/session` inferred it,
+`sessions/LATEST` inferred it, newest-open inferred it.
+
+**The fact is the harness session id.** It is on the hook payload, it is stable within a
+session and unique across sessions, and nothing was writing it down. So:
+
+- every line now carries `session_id` — the log becomes SELF-DESCRIBING, and a reader
+  partitions it by a stated fact instead of guessing boundaries from timestamps. That is
+  precisely what made the three misfiled sessions unsplittable: the 08-24 session ran
+  through midnight UTC, so the only available boundary was inference. Future logs answer.
+- the derivation is now only the **opening guess**. From line 2 the hook follows the
+  anchor: a session's lines are always appended, so the directory whose log *ends* with
+  our sid is ours. Exact, and it holds through close-out because it never consults records.
+
+**Registered as a check, and mutation-tested before shipping.**
+`scripts/tests/test_record_command_session.py`, 10 assertions. Three mutations, each
+turning it red: disable the anchor (3 fail, incl. the A01 regression), drop the
+`session_id` the anchor reads (W01 fails — the anchor would have been left dead), let
+closed sessions be written into again, i.e. the original 2026-08-23 defect (4 fail).
+
+**Two things I got wrong while writing the test, both worth recording.**
+S01 as first written — "a closed session is never written into" — passed under the
+mutation it was meant to catch, because I put the closed session *older* than the open
+one, where "newest" and "newest open" agree. It asserted nothing. The closed fixture is
+now the newest.
+And `build()` was additive, so fixtures leaked between cases: a directory left by S01
+changed which session A03 resolved to. Two assertions had been passing on run order, not
+on the code. Found by *adding* a case, not by the suite going red — which is the whole
+argument for mutation-testing a test rather than trusting a green.
+
+CLAUDE.md §1 asks what wrong thing reaches the guidebook without this check. A provenance
+record that misattributes which session did which work — against a directive stated twice,
+2026-08-20 and 2026-08-25. It guards the review surface itself, not the apparatus.

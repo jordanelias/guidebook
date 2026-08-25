@@ -23,7 +23,7 @@ see workplan/2026-08-20-adversarial-adjudication-a18-aut.md §4.
 import sys,json,os,hashlib,datetime,pathlib
 
 
-def open_session(root):
+def open_session(root, sid=None):
     """Stem of the session running NOW, derived. '' when it cannot be told.
 
     THE 2026-08-23 FIX WAS WRONG AND THIS RECORDS WHY, because the wrong version
@@ -71,14 +71,48 @@ def open_session(root):
     LOUD. Silently appending to a closed session's log is the failure this function
     exists to end, and it stayed invisible for three sessions precisely because it
     produced a plausible-looking file.
+
+    `sid` IS THE ANCHOR, AND THE DERIVATION ABOVE IS ONLY THE OPENING GUESS. The
+    harness session id is the one fact that actually says which session is running;
+    everything else here is inference from filenames. So it is written onto EVERY
+    line, and once a line exists this function stops inferring and follows it: the
+    session's own lines are always appended, so a directory whose log ENDS with our
+    sid is our directory. Exact from line 2 onward.
+
+    That is not tidiness, it closes a real hole. Tested before shipping: the moment a
+    session writes its own close-out record `sessions/<stem>.md` -- the documented
+    ritual, and sessions routinely keep working afterwards -- the newest-open rule
+    stops matching it and falls back to the newest STALE open session. Measured:
+    with 08-25's record present, the guess returned `session_2026-08-24-pointer-
+    discipline`, a session that ended a day earlier. Same defect as the one this
+    function was written to fix, reached by a different door. The anchor holds
+    through close-out because it does not care about records at all.
+
+    Recording the sid also makes the log SELF-DESCRIBING: a reader partitions it by
+    a stated fact instead of inferring boundaries from timestamps. That is what made
+    the three misfiled sessions unsplittable -- the 08-24 session ran through
+    midnight UTC, so the only available boundary was a guess. Future logs carry the
+    answer.
     """
     try:
         pads = sorted(q.name for q in (root/"scratchpad").iterdir()
                       if q.is_dir() and q.name.startswith("session_"))
-        openp = [n for n in pads if not (root/"sessions"/f"{n}.md").exists()]
-        return openp[-1] if openp else ""
     except OSError:
         return ""
+    if sid:
+        for n in reversed(pads):
+            f = root/"scratchpad"/n/"commands.jsonl"
+            try:
+                # Last line only: our lines are appended, so if this log is ours it
+                # ends with us. Reading whole logs on every Bash call would grow
+                # without bound for an answer the tail already gives.
+                last = f.read_bytes().rsplit(b"\n", 2)[-2 if f.stat().st_size else 0]
+                if json.loads(last).get("session_id") == sid:
+                    return n
+            except (OSError, ValueError, IndexError):
+                continue
+    openp = [n for n in pads if not (root/"sessions"/f"{n}.md").exists()]
+    return openp[-1] if openp else ""
 
 
 try:
@@ -175,13 +209,17 @@ try:
     else:
         out=str(tr or ""); ec=None; err=None; errout=""; interrupted=None
     root=pathlib.Path(os.environ.get("CLAUDE_PROJECT_DIR") or ".")
-    sess=open_session(root) or (d.get("session_id") or "unassigned")
+    sid=d.get("session_id")
+    sess=open_session(root,sid) or (sid or "unassigned")
     p=root/"scratchpad"/sess
     p.mkdir(parents=True,exist_ok=True)
     b=out.encode("utf-8","replace")
     eb=errout.encode("utf-8","replace")
     rec={"ts":datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
          "cwd":d.get("cwd"),"command":c,"exit":ec,"is_error":err,
+         # Ground truth for WHICH SESSION issued this. Every other signal in this
+         # hook is inferred from filenames; this one is stated. See open_session().
+         "session_id":sid,
          "interrupted":interrupted,
          "response_keys":sorted(tr.keys()) if isinstance(tr,dict) else None,
          "stdout_sha256":hashlib.sha256(b).hexdigest(),"bytes":len(b),

@@ -911,6 +911,13 @@ checks:
     - governance
     min_items: null
     cmd: python3 scripts/tests/test_pipeline_contract.py
+  - id: test_record_command_session
+    level: advisory
+    battery: tests
+    kinds:
+    - tooling
+    min_items: null
+    cmd: python3 scripts/tests/test_record_command_session.py
   - id: test_url_verifier
     level: advisory
     battery: tests
