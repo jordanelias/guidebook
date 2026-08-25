@@ -363,3 +363,97 @@ range?"** — and the two uninstrumented species are both live in this repositor
 *Smallest honest fix for D-11:* give the registry entry an explicit base, or have `run_checks.py`
 pass its computed `--changed-from` base to checks that accept one. That is a code change, not
 doctrine, and CLAUDE.md §1 says code needs evidence, not permission — the evidence is this PR.
+
+---
+
+# PART 5 — verifying the agents: one claim refined, one sharpened, one of my own withdrawn
+
+## D-12 — "never assessed" and "assessed as partial" are the same grade, and both anchor
+
+S3 reported that a cell reached `state='stated'` with none of its six governing sources assessed
+for population applicability, and attributed it to `anchoring()` not excluding `COND_DOWN_WEIGHTED`.
+The direction is right; the mechanism needs correcting, and the corrected version is the more
+interesting finding.
+
+**I first thought the bug was worse than S3 said, and I was wrong.** `schemas/directness.py:225`
+reads `pop_full = population_directness in (POP_EXACT, None)` — `None` counted as a full population
+match — which would mean an ungraded source anchors at full strength, exactly the thing R13 names:
+*"No match row = silently claiming they are the same."* But `assess_cell.py:191-195` never passes
+`None`:
+
+```python
+mg = population_match(conn, src["ref_id"], population)
+if mg is not None:
+    pop = population_directness_from_match_grade(mg)
+else:
+    pop = NOT_ASSESSED  # G2: applies but unassessed — never graded as EXACT
+```
+
+Guard G2 exists precisely to stop that collapse, and it works. **The `None`-is-full-match branch in
+`consolidate()` is a latent hazard for any future caller, not a live defect.** Withdrawn as a
+finding against the judgment stage; recorded here so the next reader does not re-raise it.
+
+**What is live is one layer down.** `NOT_ASSESSED` is not in `ALL_POP_DIRECTNESS`
+(`directness.py:98` = `{EXACT, PARTIAL, PROXY, MISMATCH}`), so at `directness.py:225-234` it fails
+`pop_full` and falls to the same `return COND_DOWN_WEIGHTED` as `PARTIAL` and `PROXY`. Then
+`assess_cell.py:248-250`:
+
+```python
+def anchoring(recs):
+    """A source anchors only if its conditioning permits (§1.7): never NON-ANCHORING/DISCOUNTED."""
+    return [r for r in recs if r["conditioning"] not in (COND_NON_ANCHORING, COND_DISCOUNTED)]
+```
+
+`COND_DOWN_WEIGHTED` anchors. And `down_weighted` (`assess_cell.py:298`) is used only to populate
+the `down_weighted_sources` column of the record (`:353`, `:363`, `:460`) — **it never enters the
+state decision.** So:
+
+| Source's population standing | Conditioning | Anchors? | Distinguishable downstream? |
+|---|---|---|---|
+| Graded `EXACT` | `DIRECT` | yes | yes |
+| Graded `PARTIAL` / `PROXY` | `DOWN-WEIGHTED` | **yes** | only in a record column |
+| **Never graded at all** | `DOWN-WEIGHTED` | **yes** | only in a record column |
+| Graded `MISMATCH` | `DISCOUNTED` | no | yes |
+
+**"We looked and it partly fits" and "we never looked" produce identical anchoring behaviour.**
+R13's warning is defended at the grading layer by G2 and then given up at the anchoring layer.
+
+This is not a coding error — `anchoring()`'s docstring cites evidence-architecture §1.7 and
+implements it exactly. It is a **doctrinal gap**: §1.7 was written about sources whose applicability
+was *assessed and found partial*, and the same rule now silently governs sources whose applicability
+was *never assessed*. Whether an unassessed source may anchor a `stated` cell is a judgement about
+the book, so it is DG-NON and the owner's (CLAUDE.md §1). Naming it is mine.
+
+For the mobility batch this is not hypothetical: `evidence_population_match` holds 25 rows against
+10 sources on a single non-mobility slug. Every mobility source admitted in the coming batch begins
+life `NOT_ASSESSED` — and, on today's rules, anchoring.
+
+## D-13 — the fabrication proofing works, and the gates around it do not agree with it
+
+S2 admitted a real mobility source end to end — Sanford, Story & Jones 1997, *Ramp Slope on People
+with Mobility Impairments*, `10.1080/10400435.1997.10132293` — retrieved through
+`retrieval_log.fetch()` with a byte-identical sha256 to an independent `curl`, and `--verify-authors`
+returned CLEAN. **The specific machinery built after the 2026-08-19 fabrication does what it was
+built to do.** That deserves to be said first and plainly, because it is the one part of this
+pipeline that was designed in response to a real failure and then tested against one.
+
+What it does not do is get that honest source through the pipeline's own downstream gates. On its
+first write, three separate defects fire, none about sourcing honesty:
+
+1. `evidence_sources.scope` has **no CLI writer** — no `--scope` flag, excluded from the column
+   whitelist — so every `clinical` / `standard_eb` admission fails `adjudication_integrity.py`'s
+   tier derivation.
+2. `--verification-status VERIFIED` never sets `verification_disposition='CLOSED'` and no flag
+   exists to set it, so every VERIFIED source fails **blocking** `test_db_integrity` check I1.
+3. `--evidence-type` enforces no vocabulary, while the correct 8-value list already sits at
+   `scripts/db.py:1223` serving a sibling command.
+
+So a session that follows CLAUDE.md §4 exactly, sources honestly, and re-retrieves every locator
+still needs a hand-written correction to pass CI on its first admission — which is precisely the
+condition that produced the hand-SQL habit CLAUDE.md §4 now forbids. **The write path was closed
+against fabrication and not re-opened against its own gates.**
+
+S2 also reproduced **OD-5** directly rather than by reading about it: `add-source`'s DOI dedup
+checks only `evidence_sources`, so a DOI already held as a lead in the 875-row clue store was
+admitted under a second identity with no warning — while `add-locator`'s dedup correctly checks
+both tables. The fix is asymmetric, and the unfixed half is the one on the admission path.

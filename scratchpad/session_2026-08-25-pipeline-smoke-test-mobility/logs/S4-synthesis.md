@@ -1049,3 +1049,124 @@ FINDING   : CONFIRMED — no gate reads attestation free text for meaning. `bias
 LOCATION  : schemas/attestation.schema.json (bias_direction/independent_reviewer_counterclaim
              — minLength only); scripts/audit/adherence_log_audit.py docstring item 6
              (Levenshtein similarity, not truth)
+
+## 8. Synthesis-stage skills
+
+### 8a. Inventory — all 12 named skills exist
+INVOKED   : `ls skills/*_SKILL.md` for each of the 12 named skills
+STAGE     : synthesis
+EXIT      : 0
+READS     : skills/ directory
+WRITES    : NONE
+EXAMINED  : 12 skill files
+OUTPUT    : all 12 present: connection-discovery (312 ln), connection-auditor (206),
+             item-consolidation-analyzer (54), sensory-coherence-checker (108),
+             cross-population-conflict-mapper (250), critique-report-writer (43),
+             audit-consolidator (244), guidebook-auditor (229), reasoning-doc-citations
+             (290), specification-curator (99), bibliography-compiler (132),
+             integrity-protocol (62)
+FINDING   : PASS (all exist)
+
+### 8b. Per-skill verdict table
+
+| Skill | Named script | Exists/runs | Hand-SQL taught | Retired vocab / stale stage naming |
+|---|---|---|---|---|
+| connection-discovery | none (agent workflow; writes via `db.py add-connection`) | n/a | No | None found |
+| connection-auditor | none (agent workflow; queries via `db.py connections`) | n/a | No (query-only SQL shown, read-only, via db.py's own sqlite3 pattern) | None found; correctly distinguishes rendered spec text from `specifications` |
+| item-consolidation-analyzer | none | n/a | No | None found |
+| sensory-coherence-checker | none | n/a | No | None found |
+| cross-population-conflict-mapper | none (writes via `db.py add-conflict`) | n/a | No | None found |
+| critique-report-writer | none | n/a | No | None found |
+| audit-consolidator | `scripts/audit_consolidator.py` | **EXISTS, RUNS** — `--help` confirmed (`--item ITEM --session SESSION [--dry-run]`) | Read-only SELECTs shown as worked example (gaps/conflicts/connections), not a write path — acceptable | None found; explicitly "Pure collation — no synthesis" |
+| guidebook-auditor | none | n/a | No | None found |
+| reasoning-doc-citations | `scripts/audit/reasoning_doc_citations_audit.py` | **EXISTS, RUNS** (verified in item 3) | **YES — see 8c, a real defect** | None found |
+| specification-curator | (writes ship as migrations, no direct script) | n/a | No — explicitly instructs migrations-only, and **pre-emptively corrects itself**, see 8d | None found — actively corrects a stale naming trap (see 8d) |
+| bibliography-compiler | none (`db.py coverage --slug`) | n/a (db.py coverage verified to exist in help output, item-1 context) | No | None found |
+| integrity-protocol | `scripts/audit/claims_docket.py`, `scripts/validate_verification_consistency.py` | **BOTH EXIST, BOTH RUN** — `claims_docket.py --help` confirmed (`{generate,check} --base --docket --selftest`); `validate_verification_consistency.py` ran cleanly: `OK verification-consistency: 0 stated/provisional specification(s) consistent (data/guidebook.db)` / `EXAMINED: 0` (VACUOUS — 0 rows, consistent with `specifications` being empty everywhere else in this log) | No | None found |
+
+### 8c. `reasoning-doc-citations_SKILL.md` — hand-SQL is the SANCTIONED path, and there is no CLI alternative
+INVOKED   : read `skills/reasoning-doc-citations_SKILL.md:169-190` ("Required DB writes");
+             cross-checked against the full `scripts/db.py` subcommand list (item 1/2 context:
+             `{migrate,gaps,connections,is-mined,log-mining,add-candidate,
+             add-population-match,add-jurisdictional-value,add-economics-entry,
+             add-case-study,add-locator,next-id,coverage,synonyms,add-gap,close-gap,
+             add-connection,update-connection,unmined,upsert-coverage,upsert-language,
+             log-search,update-bpc,add-source,add-conflict,update-conflict,conflicts,
+             delete-connection,add-item,items,add-audit-run,update-audit-run,audit-runs,
+             add-supersession-check,add-gap-mining,update-gap-addressability,
+             unmined-gaps}` — NO `add-reasoning-citation` or equivalent anywhere in this list)
+STAGE     : synthesis
+EXIT      : n/a
+READS     : skills/reasoning-doc-citations_SKILL.md:169-190; scripts/db.py (full subcommand
+             enumeration)
+WRITES    : NONE
+EXAMINED  : 1 skill, 1 CLI surface (35 subcommands, 0 of them for this table)
+OUTPUT    : |
+  ## Required DB writes
+  Per citation:
+  ```sql
+  INSERT INTO reasoning_doc_citations (
+    citation_id, reasoning_doc_slug, parameter, jurisdiction, population,
+    claim_type, claimed_value, claimed_unit, claim_text,
+    source_ref_id, source_section, value_match, claim_match,
+    verified_at, verified_by_session, paywall_purchase_candidate, notes
+  ) VALUES (...);
+  ```
+FINDING   : **FAIL — confirmed coverage gap, exactly the pattern CLAUDE.md §4 says to fix,
+             not bypass.** `reasoning_doc_citations` is the ONE table that would make item
+             3's citation-verification machinery non-vacuous (it is what
+             `reasoning_doc_citations_audit.py` reads), and its own governing skill teaches
+             raw parameterized hand-SQL as the "Required" write path because `db.py` genuinely
+             has no subcommand for it. This is not a case of an agent bypassing a CLI that
+             exists — the CLI does not exist for this table at all.
+LOCATION  : skills/reasoning-doc-citations_SKILL.md:169-190 (the INSERT block);
+             scripts/db.py (absence — no `add-reasoning-citation`/equivalent in the full
+             subcommand list)
+NOTE      : This plausibly explains part of item 3's finding: with no CLI writer, filing a
+             `reasoning_doc_citations` row requires hand-SQL discipline (correct types,
+             correct CHECK-constraint values, correct FK) that a CLI would otherwise enforce
+             mechanically — raising the friction and the error surface for the one table nine
+             of the reasoning doc's twenty citations (item 3d) needed to be gated as
+             synthesis-eligible.
+
+### 8d. `specification-curator_SKILL.md` — a genuinely well-self-corrected skill, AND a live bug it flags but does not fix
+INVOKED   : read `skills/specification-curator_SKILL.md:13-30` (rename provenance note +
+             "Schema note (corrected 2026-08-02)"); then verified its claim by running
+             `python3 scripts/generate/room_page.py` directly and checking `sqlite_master`
+             for a table literally named `specification` (singular)
+STAGE     : synthesis (skill) / render (the flagged bug)
+EXIT      : traceback (see below)
+READS     : skills/specification-curator_SKILL.md:13-30; scripts/generate/room_page.py:26,51;
+             data/guidebook.db sqlite_master
+WRITES    : NONE
+EXAMINED  : 1 skill, 1 script, sqlite_master table list
+OUTPUT    : The skill correctly documents its own 2026-08-12 rename (`cell-curator` →
+             `specification-curator`, tracking the `evidence_cell_state` → `specifications`
+             schema rename) with a provenance comment naming the two attestations that still
+             cite the old identifier and the `EXTRA_RULE_IDS` compatibility shim in
+             `adherence_log_audit.py` that keeps them resolving — **this is a model example of
+             CLAUDE.md rule §4's "sweep every caller" done correctly**, not a defect. It ALSO
+             flags, in its own text: "`scripts/generate/room_page.py:51` still reads it
+             [singular `specification`]... does **not** exist... verified against
+             `sqlite_master`." I independently confirmed: `sqlite_master` has `specifications`
+             and `specification_source_links` — **no table named `specification` (singular)
+             exists**. Running `scripts/generate/room_page.py` directly raises
+             `sqlite3.OperationalError` on an even earlier missing table (`room`) before ever
+             reaching the `specification` query at line 51.
+FINDING   : PASS for the skill itself (honest, accurate, self-correcting documentation) /
+             FAIL for the underlying script it references — `scripts/generate/room_page.py`
+             is broken against the current schema (queries two nonexistent tables, `room` and
+             `specification`). It is NOT wired into `scripts/regenerate_derived.sh` or
+             `governance/check-registry.yaml` (confirmed by grep — zero hits), so it is dead,
+             unexercised render code rather than something actively producing wrong book
+             content today — but it is exactly the kind of latent breakage CLAUDE.md §0.4
+             warns "a sweep that stops at the filename is not a sweep" about, one layer
+             further: the SKILL swept and flagged it correctly; the SCRIPT was never fixed or
+             deleted.
+LOCATION  : scripts/generate/room_page.py:26 (`SELECT * FROM room WHERE room_id = ?` — `room`
+             table does not exist), :51 (`SELECT title FROM specification WHERE item_code = ?`
+             — `specification`, singular, does not exist); skills/specification-curator_SKILL.md:24
+             (the correct, pre-existing flag)
+NOTE      : Not a mobility-batch blocker directly (the script is unwired), but if anything in
+             a future render pass re-wires `room_page.py` without reading the skill's warning
+             first, it will crash immediately on both queries.

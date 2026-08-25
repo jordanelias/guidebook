@@ -771,3 +771,115 @@ NOTE      : Every rule prints a concrete EXAMINED-style count rather than a bare
             against any of the six agents' scratch DBs — so nothing this smoke test wrote
             to `$SMOKE/s6-substrate.db` could have influenced this result either way.
 
+
+## 7. Cross-stage contract criteria — the named enforcers, run individually
+
+Invocation notes: run against the CANONICAL DB read-only (`data/guidebook.db`) except
+`audit_consolidator.py`, run against `$SMOKE/s6-substrate.db` with `--dry-run` (it is a
+per-item report writer, not a corpus gate — confirmed NOT in `governance/check-
+registry.yaml` at all, `grep -n audit_consolidator governance/check-registry.yaml` empty).
+
+| Script | Invocation | Exit | EXAMINED | Verdict |
+|---|---|---|---|---|
+| `scripts/audit/adherence_log_audit.py` | `--check all` (default) | 0 | changed files: 7; attestations: 1; synthesis: 0 | PASS — "No issues." |
+| `scripts/audit/claims_docket.py` | `check` | 0 | 68 docket claims | PASS — "68/68 docket claims carry warrant annotations" |
+| `scripts/audit/migration_reproducibility.py` | (bare), then `--deep` | 0, 0 | 7 core invariants; 66 tables (deep) | PASS both (full detail in §2h) |
+| `scripts/doctrine_recheck.py` | bare (no flags) | **1** | 4 snapshot subjects (11 govs/8 rules/163 decisions/102 BPC) | **FAIL** — 3 ERRORS, drift pass (2.4) only |
+| `scripts/doctrine_recheck.py` | `--cross-ref` (**the registered form**) | 0 | same 4 subjects, pass 2.3 only | PASS — 5 WARNINGS, 0 ERRORS (drift pass 2.4 never runs) |
+| `scripts/decision_capture.py` | bare | 0 | not instrumented (registry: "not-instrumented... C1-C9 each examine a different subject"); live: 163 ACTIVE decisions, 61 DRs on disk | PASS (exit 0) despite 56 WARNINGS incl. "51 of 61 Decision Records have no register row" |
+| `scripts/audit/pipeline_contract_audit.py` | bare | 0 | 19 contract criteria | PASS — 14 VERIFIABLE / 5 INCOMPLETE / 0 BROKEN (see breakdown below — one of the 14 is a **false VERIFIABLE**, see 7b) |
+| `scripts/audit/graph_audit.py` | bare | 0 | 825 | PASS — "live errors=0" (3 named findings are pre-existing/awaiting-migration classes, not live errors) |
+| `scripts/audit/code_currency_audit.py` | bare | 0 | (5 CHECKs; CHECK 4/5 both 0) | PASS — "TOTAL ISSUES: 0" — **note: this script is QUARANTINED in the registry** (`run_checks.py --list` output, §3a: "RED. Flags standards lacking a currency marker; a content backlog, not a gate.") yet ran clean standalone; its quarantine reason concerns a different historical state than what I measured today — re-quarantine status should be re-verified, not assumed current, before relying on either verdict. |
+| `scripts/audit/retired_vocabulary_audit.py` | bare | **1** | 26 files | **FAIL** — 66 occurrences of retired vocabulary on the live surface (matches §1c/§3c's `retired_vocabulary` FAIL exactly — this IS the check registered under id `retired_vocabulary`) |
+| `scripts/audit/db_path_env_audit.py` | bare | 0 | 45 scripts scanned | PASS — 43/45 honour `GUIDEBOOK_DB_PATH` directly, 2 documented, named exemptions |
+| `scripts/audit/readonly_db_open_audit.py` | bare | 0 | 32 (of 48 total DB consumers; 16 excluded as writers, named exclusion, not silent) | PASS — "32/32 read-only consumers open read-only" |
+| `scripts/audit/register_integrity_check.py` | bare | 0 | 15 cells × 6 registers = 90 cell-checks | PASS — "I1–I5 hold" |
+| `scripts/audit/validate_pydantic_schemas.py` | bare | 0 | 18 tables | reports non-zero drift (245 findings) but labelled **informational** by the script itself — registry confirms `level: advisory` (§1c/§3a) |
+| `scripts/audit_adversarial_use.py` | bare | 0 | 9 (ACTIVE adversarial-use vectors) | PASS, 1 WARNING ("no ACTIVE/IN_PREP guidebook versions found — may be unbuilt", pre-launch-consistent per CLAUDE.md §3) |
+| `scripts/audit_consolidator.py` | `--item E-08 --session ... --dry-run` against `$SMOKE/s6-substrate.db` | 0 | 1 item (E-08) | Not a gate — per-item brief generator. Output: "Pipeline steps complete: None" for E-08 — **confirms E-08 has zero recorded audit-pipeline history**, corroborates §9. |
+
+### 7a. `scripts/doctrine_recheck.py` — the registered check invokes a NARROWER mode than the tool's own default, and the narrower mode is the one that never runs drift detection
+FINDING   : FAIL (a real coverage gap, not a false alarm)
+LOCATION  : `governance/check-registry.yaml:799-800` (`cmd: [python3, scripts/doctrine_recheck.py, --cross-ref]` — the ONLY registered invocation); `scripts/doctrine_recheck.py:332-338`
+            (`if not args.cross_ref: prior = find_prior_snapshot(...); findings_24, drift_summary
+            = detect_drift(snapshot, prior); findings_25 = check_decision_register(snapshot)`
+            — passes 2.4 (drift) and 2.5 (decision-register) run ONLY when `--cross-ref` is
+            **absent**, i.e. never in the registered/CI-run form)
+NOTE      : Running the tool bare (no flags — its own genuine default, confirmed `--full`
+            is a documented-but-unreferenced no-op flag: `grep -n "args\.full"
+            scripts/doctrine_recheck.py` → zero hits) surfaced **3 real ERRORS** the
+            registered `--cross-ref` form never sees: `governance/co1-operational.md`,
+            `governance/evidence-methodology.md` and `governance/population-taxonomy.md`
+            each "present in prior snapshot (2026-04-30 13:30) but absent now" — i.e. three
+            governance documents that doctrine once cited have since disappeared from the
+            repository, undetected by anything CI or `run_checks.py` invokes. **Drift
+            detection (pass 2.4) — the one pass whose entire purpose is catching exactly
+            this class of silent doctrinal loss — exists in the codebase, is fully
+            functional (I ran it and it worked), and is wired to nothing any gate runs.**
+            This is CLAUDE.md §2(a)'s failure mode in a specific, sharper form: not a check
+            that passes having examined nothing, but a check that is REGISTERED under a
+            flag that structurally cannot examine the one thing its own name promises.
+            Whether these 3 missing docs are themselves a real problem is a governance
+            question outside this smoke test's remit — but the fact that the tool capable
+            of flagging them is never invoked by anything automated is squarely in scope.
+
+### 7b. `pipeline_contract_audit.py`'s own coverage map has one CONFIRMED false-VERIFIABLE
+FINDING   : FAIL (the audit's own referential-integrity pass under-reports incompleteness
+            by exactly 1, for a documented, reproducible reason)
+LOCATION  : `scripts/audit/pipeline_contract_audit.py:78-107` (`classify_check` —
+            resolves a contract criterion's named `check:` file to a **path**, then asks
+            only "does this path exist AND is it registered ACTIVE anywhere in
+            check-registry.yaml" — never checks whether any registered check's own `basis:`
+            field still claims that specific criterion id); `governance/pipeline-
+            contract.yaml:149-152` (`cross_stage/attestation-doctrine-binding`, `check:
+            scripts/audit/adherence_log_audit.py`); `governance/check-registry.yaml:942`
+            (the SAME file backs `attestation_evidence`, whose `basis:` is
+            `cross_stage/adherence-log` — with an inline comment stating exactly this:
+            "attestation-doctrine-binding dropped 2026-08-19: its enforcer
+            (check_2_doctrine_sha) was retired with the doctrine token, and
+            pipeline_contract_audit resolves enforcers at FILE granularity so it could not
+            see the gate go vacuous")
+OUTPUT    : `pipeline_contract_audit.py` reports **14 VERIFIABLE / 5 INCOMPLETE**
+            (§7 table above). `run_checks.py --selftest`'s C7 (§3b), which matches
+            criterion ids against the LIVE `basis:` strings actually declared in the
+            registry — a stricter, string-level check — independently reports **5**
+            uncovered criteria too, but a DIFFERENT fifth one:
+            `cross_stage/attestation-doctrine-binding` (not in `pipeline_contract_audit.py`'s
+            INCOMPLETE list) in place of `render/render-freshness` (which
+            `pipeline_contract_audit.py` DOES list as INCOMPLETE, so C7 does cover that one
+            — the two lists are 4/5 identical, disagreeing on exactly one entry each way).
+NOTE      : **The two coverage tools disagree with each other, and the disagreement traces
+            to a documented, self-acknowledged blind spot in `pipeline_contract_audit.py`
+            itself** — its own repo already explains why, in a comment the audit script
+            cannot read. The honest combined picture (correcting `pipeline_contract_audit.py`'s
+            file-granularity false positive with `run_checks --selftest`'s C7 basis-string
+            check) is **13 genuinely VERIFIABLE, 6 genuinely uncovered** — one worse than
+            either tool reports alone. For the mobility batch this is orthogonal (neither
+            gap touches the write path or the mobility items), but it means: **do not trust
+            `pipeline_contract_audit.py`'s VERIFIABLE count in isolation** — cross-check
+            against `run_checks.py --selftest`'s C7 INFO line, and where they disagree, the
+            `--selftest` C7 basis-string match is the more trustworthy of the two (it
+            resolves at the granularity that actually matters — which criterion a check
+            currently CLAIMS to serve — rather than merely whether its file happens to
+            still be registered for something).
+
+### 7c. The honest, corrected pipeline-contract coverage map (VERIFIABLE / INCOMPLETE / BROKEN)
+Per stage, from `pipeline_contract_audit.py`'s own breakdown (§7 table), corrected per 7b:
+
+| Stage | VERIFIABLE | INCOMPLETE | BROKEN |
+|---|---|---|---|
+| research | 2 | 0 | 0 |
+| evidence-collection | 1 | 1 (`discovery-provenance`) | 0 |
+| judgment | 3 | 2 (`derivation-handshake`, `convergence-independence`) | 0 |
+| synthesis | 1 | 1 (`opus-routing`) | 0 |
+| render | 2 | 1 (`render-freshness`) | 0 |
+| cross_stage | 3\* (was 4 reported; `attestation-doctrine-binding` moves to INCOMPLETE per 7b) | 1 (`attestation-doctrine-binding`, corrected) | 0 |
+| **Total (corrected)** | **13** (not the reported 14) | **6** (not the reported 5) | **0** |
+
+\* `cross_stage` count is not printed as its own row by `pipeline_contract_audit.py` (it
+only breaks out research/evidence-collection/judgment/synthesis/render); derived here as
+19 total − the 5 named per-stage rows' (2+1+3+1+2)=9 → 10 cross_stage-and-other criteria,
+of which 1 is now reclassified. Exact cross_stage total not independently re-derived line
+by line in this pass — flagged as a residual gap in this smoke test's own coverage, not
+asserted as precise.
+

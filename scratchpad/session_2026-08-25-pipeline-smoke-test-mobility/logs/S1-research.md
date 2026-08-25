@@ -998,3 +998,68 @@ EXAMINED  : stated per-rule inline (see above); not vacuous — real counts thro
 FINDING   : PASS
 NOTE      : See §10 below — this run is the direct evidence for the CLAUDE.md OD-5 claim check.
 
+
+## 10. The OD-5 / R9-duplicate-gate claim — checked against the code, precisely
+
+**CLAUDE.md §4 says:** *"`source_locators` is a lead index of identifiers, not evidence... the R9
+duplicate gate currently cannot see it, which is a known live defect (OD-5)."*
+
+**Checked against `scripts/audit/research_batch_dod.py` directly. The claim is TRUE of one rule
+and FALSE of two others in the same script, and the file's own comments date the fix:**
+
+1. **`R9` itself (scripts/audit/research_batch_dod.py:428-442) — the claim is TRUE and current.**
+   Its query (line 432-435) is:
+   ```sql
+   SELECT e.doi, COUNT(*) c FROM evidence_sources e WHERE e.doi IS NOT NULL AND e.doi <> ''
+   AND e.doi IN (SELECT doi FROM evidence_sources WHERE doi IS NOT NULL AND doi <> '' ...)
+   GROUP BY e.doi HAVING c > 1
+   ```
+   This joins `evidence_sources` against **itself only** — `source_locators` does not appear
+   anywhere in the query. R9 genuinely cannot see the clue store, exactly as CLAUDE.md says.
+
+2. **`R9a` (scripts/audit/research_batch_dod.py:444-486) and `R9b` (:488-512) — added 2026-08-23
+   SPECIFICALLY to close this gap, and the code's own comment says so in as many words:**
+   the block starting at line 444 is headed `# --- R9a / R9b: the stash R9 could not see (OD-5)
+   ---------` and states *"R9 above compares evidence_sources against ITSELF. source_locators —
+   835 held identifiers, 441 of them DOIs — was invisible to it... That is OD-5, and CLAUDE.md 4
+   records it as a known live defect."* Then, immediately below, the actual queries:
+   - R9a (line 472-475): `... FROM evidence_sources e JOIN source_locators sl ON
+     LOWER(TRIM(sl.doi)) = LOWER(TRIM(e.doi)) WHERE ... AND sl.ref_id <> e.ref_id ...` — DOES join
+     against `source_locators`, catching a source admitted under a different `ref_id` than the
+     one the stash already holds for the same DOI.
+   - R9b (line 495-501, widened 2026-08-23 per the comment at line 488): `... FROM
+     evidence_sources e JOIN source_locators sl ON sl.ref_id = e.ref_id WHERE (<6-identifier-type
+     mismatch OR>) ...` — checks all 6 identifier columns (`doi, pmid, pmcid, isbn, issn,
+     standard_number`), not just DOI, reaching (per the comment) 751 of 835 stash rows (the 84
+     rows carrying no identifier at all are correctly and explicitly out of reach, not silently
+     folded into a pass).
+
+   **Live-run confirmation (§9.4):** `research_batch_dod.py --all` on the canonical DB currently
+   prints `R9a: PASS — 10 admitted DOI(s) checked against the stash; none held under a different
+   ref_id` and `R9b: PASS — 10 admitted ref_id(s) checked against the stash across 6 identifier
+   types; no collision` — i.e. **the gate DOES see `source_locators` today, and actively checked
+   all 10 real evidence_sources rows against it.**
+
+**CONCLUSION: CLAUDE.md §4's OD-5 sentence is STALE, not wrong-in-spirit.** It correctly describes
+`R9` (still self-join-only, still genuinely blind to the stash) but its blanket phrasing — "the R9
+duplicate gate ... cannot see it" — reads as describing the WHOLE duplicate-detection surface, and
+that whole surface (R9 + R9a + R9b, run together by `research_batch_dod.py`, which is what a real
+session's session-close actually invokes) closed this gap on 2026-08-23, two days before this
+smoke test and confirmed still live on 2026-08-25. The narrower, still-true statement would be:
+*"R9 itself is DOI-self-join-only and blind to source_locators; R9a/R9b, added 2026-08-23, cover
+that blind spot across 6 identifier types and are what a batch's session-close DoD check actually
+runs."*
+FINDING   : the underlying mechanism is FIXED (PASS); the CLAUDE.md prose describing it is STALE
+LOCATION  : scripts/audit/research_batch_dod.py:428-442 (R9, self-join, genuinely blind to
+  source_locators — the part of the OD-5 claim that is still true); scripts/audit/research_batch_dod.py:444-486
+  (R9a, joins source_locators on DOI); scripts/audit/research_batch_dod.py:488-512 (R9b, widened
+  2026-08-23, joins source_locators on all 6 identifier columns); CLAUDE.md §4 (the sentence to
+  correct — this is exactly the kind of drifted-prose-vs-database gap CLAUDE.md §2(b) itself warns
+  about, found here in CLAUDE.md's own text about its own tooling)
+NOTE      : For the mobility batch specifically: this means a real duplicate-identity check against
+  the 875-row clue store (§2) IS mechanically available today via `research_batch_dod.py`'s R9a/R9b
+  — a mobility session does not need to build new tooling to get stash cross-checking, only to
+  actually admit sources and run the existing DoD gate at session close. This is a materially more
+  optimistic finding than CLAUDE.md's current text suggests, and worth surfacing to the owner as a
+  documentation fix (drop OD-5's "currently cannot see it" framing, or narrow it explicitly to R9).
+
