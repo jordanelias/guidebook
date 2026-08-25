@@ -64,7 +64,8 @@ mobility batch is a quantity; the one stage that produces a quantity has never r
    "General mobility limitation including walking, balance, or wheeled mobility" — the umbrella
    whose erasure of "the ambulatory and part-time-wheelchair disabled" is named in this ledger's own
    work-from-axes RULE as one of the three self-caught erasures that caused the rule to be written.
-   The axis layer still distinguishes AX-AMB / AX-WHM / AX-BAL / AX-REA; cells key on
+   The demand layer (`icf_demands`) still distinguishes ambulant movement, wheeled movement and
+   transfer, balance and postural demand, and reach and manipulation; cells key on
    `(item × population)`, so the distinction dies at judgment. Handrails serve ambulant and balance
    users first. Ramp gradient is an *opposed* demand. **The batch should not start before this is
    ruled on**, and the ruling is co-production work, not a schema edit.

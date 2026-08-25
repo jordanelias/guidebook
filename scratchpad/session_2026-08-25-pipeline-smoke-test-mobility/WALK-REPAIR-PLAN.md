@@ -469,7 +469,8 @@ Verified helpful facts for the execution: **no FK to `populations` cascades** �
 `population_code` is **under no CHECK anywhere**, so the vocabulary is enforced by Pydantic and the
 validator, not the schema.
 
-And the split is already half-written in the data: `population_axis_map` holds
-`MOB → AX-AMB "ambulant share (MOB/AMB)"` and `MOB → AX-WHM "wheeled share"`, both role `ALIAS`,
-authored 2026-07-21. **The two halves the owner named were recorded as aliases of one code fourteen
+And the split is already half-written in the data. The population-to-demand map (physically still
+`population_axis_map`, pending the §R8 rename) holds two rows for `MOB`, both role `ALIAS`, authored
+2026-07-21: one to **ambulant movement**, noted *"ambulant share (MOB/AMB)"*, and one to **wheeled
+movement & transfer**, noted *"wheeled share"*. **The two halves the owner named were recorded as aliases of one code fourteen
 months before the ruling to split them.**
