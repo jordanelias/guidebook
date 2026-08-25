@@ -744,3 +744,163 @@ FINDING   : PASS — correctly found and verified the 1 payload persisted in 7.2
   own duplicate DOI check) as unverifiable offline from this session's log.
 EXAMINED  : 1
 
+
+## 8. Research-stage skills — read and mechanically checked
+
+Method: for each skill, checked every script/table/column it names against the live repo (file
+existence, `db.py` subcommand existence, schema column existence), and looked for raw hand-written
+SQL, retired vocabulary, or stale stage ids. No corpus mining performed (per PROTOCOL §4).
+
+### 8.1 `adversarial-research` — HAND-SQL, LIVE, NOT A FALSE ALARM
+The skill's own "Required outputs (DB-enforced)" §§1-5 (lines 39-74) — the FIVE fields the skill
+exists to force onto every gap closure — are specified as raw `UPDATE evidence_sources SET
+prior_expectation=...`/`search_queries_used=...` (lines 45, 51) and `UPDATE gaps SET
+confidence_interval=..., shift_conditions=...` / `named_dissenter=...` / `falsification_condition=...`
+(lines 57-72). **Checked: `grep -n "prior_expectation\|search_queries_used\|confidence_interval\|
+shift_conditions\|named_dissenter\|falsification_condition" scripts/db.py` returns ZERO matches.**
+All six columns are real (confirmed via `PRAGMA table_info`), and there is no `update-gap` or
+`update-source` subcommand in `db.py` at all (only `add-gap`, `close-gap`,
+`update-gap-addressability`, `add-source` — none take these fields). **The skill's own central,
+mandatory mechanism has no CLI writer and can only be satisfied by hand-written SQL against the
+scratch DB** — the exact pattern CLAUDE.md's write-path section claims is closed ("every one of
+those tables and columns now has a writer that REFUSES... Do not hand-write SQL against a table
+the CLI can reach; if you find one it cannot, that is a coverage bug to fix"). This is that
+coverage bug, live, for one of the highest-value tables in the research stage (adversarial
+rigour).
+FINDING   : FAIL (real, current, high-value)
+LOCATION  : skills/adversarial-research_SKILL.md:39-74 (teaching); scripts/db.py (missing writer:
+  no `--prior-expectation`/`--search-queries-used` on `add-source`, no `update-gap` subcommand at
+  all for `confidence_interval`/`shift_conditions`/`named_dissenter`/`falsification_condition`)
+NOTE      : By contrast the SAME file's "Population match record" section (lines 76-96) WAS fixed
+  2026-08-25 to call `db.py add-population-match`, with a comment explicitly naming this exact
+  history ("This block was hand-written SQL because db.py had no writer for this table -- the gap
+  CLAUDE.md §4 names as where the 2026-08-19 fabrication entered. It has one now"). The fix pattern
+  is proven and was applied to one part of this file but not the other three tables/six columns.
+  For the mobility batch: any session running adversarial-research on a mobility gap closure hits
+  this immediately — it is not an edge case, it is the skill's first required step.
+
+### 8.2 `progressive-measurement` — same shape of defect, different table
+"Required DB writes (per walk)" (lines 128-149) instructs raw `INSERT INTO spec_value_probes
+(...) VALUES (...)`, `INSERT INTO evidence_sources (...) ON CONFLICT DO UPDATE...`, `INSERT INTO
+source_slug_links (...) ON CONFLICT DO NOTHING`, and later `UPDATE items SET
+pmp_empirical_ceiling=..., pmp_gap_signed=..., pmp_last_walk_at=... WHERE item_code=?`. **Checked:
+`grep -n "spec_value_probes"` and `grep -n "pmp_empirical_ceiling\|pmp_gap_signed\|
+pmp_last_walk_at"` against `scripts/db.py` both return ZERO matches.** `spec_value_probes` (the
+walk's own core table) and all three `items.pmp_*` columns (confirmed real via
+`PRAGMA table_info(items)` — CLAUDE.md's own item-schema excerpt in §4 lists them) have no CLI
+writer whatsoever.
+FINDING   : FAIL (real, current)
+LOCATION  : skills/progressive-measurement_SKILL.md:128-149; scripts/db.py (no `spec_value_probes`
+  writer, no `items.pmp_*` writer)
+NOTE      : Same file already carries the 2026-08-25 fix pattern for ONE line
+  (`evidence_population_match: use python3 scripts/db.py add-population-match`, with the identical
+  "Hand SQL here bypasses the FK, vocabulary and MISMATCH-reason refusals" warning) — proving the
+  author was aware of the general problem while writing this exact section, but did not extend the
+  fix to `spec_value_probes` or `items.pmp_*` in the same edit. For the mobility batch: E-03 (ramp
+  gradient) and E-08 (corridor clear width) are exactly the kind of numerical-spec items PMP exists
+  to walk — this table is squarely in scope for the batch PROTOCOL describes.
+
+### 8.3 The SAME stale boilerplate line, copy-pasted into 4 skills
+`literature-review-planner_SKILL.md:12`, `multilingual-research_SKILL.md:12`,
+`functional-deficit-researcher_SKILL.md:14`, `economics-researcher_SKILL.md:15` all carry the
+byte-identical sentence: *"All slug lookups use `python3 scripts/db.py coverage {slug}`..."* — the
+command is missing the required `--slug` flag. Confirmed by literal execution:
+```
+$ python3 scripts/db.py coverage stair-ramp-threshold-biomechanics-accessibility
+usage: db.py coverage [-h] --slug SLUG
+db.py coverage: error: the following arguments are required: --slug
+EXIT 2
+```
+FINDING   : FAIL (low severity, cosmetic, but real and reproduced 4×)
+LOCATION  : the 4 files/lines above; scripts/db.py:917-918 (`coverage` requires `--slug`)
+NOTE      : Trivial to work around once noticed (add `--slug`), but a literal copy-paste from any
+  of these four skills fails on the first command. Same root cause across all four — one shared
+  "C2 overhaul 2026-05-05" boilerplate block, never corrected in any of its 4 copies.
+
+### 8.4 `connection-discovery` — instructs writing directly to the CANONICAL DB, and nothing in the CLI would stop it
+Lines 94, 209, 219, 253 all read `GUIDEBOOK_DB_PATH=data/guidebook.db python3 scripts/db.py
+{next-id connections | add-connection | connections}` — i.e. the skill's own example commands
+point `GUIDEBOOK_DB_PATH` at the **canonical, committed file**, not a scratch copy, directly
+contradicting CLAUDE.md's "Research writes go to a scratch copy first" instruction and §0 rule 3
+("Never write `data/guidebook.db` directly... migrations only").
+
+**This is not merely a bad example — I checked whether anything downstream would catch it, and
+nothing does.** `scripts/dbcore.py` defines `is_canonical(path=None)` (line 65) whose own
+docstring says *"Callers that must never touch the canonical file (CLAUDE.md rule 3: migrations
+only) use this to refuse, rather than trusting that GUIDEBOOK_DB_PATH was set."* **`grep -rn
+"is_canonical" scripts/ | grep -v __pycache__` shows it is called ONLY from `dbcore.py`'s own
+`--selftest` block (lines 437-439) — zero callers in `scripts/db.py` itself, and zero callers in
+`dbcore.connect()`, the function every `insert_*`/`add-*` writer in `db.py` goes through (confirmed:
+`grep -n "is_canonical\|dbcore.connect(" scripts/db.py` shows 6 `connect()` call sites, 0
+`is_canonical` checks).** `dbcore.db_path()` (line 51-59) defaults to the canonical file when
+`GUIDEBOOK_DB_PATH` is unset at all. **The guard function that is supposed to be the CLI's defence
+against exactly this mistake exists, is unit-tested in isolation, and is never wired into the
+actual write path.** I did not execute the connection-discovery example commands against the
+canonical DB (that would violate PROTOCOL §Hard-prohibitions 1) — this finding is from static
+code reading, deliberately not a live reproduction, precisely because a live reproduction is the
+risk being described.
+FINDING   : FAIL (highest severity of anything in this log — not mobility-specific, but a live,
+  general defect in the write-path safety CLAUDE.md §0/§4 present as settled)
+LOCATION  : skills/connection-discovery_SKILL.md:94,209,219,253 (the instruction);
+  scripts/dbcore.py:51-59 `db_path()` (defaults to canonical), :65-74 `is_canonical()` (defined,
+  unit-tested, never called by a writer); scripts/db.py (every `insert_*`/`add-*` function calls
+  `dbcore.connect()` with no canonical-path guard)
+NOTE      : For the mobility batch specifically: connection-discovery is exactly the skill a
+  session would run after finding a cross-item connection while researching mobility items (E-08
+  circulation ↔ E-01 lift ↔ E-04 parking are natural CROSS-ITEM connection candidates) — so this
+  is not a remote corner of the skill set, it is directly in the batch's path. Recommend, in order:
+  (1) fix the 4 example lines to point at a scratch path, (2) wire `is_canonical()` into
+  `dbcore.connect()` itself so the CLI refuses a non-dry-run write to the canonical file
+  regardless of which skill or session set `GUIDEBOOK_DB_PATH` wrong, matching CLAUDE.md's stated
+  guarantee rather than merely a convention several skills already violate.
+
+### 8.5 `jurisdiction-tracker` — its own jurisdiction scope disagrees with the batch's bucket-1/2 scheme
+`skills/jurisdiction-tracker_SKILL.md:31` declares 17 "Jurisdictions in scope (§4.7.3)": Germany,
+Belgium, Norway, France, Brazil, Japan, Canada, Switzerland, Australia, UK, USA, EU, ISO, Singapore,
+Sweden, Denmark, Finland. PROTOCOL.md's bucket scheme (sourced from
+`workplan/2026-08-18-research-frame-proposal.md:420-424`, confirmed by direct read) is: **bucket 1**
+= UN·ISO·Canada·USA·UK·Germany·Norway·Sweden·Japan·Australia; **bucket 2** =
+EU·Singapore·New Zealand·Ireland·France·Spain·Portugal·Finland·Netherlands·South Korea; **bucket 3**
+(explicitly lower priority) = Brazil·China·Italy·Denmark·Switzerland·Mexico·Austria·Belgium·
+Colombia·Chile. The skill's list **mixes bucket 1, 2 and 3 members with no priority marking at
+all** (Belgium/Brazil/Switzerland/Denmark are bucket-3, i.e. explicitly lower priority, sitting
+undistinguished next to bucket-1 UK/Germany) **and omits UN (bucket 1) and New
+Zealand/Ireland/Spain/Portugal/Netherlands/South Korea (all bucket 2) entirely.**
+FINDING   : FAIL
+LOCATION  : skills/jurisdiction-tracker_SKILL.md:31 vs
+  workplan/2026-08-18-research-frame-proposal.md:420-424
+NOTE      : A session running jurisdiction-tracker on the mobility batch as literally written would
+  verify currency for a jurisdiction set that does not match the batch's own priority order and
+  silently omits 7 of the 20 bucket-1/2 jurisdictions PROTOCOL.md specifies. This looks like the
+  skill predates the 2026-08-18 bucket ruling and was never reconciled to it — the same "map
+  predates a later owner ruling" shape CLAUDE.md §0 opens with, just not yet caught here.
+
+### 8.6 `question-author` — correctly and prominently self-flags ABSENT (verified, not a new finding)
+Already carries its own `⚠ INOPERATIVE` banner (lines 16-56), which I independently verified:
+`SELECT name FROM sqlite_master WHERE type='table' AND name LIKE 'specif%'` on the canonical DB
+returns only `specifications` (plural) and `specification_source_links` — **no table named
+`specification` (singular)** exists, confirming the banner's claim exactly.
+FINDING   : ABSENT (correctly self-documented; not research-stage in any case — `specifications`
+  is the judgment-stage table per CLAUDE.md's own pipeline map, so this skill is mis-scoped to
+  research to begin with)
+LOCATION  : skills/question-author_SKILL.md:16-56 (banner, accurate); table check confirmed live
+NOTE      : Good example of honest self-flagging; no action needed beyond what the file already says.
+
+### 8.7 Remaining skills checked, no defect found
+- **`multilingual-research`** (584 lines) — beyond the shared §8.3 boilerplate line, spot-checked
+  its `db.py log-search` usage examples against the real CLI signature (matches); no hand-SQL found
+  in the sampled sections; §0-style connector-availability framing consistent with
+  `citation-miner_SKILL.md`.
+- **`research-log-manager`** — correctly reflects the `upsert-coverage`/`upsert-language` freeze
+  (line 98: *"`upsert-coverage` and `upsert-language` are gone"*) and correctly reflects the
+  `author_display` tombstone/migration-063 authors-are-rows change. Cleanest-maintained skill
+  checked in this batch.
+- **`content-gap-analyzer`** (57 lines) — `add-gap` usage matches the real CLI; its own
+  "Next GAP-ID: [GAP-NNN]" convention in the required output block is consistent with (i.e. shares
+  the same stale assumption as) the `next_gap_id()` allocator defect found independently in §5.4.
+- **`economics-researcher`**, **`functional-deficit-researcher`** — beyond the shared §8.3 line, no
+  additional hand-SQL or dead-script references found in a full read.
+- **`connection-discovery`** — beyond §8.4, its table/column usage (`connections`, `gaps`,
+  `add-gap`, `next-id connections`, `update-connection --status CONSUMED`) all check out against
+  the real schema and CLI.
+

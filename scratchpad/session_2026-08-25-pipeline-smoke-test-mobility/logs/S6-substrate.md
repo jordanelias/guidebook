@@ -599,3 +599,175 @@ NOTE      : **Checks that never run on the path the workflow actually uses, beyo
             → `migrate_db.py`), so this is orthogonal, but worth naming since the task
             explicitly asks for checks that never run on the path CI actually uses.
 
+
+## 6. The hooks — all three
+
+### 6a. `SessionStart` — contract injection + `ensure-deps.sh`, ordering
+INVOKED   : `cat .claude/settings.json`
+STAGE     : substrate
+EXIT      : n/a (read)
+READS     : `.claude/settings.json` `hooks.SessionStart[0].hooks` — a 2-element array:
+            index 0 = the `printf` contract-injection one-liner, index 1 =
+            `bash .claude/hooks/ensure-deps.sh`
+WRITES    : NONE
+EXAMINED  : 2 hooks in the SessionStart array
+FINDING   : PASS (append discipline currently honoured)
+LOCATION  : `.claude/settings.json` (`SessionStart[0].hooks[0]` = contract printf,
+            `SessionStart[0].hooks[1]` = `ensure-deps.sh` — `ensure-deps.sh` is appended
+            AFTER the contract hook, not inserted ahead of it)
+NOTE      : Ordering is currently correct per CLAUDE.md's own warning ("APPEND it — never
+            insert at index 0"). Cross-checked against the reader in 6c below.
+
+### 6b. `PostToolUse(Bash)` → `record-command.py` — session resolution (file:line)
+INVOKED   : full read of `.claude/hooks/record-command.py`
+STAGE     : substrate
+EXIT      : n/a (read)
+READS     : `sessions/LATEST` (`.claude/hooks/record-command.py:117-129`)
+WRITES    : `scratchpad/<session-stem>/commands.jsonl`
+EXAMINED  : whole file (152 lines)
+OUTPUT    : Confirmed — `lf=root/"sessions"/"LATEST"` then
+            `sess=(lf.read_text().strip().removesuffix(".md") if lf.exists() else
+            (d.get("session_id") or "unassigned"))` at `:127-129`. `.claude/session` is
+            NOT read anywhere in the current file — grep for the string `.claude/session`
+            inside this script returns nothing; the file's own comment block
+            (`:118-125`) narrates its own removal: "Until 2026-08-23 this read
+            `.claude/session`, a SECOND pointer to the same fact that nothing else
+            maintained... So the divergent copy is removed rather than synced."
+FINDING   : PASS (the code matches the claim)
+LOCATION  : `.claude/hooks/record-command.py:127-129`
+
+### 6c. Known live finding, confirmed and characterised: sessions/LATEST staleness RELOCATED, not fixed
+INVOKED   : `git diff --stat HEAD~50 -- scratchpad/session_2026-08-23-research-batch-03-forward-mining/commands.jsonl`;
+            `git log --oneline --all -- <same path>`; `cat sessions/LATEST`
+STAGE     : substrate
+EXIT      : 0
+READS     : `scratchpad/session_2026-08-23-research-batch-03-forward-mining/commands.jsonl`
+            git history; `sessions/LATEST` current content
+WRITES    : NONE
+EXAMINED  : 1 file's full commit history for the smoke-test session's lifetime
+OUTPUT    : `git diff --stat` confirms **664 lines** were appended to
+            `scratchpad/session_2026-08-23-research-batch-03-forward-mining/commands.jsonl`
+            in commit `cb34ec9` ("governance: smoke-test protocol and session record,
+            committed before running it [2026-08-25 18:19]") — the SAME commit that first
+            set `sessions/LATEST` to
+            `session_2026-08-25-pipeline-smoke-test-mobility.md` for this run. `cat
+            sessions/LATEST` now correctly reads
+            `session_2026-08-25-pipeline-smoke-test-mobility.md`.
+FINDING   : FAIL — confirmed live recurrence of the exact bug class the 2026-08-23 fix
+            claims to have closed, RELOCATED rather than eliminated
+LOCATION  : `.claude/hooks/record-command.py:118-125` (the fix's own claim: "the divergent
+            copy is removed rather than synced — per references/project-standards.md RULE
+            2026-08-23, one fact, one home"); live evidence —
+            `scratchpad/session_2026-08-23-research-batch-03-forward-mining/commands.jsonl`
+            (664 misfiled lines, committed in `cb34ec9`)
+NOTE      : **State it plainly, as instructed: moving the pointer from `.claude/session` to
+            `sessions/LATEST` did NOT fix the staleness bug — it relocated it.** The
+            original defect class was never "which file is the pointer" — it was "a single
+            mutable pointer that is read continuously but only WRITTEN at specific ritual
+            moments (session close-out), so anything that happens between one session's
+            close-out and the next session's own close-out gets filed under whoever the
+            pointer named last." `.claude/session` failed that way because nothing ever
+            updated it. `sessions/LATEST` fails the identical way because it is updated at
+            session close-out (per its own doc) — not at session START. This smoke-test
+            session's own early activity (harness bootstrap, orchestrator setup, or an
+            early sibling-agent turn — the specific author is not recoverable from the
+            jsonl schema itself per 6d below) landed under the PRIOR session's directory
+            (`session_2026-08-23-research-batch-03-forward-mining`) until a commit late in
+            setup (`cb34ec9`) updated `LATEST` to point here. The fix changed WHICH pointer
+            is stale; it did not change WHETHER one can be. A genuine fix would update
+            `LATEST` at session START (or eliminate the window by writing to a
+            self-identifying path that doesn't depend on a separately-timed update).
+
+### 6d. The docstring's claim that success cannot be proven — reproduced live
+INVOKED   : `python3 -c "raise RuntimeError('S6 deliberate traceback test for
+            record-command.py')"` — a command guaranteed to raise a Python traceback and
+            exit 1 — then `grep` the resulting jsonl line back out
+STAGE     : substrate
+EXIT      : 1 (the test command itself); the hook's own exit is untestable directly (it is
+            harness-invoked) but its write succeeded
+READS     : the harness's `tool_response` payload for the failing command
+WRITES    : one line appended to `scratchpad/session_2026-08-25-pipeline-smoke-test-
+            mobility/commands.jsonl` (grepped back out by matching the literal command text)
+EXAMINED  : 1 command, 1 resulting jsonl record
+OUTPUT    :
+```
+{
+  "ts": "2026-08-25T18:31:35Z",
+  "command": "...python3 -c \"raise RuntimeError('S6 deliberate traceback test...')\"...",
+  "exit": null,
+  "is_error": null,
+  "interrupted": false,
+  "response_keys": ["interrupted","isImage","noOutputExpected","stderr","stdout"],
+  "stdout_sha256": "55465e12c49e2ddc340003de35f50e4208c09508687b2f220fbf50c283e2a474",
+  "bytes": 156,
+  "stderr_sha256": null,
+  "stderr_bytes": 0
+}
+```
+FINDING   : PASS — the docstring's claim is TRUE, reproduced directly rather than taken on
+            the file's own word
+LOCATION  : `.claude/hooks/record-command.py:73-113` (the two "MEASURED CORRECTION" comment
+            blocks documenting `exit`/`is_error` as always-null and `stderr` as always-
+            present-but-empty)
+NOTE      : Exactly as documented: `exit` and `is_error` are both `null` even though the
+            command demonstrably raised and exited 1 (visible directly in the terminal at
+            invocation time). `stderr_bytes` is `0` — the traceback text is not separately
+            captured; it is folded into `stdout` (`bytes: 156` covers both the traceback
+            and the terminal's own visible "python exit was 1" tail). **This log line alone
+            cannot distinguish this failing command from a clean success** — a reader would
+            need the actual terminal transcript (outside this file) to know it failed. The
+            docstring's warning ("no gate, session record or attestation may cite a line in
+            this file as evidence that a command WORKED... It proves a command was ISSUED")
+            is accurate and independently reproduced here, not merely inherited from the
+            file's own prior self-report.
+
+### 6e. `research_contract_hook.py` ordering trap and `research_contract_sync` check
+INVOKED   : `grep -n 'SessionStart\[0\]' scripts/generate/research_contract_hook.py`;
+            `python3 scripts/generate/research_contract_hook.py --check`
+STAGE     : substrate
+EXIT      : 0
+READS     : `.claude/settings.json` `hooks.SessionStart[0].hooks[0].command`
+            (hardcoded index, confirmed); `governance/research-contract.yaml` (51 contract
+            lines)
+WRITES    : NONE (`--check` mode)
+EXAMINED  : 51 contract line(s) — printed explicitly by the check
+OUTPUT    : `EXAMINED: 51 contract line(s)` / `PASS: contract and enforcer agree on 15 rule
+            ids` / `PASS: the SessionStart hook matches governance/research-contract.yaml`
+FINDING   : PASS (both the trap-location claim and the live check)
+LOCATION  : `scripts/generate/research_contract_hook.py:90` (`return
+            settings["hooks"]["SessionStart"][0]["hooks"][0]["command"]`, the reader) and
+            `:155` (the identical hardcoded-index write path in the generator itself) —
+            confirmed by direct grep, both lines index `[0]["hooks"][0]`, exactly the trap
+            CLAUDE.md names.
+NOTE      : Currently green because 6a confirmed the contract hook is still at index 0.
+            This is a live landmine, not a historical one: any future `SessionStart` hook
+            addition that does not APPEND (per CLAUDE.md's own instruction, itself likely
+            written after paying this exact cost on 2026-08-25) will turn this check red
+            with a diff that reads as contract drift and isn't.
+
+### 6f. `Stop` hook — run manually
+INVOKED   : the exact Stop-hook command from `.claude/settings.json`:
+            `python3 scripts/audit/research_batch_dod.py --all` (guarded by the same `[ -f
+            ... ] && [ -f data/guidebook.db ]` existence checks as the real hook)
+STAGE     : substrate
+EXIT      : 0
+READS     : `data/guidebook.db` (read-only — the CANONICAL committed DB, not any scratch;
+            this hook always evaluates the corpus-wide research definition-of-done, not a
+            per-session slice)
+WRITES    : NONE
+EXAMINED  : R1 through R15 (15 rules; R11 reported separately as "~", inherited debt) —
+            concrete subject counts printed per rule: R1 "7 co1/co2-targeted searches, 3
+            co1/co2 sources"; R2 "10 citation_mining rows for 10 anchors"; R4 "25
+            population linkages... 28 searches"; R7 "60 candidates for 431 screened"; R9a
+            "10 admitted DOI(s)"; R13 "all 10 tier-1..3 admissions"
+OUTPUT    : all 15 rules `PASS`, `~ R11: 856 (baseline 856) — INHERITED DEBT, not a
+            regression`, `COMPLIANT — all research definition-of-done rules met.`,
+            `RESEARCH DoD: PASS (exit 0)`
+FINDING   : PASS
+LOCATION  : `scripts/audit/research_batch_dod.py`
+NOTE      : Every rule prints a concrete EXAMINED-style count rather than a bare PASS —
+            this is the definition-of-done gate working as a non-vacuous check, and it
+            correctly evaluates against the corpus as committed (`data/guidebook.db`), NOT
+            against any of the six agents' scratch DBs — so nothing this smoke test wrote
+            to `$SMOKE/s6-substrate.db` could have influenced this result either way.
+
