@@ -101,6 +101,31 @@ registered `root_id`. Without them the view still returns 0 and P1.2's stated pu
 `external_root_registry` needs its own small writer. **Both tables must be added to
 `dbcore.WRITABLE_TABLES` or `emit_batch_sql.py` silently drops the rows** — a trap worth naming.
 
+### P1.0 · NEW, AND NOW FIRST IN PHASE 1 — re-grain `specifications`
+**Owner ruling 2026-08-25.** The uniqueness key becomes the **judgment object alone**;
+`population_code` is demoted from identity to cross-reference. Three N:N junctions land in the same
+migration — specification↔**population**, specification↔**access need**, specification↔**ICF** —
+because a determination written before they exist is unqualifiable.
+
+**None of the three may be derived from another.** `access_need_icf` is 43 rows and **38 `e`, 3 `d`,
+2 `b`** — overwhelmingly environmental-factor codes. A specification's ICF cross-reference is often
+`b`/`d`, the person's functioning, which that table does not carry.
+
+**The drop is clean, and only for now.** `specifications` holds 0 rows,
+`specification_source_links` 0, and **no committed data migration INSERTs into either** — only the
+baseline's DDL at `057_baseline:6823`. Rule 5's own drop test therefore passes: `population_code`
+can be **dropped**, not NULLed forward, and migration 062's replay trap does not apply. **This
+window closes the moment the first determination is written.**
+
+**Also in this change:** amend R4's second sentence in `governance/research-contract.yaml:119`. It
+reads *"Cells are (item x population)"* and is now superseded; a contract injected into every
+session may not contradict its own first sentence.
+
+**Open, and not to be assumed away:** what the judgment object is *called*. `conceptual-model.md:92`
+makes `items` a **render** rollup — *"Item is the Part-4 [rollup]"* — while this ruling needs a
+**judgment** object to key from. No session may treat `items` as the judgment object merely because
+`item_code` is the column that exists.
+
 ### P1.3′ · RESOLVED: `assess_cell` is the sole writer of stated/provisional/pending
 The original plan proposed `db.py add-specification` with a `--state` flag. **Dropped.** F6
 enumerated all ten cell conditions and five convergence conditions that blocking
@@ -257,8 +282,8 @@ be named as a gap in any cell that turns on them.
 
 | # | Decision | Blocking? |
 |---|---|---|
-| 1 | **The determination's grain** — `specifications` keyed `UNIQUE(item_code, population_code)` contradicts the entity model's declared N:N, R4 contradicts itself, and a NOT NULL population forces applicability before synthesis produces it. `GRAIN-QUESTION.md`. | **Yes — P1.3′** |
-| 2 | Ratify the split's code strings (`AMB`, `WHEEL`), and fan-out vs individual resolution for the 31 links | **Yes — §8** |
+| ~~1~~ | ~~The determination's grain~~ — **RULED 2026-08-25.** A specification keys from the judgment object and cross-references populations, access needs and ICF, all three modes. Population is demoted from identity to cross-reference. Adds **P1.0** below. | Resolved |
+| ~~2~~ | ~~The split's code strings and fan-out~~ — **RULED 2026-08-25.** `AMB` / `WHEEL`; the 31 links fan out to 62. | Resolved |
 | 3 | The §R8 rename of the demand layer out of NOT DECIDED — prose discipline has failed four times in one session against objects that still carry the old names | No, but recurring |
 | 4 | `opus_reviewed`: delete (recommended) or build render gating | No |
 | 5 | P1.8's min/max aggregation rule as stated doctrine | Blocks P1.8 |

@@ -1222,3 +1222,86 @@ is **never** a replacement code (permitted-umbrella test, clause on umbrellas as
 (3) Part-time wheelchair users and balance remain unrepresented and must be named as a gap in any
 cell that turns on them, not silently absorbed.
 DATE: 2026-08-25 — owner ruling, quoted above.
+
+---
+
+RULE: A specification keys from the judgment object and cross-references all three modes. Owner
+ruling 2026-08-25, verbatim: *"specifications as a synthesis should be keying from a judgment item
+(if we use the word item) and cross-referencing itself against disability populations, access needs
+and ICF, ie all three modes."* Recorded on contact per `CLAUDE.md` rule 0. This settles the grain
+question raised the same day and **supersedes the `(item × population)` cell grain** that
+`DR-2026-08-12-specification-rename-and-replay-order` renamed but did not revisit.
+
+**What changes.** `specifications` is presently keyed `UNIQUE (item_code, population_code)`, both
+`NOT NULL`. Under this ruling the uniqueness key is the **judgment object alone**, and population is
+demoted from *identity* to *cross-reference* — one of three, alongside access needs and ICF.
+
+**Three modes, three junctions.** Only `specification_source_links` exists today. The ruling
+requires a specification to be cross-referenceable against **disability populations**, **access
+needs** and **ICF codes** independently, N:N in each. None of the three can be derived from another:
+`access_need_icf` currently maps 43 need→ICF pairs and is **38 `e`, 3 `d`, 2 `b`** — overwhelmingly
+environmental-factor codes, i.e. the environment side. A specification's ICF cross-reference will
+often be `b`/`d` (the person's functioning), which that table does not carry. **Deriving one mode
+from another would collapse exactly the distinction the ruling exists to preserve.**
+
+**Three things this repairs, each already on the record as broken:**
+1. `governance/conceptual-model.md:76,100` declares Population→Specification **N:N** — *"a
+   specification serves multiple populations"*. The `UNIQUE` constraint made that unimplementable.
+   The ruling restores it.
+2. `governance/research-contract.yaml:119` (R4) reads *"Cross slug x population / access-need / ICF
+   / axis. **Cells are (item x population)**."* Its first sentence becomes implementable and **its
+   second sentence is superseded by this ruling.** R4's text must be amended; a contract injected
+   into every session may not contradict itself.
+3. A `NOT NULL population_code` forced applicability *before* the determination existed, while
+   `DR-2026-08-24` §2.4 and `CLAUDE.md` §6 both hold that **applicability is an OUTPUT of synthesis,
+   not an input**. Presupposition in a primary key is now removed.
+
+**The window is open and closes on first write.** Measured 2026-08-25: `specifications` holds **0
+rows**, `specification_source_links` **0**, and **no committed data migration INSERTs into either** —
+only the baseline's DDL (`057_baseline:6823`, `CREATE INDEX idx_specifications_pop`). So rule 5's own
+drop test passes: `population_code` may be **dropped**, not merely NULLed forward, and the
+replay-order trap that cost migration 062 does not apply. **After the first determination is written
+this becomes a re-reasoning exercise instead of a schema edit.**
+
+**STILL OPEN, and deliberately not decided here: what the judgment object is called.** The owner's
+parenthesis — *"(if we use the word item)"* — is preserved as an open question, not resolved. The
+tension is real and recorded: `conceptual-model.md:92` says *"Many specifications roll up into one
+item… **Item is the Part-4 [rollup]**"*, which makes `items` a **render** aggregate, while this
+ruling needs a **judgment** object to key from. Whether those are one thing under one name, or two
+things needing two, is owed a separate ruling. Until then, no session may assume `items` is the
+judgment object merely because `item_code` is the column that exists.
+
+CONDITION: Any session writing to `specifications`, designing its writer, or reasoning about the
+grain of a determination.
+ACTION: (1) Do not write a determination keyed on a population. (2) Do not build
+`db.py add-specification --state stated`; see the companion RULE on the sole-writer resolution.
+(3) The three cross-reference junctions land in the same migration as the key change, or a
+determination becomes unqualifiable the moment it is written. (4) Amend R4's second sentence in the
+same change; leaving it is a live self-contradiction in the injected contract.
+DATE: 2026-08-25 — owner ruling, quoted above.
+
+---
+
+RULE: The mobility split is ratified as `AMB` / `WHEEL`, and the 31 links fan out to both. Owner
+ruling 2026-08-25: *"yes, AMB and WHEEL to fan out."* Settles the two questions the split design
+(`scratchpad/…/logs/F5-population-split-design.md`) put to the owner.
+
+**The codes.** `AMB` — ambulatory disabled people. `WHEEL` — wheelchair users, in the owner's own
+wording and already the repository's person-term. `MOB` is superseded.
+
+**The fan-out.** All **31** `item_population_links` rows keyed `MOB` (28 plain + 3
+`with-upper-limb-involvement`, across 28 items) become **62** rows — one `AMB` and one `WHEEL` per
+original — carrying each original's fields verbatim. The 31 originals are deleted. Net 372 → 403.
+
+**What the fan-out asserts, stated plainly so it is not mistaken for a finding.** It is a
+**mechanical carry of the umbrella's union**, not a judgement that every demand applies equally to
+both. It is the anti-erasure choice: the alternative — resolving each of the 31 by hand now — would
+decide applicability by inference, before synthesis, which is what `DR-2026-08-24` §2.4 forbids.
+Every fanned row is therefore **pending synthesis re-derivation**, and the migration header must say
+so. The 3 `with-upper-limb-involvement` rows are flagged for review rather than guessed.
+
+**Not fanned out, ever:** `evidence_population_match.study_population` is free text describing *the
+study's own* participants. A grade is a fact about a paper. (Moot in practice — measured **0** MOB
+rows there — but recorded because the next split will not be moot.)
+
+DATE: 2026-08-25 — owner ruling, quoted above.
