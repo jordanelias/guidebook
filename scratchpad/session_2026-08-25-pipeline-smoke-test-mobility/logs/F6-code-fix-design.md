@@ -1658,3 +1658,385 @@ every file: `**Source DB fingerprint:** \`<fp>\`` via `header()` `:105-109`; mea
 same one `build_site.py` uses; the byte-level truth stays `--check`-by-regeneration.
 **TESTS:** clean tree → EXAMINED: 14, exit 0; apply any data migration on a scratch checkout →
 exit 1 naming each file. **RISK:** none; advisory.
+
+---
+
+# PHASE 4 — APPARATUS HONESTY
+
+## P4.1 — attestation window: one commit locally, whole branch on CI
+
+**WHERE:** `scripts/audit/adherence_log_audit.py:569-570` (`--base` default `HEAD~1`);
+`scripts/run_checks.py:206-207` (`expand()`), `:210-221` (`run_check()` builds cmd), `:432-438`
+(the `--changed-from` base is computed for SELECTION and never given to the checks),
+`:491-494` (the run loop); `governance/check-registry.yaml:899-956` (the four
+`adherence_log_audit` entries carry no `--base`); `.github/workflows/ci.yml:210-225`
+(fetch-depth 0; on a PR merge ref, `HEAD~1` = the base-branch tip, so the same default means
+"the whole branch" there and "the last commit" locally — OPUS D-11's mechanism, verified).
+
+**CHANGE — a `@BASE@` token, the same mechanism as `@SESSION@`:**
+1. `run_checks.py:206-207`:
+```python
+def expand(cmd, session, base):
+    return [part.replace("@SESSION@", session).replace("@BASE@", base) for part in cmd]
+```
+2. `run_check()` gains `base` (`:210`), passes it (`:221` → `cmd = expand(check["cmd"],
+   subject, base)`); the loop at `:491-494` passes it; `main()` computes it once, right after
+   the selection block (`:438`):
+```python
+    diff_base = args.changed_from or "HEAD~1"
+```
+   With `--changed-from origin/main`, every check that declares `@BASE@` now audits the same
+   window the selection classified — locally AND on CI (CI's battery jobs run `--kinds …`
+   without `--changed-from`; give them the same truth by having ci.yml's battery step export
+   the base: change the attestation job's run line to
+   `python3 scripts/run_checks.py --battery attestation --kinds "…" --github --base-ref origin/${{ github.base_ref || 'main' }}`
+   and add `--base-ref` as an explicit override for `diff_base` in main(). On push builds
+   `github.base_ref` is empty → `origin/main`, which is the honest window for main too.)
+3. Registry — the four entries (`:900`, `:921`, `:938`, `:956`) each gain the token:
+```yaml
+    cmd: [python3, scripts/audit/adherence_log_audit.py, --check, presence, --base, "@BASE@"]
+```
+   and their `no_floor`/`note` prose ("HEAD~1..HEAD") is updated to name the computed window.
+4. `adherence_log_audit.py` needs no change — `--base` already exists; the default simply stops
+   being load-bearing.
+
+**TESTS:** locally: commit A touches a synthesis path, commit B is docs-only; old behaviour:
+`--battery attestation --changed-from origin/main` after B → NONE/PASS; new: FAILs (or examines
+the synthesis file) exactly as CI would. `run_checks.py --selftest` (it exercises CLI paths —
+C6 etc.) still green; add one selftest case: a dummy check with `@BASE@` in cmd receives the
+literal passed base. **BLAST RADIUS:** the four attestation checks only (no other registry cmd
+gains the token yet); preflight.sh (calls run_checks with `--changed-from`) now predicts CI —
+the stated goal. **RISK:** low; token expansion is inert for every cmd that lacks it.
+
+## P4.2 — jurisdiction vocabulary: members FIRST, then the check, ONE change
+
+**WHERE:** `schemas/enums.py:140-178` (`JurisdictionCode` — 24 country codes + `ISO`, `EU`;
+no `ES`, `PT`, `FI`); `scripts/db.py:2370-2408` (`insert_jurisdictional_value` — validates
+item FK and tier band, **no jurisdiction check of any kind**). `jurisdictional_values.
+jurisdiction` is bare `TEXT NOT NULL` (no CHECK), live values incl. 20 × `GB` (the recorded
+D-6/C-1 backlog — `UK` is the project convention).
+
+**Owner ruling honoured: both edits land in ONE commit, members first in the diff.**
+1. `schemas/enums.py` — insert alphabetically into the country block:
+```python
+    ES = "ES"   # Spain
+    FI = "FI"   # Finland
+    PT = "PT"   # Portugal
+```
+   (Bucket-2 targets the schema could not represent — OPUS C-3; adding members is inert on its
+   own: the enum's only importer, `scripts/validate_jurisdiction.py:29-31`, treats members as
+   the valid set, so additions can only turn findings green, never red.)
+2. `db.py insert_jurisdictional_value` — after the item-FK refusal (`:2381-2382`):
+```python
+        jur = data.get("jurisdiction")
+        _root = str(Path(__file__).resolve().parents[1])
+        if _root not in sys.path:
+            sys.path.insert(0, _root)
+        from schemas.enums import JurisdictionCode
+        try:
+            JurisdictionCode(jur)
+        except ValueError:
+            raise ValueError(
+                f"jurisdiction {jur!r} is not a JurisdictionCode member "
+                f"(schemas/enums.py — the ratified A3 list; UK not GB, by project "
+                f"convention). A value outside the list is a doctrine change: add the "
+                f"member in the same change as the first row that needs it. "
+                f"Nothing was written.")
+```
+   The vocabulary's single home is the enum (there is no schema CHECK to read, and live rows
+   are a sample that would legitimise `GB` — `check_vocab` is exactly wrong here; the enum is
+   the ratified home the docstring names).
+
+**TESTS:** `add-jurisdictional-value … --jurisdiction ES` → lands (the batch's own target —
+proving member-first ordering mattered); `--jurisdiction GB` → refused naming the convention;
+`--jurisdiction XX` → refused; `validate_jurisdiction.py` still green. **BLAST RADIUS:**
+`validate_jurisdiction.py` (reads the enum — green-only change); any prose listing "24 country
+codes" (the enum's own docstring `:143` — update to 27); the 20 live GB rows are UNTOUCHED
+(data backlog under its existing ruling; the refusal stops the bleeding, the migration that
+renames them is that ruling's business, not this fix's). **RISK:** none beyond the recorded GB
+question, which is already owner-ruled territory.
+
+## P4.3 — `next_gap_id()` mints a shape the register no longer uses
+
+**WHERE:** `scripts/db.py:135-144`; live gap ids: `GAP-B01-001…GAP-B02-001` (5 rows, ALL
+batch-scoped); `schemas/evidence_state.py:167` accepts only `^GAP-\d{3,4}$` for
+`gap_register_id`; `schemas/gap.py:31-32` accepts any `GAP-*`.
+
+**NOW:** `GLOB 'GAP-[0-9]*'` finds no live row → returns un-padded-adjacent `GAP-001`; no
+collision today, but two allocators exist (this one and `assess_cell.py:428-431`, which mints
+UN-padded `GAP-1` and crashes its own pydantic gate — P1.4 crash 1).
+
+**CHANGE:** both delegate to the single `dbcore.next_gap_id(conn)` specified in P1.4 item 6
+(zero-padded flat-numeric mint; batch-scoped ids recognised and skipped). `db.py:135-144`
+becomes:
+```python
+def next_gap_id() -> str:
+    with connect(readonly=True) as conn:
+        return dbcore.next_gap_id(conn)
+```
+**The format question, named and bounded:** whether NEW gaps should be batch-scoped
+(`GAP-B03-001`) rather than flat-numeric is a register-naming convention — content-adjacent.
+The code fix does not decide it: it makes the flat mint CORRECT (padded, collision-free,
+pydantic-passing, the only shape a cell may cite per `evidence_state.py:167`). If the owner
+wants batch-scoped minting, that is a later `--batch` parameter plus a widened
+`evidence_state.py:167` regex — the regex widening (to also accept `GAP-B\d{2}-\d{3}`) is
+needed EITHER WAY the moment a cell cites a live batch-scoped gap, and is recommended now:
+```python
+        if v is not None and not re.match(r"^GAP-(\d{3,4}|B\d{2}-\d{3})$", v):
+```
+(schema↔DB drift is a bug, CLAUDE.md §7 — the model currently rejects every gap id in the
+committed register.) **TESTS:** `db.py next-id gaps` → `GAP-001`; after inserting it, → 
+`GAP-002`; `EvidenceStateRecord(gap_register_id="GAP-B01-001")` validates after the regex fix.
+**BLAST RADIUS:** `next-id` dispatch (`:1328-1334`) unchanged; pydantic mirror tests
+(`validate_pydantic_schemas`). **RISK:** none.
+
+## P4.4 — runbook repairs (`decisions/DR-2026-08-19-research-restart-operative-instrument.md`)
+
+**Form of the edit — flagged as process, decided here as design:** the DR is RATIFIED but is
+"meant to be RUN"; its steps have been overtaken by later owner rulings (the 2026-08-24
+pointer ruling abolished step 7's dual write; the 2026-08-20 cull deleted step 0's script; the
+CLI grew `add-candidate`). The edit is therefore a **dated correction, marked in place** — not
+a silent rewrite: each corrected passage gets a `> **CORRECTED 2026-08-25:**` block quote
+under it and the stale text struck with `~~…~~`. Attestation required (touching `decisions/` —
+CLAUDE.md rule 2).
+
+1. **`:794`** — NOW: `python3 scripts/audit/table_connectivity.py   # record 0 of 80`.
+   The script was deleted in cull commit `80a34d1`. CHANGE: strike the line;
+   correction block: *"table_connectivity.py was deleted in the 2026-08-20 cull; the step-0
+   pre-state record is complete without it (sha256 + dod + test_db_integrity + rebuild)."* No
+   substitute command — substituting a different tool's number for "0 of 80" would fake
+   continuity of a metric that no longer exists.
+2. **`:830`** — NOW: `**Step 4 — screen and stage (R7, R15).** No CLI; scratch SQL.` CHANGE:
+   *"CLI: `db.py add-candidate` (exec-id FK, slug FKs, disposition/locator vocab from the
+   schema's own CHECKs, and the R15 ADMITTED⇒RESOLVED refusal built in — db.py:823-838,
+   :2270-2313). Scratch SQL for candidates is no longer lawful; the CLI refuses what R15
+   forbids."*
+3. **`:854-864`** — NOW: the "mandatory companion UPDATE" block: hand-SQL for
+   `doi_resolution_outcome/pages/url`, then `UPDATE search_executions … admitted_ref_ids='[…]'`
+   + junction INSERT + candidate UPDATE, citing H03/H04/H05. CHANGE (correction block):
+   - `--url/--url-accessed/--pages/--doi-resolution-outcome` are add-source flags since Act 2;
+     `--scope` since P1.1. The companion UPDATE for evidence_sources is DEAD — strike it.
+   - `admitted_ref_ids` dual write: ABOLISHED by owner ruling 2026-08-24 (`db.py:394-400`
+     "intentionally NOT written"; H03/H04 REMOVED — `test_db_integrity.py:1038`). Strike;
+     `search_admissions` junction is the sole carrier, written by `log-search
+     --admitted-ref-id` or `update-search` (P4.6).
+   - the counts UPDATE → `db.py update-search` (P4.6); the candidate disposition UPDATE →
+     `db.py update-candidate` (P4.6). Until those land, the correction block says so
+     explicitly ("hand SQL remains the only path for THESE TWO statements; that is the P4.6
+     coverage bug, not a licence").
+   - `:855`'s method list gains `direct-render` (P1.1e).
+4. Also swept while in the file: `:944` names H03/H04 as live parity gates — same correction
+   block as (3).
+
+**TESTS:** none mechanical (prose); the grep that proves the sweep:
+`grep -n "table_connectivity\|admitted_ref_ids='\|No CLI; scratch SQL" decisions/DR-2026-08-19-*.md`
+returns only struck/corrected lines. **RISK:** editing a ratified instrument — mitigated by the
+marked-correction form; if the owner prefers a separate corrections annex, the same blocks move
+there verbatim (flagged in the content section).
+
+## P4.5 — Co-1: what actually remains
+
+**Measured correction to the brief:** `validate_evidence_state.py:76-110`'s two bugs (the
+`r.get` NameError and the retired-status test) are **already fixed at HEAD** — the current code
+tests `vs == "UNVERIFIED" and disp == "CLOSED"`; the comment at `:96-101` narrates the repair.
+Settle it yourself: `git show 038913b:scripts/validate_evidence_state.py | sed -n '94,100p'`
+(old, broken) vs `sed -n '100,110p' scripts/validate_evidence_state.py` (current).
+
+**What remains, and the fixes:**
+1. **The write half** — `--co1-provenance` / `--co1-source-type` /
+   `--synthesis-attribution-required` on add-source: designed at P1.1(g).
+2. **The read half is vacuous, §2(a)-style:** `validate_source_co1_fields` runs only over
+   `data/sources/*.yaml`, guarded by `os.path.isdir(source_dir)` (`:452-456`) — the directory
+   does not exist, so the Co-1 rules examine NOTHING while the actual Co-1 rows (3 live) sit in
+   the DB. CHANGE: add a DB arm beside `validate_db()`:
+```python
+def validate_co1_db(conn):
+    """A5 §6.3 Co-1 rules over evidence_sources (the rows that exist), not a
+    YAML directory that never did."""
+    errors, n = [], 0
+    for ref, vs, disp, reason, tier in conn.execute(
+            "SELECT ref_id, verification_status, verification_disposition, "
+            "verification_closure_reason, tier FROM evidence_sources "
+            "WHERE evidence_type='co1'"):
+        n += 1
+        if vs == "UNVERIFIED" and (disp or "").upper() == "CLOSED":
+            errors.append(f"Co-1 {ref} UNVERIFIED+CLOSED "
+                          f"({reason or 'no reason recorded'}) — cells citing it as "
+                          f"sole Co-1 evidence must downgrade to pending (A6 §2.8)")
+        if tier is not None and tier != 1:
+            errors.append(f"Co-1 {ref} has tier={tier}; Co-1 is tier 1 (T-03)")
+    return errors, n
+```
+   Called from `validate_db()` and folded into its error/count return; the check's EXAMINED
+   rises by the live Co-1 count (3 today) — the gate finally has its subject. The YAML arm
+   stays for the day the directory exists.
+
+**TESTS:** live DB → +3 examined, 0 errors; scratch with a tier-2 co1 row → error. **BLAST
+RADIUS:** `validate_evidence_state` registry entry (blocking) — its subject count changes,
+nothing else. **RISK:** none.
+
+## P4.6 — R8 ordering: `update-search` (and the step-7 `update-candidate` it implies)
+
+**WHERE:** new subcommands in `scripts/db.py`. The R8 bind (OPUS D-4, verified): step 3 logs
+every query with counts 0 BEFORE screening; step 7 completes `results_screened`/
+`results_admitted`; `log_search` is append-only INSERT (`:404-407`) — so the sanctioned path
+either violates R8's ordering or hand-writes the UPDATE that blocking H05 audits.
+
+**`update-search` design:**
+```python
+    p_us = sub.add_parser("update-search",
+                          help="Complete a search_executions row's YIELD after screening "
+                               "(R8: the query was logged BEFORE screening; this is the "
+                               "step-7 completion, identity fields immutable)")
+    p_us.add_argument("--exec-id", required=True, type=int)
+    p_us.add_argument("--results-found", type=int)
+    p_us.add_argument("--results-screened", type=int)
+    p_us.add_argument("--results-admitted", type=int)
+    p_us.add_argument("--saturation-signal")
+    p_us.add_argument("--findings-note")
+    p_us.add_argument("--admitted-ref-id", action="append",
+                      help="repeatable; writes the search_admissions junction row(s) in the "
+                           "same transaction (the sole carrier of the admission edge)")
+    p_us.add_argument("--session", required=True)
+    p_us.add_argument("--dry-run", action="store_true")
+```
+Refusals in `update_search(...)`:
+- `exec_id` must exist (named refusal).
+- **Identity is immutable**: the updatable set is exactly `{results_found, results_screened,
+  results_admitted, saturation_signal, findings_note}` — a whitelist constant beside
+  `_BPC_META_COLS`; `slug/query_text/engine/…` are refused by construction (no flags) AND by
+  the whitelist (python-API path).
+- H07: repeated `--admitted-ref-id` values refused (same code as `log_search:371-377`).
+- Each admitted ref must exist in `evidence_sources` (same as `log_search:425-430`); an
+  `(exec_id, ref_id)` pair already in `search_admissions` → named refusal ("one admission edge
+  per (search, source); it is already recorded"), not a PK crash.
+- H05: after writing the junction rows, `results_admitted` (given or derived) must equal
+  `SELECT COUNT(*) FROM search_admissions WHERE exec_id=?` — refuse on disagreement, naming
+  both numbers; if `--results-admitted` omitted but refs given, derive it.
+- Counts may not DECREASE below the junction count (screened ≥ admitted enforced likewise).
+
+**`update-candidate` design** (the other hand-SQL statement on step 7's mandatory path):
+```python
+    p_ucand = sub.add_parser("update-candidate", help="Move a staged candidate's disposition")
+    p_ucand.add_argument("--candidate-id", required=True)
+    p_ucand.add_argument("--disposition", required=True)
+    p_ucand.add_argument("--locator-status")
+    p_ucand.add_argument("--notes")
+    p_ucand.add_argument("--session", required=True)
+    p_ucand.add_argument("--dry-run", action="store_true")
+```
+Refusals: candidate exists; `check_vocab` on disposition/locator_status (schema CHECKs);
+R15 both halves — `ADMITTED` requires `locator_status='RESOLVED'` (existing rule,
+`insert_search_candidate:2297-2302`) AND `--notes` beginning with the literal `RESOLVED:`
+(the runbook's re-described-from-source predicate, `:863-864`).
+
+**TESTS:** the R8 sequence end-to-end on scratch: `log-search` (found N, screened 0, admitted
+0) → `add-candidate` → `add-source` → `update-search --exec-id E --results-screened N
+--admitted-ref-id REF-X` → junction row exists, counts agree; `test_db_integrity` H05/H07
+(surviving forms) PASS; second identical `--admitted-ref-id` → refused. **BLAST RADIUS:**
+runbook step 7's correction block (P4.4-3) points here; skills that narrate step 7. **RISK:**
+low; mirrors log_search's own refusal code.
+
+## P4.7 — the four dropped-without-deferral items
+
+**(a) `add-population-match` same-session divergent grade crashes (S2 case 24).**
+WHERE: `db.py:2363` — `row["match_id"] = f"{session[:24]}-{ref}-{data['target_population']}"`;
+a second grade from the same session mints the same PK → uncaught IntegrityError, which
+silently abolishes the same-session half of the dissent mechanic CLAUDE.md §4 celebrates.
+CHANGE (replacing `:2362-2363`):
+```python
+        if row.get("match_id") is None:
+            base = f"{session[:24]}-{ref}-{data['target_population']}"
+            mid, i = base, 1
+            while dbcore.exists(conn, "evidence_population_match", "match_id", mid):
+                i += 1
+                mid = f"{base}-{i}"
+            row["match_id"] = mid
+```
+plus `p_epm.add_argument("--match-id")` (the S2-suggested explicit override; dispatch
+pass-through — the column is already in `_COLS`). The divergence NOTE at `:2350-2356` already
+prints; unchanged. TEST: same session, same (ref, population), two grades → both land,
+`…-2` suffix, NOTE printed twice.
+
+**(b) `adjudication_integrity` exit code — NOT REPRODUCIBLE at HEAD; no change.** `audit()`
+returns `0 if not viol else 1` (`:136`) and `main` propagates it (`:171-178`). Reproduced this
+pass with a scratch copy + induced violation: **EXIT 1, VERDICT FAIL** (fixture command:
+`cp data/guidebook.db $SP/f.db; python3 - <<… UPDATE tier=5 …>>;
+GUIDEBOOK_DB_PATH=$SP/f.db python3 scripts/audit/adjudication_integrity.py; echo $?`). S2's
+"EXIT: 0" is most plausibly a piped invocation capturing the wrong status (`| tee` swallows
+it without `pipefail`). Disposition: RECORDED, re-verify with the bare command before filing
+any fix; if it still shows 0 unpiped, the file has a second entry point somewhere and THAT is
+the finding.
+
+**(c) `source_locators.jurisdiction`: 818/875 unusable, no reader.** Re-measured shape: 385
+NULL, 89 `'—'`, dozens of URLs and slug-strings; ISO-code rows are a small minority. There is
+no reader to fix and the batch's bucket filter cannot run on it. Disposition — **recorded
+deferral with a tripwire, not a silent pass**: (1) no writer change (P2.1 writes NULL
+jurisdiction — honest); (2) the bucket-driven batch must derive jurisdiction from
+`evidence_sources`/retrieval, never from this column, and the promotion notes say so; (3) the
+normalisation is a DATA migration authored when the batch's bucket queries exist to name what
+"usable" means — authoring it now would invent a target vocabulary for 875 rows nothing reads.
+Settling command for the future author:
+`SELECT jurisdiction, COUNT(*) FROM source_locators GROUP BY 1 ORDER BY 2 DESC;`
+(4) tripwire: one line in `audit_evidence_metadata.py` (or the eventual bucket query's own
+EXAMINED) reporting the non-ISO share, so the deferral is visible, not forgotten.
+
+**(d) `spec_value_probes` / `items.pmp_*` writers absent while the
+progressive-measurement skill teaches raw INSERT.** Every mobility item is a quantity; probes
+are the vetting path. Design (Phase-4 depth):
+- `db.py add-value-probe`: flags mirroring the DDL's NOT NULLs — `--probe-id --walk-id --slug
+  --item-code --spec-value-origin --spec-unit --direction --population --claim-type
+  --step-index --phase …` (dump the full column list with
+  `python3 -c "import sqlite3;print(sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True).execute(\"SELECT sql FROM sqlite_master WHERE name='spec_value_probes'\").fetchone()[0])"`
+  — this pass read the first half; the implementer pastes the rest). Refusals: FK slug/item;
+  `check_declared` on `direction/claim_type/phase` (all CHECKed); duplicate probe_id;
+  population in `populations`; origin requires unit (the R3 family).
+- `db.py update-pmp --item CODE [--delta-min N] [--direction up|down] [--empirical-ceiling N]
+  [--gap-signed N] --session S`: whitelist exactly the five `pmp_*` columns (measured:
+  `pmp_delta_min, pmp_direction, pmp_last_walk_at, pmp_empirical_ceiling, pmp_gap_signed`);
+  `pmp_last_walk_at` is stamped by the writer (`dbcore.now()`), never passed — it records the
+  walk event. Refusal: item FK; at least one field.
+- `WRITABLE_TABLES` += `"spec_value_probes"` (items is UPDATE-only here — the emit path diffs
+  INSERTs; an items UPDATE ships via `emit_data_migration` as usual — note this in the
+  subcommand's help so the capture gap is named where the operator stands).
+- The skill sweep: replace the raw-INSERT teaching with these subcommands (grep
+  `skills/*progressive*` / `grep -rln spec_value_probes skills/`).
+
+---
+
+# DEPENDENCY GRAPH — what must precede what
+
+```
+P0.1 ──┬── P0.2 (same commit: P0.1 breaks P0.2's old text mechanically)
+       │
+       ▼
+P1.1 (add-source honest: scope/I1/I4/dedup/co1) ──────────┬─► P2.1 promote-mined-leads
+  │     [065 evidence_type+tier CHECK can trail P1.1;     │      (admission-side dedup is
+  │      check_declared no-ops until it lands]            │       the gate — F4 S2 corrected
+  ▼                                                       │       mechanism)
+P1.2 add-extraction + add-external-root (+WRITABLE_TABLES)│
+  ▼                                                       │
+P1.4 assess_cell de-pilot (needs dbcore.next_gap_id) ◄────┼── P4.3 (same dbcore function —
+  ▼                                                       │        land together)
+P1.5 anchoring conditions 1+3 ──► P1.8 value binding ─────┤
+  ▼                                   ▲                   │
+P1.3' assess_cell writes spec links + │ (P1.8 needs P1.2's│
+      narrow add-specification        │  extraction rows) │
+  ▼                                   │                   │
+P1.7 spec_page value column ──────────┴───────────────────┴─► E2E WALK (below)
+  ▼
+P1.6 update-bpc --population ──► 066 + link-synthesis-determination ──► P2.2 comparator
+                                                  (P2.3 replacement — same mechanism)
+P2.5 delete opus_reviewed (067) ── independent
+P3.1 room_page rewrite · P3.2 index generator · P3.3 register honesty · P3.4 parts --check
+                                              ── all independent of the walk and of each other
+P4.1 @BASE@ · P4.2 enum+check · P4.5 co1-db-arm · P4.6 update-search/-candidate ·
+P4.7a match-id suffix                          ── independent; P4.4 (runbook text) LAST,
+                                                  after P1.1/P4.6 exist to be pointed at
+```
+
+**The true critical path** is seven items long:
+**P0.1 → P1.1 → P1.2 → P1.4 → (P1.5, P1.8, P1.3′) → P1.7 → E2E.**
+Everything else can proceed in parallel or wait. The single most load-bearing edit in the
+repository is P1.1's I1/I4 reconciliation — without it every admission is born failing a
+blocking gate, which is the condition that manufactured the 2026-08-19 fabrication.
