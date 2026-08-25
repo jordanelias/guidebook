@@ -721,3 +721,92 @@ and "the paper says 1200 mm."** Until something writes it:
 
 The batch as the owner described it is a request for **numbers with locators attached to disabled
 people's demands.** The one table that holds a number with a locator has never had a row.
+
+---
+
+# PART 9 — CORRECTIONS TO THIS LOG, from the F1 doctrinal audit
+
+The read-only auditor checked my findings against the record rather than against the code, and
+found me guilty of the exact trap CLAUDE.md §0.4b names. **Two of my findings are not novel, and
+one of them mis-states the doctrine.** Both corrections stand; neither is softened.
+
+## C-1 — D-6 (the 20 `GB` rows) is NOT a discovery, and my framing contradicts a ruling
+
+`decisions/DR-2026-08-19-research-restart-operative-instrument.md:347`, §3 item 6c, already records
+all of it — the rows, the enforcer's blindness, the disposition, and the sequencing:
+
+> | 6c | `GB` → `UK` in `jurisdictional_values` (20 rows) | … | **Correct and blocked, not wrong** —
+> `jurisdiction-philosophy.md` §3.3 mandates `UK` at ERROR level and the project overrode ISO
+> deliberately. Blocked by the REFERENCE-ONLY quarantine; clears with **OD-G**. **And its enforcer
+> never opens the DB** (`validate_jurisdiction.py` parses YAML only), which is why it survived four
+> schedulings. Wire the enforcer in the same change that fixes the rows, never before. |
+
+I wrote that the table "holds 20 rows the project's own rule forbids." **The ruling says the
+opposite**: the rows are *correct and blocked* — known, scheduled, and deliberately not fixed
+because the fix is gated behind OD-G and the REFERENCE-ONLY quarantine. The instrument even
+specifies the order I would have got wrong: *wire the enforcer in the same change that fixes the
+rows, never before.* Wiring it first turns a blocking check red against rows nobody is permitted to
+touch.
+
+**How I got it wrong is the instructive part.** I grepped `validate_jurisdiction.py`, I queried the
+table, I read the enum — and I never grepped the instrument for `GB`. CLAUDE.md §0.4b, written after
+this exact failure on 2026-08-24: *"A ruling can be in the repository, in a file the traps name, and
+still fail to bind — if the search is worse than the record."* Mine was. The file is not even
+`.ignore`-hidden; one `grep -n "GB"` would have found it.
+
+What survives from D-6: nothing as a finding. The **taxonomy** point it illustrates — species 2,
+a gate that examines 111 of the wrong things — stands, but the instrument saw that first and said so
+in the same sentence. Credit belongs there.
+
+## C-2 — D-5's UN half is also already recorded
+
+`workplan/2026-08-18-research-frame-proposal.md:602` states it outright and better than I did:
+
+> **UN is in none of the three.** Not in the enum, not in `lang_jur_map`, no recorded values, and
+> `standard_name LIKE '%CRPD%'` returns **0 rows**. … **UN is a different kind of object from a
+> standards body:** it issues rights obligations, not dimensional values. … Recommend
+> `kind = international`, `instrument = CRPD`, and an explicit note that it yields obligations
+> rather than values.
+
+That is a sharper analysis than "UN is missing from the enum," and it comes with a recommendation.
+Withdrawn as a discovery.
+
+## C-3 — What survives of D-5: `ES`, `PT`, `FI`
+
+Searched `decisions/`, `governance/`, `references/` and `workplan/` for any record that Spain,
+Portugal or Finland cannot be represented. The only hit is
+`workplan/2026-08-18-research-frame-proposal.md:423` — the bucket-2 list that *names* them as
+targets. Nothing anywhere observes that `JurisdictionCode` has no member for them.
+
+So the surviving finding is narrower and, for the batch, still hard: **bucket 2 names three
+jurisdictions the schema cannot represent, and no record notices.** Combined with S6's verified
+mechanism — `insert_jurisdictional_value` (`db.py:2363-2400`) makes zero `check_vocab` calls on
+`jurisdiction` — a Spanish or Finnish code value would be written silently with no refusal anywhere
+in the path. That is a live coverage bug on a table the batch will use, and it is not the GB
+situation: nothing is quarantined here and no owner decision blocks it.
+
+## C-4 — Three things F1 found that no stage trace did
+
+Verified independently, all three:
+
+1. **`data/sources/` does not exist**, and `scripts/validate_evidence_state.py:76-110` — the only
+   wired Co-1 validator — reads `data/sources/*.yaml`. Confirmed: `ls -d data/sources` returns
+   nothing. So the Co-1 enforcement chain is dead at three points at once: no CLI flag for
+   `co1_provenance`, a Pydantic rule never invoked by the write path, and a validator whose subject
+   directory is absent. **`co1_provenance` appears in exactly one executable file: `db.py`'s column
+   whitelist.** Against CLAUDE.md §6 — *"Erasing them while claiming the tier is the worst failure
+   available here"* — the post-2026-08-19 repair fixed the author-fabrication arm and never built
+   the co-production arm.
+2. **`scripts/generate/room_page.py` has a *second* wrong table name.** S5 found `FROM room`
+   (live: `rooms`); F1 found it also queries `room_item` (live: `room_items`). S5's finding was
+   understated.
+3. **The render pages S5 called honest are carrying quarantined determinations in their titles.**
+   `site/specs/e-08.html` headlines `<h1>Corridor Clear Width (≥1200 mm Minimum on All Primary
+   Routes)</h1>` above a body that correctly says the value is not yet computed. DR-2026-08-19 §1.2
+   names precisely this as the quarantine's second vector — *"the determinations are still
+   rendered."* **E-08 is a mobility item, and it is the first one the batch would touch.** S5 graded
+   the banner and never read the heading above it.
+
+**The honest scorecard on my own log after this audit:** of 17 findings, one withdrawn on
+verification (D-12), two withdrawn as already-recorded (D-6, D-5's UN half), one narrowed (D-5 to
+ES/PT/FI). Thirteen stand.
