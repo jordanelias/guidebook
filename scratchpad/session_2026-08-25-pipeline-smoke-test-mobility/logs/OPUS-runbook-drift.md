@@ -310,3 +310,56 @@ store** — with `doi`, `pub_year`, `authors` (first author only, marked), `reco
 artifact, `status='REFERENCE-ONLY'`, and `title` left NULL pending re-retrieval. That is one
 migration, it adds no apparatus, and it turns "we would be using our clues table" from 64
 keyword-matched leads into 320.
+
+---
+
+# PART 4 — found by being caught: the local gate does not predict CI
+
+Not planned. This session's own commit `d4042e6` failed the blocking `attestation_presence` check
+on CI while the local battery reported `PASS` on the identical sha. The gate was right — `sessions/`
+is a synthesis path (CLAUDE.md §0.2) and I owed an attestation. What is worth recording is the
+disagreement, because CLAUDE.md §5 instructs every session to gate its diff locally before pushing.
+
+## D-11 — The attestation battery's window is one commit locally and the whole branch on CI
+
+| | Local | CI |
+|---|---|---|
+| command | `run_checks.py --battery attestation --changed-from origin/main` | `run_checks.py --battery attestation --kinds … --github` |
+| reported | `changed files:` *(absent)* → `[NONE] attestation_presence` → **PASS** | `changed files: 11; synthesis: 1` → `[FAIL] attestation_presence` → **FAIL** |
+
+Mechanism, in three facts:
+
+1. `scripts/audit/adherence_log_audit.py:569` — `--base` defaults to **`HEAD~1`**.
+2. `governance/check-registry.yaml` invokes it with **no base**:
+   `['python3','scripts/audit/adherence_log_audit.py','--check','presence']`. `run_checks.py`
+   computes `changed_paths(base)` at `run_checks.py:147-161` for *selection* and never passes that
+   base to the check it selected.
+3. `.github/workflows/ci.yml:220-221` checks out with `fetch-depth: 0`. On a pull request that
+   checkout resolves to the **merge ref**, whose `HEAD~1` is the base-branch tip — so `HEAD~1..HEAD`
+   is the entire PR. In a local clone `HEAD~1` is simply the previous commit.
+
+So the same default means two different things. The attestation gate audits **the last commit**
+locally and **the whole branch** on CI. Any session that touches a synthesis path in one commit and
+then makes a second commit gets a green local battery and a red CI — which is exactly the sequence
+that produced this failure.
+
+`.github/workflows/ci.yml:213-218` shows the risk was reasoned about and half-caught: the comment
+justifies `fetch-depth: 0` precisely because *"a shallow checkout would scope the attestation gates
+to nothing — a gate examining zero subjects while reporting PASS is this repo's signature failure."*
+The fix is correct for CI and does nothing for the local path, where the same vacuity is reachable
+by the ordinary act of making a second commit.
+
+**Add this to the vacuous-gate family as a third species.** The census so far:
+
+| Species | Example | Why the instrumentation misses it |
+|---|---|---|
+| Empty subject | 4 blocking checks reported `BLOCKING and vacuous` in this session's own run | Caught — `run_checks.py` escalates it by design |
+| Wrong subject | `validate_jurisdiction`, `EXAMINED: 111`, never opens the DB (D-6) | `EXAMINED > 0` reads as coverage |
+| Wrong window | `attestation_presence`, green locally, red on CI (D-11) | The count is right for the window; the window is wrong |
+
+Only the first is instrumented. **`EXAMINED` answers "how many?" and never "of what?" or "over what
+range?"** — and the two uninstrumented species are both live in this repository today.
+
+*Smallest honest fix for D-11:* give the registry entry an explicit base, or have `run_checks.py`
+pass its computed `--changed-from` base to checks that accept one. That is a code change, not
+doctrine, and CLAUDE.md §1 says code needs evidence, not permission — the evidence is this PR.
