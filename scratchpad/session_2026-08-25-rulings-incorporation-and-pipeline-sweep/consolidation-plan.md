@@ -92,12 +92,14 @@ committed at every break.
    count == write count) and the fabrication shape (assert `--verify-authors` still fires).
 3. **One capture list; hand-SQL closed by instruction.** DR-2026-08-19 gets an APPENDED
    supersession note, never an in-place edit.
-4. **Job-writer gate collision — OWNER ACT.** Doctrine-level, so the plan's job is the brief, not
+4. **Job-writer gate collision — OWNER ACT. NARROWED 2026-08-25:** the jobs are STAGE-PURE (every column they write to `evidence_sources` is evidence-collection content: identity, verification, extraction). No boundary is crossed and no fact is duplicated, so option (ii) "jobs emit migrations" buys NOTHING doctrinally — it changes the mechanism, not the stage content. Cleaner basis for (i): `pipeline_runs` / `url_verification_runs` are run ledgers, facts about the JOB not about a source — substrate infrastructure, never stage data, so never subject to the crossing rule. Doctrine-level, so the plan's job is the brief, not
    the verdict. Code floor (jobs adopt dbcore) ships regardless.
-5. **Read-side consolidation**, four slices, LAST among code acts. The two AST audits must be
+5. **Read-side consolidation** — RE-SCOPED 2026-08-25. The unit of work is NOT "does this file import dbcore" but **"does this reader cross a stage by POINTER or by reading a COPY"**. That supplies the acceptance test the original act lacked — *no live reader selects a stage-foreign column directly* — which fails today on `evidence_sources.search_queries_used`. The connect() migration rides along free. Four slices, LAST among code acts. The two AST audits must be
    re-taught IN SLICE 5a, before subjects move — otherwise a slice greens the board by emptying a
    gate's scope, which is this repo's signature failure.
-6. **Drop the 11 unread views** + per-caller join helpers only.
+6. ~~**Drop the 11 unread views**~~ **REFUSED ON EVIDENCE 2026-08-25 — see
+   `acts-456-under-the-stage-ruling.md`.** A cross-stage view IS the pointer; 8 of 11 are
+   pre-data, not dead. Per-caller join helpers survive as the cheap half.
 
 Serial: 1→2→3. Act 4 parallel (owner-bound). Act 5 after 1, slices serial. **Act 5 and Act 6 must
 never run concurrently** — both sweep the same reader files, and a sweep against a moving tree is

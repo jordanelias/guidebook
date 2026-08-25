@@ -1203,6 +1203,26 @@ checks:
     cost: fast
     no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
 
+  - id: test_record_command_session
+    cmd: [python3, scripts/tests/test_record_command_session.py]
+    battery: tests
+    kinds: [tooling]
+    level: advisory
+    basis: hygiene
+    cost: fast
+    no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
+    note: |
+      10/10 assertions. Guards which session a Bash call is filed under. That one
+      function was wrong twice in three days and both wrong answers looked like
+      correct files — .claude/session (2026-08-23) and sessions/LATEST (the "fix",
+      same day) are BOTH moved at close-out, so each named the previous session for
+      the whole life of the current one; three sessions' logs landed in one file
+      named after the earliest. A01/A02 pin the third failure, found by this test
+      before it shipped: writing your own close-out record made the newest-open
+      derivation fall back to a STALE open session. Mutation-tested 2026-08-25 —
+      disabling the anchor, dropping the session_id the anchor reads, and letting
+      closed sessions be written into each turn it red.
+
   - id: test_url_verifier
     cmd: [python3, scripts/tests/test_url_verifier.py]
     battery: tests

@@ -47,6 +47,22 @@ made it a stage is superseded.
 assignment in the 2026-08-24 stage-discipline audit is agent-authored, predates this ruling, and
 must be re-derived against these five stages before it is relied on again.
 
+**A CROSS-STAGE VIEW *IS* THE POINTER, AND IS THEREFORE THE MOST PROTECTED OBJECT IN THE SCHEMA.**
+Rule 5 says point, do not copy. **A view that joins two stages on the shared reference ID is what
+"point" MEANS in SQL** — the owner's *"call up information from any one so long as you point to the
+correct table and column"*, and *"for rendering a citation, we point towards the evidence table for
+that reference ID"*, are descriptions of a join. Measured 2026-08-25, four views cross a boundary:
+`v_source_admission` (evidence-collection ← research), `v_item_provenance` and `v_source_reach_all`
+(evidence-collection ← judgment), `v_divergence` (judgment ← synthesis).
+
+**Before deleting any view, ask which stages it spans.** A cross-stage view is not apparatus and is
+not a candidate for a cull — deleting it removes the pointer and forces the next reader back to
+copying, which is the defect the whole pointer-discipline series exists to remove. This is the
+missing half of rule 5, and its absence is why `workplan/2026-08-22-master-execution-plan.md` R6
+carried a standing order to delete eleven views, two of which are live pointers — one of them the
+designated remedy for a violation still on the books, the other repaired at the cost of migration
+064 the day before. **R6 is VOID; do not obey it.**
+
 **Re-entrancy still holds and is a different question.** `governance/pipeline-map.yaml` established
 2026-08-21 that a walk **re-enters** stages rather than passing through them once — a layer-3
 artefact legitimately produces layer-2 rows. That answers *write order*. This map answers *what a
@@ -388,9 +404,18 @@ not block research: it is downstream of it.
   with `ls` or Glob. `grep -r` and `git grep` ignore it; Python tools see everything. Search those
   paths explicitly when doing history work. **Note the cost:** rendered search logs live under an
   ignored path, so the project's own research output is invisible to search.
-- **Two session pointers.** `sessions/LATEST` is continuity; `sessions/LATEST-RESEARCH` is the
-  subject of the blocking citation-mining gate. Update `LATEST` on any session close; update
-  `LATEST-RESEARCH` only when the session actually did research.
+- **Two session pointers, and NEITHER ONE NAMES THE SESSION YOU ARE IN.** `sessions/LATEST` is
+  continuity; `sessions/LATEST-RESEARCH` is the subject of the blocking citation-mining gate.
+  Update `LATEST` on any session close; update `LATEST-RESEARCH` only when the session actually
+  did research. **Because both move at CLOSE, both name the PREVIOUS session for the whole life
+  of the current one** — so anything that needs "the session running now" must DERIVE it, never
+  read a pointer. Measured 2026-08-25: `record-command.py` read `LATEST` and filed three
+  sessions' Bash logs into one file named after the earliest (5 lines + 405 + 274), while the two
+  later sessions' scratchpad directories held no log at all. That was itself a *fix*, applied
+  2026-08-23, for the identical failure under `.claude/session` — swapping one close-out pointer
+  for another changed which stale name was written, not that it was stale. The derivation that
+  works needs no new pointer: **a session is closed exactly when `sessions/<stem>.md` exists**, so
+  a `scratchpad/session_*` directory with no record behind it is open.
 - **Session ids: bare stem in the DB, `.md` in pointers and `emit_data_migration --session`.**
   Getting it wrong scopes a gate to nothing and it passes green.
 - **Don't hand-edit generated output** (`parts/`, `site/`, `audits/`, `tools/*.html`) — regenerate

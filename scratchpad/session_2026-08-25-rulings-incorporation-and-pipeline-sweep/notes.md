@@ -401,3 +401,186 @@ for lack of time — the sweep was run, and it says the premise is wrong.
 
 The cheap part of Act 6 survives and is worth doing separately: per-caller join helpers,
 added only in the commit where a caller adopts them.
+
+---
+
+## F11 — the three fixes the stage ruling forced, executed 2026-08-25
+
+The Acts 4/5/6 interrogation ended with three concrete corrections. All three are made
+and each was verified against the live DB, not against its own diff.
+
+**FIX 1 — `scripts/db.py`, the PD-0 defect that survived in the WHERE clause.**
+PD-0 repointed the unmined-source join from `citation_mining.local_ref_id` to
+`global_ref_id` and left the sentinel testing the *old* key:
+`AND (cm.local_ref_id IS NULL OR ...)`. It reads green only while every mining row
+happens to carry a local label — and `log_mining` LOOKS THAT LABEL UP from
+`source_slug_links`, writing NULL when no link exists. A mined source with a NULL
+label would have reported UNMINED: the exact false negative PD-0 was raised to remove,
+sitting one clause below the line PD-0 fixed. Now tests `cm.global_ref_id`.
+
+**FIX 2 — `scripts/audit/research_protocol_audit.py` CHECK 8, repointed.**
+It read `evidence_sources.search_queries_used` — the copy — to decide whether a
+verified citation had a logged query. Repointed to `v_source_admission`, which is the
+cross-stage pointer (evidence-collection ← research) and the thing the ruling says to
+read. Verified before retirement so the repoint could be proved independently:
+`[CHECK 8] Verified citations lacking search_queries_used: 0`.
+
+**FIX 3 — `skills/adversarial-research_SKILL.md`, the last live writer retired.**
+The skill instructed `UPDATE evidence_sources SET search_queries_used`. That is a
+research-stage fact being written onto an evidence-collection row — the copy the
+ruling forbids, created by instruction. Removed; grep confirms zero live writers.
+
+**Then the migration**, `data_20260825215123_...sql`, emitted and applied through the
+sanctioned path (emit_data_migration → migrate_db → --rebuild). It NULLs
+`evidence_sources.search_queries_used` (10 → 0) and `citation_mining.doi` (10 → 0).
+
+Measured across the migration, and this is the whole point of it:
+
+| | before | after |
+|---|---|---|
+| `evidence_sources.search_queries_used` non-empty | 10 | **0** |
+| `citation_mining.doi` non-empty | 10 | **0** |
+| `v_source_admission.query_text` non-empty (THE POINTER) | 10 | **10** |
+| `cm → es` doi reachable by join (THE POINTER) | 10 | **10** |
+
+Nothing was lost. Both facts are still answerable; they are answered once, from the
+stage that owns them.
+
+**Neither column is dropped and neither can be.** Committed data migrations INSERT
+both, and migrations replay from the baseline, so a DROP would replay *before* the
+INSERT that names it and break `migration_reproducibility` — the trap migration 062
+sprang. Writer-retired, reader-retired, NULLed forward. Tombstones.
+
+**`citation_mining.local_ref_id` is deliberately untouched.** It is also a copy, but
+it still has live readers (the cm2 legacy fallback in `citation_mining_completeness.py`,
+and a display string). Retiring a column whose readers still exist is the sweep failure
+this series keeps paying for — CLAUDE.md rule 4, migration 064's whole reason for
+existing. It waits until they are repointed.
+
+**One collateral fix.** `retired_vocabulary` went red on RV-017 — not because any live
+surface used `db_meta.schema_version`, but because the owner's directive to commit  [RETIRED-VOCAB-OK]
+scratchpads landed a verbatim capture of `run_checks.py --all` in
+`scratchpad/**/baseline/`, and the check read *its own printed output* as an
+occurrence. Same class as `scratchpad/**/commands.jsonl`, which was exempted 2026-08-24
+for exactly the same reason. Exempted; count returns to the baseline 65, so the
+exemption removed the one occurrence I introduced and nothing else.
+
+## F12 — the command log had been misfiling for three sessions
+
+Found from `git status` while staging F11, not from a check — nothing checks this.
+
+`.claude/hooks/record-command.py` exists to serve the owner directive of 2026-08-20
+("the scratchpad needs to be getting saved always for provenance") and, restated
+2026-08-25, "so that we actually have a surface to review". It derived the session stem
+from `sessions/LATEST`. **`LATEST` is moved by the CLOSE-OUT ritual, so for the entire
+life of a session it names the previous one.** Measured:
+
+```
+scratchpad/session_2026-08-23-research-batch-03-forward-mining/commands.jsonl
+    5 lines dated 2026-08-23   <- its own session
+  405 lines dated 2026-08-24   <- session_2026-08-24-pointer-discipline
+  274 lines dated 2026-08-25   <- this session
+```
+
+Three sessions, one file, named after the earliest. Both later sessions have scratchpad
+directories and neither had a `commands.jsonl` at all. The review surface the directive
+asked for did not exist, and the 08-23 session's frozen record was being appended to.
+
+**The part that matters: this WAS the fix.** On 2026-08-23 the hook was changed from
+`.claude/session` to `sessions/LATEST` precisely to stop one session's commands landing in
+the previous session's directory — the comment in the file narrates that failure in
+detail. Both pointers are moved at close-out. They were stale in the same way for the same
+reason, and swapping one for the other changed which stale name got written, not that a
+stale name got written. The diagnosis stopped at "this copy went stale" when the finding
+was "this pointer answers a different question."
+
+**Fixed by deriving, with no new pointer.** A session is closed exactly when its record
+`sessions/<stem>.md` exists; so a `scratchpad/session_*` directory with no record behind it
+is OPEN, and the newest open one is current. Checked retrospectively against all three
+misfiling sessions and it resolves each correctly. Stated limit: same-day open sessions tie
+on alphabet — which is a reason to close sessions out, not to add machinery.
+When it cannot tell, it files under the harness session id: **a wrong answer must be
+loud.** This one stayed invisible for three sessions because it produced a plausible file.
+
+**The 679 lines are NOT split back out.** The date column is a description, not a boundary:
+the 08-24 session ran straight through midnight UTC (lines 405–411 are one continuous run,
+23:56:44Z → 00:00:09Z), so carving by date would cut a session in half. Re-attributing a
+frozen log by inference is how a provenance record becomes a guess. Each affected session
+directory gets `commands-jsonl-WHERE.md` — a POINTER to where its lines are. Rule 5.
+
+Also corrected: the hook's own docstring still described reading `.claude/session`, a file
+deleted 2026-08-23. Same defect class as the pointer itself.
+
+**Footnote to F11's collateral fix, because I got it wrong once.** I claimed
+`retired_vocabulary` was "steady at 65" in a commit message and it was at 66 — my own F11
+prose *narrating* the RV-017 exemption named the token and tripped the same entry. The
+`scratchpad/**/baseline/**` exemption I added was correctly narrow, which is exactly why it
+did not cover a prose mention two files over. `governance/retired-vocabulary.yaml`'s own
+guidance says per-file exemptions are too coarse for a file that both uses and discusses a
+token, and the inline `[RETIRED-VOCAB-OK]` is the instrument for a single line. Used it.
+Back to 65.
+
+## F13 — my own fix for F12 had the same defect, one door over
+
+Found by testing my own change against the next thing I was about to do — write this
+session's close-out record.
+
+F12's derivation was "the newest `scratchpad/session_*` directory with no
+`sessions/<stem>.md` behind it is the session running now."  [RETIRED-VOCAB-OK]
+**The close-out ritual breaks it.** Writing `sessions/<stem>.md` is how a session closes,
+and a session routinely keeps working after that — so at that instant the live session
+stops matching, and the rule falls through to the newest *stale* open session. Measured
+with the record present: it returned `session_2026-08-24-pointer-discipline`, a session
+that ended a day earlier. Same misattribution as F12, reached by a different door.
+
+The pattern across all three versions is the same one: **every signal used so far was
+inferred from filenames, and none of them was the fact.** `.claude/session` inferred it,
+`sessions/LATEST` inferred it, newest-open inferred it.
+
+**The fact is the harness session id.** It is on the hook payload, it is stable within a
+session and unique across sessions, and nothing was writing it down. So:
+
+- every line now carries `session_id` — the log becomes SELF-DESCRIBING, and a reader
+  partitions it by a stated fact instead of guessing boundaries from timestamps. That is
+  precisely what made the three misfiled sessions unsplittable: the 08-24 session ran
+  through midnight UTC, so the only available boundary was inference. Future logs answer.
+- the derivation is now only the **opening guess**. From line 2 the hook follows the
+  anchor: a session's lines are always appended, so the directory whose log *ends* with
+  our sid is ours. Exact, and it holds through close-out because it never consults records.
+
+**Registered as a check, and mutation-tested before shipping.**
+`scripts/tests/test_record_command_session.py`, 10 assertions. Three mutations, each
+turning it red: disable the anchor (3 fail, incl. the A01 regression), drop the
+`session_id` the anchor reads (W01 fails — the anchor would have been left dead), let
+closed sessions be written into again, i.e. the original 2026-08-23 defect (4 fail).
+
+**Two things I got wrong while writing the test, both worth recording.**
+S01 as first written — "a closed session is never written into" — passed under the
+mutation it was meant to catch, because I put the closed session *older* than the open
+one, where "newest" and "newest open" agree. It asserted nothing. The closed fixture is
+now the newest.
+And `build()` was additive, so fixtures leaked between cases: a directory left by S01
+changed which session A03 resolved to. Two assertions had been passing on run order, not
+on the code. Found by *adding* a case, not by the suite going red — which is the whole
+argument for mutation-testing a test rather than trusting a green.
+
+CLAUDE.md §1 asks what wrong thing reaches the guidebook without this check. A provenance
+record that misattributes which session did which work — against a directive stated twice,
+2026-08-20 and 2026-08-25. It guards the review surface itself, not the apparatus.
+
+### F12/F13 confirmed in production, not just in fixtures
+
+Measured on the live logs while CI ran, because a test proves the function and only the
+running hook proves the hook:
+
+```
+scratchpad/session_2026-08-25-rulings-incorporation-and-pipeline-sweep/commands.jsonl
+  12 lines carrying session_id 18f35fa3-4a98-5914-9944-79252bf31b9c   (since F13)
+  12 lines with no session_id                                          (F12..F13 window)
+
+scratchpad/session_2026-08-23-research-batch-03-forward-mining/commands.jsonl
+  last line 2026-08-25T21:59:46Z — stopped growing when F12 landed
+```
+
+Three sessions' worth of misfiling ends at the minute the fix was applied, and every line
+since F13 states which session issued it. Nothing has leaked back into the 08-23 record.

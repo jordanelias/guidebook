@@ -100,6 +100,15 @@ exempt_paths:
   # grep was logged. Unexempted, the check punishes the act of verifying it, and
   # every future session that searches for a retired term reddens it again.
   - "scratchpad/**/commands.jsonl" # verbatim shell-command logs
+  # Verbatim CAPTURED OUTPUT of the checks themselves. Same class as the command
+  # log above and found the same way: on 2026-08-25 the owner directive to commit
+  # scratchpads landed a baseline capture of `run_checks.py --all`, and this check
+  # read its OWN printed line -- `ok RV-017 ... 'db_meta.schema_version' (0
+  # occurrence(s))` -- as a live occurrence. A check that reddens because it was
+  # RUN AND RECORDED is measuring the recording, not the repository. Editing the
+  # capture to satisfy it would falsify what the tool actually printed, which is
+  # the whole reason the capture exists.
+  - "scratchpad/**/baseline/**"    # verbatim captured check output
   - "workplan/_superseded/**"      # superseded by definition
   # A DATED workplan records a plan as it stood on that date, exactly as a dated
   # audit records findings as they stood. Rewriting `audit.yml` inside a
