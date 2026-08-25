@@ -92,3 +92,31 @@ Four stale factual claims, all of the §2(b) class (prose statements of derivabl
   A4 "two blocking checks red" — the registry holds THREE blocking freshness/render
      checks.
 All four independently re-verified before acceptance. Rewrite pending the pipeline sweep.
+
+### F5 — this session's command log is being filed under ANOTHER session
+
+`.claude/hooks/record-command.py` appends every Bash call to
+`scratchpad/<stem>/commands.jsonl`, and takes `<stem>` from `sessions/LATEST` —
+correctly, since 2026-08-23, when it was changed to stop reading `.claude/session`
+(a second pointer to the same fact; the fix was itself pointer discipline).
+
+But `sessions/LATEST` still reads `session_2026-08-23-research-batch-03-forward-mining`.
+So every command this session runs is appended to BATCH 03's log, polluting the record
+of a research session that closed two days ago with governance work it never did.
+
+This is rule 7's own gap, and it is worth stating precisely: the rule says *"if no
+session directory exists, create it and commit into it"* — I did that, and it was not
+enough, because the HOOK does not look at the directory I created. It looks at the
+pointer. **Creating the scratchpad is not the same act as claiming it.**
+
+The fix is not a hook change. `sessions/LATEST` is the single home for "which session is
+running" and the hook is right to read it; what is missing is that opening a session must
+UPDATE that pointer. That requires the session record to exist first (the pointer names a
+`.md`), and touching `sessions/` requires an attestation under CLAUDE.md §0 rule 2.
+
+So the owed unit of work is: session record + attestation + pointer update, done together.
+Recorded here rather than rushed, because an attestation written to unblock a stop hook is
+the ceremony-without-meaning that rule 2 is already on probation for.
+
+NOTE for whoever reads batch-03's log: lines timestamped 2026-08-24T23:32 onward and all
+of 2026-08-25 are NOT batch-03's work. They are PR #116/#117 review and this session.
