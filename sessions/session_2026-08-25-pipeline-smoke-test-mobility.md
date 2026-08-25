@@ -5,9 +5,16 @@ test of the five-stage pipeline (`research → evidence collection → judgment 
 ahead of a mobility research batch — corridor widths, door thresholds, sloped surfaces, flooring
 materials, handrails — drawn from jurisdiction buckets 1 and 2 and driven from the clue store.
 
-**No evidence was admitted. No migration was written. `data/guidebook.db` is unchanged** —
-sha256 `30a106692ab4110fe4e2082018eb256a325b2884d5740d3f62445b52c07dceaf` at open and at close.
-Every stage exercise ran against a per-agent scratch copy.
+**No evidence was admitted, and this session wrote no migration.** `data/guidebook.db` held
+sha256 `30a1066…` at open and at close of the session's own work; every stage exercise ran against a
+per-agent scratch copy.
+
+**Amended after rebase, 2026-08-25.** PR #119 merged a migration to `main`, and this branch was
+rebased onto it, so the branch now carries main's `6cceacd2…`. The claim that matters is unchanged
+and is now stated the precise way: **this branch introduces no change to `data/guidebook.db` of its
+own** — `git diff --name-only origin/main HEAD -- data/guidebook.db` returns nothing. The earlier
+wording pinned a sha that only held while `main` stood still, which is the same class of defect as
+a hand-written count in a derived document.
 
 Working record: `scratchpad/session_2026-08-25-pipeline-smoke-test-mobility/` (7,122 lines across
 ten logs). Report: the `Severed Walk` artifact. Attestation:

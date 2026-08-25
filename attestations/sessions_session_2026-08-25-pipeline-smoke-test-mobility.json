@@ -13,7 +13,7 @@
     "integrity-protocol": {
       "status": "FIRED",
       "evidence_path": "data/guidebook.db",
-      "reason": "NO WRITE to the canonical DB. Every access was mode=ro or against a per-agent scratch copy under the harness scratchpad; sha256 recorded at session open and re-checked after every phase, unchanged at 30a106692ab4110fe4e2082018eb256a325b2884d5740d3f62445b52c07dceaf. No migration emitted. Live counts unchanged: evidence_sources 10, specifications 0, source_locators 875. The mechanical battery was run but is not claimed as a full Mode-3 pass: this session's subject is the battery itself."
+      "reason": "NO WRITE to the canonical DB. Every access was mode=ro or against a per-agent scratch copy under the harness scratchpad; sha256 recorded at session open and re-checked after every phase, unchanged at 30a106692ab4110fe4e2082018eb256a325b2884d5740d3f62445b52c07dceaf. No migration emitted. Live counts unchanged: evidence_sources 10, specifications 0, source_locators 875. The mechanical battery was run but is not claimed as a full Mode-3 pass: this session's subject is the battery itself. AMENDED after rebase: PR #119 merged a migration to main and this branch was rebased onto it, so the branch now carries main's 6cceacd2. The session's own claim is unaffected and is now stated as a diff rather than a sha: this branch introduces no change to data/guidebook.db of its own."
     },
     "source-discipline": {
       "status": "FIRED",
