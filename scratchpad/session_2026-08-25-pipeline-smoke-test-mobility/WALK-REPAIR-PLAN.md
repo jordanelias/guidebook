@@ -397,3 +397,79 @@ P0.1 P0.2 P0.3  ──►  [MOB split lands]  ──►  P1.1 ─► P1.2 ─►
 
 P1.1 and P1.2 have no population key and could technically precede the split; P1.3 onward cannot.
 Ordering them all after it costs nothing and removes the chance of a half-migrated cell.
+
+---
+
+# AMENDMENT 3 — 2026-08-25, from the population-split design (F5)
+
+## P0.4 — Twelve retired population codes are still taught by live skills. The mechanism to catch them exists and does not look there.
+
+**Verified independently.** `scripts/validate_population.py:79` carries a `RETIRED_CROSSWALK` — a
+complete map of every retired population code to its replacement:
+
+```python
+RETIRED_CROSSWALK = {
+    "VIS": "BLIND",  "UPL": "LMB",   "DBL": "DEAFBLIND", "NEU": "BRAIN",
+    "PCS": "BRAIN",  "OFS": "COM",   "CFS": "COM",       "MCAS": "COM",
+    "POTS": "COM",   "LCOV": "COM",  "SENS": "NDV",      "EXH":  "TALL",
+}
+```
+
+Its own comment states the design intent exactly right:
+
+> *"Kept here so an error message can say what to write instead of merely that something is wrong: a
+> validator reporting 'unknown code: UPL' sends the reader off to find the DR; one reporting 'UPL is
+> retired -> LMB' does not."*
+
+**And `validate_population` validates the database, not the skills.** Measured:
+
+| Retired code | In `populations`? | Live skill files still teaching it |
+|---|---|---:|
+| `VIS` | **no — retired to BLIND** | **12** |
+| `OFS` | **no — retired to COM** | **10** |
+
+`content-gap-analyzer` · `cross-population-conflict-mapper` · `cross-reference-resolver` ·
+`evidence-auditor` · `functional-deficit-auditor` · `functional-deficit-researcher` ·
+`guidebook-auditor` · `item-specification-writer` and more.
+
+So a session that loads any of those skills is handed a population code **that does not exist in the
+database**, with the crosswalk that would have corrected it sitting one file away, unconsulted.
+`DR-2026-07-23` retired these codes; the skills were never swept. **CLAUDE.md §0.4: "A rename or
+removal is not done until the callers are swept… A VIEW IS A CALLER, and so is a skill."**
+
+`governance/retired-vocabulary.yaml` — the register built for precisely this, whose own header names
+*"a population umbrella that doctrine [retired]"* as an example of what it holds — carries entries
+for paths and terms and **none for the twelve codes**.
+
+**Fix, two parts:**
+1. Add the twelve `RETIRED_CROSSWALK` entries to `governance/retired-vocabulary.yaml` with
+   `exempt_paths` for legitimate historical mentions (`decisions/`, `_archived/`, session records).
+   The register already runs over `skills/`; this makes the codes visible to it.
+2. Sweep the skills: replace each retired code with its crosswalk replacement, or mark the mention
+   `[RETIRED-VOCAB-OK]` where it is a licensed historical reference.
+
+**Why this is P0 and not P4.** The mobility batch loads exactly these skills —
+`cross-population-conflict-mapper` is *the* skill for the opposed-demand case that motivated the
+`MOB` split. A batch run today is handed `VIS` and `OFS` by its own tooling.
+
+## P0.5 — The `MOB` split must not become the thirteenth un-swept retirement
+
+The split ruling is recorded and its data design is in `logs/F5-population-split-design.md`. The
+lesson of P0.4 is that this project **retires population codes and does not sweep the skills**, and
+has now done so twelve times. The split's caller sweep must therefore be part of the same change,
+not a follow-up:
+
+`schemas/enums.py` (`PopulationCode`) · `scripts/validate_population.py` (`RETIRED_CROSSWALK` gains
+`MOB`) · `site/populations/mob.html` (delete; generate `amb.html`, `wheel.html`) ·
+`tools/spec-curation-vetting-surface.html` (31 `MOB` tokens) · the pipeline dashboard (1) ·
+**every live skill teaching `MOB` (10 files)** · `governance/retired-vocabulary.yaml`.
+
+Verified helpful facts for the execution: **no FK to `populations` cascades** — all eleven are
+`NO ACTION`, so a `DELETE` is refused rather than silently destroying evidence rows — and
+`population_code` is **under no CHECK anywhere**, so the vocabulary is enforced by Pydantic and the
+validator, not the schema.
+
+And the split is already half-written in the data: `population_axis_map` holds
+`MOB → AX-AMB "ambulant share (MOB/AMB)"` and `MOB → AX-WHM "wheeled share"`, both role `ALIAS`,
+authored 2026-07-21. **The two halves the owner named were recorded as aliases of one code fourteen
+months before the ruling to split them.**
