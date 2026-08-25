@@ -653,3 +653,71 @@ forgot to run them; they are passing because their subject has never existed.
 surfaces, flooring materials, handrails" are *quantities*. The batch's purpose is to get numbers
 with locators attached to disabled people's actual demands. The stage that does exactly that is the
 one stage in the pipeline that has never run.
+
+## D-17 — `source_value_extractions`: fully specified, widely read, never once written
+
+I repeated S2's "five readers, zero writers" and then checked it. It is understated. Measured
+across the tree (excluding `_archived/` and `scratchpad/`):
+
+**Specified and depended upon, in at least fourteen places:**
+`schemas/source_value_extraction.py` (its own Pydantic model) · `schemas/directness.py` (the
+value-directness dimension of the conditioning calculation) · `schemas/reasoning_doc_citation.py` ·
+`schemas/population_links.py` · `governance/evidence-architecture.md` ·
+`governance/evidence-methodology.md` · `governance/pipeline-contract.yaml` ·
+`governance/pipeline-map.yaml` · `governance/context-map.yaml` ·
+`governance/pipeline-operations.md` · `references/project-standards.md` ·
+`references/methodology-evidence-hierarchy-mapping.md` · plus the views `v_item_extractions` and
+`v_value_independence`, both of which return **0 rows**.
+
+**Written by:** nothing.
+
+```
+$ grep -rlE "INSERT INTO source_value_extractions|UPDATE source_value_extractions" \
+    --include='*.py' --include='*.sql' .        # excluding _archived/, scratchpad/
+(no output)
+
+$ grep -l "INSERT INTO source_value_extractions" scripts/migrations/*.sql
+(no output)
+
+$ python3 scripts/db.py --help | grep -i extraction
+(no output)
+```
+
+The three committed migrations that name it (`057_baseline`, `058`, `060`) carry its **DDL only**.
+There is no CLI subcommand, no script, and no migration that has ever put a row in it. Its
+`assess_cell.py` consumer names the gap honestly at `:196-201`: *"What is still absent is any
+assessment RULE for grading a value dimension from them — writing one is a judgment act, not a
+caller sweep."*
+
+**The project diagnosed this six weeks ago and wrote the diagnosis into its own data.** Three
+`convergence_assessment` rows in `working/pilot/data_20260712_pilot-cell-backfill.sql` (2026-07-12)
+each carry the rationale: *"Value-level convergence not yet assessable: `source_value_extractions`
+has no rows for these sources; assessment queued, not assumed."* That is exemplary practice — the
+absence recorded as data rather than papered over. It has been queued ever since.
+
+**And the pipeline contract's own note about it is stale.** `governance/pipeline-contract.yaml`
+describes the table as *"pilot-only — 8 rows on a single slug as of 2026-07-20"*. Live count today:
+**0**. The 8 rows were destroyed by the DR-2026-08-06 clean-room reset, so the criterion
+`judgment/convergence-independence` is not merely INCOMPLETE as the contract declares — its
+substrate went from thin to absent and the contract has not noticed.
+
+### Why this is the finding that should drive the decision
+
+Every other defect in this report is a thing that would break *while* doing the mobility batch: a
+missing enum member, an unwired guard, a stale runbook line, a gate looking at the wrong subject.
+They are all fixable in an afternoon and most need no permission.
+
+This one is different in kind. **`source_value_extractions` is the join between "we found a paper"
+and "the paper says 1200 mm."** Until something writes it:
+
+- convergence cannot count independent *values*, only documents — which
+  `governance/evidence-methodology.md` §3 expressly forbids;
+- `v_value_independence` returns 0, so the research-frame proposal's own success criterion
+  (*"≥1 bucket with ≥2 independent roots"*) is unreachable by construction, not by shortfall;
+- a `specifications` row, if one could be written, would carry a value no source is recorded as
+  having stated;
+- and the mobility batch — which is *entirely* about quantities: 1200 mm clear width, 1:20 gradient,
+  ≤30 gloss units, zero threshold — would admit sources and extract nothing from them.
+
+The batch as the owner described it is a request for **numbers with locators attached to disabled
+people's demands.** The one table that holds a number with a locator has never had a row.
