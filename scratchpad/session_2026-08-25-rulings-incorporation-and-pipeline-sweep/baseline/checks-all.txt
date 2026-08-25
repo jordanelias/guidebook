@@ -1,0 +1,114 @@
+==============================================================================
+run_checks: --all — every active check in the registry
+  selected 63 of 63 registered checks  (4 quarantined, never selected)
+==============================================================================
+[PASS] check_utf8_md                             1.4s
+[PASS] check_json                                0.1s
+[PASS] check_yaml                                0.7s
+[PASS] validate_bpc                              0.2s
+[PASS] validate_cross_refs                       0.1s
+[PASS] test_db_integrity                         0.5s
+[PASS] migration_reproducibility                 0.3s
+[PASS] migration_reproducibility_deep            0.1s  (advisory)
+[PASS] source_slug_links_duplicates              0.0s
+[PASS] validate_items                            0.0s  (advisory)
+[PASS] readonly_db_open_audit                    0.6s  (advisory)
+[PASS] db_path_env_audit                         0.3s
+[PASS] alias_provenance_audit                    0.1s
+[PASS] citation_mining_session                   0.0s
+[PASS] citation_mining_backlog_t2                0.0s  (informational)
+[PASS] validate_schema                           0.3s
+[PASS] validate_schema_cross_check               0.3s  (advisory)
+[NONE] validate_evidence_state                   0.2s
+         EXAMINED: 0
+[PASS] validate_population                       0.0s  (advisory)
+[PASS] validate_jurisdiction                     0.1s
+[PASS] validate_axes                             0.0s
+[NONE] validate_verification_consistency         0.0s
+         EXAMINED: 0
+[PASS] audit_evidence_metadata                   0.0s  (advisory)
+[FAIL] validate_pydantic_schemas                 0.3s  (advisory)
+             term_item_links
+             terms
+             url_verification_runs
+             weighting_profile
+         
+         ============================================================
+         Total drift findings: 245 (informational -- per-table accept/reject policy is separate future work)
+         EXAMINED: 18
+[PASS] audit_adversarial_use                     0.2s
+[PASS] author_fidelity                           0.0s  (advisory)
+[PASS] decision_capture                          0.5s
+[PASS] doctrine_recheck                          0.3s
+[FAIL] retired_vocabulary                        6.2s  (advisory)
+         
+           ok    RV-017  [stale-pointer]  'db_meta.schema_version' (0 occurrence(s))
+         
+         RESULTS: 65 occurrence(s) of retired vocabulary on the live surface.
+         Each is a wrong answer waiting for whoever greps next. Fix the text, or —
+         if the occurrence is a licensed mention rather than a use — add the path to
+         that entry's exempt_paths, or append [RETIRED-VOCAB-OK] to the line.
+         EXAMINED: 26
+[PASS] matrix_consistency                        0.0s  (advisory)
+[PASS] pipeline_contract_audit                   0.2s  (advisory)
+[PASS] claims_docket                             0.0s  (advisory)
+[NONE] attestation_presence                      0.0s
+         ============================================================
+[NONE] attestation_schema                        0.0s
+         ============================================================
+[PASS] attestation_evidence                      0.0s  (advisory)
+[NONE] attestation_verdict                       0.0s  (informational)
+         ============================================================
+[PASS] research_contract_baseline_ratchet        0.0s
+[PASS] research_contract_sync                    0.1s
+[PASS] research_dod_selftest                     0.1s
+[PASS] research_dod                              0.0s  (advisory)
+[PASS] research_protocol_audit                   0.0s  (advisory)
+[PASS] metadata_integrity_audit                  0.0s  (advisory)
+[PASS] gap_mining_audit                          0.0s  (advisory)
+[NONE] population_integrity_audit                0.0s  (advisory)
+         ================================================================
+[PASS] graph_audit                               1.3s  (advisory)
+[FAIL] validate_reasoning                        0.0s  (advisory)
+                   ERROR: Missing required section: 'B. Per-parameter reasoning'
+                   ERROR: Missing required section: 'C. Synthesis claims that did NOT survive evidence review'
+                   ERROR: Missing required section: 'D. Cross-references'
+                   ERROR: Missing required section: 'E. Adversarial protocol pass'
+                   ERROR: Missing required section: 'F. Provenance trail'
+         
+         Summary: 0 clean, 0 with warnings, 1 with errors, 2 skipped (templates)
+         EXAMINED: 3
+[NONE] pmp_audit                                 0.0s  (advisory)
+         ============================================================
+[NONE] reasoning_doc_citations_audit             0.0s  (advisory)
+         EXAMINED: 0
+[PASS] test_graph_audit                         16.9s  (advisory)
+[PASS] test_pipeline_contract                    0.4s  (advisory)
+[PASS] test_url_verifier                         0.2s  (advisory)
+[FAIL] test_verification_pipeline                0.2s  (advisory)
+               COMPLETE: 10
+           [✓] G04: Most recent pipeline_runs record includes Phase 4 metrics
+               phase_4_enriched=0 newly_complete=0
+         
+         ======================================================================
+         RESULTS: 15/18 tests passed
+         FAILED: 3 tests
+         ======================================================================
+[PASS] test_assess_cell_pilot                    0.2s  (advisory)
+[PASS] test_evidence_cell_state_2_3              0.1s  (advisory)
+[PASS] test_validate_evidence_state_2_4          0.4s  (advisory)
+[PASS] test_directness_2_2                       0.0s  (advisory)
+[PASS] pipeline_completeness_fresh               0.1s
+[PASS] evidentiary_audit_fresh                   0.1s
+[PASS] context_map_fresh                         0.2s  (advisory)
+[PASS] site_pages_fresh                          0.0s  (advisory)
+[NONE] check_rendered_docs                       0.0s
+         EXAMINED: 0 rendered document(s) — 1 present under specs/, reference-only since the 2026-08-06 reset; pass --doc to check a live one
+[PASS] register_integrity_check                  0.2s  (advisory)
+[PASS] render_audit_browser                      3.4s  (advisory)
+==============================================================================
+NOTHING-IN-SCOPE (9): validate_evidence_state, validate_verification_consistency, attestation_presence, attestation_schema, attestation_verdict, population_integrity_audit, pmp_audit, reasoning_doc_citations_audit, check_rendered_docs
+  These ran clean and examined nothing. They are not evidence of anything.
+  BLOCKING and vacuous (5): validate_evidence_state, validate_verification_consistency, attestation_presence, attestation_schema, check_rendered_docs — a gate that examined nothing gated nothing.
+NON-BLOCKING failures (4): validate_pydantic_schemas, retired_vocabulary, validate_reasoning, test_verification_pipeline
+RESULT: PASS — 50 check(s) green, 9 nothing-in-scope, 4 advisory failure(s)

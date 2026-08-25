@@ -11,11 +11,61 @@ caught this repository's actual failures had **zero** enforcing code.
 > criterion. It is meant to be **run**, not consulted. This file is the mechanical map — write
 > path, gates, traps. Where they disagree, the instrument wins and this file is what to correct.
 
+**The pipeline below is the frame everything else in this file reads against.** It is first
+because rule 5 — never write the same fact into a second table — cannot be applied without it:
+judging whether a column is a legitimate stage-specific fact or a copy requires knowing which
+stage its table belongs to. Owner ruling 2026-08-25.
+
+---
+
+## THE PIPELINE — read this before anything else
+
+**Owner ruling 2026-08-25**, superseding the owner's own list of 2026-08-24:
+
+> **`research → evidence collection → judgment → synthesis → render`**
+
+Rule 5 says each stage holds only its own data and anything earlier is reached by pointer. **That
+is unusable without knowing which stage a table is in** — you cannot tell a legitimate
+stage-specific fact from a copy. So the map is a stopper, not orientation.
+
+**Substrate is not a stage.** The vocabularies and registries — `items`, `populations`, `slugs`,
+`terms`, `access_needs`, the crossing maps, `decisions`, `data_migrations` — are the layer all five
+stages point into.
+
+| Stage | Holds |
+|---|---|
+| **research** | What was searched, screened and mined, plus the clue store |
+| **evidence collection** | What was admitted, its identity, verification and extraction |
+| **judgment** | Determination — grading, population matching, the cell. Writes `specifications` |
+| **synthesis** | Weighing, convergence, cross-slug findings |
+| **render** | Book surfaces — `site/`, `parts/`, `tools/*.html`, and the content tables behind them |
+
+**`specifications` is a TABLE, not a stage** — `judgment` writes it. The 2026-08-24 wording that
+made it a stage is superseded.
+
+**Derive the table-to-stage assignment; do not read one out of a document.** The six-bucket
+assignment in the 2026-08-24 stage-discipline audit is agent-authored, predates this ruling, and
+must be re-derived against these five stages before it is relied on again.
+
+**Re-entrancy still holds and is a different question.** `governance/pipeline-map.yaml` established
+2026-08-21 that a walk **re-enters** stages rather than passing through them once — a layer-3
+artefact legitimately produces layer-2 rows. That answers *write order*. This map answers *what a
+table may hold*. Both are true; do not use one to argue against the other.
+
+**The machine enforces this spine**, and as of 2026-08-25 it enforces it under these names:
+`governance/pipeline-contract.yaml` (the single home of the stage ids),
+`tools/pipeline_completeness.py`, and the blocking `pipeline_completeness_fresh` gate. The id is
+`evidence-collection`; its display form is **derived** by `stage_label()`, never stored beside it.
+
+---
+
 ---
 
 ## 0. What will actually stop you
 
-Five rules. Everything else in this file is orientation.
+**Count the list.** Everything else in this file is orientation. *(A prose number stood here
+twice and disagreed with the list both times — "Five" over six entries, then "Seven" over eight.
+§2(b) forbids hand-written counts in derived documents, and this was one. There is no number now.)*
 
 0. **A live owner statement supersedes every prior ratified record it touches, on contact.** Your
    job on hearing one is to **record the supersession, never to weigh the ruling against the
@@ -51,7 +101,27 @@ Five rules. Everything else in this file is orientation.
 
 4. **A rename or removal is not done until the callers are swept.** Search every non-archived
    caller and fix each one. A sweep that stops at the filename is not a sweep — that exact
-   shortcut left two dangling paths inside an attestation on 2026-08-19.
+   shortcut left two dangling paths inside an attestation on 2026-08-19. **A VIEW IS A CALLER**, and so is a
+   skill: migration 064 exists because 063 swept eight Python readers and six skills and missed
+   `v_item_provenance`. Grep `sqlite_master` as well as the tree, and **treat a 0-row object as
+   unproven, not clean** — `specifications` holds 0 rows, so that view rendered nothing, so a
+   byte-exact diff of every regenerated output proved it clean while it was broken.
+
+5. **Never write the same fact into a second table. Point, do not copy.** Owner ruling 2026-08-24
+   (`DR-2026-08-24` §2.1, now in `references/project-standards.md`): *"It is better to have a table
+   cell point to another table cell than to rewrite."* Each stage — research → evidence → synthesis
+   → specification → render — holds only its own data; anything earlier is reached by pointer on the
+   shared reference ID. **A parity check is not a fix** — it makes a dual home survivable, therefore
+   permanent. And **a column a committed data migration INSERTs can never be dropped**: grep
+   `scripts/migrations/data_*` for the name first, then writer-retire, reader-retire, NULL forward.
+
+6. **Commit the scratchpad at every natural break, not at session end.** Owner directive 2026-08-25.
+   A scratchpad that lives only in context is not a review surface; compaction, session end and
+   container reclamation all take it. This repository paid for that twice in two days — the
+   pointer-discipline queue existed only in a conversation while three of its items shipped citing
+   labels no file defined. If no session directory exists, create it and commit into it rather than
+   waiting for a session record. `governance: session command log [YYYY-MM-DD HH:MM]` is a complete
+   commit message.
 
 **The doctrine token is gone.** OD-10 was signed 2026-08-19 and the instrument's §10 item 4 is
 executed: the `[DOCTRINE: <sha>]` commit token, its CI step, its enforcing script, the frozen
@@ -178,22 +248,94 @@ capture the delta with `scripts/research/emit_batch_sql.py` and ship it as a mig
 write-time refusal stays live and the canonical DB's sha256 must not move until the migration is
 applied.
 
-`scripts/db.py` reads freely and has write subcommands for some tables — but **not** for
+**THE WRITE PATH IS ONE SENTENCE, and as of 2026-08-25 there is no longer a second one:**
+scratch copy → `scripts/db.py` subcommands → `scripts/research/emit_batch_sql.py` →
+`scripts/emit_data_migration.py` → `scripts/migrate_db.py`.
+
+*This paragraph used to end differently. It read: `db.py` has no subcommand for
 `search_candidates`, `evidence_population_match`, `economics_entries`, `case_studies` or
-`jurisdictional_values` values, and `add-source` cannot write `doi_resolution_outcome`, `url`,
-`pages`, `first_author_last` or author rows. Those need hand-written SQL against the scratch, and
-that gap is where the fabrication of 2026-08-19 entered. There is no `next_ref_id` allocator;
-mint above the `source_locators` high-water mark or you will collide with a held identifier.
+`jurisdictional_values`, and `add-source` cannot write `doi_resolution_outcome`, `url` or
+`pages` — so **"those need hand-written SQL against the scratch, and that gap is where the
+fabrication of 2026-08-19 entered."** The gap was the CAUSE, not the setting, and it is closed:
+every one of those tables and columns now has a writer that REFUSES (FK existence, the column's
+own CHECK vocabulary, R3 locators, MISMATCH reasons, duplicate identities). Do not hand-write SQL
+against a table the CLI can reach; if you find one it cannot, that is a coverage bug to fix, not a
+licence to bypass.*
+
+**`db.py` refuses, and that is its whole value.** A writer that merely INSERTs is worse than hand
+SQL because it looks safe. Two refusals are deliberately *absent* and must stay absent:
+`add-population-match` does **not** enforce uniqueness on (ref_id, population) — a dissenting
+adversarial grade lands as a second row (`DR-2026-08-19` §7) and divergent grades read as a
+contest — and `add-source` exposes no `--year`/`--journal` for an entry that carries a `ref_id`,
+because those are reached through the pointer.
+
+**Vocabularies come from the schema, not from a list in the code.** `dbcore.check_values()` reads
+the column's own CHECK. Live rows are a *sample* of a vocabulary, never the vocabulary:
+`search_candidates.disposition` declares `OUT-OF-SCOPE` and no live row uses it, so a
+refusal built from live rows would reject a legitimate value. **There is no ref_id allocator, and the rule this file gave for weeks was WRONG.** It said mint
+above the `source_locators` high-water mark. Measured 2026-08-25: `source_locators` tops out at
+**REF-00964** and `evidence_sources` at **REF-00970**, so that rule yields REF-00965 — a live
+evidence row. **The high-water mark is the UNION of every table holding a ref_id.** Do not compute
+it by hand: `dbcore.next_ref_id(conn)` IS that rule, computed and never stored — a counter table
+would be a second home for a fact those columns already jointly state (rule 5).
 
 ---
 
 ## 5. Running checks
 
 ```
+bash .claude/hooks/ensure-deps.sh    # pydantic + jsonschema. DO THIS FIRST. See below
 scripts/preflight.sh                                    # gate your diff vs origin/main
 python3 scripts/run_checks.py --changed-from origin/main --explain
 python3 scripts/run_checks.py --list                    # registry + quarantine
+python3 scripts/run_checks.py --selftest               # RUN THIS AFTER ANY RENAME. See below
 ```
+
+> ### **`pydantic` IS NOT INSTALLED IN A FRESH CONTAINER, AND WITHOUT IT THE REPOSITORY LOOKS BROKEN**
+>
+> `.claude/hooks/ensure-deps.sh` now installs it at `SessionStart`, but it exits 0 on failure by
+> design — offline, or with no pip, you are on your own. **Check before you believe any red result.**
+> Measured on `origin/main` at `d6ef7e9`, 2026-08-25:
+>
+> | | Blocking failures | Advisory | Result |
+> |---|---|---|---|
+> | without `pydantic` | **5** | 10 | **FAIL** |
+> | with `pydantic` | **0** | 4 | **PASS**, 50 green |
+>
+> The five are `validate_schema`, `validate_evidence_state`, `audit_adversarial_use`,
+> `decision_capture`, `doctrine_recheck` — **the entire governance battery**, which
+> `check-registry.yaml` already declares `deps: [pydantic]`.
+>
+> **This is the one place §5's advice below inverts, so read it twice.** "Reproduce it locally
+> before assuming a red check is yours" normally protects you. Here the reproduction *succeeds* —
+> on untouched `main` — and a session that skips the dependency check can spend a day fixing
+> governance failures it did not cause and cannot fix.
+>
+> **Never `pip install -r requirements.txt` in this container.** It pins `PyYAML==6.0.3`; pip
+> refuses to uninstall the Debian-managed `PyYAML 6.0.1` that is present and working
+> (*"Cannot uninstall PyYAML 6.0.1, RECORD file not found"*), the whole install aborts, and
+> nothing lands. Install the individual packages.
+>
+> **The dependency list has ONE home: `governance/check-registry.yaml`'s `batteries:` block.**
+> `requirements.txt` is a second home and it already disagreed — it names `pydantic` and
+> `PyYAML` and omits **`jsonschema`**, which the registry declares for the `research` battery and
+> which attestation validation needs. Found 2026-08-25 by an attestation validating only after a
+> hand install. `ensure-deps.sh` now reads the registry rather than carrying a copy (rule 5).
+>
+> **`--changed-from` DOES NOT RUN THE SELFTEST, AND THE SELFTEST IS WHERE A RENAME FAILS.**
+CI's *Classify change* job runs `--selftest`; `--changed-from origin/main` does not. On 2026-08-25
+I renamed a pipeline stage id, swept `scripts/`, `tools/` and `schemas/`, got a green
+`--changed-from`, pushed, and CI failed on `C7 every contract basis resolves to a real criterion`:
+`governance/check-registry.yaml` encodes stage-qualified `basis: <stage>/<criterion>` references,
+and one still named the old stage. **The registry is a caller.** After any rename, run
+`--selftest` as well, and grep the registry for the old name.
+
+**If you add a `SessionStart` hook, APPEND it — never insert at index 0.**
+> `scripts/generate/research_contract_hook.py` reads
+> `SessionStart[0]["hooks"][0]["command"]` **by hardcoded index** and compares it to
+> `governance/research-contract.yaml`. Inserting ahead of the contract turns the blocking
+> `research_contract_sync` check red with a diff that reads as contract drift and is not.
+> Cost me a cycle on 2026-08-25.
 
 `governance/check-registry.yaml` is the single inventory; `run_checks.py` is the only thing that
 invokes a check; CI and preflight both call it. Adding a check means editing the registry —
@@ -227,6 +369,15 @@ a locator or `[UNVERIFIED-QUANT]`.
 Work from the **ICF/access-need frame with codes AND names**, never from bare axis codes and never
 from population umbrellas. On 2026-08-19 a frame pulled as bare `axis_code` hid that a slug spanned
 two demand mechanisms, and four of five searches were framed on one of them.
+
+**The frame is the FULL CROSS-PRODUCT, and applicability is an OUTPUT of synthesis, not an input.**
+Owner ruling 2026-08-24 (`DR-2026-08-24` §2.4): *"Every research slug gets cross-referenced against a
+population code, access need or ICF code because there is always the chance that there is an
+unexpected connection between them… we are waiting until we have finished our syntheses to ensure we
+define them with evidenced justification, not presuppositions."* So the question is never *"which
+populations does this slug already link to"* — that presupposes the answer. **Zero
+`item_population_links` on a slug is the correct pre-synthesis state, not a defect**, and D-0165 does
+not block research: it is downstream of it.
 
 ---
 

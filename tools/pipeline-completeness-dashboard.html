@@ -172,7 +172,7 @@
     <div class="eyebrow">Accessible Built Environments Guidebook · Evidence Pipeline</div>
     <h1>Pipeline stage completeness</h1>
     <p class="lede">How far the corpus has actually moved through each of the five pipeline stages —
-      <span class="mono">research → collection → judgment → synthesis → render</span> — measured against each
+      <span class="mono">research → evidence collection → judgment → synthesis → render</span> — measured against each
       stage's own denominator, then broken down by category, item, and population class.</p>
     <div class="meta-row">
       <span><b>Source</b> data/guidebook.db (read-only)</span>
@@ -222,7 +222,7 @@
         <span class="stage-tag b0-tag">None</span>
       </div>
     </div>
-    <div class="pattern"><b>The shape is front-loaded, then it collapses.</b> Sourcing (collection) is essentially
+    <div class="pattern"><b>The shape is front-loaded, then it collapses.</b> Sourcing (evidence collection) is essentially
       finished — 10/10 sources verified, metadata near-complete — but almost nothing has been
       <i>adjudicated</i> into determinations (judgment, 0%) and only
       0 parameters has a real synthesis reasoning
@@ -333,7 +333,7 @@
     </div>
     <div class="pattern" style="background:var(--card);border-left-color:var(--accent)">
       <b>Governance gates are 9/14 built.</b> The pipeline contract reports
-      enforcement coverage per stage: research <span class="mono">2/2</span> · collection <span class="mono">1/2</span> · judgment <span class="mono">3/5</span> · synthesis <span class="mono">1/2</span> · render <span class="mono">2/3</span>. Every unenforced criterion is a <i>completeness</i>-kind one
+      enforcement coverage per stage: research <span class="mono">2/2</span> · evidence-collection <span class="mono">1/2</span> · judgment <span class="mono">3/5</span> · synthesis <span class="mono">1/2</span> · render <span class="mono">2/3</span>. Every unenforced criterion is a <i>completeness</i>-kind one
       (provenance, convergence roots, Opus-routing, render-freshness) — the integrity gates are wired; the
       coverage gates are not.
     </div>
@@ -599,7 +599,7 @@
       <div><strong style="color:var(--ink-2)">How these numbers were derived</strong><br>
         Read-only queries against <code>data/guidebook.db</code> (<code>user_version 64</code>,
         351 data migrations). Denominators: research/synthesis over 0
-        <code>bpc_metadata</code> slugs; collection over 10 <code>evidence_sources</code>; judgment/render over
+        <code>bpc_metadata</code> slugs; evidence collection over 10 <code>evidence_sources</code>; judgment/render over
         372 applicable item×population pairs (<code>item_population_links</code>). Determinations from
         <code>specifications</code>; synthesis from <code>reasoning_doc_citations</code>; enforcement coverage
         from <code>governance/pipeline-contract.yaml</code>.</div>

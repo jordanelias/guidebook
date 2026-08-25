@@ -3,7 +3,7 @@
 
 Reads ``data/guidebook.db`` (read-only) and emits a self-contained HTML
 dashboard reporting the completeness of each stage of the evidence pipeline
-(research -> collection -> judgment -> synthesis -> render), with per-category,
+(research -> evidence collection -> judgment -> synthesis -> render), with per-category,
 per-item, and per-population breakdowns. The enforcement-coverage panel is read
 from ``governance/pipeline-contract.yaml``.
 
@@ -34,7 +34,13 @@ DEFAULT_OUT = REPO_ROOT / "tools" / "pipeline-completeness-dashboard.html"
 CONTRACT = REPO_ROOT / "governance" / "pipeline-contract.yaml"
 
 # The canonical pipeline spine (governance/pipeline-contract.yaml).
-STAGES = ["research", "collection", "judgment", "synthesis", "render"]
+STAGES = ["research", "evidence-collection", "judgment", "synthesis", "render"]
+
+# Display form is DERIVED from the id, never stored beside it: one home for the
+# stage name (owner ruling 2026-08-25 / CLAUDE.md rule 5). "evidence-collection"
+# renders as "evidence collection".
+def stage_label(stage_id: str) -> str:
+    return stage_id.replace("-", " ")
 
 
 # ---------------------------------------------------------------------------
@@ -125,8 +131,8 @@ def gather(con: sqlite3.Connection) -> dict:
         gaps_total=scalar("SELECT COUNT(*) FROM gaps"),
     )
 
-    # Stage 2 -- collection ----------------------------------------------------
-    F["collection"] = dict(
+    # Stage 2 -- evidence collection ----------------------------------------------------
+    F["evidence-collection"] = dict(
         verified=scalar("SELECT COUNT(*) FROM evidence_sources WHERE verification_status LIKE 'VERIFIED%'"),
         meta_complete=scalar(
             "SELECT COUNT(*) FROM evidence_sources WHERE metadata_quality IN ('COMPLETE','COMPLETE-STATUTORY')"),
@@ -513,7 +519,7 @@ CSS = """
 # HTML assembly
 # ---------------------------------------------------------------------------
 def render_body(F: dict, enf: dict) -> str:
-    r, c, j, sy, rd = (F["research"], F["collection"], F["judgment"],
+    r, c, j, sy, rd = (F["research"], F["evidence-collection"], F["judgment"],
                        F["synthesis"], F["render"])
     slugs, srcs, items, pairs = (F["slugs_total"], F["sources_total"],
                                  F["items_total"], F["applicable_pairs"])
@@ -673,7 +679,7 @@ def render_body(F: dict, enf: dict) -> str:
     <div class="eyebrow">Accessible Built Environments Guidebook · Evidence Pipeline</div>
     <h1>Pipeline stage completeness</h1>
     <p class="lede">How far the corpus has actually moved through each of the five pipeline stages —
-      <span class="mono">research → collection → judgment → synthesis → render</span> — measured against each
+      <span class="mono">research → evidence collection → judgment → synthesis → render</span> — measured against each
       stage's own denominator, then broken down by category, item, and population class.</p>
     <div class="meta-row">
       <span><b>Source</b> data/guidebook.db (read-only)</span>
@@ -689,7 +695,7 @@ def render_body(F: dict, enf: dict) -> str:
     <div class="gauges">
 {chr(10).join(g)}
     </div>
-    <div class="pattern"><b>The shape is front-loaded, then it collapses.</b> Sourcing (collection) is essentially
+    <div class="pattern"><b>The shape is front-loaded, then it collapses.</b> Sourcing (evidence collection) is essentially
       finished — {c["verified"]}/{srcs} sources verified, metadata near-complete — but almost nothing has been
       <i>adjudicated</i> into determinations (judgment, {pct(j["cells"], pairs)}%) and only
       {sy["reasoning_slugs"]} parameter{"s" if sy["reasoning_slugs"] != 1 else ""} has a real synthesis reasoning
@@ -770,7 +776,7 @@ def render_body(F: dict, enf: dict) -> str:
       <div><strong style="color:var(--ink-2)">How these numbers were derived</strong><br>
         Read-only queries against <code>data/guidebook.db</code> (<code>user_version {F["user_version"]}</code>,
         {F["migrations"]} data migrations). Denominators: research/synthesis over {slugs}
-        <code>bpc_metadata</code> slugs; collection over {srcs} <code>evidence_sources</code>; judgment/render over
+        <code>bpc_metadata</code> slugs; evidence collection over {srcs} <code>evidence_sources</code>; judgment/render over
         {pairs} applicable item×population pairs (<code>item_population_links</code>). Determinations from
         <code>specifications</code>; synthesis from <code>reasoning_doc_citations</code>; enforcement coverage
         from <code>governance/pipeline-contract.yaml</code>.</div>

@@ -704,6 +704,31 @@ satisfied through the CLI as it stands. Under the scratch approach this survives
 hand-written SQL against the scratch, validated by STRICT CHECKs at write time and emit's guards at
 migration time. Batch 2 promotes the recurring ones (§12.8).
 
+> **⚠ SUPERSEDED IN PART 2026-08-25 — APPENDED, NOT EDITED.** The paragraph above is left exactly
+> as ratified, because a superseded record is evidence of what was true when, and rewriting an
+> instrument in place destroys that. What has changed:
+>
+> **The hand-SQL fallback it describes no longer applies to those tables.** Under the owner's
+> consolidation directive of 2026-08-25, `scripts/db.py` gained writers for
+> `search_candidates`, `evidence_population_match`, `jurisdictional_values`,
+> `economics_entries`, `case_studies` and `source_locators`, and `add-source` gained `--url`,
+> `--url-accessed`, `--pages` and `--doi-resolution-outcome`. **R3, R10, R12 and R13 CAN now be
+> satisfied through the CLI**, which the paragraph above correctly said they could not.
+>
+> **Why that matters more than convenience.** This paragraph's own prediction — *"under the
+> scratch approach this survives"* — is what `CLAUDE.md` §4 later named as the entry point of the
+> 2026-08-19 fabrication: 12 of 19 author rows naming non-authors, past six green gates. The
+> validation it relies on (STRICT CHECKs at write time, emit's guards at migration time) is real
+> but fires **after** the shape is chosen; the CLI's refusals fire before.
+>
+> **Step 7's hand half is correspondingly reduced, not abolished.** §12.1 step 7 still bolds that
+> without `doi_resolution_outcome='RESOLVED'` every VERIFIED DOI-bearing source fails R10 — that
+> remains true, and it is now settable in the same `add-source` call rather than in a mandatory
+> companion UPDATE.
+>
+> **Unchanged:** the scratch-copy discipline itself, `GUIDEBOOK_DB_PATH` inline per call, and the
+> rule that the canonical sha256 must not move until the migration is applied.
+
 ### F5/F6 — transactions. **The ordering that cannot break.**
 
 F5: the migration file carries its own `BEGIN TRANSACTION;…COMMIT;` (`emit_data_migration.py:777`),

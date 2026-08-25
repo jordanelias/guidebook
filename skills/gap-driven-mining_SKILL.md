@@ -249,17 +249,21 @@ The `gap_mining` row alone does NOT close the gap. The closure workflow:
 
 1. INSERT verified candidates to `evidence_sources` with `discovery_method = 'gap_driven:GAP-NNN'`. Use `scripts/db.py add-source` per existing protocol.
 2. Add `source_slug_links` rows linking each new source to the slug(s) the gap implicates.
-3. Add `evidence_population_match` rows per rule #7 (grade EXACT/PARTIAL/PROXY/MISMATCH; ref_id FK).
+3. Add `evidence_population_match` rows per rule #7 with
+   `python3 scripts/db.py add-population-match` (added 2026-08-25; grades come from the
+   column's own CHECK, and MISMATCH requires `--mismatch-note`).
 4. Populate the four rule #7 fields on the gap row:
-   ```bash
-   python3 scripts/db.py update-gap-research-fields \
-       --gap-id GAP-NNN \
-       --falsification-condition "..." \
-       --confidence-interval "..." \
-       --shift-conditions "..." \
-       --named-dissenter "..." \
-       --session {SESSION}
-   ```
+   > **`update-gap-research-fields` DOES NOT EXIST AND NEVER DID.** Corrected
+   > 2026-08-25: `db.py`'s parser has no such subcommand, so this block has been
+   > instructing sessions to run a command that fails. The live gap subcommands are
+   > `add-gap`, `close-gap` and `update-gap-addressability` — derive the list with
+   > `python3 scripts/db.py --help`, never from this file.
+   >
+   > The four rule #7 fields (`falsification_condition`, `confidence_interval`,
+   > `shift_conditions`, `named_dissenter`) are settable at gap creation via
+   > `add-gap`. Amending them on an existing gap has no writer today; that is a real
+   > coverage gap, and the honest move is to record it rather than to name a
+   > subcommand that does not exist.
 5. (Numerical-spec gaps only) Run `progressive-measurement` skill PMP walk. The PMP walk produces `spec_value_probes` rows; the gap cannot close until strict-termination is met.
 6. (Discoveries that supersede existing anchors only) Write a `supersession_check` row per `supersession-audit` skill §4. The gap_mining row and the supersession_check row both reference the same discovery; they describe orthogonal relationships (gap-closure vs anchor-replacement).
 7. Close the gap:

@@ -1,0 +1,54 @@
+==============================================================================
+run_checks --selftest
+==============================================================================
+  [PASS] C1 check ids are unique
+  [PASS] C1b no id is both active and quarantined
+  [PASS] C2 every referenced battery is declared
+  [PASS] C3 every registered executable exists on disk
+  [PASS] C4 data/guidebook.db -> data
+  [PASS] C4 data/decisions/decision_register.yaml -> data
+  [PASS] C4 schemas/item.py -> schema
+  [PASS] C4 scripts/migrations/013_x.sql -> schema
+  [PASS] C4 governance/mission-and-epistemics.md -> governance
+  [PASS] C4 decisions/DR-2026-08-01-x.md -> governance
+  [PASS] C4 references/project-standards.md -> governance
+  [PASS] C4 references/bpc-reasoning/x.md -> synthesis
+  [PASS] C4 references/connection-reasoning/CON-1.md -> synthesis
+  [PASS] C4 sessions/LATEST -> synthesis
+  [PASS] C4 parts/v10/part04.md -> render
+  [PASS] C4 tools/evidentiary-audit-dashboard.html -> render
+  [PASS] C4 scripts/validate_bpc.py -> tooling
+  [PASS] C4 .github/workflows/ci.yml -> tooling
+  [PASS] C4 requirements.txt -> tooling
+  [PASS] C4 README.md -> no kind (docs-only)
+  [PASS] C4 tools/nested/deep.html is NOT render (single-* must not cross '/')
+  [PASS] C5 empty kind set selects exactly the always-on checks
+  [PASS] C5 kind 'data' selects the reproducibility gate
+  [PASS] C5 kind 'data' does not select render-only browser audit
+  [PASS] C5 kind 'synthesis' selects validate_evidence_state (2026-07-23 plan F2)
+  [PASS] C5 kind 'synthesis' selects the attestation checks
+  [PASS] C5 battery filter narrows to one battery
+  [PASS] C5 --all selects every active check
+  [PASS] C5 quarantined checks are unreachable by --all
+  [PASS] C5 every level is one of blocking/advisory/informational
+  [PASS] C6 --kinds '' is the docs-only case, not a usage error
+  [PASS] C6 --kinds '' still plans the always-on checks
+  [PASS] C6 omitting all selectors is still a usage error
+  [PASS] C6 --kinds with --changed-from is refused, not silently resolved
+  [PASS] C6 --kinds auto still takes the classify path
+  [PASS] C7 every check declares a basis
+  [PASS] C7 every contract basis resolves to a real criterion
+  [INFO] contract criteria with no check claiming them: 5 of 19
+           cross_stage/attestation-doctrine-binding
+           evidence-collection/discovery-provenance
+           judgment/convergence-independence
+           judgment/derivation-handshake
+           synthesis/opus-routing
+  [PASS] C8 every check declares min_items or no_floor
+  [PASS] C8 no check declares both a floor and no_floor
+  [PASS] C8 every no_floor states a reason, not a bare true
+  [PASS] C8 every min_items is a positive integer
+  [INFO] checks with a real floor: 32 of 63 — every no_floor is a corpus that cannot yet falsify its check; ratchet this up as the corpus fills
+  [INFO] checks with no stated authority: 30 of 63 — ratchet this down, do not invent authorities
+==============================================================================
+SELFTEST: PASS — registry coherent, classifier and selector behave as documented.

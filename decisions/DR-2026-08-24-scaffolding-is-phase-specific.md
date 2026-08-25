@@ -4,11 +4,24 @@
 ratification RULE of 2026-07-24 (`references/project-standards.md`), which directs that stale
 PROPOSED text be flipped on merge. Was PROPOSED when written earlier the same day.
 
-> **§2 WAS CARVED OUT OF THAT RATIFICATION, AND THE CARVE-OUT WAS WORTH MAKING.** It held four
-> inferences of mine. They were put to the owner on 2026-08-24 and **three of the four were
-> corrected** — §2 is now the owner's rulings, quoted, not my readings. Had I flipped the whole
-> document to RATIFIED on merge, three wrong inferences would have become doctrine, including one
-> (I2) that prescribed the exact copy-don't-point defect this session spent the day cleaning up.
+> **§2's CARVE-OUT IS LIFTED. IT WAS RIGHT WHEN MADE AND IS WRONG NOW, AND LEAVING IT STANDING
+> WAS ITSELF THE REPOSITORY'S OWN FAILURE MODE.** The carve-out was made when §2 held four
+> inferences of mine; it was worth making, and had I flipped the whole document on merge, three
+> wrong inferences would have become doctrine — including I2, which prescribed the exact
+> copy-don't-point defect the pointer-discipline series then spent a day removing.
+>
+> **But §2 was replaced the same day with the owner's rulings, quoted verbatim, and the header was
+> not updated.** For a day this document told every reader that the owner's own words were
+> unratified inference. **`CLAUDE.md` rule 0 settles it: a live owner statement supersedes every
+> prior ratified record it touches, ON CONTACT.** Owner rulings do not await ratification — that is
+> the whole content of rule 0 — so there was never a carve-out to lift in substance, only a stale
+> label to remove. §2.1–§2.4 are **BINDING**, and were binding from the moment they were given.
+>
+> *Corrected 2026-08-25, when the owner asked whether these rulings had been ratified and
+> incorporated. The honest answer was no on both counts: §2 was labelled unratified, and none of
+> the four rulings had reached `references/project-standards.md` or `CLAUDE.md` — while PD-0, PD-3
+> and PD-5 had already SHIPPED citing §2.1. Executed but not recorded is the same defect
+> `workplan/2026-08-24-pointer-discipline-queue.md` was written to fix, one level up.*
 >
 > **What ratification changes in practice**, per the RULE's ACTION (3): the R8 rename — 4 tables,
 > 6 columns, the blocking `validate_axes` check, 297 files — moves from *blocked pending
@@ -212,6 +225,20 @@ those was a copy where a pointer belonged.** The rule is not "warrant each cross
 **never write the same fact into a second table.**
 
 ### §2.2 "Highly procedural" means pointer discipline, not a checklist
+
+> **⚠ THE STAGE LIST IN THIS SECTION WAS SUPERSEDED BY THE OWNER ON 2026-08-25.** The quoted
+> ruling below names the stages *"research to evidence to synthesis to specifications to render"*.
+> The owner's ruling of 2026-08-25 revises that to:
+>
+> **`research → evidence collection → judgment → synthesis → render`**
+>
+> `judgment` is restored as its own stage; `specifications` is **not** a stage but a table that
+> `judgment` writes. Recorded in `references/project-standards.md`, RULE 2026-08-25.
+>
+> **The pointer discipline this section states is UNCHANGED and still binding** — only the list of
+> stage names is superseded. Per `CLAUDE.md` rule 0 this section is kept as written rather than
+> rewritten: a superseded record is evidence of what was ruled when, and editing it would destroy
+> that. Read the ruling above, then the discipline below.
 
 > *"Reference IDs carry from table to table across stages. Data relevant in one stage does not cross
 > to another stage. We do not need an author name in a synthesis table when synthesizing information.
