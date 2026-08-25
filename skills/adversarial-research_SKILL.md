@@ -75,12 +75,25 @@ Specific finding that would invalidate the recommendation. Multiple disjunctive 
 
 ## Population match record (per cited study)
 
-```sql
-INSERT INTO evidence_population_match (
-    match_id, source_ref, target_population, study_population, 
-    sample_size, match_grade, mismatch_note, created_at, created_by_session
-) VALUES (...);
+```bash
+# CORRECTED 2026-08-25. This block was hand-written SQL because db.py had no writer
+# for this table -- the gap CLAUDE.md §4 names as where the 2026-08-19 fabrication
+# entered. It has one now, and the CLI refuses what raw SQL could not see:
+# a ref_id that is not an admitted source, a population code not in `populations`,
+# a match_grade outside the schema's own CHECK, and MISMATCH with no reason given.
+python3 scripts/db.py add-population-match \
+  --ref-id REF-NNNNN --target-population AUT \
+  --study-population "12 autistic adults, UK, semi-structured interviews" \
+  --sample-size 12 --match-grade EXACT \
+  --session {session}          # add --mismatch-note when the grade is MISMATCH
 ```
+
+> **A SECOND ROW FOR THE SAME (ref_id, population) IS NOT AN ERROR AND IS NOT REFUSED.**
+> `DR-2026-08-19` §7: an adversarial pass that re-grades blind lands its DISSENTING
+> grade as a second row distinguished by `created_by_session`, and divergent grades
+> **read as a contest**. That is the mechanic this skill exists to run. `source_ref` is
+> written from `--ref-id` automatically -- it is a dual home the CLI cannot remove
+> (committed migrations INSERT it) but can keep from ever disagreeing.
 
 Match grade rubric:
 - **EXACT**: Same condition, same age range, same setting, sample size adequate. Or: standards-track document directly addressing target population.

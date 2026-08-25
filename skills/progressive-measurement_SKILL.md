@@ -142,7 +142,10 @@ Per cited source (in addition to the probe row):
 -- existing protocol; PMP does not introduce a new path
 INSERT INTO evidence_sources (...) ON CONFLICT DO UPDATE ...;
 INSERT INTO source_slug_links (...) ON CONFLICT DO NOTHING;
-INSERT INTO evidence_population_match (...);
+-- evidence_population_match: use `python3 scripts/db.py add-population-match`
+-- (added 2026-08-25). Hand SQL here bypasses the FK, vocabulary and MISMATCH-reason
+-- refusals, and is the channel CLAUDE.md §4 names as where the 2026-08-19
+-- fabrication entered.
 ```
 
 After final row:

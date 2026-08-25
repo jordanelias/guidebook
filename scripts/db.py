@@ -1068,6 +1068,14 @@ def main():
                            "skill and runbook writes it. Each part must be a surname "
                            "followed by initials; anything this cannot parse without "
                            "guessing is REFUSED rather than approximated.")
+    # ADDED 2026-08-25 (Act 2): the three columns CLAUDE.md §4 named as unreachable,
+    # which forced a hand-written companion UPDATE after every single admission.
+    p_as.add_argument("--url")
+    p_as.add_argument("--url-accessed")
+    p_as.add_argument("--pages")
+    p_as.add_argument("--doi-resolution-outcome",
+                      help="RESOLVED | NO-MATCH | REVERTED — the set is DEFINED by "
+                           "ENUM_GUARDS in scripts/emit_data_migration.py, not here")
     p_as.add_argument("--year", required=True, type=int)
     p_as.add_argument("--title", required=True)
     p_as.add_argument("--tier", required=True, type=int)
@@ -1529,6 +1537,12 @@ def main():
             data["verification_method"] = args.verification_method
         if args.verified_by_tool:
             data["verified_by_tool"] = args.verified_by_tool
+        for _flag, _col in (("url", "url"), ("url_accessed", "url_accessed"),
+                            ("pages", "pages"),
+                            ("doi_resolution_outcome", "doi_resolution_outcome")):
+            _v = getattr(args, _flag, None)
+            if _v:
+                data[_col] = _v
         authors = (parse_author_flags(args.author) if args.author
                    else parse_author_display(args.authors))
         ref_id = insert_evidence_source(data, session=args.session,
@@ -1866,13 +1880,23 @@ def insert_evidence_source(data: dict, session: str,
     # evidence_source_authors at all, so the documented filing path populated the copy
     # and left the source of truth empty. Migration 063 writer-retires the copy; refuse
     # it explicitly rather than let a caller quietly write a column nothing reads.
-    if "author_display" in data or "authors" in data:
+    _DERIVED_AUTHOR_COPIES = ("author_display", "authors", "first_author_last",
+                              "first_author_first", "author_count", "is_corporate_primary")
+    _given = [c for c in _DERIVED_AUTHOR_COPIES if c in data]
+    if _given:
         raise ValueError(
-            "author_display is writer-retired (migration 063). Authors are rows in "
+            f"{_given} is/are writer-retired (migration 063). Authors are rows in "
             "evidence_source_authors, derived for display by v_evidence_authors. Pass "
             "the `authors` argument (parse_author_flags / parse_author_display), or on "
             "the CLI use --author / --authors.")
     _ES_COLS = frozenset({
+        # ADDED 2026-08-25 (Act 2). CLAUDE.md §4 named url, pages and
+        # doi_resolution_outcome as columns `add-source` could not write, which is why
+        # a companion hand-written UPDATE was mandatory after every admission -- and
+        # DR-2026-08-19 §12.1 step 7 bolds the consequence: "Without
+        # doi_resolution_outcome='RESOLVED', every VERIFIED DOI-bearing source fails
+        # R10." The hand half of step 7 is where H03/H04/H05 parity was won or lost.
+        "url", "url_accessed", "pages", "doi_resolution_outcome",
         "ref_id", "pub_year", "pub_title", "doi",
         "pmid", "tier", "evidence_type", "jurisdiction", "metadata_quality",
         "verification_status", "co1_provenance", "co1_source_type",
