@@ -1118,3 +1118,79 @@ NOTE      : **Confirms CLAUDE.md §0's own framing exactly**: "Rule 2 is a tax o
             who can catch a well-formed, sufficiently-long, non-duplicate, structurally-
             consistent attestation that is simply WRONG.
 
+
+## 8. Rule 5 sweep (point, do not copy) — dual homes found
+
+### 8a. CRITICAL, newly-derived here: 4 of the mobility batch's 20 bucket jurisdictions are absent from the ONE canonical jurisdiction vocabulary
+INVOKED   : `python3 -c "from schemas.enums import JurisdictionCode; print(len(list(...)),
+            sorted(...))"`; cross-checked against `scripts/validate_jurisdiction.py`'s
+            `NAME_TO_CODE` dict and its live `--registry` output (§2f)
+STAGE     : substrate
+EXIT      : 0
+READS     : `schemas/enums.py:140-178` (`JurisdictionCode` — "24 country codes per
+            jurisdiction-tracker §4.7.3 plus meta-codes... Full list confirmed at A3")
+WRITES    : NONE
+EXAMINED  : all 27 enum members, against the 20 named bucket-1/bucket-2 jurisdictions
+OUTPUT    : `JurisdictionCode` has 27 members: 24 countries (AU, BD, BR, CA, CH, CN, DE,
+            DK, EG, FR, ID, IE, IN, JP, KE, KR, NG, NL, NO, NZ, SE, SG, UK, US, ZA — that's
+            25, the docstring's "24" is itself off by one, a minor separate drift not
+            pursued further here) + 2 meta-codes (ISO, EU).
+            **Missing, cross-checked against PROTOCOL.md's own bucket lists: `UN` (bucket
+            1), `ES`/Spain, `PT`/Portugal, `FI`/Finland (all bucket 2).**
+            `scripts/validate_jurisdiction.py`'s `NAME_TO_CODE` fallback dict (the OTHER
+            place a jurisdiction name could resolve to a code) also has no entries for
+            "spain", "portugal", "finland", "un" or "united nations" — confirmed by direct
+            read (§2f transcript). Live corroboration: `validate_jurisdiction.py`'s own
+            `--registry` scan (§1, run earlier) already emits `WARN registry: Block 72:
+            unrecognised jurisdiction 'ES'`, `Block 73: unrecognised jurisdiction 'ES'`,
+            and `Block 65: unrecognised jurisdiction 'FI'` against
+            `references/standards-registry.md` as it stands TODAY — this is not a
+            hypothetical future collision, the corpus has already tried to name these
+            jurisdictions and been flagged.
+FINDING   : FAIL — the single most severe substrate blocker found in this entire smoke test
+LOCATION  : `schemas/enums.py:140-178` (`JurisdictionCode`, the ONE canonical vocabulary
+            per `validate_jurisdiction.py`'s own docstring: "All jurisdiction codes resolve
+            to JurisdictionCode enum"); `scripts/validate_jurisdiction.py:39-49`
+            (`NAME_TO_CODE`, the secondary resolution path, equally missing all four)
+NOTE      : **This blocks 4 of the 20 named jurisdictions in the mobility batch's own
+            bucket 1 + bucket 2 outright, at the schema-enum level, before any write-path
+            tooling is even reached.** A researcher trying to record a corridor-width value
+            for Spain, Portugal, Finland, or a UN instrument would hit this wall differently
+            depending on which tool they used: `db.py add-jurisdictional-value
+            --jurisdiction ES` would SUCCEED regardless (§2f already established this
+            column has NO vocabulary check in the writer at all — so the enum gap and the
+            writer gap compound: nothing stops the write, and nothing IN THE WRITE PATH
+            would ever surface that `ES` isn't in the project's own canonical enum).
+            `validate_jurisdiction.py`, run separately, would flag it only as a WARNING
+            (unrecognised, not an ERROR — GB is the only hardcoded ERROR case, per §2f), and
+            only if the value appears in `references/standards-registry.md` or
+            `data/sources/*.yaml` — NOT in `jurisdictional_values` (§2f, same scope gap).
+            **Net effect: a bucket-1/bucket-2 mobility batch touching Spain, Portugal,
+            Finland or a UN instrument writes silently against an incomplete canonical
+            vocabulary, with no gate anywhere in the chain positioned to catch it.** Fixing
+            `schemas/enums.py`'s `JurisdictionCode` (rule 5: the one place this vocabulary
+            should live) is a single, contained, mechanical addition of 4 members — nowhere
+            near doctrine-weight under CLAUDE.md §1's owner-sign-off list — but until it
+            happens, three of these four jurisdictions cannot be written toward at all in
+            good conscience, and the fourth (UN) additionally exposes the lang_jur_map gap
+            from §9c.
+
+### 8b. Consolidated dual-home census (cross-referencing every earlier §)
+| Fact | Canonical home | Confirmed second/dual home? | Section |
+|---|---|---|---|
+| Dependency list (pydantic, jsonschema) | `governance/check-registry.yaml` `batteries:*.deps` | `requirements.txt` disagrees (extra PyYAML pin, missing jsonschema) — LATENT drift, not currently executed | §1b |
+| ref_id high-water mark | `dbcore.next_ref_id()`, computed live, never stored | none found — `db.py next-id` deliberately does NOT cover `ref_id` (§2a), confirming CLAUDE.md's own correction that no allocator/counter table exists | §2a/2b |
+| `source_locators.status` vocabulary | table's own CHECK constraint | none — `dbcore.check_values()` reads it live, no list hardcoded anywhere found | §2b/§2c |
+| `jurisdictional_values.jurisdiction` vocabulary | **should be** `schemas.enums.JurisdictionCode` (per `validate_jurisdiction.py`'s own docstring) | **STRUCTURAL ABSENCE, not a duplication** — no code path connects this table's writer to that enum at all (§2f); a different, narrower failure mode than rule 5's "two homes disagreeing" — here there is effectively ZERO enforced homes for this specific table's vocabulary |
+| Jurisdiction code vocabulary itself | `schemas/enums.py:140-178` `JurisdictionCode` | none found as a SEPARATE list — but the canonical list itself is **incomplete** relative to the mobility batch's needs (§8a); `validate_jurisdiction.py`'s `NAME_TO_CODE` is a secondary RESOLUTION table (name→code), not a competing vocabulary — it delegates to the enum for validity (`if raw in VALID_CODES` / `raw.upper() in VALID_CODES`, `scripts/validate_jurisdiction.py:56-59`), so this is rule-5-COMPLIANT structurally, just incomplete in content |
+| Session id, canonical form | `sessions/LATEST` (`.md` suffix) vs `created_by_session` DB columns (bare stem) | **Not a copy-drift dual home** — these are two DIFFERENT, deliberately-different-shaped representations of the same identity for two different consumers (a filename-shaped pointer file vs a DB column value) — confirmed both used correctly and consistently in §2c/§2d/§6b-c; the actual defect is the TIMING gap (§6c), not a vocabulary duplication |
+| Tier vocabulary (`evidence_sources.tier`) | table's own CHECK — `check_values()` returns `set()` (no CHECK on this specific column), `live_vocab()` returns `{1,2,3}` today | **Same class of gap as jurisdiction**: no CHECK constraint on this column either, so `check_vocab()`-style enforcement (if ever added to a writer touching this column) would fall back to the empty-vocab-means-unconstrained behavior (§2b's `check_vocab` docstring) — worth flagging as a second instance of the same pattern found in 8a, not independently investigated further within this smoke test's time budget |
+| `doctrine_sha` field | schema-required in `schemas/attestation.schema.json`, mechanism it once verified retired | vestigial, not duplicated (§10b) |
+
+FINDING   : Of the facts swept, the JURISDICTION vocabulary (8a) is the one genuine,
+            severe, content-level gap — everything else checked out as either correctly
+            single-homed (ref_id, locator status), a latent-but-inert documentation drift
+            (requirements.txt), or a structural absence rather than a duplication
+            (jurisdictional_values.jurisdiction has no enforcement AT ALL, which is a
+            different defect than "two disagreeing enforcements").
+
