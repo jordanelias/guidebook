@@ -347,3 +347,57 @@ how the 2026-08-19 author fabrication reached committed data -- 12 of 19 author 
 naming non-authors, past six green gates, through a capture tool that was itself blind.
 Full-table CLI coverage closes the channel. Every act should be judged against whether
 it moves that, not against file counts.
+
+### F10 — ACT 6 REFUSED ON EVIDENCE. "Delete the 11 unread views" confuses EMPTY with DEAD.
+
+Master-plan R6 has said since 2026-08-22: *"Delete the 11 unread views — explicitly no
+owner gate (CLAUDE.md §1: dead tables and views: delete them)."* Fable's plan carried it
+forward as Act 6. **The rule-4 sweep it demanded is what refutes it.**
+
+Measured 2026-08-25. Zero code readers and zero data-migration references for all 11 —
+that part holds. But *why* each returns nothing is the question nobody asked:
+
+  v_coverage_priority       7208 rows   data EXISTS, nothing reads it
+  v_source_admission          10 rows   PD-6's DESIGNATED POINTER TARGET (open item)
+  v_source_reach_all          10 rows   empty-subject: specifications, specification_source_links
+  v_item_provenance            0 rows   repaired by migration 064 THREE DAYS AGO
+  v_code_floor_only            0 rows   empty-subject: specifications
+  v_item_extractions           0 rows   empty-subject: source_value_extractions
+  v_pmp_latest_walk            0 rows   empty-subject: spec_value_probes
+  v_root_id_conflicts          0 rows   empty-subject: source_value_extractions
+  v_registry_duplicate_...     0 rows   empty-subject: external_root_registry
+  v_unregistered_roots         0 rows   empty-subject: external_root_registry, source_value_extractions
+  v_value_independence         0 rows   empty-subject: external_root_registry, source_value_extractions
+
+**EIGHT OF ELEVEN RETURN NOTHING BECAUSE THEIR SUBJECT TABLES ARE EMPTY** — `specifications`,
+`source_value_extractions`, `spec_value_probes`, `external_root_registry`,
+`specification_source_links`. Every one of those is a DELIVERABLE table awaiting the
+pipeline reaching judgment and synthesis. These are not dead views. They are **render
+surfaces waiting for data**, and dropping them destroys capability the schema
+deliberately built, on the eve of the work that fills them.
+
+**CLAUDE.md rule 4 already says this and it cuts BOTH ways:** *"treat a 0-row object as
+unproven, not clean."* Unproven means do not assume it is clean — and equally, **do not
+assume it is dead.** R6 read the second half as licence.
+
+**TWO HAVE NAMED FUTURE READERS IN OPEN WORK, so dropping them is affirmatively wrong:**
+  · `v_source_admission` — PD-6's plan is literally *"Data migration NULLing 10 rows,
+    AFTER REDIRECTING READERS TO `v_source_admission.query_text`."* Dropping it removes
+    the referent before the pointer is built — the inverse of "a pointer nothing
+    dereferences", and worse.
+  · `v_item_provenance` — migration 064 exists BECAUSE 063 missed it. Paying to repair a
+    view on 2026-08-24 and deleting it on 2026-08-25 is not a cull, it is churn.
+
+**THE ONE REAL CANDIDATE, and it is still not clear-cut.** `v_coverage_priority`:
+7,208 rows computed over live tables, zero readers, no empty-subject excuse. That is a
+genuine standing cost. BUT the owner's cross-product ruling of 2026-08-25 — every slug
+against every population, access need and ICF code — is exactly the shape a
+slug × language × jurisdiction priority surface serves. Dropping it the same day that
+ruling landed would be poor timing at best.
+
+**VERDICT: Act 6 NOT EXECUTED. R6's blanket order is refused on evidence and the master
+plan should be corrected rather than obeyed.** Nothing is dropped. This is not a deferral
+for lack of time — the sweep was run, and it says the premise is wrong.
+
+The cheap part of Act 6 survives and is worth doing separately: per-caller join helpers,
+added only in the commit where a caller adopts them.
