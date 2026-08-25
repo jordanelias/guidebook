@@ -1005,3 +1005,116 @@ NOTE      : Ambiguous rather than a clean defect — UN and ISO are standards BO
    write-path defect that would let a bucket-1 UK value be silently mis-recorded as `GB`
    with no refusal anywhere in the chain.
 
+
+## 10. Commit-format and attestation gates
+
+### 10a. `scripts/ci_helpers/check_commit_msg.py` and `commit_gate.py`
+INVOKED   : `python3 scripts/ci_helpers/check_commit_msg.py --selftest`; `python3
+            scripts/ci_helpers/check_commit_msg.py` (against live HEAD)
+STAGE     : substrate
+EXIT      : 0, 0
+READS     : `scripts/ci_helpers/commit_gate.py` (`is_bot`, `is_merge` — shared exemption
+            logic, imported not copied); `git log -1 --format=%s/%an/%P` for the live-HEAD
+            check
+WRITES    : NONE
+EXAMINED  : 9 selftest cases (well-formed message, malformed — missing timestamp,
+            timestamp not last, uppercase prefix, borrowed bot exemption — and both
+            exemption classes E3/E4), each a pure-function `evaluate()` call so the test
+            doesn't need a real commit
+OUTPUT    : `SELFTEST: PASS — format gate and both exemptions behave as documented.` — all
+            9 cases pass, including the two I specifically checked per the task (a
+            well-formed message: `"governance: add a check [2026-08-01 09:12]"` → PASS; a
+            malformed one: `"governance: add a check"` with no timestamp → FAIL, and
+            `"Governance: add a check [2026-08-01 09:12]"` uppercase-prefixed → FAIL).
+            Live HEAD at time of check: `'governance: in-flight traces [2026-08-25
+            18:37]'` → PASS (well-formed, written by a sibling agent — HEAD moved again
+            during this run, consistent with §3d).
+FINDING   : PASS
+LOCATION  : `scripts/ci_helpers/check_commit_msg.py:69` (`PATTERN` regex),
+            `scripts/ci_helpers/commit_gate.py:24-33` (`is_bot`/`is_merge`, the SINGLE
+            shared home for both gates' exemption logic — the file's own docstring
+            explains this was a rule-5 fix: "the first pass implemented that agreement by
+            copying the regex... Editing BOT_RE here changes both")
+NOTE      : Confirmed the abolished doctrine-token script left no dangling caller:
+            `scripts/ci_helpers/check_doctrine_token.py` does not exist on disk (`ls`
+            confirms), and `grep -rn check_doctrine_token .github/workflows/*.yml
+            governance/check-registry.yaml scripts/ci_helpers/*.py` finds it ONLY inside
+            historical narrative comments in `check_commit_msg.py:29` and
+            `commit_gate.py:10,19` (documentation of why the shared module exists), never
+            as a live invocation. OD-10 item 4's removal was clean here — no rule-4 sweep
+            failure found in this specific corner.
+
+### 10b. Attestation validated against `schemas/attestation.schema.json`
+INVOKED   : `python3 -c "import json,jsonschema; jsonschema.validate(...)"` against
+            `attestations/sessions_session_2026-08-25-pipeline-smoke-test-mobility.json`
+            (the live attestation for THIS smoke-test session, written by the orchestrating
+            session — not by S6 — and already committed); then a deliberately-broken copy
+            (missing `bias_direction`, corrupted `doctrine_sha` pattern) to confirm the
+            validator actually rejects
+STAGE     : substrate
+EXIT      : 0 (valid case), caught exception (invalid case, as expected)
+READS     : `schemas/attestation.schema.json`, the one live attestation file
+WRITES    : NONE
+EXAMINED  : 1 real attestation (11 top-level required fields + nested `per_rule_status`/
+            `deviations` structure), 1 synthetic broken variant
+OUTPUT    : `VALID against schema` (real file); `INVALID as expected: 'bias_direction' is
+            a required property` (broken variant — `jsonschema` correctly stopped at the
+            first violation, `del`eted `bias_direction`, without even reaching the also-
+            corrupted `doctrine_sha` pattern violation)
+FINDING   : PASS
+LOCATION  : `schemas/attestation.schema.json` (`required` array, `doctrine_sha` pattern
+            `^[a-f0-9]{7}$`)
+NOTE      : **Live cross-agent corroboration, not asserted independently**: this
+            attestation (written by the session that spawned S1-S6) already states, in its
+            own `deviations` array, the SAME `sessions/LATEST` relocation-not-fix finding
+            this log derived independently in §6c ("The 2026-08-23 change that moved this
+            pointer from `.claude/session` to `sessions/LATEST` did not fix the staleness
+            its own docstring claims it fixed; it relocated it.") — two independent
+            derivations (this file's git-log/diff-stat analysis, and the orchestrator's own
+            first-hand account) reaching the same conclusion by different routes.
+            **A live, unresolved tension worth naming plainly**: `doctrine_sha` remains a
+            SCHEMA-REQUIRED field (`^[a-f0-9]{7}$`, still populated here as `"0f2f525"`)
+            even though CLAUDE.md states the doctrine-token mechanism was fully abolished
+            (OD-10 item 4) and `governance/check-registry.yaml:942`'s own comment confirms
+            "its enforcer (check_2_doctrine_sha) was retired with the doctrine token." The
+            FIELD survives in the schema and is still filled in by convention (presumably a
+            commit sha, not a doctrine-adherence token anymore) with nothing left to check
+            it against — neither a dangling caller nor a hard defect, but a vestigial
+            required field from an abolished mechanism, worth a rule-4/rule-5 pass if this
+            schema is touched again.
+
+### 10c. Is an attestation's free text read for meaning by anything? — NO, confirmed at file:line
+INVOKED   : `grep -n "bias_direction\|independent_reviewer_counterclaim\|verdict" scripts/audit/adherence_log_audit.py`; read of `check_6_counterclaim_uniqueness` and `check_8_verdict_evidence`
+STAGE     : substrate
+EXIT      : n/a (read)
+READS     : `scripts/audit/adherence_log_audit.py:341-378` (`check_6_counterclaim_uniqueness`),
+            `:458-` (`check_8_verdict_evidence`)
+WRITES    : NONE
+EXAMINED  : 2 of the audit's 8 named checks — the only two that touch the free-text fields
+            at all
+FINDING   : ABSENT — confirmed, no semantic/meaning-level reading exists anywhere in the
+            registered audit surface
+LOCATION  : `scripts/audit/adherence_log_audit.py:342-344` — Check 6 compares
+            `bias_direction` and `independent_reviewer_counterclaim` via
+            `difflib.SequenceMatcher(None, text_a, text_b).ratio()` against the last
+            `LEVENSHTEIN_WINDOW` attestations, flagging only near-DUPLICATE (boilerplate)
+            text — a syntactic string-similarity measure, not a comprehension of content.
+            Check 8 (`:458-480`) cross-checks `verdict` against the STRUCTURAL shape of
+            `per_rule_status`/`deviations` (e.g. `verdict=CLEAN` requires zero non-FIRED
+            statuses and an empty deviations array) — again structural, not semantic. The
+            schema itself (`schemas/attestation.schema.json`) enforces only `minLength` (30
+            chars for `bias_direction`/`independent_reviewer_counterclaim`, 20 for a
+            deviation's `reason`, 10 for a SKIPPED status's `reason`) — a length floor, not
+            a quality bar.
+NOTE      : **Confirms CLAUDE.md §0's own framing exactly**: "Rule 2 is a tax on the
+            deliverable... kept because attestations have caught real deviations — in
+            their free text, which no gate reads for meaning." This smoke test verified
+            that claim is literally true at the code level, not merely asserted: nothing in
+            the registered check surface parses `bias_direction`, `independent_reviewer_
+            counterclaim`, or a `deviations[].reason` for whether its CONTENT is accurate,
+            relevant, or honest — only whether it exists, is long enough, isn't a
+            near-duplicate of a recent one, and is structurally consistent with the
+            declared verdict. A human (or a differently-tasked agent) is the only reader
+            who can catch a well-formed, sufficiently-long, non-duplicate, structurally-
+            consistent attestation that is simply WRONG.
+

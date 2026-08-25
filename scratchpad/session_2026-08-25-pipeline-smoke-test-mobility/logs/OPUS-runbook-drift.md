@@ -534,3 +534,80 @@ coverage bug of exactly the kind §4 tells you to fix rather than bypass. For th
 is live and near-certain: 256 mobility DOIs are about to be promoted into the clue store (D-10), and
 the very next `add-source` for a mobility slug will be checking for duplicates against the one table
 that does not hold them.
+
+---
+
+# PART 7 — the reasoning document: S4's count corrected in both directions
+
+S4 reported *"7 of 11 citations in the repo's only real reasoning doc cite `source_locators`-only
+(unadmitted) sources as flat Tier-1/Tier-3 evidence."* The underlying finding is real and serious.
+The count is wrong in both directions, and the correction matters because it changes what the defect
+IS.
+
+## D-16 — 8 of 11 are unadmitted; but one is flagged impeccably and five are not flagged at all
+
+`references/bpc-reasoning/room-acoustic-performance.md` cites 11 distinct `REF-` ids. Checked
+against the live DB:
+
+```
+admitted (evidence_sources) : 3   — REF-00325, REF-00561, REF-00578
+leads only (source_locators): 8   — REF-00335, -00571, -00576, -00577, -00580, -00589, -00726, -00727
+```
+
+So **8**, not 7. But "flat Tier-1/Tier-3" does not survive contact with the text. Counting, per ref,
+lines that carry a caveat token (`ineligible` / `pending` / `AUTHOR-TITLE-ONLY` / `rule-#10` /
+`citation-miner pickup`) against lines that carry a tier label:
+
+| ref | mentions | caveat lines | tier-labelled lines | reading |
+|---|---|---|---|---|
+| REF-00335 | 4 | **3** | 0 | **flagged correctly** |
+| REF-00571 | 3 | 1 | 2 | mixed |
+| REF-00576 | 2 | 0 | 2 | tier-labelled, unflagged |
+| REF-00577 | 2 | 0 | 2 | tier-labelled, unflagged |
+| REF-00589 | 2 | 0 | 2 | tier-labelled, unflagged |
+| REF-00726 | 3 | 0 | 2 | tier-labelled, unflagged |
+| REF-00727 | 4 | 0 | 2 | tier-labelled, unflagged |
+| REF-00580 | 1 | 0 | 0 | passing mention |
+
+**REF-00335 is the counter-example and it deserves to be read.** The document says of it:
+*"pending citation-miner pass for rule-#10 eligibility"*, and later *"Co-supporting source REF-00335
+(ANSI/ASA S12.60-2010) is AUTHOR-TITLE-ONLY and rule-#10-ineligible; logged for citation-miner
+pickup."* That is the discipline working exactly as designed, written down, three times.
+
+**And five refs in the same document get no such treatment.** REF-00726 and REF-00727 are cited as
+`T1 review` and `T1 primary` and carry specific quantified claims — *"documented attentional
+decrement for autistic participants at 55 dB(A) background where TD participants showed none"* —
+with nothing marking them as never-admitted.
+
+## Why the corrected version is the worse finding, not the milder one
+
+If all eight were unflagged, the diagnosis would be "an author who did not know the rule." What the
+document actually shows is **an author who knew the rule, applied it explicitly to one source, and
+did not apply it to five others in the same file.** That is not ignorance; it is the predicted
+behaviour of a rule enforced by attention rather than by machine — CLAUDE.md's opening argument
+about why hooks exist: *"an agent must choose to load it, and attention degrades as context fills."*
+
+And nothing mechanical can tell the two apart. `reasoning_doc_citations` — the table built for
+precisely this cross-check, with `source_ref_id`, `claimed_value`, `value_match`, `claim_match`,
+`source_section` — holds **0 rows**, and `scripts/audit/reasoning_doc_citations_audit.py` reports:
+
+```
+Total rows: 0
+Table is empty (Phase E.1 has not begun for any BPC). No claim-level audit possible yet.
+EXAMINED: 0
+```
+
+The verification apparatus is complete, correct, and empty. The document it exists to check is the
+project's only real synthesis, and it is the §2(c) failure class — a confident citation nothing
+verified — displaced one stage downstream from where §2(c) caught it in 2026-08-19.
+
+**For the mobility batch this is the most likely way the whole thing goes wrong.** 256 mobility
+leads are about to enter the clue store (D-10). Leads are cheap, plentiful, and carry `title`,
+`pub_year` and `authors` fields that read exactly like evidence. The one existing reasoning document
+demonstrates that a careful author, writing about a slug with real admitted evidence, still cited
+five leads as tiered sources. A mobility synthesis drawing on a clue store 25× larger, with *no*
+admitted mobility evidence to anchor it, will face that temptation on every claim.
+
+*The smallest thing that would prevent it:* `reasoning_doc_citations` needs a CLI writer (S4 reports
+it has none, and its skill teaches raw SQL), and the audit needs to read the document's `REF-` ids
+directly rather than waiting for a table nobody can populate through the sanctioned path.
