@@ -810,3 +810,63 @@ Verified independently, all three:
 **The honest scorecard on my own log after this audit:** of 17 findings, one withdrawn on
 verification (D-12), two withdrawn as already-recorded (D-6, D-5's UN half), one narrowed (D-5 to
 ES/PT/FI). Thirteen stand.
+
+## C-5 — D-12 was wrong about WHO decides, and the correct fix is narrower than either of us said
+
+I closed D-12 with *"Whether an unassessed source may anchor a `stated` cell is a judgement about
+the book, so it is DG-NON and the owner's."* F1 says the existing text already settles it. **F1 is
+right, and this moves the fix out of the owner's queue and into the code.** Verified at
+`governance/evidence-methodology.md:127-132`, the four conditions for `stated`:
+
+> 1. **Tier 1 clinical evidence** with direct parameter relevance — primary research … addressing
+>    the design parameter **for the target population**.
+> 2. **Tier 2 synthesis evidence** … addressing the parameter.
+> 3. **Co-1 evidence** … that addresses the design parameter **for the target population**.
+> 4. **Co-2 evidence** with direct parameter guidance — an OT professional body CPG that addresses
+>    the design parameter.
+
+A source whose population applicability was **never assessed** cannot be known to address the
+parameter *for the target population*. Conditions 1 and 3 therefore already exclude it. No owner
+ruling is owed; the code simply does not implement the sentence.
+
+F1 also confirms the flag doctrine expects: **`needs_population_assessment` is computed and read by
+nothing.** Its only appearances are `assess_cell.py:209` (computed), `:421-422` (aggregated) and
+`:582` (emitted into the record). It is a report field, never a gate. Evidence-architecture §4's G2
+mandates both halves — cap the consolidation *and* flag for assessment — and only the first half
+has consequence.
+
+**And here the correct fix is narrower than F1 states it.** F1 reads doctrine as forbidding an
+unassessed anchor generally. It does not: **conditions 2 and 4 carry no population clause.** A Tier 2
+systematic review or a Co-2 OT professional-body CPG anchors on "addressing the parameter" alone.
+That asymmetry is deliberate and defensible — a CPG is guidance addressed to a practice, not a study
+with a study population.
+
+So the fix that follows from the text is:
+
+> `NOT_ASSESSED` population-directness disqualifies a source from anchoring **via condition 1
+> (T1 clinical) or condition 3 (Co-1)**, and does not affect conditions 2 and 4.
+
+Not "DOWN-WEIGHTED cannot anchor" (which would wrongly demote assessed-PARTIAL sources), and not
+"unassessed cannot anchor at all" (which would wrongly demote T2 and Co-2). Three candidate fixes,
+three different books.
+
+**Why this matters more for mobility than for anything else in this report.** Condition 3 is the
+Co-1 condition — lived experience, co-primary with T1 under CRPD Art 4.3. Wheelchair users',
+ambulant disabled people's and part-time wheelchair users' testimony about corridor width and ramp
+gradient enters through condition 3, and condition 3 is one of the two that *requires* population
+relevance. Combined with F1's C2 finding — that `co1_provenance` has no CLI flag, that the Pydantic
+rule never runs on DB rows, and that the only wired Co-1 validator reads `data/sources/*.yaml`, **a
+directory I confirmed does not exist** — the picture for the co-primary evidence stream is:
+
+| Co-1 requirement | Mechanism | State |
+|---|---|---|
+| Record who co-produced it (`co1_provenance`) | none — no CLI flag | **unenforced** |
+| Validate the Co-1 record shape | Pydantic model | **never invoked by the write path** |
+| Validate Co-1 against doctrine | `validate_evidence_state.py:76-110` | **reads a directory that does not exist** |
+| Require population relevance to anchor | condition 3 | **not implemented in `anchoring()`** |
+
+Four requirements, four mechanisms, none of them live. CLAUDE.md §6: *"Co-1's warrant is
+co-production… Erasing them while claiming the tier is the worst failure available here."* After
+2026-08-19 the project fixed the arm that fabricates *authors* and never built the arm that records
+*co-production* — and the mobility batch is the first one whose core evidence is disabled people's
+own accounts of a built environment that excludes them.
