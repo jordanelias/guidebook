@@ -994,3 +994,55 @@ transcript before that transcript was gone.
 - **`scratchpad/**/commands.jsonl` is exempt from `retired_vocabulary`** (`retired-vocabulary.yaml`)
   — it is a verbatim record of what was typed, in the same class as a search log. A session that
   greps for a retired term to prove it unused must not redden the check by doing so.
+
+---
+
+## RULE 2026-08-25 — the pipeline is five stages: research → evidence collection → judgment → synthesis → render
+
+Appended, not edited: this file is the append-only operative rule ledger.
+
+> *"research → evidence collection → judgment → synthesis → render"*
+> *"that works for me"*
+
+**DATE: 2026-08-25** — owner ruling, given on being shown that eighteen pipeline models exist
+in this repository and that the two live ones disagreed.
+
+**THIS SUPERSEDES THE OWNER'S OWN FIVE STAGES OF 2026-08-24**, recorded in
+`DR-2026-08-24-scaffolding-is-phase-specific.md` §2.2 and in this ledger's RULE of the same date
+as *"research to evidence to synthesis to specifications to render"*. Two changes, both
+substantive:
+
+| 2026-08-24 | 2026-08-25 | |
+|---|---|---|
+| `evidence` | **`evidence collection`** | Named for the act, not the artifact |
+| — | **`judgment`** | Restored as its own stage. Determination is not folded into synthesis |
+| `specifications` | — | **Not a stage.** `specifications` is a table that `judgment` writes |
+
+Per `CLAUDE.md` rule 0 this binds on contact and the 2026-08-24 wording is superseded, not
+weighed against it. Both records are kept: this ledger is append-only and the DR carries a
+supersession note.
+
+**WHAT IT RATIFIES, AND THIS IS THE USEFUL PART.** It is the five-stage spine of
+`DR-2026-07-13-pipeline-contract` (ACCEPTED 2026-07-21), which `governance/pipeline-contract.yaml`
+declares and which the machine has been enforcing all along — `tools/pipeline_completeness.py:37`
+holds `STAGES = ["research", "collection", "judgment", "synthesis", "render"]` and its freshness
+gate `pipeline_completeness_fresh` is **blocking**. **The conflict between the owner's model and
+the machine's is resolved in the machine's favour**, with one renaming: stage 2 is
+**evidence collection**, not bare *collection*.
+
+**Substrate is not a stage.** The vocabularies and registries — `items`, `populations`, `slugs`,
+`terms`, `access_needs`, the crossing maps — are the layer all five stages point into. The
+six-bucket model in `scratchpad/session_2026-08-24-pointer-discipline/fable-stage-discipline-audit-2026-08-24.txt`
+PART 1 added SUBSTRATE as a sixth bucket; that addition is agent-authored and is **not** part of
+this ruling. Its table-to-stage assignments must be re-derived against these five stages before
+they are relied on again.
+
+**Re-entrancy is untouched by this ruling and still holds.** `governance/pipeline-map.yaml`'s
+antagonist finding of 2026-08-21 — *"the stages are table buckets, not phases… a walk re-enters
+them"* — answers **write order**, a different question from what a stage may hold. A walk may
+re-enter any stage; each stage's tables still carry only their own facts (rule 5).
+
+**Owed, not done:** stage 2's identifier still reads `collection` in `pipeline-contract.yaml`,
+`tools/pipeline_completeness.py` and the dashboard. `schemas/pipeline_contract.py` sets
+`extra="forbid"`, so a display-name field cannot simply be added; the rename is a caller sweep
+under `CLAUDE.md` rule 4 and is tracked as such rather than done in the same breath as this record.
