@@ -1071,7 +1071,7 @@ checks:
     battery: research
     kinds: [data, synthesis]
     level: advisory
-    basis: collection/evidence-verification-gate
+    basis: evidence-collection/evidence-verification-gate
     cost: fast
     no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision, not by accident; see note
     note: >-

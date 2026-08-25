@@ -264,6 +264,7 @@ bash .claude/hooks/ensure-deps.sh    # pydantic + jsonschema. DO THIS FIRST. See
 scripts/preflight.sh                                    # gate your diff vs origin/main
 python3 scripts/run_checks.py --changed-from origin/main --explain
 python3 scripts/run_checks.py --list                    # registry + quarantine
+python3 scripts/run_checks.py --selftest               # RUN THIS AFTER ANY RENAME. See below
 ```
 
 > ### **`pydantic` IS NOT INSTALLED IN A FRESH CONTAINER, AND WITHOUT IT THE REPOSITORY LOOKS BROKEN**
@@ -297,7 +298,15 @@ python3 scripts/run_checks.py --list                    # registry + quarantine
 > which attestation validation needs. Found 2026-08-25 by an attestation validating only after a
 > hand install. `ensure-deps.sh` now reads the registry rather than carrying a copy (rule 5).
 >
-> **If you add a `SessionStart` hook, APPEND it — never insert at index 0.**
+> **`--changed-from` DOES NOT RUN THE SELFTEST, AND THE SELFTEST IS WHERE A RENAME FAILS.**
+CI's *Classify change* job runs `--selftest`; `--changed-from origin/main` does not. On 2026-08-25
+I renamed a pipeline stage id, swept `scripts/`, `tools/` and `schemas/`, got a green
+`--changed-from`, pushed, and CI failed on `C7 every contract basis resolves to a real criterion`:
+`governance/check-registry.yaml` encodes stage-qualified `basis: <stage>/<criterion>` references,
+and one still named the old stage. **The registry is a caller.** After any rename, run
+`--selftest` as well, and grep the registry for the old name.
+
+**If you add a `SessionStart` hook, APPEND it — never insert at index 0.**
 > `scripts/generate/research_contract_hook.py` reads
 > `SessionStart[0]["hooks"][0]["command"]` **by hardcoded index** and compares it to
 > `governance/research-contract.yaml`. Inserting ahead of the contract turns the blocking
