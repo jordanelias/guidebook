@@ -120,3 +120,59 @@ the ceremony-without-meaning that rule 2 is already on probation for.
 
 NOTE for whoever reads batch-03's log: lines timestamped 2026-08-24T23:32 onward and all
 of 2026-08-25 are NOT batch-03's work. They are PR #116/#117 review and this session.
+
+### F6 — suite interrogation, my own structural pass (deep audit delegated, running)
+
+Measured 2026-08-25. Commands in the command log.
+
+SURFACE SIZES
+  scripts/         85 files   26,422 lines
+  tools/            4 files    3,284 lines
+  .claude/hooks/    2 files      183 lines
+  skills/          61 files   11,077 lines
+
+DB ACCESS SHAPES — the headline
+  raw `sqlite3.connect(` call sites .......... 104
+    of those read-only (`mode=ro`) ............ 54
+    of those opening read-write ............... 50
+  files importing a shared db helper ........... 0     <-- THE FINDING
+  surviving `PRAGMA journal_mode` .............. 1 (a COMMENT in db.py saying it is
+                                                    deliberately not set — not a defect)
+
+**There is no shared connection helper. 104 call sites each re-implement the open.**
+`scripts/db.py` HAS a `connect()` with the right shape (read-only URI, `query_only`,
+no persistent pragma) and NOTHING IMPORTS IT. That is the owner's "one set of tools"
+question answered concretely: the suite does not exist as a suite; db.py is one member
+of the pile rather than its core.
+
+The 50 read-write opens are NOT 50 rule-3 violations — checked individually:
+  · `migrate_db.py`                    the sanctioned writer. Correct.
+  · `resolve_dois.py`, `verify_urls.py` exempt writers per DR-2026-05-28 / D-4.3-H
+                                        (`pipeline_runs`, `evidence_source_authors`;
+                                        named in migration_reproducibility EXEMPT_TABLES).
+  · `db.py`                             the write CLI. Correct.
+  · `readonly_db_open_audit.py`         its hits are TEST FIXTURE STRINGS. The repo already
+                                        has an L2 check for this exact shape.
+  · `test_db_integrity.py`, `audit_consolidator.py`  read-only work opening read-write.
+                                        Untidy, not dangerous.
+So the violation count is far lower than the raw grep implies. **A hit count is not a
+finding** — this repo's own rule, and applying it here changed the answer.
+
+CALLER ANALYSIS — scripts/ + tools/, 88 files
+  invoked by check-registry ......... 58
+  invoked by workflow or hook ........ 6
+  referenced by other code .......... 21   (loose heuristic; do not over-trust)
+  NO REFERENCE ANYWHERE .............. 3
+
+The 3, each referenced in PROSE but invoked by nothing:
+  · `scripts/generate_parts.py` (463 lines) — "A.12 guidebook reassembly engine".
+    Named in `governance/pipeline-map.yaml`, so it is IN the pipeline model and nothing
+    runs it. **L0 — it renders the book.** Under the cull rule (cull upward from L3,
+    never downward from L0) this is NOT a cull candidate. It is KEEP-AND-FIX or
+    CONSOLIDATE. L0 ugliness is refactored, never deleted.
+  · `scripts/audit_consolidator.py` (297 lines) — L1/L2. Real cull candidate.
+  · `scripts/tests/test_adjudication_integrity.py` (42 lines) — L2. Real cull candidate.
+
+Healthier than feared: 58 of 88 are registry-invoked. The problem is not a mass of dead
+scripts; it is 104 unshared connection idioms and a core module that exists but is
+imported by nothing.
