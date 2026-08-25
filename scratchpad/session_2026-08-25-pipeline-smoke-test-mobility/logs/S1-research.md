@@ -1,0 +1,609 @@
+# S1 — RESEARCH STAGE smoke test log
+
+Session: session_2026-08-25-pipeline-smoke-test-mobility
+Agent: S1 (research stage)
+Repo HEAD: ce33ef60b9d5247f3c2702ada545146c23bee8c5
+data/guidebook.db sha256 at start: 30a106692ab4110fe4e2082018eb256a325b2884d5740d3f62445b52c07dceaf (matches expected 30a10669...)
+Scratch DB: $SMOKE/s1-research.db (copied from canonical at session start)
+Start time (UTC): 2026-08-25 18:16
+
+---
+
+## 1. Framing — mobility items, slugs, ICF/access-need frame
+
+### 1.1 Item → slug status (query: items, slugs)
+
+| item_code | name | bpc_source_slug | slug status |
+|---|---|---|---|
+| E-08 | Corridor Clear Width (≥1200 mm Minimum on All Primary Routes) | accessible-circulation-geometry | ACTIVE |
+| E-11 | Automatic Sliding Entry and Internal Doors | threshold-door-hardware | ACTIVE |
+| G-04 | Accessible Bathroom (Wet Room Configuration — Zero Threshold) | accessible-bathroom-and-grab-bar | ACTIVE |
+| E-03 | Ramp Gradient (≤1:20 — MS Fatigue and Temporal Accessibility) | stair-ramp-threshold-biomechanics-accessibility | ACTIVE |
+| B-08 | Matte, Low-Reflectance Floor Finishes (≤30 Gloss Units) | **NULL — no slug** | n/a |
+| C-03 | Pattern Avoidance (Plain Flooring and Walls in Sensitive Environments) | luminance-contrast-lrv-evidence-base | ACTIVE |
+| C-05 | Low LRV Differential at Adjacent Floor Materials (DEM Inverse Contrast Rule) | luminance-contrast-lrv-evidence-base | ACTIVE |
+| C-06 | Plain, Low-Contrast Flooring Throughout (No Geometric Patterns) | luminance-contrast-lrv-evidence-base | ACTIVE |
+| A-05 | Carpet in Corridors and Occupied Spaces (Where VIS Navigation Maintained) | room-acoustic-performance | ACTIVE |
+| E-01 | Accessible Lift (1400×1100 mm Car, All Floors Served) | accessible-circulation-geometry | ACTIVE |
+| E-04 | Accessible Parking (3600 mm Width, Covered, Closest to Entry) | accessible-circulation-geometry | ACTIVE |
+
+**No `handrail` item exists.** Query `SELECT * FROM items WHERE lower(name) LIKE '%handrail%'` returns
+0 rows. The nearest neighbours are `G-03` "Grab Bars in All Accessible Bathrooms" and `I-03`
+"Bathroom (UPL Anti-Scald, Bilateral Grab Bars, One-Hand Operation)" — both bathroom-specific,
+neither a corridor/stair/ramp handrail item. PROTOCOL's premise is confirmed: **a real mobility
+batch cannot cite a handrail item because none exists; one must be created (new item_code under
+category E, with a slug) before any handrail-specific evidence can be admitted.**
+
+Note also `B-08` has no `bpc_source_slug` at all (NULL, not merely unresolved) — distinct defect
+from "slug exists but STUB": there is no slug row to even check status on.
+
+### 1.2 Item → axis → access_need → ICF frame (codes AND names, per CLAUDE.md §6)
+
+Traced `item_axis_links → axes → access_need_axis_map → access_needs → access_need_icf` for all 12
+mobility-relevant items (11 named + G-03 grab bars as the handrail-adjacent item). All resolve.
+Representative chain for E-08 (corridor clear width):
+
+- Axes: `AX-AMB` (Ambulant movement, partial) · `AX-BAL` (Balance & postural demand, weak) ·
+  `AX-WHM` (Wheeled movement & transfer, full)
+- `AX-WHM` → access need `A-REACH` (operating: "Be physically reachable...") and `A-SIZE`
+  (environment_safety: "Fit the range of bodies present...") via `spans` relationship
+- `AX-BAL` → `A-STABLE` (perceiving: "Hold the visual reference still...handrails...") via `primary`
+- `A-REACH` ICF: e120 (confirmed), e150 (confirmed), e155 (confirmed)
+- `A-STABLE` ICF: e150 (confirmed), e240 (confirmed)
+- `A-SIZE` ICF: e115, e120, e150, e155 (all confirmed)
+
+Full axis set touched by the 11 mobility items: AX-AMB, AX-BAL, AX-WHM, AX-REA, AX-STA, AX-VIS-L,
+AX-SPR, AX-AUD, AX-VIS-N — all resolve to named access_needs (A-REACH, A-STABLE, A-SIZE,
+A-PRECISION, A-EFFORT, A-NOSIGHT, A-STIMULUS, A-TRIGGER, A-NOSOUND, A-TACTILE) and each need has
+`confirmed` ICF `e`-codes (environmental factors) in `access_need_icf`. **CLAUDE.md §6's mandated
+frame (codes AND names) is mechanically producible for every mobility item that has a slug** — no
+missing links found on this walk.
+
+`AX-BAL`'s own `coverage_status` is `STUB` (the only STUB among the 9 axes touched; the rest are
+ESTABLISHED) — worth flagging because balance is directly implicated in handrail research and its
+axis is the least-developed one in the frame.
+
+### 1.3 item_population_links — NOT the zero-row pre-synthesis state CLAUDE.md §6 describes
+
+CLAUDE.md §6 says "Zero `item_population_links` on a slug is the correct pre-synthesis state, not
+a defect" for slugs pending synthesis. In fact every one of the 11 named mobility items already
+carries multiple populated `item_population_links` rows (MOB, BLIND, DEM, SCI, DEAF, BAR, MS, LPA,
+DEAFBLIND, BRAIN, VES, COM, LMB, PAIN, AUT, NDV, MH — 5-13 populations per item, mix of `applies`
+and `context_dependent`). This is not a contradiction of the ruling (which describes the
+*permitted* zero state, not a mandated one) but it does mean **this slug set is past the "zero
+pre-synthesis" state already** — these links pre-exist any synthesis this smoke test would run,
+so a real batch here is adding evidence against an already-populated population frame, not
+establishing one from scratch.
+
+**FINDING (framing): PASS with one BLOCKING gap.** The ICF/access-need/axis frame is fully
+mechanical and correct for 11 of the mobility items. The batch as scoped in PROTOCOL.md names
+"handrails" as a subject and **no item_code exists for it** — this blocks framing a handrail
+sub-batch entirely until an item is created. B-08's missing slug is a second, smaller gap (blocks
+sourcing for that one item only, not the whole batch).
+
+## 2. The clue store (`source_locators`, 875 rows) as batch driver
+
+### 2.1 What it actually contains — column population census (canonical DB, read-only)
+
+Query: `SELECT COUNT(*) FROM source_locators WHERE <col> IS NOT NULL AND <col> != ''` per column,
+875 total rows.
+
+| column | populated | % |
+|---|---|---|
+| doi | 448 | 51% |
+| url | 396 | 45% |
+| pmid | 129 | 15% |
+| pmcid | 30 | 3% |
+| isbn | 20 | 2% |
+| issn | 295 | 34% |
+| standard_number | 313 | 36% |
+| doi_resolution_outcome | 415 | 47% |
+| url_resolution_outcome | 71 | 8% |
+| url_last_fetched | 52 | 6% |
+| authors | 531 | 61% |
+| pub_year | 531 | 61% |
+| title | 531 | 61% (344 rows have NO title) |
+| tier_claimed | 531 | 61% |
+| jurisdiction | 490 | 56% (385 NULL) |
+| used_in_bpcs | 56 | 6% |
+| notes | 531 | 61% |
+
+`status` is uniform: all 875 rows are `REFERENCE-ONLY` (none `PROMOTED`, none `RETIRED`).
+`recovered_from`: 835 `corpus-pre-reset-2026-08-06`, 32 `references/global-reference-registry.md`,
+8 `global-reference-registry.json` — this table is entirely backfill from a pre-reset corpus and a
+registry dump, not something any live research session wrote a row into (no row's
+`recovered_from` names a session).
+
+**FINDING (LOCATION `source_locators.jurisdiction`): the jurisdiction column is not a clean
+filterable field.** Distribution over all 875 rows:
+
+| shape | count |
+|---|---|
+| NULL | 385 |
+| `—` (em-dash placeholder) | 89 |
+| clean 2–3 letter code (`^[A-Z]{2,3}$`) | 56 |
+| URL string | 154 |
+| other free-text/prose (findings, warnings, framework names, quantified claims) | 191 |
+
+Of the 56 clean-code rows, the codes used are `INT`(26) `US`(15) `UK`(5) `NL`(4) `AU`(2) `NO`(1)
+`IT`(1) `IN`(1) `NZ`(1) — an ad hoc set that does not match either the bucket-1 vocabulary in
+PROTOCOL.md (UN/ISO/Canada/USA/UK/Germany/Norway/Sweden/Japan/Australia) or bucket-2
+(EU/Singapore/New Zealand/Ireland/France/Spain/Portugal/Finland/Netherlands/South Korea) —
+e.g. "US" vs "USA", "UK" present but no "Germany"/"Canada"/"Japan"/"Sweden" rows exist at all in
+the clean set. Free text observed in the 191 "other" bucket includes verification flags
+(`⚠ verify`, `[GREY — DOI required]`), quantified findings (`2cm threshold defeats 45.8%`),
+theory names (`Restorative environment theory`), and cross-references (`See RET-14`) — this column
+is being used as a general annotation field, not a jurisdiction tag, for roughly 44% of rows that
+have anything in it at all.
+
+By contrast `lang_jur_map` (70 rows, schema `language, jurisdiction, role, notes`) uses a clean
+closed vocabulary of real ISO-ish 2-letter country codes (AR, AT, AU, BD, BE, BR, CA, CH, CL, CN,
+CO, CR, DE, DK, ...). **There is no FK from `source_locators.jurisdiction` to
+`lang_jur_map.jurisdiction`** (confirmed: `source_locators`'s CREATE TABLE has zero `REFERENCES`
+clauses) — the clean vocabulary exists in the DB but is not enforced on the clue store.
+
+### 2.2 Mobility relevance of the clue store
+
+`used_in_bpcs` (populated on only 56/875 rows) is a free-text slug list, checked by substring
+match against the 6 mobility slugs found in §1.1:
+
+| slug | rows referencing it in `used_in_bpcs` |
+|---|---|
+| accessible-circulation-geometry | 2 |
+| threshold-door-hardware | 1 |
+| accessible-bathroom-and-grab-bar | 2 |
+| stair-ramp-threshold-biomechanics-accessibility | **0** |
+| luminance-contrast-lrv-evidence-base | **0** |
+| room-acoustic-performance | 17 |
+
+Rows carrying BOTH a clean jurisdiction code AND a mobility-slug tag in `used_in_bpcs`: **22 of
+875** (2.5%), and 17 of those 22 are `room-acoustic-performance` (A-05's slug, arguably peripheral
+to core mobility) rather than circulation/door/ramp/contrast. **Zero clue-store rows are jointly
+jurisdiction-tagged and slug-tagged to the ramp/threshold-biomechanics or luminance-contrast
+slugs** — for those two slugs the clue store currently offers nothing a jurisdiction-bucket filter
+could find.
+
+Title-keyword proxy search (344/875 rows have no title at all, so this undercounts): "door" 28,
+"wheelchair" 13, "threshold" 8, "ramp" 5, "mobility" 5, "floor" 4, "stair" 2, "lift" 2,
+**"handrail" 0, "corridor" 0, "elevator" 0, "parking" 0, "flooring" 0**.
+
+### 2.3 Is there a tool to *select* leads for a batch?
+
+`grep -n "def \|add_parser" scripts/db.py` shows subcommands touching `source_locators`: only
+`add-locator` (write) exists. **No `list-locators`/`query-locators`/`select-locators` subcommand
+exists anywhere in `scripts/db.py`.** The only callers of `source_locators` outside `db.py` and
+`dbcore.py` are migrations (write-once, historical) and
+`scripts/audit/validate_pydantic_schemas.py` / `scripts/audit/research_batch_dod.py` (both audit,
+not selection) and two skill docs (`citation-miner_SKILL.md`, `research-log-manager_SKILL.md`),
+neither of which is an executable selector.
+
+**FINDING: ABSENT.** There is no mechanical way to select "mobility-relevant, bucket-1/2
+jurisdiction leads" from the clue store — every count above required hand-written ad hoc SQL run
+directly against the read-only canonical DB in this smoke test. The nearest existing surface is
+`db.py add-locator` (write-only) plus raw `sqlite3`/Python queries. What would have to exist: a
+`db.py list-locators --used-in-bpc <slug> --jurisdiction-bucket <1|2>` (or equivalent) read path,
+and — prior to that — a cleanup/migration that stops the `jurisdiction` column doubling as a notes
+field, or a separate clean jurisdiction column. Left unenforced: the **research** stage's own
+"driver" role for the clue store (PROTOCOL.md: "the clue store, source_locators ... Driver") has
+no mechanical support; a real batch would fall back to hand SQL against source_locators, which
+CLAUDE.md's write-path section says should not happen for *writes* but does not prohibit for
+*reads* — reads have no CLI path to avoid at all here.
+
+### 2.4 `db.py add-locator` — exercised on scratch (`$SMOKE/s1-research.db`)
+
+### 2.1 valid write
+INVOKED   : `GUIDEBOOK_DB_PATH=$SMOKE/s1-research.db python3 scripts/db.py add-locator --ref-id REF-00971 --title "Handrail grip diameter and fall arrest: a biomechanical review" --doi "10.9999/smoketest-s1-handrail" --pub-year 2021 --authors "Smoketest, A." --tier-claimed 2 --recovered-from "smoke-test-s1" --status REFERENCE-ONLY --used-in-bpcs "stair-ramp-threshold-biomechanics-accessibility" --session session_2026-08-25-pipeline-smoke-test-mobility`
+STAGE     : research
+EXIT      : 0   RUNTIME: <1s
+READS     : scripts/db.py:899-909 (arg parser), scripts/db.py:2489-2531 (insert_locator), scripts/dbcore.py next_ref_id/check_vocab/stamp_for
+WRITES    : $SMOKE/s1-research.db → source_locators.ref_id='REF-00971' (1 row)
+EXAMINED  : 1 (the ref_id under write; insert_locator does a targeted duplicate/DOI lookup, not a table scan)
+OUTPUT    : `{"ref_id": "REF-00971", "dry_run": false}`
+FINDING   : PASS
+LOCATION  : scripts/db.py:2489 insert_locator
+NOTE      : add-locator works cleanly for a well-formed lead with a minted ref_id.
+
+### 2.2 refusal — duplicate ref_id (identity collision)
+INVOKED   : same command, `--ref-id REF-00971` again (already exists), different title/url
+EXIT      : 1
+OUTPUT    : `ValueError: REF-00971 already exists in source_locators. Use update-locator.`
+FINDING   : PASS (correct refusal)
+LOCATION  : scripts/db.py:2504
+NOTE      : No `update-locator` subcommand actually exists in `scripts/db.py` (checked: only
+  `add-locator` is registered) — the refusal message names a command that is ABSENT. A caller who
+  hits this refusal and follows the instruction literally will fail a second time.
+
+### 2.3 refusal — bad vocabulary (status)
+INVOKED   : `--ref-id REF-00972 --status "UNVERIFIED"` (a valid value of a *different* column, `search_candidates.locator_status`, not of `source_locators.status`)
+EXIT      : 1
+OUTPUT    : `ValueError: insert_locator: source_locators.status does not accept 'UNVERIFIED'. The schema's own CHECK declares: ['PROMOTED', 'REFERENCE-ONLY', 'RETIRED']. Nothing was written.`
+FINDING   : PASS
+LOCATION  : scripts/dbcore.py:308 check_vocab → scripts/dbcore.py:272 check_values (reads the CHECK from sqlite_master, per CLAUDE.md §4's "vocabularies come from the schema" rule)
+NOTE      : Refusal correctly names the schema-declared alternative set rather than a live-row sample.
+
+### 2.4 refusal — duplicate identity via DOI (R9, case-folded)
+INVOKED   : `--ref-id REF-00972 --doi "10.9999/SMOKETEST-S1-HANDRAIL"` (same DOI as 2.1's REF-00971, different case)
+EXIT      : 1
+OUTPUT    : `ValueError: DOI '10.9999/SMOKETEST-S1-HANDRAIL' is already held as REF-00971 in source_locators. R9: cross-file the existing ref_id, never mint a second identity for one source. Nothing was written.`
+FINDING   : PASS
+LOCATION  : scripts/db.py:2510-2521 (checks both source_locators and evidence_sources, case-folded via LOWER(TRIM(doi)))
+NOTE      : Confirms the R9 duplicate-DOI refusal works at write time for `source_locators` itself
+  — this is a *different* mechanism from the R9 duplicate **gate** (a post-hoc audit script) that
+  CLAUDE.md §4/OD-5 says cannot see `source_locators`. See §10 of this log for that gate
+  specifically; this write-time check is not the gate in question and does catch the case tested.
+
+### 2.5 refusal — bad ref_id shape
+INVOKED   : `--ref-id "RAP-04"` (a per-slug local label, not a global ref id)
+EXIT      : 1
+OUTPUT    : `ValueError: --ref-id 'RAP-04' is not a global reference id. Expected REF-NNNNN (or REF-VERIFIED-NNN / Co1-NN). Mint with dbcore.next_ref_id().`
+FINDING   : PASS
+LOCATION  : scripts/db.py:2497-2500; pattern scripts/dbcore.py:175 REF_ID_SHAPE
+NOTE      : none
+
+### 2.6 refusal — CHECK constraint, no identifier at all (R3-adjacent)
+INVOKED   : `--ref-id REF-00972` with no doi/url/pmid/pmcid/isbn/issn/standard-number/title
+EXIT      : 1
+OUTPUT    : `sqlite3.IntegrityError: CHECK constraint failed: doi IS NOT NULL OR url IS NOT NULL OR pmid IS NOT NULL OR pmcid IS NOT NULL OR isbn IS NOT NULL OR issn IS NOT NULL OR standard_number IS NOT NULL OR title IS NOT NULL`
+FINDING   : PASS, but the refusal is a raw SQLite traceback, not a curated ValueError like the other four.
+LOCATION  : source_locators table CHECK (schema); surfaces via scripts/db.py:2529 conn.execute (uncaught)
+NOTE      : Minor polish gap — `insert_locator` does not pre-validate "at least one identifier
+  present" the way it pre-validates status/DOI/shape; it lets SQLite's own CHECK fail and leaks a
+  bare IntegrityError with column-list SQL text instead of a `context: table.column` message in
+  the house style of the other four refusals. Not blocking (it does refuse correctly) but
+  inconsistent — LOCATION: scripts/db.py insert_locator (no pre-check before the final INSERT at
+  line 2529).
+
+### 2.7 no-FK-refusal case: source_locators has no FK columns to test
+NOTE      : `source_locators`'s CREATE TABLE (read from sqlite_master) declares zero `REFERENCES`
+  clauses on any column — `recovered_from`, `used_in_bpcs`, `jurisdiction` etc. are all free TEXT.
+  There is therefore no "bad FK" refusal to trigger on this table; PROTOCOL's instruction to
+  "trigger every refusal you can (bad FK, bad vocabulary, duplicate identity, missing R3 locator)"
+  is only partially applicable to `add-locator` — bad-FK is N/A for this specific table by design
+  (it is a lead index, not a table anchored to items/populations). The R3 "missing locator on a
+  quantified value" refusal lives on `add-jurisdictional-value` (scripts/db.py:2383-2396), not on
+  `add-locator` — tested separately would require that subcommand, out of scope for the clue-store
+  write path itself; noted here rather than fabricated against the wrong command.
+FINDING   : ABSENT (bad-FK case does not exist for this table — correctly so)
+
+### 2.8 `dbcore.next_ref_id` — union high-water-mark behaviour
+INVOKED   : `dbcore.next_ref_id(conn)` against scratch DB, compared with independent MAX queries over `source_locators` and `evidence_sources` separately
+OUTPUT    :
+```
+next_ref_id: REF-00971
+MAX(ref_id) in source_locators : 964
+MAX(ref_id) in evidence_sources: 970
+```
+FINDING   : PASS
+LOCATION  : scripts/dbcore.py:175-224 (ref_id_high_water / next_ref_id)
+NOTE      : Confirms CLAUDE.md §4's claim exactly: source_locators tops out at REF-00964,
+  evidence_sources at REF-00970, and next_ref_id correctly returns REF-00971 (970+1), not
+  REF-00965 (964+1) — the union rule is real and matches the file's own worked numbers.
+
+## 3. Search logging (R8) — `log-search`, `coverage`, frozen `upsert-*`
+
+### 3.1 `upsert-coverage` / `upsert-language` are FROZEN write paths
+INVOKED   : `GUIDEBOOK_DB_PATH=$SMOKE/s1-research.db python3 scripts/db.py upsert-coverage --slug stair-ramp-threshold-biomechanics-accessibility --jurisdiction US --status SEARCHED --session session_...` (and the `upsert-language` equivalent)
+EXIT      : 2 for both
+OUTPUT    : `search_coverage is FROZEN as a historical artifact and no longer accepts writes.` /
+  `search_languages is FROZEN as a historical artifact and no longer accepts writes.` — both point
+  the caller at `log-search` and `workplan/search-coverage-completion-workplan.md`.
+FINDING   : PASS (this is a correct, deliberate refusal — the tables are dead write paths by
+  design; `SELECT COUNT(*) FROM search_coverage`/`search_languages` on the canonical DB show 0
+  rows written since the freeze). PROTOCOL.md's task list names `upsert-coverage`/`upsert-language`
+  alongside `log-search` as things to exercise; both do exist as subcommands but both refuse on
+  purpose. Not a defect — the task instruction is simply out of date relative to the repo.
+LOCATION  : scripts/db.py:290-330ish (freeze docstring + guard), redirect message text at ~line 300-319
+NOTE      : `log-search` is the sole live write path for R8, confirmed.
+
+### 3.2 `log-search` — real mobility query, zero-yield, logged verbatim
+INVOKED   : `GUIDEBOOK_DB_PATH=$SMOKE/s1-research.db python3 scripts/db.py log-search --slug stair-ramp-threshold-biomechanics-accessibility --language EN --query-text 'handrail diameter grip biomechanics fall arrest wheelchair ramp' --engine crossref --depth-method scoping --session session_2026-08-25-pipeline-smoke-test-mobility --jurisdiction US --target-tier 1 --target-evidence-type clinical --results-found 0 --results-screened 0 --results-admitted 0 --saturation-signal none --findings-note "..." --deferred-reason ""`
+EXIT      : 0
+WRITES    : search_executions.exec_id=29 (slug=stair-ramp-threshold-biomechanics-accessibility, jurisdiction=US, language=EN, results_found=0, deferred_reason='' [empty string, NOT NULL])
+EXAMINED  : 1
+OUTPUT    : `{"exec_id": 29, "slug": "...", "admitted": 0, "dry_run": false}`
+FINDING   : PASS with a defect discovered as a side effect (see 3.3)
+LOCATION  : scripts/db.py:336 log_search
+NOTE      : R8's "keep the empties" requirement is mechanically honoured — a zero-yield,
+  well-formed query becomes a row rather than being discarded.
+
+### 3.3 DEFECT found via own usage — `--deferred-reason ""` (empty string) silently miscounts as deferred
+By passing `--deferred-reason ""` explicitly (rather than omitting the flag) on 3.2's call, the
+column was written as `''`, not `NULL`. `get_coverage_completeness()` (scripts/db.py:520-571) and
+its callers filter with `deferred_reason IS NULL` / `IS NOT NULL` — SQLite's `IS NOT NULL` is TRUE
+for `''`, so exec_id 29 was silently excluded from `jurisdictions_searched`/`languages_searched`
+and counted in `searches_deferred_with_reason`, even though it was a real, executed, zero-yield
+search with a genuine jurisdiction and query. Confirmed by direct query:
+```
+exec_id=29: deferred_reason='' , (deferred_reason IS NULL)=0, results_found=0, jurisdiction='US'
+```
+and by contrast: a second, otherwise-identical search logged **without** passing `--deferred-reason`
+at all (exec_id 30) correctly raised `jurisdictions_searched` from 0 to 1.
+
+FINDING   : FAIL (latent defect, low severity but real)
+LOCATION  : scripts/db.py:336-410 `log_search` (no normalisation of `deferred_reason` — accepts
+  `''` uncoerced) and scripts/db.py:520-571 `get_coverage_completeness` (uses `IS NULL`/`IS NOT
+  NULL`, which does not treat `''` as absent). Also affects `scripts/audit/research_batch_dod.py`
+  R6/R14 checks at lines ~387-395 and ~583-597, which use the identical `IS NULL`/`IS NOT NULL`
+  predicate.
+NOTE      : Low practical risk if every caller remembers to omit rather than empty-string the flag,
+  but the CLI does not enforce that, and a scripted/wrapped caller (a skill script, a batch runner)
+  that always passes `--deferred-reason "$X"` with `$X` sometimes empty would silently corrupt
+  jurisdiction/language coverage counts for a real, completed search — exactly the "prose that
+  contradicts the database" failure mode CLAUDE.md §2(b) is about, except the corruption originates
+  in the write path itself rather than in a report. Cheap fix: `log_search` should coerce
+  `deferred_reason=""` to `None` before writing (one line), matching the CHECK-vocab discipline
+  already applied elsewhere in this file.
+
+### 3.4 R14's three-way distinction (query-shape failure / wrong index / genuine absence) — schema support
+`search_executions.findings_note` is free TEXT with no CHECK constraint and no companion
+enum column. `scripts/audit/research_batch_dod.py` R14 (lines ~583-597) enforces only:
+`results_found=0 AND deferred_reason IS NULL AND COALESCE(findings_note,'')=''` → FAIL. **It does
+not parse or classify the content of `findings_note`** — any non-empty string satisfies R14,
+including a string that says nothing about which of the three causes applies.
+
+FINDING   : ABSENT (partial) — the distinction is EXPRESSIBLE (I wrote it into `findings_note` by
+  hand in 3.2: "Query shape suspect... Not yet a genuine-absence claim...") but not STRUCTURED or
+  MECHANICALLY VERIFIED. Nothing in the schema or the gate can tell "I searched broadly across two
+  major indices and found nothing" (genuine-absence-leaning) apart from "this one narrow query in
+  one engine returned nothing" (query-shape-leaning) apart from "I searched the wrong database for
+  this evidence type" (wrong-index) except by a human re-reading free prose.
+LOCATION  : table.column `search_executions.findings_note` (schema: scripts/migrations, no CHECK);
+  gate: scripts/audit/research_batch_dod.py:583-597 (non-emptiness only)
+NOTE      : What would have to exist for real mechanical support: either (a) an enum column
+  `zero_yield_cause TEXT CHECK (... IN ('query_shape','wrong_index','genuine_absence'))` alongside
+  `findings_note`, or (b) a battery of paired rows the gate could check for (e.g. a genuine-absence
+  claim requires ≥2 `search_executions` rows for the same slug+item with `saturation_signal IN
+  ('partial','saturated')` and different `engine` values before `findings_note` may assert absence)
+  — this smoke test found no such requirement enforced anywhere. R14, as implemented, is a
+  "did you write something" gate, not a "did you establish what you're claiming" gate. This is
+  exactly the shape of failure mode (a) in CLAUDE.md §2 (a gate passing having examined the
+  presence of text, not its truth) generalised from citations to search logs.
+
+### 3.5 legitimate `--deferred-reason` use (control case)
+INVOKED   : `log-search --slug stair-ramp-threshold-biomechanics-accessibility --language KO --jurisdiction KR --deferred-reason "Smoke test S1: deliberately not run..."` (query-text a placeholder, no results fields)
+EXIT      : 0
+WRITES    : search_executions.exec_id=31, deferred_reason NOT NULL/NOT empty
+FINDING   : PASS
+LOCATION  : scripts/db.py:336
+NOTE      : Confirms the legitimate "deliberately not searched" path works and is distinct in kind
+  from 3.3's accidental-empty-string case (this row has real prose in deferred_reason).
+
+### 3.6 `coverage` read command
+INVOKED   : `python3 scripts/db.py coverage --slug stair-ramp-threshold-biomechanics-accessibility` (before and after the 3.3 correction)
+EXIT      : 0
+OUTPUT (after correction, exec_id 30 added): `{"jurisdictions_searched": 1, "jurisdictions_required": 48, "languages_searched": 1, "languages_required": 19, "searches_deferred_with_reason": 1, "complete": false, "legacy_grid": {"jurisdictions": 0, "languages": 0, ...}}`
+EXAMINED  : 3 rows in search_executions for this slug (29, 30, 31) at read time
+FINDING   : PASS — `jurisdictions_required`/`languages_required` are correctly derived from
+  `lang_jur_map` (48 jurisdictions, 19 languages), not hardcoded, matching CLAUDE.md's general
+  "derive volatile facts" rule and the code's own comment about a prior 24-vs-48 hardcode bug.
+LOCATION  : scripts/db.py:520-571
+NOTE      : `legacy_grid` correctly reports 0/0 for this slug and is clearly labelled as unusable —
+  good design, no defect.
+
+## 4. Screening / staging — `add-candidate` (search_candidates), R7/R15
+
+### 4.1 disposition vocabulary: schema CHECK vs live rows (CLAUDE.md §4's own worked example, re-verified)
+INVOKED   : `dbcore.check_values(conn, 'search_candidates', 'disposition')` vs `dbcore.live_vocab(conn, 'search_candidates', 'disposition')` against canonical DB (read-only) and scratch
+OUTPUT    :
+```
+canonical search_candidates rows: 60
+disposition distribution: ADMITTED=1, MISCELLANEOUS=1, PENDING-VERIFICATION=55, REHOME=3
+check_values (schema CHECK)  = {PENDING-VERIFICATION, REHOME, OUT-OF-SCOPE, ADMITTED, MISCELLANEOUS}
+live_vocab   (sample of rows) = {PENDING-VERIFICATION, REHOME, ADMITTED, MISCELLANEOUS}   # no OUT-OF-SCOPE
+```
+FINDING   : PASS
+LOCATION  : scripts/dbcore.py:272 check_values, :281 live_vocab, :308 check_vocab (uses check_values, not live_vocab)
+NOTE      : Independently reproduces CLAUDE.md §4's claim exactly — `OUT-OF-SCOPE` is declared in
+  the CHECK and unused in all 60 live rows. `check_vocab` (what `insert_search_candidate` actually
+  calls) is schema-sourced, so it does NOT wrongly refuse `OUT-OF-SCOPE` — confirmed positively in 4.2.
+
+### 4.2 add-candidate — valid writes (scratch)
+INVOKED   : `add-candidate --exec-id 30 --found-under-slug stair-ramp-threshold-biomechanics-accessibility --disposition PENDING-VERIFICATION --title "Handrail diameter and grip force in older adults: a laboratory study" --locator "10.9999/smoketest-handrail-grip" --locator-status UNVERIFIED --tier-guess 1 --why-not-admitted "..." --session ...`
+EXIT      : 0 → candidate_id=61
+INVOKED   : same shape, `--disposition OUT-OF-SCOPE --title "Handrail marketing brochure..." --why-not-admitted "Commercial marketing material, not evidence..."`
+EXIT      : 0 → candidate_id=62
+FINDING   : PASS (both)
+LOCATION  : scripts/db.py:2263 insert_search_candidate
+NOTE      : `OUT-OF-SCOPE` writes successfully — the schema-CHECK-based refusal is correct and a
+  live-row-sample-based refusal (which CLAUDE.md warns against) would have wrongly blocked this.
+
+### 4.3 R15 mechanical support — confirmed real, not aspirational
+INVOKED   : `add-candidate --disposition ADMITTED --locator-status UNVERIFIED ...` (premature admission)
+EXIT      : 1
+OUTPUT    : `ValueError: disposition=ADMITTED requires locator_status=RESOLVED. R15: a staged candidate description is a hypothesis, and admitting one whose locator was never resolved is how a guess becomes a fact.`
+INVOKED   : same, `--locator-status RESOLVED` (correct path)
+EXIT      : 0 → candidate_id=63
+FINDING   : PASS
+LOCATION  : scripts/db.py:2290-2294
+NOTE      : R15 ("re-describe a hypothesis on resolution") has real, tested, working mechanical
+  support at write time — this is not merely documented, it refuses.
+
+### 4.4 further refusals exercised
+- Bad disposition value `MAYBE` → `ValueError: ... does not accept 'MAYBE'. The schema's own CHECK declares: ['ADMITTED', 'MISCELLANEOUS', 'OUT-OF-SCOPE', 'PENDING-VERIFICATION', 'REHOME']` — EXIT 1, PASS. LOCATION scripts/dbcore.py:308.
+- Bad `--exec-id 999999` (not a live search_executions row) → `ValueError: exec_id 999999 is not a live search_executions row. A candidate is something a SEARCH surfaced; log the search first...` — EXIT 1, PASS. LOCATION scripts/db.py:2273-2277. Named, not a bare FK error — good.
+- Bad `--found-under-slug nonexistent-slug-xyz` → `ValueError: found_under_slug 'nonexistent-slug-xyz' is not in \`slugs\`.` — EXIT 1, PASS. LOCATION scripts/db.py:2278-2280.
+
+EXAMINED (candidate-vocab check overall): 60 live rows read for the live_vocab comparison, 5
+distinct add-candidate invocations against scratch DB, all producing the expected result.
+FINDING (section overall): PASS — this is the cleanest-tested surface in the research stage so
+far; every refusal PROTOCOL asked for (bad vocab, bad FK, R15 mechanism) is real and gives a
+named, actionable error, not a bare traceback.
+
+## 5. Citation mining — the headline test
+
+### 5.0 Context that changes the reading of everything below
+`SELECT COUNT(*) FROM evidence_sources` on the **canonical** DB = **10**. `SELECT COUNT(*) FROM
+source_slug_links` = **10**, and every single one is `slug='room-acoustic-performance'`. **Zero**
+evidence sources exist for ANY of the 6 mobility slugs identified in §1 — confirmed by
+`SELECT COUNT(*) FROM source_slug_links WHERE slug IN (...)` = 0 for all five distinct mobility
+slugs checked. `citation_mining` (10 rows) is entirely `room-acoustic-performance` too — a
+mobility citation-mining test on **real** data is not possible; every mechanic below except 5.0
+itself had to be exercised against either (a) the pre-existing room-acoustic-performance rows
+(read-only) or (b) one synthetic `evidence_sources` row I filed on the scratch DB, clearly titled
+`SMOKE-TEST SYNTHETIC ROW`, so `log-mining`/`is-mined` had something real to key on. **This alone
+is close to the largest finding in this whole log: the mobility batch starts from a definitionally
+empty evidence base, with citation mining having never been run on it once.**
+
+### 5.1 Is there an executable retriever for backward mining (reference list) or forward mining (citing works)?
+`find scripts -iname '*crossref*' -o -iname '*semanticscholar*' -o -iname '*citation*' -o -iname
+'*openalex*'` returns only `scripts/audit/citation_mining_completeness.py` (an audit, not a
+retriever) and `scripts/audit/reasoning_doc_citations_audit.py` (unrelated — audits reasoning-doc
+citation hygiene, not evidence citations). `grep -rl 'api.crossref.org\|semanticscholar.org\|api
+.openalex.org' scripts/ skills/` returns only `skills/citation-miner_SKILL.md` and
+`skills/gap-driven-mining_SKILL.md` — **prose instructions telling a human/agent to call
+`web_fetch` against those URLs by hand**, not a client. `scripts/resolve_dois.py` exists but does
+DOI *resolution/verification* (PMID→DOI, title/author matching against CrossRef to confirm a
+source's own identity) — it does not retrieve a reference list or a citing-works list for an
+anchor.
+
+**FINDING: ABSENT.** `citation_mining` (the table) IS what `skills/citation-miner_SKILL.md` §1/§2
+say it is: **a hand-filled ledger of work done elsewhere** (via the general-purpose `WebFetch`/
+`WebSearch` tools, narrated in `notes`), not the output of any executable retriever. Confirmed by
+reading the 10 live rows: `notes` contains prose like *"Backward mining run via Crossref: 108
+references listed, 64 carrying a DOI"* — a first-person narration of a manual fetch-and-read pass,
+not a machine-generated log. `connections_produced` holds a raw JSON array of **DOI strings only**
+(no titles, years, or verification status) — these are described in the same rows' own notes as
+**not yet verified or admitted** ("NOT harvested into source_locators: section 6 widening is OD-5
+and still open" — RAP-02/RAP-04; "5 cited DOIs are already held... FOUR are unconsumed
+source_locators leads invisible to R9" — RAP-08).
+
+**What would have to exist:** a small retrieval client — e.g. `scripts/research/crossref_client.py`
+hitting `api.crossref.org/works/{doi}` for `.message.reference[]` (backward) and
+`scripts/research/semantic_scholar_client.py` hitting
+`api.semanticscholar.org/graph/v1/paper/DOI:{doi}/citations` (forward) — that writes its raw
+output through `scripts/research/retrieval_log.py` (§7 below) BEFORE any human curation, the same
+way `--verify-authors` works for bibliographic fields. **Stage left unenforced without this:**
+`research` itself — R2's depth-2/3 requirement and the backward/forward split are currently
+enforced only by a human remembering to do the fetch and being honest in `notes`; nothing catches
+a session that skips forward mining and writes `forward=1` anyway (the CHECK on
+`citation_mining.forward` only constrains it to 0/1, not to truth).
+
+### 5.2 `citation_mining` table — what the 10 live rows actually record
+Columns: `slug, local_ref_id, global_ref_id, doi, backward, forward, connections_produced, notes,
+created_at, created_by_session, updated_at, updated_by_session, deferred_reason`. All 10 rows are
+`room-acoustic-performance`. Direction coverage: 7 rows have `backward=1,forward=1` (RAP-01/02/03
+/05/07/08... — full pairs), 3 rows (`RAP-F61/F69/F70`) have `backward=0,forward=1` with notes
+*"BACKWARD mining still OWED for this anchor (R2)"* — i.e. **known, self-declared incomplete
+mining**, honestly logged rather than hidden. `connections_produced` sizes range from `[]` (2 rows,
+one honestly explained as *"cited-by is 0 because the paper is 2026 and has not accumulated
+citations... Recorded so a later pass does not read the empty forward result as a defect"* — a
+good example of R14-style absence-vs-not-yet discipline actually working in prose) up to 39 DOIs
+(RAP-02). Two rows carry a `ROW RE-KEYED 2026-08-22` note documenting the exact
+local-vs-global-ref-id drift bug CLAUDE.md's citation-miner-skill excerpt (§1 INLINE mode) warns
+about — the drift happened once, was caught, and is now fixed in `db.py:201` per the skill's own
+correction note, confirmed by reading the code (§0 above, `log_mining` docstring).
+
+### 5.3 mechanical exercise (scratch DB)
+INVOKED   : `add-source --ref-id REF-00972 ... --slug stair-ramp-threshold-biomechanics-accessibility --local-ref-id SMK-01 --session ...` (synthetic row, evidence-collection-stage table, used only to give citation_mining a real FK to key on — noted as a stage boundary crossing, necessary because the research-stage table depends on an evidence-collection-stage table having ≥1 row)
+EXIT      : 0 → `{"ref_id": "REF-00972", "linked_slug": "stair-ramp-threshold-biomechanics-accessibility"}`
+
+INVOKED   : `is-mined --slug stair-ramp-threshold-biomechanics-accessibility --ref REF-00972` (before)
+OUTPUT    : `{"mined": false}`
+FINDING   : PASS
+
+INVOKED   : `log-mining --slug ... --ref REF-00972 --direction backward --connections '[]' --session ...`
+EXIT      : 0 → `{"logged": true}`
+
+INVOKED   : `is-mined ...` (after backward only)
+OUTPUT    : `{"backward": 1, "forward": 0, "connections_produced": "[]"}`
+FINDING   : PASS — correctly reports partial-mining state
+
+INVOKED   : `log-mining --direction forward ...` then bad-direction test `--direction sideways`
+EXIT      : 0 then 2 (argparse `choices` rejects it before reaching the DB layer)
+OUTPUT    : `db.py log-mining: error: argument --direction: invalid choice: 'sideways' (choose from 'backward', 'forward')`
+FINDING   : PASS
+
+INVOKED   : `unmined --tier-max 3` (global, scratch)
+OUTPUT    : lists the synthetic SMK-01 row (now fully mined, backward=1 forward=1 — so it
+  should NOT appear as unmined; **checked — it correctly does not appear** in the head-40 output,
+  which instead shows RAP-06/RAP-09/RAP-10, the genuinely-partial rows) — confirmed by re-reading
+  the full output, not just the head.
+EXAMINED  : 7 slug-linked Tier 1-3 sources (scratch DB total)
+FINDING   : PASS
+
+NOTE (5.3 overall): every `db.py` mechanic asked for in PROTOCOL — `log-mining`, `is-mined`,
+`unmined` — works correctly and the direction/state bookkeeping (backward vs forward, partial vs
+complete) is accurate. **The defect is not in this bookkeeping layer; it is that nothing upstream
+of it can retrieve a real reference list or citing-works list (5.1), and that zero mobility rows
+exist to book anything about (5.0).**
+
+### 5.4 `gaps` / `gap_mining` / `unmined-gaps` / `add-gap-mining` / `update-gap-addressability`
+Canonical DB: `gaps` = 5 rows, ALL `section='room-acoustic-performance'` — **zero gaps recorded
+for any mobility slug**, consistent with 5.0. `gap_mining` = **0 rows** on the canonical DB (never
+used yet, though the table and its five-outcome CHECK vocabulary, the closure-needs-discoveries
+integrity CHECK, and the ≥20/≥10-char CHECKs on `gap_recategorized`/`deferred` notes are all live
+and enforced — confirmed by table DDL).
+
+DEFECT — `next_gap_id()` / `db.py next-id gaps` disagrees with the live naming convention:
+INVOKED   : `python3 scripts/db.py next-id gaps` (scratch, before any write)
+OUTPUT    : `{"next_id": "GAP-001"}`
+All 5 live gap_ids are `GAP-B01-001, GAP-B01-002, GAP-B01-003, GAP-B01-004, GAP-B02-001` — a
+batch-scoped `GAP-B{batch}-{seq}` scheme. `next_gap_id()`'s query is
+`WHERE gap_id GLOB 'GAP-[0-9]*'` (scripts/db.py:139) — none of the 5 live ids match that glob
+(the character after `GAP-` is `B`, not a digit), so the function silently falls through to the
+`GAP-001` default every time, regardless of how many `GAP-B0N-NNN` ids already exist. No
+collision resulted in this test only because `GAP-001` happens not to exist yet.
+FINDING   : FAIL
+LOCATION  : scripts/db.py:135-144 `next_gap_id()`
+NOTE      : Same shape of defect as the `source_locators`/`evidence_sources` ref_id high-water
+  mark bug CLAUDE.md §4 describes as "WRONG for weeks" — an allocator whose pattern has drifted
+  from the table's real convention. Two sessions in the same untracked window minting gaps via
+  `next-id gaps` would both get `GAP-001` and the second INSERT would fail on the `PRIMARY KEY`
+  collision (loud, not silent) — better than the ref_id case, but the allocator itself is still
+  wrong and should read the live prefix scheme rather than assuming unscoped `GAP-NNN`.
+
+INVOKED   : `add-gap --category ST --priority P1 --description "SMOKE-TEST S1: no item_code exists for handrails..." --section stair-ramp-threshold-biomechanics-accessibility --session ...`
+EXIT      : 0 → `gap_id: GAP-001` (confirms the defect above concretely — this mobility gap's id
+  carries zero information about which batch/slug-family minted it, unlike every real gap)
+FINDING   : PASS (write succeeded) / see DEFECT above for the id-shape problem
+
+INVOKED   : `add-gap-mining --gap-id GAP-001 --search-strategy '{"strategies":[{"tool":"crossref","query":"handrail diameter grip biomechanics","candidates_returned":0}]}' --candidates-returned 0 --candidates-reviewed 0 --outcome null_result --check-method pubmed_cluster --notes "SMOKE-TEST S1: null result probe, not a real mining attempt." --session ...`
+EXIT      : 0 → `{"gap_mining_id": 1}`
+FINDING   : PASS
+
+INVOKED   : `update-gap-addressability --gap-id GAP-001 --addressability NOT-ADDRESSABLE --session ...`
+  (note: PROTOCOL/task text says `--mining-addressability`; the actual flag is `--addressability` —
+  confirmed by argparse usage string; minor doc/task-text mismatch, not a tool defect)
+EXIT      : 0 → `{"gap_id": "GAP-001", "mining_addressability": "NOT-ADDRESSABLE"}`
+FINDING   : PASS
+
+INVOKED   : `unmined-gaps` (scratch, after)
+OUTPUT    : returns the 5 real gaps, correctly EXCLUDES GAP-001 now that it has a `gap_mining` row
+  / non-NULL `mining_addressability`
+EXAMINED  : 6 gaps total in scope
+FINDING   : PASS
+
+### 5.5 Audit scripts — `citation_mining_completeness.py`, `gap_mining_audit.py`
+INVOKED   : `python3 scripts/audit/citation_mining_completeness.py` (canonical, read-only, default args)
+EXIT      : 0
+OUTPUT    :
+```
+DB: data/guidebook.db | Session scope: (all) | Tier scope: 1..2
+Examined (slug-linked T1-2 sources in scope): 6
+Outstanding (no citation_mining row): 0
+VERDICT: CLEAN
+Total in scope: 6 | Total with citation_mining row: 6 (100.0%)
+```
+EXAMINED  : 6 (printed explicitly, per CLAUDE.md §2(a) requirement)
+FINDING   : PASS — real subject, not vacuous; VERDICT enum includes CLEAN vs NOTHING-IN-SCOPE
+  as distinct outcomes per the script's own docstring, so a future mobility-scoped run that finds
+  zero sources would correctly self-report NOTHING-IN-SCOPE rather than a false CLEAN.
+
+INVOKED   : same, `GUIDEBOOK_DB_PATH=$SMOKE/s1-research.db ... --session session_2026-08-25-pipeline-smoke-test-mobility.md`
+EXIT      : 0
+OUTPUT    : `Examined (slug-linked T1-2 sources in scope): 1` / `VERDICT: CLEAN` /
+  `(repo-wide, not this session: 7/7 T1-2 sources mined, 100.0%)`
+FINDING   : PASS — correctly scoped to the one synthetic source this session added and separately
+  reports the repo-wide figure without conflating the two.
+
+INVOKED   : `python3 scripts/audit/gap_mining_audit.py` (canonical)
+EXIT      : 0
+OUTPUT    : `schema version: 64 | gaps rows: 5 | gap_mining rows: 0 | EXAMINED: 5 | FAILURES: 0 |
+  INFORMATIONAL: 1 — 5 OPEN gaps with mining_addressability=NULL (triage backlog)` / `PASS.`
+FINDING   : PASS — `EXAMINED: 5` printed explicitly; correctly flags the triage backlog as
+  informational (not a failure), matching its own documented severity model.
+
+INVOKED   : same against scratch (post GAP-001 write)
+OUTPUT    : `gaps rows: 6 | gap_mining rows: 1 | EXAMINED: 7 | FAILURES: 0` (same informational note)
+FINDING   : PASS
+
