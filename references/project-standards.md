@@ -1172,3 +1172,53 @@ cost and its own finding says why: the repair plan's acceptance test **fails by 
 nothing in the plan would have noticed.
 
 DATE: 2026-08-25 — owner prompt commissioning the adversarial review; recorded the same day.
+
+---
+
+RULE: `MOB` is split. The mobility population is separated into **ambulatory** and **wheelchair
+user** as the first cut. Owner ruling 2026-08-25, verbatim: *"As to 'mobility', separate out into
+'ambulatory' and 'wheelchair user' to start."* Recorded on contact per `CLAUDE.md` rule 0; this
+settles DG-NON item 1 of the pipeline smoke test and is **not to be relitigated**.
+
+**"To start" is load-bearing.** It marks this as the first split, not the final taxonomy. Part-time
+wheelchair users — named in the work-from-axes RULE's own provenance clause as one of the erased
+groups — are **not** covered by either new code and remain owed. Balance-demand users likewise. The
+schema work must therefore be built to extend, not to close.
+
+**Why the split was owed, in the project's own terms.** `MOB` — *"disabled people with mobility
+needs; wheelchair users"*, described as *"General mobility limitation including walking, balance, or
+wheeled mobility"* — fails clause **(c)** of the ratified permitted-umbrella test (2026-07-23):
+*"no opposed demand between members."* Ramp gradient is opposed between its members (a manual
+wheelchair user wants a shallower gradient; an ambulant person with fatigue or spasticity often
+wants a shorter run, and therefore a steeper one), and handrails serve ambulant and balance users
+first while obstructing some wheeled users. The test that forbids this umbrella has existed since
+2026-07-23; `MOB` was never run through it.
+
+**Footprint, measured 2026-08-25 before any design work:**
+
+| Table | MOB rows | of total |
+|---|---:|---:|
+| `item_population_links` | **31** | 372 |
+| `population_axis_map` | **2** | 53 |
+| `evidence_population_match.target_population` | **0** | 25 (all AUT/COM/DEM/NDV) |
+| `specifications`, `item_population_elaborations`, `probe_population_links`, `extraction_population_links`, `citation_population_links`, `case_study_populations` | **0** | 0 |
+
+**33 rows. The split is a small migration, and it is cheapest now** — every one of those empty tables
+fills during the mobility batch, and the same split after the batch would have to re-grade admitted
+evidence rather than re-point 33 substrate rows.
+
+**Two constraints the execution must respect.** (1) `evidence_population_match.study_population` is
+free text describing *the study's own* participants — a fact about the paper, never fanned out
+across a split. (2) An `item_population_links` row that genuinely applies to both becomes **two**
+links, not one ambiguous one; where it cannot be resolved mechanically it is flagged for review
+rather than guessed.
+
+CONDITION: Any session touching the mobility population codes, the `populations` vocabulary, or any
+(item × population) cell for a mobility item.
+ACTION: (1) Use the two new codes; do not write new `MOB` rows. (2) Whether `MOB` survives as an
+additive cross-cutting tag (permitted) or is retired outright is settled by the design in
+`scratchpad/…/logs/F5-population-split-design.md` plus owner confirmation of the code strings — it
+is **never** a replacement code (permitted-umbrella test, clause on umbrellas as additive tags).
+(3) Part-time wheelchair users and balance remain unrepresented and must be named as a gap in any
+cell that turns on them, not silently absorbed.
+DATE: 2026-08-25 — owner ruling, quoted above.
