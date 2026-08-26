@@ -1305,3 +1305,137 @@ study's own* participants. A grade is a fact about a paper. (Moot in practice �
 rows there — but recorded because the next split will not be moot.)
 
 DATE: 2026-08-25 — owner ruling, quoted above.
+
+---
+
+RULE: The judgment object is the **canonical parameter**, and `items` is the render rollup the entity
+model already calls it. Owner ruling 2026-08-26, selecting "key on the canonical parameter" from the
+options put on the still-open question the grain ruling of 2026-08-25 left named and undecided —
+*"what the judgment object is called"*, the owner's own parenthesis *"(if we use the word item)"*.
+Recorded on contact per `CLAUDE.md` rule 0.
+
+**The determination is keyed on the design parameter under determination**, reusing
+`source_value_extractions.parameter_canonical`. `items` is **demoted from identity to rollup**: it
+stays as the Part-4 render aggregate that `governance/conceptual-model.md:92` already declares it —
+*"Many specifications roll up into one item… Item is the Part-4 [rollup]"* — and is **derived from
+specifications rather than keyed by them**. `specifications.item_code`, presently `NOT NULL`, is
+dropped alongside `population_code` in the same P1.0 migration.
+
+**This is a carry-forward, not an invention, and the schema already proves it.** Measured 2026-08-26
+against `data/guidebook.db` (`user_version` 64):
+
+| | identity | optional cross-reference |
+|---|---|---|
+| `source_value_extractions` (evidence collection) | `parameter` **NOT NULL** | `parameter_canonical`, `population_code`, `item_code` — all nullable |
+| `specifications` (judgment) | `item_code` **NOT NULL**, `population_code` **NOT NULL** | — and **no parameter column at all** |
+
+The stage that produces the measurement already treats the parameter as mandatory identity and
+population and item as optional qualifiers. The stage immediately downstream inverts it. The ruling
+removes the inversion by carrying the extraction layer's own shape one stage forward.
+
+**The judgment stage's own convergence input was never keyed on the item.** `v_value_independence`
+— the view that counts independent roots, the input to `convergence_assessment` — reads
+`GROUP BY COALESCE(parameter_canonical, parameter), population_code`
+(`057_baseline_2026-08-12.sql:6693-6701`). No `item_code` appears in it. `idx_sve_slug_param` indexes
+`(slug, parameter_canonical)`. The grain the ruling selects is the grain the independence machinery
+has been built on since the baseline; only `specifications` disagreed.
+
+**The counter-consideration, recorded because it is real and is now the executing session's problem.**
+`parameter_canonical` has **no CHECK, no registry table, and no writer**. Its entire specification is
+a code comment — `schemas/source_value_extraction.py:89`, *"normalized for join (lowercase,
+hyphens)"*. Keying a determination on an unconstrained free-text column means "corridor clear width"
+and "clear corridor width" become two determinations of the same thing. **A key needs a vocabulary**,
+and this one does not have one yet. The nullability compounds it: `parameter_canonical` is nullable
+in the table that will feed it, so an extraction may be written that no determination can join to.
+
+**One home, verified.** `parameter` appears on exactly two live tables —
+`source_value_extractions` and `reasoning_doc_citations` (both 0 rows); `parameter_canonical` on one.
+*(An earlier measurement in this session's log named four tables. It was wrong — produced by reusing
+one SQLite cursor for an inner query inside an outer iteration, which silently truncates the outer
+loop. Recorded rather than quietly replaced: the defect class is §2(b)'s, a number in a derived
+document that the database does not support.)*
+
+CONDITION: Any session implementing P1.0, writing `db.py add-extraction`, or reasoning about what a
+determination is keyed on.
+ACTION: (1) The P1.0 migration drops **both** `item_code` and `population_code` from
+`specifications`' identity and keys it on the canonical parameter; the three N:N cross-reference
+junctions (population, access need, ICF) land in the same migration, unchanged from the 2026-08-25
+ruling. (2) **A canonical-parameter vocabulary lands in or before that migration** — the key may not
+be unconstrained free text. Its home is the schema's own CHECK or a registry table, decided by the
+executing session and recorded; not a list in code (rule 5). (3) `add-extraction` (P1.2) must
+**require** `parameter_canonical`, not accept the column's nullability, or extractions become
+unjoinable to the determinations they exist to support. (4) `v_value_independence` still groups by
+`population_code`; under this ruling population is a cross-reference, so that view's grain is
+re-derived in the same change or an independence count fragments across populations. (5) `items`
+survives as the Part-4 rollup only — no new writer keys anything on `item_code` at the judgment
+stage. The window is still open and still closes on the first determination written: `specifications`
+and `specification_source_links` both hold **0** rows and no committed data migration INSERTs into
+either.
+DATE: 2026-08-26 — owner ruling, selecting from options put.
+
+---
+
+RULE: The §R8 demand-layer rename executes **together with** a retired-vocabulary register entry.
+Owner ruling 2026-08-26, selecting "schema rename plus register entry" on open decision 3 of the
+repair plan. Recorded on contact per `CLAUDE.md` rule 0. This does not amend the `icf_demands` RULE
+above; it schedules it and adds the mechanical half.
+
+**Why the register half was chosen, and the evidence for it.** Prose discipline against this token
+failed **four times in one session** on 2026-08-25 — my own writing, against objects that still carry
+the old names. A rule enforced only by remembering is the pattern `CLAUDE.md` §2 was rewritten to
+end. `governance/retired-vocabulary.yaml` exists to catch exactly this mechanically, via
+`scripts/audit/retired_vocabulary_audit.py`, registered as `retired_vocabulary` at `advisory`.
+
+**The register's own admission test fixes the order, and it is the reverse of the intuitive one.**
+Test 2: *"THE REPLACEMENT HAS ALREADY LANDED. A token retired by a decision whose implementing
+migration has not run is still describing live data correctly."* So the entry **cannot precede the
+migration** — added first it would flag 232 rows of correct live data. Rename first, register in the
+same change, entry last.
+
+**What the entry may contain, derived from the matcher rather than assumed.** `retired_vocabulary_audit.py:93-108`
+compiles every mode with a `(?<![\w-])…(?![\w-])` boundary. Two consequences, both binding:
+
+- **The bare word `axis` may NOT be an entry.** `identifier` mode would match the ordinary English
+  word in prose and nothing else — it cannot match `axis_code`, because `_` is `\w` and fails the
+  lookahead. Flagging descriptive English is precisely what `DR-2026-08-24` §R8 forbids: *"Axis is a
+  term that we should be able to use freely to describe how things are set up."* The entries are
+  therefore **one per retired identifier**: `axes`, `axis_code`, `item_axis_links`,
+  `population_axis_map`, `access_need_axis_map`, `serves_axes`, `attaches_axes`.
+- **`AX-` cannot be expressed at all.** All three modes (`identifier`, `literal`, `phrase`) require a
+  non-`[\w-]` character after the token, so `AX-` never matches `AX-AMB`. There is no prefix mode.
+
+**Which forces a scoping question the rename must answer explicitly.** The `icf_demands` RULE renames
+the *column* to `demand_code` but is silent on whether the 17 **code values** are re-minted. If they
+are not, `AX-*` stays correct live data and fails admission tests 2 and 3, and belongs in the
+register's `deferred:` section with this reasoning. If they are, it is a data migration over **288
+live cells**, counted case-sensitively (`GLOB '*AX-*'`) on 2026-08-26: **249** in the four
+`axis_code` key columns — `item_axis_links` 158, `population_axis_map` 53, `access_need_axis_map` 21,
+`axes` 17 — and **39 in free text** across twelve further columns, among them `terms.scope_note` 17,
+`axes.falsification_condition` 8, `access_need_icf.note` 3 and `slugs.serves_axes` 1. **The migration
+must state which, because the register entry the owner ordered cannot be written until it does.**
+
+*Two notes earned in the measuring.* A first pass used `LIKE`, which is case-insensitive for ASCII in
+SQLite, and returned two `source_locators` rows that were `t`**`ax-`**`return` inside a Canada Revenue
+Agency URL; the figures above are `GLOB`. And the free-text tail is the harder half — a key column is
+re-pointed by an FK-ordered UPDATE, while `falsification_condition` and `scope_note` carry the token
+inside sentences and cannot be rewritten mechanically without reading them.
+
+**The caller surface, measured 2026-08-26** by `git grep -lIw` per identifier: `axes` 179 files ·
+`item_axis_links` 60 · `population_axis_map` 50 · `axis_code` 35 · `access_need_axis_map` 32 ·
+`serves_axes` 27 · `attaches_axes` 6. Whole-token (`axis`/`axes`/`AX-`) across tracked files: **312**,
+of which **132** sit outside the register's existing frozen-path exemptions. *(The `icf_demands`
+entry's "297 tracked files" was measured yesterday under a scope it did not record. Neither figure is
+load-bearing; the per-identifier counts are.)* A blocking check, `validate_axes`
+(`check-registry.yaml:640`), is a caller — and so is `check-registry.yaml` itself, which is where the
+2026-08-25 selftest failure came from.
+
+CONDITION: Any session executing the §R8 rename, or proposing to add `axis`/`AX-` to the retired
+register.
+ACTION: (1) Rename first, register entry last, in one change — the admission test forbids the
+reverse. (2) Seven identifier entries, never the bare word. (3) The migration states explicitly
+whether `AX-*` values are re-minted; if not, `AX-` goes to `deferred:` with the matcher reasoning
+above. (4) Category-A `exempt_paths` for the documents that record the retirement —
+`DR-2026-07-22-work-from-axes.md`, `DR-2026-08-24-scaffolding-is-phase-specific.md`, this ledger, and
+the attestations naming them. (5) The rename stays owner-gated and whole; §R8 item 3's bar on
+piecemeal execution is unchanged.
+DATE: 2026-08-26 — owner ruling, selecting from options put.

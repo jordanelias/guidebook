@@ -56,7 +56,7 @@ Counts are live at 2026-08-25.
 
 | Table | Rows | What it means for the book |
 |---|---:|---|
-| `specifications` | 0 | **The determination** — the book's actual answer to a question. Currently keyed `UNIQUE(item_code, population_code)`; that grain is under challenge (see `GRAIN-QUESTION.md`). No CLI writer exists. |
+| `specifications` | 0 | **The determination** — the book's actual answer to a question. Keyed `UNIQUE(item_code, population_code)` in the live schema; **both halves of that key are superseded** — owner rulings 2026-08-25 (population demoted to cross-reference) and 2026-08-26 (the key is the canonical parameter; `items` is the Part-4 render rollup). Executed by P1.0. No CLI writer exists. |
 | `specification_source_links` | 0 | Which sources govern a determination. **Without it a determination renders with no visible sources** — an assertion, not evidence. |
 | `convergence_assessment` | 0 | Whether independent evidence streams agree. Doctrine requires counting **independent values**, never documents. |
 | `spec_value_probes` | 0 | Progressive-measurement probes — walking a value to its empirical ceiling. |
@@ -93,7 +93,7 @@ Counts are live at 2026-08-25.
 `access_needs` 17 · `axes` 17 (→ `icf_demands`) · `access_duration` 3 · `access_stakes` 3 ·
 `life_stage_modifiers` 2 · `weighting_profile` 5 · `situations` 0
 
-**Crossing maps** *(the three `*_axis_*` names below are physical only, pending the §R8 rename to `*_demand_*`)*: `access_need_icf` 43 · `access_need_axis_map` 21 · `item_axis_links` 158 ·
+**Crossing maps** *(the three `*_axis_*` names below are physical only, pending the §R8 rename to `*_demand_*` — ruled 2026-08-26 and scheduled as REPAIR-PLAN P0.6, rename then register entry)*: `access_need_icf` 43 · `access_need_axis_map` 21 · `item_axis_links` 158 ·
 `population_axis_map` 53 · `item_population_links` 372 · `item_population_elaborations` 0 ·
 `term_item_links` 147 · `lang_jur_map` 70
 
