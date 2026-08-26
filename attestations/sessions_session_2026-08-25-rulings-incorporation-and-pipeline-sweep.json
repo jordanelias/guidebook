@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-08-25-rulings-incorporation-and-pipeline-sweep",
+  "artifact": "sessions/session_2026-08-25-rulings-incorporation-and-pipeline-sweep.md",
+  "doctrine_sha": "0f2f525",
+  "rules_in_scope": [
+    "integrity-protocol",
+    "source-discipline",
+    "citation-mining",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "data/guidebook.db",
+      "reason": "NO WRITE to the canonical database and no migration emitted. Every access this session made was sqlite3.connect(mode=ro). The claim is stated as a diff rather than a sha, per the correction the preceding session had to make when main moved underneath it: git diff --name-only origin/main HEAD -- data/guidebook.db returns nothing. Read-only state at close, user_version 64: specifications 0, specification_source_links 0, source_value_extractions 0, evidence_sources 10, source_locators 875, item_population_links 372. No code file, no script, no check and no schema was changed; the tracked surface this session touched is references/project-standards.md, sessions/ and its own scratchpad."
+    },
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "references/project-standards.md",
+      "reason": "Every figure in the two rulings recorded on 2026-08-26 was measured at the moment of writing and carries the command or file:line that produced it: the parameter/parameter_canonical nullability from PRAGMA table_info, the v_value_independence GROUP BY from 057_baseline_2026-08-12.sql:6693-6701, the matcher boundary from retired_vocabulary_audit.py:93-108, the register's admission test quoted from governance/retired-vocabulary.yaml's own header, the 288 AX- cells from a case-sensitive GLOB sweep of every column of every table, the per-identifier caller counts from git grep -lIw. Two of those figures replaced earlier wrong ones I had produced myself in this session; both wrong versions and their mechanisms are recorded in the ledger rather than quietly overwritten."
+    },
+    "citation-mining": {
+      "status": "SKIPPED",
+      "reason": "Out of scope by construction. This session admitted no evidence, ran no search and mined nothing; sessions/LATEST-RESEARCH is deliberately not advanced. The mining capability was measured by the preceding session and its stranded-yield finding is carried into REPAIR-PLAN.md as P2.1, unchanged and unre-verified here."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/sessions_session_2026-08-25-rulings-incorporation-and-pipeline-sweep.json",
+      "reason": "This file, written before the commit that touches sessions/ rather than after CI rejected it. That ordering is the direct remedy for the deviation logged against the preceding session, where the blocking attestation_presence gate caught the omission on CI at head d4042e6 and the local preflight did not. The local-versus-CI window split that allowed it is unfixed and is recorded in REPAIR-PLAN.md as deliberately deferred, so this attestation's timeliness rests on my sequencing, not on a gate."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "source-discipline",
+      "reason": "I used the retired demand vocabulary in my own prose four times inside the session that recorded its retirement, and the owner caught it rather than a check. The uses were bare code strings in place of the demand names doctrine requires (2026-08-18: codes AND names, never bare codes). Corrected in place across STAGE-TABLE-MAP.md and WALK-REPAIR-PLAN.md, and it is the measured evidence behind the register half of the 2026-08-26 §R8 ruling: prose discipline against this token has now failed four times in one session, so the remedy chosen is mechanical rather than another instruction to remember."
+    },
+    {
+      "rule": "source-discipline",
+      "reason": "Two measurements I produced were wrong and reached the options put to the owner before being re-measured. (1) A claim that four tables carry a parameter column; two do. Cause: one SQLite cursor reused for an inner query inside an outer iteration, which resets the outer cursor and silently truncates the loop, reporting a subset as the whole. The same bug had reported axes, item_axis_links and population_axis_map as absent from the schema when all three are live. (2) A count of AX- values using LIKE, which is case-insensitive for ASCII in SQLite, returning two source_locators rows that were 'tax-return' inside a Canada Revenue Agency URL. Both are recorded in references/project-standards.md with their mechanisms, because a derived document that the database does not support is CLAUDE.md 2(b)'s named failure and the mechanism is the reusable part."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "This session's deliverables were written into the PRECEDING session's scratchpad directory while its command log went to its own. A reader opening scratchpad/session_2026-08-25-rulings-incorporation-and-pipeline-sweep/ finds notes.md and commands.jsonl and none of REPAIR-PLAN.md, STAGE-TABLE-MAP.md, GRAIN-QUESTION.md, HOOK-REGRESSION.md or the F4/F6 design logs. It was the right call for continuity — those files continue one document set and splitting it would have made the plan harder to read than the provenance is to state — but it means the record of what happened and the record of where it happened disagree, which is the same defect class as the misfiling hook this session diagnosed as P0.3. Recorded rather than repaired: moving the files now would break every path already committed and merged that points at them."
+    }
+  ],
+  "bias_direction": "My bias here is toward the ruling being tidier than it is. I want the owner's 'key on the canonical parameter' to be a clean carry-forward of a grain the schema already had, and I found real evidence for that reading -- the nullability pattern in source_value_extractions, the baseline's own GROUP BY, the index on (slug, parameter_canonical). The pressure that creates is to under-report what the ruling does not solve, and there is a specific thing it does not solve: parameter_canonical is unconstrained free text with no vocabulary, no CHECK, no registry and no writer, so a determination keyed on it can fragment across spellings of the same parameter. I mitigated by writing that counter-consideration into the RULE itself as a binding ACTION rather than a caveat in a scratch file, and by making the nullability problem explicit as an obligation on P1.2's writer. The second bias is procedural: having spent the session recording rulings, I am inclined to treat recording as completion. Nothing in this session executes anything. Not one line of the repair plan is implemented, the schema is untouched, and every ruling recorded remains a promise.",
+  "independent_reviewer_counterclaim": "A reviewer could reasonably say this session moved a ruling from one document into another document and called it work. That charge has force. The strongest version: the preceding session diagnosed a severed pipeline, and the response to a severed pipeline has been two consecutive sessions of writing about it, producing a 1,434-line standards ledger and a 300-line plan against a judgment stage that still holds zero rows. The project's documented pathology is apparatus growing faster than the book, and prose about the apparatus is the cheapest apparatus of all. Three narrow defences. First, rule 0 makes recording a ruling on contact non-optional and the alternative is worse -- the ledger already records nine instances of paperwork being argued against live directives, and unrecorded rulings are how that happens. Second, the recording is not transcription: both 2026-08-26 rulings changed under measurement. The judgment-key ruling acquired a binding vocabulary obligation that nobody had noticed, and the register ruling turned out to be unexecutable as literally stated, because the matcher cannot express 'AX-' at all and an entry on the bare word 'axis' would flag the ordinary English that the governing DR explicitly protects. Both were discovered by reading the code rather than the intent. Third, the plan's ordering changed on evidence rather than on preference, including one claim of my own that had to be weakened: 'the population split must precede any cell write, categorically' stopped being categorical the moment the key it depended on was dropped, and I restated it downward rather than leaving the stronger version standing. What I cannot defend is the count: zero determinations, zero syntheses, zero rows anywhere the book is measured, for a second consecutive session.",
+  "verdict": "DEVIATION-LOGGED"
+}
