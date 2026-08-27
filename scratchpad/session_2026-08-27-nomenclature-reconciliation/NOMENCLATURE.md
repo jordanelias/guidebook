@@ -658,8 +658,13 @@ not a store. It is that the pointer is partial and the claims inside are unregis
 
 And the failure is already shipped: `site/specs/e-08.html` headlines
 `<h1>Corridor Clear Width (≥1200 mm Minimum on All Primary Routes)</h1>` over a body reading
-*"not yet computed"*. **The number is in the title, authored at render, with no determination behind
-it.** That is §2(b) — prose contradicting the database — in the most visible place in the book.
+*"not yet computed"*. **The page contradicts itself, and it is rendering the database faithfully.**
+
+*Corrected 2026-08-27, an hour after this section was written.* I first said the number was "authored
+at render". It is not. It is in **`items.name`** — a substrate vocabulary column — and
+`build_site.py --check` reports all 93 pages FRESH. The generator is doing its job. See Part L.3:
+**nine of 93 item names carry a quantified determination**, in a label column no gate reads as a
+value, while `specifications` holds 0 rows.
 
 ### K.3 The rule: render owns assembly, never content
 
@@ -756,3 +761,117 @@ The counter-argument is real: the database is where this project's integrity liv
 CHECKs, gates — and a file cannot be constrained the way a column can. If prose in files keeps
 producing unregistered claims, the answer is to enforce `syn_citations` coverage, not to move the
 prose. But that is a judgement about where enforcement is cheapest, and it is the owner's.
+
+---
+
+## PART L — Yes, and both halves already exist
+
+Owner question, 2026-08-27: *"can't we create a script or skill that generates the pages
+systematically including prose etc?"* — then: *"so we prevent drift/conflict by regeneration? I think
+script may work better but we would need more tables or something."*
+
+**Yes to all three, and the answer is mostly wiring rather than building.**
+
+### L.1 Both halves are already written
+
+**The skill half.** `skills/` holds **49** skills, including `item-specification-writer` — *"SQLite-first:
+reads evidence from `evidence_sources`, writes spec fields to specification table, triggers citation
+mining for confirmed sources"* — and `specification-curator`, which populates evidence state per cell.
+The prose-authoring layer exists.
+
+**The script half.** `scripts/generate/build_site.py --check` re-renders every spec page from `items`
+and compares. Its own docstring: *"`--check` is the piece with value beyond the build: it detects
+hand-edited [pages]."* Run today: **`FRESH: 93 page(s) match a fresh render. EXAMINED: 93`**, exit 0.
+
+### L.2 And the wiring is off exactly where the drift is
+
+| | | |
+|---|---|---|
+| `regenerate_derived.sh` mentions `tools` | **7×** | |
+| … mentions `parts`, `site`, `audits` | **0×, 0×, 0×** | |
+| `CLAUDE.md` §7 says regenerate *"(`parts/`, `site/`, `audits/`, `tools/*.html`)"* with that script | it covers **one of the four paths it names** | |
+| `pipeline_completeness_fresh`, `evidentiary_audit_fresh` | **blocking** | both guard `tools/` |
+| `site_pages_fresh` (runs `build_site.py --check`) | **advisory**, and nothing calls it | guards the reader |
+
+**The two blocking freshness gates guard the dashboards. The reader-facing pages are guarded by an
+advisory check that no script invokes.** That is the exact mechanism behind the smoke test's finding
+that *"the gates are thickest around the database and thinnest exactly where the reader is."*
+
+**Promoting it is free today.** `build_site.py --check` is green on all 93 pages, and the page set is
+exact — 93 pages, 93 items, no orphans, none missing. *(`build_site.py:14`'s comment that "six items
+added later have no page at all, including A-18" is stale; measured today it is 0.)*
+
+### L.3 But regeneration cannot catch the failure we already have
+
+`e-08.html` renders **faithfully**. The `≥1200 mm` is not a hand-edit and not render-authored — it is
+in **`items.name`**:
+
+> `('E-08', 'Corridor Clear Width (≥1200 mm Minimum on All Primary Routes)', 'E', 'active')`
+
+**Nine of 93 item names carry a quantified determination**: `E-08` ≥1200 mm · `E-01` 1400×1100 mm ·
+`E-04` 3600 mm · `E-05` 3000×2000 mm · `G-05` 650–870 mm AFF · `G-06` 760–860 mm AFF · `H-01`
+400–1100 mm AFF · `B-05` ≥5 m · `D-11` every 20 m.
+
+Meanwhile `specifications` holds **0 rows**. So **nine parameters are asserted in the book with no
+determination behind them anywhere** — the value lives in a *label*, in substrate, in a column no
+gate reads as a value, unciteable and untyped. The page then says "not yet computed" in its body and
+contradicts its own heading, and the byte-diff is clean because the page matches the database exactly.
+
+**So there are two different drifts and they need two different gates:**
+
+| drift | gate |
+|---|---|
+| the page disagrees with the database | **regeneration + byte-diff** — exists, works, is advisory |
+| the database asserts a value somewhere that is not a value column | **a vocabulary check**: no label, name or description may contain a quantity |
+
+The second is new, cheap, and would fire on nine rows today. It is the `§2(b)` rule — no hand-written
+numbers in derived documents — applied one layer earlier, to the vocabulary the documents derive from.
+
+### L.4 Where the script/skill line falls, and why it is mechanical
+
+The whole anti-drift mechanism is **regenerate and diff**. That requires the renderer to be
+**byte-reproducible**: run it twice, get identical bytes. A model at render time destroys that — a
+different paragraph every run, a permanently red freshness gate, and a check people learn to ignore.
+The retired-vocabulary register states the same principle about its own admission test:
+*"Flagging it produces noise and teaches the reader to ignore the check."*
+
+- **Skill (a model)** — authors prose **once, upstream**, into a durable row or file, under the Opus
+  floor, citation discipline, R3 locators and the adversarial pass. *Already exists.*
+- **Script (deterministic)** — assembles pages, computes tables, generates value-encoding figures.
+  Authors no claim. *Already exists.*
+
+### L.5 "More tables" — two columns, two tables, some views
+
+What a rich specification page needs, and where each piece comes from:
+
+| the page shows | source | status |
+|---|---|---|
+| parameter, value, unit, marker, state | `spe_items` | ✓ |
+| governing sources, citations | `spe_source_links` → `evi_sources` | ✓ |
+| populations · access needs · ICF | the three cross-reference junctions | ruled (P1.0) |
+| conflicts | `syn_conflicts` | ✓ |
+| open gaps | `res_gaps` | ✓ |
+| **why this value** | `spe_items.rationale` | **missing — a COLUMN** |
+| **the synthesis prose** | `syn_items.synthesis` | **missing — a COLUMN, or the file (K.6)** |
+| jurisdictional comparison | a **view** over code-leads × `spe_items` | new, but a view |
+| see-also | **computed** from shared substrate | nothing to add |
+| precedent narrative | case-study narrative, split from its evidence | per K.4 |
+| diagram | `figures` + a link junction | **new — a TABLE** |
+| the page itself | `ren_items` manifest | **new — a TABLE** |
+
+**Two columns, two tables, and views.** The instinct is right in direction and small in magnitude,
+and Part J's rule survives it: both new tables are genuinely new row-kinds — a figure, and a published
+surface — while everything else is a column, a junction, or a view.
+
+### L.6 The order, and why step 1 comes first
+
+1. **Wire what exists.** Add `build_site.py` to `regenerate_derived.sh`; promote `site_pages_fresh`
+   from advisory to blocking. **No schema change, and green today.** After this, an `e-08`-class page
+   edit cannot be committed.
+2. **Add the vocabulary check** (L.3). Fires on nine rows now; those nine are then owed real
+   determinations rather than names that assert them.
+3. **The two columns**, so prose has a home the renderer can read.
+4. **`figures` and `ren_items`**, in the baseline (Part I).
+
+Step 1 first because it is the gate that makes every later step verifiable, and because it is the
+only one that costs nothing.
