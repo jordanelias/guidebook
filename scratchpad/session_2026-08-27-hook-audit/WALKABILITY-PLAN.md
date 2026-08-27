@@ -1843,32 +1843,49 @@ print(c.execute('SELECT COUNT(*) FROM evidence_population_match WHERE source_ref
 
 ---
 
-## PART 14 — Owner architecture document, 2026-08-27 · **recorded on contact, rule 0**
+## PART 14 — Owner architecture document, 2026-08-27 · **A THOUGHT DOCUMENT, NOT A RULING**
 
 Source: `OWNER-ARCHITECTURE-2026-08-27.txt` in this directory (extracted verbatim from the uploaded
-`.docx`; the `.pdf` is the same document). It is a namespaced restatement of the pipeline in the
-owner's own hand. **It supersedes prior ratified records where they touch, and the supersessions are
-recorded here, not weighed.**
+`.docx`; the `.pdf` is the same document).
 
-**It ends at Judgment.** Synthesis, specification and render are unrestated. That is NOT a retraction
-of the 2026-08-27 six-stage ruling — absence is not a ruling — but the fan-in half of this plan still
-rests on the earlier statement and must be re-put before it is built.
+> **CORRECTED WITHIN THE HOUR, ON OWNER CONTACT.** This part was first written as a rule-0
+> supersession record — headers reading "SUPERSEDED", Q1 marked withdrawn, three prior records struck.
+> The owner then stated: ***"it's not complete, and it's not definitive — just a thought document."***
+> **That statement governs, and it is the one rule-0 applies to here.** A thought document is an
+> INPUT. It supersedes nothing, closes no owner question, and strikes no ratified record.
+>
+> **What I did wrong is worth naming, because it is this repository's own recurring failure inverted.**
+> The project's documented risk is arguing paperwork against a live ruling. I did the mirror: I
+> promoted exploratory thinking to a ruling because it resolved problems I wanted resolved — four
+> hard ones, elegantly, which is exactly when the promotion is most tempting and least warranted.
+> The `-item` RULE was faulted by A4-B3 for attribution expansion; this was the same move, one layer
+> further out. **Nothing below strikes anything.** Every "SUPERSEDED" heading is corrected to
+> "SIGNAL", and the measured facts — which are true regardless of the document's status — are kept
+> and labelled as measurements.
 
-### 14.1 SUPERSEDED — the cardinality question is closed
+**It ends at Judgment**, and the owner confirms it is incomplete. Synthesis, specification and render
+are simply not reached.
+
+### 14.1 SIGNAL — the strongest evidence yet on the cardinality question, and Q1 STAYS OPEN
 
 > *"one evidence source may provide many rows of judgment (eg a code document like Canada's NBC 3.8)"*
 
-**Supersedes** the 2026-08-27 *"each row of evidence provides one row for judgment."* It carries its
-own worked example, which admits no second reading.
+This **points the opposite way** from the 2026-08-27 *"each row of evidence provides one row for
+judgment"* — and unlike that sentence it carries a concrete worked example. But a thought document
+does not supersede a ruling, so **the ruling stands and Q1 stays open.**
 
-**Ruled: evidence → judgment is 1:N. `judgment_items.evidence_item_id NOT NULL`, NO `UNIQUE`.**
+**Q1 is NOT withdrawn. It is sharpened, and it gets easier to answer:**
 
-Consequences: **Q1 is withdrawn** — do not put it to the owner. Part 9.2's readings (a)/(b) are moot.
-B2's partial unique index (`WHERE dissent_of IS NULL`) is no longer needed for *cardinality*; it
-survives only if dissent rows are still wanted structurally distinct from ordinary siblings, which is
-a separate and much smaller question.
+> Your 08-27 ruling said each evidence row gives one judgment row. Your architecture note says one
+> evidence source gives *many* — NBC 3.8 being one code document with many clauses. Under the note's
+> own grain (14.2) both are true and there is no conflict: the *source* fans out, and if an evidence
+> item is a source then evidence→judgment is 1:N. **Is the evidence item the source, or the
+> extraction?** Answering that answers the cardinality, and nothing else needs deciding.
 
-### 14.2 SUPERSEDED — the value is derived at JUDGMENT, not evidence
+B2's partial unique index (`WHERE dissent_of IS NULL`) stays on the table until this is ruled — it is
+the only shape that satisfies a literal 1:1 while keeping dissent, and it costs nothing to hold.
+
+### 14.2 SIGNAL — a grain model that would dissolve four open problems, if adopted
 
 > Evidence: *"logs all relevant items found in search with a unique reference ID, DOI/PMID and other
 > codes if available, type of source"*
@@ -1880,7 +1897,8 @@ a separate and much smaller question.
 | evidence | **the source** — one row per document, carrying the reference ID and identifiers | `evidence_sources` |
 | judgment | **the extracted, tiered, categorised value** — one row per clause/parameter | `source_value_extractions`, re-homed |
 
-**This dissolves, rather than resolves, the plan's hardest open problems:**
+**If adopted, this would dissolve rather than resolve the plan's hardest open problems — which is
+why it is worth putting back to the owner as a question, not banking as an answer:**
 
 - **A3-F3** (a per-source fact on a per-extraction row) — the lead key hangs on the source, which is
   now the evidence item itself. No copied fact.
@@ -1892,25 +1910,27 @@ a separate and much smaller question.
   `source_value_extractions` prefigures it in 48 columns. `judgment_items` is that table plus a tier
   verdict and a category.
 
-### 14.3 SUPERSEDED — `base.clues` is SUBSTRATE, not research's hand-off
+### 14.3 SIGNAL — `base.clues` sits in substrate, not as research's hand-off
 
 The document places clues in `base.`, and `research.matrix` **consumes** `base.clues` as one of five
 search modes. Clues are an **input** to research, not its output.
 
-**This plan's `source_locators → res_items` (Part 6.2) is wrong and is struck.**
+**This plan's `source_locators → res_items` (Part 6.2) is put in doubt — not struck.** It stands as
+the plan of record until ruled, flagged as contested.
 
-It also **dissolves A3-F4**: the ratified `DR-2026-08-06` wall — *"Nothing joins it, no determination
+It would also **dissolve A3-F4** rather than requiring the supersession the plan drafts: the ratified
+`DR-2026-08-06` wall — *"Nothing joins it, no determination
 may cite it"* — needed a recorded supersession under this plan's design. Under the owner's it needs
 none. Clues stay in substrate, non-citable, an input. The conflict was an artefact of putting them in
 the wrong layer.
 
-### 14.4 CONTRADICTED — the naming grammar
+### 14.4 TENSION — the naming grammar, unresolved
 
 The document uses a **dotted namespace** and **substrate has a name**: `base.models`,
 `base.building`, `research.matrix`, `research.logs`.
 
 `NOMENCLATURE.md` Part D and this plan's §6.1 both say *"Substrate takes no prefix, and the absence is
-the signal."* **Both cannot hold.** SQLite has no schemas, so `base.models` maps to `base_models` —
+the signal."* **Both cannot hold — but a thought document does not settle which survives.** SQLite has no schemas, so `base.models` maps to `base_models` —
 which makes the prefix a **full word**, not `stage_id[:3]`. That retires B1's three-character collision
 hazard and every table name proposed in §6.2. **Owner-owed: confirm `base_` / `research_` /
 `evidence_` / `judgment_` as the literal prefixes.**
@@ -1959,18 +1979,28 @@ This is `DR-2026-08-24` §2.4's full cross-product made concrete, and **`v_cover
 matrix**: 7,208 rows over slugs × `lang_jur_map`. It was R6's deletion candidate and was HELD on
 exactly this reasoning. It is now named as a stage object. **Do not delete it.**
 
-### 14.9 What this costs the plan
+### 14.9 What actually changes — nothing is struck
 
-| survives | struck or moot |
+**Part 13 remains the operative plan.** A thought document changes no decision. What it changes is the
+*question list*, and it makes one question much more valuable than the rest.
+
+| status | items |
 |---|---|
-| the six-stage spine (unrestated past judgment, not retracted) | `res_items` = `source_locators` (14.3) |
-| hand-off keys as NOT NULL FKs, in principle | Q1 and Part 9.2 entirely (14.1) |
-| bidirectional walkability and the index requirement (§6.3) | the grain corrections X3/X4 and A3-F3/F18 (14.2) |
-| reference IDs over surrogate integers (§6.4) | `<stage>_items` naming and the `[:3]` prefix (14.4) |
-| render reads across all stages via views (§6.5) | M-2: `judgment_items` has a precedent after all |
-| the minimization tiers (§9.5), unaffected | the A3-F4 supersession paragraph — no longer needed |
+| **unchanged and operative** | the six-stage spine · hand-off keys as NOT NULL FKs · bidirectional walkability and the index requirement (§6.3) · reference IDs over surrogate integers (§6.4) · render reading across stages via views (§6.5) · the minimization tiers (§9.5) · every T-0 and T-A1 task |
+| **contested, still the plan of record** | `res_items` = `source_locators` (14.3) · `<stage>_items` naming and the `[:3]` prefix (14.4) · the evidence/judgment grain and everything resting on it — X3, X4, A3-F3, A3-F18 (14.2) |
+| **measured facts, true regardless** | the `~825` reconciliation (14.5) · three `base.` members with no table (14.6) · `base.sources` duplicated (14.7) · `v_coverage_priority` is the matrix (14.8) |
 
-**Owner-owed after this document:** the `base.clues` population (14.5) · `base.taxonomy_medical` as
-doctrine (14.6) · the literal prefixes (14.4) · the duplicated `base.sources` (14.7) · and the
-**synthesis / specification / render half**, which this document does not restate and on which the
-junction design still rests.
+**THE ONE QUESTION WORTH ASKING FIRST — it is upstream of most of the rest:**
+
+> **Is the evidence item the SOURCE (one row per document, carrying the reference ID) or the
+> EXTRACTION (one row per claimed value)?**
+
+Answer it and these fall out at no further cost: the evidence→judgment cardinality (Q1), where the
+lead key hangs (A3-F3), whether the population-match fold is a rule-5 violation (A3-F18, X4), whether
+`judgment_items` needs a designed column set or inherits 48 (M-2), and whether the `DR-2026-08-06`
+clue wall needs a supersession at all (A3-F4). **Six open items, one question.**
+
+Still separately owner-owed: `base.clues`' population (14.5) · `base.taxonomy_medical` as **doctrine**,
+not schema (14.6) · the literal prefixes (14.4) · the duplicated `base.sources` (14.7) · and the
+**synthesis / specification / render half**, which the note does not reach and on which the junction
+design rests.
