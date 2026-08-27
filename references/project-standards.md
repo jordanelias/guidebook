@@ -1920,3 +1920,70 @@ and `tools/pipeline_completeness.py`; the pre-2026-08-27 stage maps predate this
 re-derived, not read. (2) Do not rename `evidence_sources` as part of this. (3) Queue the `tier` move
 with its measured caller set.
 DATE: 2026-08-27 — owner ruling, adopting item #2.
+
+---
+
+RULE: **The four disability taxonomies are user-selectable BROWSING LENSES, and the medical model is
+included.** Owner ruling 2026-08-27.
+
+> *"yes we include the medical model too. we give our users the choice of what model they want to use
+> to browse the site."*
+
+`base.taxonomy_medical` · `base.taxonomy_identity` · `base.taxonomy_icf` · `base.taxonomy_needs` are
+**four views of one substrate**, not four competing vocabularies to reconcile. The reader chooses the
+frame.
+
+**This resolves the DG-NON objection rather than overriding it.** A medical-model taxonomy in a
+CRPD-aligned project reads as a doctrinal reversal only if it is the project's own frame. It is not:
+it is **user agency over how a reader's experience is described**, which is the social model's
+commitment applied to the interface. A reader who thinks in diagnoses is not forced to translate into
+ICF codes to use the book; a reader who refuses the medical frame never sees it. Consistent with
+CRPD Art 4.3.
+
+**Structural consequence.** Lens-switching is only possible through the crossing maps — `population_axis_map`
+(53 rows), `access_need_axis_map` (21), `access_need_icf` (43). A medical taxonomy needs the same
+crossings into the other three, or the lens cannot switch. **It is a schema change, not a vocabulary
+addition.**
+
+CONDITION: Any session adding a taxonomy, designing the browse interface, or treating one taxonomy as
+canonical over the others.
+ACTION: Never render one taxonomy as the project's own frame. A determination is keyed to substrate
+and reached through whichever lens the reader picked.
+DATE: 2026-08-27 — owner ruling, quoted above.
+
+---
+
+RULE: **`base.sources` is a registry of research TARGETS — prompts for where to look. It is neither
+evidence nor research.** Owner ruling 2026-08-27, correcting an agent finding.
+
+> *"academic publishing institutions, research journals, university publications, books and articles,
+> etc are all 'sources' for finding evidence sources. so too are countries, codes and standards,
+> professional organizations, clinical bodies, and advocacy groups. **none of these are evidence, and
+> none of these are research. they are all prompts for research to target** such that they can find
+> evidence"*
+
+**Corrects a finding recorded hours earlier** that `base.sources` was "listed twice with different
+meanings — substrate vocabulary and evidence respectively" and that collapsing the two would recreate
+the lead/evidence conflation. **Both bullets are one coherent member and neither is the corpus.** The
+error came from reading "sources" as this project's `evidence_sources`.
+
+**It is a third INPUT to `research.matrix`, alongside `base.clues`** — search THIS topic, in THIS
+language, AT this body. Target belongs in the cross-product.
+
+**Measured 2026-08-27: no target registry exists.** The nearest thing is `search_executions.engine`,
+free text, no vocabulary, no table, no CHECK. R8 requires the query be logged verbatim but nothing
+requires the target be a known one, so **coverage across targets is not a derivable fact** and a body
+nobody thought to search is invisible to every gate.
+
+**NOMENCLATURE HAZARD — the same class already ruled on.** "Sources" is doing two jobs:
+`base.sources` is *where to look*; `evidence_sources` is *what we found* (10 rows). The owner retired
+`items` as a table name because *"the word was the ambiguity."* Creating `base.sources` beside
+`evidence_sources` reproduces that ambiguity deliberately. **Resolve the name before the table exists,
+not after** — naming one for its function costs nothing now and a caller sweep later.
+
+CONDITION: Any session creating the target registry, naming a table containing "source", or designing
+the research matrix.
+ACTION: (1) Do not treat target-registry rows as evidence or as leads. (2) Give `search_executions.engine`
+a foreign key into the registry once it exists, so target coverage becomes measurable. (3) Settle the
+`sources` name collision before the table is created.
+DATE: 2026-08-27 — owner ruling, quoted above.

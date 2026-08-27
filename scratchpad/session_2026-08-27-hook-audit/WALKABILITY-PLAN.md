@@ -1949,26 +1949,87 @@ hazard and every table name proposed in §6.2. **Owner-owed: confirm `base_` / `
 not meet the stated definition. Either `base.clues` is *"875 leads, 448 of them carrying a DOI"*, or
 it is *"the 251 DOIs actually lacking metadata."* **Owner-owed: which population is `base.clues`?**
 
-### 14.6 Three `base.` members have no table, and one is a doctrine question
+### 14.6 CORRECTED — the missing tables are the PROPOSAL, and the medical model is RULED IN
 
-| member | live state | note |
+> **Owner, 2026-08-27:** *"these nonexistent tables are because the document is just a proposal for
+> what tables to make and why"* · *"yes we include the medical model too. we give our users the choice
+> of what model they want to use to browse the site."*
+
+**My framing was wrong.** I listed three `base.` members as *"have no table"* under a heading that
+read as a gap analysis. They have no table **because the document is proposing to create them.**
+Absence was the point, not the finding. This is the third time this session I have read a document at
+the wrong altitude — first promoting a thought document to a ruling, now reading a proposal as an
+audit of the existing schema.
+
+**`base.taxonomy_medical` is RULED IN, and the reason changes what it is.** I flagged it as DG-NON
+doctrine and asked for it to be ruled rather than inferred. It now is:
+
+> **The four taxonomies are user-selectable BROWSING LENSES, not competing definitions.** The reader
+> chooses which model to browse by — medical, social identity, ICF, or access needs.
+
+That is not the project adopting the medical model. **It is user agency over how a reader's own
+experience is framed, which is the social model's own commitment applied to the interface.** A
+disabled reader who thinks in diagnoses is not made to translate into ICF codes to use the book, and
+one who refuses the medical frame never sees it. Under CRPD Art 4.3 that is the correct posture, and
+it resolves the doctrinal objection rather than overriding it.
+
+**Design consequence, and it is structural.** Four parallel `base.taxonomy_*` members are **four views
+of one substrate**, not four vocabularies to reconcile. So the crossing maps that already exist —
+`population_axis_map` (53), `access_need_axis_map` (21), `access_need_icf` (43) — are not
+bookkeeping. **They are the lens-switching mechanism**, and a medical taxonomy needs the same crossing
+maps into the other three or the lens cannot switch. That is what makes it a schema change rather than
+a vocabulary addition.
+
+| member | live state | status |
 |---|---|---|
-| `base.models` (Kawa, CRPD) | **no table** | new substrate registry |
-| `base.taxonomy_medical` | **no table** | **DG-NON.** A medical-model taxonomy in a CRPD-aligned social-model project is a doctrine call, not a schema one. It is listed as one of four framings, which is defensible — ICF is itself a bio-psycho-social bridge — but it must be **ruled explicitly, not inferred from a bullet** |
-| `base.jurisdictions` | **no table** | used in `research.matrix`, never defined in the `base.` list. `jurisdiction` is currently an inert enum in `schemas/enums.py` sitting on **11 tables**. This confirms it must become real |
+| `base.models` (Kawa, CRPD) | no table | **to create** — proposed |
+| `base.taxonomy_medical` | no table | **to create — RULED IN** as a browsing lens; needs crossing maps into identity / ICF / needs |
+| `base.jurisdictions` | no table | **to create.** Confirmed needed independently: `jurisdiction` is an inert enum in `schemas/enums.py` sitting on **11 tables** with nothing behind it |
 | `base.taxonomy_identity` / `_icf` / `_needs` | `populations` 23 · `axes` 17 · `access_needs` 17 | exist |
 
-### 14.7 A defect in the document
+### 14.7 REFUTED — `base.sources` is not a duplication defect. It is a TARGET registry
 
-**`base.sources` is listed twice, with different meanings:**
-1. *"countries, international organizations like EU and UN, international standards like ISO · academic
-   journals, research publishing bodies · professional practice, clinical guidelines · advocacy
-   organizations"* — a taxonomy of source **types**.
-2. *"lists all academic sources across many languages"* — the **corpus**.
+> **Owner, 2026-08-27:** *"academic publishing institutions, research journals, university
+> publications, books and articles, etc are all 'sources' for finding evidence sources. so too are
+> countries, codes and standards, professional organizations, clinical bodies, and advocacy groups.
+> **none of these are evidence, and none of these are research. they are all prompts for research to
+> target** such that they can find evidence"*
 
-Those are substrate vocabulary and evidence respectively. **Collapsing them recreates the
-lead-versus-evidence conflation the project already has** (`source_locators` 875 vs
-`evidence_sources` 10, four rows in both, no key between them). They need two names.
+**I called this a defect and it is not one.** I read the two `base.sources` bullets as a
+source-*type* taxonomy and the academic corpus, called them *"substrate vocabulary and evidence
+respectively"*, and warned that collapsing them would recreate the lead/evidence conflation.
+
+**Both lists are the same kind of thing, and neither is the corpus.** A journal, a standards body, a
+country's code authority and an advocacy organisation are all **places to go looking**. They are
+prompts for research to target. The two bullets are one coherent member, and my objection was built
+on reading "sources" as this project's `evidence_sources` — the admitted corpus — which is not what
+the document means by the word.
+
+**So `base.sources` is a third INPUT to the matrix, alongside `base.clues`.** `research.matrix`
+crosses taxonomy × building × jurisdiction × multilingual; targets belong in that cross too — *search
+THIS topic, in THIS language, AT this body.* That is a real addition to the matrix's shape, and it is
+the layer that is missing rather than duplicated.
+
+**Measured 2026-08-27: no target registry exists, and its impoverished stand-in is a free-text
+column.** The nearest thing in the schema is `search_executions.engine` — recorded per query, with no
+vocabulary, no table, and no CHECK behind it. R8 requires every query be logged verbatim; nothing
+requires the *target* be a known one, so coverage across targets cannot be measured and a body nobody
+thought to search is invisible. `base.sources` gives `engine` a vocabulary and makes target coverage
+a derivable fact rather than a free-text hope.
+
+**A NEW NOMENCLATURE FINDING, and it is the same class the owner already ruled on.** The word
+**"sources" is doing two jobs**, exactly as "items" was:
+
+| sense | means | live table |
+|---|---|---|
+| `base.sources` | **where to look** — journals, standards bodies, advocacy orgs | none |
+| `evidence_sources` | **what we found** — the admitted corpus, 10 rows | exists |
+
+The owner retired `items` as a table name because *"the word was the ambiguity."* **The identical
+ambiguity is now proposed into the schema under `sources`**, and it should be resolved before the
+table exists rather than after — which is the whole lesson of the `items` retirement. Naming one of
+them for its function (`base.targets`, or `evidence.admitted`) costs nothing today and a caller sweep
+later.
 
 ### 14.8 CONFIRMED — `research.matrix` is a first-class object, and it already exists
 
