@@ -299,7 +299,7 @@ inverse error: preserving too much, not superseding too much).
 
 **DIGEST**
 1. Surviving set stated (§2); every ledger supersession 08-24→08-27 is backed by a live quote — none over-struck; C-1 and C-2 now owner-resolved and the resolutions correctly recorded in substance.
-2. BLOCKER: RENAME-MAP still says "the note wins on rule 0" and re-homes clues to substrate — written after the owner refused item #3 and demoted the note; re-derive it before any rename migration.
-3. Fresh recordings: (a) register-half true, but "survives in full" orphans six companion names (M1); (b) "etc"→identity/needs is fair completion of the owner's own list, unlabeled (D1); (c) anti-fold reading defensible but the all-pairwise generalisation exceeds the text (D2).
+2. B1 (RENAME-MAP "note wins on rule 0" re-homing clues against the item-#3 refusal) and M4 (owner-notes header) were both repaired mid-audit; residuals: RENAME-MAP:23-24 premise and §3's C-1..C-3 now-answered conflicts, owner-notes:5 "governing statement".
+3. Fresh recordings: (a) register-half true, but "survives in full" orphans six companion replacement names (`demand_code`, `item_demand_links`…) — M1, the one open MAJOR in the new entries; (b) "etc"→identity/needs is fair completion of the owner's own list, unlabeled (D1); (c) anti-fold reading defensible but the all-pairwise generalisation exceeds the text (D2).
 4. Attribution expansion partially recurred post-A4-B3 in the harvest and lens RULEs (unlabeled agent design under owner banners, M5/D4); `CLAUDE.md` is stale on four points against the three newest rulings (M2); #14-vs-#16 spec keying is an unrecorded conflict (M3).
-5. The §2.4-only scoping of "overrule Aug 24 DR" is defensible and compelled by reductio (whole-DR would strike rulings the owner re-affirmed this same day); the defect is only that the SCOPE note doesn't enumerate the full survival set (D9).
+5. The §2.4-only scoping of "overrule Aug 24 DR" is defensible and compelled by reductio (whole-DR would strike rulings the owner re-affirmed this same day, including R8 today); the defect is only that the SCOPE note doesn't enumerate the full survival set (D9).
