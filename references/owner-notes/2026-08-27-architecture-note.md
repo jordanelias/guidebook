@@ -4,10 +4,36 @@
 `session_2026-08-27-hook-audit`, and transcribed here **verbatim, structure preserved**, because it
 is now the governing statement on the pipeline's shape and existed nowhere in the repository.
 
-**Status.** The owner has stated its nature explicitly: *"these nonexistent tables are because the
-document is just a proposal for what tables to make and why."* It is a **proposal for structure**,
-not a census of what exists — and per `CLAUDE.md` rule 0 its rulings supersede prior records on
-contact.
+**Status — READ THIS BEFORE CITING IT. It is NOT a governing document.** The owner has stated its
+nature twice, and the second statement is the operative one:
+
+> *"these nonexistent tables are because the document is just a proposal for what tables to make and
+> why"*
+>
+> *"not complete, and not definitive — just a thought document"*
+
+**Only two of its items were adopted, by explicit owner instruction, and each stands on that
+instruction rather than on the note:**
+
+| item | disposition | recorded at |
+|---|---|---|
+| **#1** evidence → judgment is 1:N | **ADOPTED** | `references/project-standards.md` — "adopting item #1" |
+| **#2** the evidence item is the SOURCE; the judgment item is the extracted, tiered value | **ADOPTED** | `references/project-standards.md` — "adopting item #2" |
+| **#3** `base.clues` moves to substrate | **NOT ADOPTED** — *"`base.clues` is not moved to substrate"* | same contact |
+| **#4** the `~825` reconciliation | **NOT ADOPTED** — not pursued | same contact |
+
+**The naming grammar is NOT RULED.** The `base.` dotted namespace and full-word prefixes remain in
+tension with `NOMENCLATURE.md` Part D's *"substrate takes no prefix, and the absence is the signal."*
+*(Separately ruled later the same day: the separator is the **underscore**, and the four taxonomies
+take parallel `base_taxonomy_*` names. Those are owner rulings in their own right, not adoptions of
+this note.)*
+
+**Correction, recorded rather than overwritten.** This file's first version described the note as
+*"the governing statement on the pipeline's shape"* and `RENAME-MAP.md` §2 asserted *"the note wins on
+rule 0"* for all four disputed tables. **Both are false for items #3 and #4**, and executing a rename
+from that premise would have moved `source_locators` into substrate — reversing the ratified
+`DR-2026-08-06` clue-store wall with no supersession. Caught by the R1 stage-assignment audit,
+2026-08-27. It is the fourth time in this session a thought document was read at ruling altitude.
 
 **It stops at Judgment.** Synthesis, specification and render are not in it. That is not a retraction
 of the 2026-08-27 six-stage ruling; the note is simply partial.

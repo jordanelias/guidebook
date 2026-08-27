@@ -33,10 +33,23 @@ placed elsewhere**:
 **This is not a naming disagreement. It is a stage disagreement**, and under the grammar the stage is
 the prefix. `source_locators` becomes `research_items` under one map and `base_clues` under another.
 
-**The note wins on rule 0** — it is the live statement. And it is also the one that dissolves the most
-problems: clues in substrate resolves A3-F4 (the ratified DR-2026-08-06 "nothing joins it" wall) at
-zero cost, and extraction-in-judgment resolves A3-F3/F18 (the per-source vs per-extraction grain war)
-by drawing the boundary one stage left.
+**CORRECTED 2026-08-27 — the premise stated here was false.** This section originally read *"The
+note wins on rule 0"* for all four rows. It does not. The owner adopted **items #1 and #2 only**, and
+explicitly did **not** adopt item #3: *"`base.clues` is not moved to substrate."* The note is *"not
+complete, and not definitive — just a thought document."*
+
+| table | disposition |
+|---|---|
+| `source_value_extractions` → **judgment** | **RULED** (item #2 adopted). Stands. |
+| `evidence_sources` → **the evidence object** | **RULED** (item #2 adopted). Stands. |
+| `source_locators` → `base.clues` | **NOT ADOPTED.** It stays in **research**. |
+| `items` → `base.building` | **NOT REACHED by the note.** Owner ruled separately: `base_building` is three levels and `items` is none of them, so the 2026-08-26 render-rollup ruling stands. |
+
+**What executing the original premise would have done:** moved the 875-row clue store into substrate,
+reversing the ratified `DR-2026-08-06` wall — *"nothing joins it, no determination may cite it"* —
+with no recorded supersession. The R1 audit also measured the physical fact that settles it
+independently: `source_locators` has **0 inbound and 0 outbound foreign-key edges**, and a substrate
+table nothing may join is a contradiction in terms.
 
 ## 3. Three genuine conflicts that need one word each
 
