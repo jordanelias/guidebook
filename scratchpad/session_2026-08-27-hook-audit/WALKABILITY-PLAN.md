@@ -2406,3 +2406,99 @@ The harvest reorders Part 15.10, and downward — it is cheaper than what I had 
 **Note the inversion.** I had "finish `base` first, then sweep." The harvest says the opposite:
 **`base` cannot be finished up front — that is the presupposition the aporia warns against.** `base`
 is an *output* that accretes. Only its **seed** is needed to start, and the seed already exists.
+
+---
+
+## PART 17 — R3 methodology audit: the harvest has nothing to harvest from
+
+**Three claims verified independently this session. Two are errors in this document.**
+
+### 17.1 BLOCKER — no retained observation substrate
+
+The harvest model (Part 16) assumes the source text is available: evidence harvests terms from it,
+judgment deep-reads it, and the harvest is **re-runnable** when the term extractor improves. That
+last property is what makes the seed revisable and the aporia escapable.
+
+**Measured 2026-08-27:**
+
+| | |
+|---|---:|
+| PDFs anywhere in the tree (excl. `.git`) | **0** |
+| `retrieval-log/` entries | 33, **1.4 MB** |
+| payload shape | `hitCount` · `request` · `resultList` · `version` — a **search-response envelope**, not a document |
+
+**There is no stored source text in this repository.** `retrieval_log.py` persists what the *search
+API returned* — which is exactly what it was built for (`--verify-authors` diffs stored metadata
+against received bytes, and that is why the 2026-08-19 fabrication is now catchable). It was never
+built to hold the document.
+
+**Consequence, and it is structural rather than a gap to fill later:**
+- Judgment's *"deep read"* has **no object to read**. Every deep read is a re-fetch, subject to link
+  rot, paywalls and publisher blocks — and R10 already treats a publisher block as non-terminal
+  precisely because it happens.
+- **The harvest cannot be re-run.** If term-hood is extracted once at admission and the source is
+  gone, the observed vocabulary is frozen at whatever the first extractor caught. **That silently
+  re-introduces the presupposition**: the extractor's notion of what counts as a term becomes
+  unrevisable, which is the exact thing 16.1 claims the model escapes.
+
+**Smallest fix:** extend `scripts/research/retrieval_log.py` to persist full text at admission.
+**Licensing posture is owner-gated** — storing publisher PDFs is a decision about the project's legal
+exposure, not a schema choice, and belongs in the DG-NON class.
+
+### 17.2 My 16.2 was wrong — `pipeline-map.yaml` is not ratified doctrine
+
+Part 16.2 claimed the seed problem was *"already answered by ratified doctrine"*, citing
+`governance/pipeline-map.yaml:78` on re-entrancy, and concluded *"the doctrine that dissolves the
+aporia was ratified six days ago."*
+
+**The file says the opposite of itself at `:18-19`:**
+
+> `# STATUS: DESCRIPTIVE, not normative. It records the pipeline as it IS on`
+> `# 2026-08-21, defects included. It is not a design.`
+
+**It is a survey, not a ruling**, and re-entrancy there is scoped to *write order* — not to revising a
+seed vocabulary. So the seed problem is **not** already solved doctrinally. It is open, and revising
+the seed costs a migration plus a foreign-key sweep, not a re-entry.
+
+This is the same altitude error as reading the architecture note as governing: **I promoted a
+descriptive document to a normative one because it said something I needed.**
+
+### 17.3 The `tier` move creates a vacuous gate — nobody flagged this, including me
+
+The ruling adopting item #2 makes the **tier verdict a judgment output**, and queues moving `tier` off
+`evidence_sources`. Measured consequence:
+
+```
+scripts/audit/research_batch_dod.py:315   SELECT COUNT(*) FROM evidence_sources WHERE tier BETWEEN 1 AND 3
+scripts/audit/research_batch_dod.py:570   SELECT ref_id  FROM evidence_sources WHERE tier BETWEEN 1 AND 3
+```
+
+`tier` is **0 NULL of 10 today**. Move it to judgment and it is NULL at admission for every new
+source — so `admitted` becomes 0, **R2 (citation mining) passes having mined nothing**, and the
+blocking research DoD reports COMPLIANT on an empty subject. That is `CLAUDE.md` §2(a) — *"a gate that
+passes having examined nothing"* — **created by a ruling this session recorded without noticing.**
+
+**The `tier` move must ship with R2's re-phasing in the same change**, or it manufactures the exact
+defect this repository has produced four times.
+
+### 17.4 Refinement — process / goal / figure lack a READER, not a column
+
+Part 15.7 diagnosed three of judgment's four outputs as having no schema home. **Sharper:
+`claim_type` already admits `qualitative` and `framework`** — so a non-numeric judgment is *partly*
+expressible today. What does not exist is anything **downstream that consumes one**: the evidence-state
+machine is per (parameter × population) cell and resolves to a value; `walk_e2e.sh` (REPAIR-PLAN §7)
+asserts that **a number** renders.
+
+> **So the mission's central outputs — a goal, a process, a question worth asking — cannot advance the
+> project's own acceptance test.** Adding columns would not fix that. The reader is the gap.
+
+### 17.5 Also carried
+
+- **`base` accretes — but not uniformly.** Right for `terms`; wrong for the taxonomies, which are
+  owner-gated DG-NON content. The boundary between agent-mintable and owner-gated `base` members is
+  undeclared and must be, before anything writes to `base`.
+- **The matrix consumes three base members nothing produces** — jurisdictions, targets, models, all
+  absent. It cannot be crossed until they exist.
+- `search_executions.saturation_signal` is an **unread self-report**: 18 NULL / 3 none / 7 partial /
+  **0 saturated**. Deriving saturation beside it would be a rule-5 dual home.
+- `terms_used` populated **9 of 28**.
