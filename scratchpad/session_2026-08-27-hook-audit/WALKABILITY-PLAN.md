@@ -1446,6 +1446,143 @@ no view reads any table on the deletion menu** — measured over `sqlite_master`
 
 ---
 
+## PART 12 — B2 (keys / pointers) breaks three things, including one of my own laws
+
+Second Fable 5 lens, report at `audits/B2-keys-pointers.md`. **It tested SQLite on a scratch DB
+rather than reasoning about it, and two "impossible" claims — mine and A3's — are false.**
+Where Part 12 disagrees with Parts 6, 7, 9 or 10, Part 12 wins.
+
+### 12.1 BLOCKER — my corrected key placement is *still* unwritable, and the fix was in reach
+
+§9.3 K1 moved the lead key to `evi_sources.research_item_id NOT NULL`. Measured: **six of ten
+`evidence_sources` rows (`REF-00965`–`REF-00970`) have no `source_locators` parent.** The NOT NULL is
+as unwritable there as it was on the extraction. **I adopted A3-F3's placement and dropped its
+backfill remedy in the same breath — while branding backfill "§2(c) with paperwork."**
+
+**The dissolving measurement, which nobody ran until now: all six have `search_admissions` rows**
+(exec 1, 1, 6, 6, 13, 10). So the lead for each of them *is recorded* — it is in the admission edge.
+A backfilled lead with `origin='searched'` carrying that exec id is **truthful, not fabricated**.
+
+**Corrected:** T-A2 backfills six `res_items` rows from their `search_admissions` provenance, declared
+in the migration header. That is the difference between retroactive provenance (invention) and
+recovering provenance the schema already holds (recovery).
+
+### 12.2 BLOCKER — the plan contradicts its own corrections in three places
+
+I criticised the source document for shipping Parts E and J as two incompatible plans (A2-B2). **I
+reproduced the defect.** B2 transcribed my DDL and ran it:
+
+| location | still says | corrected by |
+|---|---|---|
+| T-A2 hand-off table | `evi_items.research_item_id` | §9.3 K1 |
+| §6.3 forward-gap query — **the named T-A3 acceptance test** | `e.research_item_id` | §9.3 K1 |
+| T-A2 `jud_items` column block | carries the population-grade fold | §9.1 X4 |
+
+**Tested: the acceptance query fails with `no such column: e.research_item_id` against the plan's own
+corrected schema.** A plan whose acceptance test cannot run is not executable. **Part 7 must be
+reconciled against Parts 9–12 before any DDL is transcribed** — that is now a precondition, not a
+tidy-up.
+
+### 12.3 BLOCKER — the allocator silently mints `REF-00001` after the rename, and the selftest cannot see it
+
+§6.4 says "follow the `dbcore.next_ref_id` pattern." B2 read it: **`dbcore._REF_ID_HOMES` hardcodes
+the pre-rename table names** and swallows failures with `except OperationalError: continue`.
+
+**Tested: after the T-B rename, `next_ref_id` returns `REF-00001`** — colliding with every live id.
+And `--selftest` stays green, because it fabricates its own old-named fixture tables
+(`dbcore.py:415-418`). **A blocking gate that constructs the world in which it passes.**
+
+This is `CLAUDE.md` rule 4 exactly — *a rename is not done until the callers are swept*, and **a
+hardcoded table list inside an allocator is a caller.** Added to T-0.4's sweep by name, and to T-B as
+its own task.
+
+### 12.4 A fourth cardinality option — tested, and it may dissolve Q1 entirely
+
+§9.2 put (a) literal 1:1 and (b) NOT-NULL-no-UNIQUE to the owner. B2 found a fourth:
+
+```sql
+CREATE UNIQUE INDEX ux_jud_primary ON jud_items(evidence_item_id) WHERE dissent_of IS NULL;
+```
+
+**Tested: refuses a second *primary* judgment on one extraction, accepts any number of dissents.**
+That is the owner's *"each row of evidence provides one row for judgment"* enforced **literally**,
+while the dissent contest survives — the two things §9.2 presented as mutually exclusive.
+
+**This is better than anything in the plan and it changes what to ask.** Q1 stops being "(a) or (b)?"
+and becomes a confirmation: *we can enforce your 1:1 exactly and still carry dissent; here is the
+index.* Recommend building it and telling the owner, not asking them to choose between two worse
+shapes.
+
+### 12.5 My recommended option (d) breaks ratified re-entrancy
+
+§9.2 recommended `UNIQUE(judgment_item_id)` on `syn_judgment_links` "outright." **Tested: a v2
+synthesis cannot cite v1's judgments without deleting v1's links.**
+
+That collides with `governance/pipeline-map.yaml:78`, ratified 2026-08-21: *"these are LAYERS a walk
+re-enters."* **Withdrawn.** If N:1 is wanted it must be scoped — a partial unique index over live
+(non-superseded) syntheses — not a blanket constraint.
+
+### 12.6 K3 was wrong: SQLite *can* enforce "≥1 per synthesis"
+
+A3-F2 said no declared constraint can require a parent to have a child; §9.3 K3 accepted it and
+routed the invariant to a writer plus a check. **B2 tested the alternatives and found one that works:**
+
+```sql
+syn_items.anchor_link_id  NOT NULL  REFERENCES syn_judgment_links(link_id)
+                          DEFERRABLE INITIALLY DEFERRED
+```
+
+A deferred circular FK **refuses a zero-link synthesis at COMMIT**, and refuses deletion of the
+anchor link. CHECK-subqueries, generated columns and triggers all fail, as A3 said — **also tested.**
+
+**Corrected:** the invariant is declarable. The writer and the check remain useful (they give a better
+error and catch the non-anchor links), but they are no longer the *only* enforcement, and "currently
+aspiration" no longer applies.
+
+### 12.7 My own Law 2 would turn my own spine red
+
+§10.2 Law 2: an FK column is named `<target_table_singular>_id`. The spine tables are `evi_items`,
+`jud_items`, `syn_items`. **So Law 2 demands `evi_item_id` — and the plan writes
+`evidence_item_id` throughout.** A blocking `wiring_grammar` check would flag **every hand-off column
+the plan mints.**
+
+**Resolved, and the grammar wins:** the table prefix is derived `stage_id[:3]`, so the tables are
+`res_/evi_/jud_/syn_/spe_items` and the hand-off columns are **`res_item_id`, `evi_item_id`,
+`jud_item_id`, `syn_item_id`, `spe_item_id`**. One rule, no exceptions, and the column names get
+shorter. Every occurrence of `research_item_id` / `evidence_item_id` / `judgment_item_id` in Parts
+6–11 is superseded by this form.
+
+### 12.8 Identifiers — under-specified where it matters
+
+- **The 875 legacy `REF-` ids have no stated fate.** One branch keeps them beside the new `RES-` codes
+  (recreating U-7 byte-identically — two homes for one identity); the other re-mints them (defeating
+  the point of stable, quotable codes). **Neither is chosen. This is a decision, and it is mine to
+  put, not to skip.**
+- **The `REF-VERIFIED` re-mint rests on a false necessity.** §6.4 said the 11 malformed ids must be
+  re-minted *before* the allocators are written. B2 verified the regex fullmatch already defuses
+  `MAX()`, and the gap at `-008` shows gaps are already tolerated. **Re-mint if we want tidy ids, not
+  because the allocator requires it** — and say which.
+- **`bpc_metadata`'s re-key breaks five unnamed code callers**, including a **silent-overwrite
+  corruption vector** in `scripts/db.py:1766-1781`'s UPSERT and the D03 duplicate-slug check at
+  `test_db_integrity.py:689`.
+
+### 12.9 Defects
+
+`spe_items`' key is stated **four different ways** across the plan, plus a fifth (`s.ref_id`) inside
+its own acceptance query · T-A2's "two rebuilds" undercounts its own §10.3 re-keys · a 5-digit
+allocator freezes at 99999 · the junction composite PK covers only one walk direction and the plan
+never states column order (tested) · `governing_refs` has **two contradictory dispositions inside
+Part 10 alone**.
+
+### 12.10 What B2 could not break
+
+The backward-walk mechanism · §6.3's premise that SQLite does not auto-index FK sources (confirmed
+empirically) · `next_ref_id` on the *current* schema (REF-00971, correct) · the 875/10/4/6 figures and
+the 11 malformed ids (all reproduced) · the shape of the ≥1 gap-check SQL · M-4's disposal of the
+spec→render junction · the `AFTER_DATA` reading of `migrate_db.py:283-330`.
+
+---
+
 ## Appendix — re-derivation
 
 ```bash
