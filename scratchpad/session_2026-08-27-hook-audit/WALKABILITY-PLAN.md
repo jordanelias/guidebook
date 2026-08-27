@@ -1071,6 +1071,202 @@ and not the document it corrects is the same defect this whole review is about.
 
 ---
 
+## PART 10 — STRICT NOMENCLATURE THAT DIRECTS WIRING
+
+**Owner statement, 2026-08-27, recorded on contact:**
+
+> *"We need to radically rewrite our table names and column headers, consolidate them as required
+> based upon phase, and ensure the nomenclature is strict and directs wiring."*
+
+This escalates the scope from table names to **876 columns**, and it adds a criterion the previous
+parts did not have: a name must **direct wiring** — tell a reader, and a script, what it keys to.
+That is testable, so it is measured first.
+
+### 10.1 The wiring surface, measured
+
+| | value | command |
+|---|---:|---|
+| Columns | **876** across 66 tables | `PRAGMA table_info` over all |
+| Distinct column names | **480** | — |
+| Key-shaped names (`_id`/`_code`/`_ref`/`_key`) | **114** | |
+| — legitimate foreign key | 64 | `PRAGMA foreign_key_list` |
+| — legitimate primary key | 37 | `PRAGMA table_info` pk flag |
+| — **neither: a promise of a join that does not exist** | **13 (11%)** | key-shaped ∧ ¬FK ∧ ¬PK |
+| Packed-reference columns (many refs in one cell) | **7** | |
+| FK columns whose name does **not** name their target | **6** | |
+
+*Convention, stated because §2(b) requires it: "key-shaped" is the four suffixes above; a primary key
+is counted legitimate even when unreferenced. **An earlier pass of this section reported 38%** by
+counting all 37 primary keys as liars. Corrected before publication — the honest figure is 11%.*
+
+**The thirteen liars, in full** — every one is a name that tells a reader to join and gives them
+nothing to join to:
+
+```
+conflicts.gap_id                     evidence_sources.local_id
+evidence_population_match.source_ref evidence_sources.superseded_by_ref_id
+item_population_links.rationale_ref  items.item_id            ← a second key-shaped column on `items`
+jurisdictional_values.spec_id        situations.account_text_ref
+situations.translation_ref           source_slug_links.local_ref_id
+source_value_extractions.root_id     spec_value_probes.walk_id
+supersession_check.local_ref_id
+```
+
+Two deserve naming separately. **`local_ref_id`** (3 tables) holds `RAP-01` — a within-document
+citation label, **not a `REF-` at all**: the name lies about both its target *and* its namespace.
+**`items.item_id`** sits beside `items.item_code` on the same table, so the one table the whole
+`-item` ruling is about carries two key-shaped columns and no statement of which is the identity.
+
+**The seven packed-reference columns** — references hidden inside text cells, invisible to every FK,
+join and gate:
+
+```
+search_executions.admitted_ref_ids     supersession_check.superseding_ref_ids
+specifications.governing_refs          slugs.serves_axes
+situations.attaches_axes               source_locators.used_in_bpcs
+reference_stubs.used_in_bpcs
+```
+
+`specifications.governing_refs` is the one that reaches the reader: it is the provenance of a
+rendered determination, stored as unparseable text. **Part 4's book harm is this column.**
+
+**And the vocabulary sprawl the consolidation has to fix** — one concept, many names:
+
+| concept | distinct names live | the names |
+|---|---:|---|
+| timestamp of the act | **7** | `created_at` 49 · `attempt_at` · `executed_at` · `completed_at` 2 · `checked_at` · `last_updated` · `url_last_fetched` 2 |
+| free-text remark | **7** | `notes` 26 · `note` 6 · `rationale` 3 · `mismatch_note` · `root_population_note` 2 · `findings_note` · `deferred_reason` 2 |
+| who did it | **4** | `created_by_session` 47 · `updated_by_session` 23 · `attempted_by_session` · `session` 3 |
+| a status | **8** | `status` 16 · `state` · `disposition` · `extraction_status` · `evidence_state` · `verification_status` · `doi_resolution_outcome` 2 · `url_resolution_outcome` 2 |
+
+**The audit quartet is not uniform:** `created_at` on 49 tables, `created_by_session` on 47,
+`updated_at` on 24, `updated_by_session` on 23. Four different footprints for one convention.
+
+### 10.2 The five laws
+
+Strict means **mechanically checkable**. Each law below is written so a script reading only
+`sqlite_master` can decide it — no judgement, no list to maintain.
+
+> **LAW 1 — A key-shaped suffix is a promise, and the promise is `_id`.**
+> A column ends in `_id` **if and only if** it is this table's primary key or a foreign key.
+> `_ref`, `_key` and bare `_code` on a non-key column are abolished. Nothing else may look like a key.
+> *Fixes all 13 liars. Checkable: `keyish(col) XOR (isPK ∨ isFK)` must be empty.*
+
+> **LAW 2 — A foreign key is named for the table it points at.**
+> `<target_table_singular>_id` → `evidence_item_id` resolves to `evidence_items`, and nothing else.
+> **The name IS the join.** A reader and a script derive the wiring without opening the schema.
+> *Fixes the 6 mis-named FKs — `global_ref_id`, `evidence_ref_id`, `root_ref_id`, `promoted_to_rdc_id`,
+> `parent_code`, `merged_into`. Self-references keep the rule and add a role prefix:
+> `parent_research_item_id`. Checkable: for every FK, `col == singular(target)+"_id"`.*
+
+> **LAW 3 — One reference per cell. Plural means junction.**
+> No column holds a delimited list of references. *Kills all 7 packed columns; each becomes a
+> junction or is deleted. Checkable: no column name ends in a plural reference form, and no
+> reference column's values contain a delimiter.*
+
+> **LAW 4 — One concept, one name, everywhere.**
+> The canonical set is fixed and total: `created_at` · `created_by_session` · `updated_at` ·
+> `updated_by_session` · `notes` · `status`. A stage-specific status keeps its own vocabulary in its
+> **CHECK**, never in its column name — `extraction_status` becomes `status` with a different CHECK.
+> *Collapses 7→1, 7→1(+`rationale` where it is content, not a remark), 4→2, 8→1. Checkable against
+> the canonical list.*
+
+> **LAW 5 — The stage prefix directs the wiring DIRECTION, and this is the one that earns the others.**
+> A table prefixed `<stage>_` may hold a foreign key into **its own stage, any earlier stage, or
+> substrate. Never a later stage.** *Because `stage_id[:3]` gives a total order — `res evi jud syn spe
+> ren` — a script that reads only table and column NAMES can decide whether a key points forward.*
+
+**Law 5 makes rule 5 enforceable for the first time.** `CLAUDE.md` rule 5 — *never write into a
+completed stage* — has no enforcing code today. Under Law 5 it becomes a name comparison. And it
+immediately catches a live violation the last session missed in 877 lines:
+`source_value_extractions.promoted_to_rdc_id → reasoning_doc_citations` is an **evidence-stage column
+keyed into synthesis**, filled after the extraction completes — the exact anti-pattern Part B invokes
+to reject back-pointers, sitting on the proposed `evi_items` itself (A2-W4-iii).
+
+### 10.3 The consolidated column spine, per phase
+
+Every stage hand-off object gets **the same five-part shape**. Consolidation by phase means the
+differences between stages are payload only — never plumbing.
+
+```sql
+-- IDENTITY ............ minted, stable, quotable in prose  (§6.4)
+  <stage>_item_id   TEXT PRIMARY KEY          -- RES-00001 / EVI-00001 / JUD-00001 / SYN-00001 / SPE-00001
+-- HAND-OFF ............ Law 2 names the join; NOT NULL is the spine   (§9.2, §9.3)
+  <prev>_item_id    TEXT NOT NULL REFERENCES <prev>_items(<prev>_item_id)   -- fan-out stages only
+                                                                            -- fan-in stages use a junction
+-- TOPIC ............... substrate pointers, every stage, same names
+  slug              TEXT REFERENCES slugs(slug)
+  item_code         TEXT REFERENCES <parameter registry>   -- pending Q2 / §9.6
+  population_code   TEXT REFERENCES populations(population_code)
+-- PAYLOAD ............. the ONLY part that differs by stage
+-- STAMPS .............. Law 4, mandatory, identical on all six
+  created_at, created_by_session, updated_at, updated_by_session
+```
+
+Payload by phase — what each stage is *for*, and nothing else:
+
+| stage | payload columns | consolidated from |
+|---|---|---|
+| `res_items` | `origin` *(with `unknown-legacy`, §9.7-D)* · `parent_research_item_id` · the identifier block (`doi, url, pmid, pmcid, isbn, issn, standard_number`) · `status` | `source_locators` (20) + the lead families |
+| `evi_items` | `parameter` · `parameter_canonical` · `claimed_value` · `claimed_unit` · `claim_text` · `claim_type` · `source_section` · the **15** `loc_*` locator columns · `status` | `source_value_extractions` (48) |
+| `jud_items` | `tier_assessed` · `soundness` · `directness` · `weight` · `dissent_of_judgment_item_id` · `rationale` | **new** (§9.1-X4: population grades stay a source-grained satellite) |
+| `syn_items` | `kind` (`primary`/`comparative`) · `synthesis` *(or the file pointer, pending Q3)* · `status` | `bpc_metadata` (16, all of which are process metadata) |
+| `spe_items` | `value_min` · `value_max` · `value_unit` · `state` · `design_scale` · `marker` · `rationale` · `falsification_condition` | `specifications` (27) |
+
+**Three consolidations fall straight out of this and are the answer to "consolidate by phase":**
+
+1. **`bpc_metadata`'s 16 process-metadata columns are not synthesis payload.** `co1_pass_count`,
+   `pico_complete`, `search_complete`, `citation_mining_complete`, `supersession_check_complete` are a
+   **completion checklist about the research**, sitting on the synthesis row. Under Law 5 they are
+   research-stage facts on a stage-4 table. They become a derived view over the stages that own them,
+   not stored columns — which is also why the synthesis has no column for the synthesis.
+2. **`specifications.governing_refs`, `tier_basis`, `derivation_sha`, `confidence_*` are judgment
+   facts on a specification row.** They restate what `jud_items` will hold. Under rule 5 they are
+   copies; the specification reaches them through `spe_synthesis_links → syn_judgment_links`.
+3. **The 15 `loc_*` columns are one concept in fifteen slots** — 7 start, 7 `_end`, plus `loc_note`.
+   They belong to the extraction (a locator is a within-document pointer, R3), and they are the one
+   place a wide column block is correct, because a citation locator genuinely has that many parts.
+   **Keep, do not fold** — noted because "consolidate" must not become "collapse what is honestly wide."
+
+### 10.4 The checker — the reason to do any of this
+
+None of the five laws is worth stating without a gate, and §1 requires naming what reaches the book
+if it does not exist. **A new registered check, `wiring_grammar`,** reading only `sqlite_master`:
+
+| law | assertion | `EXAMINED:` |
+|---|---|---|
+| 1 | no key-shaped column is neither PK nor FK | key-shaped columns |
+| 2 | every FK's name equals `singular(target)_id` | FK constraints |
+| 3 | no packed-reference column | all columns |
+| 4 | stamp/remark/status names are from the canonical set | all columns |
+| 5 | **no FK points to a later stage** | FK constraints |
+
+**What reaches the guidebook without it:** Law 5 is `CLAUDE.md` rule 5, which today has **zero
+enforcing code** — the file says so itself, and says the three guardrails that would have caught this
+repository's real failures all had none. A determination whose provenance is a packed text column
+(`governing_refs`) cannot be checked by a reader or a gate; that is how five fabricated citations
+passed six green gates. **The burden is paid in book terms, not apparatus terms.**
+
+### 10.5 What this does to the plan
+
+The column rewrite is **not** a new phase. It lands inside the migrations already scheduled, because
+renaming a column costs nothing extra once the table is being rewritten:
+
+| into | addition |
+|---|---|
+| **T-0** | Build `wiring_grammar` **first, as advisory**, and let it report the baseline: 13 liars, 7 packed, 6 mis-named, the stamp footprints. A check written after the rename cannot prove the rename fixed anything. |
+| **T-A2** | Mint the five hand-off objects with the §10.3 spine exactly. New tables must be born compliant — this is free now and expensive later. |
+| **T-B** | The column sweep on the renamed tables: 13 liars, 6 mis-named FKs, the four stamp names, the status collapse. Same migration as each table's rename. |
+| **T-B** | The 7 packed columns → junctions. `specifications.governing_refs` is the priority; it is the one a reader sees. |
+| **T-C** | Promote `wiring_grammar` to **blocking**. It can only be blocking once T-B has cleared its findings — the §9.8 sequencing lesson, applied in advance rather than after. |
+
+**One caution, from the same lesson.** Column renames break callers exactly as table renames do, and
+`ALTER TABLE RENAME COLUMN` does **not** rewrite string references inside Python, skills, or the
+registry — only SQL schema objects. **The T-0.4 sweep helper must take columns, not just tables**, or
+this part of the work re-arms the migration-064 failure at 876× the surface.
+
+---
+
 ## Appendix — re-derivation
 
 ```bash
