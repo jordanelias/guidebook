@@ -98,14 +98,30 @@ designated remedy for a violation still on the books, the other repaired at the 
 artefact legitimately produces layer-2 rows. That answers *write order*. This map answers *what a
 table may hold*. Both are true; do not use one to argue against the other.
 
-**The machine enforces a FIVE-stage spine and has not caught up with the 2026-08-27 ruling.**
+**THE MACHINE NOW ENFORCES THE SEVEN-STAGE SPINE.** Landed 2026-08-27 (D-0167):
 `governance/pipeline-contract.yaml`'s `stages:` list and `tools/pipeline_completeness.py`'s `STAGES`
-both still read `research → evidence-collection → judgment → synthesis → render`, with no
-`specification`. Until that lands, **the declared single home of the stage ids disagrees with this
-file**, and this file is the one that changed. What the machine does enforce, under these names:
-`governance/pipeline-contract.yaml` (the single home of the stage ids),
-`tools/pipeline_completeness.py`, and the blocking `pipeline_completeness_fresh` gate. The id is
-`evidence-collection`; its display form is **derived** by `stage_label()`, never stored beside it.
+both read `base → research → evidence → judgment → synthesis → specification → render`. The declared
+single home of the stage ids and this file agree again, and the disagreement that stood for a day is
+closed. What enforces it, under these names: `governance/pipeline-contract.yaml` (the single home of
+the stage ids), `tools/pipeline_completeness.py`, and the blocking `pipeline_completeness_fresh`
+gate. **The id is `evidence`, not `evidence-collection`** — renamed in the same change, because the
+ruled spine says *Evidence*; its display form is **derived** by `stage_label()`, never stored beside
+it.
+
+**`base` is a stage with real criteria, and none of them was invented.** Its six contract criteria
+are enforced by checks that already ran and had no stage to belong to — `validate_schema`,
+`validate_population`, `validate_axes`, `validate_jurisdiction`, `validate_items`,
+`retired_vocabulary` (plus `validate_schema_cross_check` and `population_integrity_audit`), **eight
+checks moved off `basis: unattributed`, three of them blocking.** The reason they were unattributed
+is that the contract had no `base` stage to attribute them to.
+
+**Four criteria moved from `judgment` to `specification`** — `governing-refs-nonempty`,
+`no-regulatory-stratum-stated`, `tier3-alone-threshold`, `derivation-handshake`. All four are
+enforced by `scripts/validate_evidence_state.py` **against the `specifications` table**, so they were
+specification criteria mis-filed under judgment. Judgment keeps `handoff-fanout-preserved` and
+`convergence-independence`, which are stated over its own object. **`--selftest` caught three basis
+refs still pointing at `judgment/…` after the move** — the registry is a caller, and C7 is the check
+that proves the sweep.
 
 ---
 

@@ -34,7 +34,7 @@ DEFAULT_OUT = REPO_ROOT / "tools" / "pipeline-completeness-dashboard.html"
 CONTRACT = REPO_ROOT / "governance" / "pipeline-contract.yaml"
 
 # The canonical pipeline spine (governance/pipeline-contract.yaml).
-STAGES = ["research", "evidence-collection", "judgment", "synthesis", "render"]
+STAGES = ["base", "research", "evidence", "judgment", "synthesis", "specification", "render"]
 
 # Display form is DERIVED from the id, never stored beside it: one home for the
 # stage name (owner ruling 2026-08-25 / CLAUDE.md rule 5). "evidence-collection"
