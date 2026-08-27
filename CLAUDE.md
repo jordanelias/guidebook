@@ -49,8 +49,12 @@ the ambiguity.)
 | **specification** | The determination: *therefore 1200 mm, marked ●*. Writes `specification_items` |
 | **render** | Book surfaces — `site/`, `parts/`, `tools/*.html`, and the content tables behind them |
 
-**Every stage's hand-off object is `<stage>_items`, and the hand-off is a NOT NULL foreign key.**
-Owner ruling 2026-08-27. Measured the same day: **not one foreign key in the schema lands on any
+**Every stage's hand-off object is `<stage>_items`.** Owner ruling 2026-08-27. **The KEY SHAPES below
+are not the owner's words and must not be quoted as such** — the owner ruled the naming and the
+cardinality (*"one-to-many rows of judgment provide one row for syntheses"*); NOT NULL columns,
+junctions and the fan-out/fan-in pivot are agent design derived from that cardinality, and the
+evidence→judgment shape is **reopened**: the owner said *"each row of evidence provides one row for
+judgment"* (1:1) and the first record of it said 1:N. Measured the same day: **not one foreign key in the schema lands on any
 stage's hand-off object** — `source_locators` and `bpc_metadata` have zero inbound keys at all, and
 `source_value_extractions` and `specifications` have one each, both same-stage. **Re-measured under
 the six stages, 2026-08-27: 43 foreign keys cross a boundary and 37 stay inside one, landing on
@@ -94,7 +98,11 @@ designated remedy for a violation still on the books, the other repaired at the 
 artefact legitimately produces layer-2 rows. That answers *write order*. This map answers *what a
 table may hold*. Both are true; do not use one to argue against the other.
 
-**The machine enforces this spine**, and as of 2026-08-25 it enforces it under these names:
+**The machine enforces a FIVE-stage spine and has not caught up with the 2026-08-27 ruling.**
+`governance/pipeline-contract.yaml`'s `stages:` list and `tools/pipeline_completeness.py`'s `STAGES`
+both still read `research → evidence-collection → judgment → synthesis → render`, with no
+`specification`. Until that lands, **the declared single home of the stage ids disagrees with this
+file**, and this file is the one that changed. What the machine does enforce, under these names:
 `governance/pipeline-contract.yaml` (the single home of the stage ids),
 `tools/pipeline_completeness.py`, and the blocking `pipeline_completeness_fresh` gate. The id is
 `evidence-collection`; its display form is **derived** by `stage_label()`, never stored beside it.
@@ -233,7 +241,10 @@ subject.** A blocking check whose session pointer is missing FAILs rather than S
 **(b) Prose that contradicts the database.** *Rule: no hand-written counts in derived documents.
 Generate them from the DB, or stamp the document with its generation date and a drift warning.* Counts in this file, in `index.html`, in manifests
 and in audits have all drifted. **Derive every volatile fact — row counts, schema version, CI
-status, the doctrine SHA, the active plan — from the live repo.** This file hardcodes none.
+status, the doctrine SHA, the active plan — from the live repo.** This file hardcodes as few as it
+can, and the pipeline section above now carries three (43/37 cross-stage keys on eight columns; five
+cross-stage views) because a wrong figure in each was being quoted onward. **Each is stamped
+2026-08-27 and each is a re-derivation command away** — treat them as dated, not as current.
 On 2026-08-19 a rendered search log claimed "three cells are EXACT" while the DB said two, made
 stale within the hour by the same session's own correction.
 

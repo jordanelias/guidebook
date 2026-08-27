@@ -1764,3 +1764,69 @@ research→evidence key belongs on the source, not the extraction, and needs the
 supersession recorded before it lands.
 DATE: 2026-08-27 — adversarial audit (Fable 5), schema-correctness lens, 18 findings at
 `scratchpad/session_2026-08-27-nomenclature-reconciliation/audits/A3-schema-correctness.md`.
+
+---
+
+CORRECTION — 2026-08-27, fourth pass (doctrine-conformance lens). **The audit found this session
+breaching the rules it was writing about, including one it wrote itself an hour earlier.**
+
+**1. I violated my own standing ACTION within the hour.** The entry two above ends *"Do not use E-08
+as an example of anything."* At the time the audit ran, `NOMENCLATURE.md` still used it as the
+worked example in **five** places, and the commit that claimed *"Part K's cross-reference fixed"*
+had touched only §L.3. Now removed from every **use**; it survives only in the passage that
+**records** its retirement — the mention-versus-use distinction `retired-vocabulary.yaml` already
+codifies, where a document that retires a token must be able to name it.
+
+**2. Rule 0, in the other direction: I expanded a ruling instead of arguing against one.** `CLAUDE.md`
+carried *"the hand-off is a NOT NULL foreign key. Owner ruling 2026-08-27."* **The owner ruled the
+naming and the cardinality. NOT NULL columns, junctions and the fan-out/fan-in pivot are agent design
+folded under an owner-ruling banner.** The ledger's own record of nine historical instances includes
+one where an agent invented a directive and built a 531-row table on it; this is the same shape,
+caught earlier. Corrected in place, with the derived parts labelled as derived.
+
+**3. `CLAUDE.md` contradicted itself twice after my edits.** It declared six stages while still
+asserting *"The machine enforces this spine"* — `pipeline-contract.yaml` and
+`tools/pipeline_completeness.py` both still list five, with no `specification`, so **the declared
+single home of the stage ids disagrees with the operating manual, and the manual is what changed.**
+And *"This file hardcodes none"* became false the moment I put counts in it. Both corrected; the
+counts are now stamped and marked as dated.
+
+**4. A live rule-5 violation I missed while auditing rule 5.**
+`evidence_population_match` carries **both `source_ref` and `ref_id`, identical in all 25 rows** —
+one fact, two columns, one table. It is the table this session said it had "Verified 2026-08-27". It
+also makes the audit's "seven column names for one referent" an undercount: the eighth is
+`source_ref`.
+
+**5. "`site_pages_fresh` … nothing calls it" — FALSE.** `.github/workflows/ci.yml:251` runs
+`run_checks.py --battery render`, which includes it. The true defect is narrower and was conflated
+with a second one: the check **is invoked and is advisory**, so it reports drift without stopping it;
+separately, `regenerate_derived.sh` — the script `CLAUDE.md` §7 names for `parts/` and `site/` —
+never rebuilds those pages. **"Unwired" and "non-blocking" are different defects.**
+
+**6. Counts that drifted while being corrected.** The register's name-fault total was 29 at
+`d354550` and 31 at HEAD while the prose said 30 — a §2(b) failure inside the correction of a §2(b)
+failure. Several figures were reported without a stated method (`23/14/11` literal-string lines,
+`272/256` mined DOIs, the 12-skill-file count) and are unverifiable as written.
+
+**7. Burden of proof unpaid.** §1 requires naming *what wrong thing reaches the guidebook* if a new
+object does not exist. `jud_items`, `syn_judgment_links` and `spe_synthesis_links` were justified by
+spine integrity — an argument **about the apparatus**, which §1 explicitly rejects. `figures`, the
+vocabulary check and the `site_pages_fresh` promotion do pay it. The promotion also ignores the
+registry's recorded condition that it stay advisory *until the committed-versus-generated policy is
+settled*.
+
+**8. The caller set for retiring `items` is still incomplete** after two passes: it omits the
+generators (`build_site.py` walks `items`), `validate_items.py`, the audit scripts, the tests, and
+the `context-map` / `pipeline-map` / `retired-vocabulary` YAMLs.
+
+**What held, recorded because a correction register without its confirmations is also a distortion:**
+every one of 38 row counts, the seven-target distribution under five stages, the zero inbound
+hand-off keys, the three forward pointers, the 5,318-row stage split and roughly 25 other figures
+reproduced exactly; `references/project-standards.md` has stayed append-only; all commits satisfy
+rule 1's format; rule 6's scratchpad-at-every-break was followed.
+
+CONDITION: Closing this session.
+ACTION: A session record **and** an attestation are owed — the close-out touches `sessions/`, which
+is a rule-2 path. `sessions/LATEST` moves; **`LATEST-RESEARCH` does not** (no research was done).
+DATE: 2026-08-27 — adversarial audit (Fable 5), doctrine-conformance lens, 11 breaches at
+`scratchpad/session_2026-08-27-nomenclature-reconciliation/audits/A4-doctrine-conformance.md`.

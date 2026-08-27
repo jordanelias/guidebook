@@ -160,11 +160,16 @@ key in either direction. So `REF-00325` does not tell you which stage it lives i
 sort *above* every numbered id, so `MAX(ref_id)` returns `REF-VERIFIED-012`. Any hand-rolled
 high-water mark is wrong today; `dbcore.next_ref_id()` is the sanctioned computation.
 
-### C.2 Seven column names for one referent, three of them lying
+### C.2 Eight column names for one referent, three of them lying — and one live dual home
 
 `ref_id` · `global_ref_id` · `source_ref_id` · `root_ref_id` · `evidence_ref_id` ·
-`superseded_by_ref_id` — and **`local_ref_id`**, on three tables, which holds `RAP-01`: a
-within-document citation label, not a `REF-` at all.
+`superseded_by_ref_id` · **`source_ref`** — and **`local_ref_id`**, on three tables, which holds
+`RAP-01`: a within-document citation label, not a `REF-` at all.
+
+**`source_ref` is worse than a synonym: it is a rule-5 violation sitting in live data.**
+`evidence_population_match` carries **both** `source_ref` and `ref_id`, and they are **identical in
+all 25 rows**. One fact, two columns, one table. This section originally said "seven names" and
+missed it — on the very table the same document claimed to have verified.
 
 ### C.3 Soft references — named for a key, carrying no key
 
@@ -656,9 +661,10 @@ not a store. It is that the pointer is partial and the claims inside are unregis
   `population_page.py`, 11 in `room_page.py`. `room_page.py`'s three fictional sections are already
   on the record.
 
-And the failure is already shipped: `site/specs/e-08.html` headlines
-`<h1>Corridor Clear Width (≥1200 mm Minimum on All Primary Routes)</h1>` over a body reading
-*"not yet computed"*. **The page contradicts itself, and it is rendering the database faithfully.**
+And the failure is already shipped: a spec page headlines a determination its own body reports as
+*"not yet computed"*. **The page contradicts itself, and it is rendering the database faithfully** —
+the value is in `items.name`, not in the renderer. *(The obvious worked example is a retired one; see
+L.3 for why it must not be named here.)*
 
 *Corrected 2026-08-27, an hour after this section was written.* I first said the number was "authored
 at render". It is not. It is in **`items.name`** — a substrate vocabulary column — and
@@ -682,7 +688,7 @@ chrome lives in templates, which is code, not data.
 
 **The testable form:** *if a sentence on a rendered page makes a claim about the built environment and
 cannot name the synthesis-item or specification-item it came from, it is drift.* That is a render
-gate, and it is the gate that would have caught `e-08.html` and `index.html:7`.
+gate, and it is the gate that would have caught `index.html:7`'s stale counts.
 
 ### K.4 Where each of the six things goes
 
@@ -791,10 +797,12 @@ hand-edited [pages]."* Run today: **`FRESH: 93 page(s) match a fresh render. EXA
 | … mentions `parts`, `site`, `audits` | **0×, 0×, 0×** | |
 | `CLAUDE.md` §7 says regenerate *"(`parts/`, `site/`, `audits/`, `tools/*.html`)"* with that script | it covers **one of the four paths it names** | |
 | `pipeline_completeness_fresh`, `evidentiary_audit_fresh` | **blocking** | both guard `tools/` |
-| `site_pages_fresh` (runs `build_site.py --check`) | **advisory**, and nothing calls it | guards the reader |
+| `site_pages_fresh` (runs `build_site.py --check`) | **advisory** — invoked by `ci.yml:251`'s render battery, but cannot fail the build | guards the reader |
 
 **The two blocking freshness gates guard the dashboards. The reader-facing pages are guarded by an
-advisory check that no script invokes.** That is the exact mechanism behind the smoke test's finding
+advisory check** — one that CI does run, and that therefore reports drift without stopping it, while
+`regenerate_derived.sh` (the script `CLAUDE.md` §7 names) never rebuilds those pages at all. That is
+the exact mechanism behind the smoke test's finding
 that *"the gates are thickest around the database and thinnest exactly where the reader is."*
 
 **Promoting it is free today.** `build_site.py --check` is green on all 93 pages, and the page set is
@@ -803,10 +811,9 @@ added later have no page at all, including A-18" is stale; measured today it is 
 
 ### L.3 But regeneration cannot catch the failure we already have — and this was already ratified
 
-`e-08.html` renders **faithfully**. The `≥1200 mm` is not a hand-edit and not render-authored — it is
-in **`items.name`**:
-
-> `('E-08', 'Corridor Clear Width (≥1200 mm Minimum on All Primary Routes)', 'E', 'active')`
+The pages render **faithfully**. Where a spec page headlines a value its body calls "not yet
+computed", the value is neither a hand-edit nor render-authored — it is in **`items.name`**, a
+substrate vocabulary column no gate reads as a value.
 
 **THIS SECTION ORIGINALLY CLAIMED "nine of 93 item names carry a quantified determination". THAT WAS
 WRONG, AND IT WAS NOT A FINDING.** Both halves are corrected here rather than overwritten, because
@@ -900,8 +907,10 @@ surface — while everything else is a column, a junction, or a view.
 ### L.6 The order, and why step 1 comes first
 
 1. **Wire what exists.** Add `build_site.py` to `regenerate_derived.sh`; promote `site_pages_fresh`
-   from advisory to blocking. **No schema change, and green today.** After this, an `e-08`-class page
-   edit cannot be committed.
+   from advisory to blocking. **No schema change, and green today.** After this, a hand-edited page
+   cannot be committed. *(Note: the check is already invoked — `ci.yml:251` runs the render battery —
+   but it is advisory, so it reports and cannot fail the build. "Wired" and "blocking" are different
+   defects and an earlier draft of this section conflated them.)*
 2. **Add the vocabulary check** (L.3), built against the ratified taxonomy. Fires on **42 rows at
    minimum** — 28 numeric, 23 prescriptive, 9 overlapping — each then owed a real determination
    rather than a name that asserts one.
