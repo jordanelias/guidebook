@@ -1,0 +1,44 @@
+- Base
+  - base.models
+    - catalogues models and frameworks for disability like Kawa Model for occupational therapy or Convention on the Rights of Persons with Disabilities
+  - base.building
+    - lists all building typologies
+    - lists all architectural and design elements involved in buildings
+  - base.topics
+    - exhaustive list of topics in accessibility ranging from categories like circulation and acoustics to more specific elements like ramp slopes, grab bar heights, hearing loops, contrast strips
+  - base.taxonomy_medical
+    - defining lived experience of disability by medical model
+  - base.taxonomy_identity
+    - defining lived experience of disability by social identity
+  - base.taxonomy_icf
+    - defining lived experience of disability by ICF codes for functional impairments
+  - base.taxonomy_needs
+    - defining lived experience of disability by access needs
+  - base.clues
+    - the ~825 DOI without correct metadata
+  - base.sources
+    - countries, international organizations like EU and UN, international standards like ISO
+    - academic journals, research publishing bodies
+    - professional practice, clinical guidelines
+    - advocacy organizations
+  - base.multilingual
+    - terminology for all project-related definitions across all languages in jurisdictions
+    - localizations and vernacular must be incorporated–direct English translations are insufficient
+  - base.sources
+    - lists all academic sources across many languages
+- Research
+  - research.matrix
+    - works from an expansive matrix whereby searches are performed in manners akin to
+      - base.taxonomy_x * base.building * base.jurisdictions
+      - base.taxonomy_x * base.building * base.multilingual
+      - base.topics * base.jurisdictions
+      - base.topics * base.multilingual
+      - base.clues
+  - research.logs
+    - logs all sources searched, failures to find, etc
+- Evidence
+  - logs all relevant items found in search with a unique reference ID, DOI/PMID and other codes if available, type of source (academic, code, professional practices, etc)
+- Judgment
+  - delivers a verdict on an evidence item for what tier of evidence hierarchy it belongs to (1, 2…6)
+  - one evidence source may provide many rows of judgment (eg a code document like Canada's NBC 3.8)
+  - determines category of judgment item, derives value/process/figure/goal for it

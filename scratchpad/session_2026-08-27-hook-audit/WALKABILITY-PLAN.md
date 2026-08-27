@@ -1840,3 +1840,137 @@ import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True)
 print(c.execute('SELECT COUNT(*) FROM evidence_population_match WHERE source_ref IS NOT ref_id').fetchone(),
       c.execute('SELECT COUNT(*) FROM evidence_population_match').fetchone())"
 ```
+
+---
+
+## PART 14 — Owner architecture document, 2026-08-27 · **recorded on contact, rule 0**
+
+Source: `OWNER-ARCHITECTURE-2026-08-27.txt` in this directory (extracted verbatim from the uploaded
+`.docx`; the `.pdf` is the same document). It is a namespaced restatement of the pipeline in the
+owner's own hand. **It supersedes prior ratified records where they touch, and the supersessions are
+recorded here, not weighed.**
+
+**It ends at Judgment.** Synthesis, specification and render are unrestated. That is NOT a retraction
+of the 2026-08-27 six-stage ruling — absence is not a ruling — but the fan-in half of this plan still
+rests on the earlier statement and must be re-put before it is built.
+
+### 14.1 SUPERSEDED — the cardinality question is closed
+
+> *"one evidence source may provide many rows of judgment (eg a code document like Canada's NBC 3.8)"*
+
+**Supersedes** the 2026-08-27 *"each row of evidence provides one row for judgment."* It carries its
+own worked example, which admits no second reading.
+
+**Ruled: evidence → judgment is 1:N. `judgment_items.evidence_item_id NOT NULL`, NO `UNIQUE`.**
+
+Consequences: **Q1 is withdrawn** — do not put it to the owner. Part 9.2's readings (a)/(b) are moot.
+B2's partial unique index (`WHERE dissent_of IS NULL`) is no longer needed for *cardinality*; it
+survives only if dissent rows are still wanted structurally distinct from ordinary siblings, which is
+a separate and much smaller question.
+
+### 14.2 SUPERSEDED — the value is derived at JUDGMENT, not evidence
+
+> Evidence: *"logs all relevant items found in search with a unique reference ID, DOI/PMID and other
+> codes if available, type of source"*
+> Judgment: *"delivers a verdict … for what tier of evidence hierarchy it belongs to (1, 2…6)"* ·
+> *"determines category of judgment item, **derives value/process/figure/goal for it**"*
+
+| stage | the item is | live table |
+|---|---|---|
+| evidence | **the source** — one row per document, carrying the reference ID and identifiers | `evidence_sources` |
+| judgment | **the extracted, tiered, categorised value** — one row per clause/parameter | `source_value_extractions`, re-homed |
+
+**This dissolves, rather than resolves, the plan's hardest open problems:**
+
+- **A3-F3** (a per-source fact on a per-extraction row) — the lead key hangs on the source, which is
+  now the evidence item itself. No copied fact.
+- **A3-F18 / Part 9.1 X4** (the population-match grain conflict) — `evidence_population_match` grades
+  a *source*; under this model that is where it belongs. The fold question disappears.
+- **Part 9.1 X3** — my "25 grades over 10 sources" measurement was rejected as the wrong edge. Under
+  this model it is the *right* edge and never needed to settle anything.
+- **M-2 / F.1** (`judgment_items` has no column set and nothing prefigures it) — **false now.**
+  `source_value_extractions` prefigures it in 48 columns. `judgment_items` is that table plus a tier
+  verdict and a category.
+
+### 14.3 SUPERSEDED — `base.clues` is SUBSTRATE, not research's hand-off
+
+The document places clues in `base.`, and `research.matrix` **consumes** `base.clues` as one of five
+search modes. Clues are an **input** to research, not its output.
+
+**This plan's `source_locators → res_items` (Part 6.2) is wrong and is struck.**
+
+It also **dissolves A3-F4**: the ratified `DR-2026-08-06` wall — *"Nothing joins it, no determination
+may cite it"* — needed a recorded supersession under this plan's design. Under the owner's it needs
+none. Clues stay in substrate, non-citable, an input. The conflict was an artefact of putting them in
+the wrong layer.
+
+### 14.4 CONTRADICTED — the naming grammar
+
+The document uses a **dotted namespace** and **substrate has a name**: `base.models`,
+`base.building`, `research.matrix`, `research.logs`.
+
+`NOMENCLATURE.md` Part D and this plan's §6.1 both say *"Substrate takes no prefix, and the absence is
+the signal."* **Both cannot hold.** SQLite has no schemas, so `base.models` maps to `base_models` —
+which makes the prefix a **full word**, not `stage_id[:3]`. That retires B1's three-character collision
+hazard and every table name proposed in §6.2. **Owner-owed: confirm `base_` / `research_` /
+`evidence_` / `judgment_` as the literal prefixes.**
+
+### 14.5 Measured against the DB — one figure does not reconcile
+
+`base.clues` = *"the ~825 DOI without correct metadata."*
+
+| | |
+|---|---:|
+| `source_locators` rows | **875** |
+| … with a DOI at all | **448** |
+| … DOI **and** missing title/authors | **251** |
+
+**~825 matches none of the three.** Nearest is the row count, but **427 rows carry no DOI** and so do
+not meet the stated definition. Either `base.clues` is *"875 leads, 448 of them carrying a DOI"*, or
+it is *"the 251 DOIs actually lacking metadata."* **Owner-owed: which population is `base.clues`?**
+
+### 14.6 Three `base.` members have no table, and one is a doctrine question
+
+| member | live state | note |
+|---|---|---|
+| `base.models` (Kawa, CRPD) | **no table** | new substrate registry |
+| `base.taxonomy_medical` | **no table** | **DG-NON.** A medical-model taxonomy in a CRPD-aligned social-model project is a doctrine call, not a schema one. It is listed as one of four framings, which is defensible — ICF is itself a bio-psycho-social bridge — but it must be **ruled explicitly, not inferred from a bullet** |
+| `base.jurisdictions` | **no table** | used in `research.matrix`, never defined in the `base.` list. `jurisdiction` is currently an inert enum in `schemas/enums.py` sitting on **11 tables**. This confirms it must become real |
+| `base.taxonomy_identity` / `_icf` / `_needs` | `populations` 23 · `axes` 17 · `access_needs` 17 | exist |
+
+### 14.7 A defect in the document
+
+**`base.sources` is listed twice, with different meanings:**
+1. *"countries, international organizations like EU and UN, international standards like ISO · academic
+   journals, research publishing bodies · professional practice, clinical guidelines · advocacy
+   organizations"* — a taxonomy of source **types**.
+2. *"lists all academic sources across many languages"* — the **corpus**.
+
+Those are substrate vocabulary and evidence respectively. **Collapsing them recreates the
+lead-versus-evidence conflation the project already has** (`source_locators` 875 vs
+`evidence_sources` 10, four rows in both, no key between them). They need two names.
+
+### 14.8 CONFIRMED — `research.matrix` is a first-class object, and it already exists
+
+> *"base.taxonomy_x * base.building * base.jurisdictions · base.taxonomy_x * base.building *
+> base.multilingual · base.topics * base.jurisdictions · base.topics * base.multilingual · base.clues"*
+
+This is `DR-2026-08-24` §2.4's full cross-product made concrete, and **`v_coverage_priority` is that
+matrix**: 7,208 rows over slugs × `lang_jur_map`. It was R6's deletion candidate and was HELD on
+exactly this reasoning. It is now named as a stage object. **Do not delete it.**
+
+### 14.9 What this costs the plan
+
+| survives | struck or moot |
+|---|---|
+| the six-stage spine (unrestated past judgment, not retracted) | `res_items` = `source_locators` (14.3) |
+| hand-off keys as NOT NULL FKs, in principle | Q1 and Part 9.2 entirely (14.1) |
+| bidirectional walkability and the index requirement (§6.3) | the grain corrections X3/X4 and A3-F3/F18 (14.2) |
+| reference IDs over surrogate integers (§6.4) | `<stage>_items` naming and the `[:3]` prefix (14.4) |
+| render reads across all stages via views (§6.5) | M-2: `judgment_items` has a precedent after all |
+| the minimization tiers (§9.5), unaffected | the A3-F4 supersession paragraph — no longer needed |
+
+**Owner-owed after this document:** the `base.clues` population (14.5) · `base.taxonomy_medical` as
+doctrine (14.6) · the literal prefixes (14.4) · the duplicated `base.sources` (14.7) · and the
+**synthesis / specification / render half**, which this document does not restate and on which the
+junction design still rests.
