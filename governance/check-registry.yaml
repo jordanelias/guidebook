@@ -1464,6 +1464,21 @@ checks:
 # appears exactly once in this file, inside the prose of the entry below. An entry
 # whose stated RED reason has since been measured false, and which run_checks.py
 # never selects, meets §1's evidence standard for deletion on its own.
+  - id: judgment_handoff_shape
+    cmd:
+    - python3
+    - scripts/audit/judgment_handoff_shape.py
+    battery: schema
+    kinds:
+    - schema
+    - data
+    - governance
+    level: blocking
+    basis: judgment/handoff-fanout-preserved
+    cost: fast
+    min_items: 1
+    note: "Pins the 1:N evidence->judgment hand-off ruled 2026-08-27. The subject table holds 0 rows, so every other gate is blind to a regression here (CLAUDE.md rule 4). Mutation-tested 2026-08-27: injecting UNIQUE(ref_id) on a scratch copy turns it red."
+
 quarantine:
 
 

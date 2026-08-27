@@ -1830,3 +1830,93 @@ ACTION: A session record **and** an attestation are owed — the close-out touch
 is a rule-2 path. `sessions/LATEST` moves; **`LATEST-RESEARCH` does not** (no research was done).
 DATE: 2026-08-27 — adversarial audit (Fable 5), doctrine-conformance lens, 11 breaches at
 `scratchpad/session_2026-08-27-nomenclature-reconciliation/audits/A4-doctrine-conformance.md`.
+
+---
+
+RULE: **Evidence → judgment is 1:N, and the shape already exists in the schema.** Owner ruling
+2026-08-27, adopting item #1 of the architecture note.
+
+> *"one evidence source may provide many rows of judgment (eg a code document like Canada's NBC 3.8)"*
+
+**This supersedes the 2026-08-27 statement** *"each row of evidence provides one row for judgment."*
+Recorded on contact per `CLAUDE.md` rule 0. The superseded wording is not an argument against this one
+and must not be cited as such. The owner subsequently clarified that the architecture note is *"not
+complete, and not definitive — just a thought document"*; **this rule rests on the owner's explicit
+instruction to adopt item #1, not on the note's status.**
+
+**Measured 2026-08-27, and it is the reason this costs nothing:**
+
+| property | measured | required by the ruling |
+|---|---|---|
+| `source_value_extractions.ref_id` | **NOT NULL** | NOT NULL ✓ |
+| UNIQUE index on that table | **none** | absent ✓ |
+| FK `ref_id → evidence_sources(ref_id)` | **present** | the hand-off ✓ |
+
+**The judgment hand-off key is already in the schema and has been all along.** It was not recognised
+as one because the extraction table was assigned to the wrong stage (see the companion rule below).
+`judgment_items` therefore needs **no new table and no new key** — which refutes the standing claim
+(nomenclature audit F.1; `WALKABILITY-PLAN.md` M-2) that it is *"the only genuinely new table, and
+nothing in the schema prefigures it."* Forty-nine columns prefigure it.
+
+**Q1 is CLOSED.** Do not put the evidence→judgment cardinality to the owner again. A
+`UNIQUE(ref_id)` on that table would abolish both the ruled fan-out and the dissent contest
+(`DR-2026-08-19` §7) and must never be added.
+
+CONDITION: Any session designing the judgment hand-off, writing `judgment_items`, adding an index to
+`source_value_extractions`, or proposing to put the cardinality question to the owner.
+ACTION: (1) Pin the shape with a registered check — NOT NULL present, no UNIQUE on `ref_id` — so the
+ruling cannot regress silently; a 0-row table makes regression invisible to every other gate
+(`CLAUDE.md` rule 4). (2) Do not design a new judgment table.
+DATE: 2026-08-27 — owner ruling, adopting item #1.
+
+---
+
+RULE: **The evidence item is the SOURCE; the judgment item is the extracted, tiered, categorised
+value.** Owner ruling 2026-08-27, adopting item #2 of the architecture note.
+
+> Evidence: *"logs all relevant items found in search with a unique reference ID, DOI/PMID and other
+> codes if available, type of source (academic, code, professional practices, etc)"*
+> Judgment: *"delivers a verdict on an evidence item for what tier of evidence hierarchy it belongs
+> to (1, 2…6)"* · *"determines category of judgment item, **derives value/process/figure/goal for
+> it**"*
+
+| stage | the item is | table |
+|---|---|---|
+| evidence collection | **the source** — one row per document, carrying the reference ID and identifiers | `evidence_sources` (10 rows, 97 columns) |
+| judgment | **the extracted, tiered, categorised value** — one row per clause or parameter | `source_value_extractions` (0 rows, 49 columns) |
+
+**`source_value_extractions` is a JUDGMENT table, not an evidence-collection table.** The value is
+derived at judgment; collection logs what was found. This is a stage re-assignment, **not a rename** —
+`evidence_sources` carries **13 inbound foreign keys** and is hardcoded in the blocking
+`migration_reproducibility` gate in **8 places**, so renaming it is separate, later, and expensive.
+
+**What this dissolves, rather than resolves.** Four open findings were all disputes about a boundary
+this ruling draws one stage further left, and each closes with no design work:
+
+| finding | was | now |
+|---|---|---|
+| A3-F3 — the lead key puts a per-source fact on a per-extraction row | rule-5 violation | **moot.** The evidence item IS the source; the lead key hangs on it at its own grain |
+| A3-F18 / X4 — the population-match grain conflict | fold impossible | **moot.** `evidence_population_match` grades a source, which is now the evidence item |
+| X3 — "25 grades over 10 sources" rejected as the wrong edge | wrong edge | **the right edge.** The measurement was always about sources |
+| M-2 / F.1 — `judgment_items` has no column set | owed a design | **refuted.** It inherits 49 columns |
+
+**One consequence is owed and is NOT free.** Under this ruling the **tier verdict is a judgment
+output**, but `tier` is a column on `evidence_sources` — a judgment written into an evidence row.
+Moving it is rule-5 correct and the sweep is real: measured 2026-08-27, **40 Python files name
+`evidence_sources`, 78 Python lines name a tier field, and 26 skills teach tier.** Writer-retire →
+reader-retire → NULL forward, and grep `scripts/migrations/data_*` for the column first. **Queued, not
+done.** `claim_type` (`numerical`/`range`/`qualitative`/`framework`/`absent`) is adjacent to but not
+the same as the ruled *"category of judgment item"*; that column is new and small.
+
+**Items #3 and #4 of the architecture note are NOT adopted** — owner instruction, same contact.
+`base.clues` is not moved to substrate, and the `~825` reconciliation is not pursued. The note's
+naming grammar (`base.` dotted namespace, full-word prefixes) is **not ruled** and remains in tension
+with *"substrate takes no prefix"*.
+
+CONDITION: Any session assigning a table to a stage, designing the judgment hand-off, writing the
+stage map, or reasoning about where a value or a tier is determined.
+ACTION: (1) Re-assign `source_value_extractions` to `judgment` in `governance/pipeline-contract.yaml`
+and `tools/pipeline_completeness.py`; the pre-2026-08-27 stage maps predate this and must be
+re-derived, not read. (2) Do not rename `evidence_sources` as part of this. (3) Queue the `tier` move
+with its measured caller set.
+DATE: 2026-08-27 — owner ruling, adopting item #2.

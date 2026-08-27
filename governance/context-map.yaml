@@ -1082,6 +1082,15 @@ checks:
     - render
     min_items: 1
     cmd: python3 tools/evidentiary_audit.py --check
+  - id: judgment_handoff_shape
+    level: blocking
+    battery: schema
+    kinds:
+    - schema
+    - data
+    - governance
+    min_items: 1
+    cmd: python3 scripts/audit/judgment_handoff_shape.py
   - id: migration_reproducibility
     level: blocking
     battery: data
