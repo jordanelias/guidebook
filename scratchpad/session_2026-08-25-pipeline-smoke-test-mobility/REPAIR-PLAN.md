@@ -19,26 +19,38 @@ exception (§5.2), whose burden of proof is met in place.
 ```
 P0.1 ─┬─ P0.2 (same commit)                     safety: nothing else runs first
       ├─ P0.3  hook misfiling
-      └─ P0.4  twelve retired codes in live skills
+      ├─ P0.4  twelve retired codes in live skills
+      └─ P0.6  §R8 rename + register entry  (owner-gated, whole, rename BEFORE entry)
                     │
               §8 POPULATION SPLIT  (content, ruled — must precede any cell write)
                     │
+              P1.0  re-grain `specifications`  (owner-ruled; needs its parameter vocabulary)
+                    │
 P1.1 ──► P1.2 ──► P1.4 ──► ( P1.5 ∥ P1.8 ∥ P1.3′ ) ──► P1.7 ──► walk_e2e.sh
-  │        │
+  │        │  ▲
+  │        │  └── P1.2 must REQUIRE parameter_canonical — P1.0's key depends on it
   │        └──────────────────────────► P2.1  (needs P1.1's dedup only)
   └───────────────────────────────────► P2.2  (needs migration 066)
 
 P3.x, P4.x — independent, any time.   P2.4 — deliberately last, no subject yet.
 ```
 
-**Three ordering claims, each with a reason:**
+**The ordering claims, each with a reason** *(no count — §2(b): a hand-written number in a
+derived document drifts the moment the list changes, and this one already did):*
 
 - **P0.1 and P0.2 share a commit.** Wiring the canonical-write guard mechanically breaks the four
   skill lines that instruct the canonical path. Landing the guard alone turns those skills into
   runtime failures.
-- **§8 precedes P1.3′.** `specifications` is keyed on population. A cell written before the split is
-  keyed on a code that will not exist, and re-keying a *determination* — with its governing refs,
-  convergence assessment and tier basis — is categorically worse than re-pointing 33 substrate rows.
+- **§8 precedes P1.3′ — but the reason weakened on 2026-08-26 and is restated honestly.** The
+  original reason was that `specifications` is *keyed* on population, so a cell written before the
+  split would be keyed on a code that will not exist. **P1.0 removes that key**, so the cost of
+  getting it wrong drops from re-keying a determination — with its governing refs, convergence
+  assessment and tier basis — to re-pointing junction rows. The ordering still holds, because a
+  cross-reference asserted against a superseded code is a wrong statement about the book while it
+  stands; it is no longer *categorically* worse, and this plan should not keep claiming it is.
+- **P0.6 precedes the batch, not merely the walk.** `search_executions.query_text` already holds
+  `AX-` in a live row: running a batch first writes new rows in retired vocabulary, into rendered
+  search logs that sit under an `.ignore`d path where the sweep's own grep cannot see them.
 - **P2.4 is last on purpose.** It needs ≥2 syntheses to have a subject and there are none. Building
   it now produces another gate that passes having examined nothing.
 
@@ -76,6 +88,34 @@ exactly these skills**, `cross-population-conflict-mapper` among them.
 Its caller sweep ships in the same change: `schemas/enums.py`, `validate_population.py`'s crosswalk,
 `site/populations/mob.html`, the vetting surface (31 tokens), the pipeline dashboard (1), **the ten
 live skills teaching `MOB`**, and `retired-vocabulary.yaml`.
+
+### P0.6 · The §R8 demand-layer rename — and the register entry that must follow it
+**Owner ruling 2026-08-26**, closing open decision 3: the rename executes **together with** a
+`retired-vocabulary.yaml` entry, so the token is caught mechanically rather than by remembering.
+Prose discipline against it failed four times in one session on 2026-08-25.
+
+**Order is fixed and is the reverse of the intuitive one.** The register's own admission test 2 says
+a token whose replacement has not landed *"is still describing live data correctly"* — so the entry
+cannot precede the migration. Rename first, entry last, one change.
+
+**Seven identifier entries, never the bare word.** `retired_vocabulary_audit.py:93-108` compiles
+every mode with a `(?<![\w-])…(?![\w-])` boundary, so `token: axis` would match ordinary English
+prose and nothing else — it cannot even reach `axis_code`. Flagging descriptive English is what §R8
+explicitly forbids. The entries are `axes`, `axis_code`, `item_axis_links`, `population_axis_map`,
+`access_need_axis_map`, `serves_axes`, `attaches_axes`.
+
+**`AX-` cannot be expressed by this register at all** — all three match modes require a non-`[\w-]`
+character after the token, so `AX-` never matches `AX-AMB`, and there is no prefix mode. Which forces
+the scoping question: **the migration must state whether the 17 code values are re-minted.** If not,
+`AX-*` is correct live data and goes to `deferred:` with that reasoning. If so, it is 288 live cells
+(`GLOB`, 2026-08-26) — 249 in the four `axis_code` columns and **39 in free text**, the harder half.
+
+**Why Phase 0 and not later.** `search_executions.query_text` already carries `AX-` in a live row, so
+a batch run before the rename writes new rows in retired vocabulary — and rendered search logs live
+under an `.ignore`d path, invisible to the sweep's own grep. Ledger entry:
+`references/project-standards.md`, 2026-08-26. **Owner-gated and whole** — §R8 item 3's bar on
+piecemeal execution stands; `validate_axes` (`check-registry.yaml:640`) and the registry itself are
+callers.
 
 ---
 
@@ -121,10 +161,33 @@ window closes the moment the first determination is written.**
 reads *"Cells are (item x population)"* and is now superseded; a contract injected into every
 session may not contradict its own first sentence.
 
-**Open, and not to be assumed away:** what the judgment object is *called*. `conceptual-model.md:92`
-makes `items` a **render** rollup — *"Item is the Part-4 [rollup]"* — while this ruling needs a
-**judgment** object to key from. No session may treat `items` as the judgment object merely because
-`item_code` is the column that exists.
+**RESOLVED 2026-08-26 — the judgment object is the canonical parameter.** Owner ruling, selecting
+from options put. `specifications` keys on the design parameter under determination, reusing
+`source_value_extractions.parameter_canonical`; `items` is demoted to the Part-4 render rollup that
+`conceptual-model.md:92` already calls it, **derived from** specifications rather than keyed by them.
+So `item_code` is dropped from `specifications` alongside `population_code`, in this same migration.
+
+**The schema already carries this grain one stage upstream.** `source_value_extractions` has
+`parameter` **NOT NULL** with `parameter_canonical`, `population_code` and `item_code` all nullable —
+parameter as identity, the rest as qualifiers. `specifications` inverts it and holds no parameter
+column at all. And `v_value_independence`, the view feeding `convergence_assessment`, has grouped on
+`COALESCE(parameter_canonical, parameter), population_code` since the baseline
+(`057_baseline_2026-08-12.sql:6693-6701`) with **no `item_code` in it**; `idx_sve_slug_param` indexes
+`(slug, parameter_canonical)`. Only `specifications` disagreed.
+
+**Two obligations this creates, neither optional:**
+- **A canonical-parameter vocabulary lands in or before this migration.** `parameter_canonical` has
+  no CHECK, no registry table and no writer — its entire specification is a code comment at
+  `schemas/source_value_extraction.py:89` (*"normalized for join (lowercase, hyphens)"*). Keying a
+  determination on unconstrained free text makes "corridor clear width" and "clear corridor width"
+  two determinations of one thing. Its home is a CHECK or a registry table, never a list in code
+  (rule 5).
+- **P1.2's `add-extraction` must REQUIRE `parameter_canonical`**, not honour the column's
+  nullability, or an extraction can be written that no determination can join to.
+
+**Also re-derived here:** `v_value_independence` still groups by `population_code`. Under the ruling
+population is a cross-reference, so that view's grain moves in this change or an independence count
+fragments across populations.
 
 ### P1.3′ · RESOLVED: `assess_cell` is the sole writer of stated/provisional/pending
 The original plan proposed `db.py add-specification` with a `--state` flag. **Dropped.** F6
@@ -284,7 +347,7 @@ be named as a gap in any cell that turns on them.
 |---|---|---|
 | ~~1~~ | ~~The determination's grain~~ — **RULED 2026-08-25.** A specification keys from the judgment object and cross-references populations, access needs and ICF, all three modes. Population is demoted from identity to cross-reference. Adds **P1.0** below. | Resolved |
 | ~~2~~ | ~~The split's code strings and fan-out~~ — **RULED 2026-08-25.** `AMB` / `WHEEL`; the 31 links fan out to 62. | Resolved |
-| 3 | The §R8 rename of the demand layer out of NOT DECIDED — prose discipline has failed four times in one session against objects that still carry the old names | No, but recurring |
+| ~~3~~ | ~~The §R8 rename of the demand layer~~ — **RULED 2026-08-26.** Schema rename **plus** a `retired-vocabulary.yaml` entry, in that order. Adds **P0.6**. | Resolved |
 | 4 | `opus_reviewed`: delete (recommended) or build render gating | No |
 | 5 | P1.8's min/max aggregation rule as stated doctrine | Blocks P1.8 |
 | 6 | Gap-id go-forward format; edit-form on the ratified DR; resurrecting the Template-3 room tables | No |
