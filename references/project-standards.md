@@ -2194,3 +2194,37 @@ ruled. *(A single table with `level` ∈ {building_type, room_type, element} plu
 the alternative, and it fits the parent-column ruling of the same day.)* **Reopened.**
 
 DATE: 2026-08-27 — R2 ruling-precedence audit, findings M1/D1/D2/D3.
+
+---
+
+REFINEMENT to the rule immediately above. **"Substrate" is RESERVED, not retired. It belongs to
+construction elements.** Owner ruling 2026-08-27: *"reserve the word substrate for construction
+elements."*
+
+**This changes the register shape.** The preceding entry treated the word as retired-with-a-carve-out.
+It is the reverse: the word has **one correct domain** and the pipeline-layer use is the trespass.
+
+| use | status |
+|---|---|
+| **construction element** — the material an element mounts to, bears on, or is finished over | **RESERVED. Correct. Do not touch.** |
+| pipeline layer | **wrong domain → `base`** |
+| storage / data-store (*"Storage substrate"*, `references/audits/verification-pipeline-proposal-2026-05-12.md:16`) | wrong domain; reword when touched |
+
+**It is a load-bearing accessibility term, which is why it is reserved.** The live uses are
+substantive, not decorative — `co1-housing-research-global-south.md:54`: *"A grab bar rated at ≥200 kg
+SWL requires a structural substrate — informal walls do not provide one."* Pull-out strength is a
+property of what the fixing goes into. A guidebook on the built environment that cannot say
+"substrate" about a wall has lost a word it needs.
+
+**Design consequence for `base_elements`** (the construction-element table ruled the same day, and not
+yet built): substrate is a **property of an element's context**, not of the element itself — the same
+grab bar has different capacity in masonry, stud, and corrugated metal. It belongs on the element ↔
+context relation, not as a column on the element. **Recorded now because the table does not exist
+yet**, and this is the cheapest moment.
+
+CONDITION: Any session sweeping the word, writing the register entry, or designing `base_elements`.
+ACTION: (1) The register entry must be **path-scoped to the pipeline-layer surfaces** (governance/,
+`CLAUDE.md`, the stage maps) — a bare token would flag the reserved use and teach the reader to
+ignore the check. (2) Never rewrite a construction-sense occurrence. (3) `base_elements` carries
+substrate on the relation, not the element.
+DATE: 2026-08-27 — owner ruling, quoted above.
