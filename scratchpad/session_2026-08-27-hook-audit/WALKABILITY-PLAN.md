@@ -1267,6 +1267,185 @@ this part of the work re-arms the migration-064 failure at 876× the surface.
 
 ---
 
+## PART 11 — B3 (tables / minimization) refutes Part 9.5. Corrections.
+
+First of four Fable 5 lenses, read-only, its own report at
+`scratchpad/session_2026-08-27-hook-audit/audits/B3-tables-minimization.md`. **Where Part 11 and
+Part 9.5 / §6.6 disagree, Part 11 wins.** Two BLOCKERs, five MAJORs, three defects.
+
+### 11.1 The serious one: `situations` is Co-1 doctrine, not apparatus
+
+I put it in Tier 1 on "0 rows, no writer." **That ground is true and irrelevant.**
+
+- `governance/functional-taxonomy.md:324` — *"First-person accounts → situations"*
+- `governance/functional-taxonomy.md:97` — the entity and Co-1 testimony are *"never subordinated"*
+- `governance/held-tensions.md:363` — *"situations rendered beside specifications"* — a **book surface**
+- its own DDL carries `co1_status` and `operational_access`
+
+**`situations` is the structured home of Co-1 lived-experience testimony.** §1's own carve-out
+reserves content and doctrine — *"evidence-tier definitions… work-product inclusion"* — for owner
+sign-off. Deleting it on agent evidence means that when Co-1 accounts arrive they land in prose or
+nowhere, and this project's own words for that are **"the worst failure available here."**
+
+**Corrected: `situations` leaves Tier 1 entirely. Owner-gated, and I should not have proposed it.**
+This is the §1 boundary — code is mine to delete, doctrine is not — and I crossed it on the one
+entity where the cost is highest.
+
+### 11.2 `connections` feeds a book part today, and its fold target is deferred
+
+`scripts/generate_parts.py:245-257` **builds Part 5 of the book from `connections`.** It has full
+CRUD in `db.py` (:113, :117, :129, :692-693), `log-mining` merges into it, plus `schemas/connection.py`,
+`validate_cross_refs.py`, graph audits, **11 skills**, registry and retired-vocabulary entries.
+
+And the fold target — `syn_items.kind='connection'` **plus `syn_synthesis_links`** — is the very
+table §6.6 *deferred* to reach its lower bound. **Deleting a table because it becomes X, while
+deferring X, is deletion with no successor.** The existence-guard means it would not crash; it would
+silently empty a book part, which is the §2(a) shape.
+
+**Corrected: re-tiered to "fold in the same commit that creates `syn_items.kind` and
+`syn_synthesis_links`", and `syn_synthesis_links` is added to the count (+1).**
+
+### 11.3 I skipped rule 5's own procedure on my own deletion set
+
+`reference_stubs` "0 rows and no writer" is **false**: two committed data migrations touch it.
+`data_20260823223839` INSERTs the stubs; `data_20260823225142`'s header reads *"fold reference_stubs
+into source_locators… Runs as a DATA migration so it replays AFTER data_20260823223839."* On
+`--rebuild` both replay and **require the table to exist** — an ordinary schema `DROP` replays before
+data and breaks reproducibility.
+
+**I ran the C5 collision measurement for the renames and never ran it against the deletions**, in a
+document that quotes rule 5's *"grep `scripts/migrations/data_*` for the name first."* B3 ran it:
+`reference_stubs` is the only collider in Tiers 1–2.
+
+**The honest ground is better than mine:** not "no writer" but **superseded** — migration
+`data_20260823225142` already folded 10 of its 11 columns into `source_locators`. §1 names
+"superseded" as exactly the evidence wanted. **The drop must be marked `AFTER_DATA`.**
+
+### 11.4 The grids: right verdict, wrong ground, six unswept readers
+
+`search_coverage`/`search_languages` do **not** merely restate `search_executions` — they carry
+non-derivable judgment columns (`status IN ('SEARCHED','THIN','NO-DATA','NOT-RUN')`, `co1/tier5/tier6_attempted`).
+A missing execution row cannot distinguish NOT-RUN from never-planned.
+
+**The deletion survives on a recorded ruling I never cited:** the grids are **FROZEN** in
+`scripts/db.py:264-320` (`FrozenGridError`) per `workplan/search-coverage-completion-workplan.md` —
+*"derive every coverage matrix as a VIEW over that log"* — and the three successor views exist. The
+drift that forced the freeze: **634 SEARCHED cells against 15 corroborated.**
+
+**Six live readers need sweeping**, including `tools/evidentiary_audit.py`, which feeds a **blocking**
+freshness gate. Drop without the sweep and `evidentiary_audit_fresh` goes red or vacuous.
+
+### 11.5 Tier 2, actually run: 7 of 11 clear
+
+I proposed the check; B3 ran it. **Four do not clear, and one of those is live CI infrastructure:**
+
+| table | verdict |
+|---|---|
+| `url_verification_runs` | **KEEP → Tier 3.** Writer `scripts/verify_urls.py` and a **dedicated scheduled workflow** `.github/workflows/verify-urls.yml` — one of the four CI workflows `CLAUDE.md` §5 names. Deleting it decapitates a live pipeline's log |
+| `case_study_specs` | **KEEP.** It is the named remedy inside a live `db.py` refusal (:2486 — *"Link the source through case_study_specs"*). **Deleting the designated remedy of a live refusal is the exact R6 defect `CLAUDE.md` voids** |
+| `gap_mining` | Registered check `gap_mining_audit` prints `EXAMINED` from it. And §6.3 calls the gap-driven walk *"a live requirement"* — deleting its act log while affirming the activity is incoherent. **Deletable only via the acts fold** |
+| `supersession_check` | `db.py:1051` carries DR-2026-05-24; `bpc_metadata.supersession_check_complete` references it. **Fold, don't delete** |
+| `item_audit_runs` | `db.py add-audit-run`/`update-audit-run`/`audit-runs`, `audit_consolidator.py`, 2 skills |
+
+The seven that clear: the three empty extraction/probe/citation population junctions (drop
+`schemas/population_links.py` in the same commit — the Pydantic mirror), plus
+`case_study_populations`, `economics_entry_populations`, `economics_entry_specs`.
+
+### 11.6 The fold refusal used its own measurement backwards — and this is the real finding
+
+§6.6 refused the act-table fold because **the 7 tables share zero columns.** B3:
+
+> **Zero shared columns is naming drift, not row-kind evidence.** All seven carry the same two facts
+> — who ran it, when — spelled seven ways. *The statistic that "refutes" the fold is the disease J.3
+> diagnosed, measured.*
+
+That is correct and I inverted it. Measured further: `gap_mining ∩ supersession_check` share **six
+substantive columns**; `search_executions` already carries `mining_direction`; and J.1's ruling
+(*"a mining pass IS a search with a different origin"*) already says the fold is the model. A folded
+`res_searches` with `kind ∈ {search, mine-backward, mine-forward, gap, supersession}` lands near **35
+columns** — narrower than `jurisdictional_values` alone. **My "~90-column, >80% NULL" figure described
+the 7-way merge nobody should do**; `url_verification_runs` and `pipeline_runs` are counter-reports
+and `item_audit_runs` a process checklist, and keeping those three out is the correct part of the refusal.
+
+Likewise `search_candidates → res_items` is clean (union 32 columns). And **`reference_stubs` shares
+10 of 11 columns with `source_locators` and was already folded by a committed migration** — one of the
+four "unfoldable" leads was folded by SQL I never grepped.
+
+**And the folds had no task ID.** §6.6 called them *"worth more than every deletion combined"* and
+then scheduled them nowhere. **Corrected — new tasks:**
+
+| new | task |
+|---|---|
+| **T-B.8** | Fold `citation_mining`, `gap_mining`, `supersession_check` into `res_searches` with a `kind` discriminator (−3) |
+| **T-B.9** | Fold `search_candidates` into `res_items` (−1): `tier_guess`→`tier_claimed`, `locator`→identifier block, `disposition`→`status`, keep `exec_id` as provenance |
+| **T-B.10** | Column study for `jurisdictional_values` — its **16 `loc_*` columns are a byte-for-name duplicate of the extraction locator block, 24 shared columns**, a live structural dual home no document has flagged |
+
+### 11.7 `figures` fails §1's mirror clause — strike it from the count
+
+§1: *"Nothing is added without naming what reads it."* **No renderer reads `figures`, none is
+scheduled, zero figures exist**, and it appears in the arithmetic (+1) while appearing in **no task**.
+I applied *"re-create a sibling when a stage actually needs one"* to the population junctions and
+exempted `figures` from the same rule without argument.
+
+**Corrected: struck from the count. Create it in the commit that ships the first figure, with its
+generator named as the reader.**
+
+### 11.8 Two of my own proposed checks fail §1, in a document that voids others on that ground
+
+- **9.7-H** (prefix-drift check) — justified as *"the rename is a one-time correctness event with no guard."* Apparatus.
+- **S-1** (ledger execution-status check) — justified as *"a check should read it."* Apparatus.
+
+§1: *"If the answer is about the apparatus rather than the book, do not add it."* **Either pay them in
+book terms or drop them.** 9.7-H is payable — a stage prefix that lies sends a writer to the wrong
+stage, and rule 5's write-order is what stops a determination being built on a fact from a stage that
+had not run. S-1 is not obviously payable and should be **dropped to a convention**, not a check.
+
+*(Note that `wiring_grammar` in §10.4 does pay in book terms — a determination whose provenance is a
+packed text column cannot be checked by a reader or a gate. That one stands.)*
+
+### 11.9 Three defects
+
+- **D1 — two tables fell out of my own menu.** 19 minus Tier 1 (6) minus Tier 2 (11) leaves
+  `case_study_outcomes` and `case_study_strategies` in **no tier**, and they are not in Tier 3's list
+  either. A menu that does not count is not a menu.
+- **D2 — "the only keyed cross-stage edge in the schema" is false** by my own tables:
+  `evidence_sources.ref_id` carries 7 cross-stage inbound keys, `gaps.gap_id` 2, and X2 itself names
+  `specifications.convergence_id`. **The KEEP verdict for `search_admissions` survives; the
+  superlative does not.** Defensible form: the only keyed edge joining two *consecutive* stages'
+  hand-off/act objects.
+- **D3 — the `items` −1 assumes the answer to my own open question.** §9.6 recommends re-graining to
+  a parameter registry, under which the count is **net 0**. State it as "−1, or 0 pending Q2."
+
+### 11.10 The honest number, and it is better than mine — by folding, not deleting
+
+| | |
+|---|---|
+| my claim | 52–63 |
+| arithmetic *qua* arithmetic | correct (66−6−1+4 = 63; −11 = 52) |
+| **but deletion-only actually bottoms at** | **56** — Tier 2 clears 7, not 11 |
+| **B3's composed design** | **66 → 54 firm**, 52–53 with the owner-gated and study-gated items |
+
+The route to 54 is: 3 evidenced Tier 1 deletions (grids + stubs, with `AFTER_DATA`) · 7 clearing
+Tier 2 · **fold acts −3** · **fold `search_candidates` −1** · fold `connections`+`connection_targets`
+into `syn_items.kind` when synthesis lands −2 · `items` −1 or 0 per Q2 · create `jud_items` + 3
+junctions +4 · defer `figures` · `situations` only on owner sign-off.
+
+**Below my own floor, deleting no live infrastructure, and by the mechanism the owner's own quoted
+rule (J.4) prescribes.** The lesson is the one B3 states plainly: **the minimization is in the folds,
+not the deletions**, and I had the folds refused and unscheduled while proposing to delete Co-1
+doctrine and a live CI log.
+
+### 11.11 What B3 attacked and could not break
+
+The base measurements (66/33/18); the 7-way-merge refusal and the polymorphic-junction refusal (both
+sound); the `ren_items` withdrawal and the check-artifact resolution (046-compliant and §1-clean);
+the `search_admissions` KEEP; Tier 3's protection of the spine tables and of
+`case_studies`/`economics_entries` (R12 confirmed verbatim at `governance/research-contract.yaml:186-193`);
+and X5's retraction of "33 empty = 33 unpaid." **One point in the plan's favour it never claimed:
+no view reads any table on the deletion menu** — measured over `sqlite_master`.
+
+---
+
 ## Appendix — re-derivation
 
 ```bash
