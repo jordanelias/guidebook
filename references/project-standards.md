@@ -2228,3 +2228,61 @@ ACTION: (1) The register entry must be **path-scoped to the pipeline-layer surfa
 ignore the check. (2) Never rewrite a construction-sense occurrence. (3) `base_elements` carries
 substrate on the relation, not the element.
 DATE: 2026-08-27 — owner ruling, quoted above.
+
+---
+
+RULE: **"Substrate" never named a stage. It was agent-coined, was recorded as agent-coined, and was
+then used for three days as though it were canonical.** Owner ruling 2026-08-27:
+
+> *"saying 'move clues to substrate' is nonsense to me because what the hell is substrate in our
+> pipeline? we don't have any stage named that"*
+
+**The owner is correct and this ledger already said so.** `references/project-standards.md:1035-1038`,
+recorded 2026-08-25:
+
+> *"The six-bucket model in
+> `scratchpad/session_2026-08-24-pointer-discipline/fable-stage-discipline-audit-2026-08-24.txt`
+> PART 1 **added SUBSTRATE as a sixth bucket; that addition is agent-authored** and is **not** part of
+> this ruling."*
+
+**Provenance: a Fable stage-discipline audit, 2026-08-24. Not an owner statement, ever.** Measured
+2026-08-27 — it is a stage in nothing the machine enforces:
+
+```
+governance/pipeline-contract.yaml   stages: research · evidence-collection · judgment · synthesis · render
+tools/pipeline_completeness.py:37   STAGES = [same five]
+```
+
+**So *"move clues to substrate"* names no destination.** It is a **category error, not a placement
+proposal** — which reframes the owner's non-adoption of the architecture note's item #3. The owner was
+not choosing between two homes for the clue store. They were declining a sentence whose destination
+does not exist.
+
+**This is the repository's own recorded failure mode, executed on itself.** The 2026-08-19 rule —
+*"a conclusion reached twice reads as confirmation when it is actually evidence that the first one was
+never executed"* — applies exactly: the agent-authored status was written down on 08-25 and the word
+was then propagated into `CLAUDE.md`, `STAGE-TABLE-MAP.md`, `NOMENCLATURE.md`, four audit reports and
+this session's plan as settled vocabulary.
+
+**WHAT THIS REOPENS, and it is larger than the word.** Two live figures rest on the convention
+*"substrate is not a stage"*, which is now known to rest on an agent-authored bucket:
+
+| figure | depends on | status |
+|---|---|---|
+| **five** cross-stage views | a view reading one stage plus that layer "crosses nothing" | **unproven** |
+| **43 / 37** cross-stage foreign keys on eight columns | the same bucket being excluded | **unproven** |
+
+Both are quoted in `CLAUDE.md` with dates. **Neither is safe to repeat until the layer's status is
+settled.**
+
+**And the owner's own word is `base`** — where, in the architecture note, `Base` is a **top-level
+heading alongside `Research`, `Evidence` and `Judgment`**, not a layer set apart from them. The note
+draws no stage / not-a-stage distinction at all. **Whether `base` is a stage is therefore OPEN and is
+the owner's**, not a convention to inherit.
+
+CONDITION: Any session using the word, quoting the cross-stage view or foreign-key counts, or
+assigning a table to that layer.
+ACTION: (1) Say `base`. (2) **Do not quote "five cross-stage views" or "43/37 keys" until `base`'s
+status is ruled** — both are derived from an agent-authored exclusion. (3) Do not describe `base` as
+"not a stage" on inherited authority; the note treats it as a peer heading.
+DATE: 2026-08-27 — owner ruling, quoted above.
