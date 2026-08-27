@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "session": "session_2026-08-27-rename-execution",
-  "artifact": "decisions/DR-2026-08-27-seven-stage-spine-base-is-first.md",
+  "artifact": "decisions/DR-2026-08-27-base-sources-is-a-target-registry.md",
   "doctrine_sha": "06ceda8",
   "rules_in_scope": [
     "integrity-protocol",
@@ -17,12 +17,12 @@
     "source-discipline": {
       "status": "FIRED",
       "evidence_path": "data/decisions/decision_register.yaml",
-      "reason": "The spine itself: the owner's wording is quoted verbatim in the register row and the ruling's own reason is quoted with it. The two figures this ruling moves were re-derived, not carried: foreign keys 21/59 -> 49/31 cross-stage/within and views 9 -> 10 of 18, computed from PRAGMA foreign_key_list and sqlite_master over user_version 64 using the R1 audit's 66-table assignment. The previously-quoted 43/37 on eight columns matches NEITHER convention and is recorded as void rather than silently dropped."
+      "reason": "This ruling CORRECTS a finding of mine, and the record says so rather than quietly adopting the owner's position. My error is stated with its cause (reading 'sources' as this project's evidence_sources). The supporting measurement is recorded: no target registry exists and the nearest thing is search_executions.engine, free text with no vocabulary, so target coverage is not a derivable fact. The nomenclature hazard the ruling creates is flagged at ratification rather than after."
     },
     "adherence-logging-and-attestation": {
       "status": "FIRED",
-      "evidence_path": "attestations/decisions_DR-2026-08-27-seven-stage-spine-base-is-first.json",
-      "reason": "This attestation covers D-0167 specifically. The DR set was DERIVED, not guessed: 19 ledger entries carry DATE: 2026-08-27, 13 carry a RULE line, and after removing same-day supersessions eight survive. Each DR is GENERATED from its register row so the two surfaces cannot drift, and each register row cites its own DR filename in decision_artifacts, which is how C9 matches. scripts/decision_capture.py exits 0 at 174 ACTIVE with none of the eight orphaned."
+      "evidence_path": "attestations/decisions_DR-2026-08-27-base-sources-is-a-target-registry.json",
+      "reason": "This attestation covers D-0172 specifically. The DR set was DERIVED, not guessed: 19 ledger entries carry DATE: 2026-08-27, 13 carry a RULE line, and after removing same-day supersessions eight survive. Each DR is GENERATED from its register row so the two surfaces cannot drift, and each register row cites its own DR filename in decision_artifacts, which is how C9 matches. scripts/decision_capture.py exits 0 at 174 ACTIVE with none of the eight orphaned."
     }
   },
   "deviations": [
