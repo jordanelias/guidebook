@@ -406,3 +406,213 @@ five-stage map and is overtaken by the ruling that landed hours later.*
 This matters beyond bookkeeping: CLAUDE.md protects cross-stage views from deletion because **a
 cross-stage view is the pointer**. Under six stages the protected set grows again, and every span
 above is owed a re-derivation.
+
+---
+
+## PART I — If we rebuilt from scratch
+
+**Short answer: a new baseline migration, exactly the way `057_baseline_2026-08-12.sql` was made.
+Not a hand-built database, and not sixty-six renames.**
+
+### I.1 The mechanism exists and is proven
+
+`scripts/migrations/057_baseline_2026-08-12.sql` is a **full baseline** — complete schema *and* data
+in one file, superseding every earlier migration, with the superseded files frozen at
+`_archived/scripts/migrations/` (**359 files** live there today; the path is real and the precedent
+is closed). `scripts/migrate_db.py --rebuild` replays from a baseline forward, and the blocking
+`migration_reproducibility` gate proves the committed database still reproduces. Nothing new has to
+be invented.
+
+### I.2 Why a baseline, and not sixty-six renames — in 057's own words
+
+The baseline's header states its reasons, and they are **the same reasons, at sixty-six times the
+scale**:
+
+> *"Immutable data migrations pinned RETIRED NAMES forever. Renaming `evidence_cell_state` to
+> `specifications` collided with **19 of them** and needed a new ordering mechanism (AFTER_DATA,
+> schema 056) purely to work around replay."*
+
+**One table rename collided with nineteen data migrations and required a new mechanism.** There are
+**33** data migrations live today, and this proposal renames 66 tables, moves 6 between stages,
+creates 5, and retires `items` outright.
+
+And there is a hard technical reason on top of the historical one: **SQLite cannot ALTER a
+constraint.** Adding `NOT NULL` and a foreign key to an existing table means create-new → copy →
+drop-old → rename. *The incremental path is already a rebuild — done sixty-six times, with
+sixty-six chances to miss a caller.* Migration 064 exists because 063 missed exactly one.
+
+One baseline is one DDL file, one data load, and **one caller sweep**.
+
+### I.3 What actually has to move
+
+| stage | rows | at rebuild |
+|---|---:|---|
+| substrate | 4,122 | carried — vocabularies and crossing maps |
+| research | 1,087 | carried — the clue store is 875 of it |
+| evidence collection | 92 | carried |
+| render | 17 | carried — all of it is `rooms` |
+| **judgment** | **0** | **clean-sheet CREATE** |
+| **synthesis** | **0** | **clean-sheet CREATE** |
+| **specification** | **0** | **clean-sheet CREATE** |
+| **total** | **5,318** | |
+
+**That is the whole argument.** The half of the pipeline being redesigned — the three stages whose
+grain, keys and names are all changing — contains **no data at all**. There is nothing to migrate
+there, only something to build correctly the first time. The 5,318 rows that do exist are 78%
+substrate vocabulary, which is the most stable and least contested part of the schema.
+
+### I.4 The order of operations
+
+1. **DDL for all six stages plus substrate**, in dependency order, with the hand-off keys declared
+   at creation: two `NOT NULL` columns and three junctions (Part B).
+2. **Substrate data first** — everything points into it, so it must exist before any stage row.
+   This is where the pending vocabulary changes land (I.5).
+3. **Research data** — 1,087 rows, the clue store the batch will drive from.
+4. **Evidence data** — 92 rows.
+5. **Render data** — 17 rows of `rooms`.
+6. **Nothing downstream.** Judgment, synthesis and specification are created empty.
+7. The hand-off keys are then **satisfiable by construction**: `evi_items.research_item_id NOT NULL`
+   costs nothing because there are 875 leads and 0 extractions, and the three junctions have no rows
+   to reconcile because their upstream stages are empty.
+
+### I.5 What must be resolved *in* the baseline, not after it
+
+Each of these is currently a pending change that would otherwise need its own migration and its own
+caller sweep. A rebuild absorbs all of them at no extra cost:
+
+| | measured | disposition |
+|---|---:|---|
+| `MOB` links to fan out to `AMB` / `WHEEL` | 31 → 62 | already ruled, 2026-08-26 |
+| cells carrying `AX-` values | 288 | needs the re-mint decision first (§R8 scoping) |
+| the `axis` → `demand` rename | 4 tables, 6 columns | already ruled, P0.6 |
+| admitted sources with **no clue-store row** | **6** | a provenance hole — resolve or record as legacy |
+| malformed `REF-VERIFIED-NNN` ids | **11** | they sort above every numbered id and break `MAX()` |
+| surrogate integer keys (`exec_id`, `specification_id`, `extraction_id`, …) | 6 columns | the cheapest moment to make them stable codes (F.4) |
+| retired population codes | **0 in the database** | live only in 12 skill files — a prose sweep, not a data one |
+
+### I.6 What a rebuild must not do
+
+- **Do not hand-build the database.** Rule 3 is absolute: migrations only, `emit_data_migration.py`
+  → `migrate_db.py`, CI rebuilds and compares. A baseline is a migration; a hand-edited `.db` is not.
+- **Do not lose the ledger.** `data_migrations` holds **352 rows** recording the project's own acts.
+  057 collapsed the *files* and kept the record; do the same.
+- **Do not delete the superseded migrations.** Freeze them at `_archived/scripts/migrations/`, which
+  already holds 359 and carries a README explaining what they were.
+- **Do not skip the caller sweep because the DDL is clean.** A view is a caller, and so is a skill.
+  The sweep is the cost of this change; the SQL is the cheap part.
+- **Do not do it before the open questions in Part F are answered** — `judgment_items` has no column
+  set, `render_items` may not be a table, and the `AX-` re-mint decision gates the substrate load.
+
+### I.7 The window
+
+Every item in I.4 and I.5 is DDL today and re-reasoning tomorrow. The moment the first determination
+is written — one row in `specifications` — the grain change, the key change, the hand-off keys and
+the population fan-out all stop being schema edits and become re-derivations of reasoned content.
+**The pipeline being empty is not only the problem; right now it is also the opportunity.**
+
+---
+
+## PART J — Re-entrancy is a column, not a table
+
+Three owner questions, 2026-08-27, which turn out to be one question.
+
+### J.1 Citation mining — yes, a mined DOI is just a research-item
+
+> *"if we were to do citation mining, whether it be forwards or backwards, wouldn't that just require
+> us to have them processed through research? we would just have a column that notes where they came
+> from, right?"*
+
+**Yes, and the schema is already 80% of the way there without anyone having noticed.**
+`search_executions` already carries `jurisdiction`, `language` **and `mining_direction`** among its
+23 columns. A mining pass *is* a search with a different origin. And a mined DOI is a lead — the same
+row-kind as every other lead.
+
+So: `res_items` gains `origin` (`searched` · `mined-backward` · `mined-forward` · `gap-driven` ·
+`code-register` · `hand-entered`) and `parent_item_id`, a **self-referential** nullable FK naming the
+lead whose source cited this one. The citation graph then walks inside research, which is what mining
+is. A root lead has a null parent; a depth-3 mined lead has a chain of three.
+
+**This closes a live defect rather than adding one.** `citation_mining.connections_produced` holds
+harvested DOIs and **nothing promotes them into the clue store** — measured earlier, 138 distinct
+DOIs harvested and 4 reached `source_locators`; a separate OpenAlex pass found 272 mobility DOIs of
+which 256 are in neither store. Under the origin-column model there *is* no promotion step, because
+a mined DOI arrives as a research-item. The stranded-yield bug is a consequence of modelling mining
+as a table instead of as a provenance.
+
+**And `source_locators` has no origin column today.** Its nearest thing is `recovered_from`, which is
+about URL recovery, not discovery. **875 leads and no record of where any of them came from.**
+
+### J.2 Cross-synthesis comparison — yes, same table, new id, provenance columns
+
+> *"if we were to do cross-referential comparisons between syntheses, wouldn't we just run a similar
+> synthesis logic and append it to our table, and just have columns that state where it came from and
+> assign a new reference ID?"*
+
+**Yes.** A synthesis-of-syntheses is still a synthesis-item: same row-kind, same table, its own id.
+What changes is only what it drew on. So `syn_items` gains a `kind` (`primary` from judgments ·
+`comparative` from other syntheses) and a second fan-in junction beside the first:
+
+```
+syn_judgment_links(synthesis_item_id, judgment_item_id)          -- primary
+syn_synthesis_links(synthesis_item_id, source_synthesis_item_id) -- comparative, self-referential
+```
+
+Same shape as the hand-off junctions in Part B, and for the same reason: the fan is N:1, so the
+pointer is a junction written by the downstream item.
+
+**This is already ratified doctrine, not a new idea.** `governance/pipeline-map.yaml:78` established
+2026-08-21: *"these are LAYERS a walk **re-enters**, not phases it passes through. A sequencer must
+be re-entrant."* Its `loops:` block at `:160` even names this exact case — *"citation_mining
+re-enters admission from an already-admitted source"*. The doctrine was written; the schema never
+implemented it, and built tables where it needed columns.
+
+**It also raises a question about `connections`.** *"When writing X, also consider Y"* is a
+cross-cutting finding drawn from more than one synthesis — which is precisely a comparative
+synthesis-item. Whether `connections` + `connection_targets` survive as their own tables, or become
+`syn_items` with `kind='connection'` and their targets in `syn_synthesis_links`, is now an open
+question rather than a settled one. Both hold **0 rows**.
+
+### J.3 So why are there sixty-six tables?
+
+> *"in other words, I am really questioning why we have so many tables"*
+
+Because the schema grew **one table per activity and one per attachment**, instead of one per
+*kind of row*. Measured 2026-08-27:
+
+| | tables | rows | what they all are |
+|---|---:|---:|---|
+| **A lead, under four names** | **4** | 1,044 | `source_locators` 875 · `jurisdictional_values` 109 · `search_candidates` 60 · `reference_stubs` 0 — every one is *"a document we might admit, and why we think so"* |
+| **An act performed, under four naming conventions** | **7** | 39 | `search_executions` · `citation_mining` · `gap_mining` · `supersession_check` · `url_verification_runs` · `item_audit_runs` · `pipeline_runs` |
+| **"X applies to population P"** | **6** | 372 | `item_population_links` 372 · `extraction_population_links` · `probe_population_links` · `citation_population_links` · `case_study_populations` · `economics_entry_populations` — five of the six are empty |
+
+**Seventeen tables doing three things.** And on top of that:
+
+**33 of the 66 tables hold zero rows.** Half the schema has never been used once. That is not
+principally a naming problem — it is `CLAUDE.md` §1's burden of proof unpaid: *before adding a table,
+state what wrong thing reaches the guidebook if it does not exist.* Thirty-three times, that question
+was not asked, or was answered speculatively.
+
+**Two tables are outright derivable and should be deleted, not renamed.** `search_coverage`
+(slug × jurisdiction) and `search_languages` (slug × language) restate what `search_executions`
+already records — it carries `slug`, `jurisdiction` and `language` on every row. Both hold 0 rows.
+**A second home for a fact another table already states is rule 5's exact prohibition**, and here the
+first home is more precise, because it is per-query rather than per-slug.
+
+**And one becomes redundant under the `-item` spine.** `search_admissions` is the query→source edge;
+once `evi_items.research_item_id` names the lead and the lead names its search, the edge is a join,
+not a table.
+
+### J.4 The rule this yields
+
+> **A new table is warranted only when the ROW-KIND is new. A new provenance is a COLUMN. A new
+> relationship is a junction. A new activity is a `kind` value on an existing runs table.**
+
+Applied to the three questions: mining yield is a column (`origin`), a comparative synthesis is a
+column (`kind`) plus a junction, and the reason there are sixty-six tables is that neither rule was
+in force when they were written.
+
+**What that does not license.** Collapsing the six population junctions into one polymorphic
+`(stage, item_id, population_code)` table would trade six enforced foreign keys for zero — SQLite
+cannot key a polymorphic column. **The uniform name does most of the work without that cost:**
+`<prefix>_population_links` on every stage is six tables, but six *predictable* ones, and a reader
+who knows the rule never has to look any of them up. Count is not the metric; **derivability is.**
