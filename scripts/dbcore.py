@@ -94,6 +94,32 @@ def connect(dry_run: bool = False, readonly: bool = False, path=None):
     The default (delete) is what the committed file already carries.
     """
     target = Path(path) if path is not None else db_path()
+    if not readonly and is_canonical(target):
+        # CLAUDE.md rule 3: the canonical database is written by migrations only.
+        # is_canonical() existed solely to enforce this and had no caller but its own
+        # selftest until 2026-08-27, while db_path() defaults to canonical when
+        # GUIDEBOOK_DB_PATH is unset -- so a script that forgot the variable wrote the
+        # committed file. This is the wiring.
+        #
+        # NO OVERRIDE, deliberately. migrate_db.py opens the database with raw
+        # sqlite3.connect and never imports this module, so migrations do not pass
+        # through here and need nothing unblocked. Every db.py write is required by the
+        # runbook to target a scratch copy. There is no legitimate canonical write on
+        # this path to permit, and a bypass that exists will be used.
+        #
+        # dry_run is refused too, not just committing writes: it still opens the
+        # committed blob read-write, and this file already records an incident of that
+        # exact class -- PRAGMA journal_mode "rewrote the committed blob on EVERY
+        # invocation ... including pure reads and including --dry-run".
+        raise RuntimeError(
+            "dbcore.connect: refusing to open the CANONICAL database read-write "
+            f"({target}). CLAUDE.md rule 3 -- migrations only. Copy it and point "
+            "GUIDEBOOK_DB_PATH at the copy:\n"
+            "    cp data/guidebook.db $SCRATCH/guidebook.db\n"
+            "    GUIDEBOOK_DB_PATH=$SCRATCH/guidebook.db python3 scripts/db.py ...\n"
+            "Then ship the delta with scripts/research/emit_batch_sql.py -> "
+            "emit_data_migration.py -> migrate_db.py. To READ canonical, pass readonly=True."
+        )
     if readonly:
         conn = sqlite3.connect(f"file:{target}?mode=ro", uri=True, timeout=10)
     else:

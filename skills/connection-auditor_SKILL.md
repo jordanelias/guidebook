@@ -182,21 +182,21 @@ GAP REGISTER: [N new P2 items recommended — descriptions below]
 **CONVERT-TO-PENDING:**
 
 ```bash
-GUIDEBOOK_DB_PATH=data/guidebook.db python3 scripts/db.py update-connection \
+GUIDEBOOK_DB_PATH="$SCRATCH/guidebook.db" python3 scripts/db.py update-connection \
   --con-id CON-XXXX --status PENDING --session [session-name]
 ```
 
 **RETIRE:**
 
 ```bash
-GUIDEBOOK_DB_PATH=data/guidebook.db python3 scripts/db.py update-connection \
+GUIDEBOOK_DB_PATH="$SCRATCH/guidebook.db" python3 scripts/db.py update-connection \
   --con-id CON-XXXX --status CLOSED --session [session-name]
 ```
 
 **New gap items from audit** (category `SW` = Specification Writing):
 
 ```bash
-GUIDEBOOK_DB_PATH=data/guidebook.db python3 scripts/db.py add-gap \
+GUIDEBOOK_DB_PATH="$SCRATCH/guidebook.db" python3 scripts/db.py add-gap \
   --category SW --priority P2 \
   --description "[description]" \
   --session [session-name]

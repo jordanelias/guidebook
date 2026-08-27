@@ -2407,3 +2407,38 @@ ACTION: (1) Use `icf_*`; rename `access_need_icf` → `access_need_icf_codes` in
 owed because `decisions/` is a rule-2 path. (4) Do not cite `decision_capture` green as evidence the
 register is complete.
 DATE: 2026-08-27 — owner selections from options put, quoted above.
+
+---
+
+RULE: **`base_building` is THREE tables, not one.** Owner ruling 2026-08-27: *"5 is three."*
+
+Supersedes the agonist-antagonist resolution of the same day, which had proposed **one**
+self-referential table with a `level` discriminator on the reasoning that a parent column *across*
+three tables would be polymorphic and unkeyable in SQLite.
+
+**That objection was wrong, and the owner's answer is stronger on the very ground it was raised.**
+A single generic `parent` column pointing at any level is polymorphic. **Three tables with a typed
+FK per level are not** — each child names exactly one parent table, so every key is real and
+enforced. The one-table proposal solved a problem the three-table design does not have.
+
+| table | from | holds |
+|---|---|---|
+| `base_building_types` | **new** | residential, commercial |
+| `base_room_types` | `rooms` (17) | kitchen, entry, bathroom |
+| `base_elements` | **new** | door, door handle, window, floor |
+
+**And the levels do NOT nest — measured against the owner's own examples.** A *Bathroom* occurs in
+residential **and** commercial; a *door* occurs in kitchens **and** entries **and** bathrooms. So the
+cross-level relationship is **many-to-many, not a parent column** — and the schema already says so:
+`room_items` exists as the room × element junction (0 rows, `room_code` + `item_code`). Cross-level
+edges are junctions; a parent column that tried to carry them would be wrong on the data.
+
+**Parent columns are WITHIN a level**, which is what the owner's own list implies: *"door, door
+handle"* — a handle's parent is a door, both elements. Likewise a sub-type of a room type, or of a
+building type. Each is a self-referential FK inside one table, fully enforceable.
+
+CONDITION: Any session creating the building layer or designing its keys.
+ACTION: Three tables. Parent columns are self-referential **within** each table. Cross-level is a
+junction — `room_items` is the existing one and is re-pointed, not replaced. Do not add a polymorphic
+parent column.
+DATE: 2026-08-27 — owner ruling, quoted above.

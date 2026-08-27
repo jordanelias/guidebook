@@ -216,7 +216,7 @@ Increment sequentially for each new connection in the batch.
 ## Step 4 — Log each connection
 
 ```bash
-GUIDEBOOK_DB_PATH=data/guidebook.db python3 scripts/db.py add-connection \
+GUIDEBOOK_DB_PATH="$SCRATCH/guidebook.db" python3 scripts/db.py add-connection \
   --con-id CON-XXXX \
   --confidence HIGH \
   --connection-type CROSS-ITEM \
