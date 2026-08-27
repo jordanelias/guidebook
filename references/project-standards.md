@@ -1704,3 +1704,63 @@ ACTION: (1) `ren_items` does not exist and must not be proposed again; cite migr
 contradiction, not a plan; reconcile before any migration.
 DATE: 2026-08-27 — adversarial audit (Fable 5), four parallel lenses; reports under
 `scratchpad/session_2026-08-27-nomenclature-reconciliation/audits/`.
+
+---
+
+CORRECTION — 2026-08-27, third pass (schema-correctness lens). **The baseline argument was refuted on
+its mechanism, and the hand-off keys are not sound as specified.**
+
+**1. "SQLite cannot ALTER a constraint, so the incremental path IS a rebuild done 66 times" — FALSE,
+and I asserted it without running a two-line test.** Measured on this container, SQLite **3.45.1**:
+
+```
+ALTER TABLE parent RENAME TO res_items;
+  child DDL becomes:  pid TEXT REFERENCES "res_items"(id)      -- rewritten automatically
+  view  DDL becomes:  FROM "res_items" p JOIN child c ...      -- rewritten automatically
+```
+
+**A table rename propagates itself through REFERENCES clauses and view bodies.** The true limitation
+is narrower: SQLite cannot *add* a NOT NULL foreign key to an existing table — that needs
+create/copy/drop/rename. That applies to **two** tables in this proposal, both holding **0 rows**.
+The audit further measured that a single `AFTER_DATA` marker absorbs all 33 data-migration
+collisions, which is the mechanism 057's header describes.
+
+**So the case for a full baseline is weaker than Part I argued.** The renames are cheap and
+self-propagating; only the new constraints need table rebuilds; those tables are empty. **The
+recommendation is downgraded from "a baseline, not 66 renames" to "an ordinary migration series is
+viable and should be costed against a baseline."** The conclusion may still favour a baseline for
+legibility — but not for the reason given, and not without pricing the alternative.
+
+**2. A NEW BASELINE WOULD BREAK A BLOCKING GATE ON FIRST RUN.**
+`scripts/audit/migration_reproducibility.py:55-63` hardcodes `CORE_INVARIANTS`, which includes
+`SELECT COUNT(*) FROM citation_mining`, `FROM connections`, and `FROM items` — **all three renamed or
+retired by this proposal.** The gate would raise `no such table` permanently. Part G's caller census
+named views, `db.py`, `dbcore`, the Pydantic models, the contract, the registry, the skills and the
+data migrations — **and omitted this script, the generators, and the runner's own
+`BASELINE_DATA_CUTOFF_TS` edit that 057's header names as part of the mechanism.** §0.4 says a rename
+is not done until the callers are swept; my caller list was incomplete in the document arguing for
+caller sweeps.
+
+**3. The hand-off keys are not sound as written.**
+- **Part E contradicts Part B.** Part E §4 and §5 still say `syn_items` "gains `judgment_item_id NOT
+  NULL`" and `spe_items` "gains `synthesis_item_id NOT NULL`" — the single back-pointer that Part B
+  and the RULE above explicitly reject. Part B was corrected after the owner's cardinality question;
+  **Part E was never updated to match.**
+- **`evi_items.research_item_id` is on the wrong table.** It is a per-*source* fact placed on every
+  *extraction*, so two extractions from one paper can name different leads and both pass. It is also
+  unsatisfiable for the six admitted sources with no clue-store row (REF-00965–970, measured).
+- **It also reverses a ratified demotion without recording a supersession.** `DR-2026-08-06` demoted
+  the clue store — *"nothing joins it, no determination may cite it"* — and this key would make it
+  the root of every citation walk.
+- **`syn_items` keeps PK `slug`**, which forbids the same document's Part J.2 proposal that a
+  comparative synthesis be a second row in that table.
+
+CONDITION: Any session implementing the nomenclature proposal.
+ACTION: (1) Do not repeat the "SQLite cannot rename" argument; it is false at 3.45.1. (2) Price an
+ordinary migration series before choosing a baseline. (3) Any baseline must first migrate
+`CORE_INVARIANTS`, or the blocking gate dies with it. (4) Part E's `NOT NULL` fan-in columns are
+superseded by Part B's junctions — **Part E is stale, not authoritative.** (5) The
+research→evidence key belongs on the source, not the extraction, and needs the DR-2026-08-06
+supersession recorded before it lands.
+DATE: 2026-08-27 — adversarial audit (Fable 5), schema-correctness lens, 18 findings at
+`scratchpad/session_2026-08-27-nomenclature-reconciliation/audits/A3-schema-correctness.md`.
