@@ -68,8 +68,19 @@ stages:
   - id: judgment
     anchor: "the 4-state determination machine + convergence + directness (evidence-architecture.md §5)"
     entry:
-      - "verified sources linked to an (item x population) cell"
+      # Restated 2026-08-27 at the ruled grain (project-standards.md, adopting item #2 of the
+      # owner architecture note): the evidence item is the SOURCE; the judgment item is the
+      # extracted, tiered, categorised value. Judgment therefore consumes an admitted evidence
+      # source and produces one row per clause or parameter -- 1:N, per the NBC 3.8 example.
+      # The prior wording ("verified sources linked to an (item x population) cell") described
+      # the cell grain, which is the specification stage's, not judgment's.
+      - "an admitted evidence source, ready for value extraction and a tier verdict"
     criteria:
+      - id: handoff-fanout-preserved
+        kind: integrity
+        criterion: "The evidence->judgment hand-off is 1:N: source_value_extractions.ref_id is NOT NULL and references evidence_sources(ref_id), and NO UNIQUE index exists on that table. One evidence source may provide many judgment rows (owner ruling 2026-08-27, worked example: Canada's NBC 3.8). A UNIQUE on the key would collapse a multi-clause code document to a single determination and abolish the DR-2026-08-19 §7 dissent contest."
+        references: "references/project-standards.md 2026-08-27 (items #1 and #2); DR-2026-08-19 §7"
+        check: scripts/audit/judgment_handoff_shape.py
       - id: governing-refs-nonempty
         kind: integrity
         criterion: "No `stated` or `provisional` determination without non-empty governing_refs (anti-hallucination)."

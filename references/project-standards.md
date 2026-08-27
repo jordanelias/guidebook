@@ -1830,3 +1830,510 @@ ACTION: A session record **and** an attestation are owed — the close-out touch
 is a rule-2 path. `sessions/LATEST` moves; **`LATEST-RESEARCH` does not** (no research was done).
 DATE: 2026-08-27 — adversarial audit (Fable 5), doctrine-conformance lens, 11 breaches at
 `scratchpad/session_2026-08-27-nomenclature-reconciliation/audits/A4-doctrine-conformance.md`.
+
+---
+
+RULE: **Evidence → judgment is 1:N, and the shape already exists in the schema.** Owner ruling
+2026-08-27, adopting item #1 of the architecture note.
+
+> *"one evidence source may provide many rows of judgment (eg a code document like Canada's NBC 3.8)"*
+
+**This supersedes the 2026-08-27 statement** *"each row of evidence provides one row for judgment."*
+Recorded on contact per `CLAUDE.md` rule 0. The superseded wording is not an argument against this one
+and must not be cited as such. The owner subsequently clarified that the architecture note is *"not
+complete, and not definitive — just a thought document"*; **this rule rests on the owner's explicit
+instruction to adopt item #1, not on the note's status.**
+
+**Measured 2026-08-27, and it is the reason this costs nothing:**
+
+| property | measured | required by the ruling |
+|---|---|---|
+| `source_value_extractions.ref_id` | **NOT NULL** | NOT NULL ✓ |
+| UNIQUE index on that table | **none** | absent ✓ |
+| FK `ref_id → evidence_sources(ref_id)` | **present** | the hand-off ✓ |
+
+**The judgment hand-off key is already in the schema and has been all along.** It was not recognised
+as one because the extraction table was assigned to the wrong stage (see the companion rule below).
+`judgment_items` therefore needs **no new table and no new key** — which refutes the standing claim
+(nomenclature audit F.1; `WALKABILITY-PLAN.md` M-2) that it is *"the only genuinely new table, and
+nothing in the schema prefigures it."* Forty-nine columns prefigure it.
+
+**Q1 is CLOSED.** Do not put the evidence→judgment cardinality to the owner again. A
+`UNIQUE(ref_id)` on that table would abolish both the ruled fan-out and the dissent contest
+(`DR-2026-08-19` §7) and must never be added.
+
+CONDITION: Any session designing the judgment hand-off, writing `judgment_items`, adding an index to
+`source_value_extractions`, or proposing to put the cardinality question to the owner.
+ACTION: (1) Pin the shape with a registered check — NOT NULL present, no UNIQUE on `ref_id` — so the
+ruling cannot regress silently; a 0-row table makes regression invisible to every other gate
+(`CLAUDE.md` rule 4). (2) Do not design a new judgment table.
+DATE: 2026-08-27 — owner ruling, adopting item #1.
+
+---
+
+RULE: **The evidence item is the SOURCE; the judgment item is the extracted, tiered, categorised
+value.** Owner ruling 2026-08-27, adopting item #2 of the architecture note.
+
+> Evidence: *"logs all relevant items found in search with a unique reference ID, DOI/PMID and other
+> codes if available, type of source (academic, code, professional practices, etc)"*
+> Judgment: *"delivers a verdict on an evidence item for what tier of evidence hierarchy it belongs
+> to (1, 2…6)"* · *"determines category of judgment item, **derives value/process/figure/goal for
+> it**"*
+
+| stage | the item is | table |
+|---|---|---|
+| evidence collection | **the source** — one row per document, carrying the reference ID and identifiers | `evidence_sources` (10 rows, 97 columns) |
+| judgment | **the extracted, tiered, categorised value** — one row per clause or parameter | `source_value_extractions` (0 rows, 49 columns) |
+
+**`source_value_extractions` is a JUDGMENT table, not an evidence-collection table.** The value is
+derived at judgment; collection logs what was found. This is a stage re-assignment, **not a rename** —
+`evidence_sources` carries **13 inbound foreign keys** and is hardcoded in the blocking
+`migration_reproducibility` gate in **8 places**, so renaming it is separate, later, and expensive.
+
+**What this dissolves, rather than resolves.** Four open findings were all disputes about a boundary
+this ruling draws one stage further left, and each closes with no design work:
+
+| finding | was | now |
+|---|---|---|
+| A3-F3 — the lead key puts a per-source fact on a per-extraction row | rule-5 violation | **moot.** The evidence item IS the source; the lead key hangs on it at its own grain |
+| A3-F18 / X4 — the population-match grain conflict | fold impossible | **moot.** `evidence_population_match` grades a source, which is now the evidence item |
+| X3 — "25 grades over 10 sources" rejected as the wrong edge | wrong edge | **the right edge.** The measurement was always about sources |
+| M-2 / F.1 — `judgment_items` has no column set | owed a design | **refuted.** It inherits 49 columns |
+
+**One consequence is owed and is NOT free.** Under this ruling the **tier verdict is a judgment
+output**, but `tier` is a column on `evidence_sources` — a judgment written into an evidence row.
+Moving it is rule-5 correct and the sweep is real: measured 2026-08-27, **40 Python files name
+`evidence_sources`, 78 Python lines name a tier field, and 26 skills teach tier.** Writer-retire →
+reader-retire → NULL forward, and grep `scripts/migrations/data_*` for the column first. **Queued, not
+done.** `claim_type` (`numerical`/`range`/`qualitative`/`framework`/`absent`) is adjacent to but not
+the same as the ruled *"category of judgment item"*; that column is new and small.
+
+**Items #3 and #4 of the architecture note are NOT adopted** — owner instruction, same contact.
+`base.clues` is not moved to substrate, and the `~825` reconciliation is not pursued. The note's
+naming grammar (`base.` dotted namespace, full-word prefixes) is **not ruled** and remains in tension
+with *"substrate takes no prefix"*.
+
+CONDITION: Any session assigning a table to a stage, designing the judgment hand-off, writing the
+stage map, or reasoning about where a value or a tier is determined.
+ACTION: (1) Re-assign `source_value_extractions` to `judgment` in `governance/pipeline-contract.yaml`
+and `tools/pipeline_completeness.py`; the pre-2026-08-27 stage maps predate this and must be
+re-derived, not read. (2) Do not rename `evidence_sources` as part of this. (3) Queue the `tier` move
+with its measured caller set.
+DATE: 2026-08-27 — owner ruling, adopting item #2.
+
+---
+
+RULE: **The four disability taxonomies are user-selectable BROWSING LENSES, and the medical model is
+included.** Owner ruling 2026-08-27.
+
+> *"yes we include the medical model too. we give our users the choice of what model they want to use
+> to browse the site."*
+
+`base.taxonomy_medical` · `base.taxonomy_identity` · `base.taxonomy_icf` · `base.taxonomy_needs` are
+**four views of one substrate**, not four competing vocabularies to reconcile. The reader chooses the
+frame.
+
+**This resolves the DG-NON objection rather than overriding it.** A medical-model taxonomy in a
+CRPD-aligned project reads as a doctrinal reversal only if it is the project's own frame. It is not:
+it is **user agency over how a reader's experience is described**, which is the social model's
+commitment applied to the interface. A reader who thinks in diagnoses is not forced to translate into
+ICF codes to use the book; a reader who refuses the medical frame never sees it. Consistent with
+CRPD Art 4.3.
+
+**Structural consequence.** Lens-switching is only possible through the crossing maps — `population_axis_map`
+(53 rows), `access_need_axis_map` (21), `access_need_icf` (43). A medical taxonomy needs the same
+crossings into the other three, or the lens cannot switch. **It is a schema change, not a vocabulary
+addition.**
+
+CONDITION: Any session adding a taxonomy, designing the browse interface, or treating one taxonomy as
+canonical over the others.
+ACTION: Never render one taxonomy as the project's own frame. A determination is keyed to substrate
+and reached through whichever lens the reader picked.
+DATE: 2026-08-27 — owner ruling, quoted above.
+
+---
+
+RULE: **`base.sources` is a registry of research TARGETS — prompts for where to look. It is neither
+evidence nor research.** Owner ruling 2026-08-27, correcting an agent finding.
+
+> *"academic publishing institutions, research journals, university publications, books and articles,
+> etc are all 'sources' for finding evidence sources. so too are countries, codes and standards,
+> professional organizations, clinical bodies, and advocacy groups. **none of these are evidence, and
+> none of these are research. they are all prompts for research to target** such that they can find
+> evidence"*
+
+**Corrects a finding recorded hours earlier** that `base.sources` was "listed twice with different
+meanings — substrate vocabulary and evidence respectively" and that collapsing the two would recreate
+the lead/evidence conflation. **Both bullets are one coherent member and neither is the corpus.** The
+error came from reading "sources" as this project's `evidence_sources`.
+
+**It is a third INPUT to `research.matrix`, alongside `base.clues`** — search THIS topic, in THIS
+language, AT this body. Target belongs in the cross-product.
+
+**Measured 2026-08-27: no target registry exists.** The nearest thing is `search_executions.engine`,
+free text, no vocabulary, no table, no CHECK. R8 requires the query be logged verbatim but nothing
+requires the target be a known one, so **coverage across targets is not a derivable fact** and a body
+nobody thought to search is invisible to every gate.
+
+**NOMENCLATURE HAZARD — the same class already ruled on.** "Sources" is doing two jobs:
+`base.sources` is *where to look*; `evidence_sources` is *what we found* (10 rows). The owner retired
+`items` as a table name because *"the word was the ambiguity."* Creating `base.sources` beside
+`evidence_sources` reproduces that ambiguity deliberately. **Resolve the name before the table exists,
+not after** — naming one for its function costs nothing now and a caller sweep later.
+
+CONDITION: Any session creating the target registry, naming a table containing "source", or designing
+the research matrix.
+ACTION: (1) Do not treat target-registry rows as evidence or as leads. (2) Give `search_executions.engine`
+a foreign key into the registry once it exists, so target coverage becomes measurable. (3) Settle the
+`sources` name collision before the table is created.
+DATE: 2026-08-27 — owner ruling, quoted above.
+
+---
+
+RULE: **The concept vocabulary is HARVESTED at evidence and ADJUDICATED at judgment. `DR-2026-08-24`
+§2.4's deferral to synthesis is OVERRULED.** Owner ruling 2026-08-27.
+
+> *"overrule Aug 24 DR. we go evidence>judgment>synthesis."*
+>
+> *"evidence is probably working by doing more cursory scans and grep/regex or whatever rather than
+> line by line analysis, so it's probably just getting all required metadata for apa standards and
+> listing out all concepts/topics/key words/phrases that appear in the source and then judgment phase
+> will actually do the deep read on it to determine what can be derived from the source"*
+
+**The aporia this answers**, in the owner's words: *"we do not want to presuppose
+categories/concepts/approaches/elements/techniques/practices by defining them all at the start… however
+we also can't perform our research properly if we don't presuppose all of those."*
+
+**It is a false dilemma.** The vocabulary need not be stipulated or absent; it can be **observed but
+not yet adjudicated**. Recording that a source uses a phrase is a fact about the document, not a claim
+that the phrase names one of our categories — the same epistemic act as recording its DOI. Judgment
+then adjudicates with the source in hand. **The vocabulary is grown with warrant, and every canonical
+concept is traceable to the sources that used it.**
+
+**The seed problem is answered by ratified doctrine, not by a new decision.**
+`governance/pipeline-map.yaml:78` (2026-08-21): *"these are LAYERS a walk re-enters, not phases it
+passes through."* The existing topics are a revisable seed; the harvest corrects them.
+
+**Measured 2026-08-27 — most of the mechanism already exists.** `evidence_sources` carries 30
+APA-shaped columns including `_en` variants for non-English work; `terms` (88) + `term_aliases`
+(2,382) + `term_item_links` (147) are the canonical concept layer. **Missing: the harvest.** No table
+holds terms as they appear in a source; `search_executions.terms_used` is the opposite direction —
+terms we searched *with*.
+
+**Two new objects, both new row-kinds:** `observed_terms` (evidence stage; verbatim, unjudged,
+scriptable) and `term_adjudications` (judgment stage; mints canonical concepts with the warranting
+source). §1 burden: without them a concept enters the guidebook's vocabulary with no record of which
+source put it there — the same unwarranted-assertion defect as a citation with no locator.
+
+**Saturation becomes the stopping rule.** `search_executions.saturation_signal` exists and is
+unusable today because nothing records what a source yielded conceptually. The matrix answers *"have
+we left a region unsearched"* (spread); saturation answers *"is this region done"*. Both are needed.
+
+CONDITION: Any session designing the evidence or judgment stage, defining a concept vocabulary, or
+citing `DR-2026-08-24` §2.4.
+ACTION: (1) `CLAUDE.md` §6 must be corrected — *"applicability is an OUTPUT of synthesis"* and *"zero
+`item_population_links` is the correct pre-synthesis state"* are both superseded; the crossing is
+**judgment's output**, so zero links after judgment IS a defect. (2) D-0165 is downstream of judgment,
+not synthesis. (3) `research_batch_dod`'s R4 phase must be re-declared or it measures the wrong stage.
+(4) Evidence metadata is machine-fetched, never model-authored — `retrieval_log.py --verify-authors`
+is the guarantee, and the 2026-08-19 invented-co-authors failure is why.
+SCOPE: Read as scoped to §2.4's deferral. **§2.1 (rule 5, "point, do not copy") is untouched** and
+remains operative — it is unrelated to the aporia and load-bearing project-wide. Owner confirmation
+sought.
+DATE: 2026-08-27 — owner ruling, quoted above.
+
+---
+
+RULE: **`base_building` is THREE levels — building type · room type · construction element — and
+`items` is none of them.** Owner ruling 2026-08-27.
+
+> *"Building types (eg residential, commercial), room types (eg kitchen, entry, bathroom),
+> construction elements (eg door, door handle, window, floor) are what I wanted for that table"*
+
+**Resolves the `items` conflict.** The architecture note lists *"all architectural and design elements
+involved in buildings"* under `base.building`, which read as though `items` belonged there. It does
+not. Measured 2026-08-27:
+
+| level | example | live table |
+|---|---|---|
+| building type | residential, commercial | **absent** |
+| room type | kitchen, entry, bathroom | `rooms` — 17 rows: `R-KIT`, `R-ENT`, `R-BA`, `R-WC`, `R-BED`, `R-COR`… |
+| construction element | door, door handle, window, floor | **absent** |
+
+`items` (93) holds **design provisions**, e.g. `A-03 "Acoustic Door (STC ≥35) at All Sensitive Space
+Boundaries"` — a provision *about* a door, not the door. **So the 2026-08-26 ruling stands unamended:
+`items` is the Part-4 render rollup, derived from specifications.** The note does not reach it.
+
+**And this explains a defect already on the record.** 42 of 93 `items.name` values carry a
+determination in the label (`DR-2026-08-19:127`; 28 numeric · 23 prescriptive · 9 overlap, "a
+floor"). The cause is now visible: `items` conflates **three** things — the element (*door*), the
+parameter (*STC*), and the determination (*≥35*) — because no element table and no parameter registry
+exist. With nowhere else to put them, all three collapse into one name string. The vocabulary check
+proposed for those 42 rows treats the symptom; **the three-level split removes the cause.**
+
+CONDITION: Any session creating the building layer, reasoning about `items`, or planning the
+vocabulary check.
+ACTION: Create three tables, not one — `base_building_types`, `base_room_types` (← `rooms`),
+`base_elements`. `items` is not renamed into `base_`. Note `items.category` holds bare letters `A`–`K`
+with no name column anywhere, which is a second instance of the same collapse.
+DATE: 2026-08-27 — owner ruling, quoted above.
+
+---
+
+RULE: **The four taxonomies keep parallel `base_taxonomy_*` names. `icf_demands` is superseded.**
+Owner ruling 2026-08-27.
+
+> *"we have multiple taxonomies. respect that. base_taxonomy_icf, base_taxonomy_medical etc"*
+
+| taxonomy | live table | becomes |
+|---|---|---|
+| medical model | **absent** | `base_taxonomy_medical` |
+| social identity | `populations` (23) | `base_taxonomy_identity` |
+| ICF functional codes | `axes` (17) | `base_taxonomy_icf` |
+| access needs | `access_needs` (17) | `base_taxonomy_needs` |
+
+**This supersedes the §R8 name `icf_demands`** (ruled 2026-08-25, confirmed 2026-08-26). Rule 0: the
+live statement governs, and the supersession is recorded rather than argued. **§R8's substance
+survives in full** — the retirement of `axes` / `axis_code` / `AX-` and the paired
+`retired-vocabulary.yaml` entry, rename-then-register, remain exactly as ruled. Only the replacement
+noun changes, and the seven register entries (`axes`, `axis_code`, `item_axis_links`,
+`population_axis_map`, `access_need_axis_map`, `serves_axes`, `attaches_axes`) are unaffected — they
+name what is retired, not what replaces it.
+
+**"Respect that" is a bar on folding.** The four are parallel and must not be collapsed into one
+another — consistent with the 2026-08-25 refusal to fold the demand layer into `access_needs`
+(`axes` anchors ICF **b**/**d** and carries `mechanism`; `access_needs` anchors ICF **e** and carries
+`design_obligation`; the 17/17 row coincidence is a coincidence). Under the browsing-lens ruling of
+the same day they are four views of one substrate, switched through the crossing maps.
+
+CONDITION: Any session naming, folding or querying a taxonomy layer, or executing §R8.
+ACTION: Use `base_taxonomy_icf`, not `icf_demands`. Do not fold any taxonomy into another. A new
+`base_taxonomy_medical` needs crossing maps into the other three or the lens cannot switch.
+DATE: 2026-08-27 — owner ruling, quoted above.
+
+---
+
+RULE: **Namespace separator is the underscore.** Owner ruling 2026-08-27: *"yeah use underscore
+then"*.
+
+`base_models`, `research_logs`, `evidence_items`, `judgment_items` — never `base.models`. **SQLite has
+no schemas**, so a dot in an identifier collides with `schema.table` syntax and would require quoting
+at every use site forever. Full-word namespaces also retire the collision hazard found against
+3-character `stage_id[:3]` prefixes, since full words do not collide.
+
+CONDITION: Any session naming a table or writing the rename migration.
+DATE: 2026-08-27 — owner ruling, quoted above.
+
+---
+
+RULE: **The word "substrate" is retired for the pipeline layer. That layer is `base`.** Owner ruling
+2026-08-27: *"stop using the word substrate."*
+
+**Replacement:** `base`. Every construction of the form *"substrate is not a stage"*, *"the substrate
+layer"*, *"research + substrate"* becomes `base`. The **substance is unchanged** — `base` is still not
+a stage, and the convention that a view reading one stage plus `base` crosses no boundary still holds
+and must still be stated whenever the cross-stage view count is quoted.
+
+**Measured 2026-08-27, live tree excluding `_archived/`: 117 files, 647 occurrences.**
+
+**A BLIND SWEEP WOULD CORRUPT LIVE CONTENT, and this is the reason to route it through the register
+rather than a grep.** The word has at least two other senses in this repository, both legitimate:
+
+| sense | example | disposition |
+|---|---|---|
+| **construction / material** | `co1-housing-research-global-south.md:54` — *"A grab bar rated at ≥200 kg SWL requires a structural substrate"*; `:71` — *"no paved substrate"* | **KEEP.** This is accessibility content about informal settlements and is correct as written |
+| **storage / data-store** | `references/audits/verification-pipeline-proposal-2026-05-12.md:16` — *"Storage substrate"* | KEEP or reword; not the pipeline sense |
+| **pipeline layer** | `CLAUDE.md`, `STAGE-TABLE-MAP.md`, `NOMENCLATURE.md`, this ledger | **RETIRE → `base`** |
+
+**Register entry, per the §R8 precedent (rename then register).** `retired_vocabulary_audit.py`
+compiles every mode with a `(?<![\w-])…(?![\w-])` boundary, so a bare `token: substrate` **would match
+the construction sense too** and flag correct content — the exact "flagging descriptive English"
+failure §R8 forbids. So the entry cannot be the bare word. It must either scope by path (governance,
+`CLAUDE.md`, the stage maps) or wait until the pipeline-sense occurrences are gone and then guard
+only those paths.
+
+CONDITION: Any session writing about the pipeline layers, sweeping the word, or adding a register
+entry for it.
+ACTION: (1) Use `base`. (2) Do **not** grep-replace repo-wide — the construction sense is live content.
+(3) `_archived/` is exempt by the register's own `exempt_paths`. (4) State the convention *"a view
+reading one stage plus `base` crosses nothing"* whenever quoting the cross-stage view count.
+DATE: 2026-08-27 — owner ruling, quoted above.
+
+---
+
+CORRECTION to the three rulings recorded 2026-08-27 (`base_building`, `base_taxonomy_*`, underscore).
+Raised by the R2 ruling-precedence audit; appended rather than edited, per append-only discipline.
+
+**M1 — "§R8's substance survives in full… exactly as ruled" OVERCLAIMS, and the gap would be filled
+silently.** The register-entry half is correct: the seven entries (`axes`, `axis_code`,
+`item_axis_links`, `population_axis_map`, `access_need_axis_map`, `serves_axes`, `attaches_axes`)
+name what is **retired**, so they are noun-independent and unaffected. **But the 08-25 ruling also
+selected a derived FAMILY of replacement names** — `demand_code`, `item_demand_links`,
+`population_demand_map`, `access_need_demand_map`, `serves_demands`, `attaches_demands`. The owner's
+new words supply only **`base_taxonomy_icf`**, which replaces the head table and leaves **six
+companion replacement names orphaned**. **They are REOPENED, not settled.** Whoever writes the rename
+migration must derive them from the new head noun or put them to the owner — not invent them in
+passing. *(`base_taxonomy_icf_links`? `item_icf_links`? Unresolved.)*
+
+**D1 — two rows were completed from the note's enumeration and were not labelled as such.** The owner
+said *"base_taxonomy_icf, base_taxonomy_medical etc"*. `base_taxonomy_identity` (← `populations`) and
+`base_taxonomy_needs` (← `access_needs`) are **completions of the note's own verbatim list**, which is
+the only list "etc" can complete — a fair reading, but they rename **live tables** and sat unlabelled
+under an owner banner. Labelled here as **derived**.
+
+**D2 — "respect that is a bar on folding" is a READING, not quoted ruling content**, and the ACTION
+generalised beyond both texts. The operative bar exists independently: the 2026-08-25 anti-fold ruling
+is never superseded. But that ruling barred **one specific fold** (the demand layer into
+`access_needs`); *"do not fold any taxonomy into another"* extends it to all pairs on my inference.
+**Scope it back:** the ruled bar is the 08-25 one; the general form is a reading and is marked so.
+
+**D3 — the `base_building` ACTION says "three tables, not one" against the owner's singular
+"that table".** The owner named three levels for **one** table. Whether that is one table with a level
+column or three tables is **an agent design decision, not the ruling**, and was recorded as though
+ruled. *(A single table with `level` ∈ {building_type, room_type, element} plus a parent pointer is
+the alternative, and it fits the parent-column ruling of the same day.)* **Reopened.**
+
+DATE: 2026-08-27 — R2 ruling-precedence audit, findings M1/D1/D2/D3.
+
+---
+
+REFINEMENT to the rule immediately above. **"Substrate" is RESERVED, not retired. It belongs to
+construction elements.** Owner ruling 2026-08-27: *"reserve the word substrate for construction
+elements."*
+
+**This changes the register shape.** The preceding entry treated the word as retired-with-a-carve-out.
+It is the reverse: the word has **one correct domain** and the pipeline-layer use is the trespass.
+
+| use | status |
+|---|---|
+| **construction element** — the material an element mounts to, bears on, or is finished over | **RESERVED. Correct. Do not touch.** |
+| pipeline layer | **wrong domain → `base`** |
+| storage / data-store (*"Storage substrate"*, `references/audits/verification-pipeline-proposal-2026-05-12.md:16`) | wrong domain; reword when touched |
+
+**It is a load-bearing accessibility term, which is why it is reserved.** The live uses are
+substantive, not decorative — `co1-housing-research-global-south.md:54`: *"A grab bar rated at ≥200 kg
+SWL requires a structural substrate — informal walls do not provide one."* Pull-out strength is a
+property of what the fixing goes into. A guidebook on the built environment that cannot say
+"substrate" about a wall has lost a word it needs.
+
+**Design consequence for `base_elements`** (the construction-element table ruled the same day, and not
+yet built): substrate is a **property of an element's context**, not of the element itself — the same
+grab bar has different capacity in masonry, stud, and corrugated metal. It belongs on the element ↔
+context relation, not as a column on the element. **Recorded now because the table does not exist
+yet**, and this is the cheapest moment.
+
+CONDITION: Any session sweeping the word, writing the register entry, or designing `base_elements`.
+ACTION: (1) The register entry must be **path-scoped to the pipeline-layer surfaces** (governance/,
+`CLAUDE.md`, the stage maps) — a bare token would flag the reserved use and teach the reader to
+ignore the check. (2) Never rewrite a construction-sense occurrence. (3) `base_elements` carries
+substrate on the relation, not the element.
+DATE: 2026-08-27 — owner ruling, quoted above.
+
+---
+
+RULE: **"Substrate" never named a stage. It was agent-coined, was recorded as agent-coined, and was
+then used for three days as though it were canonical.** Owner ruling 2026-08-27:
+
+> *"saying 'move clues to substrate' is nonsense to me because what the hell is substrate in our
+> pipeline? we don't have any stage named that"*
+
+**The owner is correct and this ledger already said so.** `references/project-standards.md:1035-1038`,
+recorded 2026-08-25:
+
+> *"The six-bucket model in
+> `scratchpad/session_2026-08-24-pointer-discipline/fable-stage-discipline-audit-2026-08-24.txt`
+> PART 1 **added SUBSTRATE as a sixth bucket; that addition is agent-authored** and is **not** part of
+> this ruling."*
+
+**Provenance: a Fable stage-discipline audit, 2026-08-24. Not an owner statement, ever.** Measured
+2026-08-27 — it is a stage in nothing the machine enforces:
+
+```
+governance/pipeline-contract.yaml   stages: research · evidence-collection · judgment · synthesis · render
+tools/pipeline_completeness.py:37   STAGES = [same five]
+```
+
+**So *"move clues to substrate"* names no destination.** It is a **category error, not a placement
+proposal** — which reframes the owner's non-adoption of the architecture note's item #3. The owner was
+not choosing between two homes for the clue store. They were declining a sentence whose destination
+does not exist.
+
+**This is the repository's own recorded failure mode, executed on itself.** The 2026-08-19 rule —
+*"a conclusion reached twice reads as confirmation when it is actually evidence that the first one was
+never executed"* — applies exactly: the agent-authored status was written down on 08-25 and the word
+was then propagated into `CLAUDE.md`, `STAGE-TABLE-MAP.md`, `NOMENCLATURE.md`, four audit reports and
+this session's plan as settled vocabulary.
+
+**WHAT THIS REOPENS, and it is larger than the word.** Two live figures rest on the convention
+*"substrate is not a stage"*, which is now known to rest on an agent-authored bucket:
+
+| figure | depends on | status |
+|---|---|---|
+| **five** cross-stage views | a view reading one stage plus that layer "crosses nothing" | **unproven** |
+| **43 / 37** cross-stage foreign keys on eight columns | the same bucket being excluded | **unproven** |
+
+Both are quoted in `CLAUDE.md` with dates. **Neither is safe to repeat until the layer's status is
+settled.**
+
+**And the owner's own word is `base`** — where, in the architecture note, `Base` is a **top-level
+heading alongside `Research`, `Evidence` and `Judgment`**, not a layer set apart from them. The note
+draws no stage / not-a-stage distinction at all. **Whether `base` is a stage is therefore OPEN and is
+the owner's**, not a convention to inherit.
+
+CONDITION: Any session using the word, quoting the cross-stage view or foreign-key counts, or
+assigning a table to that layer.
+ACTION: (1) Say `base`. (2) **Do not quote "five cross-stage views" or "43/37 keys" until `base`'s
+status is ruled** — both are derived from an agent-authored exclusion. (3) Do not describe `base` as
+"not a stage" on inherited authority; the note treats it as a peer heading.
+DATE: 2026-08-27 — owner ruling, quoted above.
+
+---
+
+RULE: **The pipeline is SEVEN stages, and `base` is the first.** Owner ruling 2026-08-27:
+
+> **`Base · Research · Evidence · Judgment · Synthesis · Specifications · Render`**
+>
+> *"base is a stage insofar as it supplies the base information upon which research can perform its
+> task, and it doesn't belong under research because none of it IS research. it's the first layer of
+> information"*
+
+**This ends the "not a stage" convention entirely.** That convention was agent-coined (a Fable
+stage-discipline audit, 2026-08-24), was recorded as agent-coined the next day, and was then used for
+three days as though canonical. It is dead. `base` is stage 1.
+
+**Companion ruling, same contact:** *"Slugs isn't a stage as that word doesn't actually make sense for
+it."* **A table is never a stage.** `slugs` is base-layer content — the topic list — and calling any
+table a stage is a category error of the same kind as *"move clues to substrate."*
+
+**BOTH LIVE FIGURES ARE NOW RE-DERIVED, AND BOTH PRIOR NUMBERS ARE DEAD.** Measured 2026-08-27
+against `user_version` 64 using the R1 audit's 66-table assignment (base 23 · research 10 · evidence 6
+· judgment 5 · synthesis 8 · specification 4 · render 10):
+
+| | retired convention (`base` excluded) | **RULED: `base` is stage 1** |
+|---|---:|---:|
+| **foreign keys** cross-stage / within | 21 / 59 | **49 / 31** |
+| **views** cross-stage, of 18 | 9 | **10** |
+
+**+28 foreign keys are reclassified as cross-stage** — from 26% of the schema's 80 keys to **61%**.
+The previously-quoted **"43 / 37 on eight columns" matches neither convention** and must not be
+repeated; it came from a five-stage assignment carried into a six-stage frame.
+
+**The consequence is not bookkeeping.** `CLAUDE.md` holds that *a cross-stage view IS the pointer* and
+is therefore the most protected object in the schema. Under this ruling the protected set grows to
+**10 of 18 views**, and the one that joins is **`v_coverage_priority`** — base + research, 7,208 rows.
+
+> **That is the matrix view**, and two successive plans proposed deleting it: `workplan/2026-08-22`
+> R6 ordered it culled, and the 2026-08-25 refusal spared it only as *"a real candidate — and it is
+> HELD."* Under the ruled spine it is a **protected cross-stage pointer**, and it is the only live
+> object that expresses `research.matrix`'s own cross-product. **Do not delete it.**
+
+**Minor, flagged rather than decided:** the owner wrote **`Specifications`** (plural) where every
+other stage id is singular. The stage id form is not ruled; recorded as written.
+
+CONDITION: Any session quoting a cross-stage count, assigning a table to a layer, deleting a view, or
+writing the stage list into the contract.
+ACTION: (1) Seven stages, `base` first, in `governance/pipeline-contract.yaml` and
+`tools/pipeline_completeness.py` — both still hold five. (2) Quote **49/31** and **10 of 18**, each
+with the convention stated and this date. (3) Never call a table a stage. (4) `v_coverage_priority` is
+protected.
+DATE: 2026-08-27 — owner ruling, quoted above.
