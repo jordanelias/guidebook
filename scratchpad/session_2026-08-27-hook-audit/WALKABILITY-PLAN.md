@@ -1583,6 +1583,220 @@ spec→render junction · the `AFTER_DATA` reading of `migrate_db.py:283-330`.
 
 ---
 
+# PART 13 — THE OPERATIVE PLAN
+
+> **Parts 1–12 are the audit trail. They are NOT executable and must not be transcribed.**
+> Everything a Sonnet or Opus session executes is in this Part. Where Part 13 disagrees with any
+> earlier Part, Part 13 wins, silently and completely.
+
+**Why this Part exists.** Three of four Fable 5 lenses independently found the same defect: the
+corrections in Parts 9, 11 and 12 never reached the executable surfaces in Parts 6.2 and 7, held
+together only by *"Part 9 wins."* B1 put it exactly — *"an audit trail wearing a runbook's clothes"*
+— and named eight sites where a session told to "execute T-A2" transcribes refuted DDL. **That is
+the same defect I criticised in the source document** (Parts E vs J), reproduced. This Part is the
+collation the plan already owed.
+
+## 13.0 The headline result is DEAD — corrected
+
+§C5 claimed the spine touches only zero-row tables with zero replay collisions, so it ships with no
+baseline and **no `AFTER_DATA`**. **Two lenses killed it independently:**
+
+- **B4:** T-A2 renames `source_locators`, which **two post-baseline data migrations write with real
+  DML** (`data_20260823223155`, `data_20260823225142`). Demonstrated on a scratch copy: rename, then
+  replay → `no such table: source_locators`. **`migration_reproducibility` goes red.**
+- **B1:** §9.3-K1 moved the spine key onto `evidence_sources` — **10 live rows, 14 DML collisions by
+  my own §9.9 table.** Nobody re-ran the partition after the key moved.
+
+**My own §9.9 table printed `source_locators: 3` and I never reconciled it with C5.** The measurement
+that refutes the claim was in the document, three sections away from the claim.
+
+**And one supporting claim was false.** §C4 said `AFTER_DATA` is *"in live use by two migrations."*
+B4 checked the marker regex (`^--\s*AFTER_DATA:\s*\d{14}\s*$`): **zero live migrations carry a valid
+marker.** The two files *mention* it in prose. The mechanism is implemented at
+`migrate_db.py:282-320` and is **unexercised** — that is still enough to rely on, but it must be
+stated as first use, and T-A2 must prove it.
+
+> **CORRECTED: the spine migration touches two data-bearing tables and REQUIRES an `AFTER_DATA`
+> marker. The Track A / Track B split survives — the spine is still one ordinary migration, not a
+> baseline — but "free, no marker" is withdrawn.**
+
+## 13.1 The naming, settled
+
+Six stages, prefix from `stage_id[:3]`: **`res_ evi_ jud_ syn_ spe_ ren_`**.
+
+**Hand-off columns take the PREFIX form, not the stage word** — B1-3 and B2-7 both measured that the
+stage-word form (`evidence_item_id`) fails my own Law 2 against table `evi_items`:
+
+| table | identity | hand-off column |
+|---|---|---|
+| `res_items` | `res_item_id` TEXT PK | — (origin) |
+| `evi_items` | `evi_item_id` TEXT PK | — (see 13.2: the lead key is on `evi_sources`) |
+| `jud_items` | `jud_item_id` TEXT PK | `evi_item_id` NOT NULL |
+| `syn_items` | `syn_item_id` TEXT PK | via `syn_judgment_links` |
+| `spe_items` | `spe_item_id` TEXT PK | via `spe_synthesis_links` |
+| `ren_*` | — | **no hand-off object** (M-4) |
+
+**Every occurrence of `research_item_id` / `evidence_item_id` / `judgment_item_id` /
+`synthesis_item_id` / `specification_item_id` in Parts 6–12 is superseded by the prefix form.**
+
+## 13.2 The keys, settled
+
+| edge | shape | why |
+|---|---|---|
+| research → evidence | **`evi_sources.res_item_id NOT NULL`** — on the ADMISSION, not the extraction | A3-F3: the lead→paper edge is source-grained; on the extraction it is a rule-5 copy |
+| evidence → judgment | `jud_items.evi_item_id NOT NULL`, **plus** `CREATE UNIQUE INDEX ux_jud_primary ON jud_items(evi_item_id) WHERE dissent_of IS NULL` | B2-4, tested: enforces the owner's 1:1 **literally** while admitting dissent |
+| judgment → synthesis | junction `syn_judgment_links`, **no blanket UNIQUE** | B2-5, tested: `UNIQUE(judgment_item_id)` breaks ratified re-entrancy (`pipeline-map.yaml:78`) — a v2 synthesis cannot cite v1's judgments |
+| synthesis → specification | junction `spe_synthesis_links` | fan-in |
+| ≥1 per fan-in parent | **`syn_items.anchor_link_id NOT NULL REFERENCES syn_judgment_links(link_id) DEFERRABLE INITIALLY DEFERRED`** | B2-6, tested: a deferred circular FK **refuses a zero-link synthesis at COMMIT**. A3-F2 and my own K3 were both wrong that this is inexpressible |
+
+**Indexes are mandatory on every hand-off column and both junction columns** — SQLite does not index
+FK sources, and without them the forward walk is a table scan (§6.3, confirmed empirically by B2).
+
+**The six no-lead sources are backfilled, not waived.** `REF-00965`–`REF-00970` have no
+`source_locators` parent — but **all six carry `search_admissions` rows** (exec 1, 1, 6, 6, 13, 10).
+T-A2 mints six `res_items` rows with `origin='searched'` from that recorded provenance. **That is
+recovery of provenance the schema already holds, not the retroactive invention I called §2(c).**
+
+## 13.3 The identifiers, settled
+
+Stable TEXT codes `RES-/EVI-/JUD-/SYN-/SPE-NNNNN`, computed from a high-water union, never stored.
+
+- **`dbcore._REF_ID_HOMES` is a caller and must be swept.** B2-3, tested: it hardcodes pre-rename
+  table names and swallows failures, so after the rename `next_ref_id` returns **`REF-00001`** — and
+  `--selftest` stays green because it fabricates its own old-named fixtures. **A blocking gate that
+  constructs the world in which it passes.**
+- **The 875 legacy `REF-` ids keep their namespace.** `res_items.res_item_id` holds the existing
+  `REF-NNNNN` values; new research items mint `RES-`. Two prefixes in one column is honest history,
+  and re-minting 875 ids would break every citation that quotes one. *(This was undecided; it is
+  decided here.)*
+- **The 11 `REF-VERIFIED-*` ids are re-minted for tidiness, not necessity.** B2 verified the regex
+  fullmatch already defuses `MAX()`. Say so in the header; do not claim the allocator required it.
+- `bpc_metadata`'s re-key to `syn_item_id` **breaks five code callers**, including a silent-overwrite
+  vector in `scripts/db.py:1766-1781`'s UPSERT and the D03 duplicate-slug check at
+  `test_db_integrity.py:689`. Both in the sweep.
+
+## 13.4 The five laws, corrected
+
+B1-3 ran my laws mechanically. **Law 2's test fails 75 of 80 current FKs where §10.1 claims 6, and
+Law 1's XOR form flags 31 legitimate columns including §10.3's own `slug`.** Corrected:
+
+| law | corrected statement |
+|---|---|
+| **1** | `keyish(col) ∧ ¬PK ∧ ¬FK` must be empty — **not XOR**. A key that is not key-shaped (`slug`, `alias`, `language`) is legal; a key-shape that is not a key is not. Reproduces the 13. |
+| **2** | FK column = `singular(target)_id`, where `singular()` is resolved **through `pipeline-contract.yaml`** for stage tables. **The checker reads the contract** — it cannot expand `res_` to `research` from `sqlite_master` alone. |
+| **3** | Schema-only: no column *name* is a plural reference form. **The data-delimiter test is dropped** — it contradicted "reads only `sqlite_master`," stated twice. |
+| **4** | unchanged. |
+| **5** | Stage order comes from the **contract**, not from lexical order — `evi < jud < ren < res < spe < syn` alphabetically is not the pipeline order. |
+
+**Substrate code-keys (`slug`, `item_code`, `population_code`, `*_code`) are explicitly exempt from
+Law 2** and named in the checker as such.
+
+## 13.5 The tables, settled
+
+**Deletions — three only, each evidenced on grounds other than emptiness:**
+`search_coverage` · `search_languages` (both: the recorded **freeze ruling**, `db.py:264-320`
+`FrozenGridError`, plus three built successor views — cite that, not "restates the log") ·
+`reference_stubs` (**superseded**: `data_20260823225142` already folded 10 of its 11 columns).
+**All three drops carry `AFTER_DATA`;** `reference_stubs` has two colliding data migrations.
+
+**Then the seven Tier-2 clears** (three empty population junctions + `case_study_populations`,
+`economics_entry_populations`, `economics_entry_specs`, `case_study_outcomes`), each with its
+Pydantic mirror dropped in the same commit.
+
+**NOT deleted, reversing Part 9.5:**
+
+| | why |
+|---|---|
+| **`situations`** | **Co-1 doctrine.** `functional-taxonomy.md:324`, `held-tensions.md:363`; DDL carries `co1_status`. **Owner-gated. I should not have proposed it.** |
+| `connections`, `connection_targets` | build **book Part 5** (`generate_parts.py:245-257`); fold only in the commit that creates `syn_items.kind` + `syn_synthesis_links` |
+| `url_verification_runs` | writer + **dedicated CI workflow** `.github/workflows/verify-urls.yml` |
+| `case_study_specs` | the named remedy inside a **live `db.py` refusal** (:2486) — deleting it is the R6 defect `CLAUDE.md` voids |
+| `gap_mining`, `supersession_check`, `item_audit_runs` | fold via T-B.8, do not delete |
+
+**The minimization is in the FOLDS** — and they now have task ids (13.7 T-B.8/9/10).
+**Honest target: 66 → 54 firm**, 52–53 with owner- and study-gated items.
+**`figures` is struck from the count** — no reader exists and none is scheduled (§1's mirror clause).
+**`jud_population_grades` is a real table** (X4) and appears in the map and in T-A2.
+**`items` is −1 or 0**, pending Q2.
+
+## 13.6 The three owner questions, rewritten
+
+**Q1 is no longer a choice.** B2 found and tested a shape that satisfies the owner's sentence
+literally *and* keeps the dissent contest:
+
+> Your ruling was *"each row of evidence provides one row for judgment."* We can enforce that
+> exactly — a partial unique index on `jud_items(evi_item_id) WHERE dissent_of IS NULL` refuses a
+> second **primary** judgment on any extraction while still admitting a recorded dissent. Tested.
+> **Nothing to choose; confirm and we build it.**
+
+**Q2, re-put per §9.6.** Not *"does `item_code` rename?"* but: `items` is a registry of design
+parameters; retiring it and keying specifications on a canonical label **recreates it under a worse
+key** (homonyms, no stability, one vocabulary in two homes). **Re-grain it into a substrate registry
+minting stable parameter codes** (`code` PK, `canonical_label` UNIQUE) — the ambiguous word goes, the
+registry stays. Net table count 0, not −1. *The registry still needs a name.*
+
+**Q3 unchanged** — prose in files (status quo, nearly free to ratify) or in rows.
+
+**Plus one I owe you:** `situations` (13.5) is Co-1 doctrine and its deletion is yours alone. I am
+not proposing it; I am telling you I nearly did.
+
+## 13.7 The task list, operative
+
+**T-0 — unblock (Sonnet).** T-0.1 de-hardcode `migration_reproducibility.py` (a **contract/DR**
+change; its selftest hardcodes `items` six times) · T-0.2 fix U-7 (`source_ref`/`ref_id`) · T-0.3 fix
+`record-command.py` (both defects: stale-dir minting **and** subagent attribution) · **T-0.4 the
+sweep helper, taking COLUMNS as well as tables**, and its caller list names by file:
+`scripts/generate_parts.py` *(not `scripts/generate/generate_parts.py` — that path does not exist)*,
+`build_site.py`, `spec_page.py`, `population_page.py`, `pilot_renderings.py`, `validate_items.py`,
+`validate_evidence_state.py`, `check_rendered_docs.py`, `validate_verification_consistency.py`,
+`research_batch_dod.py`, `citation_mining_completeness.py`, `assess_cell.py`,
+`adjudication_integrity.py`, `audit_consolidator.py`, `migration_reproducibility.py`,
+`pmp_audit.py`, `graph_audit.py`, `dbcore._REF_ID_HOMES`, the three `scripts/tests/*`, `tools/*`,
+five governance YAMLs, 3 views, 22 skills · T-0.5 build `wiring_grammar` **advisory**, with the 13.4
+laws, and record its true baseline.
+
+**T-A1 — six-stage spine in the machine (Opus), one commit.** As §7 T-A1.1–1.6, with two fixes:
+`derivation-handshake` carries `check: null` — it is declared-but-unenforced, so moving it is a
+registry edit only; and `convergence-independence`'s subject table moves to synthesis at T-B, so say
+which stage owns it in the interim.
+
+**⛔ GATE** — Q1 (confirm), Q2 (re-grain), Q3, plus the `situations` notice.
+
+**T-A2 — mint the spine (Opus).** `065_the_item_spine.sql`, `user_version` 65, **with an
+`AFTER_DATA` marker** (13.0). Renames + `jud_items` + `jud_population_grades` + two junctions +
+indexes + the deferred anchor FK + the six-lead backfill. Mirror `schemas/*.py` in the same commit.
+**Writers ship with it** — `add-extraction`, `add-judgment`, `add-synthesis`, `add-specification`
+and the junction writers do not exist (A3-F16). **Run T-0.4 before, and the full check battery
+after.**
+
+**T-A3 — walk one slug (Opus).** Acceptance, corrected — B4 showed three of my four criteria fail on
+a healthy repo:
+1. the five-hop join on hand-off keys only, returning ≥1 row *(B4 built it on a scratch schema: valid SQL, returns the row)*;
+2. a rendered figure traces to its extraction and paper **by key path** — *deferred to T-B*, because every generator still queries the pre-rename names until T-B rewrites them;
+3. `EXAMINED: n > 0` **on instrumented checks only** — `pipeline_completeness_fresh` is deliberately uninstrumented (`no_floor`), so demanding it is unsatisfiable;
+4. `db.py` refused at least once;
+5. **`migration_reproducibility` passes its 7-invariant compare** — *not* byte-identity, which fails on clean `main` today.
+
+**T-B — nomenclature + folds (Sonnet; Opus for the population split).** T-B.1 `axes`→`icf_demands`
+with the register entry · T-B.2 `MOB`→`AMB`/`WHEEL` (**Opus**, DG-NON) · T-B.3 sweep the 9 skills
+teaching `MOB` and the 17 teaching retired codes · T-B.4 the research/evidence renames · T-B.5 the
+three drops + seven clears · T-B.6 `items` per Q2 · T-B.7 `origin`/`parent_res_item_id` with
+`unknown-legacy` · **T-B.8 fold `citation_mining`/`gap_mining`/`supersession_check` → `res_searches`
+with `kind` (−3)** · **T-B.9 fold `search_candidates` → `res_items` (−1)** · **T-B.10 column study:
+`jurisdictional_values`' 16 `loc_*` columns duplicate the extraction locator block name-for-name — 24
+shared columns, a live structural dual home** · T-B.11 the column sweep (13 liars, 6 mis-named FKs,
+stamp/status collapse, the 7 packed columns) · T-B.12 rewrite the generators, **then** promote
+`site_pages_fresh` in the same commit.
+
+**T-C — propagate (Sonnet).** Workplan · **one** consolidating DR + attestation (rule 2) · re-derive
+the stage→table map under six stages · re-stamp the dated figures · promote `wiring_grammar` to
+blocking. **Drop S-1** — an execution-status check on the ledger is apparatus-justified and fails
+§1's own test, as does 9.7-H unless paid in book terms (a lying stage prefix sends a writer to the
+wrong stage, which is how a determination gets built on a stage that had not run — that payment is
+available; make it or drop the check).
+
+---
+
 ## Appendix — re-derivation
 
 ```bash
