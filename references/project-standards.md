@@ -2123,3 +2123,74 @@ at every use site forever. Full-word namespaces also retire the collision hazard
 
 CONDITION: Any session naming a table or writing the rename migration.
 DATE: 2026-08-27 — owner ruling, quoted above.
+
+---
+
+RULE: **The word "substrate" is retired for the pipeline layer. That layer is `base`.** Owner ruling
+2026-08-27: *"stop using the word substrate."*
+
+**Replacement:** `base`. Every construction of the form *"substrate is not a stage"*, *"the substrate
+layer"*, *"research + substrate"* becomes `base`. The **substance is unchanged** — `base` is still not
+a stage, and the convention that a view reading one stage plus `base` crosses no boundary still holds
+and must still be stated whenever the cross-stage view count is quoted.
+
+**Measured 2026-08-27, live tree excluding `_archived/`: 117 files, 647 occurrences.**
+
+**A BLIND SWEEP WOULD CORRUPT LIVE CONTENT, and this is the reason to route it through the register
+rather than a grep.** The word has at least two other senses in this repository, both legitimate:
+
+| sense | example | disposition |
+|---|---|---|
+| **construction / material** | `co1-housing-research-global-south.md:54` — *"A grab bar rated at ≥200 kg SWL requires a structural substrate"*; `:71` — *"no paved substrate"* | **KEEP.** This is accessibility content about informal settlements and is correct as written |
+| **storage / data-store** | `references/audits/verification-pipeline-proposal-2026-05-12.md:16` — *"Storage substrate"* | KEEP or reword; not the pipeline sense |
+| **pipeline layer** | `CLAUDE.md`, `STAGE-TABLE-MAP.md`, `NOMENCLATURE.md`, this ledger | **RETIRE → `base`** |
+
+**Register entry, per the §R8 precedent (rename then register).** `retired_vocabulary_audit.py`
+compiles every mode with a `(?<![\w-])…(?![\w-])` boundary, so a bare `token: substrate` **would match
+the construction sense too** and flag correct content — the exact "flagging descriptive English"
+failure §R8 forbids. So the entry cannot be the bare word. It must either scope by path (governance,
+`CLAUDE.md`, the stage maps) or wait until the pipeline-sense occurrences are gone and then guard
+only those paths.
+
+CONDITION: Any session writing about the pipeline layers, sweeping the word, or adding a register
+entry for it.
+ACTION: (1) Use `base`. (2) Do **not** grep-replace repo-wide — the construction sense is live content.
+(3) `_archived/` is exempt by the register's own `exempt_paths`. (4) State the convention *"a view
+reading one stage plus `base` crosses nothing"* whenever quoting the cross-stage view count.
+DATE: 2026-08-27 — owner ruling, quoted above.
+
+---
+
+CORRECTION to the three rulings recorded 2026-08-27 (`base_building`, `base_taxonomy_*`, underscore).
+Raised by the R2 ruling-precedence audit; appended rather than edited, per append-only discipline.
+
+**M1 — "§R8's substance survives in full… exactly as ruled" OVERCLAIMS, and the gap would be filled
+silently.** The register-entry half is correct: the seven entries (`axes`, `axis_code`,
+`item_axis_links`, `population_axis_map`, `access_need_axis_map`, `serves_axes`, `attaches_axes`)
+name what is **retired**, so they are noun-independent and unaffected. **But the 08-25 ruling also
+selected a derived FAMILY of replacement names** — `demand_code`, `item_demand_links`,
+`population_demand_map`, `access_need_demand_map`, `serves_demands`, `attaches_demands`. The owner's
+new words supply only **`base_taxonomy_icf`**, which replaces the head table and leaves **six
+companion replacement names orphaned**. **They are REOPENED, not settled.** Whoever writes the rename
+migration must derive them from the new head noun or put them to the owner — not invent them in
+passing. *(`base_taxonomy_icf_links`? `item_icf_links`? Unresolved.)*
+
+**D1 — two rows were completed from the note's enumeration and were not labelled as such.** The owner
+said *"base_taxonomy_icf, base_taxonomy_medical etc"*. `base_taxonomy_identity` (← `populations`) and
+`base_taxonomy_needs` (← `access_needs`) are **completions of the note's own verbatim list**, which is
+the only list "etc" can complete — a fair reading, but they rename **live tables** and sat unlabelled
+under an owner banner. Labelled here as **derived**.
+
+**D2 — "respect that is a bar on folding" is a READING, not quoted ruling content**, and the ACTION
+generalised beyond both texts. The operative bar exists independently: the 2026-08-25 anti-fold ruling
+is never superseded. But that ruling barred **one specific fold** (the demand layer into
+`access_needs`); *"do not fold any taxonomy into another"* extends it to all pairs on my inference.
+**Scope it back:** the ruled bar is the 08-25 one; the general form is a reading and is marked so.
+
+**D3 — the `base_building` ACTION says "three tables, not one" against the owner's singular
+"that table".** The owner named three levels for **one** table. Whether that is one table with a level
+column or three tables is **an agent design decision, not the ruling**, and was recorded as though
+ruled. *(A single table with `level` ∈ {building_type, room_type, element} plus a parent pointer is
+the alternative, and it fits the parent-column ruling of the same day.)* **Reopened.**
+
+DATE: 2026-08-27 — R2 ruling-precedence audit, findings M1/D1/D2/D3.

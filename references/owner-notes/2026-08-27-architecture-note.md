@@ -2,7 +2,10 @@
 
 **Provenance.** Supplied by the owner as a document (`.docx`/`.pdf`) during
 `session_2026-08-27-hook-audit`, and transcribed here **verbatim, structure preserved**, because it
-is now the governing statement on the pipeline's shape and existed nowhere in the repository.
+it existed nowhere in the repository while four auditors were reconciling three stage maps against
+it. **It is not a governing document — see Status below.** *(This line originally called it "the
+governing statement on the pipeline's shape". Corrected 2026-08-27; the R2 audit found the correction
+block had been added while this sentence still contradicted it.)*
 
 **Status — READ THIS BEFORE CITING IT. It is NOT a governing document.** The owner has stated its
 nature twice, and the second statement is the operative one:
