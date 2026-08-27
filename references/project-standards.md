@@ -2041,3 +2041,85 @@ SCOPE: Read as scoped to §2.4's deferral. **§2.1 (rule 5, "point, do not copy"
 remains operative — it is unrelated to the aporia and load-bearing project-wide. Owner confirmation
 sought.
 DATE: 2026-08-27 — owner ruling, quoted above.
+
+---
+
+RULE: **`base_building` is THREE levels — building type · room type · construction element — and
+`items` is none of them.** Owner ruling 2026-08-27.
+
+> *"Building types (eg residential, commercial), room types (eg kitchen, entry, bathroom),
+> construction elements (eg door, door handle, window, floor) are what I wanted for that table"*
+
+**Resolves the `items` conflict.** The architecture note lists *"all architectural and design elements
+involved in buildings"* under `base.building`, which read as though `items` belonged there. It does
+not. Measured 2026-08-27:
+
+| level | example | live table |
+|---|---|---|
+| building type | residential, commercial | **absent** |
+| room type | kitchen, entry, bathroom | `rooms` — 17 rows: `R-KIT`, `R-ENT`, `R-BA`, `R-WC`, `R-BED`, `R-COR`… |
+| construction element | door, door handle, window, floor | **absent** |
+
+`items` (93) holds **design provisions**, e.g. `A-03 "Acoustic Door (STC ≥35) at All Sensitive Space
+Boundaries"` — a provision *about* a door, not the door. **So the 2026-08-26 ruling stands unamended:
+`items` is the Part-4 render rollup, derived from specifications.** The note does not reach it.
+
+**And this explains a defect already on the record.** 42 of 93 `items.name` values carry a
+determination in the label (`DR-2026-08-19:127`; 28 numeric · 23 prescriptive · 9 overlap, "a
+floor"). The cause is now visible: `items` conflates **three** things — the element (*door*), the
+parameter (*STC*), and the determination (*≥35*) — because no element table and no parameter registry
+exist. With nowhere else to put them, all three collapse into one name string. The vocabulary check
+proposed for those 42 rows treats the symptom; **the three-level split removes the cause.**
+
+CONDITION: Any session creating the building layer, reasoning about `items`, or planning the
+vocabulary check.
+ACTION: Create three tables, not one — `base_building_types`, `base_room_types` (← `rooms`),
+`base_elements`. `items` is not renamed into `base_`. Note `items.category` holds bare letters `A`–`K`
+with no name column anywhere, which is a second instance of the same collapse.
+DATE: 2026-08-27 — owner ruling, quoted above.
+
+---
+
+RULE: **The four taxonomies keep parallel `base_taxonomy_*` names. `icf_demands` is superseded.**
+Owner ruling 2026-08-27.
+
+> *"we have multiple taxonomies. respect that. base_taxonomy_icf, base_taxonomy_medical etc"*
+
+| taxonomy | live table | becomes |
+|---|---|---|
+| medical model | **absent** | `base_taxonomy_medical` |
+| social identity | `populations` (23) | `base_taxonomy_identity` |
+| ICF functional codes | `axes` (17) | `base_taxonomy_icf` |
+| access needs | `access_needs` (17) | `base_taxonomy_needs` |
+
+**This supersedes the §R8 name `icf_demands`** (ruled 2026-08-25, confirmed 2026-08-26). Rule 0: the
+live statement governs, and the supersession is recorded rather than argued. **§R8's substance
+survives in full** — the retirement of `axes` / `axis_code` / `AX-` and the paired
+`retired-vocabulary.yaml` entry, rename-then-register, remain exactly as ruled. Only the replacement
+noun changes, and the seven register entries (`axes`, `axis_code`, `item_axis_links`,
+`population_axis_map`, `access_need_axis_map`, `serves_axes`, `attaches_axes`) are unaffected — they
+name what is retired, not what replaces it.
+
+**"Respect that" is a bar on folding.** The four are parallel and must not be collapsed into one
+another — consistent with the 2026-08-25 refusal to fold the demand layer into `access_needs`
+(`axes` anchors ICF **b**/**d** and carries `mechanism`; `access_needs` anchors ICF **e** and carries
+`design_obligation`; the 17/17 row coincidence is a coincidence). Under the browsing-lens ruling of
+the same day they are four views of one substrate, switched through the crossing maps.
+
+CONDITION: Any session naming, folding or querying a taxonomy layer, or executing §R8.
+ACTION: Use `base_taxonomy_icf`, not `icf_demands`. Do not fold any taxonomy into another. A new
+`base_taxonomy_medical` needs crossing maps into the other three or the lens cannot switch.
+DATE: 2026-08-27 — owner ruling, quoted above.
+
+---
+
+RULE: **Namespace separator is the underscore.** Owner ruling 2026-08-27: *"yeah use underscore
+then"*.
+
+`base_models`, `research_logs`, `evidence_items`, `judgment_items` — never `base.models`. **SQLite has
+no schemas**, so a dot in an identifier collides with `schema.table` syntax and would require quoting
+at every use site forever. Full-word namespaces also retire the collision hazard found against
+3-character `stage_id[:3]` prefixes, since full words do not collide.
+
+CONDITION: Any session naming a table or writing the rename migration.
+DATE: 2026-08-27 — owner ruling, quoted above.
