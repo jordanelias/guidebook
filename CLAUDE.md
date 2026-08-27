@@ -52,9 +52,14 @@ the ambiguity.)
 **Every stage's hand-off object is `<stage>_items`, and the hand-off is a NOT NULL foreign key.**
 Owner ruling 2026-08-27. Measured the same day: **not one foreign key in the schema lands on any
 stage's hand-off object** — `source_locators` and `bpc_metadata` have zero inbound keys at all, and
-`source_value_extractions` and `specifications` have one each, both same-stage. All 41 cross-stage
-keys point at substrate vocabularies or sideways. **The walk itself has no keys**, which is why it
-does not walk. The rename creates the spine; `judgment_items` is a NEW table, not a rename.
+`source_value_extractions` and `specifications` have one each, both same-stage. **Re-measured under
+the six stages, 2026-08-27: 43 foreign keys cross a boundary and 37 stay inside one, landing on
+eight columns** — `slugs.slug` 14 · `items.item_code` 10 · `evidence_sources.ref_id` 7 ·
+`populations.population_code` 7 · `gaps.gap_id` 2 · `convergence_assessment.convergence_id` 1 ·
+`reasoning_doc_citations.citation_id` 1 · `search_executions.exec_id` 1. *(The widely-quoted 41/39
+on seven columns is the FIVE-stage figure and must not be repeated inside this frame.)* Not one of
+them is a hand-off. **The walk itself has no keys**, which is why it does not walk. The rename creates
+the spine; `judgment_items` is a NEW table, not a rename.
 
 **Derive the table-to-stage assignment; do not read one out of a document.** Every bucket assignment
 written before 2026-08-27 — including the 2026-08-25 derivation in
@@ -65,13 +70,16 @@ six-stage ruling and must be re-derived against these six stages before it is re
 Rule 5 says point, do not copy. **A view that joins two stages on the shared reference ID is what
 "point" MEANS in SQL** — the owner's *"call up information from any one so long as you point to the
 correct table and column"*, and *"for rendering a citation, we point towards the evidence table for
-that reference ID"*, are descriptions of a join. **Re-measured 2026-08-27 — resolving nested views
-and quoted table names, which the earlier pass missed — SEVEN views cross a boundary, not four:**
-`v_source_admission`, `v_item_provenance`, `v_source_reach_all`, `v_code_floor_only`, `v_pending`,
-`v_item_extractions`, `v_coverage_priority`. **`v_divergence` is NOT one** — it reads
-`specifications` and `convergence_assessment`, and the earlier list mis-assigned it. Four more views
-are protected than the old list named. (These spans are stated against the five-stage map and are
-themselves owed a re-derivation under the six-stage ruling.)
+that reference ID"*, are descriptions of a join. **Re-measured 2026-08-27, and the count depends on a
+convention this file had never stated.** Substrate is not a stage, so a view reading ONE stage plus
+substrate crosses nothing. Under that convention — the one this file already uses — **FIVE views
+cross a stage boundary**: `v_source_admission`, `v_item_provenance`, `v_source_reach_all`,
+`v_code_floor_only`, `v_pending`. `v_coverage_priority` (research + substrate) and
+`v_item_extractions` (evidence + substrate) do **not**, and a first pass this session wrongly counted
+them, briefly putting "seven" in this file. `v_divergence` reads `specifications` and
+`convergence_assessment`, which the six-stage ruling puts in *different* stages — so it crosses, and
+the pre-2026-08-27 list was right about it for the wrong reason. **State the convention whenever
+quoting this count.**
 
 **Before deleting any view, ask which stages it spans.** A cross-stage view is not apparatus and is
 not a candidate for a cull — deleting it removes the pointer and forces the next reader back to

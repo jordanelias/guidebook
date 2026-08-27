@@ -1506,8 +1506,17 @@ lands on any stage's hand-off object:
 | `specifications` — the determination | 1 | **0** |
 | `bpc_metadata` — the synthesis | **0** | 0 |
 
-All **41** cross-stage foreign keys point at substrate vocabularies (`slug` 14, `item_code` 10,
-`population_code` 7), at `evidence_sources` (6), or sideways. **None of them is a hand-off.** Each
+**Re-measured under the six stages, 2026-08-27 — the figure first recorded here was wrong.** It said
+41 cross-stage / 39 within, on seven target columns; that is the **five-stage** count, carried into a
+six-stage frame without re-derivation. Under the six stages it is **43 cross-stage, 37 within, on
+eight columns**: `slugs.slug` 14 · `items.item_code` 10 · `evidence_sources.ref_id` **7** ·
+`populations.population_code` 7 · `gaps.gap_id` 2 · **`convergence_assessment.convergence_id` 1** ·
+`reasoning_doc_citations.citation_id` 1 · `search_executions.exec_id` 1. The two additions are
+`evidence_population_match.ref_id` (which becomes cross-stage once that table moves to judgment) and
+`specifications.convergence_id` (cross once `convergence_assessment` moves to synthesis).
+
+Every one of them points at a substrate vocabulary, at `evidence_sources`, or sideways. **None is a
+hand-off.** Each
 stage is joined to the next through a shared topic label, not through the thing the previous stage
 produced — which is why the pipeline does not walk, and it is a deeper defect than the naming.
 
@@ -1628,3 +1637,70 @@ split is the taxonomy for this property. (4) **Do not use E-08 as an example of 
 was purged and its name is a catalogued defect; reaching for it is a signal that the record was not
 consulted.
 DATE: 2026-08-27 — owner correction, quoted above.
+
+---
+
+CORRECTION — 2026-08-27, second pass. **The adversarial audit refuted five measured claims and two
+structural ones in the work recorded above.** Recorded in full, because one of them is the same
+rule-4b failure as the E-08 correction two entries up, repeated within the same session.
+
+**1. `ren_items` is WITHDRAWN. The owner has already ruled against it.** Part K.5 of the nomenclature
+audit proposed `ren_items` as "a manifest, not a content store — one row per published surface." That
+table existed, was called `render_manifest`, and was dropped by
+`_archived/scripts/migrations/046_drop_render_manifest.sql`, whose header quotes the owner directly:
+
+> *"the entire pipeline is dynamic rendering on site"*, and separately, *"do not rely on artifacts for
+> rendering the site"*.
+>
+> *"Under dynamic rendering there is no per-page build event to record. A manifest of build events is
+> not a weaker version of the right table; it is a record of something that will not happen."*
+
+That migration also names the pattern it was repeating — 043 dropped `building_typologies` a day
+after 042 created it on speculation; 045 cited 043 as a lesson and made the same mistake within the
+day. **This proposal is the third instance.** The `<stage>_items` ruling still holds for the five
+stages that produce rows; **render's hand-off is not a table**, and Part F.2's "open question" was
+already closed by the owner before it was asked.
+
+**2. The cross-stage FK count was a FIVE-stage measurement asserted inside a six-stage frame.**
+Corrected in the entry above: 43/37 on eight columns, not 41/39 on seven.
+
+**3. The cross-stage VIEW count depended on an unstated convention.** Substrate is not a stage, so a
+view reading one stage plus substrate crosses nothing. Under that convention it is **five**, not
+seven: `v_coverage_priority` (research+substrate) and `v_item_extractions` (evidence+substrate) do not
+cross. `CLAUDE.md` carried the wrong figure for roughly an hour and is corrected.
+
+**4. Three smaller figures, all mine, all wrong:** `source_value_extractions` has **15** `loc_*`
+columns, not sixteen (16 only if `locator_scheme` is counted, which is not a `loc_*` column);
+`jurisdiction` appears on **11** tables, not nine; the twelve retired population codes are taught by
+**17** live skill files, not twelve — twelve was the `VIS`-only figure, lifted from another document
+without re-derivation.
+
+**5. THE RULE-0 VIOLATION, which is the serious one.** The owner stated: *"each row of evidence
+provides one row for judgment"* — **1:1**. I recorded the hand-off as **1:N**, and justified it by
+citing `DR-2026-08-19` §7's dissent mechanism. **That is weighing a ratified record against a live
+owner statement, which rule 0 forbids in the plainest terms, in the session whose subject was rule
+compliance.** A third option was never considered and satisfies the ruling exactly: a junction with
+`UNIQUE(judgment_item_id)`, which is 1:1 by construction and can still carry a dissent as a second
+*graded* row elsewhere. **The evidence→judgment cardinality is reopened and is the owner's.**
+
+**6. Two claims exceeded their quotes.** The RULE above states the hand-off spine as "both quoted";
+the specification→render hand-off appears in neither owner quote and is my extrapolation — the
+owner's chain ends at specifications. And **"≥1 required per synthesis" is not expressible in SQLite
+DDL**, so "the rename creates the spine" is true of the two columns and aspirational for the three
+junctions, which need a check, not a constraint.
+
+**7. Parts E and J of that document are incompatible and both shipped.** J says four tables are one
+row-kind; E keeps three of them separate. J deletes `search_coverage`/`search_languages`; E renames
+them. J makes `search_admissions` a join; E keeps it a table. **And J's deletion premise is false:**
+`source_locators` has no search column, so "the lead names its search" does not hold — deleting
+`search_admissions` would sever the only keyed research→evidence edge that exists. That also weakens
+the causal claim *"the walk itself has no keys, which is why it does not walk"*: one keyed edge does
+exist, and it is the one J proposed to remove.
+
+CONDITION: Any session citing the nomenclature audit of 2026-08-27.
+ACTION: (1) `ren_items` does not exist and must not be proposed again; cite migration 046. (2) Quote
+43/37/eight for cross-stage keys and five for cross-stage views, **with the convention stated**.
+(3) Treat evidence→judgment as **1:1, unresolved**, until the owner rules. (4) Parts E and J are a
+contradiction, not a plan; reconcile before any migration.
+DATE: 2026-08-27 — adversarial audit (Fable 5), four parallel lenses; reports under
+`scratchpad/session_2026-08-27-nomenclature-reconciliation/audits/`.
