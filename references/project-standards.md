@@ -2337,3 +2337,73 @@ ACTION: (1) Seven stages, `base` first, in `governance/pipeline-contract.yaml` a
 with the convention stated and this date. (3) Never call a table a stage. (4) `v_coverage_priority` is
 protected.
 DATE: 2026-08-27 — owner ruling, quoted above.
+
+---
+
+RULE: **Four ratification and naming choices, selected by the owner from options put 2026-08-27.**
+
+**1 · The ICF family takes `icf_*` throughout, and the colliding table is renamed.** Owner selection.
+
+| | |
+|---|---|
+| `axes` → | `base_taxonomy_icf` (already ruled) |
+| `axis_code` → | `icf_code` |
+| `item_axis_links` → | `item_icf_links` |
+| `population_axis_map` → | `population_icf_map` |
+| `access_need_axis_map` → | `access_need_icf_map` |
+| `slugs.serves_axes` → | `serves_icf` |
+| `situations.attaches_axes` → | `attaches_icf` |
+| **`access_need_icf` (43 rows) →** | **`access_need_icf_codes`** |
+
+The last row is the point. `access_need_icf` maps `need_code` → ICF **e**-codes (environment); the
+axes table holds **b**/**d** codes (person functioning). They are different relationships, and
+`access_need_icf` beside `access_need_icf_map` would be two names one letter apart — the `items`
+ambiguity recreated deliberately. **The owner chose to break the collision rather than inherit it**,
+at the cost of one additional table and its callers in the same migration.
+
+**This supersedes the §R8 `demand_*` family** (`demand_code`, `item_demand_links`,
+`population_demand_map`, `access_need_demand_map`, `serves_demands`, `attaches_demands`), which was
+derived from the superseded noun `icf_demands`. **§R8's retired tokens are unaffected** — they name
+what is retired, not what replaces it.
+
+**2 · The stage id is SINGULAR: `specification`.** Owner selection, against their own earlier
+wording. The spine was written *"Base Research Evidence Judgment Synthesis **Specifications**
+Render"*; the id is `specification` so the prefix matches the other six and the hand-off object reads
+`specification_items` rather than `specifications_items`. **The plural remains the recorded wording of
+the spine ruling and is not altered there.**
+
+**3 · Ratification is ONE DECISION RECORD PER SUBSTANTIVE RULING**, not one consolidated DR. Owner
+selection. Derived, not guessed: **19 ledger entries carry `DATE: 2026-08-27`**, of which **13 carry a
+`RULE:` line** and the rest are corrections and records. After removing entries superseded within the
+same day (the six-stage spine by the seven-stage spine; "substrate is retired" by "base is stage 1"),
+the surviving substantive set is **eight**:
+
+1. the seven-stage spine, `base` first
+2. the hand-off object, and evidence→judgment 1:N
+3. the evidence item is the source; the judgment item is the extraction
+4. the naming grammar — underscore, `base_` prefix, `icf_*` family, singular stage ids
+5. the four taxonomies as browsing lenses, medical model included
+6. `base_building` — the levels, and its shape
+7. `base_sources` as a target registry
+8. the concept vocabulary — harvested at evidence, adjudicated at judgment; `DR-2026-08-24` §2.4 overruled
+
+**4 · `decision_capture` stays ADVISORY for now.** Owner selection. Its completeness checks — C7
+*"every CANONICAL RULE in project-standards has at least one Decision"* and C9 *"every `decisions/DR-*.md`
+has a register row"* — are **warnings**, which is why the gate passed green through all 19 unratified
+rulings. Its own docstring concedes C1–C8 *"validate the register against itself and never ask whether
+it is complete."* **The backlog is cleared first; the promotion is not made in the same session as the
+rename.** Recorded as a known open gap rather than a fixed one.
+
+**A dual home found while establishing the write path, recorded not fixed.** Decisions live in **two**
+places — `data/decisions/decision_register.yaml` (166 entries, what the gate reads) and the
+`decisions` table (166 rows, loaded by data migrations) — and **no script syncs them.** They agree
+today at 166/166. That is rule 5's prohibition, and it means ratifying a decision requires **two**
+writes: a YAML append and a data migration. Flagged for a later cull; not touched in this change.
+
+CONDITION: Any session ratifying a decision, naming an ICF-layer object, writing a stage id, or
+relying on `decision_capture` to prove the register complete.
+ACTION: (1) Use `icf_*`; rename `access_need_icf` → `access_need_icf_codes` in the same migration.
+(2) Stage id `specification`, singular. (3) Write eight DRs plus eight register rows; attestation is
+owed because `decisions/` is a rule-2 path. (4) Do not cite `decision_capture` green as evidence the
+register is complete.
+DATE: 2026-08-27 — owner selections from options put, quoted above.
