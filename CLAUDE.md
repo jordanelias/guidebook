@@ -20,40 +20,70 @@ stage its table belongs to. Owner ruling 2026-08-25.
 
 ## THE PIPELINE — read this before anything else
 
-**Owner ruling 2026-08-25**, superseding the owner's own list of 2026-08-24:
+**Owner ruling 2026-08-27**, superseding the five-stage list of 2026-08-25:
 
-> **`research → evidence collection → judgment → synthesis → render`**
+> **`research → evidence collection → judgment → synthesis → specification → render`**
+
+In the owner's own formulation: *"you research slugs, evidence research, judge evidence, synthesize
+judgments, specify syntheses, and render specifications."* **`specification` is a stage again, and it
+comes AFTER synthesis** — which restores `governance/conceptual-model.md:90`'s own arrow (*"BPC
+synthesis produces specifications"*), unchanged in the entity model since the baseline. The
+2026-08-25 wording below is superseded and is not an argument against this; full record in
+`references/project-standards.md`, 2026-08-27.
 
 Rule 5 says each stage holds only its own data and anything earlier is reached by pointer. **That
 is unusable without knowing which stage a table is in** — you cannot tell a legitimate
 stage-specific fact from a copy. So the map is a stopper, not orientation.
 
 **Substrate is not a stage.** The vocabularies and registries — `items`, `populations`, `slugs`,
-`terms`, `access_needs`, the crossing maps, `decisions`, `data_migrations` — are the layer all five
-stages point into.
+`terms`, `access_needs`, the crossing maps, `decisions`, `data_migrations` — are the layer all six
+stages point into. (`items` is retired as a table name by the 2026-08-27 `-item` ruling; the word was
+the ambiguity.)
 
 | Stage | Holds |
 |---|---|
 | **research** | What was searched, screened and mined, plus the clue store |
 | **evidence collection** | What was admitted, its identity, verification and extraction |
-| **judgment** | Determination — grading, population matching, the cell. Writes `specifications` |
-| **synthesis** | Weighing, convergence, cross-slug findings |
+| **judgment** | Whether an extraction is sound and how it weighs — grading, population matching |
+| **synthesis** | What the judgments say together — weighing, convergence, cross-slug findings |
+| **specification** | The determination: *therefore 1200 mm, marked ●*. Writes `specification_items` |
 | **render** | Book surfaces — `site/`, `parts/`, `tools/*.html`, and the content tables behind them |
 
-**`specifications` is a TABLE, not a stage** — `judgment` writes it. The 2026-08-24 wording that
-made it a stage is superseded.
+**Every stage's hand-off object is `<stage>_items`.** Owner ruling 2026-08-27. **The KEY SHAPES below
+are not the owner's words and must not be quoted as such** — the owner ruled the naming and the
+cardinality (*"one-to-many rows of judgment provide one row for syntheses"*); NOT NULL columns,
+junctions and the fan-out/fan-in pivot are agent design derived from that cardinality, and the
+evidence→judgment shape is **reopened**: the owner said *"each row of evidence provides one row for
+judgment"* (1:1) and the first record of it said 1:N. Measured the same day: **not one foreign key in the schema lands on any
+stage's hand-off object** — `source_locators` and `bpc_metadata` have zero inbound keys at all, and
+`source_value_extractions` and `specifications` have one each, both same-stage. **Re-measured under
+the six stages, 2026-08-27: 43 foreign keys cross a boundary and 37 stay inside one, landing on
+eight columns** — `slugs.slug` 14 · `items.item_code` 10 · `evidence_sources.ref_id` 7 ·
+`populations.population_code` 7 · `gaps.gap_id` 2 · `convergence_assessment.convergence_id` 1 ·
+`reasoning_doc_citations.citation_id` 1 · `search_executions.exec_id` 1. *(The widely-quoted 41/39
+on seven columns is the FIVE-stage figure and must not be repeated inside this frame.)* Not one of
+them is a hand-off. **The walk itself has no keys**, which is why it does not walk. The rename creates
+the spine; `judgment_items` is a NEW table, not a rename.
 
-**Derive the table-to-stage assignment; do not read one out of a document.** The six-bucket
-assignment in the 2026-08-24 stage-discipline audit is agent-authored, predates this ruling, and
-must be re-derived against these five stages before it is relied on again.
+**Derive the table-to-stage assignment; do not read one out of a document.** Every bucket assignment
+written before 2026-08-27 — including the 2026-08-25 derivation in
+`scratchpad/session_2026-08-25-pipeline-smoke-test-mobility/STAGE-TABLE-MAP.md` — predates the
+six-stage ruling and must be re-derived against these six stages before it is relied on again.
 
 **A CROSS-STAGE VIEW *IS* THE POINTER, AND IS THEREFORE THE MOST PROTECTED OBJECT IN THE SCHEMA.**
 Rule 5 says point, do not copy. **A view that joins two stages on the shared reference ID is what
 "point" MEANS in SQL** — the owner's *"call up information from any one so long as you point to the
 correct table and column"*, and *"for rendering a citation, we point towards the evidence table for
-that reference ID"*, are descriptions of a join. Measured 2026-08-25, four views cross a boundary:
-`v_source_admission` (evidence-collection ← research), `v_item_provenance` and `v_source_reach_all`
-(evidence-collection ← judgment), `v_divergence` (judgment ← synthesis).
+that reference ID"*, are descriptions of a join. **Re-measured 2026-08-27, and the count depends on a
+convention this file had never stated.** Substrate is not a stage, so a view reading ONE stage plus
+substrate crosses nothing. Under that convention — the one this file already uses — **FIVE views
+cross a stage boundary**: `v_source_admission`, `v_item_provenance`, `v_source_reach_all`,
+`v_code_floor_only`, `v_pending`. `v_coverage_priority` (research + substrate) and
+`v_item_extractions` (evidence + substrate) do **not**, and a first pass this session wrongly counted
+them, briefly putting "seven" in this file. `v_divergence` reads `specifications` and
+`convergence_assessment`, which the six-stage ruling puts in *different* stages — so it crosses, and
+the pre-2026-08-27 list was right about it for the wrong reason. **State the convention whenever
+quoting this count.**
 
 **Before deleting any view, ask which stages it spans.** A cross-stage view is not apparatus and is
 not a candidate for a cull — deleting it removes the pointer and forces the next reader back to
@@ -68,7 +98,11 @@ designated remedy for a violation still on the books, the other repaired at the 
 artefact legitimately produces layer-2 rows. That answers *write order*. This map answers *what a
 table may hold*. Both are true; do not use one to argue against the other.
 
-**The machine enforces this spine**, and as of 2026-08-25 it enforces it under these names:
+**The machine enforces a FIVE-stage spine and has not caught up with the 2026-08-27 ruling.**
+`governance/pipeline-contract.yaml`'s `stages:` list and `tools/pipeline_completeness.py`'s `STAGES`
+both still read `research → evidence-collection → judgment → synthesis → render`, with no
+`specification`. Until that lands, **the declared single home of the stage ids disagrees with this
+file**, and this file is the one that changed. What the machine does enforce, under these names:
 `governance/pipeline-contract.yaml` (the single home of the stage ids),
 `tools/pipeline_completeness.py`, and the blocking `pipeline_completeness_fresh` gate. The id is
 `evidence-collection`; its display form is **derived** by `stage_label()`, never stored beside it.
@@ -207,7 +241,10 @@ subject.** A blocking check whose session pointer is missing FAILs rather than S
 **(b) Prose that contradicts the database.** *Rule: no hand-written counts in derived documents.
 Generate them from the DB, or stamp the document with its generation date and a drift warning.* Counts in this file, in `index.html`, in manifests
 and in audits have all drifted. **Derive every volatile fact — row counts, schema version, CI
-status, the doctrine SHA, the active plan — from the live repo.** This file hardcodes none.
+status, the doctrine SHA, the active plan — from the live repo.** This file hardcodes as few as it
+can, and the pipeline section above now carries three (43/37 cross-stage keys on eight columns; five
+cross-stage views) because a wrong figure in each was being quoted onward. **Each is stamped
+2026-08-27 and each is a re-derivation command away** — treat them as dated, not as current.
 On 2026-08-19 a rendered search log claimed "three cells are EXACT" while the DB said two, made
 stale within the hour by the same session's own correction.
 
