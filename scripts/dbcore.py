@@ -177,7 +177,30 @@ REF_ID_SHAPE = re.compile(r"REF-\d{5}|REF-VERIFIED-\d{3}|Co1-\d{2,3}")
 _MINTABLE = re.compile(r"REF-(\d{5})")
 
 # Tables that hold a global reference id and therefore constrain the mint.
-_REF_ID_HOMES = ("source_locators", "evidence_sources")
+#
+# DERIVED FROM THE SCHEMA, NEVER LISTED HERE. This was a hardcoded pair
+# ("source_locators", "evidence_sources") until 2026-08-27. Two defects, and the
+# second is the dangerous one:
+#
+#   (1) rule 5 -- a list in code is a second home for a fact the schema already
+#       states. Any new table carrying a ref_id was silently outside the mint.
+#   (2) the loop swallowed OperationalError with `continue`, so after a table
+#       RENAME every home vanished, high water fell to 0, and next_ref_id minted
+#       REF-00001 -- on top of live data, with no error. A silent wrong answer,
+#       which is worse than a crash. Found by adversarial audit before the rename
+#       that would have triggered it.
+#
+# The schema is the single home: any table with a `ref_id` column constrains the mint.
+def ref_id_homes(conn) -> tuple:
+    """Every table carrying a `ref_id` column, read from the schema."""
+    homes = []
+    for (name,) in conn.execute(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
+    ):
+        cols = [r[1] for r in conn.execute('PRAGMA table_info("%s")' % name)]
+        if "ref_id" in cols:
+            homes.append(name)
+    return tuple(sorted(homes))
 
 
 def ref_id_high_water(conn) -> int:
@@ -189,14 +212,22 @@ def ref_id_high_water(conn) -> int:
         evidence_sources max REF-00970
     Minting at 965 -- exactly what the documented rule produced -- lands on a live
     evidence row. The high-water mark is the UNION, and this function is that rule.
+
+    REFUSES rather than guessing: a database with no ref_id column at all means the
+    caller is pointed somewhere unexpected, and returning 0 would mint onto live rows.
     """
+    homes = ref_id_homes(conn)
+    if not homes:
+        raise RuntimeError(
+            "ref_id_high_water: no table in this database carries a `ref_id` column. "
+            "Refusing to return a high-water mark of 0, which would mint REF-00001 "
+            "onto live data. Check GUIDEBOOK_DB_PATH points at the intended database."
+        )
     high = 0
-    for table in _REF_ID_HOMES:
-        try:
-            rows = conn.execute('SELECT ref_id FROM "%s" WHERE ref_id IS NOT NULL' % table)
-        except sqlite3.OperationalError:
-            continue          # table absent in a fixture/scratch schema
-        for (ref,) in rows:
+    for table in homes:
+        for (ref,) in conn.execute(
+            'SELECT ref_id FROM "%s" WHERE ref_id IS NOT NULL' % table
+        ):
             m = _MINTABLE.fullmatch((ref or "").strip())
             if m:
                 high = max(high, int(m.group(1)))
