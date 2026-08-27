@@ -2502,3 +2502,85 @@ asserts that **a number** renders.
 - `search_executions.saturation_signal` is an **unread self-report**: 18 NULL / 3 none / 7 partial /
   **0 saturated**. Deriving saturation beside it would be a rule-5 dual home.
 - `terms_used` populated **9 of 28**.
+
+---
+
+## PART 18 — R4 rename executability: three blockers, all proven by execution
+
+R4 ran the renames against copies of the live database rather than reasoning about them. Findings are
+test results, not arguments.
+
+### 18.1 BLOCKER — migration numbering. Landing above a reserved-but-unwritten number is proven broken.
+
+REPAIR-PLAN reserves `065` (P1.1), `066` (P2.2), `067` (P2.5). **None is written.** If the rename
+takes `068` and `065` is written later:
+
+- the live path **silently skips it** (`version <= current`),
+- `--rebuild` **applies it**,
+- and the blocking reproducibility gate **cannot see the divergence** post-rename.
+
+**The rename takes the next free number and REPAIR-PLAN renumbers.** A reservation is not a
+placeholder the runner understands.
+
+### 18.2 BLOCKER — three gates go green having examined nothing
+
+All §2(a), all proven by execution against a renamed database:
+
+| gate | behaviour after the rename |
+|---|---|
+| `migration_reproducibility` | prints **`VERDICT: PASS, EXAMINED: 7`** with the renamed tables reported as "skip" |
+| `emit_batch_sql` via `dbcore.WRITABLE_TABLES` | **silently captures nothing** for renamed tables — a research batch would write to a scratch copy and ship an empty migration |
+| `validate_evidence_state` | **exits 0** with its subject tables absent |
+
+**A green board would certify a broken rename.** All three sweep in the rename commit, not after.
+
+### 18.3 BLOCKER — `items` is not a rename, and it blocks the rest of the migration
+
+Dropping `items` was to be part of the same change. Measured:
+
+- **786 dangling foreign-key rows** — `item_population_links` 372 · `item_axis_links` 158 ·
+  `term_item_links` 147 · `jurisdictional_values` 109
+- **3 views break**
+- and then it **blocks every subsequent `ALTER TABLE RENAME` in the schema** —
+  `error in view v_source_reach_all`
+
+So `items` needs fixed internal ordering plus a four-table FK rebuild, **and it has no destination
+until C-1 is settled.** R4's sharper reading: C-1 is not "where does `items` go" but **a `rooms` +
+`items` merge question**, given the owner's three-level building layer.
+
+### 18.4 What held — and one measurement that shows I undercounted badly
+
+**Confirmed by test:**
+- **One `-- AFTER_DATA:` marker solves all 33 replay collisions**, proven end-to-end with 875/10 rows
+  preserved.
+- **`ALTER TABLE RENAME` auto-updates all 18 view bodies, foreign keys and indexes** on SQLite
+  3.45.1. Only the 3 `items` views need hand-written DDL.
+- **The dot separator is broken two independent ways** — unquoted it is a syntax error; via `ATTACH`
+  it creates a resolution ambiguity. Underscore confirmed.
+- **Folding P0.6 + P1.0 into the rename migration is the measured answer**: both have zero
+  data-migration DML references, so no extra markers, and executing them separately **double-renames
+  `axes` and double-rebuilds `specifications`**.
+
+**And the sweep is far larger than I priced it.**
+
+| | RENAME-MAP said | R4 measured |
+|---|---|---|
+| Python | 16 | **88** |
+| skills | 22 | **50** |
+| governance YAMLs | 4 | **7** |
+| **total live files** | — | **769** |
+
+> **`items` alone appears in 163 markdown files, and cannot be swept by grep at all** — it is an
+> ordinary English word.
+
+**That is the same class of problem as the word this session just retired for the pipeline layer.**
+A table named with a common English word cannot be mechanically swept, which is an argument about
+naming that reaches past this migration: **prefer names that are greppable.** `base_elements` is;
+`items` never was.
+
+### 18.5 One correction to my own citation
+
+`RENAME-MAP.md` cites `dbcore.py:438-439` for `is_canonical`'s only callers. **The live location is
+`:469-470`** — I carried the line numbers from REPAIR-PLAN without re-deriving them, which is the
+stale-citation defect this repository has recorded repeatedly. **The claim itself holds**: verified,
+the only callers are its own selftest, so P0.1 stands.
