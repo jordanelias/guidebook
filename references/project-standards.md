@@ -1575,3 +1575,56 @@ same migration as the rename — not a follow-up. (3) `judgment_items` is a **ne
 column set is owed a design; it is not a rename of anything. (4) `items` is retired as a table name
 outright — the word was the ambiguity.
 DATE: 2026-08-27 — owner ruling, quoted above.
+
+---
+
+CORRECTION and RULE — 2026-08-27. **Measure against the instrument before measuring against the
+database.** Recorded because the failure is rule 4b's, in the session that was auditing rule
+compliance.
+
+**What happened.** Asked how rendering should manage page content, I measured `items.name` with a
+regex of my own and reported *"nine of 93 item names carry a quantified determination"* as a finding,
+using **E-08 Corridor Clear Width (≥1200 mm Minimum on All Primary Routes)** as the worked example.
+The owner's response: *"yet again e-08.html appears despite me having ruled it doesn't exist a
+million times."*
+
+**Three things were wrong, in increasing order of seriousness.**
+
+1. **The number.** The correct figure is **28**, not nine. My regex tested only `mm|cm|m|%|°|lux|dB`
+   and missed 19 names whose determination is an index, rating or ratio — `NRC ≥0.85`, `STC ≥35`,
+   `NC-25`, `RT60`, `≥150 EML`, `≥300 Lux`, `≤30 Gloss Units`, `≤2700 K`, `LRV ≥30`, `≤1:20`,
+   `PTV ≥36`, `ISO 23599:2019`, `IEEE 1789-2015`, `MERV 13+`, `≤22 N` among them.
+
+2. **It was not a finding.** `decisions/DR-2026-08-19-research-restart-operative-instrument.md:127`
+   measured it a week earlier and characterises it **better**: 28 numeric · 23 prescriptive-condition
+   · overlap 9 · **42 of 93 distinct names carrying a determination, "and 42 is a floor."** That
+   document is RATIFIED and is the one `CLAUDE.md` instructs every session to read **first**.
+   **My "nine" is the instrument's figure for the OVERLAP** — a number already in the ratified table,
+   meaning nothing like what I claimed.
+
+3. **E-08 was the worst possible example**, and its disposition is on the record twice:
+   `RATIFICATION-PACKAGE-2026-07-12.md:47` found the public E-08 page anchored on a *"Koontz 2017"*
+   absent from the entire corpus, REF-IDs colliding with unrelated canonical rows, and a cited source
+   file that does not exist — *"verify-and-register or purge"* — plus **four coexisting "Guidebook
+   values"** (2440 canon / 1800 divergence-matrix / ≥1200 item name / ≥1200–1500 spec page).
+   `DR-2026-08-12-migration-history-baseline.md:69` records the purge: the hand-authored exemplar was
+   archived to `_archived/specs/e-08.html`. E-08 is the instrument's own example of a catalogued
+   defect, and the owner had already said in this same session that it *"has been ruled against for
+   like a month now."*
+
+**Why it happened, stated mechanically rather than apologetically.** Rule 4b says never report
+something absent from a search that could not have seen it. I searched the *database* and never
+searched the *record*. A regex over 93 rows feels like primary evidence and is not: the primary
+evidence for "has this project already characterised this problem" is `decisions/`, and it is
+reachable in one `git grep`.
+
+CONDITION: Any session about to report a measured property of the corpus as a finding.
+ACTION: (1) Before reporting a measurement as new, `git grep` the instrument, `decisions/` and this
+ledger for the same property — `grep -r`/`git grep`, never the Grep tool, which `.ignore` blinds to
+`sessions/`. (2) When the record already carries a figure, cite it and reconcile; a fresh number that
+disagrees with a ratified one is a finding **about the reconciliation**, not a replacement. (3) A
+regex you invent at the keyboard is not a taxonomy — the instrument's numeric/prescriptive/overlap
+split is the taxonomy for this property. (4) **Do not use E-08 as an example of anything.** Its page
+was purged and its name is a catalogued defect; reaching for it is a signal that the record was not
+consulted.
+DATE: 2026-08-27 — owner correction, quoted above.

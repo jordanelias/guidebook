@@ -662,9 +662,9 @@ And the failure is already shipped: `site/specs/e-08.html` headlines
 
 *Corrected 2026-08-27, an hour after this section was written.* I first said the number was "authored
 at render". It is not. It is in **`items.name`** — a substrate vocabulary column — and
-`build_site.py --check` reports all 93 pages FRESH. The generator is doing its job. See Part L.3:
-**nine of 93 item names carry a quantified determination**, in a label column no gate reads as a
-value, while `specifications` holds 0 rows.
+`build_site.py --check` reports all 93 pages FRESH. The generator is doing its job. See Part L.3 —
+and note that L.3's own first figure was wrong too, and that the whole finding was already ratified
+doctrine before this session began.
 
 ### K.3 The rule: render owns assembly, never content
 
@@ -801,31 +801,65 @@ that *"the gates are thickest around the database and thinnest exactly where the
 exact — 93 pages, 93 items, no orphans, none missing. *(`build_site.py:14`'s comment that "six items
 added later have no page at all, including A-18" is stale; measured today it is 0.)*
 
-### L.3 But regeneration cannot catch the failure we already have
+### L.3 But regeneration cannot catch the failure we already have — and this was already ratified
 
 `e-08.html` renders **faithfully**. The `≥1200 mm` is not a hand-edit and not render-authored — it is
 in **`items.name`**:
 
 > `('E-08', 'Corridor Clear Width (≥1200 mm Minimum on All Primary Routes)', 'E', 'active')`
 
-**Nine of 93 item names carry a quantified determination**: `E-08` ≥1200 mm · `E-01` 1400×1100 mm ·
-`E-04` 3600 mm · `E-05` 3000×2000 mm · `G-05` 650–870 mm AFF · `G-06` 760–860 mm AFF · `H-01`
-400–1100 mm AFF · `B-05` ≥5 m · `D-11` every 20 m.
+**THIS SECTION ORIGINALLY CLAIMED "nine of 93 item names carry a quantified determination". THAT WAS
+WRONG, AND IT WAS NOT A FINDING.** Both halves are corrected here rather than overwritten, because
+the failure mode matters more than the number.
 
-Meanwhile `specifications` holds **0 rows**. So **nine parameters are asserted in the book with no
-determination behind them anywhere** — the value lives in a *label*, in substrate, in a column no
-gate reads as a value, unciteable and untyped. The page then says "not yet computed" in its body and
-contradicts its own heading, and the byte-diff is clean because the page matches the database exactly.
+**The count.** The correct figure is **28**, re-derived 2026-08-27 and matching the ratified
+measurement exactly. My regex tested only for `mm|cm|m|%|°|lux|dB` and therefore missed **19** names
+whose determination is an index, a rating or a ratio:
 
-**So there are two different drifts and they need two different gates:**
+> `A-02` NRC ≥0.85 · `A-03` STC ≥35 · `A-06` NRC ≥0.70 · `A-08` NC-25 · `A-10b` RT60 · `A-14` STC ≥50
+> · `A-16` ≥8 m², one per 500 m² GFA · `A-18` RT60 · `B-01` ≥150 EML · `B-04` IEEE 1789-2015 ·
+> `B-06` ≥300 Lux · `B-08` ≤30 Gloss Units · `B-11` ≤2700 K after 19:00 · `C-04` LRV ≥30 ·
+> `E-03` ≤1:20 · `E-07` PTV ≥36 · `E-09` ISO 23599:2019 · `F-04` MERV 13+ · `I-01` ≤22 N
+
+**And the real figure is larger still.** `decisions/DR-2026-08-19-research-restart-operative-instrument.md:127`
+— **RATIFIED, and the document `CLAUDE.md` instructs every session to read first** — already
+measured this a week before this session began:
+
+| | |
+|---|---|
+| names embedding a **numeric determination** | **28** |
+| names embedding a **prescriptive condition clause** | **23** |
+| overlap of the two sets | **9** |
+| **distinct names carrying a determination** | **42 of 93 — "and 42 is a floor"** |
+
+My "nine" is not merely wrong: **9 is the instrument's figure for the OVERLAP of the two sets.** I
+arrived at a number that already appears in the ratified table, meaning nothing like what I said it
+meant.
+
+**The failure this records.** `CLAUDE.md` rule 4b: *"Never report an owner ruling absent from a search
+that could not have seen it."* I measured against the database with a regex I invented and never
+checked whether the project had already characterised the problem — in the one document the operating
+manual names as the first thing to read, which characterises it **better** than I did, splitting
+numeric from prescriptive and declaring its own count a floor.
+
+**And E-08 in particular should not have been my example.** The owner has ruled against it
+repeatedly, and the record carries the disposition: `RATIFICATION-PACKAGE-2026-07-12.md:47` found the
+public E-08 page anchored on a "Koontz 2017" absent from the entire corpus, with REF-IDs colliding
+with unrelated canonical rows and a cited source file that does not exist — *"verify-and-register or
+purge"* — and `DR-2026-08-12-migration-history-baseline.md:69` records the purge: the hand-authored
+exemplar was archived to `_archived/specs/e-08.html`. It also records **four coexisting "Guidebook
+values" for E-08** (2440 canon / 1800 divergence-matrix / ≥1200 item name / ≥1200–1500 spec page).
+E-08 is the instrument's own worked example of a catalogued defect. Presenting it as something this
+session discovered — twice — is the resurfacing the owner has had to correct before.
+
+**So the two-gate conclusion survives, and only the framing changes:**
 
 | drift | gate |
 |---|---|
 | the page disagrees with the database | **regeneration + byte-diff** — exists, works, is advisory |
-| the database asserts a value somewhere that is not a value column | **a vocabulary check**: no label, name or description may contain a quantity |
+| the database asserts a determination in a label | a **vocabulary check** — and it must be built against the instrument's taxonomy (numeric · prescriptive · overlap), not against a regex someone invents at the keyboard |
 
-The second is new, cheap, and would fire on nine rows today. It is the `§2(b)` rule — no hand-written
-numbers in derived documents — applied one layer earlier, to the vocabulary the documents derive from.
+It would fire on **42 rows at minimum**, not nine.
 
 ### L.4 Where the script/skill line falls, and why it is mechanical
 
@@ -868,8 +902,9 @@ surface — while everything else is a column, a junction, or a view.
 1. **Wire what exists.** Add `build_site.py` to `regenerate_derived.sh`; promote `site_pages_fresh`
    from advisory to blocking. **No schema change, and green today.** After this, an `e-08`-class page
    edit cannot be committed.
-2. **Add the vocabulary check** (L.3). Fires on nine rows now; those nine are then owed real
-   determinations rather than names that assert them.
+2. **Add the vocabulary check** (L.3), built against the ratified taxonomy. Fires on **42 rows at
+   minimum** — 28 numeric, 23 prescriptive, 9 overlapping — each then owed a real determination
+   rather than a name that asserts one.
 3. **The two columns**, so prose has a home the renderer can read.
 4. **`figures` and `ren_items`**, in the baseline (Part I).
 
