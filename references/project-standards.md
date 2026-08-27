@@ -2286,3 +2286,54 @@ ACTION: (1) Say `base`. (2) **Do not quote "five cross-stage views" or "43/37 ke
 status is ruled** — both are derived from an agent-authored exclusion. (3) Do not describe `base` as
 "not a stage" on inherited authority; the note treats it as a peer heading.
 DATE: 2026-08-27 — owner ruling, quoted above.
+
+---
+
+RULE: **The pipeline is SEVEN stages, and `base` is the first.** Owner ruling 2026-08-27:
+
+> **`Base · Research · Evidence · Judgment · Synthesis · Specifications · Render`**
+>
+> *"base is a stage insofar as it supplies the base information upon which research can perform its
+> task, and it doesn't belong under research because none of it IS research. it's the first layer of
+> information"*
+
+**This ends the "not a stage" convention entirely.** That convention was agent-coined (a Fable
+stage-discipline audit, 2026-08-24), was recorded as agent-coined the next day, and was then used for
+three days as though canonical. It is dead. `base` is stage 1.
+
+**Companion ruling, same contact:** *"Slugs isn't a stage as that word doesn't actually make sense for
+it."* **A table is never a stage.** `slugs` is base-layer content — the topic list — and calling any
+table a stage is a category error of the same kind as *"move clues to substrate."*
+
+**BOTH LIVE FIGURES ARE NOW RE-DERIVED, AND BOTH PRIOR NUMBERS ARE DEAD.** Measured 2026-08-27
+against `user_version` 64 using the R1 audit's 66-table assignment (base 23 · research 10 · evidence 6
+· judgment 5 · synthesis 8 · specification 4 · render 10):
+
+| | retired convention (`base` excluded) | **RULED: `base` is stage 1** |
+|---|---:|---:|
+| **foreign keys** cross-stage / within | 21 / 59 | **49 / 31** |
+| **views** cross-stage, of 18 | 9 | **10** |
+
+**+28 foreign keys are reclassified as cross-stage** — from 26% of the schema's 80 keys to **61%**.
+The previously-quoted **"43 / 37 on eight columns" matches neither convention** and must not be
+repeated; it came from a five-stage assignment carried into a six-stage frame.
+
+**The consequence is not bookkeeping.** `CLAUDE.md` holds that *a cross-stage view IS the pointer* and
+is therefore the most protected object in the schema. Under this ruling the protected set grows to
+**10 of 18 views**, and the one that joins is **`v_coverage_priority`** — base + research, 7,208 rows.
+
+> **That is the matrix view**, and two successive plans proposed deleting it: `workplan/2026-08-22`
+> R6 ordered it culled, and the 2026-08-25 refusal spared it only as *"a real candidate — and it is
+> HELD."* Under the ruled spine it is a **protected cross-stage pointer**, and it is the only live
+> object that expresses `research.matrix`'s own cross-product. **Do not delete it.**
+
+**Minor, flagged rather than decided:** the owner wrote **`Specifications`** (plural) where every
+other stage id is singular. The stage id form is not ruled; recorded as written.
+
+CONDITION: Any session quoting a cross-stage count, assigning a table to a layer, deleting a view, or
+writing the stage list into the contract.
+ACTION: (1) Seven stages, `base` first, in `governance/pipeline-contract.yaml` and
+`tools/pipeline_completeness.py` — both still hold five. (2) Quote **49/31** and **10 of 18**, each
+with the convention stated and this date. (3) Never call a table a stage. (4) `v_coverage_priority` is
+protected.
+DATE: 2026-08-27 — owner ruling, quoted above.
