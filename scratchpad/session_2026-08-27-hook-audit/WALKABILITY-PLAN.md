@@ -2065,3 +2065,143 @@ Still separately owner-owed: `base.clues`' population (14.5) · `base.taxonomy_m
 not schema (14.6) · the literal prefixes (14.4) · the duplicated `base.sources` (14.7) · and the
 **synthesis / specification / render half**, which the note does not reach and on which the junction
 design rests.
+
+---
+
+## PART 15 — The architecture note read as PROCESS, not nomenclature
+
+Owner instruction, 2026-08-27: *"read it again as suggestions/proposals for process, don't focus on
+the names specifically."* Names set aside entirely below.
+
+### 15.1 The process it proposes is ENUMERATE → CROSS → SWEEP. The project's current one is ASK → SEARCH → ADMIT.
+
+Every `base` member is an **exhaustive list**: *"lists all building typologies"* · *"exhaustive list
+of topics"* · *"all architectural and design elements"* · *"terminology for all project-related
+definitions across all languages"*. Then `research.matrix` **crosses** those lists, and searching is
+sweeping the cells.
+
+**That is a coverage-first process.** The current one is question-first: a session picks a slug,
+frames searches, admits sources. The difference is not style — it is whether *"have we searched
+enough?"* has an answer. Question-first has no denominator. Enumerate-then-cross has one by
+construction.
+
+### 15.2 The measurement that makes this concrete
+
+| | measured 2026-08-27 |
+|---|---:|
+| `base` members with a populated table | **8 of 12** |
+| absent | models · medical taxonomy · target registry · **jurisdictions** |
+| searches executed, all time | **28** |
+| **distinct topics searched** | **1** — of 106 |
+| evidence admitted | **10** |
+| smallest matrix cross (topics × language-jurisdiction) | **7,420 cells** |
+| taxonomy × building × language-jurisdiction | **438,900 cells** |
+
+**28 searches, on one topic of 106.** Against the smallest of the five proposed matrix modes that is
+**0.4%**, and the project cannot currently state that number about itself because the denominator
+isn't built. **The note's real diagnosis is not about tables: it is that research has been running
+without a denominator.**
+
+### 15.3 The most important thing to get right — the matrix is a DENOMINATOR, not a work queue
+
+438,900 cells is not a to-do list, and reading it as one would kill the proposal on contact.
+
+The note says searches are performed *"in manners **akin to**"* the crosses — describing the **shape**
+of a search, not enumerating one per cell. And `DR-2026-08-24` §2.4 already settles the purpose: the
+cross-product exists so applicability is **evidenced rather than presupposed**, and *"applicability is
+an OUTPUT of synthesis, not an input."*
+
+> **So the matrix defines the space and measures coverage over it. A search is a cell or a slice.
+> Coverage is a fraction of a known denominator instead of a feeling.**
+
+That distinction is the difference between an executable process and an infeasible one, and the note
+does not state it. **It is the single thing most worth adding.**
+
+### 15.4 The matrix is a structural defence against this project's worst recorded failure
+
+On 2026-08-19 a frame was pulled as bare `axis_code`, hid that a slug spanned two demand mechanisms,
+and **four of five searches were framed on one of them.** That failure changed research output and is
+one of the reasons `CLAUDE.md` rule 0 exists.
+
+**A generated cross cannot make that mistake.** If the search set is derived from taxonomy × building
+× jurisdiction, framing four of five on one mechanism is not an error a session can commit — the
+cross forbids it. The current defence is a rule telling agents to work from codes AND names; the
+note's defence is structural. **Structural beats remembered**, which is `.claude/settings.json`'s own
+stated rationale for putting the research contract in a hook rather than in prose.
+
+### 15.5 Multilingual is an AXIS of the cross, not a translation step
+
+Two of the five matrix modes are `× multilingual`, and the note is explicit: *"localizations and
+vernacular must be incorporated — direct English translations are insufficient."*
+
+**Process consequence: the query itself is in-language.** You do not search in English and translate
+the results. Today R11 is a *filing* rule (every alias carries its in-language source, else
+`[UNVERIFIED-TERMS]`); under this process it becomes a *search-generation* rule, which is much
+stronger and much earlier. The 2,382 `term_aliases` rows stop being a glossary and become **search
+input**.
+
+### 15.6 Evidence collection must not judge — and that conflicts with a live blocking rule
+
+The note's evidence stage is a **pure log**: *"logs all relevant items found in search with a unique
+reference ID, DOI/PMID and other codes if available, type of source."* No grading, no tiering, no
+value. Quality is judgment's job.
+
+**But R1 is an admission-time gate** — *"Co-1 / T2 / Co-2 pass FIRST — no exceptions"* — enforced by
+the blocking `research_batch_dod` check, which passed this session with *"7 co1/co2-targeted searches,
+3 co1/co2 sources."* R1 decides what may be admitted **on quality grounds, at collection.**
+
+> **Under the note's process, R1 belongs at judgment, not admission.** Either collection logs
+> everything relevant and judgment sorts it, or collection filters and is not a pure log. **Both
+> cannot hold**, and the enforced rule currently wins because it is the one with a gate behind it.
+
+This is a genuine process conflict, not a naming one, and it should be ruled before the process
+changes. **The R1 ordering has a real purpose** — it stops a batch filling with T4–T6 regulatory
+material and never reaching lived experience — so moving it needs the same protection at judgment.
+
+### 15.7 The largest gap: three of the four judgment outputs have nowhere to live
+
+> *"determines category of judgment item, derives **value / process / figure / goal** for it"*
+
+Four kinds of output. Measured against `source_value_extractions`:
+
+| output | schema home |
+|---|---|
+| **value** | `claim_type`, `claimed_value`, `claimed_unit` ✓ |
+| **process** | **none** |
+| **figure** | **none** — and no diagram/caption/alt-text column exists in any of the 66 tables |
+| **goal** | **none** |
+
+**This is the finding I would act on first, and it is doctrinal rather than technical.** The project's
+fixed doctrine is that it is *"a thinking tool and advocacy project, not an authority"* — *"the
+purpose of this guidebook is to get people to ask the right questions."* **A goal and a process are
+closer to that purpose than a number is.** Yet the schema can hold only numbers, so the only
+determinations expressible are the ones the mission says are least central.
+
+That also explains a symptom already on the record: 42 of 93 element names carry a determination in
+the *label* — because a determination that is a goal or a process has no column to go in, so it ends
+up in the name.
+
+### 15.8 Where the volume actually is
+
+*"one evidence source may provide many rows of judgment (eg a code document like Canada's NBC 3.8)"* —
+the unit of work at judgment is the **clause**, not the document. Ten admitted sources are not ten
+judgments; a single code chapter could be dozens. **Judgment is the throughput bottleneck, and it is
+the stage with no writer** (`db.py` has no extraction subcommand — verified).
+
+### 15.9 What the note does not say, and why that matters
+
+Silent on: admission gating, the tier hierarchy's definition, population matching (R13), dissent,
+synthesis, specification, render. **The proposed process is thinner than the enforced one.** That is
+expected of a proposal — but it means adopting it wholesale would drop rules that exist because
+something went wrong. Each of R1, R13 and the dissent contest was earned. **Port them, do not lose
+them in the re-shape.**
+
+### 15.10 The order this implies
+
+1. **Finish `base`.** 4 of 12 members absent; jurisdictions is the urgent one — an inert enum on 11
+   tables, and it is an axis of two matrix modes, so the matrix cannot be crossed without it.
+2. **Build the denominator before more searching.** One topic of 106 is searched. Coverage is
+   currently unmeasurable, which is the condition the note is written to end.
+3. **Rule the R1 ordering** (15.6) before collection is re-shaped into a pure log.
+4. **Give process / figure / goal a home** (15.7) — the mission's own outputs, currently inexpressible.
+5. Then sweep.
