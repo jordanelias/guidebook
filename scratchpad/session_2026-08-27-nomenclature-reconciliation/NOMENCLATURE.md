@@ -616,3 +616,143 @@ in force when they were written.
 cannot key a polymorphic column. **The uniform name does most of the work without that cost:**
 `<prefix>_population_links` on every stage is six tables, but six *predictable* ones, and a reader
 who knows the rule never has to look any of them up. Count is not the metric; **derivability is.**
+
+---
+
+## PART K — Managing what a page actually contains
+
+Owner question, 2026-08-27: rendering needs *"diagrams, explanations, comparative tables,
+precedents, linking to other specifications, sources and citations."* Where does each of those live?
+
+**The measurement first, because it changes the question.**
+
+### K.1 The book's explanation has no home in the schema
+
+`best_practice_synthesis` is named in **six governance documents** — the Opus-floor routing rule, the
+adversarial-use framework, `evidence-methodology.md`, `jurisdiction-philosophy.md`, and the
+doctrine-recheck sampling procedure, which classifies *"each sampled BPC's `best_practice_synthesis`
+field"*. **It is not a column.**
+
+`bpc_metadata`'s sixteen columns are, in full: `slug`, `population`, `last_updated`,
+`jurisdictions_searched`, `co1_pass_count`, `evidence_state`, `pico_complete`, `search_complete`,
+`bpc_complete`, `citation_mining_complete`, `supersession_check_complete`,
+`closure_definition_version`, and four audit stamps. **Every one is process metadata.** It is a
+completion checklist. The name is exactly accurate — it *is* metadata — and the thing it is metadata
+*about* is somewhere else.
+
+Where: a **file**. `evidence-methodology.md:312` says *"the `best_practice_synthesis` **section of the
+BPC file**"*, and `slugs.bpc_path` is the pointer. `references/bpc-reasoning/` holds **2 files**.
+
+**So the architecture already exists and is right — prose in files, DB pointing.** What is missing is
+not a store. It is that the pointer is partial and the claims inside are unregistered.
+
+### K.2 Three more gaps, measured
+
+- **No diagram, figure, caption or alt-text column exists in any of the 66 tables.** For a guidebook
+  whose subject is access, the schema cannot express an accessible figure.
+- **`specifications` has no rationale column** — only `confidence_synthesis_basis` and
+  `not_applicable_rationale`. A determination cannot say *why*.
+- **The generators carry hardcoded prose**: 23 literal-string lines in `spec_page.py`, 14 in
+  `population_page.py`, 11 in `room_page.py`. `room_page.py`'s three fictional sections are already
+  on the record.
+
+And the failure is already shipped: `site/specs/e-08.html` headlines
+`<h1>Corridor Clear Width (≥1200 mm Minimum on All Primary Routes)</h1>` over a body reading
+*"not yet computed"*. **The number is in the title, authored at render, with no determination behind
+it.** That is §2(b) — prose contradicting the database — in the most visible place in the book.
+
+### K.3 The rule: render owns assembly, never content
+
+Everything on a page is one of four kinds, and each has exactly one home:
+
+| kind | home | why |
+|---|---|---|
+| **Pointed at** — citations, sources, governing refs | upstream rows, reached by join | already ruled: *"for rendering a citation, we point towards the evidence table for that reference ID"* |
+| **Computed** — comparative tables, see-also, counts, coverage | a **view** | a comparison is a query result. Storing one is §2(b) in tabular form, and views are the pointer rule 5 protects |
+| **Generated** — any figure that encodes a value | derived from the determination | a drawn diagram showing 1200 mm beside a spec that says 1800 mm is §2(b) in pictures |
+| **Authored upstream** — explanations | the stage that reasoned it | prose making a claim about the built environment is evidence-bearing and must carry citations |
+
+Everything else on the page — navigation, section intros, *"how to use this"* — is **chrome**, and
+chrome lives in templates, which is code, not data.
+
+**The testable form:** *if a sentence on a rendered page makes a claim about the built environment and
+cannot name the synthesis-item or specification-item it came from, it is drift.* That is a render
+gate, and it is the gate that would have caught `e-08.html` and `index.html:7`.
+
+### K.4 Where each of the six things goes
+
+**Sources and citations** — nowhere new. `spe_source_links` names the governing sources;
+`evi_sources` holds them; render joins. Never copy a bibliographic field into a render table; that is
+the rule-5 violation the whole pointer-discipline series exists to remove.
+
+**Explanations** — files, pointed at, with claims registered. Three parts, two of which exist:
+1. the prose file (`references/bpc-reasoning/`, pointed at by `slugs.bpc_path`) ✓
+2. a pointer from the **specification** to its rationale — **missing**; `spe_items` needs one
+3. `reasoning_doc_citations` → `syn_citations`, which registers each claim in the prose against the
+   corpus — exists, holds **0 rows**, while the one real reasoning document cites 8 unadmitted leads
+
+**Comparative tables** — **views, never rows.** A comparison is specification-items filtered by a
+shared dimension: same canonical parameter across jurisdictions, same parameter across populations,
+same demand code across parameters. Define the view; render calls it. This also means a comparative
+table can never disagree with the determinations it compares, because it *is* them.
+
+**Precedents** — split in two, because they are two things. A built example's **measured outcome is
+evidence** and belongs to `evi_items` with a source behind it. Its **narrative** is render content.
+Today `case_studies` holds both in one row, which makes the outcome uncitable and the narrative
+unverifiable. Rule 5 says one home each, joined.
+
+**Links to other specifications** — two kinds, and the distinction is load-bearing:
+- **Evidenced** (*"these two conflict"*, *"this supersedes that"*) → a **synthesis-item**. It is a
+  finding, it needs a warrant, and it belongs upstream where it can be cited and contested.
+- **Navigational** (*"see also"*) → **computed**, not stored. Two specifications sharing a demand
+  code, a population or a room are already related in substrate; derive it.
+
+This puts `connections` (0 rows) in question, as Part J already noted: *"when writing X, also consider
+Y"* is either an evidenced comparative synthesis or a derivable navigation link. It is unlikely to be
+a third thing.
+
+**Diagrams** — the one genuinely new structure. A small table, and its shape is dictated by the
+project's own subject:
+
+```
+figures
+  figure_id
+  kind              generated | asset          -- generated wins wherever possible
+  derived_from      the spec/view a generated figure computes from  (NOT NULL when kind=generated)
+  asset_path        the file, for kind=asset    (NOT NULL when kind=asset)
+  text_equivalent   NOT NULL, always
+  caption
+figure_links(figure_id, target_kind, target_id) -- or one junction per stage, per Part J's caution
+```
+
+Two non-negotiables:
+
+1. **A figure that encodes a value is generated, never drawn.** Otherwise the diagram becomes a
+   second home for the determination — rule 5 — and drifts the moment the value moves.
+2. **`text_equivalent` is NOT NULL, and is authored to the same standard as the prose.** A text
+   equivalent makes claims, so it is citable and gateable like any other claim. **This project cannot
+   ship a figure without one without contradicting its own subject matter**, and the schema should
+   make that impossible rather than merely discouraged.
+
+### K.5 What `ren_items` therefore is
+
+**A manifest, not a content store.** One row per published surface: its identity and path, its kind
+(specification page, room page, population page, part), and junctions naming what it draws on —
+specification-items, synthesis-items, figures, case-study narratives. **No prose, no numbers, no
+tables.**
+
+Its value is precisely that it makes K.3's gate possible: a manifest lets a check ask *"does every
+claim on this page trace to something upstream?"* — which nothing can ask today, and which is why the
+gates are, as the smoke test found, thickest around the database and thinnest exactly where the
+reader is.
+
+### K.6 The one place the owner may want to overrule me
+
+**I am recommending prose stays in files rather than moving into rows.** Reasons: it is long, it
+diffs and reviews in a PR, the project already does it (`slugs.bpc_path`), and rule 5 is satisfied by
+one home plus a pointer regardless of which side the home is on.
+
+The counter-argument is real: the database is where this project's integrity lives — refusals,
+CHECKs, gates — and a file cannot be constrained the way a column can. If prose in files keeps
+producing unregistered claims, the answer is to enforce `syn_citations` coverage, not to move the
+prose. But that is a judgement about where enforcement is cheapest, and it is the owner's.
