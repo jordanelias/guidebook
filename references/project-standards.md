@@ -1987,3 +1987,57 @@ ACTION: (1) Do not treat target-registry rows as evidence or as leads. (2) Give 
 a foreign key into the registry once it exists, so target coverage becomes measurable. (3) Settle the
 `sources` name collision before the table is created.
 DATE: 2026-08-27 — owner ruling, quoted above.
+
+---
+
+RULE: **The concept vocabulary is HARVESTED at evidence and ADJUDICATED at judgment. `DR-2026-08-24`
+§2.4's deferral to synthesis is OVERRULED.** Owner ruling 2026-08-27.
+
+> *"overrule Aug 24 DR. we go evidence>judgment>synthesis."*
+>
+> *"evidence is probably working by doing more cursory scans and grep/regex or whatever rather than
+> line by line analysis, so it's probably just getting all required metadata for apa standards and
+> listing out all concepts/topics/key words/phrases that appear in the source and then judgment phase
+> will actually do the deep read on it to determine what can be derived from the source"*
+
+**The aporia this answers**, in the owner's words: *"we do not want to presuppose
+categories/concepts/approaches/elements/techniques/practices by defining them all at the start… however
+we also can't perform our research properly if we don't presuppose all of those."*
+
+**It is a false dilemma.** The vocabulary need not be stipulated or absent; it can be **observed but
+not yet adjudicated**. Recording that a source uses a phrase is a fact about the document, not a claim
+that the phrase names one of our categories — the same epistemic act as recording its DOI. Judgment
+then adjudicates with the source in hand. **The vocabulary is grown with warrant, and every canonical
+concept is traceable to the sources that used it.**
+
+**The seed problem is answered by ratified doctrine, not by a new decision.**
+`governance/pipeline-map.yaml:78` (2026-08-21): *"these are LAYERS a walk re-enters, not phases it
+passes through."* The existing topics are a revisable seed; the harvest corrects them.
+
+**Measured 2026-08-27 — most of the mechanism already exists.** `evidence_sources` carries 30
+APA-shaped columns including `_en` variants for non-English work; `terms` (88) + `term_aliases`
+(2,382) + `term_item_links` (147) are the canonical concept layer. **Missing: the harvest.** No table
+holds terms as they appear in a source; `search_executions.terms_used` is the opposite direction —
+terms we searched *with*.
+
+**Two new objects, both new row-kinds:** `observed_terms` (evidence stage; verbatim, unjudged,
+scriptable) and `term_adjudications` (judgment stage; mints canonical concepts with the warranting
+source). §1 burden: without them a concept enters the guidebook's vocabulary with no record of which
+source put it there — the same unwarranted-assertion defect as a citation with no locator.
+
+**Saturation becomes the stopping rule.** `search_executions.saturation_signal` exists and is
+unusable today because nothing records what a source yielded conceptually. The matrix answers *"have
+we left a region unsearched"* (spread); saturation answers *"is this region done"*. Both are needed.
+
+CONDITION: Any session designing the evidence or judgment stage, defining a concept vocabulary, or
+citing `DR-2026-08-24` §2.4.
+ACTION: (1) `CLAUDE.md` §6 must be corrected — *"applicability is an OUTPUT of synthesis"* and *"zero
+`item_population_links` is the correct pre-synthesis state"* are both superseded; the crossing is
+**judgment's output**, so zero links after judgment IS a defect. (2) D-0165 is downstream of judgment,
+not synthesis. (3) `research_batch_dod`'s R4 phase must be re-declared or it measures the wrong stage.
+(4) Evidence metadata is machine-fetched, never model-authored — `retrieval_log.py --verify-authors`
+is the guarantee, and the 2026-08-19 invented-co-authors failure is why.
+SCOPE: Read as scoped to §2.4's deferral. **§2.1 (rule 5, "point, do not copy") is untouched** and
+remains operative — it is unrelated to the aporia and load-bearing project-wide. Owner confirmation
+sought.
+DATE: 2026-08-27 — owner ruling, quoted above.

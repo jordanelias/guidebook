@@ -2252,3 +2252,157 @@ them in the re-shape.**
 3. **Rule the R1 ordering** (15.6) before collection is re-shaped into a pure log.
 4. **Give process / figure / goal a home** (15.7) — the mission's own outputs, currently inexpressible.
 5. Then sweep.
+
+---
+
+## PART 16 — The aporia, and the harvest that dissolves it
+
+**Owner, 2026-08-27**, two rulings and a proposed mechanism:
+
+> *"we have a fundamental issue where we do not want to presuppose
+> categories/concepts/approaches/elements/techniques/practices by defining them all at the start of
+> the project. however, we also can't perform our research properly if we don't presuppose all of
+> those. so how do we go around this aporia?"*
+>
+> *"**overrule Aug 24 DR. we go evidence>judgment>synthesis.**"*
+>
+> *"evidence is probably working by doing more cursory scans and grep/regex or whatever rather than
+> line by line analysis, so it's probably just getting all required metadata for apa standards and
+> **listing out all concepts/topics/key words/phrases that appear in the source** and then judgment
+> phase will actually do the deep read on it to determine what can be derived from the source"*
+
+### 16.1 The aporia is a false dilemma, and the proposed mechanism is why
+
+The dilemma assumes the vocabulary must be either **stipulated in advance** or **absent**. There is a
+third state, and it is the one the mechanism creates:
+
+> **Observed, but not yet adjudicated.**
+
+Recording that a paper uses the phrase *"wayfinding"* is **a fact about the text, not a claim that
+wayfinding is one of our categories.** It presupposes nothing. It is the same epistemic act as
+recording the paper's DOI.
+
+| act | stage | is it a presupposition? |
+|---|---|---|
+| harvest the terms a source uses, verbatim | evidence | **no** — a fact about the document |
+| decide what those terms mean, and whether they name a concept we hold | judgment | **no** — an adjudication *with the source in hand* |
+| decide what the concepts say together | synthesis | no |
+
+**So the vocabulary is neither presupposed nor missing: it is grown, with warrant.** Every canonical
+concept ends up traceable to the sources that used it. That is the escape.
+
+### 16.2 The seed problem, and why it is already solved doctrinally
+
+You still need *something* to search with on day one. **The seed is allowed to be wrong, because it is
+revisable and its provisionality is recorded.** The 106 existing topics are a seed; the harvest
+corrects them.
+
+That is **re-entrancy**, and it is already ratified — `governance/pipeline-map.yaml:78`, established
+2026-08-21: *"these are LAYERS a walk **re-enters**, not phases it passes through. A sequencer must be
+re-entrant."*
+
+> **The doctrine that dissolves the aporia was ratified six days ago. What is missing is not a
+> decision — it is two tables.**
+
+### 16.3 Measured: most of the mechanism already exists
+
+**The APA half is already built, and well.** `evidence_sources` carries **30 APA-shaped columns** —
+`author_count`, `author_count_is_complete`, `first_author_last/first`, `author_display`, `pub_year`,
+`pub_title`, `pub_subtitle`, `chapter_title`, `journal_name`, `journal_abbrev`, `volume`, `issue`,
+`pages_start/end`, `publisher`, `publisher_location`, `edition`, `book_title`, `doi` — **plus `_en`
+variants** (`pub_title_en`, `journal_name_en`, `chapter_title_en`, `original_title`) for non-English
+work, which is R5/R11 built into the schema. `evidence_source_authors` holds 37 rows over 10 sources.
+
+**This half needs no new table. It needs volume and a writer** — and machine-fetched metadata rather
+than model-authored, which is exactly what `scripts/research/retrieval_log.py --verify-authors`
+already exists to guarantee. **The 2026-08-19 failure was invented co-authors; cursory-and-mechanical
+is protective here, not a compromise.**
+
+**The canonical concept layer also exists.**
+
+| table | rows | what it is |
+|---|---:|---|
+| `terms` | **88** | `canonical_en`, `definition`, `domain`, `scope_note` — the canonical concept |
+| `term_aliases` | **2,382** | multilingual surface forms, with `language` and `jurisdiction` |
+| `term_item_links` | **147** | concept ↔ element |
+
+**What does not exist is the harvest.** Nothing in 66 tables holds *terms as they appear in a source*.
+The nearest thing is `search_executions.terms_used` — the terms **we searched with**, which is the
+opposite direction: our vocabulary going in, not the source's vocabulary coming out.
+
+### 16.4 So the gap is two objects, and both are genuinely new row-kinds
+
+```
+evidence stage   observed_terms(evidence_item_id, term_verbatim, language, where_seen, count)
+                 -- a FACT about the document. No adjudication. Cheap, high-volume, scriptable.
+
+judgment stage   term_adjudications(observed_term_id, term_id | NEW, verdict, grounds)
+                 -- the act of deciding: alias of an existing concept, a new concept, or noise.
+                 -- This is where a NEW canonical term is minted, with the source that warranted it.
+```
+
+Both pass §1's burden in book terms: without them, **a concept enters the guidebook's vocabulary with
+no record of which source put it there** — which is the same unwarranted-assertion defect as a
+citation with no locator. And both satisfy J.4: a harvested term and an adjudication are new
+row-kinds, not provenance columns.
+
+**It also resolves the relevance-grounds defect from 15.6 for free.** `relevance_note` is populated in
+0 of 10 rows because relevance grounds had to be hand-written. Under the harvest, *"this source is
+relevant to acoustics"* is **backed by the acoustic terms observed in it** — derivable, not authored.
+
+### 16.5 This changes my Part 15.3 — saturation is the stopping rule, the matrix is the spread rule
+
+I said the matrix is the coverage denominator and that is how *"have we searched enough?"* gets an
+answer. **The harvest gives a better answer, and the two do different jobs:**
+
+| | question it answers | mechanism |
+|---|---|---|
+| **the matrix** | *have we left a region unsearched?* | cross-product **spread** — structural, prevents systematic blind spots |
+| **saturation** | *is this region done?* | new sources stop yielding **new concepts** |
+
+Saturation is the methodologically correct stopping rule, and **the column already exists** —
+`search_executions.saturation_signal`. It is unusable today because nothing records what a source
+yielded conceptually. **The harvest makes the existing column mean something.**
+
+Both are needed: saturation alone lets you exhaust one region and never notice another; the matrix
+alone gives a denominator of guesses.
+
+### 16.6 What the overrule changes downstream — and one scoping question
+
+**Recorded per rule 0, not weighed.** `DR-2026-08-24` §2.4 deferred concept/applicability definition
+to synthesis: *"we are waiting until we have finished our syntheses to ensure we define them with
+evidenced justification, not presuppositions."* **That deferral is overruled. Adjudication happens at
+judgment.** The DR's *purpose* survives intact — evidenced justification rather than presupposition —
+and is better served, because judgment holds the source and synthesis does not.
+
+**Consequences that must be swept:**
+
+1. **`CLAUDE.md` §6 is now wrong.** It states *"applicability is an OUTPUT of synthesis, not an
+   input"* and *"**Zero `item_population_links` on a slug is the correct pre-synthesis state, not a
+   defect**"*, both citing this DR. Under the overrule, concept and population assignment is
+   **judgment's output**, so zero links after judgment IS a defect.
+2. **D-0165's position moves.** §6 says it is *"downstream of research"* and does not block it. It is
+   now downstream of **judgment**, which is a different and much shorter wait.
+3. The `research_batch_dod` R4 check ("Cross slug × population / access-need / ICF") is currently a
+   research-phase rule. Under the overrule, the crossing it checks is produced at judgment. **Its
+   phase needs re-declaring or it will measure the wrong stage.**
+
+> **One scoping question, asked rather than assumed.** `DR-2026-08-24` also carries **§2.1** — *"It is
+> better to have a table cell point to another table cell than to rewrite"* — which is **rule 5**,
+> load-bearing across the entire project and unrelated to the aporia. I have read the overrule as
+> scoped to **§2.4's deferral**, and left §2.1 standing. **Say if you meant the whole DR.**
+
+### 16.7 What this means for the work order
+
+The harvest reorders Part 15.10, and downward — it is cheaper than what I had first:
+
+1. **Parent column on the topic list** (confirmed by the owner) — relevance and concepts both need the
+   category level.
+2. **`observed_terms`** — one table, scriptable, no judgment. Unblocks saturation *and* relevance
+   grounds.
+3. **`term_adjudications`** — judgment mints canonical concepts with warrant.
+4. Then base's absent members, and the matrix as **spread**, not as a work queue.
+
+**Note the inversion.** I had "finish `base` first, then sweep." The harvest says the opposite:
+**`base` cannot be finished up front — that is the presupposition the aporia warns against.** `base`
+is an *output* that accretes. Only its **seed** is needed to start, and the seed already exists.
