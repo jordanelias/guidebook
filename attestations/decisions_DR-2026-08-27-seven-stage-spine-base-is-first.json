@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-08-27-rename-execution",
+  "artifact": "decisions/DR-2026-08-27-seven-stage-spine-base-is-first.md",
+  "doctrine_sha": "5ca1ef8",
+  "rules_in_scope": [
+    "integrity-protocol",
+    "source-discipline",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "scripts/migrations/data_20260827194239_2026-08-27-rename-execution.sql",
+      "reason": "The canonical database WAS written this session, and only through the sanctioned path. Rows were emitted with scripts/emit_data_migration.py, applied with scripts/migrate_db.py, and verified on a scratch copy (cp to /tmp/verify.db, GUIDEBOOK_DB_PATH pointed at it) BEFORE canonical was touched. No hand-written SQL was executed against data/guidebook.db. Canonical sha moved 6cceacd24db7bcbb -> 8507c4cf0a48e156, user_version unchanged at 64 (data migration, no DDL). Post-apply: decisions table 174 rows, register YAML 174 entries, MATCH. migrate_db.py --rebuild /tmp/rebuilt.db reproduces 174, so the committed database still replays from the baseline."
+    },
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "data/decisions/decision_register.yaml",
+      "reason": "Every one of the eight rulings is quoted from the owner verbatim in its register row and its generated DR, never paraphrased into a finding. Each measurement carries its command or file:line: the 49/31 foreign-key split and 10-of-18 view count from PRAGMA foreign_key_list and sqlite_master over user_version 64 using the R1 audit's 66-table assignment; the 42-of-93 determination-bearing item names from DR-2026-08-19:127; the 0-of-10 relevance_note population from a direct count; the 30 APA-shaped columns from PRAGMA table_info. The DR set was DERIVED, not guessed: 19 ledger entries carry DATE: 2026-08-27, 13 carry a RULE line, and after removing same-day supersessions eight survive. The eight DRs are GENERATED from their register rows so the two surfaces cannot drift."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/decisions_DR-2026-08-27-seven-stage-spine-base-is-first.json",
+      "reason": "This attestation covers the eight-DR ratification as one act. scripts/decision_capture.py exits 0 and reports 174 ACTIVE with all eight linked to their DR file via decision_artifacts, which is how C9 matches. The remaining C9 orphans are pre-existing July and early-August DRs and are named in the deviations below rather than left implicit."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "rule-5-point-do-not-copy",
+      "reason": "Decisions live in TWO homes: data/decisions/decision_register.yaml (what the blocking gate reads) and the decisions table (loaded by data migrations). No script syncs them. Ratifying these eight therefore required two writes, and I performed both rather than letting them diverge \u2014 174/174 verified against the canonical database and against a --rebuild replay. ACCEPTED: pre-existing structural defect, recorded in the ledger 2026-08-27 as found-not-fixed. Culling one home is out of scope for a ratification act and would itself need a decision."
+    },
+    {
+      "rule": "vacuous-gate-completeness-checks-are-warnings",
+      "reason": "decision_capture's completeness checks C7 (every RULE has a Decision) and C9 (every DR has a register row) are WARNINGS, not errors, so the gate passed green through all 19 unratified rulings of 2026-08-27. Its own docstring concedes C1-C8 'validate the register against itself and never ask whether it is complete'. ACCEPTED: owner selection from options put 2026-08-27 \u2014 clear the backlog first, do not promote the gate in the same session as the rename. The pre-existing orphan backlog is 8 DRs dated 2026-07-23 to 2026-08-24 and must be cleared before promotion."
+    },
+    {
+      "rule": "pre-existing-c3-and-c6-warnings-untouched",
+      "reason": "Three C3 rationale-length warnings (D-0006, D-0010, D-0082) and one C6 anti-pattern (D-0010, rationale identical to outcome) persist. None is mine; all eight new rows pass C3 and C6. ACCEPTED: untouched pre-existing state \u2014 fixing them would edit ratified records of decisions this session did not make."
+    }
+  ],
+  "bias_direction": "Toward over-recording. I am the author of the rulings' prose summaries and had an incentive to render each ruling as cleanly decided, smoothing the places where the owner's wording was partial or where I extrapolated. Two specific exposures: D-0169 records the stage id as singular AGAINST the owner's own written plural, and D-0171 records base_building's shape as open because the owner said 'that table' while I had proposed three. Both are flagged in the record rather than resolved in my favour. The opposite bias also applies to D-0173, where I scoped 'overrule Aug 24 DR' to \u00a72.4 and left rule 5 standing \u2014 a narrowing that happens to protect a rule I rely on constantly.",
+  "independent_reviewer_counterclaim": "An adversarial pass (R2, Fable 5, read-only) was commissioned during this session specifically to attack that last exposure, and returned that the \u00a72.4-only scoping is 'defensible and compelled, not protective narrowing', by reductio: the whole-DR reading would strike \u00a7R8, which the owner re-affirmed the same day. The same pass caught three genuine errors of mine and they are corrected in the record: reading the architecture note at ruling altitude after the owner called it a proposal; describing pipeline-map.yaml as ratified doctrine when it self-declares 'DESCRIPTIVE, not normative'; and claiming \u00a7R8 survives 'in full' when six companion replacement names were in fact orphaned. A reviewer could still fairly claim that generating the eight DRs from their register rows makes the DR set non-independent \u2014 the DR cannot disagree with the register, so C9 can never catch a substantive divergence, only a missing file. That is a real limit of the design and it is chosen deliberately over two hand-maintained copies.",
+  "verdict": "DEVIATION-LOGGED"
+}
