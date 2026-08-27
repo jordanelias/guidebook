@@ -10,7 +10,7 @@
   --accent:#245F57; --accent-soft:#DCE8E5;
   --fault:#9C4429; --fault-soft:#F2DFD7;
   --s-research:#5E6B78; --s-evidence:#245F57; --s-judgment:#7E5426;
-  --s-synthesis:#544873; --s-render:#2F5F7D; --s-substrate:#5F635C;
+  --s-synthesis:#544873; --s-specification:#7A3F52; --s-render:#2F5F7D; --s-substrate:#5F635C;
   --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
   --sans:"Archivo","Helvetica Neue",Arial,sans-serif;
   --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
@@ -24,7 +24,7 @@
     --accent:#6FBFAF; --accent-soft:#1E302E;
     --fault:#E08A6A; --fault-soft:#33211A;
     --s-research:#93A3B2; --s-evidence:#6FBFAF; --s-judgment:#C79A5E;
-    --s-synthesis:#9A8CC4; --s-render:#77A8C6; --s-substrate:#9AA096;
+    --s-synthesis:#9A8CC4; --s-specification:#D094A6; --s-render:#77A8C6; --s-substrate:#9AA096;
   }
 }
 :root[data-theme="dark"]{
@@ -34,7 +34,7 @@
   --accent:#6FBFAF; --accent-soft:#1E302E;
   --fault:#E08A6A; --fault-soft:#33211A;
   --s-research:#93A3B2; --s-evidence:#6FBFAF; --s-judgment:#C79A5E;
-  --s-synthesis:#9A8CC4; --s-render:#77A8C6; --s-substrate:#9AA096;
+  --s-synthesis:#9A8CC4; --s-specification:#D094A6; --s-render:#77A8C6; --s-substrate:#9AA096;
 }
 *{box-sizing:border-box}
 body{background:var(--ground);color:var(--ink);font-family:var(--serif);
@@ -103,6 +103,7 @@ td .m{color:var(--ink)}
   border-radius:3px;border:1px solid currentColor;white-space:nowrap}
 .st-research{color:var(--s-research)} .st-evidence{color:var(--s-evidence)}
 .st-judgment{color:var(--s-judgment)} .st-synthesis{color:var(--s-synthesis)}
+.st-specification{color:var(--s-specification)}
 .st-render{color:var(--s-render)} .st-substrate{color:var(--s-substrate)}
 .stage-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
   margin:34px 0 12px;padding-left:14px;border-left:3px solid currentColor}
@@ -130,6 +131,14 @@ ol.faults b{font-family:var(--sans);font-weight:600}
 pre{font-family:var(--mono);font-size:13px;line-height:1.6;background:var(--panel-2);
   padding:14px 16px;overflow-x:auto;margin:0 0 18px;border-left:2px solid var(--accent);color:var(--ink)}
 .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-bottom:22px}
+.flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:0 0 24px}
+.flow .n{flex:1 1 132px;min-width:132px;background:var(--panel);border:1px solid var(--rule);
+  border-top:3px solid currentColor;padding:12px 12px 14px}
+.flow .n b{display:block;font-family:var(--mono);font-size:11.5px;font-weight:600;margin-bottom:6px}
+.flow .n span{display:block;font-size:13px;line-height:1.4;color:var(--ink-2)}
+.pivot{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);display:flex;gap:10px;align-items:center;margin:0 0 8px}
+.pivot i{flex:1;height:1px;background:var(--rule-2);display:block}
 footer{margin-top:72px;padding-top:22px;border-top:1px solid var(--rule);
   font-family:var(--mono);font-size:12px;color:var(--ink-3)}
 @media (max-width:640px){
@@ -141,11 +150,11 @@ footer{margin-top:72px;padding-top:22px;border-top:1px solid var(--rule);
 
 <div class="wrap">
 <header>
-  <p class="eyebrow">Accessible Built Environments Guidebook · schema audit</p>
+  <p class="eyebrow">Accessible Built Environments Guidebook · schema audit · rev. 2026-08-27</p>
   <h1>The Naming Register</h1>
-  <p class="standfirst">Sixty-six tables, none of which tells you its stage. Forty-one foreign keys
-  that cross a stage boundary, all landing on seven columns. And one word that means two opposite
-  things in the same schema.</p>
+  <p class="standfirst">Six stages, sixty-six tables, and a walk with no keys in it. Not one foreign
+  key in the schema lands on what a stage hands to the next — every cross-stage key points at a
+  shared topic label instead. That is why it doesn't walk.</p>
   <div class="stamp">
     <span><b>Measured</b> 2026-08-27</span>
     <span><b>Against</b> data/guidebook.db · user_version 64</span>
@@ -154,73 +163,157 @@ footer{margin-top:72px;padding-top:22px;border-top:1px solid var(--rule);
 </header>
 
 <div class="caution">
-  <b>Nothing here is executed.</b> No table is renamed, no migration is written, no caller is swept.
-  The §R8 precedent sets the bar: renaming <em>four</em> tables is already owner-gated, scoped at 312
-  tracked files, and forbidden to attempt piecemeal. This covers <em>sixty-six</em>. It exists so the
-  rename can be ruled on once, as a grammar, instead of table by table forever.
+  <b>Rewritten after two owner rulings landed mid-audit.</b> The pipeline is <em>six</em> stages —
+  specification is a stage again, after synthesis — and every stage's hand-off object is
+  <code>&lt;stage&gt;_items</code>, one word appended, no distinct noun per table. Both supersede
+  earlier records, including this document's own first pass. Still a proposal: no table is renamed,
+  no migration written, no caller swept.
 </div>
 
 <nav>
-  <a href="#names">A · Stage names</a>
-  <a href="#keys">B · Keys &amp; boundaries</a>
-  <a href="#faults">C · Nine faults</a>
+  <a href="#stages">A · The six stages</a>
+  <a href="#spine">B · The missing spine</a>
+  <a href="#keys">C · What crosses today</a>
   <a href="#grammar">D · The grammar</a>
   <a href="#table">E · All 66 tables</a>
-  <a href="#open">F · Left to the owner</a>
+  <a href="#open">F · Left open</a>
   <a href="#cost">G · Cost</a>
-  <a href="#views">H · Cross-stage views</a>
+  <a href="#views">H · Views</a>
 </nav>
 
-<section id="names">
-  <h2><span class="pt">PART A</span> Stage names</h2>
-  <p class="lede">The stage layer already has a one-home rule and a derivation. Table names and column
-  names have neither — which is the whole complaint.</p>
+<section id="stages">
+  <h2><span class="pt">PART A</span> The six stages</h2>
+  <p class="lede">In the owner's own formulation: <em>"you research slugs, evidence research, judge
+  evidence, synthesize judgments, specify syntheses, and render specifications."</em></p>
+
+  <div class="flow">
+    <div class="n st-research"><b>res_items</b><span>a lead: what to go and get</span></div>
+    <div class="n st-evidence"><b>evi_items</b><span>"the paper says 1200 mm"</span></div>
+    <div class="n st-judgment"><b>jud_items</b><span>is that sound, and how does it weigh</span></div>
+    <div class="n st-synthesis"><b>syn_items</b><span>what the judgments say together</span></div>
+    <div class="n st-specification"><b>spe_items</b><span>therefore: 1200 mm, marked ●</span></div>
+    <div class="n st-render"><b>ren_items</b><span>the surface a reader opens</span></div>
+  </div>
+
+  <p>This restores <span class="m">governance/conceptual-model.md:90</span>'s own arrow —
+  <em>"BPC synthesis produces specifications"</em> — unchanged in the canonical entity model since
+  the baseline. The five-stage list was the anomaly, and the contradiction flagged as an open question
+  earlier in this audit is closed in the entity model's favour.</p>
+
+  <h3>The prefix is derived, not a second vocabulary</h3>
+  <p>An abbreviation table (<span class="m">research → res_</span>) would be a second home for the
+  stage name — the defect rule 5 exists to stop. So it is computed, exactly as the display label
+  already is:</p>
+  <pre>def stage_label(stage_id):  return stage_id.replace("-", " ")   # existing, :42
+def stage_prefix(stage_id): return stage_id[:3] + "_"           # proposed</pre>
+  <p><span class="m">res evi jud syn spe ren</span> — six distinct codes at three characters.
+  <b>Substrate takes no prefix, and the absence is the signal:</b> no prefix means not a stage.</p>
+</section>
+
+<section id="spine">
+  <h2><span class="pt">PART B</span> The spine that is not there</h2>
+  <p class="lede">This is the finding, and it is bigger than the naming.</p>
 
   <div class="scroll"><table>
-    <thead><tr><th>Name-space</th><th>Lives in</th><th>Derived by</th></tr></thead>
+    <thead><tr><th>Stage output</th><th class="num">Inbound FKs</th><th class="num">Of those, cross-stage</th></tr></thead>
     <tbody>
-      <tr><td><b>Stage names</b></td><td><span class="m">governance/pipeline-contract.yaml</span> → <span class="m">stages[].id</span></td><td><span class="m">stage_label()</span></td></tr>
-      <tr class="fault"><td><span class="m">Table names</span></td><td>the schema itself</td><td class="sub">nothing — each was named by whoever wrote its migration</td></tr>
-      <tr class="fault"><td><span class="m">Key names</span></td><td>column names</td><td class="sub">nothing</td></tr>
+      <tr class="fault"><td><span class="m">source_locators</span> — the lead</td><td class="num">0</td><td class="num">0</td></tr>
+      <tr class="fault"><td><span class="m">source_value_extractions</span> — the extracted value</td><td class="num">1</td><td class="num">0</td></tr>
+      <tr class="fault"><td><span class="m">specifications</span> — the determination</td><td class="num">1</td><td class="num">0</td></tr>
+      <tr class="fault"><td><span class="m">bpc_metadata</span> — the synthesis</td><td class="num">0</td><td class="num">0</td></tr>
     </tbody>
   </table></div>
 
-  <h3>A.1 — The five ids</h3>
-  <pre>STAGES = ["research", "evidence-collection", "judgment", "synthesis", "render"]
-
-def stage_label(stage_id: str) -> str:      # tools/pipeline_completeness.py:42
-    return stage_id.replace("-", " ")</pre>
-  <p><b>Substrate is not in that list and must not be added to it.</b> It is the layer all five stages
-  point into.</p>
-
-  <h3>A.2 — The proposed prefix, derived rather than invented</h3>
-  <p>An abbreviation table (<span class="m">research → res_</span>) would be a <em>second home for the
-  stage name</em> — the exact defect rule 5 exists to stop. So the prefix must be <em>computed</em>
-  from the id, the same way the display label is:</p>
-  <pre>def stage_prefix(stage_id: str) -> str:     # one line, one home
-    return stage_id[:3] + "_"</pre>
+  <p>The two with one inbound key have it from <em>inside their own stage</em>. <b>All 41 cross-stage
+  foreign keys point at substrate vocabularies — <span class="m">slug</span> 14,
+  <span class="m">item_code</span> 10, <span class="m">population_code</span> 7 — or at
+  <span class="m">evidence_sources</span> (6), or sideways. None of them is a hand-off.</b></p>
+  <p>So each stage is joined to the next through a <b>shared topic label</b>, not through the thing
+  the previous stage produced. The row counts say the pipeline is empty downstream; this says it was
+  never connected. Two more of the same class:</p>
   <div class="scroll"><table>
-    <thead><tr><th>Contract id</th><th>Display label</th><th>Prefix</th></tr></thead>
     <tbody>
-      <tr><td><span class="m">research</span></td><td>research</td><td><span class="chip st-research">res_</span></td></tr>
-      <tr><td><span class="m">evidence-collection</span></td><td>evidence collection</td><td><span class="chip st-evidence">evi_</span></td></tr>
-      <tr><td><span class="m">judgment</span></td><td>judgment</td><td><span class="chip st-judgment">jud_</span></td></tr>
-      <tr><td><span class="m">synthesis</span></td><td>synthesis</td><td><span class="chip st-synthesis">syn_</span></td></tr>
-      <tr><td><span class="m">render</span></td><td>render</td><td><span class="chip st-render">ren_</span></td></tr>
-      <tr><td colspan="2" class="sub">substrate — not a stage</td><td><span class="sub">no prefix</span></td></tr>
+      <tr class="fault"><td><span class="m">item_bpc_links</span></td><td>named for the synthesis, keys <span class="m">slug</span> + <span class="m">item_code</span> — <b>it never references <span class="m">bpc_metadata</span></b></td></tr>
+      <tr class="fault"><td><span class="m">spec_value_probes</span></td><td>reaches back past the extraction to the paper — <span class="m">ref_id → evidence_sources</span>, plus <span class="m">item_code</span> and <span class="m">slug</span></td></tr>
     </tbody>
   </table></div>
-  <p>All five are distinct at three characters. <b>Substrate takes no prefix, and the absence is the
-  signal</b> — <em>no prefix means not a stage.</em> That is also the cheap answer: it leaves
-  <span class="m">items</span>, <span class="m">populations</span>, <span class="m">slugs</span> and
-  <span class="m">terms</span> — the four most-referenced names in the repository — untouched.</p>
+
+  <h3>What the rename creates — and why the shape flips halfway</h3>
+  <p>The owner's cardinality decides the shape: <em>"research produces many rows of evidence from one
+  slug. each row of evidence provides one row for judgment. one-to-many rows of judgment provide one
+  row for syntheses. one-to-many rows of syntheses provide one row for specifications."</em></p>
+
+  <p class="pivot"><span>fan out</span><i></i><span>pivot</span><i></i><span>fan in</span></p>
+  <div class="flow">
+    <div class="n st-research"><b>research</b><span>1 slug → many leads</span></div>
+    <div class="n st-evidence"><b>evidence</b><span>1 lead → many extractions</span></div>
+    <div class="n st-judgment"><b>judgment</b><span>1 extraction → 1 judgment</span></div>
+    <div class="n st-synthesis"><b>synthesis</b><span>many judgments → 1</span></div>
+    <div class="n st-specification"><b>specification</b><span>many syntheses → 1</span></div>
+    <div class="n st-render"><b>render</b><span>many specs → 1 surface</span></div>
+  </div>
+
+  <p>The evidence multiplies until judgment, then narrows to one answer. <b>A hand-off column can
+  only express the fan-out half</b>, so the key changes kind exactly at the pivot:</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Hand-off</th><th>Cardinality</th><th>Shape</th></tr></thead>
+    <tbody>
+      <tr><td>research → evidence</td><td><b>1:N</b> <span class="sub">one lead states many parameters</span></td><td><span class="m">evi_items.research_item_id</span> <b>NOT NULL</b></td></tr>
+      <tr><td>evidence → judgment</td><td><b>1:N</b> <span class="sub">normally 1:1 — see dissent</span></td><td><span class="m">jud_items.evidence_item_id</span> <b>NOT NULL</b>, deliberately <b>not UNIQUE</b></td></tr>
+      <tr><td>judgment → synthesis</td><td><b>N:1</b></td><td>junction <span class="m">syn_judgment_links</span>, both sides NOT NULL, <b>≥1 per synthesis</b></td></tr>
+      <tr><td>synthesis → specification</td><td><b>N:1</b></td><td>junction <span class="m">spe_synthesis_links</span>, ≥1 per specification</td></tr>
+      <tr><td>specification → render</td><td><b>N:1</b></td><td>junction</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="grid2">
+    <div class="panel">
+      <h4>A junction, not a back-pointer</h4>
+      <p class="note">A nullable <span class="m">jud_items.synthesis_item_id</span> filled in later
+      would lose the NOT NULL guarantee, forbid one judgment feeding two syntheses, and require a
+      <b>write into a completed stage</b> — the thing rule 5 exists to stop. The junction is written
+      by the <em>downstream</em> stage as it creates its own item: <em>"this synthesis drew on these
+      judgments."</em> Every stage still writes only its own tables.</p>
+    </div>
+    <div class="panel" style="border-color:var(--fault)">
+      <h4>Never <span class="m">UNIQUE(evidence_item_id)</span></h4>
+      <p class="note"><span class="m">add-population-match</span> deliberately omits uniqueness on
+      (ref_id, population) so a dissenting adversarial grade lands as a second row and divergent
+      grades read as a contest. Verified: <span class="m">evidence_population_match</span> carries no
+      UNIQUE beyond <span class="m">match_id</span>; 25 rows across 10 sources. <b>A uniqueness
+      constraint here would silently abolish the contest.</b></p>
+    </div>
+  </div>
+
+  <p><b>The schema already half-encodes this.</b> <span class="m">bpc_metadata</span>'s primary key is
+  <span class="m">slug</span> — one synthesis per topic, the fan-in.
+  <span class="m">source_value_extractions</span> has no UNIQUE on
+  <span class="m">(ref_id, parameter)</span> — one paper may state many parameters, the fan-out. Both
+  cardinalities were already there; only the keys joining them were missing.</p>
+
+  <h3>One item table does not exist, and one is not a row at all</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Stage</th><th>Current occupant of <span class="m">&lt;stage&gt;_items</span></th></tr></thead>
+    <tbody>
+      <tr><td><span class="chip st-research">res_</span></td><td><span class="m">source_locators</span> — 875 rows</td></tr>
+      <tr><td><span class="chip st-evidence">evi_</span></td><td><span class="m">source_value_extractions</span> — 0 rows, <b>and no writer</b></td></tr>
+      <tr class="fault"><td><span class="chip st-judgment">jud_</span></td><td><b>none — <span class="m">judgment_items</span> is a NEW table</b></td></tr>
+      <tr><td><span class="chip st-synthesis">syn_</span></td><td><span class="m">bpc_metadata</span> — 0 rows</td></tr>
+      <tr><td><span class="chip st-specification">spe_</span></td><td><span class="m">specifications</span> — 0 rows</td></tr>
+      <tr class="fault"><td><span class="chip st-render">ren_</span></td><td><b>none as a row</b> — render surfaces are files under <span class="m">site/</span> and <span class="m">parts/</span></td></tr>
+    </tbody>
+  </table></div>
+  <div class="caution">That <span class="m">judgment_items</span> is missing is consistent with the
+  sever already on the record: nothing writes <span class="m">source_value_extractions</span>,
+  <b>and nothing consumes it either</b>. <span class="m">judgment_items</span> is its consumer — and
+  its absence is why the extraction table could sit specified-in-fourteen-places and unwritten for
+  seven weeks without anything noticing.</div>
 </section>
 
 <section id="keys">
-  <h2><span class="pt">PART B</span> Keys, and what actually crosses a boundary</h2>
-  <p class="lede">41 foreign keys cross a stage boundary; 39 stay inside one. Every one of the 41
-  lands on one of seven columns. That is the entire cross-stage surface.</p>
-
+  <h2><span class="pt">PART C</span> What crosses a boundary today</h2>
+  <p class="lede">41 foreign keys cross a stage boundary; 39 stay inside one. All 41 land on seven
+  columns — and not one of them is a hand-off.</p>
   <div class="scroll"><table>
     <thead><tr><th>Target column</th><th>Stage</th><th class="num">Inbound</th><th>Who points at it</th></tr></thead>
     <tbody>
@@ -233,149 +326,63 @@ def stage_label(stage_id: str) -> str:      # tools/pipeline_completeness.py:42
       <tr><td><span class="m">reasoning_doc_citations.citation_id</span></td><td><span class="chip st-synthesis">synthesis</span></td><td class="num">1</td><td><div class="bar"><i style="width:9px"></i><span>evi 1</span></div></td></tr>
     </tbody>
   </table></div>
+  <p class="note">Stage attributions here are from the five-stage map and are re-derived in Part E
+  under the six.</p>
 
-  <h3>B.2 — Nothing points into judgment, and nothing points into render</h3>
-  <p>Zero cross-stage foreign keys target a judgment or render table.
-  <span class="m">specifications.specification_id</span> is referenced by exactly one thing —
-  <span class="m">specification_source_links</span>, in its own stage.</p>
-  <p>That is <em>correct</em> under rule 5: later stages reach back, earlier stages do not reach
-  forward. Three exceptions run the other way, and each is a promotion edge someone will eventually
-  want to delete as redundant.</p>
-  <div class="scroll"><table>
-    <thead><tr><th>Pointer</th><th>Direction</th><th>What it is</th></tr></thead>
-    <tbody>
-      <tr><td><span class="m">citation_mining.global_ref_id</span></td><td class="sub">research → evidence</td><td>a mined lead that got admitted</td></tr>
-      <tr><td><span class="m">source_value_extractions.promoted_to_rdc_id</span></td><td class="sub">evidence → synthesis</td><td>an extraction that became a cited claim</td></tr>
-      <tr class="fault"><td><span class="m">item_population_elaborations.evidence_ref_id</span></td><td class="sub"><b>substrate → evidence</b></td><td>substrate citing a stage, which inverts the model</td></tr>
-    </tbody>
-  </table></div>
-
-  <h3>B.3 — The <span class="m">REF-</span> namespace is two tables sharing one id space with no key between them</h3>
+  <h3>C.1 — <span class="m">REF-</span> is two tables sharing one id space with no key between them</h3>
   <div class="grid2">
     <div class="panel">
       <h4>The split</h4>
-      <div class="scroll" style="margin:0;border:none;background:none"><table>
-        <tbody>
-          <tr><td><span class="m">source_locators</span> <span class="chip st-research">research</span></td><td class="num">875</td></tr>
-          <tr><td><span class="m">evidence_sources</span> <span class="chip st-evidence">evidence</span></td><td class="num">10</td></tr>
-          <tr><td>present in <b>both</b></td><td class="num">4</td></tr>
-          <tr><td>only in the clue store</td><td class="num">871</td></tr>
-          <tr class="fault"><td>admitted, <b>no clue-store row</b></td><td class="num">6</td></tr>
-        </tbody>
-      </table></div>
+      <p class="note">875 clue-store rows · 10 admitted · <b>4 in both</b> · <b>6 admitted with no
+      clue-store row</b> · no foreign key in either direction. So <span class="m">REF-00325</span>
+      does not tell you which stage it lives in — which is exactly what
+      <span class="m">evi_items.research_item_id</span> fixes.</p>
     </div>
     <div class="panel">
-      <h4>Eleven ids do not match the format</h4>
+      <h4>Eleven ids don't match the format</h4>
       <p class="note"><span class="m">source_locators</span> holds
       <span class="m">REF-VERIFIED-001</span> … <span class="m">-012</span>, which sort
-      <em>above</em> every numbered id. So <span class="m">MAX(ref_id)</span> returns
-      <span class="m">REF-VERIFIED-012</span>, not <span class="m">REF-00964</span> — any
-      hand-rolled high-water mark is wrong today.
+      <em>above</em> every numbered id. <span class="m">MAX(ref_id)</span> returns
+      <span class="m">REF-VERIFIED-012</span> — any hand-rolled high-water mark is wrong today.
       <span class="m">dbcore.next_ref_id()</span> is the sanctioned computation.</p>
     </div>
   </div>
-  <p>There is <b>no foreign key in either direction</b>, and the id space is shared — so
-  <span class="m">REF-00325</span> does not tell you which stage it lives in.</p>
 
-  <h3>B.4 — Seven column names for one referent, three of them lying</h3>
-  <div class="scroll"><table>
-    <thead><tr><th>Column</th><th class="num">Non-null</th><th>Keyed</th><th>What it actually holds</th></tr></thead>
-    <tbody>
-      <tr><td><span class="m">evidence_sources.ref_id</span></td><td class="num">10</td><td class="sub">is the target</td><td><span class="m">REF-00325</span></td></tr>
-      <tr><td><span class="m">citation_mining.global_ref_id</span></td><td class="num">10</td><td>yes</td><td>a ref_id</td></tr>
-      <tr><td><span class="m">reasoning_doc_citations.source_ref_id</span></td><td class="num">0</td><td>yes</td><td>a ref_id</td></tr>
-      <tr><td><span class="m">source_value_extractions.root_ref_id</span></td><td class="num">0</td><td>yes</td><td>a ref_id</td></tr>
-      <tr><td><span class="m">item_population_elaborations.evidence_ref_id</span></td><td class="num">0</td><td>yes</td><td>a ref_id</td></tr>
-      <tr class="fault"><td><span class="m">evidence_sources.superseded_by_ref_id</span></td><td class="num">0</td><td><b>no</b></td><td>a ref_id, unenforced</td></tr>
-      <tr class="fault"><td><span class="m">citation_mining.local_ref_id</span></td><td class="num">10</td><td>no</td><td><b><span class="m">RAP-01</span> — not a ref_id at all</b></td></tr>
-      <tr class="fault"><td><span class="m">source_slug_links.local_ref_id</span></td><td class="num">10</td><td>no</td><td><b><span class="m">RAP-04</span> — not a ref_id at all</b></td></tr>
-      <tr class="fault"><td><span class="m">supersession_check.local_ref_id</span></td><td class="num">0</td><td>no</td><td><b>not a ref_id at all</b></td></tr>
-    </tbody>
-  </table></div>
-  <p><span class="m">local_ref_id</span> reads as "a ref_id, locally scoped". It is a
-  <b>within-document citation label</b>. Three tables carry it; none of them means a
-  <span class="m">REF-</span>.</p>
+  <h3>C.2 — Seven column names for one referent, three of them lying</h3>
+  <p><span class="m">ref_id</span> · <span class="m">global_ref_id</span> ·
+  <span class="m">source_ref_id</span> · <span class="m">root_ref_id</span> ·
+  <span class="m">evidence_ref_id</span> · <span class="m">superseded_by_ref_id</span> — and
+  <b><span class="m">local_ref_id</span></b>, on three tables, which holds
+  <span class="m">RAP-01</span>: a within-document citation label, not a
+  <span class="m">REF-</span> at all.</p>
 
-  <h3>B.5 — Soft references: a column named for another stage's key, with no key</h3>
+  <h3>C.3 — Soft references: named for a key, carrying no key</h3>
   <div class="scroll"><table>
-    <thead><tr><th>Stage</th><th>Column</th><th>Should point at</th></tr></thead>
     <tbody>
-      <tr class="fault"><td><span class="chip st-judgment">judgment</span></td><td><span class="m">conflicts.pop_a</span>, <span class="m">conflicts.pop_b</span></td><td><span class="m">populations.population_code</span> — <b>unconstrained</b></td></tr>
-      <tr class="fault"><td><span class="chip st-judgment">judgment</span></td><td><span class="m">conflicts.gap_id</span></td><td>unconstrained, while <span class="m">specifications.gap_register_id</span> <em>is</em> keyed</td></tr>
-      <tr><td><span class="chip st-research">research</span></td><td><span class="m">source_locators.ref_id</span>, <span class="m">reference_stubs.ref_id</span></td><td>not keyed to <span class="m">evidence_sources</span></td></tr>
-      <tr><td><span class="chip st-research">research</span></td><td><span class="m">source_locators.used_in_bpcs</span></td><td>a packed reference into <b>synthesis</b></td></tr>
-      <tr><td><span class="chip st-substrate">substrate</span></td><td><span class="m">slugs.serves_axes</span>, <span class="m">situations.attaches_axes</span></td><td>packed lists of demand codes</td></tr>
-      <tr><td class="sub">9 tables</td><td><span class="m">jurisdiction</span></td><td>no table exists — an <b>inert enum</b> in <span class="m">schemas/enums.py</span></td></tr>
+      <tr class="fault"><td><span class="m">conflicts.pop_a</span> / <span class="m">pop_b</span></td><td>free text where a population code belongs</td></tr>
+      <tr class="fault"><td><span class="m">conflicts.gap_id</span></td><td>unkeyed, while <span class="m">specifications.gap_register_id</span> is keyed</td></tr>
+      <tr><td><span class="m">source_locators.ref_id</span>, <span class="m">reference_stubs.ref_id</span></td><td>unkeyed to <span class="m">evidence_sources</span></td></tr>
+      <tr><td><span class="m">source_locators.used_in_bpcs</span></td><td>a packed reference into synthesis</td></tr>
+      <tr><td><span class="m">slugs.serves_axes</span>, <span class="m">situations.attaches_axes</span></td><td>packed lists of demand codes</td></tr>
+      <tr><td><span class="m">jurisdiction</span>, on <b>9 tables</b></td><td>no table exists — an inert enum in <span class="m">schemas/enums.py</span></td></tr>
     </tbody>
   </table></div>
   <div class="caution"><b>conflicts</b> is the table a mobility batch needs most — ramp gradient is
   the opposed demand between ambulant and wheeled movement — and its two population columns are free
   text.</div>
 
-  <h3>B.6 — Key <em>kind</em> is inconsistent</h3>
-  <div class="grid2">
-    <div class="panel">
-      <h4>Stable text code</h4>
-      <p class="note"><span class="m">ref_id</span> REF-00325 · <span class="m">item_code</span> A-01 ·
-      <span class="m">population_code</span> AUT · <span class="m">slug</span> ·
-      <span class="m">term_id</span> TERM-001 · <span class="m">room_code</span> R-BA ·
-      <span class="m">gap_id</span> GAP-B01-001 · <span class="m">match_id</span> MB1-001 ·
-      <span class="m">decision_id</span> D-0001</p>
-    </div>
-    <div class="panel" style="border-color:var(--fault)">
-      <h4>Bare surrogate integer</h4>
-      <p class="note"><span class="m">search_executions.exec_id</span> 19 ·
-      <span class="m">search_candidates.candidate_id</span> 1 ·
-      <span class="m">jurisdictional_values.jv_id</span> 4 ·
-      <span class="m">specifications.specification_id</span> ·
-      <span class="m">convergence_assessment.convergence_id</span> ·
-      <span class="m">source_value_extractions.extraction_id</span></p>
-    </div>
-  </div>
-  <p><b>The admission edge hangs on an integer.</b>
-  <span class="m">search_admissions</span> is the provenance chain from a source back to the act of
-  looking, and its key is <span class="m">(exec_id, ref_id)</span> — half stable code, half rowid.
-  So does the whole output of the judgment stage.</p>
-</section>
-
-<section id="faults">
-  <h2><span class="pt">PART C</span> Nine naming faults, each measured</h2>
-  <p class="lede">Numbered because Part E cites them by number — the sequence carries information.</p>
-  <ol class="faults">
-    <li><b>No name carries its stage.</b> 0 of 66 tables are prefixed. Rule 5 is unusable without
-      knowing a table's stage, and deriving that map is a <em>stopper</em> in CLAUDE.md. The name is
-      where the derivation should already live.</li>
-    <li><b>"Locator" means two opposite things in one schema.</b>
-      <span class="m">source_locators</span> holds <span class="m">doi, url, pmid, pmcid, isbn, issn,
-      standard_number</span> — <em>bibliographic identifiers</em>. Meanwhile R3 defines a locator as a
-      within-document pointer (<em>"clause/section/page"</em>), which is what
-      <span class="m">source_value_extractions</span>' sixteen <span class="m">loc_*</span> columns
-      hold. The table named <span class="m">_locators</span> holds the sense it is not.</li>
-    <li><b><span class="m">jurisdictional_values</span> holds no values.</b> 109 rows;
-      <span class="m">value_text</span> and <span class="m">value_numeric</span> are <b>0 non-null</b>,
-      by the REFERENCE-ONLY ruling of 2026-08-12. The name states the opposite of the ruling.</li>
-    <li><b><span class="m">bpc_metadata</span> is not metadata.</b> It <em>is</em> the best-practice
-      synthesis — the stage's output. <span class="m">BPC</span> is also an unexpanded acronym living
-      in a table name, two columns and a junction.</li>
-    <li><b>Two tables named <span class="m">*_specs</span> do not reference specifications.</b>
-      <span class="m">case_study_specs.item_code → items.item_code</span> and
-      <span class="m">economics_entry_specs.item_code → items.item_code</span>. Named for the judgment
-      object, keyed on the render rollup.</li>
-    <li><b>Three suffixes for one relation kind.</b> <span class="m">_links</span> ×9,
-      <span class="m">_map</span> ×3, and seven bare-noun junctions. All are the same thing: a primary
-      key composed of references to two other things.</li>
-    <li><b>Head noun is plural in 52 tables and singular in 14.</b></li>
-    <li><b>The activity is named, not the row.</b> <span class="m">citation_mining</span>,
-      <span class="m">gap_mining</span>, <span class="m">supersession_check</span> name a
-      <em>process</em>; one row is a <em>run of it</em>. Compare
-      <span class="m">url_verification_runs</span>, which gets this right.</li>
-    <li><b>Retired vocabulary is still in four table names and six columns.</b> Already ruled — the
-      §R8 rename, then the register entry.</li>
-  </ol>
+  <h3>C.4 — Key kind is inconsistent</h3>
+  <p>Stable text codes (<span class="m">REF-00325</span>, <span class="m">A-01</span>,
+  <span class="m">AUT</span>, <span class="m">GAP-B01-001</span>) against bare surrogate integers
+  (<span class="m">exec_id</span>, <span class="m">candidate_id</span>, <span class="m">jv_id</span>,
+  <span class="m">specification_id</span>, <span class="m">convergence_id</span>,
+  <span class="m">extraction_id</span>). <b>The admission edge hangs on an integer</b> —
+  <span class="m">search_admissions</span> keys <span class="m">(exec_id, ref_id)</span>, half stable
+  code and half rowid — and so does the whole output of the judgment stage.</p>
 </section>
 
 <section id="grammar">
-  <h2><span class="pt">PART D</span> The proposed grammar</h2>
+  <h2><span class="pt">PART D</span> The grammar</h2>
   <div class="panel" style="border-left:3px solid var(--accent)">
     <p style="font-family:var(--sans);font-size:19px;font-weight:600;margin:0;max-width:none">
     <span style="color:var(--accent)">&lt;stage-prefix&gt;</span>
@@ -383,230 +390,252 @@ def stage_label(stage_id: str) -> str:      # tools/pipeline_completeness.py:42
     <span style="color:var(--ink-2)">&lt;kind-suffix&gt;</span>
     <span style="font-weight:400;font-size:15px;color:var(--ink-3)">— head noun always plural</span></p>
   </div>
-  <p><b>Prefix</b> — <span class="m">stage_id[:3] + "_"</span>, derived. No prefix means substrate.</p>
-  <p><b>Kind suffix</b> — a closed set, each decided by a test against the schema itself rather than
-  by taste:</p>
+  <p><b>The hand-off object is <span class="m">&lt;prefix&gt;_items</span>. Full stop.</b> One word,
+  appended; no distinct noun coined for it. Satellite tables inside a stage keep descriptive names,
+  because they are not the hand-off and nothing outside the stage keys to them.</p>
   <div class="scroll"><table>
-    <thead><tr><th>Kind</th><th>Test</th><th>Suffix</th><th>Example</th></tr></thead>
+    <thead><tr><th>Kind</th><th>Test</th><th>Suffix</th></tr></thead>
     <tbody>
-      <tr><td><b>registry</b></td><td>PK is a code this table mints, and other tables key to it</td><td class="sub">none</td><td><span class="m">items</span>, <span class="m">populations</span></td></tr>
-      <tr><td><b>junction</b></td><td>PK composed of ≥2 columns that each identify <em>another thing</em> — a foreign key, or an external vocabulary with no table</td><td><span class="m">_links</span></td><td><span class="m">evi_slug_links</span></td></tr>
-      <tr><td><b>run</b></td><td>a record of an act performed, carrying a timestamp and an outcome</td><td><span class="m">_runs</span></td><td><span class="m">evi_url_verification_runs</span></td></tr>
-      <tr><td><b>record</b></td><td>anything else — one row is a thing that happened or was decided</td><td class="sub">plural noun naming what one row <em>is</em></td><td><span class="m">res_searches</span>, <span class="m">jud_specifications</span></td></tr>
+      <tr><td><b>hand-off item</b></td><td>the object the next stage consumes</td><td><span class="m">_items</span></td></tr>
+      <tr><td><b>registry</b></td><td>PK is a code this table mints, and other tables key to it</td><td class="sub">none</td></tr>
+      <tr><td><b>junction</b></td><td>PK composed of ≥2 columns that each identify another thing — an FK, or an external vocabulary with no table</td><td><span class="m">_links</span></td></tr>
+      <tr><td><b>run</b></td><td>a record of an act performed, carrying a timestamp and an outcome</td><td><span class="m">_runs</span></td></tr>
+      <tr><td><b>record</b></td><td>anything else — one row is a thing that happened or was decided</td><td class="sub">plural noun naming what one row <em>is</em></td></tr>
     </tbody>
   </table></div>
-  <p class="note">The junction test is written against key columns rather than payload, because the
-  payload test fails on real tables. <span class="m">term_aliases</span> has PK
-  <span class="m">(term_id, alias, language)</span> and looks composite — but <span class="m">alias</span>
-  <em>is</em> the payload, so the row is a record, not a junction, and it keeps its name.</p>
+  <p class="note">The junction test is written against key columns, not payload, because the payload
+  test fails on real tables: <span class="m">term_aliases</span> has PK
+  <span class="m">(term_id, alias, language)</span> and looks composite, but
+  <span class="m">alias</span> <em>is</em> the payload — so it is a record, and keeps its name.</p>
 </section>
 
 <section id="table">
-  <h2><span class="pt">PART E</span> All 66 tables</h2>
-  <p class="lede">Rows marked <span class="dag">†</span> are where the <em>name</em> is wrong, not
-  merely unprefixed — those are the ones worth arguing about. Everything else is a mechanical prefix.
-  <b>30 carry a name fault; 36 are prefix-only.</b></p>
+  <h2><span class="pt">PART E</span> All 66 tables under six stages</h2>
+  <p class="lede">Rows marked <span class="dag">‡</span> change <b>stage</b>, not just name — those
+  are what the six-stage ruling moves, each a first-pass derivation owed confirmation. Rows marked
+  <span class="dag">†</span> carry a name fault beyond the prefix.</p>
 
-  <div class="stage-head st-research"><h4>Research</h4><span class="chip st-research">res_</span><span class="meta">10 tables · 1,087 rows</span></div>
+  <div class="stage-head st-research"><h4>1 · Research</h4><span class="chip st-research">res_</span><span class="meta">1,087 rows</span></div>
   <div class="scroll"><table>
-    <thead><tr><th>Current</th><th class="num">Rows</th><th>One row is</th><th>Proposed</th><th>Why</th></tr></thead>
+    <thead><tr><th>Current</th><th class="num">Rows</th><th>Proposed</th><th>Note</th></tr></thead>
     <tbody>
-      <tr class="fault"><td><span class="m">source_locators</span> <span class="dag">†</span></td><td class="num">875</td><td>a lead: identifiers for a document to go and get</td><td><span class="m">res_leads</span></td><td class="sub">fault 2 — holds identifiers, not locators</td></tr>
-      <tr class="fault"><td><span class="m">jurisdictional_values</span> <span class="dag">†</span></td><td class="num">109</td><td>which code document to go and get</td><td><span class="m">res_code_leads</span></td><td class="sub">fault 3 — it holds no values</td></tr>
-      <tr><td><span class="m">search_candidates</span></td><td class="num">60</td><td>a screened but unresolved lead</td><td><span class="m">res_candidates</span></td><td class="sub">prefix only</td></tr>
-      <tr class="fault"><td><span class="m">search_executions</span> <span class="dag">†</span></td><td class="num">28</td><td>one query, verbatim, pre-screening</td><td><span class="m">res_searches</span></td><td class="sub">the row is a search, not an "execution"</td></tr>
-      <tr class="fault"><td><span class="m">citation_mining</span> <span class="dag">†</span></td><td class="num">10</td><td>one backward/forward pass</td><td><span class="m">res_mining_runs</span></td><td class="sub">fault 8</td></tr>
-      <tr><td><span class="m">gaps</span></td><td class="num">5</td><td>an open question the book cannot answer</td><td><span class="m">res_gaps</span></td><td class="sub">prefix only</td></tr>
-      <tr class="fault"><td><span class="m">search_coverage</span> <span class="dag">†</span></td><td class="num">0</td><td>slug × jurisdiction covered</td><td><span class="m">res_coverage_links</span></td><td class="sub">it is a junction; singular head</td></tr>
-      <tr class="fault"><td><span class="m">search_languages</span> <span class="dag">†</span></td><td class="num">0</td><td>slug × language covered</td><td><span class="m">res_language_links</span></td><td class="sub">same</td></tr>
-      <tr class="fault"><td><span class="m">gap_mining</span> <span class="dag">†</span></td><td class="num">0</td><td>one gap-driven pass</td><td><span class="m">res_gap_mining_runs</span></td><td class="sub">fault 8</td></tr>
-      <tr class="fault"><td><span class="m">reference_stubs</span> <span class="dag">†</span></td><td class="num">0</td><td>—</td><td class="sub">delete candidate</td><td class="sub">0 rows, no writer — not a rename</td></tr>
+      <tr class="fault"><td><span class="m">source_locators</span> <span class="dag">†</span></td><td class="num">875</td><td><b><span class="m">res_items</span></b></td><td class="sub">the hand-off. "Locator" is wrong twice over — it holds <span class="m">doi, url, pmid, isbn</span>, while R3 defines a locator as a within-document pointer, which is what the sixteen <span class="m">loc_*</span> columns hold</td></tr>
+      <tr class="fault"><td><span class="m">jurisdictional_values</span> <span class="dag">†</span></td><td class="num">109</td><td><span class="m">res_code_leads</span></td><td class="sub">109 rows, <b>0 non-null</b> in both value columns by the REFERENCE-ONLY ruling — the name states the opposite of the ruling</td></tr>
+      <tr><td><span class="m">search_candidates</span></td><td class="num">60</td><td><span class="m">res_candidates</span></td><td class="sub">prefix only</td></tr>
+      <tr class="fault"><td><span class="m">search_executions</span> <span class="dag">†</span></td><td class="num">28</td><td><span class="m">res_searches</span></td><td class="sub">the row is a search, not an "execution"</td></tr>
+      <tr class="fault"><td><span class="m">citation_mining</span> <span class="dag">†</span></td><td class="num">10</td><td><span class="m">res_mining_runs</span></td><td class="sub">names the activity, not the row</td></tr>
+      <tr><td><span class="m">gaps</span></td><td class="num">5</td><td><span class="m">res_gaps</span></td><td class="sub">prefix only</td></tr>
+      <tr class="fault"><td><span class="m">search_coverage</span> <span class="dag">†</span></td><td class="num">0</td><td><span class="m">res_coverage_links</span></td><td class="sub">junction</td></tr>
+      <tr class="fault"><td><span class="m">search_languages</span> <span class="dag">†</span></td><td class="num">0</td><td><span class="m">res_language_links</span></td><td class="sub">junction</td></tr>
+      <tr class="fault"><td><span class="m">gap_mining</span> <span class="dag">†</span></td><td class="num">0</td><td><span class="m">res_gap_mining_runs</span></td><td class="sub">activity, not row</td></tr>
+      <tr class="fault"><td><span class="m">reference_stubs</span> <span class="dag">†</span></td><td class="num">0</td><td class="sub">delete candidate</td><td class="sub">0 rows, no writer</td></tr>
     </tbody>
   </table></div>
 
-  <div class="stage-head st-evidence"><h4>Evidence collection</h4><span class="chip st-evidence">evi_</span><span class="meta">10 tables · 92 rows</span></div>
+  <div class="stage-head st-evidence"><h4>2 · Evidence collection</h4><span class="chip st-evidence">evi_</span><span class="meta">92 rows</span></div>
   <div class="scroll"><table>
-    <thead><tr><th>Current</th><th class="num">Rows</th><th>One row is</th><th>Proposed</th><th>Why</th></tr></thead>
+    <thead><tr><th>Current</th><th class="num">Rows</th><th>Proposed</th><th>Note</th></tr></thead>
     <tbody>
-      <tr><td><span class="m">evidence_source_authors</span></td><td class="num">37</td><td>one author position on a source</td><td><span class="m">evi_source_authors</span></td><td class="sub">prefix only</td></tr>
-      <tr class="fault"><td><span class="m">evidence_population_match</span> <span class="dag">†</span></td><td class="num">25</td><td>an R13 grade of study-vs-served</td><td><span class="m">evi_population_grades</span></td><td class="sub">it is a grade; deliberately non-unique, so plural matters</td></tr>
-      <tr><td><span class="m">evidence_sources</span></td><td class="num">10</td><td>an admitted source</td><td><span class="m">evi_sources</span></td><td class="sub">prefix absorbs <span class="m">evidence_</span></td></tr>
-      <tr><td><span class="m">source_slug_links</span></td><td class="num">10</td><td>source × topic admitted under</td><td><span class="m">evi_slug_links</span></td><td class="sub">prefix only</td></tr>
-      <tr class="fault"><td><span class="m">search_admissions</span> <span class="dag">†</span></td><td class="num">10</td><td><b>the admission edge</b>: query × source</td><td><span class="m">evi_admission_links</span></td><td class="sub">fault 6 — it is a junction</td></tr>
-      <tr class="fault"><td><span class="m">source_value_extractions</span> <span class="dag">†</span></td><td class="num">0</td><td><b>"the paper says 1200 mm"</b></td><td><span class="m">evi_extractions</span></td><td class="sub"><span class="m">source_</span> is redundant under the prefix</td></tr>
-      <tr><td><span class="m">extraction_population_links</span></td><td class="num">0</td><td>extraction × population</td><td><span class="m">evi_extraction_population_links</span></td><td class="sub">prefix only</td></tr>
-      <tr class="fault"><td><span class="m">supersession_check</span> <span class="dag">†</span></td><td class="num">0</td><td>one currency check on a source</td><td><span class="m">evi_supersession_runs</span></td><td class="sub">fault 8</td></tr>
-      <tr><td><span class="m">url_verification_runs</span></td><td class="num">0</td><td>one R10 re-retrieval</td><td><span class="m">evi_url_verification_runs</span></td><td class="sub">already correct</td></tr>
-      <tr class="fault"><td><span class="m">external_root_registry</span> <span class="dag">†</span></td><td class="num">0</td><td>an independent evidence root</td><td><span class="m">evi_roots</span></td><td class="sub">"registry" names the cabinet, not the row</td></tr>
+      <tr class="fault"><td><span class="m">source_value_extractions</span> <span class="dag">†</span></td><td class="num">0</td><td><b><span class="m">evi_items</span></b></td><td class="sub">the hand-off — and the sever. Gains <span class="m">research_item_id NOT NULL</span></td></tr>
+      <tr><td><span class="m">evidence_source_authors</span></td><td class="num">37</td><td><span class="m">evi_source_authors</span></td><td class="sub">where the 2026-08-19 fabrication happened</td></tr>
+      <tr><td><span class="m">evidence_sources</span></td><td class="num">10</td><td><span class="m">evi_sources</span></td><td class="sub">the admitted corpus — a satellite, not the hand-off</td></tr>
+      <tr><td><span class="m">source_slug_links</span></td><td class="num">10</td><td><span class="m">evi_slug_links</span></td><td class="sub">prefix only</td></tr>
+      <tr class="fault"><td><span class="m">search_admissions</span> <span class="dag">†</span></td><td class="num">10</td><td><span class="m">evi_admission_links</span></td><td class="sub">junction named as a plural noun</td></tr>
+      <tr><td><span class="m">extraction_population_links</span></td><td class="num">0</td><td><span class="m">evi_item_population_links</span></td><td class="sub">follows the item rename</td></tr>
+      <tr class="fault"><td><span class="m">supersession_check</span> <span class="dag">†</span></td><td class="num">0</td><td><span class="m">evi_supersession_runs</span></td><td class="sub">activity, not row</td></tr>
+      <tr><td><span class="m">url_verification_runs</span></td><td class="num">0</td><td><span class="m">evi_url_verification_runs</span></td><td class="sub">already correct</td></tr>
+      <tr class="fault"><td><span class="m">external_root_registry</span> <span class="dag">†</span></td><td class="num">0</td><td><span class="m">evi_roots</span></td><td class="sub">"registry" names the cabinet, not the row</td></tr>
+      <tr class="fault"><td><span class="m">evidence_population_match</span> <span class="dag">‡†</span></td><td class="num">25</td><td><span class="m">jud_population_grades</span></td><td class="sub"><b>moves to judgment</b> — a grade of study-vs-served is a judgment about an admission, not part of collecting it</td></tr>
     </tbody>
   </table></div>
 
-  <div class="stage-head st-judgment"><h4>Judgment</h4><span class="chip st-judgment">jud_</span><span class="meta">7 tables · 0 rows</span></div>
+  <div class="stage-head st-judgment"><h4>3 · Judgment</h4><span class="chip st-judgment">jud_</span><span class="meta">0 rows</span></div>
   <div class="scroll"><table>
-    <thead><tr><th>Current</th><th>One row is</th><th>Proposed</th><th>Why</th></tr></thead>
+    <thead><tr><th>Current</th><th>Proposed</th><th>Note</th></tr></thead>
     <tbody>
-      <tr><td><span class="m">specifications</span></td><td><b>the determination — the book's answer</b></td><td><span class="m">jud_specifications</span></td><td class="sub">name is owner-directed (2026-08-12); prefix only</td></tr>
-      <tr><td><span class="m">specification_source_links</span></td><td>determination × governing source</td><td><span class="m">jud_source_links</span></td><td class="sub">prefix absorbs the rest</td></tr>
-      <tr class="fault"><td><span class="m">convergence_assessment</span> <span class="dag">†</span></td><td>whether independent streams agree</td><td><span class="m">jud_convergence_assessments</span></td><td class="sub">fault 7</td></tr>
-      <tr><td><span class="m">spec_value_probes</span></td><td>a progressive-measurement probe</td><td><span class="m">jud_value_probes</span></td><td class="sub">prefix absorbs <span class="m">spec_</span></td></tr>
-      <tr><td><span class="m">probe_population_links</span></td><td>probe × population</td><td><span class="m">jud_probe_population_links</span></td><td class="sub">prefix only</td></tr>
-      <tr><td><span class="m">conflicts</span></td><td><b>two populations' needs incompatible in one space</b></td><td><span class="m">jud_conflicts</span></td><td class="sub">prefix only — but see B.5</td></tr>
-      <tr><td><span class="m">item_audit_runs</span></td><td>one audit pass over an item</td><td><span class="m">jud_audit_runs</span></td><td class="sub">prefix absorbs <span class="m">item_</span></td></tr>
+      <tr class="fault"><td class="sub">— does not exist —</td><td><b><span class="m">jud_items</span></b> <span class="dag">‡</span></td><td class="sub"><b>NEW TABLE.</b> Per-extraction determination of soundness and weight. Gains <span class="m">evidence_item_id NOT NULL</span>, never UNIQUE. Column set owed a design</td></tr>
+      <tr><td><span class="m">evidence_population_match</span></td><td><span class="m">jud_population_grades</span> <span class="dag">‡</span></td><td class="sub">in from evidence</td></tr>
+      <tr><td><span class="m">item_audit_runs</span></td><td><span class="m">jud_audit_runs</span></td><td class="sub">prefix absorbs <span class="m">item_</span></td></tr>
+      <tr class="fault"><td><span class="m">conflicts</span></td><td><span class="m">syn_conflicts</span> <span class="dag">‡</span></td><td class="sub"><b>moves to synthesis</b> — an opposed demand between populations is a cross-cutting finding. Arguable</td></tr>
+      <tr class="fault"><td><span class="m">convergence_assessment</span> <span class="dag">‡†</span></td><td><span class="m">syn_convergence</span></td><td class="sub"><b>moves to synthesis</b> — counting independent roots across extractions is weighing, which is what synthesis now names</td></tr>
+      <tr class="fault"><td><span class="m">specifications</span></td><td><span class="m">spe_items</span> <span class="dag">‡</span></td><td class="sub"><b>moves to specification</b></td></tr>
+      <tr class="fault"><td><span class="m">specification_source_links</span></td><td><span class="m">spe_source_links</span> <span class="dag">‡</span></td><td class="sub">follows it</td></tr>
+      <tr class="fault"><td><span class="m">spec_value_probes</span></td><td><span class="m">spe_value_probes</span> <span class="dag">‡</span></td><td class="sub"><b>moves to specification</b> — a probe walks a value to its ceiling, which produces the number</td></tr>
+      <tr class="fault"><td><span class="m">probe_population_links</span></td><td><span class="m">spe_probe_population_links</span> <span class="dag">‡</span></td><td class="sub">follows it</td></tr>
     </tbody>
   </table></div>
 
-  <div class="stage-head st-synthesis"><h4>Synthesis</h4><span class="chip st-synthesis">syn_</span><span class="meta">6 tables · 0 rows</span></div>
+  <div class="stage-head st-synthesis"><h4>4 · Synthesis</h4><span class="chip st-synthesis">syn_</span><span class="meta">0 rows</span></div>
   <div class="scroll"><table>
-    <thead><tr><th>Current</th><th>One row is</th><th>Proposed</th><th>Why</th></tr></thead>
+    <thead><tr><th>Current</th><th>Proposed</th><th>Note</th></tr></thead>
     <tbody>
-      <tr class="fault"><td><span class="m">bpc_metadata</span> <span class="dag">†</span></td><td><b>the best-practice synthesis for a slug</b></td><td><span class="m">syn_best_practice</span></td><td class="sub">fault 4 — it is the synthesis, not metadata</td></tr>
-      <tr class="fault"><td><span class="m">item_bpc_links</span> <span class="dag">†</span></td><td>synthesis × item</td><td><span class="m">syn_item_links</span></td><td class="sub">drops the acronym</td></tr>
-      <tr><td><span class="m">connections</span></td><td><b>"when writing X, also consider Y"</b></td><td><span class="m">syn_connections</span></td><td class="sub">prefix only</td></tr>
-      <tr class="fault"><td><span class="m">connection_targets</span> <span class="dag">†</span></td><td>connection × target</td><td><span class="m">syn_connection_links</span></td><td class="sub">fault 6</td></tr>
-      <tr><td><span class="m">reasoning_doc_citations</span></td><td>a claim in a reasoning doc, verified</td><td><span class="m">syn_citations</span></td><td class="sub">prefix absorbs the rest</td></tr>
-      <tr><td><span class="m">citation_population_links</span></td><td>citation × population</td><td><span class="m">syn_citation_population_links</span></td><td class="sub">prefix only</td></tr>
+      <tr class="fault"><td><span class="m">bpc_metadata</span> <span class="dag">†</span></td><td><b><span class="m">syn_items</span></b></td><td class="sub">the hand-off. It is not metadata — it <em>is</em> the synthesis. PK <span class="m">slug</span> already encodes the fan-in</td></tr>
+      <tr class="fault"><td><span class="m">item_bpc_links</span> <span class="dag">†</span></td><td><span class="m">syn_item_links</span></td><td class="sub"><b>and it must be re-keyed</b> — today it references <span class="m">slugs</span> and <span class="m">items</span>, never <span class="m">bpc_metadata</span></td></tr>
+      <tr><td><span class="m">connections</span></td><td><span class="m">syn_connections</span></td><td class="sub">prefix only</td></tr>
+      <tr class="fault"><td><span class="m">connection_targets</span> <span class="dag">†</span></td><td><span class="m">syn_connection_links</span></td><td class="sub">junction</td></tr>
+      <tr><td><span class="m">reasoning_doc_citations</span></td><td><span class="m">syn_citations</span></td><td class="sub">prefix absorbs the rest</td></tr>
+      <tr><td><span class="m">citation_population_links</span></td><td><span class="m">syn_citation_population_links</span></td><td class="sub">prefix only</td></tr>
+      <tr><td class="sub">in from judgment</td><td><span class="m">syn_conflicts</span>, <span class="m">syn_convergence</span> <span class="dag">‡</span></td><td class="sub">see above</td></tr>
+      <tr><td class="sub">— new —</td><td><span class="m">syn_judgment_links</span></td><td class="sub">the fan-in hand-off: which judgments this synthesis drew on, ≥1 required</td></tr>
     </tbody>
   </table></div>
 
-  <div class="stage-head st-render"><h4>Render</h4><span class="chip st-render">ren_</span><span class="meta">10 tables · 17 rows</span></div>
+  <div class="stage-head st-specification"><h4>5 · Specification</h4><span class="chip st-specification">spe_</span><span class="meta">a stage again, 2026-08-27 · 0 rows</span></div>
   <div class="scroll"><table>
-    <thead><tr><th>Current</th><th class="num">Rows</th><th>One row is</th><th>Proposed</th><th>Why</th></tr></thead>
+    <thead><tr><th>Current</th><th>Proposed</th><th>Note</th></tr></thead>
     <tbody>
-      <tr><td><span class="m">rooms</span></td><td class="num">17</td><td>a room-type surface</td><td><span class="m">ren_rooms</span></td><td class="sub">prefix only</td></tr>
-      <tr class="fault"><td><span class="m">room_items</span> <span class="dag">†</span></td><td class="num">0</td><td>room × provision</td><td><span class="m">ren_room_item_links</span></td><td class="sub">fault 6</td></tr>
-      <tr><td><span class="m">case_studies</span></td><td class="num">0</td><td>a Part-12 built example</td><td><span class="m">ren_case_studies</span></td><td class="sub">prefix only</td></tr>
-      <tr><td><span class="m">case_study_outcomes</span></td><td class="num">0</td><td>a measured outcome</td><td><span class="m">ren_case_study_outcomes</span></td><td class="sub">prefix only</td></tr>
-      <tr class="fault"><td><span class="m">case_study_populations</span> <span class="dag">†</span></td><td class="num">0</td><td>case study × population</td><td><span class="m">ren_case_study_population_links</span></td><td class="sub">fault 6</td></tr>
-      <tr class="fault"><td><span class="m">case_study_specs</span> <span class="dag">†</span></td><td class="num">0</td><td>case study × <b>item</b></td><td><span class="m">ren_case_study_item_links</span></td><td class="sub"><b>fault 5</b> — name says spec, key says item</td></tr>
-      <tr><td><span class="m">case_study_strategies</span></td><td class="num">0</td><td>a strategy used</td><td><span class="m">ren_case_study_strategies</span></td><td class="sub">prefix only</td></tr>
-      <tr><td><span class="m">economics_entries</span></td><td class="num">0</td><td>a Part-13 cost/benefit entry</td><td><span class="m">ren_economics_entries</span></td><td class="sub">prefix only</td></tr>
-      <tr class="fault"><td><span class="m">economics_entry_populations</span> <span class="dag">†</span></td><td class="num">0</td><td>entry × population</td><td><span class="m">ren_economics_population_links</span></td><td class="sub">fault 6</td></tr>
-      <tr class="fault"><td><span class="m">economics_entry_specs</span> <span class="dag">†</span></td><td class="num">0</td><td>entry × <b>item</b></td><td><span class="m">ren_economics_item_links</span></td><td class="sub"><b>fault 5</b></td></tr>
+      <tr class="fault"><td><span class="m">specifications</span> <span class="dag">‡</span></td><td><b><span class="m">spe_items</span></b></td><td class="sub">the determination. Keys on the canonical parameter (2026-08-26); <span class="m">item_code</span> and <span class="m">population_code</span> leave the identity</td></tr>
+      <tr class="fault"><td><span class="m">specification_source_links</span> <span class="dag">‡</span></td><td><span class="m">spe_source_links</span></td><td class="sub">which sources govern the determination</td></tr>
+      <tr class="fault"><td><span class="m">spec_value_probes</span> <span class="dag">‡</span></td><td><span class="m">spe_value_probes</span></td><td class="sub">in from judgment</td></tr>
+      <tr class="fault"><td><span class="m">probe_population_links</span> <span class="dag">‡</span></td><td><span class="m">spe_probe_population_links</span></td><td class="sub">follows it</td></tr>
+      <tr><td class="sub">— new —</td><td><span class="m">spe_synthesis_links</span></td><td class="sub">the fan-in hand-off: which syntheses this specification rests on, ≥1 required</td></tr>
     </tbody>
   </table></div>
 
-  <div class="stage-head st-substrate"><h4>Substrate — no prefix</h4><span class="meta">23 tables · 3,861 rows</span></div>
+  <div class="stage-head st-render"><h4>6 · Render</h4><span class="chip st-render">ren_</span><span class="meta">17 rows</span></div>
   <div class="scroll"><table>
-    <thead><tr><th>Current</th><th class="num">Rows</th><th>Proposed</th><th>Why</th></tr></thead>
+    <thead><tr><th>Current</th><th class="num">Rows</th><th>Proposed</th><th>Note</th></tr></thead>
     <tbody>
-      <tr class="fault"><td><span class="m">term_aliases</span></td><td class="num">2382</td><td class="sub">unchanged</td><td class="sub">proposed as <span class="m">term_alias_links</span> on a first pass and <b>withdrawn</b> — <span class="m">alias</span> is the payload, so it is a record</td></tr>
-      <tr><td><span class="m">item_population_links</span></td><td class="num">372</td><td class="sub">unchanged</td><td class="sub">already correct</td></tr>
-      <tr><td><span class="m">data_migrations</span></td><td class="num">352</td><td class="sub">unchanged</td><td class="sub">see F.3</td></tr>
-      <tr class="fault"><td><span class="m">decisions</span></td><td class="num">166</td><td class="sub">unchanged</td><td class="sub">see F.3 — not really substrate</td></tr>
-      <tr class="fault"><td><span class="m">item_axis_links</span> <span class="dag">†</span></td><td class="num">158</td><td><span class="m">item_demand_links</span></td><td class="sub"><b>already ruled — P0.6</b></td></tr>
-      <tr><td><span class="m">term_item_links</span></td><td class="num">147</td><td class="sub">unchanged</td><td class="sub">already correct</td></tr>
-      <tr><td><span class="m">slugs</span></td><td class="num">106</td><td class="sub">unchanged</td><td class="sub">registry</td></tr>
-      <tr><td><span class="m">items</span></td><td class="num">93</td><td class="dag">see F.1 — its stage is in question</td><td class="sub">the 2026-08-26 ruling makes it a render rollup</td></tr>
-      <tr><td><span class="m">terms</span></td><td class="num">88</td><td class="sub">unchanged</td><td class="sub">registry</td></tr>
-      <tr class="fault"><td><span class="m">lang_jur_map</span> <span class="dag">†</span></td><td class="num">70</td><td><span class="m">language_jurisdiction_links</span></td><td class="sub">faults 6, 7, and two abbreviations</td></tr>
-      <tr class="fault"><td><span class="m">population_axis_map</span> <span class="dag">†</span></td><td class="num">53</td><td><span class="m">population_demand_links</span></td><td class="sub"><b>P0.6</b> + fault 6</td></tr>
-      <tr class="fault"><td><span class="m">access_need_icf</span> <span class="dag">†</span></td><td class="num">43</td><td><span class="m">access_need_icf_links</span></td><td class="sub">faults 6, 7</td></tr>
-      <tr><td><span class="m">populations</span></td><td class="num">23</td><td class="sub">unchanged</td><td class="sub">registry</td></tr>
-      <tr class="fault"><td><span class="m">access_need_axis_map</span> <span class="dag">†</span></td><td class="num">21</td><td><span class="m">access_need_demand_links</span></td><td class="sub"><b>P0.6</b> + fault 6</td></tr>
-      <tr class="fault"><td><span class="m">axes</span> <span class="dag">†</span></td><td class="num">17</td><td><span class="m">icf_demands</span></td><td class="sub"><b>already ruled — P0.6</b></td></tr>
-      <tr><td><span class="m">access_needs</span></td><td class="num">17</td><td class="sub">unchanged</td><td class="sub">registry</td></tr>
-      <tr class="fault"><td><span class="m">weighting_profile</span> <span class="dag">†</span></td><td class="num">5</td><td><span class="m">weighting_profiles</span></td><td class="sub">fault 7</td></tr>
-      <tr class="fault"><td><span class="m">access_duration</span> <span class="dag">†</span></td><td class="num">3</td><td><span class="m">access_durations</span></td><td class="sub">fault 7</td></tr>
-      <tr><td><span class="m">access_stakes</span></td><td class="num">3</td><td class="sub">unchanged</td><td class="sub">registry</td></tr>
-      <tr><td><span class="m">life_stage_modifiers</span></td><td class="num">2</td><td class="sub">unchanged</td><td class="sub">registry</td></tr>
-      <tr class="fault"><td><span class="m">pipeline_runs</span></td><td class="num">1</td><td class="sub">unchanged</td><td class="sub">see F.3</td></tr>
-      <tr><td><span class="m">item_population_elaborations</span></td><td class="num">0</td><td class="sub">unchanged</td><td class="sub">but it points <em>into</em> evidence — see B.2</td></tr>
-      <tr><td><span class="m">situations</span></td><td class="num">0</td><td class="sub">unchanged</td><td class="sub">0 rows — delete candidate</td></tr>
+      <tr class="fault"><td class="sub">— none as a row —</td><td class="num">—</td><td><b><span class="m">ren_items</span></b></td><td class="sub">render surfaces are files under <span class="m">site/</span> and <span class="m">parts/</span>. Whether they gain a row is open — see F.2</td></tr>
+      <tr><td><span class="m">rooms</span></td><td class="num">17</td><td><span class="m">ren_rooms</span></td><td class="sub">prefix only</td></tr>
+      <tr class="fault"><td><span class="m">room_items</span> <span class="dag">†</span></td><td class="num">0</td><td><span class="m">ren_room_links</span></td><td class="sub">junction — and <span class="m">_items</span> now means something specific, so it cannot keep this name</td></tr>
+      <tr><td><span class="m">case_studies</span></td><td class="num">0</td><td><span class="m">ren_case_studies</span></td><td class="sub">prefix only</td></tr>
+      <tr><td><span class="m">case_study_outcomes</span></td><td class="num">0</td><td><span class="m">ren_case_study_outcomes</span></td><td class="sub">prefix only</td></tr>
+      <tr class="fault"><td><span class="m">case_study_populations</span> <span class="dag">†</span></td><td class="num">0</td><td><span class="m">ren_case_study_population_links</span></td><td class="sub">junction</td></tr>
+      <tr class="fault"><td><span class="m">case_study_specs</span> <span class="dag">†</span></td><td class="num">0</td><td><span class="m">ren_case_study_links</span></td><td class="sub"><b>named for the specification, foreign-keyed to <span class="m">items</span></b></td></tr>
+      <tr><td><span class="m">case_study_strategies</span></td><td class="num">0</td><td><span class="m">ren_case_study_strategies</span></td><td class="sub">prefix only</td></tr>
+      <tr><td><span class="m">economics_entries</span></td><td class="num">0</td><td><span class="m">ren_economics_entries</span></td><td class="sub">prefix only</td></tr>
+      <tr class="fault"><td><span class="m">economics_entry_populations</span> <span class="dag">†</span></td><td class="num">0</td><td><span class="m">ren_economics_population_links</span></td><td class="sub">junction</td></tr>
+      <tr class="fault"><td><span class="m">economics_entry_specs</span> <span class="dag">†</span></td><td class="num">0</td><td><span class="m">ren_economics_links</span></td><td class="sub"><b>same fault</b></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="stage-head st-substrate"><h4>Substrate — no prefix</h4><span class="meta">3,861 rows</span></div>
+  <div class="caution"><b><span class="m">items</span> is retired outright.</b> The word was the
+  ambiguity, and its rollup role passes to whatever <span class="m">ren_items</span> becomes. The 10
+  foreign keys targeting <span class="m">items.item_code</span> are re-pointed or dropped in the same
+  migration.</div>
+  <div class="scroll"><table>
+    <thead><tr><th>Current</th><th class="num">Rows</th><th>Proposed</th></tr></thead>
+    <tbody>
+      <tr><td><span class="m">term_aliases</span></td><td class="num">2382</td><td class="sub">unchanged — <em>proposed as <span class="m">term_alias_links</span> on a first pass and withdrawn: <span class="m">alias</span> is the payload</em></td></tr>
+      <tr><td><span class="m">item_population_links</span></td><td class="num">372</td><td class="sub">re-pointed once <span class="m">items</span> retires</td></tr>
+      <tr><td><span class="m">data_migrations</span></td><td class="num">352</td><td class="sub">unchanged — see F.3</td></tr>
+      <tr><td><span class="m">decisions</span></td><td class="num">166</td><td class="sub">unchanged — see F.3</td></tr>
+      <tr class="fault"><td><span class="m">item_axis_links</span> <span class="dag">†</span></td><td class="num">158</td><td><span class="m">item_demand_links</span> <span class="sub">— already ruled, P0.6</span></td></tr>
+      <tr><td><span class="m">term_item_links</span></td><td class="num">147</td><td class="sub">re-pointed once <span class="m">items</span> retires</td></tr>
+      <tr><td><span class="m">slugs</span></td><td class="num">106</td><td class="sub">unchanged</td></tr>
+      <tr class="fault"><td><span class="m">items</span> <span class="dag">‡†</span></td><td class="num">93</td><td><b>retired</b></td></tr>
+      <tr><td><span class="m">terms</span></td><td class="num">88</td><td class="sub">unchanged</td></tr>
+      <tr class="fault"><td><span class="m">lang_jur_map</span> <span class="dag">†</span></td><td class="num">70</td><td><span class="m">language_jurisdiction_links</span></td></tr>
+      <tr class="fault"><td><span class="m">population_axis_map</span> <span class="dag">†</span></td><td class="num">53</td><td><span class="m">population_demand_links</span> <span class="sub">— P0.6</span></td></tr>
+      <tr class="fault"><td><span class="m">access_need_icf</span> <span class="dag">†</span></td><td class="num">43</td><td><span class="m">access_need_icf_links</span></td></tr>
+      <tr><td><span class="m">populations</span></td><td class="num">23</td><td class="sub">unchanged</td></tr>
+      <tr class="fault"><td><span class="m">access_need_axis_map</span> <span class="dag">†</span></td><td class="num">21</td><td><span class="m">access_need_demand_links</span> <span class="sub">— P0.6</span></td></tr>
+      <tr class="fault"><td><span class="m">axes</span> <span class="dag">†</span></td><td class="num">17</td><td><span class="m">icf_demands</span> <span class="sub">— already ruled, P0.6</span></td></tr>
+      <tr><td><span class="m">access_needs</span></td><td class="num">17</td><td class="sub">unchanged</td></tr>
+      <tr class="fault"><td><span class="m">weighting_profile</span> <span class="dag">†</span></td><td class="num">5</td><td><span class="m">weighting_profiles</span></td></tr>
+      <tr class="fault"><td><span class="m">access_duration</span> <span class="dag">†</span></td><td class="num">3</td><td><span class="m">access_durations</span></td></tr>
+      <tr><td><span class="m">access_stakes</span></td><td class="num">3</td><td class="sub">unchanged</td></tr>
+      <tr><td><span class="m">life_stage_modifiers</span></td><td class="num">2</td><td class="sub">unchanged</td></tr>
+      <tr><td><span class="m">pipeline_runs</span></td><td class="num">1</td><td class="sub">unchanged — see F.3</td></tr>
+      <tr><td><span class="m">item_population_elaborations</span></td><td class="num">0</td><td class="sub">re-pointed; note it points <em>into</em> evidence, inverting the substrate model</td></tr>
+      <tr><td><span class="m">situations</span></td><td class="num">0</td><td class="sub">unchanged — 0 rows, delete candidate</td></tr>
     </tbody>
   </table></div>
 </section>
 
 <section id="open">
-  <h2><span class="pt">PART F</span> What this does not decide</h2>
+  <h2><span class="pt">PART F</span> Left open</h2>
+  <h3>F.1 — <span class="m">judgment_items</span> needs a column set</h3>
+  <p>It is the only genuinely new table, and nothing in the schema prefigures it. Minimum:
+  <span class="m">evidence_item_id NOT NULL</span> (never UNIQUE), a soundness determination, a weight
+  or tier basis, and the population-match grade moving in from
+  <span class="m">evidence_population_match</span>. Owed a design before the migration.</p>
 
-  <h3>F.1 — <span class="m">items</span> may not be substrate any more</h3>
-  <p>The derived stage map (2026-08-25) files <span class="m">items</span> under substrate as a
-  vocabulary. The owner ruling of <b>2026-08-26</b> makes it <em>"the Part-4 render rollup … derived
-  from specifications rather than keyed by them."</em> Under the derivation test — <em>whose own work
-  does this record?</em> — a table derived from judgment output is <b>render</b>, not substrate.</p>
-  <p>If that reading holds, the cross-stage map in Part B changes underneath everything above: all
-  <b>10</b> foreign keys targeting <span class="m">items.item_code</span> are re-classified, and three
-  of them stop being cross-stage at all because both ends land in render. The remaining seven —
-  including four from judgment — become <em>forward</em> pointers, of the kind B.2 finds are otherwise
-  almost absent. <b>This is the highest-consequence open question here, and it is the owner's.</b></p>
+  <h3>F.2 — <span class="m">render_items</span> may not be a table</h3>
+  <p>Render surfaces are files. Either render's hand-off is the file path — and
+  <span class="m">ren_items</span> is a manifest row per published surface — or render is the one
+  stage whose item lives outside the database. Both are defensible; neither is decided.</p>
 
-  <h3>F.2 — The entity model's arrow runs backwards from the ruled pipeline</h3>
-  <div class="panel" style="border-left:3px solid var(--fault)">
-    <p class="note" style="margin:0"><span class="m">governance/conceptual-model.md:90</span> —
-    <em>"ENT-02 → ENT-03 → ENT-01 … Sources feed into BPC entries. <b>BPC synthesis produces
-    specifications.</b>"</em></p>
-  </div>
-  <p>That is evidence → <b>synthesis</b> → judgment. The ruled pipeline is evidence → <b>judgment</b>
-  → synthesis. The model predates the ruling, and one of them has to be corrected — a rename executed
-  against the wrong one bakes the contradiction into sixty-six names.</p>
-
-  <h3>F.3 — Three tables are in no stage and not really substrate either</h3>
+  <h3>F.3 — Three tables are in no stage and not really substrate</h3>
   <p><span class="m">decisions</span> (166), <span class="m">data_migrations</span> (352),
   <span class="m">pipeline_runs</span> (1) record <b>the project's own acts</b>, not the book's
-  content. They are filed under substrate for want of anywhere else. A <span class="m">meta_</span>
-  prefix is arguable; so is leaving them alone.</p>
+  content. A <span class="m">meta_</span> prefix is arguable; so is leaving them.</p>
 
-  <h3>F.4 — Key <em>kind</em> is out of scope and should not be</h3>
-  <p>Renaming <span class="m">search_executions</span> does not fix <span class="m">exec_id</span>
-  being a rowid. A rename migration is the cheapest moment this project will ever have to also make
-  the judgment stage's key a stable code — <span class="m">specifications</span> holds <b>0 rows</b>.
-  After the first determination, it is re-reasoning.</p>
+  <h3>F.4 — Key kind</h3>
+  <p>Renaming does not fix <span class="m">exec_id</span> and <span class="m">specification_id</span>
+  being rowids. The rename migration is the cheapest moment this project will ever have to make them
+  stable codes.</p>
+
+  <div class="panel" style="border-left:3px solid var(--accent)">
+    <h4>Closed by the six-stage ruling</h4>
+    <p class="note" style="margin:0">The contradiction between the ruled pipeline and
+    <span class="m">conceptual-model.md:90</span> (<em>"BPC synthesis produces specifications"</em>).
+    The entity model was right; the five-stage list was the anomaly.</p>
+  </div>
 </section>
 
 <section id="cost">
-  <h2><span class="pt">PART G</span> What it would cost</h2>
+  <h2><span class="pt">PART G</span> Cost</h2>
   <div class="panel" style="border-left:3px solid var(--accent)">
     <h4>Now is the cheapest it will ever be</h4>
-    <p class="note" style="margin:0">13 of the 66 tables — <b>all of judgment and all of
-    synthesis</b> — hold zero rows, and every render table but <span class="m">rooms</span> holds
-    zero. A rename there is DDL only.</p>
+    <p class="note" style="margin:0">Judgment, synthesis and specification hold <b>0 rows</b> between
+    them; every render table but <span class="m">rooms</span> holds 0. The renames, the two NOT NULL
+    hand-off columns and the three junctions are all DDL. After the first determination, every one of
+    them is re-reasoning.</p>
   </div>
   <p><b>The sweep is the cost, not the SQL.</b> A rename is not done until the callers are swept, and
   <em>a view is a caller, and so is a skill</em>. Migration 064 exists because 063 swept eight Python
-  readers and six skills and missed one view. Here the caller set is:</p>
+  readers and six skills and missed one view.</p>
   <div class="scroll"><table>
     <thead><tr><th>Caller</th><th>Why it bites</th></tr></thead>
     <tbody>
-      <tr><td><b>18 views</b>, 7 of them cross-stage</td><td>each one is a pointer that rule 5 protects from deletion</td></tr>
+      <tr><td><b>18 views</b>, 7 of them cross-stage</td><td>each is a pointer rule 5 protects from deletion</td></tr>
       <tr><td>every <span class="m">db.py</span> subcommand, <span class="m">dbcore</span>, the Pydantic models</td><td>schema ↔ model drift is a bug, not a convention</td></tr>
-      <tr><td><span class="m">governance/check-registry.yaml</span></td><td>encodes stage-qualified <span class="m">basis:</span> references — it broke the selftest on the last stage rename</td></tr>
+      <tr class="fault"><td><span class="m">governance/pipeline-contract.yaml</span></td><td>needs a <b>new <span class="m">specification</span> stage</b> with entry conditions and criteria before anything can reference it</td></tr>
+      <tr class="fault"><td><span class="m">tools/pipeline_completeness.py</span> <span class="m">STAGES</span></td><td>five hardcoded ids, behind the blocking <span class="m">pipeline_completeness_fresh</span> gate</td></tr>
+      <tr class="fault"><td><span class="m">governance/check-registry.yaml</span></td><td>stage-qualified <span class="m">basis:</span> references — the exact surface that broke <span class="m">--selftest</span> on the last stage rename</td></tr>
       <tr><td>the skills</td><td>they teach table names in prose, and nothing greps prose for correctness</td></tr>
-      <tr class="fault"><td><span class="m">scripts/migrations/data_*</span></td><td>a column a committed data migration INSERTs can never simply be dropped — and the same replay-order trap that cost migration 062 applies to a table rename</td></tr>
+      <tr class="fault"><td><span class="m">scripts/migrations/data_*</span></td><td>a column a committed data migration INSERTs can never simply be dropped — and migration 062's replay-order trap applies to a table rename</td></tr>
     </tbody>
   </table></div>
   <p><b>One migration, or not at all.</b> The bar on piecemeal execution applies with far more force
-  at sixty-six tables than at four.</p>
+  at sixty-six tables plus a new stage than at four tables.</p>
 </section>
 
 <section id="views">
-  <h2><span class="pt">PART H</span> Appendix — the seven cross-stage views</h2>
-  <p class="lede">CLAUDE.md names four. Re-derived 2026-08-27 against the stage map, resolving nested
-  views and quoted table names, there are seven — and one of CLAUDE.md's four is not among them.</p>
+  <h2><span class="pt">PART H</span> Appendix — the cross-stage views</h2>
+  <p class="lede">CLAUDE.md named four. Re-derived 2026-08-27 against the five-stage map, resolving
+  nested views and quoted table names, there are seven.</p>
   <div class="scroll"><table>
-    <thead><tr><th>View</th><th>Spans</th><th>Reads</th></tr></thead>
+    <thead><tr><th>View</th><th>Reads</th></tr></thead>
     <tbody>
-      <tr><td><span class="m">v_source_admission</span></td><td><span class="chip st-evidence">evi</span> <span class="chip st-research">res</span></td><td class="sub">evidence_sources, search_admissions, search_executions</td></tr>
-      <tr><td><span class="m">v_item_provenance</span></td><td><span class="chip st-evidence">evi</span> <span class="chip st-judgment">jud</span> <span class="chip st-substrate">sub</span></td><td class="sub">+ specifications, specification_source_links, items</td></tr>
-      <tr><td><span class="m">v_source_reach_all</span></td><td><span class="chip st-evidence">evi</span> <span class="chip st-judgment">jud</span> <span class="chip st-substrate">sub</span></td><td class="sub">+ specifications, specification_source_links, items</td></tr>
-      <tr class="fault"><td><span class="m">v_code_floor_only</span></td><td><span class="chip st-judgment">jud</span> <span class="chip st-research">res</span></td><td class="sub">specifications, jurisdictional_values — <b>not in CLAUDE.md's list</b></td></tr>
-      <tr class="fault"><td><span class="m">v_pending</span></td><td><span class="chip st-judgment">jud</span> <span class="chip st-research">res</span></td><td class="sub">specifications, gaps — <b>not in the list</b></td></tr>
-      <tr class="fault"><td><span class="m">v_item_extractions</span></td><td><span class="chip st-evidence">evi</span> <span class="chip st-substrate">sub</span></td><td class="sub">source_value_extractions, evidence_sources, items — <b>not in the list</b></td></tr>
-      <tr class="fault"><td><span class="m">v_coverage_priority</span></td><td><span class="chip st-research">res</span> <span class="chip st-substrate">sub</span></td><td class="sub">search_executions, slugs, lang_jur_map — <b>not in the list</b></td></tr>
+      <tr><td><span class="m">v_source_admission</span></td><td class="sub">evidence_sources, search_admissions, search_executions</td></tr>
+      <tr><td><span class="m">v_item_provenance</span></td><td class="sub">+ specifications, specification_source_links, items</td></tr>
+      <tr><td><span class="m">v_source_reach_all</span></td><td class="sub">+ specifications, specification_source_links, items</td></tr>
+      <tr class="fault"><td><span class="m">v_code_floor_only</span></td><td class="sub">specifications, jurisdictional_values — <b>not in the old list</b></td></tr>
+      <tr class="fault"><td><span class="m">v_pending</span></td><td class="sub">specifications, gaps — <b>not in the old list</b></td></tr>
+      <tr class="fault"><td><span class="m">v_item_extractions</span></td><td class="sub">source_value_extractions, evidence_sources, items — <b>not in the old list</b></td></tr>
+      <tr class="fault"><td><span class="m">v_coverage_priority</span></td><td class="sub">search_executions, slugs, lang_jur_map — <b>not in the old list</b></td></tr>
     </tbody>
   </table></div>
   <div class="caution">
-    <b>v_divergence is not cross-stage.</b> CLAUDE.md records it as <em>judgment ← synthesis</em>; it
-    reads <span class="m">specifications</span> and <span class="m">convergence_assessment</span>, and
-    the derived map puts <b>both in judgment</b>. That list predates the re-derivation the same file
-    mandates. This matters beyond bookkeeping: CLAUDE.md protects cross-stage views from deletion
-    because <em>a cross-stage view</em> is <em>the pointer</em>. <b>Four more views are protected than
-    that list names.</b>
+    <b>And a correction of my own correction.</b> I reported that
+    <span class="m">v_divergence</span> is not cross-stage — true under the five-stage map, where
+    <span class="m">specifications</span> and <span class="m">convergence_assessment</span> both sat
+    in judgment. <b>Under the six-stage ruling it becomes cross-stage again</b>, since
+    <span class="m">specifications</span> moves to specification and
+    <span class="m">convergence_assessment</span> to synthesis. The old list reached the right answer
+    by the wrong route. Every span above is likewise owed a re-derivation under six stages — and
+    since CLAUDE.md protects cross-stage views from deletion <em>because a cross-stage view is the
+    pointer</em>, the protected set only grows.
   </div>
 </section>
 
 <footer>
   Derived read-only from data/guidebook.db at user_version 64, 2026-08-27 ·
   Source of record: scratchpad/session_2026-08-27-nomenclature-reconciliation/NOMENCLATURE.md ·
-  Two proposals were withdrawn under this document's own tests, and are shown withdrawn rather than removed.
+  Superseded proposals are shown withdrawn rather than removed.
 </footer>
 </div>

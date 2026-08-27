@@ -20,40 +20,58 @@ stage its table belongs to. Owner ruling 2026-08-25.
 
 ## THE PIPELINE — read this before anything else
 
-**Owner ruling 2026-08-25**, superseding the owner's own list of 2026-08-24:
+**Owner ruling 2026-08-27**, superseding the five-stage list of 2026-08-25:
 
-> **`research → evidence collection → judgment → synthesis → render`**
+> **`research → evidence collection → judgment → synthesis → specification → render`**
+
+In the owner's own formulation: *"you research slugs, evidence research, judge evidence, synthesize
+judgments, specify syntheses, and render specifications."* **`specification` is a stage again, and it
+comes AFTER synthesis** — which restores `governance/conceptual-model.md:90`'s own arrow (*"BPC
+synthesis produces specifications"*), unchanged in the entity model since the baseline. The
+2026-08-25 wording below is superseded and is not an argument against this; full record in
+`references/project-standards.md`, 2026-08-27.
 
 Rule 5 says each stage holds only its own data and anything earlier is reached by pointer. **That
 is unusable without knowing which stage a table is in** — you cannot tell a legitimate
 stage-specific fact from a copy. So the map is a stopper, not orientation.
 
 **Substrate is not a stage.** The vocabularies and registries — `items`, `populations`, `slugs`,
-`terms`, `access_needs`, the crossing maps, `decisions`, `data_migrations` — are the layer all five
-stages point into.
+`terms`, `access_needs`, the crossing maps, `decisions`, `data_migrations` — are the layer all six
+stages point into. (`items` is retired as a table name by the 2026-08-27 `-item` ruling; the word was
+the ambiguity.)
 
 | Stage | Holds |
 |---|---|
 | **research** | What was searched, screened and mined, plus the clue store |
 | **evidence collection** | What was admitted, its identity, verification and extraction |
-| **judgment** | Determination — grading, population matching, the cell. Writes `specifications` |
-| **synthesis** | Weighing, convergence, cross-slug findings |
+| **judgment** | Whether an extraction is sound and how it weighs — grading, population matching |
+| **synthesis** | What the judgments say together — weighing, convergence, cross-slug findings |
+| **specification** | The determination: *therefore 1200 mm, marked ●*. Writes `specification_items` |
 | **render** | Book surfaces — `site/`, `parts/`, `tools/*.html`, and the content tables behind them |
 
-**`specifications` is a TABLE, not a stage** — `judgment` writes it. The 2026-08-24 wording that
-made it a stage is superseded.
+**Every stage's hand-off object is `<stage>_items`, and the hand-off is a NOT NULL foreign key.**
+Owner ruling 2026-08-27. Measured the same day: **not one foreign key in the schema lands on any
+stage's hand-off object** — `source_locators` and `bpc_metadata` have zero inbound keys at all, and
+`source_value_extractions` and `specifications` have one each, both same-stage. All 41 cross-stage
+keys point at substrate vocabularies or sideways. **The walk itself has no keys**, which is why it
+does not walk. The rename creates the spine; `judgment_items` is a NEW table, not a rename.
 
-**Derive the table-to-stage assignment; do not read one out of a document.** The six-bucket
-assignment in the 2026-08-24 stage-discipline audit is agent-authored, predates this ruling, and
-must be re-derived against these five stages before it is relied on again.
+**Derive the table-to-stage assignment; do not read one out of a document.** Every bucket assignment
+written before 2026-08-27 — including the 2026-08-25 derivation in
+`scratchpad/session_2026-08-25-pipeline-smoke-test-mobility/STAGE-TABLE-MAP.md` — predates the
+six-stage ruling and must be re-derived against these six stages before it is relied on again.
 
 **A CROSS-STAGE VIEW *IS* THE POINTER, AND IS THEREFORE THE MOST PROTECTED OBJECT IN THE SCHEMA.**
 Rule 5 says point, do not copy. **A view that joins two stages on the shared reference ID is what
 "point" MEANS in SQL** — the owner's *"call up information from any one so long as you point to the
 correct table and column"*, and *"for rendering a citation, we point towards the evidence table for
-that reference ID"*, are descriptions of a join. Measured 2026-08-25, four views cross a boundary:
-`v_source_admission` (evidence-collection ← research), `v_item_provenance` and `v_source_reach_all`
-(evidence-collection ← judgment), `v_divergence` (judgment ← synthesis).
+that reference ID"*, are descriptions of a join. **Re-measured 2026-08-27 — resolving nested views
+and quoted table names, which the earlier pass missed — SEVEN views cross a boundary, not four:**
+`v_source_admission`, `v_item_provenance`, `v_source_reach_all`, `v_code_floor_only`, `v_pending`,
+`v_item_extractions`, `v_coverage_priority`. **`v_divergence` is NOT one** — it reads
+`specifications` and `convergence_assessment`, and the earlier list mis-assigned it. Four more views
+are protected than the old list named. (These spans are stated against the five-stage map and are
+themselves owed a re-derivation under the six-stage ruling.)
 
 **Before deleting any view, ask which stages it spans.** A cross-stage view is not apparatus and is
 not a candidate for a cull — deleting it removes the pointer and forces the next reader back to

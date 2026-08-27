@@ -1439,3 +1439,139 @@ above. (4) Category-A `exempt_paths` for the documents that record the retiremen
 the attestations naming them. (5) The rename stays owner-gated and whole; §R8 item 3's bar on
 piecemeal execution is unchanged.
 DATE: 2026-08-26 — owner ruling, selecting from options put.
+
+---
+
+RULE: The pipeline is SIX stages, and `specification` is one of them — after synthesis, not inside
+judgment. Owner ruling 2026-08-27, in the owner's own formulation:
+
+> *"you research slugs, evidence research, judge evidence, synthesize judgments, specify syntheses,
+> and render specifications."*
+
+Recorded on contact per `CLAUDE.md` rule 0. **This supersedes the 2026-08-25 ruling** that
+*"`specifications` is a TABLE, not a stage — `judgment` writes it"*, and with it the five-stage spine
+`research → evidence collection → judgment → synthesis → render`. The superseded wording is not an
+argument against this one and must not be cited as such.
+
+**The spine, and the verb that produces each step:**
+
+| # | stage | consumes | produces |
+|---|---|---|---|
+| 1 | `research` | slugs | **research-items** — a lead: what to go and get |
+| 2 | `evidence-collection` | research-items | **evidence-items** — "the paper says 1200 mm" |
+| 3 | `judgment` | evidence-items | **judgment-items** — whether that extraction is sound, and how it weighs |
+| 4 | `synthesis` | judgment-items | **synthesis-items** — what the judgments say together |
+| 5 | `specification` | synthesis-items | **specification-items** — therefore: 1200 mm, marked ● |
+| 6 | `render` | specification-items | **render-items** — the surface a reader opens |
+
+**This restores the entity model's own arrow.** `governance/conceptual-model.md:90` reads *"ENT-02 →
+ENT-03 → ENT-01 … Sources feed into BPC entries. **BPC synthesis produces specifications.**"* — that
+is synthesis before specification, and it has been in the canonical entity model since the baseline.
+The five-stage ruling contradicted it; this one agrees with it. **The contradiction flagged as open
+question F.2 in the nomenclature audit is thereby closed, in the entity model's favour.**
+
+**Substrate is still not a stage.** Six stages, plus the layer they all point into.
+
+CONDITION: Any session reading, writing or enforcing the stage spine.
+ACTION: (1) `CLAUDE.md`'s pipeline section, `governance/pipeline-contract.yaml`'s `stages:` list and
+`tools/pipeline_completeness.py`'s `STAGES` all state five and must state six; the contract needs a
+`specification` stage with entry conditions and criteria, and `check-registry.yaml`'s
+stage-qualified `basis:` references must be re-pointed — that is a blocking-gate change and a
+`--selftest` failure if done piecemeal (the trap that cost a cycle on 2026-08-25). (2) The
+`stage_id[:3]` prefix derivation still yields six distinct codes: `res_ evi_ jud_ syn_ spe_ ren_`.
+DATE: 2026-08-27 — owner ruling, quoted above.
+
+---
+
+RULE: Every stage's hand-off object is named `<stage>_items`, and the hand-off is a NOT NULL foreign
+key. Owner ruling 2026-08-27, two parts, both quoted:
+
+> *"instead of using the word 'items' or anything like that, just call them whatever their stage is
+> and add -item … an 'item' in evidence is just under column called… evidence-item. evidence-items
+> get judged in judgment. these judgments are judgment-item"*
+>
+> *"we don't need to iterate different words for item — we just append '-item'."*
+
+The second sentence is a **correction to work in flight**: the nomenclature audit of the same day
+proposed a distinct noun per table (`res_leads`, `res_code_leads`, `evi_extractions`, `evi_roots`,
+`syn_best_practice`). That is superseded for the hand-off object. **One word, appended.**
+
+**Why this is structural and not cosmetic — measured 2026-08-27.** Not one foreign key in the schema
+lands on any stage's hand-off object:
+
+| stage output | inbound FKs | of those, cross-stage |
+|---|---:|---:|
+| `source_locators` — the lead | **0** | 0 |
+| `source_value_extractions` — the extracted value | 1 | **0** |
+| `specifications` — the determination | 1 | **0** |
+| `bpc_metadata` — the synthesis | **0** | 0 |
+
+All **41** cross-stage foreign keys point at substrate vocabularies (`slug` 14, `item_code` 10,
+`population_code` 7), at `evidence_sources` (6), or sideways. **None of them is a hand-off.** Each
+stage is joined to the next through a shared topic label, not through the thing the previous stage
+produced — which is why the pipeline does not walk, and it is a deeper defect than the naming.
+
+Two of the same class: `item_bpc_links` is named for BPC and **does not reference `bpc_metadata`**,
+keying `slug` + `item_code` instead; and `spec_value_probes` reaches back past the extraction to
+`evidence_sources`, the paper.
+
+**So the rename creates the spine.** Owner ruling, same day, selecting *"the rename creates the
+spine"* over deferring it to a second migration.
+
+**And the spine changes shape halfway, because the cardinality reverses.** Owner statement, same day:
+
+> *"research produces many rows of evidence from one slug. each row of evidence provides one row for
+> judgment. one-to-many rows of judgment provide one row for syntheses. one-to-many rows of syntheses
+> provide one row for specifications."*
+
+That is a **fan-out** through research → evidence → judgment and a **fan-in** through synthesis →
+specification → render. The pivot sits between judgment and synthesis, and **the key shape must flip
+there** — a hand-off column can only express the fan-out half.
+
+| hand-off | cardinality | shape |
+|---|---|---|
+| research → evidence | **1:N** — one lead states many parameters | `evi_items.research_item_id` **NOT NULL** |
+| evidence → judgment | **1:N** — see the dissent note below | `jud_items.evidence_item_id` **NOT NULL**, deliberately **not UNIQUE** |
+| judgment → synthesis | **N:1** | junction `syn_judgment_links(synthesis_item_id, judgment_item_id)`, both NOT NULL, **≥1 required per synthesis** |
+| synthesis → specification | **N:1** | junction `spe_synthesis_links(specification_item_id, synthesis_item_id)`, ≥1 required |
+| specification → render | **N:1** | junction |
+
+**Why a junction rather than a back-pointer on the upstream row.** A nullable
+`judgment_items.synthesis_item_id` filled in later would lose the NOT NULL guarantee, forbid one
+judgment feeding two syntheses, and — worst — require a **write into a completed stage**, which is
+what rule 5 exists to stop. The junction is written by the *downstream* stage as it creates its own
+item: *"this synthesis drew on these judgments."* Every stage still writes only its own tables.
+
+**The evidence → judgment hand-off is 1:1 in the normal case and must not be constrained to it.**
+`add-population-match` deliberately does not enforce uniqueness on (ref_id, population), so a
+dissenting adversarial grade lands as a second row and divergent grades read as a contest
+(`DR-2026-08-19` §7, carried in `CLAUDE.md` §4). Verified 2026-08-27: `evidence_population_match`
+carries no UNIQUE beyond `match_id`, and its 25 rows span 10 sources. **A `UNIQUE(evidence_item_id)`
+on `jud_items` would silently abolish the contest** and must not be added.
+
+**The schema already half-encodes the fan-in.** `bpc_metadata`'s primary key is `slug` — one
+synthesis per topic — which is exactly the N:1 described. And `source_value_extractions` carries no
+UNIQUE on `(ref_id, parameter)`, because one paper may state many parameters: the fan-out, likewise
+already encoded.
+
+**The window is open and closes on first write.** Judgment, synthesis and specification hold **0
+rows** between them, and every render table but `rooms` holds 0. A NOT NULL key added now is DDL;
+added after the first determination it is re-reasoning every row.
+
+**The six-stage split leaves exactly one table that does not exist.** `research_items`
+(`source_locators`), `evidence_items` (`source_value_extractions`), `synthesis_items`
+(`bpc_metadata`) and `specification_items` (`specifications`) all have a current occupant.
+**`judgment_items` has none** — there is no table today holding a per-extraction determination of
+soundness and weight. That is consistent with the sever already on the record: nothing writes
+`source_value_extractions`, and nothing consumes it either. `judgment_items` is its consumer.
+**`render_items` is also unoccupied** in a different way — render surfaces are files under `site/`
+and `parts/`, not rows.
+
+CONDITION: Any session naming a stage's output, designing a hand-off, or writing the rename
+migration.
+ACTION: (1) The hand-off object of every stage is `<prefix>_items`; do not coin a distinct noun for
+it. Satellite tables inside a stage keep descriptive names. (2) The five hand-off keys land in the
+same migration as the rename — not a follow-up. (3) `judgment_items` is a **new table** and its
+column set is owed a design; it is not a rename of anything. (4) `items` is retired as a table name
+outright — the word was the ambiguity.
+DATE: 2026-08-27 — owner ruling, quoted above.
