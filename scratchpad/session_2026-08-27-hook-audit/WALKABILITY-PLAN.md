@@ -2140,23 +2140,70 @@ the results. Today R11 is a *filing* rule (every alias carries its in-language s
 stronger and much earlier. The 2,382 `term_aliases` rows stop being a glossary and become **search
 input**.
 
-### 15.6 Evidence collection must not judge — and that conflicts with a live blocking rule
+### 15.6 REFUTED — evidence collection DOES adjudicate, and the conflict I found was manufactured
 
-The note's evidence stage is a **pure log**: *"logs all relevant items found in search with a unique
-reference ID, DOI/PMID and other codes if available, type of source."* No grading, no tiering, no
-value. Quality is judgment's job.
+> **Owner, 2026-08-27:** *"evidence states **relevant** items, and relevancy is something that must be
+> adjudicated against a topic/category/concept"*
 
-**But R1 is an admission-time gate** — *"Co-1 / T2 / Co-2 pass FIRST — no exceptions"* — enforced by
-the blocking `research_batch_dod` check, which passed this session with *"7 co1/co2-targeted searches,
-3 co1/co2 sources."* R1 decides what may be admitted **on quality grounds, at collection.**
+**I called the note's evidence stage a "pure log" and built a process conflict on it.** The note says
+*"logs all **relevant** items found in search"* — and relevance is not a property a document carries.
+**It is a relation, adjudicated against a topic.** Collection therefore judges; it simply judges a
+different question from judgment.
 
-> **Under the note's process, R1 belongs at judgment, not admission.** Either collection logs
-> everything relevant and judgment sorts it, or collection filters and is not a pure log. **Both
-> cannot hold**, and the enforced rule currently wins because it is the one with a gate behind it.
+| stage | adjudicates | the question |
+|---|---|---|
+| evidence collection | **relevance** | is this document *about* this topic? |
+| judgment | **tier and category**, then derives the output | is the claim sound, and what does it say? |
 
-This is a genuine process conflict, not a naming one, and it should be ruled before the process
-changes. **The R1 ordering has a real purpose** — it stops a batch filling with T4–T6 regulatory
-material and never reaching lived experience — so moving it needs the same protection at judgment.
+Two adjudications, two stages, **no conflict.** R1's phase in `governance/research-contract.yaml` is
+`before-admitting`, which is exactly consistent with collection being an adjudicating stage. My
+"R1 belongs at judgment" was wrong, and so was the claim that both could not hold. **Nothing needs
+ruling here.** Struck.
+
+**But the correction surfaces a real defect, and it is measured.**
+
+If relevance is adjudicated, the adjudication has grounds, and the grounds belong on the
+(source, topic) edge. That edge exists — `source_slug_links` — and it **already carries a column for
+exactly this**:
+
+| | measured 2026-08-27 |
+|---|---:|
+| `source_slug_links` rows | **10** |
+| `relevance_note` **populated** | **0** |
+| distinct topics linked | **1** |
+| `search_admissions` columns recording grounds | **none** — `(exec_id, ref_id, created_at, session)` |
+
+**The relevance adjudication is being made and never recorded.** The column is there and has never
+been filled once. This is the same defect class as the 2026-08-19 fabrication — where six gates asked
+whether author fields were *populated* and never whether they were *true*. Here it is one step worse:
+**nothing asks whether the grounds exist at all.**
+
+**A distinction the project is one step from conflating, and it would be expensive.**
+
+- **Relevance** — evidence collection — *this document is about ramp gradients.*
+- **Applicability** — synthesis — *this evidence bears on wheeled mobility users' ramp gradients.*
+
+`DR-2026-08-24` §2.4 rules that **applicability** is an OUTPUT of synthesis and must never be
+presupposed. That ruling says nothing about relevance, and it cannot: **relevance must be settled at
+collection or nothing can be admitted at all.** Conflating them fails in both directions — defer
+relevance to synthesis and admission becomes impossible; decide applicability at collection and the
+DR is breached. They are different questions at different stages and the schema should not let one
+stand in for the other.
+
+**And relevance has a granularity problem the schema cannot express.** The owner names
+*"topic/category/concept"* — three levels — and the note's own topic list spans two explicitly:
+*"ranging from categories like circulation and acoustics to more specific elements like ramp slopes,
+grab bar heights."*
+
+Measured: **`slugs` is flat.** No parent, category, group or level column; 106 leaf topics.
+(`items` does carry a `category` column — the element list is categorised, the topic list is not.)
+
+> So a source relevant at the **category** level — a paper about acoustics generally — can only be
+> linked to individual leaf slugs. It is either **copied across every acoustic topic** (rule 5) or
+> **attached to none and lost**. There is no third option in the current schema.
+
+That is a concrete, cheap fix — a parent column on the topic list — and it is a precondition for
+relevance being adjudicable at the level the owner describes.
 
 ### 15.7 The largest gap: three of the four judgment outputs have nowhere to live
 
