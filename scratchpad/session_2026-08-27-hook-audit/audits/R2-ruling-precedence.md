@@ -279,11 +279,11 @@ inverse error: preserving too much, not superseding too much).
 
 | rank | id | finding | where |
 |---|---|---|---|
-| BLOCKER | B1 | RENAME-MAP declares "the note wins on rule 0" and re-homes `source_locators` to substrate **after** the owner refused exactly that (item #3) and demoted the note | `RENAME-MAP.md:23,36,§2`; ledger:1911; commits 15fc1b6/9177084/fa2dc51 |
+| BLOCKER→repaired | B1 | RENAME-MAP declared "the note wins on rule 0" and re-homed `source_locators` to substrate **after** the owner refused exactly that (item #3); corrected mid-audit at `:36-52`; residuals at `:23-24`, `:56-69` (C-1..C-3 now ruled), `:98` | `RENAME-MAP.md`; ledger:1911, 2046-2125 |
 | MAJOR | M1 | "§R8's substance survives in full / only the noun changes" leaves six companion replacement names (`demand_code`, `item_demand_links`…) orphaned and unflagged | ledger:2095-2102 vs 1099-1101 |
 | MAJOR | M2 | `CLAUDE.md` stale on four points against adoptions #1/#2 and the overrule | `CLAUDE.md:56,66`, pipeline table, `:426,431` |
 | MAJOR | M3 | #14 (spec keys from judgment item) vs #16 (spec consumes synthesis-items) — no reconciliation recorded | ledger:1229 vs 1455-1462, 1362 |
-| MAJOR | M4 | owner-notes header asserts rule-0 supersession-on-contact for a document the owner called a proposal | `references/owner-notes/2026-08-27-architecture-note.md` Status |
+| MAJOR→repaired | M4 | owner-notes header asserted rule-0 supersession-on-contact for a proposal; Status rewritten mid-audit with the adoption table; residual: `:5` still says "the governing statement" | `references/owner-notes/2026-08-27-architecture-note.md:5,7-36` |
 | MAJOR | M5 | harvest RULE: hedged owner mechanism ("probably") stated categorically; unlabeled agent design (two-table DDL, saturation rule) under owner banner | ledger:1993-2042 |
 | DEFECT | D1 | "etc"-completed taxonomy rows unlabeled as completion | ledger:2088-2092 |
 | DEFECT | D2 | "respect that = bar on folding" stated as ruling content; generalised to all pairwise folds beyond both texts | ledger:2104-2112 |
