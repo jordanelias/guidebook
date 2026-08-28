@@ -2478,3 +2478,61 @@ ACTION: Never `population`. Use the lens name (`identity`/`icf`/`needs`/`medical
 STATUS: The owner offered `base_taxonomy` with "i think"; `identity` is put back to them as the more
 consistent reading. **Confirmation pending — the rename is not applied.**
 DATE: 2026-08-28 — owner statement, quoted above.
+
+---
+
+RULE: **After the base phase, all four lenses live in the SAME table — four typed columns, one per
+lens, with a CHECK that a row states exactly one.** Owner ruling 2026-08-28:
+
+> *"we must have all of identity, icf, needs and medical grouped into same tables after the base
+> phase, and we need to do it in an intelligent manner. if i understand things correctly, it really
+> doesn't matter if we have loads of rows concerning the same source or concept"*
+
+**The defect this fixes, measured 2026-08-27.** The schema was built with identity as the canonical
+lens and the others bolted on at two points: **11 tables can express identity, 3 icf, 2 needs, 0
+medical.** Every attachment point except `items` is identity-only — `specifications`,
+`source_value_extractions`, `gaps`, `slugs`, `evidence_sources`, `case_studies`,
+`economics_entries`, `reasoning_doc_citations`, `spec_value_probes`, `convergence_assessment`. **So
+D-0170's browsing lenses were not implementable**: pick ICF and you reach one table; pick medical and
+you reach nothing.
+
+**The shape, proven on SQLite 3.45.1 before adoption:**
+
+```sql
+identity_code TEXT REFERENCES base_taxonomy_identity(code),
+icf_code      TEXT REFERENCES base_taxonomy_icf(code),
+needs_code    TEXT REFERENCES base_taxonomy_needs(code),
+medical_code  TEXT REFERENCES base_taxonomy_medical(code),
+CHECK ((identity_code IS NOT NULL) + (icf_code IS NOT NULL)
+     + (needs_code   IS NOT NULL) + (medical_code IS NOT NULL) = 1)
+```
+
+Verified: three rows carrying the same value in three different lenses are accepted; a row naming
+**two** lenses is refused; a row naming **none** is refused; and a code absent from its registry is
+refused. **Every lens column is a real typed foreign key — nothing is polymorphic.**
+
+**Why exactly one lens per row, rather than filling all four.** The base crossing maps already state
+the translation between lenses (`population_axis_map` 53 rows, `access_need_axis_map` 21,
+`access_need_icf` 43). A row asserting both `identity_code` and `icf_code` would write a fact those
+maps already hold — rule 5. **The CHECK is rule 5 enforced in DDL.** Browsing a lens is
+`WHERE <lens>_code IS NOT NULL`, and translation is a join through the crossing map.
+
+**Row multiplicity is explicitly fine** — owner, above. One value stated in four lenses is four rows,
+and that is the fan-out the pipeline already has.
+
+**Five splinter tables are DELETED, not renamed** — `extraction_population_links`,
+`probe_population_links`, `citation_population_links`, `case_study_populations`,
+`economics_entry_populations`. All hold **0 rows**, so the restructure costs no data migration.
+Renaming them first and reshaping them after would be the double-sweep this plan exists to avoid.
+
+**Scope is "after the base phase".** The base registries keep their separate shapes (ruled: `axes`
+carries `mechanism` and anchors ICF b/d, `access_needs` carries `design_obligation` and anchors e —
+they do not fold), and the base crossing maps are pairwise by nature and untouched. **That boundary
+lands exactly where the data is**: the crossing maps hold 372 · 158 · 53 · 21 · 43 rows, while every
+downstream table this ruling reshapes holds **0**.
+
+CONDITION: Any session designing a table after the base phase, or attaching a determination,
+extraction, case study or economics entry to a group of disabled people.
+ACTION: Four lens columns, one CHECK, real FKs. Never a `population_*` link table. Never two lenses
+in one row. `population_code` is retired in favour of the four.
+DATE: 2026-08-28 — owner ruling, quoted above.
