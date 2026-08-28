@@ -53,10 +53,15 @@ SQL_VERB = re.compile(r"\b(?:SELECT|INSERT\s+INTO|UPDATE|DELETE\s+FROM|CREATE\s+
                       r"PRAGMA|REFERENCES)\b")
 # Inside a SQL region, THESE positions hold a table or view name.
 CTX = re.compile(
-    r"(?:FROM|JOIN|INTO|UPDATE|REFERENCES|CREATE\s+TABLE(?:\s+IF\s+NOT\s+EXISTS)?|"
+    r"(?:FROM|JOIN|INTO|REFERENCES|CREATE\s+TABLE(?:\s+IF\s+NOT\s+EXISTS)?|"
     r"CREATE\s+VIEW|ALTER\s+TABLE|DROP\s+TABLE|DROP\s+VIEW|"
     r"table_info\(|table_xinfo\(|foreign_key_list\(|index_list\()"
-    r"\s*[\"'`]?([a-z][a-z0-9_]{3,})")
+    r"\s*[\"'`]?([a-z][a-z0-9_]{3,})"
+    # UPDATE needs its SET. Every false positive measured came from this one
+    # keyword reading prose -- "an UPDATE statement's SET clause", "an UPDATE
+    # changes no count", "prose mentioning UPDATE does not make a reader a
+    # writer" -- and a real UPDATE always names its table then SET.
+    r"|UPDATE\s+[\"'`]?([a-z][a-z0-9_]{3,})[\"'`]?\s+SET\b")
 IDENT = re.compile(r"^[a-z][a-z0-9_]{3,}$")
 
 
@@ -104,19 +109,8 @@ def main():
             if not SQL_VERB.search(body):
                 continue
             for m in CTX.finditer(body):
-                name = m.group(1)
+                name = m.group(1) or m.group(2)
                 if name in noise or not IDENT.match(name) or "__" in name:
-                    continue
-                # A bare English word after an uppercase SQL verb inside a
-                # DOCSTRING is prose, not a table: "an UPDATE statement's SET
-                # clause", "an UPDATE changes no count". Every real table name in
-                # this schema is snake_case or a plain plural, so report a bare
-                # word only when it is a near-miss of a live name -- which is
-                # precisely the class that matters (`specification` for
-                # `specifications`, `room` for `rooms`).
-                if "_" not in name and name not in schema and not (
-                        name + "s" in schema or name + "es" in schema
-                        or name.rstrip("s") in schema):
                     continue
                 examined += 1
                 if name not in schema:
