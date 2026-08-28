@@ -466,9 +466,15 @@ not block research: it is downstream of it.
   sessions' Bash logs into one file named after the earliest (5 lines + 405 + 274), while the two
   later sessions' scratchpad directories held no log at all. That was itself a *fix*, applied
   2026-08-23, for the identical failure under `.claude/session` — swapping one close-out pointer
-  for another changed which stale name was written, not that it was stale. The derivation that
-  works needs no new pointer: **a session is closed exactly when `sessions/<stem>.md` exists**, so
-  a `scratchpad/session_*` directory with no record behind it is open.
+  for another changed which stale name was written, not that it was stale. **FIXED, and the fix
+  is not the derivation this paragraph used to end on.** `.claude/hooks/record-command.py`'s
+  `open_session()` derives the stem — a session is closed exactly when `sessions/<stem>.md`
+  exists, so a `scratchpad/session_*` directory with no record behind it is open — but that is
+  only the OPENING GUESS, because it breaks the moment a session writes its own close-out record
+  and keeps working, which is the documented ritual: measured, the guess then returned a session
+  that had ended a day earlier. The anchor is the **harness session id**, written onto every line
+  and followed from line 2 onward, because it does not care about records at all. Do not
+  re-derive the weaker rule from this paragraph; read the function.
 - **Session ids: bare stem in the DB, `.md` in pointers and `emit_data_migration --session`.**
   Getting it wrong scopes a gate to nothing and it passes green.
 - **Don't hand-edit generated output** (`parts/`, `site/`, `audits/`, `tools/*.html`) — regenerate
