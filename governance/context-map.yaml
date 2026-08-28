@@ -1130,6 +1130,15 @@ checks:
     - always
     min_items: null
     cmd: python3 scripts/audit/research_batch_dod.py --selftest
+  - id: schema_reference_audit
+    level: blocking
+    battery: schema
+    kinds:
+    - schema
+    - code
+    - governance
+    min_items: 1
+    cmd: python3 scripts/audit/schema_reference_audit.py
   - id: source_slug_links_duplicates
     level: blocking
     battery: data

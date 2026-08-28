@@ -18,6 +18,14 @@ stages:
     criterion: Every base vocabulary validates against its declared schema and its own CHECK constraints.
     references: D-0167; CLAUDE.md §4 (vocabularies come from the schema, not a list in code)
     check: scripts/validate_schema.py
+  - id: base-names-resolve
+    kind: integrity
+    criterion: Every table and view named by an executable or instructional caller -- scripts, tools,
+      schemas, governance YAML, skills -- exists in the live schema.
+    references: 'CLAUDE.md rule 4 (a rename is not done until the callers are swept; A VIEW IS A CALLER,
+      and so is a skill; treat a 0-row object as unproven, not clean); migration 064, which existed
+      because 063 swept eight Python readers and six skills and missed v_item_provenance'
+    check: scripts/audit/schema_reference_audit.py
   - id: base-population-vocabulary
     kind: integrity
     criterion: Every population code referenced downstream resolves to a live row in the population taxonomy;

@@ -440,6 +440,23 @@ checks:
   basis: base/base-schema-validates
   cost: fast
   min_items: 1
+- id: schema_reference_audit
+  cmd:
+  - python3
+  - scripts/audit/schema_reference_audit.py
+  battery: schema
+  kinds:
+  - schema
+  - code
+  - governance
+  level: blocking
+  basis: base/base-names-resolve
+  cost: fast
+  min_items: 1
+  note: 'Rule 4 made mechanical. 33 of 66 tables hold 0 rows, so a caller left pointing at a renamed
+    table renders NOTHING and every downstream byte-diff certifies it clean. Exemptions live in
+    governance/schema-reference-exemptions.yaml, carry a reason, are PRINTED as KNOWN rather than
+    hidden, and a stale one fails the check.'
 - id: validate_schema_cross_check
   cmd:
   - python3
