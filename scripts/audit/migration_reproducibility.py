@@ -51,16 +51,23 @@ import tempfile
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# The 7 core invariants. Keep this list and the DR in sync; it is the contract.
-CORE_INVARIANTS = [
-    ("PRAGMA user_version", "schema_version"),
-    ("SELECT COUNT(*) FROM evidence_sources", "evidence_sources count"),
-    ("SELECT COUNT(*) FROM citation_mining", "citation_mining count"),
-    ("SELECT COUNT(*) FROM source_slug_links", "source_slug_links count"),
-    ("SELECT COUNT(*) FROM gaps", "gaps count"),
-    ("SELECT COUNT(*) FROM connections", "connections count"),
-    ("SELECT COUNT(*) FROM items", "items count"),
-]
+# The invariants are DERIVED, not listed. This was six hardcoded table names --
+# evidence_sources, citation_mining, source_slug_links, gaps, connections, items --
+# and a handler that turned sqlite3.OperationalError into a silent `skip (no such
+# table)`. Measured 2026-08-28 against the pending seven-stage rename: ALL SIX
+# skipped, and the check printed `EXAMINED: 7` while examining one thing, the
+# schema version. A gate that examined nothing gated nothing (CLAUDE.md §2a), and
+# the moment it mattered most -- a rename -- it went blind by design.
+#
+# The skip existed for a real case ("a table may legitimately not exist in an
+# older schema version"), but it cannot tell that case from "renamed and nobody
+# swept me", which is the case this gate is FOR. Under a version mismatch,
+# schema_version already reports it, so nothing is lost by making absence loud.
+#
+# Comparing every table costs nothing measurable (~66 COUNT(*) over a 3.6 MB DB)
+# and is strictly stronger: measured the same day, a fresh rebuild reproduces the
+# committed database on every table, so this cries no wolf.
+SCHEMA_VERSION_INVARIANT = ("PRAGMA user_version", "schema_version")
 
 EXEMPT_TABLES = ("evidence_source_authors", "pipeline_runs")
 
@@ -180,23 +187,44 @@ def rebuild(target, cache=True):
     return ok, (proc.stdout + proc.stderr).strip()
 
 
+def _tables(conn):
+    return {r[0] for r in conn.execute(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'")}
+
+
 def compare(committed_path, rebuilt_path):
-    """C2/C3 — compare the core invariants. Returns (rows, mismatches)."""
+    """C2/C3 — compare schema version and EVERY table's row count.
+
+    Returns (rows, mismatches). A table present in one database and absent from
+    the other is a MISMATCH, never a skip: that asymmetry is exactly what a
+    rename with an unswept caller looks like.
+    """
     committed = sqlite3.connect(f"file:{committed_path}?mode=ro", uri=True)
     rebuilt = sqlite3.connect(f"file:{rebuilt_path}?mode=ro", uri=True)
     rows, mismatches = [], []
-    for sql, label in CORE_INVARIANTS:
-        try:
-            c = committed.execute(sql).fetchone()[0]
-            r = rebuilt.execute(sql).fetchone()[0]
-        except sqlite3.OperationalError as exc:
-            # A table may legitimately not exist in an older schema version.
-            rows.append((label, None, None, f"skip ({exc})"))
+
+    sql, label = SCHEMA_VERSION_INVARIANT
+    c = committed.execute(sql).fetchone()[0]
+    r = rebuilt.execute(sql).fetchone()[0]
+    rows.append((label, c, r, "OK" if c == r else "MISMATCH"))
+    if c != r:
+        mismatches.append((label, c, r))
+
+    ct, rt = _tables(committed), _tables(rebuilt)
+    for name in sorted((ct | rt) - set(EXEMPT_TABLES)):
+        label = f"{name} count"
+        if name not in ct or name not in rt:
+            where = "rebuilt only" if name not in ct else "committed only"
+            rows.append((label, None, None, f"MISMATCH (present in {where})"))
+            mismatches.append((label, "absent" if name not in ct else "present",
+                               "present" if name not in ct else "absent"))
             continue
-        status = "OK" if c == r else "MISMATCH"
-        rows.append((label, c, r, status))
+        c = committed.execute('SELECT COUNT(*) FROM "%s"' % name).fetchone()[0]
+        r = rebuilt.execute('SELECT COUNT(*) FROM "%s"' % name).fetchone()[0]
+        rows.append((label, c, r, "OK" if c == r else "MISMATCH"))
         if c != r:
             mismatches.append((label, c, r))
+
     committed.close()
     rebuilt.close()
     return rows, mismatches
