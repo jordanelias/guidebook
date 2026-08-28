@@ -103,7 +103,14 @@ def compare(before, after, m):
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--snapshot"); ap.add_argument("--db", default="data/guidebook.db")
+    ap.add_argument("--snapshot")
+    # GUIDEBOOK_DB_PATH is the contract (references/project-standards.md, 2026-08-25):
+    # a script that ignores it "will silently read the committed database while a test
+    # believes it is reading a scratch copy". For THIS script that is fatal rather than
+    # untidy -- it would snapshot the wrong database and the comparison it produces would
+    # be meaningless while looking authoritative. Precedence: explicit --db, then the
+    # variable, then the canonical default.
+    ap.add_argument("--db", default=os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db"))
     ap.add_argument("--compare", nargs=2); ap.add_argument("--map")
     a = ap.parse_args()
     if a.snapshot:
