@@ -2442,3 +2442,39 @@ ACTION: Three tables. Parent columns are self-referential **within** each table.
 junction — `room_items` is the existing one and is re-pointed, not replaced. Do not add a polymorphic
 parent column.
 DATE: 2026-08-27 — owner ruling, quoted above.
+
+---
+
+RULE: **"Population" is retired vocabulary. The four lenses are `identity` · `icf` · `needs` ·
+`medical`.** Owner statement 2026-08-28:
+
+> *"we don't use the word 'population' though. we have identity/icf/needs/medical (because i said we
+> need the medical model too). 'base_taxonomy' instead of 'population', i think"*
+
+**Caught during the rename map review**, where I had preserved the retired word in nine proposed
+table names. Measured extent, `user_version` 64:
+
+| surface | count |
+|---|---:|
+| proposed table names still carrying it | **9** |
+| `population_code` column | **11 tables** |
+| `population`, `population_label`, `population_description`, `populations_served_note`, `root_population_note` | 10 more sites |
+
+**The replacement is `identity`, not `taxonomy`, and the owner's own prior ruling decides it.**
+`item_axis_links → base_item_icf_links` (D-0169) names **the lens**, not the layer. The parallel
+position for the identity lens is therefore `identity`. `base_taxonomy_*` stays reserved for the four
+registries themselves, so **"taxonomy" names the layer and `identity` names the lens** — using
+`taxonomy` in a link would lose which of the four was meant.
+
+**One exception, where neither word applies.** `evidence_population_match.study_population` and
+`.target_population` grade **the paper's own participants** against who the book serves (R13). That
+is not our taxonomy in any lens; it is however the study described its subjects. They become
+`study_group` and `served_group` and stay out of the lens vocabulary.
+
+CONDITION: Any session naming a table, column or code that refers to a group of disabled people.
+ACTION: Never `population`. Use the lens name (`identity`/`icf`/`needs`/`medical`) for a link or code;
+`base_taxonomy_<lens>` for the registry itself. Add `population` and `population_code` to
+`governance/retired-vocabulary.yaml` when the rename lands — rename first, register second, per §R8.
+STATUS: The owner offered `base_taxonomy` with "i think"; `identity` is put back to them as the more
+consistent reading. **Confirmation pending — the rename is not applied.**
+DATE: 2026-08-28 — owner statement, quoted above.
