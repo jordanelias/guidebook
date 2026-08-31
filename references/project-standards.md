@@ -2337,3 +2337,202 @@ ACTION: (1) Seven stages, `base` first, in `governance/pipeline-contract.yaml` a
 with the convention stated and this date. (3) Never call a table a stage. (4) `v_coverage_priority` is
 protected.
 DATE: 2026-08-27 — owner ruling, quoted above.
+
+---
+
+RULE: **Four ratification and naming choices, selected by the owner from options put 2026-08-27.**
+
+**1 · The ICF family takes `icf_*` throughout, and the colliding table is renamed.** Owner selection.
+
+| | |
+|---|---|
+| `axes` → | `base_taxonomy_icf` (already ruled) |
+| `axis_code` → | `icf_code` |
+| `item_axis_links` → | `item_icf_links` |
+| `population_axis_map` → | `population_icf_map` |
+| `access_need_axis_map` → | `access_need_icf_map` |
+| `slugs.serves_axes` → | `serves_icf` |
+| `situations.attaches_axes` → | `attaches_icf` |
+| **`access_need_icf` (43 rows) →** | **`access_need_icf_codes`** |
+
+The last row is the point. `access_need_icf` maps `need_code` → ICF **e**-codes (environment); the
+axes table holds **b**/**d** codes (person functioning). They are different relationships, and
+`access_need_icf` beside `access_need_icf_map` would be two names one letter apart — the `items`
+ambiguity recreated deliberately. **The owner chose to break the collision rather than inherit it**,
+at the cost of one additional table and its callers in the same migration.
+
+**This supersedes the §R8 `demand_*` family** (`demand_code`, `item_demand_links`,
+`population_demand_map`, `access_need_demand_map`, `serves_demands`, `attaches_demands`), which was
+derived from the superseded noun `icf_demands`. **§R8's retired tokens are unaffected** — they name
+what is retired, not what replaces it.
+
+**2 · The stage id is SINGULAR: `specification`.** Owner selection, against their own earlier
+wording. The spine was written *"Base Research Evidence Judgment Synthesis **Specifications**
+Render"*; the id is `specification` so the prefix matches the other six and the hand-off object reads
+`specification_items` rather than `specifications_items`. **The plural remains the recorded wording of
+the spine ruling and is not altered there.**
+
+**3 · Ratification is ONE DECISION RECORD PER SUBSTANTIVE RULING**, not one consolidated DR. Owner
+selection. Derived, not guessed: **19 ledger entries carry `DATE: 2026-08-27`**, of which **13 carry a
+`RULE:` line** and the rest are corrections and records. After removing entries superseded within the
+same day (the six-stage spine by the seven-stage spine; "substrate is retired" by "base is stage 1"),
+the surviving substantive set is **eight**:
+
+1. the seven-stage spine, `base` first
+2. the hand-off object, and evidence→judgment 1:N
+3. the evidence item is the source; the judgment item is the extraction
+4. the naming grammar — underscore, `base_` prefix, `icf_*` family, singular stage ids
+5. the four taxonomies as browsing lenses, medical model included
+6. `base_building` — the levels, and its shape
+7. `base_sources` as a target registry
+8. the concept vocabulary — harvested at evidence, adjudicated at judgment; `DR-2026-08-24` §2.4 overruled
+
+**4 · `decision_capture` stays ADVISORY for now.** Owner selection. Its completeness checks — C7
+*"every CANONICAL RULE in project-standards has at least one Decision"* and C9 *"every `decisions/DR-*.md`
+has a register row"* — are **warnings**, which is why the gate passed green through all 19 unratified
+rulings. Its own docstring concedes C1–C8 *"validate the register against itself and never ask whether
+it is complete."* **The backlog is cleared first; the promotion is not made in the same session as the
+rename.** Recorded as a known open gap rather than a fixed one.
+
+**A dual home found while establishing the write path, recorded not fixed.** Decisions live in **two**
+places — `data/decisions/decision_register.yaml` (166 entries, what the gate reads) and the
+`decisions` table (166 rows, loaded by data migrations) — and **no script syncs them.** They agree
+today at 166/166. That is rule 5's prohibition, and it means ratifying a decision requires **two**
+writes: a YAML append and a data migration. Flagged for a later cull; not touched in this change.
+
+CONDITION: Any session ratifying a decision, naming an ICF-layer object, writing a stage id, or
+relying on `decision_capture` to prove the register complete.
+ACTION: (1) Use `icf_*`; rename `access_need_icf` → `access_need_icf_codes` in the same migration.
+(2) Stage id `specification`, singular. (3) Write eight DRs plus eight register rows; attestation is
+owed because `decisions/` is a rule-2 path. (4) Do not cite `decision_capture` green as evidence the
+register is complete.
+DATE: 2026-08-27 — owner selections from options put, quoted above.
+
+---
+
+RULE: **`base_building` is THREE tables, not one.** Owner ruling 2026-08-27: *"5 is three."*
+
+Supersedes the agonist-antagonist resolution of the same day, which had proposed **one**
+self-referential table with a `level` discriminator on the reasoning that a parent column *across*
+three tables would be polymorphic and unkeyable in SQLite.
+
+**That objection was wrong, and the owner's answer is stronger on the very ground it was raised.**
+A single generic `parent` column pointing at any level is polymorphic. **Three tables with a typed
+FK per level are not** — each child names exactly one parent table, so every key is real and
+enforced. The one-table proposal solved a problem the three-table design does not have.
+
+| table | from | holds |
+|---|---|---|
+| `base_building_types` | **new** | residential, commercial |
+| `base_room_types` | `rooms` (17) | kitchen, entry, bathroom |
+| `base_elements` | **new** | door, door handle, window, floor |
+
+**And the levels do NOT nest — measured against the owner's own examples.** A *Bathroom* occurs in
+residential **and** commercial; a *door* occurs in kitchens **and** entries **and** bathrooms. So the
+cross-level relationship is **many-to-many, not a parent column** — and the schema already says so:
+`room_items` exists as the room × element junction (0 rows, `room_code` + `item_code`). Cross-level
+edges are junctions; a parent column that tried to carry them would be wrong on the data.
+
+**Parent columns are WITHIN a level**, which is what the owner's own list implies: *"door, door
+handle"* — a handle's parent is a door, both elements. Likewise a sub-type of a room type, or of a
+building type. Each is a self-referential FK inside one table, fully enforceable.
+
+CONDITION: Any session creating the building layer or designing its keys.
+ACTION: Three tables. Parent columns are self-referential **within** each table. Cross-level is a
+junction — `room_items` is the existing one and is re-pointed, not replaced. Do not add a polymorphic
+parent column.
+DATE: 2026-08-27 — owner ruling, quoted above.
+
+---
+
+RULE: **"Population" is retired vocabulary. The four lenses are `identity` · `icf` · `needs` ·
+`medical`.** Owner statement 2026-08-28:
+
+> *"we don't use the word 'population' though. we have identity/icf/needs/medical (because i said we
+> need the medical model too). 'base_taxonomy' instead of 'population', i think"*
+
+**Caught during the rename map review**, where I had preserved the retired word in nine proposed
+table names. Measured extent, `user_version` 64:
+
+| surface | count |
+|---|---:|
+| proposed table names still carrying it | **9** |
+| `population_code` column | **11 tables** |
+| `population`, `population_label`, `population_description`, `populations_served_note`, `root_population_note` | 10 more sites |
+
+**The replacement is `identity`, not `taxonomy`, and the owner's own prior ruling decides it.**
+`item_axis_links → base_item_icf_links` (D-0169) names **the lens**, not the layer. The parallel
+position for the identity lens is therefore `identity`. `base_taxonomy_*` stays reserved for the four
+registries themselves, so **"taxonomy" names the layer and `identity` names the lens** — using
+`taxonomy` in a link would lose which of the four was meant.
+
+**One exception, where neither word applies.** `evidence_population_match.study_population` and
+`.target_population` grade **the paper's own participants** against who the book serves (R13). That
+is not our taxonomy in any lens; it is however the study described its subjects. They become
+`study_group` and `served_group` and stay out of the lens vocabulary.
+
+CONDITION: Any session naming a table, column or code that refers to a group of disabled people.
+ACTION: Never `population`. Use the lens name (`identity`/`icf`/`needs`/`medical`) for a link or code;
+`base_taxonomy_<lens>` for the registry itself. Add `population` and `population_code` to
+`governance/retired-vocabulary.yaml` when the rename lands — rename first, register second, per §R8.
+STATUS: The owner offered `base_taxonomy` with "i think"; `identity` is put back to them as the more
+consistent reading. **Confirmation pending — the rename is not applied.**
+DATE: 2026-08-28 — owner statement, quoted above.
+
+---
+
+RULE: **After the base phase, all four lenses live in the SAME table — four typed columns, one per
+lens, with a CHECK that a row states exactly one.** Owner ruling 2026-08-28:
+
+> *"we must have all of identity, icf, needs and medical grouped into same tables after the base
+> phase, and we need to do it in an intelligent manner. if i understand things correctly, it really
+> doesn't matter if we have loads of rows concerning the same source or concept"*
+
+**The defect this fixes, measured 2026-08-27.** The schema was built with identity as the canonical
+lens and the others bolted on at two points: **11 tables can express identity, 3 icf, 2 needs, 0
+medical.** Every attachment point except `items` is identity-only — `specifications`,
+`source_value_extractions`, `gaps`, `slugs`, `evidence_sources`, `case_studies`,
+`economics_entries`, `reasoning_doc_citations`, `spec_value_probes`, `convergence_assessment`. **So
+D-0170's browsing lenses were not implementable**: pick ICF and you reach one table; pick medical and
+you reach nothing.
+
+**The shape, proven on SQLite 3.45.1 before adoption:**
+
+```sql
+identity_code TEXT REFERENCES base_taxonomy_identity(code),
+icf_code      TEXT REFERENCES base_taxonomy_icf(code),
+needs_code    TEXT REFERENCES base_taxonomy_needs(code),
+medical_code  TEXT REFERENCES base_taxonomy_medical(code),
+CHECK ((identity_code IS NOT NULL) + (icf_code IS NOT NULL)
+     + (needs_code   IS NOT NULL) + (medical_code IS NOT NULL) = 1)
+```
+
+Verified: three rows carrying the same value in three different lenses are accepted; a row naming
+**two** lenses is refused; a row naming **none** is refused; and a code absent from its registry is
+refused. **Every lens column is a real typed foreign key — nothing is polymorphic.**
+
+**Why exactly one lens per row, rather than filling all four.** The base crossing maps already state
+the translation between lenses (`population_axis_map` 53 rows, `access_need_axis_map` 21,
+`access_need_icf` 43). A row asserting both `identity_code` and `icf_code` would write a fact those
+maps already hold — rule 5. **The CHECK is rule 5 enforced in DDL.** Browsing a lens is
+`WHERE <lens>_code IS NOT NULL`, and translation is a join through the crossing map.
+
+**Row multiplicity is explicitly fine** — owner, above. One value stated in four lenses is four rows,
+and that is the fan-out the pipeline already has.
+
+**Five splinter tables are DELETED, not renamed** — `extraction_population_links`,
+`probe_population_links`, `citation_population_links`, `case_study_populations`,
+`economics_entry_populations`. All hold **0 rows**, so the restructure costs no data migration.
+Renaming them first and reshaping them after would be the double-sweep this plan exists to avoid.
+
+**Scope is "after the base phase".** The base registries keep their separate shapes (ruled: `axes`
+carries `mechanism` and anchors ICF b/d, `access_needs` carries `design_obligation` and anchors e —
+they do not fold), and the base crossing maps are pairwise by nature and untouched. **That boundary
+lands exactly where the data is**: the crossing maps hold 372 · 158 · 53 · 21 · 43 rows, while every
+downstream table this ruling reshapes holds **0**.
+
+CONDITION: Any session designing a table after the base phase, or attaching a determination,
+extraction, case study or economics entry to a group of disabled people.
+ACTION: Four lens columns, one CHECK, real FKs. Never a `population_*` link table. Never two lenses
+in one row. `population_code` is retired in favour of the four.
+DATE: 2026-08-28 — owner ruling, quoted above.

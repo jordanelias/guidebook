@@ -332,8 +332,8 @@
       </div>
     </div>
     <div class="pattern" style="background:var(--card);border-left-color:var(--accent)">
-      <b>Governance gates are 10/15 built.</b> The pipeline contract reports
-      enforcement coverage per stage: research <span class="mono">2/2</span> · evidence-collection <span class="mono">1/2</span> · judgment <span class="mono">4/6</span> · synthesis <span class="mono">1/2</span> · render <span class="mono">2/3</span>. Every unenforced criterion is a <i>completeness</i>-kind one
+      <b>Governance gates are 17/22 built.</b> The pipeline contract reports
+      enforcement coverage per stage: base <span class="mono">7/7</span> · research <span class="mono">2/2</span> · evidence <span class="mono">1/2</span> · judgment <span class="mono">1/2</span> · synthesis <span class="mono">1/2</span> · specification <span class="mono">3/4</span> · render <span class="mono">2/3</span>. Every unenforced criterion is a <i>completeness</i>-kind one
       (provenance, convergence roots, Opus-routing, render-freshness) — the integrity gates are wired; the
       coverage gates are not.
     </div>
@@ -598,7 +598,7 @@
     <div class="two-col">
       <div><strong style="color:var(--ink-2)">How these numbers were derived</strong><br>
         Read-only queries against <code>data/guidebook.db</code> (<code>user_version 64</code>,
-        352 data migrations). Denominators: research/synthesis over 0
+        353 data migrations). Denominators: research/synthesis over 0
         <code>bpc_metadata</code> slugs; evidence collection over 10 <code>evidence_sources</code>; judgment/render over
         372 applicable item×population pairs (<code>item_population_links</code>). Determinations from
         <code>specifications</code>; synthesis from <code>reasoning_doc_citations</code>; enforcement coverage

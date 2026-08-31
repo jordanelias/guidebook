@@ -1,0 +1,2548 @@
+{
+ "tables": {
+  "base_access_duration": 3,
+  "base_access_need_icf_codes": 43,
+  "base_access_need_icf_map": 21,
+  "base_access_stakes": 3,
+  "base_data_migrations": 353,
+  "base_decisions": 174,
+  "base_item_icf_links": 158,
+  "base_item_population_elaborations": 0,
+  "base_item_population_links": 372,
+  "base_lang_jur_map": 70,
+  "base_life_stage_modifiers": 2,
+  "base_pipeline_runs": 1,
+  "base_population_icf_map": 53,
+  "base_room_types": 17,
+  "base_situations": 0,
+  "base_slugs": 106,
+  "base_taxonomy_icf": 17,
+  "base_taxonomy_identity": 23,
+  "base_taxonomy_needs": 17,
+  "base_term_aliases": 2382,
+  "base_term_item_links": 147,
+  "base_terms": 88,
+  "base_weighting_profile": 5,
+  "evidence_admission_links": 10,
+  "evidence_items": 10,
+  "evidence_roots": 0,
+  "evidence_slug_links": 10,
+  "evidence_source_authors": 37,
+  "evidence_supersession_runs": 0,
+  "evidence_url_verification_runs": 0,
+  "judgment_audit_runs": 0,
+  "judgment_items": 0,
+  "judgment_population_grades": 25,
+  "judgment_population_links": 0,
+  "render_case_studies": 0,
+  "render_case_study_outcomes": 0,
+  "render_case_study_population_links": 0,
+  "render_case_study_specification_links": 0,
+  "render_case_study_strategies": 0,
+  "render_economics_entries": 0,
+  "render_economics_population_links": 0,
+  "render_economics_specification_links": 0,
+  "render_provisions": 93,
+  "render_room_element_links": 0,
+  "research_candidates": 60,
+  "research_code_leads": 109,
+  "research_coverage_links": 0,
+  "research_gap_mining_runs": 0,
+  "research_gaps": 5,
+  "research_items": 875,
+  "research_language_links": 0,
+  "research_mining_runs": 10,
+  "research_searches": 28,
+  "research_stubs": 0,
+  "specification_items": 0,
+  "specification_probe_population_links": 0,
+  "specification_source_links": 0,
+  "specification_value_probes": 0,
+  "synthesis_citation_population_links": 0,
+  "synthesis_citations": 0,
+  "synthesis_conflicts": 0,
+  "synthesis_connection_links": 0,
+  "synthesis_connections": 0,
+  "synthesis_convergence": 0,
+  "synthesis_item_links": 0,
+  "synthesis_items": 0
+ },
+ "views": {
+  "v_best_practice": {
+   "rows": 0,
+   "base_tables": [
+    "specification_items"
+   ]
+  },
+  "v_code_floor_only": {
+   "rows": 0,
+   "base_tables": [
+    "research_code_leads",
+    "specification_items"
+   ]
+  },
+  "v_coverage_branch": {
+   "rows": 9,
+   "base_tables": [
+    "research_searches"
+   ]
+  },
+  "v_coverage_jurisdiction": {
+   "rows": 3,
+   "base_tables": [
+    "research_searches"
+   ]
+  },
+  "v_coverage_language": {
+   "rows": 4,
+   "base_tables": [
+    "research_searches"
+   ]
+  },
+  "v_coverage_priority": {
+   "rows": 7208,
+   "base_tables": [
+    "base_lang_jur_map",
+    "base_slugs",
+    "research_searches"
+   ]
+  },
+  "v_divergence": {
+   "rows": 0,
+   "base_tables": [
+    "specification_items",
+    "synthesis_convergence"
+   ]
+  },
+  "v_evidence_authors": {
+   "rows": 10,
+   "base_tables": [
+    "evidence_items",
+    "evidence_source_authors"
+   ]
+  },
+  "v_item_extractions": {
+   "rows": 0,
+   "base_tables": [
+    "evidence_items",
+    "judgment_items",
+    "render_provisions"
+   ]
+  },
+  "v_item_provenance": {
+   "rows": 0,
+   "base_tables": [
+    "evidence_items",
+    "evidence_source_authors",
+    "render_provisions",
+    "specification_items",
+    "specification_source_links"
+   ]
+  },
+  "v_pending": {
+   "rows": 0,
+   "base_tables": [
+    "research_gaps",
+    "specification_items"
+   ]
+  },
+  "v_pmp_latest_walk": {
+   "rows": 0,
+   "base_tables": [
+    "specification_value_probes"
+   ]
+  },
+  "v_registry_duplicate_descriptions": {
+   "rows": 0,
+   "base_tables": [
+    "evidence_roots"
+   ]
+  },
+  "v_root_id_conflicts": {
+   "rows": 0,
+   "base_tables": [
+    "judgment_items"
+   ]
+  },
+  "v_source_admission": {
+   "rows": 10,
+   "base_tables": [
+    "evidence_admission_links",
+    "evidence_items",
+    "research_searches"
+   ]
+  },
+  "v_source_reach_all": {
+   "rows": 10,
+   "base_tables": [
+    "evidence_items",
+    "evidence_slug_links",
+    "render_provisions",
+    "specification_items",
+    "specification_source_links"
+   ]
+  },
+  "v_unregistered_roots": {
+   "rows": 0,
+   "base_tables": [
+    "evidence_roots",
+    "judgment_items"
+   ]
+  },
+  "v_value_independence": {
+   "rows": 0,
+   "base_tables": [
+    "evidence_roots",
+    "judgment_items"
+   ]
+  }
+ },
+ "fks": [
+  "base_access_need_icf_codes.need_code -> base_taxonomy_needs.need_code",
+  "base_access_need_icf_map.axis_code -> base_taxonomy_icf.axis_code",
+  "base_access_need_icf_map.need_code -> base_taxonomy_needs.need_code",
+  "base_item_icf_links.axis_code -> base_taxonomy_icf.axis_code",
+  "base_item_icf_links.item_code -> render_provisions.item_code",
+  "base_item_population_elaborations.evidence_ref_id -> evidence_items.ref_id",
+  "base_item_population_elaborations.item_code -> render_provisions.item_code",
+  "base_item_population_elaborations.population_code -> base_taxonomy_identity.population_code",
+  "base_item_population_links.item_code -> render_provisions.item_code",
+  "base_item_population_links.population_code -> base_taxonomy_identity.population_code",
+  "base_population_icf_map.axis_code -> base_taxonomy_icf.axis_code",
+  "base_population_icf_map.population_code -> base_taxonomy_identity.population_code",
+  "base_slugs.merged_into -> base_slugs.slug",
+  "base_taxonomy_identity.parent_code -> base_taxonomy_identity.population_code",
+  "base_term_aliases.term_id -> base_terms.term_id",
+  "base_term_item_links.item_code -> render_provisions.item_code",
+  "base_term_item_links.term_id -> base_terms.term_id",
+  "evidence_admission_links.exec_id -> research_searches.exec_id",
+  "evidence_admission_links.ref_id -> evidence_items.ref_id",
+  "evidence_slug_links.ref_id -> evidence_items.ref_id",
+  "evidence_slug_links.slug -> base_slugs.slug",
+  "evidence_source_authors.ref_id -> evidence_items.ref_id",
+  "evidence_supersession_runs.ref_id -> evidence_items.ref_id",
+  "evidence_supersession_runs.slug -> base_slugs.slug",
+  "judgment_audit_runs.item_code -> render_provisions.item_code",
+  "judgment_items.item_code -> render_provisions.item_code",
+  "judgment_items.population_code -> base_taxonomy_identity.population_code",
+  "judgment_items.promoted_to_rdc_id -> synthesis_citations.citation_id",
+  "judgment_items.ref_id -> evidence_items.ref_id",
+  "judgment_items.root_ref_id -> evidence_items.ref_id",
+  "judgment_items.slug -> base_slugs.slug",
+  "judgment_population_grades.gap_id -> research_gaps.gap_id",
+  "judgment_population_grades.ref_id -> evidence_items.ref_id",
+  "judgment_population_links.extraction_id -> judgment_items.extraction_id",
+  "judgment_population_links.population_code -> base_taxonomy_identity.population_code",
+  "render_case_studies.slug -> base_slugs.slug",
+  "render_case_study_outcomes.case_study_id -> render_case_studies.case_study_id",
+  "render_case_study_population_links.case_study_id -> render_case_studies.case_study_id",
+  "render_case_study_population_links.population_code -> base_taxonomy_identity.population_code",
+  "render_case_study_specification_links.case_study_id -> render_case_studies.case_study_id",
+  "render_case_study_specification_links.item_code -> render_provisions.item_code",
+  "render_case_study_strategies.case_study_id -> render_case_studies.case_study_id",
+  "render_economics_entries.ref_id -> evidence_items.ref_id",
+  "render_economics_population_links.entry_id -> render_economics_entries.entry_id",
+  "render_economics_population_links.population_code -> base_taxonomy_identity.population_code",
+  "render_economics_specification_links.entry_id -> render_economics_entries.entry_id",
+  "render_economics_specification_links.item_code -> render_provisions.item_code",
+  "render_provisions.bpc_source_slug -> base_slugs.slug",
+  "render_room_element_links.item_code -> render_provisions.item_code",
+  "render_room_element_links.room_code -> base_room_types.room_code",
+  "research_candidates.exec_id -> research_searches.exec_id",
+  "research_candidates.found_under_slug -> base_slugs.slug",
+  "research_candidates.suggested_slug -> base_slugs.slug",
+  "research_code_leads.item_code -> render_provisions.item_code",
+  "research_coverage_links.slug -> base_slugs.slug",
+  "research_gap_mining_runs.gap_id -> research_gaps.gap_id",
+  "research_language_links.slug -> base_slugs.slug",
+  "research_mining_runs.global_ref_id -> evidence_items.ref_id",
+  "research_mining_runs.slug -> base_slugs.slug",
+  "research_searches.slug -> base_slugs.slug",
+  "specification_items.convergence_id -> synthesis_convergence.convergence_id",
+  "specification_items.gap_register_id -> research_gaps.gap_id",
+  "specification_items.item_code -> render_provisions.item_code",
+  "specification_items.population_code -> base_taxonomy_identity.population_code",
+  "specification_probe_population_links.population_code -> base_taxonomy_identity.population_code",
+  "specification_probe_population_links.probe_id -> specification_value_probes.probe_id",
+  "specification_source_links.ref_id -> evidence_items.ref_id",
+  "specification_source_links.specification_id -> specification_items.specification_id",
+  "specification_value_probes.item_code -> render_provisions.item_code",
+  "specification_value_probes.ref_id -> evidence_items.ref_id",
+  "specification_value_probes.slug -> base_slugs.slug",
+  "synthesis_citation_population_links.citation_id -> synthesis_citations.citation_id",
+  "synthesis_citation_population_links.population_code -> base_taxonomy_identity.population_code",
+  "synthesis_citations.reasoning_doc_slug -> base_slugs.slug",
+  "synthesis_citations.source_ref_id -> evidence_items.ref_id",
+  "synthesis_conflicts.item_code -> render_provisions.item_code",
+  "synthesis_connection_links.con_id -> synthesis_connections.con_id",
+  "synthesis_item_links.item_code -> render_provisions.item_code",
+  "synthesis_item_links.slug -> base_slugs.slug",
+  "synthesis_items.slug -> base_slugs.slug"
+ ],
+ "indexes": {
+  "base_access_duration": [
+   {
+    "unique": true,
+    "cols": [
+     "code"
+    ]
+   }
+  ],
+  "base_access_need_icf_codes": [
+   {
+    "unique": true,
+    "cols": [
+     "need_code",
+     "icf_code"
+    ]
+   }
+  ],
+  "base_access_need_icf_map": [
+   {
+    "unique": true,
+    "cols": [
+     "need_code",
+     "axis_code"
+    ]
+   }
+  ],
+  "base_access_stakes": [
+   {
+    "unique": true,
+    "cols": [
+     "code"
+    ]
+   }
+  ],
+  "base_data_migrations": [
+   {
+    "unique": false,
+    "cols": [
+     "applied_at"
+    ]
+   },
+   {
+    "unique": true,
+    "cols": [
+     "migration_id"
+    ]
+   }
+  ],
+  "base_decisions": [
+   {
+    "unique": false,
+    "cols": [
+     "category"
+    ]
+   },
+   {
+    "unique": true,
+    "cols": [
+     "decision_id"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "status"
+    ]
+   }
+  ],
+  "base_item_icf_links": [
+   {
+    "unique": true,
+    "cols": [
+     "item_code",
+     "axis_code"
+    ]
+   }
+  ],
+  "base_item_population_elaborations": [
+   {
+    "unique": true,
+    "cols": [
+     "item_code",
+     "population_code",
+     "variant_distinction"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "item_code"
+    ]
+   }
+  ],
+  "base_item_population_links": [
+   {
+    "unique": true,
+    "cols": [
+     "item_code",
+     "population_code",
+     "subtype"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "item_code"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "population_code"
+    ]
+   }
+  ],
+  "base_lang_jur_map": [
+   {
+    "unique": true,
+    "cols": [
+     "language",
+     "jurisdiction"
+    ]
+   }
+  ],
+  "base_life_stage_modifiers": [
+   {
+    "unique": true,
+    "cols": [
+     "code"
+    ]
+   }
+  ],
+  "base_pipeline_runs": [
+   {
+    "unique": true,
+    "cols": [
+     "run_id"
+    ]
+   }
+  ],
+  "base_population_icf_map": [
+   {
+    "unique": true,
+    "cols": [
+     "population_code",
+     "axis_code"
+    ]
+   }
+  ],
+  "base_room_types": [
+   {
+    "unique": true,
+    "cols": [
+     "room_code"
+    ]
+   }
+  ],
+  "base_situations": [
+   {
+    "unique": true,
+    "cols": [
+     "situation_id"
+    ]
+   }
+  ],
+  "base_slugs": [
+   {
+    "unique": true,
+    "cols": [
+     "slug"
+    ]
+   }
+  ],
+  "base_taxonomy_icf": [
+   {
+    "unique": true,
+    "cols": [
+     "axis_code"
+    ]
+   }
+  ],
+  "base_taxonomy_identity": [
+   {
+    "unique": true,
+    "cols": [
+     "population_code"
+    ]
+   }
+  ],
+  "base_taxonomy_needs": [
+   {
+    "unique": true,
+    "cols": [
+     "need_code"
+    ]
+   }
+  ],
+  "base_term_aliases": [
+   {
+    "unique": false,
+    "cols": [
+     "alias"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "language"
+    ]
+   },
+   {
+    "unique": true,
+    "cols": [
+     "term_id",
+     "alias",
+     "language"
+    ]
+   }
+  ],
+  "base_term_item_links": [
+   {
+    "unique": false,
+    "cols": [
+     "item_code"
+    ]
+   },
+   {
+    "unique": true,
+    "cols": [
+     "term_id",
+     "item_code"
+    ]
+   }
+  ],
+  "base_terms": [
+   {
+    "unique": true,
+    "cols": [
+     "term_id"
+    ]
+   }
+  ],
+  "base_weighting_profile": [
+   {
+    "unique": true,
+    "cols": [
+     "audience",
+     "use_pattern"
+    ]
+   }
+  ],
+  "evidence_admission_links": [
+   {
+    "unique": true,
+    "cols": [
+     "exec_id",
+     "ref_id"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "ref_id"
+    ]
+   }
+  ],
+  "evidence_items": [
+   {
+    "unique": true,
+    "cols": [
+     "ref_id"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "verification_status",
+     "verification_disposition"
+    ]
+   }
+  ],
+  "evidence_roots": [
+   {
+    "unique": true,
+    "cols": [
+     "root_id"
+    ]
+   }
+  ],
+  "evidence_slug_links": [
+   {
+    "unique": true,
+    "cols": [
+     "ref_id",
+     "slug"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "ref_id"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "slug"
+    ]
+   }
+  ],
+  "evidence_source_authors": [
+   {
+    "unique": false,
+    "cols": [
+     "corporate_name"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "last_name"
+    ]
+   },
+   {
+    "unique": true,
+    "cols": [
+     "ref_id",
+     "position",
+     "role"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "ref_id"
+    ]
+   }
+  ],
+  "evidence_supersession_runs": [
+   {
+    "unique": true,
+    "cols": [
+     "check_id"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "checked_at"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "outcome"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "ref_id"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "slug"
+    ]
+   }
+  ],
+  "evidence_url_verification_runs": [
+   {
+    "unique": true,
+    "cols": [
+     "run_id"
+    ]
+   }
+  ],
+  "judgment_audit_runs": [
+   {
+    "unique": false,
+    "cols": [
+     "item_code"
+    ]
+   },
+   {
+    "unique": true,
+    "cols": [
+     "run_id"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "status"
+    ]
+   }
+  ],
+  "judgment_items": [
+   {
+    "unique": false,
+    "cols": [
+     "extraction_status"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "item_code"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "loc_section",
+     "loc_clause"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "ref_id"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "slug",
+     "parameter_canonical"
+    ]
+   }
+  ],
+  "judgment_population_grades": [
+   {
+    "unique": false,
+    "cols": [
+     "gap_id"
+    ]
+   },
+   {
+    "unique": true,
+    "cols": [
+     "match_id"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "ref_id"
+    ]
+   }
+  ],
+  "judgment_population_links": [
+   {
+    "unique": true,
+    "cols": [
+     "extraction_id",
+     "population_code"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "population_code"
+    ]
+   }
+  ],
+  "render_case_studies": [
+   {
+    "unique": true,
+    "cols": [
+     "case_study_id"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "harm_finding"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "slug"
+    ]
+   }
+  ],
+  "render_case_study_outcomes": [],
+  "render_case_study_population_links": [
+   {
+    "unique": true,
+    "cols": [
+     "case_study_id",
+     "population_code"
+    ]
+   }
+  ],
+  "render_case_study_specification_links": [
+   {
+    "unique": true,
+    "cols": [
+     "case_study_id",
+     "item_code"
+    ]
+   }
+  ],
+  "render_case_study_strategies": [],
+  "render_economics_entries": [
+   {
+    "unique": true,
+    "cols": [
+     "entry_id"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "jurisdiction"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "pillar",
+     "entry_type"
+    ]
+   }
+  ],
+  "render_economics_population_links": [
+   {
+    "unique": true,
+    "cols": [
+     "entry_id",
+     "population_code"
+    ]
+   }
+  ],
+  "render_economics_specification_links": [
+   {
+    "unique": true,
+    "cols": [
+     "entry_id",
+     "item_code"
+    ]
+   }
+  ],
+  "render_provisions": [
+   {
+    "unique": false,
+    "cols": [
+     "bpc_source_slug"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "category"
+    ]
+   },
+   {
+    "unique": true,
+    "cols": [
+     "item_code"
+    ]
+   },
+   {
+    "unique": true,
+    "cols": [
+     "item_id"
+    ]
+   }
+  ],
+  "render_room_element_links": [
+   {
+    "unique": false,
+    "cols": [
+     "item_code"
+    ]
+   },
+   {
+    "unique": true,
+    "cols": [
+     "room_code",
+     "item_code"
+    ]
+   }
+  ],
+  "research_candidates": [
+   {
+    "unique": false,
+    "cols": [
+     "harm_finding"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "suggested_slug",
+     "disposition"
+    ]
+   }
+  ],
+  "research_code_leads": [
+   {
+    "unique": true,
+    "cols": [
+     "item_code",
+     "jurisdiction",
+     "standard_name"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "item_code"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "jurisdiction"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "loc_section",
+     "loc_clause"
+    ]
+   }
+  ],
+  "research_coverage_links": [
+   {
+    "unique": true,
+    "cols": [
+     "slug",
+     "jurisdiction"
+    ]
+   }
+  ],
+  "research_gap_mining_runs": [
+   {
+    "unique": false,
+    "cols": [
+     "attempt_at"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "gap_id"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "outcome"
+    ]
+   }
+  ],
+  "research_gaps": [
+   {
+    "unique": true,
+    "cols": [
+     "gap_id"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "mining_addressability"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "priority",
+     "status"
+    ]
+   }
+  ],
+  "research_items": [
+   {
+    "unique": true,
+    "cols": [
+     "ref_id"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "status"
+    ]
+   }
+  ],
+  "research_language_links": [
+   {
+    "unique": true,
+    "cols": [
+     "slug",
+     "language"
+    ]
+   }
+  ],
+  "research_mining_runs": [
+   {
+    "unique": false,
+    "cols": [
+     "slug",
+     "backward",
+     "forward"
+    ]
+   },
+   {
+    "unique": true,
+    "cols": [
+     "slug",
+     "local_ref_id"
+    ]
+   }
+  ],
+  "research_searches": [
+   {
+    "unique": false,
+    "cols": [
+     "slug",
+     "jurisdiction",
+     "language"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "target_tier",
+     "target_evidence_type",
+     "target_scope"
+    ]
+   }
+  ],
+  "research_stubs": [
+   {
+    "unique": false,
+    "cols": [
+     "pub_year"
+    ]
+   },
+   {
+    "unique": true,
+    "cols": [
+     "ref_id"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "status"
+    ]
+   }
+  ],
+  "specification_items": [
+   {
+    "unique": true,
+    "cols": [
+     "item_code",
+     "population_code"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "item_code"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "population_code"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "state"
+    ]
+   }
+  ],
+  "specification_probe_population_links": [
+   {
+    "unique": false,
+    "cols": [
+     "population_code"
+    ]
+   },
+   {
+    "unique": true,
+    "cols": [
+     "probe_id",
+     "population_code"
+    ]
+   }
+  ],
+  "specification_source_links": [
+   {
+    "unique": false,
+    "cols": [
+     "ref_id"
+    ]
+   },
+   {
+    "unique": true,
+    "cols": [
+     "specification_id",
+     "ref_id"
+    ]
+   }
+  ],
+  "specification_value_probes": [
+   {
+    "unique": false,
+    "cols": [
+     "item_code",
+     "phase"
+    ]
+   },
+   {
+    "unique": true,
+    "cols": [
+     "probe_id"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "ref_id"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "slug",
+     "item_code"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "walk_id",
+     "step_index"
+    ]
+   }
+  ],
+  "synthesis_citation_population_links": [
+   {
+    "unique": true,
+    "cols": [
+     "citation_id",
+     "population_code"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "population_code"
+    ]
+   }
+  ],
+  "synthesis_citations": [
+   {
+    "unique": true,
+    "cols": [
+     "citation_id"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "claim_type"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "loc_section",
+     "loc_clause"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "paywall_purchase_candidate"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "reasoning_doc_slug",
+     "parameter"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "source_ref_id"
+    ]
+   }
+  ],
+  "synthesis_conflicts": [
+   {
+    "unique": true,
+    "cols": [
+     "conflict_id"
+    ]
+   },
+   {
+    "unique": true,
+    "cols": [
+     "item_code",
+     "domain",
+     "pop_a",
+     "pop_b"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "item_code"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "status"
+    ]
+   }
+  ],
+  "synthesis_connection_links": [
+   {
+    "unique": true,
+    "cols": [
+     "con_id",
+     "target"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "target"
+    ]
+   }
+  ],
+  "synthesis_connections": [
+   {
+    "unique": true,
+    "cols": [
+     "con_id"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "confidence"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "filed_in"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "status"
+    ]
+   }
+  ],
+  "synthesis_convergence": [],
+  "synthesis_item_links": [
+   {
+    "unique": true,
+    "cols": [
+     "item_code",
+     "slug"
+    ]
+   },
+   {
+    "unique": true,
+    "cols": [
+     "item_code"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "link_type"
+    ]
+   },
+   {
+    "unique": false,
+    "cols": [
+     "slug"
+    ]
+   }
+  ],
+  "synthesis_items": [
+   {
+    "unique": true,
+    "cols": [
+     "slug"
+    ]
+   }
+  ]
+ },
+ "triggers": {},
+ "checks": {
+  "base_access_duration": [
+   "code IN ('permanent','temporary','situational'"
+  ],
+  "base_access_need_icf_codes": [
+   "confidence IN ('confirmed','proposed'",
+   "icf_type IN ('b','d','e','s'"
+  ],
+  "base_access_need_icf_map": [
+   "relationship IN ('primary','partial','spans'"
+  ],
+  "base_access_stakes": [
+   "code IN ('safety-critical','exclusion','friction'"
+  ],
+  "base_data_migrations": [],
+  "base_decisions": [
+   "category IN (\n                            'D-DOCT','D-METH','D-SCHEMA','D-OP','D-PRES'\n                        ",
+   "delegation IN ('DG-NON','DG-REVIEW','DG-AUTO'",
+   "status IN (\n                            'ACTIVE','PROPOSED','DEFERRED','RESOLVED-EVIDENCE',\n                            'RESOLVED-CONSENSUS','UNRESOLVED','CLOSED','RETIRED',\n                            'SUPERSEDED'\n                        "
+  ],
+  "base_item_icf_links": [
+   "strength_band IN ('full','partial','weak'",
+   "use_mode IN ('independent','assisted','collective') OR use_mode IS NULL"
+  ],
+  "base_item_population_elaborations": [],
+  "base_item_population_links": [
+   "applicability IN (\n                        'applies', 'applies_strictly', 'applies_loosely',\n                        'context_dependent', 'does_not_apply'\n                      "
+  ],
+  "base_lang_jur_map": [
+   "role IN ('PRIMARY', 'SECONDARY'"
+  ],
+  "base_life_stage_modifiers": [
+   "code IN ('SEN','CHD'"
+  ],
+  "base_pipeline_runs": [],
+  "base_population_icf_map": [
+   "role IN ('ALIAS','PRIMARY','SECONDARY','SITUATIONAL'"
+  ],
+  "base_room_types": [
+   "status IN ('active','draft','retired'"
+  ],
+  "base_situations": [
+   "operational_access IN ('yes','no') OR operational_access IS NULL"
+  ],
+  "base_slugs": [
+   "status IN (\n                            'ACTIVE','MERGED','STUB','PROVISIONAL'\n                        "
+  ],
+  "base_taxonomy_icf": [
+   "coverage_status IN ('ESTABLISHED','PARTIAL','STUB'"
+  ],
+  "base_taxonomy_identity": [
+   "category IN (\n                        'mobility', 'sensory', 'cognitive', 'mental_health',\n                        'pain_fatigue', 'neurological', 'developmental',\n                        'general'\n                      ",
+   "is_compound IN (0,1",
+   "status IN ('active', 'deprecated'"
+  ],
+  "base_taxonomy_needs": [
+   "family IN\n                    ('perceiving','communicating','operating','pacing','environment_safety'",
+   "typical_stakes IN ('safety-critical','exclusion','friction'"
+  ],
+  "base_term_aliases": [
+   "alias_type IN (\n                            'SYNONYM','TRANSLATION','NARROWER',\n                            'BROADER','DEPRECATED','DOMAIN'\n                        "
+  ],
+  "base_term_item_links": [],
+  "base_terms": [],
+  "base_weighting_profile": [
+   "json_valid(tier_weights"
+  ],
+  "evidence_admission_links": [],
+  "evidence_items": [
+   "citation_mining_status IN ('pending','mined','deferred','not-applicable'",
+   "data_capture_status IN ('pending','captured','none-extractable','deferred'",
+   "processing_blocked_reason IS NULL OR processing_blocked_reason IN (\n    'no-full-text',        -- full text could not be obtained\n    'paywalled',           -- access blocked by paywall\n    'no-doi',              -- no resolvable identifier for automated paths\n    'not-indexed',         -- absent from the indexes the pipeline queries\n    'language',            -- awaiting in-language reading capacity\n    'no-quantified-claims',-- read; carries no extractable value\n    'superseded',          -- superseded by another source\n    'out-of-scope',        -- outside the corpus this project extracts from\n    'tier-not-required'    -- tier does not oblige the work\n  ",
+   "scope IS NULL OR scope IN (\n    'high_control', 'lower_control', 'national', 'international', 'intrinsic'\n  ",
+   "verification_closure_reason IS NULL OR verification_closure_reason IN (\n    'paywalled',\n    'print-only',\n    'access-denied-persistent',\n    'withdrawn',\n    'not-found-after-search',\n    'disputed-existence'          -- owner ruling: there may be no resolution\n  ",
+   "verification_disposition IS NULL\n         OR verification_disposition IN ('OPEN','CLOSED'",
+   "verification_method IS NULL OR verification_method IN (\n    'direct-render',              -- the document was fetched and read\n    'co1-attestation',            -- the attestation itself was obtained (DR 3.1)\n    'corroborated-not-retrieved', -- >=2 independent retrievals agree; doc not obtained\n    'citing-bibliography',        -- existence attested only by another work's references\n    'tool'                        -- resolve_dois / verify_urls; verified_by_tool names which\n  "
+  ],
+  "evidence_roots": [
+   "root_type IN (\n                              'measurement_primary', 'participatory_finding',\n                              'committee_assertion', 'derived_calculation',\n                              'untraced'"
+  ],
+  "evidence_slug_links": [],
+  "evidence_source_authors": [],
+  "evidence_supersession_runs": [
+   "\n        -- co1_addition_logged only valid for Co-1 sources\n        outcome != 'co1_addition_logged' OR anchor_evidence_type = 'co1'\n    ",
+   "\n        -- divergent_no_supersession must include divergence notes\n        outcome != 'divergent_no_supersession' OR divergence_notes IS NOT NULL\n    ",
+   "\n        -- refined_by must name the refinement dimension\n        outcome != 'refined_by' OR refinement_dimension IS NOT NULL\n    ",
+   "\n        -- superseded_by / refined_by / divergent_no_supersession require superseding refs\n        (outcome IN ('superseded_by','refined_by','divergent_no_supersession')\n         AND (superseding_ref_ids IS NOT NULL OR superseding_dois IS NOT NULL",
+   "anchor_tier BETWEEN 1 AND 6",
+   "check_method IN (\n        'pubmed_search', 'scholar_gateway', 'cochrane_direct',\n        'standards_body_direct', 'multilingual_research',\n        'composite'\n    ",
+   "outcome IN (\n        'current_best',\n        'superseded_by',\n        'refined_by',\n        'divergent_no_supersession',\n        'co1_addition_logged',\n        'pending'  -- check started but not yet completed; should not appear on closed slug\n    "
+  ],
+  "evidence_url_verification_runs": [],
+  "judgment_audit_runs": [
+   "status IN ('IN-PROGRESS','COMPLETE','HANDED-OFF'"
+  ],
+  "judgment_items": [
+   "\n    (claim_type =  'absent' AND claimed_value IS NULL) OR\n    (claim_type <> 'absent' AND claimed_value IS NOT NULL",
+   "claim_type IN ('numerical','range','qualitative','framework','absent'",
+   "contested IN (0, 1",
+   "device_class IN (\n            'manual_self_propelled', 'manual_attendant', 'power_chair', 'scooter',\n            'bariatric_manual', 'bariatric_power', 'walker_rollator',\n            'mixed', 'not_device_scoped'",
+   "extraction_method IN ('skim','full-read','re-read','auto-mined'",
+   "extraction_status IN ('preliminary','reviewed','verified','contradicted','absent-confirmed'",
+   "measurement_paradigm IN (\n            'swept_path_dynamic', 'static_turning_circle', 'static_clearance',\n            'anthropometric_percentile', 'instrumented_physical_measurement',\n            'route_metric', 'field_observation', 'participatory_spatial',\n            'stated_unmeasured'",
+   "root_type IN (\n            'measurement_primary', 'participatory_finding',\n            'committee_assertion', 'derived_calculation', 'untraced'"
+  ],
+  "judgment_population_grades": [
+   "match_grade IN ('EXACT','PARTIAL','PROXY','MISMATCH'"
+  ],
+  "judgment_population_links": [],
+  "render_case_studies": [
+   "cost_data_quality IS NULL OR cost_data_quality IN\n                     ('VERIFIED','PROVISIONAL','GREY'",
+   "evidence_quality_tier IS NULL\n                                        OR evidence_quality_tier BETWEEN 1 AND 3",
+   "harm_finding IN (0,1"
+  ],
+  "render_case_study_outcomes": [
+   "tier IS NULL OR tier BETWEEN 1 AND 3"
+  ],
+  "render_case_study_population_links": [],
+  "render_case_study_specification_links": [],
+  "render_case_study_strategies": [],
+  "render_economics_entries": [
+   "confidence IS NULL OR confidence IN ('HIGH','MODERATE','LOW'",
+   "entry_type IN\n                    ('cost_premium','retrofit_multiplier','grant_programme','health_outcome',\n                     'market_value','housing_deficit','research_gap'",
+   "evidence_tier IS NULL OR evidence_tier BETWEEN 1 AND 6",
+   "pillar IN ('health','inaction','construction','market'",
+   "quant_status IS NULL OR quant_status IN\n                    ('VERIFIED-QUANT','UNVERIFIED-QUANT'"
+  ],
+  "render_economics_population_links": [],
+  "render_economics_specification_links": [],
+  "render_provisions": [
+   "category IN (\n                            'A','B','C','D','E','F','G','H','I','J','K'\n                        ",
+   "status IN ('draft','active','merged','retired'"
+  ],
+  "render_room_element_links": [
+   "applicability IN ('applies','conditional','not-applicable'"
+  ],
+  "research_candidates": [
+   "disposition IN\n                     ('REHOME','MISCELLANEOUS','PENDING-VERIFICATION','OUT-OF-SCOPE','ADMITTED'",
+   "harm_finding IN (0,1",
+   "locator_status IS NULL OR locator_status IN\n                     ('UNVERIFIED','RESOLVED','DEAD'",
+   "tier_guess IS NULL OR tier_guess BETWEEN 1 AND 6"
+  ],
+  "research_code_leads": [
+   "is_code_minimum IS NULL OR is_code_minimum IN (0, 1"
+  ],
+  "research_coverage_links": [
+   "co1_attempted IN (0,1",
+   "status IN ('SEARCHED','THIN','NO-DATA','NOT-RUN'",
+   "tier5_attempted IN (0,1",
+   "tier6_attempted IN (0,1"
+  ],
+  "research_gap_mining_runs": [
+   "\n        outcome != 'closure_evidence_found'\n        OR (discoveries_logged IS NOT NULL AND discoveries_logged != '[]'",
+   "\n        outcome != 'deferred'\n        OR (notes IS NOT NULL AND length(notes) >= 10",
+   "\n        outcome != 'gap_recategorized'\n        OR (notes IS NOT NULL AND length(notes) >= 20",
+   "check_method IN (\n        'pubmed_cluster',\n        'scholar_gateway_lived_experience',\n        'cochrane_direct',\n        'standards_body_direct',\n        'multilingual_research',\n        'composite'\n    ",
+   "outcome IN (\n        'closure_evidence_found',  -- enough to close the gap (rule #7 must fire)\n        'partial_evidence_found',  -- some discoveries; gap stays OPEN with annotation\n        'null_result',             -- searches ran clean, no relevant discoveries\n        'gap_recategorized',       -- gap not mining-addressable after all\n        'deferred'                 -- connectors unavailable / other blocker\n    "
+  ],
+  "research_gaps": [
+   "category IN (\n                            'RP','SW','CR','ST','MX','CD','EC','EG',\n                            'CI','DEC','CONF','AUDT'\n                        ",
+   "mining_addressability IS NULL OR mining_addressability IN (\n        'ADDRESSABLE',\n        'NOT-ADDRESSABLE',\n        'TRIAGE-NEEDED'\n    ",
+   "priority IN ('P1','P2','P3'",
+   "status LIKE 'OPEN%' OR status LIKE 'CLOSED%'"
+  ],
+  "research_items": [
+   "doi IS NOT NULL OR url IS NOT NULL OR pmid IS NOT NULL\n        OR pmcid IS NOT NULL OR isbn IS NOT NULL OR issn IS NOT NULL\n        OR standard_number IS NOT NULL OR title IS NOT NULL",
+   "status IN ('REFERENCE-ONLY','PROMOTED','RETIRED'"
+  ],
+  "research_language_links": [
+   "status IN ('SEARCHED','PARTIAL','NOT-RUN'"
+  ],
+  "research_mining_runs": [
+   "backward IN (0,1",
+   "forward IN (0,1"
+  ],
+  "research_searches": [
+   "admitted_ref_ids IS NULL OR json_valid(admitted_ref_ids",
+   "backfill IN (0,1",
+   "depth_method IN ('scoping','systematic'",
+   "mining_direction IS NULL OR mining_direction IN\n     ('none','backward','forward','both'",
+   "saturation_signal IS NULL OR saturation_signal IN\n     ('none','partial','saturated'",
+   "target_evidence_type IS NULL OR target_evidence_type IN\n     ('clinical','sr_meta','standard_eb','national_fw','code','co1','co2','grey'",
+   "target_scope IS NULL OR target_scope IN\n     ('intrinsic','lower_control','high_control','national','international'",
+   "target_tier IS NULL OR target_tier BETWEEN 1 AND 6",
+   "terms_used IS NULL OR json_valid(terms_used"
+  ],
+  "research_stubs": [
+   "status IN ('REFERENCE-ONLY','PROMOTED','RETIRED'"
+  ],
+  "specification_items": [
+   "all_sources_disqualified IN (0, 1",
+   "code_floor_only IN (0, 1",
+   "design_scale IN ('universal', 'population', 'person'",
+   "governing_refs IS NULL OR json_valid(governing_refs",
+   "has_unverified_sources IN (0, 1",
+   "regulatory_stratum_only IN (0, 1",
+   "state IN ('stated', 'provisional',\n                                                    'pending', 'not_applicable'"
+  ],
+  "specification_probe_population_links": [],
+  "specification_source_links": [
+   "role IN ('governing'"
+  ],
+  "specification_value_probes": [
+   "claim_type IN (\n                            'minimum','maximum','target','range_low','range_high'\n                        ",
+   "direction IN ('up','down'",
+   "passes_strict IN (0,1",
+   "phase IN (\n                            'outer-pass-1st','outer-pass-2nd','outer-stop',\n                            'refinement-pass-1st','refinement-pass-2nd','refinement-stop',\n                            'final'\n                        "
+  ],
+  "synthesis_citation_population_links": [],
+  "synthesis_citations": [
+   "\n      (claim_type IN ('numerical_spec','jurisdiction_value') AND claimed_value IS NOT NULL AND value_match IS NOT NULL) OR\n      (claim_type IN ('qualitative','definitional') AND claim_text IS NOT NULL AND claim_match IS NOT NULL",
+   "claim_match IN (\n        'SUPPORTED','PARTIAL','NOT-FOUND','PAYWALL','CONTRADICTED'\n    ",
+   "claim_type IN (\n        'numerical_spec','jurisdiction_value','qualitative','definitional'\n    ",
+   "paywall_purchase_candidate IN (0,1",
+   "value_match IN (\n        'EXACT','WITHIN-TOLERANCE','DIFFERENT','NOT-FOUND','PAYWALL','SUPERSEDED'\n    "
+  ],
+  "synthesis_conflicts": [
+   "status IN (\n                            'ACTIVE','PROPOSED','DEFERRED','RESOLVED-EVIDENCE',\n                            'RESOLVED-CONSENSUS','UNRESOLVED','CLOSED','RETIRED',\n                            'SUPERSEDED'\n                        "
+  ],
+  "synthesis_connection_links": [],
+  "synthesis_connections": [
+   "confidence IN ('HIGH','MODERATE','SPECULATIVE'",
+   "connection_type IN (\n                            'CROSS-POPULATION','CROSS-ITEM',\n                            'COMPOUND-INTERACTION','METHODOLOGY'\n                        ",
+   "opus_reviewed IN (0,1",
+   "status IN (\n                            'PENDING','CONSUMED','CONSUMED-DEFERRED','CLOSED'\n                        "
+  ],
+  "synthesis_convergence": [
+   "status IN ('convergent', 'divergent',\n                                              'single_axis', 'pending_assessment'"
+  ],
+  "synthesis_item_links": [
+   "link_type IN (\n        'primary','parameter','context','secondary'\n    "
+  ],
+  "synthesis_items": [
+   "bpc_complete IN (0,1",
+   "citation_mining_complete IN (0,1",
+   "closure_definition_version IS NULL OR closure_definition_version IN ('v1', 'v2'",
+   "pico_complete IN (0,1",
+   "search_complete IN (0,1",
+   "supersession_check_complete IN (0, 1"
+  ]
+ },
+ "columns": {
+  "base_access_duration": [
+   "code",
+   "created_at",
+   "created_by_session",
+   "definition"
+  ],
+  "base_access_need_icf_codes": [
+   "confidence",
+   "created_at",
+   "created_by_session",
+   "icf_code",
+   "icf_type",
+   "need_code",
+   "note"
+  ],
+  "base_access_need_icf_map": [
+   "axis_code",
+   "created_at",
+   "created_by_session",
+   "need_code",
+   "note",
+   "relationship"
+  ],
+  "base_access_stakes": [
+   "code",
+   "created_at",
+   "created_by_session",
+   "definition"
+  ],
+  "base_data_migrations": [
+   "applied_at",
+   "applied_by_session",
+   "content_sha",
+   "migration_id",
+   "notes"
+  ],
+  "base_decisions": [
+   "alternatives_considered",
+   "category",
+   "created_at",
+   "created_by_session",
+   "decided_by",
+   "decision_artifacts",
+   "decision_date",
+   "decision_id",
+   "delegation",
+   "delegation_rationale",
+   "effort_level",
+   "model_routing",
+   "notes",
+   "outcome",
+   "predecessors",
+   "rationale",
+   "review_status",
+   "status",
+   "summary",
+   "supersedes",
+   "updated_at",
+   "updated_by_session"
+  ],
+  "base_item_icf_links": [
+   "axis_code",
+   "created_at",
+   "created_by_session",
+   "item_code",
+   "mechanism_note",
+   "source",
+   "strength_band",
+   "use_mode"
+  ],
+  "base_item_population_elaborations": [
+   "created_at",
+   "created_by_session",
+   "elab_id",
+   "evidence_ref_id",
+   "item_code",
+   "notes",
+   "population_code",
+   "spec_variant_a",
+   "spec_variant_b",
+   "variant_distinction"
+  ],
+  "base_item_population_links": [
+   "applicability",
+   "created_at",
+   "created_by_session",
+   "item_code",
+   "population_code",
+   "rationale_ref",
+   "subtype"
+  ],
+  "base_lang_jur_map": [
+   "created_at",
+   "created_by_session",
+   "jurisdiction",
+   "language",
+   "notes",
+   "role"
+  ],
+  "base_life_stage_modifiers": [
+   "code",
+   "created_at",
+   "created_by_session",
+   "definition",
+   "label"
+  ],
+  "base_pipeline_runs": [
+   "completed_at",
+   "doi_after",
+   "doi_before",
+   "metadata_complete_after",
+   "metadata_complete_before",
+   "phase_0_extracted",
+   "phase_1a_no_match",
+   "phase_1a_resolved",
+   "phase_1a_transient",
+   "phase_1b_no_match",
+   "phase_1b_resolved",
+   "phase_1b_transient",
+   "phase_2a_no_match",
+   "phase_2a_resolved",
+   "phase_2b_no_match",
+   "phase_2b_resolved",
+   "phase_3_no_match",
+   "phase_3_resolved",
+   "phase_4_complete",
+   "phase_4_enriched",
+   "phase_4_transient",
+   "pmcid_after",
+   "pmcid_before",
+   "run_by_session",
+   "run_id",
+   "started_at",
+   "total_resolved",
+   "verified_after",
+   "verified_before"
+  ],
+  "base_population_icf_map": [
+   "axis_code",
+   "created_at",
+   "created_by_session",
+   "note",
+   "population_code",
+   "role"
+  ],
+  "base_room_types": [
+   "category",
+   "created_at",
+   "created_by_session",
+   "description",
+   "name",
+   "notes",
+   "room_code",
+   "status",
+   "updated_at",
+   "updated_by_session"
+  ],
+  "base_situations": [
+   "account_language",
+   "account_text_ref",
+   "attaches_axes",
+   "attaches_items",
+   "attaches_profiles",
+   "co1_status",
+   "created_at",
+   "created_by_session",
+   "operational_access",
+   "situation_id",
+   "title",
+   "translation_ref"
+  ],
+  "base_slugs": [
+   "bpc_path",
+   "created_at",
+   "created_by_session",
+   "merged_into",
+   "serves_axes",
+   "sl_path",
+   "slug",
+   "status",
+   "topic_directory",
+   "updated_at",
+   "updated_by_session"
+  ],
+  "base_taxonomy_icf": [
+   "axis_code",
+   "coverage_status",
+   "created_at",
+   "created_by_session",
+   "design_domains",
+   "falsification_condition",
+   "icf_b_anchors",
+   "icf_d_anchors",
+   "mechanism",
+   "name",
+   "notes"
+  ],
+  "base_taxonomy_identity": [
+   "category",
+   "created_at",
+   "description",
+   "display_name",
+   "is_compound",
+   "parent_code",
+   "population_code",
+   "status",
+   "updated_at"
+  ],
+  "base_taxonomy_needs": [
+   "absorbs",
+   "created_at",
+   "created_by_session",
+   "design_obligation",
+   "family",
+   "need_code",
+   "notes",
+   "source_version",
+   "typical_stakes"
+  ],
+  "base_term_aliases": [
+   "alias",
+   "alias_type",
+   "created_at",
+   "created_by_session",
+   "jurisdiction",
+   "language",
+   "notes",
+   "term_id",
+   "updated_at",
+   "updated_by_session"
+  ],
+  "base_term_item_links": [
+   "created_at",
+   "created_by_session",
+   "item_code",
+   "notes",
+   "population",
+   "term_id",
+   "updated_at",
+   "updated_by_session"
+  ],
+  "base_terms": [
+   "canonical_en",
+   "created_at",
+   "created_by_session",
+   "definition",
+   "domain",
+   "scope_note",
+   "term_id",
+   "updated_at",
+   "updated_by_session"
+  ],
+  "base_weighting_profile": [
+   "audience",
+   "notes",
+   "tier_weights",
+   "use_pattern"
+  ],
+  "evidence_admission_links": [
+   "created_at",
+   "created_by_session",
+   "exec_id",
+   "ref_id"
+  ],
+  "evidence_items": [
+   "article_number",
+   "author_count",
+   "author_count_is_complete",
+   "author_display",
+   "author_display_note",
+   "book_title",
+   "bpc_note",
+   "bpc_shorthand",
+   "chapter_title",
+   "chapter_title_en",
+   "citation_count",
+   "citation_mining_status",
+   "co1_provenance",
+   "co1_source_type",
+   "code_currency_notes",
+   "code_currency_status",
+   "code_currency_verified_at",
+   "code_currency_verified_by_session",
+   "created_at",
+   "created_by_session",
+   "data_capture_status",
+   "derivation_chain",
+   "doi",
+   "doi_resolution_outcome",
+   "edition",
+   "evidence_type",
+   "first_author_first",
+   "first_author_last",
+   "grey_flag",
+   "grey_reason",
+   "handle",
+   "institution",
+   "is_corporate_primary",
+   "isbn",
+   "issn",
+   "issue",
+   "journal_abbrev",
+   "journal_name",
+   "journal_name_en",
+   "jurisdiction",
+   "lang_detected",
+   "lang_detection_method",
+   "language",
+   "last_verified_at",
+   "local_id",
+   "metadata_integrity_detail",
+   "metadata_integrity_status",
+   "metadata_quality",
+   "notes",
+   "original_title",
+   "pages",
+   "pages_end",
+   "pages_start",
+   "pmcid",
+   "pmid",
+   "prior_expectation",
+   "processing_blocked_reason",
+   "pub_month",
+   "pub_subtitle",
+   "pub_subtitle_en",
+   "pub_title",
+   "pub_title_en",
+   "pub_year",
+   "pub_year_note",
+   "publisher",
+   "publisher_location",
+   "publisher_note",
+   "ref_id",
+   "report_number",
+   "scope",
+   "search_queries_used",
+   "series",
+   "series_number",
+   "source_type",
+   "standard_number",
+   "standard_number_note",
+   "subtype",
+   "superseded_by_ref_id",
+   "synthesis_attribution_required",
+   "tier",
+   "translation_method",
+   "translation_reviewed",
+   "updated_at",
+   "updated_by_session",
+   "url",
+   "url_accessed",
+   "url_last_fetched",
+   "url_match_similarity",
+   "url_resolution_outcome",
+   "verification_attempt_count",
+   "verification_closure_reason",
+   "verification_disposition",
+   "verification_method",
+   "verification_note",
+   "verification_status",
+   "verified_by_tool",
+   "volume"
+  ],
+  "evidence_roots": [
+   "created_at",
+   "created_by_session",
+   "description",
+   "notes",
+   "provenance",
+   "root_id",
+   "root_population_note",
+   "root_type"
+  ],
+  "evidence_slug_links": [
+   "created_at",
+   "created_by_session",
+   "local_ref_id",
+   "ref_id",
+   "relevance_note",
+   "slug",
+   "updated_at",
+   "updated_by_session"
+  ],
+  "evidence_source_authors": [
+   "corporate_name",
+   "corporate_name_en",
+   "corporate_name_note",
+   "created_at",
+   "created_by_session",
+   "first_name",
+   "id",
+   "is_corporate",
+   "last_name",
+   "orcid",
+   "position",
+   "ref_id",
+   "role",
+   "suffix"
+  ],
+  "evidence_supersession_runs": [
+   "anchor_evidence_type",
+   "anchor_tier",
+   "candidates_returned",
+   "candidates_reviewed",
+   "check_id",
+   "check_method",
+   "checked_at",
+   "checked_by_session",
+   "divergence_notes",
+   "local_ref_id",
+   "notes",
+   "outcome",
+   "ref_id",
+   "refinement_dimension",
+   "search_strategy_record",
+   "slug",
+   "superseding_dois",
+   "superseding_ref_ids"
+  ],
+  "evidence_url_verification_runs": [
+   "attempted",
+   "candidates_pool",
+   "completed_at",
+   "dead",
+   "dead_dns",
+   "no_match",
+   "probabilistic",
+   "run_by_session",
+   "run_id",
+   "started_at",
+   "transient",
+   "verified",
+   "verified_after",
+   "verified_before",
+   "wayback_probabilistic",
+   "wayback_verified"
+  ],
+  "judgment_audit_runs": [
+   "brief_path",
+   "created_at",
+   "created_by_session",
+   "item_code",
+   "run_id",
+   "session",
+   "spec_hash",
+   "status",
+   "steps_complete",
+   "steps_started",
+   "updated_at",
+   "updated_by_session"
+  ],
+  "judgment_items": [
+   "claim_text",
+   "claim_type",
+   "claimed_unit",
+   "claimed_value",
+   "contested",
+   "created_at",
+   "created_by_session",
+   "device_class",
+   "echo_of",
+   "extraction_id",
+   "extraction_method",
+   "extraction_status",
+   "file_anchor",
+   "item_code",
+   "jurisdiction",
+   "loc_clause",
+   "loc_clause_end",
+   "loc_division",
+   "loc_division_end",
+   "loc_note",
+   "loc_paragraph",
+   "loc_paragraph_end",
+   "loc_part",
+   "loc_part_end",
+   "loc_section",
+   "loc_section_end",
+   "loc_subclause",
+   "loc_subclause_end",
+   "loc_subsection",
+   "loc_subsection_end",
+   "locator_scheme",
+   "measurement_paradigm",
+   "notes",
+   "parameter",
+   "parameter_canonical",
+   "population_code",
+   "population_label",
+   "promoted_to_rdc_id",
+   "ref_id",
+   "root_classification_basis",
+   "root_id",
+   "root_population_note",
+   "root_ref_id",
+   "root_type",
+   "setting",
+   "slug",
+   "source_section",
+   "updated_at",
+   "updated_by_session"
+  ],
+  "judgment_population_grades": [
+   "created_at",
+   "created_by_session",
+   "gap_id",
+   "match_grade",
+   "match_id",
+   "mismatch_note",
+   "ref_id",
+   "sample_size",
+   "source_ref",
+   "study_population",
+   "target_population"
+  ],
+  "judgment_population_links": [
+   "created_at",
+   "created_by_session",
+   "extraction_id",
+   "note",
+   "population_code"
+  ],
+  "render_case_studies": [
+   "accessible_design_premium",
+   "architect",
+   "building_type",
+   "case_study_id",
+   "conflict_documented",
+   "construction_cost",
+   "cost_data",
+   "cost_data_quality",
+   "created_at",
+   "created_by_session",
+   "design_intent",
+   "evidence_contribution",
+   "evidence_quality_tier",
+   "failure_notes",
+   "financial_data_quality",
+   "financial_evidence_tier",
+   "funding_sources",
+   "harm_finding",
+   "limitations",
+   "location",
+   "notes",
+   "operational_cost_change",
+   "outcome_data",
+   "part13_status",
+   "part_section",
+   "population_description",
+   "populations_served_note",
+   "remediation_cost",
+   "roi_data",
+   "setting",
+   "slug",
+   "sources",
+   "status",
+   "title",
+   "updated_at",
+   "updated_by_session",
+   "year"
+  ],
+  "render_case_study_outcomes": [
+   "case_study_id",
+   "metric",
+   "outcome_id",
+   "source",
+   "tier",
+   "value"
+  ],
+  "render_case_study_population_links": [
+   "case_study_id",
+   "population_code"
+  ],
+  "render_case_study_specification_links": [
+   "case_study_id",
+   "item_code"
+  ],
+  "render_case_study_strategies": [
+   "case_study_id",
+   "strategy",
+   "strategy_id"
+  ],
+  "render_economics_entries": [
+   "bcr",
+   "confidence",
+   "created_at",
+   "created_by_session",
+   "currency",
+   "entry_id",
+   "entry_type",
+   "evidence_tier",
+   "finding",
+   "journal",
+   "jurisdiction",
+   "notes",
+   "pillar",
+   "quant_status",
+   "ref_id",
+   "sample",
+   "source",
+   "source_section",
+   "status",
+   "study_design",
+   "updated_at",
+   "updated_by_session",
+   "value_numeric",
+   "value_unit",
+   "year"
+  ],
+  "render_economics_population_links": [
+   "entry_id",
+   "population_code"
+  ],
+  "render_economics_specification_links": [
+   "entry_id",
+   "item_code"
+  ],
+  "render_provisions": [
+   "bpc_source_slug",
+   "category",
+   "created_at",
+   "created_by_session",
+   "item_code",
+   "item_id",
+   "name",
+   "pmp_delta_min",
+   "pmp_direction",
+   "pmp_empirical_ceiling",
+   "pmp_gap_signed",
+   "pmp_last_walk_at",
+   "status",
+   "updated_at",
+   "updated_by_session"
+  ],
+  "render_room_element_links": [
+   "applicability",
+   "applicability_note",
+   "created_at",
+   "created_by_session",
+   "item_code",
+   "room_code"
+  ],
+  "research_candidates": [
+   "candidate_id",
+   "created_at",
+   "disposition",
+   "exec_id",
+   "found_under_slug",
+   "harm_finding",
+   "locator",
+   "locator_status",
+   "notes",
+   "session",
+   "suggested_slug",
+   "tier_guess",
+   "title",
+   "why_not_admitted"
+  ],
+  "research_code_leads": [
+   "created_at",
+   "created_by_session",
+   "evidence_tier",
+   "is_code_minimum",
+   "item_code",
+   "jurisdiction",
+   "jv_id",
+   "loc_clause",
+   "loc_clause_end",
+   "loc_division",
+   "loc_division_end",
+   "loc_note",
+   "loc_paragraph",
+   "loc_paragraph_end",
+   "loc_part",
+   "loc_part_end",
+   "loc_section",
+   "loc_section_end",
+   "loc_subclause",
+   "loc_subclause_end",
+   "loc_subsection",
+   "loc_subsection_end",
+   "locator_scheme",
+   "notes",
+   "source_section",
+   "spec_id",
+   "standard_name",
+   "unit",
+   "updated_at",
+   "updated_by_session",
+   "value_numeric",
+   "value_text"
+  ],
+  "research_coverage_links": [
+   "co1_attempted",
+   "created_at",
+   "created_by_session",
+   "jurisdiction",
+   "notes",
+   "slug",
+   "status",
+   "tier5_attempted",
+   "tier6_attempted",
+   "updated_at",
+   "updated_by_session"
+  ],
+  "research_gap_mining_runs": [
+   "attempt_at",
+   "attempted_by_session",
+   "candidate_dois",
+   "candidates_returned",
+   "candidates_reviewed",
+   "check_method",
+   "discoveries_logged",
+   "gap_id",
+   "gap_mining_id",
+   "notes",
+   "outcome",
+   "search_strategy_record"
+  ],
+  "research_gaps": [
+   "category",
+   "confidence_interval",
+   "created_at",
+   "created_by_session",
+   "description",
+   "falsification_condition",
+   "gap_id",
+   "mining_addressability",
+   "named_dissenter",
+   "priority",
+   "section",
+   "shift_conditions",
+   "skill",
+   "status",
+   "updated_at",
+   "updated_by_session"
+  ],
+  "research_items": [
+   "authors",
+   "doi",
+   "doi_resolution_outcome",
+   "isbn",
+   "issn",
+   "jurisdiction",
+   "notes",
+   "pmcid",
+   "pmid",
+   "pub_year",
+   "recovered_from",
+   "ref_id",
+   "standard_number",
+   "status",
+   "tier_claimed",
+   "title",
+   "url",
+   "url_last_fetched",
+   "url_resolution_outcome",
+   "used_in_bpcs"
+  ],
+  "research_language_links": [
+   "created_at",
+   "created_by_session",
+   "language",
+   "notes",
+   "results_count",
+   "slug",
+   "status",
+   "updated_at",
+   "updated_by_session"
+  ],
+  "research_mining_runs": [
+   "backward",
+   "connections_produced",
+   "created_at",
+   "created_by_session",
+   "deferred_reason",
+   "doi",
+   "forward",
+   "global_ref_id",
+   "local_ref_id",
+   "notes",
+   "slug",
+   "updated_at",
+   "updated_by_session"
+  ],
+  "research_searches": [
+   "admitted_ref_ids",
+   "backfill",
+   "deferred_reason",
+   "depth_method",
+   "engine",
+   "exec_id",
+   "executed_at",
+   "findings_note",
+   "harm_finding",
+   "jurisdiction",
+   "language",
+   "mining_direction",
+   "query_text",
+   "results_admitted",
+   "results_found",
+   "results_screened",
+   "saturation_signal",
+   "session",
+   "slug",
+   "target_evidence_type",
+   "target_scope",
+   "target_tier",
+   "terms_used"
+  ],
+  "research_stubs": [
+   "authors",
+   "jurisdiction",
+   "metadata_quality",
+   "notes",
+   "pub_year",
+   "recovered_from",
+   "ref_id",
+   "status",
+   "tier_claimed",
+   "title",
+   "used_in_bpcs"
+  ],
+  "specification_items": [
+   "all_sources_disqualified",
+   "code_floor_only",
+   "confidence_dimensions_absent",
+   "confidence_dimensions_present",
+   "confidence_synthesis_basis",
+   "convergence_id",
+   "created_at",
+   "created_by_session",
+   "derivation_sha",
+   "design_scale",
+   "falsification_condition",
+   "gap_register_id",
+   "governing_refs",
+   "has_unverified_sources",
+   "item_code",
+   "not_applicable_rationale",
+   "population_code",
+   "regulatory_stratum_only",
+   "rule_version",
+   "specification_id",
+   "state",
+   "tier_basis",
+   "updated_at",
+   "updated_by_session",
+   "value_max",
+   "value_min",
+   "value_unit"
+  ],
+  "specification_probe_population_links": [
+   "created_at",
+   "created_by_session",
+   "note",
+   "population_code",
+   "probe_id"
+  ],
+  "specification_source_links": [
+   "created_at",
+   "created_by_session",
+   "ref_id",
+   "role",
+   "specification_id"
+  ],
+  "specification_value_probes": [
+   "claim_type",
+   "created_at",
+   "created_by_session",
+   "direction",
+   "item_code",
+   "notes",
+   "passes_strict",
+   "phase",
+   "population",
+   "probe_id",
+   "ref_id",
+   "search_query",
+   "search_query_alt",
+   "setting",
+   "slug",
+   "spec_unit",
+   "spec_value_origin",
+   "step_index",
+   "step_value",
+   "step_value_unit",
+   "walk_id"
+  ],
+  "synthesis_citation_population_links": [
+   "citation_id",
+   "created_at",
+   "created_by_session",
+   "note",
+   "population_code"
+  ],
+  "synthesis_citations": [
+   "citation_id",
+   "claim_match",
+   "claim_text",
+   "claim_type",
+   "claimed_unit",
+   "claimed_value",
+   "jurisdiction",
+   "loc_clause",
+   "loc_clause_end",
+   "loc_division",
+   "loc_division_end",
+   "loc_note",
+   "loc_paragraph",
+   "loc_paragraph_end",
+   "loc_part",
+   "loc_part_end",
+   "loc_section",
+   "loc_section_end",
+   "loc_subclause",
+   "loc_subclause_end",
+   "loc_subsection",
+   "loc_subsection_end",
+   "locator_scheme",
+   "notes",
+   "parameter",
+   "paywall_purchase_candidate",
+   "population",
+   "reasoning_doc_slug",
+   "setting",
+   "source_ref_id",
+   "source_section",
+   "value_match",
+   "verified_at",
+   "verified_by_session"
+  ],
+  "synthesis_conflicts": [
+   "conflict_id",
+   "created_at",
+   "created_by_session",
+   "domain",
+   "evidence",
+   "gap_id",
+   "item_code",
+   "pop_a",
+   "pop_b",
+   "resolution",
+   "source_skill",
+   "status",
+   "updated_at",
+   "updated_by_session"
+  ],
+  "synthesis_connection_links": [
+   "con_id",
+   "target"
+  ],
+  "synthesis_connections": [
+   "con_id",
+   "confidence",
+   "connection_type",
+   "created_at",
+   "created_by_session",
+   "description",
+   "filed_in",
+   "opus_reviewed",
+   "session_applied",
+   "source_skill",
+   "status",
+   "updated_at",
+   "updated_by_session"
+  ],
+  "synthesis_convergence": [
+   "clinical_sources",
+   "co1_sources",
+   "co2_sources",
+   "convergence_id",
+   "created_at",
+   "created_by_session",
+   "discounted_sources",
+   "down_weighted_sources",
+   "rationale",
+   "status",
+   "synthesis_approach",
+   "updated_at",
+   "updated_by_session"
+  ],
+  "synthesis_item_links": [
+   "created_at",
+   "created_by_session",
+   "item_code",
+   "link_type",
+   "rationale",
+   "slug"
+  ],
+  "synthesis_items": [
+   "bpc_complete",
+   "citation_mining_complete",
+   "closure_definition_version",
+   "co1_pass_count",
+   "created_at",
+   "created_by_session",
+   "evidence_state",
+   "jurisdictions_searched",
+   "last_updated",
+   "pico_complete",
+   "population",
+   "search_complete",
+   "slug",
+   "supersession_check_complete",
+   "updated_at",
+   "updated_by_session"
+  ]
+ }
+}

@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-08-27-rename-execution",
+  "artifact": "decisions/DR-2026-08-27-four-taxonomies-are-browsing-lenses.md",
+  "doctrine_sha": "06ceda8",
+  "rules_in_scope": [
+    "integrity-protocol",
+    "source-discipline",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "scripts/migrations/data_20260827194239_2026-08-27-rename-execution.sql",
+      "reason": "The canonical database WAS written and only through the sanctioned path: rows emitted with scripts/emit_data_migration.py, applied with scripts/migrate_db.py, and verified on a scratch copy (cp to /tmp/verify.db with GUIDEBOOK_DB_PATH pointed at it) BEFORE canonical was touched. No hand-written SQL was executed against data/guidebook.db. Canonical sha moved 6cceacd24db7bcbb -> 8507c4cf0a48e156; user_version unchanged at 64 (data migration, no DDL). Post-apply the decisions table holds 174 rows and the register 174 entries, and migrate_db.py --rebuild reproduces 174, so the committed database still replays from the baseline."
+    },
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "data/decisions/decision_register.yaml",
+      "reason": "This is the one D-DOCT ruling in the set and the one where I had raised a doctrinal objection. The record states the objection, the owner's resolution, and why the resolution answers rather than overrides it -- user agency over how a reader's experience is described is the social model's own commitment applied to the interface, consistent with CRPD Art 4.3. The structural consequence is recorded as a schema change, not a vocabulary addition, because lens-switching runs through the crossing maps."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/decisions_DR-2026-08-27-four-taxonomies-are-browsing-lenses.json",
+      "reason": "This attestation covers D-0170 specifically. The DR set was DERIVED, not guessed: 19 ledger entries carry DATE: 2026-08-27, 13 carry a RULE line, and after removing same-day supersessions eight survive. Each DR is GENERATED from its register row so the two surfaces cannot drift, and each register row cites its own DR filename in decision_artifacts, which is how C9 matches. scripts/decision_capture.py exits 0 at 174 ACTIVE with none of the eight orphaned."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "integrity-protocol",
+      "reason": "Decisions live in TWO homes -- data/decisions/decision_register.yaml (what the blocking decision_capture gate reads) and the decisions table (loaded by data migrations) -- with no script syncing them. Ratifying required both writes; I performed both and verified 174/174 against canonical and against a --rebuild replay. ACCEPTED: pre-existing structural defect, recorded in the ledger 2026-08-27 as found-not-fixed. Culling one home is out of scope for a ratification act and needs its own decision."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "decision_capture's completeness checks C7 (every RULE has a Decision) and C9 (every DR has a register row) are WARNINGS, so the gate passed green through all 19 unratified rulings of 2026-08-27; its own docstring concedes C1-C8 'validate the register against itself and never ask whether it is complete'. ACCEPTED: owner selection from options put 2026-08-27 -- clear the backlog first, do not promote in the same session as the rename. The pre-existing orphan backlog is 8 DRs dated 2026-07-23 to 2026-08-24. Also recorded here: three pre-existing C3 rationale-length warnings (D-0006, D-0010, D-0082) and one C6 anti-pattern (D-0010) are left untouched, since fixing them would edit ratified records of decisions this session did not make; all eight new rows pass C3 and C6."
+    }
+  ],
+  "bias_direction": "Toward over-recording. I authored the prose summaries of rulings I did not make, and had an incentive to render each as more cleanly decided than the owner's wording was. Two specific exposures are flagged in the records rather than resolved in my favour: D-0169 sets the stage id singular AGAINST the owner's own written plural, and D-0171 leaves base_building's shape open because the owner said 'that table' while I had proposed three. The opposite bias applies to D-0173, where I scoped 'overrule Aug 24 DR' to \u00a72.4 and left rule 5 standing -- a narrowing that happens to protect a rule I rely on constantly.",
+  "independent_reviewer_counterclaim": "An adversarial pass (R2, Fable 5, read-only) was commissioned during this session specifically to attack that last exposure and returned that the \u00a72.4-only scoping is 'defensible and compelled, not protective narrowing', by reductio: the whole-DR reading would strike \u00a7R8, which the owner re-affirmed the same day. The same pass caught three genuine errors of mine, all corrected in the record: reading the architecture note at ruling altitude after the owner called it a proposal; describing pipeline-map.yaml as ratified doctrine when it self-declares 'DESCRIPTIVE, not normative'; and claiming \u00a7R8 survives 'in full' when six companion replacement names were orphaned. A reviewer could still fairly object that generating each DR from its register row makes the DR set non-independent -- the DR cannot disagree with the register, so C9 can catch a missing file but never a substantive divergence. That is a real limit, chosen deliberately over two hand-maintained copies.",
+  "verdict": "DEVIATION-LOGGED"
+}

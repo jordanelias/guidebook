@@ -1,0 +1,49 @@
+# Exemptions for scripts/audit/schema_reference_audit.py.
+#
+# An exemption does NOT hide a finding: the check prints it as KNOWN with the
+# reason below, and does not fail on it. An exemption that matches nothing is
+# reported as STALE, so it cannot outlive the thing it exempts.
+#
+# Adding one is a claim that the reference is deliberate. Write the evidence.
+
+zzz_phantom: >-
+  Selftest fixture in scripts/audit/graph_audit.py -- a table name chosen
+  BECAUSE it does not exist, to prove the audit reports a phantom.
+
+no_such_table: >-
+  Selftest fixture in scripts/audit/graph_audit.py, same purpose as zzz_phantom.
+
+real_table: >-
+  Selftest fixture in scripts/audit/graph/extract_code.py, proving the extractor
+  distinguishes a real CREATE TABLE from a mention of one.
+
+evidence_sources_v1_legacy: >-
+  Guarded reference. scripts/tests/test_db_integrity.py reads it only after
+  SELECT COUNT(*) FROM sqlite_master WHERE name='evidence_sources_v1_legacy'
+  returns non-zero -- the parity check runs only while the legacy table exists.
+
+room: &room_disposal >-
+  scripts/generate/room_page.py is KNOWN-BROKEN and owner-gated, not a rename
+  casualty. Recorded 2026-08-02 ("room_page.py crashes on no such table: room",
+  "Six phantom tables; tied to the website-v0 path") as disposal item flag 3,
+  awaiting owner decision 8 on the room stratum. It queries four tables that
+  have never existed in this schema; the live tables are rooms and room_items.
+  Exempted rather than fixed because fixing it means deciding what the room
+  stratum IS, which is content doctrine (DG-NON), not a sweep.
+room_item_population: *room_disposal
+room_dar_provision: *room_disposal
+room_conflict: *room_disposal
+
+specification: >-
+  Two distinct pre-existing findings, neither a rename casualty, both recorded
+  here rather than fixed because fixing either decides content, not naming.
+  (1) skills/item-specification-writer_SKILL.md:76 is a CORRECTION NOTE quoting
+  the wrong SQL in order to say it was wrong -- it already states "That table
+  does not exist". The check cannot tell a quoted error from a live query.
+  (2) skills/question-author_SKILL.md teaches UPDATE specification SET
+  question_heading WHERE spec_id, and measured 2026-08-28: the table does not
+  exist (it is `specifications`), `spec_id` and `title` are not columns of it,
+  and `question_heading` exists in NO table in the schema. The skill's entire
+  write path has never been runnable. Where question headings live is an open
+  content question. (3) scripts/generate/room_page.py:51 is the same owner-gated
+  disposal as the `room` entry above.
