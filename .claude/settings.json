@@ -14,6 +14,24 @@
     "Stop runs the mechanical definition-of-done gate so a session cannot quietly end",
     "non-compliant. Neither blocks work; both make non-compliance impossible to not-see."
   ],
+  "_permissions_comment": [
+    "scripts/migrate_db.py is the ONLY sanctioned writer of data/guidebook.db (CLAUDE.md",
+    "rule 3: 'Never write data/guidebook.db directly. Migrations only.'). Every research",
+    "batch ends there — scratch copy -> db.py -> emit_batch_sql.py -> emit_data_migration.py",
+    "-> migrate_db.py — so without this rule no batch, and no ratification, can land.",
+    "",
+    "It is allowed rather than prompted because the script is itself the safety mechanism:",
+    "it applies migrations forward-only inside one transaction, stamps user_version and the",
+    "data_migrations ledger atomically with the DDL, and rolls back as a unit on failure.",
+    "Blanket shell access is NOT granted — the two rules below name one script and nothing",
+    "else."
+  ],
+  "permissions": {
+    "allow": [
+      "Bash(python3 scripts/migrate_db.py)",
+      "Bash(python3 scripts/migrate_db.py *)"
+    ]
+  },
   "hooks": {
     "PostToolUse": [
       {
