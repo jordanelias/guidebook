@@ -96,6 +96,113 @@ string`.
   - *(b)* Return `''` whenever no existing log carries our sid — i.e., make the opening guess apply only via the anchor, never via `openp[-1]` as a first resort — filing under the raw harness session id as the docstring already says is the intended behavior. Never corrupts another session's directory; the cost is a visibly foreign directory name on every session's first command, which is exactly the loudness the docstring asks for and which nobody has yet had to live with in practice.
   - This tracer takes no position on (a) vs (b) — that is an apparatus decision for the owner/orchestrator (CLAUDE.md §1), not for the record-keeper. Recorded here so the next session that hits this does not treat it as a fresh discovery.
 
+### D04-007 — the anti-fabrication verification check would have examined zero payloads for this batch
+- **Class:** BUG
+- **Severity:** P1
+- **Verification:** ORCHESTRATOR-VERIFIED (one of the three the orchestrator states it independently verified). Tracer independently confirmed the mechanism below via static code read (read-only; `retrieval_log.py` not executed).
+- **Observed:** 2026-09-01, by orchestrator
+- **What happened:** `retrieval-log/session_2026-09-01-research-batch-04-accessible-circulation/` holds retrieved payloads (tracer-confirmed present: NFBUK, RNIB, RCOT, AOTA documents plus multiple Crossref JSON files) but no `manifest.jsonl`. `retrieval_log.py:_logged_payloads()` reads only the manifest — nothing else — so with it absent, `--verify-authors` prints `EXAMINED: 0` and returns `INDETERMINATE — … it is not a pass`. **Tracer-confirmed by direct read of `scripts/research/retrieval_log.py`**: `_logged_payloads()` is defined at line 159 and called at line 243; the zero-manifest path prints `"  EXAMINED: 0"` at line 246 before falling through to the informational-verdict path.
+- **Where:** `retrieval-log/session_2026-09-01-research-batch-04-accessible-circulation/` (no `manifest.jsonl`); `scripts/research/retrieval_log.py` lines 159, 243, 246.
+- **Why it matters:** This is exactly failure mode (a) in CLAUDE.md §2 — "a gate that passes having examined nothing" — applied to the specific tool built in direct response to the 2026-08-19 fabrication (CLAUDE.md §2(c)). If this batch's admissions were graded against `--verify-authors` right now, the check would appear to run and would in fact certify nothing, silently.
+- **Status:** OPEN — fix planned this session, not yet executed as of this entry
+- **Resolution owed:** Orchestrator states the mechanism is confirmed working and the plan is: after admission, run `--backfill` against the scratch DB to populate the manifest (honoured via `DB_PATH`/`GUIDEBOOK_DB_PATH` at `retrieval_log.py:76`), then `--verify-authors`, and require `EXAMINED > 0` before treating the batch as verified. Noted explicitly per the orchestrator: `--backfill` is **honest-but-not-contemporaneous** by its own docstring — it performs a retrieval now, marks it as such in the manifest, and still verifies the already-stored author fields against Crossref's live answer, rather than against the original retrieval moment.
+
+---
+
+### D04-008 — the ratified runbook instructs a write the DB layer and an owner ruling have already retired
+- **Class:** CONFLICT
+- **Severity:** P2
+- **Verification:** ORCHESTRATOR-VERIFIED
+- **Observed:** 2026-09-01, by orchestrator; tracer independently confirmed all four cited locations by direct read (read-only)
+- **What happened:** `DR-2026-08-19-research-restart-operative-instrument.md` §12.1 step 7 (RATIFIED, operative) instructs `UPDATE search_executions SET … admitted_ref_ids='[…]'`, and §12.4 failure-mode 3 gives an H03/H04 parity query built on that column. Measured against the live tree, all tracer-reconfirmed verbatim:
+  - `schemas/search_execution.py:54`: `admitted_ref_ids: Optional[str] = None        # RETIRED - do not write`, with the field comment above it reading: *"RETIRED 2026-08-24. search_admissions is the sole home of which sources a search admitted; this JSON copy is no longer written and its parity checks (H03/H04/H07) are deleted. The field survives because committed data migrations INSERT the column and migrations are append-only."*
+  - `scripts/db.py` (~line 394, inside the search-execution insert dict): comment reads *"admitted_ref_ids intentionally NOT written — search_admissions is the sole home (owner ruling 2026-08-24). Column retained because committed data migrations INSERT it and migrations are append-only."*
+  - `scripts/tests/test_db_integrity.py` (~line 1019): *"H03/H04 DELETED 2026-08-24 — they policed a dual-write that no longer happens. A parity check between two homes of one fact does not prevent drift; it makes the second home survivable, and therefore permanent."*
+  - Only H05 survives (~line 1032): checks `results_admitted` equals the `search_admissions` edge count, and it is blocking and corpus-wide.
+- **Where:** `decisions/DR-2026-08-19-research-restart-operative-instrument.md` §12.1 step 7 and §12.4 failure-mode 3 (stale); `schemas/search_execution.py:54`; `scripts/db.py:~394`; `scripts/tests/test_db_integrity.py:~1019,~1032` (current).
+- **Why it matters:** This is rule 5 exactly — the JSON column was a second home for a fact `search_admissions` already states, and the owner ruling of 2026-08-24 already resolved which home wins. The ratified runbook is stale on this one point and instructs the losing side. A session following §12.1 step 7 literally would attempt a write the schema comment, the writer's own comment, and the test suite all say is retired.
+- **Status:** OPEN
+- **Resolution owed:** DR-2026-08-19 §12.1 step 7 and §12.4 failure-mode 3 need a correction noting the 2026-08-24 supersession. Not this tracer's or this batch's call to edit a RATIFIED instrument mid-batch. Orchestrator's working plan: use `log-search --admitted-ref-id`, which writes the junction directly and satisfies H05 at write time, and skip the now-retired enrichment step entirely.
+
+---
+
+### D04-009 — R3's `[UNVERIFIED-QUANT]` escape hatch has only one of its three legitimate carriers reachable from the CLI
+- **Class:** BUG
+- **Severity:** P2
+- **Verification:** ORCHESTRATOR-VERIFIED. Tracer independently confirmed via static read of `scripts/db.py`'s `add-source` argparse block and `_ES_COLS` (not executed — `add-source --help` was not run by the tracer per the hard constraint against invoking `scripts/db.py`).
+- **Observed:** 2026-09-01, by orchestrator
+- **What happened:** R3 is satisfied by `article_number` OR `pages` OR `notes LIKE '%UNVERIFIED-QUANT%'`. Only `--pages` is reachable through `add-source`. **Tracer-confirmed directly**: the `add-source` subparser (`p_as`, defined `scripts/db.py:1055`, argument list `scripts/db.py:1056–1118`) offers `--url`, `--url-accessed`, `--pages`, `--doi-resolution-outcome`, `--year`, `--title`, `--tier`, `--doi`, `--pmid`, `--jurisdiction`, `--evidence-type`, `--lang-detected`, `--lang-detection-method`, `--metadata-quality`, `--verification-method`, `--verified-by-tool`, `--verification-status`, `--slug`, `--local-ref-id`, `--session`, `--dry-run` — **no `--notes`, no `--article-number`**. `_ES_COLS` (`scripts/db.py:1895`) includes `"notes"` as a permitted column but `article_number` is not in `_ES_COLS` at all, and no CLI flag populates `notes` for this subcommand — the frozenset permits the field, nothing sets it.
+- **Where:** `scripts/db.py:1055–1118` (`add-source` subparser), `scripts/db.py:1895–1917` (`_ES_COLS`).
+- **Why it matters:** A source with no page numbers has no sanctioned path to carry `[UNVERIFIED-QUANT]` through the writer that is supposed to refuse-rather-than-silently-omit. DR-2026-08-19's own 2026-08-25 supersession note claims "R3, R10, R12 and R13 CAN now be satisfied through the CLI" — measured true only for `--pages`; the note overstates its own fix. CLAUDE.md §4 is explicit that a table or column the CLI cannot reach is a coverage bug to fix, never a licence to hand-write SQL.
+- **Status:** OPEN
+- **Resolution owed:** Add `--notes` and `--article-number` to the `add-source` subparser (and `article_number` to `_ES_COLS`) so all three R3 carriers are reachable without hand SQL. This is a `db.py` coverage fix, not something to work around by writing SQL directly against the scratch.
+
+---
+
+### D04-010 — the research contract injected into every session's start instructs a write an owner ruling struck four days ago
+- **Class:** CONFLICT
+- **Severity:** P1
+- **Verification:** Antagonist-measured. Tracer independently confirmed by direct read of `governance/research-contract.yaml`, `decisions/DR-2026-08-31-strike-jurisdictional-values-clause.md`, and a read-only DB query.
+- **Observed:** 2026-09-01, by antagonist
+- **What happened:** `governance/research-contract.yaml` rule R12 — live in the SessionStart payload right now — reads, verbatim (tracer-confirmed at lines 186–192): *"Case studies -> case_studies. Economics -> economics_entries. Code values -> jurisdictional_values. Never leave them in prose notes."* Owner ruling D-0181 (`decisions/DR-2026-08-31-strike-jurisdictional-values-clause.md`, RATIFIED ON CONTACT 2026-08-31, tracer-confirmed present and read in full) struck exactly this instruction from DR-2026-08-19 §12.1 Step 10 on the ground that a 2026-08-12 ruling made `jurisdictional_values` REFERENCE-ONLY — the table names which document to consult, never what it says — and the runbook clause was walking the next research batch into that forbidden write (labelled F-8 in the DR). The strike swept the DR's own runbook clause and did not sweep the contract file, which is a second, independent caller of the same retired instruction. Corroborating measurement, **tracer-reproduced via read-only query**: `jurisdictional_values` holds 109 rows; `value_text`, `value_numeric`, `unit`, `is_code_minimum`, and `source_section` are all 0 non-null across every row — consistent with the table never having been written to in the REFERENCE-ONLY-violating sense the ruling forbids.
+- **Where:** `governance/research-contract.yaml` rule R12 (lines ~186–192, unswept); `decisions/DR-2026-08-31-strike-jurisdictional-values-clause.md` (the ruling, which named only the DR's own §12.1 Step 10 clause); `data/guidebook.db` table `jurisdictional_values` (109 rows, 5 named columns all-NULL).
+- **Why it matters:** CLAUDE.md rule 4 — "a rename or removal is not done until the callers are swept... a skill is a caller" — is unmet by the very ruling that fixed the original trap. The contract is a caller (it is regenerated into the SessionStart hook by `scripts/generate/research_contract_hook.py` and is literally what every session, including this one, was told at start). As written, R12 still tells a session to write a column an owner ruling forbids, four days after that ruling landed.
+- **Status:** OPEN
+- **Resolution owed:** Sweep R12 out of (or rewrite it in) `governance/research-contract.yaml`, then regenerate the SessionStart hook via `scripts/generate/research_contract_hook.py --write` (append-only per CLAUDE.md §5's hook-ordering trap — do not insert at index 0). Orchestrator states this is deliberately **not** being done mid-batch: changing the text injected into every session, while this session is itself using that injection, would put the change and its own evidence in one commit.
+
+---
+
+### D04-011 — `db.py`'s own error message states the ref_id minting rule CLAUDE.md names as WRONG
+- **Class:** DOC-DRIFT
+- **Severity:** P2
+- **Verification:** Antagonist-measured. Tracer independently reproduced both the text and the correct value via static read plus a read-only `dbcore` call.
+- **Observed:** 2026-09-01, by antagonist
+- **What happened:** `scripts/db.py` (~line 1946–1947, the `--ref-id` format-refusal message) tells the user: *"There is no allocator: mint above the source_locators high-water mark, or you will collide with a held identifier (CLAUDE.md §4)."* CLAUDE.md §4 states at length that this exact rule is WRONG — it was corrected 2026-08-25 because minting above `source_locators`' high-water mark yields `REF-00965`, which collides with a live `evidence_sources` row. The correct rule is `dbcore.next_ref_id()`, the union of the high-water mark across every ref_id-bearing table. **Tracer-reproduced directly** (read-only, `dbcore.ref_id_high_water()` / `dbcore.next_ref_id()` against the live DB): high-water mark = **970**, `next_ref_id()` = **REF-00971**. A second refusal message elsewhere in the same file (`scripts/db.py:2511`, inside `insert_locator`'s own error path) states the rule correctly: *"Mint with dbcore.next_ref_id()."*
+- **Where:** `scripts/db.py:~1946–1947` (wrong rule, in the general `--ref-id` validator); `scripts/db.py:2511` (correct rule, in `insert_locator` only); `scripts/dbcore.py:263–270` (`next_ref_id()` itself).
+- **Why it matters:** The tool's own refusal message — the thing a session reads at the exact moment it needs the correct minting rule — states the superseded, collision-prone version. Only a session that already knows to distrust `db.py` and go read CLAUDE.md §4 (or happens to hit `insert_locator`'s refusal instead) gets the right answer.
+- **Status:** OPEN
+- **Resolution owed:** Update the `--ref-id` validator's error text at `scripts/db.py:~1946–1947` to point at `dbcore.next_ref_id()`, matching `insert_locator`'s message, so there is one stated rule rather than two.
+
+---
+
+### D04-012 — `dbcore.check_values()` is blind to CHECK constraints written in nullable form, and its own fallback then reintroduces the "live rows as vocabulary" defect it was built to close
+- **Class:** BUG
+- **Severity:** P2
+- **Verification:** Antagonist-measured (including the CLI-level reproduction — `--locator-status DEAD` refused — which the tracer did not attempt, per the hard constraint against running `scripts/db.py`). Tracer independently confirmed the underlying mechanism via read-only code and schema inspection.
+- **Observed:** 2026-09-01, by antagonist
+- **What happened:** `dbcore.py:348`'s extraction regex is `r"CHECK\s*\(\s*%s\s+IN\s*\(([^)]*)\)" % re.escape(column)` — it requires the literal form `CHECK ( <column> IN (`. Any column whose constraint is instead written as `CHECK (<column> IS NULL OR <column> IN (...))` does not match, and `check_values()` returns `set()`. **Tracer-reproduced directly, read-only**: `search_candidates.locator_status` is declared in `scripts/migrations/057_baseline_2026-08-12.sql:1101` as `TEXT CHECK (locator_status IS NULL OR locator_status IN ('UNVERIFIED','RESOLVED','DEAD'))` — the nullable form. Calling `dbcore.check_values(con, 'search_candidates', 'locator_status')` against the live DB (read-only) returns `set()`, despite the schema plainly declaring three legal values including `'DEAD'`. `check_vocab()`'s documented behavior for an empty declared set is "empty vocabulary means unconstrained... the write proceeds" — but antagonist reports the CLI in practice *refuses* `--locator-status DEAD`, meaning some other code path (a live-row check, per the antagonist) is filling the gap left by the blind regex, which is precisely the "live rows are a sample of a vocabulary, never the vocabulary" failure `check_values()`'s own docstring says it was built to prevent.
+- **Where:** `scripts/dbcore.py:329–352` (`check_values()`); `scripts/migrations/057_baseline_2026-08-12.sql:1101` (`search_candidates.locator_status`, the nullable-form CHECK). Antagonist reports ten columns this batch touches are affected in total; tracer confirmed one (`locator_status`) directly and did not enumerate the other nine independently.
+- **Why it matters:** The function exists specifically so a refusal can name the real, schema-declared alternative rather than trust a sample of live rows (its own docstring, quoting the 2026-08-25 `search_candidates.disposition`/`OUT-OF-SCOPE` finding). A regex that silently returns empty for a common, legitimate SQL form (`col IS NULL OR col IN (...)`) reopens exactly that hole for every column written that way.
+- **Status:** OPEN
+- **Resolution owed:** Widen `check_values()`'s regex to also match the `CHECK (<column> IS NULL OR <column> IN (...))` form (and ideally parse CHECK clauses more robustly than a single regex shape), then re-audit which of the ten affected columns were being silently vocabulary-blind. Tracer did not independently verify the "ten columns" figure or attempt to enumerate them.
+
+---
+
+### D04-013 — the pipeline contract is unratified and internally inconsistent with the tool that enforces it
+- **Class:** DOC-DRIFT
+- **Severity:** P3
+- **Verification:** Antagonist-measured. Tracer independently confirmed all four cited facts by direct read (read-only).
+- **Observed:** 2026-09-01, by antagonist
+- **What happened:** `governance/pipeline-contract.yaml` declares, verbatim (tracer-confirmed lines 2–3): `status: PROPOSED` and `ratified: false` — while CLAUDE.md calls this file "the enforcing single home of the stage ids." Its `spine:` field (line 7, tracer-confirmed verbatim) still reads: `"EvidenceSource (ENT-02) -> BPC entry (ENT-03) -> Specification (ENT-01) -> Item (ENT-08) -> render"` — the pre-2026-08-27 four-hop chain, not the six/seven-stage spine CLAUDE.md's pipeline section now describes. Separately, `tools/pipeline_completeness.py` declares `STAGES = ["base", "research", "evidence", "judgment", "synthesis", "specification", "render"]` at line 37 (seven entries, tracer-confirmed) but renders the phrase **"the five pipeline stages"** at line 682 and **"The five stages at a glance"** at line 694 (both tracer-confirmed verbatim, exact line numbers). `pipeline_completeness_fresh` is a blocking check (tracer-confirmed against `governance/check-registry.yaml` during this session's own baseline pass), so this page is regenerated and re-emits the wrong stage count on every run rather than being a one-off stale artefact.
+- **Where:** `governance/pipeline-contract.yaml:2-3,7`; `tools/pipeline_completeness.py:37,682,694`.
+- **Why it matters:** Two separate instances of CLAUDE.md §2(b)'s named failure mode ("prose that contradicts the database... generate from the DB, or stamp with a drift warning") co-existing in the one file this project treats as the pipeline's canonical enforcement surface: an unratified contract asserting authority CLAUDE.md defers to, and a rendered page whose own header count (five) contradicts its own code constant three lines above it (seven).
+- **Status:** OPEN
+- **Resolution owed:** Ratify or retire `governance/pipeline-contract.yaml` (its `status`/`ratified` fields should reflect one or the other, not sit in a "PROPOSED" state CLAUDE.md treats as authoritative); update its `spine:` field to the current stage chain; and change `tools/pipeline_completeness.py`'s rendered prose at lines 682/694 to derive the stage count from `STAGES` (len 7) rather than a hand-written "five," consistent with CLAUDE.md §2(b)'s ban on hardcoded counts in derived documents.
+
+---
+
+### D04-014 — one foreign-key back-edge in the migration-emission table order
+- **Class:** DATA
+- **Severity:** P3
+- **Verification:** Antagonist-measured. Tracer independently confirmed both index positions and the underlying FK by direct, read-only inspection.
+- **Observed:** 2026-09-01, by antagonist
+- **What happened:** `evidence_population_match.gap_id` carries `REFERENCES gaps(gap_id)` (tracer-confirmed, `scripts/migrations/057_baseline_2026-08-12.sql:203`). In the FK-ordered table list used by `scripts/research/emit_batch_sql.py` — which the file's own comments show was consolidated into `dbcore.WRITABLE_TABLES` on 2026-08-25 specifically so no table could again be "writable but invisible to capture" — `evidence_population_match` sits at **index 7** and `gaps` at **index 12** (tracer-reproduced by direct enumeration of `dbcore.WRITABLE_TABLES`, read-only). A parent (`gaps`) is emitted after a child that references it (`evidence_population_match`), inverting the ordering the list exists to guarantee ("a parent is always emitted before anything that references it, so the migration applies cleanly even with foreign_keys enforcement on" — `emit_batch_sql.py`'s own header comment).
+- **Where:** `scripts/dbcore.py` (`WRITABLE_TABLES`, indices 7 and 12); `scripts/migrations/057_baseline_2026-08-12.sql:203` (the FK declaration); `scripts/research/emit_batch_sql.py` (the consumer, header comment on table ordering).
+- **Why it matters:** A `search_candidates`/`evidence_population_match` row that references a `gaps` row created in the *same* research batch would be emitted before its parent exists, and the resulting migration SQL would fail (or silently violate ordering) under foreign-key enforcement.
+- **Status:** WORKED-AROUND
+  - **Workaround adopted (antagonist):** for this batch, either leave `--gap-id` NULL on any new `evidence_population_match` row, or ship the referenced gap in an earlier, already-applied migration so it is never a same-batch forward reference.
+- **Resolution owed:** Move `gaps` earlier than index 7 in `dbcore.WRITABLE_TABLES` (or otherwise re-derive the ordering from the actual FK graph rather than a hand-maintained list) so this class of same-batch forward reference cannot recur. Not attempted this session — batch 04 does not currently need a same-batch gap+match pairing, per the adopted workaround.
+
 ---
 
 ## Summary
@@ -107,3 +214,11 @@ string`.
 | D04-004 | DOC-DRIFT | P3 | OPEN |
 | D04-005 | DATA | P2 | OPEN |
 | D04-006 | BUG | P1 | WORKED-AROUND |
+| D04-007 | BUG | P1 | OPEN (fix planned this session) |
+| D04-008 | CONFLICT | P2 | OPEN |
+| D04-009 | BUG | P2 | OPEN |
+| D04-010 | CONFLICT | P1 | OPEN |
+| D04-011 | DOC-DRIFT | P2 | OPEN |
+| D04-012 | BUG | P2 | OPEN |
+| D04-013 | DOC-DRIFT | P3 | OPEN |
+| D04-014 | DATA | P3 | WORKED-AROUND |
