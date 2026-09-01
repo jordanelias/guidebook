@@ -2,7 +2,7 @@
 """
 scripts/generate/population_page.py — Static page generator for population pages.
 
-Queries the LIVE schema (populations, item_population_links, items,
+Queries the LIVE schema (populations, item_taxonomy_links, items,
 bpc_metadata, specifications) and produces a single self-contained HTML
 file for a given population code, following the same pattern as
 tools/regenerate_vetting_surface.py: query real tables, inline data as JSON,
@@ -51,10 +51,10 @@ def query_population(conn, code):
     ))
 
     items = conn.execute(
-        "SELECT ipl.item_code, i.name, i.category, ipl.applicability, ipl.subtype "
-        "FROM item_population_links ipl "
-        "JOIN items i ON i.item_code = ipl.item_code "
-        "WHERE ipl.population_code = ? ORDER BY i.item_code",
+        "SELECT itl.item_code, i.name, i.category, itl.applicability, itl.subtype "
+        "FROM item_taxonomy_links itl "
+        "JOIN items i ON i.item_code = itl.item_code "
+        "WHERE itl.identity_code = ? ORDER BY i.item_code",
         (code,),
     ).fetchall()
     pop["items"] = [

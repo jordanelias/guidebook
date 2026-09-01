@@ -118,12 +118,12 @@ connection_type as an existing entry is a duplicate — skip it.
 ### spec mode
 1. Item specification — full item text (Population Mode + Person Mode notes + population annotations)
 2. Cross-reference tables in the spec (explicit cross-refs already noted by the author)
-3. `item_population_links` — population scope of the item, one row per
-   (`item_code`, `population_code`), each carrying an `applicability`. Read the
+3. `item_taxonomy_links` — population scope of the item in its IDENTITY lens, one
+   row per (`item_code`, `identity_code`), each carrying an `applicability`. Read the
    applicability: `does_not_apply` records the *opposite* of a claim to the space.
    ```sql
-   SELECT population_code, applicability FROM item_population_links
-   WHERE item_code = ? ORDER BY population_code
+   SELECT identity_code, applicability FROM item_taxonomy_links
+   WHERE item_code = ? AND identity_code IS NOT NULL ORDER BY identity_code
    ```
    (This said "Items table for `applicable_groups`" — a CSV column dropped when  <!-- [RETIRED-VOCAB-OK] -->
    the junction replaced it. A query written from it raised `no such column`.)

@@ -139,7 +139,8 @@ archetypes) in one namespace, which armature §4.2 already resolves into two lay
 An **axis** is an architect-actionable person-environment interaction dimension:
 an environmental demand that bodies meet variably, which design parameters can
 lower, meet, or fail. Axes anchor mechanism and threshold evidence and
-`item_axis_links`. An axis with zero linked slugs or items is a *visible,
+`item_taxonomy_links.icf_code` (`item_axis_links` until migration 065 folded it in).
+An axis with zero linked slugs or items is a *visible,
 queryable coverage hole* — by design.
 
 ### §2.1 The axis register (17)
@@ -419,7 +420,7 @@ of priority between people; the checklist (§9) offers the reorder explicitly.
    searched JA/DE/ZH/KO/ES/FR strata — do non-English literatures carve the space
    differently? Divergences are ratification items.
 3. Apply staged DDL + seeds (promoted into `scripts/migrations/` at apply time).
-4. Backfill `slugs.serves_axes` (79 slugs); harvest `item_axis_links` from the 87
+4. Backfill `slugs.serves_axes` (79 slugs); harvest ICF-lens links from the 87
    FDA audit briefs; then re-derive population links.
 5. Regenerate FDA skill §§1–2 from the axis register; follow population-taxonomy
    §5 for enum changes.

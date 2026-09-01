@@ -138,11 +138,25 @@ def extract(gdb, store):
                 "SELECT item_code, bpc_source_slug FROM items WHERE bpc_source_slug IS NOT NULL"):
             store.add_edge(node_id("item", item_code), node_id("slug", slug), "fk",
                            attrs={"via": "items.bpc_source_slug"})
-    if "item_population_links" in tables:
+    if "item_taxonomy_links" in tables:
+        # Since migration 065 this one table carries all four lenses. Only the
+        # IDENTITY lens is drawn, which is exactly the item->population edge this
+        # graph has always drawn -- the filter is what keeps an ICF-only row from
+        # being emitted as an item->population edge with a NULL target.
+        #
+        # The ICF lens is deliberately NOT drawn here. `axes` is absent from
+        # PRIMARY, so no axis node exists, and emitting the edge would make all
+        # 158 folded rows fire ref.dangling_structural as ERRORs -- an instrument
+        # reporting its own blind spot as corruption. Registering `axes` in
+        # PRIMARY is the one-line fix and it changes audit output, so it is
+        # recorded as owed rather than smuggled into a rename sweep. Coverage of
+        # the ICF lens is unchanged by this migration: item_axis_links was never
+        # extracted either.
         for item_code, pop in cur.execute(
-                "SELECT item_code, population_code FROM item_population_links"):
+                "SELECT item_code, identity_code FROM item_taxonomy_links "
+                "WHERE identity_code IS NOT NULL"):
             store.add_edge(node_id("item", item_code), node_id("population", pop), "junction",
-                           attrs={"via": "item_population_links"})
+                           attrs={"via": "item_taxonomy_links.identity_code"})
     if "populations" in tables and "parent_code" in _columns(cur, "populations"):
         for pop, parent in cur.execute(
                 "SELECT population_code, parent_code FROM populations WHERE parent_code IS NOT NULL"):

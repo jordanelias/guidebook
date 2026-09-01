@@ -302,7 +302,7 @@ checks:
     this validator is named for. min_items:1: an empty items table would mean the DB or the query broke,
     not a legitimate state. REPAIRED AND WIRED 2026-08-05; was quarantined `broken`. It crashed with `IndexError:
     No item with that key` reading `items.applicable_groups`, a CSV  # [RETIRED-VOCAB-OK] of population
-    codes packed into one column and dropped when `item_population_links` replaced it — so V5 had been
+    codes packed into one column and dropped when the item×taxonomy junction replaced it — so V5 had been
     validating nothing, loudly, for as long as that was true. V5 now checks the junction: every link resolves
     to a live `populations` row and to a live `items` row. Both foreign keys are re-checked rather than
     trusted, because SQLite enforces FKs per-connection and they are OFF by default, so a file can carry

@@ -149,7 +149,9 @@ entries:
     match: identifier
     severity: broken
     retired_by: "schema migration — column dropped from `items`"
-    replacement: "item_population_links (the junction that replaced the packed column)"
+    replacement: "item_taxonomy_links (the junction that replaced the packed column;
+      named item_population_links from 2026-05-11 until migration 065 folded the ICF
+      lens in and made the lens a column)"
     note: >-
       Not a naming preference: the column DOES NOT EXIST in the live schema
       (verified against data/guidebook.db 2026-08-05 — all 67 tables and all 18

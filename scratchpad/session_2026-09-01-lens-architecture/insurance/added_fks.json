@@ -1,0 +1,4 @@
+["item_taxonomy_links.icf_code -> axes.axis_code",
+ "item_taxonomy_links.needs_code -> access_needs.need_code",
+ "item_taxonomy_links.medical_code -> base_taxonomy_medical.medical_code",
+ "item_taxonomy_links.rationale_ref -> decisions.decision_id"]

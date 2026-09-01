@@ -64,7 +64,7 @@ SITE_DIR = REPO_ROOT / "site"
 # that two builds are equivalent. The sha256 of the output is that.
 FP_TABLES = (
     "items", "populations", "specifications", "specification_source_links",
-    "evidence_sources", "item_bpc_links", "item_population_links",
+    "evidence_sources", "item_bpc_links", "item_taxonomy_links",
 )
 
 

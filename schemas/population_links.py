@@ -7,7 +7,7 @@ everything flagged properly"). Each links a value-claim row to one canonical
 population code; a claim applying to N populations has N rows.
 
 These extend the project's established population-junction idiom
-(item_population_links, evidence_population_match) to the value-claim tables:
+(item_taxonomy_links, evidence_population_match) to the value-claim tables:
 
     reasoning_doc_citations  --(citation_population_links)-->  populations
     spec_value_probes        --(probe_population_links)----->  populations

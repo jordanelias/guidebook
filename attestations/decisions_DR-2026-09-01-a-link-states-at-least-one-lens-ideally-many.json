@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-09-01-lens-architecture",
+  "artifact": "decisions/DR-2026-09-01-a-link-states-at-least-one-lens-ideally-many.md",
+  "doctrine_sha": "803de13",
+  "rules_in_scope": [
+    "integrity-protocol",
+    "source-discipline",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "scripts/migrations/data_20260901183203_2026-09-01-lens-architecture.sql",
+      "reason": "The canonical database is written only through the sanctioned path -- rows emitted with scripts/emit_data_migration.py and applied with scripts/migrate_db.py, dry-run on a scratch copy first (184 decisions, 540 links, foreign_key_check clean) before canonical was touched. No hand-written SQL was executed against data/guidebook.db. The register row is the single home and this DR is GENERATED from it by scratchpad/session_2026-09-01-lens-architecture/render_drs.py."
+    },
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-09-01-a-link-states-at-least-one-lens-ideally-many.md",
+      "reason": "The ruling is recorded in the owner's own three phrasings rather than paraphrased into a constraint, and the constraint is recorded separately as the mechanisation of it. Every claim about what the constraint admits and refuses was TESTED against the live shape before being written: the four-lens row, the single-lens row with three NULLs, and the no-lens row that is refused. The record also states plainly that the ideally-many clause is NOT mechanised and why -- a CHECK demanding two lenses would refuse the 372 identity-only rows that already exist."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/decisions_DR-2026-09-01-a-link-states-at-least-one-lens-ideally-many.json",
+      "reason": "One attestation per DR, because attestation_presence requires one per record and a single attestation covering a batch fails it."
+    }
+  },
+  "deviations": [],
+  "bias_direction": "Toward reading the ruling as settling more than it did. Resisted by separating the two clauses that ARE constraints from the one that is an authoring aim, and by recording that the aim has no enforcer rather than inventing one.",
+  "independent_reviewer_counterclaim": "That recording an owner's three short messages as a numbered decision over-formalises them. Not sustained: the messages reversed a parked schema design (CHECK = 1), so they had to be recorded as a decision or the reversal would have no citable authority -- CLAUDE.md rule 0 requires recording the supersession.",
+  "verdict": "CLEAN"
+}

@@ -94,17 +94,40 @@ def run_checks(db_path):
         """).fetchone()[0] == 0,
         subject=subj("SELECT COUNT(*) FROM source_slug_links"))
 
-    record("A02", "item_population_links → items",
-        conn.execute("""SELECT COUNT(*) FROM item_population_links l
+    record("A02", "item_taxonomy_links → items",
+        conn.execute("""SELECT COUNT(*) FROM item_taxonomy_links l
             WHERE NOT EXISTS (SELECT 1 FROM items i WHERE i.item_code=l.item_code)
         """).fetchone()[0] == 0,
-        subject=subj("SELECT COUNT(*) FROM item_population_links"))
+        subject=subj("SELECT COUNT(*) FROM item_taxonomy_links"))
 
-    record("A03", "item_population_links → populations",
-        conn.execute("""SELECT COUNT(*) FROM item_population_links l
-            WHERE NOT EXISTS (SELECT 1 FROM populations p WHERE p.population_code=l.population_code)
+    record("A03", "item_taxonomy_links → populations",
+        conn.execute("""SELECT COUNT(*) FROM item_taxonomy_links l
+            WHERE l.identity_code IS NOT NULL
+              AND NOT EXISTS (SELECT 1 FROM populations p WHERE p.population_code=l.identity_code)
         """).fetchone()[0] == 0,
-        subject=subj("SELECT COUNT(*) FROM item_population_links"))
+        subject=subj("SELECT COUNT(*) FROM item_taxonomy_links WHERE identity_code IS NOT NULL"))
+
+    # A03b/A03c did not exist before migration 065 because the ICF and needs lenses
+    # had no shared home to check. Folding item_axis_links in gave them one.
+    record("A03b", "item_taxonomy_links → axes",
+        conn.execute("""SELECT COUNT(*) FROM item_taxonomy_links l
+            WHERE l.icf_code IS NOT NULL
+              AND NOT EXISTS (SELECT 1 FROM axes a WHERE a.axis_code=l.icf_code)
+        """).fetchone()[0] == 0,
+        subject=subj("SELECT COUNT(*) FROM item_taxonomy_links WHERE icf_code IS NOT NULL"))
+
+    record("A03c", "item_taxonomy_links → access_needs",
+        conn.execute("""SELECT COUNT(*) FROM item_taxonomy_links l
+            WHERE l.needs_code IS NOT NULL
+              AND NOT EXISTS (SELECT 1 FROM access_needs n WHERE n.need_code=l.needs_code)
+        """).fetchone()[0] == 0,
+        subject=subj("SELECT COUNT(*) FROM item_taxonomy_links WHERE needs_code IS NOT NULL"))
+
+    record("A03d", "item_taxonomy_links states at least one lens",
+        conn.execute("""SELECT COUNT(*) FROM item_taxonomy_links
+            WHERE COALESCE(identity_code, icf_code, needs_code, medical_code) IS NULL
+        """).fetchone()[0] == 0,
+        subject=subj("SELECT COUNT(*) FROM item_taxonomy_links"))
 
     record("A04", "spec_value_probes → items",
         conn.execute("""SELECT COUNT(*) FROM spec_value_probes p

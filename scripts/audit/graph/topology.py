@@ -12,7 +12,7 @@ Checks (data layer, increment 1):
   ref.dangling_structural      fk / self_ref / item-population junction edge pointing at
                                a missing node (ERROR) — referential corruption in
                                items.bpc_source_slug, populations.parent_code,
-                               item_population_links that no other check covered
+                               item_taxonomy_links that no other check covered
   table.empty_mission_critical curated mission-critical table at/near 0 rows (INFO)
   table.missing_mission_critical curated mission-critical table ABSENT from the DB (WARN)
   connection.empty_description connection rows with empty description (INFO)

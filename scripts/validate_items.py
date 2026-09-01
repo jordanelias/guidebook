@@ -6,7 +6,7 @@ Checks:
   V2: category is single letter A-K
   V3: status is draft|active|merged|retired
   V4: name is non-empty
-  V5: every item_population_links row resolves to a live populations row,
+  V5: every item_taxonomy_links identity-lens row resolves to a live populations row,
       and its applicability is a value the schema allows
 
 Exit codes: 0 = pass, 1 = fail
@@ -14,7 +14,7 @@ Exit codes: 0 = pass, 1 = fail
 V5 REWRITTEN 2026-08-05, for two reasons that were each independently fatal.
 
 It read `items.applicable_groups`, a CSV of population codes packed into one  # [RETIRED-VOCAB-OK]
-column. That column was dropped when `item_population_links` replaced it, so
+column. That column was dropped when the item×taxonomy junction replaced it, so
 every run of this validator raised `IndexError: No item with that key` on the
 first row. It validated nothing, loudly, for as long as that was true.
 
@@ -39,7 +39,7 @@ ITEM_CODE_RE   = re.compile(r"^[A-K]-\d{2}[a-z]?$")
 CATEGORY_RE    = re.compile(r"^[A-K]$")
 VALID_STATUS   = {"draft", "active", "merged", "retired"}
 
-# NOT re-checked here: `item_population_links.applicability`. The schema already
+# NOT re-checked here: `item_taxonomy_links.applicability`. The schema already
 # enforces it with a CHECK constraint over five values — `applies`,
 # `applies_strictly`, `applies_loosely`, `context_dependent`, `does_not_apply`.
 #
@@ -75,9 +75,11 @@ def validate():
     known_pops = {r[0] for r in conn.execute(
         "SELECT population_code FROM populations"
     )}
+    # The identity lens only: item_taxonomy_links has carried all four lenses since
+    # migration 065, and V5 checks resolution against `populations`.
     links = conn.execute(
-        "SELECT item_code, population_code, applicability FROM item_population_links "
-        "ORDER BY item_code, population_code"
+        "SELECT item_code, identity_code, applicability FROM item_taxonomy_links "
+        "WHERE identity_code IS NOT NULL ORDER BY item_code, identity_code"
     ).fetchall()
 
     for r in rows:
@@ -104,9 +106,9 @@ def validate():
     # rows surviving from the bootstrap snapshot. A declared constraint is not an
     # observed one.
     for link in links:
-        ic, pc = link["item_code"], link["population_code"]
+        ic, pc = link["item_code"], link["identity_code"]
         if pc not in known_pops:
-            errors.append(f"V5 FAIL {ic}: population_code '{pc}' is not in the populations table")
+            errors.append(f"V5 FAIL {ic}: identity_code '{pc}' is not in the populations table")
         if ic not in item_codes:
             errors.append(f"V5 FAIL {ic}: link references an item_code with no items row")
 
