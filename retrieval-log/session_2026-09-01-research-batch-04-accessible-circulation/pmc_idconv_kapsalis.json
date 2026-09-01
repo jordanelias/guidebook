@@ -1,0 +1,1 @@
+{"status":"ok","response-date":"2026-09-01 16:27:32","request":{"warnings":["query param `email` is missing.","query param `tool` is missing."],"format":"json","ids":["35984675"],"echo":"ids=35984675&format=json","versions":"no","showaiid":"no","idtype":"pmid"},"records":[{"pmid":35984675,"requested-id":"35984675","status":"error","errmsg":"Identifier not found in PMC"}]}
