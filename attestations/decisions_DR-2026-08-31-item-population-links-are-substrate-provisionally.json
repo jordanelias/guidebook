@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-08-31-od-batch-ratification",
+  "artifact": "decisions/DR-2026-08-31-item-population-links-are-substrate-provisionally.md",
+  "doctrine_sha": "bd84be7",
+  "rules_in_scope": [
+    "integrity-protocol",
+    "source-discipline",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "data/decisions/decision_register.yaml",
+      "reason": "The canonical database is written only through the sanctioned path -- rows emitted with scripts/emit_data_migration.py and applied with scripts/migrate_db.py, verified on a scratch copy before canonical is touched. No hand-written SQL is executed against data/guidebook.db. The register row is the single home; this DR is GENERATED from it."
+    },
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-08-31-item-population-links-are-substrate-provisionally.md",
+      "reason": "OD-A gates every determination the project will ever make, so the record states the measurement rather than the plan's summary of it: 372 rows, rationale_ref NULL in ALL 372, and 358 of them from ONE session (session_2026-05-11-items-population-normalization) -- concentrated, not diffuse. The record also names what the ruling COSTS and what it does not yet have: the 'provisionally' obligation has no enforcer, and is recorded as owed rather than built, because its subject (a determination migration citing such an edge) does not exist yet and the check would be vacuous today -- CLAUDE.md \u00a72(a)."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/decisions_DR-2026-08-31-item-population-links-are-substrate-provisionally.json",
+      "reason": "This attestation covers D-0175 specifically -- one per DR, because the attestation_presence gate requires one per record and a single attestation covering a batch fails it. All seven rulings were put to the owner as DG-NON decisions under DR-2026-08-19 \u00a73 step 4a, which names this batch the owner's act and not a session's."
+    }
+  },
+  "deviations": [],
+  "bias_direction": "Toward recording the rulings as cleanly adopted. Resisted in two places: OD-D's premise was measured false and the question re-put to the owner rather than recorded as ruled, and OD-E was found already satisfied and recorded as such rather than performed. Both corrections make this batch look less complete than it would have otherwise.",
+  "independent_reviewer_counterclaim": "That OD-C fixes an applicability set before synthesis has run, which D-0174 reserves to synthesis. Sustained in part, and recorded in D-0177's own notes rather than rebutted: the set is a research frame, not a determination, and the record forbids citing it as though synthesis produced it.",
+  "verdict": "CLEAN"
+}
