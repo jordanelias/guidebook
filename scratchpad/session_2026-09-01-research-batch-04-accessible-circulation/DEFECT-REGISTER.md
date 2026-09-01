@@ -203,6 +203,56 @@ string`.
   - **Workaround adopted (antagonist):** for this batch, either leave `--gap-id` NULL on any new `evidence_population_match` row, or ship the referenced gap in an earlier, already-applied migration so it is never a same-batch forward reference.
 - **Resolution owed:** Move `gaps` earlier than index 7 in `dbcore.WRITABLE_TABLES` (or otherwise re-derive the ordering from the actual FK graph rather than a hand-maintained list) so this class of same-batch forward reference cannot recur. Not attempted this session — batch 04 does not currently need a same-batch gap+match pairing, per the adopted workaround.
 
+### D04-015 — the retrieval log is a single shared namespace across two concurrent agonists, so payloads cannot be attributed to the agent that retrieved them
+- **Class:** PROCESS
+- **Severity:** P2
+- **Verification:** Orchestrator-acknowledged design error ("my design error, not the agonists' — I pointed both at one directory"), reported via agonist-1's brief. Tracer independently confirmed the shared-namespace fact and the absence of any per-agent marker by direct directory listing (read-only).
+- **Observed:** 2026-09-01, by agonist-1, escalated by orchestrator
+- **What happened:** `retrieval-log/session_2026-09-01-research-batch-04-accessible-circulation/` is written by both agonist-1 and agonist-2 concurrently, with no per-agent subdirectory, prefix, or manifest field distinguishing which agent retrieved which file. Agonist-1 reports files appearing during its run that it did not create and states no payload may be attributed to its brief unless explicitly listed in its own §3/§6. **Tracer-confirmed by direct `ls` of the directory** (read-only, 2026-09-01 20:38): all of the specific files agonist-1 named as not-its-own are present exactly as described — `crossref_10.1016_j.ajem.2025.09.049.json`, `crossref_10.1016_j.ajem.2025.10.042.json` (the `ajem.*` pair); `crossref_10.3130_aija.84.1779.json`; `europepmc_10.1016_j.apergo.2006.04.023.json`, `europepmc_scirep.json`; `doaj_geoerg.json`; `geoerg2019.pdf`; the seven `s2_10.*` Semantic Scholar payloads plus `s2_kapsalis.json`; `unpaywall_10.1155_2019_9717208.json`. No `manifest.jsonl` exists in the directory at all (tracer-confirmed: `ls` on the expected path returns "No such file or directory" — consistent with D04-007's separate finding). One concrete named casualty: `geoerg2019.pdf` is reported as not agonist-1's, so its candidate C-1 must be re-retrieved before use.
+- **Where:** `retrieval-log/session_2026-09-01-research-batch-04-accessible-circulation/` (flat, unnamespaced, shared by both agonist sessions); no manifest or per-file agent field exists anywhere in the current schema or on-disk convention to record retrieving agent.
+- **Why it matters:** The retrieval log's entire purpose (CLAUDE.md §2(c): "verification must leave an artefact") is that a bibliographic field be diffable against the bytes actually received. An unattributable payload cannot support that claim on a per-agent basis — if agonist-1's admissions are later verified against "its" retrieval log, there is no mechanical way to know which files are genuinely its evidence versus agonist-2's concurrent traffic landing in the same directory.
+- **Status:** OPEN
+- **Resolution owed:** Namespace the retrieval log per agent (e.g. a subdirectory per agonist), or record the retrieving agent/session as a field in a manifest entry per payload. Orchestrator states this is its own design error (both agonists were pointed at one directory), not a mistake by either agonist.
+
+---
+
+### D04-016 — `search_executions.target_tier` has no representation for Co-1 or Co-2, so any tier-column query undercounts R1's mandatory first pass to zero
+- **Class:** DATA
+- **Severity:** P3
+- **Verification:** Schema fact, reported via agonist-1's brief as a consequence of correct logging practice (not a logging error). Tracer independently confirmed the CHECK constraint by direct schema read (read-only).
+- **Observed:** 2026-09-01, by agonist-1
+- **What happened:** **Tracer-confirmed directly** against the live schema: `search_executions.target_tier` is declared `INTEGER CHECK (target_tier IS NULL OR target_tier BETWEEN 1 AND 6)` — it can hold NULL or an integer 1–6, with no slot for the Co-1/Co-2 bands. `target_evidence_type` is a separate TEXT column whose CHECK vocabulary does include `co1`/`co2`-style values (tracer-confirmed the column exists and constrains against an enumerated list beginning `'clinical', …`). Because the tier band and the evidence-type band are different columns and only the latter can express Co-1/Co-2, agonist-1 correctly logs `target_tier = NULL` on every Co-1/Co-2 search row — there is no other option that would not misrepresent the row as some numbered tier it is not.
+- **Where:** `data/guidebook.db` table `search_executions`, column `target_tier` (schema: `scripts/migrations/057_baseline_2026-08-12.sql`, current live constraint tracer-confirmed via `sqlite_master`); column `target_evidence_type` (same table).
+- **Why it matters:** Any query or report that measures research effort by aggregating or counting non-NULL `target_tier` values will silently show zero R1 (Co-1/Co-2) passes, even on a batch — like this one — that correctly ran R1 first and mandatorily, per CLAUDE.md's evidence model where "Co-1 co-primary with T1 under CRPD Art 4.3." This is a structural blind spot in the schema's tier-counting shape, not a data-entry defect.
+- **Status:** OPEN
+- **Resolution owed:** Any tooling that reports "search effort by tier" needs to also count `target_evidence_type IN ('co1','co2', …)` rows alongside numeric `target_tier`, or the schema needs an extended tier representation that can express the Co-1/Co-2 bands directly. Not attempted this session; recorded so a future reader of a tier-count report knows R1 passes are invisible to a `target_tier`-only query by construction, not by omission.
+
+---
+
+### D04-017 — a PubMed record carries a DOI with the wrong publisher prefix; trusting it would store a permanently dead identifier under a verification flag that asserts it was checked
+- **Class:** DATA
+- **Severity:** P2
+- **Verification:** Verified by agonist-1 via direct Crossref probe (external HTTP status codes — the tracer did not repeat the live probes). Tracer independently confirmed the two saved probe-response files exist, read their content, and confirmed the file-extension-fix commit the orchestrator referenced.
+- **Observed:** 2026-09-01, by agonist-1
+- **What happened:** PMID 35299240 gives DOI `10.5104/ajot.2022/762001`; the duplicate PubMed record for the same article, PMID 35311934, gives `10.5014/ajot.2022/762001`. AJOT's real DOI prefix is reported as **10.5014**. Agonist-1's reported Crossref probe results: `10.5014/ajot.2022/762001` → 200 (resolves); `10.5104/ajot.2022/762001` → 404; `10.5014/ajot.2022.762001` (dot instead of slash) → 404. **Tracer-confirmed present**: both `retrieval-log/session_2026-09-01-research-batch-04-accessible-circulation/crossref_probe_10_5014_ajot_2022_762001.txt` and `…crossref_probe_10_5104_ajot_2022_762001.txt` exist (19 bytes each). **Tracer flag, not in the original report**: read directly, both saved files contain the byte-identical string `Resource not found.` — the saved response body does not, by itself, visibly distinguish a 200 outcome from a 404 outcome; the 200/404 distinction rests on the agonist's report of the live HTTP status at retrieval time, not on anything recoverable from the two files' content alone. This is noted as an observation for whoever verifies this defect next, not as a contradiction of the claim — the tracer did not re-run the probes and has no independent means to check the actual HTTP status codes returned at retrieval time. **Tracer also confirmed** the file-extension fix the orchestrator referenced: commit `cfcd17e` "research: a failed DOI probe is evidence, so keep it and fix its extension [2026-09-01 20:30]" is the most recent commit touching both files.
+- **Where:** Upstream PubMed records PMID 35299240 and PMID 35311934 (not this repository's data); `retrieval-log/session_2026-09-01-research-batch-04-accessible-circulation/crossref_probe_10_5014_ajot_2022_762001.txt` and `…crossref_probe_10_5104_ajot_2022_762001.txt` (the saved evidence).
+- **Why it matters:** A batch that trusted PMID 35299240's DOI field without probing it would write a permanently dead DOI into `evidence_sources.doi` while `verified_by_tool='pubmed'` asserted the record had been checked — structurally identical to the 2026-08-19 fabrication CLAUDE.md §2(c) names, where a verification flag asserted the very property that had failed. The orchestrator further notes these two files were nearly deleted as CI noise before their extension was fixed, and are in fact the evidence for this finding — a near-miss on losing the artefact CLAUDE.md §2(c) says must be left behind.
+- **Status:** OPEN (upstream defect, not this repository's to fix — the resolution is to not admit the bad DOI, which is a batch-level judgment call, not a tracer action)
+- **Resolution owed:** When PMID 35299240 (or its DOI) is considered for admission, use `10.5014/ajot.2022/762001` (verified-resolving) and not `10.5104/ajot.2022/762001` (dead). Not this tracer's call to adjudicate which candidate record to admit.
+
+---
+
+### D04-018 — the tier system's own worked example of the convergence-not-evidence trap may cite a source that does not contain the figure it is cited for
+- **Class:** DOC-DRIFT
+- **Severity:** P2
+- **Verification:** ORCHESTRATOR-VERIFIED (the source text, quoted verbatim by the orchestrator and independently re-confirmed verbatim by the tracer). HYPOTHESIS (whether the cited figure is actually absent from the full text — unread, explicitly flagged as such, not a tracer or orchestrator claim of fact).
+- **Observed:** 2026-09-01, by orchestrator (text) and agonist-1 (the Crossref check on one of the three cited sources)
+- **What happened:** **Tracer independently re-confirmed verbatim**, at `governance/tier-system.md:45`: *"The corridor-width worked example. Multiple Tier 5/6 codes converge on 1800mm two-wheelchair-passing. Co-1/T2/T3 evidence (DSDG Bauman 2010, DeafScape Vaughn 2018, Cloete & Rout 2025) anchors 2440mm primary corridors."* — exact match, no discrepancy. This is §3's worked example of the "convergence-not-evidence trap," the passage that teaches the distinction the tier system's weighting scheme turns on. Agonist-1 Crossref-verified the third cited source — Cloete, Magdalena; Rout, Michael (2025), *Acta Structilia* 32(2):238–263, DOI `10.38140/as.v32i2.9146` — and reports three findings, each explicitly flagged rather than asserted as settled: (1) it is a **scoping review**, which `tier-system.md` §9 places at T3; (2) its abstract reports "minimal participatory engagement of deaf users," which bears against reading it as Co-1; (3) **its abstract names no corridor dimension at all** — the parameters it reports consensus on are visual connectivity, lighting, and acoustics. Whether 2440 mm appears in the source's full text is explicitly labelled **unread / HYPOTHESIS** by agonist-1, not claimed either way. Nothing is claimed about the other two cited sources (Bauman 2010, Vaughn 2018) — neither was retrieved by anyone this session.
+- **Where:** `governance/tier-system.md:45`; the third cited source, Cloete & Rout 2025, DOI `10.38140/as.v32i2.9146` (abstract checked via Crossref by agonist-1; full text unread by anyone this session).
+- **Why it matters:** **E-08, corridor clear width, is an item in this very batch** (part of `accessible-circulation-geometry`'s item set — tracer-confirmed against the original batch frame). The guidebook's own doctrinal illustration of "convergence is not evidence" and this batch's research subject are the same parameter. If the 2440 mm anchor does not survive a full-text check of its three named sources, the passage that teaches the discipline against unanchored convergence claims would itself be an unanchored value — CLAUDE.md §2(b)'s failure mode ("prose that contradicts the database... or the sources") occurring inside the very document written to warn against it.
+- **Status:** OPEN
+- **Resolution owed:** Obtain the full text of all three cited sources (DSDG Bauman 2010, DeafScape Vaughn 2018, Cloete & Rout 2025) and confirm or strike the 2440 mm attribution in `governance/tier-system.md:45`. Orchestrator characterizes this as cheap and now overdue. Not attempted by the tracer — full-text retrieval and adjudication of what the sources say is research/judgment work, outside this role.
+
 ---
 
 ## Summary
@@ -222,3 +272,7 @@ string`.
 | D04-012 | BUG | P2 | OPEN |
 | D04-013 | DOC-DRIFT | P3 | OPEN |
 | D04-014 | DATA | P3 | WORKED-AROUND |
+| D04-015 | PROCESS | P2 | OPEN |
+| D04-016 | DATA | P3 | OPEN |
+| D04-017 | DATA | P2 | OPEN |
+| D04-018 | DOC-DRIFT | P2 | OPEN |
