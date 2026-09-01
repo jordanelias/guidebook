@@ -3,7 +3,7 @@
 scripts/generate/spec_page.py — Static page generator for item (specification)
 pages.
 
-Queries the LIVE schema (items, item_population_links, item_bpc_links,
+Queries the LIVE schema (items, item_taxonomy_links, item_bpc_links,
 bpc_metadata, specifications) for a given item_code and produces a single
 self-contained HTML file, following the same pattern as
 tools/regenerate_vetting_surface.py.
@@ -47,10 +47,10 @@ def query_item(conn, item_code):
     ))
 
     populations = conn.execute(
-        "SELECT ipl.population_code, p.display_name, ipl.applicability "
-        "FROM item_population_links ipl "
-        "JOIN populations p ON p.population_code = ipl.population_code "
-        "WHERE ipl.item_code = ? ORDER BY ipl.population_code",
+        "SELECT itl.identity_code, p.display_name, itl.applicability "
+        "FROM item_taxonomy_links itl "
+        "JOIN populations p ON p.population_code = itl.identity_code "
+        "WHERE itl.item_code = ? ORDER BY itl.identity_code",
         (item_code,),
     ).fetchall()
     item["populations"] = [

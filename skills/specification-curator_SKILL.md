@@ -54,13 +54,16 @@ For a given spec, assess evidence state across all 11+ populations:
    -- POINTER, NOT COPY (migration 063): first_author_last is derived by
    -- v_evidence_authors from evidence_source_authors. The evidence_sources
    -- column of that name is a writer-retired tombstone and reads NULL.
-   SELECT ipl.population_code, es.tier, va.first_author_last, es.pub_year
-   FROM item_population_links ipl
-   JOIN items i ON ipl.item_code = i.item_code
+   SELECT itl.identity_code, es.tier, va.first_author_last, es.pub_year
+   FROM item_taxonomy_links itl
+   JOIN items i ON itl.item_code = i.item_code
    LEFT JOIN source_slug_links ssl ON i.bpc_source_slug = ssl.slug
    LEFT JOIN evidence_sources es ON ssl.ref_id = es.ref_id
    LEFT JOIN v_evidence_authors va ON va.ref_id = es.ref_id
-   WHERE i.item_code = '{item_code}'
+   -- identity_code IS NOT NULL scopes this to the IDENTITY lens. Migration 065
+   -- folded the ICF lens into the same table, so an unfiltered read returns
+   -- rows whose population is NULL.
+   WHERE i.item_code = '{item_code}' AND itl.identity_code IS NOT NULL
    ```
 
 2. For each population: classify evidence state based on what's available

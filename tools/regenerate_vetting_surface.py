@@ -93,10 +93,12 @@ def fetch_backbone(db_path: Path) -> dict:
     }
     item_pops = defaultdict(list)
     for r in q(
-        "SELECT item_code, population_code, applicability "
-        "FROM item_population_links"
+        # The identity lens specifically: item_taxonomy_links holds all four since
+        # migration 065, and this surface vets item x POPULATION applicability.
+        "SELECT item_code, identity_code, applicability "
+        "FROM item_taxonomy_links WHERE identity_code IS NOT NULL"
     ):
-        item_pops[r["item_code"]].append((r["population_code"], r["applicability"]))
+        item_pops[r["item_code"]].append((r["identity_code"], r["applicability"]))
 
     # Pre-index per-source values from all three layers, keyed by (slug, ref_id)
     rdc_by = defaultdict(list)

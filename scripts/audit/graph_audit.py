@@ -13,7 +13,7 @@ Checks (data + code + content layers):
   2. cycle.population_parent      (ERROR) populations.parent_code forms a cycle
   3. ref.dangling_structural      (ERROR) fk / self_ref / item-population junction edge to
                                   a missing node (items.bpc_source_slug, populations.parent_code,
-                                  item_population_links) — corruption no other check covered
+                                  item_taxonomy_links) — corruption no other check covered
   4. orphan.uncited_source        (WARN)  evidence source cited by nothing
   5. ref.unresolved_conn_target   (WARN)  connection_target not resolving to item/slug
                                   (phantom-item vs unresolved-identifier)
@@ -395,7 +395,7 @@ def selftest():
         con.execute("UPDATE items SET bpc_source_slug='zz-phantom-slug' WHERE item_code=?", (it,))
         pop = con.execute("SELECT population_code FROM populations LIMIT 1").fetchone()[0]
         con.execute("UPDATE populations SET parent_code='ZZ-PHANTOM-POP' WHERE population_code=?", (pop,))
-        _insert_row(con, "item_population_links", {"item_code": it, "population_code": "ZZ-PHANTOM-POP2"})
+        _insert_row(con, "item_taxonomy_links", {"item_code": it, "identity_code": "ZZ-PHANTOM-POP2"})
         con.commit()
         con.close()
         s = gbuild.build(audit_db=os.path.join(tmpd, "a9.db"), guidebook_db=copy)

@@ -1,0 +1,4 @@
+{"item_population_links": ["icf_code", "needs_code", "medical_code",
+                           "mechanism_note", "strength_band", "use_mode", "source"],
+ "item_axis_links":       ["identity_code", "needs_code", "medical_code",
+                           "subtype", "applicability", "rationale_ref"]}

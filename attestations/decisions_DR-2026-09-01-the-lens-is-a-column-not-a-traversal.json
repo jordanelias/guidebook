@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-09-01-lens-architecture",
+  "artifact": "decisions/DR-2026-09-01-the-lens-is-a-column-not-a-traversal.md",
+  "doctrine_sha": "803de13",
+  "rules_in_scope": [
+    "integrity-protocol",
+    "source-discipline",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "scripts/migrations/data_20260901183203_2026-09-01-lens-architecture.sql",
+      "reason": "The canonical database is written only through the sanctioned path -- rows emitted with scripts/emit_data_migration.py and applied with scripts/migrate_db.py, dry-run on a scratch copy first (184 decisions, 540 links, foreign_key_check clean) before canonical was touched. No hand-written SQL was executed against data/guidebook.db. The register row is the single home and this DR is GENERATED from it by scratchpad/session_2026-09-01-lens-architecture/render_drs.py."
+    },
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-09-01-the-lens-is-a-column-not-a-traversal.md",
+      "reason": "Every number in the record is a measurement taken this session against the live database and re-stated in the migration header, not a figure carried from a plan: the crossing coverage (20/23, 16/17, 15/17, 15/17, none), the DEAF-20-versus-AX-AUD-38 divergence, and the 372+158=530 fold. The structural claims were proved by scripts/audit/rename_insurance.py comparing a snapshot of canonical against a full rebuild from migration history, with three findings declared as intended and REASONED rather than suppressed."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/decisions_DR-2026-09-01-the-lens-is-a-column-not-a-traversal.json",
+      "reason": "One attestation per DR, because attestation_presence requires one per record and a single attestation covering a batch fails it."
+    }
+  },
+  "deviations": [],
+  "bias_direction": "Toward presenting a large restructuring as purely mechanical. Resisted in the record itself: two capabilities are given up (uniqueness is weaker, applicability becomes nullable) and both are stated in the decision's notes and in the migration header, not left for a reader to discover. A third limit -- the graph extractor still draws only the identity lens -- is recorded as owed rather than quietly fixed inside a rename sweep.",
+  "independent_reviewer_counterclaim": "That folding item_axis_links in is scope beyond a rename and should have been a separate migration. Not sustained: rebuilding item_taxonomy_links twice would sweep its callers twice, which is the failure CLAUDE.md \u00a70.4 names, and the ICF lens living in a second table is the rule-5 dual home the fold removes. The counterclaim is recorded because the alternative was genuinely arguable.",
+  "verdict": "CLEAN"
+}

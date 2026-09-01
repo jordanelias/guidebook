@@ -80,7 +80,8 @@ def gather(con: sqlite3.Connection) -> dict:
         "SELECT COUNT(*) FROM items WHERE bpc_source_slug IS NOT NULL AND bpc_source_slug<>''")
     slugs_total = scalar("SELECT COUNT(*) FROM bpc_metadata")
     sources_total = scalar("SELECT COUNT(*) FROM evidence_sources")
-    applicable_pairs = scalar("SELECT COUNT(*) FROM item_population_links")
+    applicable_pairs = scalar(
+        "SELECT COUNT(*) FROM item_taxonomy_links WHERE identity_code IS NOT NULL")
     F.update(items_total=items_total, items_with_slug=items_with_slug,
              slugs_total=slugs_total, sources_total=sources_total,
              applicable_pairs=applicable_pairs)
@@ -201,7 +202,7 @@ def gather(con: sqlite3.Connection) -> dict:
                 "SELECT COUNT(DISTINCT item_code) FROM specifications WHERE item_code IN "
                 "(SELECT item_code FROM items WHERE category=?)", cat),
             pop_breadth=scalar(
-                "SELECT COUNT(DISTINCT population_code) FROM item_population_links WHERE item_code IN "
+                "SELECT COUNT(DISTINCT identity_code) FROM item_taxonomy_links WHERE item_code IN "
                 "(SELECT item_code FROM items WHERE category=?)", cat),
             states=[
                 f"{s.lower().replace('-pre-rehab','')}×{n}" for s, n in rows(
@@ -217,7 +218,7 @@ def gather(con: sqlite3.Connection) -> dict:
     for code, cat, name in rows(
             "SELECT population_code, COALESCE(category,''), COALESCE(display_name,'') FROM populations"):
         applies = scalar(
-            "SELECT COUNT(DISTINCT item_code) FROM item_population_links WHERE population_code=?", code)
+            "SELECT COUNT(DISTINCT item_code) FROM item_taxonomy_links WHERE identity_code=?", code)
         det = scalar("SELECT COUNT(*) FROM specifications WHERE population_code=?", code)
         if applies or det:
             pops.append(dict(code=code, cls=cat, name=name, applies=applies, det=det))
@@ -777,7 +778,7 @@ def render_body(F: dict, enf: dict) -> str:
         Read-only queries against <code>data/guidebook.db</code> (<code>user_version {F["user_version"]}</code>,
         {F["migrations"]} data migrations). Denominators: research/synthesis over {slugs}
         <code>bpc_metadata</code> slugs; evidence collection over {srcs} <code>evidence_sources</code>; judgment/render over
-        {pairs} applicable item×population pairs (<code>item_population_links</code>). Determinations from
+        {pairs} applicable item×population pairs (<code>item_taxonomy_links</code>, identity lens). Determinations from
         <code>specifications</code>; synthesis from <code>reasoning_doc_citations</code>; enforcement coverage
         from <code>governance/pipeline-contract.yaml</code>.</div>
       <div><strong style="color:var(--ink-2)">Two things to keep in mind</strong><br>

@@ -24,7 +24,9 @@ description: >
 > **Schema note (corrected 2026-08-02):** The `specification`, `specification_population`,
 > `measurement`, and `room` tables **do not exist** in `data/guidebook.db` — verified against
 > `sqlite_master`. The canonical equivalents are **`items`** (93 rows) and
-> **`item_population_links`** (372 rows). The queries below have been repointed accordingly.
+> **`item_taxonomy_links`** (530 rows since migration 065 folded `item_axis_links` in;
+> 372 carry the identity lens). The queries below have been repointed accordingly.
+> The lens is a COLUMN since migration 065: `item_taxonomy_links` carries `identity_code`, `icf_code`, `needs_code` and `medical_code`, at least one set. Filter on the lens you mean, or an ICF-lens row arrives with a NULL population.
 >
 > Do **not** run `scripts/db/migrate_all.py`. It targets `data/db/guidebook.db`, a legacy path
 > that does not exist; running it creates an empty database and then fails. If a query here
@@ -53,8 +55,8 @@ description: >
 
 3. **Load population associations:**
    ```sql
-   SELECT population_code, applicability, subtype
-   FROM item_population_links WHERE item_code = '{code}'
+   SELECT identity_code, applicability, subtype
+   FROM item_taxonomy_links WHERE item_code = '{code}' AND identity_code IS NOT NULL
    ```
 
 4. **Load connections targeting this item:**
@@ -85,7 +87,7 @@ description: >
    | Surface | Holds |
    |---|---|
    | `items` | `name`, `category`, `status`, `bpc_source_slug`, the `pmp_*` walk fields |
-   | `item_population_links` | `population_code`, `applicability`, `subtype`, `rationale_ref` |
+   | `item_taxonomy_links` | `identity_code`, `icf_code`, `needs_code`, `medical_code`, `applicability`, `subtype`, `rationale_ref` |
    | `specifications` | the per-(item × population) synthesis record and its `governing_refs` |
 
    ⚑ **Open question for the owner:** whether the spec template's prose fields should have a

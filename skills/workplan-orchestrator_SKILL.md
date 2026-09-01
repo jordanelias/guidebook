@@ -252,7 +252,7 @@ umbrella codes (`governance/functional-taxonomy.md` §3.3, RULE 2026-07-22,
 >   is simply gone.
 > - *"BAR is NOT main taxonomy … BAR in Volumes I–II = error"* — **`BAR` is an
 >   active population** in the live table (fat people; people in larger bodies).
->   It carries one `item_population_links` row today, so it is thinly populated,
+>   It carries one `item_taxonomy_links` identity-lens row today, so it is thinly populated,
 >   not illegitimate. Flagging it as an error was doctrine-inverting.
 
 ---

@@ -159,7 +159,13 @@ def check_doc_db_drift(html, doc, c):
     if not code:
         return
     db = {r[0]: r[1] for r in c.execute(
-        "SELECT population_code, applicability FROM item_population_links WHERE item_code=?",
+        # identity_code IS NOT NULL: item_taxonomy_links carries all four lenses
+        # since migration 065, and C3 compares a page's hand-authored POPULATION
+        # applicability. Without the filter the ICF-lens rows folded in from
+        # item_axis_links arrive with identity_code NULL and land in the dict as a
+        # None key -- silently, because no page ever names a population called None.
+        "SELECT identity_code, applicability FROM item_taxonomy_links "
+        "WHERE item_code=? AND identity_code IS NOT NULL",
         (code,))}
     if not db:
         return

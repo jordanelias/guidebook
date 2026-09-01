@@ -33,7 +33,7 @@ description: >
 |---|---|---|---|---|
 | 1 | `connection-discovery-spec` | connection-discovery `--mode spec` | Opus | No BPC slug AND no spec connections |
 | 2 | `connection-discovery-evidence` | connection-discovery `--mode evidence` | Opus | `bpc_source_slug IS NULL` for item |
-| 3 | `conflict-mapper` | cross-population-conflict-mapper | Sonnet/Opus | Fewer than 2 populations in `item_population_links` (excluding `does_not_apply`) |
+| 3 | `conflict-mapper` | cross-population-conflict-mapper | Sonnet/Opus | Fewer than 2 populations in `item_taxonomy_links` (identity lens, excluding `does_not_apply`) |
 | 4 | `content-gap-analyzer` | content-gap-analyzer | Sonnet/Opus | — |
 | 5 | `evidence-auditor` | evidence-auditor | Sonnet/Opus | — |
 | 6 | `functional-deficit-auditor` | functional-deficit-auditor | Sonnet/Opus | — |
@@ -58,15 +58,17 @@ if not item:
     sys.exit(1)
 print('FOUND:', item['item_code'], '—', item['name'])
 print('bpc_source_slug:', item['bpc_source_slug'])
-# Populations live in the item_population_links junction, one row per
-# (item_code, population_code). item['applicable_groups'] raised IndexError —  # [RETIRED-VOCAB-OK]
+# Populations live in the item_taxonomy_links junction, one row per
+# (item_code, identity_code) — the IDENTITY lens of four; filter it, or the
+# ICF-lens rows folded in by migration 065 arrive with a NULL population.
+# item['applicable_groups'] raised IndexError —  # [RETIRED-VOCAB-OK]
 # that CSV column was dropped when the junction replaced it, and this snippet
 # crashed here for every item until 2026-08-05.
 import sqlite3
 con = sqlite3.connect('file:data/guidebook.db?mode=ro', uri=True)
 for pc, ap in con.execute(
-        'SELECT population_code, applicability FROM item_population_links '
-        'WHERE item_code=? ORDER BY population_code', (item['item_code'],)):
+        'SELECT identity_code, applicability FROM item_taxonomy_links '
+        'WHERE item_code=? AND identity_code IS NOT NULL ORDER BY identity_code', (item['item_code'],)):
     print(f'  {pc}: {ap}')
 "
 ```
@@ -176,13 +178,13 @@ Key inputs passed to each step:
 - `item_code`
 - `session` (current session name)
 - `item` object (from items table — `item_code`, `name`, `bpc_source_slug`, `category`, `status`)
-- `populations` — the item's `item_population_links` rows, as (`population_code`, `applicability`) pairs
+- `populations` — the item's `item_taxonomy_links` rows, as (`identity_code`, `applicability`) pairs
 - Prior step outputs where relevant (e.g. Step 5 evidence-auditor results → Step 6 FDA)
 
 **Step 2 auto-skip:** If `item.bpc_source_slug IS NULL`, skip step 2 automatically and
 log `SKIP connection-discovery-evidence: no BPC slug for {item_code}`.
 
-**Step 3 auto-skip:** If fewer than 2 rows in `item_population_links` for the item —
+**Step 3 auto-skip:** If fewer than 2 identity-lens rows in `item_taxonomy_links` for the item —
 counting every `applicability` **except** `does_not_apply` — skip conflict-mapper and log
 `SKIP conflict-mapper: fewer than 2 populations`.
 
@@ -207,7 +209,7 @@ When any step encounters a new source:
 1. Check `is-mined` for the slug+ref
 2. If not mined: mine one depth (backward + forward)
 3. Relevance check: does the source's topic/slug overlap with the item's populations
-   (`item_population_links`) or its ICF codes? If YES → include in current audit findings. If NO → log with
+   (`item_taxonomy_links.identity_code`) or its ICF codes? If YES → include in current audit findings. If NO → log with
    `deferred_reason='not-relevant-to-{item_code}'`.
 4. Hard depth-1: never mine sources discovered during mining.
 
@@ -299,7 +301,7 @@ Per CO-0009 §5.10, this skill's output contract:
 | Tables written | `item_audit_runs` (tracking DB): creates run record, manages steps_started/steps_complete/status. Delegates all gap/conflict/connection writes to member skills. |
 | Gap categories | N/A — wrapper does not write gaps directly. Member skills write: AUDT, RP, EC, EG, CONF, CR, SW, MX, CD per their individual contracts. |
 | source_skill | N/A — each member skill uses its own source_skill value. Wrapper uses `item-audit-pipeline` in commit messages only. |
-| citation-miner relevance filter | Manages inline citation-miner (depth-1, relevance-gated) across steps 1–7. Relevance = source topic overlaps the item's populations (`item_population_links`) or its ICF codes. Non-relevant sources deferred with `deferred_reason`. |
+| citation-miner relevance filter | Manages inline citation-miner (depth-1, relevance-gated) across steps 1–7. Relevance = source topic overlaps the item's populations (`item_taxonomy_links.identity_code`) or its ICF codes (`.icf_code`). Non-relevant sources deferred with `deferred_reason`. |
 | Idempotency mechanism | Run-level: `run_id = {item_code}_{session}` is unique per item per session. Step-level: `force_rerun` deletes current-session findings before re-run. Member skills rely on DB-level constraints (UNIQUE indexes, INSERT OR IGNORE) for within-step idempotency. |
 
 **Additional output:** `references/audit-briefs/{item_code}_brief.md` via audit-consolidator (Step 8).

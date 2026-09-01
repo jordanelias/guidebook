@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-09-01-lens-architecture",
+  "artifact": "decisions/DR-2026-09-01-rationale-ref-points-at-the-decision.md",
+  "doctrine_sha": "803de13",
+  "rules_in_scope": [
+    "integrity-protocol",
+    "source-discipline",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "scripts/migrations/data_20260901183203_2026-09-01-lens-architecture.sql",
+      "reason": "The canonical database is written only through the sanctioned path -- rows emitted with scripts/emit_data_migration.py and applied with scripts/migrate_db.py, dry-run on a scratch copy first (184 decisions, 540 links, foreign_key_check clean) before canonical was touched. No hand-written SQL was executed against data/guidebook.db. The register row is the single home and this DR is GENERATED from it by scratchpad/session_2026-09-01-lens-architecture/render_drs.py."
+    },
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "decisions/DR-2026-09-01-rationale-ref-points-at-the-decision.md",
+      "reason": "The record states the measurement that made the ruling necessary -- rationale_ref was an unconstrained INTEGER with no foreign key, so every integer satisfied OD-A's obligation and all 372 rows held NULL -- rather than asserting that the obligation was being met. It also records that the column stays nullable and why making it NOT NULL would forge warrants."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/decisions_DR-2026-09-01-rationale-ref-points-at-the-decision.json",
+      "reason": "One attestation per DR, because attestation_presence requires one per record and a single attestation covering a batch fails it."
+    }
+  },
+  "deviations": [],
+  "bias_direction": "Toward presenting the typed pointer as discharging OD-A's debt. Resisted: the record says explicitly that 530 of 540 rows still carry NULL and that the debt is paid at the point of use, not by this migration.",
+  "independent_reviewer_counterclaim": "That a foreign key to `decisions` lets a row cite a decision that does not authorise it -- the constraint checks existence, not relevance. Sustained and unrebutted: it is a real limit of what a foreign key can do, and it is why the ten edges written under it name their authorising ruling in the migration's own prose as well.",
+  "verdict": "CLEAN"
+}

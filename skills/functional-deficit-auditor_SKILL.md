@@ -384,14 +384,14 @@ Per CO-0009 §5.10, this skill's output contract:
 9. Population↔ICF mapping in §2 is the FDA's ground truth for Questions 1–2.
    Clinical judgment (Opus) may extend it for unusual items but must document the extension.
 10. Feeds into: audit-consolidator (Step 7 output); FDR (via RP gaps); ISW (via AUDT gaps)
-11. Population scope comes from `item_population_links`, one row per
+11. Population scope comes from the identity lens of `item_taxonomy_links`, one row per
     (`item_code`, `population_code`) — **not** from a CSV column. This step used to
     say "strip whitespace from each population code after splitting on commas",
     advice for parsing `items.applicable_groups`, which was dropped when the  <!-- [RETIRED-VOCAB-OK] -->
     junction replaced it. There is nothing left to strip or split:
     ```sql
-    SELECT population_code, applicability FROM item_population_links
-    WHERE item_code = ? ORDER BY population_code
+    SELECT identity_code, applicability FROM item_taxonomy_links
+    WHERE item_code = ? AND identity_code IS NOT NULL ORDER BY identity_code
     ```
     Read `applicability` rather than assuming every row is a claim to the space —
     the schema permits `applies`, `applies_strictly`, `applies_loosely`,
