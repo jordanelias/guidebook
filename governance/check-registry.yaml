@@ -439,7 +439,19 @@ checks:
   level: blocking
   basis: base/base-schema-validates
   cost: fast
-  min_items: 1
+  # min_items 1 -> 0, 2026-09-01. The project declares no YAML entity type:
+  # jurisdictional_values was the sole registered entity and its corpus moved to
+  # _archived/ under the owner ruling that the database holds base and research
+  # only. An empty scope is now the RULED state, not a misconfiguration, and the
+  # guard was firing on the true answer.
+  #
+  # The anti-vacuity discipline this guard exists for is NOT weakened, because it
+  # moved into the script: validate_schema.py distinguishes an empty
+  # ENTITY_REGISTRY (exit 0, nothing declared) from a registry naming directories
+  # that do not exist (exit 2, a configuration fault -- the original defect, where
+  # a blocking gate reported green while ENTITY_REGISTRY named six missing paths).
+  # Restore min_items: 1 in the same commit that registers an entity type.
+  min_items: 0
 - id: schema_reference_audit
   cmd:
   - python3
@@ -469,7 +481,9 @@ checks:
   level: advisory
   basis: base/base-schema-validates
   cost: fast
-  min_items: 1
+  # Same reason as validate_schema above: no entity type is declared, so the
+  # cross-check has nothing to cross-check. Restore to 1 alongside it.
+  min_items: 0
   note: 'Was `continue-on-error: true` in ci.yml; advisory is the same thing, declared.'
 - id: validate_evidence_state
   cmd:

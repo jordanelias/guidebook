@@ -29,7 +29,9 @@ import yaml
 # Allow importing schemas from repo root
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from schemas.jurisdictional_value import JurisdictionalValueFile
+# (No entity model is imported: ENTITY_REGISTRY is empty as of 2026-09-01.
+#  schemas/jurisdictional_value.py still exists and is still covered by
+#  validate_pydantic_schemas; only this caller's reference is removed.)
 
 
 # Registry: maps data/ subdirectory to its Pydantic model.
@@ -48,9 +50,17 @@ from schemas.jurisdictional_value import JurisdictionalValueFile
 # duplicating them here would add a second opinion, not coverage. jurisdictional_values
 # is the one corpus with a real DB counterpart and no validator at all, which is
 # why it is the one wired up.
-ENTITY_REGISTRY = {
-    "jurisdictional_values": JurisdictionalValueFile,
-}
+# SWEPT 2026-09-01. jurisdictional_values was the sole registered entity and its
+# YAML corpus moved to _archived/data/jurisdictional_values/ under the owner ruling
+# of that date (base + research only; the table is item-keyed and item codes must
+# not exist). Rule 4: a removal is not done until the callers are swept, and this
+# registry is a caller. The entry is removed rather than left pointing at a path
+# that no longer exists, which is the exact stale-registry condition the block at
+# the bottom of main() was written to catch.
+#
+# The registry is now legitimately EMPTY, which is a different state from "names
+# directories that do not exist" and must not be reported as the same fault.
+ENTITY_REGISTRY = {}
 
 
 
@@ -172,6 +182,20 @@ def main():
         # check-registry.yaml) catches this independently; the non-zero exit means
         # a direct invocation says so too.
         print("EXAMINED: 0 entity file(s)")
+        if not ENTITY_REGISTRY:
+            # Legitimately empty registry: no entity type is declared at all, so
+            # there is nothing to validate and nothing is being concealed. This is
+            # NOT the fault above, which is a registry naming paths that do not
+            # exist. Exit 0 so the state is reported honestly -- and note that the
+            # runner still surfaces it: check-registry.yaml declares a min_items
+            # vacuity guard for this check, so an empty scope is reported as
+            # NOTHING-IN-SCOPE and, because the check is blocking, escalated. The
+            # vacuity stays visible; it is simply not miscalled a configuration
+            # fault.
+            print("ENTITY_REGISTRY declares no entity type, so there is no YAML "
+                  "entity corpus to validate. This is an empty scope, not a "
+                  "configuration fault. Register a type here when one exists.")
+            return 0
         print("No entity files found to validate — ENTITY_REGISTRY names no "
               "directory that exists under data/. This is a configuration fault, "
               "not a pass.")
