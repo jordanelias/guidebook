@@ -1,0 +1,2680 @@
+Seeing streets differently:
+How changes to our streets and vehicles 
+are affecting the lives of blind and partially 
+sighted people 
+
+Contents
+
+3 
+3 
+3 
+5 
+
+6 
+
+7 
+
+8 
+
+8 
+9 
+10 
+10 
+10 
+11 
+11 
+
+12 
+
+12 
+15 
+16 
+17 
+18 
+
+About RNIB 
+About sight loss
+Summary
+Methodology 
+
+Introduction
+
+Working together to make streets 
+more inclusive
+
+Understanding how a blind 
+or partially sighted person 
+gets around 
+
+Mobility aids
+Detectable kerbs
+Building lines
+Tactile paving
+Pedestrian crossings
+Vehicle sound
+High contrast and bright colours 
+
+How moving vehicles affect 
+blind and partially sighted 
+people’s journeys 
+
+Cycling
+E-scooters and micromobility 
+Keeping pavements safe
+Tandem cycling
+Electric vehicles
+
+19 
+
+19 
+22 
+25 
+
+27 
+
+The importance of kerbs 
+and crossings 
+
+Detectable kerbs 
+Accessible pedestrian crossings
+Cycleways also need accessible 
+pedestrian crossings
+
+The hazards of cluttered 
+pavements 
+
+Pavement parking
+28 
+29  Dockless hire vehicles 
+30  Other obstructions
+
+31 
+
+32 
+
+33 
+34 
+
+34 
+35 
+
+36 
+36 
+37 
+
+37 
+
+ Conclusion 
+
+Recommendations for local 
+authorities
+Keep pavements safe
+Recommendations for the 
+Department for Transport
+Inclusive street infrastructure
+Keep pedestrians separate 
+from moving vehicles
+E-scooters and micromobility 
+Electric vehicles
+Keep pavements clear and 
+clutter-free
+References
+
+2
+
+About RNIB 
+
+Summary
+
+Walking journeys are of fundamental 
+importance in ensuring blind and 
+partially sighted people can live their 
+lives with as much independence as 
+possible. However, recent – and sudden 
+– changes to the layouts of our towns 
+and cities and the way we travel have 
+impacted on the safety of people with 
+sight loss to get around independently, 
+and their confidence to do so.
+
+Our research shows there are a range 
+of factors at work – from new street 
+designs to e-scooter trials – and we 
+call on local authorities, transport 
+operators, designers and the 
+Department for Transport to work 
+with us to ensure our streets are 
+truly inclusive.
+
+Inclusive design is better for everyone, 
+ensuring the whole community can 
+access and enjoy their area and key 
+services like healthcare, education 
+and work.
+
+We are the Royal National Institute of 
+Blind People (RNIB), the UK’s leading 
+sight loss charity and its largest 
+community of blind and partially 
+sighted people. Every day, 250 people 
+begin to lose their sight. RNIB has a 
+crucial role to play in creating a world 
+where there are no barriers to people 
+with sight loss. We want society, 
+communities and individuals to see 
+differently about sight loss. 
+
+About sight loss
+
+There are around 340,000 people 
+registered blind or partially sighted 
+in the UK and an estimated two 
+million people are living with sight 
+loss that affects their daily lives.
+
+Sight loss is a spectrum, and every 
+eye condition affects someone’s sight 
+differently. For example, glaucoma 
+affects peripheral vision, and cataracts 
+cause cloudy vision. This means that 
+one size does not fit all when making 
+things accessible. 
+
+Different people will rely on different 
+things – sound, sight, or touch – to 
+varying degrees to understand their 
+environment and get around. To help, 
+it is vital that the right adjustments 
+are in place, such as inclusive 
+infrastructure and design.
+
+3
+
+44
+
+Methodology 
+
+485 blind and partially sighted 
+people responded to our Travel 
+Survey on their experiences of 
+walking journeys and what made 
+them easier or more difficult. 
+
+RNIB would like to thank all the 
+respondents for giving their time to 
+take the survey, without which this 
+report would not have been possible.
+
+The Travel Survey was a self-selecting 
+online survey run in May 2020 across 
+the UK and advertised through email 
+and social media, and although we 
+took some responses over the phone, 
+it is likely to exclude the experience of 
+those people with sight loss who do 
+not use the internet. 
+
+We received 302 responses from blind 
+people, and 153 responses from partially 
+sighted people. Of the 340,000 people 
+in the UK registered blind or partially 
+sighted, half are registered blind and 
+half are registered partially sighted, 
+demonstrating a higher than average 
+uptake of our survey among the 
+registered blind population. 
+
+All the quotes we use, unless 
+indicated otherwise, are from our 
+research and are anonymous to 
+protect confidentiality. However, 
+our respondents are from across all 
+nations of the UK.
+
+The recommendations in this report 
+focus on calls to the Department for 
+Transport and are England-specific 
+However, key sections of the report on 
+understanding how a blind or partially 
+sighted person gets around apply for 
+visually impaired pedestrians across 
+the UK, including: issues related to 
+detecting and keeping out of the way 
+of moving vehicles, the importance of 
+kerbs and crossings, and the hazards 
+of cluttered pavements.
+
+For further information, or 
+for any questions about the 
+data and research presented 
+in this report, please do 
+get in contact with us at 
+publicaffairs@rnib.org.uk
+
+5
+
+Introduction
+
+Rapid changes are taking place in the 
+way our towns and cities are designed 
+and the way we travel in order to 
+reduce car-dependence, improve air 
+quality and increase active travel 
+opportunities like cycling. 
+
+While RNIB supports these initiatives, 
+we are concerned these changes 
+are often taking place without the 
+necessary understanding of how blind 
+and partially sighted people get around. 
+However well-meaning, inaccessible 
+changes have the potential to have 
+a huge impact on blind and partially 
+sighted people’s safety, independence 
+and physical health. 
+
+In May 2020, we surveyed more than 
+480 blind and partially sighted people 
+and asked them about their experiences 
+of walking journeys and what made 
+them easier, or more difficult. 
+
+“ I live alone and obviously don’t 
+drive so walking is essential 
+for me to get anywhere. 
+Even if only to the bus stop 
+or tube station, if I can’t 
+walk outside I basically lose 
+my independence.”
+
+Blind and partially sighted people have 
+fewer transport options available to 
+them. Driving or cycling independently 
+is not an option, so walking is even 
+more important. Whether walking 
+down the street to get a taxi, a walk 
+to the bus stop, or a trip on foot to 
+the town centre, being able to make 
+walking journeys is fundamental, as our 
+respondents told us. 
+
+Walking is key to maintaining 
+independence, getting exercise, 
+staying connected with family and 
+community, and accessing work, 
+and key services such as healthcare. 
+
+ ■ 96 per cent of respondents told us 
+
+it’s important to them to be able to 
+make walking journeys independently, 
+without a sighted guide. 
+
+ ■ 73 per cent said they rely on being 
+able to make walking journeys for 
+independent travel. 
+
+ ■ 78 per cent told us walking journeys 
+were their only, or main, form of 
+outdoor physical exercise. 
+
+People also told us of the key issues 
+that were important for them to help 
+them get around safely. In the main, 
+these fell into three key themes:
+
+ ■ Avoiding moving vehicles; 
+
+ ■ The importance of kerbs and 
+
+crossings; and
+
+ ■ The hazards of cluttered pavements.
+
+6
+
+When these issues are not fully 
+addressed, streets can become 
+inaccessible, putting people at risk of 
+injury or loss of life. Even near misses 
+or the perception that areas are 
+inaccessible can damage confidence 
+and mental health, affecting 
+independence and significantly 
+reducing opportunities for exercise. 
+
+These can have the effect of making 
+people more reliant on sighted guides 
+or taxis to get around, and mean they 
+avoid going to certain areas or even 
+stay at home. 
+
+Working together to make streets 
+more inclusive
+
+This report considers and makes 
+recommendations on some of the ways 
+in which we can work together to make 
+streets more inclusive. We will look to 
+embed these recommendations and 
+the principles they embody across 
+the UK, working with the Westminster 
+Government and the devolved 
+Governments of Northern Ireland, 
+Scotland and Wales, councils, planners, 
+architects, other stakeholders, and 
+other road users. We will explore how 
+they can be built into all planning and 
+design, and the education and training 
+of built environment professionals. 
+
+As our society recovers from the 
+pandemic, following principles of 
+inclusive design will help to ensure 
+that our streets are made as accessible 
+as possible. While our starting point is 
+naturally the views, perspectives and 
+needs of blind and partially-sighted 
+people, inclusive design is better design 
+for everyone: people with sight loss, 
+other disabled groups, families, and 
+ultimately all of us who make use of our 
+streets as we go about our daily lives.
+
+Building on discussions and 
+collaboration we have undertaken 
+during this research, we will seek to 
+start a conversation to help bring 
+together different street users and 
+the groups and organisations that 
+represent them. Together, we can 
+identify joint priorities and the 
+principles behind them, so that we can 
+work towards making street design 
+truly inclusive for all.
+
+“ I’ve had a lot of issues with 
+having to avoid some routes.
+This has made me more 
+dependent on taxis and other 
+public transport, as it’s just 
+not possible to safely walk 
+to these places.”
+
+7
+
+Understanding how a blind or partially 
+sighted person gets around 
+
+Touch, sound and specific visual 
+indicators all provide important 
+information for people with sight 
+loss. Although the majority of people 
+who are registered blind or partially 
+sighted have some residual vision, 
+most people with sight loss have 
+severely reduced distance vision [1]. 
+
+This can cause problems getting 
+around, like, for example, when 
+detecting approaching vehicles and 
+judging gaps in traffic while trying 
+to cross roads and cycleways. So it is 
+essential to have reliably detectable, 
+unobstructed, safe spaces to walk 
+which are away from vehicles, and 
+crossings where traffic can be relied 
+on to come to a full stop.
+
+Although these key features will 
+help most blind and partially sighted 
+people, people with different levels 
+and types of sight loss will access 
+them in different ways. People with 
+little to no useful vision often rely on 
+what can be felt and heard in the built 
+environment, such as raised dots in 
+paving stones (tactile paving) or the 
+beeping sound or spinning cone of a 
+pelican crossing. They may also use 
+mobility aids to detect tactile features. 
+Others with low vision may instead 
+make use of visual clues, such as the 
+high contrast of tactile paving slabs at 
+controlled crossings. 
+
+For regular journeys – such as travelling 
+to work, or visiting the GP – people will 
+often have memorised routes, making it 
+essential for street layout changes to be 
+communicated effectively.
+
+Mobility aids
+
+ ■ Some people use mobility aids 
+to help them get around. These 
+include canes, and guide dogs. 
+
+ ■ Different types of cane do different 
+
+jobs. For example, guide canes 
+and long canes are used to sweep, 
+roll or tap from side to side along 
+the ground to detect and avoid 
+obstacles, whereas symbol canes 
+are used when walking to let other 
+pedestrians and road users know 
+that someone has sight loss and 
+alert them to take particular care 
+when navigating around them. 
+
+ ■ Canes will not be able to 
+
+immediately help someone detect 
+every obstacle, particularly where 
+some sections or all of the obstacle 
+is above ground level, such as 
+overhanging shrubbery, A-boards 
+or parked vehicles.
+
+ ■ Guide dogs are a type of assistance 
+dog. Guide dogs and their owners 
+receive specialist training to 
+communicate to each other, learn 
+regular routes, and use key features 
+on streets to navigate safely. For 
+new, unfamiliar routes, dogs follow 
+
+8
+
+their owners’ instructions, for 
+example to walk in a straight line, to 
+turn right or left, or to stop. 
+
+ ■ Not everyone with sight loss uses a 
+
+mobility aid, and this means it is not 
+always obvious that someone has 
+sight loss. 
+
+Detectable kerbs
+
+ ■ Kerbs which are easily detectable 
+by touch (through shoes or canes) 
+and by those who have low vision, 
+are used to help distinguish 
+between the pavement and the 
+road. According to the Effective 
+Kerb Heights for Blind and Partially 
+Sighted People research by Childs 
+et al. (2009), for a kerb to be reliably 
+detectable it must have an upstand 
+of at least 60mm.
+
+ ■ Dropped kerbs help to identify 
+
+crossing points, and the slope of the 
+pavement towards a dropped kerb 
+indicates when you are approaching 
+a crossing point. 
+
+ ■ Some people follow detectable kerbs 
+with a cane, to keep on course to 
+a destination. Guide dogs are also 
+trained to use kerbs to keep on 
+course and to keep a safe distance 
+from the road. 
+
+ ■ Guide dogs are trained to stop at 
+
+kerbs so their owners can check it is 
+safe before crossing over roads. This 
+is most effective when there is a clear 
+delineation between the kerb and the 
+road, such as a change in height. 
+
+   Download  
+
+rnib.in/Getting-Around
+
+9
+
+Building lines
+
+Tactile paving
+
+ ■ Building lines are the right angle 
+where the pavement meets the 
+edge or wall of a building.
+
+ ■ Some people follow building lines 
+with their canes to keep on course 
+to a destination. 
+
+ ■ Guide dogs are trained to guide 
+
+their owners by following building 
+lines or kerbs, they use these to 
+keep to the centre of the pavement, 
+with an equal distance between the 
+building line and the kerb edge, 
+so they have space to navigate 
+around obstacles.
+
+ ■ Any obstruction to the building 
+line (such as street furniture or 
+people queuing) can make it 
+difficult or impossible to follow 
+and keep on course.
+
+ ■ Tactile paving is paving slabs with 
+raised bumps which can be felt 
+through shoes or canes. 
+
+ ■ Tactile paving is used to indicate 
+
+a hazard. Different types of tactile 
+paving mean different things. For 
+example, raised horizontal lines 
+indicate the top of a flight of 
+stairs, and raised blister dots on a 
+pavement indicate a crossing point 
+over a road.
+
+ ■ Cane users and guide dogs are 
+trained to find tactile paving to 
+locate crossing points.
+
+ ■ Tactile paving works with other 
+
+features of the built environment. 
+For example, red blister tactile 
+paving works with the slope of the 
+pavement to a dropped kerb, and 
+guides people towards the push 
+button box at a signal controlled 
+pedestrian crossing. 
+
+Pedestrian crossings
+
+ ■ Signal controlled pedestrian 
+
+crossings, like pelican crossings, are 
+the most accessible. They tell traffic 
+to stop with a red light, and have 
+tactile paving, beeping sounds and 
+rotating cones located under push 
+button boxes to let people know 
+when it is their turn to cross. The 
+sound also indicates which direction 
+to head in, helping people walk in a 
+straight line across the road as quickly 
+as possible. Indicating when it is 
+safe to cross the road using signals 
+accessible to all senses (sight, sound, 
+touch) ensures pedestrian safety. 
+
+10
+
+ ■ Zebra and courtesy crossings are 
+
+High contrast and bright colours 
+
+ ■ The colour and contrast of the red 
+
+surface of tactile paving at controlled 
+crossing points – or buff tactile paving 
+at courtesy crossing points – can 
+provide a visual beacon to follow to 
+locate safe pedestrian crossing points. 
+
+ ■ If obstacles in the street, like a bench 
+or bollard, are brightly coloured and 
+have a high tonal contrast to their 
+surroundings, this will make them 
+more visually detectable. 
+
+ ■ High tonal contrast is also important 
+for delineating pedestrian areas and 
+highlighting dangers to those who 
+rely on low vision.
+
+Without this tactile, audio and 
+visual information, it is much 
+harder, if not impossible, for blind 
+and partially sighted people to 
+navigate independently. 
+
+less safe because there are no traffic 
+lights to stop vehicles; pedestrians 
+need to use sight and sound to 
+judge when it is safe to cross, and 
+to communicate with vehicle drivers 
+about right of way. This is not 
+possible for most blind or partially 
+sighted people.
+
+ ■ Crossings which create level 
+
+surfaces (continuous footways) from 
+pavements across roads are also 
+not accessible. Without detectable 
+tactile boundaries like upstanding 
+kerbs and graded slopes from the 
+pavement to the road at crossing 
+points, road junctions become 
+“invisible” for people who can’t see 
+the active space for vehicles. It can 
+be very frightening to be passed by 
+a car or bike when you believed you 
+were still on the pavement.
+
+Vehicle sound
+
+ ■ Vehicle sound helps to alert 
+
+someone who can’t see the vehicles 
+that they are there. 
+
+ ■ Effective vehicle sounds can 
+
+indicate where the vehicle is coming 
+from (directionality) and how fast 
+the vehicle is approaching. 
+
+ ■ Vehicles with traditional combustion 
+
+engines like petrol or diesel cars 
+already make a distinctive “broom” 
+sound when the engine is running. 
+But electric vehicles, micromobility 
+vehicles (typically small, lightweight, 
+and motor-powered) and cycles do 
+not make this sound, and so are 
+difficult, if not impossible, to hear 
+and detect if you can’t see them. 
+
+11
+
+How moving vehicles affect blind 
+and partially sighted people’s journeys 
+
+Moving vehicles can make walking 
+journeys harder for blind and partially 
+sighted people. Detecting moving 
+vehicles approaching and judging 
+their distance, speed, and direction is 
+often difficult. If the vehicle is quiet, 
+like a cycle, an electric vehicle or an 
+e-scooter, this is even harder to do, 
+if not impossible.
+
+“ One of the things I have 
+noticed which makes crossing 
+the road harder is car engines 
+are quieter and you cannot 
+hear a car coming.”
+
+It may not always be obvious to 
+a driver or cyclist that they are 
+approaching a pedestrian with sight 
+loss, as many people with sight loss 
+do not use either a cane or guide dog. 
+Drivers and cyclists may then expect 
+the pedestrian to see them and move 
+out of the way, but pedestrians with 
+sight loss who have not seen them 
+approaching will not know to do this. 
+They may not be able to move in time, 
+or to judge which way to go.
+
+These difficulties are potentially 
+dangerous. In addition, cycles and 
+micromobility vehicles are smaller and 
+more agile than cars; this can make 
+it particularly difficult for them to be 
+detected, and for movements to be 
+predicted, even when their presence 
+is known.
+
+“ They weave in and out of 
+pedestrians, often at speed, and 
+I don’t see well enough to map 
+their progress.”
+
+Cycling
+
+RNIB supports Government efforts 
+to encourage more people to 
+cycle and to increase active travel. 
+However, it is vital that the needs 
+of pedestrians are at the heart of 
+these plans. 
+
+For blind and partially sighted 
+pedestrians, knowing they can be 
+in the same space as cyclists can be 
+intimidating, particularly because 
+bikes are so hard to detect. 82 per cent 
+of respondents to our survey said 
+bicycles affected their ability to 
+make walking journeys. Many of our 
+survey respondents who identified 
+bikes as an issue reported being run 
+into by a cycle, had experienced near 
+misses, or had concerns about being 
+knocked over.
+
+12
+
+“ We have collisions very often; 
+[cyclists] simply are not aware 
+that blind people do not see 
+them or hear them coming.” 
+
+“ Repeated near misses with 
+cyclists build up the fear and 
+trauma I and other disabled 
+people feel.” 
+
+One of the challenges is that cycleways 
+and pedestrian areas are not always 
+separated. In a survey we carried out 
+in 2017, 78 per cent of respondents 
+said they would avoid a shared route 
+with bikes (RNIB, 2017). Public spaces 
+where bikes are not separated from 
+pedestrians can become no-go zones 
+for blind and partially sighted people.
+
+Even when bikes and pedestrians 
+are separated, this is not always 
+with a detectable physical barrier. In 
+some areas, cycle lanes are put onto 
+pavements with just a painted line, 
+or a low raised hump, between the 
+cycleway and the pedestrian area. 
+This type of segregation is not easily 
+detected by most blind or partially 
+sighted people, who can use their feet, 
+a cane, or the help of a guide dog 
+to understand where the pedestrian 
+walkway starts and ends. 
+
+“ Bicycles are impossible for me 
+to hear… if there is a shared 
+pedestrian and cycle way or 
+if there is no tactile separation 
+between pedestrian and 
+cycle lanes, I am at high risk 
+of getting hit by cyclists.” 
+
+Some new street designs extend cycle 
+lanes across pavements to avoid 
+dismounting at junctions; some even 
+cross the tactile paving relied on by 
+blind and partially sighted people 
+to navigate. It is important that the 
+needs of pedestrians and cyclists 
+are both considered, so increased 
+cycling infrastructure does not hinder 
+pedestrians’ ability to get out and 
+about safely.
+
+13
+
+Cycling infrastructure guidance usefully 
+suggests designers of cycleways and 
+streets should try out the infrastructure 
+as a cyclist to experience using it for 
+themselves. User testing of streets 
+by blind and partially sighted people 
+will help designers experience the 
+space as someone with sight loss and 
+understand how comfortable and 
+navigable, or otherwise, it is for them. 
+
+Work is needed on how cycles can be 
+made more detectable. Bells can be 
+helpful in alerting pedestrians to the 
+presence of vehicles but also have limits. 
+Often, it is not clear to pedestrians with 
+sight loss what the ringing of a bell 
+is meant to communicate – it could 
+mean “get out of the way now!”, or “stay 
+where you are, don’t move!” or simply: 
+“hello there!” Again, knowing which 
+way to move or having enough time 
+to move are problems. 
+
+We would like to work with cycling 
+groups to examine how cycles can 
+be made more detectable in terms 
+
+of sound and visibility. This could 
+include the use of lights and high 
+visibility materials.
+
+For our walking and cycling 
+infrastructure to be inclusive it 
+must be designed to promote 
+safer cycling and safer walking. 
+Safer walking provision means: 
+
+1.  Dedicated pedestrian‑only 
+
+footways (no shared 
+use areas); 
+
+2. Detectable kerbs (of no less 
+
+than 60mm upstand, and high 
+tonal contrast) separating 
+pedestrians from all vehicles 
+including cycles and cycle 
+lanes; and 
+
+3.  Accessible pedestrian crossings 
+over roads and cycleways to 
+ensure pedestrians are always 
+kept separate from vehicles.
+
+14
+
+E-scooters and micromobility 
+
+The Government is currently trialling 
+the use of electric scooter (e-scooter) 
+hire schemes in many areas across 
+England. These are similar to 
+short-term bicycle hire models, like 
+the Santander scheme in London or 
+dockless hire bikes. Following the 
+trials, the Government will consider 
+the legalisation of privately owned 
+and hire e-scooters for use on 
+our roads.
+
+There are also micromobility vehicles 
+commercially available, which are 
+currently not legal to use on public 
+roads, including e-scooters, but also 
+electric skateboards, self-balancing 
+scooters, Segways, and self-balancing 
+vehicles. If any of these vehicles are 
+to be legalised, it is vital that the 
+impact on the independence of blind 
+and partially sighted pedestrians is 
+fully considered. 
+
+As with cycles, micromobility vehicles 
+are quiet and difficult to detect. In our 
+survey, people told us of their concerns 
+with these new types of vehicles.
+
+“ If I have to share spaces with 
+these vehicles or cross their 
+spaces without accessible 
+controlled crossings, and if 
+nothing is done to stop them 
+riding on pavements, speeding 
+or not stopping at crossings as 
+cycles already often do, then 
+this would seriously restrict my 
+independence and freedom of 
+movement.” 
+
+“ The risk I, and other disabled 
+people, already experience from 
+pavement cyclists and cyclists 
+without bike lights would be 
+increased 100 per cent [by 
+e‑scooters]. The only way I could 
+deal with this would be to get 
+taxis. I would be prevented from 
+walking and this would affect 
+my health as I would not be able 
+to get any exercise.”
+
+We are currently working with central 
+Government, local councils and rental 
+e-scooter companies to identify the 
+measures needed to make the presence 
+of e-scooters safe. We are interested in 
+how e-scooters can be prevented from 
+being ridden or parked on pavements; 
+we have explored enforcement 
+
+15
+
+methods such as licensing, insurance 
+and registration. We are still assessing 
+the risks and gathering evidence, but 
+it is clear any new laws or regulations 
+that are developed to legalise these 
+types of vehicles must reflect the 
+specific challenges facing blind and 
+partially sighted pedestrians.
+
+Keeping pavements safe
+
+The right infrastructure is needed to 
+ensure all vehicles are kept physically 
+separate from pedestrians, and ensure 
+safe places to cross where all vehicles, 
+including cycles, must stop. However, 
+our survey also shows that some road 
+users are not following the rules of 
+the road and that this is having a 
+significant detrimental impact. 
+
+Despite it being illegal unless 
+specifically authorised, cycling 
+on pavements or other 
+pedestrian spaces was specifically 
+mentioned by just over one in three 
+respondents who commented in 
+our survey. This research was carried 
+out ahead of the introduction of 
+e-scooter trials, but the feedback we 
+have received since the start of these 
+trials indicates significant numbers of 
+e-scooters being ridden on pavements 
+and pedestrianised areas.
+
+As well as pavement cycling, people 
+in our survey also talked about the 
+difficulties caused by not being able 
+to hear cycles when trying to cross 
+a road or cycleway, and cycles not 
+stopping at pedestrian crossings.
+
+“ I have been knocked over by 
+bicycles on both zebra and 
+pelican crossings. I had to 
+take anti‑anxiety medication 
+because I was hit while the 
+light was green for me to cross. 
+They ran a red light. It makes 
+me incredibly nervous about 
+walking if I know there will 
+be bicycles around. There are 
+obviously considerate cyclists, 
+but too often they are not 
+considerate and frighten me.” 
+
+We know that lots of cyclists feel 
+unsafe on roads, and we fully support 
+Government efforts to address 
+this and to make cycling safer by 
+segregating cyclists from vehicles. 
+But these efforts must not create 
+inaccessible street design for blind 
+and partially sighted people. Indeed, 
+it is likely that dangerous roads are 
+contributing to pavement cycling.
+
+However, pedestrian safety is also 
+imperative. It is essential that 
+greater efforts are made to enforce 
+rules on cycling or using e-scooters 
+on pavements, and on cycles fully 
+stopping at crossings. It is also clear 
+that more needs to be done working 
+with cyclists and e-scooter riders so 
+that there is a better understanding 
+of the challenges blind and partially 
+sighted pedestrians face in getting 
+around. We are keen to work with 
+Government, cycling groups and 
+e-scooter manufacturers on this. 
+
+16
+
+Tandem cycling
+
+Blind and partially sighted people 
+want to be able to make walking 
+journeys safely as pedestrians. For 
+most people with sight loss, cycling 
+independently is not an option. 
+But inclusive cycle infrastructure will 
+benefit the many blind and partially 
+sighted tandem cyclists.
+
+Rachel, 48, who hadn’t been on a 
+bike for more than twenty years, 
+told us about her experiences with a 
+tandem team as part of a community 
+cycling group:
+
+“ My only experience with cyclists 
+had been being frightened that 
+they’re going to hit me or my 
+guide dog when they’re flashing 
+past in ‘shared spaces’ in our city 
+centre or getting knocked into 
+a hedge by one riding on the 
+pavement some years ago when 
+I was a long cane user. So hugely 
+negative in other words.
+
+“Since joining the community 
+cycling group I’ve learned 
+that many serious cyclists are 
+considerate and not the kind 
+of people that would ride 
+on pavements where they’re 
+not meant to. Serious and 
+considerate cyclists don’t want 
+shared surfaces any more than 
+blind or sight impaired people 
+do, but often they’re stuck with 
+the option just as we are.
+
+“ I love being the stoker on a 
+tandem because when I get on 
+the bike I am just like any other 
+cyclist – I just can’t see the 
+scenery. I am not required to 
+make navigating decisions as I 
+am when I’m working my guide 
+dog, and I don’t have to worry 
+about walking into things like 
+I am when I use my long cane. 
+I truly love the speed and the 
+feel of the wind rushing by, 
+the smells of the greenery or 
+of car exhausts and the sound 
+of the tyres on the surface 
+underneath us. I love the 
+camaraderie. And the calorie 
+burn from the workout!”
+
+17
+
+Electric vehicles
+
+Hybrid and electric vehicles are powered 
+partly or fully by an electric motor and 
+rechargeable battery, rather than by 
+an internal combustion engine. Electric 
+vehicle technology is great for reducing 
+air pollution and noise. However, 
+because these vehicles are so quiet, 
+they are extremely difficult for blind 
+and partially sighted people to detect 
+by sound alone. This has made crossing 
+the road more difficult, as before these 
+vehicles were available it was possible to 
+rely on engine sounds to judge a motor 
+vehicle’s approach.
+
+Research commissioned by Guide Dogs 
+(2014) showed that pedestrians are 
+40 per cent more likely to be hit by a 
+hybrid or electric car than a car with a 
+typical combustion engine. 
+
+In our research, people told us about 
+the problems silent electric vehicles 
+created for them:
+
+“ Electric cars have little sound. 
+I stepped into the road and an 
+electric car had to slam on the 
+brakes. I was so upset. These 
+silent killers might be good 
+for the environment, but not 
+for me.”
+
+“ Silent electronic vehicles are a 
+potential danger, especially in 
+more noisy areas.” 
+
+Following campaigning by RNIB, Guide 
+Dogs UK, European Blind Union and 
+many others, a new regulation on adding 
+sound to silent vehicles was passed by 
+the European Union in April 2014.
+
+The regulation means that from July 
+2019 all “new types” of electric and 
+hybrid cars had to be fitted with an 
+Acoustic Vehicles Alert System (AVAS), 
+which means they will emit sound 
+when travelling below 12 mph. From 
+1 July 2021, all new hybrid and electric 
+cars, regardless of their type, must be 
+fitted with AVAS.
+
+However, there are currently no legal 
+provisions for fitting AVAS retrospectively 
+to the vehicles which are already being 
+used but are exempt from the regulation 
+because they were produced before it 
+came into effect. The safety case on this 
+issue has already been proven; therefore 
+AVAS should be being fitted to these 
+vehicles as they are serviced.
+
+Further research is needed to make sure 
+that just above 12 mph is the right speed 
+for AVAS to stop making sound. Many 
+town and city speed limits in the UK are 
+20 or 30 mph and it is likely that vehicles 
+moving between 13 mph and 30 mph, 
+may not generate enough sound from 
+tyres on road surfaces to create audibility 
+at these lower speeds (EBU, 2019).
+
+RNIB is still hearing reports from 
+people who have been hit by silent 
+electric vehicles which they could not 
+see or hear approaching. In addition 
+to ensuring vehicles are always kept 
+separate from pedestrians, it is clear 
+more work is needed to make sure 
+all electric vehicles are detectable.
+
+18
+
+The importance of kerbs and crossings 
+
+ Having the right infrastructure to 
+ensure streets are safe and pavements 
+are accessible is crucial. Kerbs and 
+crossings are very important to blind 
+and partially sighted people. A more 
+inclusive approach to street design can 
+help to move policy and practice closer 
+to delivering public spaces which work 
+for everyone.
+
+Detectable kerbs 
+
+A detectable kerb is a kerb which is 
+easily detectable by touch – through 
+shoes or canes – in addition to being 
+visually detectable to people with low 
+vision. The standard height kerb in 
+the UK has a 120mm (around 5 inch) 
+upstand, which is widely recognised 
+as detectable. Research shows that 
+kerbs with an upstand of less than 
+60mm are unlikely to be detectable 
+to blind and partially sighted people 
+(Childs et al., 2009). 
+
+“ I am a white cane user and 
+severely sight impaired, so 
+when travelling I rely heavily 
+on tactile clues such as raised 
+kerbs and tactile paving. 
+Without these, independent 
+travel would be impossible 
+for me.”
+
+Detectable kerbs do a number of 
+important jobs to make independent 
+walking journeys possible. They help 
+people identify where the road is, keep 
+pedestrians separate from moving 
+vehicles, help people to find their way 
+by following the line of the kerb, and 
+are used by guide dogs in guiding.
+
+Many new street designs remove 
+detectable kerbs between pedestrians 
+and vehicles. For example, designs 
+such as shared spaces, shared use 
+pathways and areas, continuous 
+footways, Copenhagen crossings 
+and Mini-Hollands often have no 
+detectable kerbs. 
+
+These designs sometimes replace 
+detectable kerbs with painted lines or 
+material changes. But these measures 
+are often undetectable to people 
+with sight loss, or their guide dogs. 
+Replacing kerbs with tactile paving 
+does not work either, because there 
+are specific conventions for where 
+tactile paving should be used in order 
+to have meaning. 
+
+For example, tactile paving in 
+combination with the slope of a 
+dropped kerb indicates a crossing. 
+A few slabs of tactile paving in a 
+large area of level surface does not 
+have a clear message and is difficult 
+or impossible for blind or partially 
+sighted people to find. Also, it does 
+not indicate on which side of the 
+tactile paving vehicles will be. 
+
+19
+
+In July 2018, pending further research 
+and a review, the Department for 
+Transport instructed councils in 
+England to pause new shared space 
+schemes in town and city centres which 
+incorporate a level surface (i.e. those 
+without a kerb or other difference 
+in level to separate pedestrians 
+and vehicles) (DfT, 2019). While we 
+welcomed this pause, the scope of 
+the pause was unclear. It seemed to 
+concentrate mainly on entirely “level 
+surfaces” shared by pedestrians and 
+motor vehicles, and not those shared 
+by pedestrians and cyclists. The pause 
+was also concentrated mainly on town 
+and city centres – shared spaces are 
+inaccessible whether they are in a town 
+centre or a low traffic flow village 
+street. The outcome of the review and 
+plans for next steps are long overdue. 
+
+ “ [On] flat surfaces I cannot 
+
+detect where I am, I cannot 
+tell if I am on the road or 
+pavement, I cannot find 
+any pavement markings to 
+get across a busy road via 
+a crossing.”
+
+It is also important to note that 
+detectable kerbs are just as essential 
+between pavements and cycleways 
+as they are between pavements 
+and roads.
+
+“ I’ve had a lot of issues with 
+having to avoid some routes 
+due to level paving, also there 
+is no clear distinction between 
+pedestrian walkways and cycle 
+lanes. This issue in particular has 
+made me more dependent on 
+taxis and other public transport 
+as it’s just not possible to safely 
+walk to these places.” 
+
+“ The use of shared space areas 
+is particularly confusing and 
+frightening for blind people. 
+There is no delineation between 
+cyclists and visually impaired 
+people and we cannot hear 
+when they are approaching. 
+I would choose a walking route 
+that avoided shared space areas 
+if at all possible.”
+
+20
+
+In addition to shared space schemes in 
+town and city centres there are many 
+other public space designs not defined 
+as “shared space”, but which present 
+the same problems. Copenhagen 
+crossings or continuous footways, for 
+example, are designs which extend the 
+appearance and feel of a pavement 
+over a road, or a junction where side 
+roads join onto a main road, creating 
+a level surface by removing detectable 
+upstanding kerbs. Copenhagen 
+crossings create problems because 
+blind and partially sighted pedestrians 
+have no way of knowing when they are 
+in the road or walking into the path of 
+oncoming traffic. 
+
+Bus stop bypasses are designs which 
+divert cycleways around the back of 
+bus stops so that cyclists do not have 
+to wait behind or overtake a parked 
+bus. They are often installed without 
+detectable kerbs or accessible crossing 
+facilities. The impact of this is that 
+blind and partially sighted people – 
+who are often particularly dependent 
+on public transport – must navigate 
+fast-moving silent cycle traffic in order 
+to reach the bus stop, which can be 
+extremely intimidating. These designs 
+worsen the existing barriers disabled 
+people already face in both walking 
+journeys and accessing public 
+transport. All street designs must have 
+detectable kerbs between pedestrian 
+areas and roads or cycleways.
+
+“ I stopped liking going 
+out walking, since 2014 
+in my borough, when they 
+brought in new road schemes 
+for cyclists, to the detriment 
+of pedestrians, especially 
+us visually impaired people.  
+
+I very soon had injuries 
+on pavements and the new 
+Copenhagen crossings (shared 
+spaces) after kerb removal, 
+from cyclists who didn’t stop. 
+And cyclists that didn’t stop 
+at pedestrian crossings or 
+traffic lights, hidden behind 
+cars which had stopped!  
+
+The traffic islands were removed 
+which made me restricted 
+to very few local journeys by 
+foot. And lots more pavement 
+cyclists now since the new cycle 
+lanes were introduced, which is 
+one of the main reasons I stay 
+indoors these days even before 
+the coronavirus epidemic, as 
+much as possible. I always used 
+to like going out for a walk and 
+fresh air before.”
+
+21
+
+ 
+ 
+“ Bike lanes going through 
+pavements at bus stops. 
+Have had some narrow escapes 
+when bikes have appeared while 
+trying to get from [where] you 
+stand to where you actually get 
+on the bus.” 
+
+To ensure streets are inclusive, it is 
+essential that detectable kerbs separate 
+areas for pedestrians from all areas 
+where vehicles are moving, including 
+cycleways and roads.
+
+Accessible pedestrian crossings
+
+ ■ Pedestrian crossings play an 
+
+essential role in enabling blind 
+and partially sighted people to 
+get across roads and cycleways, 
+with 99 per cent of respondents 
+telling us that pedestrian crossings 
+are important to them for making 
+walking journeys. 
+
+ ■ Negotiating your way around 
+
+moving vehicles which you cannot 
+see is really difficult. The growing 
+number of quiet vehicles like 
+electric cars, cycles and e-scooters 
+means you can’t rely on hearing 
+alone to judge when it is safe to 
+cross. Even for partially sighted 
+people with more useful vision, 
+judging gaps in traffic can be 
+extremely difficult or impossible.
+
+“ Limitations of my sight means 
+crossing any road is very 
+dangerous. I cannot judge 
+distance or speed of anything 
+approaching me.” 
+
+While a few people told us that 
+pedestrian crossings provide added 
+reassurance or confidence on busy 
+roads, many described them as 
+crucial to their ability cross safely 
+and independently:
+
+“ Vital, not just important. 
+I would not be able to move 
+around safely without them.”
+
+“ I simply cannot cross roads 
+without them.”
+
+Some types of pedestrian crossings 
+work better than others. It was clear 
+from comments we received in the 
+survey that fully accessible signal 
+controlled pedestrian crossings like 
+pelican crossings are the safest option. 
+They include traffic lights to stop 
+the traffic and push button boxes to 
+request traffic to stop. They also use 
+sound and touch (beeping sound, and 
+rotating cones underneath the push 
+button boxes) to let people know when 
+it’s their turn to cross and the direction 
+of crossing. Dropped kerbs and red 
+blister tactile paving also help people 
+with sight loss locate these accessible 
+crossing points. 
+
+22
+
+It has been reported to us that there 
+is a worrying trend to remove signal 
+controlled crossings like pelicans and 
+replace them with zebra crossings 
+or courtesy crossings. These types 
+of crossings, particularly courtesy 
+crossings, are much less safe. 
+
+The need for pedestrians to make 
+and read visual cues to use courtesy 
+crossings to safely cross roads makes 
+these one of the least accessible 
+crossings for blind and partially sighted 
+people. Even with the correct tactile 
+paving, it is not always obvious to a 
+pedestrian with sight loss whether they 
+are at a zebra or a courtesy crossing. 
+This can cause confusion and can be 
+dangerous if the pedestrian mistakenly 
+assumes they are at a zebra crossing – 
+and has right of way – and steps onto 
+the crossing.
+
+“ You need to hear the audio to 
+know you can cross, so you can 
+avoid being run over by cars! I 
+don’t want to take my life into 
+my own hands. We need the 
+rotating knob too, so we know 
+it is safe to cross. I don’t like 
+zebra crossings, because you 
+can’t see when it is safe to go.”
+
+There must be a sufficient number of 
+accessible signal controlled pedestrian 
+crossings over roads and cycleways 
+in the right places to help people get 
+around, particularly along routes to 
+essential services, e.g. transport hubs, 
+shops, offices, hospitals, schools and 
+health and community facilities such 
+as parks. Given the challenges the 
+increase in quiet vehicles present for 
+people with sight loss, accessible signal 
+crossings are also necessary in lower 
+traffic flow areas.
+
+“ Many junctions cannot be 
+used because [there is] no 
+indication when it’s safe to 
+cross. Quiet cars and bikes are 
+scary and discourage me from 
+travelling for fear of my own 
+safety. Removal of controlled 
+crossings has been a particularly 
+retrograde step.”
+
+23
+
+In addition to removing kerbs, many 
+shared space-style street designs 
+involve the removal of accessible 
+pelican crossings. Research by the 
+Chartered Institute of Highways and 
+Transportation (CIHT, 2018) reported 
+evidence that some blind and partially 
+sighted people were avoiding shared 
+space areas where pelican crossings 
+had been replaced by zebra or 
+courtesy crossings. Our own evidence 
+confirms this.
+
+This experience of people self-excluding 
+– being unable to make certain 
+journeys and not going to certain 
+places – because of a lack of accessible 
+pedestrian crossings, or shared space 
+developments, and even being trapped 
+in their house or immediate local 
+area, was described by a number of 
+respondents to our survey:
+
+“I can’t go out walking locally as 
+there aren’t pedestrian crossings 
+on my route.”
+
+“ Where I live, I have become 
+marooned in my house because 
+of lack of pedestrian crossings.”
+
+“ I am OK in a traditional street 
+where I know that I walk on the 
+pavement and step off the kerb 
+to cross over a crossing to get 
+to the other side. But if it gets 
+more complicated than that 
+then I am risk. Shared spaces, 
+particularly big squares with 
+things coming from unexpected 
+directions, are a nightmare for 
+me. I can’t see to negotiate 
+the traffic or know where I’m 
+meant to be. There also needs 
+to be a good level of visual 
+contrast for me to navigate.”
+
+“ Shared spaces are a nightmare 
+so creating more would stop 
+me being as confident to walk 
+alone which is essential to 
+my independence.”
+
+Designs where pedestrians have to 
+share space with vehicles, including 
+cycles, clearly disadvantage and exclude 
+blind and partially sighted pedestrians. 
+More needs to be done to stop 
+inaccessible spaces from being built. 
+
+24
+
+Cycleways also need accessible 
+pedestrian crossings
+
+Respondents to our survey also 
+emphasised the importance of 
+accessible crossings for being able to get 
+across cycleways, particularly because of 
+how difficult it can be to detect cycles:
+
+“ If I’m waiting to cross the road 
+(locally, so there is no crossing) 
+I do not hear a cyclist coming 
+towards me, often at speed.”
+
+“ [Cycles] can be so quiet that I 
+don’t know they are there until 
+too late; and the cyclist assumes 
+I can see them coming!”
+
+Unfortunately, as mentioned above, 
+new street designs, such as “bus stop 
+bypasses” (also known as a “floating 
+bus stop”) and other designs which 
+take cycle lanes out of signal control, 
+often do not take these accessibility 
+issues into consideration.
+
+These bus stop designs create 
+problems for blind and partially 
+sighted people because they then have 
+to cross a cycleway to get onto or 
+off a bus. In some cases, a mini-zebra 
+crossing is provided for pedestrians to 
+cross over the cycle track to the bus 
+stand, or vice-versa, but in many cases 
+the cycle track has no provisions for 
+pedestrians crossing.
+
+Research conducted by the Transport 
+Research Laboratory (TfL, 2018) into 
+bus stop bypasses found that: 
+
+ ■ The proportion of cycles who gave 
+way to pedestrians at a bus stop 
+bypass with no pedestrian crossing 
+point was just 33 per cent; and 
+
+ ■ Where a zebra crossing was 
+
+present on a bus stop bypass, the 
+proportion of cycles who gave way 
+to pedestrians trying to cross was 
+still only 40 per cent (TfL, 2018). 
+
+The term “give way” in this research 
+included slowing down, or swerving 
+around the pedestrian, rather than 
+coming to a complete stop. However, 
+it still found even with a zebra 
+crossing, over half of the cyclists using 
+the bus stop bypass did not “give 
+way” to pedestrians trying to cross 
+over to get onto or to get off their 
+bus, relying on the pedestrian to stop 
+for them.
+
+The research also examined the 
+dangerous incidents – defined as a 
+“very near miss” or “collision” – that 
+did occur on bus stop bypasses, 
+and analysed the reasons these had 
+taken place. 
+
+All of the four reasons identified in 
+the report – “pedestrian appeared 
+inattentive”, “pedestrian distracted by 
+companions”, “cyclist arriving from 
+behind pedestrian”, “visibility obscured 
+by bus shelter or other pedestrians” 
+– relate to the ability to see what’s 
+happening on the cycle lane in order 
+to cross safely. Because of cycles’ size, 
+speed and silent movement, it can be 
+impossible for blind or partially sighted 
+people to be “attentive” on these 
+crossings, making them much more 
+likely to be at risk of collisions.
+
+25
+
+In light of this evidence, it is 
+disappointing that transport authorities 
+including both Transport for London 
+and Transport for Greater Manchester 
+went on to recommend the continued 
+use of bus stop bypasses. We believe 
+they should not be deployed, as the 
+designs cause confusion for all users. 
+They present particular difficulties for 
+blind and partially sighted pedestrians. 
+
+This report contains a number of 
+recommendations aimed at different 
+authorities, which aim to promote an 
+inclusive approach to street design. 
+We would like to invite the Westminster 
+Government and devolved Governments 
+of Northern Ireland, Scotland and Wales, 
+councils, planners and architects, and 
+other stakeholders to work with us to 
+develop this approach further, and to 
+look at how principles of inclusive street 
+design can be built into the education 
+of public space design professionals. It is 
+essential that inclusive design principles 
+are at the heart of policy, guidance, and 
+delivery of street design. 
+
+Other evidence backs up the findings 
+that the number of cyclists stopping 
+at these types of crossings can be 
+very low. In the evaluation of the 
+Manchester Oxford Road bus stop 
+bypass trial, the transport authority 
+observed that only 63 out of more 
+than 5,500 cycles stopped at any of 
+the zebra and courtesy crossings over 
+a period of seven days’ video footage, 
+with only 27 stopping at the zebra 
+crossing (TfGM, 2016). 
+
+The Manchester Oxford Road report 
+stated: “A cyclist stop is counted when 
+a bicycle has come to a complete stop 
+for a crossing… While the numbers 
+indicate few cyclists giving way, the 
+figures do not really account for the 
+more fluid interactions of cyclist and 
+pedestrians that appeared to arise 
+where pedestrians crossed the bypass 
+lane by means of ‘gap-selection’ 
+between cyclists.” (TfGM, 2016, p.15) 
+
+However, “gap selection” involves 
+judging traffic and is not a safe or 
+effective way for many blind and 
+partially sighted people to cross roads. 
+They rely on knowing that vehicles will 
+come to a full stop. If they cannot rely 
+on this, there is a risk to safety but also 
+long term confidence to cross roads 
+and cycle lanes independently.
+
+26
+
+The hazards of cluttered pavements 
+
+When pavements or walkways are 
+cluttered, or obstructed, this can make 
+independent walking journeys harder 
+or impossible for people with sight loss. 
+A survey we ran in 2015 showed that 95 
+per cent of blind and partially sighted 
+people have collided with an obstacle 
+in their local neighbourhood over a 
+three month period, and that nearly a 
+third of those were injured (RNIB, 2015). 
+Responses to the Travel Survey 
+demonstrate pavement obstructions 
+are still a serious problem.
+
+“ Obstacles on the pedestrian 
+walkways limit my ability to 
+move around independently 
+and safely – e.g. street furniture, 
+roadworks and temporary traffic 
+measures – all make it harder 
+for me to navigate my local area 
+by walking as I rely on being 
+able to practise and memorise 
+a route, so any changes to that 
+practice route naturally present 
+challenges and can be stressful.”
+
+“ It’s difficult with cars 
+parking on the pavement. 
+I have walked into trucks 
+before which were parked half 
+on the pavement and half on 
+the road. Dustbins being left 
+out are a continual problem, 
+as are overhanging trees. 
+People just don’t realise.”
+
+“ The environment is full of 
+potential hazards such as cars 
+parked on pavements, cyclists 
+on pavements, uneven paving 
+slabs, overhanging shrubs. 
+If I used a white cane rather 
+than a guide dog these would 
+be even more of a problem.” 
+
+Pavement obstructions can range from 
+vehicles parked on pavements, chairs 
+and tables on pavements (for café, 
+restaurant and bar seating), advertising 
+boards, wheelie bins and bin bags, and 
+overhanging trees and shrubs. 
+
+These everyday objects may not sound 
+threatening, but they have a very real 
+and negative impact on the accessibility 
+of pavements for blind and partially 
+sighted people and on confidence in 
+getting out and about. 
+
+27
+
+“ Cars parked on the pavement 
+again pose as an obstacle to 
+walk in to and possibly be 
+injured by, or cause people to 
+walk in the road when they may 
+not be sure if it is safe to do 
+so or not. This is an increasing 
+problem nationwide.”
+
+“ Vehicles parked on crossing 
+point ’bobbles’ (tactile paving) so 
+that you can’t find [the crossing] 
+and lose your route.”
+
+ “ Cars parked on pavements 
+make it very hard and 
+dangerous as we have to 
+walk on the road.”
+
+“ In my experience, it is also 
+the fact that you encounter 
+unexpected issues when you are 
+out walking. These are things 
+like dust bins, A‑boards, dog 
+mess and other road users. 
+Whilst you can usually deal 
+with each of these challenges, 
+it does add extra stress to the 
+journey which makes it less 
+pleasant, and therefore I am less 
+keen to try to do this. The thing 
+that makes it easier is if you 
+have a clear, well defined and 
+uncluttered route to follow.”
+
+New commercial demands on 
+pavements and walkways – such as 
+dockless hire vehicles – are now further 
+adding to the existing problems caused 
+by obstructions like advertising boards 
+and vehicles parked on pavements.
+
+Pavement parking
+
+People with mobility or visual 
+impairments, wheelchair and mobility 
+scooter users, and those with buggies 
+and prams are disproportionately 
+affected by pavement parking 
+(Transport Committee, 2019). Blind 
+and partially sighted people have been 
+injured from walking into parked cars. 
+People are also regularly forced out 
+into the road to get around parked cars, 
+posing significant risks to their safety. 
+One in four respondents specifically 
+mentioned pavement parking as a 
+barrier when asked what made walking 
+journeys harder or easier. 
+
+28
+
+Even where there is no physical injury, 
+the shock of a collision with a parked 
+vehicle or threat of a near miss with 
+traffic when forced to divert into the 
+road can damage confidence, meaning 
+people with sight loss may avoid 
+getting out and about altogether or 
+only feel able to make journeys with 
+a sighted guide. 
+
+Pavement parking is a serious barrier 
+to blind and partially sighted people 
+making walking journeys. It is illegal 
+to park on pavements in London, with 
+some exceptions, and the Government 
+held a consultation on introducing 
+a new law on pavement parking 
+in England. A new law to manage 
+pavement parking is already in place 
+in Scotland with implementation 
+projected by the end of 2023, and the 
+Welsh Government announced similar 
+plans in June 2021. We welcome the 
+fact the Westminster Government has 
+consulted on this important issue and 
+would like to see a new law introduced 
+in England as soon as possible.
+
+Dockless hire vehicles 
+
+Dockless bikes are a type of short-term 
+vehicle hire scheme. They allows 
+people to hire bikes which are located 
+through a smartphone app. As the 
+name suggests, dockless bikes do not 
+need to be returned to a fixed docking 
+station like other bike hire schemes 
+(such as Santander Cycles). 
+
+Rental dockless bike schemes have 
+been operating in the UK since 2007 
+and have caused significant problems 
+for disabled pedestrians because 
+they are often left partly, or entirely, 
+
+obstructing pavements. Dockless 
+e-scooters becoming a feature on our 
+streets is also of significant concern.
+
+“ I have fallen and hurt myself a 
+couple of times over bikes that 
+were left on the pavement and 
+my guide cane unfortunately 
+didn’t pick up the obstacle quick 
+enough. This will get worse as 
+more are allowed to be out 
+on the pavements and will be 
+another piece of street furniture 
+that will challenge my ability to 
+navigate around.”
+
+“ Horrendous. Dockless bikes 
+have significantly impacted 
+on my ability to navigate 
+independently around London. 
+I now can’t walk the 10 minutes 
+from the train station to work 
+and have to take a bus instead 
+because I was constantly injuring 
+myself on bikes left abandoned 
+on the pavements.”
+
+Dockless bikes have already created 
+additional and serious barriers to 
+walking journeys for blind and partially 
+sighted people. Now other types of 
+vehicles such as e-scooters are allowed 
+to be rented as dockless hire vehicles 
+in trials across England, it is likely to 
+further compound this problem, making 
+streets even less accessible, as has been 
+experienced by blind and partially 
+sighted people in other countries.
+
+29
+
+Other obstructions
+
+In our research, people also identified 
+the following as regularly problematic 
+obstructions:
+
+ ■ Street furniture like tables and 
+chairs, outside of bars and 
+restaurants.
+
+ ■ Advertising boards, or A-boards, 
+
+which are used by businesses and 
+other organisations to position 
+advertising messages at pavement 
+level.
+
+ ■ Poorly placed and insufficiently 
+
+contrasted bollards, planters and 
+fixed seating. 
+
+ ■ Wheelie bins and bin bags left on 
+
+pavements.
+
+ ■ Overhanging trees and shrubs.
+
+ ■ Building and maintenance works 
+
+which are not sturdy or not placed 
+appropriately. 
+
+ ■ Electric vehicle charging points 
+
+which are poorly placed or 
+maintained, for example where 
+charging cables trail across the 
+pavement. 
+
+All of these can cause injury, force 
+people out into the road or cause 
+challenges for navigation if placed 
+against building lines, walls, fences or 
+kerbs, which people use to follow to 
+find their way. 
+
+“ I walk using a long cane to check 
+my route is clear. Any permanent 
+or temporary obstacle in my 
+route is a hazard. If there are 
+changes to the layout of my 
+regular routes they confuse and 
+disorientate me.”
+
+Collisions with obstacles on pavements 
+and the unpredictability of street 
+clutter can cause specific challenges. It 
+is vital that pavements are kept as clear 
+and clutter free as possible. 
+
+For all permanent street obstructions, 
+it is essential that local authorities 
+comply with the substantive duties of 
+the Equality Act as well as the Public 
+Sector Equality Duty, including not 
+(indirectly) discriminating and making 
+reasonable adjustments where, for 
+example, a physical feature places 
+a disabled person at a substantial 
+disadvantage. It is also essential that 
+accessible public consultations are 
+carried out, as well as Equality Impact 
+Assessments. For any temporary 
+changes, these must be communicated 
+effectively to local residents in 
+accessible formats. 
+
+30
+
+ Conclusion 
+
+Walking journeys are of fundamental 
+importance in ensuring blind and 
+partially sighted people can live their 
+lives with as much independence 
+as possible. The more difficult it 
+is to get around, the less freedom 
+and opportunity people have to 
+participate in their local community 
+and stay connected. These are 
+essential to protect mental wellbeing 
+and physical health.
+
+The accessibility of streets is 
+determined by the way streets are 
+designed, the way that vehicles are 
+designed, and the way streets are used 
+by other pedestrians and by vehicles. 
+
+Unfortunately, understanding about 
+how blind and partially sighted people 
+navigate and travel is not widespread. 
+It is not built into training for street 
+designers and planners. 
+
+This affects new designs of streets 
+which, inadvertently, systematically 
+disadvantage people with sight loss, 
+either because designs strip away 
+essential accessibility features like 
+detectable kerbs and pedestrian 
+crossings, or because they rely solely 
+on visual cues and information. 
+
+Disabled people and the organisations 
+which represent them do not have 
+the resources to respond to every one 
+of the hundreds of local authority 
+consultations proposing inaccessible 
+street designs. It is up to Government, 
+councils, and planners and designers to 
+do more to ensure designs which are 
+
+31
+
+not accessible are not proposed in the 
+first place. Instead, they should look 
+to familiarise themselves with some of 
+the core principles of inclusive street 
+design set out in this report.
+
+Designers and developers of 
+transport technology could also help 
+by improving their understanding 
+of how blind and partially sighted 
+people get around. 
+
+A proliferation of silent vehicles, small 
+vehicles, and dockless hire vehicles 
+are creating new challenges which are 
+further compounding existing barriers. 
+Measures must be taken to ensure 
+all vehicles, cycles and micromobility 
+vehicles are kept separate from 
+pedestrians. Meanwhile some road 
+users don’t understand the serious and 
+negative impact on blind and partially 
+sighted people of riding on pavements 
+or jumping traffic lights, limiting their 
+confidence and independence. Greater 
+awareness of this impact is needed. 
+
+The drive for environmental 
+improvements is likely to mean an 
+increase in transport technology 
+innovations aiming to reduce 
+emissions and environmental impact. 
+While these moves are welcome, the 
+development and delivery of new 
+types of transport technology, such 
+as driverless vehicles, drones, and 
+autonomous delivery pods, must 
+have accessibility considerations 
+built in from the start. Retrofitting 
+accessibility is slow and expensive. 
+
+In transport design and development, 
+accessibility needs to be properly 
+thought through, consulted on, and 
+tested so new designs do not have 
+unintended negative consequences 
+for disabled people. But more than 
+this, new transport technology should 
+be actively seeking to improve the 
+lives of disabled people. 
+
+More needs to be done to recognise 
+and champion the needs of 
+pedestrians as a distinct group. 
+Combining the needs of pedestrians 
+with the needs of other groups such 
+as cyclists in guidance results in 
+confusion about the different needs 
+of these individual groups, and as a 
+result, the needs of pedestrians are 
+often being overshadowed and not 
+properly met. A hierarchy of road 
+users which prioritises pedestrians, as 
+set out in recently proposed revisions 
+to the Highway Code, is a step in 
+the right direction, but this needs to 
+be translated into practice in street 
+design and town planning. 
+
+Inclusive design is better for everyone, 
+ensuring the whole community can 
+access and enjoy their area and key 
+services like healthcare, education 
+and work.
+
+Recommendations 
+for local authorities
+
+Local authorities have a number of 
+obligations and powers to ensure that 
+principles of accessible, inclusive street 
+design are followed. As local authorities 
+make changes to local infrastructure 
+to encourage walking and cycling, it is 
+as important as ever that accessibility 
+is maintained for blind and partially 
+sighted people.
+
+1.  Under the Public Sector Equality 
+Duty, local authorities need 
+to consider how people with 
+protected characteristics may 
+be affected by any temporary 
+or permanent changes. Changes 
+must not discriminate against 
+blind and partially sighted people 
+by, for example, placing them at 
+a substantial disadvantage when 
+accessing local amenities. To help 
+ensure this, local authorities should 
+carry out an Equality Impact 
+Assessment, involving disabled 
+people in an accessible way, and 
+considering steps to mitigate 
+any negative impacts or making 
+alternative proposals.
+
+2. This report identifies a number 
+of key principles that councils 
+should ensure they are embedding 
+into street design, including: safe 
+pedestrian spaces, detectable 
+kerbs, uncluttered pavements, and 
+accessible crossings. Any changes 
+must comply with existing guidance 
+on accessibility, e.g. Inclusive 
+Mobility, and guidance on the use 
+
+32
+
+obstruction, and councils have a 
+legal duty to keep pavements free 
+from obstruction. Councils can help 
+by monitoring street accessibility 
+regularly and working with police 
+to act quickly when pavement 
+obstructions are found. 
+
+3.  Greater efforts should also be 
+made in partnership with local 
+police to enforce rules on cycling 
+or use of e-scooters on pavements, 
+stop private-use e-scooters being 
+ridden illegally, and ensure cycles 
+fully stop at crossings. More also 
+needs to be done working with 
+cyclists and e-scooter riders so that 
+there is a better understanding of 
+the challenges blind and partially 
+sighted pedestrians face in getting 
+around and the effect these 
+behaviours can have.
+
+of tactile paving surfaces. It is crucial 
+to inform blind and partially sighted 
+people who live in the local area 
+of proposed changes, liaising with 
+local sight loss organisations and 
+taking into account the accessibility 
+of any notices, newspaper adverts or 
+published plans.
+
+3.  We would like to invite the 
+
+Westminster Government and 
+devolved Governments of Northern 
+Ireland, Scotland and Wales, 
+councils, planners and architects, 
+and other stakeholders to work 
+with us to ensure that principles of 
+inclusive street design are built into 
+the education of public space design 
+professionals, and put at the heart 
+of policy, guidance, and delivery of 
+street design.
+
+Keep pavements safe
+
+1.  Councils should keep in touch with 
+disabled and elderly residents and 
+understand the impact of changing 
+street use. Where e-scooter hire 
+schemes have been introduced, 
+councils should consider RNIB’s 
+advice for making their schemes as 
+accessible as possible, available at 
+rnib.in/Advice-for-LAs and make 
+sure they provide accessible ways 
+for residents to feed back on any 
+impact, including offline options.
+
+2. Pavements which are clear from 
+obstructions and clutter free are 
+essential, to enable disabled people 
+to make independent walking 
+journeys. It is against the law to put 
+anything on pavements, without 
+permission, which creates an 
+
+33
+
+Recommendations 
+for the Department 
+for Transport
+
+Inclusive street infrastructure
+
+We would like to invite the Department 
+for Transport, along with councils, 
+planners and architects, and other 
+stakeholders to work with us to ensure 
+that principles of inclusive street design 
+can be built into the education of public 
+space design professionals, and put 
+at the heart of policy, guidance, and 
+delivery of street design.
+
+We call on the Department 
+for Transport to:
+
+1.  Instruct the new funding body and 
+inspectorate Active Travel England 
+to design guidance for streets to 
+take into account the features blind 
+and partially sighted people need 
+to get around independently, as 
+set out in this report. Any funding 
+granted and designs approved 
+should be consistent with principles 
+of inclusive street design, and 
+designs or proposals which do not 
+meet these standards should not 
+be approved or funded. 
+
+2. Introduce a national ban on all 
+
+shared space designs and public 
+space designs which incorporate 
+shared use areas, and which do not 
+have detectable kerbs and accessible 
+signal-controlled crossings. 
+This includes ensuring areas for 
+pedestrians are always separated by 
+a detectable kerb of at least 60mm 
+upstand from areas where vehicles – 
+including cycles – are travelling.
+
+3.  Work with us and others, and hold 
+
+a full public consultation, to update 
+the “Guidance on the use of tactile 
+paving surfaces, Inclusive Mobility 
+and the Using shared space to 
+improve high streets for pedestrians 
+(LTN 1/11)” guidance and “Cycle 
+Infrastructure Design (LTN 1/20)” 
+to ensure these documents uphold 
+principles of inclusive street design. 
+
+4. Work with us to undertake research 
+to inform updates to the Pedestrian 
+Crossings Guidance.
+
+5.  Work with us to ensure that parks, 
+
+greenways, and canal paths are safe 
+and accessible for people with sight 
+loss, by exploring solutions for these 
+areas where it may not always be 
+possible to install detectable kerbs or 
+accessible signal controlled crossings.
+
+34
+
+Keep pedestrians separate 
+from moving vehicles
+
+RNIB supports Government efforts to 
+encourage more people to cycle and 
+to increase active travel. However, 
+it is vital that the needs and safety 
+of pedestrians are at the heart of 
+these plans.
+
+We call on the Department 
+for Transport to:
+
+1.  Review and update existing 
+
+guidance on walking provision 
+(including Framework for a Local 
+Walking Strategy 2/00 and 
+Encouraging Walking: Advice to 
+Local Authorities 2000) to clarify 
+and strengthen the priority of 
+pedestrians, including their safety, 
+comfort and convenience over 
+other road users, and to ensure 
+that all walking guidance fully 
+embodies principles of inclusive 
+street design.
+
+2. Strengthen existing guidance on 
+cycling infrastructure and street 
+design (including Cycle Infrastructure 
+Design LTN 1/20) to ensure that all 
+vehicles, including smaller vehicles 
+like cycles, e-bikes, e-scooters, 
+other micromobility vehicles, and 
+autonomous delivery pods are always 
+kept separate from pedestrians.
+
+3.  Work with the sight loss sector and 
+cycle groups to explore how cycles 
+can be made more detectable to 
+pedestrians, and how detectability 
+measures (including visual and 
+sound) can be supported by 
+guidance and legislation.
+
+4. Ensure that when resources are 
+
+going into promoting cycling and 
+micromobility this includes actions 
+and adequate resources to make 
+sure that the law around their 
+use, including not being used on 
+pavements and stopping at controlled 
+pedestrian crossings, is enforced. 
+
+35
+
+5.  Work with the police and local 
+
+2. Make sure that in developing 
+
+councils to ensure they are enforcing 
+the law on pavement use by cycles 
+and micromobility vehicles. 
+
+6. Run public understanding 
+
+campaigns to highlight the 
+importance of responsible riding 
+of cycles, e-scooters, and other 
+micromobility vehicles including 
+e-bikes.
+
+E-scooters and micromobility 
+
+Micromobility vehicles, such as 
+e-scooters, pose potential risks to 
+pedestrians because they are fast 
+moving, operate quietly and are often 
+ridden on pavements. These risks must 
+be fully addressed before e-scooters 
+are legalised in the longer-term.
+
+We call on the Department 
+for Transport to: 
+
+1.  Ensure licensing, insurance and 
+
+registration requirements are put in 
+place to make sure that riders/drivers 
+of small vehicles access appropriate 
+training and can be held accountable 
+for not following the rules on 
+pavement riding, poor parking 
+and when there is a collision.
+
+regulations on the specification 
+for e-scooters, the specific needs 
+of blind and partially sighted 
+pedestrians are taken into 
+account, notably through ensuring 
+detectability measures – both visual 
+and sound – are included in the 
+specification. 
+
+3.  Review the regulations for other 
+
+small vehicles like e-bikes to ensure 
+that all micromobility vehicles are 
+regulated in a similar way. 
+
+4. Commission research on the impact 
+of and best way to add sound to 
+e-scooters and other small vehicles. 
+A safety sound would need robust 
+research to ensure it was detectable, 
+directional and distinctive. 
+
+Electric vehicles
+
+The Department for Transport should: 
+
+1.  Ensure existing electric vehicles and 
+hybrid cars are retrofitted with AVAS. 
+
+2. Commission further research into 
+the speed at which AVAS should 
+safely cut out or require it to 
+continue to 30mph, fitting in with 
+city speed limits. 
+
+3.  Bring forward the prohibition 
+of the AVAS pause function 
+and provide resources to raise 
+awareness of electric vehicle 
+drivers on the importance of 
+keeping AVAS turned on.
+
+36
+
+Keep pavements 
+clear and clutter‑free
+
+Pavements which are clear from 
+obstructions and clutter-free are 
+essential to streets which are inclusive, 
+to enable disabled people to make 
+independent walking journeys. 
+
+We call on the Department 
+for Transport to: 
+
+1.  Introduce new legislation on 
+
+pavement parking in England, in line 
+with that already in place in London, 
+as soon as possible.
+
+2. Require all small short-term 
+
+hire vehicles to be docked, and 
+create clear rules for making 
+sure the docking stations do 
+not become an obstruction for 
+pedestrians. This would include 
+that docking stations be placed 
+on the road wherever possible, or 
+that a minimum of two metres of 
+unobstructed pavement space is left. 
+Users should also be charged for the 
+hire until the vehicles are physically 
+locked into the dock, and there must 
+be a physical barrier (e.g. tapping 
+rail or detectable kerb) around the 
+docking station.
+
+3.  Review and strengthen the Guidance 
+on Pavement Licensing (Outdoor 
+Seating Proposal) 2020 to ensure 
+that street furniture is kept to a 
+minimum and does not compromise 
+pavement accessibility. 
+
+4. Introduce a national law restricting 
+
+the use of advertising boards. 
+
+References
+
+Childs C.R., Boampong D.K., Rostron 
+H., Morgan K., Eccleshall T., Tyler N. 
+(2009) “Effective Kerb Heights for 
+Blind and Partially Sighted People”. 
+Accessibility Research Group Civil, 
+Environmental, and Geomatic 
+Engineering, University College 
+London. Available at: https://www.
+ucl.ac.uk/civil-environmental-
+geomatic-engineering/sites/
+civil-environmental-geomatic-
+engineering/files/steps_project_for_
+guide_dogs_association.pdf 
+
+CIHT (2018) “Creating better streets: 
+Inclusive and accessible places”. 
+Available at: https://www.ciht.org.
+uk/knowledge-resource-centre/
+resources/streets-and-transport-in-
+the-urban-environment/ 
+
+DfT (2019) “Inclusive Transport 
+Strategy: Achieving Equal Access 
+for Disabled People”. Policy paper. 
+Available at: https://www.gov.uk/
+government/publications/inclusive-
+transport-strategy/the-inclusive-
+transport-strategy-achieving-equal-
+access-for-disabled-people 
+
+EBU (2019) “Silent Cars and AVAS: 
+Questions and Answers”. Available at: 
+https://bit.ly/3uPhhAa 
+
+European Parliament and European 
+Council (2014) “EU Regulation 
+No 540/2014 of the European 
+Parliament and of the Council of 
+16 April 2014 on the sound level of 
+motor vehicles and of replacement 
+silencing systems”. Available at: 
+
+37
+
+Transport Committee (2019) “Pavement 
+parking: Thirteenth Report of Session 
+2017–19. Report, together with formal 
+minutes relating to the report”. 
+Available at: https://publications.
+parliament.uk/pa/cm201719/
+cmselect/cmtrans/1982/1982.pdf 
+
+RNIB (2015) “Who put that there!”. 
+Campaign report. Available at: https://
+www.rnib.org.uk/campaigning-policy-
+and-reports-hub/transport-and-
+getting-around 
+
+RNIB (2017) “RNIB Response to the DfT 
+Accessibility Action Plan Consultation 
+2017”. Available at: https://www.rnib.
+org.uk/campaigning-policy-and-
+reports-hub/transport-and-getting-
+around 
+
+RNIB (2020) “The Criteria for 
+Certification”. RNIB website. Available 
+at: https://www.rnib.org.uk/eye-
+health/registering-your-sight-loss/
+criteria-certification 
+
+https://publications.europa.eu/en/
+publication-detail/-/publication/
+fe98a835-e656-11e3-8cd4-
+01aa75ed71a1/language-en 
+
+Equality Act (2010), part 11 chapter 1. 
+Available at: http://www.legislation.
+gov.uk/ukpga/2010/15/part/11/
+chapter/1 
+
+Guide Dogs (2014) “Safe and Sound” 
+webpage. Available at: https://www.
+guidedogs.org.uk/how-you-can-help/
+campaigning/our-current-campaigns/
+safe-and-sound/ 
+
+House of Commons Women and 
+Equalities Committee (2017) “Building 
+for Equality: Disability and the Built 
+Environment”. TSO. Ch. 7 Conclusions 
+and recommendations. Available at: 
+https://publications.parliament.
+uk/pa/cm201617/cmselect/
+cmwomeq/631/63102.htm 
+
+Local Government Association (2019) 
+Section 4: Consulting Residents. 
+Available at: https://www.local.gov.uk/
+our-support/guidance-and-resources/
+comms-hub-communications-
+support/resident-communications-4 
+
+TfGM (2016) “Oxford Road Trial Bus 
+Stop Evaluation Report”. Available at: 
+https://www.manchesterfoe.org.uk/
+blog/2016/09/27/oxford-road-trial-
+bus-stop-evaluation-report/ 
+
+TfL (2018) “New cycle infrastructure 
+on London’s streets: Summary report 
+of on-street trials”. Available at: 
+http://content.tfl.gov.uk/new-cycle-
+infrastructure-monitoring-report.pdf 
+
+38
+
+3939
+
+For more information contact:
+
+  twitter.com/RNIB 
+
+  facebook.com/rnibuk 
+
+  instagram.com/rnib 
+
+3
+0
+0
+1
+1
+2
+E
+R
+
+© RNIB registered charity in England and Wales (226227), Scotland (SC039316), Isle of Man (1226).  
+Also operating in Northern Ireland.
+
+

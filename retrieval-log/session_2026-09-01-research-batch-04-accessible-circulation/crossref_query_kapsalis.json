@@ -1,0 +1,2402 @@
+{
+ "status": "ok",
+ "message-type": "work-list",
+ "message-version": "1.0.0",
+ "message": {
+  "facets": {},
+  "total-results": 1206402,
+  "items": [
+   {
+    "indexed": {
+     "date-parts": [
+      [
+       2026,
+       8,
+       28
+      ]
+     ],
+     "date-time": "2026-08-28T08:42:40Z",
+     "timestamp": 1787906560451,
+     "version": "build-2784847793"
+    },
+    "reference-count": 117,
+    "publisher": "Informa UK Limited",
+    "issue": "3",
+    "license": [
+     {
+      "start": {
+       "date-parts": [
+        [
+         2022,
+         8,
+         19
+        ]
+       ],
+       "date-time": "2022-08-19T00:00:00Z",
+       "timestamp": 1660867200000
+      },
+      "content-version": "vor",
+      "delay-in-days": 0,
+      "URL": "http://creativecommons.org/licenses/by-nc-nd/4.0/"
+     }
+    ],
+    "funder": [
+     {
+      "DOI": "10.13039/501100000837",
+      "name": "University of Nottingham",
+      "doi-asserted-by": "publisher",
+      "id": [
+       {
+        "id": "10.13039/501100000837",
+        "id-type": "DOI",
+        "asserted-by": "publisher"
+       }
+      ]
+     }
+    ],
+    "content-domain": {
+     "domain": [
+      "www.tandfonline.com"
+     ],
+     "crossmark-restriction": true
+    },
+    "short-container-title": [
+     "Disability and Rehabilitation: Assistive Technology"
+    ],
+    "published-print": {
+     "date-parts": [
+      [
+       2024,
+       4,
+       2
+      ]
+     ]
+    },
+    "DOI": "10.1080/17483107.2022.2111723",
+    "type": "journal-article",
+    "created": {
+     "date-parts": [
+      [
+       2022,
+       8,
+       19
+      ]
+     ],
+     "date-time": "2022-08-19T15:38:25Z",
+     "timestamp": 1660923505000
+    },
+    "page": "604-622",
+    "update-policy": "https://doi.org/10.1080/tandf_crossmark_01",
+    "source": "Crossref",
+    "is-referenced-by-count": 116,
+    "title": [
+     "Disabled-by-design: effects of inaccessible urban public spaces on users of mobility assistive devices \u2013 a systematic review"
+    ],
+    "prefix": "10.1080",
+    "volume": "19",
+    "author": [
+     {
+      "ORCID": "https://orcid.org/0000-0003-1598-6426",
+      "authenticated-orcid": false,
+      "given": "Efthimis",
+      "family": "Kapsalis",
+      "sequence": "first",
+      "affiliation": [
+       {
+        "name": "Department of Architecture and Built Environment, University of Nottingham",
+        "place": [
+         "Nottingham, United Kingdom"
+        ]
+       }
+      ],
+      "role": [
+       {
+        "vocabulary": "crossref",
+        "role": "author"
+       }
+      ]
+     },
+     {
+      "ORCID": "https://orcid.org/0000-0002-4686-2568",
+      "authenticated-orcid": false,
+      "given": "Nils",
+      "family": "Jaeger",
+      "sequence": "additional",
+      "affiliation": [
+       {
+        "name": "Department of Architecture and Built Environment, University of Nottingham",
+        "place": [
+         "Nottingham, United Kingdom"
+        ]
+       }
+      ],
+      "role": [
+       {
+        "vocabulary": "crossref",
+        "role": "author"
+       }
+      ]
+     },
+     {
+      "ORCID": "https://orcid.org/0000-0002-4929-0497",
+      "authenticated-orcid": false,
+      "given": "Jonathan",
+      "family": "Hale",
+      "sequence": "additional",
+      "affiliation": [
+       {
+        "name": "Department of Architecture and Built Environment, University of Nottingham",
+        "place": [
+         "Nottingham, United Kingdom"
+        ]
+       }
+      ],
+      "role": [
+       {
+        "vocabulary": "crossref",
+        "role": "author"
+       }
+      ]
+     }
+    ],
+    "member": "301",
+    "published-online": {
+     "date-parts": [
+      [
+       2022,
+       8,
+       19
+      ]
+     ]
+    },
+    "reference": [
+     {
+      "key": "e_1_3_3_2_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.4324/9780203642603"
+     },
+     {
+      "key": "e_1_3_3_3_1",
+      "first-page": "362",
+      "volume-title": "Disability in America: toward a national agenda for prevention",
+      "author": "Nagi SZ.",
+      "year": "1991",
+      "unstructured": "Nagi SZ. Disability concepts revisited: implications for prevention. In Pope AM, Tarlov AR, Alvin R, editors. Disability in America: toward a national agenda for prevention. Washington, DC: National Academy Press; 1991. p. 362."
+     },
+     {
+      "key": "e_1_3_3_4_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.2105/9780875531915ch03"
+     },
+     {
+      "key": "e_1_3_3_5_1",
+      "unstructured": "WHO. International classification of functioning disability and health; 2001. Available from: https://www.who.int/classifications/icf/en/."
+     },
+     {
+      "key": "e_1_3_3_6_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.15585/mmwr.mm6732a3"
+     },
+     {
+      "key": "e_1_3_3_7_1",
+      "unstructured": "UK Government. Family Resources Survey 2015/16. 2017."
+     },
+     {
+      "key": "e_1_3_3_8_1",
+      "unstructured": "Australian Bureau of Statistics. Disability Ageing and Carers Australia: Summary of Findings. Notes; 2016 p. 40.."
+     },
+     {
+      "key": "e_1_3_3_9_1",
+      "volume-title": "Building access: universal design and the politics of disability",
+      "author": "Hamraie A.",
+      "year": "2017",
+      "unstructured": "Hamraie A. Building access: universal design and the politics of disability. Minneapolis: University of Minnesota Press; 2017."
+     },
+     {
+      "key": "e_1_3_3_10_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1186/1743-0003-9-20"
+     },
+     {
+      "key": "e_1_3_3_11_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/09687590025775"
+     },
+     {
+      "key": "e_1_3_3_12_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1001/jama.299.3.332"
+     },
+     {
+      "key": "e_1_3_3_13_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/09687590220140377"
+     },
+     {
+      "key": "e_1_3_3_14_1",
+      "volume-title": "The value of public spaces",
+      "author": "Design Council UK.",
+      "year": "2003",
+      "unstructured": "Design Council UK. The value of public spaces. London; 2003."
+     },
+     {
+      "key": "e_1_3_3_15_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1057/s41289-018-0070-3"
+     },
+     {
+      "key": "e_1_3_3_16_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/13604810801933495"
+     },
+     {
+      "key": "e_1_3_3_17_1",
+      "volume-title": "Polit public Sp",
+      "author": "Harvey D.",
+      "year": "2006",
+      "unstructured": "Harvey D. The political economy of public space. In Low SM, Smith N, editors. Polit public Sp. New York, NY, USA: Taylor & Francis; 2006."
+     },
+     {
+      "key": "e_1_3_3_18_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.4324/9781315725147"
+     },
+     {
+      "key": "e_1_3_3_19_1",
+      "volume-title": "Life between buildings: using public space",
+      "author": "Gehl J.",
+      "year": "2011",
+      "unstructured": "Gehl J. Life between buildings: using public space. Washington (DC): Island Press; 2011."
+     },
+     {
+      "key": "e_1_3_3_20_1",
+      "volume-title": "The death and life of great American cities",
+      "author": "Jacobs J.",
+      "year": "1993",
+      "unstructured": "Jacobs J. The death and life of great American cities. New York (NY): Modern Library; 1993."
+     },
+     {
+      "key": "e_1_3_3_21_1",
+      "volume-title": "The great good place: caf\u00e9s, coffee shops, bookstores, bars, hair salons, and other hangouts at the heart of a community",
+      "author": "Oldenburg R.",
+      "year": "1999",
+      "unstructured": "Oldenburg R. The great good place: caf\u00e9s, coffee shops, bookstores, bars, hair salons, and other hangouts at the heart of a community. Boston (MA): Da Capo Press; 1999."
+     },
+     {
+      "key": "e_1_3_3_22_1",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Null R. Universal design: principles and models. Boca Raton (FL): CRC Press; 2013.",
+      "DOI": "10.1201/b15580"
+     },
+     {
+      "key": "e_1_3_3_23_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.2307/466240"
+     },
+     {
+      "key": "e_1_3_3_24_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/978-3-319-31416-7_14"
+     },
+     {
+      "key": "e_1_3_3_25_1",
+      "volume-title": "Handbook on quality of life for human service practitioners",
+      "author": "Schalock RL",
+      "year": "2002",
+      "unstructured": "Schalock RL, Verdugo MA, Alonso MV, et\u00a0al. Handbook on quality of life for human service practitioners. Silver Spring (MD): American Association on Mental Retardation; 2002."
+     },
+     {
+      "key": "e_1_3_3_26_1",
+      "volume-title": "Measuring quality of life \u2013 WHOQOL",
+      "author": "WHO",
+      "year": "1997",
+      "unstructured": "WHO. Measuring quality of life \u2013 WHOQOL. Geneva; 1997."
+     },
+     {
+      "key": "e_1_3_3_27_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/23748834.2018.1429180"
+     },
+     {
+      "key": "e_1_3_3_28_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/23748834.2017.1316025"
+     },
+     {
+      "key": "e_1_3_3_29_1",
+      "volume-title": "Bodyspace: Anthropometry, ergonomics and the design of work",
+      "author": "Pheasant S.",
+      "year": "2014",
+      "unstructured": "Pheasant S. Bodyspace: Anthropometry, ergonomics and the design of work. Hoboken: Taylor and Francis; 2014."
+     },
+     {
+      "key": "e_1_3_3_30_1",
+      "volume-title": "Interaction design: beyond human-computer interaction",
+      "author": "Rogers Y",
+      "year": "2015",
+      "unstructured": "Rogers Y, Sharp H, Preece J. Interaction design: beyond human-computer interaction. Chichester, W. Sussex: John Wiley & Sons; 2015."
+     },
+     {
+      "key": "e_1_3_3_31_1",
+      "volume-title": "Universal declaration of human rights",
+      "author": "United Nations",
+      "year": "1948",
+      "unstructured": "United Nations. Universal declaration of human rights. Paris; 1948."
+     },
+     {
+      "key": "e_1_3_3_32_1",
+      "unstructured": "United Nations. Convention on the Rights of Persons with Disabilities (CRPD). 2006."
+     },
+     {
+      "key": "e_1_3_3_33_1",
+      "first-page": "1",
+      "article-title": "A systematic review of public transport accessibility for people using mobility devices",
+      "volume": "0",
+      "author": "Unsworth C",
+      "year": "2019",
+      "unstructured": "Unsworth C, So MH, Chua J, et\u00a0al. A systematic review of public transport accessibility for people using mobility devices. Disabil Rehabil. 2019;0:1\u201315.",
+      "journal-title": "Disabil Rehabil"
+     },
+     {
+      "key": "e_1_3_3_34_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.3109/17483107.2010.522680"
+     },
+     {
+      "key": "e_1_3_3_35_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.3390/ijerph14070703"
+     },
+     {
+      "key": "e_1_3_3_36_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/10400435.2010.541408"
+     },
+     {
+      "key": "e_1_3_3_37_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/s13670-019-00295-5"
+     },
+     {
+      "key": "e_1_3_3_38_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/09687599.2018.1453783"
+     },
+     {
+      "key": "e_1_3_3_39_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1002/9781119536604"
+     },
+     {
+      "key": "e_1_3_3_40_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.7326/0003-4819-151-4-200908180-00135"
+     },
+     {
+      "key": "e_1_3_3_41_1",
+      "first-page": "279",
+      "volume-title": "American with disabilities act accessibility guidelines",
+      "author": "US Department of Justice",
+      "year": "2010",
+      "unstructured": "US Department of Justice. American with disabilities act accessibility guidelines. USA; 2010. p. 279."
+     },
+     {
+      "key": "e_1_3_3_42_1",
+      "first-page": "1",
+      "article-title": "The mixed methods appraisal tool (MMAT) version 2018 for information professionals and researchers",
+      "volume": "34",
+      "author": "Hong QN",
+      "year": "2018",
+      "unstructured": "Hong QN, F\u00e0bregues S, Bartlett G, et\u00a0al. The mixed methods appraisal tool (MMAT) version 2018 for information professionals and researchers. Educ Inf. 2018;34:1\u20137.",
+      "journal-title": "Educ Inf"
+     },
+     {
+      "key": "e_1_3_3_43_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.3233/WOR-182758"
+     },
+     {
+      "key": "e_1_3_3_44_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.5463/dcid.v29i2.730"
+     },
+     {
+      "key": "e_1_3_3_45_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.2340/16501977-0173"
+     },
+     {
+      "key": "e_1_3_3_46_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/17483100802542603"
+     },
+     {
+      "key": "e_1_3_3_47_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1177/0361198120922995"
+     },
+     {
+      "key": "e_1_3_3_48_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.cities.2007.01.009"
+     },
+     {
+      "key": "e_1_3_3_49_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/15389588.2019.1606910"
+     },
+     {
+      "key": "e_1_3_3_50_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.apmr.2011.01.008"
+     },
+     {
+      "key": "e_1_3_3_51_1",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Chiwandire D Vincent L. Wheelchair users access and exclusion in South African higher education. African J Disabil. 2017;6:353.",
+      "DOI": "10.4102/ajod.v6i0.353"
+     },
+     {
+      "key": "e_1_3_3_52_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/10400435.2012.659326"
+     },
+     {
+      "key": "e_1_3_3_53_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.16993/sjdr.50"
+     },
+     {
+      "key": "e_1_3_3_54_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.3141/2072-14"
+     },
+     {
+      "key": "e_1_3_3_55_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1038/sc.2015.26"
+     },
+     {
+      "key": "e_1_3_3_56_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.3109/17483107.2010.509885"
+     },
+     {
+      "key": "e_1_3_3_57_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.3141/2387-17"
+     },
+     {
+      "key": "e_1_3_3_58_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/14616688.2017.1293721"
+     },
+     {
+      "key": "e_1_3_3_59_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/17483100802543247"
+     },
+     {
+      "key": "e_1_3_3_60_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.medengphy.2009.01.004"
+     },
+     {
+      "key": "e_1_3_3_61_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/17483107.2019.1604824"
+     },
+     {
+      "key": "e_1_3_3_62_1",
+      "unstructured": "Gamache S Routhier F Mortenson WB et\u00a0al. Objective evaluation of environmental obstacles encountered in two Canadian urban settings by mobility device users. J Access Des All. 2020;10:98\u2013123."
+     },
+     {
+      "key": "e_1_3_3_63_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/03081060.2016.1266165"
+     },
+     {
+      "key": "e_1_3_3_64_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.aap.2021.106259"
+     },
+     {
+      "key": "e_1_3_3_65_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/09638280500052799"
+     },
+     {
+      "key": "e_1_3_3_66_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1097/PHM.0b013e31818a52cc"
+     },
+     {
+      "key": "e_1_3_3_67_1",
+      "first-page": "1577",
+      "article-title": "Caught in-between: tensions experienced by community mobility scooter users",
+      "author": "Jang S",
+      "year": "2019",
+      "unstructured": "Jang S, Ben MW, Hurd L, et\u00a0al. Caught in-between: tensions experienced by community mobility scooter users. Disabil Soc. 2019;35(10):1577\u20131595.",
+      "journal-title": "Disabil Soc"
+     },
+     {
+      "key": "e_1_3_3_68_1",
+      "first-page": "1",
+      "article-title": "Perception of autonomy among people who use wheeled mobility assistive devices: dependence on environment and contextual factors",
+      "author": "Khalili M",
+      "year": "2021",
+      "unstructured": "Khalili M, Jonathan C, Hocking N, et\u00a0al. Perception of autonomy among people who use wheeled mobility assistive devices: dependence on environment and contextual factors. Disabil Rehabil Assist Technol. 2021;1\u20138.",
+      "journal-title": "Disabil Rehabil Assist Technol"
+     },
+     {
+      "key": "e_1_3_3_69_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.ergon.2014.07.001"
+     },
+     {
+      "key": "e_1_3_3_70_1",
+      "first-page": "741",
+      "article-title": "Accessibility facilitators and barriers affecting independent wheelchair transfers in the community",
+      "author": "Koontz AM",
+      "year": "2020",
+      "unstructured": "Koontz AM, Bass SR, Kulich HR. Accessibility facilitators and barriers affecting independent wheelchair transfers in the community. Disabil Rehabil Assist Technol. 2020;16(7):741\u2013748.",
+      "journal-title": "Disabil Rehabil Assist Technol"
+     },
+     {
+      "key": "e_1_3_3_71_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.apmr.2010.01.009"
+     },
+     {
+      "key": "e_1_3_3_72_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1017/S0144686X18001228"
+     },
+     {
+      "key": "e_1_3_3_73_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.3390/ijerph17218287"
+     },
+     {
+      "key": "e_1_3_3_74_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.5038/2375-0901.19.2.7"
+     },
+     {
+      "key": "e_1_3_3_75_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/01616846.2010.502033"
+     },
+     {
+      "key": "e_1_3_3_76_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.alter.2015.11.003"
+     },
+     {
+      "key": "e_1_3_3_77_1",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Lindemann U Schwenk M Klenk J et\u00a0al. Problems of older persons using a wheeled walker. Aging Clin Exp Res. 2016;28:215\u2013220.",
+      "DOI": "10.1007/s40520-015-0410-8"
+     },
+     {
+      "key": "e_1_3_3_78_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1111/ijcs.12155"
+     },
+     {
+      "key": "e_1_3_3_79_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.apmr.2008.05.011"
+     },
+     {
+      "key": "e_1_3_3_80_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/s10708-018-9907-y"
+     },
+     {
+      "key": "e_1_3_3_81_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.apergo.2014.01.002"
+     },
+     {
+      "key": "e_1_3_3_82_1",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Prescott M Miller WC Borisoff J et\u00a0al. An exploration of the navigational behaviours of people who use wheeled mobility devices in unfamiliar pedestrian environments. J Transp Heal. 2021;20:100975.",
+      "DOI": "10.1016/j.jth.2020.100975"
+     },
+     {
+      "key": "e_1_3_3_83_1",
+      "first-page": "298",
+      "article-title": "Bounded at the driveway\u2019s edge: body-space tensions encountered by children with mobility impairments in moving about the neighbourhood street",
+      "author": "Stafford L",
+      "year": "2019",
+      "unstructured": "Stafford L, Adkins B, Franz J. Bounded at the driveway\u2019s edge: body-space tensions encountered by children with mobility impairments in moving about the neighbourhood street. Child Geogr. 2019;18(3):298\u2013311.",
+      "journal-title": "Child Geogr"
+     },
+     {
+      "key": "e_1_3_3_84_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.3109/17483107.2014.898159"
+     },
+     {
+      "key": "e_1_3_3_85_1",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Toro ML Koontz AM Cooper RA. The impact of transfer setup on the performance of independent wheelchair transfers. Hum Factors J Hum Factors Ergon Soc. 2013;55:567\u2013580.",
+      "DOI": "10.1177/0018720812460549"
+     },
+     {
+      "key": "e_1_3_3_86_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1136/injuryprev-2015-041805"
+     },
+     {
+      "key": "e_1_3_3_87_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.ijtst.2018.04.005"
+     },
+     {
+      "key": "e_1_3_3_88_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.17645/si.v4i3.484"
+     },
+     {
+      "key": "e_1_3_3_89_1",
+      "first-page": "145",
+      "article-title": "Evaluation of wheelchair users\u2019 perceived sidewalk and ramp slope: effort and accessibility",
+      "volume": "26",
+      "author": "Vredenburgh AG",
+      "year": "2009",
+      "unstructured": "Vredenburgh AG, Hedge A, Zackowitz IB, et\u00a0al. Evaluation of wheelchair users\u2019 perceived sidewalk and ramp slope: effort and accessibility. J Archit Plann Res. 2009;26:145\u2013158.",
+      "journal-title": "J Archit Plann Res"
+     },
+     {
+      "key": "e_1_3_3_90_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.medengphy.2009.07.022"
+     },
+     {
+      "key": "e_1_3_3_91_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/17483107.2017.1401128"
+     },
+     {
+      "key": "e_1_3_3_92_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/17483107.2017.1312573"
+     },
+     {
+      "key": "e_1_3_3_93_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.5463/dcid.v29i4.785"
+     },
+     {
+      "key": "e_1_3_3_94_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.jemermed.2007.07.067"
+     },
+     {
+      "key": "e_1_3_3_95_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/09687599.2012.631797"
+     },
+     {
+      "key": "e_1_3_3_96_1",
+      "first-page": "199",
+      "article-title": "Architects, the law, and accessibility: Architect\u2019s approaches to the ADA in arenas",
+      "volume": "20",
+      "author": "Mazumdar S",
+      "year": "2003",
+      "unstructured": "Mazumdar S, Geis G. Architects, the law, and accessibility: Architect\u2019s approaches to the ADA in arenas. J Archit Plann Res. 2003;20:199\u2013220.",
+      "journal-title": "J Archit Plann Res"
+     },
+     {
+      "key": "e_1_3_3_97_1",
+      "unstructured": "UK Government. Equality Act 2010; 2010. Available from: https://www.legislation.gov.uk/ukpga/2010/15/contents."
+     },
+     {
+      "key": "e_1_3_3_98_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/10400430903520280"
+     },
+     {
+      "key": "e_1_3_3_99_1",
+      "volume-title": "Rehabil Eng Soc North Am Annu Conf.",
+      "author": "D\u2019Souza C",
+      "year": "2009",
+      "unstructured": "D\u2019Souza C, Steinfeld E, Paquet V. Functional reach for wheeled mobility device users: a comparison with ADA-ABA guidelines for accessibility. Rehabil Eng Soc North Am Annu Conf. 2009."
+     },
+     {
+      "key": "e_1_3_3_100_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.4324/9780080456454"
+     },
+     {
+      "key": "e_1_3_3_101_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/13602365.2019.1684974"
+     },
+     {
+      "key": "e_1_3_3_102_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/01441647.2020.1747569"
+     },
+     {
+      "key": "e_1_3_3_103_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1177/0265813515617659"
+     },
+     {
+      "key": "e_1_3_3_104_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.37200/IJPR/V24I1/PR200138"
+     },
+     {
+      "key": "e_1_3_3_105_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.tra.2018.02.017"
+     },
+     {
+      "key": "e_1_3_3_106_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1177/0038038503037002002"
+     },
+     {
+      "key": "e_1_3_3_107_1",
+      "unstructured": "Buckup S. The price of exclusion: the economic consequences of excluding people with disabilities from the world of work; 2009. [cited 2020 Nov 8]. Report No.: 43. Available from: http://www.ilo.org/employment/Whatwedo/Publications/working-papers/WCMS_119305/lang\u2013en/index.htm."
+     },
+     {
+      "key": "e_1_3_3_108_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1089/jwh.2015.5385"
+     },
+     {
+      "key": "e_1_3_3_109_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.dhjo.2019.100844"
+     },
+     {
+      "key": "e_1_3_3_110_1",
+      "unstructured": "WHO. World Report on Disability. 2011. Available from: https://www.who.int/disabilities/world_report/2011/report/en/."
+     },
+     {
+      "key": "e_1_3_3_111_1",
+      "unstructured": "Finkelstein V. Disability: A Social Challenge or an Administrative Responsibility. In: Disabling barriers\u2013enabling environments. London; Newbury Park: Open University: SAGE Publications; 1993 p. 34\u201343."
+     },
+     {
+      "key": "e_1_3_3_112_1",
+      "volume-title": "Designing for the disabled: the new paradigm",
+      "author": "Goldsmith S.",
+      "year": "1997",
+      "unstructured": "Goldsmith S. Designing for the disabled: the new paradigm. In: Designing for the disabled: the new paradigm. London: Routledge; 1997."
+     },
+     {
+      "key": "e_1_3_3_113_1",
+      "volume-title": "Interactive architecture",
+      "author": "Fox M",
+      "year": "2009",
+      "unstructured": "Fox M, Kemp M. Interactive architecture. New York (NY): Princeton Architectural Press; 2009."
+     },
+     {
+      "key": "e_1_3_3_114_1",
+      "volume-title": "Lessons for students in architecture",
+      "author": "Hertzberger H.",
+      "year": "2005",
+      "unstructured": "Hertzberger H. Lessons for students in architecture. Rotterdam: NAi Uitgevers/Publishers; 2005."
+     },
+     {
+      "key": "e_1_3_3_115_1",
+      "first-page": "129",
+      "volume-title": "Disabil read",
+      "author": "Imrie R.",
+      "year": "2000",
+      "unstructured": "Imrie R. Oppression, disability and access in the built environment. In: Shakespeare T, editor. Disabil read. London: Continuum; 2000. p. 129."
+     },
+     {
+      "key": "e_1_3_3_116_1",
+      "volume-title": "Universal design: creating inclusive environments",
+      "author": "Steinfeld E",
+      "year": "2012",
+      "unstructured": "Steinfeld E, Maisel J, editors. Universal design: creating inclusive environments. Hoboken (NJ): Wiley; 2012."
+     },
+     {
+      "key": "e_1_3_3_117_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2875452"
+     },
+     {
+      "key": "e_1_3_3_118_1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.4324/9781315731117"
+     }
+    ],
+    "container-title": [
+     "Disability and Rehabilitation: Assistive Technology"
+    ],
+    "language": "en",
+    "link": [
+     {
+      "URL": "https://www.tandfonline.com/doi/pdf/10.1080/17483107.2022.2111723",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+     }
+    ],
+    "deposited": {
+     "date-parts": [
+      [
+       2025,
+       6,
+       7
+      ]
+     ],
+     "date-time": "2025-06-07T17:18:27Z",
+     "timestamp": 1749316707000
+    },
+    "score": 77.44796,
+    "resource": {
+     "primary": {
+      "URL": "https://www.tandfonline.com/doi/full/10.1080/17483107.2022.2111723"
+     }
+    },
+    "issued": {
+     "date-parts": [
+      [
+       2022,
+       8,
+       19
+      ]
+     ]
+    },
+    "references-count": 117,
+    "journal-issue": {
+     "issue": "3",
+     "published-print": {
+      "date-parts": [
+       [
+        2024,
+        4,
+        2
+       ]
+      ]
+     }
+    },
+    "alternative-id": [
+     "10.1080/17483107.2022.2111723"
+    ],
+    "URL": "https://doi.org/10.1080/17483107.2022.2111723",
+    "ISSN": [
+     "1748-3107",
+     "1748-3115"
+    ],
+    "issn-type": [
+     {
+      "value": "1748-3107",
+      "type": "print"
+     },
+     {
+      "value": "1748-3115",
+      "type": "electronic"
+     }
+    ],
+    "published": {
+     "date-parts": [
+      [
+       2022,
+       8,
+       19
+      ]
+     ]
+    },
+    "assertion": [
+     {
+      "value": "The publishing and review policy for this title is described in its Aims & Scope.",
+      "order": 1,
+      "name": "peerreview_statement",
+      "label": "Peer Review Statement"
+     },
+     {
+      "value": "http://www.tandfonline.com/action/journalInformation?show=aimsScope&journalCode=iidt20",
+      "URL": "http://www.tandfonline.com/action/journalInformation?show=aimsScope&journalCode=iidt20",
+      "order": 2,
+      "name": "aims_and_scope_url",
+      "label": "Aim & Scope"
+     },
+     {
+      "value": "2021-11-04",
+      "order": 0,
+      "name": "received",
+      "label": "Received",
+      "group": {
+       "name": "publication_history",
+       "label": "Publication History"
+      }
+     },
+     {
+      "value": "2022-06-21",
+      "order": 1,
+      "name": "revised",
+      "label": "Revised",
+      "group": {
+       "name": "publication_history",
+       "label": "Publication History"
+      }
+     },
+     {
+      "value": "2022-08-05",
+      "order": 2,
+      "name": "accepted",
+      "label": "Accepted",
+      "group": {
+       "name": "publication_history",
+       "label": "Publication History"
+      }
+     },
+     {
+      "value": "2022-08-19",
+      "order": 3,
+      "name": "published",
+      "label": "Published",
+      "group": {
+       "name": "publication_history",
+       "label": "Publication History"
+      }
+     }
+    ]
+   },
+   {
+    "indexed": {
+     "date-parts": [
+      [
+       2026,
+       8,
+       17
+      ]
+     ],
+     "date-time": "2026-08-17T22:51:18Z",
+     "timestamp": 1787007078899,
+     "version": "build-2736575974"
+    },
+    "reference-count": 74,
+    "publisher": "Informa UK Limited",
+    "issue": "3",
+    "content-domain": {
+     "domain": [
+      "www.tandfonline.com"
+     ],
+     "crossmark-restriction": true
+    },
+    "short-container-title": [
+     "Journal of Urban Design"
+    ],
+    "published-print": {
+     "date-parts": [
+      [
+       2019,
+       5,
+       4
+      ]
+     ]
+    },
+    "DOI": "10.1080/13574809.2018.1484664",
+    "type": "journal-article",
+    "created": {
+     "date-parts": [
+      [
+       2018,
+       7,
+       24
+      ]
+     ],
+     "date-time": "2018-07-24T22:23:43Z",
+     "timestamp": 1532471023000
+    },
+    "page": "340-364",
+    "update-policy": "https://doi.org/10.1080/tandf_crossmark_01",
+    "source": "Crossref",
+    "is-referenced-by-count": 72,
+    "title": [
+     "Measuring experiential qualities of urban public spaces: users\u2019 perspective"
+    ],
+    "prefix": "10.1080",
+    "volume": "24",
+    "author": [
+     {
+      "ORCID": "https://orcid.org/0000-0001-8869-1018",
+      "authenticated-orcid": false,
+      "given": "Hadi",
+      "family": "Zamanifard",
+      "sequence": "first",
+      "affiliation": [
+       {
+        "name": "Cities Research Institute, Griffith University, Brisbane, Australia"
+       }
+      ],
+      "role": [
+       {
+        "vocabulary": "crossref",
+        "role": "author"
+       }
+      ]
+     },
+     {
+      "given": "Tooran",
+      "family": "Alizadeh",
+      "sequence": "additional",
+      "affiliation": [
+       {
+        "name": "School of Architecture, Design, and Planning, The University of Sydney, Sydney, Australia"
+       }
+      ],
+      "role": [
+       {
+        "vocabulary": "crossref",
+        "role": "author"
+       }
+      ]
+     },
+     {
+      "given": "Caryl",
+      "family": "Bosman",
+      "sequence": "additional",
+      "affiliation": [
+       {
+        "name": "School of Environment and Science, Griffith University, Gold Coast, Australia"
+       }
+      ],
+      "role": [
+       {
+        "vocabulary": "crossref",
+        "role": "author"
+       }
+      ]
+     },
+     {
+      "given": "Eddo",
+      "family": "Coiacetto",
+      "sequence": "additional",
+      "affiliation": [
+       {
+        "name": "Cities Research Institute, Griffith University, Brisbane, Australia"
+       }
+      ],
+      "role": [
+       {
+        "vocabulary": "crossref",
+        "role": "author"
+       }
+      ]
+     }
+    ],
+    "member": "301",
+    "published-online": {
+     "date-parts": [
+      [
+       2018,
+       7,
+       24
+      ]
+     ]
+    },
+    "reference": [
+     {
+      "key": "CIT0001",
+      "volume-title": "Shaping Places: Urban Planning, Design and Development",
+      "author": "Adams D.",
+      "year": "2013"
+     },
+     {
+      "key": "CIT0002",
+      "volume-title": "Creating Places for People: An Urban Design Protocol for Australian Cities",
+      "author": "ASBEC",
+      "year": "2015"
+     },
+     {
+      "key": "CIT0003",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/0042098032000106627"
+     },
+     {
+      "key": "CIT0005",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/01944360108976352"
+     },
+     {
+      "key": "CIT0007",
+      "volume-title": "States of Mind: American and Post-Soviet Perspectives on Contemporary Issues in Psychology",
+      "author": "Bell P. A.",
+      "year": "1997"
+     },
+     {
+      "key": "CIT0008",
+      "volume-title": "Responsive Environments: A Manual for Designers",
+      "author": "Bentley I.",
+      "year": "1985"
+     },
+     {
+      "key": "CIT0009",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/S0169-2046(02)00236-0"
+     },
+     {
+      "key": "CIT0010",
+      "volume-title": "The City of Collective Memory",
+      "author": "Boyer M. C.",
+      "year": "1996"
+     },
+     {
+      "key": "CIT0011",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/978-1-4684-5601-1_2"
+     },
+     {
+      "key": "CIT0014",
+      "volume-title": "Design in Familiar Places: What Makes Home Environments Look Good",
+      "author": "Brower S.",
+      "year": "1988"
+     },
+     {
+      "key": "CIT0015",
+      "doi-asserted-by": "crossref",
+      "DOI": "10.4324/9780080456454",
+      "volume-title": "Inclusive Urban Design: Streets for Life",
+      "author": "Burton E.",
+      "year": "2006"
+     },
+     {
+      "key": "CIT0017",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/13574800903435651"
+     },
+     {
+      "key": "CIT0018",
+      "volume-title": "Explorations in Urban Design: An Urban Design Research Primer",
+      "author": "Carmona M.",
+      "year": "2014"
+     },
+     {
+      "key": "CIT0019",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/17549175.2014.909518"
+     },
+     {
+      "key": "CIT0020",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/13574809.2013.854695"
+     },
+     {
+      "key": "CIT0021",
+      "volume-title": "Public Places Urban Spaces : The Dimensions of Urban Design",
+      "author": "Carmona M.",
+      "year": "2010",
+      "edition": "2"
+     },
+     {
+      "key": "CIT0022",
+      "volume-title": "Public Space",
+      "author": "Carr S.",
+      "year": "1992"
+     },
+     {
+      "key": "CIT0023",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/13574809.2010.502347"
+     },
+     {
+      "key": "CIT0024",
+      "volume-title": "By Design: Urban Design in the Planning System: Towards Better Practice",
+      "author": "DETR, and CABE",
+      "year": "2000"
+     },
+     {
+      "key": "CIT0025",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1093/jurban/jtg063"
+     },
+     {
+      "key": "CIT0026",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.apgeog.2010.09.005"
+     },
+     {
+      "key": "CIT0027",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.5822/978-1-61091-209-9"
+     },
+     {
+      "key": "CIT0028",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/13574800802451155"
+     },
+     {
+      "key": "CIT0029",
+      "volume-title": "Discovering Statistics Using SPSS",
+      "author": "Field A. P.",
+      "year": "2007",
+      "edition": "3"
+     },
+     {
+      "key": "CIT0030",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.jenvp.2012.07.002"
+     },
+     {
+      "key": "CIT0032",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/978-1-4684-5601-1_7"
+     },
+     {
+      "key": "CIT0033",
+      "volume-title": "Life between Buildings: Using Public Space",
+      "author": "Gehl J.",
+      "year": "1996",
+      "edition": "3"
+     },
+     {
+      "key": "CIT0034",
+      "volume-title": "Cities for People",
+      "author": "Gehl J.",
+      "year": "2010"
+     },
+     {
+      "key": "CIT0035",
+      "volume-title": "Life between Buildings: Using Public Space",
+      "author": "Gehl J.",
+      "year": "2011"
+     },
+     {
+      "key": "CIT0036",
+      "volume-title": "Public Spaces-public Life. Translated by",
+      "author": "Gehl J.",
+      "year": "1996"
+     },
+     {
+      "key": "CIT0037",
+      "volume-title": "Public Life & Urban Justice in Nyc\u2019s Plazas",
+      "author": "Gehl Studio, and J. Max Bond Center",
+      "year": "2015"
+     },
+     {
+      "key": "CIT0038",
+      "volume-title": "Public Spaces and Public Life: City of Adelaide, 2002",
+      "author": "Gehl, J., H. S\u00f8holt, Planning SA, Adelaide City Council, and Adelaide Capital City Committee",
+      "year": "2002"
+     },
+     {
+      "key": "CIT0039",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1146/annurev-psych-010213-115048"
+     },
+     {
+      "key": "CIT0040",
+      "volume-title": "In Search of New Public Domain: Analysis and Strategy. Rotterdam: NAi Publisher.",
+      "author": "Hajer M.",
+      "year": "2001"
+     },
+     {
+      "key": "CIT0041",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/01944368708976642"
+     },
+     {
+      "key": "CIT0042",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1068/a40357"
+     },
+     {
+      "key": "CIT0043",
+      "volume-title": "Subtropical Design in South East Queensland: A Handbook for Planners, Developers and Decision Makers",
+      "author": "Kennedy R.",
+      "year": "2010"
+     },
+     {
+      "key": "CIT0044",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.4324/9780203495117"
+     },
+     {
+      "key": "CIT0045",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/s11205-012-0106-9"
+     },
+     {
+      "key": "CIT0046",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.3828/tpr.64.2.6h26535771454436"
+     },
+     {
+      "key": "CIT0047",
+      "volume-title": "Urban Design Downtown: Poetics and Politics of Form",
+      "author": "Loukaitou-Sideris A.",
+      "year": "1998"
+     },
+     {
+      "key": "CIT0048",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.4324/9780203390306"
+     },
+     {
+      "key": "CIT0049",
+      "doi-asserted-by": "crossref",
+      "DOI": "10.7560/747135",
+      "volume-title": "On the Plaza: The Politics of Public Space and Culture",
+      "author": "Low S. M.",
+      "year": "2000"
+     },
+     {
+      "key": "CIT0050",
+      "volume-title": "The Image of the City",
+      "author": "Lynch K.",
+      "year": "1960"
+     },
+     {
+      "key": "CIT0051",
+      "volume-title": "Good City Form",
+      "author": "Lynch K",
+      "year": "1984"
+     },
+     {
+      "key": "CIT0052",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.4324/9780203402856"
+     },
+     {
+      "key": "CIT0053",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.4324/9780203860946"
+     },
+     {
+      "key": "CIT0054",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1177/095624780201400213"
+     },
+     {
+      "key": "CIT0055",
+      "volume-title": "People Places: Design Guidelines for Urban Open Space",
+      "author": "Marcus C. C.",
+      "year": "1998"
+     },
+     {
+      "key": "CIT0056",
+      "doi-asserted-by": "crossref",
+      "DOI": "10.4324/9780203067635",
+      "volume-title": "The Street : A Quintessential Social Public Space",
+      "author": "Mehta V.",
+      "year": "2013"
+     },
+     {
+      "key": "CIT0057",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/13574809.2013.854698"
+     },
+     {
+      "key": "CIT0058",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1111/j.1467-8306.1995.tb01797.xa"
+     },
+     {
+      "key": "CIT0059",
+      "volume-title": "The Right to the City: Social Justice and the Fight for Public Space",
+      "author": "Mitchell D.",
+      "year": "2003"
+     },
+     {
+      "key": "CIT0060",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/01944369008975742"
+     },
+     {
+      "key": "CIT0061",
+      "volume-title": "The Evaluative Image of the City",
+      "author": "Nasar J. L.",
+      "year": "1998"
+     },
+     {
+      "key": "CIT0062",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1177/1078087412446445"
+     },
+     {
+      "issue": "1",
+      "key": "CIT0063",
+      "volume": "38",
+      "author": "N\u00e9meth J.",
+      "year": "2011",
+      "journal-title": "Environment and Planning-Part B"
+     },
+     {
+      "key": "CIT0064",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/14927713.2011.567065"
+     },
+     {
+      "key": "CIT0066",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1108/02632779510097787"
+     },
+     {
+      "key": "CIT0067",
+      "volume-title": "City of Brisbane Act 2010",
+      "author": "Queensland Government",
+      "year": "2010"
+     },
+     {
+      "key": "CIT0070",
+      "volume-title": "The Fall of Public Man",
+      "author": "Sennett R.",
+      "year": "1992"
+     },
+     {
+      "key": "CIT0071",
+      "volume-title": "Convivial Urban Spaces: Creating Effective Public Places",
+      "author": "Shaftoe H.",
+      "year": "2008"
+     },
+     {
+      "key": "CIT0072",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/BF02512029"
+     },
+     {
+      "key": "CIT0073",
+      "volume-title": "Variations on a Theme Park: The New American City and the End of Public Space",
+      "author": "Sorkin M.",
+      "year": "1992"
+     },
+     {
+      "key": "CIT0074",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.4324/9780203961803"
+     },
+     {
+      "key": "CIT0075",
+      "volume-title": "Design for Diversity : Exploring Socially Mixed Neighborhoods",
+      "author": "Talen E.",
+      "year": "2008"
+     },
+     {
+      "key": "CIT0076",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.4324/9780203469521"
+     },
+     {
+      "key": "CIT0077",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/13574809.2010.502350"
+     },
+     {
+      "key": "CIT0078",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1177/1440783306066727"
+     },
+     {
+      "key": "CIT0079",
+      "volume-title": "The Social Life of Small Urban Spaces",
+      "author": "Whyte W. H.",
+      "year": "1980"
+     },
+     {
+      "key": "CIT0080",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1177/0013916501332008"
+     },
+     {
+      "key": "CIT0081",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.cities.2018.02.010"
+     },
+     {
+      "key": "CIT0082",
+      "volume-title": "Why Some Places Do Better than Others: A Closer Look at Urban Public Space Management",
+      "author": "Zamanifard H.",
+      "year": "2016"
+     },
+     {
+      "key": "CIT0083",
+      "volume-title": "The Cultures of Cities",
+      "author": "Zukin S.",
+      "year": "1995"
+     }
+    ],
+    "container-title": [
+     "Journal of Urban Design"
+    ],
+    "language": "en",
+    "link": [
+     {
+      "URL": "https://www.tandfonline.com/doi/pdf/10.1080/13574809.2018.1484664",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+     }
+    ],
+    "deposited": {
+     "date-parts": [
+      [
+       2022,
+       8,
+       28
+      ]
+     ],
+     "date-time": "2022-08-28T00:18:48Z",
+     "timestamp": 1661645928000
+    },
+    "score": 32.443085,
+    "resource": {
+     "primary": {
+      "URL": "https://www.tandfonline.com/doi/full/10.1080/13574809.2018.1484664"
+     }
+    },
+    "issued": {
+     "date-parts": [
+      [
+       2018,
+       7,
+       24
+      ]
+     ]
+    },
+    "references-count": 74,
+    "journal-issue": {
+     "issue": "3",
+     "published-online": {
+      "date-parts": [
+       [
+        2019,
+        4,
+        15
+       ]
+      ]
+     },
+     "published-print": {
+      "date-parts": [
+       [
+        2019,
+        5,
+        4
+       ]
+      ]
+     }
+    },
+    "alternative-id": [
+     "10.1080/13574809.2018.1484664"
+    ],
+    "URL": "https://doi.org/10.1080/13574809.2018.1484664",
+    "ISSN": [
+     "1357-4809",
+     "1469-9664"
+    ],
+    "issn-type": [
+     {
+      "value": "1357-4809",
+      "type": "print"
+     },
+     {
+      "value": "1469-9664",
+      "type": "electronic"
+     }
+    ],
+    "published": {
+     "date-parts": [
+      [
+       2018,
+       7,
+       24
+      ]
+     ]
+    },
+    "assertion": [
+     {
+      "value": "The publishing and review policy for this title is described in its Aims & Scope.",
+      "order": 1,
+      "name": "peerreview_statement",
+      "label": "Peer Review Statement"
+     },
+     {
+      "value": "http://www.tandfonline.com/action/journalInformation?show=aimsScope&journalCode=cjud20",
+      "URL": "http://www.tandfonline.com/action/journalInformation?show=aimsScope&journalCode=cjud20",
+      "order": 2,
+      "name": "aims_and_scope_url",
+      "label": "Aim & Scope"
+     },
+     {
+      "value": "2018-07-24",
+      "order": 3,
+      "name": "published",
+      "label": "Published",
+      "group": {
+       "name": "publication_history",
+       "label": "Publication History"
+      }
+     }
+    ]
+   },
+   {
+    "indexed": {
+     "date-parts": [
+      [
+       2026,
+       8,
+       18
+      ]
+     ],
+     "date-time": "2026-08-18T04:35:50Z",
+     "timestamp": 1787027750854,
+     "version": "build-2736575974"
+    },
+    "reference-count": 61,
+    "publisher": "MDPI AG",
+    "issue": "24",
+    "license": [
+     {
+      "start": {
+       "date-parts": [
+        [
+         2025,
+         12,
+         11
+        ]
+       ],
+       "date-time": "2025-12-11T00:00:00Z",
+       "timestamp": 1765411200000
+      },
+      "content-version": "vor",
+      "delay-in-days": 0,
+      "URL": "https://creativecommons.org/licenses/by/4.0/"
+     }
+    ],
+    "content-domain": {
+     "domain": [],
+     "crossmark-restriction": false
+    },
+    "short-container-title": [
+     "Buildings"
+    ],
+    "abstract": "<jats:p>Color in urban public spaces is often approached as an aesthetic issue, yet it also governs psychological responses, legibility and safety, place identity, and environmental performance. Despite three decades of research, planners and designers still lack measurable, audit-ready guidance that links color decisions to verifiable outcomes. This paper presents a systematic review that consolidates evidence from environmental psychology, architecture and urban design, cultural studies, and building and urban physics. Studies were screened for outdoor or outward-facing settings and for explicitly reported color variables and performance indicators. The findings are organized into four domains in which color operates as a system variable: psychological and physiological effects; cultural expression and place identity; functional zoning and wayfinding; and sustainability and environmental adaptation. Across these domains, the review identifies robust patterns\u2014such as the central role of luminance and saturation in shaping affect, attention, and visibility\u2014while highlighting where outcomes are strongly conditioned by cultural, climatic, and material context. On this basis, the paper proposes an Objective\u2013Strategy\u2013Metric\u2013Validation (OSMV) framework that connects design objectives to color strategies, quantitative metrics (e.g., color difference, contrast, and reflectance measures), and procedures for simulation or field validation. Framed in this way, color emerges not as a decorative accessory but as a measurable design variable that can be integrated into performance-based planning, regulation, and multi-objective optimization of urban public spaces.</jats:p>",
+    "DOI": "10.3390/buildings15244474",
+    "type": "journal-article",
+    "created": {
+     "date-parts": [
+      [
+       2025,
+       12,
+       11
+      ]
+     ],
+     "date-time": "2025-12-11T11:17:27Z",
+     "timestamp": 1765451847000
+    },
+    "page": "4474",
+    "update-policy": "https://doi.org/10.3390/mdpi_crossmark_policy",
+    "source": "Crossref",
+    "is-referenced-by-count": 2,
+    "title": [
+     "Color in Urban Public Spaces: A Systematic Review for Evidence-Based Design"
+    ],
+    "prefix": "10.3390",
+    "volume": "15",
+    "author": [
+     {
+      "given": "Xiaoting",
+      "family": "Cheng",
+      "sequence": "first",
+      "affiliation": [
+       {
+        "name": "Art Academy of Northeast Agricultural University, Harbin 150030, China"
+       }
+      ],
+      "role": [
+       {
+        "vocabulary": "crossref",
+        "role": "author"
+       }
+      ]
+     },
+     {
+      "given": "Guiling",
+      "family": "Zhao",
+      "sequence": "additional",
+      "affiliation": [
+       {
+        "name": "Art Academy of Northeast Agricultural University, Harbin 150030, China"
+       }
+      ],
+      "role": [
+       {
+        "vocabulary": "crossref",
+        "role": "author"
+       }
+      ]
+     },
+     {
+      "given": "Meng",
+      "family": "Xie",
+      "sequence": "additional",
+      "affiliation": [
+       {
+        "name": "Art Academy of Northeast Agricultural University, Harbin 150030, China"
+       }
+      ],
+      "role": [
+       {
+        "vocabulary": "crossref",
+        "role": "author"
+       }
+      ]
+     }
+    ],
+    "member": "1968",
+    "published-online": {
+     "date-parts": [
+      [
+       2025,
+       12,
+       11
+      ]
+     ]
+    },
+    "reference": [
+     {
+      "key": "ref_1",
+      "doi-asserted-by": "crossref",
+      "first-page": "394",
+      "DOI": "10.1037/0096-3445.123.4.394",
+      "article-title": "Effects of color on emotions",
+      "volume": "123",
+      "author": "Valdez",
+      "year": "1994",
+      "journal-title": "J. Exp. Psychol. Gen."
+     },
+     {
+      "key": "ref_2",
+      "doi-asserted-by": "crossref",
+      "first-page": "154",
+      "DOI": "10.1037/0096-3445.136.1.154",
+      "article-title": "Color and psychological functioning: The effect of red on performance attainment",
+      "volume": "136",
+      "author": "Elliot",
+      "year": "2007",
+      "journal-title": "J. Exp. Psychol. Gen."
+     },
+     {
+      "key": "ref_3",
+      "doi-asserted-by": "crossref",
+      "first-page": "1226",
+      "DOI": "10.1126/science.1169144",
+      "article-title": "Blue or red? Exploring the effect of color on cognitive task performances",
+      "volume": "323",
+      "author": "Mehta",
+      "year": "2009",
+      "journal-title": "Science"
+     },
+     {
+      "key": "ref_4",
+      "doi-asserted-by": "crossref",
+      "first-page": "e14121",
+      "DOI": "10.1111/psyp.14121",
+      "article-title": "Built environment color modulates autonomic and EEG indices of emotional response",
+      "volume": "59",
+      "author": "Bower",
+      "year": "2022",
+      "journal-title": "Psychophysiology"
+     },
+     {
+      "key": "ref_5",
+      "doi-asserted-by": "crossref",
+      "first-page": "100038",
+      "DOI": "10.1016/j.wss.2021.100038",
+      "article-title": "Color aesthetics: A transatlantic comparison of psychological and physiological impacts of warm and cool colors in garden landscapes",
+      "volume": "2",
+      "author": "Neale",
+      "year": "2021",
+      "journal-title": "Wellbeing Space Soc."
+     },
+     {
+      "key": "ref_6",
+      "doi-asserted-by": "crossref",
+      "first-page": "21",
+      "DOI": "10.1002/col.22787",
+      "article-title": "Visual and photographic assessment of wine color",
+      "volume": "48",
+      "author": "Fairchild",
+      "year": "2023",
+      "journal-title": "Color Res. Appl."
+     },
+     {
+      "key": "ref_7",
+      "doi-asserted-by": "crossref",
+      "first-page": "337",
+      "DOI": "10.1207/s15427633scc0404_3",
+      "article-title": "Wayfinding Performance in and the Spatial Knowledge of a Color-Coded Building for Adults and Children",
+      "volume": "4",
+      "author": "Wiedenbauer",
+      "year": "2004",
+      "journal-title": "Spat. Cogn. Comput."
+     },
+     {
+      "key": "ref_8",
+      "doi-asserted-by": "crossref",
+      "first-page": "392",
+      "DOI": "10.1109/TVCG.2017.2744359",
+      "article-title": "Modeling Color Difference for Visualization Design",
+      "volume": "24",
+      "author": "Szafir",
+      "year": "2018",
+      "journal-title": "IEEE Trans. Vis. Comput. Graph."
+     },
+     {
+      "key": "ref_9",
+      "doi-asserted-by": "crossref",
+      "first-page": "350",
+      "DOI": "10.1002/col.20224",
+      "article-title": "Research on color in architecture and environmental design: Brief history, current developments, and possible future",
+      "volume": "31",
+      "author": "Caivano",
+      "year": "2006",
+      "journal-title": "Color Res. Appl."
+     },
+     {
+      "key": "ref_10",
+      "unstructured": "Caivano, J.L. (2001). Investigaci\u00f3n Sobre los Objetos Visuales Desde un Punto de Vista Semi\u00f3tico, con Particular \u00c9nfasis en los Signos Visuales Producidos por la Luz: Color y Ces\u00eda, Cuadernos de la Facultad de Humanidades y Ciencias Sociales\u2014Universidad Nacional de Jujuy. Available online: http://www.redalyc.org/articulo.oa?id=18501706."
+     },
+     {
+      "key": "ref_11",
+      "first-page": "48",
+      "article-title": "La compleja relaci\u00f3n con el color de uno de los maestros de la arquitectura moderna: Nueva edici\u00f3n de la \u201cPolicrom\u00eda arquitect\u00f3nica\u201d de Le Corbusier",
+      "volume": "12",
+      "author": "Caivano",
+      "year": "2008",
+      "journal-title": "47 al Fondo"
+     },
+     {
+      "key": "ref_12",
+      "doi-asserted-by": "crossref",
+      "first-page": "255",
+      "DOI": "10.1016/0090-9092(73)90042-2",
+      "article-title": "A colorful environment for the mentally disturbed",
+      "volume": "1",
+      "author": "Birren",
+      "year": "1973",
+      "journal-title": "Art Psychother."
+     },
+     {
+      "key": "ref_13",
+      "unstructured": "Birren, F. (1950). Color Psychology and Color Therapy; a Factual Study of the Influence of Color on Human Life, McGraw-Hill."
+     },
+     {
+      "key": "ref_14",
+      "unstructured": "Birren, F. (1963). Color: A Survey in Words and Pictures, from Ancient Mysticism to Modern Science, University Books."
+     },
+     {
+      "key": "ref_15",
+      "unstructured": "Mahnke, F.H. (1996). Color, Environment and Human Response: An Interdisciplinary Understanding of Color and Its Use as a Beneficial Element in the Design of the Architectural Environment, Van Nostrand Reinhold."
+     },
+     {
+      "key": "ref_16",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Meerwein, G., Rodeck, B., and Mahnke, F.H. (2007). Color\u2013Communication in Architectural Space, Birkh\u00e4user.",
+      "DOI": "10.1007/978-3-7643-8286-5"
+     },
+     {
+      "key": "ref_17",
+      "unstructured": "Mahnke, F.H., and Mahnke, R.H. (1982). Color in Man-Made Environments, Van Nostrand Reinhold."
+     },
+     {
+      "key": "ref_18",
+      "doi-asserted-by": "crossref",
+      "first-page": "343",
+      "DOI": "10.1016/j.optlastec.2005.06.040",
+      "article-title": "Colour and lighting in hospital design",
+      "volume": "38",
+      "author": "Dalke",
+      "year": "2006",
+      "journal-title": "Opt. Laser Technol."
+     },
+     {
+      "key": "ref_19",
+      "doi-asserted-by": "crossref",
+      "first-page": "126",
+      "DOI": "10.1002/col.20657",
+      "article-title": "Color composition features in modern architecture",
+      "volume": "37",
+      "author": "Serra",
+      "year": "2012",
+      "journal-title": "Color Res. Appl."
+     },
+     {
+      "key": "ref_20",
+      "doi-asserted-by": "crossref",
+      "first-page": "135",
+      "DOI": "10.1002/col.22698",
+      "article-title": "Preference for accent and background colors in interior architecture in terms of similarity/contrast of natural color system attributes",
+      "volume": "47",
+      "author": "Serra",
+      "year": "2022",
+      "journal-title": "Color Res. Appl."
+     },
+     {
+      "key": "ref_21",
+      "unstructured": "Melman, R., and Lombardi, R. (2020). Clorindia Domestica: Studies of Architectural Chromatic Organization in Relation to Landscape, AIC International Meeting."
+     },
+     {
+      "key": "ref_22",
+      "doi-asserted-by": "crossref",
+      "first-page": "102717",
+      "DOI": "10.1016/j.technovation.2023.102717",
+      "article-title": "Smart city governance from an innovation management perspective: Theoretical framing, review of current practices, and future research agenda",
+      "volume": "123",
+      "author": "Mora",
+      "year": "2023",
+      "journal-title": "Technovation"
+     },
+     {
+      "key": "ref_23",
+      "doi-asserted-by": "crossref",
+      "first-page": "8",
+      "DOI": "10.1167/11.5.8",
+      "article-title": "Does print size matter for reading? A review of findings from vision science and typography",
+      "volume": "11",
+      "author": "Legge",
+      "year": "2011",
+      "journal-title": "J. Vis."
+     },
+     {
+      "key": "ref_24",
+      "doi-asserted-by": "crossref",
+      "first-page": "219",
+      "DOI": "10.4992/psycholres1954.36.219",
+      "article-title": "A cross-cultural study on color preference in three Asian cities: Comparison between Tokyo, Taipei and Tianjin",
+      "volume": "36",
+      "author": "Saito",
+      "year": "1994",
+      "journal-title": "Jpn. Psychol. Res."
+     },
+     {
+      "key": "ref_25",
+      "doi-asserted-by": "crossref",
+      "first-page": "35",
+      "DOI": "10.1002/(SICI)1520-6378(199602)21:1<35::AID-COL4>3.0.CO;2-6",
+      "article-title": "Comparative studies on color preference in Japan and other Asian regions, with special emphasis on the preference for white",
+      "volume": "21",
+      "author": "Saito",
+      "year": "1996",
+      "journal-title": "Color Res. Appl."
+     },
+     {
+      "key": "ref_26",
+      "unstructured": "Lenclos, J.-P. (2004). Colors of the World: The Geography of Color, W.W. Norton & Co.. Available online: https://archive.org/details/colorsofworldgeo0000lenc."
+     },
+     {
+      "key": "ref_27",
+      "doi-asserted-by": "crossref",
+      "first-page": "22",
+      "DOI": "10.1007/s11263-015-0868-z",
+      "article-title": "ATLAS: A Three-Layered Approach to Facade Parsing",
+      "volume": "118",
+      "author": "Mathias",
+      "year": "2016",
+      "journal-title": "Int. J. Comput. Vis."
+     },
+     {
+      "key": "ref_28",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Salesses, P., Schechtner, K., and Hidalgo, C.A. (2013). The Collaborative Image of The City: Mapping the Inequality of Urban Perception. PLoS ONE, 8.",
+      "DOI": "10.1371/journal.pone.0068400"
+     },
+     {
+      "key": "ref_29",
+      "doi-asserted-by": "crossref",
+      "first-page": "170170",
+      "DOI": "10.1098/rsos.170170",
+      "article-title": "Using deep learning to quantify the beauty of outdoor places",
+      "volume": "4",
+      "author": "Seresinhe",
+      "year": "2017",
+      "journal-title": "R. Soc. Open Sci."
+     },
+     {
+      "key": "ref_30",
+      "doi-asserted-by": "crossref",
+      "first-page": "1167",
+      "DOI": "10.1016/j.enbuild.2007.01.004",
+      "article-title": "Estimating the effect of using cool coatings on energy loads and thermal comfort in residential buildings in various climatic conditions",
+      "volume": "39",
+      "author": "Synnefa",
+      "year": "2007",
+      "journal-title": "Energy Build."
+     },
+     {
+      "key": "ref_31",
+      "doi-asserted-by": "crossref",
+      "first-page": "275",
+      "DOI": "10.1007/s10584-008-9515-9",
+      "article-title": "Global cooling: Increasing world-wide urban albedos to offset CO2",
+      "volume": "94",
+      "author": "Akbari",
+      "year": "2009",
+      "journal-title": "Clim. Change"
+     },
+     {
+      "key": "ref_32",
+      "doi-asserted-by": "crossref",
+      "first-page": "1467",
+      "DOI": "10.1038/s41467-023-36972-5",
+      "article-title": "Evidence-based guidance on reflective pavement for urban heat mitigation in Arizona",
+      "volume": "14",
+      "author": "Schneider",
+      "year": "2023",
+      "journal-title": "Nat. Commun."
+     },
+     {
+      "key": "ref_33",
+      "doi-asserted-by": "crossref",
+      "first-page": "20140133",
+      "DOI": "10.1098/rstb.2014.0133",
+      "article-title": "The biological impacts of artificial light at night: The research challenge",
+      "volume": "370",
+      "author": "Gaston",
+      "year": "2015",
+      "journal-title": "Philos. Trans. R. Soc. B Biol. Sci."
+     },
+     {
+      "key": "ref_34",
+      "doi-asserted-by": "crossref",
+      "unstructured": "CIE Board of Administration (2019). CIE position statement on the blue light hazard. Color Res. Appl., 44, 672\u2013673.",
+      "DOI": "10.1002/col.22389"
+     },
+     {
+      "key": "ref_35",
+      "doi-asserted-by": "crossref",
+      "first-page": "191",
+      "DOI": "10.1080/15502724.2020.1860771",
+      "article-title": "Tutorial: Background and Guidance for Using the ANSI/IES TM-30 Method for Evaluating Light Source Color Rendition",
+      "volume": "18",
+      "author": "Royer",
+      "year": "2022",
+      "journal-title": "LEUKOS"
+     },
+     {
+      "key": "ref_36",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Jaglarz, A. (2023). Perception of Color in Architecture and Urban Space. Buildings, 13.",
+      "DOI": "10.3390/buildings13082000"
+     },
+     {
+      "key": "ref_37",
+      "doi-asserted-by": "crossref",
+      "first-page": "512",
+      "DOI": "10.1002/col.22478",
+      "article-title": "Impact of environment color on individual responses in public spaces of shopping malls",
+      "volume": "45",
+      "author": "Yi",
+      "year": "2020",
+      "journal-title": "Color Res. Appl."
+     },
+     {
+      "key": "ref_38",
+      "doi-asserted-by": "crossref",
+      "first-page": "235",
+      "DOI": "10.1016/j.ufug.2012.04.002",
+      "article-title": "Use of Small Public Urban Green Spaces (SPUGS)",
+      "volume": "11",
+      "author": "Peschardt",
+      "year": "2012",
+      "journal-title": "Urban For. Urban Green."
+     },
+     {
+      "key": "ref_39",
+      "doi-asserted-by": "crossref",
+      "first-page": "128753",
+      "DOI": "10.1016/j.ufug.2025.128753",
+      "article-title": "Effects of urban greenspaces on public health and wellbeing: Serial mediation model of objective and subjective measures",
+      "volume": "106",
+      "author": "Hua",
+      "year": "2025",
+      "journal-title": "Urban For. Urban Green."
+     },
+     {
+      "key": "ref_40",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Sadeghi, A.R., Baghi, E.S.M.S., Shams, F., and Jangjoo, S. (2023). Women in a safe and healthy urban environment: Environmental top priorities for the women\u2019s presence in urban public spaces. BMC Women\u2019s Health, 23.",
+      "DOI": "10.1186/s12905-023-02281-8"
+     },
+     {
+      "key": "ref_41",
+      "first-page": "96",
+      "article-title": "Comprehensive Evaluation Model of Display Brightness in Public Space of Urban Community",
+      "volume": "31",
+      "author": "Jia",
+      "year": "2023",
+      "journal-title": "Light Eng."
+     },
+     {
+      "key": "ref_42",
+      "doi-asserted-by": "crossref",
+      "first-page": "1143",
+      "DOI": "10.1007/s00484-024-02654-0",
+      "article-title": "The effects of brightness and prominent colors on outdoor thermal perception in Chongqing, China",
+      "volume": "68",
+      "author": "Qin",
+      "year": "2024",
+      "journal-title": "Int. J. Biometeorol."
+     },
+     {
+      "key": "ref_43",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Zhang, L., and Kim, C. (2023). Chromatics in Urban Landscapes: Integrating Interactive Genetic Algorithms for Sustainable Color Design in Marine Cities. Appl. Sci., 13.",
+      "DOI": "10.3390/app131810306"
+     },
+     {
+      "key": "ref_44",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Huerta, C.M. (2023). Understanding the pathways between the use of urban green spaces and self-rated health: A case study in Mexico City. PLoS ONE, 18.",
+      "DOI": "10.1371/journal.pone.0295013"
+     },
+     {
+      "key": "ref_45",
+      "doi-asserted-by": "crossref",
+      "first-page": "453",
+      "DOI": "10.1016/j.foar.2016.10.001",
+      "article-title": "Visual comfort is affected by urban colorscape tones in hazy weather",
+      "volume": "5",
+      "author": "Liu",
+      "year": "2016",
+      "journal-title": "Front. Archit. Res."
+     },
+     {
+      "key": "ref_46",
+      "doi-asserted-by": "crossref",
+      "first-page": "896",
+      "DOI": "10.1007/s00426-017-0880-8",
+      "article-title": "Color and Emotion: Effects of Hue, Saturation, and Brightness",
+      "volume": "82",
+      "author": "Wilms",
+      "year": "2018",
+      "journal-title": "Psychol. Res."
+     },
+     {
+      "key": "ref_47",
+      "doi-asserted-by": "crossref",
+      "first-page": "1",
+      "DOI": "10.1177/2041669520902484",
+      "article-title": "Feeling Blue or Seeing Red? Similar Patterns of Emotion Associations with Colour Patches and Colour Terms",
+      "volume": "11",
+      "author": "Jonauskaite",
+      "year": "2020",
+      "journal-title": "i-Perception"
+     },
+     {
+      "key": "ref_48",
+      "doi-asserted-by": "crossref",
+      "first-page": "107581",
+      "DOI": "10.1016/j.landusepol.2025.107581",
+      "article-title": "Does Streetscape Color Matter for Urban Perceptions? A Deep Learning Approach to Street View Images",
+      "volume": "155",
+      "author": "Song",
+      "year": "2025",
+      "journal-title": "Land Use Policy"
+     },
+     {
+      "key": "ref_49",
+      "doi-asserted-by": "crossref",
+      "first-page": "8877",
+      "DOI": "10.1073/pnas.0906172107",
+      "article-title": "An Ecological Valence Theory of Human Color Preference",
+      "volume": "107",
+      "author": "Palmer",
+      "year": "2010",
+      "journal-title": "Proc. Natl. Acad. Sci. USA"
+     },
+     {
+      "key": "ref_50",
+      "doi-asserted-by": "crossref",
+      "first-page": "201100",
+      "DOI": "10.1098/rsos.201100",
+      "article-title": "The Nature Effect in Motion: Visual Exposure to Environmental Scenes Impacts Cognitive Load and Human Gait Kinematics",
+      "volume": "8",
+      "author": "Burtan",
+      "year": "2021",
+      "journal-title": "R. Soc. Open Sci."
+     },
+     {
+      "key": "ref_51",
+      "doi-asserted-by": "crossref",
+      "first-page": "101809",
+      "DOI": "10.1016/j.jenvp.2022.101809",
+      "article-title": "Spaces for Relaxing, Spaces for Recharging: How Parks Affect People\u2019s Emotions",
+      "volume": "81",
+      "author": "Rapuano",
+      "year": "2022",
+      "journal-title": "J. Environ. Psychol."
+     },
+     {
+      "key": "ref_52",
+      "unstructured": "Charytonowicz, J. (2020). The Contribution of the Built Environment to the Success of Learning: The Role of Colour in the Ergonomics of Educational Spaces. Advances in Human Factors in Architecture, Sustainable Urban Planning and Infrastructure, Springer International Publishing."
+     },
+     {
+      "key": "ref_53",
+      "doi-asserted-by": "crossref",
+      "first-page": "416",
+      "DOI": "10.1007/978-3-642-33786-4_31",
+      "article-title": "A Three-Layered Approach to Facade Parsing",
+      "volume": "7578",
+      "author": "Mathias",
+      "year": "2012",
+      "journal-title": "Lect. Notes Comput. Sci."
+     },
+     {
+      "key": "ref_54",
+      "doi-asserted-by": "crossref",
+      "first-page": "364",
+      "DOI": "10.1007/978-3-642-40602-7_39",
+      "article-title": "Spatial Pattern Templates for Recognition of Objects with Regular Structure",
+      "volume": "8142",
+      "year": "2013",
+      "journal-title": "Lect. Notes Comput. Sci."
+     },
+     {
+      "key": "ref_55",
+      "doi-asserted-by": "crossref",
+      "first-page": "1259",
+      "DOI": "10.1002/col.22808",
+      "article-title": "A study on color conspicuity and color harmony of wayfinding signs according to outdoor environment types",
+      "volume": "47",
+      "author": "Yi",
+      "year": "2022",
+      "journal-title": "Color Res. Appl."
+     },
+     {
+      "key": "ref_56",
+      "doi-asserted-by": "crossref",
+      "first-page": "26",
+      "DOI": "10.1145/3231772",
+      "article-title": "The good, the bad, and the biased: Five ways visualizations can mislead (and how to fix them)",
+      "volume": "25",
+      "author": "Szafir",
+      "year": "2018",
+      "journal-title": "Interactions"
+     },
+     {
+      "key": "ref_57",
+      "unstructured": "Arditi, A. (2009). Making Text Legible: Designing for People with Partial Sight, Lighthouse International. Available online: http://www.lighthouse.org/accessibility/legible/."
+     },
+     {
+      "key": "ref_58",
+      "doi-asserted-by": "crossref",
+      "first-page": "441",
+      "DOI": "10.1038/nmeth.1618",
+      "article-title": "Points of view: Color blindness",
+      "volume": "8",
+      "author": "Wong",
+      "year": "2011",
+      "journal-title": "Nat. Methods"
+     },
+     {
+      "key": "ref_59",
+      "doi-asserted-by": "crossref",
+      "first-page": "112095",
+      "DOI": "10.1016/j.buildenv.2024.112095",
+      "article-title": "Assessment of the effectiveness of cool pavements on outdoor thermal environment in urban areas",
+      "volume": "226",
+      "author": "Elmagri",
+      "year": "2024",
+      "journal-title": "Build. Environ."
+     },
+     {
+      "key": "ref_60",
+      "doi-asserted-by": "crossref",
+      "first-page": "E804",
+      "DOI": "10.1001/amajethics.2024.804",
+      "article-title": "We\u2019re All Healthier Under a Starry Sky",
+      "volume": "26",
+      "author": "Motta",
+      "year": "2024",
+      "journal-title": "AMA J. Ethics"
+     },
+     {
+      "key": "ref_61",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Miller, C.C., Larason, T.C., Poster, D.L., Obeng, Y., Postek, M.T., Cowen, T.E., and Martinello, R.A. (2019, January 14\u201322). Innovative approache to combat healthcare-associated infections using standards developed through industry and U.S. federal collaboration. Proceedings of the 29th CIE Session (CIE x046:2019, OP23), Washington, DC, USA.",
+      "DOI": "10.25039/x46.2019.OP23"
+     }
+    ],
+    "container-title": [
+     "Buildings"
+    ],
+    "language": "en",
+    "link": [
+     {
+      "URL": "https://www.mdpi.com/2075-5309/15/24/4474/pdf",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+     }
+    ],
+    "deposited": {
+     "date-parts": [
+      [
+       2025,
+       12,
+       11
+      ]
+     ],
+     "date-time": "2025-12-11T11:38:44Z",
+     "timestamp": 1765453124000
+    },
+    "score": 32.274433,
+    "resource": {
+     "primary": {
+      "URL": "https://www.mdpi.com/2075-5309/15/24/4474"
+     }
+    },
+    "issued": {
+     "date-parts": [
+      [
+       2025,
+       12,
+       11
+      ]
+     ]
+    },
+    "references-count": 61,
+    "journal-issue": {
+     "issue": "24",
+     "published-online": {
+      "date-parts": [
+       [
+        2025,
+        12
+       ]
+      ]
+     }
+    },
+    "alternative-id": [
+     "buildings15244474"
+    ],
+    "URL": "https://doi.org/10.3390/buildings15244474",
+    "ISSN": [
+     "2075-5309"
+    ],
+    "issn-type": [
+     {
+      "value": "2075-5309",
+      "type": "electronic"
+     }
+    ],
+    "published": {
+     "date-parts": [
+      [
+       2025,
+       12,
+       11
+      ]
+     ]
+    }
+   }
+  ],
+  "items-per-page": 3,
+  "query": {
+   "start-index": 0,
+   "search-terms": null
+  }
+ }
+}
