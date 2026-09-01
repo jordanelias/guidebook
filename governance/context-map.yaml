@@ -993,7 +993,7 @@ checks:
     kinds:
     - schema
     - data
-    min_items: 0
+    min_items: null
     cmd: python3 scripts/validate_schema.py --cross-check
   - id: alias_provenance_audit
     level: blocking
@@ -1214,7 +1214,7 @@ checks:
     - schema
     - data
     - governance
-    min_items: 0
+    min_items: null
     cmd: python3 scripts/validate_schema.py --verbose
   - id: validate_verification_consistency
     level: blocking

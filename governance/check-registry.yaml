@@ -439,19 +439,18 @@ checks:
   level: blocking
   basis: base/base-schema-validates
   cost: fast
-  # min_items 1 -> 0, 2026-09-01. The project declares no YAML entity type:
-  # jurisdictional_values was the sole registered entity and its corpus moved to
-  # _archived/ under the owner ruling that the database holds base and research
-  # only. An empty scope is now the RULED state, not a misconfiguration, and the
-  # guard was firing on the true answer.
-  #
-  # The anti-vacuity discipline this guard exists for is NOT weakened, because it
-  # moved into the script: validate_schema.py distinguishes an empty
-  # ENTITY_REGISTRY (exit 0, nothing declared) from a registry naming directories
-  # that do not exist (exit 2, a configuration fault -- the original defect, where
-  # a blocking gate reported green while ENTITY_REGISTRY named six missing paths).
-  # Restore min_items: 1 in the same commit that registers an entity type.
-  min_items: 0
+  no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision,
+    not by accident; see note
+  note: 'FLOOR RETIRED 2026-09-01, replacing `min_items: 1`. jurisdictional_values was the SOLE registered
+    entity type and its YAML corpus moved to _archived/ under the owner ruling that the database holds
+    base and research only — the records are item-keyed and item codes must not exist. ENTITY_REGISTRY
+    is therefore empty and an empty scope is the RULED state, not a misconfiguration; the floor was
+    firing on the true answer. THE ANTI-VACUITY DISCIPLINE IS NOT WEAKENED, IT MOVED INTO THE SCRIPT:
+    validate_schema.py now distinguishes an empty ENTITY_REGISTRY (exit 0, nothing declared) from a
+    registry naming directories that do not exist (exit 2, a configuration fault) — and that second
+    case is the original defect this check was hardened against, where a blocking gate reported green
+    for its whole life while ENTITY_REGISTRY named six missing paths. Restore `min_items: 1` and delete
+    this note in the same commit that registers an entity type.'
 - id: schema_reference_audit
   cmd:
   - python3
@@ -481,9 +480,10 @@ checks:
   level: advisory
   basis: base/base-schema-validates
   cost: fast
-  # Same reason as validate_schema above: no entity type is declared, so the
-  # cross-check has nothing to cross-check. Restore to 1 alongside it.
-  min_items: 0
+  no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision,
+    not by accident; same cause as validate_schema, whose note carries the full reasoning
+  note: 'FLOOR RETIRED 2026-09-01 alongside validate_schema. No entity type is declared, so there is
+    nothing to cross-check. Restore `min_items: 1` when one is registered.'
   note: 'Was `continue-on-error: true` in ci.yml; advisory is the same thing, declared.'
 - id: validate_evidence_state
   cmd:
