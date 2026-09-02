@@ -23,7 +23,7 @@
     "adherence-logging-and-attestation": {
       "status": "FIRED",
       "evidence_path": "attestations/sessions_session_2026-09-02-research-batch-05-circulation-icf.json",
-      "reason": "One attestation for the one session record, as attestation_presence requires. Defect status has one home, scratchpad/session_2026-09-02-research-batch-05-circulation-icf/DEFECT-REGISTER.md, with the tracer log carrying narrative and pointing at it rather than restating status."
+      "reason": "One attestation for the one session record, as attestation_presence requires. Defect status has one home, scratchpad/pr-127-research-batch-05-circulation-icf/DEFECT-REGISTER.md, with the tracer log carrying narrative and pointing at it rather than restating status."
     },
     "adversarial-review": {
       "status": "FIRED",

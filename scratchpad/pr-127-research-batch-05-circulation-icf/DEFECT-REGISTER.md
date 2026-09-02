@@ -99,7 +99,7 @@ PROCESS}. Severity: P1 blocks the batch · P2 blocks a claim · P3 latent.
 | D05-001 | DATA | P2 | OPEN (declared, correctly not blocking research per DR-2026-08-24 §2.4) |
 | D05-002 | DATA | P2 | OPEN (declared, correctly not blocking research per DR-2026-08-24 §2.4) |
 | D05-003 | DOC-DRIFT | P3 | RESOLVED |
-| D05-004 | TOOL | P2 | OPEN — live, currently misfiling this session's own command log |
+| D05-004 | TOOL | P2 | **RESOLVED 2026-09-02.** Measured at the fix: ALL 969 lines of THREE project sessions were in batch-04's directory and batch 05 had no `commands.jsonl` at all. `open_session()` calls `sid` its anchor, but `sid` identifies the HARNESS session, and one harness session spans as many project sessions as the container survives — so it matched the first directory it ever wrote to and returned it forever, locking onto its own first mistake. Fixed by `scratchpad/CURRENT`, a stated fact that outranks every inference and, unlike `sessions/LATEST` and `LATEST-RESEARCH`, moves at OPEN rather than at close. The log was split at the 42-minute gap at 2026-09-02T20:33:17Z into 503 lines (batch 04 + the owed-repairs session) and 471 (batch 05). Verified live: the next command landed in `pr-127`. |
 | D05-005 | PROCESS | P3 | OPEN — pending re-observation once retrieval begins |
 | D05-006 | DOC-DRIFT | P3 | OPEN — latent, escalates on evidence admission + session close |
 | D05-007 | PROCESS | P3 | RESOLVED — self-reported, no observed harm |

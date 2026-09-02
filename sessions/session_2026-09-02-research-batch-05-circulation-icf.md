@@ -207,7 +207,7 @@ not beaten yet), and `D05-021`–`D05-024` above.
 `sessions/LATEST-RESEARCH` moves to this session, which closes **D05-006** — it had been
 naming batch-02 while batch-03 was the newest session with research rows.
 
-Full narrative in `scratchpad/session_2026-09-02-research-batch-05-circulation-icf/`:
+Full narrative in `scratchpad/pr-127-research-batch-05-circulation-icf/`:
 `FRAME.md`, `agonist/BRIEF.md`, `antagonist/FINDINGS.md`, `tracer/LOG.md`, and
 `DEFECT-REGISTER.md`, which is the single home of defect status.
 

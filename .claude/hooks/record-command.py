@@ -94,9 +94,36 @@ def open_session(root, sid=None):
     midnight UTC, so the only available boundary was a guess. Future logs carry the
     answer.
     """
+    # scratchpad/CURRENT IS A STATED FACT AND OUTRANKS EVERY INFERENCE BELOW.
+    #
+    # Added 2026-09-02, after measuring that ALL 969 lines of three project sessions
+    # had landed in ONE directory -- batch 04's -- while batch 05's scratchpad held no
+    # commands.jsonl at all. The docstring above calls `sid` the anchor. It is not:
+    # `sid` identifies the HARNESS session, and one harness session spans as many
+    # project sessions as the container survives. Here a single sid covered batch 04,
+    # a repairs session and batch 05. So the anchor matched the first directory it
+    # ever wrote to and returned it forever -- the hook locking onto its own first
+    # mistake, which is why the misfiling was total rather than partial.
+    #
+    # The two existing pointers cannot help: CLAUDE.md 7 records that `sessions/LATEST`
+    # and `LATEST-RESEARCH` both move at CLOSE, so both name the PREVIOUS session for
+    # the whole life of the current one. CURRENT moves at OPEN, which is the only time
+    # a pointer to the running session can be correct.
+    cur = root/"scratchpad"/"CURRENT"
     try:
+        stated = cur.read_text(encoding="utf-8").strip()
+    except OSError:
+        stated = ""
+    if stated and (root/"scratchpad"/stated).is_dir():
+        return stated
+
+    try:
+        # Accepts pr-<n>-<slug> as well as session_<stem>: owner directive 2026-09-02,
+        # scratchpad folders are named for the PR they belong to. Both prefixes are
+        # matched because the historical directories keep their names.
         pads = sorted(q.name for q in (root/"scratchpad").iterdir()
-                      if q.is_dir() and q.name.startswith("session_"))
+                      if q.is_dir() and (q.name.startswith("session_")
+                                         or q.name.startswith("pr-")))
     except OSError:
         return ""
     if sid:
