@@ -17,9 +17,17 @@ falls back to inference if that file is missing or names no real directory.
 **So a new batch sets `CURRENT` when it creates its folder, before running anything.**
 
 ```sh
-mkdir -p scratchpad/pr-128-<slug>
-printf 'pr-128-<slug>' > scratchpad/CURRENT
+mkdir -p scratchpad/pr-<n>-<slug>
+printf 'pr-<n>-<slug>' > scratchpad/CURRENT
 ```
+
+**You do not know `<n>` until the PR exists, so open the PR first.** Push the branch with
+whatever first commit you have and create the PR, then name the folder from the number it
+comes back with. On 2026-09-02 the very first use of this convention guessed 128 before
+the PR existed; it happened to be right, which is worse than being wrong — a guess that
+lands teaches nobody. If you genuinely must start before the PR (a long batch that will
+open its PR at the end), name it for the branch and rename with `git mv` once the number
+is known: the hook follows `CURRENT`, so update that in the same commit.
 
 Forget it, and the hook infers — which is how, on 2026-09-02, **all 969 lines of three
 project sessions ended up in one directory** while the newest batch had no command log at
