@@ -65,12 +65,70 @@ def _norm(s):
     A stored "Rosas-Perez" against an actual "Rosas-Pérez" is the SAME PERSON
     differently encoded; the failure this module detects is a DIFFERENT person.
     A plain .lower() compare called that a mismatch, which meant this verifier
-    and scripts/audit/author_fidelity_audit.py — two checks of one property,
-    shipped in the same commit — returned opposite answers on REF-00965. Two
-    verifiers with divergent match rules is a defect, not depth.
+    and the since-retired scripts/audit/author_fidelity_audit.py — two checks of one
+    property, shipped in the same commit — returned opposite answers on REF-00965.
+    Two verifiers with divergent match rules is a defect, not depth; the second one
+    is gone and this is now the only place the rule lives.
+
+    Typographic punctuation folds the same way and for the same reason. A stored
+    "D'Cruz" against a logged "D\u2019Cruz" is one person and one apostrophe in two
+    encodings; on 2026-09-02 that difference alone printed a FAIL over REF-00975,
+    and a fidelity check that cries wolf on a curly quote teaches its reader to
+    skip the one line that matters.
     """
     s = unicodedata.normalize("NFKD", (s or "").strip().lower())
-    return "".join(ch for ch in s if not unicodedata.combining(ch))
+    s = "".join(ch for ch in s if not unicodedata.combining(ch))
+    return s.translate(_PUNCT_FOLD)
+
+
+# Typographic variants that carry no bibliographic information.
+_PUNCT_FOLD = {ord(c): "'" for c in "\u2018\u2019\u02bc\u00b4`"}
+_PUNCT_FOLD.update({ord(c): '"' for c in "\u201c\u201d"})
+_PUNCT_FOLD.update({ord(c): "-" for c in "\u2010\u2011\u2012\u2013\u2014\u2212"})
+
+
+def _norm_title(s):
+    """Compare titles on their WORDS, not their typesetting.
+
+    Crossref renders an en-dash where a DB row carries a hyphen, capitalises
+    differently, and sometimes carries trailing whitespace. None of that is a
+    bibliographic disagreement. A different WORD is.
+    """
+    s = unicodedata.normalize("NFKD", (s or "").lower())
+    s = "".join(ch for ch in s if not unicodedata.combining(ch))
+    return " ".join("".join(ch if ch.isalnum() else " " for ch in s).split())
+
+
+def _given_conflict(real, stored):
+    """True only when two given names cannot be the same person's.
+
+    "J." against "Jonathan" is one person under two house styles; "Naoji" against
+    "Toshiyuki" is a DIFFERENT PERSON, and until 2026-09-02 this module compared
+    family names alone, so it printed CLEAN over exactly that substitution in
+    REF-00976. The test is provable rather than inferred — an abbreviation is a
+    prefix, and nothing else is excused.
+    """
+    a, b = _given_tokens(real), _given_tokens(stored)
+    if not a or not b:
+        return False              # one side is silent: incompleteness, not falsehood
+    if len(a) != len(b):
+        return False              # one house style carries a middle name, one does not
+    # Every token must be able to be the other's abbreviation. "h" / "h" and
+    # "dirkjan" / "dirkjan" pass; "naoji" / "toshiyuki" cannot.
+    return not all(x.startswith(y) or y.startswith(x) for x, y in zip(a, b))
+
+
+def _given_tokens(s):
+    """A given name as its name-parts, with all typesetting discarded.
+
+    Crossref renders Veeger's initials as "Dirkjan (H. E. J.)" where the DB holds
+    "Dirkjan H. E. J.", and "Wiebe H.K." against "Wiebe H. K.". Parentheses and
+    the spacing of stops are house style. Comparing the raw strings made both of
+    those FAILs on 2026-09-02 — noise filed beside the two real substitutions in
+    the same run, which is how a real finding gets scrolled past.
+    """
+    s = _norm(s)
+    return "".join(ch if ch.isalnum() else " " for ch in s).split()
 
 LOG_ROOT = Path(os.environ.get("GUIDEBOOK_RETRIEVAL_LOG", "retrieval-log"))
 DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db"))
@@ -224,6 +282,79 @@ _BIBLIO_FIELDS = (
     ("pub_year",       lambda m: (((m.get("issued") or {}).get("date-parts") or [[]])[0] or [None])[0]),
 )
 
+# Columns any one of which may legitimately carry the payload's title. A
+# non-English source stores its native title in `pub_title` and the English in
+# `pub_title_en`, so a payload title matching EITHER is a match. Checked as a set,
+# never as a single column, or every Japanese admission reads as a fabrication.
+_TITLE_COLS = ("pub_title", "pub_title_en", "original_title", "chapter_title", "book_title")
+
+
+def _index_by_doi(payloads):
+    """Every logged payload that identifies a DOI, whatever service produced it.
+
+    Until 2026-09-02 this read `message.DOI` alone — the shape Crossref returns for
+    a single work. Unpaywall files the DOI at top level and its authors under
+    `z_authors`; a Crossref SEARCH files works under `message.items`. Three of this
+    batch's eight sources were logged only in those shapes, and the verifier
+    reported them as "NO LOGGED RETRIEVAL … not verifiable offline" — a shrug
+    printed over evidence that was sitting on disk. An indexer that sees one
+    vendor's envelope and calls the rest unlogged is CLAUDE.md 2(a) at the input.
+
+    Richer envelopes win: a Crossref work carries volume/issue/page that Unpaywall
+    does not, so it must not be displaced by a thinner record of the same DOI.
+    """
+    ranked = {}
+    def offer(doi, msg, rank):
+        if not doi:
+            return
+        doi = str(doi).strip().lower()
+        if doi and rank >= ranked.get(doi, (-1, None))[0]:
+            ranked[doi] = (rank, msg)
+
+    for _url, m in payloads.items():
+        if not isinstance(m, dict):
+            continue
+        msg = m.get("message")
+        if isinstance(msg, dict) and msg.get("DOI"):
+            offer(msg["DOI"], msg, 3)                       # Crossref, single work
+        elif isinstance(msg, dict) and isinstance(msg.get("items"), list):
+            for it in msg["items"]:                         # Crossref, search result
+                if isinstance(it, dict) and it.get("DOI"):
+                    offer(it["DOI"], it, 2)
+        elif m.get("doi") and ("z_authors" in m or "title" in m):
+            offer(m["doi"], _from_unpaywall(m), 1)          # Unpaywall
+    return {d: msg for d, (_r, msg) in ranked.items()}
+
+
+def _from_unpaywall(m):
+    """Re-shape an Unpaywall record into the Crossref keys this module compares.
+
+    Only the fields Unpaywall states are carried across. It has no volume, issue or
+    page, and inventing empties for them here would turn silence into a claim.
+    """
+    out = {"DOI": m.get("doi"), "title": [m.get("title")] if m.get("title") else [],
+           "author": [a for a in (m.get("z_authors") or []) if isinstance(a, dict)]}
+    if m.get("year"):
+        out["issued"] = {"date-parts": [[int(m["year"])]]}
+    return out
+
+
+def _author_conflict(real, stored):
+    """Do the payload's authors and the DB's disagree about WHO they are?
+
+    Family names must line up in order. Given names are then checked for
+    substitution — the check this module did not have on 2026-09-02, when
+    REF-00976 stored HASEGAWA Toshiyuki over a payload that said HASEGAWA Naoji
+    and printed CLEAN, because five surnames matched and nothing looked further.
+    """
+    if [_norm(f) for f, _ in real] != [_norm(f) for f, _ in stored]:
+        return True
+    return any(_given_conflict(gr, gs) for (_, gr), (_, gs) in zip(real, stored))
+
+
+def _disp(family, given):
+    return ", ".join(x for x in (family, given) if x) or "?"
+
 
 def _biblio_divergences(msg, row):
     """Return (mismatches, gaps) for one source against its payload.
@@ -271,6 +402,14 @@ def _biblio_divergences(msg, row):
             gaps.append((col, want))
         elif str(have).strip() != str(want).strip():
             mismatches.append((col, have, want))
+
+    want_title = next((t for t in (msg.get("title") or []) if t), None)
+    if want_title:
+        haves = [row[c] for c in _TITLE_COLS if c in row.keys() and row[c]]
+        if not haves:
+            gaps.append(("pub_title", want_title))
+        elif not any(_norm_title(h) == _norm_title(want_title) for h in haves):
+            mismatches.append(("pub_title", haves[0], want_title))
     return mismatches, gaps
 
 
@@ -285,11 +424,7 @@ def verify_authors(session):
         print("  verified offline. That is the gap this module exists to close;")
         print("  it is not a pass.")
         return 1
-    by_doi = {}
-    for url, m in payloads.items():
-        msg = m.get("message") if isinstance(m, dict) else None
-        if isinstance(msg, dict) and msg.get("DOI"):
-            by_doi[msg["DOI"].lower()] = msg
+    by_doi = _index_by_doi(payloads)
 
     cx = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
     cx.row_factory = sqlite3.Row
@@ -304,12 +439,13 @@ def verify_authors(session):
             unlogged.append((ref_id, doi))
             continue
         examined += 1
-        real = [(a.get("family") or a.get("name") or "") for a in msg.get("author", [])]
-        stored = [r[0] for r in cx.execute(
-            "SELECT last_name FROM evidence_source_authors WHERE ref_id=? ORDER BY position",
-            (ref_id,))]
-        if [_norm(x) for x in real] != [_norm(x) for x in stored]:
-            bad.append((ref_id, real, stored))
+        real = [((a.get("family") or a.get("name") or ""), (a.get("given") or ""))
+                for a in msg.get("author", [])]
+        stored = [tuple(r) for r in cx.execute(
+            "SELECT last_name, COALESCE(first_name,'') FROM evidence_source_authors "
+            "WHERE ref_id=? ORDER BY position", (ref_id,))]
+        if _author_conflict(real, stored):
+            bad.append((ref_id, [_disp(*a) for a in real], [_disp(*a) for a in stored]))
         mm, gp = _biblio_divergences(msg, row)
         if mm:
             biblio_bad.append((ref_id, mm))

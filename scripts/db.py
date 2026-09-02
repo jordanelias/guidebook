@@ -912,6 +912,18 @@ def main():
     p_rcl.add_argument("--session", required=True)
     p_rcl.add_argument("--dry-run", action="store_true")
 
+    p_cs = sub.add_parser("correct-source",
+                          help="Rewrite bibliographic fields FROM THE LOGGED PAYLOAD")
+    p_cs.add_argument("--ref-id", required=True)
+    p_cs.add_argument("--field", action="append", required=True, dest="fields",
+                      help="Repeatable. One of: authors, " +
+                           "pub_title, volume, issue, article_number, pages, pub_year. "
+                           "There is NO flag for the VALUE — it comes from the payload.")
+    p_cs.add_argument("--log-session", required=True,
+                      help="retrieval-log session holding the payload to read")
+    p_cs.add_argument("--session", required=True)
+    p_cs.add_argument("--dry-run", action="store_true")
+
     p_loc = sub.add_parser("add-locator", help="Write a lead into the clue store")
     p_loc.add_argument("--ref-id", required=True)
     for f in ("doi", "pmid", "pmcid", "isbn", "issn", "url", "standard-number",
@@ -1536,6 +1548,11 @@ def main():
         }, session=args.session, dry_run=args.dry_run)
         _emit({"lead_id": lid, "dry_run": args.dry_run})
 
+    elif args.command == "correct-source":
+        ch = correct_source(args.ref_id, args.fields, session=args.session,
+                            log_session=args.log_session, dry_run=args.dry_run)
+        _emit({"ref_id": args.ref_id, "corrected": ch, "dry_run": args.dry_run})
+
     elif args.command == "add-locator":
         rid = insert_locator({
             "ref_id": args.ref_id, "doi": args.doi, "pmid": args.pmid,
@@ -2092,6 +2109,122 @@ def insert_evidence_source(data: dict, session: str,
                  a.get("is_corporate", 0), a.get("corporate_name"),
                  stamp["created_at"], stamp["created_by_session"]])
     return data["ref_id"]
+
+
+# Fields `correct-source` can rewrite. The boundary is not a taste judgement: it is
+# EXACTLY what retrieval_log --verify-authors can prove against a payload. A field the
+# verifier cannot check is a field this writer must not touch, or the repository gains
+# a way to assert a bibliographic value that nothing can ever contradict.
+_CORRECTABLE = {
+    "pub_title":      lambda m: next((t for t in (m.get("title") or []) if t), None),
+    "volume":         lambda m: m.get("volume"),
+    "issue":          lambda m: m.get("issue"),
+    "article_number": lambda m: m.get("article-number"),
+    "pages":          lambda m: m.get("page"),
+    "pub_year":       lambda m: (((m.get("issued") or {}).get("date-parts") or [[]])[0]
+                                 or [None])[0],
+}
+
+
+def _payload_for(ref_id, doi, log_session):
+    """The logged payload for one DOI, or a refusal explaining what is missing."""
+    sys.path.insert(0, str(Path(__file__).resolve().parent / "research"))
+    import retrieval_log                                              # noqa: E402
+    payloads = retrieval_log._logged_payloads(log_session)
+    if not payloads:
+        raise ValueError(
+            f"{ref_id}: no retrieval log for session {log_session!r}. A correction is "
+            f"only as good as the bytes behind it; re-retrieve first (R10).")
+    msg = retrieval_log._index_by_doi(payloads).get((doi or "").lower())
+    if msg is None:
+        raise ValueError(
+            f"{ref_id}: nothing logged for DOI {doi!r} in session {log_session!r}. "
+            f"This writer cannot be told a value, only shown one — re-retrieve the "
+            f"locator so there is a payload to read (R10).")
+    return msg
+
+
+def correct_source(ref_id: str, fields: list, session: str, log_session: str,
+                   dry_run: bool = False):
+    """Rewrite bibliographic fields from the LOGGED PAYLOAD, never from an argument.
+
+    There is deliberately no way to pass a value. On 2026-09-02 three bibliographic
+    fields in this batch were wrong in the same direction — REF-00976 stored a title
+    and a co-author's given name that no payload asserted, and REF-00973 stored a
+    title bent toward the slug it was admitted for ('... During Manual Wheelchair
+    Propulsion on Different Slopes' for a paper actually subtitled 'A Study of Manual
+    Wheelchair Propulsion'). Every one of them was typed by a writer who had the
+    payload on disk.
+
+    A `--title` flag here would rebuild that hole one level up. So the argument names
+    WHICH field to take from the payload, and the payload supplies WHAT. Fabricating a
+    bibliographic field through this path requires forging the retrieval log first.
+    """
+    unknown = [f for f in fields if f not in _CORRECTABLE and f != "authors"]
+    if unknown:
+        raise ValueError(
+            f"{ref_id}: cannot correct {', '.join(unknown)} — this writer rewrites only "
+            f"fields retrieval_log --verify-authors can prove: "
+            f"{', '.join(sorted(_CORRECTABLE))}, authors.")
+    with connect(dry_run) as conn:
+        row = conn.execute(
+            "SELECT ref_id, doi FROM evidence_sources WHERE ref_id=?", [ref_id]).fetchone()
+        if row is None:
+            raise ValueError(f"{ref_id}: no such evidence source.")
+        if not row["doi"]:
+            raise ValueError(
+                f"{ref_id}: no DOI, so no payload can be keyed to it. Corrections to a "
+                f"DOI-less source have no byte-level authority and are refused here.")
+        msg = _payload_for(ref_id, row["doi"], log_session)
+        stamp = audit(session)
+        changed = []
+
+        for f in [x for x in fields if x != "authors"]:
+            want = _CORRECTABLE[f](msg)
+            if want in (None, ""):
+                raise ValueError(
+                    f"{ref_id}: the payload states nothing for {f!r}. A silence is not a "
+                    f"correction — leave the column NULL rather than inventing one.")
+            have = conn.execute(
+                f"SELECT {f} FROM evidence_sources WHERE ref_id=?", [ref_id]).fetchone()[0]
+            if str(have or "").strip() == str(want).strip():
+                continue
+            conn.execute(f"UPDATE evidence_sources SET {f}=?, updated_at=?, "
+                         f"updated_by_session=? WHERE ref_id=?",
+                         [want, stamp["created_at"], stamp["created_by_session"], ref_id])
+            changed.append({"field": f, "was": have, "now": want})
+
+        if "authors" in fields:
+            real = [a for a in (msg.get("author") or []) if isinstance(a, dict)]
+            if not real:
+                raise ValueError(
+                    f"{ref_id}: the payload names no authors. Refusing to empty the "
+                    f"byline on the strength of a payload that simply does not say.")
+            was = [f"{r['last_name']}, {r['first_name'] or ''}".strip(", ") for r in
+                   conn.execute("SELECT last_name, first_name FROM evidence_source_authors "
+                                "WHERE ref_id=? ORDER BY position", [ref_id])]
+            conn.execute("DELETE FROM evidence_source_authors WHERE ref_id=?", [ref_id])
+            for i, a in enumerate(real, start=1):
+                fam = (a.get("family") or "").strip()
+                giv = (a.get("given") or "").strip() or None
+                corp = 1 if not fam else 0
+                conn.execute(
+                    "INSERT INTO evidence_source_authors "
+                    "(ref_id, position, last_name, first_name, is_corporate, "
+                    " corporate_name, role, created_at, created_by_session) "
+                    "VALUES (?,?,?,?,?,?,'author',?,?)",
+                    [ref_id, i, fam or None, giv, corp,
+                     (a.get("name") or "").strip() or None if corp else None,
+                     stamp["created_at"], stamp["created_by_session"]])
+            now = [f"{(a.get('family') or a.get('name') or '')}, {a.get('given') or ''}"
+                   .strip(", ") for a in real]
+            if was != now:
+                changed.append({"field": "authors", "was": "; ".join(was),
+                                "now": "; ".join(now)})
+            conn.execute("UPDATE evidence_sources SET updated_at=?, updated_by_session=? "
+                         "WHERE ref_id=?",
+                         [stamp["created_at"], stamp["created_by_session"], ref_id])
+        return changed
 
 
 def insert_source_slug_link(ref_id: str, slug: str, local_ref_id: str,
