@@ -253,3 +253,74 @@ CLI at all — a coverage bug not currently registered.
 
 Acts 1–5 are mine. Act 6 is not, and **§4.1 should be answered before act 1**, because restoring
 `jurisdictional_values` would change what the compensating migration must contain.
+
+---
+
+## 7. §4.1 ANSWERED — measured 2026-09-01, after the plan above was written
+
+The owner asked what serves long-term integrity and how much of `jurisdictional_values` can safely
+move to another phase. Measured rather than argued.
+
+### 7.1 What the 109 archived records actually contain
+Exactly **three** columns carry data — `item_code`, `jurisdiction`, `standard_name`, each 109/109.
+`value_text`, `value_numeric`, `unit`, `is_code_minimum`, `spec_id`, `source_section`,
+`evidence_tier`, `notes` are **0 non-null of 109**, cleared by the 2026-08-12 REFERENCE-ONLY ruling.
+
+| measure | value |
+|---|---|
+| records | 109 |
+| distinct `(jurisdiction, standard_name)` | **83** |
+| rows that are pure item-crossing duplication | **26** |
+| distinct `item_code` | 20 |
+| jurisdictions | 12, all valid codes: AU CA CH DE EU FR GB ISO JP NO SG US |
+
+**100% of the surviving information is item-independent.** The only item-dependent column is
+`item_code`, which the ruling removes. Relocation therefore loses nothing but the duplication.
+
+### 7.2 CORRECTION to my own first measurement
+A first pass matched archived standard names against `source_locators` with
+`standard_number LIKE '%key%' OR title LIKE '%key%'` and reported **"81 of 83 already held."**
+**That is wrong.** The loose pattern was matching a corrupted column. Matched strictly against
+`source_locators.standard_number`, the overlap is **11 of 83**. So ~72 of the 83 exist nowhere else
+in the project and are lost with the archive if not relocated. Recorded because the wrong figure
+would have argued the opposite conclusion — that relocation was mostly duplication.
+
+### 7.3 Why `source_locators` is the wrong destination, measured
+- **24 rows carry BOTH a `standard_number` and a `doi`.** A standard has no DOI. This is the
+  signature of two identifier classes with different shapes forced into one row format — the same
+  defect as `REF-00037`, and the cause of today's false R9a block on Rouvier.
+- **`jurisdiction` is no longer a jurisdiction column.** ~200 distinct values, including full URLs
+  (`https://www.ada.gov/...`), prose findings (`Descent fall risk 3x ascent`), slug names,
+  quantified claims (`2cm threshold defeats 45.8%`), and warnings
+  (`KfW "Altersgerecht Umbauen" grant SUSPENDED Dec 2021`). Roughly nine values are real codes.
+- The 83 code leads are, by contrast, the **cleanest structured data in the project**: uniform,
+  complete, no nulls in any populated column. Merging the cleanest data into the dirtiest store
+  destroys the ability to tell them apart afterwards.
+
+### 7.4 Recommendation
+Restore the 83 as a **research-stage table with a constraint surface `source_locators` cannot
+have**: `jurisdiction` NOT NULL against a controlled list, `standard_name` NOT NULL, and **no DOI
+column at all** — which makes the 24-row collision structurally impossible rather than merely
+discouraged. This is what D-0181 already named `research_code_leads`.
+
+**Not a rule-5 breach.** Rule 5 forbids the same FACT in two tables; after the move a code lead
+lives in exactly one place. The 11 overlaps are reconciled, not duplicated.
+
+**Do not carry `item_code`.** It is a coverage hint — "this standard was consulted for corridor
+width" — and under the owner's frame that is the presupposition to avoid. It is not lost: the
+archived filenames encode it (`a-3_e08.yaml` -> E-08), so it stays auditable in `_archived/` while
+being absent from the live frame.
+
+**So §4.1 is not a supersession of D-0181 — it is its EXECUTION.** D-0181 called these rows
+research; the retraction deleted them instead of moving them.
+
+### 7.5 A defect found while answering
+D-0181's note reads *"renamed research_code_leads by the parked migration 065"*. **Migration 065 is
+`065_one_link_table_four_lenses.sql`** — the lens work of 2026-09-01 consumed the reserved slot. The
+rename has no migration number, and a session reading D-0181 would look for one that does not exist.
+Class DOC-DRIFT, P3; the fix is a corrected note on the register row, not a renumbering.
+
+### 7.6 Explicitly OUT of scope
+`source_locators` needs its own repair pass — 32 duplicate DOIs, the misaligned `doi`/bibliography
+columns, and the `jurisdiction` junk drawer. That is a larger job than this one and must not ride
+along on it.
