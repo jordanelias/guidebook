@@ -96,7 +96,24 @@ def _extension_for(body):
     Sniff the body rather than trusting the URL: `api.crossref.org` can return an
     HTML error page, and a repository PDF endpoint can return JSON metadata.
     """
-    head = body.lstrip()[:512]
+    # ACCEPTS BYTES as of 2026-09-02. It previously took str, which forced fetch() to
+    # decode the body before sniffing it -- and that decode is what silently corrupted
+    # every non-UTF-8 artefact. Binary formats are identified by magic number, which is
+    # what they are actually identified by; the text branches decode a small head
+    # tolerantly, because a sniffer must never raise on the bytes it is inspecting.
+    if isinstance(body, bytes):
+        raw = body.lstrip()[:512]
+        if raw.startswith(b"%PDF-"):
+            return ".pdf"                  # the format Co-1 and DPO evidence arrives in
+        if raw[:4] in (b"PK\x03\x04", b"PK\x05\x06"):
+            return ".zip"                  # .docx/.xlsx/.epub are zips; do not claim more
+        if raw.startswith(b"\xd0\xcf\x11\xe0"):
+            return ".doc"                  # OLE2: legacy .doc/.xls
+        if raw[:3] == b"\xef\xbb\xbf":
+            raw = raw[3:]                  # strip a UTF-8 BOM before the text sniffs
+        head = raw.decode("utf-8", errors="replace").lstrip()
+    else:
+        head = body.lstrip()[:512]
     if not head:
         return ".txt"                      # a recorded empty response is evidence too
     if head[0] in "{[":
@@ -121,14 +138,31 @@ def fetch(url, session, purpose="", timeout=40, stamp=None):
     The write happens before the return, deliberately: the artefact on disk is the
     bytes the caller actually received, not a later re-fetch that may differ.
     """
-    r = subprocess.run(["curl", "-sS", "--max-time", str(timeout), url],
-                       capture_output=True, text=True)
-    body = r.stdout
+    # BYTES, NOT TEXT, AND FOLLOW REDIRECTS. Both fixed 2026-09-02 after measurement.
+    #
+    # This function's docstring promises "the artefact on disk is the bytes the caller
+    # actually received". With `text=True` that promise was FALSE for every non-UTF-8
+    # body, and false SILENTLY -- no exception, exit code 0. curl decoded the bytes with
+    # replacement characters, `body.encode("utf-8")` re-encoded the damaged text, and the
+    # manifest recorded a sha256 of the damage. Measured on a real RCOT PDF: stored
+    # bdfeba45..., actually received ab78cbbc... . A logger whose hash does not identify
+    # what arrived cannot support the fidelity audit it exists for, and PDF is the format
+    # Co-1 and disability-led evidence overwhelmingly arrives in.
+    #
+    # `-L` because a DOI is a 302. Without it the artefact was the redirect stub: one
+    # 0-byte figshare line sits in this session's manifest as evidence of exactly that.
+    #
+    # This is the ROOT CAUSE of D04-032, which was closed on 2026-09-02 by reconstructing
+    # a manifest for 58 unlogged payloads. That fix treated the symptom -- it never asked
+    # why the payloads were unlogged. This is why.
+    r = subprocess.run(["curl", "-sS", "-L", "--max-time", str(timeout), url],
+                       capture_output=True)
+    body = r.stdout                        # bytes
     d = LOG_ROOT / _session_stem(session)
     d.mkdir(parents=True, exist_ok=True)
-    sha = hashlib.sha256(body.encode("utf-8")).hexdigest()
+    sha = hashlib.sha256(body).hexdigest()  # of what arrived, not of a lossy decode
     artefact = f"{sha[:16]}{_extension_for(body)}"
-    (d / artefact).write_text(body, encoding="utf-8")
+    (d / artefact).write_bytes(body)
     with open(d / "manifest.jsonl", "a", encoding="utf-8") as fh:
         fh.write(json.dumps({
             "retrieved_at": stamp or _now(), "url": url, "purpose": purpose,
@@ -138,7 +172,10 @@ def fetch(url, session, purpose="", timeout=40, stamp=None):
     if r.returncode != 0 or not body.strip():
         return None
     try:
-        return json.loads(body)
+        # Decode ONLY to parse, never to store. A binary body simply is not JSON, and
+        # `errors="replace"` keeps that a clean None rather than an exception raised
+        # after the artefact is already safely on disk.
+        return json.loads(body.decode("utf-8", errors="replace"))
     except Exception:
         return None
 
