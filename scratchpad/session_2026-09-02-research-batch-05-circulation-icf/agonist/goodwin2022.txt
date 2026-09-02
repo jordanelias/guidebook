@@ -1,0 +1,690 @@
+956 |     Aust J Soc Issues. 2022;57:956–969.
+wileyonlinelibrary.com/journal/ajs4
+Received: 9 August 2021 | Revised: 28 March 2022 | Accepted: 31 March 2022
+DOI: 10.1002/ajs4.214  
+ORIGINAL ARTICLE
+Making homes more accessible for people with 
+mobility impairment: A lived experience perspective
+Isabella Goodwin1 |    Elise Davis1,2  |    Di Winkler1,2 |   
+Jacinta Douglas1,2 |    Cornelia Wellecke1,2 |    Kate D’Cruz1,2 |   
+Peter Mulherin1,2 |    Stephanie Liddicoat1,2
+1Summer Foundation Ltd, Blackburn, 
+Victoria, Australia
+2Living with Disability Research Centre, 
+La Trobe University, Bundoora, Victoria, 
+Australia
+Correspondence
+Di Winkler, Summer Foundation Ltd, 
+Blacburn, Victoria, Australia.
+Email: di.winkler@summerfoundation.org.au
+Abstract
+People with mobility impairment have the right to live 
+in accessible housing that meets their needs. Although 
+the Australian National Construction Code for resi -
+dential housing will be amended to include minimum 
+accessibility standards in September 2022, some states 
+have chosen not to adopt these standards (New South 
+Wales, Western Australia and South Australia). The 
+inclusion of people with lived experience in decisions 
+surrounding accessible housing design is lacking. This 
+study sought the perspective of people with mobility 
+impairment on the most important modifications they 
+would make to the design of their own homes, and 
+the homes of their friends and family, to make them 
+more accessible. An online survey was completed 
+from February to March 2021 by 145 people living in 
+Australia including 112 people with mobility impair -
+ment, and 33 family members. Results indicated that 71 
+per cent of the participants were living in housing that 
+did not fully meet their accessibility needs. Descriptive 
+qualitative analyses demonstrated that commonly re -
+ported modifications included a step-  free entrance, 
+wider internal doors and corridors, and level access 
+This is an open access article under the terms of the Creative Commons Attribution  License, which permits use, distribution and 
+reproduction in any medium, provided the original work is properly cited.
+© 2022 The Authors. Australian Journal of Social Issues published by John Wiley & Sons Australia, Ltd on behalf of Australian 
+Social Policy Association.
+ 18394655, 2022, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/ajs4.214 by La Trobe University Library, Wiley Online Library on [08/02/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+    | 957
+GOODWIN et al.
+1 | INTRODUCTION
+With over 3.3 million Australians living with activity limitations and an ageing population 
+(ABS, 2019), the demand for accessible housing is growing. Given almost one in five Australians 
+live with disability, with the majority reporting a physical condition as their main long-  term 
+health condition, it is estimated that one third of all Australian households are currently oc -
+cupied by a person with disability (Galbraith, 2018 ). The Centre for International Economics 
+(2020) projects that 5.75 million Australians will have a mobility limitation by 2060. Although 
+the United Nations Convention on the Rights of Persons with Disabilities (UNCRPD) states 
+that people have the right to housing that suits one's needs (United Nations, 2007), there is a 
+dearth of appropriate accessible housing for people with mobility impairment (Aplin et al., 
+2020; Lakhani et al., 2020 ; National Disability Services, 2015 ).
+Recognising the shortage of accessible housing in Australia, the government introduced a 
+voluntary programme in 2011, which aimed to provide accessible features in all new housing 
+by 2020 (Council of Australian Governments, 2011 ; Ward, 2011). This voluntary programme 
+focused on inclusivity rather than specialisation, meaning that new dwellings were expected to 
+be constructed with a reduced need for adaptation or post-  construction modifications, align -
+ing with “visitable” standards. This voluntary programme intended to achieve accessible fea -
+tures in all new dwellings, to ensure that people with mobility impairment are able to visit or 
+live in the dwelling (Ward & Franz, 2015). However, the Centre for International Economics 
+(2020) estimated, based on previous evidence, that less than 10 per cent of new housing stock 
+has been built to these baseline standards, indicating that this approach has failed. Many 
+people with mobility impairment are living in housing that does not meet their needs. A recent 
+survey of 1187 Australians with mobility impairments showed that 74 per cent of respondents 
+were living in housing that did not adequately meet their accessibility needs (Wiesel, 2020 ). 
+Thus, the over- reliance on the private market to voluntarily address the inequalities surround -
+ing accessible housing has, so far, been ineffective (Ward & Jacobs, 2017 ).
+Significantly, in March 2021, the Australian Building Codes Board (ABCB) agreed to amend 
+the National Construction Code from September 2022 to include minimum accessibility stan -
+dards (Department of Industry, Science, Energy & Resources, 2021 ). However, several states 
+have chosen to opt out of these changes to the building code, including New South Wales, 
+Western Australia and South Australia.
+People with disability in Australia experience housing inequalities beyond inaccessibility. 
+A nationally representative survey of Australians indicated that people with disability experi -
+ence an increased likelihood of living in unaffordable, insecure and/or poor-  quality housing 
+(Aitken et al., 2019 ; Kavanagh et al., 2015 ). The risk of living in public housing is six times 
+higher for people with disability (Aitken et al., 2019 ). People with mobility impairments are 
+often forced to rely on social or community housing, or even residential aged care facilities 
+(Gonzalez et al., 2015; Oliver et al., 2020; Saugeres, 2011), and this is often because they cannot 
+secure housing that meets their needs. Public and community housing encompasses only 6 per 
+throughout the home. These modifications would pro -
+mote social inclusion, functioning, independence and 
+overall quality of life. These results have policy impli -
+cations for the implementation of accessibility stand -
+ards in the National Construction Code.
+KEYWORDS
+accessible housing, lived experience, mobility impairment
+ 18394655, 2022, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/ajs4.214 by La Trobe University Library, Wiley Online Library on [08/02/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+958 |   
+GOODWIN et al.
+cent of the Australian market, with these facilities often burdened by stretched resources, long 
+waitlists, and limited choices (Saugeres, 2011 ). Private rentals, the only other option, are often 
+not accessible. Post-  construction modifications to increase the accessibility of private rentals 
+are often unaffordable, are low in quality and have lengthy wait times (Jones et al., 2008; Peace 
+& Darton, 2020 ; Petersen & Aplin, 2021 ). This limited supply of accessible housing that is af -
+fordable in the current market does not meet Australia's commitment to the UNCRPD and the 
+rights of people with disability to live with equality and choice (Wiesel, 2020 ).
+1.1 | Impact of housing accessibility
+Evidence is emerging on the social, emotional, economic and health impact of inaccessible 
+housing for people with mobility limitations. More than 80 per cent of respondents in an 
+Australian online survey of 1187 people with mobility impairments indicated that they could 
+not visit family and friends whose homes are inaccessible (Wiesel, 2020 ). This situation often 
+resulted in people living “hermit” lives, characterised by isolation, loneliness and a disconnec -
+tion from the community. Social exclusion due to a lack of accessibility resulted in participants 
+feeling dehumanised and reclusive, which had severe impacts on self- reported mental health. 
+Moreover, the time and energy spent navigating inaccessible housing often leads to higher 
+levels of difficulty, stress and fatigue in performing everyday activities at home such as moving 
+around, self-  care and caregiving of others (Aplin et al., 2015 ; Lau et al., 2018 ). Easier access 
+around the home often results in reduced formal and/or informal support needs, meaning that 
+people have a greater sense of independence and privacy when conducting everyday activi -
+ties (Norin et al., 2017 ; Wiesel, 2020 ). When a home is modified to be accessible, there are a 
+range of activities that are easier, including getting in and out of the home, showering/bathing, 
+transferring to the toilet, grooming and moving in and out of bed (Lau et al., 2018 ). Increased 
+autonomy and control in easily performing these activities allows time to be freed up for more 
+meaningful tasks (Norin et al., 2017 ).
+Accessible housing can also reduce the risk of falls and progression of frailty, leading to im -
+provements in both physical and mental well- being. This reduced risk is particularly important 
+for seniors wanting to age in place at home, rather than moving to institutional environments. 
+A recent study of older Australians found that housing modifications reduced hours of care 
+by 42 per cent per week (Carnemolla & Bridge, 2019). These changes in care positively contrib -
+uted to participants' autonomy and the ability to remain in their current housing situation. 
+However, the study is limited in its generalisability to all people with mobility impairment, as 
+an overwhelming majority of participants were homeowners, rather than people living in pri -
+vate rentals, where changes to accessible design are significantly more difficult. Nevertheless, 
+for people with mobility impairment, the stress of possibly being forced to move to another 
+residence or to residential aged care has significant negative impacts on self- reported mental 
+health and well-  being (Oliver et al., 2020 ; Wiesel, 2020 ). Therefore, incorporating accessible 
+features in new dwellings would improve opportunity and choice for people to stay in locations 
+close to family and friends, and reduce the need for them to move to alternative accommo -
+dation (Aplin et al., 2015 ). Consequently, this would positively contribute to people's mental 
+and physical well- being. Although this emerging literature highlights the benefits of accessible 
+housing, there is limited evidence on which specific accessible features would be most benefi -
+cial to include in accessible design.
+1.2 | Making housing more accessible: lived experience expertise
+A more coordinated and informed approach focusing on the needs and preferences of people 
+who are likely to directly benefit from accessible housing is required to facilitate effective 
+ 18394655, 2022, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/ajs4.214 by La Trobe University Library, Wiley Online Library on [08/02/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+    | 959
+GOODWIN et al.
+change. International literature suggests that people with disability face barriers in the home -
+owner market due to a systematic lack of knowledge and direct consultation in the design 
+stage from developers and builders (Burns, 2004 ; Nasar & Elmer, 2016 ; Thomas, 2004 ). Key 
+stakeholders including developers and builders are often unaware of the impacts of building 
+inaccessible housing, with a limited understanding of the preferences and needs of end-  users 
+(Imrie, 2003; Lakhani et al., 2020 ). Current evidence demonstrates how the inclusion of peo -
+ple with lived experience in design decisions improves the final product. For example, Lau 
+et al. (2018) completed a mixed-  methods study to investigate the effectiveness of home modi -
+fications from clients' perspectives. They found that actively involving clients in decision-  
+making processes surrounding home modifications positively contributed to the effectiveness 
+of their completion. In particular, home modifications allowed improvements in independ -
+ence, safety, privacy and confidence, which supported participants' ability to complete daily 
+living and self-  care activities. The results demonstrated the importance of collaboration and 
+communication across clients, occupational therapists and builders when installing home 
+modifications, to ensure that the lived experience perspective guides the effectiveness of their 
+completion. Similarly, a recent investigation into clients' satisfaction with home modifica -
+tions in Australia concluded that person-  centred experiences of the home environment must 
+be central to the process behind consumer-  directed care (Aplin et al., 2020 ). In fact, poor 
+consultation around the needs and preferences of the client often resulted in incorrect or 
+unnecessary home modifications being installed, leading to safety concerns and wasted re -
+sources (Aplin et al., 2015 ).
+The aim of the current study was to obtain the perspective of people with mobility impair -
+ment on the most important modifications they would make to the design of their own homes, 
+and the homes of their friends and family, in order to make them more accessible. A further 
+aim was to explore the reason for the modifications and the potential impact of the modifi -
+cations. It is important to understand which specific housing features are most essential for 
+people with mobility impairment when choosing a new place to live and when visiting family 
+and friends. Access to this information would allow homeowners, builders and governments 
+to gain insight into the lived experience priorities of accessible design.
+2 | METHOD
+This study involved an online survey (via QuestionPro) of people with mobility impairment 
+including seniors and people with mobility- related disability. Prior to distribution, the survey 
+was piloted by three people with mobility impairment to check ease of completion. The re -
+spondents indicated that they felt the questions were easy to complete. Ethics approval was ob-
+tained from (Ethics approval was obtained from La Trobe University Human Research Ethics 
+Committee (HEC21021)). Survey participants were recruited via advertisements in newsletters 
+and social media accounts of an advocacy association. To be eligible, participants had to be 
+18 years or older, currently reside in Australia and have a mobility impairment. An option was 
+included for a carer or relative to complete the survey on behalf of the person with the mobility 
+impairment. The survey took on average 33.2 min (SD = 38.5) to complete, and no reimburse -
+ment was offered for participation.
+The survey opened with questions regarding standard demographic information. The re -
+spondents were then asked about their current housing situation including the type of hous -
+ing (private rental, residential group home or supported accommodation), who they live with 
+(alone, with family and with others) and the accessibility of their current home (whether it was 
+built accessible, modified fully accessible, modified partly accessible, or not built or modi -
+fied accessible; scale sourced from Wiesel, 2020 ). The participants were also asked to provide 
+ 18394655, 2022, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/ajs4.214 by La Trobe University Library, Wiley Online Library on [08/02/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+960 |   
+GOODWIN et al.
+details of their mobility impairment including the level of impairment (scale sourced from 
+EQ- 5D- 5L; McCaffrey et al., 2016), type of impairment (adapted from Wiesel, 2020 to en -
+sure it was inclusive of people with disability and seniors) and whether they use mobility aids 
+(item sourced from Survey of Disability, Ageing and Carers, ABS, 2019 ). Finally, participants 
+were asked to indicate whether they had a “magic wand,” what they would change about the 
+physical features of their current home, and the homes of family and friends, in order to make 
+them more accessible. They were asked to identify up to three features and describe why these 
+changes would be important. An option to provide general comments was included at the end 
+of the survey.
+2.1 | Data analyses
+Demographic data were analysed using R and Excel to generate frequencies and average re -
+sponses. Descriptive qualitative analyses were used to analyse responses to open-  ended ques-
+tions about design features that participants would like to change in their own home and the 
+homes of family and friends (Braun & Clarke, 2006 ). A list of design features that were com -
+monly reported were identified and summarised. Common themes underlying the importance 
+and impact of these design features were identified.
+3 | RESULTS
+3.1 | Sample characteristics
+The final sample consisted of 145 participants including 77.2 per cent people with mobil -
+ity impairment and 22.7 per cent family members of the person with mobility impairment. 
+Demographic information and housing situations of the sample were compared with those 
+of all Australians with activity limitations as shown in Table  1, indicating that the sam -
+ple was relatively representative of national data (ABS, 2019 ), although the sample over-  
+represented people younger than 65  years. When asked about the accessibility of their 
+current home, results indicated that 27.5 per cent of participants were living in accessible 
+housing (including 18.6 per cent built accessible and 8.9 per cent modified fully accessible), 
+while 71.0 per cent were living in housing that did not fully meet their accessibility needs 
+(including 38.6 per cent modified partly accessible and 32.4 per cent not built or modified 
+accessible).
+Additionally, most people who reported having a severe or profound mobility impairment 
+were currently living in inaccessible housing (85.1 per cent and 59.6 per cent, respectively; see 
+Table 2). When determining the severity of their mobility impairment, the majority of partici -
+pants indicated that they have severe problems in walking (32.4 per cent) or are unable to walk 
+(32.4 per cent). The data of people with severe/profound impairments were over- represented 
+compared to the normative data, whereby only 2.9 per cent of Australians report having a 
+severe or extreme mobility impairment (sourced from a community sample of 2908 South 
+Australians; McCaffrey et al., 2016 ). Participants reported having a range of disabilities, with 
+the most common including arthritis (28.9 per cent), back problems (28.3 per cent), general lack 
+of mobility (25.5 per cent) and knee problems (24.1 per cent). Wheelchair use was the most fre -
+quently reported mobility aid (39.3 per cent manual wheelchair, 4.1 per cent manual wheelchair 
+with electric features and 33.1 per cent electric wheelchair), followed by walking stick (28.3 per 
+cent), walking frame (22.1 per cent), scooter (16.6 per cent), and crutches or Canadian walking 
+sticks (6.2 per cent).
+ 18394655, 2022, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/ajs4.214 by La Trobe University Library, Wiley Online Library on [08/02/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+    | 961
+GOODWIN et al.
+3.2 | Accessible design features
+Participants were asked to identify up to three design features that, if they had a magic wand, 
+they would change in their own homes and the homes of their friends and family to make 
+them more accessible. Within their own home and the homes of others, the most commonly 
+reported changes were a clear, step-  free entrance to the property, wider internal passageways 
+and doors, no stairs throughout the home and increased bathroom space. These features and 
+other changes are summarised within “sections of the home” in Table  3, including entrance 
+to outdoor spaces, larger room sizes, non-  slip flooring, accessible bathrooms, and heights of 
+features and appliances around the home.
+3.3 | Impact of accessible design features
+Participants' reports of why these changes were important allowed researchers to identify 
+themes on the impact of accessible housing including social inclusion, increased functioning 
+and independence, and increased quality of life.
+TABLE 1  Representativeness of the demographic characteristics and housing situations of the sample 
+compared to those of all Australians with activity limitations
+% of sample
+% of all Australians with 
+activity limitations
+Younger than 65 years 72.5 52.5
+Female 62.1 51.7
+Live in metropolitan regions 62.1 65.6
+Employed full-  time or part-  time 22.8 20.5
+Living in private homes, owned by themselves/family or rented 
+from a private landlord or public authority a
+78.0 94.6
+Living in cared accommodation such as residential group homes, 
+aged care or supported accommodation a
+8.4 5.3
+Living alone b 32.7 21.2
+Living with others including a spouse/partner, family members or 
+people not related to them b
+66.9 73.6
+Note: Comparisons to people with activity limitations were sourced from national data from Survey of Disability, Aging and 
+Carers (ABS, 2019).
+aAside from living in private homes and living in cared accommodation, 12.4% of participants reported living in “other” 
+accommodation (e.g. boarding house/private hotel, short-  term crisis, public/community housing, retirement village and purpose- 
+built dwellings) or did not respond (1.2%).
+b0.4% of participants did not respond to this question.
+TABLE 2  Number of participants living in accessible or inaccessible housing, as a proportion of severity of 
+mobility impairment
+Mild 
+impairment
+Moderate 
+impairment
+Severe 
+impairment
+Profound 
+impairment
+Total 
+(%)
+Accessible housing 5 9 7 19 27.6
+Inaccessible housing 12 21 40 28 69.7
+Total (%) 11.7 20.7 32.4 32.4 97.2
+Note: Scale of impairment severity taken from EQ-  5D- 5L (McCaffrey et al., 2016 ). Four participants did not respond to this 
+question; thus, total does not add to 100%.
+ 18394655, 2022, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/ajs4.214 by La Trobe University Library, Wiley Online Library on [08/02/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+962 |   
+GOODWIN et al.
+3.4 | Social inclusion
+Accessible design where people with mobility impairment can access the house or move around 
+the house with ease promotes social inclusion. For some people, getting into the houses of 
+family and friends was either impossible or extremely difficult, and so they were excluded from 
+visiting others. Participants described that if the effort of entering the house is too great, they 
+are less inclined to visit again or are not invited to visit again, impacting friendships.
+I have lost friendships because I've had to say no to social invitations due to lack 
+of access. Some of the most humiliating moments of my life have involved trying 
+to access friends' and family's inaccessible houses. 
+(Participant 107; 45– 54 years old with a moderate limitation)
+I currently can't visit most of my friends and family because I physically can't get 
+into the house. 
+(Participant 144; 45– 54 years old with a profound limitation)
+Important changes to accessibility not only involve entry into the house but also being able to 
+move around the house in social areas. These changes are important in one's own home and the 
+homes of family and friends. For example, freedom to move around the house enables people with 
+mobility impairment to socialise and connect with people where the conversations or celebrations 
+are occurring.
+Better access to friends’ decks and gardens. Many social functions involve BBQ 
+and outdoor social groups. 
+(Participant 131, 25– 34 years old with a profound limitation)
+TABLE 3  Summary of design features that participants wanted to change within their own home and the 
+homes of their friends and family
+Section of the home Changes to design features
+Entrance to home and 
+outdoor areas
+Clear, step-  free pathway into the property that is wide enough to fit mobility 
+devices
+Step- free, seamless entrance to backyards and outdoor spaces
+Getting around the home Level access throughout the property (no stairs)
+Wider internal doorways and corridors to allow mobility devices to be used 
+without damaging the property
+Flooring that is seamless, non-  carpeted, and non-  slip to prevent trips and falls
+Larger room sizes to allow circulation space for wheelchair users
+Bedroom located on the ground floor
+If stairs are necessary, a handrail should be included to reduce risk of falls and 
+mitigate effort involved
+Bathroom and toilet Larger bathrooms located on the ground floor
+Step- free/hobless shower with grab rails to prevent falls
+Higher toilet to allow easier transfers
+Using features in the 
+home
+Height of benches, cabinets/drawers, and appliances in the kitchen and laundry 
+was lowered to allow access from a sitting position
+Lower handles and switches and/or automated controls for temperature, lighting, 
+doors and windows to allow easier access to these features
+ 18394655, 2022, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/ajs4.214 by La Trobe University Library, Wiley Online Library on [08/02/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+    | 963
+GOODWIN et al.
+Access to bathroom facilities was also important to enable social visits longer than a 
+few hours. Not being able to use the bathroom places limitations on how much people 
+can participate in sharing food and drinks, contributing to worry and stress associated 
+with the social visit. For some people, in order to visit family and friends, they require 
+an overnight stay to manage fatigue or to receive support or they face a lack of transport. 
+Participants described that an overnight stay was only possible with a ground-  floor bed -
+room and bathroom.
+Toilet and bathroom on ground floor which has clear access, so that I can stay 
+longer than a couple of hours. 
+(Participant 4; 65– 74 years old with a profound limitation)
+Participants reported that accessible housing would allow for increased privacy particularly 
+in being able to use the toilet and shut the door properly. The availability of an accessible toilet 
+increases the ability for people to visit family and friends with privacy and dignity.
+Make the toilet accessible in the bathroom with a door I can close behind me… It's 
+the biggest factor for me in deciding whether I can visit a house or not. 
+(Participant 107; 45– 54 years old with a moderate limitation)
+The frustrations over inequalities of accessible design were often felt by participants, with par-
+ticipants suggesting improvements in design would lead to better awareness/visibility of disability 
+and connection to society more generally.
+Not having suitable access to houses and buildings makes it very isolating for 
+wheelchair user's and not feeling like a part of society. A really awful feeling to 
+have for any human being. 
+(Participant 21; 18– 24 years old with a profound limitation)
+3.5 | Increased functioning and independence
+Accessible design features in the home would enable increased functioning and independ -
+ence in completing everyday tasks, such as accessing storage and kitchen cupboards. 
+Reducing reliance on support workers or family members would augment one's ability to 
+live more independently. Additionally, being able to contribute to household tasks such as 
+preparing meals when visiting family and friends would make people feel more useful and 
+included.
+Accessible wardrobes and cupboards, without having to ask for continual help. 
+(Participant 19; 65– 74 years old with a severe limitation)
+A kitchen you can enter and assist in preparation instead of being placed some -
+where else out of the way. 
+(Participant 76; 65– 74 years old with a severe limitation)
+The fatigue and effort involved in navigating inaccessible homes seemed to significantly im -
+pact participants' way of life. Accessible features were reported to improve mobility and assist 
+with ease of movement, such that energy could be saved for more meaningful tasks. A home with 
+accessible features also reduces the risk of trips and falls, allowing the person to conserve energy 
+when navigating hazards. Additionally, having space for a support person to provide assistance 
+ 18394655, 2022, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/ajs4.214 by La Trobe University Library, Wiley Online Library on [08/02/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+964 |   
+GOODWIN et al.
+if needed would increase safety in completing simple tasks such as using the toilet and moving 
+through corridors and doorways.
+I have recently installed non-  slip external tiles throughout my home. This 
+means I am now confident to walk around my home which helps me maintain 
+my strength. 
+(Participant 41; 55– 64 years old with a moderate limitation)
+Make the bathroom twice as big so that I could fit my shower chair, my toilet 
+surround, my wheelchair, my support worker and me comfortably in the room 
+without us having to scramble over one another. It would also be less of a falling 
+hazard. 
+(Participant 121; 35– 44 years old with a severe limitation)
+Another important aspect of safety in accessible design is emergency egress from the property. 
+For people with mobility impairment, being able to get out of the property in a safe and timely 
+manner is extremely important in the event of a fire or other emergency. Access for emergency 
+workers to get into the building is equally important, as doorways and passageways are often too 
+narrow to allow sufficient access.
+3.6 | Increased quality of life
+Accessible design was often reported to result in huge changes to quality of life. For some, ac -
+cessing outdoor areas could result in improvements in mental well-  being, increasing areas for 
+socialising around the home and allowing hobbies such as gardening to be undertaken.
+More ramps leading inside, and out than the one I have, so I can enjoy my 
+garden. 
+(Participant 45; 35–  44 years old with a severe limitation)
+I would have ramp access to the workshop/garage area to allow me access to un -
+dertake hobbies. 
+(Participant 26; 55–  64 years old with a severe limitation)
+Accessible housing can also increase choice and control in terms of people being able to choose 
+where they spend their time within a house, as well as controlling lighting, doors and tempera -
+tures. Furthermore, accessible housing can allow people the choice to stay living in their home 
+safely for longer.
+All of the changes so that I can be safe, secure and independent living arrangement 
+whilst ageing in place. 
+(Participant 116; 55– 64 years old with a profound limitation)
+More remote controls so I can operate everything from my wheelchair and bed. 
+(Participant 28; 65– 74 years old with a moderate limitation)
+Accessible design would reduce avoidable damage to the property, as mobility devices would 
+be less likely to scrape wider doorways and corridors. This response was particularly prevalent 
+for people living in private rentals where modifications were not possible, and also reported when 
+accessing homes of friends and family.
+ 18394655, 2022, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/ajs4.214 by La Trobe University Library, Wiley Online Library on [08/02/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+    | 965
+GOODWIN et al.
+To be able to move about within your own home without damaging walls. 
+(Participant 66; 18– 24 years old with a profound limitation)
+4 | DISCUSSION
+This study was undertaken to gain an understanding of accessible design modifications 
+deemed most important from the perspective of people living with mobility impairment. 
+Findings reflect the experiences of 145 participants who responded to an Australian na -
+tional online survey conducted from February through March 2021. Results demonstrated 
+that the most important accessible design features for people with mobility impairment in -
+clude a step-  free entrance, wider internal doors and corridors, and level access throughout 
+the home. These design features have wide- ranging impacts on people's lives and can in -
+crease social inclusion, functioning and quality of life. The changes to design features for 
+their own home and the homes of their friends and family were centred on getting into a 
+home and moving around within it. These findings highlight Australia's failure to date in 
+honouring the commitment made to the rights of people with disability to live with equal -
+ity and choice in housing that suits one's needs (United Nations, 2007 ). These findings also 
+provide evidence to support the need for mandatory rather than voluntary minimum acces -
+sibility standards.
+The changes that people considered important to make in their own home were similar to 
+the changes they would make in the homes of family and friends. This is not surprising given 
+that the majority of participants (71 per cent of the sample) were living in inaccessible housing. 
+This finding was consistent with Wiesel's ( 2020) survey of 1187 people, where 74 per cent of 
+people were living in inaccessible housing. Similar changes at home and at the homes of family 
+and friends may also reflect the nature of visits for people with mobility impairments, where 
+for a variety of reasons (such as choice, lack of transport and needing support), people may 
+need to stay longer than a few hours with family and friends and thus require accessible design 
+features throughout the house.
+Insight into the reason for the changes to housing design elucidated three central themes: 
+social inclusion, increased functioning and independence, and increased quality of life. The 
+lived experience perspective gained in this study highlighted the frustrations experienced by 
+people with mobility impairments. These frustrations included being unable to visit family 
+and friends, reliance on others for basic support needs around the home, being unable to con -
+tribute to everyday tasks such as preparing a meal, unnecessary fatigue and effort involved in 
+navigating one's home, and the safety hazards that increase the risk of trips and falls. These 
+findings align with previous literature, exemplifying the impact of inaccessible housing such 
+as social isolation, lack of choice, dependency on others, lack of control and safety concerns, 
+which have consistently been found to be related to poorer health and mental well-  being out-
+comes (Anderson et al., 2020 ; Carnemolla & Bridge, 2016 ; Wiesel, 2020 ; Wright et al., 2017 ). 
+Social inclusion is a key determinant of mental health (Emerson et al., 2021) and is particularly 
+important for adults with disability, who are four times as likely to experience high or very 
+high levels of psychological distress compared to those without disability (AIHW, 2020 ). Thus, 
+more accessible housing for people with mobility impairments could contribute to benefits in 
+physical and mental well-  being.
+The findings also highlight the influence of accessible design on independence, choice 
+and control. Inadequate housing may reinforce the marginalisation of people with disability 
+through unnecessary dependence on others. Previous literature highlights how the introduc -
+tion of accessible features often reduces formal support requirements (Carnemolla & Bridge, 
+2019), suggesting that accessible housing could potentially generate savings on costs of formal 
+support. It could also reduce the unnecessary reliance on people with mobility impairments to 
+ 18394655, 2022, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/ajs4.214 by La Trobe University Library, Wiley Online Library on [08/02/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+966 |   
+GOODWIN et al.
+live in public or community housing and residential aged care facilities due to limited access to 
+affordable, accessible housing.
+The strength of this study was that it focused on the perspective of people with lived ex -
+perience of mobility impairment to understand the importance of accessible housing 
+features. However, the context of the sample must also be considered, as there was an over- 
+representation of people younger than 65 years and people with severe or profound mobility 
+impairments. Given this, it is likely that the design changes identified by the participants may 
+be more important for younger people with more severe mobility impairment. Furthermore, as 
+this study was completed using an online survey, there was no opportunity to further explore 
+why design changes were needed. Nevertheless, this study contributed important insights into 
+the perspective of people with mobility impairment on accessible housing features and their 
+impacts.
+4.1 | Implications
+The results suggest that new housing should incorporate a clear, step-  free entrance to 
+the property, wider internal doors and corridors, and level access throughout the home. 
+Winkler et al. ( 2021a) conducted an audit of Australian houses and found that most of 
+these features are incorporated in many new houses constructed by volume builders, but 
+not in a systematic way that makes all new dwellings fully accessible. These features were 
+also found to be relatively cost-  effective and easy to implement in new dwellings accord -
+ing to a survey of expert architects and access consultants (Winkler et al., 2021b ). In fact, 
+standardisation of these features was suggested to improve the cost-  effectiveness of imple -
+mentation over time.
+Significantly, in March 2021 the ABCB agreed to amend the National Construction Code 
+in September 2022 to include minimum accessibility standards (Department of Industry, 
+Science, Energy & Resources, 2021 ) based on the Livable Housing Design Guidelines 
+(LHDG) silver standards. This will include a safe, step-  free path and entrance to the dwell -
+ing, wider internal doors and corridors, a toilet on entry level, a hobless shower in the bath -
+room, reinforced walls in the bathroom to support grab rail installation if required, and 
+design of stairways to reduce the likelihood of injury and enable future adaptation (Livable 
+Housing Australia, 2017 ). It is anticipated that this legislative approach to increasing ac -
+cessible housing supply will offer a great benefit to people with disability and seniors at a 
+relatively low-  cost impost (Dalton & Carter, 2020 ). As these accessible features are consis -
+tent with what people with lived experience want to change within their own homes and the 
+homes of their friends and family, this is expected to positively influence the lives of people 
+with mobility impairment.
+The inclusion of minimum design standards in the National Construction Code is a 
+major step forward for inclusive housing for the ageing population and people with disabil -
+ity in Australia. While it is disappointing that some states have indicated that they will not 
+adopt these standards, there is an opportunity to demonstrate in the other jurisdictions that 
+universal design can be both cost-  effective and improve the quality and design of housing 
+for all users. The adoption of minimum accessibility standards in some jurisdictions also 
+provides an opportunity for research on the real costs and benefits of implementing these 
+standards at scale over time. Further research is also required to better understand what 
+support, training and resources might support the building sector to make the transition to 
+including minimum accessibility standards in all new housing in Australia. The incorpora -
+tion of the standards into the national code also provides the aged care and disability sector 
+peaks with the opportunity to lobby each of the states that have opted out in the lead up to 
+each state election.
+ 18394655, 2022, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/ajs4.214 by La Trobe University Library, Wiley Online Library on [08/02/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+    | 967
+GOODWIN et al.
+4.2 | Conclusion
+This study presented evidence of the most frequently reported modifications that people with 
+mobility impairment would make to their own homes and the homes of their friends and family. 
+These centred around improving access into homes and facilitating movement within them. The 
+impact of these and other changes were perceived to lead to social inclusion, increased function-
+ing and independence, and increased quality of life. These findings support the ABCB's recent 
+decision to include minimum design standards in the National Construction Code.
+ACKNOWLEDGEMENT
+We would like to acknowledge the participants for their time and effort in completing the 
+survey and sharing their experiences with us. Open access publishing facilitated by La Trobe 
+University, as part of the Wiley - La Trobe University agreement via the Council of Australian 
+University Librarians.
+AUTHOR CONTRIBUTION
+Isabella Goodwin: Writing –  original draft preparation (equal); data curation (equal); for -
+mal analysis (supporting); writing –  review and editing (equal); Elise Davis: Formal analy -
+sis (supporting); data curation (equal); project administration (equal); Writing –  review and 
+editing (equal); Di Winkler: Conceptualization (Lead); Writing –  review and editing (equal); 
+Jacinta Douglas: Conceptualization (Supporting); formal analysis (lead); methodology (lead); 
+Writing  –  review and editing (equal); Cornelia Wellecke: Writing –  original draft prepara -
+tion (equal); data curation (equal); formal analysis (supporting); writing –  review and editing 
+(equal); Kate D’Cruz: Writing –  review and editing (equal); Peter Mulherin: Writing –  review 
+and editing (equal); Stephanie Liddicoat: Writing –  review and editing (equal).
+ORCID
+Elise Davis   https://orcid.org/0000-0002-5076-2869  
+REFERENCES
+Aitken, Z., Baker, E., Badland, H., Manson, K., Bentley, R., Beer, A. et al. (2019) Precariously placed: housing af -
+fordability, quality and satisfaction of Australians with disabilities. Disability & Society , 34(1), 121– 142.
+Anderson, I., Theakstone, D.D. & Lawrence, J. (2020) Inclusive social lettings practice: opportunities to enhance 
+independent living for disabled people. Social Inclusion , 8(3), 54– 65.
+Aplin, T., Hoyle, M., Fiechtner, E., Bailey, A. & Ainsworth, E. (2020) Home modification service delivery in 
+Australia. Journal of Aging and Environment , 34(2), 190– 209.
+Aplin, T., Jonge, D. & Gustafsson, L. (2015) Understanding home modifications impact on clients and their family's 
+experience of home: a qualitative study. Australian Occupational Therapy Journal , 62(2), 123– 131.
+Australian Bureau of Statistics (ABS) (2019) Disability, ageing and carers, Australia: Summary of findings, Reference 
+period 2018. Cat. no, 4430.
+Australian Institute of Health and Welfare (AIHW) (2020) Health of people with disability . Canberra, Australian 
+Institute of Health and Welfare.
+Braun, V. & Clarke, V. (2006) Using thematic analysis in psychology. Qualitative Research in Psychology , 3(2), 
+77– 101.
+Burns, N. (2004) Negotiating difference: disabled people’s experiences of housebuilders. Housing Studies , 19(5), 
+765– 780.
+Carnemolla, P. & Bridge, C. (2019) Housing design and community care: how home modifications reduce care needs 
+of older people and people with disability. International Journal of Environmental Research and Public Health , 
+16(11), 1951.
+Carnemolla, P. & Bridge, C. (2016) Accessible housing and health-  related quality of life: measurements of wellbeing 
+outcomes following home modifications. International Journal of Architectural Research , 10(2), 38– 51.
+Centre for International Economics (2020) Proposal to include minimum accessibility standards for housing in the 
+National Construction Code Consultation Regulation Impact Statement , Canberra, Centre for International 
+Economics.
+ 18394655, 2022, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/ajs4.214 by La Trobe University Library, Wiley Online Library on [08/02/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+968 |   
+GOODWIN et al.
+Council of Australian Governments (2011) National Disability Strategy 2010–  2020. Retrieved from https://human  
+rights.gov.au/sites/  defau lt/files/ NDS%20PDF.pdf
+Dalton, A. & Carter, R. (2020) ‘Economic advice prepared to assist with responses to the Consultation Regulation 
+Impact Statement on minimum accessibility standards for housing in the National Construction Code’ , Melbourne 
+Disability Institute.
+Department of Industry, Science, Energy and Resources (2021) ‘Building Ministers’ Meeting: Communiqué April 
+2021’, Media release, 30 April, Canberra. Available from: https://www.indus  try.gov.au/news/build ing- minis 
+ters- meeti ng- commu nique - april - 2021 [Accessed 18th June 2021]
+Emerson, E., Fortune, N., Llewellyn, G. & Stancliffe, R. (2021) Loneliness, social support, social isolation and 
+wellbeing among working age adults with and without disability: cross-  sectional study. Disability and Health 
+Journal , 14(1), 100965.
+Galbraith, P. (2018) Home Coming? A story of reassurance, opportunity and hope for universally designed housing 
+in Australia. Studies in Health Technology and Informatics , 256, 324– 335.
+Gonzalez, E., Fausset, C., Foster, A., Cha, G. & Fain, W.B. (2015) Moving in, out and around the home: solutions from 
+older adults with long-  term mobility impairment , Georgia, USA, Georgia Institute of Technology.
+Imrie, R. (2003) Housing quality and the provision of accessible homes. Housing Studies , 18(3), 387– 408.
+Jones, A., De Jonge, D. & Phillips, R. (2008) The impact of home maintenance and modification services on health, com -
+munity care and housing outcomes in later life , Melbourne, Australian Housing and Urban Research Institute 
+Limited.
+Kavanagh, A.M., Krnjacki, L., Aitken, Z., LaMontagne, A.D., Beer, A., Baker, E. et al. (2015) Intersections between 
+disability, type of impairment, gender and socio-  economic disadvantage in a nationally representative sample 
+of 33,101 working- aged Australians. Disability and Health Journal , 8(2), 191– 199.
+Lakhani, A., Zeeman, H., Wright, C.J., Watling, D.P., Smith, D. & Islam, R. (2020) Stakeholder priorities for in -
+clusive accessible housing: a systematic review and multicriteria decision analysis. Journal of Multi-  Criteria 
+Decision Analysis , 27(1– 2), 5– 19.
+Lau, G.W.C., Yu, M.L., Brown, T. & Locke, C. (2018) Clients’ perspectives of the effectiveness of home modification 
+recommendations by occupational therapists. Occupational Therapy in Health Care , 32(3), 230– 250.
+Livable Housing Australia (2017) Livable housing design guidelines , 4th edition. Forest Lodge, NSW: Livable Housing 
+Australia.
+McCaffrey, N., Kaambwa, B., Currow, D.C. & Ratcliffe, J. (2016) Health-  related quality of life measured using the 
+EQ- 5D- 5L: South Australian population norms. Health and Quality of Life Outcomes , 14(133), 1– 12.
+Nasar, J.L. & Elmer, J.R. (2016) Homeowner and homebuyer impressions of visitable features. Disability and Health 
+Journal , 9(1), 108– 117.
+National Disability Services (2015) State of the Disability Sector Report 2015 , Canberra, National Disability 
+Services.
+Norin, L., Slaug, B., Haak, M., Jorgensen, S., Lexell, J. & Iwarsson, S. (2017) Housing accessibility and its associa -
+tions with participation among older adults living with long-  standing spinal cord injury. The Journal of Spinal 
+Cord Medicine , 40(2), 230– 240.
+Oliver, S., Gosden-  Kaye, E.Z., Jarman, H., Winkler, D. & Douglas, J. (2020) A scoping review to explore the expe -
+riences and outcomes of younger people with disabilities in residential aged care facilities. Brain Injury , 34(11), 
+1446 – 1460.
+Peace, S. & Darton, R. (2020) Reflections on cross-  cultural comparison of the impact of housing modification/
+adaptation for supporting older people at home: a discussion. Journal of Aging and Environment , 34(2), 210– 231.
+Petersen, M. & Aplin, T. (2021) Exploring older tenants’ healthy ageing in privately rented homes. Australian Social 
+Work, 1– 13. https://doi.org/10.1080/03124 07X.2021.1970783
+Saugeres, L. (2011) (Un)accommodating disabilities: housing, marginalization and dependency in Australia. Journal 
+of Housing and the Built Environment , 26(1), 1– 15.
+Thomas, P. (2004) The experience of disabled people as customers in the owner occupation market. Housing Studies , 
+19(5), 781– 794.
+United Nations (2007) United Nations Convention on the Rights of Persons with Disabilities . United Nations Human 
+Rights Office of the High Commissioner. Available from: https://www.ohchr.org/en/hrbod  ies/crpd/pages/ 
+conve ntion right spers onswi thdis abili ties.aspx (Accessed 8th June 2021)
+Ward, M. (2011) Included by design: a case for regulation for accessible housing in Australia. In Cowled CJL (ed.) 
+Proceedings of the First International Conference on Engineering, Designing and Developing the Built Environment 
+for Sustainable Wellbeing . Australia: Queensland University of Technology.
+Ward, M. & Franz, J. (2015) The provision of visitable housing in Australia: down to the detail. Social Inclusion , 
+3(2), 31– 43.
+Ward, M. & Jacobs, K. (2017) Policies that fail –  words that succeed: the politics of accessible housing in Australia. 
+Australian Journal of Public Administration , 76(1), 80– 92.
+Wiesel, I. (2020) Living with disability in inaccessible housing: social, health and economic impacts , Melbourne, 
+University of Melbourne School of Geography.
+ 18394655, 2022, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/ajs4.214 by La Trobe University Library, Wiley Online Library on [08/02/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+    | 969
+GOODWIN et al.
+Winkler, D., Harvey, C., Davis, E., Goodwin, I., Wellecke, C., Douglas, J. et al. (2021b) Incorporating minimum acces -
+sibility standards in new housing: a survey of access consultants and architects , Melbourne, Summer Foundation.
+Winkler, D., Martel, A., Chen, Y. & Greaves, T. (2021a) Audit of accessible features in new build house plans , 
+Melbourne, Summer Foundation.
+Wright, C.J., Zeeman, H., Kendall, E. & Whitty, J.A. (2017) What housing features should inform the development 
+of housing solutions for adults with neurological disability?: a systematic review of the literature. Health and 
+Place, 46, 234– 248.
+AUTHOR BIOGRAPHIES
+Isabella Goodwin , Research Intern, Summer Foundation.
+Elise Davis, Senior Research Fellow, Summer Foundation and Adjunct, La Trobe University.
+Di Winkler , CEO, Summer Foundation and Adjunct Associate Professor, La Trobe 
+University.
+Jacinta Douglas , Professor of Acquired Brain Injury (Summer Foundation Chair, Living 
+Well with Brain Injury) La Trobe University.
+Cornelia Wellecke, Research Project Co-  ordinator, Summer Foundation.
+Kate D’Cruz , Senior Research Fellow, Summer Foundation and Adjunct, La Trobe 
+University.
+Peter Mulherin, Research Centre Administrator, Summer Foundation.
+Stephanie Liddicoat, Research Project Manager, Summer Foundation
+How to cite this article: Goodwin, I., Davis, E., Winkler, D., Douglas, J., Wellecke, C., 
+D'Cruz, K. et al. (2022). Making homes more accessible for people with mobility 
+impairment: A lived experience perspective. Australian Journal of Social Issues , 57, 
+956– 969. Available from: https://doi.org/10.1002/ajs4.214
+ 18394655, 2022, 4, Downloaded from https://onlinelibrary.wiley.com/doi/10.1002/ajs4.214 by La Trobe University Library, Wiley Online Library on [08/02/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
