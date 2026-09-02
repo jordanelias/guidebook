@@ -181,7 +181,20 @@ twice and disagreed with the list both times — "Five" over six entries, then "
    permanent. And **a column a committed data migration INSERTs can never be dropped**: grep
    `scripts/migrations/data_*` for the name first, then writer-retire, reader-retire, NULL forward.
 
-6. **Commit the scratchpad at every natural break, not at session end.** Owner directive 2026-08-25.
+6. **Commit the scratchpad — AND THE AGENT TRANSCRIPTS — at every natural break, not at
+   session end.** Owner directive 2026-08-25; extended to transcripts 2026-09-02 after the
+   owner asked whether an adversarial pass's workings had been lost and they very nearly
+   had been. `python3 scripts/preserve_transcripts.py` copies this container's agent
+   transcripts into `transcripts/`, and `--check` says whether anything is still
+   unpreserved. **A subagent that runs read-only writes nothing at all**, so its entire
+   workings live in `~/.claude/projects` — ephemeral container storage that a fresh clone
+   does not inherit. Batch 05's antagonist found a containment relation and a false
+   provenance citation; both survived only because someone asked in time. A container
+   restart the same day had already killed one antagonist mid-run. **Its conclusions are
+   not a substitute for its workings: a finding you cannot trace is a finding you cannot
+   correct.** Deliberately NOT a registered gate — `--check` is red for the whole life of a
+   session, because the orchestrator's own transcript grows until the session ends, and a
+   check that is red by construction teaches its reader to ignore it. Owner directive 2026-08-25.
    A scratchpad that lives only in context is not a review surface; compaction, session end and
    container reclamation all take it. This repository paid for that twice in two days — the
    pointer-discipline queue existed only in a conversation while three of its items shipped citing
