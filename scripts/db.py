@@ -933,6 +933,19 @@ def main():
     p_am.add_argument("--session", required=True)
     p_am.add_argument("--dry-run", action="store_true")
 
+    p_rc = sub.add_parser("resolve-candidate",
+                          help="Close a staged candidate, re-describing it from the source (R15)")
+    p_rc.add_argument("--candidate-id", required=True, type=int)
+    p_rc.add_argument("--disposition", required=True,
+                      help="Live vocabulary, read from the column's own CHECK")
+    p_rc.add_argument("--redescription", required=True,
+                      help="What the SOURCE says, now that it has been read. Appended "
+                           "after a RESOLVED marker; the staged hypothesis is kept.")
+    p_rc.add_argument("--admitted-ref-id", dest="admitted_ref_id",
+                      help="Required when --disposition ADMITTED")
+    p_rc.add_argument("--session", required=True)
+    p_rc.add_argument("--dry-run", action="store_true")
+
     p_loc = sub.add_parser("add-locator", help="Write a lead into the clue store")
     p_loc.add_argument("--ref-id", required=True)
     for f in ("doi", "pmid", "pmcid", "isbn", "issn", "url", "standard-number",
@@ -1565,6 +1578,11 @@ def main():
     elif args.command == "amend-search":
         _emit(amend_search(args.exec_id, args.append_note, session=args.session,
                            dry_run=args.dry_run))
+
+    elif args.command == "resolve-candidate":
+        _emit(resolve_candidate(args.candidate_id, args.disposition, args.redescription,
+                                session=args.session, admitted_ref_id=args.admitted_ref_id,
+                                dry_run=args.dry_run))
 
     elif args.command == "add-locator":
         rid = insert_locator({
@@ -2275,6 +2293,64 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False):
         conn.execute("UPDATE search_executions SET findings_note=? WHERE exec_id=?",
                      [merged, exec_id])
         return {"exec_id": exec_id, "appended": True, "chars": len(merged)}
+
+
+def resolve_candidate(candidate_id: int, disposition: str, redescription: str,
+                      session: str, admitted_ref_id: str = None, dry_run: bool = False):
+    """Close a staged candidate by RE-DESCRIBING it from the source (R15).
+
+    R15: "A staged candidate description is a HYPOTHESIS. On resolution, re-describe
+    it from the source and CORRECT it if you over-claimed. Do not let your own guess
+    harden into fact." Until now nothing in the CLI could do that -- search_candidates
+    had an insert and no way to close a row -- so a resolved candidate kept whatever
+    was guessed about it when it was staged.
+
+    Candidate 73 is why this exists. Staged from a 404 page, it asserted that the
+    Euan's Guide Access Survey has "6000+ respondents in 2023" and that its content
+    "skews to information provision, toilets and staff attitude rather than
+    circulation". The retrieved report says over 4,400 respondents, and its
+    second-most-cited barrier of twelve is inability to get around the venue for want
+    of lifts, corridor width, space or layout.
+
+    The hypothesis is APPENDED TO, never overwritten. R15 asks that a guess not harden
+    into fact, and the way to guarantee that is to leave the guess legible beside what
+    the source actually said -- an overwrite would erase the evidence that anyone
+    guessed at all.
+    """
+    redescription = (redescription or "").strip()
+    if not redescription:
+        raise ValueError(
+            f"candidate {candidate_id}: R15 requires a re-description FROM THE SOURCE "
+            f"to resolve a candidate. Refusing to close a hypothesis without one.")
+    with connect(dry_run) as conn:
+        row = conn.execute("SELECT candidate_id, disposition, notes, title "
+                           "FROM search_candidates WHERE candidate_id=?",
+                           [candidate_id]).fetchone()
+        if row is None:
+            raise ValueError(f"candidate {candidate_id}: no such staged candidate.")
+        allowed = dbcore.check_values(conn, "search_candidates", "disposition")
+        if allowed and disposition not in allowed:
+            raise ValueError(
+                f"candidate {candidate_id}: disposition {disposition!r} is not in the "
+                f"column's own vocabulary {sorted(allowed)}.")
+        if disposition == "ADMITTED" and not admitted_ref_id:
+            raise ValueError(
+                f"candidate {candidate_id}: ADMITTED without --admitted-ref-id names no "
+                f"evidence row. Say which source it became.")
+        if admitted_ref_id and not conn.execute(
+                "SELECT 1 FROM evidence_sources WHERE ref_id=?", [admitted_ref_id]).fetchone():
+            raise ValueError(
+                f"candidate {candidate_id}: --admitted-ref-id {admitted_ref_id} is not in "
+                f"evidence_sources. File the source first.")
+        stamp = audit(session)
+        tail = f" || RESOLVED {stamp['created_at'][:10]} (R15, re-described from the source"
+        tail += f"; admitted as {admitted_ref_id}" if admitted_ref_id else ""
+        tail += f"): {redescription}"
+        conn.execute("UPDATE search_candidates SET disposition=?, notes=? "
+                     "WHERE candidate_id=?",
+                     [disposition, (row["notes"] or "").rstrip() + tail, candidate_id])
+        return {"candidate_id": candidate_id, "was": row["disposition"],
+                "now": disposition, "admitted_ref_id": admitted_ref_id}
 
 
 def insert_source_slug_link(ref_id: str, slug: str, local_ref_id: str,
