@@ -103,6 +103,27 @@ PROCESS}. Severity: P1 blocks the batch · P2 blocks a claim · P3 latent.
 | D05-005 | PROCESS | P3 | OPEN — pending re-observation once retrieval begins |
 | D05-006 | DOC-DRIFT | P3 | OPEN — latent, escalates on evidence admission + session close |
 | D05-007 | PROCESS | P3 | RESOLVED — self-reported, no observed harm |
+| D05-008 | TOOL | P1 | RESOLVED `39e5b9b` — `fetch()` decoded bytes as text, so no PDF could ever be logged |
+| D05-009 | TOOL | P1 | RESOLVED `fd26b18` — `--verify-authors` compared surnames only |
+| D05-010 | TOOL | P1 | RESOLVED `fd26b18` — only Crossref single-work payloads were indexed |
+| D05-011 | TOOL | P3 | RESOLVED `fd26b18` — curly apostrophe produced a false FAIL on REF-00975 |
+| D05-012 | DATA | P1 | RESOLVED `fd26b18` — two fabricated titles and one given name, rewritten from the payload |
+| D05-013 | DATA | P1 | RESOLVED `2718457` — the one disability-led source screened out on a 404-page characterisation |
+| D05-014 | TOOL | P1 | RESOLVED — `correct-source`, `amend-search`, `resolve-candidate`, `amend-source`, `update-locator` |
+| D05-015 | DOC-DRIFT | P3 | RESOLVED — `AUDIT-LOG.md` cross-referenced a nonexistent D05-000; now D05-007 |
+| D05-016 | DOC-DRIFT | P2 | RESOLVED `863d369` — three counts of one event; the manifest says SEVEN euansguide fetches, one 404 plus six further |
+| D05-017 | NOT A DEFECT | — | WITHDRAWN. The tracer read commit `645a6b9`, which was amended to `2718457` **before any push** and is not an ancestor of HEAD. The pushed record carries the corrected ranking ("most-cited IN-BUILDING barrier and second of twelve"). No reader ever saw the over-claim in git. |
+| D05-018 | PROCESS | P2 | PART-RESOLVED — three PubMed abstracts retained (20690862, 21657823, 40602232) and Marchiori recovered via PMC10648130 after MDPI's Akamai block. **OPEN for Goodwin only**: Wiley serves a Cloudflare interstitial to both OA endpoints, Unpaywall has no `url_for_pdf`. Recorded on `REF-00975.verification_note`. |
+| D05-019 | TOOL | P2 | RESOLVED `863d369` — `evidence_population_match.match_id` derived from session+ref+pop, so a dissenting grade raised in the SAME session collided on the primary key. The id derivation was abolishing the adversarial mechanic the comment beside it defends. Suffixes on collision now. |
+| D05-020 | TOOL | P3 | RESOLVED `863d369` — `insert_locator`'s error told callers to "Use update-locator"; no such command existed |
+| D05-021 | GATE | P2 | OPEN — R7's harm count in `research_batch_dod.py` is printed and never asserted; only `cand < screened//25` can fail it. The exec-32 filing gap was invisible by construction. |
+| D05-022 | GATE | P2 | OPEN — R13 tests row PRESENCE, not soundness. It cannot see a match row whose stated rationale the payload contradicts, and it passes or fails purely on when the author happened to write the row. |
+| D05-023 | GATE | P1-latent | OPEN — **nothing in the gate tests independence or containment.** REF-00977 contains REF-00971 and REF-00784 as included studies; the DOIs were in this batch's own `citation_mining` row from 21:11 and the gate ran green over them. A synthesis counted as convergent with its own included primaries is one line of evidence counted three times, and only an adversarial reader caught it. |
+| D05-024 | TOOL | P3 | OPEN — `search_executions.results_found` is an integer on an append-only log with no writer. exec 43 understates the fetch count by one; corrected in prose in the row's own note rather than silently rewritten. |
+| D05-025 | PROTOCOL | P2 | OPEN, AND DELIBERATELY NOT BACKFILLED — `research_protocol_audit` CHECK 7 wants `prior_expectation` on every verified citation and all nine of this batch's sources lack it. `add-source` had no flag for it (added 2026-09-02), so it could not be captured at admission, which is the only moment it can honestly be recorded. **A prior written after reading the source is not a prior**, it is a post-hoc rationalisation wearing the field that exists to prevent one. Left failing rather than invented. |
+| D05-026 | TOOL | P1 | RESOLVED — `insert_source` set `verification_disposition='OPEN'` unconditionally, so every VERIFIED row it wrote failed D-0157 invariant I1 ("verification is finished or it did not happen"). Unnoticed while `evidence_sources` held 0 rows and I1 was vacuous; this batch repopulated it and all nine failed together. A default no row can satisfy is a trap, not a default. VERIFIED now defaults CLOSED. |
+| D05-027 | TOOL | P1 | RESOLVED — `log_mining` never touched `citation_mining_status`, so `test_db_integrity` C08's biconditional ('mined' iff a non-deferred mining row resolves to it) could not hold through the sanctioned path. The CLI was structurally unable to produce a state its own integrity test accepts. It now sets the status, refuses a pass that is neither productive nor deferred, and takes `--deferred-reason`. |
+| D05-028 | NOT A DEFECT | — | `metadata_integrity_audit` is advisory-RED on this batch BY DESIGN: nine rows carry `metadata_integrity_status='CORRECTED'` because nine rows had metadata corrected this session. That is an owner-review queue doing its job. Recorded so the red is not mistaken for drift and quietly suppressed later. |
 
 Not registered as defects (checked and found consistent, logged in `AUDIT-LOG.md` instead): schema
 `user_version`, `evidence_sources` count, all 11 seeded row counts, canonical DB sha256, DoD

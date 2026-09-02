@@ -1,3 +1,9 @@
+> **Defect STATUS has one home: `../DEFECT-REGISTER.md`.** This log is the session
+> narrative and holds the evidence for each finding; the register holds whether it is
+> open. Where they differ the register is right. D05-017 was WITHDRAWN after this log
+> was written: it rests on commit `645a6b9`, which was amended to `2718457` before any
+> push and is not an ancestor of HEAD, so the over-claim never entered pushed history.
+
 # TRACER LOG — session_2026-09-02-research-batch-05-circulation-icf
 
 Author: tracer (Sonnet 5). Records only; does not adjudicate research quality (an antagonist does

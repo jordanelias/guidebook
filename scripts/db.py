@@ -200,7 +200,8 @@ def is_mined(slug: str, ref_id: str) -> dict | None:
 
 def log_mining(slug: str, ref_id: str, direction: str,
                connections: list[str], session: str,
-               dry_run: bool = False):
+               dry_run: bool = False, deferred_reason: str = None,
+               status: str = None):
     """Record a mining pass. Keyed on the global ref_id.
 
     The `doi` parameter was REMOVED 2026-08-24. It wrote a copy of a value that
@@ -212,6 +213,22 @@ def log_mining(slug: str, ref_id: str, direction: str,
         raise ValueError(
             f"direction must be 'backward' or 'forward', got '{direction}'"
         )
+    deferred_reason = (deferred_reason or "").strip() or None
+    if connections and deferred_reason:
+        raise ValueError(
+            f"{ref_id}: a pass cannot both produce connections and be deferred. "
+            f"Say which happened.")
+    if not connections and not deferred_reason:
+        raise ValueError(
+            f"{ref_id}: no connections and no --deferred-reason. A mining pass that "
+            f"found nothing and does not say why is indistinguishable from one that "
+            f"never ran (R8's rule for searches, applied to mining).")
+    # citation_mining_status is asserted AGAINST this table by test_db_integrity C08:
+    # 'mined' iff a non-deferred mining row resolves to it. Nothing in this writer ever
+    # moved it, so the biconditional could not hold through the sanctioned path -- the
+    # CLI was structurally unable to produce a state its own integrity test accepts.
+    if status is None:
+        status = "deferred" if deferred_reason else "mined"
     dir_col = direction
     ts = now()
 
@@ -254,6 +271,15 @@ def log_mining(slug: str, ref_id: str, direction: str,
                  1 if direction == "forward" else 0,
                  json.dumps(connections), ts, session, ts, session]
             )
+        if deferred_reason:
+            conn.execute("UPDATE citation_mining SET deferred_reason=?, updated_at=?, "
+                         "updated_by_session=? WHERE slug=? AND global_ref_id=?",
+                         [deferred_reason, ts, session, slug, ref_id])
+        dbcore.check_vocab(conn, "evidence_sources", "citation_mining_status",
+                           status, "--status")
+        conn.execute("UPDATE evidence_sources SET citation_mining_status=?, "
+                     "updated_at=?, updated_by_session=? WHERE ref_id=?",
+                     [status, ts, session, ref_id])
 
 
 class FrozenGridError(RuntimeError):
@@ -814,8 +840,17 @@ def main():
     p_logm.add_argument("--ref", required=True)
     p_logm.add_argument("--direction", required=True,
                         choices=["backward", "forward"])
-    p_logm.add_argument("--connections", required=True,
-                        help="JSON array of CON-IDs")
+    p_logm.add_argument("--connections",
+                        help="JSON array of CON-IDs. Omit only when --deferred-reason "
+                             "says why the pass produced none.")
+    p_logm.add_argument("--deferred-reason", dest="deferred_reason",
+                        help="Why this anchor was NOT mined. Required when no "
+                             "connections are given, so a pass that found nothing is "
+                             "distinguishable from one that never ran.")
+    p_logm.add_argument("--status", dest="mining_status",
+                        help="citation_mining_status to set on the source. Live "
+                             "vocabulary from the column's own CHECK. Derived when "
+                             "omitted: 'mined' with connections, 'deferred' without.")
     p_logm.add_argument("--session", required=True)
     p_logm.add_argument("--dry-run", action="store_true")
 
@@ -1173,6 +1208,14 @@ def main():
                            "organisation. D-0178: 'published_corpus' says where it was PUBLISHED, "
                            "not that disabled people CO-PRODUCED it. Required for --evidence-type co1.")
     p_as.add_argument("--co1-source-type")
+    p_as.add_argument("--prior-expectation",
+                      help="What you expected this source to say BEFORE reading it. "
+                           "research_protocol_audit CHECK 7 asks for it on every "
+                           "verified citation, and there was no way to write it at "
+                           "admission until 2026-09-02 -- which is the only moment it "
+                           "can honestly be recorded. Backfilling one after reading the "
+                           "source manufactures a prior, which is the failure the field "
+                           "exists to prevent.")
     p_as.add_argument("--synthesis-attribution-required", type=int, choices=[0, 1])
     p_as.add_argument("--lang-detected", help="ISO 639-1 code for the source's actual publication language")
     p_as.add_argument("--lang-detection-method",
@@ -1408,14 +1451,17 @@ def main():
         _emit(result if result else {"mined": False})
 
     elif args.command == "log-mining":
-        conns = json.loads(args.connections)
+        conns = json.loads(args.connections) if args.connections else []
         log_mining(
             slug=args.slug, ref_id=args.ref,
             direction=args.direction, connections=conns,
             session=args.session,
-            dry_run=args.dry_run
+            dry_run=args.dry_run,
+            deferred_reason=args.deferred_reason,
+            status=args.mining_status,
         )
-        print(json.dumps({"logged": True, "dry_run": args.dry_run}))
+        print(json.dumps({"logged": True, "connections": len(conns),
+                          "dry_run": args.dry_run}))
 
     elif args.command == "next-id":
         id_funcs = {
@@ -1671,7 +1717,13 @@ def main():
                             ("co1_provenance", "co1_provenance"),
                             ("co1_source_type", "co1_source_type"),
                             ("synthesis_attribution_required",
-                             "synthesis_attribution_required")):
+                             "synthesis_attribution_required"),
+                            # Added 2026-09-02: research_protocol_audit CHECK 7 asks for
+                            # this on every verified citation and nothing could write it,
+                            # so all nine of batch 05's sources failed it and none could
+                            # be fixed honestly -- a prior recorded after reading the
+                            # source is not a prior.
+                            ("prior_expectation", "prior_expectation")):
             _v = getattr(args, _flag, None)
             # `is not None`, not truthiness: synthesis_attribution_required is an int flag
             # and 0 is a real, meaningful value that `if _v` would discard.
@@ -2059,7 +2111,7 @@ def insert_evidence_source(data: dict, session: str,
         # attempt) the moment it lands — both blocking checks. The two scheduled
         # jobs were swept for D-0157; this third writer was not, and it is the
         # one the skills tell sessions to use.
-        "verification_disposition", "verification_method",
+        "verification_disposition", "verification_method", "prior_expectation",
         "verification_closure_reason", "verification_attempt_count",
         "verification_note", "verified_by_tool",
     })
@@ -2121,6 +2173,13 @@ def insert_evidence_source(data: dict, session: str,
                 "verification_method='tool' requires --verified-by-tool naming "
                 "which tool established it (invariant I4b).")
         data.setdefault("verification_attempt_count", 1)
+        # D-0157 invariant I1: "verification is finished or it did not happen."
+        # insert_source set OPEN unconditionally, so EVERY verified source it wrote
+        # failed I1 the moment anything looked. That went unnoticed while
+        # evidence_sources held 0 rows and I1 was vacuous; this batch is the first to
+        # repopulate it, and all nine rows failed together. A default that no row can
+        # satisfy is not a default, it is a trap.
+        data.setdefault("verification_disposition", "CLOSED")
     elif vs == "UNVERIFIED":
         data.setdefault("verification_disposition", "OPEN")
         data.setdefault("verification_attempt_count", 1)
@@ -2412,6 +2471,11 @@ def resolve_candidate(candidate_id: int, disposition: str, redescription: str,
 _AMENDABLE = (
     "co1_provenance", "co1_source_type", "grey_reason", "verification_note",
     "prior_expectation", "notes", "bpc_note", "scope",
+    # verification_disposition belongs here and not with the bibliographic fields:
+    # D-0157 states it as a JUDGEMENT -- "verification is finished or it did not
+    # happen" -- which no payload can settle. Added 2026-09-02 to correct rows that
+    # insert_source had written OPEN while VERIFIED, before its default was fixed.
+    "verification_disposition",
 )
 
 
