@@ -116,6 +116,34 @@ try:
            open_session(build(pathlib.Path(tempfile.mkdtemp()),
                               {"session_2026-08-25-x": (None, CLOSED)}), "SID-Z") == "")
 
+    # --- scratchpad/CURRENT, added 2026-09-02 -------------------------------------
+    # These four exist because the inference these tests cover was WRONG IN PRODUCTION
+    # while every one of them passed: one harness sid spanned three project sessions,
+    # so the sid anchor matched the first directory it ever wrote to and returned it
+    # for all three. All 969 lines landed in one folder. A stated fact beats it.
+    def with_current(dirs, current, sid="SID-A"):
+        t = build(pathlib.Path(tempfile.mkdtemp()), dirs)
+        if current is not None:
+            (t / "scratchpad" / "CURRENT").write_text(current)
+        return open_session(t, sid)
+
+    ours = [{"session_id": "SID-A"}]
+    record("C01", "CURRENT outranks the sid anchor pointing at another directory",
+           with_current({"pr-127-batch-05": (None, OPEN),
+                         "session_2026-09-01-batch-04": (ours, OPEN)},
+                        "pr-127-batch-05") == "pr-127-batch-05")
+
+    record("C02", "CURRENT naming a directory that does not exist falls back, never invents",
+           with_current({"session_2026-09-01-batch-04": (ours, OPEN)},
+                        "pr-999-does-not-exist") == "session_2026-09-01-batch-04")
+
+    record("C03", "a pr-* directory participates in the fallback inference",
+           with_current({"pr-127-batch-05": (ours, OPEN)}, None) == "pr-127-batch-05")
+
+    record("C04", "CURRENT is stripped, so a trailing newline still resolves",
+           with_current({"pr-127-batch-05": (None, OPEN)},
+                        "pr-127-batch-05\n") == "pr-127-batch-05")
+
     # ── W: the writer must actually record the anchor the reader depends on ──
     src = HOOK.read_text()
     record("W01", "the hook writes session_id onto every line",

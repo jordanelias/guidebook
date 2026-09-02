@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed  xmlns="http://www.w3.org/2005/Atom"
+  xmlns:prism="http://prismstandard.org/namespaces/basic/2.0/"
+  xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/"
+  xml:lang="ja" > 
+  <result>
+    <status>0</status>
+    <message/>
+  </result>
+  <title>Articles</title>
+  <link href="https://api.jstage.jst.go.jp/searchapi/do?service=3&amp;text=%E8%BB%8A%E6%A4%85%E5%AD%90%20%E5%BB%8A%E4%B8%8B%20%E5%B9%85%E5%93%A1&amp;count=20"/>
+  <id>https://api.jstage.jst.go.jp/searchapi/do?service=3&amp;text=%E8%BB%8A%E6%A4%85%E5%AD%90%20%E5%BB%8A%E4%B8%8B%20%E5%B9%85%E5%93%A1&amp;count=20</id>
+  <servicecd>3</servicecd>
+  <updated>2026-09-03T05:51+09:00</updated>
+  <opensearch:totalResults>49</opensearch:totalResults>
+  <opensearch:startIndex>1</opensearch:startIndex>
+  <opensearch:itemsPerPage>20</opensearch:itemsPerPage>
+  <entry>
+    <article_title>
+      <en><![CDATA[House Adaptation]]></en>
+      <ja><![CDATA[ハウスアダプテーション]]></ja>
+    </article_title>
+    <article_link>
+      <en>https://www.jstage.jst.go.jp/article/rigaku/28/3/28_KJ00001309650/_article</en>
+      <ja>https://www.jstage.jst.go.jp/article/rigaku/28/3/28_KJ00001309650/_article/-char/ja/</ja>
+    </article_link>
+    <author>
+      <en>
+        <name><![CDATA[Takeshi Higashida]]></name>
+      </en>
+      <ja>
+        <name><![CDATA[東田 武志]]></name>
+      </ja>
+    </author>
+    <cdjournal>rigaku</cdjournal>
+    <material_title>
+      <en><![CDATA[Physical Therapy Japan]]></en>
+      <ja><![CDATA[理学療法学]]></ja>
+    </material_title>
+    <prism:issn>0289-3770</prism:issn>
+    <prism:eIssn>2189-602X</prism:eIssn>
+    <prism:volume>28</prism:volume>
+    <prism:number>3</prism:number>
+    <prism:startingPage>141</prism:startingPage>
+    <prism:endingPage>144</prism:endingPage>
+    <pubyear>2001</pubyear>
+    <prism:doi>10.15063/rigaku.KJ00001309650</prism:doi>
+    <systemcode>1</systemcode>
+    <systemname>J-STAGE</systemname>
+    <title><![CDATA[ハウスアダプテーション]]></title>
+    <link href="https://www.jstage.jst.go.jp/article/rigaku/28/3/28_KJ00001309650/_article/-char/ja/"/>
+    <id>https://www.jstage.jst.go.jp/article/rigaku/28/3/28_KJ00001309650/_article/-char/ja/</id>
+    <updated>2018-09-25T09:00+09:00</updated>
+  </entry>
+  <entry>
+    <article_title>
+      <en><![CDATA[ACUTUAL FEATURES OF ORIENTATION TO LIFE TIME HOMES FROM VIEWPOINTS OF WHEEL CHAIR MOVEMENTS POSSIBILITY]]></en>
+      <ja><![CDATA[車椅子生活移動の観点からの新築住宅における生涯住宅対応性の現状]]></ja>
+    </article_title>
+    <article_link>
+      <en>https://www.jstage.jst.go.jp/article/aija/69/577/69_KJ00004227047/_article</en>
+      <ja>https://www.jstage.jst.go.jp/article/aija/69/577/69_KJ00004227047/_article/-char/ja/</ja>
+    </article_link>
+    <author>
+      <en>
+        <name><![CDATA[Akio BABA]]></name>
+        <name><![CDATA[Akiko MORI]]></name>
+        <name><![CDATA[Wataru ASAINE]]></name>
+        <name><![CDATA[Takeshi FUTADUKA]]></name>
+        <name><![CDATA[Naoji HASEGAWA]]></name>
+      </en>
+      <ja>
+        <name><![CDATA[馬場 明生]]></name>
+        <name><![CDATA[守 明子]]></name>
+        <name><![CDATA[朝稲 渉]]></name>
+        <name><![CDATA[二塚 岳志]]></name>
+        <name><![CDATA[長谷川 直司]]></name>
+      </ja>
+    </author>
+    <cdjournal>aija</cdjournal>
+    <material_title>
+      <en><![CDATA[Journal of Architecture and Planning (Transactions of AIJ)]]></en>
+      <ja><![CDATA[日本建築学会計画系論文集]]></ja>
+    </material_title>
+    <prism:issn>1340-4210</prism:issn>
+    <prism:eIssn>1881-8161</prism:eIssn>
+    <prism:volume>69</prism:volume>
+    <prism:number>577</prism:number>
+    <prism:startingPage>33</prism:startingPage>
+    <prism:endingPage>39</prism:endingPage>
+    <pubyear>2004</pubyear>
+    <prism:doi>10.3130/aija.69.33_1</prism:doi>
+    <systemcode>1</systemcode>
+    <systemname>J-STAGE</systemname>
+    <title><![CDATA[車椅子生活移動の観点からの新築住宅における生涯住宅対応性の現状]]></title>
+    <link href="https://www.jstage.jst.go.jp/article/aija/69/577/69_KJ00004227047/_article/-char/ja/"/>
+    <id>https://www.jstage.jst.go.jp/article/aija/69/577/69_KJ00004227047/_article/-char/ja/</id>
+    <updated>2017-02-09T09:00+09:00</updated>
+  </entry>
+  <entry>
+    <article_title>
+      <en><![CDATA[A STUDY ON ACTUAL CONDITION OF BARRIER FREE OF 18 PARKS IN MURORAN CITY]]></en>
+      <ja><![CDATA[室蘭市における公園のバリアフリーの実態に関する研究]]></ja>
+    </article_title>
+    <article_link>
+      <en>https://www.jstage.jst.go.jp/article/aijt/5/7/5_KJ00003286478/_article</en>
+      <ja>https://www.jstage.jst.go.jp/article/aijt/5/7/5_KJ00003286478/_article/-char/ja/</ja>
+    </article_link>
+    <author>
+      <en>
+        <name><![CDATA[Yoshiyuki OSAKAYA]]></name>
+      </en>
+      <ja>
+        <name><![CDATA[大坂谷 吉行]]></name>
+      </ja>
+    </author>
+    <cdjournal>aijt</cdjournal>
+    <material_title>
+      <en><![CDATA[AIJ Journal of Technology and Design]]></en>
+      <ja><![CDATA[日本建築学会技術報告集]]></ja>
+    </material_title>
+    <prism:issn>1341-9463</prism:issn>
+    <prism:eIssn>1881-8188</prism:eIssn>
+    <prism:volume>5</prism:volume>
+    <prism:number>7</prism:number>
+    <prism:startingPage>139</prism:startingPage>
+    <prism:endingPage>144</prism:endingPage>
+    <pubyear>1999</pubyear>
+    <prism:doi>10.3130/aijt.5.139</prism:doi>
+    <systemcode>1</systemcode>
+    <systemname>J-STAGE</systemname>
+    <title><![CDATA[室蘭市における公園のバリアフリーの実態に関する研究]]></title>
+    <link href="https://www.jstage.jst.go.jp/article/aijt/5/7/5_KJ00003286478/_article/-char/ja/"/>
+    <id>https://www.jstage.jst.go.jp/article/aijt/5/7/5_KJ00003286478/_article/-char/ja/</id>
+    <updated>2017-01-25T09:00+09:00</updated>
+  </entry>
+  <entry>
+    <article_title>
+      <en><![CDATA[A STUDY ON ACTUAL CONDITIONS OF BARRIER FREE OF MEDICAL, HEALTH CARE AND SOCIAL WELFARE FACILITIES FOR THE AGED AND THE DISABLED IN LOCAL MEDIUM AND SMALL CITIES]]></en>
+      <ja><![CDATA[地方中小都市の高齢者・身障者対応施設のバリアフリーの実態 : 室蘭市・登別市・伊達市・苫小牧市の事例報告]]></ja>
+    </article_title>
+    <article_link>
+      <en>https://www.jstage.jst.go.jp/article/aijt/6/11/6_KJ00003287765/_article</en>
+      <ja>https://www.jstage.jst.go.jp/article/aijt/6/11/6_KJ00003287765/_article/-char/ja/</ja>
+    </article_link>
+    <author>
+      <en>
+        <name><![CDATA[Yoshiyuki OSAKAYA]]></name>
+      </en>
+      <ja>
+        <name><![CDATA[大坂谷 吉行]]></name>
+      </ja>
+    </author>
+    <cdjournal>aijt</cdjournal>
+    <material_title>
+      <en><![CDATA[AIJ Journal of Technology and Design]]></en>
+      <ja><![CDATA[日本建築学会技術報告集]]></ja>
+    </material_title>
+    <prism:issn>1341-9463</prism:issn>
+    <prism:eIssn>1881-8188</prism:eIssn>
+    <prism:volume>6</prism:volume>
+    <prism:number>11</prism:number>
+    <prism:startingPage>223</prism:startingPage>
+    <prism:endingPage>228</prism:endingPage>
+    <pubyear>2000</pubyear>
+    <prism:doi>10.3130/aijt.6.223</prism:doi>
+    <systemcode>1</systemcode>
+    <systemname>J-STAGE</systemname>
+    <title><![CDATA[地方中小都市の高齢者・身障者対応施設のバリアフリーの実態 : 室蘭市・登別市・伊達市・苫小牧市の事例報告]]></title>
+    <link href="https://www.jstage.jst.go.jp/article/aijt/6/11/6_KJ00003287765/_article/-char/ja/"/>
+    <id>https://www.jstage.jst.go.jp/article/aijt/6/11/6_KJ00003287765/_article/-char/ja/</id>
+    <updated>2017-04-14T09:00+09:00</updated>
+  </entry>
+  <entry>
+    <article_title>
+      <en><![CDATA[A STUDY ON ACTUAL CONDITION OF BARRIER FREE OF ROADS AT NAKAJIMA AREA IN MURORAN CITY]]></en>
+      <ja><![CDATA[室蘭市中島町における道路のバリアフリーの実態に関する研究]]></ja>
+    </article_title>
+    <article_link>
+      <en>https://www.jstage.jst.go.jp/article/aijt/5/7/5_KJ00003286479/_article</en>
+      <ja>https://www.jstage.jst.go.jp/article/aijt/5/7/5_KJ00003286479/_article/-char/ja/</ja>
+    </article_link>
+    <author>
+      <en>
+        <name><![CDATA[Yoshiyuki OSAKAYA]]></name>
+      </en>
+      <ja>
+        <name><![CDATA[大坂谷 吉行]]></name>
+      </ja>
+    </author>
+    <cdjournal>aijt</cdjournal>
+    <material_title>
+      <en><![CDATA[AIJ Journal of Technology and Design]]></en>
+      <ja><![CDATA[日本建築学会技術報告集]]></ja>
+    </material_title>
+    <prism:issn>1341-9463</prism:issn>
+    <prism:eIssn>1881-8188</prism:eIssn>
+    <prism:volume>5</prism:volume>
+    <prism:number>7</prism:number>
+    <prism:startingPage>145</prism:startingPage>
+    <prism:endingPage>150</prism:endingPage>
+    <pubyear>1999</pubyear>
+    <prism:doi>10.3130/aijt.5.145</prism:doi>
+    <systemcode>1</systemcode>
+    <systemname>J-STAGE</systemname>
+    <title><![CDATA[室蘭市中島町における道路のバリアフリーの実態に関する研究]]></title>
+    <link href="https://www.jstage.jst.go.jp/article/aijt/5/7/5_KJ00003286479/_article/-char/ja/"/>
+    <id>https://www.jstage.jst.go.jp/article/aijt/5/7/5_KJ00003286479/_article/-char/ja/</id>
+    <updated>2017-01-25T09:00+09:00</updated>
+  </entry>
+  <entry>
+    <article_title>
+      <en><![CDATA[A comparative study of suitable sign position for standing position and sitting in a wheelchair]]></en>
+      <ja><![CDATA[見やすい標示位置に関する立位と車椅子坐位の比較研究]]></ja>
+    </article_title>
+    <article_link>
+      <en>https://www.jstage.jst.go.jp/article/jais/4/1/4_KJ00008025063/_article</en>
+      <ja>https://www.jstage.jst.go.jp/article/jais/4/1/4_KJ00008025063/_article/-char/ja/</ja>
+    </article_link>
+    <author>
+      <en>
+        <name><![CDATA[Yoshihide TOKUDA]]></name>
+        <name><![CDATA[Ken NUNOTA]]></name>
+      </en>
+      <ja>
+        <name><![CDATA[徳田 良英]]></name>
+        <name><![CDATA[布田 健]]></name>
+      </ja>
+    </author>
+    <cdjournal>jais</cdjournal>
+    <material_title>
+      <en><![CDATA[Journal of Japanese Association for an Inclusive Society]]></en>
+      <ja><![CDATA[福祉のまちづくり研究]]></ja>
+    </material_title>
+    <prism:issn>1345-8973</prism:issn>
+    <prism:eIssn>2189-891X</prism:eIssn>
+    <prism:volume>4</prism:volume>
+    <prism:number>1</prism:number>
+    <prism:startingPage>27</prism:startingPage>
+    <prism:endingPage>33</prism:endingPage>
+    <pubyear>2002</pubyear>
+    <prism:doi>10.18975/jais.4.1_27</prism:doi>
+    <systemcode>1</systemcode>
+    <systemname>J-STAGE</systemname>
+    <title><![CDATA[見やすい標示位置に関する立位と車椅子坐位の比較研究]]></title>
+    <link href="https://www.jstage.jst.go.jp/article/jais/4/1/4_KJ00008025063/_article/-char/ja/"/>
+    <id>https://www.jstage.jst.go.jp/article/jais/4/1/4_KJ00008025063/_article/-char/ja/</id>
+    <updated>2017-06-23T09:00+09:00</updated>
+  </entry>
+  <entry>
+    <article_title>
+      <en><![CDATA[A Study of the Factors Related to Providing Bathroom Techno-aids for the Elderly at Home : Factors for Installing Bath Mats and Handrails]]></en>
+      <ja><![CDATA[在宅障害高齢者における入浴用福祉用具導入を決定する要因の検討]]></ja>
+    </article_title>
+    <article_link>
+      <en>https://www.jstage.jst.go.jp/article/rigaku/22/5/22_KJ00001307513/_article</en>
+      <ja>https://www.jstage.jst.go.jp/article/rigaku/22/5/22_KJ00001307513/_article/-char/ja/</ja>
+    </article_link>
+    <author>
+      <en>
+        <name><![CDATA[Osamu NITTA]]></name>
+        <name><![CDATA[Takako TSUTSUI]]></name>
+      </en>
+      <ja>
+        <name><![CDATA[新田 収]]></name>
+        <name><![CDATA[筒井 孝子]]></name>
+      </ja>
+    </author>
+    <cdjournal>rigaku</cdjournal>
+    <material_title>
+      <en><![CDATA[Physical Therapy Japan]]></en>
+      <ja><![CDATA[理学療法学]]></ja>
+    </material_title>
+    <prism:issn>0289-3770</prism:issn>
+    <prism:eIssn>2189-602X</prism:eIssn>
+    <prism:volume>22</prism:volume>
+    <prism:number>5</prism:number>
+    <prism:startingPage>189</prism:startingPage>
+    <prism:endingPage>195</prism:endingPage>
+    <pubyear>1995</pubyear>
+    <prism:doi>10.15063/rigaku.KJ00001307513</prism:doi>
+    <systemcode>1</systemcode>
+    <systemname>J-STAGE</systemname>
+    <title><![CDATA[在宅障害高齢者における入浴用福祉用具導入を決定する要因の検討]]></title>
+    <link href="https://www.jstage.jst.go.jp/article/rigaku/22/5/22_KJ00001307513/_article/-char/ja/"/>
+    <id>https://www.jstage.jst.go.jp/article/rigaku/22/5/22_KJ00001307513/_article/-char/ja/</id>
+    <updated>2018-09-25T09:00+09:00</updated>
+  </entry>
+  <entry>
+    <article_title>
+      <en><![CDATA[WALKING BEHAVIOR OF A CROWD INCLUDING WHEELCHAIR USERS]]></en>
+      <ja><![CDATA[車椅子使用者が混在する群集の流動特性に関する研究]]></ja>
+    </article_title>
+    <article_link>
+      <en>https://www.jstage.jst.go.jp/article/aije/68/571/68_KJ00004079002/_article</en>
+      <ja>https://www.jstage.jst.go.jp/article/aije/68/571/68_KJ00004079002/_article/-char/ja/</ja>
+    </article_link>
+    <author>
+      <en>
+        <name><![CDATA[Shin&apos;ichi TSUCHIYA]]></name>
+        <name><![CDATA[Yoko FURUKAWA]]></name>
+        <name><![CDATA[Yoshiyasu MIYANO]]></name>
+        <name><![CDATA[Naoyuki YOSHIDA]]></name>
+        <name><![CDATA[Yuji HASEMI]]></name>
+      </en>
+      <ja>
+        <name><![CDATA[土屋 伸一]]></name>
+        <name><![CDATA[古川 容子]]></name>
+        <name><![CDATA[宮野 義康]]></name>
+        <name><![CDATA[吉田 直之]]></name>
+        <name><![CDATA[長谷見 雄二]]></name>
+      </ja>
+    </author>
+    <cdjournal>aije</cdjournal>
+    <material_title>
+      <en><![CDATA[Journal of Environmental Engineering (Transactions of AIJ)]]></en>
+      <ja><![CDATA[日本建築学会環境系論文集]]></ja>
+    </material_title>
+    <prism:issn>1348-0685</prism:issn>
+    <prism:eIssn>1881-817X</prism:eIssn>
+    <prism:volume>68</prism:volume>
+    <prism:number>571</prism:number>
+    <prism:startingPage>1</prism:startingPage>
+    <prism:endingPage>7</prism:endingPage>
+    <pubyear>2003</pubyear>
+    <prism:doi>10.3130/aije.68.1_6</prism:doi>
+    <systemcode>1</systemcode>
+    <systemname>J-STAGE</systemname>
+    <title><![CDATA[車椅子使用者が混在する群集の流動特性に関する研究]]></title>
+    <link href="https://www.jstage.jst.go.jp/article/aije/68/571/68_KJ00004079002/_article/-char/ja/"/>
+    <id>https://www.jstage.jst.go.jp/article/aije/68/571/68_KJ00004079002/_article/-char/ja/</id>
+    <updated>2017-01-27T09:00+09:00</updated>
+  </entry>
+  <entry>
+    <article_title>
+      <en><![CDATA[STUDY ON CONSOLIDATION OF THE RESIDENTIAL SPACE FOR PHYSICALLY HANDICAPPED : Part I Classification of physical conditions &amp; care helper&apos;s estimation of inconvenient-degrees referred to residential spaces of houses]]></en>
+      <ja><![CDATA[肢体不自由児者の住空間整備に関する研究 : その1. 脳性麻痺児者の主体類型と住宅各部の不便評価]]></ja>
+    </article_title>
+    <article_link>
+      <en>https://www.jstage.jst.go.jp/article/aijax/411/0/411_KJ00004075165/_article</en>
+      <ja>https://www.jstage.jst.go.jp/article/aijax/411/0/411_KJ00004075165/_article/-char/ja/</ja>
+    </article_link>
+    <author>
+      <en>
+        <name><![CDATA[Yoshirou YUDA]]></name>
+        <name><![CDATA[Kazuo KAKEHI]]></name>
+        <name><![CDATA[Minoru KANNO]]></name>
+        <name><![CDATA[Tatsuya MINOSHITA]]></name>
+      </en>
+      <ja>
+        <name><![CDATA[湯田 善郎]]></name>
+        <name><![CDATA[筧 和夫]]></name>
+        <name><![CDATA[菅野 實]]></name>
+        <name><![CDATA[木下 辰也]]></name>
+      </ja>
+    </author>
+    <cdjournal>aijax</cdjournal>
+    <material_title>
+      <en><![CDATA[Journal of Architecture, Planning and Environmental Engineering (Transactions of AIJ)]]></en>
+      <ja><![CDATA[日本建築学会計画系論文報告集]]></ja>
+    </material_title>
+    <prism:issn>0910-8017</prism:issn>
+    <prism:eIssn>2433-0043</prism:eIssn>
+    <prism:volume>411</prism:volume>
+    <prism:number>0</prism:number>
+    <prism:startingPage>45</prism:startingPage>
+    <prism:endingPage>56</prism:endingPage>
+    <pubyear>1990</pubyear>
+    <prism:doi>10.3130/aijax.411.0_45</prism:doi>
+    <systemcode>1</systemcode>
+    <systemname>J-STAGE</systemname>
+    <title><![CDATA[肢体不自由児者の住空間整備に関する研究 : その1. 脳性麻痺児者の主体類型と住宅各部の不便評価]]></title>
+    <link href="https://www.jstage.jst.go.jp/article/aijax/411/0/411_KJ00004075165/_article/-char/ja/"/>
+    <id>https://www.jstage.jst.go.jp/article/aijax/411/0/411_KJ00004075165/_article/-char/ja/</id>
+    <updated>2017-12-25T09:00+09:00</updated>
+  </entry>
+  <entry>
+    <article_title>
+      <en><![CDATA[A PROPOSAL ON EVALUATION METHOD FOR LIFETIME HOMES BASED ON BUILDING STANDARDS IN UNITED KINGDOM]]></en>
+      <ja><![CDATA[英国建築基準に基づく生涯住宅の評価手法に関する提案]]></ja>
+    </article_title>
+    <article_link>
+      <en>https://www.jstage.jst.go.jp/article/aija/67/562/67_KJ00004230586/_article</en>
+      <ja>https://www.jstage.jst.go.jp/article/aija/67/562/67_KJ00004230586/_article/-char/ja/</ja>
+    </article_link>
+    <author>
+      <en>
+        <name><![CDATA[Akio BABA]]></name>
+        <name><![CDATA[Akiko MORI]]></name>
+        <name><![CDATA[Wataru ASAINE]]></name>
+        <name><![CDATA[Naoji HASEGAWA]]></name>
+      </en>
+      <ja>
+        <name><![CDATA[馬場 明生]]></name>
+        <name><![CDATA[守 明子]]></name>
+        <name><![CDATA[朝稲 渉]]></name>
+        <name><![CDATA[長谷川 直司]]></name>
+      </ja>
+    </author>
+    <cdjournal>aija</cdjournal>
+    <material_title>
+      <en><![CDATA[Journal of Architecture and Planning (Transactions of AIJ)]]></en>
+      <ja><![CDATA[日本建築学会計画系論文集]]></ja>
+    </material_title>
+    <prism:issn>1340-4210</prism:issn>
+    <prism:eIssn>1881-8161</prism:eIssn>
+    <prism:volume>67</prism:volume>
+    <prism:number>562</prism:number>
+    <prism:startingPage>121</prism:startingPage>
+    <prism:endingPage>128</prism:endingPage>
+    <pubyear>2002</pubyear>
+    <prism:doi>10.3130/aija.67.121_3</prism:doi>
+    <systemcode>1</systemcode>
+    <systemname>J-STAGE</systemname>
+    <title><![CDATA[英国建築基準に基づく生涯住宅の評価手法に関する提案]]></title>
+    <link href="https://www.jstage.jst.go.jp/article/aija/67/562/67_KJ00004230586/_article/-char/ja/"/>
+    <id>https://www.jstage.jst.go.jp/article/aija/67/562/67_KJ00004230586/_article/-char/ja/</id>
+    <updated>2017-02-04T09:00+09:00</updated>
+  </entry>
+  <entry>
+    <article_title>
+      <en><![CDATA[EVALUATION OF SAFETY ON EVACUATION BEHAVIOR FROM AN UNDERGROUND SPACE DURING AN EARTHQUAKE]]></en>
+      <ja><![CDATA[避難行動シミュレーションに基づく地下街の安全性評価]]></ja>
+    </article_title>
+    <article_link>
+      <en>https://www.jstage.jst.go.jp/article/jscej1984/2001/689/2001_689_31/_article</en>
+      <ja>https://www.jstage.jst.go.jp/article/jscej1984/2001/689/2001_689_31/_article/-char/ja/</ja>
+    </article_link>
+    <author>
+      <en>
+        <name><![CDATA[Junji KIYONO]]></name>
+        <name><![CDATA[Kenzo TOKI]]></name>
+        <name><![CDATA[Nobuhiro INUKAI]]></name>
+        <name><![CDATA[Toru TAKEUCHI]]></name>
+      </en>
+      <ja>
+        <name><![CDATA[清野 純史]]></name>
+        <name><![CDATA[土岐 憲三]]></name>
+        <name><![CDATA[犬飼 信広]]></name>
+        <name><![CDATA[竹内 徹]]></name>
+      </ja>
+    </author>
+    <cdjournal>jscej1984</cdjournal>
+    <material_title>
+      <en><![CDATA[Doboku Gakkai Ronbunshu]]></en>
+      <ja><![CDATA[土木学会論文集]]></ja>
+    </material_title>
+    <prism:issn>0289-7806</prism:issn>
+    <prism:eIssn>1882-7187</prism:eIssn>
+    <prism:volume>2001</prism:volume>
+    <prism:number>689</prism:number>
+    <prism:startingPage>31</prism:startingPage>
+    <prism:endingPage>43</prism:endingPage>
+    <pubyear>2001</pubyear>
+    <prism:doi>10.2208/jscej.2001.689_31</prism:doi>
+    <systemcode>1</systemcode>
+    <systemname>J-STAGE</systemname>
+    <title><![CDATA[避難行動シミュレーションに基づく地下街の安全性評価]]></title>
+    <link href="https://www.jstage.jst.go.jp/article/jscej1984/2001/689/2001_689_31/_article/-char/ja/"/>
+    <id>https://www.jstage.jst.go.jp/article/jscej1984/2001/689/2001_689_31/_article/-char/ja/</id>
+    <updated>2010-08-24T09:00+09:00</updated>
+  </entry>
+  <entry>
+    <article_title>
+      <en><![CDATA[INFLUENCE OF SNOW AROUND THE BUILDING ON EVACUATION ACTIVITIES]]></en>
+      <ja><![CDATA[建築物周辺の積雪が避難行動に及ぼす影響]]></ja>
+    </article_title>
+    <article_link>
+      <en>https://www.jstage.jst.go.jp/article/aija/67/560/67_KJ00004226574/_article</en>
+      <ja>https://www.jstage.jst.go.jp/article/aija/67/560/67_KJ00004226574/_article/-char/ja/</ja>
+    </article_link>
+    <author>
+      <en>
+        <name><![CDATA[Kazuhiko HOSOKAWA]]></name>
+        <name><![CDATA[Megumi NAITO]]></name>
+        <name><![CDATA[Tsukasa TOMABECHI]]></name>
+      </en>
+      <ja>
+        <name><![CDATA[細川 和彦]]></name>
+        <name><![CDATA[内藤 恵]]></name>
+        <name><![CDATA[苫米地 司]]></name>
+      </ja>
+    </author>
+    <cdjournal>aija</cdjournal>
+    <material_title>
+      <en><![CDATA[Journal of Architecture and Planning (Transactions of AIJ)]]></en>
+      <ja><![CDATA[日本建築学会計画系論文集]]></ja>
+    </material_title>
+    <prism:issn>1340-4210</prism:issn>
+    <prism:eIssn>1881-8161</prism:eIssn>
+    <prism:volume>67</prism:volume>
+    <prism:number>560</prism:number>
+    <prism:startingPage>167</prism:startingPage>
+    <prism:endingPage>172</prism:endingPage>
+    <pubyear>2002</pubyear>
+    <prism:doi>10.3130/aija.67.167_3</prism:doi>
+    <systemcode>1</systemcode>
+    <systemname>J-STAGE</systemname>
+    <title><![CDATA[建築物周辺の積雪が避難行動に及ぼす影響]]></title>
+    <link href="https://www.jstage.jst.go.jp/article/aija/67/560/67_KJ00004226574/_article/-char/ja/"/>
+    <id>https://www.jstage.jst.go.jp/article/aija/67/560/67_KJ00004226574/_article/-char/ja/</id>
+    <updated>2017-02-04T09:00+09:00</updated>
+  </entry>
+  <entry>
+    <article_title>
+      <en><![CDATA[EXPERIMENTS OF COMFORTABLENESS AND TASK DIFFICULTY EVALUATION OF THE GOING IN AND OUT OF THE HOUSE BY THE HEART RATE OF AGED AND DISABLED PEOPLE : A study about designing for the space of the going in and out of the house in a cold and snowy region]]></en>
+      <ja><![CDATA[高齢者・障害者の心拍数から見た住宅内外での移動の容易性と快適性に関する実験的検討 : 積雪寒冷地の住宅における出入り空間の形状とあり方に関する基礎的研究]]></ja>
+    </article_title>
+    <article_link>
+      <en>https://www.jstage.jst.go.jp/article/aija/66/545/66_KJ00004226252/_article</en>
+      <ja>https://www.jstage.jst.go.jp/article/aija/66/545/66_KJ00004226252/_article/-char/ja/</ja>
+    </article_link>
+    <author>
+      <en>
+        <name><![CDATA[Chitose TANAKA]]></name>
+        <name><![CDATA[Takahiro NOGUCHI]]></name>
+        <name><![CDATA[Jiro MAJIMA]]></name>
+      </en>
+      <ja>
+        <name><![CDATA[田中 千歳]]></name>
+        <name><![CDATA[野口 孝博]]></name>
+        <name><![CDATA[眞嶋 二郎]]></name>
+      </ja>
+    </author>
+    <cdjournal>aija</cdjournal>
+    <material_title>
+      <en><![CDATA[Journal of Architecture and Planning (Transactions of AIJ)]]></en>
+      <ja><![CDATA[日本建築学会計画系論文集]]></ja>
+    </material_title>
+    <prism:issn>1340-4210</prism:issn>
+    <prism:eIssn>1881-8161</prism:eIssn>
+    <prism:volume>66</prism:volume>
+    <prism:number>545</prism:number>
+    <prism:startingPage>121</prism:startingPage>
+    <prism:endingPage>127</prism:endingPage>
+    <pubyear>2001</pubyear>
+    <prism:doi>10.3130/aija.66.121_2</prism:doi>
+    <systemcode>1</systemcode>
+    <systemname>J-STAGE</systemname>
+    <title><![CDATA[高齢者・障害者の心拍数から見た住宅内外での移動の容易性と快適性に関する実験的検討 : 積雪寒冷地の住宅における出入り空間の形状とあり方に関する基礎的研究]]></title>
+    <link href="https://www.jstage.jst.go.jp/article/aija/66/545/66_KJ00004226252/_article/-char/ja/"/>
+    <id>https://www.jstage.jst.go.jp/article/aija/66/545/66_KJ00004226252/_article/-char/ja/</id>
+    <updated>2017-02-04T09:00+09:00</updated>
+  </entry>
+  <entry>
+    <article_title>
+      <en/>
+      <ja><![CDATA[佐川町公営住宅・稲荷団地(2008年 日本建築仕上学会 学会賞 作品賞 住宅部門受賞,作品紹介)]]></ja>
+    </article_title>
+    <article_link>
+      <en>https://www.jstage.jst.go.jp/article/finexjournal/20/120/20_KJ00005045779/_article</en>
+      <ja>https://www.jstage.jst.go.jp/article/finexjournal/20/120/20_KJ00005045779/_article/-char/ja/</ja>
+    </article_link>
+    <author>
+      <en/>
+      <ja>
+        <name><![CDATA[太田 憲男]]></name>
+        <name><![CDATA[西森 啓史]]></name>
+      </ja>
+    </author>
+    <cdjournal>finexjournal</cdjournal>
+    <material_title>
+      <en><![CDATA[Finex]]></en>
+      <ja><![CDATA[Finex]]></ja>
+    </material_title>
+    <prism:issn>0915-6224</prism:issn>
+    <prism:eIssn>2424-2241</prism:eIssn>
+    <prism:volume>20</prism:volume>
+    <prism:number>120</prism:number>
+    <prism:startingPage>25</prism:startingPage>
+    <prism:endingPage>33</prism:endingPage>
+    <pubyear>2008</pubyear>
+    <prism:doi>10.14820/finexjournal.20.120_25</prism:doi>
+    <systemcode>1</systemcode>
+    <systemname>J-STAGE</systemname>
+    <title><![CDATA[佐川町公営住宅・稲荷団地(2008年 日本建築仕上学会 学会賞 作品賞 住宅部門受賞,作品紹介)]]></title>
+    <link href="https://www.jstage.jst.go.jp/article/finexjournal/20/120/20_KJ00005045779/_article/-char/ja/"/>
+    <id>https://www.jstage.jst.go.jp/article/finexjournal/20/120/20_KJ00005045779/_article/-char/ja/</id>
+    <updated>2020-06-23T09:00+09:00</updated>
+  </entry>
+  <entry>
+    <article_title>
+      <en><![CDATA[An Indoor Autonomous Mobile System Guidedby Light Markers to Assist Elderly People]]></en>
+      <ja><![CDATA[高齢者のための光マーカ誘導による施設内自立走行システム]]></ja>
+    </article_title>
+    <article_link>
+      <en>https://www.jstage.jst.go.jp/article/lifesupport1986/7/1/7_1_11/_article</en>
+      <ja>https://www.jstage.jst.go.jp/article/lifesupport1986/7/1/7_1_11/_article/-char/ja/</ja>
+    </article_link>
+    <author>
+      <en>
+        <name><![CDATA[Makoto SUZUKI]]></name>
+        <name><![CDATA[Kazutoshi OKAMOTO]]></name>
+        <name><![CDATA[Takeyoshi DIHI]]></name>
+        <name><![CDATA[Hideo YANO]]></name>
+      </en>
+      <ja>
+        <name><![CDATA[鈴木 真]]></name>
+        <name><![CDATA[岡本 和年]]></name>
+        <name><![CDATA[土肥 健純]]></name>
+        <name><![CDATA[矢野 英雄]]></name>
+      </ja>
+    </author>
+    <cdjournal>lifesupport1986</cdjournal>
+    <material_title>
+      <en><![CDATA[Journal of Life Support Technology]]></en>
+      <ja><![CDATA[エル・エス・ティ学会誌]]></ja>
+    </material_title>
+    <prism:issn>0912-1595</prism:issn>
+    <prism:eIssn>1884-5819</prism:eIssn>
+    <prism:volume>7</prism:volume>
+    <prism:number>1</prism:number>
+    <prism:startingPage>11</prism:startingPage>
+    <prism:endingPage>19</prism:endingPage>
+    <pubyear>1995</pubyear>
+    <prism:doi>10.5136/lifesupport1986.7.11</prism:doi>
+    <systemcode>1</systemcode>
+    <systemname>J-STAGE</systemname>
+    <title><![CDATA[高齢者のための光マーカ誘導による施設内自立走行システム]]></title>
+    <link href="https://www.jstage.jst.go.jp/article/lifesupport1986/7/1/7_1_11/_article/-char/ja/"/>
+    <id>https://www.jstage.jst.go.jp/article/lifesupport1986/7/1/7_1_11/_article/-char/ja/</id>
+    <updated>2010-07-21T09:00+09:00</updated>
+  </entry>
+  <entry>
+    <article_title>
+      <en><![CDATA[STUDY ON THE VEHICLES IN A HOSPITAL]]></en>
+      <ja><![CDATA[病院における車に関する調査]]></ja>
+    </article_title>
+    <article_link>
+      <en>https://www.jstage.jst.go.jp/article/aijsaxx/192/0/192_KJ00003749910/_article</en>
+      <ja>https://www.jstage.jst.go.jp/article/aijsaxx/192/0/192_KJ00003749910/_article/-char/ja/</ja>
+    </article_link>
+    <author>
+      <en>
+        <name><![CDATA[SADAKICHI SHIN]]></name>
+        <name><![CDATA[NOBUKIYO SHIMOGAITO]]></name>
+        <name><![CDATA[EISHOKU KANG]]></name>
+        <name><![CDATA[YASUMI YOSHITAKE]]></name>
+      </en>
+      <ja>
+        <name><![CDATA[慎 貞吉]]></name>
+        <name><![CDATA[下垣内 信清]]></name>
+        <name><![CDATA[姜 英植]]></name>
+        <name><![CDATA[吉武 泰水]]></name>
+      </ja>
+    </author>
+    <cdjournal>aijsaxx</cdjournal>
+    <material_title>
+      <en><![CDATA[Transactions of the Architectural Institute of Japan]]></en>
+      <ja><![CDATA[日本建築学会論文報告集]]></ja>
+    </material_title>
+    <prism:issn>0387-1185</prism:issn>
+    <prism:eIssn>2433-0027</prism:eIssn>
+    <prism:volume>192</prism:volume>
+    <prism:number>0</prism:number>
+    <prism:startingPage>65</prism:startingPage>
+    <prism:endingPage>72,89</prism:endingPage>
+    <pubyear>1972</pubyear>
+    <prism:doi>10.3130/aijsaxx.192.0_65</prism:doi>
+    <systemcode>1</systemcode>
+    <systemname>J-STAGE</systemname>
+    <title><![CDATA[病院における車に関する調査]]></title>
+    <link href="https://www.jstage.jst.go.jp/article/aijsaxx/192/0/192_KJ00003749910/_article/-char/ja/"/>
+    <id>https://www.jstage.jst.go.jp/article/aijsaxx/192/0/192_KJ00003749910/_article/-char/ja/</id>
+    <updated>2017-08-22T09:00+09:00</updated>
+  </entry>
+  <entry>
+    <article_title>
+      <en><![CDATA[A Study on Investigation of Urban Environmental Planning for Welfare Community(&lt;Special Issue&gt;Designing for the Physically Handicapped)]]></en>
+      <ja><![CDATA[福祉の街づくり整備の実態と課題(&lt;特集&gt;身体障害者のためのデザイン)]]></ja>
+    </article_title>
+    <article_link>
+      <en>https://www.jstage.jst.go.jp/article/jssds/2/4/2_KJ00007040322/_article</en>
+      <ja>https://www.jstage.jst.go.jp/article/jssds/2/4/2_KJ00007040322/_article/-char/ja/</ja>
+    </article_link>
+    <author>
+      <en>
+        <name><![CDATA[Tadao Koga]]></name>
+        <name><![CDATA[Yoshitsugu Morita]]></name>
+      </en>
+      <ja>
+        <name><![CDATA[古賀 唯夫]]></name>
+        <name><![CDATA[森田 昌嗣]]></name>
+      </ja>
+    </author>
+    <cdjournal>jssds</cdjournal>
+    <material_title>
+      <en><![CDATA[Special issue of Japanese Society for the Science of Design]]></en>
+      <ja><![CDATA[デザイン学研究特集号]]></ja>
+    </material_title>
+    <prism:issn>0919-6803</prism:issn>
+    <prism:eIssn>2433-300X</prism:eIssn>
+    <prism:volume>2</prism:volume>
+    <prism:number>4</prism:number>
+    <prism:startingPage>36</prism:startingPage>
+    <prism:endingPage>51</prism:endingPage>
+    <pubyear>1995</pubyear>
+    <prism:doi>10.11247/jssds.2.4_36</prism:doi>
+    <systemcode>1</systemcode>
+    <systemname>J-STAGE</systemname>
+    <title><![CDATA[福祉の街づくり整備の実態と課題(&lt;特集&gt;身体障害者のためのデザイン)]]></title>
+    <link href="https://www.jstage.jst.go.jp/article/jssds/2/4/2_KJ00007040322/_article/-char/ja/"/>
+    <id>https://www.jstage.jst.go.jp/article/jssds/2/4/2_KJ00007040322/_article/-char/ja/</id>
+    <updated>2017-11-27T09:00+09:00</updated>
+  </entry>
+  <entry>
+    <article_title>
+      <en/>
+      <ja><![CDATA[基準金利適用住宅の技術基準について]]></ja>
+    </article_title>
+    <article_link>
+      <en>https://www.jstage.jst.go.jp/article/jwpa1975/22/5/22_5_272/_article</en>
+      <ja>https://www.jstage.jst.go.jp/article/jwpa1975/22/5/22_5_272/_article/-char/ja/</ja>
+    </article_link>
+    <author>
+      <en/>
+      <ja>
+        <name><![CDATA[仲田 正徳]]></name>
+      </ja>
+    </author>
+    <cdjournal>jwpa1975</cdjournal>
+    <material_title>
+      <en><![CDATA[MOKUZAI HOZON (Wood Protection)]]></en>
+      <ja><![CDATA[木材保存]]></ja>
+    </material_title>
+    <prism:issn>0287-9255</prism:issn>
+    <prism:eIssn>1884-0116</prism:eIssn>
+    <prism:volume>22</prism:volume>
+    <prism:number>5</prism:number>
+    <prism:startingPage>272</prism:startingPage>
+    <prism:endingPage>278</prism:endingPage>
+    <pubyear>1996</pubyear>
+    <prism:doi>10.5990/jwpa.22.272</prism:doi>
+    <systemcode>1</systemcode>
+    <systemname>J-STAGE</systemname>
+    <title><![CDATA[基準金利適用住宅の技術基準について]]></title>
+    <link href="https://www.jstage.jst.go.jp/article/jwpa1975/22/5/22_5_272/_article/-char/ja/"/>
+    <id>https://www.jstage.jst.go.jp/article/jwpa1975/22/5/22_5_272/_article/-char/ja/</id>
+    <updated>2009-05-22T09:00+09:00</updated>
+  </entry>
+  <entry>
+    <article_title>
+      <en><![CDATA[THE HYPOTHESIS ON NURSING HOMES TYPE OF GROUP HOME AND IT&apos;S VERIFICATION : Practice report on the nursing home(Architectural Planning and Design)]]></en>
+      <ja><![CDATA[グループホーム型特別養護老人ホームの仮説と検証 : 特養A施設の実践報告(建築計画)]]></ja>
+    </article_title>
+    <article_link>
+      <en>https://www.jstage.jst.go.jp/article/aijt/10/19/10_KJ00004656089/_article</en>
+      <ja>https://www.jstage.jst.go.jp/article/aijt/10/19/10_KJ00004656089/_article/-char/ja/</ja>
+    </article_link>
+    <author>
+      <en>
+        <name><![CDATA[Masaki MATSUMURA]]></name>
+        <name><![CDATA[Yasuhiro SAKURAI]]></name>
+      </en>
+      <ja>
+        <name><![CDATA[松村 正希]]></name>
+        <name><![CDATA[桜井 康宏]]></name>
+      </ja>
+    </author>
+    <cdjournal>aijt</cdjournal>
+    <material_title>
+      <en><![CDATA[AIJ Journal of Technology and Design]]></en>
+      <ja><![CDATA[日本建築学会技術報告集]]></ja>
+    </material_title>
+    <prism:issn>1341-9463</prism:issn>
+    <prism:eIssn>1881-8188</prism:eIssn>
+    <prism:volume>10</prism:volume>
+    <prism:number>19</prism:number>
+    <prism:startingPage>249</prism:startingPage>
+    <prism:endingPage>254</prism:endingPage>
+    <pubyear>2004</pubyear>
+    <prism:doi>10.3130/aijt.10.249</prism:doi>
+    <systemcode>1</systemcode>
+    <systemname>J-STAGE</systemname>
+    <title><![CDATA[グループホーム型特別養護老人ホームの仮説と検証 : 特養A施設の実践報告(建築計画)]]></title>
+    <link href="https://www.jstage.jst.go.jp/article/aijt/10/19/10_KJ00004656089/_article/-char/ja/"/>
+    <id>https://www.jstage.jst.go.jp/article/aijt/10/19/10_KJ00004656089/_article/-char/ja/</id>
+    <updated>2017-04-14T09:00+09:00</updated>
+  </entry>
+  <entry>
+    <article_title>
+      <en/>
+      <ja><![CDATA[第31回 日本リハビリテーション医学会学術集会]]></ja>
+    </article_title>
+    <article_link>
+      <en>https://www.jstage.jst.go.jp/article/jjrm1964/32/3/32_3_147/_article</en>
+      <ja>https://www.jstage.jst.go.jp/article/jjrm1964/32/3/32_3_147/_article/-char/ja/</ja>
+    </article_link>
+    <author>
+      <en/>
+      <ja/>
+    </author>
+    <cdjournal>jjrm1964</cdjournal>
+    <material_title>
+      <en><![CDATA[The Japanese Journal of Rehabilitation Medicine]]></en>
+      <ja><![CDATA[リハビリテーション医学]]></ja>
+    </material_title>
+    <prism:issn>0034-351X</prism:issn>
+    <prism:eIssn>1880-778X</prism:eIssn>
+    <prism:volume>32</prism:volume>
+    <prism:number>3</prism:number>
+    <prism:startingPage>147</prism:startingPage>
+    <prism:endingPage>165</prism:endingPage>
+    <pubyear>1995</pubyear>
+    <prism:doi>10.2490/jjrm1963.32.147</prism:doi>
+    <systemcode>1</systemcode>
+    <systemname>J-STAGE</systemname>
+    <title><![CDATA[第31回 日本リハビリテーション医学会学術集会]]></title>
+    <link href="https://www.jstage.jst.go.jp/article/jjrm1964/32/3/32_3_147/_article/-char/ja/"/>
+    <id>https://www.jstage.jst.go.jp/article/jjrm1964/32/3/32_3_147/_article/-char/ja/</id>
+    <updated>2009-10-28T09:00+09:00</updated>
+  </entry>
+</feed>

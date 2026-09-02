@@ -1,0 +1,79 @@
+[
+  {
+    "started": "2026-09-01T20:17:18",
+    "role": "tracer",
+    "bytes": 658694,
+    "agent_id_prefix": "aaecf742",
+    "file": "2026-09-01T20-17-18_tracer_aaecf742.jsonl"
+  },
+  {
+    "started": "2026-09-01T20:17:50",
+    "role": "antagonist",
+    "bytes": 638171,
+    "agent_id_prefix": "a8d2eccc",
+    "file": "2026-09-01T20-17-50_antagonist_a8d2eccc.jsonl"
+  },
+  {
+    "started": "2026-09-01T20:18:56",
+    "role": "agonist",
+    "bytes": 761790,
+    "agent_id_prefix": "a7f129b3",
+    "file": "2026-09-01T20-18-56_agonist_a7f129b3.jsonl"
+  },
+  {
+    "started": "2026-09-01T20:19:41",
+    "role": "agonist",
+    "bytes": 807488,
+    "agent_id_prefix": "a06dee47",
+    "file": "2026-09-01T20-19-41_agonist_a06dee47.jsonl"
+  },
+  {
+    "started": "2026-09-01T21:55:25",
+    "role": "adversarial-critic",
+    "bytes": 811864,
+    "agent_id_prefix": "a2e4e144",
+    "file": "2026-09-01T21-55-25_adversarial-critic_a2e4e144.jsonl"
+  },
+  {
+    "started": "2026-09-01T21:55:58",
+    "role": "adversarial-critic",
+    "bytes": 815715,
+    "agent_id_prefix": "a6a26dd6",
+    "file": "2026-09-01T21-55-58_adversarial-critic_a6a26dd6.jsonl"
+  },
+  {
+    "started": "2026-09-02T20:34:55",
+    "role": "tracer",
+    "bytes": 435727,
+    "agent_id_prefix": "aa503646",
+    "file": "2026-09-02T20-34-55_tracer_aa503646.jsonl"
+  },
+  {
+    "started": "2026-09-02T20:35:38",
+    "role": "agonist",
+    "bytes": 935935,
+    "agent_id_prefix": "ad70561b",
+    "file": "2026-09-02T20-35-38_agonist_ad70561b.jsonl"
+  },
+  {
+    "started": "2026-09-02T21:12:26",
+    "role": "antagonist",
+    "bytes": 693904,
+    "agent_id_prefix": "a7a87b8b",
+    "file": "2026-09-02T21-12-26_antagonist_a7a87b8b.jsonl"
+  },
+  {
+    "started": "2026-09-02T21:31:38",
+    "role": "antagonist",
+    "bytes": 618277,
+    "agent_id_prefix": "a11188b0",
+    "file": "2026-09-02T21-31-38_antagonist_a11188b0.jsonl"
+  },
+  {
+    "started": "2026-09-02T21:31:58",
+    "role": "tracer",
+    "bytes": 734725,
+    "agent_id_prefix": "ad3f7fe1",
+    "file": "2026-09-02T21-31-58_tracer_ad3f7fe1.jsonl"
+  }
+]
