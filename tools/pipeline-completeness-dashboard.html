@@ -176,8 +176,8 @@
       stage's own denominator, then broken down by category, item, and population class.</p>
     <div class="meta-row">
       <span><b>Source</b> data/guidebook.db (read-only)</span>
-      <span><b>Schema</b> user_version 65</span>
-      <span><b>Data as of</b> 2026-08-23</span>
+      <span><b>Schema</b> user_version 67</span>
+      <span><b>Data as of</b> 2026-08-22</span>
       <span><b>Auto-generated</b> tools/pipeline_completeness.py</span>
     </div>
   </header>
@@ -195,15 +195,15 @@
       </div>
       <div class="gauge">
         <div class="stage-idx">STAGE 2</div><div class="stage-name">Collection</div>
-        <div class="pct b4-fg">100<small>%</small></div>
-        <div class="denom">10 / 10<br>metadata-complete sources</div>
-        <div class="bar"><i class="b4-bg-solid" style="width:100%"></i></div>
-        <span class="stage-tag b4-tag">High</span>
+        <div class="pct b0-fg">0<small>%</small></div>
+        <div class="denom">0 / 0<br>metadata-complete sources</div>
+        <div class="bar"><i class="b0-bg-solid" style="width:2%"></i></div>
+        <span class="stage-tag b0-tag">None</span>
       </div>
       <div class="gauge">
         <div class="stage-idx">STAGE 3</div><div class="stage-name">Judgment</div>
         <div class="pct b0-fg">0<small>%</small></div>
-        <div class="denom">0 / 382<br>cells determined</div>
+        <div class="denom">0 / 0<br>cells determined</div>
         <div class="bar"><i class="b0-bg-solid" style="width:2%"></i></div>
         <span class="stage-tag b0-tag">None</span>
       </div>
@@ -217,13 +217,13 @@
       <div class="gauge">
         <div class="stage-idx">STAGE 5</div><div class="stage-name">Render</div>
         <div class="pct b0-fg">0<small>%</small></div>
-        <div class="denom">0 / 382<br>cells render-ready</div>
+        <div class="denom">0 / 0<br>cells render-ready</div>
         <div class="bar"><i class="b0-bg-solid" style="width:2%"></i></div>
         <span class="stage-tag b0-tag">None</span>
       </div>
     </div>
     <div class="pattern"><b>The shape is front-loaded, then it collapses.</b> Sourcing (evidence collection) is essentially
-      finished — 10/10 sources verified, metadata near-complete — but almost nothing has been
+      finished — 0/0 sources verified, metadata near-complete — but almost nothing has been
       <i>adjudicated</i> into determinations (judgment, 0%) and only
       0 parameters has a real synthesis reasoning
       doc (synthesis, 0%). Render faithfully mirrors that emptiness: it can only
@@ -234,7 +234,7 @@
   <section>
     <div class="caveat">
       <h3><span class="dot"></span>Read the flags with care: the item-facing corpus is retracted, not finished</h3>
-      Every one of the 87 items that points at a BPC slug points at one whose
+      Every one of the 0 items that points at a BPC slug points at one whose
       <span class="mono">evidence_state = RETRACTED-PRE-REHAB</span>. Those slugs still carry a stale
       <span class="mono">bpc_complete = 1</span> flag from the pre-rehabilitation era — so a naïve flag count would
       report the BPC layer as largely "complete," when the honest current state is that
@@ -273,13 +273,13 @@
         <div class="sb-left"><div class="n">STAGE 2</div><div class="t">Collection</div>
           <div class="entry">Entry: sources discovered for the topic under research.</div></div>
         <div class="sb-right">
-          <div class="metric-row"><span class="lbl">Sources verified</span><span class="val">10 / 10 · 100%</span>
-          <span class="mini-bar"><i class="b4-bg-solid" style="width:100%"></i></span></div>
-          <div class="metric-row"><span class="lbl">Metadata complete</span><span class="val">10 / 10 · 100%</span>
-          <span class="mini-bar"><i class="b4-bg-solid" style="width:100%"></i></span></div>
+          <div class="metric-row"><span class="lbl">Sources verified</span><span class="val">0 / 0 · 0%</span>
+          <span class="mini-bar"><i class="b0-bg-solid" style="width:2%"></i></span></div>
+          <div class="metric-row"><span class="lbl">Metadata complete</span><span class="val">0 / 0 · 0%</span>
+          <span class="mini-bar"><i class="b0-bg-solid" style="width:2%"></i></span></div>
           <div class="metric-row"><span class="lbl">Author-title-only (rule&nbsp;#10 blockers)</span><span class="val">0 · 0%</span>
           <span class="mini-bar"><i class="b0-bg-solid" style="width:2%"></i></span></div>
-          <div class="metric-row"><span class="lbl">Discovery provenance recorded</span><span class="val">0 / 10 · 0%</span>
+          <div class="metric-row"><span class="lbl">Discovery provenance recorded</span><span class="val">0 / 0 · 0%</span>
           <span class="mini-bar"><i class="b0-bg-solid" style="width:2%"></i></span></div>
           <div class="metric-row"><span class="lbl">Citation-mining complete (slugs)</span><span class="val">0 / 0 · 0%</span>
           <span class="mini-bar"><i class="b0-bg-solid" style="width:2%"></i></span></div>
@@ -291,9 +291,9 @@
         <div class="sb-left"><div class="n">STAGE 3</div><div class="t">Judgment</div>
           <div class="entry">Entry: verified sources linked to an item × population specification.</div></div>
         <div class="sb-right">
-          <div class="metric-row"><span class="lbl">Specifications determined (of applicable pairs)</span><span class="val">0 / 382 · 0%</span>
+          <div class="metric-row"><span class="lbl">Specifications determined (of applicable pairs)</span><span class="val">0 / 0 · 0%</span>
           <span class="mini-bar"><i class="b0-bg-solid" style="width:2%"></i></span></div>
-          <div class="metric-row"><span class="lbl">Items with any determination</span><span class="val">0 / 93 · 0%</span>
+          <div class="metric-row"><span class="lbl">Items with any determination</span><span class="val">0 / 0 · 0%</span>
           <span class="mini-bar"><i class="b0-bg-solid" style="width:2%"></i></span></div>
           <div class="metric-row"><span class="lbl">State split</span><span class="val">0 stated · 0 prov · 0 pend</span></div>
           <div class="metric-row"><span class="lbl">Determinations with governing_refs</span><span class="val">0 / 0 · 0%</span>
@@ -310,7 +310,7 @@
           <div class="metric-row"><span class="lbl">Slugs with a reasoning doc + citations</span><span class="val">0 / 0 · 0%</span>
           <span class="mini-bar"><i class="b0-bg-solid" style="width:2%"></i></span></div>
           <div class="metric-row"><span class="lbl">Verified reasoning-doc citations</span><span class="val">0 rows</span></div>
-          <div class="metric-row"><span class="lbl">Live item-facing syntheses</span><span class="val">0 / 87 · 0%</span>
+          <div class="metric-row"><span class="lbl">Live item-facing syntheses</span><span class="val">0 / 0 · 0%</span>
           <span class="mini-bar"><i class="b0-bg-solid" style="width:2%"></i></span></div>
           <div class="metric-row"><span class="lbl">Slugs in PARTIAL (non-item methodology)</span><span class="val">0</span></div>
           <div class="gate-label">Integrity gates</div>
@@ -321,7 +321,7 @@
         <div class="sb-left"><div class="n">STAGE 5</div><div class="t">Render</div>
           <div class="entry">Entry: determinations tagged with design_scale, ready to present.</div></div>
         <div class="sb-right">
-          <div class="metric-row"><span class="lbl">Determinations render-ready (of matrix)</span><span class="val">0 / 382 · 0%</span>
+          <div class="metric-row"><span class="lbl">Determinations render-ready (of matrix)</span><span class="val">0 / 0 · 0%</span>
           <span class="mini-bar"><i class="b0-bg-solid" style="width:2%"></i></span></div>
           <div class="metric-row"><span class="lbl">Render-ready share of determinations made</span><span class="val">0 / 0 · 0%</span>
           <span class="mini-bar"><i class="b0-bg-solid" style="width:2%"></i></span></div>
@@ -341,91 +341,11 @@
 
   <section>
     <div class="sec-head"><span class="sec-num">03</span><h2>Breakdown by category</h2>
-      <span class="sec-sub">10 item categories — 93 items total</span></div>
+      <span class="sec-sub">0 item categories — 0 items total</span></div>
     <div class="tbl-scroll"><table>
       <thead><tr><th class="code">Cat</th><th class="n">Items</th><th class="n">With slug</th>
         <th>BPC synthesis state</th><th class="ratio-cell">Reached judgment</th><th class="n">Pop breadth</th></tr></thead>
       <tbody>
-      <tr>
-        <td class="code">A</td>
-        <td class="n">19</td>
-        <td class="n">17</td>
-        <td><span class="state-badge">—</span></td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/19 · 0%</span></span></td>
-        <td class="n">14</td>
-      </tr>
-      <tr>
-        <td class="code">B</td>
-        <td class="n">12</td>
-        <td class="n">11</td>
-        <td><span class="state-badge">—</span></td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/12 · 0%</span></span></td>
-        <td class="n">14</td>
-      </tr>
-      <tr>
-        <td class="code">C</td>
-        <td class="n">6</td>
-        <td class="n">6</td>
-        <td><span class="state-badge">—</span></td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/6 · 0%</span></span></td>
-        <td class="n">9</td>
-      </tr>
-      <tr>
-        <td class="code">D</td>
-        <td class="n">11</td>
-        <td class="n">11</td>
-        <td><span class="state-badge">—</span></td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/11 · 0%</span></span></td>
-        <td class="n">11</td>
-      </tr>
-      <tr>
-        <td class="code">E</td>
-        <td class="n">14</td>
-        <td class="n">14</td>
-        <td><span class="state-badge">—</span></td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/14 · 0%</span></span></td>
-        <td class="n">16</td>
-      </tr>
-      <tr>
-        <td class="code">F</td>
-        <td class="n">8</td>
-        <td class="n">7</td>
-        <td><span class="state-badge">—</span></td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/8 · 0%</span></span></td>
-        <td class="n">12</td>
-      </tr>
-      <tr>
-        <td class="code">G</td>
-        <td class="n">9</td>
-        <td class="n">7</td>
-        <td><span class="state-badge">—</span></td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/9 · 0%</span></span></td>
-        <td class="n">13</td>
-      </tr>
-      <tr>
-        <td class="code">H</td>
-        <td class="n">5</td>
-        <td class="n">5</td>
-        <td><span class="state-badge">—</span></td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/5 · 0%</span></span></td>
-        <td class="n">13</td>
-      </tr>
-      <tr>
-        <td class="code">I</td>
-        <td class="n">4</td>
-        <td class="n">4</td>
-        <td><span class="state-badge">—</span></td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/4 · 0%</span></span></td>
-        <td class="n">8</td>
-      </tr>
-      <tr>
-        <td class="code">K</td>
-        <td class="n">5</td>
-        <td class="n">5</td>
-        <td><span class="state-badge">—</span></td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/5 · 0%</span></span></td>
-        <td class="n">7</td>
-      </tr>
       </tbody>
     </table></div>
     <div class="legend"><span class="li"><span class="sw b0-bg-solid"></span>none</span><span class="li"><span class="sw b1-bg-solid"></span>&lt;15%</span><span class="li"><span class="sw b2-bg-solid"></span>15–50%</span><span class="li"><span class="sw b3-bg-solid"></span>50–85%</span><span class="li"><span class="sw b4-bg-solid"></span>&gt;85%</span>
@@ -434,10 +354,10 @@
 
   <section>
     <div class="sec-head"><span class="sec-num">04</span><h2>Breakdown by item — the frontier</h2>
-      <span class="sec-sub">the 0 of 93 items with a materialized determination; the other 93 have none</span></div>
+      <span class="sec-sub">the 0 of 0 items with a materialized determination; the other 0 have none</span></div>
     <div class="frontier">
     </div>
-    <div class="pattern">Categories <span class="mono">A, B, C, D, E, F, G, H, I, K</span> (93 items) have <b>zero</b> determinations of any kind.</div>
+    <div class="pattern">Every category has at least one determination.</div>
   </section>
 
   <section>
@@ -447,146 +367,6 @@
       <thead><tr><th class="code">Pop</th><th>Class</th><th class="n">Applies to items</th>
         <th class="n">Determinations</th><th class="ratio-cell">Judgment coverage</th></tr></thead>
       <tbody>
-      <tr>
-        <td class="code">DEM</td>
-        <td>cognitive · people living with dementia</td>
-        <td class="n">56</td>
-        <td class="n">0</td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/56 · 0%</span></span></td>
-      </tr>
-      <tr>
-        <td class="code">BLIND</td>
-        <td>sensory · blind and low-vision people</td>
-        <td class="n">43</td>
-        <td class="n">0</td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/43 · 0%</span></span></td>
-      </tr>
-      <tr>
-        <td class="code">COM</td>
-        <td>pain_fatigue · people with complex conditions</td>
-        <td class="n">37</td>
-        <td class="n">0</td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/37 · 0%</span></span></td>
-      </tr>
-      <tr>
-        <td class="code">BRAIN</td>
-        <td>neurological · people with acquired brain injury</td>
-        <td class="n">30</td>
-        <td class="n">0</td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/30 · 0%</span></span></td>
-      </tr>
-      <tr>
-        <td class="code">NDV</td>
-        <td>developmental · neurodivergent people</td>
-        <td class="n">29</td>
-        <td class="n">0</td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/29 · 0%</span></span></td>
-      </tr>
-      <tr>
-        <td class="code">PAIN</td>
-        <td>pain_fatigue · people with chronic pain</td>
-        <td class="n">29</td>
-        <td class="n">0</td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/29 · 0%</span></span></td>
-      </tr>
-      <tr>
-        <td class="code">MOB</td>
-        <td>mobility · disabled people with mobility needs; wheelchair users</td>
-        <td class="n">28</td>
-        <td class="n">0</td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/28 · 0%</span></span></td>
-      </tr>
-      <tr>
-        <td class="code">SCI</td>
-        <td>mobility · people with spinal cord injuries</td>
-        <td class="n">26</td>
-        <td class="n">0</td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/26 · 0%</span></span></td>
-      </tr>
-      <tr>
-        <td class="code">AUT</td>
-        <td>developmental · autistic people</td>
-        <td class="n">20</td>
-        <td class="n">0</td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/20 · 0%</span></span></td>
-      </tr>
-      <tr>
-        <td class="code">DEAF</td>
-        <td>sensory · Deaf and hard-of-hearing people</td>
-        <td class="n">20</td>
-        <td class="n">0</td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/20 · 0%</span></span></td>
-      </tr>
-      <tr>
-        <td class="code">DEAFBLIND</td>
-        <td>sensory · DeafBlind people</td>
-        <td class="n">18</td>
-        <td class="n">0</td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/18 · 0%</span></span></td>
-      </tr>
-      <tr>
-        <td class="code">MH</td>
-        <td>mental_health · people with mental health conditions</td>
-        <td class="n">15</td>
-        <td class="n">0</td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/15 · 0%</span></span></td>
-      </tr>
-      <tr>
-        <td class="code">ALL</td>
-        <td>general · applies to all populations (scope marker)</td>
-        <td class="n">9</td>
-        <td class="n">0</td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/9 · 0%</span></span></td>
-      </tr>
-      <tr>
-        <td class="code">LMB</td>
-        <td>mobility · people with limb differences; upper-limb disabilities</td>
-        <td class="n">9</td>
-        <td class="n">0</td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/9 · 0%</span></span></td>
-      </tr>
-      <tr>
-        <td class="code">MS</td>
-        <td>neurological · people with MS</td>
-        <td class="n">3</td>
-        <td class="n">0</td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/3 · 0%</span></span></td>
-      </tr>
-      <tr>
-        <td class="code">ADHD</td>
-        <td>developmental · ADHDers; people with ADHD</td>
-        <td class="n">1</td>
-        <td class="n">0</td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/1 · 0%</span></span></td>
-      </tr>
-      <tr>
-        <td class="code">BAR</td>
-        <td>general · fat people; people in larger bodies</td>
-        <td class="n">1</td>
-        <td class="n">0</td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/1 · 0%</span></span></td>
-      </tr>
-      <tr>
-        <td class="code">EPI</td>
-        <td>neurological · people with epilepsy</td>
-        <td class="n">1</td>
-        <td class="n">0</td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/1 · 0%</span></span></td>
-      </tr>
-      <tr>
-        <td class="code">LPA</td>
-        <td>general · little people; people with dwarfism</td>
-        <td class="n">1</td>
-        <td class="n">0</td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/1 · 0%</span></span></td>
-      </tr>
-      <tr>
-        <td class="code">VES</td>
-        <td>neurological · people with vestibular disorders</td>
-        <td class="n">1</td>
-        <td class="n">0</td>
-        <td><span class="heat"><span class="sw b0-sw"><i class="b0-bg-solid" style="width:3%"></i></span><span class="frac">0/1 · 0%</span></span></td>
-      </tr>
       </tbody>
     </table></div>
     <div class="equity"><b>Coverage tends to invert need.</b> The most broadly-relevant populations are often the
@@ -597,10 +377,10 @@
   <footer>
     <div class="two-col">
       <div><strong style="color:var(--ink-2)">How these numbers were derived</strong><br>
-        Read-only queries against <code>data/guidebook.db</code> (<code>user_version 65</code>,
-        355 data migrations). Denominators: research/synthesis over 0
-        <code>bpc_metadata</code> slugs; evidence collection over 10 <code>evidence_sources</code>; judgment/render over
-        382 applicable item×population pairs (<code>item_taxonomy_links</code>, identity lens). Determinations from
+        Read-only queries against <code>data/guidebook.db</code> (<code>user_version 67</code>,
+        362 data migrations). Denominators: research/synthesis over 0
+        <code>bpc_metadata</code> slugs; evidence collection over 0 <code>evidence_sources</code>; judgment/render over
+        0 applicable item×population pairs (<code>item_taxonomy_links</code>, identity lens). Determinations from
         <code>specifications</code>; synthesis from <code>reasoning_doc_citations</code>; enforcement coverage
         from <code>governance/pipeline-contract.yaml</code>.</div>
       <div><strong style="color:var(--ink-2)">Two things to keep in mind</strong><br>

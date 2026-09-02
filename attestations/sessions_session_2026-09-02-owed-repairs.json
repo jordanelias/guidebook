@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-09-02-owed-repairs",
+  "artifact": "sessions/session_2026-09-02-owed-repairs.md",
+  "doctrine_sha": "969e00c",
+  "rules_in_scope": [
+    "integrity-protocol",
+    "source-discipline",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "scripts/migrations/",
+      "reason": "Every database change in the session this records went through the sanctioned path — staged on a scratch copy or rendered from a single-home source, emitted with emit_data_migration.py, applied with migrate_db.py. No hand-written SQL was executed against data/guidebook.db. One emit failed on a column search_executions does not have; it rolled back atomically leaving no ledger row, and because the file was untracked it was deleted and re-emitted rather than compensated. migration_reproducibility PASSes, so the committed DB is what the migration history produces."
+    },
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "sessions/session_2026-09-02-owed-repairs.md",
+      "reason": "Every figure in this record was re-derived from the live repository or from origin/main's committed blob, not carried from memory or from an earlier session's prose. Where a figure corrects a claim of mine it is presented as a correction with both values shown, not silently replaced."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/sessions_session_2026-09-02-owed-repairs.json",
+      "reason": "One attestation per session record, because the attestation_presence gate requires one per record and a single attestation covering both would fail it."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "session-id-discipline",
+      "reason": "Four session ids were minted across one working session's migrations where one was correct. Recorded as a deviation rather than tidied: CLAUDE.md §7 makes the session id the scope gates use, so this fragmented one session's work across four scopes."
+    },
+    {
+      "rule": "session-record-timeliness",
+      "reason": "The 2026-09-01 record was written a day late, after its own migration ledger had already named it. emit_data_migration does not verify the session exists, so nothing caught it."
+    }
+  ],
+  "bias_direction": "Toward reporting a long repair session as clean execution. Resisted by giving defects I introduced their own section rather than a footnote: an empty-registry return that made a check unreachable, a duplicate YAML key that silently discarded reasoning I had already reported as recorded, a silent-drop bug in the Co-1 warrant fix that the probe caught rather than my reasoning, four session ids where one was correct, and a commit message eaten by backticks. The 'still owed' section names five things NOT done and why, including two files whose provenance I could not reconstruct and did not invent.",
+  "independent_reviewer_counterclaim": "That this record covers four session ids and so is itself the fragmentation CLAUDE.md §7 warns about. SUSTAINED and placed at the top of the file rather than buried: the four ids are listed so a grep for any of them reaches this record, and the rule is stated plainly — one session, one id. The alternative, four near-empty records, would have satisfied a file-existence check while telling a reader less.",
+  "verdict": "DEVIATION-LOGGED"
+}

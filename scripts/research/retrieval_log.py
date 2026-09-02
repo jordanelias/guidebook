@@ -339,17 +339,99 @@ def backfill(session, sleep=1.0):
     return 0
 
 
+def reconstruct_manifest(session):
+    """Build a manifest for payloads that are on disk with no manifest line.
+
+    WHY THIS EXISTS, AND WHY backfill() CANNOT DO IT. backfill() iterates
+    `evidence_sources WHERE doi <> ''` and re-fetches. That input is exactly what a
+    retraction deletes, so a session whose evidence was retracted can never be
+    reconstructed by it -- measured 2026-09-02 on the 2026-09-01 circulation batch:
+    58 payload files on disk, evidence_sources at 0 rows, backfill exiting 0 in
+    silence having logged nothing. And _logged_payloads() returns {} without a
+    manifest, so those files are invisible to --verify-authors: the anti-fabrication
+    check cannot see the very artefacts written to defeat fabrication.
+
+    WHAT THIS IS, STATED SO IT CANNOT BE MISREAD. Every line it writes carries
+    `"reconstructed": true`. The URL is derived from the DOI INSIDE each payload,
+    never from its filename -- a filename is a claim by whoever named it, the
+    payload's own message.DOI is the retrieved bytes speaking. `retrieved_at` is the
+    file mtime, which is when the file was written and not necessarily when the
+    request was made.
+
+    THE PROVENANCE HALF IS WEAKER THAN A CONTEMPORANEOUS LINE AND MUST NOT BE
+    TREATED AS EQUAL. sha256 here verifies the file against itself, which proves
+    nothing about what a server sent. What this DOES restore is the half that caught
+    the 2026-08-19 fabrication: the content check, stored author rows against the
+    author array in the payload the session actually held. That check is real
+    whether the manifest line was written at fetch time or reconstructed after.
+    """
+    session = _session_stem(session)
+    d = LOG_ROOT / session
+    if not d.is_dir():
+        print(f"  no retrieval log directory for {session!r}")
+        print("  EXAMINED: 0")
+        return 1
+    man = d / "manifest.jsonl"
+    known = set()
+    if man.exists():
+        for line in man.read_text(encoding="utf-8").splitlines():
+            if line.strip():
+                known.add(json.loads(line).get("artefact"))
+    written = skipped = 0
+    lines = []
+    for f in sorted(d.iterdir()):
+        if not f.is_file() or f.name == "manifest.jsonl" or f.name in known:
+            continue
+        raw = f.read_text(encoding="utf-8", errors="replace")
+        try:
+            doc = json.loads(raw)
+        except Exception:
+            skipped += 1          # not JSON: a PDF, a .doc, an HTML error page
+            continue
+        msg = doc.get("message") if isinstance(doc, dict) else None
+        doi = msg.get("DOI") if isinstance(msg, dict) else None
+        if not doi:
+            skipped += 1          # JSON, but not a single-work Crossref payload
+            continue
+        lines.append(json.dumps({
+            "retrieved_at": datetime.fromtimestamp(
+                f.stat().st_mtime, tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "url": f"https://api.crossref.org/works/{doi}",
+            "purpose": ("RECONSTRUCTED 2026-09-02 from a payload already on disk. NOT a "
+                        "contemporaneous fetch record: the URL is derived from the payload's "
+                        "own message.DOI, retrieved_at is the file mtime, and sha256 hashes "
+                        "the stored file rather than a server response. Restores the CONTENT "
+                        "check only."),
+            "sha256": hashlib.sha256(raw.encode("utf-8")).hexdigest(),
+            "bytes": len(raw), "exit": 0, "artefact": f.name,
+            "reconstructed": True,
+        }, ensure_ascii=False))
+        written += 1
+    if lines:
+        with open(man, "a", encoding="utf-8") as fh:
+            fh.write("\n".join(lines) + "\n")
+    print(f"  reconstructed {written} manifest line(s); skipped {skipped} "
+          f"non-Crossref file(s) (PDF/doc/HTML/query results carry no single message.DOI)")
+    print(f"  EXAMINED: {written + skipped}")
+    return 0
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     p.add_argument("--session", required=True)
     p.add_argument("--verify-authors", action="store_true")
     p.add_argument("--backfill", action="store_true")
+    p.add_argument("--reconstruct-manifest", action="store_true",
+                   help="rebuild manifest lines for payloads already on disk; "
+                        "marks every line reconstructed=true")
     a = p.parse_args()
+    if a.reconstruct_manifest:
+        sys.exit(reconstruct_manifest(a.session))
     if a.backfill:
         sys.exit(backfill(a.session))
     if a.verify_authors:
         sys.exit(verify_authors(a.session))
-    p.error("choose --verify-authors or --backfill")
+    p.error("choose --verify-authors, --backfill or --reconstruct-manifest")
 
 
 if __name__ == "__main__":

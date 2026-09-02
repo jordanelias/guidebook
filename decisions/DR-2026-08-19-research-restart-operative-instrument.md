@@ -797,15 +797,46 @@ An empty session trips **R1 only**. Any other rule firing pre-batch means the se
 
 **Step 1 — scratch.** `cp data/guidebook.db "$SCRATCH"` (safe: `journal_mode=delete`, no sidecars).
 
-**Step 2 — pull the frame (R4, R11).** All reads against `$SCRATCH`, never canonical:
+> **⚠ STRUCK 2026-09-02 BY OWNER RULING — the struck text is preserved below, not deleted.**
+> The original step 2 read:
+>
+> > *"`db.py items --category A` · `db.py synonyms --item A-18` · `db.py synonyms --item A-08
+> > --language DE` · `db.py coverage --slug room-acoustic-performance`, plus one `mode=ro` join
+> > over `item_axis_links` / `item_population_links` / `access_need_axis_map` / `lang_jur_map`."*
+>
+> **It contradicted §1.4 of this same instrument.** §1.4 rule 1 says a slug is authored from the
+> ICF/access-need frame first and the item list consulted for coverage *"never to supply one"*;
+> rule 2 says *"No value crosses"* from an item name into a `search_executions` or
+> `search_candidates` row. Step 2 ordered the frame pulled from `items` — so a session obeying the
+> runbook broke the quarantine, and on 2026-09-01 one did: the frame was built from `items` and
+> the item values "22 N" and "PTV ≥36" reached agonist queries. The instrument was self-defeating
+> at exactly the point it was most trusted.
+>
+> It is also now inert three times over: `items` is empty, and `item_axis_links` and
+> `item_population_links` were dropped by migration 065.
+
+**Step 2 — pull the frame (R4, R11), ICF-first.** All reads against `$SCRATCH`, never canonical.
+The frame is the **full cross-product** and applicability is an OUTPUT of synthesis (owner ruling
+2026-08-24), so this pulls the whole vocabulary and does not pre-filter it:
+
 ```
-GUIDEBOOK_DB_PATH=$SCRATCH python3 scripts/db.py items --category A
-GUIDEBOOK_DB_PATH=$SCRATCH python3 scripts/db.py synonyms --item A-18
-GUIDEBOOK_DB_PATH=$SCRATCH python3 scripts/db.py synonyms --item A-08 --language DE
-GUIDEBOOK_DB_PATH=$SCRATCH python3 scripts/db.py coverage --slug room-acoustic-performance
+GUIDEBOOK_DB_PATH=$SCRATCH python3 scripts/db.py coverage --slug <slug>
 ```
-plus one `mode=ro` join over `item_axis_links` / `item_population_links` / `access_need_axis_map` /
-`lang_jur_map`. Output: the query plan — populations × languages × tier bands, `terms_used` term_ids per query.
+plus one `mode=ro` join over `axes` (17 — **codes AND names**, never bare `axis_code`),
+`access_needs` (17), `access_need_axis_map` (21), `access_need_icf` (43), `populations` (23),
+`population_axis_map` (53) and `lang_jur_map` (70).
+Output: the query plan — ICF axis × access need × population × language × tier band.
+
+> **Two gaps this step must state rather than paper over, both created by the 2026-09-01
+> retraction and neither yet repaired.**
+> **(a) There is no route from a slug to its vocabulary.** `term_item_links` was the only path from
+> `terms`/`term_aliases` (88 / 2,382 rows) to a research subject, and it was item-keyed, so it is
+> now empty. R11's `terms_used` therefore cannot be populated from a slug. Until a term↔slug link
+> exists, choose terms by `terms.domain`, record the term_ids you fired, and treat the absence as
+> owed work — not as a reason to skip R11.
+> **(b) There is no route from a slug to its axes either.** `slugs.serves_axes` is populated on
+> **1 of 106** rows. The cross-product above is therefore generic, not slug-specific. Say so in the
+> session record rather than implying the frame was narrower than it was.
 
 **Step 3 — log every query verbatim BEFORE screening (R8), tier-ordered (R1: Co-1 → Co-2 → T2 → T1 → T4-T6).**
 `results_screened`/`results_admitted` stay 0 until step 7.

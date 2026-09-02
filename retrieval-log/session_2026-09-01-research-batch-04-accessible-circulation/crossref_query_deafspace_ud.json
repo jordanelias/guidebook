@@ -1,0 +1,488 @@
+{
+ "status": "ok",
+ "message-type": "work-list",
+ "message-version": "1.0.0",
+ "message": {
+  "facets": {},
+  "total-results": 3635993,
+  "items": [
+   {
+    "indexed": {
+     "date-parts": [
+      [
+       2026,
+       8,
+       11
+      ]
+     ],
+     "date-time": "2026-08-11T02:50:05Z",
+     "timestamp": 1786416605636,
+     "version": "build-2736575974"
+    },
+    "reference-count": 34,
+    "publisher": "Informa UK Limited",
+    "issue": "16",
+    "content-domain": {
+     "domain": [
+      "www.tandfonline.com"
+     ],
+     "crossmark-restriction": true
+    },
+    "short-container-title": [
+     "Disability and Rehabilitation"
+    ],
+    "published-print": {
+     "date-parts": [
+      [
+       2014,
+       8
+      ]
+     ]
+    },
+    "DOI": "10.3109/09638288.2014.913710",
+    "type": "journal-article",
+    "created": {
+     "date-parts": [
+      [
+       2014,
+       4,
+       30
+      ]
+     ],
+     "date-time": "2014-04-30T14:07:19Z",
+     "timestamp": 1398866839000
+    },
+    "page": "1350-1359",
+    "update-policy": "https://doi.org/10.1080/tandf_crossmark_01",
+    "source": "Crossref",
+    "is-referenced-by-count": 43,
+    "title": [
+     "DeafSpace and the principles of universal design"
+    ],
+    "prefix": "10.1080",
+    "volume": "36",
+    "author": [
+     {
+      "given": "Claire",
+      "family": "Edwards",
+      "sequence": "first",
+      "affiliation": [],
+      "role": [
+       {
+        "vocabulary": "crossref",
+        "role": "author"
+       }
+      ]
+     },
+     {
+      "given": "Gill",
+      "family": "Harold",
+      "sequence": "additional",
+      "affiliation": [],
+      "role": [
+       {
+        "vocabulary": "crossref",
+        "role": "author"
+       }
+      ]
+     }
+    ],
+    "member": "301",
+    "published-online": {
+     "date-parts": [
+      [
+       2014,
+       4,
+       30
+      ]
+     ]
+    },
+    "reference": [
+     {
+      "key": "CIT0002",
+      "first-page": "1.3",
+      "volume-title": "Universal design handbook",
+      "author": "Ostroff E",
+      "year": "2001"
+     },
+     {
+      "key": "CIT0003",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.3109/09638288.2011.624250"
+     },
+     {
+      "key": "CIT0004",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/15017419.2012.724445"
+     },
+     {
+      "key": "CIT0005",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1162/07479360152103796"
+     },
+     {
+      "key": "CIT0006",
+      "first-page": "1",
+      "volume": "9",
+      "author": "Tobias J",
+      "year": "2003",
+      "journal-title": "Infor Technol Disabil"
+     },
+     {
+      "key": "CIT0009",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1111/j.0008-3658.2003.00035.x"
+     },
+     {
+      "key": "CIT0010",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1353/sls.2002.0019"
+     },
+     {
+      "key": "CIT0011",
+      "volume-title": "The new normal: deaf-gain and the future of humanity",
+      "author": "Bauman H",
+      "year": "2014"
+     },
+     {
+      "key": "CIT0013",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/13549830802259938"
+     },
+     {
+      "key": "CIT0014",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.2114/jpa2.25.113"
+     },
+     {
+      "key": "CIT0016",
+      "first-page": "17",
+      "volume": "17",
+      "author": "Lid IM",
+      "year": "2009",
+      "journal-title": "FORMakademisk"
+     },
+     {
+      "key": "CIT0017",
+      "volume-title": "Accessible housing: quality, disability and design",
+      "author": "Imrie R",
+      "year": "2006"
+     },
+     {
+      "key": "CIT0018",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.4135/9781412976251.n25"
+     },
+     {
+      "key": "CIT0019",
+      "doi-asserted-by": "crossref",
+      "DOI": "10.21832/9781853595479",
+      "volume-title": "Understanding Deaf culture",
+      "author": "Ladd P",
+      "year": "2003"
+     },
+     {
+      "key": "CIT0020",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1093/deafed/eni030"
+     },
+     {
+      "key": "CIT0021",
+      "first-page": "83",
+      "volume-title": "Open your eyes: deaf studies talking",
+      "author": "Bahan B",
+      "year": "2008"
+     },
+     {
+      "key": "CIT0022",
+      "first-page": "87",
+      "volume-title": "Making sense of place",
+      "author": "Gulliver M",
+      "year": "2008"
+     },
+     {
+      "key": "CIT0023",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1353/sls.0.0035"
+     },
+     {
+      "key": "CIT0024",
+      "first-page": "215",
+      "volume": "2",
+      "author": "Mathews ES",
+      "year": "2007",
+      "journal-title": "Deaf Studies Today"
+     },
+     {
+      "key": "CIT0025",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1068/d3310"
+     },
+     {
+      "key": "CIT0028",
+      "doi-asserted-by": "crossref",
+      "DOI": "10.4159/9780674041752",
+      "volume-title": "Inside deaf culture",
+      "author": "Padden C",
+      "year": "2005"
+     },
+     {
+      "key": "CIT0029",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.3139/9783446433403.001"
+     },
+     {
+      "key": "CIT0030",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1017/CBO9781139163804.006"
+     },
+     {
+      "key": "CIT0032",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.4324/9780203362501"
+     },
+     {
+      "key": "CIT0034",
+      "first-page": "65",
+      "volume-title": "Deaf studies in Ireland: an introduction",
+      "author": "Mathews P",
+      "year": "2004"
+     },
+     {
+      "key": "CIT0036",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1093/acprof:oso/9780195320664.001.0001"
+     },
+     {
+      "key": "CIT0037",
+      "volume-title": "The timeless way of building",
+      "author": "Alexander C",
+      "year": "1979"
+     },
+     {
+      "key": "CIT0038",
+      "volume-title": "A pattern language: towns, buildings, construction",
+      "author": "Alexander C",
+      "year": "1977"
+     },
+     {
+      "key": "CIT0039",
+      "doi-asserted-by": "crossref",
+      "first-page": "181",
+      "DOI": "10.4324/9780203753446-9",
+      "volume-title": "Rethinking aesthetics: the role of body in design",
+      "author": "Bhatt R",
+      "year": "2013"
+     },
+     {
+      "key": "CIT0040",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/0142-694X(90)90009-2"
+     },
+     {
+      "key": "CIT0043",
+      "volume-title": "Disability and the city",
+      "author": "Imrie R",
+      "year": "1996"
+     },
+     {
+      "key": "CIT0044",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/s10209-009-0175-y"
+     },
+     {
+      "key": "CIT0047",
+      "first-page": "111",
+      "volume-title": "Open your eyes: deaf studies talking",
+      "author": "Haualand H",
+      "year": "2008"
+     },
+     {
+      "key": "CIT0048",
+      "volume-title": "A journey into the deaf-world",
+      "author": "Lane H",
+      "year": "1996"
+     }
+    ],
+    "container-title": [
+     "Disability and Rehabilitation"
+    ],
+    "language": "en",
+    "link": [
+     {
+      "URL": "http://www.tandfonline.com/doi/pdf/10.3109/09638288.2014.913710",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+     }
+    ],
+    "deposited": {
+     "date-parts": [
+      [
+       2022,
+       4,
+       2
+      ]
+     ],
+     "date-time": "2022-04-02T16:01:20Z",
+     "timestamp": 1648915280000
+    },
+    "score": 53.462154,
+    "resource": {
+     "primary": {
+      "URL": "http://www.tandfonline.com/doi/full/10.3109/09638288.2014.913710"
+     }
+    },
+    "issued": {
+     "date-parts": [
+      [
+       2014,
+       4,
+       30
+      ]
+     ]
+    },
+    "references-count": 34,
+    "journal-issue": {
+     "issue": "16",
+     "published-online": {
+      "date-parts": [
+       [
+        2014,
+        7,
+        28
+       ]
+      ]
+     },
+     "published-print": {
+      "date-parts": [
+       [
+        2014,
+        8
+       ]
+      ]
+     }
+    },
+    "alternative-id": [
+     "10.3109/09638288.2014.913710"
+    ],
+    "URL": "https://doi.org/10.3109/09638288.2014.913710",
+    "ISSN": [
+     "0963-8288",
+     "1464-5165"
+    ],
+    "issn-type": [
+     {
+      "value": "0963-8288",
+      "type": "print"
+     },
+     {
+      "value": "1464-5165",
+      "type": "electronic"
+     }
+    ],
+    "published": {
+     "date-parts": [
+      [
+       2014,
+       4,
+       30
+      ]
+     ]
+    },
+    "assertion": [
+     {
+      "value": "The publishing and review policy for this title is described in its Aims & Scope.",
+      "order": 1,
+      "name": "peerreview_statement",
+      "label": "Peer Review Statement"
+     },
+     {
+      "value": "http://www.tandfonline.com/action/journalInformation?show=aimsScope&journalCode=idre20",
+      "URL": "http://www.tandfonline.com/action/journalInformation?show=aimsScope&journalCode=idre20",
+      "order": 2,
+      "name": "aims_and_scope_url",
+      "label": "Aim & Scope"
+     }
+    ]
+   },
+   {
+    "indexed": {
+     "date-parts": [
+      [
+       2022,
+       4,
+       5
+      ]
+     ],
+     "date-time": "2022-04-05T20:03:43Z",
+     "timestamp": 1649189023632
+    },
+    "reference-count": 0,
+    "publisher": "University of Minnesota Press",
+    "content-domain": {
+     "domain": [],
+     "crossmark-restriction": false
+    },
+    "DOI": "10.5749/j.ctt1pwt79d.11",
+    "type": "book-chapter",
+    "created": {
+     "date-parts": [
+      [
+       2017,
+       11,
+       1
+      ]
+     ],
+     "date-time": "2017-11-01T21:03:04Z",
+     "timestamp": 1509570184000
+    },
+    "page": "223-254",
+    "source": "Crossref",
+    "is-referenced-by-count": 0,
+    "title": [
+     "Entangled Principles"
+    ],
+    "prefix": "10.5749",
+    "member": "3779",
+    "container-title": [
+     "Building Access"
+    ],
+    "deposited": {
+     "date-parts": [
+      [
+       2018,
+       4,
+       9
+      ]
+     ],
+     "date-time": "2018-04-09T10:55:17Z",
+     "timestamp": 1523271317000
+    },
+    "score": 33.8348,
+    "resource": {
+     "primary": {
+      "URL": "https://www.jstor.org/stable/10.5749/j.ctt1pwt79d.11"
+     }
+    },
+    "subtitle": [
+     "Crafting a Universal Design Methodology"
+    ],
+    "issued": {
+     "date-parts": [
+      [
+       null
+      ]
+     ]
+    },
+    "references-count": 0,
+    "URL": "https://doi.org/10.5749/j.ctt1pwt79d.11"
+   }
+  ],
+  "items-per-page": 2,
+  "query": {
+   "start-index": 0,
+   "search-terms": null
+  }
+ }
+}

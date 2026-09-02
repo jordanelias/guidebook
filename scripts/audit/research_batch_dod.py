@@ -76,7 +76,7 @@ CHECKS (each maps to a documented rule and to the observed violation that motiva
       must carry its authoritative in-language source basis, else [UNVERIFIED-TERMS].
 
   R12 STRUCTURED HOMES USED.  Case-study, economics and jurisdictional VALUE data belong in
-      case_studies / economics_entries / jurisdictional_values — not in prose notes.
+      case_studies / economics_entries / research_code_leads — not in prose notes.
 
   --- Added 2026-07-25, derived from the remediation pass itself. ---
 
@@ -554,7 +554,7 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     if econ_words and econ_rows < econ_words:
         fail("R12", f"{econ_words} search(es) carry economic findings in prose but only "
                     f"{econ_rows} economics_entries row(s) exist. Economic/case-study/value data "
-                    f"belongs in economics_entries / case_studies / jurisdictional_values, not "
+                    f"belongs in economics_entries / case_studies / research_code_leads, not "
                     f"in prose notes.", econ_words)
     else:
         ok("R12", f"structured homes used (economics_entries={econ_rows} for {econ_words} "

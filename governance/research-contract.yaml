@@ -188,9 +188,31 @@ rules:
     title: "Structured homes used"
     hook: >-
       Case studies -> case_studies. Economics -> economics_entries. Code values ->
-      jurisdictional_values. Never leave them in prose notes.
-    anchor: "schemas/case_study.py; schemas/economics.py; schemas/jurisdictional_value.py"
+      research_code_leads. Never leave them in prose notes.
+    anchor: "schemas/case_study.py; schemas/economics.py; scripts/migrations/066_research_code_leads.sql"
     enforcer: R12
+    resolution: >-
+      CORRECTED 2026-09-02. The clause read "Code values -> jurisdictional_values",
+      which instructed a write that CANNOT SUCCEED and, before 2026-09-01, one that
+      was forbidden. Two separate defects had accumulated on one line.
+      (a) FORBIDDEN: the 2026-08-12 REFERENCE-ONLY ruling made jurisdictional_values
+      name which document to go and get, never what it says, and D-0181 (2026-08-31,
+      OD-G) struck the same clause from DR-2026-08-19 §12.1 step 10 for exactly this
+      reason -- but struck it only in the runbook, leaving this copy, which is the
+      one injected into every session by the SessionStart hook. A ruling that fixes
+      one of two copies is CLAUDE.md rule 5's dual-home defect wearing a correction
+      as a disguise.
+      (b) IMPOSSIBLE: since the owner ruling of 2026-09-01 emptied `items`,
+      db.py:2383 refuses every add-jurisdictional-value call on the FK existence
+      check, so a session obeying this hook meets a hard refusal with no route
+      forward. The table now holds 0 rows.
+      RE-POINTED 2026-09-02, same day. The first correction sent code values to
+      search_candidates because at that hour no lawful home existed. The owner then
+      ruled the 83 archived leads restored as `research_code_leads` (migration 066,
+      D-0185), which IS the home: jurisdiction and standard_name mandatory, a clause
+      column for R3's locator, and no DOI column at all. Write them with
+      `db.py add-code-lead`. search_candidates remains correct for an off-slug or
+      unverified FINDING (R7); it was never the right home for a code identifier.
 
   - id: R13
     phase: while-searching

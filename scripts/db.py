@@ -896,13 +896,35 @@ def main():
     p_cs.add_argument("--session", required=True)
     p_cs.add_argument("--dry-run", action="store_true")
 
+    p_rcl = sub.add_parser("add-code-lead",
+                           help="Record a code/standard lead (research_code_leads)")
+    p_rcl.add_argument("--jurisdiction", required=True,
+                       help="e.g. GB, DE, ISO. NOT NULL: a lead that cannot say where it "
+                            "applies is not retrievable.")
+    p_rcl.add_argument("--standard-name", required=True,
+                       help="e.g. 'BS 8300-2:2018'. Keyed with --jurisdiction; restating "
+                            "one standard per design parameter is refused.")
+    p_rcl.add_argument("--clause", help="R3's locator: clause/section/page, once retrieved")
+    p_rcl.add_argument("--status", default="REFERENCE-ONLY",
+                       help="Live vocabulary, derived from the table; not a list in this file")
+    p_rcl.add_argument("--recovered-from")
+    p_rcl.add_argument("--notes")
+    p_rcl.add_argument("--session", required=True)
+    p_rcl.add_argument("--dry-run", action="store_true")
+
     p_loc = sub.add_parser("add-locator", help="Write a lead into the clue store")
     p_loc.add_argument("--ref-id", required=True)
     for f in ("doi", "pmid", "pmcid", "isbn", "issn", "url", "standard-number",
               "title", "authors", "notes", "used-in-bpcs"):
         p_loc.add_argument("--" + f)
     p_loc.add_argument("--pub-year", type=int)
-    p_loc.add_argument("--tier-claimed", type=int)
+    # TEXT, not int. The column is `tier_claimed TEXT` and its live values include
+    # 'Co-1/3', 'Co-2', 'Tier 1', 'INT', 'CA' and 'DE' -- a tier CLAIM is what a
+    # lead asserts about itself, not a validated tier. `type=int` made the writer
+    # refuse every Co-1 and Co-2 lead, which is the one class CRPD Art 4.3 makes
+    # co-primary with T1, and the class this project most needs its clue store to
+    # carry. Found 2026-09-02 parking six retracted identities, three of them Co-1.
+    p_loc.add_argument("--tier-claimed")
     p_loc.add_argument("--recovered-from", required=True)
     p_loc.add_argument("--status", required=True)
     p_loc.add_argument("--session", required=True)
@@ -1083,6 +1105,17 @@ def main():
     p_as.add_argument("--pmid")
     p_as.add_argument("--jurisdiction")
     p_as.add_argument("--evidence-type")
+    # ADDED 2026-09-02. All three columns were ALREADY in _ES_COLS, so
+    # insert_evidence_source accepted them; only the CLI had no way to say them. The
+    # cost was measured 2026-09-01: two Co-1 sources admitted with co1_provenance NULL,
+    # which DR-2026-08-31 (D-0178) calls "unwarranted-pending" — on the one tier whose
+    # entire warrant under CRPD Art 4.3 IS the co-production.
+    p_as.add_argument("--co1-provenance",
+                      help="HOW the co-production is evidenced — name the disabled people or "
+                           "organisation. D-0178: 'published_corpus' says where it was PUBLISHED, "
+                           "not that disabled people CO-PRODUCED it. Required for --evidence-type co1.")
+    p_as.add_argument("--co1-source-type")
+    p_as.add_argument("--synthesis-attribution-required", type=int, choices=[0, 1])
     p_as.add_argument("--lang-detected", help="ISO 639-1 code for the source's actual publication language")
     p_as.add_argument("--lang-detection-method",
                       help="How --lang-detected was determined, e.g. 'native_title_verified', "
@@ -1495,6 +1528,14 @@ def main():
         }, session=args.session, dry_run=args.dry_run)
         _emit({"case_study_id": cs, "dry_run": args.dry_run})
 
+    elif args.command == "add-code-lead":
+        lid = insert_code_lead({
+            "jurisdiction": args.jurisdiction, "standard_name": args.standard_name,
+            "clause": args.clause, "status": args.status,
+            "recovered_from": args.recovered_from, "notes": args.notes,
+        }, session=args.session, dry_run=args.dry_run)
+        _emit({"lead_id": lid, "dry_run": args.dry_run})
+
     elif args.command == "add-locator":
         rid = insert_locator({
             "ref_id": args.ref_id, "doi": args.doi, "pmid": args.pmid,
@@ -1540,10 +1581,35 @@ def main():
             data["verified_by_tool"] = args.verified_by_tool
         for _flag, _col in (("url", "url"), ("url_accessed", "url_accessed"),
                             ("pages", "pages"),
-                            ("doi_resolution_outcome", "doi_resolution_outcome")):
+                            ("doi_resolution_outcome", "doi_resolution_outcome"),
+                            # The Co-1 warrant and its companions. Omitting these here on
+                            # 2026-09-02 made the flag parse, the refusal pass, and the value
+                            # silently never reach the row — a worse failure than no flag at
+                            # all, because the CLI would have reported success on a Co-1
+                            # admission whose warrant was dropped on the floor.
+                            ("co1_provenance", "co1_provenance"),
+                            ("co1_source_type", "co1_source_type"),
+                            ("synthesis_attribution_required",
+                             "synthesis_attribution_required")):
             _v = getattr(args, _flag, None)
-            if _v:
+            # `is not None`, not truthiness: synthesis_attribution_required is an int flag
+            # and 0 is a real, meaningful value that `if _v` would discard.
+            if _v is not None:
                 data[_col] = _v
+        # THE CO-1 WARRANT REFUSAL (D-0178, ratified 2026-08-31). A Co-1 admission whose
+        # warrant is not stated is "unwarranted-pending", and Co-1 is co-primary with T1
+        # under CRPD Art 4.3 — this is the tier where the claim rests entirely on disabled
+        # people having produced the work. CLAUDE.md §6: "Erasing them while claiming the
+        # tier is the worst failure available here." On 2026-09-01 two Co-1 rows were
+        # written with co1_provenance NULL because the CLI could not say it; nothing
+        # refused them. Now something does.
+        if (args.evidence_type or "").lower() == "co1" and not args.co1_provenance:
+            raise ValueError(
+                "--co1-provenance is REQUIRED for --evidence-type co1. D-0178: the Co-1 "
+                "warrant must NAME the co-production — which disabled people or "
+                "organisation produced this work — because that co-production IS the "
+                "warrant. If it genuinely cannot be evidenced from the source, the row is "
+                "not Co-1; admit it at its actual tier and say why in --notes.")
         authors = (parse_author_flags(args.author) if args.author
                    else parse_author_display(args.authors))
         ref_id = insert_evidence_source(data, session=args.session,
@@ -2494,6 +2560,53 @@ def insert_case_study(data: dict, session: str, dry_run: bool = False):
         conn.execute(f"INSERT INTO case_studies ({cols}) VALUES ({','.join('?'*len(row))})",
                      list(row.values()))
     return data.get("case_study_id")
+
+
+def insert_code_lead(data: dict, session: str, dry_run: bool = False) -> int:
+    """Write a code/standard lead into the research-stage lead store.
+
+    Deliberately NOT a DOI-bearing writer. research_code_leads has no doi column
+    (migration 066): a standard is retrieved by clause reference, and letting the two
+    identifier shapes share a row format is what put 24 rows in source_locators
+    carrying both a standard_number and a DOI.
+    """
+    _COLS = frozenset({
+        "jurisdiction", "standard_name", "clause", "status", "recovered_from", "notes",
+    })
+    dbcore.validate_cols(data.keys(), _COLS, "insert_code_lead")
+    jur = (data.get("jurisdiction") or "").strip()
+    std = (data.get("standard_name") or "").strip()
+    # Both are NOT NULL in the schema; refusing here means the caller gets a sentence
+    # instead of an IntegrityError, and refusing on blank means a whitespace string
+    # cannot slip past a NOT NULL that only tests for NULL.
+    if not jur:
+        raise ValueError("--jurisdiction is required and may not be blank: a lead that "
+                         "cannot say which jurisdiction it belongs to is not retrievable, "
+                         "which is the only purpose this row has.")
+    if not std:
+        raise ValueError("--standard-name is required and may not be blank.")
+    with dbcore.connect(dry_run) as conn:
+        dbcore.check_vocab(conn, "research_code_leads", "status", data.get("status"),
+                           "insert_code_lead")
+        # THE DEDUP REFUSAL. 109 archived rows were 83 leads because the same standard was
+        # restated once per item. The UNIQUE constraint makes that impossible; this turns
+        # it into a sentence naming the row that already holds it.
+        hit = conn.execute(
+            "SELECT lead_id FROM research_code_leads WHERE jurisdiction=? AND standard_name=?",
+            (jur, std)).fetchone()
+        if hit:
+            raise ValueError(
+                f"{jur} / {std!r} is already held as lead_id {hit[0]}. A code lead is keyed "
+                f"on (jurisdiction, standard_name) — restating it is the duplication the "
+                f"item-keyed shape produced. Update that row instead.")
+        now = dbcore.now()
+        cur = conn.execute(
+            "INSERT INTO research_code_leads (jurisdiction, standard_name, clause, status, "
+            "recovered_from, notes, created_at, created_by_session) "
+            "VALUES (?,?,?,?,?,?,?,?)",
+            (jur, std, data.get("clause"), data.get("status") or "REFERENCE-ONLY",
+             data.get("recovered_from"), data.get("notes"), now, session))
+        return cur.lastrowid
 
 
 def insert_locator(data: dict, session: str, dry_run: bool = False) -> str:

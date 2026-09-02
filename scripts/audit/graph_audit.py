@@ -391,7 +391,21 @@ def selftest():
         shutil.copy(canonical, copy)
         con = sqlite3.connect(copy)
         con.execute("PRAGMA foreign_keys=OFF")
-        it = con.execute("SELECT item_code FROM items LIMIT 1").fetchone()[0]
+        # Seed our own item rather than borrowing a live one. Until 2026-09-01 this
+        # read `SELECT item_code FROM items LIMIT 1` and subscripted the result, so
+        # it raised TypeError the moment the table was empty — which it became when
+        # the owner ruled the item layer out of existence that day. A selftest that
+        # proves dangling-reference detection must not itself depend on the live
+        # corpus having rows; the fixture is the point.
+        row = con.execute("SELECT item_code FROM items LIMIT 1").fetchone()
+        if row is None:
+            it = "ZZ-SELFTEST-ITEM"
+            con.execute("INSERT INTO items (item_code, item_id, name, category, status, "
+                        "created_at, created_by_session, updated_at, updated_by_session) "
+                        "VALUES (?, 9999, 'graph_audit selftest fixture', 'A', 'active', "
+                        "'2026-01-01', 'selftest', '2026-01-01', 'selftest')", (it,))
+        else:
+            it = row[0]
         con.execute("UPDATE items SET bpc_source_slug='zz-phantom-slug' WHERE item_code=?", (it,))
         pop = con.execute("SELECT population_code FROM populations LIMIT 1").fetchone()[0]
         con.execute("UPDATE populations SET parent_code='ZZ-PHANTOM-POP' WHERE population_code=?", (pop,))

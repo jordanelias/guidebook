@@ -148,10 +148,21 @@ def run_checks(db_path):
         """).fetchone()[0] == 0,
         subject=subj("SELECT COUNT(*) FROM bpc_metadata"))
 
-    record("A07", "citation_mining global_ref_id → source_slug_links",
+    # A07 WIDENED 2026-09-02, and it is the replacement migration 067 said was owed.
+    # It used to require the anchor resolve through source_slug_links, i.e. that a mined
+    # anchor be an ADMITTED, slug-linked source. That was true while the only ref_ids
+    # lived in evidence_sources; it stopped being true when the owner ruled DOI leads to
+    # be research rather than evidence. Mining a LEAD is legitimate research, and after
+    # the 2026-09-01 retraction the ten anchors here resolve in source_locators.
+    # dbcore.next_ref_id() already treats ref_id as an identity spanning both tables --
+    # the UNION high-water mark -- and CLAUDE.md records that the older single-table rule
+    # was WRONG. This check now asks the question the identity model actually supports:
+    # does the anchor resolve ANYWHERE a ref_id can live? A dangling anchor still fails.
+    record("A07", "citation_mining global_ref_id resolves as a ref_id identity",
         conn.execute("""SELECT COUNT(*) FROM citation_mining c
             WHERE global_ref_id IS NOT NULL
-            AND NOT EXISTS (SELECT 1 FROM source_slug_links l WHERE l.ref_id=c.global_ref_id)
+            AND NOT EXISTS (SELECT 1 FROM source_locators  s WHERE s.ref_id=c.global_ref_id)
+            AND NOT EXISTS (SELECT 1 FROM evidence_sources e WHERE e.ref_id=c.global_ref_id)
         """).fetchone()[0] == 0,
         subject=subj("SELECT COUNT(*) FROM citation_mining WHERE global_ref_id IS NOT NULL"))
 
@@ -1020,20 +1031,25 @@ def run_checks(db_path):
     # happens. A parity check between two homes of one fact does not prevent
     # drift; it makes the second home survivable, and therefore permanent.
 
-    # results_admitted is a third store of the same fact. It was consistent with
-    # the JSON on all 84 rows when 050 was written; if it drifts, the junction is
-    # the one to trust and this says so out loud rather than letting a stale
-    # counter be read as yield.
-    admit_count_drift = conn.execute("""
-        SELECT COUNT(*) FROM search_executions se
-        WHERE se.results_admitted != (
-          SELECT COUNT(*) FROM search_admissions sa WHERE sa.exec_id = se.exec_id)
-    """).fetchone()[0]
-    record("H05", "results_admitted equals the admission edge count",
-           admit_count_drift == 0,
-           f"{admit_count_drift} executions whose results_admitted disagrees with "
-           f"search_admissions" if admit_count_drift else "",
-           subject=subj("SELECT COUNT(*) FROM search_executions"))
+    # H05 DELETED 2026-09-02, for the reason its own comment gave. It read:
+    # "results_admitted is a third store of the same fact." CLAUDE.md rule 5 is
+    # explicit that a parity check between two homes of one fact "is not a fix — it
+    # makes a dual home survivable, therefore permanent", which is exactly why H03/H04
+    # were deleted three lines above. H05 was the same defect left standing.
+    #
+    # It did active harm, not merely redundant work. On 2026-09-01 the retraction
+    # migration emptied search_admissions, and to keep H05 green it also ran
+    # `UPDATE search_executions SET results_admitted = 0` across 7 research rows.
+    # The gate did not detect drift; it CAUSED a research-stage record to be rewritten
+    # so the second home would agree with the first. v_coverage_jurisdiction then read
+    # 25 searches / 0 admitted for room-acoustic-performance, which is false: those
+    # searches did admit, and the retraction happened downstream of them.
+    #
+    # The 7 historical values are restored in data_20260902* alongside this deletion,
+    # and results_admitted is now writer-retired the way admitted_ref_ids was on
+    # 2026-08-24: db.py sets it from len(--admitted-ref-id) at insert and nothing
+    # updates it thereafter. Current yield is COUNT(search_admissions); the execution
+    # row keeps what it found.
 
     # H06 is what makes H01–H04 non-vacuous: they only compare rows that are
     # JSON arrays, so a column drifting into some other shape would quietly
@@ -1386,18 +1402,36 @@ def run_checks(db_path):
     # jurisdictional_values has a YAML mirror too, held equal by
     # validate_schema.py --cross-check. Asserted here as well because that
     # check runs in a different battery and a data-only PR may not select it.
-    jv_dir = os.path.join(REPO, "data", "jurisdictional_values")
-    if _yaml is not None and os.path.isdir(jv_dir):
+    # L02 REPOINTED 2026-09-02. It compared data/jurisdictional_values/ against the
+    # jurisdictional_values table. The owner ruled that corpus restored as
+    # research_code_leads (D-0185); the YAML moved to _archived/ and the old table is
+    # empty. Until 2026-09-02 this simply VANISHED when the directory went — the guard
+    # skipped it and it never appeared in the results at all, which is the failure this
+    # file's own C05 convention names: "a skip that reads as a pass is the vacuity
+    # itself". It now states an empty scope instead of disappearing, and points at the
+    # live pairing.
+    jv_dir = os.path.join(REPO, "_archived", "data", "jurisdictional_values")
+    if _yaml is None or not os.path.isdir(jv_dir):
+        record("L02", "research_code_leads: archived record count matches the table",
+               True, "", subject=0)
+    else:
         n_yaml = 0
         for fn in os.listdir(jv_dir):
             if fn.endswith((".yaml", ".yml")):
                 doc = _yaml.safe_load(open(os.path.join(jv_dir, fn))) or {}
                 vals = doc.get("records") or []
                 n_yaml += len(vals) if isinstance(vals, list) else 0
-        n_db = conn.execute("SELECT COUNT(*) FROM jurisdictional_values").fetchone()[0]
-        record("L02", "jurisdictional_values: YAML record count matches the table",
+        # Distinct leads, not raw records: the restore deliberately collapsed 109
+        # item-keyed rows onto their 83 distinct (jurisdiction, standard_name) leads,
+        # so a raw count would report drift where the ruling produced compression.
+        n_yaml = len({(r.get("jurisdiction"), r.get("standard_name"))
+                      for fn in os.listdir(jv_dir) if fn.endswith((".yaml", ".yml"))
+                      for r in ((_yaml.safe_load(open(os.path.join(jv_dir, fn))) or {})
+                                .get("records") or [])})
+        n_db = conn.execute("SELECT COUNT(*) FROM research_code_leads").fetchone()[0]
+        record("L02", "research_code_leads: archived lead count matches the table",
                n_yaml == n_db,
-               f"{n_yaml} YAML records vs {n_db} table rows" if n_yaml != n_db else "",
+               f"{n_yaml} archived leads vs {n_db} table rows" if n_yaml != n_db else "",
                subject=n_yaml + n_db)
 
     # L03 (legacy coverage-grid freeze) was RETIRED by the 2026-08-06 clean-room
