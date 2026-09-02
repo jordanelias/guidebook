@@ -208,5 +208,12 @@ not beaten yet), and `D05-021`–`D05-024` above.
 naming batch-02 while batch-03 was the newest session with research rows.
 
 Full narrative in `scratchpad/session_2026-09-02-research-batch-05-circulation-icf/`:
-`FRAME.md`, `agonist/BRIEF.md`, `tracer/LOG.md`, and `DEFECT-REGISTER.md`, which is the
-single home of defect status.
+`FRAME.md`, `agonist/BRIEF.md`, `antagonist/FINDINGS.md`, `tracer/LOG.md`, and
+`DEFECT-REGISTER.md`, which is the single home of defect status.
+
+`antagonist/FINDINGS.md` was written up after the fact by the orchestrator rather than by
+the agent, which ran read-only and wrote nothing. That directory stood empty beside the
+agonist's and the tracer's files until the omission was noticed — the pass that produced
+the session's most valuable findings had no review surface, which is the exact failure
+rule 6 names. It records what the agent claimed, what re-verification sustained, the one
+place it over-counted, and the one place the orchestrator disagreed and why.
