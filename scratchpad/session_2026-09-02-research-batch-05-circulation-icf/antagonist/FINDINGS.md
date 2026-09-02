@@ -6,7 +6,9 @@ reader could check"*), and the previous batch's antagonist produced an 857-line 
 nothing. Mechanic: blind-then-compare, against the retained payloads.
 
 **Written up after the fact by the orchestrator**, from the agent's report and from the independent
-re-verification of each finding. The agent ran read-only and wrote nothing itself; this file exists
+re-verification of each finding. **The agent's own verbatim workings — every tool call, query and
+intermediate result — are preserved at `transcripts/harness_6a6f63cd/subagents/`**, run 1 (killed by a
+container restart) and run 2. This file is the reading; those are the record. The agent ran read-only and wrote nothing itself; this file exists
 because rule 6 says a review surface must be on disk, and an empty `antagonist/` beside the agonist's
 BRIEF.md and the tracer's LOG.md misrepresents what happened. **Every finding below was re-derived by
 the orchestrator against the primary artefact before any data changed** — where the two disagreed, that
