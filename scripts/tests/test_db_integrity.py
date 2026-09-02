@@ -148,10 +148,21 @@ def run_checks(db_path):
         """).fetchone()[0] == 0,
         subject=subj("SELECT COUNT(*) FROM bpc_metadata"))
 
-    record("A07", "citation_mining global_ref_id → source_slug_links",
+    # A07 WIDENED 2026-09-02, and it is the replacement migration 067 said was owed.
+    # It used to require the anchor resolve through source_slug_links, i.e. that a mined
+    # anchor be an ADMITTED, slug-linked source. That was true while the only ref_ids
+    # lived in evidence_sources; it stopped being true when the owner ruled DOI leads to
+    # be research rather than evidence. Mining a LEAD is legitimate research, and after
+    # the 2026-09-01 retraction the ten anchors here resolve in source_locators.
+    # dbcore.next_ref_id() already treats ref_id as an identity spanning both tables --
+    # the UNION high-water mark -- and CLAUDE.md records that the older single-table rule
+    # was WRONG. This check now asks the question the identity model actually supports:
+    # does the anchor resolve ANYWHERE a ref_id can live? A dangling anchor still fails.
+    record("A07", "citation_mining global_ref_id resolves as a ref_id identity",
         conn.execute("""SELECT COUNT(*) FROM citation_mining c
             WHERE global_ref_id IS NOT NULL
-            AND NOT EXISTS (SELECT 1 FROM source_slug_links l WHERE l.ref_id=c.global_ref_id)
+            AND NOT EXISTS (SELECT 1 FROM source_locators  s WHERE s.ref_id=c.global_ref_id)
+            AND NOT EXISTS (SELECT 1 FROM evidence_sources e WHERE e.ref_id=c.global_ref_id)
         """).fetchone()[0] == 0,
         subject=subj("SELECT COUNT(*) FROM citation_mining WHERE global_ref_id IS NOT NULL"))
 
@@ -1020,20 +1031,25 @@ def run_checks(db_path):
     # happens. A parity check between two homes of one fact does not prevent
     # drift; it makes the second home survivable, and therefore permanent.
 
-    # results_admitted is a third store of the same fact. It was consistent with
-    # the JSON on all 84 rows when 050 was written; if it drifts, the junction is
-    # the one to trust and this says so out loud rather than letting a stale
-    # counter be read as yield.
-    admit_count_drift = conn.execute("""
-        SELECT COUNT(*) FROM search_executions se
-        WHERE se.results_admitted != (
-          SELECT COUNT(*) FROM search_admissions sa WHERE sa.exec_id = se.exec_id)
-    """).fetchone()[0]
-    record("H05", "results_admitted equals the admission edge count",
-           admit_count_drift == 0,
-           f"{admit_count_drift} executions whose results_admitted disagrees with "
-           f"search_admissions" if admit_count_drift else "",
-           subject=subj("SELECT COUNT(*) FROM search_executions"))
+    # H05 DELETED 2026-09-02, for the reason its own comment gave. It read:
+    # "results_admitted is a third store of the same fact." CLAUDE.md rule 5 is
+    # explicit that a parity check between two homes of one fact "is not a fix — it
+    # makes a dual home survivable, therefore permanent", which is exactly why H03/H04
+    # were deleted three lines above. H05 was the same defect left standing.
+    #
+    # It did active harm, not merely redundant work. On 2026-09-01 the retraction
+    # migration emptied search_admissions, and to keep H05 green it also ran
+    # `UPDATE search_executions SET results_admitted = 0` across 7 research rows.
+    # The gate did not detect drift; it CAUSED a research-stage record to be rewritten
+    # so the second home would agree with the first. v_coverage_jurisdiction then read
+    # 25 searches / 0 admitted for room-acoustic-performance, which is false: those
+    # searches did admit, and the retraction happened downstream of them.
+    #
+    # The 7 historical values are restored in data_20260902* alongside this deletion,
+    # and results_admitted is now writer-retired the way admitted_ref_ids was on
+    # 2026-08-24: db.py sets it from len(--admitted-ref-id) at insert and nothing
+    # updates it thereafter. Current yield is COUNT(search_admissions); the execution
+    # row keeps what it found.
 
     # H06 is what makes H01–H04 non-vacuous: they only compare rows that are
     # JSON arrays, so a column drifting into some other shape would quietly
