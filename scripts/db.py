@@ -930,6 +930,10 @@ def main():
     p_am.add_argument("--append-note", required=True, dest="append_note",
                       help="Appended after a '|| CORRECTED <date>:' marker. The existing "
                            "note is never rewritten -- R8 makes this log append-only.")
+    p_am.add_argument("--set-harm-finding", action="store_true",
+                      help="Raise harm_finding 0 -> 1. R7 makes harm first-class, so a "
+                           "search logged with the flag down that did surface harm has an "
+                           "incomplete record. Only rises; lowering is refused.")
     p_am.add_argument("--session", required=True)
     p_am.add_argument("--dry-run", action="store_true")
 
@@ -945,6 +949,26 @@ def main():
                       help="Required when --disposition ADMITTED")
     p_rc.add_argument("--session", required=True)
     p_rc.add_argument("--dry-run", action="store_true")
+
+    p_ams = sub.add_parser("amend-source",
+                           help="Correct a JUDGEMENT field on an evidence row, recording what was replaced")
+    p_ams.add_argument("--ref-id", required=True)
+    p_ams.add_argument("--field", required=True,
+                       help="A judgement field, not a bibliographic one. Bibliographic "
+                            "fields belong to correct-source and are refused here.")
+    p_ams.add_argument("--replacement", required=True)
+    p_ams.add_argument("--reason", required=True,
+                       help="Why the previous text was wrong. Recorded in "
+                            "metadata_integrity_detail with the replaced text.")
+    p_ams.add_argument("--session", required=True)
+    p_ams.add_argument("--dry-run", action="store_true")
+
+    p_ul = sub.add_parser("update-locator", help="Move a lead's status in the clue store")
+    p_ul.add_argument("--ref-id", required=True)
+    p_ul.add_argument("--status", required=True,
+                      help="Live vocabulary, read from the column's own CHECK")
+    p_ul.add_argument("--session", required=True)
+    p_ul.add_argument("--dry-run", action="store_true")
 
     p_loc = sub.add_parser("add-locator", help="Write a lead into the clue store")
     p_loc.add_argument("--ref-id", required=True)
@@ -1577,12 +1601,21 @@ def main():
 
     elif args.command == "amend-search":
         _emit(amend_search(args.exec_id, args.append_note, session=args.session,
-                           dry_run=args.dry_run))
+                           dry_run=args.dry_run,
+                           set_harm_finding=args.set_harm_finding))
 
     elif args.command == "resolve-candidate":
         _emit(resolve_candidate(args.candidate_id, args.disposition, args.redescription,
                                 session=args.session, admitted_ref_id=args.admitted_ref_id,
                                 dry_run=args.dry_run))
+
+    elif args.command == "amend-source":
+        _emit(amend_source(args.ref_id, args.field, args.replacement, args.reason,
+                           session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "update-locator":
+        _emit(update_locator(args.ref_id, args.status, session=args.session,
+                             dry_run=args.dry_run))
 
     elif args.command == "add-locator":
         rid = insert_locator({
@@ -2258,7 +2291,8 @@ def correct_source(ref_id: str, fields: list, session: str, log_session: str,
         return changed
 
 
-def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False):
+def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
+                 set_harm_finding: bool = False):
     """APPEND a correction to a logged search's findings_note. Never rewrite it.
 
     R8 makes search_executions an append-only log: a query is logged verbatim before
@@ -2280,19 +2314,36 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False):
     if not note:
         raise ValueError(f"exec {exec_id}: refusing to append an empty amendment.")
     with connect(dry_run) as conn:
-        row = conn.execute("SELECT exec_id, findings_note FROM search_executions "
-                           "WHERE exec_id=?", [exec_id]).fetchone()
+        row = conn.execute("SELECT exec_id, findings_note, harm_finding "
+                           "FROM search_executions WHERE exec_id=?", [exec_id]).fetchone()
         if row is None:
             raise ValueError(f"exec {exec_id}: no such search execution.")
         stamp = audit(session)
         marker = f" || CORRECTED {stamp['created_at'][:10]}: "
-        if note in (row["findings_note"] or ""):
+        duplicate = note in (row["findings_note"] or "")
+        if duplicate and not set_harm_finding:
             return {"exec_id": exec_id, "appended": False,
                     "reason": "this amendment is already on the row"}
-        merged = (row["findings_note"] or "").rstrip() + marker + note
-        conn.execute("UPDATE search_executions SET findings_note=? WHERE exec_id=?",
-                     [merged, exec_id])
-        return {"exec_id": exec_id, "appended": True, "chars": len(merged)}
+        merged = row["findings_note"] or ""
+        if not duplicate:
+            merged = merged.rstrip() + marker + note
+            conn.execute("UPDATE search_executions SET findings_note=? WHERE exec_id=?",
+                         [merged, exec_id])
+        raised = False
+        if set_harm_finding:
+            # MONOTONIC, 0 -> 1 ONLY. R7 makes failure, harm and inadequacy first-class
+            # evidence rather than a by-product, so a search that turned some up and was
+            # logged with the flag down has an INCOMPLETE record, not a historical one --
+            # completing it is not rewriting what the search found. Lowering the flag
+            # would be, and is refused: that would erase a harm finding.
+            if row["harm_finding"]:
+                raise ValueError(
+                    f"exec {exec_id}: harm_finding is already 1. This flag only rises.")
+            conn.execute("UPDATE search_executions SET harm_finding=1 WHERE exec_id=?",
+                         [exec_id])
+            raised = True
+        return {"exec_id": exec_id, "appended": not duplicate, "chars": len(merged),
+                "harm_finding_raised": raised}
 
 
 def resolve_candidate(candidate_id: int, disposition: str, redescription: str,
@@ -2351,6 +2402,108 @@ def resolve_candidate(candidate_id: int, disposition: str, redescription: str,
                      [disposition, (row["notes"] or "").rstrip() + tail, candidate_id])
         return {"candidate_id": candidate_id, "was": row["disposition"],
                 "now": disposition, "admitted_ref_id": admitted_ref_id}
+
+
+# Judgement fields on evidence_sources: prose an author must WRITE, which no payload
+# can supply and no verifier can prove. Deliberately disjoint from _CORRECTABLE. The
+# division is the whole design: a BIBLIOGRAPHIC fact comes from the payload and this
+# writer refuses to touch it; a JUDGEMENT is written by a person and can only be
+# corrected by a person, with the correction recorded.
+_AMENDABLE = (
+    "co1_provenance", "co1_source_type", "grey_reason", "verification_note",
+    "prior_expectation", "notes", "bpc_note", "scope",
+)
+
+
+def amend_source(ref_id: str, field: str, replacement: str, reason: str,
+                 session: str, dry_run: bool = False):
+    """Replace a JUDGEMENT field on an evidence row, recording what was replaced.
+
+    Replaces rather than appends, and that is the opposite of what resolve-candidate
+    and amend-search do, on purpose. Those fields hold a HYPOTHESIS, and R15 wants the
+    guess left legible beside the correction. These fields hold a WARRANT -- the
+    sentence a downstream reader takes as the reason a source stands where it does. A
+    false citation inside co1_provenance is not a historical record of what someone
+    believed; it is a live claim about why a Co-1 source counts as Co-1, and leaving
+    it in place with a correction underneath means the next reader can still quote it.
+
+    So the wrong text goes, and it goes into metadata_integrity_detail with the date
+    and the reason, where it is preserved without being quotable as the warrant.
+
+    Written 2026-09-02 for REF-00978, whose co1_provenance ended "Provenance verified
+    from the retrieved report itself (p.2, p.28), not from a description of it." p.2 of
+    that PDF is blank, p.28 is survey question 40, and the charity number the sentence
+    carried appears nowhere in the 29 pages -- it came from a web description, which is
+    the one thing the sentence denies. A verification assertion that is itself the
+    thing that failed is the CLAUDE.md 2(c) shape, and it was in the field carrying a
+    CRPD Art 4.3 warrant.
+    """
+    replacement, reason = (replacement or "").strip(), (reason or "").strip()
+    if field in _CORRECTABLE or field == "authors":
+        raise ValueError(
+            f"{ref_id}: {field!r} is a bibliographic field. It is not amendable by hand "
+            f"-- use `db.py correct-source`, which takes it from the logged payload.")
+    if field not in _AMENDABLE:
+        raise ValueError(
+            f"{ref_id}: {field!r} is not an amendable judgement field. "
+            f"Amendable: {', '.join(_AMENDABLE)}.")
+    if not replacement:
+        raise ValueError(f"{ref_id}: refusing to blank {field!r}. Give the corrected text.")
+    if not reason:
+        raise ValueError(
+            f"{ref_id}: --reason is required. An unexplained overwrite of a warrant is "
+            f"indistinguishable from the error it replaces.")
+    with connect(dry_run) as conn:
+        row = conn.execute(f"SELECT ref_id, {field}, metadata_integrity_detail "
+                           f"FROM evidence_sources WHERE ref_id=?", [ref_id]).fetchone()
+        if row is None:
+            raise ValueError(f"{ref_id}: no such evidence source.")
+        was = row[field]
+        if (was or "").strip() == replacement:
+            return {"ref_id": ref_id, "field": field, "changed": False}
+        stamp = audit(session)
+        ledger = (row["metadata_integrity_detail"] or "").rstrip()
+        ledger += (f" || {stamp['created_at'][:10]} {field} CORRECTED ({reason}). "
+                   f"Replaced text was: {was!r}")
+        conn.execute(
+            f"UPDATE evidence_sources SET {field}=?, metadata_integrity_status=?, "
+            f"metadata_integrity_detail=?, updated_at=?, updated_by_session=? "
+            f"WHERE ref_id=?",
+            [replacement, "CORRECTED", ledger.lstrip(" |"),
+             stamp["created_at"], stamp["created_by_session"], ref_id])
+        return {"ref_id": ref_id, "field": field, "changed": True,
+                "was_chars": len(was or ""), "now_chars": len(replacement)}
+
+
+def update_locator(ref_id: str, status: str, session: str, dry_run: bool = False):
+    """Move a lead's status. insert_locator has told callers to "Use update-locator"
+    for some time, and there was no such command -- an error message naming a remedy
+    that does not exist, which CLAUDE.md 4 treats as an unswept caller.
+
+    The transition this exists for is REFERENCE-ONLY -> PROMOTED, declared in the
+    column's own CHECK and, measured 2026-09-02, used by NONE of the 881 rows. When a
+    lead is cross-filed onto a real evidence row under R9, the clue store still says
+    "reference only, not evidence" about a ref_id that now carries an evidence_sources
+    row, a slug link and graded population matches. Only the status moves: the lead's
+    identifiers are what make it that lead, and rule 5 keeps the bibliography in
+    evidence_sources rather than copying it back down here.
+    """
+    with connect(dry_run) as conn:
+        row = conn.execute("SELECT ref_id, status FROM source_locators WHERE ref_id=?",
+                           [ref_id]).fetchone()
+        if row is None:
+            raise ValueError(f"{ref_id}: not in source_locators.")
+        dbcore.check_vocab(conn, "source_locators", "status", status, "--status")
+        if status == "PROMOTED" and not dbcore.exists(conn, "evidence_sources",
+                                                      "ref_id", ref_id):
+            raise ValueError(
+                f"{ref_id}: PROMOTED means this lead became evidence, and there is no "
+                f"evidence_sources row for it. File the source first.")
+        if row["status"] == status:
+            return {"ref_id": ref_id, "status": status, "changed": False}
+        conn.execute("UPDATE source_locators SET status=? WHERE ref_id=?",
+                     [status, ref_id])
+        return {"ref_id": ref_id, "was": row["status"], "now": status, "changed": True}
 
 
 def insert_source_slug_link(ref_id: str, slug: str, local_ref_id: str,
@@ -2688,7 +2841,21 @@ def insert_population_match(data: dict, session: str, dry_run: bool = False):
         row["source_ref"] = ref
         row.update(dbcore.stamp_for(conn, "evidence_population_match", session))
         if row.get("match_id") is None:
-            row["match_id"] = f"{session[:24]}-{ref}-{data['target_population']}"
+            # The dissent above is only WRITABLE if the derived id can differ. Until
+            # 2026-09-02 this was exactly f"{session}-{ref}-{pop}", so a dissenting grade
+            # raised in the SAME session as the grade it dissents from collided on the
+            # primary key -- the id derivation quietly abolishing the mechanic the comment
+            # above defends. DR-2026-08-19 §7 says "distinguished by created_by_session",
+            # which held while adversarial passes were separate sessions; under the
+            # agonist/antagonist format they are routinely the same one. Suffix on
+            # collision, so the contest can actually be recorded.
+            base = f"{session[:24]}-{ref}-{data['target_population']}"
+            row["match_id"] = base
+            n = 1
+            while conn.execute("SELECT 1 FROM evidence_population_match WHERE match_id=?",
+                               (row["match_id"],)).fetchone():
+                n += 1
+                row["match_id"] = f"{base}-{n}"
         cols = ",".join(row)
         conn.execute(f"INSERT INTO evidence_population_match ({cols}) "
                      f"VALUES ({','.join('?'*len(row))})", list(row.values()))
