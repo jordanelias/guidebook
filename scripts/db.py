@@ -924,6 +924,15 @@ def main():
     p_cs.add_argument("--session", required=True)
     p_cs.add_argument("--dry-run", action="store_true")
 
+    p_am = sub.add_parser("amend-search",
+                          help="APPEND a dated correction to a logged search's findings_note")
+    p_am.add_argument("--exec-id", required=True, type=int)
+    p_am.add_argument("--append-note", required=True, dest="append_note",
+                      help="Appended after a '|| CORRECTED <date>:' marker. The existing "
+                           "note is never rewritten -- R8 makes this log append-only.")
+    p_am.add_argument("--session", required=True)
+    p_am.add_argument("--dry-run", action="store_true")
+
     p_loc = sub.add_parser("add-locator", help="Write a lead into the clue store")
     p_loc.add_argument("--ref-id", required=True)
     for f in ("doi", "pmid", "pmcid", "isbn", "issn", "url", "standard-number",
@@ -1552,6 +1561,10 @@ def main():
         ch = correct_source(args.ref_id, args.fields, session=args.session,
                             log_session=args.log_session, dry_run=args.dry_run)
         _emit({"ref_id": args.ref_id, "corrected": ch, "dry_run": args.dry_run})
+
+    elif args.command == "amend-search":
+        _emit(amend_search(args.exec_id, args.append_note, session=args.session,
+                           dry_run=args.dry_run))
 
     elif args.command == "add-locator":
         rid = insert_locator({
@@ -2225,6 +2238,43 @@ def correct_source(ref_id: str, fields: list, session: str, log_session: str,
                          "WHERE ref_id=?",
                          [stamp["created_at"], stamp["created_by_session"], ref_id])
         return changed
+
+
+def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False):
+    """APPEND a correction to a logged search's findings_note. Never rewrite it.
+
+    R8 makes search_executions an append-only log: a query is logged verbatim before
+    screening and empties are kept, so no writer may edit what a search recorded at
+    the time. But a note can be WRONG, and leaving a wrong one standing is worse than
+    the rule it protects. On 2026-09-02 exec 34 recorded that the Euan's Guide Access
+    Survey is "predominantly information provision, toilets and staff attitude rather
+    than circulation geometry" — a characterisation written from a 404 page, and false
+    on the actual report, whose most-cited barrier is "could not get around the venue
+    (lack of lifts, narrow corridors, too little space or poor layout)" at 56%. That
+    sentence was the whole reason the batch's one disability-led source was not
+    admitted, and until now nothing in the CLI could correct it.
+
+    So: append, with a dated marker, in the '|| CORRECTED <date>:' form the record
+    already uses. The original text is never touched, which is what R8 protects, and
+    the next reader sees both what was believed and what was established.
+    """
+    note = (note or "").strip()
+    if not note:
+        raise ValueError(f"exec {exec_id}: refusing to append an empty amendment.")
+    with connect(dry_run) as conn:
+        row = conn.execute("SELECT exec_id, findings_note FROM search_executions "
+                           "WHERE exec_id=?", [exec_id]).fetchone()
+        if row is None:
+            raise ValueError(f"exec {exec_id}: no such search execution.")
+        stamp = audit(session)
+        marker = f" || CORRECTED {stamp['created_at'][:10]}: "
+        if note in (row["findings_note"] or ""):
+            return {"exec_id": exec_id, "appended": False,
+                    "reason": "this amendment is already on the row"}
+        merged = (row["findings_note"] or "").rstrip() + marker + note
+        conn.execute("UPDATE search_executions SET findings_note=? WHERE exec_id=?",
+                     [merged, exec_id])
+        return {"exec_id": exec_id, "appended": True, "chars": len(merged)}
 
 
 def insert_source_slug_link(ref_id: str, slug: str, local_ref_id: str,
