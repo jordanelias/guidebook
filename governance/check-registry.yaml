@@ -298,6 +298,17 @@ checks:
   basis: base/base-parameter-vocabulary
   cost: fast
   min_items: 1
+  floor_basis: 'FLOOR KEPT DELIBERATELY, 2026-09-02, though it now fails. The owner ruled the
+    design-parameter registry out of existence on 2026-09-01, so `items` holds 0 rows and this check
+    reports EXAMINED 0 and trips its vacuity guard as an advisory failure. That failure is CORRECT and
+    is not to be silenced by lowering the floor to 0 or by adding no_floor. The criterion it serves --
+    base-parameter-vocabulary, "the design-parameter registry is internally consistent and its labels
+    do not themselves assert determinations" -- was VINDICATED rather than refuted: its own reference
+    records that 42 of 93 item names carried a determination, and that is precisely the defect the owner
+    acted on. A red advisory here is the honest signal that a stage has no subject. If a design-parameter
+    layer is ever rebuilt, this is the check it must pass. (Recorded here and not on the contract
+    criterion because the contract schema forbids extra fields, and because it is the CHECK that is
+    dormant, not the criterion.)'
   note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the items-table row count (93 today) — the table
     this validator is named for. min_items:1: an empty items table would mean the DB or the query broke,
     not a legitimate state. REPAIRED AND WIRED 2026-08-05; was quarantined `broken`. It crashed with `IndexError:
@@ -480,11 +491,19 @@ checks:
   level: advisory
   basis: base/base-schema-validates
   cost: fast
-  no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision,
-    not by accident; same cause as validate_schema, whose note carries the full reasoning
-  note: 'FLOOR RETIRED 2026-09-01 alongside validate_schema. No entity type is declared, so there is
-    nothing to cross-check. Restore `min_items: 1` when one is registered.'
-  note: 'Was `continue-on-error: true` in ci.yml; advisory is the same thing, declared.'
+  min_items: 1
+  floor_basis: 'FLOOR RESTORED 2026-09-02, a day after it was retired, because the check acquired a subject
+    for the first time in its life. It was retired on the true premise that no YAML entity type was declared.
+    It has since been REPOINTED: it no longer reconciles a YAML corpus against jurisdictional_values (both
+    sides of that pairing are gone -- the table emptied by the item-layer ruling, the YAML archived) but
+    reconciles research_code_leads against the _archived/ corpus D-0185 restored it from, on the
+    (jurisdiction, standard_name) identity. It examines 83 leads and was proven to fire by deleting one.
+    A floor is honest here now; no_floor was not. It was ALSO unreachable 2026-09-01 to 2026-09-02: an
+    empty-registry `return 0` in validate_schema.py fired ahead of its dispatch.'
+  note: 'Was `continue-on-error: true` in ci.yml; advisory is the same thing, declared. DUPLICATE-KEY
+    DEFECT CORRECTED 2026-09-02: this entry carried TWO `note:` keys, so YAML kept the last and silently
+    discarded the retirement reasoning written the day before. A rule recorded in a discarded key is not
+    recorded. Merged into one key; the reasoning now lives in floor_basis above.'
 - id: validate_evidence_state
   cmd:
   - python3

@@ -4,7 +4,13 @@ ratified: false
 authored_by: Claude
 dr: decisions/DR-2026-07-13-pipeline-contract.md
 enforcement_level: 2
-spine: EvidenceSource (ENT-02) -> BPC entry (ENT-03) -> Specification (ENT-01) -> Item (ENT-08) -> render
+# CORRECTED 2026-09-02. This line still carried the pre-2026-08-27 ENTITY spine and named
+# `Item (ENT-08)` as a stage of the pipeline. Two things were wrong with it. The owner's
+# 2026-08-27 ruling replaced that spine with the stage list below -- which this same file
+# already carries correctly, so the two disagreed inside one document. And the owner's
+# 2026-09-01 ruling deleted the item layer outright, so the surviving copy named an entity
+# that no longer exists. Restated as the ruled stage spine, which `stages:` below enumerates.
+spine: base -> research -> evidence -> judgment -> synthesis -> specification -> render
 stages:
 - id: base
   anchor: 'the vocabulary and registry layer every stage points into (D-0167, owner ruling 2026-08-27:

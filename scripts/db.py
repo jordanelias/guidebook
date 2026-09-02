@@ -1105,6 +1105,17 @@ def main():
     p_as.add_argument("--pmid")
     p_as.add_argument("--jurisdiction")
     p_as.add_argument("--evidence-type")
+    # ADDED 2026-09-02. All three columns were ALREADY in _ES_COLS, so
+    # insert_evidence_source accepted them; only the CLI had no way to say them. The
+    # cost was measured 2026-09-01: two Co-1 sources admitted with co1_provenance NULL,
+    # which DR-2026-08-31 (D-0178) calls "unwarranted-pending" — on the one tier whose
+    # entire warrant under CRPD Art 4.3 IS the co-production.
+    p_as.add_argument("--co1-provenance",
+                      help="HOW the co-production is evidenced — name the disabled people or "
+                           "organisation. D-0178: 'published_corpus' says where it was PUBLISHED, "
+                           "not that disabled people CO-PRODUCED it. Required for --evidence-type co1.")
+    p_as.add_argument("--co1-source-type")
+    p_as.add_argument("--synthesis-attribution-required", type=int, choices=[0, 1])
     p_as.add_argument("--lang-detected", help="ISO 639-1 code for the source's actual publication language")
     p_as.add_argument("--lang-detection-method",
                       help="How --lang-detected was determined, e.g. 'native_title_verified', "
@@ -1570,10 +1581,35 @@ def main():
             data["verified_by_tool"] = args.verified_by_tool
         for _flag, _col in (("url", "url"), ("url_accessed", "url_accessed"),
                             ("pages", "pages"),
-                            ("doi_resolution_outcome", "doi_resolution_outcome")):
+                            ("doi_resolution_outcome", "doi_resolution_outcome"),
+                            # The Co-1 warrant and its companions. Omitting these here on
+                            # 2026-09-02 made the flag parse, the refusal pass, and the value
+                            # silently never reach the row — a worse failure than no flag at
+                            # all, because the CLI would have reported success on a Co-1
+                            # admission whose warrant was dropped on the floor.
+                            ("co1_provenance", "co1_provenance"),
+                            ("co1_source_type", "co1_source_type"),
+                            ("synthesis_attribution_required",
+                             "synthesis_attribution_required")):
             _v = getattr(args, _flag, None)
-            if _v:
+            # `is not None`, not truthiness: synthesis_attribution_required is an int flag
+            # and 0 is a real, meaningful value that `if _v` would discard.
+            if _v is not None:
                 data[_col] = _v
+        # THE CO-1 WARRANT REFUSAL (D-0178, ratified 2026-08-31). A Co-1 admission whose
+        # warrant is not stated is "unwarranted-pending", and Co-1 is co-primary with T1
+        # under CRPD Art 4.3 — this is the tier where the claim rests entirely on disabled
+        # people having produced the work. CLAUDE.md §6: "Erasing them while claiming the
+        # tier is the worst failure available here." On 2026-09-01 two Co-1 rows were
+        # written with co1_provenance NULL because the CLI could not say it; nothing
+        # refused them. Now something does.
+        if (args.evidence_type or "").lower() == "co1" and not args.co1_provenance:
+            raise ValueError(
+                "--co1-provenance is REQUIRED for --evidence-type co1. D-0178: the Co-1 "
+                "warrant must NAME the co-production — which disabled people or "
+                "organisation produced this work — because that co-production IS the "
+                "warrant. If it genuinely cannot be evidenced from the source, the row is "
+                "not Co-1; admit it at its actual tier and say why in --notes.")
         authors = (parse_author_flags(args.author) if args.author
                    else parse_author_display(args.authors))
         ref_id = insert_evidence_source(data, session=args.session,

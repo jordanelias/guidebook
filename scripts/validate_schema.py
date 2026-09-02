@@ -181,25 +181,29 @@ def main():
         # green having examined nothing. The runner's vacuity guard (min_items in
         # check-registry.yaml) catches this independently; the non-zero exit means
         # a direct invocation says so too.
-        print("EXAMINED: 0 entity file(s)")
-        if not ENTITY_REGISTRY:
-            # Legitimately empty registry: no entity type is declared at all, so
-            # there is nothing to validate and nothing is being concealed. This is
-            # NOT the fault above, which is a registry naming paths that do not
-            # exist. Exit 0 so the state is reported honestly -- and note that the
-            # runner still surfaces it: check-registry.yaml declares a min_items
-            # vacuity guard for this check, so an empty scope is reported as
-            # NOTHING-IN-SCOPE and, because the check is blocking, escalated. The
-            # vacuity stays visible; it is simply not miscalled a configuration
-            # fault.
-            print("ENTITY_REGISTRY declares no entity type, so there is no YAML "
-                  "entity corpus to validate. This is an empty scope, not a "
-                  "configuration fault. Register a type here when one exists.")
-            return 0
-        print("No entity files found to validate — ENTITY_REGISTRY names no "
-              "directory that exists under data/. This is a configuration fault, "
-              "not a pass.")
-        return 2
+        if ENTITY_REGISTRY:
+            print("EXAMINED: 0 entity file(s)")
+            # A registry naming directories that do not exist. THIS is the original
+            # defect: this script returned 0 here for its whole life while
+            # ENTITY_REGISTRY named six missing paths, so a BLOCKING gate reported
+            # green having examined nothing.
+            print("No entity files found to validate — ENTITY_REGISTRY names no "
+                  "directory that exists under data/. This is a configuration fault, "
+                  "not a pass.")
+            return 2
+        # Legitimately EMPTY registry: no entity type is declared at all, so there is
+        # nothing to validate and nothing is concealed. A different state from the
+        # fault above and it must not be reported as the same one.
+        #
+        # FIXED 2026-09-02. This branch used to `return 0` right here, which fired
+        # BEFORE the --cross-check dispatch below and made validate_schema_cross_check
+        # structurally unreachable: it could never run whatever it would have found.
+        # Introduced 2026-09-01 while fixing a different vacuity and caught by the
+        # adversarial pass the next day. Fall through instead, so the cross-check still
+        # gets its chance; file_list is empty, so the validation loop is a no-op.
+        print("ENTITY_REGISTRY declares no entity type, so there is no YAML entity "
+              "corpus to validate. This is an empty scope, not a configuration fault. "
+              "Register a type here when one exists.")
 
     # Quick mode: sample
     if args.quick and len(file_list) > 5:
@@ -220,8 +224,13 @@ def main():
             failed += 1
             all_errors.extend(errors)
 
-    # Report
-    print(f"\nEXAMINED: {total} entity file(s)")
+    # Report. The EXAMINED line is emitted ONCE, after the cross-check, so it states
+    # what the whole check looked at.
+    cross_errors, cross_examined = [], 0
+    if args.cross_check:
+        cross_errors, cross_examined = run_cross_checks("data")
+    print(f"\nEXAMINED: {total + cross_examined} subject(s) "
+          f"({total} entity file(s), {cross_examined} cross-check subject(s))")
     print(f"Schema validation: {total} files checked, "
           f"{total - failed} passed, {failed} failed")
 
@@ -231,9 +240,8 @@ def main():
             print(f"  {e['file']}: {e['error'][:200]}")
         return 1
 
-    # Cross-entity referential integrity
+    # Cross-entity referential integrity (already run above so its count reaches EXAMINED)
     if args.cross_check:
-        cross_errors = run_cross_checks("data")
         if cross_errors:
             print(f"\nCross-entity integrity: {len(cross_errors)} issues")
             for ce in cross_errors[:20]:
@@ -248,68 +256,74 @@ def main():
 
 
 def run_cross_checks(base_dir: str = "data") -> list:
-    """Reconcile the entity YAML corpus against its DB counterpart.
+    """Reconcile research_code_leads against the archive it was restored from.
 
-    REWRITTEN 2026-08-01. This function previously loaded index sets from
-    data/slugs, data/sources, data/connections, data/bpc-metadata and
-    data/specifications and cross-referenced them. None of those directories has
-    ever existed, so every index was empty, every loop body was unreachable, and
-    the function reported "Cross-entity integrity: all checks passed" having
-    compared nothing.
+    REPOINTED 2026-09-02, and this is the first time the function has had a subject.
 
-    data/jurisdictional_values/ is the one entity corpus with a real DB table
-    behind it (`jurisdictional_values`), and the 2026-08-01 boundary map recorded
-    that pairing as UNCHECKED in both directions. This reconciles them on the
-    (item_code, jurisdiction, standard_name) identity: a record present in one
-    store and absent from the other is drift, regardless of which side is
-    canonical — that question is open (see check-registry.yaml on whether
-    schemas/*.py mirrors SQLite or the YAML layer) and this check deliberately
-    does not presume an answer. It reports the disagreement and lets the owner
-    decide the direction.
+    Its 2026-08-01 rewrite reconciled data/jurisdictional_values/ against the
+    `jurisdictional_values` table on (item_code, jurisdiction, standard_name). Both
+    sides of that pairing are gone: the owner's 2026-09-01 ruling emptied the table by
+    deleting the item layer it was keyed to, and the YAML moved to _archived/ on
+    2026-09-02. The function was returning "not found — cross-check cannot run", which
+    is not a check.
+
+    It was ALSO unreachable between 2026-09-01 and 2026-09-02: an empty-registry
+    `return 0` fired ahead of its dispatch, so nothing would have run even had it had a
+    subject. That is fixed above.
+
+    WHAT IT CHECKS NOW. Owner ruling D-0185 restored the archived corpus as
+    research_code_leads, collapsing 109 item-keyed records onto their 83 distinct
+    (jurisdiction, standard_name) leads. That relationship is a real, checkable
+    invariant: every lead in the archive must be in the table, and the table must
+    invent none. It would catch a lead silently dropped by a later migration, and it
+    is the only thing standing between the restore and quiet erosion.
+
+    The archive is the SOURCE here, not a second home: it is frozen content under
+    _archived/, and the table is the live record. Comparing them is provenance, not
+    the dual-write rule 5 forbids.
     """
     errors = []
-    yaml_dir = os.path.join(base_dir, "jurisdictional_values")
-    if not os.path.isdir(yaml_dir):
-        return [f"{yaml_dir} not found — cross-check cannot run"]
+    arch = os.path.join("_archived", "data", "jurisdictional_values")
+    if not os.path.isdir(arch):
+        return [f"{arch} not found — the restore provenance cannot be checked"]
 
     db_path = os.environ.get("GUIDEBOOK_DB_PATH",
                              os.path.join(base_dir, "guidebook.db"))
     if not os.path.exists(db_path):
         return [f"DB not found at {db_path} — cross-check cannot run"]
 
-    def key(item_code, jurisdiction, standard_name):
-        return (str(item_code or "").strip(),
-                str(jurisdiction or "").strip(),
-                str(standard_name or "").strip())
+    def key(jurisdiction, standard_name):
+        return (str(jurisdiction or "").strip(), str(standard_name or "").strip())
 
-    yaml_keys = set()
-    for path in sorted(glob.glob(os.path.join(yaml_dir, "*.yaml"))):
+    archived = set()
+    for path in sorted(glob.glob(os.path.join(arch, "*.yaml"))):
         with open(path, encoding="utf-8") as fh:
             doc = yaml.safe_load(fh) or {}
         for rec in doc.get("records", []) or []:
-            yaml_keys.add(key(rec.get("item_code"), rec.get("jurisdiction"),
-                              rec.get("standard_name")))
+            archived.add(key(rec.get("jurisdiction"), rec.get("standard_name")))
 
     con = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
     try:
-        db_keys = {key(*row) for row in con.execute(
-            "SELECT item_code, jurisdiction, standard_name FROM jurisdictional_values")}
+        live = {key(j, n) for j, n in
+                con.execute("SELECT jurisdiction, standard_name FROM research_code_leads")}
     finally:
         con.close()
 
-    only_yaml = sorted(yaml_keys - db_keys)
-    only_db = sorted(db_keys - yaml_keys)
-    for k in only_yaml[:20]:
-        errors.append(f"jurisdictional_values: in YAML, absent from DB: {k}")
-    if len(only_yaml) > 20:
-        errors.append(f"  ... and {len(only_yaml) - 20} more YAML-only records")
-    for k in only_db[:20]:
-        errors.append(f"jurisdictional_values: in DB, absent from YAML: {k}")
-    if len(only_db) > 20:
-        errors.append(f"  ... and {len(only_db) - 20} more DB-only records")
+    missing = archived - live
+    invented = live - archived
+    for j, n in sorted(missing)[:20]:
+        errors.append(f"in the archive, absent from research_code_leads: {j} / {n}")
+    for j, n in sorted(invented)[:20]:
+        errors.append(f"in research_code_leads, absent from the archive: {j} / {n}")
 
-    print(f"CROSS-CHECK: {len(yaml_keys)} YAML record(s) vs {len(db_keys)} DB row(s)")
-    return errors
+    # Returns the count rather than printing its own EXAMINED line. run_checks.py's
+    # vacuity guard uses EXAMINED_RE.search(), which takes the FIRST match, and
+    # run_checks' own comment states that "EXAMINED: <n> is a WHOLE-CHECK contract, not
+    # a per-subject one". Two EXAMINED lines in one run meant the guard read the entity
+    # count (0) and never saw the 83 leads this actually reconciled — reporting the
+    # check vacuous while it was doing real work. One line, printed by main().
+    print(f"Cross-entity provenance: {len(archived)} archived lead(s), {len(live)} live")
+    return errors, len(archived | live)
 
 
 def _load_field_set(base_dir: str, subdir: str, field: str) -> set:

@@ -1402,18 +1402,36 @@ def run_checks(db_path):
     # jurisdictional_values has a YAML mirror too, held equal by
     # validate_schema.py --cross-check. Asserted here as well because that
     # check runs in a different battery and a data-only PR may not select it.
-    jv_dir = os.path.join(REPO, "data", "jurisdictional_values")
-    if _yaml is not None and os.path.isdir(jv_dir):
+    # L02 REPOINTED 2026-09-02. It compared data/jurisdictional_values/ against the
+    # jurisdictional_values table. The owner ruled that corpus restored as
+    # research_code_leads (D-0185); the YAML moved to _archived/ and the old table is
+    # empty. Until 2026-09-02 this simply VANISHED when the directory went — the guard
+    # skipped it and it never appeared in the results at all, which is the failure this
+    # file's own C05 convention names: "a skip that reads as a pass is the vacuity
+    # itself". It now states an empty scope instead of disappearing, and points at the
+    # live pairing.
+    jv_dir = os.path.join(REPO, "_archived", "data", "jurisdictional_values")
+    if _yaml is None or not os.path.isdir(jv_dir):
+        record("L02", "research_code_leads: archived record count matches the table",
+               True, "", subject=0)
+    else:
         n_yaml = 0
         for fn in os.listdir(jv_dir):
             if fn.endswith((".yaml", ".yml")):
                 doc = _yaml.safe_load(open(os.path.join(jv_dir, fn))) or {}
                 vals = doc.get("records") or []
                 n_yaml += len(vals) if isinstance(vals, list) else 0
-        n_db = conn.execute("SELECT COUNT(*) FROM jurisdictional_values").fetchone()[0]
-        record("L02", "jurisdictional_values: YAML record count matches the table",
+        # Distinct leads, not raw records: the restore deliberately collapsed 109
+        # item-keyed rows onto their 83 distinct (jurisdiction, standard_name) leads,
+        # so a raw count would report drift where the ruling produced compression.
+        n_yaml = len({(r.get("jurisdiction"), r.get("standard_name"))
+                      for fn in os.listdir(jv_dir) if fn.endswith((".yaml", ".yml"))
+                      for r in ((_yaml.safe_load(open(os.path.join(jv_dir, fn))) or {})
+                                .get("records") or [])})
+        n_db = conn.execute("SELECT COUNT(*) FROM research_code_leads").fetchone()[0]
+        record("L02", "research_code_leads: archived lead count matches the table",
                n_yaml == n_db,
-               f"{n_yaml} YAML records vs {n_db} table rows" if n_yaml != n_db else "",
+               f"{n_yaml} archived leads vs {n_db} table rows" if n_yaml != n_db else "",
                subject=n_yaml + n_db)
 
     # L03 (legacy coverage-grid freeze) was RETIRED by the 2026-08-06 clean-room
