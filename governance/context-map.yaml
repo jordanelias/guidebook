@@ -102,7 +102,7 @@ directories:
     authority: canonical
     hidden_from_ripgrep: false
 pointers:
-  sessions_latest: session_2026-09-01-lens-architecture.md
+  sessions_latest: session_2026-09-02-owed-repairs.md
   sessions_latest_resolves: true
   sessions_latest_research: session_2026-08-22-research-batch-02-room-acoustic-performance.md
   sessions_latest_research_resolves: true

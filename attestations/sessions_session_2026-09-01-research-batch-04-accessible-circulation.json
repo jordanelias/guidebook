@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-09-02-owed-repairs",
+  "artifact": "sessions/session_2026-09-01-research-batch-04-accessible-circulation.md",
+  "doctrine_sha": "969e00c",
+  "rules_in_scope": [
+    "integrity-protocol",
+    "source-discipline",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "scripts/migrations/",
+      "reason": "Every database change in the session this records went through the sanctioned path — staged on a scratch copy or rendered from a single-home source, emitted with emit_data_migration.py, applied with migrate_db.py. No hand-written SQL was executed against data/guidebook.db. One emit failed on a column search_executions does not have; it rolled back atomically leaving no ledger row, and because the file was untracked it was deleted and re-emitted rather than compensated. migration_reproducibility PASSes, so the committed DB is what the migration history produces."
+    },
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "sessions/session_2026-09-01-research-batch-04-accessible-circulation.md",
+      "reason": "Every figure in this record was re-derived from the live repository or from origin/main's committed blob, not carried from memory or from an earlier session's prose. Where a figure corrects a claim of mine it is presented as a correction with both values shown, not silently replaced."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/sessions_session_2026-09-01-research-batch-04-accessible-circulation.json",
+      "reason": "One attestation per session record, because the attestation_presence gate requires one per record and a single attestation covering both would fail it."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "session-id-discipline",
+      "reason": "Four session ids were minted across one working session's migrations where one was correct. Recorded as a deviation rather than tidied: CLAUDE.md §7 makes the session id the scope gates use, so this fragmented one session's work across four scopes."
+    },
+    {
+      "rule": "session-record-timeliness",
+      "reason": "The 2026-09-01 record was written a day late, after its own migration ledger had already named it. emit_data_migration does not verify the session exists, so nothing caught it."
+    }
+  ],
+  "bias_direction": "This record exists to correct my own claims, and its central correction makes the session look worse: it states that DR-2026-08-19 §1.4 was misread, that the session then BREACHED §1.4 rules 1 and 2 by pulling the frame from `items` and letting '22 newtons' and 'PTV ≥36' reach agonist queries, and that the breach was reported as a discovery. §1.4 rule 4 requires that provenance be recorded rather than hidden, so the specific crossings are named. Eight further numeric claims are corrected against the live repository, including '147 preserved DOI leads', which is 138 distinct and 134 net-new and which stands uncorrectable in an immutable migration header.",
+  "independent_reviewer_counterclaim": "That writing a late session record is itself a violation of the discipline it documents. SUSTAINED, and stated in the record's first paragraph rather than rebutted: the ledger named this file from the moment data_20260901205639 was applied, emit_data_migration does not verify a named session exists, and nothing objected for a day. The record closes the gap; it does not pretend the gap was not there.",
+  "verdict": "DEVIATION-LOGGED"
+}
