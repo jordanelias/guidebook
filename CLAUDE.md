@@ -194,9 +194,9 @@ twice and disagreed with the list both times — "Five" over six entries, then "
    not a substitute for its workings: a finding you cannot trace is a finding you cannot
    correct.** Deliberately NOT a registered gate — `--check` is red for the whole life of a
    session, because the orchestrator's own transcript grows until the session ends, and a
-   check that is red by construction teaches its reader to ignore it. Owner directive 2026-08-25.
+   check that is red by construction teaches its reader to ignore it.
    A scratchpad that lives only in context is not a review surface; compaction, session end and
-   container reclamation all take it. This repository paid for that twice in two days — the
+   container reclamation all take it, and the same is true of a transcript. This repository paid for that twice in two days — the
    pointer-discipline queue existed only in a conversation while three of its items shipped citing
    labels no file defined. If no session directory exists, create it and commit into it rather than
    waiting for a session record. `governance: session command log [YYYY-MM-DD HH:MM]` is a complete
