@@ -188,9 +188,26 @@ rules:
     title: "Structured homes used"
     hook: >-
       Case studies -> case_studies. Economics -> economics_entries. Code values ->
-      jurisdictional_values. Never leave them in prose notes.
-    anchor: "schemas/case_study.py; schemas/economics.py; schemas/jurisdictional_value.py"
+      search_candidates as LEADS. Never leave them in prose notes.
+    anchor: "schemas/case_study.py; schemas/economics.py; decisions/DR-2026-08-31-strike-jurisdictional-values-clause.md"
     enforcer: R12
+    resolution: >-
+      CORRECTED 2026-09-02. The clause read "Code values -> jurisdictional_values",
+      which instructed a write that CANNOT SUCCEED and, before 2026-09-01, one that
+      was forbidden. Two separate defects had accumulated on one line.
+      (a) FORBIDDEN: the 2026-08-12 REFERENCE-ONLY ruling made jurisdictional_values
+      name which document to go and get, never what it says, and D-0181 (2026-08-31,
+      OD-G) struck the same clause from DR-2026-08-19 §12.1 step 10 for exactly this
+      reason -- but struck it only in the runbook, leaving this copy, which is the
+      one injected into every session by the SessionStart hook. A ruling that fixes
+      one of two copies is CLAUDE.md rule 5's dual-home defect wearing a correction
+      as a disguise.
+      (b) IMPOSSIBLE: since the owner ruling of 2026-09-01 emptied `items`,
+      db.py:2383 refuses every add-jurisdictional-value call on the FK existence
+      check, so a session obeying this hook meets a hard refusal with no route
+      forward. The table now holds 0 rows.
+      Code values are staged as LEADS in search_candidates, which is where DR-2026-08-19
+      D-1 puts them and what the REFERENCE-ONLY ruling actually describes.
 
   - id: R13
     phase: while-searching

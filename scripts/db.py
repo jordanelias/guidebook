@@ -902,7 +902,13 @@ def main():
               "title", "authors", "notes", "used-in-bpcs"):
         p_loc.add_argument("--" + f)
     p_loc.add_argument("--pub-year", type=int)
-    p_loc.add_argument("--tier-claimed", type=int)
+    # TEXT, not int. The column is `tier_claimed TEXT` and its live values include
+    # 'Co-1/3', 'Co-2', 'Tier 1', 'INT', 'CA' and 'DE' -- a tier CLAIM is what a
+    # lead asserts about itself, not a validated tier. `type=int` made the writer
+    # refuse every Co-1 and Co-2 lead, which is the one class CRPD Art 4.3 makes
+    # co-primary with T1, and the class this project most needs its clue store to
+    # carry. Found 2026-09-02 parking six retracted identities, three of them Co-1.
+    p_loc.add_argument("--tier-claimed")
     p_loc.add_argument("--recovered-from", required=True)
     p_loc.add_argument("--status", required=True)
     p_loc.add_argument("--session", required=True)

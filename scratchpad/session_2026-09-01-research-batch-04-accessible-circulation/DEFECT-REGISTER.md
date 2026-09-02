@@ -253,6 +253,161 @@ string`.
 - **Status:** OPEN
 - **Resolution owed:** Obtain the full text of all three cited sources (DSDG Bauman 2010, DeafScape Vaughn 2018, Cloete & Rout 2025) and confirm or strike the 2440 mm attribution in `governance/tier-system.md:45`. Orchestrator characterizes this as cheap and now overdue. Not attempted by the tracer — full-text retrieval and adjudication of what the sources say is research/judgment work, outside this role.
 
+
+### D04-019 — citation_mining rows no longer identify what they mined
+- **Class:** DATA
+- **Severity:** P2
+- **Verification:** ORCHESTRATOR-VERIFIED — re-derived independently before acceptance. Source: adversarial pass 2026-09-02 (two Fable 5 read-only critics, blind and partitioned).
+- **Observed:** 2026-09-02
+- **What happened:** All ten rows now carry global_ref_id NULL (nulled by the retraction), doi NULL (never written since 2026-08-24, when log_mining dropped the DOI write on the premise it was reachable through global_ref_id), and a local_ref_id that resolved through source_slug_links — which the retraction emptied. Rule 5's point-don't-copy collapsed into neither. db.py log_mining will now RAISE on a NOT NULL lookup rather than duplicate.
+- **Where:** citation_mining; scripts/db.py log_mining
+- **Why it matters:** The 138 distinct DOI leads survive but nothing says which anchor produced them; citation_mining_completeness reports NOTHING-IN-SCOPE.
+- **Status:** OPEN
+- **Resolution owed:** UPDATE citation_mining SET doi = <anchor DOI> per (slug, local_ref_id), recoverable from the six identities now parked in source_locators. The doi column is now the ONLY home, so this is not a rule-5 copy.
+
+### D04-020 — the retraction rewrote a research-stage record to satisfy a parity check
+- **Class:** DATA
+- **Severity:** P2
+- **Verification:** ORCHESTRATOR-VERIFIED — re-derived independently before acceptance. Source: adversarial pass 2026-09-02 (two Fable 5 read-only critics, blind and partitioned).
+- **Observed:** 2026-09-02
+- **What happened:** UPDATE search_executions SET results_admitted = 0 altered 7 research rows (sum was 10). v_coverage_jurisdiction now reports room-acoustic-performance as 25 searches / 0 admitted, which is false: the searches did admit; the retraction happened downstream. test_db_integrity itself calls results_admitted 'a third store of the same fact'.
+- **Where:** scripts/migrations/data_20260901205639_*.sql:41-43; v_coverage_jurisdiction / _branch / _language
+- **Why it matters:** The research record now understates what the searches found, and the migration header claims 'Research is untouched'.
+- **Status:** OPEN
+- **Resolution owed:** COUPLED: restoring the 7 values breaks H05 (results_admitted == COUNT(search_admissions)). Restore AND writer-retire results_admitted, the way admitted_ref_ids was retired 2026-08-24, letting v_coverage_* compute current yield from search_admissions.
+
+### D04-021 — a search candidate is ADMITTED to a source that no longer exists
+- **Class:** DATA
+- **Severity:** P3
+- **Verification:** ORCHESTRATOR-VERIFIED — re-derived independently before acceptance. Source: adversarial pass 2026-09-02 (two Fable 5 read-only critics, blind and partitioned).
+- **Observed:** 2026-09-02
+- **What happened:** search_candidates #1 carries disposition='ADMITTED' and notes 'RESOLVED: … Admitted as REF-00968'. REF-00968 was deleted. R15 passes only because its predicate is notes LIKE '%RESOLVED%'; no rule joins ADMITTED to evidence_sources.
+- **Where:** search_candidates candidate_id=1
+- **Why it matters:** A research-stage row asserts an evidence-stage fact with no target.
+- **Status:** OPEN
+- **Resolution owed:** Re-disposition to PENDING-VERIFICATION noting the retraction. Do NOT add an ADMITTED-implies-exists check in the same pass — CLAUDE.md §1 puts the burden of proof on new apparatus.
+
+### D04-022 — the render sweep stopped at site/specs and left 184 links into the deleted directory
+- **Class:** DOC-DRIFT
+- **Severity:** P2
+- **Verification:** ORCHESTRATOR-VERIFIED — re-derived independently before acceptance. Source: adversarial pass 2026-09-02 (two Fable 5 read-only critics, blind and partitioned).
+- **Observed:** 2026-09-02
+- **What happened:** site/populations/*.html publishes 172 links across 79 item codes; site/index.html and root index.html carry 6 each. site/assets/e-08-jurisdictions.json is an orphaned copy of an archived YAML record with no reader. validate_cross_refs treats site/ as REFERENCE_ONLY so no gate fires.
+- **Where:** site/populations/*.html; site/index.html; index.html; site/assets/e-08-jurisdictions.json
+- **Why it matters:** The item determinations the owner ruled out of existence are still published, which DR-2026-08-19 §1.2 predicted exactly: 'a researcher who greps the repository for their slug will meet the old answer'.
+- **Status:** OPEN
+- **Resolution owed:** OWNER DECISION: is site/ a frozen reference surface (restore site/specs and stop) or live (finish the sweep to _archived/ and fix the links)? Work-product inclusion is DG-NON.
+
+### D04-023 — validate_schema's empty-registry branch made the cross-check unreachable
+- **Class:** BUG
+- **Severity:** P2
+- **Verification:** ORCHESTRATOR-VERIFIED — re-derived independently before acceptance. Source: adversarial pass 2026-09-02 (two Fable 5 read-only critics, blind and partitioned).
+- **Observed:** 2026-09-02
+- **What happened:** The `if not ENTITY_REGISTRY: return 0` branch added 2026-09-01 fires BEFORE run_cross_checks() is dispatched, so validate_schema_cross_check can never execute whatever it would find. Its comment also asserts that check-registry.yaml's min_items guard escalates the empty scope — made false by the very next commit, which replaced min_items with no_floor.
+- **Where:** scripts/validate_schema.py:185-200
+- **Why it matters:** An advisory referential-integrity check is silently dead, and a comment in the file lies about the state of its own guard.
+- **Status:** OPEN
+- **Resolution owed:** Move the empty-registry branch AFTER the --cross-check dispatch; delete the false comment; correct the stale data/specifications docstring.
+
+### D04-024 — the pipeline contract's spine still names the deleted Item stage
+- **Class:** DOC-DRIFT
+- **Severity:** P2
+- **Verification:** ORCHESTRATOR-VERIFIED — re-derived independently before acceptance. Source: adversarial pass 2026-09-02 (two Fable 5 read-only critics, blind and partitioned).
+- **Observed:** 2026-09-02
+- **What happened:** governance/pipeline-contract.yaml:7 reads 'EvidenceSource (ENT-02) -> BPC entry (ENT-03) -> Specification (ENT-01) -> Item (ENT-08) -> render', and criterion base-parameter-vocabulary still points at scripts/validate_items.py, now permanently vacuous.
+- **Where:** governance/pipeline-contract.yaml:7,44-50
+- **Why it matters:** The declared single home of the stage ids names an entity the owner ruled must not exist.
+- **Status:** OPEN
+- **Resolution owed:** Record the supersession in the contract (rule 0: record, don't argue) and retire or repoint the criterion.
+
+### D04-025 — no session record exists, and the migration ledger names one that does not
+- **Class:** PROCESS
+- **Severity:** P2
+- **Verification:** ORCHESTRATOR-VERIFIED — re-derived independently before acceptance. Source: adversarial pass 2026-09-02 (two Fable 5 read-only critics, blind and partitioned).
+- **Observed:** 2026-09-02
+- **What happened:** data_migrations holds applied_by_session 'session_2026-09-01-research-batch-04-accessible-circulation'; sessions/ holds no such file. sessions/LATEST still points at session_2026-09-01-lens-architecture, LATEST-RESEARCH at batch-02. emit_data_migration does not verify the session exists.
+- **Where:** data_migrations; sessions/LATEST; sessions/LATEST-RESEARCH
+- **Why it matters:** DR-2026-08-19 §12.3(7) unmet. §7 trap 2: a wrong session id scopes a gate to nothing and it passes green.
+- **Status:** OPEN
+- **Resolution owed:** Write the session record (which triggers CLAUDE.md rule 2, so the attestation lands with it) and move LATEST. Do NOT move LATEST-RESEARCH: no research reached the DB, so pointing the citation-mining gate here would scope it to nothing.
+
+### D04-026 — test_db_integrity L02 vanishes silently instead of recording subject 0
+- **Class:** BUG
+- **Severity:** P3
+- **Verification:** ORCHESTRATOR-VERIFIED — re-derived independently before acceptance. Source: adversarial pass 2026-09-02 (two Fable 5 read-only critics, blind and partitioned).
+- **Observed:** 2026-09-02
+- **What happened:** The check is guarded by `if _yaml is not None and os.path.isdir(jv_dir)`. With data/jurisdictional_values archived the branch never record()s at all, so L02 disappears from the results rather than reporting an empty scope — contrary to the file's own C05 convention that 'a skip that reads as a pass is the vacuity itself'.
+- **Where:** scripts/tests/test_db_integrity.py:1389-1401
+- **Why it matters:** A check silently leaves the roster; nobody notices it stopped running.
+- **Status:** OPEN
+- **Resolution owed:** Add the else-branch recording L02 with subject=0, or delete L02 as a dead parity check (rule 5).
+
+### D04-027 — the session misread DR-2026-08-19 §1.4 and breached it, then reported the breach as a discovery
+- **Class:** PROCESS
+- **Severity:** P1
+- **Verification:** ORCHESTRATOR-VERIFIED — re-derived independently before acceptance. Source: adversarial pass 2026-09-02 (two Fable 5 read-only critics, blind and partitioned).
+- **Observed:** 2026-09-02
+- **What happened:** Commit befaa29 and the PR body state: 'DR-2026-08-19 §1.4 wrote a quarantine for exactly this and never ran it.' §1.4 says no such thing — it is six CONDUCT rules, and rule 3 records 'zero rows currently use it' as its own BASELINE, so the measurement is consistent with the protocol being OBEYED. Meanwhile rule 1 forbids taking the frame from the item list and rule 2 says 'No value crosses' into a search row. FRAME.md was derived from items and item values reached agonist queries (agonist-1 #8 '22 newtons' = I-01; agonist-2 #6 'pendulum test value' = E-07).
+- **Where:** decisions/DR-2026-08-19-…§1.4; commit befaa29; PR #126 body; FRAME.md
+- **Why it matters:** A false claim about a ratified instrument stands in the permanent record, and the session's own breach is framed as the instrument's failure. §1.4 rule 4 requires the provenance be 'recorded, not hidden'.
+- **Status:** OPEN
+- **Resolution owed:** Correct the claim in the session record. The instrument's internal contradiction — §1.4 rule 1 forbids the frame that §12.1 step 2 orders — is a separate OWNER question.
+
+### D04-028 — '147 preserved DOI leads' is false in three committed artefacts
+- **Class:** DATA
+- **Severity:** P3
+- **Verification:** ORCHESTRATOR-VERIFIED — re-derived independently before acceptance. Source: adversarial pass 2026-09-02 (two Fable 5 read-only critics, blind and partitioned).
+- **Observed:** 2026-09-02
+- **What happened:** connections_produced holds 147 ENTRIES but 138 distinct DOIs, of which 134 are not already in source_locators. The 147 figure appears in commit befaa29, in the immutable migration header, and in the PR body.
+- **Where:** commit befaa29; scripts/migrations/data_20260901205639_*.sql:21; PR #126
+- **Why it matters:** CLAUDE.md §2(b), prose contradicting the database. The migration file cannot be edited.
+- **Status:** OPEN
+- **Resolution owed:** State the correction in the session record and in the next migration's header; correct the PR body.
+
+### D04-029 — item codes remain in retained base tables after the 'pared' ruling
+- **Class:** DOC-DRIFT
+- **Severity:** P2
+- **Verification:** ORCHESTRATOR-VERIFIED — re-derived independently before acceptance. Source: adversarial pass 2026-09-02 (two Fable 5 read-only critics, blind and partitioned).
+- **Observed:** 2026-09-02
+- **What happened:** terms.scope_note carries item references in 7 cells ('Links item E-10…'), axes.design_domains in 17 ('E-01/E-12, G-04, turning circles…'), search_candidates.title in 13, search_executions.findings_note in 1.
+- **Where:** terms.scope_note; axes.design_domains; search_candidates.title
+- **Why it matters:** Owner ruling R-03 said the retained base is kept 'in a pared format where item codes etc should not exist with them'. It is not fully pared, and the residue was not disclosed.
+- **Status:** OPEN
+- **Resolution owed:** Disclose; the text edits are a content judgement and are OWNER-GATED, not a session's to make.
+
+### D04-030 — db.py cannot write co1_provenance, so a Co-1 row cannot carry its own warrant
+- **Class:** TOOL
+- **Severity:** P2
+- **Verification:** ORCHESTRATOR-VERIFIED — re-derived independently before acceptance. Source: adversarial pass 2026-09-02 (two Fable 5 read-only critics, blind and partitioned).
+- **Observed:** 2026-09-02
+- **What happened:** add-source exposes no --co1-provenance or --co1-source-type flag, so REF-00971/00972 were written with co1_provenance NULL — 'unwarranted-pending' under DR-2026-08-31, which holds that a Co-1 warrant must NAME the co-production. Agonist-1 supplied provenance strings and explicitly hedged the RNIB source; the commit recorded both flatly as co1.
+- **Where:** scripts/db.py add-source; decisions/DR-2026-08-31-co1-warrant-must-name-the-co-production.md
+- **Why it matters:** The tier whose warrant is co-production cannot record that warrant through the sanctioned writer — the same shape as the verification_method gap (schema declares six values, CLI offers four).
+- **Status:** OPEN
+- **Resolution owed:** Add the flags. Until then no Co-1 admission can satisfy D-0178 through the CLI.
+
+### D04-031 — db.py --tier-claimed was type=int against a TEXT column — FIXED 2026-09-02
+- **Class:** TOOL
+- **Severity:** P3
+- **Verification:** ORCHESTRATOR-VERIFIED — re-derived independently before acceptance. Source: adversarial pass 2026-09-02 (two Fable 5 read-only critics, blind and partitioned).
+- **Observed:** 2026-09-02
+- **What happened:** scripts/db.py:905 declared --tier-claimed as type=int while source_locators.tier_claimed is TEXT holding 'Co-1/3', 'Co-2', 'Tier 1', 'INT', 'CA', 'DE'. add-locator therefore REFUSED every Co-1 and Co-2 lead — the class CRPD Art 4.3 makes co-primary with T1.
+- **Where:** scripts/db.py:905
+- **Why it matters:** The clue store could not record a Co-1 claim through its own writer. Found while parking three Co-1 identities, all three refused.
+- **Status:** RESOLVED
+- **Resolution owed:** FIXED 2026-09-02: the flag now accepts TEXT, matching the column. All six identities landed.
+
+### D04-032 — the retrieval log has no manifest, so author_fidelity examines nothing
+- **Class:** PROCESS
+- **Severity:** P2
+- **Verification:** ORCHESTRATOR-VERIFIED — re-derived independently before acceptance. Source: adversarial pass 2026-09-02 (two Fable 5 read-only critics, blind and partitioned).
+- **Observed:** 2026-09-02
+- **What happened:** author_fidelity at HEAD reports 'EXAMINED: 0 — INDETERMINATE — nothing verifiable. Not a pass.' No manifest.jsonl was written for this session; retrieval_log.py --backfill was identified as the fix on 2026-09-01 and never run.
+- **Where:** retrieval-log/session_2026-09-01-…/ (no manifest.jsonl)
+- **Why it matters:** The §2(c) anti-fabrication check — the one built after five sources were stored with invented co-authors — cannot see any of this session's 19 payloads. The PR calls the bibliography 'verified' and 're-admissible' while the verifier is blind to it.
+- **Status:** OPEN
+- **Resolution owed:** Run retrieval_log.py --backfill --session before any re-admission of this material. Already tracked as task #5.
+
 ---
 
 ## Summary
@@ -276,3 +431,17 @@ string`.
 | D04-016 | DATA | P3 | OPEN |
 | D04-017 | DATA | P2 | OPEN |
 | D04-018 | DOC-DRIFT | P2 | OPEN |
+| D04-019 | DATA | P2 | OPEN |
+| D04-020 | DATA | P2 | OPEN |
+| D04-021 | DATA | P3 | OPEN |
+| D04-022 | DOC-DRIFT | P2 | OPEN |
+| D04-023 | BUG | P2 | OPEN |
+| D04-024 | DOC-DRIFT | P2 | OPEN |
+| D04-025 | PROCESS | P2 | OPEN |
+| D04-026 | BUG | P3 | OPEN |
+| D04-027 | PROCESS | P1 | OPEN |
+| D04-028 | DATA | P3 | OPEN |
+| D04-029 | DOC-DRIFT | P2 | OPEN |
+| D04-030 | TOOL | P2 | OPEN |
+| D04-031 | TOOL | P3 | RESOLVED |
+| D04-032 | PROCESS | P2 | OPEN |

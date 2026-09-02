@@ -101,3 +101,11 @@ was denied by the harness permission classifier. The retraction migration is wri
 dry-applied to a throwaway copy of canonical with foreign keys enforced: **0 new FK violations**.
 It cannot be applied until that command is approved. No workaround was attempted: hand-writing SQL
 against `data/guidebook.db` is forbidden by CLAUDE.md rule 3.
+
+> **CORRECTION, 2026-09-02.** The paragraph above stopped being true about a minute after it was
+> committed and was never updated, which made it a committed artefact contradicting the database —
+> CLAUDE.md §2(b), the failure mode this project names as one of its three real ones. **The owner
+> approved the command and the migration WAS applied**, at `2026-09-02T20:56:54` (in repo terms
+> `2026-09-01T20:56:54+00:00`), as `data_20260901205639_…`, in commit `befaa29`. Left in place rather
+> than rewritten, because a superseded record is evidence of what was believed when; the correction
+> is appended. Found by the adversarial pass of 2026-09-02 (finding B-06).
