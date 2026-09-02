@@ -430,6 +430,12 @@ TABLES = [
     # error raised. A table the tooling cannot see is a table the project does not
     # really have. What reads it: this script, invoked by the DR-2026-08-19 runbook.
     "source_locators",
+    # ADDED 2026-09-02 with migration 066. The research-stage home for code and
+    # standard leads, restored by owner ruling after the item-layer deletion took
+    # jurisdictional_values with it. No FK, so position is free; kept beside
+    # source_locators because both are lead stores and a reader looking for one
+    # should meet the other.
+    "research_code_leads",
     "source_slug_links",
     "search_executions",
     "search_admissions",
