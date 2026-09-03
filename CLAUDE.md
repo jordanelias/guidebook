@@ -466,7 +466,14 @@ not block research: it is downstream of it.
 ## 7. Traps
 
 - **`.ignore` hides frozen records from ripgrep** — `_archived/`, `audits/`, `sessions/`,
-  `references/search-log/`, `versions/`, `workplan/_superseded/`. "No matches" ≠ absent: confirm
+  `references/search-log/`, `versions/`, `workplan/_superseded/`, and **the JSONL under
+  `transcripts/`** (owner ruling 2026-09-03; `transcripts/README.md` and every `index.json`
+  stay searchable on purpose, so a grep still finds THAT a transcript exists and whose it
+  is). That last entry matches `transcripts/**/*.jsonl` rather than the directory,
+  because `transcripts/**` with negations FAILED a planted-token test: `**` excludes the
+  session directory, and gitignore cannot re-include a file whose parent is excluded. The
+  `sessions/**` + `!sessions/LATEST` precedent works only because LATEST sits at the top
+  level of the excluded directory. "No matches" ≠ absent: confirm
   with `ls` or Glob. `grep -r` and `git grep` ignore it; Python tools see everything. Search those
   paths explicitly when doing history work. **Note the cost:** rendered search logs live under an
   ignored path, so the project's own research output is invisible to search.

@@ -19,6 +19,8 @@ search_visibility:
   - references/audits/
   - references/search-log/
   - sessions/**
+  - transcripts/**/*.jsonl
+  - transcripts/*.jsonl
   - versions/
   - workplan/_superseded/
   note: 'The root .ignore hides these from ripgrep/Grep by design (DR-2026-08-06-cold-storage-search-scope).

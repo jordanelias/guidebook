@@ -330,25 +330,38 @@ Everything else in this programme is executable without asking. The two items be
 caution; each rests on a specific ratified authority that a general instruction to act
 autonomously does not reach.
 
-### (a) D05-030, `.ignore` scope — **the one decision**
+### (a) D05-030, `.ignore` scope — **DECIDED 2026-09-03, and landed**
 
-21 of the live surface's retired-vocabulary occurrences are now in `transcripts/`, and that number
-grows with every session. Left visible, agent transcripts will flood ordinary ripgrep searches —
-the precise problem `.ignore` exists to solve.
+**Owner ruled option 1 of three:** hide the transcript JSONL from ripgrep, keep the index
+searchable. Landed in this PR. `D05-030` closed.
 
-**This is genuinely owner-gated and I am not treating "be autonomous" as overriding it.** The
-file's own header states that changing its entries is owner-gated, and names
-`decisions/DR-2026-08-06-cold-storage-search-scope.md` as the ratified authority. Search scope is
-a judgement about the work product, not about code. A general instruction is not a ruling on this
-specific gate — and CLAUDE.md's §0 rule 0 cuts the other way too: paperwork is never an argument
-against a live directive, but a live directive has to actually reach the question.
+**The measurement that justified it** — searchable, `REF-00977` returned 174 hits of which 136 were
+transcripts, and `next_ref_id` 305 of which 194. After: 39 hits, identical whether or not
+transcripts are excluded. Transcripts are conversation *about* the code, including superseded and
+plainly wrong statements, so a hit answers a current question with a stale answer.
 
-**Recommendation, so this costs you one word:** add `transcripts/**` to `.ignore` and to
-`governance/retired-vocabulary.yaml` `exempt_paths`, keeping `transcripts/README.md` and
-`**/index.json` searchable. The counter-argument is real and worth one sentence: `.ignore`
-deliberately does *not* hide things that answer a question with a true hit, and "what did the
-agent actually do" is one of those. **Say yes and I will land it; say no and the transcripts stay
-searchable and I will stop raising it.**
+**Two corrections to what this section originally said, both mine.**
+
+1. **The figure was wrong.** This section claimed *"21 of the live surface's retired-vocabulary
+   occurrences are now in `transcripts/`"*. `retired_vocabulary_audit.py` reports **71
+   occurrences and names zero transcript paths**, before and after the exemption alike — it
+   `rglob`s the whole tree, so transcripts were never contributing. I wrote the figure out
+   without deriving it, which is the §2(b) failure this repository names by name. The
+   `exempt_paths` entry was still added, but as a *preventative* that keeps the `.ignore`
+   header's stated invariant true — every path it hides is already adjudicated on that list —
+   not because it fixed a live count.
+
+2. **The recommended mechanism does not work.** This section recommended `transcripts/**` plus
+   negations. That **failed a planted-token test**: `README.md` came back and `index.json` did
+   not, because `**` excludes the session directory and gitignore cannot re-include a file whose
+   parent is excluded. The `.ignore` header says exactly this, and its `sessions/**` +
+   `!sessions/LATEST` precedent works only because `LATEST` sits at the *top level* of the
+   excluded directory — `index.json` does not. **What landed is `transcripts/**/*.jsonl` plus
+   `transcripts/*.jsonl`**, matching the payload by extension so no negation is needed and there
+   is nothing left to get subtly wrong. Re-tested: README and index reachable, JSONL not.
+
+**Swept:** `.ignore`, `CLAUDE.md` §7 trap 1, the global `exempt_paths` in
+`governance/retired-vocabulary.yaml`, `transcripts/README.md`, and the batch-05 defect register.
 
 ### (b) `serves_axes` → `serves_icf` — **deferred, not asked**
 
