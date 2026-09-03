@@ -12,8 +12,12 @@ most of that pass went with it.
 The conclusions of an adversarial pass are not a substitute for its workings. A finding
 you cannot trace is a finding you cannot correct, and correcting them is the point.
 
-IDEMPOTENT. Safe to run repeatedly and safe to run mid-session; a transcript still being
-written is copied as far as it has got, and the next run overwrites it with more.
+IDEMPOTENT, NOT ATOMIC. Safe to run repeatedly and safe to run mid-session; a transcript
+still being written is copied as far as it has got, and the next run overwrites it with more.
+But a crash part-way can leave a stale-label prune done and its replacement copy not done --
+measured 2026-09-03, when exactly that happened and the run then reported two writes for
+three actions. Re-running converges, so the remedy is to run it again rather than to reason
+about what a half-run left behind.
 
     python3 scripts/preserve_transcripts.py            # copy, print what changed
     python3 scripts/preserve_transcripts.py --check    # report only, exit 1 if stale
