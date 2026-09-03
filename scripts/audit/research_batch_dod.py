@@ -415,8 +415,11 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
         # line read PASS. Softened deliberately 2026-09-03. Do NOT restore the confident
         # wording without putting a predicate behind it, and do not add one that merely
         # counts rows: whether a batch's harm findings actually REACHED the flagged rows
-        # is not machine-decidable, which is why it is a standing subject of the
-        # adversarial pass instead.
+        # is not machine-decidable, which is why it is standing subject 1 of the
+        # adversarial pass instead -- skills/adversarial-research_SKILL.md, "Standing
+        # subjects of every adversarial pass". That section was written 2026-09-03
+        # because THIS COMMENT NAMED A HOME THAT DID NOT EXIST: an audit grepped for
+        # it and found the phrase only here and in a scratchpad no brief reads.
         ok("R7", f"{cand} candidates for {screened} screened "
                  f"(asserted: >= 1 per 25 screened). {harm} row(s) carry "
                  f"harm_finding=1 -- REPORTED, not asserted")
@@ -513,7 +516,8 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     if collide:
         fail("R9b", f"{len(collide)} ref_id(s) admitted by this batch collide with a HELD "
                     f"identifier in source_locators that identifies a DIFFERENT source — mint "
-                    f"above the stash high-water mark: "
+                    f"above dbcore.next_ref_id(conn), which computes the high-water mark "
+                    f"as the UNION of every table holding a ref_id -- NOT the stash alone: "
                     + "; ".join(f"{r} admitted {a}, stash holds {b}" for r, a, b in collide[:5]),
              len(collide))
     elif n_adm == 0:
@@ -636,6 +640,11 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
                     f"{', '.join(unmatched[:5])}. Grade each EXACT/PARTIAL/PROXY and write the "
                     f"mismatch note.", len(unmatched))
     else:
+        # Whether a mismatch_note is TRUE against the payload it describes is standing
+        # subject 2 of the adversarial pass -- skills/adversarial-research_SKILL.md,
+        # "Standing subjects of every adversarial pass". Named here so the gate points
+        # at a home that exists; the phrase was in this file's R7 comment for a day
+        # while no such section did.
         ok("R13", f"all {len(anchors)} tier-1..3 admissions carry a population match "
                   f"ROW -- presence only. Nothing here reads match_grade or "
                   f"mismatch_note, so 'graded' was an overclaim and is gone")

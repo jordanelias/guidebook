@@ -212,7 +212,12 @@ a label that means nothing outside one slug. `db.py add-source` now refuses a re
 is not a global reference id, and names this confusion when it does.
 
 - `--ref-id` is the **global** reference id, `REF-NNNNN`, unique across the repository.
-  There is no allocator: mint above the `source_locators` high-water mark (CLAUDE.md §4).
+  There is no allocator: `dbcore.next_ref_id(conn)` IS the rule — the high-water mark is the
+  UNION of every table holding a ref_id, NOT `source_locators` alone (CLAUDE.md §4). Corrected
+  2026-09-03: line 191 of this same file was swept on 2026-09-02 and this line, 24 lines below
+  it, was not — so the file taught the superseded rule while citing the section that calls it
+  wrong. Measured: `source_locators` tops out at REF-00970 and `evidence_sources` at REF-00978,
+  so the old rule mints REF-00971, a live evidence row.
 - `--local-ref-id` is the **per-slug label**, `RAP-04`, meaningful only inside `{slug}`.
 
 This is the same copy-versus-pointer confusion that put `RAP-F61/F69/F70` in

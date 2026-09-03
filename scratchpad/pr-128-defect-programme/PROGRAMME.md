@@ -18,7 +18,7 @@ recorded. Baseline: `2a1ef12`, `user_version` 67.
 | D05-005 manifest contemporaneity | `wc -l`, `grep -c '"reconstructed": true'` | 49 lines, **0** reconstructed |
 | D05-006 `LATEST-RESEARCH` staleness | `git log -- sessions/LATEST-RESEARCH` | advanced in `22bc8df` |
 | CHECK 7's registry home | `check-registry.yaml` | `basis: research/adversarial-fields-complete`, advisory |
-| ~~Retired-vocabulary hits in `transcripts/`~~ | `retired_vocabulary_audit.py` | **WITHDRAWN — it reports 71 and names ZERO transcript paths, before and after the exemption alike. See §7a.** |
+| Retired-vocabulary hits in `transcripts/` | `retired_vocabulary_audit.py` | **UN-WITHDRAWN 2026-09-03.** The withdrawal measured the post-exemption tree and called it the pre-exemption one. Removing the exemption on an otherwise identical tree moves it 71 → 134 with 58 transcript-path lines, so the exemption fixed a live count. Derive it; the number climbs as transcripts accumulate. See §7a item 1. |
 | ~~FKs landing on `evidence_sources.ref_id` = 7 is stale~~ | see Correction 1 below | **WITHDRAWN — 7 is the cross-boundary subset, not a total. Not stale.** |
 
 **Correction 1 — WITHDRAWN 2026-09-03. CLAUDE.md's foreign-key figure is NOT stale, and
@@ -98,7 +98,8 @@ prior, and why D05-029 needs a hook rather than a habit.
 **(d) Substrate presuppositions — not in the original hypothesis.** D05-001 and D05-002 are a
 column and a table that would hold a **synthesis output** upstream of synthesis. Their correct fix
 is the *absence* of work until synthesis exists, plus a doctrine text that currently contradicts
-the ruling (§7b).
+the ruling (§7(c), first item — corrected 2026-09-03 from "§7b", which is the `serves_icf`
+rename deferral and has nothing to do with the contradiction).
 
 **The holistic link.** (b2) is gated by the adversarial pass, and the adversarial pass is gated by
 leaving its workings on disk. **Fixing D05-029 is what makes D05-021 and D05-022 "gated" at all.**
@@ -142,9 +143,19 @@ proposing one for any would be the accretion §1 exists to stop.
 
 ## 3a. EXECUTION RECORD — what verification changed, 2026-09-03
 
-**Two independent read-only passes fact-checked and attacked this plan before it was executed.
-Five of its instructions were wrong.** They are struck below where they appear; this section is the
-index, so nobody executes a superseded instruction by reading past a strike.
+**Three independent read-only passes fact-checked and attacked this plan — two before execution,
+one adversarial steelman afterwards, which is the pass that caught what the first two and I all
+missed.** Instructions are struck below where they appear; this section is the index, so nobody
+executes a superseded instruction by reading past a strike.
+
+*No count in this sentence: it read "Five of its instructions were wrong" over an eleven-row table,
+which is CLAUDE.md §0's prose-number-over-a-list trap inside the section written to close that
+class. Count the `NOT executed` / `replaced` / `superseded` verdicts in the Verdict column.*
+
+**And read the row before trusting it.** The `T2.3 / §1(d) / §3 / §9` row said "corrected" while
+none of the text had been touched — the disposition written, the file unchanged, which is the
+pattern that runs through D05-032, D05-037 and D05-038 alike. It is corrected now, and the row
+says so in the past tense on purpose.
 
 | Item | Verdict | What actually happened |
 |---|---|---|
@@ -156,7 +167,7 @@ index, so nobody executes a superseded instruction by reading past a strike.
 | **T1.1** | **NOT executed** | Its success criterion was to write a sentinel into the field CHECK 7 tests — self-administered reclassification, and it published a sentinel that would satisfy T0.3's own refusal. **Moot now:** CHECK 7 measures the research stage and honestly reports 9, because those nine searches recorded no prior. Batch 06 satisfies it by writing one. |
 | **T1.2** | **NOT executed** | It lists Wiley `pdfdirect` as "not yet tried". Both `pdfdirect` and `/epdf` are in the manifest as Cloudflare interstitials and `REF-00975`'s note says so. Only an author-manuscript repository is genuinely untried. It would also have written a `reconstructed: true` line into the manifest whose 0 reconstructed lines are D05-005's proof. |
 | **T2.2** | **NOT executed** | Its deletion gate greps `data_*.sql`; the 147 real INSERTs are in `057_baseline`, invisible to that glob. It also misses a live reader at `scripts/audit/graph/extract_db.py:173`. |
-| **T2.3 / §2 / §9** | corrected | T2.3 defers to a "§7c" that does not exist; §2 rows 001/002 mis-point at §7b; §9's "five single-file edits" touches at least seven files. |
+| **T2.3 / §1(d) / §3 / §9** | **NOT corrected when this row first claimed it was; corrected 2026-09-03** | The row was written and the text was not touched — the same "disposition written, text unchanged" pattern this session kept producing, inside the section built to stop it. Now actually done: §7's third subsection is lettered **(c)**, so T2.3's "until §7c is answered" resolves (and now says §7(c) answers it); §1(d)'s "(§7b)" is corrected to §7(c); and both "five single-file edits" sentences are replaced by a derivation. §2 row 001's pointer at §7b was **right** — §7(b) is the `serves_axes` item — and the original row was wrong to call it a mis-pointer. |
 | **§6** | **superseded** | "No new tables and no new columns" was a scope rule written as a standing prohibition, against an ACTIVE owner ruling. The harvest landed in migration 068. |
 | **D-0173 vs D-0174** | **NOT a conflict** | Reported as contradictory and it is not. D-0173 rules on the concept VOCABULARY; D-0174 rules that relevance is adjudicated at collection while APPLICABILITY stays synthesis. The apparent clash is in D-0173's agent-written sweep note, not in either ruling. CLAUDE.md §6 needs no correction. |
 
@@ -168,8 +179,12 @@ blocked. Every wrong instruction above was wrong about a REMEDY, never about a d
 
 ## 3. Tranche 0 — before batch 06
 
-Five single-file edits and one migration. Nothing here blocks research; T0.3 changes one writer's
-behaviour and agents satisfy it with one flag.
+**Do not read a count here — derive it.** This paragraph said "five single-file edits and one
+migration" before execution and was wrong in both halves: T0.2 and T0.4 were not executed at all,
+T0.3 was replaced by a three-migration move, and no view migration was written. What Tranche 0
+actually cost is in git: `git diff --stat origin/main..HEAD -- ':!scratchpad' ':!transcripts'`.
+Nothing here blocks research; T0.3's replacement changes one writer's behaviour and agents satisfy
+it with one flag on `log-search`.
 
 ### T0.1 · Register and map hygiene
 
@@ -353,7 +368,11 @@ candidate under §1: `term_item_links` — 0 rows, FK to the item layer the owne
 
 ### T2.3 · D05-028
 
-No change to `metadata_integrity_audit` and no new writer until §7c is answered.
+No change to `metadata_integrity_audit` and no new writer. **§7(c), second item, answers it:**
+closed as no-action — the nine `CORRECTED` rows are an owner-review queue doing its job, and a
+`review-source` writer to drain it would be apparatus justified by apparatus, which §1 forbids.
+*Corrected 2026-09-03: this read "until §7c is answered" while §7 had no lettered (c) at all, so
+it deferred to nothing.*
 
 ---
 
@@ -395,14 +414,33 @@ plainly wrong statements, so a hit answers a current question with a stale answe
 
 **Two corrections to what this section originally said, both mine.**
 
-1. **The figure was wrong.** This section claimed *"21 of the live surface's retired-vocabulary
-   occurrences are now in `transcripts/`"*. `retired_vocabulary_audit.py` reports **71
-   occurrences and names zero transcript paths**, before and after the exemption alike — it
-   `rglob`s the whole tree, so transcripts were never contributing. I wrote the figure out
-   without deriving it, which is the §2(b) failure this repository names by name. The
-   `exempt_paths` entry was still added, but as a *preventative* that keeps the `.ignore`
-   header's stated invariant true — every path it hides is already adjudicated on that list —
-   not because it fixed a live count.
+1. **The figure was wrong, and so was the correction. ~~Corrected 2026-09-03~~ — RE-corrected
+   2026-09-03 by an adversarial steelman audit, and this is the more instructive failure of the
+   two.** The section originally claimed *"21 of the live surface's retired-vocabulary
+   occurrences are now in `transcripts/`"* — a figure written out without deriving it, §2(b) by
+   name. I then "corrected" it to *"71 occurrences and zero transcript paths, before and after
+   the exemption alike … transcripts were never contributing … a preventative, not because it
+   fixed a live count."*
+
+   **That correction measured the POST-exemption state and reported it as the PRE-exemption
+   state.** Derived on one tree, changing only `governance/retired-vocabulary.yaml`:
+
+   ```
+   with the transcripts exemption : RESULTS: 71   lines naming a transcript path:  0
+   exemption removed, same tree   : RESULTS: 134  lines naming a transcript path: 58
+   ```
+
+   So transcripts contributed **63 occurrences** at the moment of measurement, the exemption
+   fixed a live count, and the original "21" was directionally right and merely undercounted.
+   The count MOVES as transcripts accumulate — the audit that caught this measured 107/71/33 an
+   hour earlier on fewer preserved files — so **derive it, never quote it**:
+   `python3 scripts/audit/retired_vocabulary_audit.py | tail -1`, with and without the
+   `transcripts` lines in `exempt_paths`.
+
+   The lesson is not the arithmetic. A correction of a §2(b) violation reproduced the §2(b)
+   violation, in the same paragraph, while naming it — because I checked the state I had
+   already changed instead of the state I was describing. **Commit `f6b506b`'s message carries
+   the wrong version and cannot be amended; this paragraph is the correction of record.**
 
 2. **The recommended mechanism does not work.** This section recommended `transcripts/**` plus
    negations. That **failed a planted-token test**: `README.md` came back and `index.json` did
@@ -421,7 +459,11 @@ plainly wrong statements, so a hit answers a current question with a stale answe
 The rename is a retired-token sweep across doctrine and schema. It is not in this programme's
 scope and nothing here depends on it. Raised only so it is not lost.
 
-### Closed autonomously, previously flagged
+### (c) Closed autonomously, previously flagged
+
+*Lettered 2026-09-03. It had no letter, so two pointers elsewhere in this file — §1(d)'s
+"(§7b)" and T2.3's "until §7c is answered" — resolved to nothing or to the wrong subsection.
+Both now point here.*
 
 **`governance/functional-taxonomy.md` contradicting DR-2026-08-24 §2.4.** The file says every slug
 declares `serves_axes` (≥1); the DR makes applicability an *output* of synthesis. I will annotate
@@ -462,6 +504,8 @@ predict. Each is a signal the analysis failed, not a step to push through.
 
 ## 9. Batch 06 is not blocked
 
-Tranche 0 is five single-file edits and one view migration. The only change to research behaviour
-is T0.3's refusal, satisfied with one flag. Tranche 1 runs beside the batch. Tranche 2 waits for
+Tranche 0 is small but not the size this paragraph claimed — see §3's opening, and derive it from
+`git diff --stat` rather than from either sentence. No view migration was written (T0.4 was not
+executed). The only change to research behaviour is T0.3's replacement, satisfied with one
+`--prior-expectation` flag on `log-search`. Tranche 1 runs beside the batch. Tranche 2 waits for
 judgment to exist.

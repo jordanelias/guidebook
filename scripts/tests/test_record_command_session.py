@@ -149,6 +149,20 @@ try:
     record("W01", "the hook writes session_id onto every line",
            '"session_id":sid' in src.replace(" ", ""),
            "open_session anchors on a field nothing writes — the anchor is dead")
+
+    # W02 exists because THIS SUITE WENT GREEN OVER A DEAD HOOK. load() execs only
+    # the text ABOVE the module-level `try:`, so a SyntaxError anywhere below it —
+    # on 2026-09-03 a bare `return` at line 258, inside that try — is invisible to
+    # every assertion here. settings.json swallows the failure (`2>/dev/null ||
+    # true`), so the hook logged NOTHING for two hours and the suite still read
+    # 14/14. Compiling the whole file is the one assertion that could have caught
+    # it, and it costs a millisecond.
+    try:
+        compile(src, str(HOOK), "exec")
+        record("W02", "the hook file compiles end to end, not just its header", True)
+    except SyntaxError as exc:
+        record("W02", "the hook file compiles end to end, not just its header", False,
+               f"{exc.__class__.__name__} at line {exc.lineno}: {exc.msg}")
 finally:
     shutil.rmtree(tmp, ignore_errors=True)
 

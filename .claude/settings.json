@@ -69,6 +69,17 @@
           }
         ]
       }
+    ],
+    "SubagentStop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PROJECT_DIR:-.}/scripts/preserve_transcripts.py\" >/dev/null 2>&1 || true"
+          }
+        ]
+      }
     ]
   }
 }

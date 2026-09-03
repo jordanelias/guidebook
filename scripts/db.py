@@ -393,6 +393,29 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
     # insert_evidence_source. One file, one diff, two opposite doctrines. A gate
     # that catches a bad write after it lands is strictly worse than a write path
     # that cannot make it.
+    # R8 says log every query WITH the prior written before you run it. A flag that
+    # is merely available is not that rule: batch 05 logged 43 searches and CHECK 7
+    # reports 9 verified citations with no prior, permanently, because
+    # search_executions is append-only (R8) and `amend-search` writes only
+    # findings_note and harm_finding -- so those nine can never be cleared by any
+    # sanctioned path. The check went red forever, and a check that is red forever
+    # is one its reader learns to skip: exactly the cry-wolf failure this session
+    # fixed in the fidelity checker and then rebuilt here. Refusing at the writer is
+    # the only place the prior can still be honest, because after this call the
+    # results exist and anything written is a reconstruction.
+    #
+    # Deliberately NOT argparse required=True: this refusal also catches programmatic
+    # callers, and it can say why. An empty string is refused too -- R8 keeps empties
+    # as completed work, and "I expected nothing" is a prior worth typing.
+    if not (prior_expectation or "").strip():
+        raise ValueError(
+            "--prior-expectation is required. Write what you expect this search to "
+            "find BEFORE you run it (DR-2026-05-09 24). Written afterwards it is a "
+            "rationalisation wearing the field that exists to prevent one, and there "
+            "is no sanctioned path to add it later: search_executions is append-only "
+            "under R8 and amend-search cannot touch this column. A zero-yield "
+            "expectation is a legitimate prior -- say so.")
+
     ids = list(admitted_ref_ids or [])
     if len(set(ids)) != len(ids):
         dupes = sorted({r for r in ids if ids.count(r) > 1})
