@@ -492,9 +492,18 @@ not block research: it is downstream of it.
   exists, so a `scratchpad/session_*` directory with no record behind it is open — but that is
   only the OPENING GUESS, because it breaks the moment a session writes its own close-out record
   and keeps working, which is the documented ritual: measured, the guess then returned a session
-  that had ended a day earlier. The anchor is the **harness session id**, written onto every line
-  and followed from line 2 onward, because it does not care about records at all. Do not
-  re-derive the weaker rule from this paragraph; read the function.
+  that had ended a day earlier. **The harness session id was then called the anchor. IT IS NOT,
+  and that claim is what this trap now exists to correct.** A `sid` identifies the HARNESS
+  session, and one harness session spans as many project sessions as the container survives —
+  measured 2026-09-02, one sid covered batch 04, a repairs session and batch 05, so the rule
+  matched the first directory it ever wrote to and returned it for all three. **All 969 lines
+  landed in one folder while the newest batch had no command log at all**, the hook locking onto
+  its own first mistake, which is why the misfiling was total rather than partial (D05-004).
+  **The anchor is `scratchpad/CURRENT`**, a stated fact that outranks every inference — and,
+  unlike `sessions/LATEST` and `LATEST-RESEARCH` above, it moves at **OPEN**, which is the only
+  time a pointer to the running session can be right. Set it when you create the batch's folder;
+  `scratchpad/README.md` says how. Do not re-derive any weaker rule from this paragraph; read the
+  function and its tests C01–C04.
 - **Session ids: bare stem in the DB, `.md` in pointers and `emit_data_migration --session`.**
   Getting it wrong scopes a gate to nothing and it passes green.
 - **Don't hand-edit generated output** (`parts/`, `site/`, `audits/`, `tools/*.html`) — regenerate

@@ -18,17 +18,36 @@ recorded. Baseline: `2a1ef12`, `user_version` 67.
 | D05-005 manifest contemporaneity | `wc -l`, `grep -c '"reconstructed": true'` | 49 lines, **0** reconstructed |
 | D05-006 `LATEST-RESEARCH` staleness | `git log -- sessions/LATEST-RESEARCH` | advanced in `22bc8df` |
 | CHECK 7's registry home | `check-registry.yaml` | `basis: research/adversarial-fields-complete`, advisory |
-| Retired-vocabulary hits in `transcripts/` | `retired_vocabulary_audit.py` | **21** |
+| ~~Retired-vocabulary hits in `transcripts/`~~ | `retired_vocabulary_audit.py` | **WITHDRAWN — it reports 71 and names ZERO transcript paths, before and after the exemption alike. See §7a.** |
+| ~~FKs landing on `evidence_sources.ref_id` = 7 is stale~~ | see Correction 1 below | **WITHDRAWN — 7 is the cross-boundary subset, not a total. Not stale.** |
 
-**Correction 1 — CLAUDE.md's foreign-key figure is stale.** The pipeline section states
-`evidence_sources.ref_id` carries **7** inbound keys, stamped 2026-08-27. It carries **12**:
-`economics_entries`, `evidence_population_match`, `evidence_source_authors`,
-`item_population_elaborations.evidence_ref_id`, `reasoning_doc_citations.source_ref_id`,
-`search_admissions`, `source_slug_links`, `source_value_extractions` (×2, `ref_id` and
-`root_ref_id`), `spec_value_probes`, `specification_source_links`, `supersession_check`. CLAUDE.md
-§2(b) already says to treat those figures as dated rather than current, and this is the first
-re-derivation since. **Fix it in T0.1** — a stale number in the file every session reads first is
-the §2(b) failure mode by definition.
+**Correction 1 — WITHDRAWN 2026-09-03. CLAUDE.md's foreign-key figure is NOT stale, and
+changing it would have introduced the error it claimed to fix.**
+
+This section originally said `evidence_sources.ref_id` carries 7 inbound keys but really carries
+12, and T0.1 was to correct the file accordingly. **The two numbers measure different things.**
+
+CLAUDE.md's sentence reads: *"43 foreign keys cross a boundary and 37 stay inside one, landing on
+eight columns"*, and the eight listed figures sum to **exactly 43**. So the list is the breakdown
+of the CROSS-BOUNDARY keys, not of total inbound keys. Every listed column is correspondingly
+below its total, and consistently so:
+
+| column | CLAUDE.md (crossing) | total inbound |
+|---|---|---|
+| `slugs.slug` | 14 | 16 |
+| `items.item_code` | 10 | 13 |
+| `evidence_sources.ref_id` | **7** | **12** |
+| `populations.population_code` | 7 | 11 |
+
+Four columns all lower, and the list summing to the stated crossing total, is not four
+coincidences. **12 is the total; 7 is the crossing subset; comparing them is a category error.**
+Writing 12 into that sentence would have broken the sum, contradicted the neighbouring 43/37, and
+put a false figure in the file every session reads first — under the banner of fixing a §2(b)
+defect. Caught when executing T0.1 rather than when planning it.
+
+**What T0.1 does instead:** leave the figure alone, and record here that the total inbound count is
+12, derived 2026-09-03 by `PRAGMA foreign_key_list` over every table. That is a real and separate
+fact; it is simply not what that sentence states.
 
 **Correction 2 — the containment query returns the antagonist's finding exactly.** Run today it
 yields two rows and only two:
@@ -130,17 +149,23 @@ behaviour and agents satisfy it with one flag.
 
 **Do.** Mark D05-005 and D05-006 RESOLVED in
 `scratchpad/pr-127-research-batch-05-circulation-icf/DEFECT-REGISTER.md`, carrying the derivations
-from §0. Correct CLAUDE.md's `evidence_sources.ref_id` inbound-key figure from 7 to 12, restamped
-with today's date. Correct CLAUDE.md §7 trap 2, which still teaches the superseded anchor — it
-says the harness session id is the anchor; `scratchpad/CURRENT` is, and the hook and its tests
-C01–C04 already say so.
+from §0. Correct CLAUDE.md §7 trap 2, which still teaches the superseded anchor — it says the
+harness session id is the anchor; `scratchpad/CURRENT` is, and the hook and its tests C01–C04
+already say so.
+
+**~~Correct CLAUDE.md's `evidence_sources.ref_id` figure from 7 to 12.~~ STRUCK 2026-09-03 on
+execution.** 7 is the cross-boundary subset and 12 the total inbound; they are not the same
+measurement, and the eight-column list sums to exactly the stated 43 crossing keys. Making that
+edit would have broken the sum and put a false number in the file every session reads first. Full
+reasoning in §0 Correction 1, withdrawn there.
 
 **Why.** The register is the declared single home of defect status and is wrong about two entries;
 a reader planning work from it would re-do finished work. The CLAUDE.md figure is the §2(b) defect
 in the file that forbids it. The trap text actively teaches the mechanism that failed.
 
 **Verify.** `grep -n "harness session id" CLAUDE.md` returns nothing calling it the anchor; the
-register's two rows read RESOLVED with their derivation commands.
+register's two rows read RESOLVED with their derivation commands; and the eight-column figures in
+the pipeline section still sum to 43.
 
 ### T0.2 · D05-029 — the transcript hook
 
