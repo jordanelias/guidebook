@@ -368,7 +368,8 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
                results_admitted: int = 0, saturation_signal: str = None,
                admitted_ref_ids=None, deferred_reason: str = None,
                backfill: int = 0, findings_note: str = None,
-               harm_finding: int = 0, dry_run: bool = False) -> int:
+               harm_finding: int = 0, prior_expectation: str = None,
+               dry_run: bool = False) -> int:
     """Append one row to search_executions. Returns its exec_id.
 
     The successor to upsert-coverage/upsert-language. A row here is a completed
@@ -424,6 +425,10 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
         "deferred_reason": deferred_reason, "backfill": backfill,
         "session": session, "executed_at": ts,
         "findings_note": findings_note, "harm_finding": harm_finding,
+        # The prior belongs HERE, on the search, and nowhere else. Migration 069
+        # moved it off evidence_sources, where it could only be reconstructed after
+        # reading the source -- the artefact the field exists to prevent.
+        "prior_expectation": prior_expectation,
     }
     cols = ", ".join(row)
     ph = ", ".join(["?"] * len(row))
@@ -1134,6 +1139,12 @@ def main():
     p_ls = sub.add_parser(
         "log-search",
         help="Append one row to search_executions (replaces upsert-coverage/-language)")
+    p_ls.add_argument("--prior-expectation", dest="prior_expectation",
+                      help="What you expect this search to find, written BEFORE you run "
+                           "it. DR-2026-05-09: logged in advance to expose confirmation "
+                           "bias. This is the only moment it can honestly be recorded -- "
+                           "a prior written after reading the results is a "
+                           "rationalisation wearing the field that prevents one.")
     p_ls.add_argument("--slug", required=True)
     p_ls.add_argument("--language", required=True, help="ISO 639-1, uppercase (EN, FR)")
     p_ls.add_argument("--query-text", required=True,
@@ -1238,14 +1249,13 @@ def main():
                            "organisation. D-0178: 'published_corpus' says where it was PUBLISHED, "
                            "not that disabled people CO-PRODUCED it. Required for --evidence-type co1.")
     p_as.add_argument("--co1-source-type")
-    p_as.add_argument("--prior-expectation",
-                      help="What you expected this source to say BEFORE reading it. "
-                           "research_protocol_audit CHECK 7 asks for it on every "
-                           "verified citation, and there was no way to write it at "
-                           "admission until 2026-09-02 -- which is the only moment it "
-                           "can honestly be recorded. Backfilling one after reading the "
-                           "source manufactures a prior, which is the failure the field "
-                           "exists to prevent.")
+    # --prior-expectation was HERE and is gone (2026-09-03). I added it on 2026-09-02
+    # reasoning that admission "is the only moment it can honestly be recorded". That was
+    # wrong by one stage. add-source runs in the LOG action, AFTER the source is searched,
+    # screened, retrieved and read; DR-2026-05-09 defines the field as what was expected
+    # BEFORE searching. A flag here could only ever be satisfied by reconstruction, which
+    # is the exact artefact the field exists to prevent. It now lives on `log-search`,
+    # where the fact exists, and migration 069 gives search_executions the column.
     p_as.add_argument("--synthesis-attribution-required", type=int, choices=[0, 1])
     p_as.add_argument("--lang-detected", help="ISO 639-1 code for the source's actual publication language")
     p_as.add_argument("--lang-detection-method",
@@ -1581,6 +1591,7 @@ def main():
             admitted_ref_ids=args.admitted_ref_ids,
             deferred_reason=args.deferred_reason, backfill=args.backfill,
             findings_note=args.findings_note, harm_finding=args.harm_finding,
+            prior_expectation=args.prior_expectation,
             dry_run=args.dry_run)
         _emit({"exec_id": exec_id, "slug": args.slug,
                "admitted": len(args.admitted_ref_ids or []),
@@ -1765,7 +1776,7 @@ def main():
                             # so all nine of batch 05's sources failed it and none could
                             # be fixed honestly -- a prior recorded after reading the
                             # source is not a prior.
-                            ("prior_expectation", "prior_expectation")):
+                            ):
             _v = getattr(args, _flag, None)
             # `is not None`, not truthiness: synthesis_attribution_required is an int flag
             # and 0 is a real, meaningful value that `if _v` would discard.
@@ -2153,7 +2164,7 @@ def insert_evidence_source(data: dict, session: str,
         # attempt) the moment it lands — both blocking checks. The two scheduled
         # jobs were swept for D-0157; this third writer was not, and it is the
         # one the skills tell sessions to use.
-        "verification_disposition", "verification_method", "prior_expectation",
+        "verification_disposition", "verification_method",
         "verification_closure_reason", "verification_attempt_count",
         "verification_note", "verified_by_tool",
     })
@@ -2166,7 +2177,7 @@ def insert_evidence_source(data: dict, session: str,
     # `--ref-id {local_ref_id}` beside `--local-ref-id {local_ref_id}`.
     #
     # What that costs: a source filed under a per-slug label is invisible to the
-    # source_locators high-water mark that ref_ids are minted above, collides with the
+    # high-water mark ref_ids are minted above, collides with the
     # next slug that mints the same label, and renders a citation keyed to a string
     # that means nothing outside one slug. It is the copy-versus-pointer confusion that
     # already put RAP-F61/F69/F70 in citation_mining against RAP-06/09/10 in
@@ -2184,9 +2195,9 @@ def insert_evidence_source(data: dict, session: str,
                     f"meaningful only inside one slug.")
         raise ValueError(
             f"--ref-id {rid!r} is not a global reference id.{hint} Expected REF-NNNNN "
-            f"(or REF-VERIFIED-NNN / Co1-NN). There is no allocator: mint above the "
-            f"source_locators high-water mark, or you will collide with a held "
-            f"identifier (CLAUDE.md §4). Nothing was written.")
+            f"(or REF-VERIFIED-NNN / Co1-NN). Get the next one from "
+            f"`dbcore.next_ref_id(conn)`, which computes the high-water mark as the "
+            f"UNION of every table holding a ref_id. Nothing was written.")
 
     # A verification standing implies its evidence — so REFUSE the write when the
     # evidence is absent. Do not fill it in.
@@ -2512,7 +2523,7 @@ def resolve_candidate(candidate_id: int, disposition: str, redescription: str,
 # corrected by a person, with the correction recorded.
 _AMENDABLE = (
     "co1_provenance", "co1_source_type", "grey_reason", "verification_note",
-    "prior_expectation", "notes", "bpc_note", "scope",
+    "notes", "bpc_note", "scope",
     # verification_disposition belongs here and not with the bibliographic fields:
     # D-0157 states it as a JUDGEMENT -- "verification is finished or it did not
     # happen" -- which no payload can settle. Added 2026-09-02 to correct rows that

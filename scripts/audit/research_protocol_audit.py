@@ -89,15 +89,33 @@ def audit():
         AND named_dissenter NOT LIKE '%review%'
     """).fetchall()
 
-    # CHECK 7 (added 2026-05-10): Verified citations lacking prior_expectation.
-    # Per DR-2026-05-09 §"What v2 Requires" — prior_expectation is one of the
-    # five required fields. Pre-Stage-B.5 audit returned 0 issues across all
-    # checks while 642/659 evidence_sources were missing this field. Closing
-    # the hole.
+    # CHECK 7 (added 2026-05-10; REPOINTED 2026-09-03, exactly as CHECK 8 was).
+    #
+    # DR-2026-05-09 §24 defines the field as "what Claude expected BEFORE searching",
+    # logged in advance to expose confirmation bias. It was read off
+    # evidence_sources.prior_expectation -- a RESEARCH-stage fact copied onto an
+    # evidence row, the same §2.2 violation CHECK 8 was repointed for below. Worse
+    # than a copy: evidence rows are written in the LOG action, AFTER the source has
+    # been searched, screened, retrieved and read, so the column could never be
+    # honestly populated where it sat. A prior written after reading the source is a
+    # post-hoc rationalisation wearing the field that exists to prevent one, and this
+    # check was therefore demanding the artefact it exists to forbid.
+    #
+    # Migration 069 gives search_executions the column; db.py writes it at log-search
+    # time and add-source no longer accepts it. The pointer is v_source_admission,
+    # which reaches search_executions through search_admissions on the shared
+    # reference id -- the identical route CHECK 8 uses.
+    #
+    # evidence_sources.prior_expectation is NOT dropped: four committed data
+    # migrations INSERT it and CLAUDE.md rule 5 makes such a column undroppable.
+    # Writer-retired, now reader-retired, NULL forward. It held 0 non-empty values.
     verified_no_prior = db.execute("""
-        SELECT ref_id, pub_title AS title FROM evidence_sources
-        WHERE verification_status = 'VERIFIED'
-        AND (prior_expectation IS NULL OR prior_expectation = '')
+        SELECT e.ref_id, e.pub_title AS title
+        FROM evidence_sources e
+        LEFT JOIN v_source_admission v ON v.ref_id = e.ref_id
+        WHERE e.verification_status = 'VERIFIED'
+        GROUP BY e.ref_id
+        HAVING COALESCE(MAX(NULLIF(TRIM(v.prior_expectation), '')), '') = ''
     """).fetchall()
 
     # CHECK 8 (added 2026-05-10; REPOINTED 2026-08-25).

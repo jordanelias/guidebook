@@ -140,6 +140,32 @@ proposing one for any would be the accretion §1 exists to stop.
 
 ---
 
+## 3a. EXECUTION RECORD — what verification changed, 2026-09-03
+
+**Two independent read-only passes fact-checked and attacked this plan before it was executed.
+Five of its instructions were wrong.** They are struck below where they appear; this section is the
+index, so nobody executes a superseded instruction by reading past a strike.
+
+| Item | Verdict | What actually happened |
+|---|---|---|
+| **T0.1** | executed, one instruction struck | The CLAUDE.md FK "correction" compared a cross-boundary subset (7) against a total inbound count (12). The eight listed columns sum to exactly the stated 43 crossing keys, and every column is below its total. Writing 12 in would have broken the sum. **Struck.** |
+| **T0.2** | **NOT executed as written** | `.claude/settings.json` already has a `Stop` key running the research DoD gate — "append a Stop entry" read carelessly disables it. `Stop` fires per TURN, so it would re-copy an 11.2 MB tracked blob every turn, rebuilding the never-clean-tree loop. **Superseded: the recursion was fixed at its cause instead** — `record-command.py` no longer logs the commit that commits the log. |
+| **T0.3** | **replaced, not executed** | `DR-2026-05-09:24` defines `prior_expectation` as *"what Claude expected BEFORE searching"*; `add-source` runs after the source is read, so the refusal could only be satisfied by reconstruction. **Migrations 069/070 moved the field to `search_executions`, `log-search --prior-expectation` writes it at search time, `add-source` lost the flag, and CHECK 7 is repointed through `v_source_admission` exactly as CHECK 8 was.** |
+| **T0.4** | **NOT executed** | `connections_produced` carries no per-connection direction — 6 of 15 rows are `backward=1 AND forward=1` — so the view would assert containment the data cannot support. It would also turn the BLOCKING `pipeline_completeness_fresh` red via a `user_version` bump the sweep omitted, and staleen CLAUDE.md's "five cross-stage views". **Run it as the antagonist's standing query; revisit the view only when T2.1's writer exists.** |
+| **T0.5** | **executed, with corrections** | R7, R11 and R13 now state what they assert and mark what they only report — with the reason inline, so the next reader does not "restore" the confident wording. The standing-subject YAML key was NOT added: nothing reads it. |
+| **T1.1** | **NOT executed** | Its success criterion was to write a sentinel into the field CHECK 7 tests — self-administered reclassification, and it published a sentinel that would satisfy T0.3's own refusal. **Moot now:** CHECK 7 measures the research stage and honestly reports 9, because those nine searches recorded no prior. Batch 06 satisfies it by writing one. |
+| **T1.2** | **NOT executed** | It lists Wiley `pdfdirect` as "not yet tried". Both `pdfdirect` and `/epdf` are in the manifest as Cloudflare interstitials and `REF-00975`'s note says so. Only an author-manuscript repository is genuinely untried. It would also have written a `reconstructed: true` line into the manifest whose 0 reconstructed lines are D05-005's proof. |
+| **T2.2** | **NOT executed** | Its deletion gate greps `data_*.sql`; the 147 real INSERTs are in `057_baseline`, invisible to that glob. It also misses a live reader at `scripts/audit/graph/extract_db.py:173`. |
+| **T2.3 / §2 / §9** | corrected | T2.3 defers to a "§7c" that does not exist; §2 rows 001/002 mis-point at §7b; §9's "five single-file edits" touches at least seven files. |
+| **§6** | **superseded** | "No new tables and no new columns" was a scope rule written as a standing prohibition, against an ACTIVE owner ruling. The harvest landed in migration 068. |
+| **D-0173 vs D-0174** | **NOT a conflict** | Reported as contradictory and it is not. D-0173 rules on the concept VOCABULARY; D-0174 rules that relevance is adjudicated at collection while APPLICABILITY stays synthesis. The apparent clash is in D-0173's agent-written sweep note, not in either ruling. CLAUDE.md §6 needs no correction. |
+
+**What the plan got right, and it is the larger half:** the diagnosis. Four mechanisms rather than
+thirty defects; the stage assignment; the sequencing; and the judgement that the batch must not be
+blocked. Every wrong instruction above was wrong about a REMEDY, never about a defect.
+
+---
+
 ## 3. Tranche 0 — before batch 06
 
 Five single-file edits and one migration. Nothing here blocks research; T0.3 changes one writer's

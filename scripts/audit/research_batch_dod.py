@@ -408,7 +408,18 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
                    f"(expect >= {expected}). Off-slug / unverified material must land in "
                    f"search_candidates, not in prose that evaporates.")
     else:
-        ok("R7", f"{cand} candidates for {screened} screened; {harm} harm/failure flagged")
+        # ASSERTED: cand >= max(1, screened//25). REPORTED, NEVER ASSERTED: the harm
+        # count. `harm` appears in this string and in no predicate anywhere in this
+        # file, and printing a number the check never tested is CLAUDE.md §2(a) at
+        # message level -- it is how the exec-32 filing gap stayed invisible while this
+        # line read PASS. Softened deliberately 2026-09-03. Do NOT restore the confident
+        # wording without putting a predicate behind it, and do not add one that merely
+        # counts rows: whether a batch's harm findings actually REACHED the flagged rows
+        # is not machine-decidable, which is why it is a standing subject of the
+        # adversarial pass instead.
+        ok("R7", f"{cand} candidates for {screened} screened "
+                 f"(asserted: >= 1 per 25 screened). {harm} row(s) carry "
+                 f"harm_finding=1 -- REPORTED, not asserted")
 
     # --- R8 empties kept + APPEND-ONLY integrity -------------------------------------------
     # HARDENED: the original could never fail — it printed a count and passed. Deleting the
@@ -535,13 +546,23 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
         ok("R10", "every VERIFIED source has a locator AND a recorded resolution outcome")
 
     # --- R11 vocabulary provenance ---------------------------------------------------------
+    noprov_scope = _rows(cx, f"SELECT COUNT(*) FROM term_aliases WHERE 1=1"
+                       f"{scope.replace('session','created_by_session')}", sargs)[0][0]
     noprov = _rows(cx, f"SELECT COUNT(*) FROM term_aliases WHERE COALESCE(notes,'')=''"
                        f"{scope.replace('session','created_by_session')}", sargs)[0][0]
     if noprov:
         fail("R11", f"{noprov} alias(es) with no sourcing note. No back-translation: every alias "
                     f"needs its authoritative in-language basis or [UNVERIFIED-TERMS].", noprov)
     else:
-        ok("R11", "all vocabulary carries in-language sourcing provenance")
+        # EXAMINED, per CLAUDE.md §2(a). This printed "all vocabulary carries
+        # in-language sourcing provenance" over ZERO aliases for batch 05 -- and
+        # corpus-wide 856 of 2382 aliases have no note, so the sentence was not merely
+        # uninformative, it was the opposite of the corpus truth. A scoped count must
+        # state its scope.
+        ok("R11", f"{noprov_scope} alias(es) written by this batch; all carry "
+                  f"in-language sourcing provenance" if noprov_scope else
+                  "EXAMINED: 0 aliases. This batch wrote none, so this asserts "
+                  "nothing about the corpus")
 
     # --- R12 structured homes used ----------------------------------------------------------
     econ_words = _rows(cx, f"SELECT COUNT(*) FROM search_executions WHERE ("
@@ -578,7 +599,9 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
                     f"{', '.join(unmatched[:5])}. Grade each EXACT/PARTIAL/PROXY and write the "
                     f"mismatch note.", len(unmatched))
     else:
-        ok("R13", f"all {len(anchors)} tier-1..3 admissions carry a graded population match")
+        ok("R13", f"all {len(anchors)} tier-1..3 admissions carry a population match "
+                  f"ROW -- presence only. Nothing here reads match_grade or "
+                  f"mismatch_note, so 'graded' was an overclaim and is gone")
 
     # --- R14 ZERO-YIELD MUST SAY WHY ---------------------------------------------------------
     # LESSON: a zero-yield search is only evidence of ABSENCE if the query was well-formed. Twice

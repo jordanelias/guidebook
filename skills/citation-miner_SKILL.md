@@ -188,7 +188,7 @@ crashed with "table evidence_sources has no column named authors".
 ### Adding new sources
 ```bash
 python3 scripts/db.py add-source \
-  --ref-id {global_ref_id} \        # REF-NNNNN, minted above the source_locators high-water mark
+  --ref-id {global_ref_id} \        # REF-NNNNN, from dbcore.next_ref_id(conn) -- the high-water mark is the UNION of every table holding a ref_id, NOT source_locators alone (CLAUDE.md §4)
   --author "{last}|{given}" \      # repeatable, byline order; 'corp|{name}' for a body
   # or, from a display string: --authors "{authors}"   (parsed into rows; refuses ambiguity)
   --year {year} \
