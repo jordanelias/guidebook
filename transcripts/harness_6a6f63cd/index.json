@@ -78,9 +78,9 @@
   },
   {
     "started": "2026-09-02T23:53:54",
-    "role": "other",
-    "bytes": 666086,
+    "role": "planner",
+    "bytes": 876188,
     "agent_id_prefix": "a8d7480c",
-    "file": "2026-09-02T23-53-54_other_a8d7480c.jsonl"
+    "file": "2026-09-02T23-53-54_planner_a8d7480c.jsonl"
   }
 ]

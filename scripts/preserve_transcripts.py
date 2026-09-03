@@ -58,7 +58,16 @@ def _role_of(path):
             for needle, role in (("ANTAGONIST", "antagonist"),
                                  ("AGONIST", "agonist"),
                                  ("TRACER", "tracer"),
-                                 ("ADVERSARIAL CRITIC", "adversarial-critic")):
+                                 ("ADVERSARIAL CRITIC", "adversarial-critic"),
+                                 # Added 2026-09-03: Fable's planning pass for the
+                                 # thirty-defect programme came back labelled "other",
+                                 # which is honest but useless -- the index exists so a
+                                 # reader can find "the planner run" without opening
+                                 # 666 KB of JSONL. Tested AFTER the four above, so a
+                                 # brief that merely mentions planning cannot outrank
+                                 # its own declared role.
+                                 ("YOU ARE PLANNING", "planner"),
+                                 ("PLANNER", "planner")):
                 if needle in head:
                     return role
             return "other"
@@ -97,7 +106,7 @@ def main():
         print("  elsewhere. That is not a pass; find out which before relying on it.")
         return 1
 
-    examined, written, stale = 0, [], []
+    examined, written, stale, stale_labels = 0, [], [], []
     for project_root in roots:
         for sid, main, subdir in _sessions(project_root):
             dest = OUT / f"harness_{sid[:8]}"
@@ -106,6 +115,24 @@ def main():
                 name = (f"{_started(f).replace(':', '-')}_{_role_of(f)}"
                         f"_{f.name[6:14]}.jsonl")
                 pairs.append((f, dest / "subagents" / name))
+
+            # A BETTER ROLE DERIVATION MUST NOT LEAVE AN ORPHAN. The destination name
+            # encodes the role, so improving _role_of renames the file -- and a plain
+            # copy would leave the old name beside the new one, silently doubling a
+            # 666 KB transcript and putting two rows in the index for one agent. Keyed
+            # on the agent id, which is the one part of the name that never changes.
+            wanted = {d.name for _s, d in pairs}
+            subdir_out = dest / "subagents"
+            if subdir_out.is_dir():
+                for old_dst in subdir_out.glob("*.jsonl"):
+                    aid = old_dst.name.rsplit("_", 1)[-1]
+                    if old_dst.name not in wanted and any(
+                            d.name.endswith(aid) for _s, d in pairs):
+                        if not args.check:
+                            old_dst.unlink()
+                            written.append(f"(removed stale label) {old_dst}")
+                        else:
+                            stale_labels.append(str(old_dst))
 
             index = []
             for src, dst in pairs:
@@ -129,7 +156,11 @@ def main():
 
     print(f"  EXAMINED: {examined} transcript(s) in this container")
     if args.check:
-        if stale:
+        if stale_labels:
+            print(f"  STALE ROLE LABELS: {len(stale_labels)} (rerun without --check)")
+            for s_ in stale_labels[:6]:
+                print(f"      {s_}")
+        if stale or stale_labels:
             print(f"  UNPRESERVED OR STALE: {len(stale)}")
             for s in stale[:8]:
                 print(f"      {s}")
