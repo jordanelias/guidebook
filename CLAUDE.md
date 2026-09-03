@@ -194,9 +194,9 @@ twice and disagreed with the list both times — "Five" over six entries, then "
    not a substitute for its workings: a finding you cannot trace is a finding you cannot
    correct.** Deliberately NOT a registered gate — `--check` is red for the whole life of a
    session, because the orchestrator's own transcript grows until the session ends, and a
-   check that is red by construction teaches its reader to ignore it. Owner directive 2026-08-25.
+   check that is red by construction teaches its reader to ignore it.
    A scratchpad that lives only in context is not a review surface; compaction, session end and
-   container reclamation all take it. This repository paid for that twice in two days — the
+   container reclamation all take it, and the same is true of a transcript. This repository paid for that twice in two days — the
    pointer-discipline queue existed only in a conversation while three of its items shipped citing
    labels no file defined. If no session directory exists, create it and commit into it rather than
    waiting for a session record. `governance: session command log [YYYY-MM-DD HH:MM]` is a complete
@@ -466,7 +466,14 @@ not block research: it is downstream of it.
 ## 7. Traps
 
 - **`.ignore` hides frozen records from ripgrep** — `_archived/`, `audits/`, `sessions/`,
-  `references/search-log/`, `versions/`, `workplan/_superseded/`. "No matches" ≠ absent: confirm
+  `references/search-log/`, `versions/`, `workplan/_superseded/`, and **the JSONL under
+  `transcripts/`** (owner ruling 2026-09-03; `transcripts/README.md` and every `index.json`
+  stay searchable on purpose, so a grep still finds THAT a transcript exists and whose it
+  is). That last entry matches `transcripts/**/*.jsonl` rather than the directory,
+  because `transcripts/**` with negations FAILED a planted-token test: `**` excludes the
+  session directory, and gitignore cannot re-include a file whose parent is excluded. The
+  `sessions/**` + `!sessions/LATEST` precedent works only because LATEST sits at the top
+  level of the excluded directory. "No matches" ≠ absent: confirm
   with `ls` or Glob. `grep -r` and `git grep` ignore it; Python tools see everything. Search those
   paths explicitly when doing history work. **Note the cost:** rendered search logs live under an
   ignored path, so the project's own research output is invisible to search.
@@ -485,9 +492,18 @@ not block research: it is downstream of it.
   exists, so a `scratchpad/session_*` directory with no record behind it is open — but that is
   only the OPENING GUESS, because it breaks the moment a session writes its own close-out record
   and keeps working, which is the documented ritual: measured, the guess then returned a session
-  that had ended a day earlier. The anchor is the **harness session id**, written onto every line
-  and followed from line 2 onward, because it does not care about records at all. Do not
-  re-derive the weaker rule from this paragraph; read the function.
+  that had ended a day earlier. **The harness session id was then called the anchor. IT IS NOT,
+  and that claim is what this trap now exists to correct.** A `sid` identifies the HARNESS
+  session, and one harness session spans as many project sessions as the container survives —
+  measured 2026-09-02, one sid covered batch 04, a repairs session and batch 05, so the rule
+  matched the first directory it ever wrote to and returned it for all three. **All 969 lines
+  landed in one folder while the newest batch had no command log at all**, the hook locking onto
+  its own first mistake, which is why the misfiling was total rather than partial (D05-004).
+  **The anchor is `scratchpad/CURRENT`**, a stated fact that outranks every inference — and,
+  unlike `sessions/LATEST` and `LATEST-RESEARCH` above, it moves at **OPEN**, which is the only
+  time a pointer to the running session can be right. Set it when you create the batch's folder;
+  `scratchpad/README.md` says how. Do not re-derive any weaker rule from this paragraph; read the
+  function and its tests C01–C04.
 - **Session ids: bare stem in the DB, `.md` in pointers and `emit_data_migration --session`.**
   Getting it wrong scopes a gate to nothing and it passes green.
 - **Don't hand-edit generated output** (`parts/`, `site/`, `audits/`, `tools/*.html`) — regenerate

@@ -89,16 +89,58 @@ def audit():
         AND named_dissenter NOT LIKE '%review%'
     """).fetchall()
 
-    # CHECK 7 (added 2026-05-10): Verified citations lacking prior_expectation.
-    # Per DR-2026-05-09 §"What v2 Requires" — prior_expectation is one of the
-    # five required fields. Pre-Stage-B.5 audit returned 0 issues across all
-    # checks while 642/659 evidence_sources were missing this field. Closing
-    # the hole.
-    verified_no_prior = db.execute("""
-        SELECT ref_id, pub_title AS title FROM evidence_sources
-        WHERE verification_status = 'VERIFIED'
-        AND (prior_expectation IS NULL OR prior_expectation = '')
+    # CHECK 7 (added 2026-05-10; REPOINTED 2026-09-03, exactly as CHECK 8 was).
+    #
+    # DR-2026-05-09 §24 defines the field as "what Claude expected BEFORE searching",
+    # logged in advance to expose confirmation bias. It was read off
+    # evidence_sources.prior_expectation -- a RESEARCH-stage fact copied onto an
+    # evidence row, the same §2.2 violation CHECK 8 was repointed for below. Worse
+    # than a copy: evidence rows are written in the LOG action, AFTER the source has
+    # been searched, screened, retrieved and read, so the column could never be
+    # honestly populated where it sat. A prior written after reading the source is a
+    # post-hoc rationalisation wearing the field that exists to prevent one, and this
+    # check was therefore demanding the artefact it exists to forbid.
+    #
+    # Migration 069 gives search_executions the column; db.py writes it at log-search
+    # time and add-source no longer accepts it. The pointer is v_source_admission,
+    # which reaches search_executions through search_admissions on the shared
+    # reference id -- the identical route CHECK 8 uses.
+    #
+    # evidence_sources.prior_expectation is NOT dropped: four committed data
+    # migrations INSERT it and CLAUDE.md rule 5 makes such a column undroppable.
+    # Writer-retired, now reader-retired, NULL forward. It held 0 non-empty values.
+    #
+    # SPLIT 2026-09-03, and this half matters as much as the repoint. Read as one
+    # number the check was UNSATISFIABLE: search_executions is append-only under R8
+    # and amend-search cannot touch this column, so a source admitted by a search
+    # logged before the writer existed can never acquire a prior through any
+    # sanctioned path. Nine such rows meant a permanent red -- and a check that is
+    # red forever is one its reader learns to skip, which is the same cry-wolf
+    # failure this session fixed in the fidelity checker. So the pre-writer rows are
+    # COUNTED AND NAMED separately and excluded from the issue total: the check can
+    # now go green on a batch that does its job, and still says out loud how many
+    # rows it is not holding against anyone.
+    #
+    # The boundary is the date db.py started REFUSING a log-search without a prior,
+    # not the date the column appeared -- migration 069 landed hours earlier and a
+    # search logged in that window was not required to carry one. Do not "tidy" this
+    # into a row-id cutoff: exec ids are not chronological across sessions.
+    PRIOR_REFUSAL_LANDED = "2026-09-03"
+
+    _no_prior = db.execute("""
+        SELECT e.ref_id, e.pub_title AS title,
+               COALESCE(MAX(v.admitted_at), '') AS latest_search
+        FROM evidence_sources e
+        LEFT JOIN v_source_admission v ON v.ref_id = e.ref_id
+        WHERE e.verification_status = 'VERIFIED'
+        GROUP BY e.ref_id
+        HAVING COALESCE(MAX(NULLIF(TRIM(v.prior_expectation), '')), '') = ''
     """).fetchall()
+    # Tuple rows, not sqlite3.Row -- this module's connection sets no row_factory,
+    # and indexing by name here raised TypeError on the first run. (ref_id, title,
+    # latest_search) is the SELECT order above; keep them in step.
+    pre_writer = [r for r in _no_prior if (r[2] or "") < PRIOR_REFUSAL_LANDED]
+    verified_no_prior = [r for r in _no_prior if (r[2] or "") >= PRIOR_REFUSAL_LANDED]
 
     # CHECK 8 (added 2026-05-10; REPOINTED 2026-08-25).
     #
@@ -164,8 +206,17 @@ def audit():
         print(f"  ⚠ {gap_id}: '{dissent[:80]}'")
 
     print(f"\n[CHECK 7] Verified citations lacking prior_expectation: {len(verified_no_prior)}")
-    for ref_id, title in verified_no_prior[:5]:
+    for ref_id, title, _ in verified_no_prior[:5]:
         print(f"  ⚠ {ref_id}: {(title or '')[:70]}")
+    if pre_writer:
+        print(f"  ({len(pre_writer)} further source(s) admitted by searches logged before "
+              f"{PRIOR_REFUSAL_LANDED}, when db.py did not yet refuse a log-search without a "
+              f"prior. search_executions is append-only under R8 and amend-search cannot write "
+              f"this column, so no sanctioned path can ever clear them. NOT counted as issues, "
+              f"and NOT to be backfilled: a prior written now would be a reconstruction, which "
+              f"is the artefact this field exists to prevent.)")
+        for ref_id, title, _ in pre_writer[:5]:
+            print(f"      · {ref_id}: {(title or '')[:60]}")
 
     print(f"\n[CHECK 8] Verified citations lacking search_queries_used: {len(verified_no_queries)}")
     for ref_id, title in verified_no_queries[:5]:

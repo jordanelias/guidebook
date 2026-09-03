@@ -235,6 +235,36 @@ try:
         interrupted=tr.get("interrupted")
     else:
         out=str(tr or ""); ec=None; err=None; errout=""; interrupted=None
+    # THE ONE COMMAND THIS LOG MUST NOT RECORD: the commit that commits this log.
+    #
+    # This hook appends AFTER the tool completes, so a `git commit` of
+    # commands.jsonl leaves a NEW uncommitted line behind it. The Stop hook then
+    # demands a clean tree, the commit that satisfies it dirties the tree again,
+    # and the two hooks are mutually recursive with no exit -- measured
+    # 2026-09-03 over a dozen consecutive commits that recorded nothing but
+    # themselves. The Stop hook's own `stop_hook_active` guard cannot see this,
+    # because it only prevents that hook re-entering ITSELF.
+    #
+    # Matched on the commit message CLAUDE.md rule 6 declares for exactly this
+    # purpose -- "governance: session command log [YYYY-MM-DD HH:MM] is a
+    # complete commit message" -- so this recognises a documented convention
+    # rather than guessing at intent. Nothing else is skipped: a real commit that
+    # happens to touch the log is still recorded, because its message differs.
+    #
+    # What is lost is one line saying the log was committed, which the commit
+    # itself already says, in git, with a timestamp. What is gained is that the
+    # loop terminates.
+    # sys.exit(0), NOT return. This block is module-level, inside the `try:` at
+    # line 145 — a bare `return` here is a SyntaxError that takes the WHOLE hook
+    # down, and settings.json wires it as `... 2>/dev/null || true`, so it fails
+    # silently. It did: written 2026-09-03 01:28 to break the log/commit
+    # recursion, it stopped every command from being logged for the next two
+    # hours (the migrations, the db.py work, the contract amendment and the D-0173
+    # harvest all have no entry) and was found by an adversarial audit, not by the
+    # test. The neighbouring early exits at 149/186/187 already use sys.exit(0);
+    # this line did not, and matching them is the whole fix.
+    if "session command log" in (c or ""):
+        sys.exit(0)
     root=pathlib.Path(os.environ.get("CLAUDE_PROJECT_DIR") or ".")
     sid=d.get("session_id")
     sess=open_session(root,sid) or (sid or "unassigned")

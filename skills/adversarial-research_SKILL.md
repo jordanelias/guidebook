@@ -41,10 +41,19 @@ The reviewer is the truth-source. This skill makes shallow research VISIBLE so t
 Before any gap closure under this skill, populate ALL FIVE:
 
 ### 1. Prior expectation
-```sql
-UPDATE evidence_sources SET prior_expectation = ? WHERE ref_id = ?;
+```
+python3 scripts/db.py log-search ... --prior-expectation "<what you expect, written BEFORE you run it>"
 ```
 State what you expected to find before searching, and why. If the search result matches the prior exactly, that's a flag, not confirmation.
+
+**Corrected 2026-09-03.** This block read `UPDATE evidence_sources SET prior_expectation = ?
+WHERE ref_id = ?` — hand-written SQL against a column that no longer exists on that table, and
+against the wrong stage besides. `prior_expectation` moved to `search_executions` in migration
+069, because DR-2026-05-09 §24 defines it as *what was expected BEFORE searching* and
+`add-source` runs after the source is searched, screened, retrieved and read; a field written
+there can only ever be a reconstruction, which is the exact artefact this output exists to
+prevent. A skill is a caller (CLAUDE.md rule 4) and this one was missed by the sweep that moved
+the field.
 
 ### 2. Search queries used
 ```sql
@@ -78,6 +87,48 @@ Specific researcher/paper/institution with contrary or qualifying view. If absen
 UPDATE gaps SET falsification_condition = ? WHERE gap_id = ?;
 ```
 Specific finding that would invalidate the recommendation. Multiple disjunctive conditions OK. Vague conditions ("better evidence") are not acceptable.
+
+## Standing subjects of every adversarial pass
+
+**These three properties are NOT machine-decidable and no gate asserts them.** Each was raised as
+a defect whose gate could only ever report, never check (D05-021, D05-022, D05-023), and the
+remedy chosen was to give the property a durable home in the pass that *can* decide it. **This
+section is that home** — added 2026-09-03 after an audit found `research_batch_dod.py`'s R7 and
+R13 comments naming "a standing subject of the adversarial pass" while no such subject existed
+anywhere a brief would read. Cite all three by name in your findings, including when you find
+nothing.
+
+1. **Harm findings against the rows that claim them.** R7 prints the count of
+   `search_executions.harm_finding = 1` and asserts nothing about it — only
+   `candidates < screened/25` can fail that rule. Read the flagged rows' `findings_note` against
+   what the batch actually recorded: a harm flag with no finding behind it, and a finding in the
+   brief that never reached a flagged row, are both invisible to the gate. The batch-05 exec-32
+   filing gap was invisible by construction.
+
+2. **Each `mismatch_note` against the retained payload.** R13 tests that a population-match ROW
+   exists; nothing reads `match_grade` or `mismatch_note`. A row whose stated rationale the
+   stored payload contradicts passes. Open the payload under `retrieval-log/<session>/` and read
+   the note against it — that is the only place the two can meet. Dissent is writable: a second
+   row for the same (ref_id, population) is a contest, not a collision (DR-2026-08-19 §7).
+
+3. **Independence and containment.** Nothing anywhere tests whether two "converging" sources are
+   independent. In batch 05, REF-00977 (a systematic review) contains REF-00971 and REF-00784
+   among its 48 included studies, and the DOIs were in the batch's own `citation_mining` row
+   hours before the gate ran green over them. A synthesis counted as convergent with its own
+   included primaries is one line of evidence counted three times. The standing query, until a
+   writer exists:
+
+   ```sql
+   SELECT sr.ref_id AS container, cm.cited_doi, e.ref_id AS contained
+   FROM citation_mining cm
+   JOIN evidence_sources sr ON sr.ref_id = cm.ref_id
+   JOIN evidence_sources e  ON LOWER(e.doi) = LOWER(cm.cited_doi)
+   WHERE sr.ref_id <> e.ref_id;
+   ```
+
+   `v_source_containment` was proposed and **not** built: `connections_produced` carries no
+   per-connection direction, so a view over it would assert containment the data cannot support.
+   Run the query; do not trust its absence.
 
 ## Population match record (per cited study)
 

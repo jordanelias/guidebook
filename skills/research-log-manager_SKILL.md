@@ -124,8 +124,10 @@ After multilingual-research completes:
    **`--ref-id` is the global `REF-NNNNN`; `--local-ref-id` is the per-slug label.** This
    block read `--ref-id {local_ref_id}` until 2026-08-24, which files a source under a
    label meaningful only inside one slug. `evidence_sources.ref_id` has no CHECK, so it
-   inserted silently; `add-source` now refuses it. Mint the global id above the
-   `source_locators` high-water mark — there is no allocator (CLAUDE.md §4).
+   inserted silently; `add-source` now refuses it. Take the global id from
+   `dbcore.next_ref_id(conn)`: there is no allocator, and the high-water mark is the UNION of
+   every table holding a ref_id, not `source_locators` alone (CLAUDE.md §4). Corrected
+   2026-09-03 — the union rule landed 2026-08-25 and this caller was missed for nine days.
 
 5. **Update BPC file on GitHub:** Append new findings to BPC synthesis sections.
 

@@ -152,8 +152,10 @@ rules:
     phase: while-searching
     title: "Empties and deferrals kept"
     hook: >-
-      Log EVERY query verbatim before screening. KEEP EMPTIES - a zero-yield search
-      is a COMPLETED unit of work. Never delete or backfill them.
+      Log EVERY query verbatim before screening, WITH --prior-expectation written
+      BEFORE you run it - a prior recorded after seeing results is a rationalisation,
+      not a prior (DR-2026-05-09). KEEP EMPTIES - a zero-yield search is a COMPLETED
+      unit of work. Never delete or backfill them.
     anchor: "references/project-standards.md; skills/research-log-manager_SKILL.md"
     enforcer: R8
 
@@ -179,7 +181,10 @@ rules:
     title: "Vocabulary provenance"
     hook: >-
       No back-translation. Every alias carries its in-language source, else
-      [UNVERIFIED-TERMS].
+      [UNVERIFIED-TERMS]. HARVEST AS YOU GO: db.py observe-term for each concept
+      phrase a source USES, in the source's own words. That is a fact about the
+      document, not a claim it names one of our categories; judgment adjudicates it
+      later (D-0173).
     anchor: "CO-0005; DR-2026-05-09; skills/multilingual-research_SKILL.md"
     enforcer: R11
 

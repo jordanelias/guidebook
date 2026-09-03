@@ -53,9 +53,20 @@ copies these files. They were copied because someone asked the right question at
 moment. **A session that does not think of it will lose its own transcripts**, exactly as
 this one nearly did. Registered as D05-029.
 
-**Search scope is unresolved and owner-gated.** These files are large and full of
-intermediate text. Left visible to ripgrep they will flood ordinary searches — the precise
-problem `.ignore` exists to solve. But adding an entry to `.ignore` is owner-gated by
-`decisions/DR-2026-08-06-cold-storage-search-scope.md`, so no entry was added. Until the
-owner rules: `git grep`, `grep -r`, Glob and all Python tooling see these files; if
-ripgrep results become unusable, that is the reason. Registered as D05-030.
+**The JSONL here is hidden from ripgrep, and that was measured, not assumed.** With it
+searchable, `REF-00977` returned 174 hits of which 136 were transcripts, and `next_ref_id`
+305 of which 194 — a session grepping for a fact got more noise than signal, from
+conversation that includes superseded and simply wrong statements. Owner ruling 2026-09-03
+under `DR-2026-08-06-cold-storage-search-scope.md`. After: 39 hits, identical whether or
+not transcripts are excluded.
+
+**This README and every `index.json` stay searchable on purpose.** A grep still finds THAT
+a transcript exists and which agent, role and time it belongs to; the file itself is one
+`git grep` or one open away. Nothing is deleted, untracked, or hidden from code — git,
+`grep -r`, `git grep`, Glob and all Python tooling read the whole tree.
+
+The `.ignore` entry matches `transcripts/**/*.jsonl`, not the directory. `transcripts/**`
+with negations was tried first and **failed a planted-token test**: README.md came back and
+`index.json` did not, because `**` excludes the session directory and gitignore cannot
+re-include a file whose parent is excluded. Matching the payload by extension needs no
+negation, so there is nothing left to get subtly wrong. D05-030 closed.
