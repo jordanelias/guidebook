@@ -564,6 +564,43 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
                   "EXAMINED: 0 aliases. This batch wrote none, so this asserts "
                   "nothing about the corpus")
 
+    # R11's second half, added 2026-09-03: the D-0173 concept-vocabulary harvest.
+    # The subject is THIS BATCH'S ADMISSIONS, not this session's writes — a later
+    # session harvesting batch 05's nine sources satisfies the requirement, and
+    # scoping on observed_terms.created_by_session would have called that a miss.
+    # What this asserts is ONLY that every source the batch admitted carries at
+    # least one observation. Whether the phrases harvested are the RIGHT ones is
+    # not machine-decidable and is not claimed here; judgment adjudicates them
+    # through term_adjudications, and the adversarial pass is where coverage is
+    # argued. Do not "strengthen" this message: the weaker sentence is the true one.
+    #
+    # Why it exists at all, against §1's burden of proof: migration 068 shipped the
+    # table, the writer AND a contract line ordering agents to harvest as they go,
+    # and batch 05 admitted nine sources and harvested nothing. Nobody noticed until
+    # someone counted the rows by hand a day later. Without this line the harvest is
+    # a rule with no reader, which §1 calls the same defect as an unread field.
+    unharvested = _rows(cx,
+        "SELECT e.ref_id FROM evidence_sources e WHERE NOT EXISTS ("
+        "SELECT 1 FROM observed_terms o WHERE o.ref_id = e.ref_id)" + escope, sargs)
+    harvested = _rows(cx,
+        "SELECT COUNT(*) FROM observed_terms o WHERE EXISTS ("
+        "SELECT 1 FROM evidence_sources e WHERE e.ref_id = o.ref_id" + escope + ")",
+        sargs)[0][0]
+    if unharvested:
+        fail("R11-harvest",
+             "%d admitted source(s) with no observed_terms row: %s. D-0173 harvests the "
+             "concept vocabulary AT EVIDENCE, in the source's own words: "
+             "db.py observe-term --ref-id ... --surface-form ..." % (
+                 len(unharvested), ", ".join(r[0] for r in unharvested[:8])),
+             len(unharvested))
+    else:
+        ok("R11-harvest",
+           "%d concept observation(s) across this batch's admissions; every admitted "
+           "source carries at least one. Whether they are the RIGHT phrases is NOT "
+           "tested here — judgment adjudicates them" % harvested if harvested else
+           "EXAMINED: 0 sources. This batch admitted none, so this asserts nothing")
+
+
     # --- R12 structured homes used ----------------------------------------------------------
     econ_words = _rows(cx, f"SELECT COUNT(*) FROM search_executions WHERE ("
                            f"LOWER(COALESCE(findings_note,'')) LIKE '%cost%' OR "
@@ -805,8 +842,13 @@ def selftest():
     # fires because of REF-ST2 ("no population match row"), so it arrived with the
     # R2 fix in the same commit. If a rule here stops firing, that is either
     # detection rot or a corpus change; both need a human, so both fail.
+    # R11-harvest added 2026-09-03 with the rule. The corpus seeds evidence rows
+    # and no observed_terms, so it fires without any new fixture — but it is listed
+    # HERE because a rule that is not in `expected` is a rule this selftest does not
+    # protect, which is the exact hole the 2026-08-04 note above describes closing.
     expected = {"R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8",
-                "R9", "R9a", "R9b", "R10", "R11", "R12", "R13", "R14", "R15"}
+                "R9", "R9a", "R9b", "R10", "R11", "R11-harvest",
+                "R12", "R13", "R14", "R15"}
     fired = {c for c, n in caught.items() if n}
     missed = expected - fired
     print()

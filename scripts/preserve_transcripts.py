@@ -63,6 +63,18 @@ def _role_of(path):
                                  ("AGONIST", "agonist"),
                                  ("TRACER", "tracer"),
                                  ("ADVERSARIAL CRITIC", "adversarial-critic"),
+                                 # Added 2026-09-03: this session's steelman audit of
+                                 # its own claimed resolutions came back "other". Its
+                                 # brief opens "You are an ADVERSARIAL STEELMAN
+                                 # AUDITOR", which matched none of the four above --
+                                 # the needle list only knew the role names this repo
+                                 # had used BEFORE, so every new adversarial role is
+                                 # invisible until someone reads the file. STEELMAN is
+                                 # tested before the bare ADVERSARIAL so the more
+                                 # specific role wins; bare ADVERSARIAL is last of the
+                                 # adversarial family for the same reason.
+                                 ("STEELMAN", "steelman"),
+                                 ("ADVERSARIAL", "adversarial"),
                                  # Added 2026-09-03: Fable's planning pass for the
                                  # thirty-defect programme came back labelled "other",
                                  # which is honest but useless -- the index exists so a
