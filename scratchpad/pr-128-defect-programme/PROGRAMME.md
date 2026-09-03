@@ -334,6 +334,8 @@ No change to `metadata_integrity_audit` and no new writer until §7c is answered
 ## 6. What NOT to do
 
 - **No new tables and no new columns.** Every item is a view, a refusal, a message, a hook, or a
+
+> **SUPERSEDED 2026-09-03 by owner ruling: "harvest now and as you go".** This was a scope rule for this programme and was written as though it were a standing prohibition — which put it against **D-0173**, an ACTIVE DG-NON owner ruling that had already ORDERED the concept-vocabulary harvest and named the two objects it needs. CLAUDE.md rule 0: a live directive is not answerable to paperwork, and a scope rule of mine is paperwork. `observed_terms` and `term_adjudications` landed in migration 068. **D05-002's disposal as "no work" is withdrawn with it** — D-0173 ordered work, and the plan read the ruling's silence on shape as silence on obligation.
   data sentinel.
 - **Do not backfill `prior_expectation` with a prior.**
 - **Do not add `--set-results-found`** (D05-024). `results_found` is read only at the `=0`/`>0`
