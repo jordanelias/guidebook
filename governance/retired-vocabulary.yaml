@@ -93,6 +93,12 @@ exempt_paths:
   - "audits/**"                    # dated reports, frozen at their date
   - "references/audits/**"         # ditto
   - "references/search-log/**"     # verbatim query logs; R8 forbids backfilling
+  # Verbatim agent transcripts. Same class as the command log below and for the
+  # identical reason: a transcript records a session GREPPING for retired
+  # vocabulary in order to prove no live surface uses it, and that grep is then
+  # itself an occurrence. Added 2026-09-03 with the .ignore entry, whose header
+  # states that every path it hides is already adjudicated on this list.
+  - "transcripts/**"               # verbatim agent transcripts, append-only
   # A verbatim log of the shell commands a session ran. Same class as a search
   # log: it preserves what was typed. Added 2026-08-24, when the M5 author sweep
   # turned this check red — not because any live surface used `doi_less_key`, but

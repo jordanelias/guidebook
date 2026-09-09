@@ -368,7 +368,8 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
                results_admitted: int = 0, saturation_signal: str = None,
                admitted_ref_ids=None, deferred_reason: str = None,
                backfill: int = 0, findings_note: str = None,
-               harm_finding: int = 0, dry_run: bool = False) -> int:
+               harm_finding: int = 0, prior_expectation: str = None,
+               dry_run: bool = False) -> int:
     """Append one row to search_executions. Returns its exec_id.
 
     The successor to upsert-coverage/upsert-language. A row here is a completed
@@ -392,6 +393,29 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
     # insert_evidence_source. One file, one diff, two opposite doctrines. A gate
     # that catches a bad write after it lands is strictly worse than a write path
     # that cannot make it.
+    # R8 says log every query WITH the prior written before you run it. A flag that
+    # is merely available is not that rule: batch 05 logged 43 searches and CHECK 7
+    # reports 9 verified citations with no prior, permanently, because
+    # search_executions is append-only (R8) and `amend-search` writes only
+    # findings_note and harm_finding -- so those nine can never be cleared by any
+    # sanctioned path. The check went red forever, and a check that is red forever
+    # is one its reader learns to skip: exactly the cry-wolf failure this session
+    # fixed in the fidelity checker and then rebuilt here. Refusing at the writer is
+    # the only place the prior can still be honest, because after this call the
+    # results exist and anything written is a reconstruction.
+    #
+    # Deliberately NOT argparse required=True: this refusal also catches programmatic
+    # callers, and it can say why. An empty string is refused too -- R8 keeps empties
+    # as completed work, and "I expected nothing" is a prior worth typing.
+    if not (prior_expectation or "").strip():
+        raise ValueError(
+            "--prior-expectation is required. Write what you expect this search to "
+            "find BEFORE you run it (DR-2026-05-09 24). Written afterwards it is a "
+            "rationalisation wearing the field that exists to prevent one, and there "
+            "is no sanctioned path to add it later: search_executions is append-only "
+            "under R8 and amend-search cannot touch this column. A zero-yield "
+            "expectation is a legitimate prior -- say so.")
+
     ids = list(admitted_ref_ids or [])
     if len(set(ids)) != len(ids):
         dupes = sorted({r for r in ids if ids.count(r) > 1})
@@ -424,6 +448,10 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
         "deferred_reason": deferred_reason, "backfill": backfill,
         "session": session, "executed_at": ts,
         "findings_note": findings_note, "harm_finding": harm_finding,
+        # The prior belongs HERE, on the search, and nowhere else. Migration 069
+        # moved it off evidence_sources, where it could only be reconstructed after
+        # reading the source -- the artefact the field exists to prevent.
+        "prior_expectation": prior_expectation,
     }
     cols = ", ".join(row)
     ph = ", ".join(["?"] * len(row))
@@ -1005,6 +1033,36 @@ def main():
     p_ul.add_argument("--session", required=True)
     p_ul.add_argument("--dry-run", action="store_true")
 
+    p_obs = sub.add_parser("observe-term",
+                           help="Record that a source USES a phrase (evidence stage, D-0173)")
+    p_obs.add_argument("--ref-id", required=True)
+    p_obs.add_argument("--surface-form", required=True,
+                       help="The phrase AS THE SOURCE WRITES IT. Not normalised, not "
+                            "translated, not mapped to one of our terms.")
+    p_obs.add_argument("--language", default="EN",
+                       help="The language the phrase APPEARS IN, which need not be the "
+                            "source's own language")
+    p_obs.add_argument("--locator", help="R3: where in the source it appears")
+    p_obs.add_argument("--context-quote",
+                       help="Enough surrounding text that judgment can adjudicate "
+                            "without re-retrieving the source")
+    p_obs.add_argument("--notes")
+    p_obs.add_argument("--session", required=True)
+    p_obs.add_argument("--dry-run", action="store_true")
+
+    p_adj = sub.add_parser("adjudicate-term",
+                           help="Decide whether an observed phrase names our concept "
+                                "(judgment stage, D-0173)")
+    p_adj.add_argument("--observation-id", required=True, type=int)
+    p_adj.add_argument("--outcome", required=True,
+                       help="Live vocabulary, read from the column's own CHECK")
+    p_adj.add_argument("--term-id",
+                       help="Required for NAMES-EXISTING and NAMES-NEW; refused otherwise")
+    p_adj.add_argument("--rationale", required=True,
+                       help="Why. An adjudication that cannot be contested is not one.")
+    p_adj.add_argument("--session", required=True)
+    p_adj.add_argument("--dry-run", action="store_true")
+
     p_loc = sub.add_parser("add-locator", help="Write a lead into the clue store")
     p_loc.add_argument("--ref-id", required=True)
     for f in ("doi", "pmid", "pmcid", "isbn", "issn", "url", "standard-number",
@@ -1104,6 +1162,12 @@ def main():
     p_ls = sub.add_parser(
         "log-search",
         help="Append one row to search_executions (replaces upsert-coverage/-language)")
+    p_ls.add_argument("--prior-expectation", dest="prior_expectation",
+                      help="What you expect this search to find, written BEFORE you run "
+                           "it. DR-2026-05-09: logged in advance to expose confirmation "
+                           "bias. This is the only moment it can honestly be recorded -- "
+                           "a prior written after reading the results is a "
+                           "rationalisation wearing the field that prevents one.")
     p_ls.add_argument("--slug", required=True)
     p_ls.add_argument("--language", required=True, help="ISO 639-1, uppercase (EN, FR)")
     p_ls.add_argument("--query-text", required=True,
@@ -1208,14 +1272,13 @@ def main():
                            "organisation. D-0178: 'published_corpus' says where it was PUBLISHED, "
                            "not that disabled people CO-PRODUCED it. Required for --evidence-type co1.")
     p_as.add_argument("--co1-source-type")
-    p_as.add_argument("--prior-expectation",
-                      help="What you expected this source to say BEFORE reading it. "
-                           "research_protocol_audit CHECK 7 asks for it on every "
-                           "verified citation, and there was no way to write it at "
-                           "admission until 2026-09-02 -- which is the only moment it "
-                           "can honestly be recorded. Backfilling one after reading the "
-                           "source manufactures a prior, which is the failure the field "
-                           "exists to prevent.")
+    # --prior-expectation was HERE and is gone (2026-09-03). I added it on 2026-09-02
+    # reasoning that admission "is the only moment it can honestly be recorded". That was
+    # wrong by one stage. add-source runs in the LOG action, AFTER the source is searched,
+    # screened, retrieved and read; DR-2026-05-09 defines the field as what was expected
+    # BEFORE searching. A flag here could only ever be satisfied by reconstruction, which
+    # is the exact artefact the field exists to prevent. It now lives on `log-search`,
+    # where the fact exists, and migration 069 gives search_executions the column.
     p_as.add_argument("--synthesis-attribution-required", type=int, choices=[0, 1])
     p_as.add_argument("--lang-detected", help="ISO 639-1 code for the source's actual publication language")
     p_as.add_argument("--lang-detection-method",
@@ -1551,6 +1614,7 @@ def main():
             admitted_ref_ids=args.admitted_ref_ids,
             deferred_reason=args.deferred_reason, backfill=args.backfill,
             findings_note=args.findings_note, harm_finding=args.harm_finding,
+            prior_expectation=args.prior_expectation,
             dry_run=args.dry_run)
         _emit({"exec_id": exec_id, "slug": args.slug,
                "admitted": len(args.admitted_ref_ids or []),
@@ -1663,6 +1727,18 @@ def main():
         _emit(update_locator(args.ref_id, args.status, session=args.session,
                              dry_run=args.dry_run))
 
+    elif args.command == "observe-term":
+        _emit(observe_term({
+            "ref_id": args.ref_id, "surface_form": args.surface_form,
+            "language": args.language, "locator": args.locator,
+            "context_quote": args.context_quote, "notes": args.notes,
+        }, session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "adjudicate-term":
+        _emit(adjudicate_term(args.observation_id, args.outcome, args.rationale,
+                              session=args.session, term_id=args.term_id,
+                              dry_run=args.dry_run))
+
     elif args.command == "add-locator":
         rid = insert_locator({
             "ref_id": args.ref_id, "doi": args.doi, "pmid": args.pmid,
@@ -1723,7 +1799,7 @@ def main():
                             # so all nine of batch 05's sources failed it and none could
                             # be fixed honestly -- a prior recorded after reading the
                             # source is not a prior.
-                            ("prior_expectation", "prior_expectation")):
+                            ):
             _v = getattr(args, _flag, None)
             # `is not None`, not truthiness: synthesis_attribution_required is an int flag
             # and 0 is a real, meaningful value that `if _v` would discard.
@@ -2111,7 +2187,7 @@ def insert_evidence_source(data: dict, session: str,
         # attempt) the moment it lands — both blocking checks. The two scheduled
         # jobs were swept for D-0157; this third writer was not, and it is the
         # one the skills tell sessions to use.
-        "verification_disposition", "verification_method", "prior_expectation",
+        "verification_disposition", "verification_method",
         "verification_closure_reason", "verification_attempt_count",
         "verification_note", "verified_by_tool",
     })
@@ -2124,7 +2200,7 @@ def insert_evidence_source(data: dict, session: str,
     # `--ref-id {local_ref_id}` beside `--local-ref-id {local_ref_id}`.
     #
     # What that costs: a source filed under a per-slug label is invisible to the
-    # source_locators high-water mark that ref_ids are minted above, collides with the
+    # high-water mark ref_ids are minted above, collides with the
     # next slug that mints the same label, and renders a citation keyed to a string
     # that means nothing outside one slug. It is the copy-versus-pointer confusion that
     # already put RAP-F61/F69/F70 in citation_mining against RAP-06/09/10 in
@@ -2142,9 +2218,9 @@ def insert_evidence_source(data: dict, session: str,
                     f"meaningful only inside one slug.")
         raise ValueError(
             f"--ref-id {rid!r} is not a global reference id.{hint} Expected REF-NNNNN "
-            f"(or REF-VERIFIED-NNN / Co1-NN). There is no allocator: mint above the "
-            f"source_locators high-water mark, or you will collide with a held "
-            f"identifier (CLAUDE.md §4). Nothing was written.")
+            f"(or REF-VERIFIED-NNN / Co1-NN). Get the next one from "
+            f"`dbcore.next_ref_id(conn)`, which computes the high-water mark as the "
+            f"UNION of every table holding a ref_id. Nothing was written.")
 
     # A verification standing implies its evidence — so REFUSE the write when the
     # evidence is absent. Do not fill it in.
@@ -2470,7 +2546,7 @@ def resolve_candidate(candidate_id: int, disposition: str, redescription: str,
 # corrected by a person, with the correction recorded.
 _AMENDABLE = (
     "co1_provenance", "co1_source_type", "grey_reason", "verification_note",
-    "prior_expectation", "notes", "bpc_note", "scope",
+    "notes", "bpc_note", "scope",
     # verification_disposition belongs here and not with the bibliographic fields:
     # D-0157 states it as a JUDGEMENT -- "verification is finished or it did not
     # happen" -- which no payload can settle. Added 2026-09-02 to correct rows that
@@ -2568,6 +2644,104 @@ def update_locator(ref_id: str, status: str, session: str, dry_run: bool = False
         conn.execute("UPDATE source_locators SET status=? WHERE ref_id=?",
                      [status, ref_id])
         return {"ref_id": ref_id, "was": row["status"], "now": status, "changed": True}
+
+
+def observe_term(data: dict, session: str, dry_run: bool = False):
+    """Record that a source USES a phrase. Makes no claim that it names our concept.
+
+    D-0173, the owner ruling this implements: "Recording that a source uses a phrase is
+    a fact about the document, not a claim that the phrase names one of our categories
+    -- the same epistemic act as recording its DOI."
+
+    So this writer accepts NO term_id, and there is no flag for one. Adjudication is a
+    different stage with its own writer. A single call that could observe and classify
+    at once would let the observation be born half-adjudicated, which is precisely the
+    presupposition the ruling exists to prevent.
+    """
+    surface = (data.get("surface_form") or "").strip()
+    if not surface:
+        raise ValueError("--surface-form is required: the phrase AS THE SOURCE WRITES IT.")
+    if "term_id" in data:
+        raise ValueError(
+            "observe-term does not accept a term_id. Observing that a source uses a "
+            "phrase is a fact about the document; deciding whether it names one of our "
+            "concepts is judgment, and belongs to `db.py adjudicate-term` (D-0173).")
+    with connect(dry_run) as conn:
+        ref = dbcore.fold_ref(data.get("ref_id"))
+        if not dbcore.exists(conn, "evidence_sources", "ref_id", ref):
+            raise ValueError(
+                f"ref_id {data.get('ref_id')!r} is not an admitted source. A term is "
+                f"observed IN a source; observe it after the source is filed.")
+        row = {"ref_id": ref, "surface_form": surface,
+               "language": (data.get("language") or "EN").strip().upper(),
+               "locator": data.get("locator"),
+               "context_quote": data.get("context_quote"),
+               "notes": data.get("notes")}
+        row.update(dbcore.stamp_for(conn, "observed_terms", session))
+        prior = conn.execute(
+            "SELECT observation_id FROM observed_terms "
+            "WHERE ref_id=? AND surface_form=? AND language=?",
+            (ref, surface, row["language"])).fetchone()
+        if prior:
+            return {"observation_id": prior[0], "created": False,
+                    "reason": "this source was already observed using this phrase"}
+        cols = ",".join(row)
+        cur = conn.execute(f"INSERT INTO observed_terms ({cols}) "
+                           f"VALUES ({','.join('?'*len(row))})", list(row.values()))
+        return {"observation_id": cur.lastrowid, "created": True}
+
+
+def adjudicate_term(observation_id: int, outcome: str, rationale: str, session: str,
+                    term_id: str = None, dry_run: bool = False):
+    """Decide, WITH THE SOURCE IN HAND, whether an observed phrase names our concept.
+
+    The judgment half of D-0173. Divergent adjudications are DELIBERATELY permitted --
+    no uniqueness on observation_id -- so an adversarial pass that disagrees lands a
+    second row and the divergence reads as a contest. Same mechanic DR-2026-08-19 §7
+    fixes for evidence_population_match, which CLAUDE.md §4 lists among the refusals
+    that must stay absent.
+    """
+    rationale = (rationale or "").strip()
+    if not rationale:
+        raise ValueError(
+            "--rationale is required. An adjudication that does not say why cannot be "
+            "contested, and being contestable is the point of splitting judgment from "
+            "observation.")
+    with connect(dry_run) as conn:
+        obs = conn.execute("SELECT observation_id, surface_form FROM observed_terms "
+                           "WHERE observation_id=?", [observation_id]).fetchone()
+        if obs is None:
+            raise ValueError(f"observation {observation_id}: no such observed term.")
+        dbcore.check_vocab(conn, "term_adjudications", "outcome", outcome, "--outcome")
+        names = outcome in ("NAMES-EXISTING", "NAMES-NEW")
+        if names and not term_id:
+            raise ValueError(
+                f"--outcome {outcome} names a term, so --term-id is required. If the "
+                f"phrase is not one of our concepts the outcome is NOT-OURS; if it "
+                f"cannot be settled on this source alone it is DEFERRED.")
+        if not names and term_id:
+            raise ValueError(
+                f"--outcome {outcome} declines to name a term, so --term-id must be "
+                f"absent. Say NAMES-EXISTING or NAMES-NEW if it does name one.")
+        if term_id and not dbcore.exists(conn, "terms", "term_id", term_id):
+            raise ValueError(
+                f"term_id {term_id!r} is not in `terms`. For a concept new to the "
+                f"vocabulary, create the term first, then adjudicate NAMES-NEW to it.")
+        row = {"observation_id": observation_id, "outcome": outcome,
+               "term_id": term_id, "rationale": rationale}
+        row.update(dbcore.stamp_for(conn, "term_adjudications", session))
+        prior = conn.execute("SELECT created_by_session FROM term_adjudications "
+                             "WHERE observation_id=?", [observation_id]).fetchall()
+        if prior:
+            print(f"NOTE: observation {observation_id} ({obs['surface_form']!r}) already "
+                  f"adjudicated by {[r[0] for r in prior]}. Writing a second row -- "
+                  f"divergent judgements read as a contest, not as an error.",
+                  file=sys.stderr)
+        cols = ",".join(row)
+        cur = conn.execute(f"INSERT INTO term_adjudications ({cols}) "
+                           f"VALUES ({','.join('?'*len(row))})", list(row.values()))
+        return {"adjudication_id": cur.lastrowid, "outcome": outcome,
+                "contested": bool(prior)}
 
 
 def insert_source_slug_link(ref_id: str, slug: str, local_ref_id: str,
