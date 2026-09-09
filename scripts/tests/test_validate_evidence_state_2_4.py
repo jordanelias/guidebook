@@ -34,9 +34,31 @@ def schema_ddl():
     gone entirely. One baseline file holds the current schema, so both problems
     disappear along with the hand-copied replay they required.
     """
-    return [ddl_for("specifications", "convergence_assessment",
-                    "idx_specifications_item", "idx_specifications_pop",
-                    "idx_specifications_state")]
+    # `specifications` and its indexes come from the LIVE schema, not the baseline.
+    # Migration 071 dropped and recreated the table (parameter_id + four lens columns,
+    # item_code and population_code gone) and replaced idx_specifications_item/_pop
+    # with idx_spec_row_identity. The baseline is immutable and therefore frozen at the
+    # pre-071 shape, so building the fixture from it would assert against a table the
+    # database no longer has -- the exact failure this function's docstring describes.
+    # Everything else still comes from the baseline; only the re-keyed table is live.
+    import sqlite3 as _sq
+    con = _sq.connect("file:data/guidebook.db?mode=ro", uri=True)
+    # The re-keyed table carries real typed FKs into the four lens registries and
+    # base_parameters (owner 2026-08-28: "real FKs"), so the fixture needs those parents
+    # or every INSERT dies on a missing table. Pulled live for the same reason as
+    # specifications itself: they are the only place their current shape exists.
+    live = [r[0] for r in con.execute(
+        "SELECT sql FROM sqlite_master WHERE sql IS NOT NULL AND ("
+        "  name = 'specifications' OR tbl_name = 'specifications'"
+        "  OR name IN ('base_parameters','axes','access_needs','base_taxonomy_medical'))")]
+    con.close()
+    if not live:
+        print("  [FAIL] live schema has no `specifications` — fixture cannot be built.",
+              file=sys.stderr)
+        sys.exit(1)
+    # sqlite_master stores statements WITHOUT a trailing semicolon; executescript needs
+    # them separated. ddl_for() returns baseline text that already carries its own.
+    return [";\n".join(live) + ";\n" + ddl_for("convergence_assessment")]
 
 
 DDL = schema_ddl()
@@ -47,19 +69,28 @@ def fresh():
     if os.path.exists(DBP):
         os.remove(DBP)
     c = sqlite3.connect(DBP)
-    c.execute("CREATE TABLE items(item_code TEXT PRIMARY KEY)")
+    # `items` stub retired 2026-09-09: migration 071 removed specifications.item_code,
+    # so nothing in this fixture references it. `populations` stays — it is the identity
+    # lens (base_taxonomy_identity) and specifications.identity_code points at it.
     c.execute("CREATE TABLE populations(population_code TEXT PRIMARY KEY)")
     # description/category/priority are stubbed because v_pending selects them.
     # Not needed while nothing re-parses the views, but a stub parent that matches
     # the real column set is the honest fixture either way.
     c.execute("CREATE TABLE gaps(gap_id TEXT PRIMARY KEY, category TEXT, "
               "priority TEXT, description TEXT)")
-    c.executemany("INSERT INTO items VALUES(?)", [(x,) for x in ("A-02", "A-03", "A-04", "A-05", "A-06", "A-07")])
     c.executemany("INSERT INTO populations VALUES(?)", [(x,) for x in ("AUT", "MOB", "DEAF")])
     c.execute("INSERT INTO gaps(gap_id,category,priority,description) "
               "VALUES('GAP-001','RP','P2','fixture gap')")
     for step in DDL:
         c.executescript(step)
+    # Seed the subject side. base_parameters.term_id is NOT NULL UNIQUE into `terms`,
+    # which this fixture does not stub, so FKs stay off for the seed — this file tests
+    # the §2 STATE MACHINE, not referential integrity, and the real FK behaviour is
+    # proven against the live schema in test_db_integrity.
+    c.execute("PRAGMA foreign_keys=OFF")
+    c.executemany("INSERT INTO base_parameters(parameter_id,term_id,created_at,created_by_session)"
+                  " VALUES(?,?,?,?)",
+                  [(i, f"TERM-{i:03d}", "2026-09-09", "fixture") for i in range(1, 7)])
     return c
 
 
@@ -114,8 +145,8 @@ def clean(c):
               "VALUES (1,'convergent','[\"REF-1\"]','[\"REF-2\"]')")
     # governing_refs is required on 'stated' (anti-hallucination gate, §2.7). The
     # baseline predated that rule, so it was not clean once the fixture caught up.
-    c.execute("INSERT INTO specifications(specification_id,item_code,population_code,state,design_scale,convergence_id,governing_refs) "
-              "VALUES (1,'A-02','AUT','stated','population',1,'[\"REF-1\"]')")
+    c.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,state,design_scale,convergence_id,governing_refs) "
+              "VALUES (1,1,'AUT','stated','population',1,'[\"REF-1\"]')")
 check("clean stated+convergent → 0 errors", run(clean) == [])
 
 # stated without governing_refs — the anti-hallucination gate. Untested until now:
@@ -124,34 +155,34 @@ check("stated without governing_refs caught (anti-hallucination gate)",
       has(run(lambda c: (
           c.execute("INSERT INTO convergence_assessment(convergence_id,status,clinical_sources,co1_sources) "
                     "VALUES (1,'convergent','[\"REF-1\"]','[\"REF-2\"]')"),
-          c.execute("INSERT INTO specifications(specification_id,item_code,population_code,state,design_scale,convergence_id) "
-                    "VALUES (1,'A-07','MOB','stated','population',1)"))),
+          c.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,state,design_scale,convergence_id) "
+                    "VALUES (1,7,'MOB','stated','population',1)"))),
           "stated", "governing_refs"))
 
 # pending without gap
 check("pending without gap_register_id caught",
-      has(run(lambda c: c.execute("INSERT INTO specifications(specification_id,item_code,population_code,state) "
-                                  "VALUES (1,'A-03','MOB','pending')")), "pending", "requires gap_register_id"))
+      has(run(lambda c: c.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,state) "
+                                  "VALUES (1,3,'MOB','pending')")), "pending", "requires gap_register_id"))
 
 # pending with gap not in gaps table (FK off to construct the row)
 check("pending with unknown gap caught (defense-in-depth vs FK)",
-      has(run(lambda c: c.execute("INSERT INTO specifications(specification_id,item_code,population_code,state,gap_register_id) "
-                                  "VALUES (1,'A-03','MOB','pending','GAP-999')"), fk=False), "not in gaps table"))
+      has(run(lambda c: c.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,state,gap_register_id) "
+                                  "VALUES (1,3,'MOB','pending','GAP-999')"), fk=False), "not in gaps table"))
 
 # provisional without confidence flag
 check("provisional without confidence flag caught",
-      has(run(lambda c: c.execute("INSERT INTO specifications(specification_id,item_code,population_code,state,convergence_id) "
-                                  "VALUES (1,'A-04','AUT','provisional',NULL)")), "provisional", "confidence flag"))
+      has(run(lambda c: c.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,state,convergence_id) "
+                                  "VALUES (1,4,'AUT','provisional',NULL)")), "provisional", "confidence flag"))
 
 # not_applicable without rationale
 check("not_applicable without rationale caught",
-      has(run(lambda c: c.execute("INSERT INTO specifications(specification_id,item_code,population_code,state) "
-                                  "VALUES (1,'A-05','DEAF','not_applicable')")), "not_applicable", "rationale"))
+      has(run(lambda c: c.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,state) "
+                                  "VALUES (1,5,'DEAF','not_applicable')")), "not_applicable", "rationale"))
 
 # stated without convergence
 check("stated without convergence caught",
-      has(run(lambda c: c.execute("INSERT INTO specifications(specification_id,item_code,population_code,state) "
-                                  "VALUES (1,'A-06','AUT','stated')")), "stated", "convergence"))
+      has(run(lambda c: c.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,state) "
+                                  "VALUES (1,6,'AUT','stated')")), "stated", "convergence"))
 
 # convergent with <2 axes
 check("convergent with <2 axes caught",

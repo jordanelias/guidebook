@@ -146,8 +146,12 @@ def check(doc, db_path=None):
         import json as _json
         import sqlite3
         conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+        # Re-keyed by migration 071: the cell is parameter x lens. COALESCE yields the
+        # lens the row is stated in; the table's CHECK (D-0182) guarantees one is set.
         for ic, pc, st, tb, cfo, sha, rv, rso, gr in conn.execute(
-                "SELECT item_code, population_code, state, tier_basis, code_floor_only, "
+                "SELECT parameter_id, "
+                "COALESCE(identity_code, icf_code, needs_code, medical_code), "
+                "state, tier_basis, code_floor_only, "
                 "derivation_sha, rule_version, regulatory_stratum_only, governing_refs "
                 "FROM specifications"):
             refs = _json.loads(gr) if gr else []
@@ -384,12 +388,18 @@ def selftest(doc, db_path=None):
             ghost_db = os.path.join(tmpd, "gb.db")
             shutil.copy(db_path, ghost_db)
             gcon = sqlite3.connect(ghost_db)
+            # Re-keyed by migration 071. The ghost row exists to prove the check
+            # notices a DB row with no rendering behind it, so its key only has to be
+            # one the renderings cannot match — parameter_id is synthetic for that
+            # reason. FKs are off on a bare sqlite3 connection, which is what lets a
+            # synthetic parameter_id land; the assertion under test is the check's
+            # reaction, not referential integrity.
             gcon.execute(
-                "INSERT INTO specifications (item_code, population_code, state, "
+                "INSERT INTO specifications (parameter_id, identity_code, state, "
                 "tier_basis, governing_refs, rule_version, derivation_sha, "
                 "code_floor_only, regulatory_stratum_only) "
                 "VALUES (?, ?, ?, ?, '[]', ?, ?, ?, ?)",
-                (item_code, population_code, attrs0["state"], attrs0["tier-basis"],
+                (999999, population_code, attrs0["state"], attrs0["tier-basis"],
                  attrs0["rule-version"], attrs0["sha"], int(attrs0["cfo"]),
                  int(attrs0["rso"])))
             gcon.commit()

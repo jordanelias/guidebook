@@ -51,13 +51,17 @@ def _check(con) -> list:
         for r in c.execute("SELECT ref_id, verification_status FROM evidence_sources")
     }
     rows = c.execute(
-        "SELECT specification_id,item_code,population_code,state,governing_refs,"
+        # Re-keyed by migration 071: the cell is parameter x lens. COALESCE over the
+        # four lens columns yields the one the row is stated in; the table's CHECK
+        # (D-0182) guarantees at least one is non-NULL.
+        "SELECT specification_id,parameter_id,"
+        "COALESCE(identity_code,icf_code,needs_code,medical_code),state,governing_refs,"
         "has_unverified_sources FROM specifications "
         "WHERE state IN ('stated','provisional')"
     ).fetchall()
     errors = []
-    for specification_id, item, pop, state, gref, hus in rows:
-        tag = f"specification {specification_id} ({item}×{pop}, {state})"
+    for specification_id, parameter_id, lens, state, gref, hus in rows:
+        tag = f"specification {specification_id} (param {parameter_id}×{lens}, {state})"
         refs = _jlist(gref)
         for r in [r for r in refs if r not in status]:
             errors.append(f"{tag}: governing_ref {r} not in evidence_sources (dangling)")
@@ -83,22 +87,24 @@ def selftest() -> int:
     con = sqlite3.connect(":memory:")
     con.executescript(
         "CREATE TABLE evidence_sources(ref_id TEXT, verification_status TEXT);"
-        "CREATE TABLE specifications(specification_id INT, item_code TEXT, population_code TEXT,"
+        "CREATE TABLE specifications(specification_id INT, parameter_id INT,"
+        " identity_code TEXT, icf_code TEXT, needs_code TEXT, medical_code TEXT,"
         " state TEXT, governing_refs TEXT, has_unverified_sources INT);"
         "INSERT INTO evidence_sources VALUES('R1','VERIFIED'),('R2','UNVERIFIED');"
     )
     cases = [
         # (row, expect_violation, why)
-        ((1, "A-01", "X", "provisional", '["R1"]', 0), False, "clean: verified ref, flag 0"),
-        ((2, "A-02", "X", "provisional", '["R2"]', 0), True, "lies: cites UNVERIFIED with flag 0"),
-        ((3, "A-03", "X", "stated", '["R1"]', 1), True, "stale: flag 1 but no unverified ref"),
-        ((4, "A-04", "X", "provisional", '["R2"]', 1), False, "honest: unverified ref, flag 1"),
-        ((5, "A-05", "X", "provisional", '["R9"]', 0), True, "dangling: R9 not in sources"),
+        # (specification_id, parameter_id, identity, icf, needs, medical, state, refs, flag)
+        ((1, 1, "X", None, None, None, "provisional", '["R1"]', 0), False, "clean: verified ref, flag 0"),
+        ((2, 2, "X", None, None, None, "provisional", '["R2"]', 0), True, "lies: cites UNVERIFIED with flag 0"),
+        ((3, 3, "X", None, None, None, "stated", '["R1"]', 1), True, "stale: flag 1 but no unverified ref"),
+        ((4, 4, "X", None, None, None, "provisional", '["R2"]', 1), False, "honest: unverified ref, flag 1"),
+        ((5, 5, "X", None, None, None, "provisional", '["R9"]', 0), True, "dangling: R9 not in sources"),
     ]
     ok = True
     for row, expect, why in cases:
         con.execute("DELETE FROM specifications")
-        con.execute("INSERT INTO specifications VALUES(?,?,?,?,?,?)", row)
+        con.execute("INSERT INTO specifications VALUES(?,?,?,?,?,?,?,?,?)", row)
         errs, _ = _check(con)
         got = len(errs) > 0
         status = "OK" if got == expect else "**MISSED**"

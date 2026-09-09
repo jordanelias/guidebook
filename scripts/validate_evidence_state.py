@@ -201,7 +201,12 @@ def _ref_tiers(conn, ref_ids):
 # tier_basis is appended unconditionally by the query below;
 # regulatory_stratum_only is probed at runtime (pre-027 DBs stay validatable), so
 # it is deliberately not part of the required set.
-CELL_STATE_COLUMNS = ("specification_id,item_code,population_code,state,design_scale,convergence_id,"
+# Re-keyed 2026-09-09 by migration 071: the cell is parameter x lens, not
+# (item_code x population_code). item_code went with the item layer the owner deleted;
+# population_code is retired in favour of the four lens columns (owner 2026-08-28).
+CELL_STATE_COLUMNS = ("specification_id,parameter_id,"
+                      "identity_code,icf_code,needs_code,medical_code,"
+                      "state,design_scale,convergence_id,"
                       "confidence_dimensions_present,confidence_dimensions_absent,"
                       "confidence_synthesis_basis,gap_register_id,not_applicable_rationale,"
                       "governing_refs,code_floor_only")
@@ -235,12 +240,17 @@ def validate_cell_states_db(conn, gap_ids: set):
     cols += ",tier_basis" + (",regulatory_stratum_only" if have_rso else "")
     n = 0
     for row in conn.execute(f"SELECT {cols} FROM specifications"):
-        (specification_id, item_code, pop, state, design_scale, conv_id,
+        (specification_id, parameter_id,
+         identity_code, icf_code, needs_code, medical_code,
+         state, design_scale, conv_id,
          cdp, cda, csb, gap_id, na_rat,
-         governing_refs, code_floor_only, tier_basis) = row[:14]
-        rso = row[14] if have_rso else 0
+         governing_refs, code_floor_only, tier_basis) = row[:17]
+        rso = row[17] if have_rso else 0
         n += 1
-        tag = f"cell {specification_id} ({item_code}×{pop})"
+        # The row's CHECK guarantees at least one lens is non-NULL (D-0182), so this
+        # never falls through to "?" on a row the database accepted.
+        lens = next((c for c in (identity_code, icf_code, needs_code, medical_code) if c), "?")
+        tag = f"cell {specification_id} (param {parameter_id}×{lens})"
         # scale-aware: design_scale vocabulary (§1.4/§1.6)
         if design_scale is not None and design_scale not in ALL_SCALES:
             errors.append(f"{tag}: design_scale {design_scale!r} not in {sorted(ALL_SCALES)}")

@@ -1186,16 +1186,22 @@ def run_checks(db_path):
     import hashlib as _hashlib
     import json as _json
     stale, unattested = [], 0
-    for cid, ic, pc, gr, rv, sha_rec in conn.execute(
-            "SELECT specification_id, item_code, population_code, governing_refs, rule_version, "
-            "derivation_sha FROM specifications"):
+    # Re-keyed 2026-09-09 by migration 071. The attestation payload hashes the cell's
+    # IDENTITY, and the identity changed: (item_code x population_code) became
+    # (parameter_id x lens). COALESCE yields the lens the row is stated in; the table's
+    # CHECK (D-0182) guarantees one is non-NULL. No stored sha is invalidated by this
+    # because specifications held 0 rows at the re-key -- there was nothing to rehash.
+    for cid, pid, lens, gr, rv, sha_rec in conn.execute(
+            "SELECT specification_id, parameter_id, "
+            "COALESCE(identity_code, icf_code, needs_code, medical_code), "
+            "governing_refs, rule_version, derivation_sha FROM specifications"):
         if not sha_rec or not rv:
             unattested += 1
             continue
         refs = sorted(_json.loads(gr or "[]"))
-        payload = f"{ic}|{pc}|" + "|".join(refs) + "::" + rv
+        payload = f"{pid}|{lens}|" + "|".join(refs) + "::" + rv
         if _hashlib.sha256(payload.encode()).hexdigest() != sha_rec:
-            stale.append(f"{cid} ({ic}×{pc})")
+            stale.append(f"{cid} (param {pid}×{lens})")
     record("K01", "every recorded derivation_sha verifies against its own row",
            not stale,
            f"{len(stale)} stale: {', '.join(stale)} — the row changed after the "
