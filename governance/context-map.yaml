@@ -575,6 +575,7 @@ writers:
     - source_locators
     - term_aliases
     scripts/db.py:
+    - base_parameters
     - bpc_metadata
     - case_studies
     - citation_mining

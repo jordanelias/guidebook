@@ -1051,6 +1051,17 @@ def main():
     p_at.add_argument("--session", required=True)
     p_at.add_argument("--dry-run", action="store_true")
 
+    # add-parameter — the writer base_parameters shipped without. See insert_parameter
+    # for the four refusals and for why --status/--merged-into are deliberately absent.
+    p_ap = sub.add_parser("add-parameter",
+                          help="Promote an adjudicated term into base_parameters "
+                               "(THE SUBJECT of a determination)")
+    p_ap.add_argument("--term-id", dest="term_id", required=True,
+                      help="terms.term_id — must carry a NAMES-NEW/NAMES-EXISTING adjudication")
+    p_ap.add_argument("--notes")
+    p_ap.add_argument("--session", required=True)
+    p_ap.add_argument("--dry-run", action="store_true")
+
     p_adj = sub.add_parser("adjudicate-term",
                            help="Decide whether an observed phrase names our concept "
                                 "(judgment stage, D-0173)")
@@ -1741,6 +1752,14 @@ def main():
             definition=args.definition,
             domain=args.domain,
             scope_note=args.scope_note,
+            session=args.session,
+            dry_run=args.dry_run,
+        ))
+
+    elif args.command == "add-parameter":
+        _emit(insert_parameter(
+            term_id=args.term_id,
+            notes=args.notes,
             session=args.session,
             dry_run=args.dry_run,
         ))
@@ -2838,6 +2857,90 @@ def insert_term(from_observation: int, canonical_en: str, rationale: str, sessio
         return {"term_id": term_id, "canonical_en": canonical_en,
                 "adjudication_id": cur.lastrowid, "from_surface_form": obs["surface_form"],
                 "from_ref_id": obs["ref_id"], "dry_run": dry_run}
+
+
+def insert_parameter(term_id: str, session: str, notes: str = None,
+                     dry_run: bool = False):
+    """Promote an adjudicated term into `base_parameters` — THE SUBJECT of a determination.
+
+    Migration 071 put the parameter at base and re-keyed `specifications` onto it
+    (owner 2026-08-26: "the judgment object is the canonical parameter"). The table
+    shipped writable — `dbcore.WRITABLE_TABLES` names it — with nothing that could write
+    a row, so no parameter_id could be minted and `specifications` stayed unwritable in
+    practice. A capturable table with no writer is the mirror of the trap `insert_term`
+    was built to close: there, a checker whose satisfying writer did not exist.
+
+    WHAT IT REFUSES, and why each refusal is the point:
+
+    * A term that does not exist. The FK would say `FOREIGN KEY constraint failed`,
+      which names neither the term nor the fix.
+    DELIBERATELY NOT REFUSED: a term with no adjudication. The first cut of this writer
+    demanded a NAMES-NEW/NAMES-EXISTING row, on the reasoning that a parameter is the
+    output of judgment (D-0173). Exercised against a scratch copy, that refusal blocked
+    all 88 live terms, because `term_adjudications` holds 0 rows and the vocabulary was
+    seeded by dedicated sessions in May and July — before observe/adjudicate existed.
+    Two provenances are both legitimate: a term MINTED from an observation carries
+    NAMES-NEW by construction, and a term that IS the base vocabulary has no observation
+    to point at. Gating on the first would have made this a writer that can never write,
+    which is the trap `insert_term` was built to close, wearing a new coat. The result
+    reports which provenance a promotion had; that is information for the operator, not
+    a gate.
+    * A second parameter for the same term. The column is UNIQUE, so the database
+      refuses it anyway; this says WHICH parameter already holds the term, because a
+      dual home is rule 5's central prohibition and the fix is to use the existing one.
+    * A value-bearing name. `add-term` already refuses one, but a term minted before
+      that guard existed could still carry it, and promotion to parameter is the last
+      gate before the name becomes a determination's subject.
+
+    DELIBERATELY ABSENT, and must stay absent: no --status and no --merged-into. A
+    parameter is created active. Merging one into another is a different act on an
+    existing row — it needs its own verb, its own rationale, and a sweep of whatever
+    points at the loser. Letting creation mint a row already marked `merged` would
+    permit a parameter that was never alive, which the table's own CHECK cannot catch
+    because the shape is legal.
+    """
+    term_id = (term_id or "").strip()
+    if not term_id:
+        raise ValueError("--term-id is required: a parameter is a pointer at a term.")
+    with connect(dry_run) as conn:
+        term = conn.execute("SELECT term_id, canonical_en FROM terms WHERE term_id=?",
+                            [term_id]).fetchone()
+        if term is None:
+            raise ValueError(
+                f"{term_id!r}: no such term. A parameter points at a term, and the term "
+                f"comes from an observed phrase:\n"
+                f"  db.py observe-term ...   then   db.py add-term --from-observation N "
+                f"--canonical-en '...' --rationale '...'")
+        if _VALUE_BEARING.search(term["canonical_en"]):
+            raise ValueError(
+                f"{term_id} is named {term['canonical_en']!r}, which carries a number, a "
+                f"comparator or a min/max word — it states a determination in its own "
+                f"name.\nA parameter is what is under determination, never the answer. "
+                f"Correct the term's canonical_en first; promoting it would make the "
+                f"answer the subject.")
+        adj = conn.execute(
+            "SELECT adjudication_id, outcome FROM term_adjudications "
+            "WHERE term_id=? AND outcome IN ('NAMES-NEW','NAMES-EXISTING') "
+            "ORDER BY adjudication_id LIMIT 1", [term_id]).fetchone()
+        clash = conn.execute(
+            "SELECT p.parameter_id, p.status FROM base_parameters p WHERE p.term_id=?",
+            [term_id]).fetchone()
+        if clash:
+            raise ValueError(
+                f"{term_id} is already parameter {clash['parameter_id']} "
+                f"(status {clash['status']}). One parameter per term — a second row is "
+                f"the dual home rule 5 forbids.\n"
+                f"Key the determination on parameter_id {clash['parameter_id']}.")
+        row = {"term_id": term_id, "status": "active", "notes": notes}
+        row.update(dbcore.stamp_for(conn, "base_parameters", session))
+        cur = conn.execute(f"INSERT INTO base_parameters ({','.join(row)}) "
+                           f"VALUES ({','.join('?'*len(row))})", list(row.values()))
+        return {"parameter_id": cur.lastrowid, "term_id": term_id,
+                "canonical_en": term["canonical_en"], "status": "active",
+                "provenance": ("adjudicated" if adj else "base-vocabulary"),
+                "adjudicated_by": (adj["adjudication_id"] if adj else None),
+                "outcome": (adj["outcome"] if adj else None),
+                "dry_run": dry_run}
 
 
 def insert_source_slug_link(ref_id: str, slug: str, local_ref_id: str,

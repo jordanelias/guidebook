@@ -2670,3 +2670,53 @@ ACTION: Mint parameter names with `db.py add-term --from-observation`, never by 
 bearing a value. Stage the parameter registry at `base`. Treat anything under `_archived/` as
 prior-version content; if you meet an `[A-Z]-NN` code, it is not a container to file into.
 DATE: 2026-09-09 — owner ruling, quoted above.
+
+---
+
+## Owner ruling 2026-09-09 (evening) — the determination is COMPUTED, not hand-assigned
+
+Asked whether `DR-2026-08-19` §12.5's *"Permanently manual: … anything touching `specifications` …
+The contract's premise is that these are judgment acts machinery can only **check**"* retires the
+determination engine as a writer or merely human-gates it, the owner ruled:
+
+> **"oh. you have to compute it. I can't handle this load manually. you need to repair this and
+> anything else"**
+
+**This supersedes §12.5's "permanently manual" clause as it applies to `specifications`, on contact
+(`CLAUDE.md` rule 0).** The clause is not an argument against the ruling; it is what the ruling
+changes. Recorded here rather than weighed.
+
+**What was actually being asked.** Whether a cell's state — `stated` / `provisional` / `pending` /
+`not_applicable` — is derived by a script from the tier arithmetic, or decided by a person and
+merely recorded. `scripts/assess/assess_cell.py` derives it: anchoring strata, the T3-alone split
+(T3-clinical-alone ⇒ provisional, T3-grey-alone ⇒ pending), the G1 regulatory-stratum test, §2.3
+richness with jurisdiction distinctness, and the §1.7 directness conditioning. Migration 071
+re-keyed `specifications` and left that engine writing `item_code, population_code` — columns the
+table no longer has — so the only implementation of those rules could not emit an acceptable row.
+
+**Two sessions had already read §12.5 as retiring the engine** (`sessions/session_2026-08-20…:212`
+"the write path for a determination is hand SQL"; `…2026-08-22…:297` "a dead pilot engine"). Those
+were session authors' readings, not rulings, and they are now wrong. The engine is repaired, not
+deleted, and the reading it rested on is closed.
+
+**What does NOT change.** The engine still refuses `data/guidebook.db` outright and emits SQL for
+replay through `emit_data_migration.py` → `migrate_db.py`. Computing the state is not licence to
+write the canonical blob; the migration path is untouched. Nor does this touch the Opus floor on
+`best_practice_synthesis`, or the B-before-E gate, or any other clause of §12.5 — only the
+`specifications` clause, and only as to whether a machine may derive the state.
+
+**A ratified debt this makes urgent.** Three A5 items — G2 (an unassessed applicable dimension caps
+at DOWN-WEIGHTED), G3 (Co-1 grain follows `co1_source_type`), G6 (`standard_eb` grain follows type ×
+tier) — are ratified (`RATIFICATION-PACKAGE-2026-07-12.md`, owner directive 2026-07-13) and
+implemented **only** inside `assess_cell.source_grain()`.
+`workplan/2026-08-11-remediation-and-pipeline-anatomy.md:4661-4663` records them as *"UNENFORCED in
+the shared model"*, and `schemas/directness.py` still maps `co1 → specific` and `standard_eb → code`
+unconditionally. Promotion into the shared model is register item Q4. While the engine was thought
+dead this was a dormant inconsistency; with the engine computing determinations it is a live one —
+two implementations of one ratified rule, disagreeing.
+
+CONDITION: Any session writing, checking, or reasoning about a determination's state.
+ACTION: The state is derived by the engine, not asserted by hand. Do not cite §12.5's "permanently
+manual" against a machine-computed `specifications` state; cite it for the reasoning doc and the
+Opus floor, which it still governs.
+DATE: 2026-09-09 — owner ruling, quoted above.
