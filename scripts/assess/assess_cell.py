@@ -612,7 +612,15 @@ def main():
         "-- REPLAY CAVEAT: gap ids (GAP-NNN) are assigned from the generating DB's",
         "-- gaps table; REGENERATE this artifact against the canonical DB immediately",
         "-- before replay — a stale copy can collide with gap ids created since.",
-        "BEGIN;",
+        "--",
+        "-- NOT WRAPPED. This body carried its own BEGIN;/COMMIT; until 2026-09-09.",
+        "-- migrate_db.py STRIPS a file's transaction control rather than nesting it",
+        "-- (DR-2026-08-19 §12.0 F5/F6), so the wrapper was never load-bearing — but a",
+        "-- body that commits itself mid-run is precisely what F5 exists to prevent,",
+        "-- and emit_data_migration.py says bodies are never wrapped. Relying on the",
+        "-- stripper to undo something the convention says not to write is one edit",
+        "-- away from a body that commits while its data_migrations ledger row rolls",
+        "-- back. The engine still commits its own scratch DB: conn.commit(), not this.",
     ]
     report = []
     # Explicit ids from the live high-water mark: reproducible against a given DB, and
@@ -739,7 +747,6 @@ def main():
     #
     # A determination engine has no business rewriting the schema it writes into.
     # The view is defined by migration and belongs to the migration layer.
-    sql_lines.append("COMMIT;")
     conn.commit()
     with open(args.emit_sql, "w") as f:
         f.write("\n".join(sql_lines) + "\n")
