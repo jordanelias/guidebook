@@ -1,5 +1,5 @@
 """
-schemas/evidence_state.py — Evidence state model for (parameter × population) cells.
+schemas/evidence_state.py — Evidence state model for (parameter × lens) cells.
 
 Per T-04 (Stage 0.5, DECIDED) and governance/evidence-methodology.md §2 (A6):
 each cell in the guidebook's specification matrix holds one of four states
@@ -15,13 +15,25 @@ closing R2) and carry the scale × directness conditioning of §1.4/§1.6/§1.7:
   `down_weighted_sources` / `discounted_sources` (grain-mismatched sources that
   count less, or cannot anchor).
 
-CELL IDENTITY. The parameter is the canonical live key `items.item_code`
-(e.g. A-02), not the spec-layer SPEC-NNNN: the `specification` table is not in the
-migration-built DB (defined only in the legacy scripts/migrate/ path). The cell
-can be refined to spec_id × population if/when that layer is built canonically.
+CELL IDENTITY — BOTH HALVES ARE RULED; NEITHER IS OPEN.
+
+The SUBJECT is the canonical design parameter (owner 2026-08-26): `parameter_id`
+into `base_parameters`, which points at the adjudicated term. It is NOT
+`items.item_code` — the item layer was emptied 2026-09-01 and `items` is demoted
+to a Part-4 render rollup derived FROM specifications, never keyed by them. Every
+`[A-E]-NN` code still on the reading surface is prior-version content.
+
+The LENS is the four browsing taxonomies (owner 2026-08-28, CHECK relaxed by
+D-0182): identity / ICF / access-need / medical. `population_code` is retired in
+favour of the four, and `populations` is ONLY the identity lens — keying a cell on
+it alone is the traversal D-0184 measured and rejected. NULL in a lens means the
+determination is not stated in that lens, which is legitimate; NULL in all four is
+not, and `at_least_one_lens` below is that CHECK mechanised.
+
+Migration 071 built both halves. This model mirrors the table it built.
 
 Cross-entity relationships:
-- One EvidenceStateRecord per (item_code × population) cell
+- One EvidenceStateRecord per (parameter_id × lens) cell
 - References EvidenceSource records via the convergence source lists
 - Cross-links to the gaps table (gap_id) for pending cells
 """
@@ -102,7 +114,7 @@ class ConvergenceAssessment(BaseModel):
 
 
 class EvidenceStateRecord(BaseModel):
-    """T-04 evidence state for a single (parameter × population) cell.
+    """T-04 evidence state for a single (parameter × lens) cell.
 
     Per governance/evidence-methodology.md §2 (A6):
     - stated: ≥1 anchoring source at Tier 1, Tier 2 (either stream), Co-1, or Co-2
@@ -111,7 +123,7 @@ class EvidenceStateRecord(BaseModel):
     - provisional: T3-clinical-alone (no anchoring corroboration), or Tier 4–6 only
       meeting the §2.3 richness threshold
     - pending: too sparse; gap-register link required
-    - not_applicable: parameter irrelevant for population; rationale required
+    - not_applicable: parameter irrelevant under that lens; rationale required
 
     Directness-aware (§1.4/§1.6/§1.7): the cell carries its `design_scale`, the
     axis from which each source's directness conditioning is computed.
@@ -119,9 +131,18 @@ class EvidenceStateRecord(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    # Cell identity — canonical parameter key (items.item_code), e.g. A-02
-    item_code: str
-    population: str  # PopulationCode value
+    # Cell identity — THE SUBJECT (owner 2026-08-26): the canonical design
+    # parameter, pointed at, never copied (rule 5). base_parameters.parameter_id.
+    parameter_id: int
+
+    # Cell identity — THE FOUR LENSES (owner 2026-08-28; CHECK relaxed by D-0182
+    # to "at least one"). Each is a code in its own base taxonomy; the codes are
+    # NOT validated here, because a vocabulary belongs to the schema's CHECK and
+    # its FK, never to a list in Python (CLAUDE.md §4).
+    identity_code: Optional[str] = None   # populations.population_code
+    icf_code: Optional[str] = None        # axes.axis_code
+    needs_code: Optional[str] = None      # access_needs.need_code
+    medical_code: Optional[str] = None    # base_taxonomy_medical.medical_code
 
     # Design scale (§1.4/§1.6) — universal | population | person
     design_scale: Optional[str] = None
@@ -147,13 +168,6 @@ class EvidenceStateRecord(BaseModel):
 
     # --- Validators ---
 
-    @field_validator("item_code")
-    @classmethod
-    def valid_item_code(cls, v: str) -> str:
-        if not re.match(r"^[A-K]-\d{2}[a-z]?$", v):
-            raise ValueError(f"item_code must match [A-K]-NN[opt letter], got: {v}")
-        return v
-
     @field_validator("design_scale")
     @classmethod
     def valid_design_scale(cls, v: Optional[str]) -> Optional[str]:
@@ -169,6 +183,29 @@ class EvidenceStateRecord(BaseModel):
                 f"gap_register_id must match GAP-NNN or GAP-NNNN, got: {v}"
             )
         return v
+
+    @model_validator(mode="after")
+    def at_least_one_lens(self) -> "EvidenceStateRecord":
+        """D-0182, mechanised: absence in a lens is fine, absence in ALL is not.
+
+        This is the Python side of the live table's
+        `CHECK (COALESCE(identity_code, icf_code, needs_code, medical_code)
+        IS NOT NULL)`. It was "exactly one" under the 2026-08-28 ruling and D-0182
+        relaxed it; stating a determination in several lenses at once is the ideal,
+        not a violation.
+        """
+        if (
+            self.identity_code is None
+            and self.icf_code is None
+            and self.needs_code is None
+            and self.medical_code is None
+        ):
+            raise ValueError(
+                "A determination must be stated in at least one lens: set one or "
+                "more of identity_code / icf_code / needs_code / medical_code "
+                "(D-0182). A cell in no lens is a cell about nobody."
+            )
+        return self
 
     @model_validator(mode="after")
     def state_field_consistency(self) -> "EvidenceStateRecord":
