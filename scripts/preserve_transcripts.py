@@ -164,7 +164,17 @@ def main():
                     index.append({"started": _started(src), "role": _role_of(src),
                                   "bytes": src.stat().st_size,
                                   "agent_id_prefix": src.name[6:14], "file": dst.name})
-            if index and not args.check:
+            # WRITTEN EVEN WHEN `index` IS EMPTY, and that is the point. The list holds
+            # SUBAGENT rows only, so a session that ran none produced no index.json and
+            # its directory held one file: main.jsonl, which `.ignore` hides. Measured
+            # 2026-09-09 -- `rg --files transcripts/` returned harness_6a6f63cd/index.json
+            # and README.md, and harness_292c6e38/ not at all. transcripts/README.md:63
+            # states the invariant the owner ruled for on 2026-09-03: "every index.json
+            # stays searchable on purpose. A grep still finds THAT a transcript exists and
+            # whose it is." An orchestrator-only session is the common case, and for every
+            # one of them that property was silently false. An empty array is enough: the
+            # HARNESS ID IS THE DIRECTORY NAME, so the path alone carries both halves.
+            if not args.check:
                 dest.mkdir(parents=True, exist_ok=True)
                 (dest / "index.json").write_text(
                     json.dumps(sorted(index, key=lambda r: r["started"]), indent=2),
