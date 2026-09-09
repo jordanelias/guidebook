@@ -1,17 +1,36 @@
 #!/usr/bin/env python3
 """
-scripts/assess/assess_cell.py — pilot determination engine (rule_version "pilot-2").
+scripts/assess/assess_cell.py — the determination engine (rule_version "pilot-2").
+
+THE STATE IS COMPUTED. Owner ruling 2026-09-09 (references/project-standards.md):
+*"you have to compute it. I can't handle this load manually."* That supersedes
+DR-2026-08-19 §12.5's "permanently manual" clause as it applies to `specifications`,
+on contact (CLAUDE.md rule 0). Two sessions had read §12.5 as retiring this engine;
+that reading is closed. What §12.5 still governs is untouched: the reasoning doc, the
+Opus floor on best_practice_synthesis, the B-before-E gate — and this engine still
+REFUSES data/guidebook.db outright and emits SQL for replay through
+emit_data_migration.py → migrate_db.py. Computing the state is not licence to write
+the canonical blob.
+
+RE-KEYED 2026-09-09 by migration 071. The cell was (item_code × population_code) and
+is now (parameter_id × lens). The item layer was emptied 2026-09-01 and the seven
+hardcoded PILOT_CELLS this engine used to walk — E-08, E-12, G-03, C-02, E-06, B-10 —
+were prior-version containers whose names stated their answers. They are gone with the
+driver that held them; the engine now takes its cell on the command line.
 
 Implements the pure determination function of workplan/best-practices-assessment-system.md
-§3 for the pilot cells in working/pilot/PILOT-MANIFEST.md §3, under the doctrine of
-governance/evidence-architecture.md (PROPOSED) with the G1/G2/G3/G6 fixes active
-ADDITIVELY — no existing schema function is modified; every deviation from the
-schemas/directness.py defaults is engine-side and tagged rule_version="pilot-2",
-so no PROPOSED doctrine changes live behavior before owner ratification.
+§3 under the doctrine of governance/evidence-architecture.md, with the G1/G2/G3/G6
+fixes active ADDITIVELY — no existing schema function is modified; every deviation from
+the schemas/directness.py defaults is engine-side and tagged rule_version="pilot-2".
+G2, G3 and G6 are RATIFIED (RATIFICATION-PACKAGE-2026-07-12, owner directive
+2026-07-13) and implemented ONLY here; schemas/directness.py still maps co1 → specific
+and standard_eb → code unconditionally. Promoting them into the shared model is
+register item Q4, and it is now urgent: two implementations of one ratified rule that
+disagree is a live inconsistency, not a dormant one.
 
 Determinism: same evidence + same rule_version ⇒ same state + same derivation_sha.
-Timestamps are fixed strings (this run's date), not wall-clock reads, so a re-run is
-byte-identical and the double-run determinism check is meaningful.
+Timestamps come from --stamp, not wall-clock reads, so a re-run is byte-identical and
+the double-run determinism check (evidence-architecture.md §10, check 2) is meaningful.
 
 Module roster (PILOT-MANIFEST.md §4 — no silent omissions):
   schemas.directness          grain-matching, scale-directness, consolidation
@@ -25,8 +44,8 @@ Module roster (PILOT-MANIFEST.md §4 — no silent omissions):
   schemas.source_value_extraction  value substrate (table empty — value dimension
                               recorded NOT_ASSESSED, never silently EXACT; G2)
   schemas.population, schemas.population_links, schemas.slug, schemas.bpc_metadata,
-  schemas.gap                 identity/attribution semantics (codes validated against
-                              live tables + PopulationCode enum)
+  schemas.gap                 identity/attribution semantics (lens codes validated
+                              against their own live base tables)
 
 G-fixes (evidence-architecture.md §4, DR-2026-07-12-evidence-architecture-unification):
   G1  T4–6-only basis ⇒ regulatory-stratum determination: design_scale='universal',
@@ -76,8 +95,11 @@ RULE_VERSION = "pilot-2"  # pilot-1 + adversarial-review corrections (see PILOT-
 #   (interim, marker-based; migration 027 adds the real column).~~ WITHDRAWN
 #   2026-08-22 (BRK-26): the column exists and migration 029 superseded the
 #   exclusion under ratified DR-2026-07-21. See the note at the emit site.
-SESSION = "session_2026-07-12-evidence-architecture-pilot"
-STAMP = "2026-07-12 00:00:00"  # fixed, not wall-clock: determinism (see docstring)
+# Run-supplied, not wall-clock: --session and --stamp. Determinism is the point
+# (evidence-architecture.md §10 check 2: the engine run twice must produce a
+# byte-identical derivation_sha), so the stamp is an INPUT, never `now()`.
+SESSION = None
+STAMP = None
 
 # G2: engine-side grade for "dimension applies but was never assessed".
 # Deliberately NOT added to schemas.directness vocab pre-ratification (additive rule).
@@ -112,25 +134,31 @@ def _is_disqualified(rec) -> bool:
         return True
     return status != "VERIFIED" and (rec.get("verification_disposition") or "") in DISQUALIFIED_DISPOSITION
 
-# Pilot cells — PILOT-MANIFEST.md §3 (manual slug→item mapping recorded there)
-PILOT_CELLS = [
-    ("E-08", "DEAF", "deaf-spatial-design",
-     "Co-1-anchored corridor width; canonical tier-system.md §3 case"),
-    ("E-12", "MOB", "mobility-built-environment",
-     "full-mix; convergence assessed from real data"),
-    ("G-03", "MOB", "ot-cpg-built-environment",
-     "Co-2 + T2 anchoring (§2.2 cond. 3)"),
-    ("C-02", "DEM", "wayfinding-cognitive-science-spatial-design",
-     "T3-alone; exercises DR-2026-07-12-tier3-stated-threshold"),
-    ("E-06", "MOB", "threshold-and-level-access",
-     "T4-6 only; decisive G1 regulatory-stratum test"),
-    ("G-03", "SCI", "fold-down-grab-bar-specification",
-     "zero evidence; pending + gap"),
-    ("B-10", "NEU", "visual-fire-alarm-seizure-safety",
-     "mixed with one T2 anchor lifting cell out of regulatory stratum"),
-]
+# THE FOUR LENSES (owner 2026-08-28; CHECK relaxed to "at least one" by D-0182).
+# Each column, the base table its real FK points into, and that table's key. Derived
+# from the schema rather than restated as a vocabulary in code — the tables ARE the
+# vocabulary (CLAUDE.md §4).
+LENS_COLUMNS = {
+    "identity_code": ("populations", "population_code"),
+    "icf_code": ("axes", "axis_code"),
+    "needs_code": ("access_needs", "need_code"),
+    "medical_code": ("base_taxonomy_medical", "medical_code"),
+}
+# COALESCE order, matching the table's own CHECK and test_db_integrity K01's sha payload.
+LENS_ORDER = ("identity_code", "icf_code", "needs_code", "medical_code")
 
-CELL_ID_BASE = 9000  # explicit ids: reproducible artifact, no autoincrement drift
+
+def lens_key(lens):
+    """The single lens value a cell is identified by — COALESCE over the four.
+
+    K01 hashes this, and the D-0182 CHECK guarantees it is never None for a row that
+    reached the table. A cell may be stated in several lenses at once; the KEY is the
+    first present in COALESCE order, which is what the database's own COALESCE returns.
+    """
+    for col in LENS_ORDER:
+        if lens.get(col):
+            return lens[col]
+    return None
 
 
 def source_grain(evidence_type, tier, co1_source_type):
@@ -174,6 +202,12 @@ def population_match(conn, ref_id, population):
     cannot be attributed to this population are NOT evidence of directness for
     it — the dimension stays NOT_ASSESSED (G2; a grade assessed against another
     population must never condition this cell)."""
+    if not population:
+        # No identity lens on this cell — a determination stated only in ICF, access-need
+        # or medical terms has no population to attribute a match row TO. The dimension is
+        # then unassessed rather than absent, which is G2 exactly: consolidation caps at
+        # DOWN-WEIGHTED and the source is flagged. Never silently EXACT.
+        return None
     rows = conn.execute(
         "SELECT match_grade, target_population FROM evidence_population_match "
         "WHERE ref_id = ? ORDER BY match_id", (ref_id,)).fetchall()
@@ -276,17 +310,32 @@ def regulatory_richness(t45, t6):
     return False, "below §2.3 richness"
 
 
-def sha(item_code, population, refs):
+def sha(parameter_id, lens, refs):
     """Cell-scoped derivation sha: identity + governing set + rule version, so
-    pending cells do not all share one constant hash (staleness stays checkable)."""
-    payload = f"{item_code}|{population}|" + "|".join(sorted(refs)) + "::" + RULE_VERSION
+    pending cells do not all share one constant hash (staleness stays checkable).
+
+    The payload is byte-for-byte what test_db_integrity K01 recomputes when it verifies
+    a stored sha, and K01 was re-keyed to (parameter_id × lens) by migration 071. Two
+    implementations of one hash that disagree is a hash that attests nothing, so this
+    one and K01's move together or not at all. `lens` is the COALESCE value, not the
+    whole dict — see lens_key().
+    """
+    payload = f"{parameter_id}|{lens}|" + "|".join(sorted(refs)) + "::" + RULE_VERSION
     return hashlib.sha256(payload.encode()).hexdigest()
 
 
-def determine(conn, item_code, population, slug, note):
-    """The pure determination function. Returns (record dicts for insert, log)."""
+def determine(conn, parameter_id, lens, slug, note):
+    """The pure determination function. Returns (record dicts for insert, log).
+
+    `lens` is the four-column dict; at least one value is non-None (D-0182). Only the
+    identity lens conditions population-directness, because that is the only one
+    evidence_population_match.target_population is written in — a cell in ICF or
+    access-need terms alone leaves the dimension NOT_ASSESSED, which caps it at
+    DOWN-WEIGHTED under G2 rather than pretending to a match.
+    """
+    identity = lens.get("identity_code")
     sources = gather_sources(conn, slug)
-    recs = [assess_source(conn, s, SCALE_POPULATION, population) for s in sources]
+    recs = [assess_source(conn, s, SCALE_POPULATION, identity) for s in sources]
     b = classify(recs)
     # §2.8 verification-status machinery
     live = [r for r in recs if not _is_disqualified(r)]
@@ -407,7 +456,8 @@ def determine(conn, item_code, population, slug, note):
         gap_needed = True
 
     return {
-        "item_code": item_code, "population": population, "slug": slug, "note": note,
+        "parameter_id": parameter_id, "lens": dict(lens), "lens_key": lens_key(lens),
+        "slug": slug, "note": note,
         "state": state, "design_scale": design_scale, "tier_basis": tier_basis,
         "governing_refs": governing, "supporting_refs": supporting,
         "convergence": conv, "confidence": conf,
@@ -416,7 +466,7 @@ def determine(conn, item_code, population, slug, note):
         "has_unverified_sources": 1 if has_unverified else 0,
         "all_sources_disqualified": 1 if all_disqualified else 0,
         "falsification": falsification,
-        "derivation_sha": sha(item_code, population, governing),
+        "derivation_sha": sha(parameter_id, lens_key(lens), governing),
         "n_sources": len(sources),
         "needs_population_assessment": sorted(r["ref_id"] for r in recs
                                               if r["needs_population_assessment"]),
@@ -426,27 +476,68 @@ def determine(conn, item_code, population, slug, note):
 
 
 def next_gap_id(conn):
+    """Zero-padded to three digits, because the schema and the Pydantic model both
+    require it. This minted `GAP-1` until 2026-09-09 — one short of `^GAP-\\d{3,4}$` —
+    so every gap it created failed EvidenceStateRecord's own validator at the pydantic
+    gate, which is where a pending cell dies. The bug survived because the pilot's
+    pending cells were never replayed."""
     rows = [r[0] for r in conn.execute("SELECT gap_id FROM gaps WHERE gap_id LIKE 'GAP-%'")]
     mx = max((int(g.split("-")[1]) for g in rows if g.split("-")[1].isdigit()), default=0)
-    return f"GAP-{mx + 1}"
+    return f"GAP-{mx + 1:03d}"
 
 
 ENUM_DRIFT = []  # populations valid in the live table but missing from PopulationCode
 
 
-def validate_population(conn, code):
-    """Cell identity truth is the live populations table (DR-2026-07-12 schema
-    reconciliation keys cells on population_code REFERENCES populations).
-    schemas.enums.PopulationCode is ALSO checked; a code present in the table but
-    absent from the enum is recorded as a drift finding (pilot discovery:
-    the enum's 25 values do not match the table's 22 codes), never silently passed."""
-    row = conn.execute("SELECT 1 FROM populations WHERE population_code=?", (code,)).fetchone()
+def validate_parameter(conn, parameter_id):
+    """The SUBJECT must exist and be alive (owner 2026-08-26; migration 071).
+
+    A merged or retired parameter is refused rather than written: a determination keyed
+    on a parameter that was folded into another is a determination about a subject that
+    no longer stands on its own, and the FK cannot see the difference because the row
+    is still there.
+    """
+    row = conn.execute("SELECT status, merged_into FROM base_parameters "
+                       "WHERE parameter_id=?", (parameter_id,)).fetchone()
     if not row:
-        raise ValueError(f"population {code!r} not in populations table")
-    try:
-        PopulationCode(code)
-    except ValueError:
-        ENUM_DRIFT.append(code)
+        raise ValueError(
+            f"parameter_id {parameter_id}: no such parameter. Mint one from a term:\n"
+            f"  db.py add-parameter --term-id TERM-NNN --session ...")
+    status, merged_into = row[0], row[1]
+    if status != "active":
+        target = f" (merged into {merged_into})" if merged_into else ""
+        raise ValueError(
+            f"parameter_id {parameter_id} is {status}{target}, not active. "
+            f"Key the determination on the surviving parameter.")
+
+
+def validate_lens(conn, lens):
+    """Every supplied lens code must be live in its OWN base table, and at least one
+    must be supplied (D-0182).
+
+    The codes are checked against the tables, never against a list in code: the base
+    tables ARE the vocabulary (CLAUDE.md §4). schemas.enums.PopulationCode is still
+    consulted for the identity lens ONLY to record drift — the pilot found the enum's
+    25 values did not match the table's 22 codes — and a mismatch is a finding, never a
+    refusal, because the table is the truth and the enum is the copy.
+    """
+    if not lens_key(lens):
+        raise ValueError(
+            "a determination must be stated in at least one lens (D-0182): pass one or "
+            "more of --identity / --icf / --needs / --medical. A cell in no lens is a "
+            "cell about nobody.")
+    for col, (table, key) in LENS_COLUMNS.items():
+        code = lens.get(col)
+        if not code:
+            continue
+        if not conn.execute(f"SELECT 1 FROM {table} WHERE {key}=?", (code,)).fetchone():
+            raise ValueError(f"{col} {code!r} is not a live {key} in {table}")
+    identity = lens.get("identity_code")
+    if identity:
+        try:
+            PopulationCode(identity)
+        except ValueError:
+            ENUM_DRIFT.append(identity)
 
 
 def validate_with_models(det, gap_id):
@@ -466,8 +557,8 @@ def validate_with_models(det, gap_id):
             dimensions_absent=det["confidence"]["absent"],
             synthesis_basis=det["confidence"]["basis"])
     EvidenceStateRecord(
-        item_code=det["item_code"],
-        population=det["population"],
+        parameter_id=det["parameter_id"],
+        **det["lens"],
         design_scale=det["design_scale"],
         state=EvidenceCellState(det["state"]),
         convergence=conv_model, confidence_flag=flag,
@@ -485,36 +576,62 @@ def q(v):
 
 
 def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--db", required=True, help="pilot DB (NEVER the canonical data/guidebook.db)")
+    global SESSION, STAMP
+    ap = argparse.ArgumentParser(
+        description="Determine one cell: a parameter under one or more lenses.")
+    ap.add_argument("--db", required=True, help="scratch DB (NEVER data/guidebook.db)")
     ap.add_argument("--emit-sql", required=True)
+    ap.add_argument("--parameter-id", dest="parameter_id", type=int, required=True,
+                    help="base_parameters.parameter_id — THE SUBJECT (owner 2026-08-26)")
+    ap.add_argument("--slug", required=True, help="the evidence slug to gather from")
+    ap.add_argument("--identity", help="populations.population_code")
+    ap.add_argument("--icf", help="axes.axis_code")
+    ap.add_argument("--needs", help="access_needs.need_code")
+    ap.add_argument("--medical", help="base_taxonomy_medical.medical_code")
+    ap.add_argument("--note", default="", help="why this cell is being determined")
+    ap.add_argument("--session", required=True)
+    ap.add_argument("--stamp", required=True,
+                    help="fixed timestamp, e.g. '2026-09-09 00:00:00'. An INPUT, never "
+                         "now(): the engine run twice must be byte-identical.")
     ap.add_argument("--report-json", default=None)
     args = ap.parse_args()
     if os.path.abspath(args.db) == os.path.abspath(os.path.join(REPO_ROOT, "data", "guidebook.db")):
         sys.exit("REFUSING: this engine never writes the canonical DB (owner-gated).")
+    SESSION, STAMP = args.session, args.stamp
+
+    lens = {"identity_code": args.identity, "icf_code": args.icf,
+            "needs_code": args.needs, "medical_code": args.medical}
 
     conn = sqlite3.connect(args.db)
     sql_lines = [
-        "-- working/pilot pilot-cell backfill — generated by scripts/assess/assess_cell.py",
-        f"-- rule_version {RULE_VERSION}; deterministic (fixed STAMP; explicit ids)",
-        "-- Replayable onto the canonical DB ONLY after owner ratification",
-        "-- (DR-2026-07-12-evidence-architecture-unification + ratification package).",
+        "-- determination — generated by scripts/assess/assess_cell.py",
+        f"-- rule_version {RULE_VERSION}; deterministic (--stamp; explicit ids)",
+        "-- Replay onto the canonical DB through emit_data_migration.py -> migrate_db.py,",
+        "-- never by hand: the engine computes the state (owner 2026-09-09) but the write",
+        "-- path is unchanged.",
         "-- REPLAY CAVEAT: gap ids (GAP-NNN) are assigned from the generating DB's",
         "-- gaps table; REGENERATE this artifact against the canonical DB immediately",
         "-- before replay — a stale copy can collide with gap ids created since.",
         "BEGIN;",
     ]
     report = []
-    conv_id = CELL_ID_BASE
-    specification_id = CELL_ID_BASE
-    for item_code, population, slug, note in PILOT_CELLS:
-        validate_population(conn, population)
-        det = determine(conn, item_code, population, slug, note)
+    # Explicit ids from the live high-water mark: reproducible against a given DB, and
+    # no autoincrement drift between the emitted SQL and the DB it was generated from.
+    base = max(
+        conn.execute("SELECT COALESCE(MAX(specification_id), 0) FROM specifications").fetchone()[0],
+        conn.execute("SELECT COALESCE(MAX(convergence_id), 0) FROM convergence_assessment").fetchone()[0])
+    conv_id = base
+    specification_id = base
+    for (parameter_id, lens, slug, note) in [(args.parameter_id, lens, args.slug, args.note)]:
+        validate_parameter(conn, parameter_id)
+        validate_lens(conn, lens)
+        det = determine(conn, parameter_id, lens, slug, note)
         gap_id = None
         if det["gap_needed"]:
             gap_id = next_gap_id(conn)
             desc = (f"Evidence gap (slug-scoped): no evidence is linked via slug '{slug}' "
-                    f"for cell {item_code}×{population}, and no linked evidence met the "
+                    f"for cell parameter {parameter_id}×{lens_key(lens)}, and no linked "
+                    f"evidence met the "
                     f"determination thresholds. This records absence of a slug-link, NOT "
                     f"corpus-level absence: item-relevant evidence may exist under sibling "
                     f"slugs and is unreachable until the item_bpc_links bridge (1/92 "
@@ -549,7 +666,15 @@ def main():
 
         specification_id += 1
         conf = det["confidence"]
-        vals = (specification_id, det["item_code"], det["population"], det["state"], det["design_scale"],
+        # regulatory_stratum_only is written HERE for the first time. determine() has
+        # computed it since G1 landed and main() dropped it on the floor, so every row
+        # the pilot emitted said 0 for a column whose whole purpose is to mark a
+        # determination resting entirely on the regulatory stratum. A computed flag
+        # that never reaches its column is the same defect as a column nothing reads.
+        vals = (specification_id, det["parameter_id"],
+                det["lens"]["identity_code"], det["lens"]["icf_code"],
+                det["lens"]["needs_code"], det["lens"]["medical_code"],
+                det["state"], det["design_scale"],
                 this_conv,
                 json.dumps(conf["present"]) if conf else None,
                 json.dumps(conf["absent"]) if conf else None,
@@ -561,21 +686,24 @@ def main():
                 None, None, None,
                 det["falsification"],
                 det["has_unverified_sources"], det["all_sources_disqualified"],
+                det["regulatory_stratum_only"],
                 STAMP, SESSION, STAMP, SESSION)
-        cols = ("specification_id, item_code, population_code, state, design_scale, convergence_id, "
+        cols = ("specification_id, parameter_id, "
+                "identity_code, icf_code, needs_code, medical_code, "
+                "state, design_scale, convergence_id, "
                 "confidence_dimensions_present, confidence_dimensions_absent, "
                 "confidence_synthesis_basis, gap_register_id, not_applicable_rationale, "
                 "tier_basis, governing_refs, rule_version, derivation_sha, code_floor_only, "
                 "value_min, value_max, value_unit, falsification_condition, "
-                "has_unverified_sources, all_sources_disqualified, "
+                "has_unverified_sources, all_sources_disqualified, regulatory_stratum_only, "
                 "created_at, created_by_session, updated_at, updated_by_session")
         conn.execute(f"INSERT INTO specifications ({cols}) VALUES ("
-                     + ",".join("?" * 26) + ")", vals)
+                     + ",".join("?" * len(vals)) + ")", vals)
         sql_lines.append(f"INSERT INTO specifications ({cols}) VALUES (" +
                          ", ".join(q(v) for v in vals) + ");")
 
         report.append({k: det[k] for k in
-                       ("item_code", "population", "slug", "note", "state", "design_scale",
+                       ("parameter_id", "lens", "lens_key", "slug", "note", "state", "design_scale",
                         "tier_basis", "governing_refs", "supporting_refs", "code_floor_only",
                         "regulatory_stratum_only", "has_unverified_sources",
                         "all_sources_disqualified", "derivation_sha", "n_sources",
@@ -620,11 +748,12 @@ def main():
             json.dump(report, f, indent=1)
 
     for r in report:
-        print(f"{r['item_code']}×{r['population']:<5} {r['state']:<12} "
+        print(f"param {r['parameter_id']}×{r['lens_key']:<8} {r['state']:<12} "
               f"basis={r['tier_basis'] or '-':<32} scale={r['design_scale']:<10} "
               f"refs={len(r['governing_refs'])} rso={r['regulatory_stratum_only']} "
               f"cfo={r['code_floor_only']} sha={r['derivation_sha'][:12]}")
-    print(f"\n{len(report)} cells written; SQL artifact: {args.emit_sql}")
+    print(f"\n{len(report)} cell(s) determined; SQL artifact: {args.emit_sql}\n"
+          f"REPLAY through emit_data_migration.py -> migrate_db.py, never by hand.")
     if ENUM_DRIFT:
         print(f"DRIFT FINDING: populations valid in live table but missing from "
               f"schemas.enums.PopulationCode: {sorted(set(ENUM_DRIFT))} — "

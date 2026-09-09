@@ -66,14 +66,14 @@ def main():
     # 1. Pure Co-2-only -> stated (§2.2 condition 3)
     d = determine(synth_db([{"tier": 2, "evidence_type": "co2"},
                             {"tier": 2, "evidence_type": "co2"}]),
-                  "G-03", "MOB", "syn-slug", "co2-only")
+                  1, {"identity_code": "MOB"}, "syn-slug", "co2-only")
     expect("Co-2-only => stated", d["state"] == "stated", d["state"])
     expect("Co-2-only tier_basis == CO2", d["tier_basis"] == "CO2", d["tier_basis"])
 
     # 2. T6-only, 3 distinct jurisdictions -> provisional + cfo + rso + universal
     d = determine(synth_db([{"tier": 6, "evidence_type": "code", "jurisdiction": j}
                             for j in ("US", "GB", "AU")]),
-                  "E-06", "MOB", "syn-slug", "t6-only")
+                  1, {"identity_code": "MOB"}, "syn-slug", "t6-only")
     expect("T6-only(3 jur) => provisional", d["state"] == "provisional", d["state"])
     expect("T6-only => code_floor_only=1", d["code_floor_only"] == 1)
     expect("T6-only => regulatory_stratum_only=1", d["regulatory_stratum_only"] == 1)
@@ -83,13 +83,13 @@ def main():
     # 3. T6-only, one jurisdiction x3 -> pending (jurisdiction distinctness)
     d = determine(synth_db([{"tier": 6, "evidence_type": "code", "jurisdiction": "US"}
                             for _ in range(3)]),
-                  "E-06", "DEM", "syn-slug", "t6-mono")
+                  1, {"identity_code": "DEM"}, "syn-slug", "t6-mono")
     expect("T6-only(1 jur) => pending", d["state"] == "pending", d["state"])
 
     # 4. All sources disqualified -> pending + flag (§2.8)
     d = determine(synth_db([{"tier": 1, "evidence_type": "clinical",
                              "verification_status": "UNVERIFIED-CLOSED"}]),
-                  "B-10", "NEU", "syn-slug", "disqualified")
+                  1, {"identity_code": "NEU"}, "syn-slug", "disqualified")
     expect("all-disqualified => pending", d["state"] == "pending", d["state"])
     expect("all_sources_disqualified flag set", d["all_sources_disqualified"] == 1)
 
@@ -97,9 +97,24 @@ def main():
     d = determine(synth_db([{"tier": 2, "evidence_type": "sr_meta"},
                             {"tier": 6, "evidence_type": "code",
                              "verification_status": "UNVERIFIED"}]),
-                  "B-10", "DEM", "syn-slug", "unverified-present")
+                  1, {"identity_code": "DEM"}, "syn-slug", "unverified-present")
     expect("UNVERIFIED => has_unverified_sources=1", d["has_unverified_sources"] == 1)
     expect("anchored despite unverified T6", d["state"] == "stated", d["state"])
+
+    # 5b. A cell stated in NO identity lens leaves population-directness NOT_ASSESSED.
+    # New with the 071 re-key: evidence_population_match.target_population is written in
+    # identity terms only, so a determination stated in ICF / access-need / medical terms
+    # alone has nothing to attribute a match row TO. G2 says that dimension is unassessed,
+    # not absent — it caps consolidation at DOWN-WEIGHTED and flags the source. The old
+    # engine could not reach this state at all, because population was mandatory.
+    d = determine(synth_db([{"tier": 1, "evidence_type": "clinical"}]),
+                  1, {"icf_code": "AX-AMB"}, "syn-slug", "lens without identity")
+    expect("no identity lens => every source needs population assessment (G2)",
+           d["needs_population_assessment"] == [r["ref_id"] for r in d["source_records"]],
+           str(d["needs_population_assessment"]))
+    expect("no identity lens => population_directness NOT_ASSESSED, never EXACT",
+           all(r["population_directness"] == "NOT_ASSESSED" for r in d["source_records"]),
+           str([r["population_directness"] for r in d["source_records"]]))
 
     # 6. Model enforcement: not_applicable requires rationale.
     #
