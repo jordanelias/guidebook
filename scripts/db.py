@@ -1035,6 +1035,22 @@ def main():
     p_obs.add_argument("--session", required=True)
     p_obs.add_argument("--dry-run", action="store_true")
 
+    # add-term — the writer NAMES-NEW needs. See insert_term for why the term and its
+    # adjudication land together.
+    p_at = sub.add_parser("add-term",
+                          help="Mint a term for a NEW concept and adjudicate it NAMES-NEW")
+    p_at.add_argument("--from-observation", dest="from_observation", type=int, required=True,
+                      help="observed_terms.observation_id the term is minted FROM")
+    p_at.add_argument("--canonical-en", dest="canonical_en", required=True,
+                      help="the parameter's name — never a value, never a comparator")
+    p_at.add_argument("--rationale", required=True,
+                      help="why this phrase names a concept we did not hold")
+    p_at.add_argument("--definition")
+    p_at.add_argument("--domain")
+    p_at.add_argument("--scope-note", dest="scope_note")
+    p_at.add_argument("--session", required=True)
+    p_at.add_argument("--dry-run", action="store_true")
+
     p_adj = sub.add_parser("adjudicate-term",
                            help="Decide whether an observed phrase names our concept "
                                 "(judgment stage, D-0173)")
@@ -1716,6 +1732,18 @@ def main():
             "language": args.language, "locator": args.locator,
             "context_quote": args.context_quote, "notes": args.notes,
         }, session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "add-term":
+        _emit(insert_term(
+            from_observation=args.from_observation,
+            canonical_en=args.canonical_en,
+            rationale=args.rationale,
+            definition=args.definition,
+            domain=args.domain,
+            scope_note=args.scope_note,
+            session=args.session,
+            dry_run=args.dry_run,
+        ))
 
     elif args.command == "adjudicate-term":
         _emit(adjudicate_term(args.observation_id, args.outcome, args.rationale,
@@ -2734,6 +2762,82 @@ def adjudicate_term(observation_id: int, outcome: str, rationale: str, session: 
                            f"VALUES ({','.join('?'*len(row))})", list(row.values()))
         return {"adjudication_id": cur.lastrowid, "outcome": outcome,
                 "contested": bool(prior)}
+
+
+# A canonical name may not state its own answer. This is the item-layer lesson as a
+# refusal: `E-08 Corridor Clear Width (>=1200 mm Minimum)` biased every finding filed
+# into it, because the container announced the determination before the evidence did.
+# Measured 2026-09-09: no live terms.canonical_en contains any of these.
+_VALUE_BEARING = re.compile(r"[0-9\u2265\u2264<>=]|\b(min|max|minimum|maximum)\b", re.I)
+
+
+def insert_term(from_observation: int, canonical_en: str, rationale: str, session: str,
+                definition: str = None, domain: str = None, scope_note: str = None,
+                dry_run: bool = False):
+    """Mint a term for a concept new to the vocabulary, AND adjudicate it in one act.
+
+    The missing half of D-0173. `adjudicate-term --outcome NAMES-NEW` refuses unless the
+    term already exists -- "create the term first, then adjudicate NAMES-NEW to it" --
+    and nothing created one, so NAMES-NEW was an outcome the CLI documented and could
+    not reach. A checker whose satisfying writer does not exist is a trap (CLAUDE.md §8).
+
+    Term and adjudication land together because they are one judgement: *this observed
+    phrase names a concept we did not hold, and here is the term for it.* Splitting them
+    would permit a term with no provenance, which is the contamination the owner objected
+    to on 2026-09-09 -- prior-version containers that exist before the work does.
+    """
+    canonical_en = (canonical_en or "").strip()
+    rationale = (rationale or "").strip()
+    if not canonical_en:
+        raise ValueError("--canonical-en is required: a term is its name.")
+    if not rationale:
+        raise ValueError(
+            "--rationale is required. Minting a term is an adjudication, and an "
+            "adjudication that does not say why cannot be contested.")
+    if _VALUE_BEARING.search(canonical_en):
+        raise ValueError(
+            f"--canonical-en {canonical_en!r} REFUSED: it carries a number, a comparator "
+            f"or a min/max word, so it states a determination in its own name.\n"
+            f"That is the defect the item layer was deleted for -- a container that "
+            f"announces its answer predisposes every finding filed into it "
+            f"(DR-2026-08-19 §1.1: 42 of 93 item names embedded a determination).\n"
+            f"Name the PARAMETER, not the value: 'corridor width', not "
+            f"'corridor width >=1200 mm'. The value belongs in the determination.")
+    with connect(dry_run) as conn:
+        obs = conn.execute("SELECT observation_id, surface_form, ref_id FROM observed_terms "
+                           "WHERE observation_id=?", [from_observation]).fetchone()
+        if obs is None:
+            raise ValueError(
+                f"observation {from_observation}: no such observed term. A term is minted "
+                f"FROM an observed phrase (db.py observe-term), never from nothing -- that "
+                f"is what makes the vocabulary an output of the work rather than a "
+                f"presupposition.")
+        clash = conn.execute("SELECT term_id, canonical_en FROM terms "
+                             "WHERE lower(canonical_en)=lower(?)", [canonical_en]).fetchone()
+        if clash:
+            raise ValueError(
+                f"{canonical_en!r} is already TERM {clash['term_id']} "
+                f"({clash['canonical_en']!r}). That makes this NAMES-EXISTING, not "
+                f"NAMES-NEW:\n  db.py adjudicate-term --observation-id {from_observation} "
+                f"--outcome NAMES-EXISTING --term-id {clash['term_id']} --rationale ...")
+        # Computed, never stored -- a counter table would be a second home for a fact
+        # the column already states (rule 5). Same discipline as dbcore.next_ref_id.
+        top = conn.execute("SELECT max(CAST(substr(term_id,6) AS INTEGER)) FROM terms "
+                           "WHERE term_id LIKE 'TERM-___'").fetchone()[0] or 0
+        term_id = f"TERM-{top + 1:03d}"
+        row = {"term_id": term_id, "canonical_en": canonical_en,
+               "definition": definition, "domain": domain, "scope_note": scope_note}
+        row.update(dbcore.stamp_for(conn, "terms", session))
+        conn.execute(f"INSERT INTO terms ({','.join(row)}) "
+                     f"VALUES ({','.join('?'*len(row))})", list(row.values()))
+        adj = {"observation_id": from_observation, "outcome": "NAMES-NEW",
+               "term_id": term_id, "rationale": rationale}
+        adj.update(dbcore.stamp_for(conn, "term_adjudications", session))
+        cur = conn.execute(f"INSERT INTO term_adjudications ({','.join(adj)}) "
+                           f"VALUES ({','.join('?'*len(adj))})", list(adj.values()))
+        return {"term_id": term_id, "canonical_en": canonical_en,
+                "adjudication_id": cur.lastrowid, "from_surface_form": obs["surface_form"],
+                "from_ref_id": obs["ref_id"], "dry_run": dry_run}
 
 
 def insert_source_slug_link(ref_id: str, slug: str, local_ref_id: str,

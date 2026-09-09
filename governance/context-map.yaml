@@ -473,7 +473,6 @@ database:
   - rooms
   - slugs
   - term_item_links
-  - terms
   tables_written_directly_by_code:
   - axes
   - bpc_metadata
@@ -507,6 +506,7 @@ database:
   - supersession_check
   - term_adjudications
   - term_aliases
+  - terms
   - url_verification_runs
   - weighting_profile
   tables_with_no_writer_at_all:
@@ -584,6 +584,7 @@ writers:
     - source_slug_links
     - supersession_check
     - term_adjudications
+    - terms
     scripts/dbcore.py:
     - evidence_sources
     - source_locators

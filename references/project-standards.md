@@ -2613,3 +2613,60 @@ CONDITION: Any session editing CLAUDE.md, or reading `layer-N` in a record dated
 ACTION: Treat CLAUDE.md as Layer 0 — process, workflow and rules; derive every volatile fact. Read
 `layer-N` in older records as the retired pipeline-map bucketing, never as this model.
 DATE: 2026-09-09 — owner ruling, quoted above.
+
+---
+
+## The parameter registry is BASE; the prior corpus is archived out of reach of the common tools; `add-term` is the naming route for now
+
+Three owner rulings, 2026-09-09, given together and recorded on contact per `CLAUDE.md` rule 0:
+
+> *"parameter at base, archive prior corpus so it can't be found by tools we use commonly, use add-term for now"*
+
+**(1) The parameter registry sits at `base`, not at `judgment`.** This settles a fork an adversarial
+pass had opened: `governance/pipeline-contract.yaml` already stages `base-parameter-vocabulary` at
+`base`, while a proposed design put the registry at `judgment` because that is where a parameter is
+adjudicated. The ruling keeps the registry where the contract already stages it — the vocabulary is
+the layer every stage points into, and *adjudicating* into a vocabulary is not the same act as
+*holding* it. Rule 5 reads the same way: the registry is base substrate; the adjudication that puts a
+row in it is judgment's, and it points.
+
+**(2) The prior-version corpus is archived, and the test is reachability by the tools actually
+used.** Not deletion — `CLAUDE.md` §8 reserves `_archived/` for retired reader-facing content and
+deletion for executable surface. `_archived/` is in `.ignore`, so ripgrep and the Grep tool stop
+returning it; `grep -r`, `git grep`, Glob and Read still reach it, which is the deliberate escape
+hatch for history work. **What archiving changes is what a hit says about itself**: a path under
+`_archived/` is labelled by its own path, while the same file under `references/` reads as live.
+That is the whole benefit and it should not be oversold.
+
+**(3) `add-term` is the naming route "for now".** The vocabulary runs through `terms`, and the
+provisional wording is recorded as given — this is a working decision, not a doctrine, and it is the
+owner's to revisit.
+
+**Why (3) is discharging a defect rather than adding apparatus.** `adjudicate-term --outcome
+NAMES-NEW` refused unless the term already existed — *"create the term first, then adjudicate
+NAMES-NEW to it"* — and **nothing created one**. NAMES-NEW was an outcome the CLI documented and
+could not reach: a checker whose satisfying writer does not exist, which `CLAUDE.md` §8 names as a
+trap. `add-term` mints the term and writes its NAMES-NEW adjudication **in one act**, so a term with
+no provenance is unreachable through the sanctioned path.
+
+**Two refusals it carries, and why each exists.** A canonical name bearing a digit, a comparator or a
+min/max word is REFUSED: that is the item-layer defect in miniature — a container that announces its
+answer predisposes every finding filed into it, which is why the owner deleted the layer on
+2026-09-01. And a name that already exists is refused as NAMES-EXISTING with the exact
+`adjudicate-term` command to run instead, because minting a second term for one concept is the dual
+home rule 5 forbids.
+
+**`terms` was blind to the capture path, and that is the fourth time.** `dbcore.WRITABLE_TABLES` did
+not list it, after the identical failure for `evidence_source_authors`, `source_locators`, and
+`observed_terms`/`term_adjudications` a week earlier. Left alone it would have been worse than the
+previous three: `add-term` writes two rows, so a harvest would have shipped the adjudication and
+silently dropped the term it points at, producing a migration whose `term_adjudications.term_id`
+violates its own foreign key. `terms` is now listed **before** `term_adjudications`, since the list
+replays in order and the child references the parent.
+
+CONDITION: Any session naming a design parameter, staging the parameter registry, or reading the
+prior-version corpus.
+ACTION: Mint parameter names with `db.py add-term --from-observation`, never by hand and never
+bearing a value. Stage the parameter registry at `base`. Treat anything under `_archived/` as
+prior-version content; if you meet an `[A-Z]-NN` code, it is not a container to file into.
+DATE: 2026-09-09 — owner ruling, quoted above.

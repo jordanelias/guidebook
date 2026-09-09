@@ -459,6 +459,16 @@ TABLES = [
     # and term_adjudications points at observed_terms, so parents precede both.
     # What reads them: this script, and judgment when it adjudicates the harvest.
     "observed_terms",
+    # ADDED 2026-09-09 with `db.py add-term`, and this is the FOURTH tool found blind
+    # to a live table by the same mechanism — after evidence_source_authors,
+    # source_locators, and observed_terms/term_adjudications one week ago. The owner
+    # ruled the naming vocabulary runs through `terms`; `add-term` mints a term and its
+    # NAMES-NEW adjudication together, so a harvest that minted a term would have
+    # shipped the adjudication and SILENTLY DROPPED the term it points at — leaving a
+    # migration whose term_adjudications.term_id violates its own foreign key.
+    # MUST precede term_adjudications: that table's term_id references this one, and
+    # this list is replayed in order.
+    "terms",
     "term_adjudications",
 ]
 
