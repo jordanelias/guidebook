@@ -277,6 +277,16 @@ and crossing changes the answer.
 - **`git rebase` and `git checkout -B` are blocked in this harness** as history-rewriting. When a
   merged PR leaves unmerged commits on your branch, `git merge origin/main` reaches the same state
   without rewriting anything — the branch carries a merge commit rather than a replay.
+- **THE ITEM LAYER IS GONE FROM THE DATABASE AND STILL LIVE ON THE READING SURFACE.** `items` holds
+  0 rows and a rebuild does not restore it — but the prior version's corpus still publishes the
+  codes and their names in `references/`, `versions/`, `working/` and `index.html`, none of which
+  `.ignore` hides. So a session that greps for a topic still meets **`E-08 Corridor Clear Width
+  (≥1200 mm Minimum on All Primary Routes)`** — a container whose name states its answer, which is
+  the whole reason the owner deleted the layer: *if E-08 already exists then the work is predisposed
+  to filing into a container that already exists, and that biases every finding.* **Treat every
+  `[A-E]-NN` code you meet as prior-version content, never as a container to file into.** `db.py
+  add-item` refuses for this reason. Derive the surface before framing anything:
+  `grep -rEl '\b[A-E]-[0-9]{2}\b' references/ versions/ working/ index.html`
 - **Session ids: bare stem in the DB, `.md` in pointers and `emit_data_migration --session`.** Wrong
   form scopes a gate to nothing and it passes green.
 - **If you add a `SessionStart` hook, APPEND it — never insert at index 0.**

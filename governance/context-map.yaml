@@ -574,7 +574,6 @@ writers:
     - gap_mining
     - gaps
     - item_audit_runs
-    - items
     - jurisdictional_values
     - observed_terms
     - research_code_leads

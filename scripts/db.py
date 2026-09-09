@@ -747,21 +747,6 @@ def delete_connection(con_id: str, session: str, dry_run: bool = False):
         conn.execute("DELETE FROM connections WHERE con_id=?", [con_id])
 
 
-def insert_item(data: dict, session: str, dry_run: bool = False) -> str:
-    if not _ITEM_CODE_RE.match(data.get("item_code", "")):
-        raise ValueError(f"item_code must match [A-K]-NN[a-z]?, got: '{data.get('item_code')}'")
-    if not _CATEGORY_RE.match(data.get("category", "")):
-        raise ValueError(f"category must be single letter A-K, got: '{data.get('category')}'")
-    if data.get("status") and data["status"] not in _VALID_ITEM_STATUS:
-        raise ValueError(f"Invalid item status: {data.get('status')}")
-    row = {**data, **audit(session)}
-    with connect(dry_run) as conn:
-        cols = ", ".join(row)
-        ph   = ", ".join(["?"] * len(row))
-        conn.execute(f"INSERT INTO items ({cols}) VALUES ({ph})", list(row.values()))
-    return data["item_code"]
-
-
 def get_items(category: str = None, status: str = None) -> list:
     q      = "SELECT * FROM items WHERE 1=1"
     params = []
@@ -1360,24 +1345,22 @@ def main():
     p_dc.add_argument("--session", required=True)
     p_dc.add_argument("--dry-run", action="store_true")
 
-    # add-item
-    p_ai = sub.add_parser("add-item", help="Insert an item record")
-    p_ai.add_argument("--item-code", required=True)
-    p_ai.add_argument("--category", required=True)
-    p_ai.add_argument("--name", required=True)
-    # RETIRED. `items.applicable_groups` was a CSV of population codes packed into  # [RETIRED-VOCAB-OK]
-    # one column; it was replaced by the item×taxonomy junction (today
-    # `item_taxonomy_links`) and
-    # dropped from the schema. The flag is kept rather than deleted so the failure
-    # says where populations went — insert_item builds its INSERT from the dict
-    # keys, so passing this used to produce a bare `no such column` from SQLite.
-    p_ai.add_argument("--applicable-groups",
-                      help=argparse.SUPPRESS)   # [RETIRED-VOCAB-OK]
+    # add-item — REFUSES. The item layer was deleted by owner ruling 2026-09-01;
+    # the handler explains why and what to do instead. Every argument is optional
+    # ON PURPOSE: `required=True` would make a bare `db.py add-item` die in argparse
+    # with "the following arguments are required", and the caller would never reach
+    # the refusal that tells them the layer is gone. An error that teaches beats an
+    # error that is merely correct.
+    p_ai = sub.add_parser("add-item",
+                          help="REFUSED — the item layer was deleted (owner, 2026-09-01)")
+    p_ai.add_argument("--item-code")
+    p_ai.add_argument("--category")
+    p_ai.add_argument("--name")
     p_ai.add_argument("--bpc-source-slug")
     p_ai.add_argument("--status", default="draft",
                       choices=list(_VALID_ITEM_STATUS))
     p_ai.add_argument("--item-id")
-    p_ai.add_argument("--session", required=True)
+    p_ai.add_argument("--session")
     p_ai.add_argument("--dry-run", action="store_true")
 
     # items
@@ -1869,30 +1852,32 @@ def main():
         _emit({"deleted": args.con_id, "dry_run": args.dry_run})
 
     elif args.command == "add-item":
-        data = {
-            "item_code": args.item_code,
-            "category":  args.category,
-            "name":      args.name,
-            "status":    args.status,
-        }
-        if args.applicable_groups:                          # [RETIRED-VOCAB-OK]
-            raise SystemExit(
-                "--applicable-groups is retired: items.applicable_groups was dropped "  # [RETIRED-VOCAB-OK]
-                "from the schema when the packed CSV column was replaced by the "
-                "item_taxonomy_links junction.\n"
-                "Populations attach to an item as one row per (item_code, "
-                "identity_code), carrying subtype, applicability and rationale_ref "
-                "— none of which a CSV could hold. Since migration 065 that same row "
-                "may also carry icf_code, needs_code and medical_code, so one fact "
-                "can state several lenses at once.\n"
-                "Create the item first, then add the links via a data migration "
-                "(scripts/emit_data_migration.py); the canonical DB takes writes only "
-                "through migrations (CLAUDE.md §0 rule 4)."
-            )
-        if args.bpc_source_slug:   data["bpc_source_slug"]   = args.bpc_source_slug
-        if args.item_id:           data["item_id"]           = args.item_id
-        insert_item(data, session=args.session, dry_run=args.dry_run)
-        _emit({"item_code": args.item_code, "dry_run": args.dry_run})
+        raise SystemExit(
+            "add-item REFUSES: the item layer was deleted by owner ruling 2026-09-01 "
+            "and there is no ruling to restore it.\n"
+            "\n"
+            "WHY, in the owner's terms: if E-08 already exists then the work is "
+            "predisposed to filing into a container that already exists, and that "
+            "biases every finding. Measured in DR-2026-08-19 1.1, 42 of the 93 item "
+            "names embedded a determination -- `E-08 Corridor Clear Width (>=1200 mm "
+            "Minimum on All Primary Routes)` states its answer in its own name, so a "
+            "search framed on it is a search for confirmation. That is why the layer "
+            "went, and why a writer that can retype an old code verbatim is the "
+            "contamination path rather than a convenience.\n"
+            "\n"
+            "This refusal is deliberately not a deletion. Deleting the subcommand "
+            "would send you to hand-written SQL against `items`, which CLAUDE.md 4 "
+            "names as the exact temptation to refuse.\n"
+            "\n"
+            "WHAT TO DO INSTEAD. Nothing here yet. What replaces item_code as the "
+            "determination's subject is an OPEN OWNER DECISION (CLAUDE.md 6) -- do "
+            "not invent one, and do not reach for `slug x population`, because "
+            "`populations` is only the identity lens. If the owner rules a new "
+            "subject, this writer is rebuilt for it rather than un-refused.\n"
+            "\n"
+            "A subject the pipeline PRODUCES is the point. An item must be an output "
+            "of the work, never a container chosen before it."
+        )
 
     elif args.command == "items":
         _emit(get_items(category=args.category, status=args.status))
