@@ -168,6 +168,7 @@ says so in the past tense on purpose.
 | **T1.2** | **NOT executed** | It lists Wiley `pdfdirect` as "not yet tried". Both `pdfdirect` and `/epdf` are in the manifest as Cloudflare interstitials and `REF-00975`'s note says so. Only an author-manuscript repository is genuinely untried. It would also have written a `reconstructed: true` line into the manifest whose 0 reconstructed lines are D05-005's proof. |
 | **T2.2** | **NOT executed** | Its deletion gate greps `data_*.sql`; the 147 real INSERTs are in `057_baseline`, invisible to that glob. It also misses a live reader at `scripts/audit/graph/extract_db.py:173`. |
 | **T2.3 / §1(d) / §3 / §9** | **NOT corrected when this row first claimed it was; corrected 2026-09-03** | The row was written and the text was not touched — the same "disposition written, text unchanged" pattern this session kept producing, inside the section built to stop it. Now actually done: §7's third subsection is lettered **(c)**, so T2.3's "until §7c is answered" resolves (and now says §7(c) answers it); §1(d)'s "(§7b)" is corrected to §7(c); and both "five single-file edits" sentences are replaced by a derivation. §2 row 001's pointer at §7b was **right** — §7(b) is the `serves_axes` item — and the original row was wrong to call it a mis-pointer. |
+| **T0.4 / T0.5 / T2.1 — the view that was never built** | **corrected 2026-09-09** | §3a recorded T0.4 as not executed and **its section was left reading as live instructions for six days**, unstruck — D05-037's defect in the file that names it. Two further sites depended on the view it declined: T0.5's standing-subject list and **T2.1's `Do.`, which was therefore unexecutable as written** and would have been found only by whoever tried. T0.4 is now struck inline with all three reasons; T0.5 and T2.1 source the containment relation from `skills/adversarial-research_SKILL.md` subject 3 instead. Migration 068 is the harvest, not this view. |
 | **§6** | **superseded** | "No new tables and no new columns" was a scope rule written as a standing prohibition, against an ACTIVE owner ruling. The harvest landed in migration 068. |
 | **D-0173 vs D-0174** | **NOT a conflict** | Reported as contradictory and it is not. D-0173 rules on the concept VOCABULARY; D-0174 rules that relevance is adjudicated at collection while APPLICABILITY stays synthesis. The apparent clash is in D-0173's agent-written sweep note, not in either ruling. CLAUDE.md §6 needs no correction. |
 
@@ -248,9 +249,20 @@ non-compliant rows. Batch 06's agonist brief must carry the flag.
 
 **Verify.** CHECK 7's count after batch 06 equals its count before — the nine, and no more.
 
-### T0.4 · D05-023 — the containment pointer
+### T0.4 · D05-023 — the containment pointer — ~~**NOT EXECUTED**~~
 
-**Do.** Schema migration `068_v_source_containment.sql`, `user_version` 68. A view over
+> **STRUCK 2026-09-03, struck INLINE 2026-09-09.** §3a recorded this as not executed and the
+> section itself was left reading as live instructions for six days — the same "index says
+> superseded, text reads live" defect as D05-037, in the file that names it. Three reasons it was
+> declined, any one sufficient: `connections_produced` carries **no per-connection direction**
+> (6 of 15 rows are `backward=1 AND forward=1`), so the view would assert containment the data
+> cannot support; the `user_version` bump was omitted from its own sweep and would turn the
+> BLOCKING `pipeline_completeness_fresh` red; and it would stale CLAUDE.md's "five cross-stage
+> views". **Migration 068 is the concept-vocabulary harvest, not this view.** The enforcement in
+> the meantime is standing subject 3 of `skills/adversarial-research_SKILL.md`, which carries the
+> query to run instead. Revisit only when T2.1's writer exists.
+
+~~**Do.** Schema migration `068_v_source_containment.sql`, `user_version` 68. A view over
 `citation_mining` — `json_each(connections_produced)` on non-deferred rows — joined to
 `evidence_sources.doi` and `source_slug_links` on the same slug, emitting
 `(container_ref_id, contained_ref_id, slug, doi)`.
@@ -268,7 +280,7 @@ reader `connections_produced` has ever had**.
 A view is a caller and so is a skill.
 
 **Verify.** `SELECT * FROM v_source_containment` returns exactly the two batch-05 pairs in §0 —
-no more, no fewer.
+no more, no fewer.~~
 
 ### T0.5 · D05-021 / D05-022 — make the gate say what it asserted
 
@@ -282,7 +294,11 @@ Then add both properties as standing subjects of the adversarial pass in
 `governance/research-contract.yaml`, under a **non-hook** field (the hook text is regenerated from
 `hook:` only, so a new key there would drift `research_contract_sync`): R7 — brief harm findings
 against `harm_finding=1` rows and their content; R13 — each `mismatch_note` against the retained
-payload; R2/R13 — `v_source_containment` for the batch's slug.
+payload; R2/R13 — containment for the batch's slug. *(Corrected 2026-09-09: this said
+`v_source_containment`, which T0.4 declined to build. The standing query is in
+`skills/adversarial-research_SKILL.md`, "Standing subjects of every adversarial pass",
+subject 3 — which is where all three landed, the YAML key having been declined because
+nothing reads it.)*
 
 **Why.** A gate that prints a number it never checked is indistinguishable from one that checked
 it. That is the §2(a) failure at message level, and it is how the exec-32 filing gap stayed
@@ -346,9 +362,16 @@ The only item in the programme that waits on you. Everything else in Tranche 1 p
 
 ### T2.1 · D05-023 — the gate
 
-**Do.** Wire `judgment/convergence-independence` to a check reading `convergence_assessment` ×
-`v_source_containment`: a convergence row may not count a container and its contained as separate
-sources. **Land it in the same commit as the first `add-convergence` writer.**
+**Do.** Wire `judgment/convergence-independence` to a check reading `convergence_assessment`
+against the containment relation: a convergence row may not count a container and its contained as
+separate sources. **Land it in the same commit as the first `add-convergence` writer.**
+
+**Amended 2026-09-09.** This read "× `v_source_containment`", a view **T0.4 declined to build** and
+that does not exist — so as written this item was unexecutable, and would have been discovered only
+by whoever tried. Source the relation from the standing query in
+`skills/adversarial-research_SKILL.md` (subject 3), which joins `citation_mining.cited_doi` to
+`evidence_sources.doi`. If the writer arrives and a view is still wanted, build it **then**, against
+data whose direction is recorded — which is the condition T0.4 failed on.
 
 **Why the wait.** Until a writer exists, the gate is a trap of exactly the kind this programme
 exists to remove — a checker whose satisfying writer does not exist. The view plus the standing
