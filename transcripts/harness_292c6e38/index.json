@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "started": "2026-09-09T07:50:21",
+    "role": "agonist",
+    "bytes": 1031453,
+    "agent_id_prefix": "aa68d695",
+    "file": "2026-09-09T07-50-21_agonist_aa68d695.jsonl"
+  },
+  {
+    "started": "2026-09-09T08:11:10",
+    "role": "antagonist",
+    "bytes": 798682,
+    "agent_id_prefix": "a8c704cc",
+    "file": "2026-09-09T08-11-10_antagonist_a8c704cc.jsonl"
+  }
+]
