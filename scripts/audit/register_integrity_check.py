@@ -33,7 +33,14 @@ sys.path.insert(0, os.path.join(REPO_ROOT, "scripts", "generate"))
 
 from pilot_renderings import REGISTER_MAP, ROLES, tuple_class  # noqa: E402  (single source of truth)
 
-DEFAULT_DOC = os.path.join(REPO_ROOT, "working", "pilot", "pilot-renderings.html")
+# The July pilot moved to _archived/ on 2026-09-09 when the owner archived the
+# prior-version corpus. Repointed rather than retired: the I1-I5 register invariants
+# this asserts are live doctrine (evidence-architecture.md §6), and the pilot is
+# still their ONLY subject — `specifications` holds 0 rows, so nothing else renders
+# a determination yet. When real render output exists, point --html at that instead;
+# a check whose only subject is archived content is one step from vacuous (§5a).
+DEFAULT_DOC = os.path.join(REPO_ROOT, "_archived", "working", "pilot",
+                           "pilot-renderings.html")
 
 RENDER_RE = re.compile(r"<div class='rendering' ([^>]*)>(.*?)</div>", re.S)
 ATTR_RE = re.compile(r"data-([a-z-]+)='([^']*)'")

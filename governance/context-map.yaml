@@ -558,8 +558,6 @@ writers:
     - search_executions
     - source_locators
     - term_aliases
-    scripts/audit_consolidator.py:
-    - item_audit_runs
     scripts/db.py:
     - bpc_metadata
     - case_studies
