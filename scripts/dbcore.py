@@ -446,6 +446,20 @@ TABLES = [
     "economics_entries",
     "case_studies",
     "gaps",
+    # ADDED 2026-09-03, one day after migration 068 created them. The D-0173
+    # harvest shipped a writer (`db.py observe-term` / `adjudicate-term`) and a
+    # contract line telling agents to harvest as they go, and this capture path
+    # could see NEITHER table — so the first real harvest, 33 observations over
+    # batch 05's nine sources, hit "no delta ... across all 14 tables" and could
+    # not be shipped at all. That is the same blindness recorded twice above for
+    # evidence_source_authors and source_locators, and it is the reason CLAUDE.md
+    # §4 rule 4 says a view is a caller and so is a skill: this emitter is a
+    # caller too, and creating a table is not done until it can be captured.
+    # FK-safe here: observed_terms points at evidence_sources (head of this list)
+    # and term_adjudications points at observed_terms, so parents precede both.
+    # What reads them: this script, and judgment when it adjudicates the harvest.
+    "observed_terms",
+    "term_adjudications",
 ]
 
 WRITABLE_TABLES = TABLES          # the name this module exports; TABLES is the moved original

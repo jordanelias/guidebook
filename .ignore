@@ -80,5 +80,27 @@ sessions/**
 
 references/search-log/
 
+# --- agent transcripts -----------------------------------------------------
+# Owner ruling 2026-09-03, on the measurement rather than on principle: with 19 MB of
+# JSONL searchable, `REF-00977` returned 174 hits of which 136 were transcripts, and
+# `next_ref_id` 305 of which 194. Transcripts are CONVERSATION ABOUT the code, including
+# superseded and simply wrong statements, so a hit answers a current question with a
+# stale answer -- the failure this whole file exists to remove.
+#
+# The index stays searchable, and that is the point of the two negations: ripgrep still
+# finds THAT a transcript exists and which agent, role and time it belongs to, and the
+# file itself is one `git grep` or one open away. Nothing here is deleted, untracked or
+# hidden from code; git, `grep -r`, `git grep`, Glob and every Python tool still read
+# the whole tree. See transcripts/README.md.
+# EXCLUDE THE BULK, NOT THE DIRECTORY. `transcripts/**` with negations was tried first
+# and FAILED THE PLANTED-TOKEN TEST: README.md came back but index.json did not, because
+# `**` excludes `transcripts/<session>/` as a DIRECTORY and gitignore cannot re-include a
+# file whose parent directory is excluded. The note at the top of this file says exactly
+# that; its `sessions/**` + `!sessions/LATEST` precedent works only because LATEST sits at
+# the TOP level of the excluded directory, and index.json does not. Matching the payload
+# by extension needs no negation at all, so there is nothing left to get subtly wrong.
+transcripts/**/*.jsonl
+transcripts/*.jsonl
+
 # --- superseded spec snapshots ---------------------------------------------
 versions/
