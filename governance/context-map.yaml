@@ -1092,6 +1092,14 @@ checks:
     - synthesis
     min_items: null
     cmd: python3 scripts/audit/citation_mining_completeness.py --session @SESSION@ --tier-max 2
+  - id: claude_md_spine
+    level: blocking
+    battery: governance
+    kinds:
+    - governance
+    - docs
+    min_items: 1
+    cmd: python3 scripts/audit/claude_md_spine.py
   - id: db_path_env_audit
     level: blocking
     battery: data

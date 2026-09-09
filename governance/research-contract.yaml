@@ -116,7 +116,7 @@ rules:
     phase: while-searching
     title: "Combinatorial dimension"
     hook: >-
-      Cross slug x population / access-need / ICF / axis. Cells are (item x population).
+      Cross slug x EVERY lens: identity / access-need / ICF / medical (D-0170). NOT (item x population) - the item layer was deleted 2026-09-01, and populations is ONLY the identity lens, so framing on it alone is the traversal D-0184 rejected. What a cell keys on is an open owner decision.
     anchor: "governance/conceptual-model.md; governance/functional-taxonomy.md; specifications"
     enforcer: R4
 

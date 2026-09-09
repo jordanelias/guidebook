@@ -462,6 +462,23 @@ checks:
     case is the original defect this check was hardened against, where a blocking gate reported green
     for its whole life while ENTITY_REGISTRY named six missing paths. Restore `min_items: 1` and delete
     this note in the same commit that registers an entity type.'
+- id: claude_md_spine
+  cmd: ['python3', 'scripts/audit/claude_md_spine.py']
+  battery: governance
+  kinds: ['governance', 'docs']
+  level: blocking
+  basis: base/base-names-resolve
+  cost: fast
+  min_items: 1
+  note: >-
+    CLAUDE.md is auto-loaded into every session and its stage list is the frame rule 5
+    is applied against, so drift there is made at the cost of a duplicated fact in the
+    database rather than a red check. For thirteen days the file carried both
+    "Substrate is not a stage" and, forty lines below, the paragraph recording that the
+    machine enforces base as one. Prose could not catch that; this compares the single
+    SPINE line against governance/pipeline-contract.yaml, the declared single home of
+    the stage ids. Proven to fail on a dropped stage and on a duplicated SPINE line.
+
 - id: schema_reference_audit
   cmd:
   - python3

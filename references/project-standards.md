@@ -2536,3 +2536,80 @@ extraction, case study or economics entry to a group of disabled people.
 ACTION: Four lens columns, one CHECK, real FKs. Never a `population_*` link table. Never two lenses
 in one row. `population_code` is retired in favour of the four.
 DATE: 2026-08-28 — owner ruling, quoted above.
+
+---
+
+## The lens CHECK is "at least one", not "exactly one" — and the 2026-08-28 ACTION above is superseded on that clause only
+
+The entry dated 2026-08-28 ends: *"Four lens columns, one CHECK, real FKs. Never a `population_*`
+link table. **Never two lenses in one row.** `population_code` is retired in favour of the four"* —
+and states the CHECK as a sum equal to 1.
+
+**D-0182 (owner ruling 2026-09-01) overturned that clause**, in three messages: *"it is OKAY for a
+link to be absent in a related taxonomy column"*, *"but a link MUST be tied to at least one"*, *"and
+ideally it ties into many"*. Migration 065 built it accordingly, and the live table carries the
+newer rule with the reasoning in its own comment:
+
+```sql
+-- The owner's rule, mechanised: absence in a lens is fine, absence in ALL of them
+-- is not. COALESCE is the whole constraint — "at least one", never "exactly one".
+CHECK (COALESCE(identity_code, icf_code, needs_code, medical_code) IS NOT NULL)
+```
+
+**Only that clause is superseded.** The rest of the 2026-08-28 ACTION stands and is still owed:
+four lens columns, one CHECK, real typed FKs, never a `population_*` link table, and
+**`population_code` retired in favour of the four** — which `specifications.population_code` has
+not yet had done to it.
+
+**Why this is recorded rather than edited.** This ledger is append-only, and a superseded ruling
+that is silently deleted takes its reasoning with it — the 2026-08-28 rationale (a row naming two
+lenses writes a fact the crossing maps already hold, rule 5) is a real argument that D-0182 answered
+by ruling multiplicity acceptable, not by refuting it. A reader who meets the older entry first must
+be able to find that.
+
+**How this was found, because the search pattern matters.** A session about to record
+"what a determination keys on is an open owner decision" grepped this ledger before writing it, and
+found the owner had ruled the lens half on 2026-08-28. CLAUDE.md rule 4b names the inverse failure —
+reporting a ruling absent from a search that could not have seen it — and this is the same error
+wearing the other face: declaring open a question already answered.
+
+CONDITION: Any session reading the 2026-08-28 lens entry, or designing a table that attaches a
+determination to a group of disabled people.
+ACTION: Apply "at least one" (`COALESCE ... IS NOT NULL`), never "exactly one". Everything else in
+the 2026-08-28 ACTION stands, including the retirement of `population_code`.
+DATE: 2026-09-09 — derived from D-0182 and the live schema; supersession recorded, not decided.
+
+---
+
+## The project is five layers, and CLAUDE.md is Layer 0
+
+Owner ruling 2026-09-09, quoted verbatim:
+
+> **Layer 0** is Claude.md and tools/scripts that ensure that Layer 1's architecture/shape/pipelines/schema etc are working
+> **Layer 1** is code architecture and data shape and pipeline orchestration and schematic compliance etc — it is what guides all processes in the pipeline
+> **Layer 2** is comprised of each stage in the pipeline including its tools/workflows/processes/scripts etc
+> **Layer 3** is the actual data being recorded in the tables
+> **Layer 4** is supplementary data
+
+**What this settles.** CLAUDE.md's own scope: it is Layer 0, so it holds **process, workflow and
+rules**, and every volatile fact is derived there rather than stated. That is the standing
+justification for rule 7 and for the removal of the hardcoded figures the file carried until this
+date — cross-stage foreign-key counts, cross-stage view counts, and a `ref_id` high-water mark, all
+three stale, one of them contradicting the list printed beneath it.
+
+**A name collision to know about.** `layer-N` appears in frozen records dated before this ruling —
+principally the retired `governance/pipeline-map.yaml`, moved to `_archived/governance/` on
+2026-09-09 — where it means that file's old table-to-stage bucketing. It is **not** this five-layer
+model. Do not read one for the other; the bucketing predates the seven-stage spine and must be
+re-derived against it in any case.
+
+**Why the map was archived rather than deleted.** Nothing executable reads it — the readers are
+prose, two DRs and nine attestations. CLAUDE.md §8 puts retired reader-facing *content* in
+`_archived/` and reserves deletion for executable surface, whose archive is git history. Deleting it
+outright would also have left dangling paths inside frozen attestations, which is the defect rule 4
+names by example.
+
+CONDITION: Any session editing CLAUDE.md, or reading `layer-N` in a record dated before 2026-09-09.
+ACTION: Treat CLAUDE.md as Layer 0 — process, workflow and rules; derive every volatile fact. Read
+`layer-N` in older records as the retired pipeline-map bucketing, never as this model.
+DATE: 2026-09-09 — owner ruling, quoted above.
