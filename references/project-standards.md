@@ -2536,3 +2536,94 @@ extraction, case study or economics entry to a group of disabled people.
 ACTION: Four lens columns, one CHECK, real FKs. Never a `population_*` link table. Never two lenses
 in one row. `population_code` is retired in favour of the four.
 DATE: 2026-08-28 — owner ruling, quoted above.
+
+---
+
+## RULE 2026-09-09 — the project is FIVE LAYERS, and the word "layer" is now spoken for
+
+**Owner ruling, given 2026-09-09, quoted verbatim and prefaced by the owner as an "important rule
+here about project hierarchy going forward":**
+
+> **Layer 0** is Claude.md and tools/scripts that ensure that Layer 1's architecture/shape/pipelines/schema etc are working
+> **Layer 1** is code architecture and data shape and pipeline orchestration and schematic compliance etc — it is what guides all processes in the pipeline
+> **Layer 2** is comprised of each stage in the pipeline including its tools/workflows/processes/scripts etc
+> **Layer 3** is the actual data being recorded in the tables
+> **Layer 4** is supplementary data
+
+| Layer | Is | Examples in this repository |
+|---|---|---|
+| **0** | The instruments that ensure Layer 1 holds | `CLAUDE.md`, `governance/check-registry.yaml`, `scripts/run_checks.py`, `scripts/audit/*`, `scripts/tests/*`, the hooks |
+| **1** | Architecture, data shape, orchestration, schematic compliance — **what guides every process in the pipeline** | `scripts/migrations/*`, `schemas/*`, `governance/pipeline-contract.yaml`, `governance/conceptual-model.md`, the seven-stage spine, `dbcore` |
+| **2** | Each pipeline stage, with its own tools, workflows, processes and scripts | `scripts/db.py`, `scripts/research/*`, `skills/*`, the stage batteries |
+| **3** | The data actually recorded in the tables | `evidence_sources`, `search_executions`, `observed_terms`, `specifications` |
+| **4** | Supplementary data | `retrieval-log/`, `transcripts/`, `scratchpad/`, `sessions/`, `audits/` |
+
+*The table is a reading aid derived from the ruling, not part of it. Where a placement is arguable,
+the owner's five sentences govern and this table is what gets corrected.*
+
+### This does NOT supersede the seven-stage spine. The two are orthogonal.
+
+The spine — `base → research → evidence → judgment → synthesis → specification → render`
+(owner, 2026-08-27) — is **flow**: the order in which work moves. This ruling is **stack**: what
+governs what. They meet at Layer 2, which the ruling defines as *"each stage in the pipeline"* —
+so the seven stages live **inside** Layer 2, and the spine is Layer 1's statement about how Layer 2
+is ordered. Neither answers the other's question and neither is an argument against the other.
+
+### THE WORD "LAYER" WAS ALREADY IN USE HERE. The ruling takes it, and the file holding the other meaning is DELETED.
+
+`governance/pipeline-map.yaml` (2026-08-21) carried a `layers:` key with four entries —
+`1-substrate`, `2-acquisition`, `3-synthesis`, `4-render` — table buckets, not a governance stack,
+built on the **four-stage model the 2026-08-27 seven-stage spine superseded**. CLAUDE.md's
+re-entrancy paragraph had inherited that sense: *"a layer-3 artefact legitimately produces layer-2
+rows."*
+
+**Two live meanings for one word, which is the ambiguity rule 5 exists to prevent, expressed in
+prose rather than in a column.** My first move was to rename the older usage to `table_buckets` and
+banner the file as stale. The owner rejected that, same day, in two messages:
+
+> *"governance pipeline map isn't even correct with the number of pipeline stages lol"*
+>
+> *"no, you just remove it? you need to bring up the actually correct pipeline and have that
+> safeguarded and placed in Claude.md"*
+
+**DELETED**, not renamed and not archived — git history is the archive. A file modelling four
+buckets against a seven-stage spine, that nothing reads, is not something to keep correcting. Its
+one surviving finding — that a walk **re-enters** stages rather than passing through them, evidenced
+by a reasoning-doc digestion producing research leads — is restated in CLAUDE.md on its own
+evidence, with no citation to a file you cannot open.
+
+Frozen records that mention it — attestations, sessions, workplans, dated entries in THIS file —
+are **not** swept. They record what was true when written. Only live documents were: `CLAUDE.md`
+and this entry. Attestations reference it in prose fields, not as resolved paths, so nothing
+dangles (checked before deleting; rule 4's own cautionary example is a dangling attestation path).
+
+### THE SPINE IS NOW SAFEGUARDED, which is what the owner asked for and what Layer 0 is
+
+Owner, on this sequence: *"hence Layer 0 for us."* The pipeline was stated in CLAUDE.md's prose and
+**nothing verified it against the machine** — so a stale four-stage map could sit in `governance/`
+for thirteen days after the seven-stage ruling and no gate cared. `governance/pipeline-contract.yaml`
+is the declared single home of the stage ids; CLAUDE.md now carries a canonical `SPINE:` line and
+`scripts/audit/claude_md_spine.py` refuses if the two disagree, naming the contract as the one to
+trust.
+
+**This accepts a checked duplicate, and rule 5 says a parity check is not a fix.** Recorded as a
+deliberate supersession under this ruling rather than an oversight: the owner directed the pipeline
+be *placed in CLAUDE.md* and *safeguarded*, CLAUDE.md is prose and cannot join, and the alternative
+— CLAUDE.md silent on its own frame — is worse. The line is a **rendering** of the contract, not a
+second source of truth, and the check says so when it fires.
+
+### One derived observation, flagged as mine and not part of the ruling
+
+The hierarchy names the defect class this session kept paying for. A writer with no reader
+(D05-033), a gate blind to a live table (D05-031), a rename with unswept callers (D05-035), a hook
+that was a SyntaxError while its own test passed green (D05-034) — **every one is Layer 0 failing
+at its stated job**, which the ruling defines as *ensuring Layer 1's architecture/shape/pipelines/
+schema are working*. Layer 0 is not "the governance overhead"; it is the thing that was supposed to
+catch all four and did not. That reading is a reason to hold Layer 0 to its purpose, not licence to
+add to it — CLAUDE.md §1's burden of proof is unchanged.
+
+CONDITION: Any session reasoning about where a file, table, script or defect belongs; any session
+using the word "layer"; any session deciding whether a change is doctrine or code.
+ACTION: Use these five layers. Layer 2 contains the seven stages; the spine is unaffected. Never use
+"layer" for the old `pipeline-map` table buckets — they are `table_buckets` now.
+DATE: 2026-09-09 — owner ruling, quoted above.

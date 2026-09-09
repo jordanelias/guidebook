@@ -11,10 +11,51 @@ caught this repository's actual failures had **zero** enforcing code.
 > criterion. It is meant to be **run**, not consulted. This file is the mechanical map — write
 > path, gates, traps. Where they disagree, the instrument wins and this file is what to correct.
 
-**The pipeline below is the frame everything else in this file reads against.** It is first
+**Two frames govern this file, and they answer different questions.** THE LAYERS say what governs
+what; THE PIPELINE says in what order work moves. The layers are the outer frame — the pipeline
+lives inside their Layer 2 — so they come first. Neither is an argument against the other.
+
+**The pipeline is the frame the REST of this file reads against.** It is first among the mechanics
 because rule 5 — never write the same fact into a second table — cannot be applied without it:
 judging whether a column is a legitimate stage-specific fact or a copy requires knowing which
 stage its table belongs to. Owner ruling 2026-08-25.
+
+---
+
+## THE LAYERS — what governs what
+
+**Owner ruling 2026-09-09**, given as an "important rule about project hierarchy going forward":
+
+> **Layer 0** is Claude.md and tools/scripts that ensure that Layer 1's architecture/shape/pipelines/schema etc are working
+> **Layer 1** is code architecture and data shape and pipeline orchestration and schematic compliance etc — it is what guides all processes in the pipeline
+> **Layer 2** is comprised of each stage in the pipeline including its tools/workflows/processes/scripts etc
+> **Layer 3** is the actual data being recorded in the tables
+> **Layer 4** is supplementary data
+
+| Layer | Is | Here |
+|---|---|---|
+| **0** | The instruments that ensure Layer 1 holds | this file, `check-registry.yaml`, `run_checks.py`, `scripts/audit/*`, `scripts/tests/*`, the hooks |
+| **1** | Architecture, data shape, orchestration, schematic compliance — **what guides every process in the pipeline** | `scripts/migrations/*`, `schemas/*`, `pipeline-contract.yaml`, `conceptual-model.md`, the spine below, `dbcore` |
+| **2** | Each pipeline stage, with its tools, workflows, processes, scripts | `db.py`, `scripts/research/*`, `skills/*`, the stage batteries |
+| **3** | The data recorded in the tables | `evidence_sources`, `search_executions`, `observed_terms`, `specifications` |
+| **4** | Supplementary data | `retrieval-log/`, `transcripts/`, `scratchpad/`, `sessions/`, `audits/` |
+
+*The table is a reading aid derived from the ruling, not part of it. Where a placement is arguable
+the owner's five sentences govern and the table is what gets corrected.* Full record with the
+supersession it forced: `references/project-standards.md`, 2026-09-09.
+
+**THE SPINE IS UNAFFECTED.** Layer 2 is defined as *"each stage in the pipeline"*, so the seven
+stages live INSIDE Layer 2 and the spine is Layer 1's statement about how Layer 2 is ordered. Flow
+and stack are orthogonal; do not use one to argue against the other.
+
+**THE WORD "LAYER" WAS ALREADY IN USE HERE MEANING SOMETHING ELSE. The ruling takes it, and the
+file that held the other meaning is DELETED.** `governance/pipeline-map.yaml` carried a `layers:`
+key — `1-substrate`, `2-acquisition`, `3-synthesis`, `4-render` — table buckets built on the
+**four-stage model the 2026-08-27 spine superseded**. Owner, 2026-09-09: *"governance pipeline map
+isn't even correct with the number of pipeline stages"*, then *"you just remove it? you need to
+bring up the actually correct pipeline and have that safeguarded and placed in Claude.md."*
+**Removed.** Git history is the archive. If you meet `layer-N` in a frozen record — an attestation,
+a session, a workplan — it is that old bucketing and it is not current.
 
 ---
 
@@ -23,6 +64,28 @@ stage its table belongs to. Owner ruling 2026-08-25.
 **Owner ruling 2026-08-27**, superseding the five-stage list of 2026-08-25:
 
 > **`research → evidence collection → judgment → synthesis → specification → render`**
+
+**THE CANONICAL SPINE, AS THE MACHINE HOLDS IT. This line is checked; do not hand-edit it.**
+
+    SPINE: base -> research -> evidence -> judgment -> synthesis -> specification -> render
+
+`governance/pipeline-contract.yaml`'s `stages:` is the **single home** of the stage ids. The line
+above is a RENDERING of it, not a second source of truth, and
+`scripts/audit/claude_md_spine.py` refuses if the two disagree — naming the contract as the one to
+trust. Added 2026-09-09 on owner directive (*"bring up the actually correct pipeline and have that
+safeguarded and placed in Claude.md"*, and on the class of work: *"hence Layer 0 for us"*). It
+exists because the spine was stated in this file's prose and **nothing verified it against the
+machine**, which is how `governance/pipeline-map.yaml` sat in the repo for thirteen days modelling
+FOUR stages after the seven-stage ruling, with no gate caring. That file is now deleted.
+
+*Rule 5 says a parity check is not a fix, and this is a checked duplicate. Kept deliberately under
+the owner's directive: this file is prose and cannot join, and a CLAUDE.md silent on its own frame
+is worse than a checked rendering of it.*
+
+**It differs from the owner's formulation quoted above, and both are correct.** The owner named the
+six stages of the walk; `base` is the substrate layer the machine gates as a stage (D-0167), and
+the id is `evidence`, whose display form `evidence collection` is DERIVED by `stage_label()` and
+never stored beside it.
 
 In the owner's own formulation: *"you research slugs, evidence research, judge evidence, synthesize
 judgments, specify syntheses, and render specifications."* **`specification` is a stage again, and it
@@ -93,10 +156,13 @@ carried a standing order to delete eleven views, two of which are live pointers 
 designated remedy for a violation still on the books, the other repaired at the cost of migration
 064 the day before. **R6 is VOID; do not obey it.**
 
-**Re-entrancy still holds and is a different question.** `governance/pipeline-map.yaml` established
-2026-08-21 that a walk **re-enters** stages rather than passing through them once — a layer-3
-artefact legitimately produces layer-2 rows. That answers *write order*. This map answers *what a
-table may hold*. Both are true; do not use one to argue against the other.
+**Re-entrancy still holds and is a different question.** A walk **re-enters** stages rather than
+passing through them once: digesting a reasoning document produced research leads, which is a
+backward edge and is normal. That answers *write order*. The stage table above answers *what a
+table may hold*. Both are true; do not use one to argue against the other. *(Established
+2026-08-21 in `governance/pipeline-map.yaml`, deleted 2026-09-09 — the finding outlived the file,
+which had four buckets against a seven-stage spine. The claim stands on its own evidence; it
+needs no citation to a file you cannot open.)*
 
 **THE MACHINE NOW ENFORCES THE SEVEN-STAGE SPINE.** Landed 2026-08-27 (D-0167):
 `governance/pipeline-contract.yaml`'s `stages:` list and `tools/pipeline_completeness.py`'s `STAGES`

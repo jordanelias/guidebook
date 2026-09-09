@@ -214,6 +214,34 @@ checks:
     \ D-SCHEMA decision for the owner, not a unilateral edit to a blocking gate. Deliberately NOT triggered\
     \ by `tooling`: it asserts things about DB CONTENT, which a scripts-only diff cannot change. db_path_env_audit\
     \ and pipeline_contract_audit are the checks that a tooling diff can actually break."
+- id: claude_md_spine
+  cmd:
+  - python3
+  - scripts/audit/claude_md_spine.py
+  battery: governance
+  kinds:
+  - governance
+  - schema
+  level: blocking
+  basis: base/base-names-resolve
+  cost: fast
+  min_items: 1
+  note: 'Added 2026-09-09 on owner directive: "you need to bring up the actually correct pipeline
+    and have that safeguarded and placed in Claude.md", and on the class of work, "hence Layer 0 for
+    us". WHAT REACHES THE BOOK WITHOUT IT (CLAUDE.md 1''s burden of proof): governance/pipeline-map.yaml
+    modelled FOUR stages and sat in governance/ for thirteen days after the owner ruled SEVEN, and no
+    gate cared, because nothing compared a document''s account of the pipeline to the machine''s. The
+    owner found it by reading. Every agent orients from CLAUDE.md, so a wrong spine there mis-frames
+    every downstream judgement about which stage a table belongs to -- and rule 5 cannot be applied at
+    all without knowing that. ASSERTS ONLY that the ordered ids on CLAUDE.md''s canonical SPINE line
+    equal governance/pipeline-contract.yaml''s stages:, which is their single home; it does not check
+    that either is RIGHT, since that is a stage ruling and the owner''s. Rule 5 says a parity check is
+    not a fix and this IS a dual home -- kept deliberately under the directive above, because prose
+    cannot JOIN and a front page silent on its own frame is worse than a checked rendering of one; the
+    failure message always names the contract as the one to trust. min_items:1 because the SPINE line
+    is the subject: absent or duplicated, the parser RAISES rather than returning empty, so this can
+    never pass having examined nothing. --selftest proves it fails on a dropped stage, an added stage,
+    a REORDERED spine, and on the exact four-stage list that caused it.'
 - id: migration_reproducibility
   cmd:
   - python3
