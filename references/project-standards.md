@@ -2625,5 +2625,9 @@ add to it — CLAUDE.md §1's burden of proof is unchanged.
 CONDITION: Any session reasoning about where a file, table, script or defect belongs; any session
 using the word "layer"; any session deciding whether a change is doctrine or code.
 ACTION: Use these five layers. Layer 2 contains the seven stages; the spine is unaffected. Never use
-"layer" for the old `pipeline-map` table buckets — they are `table_buckets` now.
+"layer" for the old `pipeline-map` bucketing; that file is DELETED. *(This line read "they are
+`table_buckets` now" — the rename I made before the owner said remove it — contradicting this
+entry's own body five paragraphs above, which records the deletion. Both were written the same
+hour. Caught by an adversarial critique of CLAUDE.md, not by me: §2(b) inside a correction of a
+§2(b) defect, which is D05-036 exactly, one week later.)*
 DATE: 2026-09-09 — owner ruling, quoted above.

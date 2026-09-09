@@ -69,7 +69,9 @@ a session, a workplan — it is that old bucketing and it is not current.
 
     SPINE: base -> research -> evidence -> judgment -> synthesis -> specification -> render
 
-`governance/pipeline-contract.yaml`'s `stages:` is the **single home** of the stage ids. The line
+`governance/pipeline-contract.yaml`'s `stages:` is the **single home** of the stage ids — though
+that file is still `status: PROPOSED, ratified: false`, so the ids are ratified (owner, 2026-08-27)
+even where their container is not. The line
 above is a RENDERING of it, not a second source of truth, and
 `scripts/audit/claude_md_spine.py` refuses if the two disagree — naming the contract as the one to
 trust. Added 2026-09-09 on owner directive (*"bring up the actually correct pipeline and have that
@@ -116,17 +118,25 @@ the ambiguity.)
 are not the owner's words and must not be quoted as such** — the owner ruled the naming and the
 cardinality (*"one-to-many rows of judgment provide one row for syntheses"*); NOT NULL columns,
 junctions and the fan-out/fan-in pivot are agent design derived from that cardinality, and the
-evidence→judgment shape is **reopened**: the owner said *"each row of evidence provides one row for
-judgment"* (1:1) and the first record of it said 1:N. Measured the same day: **not one foreign key in the schema lands on any
-stage's hand-off object** — `source_locators` and `bpc_metadata` have zero inbound keys at all, and
-`source_value_extractions` and `specifications` have one each, both same-stage. **Re-measured under
-the six stages, 2026-08-27: 43 foreign keys cross a boundary and 37 stay inside one, landing on
-eight columns** — `slugs.slug` 14 · `items.item_code` 10 · `evidence_sources.ref_id` 7 ·
-`populations.population_code` 7 · `gaps.gap_id` 2 · `convergence_assessment.convergence_id` 1 ·
-`reasoning_doc_citations.citation_id` 1 · `search_executions.exec_id` 1. *(The widely-quoted 41/39
-on seven columns is the FIVE-stage figure and must not be repeated inside this frame.)* Not one of
-them is a hand-off. **The walk itself has no keys**, which is why it does not walk. The rename creates
-the spine; `judgment_items` is a NEW table, not a rename.
+evidence→judgment shape is **1:N and CLOSED** — `references/project-standards.md`, 2026-08-27:
+*"Q1 is CLOSED. Do not put the evidence→judgment cardinality to the owner again"*, and it needs no
+new table and no new key.
+
+**The walk has almost no keys of its own, which is why it does not walk.** Derive the shape; do not
+read a number here:
+
+```
+python3 -c "import sqlite3,collections; c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True); t=collections.Counter(); n=0
+for (tb,) in c.execute(\"SELECT name FROM sqlite_master WHERE type='table'\"):
+    for r in c.execute(f'PRAGMA foreign_key_list(\"{tb}\")'): n+=1; t[f'{r[2]}.{r[4]}']+=1
+print(n,'FKs on',len(t),'target columns:',t.most_common(8))"
+```
+
+*Three hardcoded figures stood here — cross-boundary key counts, target-column counts, a
+five-stage-versus-six caveat — under a paragraph that itself warned they were dated. Every one was
+false by 2026-09-09, and the section also recorded a CLOSED question as "reopened" and a table that
+needs no creating as "NEW". §2(b) forbids exactly this, in this file, about this file. Removed
+rather than re-measured: the next number would go stale too.*
 
 **Derive the table-to-stage assignment; do not read one out of a document.** Every bucket assignment
 written before 2026-08-27 — including the 2026-08-25 derivation in
@@ -137,16 +147,13 @@ six-stage ruling and must be re-derived against these six stages before it is re
 Rule 5 says point, do not copy. **A view that joins two stages on the shared reference ID is what
 "point" MEANS in SQL** — the owner's *"call up information from any one so long as you point to the
 correct table and column"*, and *"for rendering a citation, we point towards the evidence table for
-that reference ID"*, are descriptions of a join. **Re-measured 2026-08-27, and the count depends on a
-convention this file had never stated.** Substrate is not a stage, so a view reading ONE stage plus
-substrate crosses nothing. Under that convention — the one this file already uses — **FIVE views
-cross a stage boundary**: `v_source_admission`, `v_item_provenance`, `v_source_reach_all`,
-`v_code_floor_only`, `v_pending`. `v_coverage_priority` (research + substrate) and
-`v_item_extractions` (evidence + substrate) do **not**, and a first pass this session wrongly counted
-them, briefly putting "seven" in this file. `v_divergence` reads `specifications` and
-`convergence_assessment`, which the six-stage ruling puts in *different* stages — so it crosses, and
-the pre-2026-08-27 list was right about it for the wrong reason. **State the convention whenever
-quoting this count.**
+that reference ID"*, are descriptions of a join.
+
+**The convention, which is the part worth stating: `base` is not a stage**, so a view reading ONE
+stage plus base crosses nothing. **Derive the list; there is no count here.** *(One stood here and
+contradicted itself inside seven lines — it said FIVE, named them, then explained that a sixth
+crosses too. That is §2(b)'s "prose number disagreed with the list", in the paragraph warning
+against it.)*
 
 **Before deleting any view, ask which stages it spans.** A cross-stage view is not apparatus and is
 not a candidate for a cull — deleting it removes the pointer and forces the next reader back to
@@ -174,12 +181,9 @@ gate. **The id is `evidence`, not `evidence-collection`** — renamed in the sam
 ruled spine says *Evidence*; its display form is **derived** by `stage_label()`, never stored beside
 it.
 
-**`base` is a stage with real criteria, and none of them was invented.** Its six contract criteria
-are enforced by checks that already ran and had no stage to belong to — `validate_schema`,
-`validate_population`, `validate_axes`, `validate_jurisdiction`, `validate_items`,
-`retired_vocabulary` (plus `validate_schema_cross_check` and `population_integrity_audit`), **eight
-checks moved off `basis: unattributed`, three of them blocking.** The reason they were unattributed
-is that the contract had no `base` stage to attribute them to.
+**`base` is a stage with real criteria, and none of them was invented** — they are checks that
+already ran and had no stage to belong to. Read them from `governance/pipeline-contract.yaml`; the
+count is not stated here, and the one that was ("six") was wrong within a fortnight.
 
 **Four criteria moved from `judgment` to `specification`** — `governing-refs-nonempty`,
 `no-regulatory-stratum-stated`, `tier3-alone-threshold`, `derivation-handshake`. All four are
@@ -241,9 +245,11 @@ twice and disagreed with the list both times — "Five" over six entries, then "
 
 5. **Never write the same fact into a second table. Point, do not copy.** Owner ruling 2026-08-24
    (`DR-2026-08-24` §2.1, now in `references/project-standards.md`): *"It is better to have a table
-   cell point to another table cell than to rewrite."* Each stage — research → evidence → synthesis
-   → specification → render — holds only its own data; anything earlier is reached by pointer on the
-   shared reference ID. **A parity check is not a fix** — it makes a dual home survivable, therefore
+   cell point to another table cell than to rewrite."* **Each stage — see the `SPINE:` line above,
+   which is the checked one — holds only its own data**; anything earlier is reached by pointer on
+   the shared reference ID. *(This sentence used to spell the stages out again and got them wrong:
+   it listed five, omitting `base` AND `judgment`. `claude_md_spine.py` matches only the `SPINE:`
+   line, so a second, wrong spine sat 175 lines below the checked one and stayed green. One home.)* **A parity check is not a fix** — it makes a dual home survivable, therefore
    permanent. And **a column a committed data migration INSERTs can never be dropped**: grep
    `scripts/migrations/data_*` for the name first, then writer-retire, reader-retire, NULL forward.
 
@@ -380,11 +386,15 @@ import sqlite3
 con = sqlite3.connect('file:data/guidebook.db?mode=ro', uri=True)
 ```
 
-**Backbone.** `items` (design parameters) × `populations` meet in `specifications`, the
-per-(item × population) synthesis record. Evidence lives in `evidence_sources` and attaches via
-`source_slug_links`, `evidence_population_match`, `search_admissions`. `source_locators` is a
-**lead index of identifiers, not evidence** (`SELECT COUNT(*) FROM source_locators`) — the R9 duplicate gate currently cannot see it,
-which is a known live defect (OD-5).
+**Backbone.** Read it off the stage table above — that is where a table's stage is stated, and
+duplicating it here is how this paragraph went stale. Evidence lives in `evidence_sources` and
+attaches via `source_slug_links`, `evidence_population_match`, `search_admissions`.
+`source_locators` is a **lead index of identifiers, not evidence**.
+
+*Corrected 2026-09-09: this described an `items` × `populations` backbone meeting in
+`specifications`. The owner deleted the item layer on 2026-09-01 and `items` now holds 0 rows, so
+the sentence named a dead spine as the live one. It also called OD-5 "a known live defect"; the
+instrument records it DONE on 2026-08-23.*
 
 **Changing it.** Schema → new `scripts/migrations/NNN_slug.sql`, bump `user_version`, mirror the
 Pydantic model. Data → `emit_data_migration.py --input` then `migrate_db.py`. Verify with
@@ -518,14 +528,23 @@ Work from the **ICF/access-need frame with codes AND names**, never from bare ax
 from population umbrellas. On 2026-08-19 a frame pulled as bare `axis_code` hid that a slug spanned
 two demand mechanisms, and four of five searches were framed on one of them.
 
-**The frame is the FULL CROSS-PRODUCT, and applicability is an OUTPUT of synthesis, not an input.**
-Owner ruling 2026-08-24 (`DR-2026-08-24` §2.4): *"Every research slug gets cross-referenced against a
-population code, access need or ICF code because there is always the chance that there is an
-unexpected connection between them… we are waiting until we have finished our syntheses to ensure we
-define them with evidenced justification, not presuppositions."* So the question is never *"which
-populations does this slug already link to"* — that presupposes the answer. **Zero
-`item_population_links` on a slug is the correct pre-synthesis state, not a defect**, and D-0165 does
-not block research: it is downstream of it.
+**The frame is the FULL CROSS-PRODUCT, and the crossing is JUDGMENT'S OUTPUT.** Owner ruling
+2026-08-27: *"overrule Aug 24 DR. we go evidence>judgment>synthesis."* The question is never *"which
+populations does this slug already link to"* — that presupposes the answer — but zero links **after
+judgment IS a defect**, not the correct state.
+
+*Corrected 2026-09-09. This section taught `DR-2026-08-24` §2.4's superseded rule — "applicability is
+an OUTPUT of synthesis" and "zero `item_population_links` is the correct pre-synthesis state" — for
+thirteen days after `references/project-standards.md`'s ACTION for that ruling ordered, in as many
+words, that "`CLAUDE.md` §6 must be corrected". It also named `item_population_links`, a table that
+no longer exists. Rule 0 says record the supersession on contact; nobody did, and every agent
+oriented from the overruled text. Found by an adversarial critique, not by a gate.*
+
+**The split, as the owner put it:** evidence does the cursory pass — *"getting all required metadata
+for apa standards and listing out all concepts/topics/key words/phrases that appear in the source"* —
+and *"judgment phase will actually do the deep read on it to determine what can be derived from the
+source"*. So: **harvest at evidence** (`db.py observe-term`, verbatim and unjudged), **adjudicate at
+judgment** (`db.py adjudicate-term`). D-0165 is downstream of judgment, not synthesis.
 
 ---
 

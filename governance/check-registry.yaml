@@ -241,7 +241,13 @@ checks:
     failure message always names the contract as the one to trust. min_items:1 because the SPINE line
     is the subject: absent or duplicated, the parser RAISES rather than returning empty, so this can
     never pass having examined nothing. --selftest proves it fails on a dropped stage, an added stage,
-    a REORDERED spine, and on the exact four-stage list that caused it.'
+    a REORDERED spine, and on the exact four-stage list that caused it. CAVEAT, found by an
+    adversarial critique the same day and recorded rather than papered over: governance/pipeline-contract.yaml
+    is status: PROPOSED / ratified: false. So this BLOCKING check treats an unratified file as the single
+    home of the stage ids. That is defensible -- the ids in it are the owner ruling of 2026-08-27 and
+    tools/pipeline_completeness.py already reads them, so the SPINE is ratified even where its container
+    is not -- but it is not invisible, and the honest fix is for the contract to be ratified rather than
+    for this note to stop mentioning it.'
 - id: migration_reproducibility
   cmd:
   - python3
