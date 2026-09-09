@@ -81,11 +81,26 @@ class SourceValueExtraction(BaseModel):
     # What is being extracted
     item_code: Optional[str] = Field(
         None,
-        description="FK items.item_code (migration 052). NULL means the item was "
-                    "not established at extraction — `parameter` alone cannot "
-                    "resolve it (A-18 and A-10b are both RT60).",
+        description="FK items.item_code (migration 052). SUPERSEDED: the owner "
+                    "emptied the item layer 2026-09-01 and `items` is now a Part-4 "
+                    "render rollup, not an identity. Every [A-E]-NN code still on "
+                    "the reading surface is prior-version content. Use parameter_id.",
     )
-    parameter: str = Field(..., description='e.g. "RT60", "door clear width"')
+    parameter_id: Optional[int] = Field(
+        None,
+        description="FK base_parameters.parameter_id (migration 071) — THE SUBJECT "
+                    "of a determination (owner 2026-08-26). Nullable on purpose: "
+                    "extraction records what the source SAYS, and adjudicating that "
+                    "phrase onto a canonical parameter is judgment's output "
+                    "(D-0173), not evidence's. It is the pointer rule 5 requires — "
+                    "the parameter's name lives in `terms`, never copied here.",
+    )
+    parameter: str = Field(
+        ...,
+        description='The SOURCE\'s own phrase for what it measures, verbatim and '
+                    'unjudged (R11/D-0173) — e.g. "RT60", "door clear width". A fact '
+                    'about the document, not a claim it names one of our categories.',
+    )
     parameter_canonical: Optional[str] = None  # normalized for join (lowercase, hyphens)
     population_code: Optional[str] = None  # FK populations.population_code
     population_label: Optional[str] = None  # free-text qualifier

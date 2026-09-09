@@ -622,11 +622,13 @@ writers:
     - evidence_sources
     - search_executions
     scripts/tests/test_evidence_cell_state_2_3.py:
+    - axes
+    - base_parameters
     - convergence_assessment
     - gaps
-    - items
     - populations
     - specifications
+    - terms
     scripts/tests/test_url_verifier.py:
     - evidence_sources
     scripts/tests/test_validate_evidence_state_2_4.py:
