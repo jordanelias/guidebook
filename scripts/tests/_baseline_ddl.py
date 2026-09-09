@@ -10,19 +10,39 @@ migration history for a literal table name. That approach broke twice in one day
   2. When the history was frozen behind `057_baseline_2026-08-12.sql`, the files
      the scan read were no longer in `scripts/migrations/` at all.
 
-Reading the baseline is simpler and self-correcting: there is exactly one file, it
-holds the CURRENT schema, and a future baseline replaces it in place under the same
-glob. No rename replay, no hand-copied DDL, nothing to drift.
+Reading the baseline is simpler for the two problems above: there is exactly one
+file, and a future baseline replaces it in place under the same glob. No rename
+replay, no hand-copied DDL.
+
+BUT THE BASELINE IS NOT THE CURRENT SCHEMA, AND THIS DOCSTRING CLAIMED IT WAS.
+A baseline is immutable and frozen at the date in its name; every migration after
+it moves the schema and the baseline does not follow. So `ddl_for()` returns the
+schema AS OF the baseline, which is the current one only until the next migration.
+That gap shipped a third failure of exactly the kind this module exists to prevent:
+migration 071 re-keyed `specifications`, and `test_evidence_cell_state_2_3` went on
+building the pre-071 table from the baseline and reporting "FK: non-existent
+item_code" green over a column dropped a fortnight earlier — a gate passing having
+examined a fiction (CLAUDE.md §5(a)).
+
+So the rule for a fixture is: read an object from the LIVE schema when a migration
+has touched it since the baseline, and from here only when it has not. `ddl_for()`
+now says which case you are in — it compares what it hands back against the live
+schema and warns on any object whose shape has moved. It cannot fail on that,
+because a fixture may legitimately have no database to compare with.
 
 `ddl_for()` fails loudly on a name it cannot find, rather than returning a short
 list — a fixture that quietly builds fewer tables is the "a gate reporting zero may
 have examined zero" failure wearing a test's clothes.
 """
+import os
 import pathlib
 import re
+import sqlite3
 import sys
 
+REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
 MIGRATIONS = pathlib.Path(__file__).resolve().parents[1] / "migrations"
+LIVE_DB = pathlib.Path(os.environ.get("GUIDEBOOK_DB_PATH", REPO_ROOT / "data" / "guidebook.db"))
 
 _NAME_RE = re.compile(
     r'CREATE\s+(?:UNIQUE\s+)?(?:TABLE|INDEX|VIEW|TRIGGER)\s+'
@@ -76,4 +96,46 @@ def ddl_for(*names):
               f"         The fixture would have built a schema the database does not have.",
               file=sys.stderr)
         sys.exit(1)
+    _warn_if_stale(found)
     return "\n".join(found[n] for n in wanted)
+
+
+def _norm(sql):
+    """Collapse whitespace and drop a trailing semicolon, so the comparison is
+    about shape rather than formatting. The baseline is generated from
+    sqlite_master, so an untouched object matches exactly once normalised."""
+    return re.sub(r"\s+", " ", sql.strip().rstrip(";")).strip()
+
+
+def _warn_if_stale(found):
+    """Say which of the returned objects the live schema has since moved.
+
+    Advisory by construction: a fixture may legitimately run with no database
+    present, and some fixtures WANT the frozen shape. What this refuses to do is
+    stay silent — a fixture building a table the database no longer has passes
+    green over a fiction, which is how `test_evidence_cell_state_2_3` asserted FK
+    constraints on `specifications.item_code` for a fortnight after migration 071
+    dropped it.
+    """
+    try:
+        con = sqlite3.connect(f"file:{LIVE_DB}?mode=ro", uri=True)
+    except sqlite3.Error:
+        return
+    try:
+        live = {n: sql for n, sql in con.execute(
+            "SELECT name, sql FROM sqlite_master WHERE sql IS NOT NULL")}
+    except sqlite3.Error:
+        return
+    finally:
+        con.close()
+    if not live:
+        return
+    for name, sql in found.items():
+        if name in live and _norm(live[name]) != _norm(sql):
+            print(
+                f"  [STALE-BASELINE] {name}: {baseline_path().name} and the live "
+                f"schema disagree.\n"
+                f"         A migration has moved this object since the baseline was "
+                f"frozen. Read it from sqlite_master instead, or the fixture asserts "
+                f"against a table the database does not have.",
+                file=sys.stderr)
