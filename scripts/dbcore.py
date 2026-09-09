@@ -470,6 +470,22 @@ TABLES = [
     # this list is replayed in order.
     "terms",
     "term_adjudications",
+    # ADDED 2026-09-09, and this is the FIFTH time this list has been blind to a live
+    # table -- after evidence_source_authors, source_locators, observed_terms/
+    # term_adjudications, and terms EARLIER THE SAME DAY. Migration 071 created
+    # base_parameters and re-keyed specifications; neither was added here, so a session
+    # that adjudicated a parameter or wrote a determination into a scratch would have
+    # emitted "no delta" and lost it silently. The pattern is now explicit: CREATING A
+    # TABLE IS NOT DONE UNTIL THE CAPTURE PATH CAN SEE IT, and the migration that
+    # creates it should edit this list in the same change.
+    # FK order, parents first: base_parameters -> terms (above); specifications ->
+    # base_parameters, convergence_assessment, gaps and the four lens registries;
+    # specification_source_links -> specifications, evidence_sources (head of list).
+    "base_parameters",
+    "source_value_extractions",
+    "convergence_assessment",
+    "specifications",
+    "specification_source_links",
 ]
 
 WRITABLE_TABLES = TABLES          # the name this module exports; TABLES is the moved original
