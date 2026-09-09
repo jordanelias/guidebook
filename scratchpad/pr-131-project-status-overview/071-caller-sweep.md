@@ -71,3 +71,87 @@ implementation in the repo.
 
 **Not decided here.** Recorded so the next session does not meet five green checks and
 conclude the re-key was finished.
+
+---
+
+# `assess_cell.py` — the deletion case was wrong, and what replaces it
+
+An antagonist pass was run against the proposal to delete `scripts/assess/assess_cell.py`
+and its registered check. The proposal does not survive. Two of its three grounds hold;
+the third is overstated; and it missed the fact that decides the question.
+
+**Verified independently, not taken on the agent's word:**
+
+- `schemas/directness.py` maps `GRAIN_FROM_EVIDENCE_TYPE['co1'] = specific` and
+  `['standard_eb'] = code` **unconditionally**. `co1_source_type` appears nowhere in
+  that module — only on the `EvidenceSource` model, where nothing computes grain from it.
+- `workplan/2026-08-11-remediation-and-pipeline-anatomy.md:4661-4663` states rows 6, 7
+  and 8 — G2 unassessed-dimension capping, G3 Co-1 grain by `co1_source_type`, G6
+  `standard_eb` grain by (type × tier) — are **"UNENFORCED in the shared model"**,
+  "`assess_cell.source_grain()` only".
+- These are ratified: `decisions/RATIFICATION-PACKAGE-2026-07-12.md:2`, "ratified in
+  full by owner directive 2026-07-13". Their promotion into the shared model is owed as
+  register item Q4.
+
+So `determine()` is the only implementation in the repository of three ratified doctrine
+items plus the T3-alone and regulatory-stratum state rules. Deleting the file destroys
+them. The item-keyed *driver* around it — `PILOT_CELLS`, `main()`, the INSERT block, a
+`next_gap_id` that mints `GAP-1` and fails the schema's own `^GAP-\d{3,4}$` — is dead.
+Those are separable.
+
+## The fork, which is not mine to settle
+
+`decisions/DR-2026-08-19-research-restart-operative-instrument.md` §12.5:
+
+> **Permanently manual:** … anything touching `specifications` or the reasoning doc,
+> which sits at the Opus synthesis floor behind the B-before-E gate. The contract's
+> premise is that these are judgment acts machinery can only *check*.
+
+That is the newest operative word on this table, and it admits two readings that lead to
+opposite work:
+
+**(i) The engine is retired as a WRITER.** "Judgment acts machinery can only check" is a
+claim about the nature of the act, not about which file gets written. An engine that
+computes `state='stated'` from tier arithmetic is *performing* the judgment, not checking
+it. `scratchpad/session_2026-08-25-…/REPAIR-PLAN.md:193-203` says the same from the other
+side: "a CLI that lets a session assert `--state stated` directly *is the fabrication
+shape*." Under this reading: extract G2/G3/G6 into `schemas/directness.py` (discharging
+Q4), keep `determine()` as a checker, delete the emit half.
+
+**(ii) The engine is human-gated, not forbidden.** It already refuses the canonical DB
+outright and emits SQL marked "replayable ONLY after owner ratification", which is
+"manual" in the sense that matters. Under this reading: re-key it — roughly 50 lines,
+no migration, and the design is already written at `REPAIR-PLAN.md` P1.3′/P1.4.
+
+Two sessions (`sessions/session_2026-08-20…:212`, `…2026-08-22…:297`) read §12.5 as
+reading (i) and called the engine dead. Those are session authors' readings. A search
+that would have found an owner ruling either way —
+`grep -rn -iE "owner[^.]{0,120}(engine|assess_cell)" sessions/ decisions/ references/project-standards.md`
+— returns nothing, and `references/project-standards.md` has no hit for
+`assess_cell|pilot engine|determination engine` at all. **No owner statement retires it
+and none preserves it.** Rule 4b applies in both directions: do not report a ruling
+absent from a search that could not have seen it, and do not declare open a question
+already answered. This one is genuinely open.
+
+## Done regardless of which reading wins
+
+`test_assess_cell_pilot.py` assertion 6 passed for the wrong reason from migration 071
+until 2026-09-09: the cell was keyed `(item_code="E-06", population="MOB")`, 071 re-keyed
+the model, `extra="forbid"` rejected `item_code`, and a bare `except Exception` reported
+that as "not_applicable without rationale rejected". Re-keyed, and the assertion now
+names the rule it tests — a refusal is only evidence for the refusal you asked for.
+Fault-injected: restoring the old key turns it red instead of green.
+
+The other 12 assertions in that file exercise `determine()` and are the only automated
+coverage of T3-alone, T6 richness, jurisdiction distinctness, all-disqualified and
+has-unverified. They are not vacuous, and they are a further argument against deletion.
+
+## Also broken, and run by nothing
+
+`scripts/generate/pilot_renderings.py:233-243` selects `item_code, population_code` and
+joins `items`. No registry entry invokes it; it is not in `regenerate_derived.sh` or
+`preflight.sh`. Only `register_integrity_check.py:34` imports from it, and only
+`REGISTER_MAP` / `ROLES` / `tuple_class`. Its private copy of `derivation_sha`
+(`:294-298`) is still item-keyed and now contradicts `test_db_integrity.py` K01, which
+was re-keyed to `parameter_id|lens` on this branch. Two implementations of one hash that
+disagree.

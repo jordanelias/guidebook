@@ -101,13 +101,22 @@ def main():
     expect("UNVERIFIED => has_unverified_sources=1", d["has_unverified_sources"] == 1)
     expect("anchored despite unverified T6", d["state"] == "stated", d["state"])
 
-    # 6. Model enforcement: not_applicable requires rationale
+    # 6. Model enforcement: not_applicable requires rationale.
+    #
+    # This assertion passed for the wrong reason between migration 071 and
+    # 2026-09-09. The cell was keyed (item_code="E-06", population="MOB"), 071
+    # re-keyed EvidenceStateRecord to parameter_id + lens, and the model forbids
+    # extras -- so the rejection fired on `extra_forbidden` for item_code and never
+    # reached the rationale rule at all. A bare `except Exception` cannot tell the
+    # two apart, which is why the assertion below now names the rule it is testing:
+    # a refusal is only evidence for the refusal you asked for.
     try:
-        EvidenceStateRecord(item_code="E-06", population="MOB", state="not_applicable",
+        EvidenceStateRecord(parameter_id=1, identity_code="MOB", state="not_applicable",
                             not_applicable_rationale=None)
         expect("not_applicable without rationale rejected", False)
-    except Exception:
-        expect("not_applicable without rationale rejected", True)
+    except Exception as e:
+        expect("not_applicable without rationale rejected",
+               "not_applicable_rationale" in str(e), str(e).splitlines()[0])
 
     # 7. Model enforcement: divergent requires synthesis_approach
     try:
