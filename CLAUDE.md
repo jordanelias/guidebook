@@ -250,13 +250,25 @@ favour of the four**. D-0182 then relaxed that CHECK from "exactly one" to **at 
 (`COALESCE(...) IS NOT NULL`), which is what migration 065 built and what the live table says in its
 own comment. So `specifications.population_code` is not a question — it is a sweep owed.
 
-**What IS open is the subject.** D-0184 keys the lens table on `item_code`; the owner deleted the
-item layer hours later the same day. So `item_taxonomy_links` — the object that executes the lens
-ruling — cannot accept a row, and neither can `specifications`. What replaces `item_code` as the
-determination's subject is an owner decision. **Do not invent one, and do not read
-`slug × population` as the answer**: `populations` IS the identity lens (`base_taxonomy_identity`),
-so that key reintroduces the traversal D-0184 measured and rejected — the crossings are incomplete
-and crossing changes the answer.
+**THE SUBJECT IS ALSO RULED, AND THIS FILE SAID OTHERWISE FOR A DAY.** Owner ruling **2026-08-26**
+(`references/project-standards.md`, `grep -n 'judgment object is the'`): *"The judgment object is the
+**canonical parameter**, and `items` is the render rollup the entity model already calls it."* The
+determination is keyed on **the design parameter under determination**; `specifications.item_code`,
+presently NOT NULL, *"is dropped alongside `population_code` in the same P1.0 migration"*; `items` is
+demoted from identity to a Part-4 render aggregate **derived from** specifications rather than keyed
+by them. That ruling carries a five-clause ACTION — read it before touching any of this.
+
+*This paragraph read "an owner decision — do not invent one" until 2026-09-09, while the ruling had
+stood since 2026-08-26. It was written in the same change that added rule 4b's mirror to the ledger
+— **declaring open a question already answered** — and by an author who had just caught that error
+on the lens half and did not re-run the search for the subject half. A ruling can be in the
+repository, in the file §9 sends you to, and still fail to bind if the search stops at the first
+answer it finds.*
+
+**So neither half is open. Both are sweeps owed**, and `item_taxonomy_links` and `specifications`
+stay unwritable until they are done. Do not read `slug × population` as any part of the answer:
+`populations` IS the identity lens (`base_taxonomy_identity`), so that key reintroduces the
+traversal D-0184 measured and rejected.
 
 ---
 
@@ -279,14 +291,18 @@ and crossing changes the answer.
   without rewriting anything — the branch carries a merge commit rather than a replay.
 - **THE ITEM LAYER IS GONE FROM THE DATABASE AND STILL LIVE ON THE READING SURFACE.** `items` holds
   0 rows and a rebuild does not restore it — but the prior version's corpus still publishes the
-  codes and their names in `references/`, `versions/`, `working/` and `index.html`, none of which
-  `.ignore` hides. So a session that greps for a topic still meets **`E-08 Corridor Clear Width
+  codes and their names in `references/`, `working/` and `index.html`, which `.ignore` does **not**
+  hide. (`versions/` carries them too and **is** hidden — `.ignore` line 106. This bullet claimed
+  otherwise until 2026-09-09; the bullet above it was right.) So a session that greps for a topic
+  still meets **`E-08 Corridor Clear Width
   (≥1200 mm Minimum on All Primary Routes)`** — a container whose name states its answer, which is
   the whole reason the owner deleted the layer: *if E-08 already exists then the work is predisposed
   to filing into a container that already exists, and that biases every finding.* **Treat every
   `[A-E]-NN` code you meet as prior-version content, never as a container to file into.** `db.py
-  add-item` refuses for this reason. Derive the surface before framing anything:
-  `grep -rEl '\b[A-E]-[0-9]{2}\b' references/ versions/ working/ index.html`
+  add-item` refuses for this reason. **The prefixes run wider than the obvious ones** — derive them,
+  do not assume a range: `grep -rhoE '\b[A-Z]-[0-9]{2}\b' references/part04-item-index.md | cut -c1
+  | sort -u`. Then derive the surface before framing anything:
+  `grep -rEl '\b[A-Z]-[0-9]{2}\b' references/ working/ index.html`
 - **Session ids: bare stem in the DB, `.md` in pointers and `emit_data_migration --session`.** Wrong
   form scopes a gate to nothing and it passes green.
 - **If you add a `SessionStart` hook, APPEND it — never insert at index 0.**

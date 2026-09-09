@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "started": "2026-09-09T07:50:21",
+    "role": "agonist",
+    "bytes": 1031453,
+    "agent_id_prefix": "aa68d695",
+    "file": "2026-09-09T07-50-21_agonist_aa68d695.jsonl"
+  }
+]
