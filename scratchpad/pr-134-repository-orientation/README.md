@@ -1,9 +1,10 @@
-# branch `claude/repository-orientation-9380wp` — orientation, then research preparation
+# PR #134 — orientation, then research preparation
 
-**Named for the branch, not a PR number, because no PR existed when the folder was created**
-(`scratchpad/README.md`: *"You do not know `<n>` until the PR exists… name it for the branch and
-rename with `git mv` once the number is known"*). `git mv` it to `pr-<n>-repository-orientation`
-and update `scratchpad/CURRENT` in the same commit once the number comes back.
+Branch `claude/repository-orientation-9380wp`. **Created as `branch-repository-orientation-9380wp`
+because no PR existed yet** (`scratchpad/README.md`: *"You do not know `<n>` until the PR exists…
+name it for the branch and rename with `git mv` once the number is known"*), and `git mv`d here
+with `scratchpad/CURRENT` updated in the same commit once #134 came back. The number was never
+guessed.
 
 ## Why this folder exists at all, on its first commit
 
