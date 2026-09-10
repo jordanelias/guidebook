@@ -42,6 +42,8 @@ tables; they apply this model. The conditioning is CATEGORICAL, not a number
 
 from typing import Optional
 
+from schemas.enums import Co1SourceType
+
 
 # ---------------------------------------------------------------------------
 # Design scales (the CLAIM's grain) — Design Hierarchy, §1.4
@@ -83,6 +85,57 @@ GRAIN_FROM_EVIDENCE_TYPE = {
     "national_fw": GRAIN_CODE,
     "code": GRAIN_CODE,
 }
+
+
+# ---------------------------------------------------------------------------
+# G3/G6 grain rules — RATIFIED (RATIFICATION-PACKAGE-2026-07-12, owner directive
+# 2026-07-13). Promoted 2026-09-10 from scripts/assess/assess_cell.py's
+# engine-local `source_grain()`, which implemented this rule while this module's
+# unconditional `co1 -> specific` / `standard_eb -> code` entries above stated
+# the opposite. Two implementations of one ratified rule, disagreeing, is a rule
+# that attests nothing (CLAUDE.md rule... the finding this closes). This is now
+# the ONE home; `GRAIN_FROM_EVIDENCE_TYPE` stays put, unmodified, as the default
+# map `grain_for()` falls back to for every evidence_type it does not condition
+# further — which is why `co1` and `standard_eb` still appear in it.
+# ---------------------------------------------------------------------------
+def grain_for(evidence_type: str, tier: Optional[int],
+             co1_source_type: Optional[str]) -> tuple:
+    """G3 + G6: grain from (evidence_type x tier x co1_source_type); the
+    GRAIN_FROM_EVIDENCE_TYPE default map otherwise. Returns (grain, reason).
+
+    G3  Co-1 grain follows co1_source_type: dpo_research / advocacy_position
+        -> aggregate (population-grain); every other value, including an
+        unrecognised one (e.g. a co1_source_type outside schemas.enums.
+        Co1SourceType) -> specific (individual-grain), noted.
+    G6  standard_eb grain follows (type x tier): T2 -> aggregate
+        (synthesis-tier); T4/T5 -> code (regulatory; no re-graining claimed,
+        see G1).
+    """
+    if evidence_type == "co1":
+        if co1_source_type in (Co1SourceType.DPO_RESEARCH.value,
+                               Co1SourceType.ADVOCACY_POSITION.value):
+            return GRAIN_AGGREGATE, "G3:population-grain co1"
+        return GRAIN_SPECIFIC, "G3:individual-grain co1"
+    if evidence_type == "standard_eb":
+        if tier == 2:
+            return GRAIN_AGGREGATE, "G6:standard_eb@T2=synthesis-tier"
+        return GRAIN_CODE, "G6:standard_eb@T4/5=regulatory (no re-graining claimed: G1)"
+    return GRAIN_FROM_EVIDENCE_TYPE.get(evidence_type, GRAIN_SPECIFIC), "default map"
+
+
+# ---------------------------------------------------------------------------
+# G2 — "applies but never assessed" is a first-class grade, not an
+# engine-local string. Before this promotion, scripts/assess/assess_cell.py
+# defined NOT_ASSESSED itself and relied on it merely FAILING every "full"
+# check in consolidate() below (it matches none of POP_EXACT/None,
+# VAL_EXACT/None, SD_DIRECT/None) to fall through to DOWN-WEIGHTED. That
+# behaviour is unchanged here — NOT_ASSESSED is still not a member of
+# ALL_POP_DIRECTNESS / ALL_VAL_DIRECTNESS / ALL_SCALE_DIRECTNESS, so
+# check_directness_record still flags it if it leaks somewhere ungoverned —
+# but the value itself now has ONE home instead of being reinvented wherever
+# G2 is needed.
+# ---------------------------------------------------------------------------
+NOT_ASSESSED = "NOT_ASSESSED"
 
 
 # ---------------------------------------------------------------------------
