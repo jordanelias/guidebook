@@ -266,14 +266,22 @@ line have been read.
 `specifications(parameter_id, COALESCE(identity_code,''), COALESCE(icf_code,''),
 COALESCE(needs_code,''), COALESCE(medical_code,''))`. Running `assess_cell.py` a second time for
 the *same* parameter × lens combination is refused **at engine time, at step 5** — not at apply
-time. The engine does NOT re-emit: it dies with an uncaught
-`sqlite3.IntegrityError: UNIQUE constraint failed: index 'idx_spec_row_identity'` at
-`assess_cell.py:721`, exits 1, and **writes no `--emit-sql` file at all**. Verified twice on
-2026-09-10, including the real batch-07 shape (a fresh copy of the post-migration DB, new session,
-new stamp): same crash. The scratch DB is left partially written. This file said the opposite
-until the adversarial pass executed it. Batch 06 is
-the first determination of this cell; a batch 07 that revisits it needs a supersede design (an
-owner decision this runbook does not make — workplan DELIBERATELY WAITING).
+time. The engine does NOT re-emit: it prints a `REFUSING:` line naming the standing
+`specification_id`, its state and the session that wrote it, exits 1, and **writes no `--emit-sql`
+file at all**. Verified twice on 2026-09-10, including the real batch-07 shape (a fresh copy of the
+post-migration DB, new session, new stamp). This file said the opposite until the adversarial pass
+executed it. Batch 06 is the first determination of this cell; a batch 07 that revisits it needs a
+supersede design (an owner decision this runbook does not make — workplan DELIBERATELY WAITING).
+
+> **What changed on 2026-09-10, later the same day.** The refusal used to arrive as an uncaught
+> `sqlite3.IntegrityError: UNIQUE constraint failed: index 'idx_spec_row_identity'` raised from
+> inside the `specifications` INSERT — a stack trace naming an index rather than a cell, after the
+> whole determination had been computed, telling the operator neither that the cell was already
+> determined nor that there is nothing to do about it. `assess_cell.validate_cell_undetermined()`
+> now asks the question from argv, before the gather, and the engine prints its refusals as
+> sentences instead of tracebacks. **The outcome is unchanged** — same refusal, same exit 1, still
+> no artifact, still nothing written — so every instruction in this runbook stands. Only the
+> operator's view of it moved.
 
 ## Step 6 — apply: capture, migrate, gate, regenerate — in that order
 
