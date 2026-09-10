@@ -44,7 +44,7 @@
   {
     "started": "2026-09-10T00:27:40",
     "role": "adversarial",
-    "bytes": 577913,
+    "bytes": 590711,
     "agent_id_prefix": "ac7766ba",
     "file": "2026-09-10T00-27-40_adversarial_ac7766ba.jsonl"
   },
