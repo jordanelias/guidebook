@@ -2720,3 +2720,44 @@ ACTION: The state is derived by the engine, not asserted by hand. Do not cite §
 manual" against a machine-computed `specifications` state; cite it for the reasoning doc and the
 Opus floor, which it still governs.
 DATE: 2026-09-09 — owner ruling, quoted above.
+
+---
+
+## Owner rulings 2026-09-10 — the Layer 2 line, and owner-gated work
+
+Asked whether the six checks that invoke Layer 2 stage tools are compliant, and whether
+brokenness parked awaiting an owner decision falls under the deletion rule, the owner
+ruled:
+
+> **"deciding at Layer 2 isn't allowed, and owner-gated stuff stays"**
+
+**Scope of the first clause.** It answers a question that was explicitly about CHECKS
+("ensure that our checks are actually checking something, that we are only using Layer 0
+or Layer 1 for checks"). A check may INVOKE a Layer 2 tool — a freshness check has no
+other way to know an artefact is fresh — but the pass/fail judgment must be computed at
+Layer 0/1. It does **not** retire a pipeline stage's own output: a stage tool producing
+its stage's result is that stage doing its job, and judgment's job is to decide. The
+2026-09-09 evening ruling directing the engine to compute the determination stands.
+
+**Mechanical form.** "Decides" = the Layer 2 file contains a conditional non-zero exit
+reachable from `main`. "Invokes" = a Layer 0 file runs it and computes the verdict from
+its output. Six registry entries fail today: `author_fidelity`,
+`research_contract_sync`, `pipeline_completeness_fresh`, `evidentiary_audit_fresh`,
+`context_map_fresh`, `site_pages_fresh`.
+
+**Scope of the second clause.** Work parked awaiting an owner decision is exempt from the
+non-compliance deletion rule. Named today: `scripts/generate/room_page.py` and
+`skills/question-author_SKILL.md`, both in `governance/schema-reference-exemptions.yaml`
+awaiting decision 8 on the room stratum, open since 2026-08-02.
+
+**Recorded late, and that is the point.** These rulings were acted on for two hours
+before being written here. Rule 0's second sentence is *"Record the supersession"*, and
+an unrecorded ruling binds nothing mechanical: a meta-script reads code, YAML and DDL,
+never a transcript. This entry was added only after an audit observed that
+`grep -n 2026-09-10 references/project-standards.md` returned nothing.
+
+CONDITION: Any session registering a check, or judging whether broken apparatus may be
+deleted.
+ACTION: A check's verdict is computed at Layer 0/1; invoking a Layer 2 tool is fine.
+Owner-gated brokenness stays until the decision it waits on is made.
+DATE: 2026-09-10 — owner rulings, quoted above.
