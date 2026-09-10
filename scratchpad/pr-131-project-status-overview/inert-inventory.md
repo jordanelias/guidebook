@@ -180,3 +180,60 @@ with `item_code = NULL`.
 and a determination was proven writable — but on a *scratch* copy. Until a parameter is
 minted into the canonical DB through the migration path, `specifications` remains
 unwritable there. The tool exists; the row does not.
+
+---
+
+# CORRECTION — applying the layer model changes the answer
+
+Owner ruling (2026-09-10): *deciding at Layer 2 isn't allowed, and owner-gated stuff
+stays.* Applying that, plus §3's layer model, to the inert list above: **"nine genuinely
+inert" was wrong.** The honest number is at most two, and the real findings are different.
+
+## The method error, twice
+
+**Layer 0 tools are invoked by a human following a procedure, not by CI.** An inertness
+test built on registry / CI / hooks / Python imports is structurally blind to exactly the
+apparatus Layer 0 is made of. It flagged:
+
+- `scripts/research/emit_batch_sql.py` — the capture step of THE WRITE PATH (CLAUDE.md:163)
+- `scripts/audit/rename_insurance.py` — **"prove a table rename changed NAMES ONLY"**, whose
+  docstring cites rule 4, the rule that exists because migration 063 swept fourteen callers
+  and missed `v_item_provenance`.
+
+Both work. `rename_insurance.py --snapshot` runs clean: EXAMINED 70 tables, 18 views, 90
+foreign keys. **Nothing invokes it because you invoke it when you do a rename — and
+migration 071 was a re-key, and it was not run.** That is not a dead tool. That is a Layer
+0 tool that was available and unused during the exact operation it exists for.
+
+**So the layer must be an INPUT to the inertness test**, not a conclusion drawn after it.
+
+## Quarantine is not death — the registry says so itself
+
+All three quarantined scripts stay. Their own entries say why:
+
+| script | what the registry records |
+|---|---|
+| `code_currency_audit.py` | quarantine says *"a content backlog, not a gate"* — but `governance/tier-system.md:55` names it as **the mechanical enforcement** of a doctrine rule, *"promoted from text rule (Level 1) to audit script (Level 2)"*. tier-system.md is **operative** (CLAUDE.md §6). Deleting it deletes the enforcement of live doctrine. |
+| `pre_rehab_banner_audit.py` | the entry **corrects an earlier claim** that it was permanently red: *"It is not. It is a 4-invariant file↔DB drift gate… it PASSES when the banners and the DB agree."* It fails today on invariant 2 only — 6 slugs carrying a retraction banner while sitting at `evidence_state='PARTIAL'`. A working gate with a real, fixable finding. |
+| `adjudication_integrity.py` | the entry states outright *"why this entry is NOT retired"*: `scope` was NULL on all five admitted sources, and `schemas/tier_derivation.py` keys the ratified tier on it. |
+
+## Owner-gated — stays, per the ruling
+
+`scripts/generate/room_page.py` and `skills/question-author_SKILL.md`, parked in
+`schema-reference-exemptions.yaml` awaiting decision 8 since 2026-08-02.
+
+## What is actually left
+
+`scripts/generate_parts.py` writes `parts/v10/`, which **does not exist** — `parts/` holds
+only `88_to_90`, `_archived`, `deprecated`. But three live skills still name it
+(`cross-reference-resolver`, `session-consolidator`, `structure-auditor`, plus two
+deprecated ones). Deleting it creates the broken path the rule is meant to eliminate,
+pointing the other way. It belongs to the render cluster awaiting decisions, not to a cull.
+
+`scripts/audit/graph/__init__.py` is a one-line comment never imported as a package —
+genuinely deletable, and worth almost nothing either way.
+
+**Conclusion: the cull is not the win here.** Three working gates are in quarantine, one
+enforcing operative doctrine; two Layer 0 tools are invisible to the test that was
+supposed to find dead code; and one blocking gate is broken in the mode a human runs it.
+Those are the repairs.
