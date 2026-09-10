@@ -52,6 +52,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 # refuses from the one authority rather than from a list of its own.
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import dbcore                                                      # noqa: E402
+# The ONE dbcore name imported bare rather than reached through the module: it is raised,
+# not called, and a module path in front of it at 114 sites crowds the line whose whole job
+# is to carry a sentence. See dbcore.Refusal for why these are a subclass rather than plain
+# ValueError -- in short, so that a defect keeps the traceback a refusal does not need.
+from dbcore import Refusal                                         # noqa: E402
 
 # DB_PATH stays a module attribute because callers and tests read it. It is resolved
 # through dbcore so there is one resolution, not two.
@@ -174,7 +179,7 @@ def insert_gap(data: dict, session: str, dry_run: bool = False) -> str:
 def close_gap(gap_id: str, status: str,
               session: str, dry_run: bool = False):
     if not status.startswith("CLOSED"):
-        raise ValueError(f"status must start with CLOSED, got '{status}'")
+        raise Refusal(f"status must start with CLOSED, got '{status}'")
     u = _upd(session)
     with connect(dry_run) as conn:
         conn.execute(
@@ -187,7 +192,7 @@ def close_gap(gap_id: str, status: str,
 def update_gap_priority(gap_id: str, priority: str,
                         session: str, dry_run: bool = False):
     if priority not in ("P1", "P2", "P3"):
-        raise ValueError(f"Invalid priority: {priority}")
+        raise Refusal(f"Invalid priority: {priority}")
     u = _upd(session)
     with connect(dry_run) as conn:
         conn.execute(
@@ -225,16 +230,16 @@ def log_mining(slug: str, ref_id: str, direction: str,
     keeping or dropping it: a caller would believe a DOI had been recorded.
     """
     if direction not in _VALID_DIRECTIONS:
-        raise ValueError(
+        raise Refusal(
             f"direction must be 'backward' or 'forward', got '{direction}'"
         )
     deferred_reason = (deferred_reason or "").strip() or None
     if connections and deferred_reason:
-        raise ValueError(
+        raise Refusal(
             f"{ref_id}: a pass cannot both produce connections and be deferred. "
             f"Say which happened.")
     if not connections and not deferred_reason:
-        raise ValueError(
+        raise Refusal(
             f"{ref_id}: no connections and no --deferred-reason. A mining pass that "
             f"found nothing and does not say why is indistinguishable from one that "
             f"never ran (R8's rule for searches, applied to mining).")
@@ -297,8 +302,22 @@ def log_mining(slug: str, ref_id: str, direction: str,
                      [status, ts, session, ref_id])
 
 
-class FrozenGridError(RuntimeError):
-    """Raised on any attempt to write a legacy coverage grid. See _FROZEN_MSG."""
+class FrozenGridError(Refusal):
+    """Raised on any attempt to write a legacy coverage grid. See _FROZEN_MSG.
+
+    A Refusal, not the RuntimeError it was until 2026-09-10, because _FROZEN_MSG is a
+    refusal in every sense that matters: it says the table no longer accepts writes, why
+    it was frozen, and what replaced it. Its own class survives for anyone catching it
+    specifically; only the base moved.
+
+    NO OPERATOR MEETS IT TODAY, and the honest version of this note says so. The CLI never
+    calls the two functions that raise it -- `main()`'s `upsert-coverage`/`upsert-language`
+    branch prints _FROZEN_MSG itself and exits 2 -- so `upsert_search_coverage()` and
+    `upsert_search_languages()` currently have no caller at all, and this class is
+    classified correctly rather than usefully. That makes them a deletion candidate under
+    CLAUDE.md §8 ("an uncalled script and an unread field are the same defect"), which is
+    a separate judgment from this one and is not made here.
+    """
 
 
 # ---------------------------------------------------------------------------
@@ -423,7 +442,7 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
     # callers, and it can say why. An empty string is refused too -- R8 keeps empties
     # as completed work, and "I expected nothing" is a prior worth typing.
     if not (prior_expectation or "").strip():
-        raise ValueError(
+        raise Refusal(
             "--prior-expectation is required. Write what you expect this search to "
             "find BEFORE you run it (DR-2026-05-09 24). Written afterwards it is a "
             "rationalisation wearing the field that exists to prevent one, and there "
@@ -434,12 +453,12 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
     ids = list(admitted_ref_ids or [])
     if len(set(ids)) != len(ids):
         dupes = sorted({r for r in ids if ids.count(r) > 1})
-        raise ValueError(
+        raise Refusal(
             f"--admitted-ref-id repeated: {', '.join(dupes)}. One admission edge "
             f"per (search, source); a repeat is a miscount, not two admissions "
             f"(invariant H07).")
     if ids and results_admitted and results_admitted != len(ids):
-        raise ValueError(
+        raise Refusal(
             f"--results-admitted {results_admitted} disagrees with "
             f"{len(ids)} --admitted-ref-id value(s). The count and the edges are "
             f"the same fact; they may not differ (invariant H05).")
@@ -489,7 +508,7 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
                                 [ref_id]).fetchone():
                 # Named, not a bare FOREIGN KEY constraint failed. The whole
                 # transaction rolls back, execution row included.
-                raise ValueError(
+                raise Refusal(
                     f"--admitted-ref-id {ref_id} is not in evidence_sources. "
                     f"File the source first (`db.py add-source`), then log the "
                     f"search that admitted it.")
@@ -696,10 +715,10 @@ def next_conf_id() -> str:
 
 def insert_conflict(data: dict, session: str, dry_run: bool = False) -> str:
     if data.get("status") not in _VALID_CONFLICT_STATUS:
-        raise ValueError(f"Invalid conflict status: {data.get('status')}")
+        raise Refusal(f"Invalid conflict status: {data.get('status')}")
     if data.get("pop_a") and data.get("pop_b"):
         if data["pop_a"] > data["pop_b"]:
-            raise ValueError(
+            raise Refusal(
                 f"pop_a must be < pop_b lexicographically. "
                 f"Got pop_a={data['pop_a']} pop_b={data['pop_b']}. "
                 f"Swap them before inserting."
@@ -717,7 +736,7 @@ def update_conflict(conflict_id: str, session: str,
                     evidence: str = None, gap_id: str = None,
                     dry_run: bool = False):
     if status and status not in _VALID_CONFLICT_STATUS:
-        raise ValueError(f"Invalid conflict status: {status}")
+        raise Refusal(f"Invalid conflict status: {status}")
     u    = _upd(session)
     sets = [f"updated_at=?", f"updated_by_session=?"]
     vals = [u["updated_at"], u["updated_by_session"]]
@@ -776,7 +795,7 @@ def get_items(category: str = None, status: str = None) -> list:
 
 def insert_audit_run(data: dict, session: str, dry_run: bool = False) -> str:
     if data.get("status") and data["status"] not in _VALID_RUN_STATUS:
-        raise ValueError(f"Invalid audit run status: {data.get('status')}")
+        raise Refusal(f"Invalid audit run status: {data.get('status')}")
     row = {**data, **audit(session)}
     with connect(dry_run) as conn:
         cols = ", ".join(row)
@@ -790,12 +809,12 @@ def update_audit_run(run_id: str, session: str,
                      steps_started: list = None, brief_path: str = None,
                      spec_hash: str = None, dry_run: bool = False):
     if status and status not in _VALID_RUN_STATUS:
-        raise ValueError(f"Invalid audit run status: {status}")
+        raise Refusal(f"Invalid audit run status: {status}")
     # Validate step names
     for step_list in [steps_complete or [], steps_started or []]:
         unknown = [s for s in step_list if s not in _PIPELINE_STEPS]
         if unknown:
-            raise ValueError(f"Unknown pipeline step(s): {unknown}. Valid: {sorted(_PIPELINE_STEPS)}")
+            raise Refusal(f"Unknown pipeline step(s): {unknown}. Valid: {sorted(_PIPELINE_STEPS)}")
     u    = _upd(session)
     sets = ["updated_at=?", "updated_by_session=?"]
     vals = [u["updated_at"], u["updated_by_session"]]
@@ -2003,7 +2022,7 @@ def main():
             # a row with type NULL and scope NULL — underivable by construction, which
             # is the precise thing the guard exists to prevent. Proven on a scratch
             # copy: REF-90001 (tier 1, type NULL, scope NULL) accepted.
-            raise ValueError(
+            raise Refusal(
                 "--evidence-type is REQUIRED. The tier is derived from "
                 "(evidence_type, scope) — with no type there is nothing to derive it "
                 "from, and --tier alone is an assertion.\n"
@@ -2020,26 +2039,26 @@ def main():
                 TIER_MAP, VALID_SCOPES_BY_TYPE, derive_tier)
             _valid = VALID_SCOPES_BY_TYPE.get(_etype)
             if _valid is None:
-                raise ValueError(
+                raise Refusal(
                     f"--evidence-type {_etype!r} is not on the ratified ladder. "
                     f"Known types: {sorted(VALID_SCOPES_BY_TYPE)}")
             _scope = args.scope
             if _scope is None and len(_valid) == 1:
                 _scope = next(iter(_valid))          # forced by the type; not a judgment
             if _scope is None:
-                raise ValueError(
+                raise Refusal(
                     f"--scope is REQUIRED for --evidence-type {_etype!r}: it is the "
                     f"discriminator the ratified tier is derived from, and this type "
                     f"spans more than one tier. Choose {sorted(_valid)}.\n"
                     f"Without it the tier is an assertion, and a tier that cannot be "
                     f"derived cannot be contested.")
             if _scope not in _valid:
-                raise ValueError(
+                raise Refusal(
                     f"--scope {_scope!r} is not admissible for --evidence-type "
                     f"{_etype!r}; valid: {sorted(_valid)}")
             _derived = derive_tier(_etype, _scope)
             if args.tier != _derived:
-                raise ValueError(
+                raise Refusal(
                     f"--tier {args.tier} contradicts the ratified ladder: "
                     f"({_etype}, {_scope}) derives tier {_derived}.\n"
                     f"The tier is not a free integer — it is a function of the evidence "
@@ -2055,7 +2074,7 @@ def main():
         # written with co1_provenance NULL because the CLI could not say it; nothing
         # refused them. Now something does.
         if (args.evidence_type or "").lower() == "co1" and not args.co1_provenance:
-            raise ValueError(
+            raise Refusal(
                 "--co1-provenance is REQUIRED for --evidence-type co1. D-0178: the Co-1 "
                 "warrant must NAME the co-production — which disabled people or "
                 "organisation produced this work — because that co-production IS the "
@@ -2224,14 +2243,14 @@ def main():
         try:
             discoveries = json.loads(args.discoveries) if args.discoveries else []
             if not isinstance(discoveries, list):
-                raise ValueError("--discoveries must be a JSON array")
+                raise Refusal("--discoveries must be a JSON array")
         except (json.JSONDecodeError, ValueError) as e:
             print(json.dumps({"error": f"--discoveries: {e}"}))
             sys.exit(2)
         try:
             cand_dois = json.loads(args.candidate_dois) if args.candidate_dois else []
             if not isinstance(cand_dois, list):
-                raise ValueError("--candidate-dois must be a JSON array")
+                raise Refusal("--candidate-dois must be a JSON array")
         except (json.JSONDecodeError, ValueError) as e:
             print(json.dumps({"error": f"--candidate-dois: {e}"}))
             sys.exit(2)
@@ -2323,7 +2342,7 @@ def parse_author_flags(flags: list[str]) -> list[dict]:
     for i, raw in enumerate(flags, start=1):
         part = (raw or "").strip()
         if not part:
-            raise ValueError("--author was given an empty value")
+            raise Refusal("--author was given an empty value")
         if "|" in part:
             head, tail = part.split("|", 1)
         else:
@@ -2331,12 +2350,12 @@ def parse_author_flags(flags: list[str]) -> list[dict]:
         head, tail = head.strip(), tail.strip()
         if head.lower() in ("corp", "corporate"):
             if not tail:
-                raise ValueError(f"--author {raw!r}: corporate author has no name")
+                raise Refusal(f"--author {raw!r}: corporate author has no name")
             out.append({"position": i, "is_corporate": 1, "corporate_name": tail,
                         "last_name": None, "first_name": None})
         else:
             if not head:
-                raise ValueError(f"--author {raw!r}: no surname. Give 'Last|Given'.")
+                raise Refusal(f"--author {raw!r}: no surname. Give 'Last|Given'.")
             out.append({"position": i, "is_corporate": 0, "corporate_name": None,
                         "last_name": head, "first_name": tail or None})
     return out
@@ -2369,7 +2388,7 @@ def parse_author_display(display: str) -> list[dict]:
     parts = [p.strip() for p in (display or "").split(";")]
     parts = [p for p in parts if p]
     if not parts:
-        raise ValueError("--authors is empty")
+        raise Refusal("--authors is empty")
     for i, part in enumerate(parts, start=1):
         m = _DISPLAY_PART.match(part)
         if m:
@@ -2379,7 +2398,7 @@ def parse_author_display(display: str) -> list[dict]:
         else:
             bad.append(part)
     if bad:
-        raise ValueError(
+        raise Refusal(
             "--authors could not be parsed without guessing: "
             + "; ".join(repr(b) for b in bad)
             + ". Each part must be a surname followed by initials ('Payne S'). "
@@ -2413,7 +2432,7 @@ def insert_evidence_source(data: dict, session: str,
                               "first_author_first", "author_count", "is_corporate_primary")
     _given = [c for c in _DERIVED_AUTHOR_COPIES if c in data]
     if _given:
-        raise ValueError(
+        raise Refusal(
             f"{_given} is/are writer-retired (migration 063). Authors are rows in "
             "evidence_source_authors, derived for display by v_evidence_authors. Pass "
             "the `authors` argument (parse_author_flags / parse_author_display), or on "
@@ -2477,7 +2496,7 @@ def insert_evidence_source(data: dict, session: str,
                     f"--local-ref-id, not --ref-id. They are different values: the "
                     f"global id is unique across the repository, the label is "
                     f"meaningful only inside one slug.")
-        raise ValueError(
+        raise Refusal(
             f"--ref-id {rid!r} is not a global reference id.{hint} Expected REF-NNNNN "
             f"(or REF-VERIFIED-NNN / Co1-NN). Get the next one from "
             f"`db.py next-id ref` (added 2026-09-10 — this message named the Python "
@@ -2500,14 +2519,14 @@ def insert_evidence_source(data: dict, session: str,
     vs = data.get("verification_status")
     if vs == "VERIFIED":
         if not data.get("verification_method"):
-            raise ValueError(
+            raise Refusal(
                 "VERIFIED requires --verification-method (how it was established: "
                 "tool / corroborated-not-retrieved / co1-attestation / "
                 "citing-bibliography). D-0157: a standing without its method is "
                 "not a standing. Filing it as UNVERIFIED with disposition OPEN is "
                 "the honest move if you have not established it.")
         if data["verification_method"] == "tool" and not data.get("verified_by_tool"):
-            raise ValueError(
+            raise Refusal(
                 "verification_method='tool' requires --verified-by-tool naming "
                 "which tool established it (invariant I4b).")
         data.setdefault("verification_attempt_count", 1)
@@ -2533,7 +2552,7 @@ def insert_evidence_source(data: dict, session: str,
             "SELECT ref_id FROM evidence_sources WHERE ref_id = ?",
             [data["ref_id"]]).fetchone()
         if existing:
-            raise ValueError(
+            raise Refusal(
                 f"{data['ref_id']} already exists. R9: cross-file the existing "
                 f"ref_id rather than duplicating. To amend it, ship a migration.")
         if data.get("doi"):
@@ -2541,7 +2560,7 @@ def insert_evidence_source(data: dict, session: str,
                 "SELECT ref_id FROM evidence_sources WHERE doi = ? "
                 "AND COALESCE(superseded_by_ref_id,'') = ''", [data["doi"]]).fetchone()
             if dupe:
-                raise ValueError(
+                raise Refusal(
                     f"DOI {data['doi']} is already filed as {dupe[0]} (R9: "
                     f"pre-check the DOI, cross-file rather than duplicate). "
                     f"Link that ref_id to your slug instead.")
@@ -2554,7 +2573,7 @@ def insert_evidence_source(data: dict, session: str,
         # A source with no authors renders as a blank byline everywhere, and the
         # display column that used to paper over that is gone. Refuse the write.
         if not authors:
-            raise ValueError(
+            raise Refusal(
                 f"{data['ref_id']}: no authors given. Every source needs its authors "
                 f"as rows (--author / --authors); there is no display column to write "
                 f"instead. If the work genuinely has no named author, file the issuing "
@@ -2593,12 +2612,12 @@ def _payload_for(ref_id, doi, log_session):
     import retrieval_log                                              # noqa: E402
     payloads = retrieval_log._logged_payloads(log_session)
     if not payloads:
-        raise ValueError(
+        raise Refusal(
             f"{ref_id}: no retrieval log for session {log_session!r}. A correction is "
             f"only as good as the bytes behind it; re-retrieve first (R10).")
     msg = retrieval_log._index_by_doi(payloads).get((doi or "").lower())
     if msg is None:
-        raise ValueError(
+        raise Refusal(
             f"{ref_id}: nothing logged for DOI {doi!r} in session {log_session!r}. "
             f"This writer cannot be told a value, only shown one — re-retrieve the "
             f"locator so there is a payload to read (R10).")
@@ -2623,7 +2642,7 @@ def correct_source(ref_id: str, fields: list, session: str, log_session: str,
     """
     unknown = [f for f in fields if f not in _CORRECTABLE and f != "authors"]
     if unknown:
-        raise ValueError(
+        raise Refusal(
             f"{ref_id}: cannot correct {', '.join(unknown)} — this writer rewrites only "
             f"fields retrieval_log --verify-authors can prove: "
             f"{', '.join(sorted(_CORRECTABLE))}, authors.")
@@ -2631,9 +2650,9 @@ def correct_source(ref_id: str, fields: list, session: str, log_session: str,
         row = conn.execute(
             "SELECT ref_id, doi FROM evidence_sources WHERE ref_id=?", [ref_id]).fetchone()
         if row is None:
-            raise ValueError(f"{ref_id}: no such evidence source.")
+            raise Refusal(f"{ref_id}: no such evidence source.")
         if not row["doi"]:
-            raise ValueError(
+            raise Refusal(
                 f"{ref_id}: no DOI, so no payload can be keyed to it. Corrections to a "
                 f"DOI-less source have no byte-level authority and are refused here.")
         msg = _payload_for(ref_id, row["doi"], log_session)
@@ -2643,7 +2662,7 @@ def correct_source(ref_id: str, fields: list, session: str, log_session: str,
         for f in [x for x in fields if x != "authors"]:
             want = _CORRECTABLE[f](msg)
             if want in (None, ""):
-                raise ValueError(
+                raise Refusal(
                     f"{ref_id}: the payload states nothing for {f!r}. A silence is not a "
                     f"correction — leave the column NULL rather than inventing one.")
             have = conn.execute(
@@ -2658,7 +2677,7 @@ def correct_source(ref_id: str, fields: list, session: str, log_session: str,
         if "authors" in fields:
             real = [a for a in (msg.get("author") or []) if isinstance(a, dict)]
             if not real:
-                raise ValueError(
+                raise Refusal(
                     f"{ref_id}: the payload names no authors. Refusing to empty the "
                     f"byline on the strength of a payload that simply does not say.")
             was = [f"{r['last_name']}, {r['first_name'] or ''}".strip(", ") for r in
@@ -2709,12 +2728,12 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
     """
     note = (note or "").strip()
     if not note:
-        raise ValueError(f"exec {exec_id}: refusing to append an empty amendment.")
+        raise Refusal(f"exec {exec_id}: refusing to append an empty amendment.")
     with connect(dry_run) as conn:
         row = conn.execute("SELECT exec_id, findings_note, harm_finding "
                            "FROM search_executions WHERE exec_id=?", [exec_id]).fetchone()
         if row is None:
-            raise ValueError(f"exec {exec_id}: no such search execution.")
+            raise Refusal(f"exec {exec_id}: no such search execution.")
         stamp = audit(session)
         marker = f" || CORRECTED {stamp['created_at'][:10]}: "
         duplicate = note in (row["findings_note"] or "")
@@ -2734,7 +2753,7 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
             # completing it is not rewriting what the search found. Lowering the flag
             # would be, and is refused: that would erase a harm finding.
             if row["harm_finding"]:
-                raise ValueError(
+                raise Refusal(
                     f"exec {exec_id}: harm_finding is already 1. This flag only rises.")
             conn.execute("UPDATE search_executions SET harm_finding=1 WHERE exec_id=?",
                          [exec_id])
@@ -2767,7 +2786,7 @@ def resolve_candidate(candidate_id: int, disposition: str, redescription: str,
     """
     redescription = (redescription or "").strip()
     if not redescription:
-        raise ValueError(
+        raise Refusal(
             f"candidate {candidate_id}: R15 requires a re-description FROM THE SOURCE "
             f"to resolve a candidate. Refusing to close a hypothesis without one.")
     with connect(dry_run) as conn:
@@ -2775,19 +2794,19 @@ def resolve_candidate(candidate_id: int, disposition: str, redescription: str,
                            "FROM search_candidates WHERE candidate_id=?",
                            [candidate_id]).fetchone()
         if row is None:
-            raise ValueError(f"candidate {candidate_id}: no such staged candidate.")
+            raise Refusal(f"candidate {candidate_id}: no such staged candidate.")
         allowed = dbcore.check_values(conn, "search_candidates", "disposition")
         if allowed and disposition not in allowed:
-            raise ValueError(
+            raise Refusal(
                 f"candidate {candidate_id}: disposition {disposition!r} is not in the "
                 f"column's own vocabulary {sorted(allowed)}.")
         if disposition == "ADMITTED" and not admitted_ref_id:
-            raise ValueError(
+            raise Refusal(
                 f"candidate {candidate_id}: ADMITTED without --admitted-ref-id names no "
                 f"evidence row. Say which source it became.")
         if admitted_ref_id and not conn.execute(
                 "SELECT 1 FROM evidence_sources WHERE ref_id=?", [admitted_ref_id]).fetchone():
-            raise ValueError(
+            raise Refusal(
                 f"candidate {candidate_id}: --admitted-ref-id {admitted_ref_id} is not in "
                 f"evidence_sources. File the source first.")
         stamp = audit(session)
@@ -2842,24 +2861,24 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
     """
     replacement, reason = (replacement or "").strip(), (reason or "").strip()
     if field in _CORRECTABLE or field == "authors":
-        raise ValueError(
+        raise Refusal(
             f"{ref_id}: {field!r} is a bibliographic field. It is not amendable by hand "
             f"-- use `db.py correct-source`, which takes it from the logged payload.")
     if field not in _AMENDABLE:
-        raise ValueError(
+        raise Refusal(
             f"{ref_id}: {field!r} is not an amendable judgement field. "
             f"Amendable: {', '.join(_AMENDABLE)}.")
     if not replacement:
-        raise ValueError(f"{ref_id}: refusing to blank {field!r}. Give the corrected text.")
+        raise Refusal(f"{ref_id}: refusing to blank {field!r}. Give the corrected text.")
     if not reason:
-        raise ValueError(
+        raise Refusal(
             f"{ref_id}: --reason is required. An unexplained overwrite of a warrant is "
             f"indistinguishable from the error it replaces.")
     with connect(dry_run) as conn:
         row = conn.execute(f"SELECT ref_id, {field}, metadata_integrity_detail "
                            f"FROM evidence_sources WHERE ref_id=?", [ref_id]).fetchone()
         if row is None:
-            raise ValueError(f"{ref_id}: no such evidence source.")
+            raise Refusal(f"{ref_id}: no such evidence source.")
         was = row[field]
         if (was or "").strip() == replacement:
             return {"ref_id": ref_id, "field": field, "changed": False}
@@ -2876,17 +2895,17 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                                "WHERE ref_id=?", [ref_id]).fetchone()
             _et = (cur["evidence_type"] or "").lower()
             if not _et:
-                raise ValueError(
+                raise Refusal(
                     f"{ref_id} has no evidence_type, so no scope is derivable for it. "
                     f"Set the type first; a scope without a type states nothing.")
             _valid = VALID_SCOPES_BY_TYPE.get(_et, frozenset())
             if replacement not in _valid:
-                raise ValueError(
+                raise Refusal(
                     f"{ref_id}: scope {replacement!r} is not admissible for "
                     f"evidence_type {_et!r}; valid: {sorted(_valid)}")
             _derived = derive_tier(_et, replacement)
             if cur["tier"] != _derived:
-                raise ValueError(
+                raise Refusal(
                     f"{ref_id}: amending scope to {replacement!r} would make the stored "
                     f"tier {cur['tier']} contradict the ratified ladder, which derives "
                     f"{_derived} from ({_et}, {replacement}).\n"
@@ -2923,11 +2942,11 @@ def update_locator(ref_id: str, status: str, session: str, dry_run: bool = False
         row = conn.execute("SELECT ref_id, status FROM source_locators WHERE ref_id=?",
                            [ref_id]).fetchone()
         if row is None:
-            raise ValueError(f"{ref_id}: not in source_locators.")
+            raise Refusal(f"{ref_id}: not in source_locators.")
         dbcore.check_vocab(conn, "source_locators", "status", status, "--status")
         if status == "PROMOTED" and not dbcore.exists(conn, "evidence_sources",
                                                       "ref_id", ref_id):
-            raise ValueError(
+            raise Refusal(
                 f"{ref_id}: PROMOTED means this lead became evidence, and there is no "
                 f"evidence_sources row for it. File the source first.")
         if row["status"] == status:
@@ -2951,16 +2970,16 @@ def observe_term(data: dict, session: str, dry_run: bool = False):
     """
     surface = (data.get("surface_form") or "").strip()
     if not surface:
-        raise ValueError("--surface-form is required: the phrase AS THE SOURCE WRITES IT.")
+        raise Refusal("--surface-form is required: the phrase AS THE SOURCE WRITES IT.")
     if "term_id" in data:
-        raise ValueError(
+        raise Refusal(
             "observe-term does not accept a term_id. Observing that a source uses a "
             "phrase is a fact about the document; deciding whether it names one of our "
             "concepts is judgment, and belongs to `db.py adjudicate-term` (D-0173).")
     with connect(dry_run) as conn:
         ref = dbcore.fold_ref(data.get("ref_id"))
         if not dbcore.exists(conn, "evidence_sources", "ref_id", ref):
-            raise ValueError(
+            raise Refusal(
                 f"ref_id {data.get('ref_id')!r} is not an admitted source. A term is "
                 f"observed IN a source; observe it after the source is filed.")
         row = {"ref_id": ref, "surface_form": surface,
@@ -2994,7 +3013,7 @@ def adjudicate_term(observation_id: int, outcome: str, rationale: str, session: 
     """
     rationale = (rationale or "").strip()
     if not rationale:
-        raise ValueError(
+        raise Refusal(
             "--rationale is required. An adjudication that does not say why cannot be "
             "contested, and being contestable is the point of splitting judgment from "
             "observation.")
@@ -3002,20 +3021,20 @@ def adjudicate_term(observation_id: int, outcome: str, rationale: str, session: 
         obs = conn.execute("SELECT observation_id, surface_form FROM observed_terms "
                            "WHERE observation_id=?", [observation_id]).fetchone()
         if obs is None:
-            raise ValueError(f"observation {observation_id}: no such observed term.")
+            raise Refusal(f"observation {observation_id}: no such observed term.")
         dbcore.check_vocab(conn, "term_adjudications", "outcome", outcome, "--outcome")
         names = outcome in ("NAMES-EXISTING", "NAMES-NEW")
         if names and not term_id:
-            raise ValueError(
+            raise Refusal(
                 f"--outcome {outcome} names a term, so --term-id is required. If the "
                 f"phrase is not one of our concepts the outcome is NOT-OURS; if it "
                 f"cannot be settled on this source alone it is DEFERRED.")
         if not names and term_id:
-            raise ValueError(
+            raise Refusal(
                 f"--outcome {outcome} declines to name a term, so --term-id must be "
                 f"absent. Say NAMES-EXISTING or NAMES-NEW if it does name one.")
         if term_id and not dbcore.exists(conn, "terms", "term_id", term_id):
-            raise ValueError(
+            raise Refusal(
                 f"term_id {term_id!r} is not in `terms`. For a concept new to the "
                 f"vocabulary, create the term first, then adjudicate NAMES-NEW to it.")
         row = {"observation_id": observation_id, "outcome": outcome,
@@ -3060,13 +3079,13 @@ def insert_term(from_observation: int, canonical_en: str, rationale: str, sessio
     canonical_en = (canonical_en or "").strip()
     rationale = (rationale or "").strip()
     if not canonical_en:
-        raise ValueError("--canonical-en is required: a term is its name.")
+        raise Refusal("--canonical-en is required: a term is its name.")
     if not rationale:
-        raise ValueError(
+        raise Refusal(
             "--rationale is required. Minting a term is an adjudication, and an "
             "adjudication that does not say why cannot be contested.")
     if _VALUE_BEARING.search(canonical_en):
-        raise ValueError(
+        raise Refusal(
             f"--canonical-en {canonical_en!r} REFUSED: it carries a number, a comparator "
             f"or a min/max word, so it states a determination in its own name.\n"
             f"That is the defect the item layer was deleted for -- a container that "
@@ -3078,7 +3097,7 @@ def insert_term(from_observation: int, canonical_en: str, rationale: str, sessio
         obs = conn.execute("SELECT observation_id, surface_form, ref_id FROM observed_terms "
                            "WHERE observation_id=?", [from_observation]).fetchone()
         if obs is None:
-            raise ValueError(
+            raise Refusal(
                 f"observation {from_observation}: no such observed term. A term is minted "
                 f"FROM an observed phrase (db.py observe-term), never from nothing -- that "
                 f"is what makes the vocabulary an output of the work rather than a "
@@ -3086,7 +3105,7 @@ def insert_term(from_observation: int, canonical_en: str, rationale: str, sessio
         clash = conn.execute("SELECT term_id, canonical_en FROM terms "
                              "WHERE lower(canonical_en)=lower(?)", [canonical_en]).fetchone()
         if clash:
-            raise ValueError(
+            raise Refusal(
                 f"{canonical_en!r} is already TERM {clash['term_id']} "
                 f"({clash['canonical_en']!r}). That makes this NAMES-EXISTING, not "
                 f"NAMES-NEW:\n  db.py adjudicate-term --observation-id {from_observation} "
@@ -3153,18 +3172,18 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
     """
     term_id = (term_id or "").strip()
     if not term_id:
-        raise ValueError("--term-id is required: a parameter is a pointer at a term.")
+        raise Refusal("--term-id is required: a parameter is a pointer at a term.")
     with connect(dry_run) as conn:
         term = conn.execute("SELECT term_id, canonical_en FROM terms WHERE term_id=?",
                             [term_id]).fetchone()
         if term is None:
-            raise ValueError(
+            raise Refusal(
                 f"{term_id!r}: no such term. A parameter points at a term, and the term "
                 f"comes from an observed phrase:\n"
                 f"  db.py observe-term ...   then   db.py add-term --from-observation N "
                 f"--canonical-en '...' --rationale '...'")
         if _VALUE_BEARING.search(term["canonical_en"]):
-            raise ValueError(
+            raise Refusal(
                 f"{term_id} is named {term['canonical_en']!r}, which carries a number, a "
                 f"comparator or a min/max word — it states a determination in its own "
                 f"name.\nA parameter is what is under determination, never the answer. "
@@ -3178,7 +3197,7 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
             "SELECT p.parameter_id, p.status FROM base_parameters p WHERE p.term_id=?",
             [term_id]).fetchone()
         if clash:
-            raise ValueError(
+            raise Refusal(
                 f"{term_id} is already parameter {clash['parameter_id']} "
                 f"(status {clash['status']}). One parameter per term — a second row is "
                 f"the dual home rule 5 forbids.\n"
@@ -3346,14 +3365,14 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False):
     with dbcore.connect(dry_run) as conn:
         ref = dbcore.fold_ref(row.get("ref_id"))
         if not dbcore.exists(conn, "evidence_sources", "ref_id", ref):
-            raise ValueError(
+            raise Refusal(
                 f"ref_id {data.get('ref_id')!r} is not an admitted source. An extraction "
                 f"is a reading OF a source; extract AFTER admission.\n"
                 f"  db.py add-source ...")
         row["ref_id"] = ref
 
         if not dbcore.exists(conn, "slugs", "slug", row.get("slug")):
-            raise ValueError(
+            raise Refusal(
                 f"slug {row.get('slug')!r} is not a live slug. The slug records where the "
                 f"reading happened, and it must be one the project holds.")
 
@@ -3380,7 +3399,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False):
             held = [r[0] for r in conn.execute(
                 "SELECT slug FROM source_slug_links WHERE ref_id=? ORDER BY slug",
                 (ref,))]
-            raise ValueError(
+            raise Refusal(
                 f"{ref} is not admitted to slug {row.get('slug')!r}. An extraction is "
                 f"mined under a topic the source was ADMITTED to; `source_slug_links` "
                 f"is that record and it does not hold this pair.\n"
@@ -3395,13 +3414,13 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False):
         # --- the subject -----------------------------------------------------
         pid = row.get("parameter_id")
         if pid is None:
-            raise ValueError(
+            raise Refusal(
                 "--parameter-id is required: an extraction whose subject is unknown "
                 "cannot reach the determination it exists to support (owner 2026-08-26, "
                 "'the judgment object is the canonical parameter').")
         n_params = conn.execute("SELECT COUNT(*) FROM base_parameters").fetchone()[0]
         if n_params == 0:
-            raise ValueError(
+            raise Refusal(
                 "`base_parameters` holds no rows, so NO parameter_id can be valid and a "
                 "bare INSERT would fail with `FOREIGN KEY constraint failed` — a refusal "
                 "that names neither the cause nor the fix (CLAUDE.md §4).\n"
@@ -3410,19 +3429,19 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False):
         prow = conn.execute("SELECT status, merged_into FROM base_parameters "
                             "WHERE parameter_id=?", (pid,)).fetchone()
         if prow is None:
-            raise ValueError(
+            raise Refusal(
                 f"parameter_id {pid}: no such parameter. Mint one from a term:\n"
                 f"  db.py add-parameter --term-id TERM-NNN --session ...")
         if prow["status"] != "active":
             target = f" (merged into {prow['merged_into']})" if prow["merged_into"] else ""
-            raise ValueError(
+            raise Refusal(
                 f"parameter_id {pid} is {prow['status']}{target}, not active. Key the "
                 f"extraction on the surviving parameter — a value filed under a folded "
                 f"parameter is unreachable from the determination that replaced it.")
 
         # --- the lenses ------------------------------------------------------
         if not any(row.get(c) for c in _LENS_COLUMNS):
-            raise ValueError(
+            raise Refusal(
                 "an extraction must be stated in at least one lens (D-0182): pass one or "
                 "more of --identity / --icf / --needs / --medical. A value attached to no "
                 "lens is a value about nobody.")
@@ -3433,12 +3452,12 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False):
             if not dbcore.exists(conn, table, key, code):
                 n = conn.execute(f'SELECT COUNT(*) FROM "{table}"').fetchone()[0]
                 if n == 0:
-                    raise ValueError(
+                    raise Refusal(
                         f"{col} {code!r}: the registry `{table}` holds no rows, so no code "
                         f"is valid in this lens yet and the INSERT would fail with "
                         f"`FOREIGN KEY constraint failed`. Seed the registry in a "
                         f"migration, or state the value in a lens that has one.")
-                raise ValueError(
+                raise Refusal(
                     f"{col} {code!r} is not a live {key} in `{table}`. The registry is the "
                     f"vocabulary (CLAUDE.md §4); it is not extended from the CLI.")
 
@@ -3450,19 +3469,19 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False):
         # and normalising it to None here would restore exactly the zero-verbatim row
         # the requirement exists to forbid.
         if not str(row.get("claim_text") or "").strip():
-            raise ValueError(
+            raise Refusal(
                 "--claim-text is required and must not be blank. Migration 073 retired "
                 "`parameter`, the last NOT NULL column that carried the source's own "
                 "words; every remaining verbatim column on this table is nullable, so "
                 "without --claim-text this row would assert a value with nothing of the "
                 "source's own phrasing behind it. Quote the clause you read.")
         if claim_type == "absent" and value is not None:
-            raise ValueError(
+            raise Refusal(
                 "claim_type='absent' records that the source asserts NO value for this "
                 "parameter, so --claimed-value must be omitted. If the source does state "
                 "a value, the claim_type is one of the others.")
         if claim_type is not None and claim_type != "absent" and value is None:
-            raise ValueError(
+            raise Refusal(
                 f"claim_type={claim_type!r} requires --claimed-value. If the source "
                 f"asserts nothing for this parameter, that is claim_type='absent' — a "
                 f"recorded absence, which is evidence, not a missing field.")
@@ -3702,7 +3721,7 @@ def update_gap_addressability(*, gap_id: str, addressability: str,
     triage time per DR §Addressability classification.
     """
     if addressability not in ("ADDRESSABLE", "NOT-ADDRESSABLE", "TRIAGE-NEEDED"):
-        raise ValueError(f"Invalid addressability: {addressability}")
+        raise Refusal(f"Invalid addressability: {addressability}")
     u = _upd(session)
     with connect(dry_run) as conn:
         conn.execute(
@@ -3813,16 +3832,16 @@ def insert_search_candidate(data: dict, session: str, dry_run: bool = False) -> 
     with dbcore.connect(dry_run) as conn:
         if data.get("exec_id") is not None and not dbcore.exists(
                 conn, "search_executions", "exec_id", data["exec_id"]):
-            raise ValueError(
+            raise Refusal(
                 f"exec_id {data['exec_id']!r} is not a live search_executions row. "
                 f"A candidate is something a SEARCH surfaced; log the search first "
                 f"(db.py log-search), then stage what it found.")
         if not dbcore.exists(conn, "slugs", "slug", data.get("found_under_slug")):
-            raise ValueError(
+            raise Refusal(
                 f"found_under_slug {data.get('found_under_slug')!r} is not in `slugs`.")
         if data.get("suggested_slug") and not dbcore.exists(
                 conn, "slugs", "slug", data["suggested_slug"]):
-            raise ValueError(f"suggested_slug {data['suggested_slug']!r} is not in `slugs`.")
+            raise Refusal(f"suggested_slug {data['suggested_slug']!r} is not in `slugs`.")
         dbcore.check_vocab(conn, "search_candidates", "disposition",
                            data.get("disposition"), "insert_search_candidate")
         if data.get("locator_status") is not None:
@@ -3831,7 +3850,7 @@ def insert_search_candidate(data: dict, session: str, dry_run: bool = False) -> 
         # R15: a staged description is a HYPOTHESIS. ADMITTED without a resolved
         # locator is the shape that lets a guess harden into a fact.
         if data.get("disposition") == "ADMITTED" and data.get("locator_status") != "RESOLVED":
-            raise ValueError(
+            raise Refusal(
                 "disposition=ADMITTED requires locator_status=RESOLVED. R15: a staged "
                 "candidate description is a hypothesis, and admitting one whose locator "
                 "was never resolved is how a guess becomes a fact.")
@@ -3857,17 +3876,17 @@ def insert_population_match(data: dict, session: str, dry_run: bool = False):
     with dbcore.connect(dry_run) as conn:
         ref = dbcore.fold_ref(data.get("ref_id"))
         if not dbcore.exists(conn, "evidence_sources", "ref_id", ref):
-            raise ValueError(
+            raise Refusal(
                 f"ref_id {data.get('ref_id')!r} is not an admitted source. Grade the "
                 f"match AFTER admission -- a match row for a source that does not exist "
                 f"is a claim about nothing.")
         if not dbcore.exists(conn, "populations", "population_code", data.get("target_population")):
-            raise ValueError(
+            raise Refusal(
                 f"target_population {data.get('target_population')!r} is not in `populations`.")
         dbcore.check_vocab(conn, "evidence_population_match", "match_grade",
                            data.get("match_grade"), "insert_population_match")
         if data.get("match_grade") == "MISMATCH" and not (data.get("mismatch_note") or "").strip():
-            raise ValueError(
+            raise Refusal(
                 "match_grade=MISMATCH requires --mismatch-note. A mismatch that does not "
                 "say WHY cannot stop the source drifting into that population's cells later.")
 
@@ -3927,13 +3946,13 @@ def insert_jurisdictional_value(data: dict, session: str, dry_run: bool = False)
     dbcore.validate_cols(data.keys(), _COLS, "insert_jurisdictional_value")
     with dbcore.connect(dry_run) as conn:
         if not dbcore.exists(conn, "items", "item_code", data.get("item_code")):
-            raise ValueError(f"item_code {data.get('item_code')!r} is not in `items`.")
+            raise Refusal(f"item_code {data.get('item_code')!r} is not in `items`.")
         tier = data.get("evidence_tier")
         # RANGE_GUARDS in scripts/emit_data_migration.py owns the 1-6 band and cites
         # schemas/evidence_source.py:85 as its authority. Not restated here (rule 5) --
         # the same band is asserted, and the guard remains the place it is DEFINED.
         if tier is None or not (1 <= int(tier) <= 6):
-            raise ValueError(
+            raise Refusal(
                 f"evidence_tier {tier!r} is outside the ratified 1-6 band "
                 f"(RANGE_GUARDS in emit_data_migration.py; governance/tier-system.md).")
         # R3: a quantified value needs a locator or an explicit unverified marker.
@@ -3942,10 +3961,10 @@ def insert_jurisdictional_value(data: dict, session: str, dry_run: bool = False)
                           if isinstance(data.get(k), str))
         if data.get("value_numeric") is not None:
             if not data.get("unit"):
-                raise ValueError("--value-numeric requires --unit. A number without a "
+                raise Refusal("--value-numeric requires --unit. A number without a "
                                  "unit is not a value.")
             if not has_locator and "[UNVERIFIED-QUANT]" not in (data.get("notes") or ""):
-                raise ValueError(
+                raise Refusal(
                     "R3: a quantified code value needs a locator (clause/section/page) "
                     "or an explicit [UNVERIFIED-QUANT] marker in --notes. Nothing written.")
         row = dict(data)
@@ -3971,7 +3990,7 @@ def insert_economics_entry(data: dict, session: str, dry_run: bool = False):
                            data.get("entry_type"), "insert_economics_entry")
         ref = dbcore.fold_ref(data.get("ref_id"))
         if ref and not dbcore.exists(conn, "evidence_sources", "ref_id", ref):
-            raise ValueError(f"ref_id {data.get('ref_id')!r} is not an admitted source.")
+            raise Refusal(f"ref_id {data.get('ref_id')!r} is not an admitted source.")
         # THE DUAL-HOME REFUSAL, and a note on WHICH LAYER ENFORCES IT. The CLI does
         # not expose --year/--journal/--study-design/--sample at all, so through
         # `db.py` the restatement is structurally impossible rather than refused --
@@ -3989,14 +4008,14 @@ def insert_economics_entry(data: dict, session: str, dry_run: bool = False):
             restated = [k for k in ("year", "journal", "study_design", "sample")
                         if data.get(k) is not None]
             if restated:
-                raise ValueError(
+                raise Refusal(
                     f"--ref-id was given, so {restated} are reachable through it and must "
                     f"not be copied onto this row (CLAUDE.md rule 5: point, do not copy). "
                     f"Omit them; a reader follows ref_id to evidence_sources.")
             row_source = data.get("source") or ref
         else:
             if not (data.get("source") or "").strip():
-                raise ValueError(
+                raise Refusal(
                     "an entry with no --ref-id must name its --source. `source` is "
                     "NOT NULL and is the only identity a ref-less entry has.")
             row_source = data["source"]
@@ -4021,15 +4040,15 @@ def insert_case_study(data: dict, session: str, dry_run: bool = False):
     dbcore.validate_cols(data.keys(), _COLS, "insert_case_study")
     with dbcore.connect(dry_run) as conn:
         if not dbcore.exists(conn, "slugs", "slug", data.get("slug")):
-            raise ValueError(f"slug {data.get('slug')!r} is not in `slugs`.")
+            raise Refusal(f"slug {data.get('slug')!r} is not in `slugs`.")
         if dbcore.exists(conn, "case_studies", "case_study_id", data.get("case_study_id")):
-            raise ValueError(f"case_study_id {data.get('case_study_id')!r} already exists.")
+            raise Refusal(f"case_study_id {data.get('case_study_id')!r} already exists.")
         # `sources` is prose where a junction to evidence_sources.ref_id is the ruling's
         # exact target ("for rendering a citation, we point towards the evidence table").
         # The table is empty, so refuse the copy shape now rather than migrate later:
         # a REF-NNNNN inside the prose field means a pointer was flattened into text.
         if dbcore.REF_ID_SHAPE.search(data.get("sources") or ""):
-            raise ValueError(
+            raise Refusal(
                 "--sources contains a REF-NNNNN. A reference id in a prose field is a "
                 "flattened pointer (CLAUDE.md rule 5). Link the source through "
                 "case_study_specs / the evidence tables, and keep --sources for material "
@@ -4060,11 +4079,11 @@ def insert_code_lead(data: dict, session: str, dry_run: bool = False) -> int:
     # instead of an IntegrityError, and refusing on blank means a whitespace string
     # cannot slip past a NOT NULL that only tests for NULL.
     if not jur:
-        raise ValueError("--jurisdiction is required and may not be blank: a lead that "
+        raise Refusal("--jurisdiction is required and may not be blank: a lead that "
                          "cannot say which jurisdiction it belongs to is not retrievable, "
                          "which is the only purpose this row has.")
     if not std:
-        raise ValueError("--standard-name is required and may not be blank.")
+        raise Refusal("--standard-name is required and may not be blank.")
     with dbcore.connect(dry_run) as conn:
         dbcore.check_vocab(conn, "research_code_leads", "status", data.get("status"),
                            "insert_code_lead")
@@ -4075,7 +4094,7 @@ def insert_code_lead(data: dict, session: str, dry_run: bool = False) -> int:
             "SELECT lead_id FROM research_code_leads WHERE jurisdiction=? AND standard_name=?",
             (jur, std)).fetchone()
         if hit:
-            raise ValueError(
+            raise Refusal(
                 f"{jur} / {std!r} is already held as lead_id {hit[0]}. A code lead is keyed "
                 f"on (jurisdiction, standard_name) — restating it is the duplication the "
                 f"item-keyed shape produced. Update that row instead.")
@@ -4099,12 +4118,12 @@ def insert_locator(data: dict, session: str, dry_run: bool = False) -> str:
     dbcore.validate_cols(data.keys(), _COLS, "insert_locator")
     ref = dbcore.fold_ref(data.get("ref_id"))
     if not ref or not dbcore.REF_ID_SHAPE.fullmatch(ref):
-        raise ValueError(
+        raise Refusal(
             f"--ref-id {data.get('ref_id')!r} is not a global reference id. Expected "
             f"REF-NNNNN (or REF-VERIFIED-NNN / Co1-NN). Mint with `db.py next-id ref`.")
     with dbcore.connect(dry_run) as conn:
         if dbcore.exists(conn, "source_locators", "ref_id", ref):
-            raise ValueError(f"{ref} already exists in source_locators. Use update-locator.")
+            raise Refusal(f"{ref} already exists in source_locators. Use update-locator.")
         dbcore.check_vocab(conn, "source_locators", "status", data.get("status"),
                            "insert_locator")
         doi = dbcore.norm_doi(data.get("doi"))
@@ -4118,7 +4137,7 @@ def insert_locator(data: dict, session: str, dry_run: bool = False) -> str:
                     'SELECT ref_id FROM "%s" WHERE LOWER(TRIM(doi))=? AND ref_id<>?' % table,
                     (doi, ref)).fetchone()
                 if hit:
-                    raise ValueError(
+                    raise Refusal(
                         f"DOI {data['doi']!r} is already held as {hit[0]} in {table}. "
                         f"R9: cross-file the existing ref_id, never mint a second identity "
                         f"for one source. Nothing was written.")
@@ -4135,5 +4154,15 @@ def insert_locator(data: dict, session: str, dry_run: bool = False) -> str:
 
 
 if __name__ == "__main__":
-    main()
+    # REFUSALS ARE MESSAGES, NOT STACK TRACES. This CLI's whole value is that it says no
+    # (CLAUDE.md §4), and its refusals are careful: they cite the ruling, name the remedy
+    # and say what was written, which is nothing. Every one of them reached the terminal
+    # as the last line of a traceback until 2026-09-10 -- the message at the bottom of a
+    # stack the operator did not ask for and has to read past. Same refusals, same exit 1,
+    # no stack. Refusal only: anything else keeps its traceback, because anything else is
+    # a defect and its location is the evidence.
+    try:
+        main()
+    except Refusal as exc:
+        sys.exit(f"REFUSING: {exc}")
 
