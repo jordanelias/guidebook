@@ -23,28 +23,28 @@
   {
     "started": "2026-09-10T23:03:23",
     "role": "agonist",
-    "bytes": 798653,
+    "bytes": 820048,
     "agent_id_prefix": "aab00c32",
     "file": "2026-09-10T23-03-23_agonist_aab00c32.jsonl"
   },
   {
     "started": "2026-09-10T23:10:47",
     "role": "antagonist",
-    "bytes": 332933,
+    "bytes": 485912,
     "agent_id_prefix": "a9613e17",
     "file": "2026-09-10T23-10-47_antagonist_a9613e17.jsonl"
   },
   {
     "started": "2026-09-10T23:12:59",
     "role": "agonist",
-    "bytes": 356349,
+    "bytes": 496558,
     "agent_id_prefix": "a743a847",
     "file": "2026-09-10T23-12-59_agonist_a743a847.jsonl"
   },
   {
     "started": "2026-09-10T23:13:33",
     "role": "agonist",
-    "bytes": 341547,
+    "bytes": 552702,
     "agent_id_prefix": "aeece19c",
     "file": "2026-09-10T23-13-33_agonist_aeece19c.jsonl"
   }

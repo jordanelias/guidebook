@@ -40,6 +40,13 @@ or historical-alias identifier without rewriting past attestations.
 |---|---|---|---|
 | `cell-curator` | `specification-curator` | 2026-08-12 | `decisions/DR-2026-08-12-specification-curator-rename.md` |
 
+*Note (2026-09-10): `specification-curator` — the "Current identifier" above — was itself deleted
+this date (`skills/specification-curator_SKILL.md`, item-layer skill, subject retired by the
+2026-09-01 owner ruling). This row is a historical record of the 2026-08-12 rename event, not a
+pointer to a live skill; it stays, and is not rewritten, for the same reason the row below it
+gives. `cell-curator`'s resolution via `EXTRA_RULE_IDS` for historical attestations is unaffected
+by the later deletion.*
+
 **Past attestations citing a former identifier are NOT rewritten.** Step 2 of the process above
 calls for a migration that rewrites every `attestations/*.json`; that step is deliberately not taken
 here, and the departure is recorded in the DR. Rewriting a committed adherence log to say a session

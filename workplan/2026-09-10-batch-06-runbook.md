@@ -249,6 +249,89 @@ GUIDEBOOK_DB_PATH="$S/walk.db" python3 scripts/db.py log-search \
 "dry_run": false}`. A zero-yield row with **no** `findings_note` fails R14 — the note is what
 distinguishes "well-formed, nothing there" from "the query itself was broken."
 
+## Step 4b — judgment: EXTRACT what each source asserts for the parameter
+
+**ADDED 2026-09-10. This step did not exist, and its absence made the runbook produce a wrong
+answer while passing every gate.** After migration 073, `assess_cell.gather_sources(conn,
+parameter_id)` returns only sources holding an extraction **for the parameter under determination**.
+A session following steps 1–4 as previously written writes no extractions at all, so the governing
+set is empty and step 5 emits `pending` on nothing — with `research_batch_dod.py` still returning
+COMPLIANT, because no rule counts extractions. That is `CLAUDE.md` §5(a) at the one place it costs a
+determination.
+
+**One `add-extraction` per source that says something about the parameter.** Vocabularies below are
+read from the column's own CHECK (`dbcore.check_values()`), never from a list in code — re-derive
+them rather than trusting this list:
+
+```
+python3 - <<'PY'
+import re, sqlite3
+con = sqlite3.connect('file:data/guidebook.db?mode=ro', uri=True)
+ddl = con.execute("select sql from sqlite_master where name='source_value_extractions'").fetchone()[0]
+for col in ('claim_type','extraction_method','extraction_status','root_type',
+            'measurement_paradigm','device_class'):
+    m = re.search(col + r"[^,]*?CHECK\s*\(([^)]*)\)", ddl, re.S | re.I)
+    print(col, re.findall(r"'([^']+)'", m.group(1)) if m else '(no inline CHECK)')
+PY
+```
+
+As measured 2026-09-10: `claim_type` `numerical|range|qualitative|framework|absent` ·
+`extraction_method` `skim|full-read|re-read|auto-mined` · `extraction_status`
+`preliminary|reviewed|verified|contradicted|absent-confirmed` · `root_type`
+`measurement_primary|participatory_finding|committee_assertion|derived_calculation|untraced` ·
+`measurement_paradigm` nine values including `instrumented_physical_measurement` and
+`stated_unmeasured` · `device_class` nine including `manual_self_propelled` and `not_device_scoped`.
+
+```
+GUIDEBOOK_DB_PATH="$S/walk.db" python3 scripts/db.py add-extraction \
+  --ref-id "$REF" --slug <slug> --parameter-id "$PID" --identity <POP> \
+  --claim-type range --claimed-value '<from the bytes>' --claimed-unit '<from the bytes>' \
+  --claim-text '<VERBATIM from the payload — see below>' \
+  --source-section '<locator>' --extraction-method full-read --extraction-status preliminary \
+  --root-type measurement_primary --root-ref-id "$REF" \
+  --measurement-paradigm instrumented_physical_measurement --device-class manual_self_propelled \
+  --session "$SESS"
+```
+
+**`--claim-text` must be a byte-substring of the persisted payload.** That is the one thing the
+antagonist can check mechanically and it is the direct guard against the 2026-08-19 shape: a claim
+written from memory beside a source that was genuinely retrieved. Copy it out of the artefact under
+`retrieval-log/<session>/`, do not retype it.
+
+**`claim_type='absent'` is a real and often correct grade.** A source may address the parameter and
+state no value for it — that is a *finding*, not a gap to be papered with a number from elsewhere.
+Grade it `absent`, keep `claimed_value` NULL, and let the engine weigh it.
+
+> **Live example of exactly that, and it is the batch's own case.** For `ramp gradient` (TERM-001),
+> REF-00973's payload states the parameter as its independent variable — *"the inclination of which
+> varied between (0° to 4.8°)"* — so it extracts as a `range` with a value. REF-00974's payload
+> states *"wheelchair propulsion at different speeds and inclines, ascending and descending ramps"*
+> and reports shoulder load **without stating any slope**. So its honest extraction carries no
+> gradient value: either `qualitative` on the load finding or `absent` on the gradient itself,
+> decided from the bytes at extraction time. **Do not manufacture a gradient for it.** If that leaves
+> the cell anchored on REF-00973 alone, the cell is `stated` on one source and says so — which is a
+> true claim, where two sources one of which was invented is not.
+
+**`value_directness` stays `NOT_ASSESSED`.** No grading rule for it exists and inventing one is STOP
+condition 4 of `workplan/2026-09-10-road-to-batch-06.md`. The engine caps weight accordingly and that
+is correct behaviour, not a defect to route around.
+
+**Then verify the edge exists before running the engine**, because a silent zero here is what the
+missing step produced:
+
+```
+GUIDEBOOK_DB_PATH="$S/walk.db" python3 - <<'PY'
+import os, sqlite3
+con = sqlite3.connect('file:%s?mode=ro' % os.environ['GUIDEBOOK_DB_PATH'], uri=True)
+for r in con.execute("select parameter_id, ref_id, claim_type, claimed_value, extraction_status "
+                     "from source_value_extractions order by extraction_id"):
+    print(r)
+print("EXTRACTIONS:", con.execute("select count(*) from source_value_extractions").fetchone()[0])
+PY
+```
+
+**A count of 0 here means step 5 will emit `pending` regardless of how good the search was.**
+
 ## Step 5 — specification: the engine determines ONE cell
 
 ```
