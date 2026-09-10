@@ -171,14 +171,19 @@ harness resets env between shells. The canonical DB's sha256 must not move until
 applied.
 
 **Do not hand-write SQL against a table the CLI can reach.** If you find one it cannot, that is a
-coverage bug to fix, not a licence to bypass — `dbcore.WRITABLE_TABLES` has been blind to a live
-table three times, and each time the temptation was to write around it.
+coverage bug to fix, not a licence to bypass — `dbcore.WRITABLE_TABLES` keeps going blind to live
+tables, and each time the temptation is to write around it. **Derive the count, never quote it** —
+this file said "three times" while `architecture/conformance-schema-findings.md` recorded a
+seventh (`grep -n 'blindness' architecture/conformance-schema-findings.md`), and rule 7 is exactly
+about figures like this one going stale under a paragraph that looks authoritative.
 
 **`db.py` refuses, and that is its whole value.** A writer that merely INSERTs is worse than hand SQL
 because it looks safe. **Two refusals are deliberately absent and must stay absent:**
 `add-population-match` does not enforce uniqueness on (ref_id, population) — a dissenting adversarial
-grade lands as a second row and divergent grades read as a contest — and `add-source` exposes no
-`--year`/`--journal` for an entry carrying a `ref_id`, because those are reached through the pointer.
+grade lands as a second row and divergent grades read as a contest — and `insert_economics_entry` refuses
+`--year`/`--journal` for an entry carrying a `ref_id`, because those are reached through the pointer
+— **the refusal is there, not in `add-source`, and through argparse it is unreachable at all**
+(`scripts/db.py:3978-3999`; this file misattributed it to `add-source` until 2026-09-10).
 
 **Vocabularies come from the schema, not a list in code.** `dbcore.check_values()` reads the column's
 own CHECK. Live rows are a *sample* of a vocabulary, never the vocabulary. **Never compute a ref_id
@@ -197,7 +202,7 @@ yet — so **no determination can be written until a parameter is minted**, and 
 is the writer that mints one. (This bullet blamed the 2026-09-01 item-layer emptying for
 `specifications`' unwritability instead, until 2026-09-10 — true of the OLD `specifications.item_code`
 FK, which 071 dropped along with the table it sat on; stale the moment 071 re-keyed `specifications`
-onto a different empty table for an unrelated reason.) `item_taxonomy_links` is unwritable on the
+onto a different empty table for the NEXT STAGE OF THE SAME REFORM — 071's own comment reads *"Was item_code NOT NULL into an emptied table, which is why no determination could be written at all"* (`:96-97`), so these are two stages of one continuous re-keying, not unrelated accidents; this clause read "for an unrelated reason" until an adversarial pass broke it the same day.) `item_taxonomy_links` is unwritable on the
 original mechanism — its `item_code` FK still reaches into the emptied `items` — which means
 **D-0184's own object cannot accept a row either**. This is rule 4's "treat a 0-row object as
 unproven, not clean" with teeth. Derive the live set before planning any write, and never quote it:
