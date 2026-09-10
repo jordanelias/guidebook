@@ -16,3 +16,10 @@ data/guidebook.db-wal
 data/audit_graph.db
 data/audit_graph.db-shm
 data/audit_graph.db-wal
+# -journal, not only -wal: DR-2026-08-19 §12.0's F4 fix deleted PRAGMA journal_mode=WAL
+# from db.py connect(), so these stores run in delete mode now and drop a -journal
+# sidecar mid-run. This list was written for the WAL era and was one sidecar short, so
+# every graph_audit run left an untracked file in git status — noise that teaches its
+# reader to stop reading git status, which is the same disease as a check that is red by
+# construction (CLAUDE.md rule 6).
+data/audit_graph.db-journal
