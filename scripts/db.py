@@ -13,7 +13,7 @@ CLI usage:
     python3 scripts/db.py log-mining --slug S --ref R --direction backward
                           --connections '["CON-0241"]' --session SESSION
                           [--dry-run]
-    python3 scripts/db.py next-id connections|gaps|terms
+    python3 scripts/db.py next-id connections|gaps|terms|conflicts|ref
     python3 scripts/db.py coverage --slug SLUG
     python3 scripts/db.py synonyms --item A-16 [--language JA]
     python3 scripts/db.py add-gap --category RES --priority P2 --description "..." --session SESSION
@@ -96,6 +96,16 @@ def _emit(data):
 
 
 # --- Storage layer (CRUD) ---
+
+
+def next_ref() -> str:
+    """The next global REF-NNNNN. Thin CLI wrapper — `dbcore.next_ref_id(conn)` is the rule
+    (CLAUDE.md §4: the high-water mark is the UNION of every table holding a ref_id); this
+    does not reimplement it. `add-source`'s refusal on a bad ref_id named that function
+    directly, sending an operator to a Python call instead of a command
+    (workplan/2026-09-10-road-to-batch-06.md B2)."""
+    with connect(readonly=True) as conn:
+        return dbcore.next_ref_id(conn)
 
 
 def next_con_id() -> str:
@@ -1101,7 +1111,7 @@ def main():
     # next-id
     p_nid = sub.add_parser("next-id", help="Get next available ID")
     p_nid.add_argument("entity",
-                       choices=["connections", "gaps", "terms", "conflicts"])
+                       choices=["connections", "gaps", "terms", "conflicts", "ref"])
 
     # coverage
     p_cov = sub.add_parser("coverage", help="Check search coverage")
@@ -1557,6 +1567,7 @@ def main():
             "gaps":        next_gap_id,
             "terms":       next_term_id,
             "conflicts":   next_conf_id,
+            "ref":         next_ref,
         }
         _emit({"next_id": id_funcs[args.entity]()})
 
