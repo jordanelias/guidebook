@@ -2756,8 +2756,31 @@ an unrecorded ruling binds nothing mechanical: a meta-script reads code, YAML an
 never a transcript. This entry was added only after an audit observed that
 `grep -n 2026-09-10 references/project-standards.md` returned nothing.
 
-CONDITION: Any session registering a check, or judging whether broken apparatus may be
-deleted.
-ACTION: A check's verdict is computed at Layer 0/1; invoking a Layer 2 tool is fine.
-Owner-gated brokenness stays until the decision it waits on is made.
-DATE: 2026-09-10 — owner rulings, quoted above.
+**CORRECTION, same day, owner:** *"you can decide at layer 2. why wouldn't you be able
+to? layer 2 is reserved for actual project materials tho"*
+
+The reading above was wrong and is superseded. **Deciding at Layer 2 is not prohibited** —
+a stage tool decides constantly; that is what a stage does, and judgment's entire job is
+to decide. The "decides vs invokes" test proposed above is therefore NOT the rule, and any
+meta-script built on it would enforce a prohibition that does not exist.
+
+**The actual rule is about tenancy, not about deciding.** Layer 2 is reserved for the
+project's real stage work — its materials, tools and processes. Apparatus is not stage
+work. So a CHECK does not belong at Layer 2 *at all*, whatever it does there: the check is
+Layer 0 by definition, and may freely invoke a Layer 2 tool and freely let that tool decide
+its own stage's business.
+
+The six entries named above are still misfiled, for this reason instead: check logic is
+sitting inside project-material scripts (`scripts/research/retrieval_log.py`,
+`scripts/generate/research_contract_hook.py`, and four freshness checks whose verdict is
+computed inside the generator they run). The remedy is unchanged — the check moves to
+Layer 0 and calls the Layer 2 tool — but the test a meta-script applies is
+**"is this artefact apparatus or project material, and does its filing match?"**, not
+"does a Layer 2 file exit non-zero".
+
+CONDITION: Any session registering a check, filing a script, or judging whether broken
+apparatus may be deleted.
+ACTION: File apparatus at Layer 0/1 and stage work at Layer 2. A check may invoke a Layer
+2 tool and that tool may decide its own stage's business; what may not happen is a check
+living inside project materials. Owner-gated brokenness stays until its decision is made.
+DATE: 2026-09-10 — owner rulings and same-day correction, quoted above.
