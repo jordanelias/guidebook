@@ -20,11 +20,23 @@ def check(name, cond):
         fails.append(name)
 
 
-def reject(name, fn):
+def reject(name, fn, expect=None):
+    """`expect` names a substring the refusal must contain.
+
+    A bare `except Exception` proves only that SOMETHING went wrong, and a refusal is
+    only evidence for the refusal you asked for. Two assertions in this file passed for
+    the wrong reason before `expect` existed: "reject the retired bare population key"
+    was satisfied by `at_least_one_lens` rather than by any refusal of `population`, and
+    a typo'd table name in a SQL reject stayed green because the typo itself raised.
+    """
     try:
         fn(); check(name + " (NOT rejected!)", False)
-    except Exception:
-        check(name, True)
+    except Exception as e:
+        if expect and expect not in str(e):
+            check(f"{name} (rejected for the WRONG reason: {str(e).splitlines()[0][:90]})",
+                  False)
+        else:
+            check(name, True)
 
 
 # ----------------------------------------------------------------------------
@@ -58,9 +70,16 @@ reject("reject a cell stated in NO lens (D-0182 CHECK, mechanised)",
        lambda: EvidenceStateRecord(parameter_id=1, state="stated"))
 reject("reject the retired item_code key (item layer emptied 2026-09-01)",
        lambda: EvidenceStateRecord(parameter_id=1, item_code="A-02",
-                                   identity_code="AUT", state="stated"))
+                                   identity_code="AUT", state="stated"),
+       expect="item_code")
 reject("reject the retired bare population key (populations is ONLY the identity lens)",
-       lambda: EvidenceStateRecord(parameter_id=1, population="AUT", state="stated"))
+       # WITHOUT expect= this passed on `at_least_one_lens`, not on any refusal of
+       # `population` — the model would have accepted the retired key had a lens been
+       # supplied alongside it. A lens IS supplied here now, so only extra="forbid" can
+       # produce this failure.
+       lambda: EvidenceStateRecord(parameter_id=1, population="AUT",
+                                   identity_code="AUT", state="stated"),
+       expect="population")
 reject("reject out-of-vocab design_scale",
        lambda: EvidenceStateRecord(parameter_id=1, identity_code="AUT",
                                    design_scale="molecular", state="stated"))

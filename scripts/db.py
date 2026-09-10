@@ -1881,7 +1881,25 @@ def main():
         # CLI whose refusals come from its own list rather than the one authority is the
         # thing this file exists not to be.
         _etype = (args.evidence_type or "").lower()
-        if _etype:
+        if not _etype:
+            # BYPASS CLOSED 2026-09-10. The guard below used to be `if _etype:`, so
+            # omitting --evidence-type skipped it entirely and a bare `--tier 1` landed
+            # a row with type NULL and scope NULL — underivable by construction, which
+            # is the precise thing the guard exists to prevent. Proven on a scratch
+            # copy: REF-90001 (tier 1, type NULL, scope NULL) accepted.
+            raise ValueError(
+                "--evidence-type is REQUIRED. The tier is derived from "
+                "(evidence_type, scope) — with no type there is nothing to derive it "
+                "from, and --tier alone is an assertion.\n"
+                "Types: clinical, co1, co2, sr_meta, grey, standard_eb, national_fw, code.")
+        # STORE THE NORMALISED FORM. --evidence-type CLINICAL used to derive from the
+        # lowercased value and then store the raw string, so the row satisfied the ladder
+        # at write time and was invisible to every reader afterwards —
+        # assess_cell.classify() compares against lowercase literals, so a 'CLINICAL'
+        # source falls into the `other` bucket and silently stops anchoring anything.
+        args.evidence_type = _etype
+        data["evidence_type"] = _etype
+        if True:
             from schemas.tier_derivation import (  # noqa: E402
                 TIER_MAP, VALID_SCOPES_BY_TYPE, derive_tier)
             _valid = VALID_SCOPES_BY_TYPE.get(_etype)
@@ -2728,6 +2746,35 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
         was = row[field]
         if (was or "").strip() == replacement:
             return {"ref_id": ref_id, "field": field, "changed": False}
+        if field == "scope":
+            # BYPASS CLOSED 2026-09-10. `scope` is amendable, and amending it changes
+            # the ratified tier — this path performed no derivation, so it could write a
+            # contradiction. Proven on a scratch copy: REF-00784 amended to
+            # (clinical, lower_control) while tier stayed 1, and clinical+lower_control
+            # derives 3. The row then satisfied every gate and asserted a tier the
+            # ladder does not produce.
+            from schemas.tier_derivation import (  # noqa: E402
+                VALID_SCOPES_BY_TYPE, derive_tier)
+            cur = conn.execute("SELECT evidence_type, tier FROM evidence_sources "
+                               "WHERE ref_id=?", [ref_id]).fetchone()
+            _et = (cur["evidence_type"] or "").lower()
+            if not _et:
+                raise ValueError(
+                    f"{ref_id} has no evidence_type, so no scope is derivable for it. "
+                    f"Set the type first; a scope without a type states nothing.")
+            _valid = VALID_SCOPES_BY_TYPE.get(_et, frozenset())
+            if replacement not in _valid:
+                raise ValueError(
+                    f"{ref_id}: scope {replacement!r} is not admissible for "
+                    f"evidence_type {_et!r}; valid: {sorted(_valid)}")
+            _derived = derive_tier(_et, replacement)
+            if cur["tier"] != _derived:
+                raise ValueError(
+                    f"{ref_id}: amending scope to {replacement!r} would make the stored "
+                    f"tier {cur['tier']} contradict the ratified ladder, which derives "
+                    f"{_derived} from ({_et}, {replacement}).\n"
+                    f"Amending the scope is amending the tier. Say which is wrong; this "
+                    f"path will not write a row the ladder cannot produce.")
         stamp = audit(session)
         ledger = (row["metadata_integrity_detail"] or "").rstrip()
         ledger += (f" || {stamp['created_at'][:10]} {field} CORRECTED ({reason}). "

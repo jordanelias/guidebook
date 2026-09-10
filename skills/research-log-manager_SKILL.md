@@ -114,6 +114,13 @@ After multilingual-research completes:
      --year {year} \
      --title "{title}" \
      --tier {tier} \
+     --evidence-type {clinical|co1|co2|sr_meta|grey|standard_eb|national_fw|code} \
+     --scope {high_control|lower_control}   # clinical only; standard_eb takes
+     #   national|international. Every other type is `intrinsic` and is FILLED IN.
+     #   REQUIRED since 2026-09-10: the tier is DERIVED from (evidence_type, scope) via
+     #   schemas/tier_derivation.py, and --tier is now CHECKED against that derivation
+     #   rather than believed. A tier with no type behind it is an assertion, and all 9
+     #   sources admitted before this carry scope NULL for exactly that reason.
      --doi {doi} \
      --jurisdiction {jur} \
      --slug {slug} \
