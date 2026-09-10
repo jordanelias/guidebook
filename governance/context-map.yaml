@@ -518,6 +518,7 @@ database:
   - search_executions
   - source_locators
   - source_slug_links
+  - specification_source_links
   - specifications
   - supersession_check
   - term_adjudications
@@ -546,7 +547,6 @@ database:
   - situations
   - source_value_extractions
   - spec_value_probes
-  - specification_source_links
 writers:
   _note: 'direct_python lists every .py under scripts/ or tools/ containing an INSERT/UPDATE/DELETE naming
     the table. Where such a script writes the CANONICAL DB it is outside the migration path, which CLAUDE.md
@@ -558,6 +558,7 @@ writers:
     scripts/assess/assess_cell.py:
     - convergence_assessment
     - gaps
+    - specification_source_links
     - specifications
     scripts/audit/graph_audit.py:
     - connection_targets
@@ -574,6 +575,8 @@ writers:
     - search_executions
     - source_locators
     - term_aliases
+    scripts/audit_consolidator.py:
+    - item_audit_runs
     scripts/db.py:
     - base_parameters
     - bpc_metadata

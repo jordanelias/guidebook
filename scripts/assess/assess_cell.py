@@ -710,6 +710,30 @@ def main():
         sql_lines.append(f"INSERT INTO specifications ({cols}) VALUES (" +
                          ", ".join(q(v) for v in vals) + ");")
 
+        # THE JUNCTION, not just the JSON. The engine wrote only
+        # specifications.governing_refs until 2026-09-10, and test_db_integrity H02 —
+        # BLOCKING — asserts "every JSON entry is in the junction". Reproduced before
+        # fixing: one engine row, 5 governing_refs entries, 0 specification_source_links
+        # rows, H02 red. A determination engine that cannot produce a state its own
+        # checker accepts is the failure CLAUDE.md names, and it was reintroduced here.
+        #
+        # RULE 5 TENSION, recorded rather than hidden: the JSON and the junction are two
+        # homes for one fact, and the comment directly under H01/H02 in
+        # test_db_integrity.py says H03/H04 were DELETED because "a parity check between
+        # two homes of one fact does not prevent drift; it makes the second home
+        # survivable, and therefore permanent." H01/H02 is that shape and it is live and
+        # blocking, so the engine satisfies it. The retirement owed is the JSON's: the
+        # junction is the pointer, `governing_refs` is the copy — but the copy is what
+        # derivation_sha hashes (and K01 recomputes), so dropping it re-keys the
+        # attestation. That is a sweep, not this change.
+        for _ref in det["governing_refs"]:
+            _link = (specification_id, _ref, "governing", STAMP, SESSION)
+            _lcols = ("specification_id, ref_id, role, created_at, created_by_session")
+            conn.execute(f"INSERT INTO specification_source_links ({_lcols}) "
+                         f"VALUES (?,?,?,?,?)", _link)
+            sql_lines.append(f"INSERT INTO specification_source_links ({_lcols}) VALUES (" +
+                             ", ".join(q(v) for v in _link) + ");")
+
         report.append({k: det[k] for k in
                        ("parameter_id", "lens", "lens_key", "slug", "note", "state", "design_scale",
                         "tier_basis", "governing_refs", "supporting_refs", "code_floor_only",
