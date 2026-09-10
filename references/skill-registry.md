@@ -67,20 +67,19 @@ Each active skill's effort level is in `references/effort-guide.md`. Triggers an
 adversarial-research              cross-reference-resolver         literature-review-planner        research-log-manager
 audit-consolidator                doctrine-recheck                 markdown-formatter               sensory-coherence-checker
 bibliography-compiler             economics-auditor                multilingual-research            session-consolidator
-specification-curator             economics-researcher             practice-note-generator          structure-auditor
-citation-miner                    evidence-auditor                 progressive-measurement          supplemental-integrator
-citation-verifier                 evidence-metadata-rehabilitation prose-style-checker              table-formatter
-connection-auditor                find-and-replace                 question-author                  toc-editor
-connection-discovery              functional-deficit-auditor       reasoning-doc-citations          version-diff
-content-gap-analyzer              functional-deficit-researcher    relational-integrity-checker     voice-style
-critique-report-writer            gap-driven-mining                                                 workplan-orchestrator
-cross-population-conflict-mapper  github-filing
+citation-miner                    economics-researcher             practice-note-generator          structure-auditor
+citation-verifier                 evidence-auditor                 progressive-measurement          supplemental-integrator
+connection-auditor                evidence-metadata-rehabilitation prose-style-checker              table-formatter
+connection-discovery              find-and-replace                 question-author                  toc-editor
+content-gap-analyzer              functional-deficit-auditor       reasoning-doc-citations          version-diff
+critique-report-writer            functional-deficit-researcher    relational-integrity-checker     voice-style
+cross-population-conflict-mapper  gap-driven-mining                                                 workplan-orchestrator
+                                  github-filing
                                   github-io
                                   guidebook-auditor
                                   integrity-protocol
                                   item-audit-pipeline
                                   item-consolidation-analyzer
-                                  item-specification-writer
                                   jurisdiction-tracker
 ```
 
