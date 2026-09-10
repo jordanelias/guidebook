@@ -130,16 +130,33 @@ co-authorship. **Six gates passed it**, because each asked whether the author fi
 *populated*, never whether they were *true* (CLAUDE.md §5(c)). Nothing below detects that; the
 retrieval log is what does.
 
+**CORRECTED 2026-09-10 — the two commands this block carried do not exist.** `retrieval_log.py`
+has no `--fetch`, no `--doi` and no `--ref-id`; its whole CLI is `--session` plus one of
+`--verify-authors` / `--backfill` / `--reconstruct-manifest` (`retrieval_log.py:729-733`), and
+`workplan/2026-08-20-provenance-walk-execution-plan.md:485` had already recorded *"`retrieval_log.py`
+has **no fetch subcommand**"*. **Retrieval is a Python call, not a flag** — the module's own USE
+block (`retrieval_log.py:31-38`) is the sanctioned form, and both forms below were executed on
+2026-09-10 against the live corpus before being written here.
+
 ```
-python3 scripts/research/retrieval_log.py --fetch --doi "$DOI" --session "$SESS"
+python3 - <<'PY'
+import sys; sys.path.insert(0, 'scripts/research')
+from retrieval_log import fetch
+msg = fetch("https://api.crossref.org/works/<doi>", session="<SESS>",
+            purpose="crossref metadata for <REF>")["message"]
+print(msg["title"], [(a.get("family"), a.get("given")) for a in msg.get("author", [])])
+PY
 ```
-Persist the payload FIRST, then take every bibliographic field from the bytes you received — never
-from memory, never from a search-result snippet. After admission:
+`fetch()` writes the raw bytes and a manifest line **before** it returns, so a caller cannot act on
+one payload and log another. Persist FIRST, then take every bibliographic field from the bytes you
+received — never from memory, never from a search-result snippet. After admission:
 ```
-python3 scripts/research/retrieval_log.py --verify-authors --ref-id "$REF"
+python3 scripts/research/retrieval_log.py --verify-authors --session "$SESS"
 ```
-which diffs the stored row against the payload actually received. **A `VERIFIED` standing with no
-payload behind it is the fabrication shape, and it passes R9a/R9b/R10 green.**
+**`--session`, not `--ref-id`.** The pass is corpus-wide and offline: it diffs *every*
+`evidence_sources` row against the payloads logged under that session, matched by DOI, and names
+what it could not examine rather than passing over it. **A `VERIFIED` standing with no payload
+behind it is the fabrication shape, and it passes R9a/R9b/R10 green.**
 
 ```
 GUIDEBOOK_DB_PATH="$S/walk.db" python3 scripts/db.py add-source \
