@@ -149,3 +149,64 @@ copies, both hashed or read by K01. Writer-retire → reader-retire → NULL for
 - Why `validate_pydantic_schemas` and `test_verification_pipeline` fail advisory today — not examined;
   neither is on the walk.
 - Whether the owner regards SKILL files as doctrine rather than process apparatus (P1's STOP).
+
+---
+
+## CORRECTION to escalation item 1 — found by reading the payloads, 2026-09-10
+
+**Item 1 as drafted is wrong, and it is withdrawn in that form.** It read: *"`high_control` means
+experimental control over PARTICIPANTS, not over the rig. Device bench tests with no disabled
+participant are `lower_control` (T3)."*
+
+**What the ratified ladder actually says** (`schemas/tier_derivation.py:16-21`, citing
+`governance/tier-system.md` doctrine SHA 373255e and decisions D-A/D-D/D-E):
+
+> `high_control` → Tier 1 — *intervention / RCT / **biomechanical** / sensory-threshold studies. Per
+> D-E, directly-relevant high-control non-OT primary research is admitted at T1, not demoted.*
+> `lower_control` → Tier 3 — *cross-sectional, observational, qualitative, single-centre.*
+
+The discriminator is **study DESIGN control**. It says nothing about who the participants are.
+
+**The case that exposed it.** REF-00974's payload (`44993333b75d5477.xml`) reads *"Ten able-bodied
+participants performed these activities while their upper extremity kinematics and exerted forces
+were measured."* Under item 1 as drafted — participants, but none disabled — REF-00974 becomes
+`lower_control`/T3, which contradicts its stored T1, which makes it **tier-inconsistent and therefore
+NON-ANCHORING under B5a**, which removes one of the two anchors from the very cell this order of work
+selects. The escalation would have knocked out the batch it was written alongside.
+
+**Why the drafted reading is wrong rather than merely inconvenient.** It conflates two axes the
+architecture separates on purpose:
+
+- **Design control** → `scope` → tier. A biomechanical protocol with instrumented measurement is
+  `high_control` whoever performs it.
+- **Population of study vs population served** → `evidence_population_match` → conditioning and
+  weight. REF-00974 is already graded **PROXY on MOB** for exactly this reason
+  (`select ref_id,target_population,match_grade from evidence_population_match where ref_id='REF-00974'`).
+
+Demoting the tier *as well* would count one fact twice — once as a tier demotion and once as a match
+grade. That is rule 5's dual-home objection in a different guise: the fact that no disabled person
+participated already has a home, and it is the match row.
+
+**So REF-00974 stays T1 / `high_control`, and the cell keeps both anchors.** REF-00973 independently
+verifies: `19194f9d0d6f8fe6.xml` carries DOI `10.3390/s23218659`, *"inclination of which varied
+between (0° to 4.8°)"*, *"recommendations, such as those regarding slope steepness for entering a
+building"*, and **17 spinal cord injury participants** — a controlled biomechanical protocol on
+disabled participants, `high_control` under any reading.
+
+### Escalation item 1, RE-DRAFTED
+
+**`scope` discriminates study DESIGN control only; whether the study population is the served
+population is graded separately and never moves the tier.** So the question for REF-00971/972 (the
+Toronto mobility-scooter pair, and the actual subject of the original item) is not who participated
+but what design was run: a bench measurement of device geometry is `lower_control`/T3 as
+*observational*; an instrumented protocol with a controlled independent variable is
+`high_control`/T1 as *biomechanical*. W1 must answer that from the payloads, not from participant
+identity.
+
+*Reason:* it is what the ratified ladder says, in the file that implements it.
+*Cost if wrong:* one compensating migration on two rows; no cell is lost either way, because
+REF-00971/972 are not anchors of the ramp-gradient cell.
+
+**This is a smaller ask than the original, and it may not be an owner question at all** — it is the
+ladder read as written rather than a new tier definition. It is left in the escalation block only
+because the original was put there, and because W1 needs the reading settled before it writes.
