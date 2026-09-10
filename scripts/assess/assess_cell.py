@@ -688,6 +688,19 @@ def next_gap_id(conn):
 ENUM_DRIFT = []  # populations valid in the live table but missing from PopulationCode
 
 
+class Refusal(ValueError):
+    """A deliberate refusal by the engine, addressed to the operator.
+
+    A separate class rather than a bare ValueError so `__main__` can print these as
+    sentences and leave everything else its traceback. The distinction is load-bearing:
+    pydantic's ValidationError IS a ValueError, and a model rejecting a row THIS ENGINE
+    built is an engine defect, not an operator mistake — it is how the GAP-1 padding bug
+    (see next_gap_id) would have surfaced had a pending cell ever been replayed. Dressing
+    that as a one-line refusal and throwing its location away is how such a defect gets
+    read as a typo and retried.
+    """
+
+
 def validate_parameter(conn, parameter_id):
     """The SUBJECT must exist and be alive (owner 2026-08-26; migration 071).
 
@@ -699,13 +712,13 @@ def validate_parameter(conn, parameter_id):
     row = conn.execute("SELECT status, merged_into FROM base_parameters "
                        "WHERE parameter_id=?", (parameter_id,)).fetchone()
     if not row:
-        raise ValueError(
+        raise Refusal(
             f"parameter_id {parameter_id}: no such parameter. Mint one from a term:\n"
             f"  db.py add-parameter --term-id TERM-NNN --session ...")
     status, merged_into = row[0], row[1]
     if status != "active":
         target = f" (merged into {merged_into})" if merged_into else ""
-        raise ValueError(
+        raise Refusal(
             f"parameter_id {parameter_id} is {status}{target}, not active. "
             f"Key the determination on the surviving parameter.")
 
@@ -721,7 +734,7 @@ def validate_lens(conn, lens):
     refusal, because the table is the truth and the enum is the copy.
     """
     if not lens_key(lens):
-        raise ValueError(
+        raise Refusal(
             "a determination must be stated in at least one lens (D-0182): pass one or "
             "more of --identity / --icf / --needs / --medical. A cell in no lens is a "
             "cell about nobody.")
@@ -738,13 +751,66 @@ def validate_lens(conn, lens):
         if not code:
             continue
         if not conn.execute(f"SELECT 1 FROM {table} WHERE {key}=?", (code,)).fetchone():
-            raise ValueError(f"{col} {code!r} is not a live {key} in {table}")
+            raise Refusal(f"{col} {code!r} is not a live {key} in {table}")
     identity = lens.get("identity_code")
     if identity:
         try:
             PopulationCode(identity)
         except ValueError:
             ENUM_DRIFT.append(identity)
+
+
+def validate_cell_undetermined(conn, parameter_id, lens):
+    """This cell must not already carry a determination.
+
+    `idx_spec_row_identity` (migration 071) is UNIQUE on the cell itself —
+    `parameter_id` plus the four lens columns COALESCEd to `''` — so a second run for
+    the same cell has always been refused. It was refused in the WRONG PLACE. The
+    refusal fired inside the `specifications` INSERT, after the whole determination had
+    been computed, as an untranslated `sqlite3.IntegrityError: UNIQUE constraint failed:
+    index 'idx_spec_row_identity'`: a stack trace naming an index rather than a cell, no
+    `--emit-sql` file written, and nothing said about what had happened or what to do.
+    The engine knows the cell from argv, before it reads a single source, so it asks
+    here — ahead of the gather, ahead of `next_gap_id`, ahead of the pydantic gate.
+
+    The check restates the index's own COALESCE expression rather than probing for the
+    error, so the two cannot drift apart on the blank-versus-NULL question that made the
+    index need COALESCE in the first place. `validate_lens()` has already normalised
+    blanks to None by the time this runs, which is what makes that restatement exact.
+
+    THE REFUSAL NAMES NO REMEDY, and that is deliberate. There is no re-determination
+    path: `workplan/2026-09-10-road-to-batch-06.md` ("DELIBERATELY WAITING") and the
+    batch-06 runbook both record that revisiting a determined cell needs a SUPERSEDE
+    DESIGN, which is an owner decision. A helpful-sounding suggestion here — delete the
+    row, re-run against a fresh copy, bump the id — would be that design, written in a
+    help string by the one component that must not make it.
+    """
+    where = ("parameter_id=? AND COALESCE(identity_code,'')=? "
+             "AND COALESCE(icf_code,'')=? AND COALESCE(needs_code,'')=? "
+             "AND COALESCE(medical_code,'')=?")
+    vals = (parameter_id,) + tuple(lens.get(c) or "" for c in LENS_ORDER)
+    row = conn.execute(
+        "SELECT specification_id, state, rule_version, derivation_sha, created_at, "
+        f"created_by_session FROM specifications WHERE {where}", vals).fetchone()
+    if not row:
+        return
+    spec_id, state, rule_version, dsha, created_at, created_by = row
+    raise Refusal(
+        f"cell {parameter_id}×{lens_key(lens)} is ALREADY DETERMINED. "
+        f"specification_id {spec_id}, state {state!r}, rule_version {rule_version!r}, "
+        f"derivation_sha {str(dsha)[:12]}, written {created_at} by session "
+        f"{created_by}.\n"
+        f"  Nothing was computed; no SQL artifact was written; the database is "
+        f"unchanged.\n"
+        f"  This is not a fault in the run. `idx_spec_row_identity` is UNIQUE on "
+        f"(parameter_id, identity_code, icf_code, needs_code, medical_code), and there "
+        f"is no re-determination path: a batch revisiting a determined cell needs a "
+        f"SUPERSEDE DESIGN first, which is an owner decision "
+        f"(workplan/2026-09-10-road-to-batch-06.md, 'DELIBERATELY WAITING'), not a "
+        f"second engine run.\n"
+        f"  If you meant a DIFFERENT cell, the difference has to be in --parameter-id "
+        f"or in --identity/--icf/--needs/--medical. --slug is not part of the cell's "
+        f"identity: it records the topic, and changing it changes nothing here.")
 
 
 def validate_with_models(det, gap_id):
@@ -785,9 +851,23 @@ def q(v):
 def main():
     global SESSION, STAMP
     ap = argparse.ArgumentParser(
-        description="Determine one cell: a parameter under one or more lenses.")
-    ap.add_argument("--db", required=True, help="scratch DB (NEVER data/guidebook.db)")
-    ap.add_argument("--emit-sql", required=True)
+        description="Determine one cell: a parameter under one or more lenses.",
+        epilog="--db IS WRITTEN, NOT ONLY READ. The engine gathers the cell's evidence "
+               "from it and INSERTs the determination -- plus any gap and convergence "
+               "row -- straight back into it, committing before it exits. --emit-sql is "
+               "a replayable COPY of those same inserts, not the only place they land: "
+               "emit_batch_sql.py captures them from the scratch DB, so applying the "
+               "artifact AS WELL double-inserts. Two consequences before you run: a --db "
+               "that has been run against is no longer pristine, and a re-run for the "
+               "same cell is refused by the row-identity index; and comparing two runs "
+               "for determinism means two fresh copies, not one DB run twice. The "
+               "canonical DB is refused outright.")
+    ap.add_argument("--db", required=True,
+                    help="scratch DB, READ for the evidence and WRITTEN with the "
+                         "determination (NEVER data/guidebook.db)")
+    ap.add_argument("--emit-sql", required=True,
+                    help="path for the replayable SQL copy of the rows this run also "
+                         "commits into --db")
     ap.add_argument("--parameter-id", dest="parameter_id", type=int, required=True,
                     help="base_parameters.parameter_id — THE SUBJECT (owner 2026-08-26)")
     # NO LONGER "the slug to gather from" -- B4c gathers by parameter_id. This is the
@@ -852,6 +932,9 @@ def main():
     for (parameter_id, lens, slug, note) in [(args.parameter_id, lens, args.slug, args.note)]:
         validate_parameter(conn, parameter_id)
         validate_lens(conn, lens)
+        # AFTER validate_lens, which normalises blanks to None — the row-identity check
+        # restates the index's COALESCE and needs the same lens dict the INSERT will use.
+        validate_cell_undetermined(conn, parameter_id, lens)
         det = determine(conn, parameter_id, lens, slug, note)
         gap_id = None
         if det["gap_needed"]:
@@ -1053,6 +1136,9 @@ def main():
               f"rso={r['regulatory_stratum_only']} "
               f"cfo={r['code_floor_only']} sha={r['derivation_sha'][:12]}")
     print(f"\n{len(report)} cell(s) determined; SQL artifact: {args.emit_sql}\n"
+          f"COMMITTED into {args.db} — those rows are in that scratch DB now, and\n"
+          f"emit_batch_sql.py captures them from there. Applying the artifact AS WELL\n"
+          f"double-inserts. Re-running this cell against this DB is refused.\n"
           f"REPLAY through emit_data_migration.py -> migrate_db.py, never by hand.")
     if ENUM_DRIFT:
         print(f"DRIFT FINDING: populations valid in live table but missing from "
@@ -1061,4 +1147,27 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # REFUSALS ARE MESSAGES, NOT STACK TRACES. The canonical-DB guard has exited cleanly
+    # via sys.exit since this file was written, and every other refusal here — a merged
+    # parameter, a lens code that is not live, a cell already determined — arrived as a
+    # traceback with the sentence at the bottom. These messages cite the ruling and name
+    # the next move; a stack trace above them buries the part the operator needs. Same
+    # refusals, same non-zero exit, no stack. Refusal only: anything else keeps its
+    # traceback, because anything else is a defect and its location is the evidence.
+    try:
+        main()
+    except Refusal as exc:
+        sys.exit(f"REFUSING: {exc}")
+    except sqlite3.IntegrityError as exc:
+        # Belt and braces on the one constraint an operator meets by ordinary use.
+        # validate_cell_undetermined() restates this index's own COALESCE expression,
+        # so reaching here means the two have drifted — which is worth saying plainly
+        # rather than as a bare constraint name.
+        if "idx_spec_row_identity" in str(exc):
+            sys.exit("REFUSING: this cell is already determined — "
+                     "`idx_spec_row_identity` refused a second row for the same "
+                     "parameter × lens, at the INSERT rather than at the "
+                     "pre-flight check that should have caught it "
+                     "(validate_cell_undetermined). There is no re-determination path; "
+                     "revisiting a determined cell needs a supersede design first.")
+        raise
