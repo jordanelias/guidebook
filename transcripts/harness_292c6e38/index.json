@@ -86,8 +86,22 @@
   {
     "started": "2026-09-10T04:38:54",
     "role": "other",
-    "bytes": 1339392,
+    "bytes": 1389619,
     "agent_id_prefix": "a905c39c",
     "file": "2026-09-10T04-38-54_other_a905c39c.jsonl"
+  },
+  {
+    "started": "2026-09-10T05:00:03",
+    "role": "adversarial",
+    "bytes": 796700,
+    "agent_id_prefix": "ac6d604e",
+    "file": "2026-09-10T05-00-03_adversarial_ac6d604e.jsonl"
+  },
+  {
+    "started": "2026-09-10T05:41:47",
+    "role": "antagonist",
+    "bytes": 297230,
+    "agent_id_prefix": "a060b54c",
+    "file": "2026-09-10T05-41-47_antagonist_a060b54c.jsonl"
   }
 ]
