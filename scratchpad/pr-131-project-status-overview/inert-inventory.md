@@ -51,3 +51,66 @@ tool, not a gate ... Exit code is always 0 unless run with --strict"*. It is red
 run and always will be until a per-model accept/reject policy exists, which its own
 docstring defers as separate work. It is the single loudest contributor to the battery's
 background noise.
+
+---
+
+# Strand 2 — inert executable surface (91 scripts swept)
+
+## The one the sweep got WRONG, and why it matters for the deletion rule
+
+`scripts/research/emit_batch_sql.py` came back INERT. It is not. **CLAUDE.md:163 names it
+as a step in THE WRITE PATH**, `governance/context-map.yaml:612` lists it, and **seven
+attestations record sessions actually using it** — *"Every row reached the canonical DB
+through the sanctioned path... captured by emit_batch_sql.py"*
+(`attestations/sessions_session_2026-09-02-research-batch-05-circulation-icf.json:16`).
+Deleting it would remove the capture step from the write path.
+
+The sweep's criteria were registry / CI / hooks / Python importers / skills /
+context-map. **None of those cover "a human or agent follows CLAUDE.md."** So any script
+whose only caller is the documented procedure reads as inert.
+
+**This is a required guard on the deletion rule.** "Nothing invokes it" must mean
+*including no prose procedure in CLAUDE.md, a skill, or an attested session*, or the rule
+deletes the write path. The narrower true finding here: no *skill* names
+`emit_batch_sql.py`, so an agent working from a skill rather than CLAUDE.md skips the
+capture step — which is how a table gets written and not captured.
+
+## Genuinely inert — nine, none load-bearing
+
+Confirmed: none of the nine is named as a step in CLAUDE.md, a skill, a hook or a
+governance document. None defines anything a live file imports.
+
+| file | status |
+|---|---|
+| `scripts/audit/rename_insurance.py` | nothing invokes it, no mention anywhere |
+| `scripts/generate_parts.py` | nothing invokes it, no mention anywhere |
+| `scripts/generate/population_page.py` | `build_site.py:6-11` says it *"has never had a driver"*; appears in `governance/retired-vocabulary.yaml` |
+| `scripts/generate/room_page.py` | `build_site.py:7` says it *"does NOT drive"* it and that it *"crashes against the live schema"* — see the exemption note below |
+| `scripts/tests/test_adjudication_integrity.py` | the registry's own quarantine note (`check-registry.yaml:1492`) records that a prior cull spared code on the false premise this was a live check — *"It is not, and never was"* |
+| `scripts/audit/graph/__init__.py` | siblings load via `sys.path.insert` + bare import; the package is never imported as one |
+| `scripts/audit/adjudication_integrity.py` | **quarantined** |
+| `scripts/audit/code_currency_audit.py` | **quarantined** |
+| `scripts/audit/pre_rehab_banner_audit.py` | **quarantined** |
+
+**Quarantine is real, and verified**: `run_checks.py` selftest C5 asserts *"quarantined
+checks are unreachable by --all"*, and the runner prints `(N quarantined, never selected)`.
+So "registered" and "runs" are different things, and three of the nine are registered but
+provably unreachable — a category worth naming rather than trusting the YAML's presence.
+
+## Where broken things are parked — and it is NOT hiding
+
+`governance/schema-reference-exemptions.yaml` holds nine exemptions, and reading it
+changes the shape of the deletion question. Its entries are honest and self-dating:
+
+- **`room` and three siblings** — `room_page.py` queries *"four tables that have never
+  existed in this schema"*. Exempted, not fixed, *"because fixing it means deciding what
+  the room stratum IS, which is content doctrine (DG-NON), not a sweep"* — recorded
+  2026-08-02 as disposal item flag 3, **awaiting owner decision 8**.
+- **`specification`** — the phantom table, and it records that
+  `skills/question-author_SKILL.md`'s *"entire write path has never been runnable"* and
+  that `question_heading` exists in **no table in the schema**.
+
+So a material share of the repo's broken paths are **not sweep misses awaiting a fix —
+they are parked awaiting an owner decision that has been open since 2026-08-02.** A
+non-compliance rule that deletes on brokenness alone would delete work that is waiting on
+the owner, and would discard the record of what it is waiting for.
