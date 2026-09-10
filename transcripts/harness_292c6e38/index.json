@@ -51,7 +51,7 @@
   {
     "started": "2026-09-10T00:28:02",
     "role": "adversarial",
-    "bytes": 556222,
+    "bytes": 615379,
     "agent_id_prefix": "a5369a62",
     "file": "2026-09-10T00-28-02_adversarial_a5369a62.jsonl"
   }
