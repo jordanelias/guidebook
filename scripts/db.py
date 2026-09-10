@@ -46,6 +46,11 @@ from pathlib import Path
 # only correct implementation in the repository and it had zero importers, so 55 other
 # files re-implemented it 104 times and inherited none of its lessons.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+# The REPO ROOT too, so `schemas.*` resolves. add-source derives the ratified tier from
+# schemas/tier_derivation.py rather than re-stating the ladder here — a second copy of a
+# ratified rule is the dual home rule 5 forbids, and this CLI's whole value is that it
+# refuses from the one authority rather than from a list of its own.
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import dbcore                                                      # noqa: E402
 
 # DB_PATH stays a module attribute because callers and tests read it. It is resolved
@@ -1274,6 +1279,16 @@ def main():
     p_as.add_argument("--pmid")
     p_as.add_argument("--jurisdiction")
     p_as.add_argument("--evidence-type")
+    # ADDED 2026-09-10. `scope` is the discriminator schemas/tier_derivation.py derives
+    # the ratified tier FROM, and this CLI could say --tier and could not say --scope. So
+    # every tier in the corpus was ASSERTED rather than derived: all 9 admitted sources
+    # carry scope NULL, and adjudication_integrity.py reports 9 of 9 underivable. Only
+    # `clinical` and `standard_eb` have a real choice; the other six types admit exactly
+    # one scope, so it is filled in rather than demanded.
+    p_as.add_argument("--scope",
+                      help="clinical: high_control | lower_control. standard_eb: national | "
+                           "international. Every other type takes 'intrinsic', which is "
+                           "supplied automatically. The tier is CHECKED against it.")
     # ADDED 2026-09-02. All three columns were ALREADY in _ES_COLS, so
     # insert_evidence_source accepted them; only the CLI had no way to say them. The
     # cost was measured 2026-09-01: two Co-1 sources admitted with co1_provenance NULL,
@@ -1835,6 +1850,69 @@ def main():
             # and 0 is a real, meaningful value that `if _v` would discard.
             if _v is not None:
                 data[_col] = _v
+        # THE TIER MUST BE DERIVABLE, NOT MERELY ASSERTED (2026-09-10).
+        #
+        # schemas/tier_derivation.py calls TIER_MAP "the ratified ladder as a total
+        # function" over (evidence_type, scope). This CLI could write --tier and had no
+        # --scope, so the ladder had no input and the tier was whatever the operator
+        # typed. Every one of the 9 admitted sources carries scope NULL, and
+        # adjudication_integrity.py reports 9 of 9 stored tiers as underivable — a field
+        # that is POPULATED but not TRUE, which is CLAUDE.md §5(c)'s failure exactly, and
+        # tier is what drives weight, which drives the determination.
+        #
+        # Six of the eight evidence types admit exactly one scope, so demanding a flag
+        # nobody could get wrong would be friction without a decision. It is supplied.
+        # The two that carry a real judgment — clinical (how controlled) and standard_eb
+        # (whose standard) — must be said, and are refused if silent.
+        #
+        # THIS IS A PARITY CHECK, AND RULE 5 SAYS A PARITY CHECK IS NOT A FIX: it makes a
+        # dual home survivable, therefore permanent. Once `scope` is recorded, `tier` IS
+        # derive_tier(evidence_type, scope) — a stored copy of a computed fact. The
+        # sanctioned end state is to retire it: writer-retire --tier, reader-retire the
+        # column, NULL forward (CLAUDE.md §5). That is a sweep across every reader of
+        # evidence_sources.tier, including the determination engine, and it is not this
+        # change. What this change does is stop the two from diverging any further, so the
+        # retirement has a consistent corpus to work from. Do not read the guard as the
+        # remedy.
+        #
+        # LAYER: this is a Layer 1 refusal in a Layer 1 writer, deriving from the Layer 1
+        # model. The ladder is IMPORTED from schemas/tier_derivation.py, never restated
+        # here — a second copy of a ratified rule is the dual home rule 5 forbids, and a
+        # CLI whose refusals come from its own list rather than the one authority is the
+        # thing this file exists not to be.
+        _etype = (args.evidence_type or "").lower()
+        if _etype:
+            from schemas.tier_derivation import (  # noqa: E402
+                TIER_MAP, VALID_SCOPES_BY_TYPE, derive_tier)
+            _valid = VALID_SCOPES_BY_TYPE.get(_etype)
+            if _valid is None:
+                raise ValueError(
+                    f"--evidence-type {_etype!r} is not on the ratified ladder. "
+                    f"Known types: {sorted(VALID_SCOPES_BY_TYPE)}")
+            _scope = args.scope
+            if _scope is None and len(_valid) == 1:
+                _scope = next(iter(_valid))          # forced by the type; not a judgment
+            if _scope is None:
+                raise ValueError(
+                    f"--scope is REQUIRED for --evidence-type {_etype!r}: it is the "
+                    f"discriminator the ratified tier is derived from, and this type "
+                    f"spans more than one tier. Choose {sorted(_valid)}.\n"
+                    f"Without it the tier is an assertion, and a tier that cannot be "
+                    f"derived cannot be contested.")
+            if _scope not in _valid:
+                raise ValueError(
+                    f"--scope {_scope!r} is not admissible for --evidence-type "
+                    f"{_etype!r}; valid: {sorted(_valid)}")
+            _derived = derive_tier(_etype, _scope)
+            if args.tier != _derived:
+                raise ValueError(
+                    f"--tier {args.tier} contradicts the ratified ladder: "
+                    f"({_etype}, {_scope}) derives tier {_derived}.\n"
+                    f"The tier is not a free integer — it is a function of the evidence "
+                    f"type and its scope. Either the scope is wrong or the tier is; "
+                    f"say which, do not assert past it.")
+            data["scope"] = _scope
+
         # THE CO-1 WARRANT REFUSAL (D-0178, ratified 2026-08-31). A Co-1 admission whose
         # warrant is not stated is "unwarranted-pending", and Co-1 is co-primary with T1
         # under CRPD Art 4.3 — this is the tier where the claim rests entirely on disabled
@@ -2229,6 +2307,16 @@ def insert_evidence_source(data: dict, session: str,
         "verification_disposition", "verification_method",
         "verification_closure_reason", "verification_attempt_count",
         "verification_note", "verified_by_tool",
+        # ADDED 2026-09-10, and its absence explains the corpus rather than excusing it.
+        # `scope` is the discriminator schemas/tier_derivation.py derives the ratified
+        # tier FROM. It was not on this list, so the sanctioned writer COULD NOT WRITE IT
+        # — which is why all 9 admitted sources carry scope NULL and adjudication_integrity
+        # reports 9 of 9 stored tiers underivable. That was never operator oversight: the
+        # only path that was allowed to write a source had no column for the one field the
+        # tier is a function of. Sixth time the capture path has been blind to a live
+        # column, after evidence_source_authors, source_locators, observed_terms /
+        # term_adjudications, terms, and base_parameters.
+        "scope",
     })
     _validate_cols(data.keys(), _ES_COLS, "insert_evidence_source")
 
