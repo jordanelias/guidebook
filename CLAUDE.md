@@ -291,18 +291,24 @@ traversal D-0184 measured and rejected.
   without rewriting anything — the branch carries a merge commit rather than a replay.
 - **THE ITEM LAYER IS GONE FROM THE DATABASE AND STILL LIVE ON THE READING SURFACE.** `items` holds
   0 rows and a rebuild does not restore it — but the prior version's corpus still publishes the
-  codes and their names in `references/`, `working/` and `index.html`, which `.ignore` does **not**
-  hide. (`versions/` carries them too and **is** hidden — `.ignore` line 106. This bullet claimed
-  otherwise until 2026-09-09; the bullet above it was right.) So a session that greps for a topic
-  still meets **`E-08 Corridor Clear Width
+  codes and their names across `references/` and `working/`, which `.ignore` does **not** hide.
+  (`versions/` carries them too and **is** hidden — `.ignore` line 106. This bullet claimed
+  otherwise until 2026-09-09; the bullet above it was right. **And it named `index.html` as a live
+  surface until 2026-09-10, when that file and `references/part04-item-index.md` had both already
+  moved under `_archived/`, which `.ignore` line 63 DOES hide** — so the bullet asserted the
+  opposite of the state on that clause, and both of its derivation commands below pointed at paths
+  that no longer resolve. A trap whose command errors out teaches the reader to distrust the trap.)
+  So a session that greps for a topic still meets **`E-08 Corridor Clear Width
   (≥1200 mm Minimum on All Primary Routes)`** — a container whose name states its answer, which is
   the whole reason the owner deleted the layer: *if E-08 already exists then the work is predisposed
   to filing into a container that already exists, and that biases every finding.* **Treat every
-  `[A-E]-NN` code you meet as prior-version content, never as a container to file into.** `db.py
-  add-item` refuses for this reason. **The prefixes run wider than the obvious ones** — derive them,
-  do not assume a range: `grep -rhoE '\b[A-Z]-[0-9]{2}\b' references/part04-item-index.md | cut -c1
-  | sort -u`. Then derive the surface before framing anything:
-  `grep -rEl '\b[A-Z]-[0-9]{2}\b' references/ working/ index.html`
+  `[A-Z]-NN` code you meet as prior-version content, never as a container to file into.** `db.py
+  add-item` refuses for this reason. **The prefixes run wider than any range you would guess** —
+  derive them, and note the archived index is now their only home:
+  `grep -rhoE '\b[A-Z]-[0-9]{2}\b' _archived/references/part04-item-index.md | cut -c1 | sort -u`.
+  Then derive the LIVE surface before framing anything — the two are different questions and only
+  the second one bounds what a grep will hand you:
+  `grep -rEl '\b[A-Z]-[0-9]{2}\b' references/ working/`
 - **Session ids: bare stem in the DB, `.md` in pointers and `emit_data_migration --session`.** Wrong
   form scopes a gate to nothing and it passes green.
 - **If you add a `SessionStart` hook, APPEND it — never insert at index 0.**

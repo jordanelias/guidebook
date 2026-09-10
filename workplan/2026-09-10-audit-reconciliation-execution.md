@@ -241,3 +241,33 @@ Each was executed by the logic audit; each needs a fix and a fault-injected test
 - **Retiring `specifications.governing_refs`** — same shape; the junction is the pointer
   and the JSON is the copy, but the copy is what `derivation_sha` hashes and K01
   recomputes, so dropping it re-keys the attestation.
+
+---
+
+## MEASURED 2026-09-10 (later, by the orientation session) — two register entries corrected
+
+Neither task below was worked; both descriptions were checked against the live code and the live
+schema, because a register that misdescribes its own targets sends the next session to the wrong
+place.
+
+**TASK 4 is NOT fixed, and a prior report of it was wrong.** `regulatory_richness()`
+(`assess_cell.py:409`) still reads `jur45 = {r.get("jurisdiction") for r in t45}` — no strip, no
+casefold, no None-dropping — and the T6 branch at `:416` does the same. `None` is still counted as a
+distinct jurisdiction. The orientation session initially reported this task's state from the
+function's **docstring**, which says *"jurisdiction distinctness IS checkable and is enforced"*; that
+sentence is about which §2.3 clauses are mechanically testable, not about whether the normalisation
+landed. Reading a docstring and reporting on code is the same error as quoting a count from prose.
+
+**TASK 8.7's description no longer matches the object.** It reads: *"`v_value_independence`
+(`071:161-170`) groups by `parameter_id` AND the verbatim label, so two phrasings of one parameter
+fragment the independence count."* The live view groups by `sve.parameter_id, t.canonical_en`, where
+`canonical_en` is reached by joining `base_parameters` → `terms` on `parameter_id`. The label is
+functionally determined by the group key, so **it cannot fragment anything**. Migration 071's version
+may well have had the defect; 072 and 073 both touched these views. Re-derive the view before
+working this item, and do not cite the 071 line numbers.
+
+CONDITION: Any session working task 4 or task 8.7, or citing either description.
+ACTION: Task 4 — fix the normalisation; the docstring is not evidence it is done. Task 8.7 —
+re-derive `v_value_independence` from `sqlite_master` first; the defect as described is absent from
+the live view.
+DATE: 2026-09-10 — measured, not worked.

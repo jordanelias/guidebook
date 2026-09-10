@@ -76,9 +76,17 @@ Why this one:
   min/max word — the item-layer defect in miniature. Compare observation 7, `"turning 180° in a
   corridor"`, which that guard would and should refuse.
 - **A second source states the same concept in different words**: observation 9, `"turning circle"`
-  (REF-00972). That is the NAMES-EXISTING adjudication runbook step 4 exists for, and it is the
-  in-data repair for `v_value_independence` fragmenting by verbatim label (audit task 8.7) — two
-  phrasings of one parameter otherwise read as two parameters.
+  (REF-00972). That is the NAMES-EXISTING adjudication runbook step 4 exists for.
+
+  > **CORRECTED 2026-09-10 — the rest of this bullet was a fabricated rationale and is struck.**
+  > It read: *"and it is the in-data repair for `v_value_independence` fragmenting by verbatim
+  > label (audit task 8.7) — two phrasings of one parameter otherwise read as two parameters."*
+  > The live view groups by `sve.parameter_id, t.canonical_en`, where `canonical_en` is reached by
+  > joining `base_parameters` → `terms` on `parameter_id`. The label is therefore functionally
+  > determined by the group key and **cannot fragment anything**. There was no defect to repair,
+  > and the audit register's own task-8.7 description no longer matches the view either — it
+  > described 071's version, and 072/073 moved it. A justification invented to make a choice look
+  > better is the same failure class as a count carried forward from prose.
 
 **Deliberately NOT `"corridor clear width"`**, the runbook's worked example. It is admissible, but it
 is also the exact name the deleted `E-08 Corridor Clear Width (≥1200 mm Minimum on All Primary
@@ -219,3 +227,82 @@ not a general defence against a name that states its answer. The operator is sti
 
 Canonical `data/guidebook.db` sha256 verified unchanged across the whole frame pull and both dry
 runs — every call above ran against `walk.db` with `GUIDEBOOK_DB_PATH` set inline.
+
+---
+
+## 7. THE DEPENDENCY THIS PLAN MISSED, derived 2026-09-10 after the plan was written
+
+Sections 1–6 above treated B5a (the tier gate) and B5b (the four escalated `scope` rows) as two
+separately-tracked items, one closed and one pending. **They compose, and the composition decides
+whether this batch can produce a believable cell at all.**
+
+### The measurement
+
+`schemas/tier_derivation.check_tier_consistency(evidence_type, scope, stored_tier)` applied to all
+nine admitted sources — B5a routes a `False` here through `anchoring()` to `NON-ANCHORING`:
+
+| ref_id | stored | type | scope | derived | |
+|---|---|---|---|---|---|
+| REF-00784 | T1 | clinical | **NULL** | UNDERIVABLE | **NON-ANCHORING** |
+| REF-00971 | T3 | clinical | **NULL** | UNDERIVABLE | **NON-ANCHORING** |
+| REF-00972 | T3 | clinical | **NULL** | UNDERIVABLE | **NON-ANCHORING** |
+| REF-00973 | T1 | clinical | high_control | 1 | ANCHORABLE |
+| REF-00974 | T1 | clinical | high_control | 1 | ANCHORABLE |
+| REF-00975 | T3 | clinical | lower_control | 3 | ANCHORABLE |
+| REF-00976 | T3 | clinical | **NULL** | UNDERIVABLE | **NON-ANCHORING** |
+| REF-00977 | T2 | sr_meta | intrinsic | 2 | ANCHORABLE |
+| REF-00978 | T1 | co1 | intrinsic | 1 | ANCHORABLE |
+
+**5 of 9 can anchor.** The four that cannot are exactly the four rows B5b left NULL and escalated to
+the owner — the sets are identical, not merely overlapping, because a NULL `scope` makes
+`(evidence_type, scope)` underivable and B5a excludes precisely that.
+
+### Why this lands on the parameter chosen above
+
+`"turning diameter"` is observation 6 on **REF-00971**. `"turning circle"` is observation 9 on
+**REF-00972**. **Both are non-anchoring.** They are also the only two sources in the corpus whose
+abstracts state turning geometry at all — they are the Toronto mobility-scooter pair, and turning
+diameter is their measured outcome.
+
+After B4, `gather_sources(conn, parameter_id)` returns only sources holding an extraction **for that
+parameter**. So the governing set for `turning diameter` would be drawn from REF-00971/972, and both
+would arrive `NON-ANCHORING`. The engine's own `sha()` docstring names this exact case as the one it
+added `n_extractions` to the hash payload to distinguish:
+
+> *(b) a parameter READ AND REJECTED — 2 sources, 2 extractions, both non-anchoring on tier (B5a)*
+
+**So the cell is constructible and would come out `pending`, not `stated`** — correctly, and for a
+reason that is not about circulation geometry. That is the engine working. But this plan presented
+the parameter choice as well-founded without checking it, and "we chose the phrase two independent
+sources use" is a weaker recommendation once both of those sources are excluded from anchoring.
+
+### What follows, stated as options rather than a decision
+
+1. **Run it and accept `pending`.** Honest, and it exercises the whole walk end to end. But
+   `idx_spec_row_identity` gives no re-determination path, so a `pending` cell on
+   `turning diameter × <lens>` **permanently occupies** that cell until a supersede design exists.
+   That is a real cost, not a rehearsal.
+2. **Choose a parameter whose extractions can come from the five anchorable sources.** Their subject
+   matter is shoulder load and propulsion kinetics (REF-00973/974), lived-experience home access
+   (REF-00975), a synthesis on inaccessible public space (REF-00977), and a Co-1 access survey
+   (REF-00978). A parameter drawn from that set is likelier to be about gradient, effort or route
+   length than about turning geometry — which would also serve the lens-crossing purpose in §1
+   better than turning diameter does.
+3. **Get B5b ratified first.** Four `scope` values land, the four sources become anchorable, and
+   `turning diameter` becomes a candidate for `stated`. **Owner-gated** — evidence-tier definitions
+   are owner-only (`CLAUDE.md` §8), and `workplan/2026-09-10-b5b-scope-owner-escalation.md` §6 is
+   where that ask already sits.
+
+**Option 3 is the only one that makes the chosen parameter reach `stated`, and it is not a session's
+to take.** Recorded here rather than resolved.
+
+### One more edge, unevaluated until now
+
+`regulatory_richness()` (`assess_cell.py:409`) builds `jur45 = {r.get("jurisdiction") for r in t45}`
+with **no strip, no casefold and no None-dropping** — audit task 4 is **NOT fixed**, verified in the
+code rather than inferred from its docstring. Every source in the live corpus has
+`jurisdiction` NULL except REF-00978 (`GB`). So a T4–T6 governing set assembled from this corpus
+would count `None` as a distinct jurisdiction and could clear a §2.3 richness test it should fail.
+This plan's leg 14 targets the regulatory stratum. **Leads only there, per the REFERENCE-ONLY
+ruling, so nothing this batch files reaches that code path** — but the interaction is live the moment
+a regulatory value is ever adjudicated, and it should be fixed before then.
