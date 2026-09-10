@@ -306,3 +306,43 @@ would count `None` as a distinct jurisdiction and could clear a §2.3 richness t
 This plan's leg 14 targets the regulatory stratum. **Leads only there, per the REFERENCE-ONLY
 ruling, so nothing this batch files reaches that code path** — but the interaction is live the moment
 a regulatory value is ever adjudicated, and it should be fixed before then.
+
+---
+
+## 8. The four parameter legs for `ramp gradient` — PRIORS WRITTEN BEFORE THE SEARCHES RUN
+
+The §3 legs stand: they cross the lenses batch 05 missed and none of them is parameter-specific.
+These four are new, tied to `ramp gradient` (TERM-001, `parameter_id 1`), and **this section is
+committed before any of them is executed**, because a prior recorded after seeing results is a
+rationalisation rather than a prior (DR-2026-05-09, R8).
+
+| # | Tier / lens | Engine | Prior expectation, written now |
+|---|---|---|---|
+| R1 | Co-1, MOB | web | Expect disabled-led organisations to have published on ramps extensively as *complaint and campaign* material — "the ramp is too steep", "no ramp at all" — and expect almost none of it to carry a measured gradient. If a DPO source does state a ratio, expect it quoted from a building code rather than measured, which makes it an echo and not a primary root. A rich qualitative yield with zero measured values is the expected shape and is a finding about who gets to measure, not a search failure. |
+| R2 | Co-2, OT professional body | web | Expect ramp gradient to appear in OT home-assessment guidance, and expect it as a code citation rather than an independent finding. Batch 05 established that RCOT guidelines sit outside PubMed (its exec 35/36 R14 diagnosis), so search the body's own site. Expect a document that exists and an extraction graded `absent` or an echo. |
+| R3 | T2 synthesis | pubmed | Expect a real systematic-review literature on wheelchair propulsion and slope — this is one of the better-served biomechanics questions. Expect reviews that pool kinetics across gradients, which would give a second independent root for the parameter. This is the leg most likely to change the cell's convergence from single-axis. |
+| R4 | T1 primary, backward mining | crossref | REF-00973's own reference list is already in the persisted payload and cites, by title, *"An analysis of the effects of ramp slope on people with mobility impairments"* and *"Kinematic and electromyographic analysis of wheelchair propulsion on ramps of different slopes for young men with paraplegia"*. Expect both to resolve and to state gradients directly. This is the cheapest lead source in the batch and satisfies R2's mining floor with real chases rather than a deferral. |
+
+**Two things these priors commit me to reporting honestly afterwards.** If R3 yields a pooled review
+with gradient values, the cell gains a second measuring root and its convergence claim changes — I
+must not quietly keep the single-axis framing. If R1 yields nothing measured, that zero is a
+first-class finding under R7 and goes in a `findings_note`, not into silence.
+
+### The R7 finding already in hand, filed where it belongs
+
+REF-00973's *"an increased risk of MD occurred in two steps: firstly, when a slope was introduced;
+secondly, when the gradient became much steeper"* is a harm finding about the parameter. It carries no
+value, so `add-extraction` **refused it** — *"claim_type='qualitative' requires --claimed-value. If the
+source asserts nothing for this parameter, that is claim_type='absent' — a recorded absence, which is
+evidence, not a missing field."* That refusal is right and it pointed at the correct home: R6 and R7
+put findings in `findings_note`, not in the value-extraction table. Recorded here so the batch files
+it there rather than losing it to a refusal.
+
+### An open question for the batch's own antagonist
+
+Extraction 2 grades REF-00974 `absent`, and `gather_sources()` joins on `(ref_id, parameter_id)` — so
+REF-00974 **enters the governing set while contributing no value**, and the engine will print
+`refs=2` where only one source measured anything. That may well be correct: the source genuinely was
+read for this parameter and its silence is recorded rather than assumed. But it inflates a count a
+reader will take at face value. **Attack it rather than assume it** — and if it is wrong, the fix is
+in the engine's gather or its reporting, not in deleting an honest `absent` row.

@@ -37,14 +37,14 @@
   {
     "started": "2026-09-10T23:12:59",
     "role": "agonist",
-    "bytes": 841640,
+    "bytes": 861978,
     "agent_id_prefix": "a743a847",
     "file": "2026-09-10T23-12-59_agonist_a743a847.jsonl"
   },
   {
     "started": "2026-09-10T23:13:33",
     "role": "agonist",
-    "bytes": 812237,
+    "bytes": 851605,
     "agent_id_prefix": "aeece19c",
     "file": "2026-09-10T23-13-33_agonist_aeece19c.jsonl"
   }
