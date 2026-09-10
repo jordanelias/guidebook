@@ -2375,7 +2375,8 @@ def insert_evidence_source(data: dict, session: str,
         raise ValueError(
             f"--ref-id {rid!r} is not a global reference id.{hint} Expected REF-NNNNN "
             f"(or REF-VERIFIED-NNN / Co1-NN). Get the next one from "
-            f"`dbcore.next_ref_id(conn)`, which computes the high-water mark as the "
+            f"`db.py next-id ref` (added 2026-09-10 — this message named the Python "
+            f"function for months while no command existed), which computes the high-water mark as the "
             f"UNION of every table holding a ref_id. Nothing was written.")
 
     # A verification standing implies its evidence — so REFUSE the write when the
@@ -3630,7 +3631,7 @@ def insert_locator(data: dict, session: str, dry_run: bool = False) -> str:
     if not ref or not dbcore.REF_ID_SHAPE.fullmatch(ref):
         raise ValueError(
             f"--ref-id {data.get('ref_id')!r} is not a global reference id. Expected "
-            f"REF-NNNNN (or REF-VERIFIED-NNN / Co1-NN). Mint with dbcore.next_ref_id().")
+            f"REF-NNNNN (or REF-VERIFIED-NNN / Co1-NN). Mint with `db.py next-id ref`.")
     with dbcore.connect(dry_run) as conn:
         if dbcore.exists(conn, "source_locators", "ref_id", ref):
             raise ValueError(f"{ref} already exists in source_locators. Use update-locator.")

@@ -8,9 +8,14 @@ cleanly with **zero** UPDATE statements, not one), and no step named `observe-te
 `add-parameter`, `adjudicate-term` or the determination engine (`scripts/assess/assess_cell.py`),
 none of which existed when §12.1 was written.
 
-Every command and every "expected" block below was executed for real, on a scratch copy of the
-canonical DB, in this same commit's rehearsal (`/tmp/rb06`), after the R10b and `next-id ref`
-fixes elsewhere in this commit. `sha256sum data/guidebook.db` was identical before and after.
+Every command below was executed for real, on a scratch copy of the canonical DB, and
+`sha256sum data/guidebook.db` was identical before and after.
+
+**Two "expected" blocks were NOT reproduced by the rehearsal that wrote them**, found by an
+adversarial pass following this file literally on 2026-09-10 and corrected here: step 6a's insert
+count (stated 23, the commands below yield 22 — row-delta and capture both), and HAZARD 4, whose
+mechanism was stated backwards. Read an "expected" block as what the walk produced, and if yours
+differs, trust yours and correct this file.
 
 **This is a mechanics runbook, not a claim that batch 06's determination is believable.**
 `workplan/2026-09-10-road-to-batch-06.md`'s HEADLINE is still true after this commit:
@@ -67,8 +72,16 @@ GUIDEBOOK_DB_PATH="$S/walk.db" python3 scripts/db.py observe-term \
   --locator "p.4" --context-quote "minimum clear width of the corridor measured between handrails" \
   --session "$SESS"
 ```
-**Expected:** `{"observation_id": <N>, "created": true}`. Read `OBS` back:
-`select observation_id from observed_terms where surface_form='corridor clear width'`.
+**Expected:** `{"observation_id": <N>, "created": true}`. **Set `OBS` from that JSON** — do not
+re-query for it. There is no `sqlite3` CLI in this container (CLAUDE.md §4), and the value is
+already in the output:
+```
+OBS=$(GUIDEBOOK_DB_PATH="$S/walk.db" python3 scripts/db.py observe-term ... | python3 -c \
+  "import json,sys; print(json.load(sys.stdin)['observation_id'])")
+```
+Every later `$VAR` in this runbook is set the same way, from the JSON of the step that minted it:
+`$TERM` from `add-term`'s `term_id`, `$PID` from `add-parameter`'s `parameter_id`, `$E` and `$N2`
+from `log-search`'s `exec_id`, `$REF` from `next-id ref`'s `next_id`.
 
 ```
 GUIDEBOOK_DB_PATH="$S/walk.db" python3 scripts/db.py add-term \
@@ -110,14 +123,36 @@ commit (item 3) — before it, `next-id` offered only `{connections,gaps,terms,c
 `add-source` refused any hand-picked id by *naming* `dbcore.next_ref_id(conn)` rather than a
 command to run.
 
+**⚠ RETRIEVE BEFORE YOU ADMIT. THIS IS THE STEP THE PROJECT HAS ALREADY FAILED.** On 2026-08-19
+all five sources in the first research batch were stored with **invented co-authors** — including
+the deletion of autistic community co-authors from a Co-1 paper whose Co-1 warrant *is* their
+co-authorship. **Six gates passed it**, because each asked whether the author fields were
+*populated*, never whether they were *true* (CLAUDE.md §5(c)). Nothing below detects that; the
+retrieval log is what does.
+
+```
+python3 scripts/research/retrieval_log.py --fetch --doi "$DOI" --session "$SESS"
+```
+Persist the payload FIRST, then take every bibliographic field from the bytes you received — never
+from memory, never from a search-result snippet. After admission:
+```
+python3 scripts/research/retrieval_log.py --verify-authors --ref-id "$REF"
+```
+which diffs the stored row against the payload actually received. **A `VERIFIED` standing with no
+payload behind it is the fabrication shape, and it passes R9a/R9b/R10 green.**
+
 ```
 GUIDEBOOK_DB_PATH="$S/walk.db" python3 scripts/db.py add-source \
   --ref-id "$REF" --author "Smith|Jane" --year 2020 --title "..." --tier 1 \
-  --doi 10.9999/... --evidence-type clinical --scope high_control \
+  --doi "$DOI" --url "$URL" --evidence-type clinical --scope high_control \
   --metadata-quality COMPLETE --verification-status VERIFIED --verification-method tool \
   --verified-by-tool crossref --doi-resolution-outcome RESOLVED \
   --slug accessible-circulation-geometry --local-ref-id 1 --session "$SESS"
 ```
+`$DOI` and `$URL` are the real values from the payload above. The placeholder `10.9999/...` this
+example carried until 2026-09-10 was itself the defect being described: it admitted a fabricated
+DOI as VERIFIED, and the gate passed it. Passing `--url` is also what makes the walk exercise the
+`R10b` this same commit added — without it the runbook never tested its own new rule.
 **Expected:** `{"ref_id": "REF-NNNNN", "linked_slug": "accessible-circulation-geometry",
 "dry_run": false}`. **`--verification-status` is a CLI choice of `{VERIFIED,UNVERIFIED}` but the
 column itself accepts NULL if the flag is omitted — always pass it.** Since this commit, omitting
@@ -166,7 +201,10 @@ GUIDEBOOK_DB_PATH="$S/walk.db" python3 scripts/db.py add-population-match \
   --ref-id "$REF" --target-population MOB --study-population "manual wheelchair users n=30" \
   --match-grade EXACT --session "$SESS"
 ```
-**Expected:** `{"match_id": "<session>-<ref>-<pop>", "dry_run": false}`.
+**Expected:** `{"match_id": "<session[:24]>-<ref>-<pop>", "dry_run": false}`. **`db.py:3435` truncates the
+session to 24 chars** — e.g. `session_2026-09-10-batch-REF-00979-MOB`. Two sessions sharing a
+24-char prefix produce ids that look identical; `db.py:3437-3441` suffixes on collision so nothing
+is lost, but the id is not the plain template it appears to be.
 `--target-population` is a `populations.population_code` (the identity lens; codes AND names, per
 CLAUDE.md §6 — never bare axis codes). `db.py add-population-match` does **not** enforce
 uniqueness on `(ref_id, population)` — that refusal is deliberately absent (CLAUDE.md §4); a
@@ -227,8 +265,13 @@ line have been read.
 **⚠ HAZARD — no re-determination path.** `idx_spec_row_identity` is a UNIQUE index on
 `specifications(parameter_id, COALESCE(identity_code,''), COALESCE(icf_code,''),
 COALESCE(needs_code,''), COALESCE(medical_code,''))`. Running `assess_cell.py` a second time for
-the *same* parameter × lens combination is refused at apply time, not at engine time — the engine
-happily re-emits, and the refusal surfaces only when `migrate_db.py` tries to INSERT. Batch 06 is
+the *same* parameter × lens combination is refused **at engine time, at step 5** — not at apply
+time. The engine does NOT re-emit: it dies with an uncaught
+`sqlite3.IntegrityError: UNIQUE constraint failed: index 'idx_spec_row_identity'` at
+`assess_cell.py:721`, exits 1, and **writes no `--emit-sql` file at all**. Verified twice on
+2026-09-10, including the real batch-07 shape (a fresh copy of the post-migration DB, new session,
+new stamp): same crash. The scratch DB is left partially written. This file said the opposite
+until the adversarial pass executed it. Batch 06 is
 the first determination of this cell; a batch 07 that revisits it needs a supersede design (an
 owner decision this runbook does not make — workplan DELIBERATELY WAITING).
 
@@ -239,10 +282,12 @@ owner decision this runbook does not make — workplan DELIBERATELY WAITING).
 python3 scripts/research/emit_batch_sql.py \
   --scratch "$S/walk.db" --canonical data/guidebook.db --out "$S/batch.sql"
 ```
-**Expected:** `Wrote <S>/batch.sql — 23 insert(s), 0 update(s)` (counts will differ with different
-inputs; what matters is that the per-table breakdown printed includes exactly one
-`specifications` insert and one `convergence_assessment` insert — the step-5 rows, captured here
-and nowhere else).
+**Expected:** `Wrote <S>/batch.sql — 22 insert(s), 0 update(s)` (counts differ with different
+inputs; what matters is that the file contains exactly one `specifications` insert and one
+`convergence_assessment` insert — the step-5 rows, captured here and nowhere else). The per-table
+breakdown is NOT printed: `emit_batch_sql.py:173` prints one summary line, and the breakdown is
+written as `-- <table>: N insert(s)` comment lines INSIDE the output file. Read it there:
+`grep '^-- ' "$S/batch.sql"`.
 
 **6b — name the migration file. `--session` takes the `.md` form.**
 ```
@@ -259,10 +304,17 @@ Rehearse this against a throwaway `--output-dir` first if unsure; only point it 
 python3 scripts/migrate_db.py --session "$SESS.md"
 ```
 **No `GUIDEBOOK_DB_PATH` override — this is the one call in the whole walk that is meant to touch
-`data/guidebook.db`.** Rehearse it first against a scratch copy of canonical
-(`cp data/guidebook.db "$S/replay.db"; GUIDEBOOK_DB_PATH="$S/replay.db" python3
-scripts/migrate_db.py --session "$SESS.md"`) and confirm `pragma foreign_key_check` is empty and
-`sha256sum data/guidebook.db` is unchanged before running it for real.
+`data/guidebook.db`.** Rehearse it first against a scratch copy of canonical. **The rehearsal
+needs `GUIDEBOOK_MIGRATIONS_DIR` as well** — `migrate_db.py:42` reads the migrations directory
+from it, so without it the rehearsal can only find a migration 6b has already written into the
+repo, which contradicts 6b's own throwaway-directory advice:
+```
+cp data/guidebook.db "$S/replay.db"
+GUIDEBOOK_DB_PATH="$S/replay.db" GUIDEBOOK_MIGRATIONS_DIR="$S/mig" \
+  python3 scripts/migrate_db.py --session "$SESS.md"
+```
+Confirm `PRAGMA foreign_key_check` is empty and `sha256sum data/guidebook.db` is unchanged before
+running it for real.
 **Expected:** `Done. Schema at version <N>; 1 data migration(s) applied.`
 
 **⚠ HAZARD — regenerate BEFORE the gate, not after.**

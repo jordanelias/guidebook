@@ -133,9 +133,27 @@ def main():
         print(f"research_contract_hook: cannot read the enforcer: {exc}", file=sys.stderr)
         return 2
     import re as _re
-    enforcer_ids = set(_re.findall(r"\bR(?:1[0-5]|[1-9])\b", enforcer_src))
-    only_contract = sorted(rule_ids - enforcer_ids, key=lambda r: int(r[1:]))
-    only_enforcer = sorted(enforcer_ids - rule_ids, key=lambda r: int(r[1:]))
+    # SUB-LETTERED RULES WERE INVISIBLE. The pattern was `\bR(?:1[0-5]|[1-9])\b`, and `\b`
+    # does not fire between `0` and `b`, so R9a, R9b, R10b and R11-harvest were never
+    # collected — this printed "agree on 15 rule ids" while FOUR enforced rules had no
+    # contract entry and therefore reached no session's hook. A comparator that cannot see
+    # part of what it compares reports agreement it did not establish.
+    #
+    # Sub-rules normalise to their parent: R9a/R9b are the two halves of R9's duplicate-DOI
+    # check and R11-harvest is R11's own "HARVEST AS YOU GO" clause, so the parent's hook
+    # text already warns the session. The set comparison is on parents; the sub-ids are
+    # reported so a reader knows they exist.
+    raw_ids = set(_re.findall(r"\bR(?:1[0-5]|[1-9])(?:[a-z]|-[a-z]+)?\b", enforcer_src))
+    def _parent(rid):
+        m = _re.match(r"(R\d+)", rid)
+        return m.group(1)
+    enforcer_ids = {_parent(r) for r in raw_ids}
+    sub_ids = sorted(r for r in raw_ids if r != _parent(r))
+    def _key(r):
+        m = _re.match(r"R(\d+)(.*)", r)
+        return (int(m.group(1)), m.group(2))
+    only_contract = sorted(rule_ids - enforcer_ids, key=_key)
+    only_enforcer = sorted(enforcer_ids - rule_ids, key=_key)
     if only_contract or only_enforcer:
         print("FAIL: the contract and its enforcer disagree about which rules exist.")
         if only_contract:
@@ -143,7 +161,9 @@ def main():
         if only_enforcer:
             print(f"      enforced but not defined in the contract: {only_enforcer}")
         return 1
-    print(f"PASS: contract and enforcer agree on {len(rule_ids)} rule ids")
+    print(f"PASS: contract and enforcer agree on {len(rule_ids)} rule ids"
+          + (f" (+{len(sub_ids)} sub-rules under their parents: {', '.join(sub_ids)})"
+             if sub_ids else ""))
 
     if have == wanted:
         print("PASS: the SessionStart hook matches governance/research-contract.yaml")

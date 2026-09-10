@@ -42,7 +42,7 @@ CHECKS (each maps to a documented rule and to the observed violation that motiva
       DOI + page/table (or direct URL) else [UNVERIFIED-QUANT].
       Observed violation: 5 code/standard sources admitted with 0 clauses and 0 flags.
 
-  R4  COMBINATORIAL dimension.  Cells are (item x population); populations/access_needs/ICF/axes
+  R4  COMBINATORIAL dimension.  Cells are (parameter x lens); populations/access_needs/ICF/axes
       are first-class. Observed violation: 0 of 52 queries crossed a population, access need,
       ICF code or axis — coverage was one-dimensional.
 
@@ -370,7 +370,8 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
                            f"{scope.replace('session','created_by_session')}", sargs)[0][0]
     if total and linked == 0:
         fail("R4", f"{total} searches produced ZERO population linkages "
-                   f"(evidence_population_match). Cells are (item x population): a search that "
+                   f"(evidence_population_match). Cells are (parameter x lens) since migration "
+                   f"071 — NOT (item x population), the traversal D-0184 rejected: a search that "
                    f"merely mentions a population in prose is not a crossing — link admitted "
                    f"evidence to the population(s)/axis it actually speaks to.", total)
     else:
@@ -525,7 +526,7 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     if collide:
         fail("R9b", f"{len(collide)} ref_id(s) admitted by this batch collide with a HELD "
                     f"identifier in source_locators that identifies a DIFFERENT source — mint "
-                    f"above dbcore.next_ref_id(conn), which computes the high-water mark "
+                    f"above `db.py next-id ref`, which computes the high-water mark "
                     f"as the UNION of every table holding a ref_id -- NOT the stash alone: "
                     + "; ".join(f"{r} admitted {a}, stash holds {b}" for r, a, b in collide[:5]),
              len(collide))
@@ -574,6 +575,11 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     unverified_url = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources WHERE "
                                f"COALESCE(url,'') <> '' AND verification_status IS NULL"
                                f"{scope.replace('session','created_by_session')}", sargs)[0][0]
+    # The subject: URL-bearing admissions. Without this the pass could not say whether it
+    # had looked at anything, which is the whole of §5(a).
+    n_url_bearing = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources WHERE "
+                              f"COALESCE(url,'') <> ''"
+                              f"{scope.replace('session','created_by_session')}", sargs)[0][0]
     if unverified_url:
         fail("R10b", f"{unverified_url} admitted source(s) carry a URL with verification_status "
                      f"left NULL. This is exactly the pool verify_urls.py's scheduled cron "
@@ -583,7 +589,15 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
                      f"every open DB-touching PR. Set --verification-status on add-source (even "
                      f"UNVERIFIED is a real value) before merge.", unverified_url)
     else:
-        ok("R10b", "no admitted source carries a URL with verification_status left NULL")
+        # SUBJECT COUNT, per this file's own DESIGN RULES and the R9a/R9b hardening
+        # directly above: a bare PASS on a session that admitted nothing is CLAUDE.md
+        # §5(a), and R10b shipped with exactly that on 2026-09-10.
+        if not n_url_bearing:
+            ok("R10b", "NOTHING IN SCOPE — this batch admitted no source carrying a URL, "
+                       "so the cron's pool cannot have grown. EXAMINED: 0")
+        else:
+            ok("R10b", f"EXAMINED: {n_url_bearing} admitted source(s) carrying a URL; "
+                       f"none left verification_status NULL")
 
     # --- R11 vocabulary provenance ---------------------------------------------------------
     noprov_scope = _rows(cx, f"SELECT COUNT(*) FROM term_aliases WHERE 1=1"
