@@ -2809,3 +2809,40 @@ ACTION: File apparatus at Layer 0/1 and stage work at Layer 2. A check may invok
 2 tool and that tool may decide its own stage's business; what may not happen is a check
 living inside project materials. Owner-gated brokenness stays until its decision is made.
 DATE: 2026-09-10 — owner rulings and same-day correction, quoted above.
+
+---
+
+CORRECTION — 2026-09-10. **`v_item_extractions` is DELETED; the ledger entry that names it
+live stands as written and is superseded here, not edited.**
+
+**What is now wrong on the record.** The 2026-08-27 correction entry above (the cross-stage
+VIEW count, `grep -n 'v_item_extractions'`) reads: *"Under that convention it is **five**, not
+seven: `v_coverage_priority` (research+substrate) and `v_item_extractions` (evidence+substrate)
+do not cross."* The view no longer exists. **Migration 073 dropped it**, having asked the
+question `CLAUDE.md` §3 requires before any view is deleted — which stages does it span, and
+does deleting it force the next reader back to copying — and recorded both the answer and the
+sweep in its own text. The short version: the view joined `sve.item_code = i.item_code`, the
+hop-4 item edge, and the owner's 2026-08-26 ACTION (5) says *"`items` survives as the Part-4
+rollup only — no new writer keys anything on `item_code` at the judgment stage"*. The edge the
+view was the pointer for is the edge the ruling itself deleted, so a reader deprived of it is
+pushed toward the route the ruling installed, not toward copying. No replacement was built,
+because nothing read the old one: `CLAUDE.md` §8, *"nothing is added without naming what reads
+it."*
+
+**Why this is an appended entry and not an edit at line 1669.** This ledger is **append-only**.
+Editing the 2026-08-27 entry would silently rewrite what was true when it was written — the
+view WAS live that day, and the count of five WAS correct under the stated convention. The
+entry is not wrong about 2026-08-27; it is out of date about 2026-09-10, and those are
+different things. Anyone re-deriving a cross-stage view count reads forward to here.
+
+**Do not re-derive the figure from this entry either.** The five/seven count was a measurement
+of a moving object and it has now moved twice. Derive it: enumerate `sqlite_master` views,
+assign each stage under `CLAUDE.md` §3's seven-stage table, and apply the stated convention
+that `base` is not a stage — a view reading one stage plus base crosses nothing.
+
+CONDITION: Any session quoting a cross-stage view count, looking for `v_item_extractions`, or
+reading the 2026-08-27 correction entry.
+ACTION: (1) Treat `v_item_extractions` as deleted; migration 073 carries the reasoning. (2)
+Re-derive any view count from the live schema — never quote 5, 7, or any successor figure. (3)
+Leave line 1669 as written; this entry is its supersession.
+DATE: 2026-09-10 — sweep of migration 073's prose callers.

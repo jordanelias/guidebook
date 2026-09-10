@@ -18,6 +18,25 @@ hardcoded PILOT_CELLS this engine used to walk — E-08, E-12, G-03, C-02, E-06,
 were prior-version containers whose names stated their answers. They are gone with the
 driver that held them; the engine now takes its cell on the command line.
 
+RE-KEYED AGAIN 2026-09-10, AND THIS TIME AT THE POINT WHERE IT DECIDES. 071 re-keyed the
+cell's IDENTITY; the engine still gathered its EVIDENCE by slug, so `parameter_id` reached
+sha(), the report and validate_parameter() and never reached the evidence. `param 1 × MOB
+→ stated basis=T1+CO1+T2` therefore meant "everything admitted to
+accessible-circulation-geometry" — 10 sources, 8 of them flagged `tier_inconsistent` by
+this engine's own report, all 10 DOWN-WEIGHTED. Two changes close it:
+
+  B4c  gather_sources() takes a parameter_id and returns the sources holding an
+       EXTRACTION for it, joined on (ref_id, parameter_id). Migration 073 made
+       `source_value_extractions.parameter_id` NOT NULL and `db.py add-extraction` —
+       the writer that table shipped without — creates the edge this joins on.
+  B5a  a source whose tier is not derivable from its own (evidence_type, scope) is
+       NON-ANCHORING and cannot reach a `stated` determination. A parameter with no
+       qualifying extraction is `pending` with a gap, which is what it always was.
+
+`--slug` survives as the topic a determination is RECORDED under. It no longer selects
+evidence, and every sentence this engine emits that mentions it has been re-derived to
+say so.
+
 Implements the pure determination function of workplan/best-practices-assessment-system.md
 §3 under the doctrine of governance/evidence-architecture.md, with the G1/G2/G3/G6
 fixes active ADDITIVELY — no existing schema function is modified; every deviation from
@@ -41,8 +60,11 @@ Module roster (PILOT-MANIFEST.md §4 — no silent omissions):
   schemas.enums               PopulationCode / EvidenceCellState / ConvergenceStatus /
                               Co1SourceType / VerificationStatus vocabularies
   schemas.evidence_source     (via enums + verification gates below)
-  schemas.source_value_extraction  value substrate (table empty — value dimension
-                              recorded NOT_ASSESSED, never silently EXACT; G2)
+  schemas.source_value_extraction  the JUDGMENT item (D-0168) — what gather_sources
+                              now joins on. The VALUE dimension stays NOT_ASSESSED,
+                              and the reason is not emptiness: no value-directness
+                              grading rule exists in this repository and inventing
+                              one is stop condition 4 (G2; never silently EXACT)
   schemas.population, schemas.population_links, schemas.slug, schemas.bpc_metadata,
   schemas.gap                 identity/attribution semantics (lens codes validated
                               against their own live base tables)
@@ -90,7 +112,9 @@ RULE_VERSION = "pilot-2"  # pilot-1 + adversarial-review corrections (see PILOT-
 #   has_unverified_sources / all_sources_disqualified implemented per §2.8;
 #   population-match rows attributed to the cell's population or treated NOT_ASSESSED;
 #   §2.3 richness checks T6 jurisdiction distinctness and names its unchecked clause;
-#   gap descriptions are slug-scoped (absence of a slug-link is not corpus-level absence);
+#   gap descriptions are PARAMETER-scoped as of 2026-09-10 (they were slug-scoped, and
+#   said so, back when the gather was too — absence of an extraction for the parameter
+#   is not corpus-level absence, and is not the same absence a missing slug-link is);
 #   ~~the SQL artifact amends v_best_practice to exclude regulatory-stratum-only rows
 #   (interim, marker-based; migration 027 adds the real column).~~ WITHDRAWN
 #   2026-08-22 (BRK-26): the column exists and migration 029 superseded the
@@ -175,7 +199,37 @@ def source_grain(evidence_type, tier, co1_source_type):
     return GRAIN_FROM_EVIDENCE_TYPE.get(evidence_type, GRAIN_SPECIFIC), "default map"
 
 
-def gather_sources(conn, slug):
+def gather_sources(conn, parameter_id):
+    """The sources holding an EXTRACTION FOR THIS PARAMETER. Not the slug's sources.
+
+    THE DEFECT THIS CLOSES, measured 2026-09-10. This function took a `slug` and
+    joined `source_slug_links`, so the governing set was "everything admitted to this
+    topic". `parameter_id` was carried through determine()'s signature, sha(), the
+    report dict and validate_parameter() and never reached the evidence at all -- the
+    071 re-key was cosmetic at the exact point where the engine decides. The visible
+    result was `param 1 x MOB -> stated basis=T1+CO1+T2` anchored on all 10 sources
+    linked to `accessible-circulation-geometry`, 8 of which the engine's own report
+    flagged `tier_inconsistent`, and every one of the 10 DOWN-WEIGHTED.
+
+    The cause was one absent table-writer, not a bad query: `db.py` held ZERO
+    references to `source_value_extractions`, so no parameter->evidence edge existed
+    and the slug was the only join available. `db.py add-extraction` (migration 073,
+    same change as this) creates the edge; this query uses it.
+
+    DISTINCT IS LOAD-BEARING, not tidiness. Evidence to judgment is 1:N (D-0168): one
+    code document yields many clause-level extractions for one parameter. Without
+    DISTINCT, NBC 3.8's clauses would each add a copy of the same source to the
+    governing set, and a single document would look like corroboration of itself --
+    the independence failure `v_value_independence` exists to detect, manufactured
+    inside the engine.
+
+    A CONSEQUENCE WORTH STATING, because it is stop condition 6 of the operative
+    plan ("any `stated` cell whose governing set includes a source with no extraction
+    for that parameter -- do not merge the migration"): after this change that cell is
+    not merely forbidden, it is unconstructible. Every ref_id in the governing set
+    came out of this query, and this query returns only sources that hold an
+    extraction for the parameter being determined.
+    """
     # verification_disposition arrived with migration 049 (D-0157). This script
     # is run against scratch and fixture databases as well as the canonical one
     # -- it refuses the canonical DB by design -- so the column is selected only
@@ -184,15 +238,28 @@ def gather_sources(conn, slug):
     has_disp = any(r[1] == "verification_disposition"
                    for r in conn.execute("PRAGMA table_info(evidence_sources)"))
     disp_col = "e.verification_disposition" if has_disp else "NULL"
-    q = f"""SELECT e.ref_id, e.tier, e.evidence_type, e.co1_source_type,
+    q = f"""SELECT DISTINCT e.ref_id, e.tier, e.evidence_type, e.co1_source_type,
                    e.verification_status, {disp_col}, e.scope, e.jurisdiction
-            FROM source_slug_links l JOIN evidence_sources e ON e.ref_id = l.ref_id
-            WHERE l.slug = ? AND e.superseded_by_ref_id IS NULL
+            FROM source_value_extractions x
+            JOIN evidence_sources e ON e.ref_id = x.ref_id
+            WHERE x.parameter_id = ? AND e.superseded_by_ref_id IS NULL
             ORDER BY e.ref_id"""
     return [dict(zip(("ref_id", "tier", "evidence_type", "co1_source_type",
                       "verification_status", "verification_disposition",
                       "scope", "jurisdiction"), r))
-            for r in conn.execute(q, (slug,))]
+            for r in conn.execute(q, (parameter_id,))]
+
+
+def count_extractions(conn, parameter_id):
+    """How many extraction rows this parameter holds, across all sources.
+
+    Reported alongside the source count so a reader can see the 1:N fan-out rather
+    than infer it: 2 sources and 9 extractions is a normal, ruled shape (D-0168), and
+    a report showing only "2 sources" hides which of the two carried the clauses.
+    """
+    return conn.execute(
+        "SELECT COUNT(*) FROM source_value_extractions WHERE parameter_id = ?",
+        (parameter_id,)).fetchone()[0]
 
 
 def population_match(conn, ref_id, population):
@@ -227,19 +294,59 @@ def assess_source(conn, src, claim_scale, population):
         pop = population_directness_from_match_grade(mg)
     else:
         pop = NOT_ASSESSED  # G2: applies but unassessed — never graded as EXACT
-    # value dimension: still NOT_ASSESSED, but the reason has changed and the
-    # old one was that source_value_extractions "is EMPTY (0 rows)". It holds 8
-    # rows as of migration 052 and, since that migration, an item_code to join
-    # them on. What is still absent is any assessment RULE for grading a value
-    # dimension from them — writing one is a judgment act, not a caller sweep.
-    # G2 stands: applies but unassessed, never silently full-match.
+    # VALUE DIMENSION: NOT_ASSESSED, and it stays that way.
+    #
+    # The reason is not that the table is empty — it is writable from 2026-09-10 and
+    # this engine now gathers BY its rows. The reason is that NO VALUE-DIRECTNESS
+    # GRADING RULE EXISTS IN THIS REPOSITORY. Grading "how directly does this
+    # source's stated value bear on this cell" is a judgment act with doctrine behind
+    # it, and inventing one here — at the point where it is least visible and most
+    # load-bearing — is stop condition 4 of the operative plan: "Any step needing a
+    # value-directness grading rule. None exists. Do not invent one."
+    #
+    # This comment previously read that the table "holds 8 rows as of migration 052
+    # and, since that migration, an item_code to join them on". Both halves are now
+    # false: the item layer was emptied 2026-09-01 and migration 073 retired
+    # `item_code` from this table outright. Corrected rather than deleted, because
+    # the SUBSTANTIVE claim — G2 stands, applies but unassessed, never silently
+    # full-match — never depended on either.
     val = NOT_ASSESSED
     cond = consolidate(pop, val, sd)
     tier_ok = check_tier_consistency(src["evidence_type"], src["scope"], src["tier"])
+    # THE TIER GATE (B5a). A source whose stored tier is not derivable from its own
+    # (evidence_type, scope) CANNOT ANCHOR. `tier_basis` is the sentence a `stated`
+    # determination offers as its warrant — "T1+CO1+T2" — so anchoring on a source
+    # whose tier the repository cannot re-derive is asserting a warrant out of an
+    # input the engine's OWN report flags as underivable. That is not a marginal
+    # case: on the 2026-09-10 walk, 8 of the 10 sources in the governing set were
+    # flagged `tier_inconsistent` and the cell still came out `stated`.
+    #
+    # Implemented as CONDITIONING rather than as a separate filter, deliberately.
+    # `anchoring()` is the single function that decides what may anchor (§1.7), and
+    # routing the gate through it means the exclusion propagates everywhere anchoring
+    # is consulted — the T1/Co-1/T2/Co-2 set AND the T3-clinical set — instead of
+    # being applied in one branch and forgotten in another. NON-ANCHORING also lands
+    # the ref in `discounted_sources`, whose own definition is "cannot anchor", so
+    # the convergence record says what happened rather than hiding it.
+    #
+    # WHAT THIS DOES NOT DO, stated so silence is not read as oversight: it does not
+    # touch the G1 regulatory branch, which reads `b["t45"] + b["t6"]` unfiltered.
+    # That branch never emits `stated` — it emits a Universal-Mode floor claim at
+    # provisional, whose §2.3 richness test is about jurisdictional breadth. Widening
+    # the gate to cover it is a doctrinal call about what an underivable tier means
+    # for a code floor, and it is left open rather than decided here.
+    #
+    # The pre-gate grade is kept so the report shows both: a reader can see that a
+    # source was DOWN-WEIGHTED on directness AND non-anchoring on tier, rather than
+    # seeing one verdict and guessing which rule produced it.
+    cond_before_tier_gate = cond
+    if not tier_ok:
+        cond = COND_NON_ANCHORING
     return {
         "ref_id": src["ref_id"], "tier": src["tier"], "evidence_type": src["evidence_type"],
         "grain": grain, "grain_why": grain_why, "scale_directness": sd,
         "population_directness": pop, "value_directness": val, "conditioning": cond,
+        "conditioning_before_tier_gate": cond_before_tier_gate,
         "needs_population_assessment": pop == NOT_ASSESSED,
         "tier_consistent": tier_ok,
         "verification_status": src["verification_status"],
@@ -289,11 +396,14 @@ def regulatory_richness(t45, t6):
 
     Honestly-partial implementation, named as such in the rationale it emits:
     §2.3's T4 clause requires "an evidence-based value directly addressing the
-    parameter" — the T4 branch checks presence only and SAYS SO. (This used to
-    read "not mechanically checkable while source_value_extractions is empty";
-    the table now has 8 rows and, per migration 052, an item_code to address the
-    parameter with. The branch is unchanged because deciding what counts as
-    "directly addressing" is a judgment call, not a missing join.) The T6 clause
+    parameter" — the T4 branch checks presence only and SAYS SO. (This has now
+    carried two wrong reasons in turn: first "not mechanically checkable while
+    source_value_extractions is empty", then "the table now has 8 rows and, per
+    migration 052, an item_code to address the parameter with" — the table holds 0
+    rows and migration 073 retired `item_code` from it. The branch is unchanged
+    under either, because the join was never what was missing: deciding what counts
+    as "directly addressing" is a judgment call, and the rule for making it does not
+    exist.) The T6 clause
     requires convergence "on the same value or range" — likewise unverifiable;
     jurisdiction distinctness IS checkable and is enforced."""
     jur45 = {r.get("jurisdiction") for r in t45}
@@ -310,17 +420,52 @@ def regulatory_richness(t45, t6):
     return False, "below §2.3 richness"
 
 
-def sha(parameter_id, lens, refs):
-    """Cell-scoped derivation sha: identity + governing set + rule version, so
-    pending cells do not all share one constant hash (staleness stays checkable).
+def sha(parameter_id, lens, refs, n_extractions):
+    """Cell-scoped derivation sha: identity + governing set + EVIDENCE READ + rule
+    version, so pending cells do not all share one constant hash (staleness stays
+    checkable).
 
     The payload is byte-for-byte what test_db_integrity K01 recomputes when it verifies
     a stored sha, and K01 was re-keyed to (parameter_id × lens) by migration 071. Two
     implementations of one hash that disagree is a hash that attests nothing, so this
     one and K01's move together or not at all. `lens` is the COALESCE value, not the
     whole dict — see lens_key().
+
+    WHY `n_extractions` IS IN THE PAYLOAD (added 2026-09-10). Without it, two
+    materially different cells hash IDENTICALLY, because both have an empty governing
+    set:
+
+        (a) a parameter NEVER READ            — 0 sources, 0 extractions
+        (b) a parameter READ AND REJECTED     — 2 sources, 2 extractions, both
+                                                non-anchoring on tier (B5a)
+
+    Reproduced 2026-09-10: both produced f6c0126a5726af3c…. Their gap DESCRIPTIONS
+    differ; the attestation did not. B5a creates a new route into that collision class
+    and, on today's corpus — where every source's tier is underivable from its own
+    (evidence_type, scope) — the universal one. So the sha failed to move across
+    exactly the transition this change exists to make visible: somebody reading the
+    parameter for the first time.
+
+    WHY THE COUNT AND NOT THE SORTED GATHERED-REF SET, which is the other candidate
+    and carries strictly more information (it would also move when one rejected source
+    is swapped for another). K01 must recompute this payload from the database, and
+    `specifications` stores neither quantity. A count is recomputable there in one
+    line — `SELECT COUNT(*) FROM source_value_extractions WHERE parameter_id = ?`,
+    the whole of `count_extractions()`. The gathered set is not: reproducing it means
+    reproducing gather_sources()' DISTINCT and its `superseded_by_ref_id IS NULL`
+    filter inside the check, i.e. a SECOND HOME for the gather rule, free to drift
+    from the engine's. A hash whose two implementations can silently disagree attests
+    nothing, which is the exact failure this docstring already warns about. The count
+    is the largest payload term that keeps one home.
+
+    CONSEQUENCE, stated because it widens K01: the sha now moves when EVIDENCE for the
+    parameter is added, not only when the stored row is edited. That is the doctrine
+    it was built for — evidence-architecture §10 mechanical check 2, "same evidence +
+    same rule_version ⇒ same state + same derivation_sha". A determination stamped
+    before an extraction arrived IS stale, and K01 saying so is the check working.
     """
-    payload = f"{parameter_id}|{lens}|" + "|".join(sorted(refs)) + "::" + RULE_VERSION
+    payload = (f"{parameter_id}|{lens}|" + "|".join(sorted(refs))
+               + f"|x{n_extractions}::" + RULE_VERSION)
     return hashlib.sha256(payload.encode()).hexdigest()
 
 
@@ -334,7 +479,11 @@ def determine(conn, parameter_id, lens, slug, note):
     DOWN-WEIGHTED under G2 rather than pretending to a match.
     """
     identity = lens.get("identity_code")
-    sources = gather_sources(conn, slug)
+    # THE SUBJECT, not the topic. Sources are gathered by the extractions they hold
+    # for THIS parameter (B4c); `slug` no longer selects evidence and is carried only
+    # as the topic the determination was recorded under.
+    sources = gather_sources(conn, parameter_id)
+    n_extractions = count_extractions(conn, parameter_id)
     recs = [assess_source(conn, s, SCALE_POPULATION, identity) for s in sources]
     b = classify(recs)
     # §2.8 verification-status machinery
@@ -420,6 +569,39 @@ def determine(conn, parameter_id, lens, slug, note):
                          "per §2.7) or the T3 sources are retracted (cell downgrades to pending).")
     elif regulatory:
         # G1: the determination is a Universal-Mode regulatory claim, never best practice.
+        #
+        # ── OPEN DOCTRINAL QUESTION, RECORDED 2026-09-10, DELIBERATELY NOT DECIDED ──
+        # The B5a tier gate above conditions a source to NON-ANCHORING when its stored
+        # tier is not derivable from its own (evidence_type, scope). That gate reaches
+        # this branch NOT AT ALL: `regulatory = b["t45"] + b["t6"]` is unfiltered, and
+        # unlike the T1/Co-1/T2/Co-2 and T3-clinical sets it does not pass through
+        # `anchoring()`. Two consequences, both real and neither reachable on today's
+        # corpus (0 sources at T4-T6, measured 2026-09-10):
+        #
+        #   1. A T4 source with scope=NULL -- tier underivable, exactly the state all
+        #      nine live sources are in -- still reaches state=provisional,
+        #      basis='T4-5-only', and writes a `specifications` row plus a `governing`
+        #      link on a tier the repository cannot re-derive. The B5a comment in
+        #      assess_source() says a warrant asserted out of an underivable tier is
+        #      the defect; here it is asserted anyway.
+        #
+        #   2. B5a CHANGED WHAT REACHES THIS BRANCH. A cell whose T1 sources all fail
+        #      the tier gate no longer stops at `stated` -- it falls through to here
+        #      and, if any T4-6 source is present, emits a Universal-Mode FLOOR CLAIM.
+        #      That is not a weaker version of the same claim; it is a different KIND
+        #      of claim about the same cell, produced by a gate that was only meant to
+        #      withhold anchoring.
+        #
+        # WHY IT IS LEFT OPEN. Whether an underivable tier disqualifies a CODE
+        # citation is not the same question as whether it disqualifies an anchoring
+        # source. A code's tier is a fact about the document's legal standing, and
+        # `check_tier_consistency` derives tier from (evidence_type, scope) -- a map
+        # built for the research ladder. Widening the gate to cover T4-6 might be
+        # right, or might mean the map needs a regulatory arm; deciding that from
+        # inside a defect fix is inventing doctrine at the point where it is least
+        # visible, which is the failure this engine's own G2 comment refuses. Whoever
+        # takes it: it is a §2.3/tier-system question, it needs a DR, and the two
+        # consequences above are the evidence it should start from.
         rich, why = regulatory_richness(b["t45"], b["t6"])
         design_scale = SCALE_UNIVERSAL
         regulatory_stratum_only = 1
@@ -452,10 +634,19 @@ def determine(conn, parameter_id, lens, slug, note):
         state = "pending"
         gap_needed = True
     else:
+        # B5a, second half — AND THIS BRANCH IS NOW REACHABLE FOR AN HONEST REASON.
+        # It catches three distinct states that all mean the same thing for the book:
+        # the parameter has no extractions at all; it has extractions but every
+        # source holding one is disqualified; or every one of them failed the tier
+        # gate above and so cannot anchor. In each case there is no qualifying
+        # evidence FOR THIS PARAMETER, and the honest cell is `pending` with a gap.
+        # Before B4c the same cell came out `stated` on the slug's evidence, none of
+        # which had been read for this parameter.
         state = "pending"
         gap_needed = True
 
     return {
+        "n_extractions": n_extractions,
         "parameter_id": parameter_id, "lens": dict(lens), "lens_key": lens_key(lens),
         "slug": slug, "note": note,
         "state": state, "design_scale": design_scale, "tier_basis": tier_basis,
@@ -466,11 +657,19 @@ def determine(conn, parameter_id, lens, slug, note):
         "has_unverified_sources": 1 if has_unverified else 0,
         "all_sources_disqualified": 1 if all_disqualified else 0,
         "falsification": falsification,
-        "derivation_sha": sha(parameter_id, lens_key(lens), governing),
+        "derivation_sha": sha(parameter_id, lens_key(lens), governing, n_extractions),
         "n_sources": len(sources),
         "needs_population_assessment": sorted(r["ref_id"] for r in recs
                                               if r["needs_population_assessment"]),
         "tier_inconsistent": sorted(r["ref_id"] for r in recs if not r["tier_consistent"]),
+        # B5a made visible. `tier_inconsistent` was ALREADY reported before this
+        # change and the cell came out `stated` anyway -- a report naming the defect
+        # beside a verdict that ignored it. This key names the sources the tier gate
+        # actually excluded, so the report says what the engine DID, not only what it
+        # noticed. The two lists coincide today by construction; they are kept
+        # separate because the reasons differ and a future gate may widen one.
+        "non_anchoring_on_tier": sorted(r["ref_id"] for r in recs
+                                        if not r["tier_consistent"]),
         "source_records": recs,
     }
 
@@ -591,7 +790,14 @@ def main():
     ap.add_argument("--emit-sql", required=True)
     ap.add_argument("--parameter-id", dest="parameter_id", type=int, required=True,
                     help="base_parameters.parameter_id — THE SUBJECT (owner 2026-08-26)")
-    ap.add_argument("--slug", required=True, help="the evidence slug to gather from")
+    # NO LONGER "the slug to gather from" -- B4c gathers by parameter_id. This is the
+    # topic the determination is being RECORDED under: it lands in the report and in
+    # the gap description's context, and it is required so a determination cannot be
+    # made without saying which piece of work it belongs to.
+    ap.add_argument("--slug", required=True,
+                    help="the topic this determination is recorded under. It does NOT "
+                         "select evidence -- sources are gathered by the extractions "
+                         "they hold for --parameter-id.")
     ap.add_argument("--identity", help="populations.population_code")
     ap.add_argument("--icf", help="axes.axis_code")
     ap.add_argument("--needs", help="access_needs.need_code")
@@ -650,13 +856,52 @@ def main():
         gap_id = None
         if det["gap_needed"]:
             gap_id = next_gap_id(conn)
-            desc = (f"Evidence gap (slug-scoped): no evidence is linked via slug '{slug}' "
-                    f"for cell parameter {parameter_id}×{lens_key(lens)}, and no linked "
-                    f"evidence met the "
-                    f"determination thresholds. This records absence of a slug-link, NOT "
-                    f"corpus-level absence: item-relevant evidence may exist under sibling "
-                    f"slugs and is unreachable until the item_bpc_links bridge (1/92 "
-                    f"populated) is backfilled. Determination pending per §2.4.")
+            # THE GAP DESCRIPTION IS DERIVED, and it had to change with the gather.
+            # It used to read "no evidence is linked via slug '<slug>' ... This
+            # records absence of a slug-link" and point at the item_bpc_links
+            # bridge — a sentence about a join this engine no longer makes and a
+            # bridge into the emptied item layer. A gap description that names the
+            # wrong absence sends the next session looking in the wrong place.
+            det_at = det["n_sources"]
+            det_x = det["n_extractions"]
+            # THREE CAUSES, THREE SENTENCES, and the middle one exists because the
+            # first draft of this text was FALSE. `count_extractions` counts every
+            # extraction for the parameter; `gather_sources` filters
+            # `superseded_by_ref_id IS NULL`. When the only source holding an
+            # extraction has been superseded the two disagree, and the text read
+            # "N extraction(s) from 0 source(s) ... none of those sources qualified
+            # to anchor" — which names the tier gate for a supersession, and sends
+            # the next session to re-read a tier ladder when what it needs is the
+            # replacement source. A gap description that names the wrong cause is
+            # worse than a vague one: it is followed.
+            if det_x == 0:
+                cause = (f"no source holds an extraction for parameter "
+                         f"{parameter_id}: the parameter has never been read out of "
+                         f"a document")
+                remedy = ("read a source that is already admitted and record what it "
+                          "says: `db.py add-extraction`. This is NOT corpus-level "
+                          "absence of the topic — sources may be admitted and linked "
+                          "to the slug and still have been read for no parameter at "
+                          "all, so a new search is not the first move")
+            elif det_at == 0:
+                cause = (f"{det_x} extraction(s) exist for parameter {parameter_id}, "
+                         f"but EVERY source holding one has been SUPERSEDED "
+                         f"(evidence_sources.superseded_by_ref_id is set) and a "
+                         f"superseded source is not gathered")
+                remedy = ("the reading exists; the document behind it was replaced. "
+                          "Re-extract the same parameter from the superseding source")
+            else:
+                cause = (f"{det_x} extraction(s) from {det_at} source(s) exist for "
+                         f"parameter {parameter_id}, but none of those sources "
+                         f"qualified to anchor — disqualified, or tier not derivable "
+                         f"from their own (evidence_type, scope)")
+                remedy = ("the evidence has been read; what is missing is evidence "
+                          "that can ANCHOR. Another extraction from the same sources "
+                          "will not move this cell — fix the sources' derivable tier, "
+                          "or admit evidence that qualifies")
+            desc = (f"Evidence gap (parameter-scoped): {cause}. Cell "
+                    f"{parameter_id}×{lens_key(lens)}; recorded while working slug "
+                    f"'{slug}'. Remedy: {remedy}. Determination pending per §2.4.")
             gcols = ("gap_id, category, priority, status, description, created_at, "
                      "created_by_session, updated_at, updated_by_session")
             gvals = (gap_id, "EG", "P2", "OPEN", desc, STAMP, SESSION, STAMP, SESSION)
@@ -752,6 +997,7 @@ def main():
                         "tier_basis", "governing_refs", "supporting_refs", "code_floor_only",
                         "regulatory_stratum_only", "has_unverified_sources",
                         "all_sources_disqualified", "derivation_sha", "n_sources",
+                        "n_extractions", "non_anchoring_on_tier",
                         "needs_population_assessment", "tier_inconsistent", "falsification")}
                       | {"convergence": det["convergence"], "confidence": det["confidence"],
                          "gap_register_id": gap_id, "specification_id": specification_id,
@@ -759,7 +1005,9 @@ def main():
                          "source_records": [{k2: r[k2] for k2 in
                                              ("ref_id", "tier", "evidence_type", "grain",
                                               "grain_why", "scale_directness",
-                                              "population_directness", "conditioning")}
+                                              "population_directness", "conditioning",
+                                              "conditioning_before_tier_gate",
+                                              "tier_consistent")}
                                             for r in det["source_records"]]})
 
     # REMOVED 2026-08-22 (BRK-26). An interim v_best_practice amendment used to sit
@@ -792,9 +1040,17 @@ def main():
             json.dump(report, f, indent=1)
 
     for r in report:
+        # `sources=` and `extractions=` are printed because the 1:N fan-out is
+        # invisible otherwise: 2 sources / 9 extractions and 9 sources / 9
+        # extractions are very different evidence bases and the old line showed
+        # neither. `nonanchor=` names how many were excluded by the tier gate, so a
+        # thin `stated` cannot look thick.
         print(f"param {r['parameter_id']}×{r['lens_key']:<8} {r['state']:<12} "
               f"basis={r['tier_basis'] or '-':<32} scale={r['design_scale']:<10} "
-              f"refs={len(r['governing_refs'])} rso={r['regulatory_stratum_only']} "
+              f"refs={len(r['governing_refs'])} sources={r['n_sources']} "
+              f"extractions={r['n_extractions']} "
+              f"nonanchor={len(r['non_anchoring_on_tier'])} "
+              f"rso={r['regulatory_stratum_only']} "
               f"cfo={r['code_floor_only']} sha={r['derivation_sha'][:12]}")
     print(f"\n{len(report)} cell(s) determined; SQL artifact: {args.emit_sql}\n"
           f"REPLAY through emit_data_migration.py -> migrate_db.py, never by hand.")

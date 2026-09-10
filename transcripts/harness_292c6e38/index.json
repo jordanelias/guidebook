@@ -100,8 +100,22 @@
   {
     "started": "2026-09-10T05:41:47",
     "role": "antagonist",
-    "bytes": 297230,
+    "bytes": 1494196,
     "agent_id_prefix": "a060b54c",
     "file": "2026-09-10T05-41-47_antagonist_a060b54c.jsonl"
+  },
+  {
+    "started": "2026-09-10T06:13:29",
+    "role": "antagonist",
+    "bytes": 1246379,
+    "agent_id_prefix": "a2ff0172",
+    "file": "2026-09-10T06-13-29_antagonist_a2ff0172.jsonl"
+  },
+  {
+    "started": "2026-09-10T06:36:59",
+    "role": "antagonist",
+    "bytes": 1259018,
+    "agent_id_prefix": "af039af8",
+    "file": "2026-09-10T06-36-59_antagonist_af039af8.jsonl"
   }
 ]

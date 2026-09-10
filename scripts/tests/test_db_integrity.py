@@ -1091,81 +1091,40 @@ def run_checks(db_path):
     record("H07", "no id repeats inside a single JSON edge array", not dup,
            "; ".join(dup), subject=h07_subject)
 
-    # ── J: hop-4 edge coherence (source_value_extractions.item_code) ──────────
-    # The column (migration 052) is nullable by design — NULL means the item was
-    # not established at extraction. What it must never hold is an item that
-    # contradicts the row's own slug or its own probe.
-    print("\n[J] Extraction → item edge coherence")
-
-    # An extraction's item should belong to the extraction's slug, by either
-    # route the repo models that with: the item_bpc_links junction (hop 7's
-    # edge object) or the legacy items.bpc_source_slug scalar it is replacing.
-    # Assumption stated out loud: this holds while extractions describe items
-    # their own BPC governs. If a legitimate cross-slug extraction ever appears,
-    # this check is the thing that should be revisited — not silently widened.
-    incoherent = conn.execute("""
-        SELECT COUNT(*) FROM source_value_extractions sve
-        WHERE sve.item_code IS NOT NULL
-          AND NOT EXISTS (SELECT 1 FROM item_bpc_links l
-                          WHERE l.item_code = sve.item_code AND l.slug = sve.slug)
-          AND NOT EXISTS (SELECT 1 FROM items i
-                          WHERE i.item_code = sve.item_code
-                            AND i.bpc_source_slug = sve.slug)
-    """).fetchone()[0]
-    record("J01", "an extraction's item belongs to the extraction's slug",
-           incoherent == 0,
-           f"{incoherent} extractions whose item_code is not linked to their slug"
-           if incoherent else "",
-           subject=subj("SELECT COUNT(*) FROM source_value_extractions "
-                        "WHERE item_code IS NOT NULL"))
-
-    # Where a row's own basis text names a PMP probe, that probe carries a typed
-    # item_code. The two must agree — this is the W1 witness the backfill relied
-    # on, turned into a standing check so it cannot drift apart later.
-    probe_disagree = conn.execute("""
-        SELECT COUNT(*) FROM source_value_extractions sve
-        JOIN spec_value_probes p
-          ON sve.root_classification_basis LIKE '%' || p.probe_id || '%'
-        WHERE sve.item_code IS NOT NULL AND p.item_code != sve.item_code
-    """).fetchone()[0]
-    record("J02", "an extraction agrees with the PMP probe its basis text names",
-           probe_disagree == 0,
-           f"{probe_disagree} extractions disagreeing with their named probe"
-           if probe_disagree else "",
-           # Only rows whose basis text NAMES a probe are in scope; J02 cannot
-           # speak about the rest, and counting them would overstate its reach.
-           subject=subj("SELECT COUNT(*) FROM source_value_extractions sve "
-                        "JOIN spec_value_probes p ON sve.root_classification_basis "
-                        "LIKE '%' || p.probe_id || '%' WHERE sve.item_code IS NOT NULL"))
-
-    # J01 and J02 do NOT hold the judgment the backfill actually made, and an
-    # adversarial review proved it by injection: setting extraction 6 to A-10b
-    # passes both, because A-10b shares bpc_source_slug='room-acoustic-performance'
-    # (so J01's second branch admits it) and row 6 names no probe (so J02 never
-    # reaches it). The realistic error was never cross-slug — it was the OTHER
-    # RT60 item, same slug. J01 guards the least-likely class.
+    # ── J: RETIRED 2026-09-10 by migration 073 ────────────────────────────────
+    # J01/J02/J03 policed `source_value_extractions.item_code` -- the hop-4
+    # extraction->item edge that migration 052 created. Migration 073 retired that
+    # column, so all three checks now name a column that does not exist and would
+    # raise `no such column: item_code` rather than fail honestly.
     #
-    # These eight assignments were adjudicated once, per row, in
-    # data_20260804175506 under three named witness classes. That adjudication
-    # is not mechanizable — but it is pinnable, and pinning it is what stops a
-    # later pass from quietly reassigning a row to A-10b. This is a snapshot
-    # check by design: if the set legitimately changes, this check changes with
-    # it in the same commit, and the diff is the record of the re-adjudication.
-    ADJUDICATED_A18 = tuple(range(1, 9))
-    moved = conn.execute(f"""
-        SELECT COUNT(*) FROM source_value_extractions
-        WHERE extraction_id IN ({','.join('?' * len(ADJUDICATED_A18))})
-          AND (item_code IS NULL OR item_code != 'A-18')
-    """, ADJUDICATED_A18).fetchone()[0]
-    record("J03", "the 8 adjudicated RT60 extractions still hold their assigned item",
-           moved == 0,
-           f"{moved} of the 8 rows adjudicated to A-18 by data_20260804175506 no "
-           f"longer carry it — re-adjudicate in a migration, don't drift" if moved else "",
-           # The subject is the adjudicated rows that ACTUALLY EXIST. Declaring the
-           # literal 8 would claim coverage of rows that may have been deleted —
-           # a pinning check whose pins are gone has pinned nothing.
-           subject=subj("SELECT COUNT(*) FROM source_value_extractions WHERE extraction_id IN "
-                        f"({','.join('?' * len(ADJUDICATED_A18))})", ADJUDICATED_A18))
+    # THIS IS A DELETION WITH EVIDENCE, NOT A CONVENIENCE (CLAUDE.md §8: "removing
+    # apparatus does not carry the burden of proof ... You need evidence --
+    # unreferenced, vacuous after a real batch, or superseded"). All three are
+    # superseded, and each was already weak on its own terms:
+    #
+    #   J01 -- "an extraction's item belongs to the extraction's slug". Its own
+    #     comment recorded that an adversarial review DISPROVED it by injection:
+    #     setting extraction 6 to A-10b passed both J01 and J02, because A-10b shares
+    #     the slug. "J01 guards the least-likely class", in its own words.
+    #   J02 -- agreement with a named PMP probe. `spec_value_probes` holds 0 rows, so
+    #     its subject was empty even before the column went.
+    #   J03 -- pinned 8 RT60 extractions to item A-18. Those rows were deleted with
+    #     the 2026-08-06 clean-room reset; the check has examined 0 rows since, and
+    #     its own comment says "a pinning check whose pins are gone has pinned
+    #     nothing".
+    #
+    # All three appeared in the 2026-09-10 baseline run's PASSED HAVING EXAMINED
+    # NOTHING list. What replaced the edge they guarded is `parameter_id`, which is
+    # NOT NULL with a real FK at `base_parameters` -- the database enforces it on
+    # every row, which is strictly stronger than three checks over an empty table.
+    #
+    # WHAT IS *NOT* REPLACED, recorded so the deletion does not silently lower the
+    # bar: nothing here now asserts that an extraction's PARAMETER is coherent with
+    # its SLUG. That is not an oversight -- it is not a defect either. A source
+    # admitted under one slug may legitimately be read for a parameter that another
+    # slug also governs, and `db.py add-extraction` requires both independently.
+    # A check asserting otherwise would encode the cross-slug assumption J01's own
+    # comment flagged as the thing to revisit rather than silently widen.
 
     # ── K: determination attestation (derivation_sha) ─────────────────────────
     # evidence-architecture §10 mechanical check 2: "same evidence + same
@@ -1191,6 +1150,23 @@ def run_checks(db_path):
     # (parameter_id x lens). COALESCE yields the lens the row is stated in; the table's
     # CHECK (D-0182) guarantees one is non-NULL. No stored sha is invalidated by this
     # because specifications held 0 rows at the re-key -- there was nothing to rehash.
+    #
+    # MOVED AGAIN 2026-09-10, IN THE SAME CHANGE AS assess_cell.sha(). Its docstring
+    # is explicit that the two implementations "move together or not at all", so this
+    # is not an optional follow-up. The payload gained the EXTRACTION COUNT for the
+    # parameter, because without it a parameter NEVER READ (0 sources, 0 extractions)
+    # and one READ AND REJECTED (2 sources, both non-anchoring on tier) hashed
+    # identically -- both have an empty governing set. Read sha()'s docstring for why
+    # the count and not the gathered-ref set.
+    #
+    # THIS TERM IS RECOMPUTED FROM THE DATABASE, not read off the specifications row,
+    # because the row does not store it. That is deliberate and it WIDENS this check:
+    # K01 now goes red when evidence for the parameter arrives after the
+    # determination was stamped, not only when the stored row is edited. A
+    # determination made before an extraction existed is stale in exactly the sense
+    # evidence-architecture §10 means -- "same evidence + same rule_version => same
+    # state + same derivation_sha" -- and the remedy is the same as for every other
+    # K01 failure: re-run the engine and restamp.
     for cid, pid, lens, gr, rv, sha_rec in conn.execute(
             "SELECT specification_id, parameter_id, "
             "COALESCE(identity_code, icf_code, needs_code, medical_code), "
@@ -1199,14 +1175,17 @@ def run_checks(db_path):
             unattested += 1
             continue
         refs = sorted(_json.loads(gr or "[]"))
-        payload = f"{pid}|{lens}|" + "|".join(refs) + "::" + rv
+        n_x = conn.execute("SELECT COUNT(*) FROM source_value_extractions "
+                           "WHERE parameter_id = ?", (pid,)).fetchone()[0]
+        payload = f"{pid}|{lens}|" + "|".join(refs) + f"|x{n_x}::" + rv
         if _hashlib.sha256(payload.encode()).hexdigest() != sha_rec:
             stale.append(f"{cid} (param {pid}×{lens})")
     record("K01", "every recorded derivation_sha verifies against its own row",
            not stale,
-           f"{len(stale)} stale: {', '.join(stale)} — the row changed after the "
-           f"determination was stamped; restamp or clear, don't leave a hash "
-           f"attesting a state that no longer exists" if stale else "",
+           f"{len(stale)} stale: {', '.join(stale)} — the row, or the evidence read "
+           f"for its parameter, changed after the determination was stamped; re-run "
+           f"the engine and restamp, or clear the hash. Don't leave one attesting a "
+           f"state that no longer exists" if stale else "",
            # Attested rows only. The unattested ones are counted separately and
            # reported below; K01 verifies hashes, and a row with no hash gave it
            # nothing to verify.

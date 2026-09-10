@@ -11,11 +11,14 @@ Checks:
    <data_layer_pattern>).
 2. Scalar<->junction CONSISTENCY: for each value-claim row with a non-null
    scalar population (reasoning_doc_citations.population,
-   spec_value_probes.population) or population_code
-   (source_value_extractions), the set of comma-split scalar codes must
+   spec_value_probes.population), the set of comma-split scalar codes must
    equal the set of junction population_codes. The scalar columns are
    deprecated transition aliases; this guards against silent drift between
    the authoritative junction and the denormalized scalar.
+   source_value_extractions NO LONGER HAS ONE: migration 073 retired its
+   `population_code` under the 2026-08-28 four-lens ruling, so checks 2-4
+   skip it and say so rather than reading a column that does not exist.
+   That is this audit's own goal reached for that table, not a hole in it.
 3. MIGRATION COMPLETENESS: no value-claim row has a non-null scalar
    population but an empty junction (would mean the backfill missed it).
 4. SCALAR CANONICALITY: every comma-split code in a scalar population field
@@ -40,10 +43,29 @@ REPO = Path(__file__).resolve().parent.parent.parent
 DB = Path(os.environ.get("GUIDEBOOK_DB_PATH", str(REPO / "data" / "guidebook.db")))
 
 # (junction table, parent table, parent PK col, scalar col on parent)
+#
+# A scalar of None means THE PARENT NO LONGER CARRIES ONE. Checks 2/3/4 compare a
+# parent's scalar population column against its junction rows; with no scalar there
+# is nothing to compare, and they are skipped for that entry rather than reading a
+# column that does not exist. Check 1 (junction codes canonical) and check 5
+# (distribution) still cover it, because those read the junction alone.
+#
+# source_value_extractions reached that state on 2026-09-10, migration 073: the
+# 2026-08-28 owner ruling retired `population_code` in favour of four typed lens
+# columns ("Four lens columns, one CHECK, real FKs. Never a `population_*` link
+# table"), and this audit's own purpose was to measure the migration AWAY from a
+# scalar. Its subject for that parent is not missing — it is finished.
+#
+# NOT WIDENED to the four lens columns, deliberately. This audit exists to catch
+# scalar/junction DISAGREEMENT (migration 021). The lens columns have no junction to
+# disagree with — that is the point of the ruling — and their codes are enforced by
+# real typed FKs on every row, which is stronger than an audit over an empty table.
+# `extraction_population_links` is itself listed for deletion by that same ruling,
+# with four sibling junctions; that deletion is owed and is not executed here.
 JUNCTIONS = [
     ("citation_population_links", "reasoning_doc_citations", "citation_id", "population"),
     ("probe_population_links", "spec_value_probes", "probe_id", "population"),
-    ("extraction_population_links", "source_value_extractions", "extraction_id", "population_code"),
+    ("extraction_population_links", "source_value_extractions", "extraction_id", None),
 ]
 
 
@@ -96,6 +118,10 @@ def audit():
     # CHECK 2 + 3: scalar<->junction consistency and completeness
     print("\n[CHECK 2/3] Scalar<->junction consistency + migration completeness")
     for jt, parent, pk, scalar in JUNCTIONS:
+        if scalar is None:
+            print(f"  – {parent}: no scalar population column (retired by the "
+                  f"2026-08-28 four-lens ruling); nothing to reconcile")
+            continue
         rows = db.execute(
             f"SELECT {pk} AS pid, {scalar} AS sc FROM {parent} WHERE {scalar} IS NOT NULL AND {scalar} != ''"
         ).fetchall()
@@ -122,6 +148,9 @@ def audit():
     # CHECK 4: scalar canonicality
     print("\n[CHECK 4] Scalar population code canonicality")
     for jt, parent, pk, scalar in JUNCTIONS:
+        if scalar is None:
+            print(f"  – {parent}: no scalar population column to check")
+            continue
         bad_rows = []
         for r in db.execute(
             f"SELECT {pk} AS pid, {scalar} AS sc FROM {parent} WHERE {scalar} IS NOT NULL AND {scalar} != ''"

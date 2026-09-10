@@ -110,8 +110,12 @@ stages:
   - id: convergence-independence
     kind: completeness
     criterion: Convergence counts INDEPENDENT evidence axes (and, once genealogy lands, independent roots
-      excluding committee_assertion), never document/citation count. Root-count layer is unbuilt (source_value_extractions
-      is pilot-only — 8 rows on a single slug as of 2026-07-20; no general extraction pass).
+      excluding committee_assertion), never document/citation count. The root-count substrate exists
+      (root_id / root_type / root_ref_id on source_value_extractions, and v_value_independence over them,
+      re-derived onto parameter_id by migration 073) and gained its first writer on 2026-09-10, `db.py
+      add-extraction`. Derive the row count from the database; the figure previously stated here — "pilot-only
+      — 8 rows on a single slug as of 2026-07-20" — was a hardcoded volatile fact (CLAUDE.md rule 7) and
+      those rows were deleted by the 2026-08-06 clean-room reset.
     references: evidence-methodology.md §3; DR-2026-07-13 H1 (v_value_independence)
     check: null
 - id: synthesis

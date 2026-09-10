@@ -36,6 +36,31 @@ DEFAULT_DB = REPO_ROOT / "data" / "guidebook.db"
 DEFAULT_OUT = REPO_ROOT / "tools" / "spec-curation-vetting-surface.html"
 
 
+def _other_lenses(row):
+    """Render the non-identity lenses a row states, as its OWN output value.
+
+    D-0182 lets a row state several lenses at once; `populations` can only label the
+    identity one, so without this a value stated purely in ICF or access-need terms
+    would render as "no population" -- the browsing lens the 2026-08-28 ruling was
+    issued to make reachable, invisible on the page built to inspect it.
+
+    IT GETS ITS OWN CELL, AND THE FIRST VERSION OF THIS DID NOT. It was passed to
+    popCell() as `settingLabelFallback`, which that function uses ONLY when `setting`
+    is NULL and renders inside `<div class="pop-setting">`. So the fix worked only on
+    rows with no setting -- and a spatial extraction usually HAS one. A row with
+    `icf:AX-AMB` and setting='hospital corridor' showed the setting and hid the lens,
+    which is the exact failure the docstring above claims to fix; and a row with
+    `needs:A-AT` and no setting put the lens in the slot the legend reserves for
+    setting, so the page said something false about a different column. A lens is not
+    a fallback for a setting. It is now `lens` in the payload, `lensCell()` in the JS,
+    and a column of its own.
+    """
+    parts = [f"{name}:{row[col]}" for name, col in
+             (("icf", "icf_code"), ("needs", "needs_code"), ("medical", "medical_code"))
+             if row[col]]
+    return " \u00b7 ".join(parts) or None
+
+
 def fetch_backbone(db_path: Path) -> dict:
     """Build the per-topic data backbone from the DB. Read-only (opened mode=ro)."""
     c = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
@@ -146,12 +171,31 @@ def fetch_backbone(db_path: Path) -> dict:
             }
         )
 
+    # SWEPT 2026-09-10 for migration 073 (rule 4: this generator is a caller, and it
+    # is on `scripts/regenerate_derived.sh`, so a stale column here reddens the
+    # freshness gate rather than failing quietly). `parameter`, `population_code` and
+    # `population_label` are retired from source_value_extractions. All three are
+    # re-derived rather than dropped:
+    #
+    #   parameter  -- BY POINTER, base_parameters -> terms.canonical_en. The page
+    #                 shows the same words it always showed; the difference is that
+    #                 no table stores them twice (rule 5).
+    #   population -- the IDENTITY lens, which is the only one `populations` can label
+    #                 and the only one popCell() renders without flagging every code
+    #                 as taxonomy drift.
+    #   lens       -- the other three lenses, in an output key and a page column of
+    #                 their OWN, so a value stated only in ICF or access-need terms is
+    #                 visible instead of reading as "no population". NOT folded into
+    #                 the setting slot -- see _other_lenses() for why that failed.
     sve_by = defaultdict(list)
     for r in q(
-        """SELECT extraction_id, slug, ref_id, parameter, claimed_value, claimed_unit,
-                  jurisdiction, population_code, population_label, setting,
-                  extraction_status, source_section
-           FROM source_value_extractions"""
+        """SELECT x.extraction_id, x.slug, x.ref_id, t.canonical_en AS parameter,
+                  x.claimed_value, x.claimed_unit, x.jurisdiction,
+                  x.identity_code, x.icf_code, x.needs_code, x.medical_code,
+                  x.setting, x.extraction_status, x.source_section
+           FROM source_value_extractions x
+           JOIN base_parameters p ON p.parameter_id = x.parameter_id
+           JOIN terms t           ON t.term_id      = p.term_id"""
     ):
         junc = epl_by.get(r["extraction_id"], [])
         sve_by[(r["slug"], r["ref_id"])].append(
@@ -161,8 +205,8 @@ def fetch_backbone(db_path: Path) -> dict:
                 "value": r["claimed_value"],
                 "unit": r["claimed_unit"],
                 "jurisdiction": r["jurisdiction"],
-                "population": ",".join(junc) if junc else r["population_code"],
-                "population_label": r["population_label"],
+                "population": ",".join(junc) if junc else r["identity_code"],
+                "lens": _other_lenses(r),
                 "setting": r["setting"],
                 "verdict": r["extraction_status"],
                 "section": r["source_section"],
@@ -246,18 +290,28 @@ def fetch_backbone(db_path: Path) -> dict:
         for row in probes:
             j = ppl_by.get(row["probe_id"], [])
             row["population"] = ",".join(j) if j else row["population"]
+        # Swept with the query above and for the same reasons. `population_code` stays
+        # as an OUTPUT key because the page's JS reads it by name; what changed is
+        # where it comes from. `population_label` is GONE as an output key -- the row's
+        # other lenses are now `lens`, with their own column, because a lens rendered
+        # in the setting slot is a page saying something false about a column.
         sve = q(
-            """SELECT extraction_id, ref_id, parameter, population_code,
-                      population_label, setting, jurisdiction, claim_type,
-                      claimed_value, claimed_unit, source_section, extraction_method,
-                      extraction_status, promoted_to_rdc_id, notes
-               FROM source_value_extractions
-               WHERE slug = ?""",
+            """SELECT x.extraction_id, x.ref_id, t.canonical_en AS parameter,
+                      x.identity_code, x.icf_code, x.needs_code, x.medical_code,
+                      x.setting, x.jurisdiction, x.claim_type,
+                      x.claimed_value, x.claimed_unit, x.source_section,
+                      x.extraction_method, x.extraction_status, x.promoted_to_rdc_id,
+                      x.notes
+               FROM source_value_extractions x
+               JOIN base_parameters p ON p.parameter_id = x.parameter_id
+               JOIN terms t           ON t.term_id      = p.term_id
+               WHERE x.slug = ?""",
             slug,
         )
         for row in sve:
             j = epl_by.get(row["extraction_id"], [])
-            row["population_code"] = ",".join(j) if j else row["population_code"]
+            row["lens"] = _other_lenses(row)
+            row["population_code"] = ",".join(j) if j else row["identity_code"]
         items_here = [ic for ic, sg in item_slug.items() if sg == slug]
         bb[slug] = {
             "linked_sources": linked,
@@ -391,8 +445,17 @@ table.spread td.c-auth,table.spread td.c-rel{font-size:11px;line-height:1.35}
 .pop-code.drift::after{content:" ⚠"}
 .pop-setting{font-size:10px;color:var(--muted);font-style:italic;line-height:1.3}
 .pop-empty{font-size:10px;color:var(--muted);font-style:italic}
+/* The non-identity lenses (D-0182). Deliberately unlike .pop-setting — outlined,
+   monospace, upright — because the two sat in one slot until 2026-09-10 and a
+   reader must be able to tell a lens from a setting at a glance. */
+.lens-cell{display:flex;flex-wrap:wrap;gap:3px}
+.lens-chip{font-family:var(--mono);font-size:10px;padding:0 5px;border-radius:2px;
+  border:1px solid var(--ink);color:var(--ink);background:transparent;letter-spacing:.2px;cursor:help}
+.lens-fam{color:var(--muted);margin-right:3px}
 .vrow .vpop{display:flex;gap:3px;flex-wrap:wrap;align-items:center}
 .vrow .vpop .pop-code{font-size:9px;padding:0 4px}
+.vrow .vlens{font-family:var(--mono);font-size:9px;padding:0 4px;border:1px solid var(--line);
+  border-radius:2px;color:var(--ink)}
 .vrow .vsetting{font-size:9.5px;color:var(--muted);font-style:italic}
 </style></head><body>
 <header>
@@ -418,13 +481,27 @@ table.spread td.c-auth,table.spread td.c-rel{font-size:11px;line-height:1.35}
  <span><b>bibliography:</b> <span class="badge b-strong">strong</span> id+complete+verified &middot; <span class="badge b-ok">ok</span> complete/statutory, no DOI &middot; <span class="badge b-weak">weak</span> thin/unverified</span>
  <span><b>extraction status:</b> <span class="badge s-prel">preliminary</span> <span class="badge s-rev">reviewed</span> <span class="badge s-ver">verified</span> <span class="badge s-con">contradicted</span> <span class="badge s-abs">absent-confirmed</span></span>
  <span><b>value-match (synthesis):</b> <span class="badge m-exact">EXACT</span> <span class="badge m-tol">WITHIN-TOL</span></span>
+ <span><b>lenses (D-0182):</b> the <b>population</b> column carries the <i>identity</i> lens and, in italics beneath it, the free-text <i>setting</i>. <b>Other lenses</b> carries the rest &mdash; <span class="lens-chip"><span class="lens-fam">icf</span>AX-&hellip;</span> ICF axis &middot; <span class="lens-chip"><span class="lens-fam">needs</span>A-&hellip;</span> access need &middot; <span class="lens-chip"><span class="lens-fam">medical</span>&hellip;</span> medical. A row may state several at once; at least one is required. A lens is never shown in the setting slot.</span>
 </div>
 <script id="vetting-data" type="application/json">__PAYLOAD__</script>
 <script>
 const DATA=JSON.parse(document.getElementById('vetting-data').textContent);
 const BB=DATA.backbone,T=DATA.totals;
 const POPS=DATA.populations||{};
-function popCell(popStr, setting, settingLabelFallback){
+function lensCell(lensStr){
+  // The row's NON-IDENTITY lenses (D-0182: a row may state several at once), e.g.
+  // 'icf:AX-AMB · needs:A-AT'. Its own cell, never the setting slot: a lens folded
+  // into `settingLabelFallback` showed only on rows with no setting, which is the
+  // minority for a spatial extraction, and rendered as a setting when it did show.
+  if (!lensStr) return '<span class="pop-empty">&mdash;</span>';
+  return '<div class="lens-cell">' + lensStr.split(' · ').map(p=>{
+    const i = p.indexOf(':');
+    const fam = i<0 ? '' : p.slice(0,i), code = i<0 ? p : p.slice(i+1);
+    return '<span class="lens-chip" title="'+esc(fam||'lens')+' lens">'+
+      (fam?'<span class="lens-fam">'+esc(fam)+'</span>':'')+esc(code)+'</span>';
+  }).join('') + '</div>';
+}
+function popCell(popStr, setting){
   // popStr: comma-separated codes like 'DEAF' or 'NDV,AUT' or 'ALL' (or null)
   // setting: free-text setting/context (or null)
   let codesHtml='';
@@ -440,8 +517,7 @@ function popCell(popStr, setting, settingLabelFallback){
       }
     }).join('') + '</div>';
   }
-  const settingShow = setting || settingLabelFallback;
-  const settingHtml = settingShow ? '<div class="pop-setting">'+esc(settingShow)+'</div>' : '';
+  const settingHtml = setting ? '<div class="pop-setting">'+esc(setting)+'</div>' : '';
   if (!codesHtml && !settingHtml) return '<span class="pop-empty">&mdash;</span>';
   return '<div class="pop-cell">' + codesHtml + settingHtml + '</div>';
 }
@@ -508,9 +584,10 @@ function renderDetail(slug){
  let h='<h2>'+esc(slug)+'</h2><div class="slug">'+ls.length+' linked sources &middot; '+sx.length+' per-source extractions &middot; '+ve.length+' synthesis verifications &middot; '+steps[3].n+' walk(s)</div>';
  h+='<div class="chain">'+steps.map(s=>'<span'+(s.n?' class="here"':' class="empty-step"')+'>'+s.l+': '+s.n+'</span>').join(' &rarr; ')+'</div>';
  h+='<div class="sec"><div class="sec-h">Per-source extractions <em>what each source asserts &middot; per population &middot; pre-synthesis</em></div>';
- if(sx.length){h+='<table><tr><th>source</th><th>parameter</th><th>population &middot; setting</th><th>juris.</th><th>value</th><th>section</th><th>status</th><th>&rarr; rdc</th></tr>';
+ if(sx.length){h+='<table><tr><th>source</th><th>parameter</th><th>population &middot; setting</th><th>other lenses</th><th>juris.</th><th>value</th><th>section</th><th>status</th><th>&rarr; rdc</th></tr>';
   sx.forEach(r=>{h+='<tr><td class="ref">'+esc(r.ref_id)+'</td><td>'+esc(r.parameter)+'</td>'+
-   '<td>'+popCell(r.population_code, r.setting, r.population_label)+'</td>'+
+   '<td>'+popCell(r.population_code, r.setting)+'</td>'+
+   '<td>'+lensCell(r.lens)+'</td>'+
    '<td>'+esc(r.jurisdiction||'')+'</td>'+
    '<td><span class="val">'+esc(r.claimed_value||'&mdash;')+' '+esc(r.claimed_unit||'')+'</span></td>'+
    '<td><span class="note">'+esc(r.source_section||'')+'</span></td>'+
@@ -576,11 +653,16 @@ function renderDetail(slug){
     const valsHtml = vc.length ? '<div class="values">' + vc.map(x=>{
       const lay=x.layer||'extraction';
       const popH = popInline(x.population);
+      // The non-identity lenses, inline and distinct from the setting beside them.
+      // Without this the only reader of the `lens` key would be the table above, and
+      // an extraction stated purely in ICF or access-need terms would read here as
+      // having no lens at all — the same defect, in the other rendering.
+      const lensH = x.lens ? '<span class="vlens">'+esc(x.lens)+'</span>' : '';
       const setH = x.setting ? '<span class="vsetting">'+esc(x.setting)+'</span>' : '';
       const jurH = x.jurisdiction ? '<span class="vmeta">'+esc(x.jurisdiction)+'</span>' : '';
       return '<div class="vrow"><span class="layer-pill layer-'+lay+'">'+lay+'</span>'+
         '<span class="vval">'+esc(x.value||'&mdash;')+' '+esc(x.unit||'')+'</span>'+
-        '<span class="vmeta">'+esc(x.parameter||'')+'</span>'+jurH+popH+setH+'</div>';
+        '<span class="vmeta">'+esc(x.parameter||'')+'</span>'+jurH+popH+lensH+setH+'</div>';
     }).join('') + '</div>' : '<span class="no-vals">no values extracted from this source yet</span>';
     const relHtml = s.relevance_note
       ? esc(s.relevance_note)

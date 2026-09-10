@@ -1,37 +1,69 @@
 """
-schemas/source_value_extraction.py — per-source extracted-value layer.
+schemas/source_value_extraction.py — the JUDGMENT item.
 
-Mirrors the source_value_extractions SQLite table introduced by
-migration 018 per DR-2026-05-28-b. Sits between the bare-link layer
-(source_slug_links) and the synthesis-verification layer
-(reasoning_doc_citations) in the evidence-curation chain:
+Mirrors the `source_value_extractions` SQLite table as migration 073 re-keyed it.
 
-    source_slug_links (link)
-       ↓
-    source_value_extractions (per-source asserted value)  ← this model
-       ↓
-    reasoning_doc_citations (re-read, value_match verdict — rule #10 gate)
-       ↓
-    spec_value_probes (PMP walk — rule #8)
-       ↓
-    items.pmp_* (curated spec value)
+WHICH STAGE THIS IS, because the file said the wrong one for four months. D-0168
+(2026-08-27, RATIFIED ON CONTACT): *"The evidence item is the SOURCE; the judgment
+item is the extracted, tiered, categorised value. Evidence to judgment is 1:N."*
+So this table is at JUDGMENT, not evidence collection. The owner's worked example
+is the one to hold in mind: one code document (Canada's NBC 3.8) yields MANY rows
+here, one per clause. The old docstring drew this model as a link in an
+"evidence-curation chain" between `source_slug_links` and `reasoning_doc_citations`
+and ended at `items.pmp_*`; that chain's last two links are prior-version content
+(the owner emptied the item layer 2026-09-01) and its stage assignment is the one
+D-0168 overturned.
 
-An extraction with extraction_status='verified' and a non-null
-promoted_to_rdc_id is the bridge: the extraction has graduated to the
-synthesis layer and the reasoning-doc cell points back via citation_id.
+    evidence_sources (the evidence item — one row per source)
+       ↓  1:N   — ruled, and pinned by scripts/audit/judgment_handoff_shape.py
+    source_value_extractions (the judgment item — one row per extracted value) ← this model
+       ↓
+    specifications (the determination — keyed on the SAME parameter_id and the
+                    SAME four lenses, so the hand-off needs no translation)
 
-SCOPE — this model is a DELIBERATE SUBSET, not a complete mirror.
-The SQLite table has 33 columns; this model declares 22. Missing, all added
-by later migrations that never reached here: root_id, root_type, root_ref_id,
-root_population_note, root_classification_basis, echo_of, measurement_paradigm,
-device_class, contested, file_anchor, setting. Those carry the value-genealogy
-and independence-scoring layer, and mirroring them means mirroring three CHECK
-vocabularies — real work with its own review surface, tracked as F5 in
-workplan/2026-08-03-fork-cut-walkable-graph-execution-plan.md. `item_code`
-(migration 052) IS declared below, because it is the hop-4 edge itself and a
-model silently missing it would misrepresent the chain this docstring draws.
-Stated here rather than left implicit: a reader should not infer from one
-added field that the mirror is whole.
+CELL IDENTITY — THE SAME TWO HALVES `specifications` CARRIES, AND FOR THE SAME REASONS.
+
+The SUBJECT is `parameter_id` into `base_parameters` (owner 2026-08-26; built by
+migration 071, made mandatory here). It is the pointer rule 5 requires: the
+parameter's NAME lives in `terms.canonical_en`, reached through
+`base_parameters.term_id`, and is never copied onto an extraction row.
+
+The LENS is the four browsing taxonomies (owner 2026-08-28, CHECK relaxed by
+D-0182 to "at least one"): identity / ICF / access-need / medical. That ruling names
+this table in its own evidence and its ACTION says `population_code` is retired in
+favour of the four.
+
+THREE COLUMNS THIS MODEL NO LONGER DECLARES, and none of them is an omission:
+`parameter` and `parameter_canonical` (retired by 073 — the verbatim source phrase
+lives in `observed_terms.surface_form`, which is where R11/D-0173 put it, with a live
+writer and 33 live rows), and `population_code` / `population_label` / `item_code`
+(retired by 073 under the 2026-08-28 and 2026-08-26 rulings respectively).
+
+SCOPE — THIS IS NOW A COMPLETE MIRROR, which it deliberately was not before.
+It declared 22 of the table's columns and carried a paragraph explaining that the
+value-genealogy layer (root_id, root_type, root_ref_id, root_population_note,
+root_classification_basis, echo_of, measurement_paradigm, device_class, contested,
+file_anchor, setting) was "real work with its own review surface, tracked as F5".
+CLAUDE.md §7 calls that drift a bug, not a convention, and
+`scripts/audit/validate_pydantic_schemas.py` reported all eleven as DB-only every
+run. They are declared below. Field count is checked against the live table by that
+audit; do not state it here (CLAUDE.md rule 7).
+
+VOCABULARIES, AND A DELIBERATE ASYMMETRY WORTH NAMING SO IT READS AS A DECISION.
+`root_type`, `measurement_paradigm` and `device_class` are declared `Optional[str]`
+and NOT as Python enums, even though each has a closed CHECK. CLAUDE.md §4:
+"Vocabularies come from the schema, not a list in code" — `dbcore.check_values()`
+reads the column's own CHECK and that is what `db.py add-extraction` refuses on, so a
+Python copy would be a second home that drifts the first time a migration changes the
+list. The three enums that ARE here (ClaimType, ExtractionMethod, ExtractionStatus)
+predate that rule; `ClaimType` is load-bearing for `_value_consistency` below, which
+mirrors the table's own claim/value CHECK. Retiring the other two is a separate change
+with its own sweep, not a side effect of this one.
+
+Lens CODES are likewise not validated here — a code's vocabulary is its own base
+registry, reached by a real typed FK (populations / axes / access_needs /
+base_taxonomy_medical). `at_least_one_lens` below validates the SHAPE, which the
+database also states, and nothing else.
 """
 
 from datetime import datetime
@@ -65,61 +97,79 @@ class ExtractionStatus(str, Enum):
 
 
 class SourceValueExtraction(BaseModel):
-    """One per-source asserted-value row.
+    """One judgment item: what ONE source asserts, for ONE parameter, under ONE
+    or more lenses, at ONE place in the document.
 
-    Records what a single evidence source asserts for a given parameter,
-    population, and jurisdiction — captured during mining, before
-    rule #10 re-read verification.
+    Many of these may point at the same `ref_id`, and many may point at the same
+    (`ref_id`, `parameter_id`) pair. Both fan-outs are ruled, not tolerated —
+    D-0168's clause-level example, and the DR-2026-08-19 §7 dissent contest where
+    a divergent adversarial grade lands as a second row and the divergence reads
+    as a contest rather than overwriting the first grade.
     """
 
     extraction_id: Optional[int] = None  # autoincrement PK
 
-    # Provenance
-    ref_id: str = Field(..., description="FK evidence_sources.ref_id")
-    slug: str = Field(..., description="topic; matches source_slug_links.slug")
-
-    # What is being extracted
-    item_code: Optional[str] = Field(
-        None,
-        description="FK items.item_code (migration 052). SUPERSEDED: the owner "
-                    "emptied the item layer 2026-09-01 and `items` is now a Part-4 "
-                    "render rollup, not an identity. Every [A-E]-NN code still on "
-                    "the reading surface is prior-version content. Use parameter_id.",
-    )
-    parameter_id: Optional[int] = Field(
-        None,
-        description="FK base_parameters.parameter_id (migration 071) — THE SUBJECT "
-                    "of a determination (owner 2026-08-26). Nullable on purpose: "
-                    "extraction records what the source SAYS, and adjudicating that "
-                    "phrase onto a canonical parameter is judgment's output "
-                    "(D-0173), not evidence's. It is the pointer rule 5 requires — "
-                    "the parameter's name lives in `terms`, never copied here.",
-    )
-    parameter: str = Field(
+    # ── The hand-off key (D-0168) ────────────────────────────────────────────
+    ref_id: str = Field(..., description="FK evidence_sources.ref_id — the EVIDENCE item")
+    slug: str = Field(
         ...,
-        description='The SOURCE\'s own phrase for what it measures, verbatim and '
-                    'unjudged (R11/D-0173) — e.g. "RT60", "door clear width". A fact '
-                    'about the document, not a claim it names one of our categories.',
+        description="the slug this extraction was mined under. Not a copy of "
+                    "source_slug_links: that junction says the source is admitted to "
+                    "the slug, this says the reading happened there, and "
+                    "evidence_sources has no slug column to point at.",
     )
-    parameter_canonical: Optional[str] = None  # normalized for join (lowercase, hyphens)
-    population_code: Optional[str] = None  # FK populations.population_code
-    population_label: Optional[str] = None  # free-text qualifier
-    jurisdiction: Optional[str] = None  # "UK","US","Multi", or None for clinical
 
-    # The asserted claim
+    # ── The subject (owner 2026-08-26; mandatory since migration 073) ────────
+    parameter_id: int = Field(
+        ...,
+        description="FK base_parameters.parameter_id — THE SUBJECT. Mandatory: an "
+                    "extraction whose parameter is unknown cannot reach the "
+                    "determination it exists to support, and `db.py add-extraction` "
+                    "mints the row and its subject together.",
+    )
+
+    # ── The four lenses (owner 2026-08-28; CHECK relaxed by D-0182) ──────────
+    # Each is a code in its own base registry, reached by a real typed FK. The codes
+    # are NOT validated here — the registry is the vocabulary (CLAUDE.md §4).
+    identity_code: Optional[str] = None   # populations.population_code
+    icf_code: Optional[str] = None        # axes.axis_code
+    needs_code: Optional[str] = None      # access_needs.need_code
+    medical_code: Optional[str] = None    # base_taxonomy_medical.medical_code
+
+    jurisdiction: Optional[str] = None  # "UK","US","Multi", or None for clinical
+    setting: Optional[str] = None
+
+    # ── The asserted claim ───────────────────────────────────────────────────
     claim_type: ClaimType
     claimed_value: Optional[str] = None
     claimed_unit: Optional[str] = None
-    claim_text: Optional[str] = None  # exact source phrasing
+    claim_text: Optional[str] = None  # exact source phrasing — clause-level verbatim
     source_section: Optional[str] = None  # "Table 6, p.33"
 
+    # ── Value genealogy / independence substrate (DR-2026-07-13 H1) ──────────
+    # v_value_independence counts DISTINCT COALESCE(root_ref_id, root_id) over the
+    # measurement/participatory/derived root types. Vocabularies live in the columns'
+    # own CHECKs; see the module docstring for why they are not enums here.
+    root_id: Optional[str] = None
+    root_type: Optional[str] = None
+    root_ref_id: Optional[str] = None  # FK evidence_sources.ref_id — the root SOURCE
+    echo_of: Optional[str] = None
+    measurement_paradigm: Optional[str] = None
+    device_class: Optional[str] = None
+    root_population_note: Optional[str] = None
+    root_classification_basis: Optional[str] = None
+    contested: int = 0  # 0/1; SQLite has no boolean and the column is INTEGER
+    file_anchor: Optional[str] = None
+
     # ── Pinpoint locator (schema 053) ────────────────────────────────────────
-    # A code or standard is cited at a hierarchical position inside it. These
-    # mirror the DB columns 1:1; most are NULL on most rows, because a level a
-    # document does not have is not missing data. `locator_scheme` records which
-    # family's naming applies (ISO's top numbered level is a CLAUSE, ADA's is a
-    # SECTION), so a reader knows whether to render '§404.2' or 'clause 12.3'.
-    # The `_end` companions carry spans -- 'ADA 2010 §604-608' is live data.
+    # A code or standard is cited at a hierarchical position inside it. These mirror
+    # the DB columns 1:1; most are NULL on most rows, because a level a document does
+    # not have is not missing data. `locator_scheme` records which family's naming
+    # applies (ISO's top numbered level is a CLAUSE, ADA's is a SECTION), so a reader
+    # knows whether to render '§404.2' or 'clause 12.3'. The `_end` companions carry
+    # spans -- 'ADA 2010 §604-608' is live data. Under D-0168 these are also what
+    # makes the 1:N fan-out legible: NBC 3.8's clauses are many rows, and these tell
+    # them apart.
     locator_scheme: Optional[str] = None
     loc_division: Optional[str] = None
     loc_part: Optional[str] = None
@@ -137,8 +187,7 @@ class SourceValueExtraction(BaseModel):
     loc_subclause_end: Optional[str] = None
     loc_note: Optional[str] = None
 
-
-    # Provenance of the extraction itself
+    # ── Provenance of the extraction itself ──────────────────────────────────
     extraction_method: ExtractionMethod
     extraction_status: ExtractionStatus = ExtractionStatus.PRELIMINARY
 
@@ -153,6 +202,8 @@ class SourceValueExtraction(BaseModel):
     updated_at: Optional[datetime] = None
     updated_by_session: Optional[str] = None
 
+    # --- Validators ---
+
     @model_validator(mode="after")
     def _value_consistency(self):
         # Mirror the SQL CHECK: claim_type='absent' ↔ claimed_value IS NULL
@@ -161,5 +212,33 @@ class SourceValueExtraction(BaseModel):
         if self.claim_type != ClaimType.ABSENT and self.claimed_value is None:
             raise ValueError(
                 f"claim_type='{self.claim_type.value}' requires claimed_value to be set"
+            )
+        return self
+
+    @model_validator(mode="after")
+    def at_least_one_lens(self) -> "SourceValueExtraction":
+        """D-0182, mechanised: absence in a lens is fine, absence in ALL is not.
+
+        This is the Python side of the live table's
+        `CHECK (COALESCE(identity_code, icf_code, needs_code, medical_code)
+        IS NOT NULL)`, and is word-for-word the same guard `schemas/evidence_state.py`
+        puts on the determination. It was "exactly one" under the 2026-08-28 ruling and
+        D-0182 relaxed it; stating a value in several lenses at once is the ideal, not a
+        violation.
+
+        The determination and the extraction it rests on carry the SAME shape on
+        purpose: a judgment row that could not name a lens would hand the determination
+        a value about nobody.
+        """
+        if (
+            self.identity_code is None
+            and self.icf_code is None
+            and self.needs_code is None
+            and self.medical_code is None
+        ):
+            raise ValueError(
+                "An extraction must be stated in at least one lens: set one or more of "
+                "identity_code / icf_code / needs_code / medical_code (D-0182). A value "
+                "attached to no lens is a value about nobody."
             )
         return self

@@ -230,6 +230,40 @@ CO1_LIMIT = ("Co-1 engagement is at evidence level (published corpus), not parti
 
 
 def fetch_cells(conn):
+    """READ THIS BEFORE CONCLUDING ANYTHING FROM THE COLUMN NAMES BELOW.
+
+    THIS FUNCTION HAS BEEN DEAD SINCE 2026-09-09. Migration 071 re-keyed
+    `specifications` off `item_code` / `population_code` and onto `parameter_id` +
+    the four lens columns, and the query on the next lines still names the old
+    ones. Reproduce, against the committed database:
+
+        python3 scripts/generate/pilot_renderings.py --db data/guidebook.db --out /tmp/x.html
+        -> sqlite3.OperationalError: no such column: item_code   (at the SELECT below)
+
+    IT IS NOT SWEPT HERE, AND THE REASON IS DELIBERATE. Migration 073 (2026-09-10)
+    retired `source_value_extractions.item_code`, which this function also names --
+    in the extraction-count query further down, at a line the exception above means
+    is never reached. Sweeping that ONE line would leave the file exactly as dead
+    while making it LOOK swept, which is worse than leaving it legibly broken: the
+    next reader would take the file's silence as health. CLAUDE.md rule 4's own
+    proof case is a sweep that missed a caller because a 0-row object looked clean.
+
+    WHAT A REAL SWEEP REQUIRES, so the next session does not have to re-derive it:
+      * the SELECT below, onto parameter_id + identity/icf/needs/medical
+      * `items.name` -> the parameter's name via base_parameters.term_id ->
+        terms.canonical_en (`items` holds 0 rows and a rebuild does not restore it)
+      * `jurisdictional_values WHERE item_code=?` -- the item layer again
+      * the derivation_sha payload, which hashes `item|population|refs::rule_version`
+        while assess_cell.sha() now hashes `parameter_id|lens|refs::rule_version`
+      * the extraction-count join, onto (ref_id, parameter_id)
+      * the HTML cell ids and headings, keyed `item_code x population`
+    That is a render-stage re-key of a document generator. The operative plan
+    (workplan/2026-09-10-road-to-batch-06.md, "DELIBERATELY WAITING") puts
+    pilot_renderings off the walk, and `scripts/regenerate_derived.sh` does not call
+    it. Its registered consumer, `register_integrity_check --selftest`, imports only
+    REGISTER_MAP / ROLES / tuple_class from this module and checks a committed
+    document, so nothing that gates is resting on this function.
+    """
     cells = []
     q = ("SELECT specification_id,item_code,population_code,state,design_scale,convergence_id,"
          "tier_basis,governing_refs,rule_version,derivation_sha,code_floor_only,"

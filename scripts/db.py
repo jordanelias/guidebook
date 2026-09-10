@@ -1077,6 +1077,83 @@ def main():
     p_ap.add_argument("--session", required=True)
     p_ap.add_argument("--dry-run", action="store_true")
 
+    # add-extraction — the writer source_value_extractions shipped without. See
+    # insert_extraction for the refusals, and for the three that are DELIBERATELY
+    # ABSENT (uniqueness on (ref_id, parameter_id), a value-directness grade, and
+    # --promoted-to-rdc-id).
+    p_ax = sub.add_parser("add-extraction",
+                          help="Record what one source asserts for one parameter "
+                               "(the JUDGMENT item, D-0168)")
+    p_ax.add_argument("--ref-id", required=True, help="evidence_sources.ref_id — the source read")
+    p_ax.add_argument("--slug", required=True, help="the slug the reading happened under")
+    p_ax.add_argument("--parameter-id", dest="parameter_id", type=int, required=True,
+                      help="base_parameters.parameter_id — THE SUBJECT (owner 2026-08-26)")
+    # The four lenses. At least one is required (D-0182); the CLI names them by lens
+    # rather than by column so the operator is choosing a LENS, not filling a field.
+    p_ax.add_argument("--identity", help="populations.population_code")
+    p_ax.add_argument("--icf", help="axes.axis_code")
+    p_ax.add_argument("--needs", help="access_needs.need_code")
+    p_ax.add_argument("--medical", help="base_taxonomy_medical.medical_code")
+    p_ax.add_argument("--claim-type", dest="claim_type", required=True,
+                      help="Live vocabulary, read from the column's own CHECK. "
+                           "'absent' records that the source asserts NO value — which is "
+                           "evidence, and takes no --claimed-value.")
+    p_ax.add_argument("--claimed-value", dest="claimed_value")
+    p_ax.add_argument("--claimed-unit", dest="claimed_unit")
+    # REQUIRED, and this flag is the ONLY thing holding the verbatim guarantee.
+    # Before migration 073 `parameter` was NOT NULL, so every row carried at least
+    # the source's own phrase for what it measures. 073 retired that column (its
+    # verbatim job belongs to observed_terms.surface_form) and left `claim_text`,
+    # `source_section` and all 16 `loc_*` columns NULLABLE — so a happy-path row
+    # could carry ZERO verbatim from the source it claims to have read. The schema
+    # cannot be tightened without a compensating migration; the writer can, in one
+    # line, and this is it. The guarantee is therefore the CLI's, not the schema's:
+    # a row written by any other path can still carry none.
+    p_ax.add_argument("--claim-text", dest="claim_text", required=True,
+                      help="REQUIRED. The source's exact phrasing of the claim, "
+                           "verbatim. This is the row's only guaranteed verbatim "
+                           "anchor — without it an extraction asserts a value with "
+                           "nothing of the source's own words behind it. For "
+                           "--claim-type absent, quote the passage that SHOULD have "
+                           "carried the value and does not.")
+    p_ax.add_argument("--source-section", dest="source_section")
+    p_ax.add_argument("--jurisdiction")
+    p_ax.add_argument("--setting")
+    p_ax.add_argument("--extraction-method", dest="extraction_method", required=True,
+                      help="Live vocabulary, read from the column's own CHECK")
+    p_ax.add_argument("--extraction-status", dest="extraction_status",
+                      help="Live vocabulary, read from the column's own CHECK "
+                           "(the column's own DEFAULT applies when omitted)")
+    # Value genealogy (DR-2026-07-13 H1) — what v_value_independence counts over.
+    p_ax.add_argument("--root-id", dest="root_id")
+    p_ax.add_argument("--root-type", dest="root_type",
+                      help="Live vocabulary, read from the column's own CHECK")
+    p_ax.add_argument("--root-ref-id", dest="root_ref_id",
+                      help="evidence_sources.ref_id of the root the value traces to")
+    p_ax.add_argument("--echo-of", dest="echo_of")
+    p_ax.add_argument("--measurement-paradigm", dest="measurement_paradigm",
+                      help="Live vocabulary, read from the column's own CHECK")
+    p_ax.add_argument("--device-class", dest="device_class",
+                      help="Live vocabulary, read from the column's own CHECK")
+    p_ax.add_argument("--root-population-note", dest="root_population_note")
+    p_ax.add_argument("--root-classification-basis", dest="root_classification_basis")
+    p_ax.add_argument("--contested", type=int, choices=[0, 1])
+    p_ax.add_argument("--file-anchor", dest="file_anchor")
+    # Pinpoint locator (migration 053). One flag per column, generated rather than
+    # typed out twice: the columns ARE the list, and duplicating them here would be a
+    # second home for the locator hierarchy.
+    p_ax.add_argument("--locator-scheme", dest="locator_scheme",
+                      help="which family's naming applies (ISO clause vs ADA section)")
+    for _lvl in ("division", "part", "section", "subsection", "paragraph",
+                 "clause", "subclause"):
+        p_ax.add_argument(f"--loc-{_lvl}", dest=f"loc_{_lvl}")
+        p_ax.add_argument(f"--loc-{_lvl}-end", dest=f"loc_{_lvl}_end",
+                          help=f"end of a span, e.g. ADA 2010 §604-608")
+    p_ax.add_argument("--loc-note", dest="loc_note")
+    p_ax.add_argument("--notes")
+    p_ax.add_argument("--session", required=True)
+    p_ax.add_argument("--dry-run", action="store_true")
+
     p_adj = sub.add_parser("adjudicate-term",
                            help="Decide whether an observed phrase names our concept "
                                 "(judgment stage, D-0173)")
@@ -1789,6 +1866,34 @@ def main():
             session=args.session,
             dry_run=args.dry_run,
         ))
+
+    elif args.command == "add-extraction":
+        # The lens flags are named for the LENS and stored in the COLUMN; the mapping
+        # is stated once, here, and mirrors db._LENS_COLUMNS' key order.
+        _ax = {"ref_id": args.ref_id, "slug": args.slug,
+               "parameter_id": args.parameter_id,
+               "identity_code": args.identity, "icf_code": args.icf,
+               "needs_code": args.needs, "medical_code": args.medical,
+               "claim_type": args.claim_type, "claimed_value": args.claimed_value,
+               "claimed_unit": args.claimed_unit, "claim_text": args.claim_text,
+               "source_section": args.source_section,
+               "jurisdiction": args.jurisdiction, "setting": args.setting,
+               "extraction_method": args.extraction_method,
+               "extraction_status": args.extraction_status,
+               "root_id": args.root_id, "root_type": args.root_type,
+               "root_ref_id": args.root_ref_id, "echo_of": args.echo_of,
+               "measurement_paradigm": args.measurement_paradigm,
+               "device_class": args.device_class,
+               "root_population_note": args.root_population_note,
+               "root_classification_basis": args.root_classification_basis,
+               "contested": args.contested, "file_anchor": args.file_anchor,
+               "locator_scheme": args.locator_scheme, "loc_note": args.loc_note,
+               "notes": args.notes}
+        for _lvl in ("division", "part", "section", "subsection", "paragraph",
+                     "clause", "subclause"):
+            _ax[f"loc_{_lvl}"] = getattr(args, f"loc_{_lvl}")
+            _ax[f"loc_{_lvl}_end"] = getattr(args, f"loc_{_lvl}_end")
+        _emit(insert_extraction(_ax, session=args.session, dry_run=args.dry_run))
 
     elif args.command == "adjudicate-term":
         _emit(adjudicate_term(args.observation_id, args.outcome, args.rationale,
@@ -3087,6 +3192,371 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
                 "provenance": ("adjudicated" if adj else "base-vocabulary"),
                 "adjudicated_by": (adj["adjudication_id"] if adj else None),
                 "outcome": (adj["outcome"] if adj else None),
+                "dry_run": dry_run}
+
+
+# The four lenses (owner 2026-08-28; CHECK relaxed to "at least one" by D-0182).
+# Each column, the base registry its real FK points into, and that registry's key.
+# DERIVED FROM THE SCHEMA, not a vocabulary restated in code: the registries ARE the
+# vocabulary (CLAUDE.md §4). Mirrors assess_cell.LENS_COLUMNS deliberately — the
+# extraction and the determination it feeds must name the lens the same way, or the
+# hand-off needs a translation nobody wrote.
+_LENS_COLUMNS = {
+    "identity_code": ("populations", "population_code"),
+    "icf_code": ("axes", "axis_code"),
+    "needs_code": ("access_needs", "need_code"),
+    "medical_code": ("base_taxonomy_medical", "medical_code"),
+}
+
+# Columns on source_value_extractions whose CHECK declares a closed vocabulary. The
+# MEMBERS are never listed here — dbcore.check_values() reads each column's own CHECK.
+# What this list says is only WHICH columns to ask about. Verified 2026-09-10 against
+# the live schema: all six yield a non-empty set, which matters because
+# dbcore.check_declared() does `if allowed and value not in allowed` — an unparsed
+# CHECK returns the empty set and turns the refusal silently OFF (the defect recorded
+# in check_values' own docstring, where 16 of 108 vocabularies were unguarded).
+_SVE_VOCAB_COLUMNS = (
+    "claim_type", "extraction_method", "extraction_status",
+    "root_type", "measurement_paradigm", "device_class",
+)
+
+
+def insert_extraction(data: dict, session: str, dry_run: bool = False):
+    """Record ONE judgment item: what one source asserts for one parameter.
+
+    THE WRITER THIS TABLE SHIPPED WITHOUT. `source_value_extractions` has existed
+    since migration 018 and `scripts/db.py` contained ZERO references to it —
+    measured 2026-09-10, `grep -c source_value_extractions scripts/db.py` -> 0. With
+    no extraction writer there was no parameter->evidence edge at all, so the
+    determination engine had nothing to gather evidence by except the slug, and
+    `param 1 x MOB -> stated` meant "everything linked to
+    accessible-circulation-geometry" — 10 sources, 8 of which the engine's own report
+    flagged `tier_inconsistent`. This function is what makes that join exist.
+
+    WHAT IT REFUSES, and why each refusal is the point:
+
+    * An unknown `ref_id`. The FK would say `FOREIGN KEY constraint failed`, which
+      names neither the source nor the fix. An extraction is a reading OF a source;
+      one that names no admitted source is a claim about nothing.
+
+    * An unknown `slug`. Same class. `slug` is NOT NULL here and is a fact of the
+      extraction — the reading happened under that topic — not a copy of
+      `source_slug_links` (`evidence_sources` has no slug column to point at).
+
+    * A slug the REF IS NOT ADMITTED TO. The column's FK points at `slugs`, so the
+      database accepts any live slug and cannot see that this source was never
+      admitted to this topic. `source_slug_links` is that record. Without this
+      refusal the vetting surface renders the row under a slug whose own
+      `linked_sources` does not contain the ref.
+
+    * A MISSING OR BLANK `claim_text`. Migration 073 retired `parameter`, the last
+      NOT NULL column carrying the source's own words; `claim_text`,
+      `source_section` and all 16 `loc_*` columns are nullable, so without this the
+      happy path writes a row with ZERO verbatim from the source it read. The
+      guarantee is the CLI's, not the schema's — say so rather than implying the
+      table enforces it.
+
+    * A `parameter_id` that is absent, or whose row is not `status='active'`. A
+      determination keyed on a parameter folded into another is a determination about
+      a subject that no longer stands on its own, and the FK cannot see the
+      difference because the row is still there. `assess_cell.validate_parameter()`
+      refuses the same thing at the other end; both ends refuse or neither does.
+
+    * FK-INTO-EMPTY-PARENT, refused EARLY and by name. `base_parameters` holds 0 rows
+      today, so a bare INSERT dies with `FOREIGN KEY constraint failed` at INSERT and
+      never at migration time — the exact failure CLAUDE.md §4 says "makes a broken
+      table look healthy": the schema parses, a rebuild reproduces it exactly, and
+      every gate stays green over a table that cannot accept a row. The refusal here
+      names `db.py add-parameter` as the remedy. The same treatment is given to each
+      lens registry, because `base_taxonomy_medical` is ALSO empty and `--medical`
+      would fail the same silent way.
+
+    * A lens code that is not live in its own registry — and a BLANK is not an
+      absence. `--identity ""` is normalised to None before anything reads it:
+      assess_cell records the live incident where a blank skipped validation (falsy),
+      satisfied the at-least-one test at the NEXT lens (truthy), was INSERTed as '',
+      and produced a `PRAGMA foreign_key_check` violation against `populations`.
+
+    * NO LENS AT ALL. D-0182: absence in a lens is fine, absence in all four is not.
+      A value attached to no lens is a value about nobody.
+
+    * The claim/value contradiction, IN WORDS. The table's own CHECK already refuses
+      `claim_type='absent'` with a value and any other claim_type without one; this
+      refuses it first so the operator gets a sentence instead of
+      "CHECK constraint failed", which names neither column.
+
+    * Any value outside a column's own declared CHECK vocabulary, for all six
+      vocabulary columns, read from the schema and never from a list in code.
+
+    DELIBERATELY ABSENT REFUSALS — each must STAY absent, and this is where the next
+    reader is told so rather than discovering it by removing one:
+
+    * NO UNIQUENESS ON (ref_id, parameter_id). This is the ruled 1:N fan-out. D-0168
+      (owner, 2026-08-27): "one evidence source may provide many rows of judgment (eg
+      a code document like Canada's NBC 3.8)" — many clauses, many rows, one source,
+      one parameter. It is ALSO the DR-2026-08-19 §7 dissent contest: a divergent
+      adversarial grade lands as a SECOND row and divergent readings are meant to be
+      readable as a contest, not silently overwritten. A uniqueness refusal here
+      would be the CLI quietly overruling doctrine, and
+      `scripts/audit/judgment_handoff_shape.py` (BLOCKING) fails if the same
+      collapse is attempted in the schema. A duplicate is NOTED on stderr, never
+      refused: if it is unintended the author sees it in the same session; if it is
+      intended it is the whole point.
+
+    * NO VALUE-DIRECTNESS GRADE. There is no value-directness grading rule in this
+      repository (workplan 2026-09-10, stop condition 4: "Any step needing a
+      value-directness grading rule. None exists. Do not invent one."). The engine
+      records the dimension NOT_ASSESSED under G2 — applies but unassessed, never
+      silently EXACT. Accepting a grade here would be inventing the rule at the
+      point of capture, where it is least visible.
+
+    * NO `--promoted-to-rdc-id`. Promotion to the synthesis layer is a later act on
+      an existing row with its own verdict behind it (rule #10 re-read). Letting
+      capture assert it would mint an extraction that claims to have been verified
+      before it was read twice.
+
+    ONE SIDE EFFECT ON ANOTHER TABLE, and it is not free: the ref's
+    `evidence_sources.data_capture_status` is set to 'captured' in the SAME
+    transaction. See the comment at the UPDATE for what breaks without it (blocking
+    check C06), what the other three capture-table writers do (nothing), and the
+    rule 5 tension it stops rather than cures.
+    """
+    _COLS = frozenset({
+        "ref_id", "slug", "parameter_id",
+        "identity_code", "icf_code", "needs_code", "medical_code",
+        "jurisdiction", "setting",
+        "claim_type", "claimed_value", "claimed_unit", "claim_text", "source_section",
+        "root_id", "root_type", "root_ref_id", "echo_of", "measurement_paradigm",
+        "device_class", "root_population_note", "root_classification_basis",
+        "contested", "file_anchor",
+        "locator_scheme", "loc_division", "loc_part", "loc_section", "loc_subsection",
+        "loc_paragraph", "loc_clause", "loc_subclause",
+        "loc_division_end", "loc_part_end", "loc_section_end", "loc_subsection_end",
+        "loc_paragraph_end", "loc_clause_end", "loc_subclause_end", "loc_note",
+        "extraction_method", "extraction_status", "notes",
+    })
+    dbcore.validate_cols(data.keys(), _COLS, "insert_extraction")
+    row = {k: v for k, v in data.items() if v is not None}
+
+    # A BLANK IS NOT AN ABSENCE — normalise before anything reads these.
+    for col in _LENS_COLUMNS:
+        if col in row and not str(row[col]).strip():
+            del row[col]
+
+    with dbcore.connect(dry_run) as conn:
+        ref = dbcore.fold_ref(row.get("ref_id"))
+        if not dbcore.exists(conn, "evidence_sources", "ref_id", ref):
+            raise ValueError(
+                f"ref_id {data.get('ref_id')!r} is not an admitted source. An extraction "
+                f"is a reading OF a source; extract AFTER admission.\n"
+                f"  db.py add-source ...")
+        row["ref_id"] = ref
+
+        if not dbcore.exists(conn, "slugs", "slug", row.get("slug")):
+            raise ValueError(
+                f"slug {row.get('slug')!r} is not a live slug. The slug records where the "
+                f"reading happened, and it must be one the project holds.")
+
+        # THE REF MUST BE ADMITTED TO THE SLUG, not merely exist beside it. The
+        # column's FK points at `slugs`, so the database is satisfied by ANY live
+        # slug -- it cannot see that this source was never admitted to this topic.
+        # Without this refusal an extraction lands under a slug whose own
+        # `linked_sources` does not contain the ref, and
+        # tools/regenerate_vetting_surface.py renders it there: the vetting surface
+        # would show a value mined under a topic the source was never admitted to,
+        # which is the one thing that surface exists to make impossible to miss.
+        #
+        # THIS IS REF<->SLUG COHERENCE, NOT PARAMETER<->SLUG COHERENCE, and the two
+        # are deliberately different. test_db_integrity's retired J01 asserted that
+        # an extraction's PARAMETER belonged to its slug; that assumption is wrong
+        # (a source admitted under one slug may legitimately be read for a parameter
+        # another slug also governs) and its deletion note says so. Ref<->slug is the
+        # stronger and simpler invariant: the junction that records admission is
+        # `source_slug_links`, it is non-empty, and it is the only record of what the
+        # project decided this source was admitted FOR.
+        if not conn.execute(
+                "SELECT 1 FROM source_slug_links WHERE ref_id=? AND slug=?",
+                (ref, row.get("slug"))).fetchone():
+            held = [r[0] for r in conn.execute(
+                "SELECT slug FROM source_slug_links WHERE ref_id=? ORDER BY slug",
+                (ref,))]
+            raise ValueError(
+                f"{ref} is not admitted to slug {row.get('slug')!r}. An extraction is "
+                f"mined under a topic the source was ADMITTED to; `source_slug_links` "
+                f"is that record and it does not hold this pair.\n"
+                f"  admitted to: {held or '(no slug at all)'}\n"
+                f"Extract under one of those. Admission to a FURTHER slug happens at "
+                f"admission time (`db.py add-source --ref-id ... --slug SLUG "
+                f"--local-ref-id ...`); there is no CLI verb that links an "
+                f"already-admitted source to a second slug today, and inventing the "
+                f"link from here would make this writer the thing that decides what a "
+                f"source was admitted for.")
+
+        # --- the subject -----------------------------------------------------
+        pid = row.get("parameter_id")
+        if pid is None:
+            raise ValueError(
+                "--parameter-id is required: an extraction whose subject is unknown "
+                "cannot reach the determination it exists to support (owner 2026-08-26, "
+                "'the judgment object is the canonical parameter').")
+        n_params = conn.execute("SELECT COUNT(*) FROM base_parameters").fetchone()[0]
+        if n_params == 0:
+            raise ValueError(
+                "`base_parameters` holds no rows, so NO parameter_id can be valid and a "
+                "bare INSERT would fail with `FOREIGN KEY constraint failed` — a refusal "
+                "that names neither the cause nor the fix (CLAUDE.md §4).\n"
+                "Mint the subject first, from an adjudicated term:\n"
+                "  db.py add-parameter --term-id TERM-NNN --session ...")
+        prow = conn.execute("SELECT status, merged_into FROM base_parameters "
+                            "WHERE parameter_id=?", (pid,)).fetchone()
+        if prow is None:
+            raise ValueError(
+                f"parameter_id {pid}: no such parameter. Mint one from a term:\n"
+                f"  db.py add-parameter --term-id TERM-NNN --session ...")
+        if prow["status"] != "active":
+            target = f" (merged into {prow['merged_into']})" if prow["merged_into"] else ""
+            raise ValueError(
+                f"parameter_id {pid} is {prow['status']}{target}, not active. Key the "
+                f"extraction on the surviving parameter — a value filed under a folded "
+                f"parameter is unreachable from the determination that replaced it.")
+
+        # --- the lenses ------------------------------------------------------
+        if not any(row.get(c) for c in _LENS_COLUMNS):
+            raise ValueError(
+                "an extraction must be stated in at least one lens (D-0182): pass one or "
+                "more of --identity / --icf / --needs / --medical. A value attached to no "
+                "lens is a value about nobody.")
+        for col, (table, key) in _LENS_COLUMNS.items():
+            code = row.get(col)
+            if not code:
+                continue
+            if not dbcore.exists(conn, table, key, code):
+                n = conn.execute(f'SELECT COUNT(*) FROM "{table}"').fetchone()[0]
+                if n == 0:
+                    raise ValueError(
+                        f"{col} {code!r}: the registry `{table}` holds no rows, so no code "
+                        f"is valid in this lens yet and the INSERT would fail with "
+                        f"`FOREIGN KEY constraint failed`. Seed the registry in a "
+                        f"migration, or state the value in a lens that has one.")
+                raise ValueError(
+                    f"{col} {code!r} is not a live {key} in `{table}`. The registry is the "
+                    f"vocabulary (CLAUDE.md §4); it is not extended from the CLI.")
+
+        # --- the claim -------------------------------------------------------
+        claim_type = row.get("claim_type")
+        value = row.get("claimed_value")
+        # THE VERBATIM FLOOR. `--claim-text` is required at the parser, so this fires
+        # on the PYTHON API path and on `--claim-text ""` — a blank is not a quote,
+        # and normalising it to None here would restore exactly the zero-verbatim row
+        # the requirement exists to forbid.
+        if not str(row.get("claim_text") or "").strip():
+            raise ValueError(
+                "--claim-text is required and must not be blank. Migration 073 retired "
+                "`parameter`, the last NOT NULL column that carried the source's own "
+                "words; every remaining verbatim column on this table is nullable, so "
+                "without --claim-text this row would assert a value with nothing of the "
+                "source's own phrasing behind it. Quote the clause you read.")
+        if claim_type == "absent" and value is not None:
+            raise ValueError(
+                "claim_type='absent' records that the source asserts NO value for this "
+                "parameter, so --claimed-value must be omitted. If the source does state "
+                "a value, the claim_type is one of the others.")
+        if claim_type is not None and claim_type != "absent" and value is None:
+            raise ValueError(
+                f"claim_type={claim_type!r} requires --claimed-value. If the source "
+                f"asserts nothing for this parameter, that is claim_type='absent' — a "
+                f"recorded absence, which is evidence, not a missing field.")
+
+        # --- the declared vocabularies, read from the schema ------------------
+        for col in _SVE_VOCAB_COLUMNS:
+            if row.get(col) is not None:
+                dbcore.check_declared(conn, "source_value_extractions", col,
+                                      row[col], "insert_extraction")
+
+        # DELIBERATELY NOT REFUSED — see the docstring. Noted so the fan-out is
+        # visible in the session log rather than silent.
+        prior = conn.execute(
+            "SELECT extraction_id, created_by_session FROM source_value_extractions "
+            "WHERE ref_id=? AND parameter_id=?", (ref, pid)).fetchall()
+        if prior:
+            print(f"NOTE: {ref} already carries {len(prior)} extraction(s) for parameter "
+                  f"{pid} ({[r[0] for r in prior]}). Writing another — evidence to "
+                  f"judgment is 1:N (D-0168), and a divergent reading is a contest "
+                  f"(DR-2026-08-19 §7), not an error.", file=sys.stderr)
+
+        row.update(dbcore.stamp_for(conn, "source_value_extractions", session))
+        cur = conn.execute(
+            f"INSERT INTO source_value_extractions ({','.join(row)}) "
+            f"VALUES ({','.join('?' * len(row))})", list(row.values()))
+
+        # THE STATUS THIS ROW MAKES TRUE — set in the SAME transaction as the INSERT,
+        # so the two can never be observed apart. `dbcore.connect()` commits once at
+        # the end of the with-block and rolls back on any exception, so either both
+        # land or neither does.
+        #
+        # WHAT BREAKS WITHOUT IT: test_db_integrity C06 asserts
+        # `evidence_sources.data_capture_status='captured'` <=> a joinable capture row
+        # exists, and `source_value_extractions` is one of its four capture tables.
+        # test_db_integrity is BLOCKING. `add-extraction` shipped as the table's first
+        # writer, so its first row turned a green blocking gate red -- reproduced
+        # 2026-09-10: one extraction, `C06 (9 examined) ... 1 have rows but do not claim
+        # it`, 68/69.
+        #
+        # WHAT THE OTHER THREE CAPTURE-TABLE WRITERS DO: NOTHING, AND MOSTLY THEY DO
+        # NOT EXIST. Measured 2026-09-10 -- `spec_value_probes` and
+        # `reasoning_doc_citations` have no `db.py` writer at all; `economics_entries`
+        # has `insert_economics_entry`, which never touches `data_capture_status`. So
+        # this is not a convention being followed, it is the first writer to maintain
+        # the biconditional at all. C06 is green over those three only because all
+        # three tables hold 0 rows. WHEN ANY OF THEM GAINS A WRITER, IT NEEDS THIS
+        # SAME BLOCK, and this comment is where that is recorded.
+        #
+        # RULE 5 TENSION, STATED RATHER THAN PAPERED OVER. `data_capture_status` is a
+        # DERIVED DUPLICATE of "does a capture row exist for this ref" -- a fact whose
+        # real home is the four capture tables. C06 is therefore a PARITY CHECK over a
+        # dual home, and CLAUDE.md rule 5 is explicit that "a parity check is not a fix
+        # -- it makes a dual home survivable, therefore permanent". THIS BLOCK STOPS
+        # THE BLEED; IT DOES NOT CURE IT. The cure is rule 5's own sequence:
+        #   1. WRITER-RETIRE  -- this block, plus the same in any future capture-table
+        #                        writer, is the last thing that should ever set the
+        #                        column. No new writer of it.
+        #   2. READER-RETIRE  -- the live readers are test_db_integrity C06/C07 and
+        #                        `governance/pipeline-operations.md`'s stage-4 row.
+        #                        Re-point them at the four EXISTS() predicates, which
+        #                        are the fact itself rather than a summary of it, and
+        #                        C06 dissolves rather than passing.
+        #   3. NULL FORWARD   -- the column is NOT NULL with a CHECK, so retiring it
+        #                        needs a compensating migration; that migration is the
+        #                        right place, not here, because dropping it while a
+        #                        blocking check still reads it is how a gate goes red
+        #                        on untouched main.
+        # AND NOTE WHAT THIS BLOCK HAD TO DO TO EXIST: a JUDGMENT-stage writer reaching
+        # back to UPDATE an EVIDENCE-stage row. The 2026-08-27 hand-off ruling names
+        # that act directly -- a back-pointer filled in later "require[s] a write into a
+        # completed stage, which is what rule 5 exists to stop", and its answer there was
+        # to move the fact to the stage that owns it. That the only way to keep C06
+        # honest is a cross-stage write is not an argument for the write; it is the
+        # clearest available evidence that the column is in the wrong home. Recorded
+        # here rather than resolved, because resolving it is the compensating migration
+        # in step 3 above.
+        #
+        # Grep `data_capture_status` before touching any of this: the whole reader set
+        # is four files and it is small on purpose.
+        _upd = dbcore.upd(session)
+        captured = conn.execute(
+            "UPDATE evidence_sources SET data_capture_status='captured', "
+            "updated_at=?, updated_by_session=? "
+            "WHERE ref_id=? AND data_capture_status<>'captured'",
+            (_upd["updated_at"], _upd["updated_by_session"], ref)).rowcount
+        return {"extraction_id": cur.lastrowid, "ref_id": ref, "parameter_id": pid,
+                "slug": row.get("slug"),
+                "lens": {c: row.get(c) for c in _LENS_COLUMNS if row.get(c)},
+                "claim_type": claim_type, "claimed_value": value,
+                "siblings_for_this_parameter": len(prior),
+                # Reported, not silent: a status change on ANOTHER table is exactly
+                # the kind of side effect an operator should see in the same output
+                # as the write that caused it.
+                "data_capture_status_set_captured": bool(captured),
                 "dry_run": dry_run}
 
 
