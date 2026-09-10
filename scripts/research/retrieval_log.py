@@ -251,17 +251,34 @@ def _session_stem(session):
     return session[:-3] if session.endswith(".md") else session
 
 
-def _logged_payloads(session):
-    """Every payload logged for a session, newest last, keyed by URL."""
+def _manifest_records(session):
+    """Every manifest line for a session, in file order. The record of what was FETCHED.
+
+    Separate from _logged_payloads because the two answer different questions:
+    this one says what bytes exist, that one says which of them this module can
+    parse. Conflating them is how the drop below stayed invisible.
+    """
     session = _session_stem(session)
     man = LOG_ROOT / session / "manifest.jsonl"
     if not man.exists():
-        return {}
+        return []
+    return [json.loads(line) for line in man.read_text(encoding="utf-8").splitlines()
+            if line.strip()]
+
+
+def _logged_payloads(session):
+    """Every payload logged for a session, newest last, keyed by URL.
+
+    JSON ONLY, and that is a real limit rather than an implementation detail: a
+    payload whose bytes are not JSON is dropped here and this dict is the input to
+    every comparison the module makes. Callers that report on coverage MUST call
+    _unparsed_payloads() as well; the CONTRACT of this function is deliberately
+    unchanged (scripts/db.py's correct-source path depends on it returning parsed
+    Crossref-shaped dicts), so the honesty has to be added beside it, not inside it.
+    """
+    session = _session_stem(session)
     out = {}
-    for line in man.read_text(encoding="utf-8").splitlines():
-        if not line.strip():
-            continue
-        rec = json.loads(line)
+    for rec in _manifest_records(session):
         p = LOG_ROOT / session / rec["artefact"]
         if p.exists():
             try:
@@ -269,6 +286,51 @@ def _logged_payloads(session):
             except Exception:
                 pass
     return out
+
+
+def _unparsed_payloads(session):
+    """The payloads _logged_payloads() drops. Returns [(artefact, url, why), ...].
+
+    ADDED 2026-09-10, because the drop was a bare `except: pass` and therefore
+    silent. On the 2026-09-02 batch it discards every .xml and .pdf artefact in the
+    log — including the PubMed efetch abstracts behind REF-00971/972/974 and the PMC
+    full text behind REF-00973, which are exactly the bytes that carry the study
+    DESIGN that `evidence_sources.scope` is derived from. A verifier that cannot see
+    the design-bearing bytes and prints CLEAN is CLAUDE.md 5(a) at the input.
+
+    This function does not fix that. It makes it PRINTABLE, so no CLEAN verdict is
+    issued over an unstated blind spot. Teaching the module to read PubMed XML was
+    weighed and declined on 2026-09-10: measured on the live corpus, every
+    DOI-bearing source already indexes through a richer Crossref or Unpaywall
+    payload, so an adapter would newly examine nothing today while risking the
+    displacement of richer records in _index_by_doi's ranking. It is recorded as
+    owed work in workplan/2026-09-10-b5b-scope-owner-escalation.md §7 rather than
+    half-built here.
+    """
+    session = _session_stem(session)
+    out = []
+    for rec in _manifest_records(session):
+        p = LOG_ROOT / session / rec["artefact"]
+        if not p.exists():
+            out.append((rec["artefact"], rec.get("url", ""), "artefact missing from disk"))
+            continue
+        try:
+            json.loads(p.read_text(encoding="utf-8"))
+        except Exception:
+            ext = p.suffix or "(no extension)"
+            why = f"not JSON ({ext}); this module parses Crossref-shaped JSON only"
+            out.append((rec["artefact"], rec.get("url", ""), why))
+    return out
+
+
+# Locator columns a source may carry INSTEAD of a DOI, in the order they are tried
+# against the manifest. REF-00978 -- the corpus's only Co-1 source, whose warrant
+# CLAUDE.md 6 calls "the worst failure available here" -- has no DOI at all: it is a
+# PDF URL. Until 2026-09-10 verify_authors() selected `WHERE COALESCE(doi,'') <> ''`,
+# so that row was filtered out BEFORE the loop and never reached the `unlogged` list
+# either. Output: EXAMINED: 8 of nine sources, verdict CLEAN, and nothing anywhere
+# said which one was missing.
+_ALT_LOCATORS = ("url", "pmid", "pmcid", "handle", "isbn")
 
 
 # Bibliographic fields this verifier can check against a Crossref payload, and the
@@ -413,8 +475,34 @@ def _biblio_divergences(msg, row):
     return mismatches, gaps
 
 
+def _locator_evidence(row, manifest):
+    """For a source with no DOI: which logged artefact, if any, stands behind it.
+
+    Returns (label, locator, [(artefact, url), ...]). A hit proves a retrieval was
+    made for that locator; it does NOT prove the authors are right, and this
+    function never claims it does. Matching is on the manifest URL containing the
+    locator, which is provable from the bytes rather than inferred.
+    """
+    for col in _ALT_LOCATORS:
+        val = row[col] if col in row.keys() else None
+        val = (str(val).strip() if val is not None else "")
+        if not val:
+            continue
+        hits = [(r["artefact"], r.get("url", "")) for r in manifest
+                if val in (r.get("url") or "")]
+        return col, val, hits
+    return None, None, []
+
+
 def verify_authors(session):
-    """Diff stored authors against the LOGGED payload. Offline. No network."""
+    """Diff stored authors against the LOGGED payload. Offline. No network.
+
+    EXAMINES EVERY evidence_sources ROW as of 2026-09-10, not only DOI-bearing ones,
+    and prints its denominator. A row this module cannot author-diff is now named in
+    an UNEXAMINABLE block with the reason, and its existence is carried into the
+    closing verdict, so "CLEAN" can never again read as a statement about the whole
+    corpus while a source sits silently outside the query that selected it.
+    """
     session = _session_stem(session)
     payloads = _logged_payloads(session)
     if not payloads:
@@ -426,15 +514,25 @@ def verify_authors(session):
         return 1
     by_doi = _index_by_doi(payloads)
 
+    manifest = _manifest_records(session)
+    unparsed = _unparsed_payloads(session)
+
     cx = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
     cx.row_factory = sqlite3.Row
-    rows = cx.execute("SELECT * FROM evidence_sources "
-                      "WHERE COALESCE(doi,'') <> '' ORDER BY ref_id").fetchall()
-    examined, bad, unlogged = 0, [], []
+    rows = cx.execute("SELECT * FROM evidence_sources ORDER BY ref_id").fetchall()
+    n_rows = len(rows)
+    n_doi = sum(1 for r in rows if (r["doi"] or "").strip())
+    examined, bad, unlogged, unexaminable = 0, [], [], []
     biblio_bad, biblio_gap = [], []
     for row in rows:
-        ref_id, doi = row["ref_id"], row["doi"]
-        msg = by_doi.get((doi or "").lower())
+        ref_id, doi = row["ref_id"], (row["doi"] or "").strip()
+        if not doi:
+            # NOT a skip. A source with no DOI is located by whatever locator it
+            # does have and reported, with or without a hit.
+            col, val, hits = _locator_evidence(row, manifest)
+            unexaminable.append((ref_id, col, val, hits))
+            continue
+        msg = by_doi.get(doi.lower())
         if msg is None:
             unlogged.append((ref_id, doi))
             continue
@@ -455,8 +553,41 @@ def verify_authors(session):
     print("=" * 74)
     print(f"retrieval_log --verify-authors  session={session}")
     print("=" * 74)
-    print(f"  logged payloads: {len(payloads)}   DOI-bearing: {len(by_doi)}")
-    print(f"  EXAMINED: {examined}")
+    print(f"  logged payloads: {len(payloads)} parsed of {len(manifest)} manifest line(s)"
+          f"   DOI-bearing: {len(by_doi)}")
+    print(f"  EXAMINED: {examined} of {n_rows} evidence_sources row(s) "
+          f"— {n_doi} carry a DOI, {n_rows - n_doi} do not")
+    if unexaminable:
+        n = len(unexaminable)
+        print(f"\n  UNEXAMINABLE — {n} source{'' if n == 1 else 's'} carr"
+              f"{'ies' if n == 1 else 'y'} no DOI, so this module cannot")
+        print("  diff its authors against a Crossref-shaped payload. REPORTED, never")
+        print("  skipped: the CLEAN verdict below does not speak for it.")
+        for ref_id, col, val, hits in unexaminable:
+            if col is None:
+                print(f"      {ref_id}  no DOI and no alternative locator on the row at all")
+                continue
+            shown = str(val)[:78] + ("…" if len(str(val)) > 78 else "")
+            print(f"      {ref_id}  no DOI; locator {col}={shown}")
+            if hits:
+                for art, _u in hits:
+                    print(f"          logged artefact {art} matches this locator — the retrieval "
+                          f"happened; its bytes are not author-diffable here")
+            else:
+                print("          NO logged artefact matches this locator — not verifiable offline")
+    if unparsed:
+        tally = {}
+        for art, _u, _w in unparsed:
+            tally[Path(art).suffix or "(none)"] = tally.get(Path(art).suffix or "(none)", 0) + 1
+        print(f"\n  NOT INGESTED — {len(unparsed)} of {len(manifest)} logged payload(s) are bytes")
+        print("  this module cannot parse: " + ", ".join(
+            f"{n}×{ext}" for ext, n in sorted(tally.items(), key=lambda kv: -kv[1])) + ".")
+        print("  They were retrieved and are on disk, and they are outside every comparison")
+        print("  above — including the PubMed/PMC XML that carries the study DESIGN from which")
+        print("  evidence_sources.scope is derived.")
+        for art, url, why in unparsed:
+            print(f"      {art}  {why}")
+            print(f"          {url[:96]}")
     if unlogged:
         print(f"  NO LOGGED RETRIEVAL for {len(unlogged)} source(s) — not verifiable offline:")
         for ref_id, doi in unlogged[:6]:
@@ -488,8 +619,13 @@ def verify_authors(session):
         print("\n  INDETERMINATE — nothing verifiable. Not a pass.")
         return 1
     tail = "" if not biblio_gap else " Bibliographic gaps above are reported, not failed."
-    print("\n  CLEAN — stored authors and asserted bibliographic fields match the")
-    print("  retrieved payloads, byte-for-byte source." + tail)
+    scope = (f"the {examined} of {n_rows} source(s) examined"
+             if examined != n_rows else f"all {n_rows} source(s)")
+    print(f"\n  CLEAN FOR {scope.upper()} — their stored authors and asserted")
+    print("  bibliographic fields match the retrieved payloads, byte-for-byte source." + tail)
+    if unexaminable or unlogged or unparsed:
+        print("  NOT A WHOLE-CORPUS PASS: see the block(s) above for what this verdict")
+        print("  does not cover. A source outside the comparison is not a source that agreed.")
     return 0
 
 

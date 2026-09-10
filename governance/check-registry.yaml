@@ -1477,7 +1477,18 @@ quarantine:
   - python3
   - scripts/audit/adjudication_integrity.py
   status: quarantined
-  reason: 'RE-MEASURED 2026-08-22: 1 tier-derivation inconsistency of 5 checked, not 274. The 274 figure
+  reason: 'RE-MEASURED 2026-09-10: 4 tier-derivation inconsistencies of 9 checked, VERDICT FAIL --
+    REF-00784, REF-00971, REF-00972, REF-00976, every one of them scope NULL. That supersedes the
+    2026-08-22 measurement recorded below (1 of 5), which was correct on its date and is wrong today:
+    the corpus grew from 5 admitted sources to 9, and B5(b) on 2026-09-10 wrote scope on five of the
+    nine from their retrieval-log payloads, leaving these four deliberately NULL rather than guessing.
+    Two are payload gaps (REF-00784, REF-00976 -- no logged payload establishes the design) and two are
+    contradictions between the blind derivation and the stored tier (REF-00971, REF-00972), all four
+    escalated with their evidence in workplan/2026-09-10-b5b-scope-owner-escalation.md. RE-MEASURE
+    BEFORE QUOTING: `python3 scripts/audit/adjudication_integrity.py`. Every figure in this entry is
+    dated because every one of them has been wrong within a fortnight of being written. The earlier
+    record, kept because its lesson is about this entry rather than about the corpus:
+    RE-MEASURED 2026-08-22: 1 tier-derivation inconsistency of 5 checked, not 274. The 274 figure
     predates the 2026-08-06 clean-room reset, which deleted the corpus that produced it; it survived here
     for sixteen days as a live-sounding justification for a state that no longer existed, and the 2026-08-18
     cull plan then measured it again and recorded PASS/0 — also wrong, because the 2026-08-19 batch had
