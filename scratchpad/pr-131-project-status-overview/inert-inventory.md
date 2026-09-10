@@ -114,3 +114,69 @@ So a material share of the repo's broken paths are **not sweep misses awaiting a
 they are parked awaiting an owner decision that has been open since 2026-08-02.** A
 non-compliance rule that deletes on brokenness alone would delete work that is waiting on
 the owner, and would discard the record of what it is waiting for.
+
+---
+
+# Strand 3 — SQL that raises (976 candidate hits, executed not inferred)
+
+## The finding that explains the whole problem
+
+**`scripts/audit/check_rendered_docs.py` raises in the mode a human runs it, and passes
+green in the mode CI runs it.**
+
+- Run bare, or with `--doc specs/e-08-brief.html`: `OperationalError: no such column:
+  item_code` at `:95-97`, and independently at `:201-203` and `:218-219`. Migration 071
+  dropped the column.
+- Run `--all`, which is the registered CI form: short-circuits to `EXAMINED: 0` **by
+  policy, before opening the database**. Exit 0.
+
+It is a **blocking** gate. So the one invocation that would have caught its own breakage
+is the one CI never makes. This is failure mode (a) — a gate that passes having examined
+nothing — with the additional property that the vacuity is what conceals the fault.
+
+## A. RAISES — verified by execution
+
+| file:line | error | cause |
+|---|---|---|
+| `check_rendered_docs.py:95-97, 201-203, 218-219` | `no such column: item_code` | 071 |
+| `generate/population_page.py:75-80` | `no such column: item_code` | 071 — `populations` has 23 rows, so any invocation reaches it |
+| `generate/pilot_renderings.py:234-237` | `no such column: item_code` | 071 — fails at SQL-compile time, so it raises **regardless of row count** |
+| `generate/room_page.py` (8 sites) | `no such table: room` | **NOT 071.** Pre-existing and owner-gated: flagged 2026-08-02, before the live `rooms`/`room_items` tables existed at all |
+
+## B. DORMANT — valid SQL the loop never reaches
+
+`generate/spec_page.py:73-79` and `generate/build_site.py:96-100` both name the dropped
+columns and would raise identically, but both are driven by `SELECT ... FROM items`, and
+`items` has 0 rows, so neither is reached. Broken and unreachable are different states and
+only one of them is urgent.
+
+Everything else that reads now-empty tables was executed and **none raises** — the columns
+still exist, the tables are simply at 0 rows, which is an empty result, not an error.
+`register_integrity_check.py` and `validate_verification_consistency.py` were already
+swept post-071 and pass. All 18 views execute (072's repair holds).
+`PRAGMA foreign_key_check`: **0 violations** — the corruption CLAUDE.md describes is
+entirely prospective, never present in the committed blob.
+
+## C. UNWRITABLE TABLES — twenty-one, not two
+
+CLAUDE.md §4 names `specifications` and `item_taxonomy_links` as examples and says to
+derive the live set. Derived, it is **21 tables** whose NOT NULL foreign key points into an
+empty parent:
+
+- into **`items`** (11): `item_taxonomy_links`, `item_bpc_links`, `item_audit_runs`,
+  `item_population_elaborations`, `jurisdictional_values`, `spec_value_probes`,
+  `term_item_links`, `room_items`, `case_study_specs`, `economics_entry_specs`
+- into **`base_parameters`**: `specifications`
+- into **`specifications`**: `specification_source_links`
+- into **`case_studies`** (3): outcomes, populations, strategies
+- into **`economics_entries`** (2), **`connections`**, **`reasoning_doc_citations`**,
+  **`spec_value_probes`**, **`source_value_extractions`**
+
+`conflicts.item_code` is correctly ABSENT: it is nullable, so `conflicts` stays writable
+with `item_code = NULL`.
+
+**The one that matters right now:** `specifications.parameter_id → base_parameters`, and
+`base_parameters` holds **0 rows in the canonical DB**. `db.py add-parameter` now exists
+and a determination was proven writable — but on a *scratch* copy. Until a parameter is
+minted into the canonical DB through the migration path, `specifications` remains
+unwritable there. The tool exists; the row does not.
