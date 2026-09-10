@@ -50,10 +50,11 @@ stages:
     check: scripts/validate_jurisdiction.py
   - id: base-parameter-vocabulary
     kind: completeness
-    criterion: The design-parameter registry is internally consistent and its labels do not themselves
-      assert determinations.
-    references: D-0171 (items is not the building layer); DR-2026-08-19:127 (42 of 93 names carry a determination)
-    check: scripts/validate_items.py
+    criterion: No base_parameters row points at a terms.canonical_en that itself states a
+      determination (a digit, a comparator, or a min/max word).
+    references: D-0171 (items is not the building layer); DR-2026-08-19:127 (42 of 93 names carry a
+      determination); owner ruling 2026-08-26 (base_parameters is items's replacement subject)
+    check: scripts/validate_parameters.py
   - id: base-retired-vocabulary-not-taught
     kind: integrity
     criterion: No retired base token survives in live prose, skills or code outside the exempt paths.

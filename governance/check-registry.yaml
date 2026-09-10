@@ -286,10 +286,10 @@ checks:
     subject; an empty subject that is the declared state of the project is not that, and leaving the guard
     would have made a blocking gate red for telling the truth. The EXAMINED line stays, so the emptiness
     is still visible rather than inferred.'
-- id: validate_items
+- id: validate_parameters
   cmd:
   - python3
-  - scripts/validate_items.py
+  - scripts/validate_parameters.py
   battery: data
   kinds:
   - data
@@ -298,32 +298,31 @@ checks:
   basis: base/base-parameter-vocabulary
   cost: fast
   min_items: 1
-  floor_basis: 'FLOOR KEPT DELIBERATELY, 2026-09-02, though it now fails. The owner ruled the
-    design-parameter registry out of existence on 2026-09-01, so `items` holds 0 rows and this check
-    reports EXAMINED 0 and trips its vacuity guard as an advisory failure. That failure is CORRECT and
-    is not to be silenced by lowering the floor to 0 or by adding no_floor. The criterion it serves --
-    base-parameter-vocabulary, "the design-parameter registry is internally consistent and its labels
-    do not themselves assert determinations" -- was VINDICATED rather than refuted: its own reference
-    records that 42 of 93 item names carried a determination, and that is precisely the defect the owner
-    acted on. A red advisory here is the honest signal that a stage has no subject. If a design-parameter
-    layer is ever rebuilt, this is the check it must pass. (Recorded here and not on the contract
-    criterion because the contract schema forbids extra fields, and because it is the CHECK that is
-    dormant, not the criterion.)'
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the items-table row count (93 today) — the table
-    this validator is named for. min_items:1: an empty items table would mean the DB or the query broke,
-    not a legitimate state. REPAIRED AND WIRED 2026-08-05; was quarantined `broken`. It crashed with `IndexError:
-    No item with that key` reading `items.applicable_groups`, a CSV  # [RETIRED-VOCAB-OK] of population
-    codes packed into one column and dropped when the item×taxonomy junction replaced it — so V5 had been
-    validating nothing, loudly, for as long as that was true. V5 now checks the junction: every link resolves
-    to a live `populations` row and to a live `items` row. Both foreign keys are re-checked rather than
-    trusted, because SQLite enforces FKs per-connection and they are OFF by default, so a file can carry
-    orphans its own DDL forbids. It also dropped KNOWN_POPS, a 23-code population taxonomy transcribed
-    into the validator, which had drifted from the `populations` table it was supposedly validating. Codes
-    now come from that table, so the validator cannot disagree with the data it checks. `applicability`
-    is NOT re-checked — the schema''s CHECK constraint owns it, and a fault-injection run caught the first
-    draft re-transcribing it two values too narrow. Measured 2026-08-05: 93 items, 372 links across 92
-    items, green. Advisory per house norm. The previous quarantine note called this a duplicate of validate_item.py;
-    it is not — that one validates the markdown and YAML corpus, this one validates the table.'
+  note: 'P5, 2026-09-10, REPLACES validate_items.py (deleted in the same commit). validate_items.py read
+    `items`, which holds 0 rows by the owner''s 2026-09-01 ruling and cannot ever hold rows again without
+    a new ruling -- so it failed EXAMINED:0 against min_items:1 permanently, by construction, not by a
+    correctable defect. A check that can never pass is not a floor, it is a fixed red light nobody can
+    act on, which teaches its reader to ignore it (CLAUDE.md §5a in miniature).
+
+    This asserts the ONE thing SQLite cannot state itself: no `terms.canonical_en` reached by a live
+    `base_parameters` row matches the value-bearing pattern (a digit, a comparator, or a min/max word)
+    -- the item-layer defect (DR-2026-08-19 §1.1: 42 of 93 item names embedded a determination) restated
+    one layer down, against the table the owner named as `items`''s replacement subject (owner ruling
+    2026-08-26, "the judgment object is the canonical parameter"). Full reasoning is in the script''s own
+    header per CLAUDE.md §8.
+
+    NOT A SECOND COPY OF A RULE (CLAUDE.md rule 5): the regex is imported from `scripts/db.py`''s
+    `_VALUE_BEARING`, which `add-term` and `add-parameter` already refuse against at write time. This
+    check is the backstop for what that refusal cannot cover -- a migration written directly against
+    dbcore, or a future writer that does not route through `db.py` -- not a first line of defense.
+
+    `base_parameters` is empty today (2026-09-10, no batch has minted a parameter yet), so this reports
+    NOTHING-IN-SCOPE. min_items:1, not no_floor: unlike `items`, this table was never emptied by ruling
+    -- it is the intended home for exactly the work the owner wants done next, so an empty result today
+    is a stage with no subject yet, and the day it gets one this floor is what makes a silently-reopened
+    item-layer defect visible instead of silent. Fault-injected 2026-09-10: a scratch-DB row named
+    `corridor width >=1200 mm` was rejected (EXAMINED:1, exit 1); a row named `corridor width` passed
+    (EXAMINED:1, exit 0).'
 - id: readonly_db_open_audit
   cmd:
   - python3
@@ -437,31 +436,31 @@ checks:
   cost: fast
   no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision,
     not by accident; see note
-- id: validate_schema
-  cmd:
-  - python3
-  - scripts/validate_schema.py
-  - --verbose
-  battery: schema
-  kinds:
-  - schema
-  - data
-  - governance
-  level: blocking
-  basis: base/base-schema-validates
-  cost: fast
-  no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision,
-    not by accident; see note
-  note: 'FLOOR RETIRED 2026-09-01, replacing `min_items: 1`. jurisdictional_values was the SOLE registered
-    entity type and its YAML corpus moved to _archived/ under the owner ruling that the database holds
-    base and research only — the records are item-keyed and item codes must not exist. ENTITY_REGISTRY
-    is therefore empty and an empty scope is the RULED state, not a misconfiguration; the floor was
-    firing on the true answer. THE ANTI-VACUITY DISCIPLINE IS NOT WEAKENED, IT MOVED INTO THE SCRIPT:
-    validate_schema.py now distinguishes an empty ENTITY_REGISTRY (exit 0, nothing declared) from a
-    registry naming directories that do not exist (exit 2, a configuration fault) — and that second
-    case is the original defect this check was hardened against, where a blocking gate reported green
-    for its whole life while ENTITY_REGISTRY named six missing paths. Restore `min_items: 1` and delete
-    this note in the same commit that registers an entity type.'
+# DELETED 2026-09-10 (P7): the `validate_schema` id that ran `scripts/validate_schema.py --verbose`
+# (no `--cross-check`). ENTITY_REGISTRY = {} (scripts/validate_schema.py:63) is iterated at :101 and
+# :149 with nothing else gating the `--verbose` path, so this examined ENTITY_REGISTRY's zero entries
+# on every possible input, not merely today's corpus -- vacuous by construction, not by decision, and
+# it was registered BLOCKING. CLAUDE.md §5(a): "a blocking gate that can never examine anything gates
+# nothing while appearing to gate everything."
+#
+# THE SCRIPT AND ITS `base/base-schema-validates` BASIS ARE NOT ORPHANED, so nothing below was
+# repointed or unclaimed. `scripts/validate_schema.py` was NOT deleted, and this is the reason the
+# task brief's premise (delete the file; then decide the criterion's fate) does not hold here:
+#   1. `validate_schema_cross_check` below is a SEPARATE registered entry running the SAME file with
+#      `--cross-check`, a code path independent of ENTITY_REGISTRY (it reconciles
+#      research_code_leads against _archived/data/jurisdictional_values on (jurisdiction,
+#      standard_name)). It is demonstrably non-vacuous -- its own floor_basis records "examines 83
+#      leads and was proven to fire by deleting one" -- and it ALREADY claims
+#      `basis: base/base-schema-validates`, so that criterion stays claimed without any edit here.
+#   2. `skills/workplan-orchestrator_SKILL.md` step "2b — Data health check" runs
+#      `python3 scripts/validate_schema.py --quick` as a documented, unconditional-when-`data/`-exists
+#      session-start step (`data/` exists in this repo). Deleting the file breaks that live, active
+#      skill's command. skills/ is out of this batch's edit scope, so that caller cannot be swept here
+#      (CLAUDE.md rule 4: "a rename or removal is not done until the callers are swept... so is a
+#      skill"). Per this batch's own caller-sweep instruction, a live active-skill caller is a STOP,
+#      not a delete.
+# Net effect: only the genuinely-vacuous blocking entry is gone. The file, `validate_schema_cross_check`,
+# and the `base-schema-validates` criterion (governance/pipeline-contract.yaml) are all untouched.
 - id: claude_md_spine
   cmd: ['python3', 'scripts/audit/claude_md_spine.py']
   battery: governance
@@ -1373,30 +1372,28 @@ checks:
     exists in `items` — those cannot be found by re-rendering, because the build walks `items`. Advisory
     until the committed-vs-generated policy is settled; the check is mutation-tested for both failure
     modes.'
-- id: check_rendered_docs
-  cmd:
-  - python3
-  - scripts/audit/check_rendered_docs.py
-  - --all
-  battery: render
-  kinds:
-  - render
-  - data
-  - synthesis
-  level: blocking
-  basis: unattributed
-  cost: fast
-  no_floor: examines-none-by-policy — specs/ holds 1 document, and --all deliberately declines to check
-    it — the briefs there are REFERENCE, citing REF-ids the 2026-08-06 reset removed. 0 is a policy exclusion,
-    not an empty directory; --doc checks a live one.
-  note: 'DR-2026-07-25 rendered-document integrity gate. `min_items: 1` was added and RETIRED on 2026-08-06.
-    It was added because the script returned 0 on an empty specs/ glob, so a blocking gate went green
-    if specs/ was renamed or the render step never ran. It was retired hours later by the clean-room reset,
-    which made specs/ reference-only: those briefs cite REF-ids the reset removed, deliberately, so `--all`
-    now examines nothing BY DECISION. The distinction the guard exists for still holds — a check passing
-    on an ACCIDENTALLY empty subject is worthless — and it does not apply to a subject that is empty because
-    the owner said so. The EXAMINED line stays and names the reason, so the emptiness is stated rather
-    than inferred. Re-declare `min_items` the day specs/ is regenerated against the live DB.'
+# DELETED 2026-09-10 (P7): `check_rendered_docs`, which ran `scripts/audit/check_rendered_docs.py
+# --all` (script also deleted, same commit). basis was `unattributed`, so no pipeline-contract
+# criterion is orphaned by this removal.
+#
+# Its subject was hand-authored `specs/*.html` -- a directory the live render path does not write to
+# at all. `scripts/generate/spec_page.py` and `population_page.py` write to `site/specs/` and
+# `site/populations/`, a DIFFERENT directory tree; `specs/` holds one file
+# (`specs/e-08-brief.html`), reference-only since the 2026-08-06 clean-room reset because it cites
+# REF-ids that reset removed. `--all` therefore examined 0 documents by policy, forever, while
+# registered BLOCKING -- proven live: `python3 scripts/audit/check_rendered_docs.py --all` printed
+# `EXAMINED: 0 rendered document(s) — 1 present under specs/, reference-only... pass --doc to check a
+# live one` and exited 0. A blocking gate whose one possible subject is permanently excluded by policy
+# gates nothing (CLAUDE.md §5a), and the DB→generator render path it would need to gain a subject
+# writes somewhere else entirely, so it can never gain one without a directory change no ruling calls
+# for.
+# Caller sweep (git grep, this commit): no import, no workflow step, no skill, no hook referenced the
+# script by name outside prose in decisions/, references/project-standards.md, and workplan/ (frozen
+# records of why the gate was built, not live callers) and `scripts/audit/render_audit.js`'s own
+# docstring (describes the split with check_rendered_docs.py, does not invoke it -- render_audit.js
+# stays; nothing calls it either way). `--doc specs/e-08-brief.html` still finding 26 C1 failures on
+# that one reference-only brief is exactly the state DR-2026-07-25 already named as known and
+# unenforced; deleting the always-vacuous `--all` gate changes nothing about that.
 - id: register_integrity_check
   cmd:
   - python3
