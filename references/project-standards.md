@@ -2778,6 +2778,31 @@ Layer 0 and calls the Layer 2 tool — but the test a meta-script applies is
 **"is this artefact apparatus or project material, and does its filing match?"**, not
 "does a Layer 2 file exit non-zero".
 
+**SECOND CLARIFICATION, same day, owner:** *"layer 1 is ensuring that layer 2 works
+properly when project parameters"*
+
+This gives the layers their actual shape, which is a **recursion, not a checklist**:
+
+> **Layer 0 ensures Layer 1 works. Layer 1 ensures Layer 2 works. Layer 2 is the project's
+> real stage work. Layer 3 is what that work produces. Layer 4 is supplementary.**
+
+Each layer's conformance question is therefore the same single question — *does it ensure
+the layer below it works?* — and this is what the per-layer meta-scripts must measure,
+rather than an assembled list of desirable properties.
+
+**It also names the session's whole failure family in one sentence.**
+`evidence_sources.scope` carried a CHECK, so Layer 1 stated what a valid value was; no
+writer could set it, so Layer 2 could not produce one; all 9 rows are NULL and every
+stored tier is underivable. That is not six unrelated bugs. It is **Layer 1 failing to
+ensure Layer 2 works**, six times: a vocabulary with no writer, a table outside the
+capture path, a CHECK value no verb can produce, a mirror missing a live column, a
+contract criterion pointed at a retired object, a rule whose only executable home is the
+stage it was supposed to govern.
+
+So the L1 meta-script's test is not "is the schema well-formed" but **"for every Layer 1
+statement about what Layer 2 must produce, can Layer 2 actually produce it?"** — and the
+L0 meta-script's is "for every Layer 1 property, is something gating it?"
+
 CONDITION: Any session registering a check, filing a script, or judging whether broken
 apparatus may be deleted.
 ACTION: File apparatus at Layer 0/1 and stage work at Layer 2. A check may invoke a Layer
