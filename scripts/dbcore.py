@@ -42,6 +42,37 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 # ---------------------------------------------------------------------------
+# Refusal — the exception a writer raises when it will not do the thing asked.
+# ---------------------------------------------------------------------------
+
+
+class Refusal(ValueError):
+    """A deliberate refusal by a writer, addressed to the operator.
+
+    THE REFUSALS ARE THE PRODUCT. CLAUDE.md §4: "`db.py` refuses, and that is its whole
+    value. A writer that merely INSERTs is worse than hand SQL because it looks safe."
+    Those refusals cite rulings, name the remedy and say `Nothing was written` — and
+    until 2026-09-10 every one of them arrived at the terminal as the last line of a
+    Python traceback, with the part the operator needs at the bottom of a stack they did
+    not ask for. A `db.py`/`dbcore` refusal is now printed as a sentence.
+
+    A SUBCLASS RATHER THAN A BARE `except ValueError`, and the distinction is
+    load-bearing. `ValueError` is also what `int('abc')` raises, what a mis-typed
+    conversion raises, and what pydantic's `ValidationError` IS. Those are DEFECTS, not
+    refusals, and a defect's traceback is the evidence of where it lives. Catching the
+    base class would print them as one-line refusals and teach their reader to retry the
+    command instead of reading the bug. So: raise `Refusal` where the writer is saying
+    no on purpose; leave everything else alone, and let it keep its stack.
+
+    `scripts/assess/assess_cell.py` carries its own class of the same name for the same
+    reason. It is a deliberate second definition, not an oversight: that engine's import
+    roster is documented per PILOT-MANIFEST.md §4 and imports only `schemas.*`, and
+    coupling a determination engine to the write library to share an exception class
+    would buy nothing either surface can use — neither ever catches the other's.
+    """
+
+
+# ---------------------------------------------------------------------------
 # Paths — one resolution each, and no other module should compute these.
 # ---------------------------------------------------------------------------
 
@@ -111,7 +142,13 @@ def connect(dry_run: bool = False, readonly: bool = False, path=None):
         # committed blob read-write, and this file already records an incident of that
         # exact class -- PRAGMA journal_mode "rewrote the committed blob on EVERY
         # invocation ... including pure reads and including --dry-run".
-        raise RuntimeError(
+        # A Refusal, not a RuntimeError: this is the guard an operator meets by forgetting
+        # GUIDEBOOK_DB_PATH, and the message is already written to be read -- it names
+        # rule 3 and gives the two commands. The OTHER RuntimeError in this module
+        # (ref_id_high_water, no homes) stays what it is: its own docstring says the
+        # caller is pointed somewhere unexpected, which is a defect, and a defect keeps
+        # its traceback.
+        raise Refusal(
             "dbcore.connect: refusing to open the CANONICAL database read-write "
             f"({target}). CLAUDE.md rule 3 -- migrations only. Copy it and point "
             "GUIDEBOOK_DB_PATH at the copy:\n"
@@ -169,7 +206,7 @@ def upd(session: str) -> dict:
 def validate_cols(data_keys, whitelist: frozenset, context: str):
     unknown = set(data_keys) - whitelist
     if unknown:
-        raise ValueError(
+        raise Refusal(
             f"{context}: unknown column(s) {unknown}. "
             f"Permitted: {whitelist}"
         )
@@ -375,7 +412,7 @@ def check_declared(conn, table: str, column: str, value, context: str):
     """Refuse a value the column's CHECK constraint would reject, naming the set."""
     allowed = check_values(conn, table, column)
     if allowed and value not in allowed:
-        raise ValueError(
+        raise Refusal(
             "%s: %s.%s does not accept %r. The schema's own CHECK declares: %s. "
             "Nothing was written."
             % (context, table, column, value, sorted(allowed)))
@@ -399,7 +436,7 @@ def check_vocab(conn, table: str, column: str, value, context: str):
     declared = check_values(conn, table, column)
     if declared:
         if value not in declared:
-            raise ValueError(
+            raise Refusal(
                 "%s: %s.%s does not accept %r. The schema's own CHECK declares: %s. "
                 "Nothing was written." % (context, table, column, value, sorted(declared)))
         return
@@ -408,7 +445,7 @@ def check_vocab(conn, table: str, column: str, value, context: str):
     if not vocab:
         return          # no corpus yet; the first writer defines the vocabulary
     if value not in vocab:
-        raise ValueError(
+        raise Refusal(
             "%s: %r is not in the live vocabulary of %s.%s, which is %s. "
             "If this value is legitimately new, it is a doctrine change -- add it "
             "in a migration with its justification, not as a CLI argument."

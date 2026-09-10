@@ -94,6 +94,23 @@ that PR #131 only partly touched, and translating its exceptions is a sweep with
 caller question (`dbcore` raises `ValueError` from paths `db.py` is not the only caller
 of). Recorded as owed, not done.
 
+> **SUPERSEDED 2026-09-10, later the same day.** The owed sweep was done. `dbcore.Refusal`
+> now exists and all 118 `raise ValueError(` sites across `db.py` (114) and `dbcore.py` (4)
+> raise it; `db.py`'s `__main__` prints a `Refusal` as a sentence and lets everything else
+> keep its traceback. The "caller question" this paragraph raised turned out to have an
+> answer rather than a difficulty: every one of those 118 was read before it was retagged,
+> and every one is operator-facing — bad flag values, unknown vocabulary, a ref_id that is
+> not admitted. Not one was an internal invariant. The two that were NOT `ValueError` were
+> decided individually: `FrozenGridError` was rebased onto `Refusal` because it is one —
+> though no operator meets it, since `main()` prints `_FROZEN_MSG` itself and the two
+> functions that raise it have no caller, which the class's own docstring now records — as
+> was `dbcore.connect`'s
+> canonical-database guard (the refusal an operator meets by forgetting
+> `GUIDEBOOK_DB_PATH`); `ref_id_high_water`'s "no homes" `RuntimeError` was left alone,
+> because its own docstring says the caller is pointed somewhere unexpected, and that is a
+> defect whose traceback is the evidence. This paragraph stands as the record of what was
+> true when it was written.
+
 ## Not exercised
 
 Replaying an emitted artifact through `emit_data_migration.py` → `migrate_db.py` into

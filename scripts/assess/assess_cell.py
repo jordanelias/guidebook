@@ -698,6 +698,12 @@ class Refusal(ValueError):
     (see next_gap_id) would have surfaced had a pending cell ever been replayed. Dressing
     that as a one-line refusal and throwing its location away is how such a defect gets
     read as a typo and retried.
+
+    `scripts/dbcore.py` defines a class of the same name for the same reason, covering
+    `db.py`'s write surface. The duplication is deliberate: this engine's import roster is
+    documented per PILOT-MANIFEST.md §4 and reaches only `schemas.*`, and coupling it to
+    the write library to share an exception class neither surface ever catches from the
+    other would buy nothing.
     """
 
 
