@@ -329,6 +329,11 @@ def live_vocab(conn, table: str, column: str) -> set:
 def check_values(conn, table: str, column: str) -> set:
     """The value set a column's own CHECK constraint declares, or empty if none.
 
+    EMPTY MEANS "NO VOCABULARY DECLARED", and callers act on that by permitting
+    anything -- so a parse failure that returns empty disables the guard silently.
+    Both the plain `c IN (...)` and the nullable `c IS NULL OR c IN (...)` forms are
+    read; a third form would need adding here, not working around at the call site.
+
     THE SCHEMA IS THE SINGLE HOME OF A CLOSED VOCABULARY. `source_locators.status`
     declares CHECK(status IN ('REFERENCE-ONLY','PROMOTED','RETIRED')) in the table
     definition; listing those three in this file would be a second home (rule 5) and
@@ -345,8 +350,22 @@ def check_values(conn, table: str, column: str) -> set:
     ).fetchone()
     if not row or not row[0]:
         return set()
+    # THE NULLABLE FORM COUNTS. This read only `CHECK (c IN (...))` until 2026-09-10,
+    # and 16 of the 108 live vocabularies are written `CHECK (c IS NULL OR c IN (...))`
+    # -- among them evidence_sources.scope, the discriminator the ratified tier is
+    # derived from. For all sixteen this returned the empty set, and check_declared's
+    # `if allowed and ...` treats empty as NO CONSTRAINT, so the CLI's vocabulary
+    # refusal was silently OFF for every one of them.
+    #
+    # The defect is the conflation in this function's own docstring -- "or empty if
+    # none" -- between "the column declares no vocabulary" and "I could not parse the
+    # one it declares". A reader that cannot tell those apart reports the second as the
+    # first, which is how a guard comes to permit anything while looking like it reads
+    # the schema (CLAUDE.md §4: "Vocabularies come from the schema, not a list in
+    # code"). It read the schema for 92 of 108 and guessed for the rest.
     m = re.search(
-        r"CHECK\s*\(\s*%s\s+IN\s*\(([^)]*)\)" % re.escape(column), row[0], re.I)
+        r"CHECK\s*\(\s*(?:%s\s+IS\s+NULL\s+OR\s+)?%s\s+IN\s*\(([^)]*)\)"
+        % (re.escape(column), re.escape(column)), row[0], re.I)
     if not m:
         return set()
     return {v.strip().strip("'\"") for v in m.group(1).split(",") if v.strip()}
@@ -459,7 +478,33 @@ TABLES = [
     # and term_adjudications points at observed_terms, so parents precede both.
     # What reads them: this script, and judgment when it adjudicates the harvest.
     "observed_terms",
+    # ADDED 2026-09-09 with `db.py add-term`, and this is the FOURTH tool found blind
+    # to a live table by the same mechanism — after evidence_source_authors,
+    # source_locators, and observed_terms/term_adjudications one week ago. The owner
+    # ruled the naming vocabulary runs through `terms`; `add-term` mints a term and its
+    # NAMES-NEW adjudication together, so a harvest that minted a term would have
+    # shipped the adjudication and SILENTLY DROPPED the term it points at — leaving a
+    # migration whose term_adjudications.term_id violates its own foreign key.
+    # MUST precede term_adjudications: that table's term_id references this one, and
+    # this list is replayed in order.
+    "terms",
     "term_adjudications",
+    # ADDED 2026-09-09, and this is the FIFTH time this list has been blind to a live
+    # table -- after evidence_source_authors, source_locators, observed_terms/
+    # term_adjudications, and terms EARLIER THE SAME DAY. Migration 071 created
+    # base_parameters and re-keyed specifications; neither was added here, so a session
+    # that adjudicated a parameter or wrote a determination into a scratch would have
+    # emitted "no delta" and lost it silently. The pattern is now explicit: CREATING A
+    # TABLE IS NOT DONE UNTIL THE CAPTURE PATH CAN SEE IT, and the migration that
+    # creates it should edit this list in the same change.
+    # FK order, parents first: base_parameters -> terms (above); specifications ->
+    # base_parameters, convergence_assessment, gaps and the four lens registries;
+    # specification_source_links -> specifications, evidence_sources (head of list).
+    "base_parameters",
+    "source_value_extractions",
+    "convergence_assessment",
+    "specifications",
+    "specification_source_links",
 ]
 
 WRITABLE_TABLES = TABLES          # the name this module exports; TABLES is the moved original

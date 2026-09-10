@@ -60,6 +60,11 @@ MODEL_TABLE_MAP = {
     # Migration 061 created reference_stubs; 062 merged it into source_locators and
     # dropped it. The model moved with the table.
     "source_locator.SourceLocator": "source_locators",
+    # Migration 071 put THE SUBJECT of a determination at base (owner 2026-08-26).
+    # A new table shipped without a mirror is invisible here twice over -- it lands
+    # in the "no mapped Pydantic model" list looking exactly like a table that was
+    # never meant to have one.
+    "base_parameter.BaseParameter": "base_parameters",
     "bpc_metadata.BPCMetadata": "bpc_metadata",
     "connection.Connection": "connections",
     "conflict.Conflict": "conflicts",

@@ -42,7 +42,7 @@ CHECKS (each maps to a documented rule and to the observed violation that motiva
       DOI + page/table (or direct URL) else [UNVERIFIED-QUANT].
       Observed violation: 5 code/standard sources admitted with 0 clauses and 0 flags.
 
-  R4  COMBINATORIAL dimension.  Cells are (item x population); populations/access_needs/ICF/axes
+  R4  COMBINATORIAL dimension.  Cells are (parameter x lens); populations/access_needs/ICF/axes
       are first-class. Observed violation: 0 of 52 queries crossed a population, access need,
       ICF code or axis — coverage was one-dimensional.
 
@@ -71,6 +71,15 @@ CHECKS (each maps to a documented rule and to the observed violation that motiva
       doi.org 302 to the publisher, or a PubMed/Crossref hit, counts as resolved. When a
       publisher blocks, LADDER (Crossref -> PubMed -> publisher page -> repository) rather than
       treating the block as terminal.
+
+  --- Added 2026-09-10, from workplan/2026-09-10-road-to-batch-06.md B3. ---
+
+  R10b NO SILENTLY-NULL VERIFICATION STATUS ON A URL-BEARING ADMISSION.  R10 above examines
+      VERIFIED sources only, so it cannot see the one condition that wakes the scheduled
+      verify-urls cron: a source with a URL and verification_status left NULL. That is exactly
+      what `add-source` permits and exactly the pool verify_urls.py polls; the cron's next fire
+      writes a url_verification_runs row (not exempt from migration_reproducibility) straight to
+      main and reddens migration_reproducibility for every open DB-touching PR.
 
   R11 VOCABULARY PROVENANCE.  CO-0005 / DR-2026-05-09: no machine back-translation; every alias
       must carry its authoritative in-language source basis, else [UNVERIFIED-TERMS].
@@ -361,7 +370,8 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
                            f"{scope.replace('session','created_by_session')}", sargs)[0][0]
     if total and linked == 0:
         fail("R4", f"{total} searches produced ZERO population linkages "
-                   f"(evidence_population_match). Cells are (item x population): a search that "
+                   f"(evidence_population_match). Cells are (parameter x lens) since migration "
+                   f"071 — NOT (item x population), the traversal D-0184 rejected: a search that "
                    f"merely mentions a population in prose is not a crossing — link admitted "
                    f"evidence to the population(s)/axis it actually speaks to.", total)
     else:
@@ -516,7 +526,7 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     if collide:
         fail("R9b", f"{len(collide)} ref_id(s) admitted by this batch collide with a HELD "
                     f"identifier in source_locators that identifies a DIFFERENT source — mint "
-                    f"above dbcore.next_ref_id(conn), which computes the high-water mark "
+                    f"above `db.py next-id ref`, which computes the high-water mark "
                     f"as the UNION of every table holding a ref_id -- NOT the stash alone: "
                     + "; ".join(f"{r} admitted {a}, stash holds {b}" for r, a, b in collide[:5]),
              len(collide))
@@ -548,6 +558,46 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
                     f"re-retrieval — resolve it and record the outcome.")
     else:
         ok("R10", "every VERIFIED source has a locator AND a recorded resolution outcome")
+
+    # --- R10b unverified-status admission carrying a URL -----------------------------------
+    # R10 above examines VERIFIED sources ONLY (its own comment, above). That is blind to the
+    # condition that actually wakes the scheduled verify-urls cron: verify_urls.py:447-470
+    # pools any source with `url<>'' AND verification_status IS NULL` and, for a non-empty
+    # candidate set, writes a url_verification_runs row — a table NOT in
+    # migration_reproducibility.EXEMPT_TABLES — then `.github/workflows/verify-urls.yml`
+    # commits data/guidebook.db straight to main on its own schedule (cron: 0 06 1,15 * *).
+    # `add-source` accepts a NULL --verification-status (db.py branches only on VERIFIED), so a
+    # batch can admit exactly this row and pass every other rule. The next 1st/15th 06:00 UTC
+    # fire then pushes a blob to main and reddens migration_reproducibility for every OPEN
+    # DB-touching PR (2026-09-07 did this to PR #128; workplan/2026-09-10-road-to-batch-06.md
+    # B3). Block the admission itself — the cron is owner decision #5 and is not this fix's to
+    # edit (same workplan, STOP CONDITIONS #1).
+    unverified_url = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources WHERE "
+                               f"COALESCE(url,'') <> '' AND verification_status IS NULL"
+                               f"{scope.replace('session','created_by_session')}", sargs)[0][0]
+    # The subject: URL-bearing admissions. Without this the pass could not say whether it
+    # had looked at anything, which is the whole of §5(a).
+    n_url_bearing = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources WHERE "
+                              f"COALESCE(url,'') <> ''"
+                              f"{scope.replace('session','created_by_session')}", sargs)[0][0]
+    if unverified_url:
+        fail("R10b", f"{unverified_url} admitted source(s) carry a URL with verification_status "
+                     f"left NULL. This is exactly the pool verify_urls.py's scheduled cron "
+                     f"claims: the next 1st/15th 06:00 UTC fire will write a "
+                     f"url_verification_runs row (not exempt from migration_reproducibility) "
+                     f"and push a DB blob to main, reddening migration_reproducibility for "
+                     f"every open DB-touching PR. Set --verification-status on add-source (even "
+                     f"UNVERIFIED is a real value) before merge.", unverified_url)
+    else:
+        # SUBJECT COUNT, per this file's own DESIGN RULES and the R9a/R9b hardening
+        # directly above: a bare PASS on a session that admitted nothing is CLAUDE.md
+        # §5(a), and R10b shipped with exactly that on 2026-09-10.
+        if not n_url_bearing:
+            ok("R10b", "NOTHING IN SCOPE — this batch admitted no source carrying a URL, "
+                       "so the cron's pool cannot have grown. EXAMINED: 0")
+        else:
+            ok("R10b", f"EXAMINED: {n_url_bearing} admitted source(s) carrying a URL; "
+                       f"none left verification_status NULL")
 
     # --- R11 vocabulary provenance ---------------------------------------------------------
     noprov_scope = _rows(cx, f"SELECT COUNT(*) FROM term_aliases WHERE 1=1"
@@ -809,6 +859,12 @@ def selftest():
                "created_by_session) VALUES ('REF-ST6',6,'code','10.9999/minted','§5.2',?)", (T,))
     cx.execute("INSERT INTO source_locators (ref_id,doi) VALUES "
                "('REF-ST6','10.9999/already-held')")
+    # R10b: a URL-bearing admission with verification_status left NULL -- exactly the pool
+    # verify_urls.py's scheduled cron polls (workplan/2026-09-10-road-to-batch-06.md B3). No doi
+    # keeps this row out of R9/R9a/R9b; verification_status NULL (never 'VERIFIED') keeps it out
+    # of R10 above, which is the whole point -- R10 cannot see this condition, R10b must.
+    cx.execute("INSERT INTO evidence_sources (ref_id,tier,evidence_type,url,"
+               "created_by_session) VALUES ('REF-ST7',6,'code','https://example.org/doc',?)", (T,))
     # R12: an economic finding left in prose with economics_entries empty. findings_note is the
     # correct channel (R6 forbids using deferred_reason for it), and results_found > 0 keeps it
     # out of R14's zero-yield check. exec_id 4 preserves the exec_id-2 gap that R8 detects.
@@ -856,7 +912,7 @@ def selftest():
     # HERE because a rule that is not in `expected` is a rule this selftest does not
     # protect, which is the exact hole the 2026-08-04 note above describes closing.
     expected = {"R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8",
-                "R9", "R9a", "R9b", "R10", "R11", "R11-harvest",
+                "R9", "R9a", "R9b", "R10", "R10b", "R11", "R11-harvest",
                 "R12", "R13", "R14", "R15"}
     fired = {c for c, n in caught.items() if n}
     missed = expected - fired

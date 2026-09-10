@@ -33,7 +33,14 @@ sys.path.insert(0, os.path.join(REPO_ROOT, "scripts", "generate"))
 
 from pilot_renderings import REGISTER_MAP, ROLES, tuple_class  # noqa: E402  (single source of truth)
 
-DEFAULT_DOC = os.path.join(REPO_ROOT, "working", "pilot", "pilot-renderings.html")
+# The July pilot moved to _archived/ on 2026-09-09 when the owner archived the
+# prior-version corpus. Repointed rather than retired: the I1-I5 register invariants
+# this asserts are live doctrine (evidence-architecture.md §6), and the pilot is
+# still their ONLY subject — `specifications` holds 0 rows, so nothing else renders
+# a determination yet. When real render output exists, point --html at that instead;
+# a check whose only subject is archived content is one step from vacuous (§5a).
+DEFAULT_DOC = os.path.join(REPO_ROOT, "_archived", "working", "pilot",
+                           "pilot-renderings.html")
 
 RENDER_RE = re.compile(r"<div class='rendering' ([^>]*)>(.*?)</div>", re.S)
 ATTR_RE = re.compile(r"data-([a-z-]+)='([^']*)'")
@@ -139,8 +146,12 @@ def check(doc, db_path=None):
         import json as _json
         import sqlite3
         conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+        # Re-keyed by migration 071: the cell is parameter x lens. COALESCE yields the
+        # lens the row is stated in; the table's CHECK (D-0182) guarantees one is set.
         for ic, pc, st, tb, cfo, sha, rv, rso, gr in conn.execute(
-                "SELECT item_code, population_code, state, tier_basis, code_floor_only, "
+                "SELECT parameter_id, "
+                "COALESCE(identity_code, icf_code, needs_code, medical_code), "
+                "state, tier_basis, code_floor_only, "
                 "derivation_sha, rule_version, regulatory_stratum_only, governing_refs "
                 "FROM specifications"):
             refs = _json.loads(gr) if gr else []
@@ -377,12 +388,18 @@ def selftest(doc, db_path=None):
             ghost_db = os.path.join(tmpd, "gb.db")
             shutil.copy(db_path, ghost_db)
             gcon = sqlite3.connect(ghost_db)
+            # Re-keyed by migration 071. The ghost row exists to prove the check
+            # notices a DB row with no rendering behind it, so its key only has to be
+            # one the renderings cannot match — parameter_id is synthetic for that
+            # reason. FKs are off on a bare sqlite3 connection, which is what lets a
+            # synthetic parameter_id land; the assertion under test is the check's
+            # reaction, not referential integrity.
             gcon.execute(
-                "INSERT INTO specifications (item_code, population_code, state, "
+                "INSERT INTO specifications (parameter_id, identity_code, state, "
                 "tier_basis, governing_refs, rule_version, derivation_sha, "
                 "code_floor_only, regulatory_stratum_only) "
                 "VALUES (?, ?, ?, ?, '[]', ?, ?, ?, ?)",
-                (item_code, population_code, attrs0["state"], attrs0["tier-basis"],
+                (999999, population_code, attrs0["state"], attrs0["tier-basis"],
                  attrs0["rule-version"], attrs0["sha"], int(attrs0["cfo"]),
                  int(attrs0["rso"])))
             gcon.commit()

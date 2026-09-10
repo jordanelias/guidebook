@@ -775,6 +775,9 @@ which the selftest will then fail on, correctly. Finally set `expected = {"R1"�
 
 ## §12.1 The batch, command by command
 
+> **SUPERSEDED 2026-09-10 — see `workplan/2026-09-10-batch-06-runbook.md`** for the current
+> base→research→evidence→judgment→specification walk; this section is stale in three ways (`workplan/2026-09-10-road-to-batch-06.md` B2) and is left below as a historical record only.
+
 `S=session_2026-08-19-research-batch-01-room-acoustic-performance` (**bare stem** — the DB stores
 stems; only pointer files and `emit_data_migration --session` take `.md`).
 `SCRATCH=<scratchpad>/batch01.db`. **The harness resets env between shell calls — prefix every

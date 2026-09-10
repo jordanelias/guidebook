@@ -116,7 +116,7 @@ rules:
     phase: while-searching
     title: "Combinatorial dimension"
     hook: >-
-      Cross slug x EVERY lens: identity / access-need / ICF / medical (D-0170). NOT (item x population) - the item layer was deleted 2026-09-01, and populations is ONLY the identity lens, so framing on it alone is the traversal D-0184 rejected. What a cell keys on is an open owner decision.
+      Cross slug x EVERY lens: identity / access-need / ICF / medical (D-0170). NOT (item x population) - the item layer was deleted 2026-09-01, and populations is ONLY the identity lens, so framing on it alone is the traversal D-0184 rejected. THE KEY IS RULED: a cell is parameter_id (base_parameters) x at least one of the four lens columns - subject ruled 2026-08-26, lens ruled 2026-08-28 as relaxed by D-0182.
     anchor: "governance/conceptual-model.md; governance/functional-taxonomy.md; specifications"
     enforcer: R4
 
@@ -173,6 +173,9 @@ rules:
     hook: >-
       Re-retrieve every locator. DOI -> Crossref/PubMed -> publisher -> repository.
       A publisher block is NOT a terminal answer. No re-retrieval = no admission.
+      NEVER leave verification_status NULL on a source carrying a URL: that is the exact
+      pool the scheduled url-verification cron claims, and it pushes a DB blob to main.
+      UNVERIFIED is a real value - say it.
     anchor: "references/project-standards.md citation discipline; DR-2026-05-13"
     enforcer: R10
 

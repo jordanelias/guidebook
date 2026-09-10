@@ -2613,3 +2613,236 @@ CONDITION: Any session editing CLAUDE.md, or reading `layer-N` in a record dated
 ACTION: Treat CLAUDE.md as Layer 0 — process, workflow and rules; derive every volatile fact. Read
 `layer-N` in older records as the retired pipeline-map bucketing, never as this model.
 DATE: 2026-09-09 — owner ruling, quoted above.
+
+---
+
+## The parameter registry is BASE; the prior corpus is archived out of reach of the common tools; `add-term` is the naming route for now
+
+Three owner rulings, 2026-09-09, given together and recorded on contact per `CLAUDE.md` rule 0:
+
+> *"parameter at base, archive prior corpus so it can't be found by tools we use commonly, use add-term for now"*
+
+**(1) The parameter registry sits at `base`, not at `judgment`.** This settles a fork an adversarial
+pass had opened: `governance/pipeline-contract.yaml` already stages `base-parameter-vocabulary` at
+`base`, while a proposed design put the registry at `judgment` because that is where a parameter is
+adjudicated. The ruling keeps the registry where the contract already stages it — the vocabulary is
+the layer every stage points into, and *adjudicating* into a vocabulary is not the same act as
+*holding* it. Rule 5 reads the same way: the registry is base substrate; the adjudication that puts a
+row in it is judgment's, and it points.
+
+**(2) The prior-version corpus is archived, and the test is reachability by the tools actually
+used.** Not deletion — `CLAUDE.md` §8 reserves `_archived/` for retired reader-facing content and
+deletion for executable surface. `_archived/` is in `.ignore`, so ripgrep and the Grep tool stop
+returning it; `grep -r`, `git grep`, Glob and Read still reach it, which is the deliberate escape
+hatch for history work. **What archiving changes is what a hit says about itself**: a path under
+`_archived/` is labelled by its own path, while the same file under `references/` reads as live.
+That is the whole benefit and it should not be oversold.
+
+**(3) `add-term` is the naming route "for now".** The vocabulary runs through `terms`, and the
+provisional wording is recorded as given — this is a working decision, not a doctrine, and it is the
+owner's to revisit.
+
+**Why (3) is discharging a defect rather than adding apparatus.** `adjudicate-term --outcome
+NAMES-NEW` refused unless the term already existed — *"create the term first, then adjudicate
+NAMES-NEW to it"* — and **nothing created one**. NAMES-NEW was an outcome the CLI documented and
+could not reach: a checker whose satisfying writer does not exist, which `CLAUDE.md` §8 names as a
+trap. `add-term` mints the term and writes its NAMES-NEW adjudication **in one act**, so a term with
+no provenance is unreachable through the sanctioned path.
+
+**Two refusals it carries, and why each exists.** A canonical name bearing a digit, a comparator or a
+min/max word is REFUSED: that is the item-layer defect in miniature — a container that announces its
+answer predisposes every finding filed into it, which is why the owner deleted the layer on
+2026-09-01. And a name that already exists is refused as NAMES-EXISTING with the exact
+`adjudicate-term` command to run instead, because minting a second term for one concept is the dual
+home rule 5 forbids.
+
+**`terms` was blind to the capture path, and that is the fourth time.** `dbcore.WRITABLE_TABLES` did
+not list it, after the identical failure for `evidence_source_authors`, `source_locators`, and
+`observed_terms`/`term_adjudications` a week earlier. Left alone it would have been worse than the
+previous three: `add-term` writes two rows, so a harvest would have shipped the adjudication and
+silently dropped the term it points at, producing a migration whose `term_adjudications.term_id`
+violates its own foreign key. `terms` is now listed **before** `term_adjudications`, since the list
+replays in order and the child references the parent.
+
+CONDITION: Any session naming a design parameter, staging the parameter registry, or reading the
+prior-version corpus.
+ACTION: Mint parameter names with `db.py add-term --from-observation`, never by hand and never
+bearing a value. Stage the parameter registry at `base`. Treat anything under `_archived/` as
+prior-version content; if you meet an `[A-Z]-NN` code, it is not a container to file into.
+DATE: 2026-09-09 — owner ruling, quoted above.
+
+---
+
+## Owner ruling 2026-09-09 (evening) — the determination is COMPUTED, not hand-assigned
+
+Asked whether `DR-2026-08-19` §12.5's *"Permanently manual: … anything touching `specifications` …
+The contract's premise is that these are judgment acts machinery can only **check**"* retires the
+determination engine as a writer or merely human-gates it, the owner ruled:
+
+> **"oh. you have to compute it. I can't handle this load manually. you need to repair this and
+> anything else"**
+
+**This supersedes §12.5's "permanently manual" clause as it applies to `specifications`, on contact
+(`CLAUDE.md` rule 0).** The clause is not an argument against the ruling; it is what the ruling
+changes. Recorded here rather than weighed.
+
+**What was actually being asked.** Whether a cell's state — `stated` / `provisional` / `pending` /
+`not_applicable` — is derived by a script from the tier arithmetic, or decided by a person and
+merely recorded. `scripts/assess/assess_cell.py` derives it: anchoring strata, the T3-alone split
+(T3-clinical-alone ⇒ provisional, T3-grey-alone ⇒ pending), the G1 regulatory-stratum test, §2.3
+richness with jurisdiction distinctness, and the §1.7 directness conditioning. Migration 071
+re-keyed `specifications` and left that engine writing `item_code, population_code` — columns the
+table no longer has — so the only implementation of those rules could not emit an acceptable row.
+
+**Two sessions had already read §12.5 as retiring the engine** (`sessions/session_2026-08-20…:212`
+"the write path for a determination is hand SQL"; `…2026-08-22…:297` "a dead pilot engine"). Those
+were session authors' readings, not rulings, and they are now wrong. The engine is repaired, not
+deleted, and the reading it rested on is closed.
+
+**What does NOT change.** The engine still refuses `data/guidebook.db` outright and emits SQL for
+replay through `emit_data_migration.py` → `migrate_db.py`. Computing the state is not licence to
+write the canonical blob; the migration path is untouched. Nor does this touch the Opus floor on
+`best_practice_synthesis`, or the B-before-E gate, or any other clause of §12.5 — only the
+`specifications` clause, and only as to whether a machine may derive the state.
+
+**A ratified debt this makes urgent.** Three A5 items — G2 (an unassessed applicable dimension caps
+at DOWN-WEIGHTED), G3 (Co-1 grain follows `co1_source_type`), G6 (`standard_eb` grain follows type ×
+tier) — are ratified (`RATIFICATION-PACKAGE-2026-07-12.md`, owner directive 2026-07-13) and
+implemented **only** inside `assess_cell.source_grain()`.
+`workplan/2026-08-11-remediation-and-pipeline-anatomy.md:4661-4663` records them as *"UNENFORCED in
+the shared model"*, and `schemas/directness.py` still maps `co1 → specific` and `standard_eb → code`
+unconditionally. Promotion into the shared model is register item Q4. While the engine was thought
+dead this was a dormant inconsistency; with the engine computing determinations it is a live one —
+two implementations of one ratified rule, disagreeing.
+
+CONDITION: Any session writing, checking, or reasoning about a determination's state.
+ACTION: The state is derived by the engine, not asserted by hand. Do not cite §12.5's "permanently
+manual" against a machine-computed `specifications` state; cite it for the reasoning doc and the
+Opus floor, which it still governs.
+DATE: 2026-09-09 — owner ruling, quoted above.
+
+---
+
+## Owner rulings 2026-09-10 — the Layer 2 line, and owner-gated work
+
+Asked whether the six checks that invoke Layer 2 stage tools are compliant, and whether
+brokenness parked awaiting an owner decision falls under the deletion rule, the owner
+ruled:
+
+> **"deciding at Layer 2 isn't allowed, and owner-gated stuff stays"**
+
+**Scope of the first clause.** It answers a question that was explicitly about CHECKS
+("ensure that our checks are actually checking something, that we are only using Layer 0
+or Layer 1 for checks"). A check may INVOKE a Layer 2 tool — a freshness check has no
+other way to know an artefact is fresh — but the pass/fail judgment must be computed at
+Layer 0/1. It does **not** retire a pipeline stage's own output: a stage tool producing
+its stage's result is that stage doing its job, and judgment's job is to decide. The
+2026-09-09 evening ruling directing the engine to compute the determination stands.
+
+**Mechanical form.** "Decides" = the Layer 2 file contains a conditional non-zero exit
+reachable from `main`. "Invokes" = a Layer 0 file runs it and computes the verdict from
+its output. Six registry entries fail today: `author_fidelity`,
+`research_contract_sync`, `pipeline_completeness_fresh`, `evidentiary_audit_fresh`,
+`context_map_fresh`, `site_pages_fresh`.
+
+**Scope of the second clause.** Work parked awaiting an owner decision is exempt from the
+non-compliance deletion rule. Named today: `scripts/generate/room_page.py` and
+`skills/question-author_SKILL.md`, both in `governance/schema-reference-exemptions.yaml`
+awaiting decision 8 on the room stratum, open since 2026-08-02.
+
+**Recorded late, and that is the point.** These rulings were acted on for two hours
+before being written here. Rule 0's second sentence is *"Record the supersession"*, and
+an unrecorded ruling binds nothing mechanical: a meta-script reads code, YAML and DDL,
+never a transcript. This entry was added only after an audit observed that
+`grep -n 2026-09-10 references/project-standards.md` returned nothing.
+
+**CORRECTION, same day, owner:** *"you can decide at layer 2. why wouldn't you be able
+to? layer 2 is reserved for actual project materials tho"*
+
+The reading above was wrong and is superseded. **Deciding at Layer 2 is not prohibited** —
+a stage tool decides constantly; that is what a stage does, and judgment's entire job is
+to decide. The "decides vs invokes" test proposed above is therefore NOT the rule, and any
+meta-script built on it would enforce a prohibition that does not exist.
+
+**The actual rule is about tenancy, not about deciding.** Layer 2 is reserved for the
+project's real stage work — its materials, tools and processes. Apparatus is not stage
+work. So a CHECK does not belong at Layer 2 *at all*, whatever it does there: the check is
+Layer 0 by definition, and may freely invoke a Layer 2 tool and freely let that tool decide
+its own stage's business.
+
+The six entries named above are still misfiled, for this reason instead: check logic is
+sitting inside project-material scripts (`scripts/research/retrieval_log.py`,
+`scripts/generate/research_contract_hook.py`, and four freshness checks whose verdict is
+computed inside the generator they run). The remedy is unchanged — the check moves to
+Layer 0 and calls the Layer 2 tool — but the test a meta-script applies is
+**"is this artefact apparatus or project material, and does its filing match?"**, not
+"does a Layer 2 file exit non-zero".
+
+**SECOND CLARIFICATION, same day, owner:** *"layer 1 is ensuring that layer 2 works
+properly when project parameters"*
+
+This gives the layers their actual shape, which is a **recursion, not a checklist**:
+
+> **Layer 0 ensures Layer 1 works. Layer 1 ensures Layer 2 works. Layer 2 is the project's
+> real stage work. Layer 3 is what that work produces. Layer 4 is supplementary.**
+
+Each layer's conformance question is therefore the same single question — *does it ensure
+the layer below it works?* — and this is what the per-layer meta-scripts must measure,
+rather than an assembled list of desirable properties.
+
+**It also names the session's whole failure family in one sentence.**
+`evidence_sources.scope` carried a CHECK, so Layer 1 stated what a valid value was; no
+writer could set it, so Layer 2 could not produce one; all 9 rows are NULL and every
+stored tier is underivable. That is not six unrelated bugs. It is **Layer 1 failing to
+ensure Layer 2 works**, six times: a vocabulary with no writer, a table outside the
+capture path, a CHECK value no verb can produce, a mirror missing a live column, a
+contract criterion pointed at a retired object, a rule whose only executable home is the
+stage it was supposed to govern.
+
+So the L1 meta-script's test is not "is the schema well-formed" but **"for every Layer 1
+statement about what Layer 2 must produce, can Layer 2 actually produce it?"** — and the
+L0 meta-script's is "for every Layer 1 property, is something gating it?"
+
+CONDITION: Any session registering a check, filing a script, or judging whether broken
+apparatus may be deleted.
+ACTION: File apparatus at Layer 0/1 and stage work at Layer 2. A check may invoke a Layer
+2 tool and that tool may decide its own stage's business; what may not happen is a check
+living inside project materials. Owner-gated brokenness stays until its decision is made.
+DATE: 2026-09-10 — owner rulings and same-day correction, quoted above.
+
+---
+
+CORRECTION — 2026-09-10. **`v_item_extractions` is DELETED; the ledger entry that names it
+live stands as written and is superseded here, not edited.**
+
+**What is now wrong on the record.** The 2026-08-27 correction entry above (the cross-stage
+VIEW count, `grep -n 'v_item_extractions'`) reads: *"Under that convention it is **five**, not
+seven: `v_coverage_priority` (research+substrate) and `v_item_extractions` (evidence+substrate)
+do not cross."* The view no longer exists. **Migration 073 dropped it**, having asked the
+question `CLAUDE.md` §3 requires before any view is deleted — which stages does it span, and
+does deleting it force the next reader back to copying — and recorded both the answer and the
+sweep in its own text. The short version: the view joined `sve.item_code = i.item_code`, the
+hop-4 item edge, and the owner's 2026-08-26 ACTION (5) says *"`items` survives as the Part-4
+rollup only — no new writer keys anything on `item_code` at the judgment stage"*. The edge the
+view was the pointer for is the edge the ruling itself deleted, so a reader deprived of it is
+pushed toward the route the ruling installed, not toward copying. No replacement was built,
+because nothing read the old one: `CLAUDE.md` §8, *"nothing is added without naming what reads
+it."*
+
+**Why this is an appended entry and not an edit at line 1669.** This ledger is **append-only**.
+Editing the 2026-08-27 entry would silently rewrite what was true when it was written — the
+view WAS live that day, and the count of five WAS correct under the stated convention. The
+entry is not wrong about 2026-08-27; it is out of date about 2026-09-10, and those are
+different things. Anyone re-deriving a cross-stage view count reads forward to here.
+
+**Do not re-derive the figure from this entry either.** The five/seven count was a measurement
+of a moving object and it has now moved twice. Derive it: enumerate `sqlite_master` views,
+assign each stage under `CLAUDE.md` §3's seven-stage table, and apply the stated convention
+that `base` is not a stage — a view reading one stage plus base crosses nothing.
+
+CONDITION: Any session quoting a cross-stage view count, looking for `v_item_extractions`, or
+reading the 2026-08-27 correction entry.
+ACTION: (1) Treat `v_item_extractions` as deleted; migration 073 carries the reasoning. (2)
+Re-derive any view count from the live schema — never quote 5, 7, or any successor figure. (3)
+Leave line 1669 as written; this entry is its supersession.
+DATE: 2026-09-10 — sweep of migration 073's prose callers.

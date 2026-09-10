@@ -1,0 +1,22 @@
+2026-09-10 07:07:22 UTC
+B5(b) BLIND SCOPE DERIVATION — recorded BEFORE evidence_sources.tier was read.
+Every scope below comes from the retrieval-log payload named on its line.
+Rule source: governance/tier-system.md §1; schemas/tier_derivation.py docstring.
+
+REF-00784  clinical  -> GAP (scope NULL). Payloads 09d0c286f7de90f9.json (Crossref work),
+           711b950e88d42b38.json (Unpaywall), 753c7d7e2af6c6d4.json (Crossref search) carry
+           bibliographic identity ONLY. Crossref record has no 'abstract' key; Unpaywall has
+           no abstract; no PubMed efetch for pmid 20434614 exists in any manifest. Design not
+           established by any payload in hand. NOT derived from memory.
+REF-00971  clinical  -> high_control.  38b8b76bb0e8214d.xml (PubMed efetch, pmid 20690862)
+REF-00972  clinical  -> high_control.  3d7ad150db8ba472.xml (PubMed efetch, pmid 21657823)
+REF-00973  clinical  -> high_control.  19194f9d0d6f8fe6.xml (EuropePMC/PMC full text PMC10648130)
+REF-00974  clinical  -> high_control.  44993333b75d5477.xml (PubMed efetch, pmid 40602232)
+REF-00975  clinical  -> lower_control. 9229bebb0f21a430.json (Crossref work, publisher abstract)
+REF-00976  clinical  -> GAP (scope NULL). Payloads ac2a86db5cbeca4c.json (Crossref, abstract=None),
+           a0e41367085fcfb7.json (Unpaywall, no abstract), d8217b8884ac188f.xml (J-STAGE search,
+           metadata only). The J-STAGE full-text PDF was never retrieved. Design not established.
+REF-00977  sr_meta   -> intrinsic (total function: sr_meta admits only 'intrinsic').
+           1cfd192efd557b21.json — title self-describes "a systematic review".
+REF-00978  co1       -> intrinsic (total function: co1 admits only 'intrinsic').
+           f07d3924aaec6708.pdf — co-production warrant verified against the received bytes.

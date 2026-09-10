@@ -150,7 +150,8 @@ def gather(con: sqlite3.Connection) -> dict:
         "SELECT state, COUNT(*) FROM specifications GROUP BY state")}
     F["judgment"] = dict(
         cells=cells_total,
-        items_judged=scalar("SELECT COUNT(DISTINCT item_code) FROM specifications"),
+        # Re-keyed by migration 071: the determination is keyed on the parameter.
+        parameters_judged=scalar("SELECT COUNT(DISTINCT parameter_id) FROM specifications"),
         stated=state_counts.get("stated", 0),
         provisional=state_counts.get("provisional", 0),
         pending=state_counts.get("pending", 0),
@@ -198,12 +199,14 @@ def gather(con: sqlite3.Connection) -> dict:
             with_slug=scalar(
                 "SELECT COUNT(*) FROM items WHERE category=? AND bpc_source_slug IS NOT NULL "
                 "AND bpc_source_slug<>''", cat),
-            judged=scalar(
-                "SELECT COUNT(DISTINCT item_code) FROM specifications WHERE item_code IN "
-                "(SELECT item_code FROM items WHERE category=?)", cat),
-            pop_breadth=scalar(
-                "SELECT COUNT(DISTINCT identity_code) FROM item_taxonomy_links WHERE item_code IN "
-                "(SELECT item_code FROM items WHERE category=?)", cat),
+            # `judged` and `pop_breadth` were per-category counts reached by joining
+            # specifications -> items on item_code. Migration 071 removed that join:
+            # the determination keys on parameter_id and `items` is a render rollup
+            # DERIVED FROM specifications, never keying them (owner 2026-08-26). There
+            # is no parameter->category edge yet, so these are not derivable rather than
+            # zero, and are reported as None so the surface says "unknown" not "none".
+            judged=None,
+            pop_breadth=None,
             states=[
                 f"{s.lower().replace('-pre-rehab','')}×{n}" for s, n in rows(
                     "SELECT b.evidence_state s, COUNT(*) n FROM items i "
@@ -219,7 +222,9 @@ def gather(con: sqlite3.Connection) -> dict:
             "SELECT population_code, COALESCE(category,''), COALESCE(display_name,'') FROM populations"):
         applies = scalar(
             "SELECT COUNT(DISTINCT item_code) FROM item_taxonomy_links WHERE identity_code=?", code)
-        det = scalar("SELECT COUNT(*) FROM specifications WHERE population_code=?", code)
+        # population_code is retired in favour of the four lens columns (owner
+        # 2026-08-28); a population is now the IDENTITY lens.
+        det = scalar("SELECT COUNT(*) FROM specifications WHERE identity_code=?", code)
         if applies or det:
             pops.append(dict(code=code, cls=cat, name=name, applies=applies, det=det))
     pops.sort(key=lambda p: (-p["applies"], -p["det"], p["code"]))
@@ -229,17 +234,20 @@ def gather(con: sqlite3.Connection) -> dict:
     synth_slugs = {s for (s,) in rows("SELECT DISTINCT reasoning_doc_slug FROM reasoning_doc_citations")}
     # slug(s) an item is bound to, via bpc_source_slug or item_bpc_links
     frontier = []
+    # PARAMETER frontier since 071 — the parameters that reached judgment. The slug
+    # binding came from items.bpc_source_slug / item_bpc_links, both keyed on the
+    # deleted item layer; a parameter reaches its slug through the extractions that
+    # minted it, which needs the extraction writer that does not exist yet. Left empty
+    # rather than faked, so the surface under-reports visibly instead of inventing.
     judged_items = [r[0] for r in rows(
-        "SELECT DISTINCT item_code FROM specifications ORDER BY item_code")]
+        "SELECT DISTINCT parameter_id FROM specifications ORDER BY parameter_id")]
     for item in judged_items:
         cells = rows(
-            "SELECT population_code, state FROM specifications WHERE item_code=? "
+            "SELECT COALESCE(identity_code, icf_code, needs_code, medical_code), state "
+            "FROM specifications WHERE parameter_id=? "
             "ORDER BY CASE state WHEN 'stated' THEN 0 WHEN 'provisional' THEN 1 "
-            "WHEN 'pending' THEN 2 ELSE 3 END, population_code", item)
-        item_slugs = {r[0] for r in rows(
-            "SELECT bpc_source_slug FROM items WHERE item_code=? AND bpc_source_slug IS NOT NULL", item)}
-        item_slugs |= {r[0] for r in rows(
-            "SELECT slug FROM item_bpc_links WHERE item_code=?", item)}
+            "WHEN 'pending' THEN 2 ELSE 3 END, 1", item)
+        item_slugs = set()
         frontier.append(dict(
             item=item,
             cells=[dict(pop=p, state=s) for p, s in cells],
@@ -584,7 +592,7 @@ def render_body(F: dict, enf: dict) -> str:
           <div class="entry">Entry: verified sources linked to an item × population specification.</div></div>
         <div class="sb-right">
 {metric("Specifications determined (of applicable pairs)", f'{j["cells"]} / {pairs} · {pct(j["cells"], pairs)}%', j["cells"], pairs)}
-{metric("Items with any determination", f'{j["items_judged"]} / {items} · {pct(j["items_judged"], items)}%', j["items_judged"], items)}
+{metric("Parameters with any determination", f'{j["parameters_judged"]}', j["parameters_judged"], None)}
 {metric("State split", f'{j["stated"]} stated · {j["provisional"]} prov · {j["pending"]} pend')}
 {metric("Determinations with governing_refs", f'{j["govrefs_ok"]} / {j["govrefs_denom"]} · {pct(j["govrefs_ok"], j["govrefs_denom"])}%', j["govrefs_ok"], j["govrefs_denom"])}
 {metric("Convergence assessments · value extractions", f'{j["convergence"]} · {j["value_extractions"]} rows')}
@@ -627,8 +635,8 @@ def render_body(F: dict, enf: dict) -> str:
         <td class="n">{cat["items"]}</td>
         <td class="n">{cat["with_slug"]}</td>
         <td><span class="state-badge">{esc(states)}</span></td>
-        <td>{heat(cat["judged"], cat["items"])}</td>
-        <td class="n">{cat["pop_breadth"]}</td>
+        <td>{"&mdash;" if cat["judged"] is None else heat(cat["judged"], cat["items"])}</td>
+        <td class="n">{"&mdash;" if cat["pop_breadth"] is None else cat["pop_breadth"]}</td>
       </tr>
 """
 
@@ -646,7 +654,7 @@ def render_body(F: dict, enf: dict) -> str:
 """
 
     # ---- item frontier ----
-    n_judged = F["judgment"]["items_judged"]
+    n_judged = F["judgment"]["parameters_judged"]
     cards = ""
     for fr in F["frontier"]:
         champ = " champ" if fr["synthesized"] else ""
@@ -662,6 +670,8 @@ def render_body(F: dict, enf: dict) -> str:
 """
 
     # zero-determination categories
+    # `judged` is None since 071 (not derivable, see the fetch side), so "== 0" would
+    # silently classify every category as zero-judged. Compare explicitly.
     zero_cats = [c["cat"] for c in F["categories"] if c["judged"] == 0]
     zero_items = sum(c["items"] for c in F["categories"] if c["judged"] == 0)
     zero_line = (f'Categories <span class="mono">{", ".join(zero_cats)}</span> '

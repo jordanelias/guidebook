@@ -24,8 +24,20 @@ and untouched in another.
 | 1 | **Search execution** | a query × index × language × jurisdiction | screened results | `search_candidates` | `search_executions` |
 | 2 | **Citation mining** *(anchor-driven discovery)* | one confirmed source, as an anchor | further candidate **sources** | `search_candidates` / new `evidence_sources` | `citation_mining` (per slug × local ref) + `evidence_sources.citation_mining_status` |
 | 3 | **Gap-driven mining** *(gap-driven discovery)* | one open row in `gaps` | further candidate **sources** | `search_candidates` | `gap_mining` |
-| 4 | **Data extraction** *(value capture)* | one source we hold | **values**, with locator and population grain | `source_value_extractions`, `spec_value_probes`, `jurisdictional_values`, `economics_entries` | `evidence_sources.data_capture_status` |
-| 5 | **Synthesis** | extracted values across sources for one (item × population) | a **best-practice statement** with an evidence marker | `specifications` + `convergence_assessment` | `specifications.derivation_sha`, attestations |
+| 4 | **Data extraction** *(value capture)* | one source we hold | **values**, with locator and lens grain, keyed on the parameter (`db.py add-extraction`) | `source_value_extractions`, `spec_value_probes`, `jurisdictional_values`, `economics_entries` | `evidence_sources.data_capture_status` |
+| 5 | **Synthesis** | extracted values across sources for one (parameter × lens) | a **best-practice statement** with an evidence marker | `specifications` + `convergence_assessment` | `specifications.derivation_sha`, attestations |
+
+*Rows 4 and 5 read `(item × population)` until 2026-09-10. Migrations 071 and 073 re-keyed both
+tables onto `parameter_id` and the four lens columns (owner 2026-08-26 and 2026-08-28); the item
+layer was emptied 2026-09-01 and `items` is a Part-4 render rollup derived from specifications.*
+
+*Row 4's status column is **maintained by `db.py add-extraction`**, which sets
+`data_capture_status='captured'` in the same transaction as the INSERT — before that it had no
+writer at all, and the first extraction row would have turned the blocking `test_db_integrity`
+C06 red. Read the comment at that UPDATE before relying on it: the column is a derived duplicate
+of "does a capture row exist", C06 is therefore a parity check over a dual home, and CLAUDE.md
+rule 5 says such a check makes the dual home survivable rather than curing it. This row and C06/C07
+are the readers a writer-retire must re-point at the four capture tables' own EXISTS predicates.*
 
 Adjudication (does this source qualify for admission, at which tier) is not a sixth operation —
 it is the gate between 1–3 and 4, recorded on the source itself
@@ -102,8 +114,10 @@ column so it can be counted, joined and checked.
 **Extracted content may be prose** — a verbatim claim, a quoted clause — provided it sits in a
 dedicated table with the pointers that make it traceable, alongside the typed value it
 accompanies. `source_value_extractions` is the model: `claimed_value` and `claimed_unit` are
-typed, `claim_text` is the verbatim quote, `source_section` is the locator, and `ref_id`, `slug`,
-`population_code`, `promoted_to_rdc_id` carry the trace.
+typed, `claim_text` is the verbatim quote, `source_section` and the 16 `loc_*` columns are the
+locator, and `ref_id`, `slug`, `parameter_id`, the four lens columns and `promoted_to_rdc_id`
+carry the trace. *(This named `population_code` until 2026-09-10; migration 073 retired it in
+favour of the four lens columns, under the 2026-08-28 owner ruling.)*
 
 What is forbidden is a **state written as prose in a value column**. This is not hypothetical:
 four rows held `[author surname pending …]` in `first_author_last`, and because the string was
