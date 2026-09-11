@@ -20,3 +20,15 @@ byte-identical with `HEAD`. Same repair as commit `7660be0` made at #132's merge
 - `commands.jsonl` — the Bash hook's log for this session.
 - `ORIENTATION.md` — the derived state of the repository and what a batch 06 needs. Everything in
   it is derived from the live repository at the stated timestamp; nothing is quoted from prose.
+- `BATCH-06-PLAN.md` — the fifteen legs, each with its `--prior-expectation` written before the
+  search ran, per R8.
+- `ORDER-OF-WORK.md` — the read-only ordering pass and its instructions. Its lines 97–100 said the
+  medical lens was deferred; that was withdrawn under D-0188 and is struck in place.
+- `ADJUDICATION.md` — the adjudicator's report, verbatim, under owner delegation D-0188. Three
+  records cite it in `decision_artifacts`, one of them immutable.
+- `ICD11-CORRESPONDENCE.md` — how ICD-11 grain maps onto the four lenses, and why block level.
+- `ICD11-VERIFIED.md` — the retrieval that dissolved the verification block, and the correction to
+  the claim that there was one.
+- `MEDICAL-LENS-LICENSING-STOP.md` — superseded in place; kept because the ruling that superseded
+  it is only legible beside what it overruled.
+- `HANDOFF.md` — the next single action, what is owed, and the four owner-gated questions.

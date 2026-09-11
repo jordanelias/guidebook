@@ -94,10 +94,17 @@ inside the batch's own first commit, executed before written.
    `governance/tier-system.md` §1 and `schemas/tier_derivation.py:13-19` is a design on people, and
    these rows' own population grades say nobody participated. *Cost if wrong:* REF-00971/972 sit at T3
    when they should be T1 — one compensating migration promotes them, no cell is lost.
-2. **`base_taxonomy_medical` stays empty; the medical lens is explicitly deferred.** *Reason:*
+2. ~~**`base_taxonomy_medical` stays empty; the medical lens is explicitly deferred.** *Reason:*
    population taxonomy is owner-reserved, no batch needs it, and D-0182's at-least-one CHECK keeps
    every table writable without it. *Cost if wrong:* none — a medical-lens cell is a new lens tuple
-   addable later without touching existing cells.
+   addable later without touching existing cells.~~
+   **WITHDRAWN 2026-09-11 — it escalated a question already ruled.** D-0170 adopted the medical lens
+   on 2026-08-27 (*"yes we include the medical model too. we give our users the choice of what model
+   they want to use to browse the site"*), so this was never an open item and the "cost if wrong" was
+   not none: it was eight hours of a ratified lens staying empty. Struck in place rather than deleted,
+   because the failure is the instructive part — the search stopped at the first answer it found, and
+   the first answer was an empty table. `CLAUDE.md` §6 documents the identical failure on the subject
+   half of the cell key. Recorded in D-0188's `notes`; the text above is preserved unedited.
 
 **De-escalated, with reasons** — the agent tested each against §8 and dropped it:
 

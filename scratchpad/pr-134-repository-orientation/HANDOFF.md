@@ -83,10 +83,14 @@ demand count was measured against the committed table while ignoring the scratch
 
 ## Owed
 
-- Write `scratchpad/pr-134-repository-orientation/ADJUDICATION.md` from
+- ~~Write `scratchpad/pr-134-repository-orientation/ADJUDICATION.md` from
   `transcripts/harness_94859b50/subagents/2026-09-11T00-54-46_other_a382a8ba.jsonl` (search
   `Ruling 1.1`). **Three homes cite it and it was never committed** — including an immutable
-  `decisions` row, which cannot be corrected.
+  `decisions` row, which cannot be corrected.~~ **DONE 2026-09-11.** Written verbatim from the
+  transcript's final message rather than paraphrased, with a header naming the source bytes and a
+  command that reproduces the body byte-for-byte. Its header also records which of the report's
+  rulings landed and which did not — §1.1's 29-row vocabulary is still unwritten, and §2.3's
+  `source_locators_integrity` gate was never built.
 - Correct the PR body's "data migration is applied" sentence.
 - A contract criterion stating **"the medical lens is offered, not adopted"**. Layer 2 enforces it
   (`add-medical`, 074's CHECK); Layer 1 never states it.
