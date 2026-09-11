@@ -2846,3 +2846,47 @@ ACTION: (1) Treat `v_item_extractions` as deleted; migration 073 carries the rea
 Re-derive any view count from the live schema — never quote 5, 7, or any successor figure. (3)
 Leave line 1669 as written; this entry is its supersession.
 DATE: 2026-09-10 — sweep of migration 073's prose callers.
+
+---
+
+## Owner ruling 2026-09-11 — adjudication delegated for a named set; the medical lens gets filled
+
+> **"Fable 5.1 to adjudicate and resolve all items that are presented to me. Opus to execute in
+> agonist-antagonist method. Ensure that medical gets filled out."**
+
+Register row **D-0188**. Three clauses, and the third is not what it looks like.
+
+**Clause 1 delegates adjudication, and it reaches only the items that were presented.** On contact
+this supersedes the Delegation clauses of D-0170, D-0169 and D-0182, and
+`governance/decision-protocol.md` §2.4 items 2–3, **as applied to the enumerated items and no
+further**. The DG-NON list is not amended generally. Reading it wider would be an agent enlarging
+its own authority out of a sentence about a queue.
+
+**Clause 3 ENFORCES AN EXISTING RULING. It does not make a new one.** D-0170 adopted the medical
+lens on 2026-08-27 — *"yes we include the medical model too. we give our users the choice of what
+model they want to use to browse the site."* This session had nevertheless escalated
+*"`base_taxonomy_medical` stays empty; the medical lens is explicitly deferred"* as though it were an
+open owner question. **That escalation contradicted a ratified ruling and is withdrawn.**
+
+It is the identical failure §6 of `CLAUDE.md` already documents for the subject half of the cell key:
+*a ruling can be in the repository, in the file §9 sends you to, and still fail to bind if the search
+stops at the first answer it finds.* There the first answer was the lens half. Here it was an empty
+table — 0 rows read as an open question rather than as an unexecuted ruling, which is rule 4's *"treat
+a 0-row object as unproven, not clean"* failing in the other direction. **An empty table is not
+evidence that nobody has decided.**
+
+**What the adjudication then corrected, which matters more than the delegation.** The mechanism
+D-0170 stated for lens-switching — *"a medical taxonomy needs the same crossings into the other three
+or the lens cannot switch"* — was itself superseded on 2026-09-01. D-0184 measured that traversal
+manufactures inference and made the lens a **column**: render is `WHERE medical_code = ?`. The
+crossing maps survive as the authoring aid that lets a row state its other lens codes without
+inference, and as the coverage measure — not as the render path. A session reading D-0170 alone
+would have built the wrong thing, correctly citing a ratified DR while doing it.
+
+CONDITION: Any session acting on an escalation, reading an empty base-vocabulary table, or citing
+D-0170's crossing mechanism.
+ACTION: Before escalating, search `sessions/` with `grep -r` (`.ignore` hides it from ripgrep) for a
+ruling that already settles it — an empty table is the likeliest place a ratified ruling sits
+unexecuted. Cite D-0184 for the lens mechanism, not D-0170. This delegation covers the enumerated
+items only.
+DATE: 2026-09-11 — owner ruling, quoted above.
