@@ -25,6 +25,7 @@ ADVISORY UNTIL ANCHORS VERIFY. Blocking on unverified anchors today would redden
 for a reason no session can fix from this container; that is a check red by construction,
 which CLAUDE.md rule 6 says teaches its reader to ignore it.
 """
+import os
 import sqlite3
 import sys
 from pathlib import Path
@@ -32,7 +33,13 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from db import _VALUE_BEARING, _MD_CODE          # noqa: E402  — imported, never retyped (rule 5)
 
-DB = Path(__file__).resolve().parents[2] / "data" / "guidebook.db"
+# HONOURS GUIDEBOOK_DB_PATH, because the blocking db_path_env_audit caught the first draft
+# hardcoding this and it was right to. Its own reason is the one that matters: a script that
+# ignores the variable "will silently read the committed database while a test believes it is
+# reading a scratch copy" — which would have made this check's own fault injection unreliable
+# in any configuration that sets it.
+DB = Path(os.environ.get("GUIDEBOOK_DB_PATH",
+                         Path(__file__).resolve().parents[2] / "data" / "guidebook.db"))
 
 
 def main(argv=None):
