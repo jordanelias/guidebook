@@ -1431,6 +1431,32 @@ checks:
   note: 'Pins the 1:N evidence->judgment hand-off ruled 2026-08-27. The subject table holds 0 rows, so
     every other gate is blind to a regression here (CLAUDE.md rule 4). Mutation-tested 2026-08-27: injecting
     UNIQUE(ref_id) on a scratch copy turns it red.'
+- id: source_locators_integrity
+  cmd:
+  - python3
+  - scripts/audit/source_locators_integrity.py
+  battery: data
+  kinds:
+  - data
+  - governance
+  level: advisory
+  basis: evidence/locator-title-matches-identifier
+  cost: fast
+  min_items: 1
+  note: 'RULED 2026-09-11 (adjudication Ruling 2.3) AND NOT BUILT UNTIL THE SAME DAY. Four
+    sessions measured this corruption with four ad-hoc queries; a measurement nobody registers
+    is one the next session repeats. FAULT-INJECTED on a scratch before being claimed, both
+    directions: stripping the embedded DOI from all 31 mismatched rows turns it CLEAN, and
+    injecting one bad title turns it FAIL. Canonical sha unmoved throughout. ADVISORY, not
+    blocking, and the reason is rule 6 rather than timidity: the repair needs a db.py writer
+    that does not exist (update-locator sets status only), so blocking would redden every run
+    for a state no session can clear -- a check red by construction teaches its reader to
+    ignore it. RATCHET TO blocking in the same change that lands correct-locator. That writer
+    must take NO value flag and read the title from a persisted retrieval payload, the way
+    correct-source does, because writing a title from anything but bytes is how these rows got
+    wrong. The 17 "unprovable" rows are reported and never failed: a title embedding a DOI on a
+    row that carries none is suspect, not proven, and failing on suspicion is how a gate starts
+    lying.'
 - id: medical_lens_integrity
   cmd:
   - python3

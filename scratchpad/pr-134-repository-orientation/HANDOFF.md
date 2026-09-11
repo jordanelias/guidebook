@@ -24,6 +24,59 @@ open DB-touching PR (rule 3; it did this to PR #128). A redundant second check-i
 **An absent event is no longer evidence that nothing happened.** Re-subscribe with
 `subscribe_pr_activity` if the owner wants webhook delivery back.
 
+## The process fixes, 2026-09-11 — mechanisms, not facts
+
+Four findings had been recorded-not-fixed. Each is now closed by the gate that catches the NEXT
+one, because the owner's instruction was *"we aren't just fixing the fact but the process."*
+
+**1. Two BLOCKING gates saw one commit, not the branch.** `attestation_presence` and
+`attestation_schema` defaulted to `HEAD~1..HEAD`, so an attestation missing from a synthesis file
+committed earlier on the branch passed, and on a tip commit touching no synthesis path both
+examined nothing and passed green — failure mode (a), in the two gates rule 2 depends on. It is
+also why they were the last two blocking-and-vacuous checks.
+*Process, not fact:* `_changed_files` now imports `run_checks.changed_paths` rather than
+reimplementing it. "What changed on this branch" had two definitions and only one resolved a merge
+base (rule 5 — point, do not copy). A base that will not resolve now **exits 2 and says so**; it
+never narrows to `HEAD~1`, because a silent narrowing is what made the defect read as a pass.
+*Proved:* fault-injected an unattested `decisions/` file — `EXAMINED` 1→2, the gate named the
+missing attestation, exit 1; clean again on removal. **Blocking-and-vacuous is now 0.**
+
+**2. A gate was pressuring sessions to edit stored evidence.** `retired_vocabulary` flagged
+`retrieval-log/**` — RV-010 fired on two Crossref payloads, one of them a third party's own
+reference-list entry. The only way to make an immutable payload go green is to edit it, which is
+the 2026-08-19 fabrication mechanism and attacks the one defence built afterwards
+(`--verify-authors`, which diffs stored data against the bytes received). Exempted as a class,
+with that reasoning in the file. RV-010 went 4→2; the remainder quote the prohibition itself.
+
+**3. An exemption naming a deleted file exempted nothing.** Five entries pointed at
+`scripts/generate/population_page.py` hours after this branch deleted it. Rule 4 says a removal is
+not done until the callers are swept and **an exemption is a caller** — and no gate covered that
+class.
+*Process, not fact:* `retired_vocabulary_audit` gained a `dead_exemptions` finding class that names
+every concrete (non-glob) exemption whose path is absent, with the entries citing it. It found
+**nine**, not five, across six earlier deletions; the sweep was then driven from the check's own
+output rather than by hand. Globs are deliberately exempt — they assert a shape, not a path. A
+selftest case was added and **mutation-tested**: removing the glob guard turns the selftest red.
+
+**4. `source_locators_integrity` was RULED and never built.** Adjudication Ruling 2.3 named this
+gate; four sessions instead measured the corruption with four ad-hoc queries. A measurement nobody
+registers is one the next session repeats.
+*Built, with its Layer 1 criterion:* `evidence/locator-title-matches-identifier`. Signature: a
+bibliographic title never contains a DOI, so one embedding a DOI that differs from the row's own is
+a title attached to a stranger's identifier. Reproduces 31 mismatched / 5 agreeing / 17 unprovable
+over 537 title-bearing rows. Fault-injected both ways on a scratch. **Advisory, and rule 6 is the
+reason:** the repair needs a `db.py` writer that does not exist, so blocking would redden every run
+for a state no session can clear.
+
+**THE REPAIR OF THOSE 31 ROWS IS BLOCKED ON A COVERAGE BUG, NOT A DECISION.** `update-locator` sets
+`status` only; nothing can write `source_locators.title`, and §4 makes that a bug to fix rather
+than a licence to hand-write SQL. The writer must take **no value flag** and read the title from a
+persisted retrieval payload the way `correct-source` does — because writing a title from anything
+but bytes is how these rows got wrong. Ratchet the gate to blocking in the same change.
+
+**Left alone, deliberately:** 62 retired-vocabulary occurrences remain, 54 of them stale
+identifiers in files this PR never touched. Sweeping them here would widen the PR on my own.
+
 ## THE NEXT SINGLE ACTION
 
 **Decide what resolves a determination's VALUE, because nothing does.** This is the finding the first

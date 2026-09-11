@@ -99,6 +99,17 @@ stages:
       NULL (rule #10 existence gate).'
     references: 'PI rule #10; DR-2026-05-13; DR-2026-05-20 (metadata_integrity_status)'
     check: scripts/audit/metadata_integrity_audit.py
+  - id: locator-title-matches-identifier
+    kind: integrity
+    criterion: 'A locator''s title describes the work its identifier points at. Detectable
+      signature: a bibliographic title never contains a DOI, so a title embedding one that
+      differs from the row''s own doi is a title attached to a stranger''s identifier.'
+    references: 'Adjudication 2026-09-11 Ruling 2.3, which ruled a gate by the name
+      source_locators_integrity and was never built until 2026-09-11; data_20260823225142,
+      which folded two ref-id keyspaces as one; R9b, which tells the next session to REUSE a
+      stash ref_id rather than mint a new one -- so a wrong title travels forward into an
+      admission. The identifiers are the sound side; the titles are not.'
+    check: scripts/audit/source_locators_integrity.py
   - id: discovery-provenance
     kind: completeness
     criterion: 'Each carried-forward source records how it was discovered. No committed enforcer, and

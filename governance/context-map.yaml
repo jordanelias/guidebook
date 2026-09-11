@@ -974,6 +974,14 @@ checks:
     - render
     min_items: 1
     cmd: python3 scripts/generate/build_site.py --check
+  - id: source_locators_integrity
+    level: advisory
+    battery: data
+    kinds:
+    - data
+    - governance
+    min_items: 1
+    cmd: python3 scripts/audit/source_locators_integrity.py
   - id: test_assess_cell_pilot
     level: advisory
     battery: tests

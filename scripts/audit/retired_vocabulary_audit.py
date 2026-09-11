@@ -185,6 +185,44 @@ def iter_text_files(root, global_globs):
             continue
 
 
+def dead_exemptions(root=REPO, register=None):
+    """Exemptions naming a concrete path that does not exist.
+
+    WHY THIS IS PART OF THIS CHECK AND NOT A NEW ONE. An exempt_paths entry is the
+    only thing that can licence a retired token to sit on a live surface, so a dead
+    one is this register's own integrity, not a separate subject. §8: "Nothing is
+    added without naming what reads it" -- an exemption naming a deleted file is that
+    defect pointed the other way, and this register carried five for
+    scripts/generate/population_page.py within hours of the branch that deleted it.
+
+    THE PROCESS, NOT THE FACT. Sweeping the five by hand fixes today and nothing
+    else: rule 4 says a removal is not done until the callers are swept, AN
+    EXEMPTION IS A CALLER, and no gate covered that class. This is the gate. The
+    next deletion that leaves an exemption behind is named here rather than found by
+    someone reading 77 glob patterns.
+
+    GLOBS ARE NOT CHECKED, deliberately. `decisions/**` and `workplan/*20??-??-??*`
+    are properties of a shape, not claims that a file exists, and an empty directory
+    is a legitimate state. Only entries with no glob metacharacter are asserted to
+    exist -- those are unambiguous claims about a path.
+    """
+    data = register if register is not None else load_register()
+    seen, dead = {}, []
+    def note(where, paths):
+        for raw in paths or []:
+            g = str(raw)
+            if any(c in g for c in "*?["):
+                continue
+            seen.setdefault(g, []).append(where)
+    note("exempt_paths (global)", data.get("exempt_paths"))
+    for e in data.get("entries") or []:
+        note(f"{e['id']} ({e['token']})", e.get("exempt_paths"))
+    for g, wheres in sorted(seen.items()):
+        if not (Path(root) / g).exists():
+            dead.append((g, wheres))
+    return dead
+
+
 def scan(root=REPO, register=None):
     """Return {entry_id: [(rel, lineno, line), ...]} plus the entry index."""
     data = register if register is not None else load_register()
@@ -257,15 +295,32 @@ def main(argv=None):
         if len(hits) > args.max_per_entry:
             print(f"          ... and {len(hits) - args.max_per_entry} more")
 
+    dead = dead_exemptions()
+    if dead:
+        print()
+        print("-" * 70)
+        print(f"DEAD EXEMPTIONS: {len(dead)} exempt_paths entr(ies) name a path that does "
+              f"not exist.")
+        print("  An exemption for a deleted file exempts nothing and misleads the next")
+        print("  reader of this register. Rule 4: an exemption IS a caller. Remove it, or")
+        print("  restore the path.")
+        for g, wheres in dead:
+            print(f"    {g}")
+            for w in wheres:
+                print(f"        cited by: {w}")
+
     print()
-    if total:
-        print(f"RESULTS: {total} occurrence(s) of retired vocabulary on the live surface.")
-        print("Each is a wrong answer waiting for whoever greps next. Fix the text, or —")
-        print("if the occurrence is a licensed mention rather than a use — add the path to")
-        print(f"that entry's exempt_paths, or append {ESCAPE} to the line.")
-        print(f"EXAMINED: {len(ordered)}")
+    if total or dead:
+        if total:
+            print(f"RESULTS: {total} occurrence(s) of retired vocabulary on the live surface.")
+            print("Each is a wrong answer waiting for whoever greps next. Fix the text, or —")
+            print("if the occurrence is a licensed mention rather than a use — add the path to")
+            print(f"that entry's exempt_paths, or append {ESCAPE} to the line.")
+        print(f"EXAMINED: {len(ordered)} register entr(ies) + "
+              f"{len(dead)} dead exemption(s)")
         return 1
-    print(f"RESULTS: {len(ordered)}/{len(ordered)} register entries clean on the live surface.")
+    print(f"RESULTS: {len(ordered)}/{len(ordered)} register entries clean on the live surface, "
+          f"every concrete exemption resolves.")
     print(f"EXAMINED: {len(ordered)}")
     return 0
 
@@ -344,6 +399,27 @@ def selftest():
 
         if any("blob.dat" in paths for paths in hit_paths.values()):
             failures.append("blob.dat: binary file was scanned")
+
+        # DEAD-EXEMPTION DETECTION, mutation-tested both ways. Added 2026-09-11 with
+        # the finding class itself: a new branch with no selftest is what this file's
+        # own header calls a checker whose next refactor silently stops checking.
+        reg = {
+            "exempt_paths": ["live/a.md", "live/gone.md", "live/**"],
+            "entries": [{"id": "X", "token": "t", "match": "identifier",
+                         "exempt_paths": ["live/also-gone.py"]}],
+        }
+        dead = {g for g, _ in dead_exemptions(root=root, register=reg)}
+        if "live/gone.md" not in dead:
+            failures.append("dead_exemptions: missed a global exemption naming a "
+                            "nonexistent path")
+        if "live/also-gone.py" not in dead:
+            failures.append("dead_exemptions: missed a per-entry exemption naming a "
+                            "nonexistent path")
+        if "live/a.md" in dead:
+            failures.append("dead_exemptions: flagged an exemption whose path EXISTS")
+        if "live/**" in dead:
+            failures.append("dead_exemptions: flagged a GLOB, which asserts a shape "
+                            "rather than a path")
 
     # The register itself must be coherent, and must not silently degrade into
     # an empty scan — a register that parses but selects nothing passes every
