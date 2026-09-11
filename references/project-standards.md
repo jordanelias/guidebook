@@ -2890,3 +2890,53 @@ ruling that already settles it — an empty table is the likeliest place a ratif
 unexecuted. Cite D-0184 for the lens mechanism, not D-0170. This delegation covers the enumerated
 items only.
 DATE: 2026-09-11 — owner ruling, quoted above.
+
+---
+
+## Owner ruling 2026-09-11 — ICD-11 is the medical-lens source, at BLOCK grain, for correspondence
+
+> **"Yes, use ICD-11."**
+> **"eg MB5 series of codes discussing paralytic symptoms"**
+> **"we are looking through ICD-11 for how it corresponds to our existing ICF/identities/access
+> needs on a high level"**
+
+This resolves the licensing hold recorded the same day: **DG-NON item 7 is answered — ICD-11 is the
+source.** It also settles two things the adjudication had to guess, and corrects it on one.
+
+**The grain is the BLOCK, not the entity.** MB5 is a block, and "on a high level" says so outright.
+The adjudication had proposed 29 disease *entities* (6A02 autism, 8A40 MS, 8B00 stroke); that is the
+wrong shape for a browsing lens and is superseded.
+
+**The purpose is CORRESPONDENCE, not vocabulary.** The lens exists so a reader arriving with a
+diagnosis reaches the functional demand the project holds. It is not a clinical nomenclature and must
+not grow into one.
+
+**THE JOIN IS DERIVABLE AND MUST STILL BE PRUNED.** ICF and ICD-11 are complementary WHO
+classifications, and all 17 axes already declare ICF b-anchors, so the route is: ICD-11 block → the
+ICF b-code it impairs → our axis → the identities and needs already attached. Nothing in that chain
+is invented. **But it over-reaches, and the owner's own example proves it**: MB5 impairs b730 (muscle
+power); b730 is declared by AX-AMB, AX-REA and AX-WHM; those axes carry nine identities including
+BAR, LPA and TALL — who attach for *anthropometric* reasons, not muscle power. Run the join naively
+and the map asserts that paralytic symptoms correspond to being tall. **That is the inference
+D-0184 measured when it made the lens a column rather than a traversal, reappearing one hop further
+out.** The route proposes candidates; judgment prunes; the pruning reason is recorded in the row's
+`note` and its strength in `mapping_confidence`.
+
+**What the lens reaches that nothing else does, as a measurement not an argument:** `AX-COG-L`
+(Information-access demand, b117/b167) carries **zero** identities and is the only orphan of the
+seventeen. ICD-11's intellectual-development and language blocks land there.
+
+**AND NO CODE CAN BE VERIFIED FROM THE CONTAINER.** Measured: `id.who.int` 401 on every route, the
+token endpoint 400 (OAuth2 client credentials required), the public browser a JavaScript application
+whose HTML carries no codes, its search endpoint 0 bytes, and no WHO credentials in the environment.
+So `icd11_verified_at` lands NULL on every row written today, which is precisely what that column
+means. Free registration at `icd.who.int/icdapi` yields the credentials; set them on the remote
+environment and `retrieval_log.fetch()` can persist real `codeinfo` payloads for
+`add-medical --icd11-payload` to stamp from.
+
+CONDITION: Any session writing a medical-lens row, or deriving an ICD-11 ↔ ICF correspondence.
+ACTION: Work at block grain. Derive candidates through `axes.icf_b_anchors`, then PRUNE — never ship
+the join's raw output. Leave `icd11_verified_at` NULL until a persisted WHO payload exists; never
+write a code from recollection, which is CLAUDE.md §5(c) made worse by the payload being
+unobtainable rather than merely unfetched.
+DATE: 2026-09-11 — owner ruling, quoted above.
