@@ -118,7 +118,7 @@ INDEX idx_evidence_source_year (year)
 >
 > | This proposal | What shipped |
 > |---|---|
-> | Grain is **specification × population** (`spec_id` → a `specification` entity table) | Grain is **item × population** (`item_code` → `items`) |
+> | Grain is **specification × population** (`spec_id` → a `specification` entity table) | Grain was **item × population** (`item_code` → `items`) when this row was checked on 2026-08-12. **Both halves are now retired**: migration 071 re-keyed `specifications` on `parameter_id NOT NULL REFERENCES base_parameters` and dropped `item_code` and `population_code` together, replacing the latter with four lens columns under an at-least-one CHECK (D-0182). The live grain is `parameter_id` × at least one of `identity_code` / `icf_code` / `needs_code` / `medical_code`. Verify with `PRAGMA table_info(specifications)`; do not read this cell as current. |
 > | Text key `CELL-{spec_id}-{population_code}` | Integer `specification_id` |
 > | Four states `stated / provisional / silent / contested` | Four states `stated / provisional / **pending** / **not_applicable**` — a different vocabulary, not a renaming |
 > | Five tables (state + transition + provisional-flag + convergence + source join) | Two (`specifications`, `convergence_assessment`) plus the `specification_source_links` junction. **There is no state-transition audit table and no provisional-flag table at all.** |
