@@ -3239,6 +3239,13 @@ def insert_medical(code: str, display_name: str, icd11: str, session: str,
                 f"word, so it states a determination in its own name.\nA diagnosis names "
                 f"the SUBJECT. The value belongs in the determination, which the engine "
                 f"computes (owner 2026-09-09).")
+    if not (icd11 or "").strip():
+        raise Refusal(
+            "--icd11 REFUSED: empty. argparse requires the flag to be PRESENT but an empty "
+            "string satisfied it, and a row whose anchor points nowhere is worse than one "
+            "with no anchor at all -- it reads as satisfied.\nThe anchor is the entire reason "
+            "this row exists (rule 5: point, do not copy). Give at least one ICD-11 code or "
+            "BlockId.")
     if identity and not relationship:
         raise Refusal("--identity given without --relationship. Say HOW the diagnosis "
                       "relates: names | member_of | identity_first.")
@@ -3310,6 +3317,31 @@ def insert_medical(code: str, display_name: str, icd11: str, session: str,
                 f"--code {code!r} REFUSED: already exists as {dup[1]!r}. Minting a second "
                 f"row for one concept is the dual home rule 5 forbids; add a crossing to "
                 f"the standing row instead.")
+        # PRE-CHECK THE CROSSING TARGETS. Without this, a typo'd --identity or --icf
+        # reached the INSERT and surfaced as `sqlite3.IntegrityError: FOREIGN KEY
+        # constraint failed` with a traceback naming a line number -- while a
+        # DOCTRINAL error (--identity ALL) got a full sentence. So the writer explained
+        # the subtle mistake and stack-traced the obvious one. That is the exact pattern
+        # PR #133 ("db.py's refusals become sentences too") existed to remove, and this
+        # writer reintroduced it. Found by driving the CLI, not by reading it.
+        # The transaction did roll back, so nothing was corrupted -- the defect was the
+        # message, which is still the difference between a user fixing a typo and a user
+        # filing a bug.
+        if identity:
+            if not conn.execute("SELECT 1 FROM populations WHERE population_code = ?",
+                                (identity,)).fetchone():
+                near = [r[0] for r in conn.execute(
+                    "SELECT population_code FROM populations ORDER BY population_code")]
+                raise Refusal(
+                    f"--identity {identity!r} REFUSED: not a population_code. The identity "
+                    f"lens is `populations`, and its live vocabulary is: {', '.join(near)}")
+        if icf:
+            if not conn.execute("SELECT 1 FROM axes WHERE axis_code = ?", (icf,)).fetchone():
+                near = [r[0] for r in conn.execute("SELECT axis_code FROM axes ORDER BY axis_code")]
+                raise Refusal(
+                    f"--icf {icf!r} REFUSED: not an axis_code. specifications.icf_code FKs to "
+                    f"`axes`, NOT to raw ICF b/d/e codes (CLAUDE.md: a raw code would be refused "
+                    f"by the FK). Live vocabulary: {', '.join(near)}")
         row = {"medical_code": code, "display_name": display_name,
                "description": description, "icd11_anchors": icd11,
                "icd11_verified_at": verified_at, "notes": note}
