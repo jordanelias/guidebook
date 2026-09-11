@@ -1394,29 +1394,6 @@ checks:
 # stays; nothing calls it either way). `--doc specs/e-08-brief.html` still finding 26 C1 failures on
 # that one reference-only brief is exactly the state DR-2026-07-25 already named as known and
 # unenforced; deleting the always-vacuous `--all` gate changes nothing about that.
-- id: register_integrity_check
-  cmd:
-  - python3
-  - scripts/audit/register_integrity_check.py
-  - --selftest
-  battery: render
-  kinds:
-  - render
-  - data
-  - tooling
-  level: advisory
-  basis: render/register-invariants
-  cost: fast
-  no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
-  note: 'Amended I1–I5 (DR-2026-07-21 Option A) over working/pilot/pilot-renderings.html, with the DB
-    cross-check and the DB→doc completeness direction on by default. --selftest mutation-tests every invariant
-    before checking the real document, so a pass is a demonstrated-firing pass rather than an assumed
-    one. De-quarantined 2026-08-04: both stated blockers were cleared — it now defaults its document and
-    DB paths (honouring GUIDEBOOK_DB_PATH), and enforces amended I3 rather than the repealed absolute
-    form. `tooling` kind because it imports REGISTER_MAP and tuple_class from scripts/generate/pilot_renderings.py,
-    so a renderer-only diff is exactly when the coupling can break. Advisory on arrival per the house
-    norm at the head of this file; promotion to blocking is a separate owner-gated commit once the false-positive
-    rate of its lexicon checks is known.'
 - id: render_audit_browser
   cmd:
   - node
@@ -1508,6 +1485,39 @@ checks:
     every invocation. Splitting the script in two to satisfy a one-to-one field would be apparatus
     added for the apparatus''s sake, which §8 refuses.'
 quarantine:
+- id: register_integrity_check
+  cmd:
+  - python3
+  - scripts/audit/register_integrity_check.py
+  - --selftest
+  status: quarantined
+  reason: 'QUARANTINED 2026-09-11 — RED BY CONSTRUCTION FROM THE FIRST DETERMINATION ONWARD, which
+    is the one state it could not be tested in until today. It compares the live DB against
+    _archived/working/pilot/pilot-renderings.html, a FROZEN document keyed on [A-Z]-NN item codes.
+    Migration 071 dropped item_code from specifications and re-keyed it on parameter_id, so the
+    document can never agree with the DB again and cannot be regenerated against a key it does not
+    have. Measured, not assumed: against the DB at commit 7e9b9c8 (specifications = 0 rows) the
+    selftest printed "clean pass on untampered document: yes" and PASS over 15 cells x 6 registers;
+    against the DB one commit later, holding the project''s FIRST determination (parameter 1 x MOB),
+    it aborts with "1xMOB: COMPLETENESS VIOLATION — specifications row exists but no rendering
+    appears in the document" plus four inverse errors for the pilot''s own E-08xDEAF, E-12xMOB,
+    G-03xMOB and C-02xDEM. So it passed only while it had nothing to cross-check, and the first real
+    subject turns it red permanently. CLAUDE.md rule 6: a check that is red by construction teaches
+    its reader to ignore it. NOT DELETED, and the logic is sound — its --selftest mutation-fires on
+    all eight tampering scenarios, so the I1-I5 invariant coverage is real and worth keeping. WHAT
+    WOULD DE-QUARANTINE IT: a live render surface keyed on parameter_id x lens, which does not exist
+    yet (parts/ and site/ are render-stage and hold no determination rows). Repoint --doc at that
+    surface and it works again; it was de-quarantined once before, on 2026-08-04, by clearing its
+    blockers the same way. Its prior note is preserved below verbatim so nothing is lost.'
+  prior_note: 'Amended I1–I5 (DR-2026-07-21 Option A) over working/pilot/pilot-renderings.html, with the DB
+    cross-check and the DB→doc completeness direction on by default. --selftest mutation-tests every invariant
+    before checking the real document, so a pass is a demonstrated-firing pass rather than an assumed
+    one. De-quarantined 2026-08-04: both stated blockers were cleared — it now defaults its document and
+    DB paths (honouring GUIDEBOOK_DB_PATH), and enforces amended I3 rather than the repealed absolute
+    form. `tooling` kind because it imports REGISTER_MAP and tuple_class from scripts/generate/pilot_renderings.py,
+    so a renderer-only diff is exactly when the coupling can break. Advisory on arrival per the house
+    norm at the head of this file; promotion to blocking is a separate owner-gated commit once the false-positive
+    rate of its lexicon checks is known.'
 - id: validate_db
   cmd:
   - python3

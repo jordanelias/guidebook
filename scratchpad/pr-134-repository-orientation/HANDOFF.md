@@ -5,11 +5,52 @@ Written at session close. Everything below is derived; re-derive anything you in
 
 ## THE NEXT SINGLE ACTION
 
-**Write the first determination.** `specifications` is writable for the first time since migration 071
-re-keyed it: `base_parameters` now holds the row its `parameter_id NOT NULL` FK needed, so the §4
-unwritability mechanism is cleared. Drive `scripts/assess/assess_cell.py` on parameter 1 × a lens and
-let it decide the state; do not pre-judge whether 2 sources and 3 extractions carry a `stated` cell —
-the determination is a pure function and its answer is the finding.
+**Decide what resolves a determination's VALUE, because nothing does.** This is the finding the first
+determination produced, and it is more important than the determination.
+
+`specifications.value_min`, `value_max` and `value_unit` are written `NULL` by `assess_cell.py` —
+hardcoded `None, None, None` at `scripts/assess/assess_cell.py:1075` — and **read by nothing**: no
+view, no generator, no check (`grep -rn value_min scripts/ tools/ --include='*.py'` returns only the
+engine). So the project's spine defines specification as *"the determination: therefore 1200 mm,
+marked ●"* and the stage has no resolved number anywhere. §8 calls an unread field and an uncalled
+script the same defect; this is three unread columns whose only writer sets them to NULL.
+
+**No check was added for it, deliberately.** §8's bar is "state what wrong thing reaches the
+*guidebook*" — nothing does, because nothing reads the columns, so a gate on them would be apparatus
+about the apparatus. The decision owed is upstream of a gate: either value resolution gets built (and
+then a `stated` cell without a value should be refused) or the columns get dropped. Do not add the
+gate before that is settled.
+
+~~**Write the first determination.**~~ **DONE**, and faithful to ratified doctrine rather than to
+intuition. `parameter_id 1 × MOB`, `stated`, `tier_basis T1`, `design_scale population`, 4 governing
+refs, `convergence_assessment` `single_axis` with all four sources down-weighted,
+`derivation_sha 75c34f1d82b5`. It is `stated` because `evidence-methodology.md:200` makes that the
+state for "evidence at Tier 1 … with direct parameter relevance", and four T1 sources hold
+extractions on this parameter. **The state machine never asks whether the cell has a VALUE** — that
+is doctrine's shape, not an engine bug, and it is what the finding above is about.
+
+One extraction was added first, from bytes, because without it the cell would have been a
+determination about experimental design: extractions 1 and 3 record `1:20, 1:16, 1:12, 1:8` and
+`1:8 to 1:20`, which are the **test rigs**, and extraction 2 is `claim_type absent`. Extraction 4 is
+REF-00979's only outcome claim against gradient — *"major adjustments in stroking kinematics and
+significant increases in muscle activity occurred at slopes between 4 degrees and 10 degrees"*
+(ascent only). Worth holding beside REF-00980's own conclusion, which is a **non-recommendation**:
+*"changes to the technical requirements for ramp slope and length cannot be recommended at this
+time."*
+
+### Two gates changed state because a determination finally exists
+
+- **`validate_evidence_state` and `validate_verification_consistency` are no longer vacuous.** Both
+  are blocking and both had examined nothing on every possible input. Blocking-and-vacuous is now 2,
+  down from 4 at the start of this session and 6 before it.
+- **`register_integrity_check` is QUARANTINED**, and the first determination is what exposed it. It
+  compared the live DB against `_archived/working/pilot/pilot-renderings.html`, frozen and keyed on
+  `[A-Z]-NN` item codes; 071 re-keyed `specifications` on `parameter_id`, so the two can never agree
+  again. Measured both ways: against the DB at `7e9b9c8` (0 specifications rows) its selftest printed
+  *"clean pass on untampered document: yes"*; against the next commit, holding one determination, it
+  aborts. It passed only while it had nothing to cross-check. The invariant logic is sound and
+  mutation-fires on all eight tampering scenarios, so it is quarantined rather than deleted, and
+  `render/register-invariants` now says `check: null` with the reason.
 
 ~~**Re-run batch 06 steps 1–2 on a fresh scratch copy of canonical, emit the data migration, and commit
 it.** Four hours of walk work exists **only** in a container scratch DB that dies with the container.
