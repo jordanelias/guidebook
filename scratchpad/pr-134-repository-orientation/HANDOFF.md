@@ -3,6 +3,27 @@
 Written at session close. Everything below is derived; re-derive anything you intend to rely on
 (`CLAUDE.md` rule 7).
 
+## Watching — the subscription was dropped, one check-in remains
+
+**PR #134's webhook subscription was deliberately dropped 2026-09-11 05:42.** Every wake produced
+transcript lines, the code-enforced stop hook required them committed, and the push re-triggered CI —
+a self-sustaining loop with no information in it. Nine consecutive wakes carried the same fact: a
+green check suite on a commit whose only content was the transcript of verifying the previous green
+check suite.
+
+Two alternatives were considered and rejected. A `paths-ignore` on `ci.yml` for `transcripts/**` is
+defensible on the merits — no battery reads that path — but if the job is a required status check, a
+skipped run leaves the PR on *"expected — waiting"*, and branch protection is not readable from here.
+`[skip ci]` is unavailable for a different reason: `check_commit_msg.py:57` anchors the subject with
+`$` after the timestamp, so nothing can follow it.
+
+**So `trig_015hkQrEqNMvH9g7GEEZ4feH` is now the only watcher**, firing 07:11Z and re-arming at 3h.
+Its prompt carries the baseline and the reason the watch matters — the scheduled `source-verification`
+workflow commits a `pipeline_runs` row into the DB blob, which inherits a binary conflict on every
+open DB-touching PR (rule 3; it did this to PR #128). A redundant second check-in was deleted.
+**An absent event is no longer evidence that nothing happened.** Re-subscribe with
+`subscribe_pr_activity` if the owner wants webhook delivery back.
+
 ## THE NEXT SINGLE ACTION
 
 **Decide what resolves a determination's VALUE, because nothing does.** This is the finding the first
