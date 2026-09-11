@@ -4,7 +4,12 @@
 working (owner, 2026-09-09). It holds **process, workflow and rules only**. Every volatile fact —
 counts, versions, CI state — is derived here, never stated. Where it disagrees with
 `decisions/DR-2026-08-19-research-restart-operative-instrument.md`, that instrument wins and this
-file is what to correct.
+file is what to correct — **unless a live owner ruling has superseded the instrument itself, per
+rule 0, in which case the ruling wins over both.** Worked example: the owner's 2026-09-09 (evening)
+ruling (`references/project-standards.md`, "the determination is COMPUTED, not hand-assigned")
+overrode DR-2026-08-19 §12.5's "Permanently manual… anything touching `specifications`" clause on
+contact — no edit to the DR or to this file made that happen; the ruling did. (This paragraph stated
+the instrument-wins rule with no exception until 2026-09-10.)
 
 ---
 
@@ -166,14 +171,19 @@ harness resets env between shells. The canonical DB's sha256 must not move until
 applied.
 
 **Do not hand-write SQL against a table the CLI can reach.** If you find one it cannot, that is a
-coverage bug to fix, not a licence to bypass — `dbcore.WRITABLE_TABLES` has been blind to a live
-table three times, and each time the temptation was to write around it.
+coverage bug to fix, not a licence to bypass — `dbcore.WRITABLE_TABLES` keeps going blind to live
+tables, and each time the temptation is to write around it. **Derive the count, never quote it** —
+this file said "three times" while `architecture/conformance-schema-findings.md` recorded a
+seventh (`grep -n 'blindness' architecture/conformance-schema-findings.md`), and rule 7 is exactly
+about figures like this one going stale under a paragraph that looks authoritative.
 
 **`db.py` refuses, and that is its whole value.** A writer that merely INSERTs is worse than hand SQL
 because it looks safe. **Two refusals are deliberately absent and must stay absent:**
 `add-population-match` does not enforce uniqueness on (ref_id, population) — a dissenting adversarial
-grade lands as a second row and divergent grades read as a contest — and `add-source` exposes no
-`--year`/`--journal` for an entry carrying a `ref_id`, because those are reached through the pointer.
+grade lands as a second row and divergent grades read as a contest — and `insert_economics_entry` refuses
+`--year`/`--journal` for an entry carrying a `ref_id`, because those are reached through the pointer
+— **the refusal is there, not in `add-source`, and through argparse it is unreachable at all**
+(`scripts/db.py:3978-3999`; this file misattributed it to `add-source` until 2026-09-10).
 
 **Vocabularies come from the schema, not a list in code.** `dbcore.check_values()` reads the column's
 own CHECK. Live rows are a *sample* of a vocabulary, never the vocabulary. **Never compute a ref_id
@@ -183,13 +193,19 @@ table holding a ref_id.
 **Schema change:** new `scripts/migrations/NNN_slug.sql`, bump `user_version`, mirror the Pydantic
 model. Verify with `migrate_db.py --rebuild /tmp/rebuilt.db`.
 
-**A NOT NULL foreign key into an EMPTIED table makes that table unwritable, and the owner emptied
-the item layer on 2026-09-01.** The refusal is `FOREIGN KEY constraint failed` at INSERT — never at
-migration time — so the schema looks healthy, a rebuild reproduces it exactly, and every gate stays
-green over a table that cannot accept a row. `specifications` is in this state, which is why **no
-determination can be written today**; so is `item_taxonomy_links`, which means **D-0184's own object
-cannot accept a row either**. This is rule 4's "treat a 0-row object as unproven, not clean" with
-teeth. Derive the live set before planning any write, and never quote it:
+**A NOT NULL foreign key into an EMPTIED table makes that table unwritable.** The refusal is
+`FOREIGN KEY constraint failed` at INSERT — never at migration time — so the schema looks healthy, a
+rebuild reproduces it exactly, and every gate stays green over a table that cannot accept a row.
+`specifications` is in this state: migration 071 re-keyed it on `parameter_id NOT NULL REFERENCES
+base_parameters(parameter_id)`, and `base_parameters` is a freshly-minted registry with nothing in it
+yet — so **no determination can be written until a parameter is minted**, and `db.py add-parameter`
+is the writer that mints one. (This bullet blamed the 2026-09-01 item-layer emptying for
+`specifications`' unwritability instead, until 2026-09-10 — true of the OLD `specifications.item_code`
+FK, which 071 dropped along with the table it sat on; stale the moment 071 re-keyed `specifications`
+onto a different empty table for the NEXT STAGE OF THE SAME REFORM — 071's own comment reads *"Was item_code NOT NULL into an emptied table, which is why no determination could be written at all"* (`:96-97`), so these are two stages of one continuous re-keying, not unrelated accidents; this clause read "for an unrelated reason" until an adversarial pass broke it the same day.) `item_taxonomy_links` is unwritable on the
+original mechanism — its `item_code` FK still reaches into the emptied `items` — which means
+**D-0184's own object cannot accept a row either**. This is rule 4's "treat a 0-row object as
+unproven, not clean" with teeth. Derive the live set before planning any write, and never quote it:
 
 ```
 python3 - <<'PY'
@@ -248,15 +264,21 @@ judgment. Zero links **after judgment** is a defect. Only Opus-class models writ
 disabled people takes **four lens columns, one CHECK, real FKs, and `population_code` is retired in
 favour of the four**. D-0182 then relaxed that CHECK from "exactly one" to **at least one**
 (`COALESCE(...) IS NOT NULL`), which is what migration 065 built and what the live table says in its
-own comment. So `specifications.population_code` is not a question — it is a sweep owed.
+own comment. **The sweep is DONE:** migration 071 (2026-09-09) dropped `population_code` from
+`specifications` outright, in the same pass that gave it the four lens columns above. (This sentence
+called it a sweep owed until 2026-09-10; verify with `PRAGMA table_info(specifications)` — the
+column is absent.)
 
 **THE SUBJECT IS ALSO RULED, AND THIS FILE SAID OTHERWISE FOR A DAY.** Owner ruling **2026-08-26**
 (`references/project-standards.md`, `grep -n 'judgment object is the'`): *"The judgment object is the
 **canonical parameter**, and `items` is the render rollup the entity model already calls it."* The
 determination is keyed on **the design parameter under determination**; `specifications.item_code`,
-presently NOT NULL, *"is dropped alongside `population_code` in the same P1.0 migration"*; `items` is
-demoted from identity to a Part-4 render aggregate **derived from** specifications rather than keyed
-by them. That ruling carries a five-clause ACTION — read it before touching any of this.
+NOT NULL at ruling time, *"is dropped alongside `population_code` in the same P1.0 migration"* — and
+is: migration 071 is that P1.0 migration, and the column no longer exists on `specifications`.
+`items` is demoted from identity to a Part-4 render aggregate **derived from** specifications rather
+than keyed by them. That ruling carries a five-clause ACTION — read it before touching any of this.
+(This paragraph called `item_code` "presently NOT NULL" until 2026-09-10, after 071 had already
+dropped it; verify with `PRAGMA table_info(specifications)`.)
 
 *This paragraph read "an owner decision — do not invent one" until 2026-09-09, while the ruling had
 stood since 2026-08-26. It was written in the same change that added rule 4b's mirror to the ledger
@@ -265,8 +287,14 @@ on the lens half and did not re-run the search for the subject half. A ruling ca
 repository, in the file §9 sends you to, and still fail to bind if the search stops at the first
 answer it finds.*
 
-**So neither half is open. Both are sweeps owed**, and `item_taxonomy_links` and `specifications`
-stay unwritable until they are done. Do not read `slug × population` as any part of the answer:
+**So neither half was ever open, and both sweeps are now DONE.** `specifications` carries neither
+`population_code` nor `item_code` today — migration 071 executed both drops in one pass. That does
+not make it writable: `specifications` is unwritable for a different, live reason —
+`parameter_id NOT NULL` into the still-empty `base_parameters` (§4) — and `item_taxonomy_links` stays
+unwritable on its own original mechanism, the `item_code` FK into the emptied `items`. (This sentence
+called both sweeps owed and named them as the reason the two tables were unwritable, until
+2026-09-10; the sweeps and the unwritability are different facts, and the second outlived the
+first.) Do not read `slug × population` as any part of the answer:
 `populations` IS the identity lens (`base_taxonomy_identity`), so that key reintroduces the
 traversal D-0184 measured and rejected.
 
@@ -291,18 +319,24 @@ traversal D-0184 measured and rejected.
   without rewriting anything — the branch carries a merge commit rather than a replay.
 - **THE ITEM LAYER IS GONE FROM THE DATABASE AND STILL LIVE ON THE READING SURFACE.** `items` holds
   0 rows and a rebuild does not restore it — but the prior version's corpus still publishes the
-  codes and their names in `references/`, `working/` and `index.html`, which `.ignore` does **not**
-  hide. (`versions/` carries them too and **is** hidden — `.ignore` line 106. This bullet claimed
-  otherwise until 2026-09-09; the bullet above it was right.) So a session that greps for a topic
-  still meets **`E-08 Corridor Clear Width
+  codes and their names across `references/` and `working/`, which `.ignore` does **not** hide.
+  (`versions/` carries them too and **is** hidden — `.ignore` line 106. This bullet claimed
+  otherwise until 2026-09-09; the bullet above it was right. **And it named `index.html` as a live
+  surface until 2026-09-10, when that file and `references/part04-item-index.md` had both already
+  moved under `_archived/`, which `.ignore` line 63 DOES hide** — so the bullet asserted the
+  opposite of the state on that clause, and both of its derivation commands below pointed at paths
+  that no longer resolve. A trap whose command errors out teaches the reader to distrust the trap.)
+  So a session that greps for a topic still meets **`E-08 Corridor Clear Width
   (≥1200 mm Minimum on All Primary Routes)`** — a container whose name states its answer, which is
   the whole reason the owner deleted the layer: *if E-08 already exists then the work is predisposed
   to filing into a container that already exists, and that biases every finding.* **Treat every
-  `[A-E]-NN` code you meet as prior-version content, never as a container to file into.** `db.py
-  add-item` refuses for this reason. **The prefixes run wider than the obvious ones** — derive them,
-  do not assume a range: `grep -rhoE '\b[A-Z]-[0-9]{2}\b' references/part04-item-index.md | cut -c1
-  | sort -u`. Then derive the surface before framing anything:
-  `grep -rEl '\b[A-Z]-[0-9]{2}\b' references/ working/ index.html`
+  `[A-Z]-NN` code you meet as prior-version content, never as a container to file into.** `db.py
+  add-item` refuses for this reason. **The prefixes run wider than any range you would guess** —
+  derive them, and note the archived index is now their only home:
+  `grep -rhoE '\b[A-Z]-[0-9]{2}\b' _archived/references/part04-item-index.md | cut -c1 | sort -u`.
+  Then derive the LIVE surface before framing anything — the two are different questions and only
+  the second one bounds what a grep will hand you:
+  `grep -rEl '\b[A-Z]-[0-9]{2}\b' references/ working/`
 - **Session ids: bare stem in the DB, `.md` in pointers and `emit_data_migration --session`.** Wrong
   form scopes a gate to nothing and it passes green.
 - **If you add a `SessionStart` hook, APPEND it — never insert at index 0.**

@@ -67,6 +67,10 @@ from difflib import SequenceMatcher
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent.parent
+
+# The branch base every other branch-scoped check uses (claims_docket.py:235).
+# NOT HEAD~1 -- see _changed_files.
+DEFAULT_BASE = "origin/main"
 DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", str(REPO / "data" / "guidebook.db")))
 SCHEMA_PATH = REPO / "schemas" / "attestation.schema.json"
 ATTESTATIONS_DIR = REPO / "attestations"
@@ -123,11 +127,44 @@ def _git(*args):
 
 
 def _changed_files(base, head):
+    """The branch's own changed files, using the SAME definition run_checks uses.
+
+    THIS DEFAULTED TO HEAD~1..HEAD UNTIL 2026-09-11, and two BLOCKING gates
+    (attestation_presence, attestation_schema) ran on it. A one-commit window means
+    an attestation missing from a synthesis file committed earlier on the branch
+    passes, and on a tip commit that touches no synthesis path both gates examine
+    nothing and pass green -- failure mode (a) in CLAUDE.md section 5, in the two
+    gates rule 2 relies on. It also made them the last two blocking-and-vacuous
+    checks in the battery.
+
+    run_checks.changed_paths is imported rather than reimplemented: "what changed on
+    this branch" had two definitions and only one of them resolved a merge base.
+    Rule 5 -- point, do not copy.
+
+    `head` is honoured only for an explicit two-ref comparison, which is what the
+    selftests and any caller passing --head want; the default path asks the shared
+    helper, which compares the merge base against the WORKING TREE and includes
+    untracked files.
+    """
+    if head != "HEAD":
+        try:
+            out = _git("diff", "--name-only", base, head)
+        except subprocess.CalledProcessError:
+            return []
+        return [line for line in out.splitlines() if line]
+    sys.path.insert(0, str(REPO / "scripts"))
+    import run_checks                                              # noqa: E402
     try:
-        out = _git("diff", "--name-only", base, head)
-    except subprocess.CalledProcessError:
-        return []
-    return [line for line in out.splitlines() if line]
+        return run_checks.changed_paths(base)
+    except RuntimeError as exc:
+        # NEVER fall back to a silently narrower window. A base that will not
+        # resolve is a fact to print, not to paper over with HEAD~1 -- that is how
+        # the original defect read as a pass.
+        print(f"adherence_log_audit: cannot resolve base {base!r}: {exc}",
+              file=sys.stderr)
+        print(f"  Pass --base <ref> explicitly. REFUSING to narrow to HEAD~1, "
+              f"which is the window that made these gates vacuous.", file=sys.stderr)
+        raise SystemExit(2)
 
 
 def _attestation_path_for(synthesis_path):
@@ -514,7 +551,7 @@ def _non_compliant_verdicts(changed):
     return out
 
 
-def audit(check_filter=None, base="HEAD~1", head="HEAD"):
+def audit(check_filter=None, base=DEFAULT_BASE, head="HEAD"):
     issues = []
     changed = _changed_files(base, head)
     if check_filter:
@@ -566,8 +603,10 @@ def main():
     parser = argparse.ArgumentParser(description="Adherence-log attestation audit.")
     parser.add_argument("--check", choices=list(CHECK_GROUPS.keys()), default=None,
                         help="Run a single named check group (default: all).")
-    parser.add_argument("--base", default="HEAD~1",
-                        help="Base ref for changed-file diff (default: HEAD~1).")
+    parser.add_argument("--base", default=DEFAULT_BASE,
+                        help=f"Base ref for changed-file diff (default: {DEFAULT_BASE}). "
+                             f"Branch-scoped, matching claims_docket.py and the range "
+                             f"run_checks gates on.")
     parser.add_argument("--head", default="HEAD",
                         help="Head ref for changed-file diff (default: HEAD).")
     args = parser.parse_args()

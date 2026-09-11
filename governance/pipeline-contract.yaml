@@ -43,6 +43,17 @@ stages:
     criterion: Every ICF/demand code referenced downstream resolves to a live row in the ICF taxonomy.
     references: D-0169 (base_taxonomy_icf); DR-2026-08-24 §R8
     check: scripts/validate_axes.py
+  - id: base-medical-lens-offered-not-adopted
+    kind: integrity
+    criterion: Every medical-lens row carries an MD- code with no digit, states no determination in
+      its own display_name or description, and is crossed to at least one other lens. A row nothing
+      crosses to is a dead end for the reader who selected that lens.
+    references: 'D-0170 (owner ruling 2026-08-27: "we give our users the choice of what model they
+      want to use to browse the site") — the lens is OFFERED, not adopted, and this is the half of
+      that ruling Layer 1 previously left unstated while db.py add-medical and migration 074''s CHECK
+      enforced it at Layer 2; CLAUDE.md §7 (the [A-Z]-NN item-code trap the MD- shape cannot collide
+      with); rule 5 (description is not a restatement of the identity row''s)'
+    check: scripts/audit/medical_lens_integrity.py
   - id: base-jurisdiction-vocabulary
     kind: integrity
     criterion: Every jurisdiction value resolves to the declared vocabulary.
@@ -50,10 +61,11 @@ stages:
     check: scripts/validate_jurisdiction.py
   - id: base-parameter-vocabulary
     kind: completeness
-    criterion: The design-parameter registry is internally consistent and its labels do not themselves
-      assert determinations.
-    references: D-0171 (items is not the building layer); DR-2026-08-19:127 (42 of 93 names carry a determination)
-    check: scripts/validate_items.py
+    criterion: No base_parameters row points at a terms.canonical_en that itself states a
+      determination (a digit, a comparator, or a min/max word).
+    references: D-0171 (items is not the building layer); DR-2026-08-19:127 (42 of 93 names carry a
+      determination); owner ruling 2026-08-26 (base_parameters is items's replacement subject)
+    check: scripts/validate_parameters.py
   - id: base-retired-vocabulary-not-taught
     kind: integrity
     criterion: No retired base token survives in live prose, skills or code outside the exempt paths.
@@ -87,11 +99,31 @@ stages:
       NULL (rule #10 existence gate).'
     references: 'PI rule #10; DR-2026-05-13; DR-2026-05-20 (metadata_integrity_status)'
     check: scripts/audit/metadata_integrity_audit.py
+  - id: locator-title-matches-identifier
+    kind: integrity
+    criterion: 'A locator''s title describes the work its identifier points at. Detectable
+      signature: a bibliographic title never contains a DOI, so a title embedding one that
+      differs from the row''s own doi is a title attached to a stranger''s identifier.'
+    references: 'Adjudication 2026-09-11 Ruling 2.3, which ruled a gate by the name
+      source_locators_integrity and was never built until 2026-09-11; data_20260823225142,
+      which folded two ref-id keyspaces as one; R9b, which tells the next session to REUSE a
+      stash ref_id rather than mint a new one -- so a wrong title travels forward into an
+      admission. The identifiers are the sound side; the titles are not.'
+    check: scripts/audit/source_locators_integrity.py
   - id: discovery-provenance
     kind: completeness
-    criterion: Each carried-forward source records how it was discovered (derivation_chain) — currently
-      sparse (16/640); no committed enforcer.
-    references: project-shape-audit F-06; evidence-architecture G1 provenance
+    criterion: 'Each carried-forward source records how it was discovered. No committed enforcer, and
+      the column named for it is UNREACHABLE -- neither derivation_chain nor search_queries_used can
+      be set by any db.py writer (add-source takes no flag for either, amend-source refuses both as
+      non-judgement fields, correct-source writes bibliography from a payload only), so both sit at
+      0 populated. DO NOT ADD A WRITER WITHOUT SETTLING THE DUAL HOME FIRST -- the discovery route is
+      already held by search_admissions (exec_id to ref_id, for a source a logged search admitted)
+      and by citation_mining.connections_produced (for a source a backward pass surfaced), so
+      populating these columns would copy a fact rule 5 says to point at. Derive the counts, never
+      quote them: this criterion carried the hand-written figure "currently sparse (16/640)" until
+      2026-09-11, false since the corpus retraction and exactly what rule 7 is about.'
+    references: 'project-shape-audit F-06; evidence-architecture G1 provenance; research_protocol_audit
+      CHECK 8, which reads search_queries_used and is the only committed reader of either column'
     check: null
 - id: judgment
   anchor: the 4-state determination machine + convergence + directness (evidence-architecture.md §5)
@@ -157,6 +189,15 @@ stages:
     criterion: A single-axis cell whose clinical sources are all Tier 3 is `provisional`, not `stated`.
     references: DR-2026-07-12-tier3-stated-threshold (A3)
     check: scripts/validate_evidence_state.py
+  - id: no-diagnosis-only-determination
+    kind: integrity
+    criterion: No determination is keyed on medical_code alone. A medical lens always accompanies at
+      least one of identity, ICF or access-need on the cell.
+    references: 'D-0170 offers the medical model as a reader''s choice and does not adopt it; a cell
+      whose only lens is a diagnosis renders as "this is what disabled people with condition X need",
+      which is that model as the PROJECT''S frame. D-0182 relaxed the lens CHECK to at-least-one,
+      which is what makes a medical-only cell writable and therefore worth gating.'
+    check: scripts/audit/medical_lens_integrity.py
   - id: derivation-handshake
     kind: integrity
     criterion: Determinations record derivation_paths (dual/population_only/function_only); a single-path
@@ -171,11 +212,19 @@ stages:
   criteria:
   - id: register-invariants
     kind: integrity
-    criterion: Every rendering of a cell carries the identical determination tuple across registers; no
-      unflagged and no above-weak-band best-practice language on regulatory-stratum cells under any weighting
-      profile; no register exceeds its map row (amended I1-I5).
-    references: evidence-architecture.md §6 I1-I5
-    check: scripts/audit/register_integrity_check.py
+    criterion: 'Every rendering of a cell carries the identical determination tuple across registers; no
+      unflagged and no above-weak-band best-practice language on regulatory-stratum cells under any
+      weighting profile; no register exceeds its map row (amended I1-I5). UNENFORCED SINCE 2026-09-11,
+      and the reason is worth reading before anyone re-points it: register_integrity_check enforced
+      this over _archived/working/pilot/pilot-renderings.html, a frozen document keyed on [A-Z]-NN item
+      codes. Migration 071 re-keyed specifications on parameter_id, so the document and the DB can
+      never agree again. The check passed only while specifications held 0 rows; the project''s FIRST
+      determination turned it red permanently, so it is quarantined (see governance/check-registry.yaml,
+      quarantine section, for the measurement). The invariant logic is sound and mutation-tested --
+      what is missing is a live render surface keyed on parameter_id x lens for it to read.'
+    references: evidence-architecture.md §6 I1-I5; governance/check-registry.yaml quarantine entry for
+      register_integrity_check
+    check: null
   - id: mode-stratum-matrix-consistency
     kind: integrity
     criterion: The grain x design-scale directness matrix regenerated from schemas/directness.py matches

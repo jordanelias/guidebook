@@ -111,7 +111,7 @@ The doctrine in one line: **precedent counts documents; evidence counts roots.**
 
 ## 5. Determinations — states, and what each state is *about*
 
-Each (item × population) cell holds one of four states (`evidence-methodology.md` §2; storage: migration 026): `stated`, `provisional`, `pending`, `not_applicable`. The determination is written by a pure function — same evidence + same `rule_version` ⇒ same state and same `derivation_sha` (`workplan/best-practices-assessment-system.md` §3) — and no `stated` or `provisional` determination can exist without non-empty `governing_refs` (anti-hallucination, DR-2026-07-12 item 10; `pending`/`not_applicable` rows carry a gap link or rationale instead).
+Each (`parameter_id` × at least one of `identity_code`, `icf_code`, `needs_code`, `medical_code`) cell holds one of four states (`evidence-methodology.md` §2; storage: migration 026): `stated`, `provisional`, `pending`, `not_applicable`. The determination is written by a pure function — same evidence + same `rule_version` ⇒ same state and same `derivation_sha` (`workplan/best-practices-assessment-system.md` §3) — and no `stated` or `provisional` determination can exist without non-empty `governing_refs` (anti-hallucination, DR-2026-07-12 item 10; `pending`/`not_applicable` rows carry a gap link or rationale instead).
 
 **Scale-tagging** `[NEW — DR-gated: G1b]`. Every determination is tagged with the design scale its claim speaks to, and the tag governs what the determination may be *called* in every rendering:
 

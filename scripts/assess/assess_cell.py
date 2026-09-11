@@ -39,26 +39,39 @@ say so.
 
 Implements the pure determination function of workplan/best-practices-assessment-system.md
 §3 under the doctrine of governance/evidence-architecture.md, with the G1/G2/G3/G6
-fixes active ADDITIVELY — no existing schema function is modified; every deviation from
-the schemas/directness.py defaults is engine-side and tagged rule_version="pilot-2".
-G2, G3 and G6 are RATIFIED (RATIFICATION-PACKAGE-2026-07-12, owner directive
-2026-07-13) and implemented ONLY here; schemas/directness.py still maps co1 → specific
-and standard_eb → code unconditionally. Promoting them into the shared model is
-register item Q4, and it is now urgent: two implementations of one ratified rule that
-disagree is a live inconsistency, not a dormant one.
+fixes active, tagged rule_version="pilot-2". G2, G3 and G6 are RATIFIED
+(RATIFICATION-PACKAGE-2026-07-12, owner directive 2026-07-13).
+
+PROMOTED 2026-09-10 (register item Q4). G3 and G6 used to be implemented ONLY in
+this engine's own `source_grain()`, while schemas/directness.py's
+`GRAIN_FROM_EVIDENCE_TYPE` mapped `co1 -> specific` and `standard_eb -> code`
+unconditionally — two implementations of one ratified rule, disagreeing, which is
+a rule that attests nothing. `schemas.directness.grain_for()` is now the single
+home; `source_grain()` is deleted from this module and `GRAIN_FROM_EVIDENCE_TYPE`
+is unchanged, kept as the default map `grain_for()` falls back to. Equivalence
+was checked by enumeration over every (evidence_type, tier, co1_source_type)
+triple the live schema admits, not by reading: 0 of 336 triples differ, including
+REF-00978's live (co1, 1, 'dpo_annual_survey') — the corpus's only Co-1 source,
+whose co1_source_type is not in schemas.enums.Co1SourceType and which both the
+old and new implementation grain SPECIFIC via the same unrecognised-value
+fallback. G2's NOT_ASSESSED moved the same way, into schemas.directness, so it
+is a first-class shared grade rather than an engine-local string.
 
 Determinism: same evidence + same rule_version ⇒ same state + same derivation_sha.
 Timestamps come from --stamp, not wall-clock reads, so a re-run is byte-identical and
 the double-run determinism check (evidence-architecture.md §10, check 2) is meaningful.
 
 Module roster (PILOT-MANIFEST.md §4 — no silent omissions):
-  schemas.directness          grain-matching, scale-directness, consolidation
+  schemas.directness          grain-matching (grain_for, G3/G6 — promoted 2026-09-10),
+                              scale-directness, consolidation, NOT_ASSESSED (G2 —
+                              promoted 2026-09-10). Co1SourceType is consulted inside
+                              grain_for() itself, not imported here directly.
   schemas.tier_derivation     tier/evidence_type/scope consistency audit per source
   schemas.evidence_state      EvidenceStateRecord / ConvergenceAssessment /
                               ProvisionalConfidenceFlag — every row validated
                               against the pydantic model BEFORE insert
   schemas.enums               PopulationCode / EvidenceCellState / ConvergenceStatus /
-                              Co1SourceType / VerificationStatus vocabularies
+                              VerificationStatus vocabularies
   schemas.evidence_source     (via enums + verification gates below)
   schemas.source_value_extraction  the JUDGMENT item (D-0168) — what gather_sources
                               now joins on. The VALUE dimension stays NOT_ASSESSED,
@@ -73,12 +86,17 @@ G-fixes (evidence-architecture.md §4, DR-2026-07-12-evidence-architecture-unifi
   G1  T4–6-only basis ⇒ regulatory-stratum determination: design_scale='universal',
       never 'stated', code_floor_only=1 iff T6-only; T4/T5 keep GRAIN_CODE (no pilot
       source has documented T1/T2 traceability, so no re-graining is claimed).
+      Engine-side (regulatory_richness(), below) — not a directness-model rule.
   G2  A directness dimension that APPLIES but has never been assessed is NOT_ASSESSED,
       not None ("not applicable"): it caps consolidation at DOWN-WEIGHTED via
       consolidate()'s existing partial-dimension path, and the source is flagged.
+      schemas.directness.NOT_ASSESSED (promoted 2026-09-10; was engine-local).
   G3  Co-1 grain follows co1_source_type (dpo_research/advocacy_position → aggregate;
-      academic_narrative → specific; others → specific, noted).
+      academic_narrative → specific; others, including an unrecognised
+      co1_source_type → specific, noted).
+      schemas.directness.grain_for() (promoted 2026-09-10; was source_grain() here).
   G6  standard_eb grain follows (type × tier): T2 → aggregate; T4/T5 → code.
+      schemas.directness.grain_for() (promoted 2026-09-10; was source_grain() here).
 """
 import argparse
 import hashlib
@@ -91,15 +109,14 @@ REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 sys.path.insert(0, REPO_ROOT)
 
 from schemas.directness import (  # noqa: E402
-    GRAIN_AGGREGATE, GRAIN_CODE, GRAIN_SPECIFIC, GRAIN_FROM_EVIDENCE_TYPE,
-    SCALE_POPULATION, SCALE_UNIVERSAL,
+    NOT_ASSESSED, SCALE_POPULATION, SCALE_UNIVERSAL,
     SD_NON_ANCHORING,
     COND_DIRECT, COND_DOWN_WEIGHTED, COND_DISCOUNTED, COND_NON_ANCHORING,
-    consolidate, population_directness_from_match_grade, scale_directness,
+    consolidate, grain_for, population_directness_from_match_grade, scale_directness,
 )
 from schemas.tier_derivation import check_tier_consistency  # noqa: E402
 from schemas.enums import (  # noqa: E402
-    Co1SourceType, ConvergenceStatus, EvidenceCellState, PopulationCode,
+    ConvergenceStatus, EvidenceCellState, PopulationCode,
     VerificationStatus,
 )
 from schemas.evidence_state import (  # noqa: E402
@@ -112,6 +129,11 @@ RULE_VERSION = "pilot-2"  # pilot-1 + adversarial-review corrections (see PILOT-
 #   has_unverified_sources / all_sources_disqualified implemented per §2.8;
 #   population-match rows attributed to the cell's population or treated NOT_ASSESSED;
 #   §2.3 richness checks T6 jurisdiction distinctness and names its unchecked clause;
+#   jurisdiction distinctness is now NORMALISED before counting (2026-09-10, audit
+#   Task 4): stripped, casefolded, empty/None dropped — ("US", None) is one
+#   jurisdiction, not two, and ("US","us","US ") is one, not three;
+#   G2/G3/G6 grain rules promoted into schemas.directness (2026-09-10, register
+#   item Q4): source_grain() deleted from this module, grain_for() is the one home;
 #   gap descriptions are PARAMETER-scoped as of 2026-09-10 (they were slug-scoped, and
 #   said so, back when the gather was too — absence of an extraction for the parameter
 #   is not corpus-level absence, and is not the same absence a missing slug-link is);
@@ -125,11 +147,13 @@ RULE_VERSION = "pilot-2"  # pilot-1 + adversarial-review corrections (see PILOT-
 SESSION = None
 STAMP = None
 
-# G2: engine-side grade for "dimension applies but was never assessed".
-# Deliberately NOT added to schemas.directness vocab pre-ratification (additive rule).
-# Passing it to consolidate() makes pop_full/val_full False -> caps at DOWN-WEIGHTED,
-# which is exactly the G2 semantics, without touching consolidate() itself.
-NOT_ASSESSED = "NOT_ASSESSED"
+# G2: "dimension applies but was never assessed" is imported from
+# schemas.directness, not redefined here. PROMOTED 2026-09-10: it used to be
+# engine-local, exactly the "additive rule, not touching schemas.directness"
+# posture G3/G6 were also under before that promotion left one ratified rule
+# with two disagreeing implementations. Passing it to consolidate() still makes
+# pop_full/val_full False -> caps at DOWN-WEIGHTED — that mechanism is
+# unchanged; only its home moved.
 
 # Verification gates (evidence-methodology.md §2.2 cond. 2 / §2.8)
 # D-0157: the standing is binary, so the sound set is a single value. The old
@@ -183,20 +207,6 @@ def lens_key(lens):
         if lens.get(col):
             return lens[col]
     return None
-
-
-def source_grain(evidence_type, tier, co1_source_type):
-    """G3 + G6: grain from (type × tier × co1_source_type); default map otherwise."""
-    if evidence_type == "co1":  # G3
-        if co1_source_type in (Co1SourceType.DPO_RESEARCH.value if hasattr(Co1SourceType, "DPO_RESEARCH") else "dpo_research",
-                               "dpo_research", "advocacy_position"):
-            return GRAIN_AGGREGATE, "G3:population-grain co1"
-        return GRAIN_SPECIFIC, "G3:individual-grain co1"
-    if evidence_type == "standard_eb":  # G6
-        if tier == 2:
-            return GRAIN_AGGREGATE, "G6:standard_eb@T2=synthesis-tier"
-        return GRAIN_CODE, "G6:standard_eb@T4/5=regulatory (no re-graining claimed: G1)"
-    return GRAIN_FROM_EVIDENCE_TYPE.get(evidence_type, GRAIN_SPECIFIC), "default map"
 
 
 def gather_sources(conn, parameter_id):
@@ -287,7 +297,7 @@ def population_match(conn, ref_id, population):
 
 def assess_source(conn, src, claim_scale, population):
     """Per-source directness record under pilot rules (G2/G3/G6 active)."""
-    grain, grain_why = source_grain(src["evidence_type"], src["tier"], src["co1_source_type"])
+    grain, grain_why = grain_for(src["evidence_type"], src["tier"], src["co1_source_type"])
     sd = scale_directness(grain, claim_scale)
     mg = population_match(conn, src["ref_id"], population)
     if mg is not None:
@@ -391,6 +401,26 @@ def anchoring(recs):
     return [r for r in recs if r["conditioning"] not in (COND_NON_ANCHORING, COND_DISCOUNTED)]
 
 
+def _distinct_jurisdictions(recs):
+    """The set of distinct jurisdictions among `recs`, normalised.
+
+    §2.3's "different jurisdictions" test is a count over this set's SIZE, so
+    what counts as one distinct value matters. Strip whitespace, casefold, and
+    drop empty/None — a source with no recorded jurisdiction contributes
+    nothing to distinctness (it is not "one more jurisdiction"), and
+    "US" / "us" / "US " are the same jurisdiction, not three.
+    """
+    out = set()
+    for r in recs:
+        j = r.get("jurisdiction")
+        if j is None:
+            continue
+        j = j.strip().casefold()
+        if j:
+            out.add(j)
+    return out
+
+
 def regulatory_richness(t45, t6):
     """§2.3 richness for a T4–6-only provisional (else pending).
 
@@ -405,15 +435,23 @@ def regulatory_richness(t45, t6):
     as "directly addressing" is a judgment call, and the rule for making it does not
     exist.) The T6 clause
     requires convergence "on the same value or range" — likewise unverifiable;
-    jurisdiction distinctness IS checkable and is enforced."""
-    jur45 = {r.get("jurisdiction") for r in t45}
+    jurisdiction distinctness IS checkable and is enforced.
+
+    NORMALISED before counting (fixed 2026-09-10; audit Task 4). §2.3 requires
+    sources "from different jurisdictions" — an untrimmed, un-casefolded set
+    counted `("US", None)` as two distinct jurisdictions and `("US","us","US ")`
+    as three, because `{r.get("jurisdiction") for r in recs}` is a set over raw
+    strings, and a source with NO recorded jurisdiction was being counted as
+    ONE. `_distinct_jurisdictions()` strips, casefolds, and drops empty/None
+    before the set is built, in both the T4-5 and T6 branches."""
+    jur45 = _distinct_jurisdictions(t45)
     if len([r for r in t45 if r["tier"] == 4]) >= 1:
         return True, (">=1 T4 international standard present (§2.3; the clause's "
                       "'value directly addressing the parameter' is unverified — "
                       "value extraction pending)")
     if len(t45) >= 2 and len(jur45) >= 2:
         return True, ">=2 T4-5 sources, distinct jurisdictions (§2.3)"
-    jur6 = {r.get("jurisdiction") for r in t6}
+    jur6 = _distinct_jurisdictions(t6)
     if len(t6) >= 3 and len(jur6) >= 3:
         return True, (f">=3 T6 codes from {len(jur6)} distinct jurisdictions (§2.3; "
                       "value-level convergence unverified — extraction pending)")

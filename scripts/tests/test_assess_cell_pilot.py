@@ -128,6 +128,36 @@ def main():
                   1, {"identity_code": "DEM"}, "syn-slug", "t6-mono")
     expect("T6-only(1 jur) => pending", d["state"] == "pending", d["state"])
 
+    # 3b-3d. jurisdiction distinctness must be NORMALISED before counting (audit
+    # Task 4, fixed 2026-09-10). Uses tier 5 (national_fw), never tier 4: a T4
+    # source is "rich" the moment it is present, unconditionally on
+    # jurisdiction (§2.3's first clause), which would hide exactly the bug
+    # being tested here. Two T4-5 sources with >=2 distinct jurisdictions is
+    # the smallest branch that isolates the jurisdiction-distinctness rule.
+
+    # 3b. ("US", None) -- a MISSING jurisdiction is not "one more jurisdiction".
+    # Before the fix, {"US", None} counted as 2 distinct values -> wrongly rich.
+    d = determine(synth_db([{"tier": 5, "evidence_type": "national_fw", "jurisdiction": "US"},
+                            {"tier": 5, "evidence_type": "national_fw", "jurisdiction": None}]),
+                  1, {"identity_code": "MOB"}, "syn-slug", "t45-us-and-none")
+    expect("T4-5(US, None) => NOT rich (None does not count as a jurisdiction)",
+          d["state"] != "provisional", d["state"])
+
+    # 3c. ("US","us","US ") -- case and whitespace variants of ONE jurisdiction.
+    # Before the fix this set had 3 raw members -> wrongly rich.
+    d = determine(synth_db([{"tier": 5, "evidence_type": "national_fw", "jurisdiction": j}
+                            for j in ("US", "us", "US ")]),
+                  1, {"identity_code": "MOB"}, "syn-slug", "t45-case-whitespace")
+    expect("T4-5(US/us/US ) => NOT rich (one jurisdiction, not three)",
+          d["state"] != "provisional", d["state"])
+
+    # 3d. ("US","CA") -- genuinely two distinct jurisdictions -> rich, as control.
+    d = determine(synth_db([{"tier": 5, "evidence_type": "national_fw", "jurisdiction": j}
+                            for j in ("US", "CA")]),
+                  1, {"identity_code": "MOB"}, "syn-slug", "t45-two-distinct")
+    expect("T4-5(US, CA) => rich (two genuinely distinct jurisdictions)",
+          d["state"] == "provisional", d["state"])
+
     # 4. All sources disqualified -> pending + flag (§2.8)
     d = determine(synth_db([{"tier": 1, "evidence_type": "clinical",
                              "verification_status": "UNVERIFIED-CLOSED"}]),

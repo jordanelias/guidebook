@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WHO-FIC Classifications</title>
+    <link rel="stylesheet" href="/browse/css/browser.css?v=phjl1iKYIS9wDNATyuejS8x042lS2o5mcutkvekKCMk" />
+    <link rel="stylesheet" href="/browse/css/browser-releases.css?v=BqL6CNGVyVXlQdjoXSD-b3riKC7EgjjKa5JmASob6-U" />
+    <link rel="stylesheet" href="/browse/css/browser-menu.css?v=C_TbsYEDJTpzcqtPP474RJcEuwvhZ8CVLJO8YOaRduI" />
+    
+    <style>
+        body {
+            overflow: auto;
+        }
+    </style>
+ 
+<script type="text/javascript">!function(T,l,y){var S=T.location,k="script",D="instrumentationKey",C="ingestionendpoint",I="disableExceptionTracking",E="ai.device.",b="toLowerCase",w="crossOrigin",N="POST",e="appInsightsSDK",t=y.name||"appInsights";(y.name||T[e])&&(T[e]=t);var n=T[t]||function(d){var g=!1,f=!1,m={initialize:!0,queue:[],sv:"5",version:2,config:d};function v(e,t){var n={},a="Browser";return n[E+"id"]=a[b](),n[E+"type"]=a,n["ai.operation.name"]=S&&S.pathname||"_unknown_",n["ai.internal.sdkVersion"]="javascript:snippet_"+(m.sv||m.version),{time:function(){var e=new Date;function t(e){var t=""+e;return 1===t.length&&(t="0"+t),t}return e.getUTCFullYear()+"-"+t(1+e.getUTCMonth())+"-"+t(e.getUTCDate())+"T"+t(e.getUTCHours())+":"+t(e.getUTCMinutes())+":"+t(e.getUTCSeconds())+"."+((e.getUTCMilliseconds()/1e3).toFixed(3)+"").slice(2,5)+"Z"}(),iKey:e,name:"Microsoft.ApplicationInsights."+e.replace(/-/g,"")+"."+t,sampleRate:100,tags:n,data:{baseData:{ver:2}}}}var h=d.url||y.src;if(h){function a(e){var t,n,a,i,r,o,s,c,u,p,l;g=!0,m.queue=[],f||(f=!0,t=h,s=function(){var e={},t=d.connectionString;if(t)for(var n=t.split(";"),a=0;a<n.length;a++){var i=n[a].split("=");2===i.length&&(e[i[0][b]()]=i[1])}if(!e[C]){var r=e.endpointsuffix,o=r?e.location:null;e[C]="https://"+(o?o+".":"")+"dc."+(r||"services.visualstudio.com")}return e}(),c=s[D]||d[D]||"",u=s[C],p=u?u+"/v2/track":d.endpointUrl,(l=[]).push((n="SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details)",a=t,i=p,(o=(r=v(c,"Exception")).data).baseType="ExceptionData",o.baseData.exceptions=[{typeName:"SDKLoadFailed",message:n.replace(/\./g,"-"),hasFullStack:!1,stack:n+"\nSnippet failed to load ["+a+"] -- Telemetry is disabled\nHelp Link: https://go.microsoft.com/fwlink/?linkid=2128109\nHost: "+(S&&S.pathname||"_unknown_")+"\nEndpoint: "+i,parsedStack:[]}],r)),l.push(function(e,t,n,a){var i=v(c,"Message"),r=i.data;r.baseType="MessageData";var o=r.baseData;return o.message='AI (Internal): 99 message:"'+("SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details) ("+n+")").replace(/\"/g,"")+'"',o.properties={endpoint:a},i}(0,0,t,p)),function(e,t){if(JSON){var n=T.fetch;if(n&&!y.useXhr)n(t,{method:N,body:JSON.stringify(e),mode:"cors"});else if(XMLHttpRequest){var a=new XMLHttpRequest;a.open(N,t),a.setRequestHeader("Content-type","application/json"),a.send(JSON.stringify(e))}}}(l,p))}function i(e,t){f||setTimeout(function(){!t&&m.core||a()},500)}var e=function(){var n=l.createElement(k);n.src=h;var e=y[w];return!e&&""!==e||"undefined"==n[w]||(n[w]=e),n.onload=i,n.onerror=a,n.onreadystatechange=function(e,t){"loaded"!==n.readyState&&"complete"!==n.readyState||i(0,t)},n}();y.ld<0?l.getElementsByTagName("head")[0].appendChild(e):setTimeout(function(){l.getElementsByTagName(k)[0].parentNode.appendChild(e)},y.ld||0)}try{m.cookie=l.cookie}catch(p){}function t(e){for(;e.length;)!function(t){m[t]=function(){var e=arguments;g||m.queue.push(function(){m[t].apply(m,e)})}}(e.pop())}var n="track",r="TrackPage",o="TrackEvent";t([n+"Event",n+"PageView",n+"Exception",n+"Trace",n+"DependencyData",n+"Metric",n+"PageViewPerformance","start"+r,"stop"+r,"start"+o,"stop"+o,"addTelemetryInitializer","setAuthenticatedUserContext","clearAuthenticatedUserContext","flush"]),m.SeverityLevel={Verbose:0,Information:1,Warning:2,Error:3,Critical:4};var s=(d.extensionConfig||{}).ApplicationInsightsAnalytics||{};if(!0!==d[I]&&!0!==s[I]){var c="onerror";t(["_"+c]);var u=T[c];T[c]=function(e,t,n,a,i){var r=u&&u(e,t,n,a,i);return!0!==r&&m["_"+c]({message:e,url:t,lineNumber:n,columnNumber:a,error:i}),r},d.autoExceptionInstrumented=!0}return m}(y.cfg);function a(){y.onInit&&y.onInit(n)}(T[t]=n).queue&&0===n.queue.length?(n.queue.push(a),n.trackPageView({})):a()}(window,document,{
+src: "https://js.monitor.azure.com/scripts/b/ai.2.min.js", // The SDK URL Source
+crossOrigin: "anonymous", 
+cfg: { // Application Insights Configuration
+    connectionString: 'InstrumentationKey=e2a19edf-7b92-43f2-9646-131392f7d8a1;IngestionEndpoint=https://northeurope-2.in.applicationinsights.azure.com/;LiveEndpoint=https://northeurope.livediagnostics.monitor.azure.com/;ApplicationId=9f96d290-2110-4718-a7d9-3f0007fe5b2f'
+}});</script></head>
+
+<body>
+    <header>
+        
+<nav class="navbar">
+    <div class="navbar-header" asp-area="" asp-controller="Home" asp-action="Index">
+        <h1 class="navbar-title" id="l-title">WHO-FIC Classifications</h1>
+        <span class="navbar-sidetitle">
+            
+        </span>
+    </div>
+   
+
+    <div id="langarea">
+        <div id="langbutton" onclick="openLanguageList()" onmouseover="openLanguageList()" onmouseout="closeLanguageList()">
+            <img id="mlimg" alt="language change icon" src="/browse/img/globe.svg">
+            EN
+        </div>
+
+        <div id="languagelist" style="display: none;" onmouseover="openLanguageList()" onmouseout="closeLanguageList()">
+            <div id="languagelist-flex">
+                <div id="languagelist-flex-first">
+                    <div class="languagelist-title">
+                        Language
+                    </div>
+                    <div class="languagelist-block">
+                                    <div class="languagelist-language">
+                                            <a onclick="changeLanguage(event,'releases/all-releases/ar')" href="/browse/releases/all-releases/ar" class="languageswitch">
+                                                <span class="selstatus"></span>
+                                                Arabic
+                                            </a>
+                                    </div>
+                                    <div class="languagelist-language">
+                                            <a onclick="changeLanguage(event,'releases/all-releases/hy')" href="/browse/releases/all-releases/hy" class="languageswitch">
+                                                <span class="selstatus"></span>
+                                                Armenian
+                                            </a>
+                                    </div>
+                                    <div class="languagelist-language">
+                                            <a onclick="changeLanguage(event,'releases/all-releases/zh')" href="/browse/releases/all-releases/zh" class="languageswitch">
+                                                <span class="selstatus"></span>
+                                                Chinese
+                                            </a>
+                                    </div>
+                                    <div class="languagelist-language">
+                                            <a onclick="changeLanguage(event,'releases/all-releases/cs')" href="/browse/releases/all-releases/cs" class="languageswitch">
+                                                <span class="selstatus"></span>
+                                                Czech
+                                            </a>
+                                    </div>
+                                    <div class="languagelist-language">
+                                            <a onclick="changeLanguage(event,'releases/all-releases/en')" href="/browse/releases/all-releases/en" class="languageselected">
+                                                <span class="selstatus">&#x2713</span>
+                                                English
+                                            </a>
+                                    </div>
+                                    <div class="languagelist-language">
+                                            <a onclick="changeLanguage(event,'releases/all-releases/et')" href="/browse/releases/all-releases/et" class="languageswitch">
+                                                <span class="selstatus"></span>
+                                                Estonian
+                                            </a>
+                                    </div>
+                                    <div class="languagelist-language">
+                                            <a onclick="changeLanguage(event,'releases/all-releases/fi')" href="/browse/releases/all-releases/fi" class="languageswitch">
+                                                <span class="selstatus"></span>
+                                                Finnish
+                                            </a>
+                                    </div>
+                                    <div class="languagelist-language">
+                                            <a onclick="changeLanguage(event,'releases/all-releases/fr')" href="/browse/releases/all-releases/fr" class="languageswitch">
+                                                <span class="selstatus"></span>
+                                                French
+                                            </a>
+                                    </div>
+                                    <div class="languagelist-language">
+                                            <a onclick="changeLanguage(event,'releases/all-releases/de')" href="/browse/releases/all-releases/de" class="languageswitch">
+                                                <span class="selstatus"></span>
+                                                German
+                                            </a>
+                                    </div>
+                                    <div class="languagelist-language">
+                                            <a onclick="changeLanguage(event,'releases/all-releases/it')" href="/browse/releases/all-releases/it" class="languageswitch">
+                                                <span class="selstatus"></span>
+                                                Italian
+                                            </a>
+                                    </div>
+                                    <div class="languagelist-language">
+                                            <a onclick="changeLanguage(event,'releases/all-releases/kk')" href="/browse/releases/all-releases/kk" class="languageswitch">
+                                                <span class="selstatus"></span>
+                                                Kazakh
+                                            </a>
+                                    </div>
+                                    <div class="languagelist-language">
+                                            <a onclick="changeLanguage(event,'releases/all-releases/la')" href="/browse/releases/all-releases/la" class="languageswitch">
+                                                <span class="selstatus"></span>
+                                                Latin
+                                            </a>
+                                    </div>
+                                    <div class="languagelist-language">
+                                            <a onclick="changeLanguage(event,'releases/all-releases/mn')" href="/browse/releases/all-releases/mn" class="languageswitch">
+                                                <span class="selstatus"></span>
+                                                Mongolian
+                                            </a>
+                                    </div>
+                                    <div class="languagelist-language">
+                                            <a onclick="changeLanguage(event,'releases/all-releases/pt')" href="/browse/releases/all-releases/pt" class="languageswitch">
+                                                <span class="selstatus"></span>
+                                                Portuguese
+                                            </a>
+                                    </div>
+                                    <div class="languagelist-language">
+                                            <a onclick="changeLanguage(event,'releases/all-releases/ru')" href="/browse/releases/all-releases/ru" class="languageswitch">
+                                                <span class="selstatus"></span>
+                                                Russian
+                                            </a>
+                                    </div>
+                                    <div class="languagelist-language">
+                                            <a onclick="changeLanguage(event,'releases/all-releases/sk')" href="/browse/releases/all-releases/sk" class="languageswitch">
+                                                <span class="selstatus"></span>
+                                                Slovak
+                                            </a>
+                                    </div>
+                                    <div class="languagelist-language">
+                                            <a onclick="changeLanguage(event,'releases/all-releases/es')" href="/browse/releases/all-releases/es" class="languageswitch">
+                                                <span class="selstatus"></span>
+                                                Spanish
+                                            </a>
+                                    </div>
+                                    <div class="languagelist-language">
+                                            <a onclick="changeLanguage(event,'releases/all-releases/sv')" href="/browse/releases/all-releases/sv" class="languageswitch">
+                                                <span class="selstatus"></span>
+                                                Swedish
+                                            </a>
+                                    </div>
+                                    <div class="languagelist-language">
+                                            <a onclick="changeLanguage(event,'releases/all-releases/tr')" href="/browse/releases/all-releases/tr" class="languageswitch">
+                                                <span class="selstatus"></span>
+                                                Turkish
+                                            </a>
+                                    </div>
+                                    <div class="languagelist-language">
+                                            <a onclick="changeLanguage(event,'releases/all-releases/uk')" href="/browse/releases/all-releases/uk" class="languageswitch">
+                                                <span class="selstatus"></span>
+                                                Ukrainian
+                                            </a>
+                                    </div>
+                                    <div class="languagelist-language">
+                                            <a onclick="changeLanguage(event,'releases/all-releases/uz')" href="/browse/releases/all-releases/uz" class="languageswitch">
+                                                <span class="selstatus"></span>
+                                                Uzbek
+                                            </a>
+                                    </div>
+                    </div>
+                </div>
+                    
+            </div>
+        </div>            
+    </div>                
+
+        
+</nav>   
+    </header>
+
+    <main role="main">
+        <div class="placeholder"></div>
+        
+
+
+
+
+        <div class="showAllReleases">
+
+            <div class="releaseList">
+                <h2>
+                    <a class="openReleaseList" href="/browse/releases/mms">ICD-11 for Mortality and Morbidity Statistics</a>
+                </h2>
+            </div>
+
+
+
+
+
+
+<div class="releaseList">
+
+    <div class="flex-container">
+        
+        <h3 class="column">Releases</h3>
+        
+            <h3 class="column-large">Available languages</h3>
+        
+        
+            <h3 class="column">Prerelease languages</h3>
+        
+            <h3>Changes made</h3>
+    </div>
+
+    <ul>
+                <li class="flex-container">
+
+                    <span class="column">
+                            <a class="releaseId" href="/browse/2026-01/mms/en">2026-01</a>
+                        (latest release)
+                    </span>
+
+                    <span class="column-large">
+                                <a class="releaseId" title="Arabic" href="/browse/2026-01/mms/ar">ar</a>
+                                <a class="releaseId" title="Czech" href="/browse/2026-01/mms/cs">cs</a>
+                                <a class="releaseId" title="English" href="/browse/2026-01/mms/en">en</a>
+                                <a class="releaseId" title="Spanish" href="/browse/2026-01/mms/es">es</a>
+                                <a class="releaseId" title="French" href="/browse/2026-01/mms/fr">fr</a>
+                                <a class="releaseId" title="Kazakh" href="/browse/2026-01/mms/kk">kk</a>
+                                <a class="releaseId" title="Latin" href="/browse/2026-01/mms/la">la</a>
+                                <a class="releaseId" title="Portuguese" href="/browse/2026-01/mms/pt">pt</a>
+                                <a class="releaseId" title="Russian" href="/browse/2026-01/mms/ru">ru</a>
+                                <a class="releaseId" title="Slovak" href="/browse/2026-01/mms/sk">sk</a>
+                                <a class="releaseId" title="Swedish" href="/browse/2026-01/mms/sv">sv</a>
+                                <a class="releaseId" title="Turkish" href="/browse/2026-01/mms/tr">tr</a>
+                                <a class="releaseId" title="Uzbek" href="/browse/2026-01/mms/uz">uz</a>
+                                <a class="releaseId" title="Chinese" href="/browse/2026-01/mms/zh">zh</a>
+                    </span>
+
+                        <span class="column">
+                                    <a class="releaseId" title="German" href="/browse/2026-01/mms/de">de</a>
+                        </span>
+
+                        <span>
+                            <a class="changes-made" href="https://icdcdn.who.int/static/releasefiles/changes/changes_MMS_2026-01_2025-01.zip">Changes made in this release</a>
+                        </span>
+                </li>
+                <li class="flex-container">
+
+                    <span class="column">
+                            <a class="releaseId" href="/browse/2025-01/mms/en">2025-01</a>
+                        
+                    </span>
+
+                    <span class="column-large">
+                                <a class="releaseId" title="Arabic" href="/browse/2025-01/mms/ar">ar</a>
+                                <a class="releaseId" title="Czech" href="/browse/2025-01/mms/cs">cs</a>
+                                <a class="releaseId" title="English" href="/browse/2025-01/mms/en">en</a>
+                                <a class="releaseId" title="Spanish" href="/browse/2025-01/mms/es">es</a>
+                                <a class="releaseId" title="French" href="/browse/2025-01/mms/fr">fr</a>
+                                <a class="releaseId" title="Kazakh" href="/browse/2025-01/mms/kk">kk</a>
+                                <a class="releaseId" title="Latin" href="/browse/2025-01/mms/la">la</a>
+                                <a class="releaseId" title="Portuguese" href="/browse/2025-01/mms/pt">pt</a>
+                                <a class="releaseId" title="Russian" href="/browse/2025-01/mms/ru">ru</a>
+                                <a class="releaseId" title="Slovak" href="/browse/2025-01/mms/sk">sk</a>
+                                <a class="releaseId" title="Swedish" href="/browse/2025-01/mms/sv">sv</a>
+                                <a class="releaseId" title="Turkish" href="/browse/2025-01/mms/tr">tr</a>
+                                <a class="releaseId" title="Uzbek" href="/browse/2025-01/mms/uz">uz</a>
+                                <a class="releaseId" title="Chinese" href="/browse/2025-01/mms/zh">zh</a>
+                    </span>
+
+                        <span class="column">
+                        </span>
+
+                        <span>
+                            <a class="changes-made" href="https://icdcdn.who.int/static/releasefiles/changes/changes_MMS_2025-01_2024-01.zip">Changes made in this release</a>
+                        </span>
+                </li>
+                <li class="flex-container">
+
+                    <span class="column">
+                            <a class="releaseId" href="/browse/2024-01/mms/en">2024-01</a>
+                        
+                    </span>
+
+                    <span class="column-large">
+                                <a class="releaseId" title="Arabic" href="/browse/2024-01/mms/ar">ar</a>
+                                <a class="releaseId" title="Czech" href="/browse/2024-01/mms/cs">cs</a>
+                                <a class="releaseId" title="English" href="/browse/2024-01/mms/en">en</a>
+                                <a class="releaseId" title="Spanish" href="/browse/2024-01/mms/es">es</a>
+                                <a class="releaseId" title="French" href="/browse/2024-01/mms/fr">fr</a>
+                                <a class="releaseId" title="Portuguese" href="/browse/2024-01/mms/pt">pt</a>
+                                <a class="releaseId" title="Russian" href="/browse/2024-01/mms/ru">ru</a>
+                                <a class="releaseId" title="Turkish" href="/browse/2024-01/mms/tr">tr</a>
+                                <a class="releaseId" title="Uzbek" href="/browse/2024-01/mms/uz">uz</a>
+                                <a class="releaseId" title="Chinese" href="/browse/2024-01/mms/zh">zh</a>
+                    </span>
+
+                        <span class="column">
+                        </span>
+
+                        <span>
+                            <a class="changes-made" href="https://icdcdn.who.int/static/releasefiles/changes/changes_MMS_2024-01_2023-01.zip">Changes made in this release</a>
+                        </span>
+                </li>
+                <li class="flex-container">
+
+                    <span class="column">
+                            <a class="releaseId" href="/browse/2023-01/mms/en">2023-01</a>
+                        
+                    </span>
+
+                    <span class="column-large">
+                                <a class="releaseId" title="Arabic" href="/browse/2023-01/mms/ar">ar</a>
+                                <a class="releaseId" title="English" href="/browse/2023-01/mms/en">en</a>
+                                <a class="releaseId" title="Spanish" href="/browse/2023-01/mms/es">es</a>
+                                <a class="releaseId" title="French" href="/browse/2023-01/mms/fr">fr</a>
+                                <a class="releaseId" title="Russian" href="/browse/2023-01/mms/ru">ru</a>
+                                <a class="releaseId" title="Turkish" href="/browse/2023-01/mms/tr">tr</a>
+                                <a class="releaseId" title="Chinese" href="/browse/2023-01/mms/zh">zh</a>
+                    </span>
+
+                        <span class="column">
+                        </span>
+
+                        <span>
+                            <a class="changes-made" href="https://icdcdn.who.int/static/releasefiles/changes/changes_MMS_2023-01_2022-02.zip">Changes made in this release</a>
+                        </span>
+                </li>
+                <li class="flex-container">
+
+                    <span class="column">
+                            <a class="releaseId" href="/browse/2022-02/mms/en">2022-02</a>
+                        
+                    </span>
+
+                    <span class="column-large">
+                                <a class="releaseId" title="Arabic" href="/browse/2022-02/mms/ar">ar</a>
+                                <a class="releaseId" title="English" href="/browse/2022-02/mms/en">en</a>
+                                <a class="releaseId" title="Spanish" href="/browse/2022-02/mms/es">es</a>
+                                <a class="releaseId" title="French" href="/browse/2022-02/mms/fr">fr</a>
+                                <a class="releaseId" title="Chinese" href="/browse/2022-02/mms/zh">zh</a>
+                    </span>
+
+                        <span class="column">
+                        </span>
+
+                        <span>
+                            <a class="changes-made" href="https://icdcdn.who.int/static/releasefiles/changes/changes_MMS_2022-02_2021-05.zip">Changes made in this release</a>
+                        </span>
+                </li>
+                <li class="flex-container">
+
+                    <span class="column">
+                            <a class="releaseId" href="/browse/2021-05/mms/en">2021-05</a>
+                        
+                    </span>
+
+                    <span class="column-large">
+                                <a class="releaseId" title="Arabic" href="/browse/2021-05/mms/ar">ar</a>
+                                <a class="releaseId" title="English" href="/browse/2021-05/mms/en">en</a>
+                                <a class="releaseId" title="Spanish" href="/browse/2021-05/mms/es">es</a>
+                                <a class="releaseId" title="Chinese" href="/browse/2021-05/mms/zh">zh</a>
+                    </span>
+
+                        <span class="column">
+                        </span>
+
+                        <span>
+                            <a class="changes-made" href="https://icdcdn.who.int/static/releasefiles/changes/changes_MMS_2021-05_2020-09.zip">Changes made in this release</a>
+                        </span>
+                </li>
+                <li class="flex-container">
+
+                    <span class="column">
+                            <a class="releaseId" href="/browse/2020-09/mms/en">2020-09</a>
+                        
+                    </span>
+
+                    <span class="column-large">
+                                <a class="releaseId" title="Arabic" href="/browse/2020-09/mms/ar">ar</a>
+                                <a class="releaseId" title="English" href="/browse/2020-09/mms/en">en</a>
+                                <a class="releaseId" title="Spanish" href="/browse/2020-09/mms/es">es</a>
+                    </span>
+
+                        <span class="column">
+                        </span>
+
+                        <span>
+                            <a class="changes-made" href="https://icdcdn.who.int/static/releasefiles/changes/changes_MMS_2020-09_2019-04.zip">Changes made in this release</a>
+                        </span>
+                </li>
+                <li class="flex-container">
+
+                    <span class="column">
+                            <a class="releaseId" href="/browse/2019-04/mms/en">2019-04</a>
+                        
+                    </span>
+
+                    <span class="column-large">
+                                <a class="releaseId" title="English" href="/browse/2019-04/mms/en">en</a>
+                    </span>
+
+                        <span class="column">
+                        </span>
+
+                        <span>
+                            <a class="changes-made" href="https://icdcdn.who.int/static/releasefiles/changes/changes_MMS_2019-04_2018-06.zip">Changes made in this release</a>
+                        </span>
+                </li>
+                <li class="flex-container">
+
+                    <span class="column">
+                            <a class="releaseId" href="/browse/2018/mms/en">2018</a>
+                        (initial release)
+                    </span>
+
+                    <span class="column-large">
+                                <a class="releaseId" title="English" href="/browse/2018/mms/en">en</a>
+                    </span>
+
+                        <span class="column">
+                        </span>
+
+                        <span>
+                            <a class="changes-made" href=""></a>
+                        </span>
+                </li>
+    </ul>
+</div>
+
+
+        </div>
+        <hr />
+        <div class="showAllReleases">
+
+            <div class="releaseList">
+                <h2>
+                    <a class="openReleaseList" href="/browse/releases/icf">International Classification of Functioning, Disability and Health</a>
+                </h2>
+            </div>
+
+
+
+
+
+
+<div class="releaseList">
+
+    <div class="flex-container">
+        
+        <h3 class="column">Releases</h3>
+        
+            <h3 class="column-large">Available languages</h3>
+        
+        
+        
+    </div>
+
+    <ul>
+                <li class="flex-container">
+
+                    <span class="column">
+                            <a class="releaseId releaseId-icf" href="/browse/2026-01/icf/en">2026-01</a>
+                        (latest release)
+                    </span>
+
+                    <span class="column-large">
+                                <a class="releaseId releaseId-icf" title="Czech" href="/browse/2026-01/icf/cs">cs</a>
+                                <a class="releaseId releaseId-icf" title="English" href="/browse/2026-01/icf/en">en</a>
+                                <a class="releaseId releaseId-icf" title="Spanish" href="/browse/2026-01/icf/es">es</a>
+                                <a class="releaseId releaseId-icf" title="Estonian" href="/browse/2026-01/icf/et">et</a>
+                                <a class="releaseId releaseId-icf" title="Finnish" href="/browse/2026-01/icf/fi">fi</a>
+                                <a class="releaseId releaseId-icf" title="French" href="/browse/2026-01/icf/fr">fr</a>
+                                <a class="releaseId releaseId-icf" title="Armenian" href="/browse/2026-01/icf/hy">hy</a>
+                                <a class="releaseId releaseId-icf" title="Italian" href="/browse/2026-01/icf/it">it</a>
+                                <a class="releaseId releaseId-icf" title="Mongolian" href="/browse/2026-01/icf/mn">mn</a>
+                                <a class="releaseId releaseId-icf" title="Portuguese" href="/browse/2026-01/icf/pt">pt</a>
+                                <a class="releaseId releaseId-icf" title="Russian" href="/browse/2026-01/icf/ru">ru</a>
+                                <a class="releaseId releaseId-icf" title="Slovak" href="/browse/2026-01/icf/sk">sk</a>
+                                <a class="releaseId releaseId-icf" title="Turkish" href="/browse/2026-01/icf/tr">tr</a>
+                                <a class="releaseId releaseId-icf" title="Ukrainian" href="/browse/2026-01/icf/uk">uk</a>
+                                <a class="releaseId releaseId-icf" title="Chinese" href="/browse/2026-01/icf/zh">zh</a>
+                    </span>
+
+
+                </li>
+                <li class="flex-container">
+
+                    <span class="column">
+                            <a class="releaseId releaseId-icf" href="/browse/2025-01/icf/en">2025-01</a>
+                        
+                    </span>
+
+                    <span class="column-large">
+                                <a class="releaseId releaseId-icf" title="Czech" href="/browse/2025-01/icf/cs">cs</a>
+                                <a class="releaseId releaseId-icf" title="English" href="/browse/2025-01/icf/en">en</a>
+                                <a class="releaseId releaseId-icf" title="Spanish" href="/browse/2025-01/icf/es">es</a>
+                                <a class="releaseId releaseId-icf" title="French" href="/browse/2025-01/icf/fr">fr</a>
+                                <a class="releaseId releaseId-icf" title="Turkish" href="/browse/2025-01/icf/tr">tr</a>
+                                <a class="releaseId releaseId-icf" title="Chinese" href="/browse/2025-01/icf/zh">zh</a>
+                    </span>
+
+
+                </li>
+                <li class="flex-container">
+
+                    <span class="column">
+                            <a class="releaseId releaseId-icf" href="/browse/2024-01/icf/en">2024-01</a>
+                        (initial release)
+                    </span>
+
+                    <span class="column-large">
+                                <a class="releaseId releaseId-icf" title="Czech" href="/browse/2024-01/icf/cs">cs</a>
+                                <a class="releaseId releaseId-icf" title="English" href="/browse/2024-01/icf/en">en</a>
+                                <a class="releaseId releaseId-icf" title="Turkish" href="/browse/2024-01/icf/tr">tr</a>
+                    </span>
+
+
+                </li>
+    </ul>
+</div>
+
+
+        </div>
+        <hr />
+        <div class="showAllReleases">
+
+            <div class="releaseList">
+                <h2>
+                    <a class="openReleaseList" href="/browse/releases/foundation">WHOFIC Foundation</a>
+                </h2>
+            </div>
+
+
+
+
+
+
+<div class="releaseList">
+
+    <div class="flex-container">
+        
+        <h3 class="column">Releases</h3>
+        
+            <h3>
+                Available languages
+                    <br />
+                    <span class="foundation-languages">Some of the languages listed under foundation might be in prerelease state. Please check the linearization for the state of the translation for individual classifications</span>
+            </h3>
+        
+        
+        
+    </div>
+
+    <ul>
+                <li class="flex-container">
+
+                    <span class="column">
+                            <a class="releaseId" href="/browse/2026-01/foundation/en">2026-01</a>
+                        (latest release)
+                    </span>
+
+                    <span class="column-large">
+                                <a class="releaseId" title="Arabic" href="/browse/2026-01/foundation/ar">ar</a>
+                                <a class="releaseId" title="Czech" href="/browse/2026-01/foundation/cs">cs</a>
+                                <a class="releaseId" title="German" href="/browse/2026-01/foundation/de">de</a>
+                                <a class="releaseId" title="English" href="/browse/2026-01/foundation/en">en</a>
+                                <a class="releaseId" title="Spanish" href="/browse/2026-01/foundation/es">es</a>
+                                <a class="releaseId" title="Estonian" href="/browse/2026-01/foundation/et">et</a>
+                                <a class="releaseId" title="French" href="/browse/2026-01/foundation/fr">fr</a>
+                                <a class="releaseId" title="Finnish" href="/browse/2026-01/foundation/fi">fi</a>
+                                <a class="releaseId" title="Armenian" href="/browse/2026-01/foundation/hy">hy</a>
+                                <a class="releaseId" title="Italian" href="/browse/2026-01/foundation/it">it</a>
+                                <a class="releaseId" title="Kazakh" href="/browse/2026-01/foundation/kk">kk</a>
+                                <a class="releaseId" title="Mongolian" href="/browse/2026-01/foundation/mn">mn</a>
+                                <a class="releaseId" title="Latin" href="/browse/2026-01/foundation/la">la</a>
+                                <a class="releaseId" title="Portuguese" href="/browse/2026-01/foundation/pt">pt</a>
+                                <a class="releaseId" title="Russian" href="/browse/2026-01/foundation/ru">ru</a>
+                                <a class="releaseId" title="Slovak" href="/browse/2026-01/foundation/sk">sk</a>
+                                <a class="releaseId" title="Swedish" href="/browse/2026-01/foundation/sv">sv</a>
+                                <a class="releaseId" title="Turkish" href="/browse/2026-01/foundation/tr">tr</a>
+                                <a class="releaseId" title="Ukrainian" href="/browse/2026-01/foundation/uk">uk</a>
+                                <a class="releaseId" title="Uzbek" href="/browse/2026-01/foundation/uz">uz</a>
+                                <a class="releaseId" title="Chinese" href="/browse/2026-01/foundation/zh">zh</a>
+                    </span>
+
+
+                </li>
+                <li class="flex-container">
+
+                    <span class="column">
+                            <a class="releaseId" href="/browse/2025-01/foundation/en">2025-01</a>
+                        
+                    </span>
+
+                    <span class="column-large">
+                                <a class="releaseId" title="Arabic" href="/browse/2025-01/foundation/ar">ar</a>
+                                <a class="releaseId" title="Czech" href="/browse/2025-01/foundation/cs">cs</a>
+                                <a class="releaseId" title="English" href="/browse/2025-01/foundation/en">en</a>
+                                <a class="releaseId" title="Spanish" href="/browse/2025-01/foundation/es">es</a>
+                                <a class="releaseId" title="French" href="/browse/2025-01/foundation/fr">fr</a>
+                                <a class="releaseId" title="Kazakh" href="/browse/2025-01/foundation/kk">kk</a>
+                                <a class="releaseId" title="Latin" href="/browse/2025-01/foundation/la">la</a>
+                                <a class="releaseId" title="Portuguese" href="/browse/2025-01/foundation/pt">pt</a>
+                                <a class="releaseId" title="Russian" href="/browse/2025-01/foundation/ru">ru</a>
+                                <a class="releaseId" title="Slovak" href="/browse/2025-01/foundation/sk">sk</a>
+                                <a class="releaseId" title="Swedish" href="/browse/2025-01/foundation/sv">sv</a>
+                                <a class="releaseId" title="Turkish" href="/browse/2025-01/foundation/tr">tr</a>
+                                <a class="releaseId" title="Uzbek" href="/browse/2025-01/foundation/uz">uz</a>
+                                <a class="releaseId" title="Chinese" href="/browse/2025-01/foundation/zh">zh</a>
+                    </span>
+
+
+                </li>
+                <li class="flex-container">
+
+                    <span class="column">
+                            <a class="releaseId" href="/browse/2024-01/foundation/en">2024-01</a>
+                        
+                    </span>
+
+                    <span class="column-large">
+                                <a class="releaseId" title="Arabic" href="/browse/2024-01/foundation/ar">ar</a>
+                                <a class="releaseId" title="Czech" href="/browse/2024-01/foundation/cs">cs</a>
+                                <a class="releaseId" title="English" href="/browse/2024-01/foundation/en">en</a>
+                                <a class="releaseId" title="Spanish" href="/browse/2024-01/foundation/es">es</a>
+                                <a class="releaseId" title="French" href="/browse/2024-01/foundation/fr">fr</a>
+                                <a class="releaseId" title="Portuguese" href="/browse/2024-01/foundation/pt">pt</a>
+                                <a class="releaseId" title="Russian" href="/browse/2024-01/foundation/ru">ru</a>
+                                <a class="releaseId" title="Turkish" href="/browse/2024-01/foundation/tr">tr</a>
+                                <a class="releaseId" title="Uzbek" href="/browse/2024-01/foundation/uz">uz</a>
+                                <a class="releaseId" title="Chinese" href="/browse/2024-01/foundation/zh">zh</a>
+                    </span>
+
+
+                </li>
+                <li class="flex-container">
+
+                    <span class="column">
+                            <a class="releaseId" href="/browse/2023-01/foundation/en">2023-01</a>
+                        
+                    </span>
+
+                    <span class="column-large">
+                                <a class="releaseId" title="Arabic" href="/browse/2023-01/foundation/ar">ar</a>
+                                <a class="releaseId" title="English" href="/browse/2023-01/foundation/en">en</a>
+                                <a class="releaseId" title="Spanish" href="/browse/2023-01/foundation/es">es</a>
+                                <a class="releaseId" title="French" href="/browse/2023-01/foundation/fr">fr</a>
+                                <a class="releaseId" title="Russian" href="/browse/2023-01/foundation/ru">ru</a>
+                                <a class="releaseId" title="Turkish" href="/browse/2023-01/foundation/tr">tr</a>
+                                <a class="releaseId" title="Chinese" href="/browse/2023-01/foundation/zh">zh</a>
+                    </span>
+
+
+                </li>
+                <li class="flex-container">
+
+                    <span class="column">
+                            <a class="releaseId" href="/browse/2022-02/foundation/en">2022-02</a>
+                        
+                    </span>
+
+                    <span class="column-large">
+                                <a class="releaseId" title="Arabic" href="/browse/2022-02/foundation/ar">ar</a>
+                                <a class="releaseId" title="English" href="/browse/2022-02/foundation/en">en</a>
+                                <a class="releaseId" title="Spanish" href="/browse/2022-02/foundation/es">es</a>
+                                <a class="releaseId" title="French" href="/browse/2022-02/foundation/fr">fr</a>
+                                <a class="releaseId" title="Chinese" href="/browse/2022-02/foundation/zh">zh</a>
+                    </span>
+
+
+                </li>
+                <li class="flex-container">
+
+                    <span class="column">
+                            <a class="releaseId" href="/browse/2021-05/foundation/en">2021-05</a>
+                        
+                    </span>
+
+                    <span class="column-large">
+                                <a class="releaseId" title="Arabic" href="/browse/2021-05/foundation/ar">ar</a>
+                                <a class="releaseId" title="English" href="/browse/2021-05/foundation/en">en</a>
+                                <a class="releaseId" title="Spanish" href="/browse/2021-05/foundation/es">es</a>
+                                <a class="releaseId" title="Chinese" href="/browse/2021-05/foundation/zh">zh</a>
+                    </span>
+
+
+                </li>
+                <li class="flex-container">
+
+                    <span class="column">
+                            <a class="releaseId" href="/browse/2020-09/foundation/en">2020-09</a>
+                        
+                    </span>
+
+                    <span class="column-large">
+                                <a class="releaseId" title="Arabic" href="/browse/2020-09/foundation/ar">ar</a>
+                                <a class="releaseId" title="English" href="/browse/2020-09/foundation/en">en</a>
+                                <a class="releaseId" title="Spanish" href="/browse/2020-09/foundation/es">es</a>
+                    </span>
+
+
+                </li>
+                <li class="flex-container">
+
+                    <span class="column">
+                            <a class="releaseId" href="/browse/2019-04/foundation/en">2019-04</a>
+                        
+                    </span>
+
+                    <span class="column-large">
+                                <a class="releaseId" title="English" href="/browse/2019-04/foundation/en">en</a>
+                    </span>
+
+
+                </li>
+                <li class="flex-container">
+
+                    <span class="column">
+                            <a class="releaseId" href="/browse/2018/foundation/en">2018</a>
+                        (initial release)
+                    </span>
+
+                    <span class="column-large">
+                                <a class="releaseId" title="English" href="/browse/2018/foundation/en">en</a>
+                    </span>
+
+
+                </li>
+    </ul>
+</div>
+
+
+        </div>
+        <hr />
+
+
+
+
+
+
+    </main>
+
+    <script src="/browse/js/site.js?v=fvaAZoOrLe-cnfND6nrAdKI2_3swiRoxVJrHjvV24Cg"></script>
+    
+</body>
+
+</html>

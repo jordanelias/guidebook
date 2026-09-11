@@ -3,13 +3,14 @@
 scripts/generate/build_site.py — build the spec pages, and prove they match the DB.
 
 SCOPE, STATED PLAINLY: this drives `site/specs/` only. `site/populations/` (11
-files) and `site/rooms/` (17 files) have generators — population_page.py and
-room_page.py — that it does NOT drive; room_page.py additionally crashes
-against the live schema (no `rooms` table). Naming this "build every page"
-would be false for 28 of ~121 files.
+files) and `site/rooms/` (17 files) are NOT driven by it. room_page.py still
+exists (owner-parked on decision 8) and crashes against the live schema (no
+`rooms` table); population_page.py was DELETED 2026-09-11 — it raised `no such
+column: item_code` against the live DB and had no caller, this docstring
+included. Naming this "build every page" would be false for 28 of ~121 files.
 
-The per-page generators (spec_page.py, population_page.py, room_page.py) each
-render ONE page from argv and have never had a driver. The 87 files under
+The per-page generators (spec_page.py, room_page.py) each render ONE page from
+argv and have never had a driver. The 87 files under
 site/specs/ were produced by an ad-hoc loop at some point and have not been
 regenerated since; six items added later have no page at all, including A-18,
 which holds one of only two `primary` item_bpc_links. This is that driver.

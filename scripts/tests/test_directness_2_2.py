@@ -83,6 +83,35 @@ check("sr_meta=AGGREGATE, clinical=SPECIFIC, code=CODE",
       and d.GRAIN_FROM_EVIDENCE_TYPE["clinical"] == d.GRAIN_SPECIFIC
       and d.GRAIN_FROM_EVIDENCE_TYPE["code"] == d.GRAIN_CODE)
 
+# 5b. grain_for() — G3/G6, RATIFIED (RATIFICATION-PACKAGE-2026-07-12, owner
+# directive 2026-07-13), promoted 2026-09-10 from the engine-local
+# source_grain() that used to be the only place this rule was implemented
+# while GRAIN_FROM_EVIDENCE_TYPE above stated co1->specific / standard_eb->code
+# UNCONDITIONALLY. These assertions are what makes that disagreement
+# impossible now: the ratified, conditional rule is tested where it lives.
+check("grain_for: co1 + dpo_research => AGGREGATE (G3, population-grain)",
+      d.grain_for("co1", 1, "dpo_research")[0] == d.GRAIN_AGGREGATE)
+check("grain_for: co1 + advocacy_position => AGGREGATE (G3, population-grain)",
+      d.grain_for("co1", 1, "advocacy_position")[0] == d.GRAIN_AGGREGATE)
+check("grain_for: co1 + academic_narrative => SPECIFIC (G3, individual-grain)",
+      d.grain_for("co1", 1, "academic_narrative")[0] == d.GRAIN_SPECIFIC)
+check("grain_for: co1 + None => SPECIFIC (G3 default, individual-grain)",
+      d.grain_for("co1", 1, None)[0] == d.GRAIN_SPECIFIC)
+check("grain_for: co1 + an unrecognised co1_source_type => SPECIFIC, not a crash",
+      d.grain_for("co1", 1, "dpo_annual_survey")[0] == d.GRAIN_SPECIFIC)
+check("grain_for: standard_eb @ T2 => AGGREGATE (G6, synthesis-tier)",
+      d.grain_for("standard_eb", 2, None)[0] == d.GRAIN_AGGREGATE)
+check("grain_for: standard_eb @ T4 => CODE (G6, regulatory)",
+      d.grain_for("standard_eb", 4, None)[0] == d.GRAIN_CODE)
+check("grain_for: standard_eb @ T5 => CODE (G6, regulatory)",
+      d.grain_for("standard_eb", 5, None)[0] == d.GRAIN_CODE)
+check("grain_for: evidence types G3/G6 do not touch fall back to the default map",
+      d.grain_for("sr_meta", 2, None)[0] == d.GRAIN_FROM_EVIDENCE_TYPE["sr_meta"]
+      and d.grain_for("clinical", 1, None)[0] == d.GRAIN_FROM_EVIDENCE_TYPE["clinical"]
+      and d.grain_for("code", 6, None)[0] == d.GRAIN_FROM_EVIDENCE_TYPE["code"])
+check("NOT_ASSESSED is a shared string constant, not an engine-local one",
+      d.NOT_ASSESSED == "NOT_ASSESSED")
+
 # 6. Scale<->RecommendationStrength reconciliation
 check("SCALE_FROM_RECOMMENDATION maps the 3 strengths",
       d.SCALE_FROM_RECOMMENDATION == {"STRONG_UNIVERSAL": d.SCALE_UNIVERSAL,

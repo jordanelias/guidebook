@@ -2846,3 +2846,206 @@ ACTION: (1) Treat `v_item_extractions` as deleted; migration 073 carries the rea
 Re-derive any view count from the live schema — never quote 5, 7, or any successor figure. (3)
 Leave line 1669 as written; this entry is its supersession.
 DATE: 2026-09-10 — sweep of migration 073's prose callers.
+
+---
+
+## Owner ruling 2026-09-11 — adjudication delegated for a named set; the medical lens gets filled
+
+> **"Fable 5.1 to adjudicate and resolve all items that are presented to me. Opus to execute in
+> agonist-antagonist method. Ensure that medical gets filled out."**
+
+Register row **D-0188**. Three clauses, and the third is not what it looks like.
+
+**Clause 1 delegates adjudication, and it reaches only the items that were presented.** On contact
+this supersedes the Delegation clauses of D-0170, D-0169 and D-0182, and
+`governance/decision-protocol.md` §2.4 items 2–3, **as applied to the enumerated items and no
+further**. The DG-NON list is not amended generally. Reading it wider would be an agent enlarging
+its own authority out of a sentence about a queue.
+
+**Clause 3 ENFORCES AN EXISTING RULING. It does not make a new one.** D-0170 adopted the medical
+lens on 2026-08-27 — *"yes we include the medical model too. we give our users the choice of what
+model they want to use to browse the site."* This session had nevertheless escalated
+*"`base_taxonomy_medical` stays empty; the medical lens is explicitly deferred"* as though it were an
+open owner question. **That escalation contradicted a ratified ruling and is withdrawn.**
+
+It is the identical failure §6 of `CLAUDE.md` already documents for the subject half of the cell key:
+*a ruling can be in the repository, in the file §9 sends you to, and still fail to bind if the search
+stops at the first answer it finds.* There the first answer was the lens half. Here it was an empty
+table — 0 rows read as an open question rather than as an unexecuted ruling, which is rule 4's *"treat
+a 0-row object as unproven, not clean"* failing in the other direction. **An empty table is not
+evidence that nobody has decided.**
+
+**What the adjudication then corrected, which matters more than the delegation.** The mechanism
+D-0170 stated for lens-switching — *"a medical taxonomy needs the same crossings into the other three
+or the lens cannot switch"* — was itself superseded on 2026-09-01. D-0184 measured that traversal
+manufactures inference and made the lens a **column**: render is `WHERE medical_code = ?`. The
+crossing maps survive as the authoring aid that lets a row state its other lens codes without
+inference, and as the coverage measure — not as the render path. A session reading D-0170 alone
+would have built the wrong thing, correctly citing a ratified DR while doing it.
+
+CONDITION: Any session acting on an escalation, reading an empty base-vocabulary table, or citing
+D-0170's crossing mechanism.
+ACTION: Before escalating, search `sessions/` with `grep -r` (`.ignore` hides it from ripgrep) for a
+ruling that already settles it — an empty table is the likeliest place a ratified ruling sits
+unexecuted. Cite D-0184 for the lens mechanism, not D-0170. This delegation covers the enumerated
+items only.
+DATE: 2026-09-11 — owner ruling, quoted above.
+
+---
+
+## Owner ruling 2026-09-11 — ICD-11 is the medical-lens source, at BLOCK grain, for correspondence
+
+> **"Yes, use ICD-11."**
+> **"eg MB5 series of codes discussing paralytic symptoms"**
+> **"we are looking through ICD-11 for how it corresponds to our existing ICF/identities/access
+> needs on a high level"**
+
+This resolves the licensing hold recorded the same day: **DG-NON item 7 is answered — ICD-11 is the
+source.** It also settles two things the adjudication had to guess, and corrects it on one.
+
+**The grain is the BLOCK, not the entity.** MB5 is a block, and "on a high level" says so outright.
+The adjudication had proposed 29 disease *entities* (6A02 autism, 8A40 MS, 8B00 stroke); that is the
+wrong shape for a browsing lens and is superseded.
+
+**The purpose is CORRESPONDENCE, not vocabulary.** The lens exists so a reader arriving with a
+diagnosis reaches the functional demand the project holds. It is not a clinical nomenclature and must
+not grow into one.
+
+**THE JOIN IS DERIVABLE AND MUST STILL BE PRUNED.** ICF and ICD-11 are complementary WHO
+classifications, and all 17 axes already declare ICF b-anchors, so the route is: ICD-11 block → the
+ICF b-code it impairs → our axis → the identities and needs already attached. Nothing in that chain
+is invented. **But it over-reaches, and the owner's own example proves it**: MB5 impairs b730 (muscle
+power); b730 is declared by AX-AMB, AX-REA and AX-WHM; those axes carry nine identities including
+BAR, LPA and TALL — who attach for *anthropometric* reasons, not muscle power. Run the join naively
+and the map asserts that paralytic symptoms correspond to being tall. **That is the inference
+D-0184 measured when it made the lens a column rather than a traversal, reappearing one hop further
+out.** The route proposes candidates; judgment prunes; the pruning reason is recorded in the row's
+`note` and its strength in `mapping_confidence`.
+
+**What the lens reaches that nothing else does, as a measurement not an argument:** `AX-COG-L`
+(Information-access demand, b117/b167) carries **zero** identities and is the only orphan of the
+seventeen. ICD-11's intellectual-development and language blocks land there.
+
+**AND NO CODE CAN BE VERIFIED FROM THE CONTAINER.** Measured: `id.who.int` 401 on every route, the
+token endpoint 400 (OAuth2 client credentials required), the public browser a JavaScript application
+whose HTML carries no codes, its search endpoint 0 bytes, and no WHO credentials in the environment.
+So `icd11_verified_at` lands NULL on every row written today, which is precisely what that column
+means. Free registration at `icd.who.int/icdapi` yields the credentials; set them on the remote
+environment and `retrieval_log.fetch()` can persist real `codeinfo` payloads for
+`add-medical --icd11-payload` to stamp from.
+
+CONDITION: Any session writing a medical-lens row, or deriving an ICD-11 ↔ ICF correspondence.
+ACTION: Work at block grain. Derive candidates through `axes.icf_b_anchors`, then PRUNE — never ship
+the join's raw output. Leave `icd11_verified_at` NULL until a persisted WHO payload exists; never
+write a code from recollection, which is CLAUDE.md §5(c) made worse by the payload being
+unobtainable rather than merely unfetched.
+DATE: 2026-09-11 — owner ruling, quoted above.
+
+---
+
+## The medical lens is DEMAND-POPULATED, not pre-populated — the owner's granularity doubt, measured
+
+> **Owner, 2026-09-11: "maybe the medical vocabulary is just too granular to be usable."**
+
+**Measured, and the doubt is correct.** From WHO's own MMS 2024-01 release file (persisted,
+`sha256 b92212138c67738a…`): 28 chapters, 1,353 blocks, 34,663 categories. Restricted to the eight
+chapters that could touch any of our 17 axes — 06, 08, 09, 10, 11, 15, 21, 22 — the **coarsest**
+browsable grain is still **108 depth-1 blocks**, 6.4× the axis vocabulary and 4.7× the populations,
+over 6,812 categories. A lens nobody can browse is not a lens.
+
+**But the doubt kills a DESIGN, not the lens.** What is too granular is a *pre-populated mirror* of
+ICD-11. What the ruling D-0170 actually requires is that a reader arriving with a diagnosis reaches
+the functional demand we hold — and that is a **resolver**, not a taxonomy. A reader does not scan 108
+blocks for theirs; they arrive already holding one identifier.
+
+**The corpus proves the demand is tiny.** Of the nine admitted sources, exactly **one** names a
+diagnosis with enough specificity to need a route: REF-00973, *"17 people with SCI, C4-T12, AIS
+A/B/C"* — `MB57 Functional level of injury of spinal cord`. One more is partial: REF-00975's
+*"arthritis 28.9pc, back problems 28.3pc, knee problems 24.1pc"* (chapter 15). The remaining seven are
+device-based or explicitly diagnosis-free — REF-00784's own match row reads *"diagnosis not
+reported"*. **A 108-row vocabulary to serve two live needs is precisely what `CLAUDE.md` §8 forbids:
+nothing is added without naming what reads it.**
+
+**THE RULING: `base_taxonomy_medical` grows on demand.** A row is written when an admitted source, or
+a reader's query, actually names a diagnosis that needs a route into the axes. Not before. Anchors are
+verified against the persisted release file at write time. The table is an *index of encountered
+diagnoses*, never a mirror of the classification — which is rule 5's "point, do not copy" applied to a
+whole vocabulary rather than a column.
+
+**This is the THIRD reading of that empty table, and the first honest one.** It was read as *"a
+ruling awaiting execution"* (wrong — and the error was mine, recorded above), then as *"blocked on
+licensing"* (true but incidental). The real state is **"no admitted source has yet named a diagnosis
+needing a route"** — measurable, self-clearing, and it goes to zero the moment one does. An empty
+table with a stated demand test is not a gap; it is a correct reading of a corpus that studies
+equipment rather than conditions.
+
+**A finding for the book, not just the schema.** The circulation literature is **device-based**: it
+studies wheelchairs, scooters and walking aids, not diagnoses. So a reader arriving with "paraplegia"
+faces a real crossing that the evidence base does not make for them. That gap is content worth stating
+in the guidebook, and the medical lens is where a reader meets it.
+
+CONDITION: Any session considering rows for `base_taxonomy_medical`, or reading its row count.
+ACTION: Write a row only when a named diagnosis in an admitted source or a reader route requires it,
+with its anchor verified against a persisted WHO release file. Never pre-populate from a chapter, a
+block list, or a model's recollection. Read a low row count as a measurement of demand, not as
+unexecuted work.
+DATE: 2026-09-11 — owner doubt, measured and sustained.
+
+---
+
+## CORRECTION, same day — "demand-populated" re-instated a position the owner had overruled
+
+The entry above ("The medical lens is DEMAND-POPULATED") is **superseded on its trigger clause**, by
+an adversarial pass commissioned to confirm it. Appended rather than edited: the ledger is append-only
+and the reasoning that produced the error is the part worth keeping.
+
+**WHAT SURVIVES:** never mirror the classification. 1,353 blocks and 34,663 categories against a
+17-axis vocabulary is not a browsable lens, and that measurement reproduces exactly.
+
+**WHAT FAILS: "not before a source or reader names one."** Three things break it.
+
+**(1) It answers a question the owner did not ask.** The owner's doubt was *"maybe the medical
+vocabulary is just too granular to be usable"* — about **grain**. Converting it into a ruling that
+yields **zero rows** re-instates `ORDER-OF-WORK.md:97` ("stays empty; explicitly deferred") under a
+new name, six hours after the owner overruled exactly that with *"Ensure that medical gets filled
+out."* A doubt about how coarse to be is not an instruction to stop.
+
+**(2) The "reader's query" trigger is unreachable.** Pre-launch there is no reader, no query log, no
+mechanism. So the only live trigger was admitted sources, and the answer to *"when does a reader with
+paraplegia get a route"* became "when circulation research happens to say paraplegia."
+
+**(3) The demand count was wrong, and wrong in the direction that flattered the ruling.** "Exactly one
+diagnosis named" was true of canonical `evidence_sources` and false of the corpus the same session was
+building: the batch-06 scratch holds **REF-00979 Chow 2009, *"…for Young Men With Paraplegia"*** —
+MB56 in its own title — and REF-00980 Sanford 1997. Two of eleven. **The demand test was already
+firing and the session did not notice**, because it measured the committed table and not the work in
+front of it.
+
+**THE RULING AS CORRECTED.** The lens is populated **by correspondence from the registries we already
+hold** — 17 axes and 23 populations, of which BAR, LPA, TALL, NDV, MOB, COM and ALL are identity-first
+or umbrellas taking no anchor (`governance/functional-taxonomy.md:241-245`). That bounds it at roughly
+**15–20 rows**: not 108, not zero. §4 of the functional taxonomy already names several anchors
+(`:293` AUT, `:294` ADHD, `:304` LCOV). §8's "name what reads it" is satisfied — the reader is the
+lens switch D-0170 was ruled for. On-demand growth continues **after** that, not instead of it.
+
+**AND THE CHAPTER PREFERENCE WAS TOO BROAD.** "Chapter 21 is the right chapter" holds for motor and
+pain — MB44 states b770 in WHO's own words, and MG30 Chronic pain sits there deliberately — and
+**fails for sensory, cognitive and energy-limiting**, where the disease chapters hold the functional
+block: `9D9` Vision impairment with its severity grades, `AB5` Disorders with hearing impairment,
+`6A00` intellectual development, `8E49` postviral fatigue. **The rule is: anchor on the block whose
+title states the presentation, wherever it sits.**
+
+**Two further corrections to the record.** The eight-chapter set (06/08/09/10/11/15/21/22) was
+described as "the chapters that could touch any of our 17 axes" and is falsified by `axes` itself —
+AX-CHM declares b435/b440 (chapters 04, 12) and AX-CNT declares b620/b525 (chapters 13, 16). The
+honest set is ~144 depth-1 blocks; the direction of error strengthens "do not mirror" and the stated
+premise was still false. And **"the circulation literature is device-based" does not generalise**: 9
+of batch 05's 15 searches were device-framed and produced all 7 admissions, so it is a finding about
+this project's queries, not about the field. It must not ship as a claim about the literature.
+
+CONDITION: Any session populating the medical lens, or citing the demand-populated entry above.
+ACTION: Populate by correspondence from `populations` and `axes` first, ~15–20 rows, anchoring on the
+block whose title states the presentation regardless of chapter; then on demand. Do not cite the
+device-based finding as a property of the field. Measure demand against the corpus being built, not
+only the committed table.
+DATE: 2026-09-11 — adversarial pass on the same day's ruling.

@@ -40,6 +40,13 @@ or historical-alias identifier without rewriting past attestations.
 |---|---|---|---|
 | `cell-curator` | `specification-curator` | 2026-08-12 | `decisions/DR-2026-08-12-specification-curator-rename.md` |
 
+*Note (2026-09-10): `specification-curator` — the "Current identifier" above — was itself deleted
+this date (`skills/specification-curator_SKILL.md`, item-layer skill, subject retired by the
+2026-09-01 owner ruling). This row is a historical record of the 2026-08-12 rename event, not a
+pointer to a live skill; it stays, and is not rewritten, for the same reason the row below it
+gives. `cell-curator`'s resolution via `EXTRA_RULE_IDS` for historical attestations is unaffected
+by the later deletion.*
+
 **Past attestations citing a former identifier are NOT rewritten.** Step 2 of the process above
 calls for a migration that rewrites every `attestations/*.json`; that step is deliberately not taken
 here, and the departure is recorded in the DR. Rewriting a committed adherence log to say a session
@@ -67,20 +74,19 @@ Each active skill's effort level is in `references/effort-guide.md`. Triggers an
 adversarial-research              cross-reference-resolver         literature-review-planner        research-log-manager
 audit-consolidator                doctrine-recheck                 markdown-formatter               sensory-coherence-checker
 bibliography-compiler             economics-auditor                multilingual-research            session-consolidator
-specification-curator             economics-researcher             practice-note-generator          structure-auditor
-citation-miner                    evidence-auditor                 progressive-measurement          supplemental-integrator
-citation-verifier                 evidence-metadata-rehabilitation prose-style-checker              table-formatter
-connection-auditor                find-and-replace                 question-author                  toc-editor
-connection-discovery              functional-deficit-auditor       reasoning-doc-citations          version-diff
-content-gap-analyzer              functional-deficit-researcher    relational-integrity-checker     voice-style
-critique-report-writer            gap-driven-mining                                                 workplan-orchestrator
-cross-population-conflict-mapper  github-filing
+citation-miner                    economics-researcher             practice-note-generator          structure-auditor
+citation-verifier                 evidence-auditor                 progressive-measurement          supplemental-integrator
+connection-auditor                evidence-metadata-rehabilitation prose-style-checker              table-formatter
+connection-discovery              find-and-replace                 question-author                  toc-editor
+content-gap-analyzer              functional-deficit-auditor       reasoning-doc-citations          version-diff
+critique-report-writer            functional-deficit-researcher    relational-integrity-checker     voice-style
+cross-population-conflict-mapper  gap-driven-mining                                                 workplan-orchestrator
+                                  github-filing
                                   github-io
                                   guidebook-auditor
                                   integrity-protocol
                                   item-audit-pipeline
                                   item-consolidation-analyzer
-                                  item-specification-writer
                                   jurisdiction-tracker
 ```
 

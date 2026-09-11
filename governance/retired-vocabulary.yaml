@@ -106,6 +106,19 @@ exempt_paths:
   # grep was logged. Unexempted, the check punishes the act of verifying it, and
   # every future session that searches for a retired term reddens it again.
   - "scratchpad/**/commands.jsonl" # verbatim shell-command logs
+  # THIRD-PARTY BYTES, AND THE MOST DANGEROUS OMISSION ON THIS LIST UNTIL 2026-09-11.
+  # Retrieval payloads are what a publisher, Crossref, PubMed or WHO actually sent.
+  # A retired term inside one is never this project's USE of it -- RV-010
+  # ('physically disabled') was firing on two Crossref records, one of them a
+  # third party's own reference-list entry for a 2016 paper. Unexempted, this check
+  # asks a session to make an immutable evidence artefact go green, and the only way
+  # to do that is to EDIT A STORED PAYLOAD. That is the 2026-08-19 fabrication
+  # mechanism exactly (CLAUDE.md §5(c)): six gates passed invented co-authors because
+  # each asked whether a field was populated, never whether it was true, and the one
+  # defence built afterwards was `--verify-authors` diffing stored data against the
+  # bytes received. A gate that pressures a session to alter those bytes attacks the
+  # defence. Same class as the verbatim logs above; stronger reason.
+  - "retrieval-log/**"             # verbatim third-party payloads; NEVER editable
   # Verbatim CAPTURED OUTPUT of the checks themselves. Same class as the command
   # log above and found the same way: on 2026-08-25 the owner directive to commit
   # scratchpads landed a baseline capture of `run_checks.py --all`, and this check
@@ -180,7 +193,6 @@ entries:
       - "references/tooling-register.md"         # ditto
       - "scripts/tests/test_db_integrity.py"     # comment explains why C5 lapsed
       - "scripts/db.py"                          # comment on the line that STRIPS the key
-      - "scripts/migrate_evidence_sources_v2.py" # one-time migrator FROM the old schema
       # The 2026-05-05 pre-implementation DESIGN document. Its CREATE TABLE blocks
       # are what was specified, not what was built; a DDL banner at the head of the
       # file says so and points at the live schema. Preserved rather than corrected,
@@ -314,8 +326,6 @@ entries:
     exempt_paths:
       - "CLAUDE.md"                              # §7 documents the hazard by name
       - "scripts/audit/db_path_env_audit.py"     # scopes the contract by this path
-      - "scripts/migrate/_legacy_guard.py"       # quotes §7 to justify the guard
-      - "skills/item-specification-writer_SKILL.md"   # warns sessions off it by name
       # Proposal-of-record documents from 2026-05-02 whose execution landed
       # elsewhere. Each now carries an OUTCOME BANNER at its head saying so; the
       # proposal body is preserved verbatim, because rewriting a proposal to match
@@ -337,10 +347,8 @@ entries:
     exempt_paths:
       - "CLAUDE.md"
       - "scripts/audit/db_path_env_audit.py"
-      - "scripts/migrate/_legacy_guard.py"
       # Correct uses of a scratch path, which is what /tmp is for:
       - "scripts/bootstrap.sh"            # downloads a COPY of the DB and reads it
-      - "scripts/verify_resolved_dois.py" # defensive default; resolve-dois.yml sets the real path
       - "scripts/tests/**"                # fixture DBs
     note: >-
       This is stale context that ACTIVELY MISLEADS rather than merely ageing: a
@@ -404,10 +412,8 @@ entries:
       - "schemas/evidence_state.py"
       - "scripts/tests/test_db_integrity.py"
       - "scripts/validate_verification_consistency.py"
-      - "scripts/verify_resolved_dois.py"
       - "scripts/audit_evidence_metadata.py"
       - "scripts/generate/spec_page.py"
-      - "scripts/generate/population_page.py"
       - "tools/regenerate_vetting_surface.py"
       - "governance/evidence-methodology.md"      # carries the D-0157 amendment banner
       - "governance/co1-operational.md"           # ditto
@@ -416,7 +422,6 @@ entries:
       - "skills/gap-driven-mining_SKILL.md"
       - "skills/reasoning-doc-citations_SKILL.md"
       # B — the token is still correct here
-      - "scripts/convert/convert_sources.py"      # the old->new crosswalk itself
 
   - id: RV-013
     token: VERIFIED-1
@@ -435,10 +440,8 @@ entries:
       - "schemas/evidence_state.py"
       - "scripts/tests/test_db_integrity.py"
       - "scripts/validate_verification_consistency.py"
-      - "scripts/verify_resolved_dois.py"
       - "scripts/audit_evidence_metadata.py"
       - "scripts/generate/spec_page.py"
-      - "scripts/generate/population_page.py"
       - "tools/regenerate_vetting_surface.py"
       - "governance/evidence-methodology.md"      # carries the D-0157 amendment banner
       - "governance/co1-operational.md"           # ditto
@@ -447,7 +450,6 @@ entries:
       - "skills/gap-driven-mining_SKILL.md"
       - "skills/reasoning-doc-citations_SKILL.md"
       # B — the token is still correct here
-      - "scripts/convert/convert_sources.py"      # the old->new crosswalk itself
 
   - id: RV-014
     token: VERIFIED-2
@@ -469,10 +471,8 @@ entries:
       - "schemas/evidence_state.py"
       - "scripts/tests/test_db_integrity.py"
       - "scripts/validate_verification_consistency.py"
-      - "scripts/verify_resolved_dois.py"
       - "scripts/audit_evidence_metadata.py"
       - "scripts/generate/spec_page.py"
-      - "scripts/generate/population_page.py"
       - "tools/regenerate_vetting_surface.py"
       - "governance/evidence-methodology.md"      # carries the D-0157 amendment banner
       - "governance/co1-operational.md"           # ditto
@@ -481,7 +481,6 @@ entries:
       - "skills/gap-driven-mining_SKILL.md"
       - "skills/reasoning-doc-citations_SKILL.md"
       # B — the token is still correct here
-      - "scripts/convert/convert_sources.py"      # the old->new crosswalk itself
 
   - id: RV-015
     token: UNVERIFIED-2
@@ -500,10 +499,8 @@ entries:
       - "schemas/evidence_state.py"
       - "scripts/tests/test_db_integrity.py"
       - "scripts/validate_verification_consistency.py"
-      - "scripts/verify_resolved_dois.py"
       - "scripts/audit_evidence_metadata.py"
       - "scripts/generate/spec_page.py"
-      - "scripts/generate/population_page.py"
       - "tools/regenerate_vetting_surface.py"
       - "governance/evidence-methodology.md"      # carries the D-0157 amendment banner
       - "governance/co1-operational.md"           # ditto
@@ -512,7 +509,6 @@ entries:
       - "skills/gap-driven-mining_SKILL.md"
       - "skills/reasoning-doc-citations_SKILL.md"
       # B — the token is still correct here
-      - "scripts/convert/convert_sources.py"      # the old->new crosswalk itself
 
   - id: RV-016
     token: VERIFIED-WITH-CORRECTION
@@ -535,10 +531,8 @@ entries:
       - "schemas/evidence_state.py"
       - "scripts/tests/test_db_integrity.py"
       - "scripts/validate_verification_consistency.py"
-      - "scripts/verify_resolved_dois.py"
       - "scripts/audit_evidence_metadata.py"
       - "scripts/generate/spec_page.py"
-      - "scripts/generate/population_page.py"
       - "tools/regenerate_vetting_surface.py"
       - "governance/evidence-methodology.md"      # carries the D-0157 amendment banner
       - "governance/co1-operational.md"           # ditto
@@ -547,7 +541,6 @@ entries:
       - "skills/gap-driven-mining_SKILL.md"
       - "skills/reasoning-doc-citations_SKILL.md"
       # B — the token is still correct here
-      - "scripts/convert/convert_sources.py"      # the old->new crosswalk itself
 
   - id: RV-018
     token: IS-PAYWALL
@@ -620,7 +613,6 @@ entries:
     exempt_paths:
       # A — the paper trail for this retirement
       - "CLAUDE.md"
-      - "scripts/init_db.py"
 
   - id: RV-010
     token: physically disabled
@@ -677,7 +669,6 @@ entries:
     exempt_paths:
       # A — the paper trail for this retirement
       - "CLAUDE.md"                                        # §4 names the old name once, as a pointer
-      - "skills/specification-curator_SKILL.md"            # ditto, in its repointing note
       - "governance/check-registry.yaml"                   # a check note quotes the pre-rename tamper trace
       - "workplan/2026-08-12-step-R-rename-execution-record.md"
       # B — fixtures that must name it because they replay the rename onto an
@@ -725,7 +716,6 @@ entries:
     retired_by: "owner ruling 2026-08-14; schema migration 058 — CHECK no longer admits it"
     replacement: "PROPOSED"
     exempt_paths:
-      - "scripts/validate_conflict.py"   # the enforcer; its map names what it rejects
       - "scripts/db.py"                  # comment on the line carrying the new set
     note: >-
       A direct synonym retirement: nothing about the conflict's meaning moved, only
@@ -740,7 +730,6 @@ entries:
     retired_by: "owner ruling 2026-08-14; schema migration 058"
     replacement: "UNRESOLVED, with the Person-Mode handoff named in mode_s_trigger"
     exempt_paths:
-      - "scripts/validate_conflict.py"   # the enforcer
       - "scripts/db.py"                  # comment on the new set
       - "schemas/conflict.py"            # docstring explaining the rehomed rule
     note: >-
@@ -769,7 +758,6 @@ entries:
     retired_by: "as RV-023"
     replacement: "UNRESOLVED"
     exempt_paths:
-      - "scripts/validate_conflict.py"   # the enforcer
       - "schemas/conflict.py"            # docstring explaining the rehomed rule
     note: >-
       The file layer's spelling of RV-023 — registered separately because the two

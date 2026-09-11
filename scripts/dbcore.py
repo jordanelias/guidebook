@@ -537,6 +537,21 @@ TABLES = [
     # FK order, parents first: base_parameters -> terms (above); specifications ->
     # base_parameters, convergence_assessment, gaps and the four lens registries;
     # specification_source_links -> specifications, evidence_sources (head of list).
+    # ADDED 2026-09-11, and this is the SIXTH time this list has been blind to a live
+    # table -- after evidence_source_authors, source_locators, observed_terms/
+    # term_adjudications, terms, and base_parameters/specifications two days ago. The
+    # comment above already said "CREATING A TABLE IS NOT DONE UNTIL THE CAPTURE PATH CAN
+    # SEE IT", and base_taxonomy_medical was created by migration 065 and sat unlisted
+    # regardless -- so the rule was written down and then not applied to the very next
+    # table. Migration 074 adds the two crossing maps and edits this list in the same
+    # change, which is what that comment asked for.
+    # FK order, parents first: base_taxonomy_medical is the parent of BOTH maps and of
+    # specifications.medical_code and source_value_extractions.medical_code, so it must
+    # precede all four. The maps reference populations(population_code) and
+    # axes(axis_code), which are base vocabularies no batch writes.
+    "base_taxonomy_medical",
+    "identity_medical_map",
+    "icf_medical_map",
     "base_parameters",
     "source_value_extractions",
     "convergence_assessment",

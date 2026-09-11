@@ -1,9 +1,9 @@
 {
-  "as_of": "2026-09-10",
+  "as_of": "2026-09-11",
   "n_slices": 80,
   "n_items": 0,
-  "total_source_instances": 9,
-  "unique_sources": 9,
+  "total_source_instances": 11,
+  "unique_sources": 11,
   "grade_distribution": {
     "A": 0,
     "B": 0,
@@ -13,7 +13,7 @@
     "F": 79
   },
   "tier_totals": {
-    "1": 4,
+    "1": 6,
     "2": 1,
     "3": 4
   },
@@ -24,13 +24,13 @@
     "disputed-only": 0
   },
   "strength_band_instances": {
-    "full": 9,
+    "full": 11,
     "partial": 0,
     "weak": 0,
     "disputed": 0
   },
   "practice_stream_instances": 0,
-  "english_instances": 8,
+  "english_instances": 10,
   "zero_yield_search_languages": [],
   "item_basis_health": {},
   "slices": [
@@ -38,8 +38,8 @@
       "slug": "accessible-circulation-geometry",
       "topic": "entrances-and-circulation",
       "state": null,
-      "n": 9,
-      "full": 9,
+      "n": 11,
+      "full": 11,
       "partial": 0,
       "weak": 0,
       "disputed": 0,
@@ -49,22 +49,22 @@
       "strength_band": "full",
       "weak_only": false,
       "tiers": {
-        "1": 4,
+        "1": 6,
         "2": 1,
         "3": 4
       },
       "etypes": {
-        "clinical": 7,
+        "clinical": 9,
         "sr_meta": 1,
         "co1": 1
       },
       "markers": {
-        "●": 9
+        "●": 11
       },
       "n_jur": 1,
       "n_jur_raw": 1,
       "n_true_jur": 1,
-      "n_null_jur": 8,
+      "n_null_jur": 10,
       "polluted_jur": {},
       "jurs": {
         "GB": 1
@@ -74,12 +74,12 @@
       },
       "n_lang": 2,
       "langs": {
-        "en": 8,
+        "en": 10,
         "ja": 1
       },
-      "n_en": 8,
+      "n_en": 10,
       "n_nonen": 1,
-      "pct_en": 88.9,
+      "pct_en": 90.9,
       "anglo_core": 0,
       "supra": 0,
       "non_anglo": 1,
@@ -87,13 +87,13 @@
       "sl_searched": 0,
       "sl_hit": 0,
       "search_jurs": 0,
-      "score": 64.3,
+      "score": 64.2,
       "components": {
         "A": 16,
         "B": 30,
         "C": 5,
         "D": 5,
-        "E": 8.3
+        "E": 8.2
       },
       "grade": "C"
     },
