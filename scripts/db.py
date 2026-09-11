@@ -34,6 +34,7 @@ CLI usage:
 import json
 import os
 import re
+import zipfile
 import sqlite3
 import sys
 import argparse
@@ -3268,8 +3269,27 @@ def insert_medical(code: str, display_name: str, icd11: str, session: str,
         if not pay.exists():
             raise Refusal(f"--icd11-payload {icd11_payload!r} REFUSED: file does not exist. "
                           f"icd11_verified_at is set from BYTES or not at all.")
-        body = pay.read_bytes().decode("utf-8", errors="replace")
-        missing = [c.strip() for c in icd11.split(",") if c.strip() and c.strip() not in body]
+        # READ ARCHIVE MEMBERS, NOT JUST RAW BYTES. The first version of this check
+        # substring-matched `pay.read_bytes()`, and the only artefact it will ever be
+        # pointed at is WHO's release file — a DEFLATE-COMPRESSED ZIP, in which no code
+        # occurs literally. Measured: b"MB56" in the raw zip -> False; in the decompressed
+        # member -> True. So the check refused the very payload that proves the anchor,
+        # and the ruling it enforces ("verified against the persisted release file at write
+        # time") was unexecutable. The MB5 verification of 2026-09-11 02:47 was done by
+        # hand in Python and never through this writer, while the record claimed otherwise.
+        raw = pay.read_bytes()
+        bodies = [raw.decode("utf-8", errors="replace")]
+        if zipfile.is_zipfile(pay):
+            with zipfile.ZipFile(pay) as zf:
+                for member in zf.namelist():
+                    # Bounded: a release file's members are text tabulations. A member
+                    # larger than 64 MiB is not what this check is for, and decompressing
+                    # it blindly is how a zip becomes a denial of service.
+                    info = zf.getinfo(member)
+                    if info.file_size <= 64 * 1024 * 1024:
+                        bodies.append(zf.read(member).decode("utf-8", errors="replace"))
+        missing = [c.strip() for c in icd11.split(",")
+                   if c.strip() and not any(c.strip() in b for b in bodies)]
         if missing:
             raise Refusal(
                 f"--icd11-payload does not contain {missing!r}. REFUSED rather than stamped: "

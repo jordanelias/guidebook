@@ -2990,3 +2990,62 @@ with its anchor verified against a persisted WHO release file. Never pre-populat
 block list, or a model's recollection. Read a low row count as a measurement of demand, not as
 unexecuted work.
 DATE: 2026-09-11 — owner doubt, measured and sustained.
+
+---
+
+## CORRECTION, same day — "demand-populated" re-instated a position the owner had overruled
+
+The entry above ("The medical lens is DEMAND-POPULATED") is **superseded on its trigger clause**, by
+an adversarial pass commissioned to confirm it. Appended rather than edited: the ledger is append-only
+and the reasoning that produced the error is the part worth keeping.
+
+**WHAT SURVIVES:** never mirror the classification. 1,353 blocks and 34,663 categories against a
+17-axis vocabulary is not a browsable lens, and that measurement reproduces exactly.
+
+**WHAT FAILS: "not before a source or reader names one."** Three things break it.
+
+**(1) It answers a question the owner did not ask.** The owner's doubt was *"maybe the medical
+vocabulary is just too granular to be usable"* — about **grain**. Converting it into a ruling that
+yields **zero rows** re-instates `ORDER-OF-WORK.md:97` ("stays empty; explicitly deferred") under a
+new name, six hours after the owner overruled exactly that with *"Ensure that medical gets filled
+out."* A doubt about how coarse to be is not an instruction to stop.
+
+**(2) The "reader's query" trigger is unreachable.** Pre-launch there is no reader, no query log, no
+mechanism. So the only live trigger was admitted sources, and the answer to *"when does a reader with
+paraplegia get a route"* became "when circulation research happens to say paraplegia."
+
+**(3) The demand count was wrong, and wrong in the direction that flattered the ruling.** "Exactly one
+diagnosis named" was true of canonical `evidence_sources` and false of the corpus the same session was
+building: the batch-06 scratch holds **REF-00979 Chow 2009, *"…for Young Men With Paraplegia"*** —
+MB56 in its own title — and REF-00980 Sanford 1997. Two of eleven. **The demand test was already
+firing and the session did not notice**, because it measured the committed table and not the work in
+front of it.
+
+**THE RULING AS CORRECTED.** The lens is populated **by correspondence from the registries we already
+hold** — 17 axes and 23 populations, of which BAR, LPA, TALL, NDV, MOB, COM and ALL are identity-first
+or umbrellas taking no anchor (`governance/functional-taxonomy.md:241-245`). That bounds it at roughly
+**15–20 rows**: not 108, not zero. §4 of the functional taxonomy already names several anchors
+(`:293` AUT, `:294` ADHD, `:304` LCOV). §8's "name what reads it" is satisfied — the reader is the
+lens switch D-0170 was ruled for. On-demand growth continues **after** that, not instead of it.
+
+**AND THE CHAPTER PREFERENCE WAS TOO BROAD.** "Chapter 21 is the right chapter" holds for motor and
+pain — MB44 states b770 in WHO's own words, and MG30 Chronic pain sits there deliberately — and
+**fails for sensory, cognitive and energy-limiting**, where the disease chapters hold the functional
+block: `9D9` Vision impairment with its severity grades, `AB5` Disorders with hearing impairment,
+`6A00` intellectual development, `8E49` postviral fatigue. **The rule is: anchor on the block whose
+title states the presentation, wherever it sits.**
+
+**Two further corrections to the record.** The eight-chapter set (06/08/09/10/11/15/21/22) was
+described as "the chapters that could touch any of our 17 axes" and is falsified by `axes` itself —
+AX-CHM declares b435/b440 (chapters 04, 12) and AX-CNT declares b620/b525 (chapters 13, 16). The
+honest set is ~144 depth-1 blocks; the direction of error strengthens "do not mirror" and the stated
+premise was still false. And **"the circulation literature is device-based" does not generalise**: 9
+of batch 05's 15 searches were device-framed and produced all 7 admissions, so it is a finding about
+this project's queries, not about the field. It must not ship as a claim about the literature.
+
+CONDITION: Any session populating the medical lens, or citing the demand-populated entry above.
+ACTION: Populate by correspondence from `populations` and `axes` first, ~15–20 rows, anchoring on the
+block whose title states the presentation regardless of chapter; then on demand. Do not cite the
+device-based finding as a property of the field. Measure demand against the corpus being built, not
+only the committed table.
+DATE: 2026-09-11 — adversarial pass on the same day's ruling.
