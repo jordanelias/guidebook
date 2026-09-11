@@ -508,6 +508,7 @@ database:
   tables_written_directly_by_code:
   - axes
   - base_parameters
+  - base_taxonomy_medical
   - bpc_metadata
   - case_studies
   - citation_mining
@@ -522,6 +523,8 @@ database:
   - evidence_sources
   - gap_mining
   - gaps
+  - icf_medical_map
+  - identity_medical_map
   - item_audit_runs
   - items
   - jurisdictional_values
@@ -545,7 +548,6 @@ database:
   - url_verification_runs
   - weighting_profile
   tables_with_no_writer_at_all:
-  - base_taxonomy_medical
   - case_study_outcomes
   - case_study_populations
   - case_study_specs
@@ -555,8 +557,6 @@ database:
   - economics_entry_specs
   - external_root_registry
   - extraction_population_links
-  - icf_medical_map
-  - identity_medical_map
   - item_bpc_links
   - item_population_elaborations
   - probe_population_links
@@ -598,6 +598,7 @@ writers:
     - item_audit_runs
     scripts/db.py:
     - base_parameters
+    - base_taxonomy_medical
     - bpc_metadata
     - case_studies
     - citation_mining
@@ -610,6 +611,8 @@ writers:
     - evidence_sources
     - gap_mining
     - gaps
+    - icf_medical_map
+    - identity_medical_map
     - item_audit_runs
     - jurisdictional_values
     - observed_terms

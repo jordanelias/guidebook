@@ -1096,6 +1096,37 @@ def main():
     p_ap.add_argument("--session", required=True)
     p_ap.add_argument("--dry-run", action="store_true")
 
+    # add-medical — the writer base_taxonomy_medical shipped without, and went on
+    # shipping without for the two weeks between migration 065 creating the table and
+    # 074 giving it something to point with. See insert_medical for the refusals.
+    p_md = sub.add_parser("add-medical",
+                          help="Mint a medical-lens row and at least one crossing "
+                               "(the FOURTH lens, D-0170)")
+    p_md.add_argument("--code", required=True, help="MD-<UPPER>, e.g. MD-AUTISM")
+    p_md.add_argument("--display-name", dest="display_name", required=True,
+                      help="the project's OWN name for the concept — not copied prose")
+    p_md.add_argument("--description", help="the project's OWN definition")
+    p_md.add_argument("--icd11", required=True,
+                      help="comma list of ICD-11 codes this ANCHORS to. A bare code is a "
+                           "fact; it is a pointer, not borrowed text (rule 5)")
+    p_md.add_argument("--icd11-payload", dest="icd11_payload",
+                      help="path under retrieval-log/ whose bytes CONTAIN every --icd11 "
+                           "code. ONLY this sets icd11_verified_at; absent means NULL, "
+                           "and NULL means not verified")
+    p_md.add_argument("--identity", help="populations.population_code to cross to")
+    p_md.add_argument("--relationship", choices=["names", "member_of", "identity_first"],
+                      help="required with --identity")
+    p_md.add_argument("--icf", help="axes.axis_code to cross to")
+    p_md.add_argument("--role", choices=["PRIMARY", "SECONDARY", "SITUATIONAL"],
+                      help="required with --icf. No ALIAS: a diagnosis is never an alias "
+                           "of a functional demand (074)")
+    p_md.add_argument("--mapping-confidence", dest="mapping_confidence",
+                      choices=["high_predictive", "moderate", "low", "minimal"],
+                      help="required with --icf; functional-taxonomy §3.2")
+    p_md.add_argument("--note")
+    p_md.add_argument("--session", required=True)
+    p_md.add_argument("--dry-run", action="store_true")
+
     # add-extraction — the writer source_value_extractions shipped without. See
     # insert_extraction for the refusals, and for the three that are DELIBERATELY
     # ABSENT (uniqueness on (ref_id, parameter_id), a value-directness grade, and
@@ -1885,6 +1916,15 @@ def main():
             session=args.session,
             dry_run=args.dry_run,
         ))
+
+    elif args.command == "add-medical":
+        out = insert_medical(
+            code=args.code, display_name=args.display_name, icd11=args.icd11,
+            description=args.description, icd11_payload=args.icd11_payload,
+            identity=args.identity, relationship=args.relationship,
+            icf=args.icf, role=args.role, mapping_confidence=args.mapping_confidence,
+            note=args.note, session=args.session, dry_run=args.dry_run)
+        print(json.dumps(out, indent=2, ensure_ascii=False))
 
     elif args.command == "add-extraction":
         # The lens flags are named for the LENS and stored in the COLUMN; the mapping
@@ -3128,6 +3168,160 @@ def insert_term(from_observation: int, canonical_en: str, rationale: str, sessio
         return {"term_id": term_id, "canonical_en": canonical_en,
                 "adjudication_id": cur.lastrowid, "from_surface_form": obs["surface_form"],
                 "from_ref_id": obs["ref_id"], "dry_run": dry_run}
+
+
+_MD_CODE = re.compile(r"^MD-[A-Z]+(-[A-Z]+)*$")
+
+
+def insert_medical(code: str, display_name: str, icd11: str, session: str,
+                   description: str = None, icd11_payload: str = None,
+                   identity: str = None, relationship: str = None,
+                   icf: str = None, role: str = None, mapping_confidence: str = None,
+                   note: str = None, dry_run: bool = False):
+    """Mint a medical-lens row AND at least one crossing, in one act.
+
+    THE FOURTH LENS. D-0170 (2026-08-27) adopted it on the owner's ruling -- "yes we
+    include the medical model too. we give our users the choice of what model they want to
+    use to browse the site." `base_taxonomy_medical` was created by migration 065 and had
+    no writer for the fortnight since, which is why D-0182's own evidence could count "0
+    medical" attachment points. Migration 074 gave it the crossings; this gives it a verb.
+
+    ROW AND CROSSING TOGETHER, on the `insert_term` precedent. A medical row with no
+    crossing cannot be reached from any other lens, so the lens cannot switch into it --
+    D-0170's structural requirement, still binding even though D-0184 moved the render path
+    off traversal. Minting the row alone would satisfy a CHECK and defeat the purpose.
+
+    WHAT IT REFUSES, and why each refusal is the point:
+
+      A CODE OUTSIDE `^MD-[A-Z]+(-[A-Z]+)*$`. Letters only, so no medical code can ever
+      match the `\b[A-Z]-[0-9]{2}\b` prior-version item-code shape that CLAUDE.md §7
+      warns a grep will hand you. A digit in this namespace would collide with the exact
+      surface the owner deleted the item layer to get away from.
+
+      A VALUE-BEARING NAME OR DESCRIPTION, via the same `_VALUE_BEARING` that gates
+      `add-term` -- IMPORTED, not retyped, because two copies of one regex is rule 5 in
+      miniature. A diagnosis names the subject, never the determination.
+
+      NO CROSSING. `--identity` needs `--relationship`; `--icf` needs both `--role` and
+      `--mapping-confidence`; and at least one of the two must be present.
+
+      `--identity ALL`. ALL is a scope marker, not a population, and crossing a diagnosis
+      to "everyone" asserts the medical model as the frame rather than offering it as a
+      lens -- which is what D-0170's rationale exists to refuse.
+
+      A DUPLICATE CODE, with the existing row named, on the `add-term` NAMES-EXISTING
+      precedent: a second row for one concept is the dual home rule 5 forbids.
+
+    icd11_verified_at IS SET ONLY FROM BYTES. `--icd11-payload` must name a file under
+    `retrieval-log/` whose content contains every code in `--icd11`; otherwise the column
+    stays NULL and NULL means "not verified". This is `retrieval_log.py`'s artefact
+    discipline (CLAUDE.md §5(c)) applied to a vocabulary instead of a citation -- the 2026-
+    08-19 fabrication was bibliographic fields written from memory past six green gates, and
+    an anchor asserted from memory is the same act on a different column.
+
+    WHAT IS DELIBERATELY ABSENT: any writer for `display_name` or `description` that copies
+    text from a classification. The anchor points; the prose is ours. That is rule 5, and it
+    is also why the licensing question on WHO's terms does not reach these two columns --
+    see scratchpad/pr-134-repository-orientation/MEDICAL-LENS-LICENSING-STOP.md.
+    """
+    if not _MD_CODE.match(code or ""):
+        raise Refusal(
+            f"--code {code!r} REFUSED: medical codes are ^MD-[A-Z]+(-[A-Z]+)*$ -- letters "
+            f"only, no digits.\nA digit here would produce a token matching the prior-"
+            f"version item-code shape [A-Z]-NN that CLAUDE.md §7 warns every grep still "
+            f"meets. That surface is what the owner deleted the item layer to escape; this "
+            f"namespace does not rejoin it.")
+    for field, val in (("--display-name", display_name), ("--description", description)):
+        if val and _VALUE_BEARING.search(val):
+            raise Refusal(
+                f"{field} {val!r} REFUSED: it carries a number, a comparator or a min/max "
+                f"word, so it states a determination in its own name.\nA diagnosis names "
+                f"the SUBJECT. The value belongs in the determination, which the engine "
+                f"computes (owner 2026-09-09).")
+    if identity and not relationship:
+        raise Refusal("--identity given without --relationship. Say HOW the diagnosis "
+                      "relates: names | member_of | identity_first.")
+    if icf and not (role and mapping_confidence):
+        raise Refusal("--icf needs both --role and --mapping-confidence. A crossing whose "
+                      "strength is unstated reads as high-predictive to the next reader, "
+                      "which is the inference D-0184 measured and rejected.")
+    if not identity and not icf:
+        raise Refusal(
+            "REFUSED: no crossing given. A medical row with no crossing cannot be reached "
+            "from any other lens, so the lens cannot switch into it (D-0170's structural "
+            "requirement).\nPass --identity/--relationship, or --icf/--role/"
+            "--mapping-confidence, or both.")
+    if identity == "ALL":
+        raise Refusal(
+            "--identity ALL REFUSED: ALL is a scope marker, not a population. Crossing a "
+            "diagnosis to every population asserts the medical model as the project's "
+            "FRAME rather than offering it as one lens among four -- the reading D-0170's "
+            "rationale exists to refuse.")
+
+    verified_at = None
+    if icd11_payload:
+        pay = Path(icd11_payload)
+        if "retrieval-log" not in pay.parts:
+            raise Refusal(f"--icd11-payload {icd11_payload!r} REFUSED: must live under "
+                          f"retrieval-log/, which is the only store a later audit can diff "
+                          f"against.")
+        if not pay.exists():
+            raise Refusal(f"--icd11-payload {icd11_payload!r} REFUSED: file does not exist. "
+                          f"icd11_verified_at is set from BYTES or not at all.")
+        body = pay.read_bytes().decode("utf-8", errors="replace")
+        missing = [c.strip() for c in icd11.split(",") if c.strip() and c.strip() not in body]
+        if missing:
+            raise Refusal(
+                f"--icd11-payload does not contain {missing!r}. REFUSED rather than stamped: "
+                f"a payload that does not mention the code verifies nothing, and a "
+                f"verification standing with no artefact behind it is the 2026-08-19 shape.")
+        # A REAL stamp, not a guarded one. The first draft of this line read
+        # `_now() if "_now" in globals() else None`, and _now() does not exist in this
+        # module -- so --icd11-payload would have validated the bytes and then written
+        # NULL anyway, leaving a verified anchor indistinguishable from an unverified
+        # one. A writer that silently does nothing is worse than one that refuses.
+        verified_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    with connect(dry_run) as conn:
+        dup = conn.execute("SELECT medical_code, display_name FROM base_taxonomy_medical "
+                           "WHERE medical_code = ?", (code,)).fetchone()
+        if dup:
+            raise Refusal(
+                f"--code {code!r} REFUSED: already exists as {dup[1]!r}. Minting a second "
+                f"row for one concept is the dual home rule 5 forbids; add a crossing to "
+                f"the standing row instead.")
+        row = {"medical_code": code, "display_name": display_name,
+               "description": description, "icd11_anchors": icd11,
+               "icd11_verified_at": verified_at, "notes": note}
+        row = {k: v for k, v in row.items() if v is not None}
+        row.update(dbcore.stamp_for(conn, "base_taxonomy_medical", session))
+        conn.execute(
+            f"INSERT INTO base_taxonomy_medical ({','.join(row)}) "
+            f"VALUES ({','.join('?' * len(row))})", tuple(row.values()))
+        crossings = []
+        if identity:
+            c = {"identity_code": identity, "medical_code": code,
+                 "relationship": relationship, "note": note}
+            c = {k: v for k, v in c.items() if v is not None}
+            c.update(dbcore.stamp_for(conn, "identity_medical_map", session))
+            conn.execute(f"INSERT INTO identity_medical_map ({','.join(c)}) "
+                         f"VALUES ({','.join('?' * len(c))})", tuple(c.values()))
+            crossings.append({"lens": "identity", "code": identity,
+                              "relationship": relationship})
+        if icf:
+            c = {"icf_code": icf, "medical_code": code, "role": role,
+                 "mapping_confidence": mapping_confidence, "note": note}
+            c = {k: v for k, v in c.items() if v is not None}
+            c.update(dbcore.stamp_for(conn, "icf_medical_map", session))
+            conn.execute(f"INSERT INTO icf_medical_map ({','.join(c)}) "
+                         f"VALUES ({','.join('?' * len(c))})", tuple(c.values()))
+            crossings.append({"lens": "icf", "code": icf, "role": role,
+                              "mapping_confidence": mapping_confidence})
+        return {"medical_code": code, "display_name": display_name,
+                "icd11_anchors": icd11,
+                "icd11_verified_at": verified_at,
+                "anchor_verified": bool(verified_at),
+                "crossings": crossings, "dry_run": dry_run}
 
 
 def insert_parameter(term_id: str, session: str, notes: str = None,
