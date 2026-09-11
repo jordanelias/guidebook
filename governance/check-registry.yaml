@@ -1466,12 +1466,17 @@ checks:
   level: advisory
   basis: base/base-population-vocabulary
   cost: fast
-  no_floor: 'The vocabulary holds 0 rows and its CONTENT is blocked on an owner licensing
-    ruling (DG-NON item 7, governance/decision-protocol.md:81) — see scratchpad/pr-134-repository-orientation/MEDICAL-LENS-LICENSING-STOP.md.
-    A min_items floor today would be red on every run for a reason no session can clear from
-    this container, which is a check red by construction, which CLAUDE.md rule 6 says teaches
-    its reader to ignore it. RATCHET TO min_items: 1 in the same change that writes the first
-    medical row.'
+  no_floor: 'ZERO ROWS IS THE CORRECT STATE, not a blocked one, and this reason was rewritten
+    2026-09-11 because its first two versions were both wrong. It read "blocked on an owner
+    licensing ruling (DG-NON item 7)"; the owner then ruled "use ICD-11", so licensing stopped
+    being the blocker, and measurement then showed the real reason: the lens is DEMAND-POPULATED
+    (references/project-standards.md, "The medical lens is DEMAND-POPULATED"). ICD-11 offers 108
+    depth-1 blocks even restricted to the eight chapters touching our axes — 6.4x the axis
+    vocabulary — while the admitted corpus names exactly ONE diagnosis needing a route
+    (REF-00973, SCI C4-T12). A row is written when a source or a reader route names a diagnosis;
+    until one does, 0 is a measurement of demand and a floor would be red by construction for a
+    reason no session should clear (CLAUDE.md rule 6). RATCHET TO min_items: 1 in the same change
+    that writes the first medical row — rows are never deleted, so the floor holds once set.'
   note: 'WHAT REACHES THE BOOK WITHOUT IT (CLAUDE.md §8''s bar): a determination whose ONLY lens
     is a diagnosis, which renders as the medical model being the project''s frame — D-0170 adopted
     the medical lens as a READER''S CHOICE ("we give our users the choice of what model they want

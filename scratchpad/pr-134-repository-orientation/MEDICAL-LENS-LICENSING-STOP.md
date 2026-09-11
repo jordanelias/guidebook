@@ -1,3 +1,32 @@
+> # ⚠ SUPERSEDED 2026-09-11 — BOTH ITS PREMISES FELL, IN OPPOSITE DIRECTIONS
+>
+> **Read this file as a record of what was true for about four hours, not as instruction.** It is
+> kept rather than deleted because the project supersedes wrong records in place; the ledger entries
+> in `references/project-standards.md` dated 2026-09-11 are what binds.
+>
+> **1. The licensing block is lifted.** The owner ruled *"Yes, use ICD-11"*, answering DG-NON item 7
+> as to source. This file's central claim — that writing content awaits a licensing ruling — is spent.
+>
+> **2. The 29 candidate rows are withdrawn, and not because of licensing.** Measured against WHO's own
+> release file: ICD-11 offers 108 depth-1 blocks even restricted to the eight chapters touching our
+> axes, 6.4× the axis vocabulary, and the admitted corpus names exactly ONE diagnosis needing a route.
+> The lens is **demand-populated** — a row when a source or reader route names a diagnosis, never a
+> pre-populated mirror. So the thing this file was holding back is not merely unblocked; it is
+> cancelled.
+>
+> **3. And the verification claim in here is wrong too.** This file states ICD-11 codes cannot be
+> verified from the container. They can: WHO's CDN release files are unauthenticated, and
+> `SimpleTabulation-ICD-11-MMS-en.zip` is persisted under `retrieval-log/`. I had generalised from a
+> 401 API and a JavaScript browser to a closed building, which is exactly what R10 forbids.
+>
+> **What survives:** the reasoning that identifiers are facts while prose is ours (rule 5), and that
+> a determination keyed on a diagnosis alone asserts the medical model as the frame. Both are now
+> enforced in `add-medical` and migration 074.
+>
+> **One thing that CANNOT be corrected:** migration 074's header still says the content half is
+> licensing-blocked. Migrations are immutable once committed (`CLAUDE.md` rule 3 — fix forward, never
+> edit), so that text stands and this entry is its supersession.
+
 # STOP — the medical vocabulary's content half is blocked on a licensing ruling
 
 Derived 2026-09-11. The structural half (migration 074, the two crossing maps, `db.py add-medical`,
