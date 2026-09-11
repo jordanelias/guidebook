@@ -2940,3 +2940,53 @@ the join's raw output. Leave `icd11_verified_at` NULL until a persisted WHO payl
 write a code from recollection, which is CLAUDE.md §5(c) made worse by the payload being
 unobtainable rather than merely unfetched.
 DATE: 2026-09-11 — owner ruling, quoted above.
+
+---
+
+## The medical lens is DEMAND-POPULATED, not pre-populated — the owner's granularity doubt, measured
+
+> **Owner, 2026-09-11: "maybe the medical vocabulary is just too granular to be usable."**
+
+**Measured, and the doubt is correct.** From WHO's own MMS 2024-01 release file (persisted,
+`sha256 b92212138c67738a…`): 28 chapters, 1,353 blocks, 34,663 categories. Restricted to the eight
+chapters that could touch any of our 17 axes — 06, 08, 09, 10, 11, 15, 21, 22 — the **coarsest**
+browsable grain is still **108 depth-1 blocks**, 6.4× the axis vocabulary and 4.7× the populations,
+over 6,812 categories. A lens nobody can browse is not a lens.
+
+**But the doubt kills a DESIGN, not the lens.** What is too granular is a *pre-populated mirror* of
+ICD-11. What the ruling D-0170 actually requires is that a reader arriving with a diagnosis reaches
+the functional demand we hold — and that is a **resolver**, not a taxonomy. A reader does not scan 108
+blocks for theirs; they arrive already holding one identifier.
+
+**The corpus proves the demand is tiny.** Of the nine admitted sources, exactly **one** names a
+diagnosis with enough specificity to need a route: REF-00973, *"17 people with SCI, C4-T12, AIS
+A/B/C"* — `MB57 Functional level of injury of spinal cord`. One more is partial: REF-00975's
+*"arthritis 28.9pc, back problems 28.3pc, knee problems 24.1pc"* (chapter 15). The remaining seven are
+device-based or explicitly diagnosis-free — REF-00784's own match row reads *"diagnosis not
+reported"*. **A 108-row vocabulary to serve two live needs is precisely what `CLAUDE.md` §8 forbids:
+nothing is added without naming what reads it.**
+
+**THE RULING: `base_taxonomy_medical` grows on demand.** A row is written when an admitted source, or
+a reader's query, actually names a diagnosis that needs a route into the axes. Not before. Anchors are
+verified against the persisted release file at write time. The table is an *index of encountered
+diagnoses*, never a mirror of the classification — which is rule 5's "point, do not copy" applied to a
+whole vocabulary rather than a column.
+
+**This is the THIRD reading of that empty table, and the first honest one.** It was read as *"a
+ruling awaiting execution"* (wrong — and the error was mine, recorded above), then as *"blocked on
+licensing"* (true but incidental). The real state is **"no admitted source has yet named a diagnosis
+needing a route"** — measurable, self-clearing, and it goes to zero the moment one does. An empty
+table with a stated demand test is not a gap; it is a correct reading of a corpus that studies
+equipment rather than conditions.
+
+**A finding for the book, not just the schema.** The circulation literature is **device-based**: it
+studies wheelchairs, scooters and walking aids, not diagnoses. So a reader arriving with "paraplegia"
+faces a real crossing that the evidence base does not make for them. That gap is content worth stating
+in the guidebook, and the medical lens is where a reader meets it.
+
+CONDITION: Any session considering rows for `base_taxonomy_medical`, or reading its row count.
+ACTION: Write a row only when a named diagnosis in an admitted source or a reader route requires it,
+with its anchor verified against a persisted WHO release file. Never pre-populate from a chapter, a
+block list, or a model's recollection. Read a low row count as a measurement of demand, not as
+unexecuted work.
+DATE: 2026-09-11 — owner doubt, measured and sustained.
