@@ -1454,6 +1454,43 @@ checks:
   note: 'Pins the 1:N evidence->judgment hand-off ruled 2026-08-27. The subject table holds 0 rows, so
     every other gate is blind to a regression here (CLAUDE.md rule 4). Mutation-tested 2026-08-27: injecting
     UNIQUE(ref_id) on a scratch copy turns it red.'
+- id: medical_lens_integrity
+  cmd:
+  - python3
+  - scripts/audit/medical_lens_integrity.py
+  battery: schema
+  kinds:
+  - schema
+  - data
+  - governance
+  level: advisory
+  basis: base/base-population-vocabulary
+  cost: fast
+  no_floor: 'The vocabulary holds 0 rows and its CONTENT is blocked on an owner licensing
+    ruling (DG-NON item 7, governance/decision-protocol.md:81) — see scratchpad/pr-134-repository-orientation/MEDICAL-LENS-LICENSING-STOP.md.
+    A min_items floor today would be red on every run for a reason no session can clear from
+    this container, which is a check red by construction, which CLAUDE.md rule 6 says teaches
+    its reader to ignore it. RATCHET TO min_items: 1 in the same change that writes the first
+    medical row.'
+  note: 'WHAT REACHES THE BOOK WITHOUT IT (CLAUDE.md §8''s bar): a determination whose ONLY lens
+    is a diagnosis, which renders as the medical model being the project''s frame — D-0170 adopted
+    the medical lens as a READER''S CHOICE ("we give our users the choice of what model they want
+    to use to browse the site") and its whole rationale turns on the lens being offered rather
+    than adopted; a medical row whose display_name states its answer, the item-layer defect rebuilt
+    one lens over; and a row nothing crosses to, which a reader selecting the lens cannot get from
+    to the evidence. db.py add-medical refuses all three at write time — this is the backstop for
+    rows arriving by any other route, the same division of labour validate_parameters has with
+    add-term. Unverified ICD-11 anchors are REPORTED, not failed: with no WHO credentials in the
+    environment (id.who.int -> 401, measured 2026-09-11) unverified is the honest state, but a
+    count nobody prints is a count nobody acts on. FAULT-INJECTED 2026-09-11 on a scratch: a
+    crossing-less row and a value-bearing display_name both turn it red; the legitimate rows stay
+    CLEAN with the unverified anchor noted. ITS BASIS IS AN IMPERFECT FIT AND THAT IS RECORDED
+    RATHER THAN HIDDEN: base-population-vocabulary''s text is about codes RESOLVING downstream,
+    while this check is about the lens not becoming the FRAME. It cites D-0170 as its own
+    reference and the medical taxonomy is one of the four that ruling created, which is why the
+    claim is defensible — but a contract criterion stating "the medical lens is offered, not
+    adopted" does not exist and is owed. Claiming a criterion whose text matched would have been
+    preferable to both.'
 quarantine:
 - id: validate_db
   cmd:

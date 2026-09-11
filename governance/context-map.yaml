@@ -856,6 +856,15 @@ checks:
     - schema
     min_items: 1
     cmd: python3 scripts/audit/matrix_consistency.py
+  - id: medical_lens_integrity
+    level: advisory
+    battery: schema
+    kinds:
+    - schema
+    - data
+    - governance
+    min_items: null
+    cmd: python3 scripts/audit/medical_lens_integrity.py
   - id: metadata_integrity_audit
     level: advisory
     battery: research
