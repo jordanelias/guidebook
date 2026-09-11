@@ -9,7 +9,7 @@ Written at session close. Everything below is derived; re-derive anything you in
 determination produced, and it is more important than the determination.
 
 `specifications.value_min`, `value_max` and `value_unit` are written `NULL` by `assess_cell.py` —
-hardcoded `None, None, None` at `scripts/assess/assess_cell.py:1075` — and **read by nothing**: no
+hardcoded `None, None, None` at `scripts/assess/assess_cell.py:1079` — and **read by nothing**: no
 view, no generator, no check (`grep -rn value_min scripts/ tools/ --include='*.py'` returns only the
 engine). So the project's spine defines specification as *"the determination: therefore 1200 mm,
 marked ●"* and the stage has no resolved number anywhere. §8 calls an unread field and an uncalled
