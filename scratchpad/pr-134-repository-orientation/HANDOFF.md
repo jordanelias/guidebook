@@ -91,9 +91,26 @@ demand count was measured against the committed table while ignoring the scratch
   command that reproduces the body byte-for-byte. Its header also records which of the report's
   rulings landed and which did not — §1.1's 29-row vocabulary is still unwritten, and §2.3's
   `source_locators_integrity` gate was never built.
-- Correct the PR body's "data migration is applied" sentence.
-- A contract criterion stating **"the medical lens is offered, not adopted"**. Layer 2 enforces it
-  (`add-medical`, 074's CHECK); Layer 1 never states it.
+- ~~Correct the PR body's "data migration is applied" sentence.~~ **ALREADY DONE**, verified
+  2026-09-11 against the live body: it reads *"The only data migration applied here is `D-0188`'s
+  decisions row"*, and `git diff --name-status origin/main...HEAD -- scripts/migrations/` confirms
+  exactly two additions, `074_medical_lens_crossings.sql` and
+  `data_20260911012015_…circulation-geometry.sql`. **NOT done, and deliberately:** the body does not
+  mention the `ADJUDICATION.md` repair. `update_pull_request` takes no patch — only a whole new body
+  — so adding one line means hand-retyping ~4.4 KB of a reviewer-facing record. That is the
+  hand-copied dual home this project already carries three of per decision, and a transcription slip
+  in it would be worse than the omission. The commit message carries the full account.
+- ~~A contract criterion stating **"the medical lens is offered, not adopted"**. Layer 2 enforces it
+  (`add-medical`, 074's CHECK); Layer 1 never states it.~~ **DONE 2026-09-11**, as two criteria
+  rather than one, because it is two facts at two stages: `base/base-medical-lens-offered-not-adopted`
+  (MD- shape, no value-bearing name, every row crossed) and
+  `specification/no-diagnosis-only-determination` (a determination is never keyed on a diagnosis
+  alone). `medical_lens_integrity`'s registry `basis:` moved off the borrowed
+  `base-population-vocabulary` onto the first; `basis` is singular, so selftest C7 lists the second
+  among criteria no check claims — enforced, unclaimed, and recorded in the entry rather than left
+  to be rediscovered. Two stale rationales in the same entry were corrected in the pass: the
+  demand-populated no_floor (superseded by the correspondence correction, whose own CONDITION names
+  "any session citing the demand-populated entry") and the "no WHO credentials" note.
 - `sessions/LATEST` / `LATEST-RESEARCH` still name batch 05. They move at CLOSE with a session record,
   and **the D-0188 attestation already names `session_2026-09-10-research-batch-06-circulation-geometry`**
   — so the record must be written under exactly that id.

@@ -13,17 +13,22 @@ adding a check, which is about the book and not the apparatus):
      deleted a whole table to escape, rebuilt one lens over.
   3. A medical row nothing crosses to. The reader selects the medical lens, finds the row,
      and cannot get from it to the evidence, because the crossings are what carry them.
-  4. An ICD-11 anchor asserted from memory. Reported rather than failed, because with no WHO
-     credentials in the environment the honest state is unverified — but a count nobody
-     prints is a count nobody acts on.
+  4. An ICD-11 anchor asserted from memory. Reported rather than failed, because anchors land
+     before they are checked against bytes — but a count nobody prints is a count nobody acts
+     on. This is §5(c) on the medical lens: the 2026-08-19 fabrication passed six gates that
+     each asked whether a field was POPULATED, never whether it was TRUE.
 
 `db.py add-medical` refuses 1-3 at write time. This is the backstop for rows that arrive by
 any other route (a hand-written migration, a replay, a future writer), which is the same
 division of labour `validate_parameters` has with `add-term`.
 
-ADVISORY UNTIL ANCHORS VERIFY. Blocking on unverified anchors today would redden every run
-for a reason no session can fix from this container; that is a check red by construction,
-which CLAUDE.md rule 6 says teaches its reader to ignore it.
+ADVISORY ON THE ANCHOR COUNT, BLOCKING-SHAPED ON THE REST. The original reason given here was
+that no session could verify an anchor from this container — WRONG, and corrected 2026-09-11:
+WHO's MMS release file is served unauthenticated and is persisted under `retrieval-log/`, so
+`add-medical --icd11` verifies against bytes at write time. What remains advisory is narrower:
+a row can be written through a route that skips the writer (a hand-written migration, a replay),
+and reddening the whole battery for that is disproportionate while the table is being built.
+Revisit once the vocabulary is written — an unverified anchor then is a defect, not a backlog.
 """
 import os
 import sqlite3

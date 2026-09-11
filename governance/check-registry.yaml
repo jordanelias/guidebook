@@ -1464,19 +1464,22 @@ checks:
   - data
   - governance
   level: advisory
-  basis: base/base-population-vocabulary
+  basis: base/base-medical-lens-offered-not-adopted
   cost: fast
   no_floor: 'ZERO ROWS IS THE CORRECT STATE, not a blocked one, and this reason was rewritten
     2026-09-11 because its first two versions were both wrong. It read "blocked on an owner
     licensing ruling (DG-NON item 7)"; the owner then ruled "use ICD-11", so licensing stopped
-    being the blocker, and measurement then showed the real reason: the lens is DEMAND-POPULATED
-    (references/project-standards.md, "The medical lens is DEMAND-POPULATED"). ICD-11 offers 108
-    depth-1 blocks even restricted to the eight chapters touching our axes — 6.4x the axis
-    vocabulary — while the admitted corpus names exactly ONE diagnosis needing a route
-    (REF-00973, SCI C4-T12). A row is written when a source or a reader route names a diagnosis;
-    until one does, 0 is a measurement of demand and a floor would be red by construction for a
-    reason no session should clear (CLAUDE.md rule 6). RATCHET TO min_items: 1 in the same change
-    that writes the first medical row — rows are never deleted, so the floor holds once set.'
+    being the blocker. Its second version said the lens was DEMAND-POPULATED and that 0 measured
+    demand; the same-day adversarial pass superseded that on its trigger clause
+    (references/project-standards.md, "CORRECTION, same day"), because demand-population yields
+    zero rows and so re-instates the deferral the owner had overruled hours earlier — and its
+    demand count was taken against the committed table while the session''s own scratch already
+    held REF-00979, MB56 in its title. THE RULING AS CORRECTED: populate by CORRESPONDENCE from
+    the registries already held — 17 axes and 23 populations, less the identity-first and umbrella
+    codes taking no anchor — bounding the lens at roughly 15-20 rows, then on demand after that.
+    So 0 is now an UNWRITTEN VOCABULARY, not a measurement, and it is a floor-less state only
+    because the rows are owed rather than absent. RATCHET TO min_items: 1 in the same change that
+    writes the first medical row — rows are never deleted, so the floor holds once set.'
   note: 'WHAT REACHES THE BOOK WITHOUT IT (CLAUDE.md §8''s bar): a determination whose ONLY lens
     is a diagnosis, which renders as the medical model being the project''s frame — D-0170 adopted
     the medical lens as a READER''S CHOICE ("we give our users the choice of what model they want
@@ -1485,17 +1488,25 @@ checks:
     one lens over; and a row nothing crosses to, which a reader selecting the lens cannot get from
     to the evidence. db.py add-medical refuses all three at write time — this is the backstop for
     rows arriving by any other route, the same division of labour validate_parameters has with
-    add-term. Unverified ICD-11 anchors are REPORTED, not failed: with no WHO credentials in the
-    environment (id.who.int -> 401, measured 2026-09-11) unverified is the honest state, but a
-    count nobody prints is a count nobody acts on. FAULT-INJECTED 2026-09-11 on a scratch: a
+    add-term. Unverified ICD-11 anchors are REPORTED, not failed — but NOT for the reason this
+    entry first gave. It said "no WHO credentials in the environment (id.who.int -> 401)", which
+    generalised a closed OAuth2 API into a closed building; WHO serves the MMS release file
+    unauthenticated and it is persisted under retrieval-log/, so add-medical --icd11 verifies
+    against bytes at write time. What is actually advisory is narrower: a row can arrive through a
+    route that skips the writer. FAULT-INJECTED 2026-09-11 on a scratch: a
     crossing-less row and a value-bearing display_name both turn it red; the legitimate rows stay
-    CLEAN with the unverified anchor noted. ITS BASIS IS AN IMPERFECT FIT AND THAT IS RECORDED
-    RATHER THAN HIDDEN: base-population-vocabulary''s text is about codes RESOLVING downstream,
-    while this check is about the lens not becoming the FRAME. It cites D-0170 as its own
-    reference and the medical taxonomy is one of the four that ruling created, which is why the
-    claim is defensible — but a contract criterion stating "the medical lens is offered, not
-    adopted" does not exist and is owed. Claiming a criterion whose text matched would have been
-    preferable to both.'
+    CLEAN with the unverified anchor noted. ITS BASIS WAS AN IMPERFECT FIT AND THE FIT IS NOW
+    REAL: it borrowed base-population-vocabulary, whose text is about codes RESOLVING downstream,
+    while this check is about the lens not becoming the FRAME — and it recorded that a criterion
+    saying "the medical lens is offered, not adopted" did not exist and was owed. It exists as of
+    2026-09-11: base/base-medical-lens-offered-not-adopted carries the vocabulary half (MD- shape,
+    no value-bearing name, every row crossed) and specification/no-diagnosis-only-determination
+    carries the frame half. The basis now points at the first. Layer 1 states what Layer 2 was
+    already enforcing alone. BASIS IS SINGULAR AND THIS CHECK ENFORCES BOTH, so selftest C7 lists
+    specification/no-diagnosis-only-determination among the criteria no check claims. It is not
+    unenforced — the criterion''s own check: field names this script, and the frame test runs on
+    every invocation. Splitting the script in two to satisfy a one-to-one field would be apparatus
+    added for the apparatus''s sake, which §8 refuses.'
 quarantine:
 - id: validate_db
   cmd:

@@ -43,6 +43,17 @@ stages:
     criterion: Every ICF/demand code referenced downstream resolves to a live row in the ICF taxonomy.
     references: D-0169 (base_taxonomy_icf); DR-2026-08-24 §R8
     check: scripts/validate_axes.py
+  - id: base-medical-lens-offered-not-adopted
+    kind: integrity
+    criterion: Every medical-lens row carries an MD- code with no digit, states no determination in
+      its own display_name or description, and is crossed to at least one other lens. A row nothing
+      crosses to is a dead end for the reader who selected that lens.
+    references: 'D-0170 (owner ruling 2026-08-27: "we give our users the choice of what model they
+      want to use to browse the site") — the lens is OFFERED, not adopted, and this is the half of
+      that ruling Layer 1 previously left unstated while db.py add-medical and migration 074''s CHECK
+      enforced it at Layer 2; CLAUDE.md §7 (the [A-Z]-NN item-code trap the MD- shape cannot collide
+      with); rule 5 (description is not a restatement of the identity row''s)'
+    check: scripts/audit/medical_lens_integrity.py
   - id: base-jurisdiction-vocabulary
     kind: integrity
     criterion: Every jurisdiction value resolves to the declared vocabulary.
@@ -158,6 +169,15 @@ stages:
     criterion: A single-axis cell whose clinical sources are all Tier 3 is `provisional`, not `stated`.
     references: DR-2026-07-12-tier3-stated-threshold (A3)
     check: scripts/validate_evidence_state.py
+  - id: no-diagnosis-only-determination
+    kind: integrity
+    criterion: No determination is keyed on medical_code alone. A medical lens always accompanies at
+      least one of identity, ICF or access-need on the cell.
+    references: 'D-0170 offers the medical model as a reader''s choice and does not adopt it; a cell
+      whose only lens is a diagnosis renders as "this is what disabled people with condition X need",
+      which is that model as the PROJECT''S frame. D-0182 relaxed the lens CHECK to at-least-one,
+      which is what makes a medical-only cell writable and therefore worth gating.'
+    check: scripts/audit/medical_lens_integrity.py
   - id: derivation-handshake
     kind: integrity
     criterion: Determinations record derivation_paths (dual/population_only/function_only); a single-path
