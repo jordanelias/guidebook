@@ -5,18 +5,52 @@ Written at session close. Everything below is derived; re-derive anything you in
 
 ## THE NEXT SINGLE ACTION
 
-**Re-run batch 06 steps 1–2 on a fresh scratch copy of canonical, emit the data migration, and commit
+**Write the first determination.** `specifications` is writable for the first time since migration 071
+re-keyed it: `base_parameters` now holds the row its `parameter_id NOT NULL` FK needed, so the §4
+unwritability mechanism is cleared. Drive `scripts/assess/assess_cell.py` on parameter 1 × a lens and
+let it decide the state; do not pre-judge whether 2 sources and 3 extractions carry a `stated` cell —
+the determination is a pure function and its answer is the finding.
+
+~~**Re-run batch 06 steps 1–2 on a fresh scratch copy of canonical, emit the data migration, and commit
 it.** Four hours of walk work exists **only** in a container scratch DB that dies with the container.
-Nothing was emitted through `emit_batch_sql → emit_data_migration → migrate_db`.
+Nothing was emitted through `emit_batch_sql → emit_data_migration → migrate_db`.~~ **DONE 2026-09-11**,
+and not by re-running: the scratch had NOT died — the container survived the context compaction — so
+the walk was re-based rather than replayed. `migrate_db.py` was pointed at a copy of it via
+`GUIDEBOOK_DB_PATH`, which applied 074 and the D-0188 data migration and brought it level with
+canonical v74; `emit_batch_sql.py` then emitted only the walk's own additions. Re-running the searches
+would have destroyed a record R8 makes append-only.
 
-The loss is bounded, not total: **the retrieval-log payloads for both new papers are committed**
-(`retrieval-log/session_2026-09-10-research-batch-06-circulation-geometry/`, 15 manifest lines), so
-re-running is cheap and the bibliography comes from bytes rather than memory. The scratch is at schema
-73 and canonical is now **74**, so start from a fresh copy — do not carry the old scratch forward.
+**The batch was NOT complete, and the DoD gate is what said so.** `research_batch_dod.py` reported five
+unmet rules on the first pass — R1 (no Co-1/Co-2 pass), R2 (two T1 anchors with no `citation_mining`
+row), R4 and R13 (REF-00979/980 admitted with no `evidence_population_match` row, which R13 calls
+silently asserting that the population studied is the population served), and R11-harvest (neither new
+source carried an `observed_terms` row). All five were closed from bytes, not memory: PMID 19236980's
+abstract was retrieved for REF-00979's study population, both Crossref reference lists were retrieved
+for the backward passes, and the Co-1 leg's prior was written to a file and timestamped before the
+query ran. Gate now COMPLIANT on all nineteen rules.
 
-One thing to re-check when you do: commit `bd0d08c` says Sanford (REF-00980) was staged-not-admitted,
+~~One thing to re-check when you do: commit `bd0d08c` says Sanford (REF-00980) was staged-not-admitted,
 and the scratch admitted it six minutes later with `scope=high_control` **after** the last manifest
-fetch. Confirm that scope came from bytes before emitting it.
+fetch. Confirm that scope came from bytes before emitting it.~~ **CHECKED, and it holds.** PMID
+10168021's abstract: *"One hundred seventy-one subjects of all ages and using different types of
+mobility aids traversed a 30-foot ramp varying in slope from 1:8 to 1:20. Data were recorded for pulse
+rate, energy expenditure, rate of travel…"* — experimental control over participants, which is what
+`high_control` means under the ruling that device bench tests with no disabled participant are
+`lower_control`. REF-00979 likewise: repeated-measures, ten participants with paraplegia, seven
+prescribed slopes.
+
+### The Co-1 leg found the venue, not the evidence
+
+Worth reading before anyone records Co-1 as covered on this slug. The query returned **one** hit, and
+it was not admitted: PMID 27664403 evaluates two anti-rollback prototypes with twelve chronic-SCI
+participants on a fixed 7.3-m rig. Participants **tested** devices; they did not co-produce the
+research, and Co-1's warrant is co-production. It is also off-parameter — the ramp is a constant of
+the apparatus, so it reports no gradient. The control query (`ramp AND wheelchair`, no methods clause)
+returned **97**, which is what makes the single hit a fact about publication venue rather than query
+shape (R14). A real Co-1 pass on ramp gradient has to run outside PubMed. It is logged as exec 45 with
+that finding in `findings_note`, and the hit is candidate 77 carrying an R7 harm finding: existing
+anti-rollback devices restrict backward motion, *"limiting recovery from an overturning wheelchair,
+which is a safety concern"*.
 
 ## State of the pipeline, measured
 

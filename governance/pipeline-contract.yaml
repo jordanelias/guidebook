@@ -101,9 +101,18 @@ stages:
     check: scripts/audit/metadata_integrity_audit.py
   - id: discovery-provenance
     kind: completeness
-    criterion: Each carried-forward source records how it was discovered (derivation_chain) — currently
-      sparse (16/640); no committed enforcer.
-    references: project-shape-audit F-06; evidence-architecture G1 provenance
+    criterion: 'Each carried-forward source records how it was discovered. No committed enforcer, and
+      the column named for it is UNREACHABLE -- neither derivation_chain nor search_queries_used can
+      be set by any db.py writer (add-source takes no flag for either, amend-source refuses both as
+      non-judgement fields, correct-source writes bibliography from a payload only), so both sit at
+      0 populated. DO NOT ADD A WRITER WITHOUT SETTLING THE DUAL HOME FIRST -- the discovery route is
+      already held by search_admissions (exec_id to ref_id, for a source a logged search admitted)
+      and by citation_mining.connections_produced (for a source a backward pass surfaced), so
+      populating these columns would copy a fact rule 5 says to point at. Derive the counts, never
+      quote them: this criterion carried the hand-written figure "currently sparse (16/640)" until
+      2026-09-11, false since the corpus retraction and exactly what rule 7 is about.'
+    references: 'project-shape-audit F-06; evidence-architecture G1 provenance; research_protocol_audit
+      CHECK 8, which reads search_queries_used and is the only committed reader of either column'
     check: null
 - id: judgment
   anchor: the 4-state determination machine + convergence + directness (evidence-architecture.md §5)
