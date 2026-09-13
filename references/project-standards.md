@@ -3290,3 +3290,41 @@ recorded provenance first; where none exists, treat it as regulatory stratum. Ex
 `regulatory_stratum_only`, which is where it matters.
 DATE: 2026-09-13 — owner ruling, quoted above. The rebuttable-presumption shape is a proposal, not
 the ruling.
+
+---
+
+## Owner ruling 2026-09-13 — the derived-figure weighting function: mean of band ordinals, ROUNDED DOWN
+
+> **"yeah round down"**
+
+Closing the function left open by the weighted-average ruling above. The band ordinals are the
+weights: `●`=3, `◐`=2, `○`=1; the derived figure's band is the **floor** of the mean across its
+inputs. Verified against the owner's own worked case and its neighbours:
+
+| inputs | mean | band |
+|---|---|---|
+| 2×T1 + 1×T4 — **the owner's example** | 2.667 | **◐** |
+| 3×T1 | 3.000 | ● |
+| 2×T1 + 1×T6 | 2.333 | ◐ |
+| 1×T1 + 2×T6 | 1.667 | ○ |
+| 99×T1 + 1×T4 | 2.990 | ◐ |
+
+**The property that follows from `floor`, recorded so it is a decision and not a surprise.** Only an
+all-`●` input set reaches exactly 3.0, so **a single sub-`●` input caps the result below full circle
+at any scale** — the last row above. The rule is therefore equivalent to: *a derived figure is fully
+anchored only if every input is fully anchored.* That is consistent with the ruling it completes (the
+T4 costs you the full circle), and it is the strongest consequence of rounding down rather than to
+nearest.
+
+**What "weighted" means here, stated because it was ambiguous.** The ordinals carry the weighting —
+inputs are equally weighted and the tiers differ. If per-input weighting by something else was
+intended (sample size, source count, directness), that is a different function and is NOT ruled.
+
+**Note for the implementer.** `v_best_practice.strength_band` computes a two-value band today; these
+are the three `●◐○` bands of `tier-system.md` §5/§8, and no numeric ordinal encoding exists anywhere
+in the schema yet. It has to be introduced with the engine rule, not assumed to be present.
+
+CONDITION: Implementing the band of a `figure_role='derived'` row.
+ACTION: floor(mean(ordinal(input bands))), ordinals 3/2/1, inputs equally weighted. Test against the
+five rows above; the owner's example is the acceptance case and it falsifies rounding to nearest.
+DATE: 2026-09-13 — owner ruling, quoted above.
