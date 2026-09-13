@@ -1486,6 +1486,50 @@ def run_checks(db_path):
                # — one, and only when a pointer was found at all.
                subject=1 if _ptr else 0)
 
+    # ── M: dbcore.check_values() parses CHECK constraints, not comment prose ──
+    #
+    # Regression for the 2026-09-13 defect: check_values() pulled quoted strings
+    # out of a column's raw CHECK-clause DDL without first removing `-- prose`
+    # line comments, so comment text that happened to contain an apostrophe (or
+    # that merely sat on the line before a real quoted value) was returned as a
+    # vocabulary member. Measured before the fix: evidence_sources.verification_method
+    # returned 3 "values", 2 of them comment fragments; processing_blocked_reason
+    # returned 9 of which 8 were contaminated; gap_mining.outcome 2 of which 1.
+    # CLAUDE.md §4 is explicit that vocabularies come from the schema's own CHECK
+    # via this exact function, never a list in code — a parser that mistakes
+    # comment prose for data makes that mechanism unreliable everywhere it reads
+    # a `-- ...` annotated CHECK, not just on the three columns first measured.
+    #
+    # This walks every table/column pair in the LIVE schema (not a fixed list —
+    # a fixed list here would be exactly the second-home rule 5 forbids) and
+    # asserts that whatever check_values() parses out never contains the two
+    # signatures a comment leaves behind: a literal `--` or an embedded newline.
+    # Neither can appear in a real vocabulary token in this schema (they are all
+    # short lower/upper-case enum words), so either signature in a parsed value
+    # is conclusive evidence the parser walked past a comment.
+    print("\n[M] dbcore.check_values() vocabulary parsing")
+    sys.path.insert(0, os.path.join(REPO, "scripts"))
+    import dbcore as _dbcore
+
+    _tables = [r[0] for r in conn.execute(
+        "SELECT name FROM sqlite_master WHERE type='table'")]
+    _contaminated = []
+    _cols_examined = 0
+    for _t in _tables:
+        for _c in (r[1] for r in conn.execute(f'PRAGMA table_info("{_t}")')):
+            _cols_examined += 1
+            for _v in _dbcore.check_values(conn, _t, _c):
+                if "--" in _v or "\n" in _v:
+                    _contaminated.append((_t, _c, _v))
+    record("M01", "check_values() never returns a comment fragment as a value",
+           not _contaminated,
+           "contaminated: " + "; ".join(f"{t}.{c}={v!r}" for t, c, v in _contaminated[:8])
+           + (", ..." if len(_contaminated) > 8 else "") if _contaminated else "",
+           # Subject is every column in the live schema, because check_values()
+           # is called per-column and any one of them could hide an unstripped
+           # comment — not just the three the defect was first measured on.
+           subject=_cols_examined)
+
     # ── Summary ───────────────────────────────────────────────────────────────
     conn.close()
     print("\n" + "=" * 70)

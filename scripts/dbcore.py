@@ -363,6 +363,54 @@ def live_vocab(conn, table: str, column: str) -> set:
     )}
 
 
+def _strip_sql_line_comments(sql: str) -> str:
+    """Drop `-- ...` line comments from a DDL fragment, respecting quoted strings.
+
+    Found 2026-09-13: `check_values` below pulled quoted values out of the raw CHECK
+    text without removing `-- explanatory prose` comments first, so a comment fragment
+    that happened to contain an apostrophe (`the document's...`) or that simply sat
+    before a real quoted value on the next line was captured as if it were a
+    vocabulary member -- 8 of `processing_blocked_reason`'s 9 "values" were comment
+    text, not data. The comments also embed bare parens ("(DR 3.1)"), which truncated
+    check_values' own `[^)]*` scan early and silently dropped the tail of the
+    vocabulary (`tool` in verification_method); stripping the comment text removes
+    those stray parens too, so the caller's paren-scan reaches the real close.
+
+    A `--` INSIDE a quoted string literal is data, not comment syntax, and must
+    survive (a legitimate vocabulary value could contain it) -- so this walks the
+    fragment tracking single-quote string state rather than regexing line by line.
+    SQL's own escape for an embedded quote is a doubled `''`, which is tracked here
+    so the second quote of an escape is never mistaken for the string's end.
+    """
+    out = []
+    in_string = False
+    i, n = 0, len(sql)
+    while i < n:
+        ch = sql[i]
+        if in_string:
+            out.append(ch)
+            if ch == "'":
+                if i + 1 < n and sql[i + 1] == "'":
+                    out.append(sql[i + 1])
+                    i += 2
+                    continue
+                in_string = False
+            i += 1
+            continue
+        if ch == "'":
+            in_string = True
+            out.append(ch)
+            i += 1
+            continue
+        if ch == "-" and i + 1 < n and sql[i + 1] == "-":
+            j = sql.find("\n", i)
+            i = n if j == -1 else j  # leave the newline for the next pass to append
+            continue
+        out.append(ch)
+        i += 1
+    return "".join(out)
+
+
 def check_values(conn, table: str, column: str) -> set:
     """The value set a column's own CHECK constraint declares, or empty if none.
 
@@ -400,9 +448,10 @@ def check_values(conn, table: str, column: str) -> set:
     # first, which is how a guard comes to permit anything while looking like it reads
     # the schema (CLAUDE.md §4: "Vocabularies come from the schema, not a list in
     # code"). It read the schema for 92 of 108 and guessed for the rest.
+    ddl = _strip_sql_line_comments(row[0])
     m = re.search(
         r"CHECK\s*\(\s*(?:%s\s+IS\s+NULL\s+OR\s+)?%s\s+IN\s*\(([^)]*)\)"
-        % (re.escape(column), re.escape(column)), row[0], re.I)
+        % (re.escape(column), re.escape(column)), ddl, re.I)
     if not m:
         return set()
     return {v.strip().strip("'\"") for v in m.group(1).split(",") if v.strip()}

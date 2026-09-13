@@ -1488,8 +1488,14 @@ def main():
                            "COMPLETE if DOI/full metadata confirmed via CrossRef/PubMed/Semantic Scholar; "
                            "AUTHOR-TITLE-ONLY if only single-source (citing-document) attestation.")
     p_as.add_argument("--verification-method",
+                      # 'direct-render' was missing here until 2026-09-13 even though
+                      # evidence_sources.verification_method's own CHECK admits it
+                      # (dbcore.check_values(con, "evidence_sources", "verification_method")
+                      # returns all five) -- the schema is the authority (CLAUDE.md §4),
+                      # so the CLI's list was the thing out of date, not the column.
                       choices=["tool", "corroborated-not-retrieved",
-                               "co1-attestation", "citing-bibliography"],
+                               "co1-attestation", "citing-bibliography",
+                               "direct-render"],
                       help="REQUIRED when --verification-status VERIFIED. How the "
                            "standing was established (D-0157).")
     p_as.add_argument("--verified-by-tool",
@@ -2626,14 +2632,33 @@ def insert_evidence_source(data: dict, session: str,
                 f"{data['ref_id']} already exists. R9: cross-file the existing "
                 f"ref_id rather than duplicating. To amend it, ship a migration.")
         if data.get("doi"):
-            dupe = conn.execute(
-                "SELECT ref_id FROM evidence_sources WHERE doi = ? "
-                "AND COALESCE(superseded_by_ref_id,'') = ''", [data["doi"]]).fetchone()
-            if dupe:
-                raise Refusal(
-                    f"DOI {data['doi']} is already filed as {dupe[0]} (R9: "
-                    f"pre-check the DOI, cross-file rather than duplicate). "
-                    f"Link that ref_id to your slug instead.")
+            # THE DUPLICATE-IDENTITY REFUSAL, case-folded and cross-filed against BOTH
+            # ref_id homes. Measured 2026-09-13 (REF-00784's DOI): this compared
+            # `doi = ?` on the RAW argument, so a case-variant DOI -- `= upper(doi)`
+            # matches 0 rows, `lower()=lower()` matches 1 -- passed the check as a new
+            # DOI and filed a duplicate, exactly the identity split dbcore.norm_doi's
+            # own docstring warns about ("stored as two ... case-folded they match; to
+            # `=` they do not"). It also queried evidence_sources alone, so a DOI
+            # already staged in the clue store (source_locators, via add-locator) was
+            # invisible here -- and a promotion (the SAME ref_id being inserted here
+            # after add-locator staged it) must not trip on its own locator row, which
+            # is what the `ref_id<>?` exclusion is for. insert_locator (add-locator,
+            # below) already gets this right; this copies that shape rather than
+            # inventing a second one.
+            doi = dbcore.norm_doi(data["doi"])
+            for table, extra in (
+                ("evidence_sources", "AND COALESCE(superseded_by_ref_id,'') = ''"),
+                ("source_locators", ""),
+            ):
+                dupe = conn.execute(
+                    'SELECT ref_id FROM "%s" WHERE LOWER(TRIM(doi))=? AND ref_id<>? %s'
+                    % (table, extra),
+                    (doi, data["ref_id"])).fetchone()
+                if dupe:
+                    raise Refusal(
+                        f"DOI {data['doi']!r} is already filed as {dupe[0]} in {table} "
+                        f"(R9: cross-file the existing ref_id, never duplicate). Link "
+                        f"that ref_id to your slug instead. Nothing was written.")
         cols = ", ".join(row)
         ph = ", ".join(["?"] * len(row))
         conn.execute(
