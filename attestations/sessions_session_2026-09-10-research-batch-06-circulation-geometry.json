@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-09-13-research-batch-07-corridor-width",
+  "artifact": "sessions/session_2026-09-10-research-batch-06-circulation-geometry.md",
+  "doctrine_sha": "969e00c",
+  "rules_in_scope": [
+    "integrity-protocol",
+    "source-discipline",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "data/guidebook.db",
+      "reason": "This artefact is a RECONSTRUCTION and writes no data. Every figure in it was derived by query against data/guidebook.db scoped to created_by_session='session_2026-09-10-research-batch-06-circulation-geometry' after batch 06's migrations had long applied; none was recalled, inferred, or copied from prose. The database was opened read-only. No migration accompanies this file because it changes no rows."
+    },
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "scratchpad/pr-134-repository-orientation/HANDOFF.md",
+      "reason": "Sources for the reconstruction are named in the file itself and are all committed: the DB rows under batch 06's session id, its migrations under scripts/migrations/data_20260911*.sql, its retrieval-log manifest, and the HANDOFF written at batch 06's close. Where the artefacts do not establish something the record says so instead of supplying it -- specifically batch 06's own deviations, bias direction and adversarial posture, which no later session can recover."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/sessions_session_2026-09-10-research-batch-06-circulation-geometry.json",
+      "reason": "THIS ATTESTATION COVERS THE RECONSTRUCTION ACT, NOT BATCH 06's CONDUCT, and the distinction is stated in the record's own header rather than left to be inferred from the session field. The `session` field names the 2026-09-13 session because that is who performed the act being attested. Batch 06 remains un-attested as to how it conducted itself, and that is recorded as a permanent gap rather than closed by proxy."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "Batch 06 closed without a session record or an attestation and left both pointer files naming batch 05, so its two Tier 1 admissions went un-audited by every session-scoped check from 2026-09-02 until 2026-09-13. This file closes the record half. The attestation half cannot be closed: a first-person statement about another session's conduct would be fabricated continuity, which is worse than the gap."
+    },
+    {
+      "rule": "integrity-protocol",
+      "reason": "The immediate trigger for writing this was mechanical, not curatorial: test_db_integrity's L04 fails when sessions/LATEST-RESEARCH names a session with zero slug-linked Tier 1-2 sources, because the blocking citation_mining_session gate then examines nothing and passes. Batch 07 admitted only Tier 3, so the pointer had to name batch 06, and batch 06 had no record to name. Logged so nobody later reads this reconstruction as routine housekeeping."
+    }
+  ],
+  "bias_direction": "Writing another session's record invites two opposite distortions and the stronger pull here was the flattering one: batch 06 produced the project's first determination, and a reconstruction written by the session that just cleared its blocker has every incentive to describe it as clean. The counter-pressure I applied was to restrict the file to figures I could re-derive by query and to state the two things it cannot supply. The opposite distortion -- writing batch 06 down to make batch 07's provisional result look comparatively rigorous -- was available too, and the REF-00784 demotion paragraph is where it would have shown; that paragraph states the demotion does not affect the determination, because it does not.",
+  "independent_reviewer_counterclaim": "A reviewer would reasonably object that a record reconstructed by a later session should not exist at all, because it makes an un-closed session look closed, and that the honest state was the visible gap. The strongest version: the pointer problem could have been solved by demoting citation_mining_session to advisory, which L04's own message offers as the alternative remedy, leaving batch 06 conspicuously unrecorded until its own author closed it. I chose the record because demoting a blocking gate is a larger and more permanent act than writing a labelled reconstruction, and because the gap was costing a real audit every day it stood -- but the objection is sound and the choice was mine, not forced.",
+  "verdict": "DEVIATION-LOGGED"
+}

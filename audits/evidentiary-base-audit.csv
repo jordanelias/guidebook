@@ -1,5 +1,5 @@
 rank,slug,topic,evidence_state,grade,score,n_sources,strength_band,full_anchor,partial_anchor,weak_anchor,disputed,t3_clinical,practice,weak_only,tier_profile,n_true_jurisdictions,n_jurisdictions_raw,jurisdictions,n_languages,languages,pct_english,n_nonenglish,pct_anglo_core,anglo_core_instances,supra_instances,non_anglo_instances,null_jurisdiction_instances,comp_volume,comp_tier,comp_jurisdiction,comp_language,comp_anglo_balance,search_langs_run,search_langs_hit
-1,accessible-circulation-geometry,entrances-and-circulation,,C,64.2,11,full,11,0,0,0,5,0,0,T1:5;T2:1;T3:5,1,1,GB:1,2,en:10;ja:1,90.9,1,0.0,0,0,1,10,16,30,5,5,8.2,0,0
+1,accessible-circulation-geometry,entrances-and-circulation,,B,73.2,13,full,13,0,0,0,7,0,0,T1:5;T2:1;T3:7,1,1,GB:1,3,en:10;?:2;ja:1,76.9,3,0.0,0,0,1,12,20,30,5,9,9.2,0,0
 2,accessibility-feature-market-value-uplift-framing,economics,,F,0,0,,0,0,0,0,0,0,0,,0,0,,0,,,0,,0,0,0,0,0,0,0,0,0,0,0
 3,accessible-bathroom-and-grab-bar,bathrooms-and-wet-areas,,F,0,0,,0,0,0,0,0,0,0,,0,0,,0,,,0,,0,0,0,0,0,0,0,0,0,0,0
 4,accessible-design-economics-cost-premium,economics,,F,0,0,,0,0,0,0,0,0,0,,0,0,,0,,,0,,0,0,0,0,0,0,0,0,0,0,0

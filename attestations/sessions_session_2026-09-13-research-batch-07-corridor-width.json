@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-09-13-research-batch-07-corridor-width",
+  "artifact": "sessions/session_2026-09-13-research-batch-07-corridor-width.md",
+  "doctrine_sha": "969e00c",
+  "rules_in_scope": [
+    "integrity-protocol",
+    "source-discipline",
+    "adherence-logging-and-attestation",
+    "adversarial-research"
+  ],
+  "per_rule_status": {
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "scripts/migrations/data_20260913010854_2026-09-13-research-batch-07-corridor-width.sql",
+      "reason": "Every row reached canonical through the sanctioned path and no other: a scratch copy under GUIDEBOOK_DB_PATH passed inline on every call, written only by scripts/db.py subcommands and scripts/assess/assess_cell.py, captured by emit_batch_sql.py, named by emit_data_migration.py, applied by migrate_db.py. Both migrations were rehearsed against a throwaway copy of canonical under GUIDEBOOK_MIGRATIONS_DIR before the real apply, and the rehearsal was compared row-for-row against the scratch with PRAGMA foreign_key_check empty on both sides. The canonical sha256 was pinned at 0bf68891f1016671 and verified unmoved until migrate_db.py ran. No hand-written SQL touched data/guidebook.db. Where the CLI's refusals proved incomplete they were repaired rather than bypassed: db.py log-search's H05 guard was conditioned on `ids` being non-empty, so an admission count with no --admitted-ref-id at all passed silently; the gap was closed, the exact call that slipped through was re-run and now refuses with exit 1, and the legitimate shapes were re-tested before use. The scratch was rebuilt from canonical and the whole walk re-driven through the fixed writer rather than patching the bad row in place."
+    },
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "retrieval-log/session_2026-09-13-research-batch-07-corridor-width/manifest.jsonl",
+      "reason": "Six payloads persisted with a contemporaneous manifest line each, every one written by retrieval_log.fetch(), which writes bytes and manifest before it returns so a caller cannot act on one payload and log another. Every bibliographic field on REF-00981 and REF-00982 was taken from the Crossref bytes, none from memory. R9 pre-checked both DOIs and both PMIDs against evidence_sources and source_locators before admission; both clean. All four claim_text values were verified as byte-substrings of a persisted payload by direct search over retrieval-log/ -- the guard the runbook names as the one mechanical defence against the 2026-08-19 fabrication shape, and one that db.py does not itself enforce. Where the bytes do not establish a value, the extraction says so instead of supplying one: REF-00982's full text is not in hand and its extraction was withdrawn rather than written on a title."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/sessions_session_2026-09-13-research-batch-07-corridor-width.json",
+      "reason": "One attestation for the one session record, as attestation_presence requires. The R8 prior-expectation file was committed at fbb7649 (2026-09-13 00:53:08 UTC) before the first retrieval at 00:53:30, so the ordering R8 demands is checkable by commit timestamp against the manifest rather than asserted -- and the adversarial pass verified exactly that, independently. Both session pointers were moved to this record; that they named batch 05 until now, and what it cost, is stated in the record rather than quietly corrected."
+    },
+    "adversarial-research": {
+      "status": "FIRED",
+      "evidence_path": "sessions/session_2026-09-13-research-batch-07-corridor-width.md",
+      "reason": "The antagonist was launched BEFORE the batch ran and armed itself independently from CLAUDE.md, the contract, the gate source and the runbook, so it graded the work against its own reading rather than against mine. It ran read-only and wrote nothing; canonical's sha was unchanged by it. Two of its findings changed filed rows rather than being noted and dismissed: REF-00982's extraction was retracted as a subject conflation with TERM-021, and REF-00971's was marked contested=1 on the turning-space challenge. It also predicted provisional/T3-only before the engine ran, which the engine then emitted. Its standing warning -- that gather_sources() never reads claim_type, so one extraction on the Co-1 survey or the T2 review would have made a source that states no width the sole governing anchor of a stated cell -- is recorded unfixed in the session record and in this attestation."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "integrity-protocol",
+      "reason": "An execution row was written claiming two admissions with zero junction edges before the H05 gap was found. It never reached canonical -- the scratch was rebuilt and re-driven -- but the rule was broken first and the writer was merely unable to say so, which is why this is logged as a deviation rather than folded into the tool fix. The same shape exists in canonical on 8 of 13 executions claiming admissions, including batch 06's exec 44, and repairing those historical rows is NOT attempted here: search_executions is append-only under R8 and the repair is a question for the owner, not a side effect of this batch."
+    },
+    {
+      "rule": "source-discipline",
+      "reason": "Four extractions were first written as claim_type='qualitative' with no --claimed-value and were refused by the writer, which holds that an assertion with no nameable value is claim_type='absent'. The writer's position was better than mine and the rows were rewritten with named qualitative values. Recorded because the initial grading was wrong, not because the tool failed."
+    },
+    {
+      "rule": "adversarial-research",
+      "reason": "The ICF and access-need lens columns are NULL on this cell; only identity_code is set. The crossing is judgment's output under the owner ruling of 2026-08-27 and this batch harvested the phrases without adjudicating them, so the cell currently has the zero-links-after-judgment shape the project defines as a defect. Stated rather than deferred silently."
+    }
+  ],
+  "bias_direction": "The pressure on me ran toward making this cell look like a result. I had spent the session clearing the blocker that was said to be holding batch 07, so a thin or negative outcome would read as the clearing having bought little, and that is exactly the direction in which I would have been tempted to extract a number that no source states -- REF-00976's thirty centimetres was available and would have filled value_min. I also had the specific temptation the antagonist named in advance: extracting the Co-1 survey or the T2 review would have moved the cell from provisional to stated in one command, with no gate objecting. Neither was done, and the record says the literature measures the inadequacy of dimensions rather than the dimensions.",
+  "independent_reviewer_counterclaim": "A reviewer who did not run this batch would most likely attack the cell's subject rather than its evidence: that REF-00784's four tasks are an L-turn, a 360-degree turn in place and two U-turns, so the passage width it measures is width-to-execute-a-turn, and together with REF-00971's corridor 180-degree turn that makes three of the four governing sources arguably TERM-003 turning circle rather than TERM-002 corridor width. If that reading holds, the cell is not thinly evidenced but wrongly keyed, and the honest remedy is to promote TERM-003 and re-file, not to strengthen this cell. I have recorded the contest on REF-00971's row and in the session record, and I do not claim to have settled it: settling it needs the full texts, which are not in hand.",
+  "verdict": "DEVIATION-LOGGED"
+}

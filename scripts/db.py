@@ -458,6 +458,29 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
             f"--admitted-ref-id repeated: {', '.join(dupes)}. One admission edge "
             f"per (search, source); a repeat is a miscount, not two admissions "
             f"(invariant H07).")
+    if results_admitted and not ids:
+        # THE DIRECTION THE CHECK BELOW COULD NOT SEE, closed 2026-09-13.
+        # That check is conditioned on `ids`, so it fires only when SOME edges
+        # were named. An admission count with NO --admitted-ref-id at all --
+        # the emptiest violation of the same invariant -- passed silently and
+        # wrote a row claiming admissions it has no junction edges for. Found
+        # by tripping it while logging batch 07, then measured against
+        # canonical: 8 of the 13 executions claiming admissions carry 0 edges,
+        # and one of them (exec 44) is batch 06, which the definition-of-done
+        # gate had passed COMPLIANT. This is CLAUDE.md 5(a) inside the refusal
+        # that exists to prevent it -- a guard that examined nothing.
+        #
+        # It matters because the junction is the ONE carrier (see the comment
+        # at the INSERT below): admitted_ref_ids is deliberately not written,
+        # so with no edge there is no path at all from a source back to the
+        # search that admitted it.
+        raise Refusal(
+            f"--results-admitted {results_admitted} with no --admitted-ref-id. "
+            f"The count and the edges are the same fact (invariant H05), and "
+            f"search_admissions is the only carrier of it -- admitted_ref_ids "
+            f"is deliberately not written. A count with no edge claims an "
+            f"admission nothing can trace. Name the ref_id(s) admitted, or "
+            f"record 0 and say why in --findings-note.")
     if ids and results_admitted and results_admitted != len(ids):
         raise Refusal(
             f"--results-admitted {results_admitted} disagrees with "

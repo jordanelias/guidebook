@@ -1,24 +1,24 @@
 # Per-Slice Evidentiary Audit
-**Data as of:** 2026-09-12 · **Scope:** all 80 ACTIVE research slices (slugs) in `data/guidebook.db` · **Method:** read-only aggregation over `source_slug_links → evidence_sources`, `bpc_metadata`, and the frozen pre-log grids `search_languages` / `search_coverage` (labelled as history wherever used — live coverage comes from `search_executions` via `v_coverage_*`).
+**Data as of:** 2026-09-13 · **Scope:** all 80 ACTIVE research slices (slugs) in `data/guidebook.db` · **Method:** read-only aggregation over `source_slug_links → evidence_sources`, `bpc_metadata`, and the frozen pre-log grids `search_languages` / `search_coverage` (labelled as history wherever used — live coverage comes from `search_executions` via `v_coverage_*`).
 
 This audit scores every research slice on the six requested dimensions — (1) amount of evidence, (2) tiers of evidence, (3) jurisdictions sourced, (4) languages sourced, (5) English/Anglophone bias, and (6) overall quality of the evidentiary base — and rolls them into a transparent 0–100 composite grade. It audits the **raw evidence linked to each slice**, i.e. the material available for (re-)derivation; it does not re-judge synthesis prose.
 
 > **Reproducibility.** Every number here is regenerated from the DB by `tools/evidentiary_audit.py` — nothing is hand-transcribed, and the “data as of” date is the DB’s own `max(updated_at)`, so identical data yields byte-identical output. No grade is stored in the DB; the composite is a *derived* view whose rubric is fully specified in §2, so any reader can recompute it. Companion outputs: `evidentiary-base-audit.json` / `.csv`, and the interactive `tools/evidentiary-audit-dashboard.html` (filter by corpus / category / term).
 
-> **Adversarial review (two passes).** The audit was independently red-teamed twice; all raw counts (volume, tiers, language/jurisdiction distributions, search yield) reproduce exactly through a second code path. Folded in: (i) the **weighted-strength bands** (§8, DR-2026-07-20) — every slice is graded by the strongest band it can anchor at: ● full (T1/Co-1/T2/Co-2/T3-clinical), ◐ partial (T4/T5 standards), ○ weak (T3-grey/T6/grey); a ○ weak-only slice carries the honesty flag in place of the retired binary no-anchor flag (§2, §4); (ii) **DISPUTED sources** (0 instances) stripped of anchoring per the anti-fabrication sweep (§4) — retained in raw totals but counted at no band; (iii) a **convergence discount** (scoped to the ○ weak band) so code-floor-only slices can’t score highly on breadth alone (§2, §6); (iv) full disclosure of the **10 NULL-jurisdiction instances** (§3.5); (v) **true-jurisdiction** breadth scoring of the jurisdiction column (no language codes are currently mis-filed there).
+> **Adversarial review (two passes).** The audit was independently red-teamed twice; all raw counts (volume, tiers, language/jurisdiction distributions, search yield) reproduce exactly through a second code path. Folded in: (i) the **weighted-strength bands** (§8, DR-2026-07-20) — every slice is graded by the strongest band it can anchor at: ● full (T1/Co-1/T2/Co-2/T3-clinical), ◐ partial (T4/T5 standards), ○ weak (T3-grey/T6/grey); a ○ weak-only slice carries the honesty flag in place of the retired binary no-anchor flag (§2, §4); (ii) **DISPUTED sources** (0 instances) stripped of anchoring per the anti-fabrication sweep (§4) — retained in raw totals but counted at no band; (iii) a **convergence discount** (scoped to the ○ weak band) so code-floor-only slices can’t score highly on breadth alone (§2, §6); (iv) full disclosure of the **12 NULL-jurisdiction instances** (§3.5); (v) **true-jurisdiction** breadth scoring of the jurisdiction column (no language codes are currently mis-filed there).
 
 ## 1. Executive summary
 
-- **11 source-instances** are linked across **1 of 80 slices**; **79 slices carry zero linked evidence**.
-- **Grade distribution:** A=0 · B=0 · C=1 · D=0 · E=0 · F=79  (A≥80, B≥65, C≥50, D≥35, E>0, F=empty).
-- **Tier profile is code-and-clinical heavy, synthesis-light.** Of linked instances: T1=5, T2=1, T3=5, T4=0, T5=0, T6=0. Only **1 Tier-2 (systematic-review / evidence-based-standard) instances** exist across the whole corpus — the synthesis tier that best anchors best-practice claims is the thinnest.
-- **Anchoring strength, banded.** Under the weighted-strength model (§8) every tier can anchor a best-practice claim, weighted by tier: **11/11 (100%)** of instances anchor at ● full strength (T1/Co-1/T2/Co-2/T3-clinical, adjudicated), 0 at ◐ partial (T4/T5 standards practice), 0 at ○ weak (T3-grey/T6/grey floor). By slice: **1 full · 0 partial · 0 weak-only** (of 1 evidenced). Every evidenced slice anchors at ● full or ◐ partial strength — none rests on a weak-only base.
-- **Anglophone concentration is the dominant quality risk.** **10/11 (91%) of linked sources are English-language**; only 1 are non-English. By jurisdiction, 0 instances are native-Anglophone (US/UK/AU/CA/NZ/IE), 0 supranational (INT/EU/ISO), 1 other, 10 unrecorded.
+- **13 source-instances** are linked across **1 of 80 slices**; **79 slices carry zero linked evidence**.
+- **Grade distribution:** A=0 · B=1 · C=0 · D=0 · E=0 · F=79  (A≥80, B≥65, C≥50, D≥35, E>0, F=empty).
+- **Tier profile is code-and-clinical heavy, synthesis-light.** Of linked instances: T1=5, T2=1, T3=7, T4=0, T5=0, T6=0. Only **1 Tier-2 (systematic-review / evidence-based-standard) instances** exist across the whole corpus — the synthesis tier that best anchors best-practice claims is the thinnest.
+- **Anchoring strength, banded.** Under the weighted-strength model (§8) every tier can anchor a best-practice claim, weighted by tier: **13/13 (100%)** of instances anchor at ● full strength (T1/Co-1/T2/Co-2/T3-clinical, adjudicated), 0 at ◐ partial (T4/T5 standards practice), 0 at ○ weak (T3-grey/T6/grey floor). By slice: **1 full · 0 partial · 0 weak-only** (of 1 evidenced). Every evidenced slice anchors at ● full or ◐ partial strength — none rests on a weak-only base.
+- **Anglophone concentration is the dominant quality risk.** **10/13 (77%) of linked sources are English-language**; only 3 are non-English. By jurisdiction, 0 instances are native-Anglophone (US/UK/AU/CA/NZ/IE), 0 supranational (INT/EU/ISO), 1 other, 12 unrecorded.
 - **Search breadth ≠ evidentiary yield.** Per the frozen pre-log coverage grids, slices were searched across **0 languages** and ~0 jurisdictions, but 0 searched languages () returned **zero** usable sources in **every** slice. The bias lives in what converted to evidence, not in search effort.
 
 ## 2. Method & definitions
 
-**Slice = slug.** The 80 ACTIVE slugs are the unit of audit. Evidence is attributed through `source_slug_links`; each linked `evidence_sources` row is one *source-instance* (a source shared by two slices counts once in each). The 11 instances collapse to **11 unique sources** (reuse factor 1.0×; 0 sources span >1 slice, one — `REF-00784` — spans 1). Instance-weighting is deliberate — it measures per-slice coverage — but shared sources are re-counted, so corpus tier/language totals read ~0% above unique-source counts. (0 of the 11 rows in `evidence_sources` are linked to no active slug.)
+**Slice = slug.** The 80 ACTIVE slugs are the unit of audit. Evidence is attributed through `source_slug_links`; each linked `evidence_sources` row is one *source-instance* (a source shared by two slices counts once in each). The 13 instances collapse to **13 unique sources** (reuse factor 1.0×; 0 sources span >1 slice, one — `REF-00784` — spans 1). Instance-weighting is deliberate — it measures per-slice coverage — but shared sources are re-counted, so corpus tier/language totals read ~0% above unique-source counts. (0 of the 13 rows in `evidence_sources` are linked to no active slug.)
 
 **Tiers** follow `governance/tier-system.md`. Tier number reflects *what kind of claim a source can anchor*, not raw quality. Under the **weighted-strength model** (§8, `DR-2026-07-20`) every tier can anchor a best-practice claim; the claim's *strength* is weighted by the tier of the evidence behind it. The three strength bands reuse the `●◐○` quality markers (§5), now given anchoring semantics:
 
@@ -61,38 +61,39 @@ Grades: **A**≥80 · **B**≥65 · **C**≥50 · **D**≥35 · **E**>0 · **F**
 | 8–14 | 1 |
 | 15+ | 0 |
 
-Median linked sources among non-empty slices: **11**. Largest bases: `accessible-circulation-geometry` (11).
+Median linked sources among non-empty slices: **13**. Largest bases: `accessible-circulation-geometry` (13).
 
 ### (2) Tiers of evidence
 | Tier | Instances | Share |
 |---|---|---|
-| T1 | 5 | █████████··········· 45% |
-| T2 | 1 | ██·················· 9% |
-| T3 | 5 | █████████··········· 45% |
+| T1 | 5 | ████████············ 38% |
+| T2 | 1 | ██·················· 8% |
+| T3 | 7 | ███████████········· 54% |
 | T4 | 0 | ···················· 0% |
 | T5 | 0 | ···················· 0% |
 | T6 | 0 | ···················· 0% |
 
-**Strength-band split of instances:** **11/11 (100%)** anchor at ● full (T1/Co-1/T2/Co-2/T3-clinical), 0 (0%) at ◐ partial (T4/T5 standards), and 0 (0%) at ○ weak (T3-grey/T6/grey floor). No evidenced slice rests on a ○ weak-only base — every slice anchors at ● full or ◐ partial strength (see the band breakdown in §4).
+**Strength-band split of instances:** **13/13 (100%)** anchor at ● full (T1/Co-1/T2/Co-2/T3-clinical), 0 (0%) at ◐ partial (T4/T5 standards), and 0 (0%) at ○ weak (T3-grey/T6/grey floor). No evidenced slice rests on a ○ weak-only base — every slice anchors at ● full or ◐ partial strength (see the band breakdown in §4).
 
 ### (3) Jurisdictions sourced
 Distinct jurisdiction strings across the corpus: **1**, none mis-filed as language codes in the `jurisdiction` column. Top: GB (1).
 
-**1 non-empty slices draw on ≤1 jurisdiction** — monojurisdictional bases whose values may not transfer across code regimes. Separately, **10 source-instances carry no jurisdiction at all** (NULL) — mostly clinical/synthesis sources with no single national home; these are excluded from every jurisdiction-share denominator.
+**1 non-empty slices draw on ≤1 jurisdiction** — monojurisdictional bases whose values may not transfer across code regimes. Separately, **12 source-instances carry no jurisdiction at all** (NULL) — mostly clinical/synthesis sources with no single national home; these are excluded from every jurisdiction-share denominator.
 
 ### (4) Languages sourced
 | Language | Instances |
 |---|---|
 | en | 10 |
+| ? | 2 |
 | ja | 1 |
 
-Distinct source languages: **2** (`en`/`eng` merged; raw ISO codes may be one more). English dominates at 91%. The non-English corpus is overwhelmingly Western-European + East-Asian; the only languages outside that group to yield *any* linked source are: none.
+Distinct source languages: **3** (`en`/`eng` merged; raw ISO codes may be one more). English dominates at 77%. The non-English corpus is overwhelmingly Western-European + East-Asian; the only languages outside that group to yield *any* linked source are: ? (2).
 
 **0 non-empty slices are English-only** (0% of evidenced slices).
 
 ### (5) English / Anglophone bias
-- **Language axis:** 91% English. 0 slices 100% English.
-- **Jurisdiction axis (all 11 instances):** native-Anglophone (US/UK/AU/CA/NZ/IE) **0** · supranational/English-medium (INT/EU/ISO) **0** · English-official + other non-Anglophone **1** · **no jurisdiction recorded 10**. (These four sum to 11 = all instances.)
+- **Language axis:** 77% English. 0 slices 100% English.
+- **Jurisdiction axis (all 13 instances):** native-Anglophone (US/UK/AU/CA/NZ/IE) **0** · supranational/English-medium (INT/EU/ISO) **0** · English-official + other non-Anglophone **1** · **no jurisdiction recorded 12**. (These four sum to 13 = all instances.)
 - **0 slices are doubly-concentrated** (≥90% English *and* ≥50% native-Anglophone jurisdiction): .
 - **Process counter-evidence:** non-English/Global-South *searches were run* (0 languages across 0 of 80 slices per the frozen `search_languages` grid — a pre-log record, not a logged search) but  yielded nothing linkable in any slice. The gap is a *yield/recovery* gap, not a *search-effort* gap.
 
@@ -100,8 +101,8 @@ Distinct source languages: **2** (`en`/`eng` merged; raw ISO codes may be one mo
 | Grade | Slices | Meaning |
 |---|---|---|
 | A | 0 | strong, balanced, synthesis-anchored |
-| B | 0 | solid, some concentration or tier gaps |
-| C | 1 | usable but thin or monolingual |
+| B | 1 | solid, some concentration or tier gaps |
+| C | 0 | usable but thin or monolingual |
 | D | 0 | weak — few sources / single jurisdiction / English-only |
 | E | 0 | very weak — 1 jurisdiction, weak-only or thin base |
 | F | 79 | empty — no linked evidence |
@@ -112,7 +113,7 @@ Legend: **N** linked sources · **Band** strongest anchoring band (● full / �
 
 | # | Grade | Score | Slice | Topic | N | Band | ● | ◐ | ○ | ⊘ | Tiers | JUR | LNG | %EN | %ANG | A·B·C·D·E |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | **C** | 64.2 | `accessible-circulation-geometry` | entrances-and-circulation | 11 | ● | 11 | 0 | 0 | 0 | T1×5,T2×1,T3×5 | 1 | 2 | 90.9 | 0.0 | 16·30·5·5·8.2 |
+| 1 | **B** | 73.2 | `accessible-circulation-geometry` | entrances-and-circulation | 13 | ● | 13 | 0 | 0 | 0 | T1×5,T2×1,T3×7 | 1 | 3 | 76.9 | 0.0 | 20·30·5·9·9.2 |
 | 2 | **F** | 0 | `accessibility-feature-market-value-uplift-framing` | economics | 0 | — | 0 | 0 | 0 | 0 | — | 0 | 0 | — | — | 0·0·0·0·0 |
 | 3 | **F** | 0 | `accessible-bathroom-and-grab-bar` | bathrooms-and-wet-areas | 0 | — | 0 | 0 | 0 | 0 | — | 0 | 0 | — | — | 0·0·0·0·0 |
 | 4 | **F** | 0 | `accessible-design-economics-cost-premium` | economics | 0 | — | 0 | 0 | 0 | 0 | — | 0 | 0 | — | — | 0·0·0·0·0 |
@@ -288,14 +289,14 @@ Several name high-salience topics where an empty base is a material coverage gap
 ## 6. Findings & recommended remediation
 
 1. **Strengthen the ◐ partial and ○ weak bases toward ● full.** 0 slices anchor only at ◐ partial (T4/T5 standards practice) and none rest on a ○ weak-only base. With only 1 systematic-review/evidence-based-standard instances corpus-wide, the ● full synthesis tier is the thinnest. Prioritise SR/meta-analysis + DPO-standard recovery on the partial/weak slices to lift them to full-strength anchoring.
-2. **Convert non-English search into non-English evidence.** The pre-log grids record searches in 0 languages but the corpus is ~91% English. Target the languages already searched-with-results but under-linked, and the zero-yield languages () explicitly.
+2. **Convert non-English search into non-English evidence.** The pre-log grids record searches in 0 languages but the corpus is ~77% English. Target the languages already searched-with-results but under-linked, and the zero-yield languages () explicitly.
 3. **De-risk monojurisdictional slices.** 1 evidenced slices rest on ≤1 jurisdiction; flag their numeric thresholds as non-transferable until a second regime is sourced.
 4. **Fill or formally park the empty slices.** Move the 79 un-started slices into an active search queue or an explicit deferred state so they stop reading as silent gaps.
 5. **Treat the doubly-concentrated slices as citation-risk.** The 0 ≥90%-English-and-≥50%-Anglophone slices are where global-applicability claims are weakest.
 
 ## 7. Limitations & what this audit does *not* claim
 
-- **Instance-weighted, not source-weighted.** The 11 instances are 11 unique sources, so corpus tier/language totals run ~0% above unique-source counts. Per-slice figures are unaffected.
+- **Instance-weighted, not source-weighted.** The 13 instances are 13 unique sources, so corpus tier/language totals run ~0% above unique-source counts. Per-slice figures are unaffected.
 - **The composite is a lens, not ground truth.** Weights (20/30/20/15/15) are a defensible but editorial choice; the six raw dimensions are printed alongside every grade so a reader can re-weight. No grade is stored in the DB — it is recomputed each run.
 - **Coverage ≠ correctness.** The audit measures the *shape* of each base (how much, what tier, where from, what language, how concentrated). It does **not** re-verify that any citation resolves, is current, or supports its claim — those are the `url_verification_runs` / `code_currency` / supersession checks, run separately.
 - **Jurisdiction shares rest on recorded jurisdictions only.** NULL-jurisdiction instances are excluded from %ANG denominators, so a low %ANG can mean *genuinely non-Anglophone* or *unrecorded* — the master table’s JUR count exposes the denominator.
@@ -321,4 +322,4 @@ The Guidebook’s **0 design specifications** (the `items` table, categories A�
 The full per-specification table (all 0 items with inherited grade and dimension snapshot) is in `evidentiary-base-audit-items.csv` and the `items` array of the JSON; the dashboard’s **Specifications** view filters them by corpus / category / term.
 
 ---
-*Data as of 2026-09-12 · read-only over `data/guidebook.db` · generated by `tools/evidentiary_audit.py`. Independently red-teamed; raw counts reproduce through a second code path. Aligned to `governance/tier-system.md`.*
+*Data as of 2026-09-13 · read-only over `data/guidebook.db` · generated by `tools/evidentiary_audit.py`. Independently red-teamed; raw counts reproduce through a second code path. Aligned to `governance/tier-system.md`.*
