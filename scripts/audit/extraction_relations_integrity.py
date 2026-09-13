@@ -84,7 +84,7 @@ LEDGER = "data_migrations"
 # NOT fail this check. Once False: every figure_role-NULL row fails, full
 # stop, and the boundary is never consulted.
 # ---------------------------------------------------------------------------
-PRE_075_GRANDFATHER = True
+PRE_075_GRANDFATHER = False  # flipped 2026-09-13: the backfill landed, all rows graded
 
 # THE GRANDFATHERED SET IS A FROZEN LIST OF ROW IDS, NOT A TIME RANGE.
 #
