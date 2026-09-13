@@ -143,7 +143,7 @@ class SourceValueExtraction(BaseModel):
     # Each is a code in its own base registry, reached by a real typed FK. The codes
     # are NOT validated here — the registry is the vocabulary (CLAUDE.md §4).
     identity_code: Optional[str] = None   # populations.population_code
-    icf_code: Optional[str] = None        # axes.axis_code
+    icf_code: Optional[str] = None        # base_icf.icf_code (was axes.axis_code until migration 081)
     needs_code: Optional[str] = None      # access_needs.need_code
     medical_code: Optional[str] = None    # base_taxonomy_medical.medical_code
 

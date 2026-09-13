@@ -3452,3 +3452,75 @@ explicitly, because this ruling is what made both unavoidable. (4) The retired-v
 character after the token, so `AX-` never matches `AX-AMB`; that is a matcher fact recorded on
 2026-08-26 and unchanged by this ruling.
 DATE: 2026-09-13 — owner ruling, quoted above.
+
+---
+
+RULE: **The ICF lens keeps its name and comes to hold real ICF codes.** Owner ruling
+2026-09-13, selecting that option over renaming the lens to `demand_code`, and answering the
+fork the same day's `AX-` ruling opened. Recorded on contact per `CLAUDE.md` rule 0.
+
+**Executed the same day by migration 081.** `base_icf` is the registry, and all six columns
+named `icf_code` now point at it: the four lens columns that had FK'd into `axes(axis_code)`
+— `specifications`, `source_value_extractions`, `item_taxonomy_links`, `icf_medical_map` —
+plus `access_need_icf` and `population_icf_links`, which already held real ICF codes and
+pointed at nothing. The second pair matters as much as the first: without them `base_icf`
+would be a *third* home for ICF codes rather than the one home, which is the whole point
+(rule 5).
+
+**A CORRECTION OWED TO THE OWNER, because the estimate put to them was wrong in the
+direction that mattered.** The option was described as "a bigger data change — every
+extraction and determination keyed on a demand code needs re-keying". It needed none. All
+four lens columns hold **zero** rows: the 2026-09-13 circulation clear emptied
+`specifications` and `source_value_extractions`, `item_taxonomy_links` has been unwritable
+since its `item_code` FK reached into the emptied `items`, and `icf_medical_map` had never
+been written. The option ruled for was the *cheapest* of the three, not the dearest. The
+estimate was made from the 2026-08-26 count of 288 live cells, which predates the clear —
+`CLAUDE.md` rule 7, in the one place where quoting a stale figure changed what was put to
+the owner.
+
+**What the registry holds, and what it deliberately does not.** 72 codes, seeded only from
+codes this repository already held (`access_need_icf`, `population_icf_links`, and the
+`axes` anchor columns) — never from a remembered classification. **29 carry a title and 43
+do not**, because nothing here states them and supplying an ICF title from memory is the
+2026-08-19 fabrication in a smaller field. `base_icf` refuses a title without a
+`title_source`; `db.py set-icf-title --title-payload` verifies one against persisted bytes
+the way `add-medical --icd11-payload` does for ICD-11. The 43 are logged as
+`GAP-ICF-TITLES`, and they are a real gap on this lens: `CLAUDE.md` §6 requires working from
+ICF codes **and names**.
+
+**The demand layer is untouched and is no longer a lens.** `axes` keeps its 17 rows,
+`population_axis_map` its 53 and `access_need_axis_map` its 21. The 2026-08-25 RULE's
+refusal to fold the demand layer into `access_needs` stands, and its b/d ÷ e reasoning is
+intact: the ICF lens now holds b and d codes directly, `access_needs` keeps its e-anchors.
+
+**AN OPEN QUESTION THIS CREATES, recorded rather than answered.** The 2026-08-25 RULE
+renames `axes` → **`icf_demands`**. Running that rename now would put `AX-` codes inside a
+table whose name begins "icf", which is the state the 2026-09-13 `AX-` ruling bans. The
+rename therefore cannot execute as specified, and what the demand layer should be called —
+and whether it survives at all now that real ICF codes carry the lens — is owner-gated.
+
+---
+
+**OWNER STATEMENT, same day, recorded verbatim and NOT resolved here:**
+*"access needs, ICF codes, disability identities"* — given immediately after the ruling
+above.
+
+READ AS: the three base vocabularies the pipeline keys on — `access_needs` (17 rows, ICF
+**e**, what the environment must do), `base_icf` (72 rows, ICF **b**/**d**, the person's
+function) and `populations` (23 rows, identity). That reading is what the work above acted
+on, and it is consistent with the ruling it followed: the demand layer is not among them.
+
+**WHAT IT WAS NOT READ TO DO, and this is flagged rather than decided.** D-0170 adopted a
+**fourth** lens — medical — as a reader's choice, and D-0182 relaxed the `specifications`
+CHECK to "at least one of four". Three words naming three vocabularies is not read here as
+retiring a ruled lens, and no code or schema was changed on that basis. If the intent was
+that the medical lens goes, it needs saying, because `specifications.medical_code`,
+`base_taxonomy_medical`, `identity_medical_map`, `icf_medical_map`, `db.py add-medical` and
+the blocking-adjacent `medical_lens_integrity` check all exist to serve it.
+
+CONDITION: Any session reasoning about the lens set, the demand layer, or `base_icf`.
+ACTION: (1) The ICF lens is `base_icf` and holds real ICF codes; mint with `db.py
+add-icf-code`. (2) Do not re-introduce a demand code into any `icf_*` column — six FKs now
+refuse it. (3) Do not treat the medical lens as retired without an owner ruling that says
+so. (4) `GAP-ICF-TITLES` closes by retrieval and persisted bytes, never by recall.
+DATE: 2026-09-13 — owner ruling and owner statement, both quoted above.

@@ -113,7 +113,12 @@ _con = sqlite3.connect("file:data/guidebook.db?mode=ro", uri=True)
 _live = [r[0] for r in _con.execute(
     "SELECT sql FROM sqlite_master WHERE sql IS NOT NULL AND ("
     "  name = 'specifications' OR tbl_name = 'specifications'"
-    "  OR name IN ('base_parameters','terms','populations','axes',"
+    # `axes` left the list 2026-09-13: the ICF lens no longer points at it. Owner ruling,
+    # "keep the ICF lens, give it real ICF codes", executed by migration 081 -- which
+    # re-pointed specifications.icf_code at `base_icf`. A fixture still pulling `axes`
+    # would build a parent nothing references and MISS the one the FK now needs, which is
+    # how this test failed the moment 081 landed (rule 4: a test fixture is a caller).
+    "  OR name IN ('base_parameters','terms','populations','base_icf',"
     "              'access_needs','base_taxonomy_medical'))")]
 _con.close()
 if not _live:
@@ -142,9 +147,12 @@ db.execute("INSERT INTO base_parameters(parameter_id,term_id,created_at,created_
            "VALUES (1,'TERM-0001',?,?)", (STAMP, SESS))
 db.execute("INSERT INTO populations(population_code,display_name) VALUES ('AUT','Autistic people')")
 db.execute("INSERT INTO populations(population_code,display_name) VALUES ('MOB','Mobility')")
-db.execute("INSERT INTO axes(axis_code,name,mechanism,coverage_status,falsification_condition) "
-           "VALUES ('b230','Hearing functions','auditory demand','STUB',"
-           "'a source shows the demand is not auditory')")
+# The ICF lens's parent. The old fixture seeded `axes` with axis_code='b230' -- a real ICF
+# code sitting in the demand registry, which is the confusion the 2026-09-13 rulings ended.
+# It now goes where it belongs.
+db.execute("INSERT INTO base_icf(icf_code,component,title,title_source,created_at,"
+           "created_by_session) VALUES ('b230','b','Hearing functions','test fixture',?,?)",
+           (STAMP, SESS))
 
 db.execute("INSERT INTO convergence_assessment(convergence_id,status,clinical_sources) "
            "VALUES (1,'convergent','[\"REF-001\"]')")

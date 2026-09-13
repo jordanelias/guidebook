@@ -1164,6 +1164,37 @@ def main():
     # the writers migration 080's two tables shipped without. See the functions for the
     # refusals, and for the two that are DELIBERATELY ABSENT (a second link for the same
     # population under a different mechanism, and a resolved-on-creation gate).
+    # add-icf-code / set-icf-title — the writers `base_icf` needs to grow after migration
+    # 081 seeded it. See the functions for the refusals, and for why a title may never
+    # arrive without a source.
+    p_icf = sub.add_parser(
+        "add-icf-code",
+        help="Mint one ICF code into base_icf — the registry the ICF lens points at")
+    p_icf.add_argument("--icf-code", dest="icf_code", required=True,
+                       help="b/d/e/s + digits, optionally a range (d450, b1342, "
+                            "d310–d329). `component` and `is_range` are DERIVED from it")
+    p_icf.add_argument("--title", help="the classification's own wording. Needs a source")
+    p_icf.add_argument("--title-source", dest="title_source",
+                       help="the document stating the title — weaker than a payload, and "
+                            "meant to read as weaker")
+    p_icf.add_argument("--title-payload", dest="title_payload",
+                       help="path under retrieval-log/ whose BYTES contain --title. ONLY "
+                            "this makes the title verified rather than recorded")
+    p_icf.add_argument("--notes")
+    p_icf.add_argument("--session", required=True)
+    p_icf.add_argument("--dry-run", action="store_true")
+
+    p_sit = sub.add_parser(
+        "set-icf-title",
+        help="Name a seeded ICF code (GAP-ICF-TITLES); refuses to overwrite a title")
+    p_sit.add_argument("--icf-code", dest="icf_code", required=True)
+    p_sit.add_argument("--title", required=True)
+    p_sit.add_argument("--title-source", dest="title_source")
+    p_sit.add_argument("--title-payload", dest="title_payload",
+                       help="path under retrieval-log/ whose BYTES contain --title")
+    p_sit.add_argument("--session", required=True)
+    p_sit.add_argument("--dry-run", action="store_true")
+
     p_pil = sub.add_parser(
         "add-population-icf-link",
         help="Map a population to an ICF activity it has a functional deficit in (H3)")
@@ -1264,7 +1295,7 @@ def main():
     # The four lenses. At least one is required (D-0182); the CLI names them by lens
     # rather than by column so the operator is choosing a LENS, not filling a field.
     p_ax.add_argument("--identity", help="populations.population_code")
-    p_ax.add_argument("--icf", help="axes.axis_code")
+    p_ax.add_argument("--icf", help="base_icf.icf_code — a real ICF b/d code")
     p_ax.add_argument("--needs", help="access_needs.need_code")
     p_ax.add_argument("--medical", help="base_taxonomy_medical.medical_code")
     p_ax.add_argument("--claim-type", dest="claim_type", required=True,
@@ -2199,6 +2230,17 @@ def main():
             session=args.session,
             dry_run=args.dry_run,
         ))
+
+    elif args.command == "add-icf-code":
+        _emit(insert_icf_code(
+            icf_code=args.icf_code, title=args.title, title_source=args.title_source,
+            title_payload=args.title_payload, notes=args.notes,
+            session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "set-icf-title":
+        _emit(set_icf_title(
+            icf_code=args.icf_code, title=args.title, title_source=args.title_source,
+            title_payload=args.title_payload, session=args.session, dry_run=args.dry_run))
 
     elif args.command == "add-population-icf-link":
         _emit(insert_population_icf_link(
@@ -3690,13 +3732,6 @@ def insert_medical(code: str, display_name: str, icd11: str, session: str,
     verified_at = None
     if icd11_payload:
         pay = Path(icd11_payload)
-        if "retrieval-log" not in pay.parts:
-            raise Refusal(f"--icd11-payload {icd11_payload!r} REFUSED: must live under "
-                          f"retrieval-log/, which is the only store a later audit can diff "
-                          f"against.")
-        if not pay.exists():
-            raise Refusal(f"--icd11-payload {icd11_payload!r} REFUSED: file does not exist. "
-                          f"icd11_verified_at is set from BYTES or not at all.")
         # READ ARCHIVE MEMBERS, NOT JUST RAW BYTES. The first version of this check
         # substring-matched `pay.read_bytes()`, and the only artefact it will ever be
         # pointed at is WHO's release file — a DEFLATE-COMPRESSED ZIP, in which no code
@@ -3705,17 +3740,8 @@ def insert_medical(code: str, display_name: str, icd11: str, session: str,
         # and the ruling it enforces ("verified against the persisted release file at write
         # time") was unexecutable. The MB5 verification of 2026-09-11 02:47 was done by
         # hand in Python and never through this writer, while the record claimed otherwise.
-        raw = pay.read_bytes()
-        bodies = [raw.decode("utf-8", errors="replace")]
-        if zipfile.is_zipfile(pay):
-            with zipfile.ZipFile(pay) as zf:
-                for member in zf.namelist():
-                    # Bounded: a release file's members are text tabulations. A member
-                    # larger than 64 MiB is not what this check is for, and decompressing
-                    # it blindly is how a zip becomes a denial of service.
-                    info = zf.getinfo(member)
-                    if info.file_size <= 64 * 1024 * 1024:
-                        bodies.append(zf.read(member).decode("utf-8", errors="replace"))
+        bodies = _payload_bodies(pay, "--icd11-payload",
+                                 "icd11_verified_at is set from BYTES or not at all")
         missing = [c.strip() for c in icd11.split(",")
                    if c.strip() and not any(c.strip() in b for b in bodies)]
         if missing:
@@ -3757,12 +3783,22 @@ def insert_medical(code: str, display_name: str, icd11: str, session: str,
                     f"--identity {identity!r} REFUSED: not a population_code. The identity "
                     f"lens is `populations`, and its live vocabulary is: {', '.join(near)}")
         if icf:
-            if not conn.execute("SELECT 1 FROM axes WHERE axis_code = ?", (icf,)).fetchone():
-                near = [r[0] for r in conn.execute("SELECT axis_code FROM axes ORDER BY axis_code")]
+            # INVERTED 2026-09-13, and the old message is worth remembering because it
+            # stated the ruled-out state as doctrine: it read "specifications.icf_code FKs
+            # to `axes`, NOT to raw ICF b/d/e codes … a raw code would be refused by the
+            # FK". That was true of the schema and is now exactly backwards. Owner ruling,
+            # same day: "'AX-' for ICF should never ever exist anywhere", then "keep the
+            # ICF lens, give it real ICF codes". Migration 081 re-pointed all six icf_code
+            # columns at `base_icf`, so a raw ICF code is the ONLY thing accepted here and
+            # an AX- demand code is what the FK now refuses.
+            if not dbcore.exists(conn, "base_icf", "icf_code", icf):
                 raise Refusal(
-                    f"--icf {icf!r} REFUSED: not an axis_code. specifications.icf_code FKs to "
-                    f"`axes`, NOT to raw ICF b/d/e codes (CLAUDE.md: a raw code would be refused "
-                    f"by the FK). Live vocabulary: {', '.join(near)}")
+                    f"--icf {icf!r} REFUSED: not in `base_icf`, the ICF registry the lens "
+                    f"points at since migration 081.\n"
+                    f"If this is a real ICF code the registry does not yet hold, mint it:\n"
+                    f"  db.py add-icf-code --icf-code {icf} --session ...\n"
+                    f"If it is an AX- demand code, it is not an ICF code and never was "
+                    f"(owner ruling 2026-09-13).")
         row = {"medical_code": code, "display_name": display_name,
                "description": description, "icd11_anchors": icd11,
                "icd11_verified_at": verified_at, "notes": note}
@@ -3956,23 +3992,15 @@ def set_parameter_direction(*, parameter_id: int, direction: str, rationale: str
 # next session reaches for hand SQL (CLAUDE.md section 4 -- "if you find one it cannot,
 # that is a coverage bug to fix, not a licence to bypass").
 
-#: The shape an ICF activity code takes. NOT a vocabulary -- `population_icf_links.
-#: icf_code` is free text ON PURPOSE (080: the FDA mapping states ranges, and there is
-#: no ICF registry in this schema to point at).
+#: The shape an ICF code takes, kept ONLY to tell a new mint from a typo in
+#: `add-icf-code`. It is no longer the membership test anywhere: migration 081 created
+#: `base_icf` and re-pointed all six `icf_code` columns at it, so membership is the FK's
+#: job now -- which is exactly what the block this replaced promised would happen ("when
+#: an ICF registry lands, this becomes an FK and the guard goes").
 #:
-#: AND IT IS A TRIPWIRE FOR THE 2026-09-13 OWNER RULING, not only a typo guard.
-#: "'AX-' for ICF should never ever exist anywhere" (references/project-standards.md).
-#: Four columns named `icf_code` currently FK into the demand registry, whose codes
-#: carry that prefix -- so `icf_code` resolves to a demand code in four places in the
-#: live schema. THIS column is not one of them and must never become one: the guard
-#: below refuses the prefix outright, so the ruled state cannot be recreated here while
-#: the wider re-mint is still owner-gated.
-#:
-#: A shape guard is the most this can honestly do -- it cannot say the code EXISTS, only
-#: that the value is an ICF activity code rather than something from another lens pasted
-#: into the wrong column. When an ICF registry lands, this becomes an FK and the guard
-#: goes.
-_ICF_CODE_RE = re.compile(r"^d\d{3}(?:\s*[-\u2013\u2014]\s*d\d{3})?$")
+#: Owner rulings 2026-09-13, both: "'AX-' for ICF should never ever exist anywhere", and
+#: then, on the fork that opened, "keep the ICF lens, give it real ICF codes".
+_ICF_CODE_RE = re.compile(r"^[bdes]\d{3}[0-9]*(?:\s*[-\u2013\u2014]\s*[bdes]\d{3}[0-9]*)?$")
 
 
 def insert_population_icf_link(*, population: str, icf_code: str, mechanism: str,
@@ -3992,9 +4020,12 @@ def insert_population_icf_link(*, population: str, icf_code: str, mechanism: str
       names neither the code nor the fix -- and the codes that fail here are usually
       RETIRED ones (the pre-DR-2026-07-23 set the functional-deficit-auditor taught for
       fourteen months), so the refusal points at the crosswalk rather than at the FK.
-    * An `icf_code` that is not shaped like an ICF activity code. See _ICF_CODE_RE: the
-      column is free text because there is nothing to point at, and free text is where
-      an axis code or a population code gets pasted by accident.
+    * An `icf_code` that is not in `base_icf`. REWRITTEN 2026-09-13: this was a shape
+      guard, because at the time there was no ICF registry to point at and free text is
+      where a code from another lens gets pasted by accident. Migration 081 created the
+      registry and gave this column its FK, so membership is now a real check rather than
+      a plausibility one -- and the refusal names the mint verb, because a bare
+      `FOREIGN KEY constraint failed` names neither the code nor the fix.
     * An empty `provenance`. The column is NOT NULL, so the database catches a missing
       one -- but not `''`, and a mapping with no provenance is the skill prose again,
       in a table. That is the exact state migration 080 moved the mapping OUT of.
@@ -4017,17 +4048,17 @@ def insert_population_icf_link(*, population: str, icf_code: str, mechanism: str
             "provenance is skill prose in a table, which is the state migration 080 "
             "moved this mapping out of. Name the source: a ref_id for a row derived "
             "from a study, or the promotion that produced it.")
-    if not _ICF_CODE_RE.match(icf_code):
-        raise Refusal(
-            f"{icf_code!r} is not shaped like an ICF activity code. Expected d### or a "
-            f"range d###-d### (e.g. 'd450', 'd310\u2013d329').\n"
-            f"This column is free text because there is no ICF registry to point at yet "
-            f"-- which is precisely why a shape guard sits here.\n"
-            f"If what you have is a DEMAND code or a population code, this is the wrong "
-            f"column. A demand code in particular: owner ruling 2026-09-13 is that the "
-            f"AX- prefix may never denote an ICF code anywhere, and this column is where "
-            f"that would happen next.")
     with connect(dry_run) as conn:
+        if not dbcore.exists(conn, "base_icf", "icf_code", icf_code):
+            raise Refusal(
+                f"{icf_code!r} is not in `base_icf`, the ICF registry this column has FK'd "
+                f"into since migration 081 -- so the bare FK error would say only "
+                f"'FOREIGN KEY constraint failed', which names neither the code nor the "
+                f"fix.\n"
+                f"If it is a real ICF code the registry does not hold yet, mint it first:\n"
+                f"  db.py add-icf-code --icf-code {icf_code} --session ...\n"
+                f"If it is an AX- demand code, it is not an ICF code and never was (owner "
+                f"ruling 2026-09-13).")
         if not dbcore.exists(conn, "populations", "population_code", population):
             live = sorted(r[0] for r in
                           conn.execute("SELECT population_code FROM populations"))
@@ -4057,6 +4088,129 @@ def insert_population_icf_link(*, population: str, icf_code: str, mechanism: str
         return {"link_id": cur.lastrowid, "population_code": population,
                 "icf_code": icf_code, "mechanism": mechanism,
                 "mapping_confidence": mapping_confidence, "dry_run": dry_run}
+
+
+def insert_icf_code(*, icf_code: str, title: str = None, title_source: str = None,
+                    title_payload: str = None, notes: str = None, session: str,
+                    dry_run: bool = False):
+    """Mint one ICF code into `base_icf` — the registry the ICF lens points at.
+
+    OWNER RULING 2026-09-13: "keep the ICF lens, give it real ICF codes", answering the
+    fork opened by the same day's "'AX-' for ICF should never ever exist anywhere".
+    Migration 081 built the registry and re-pointed all six `icf_code` columns at it; this
+    is how it grows afterwards.
+
+    WHAT IS DERIVED RATHER THAN ASKED FOR (CLAUDE.md rule 8). `component` is the code's
+    first letter and `is_range` is whether it spans two codes. Both are computable from
+    the code itself, so asking for them would be inviting a row whose component disagrees
+    with its own identifier.
+
+    THE TITLE IS THE PART THAT CANNOT BE TYPED FROM MEMORY, and this is CLAUDE.md 5(c)
+    before the fact rather than after. On 2026-08-19 five sources were stored with invented
+    co-authors and six gates passed them, because each asked whether a field was POPULATED
+    and never whether it was TRUE. An ICF title recalled rather than read is the same act
+    in a smaller field. So `title` may only arrive with a `title_source`, which the schema
+    enforces too — and when that source is a persisted payload, the title is checked
+    against its BYTES here, the same way `add-medical --icd11-payload` checks an ICD-11
+    anchor. A title with no payload is accepted and records its document, which is weaker
+    and is meant to read as weaker.
+
+    A CODE WITH NO TITLE IS FINE and is the honest default: 43 of the 72 seeded codes are
+    in that state because nothing in this repository names them (GAP-ICF-TITLES). CLAUDE.md
+    section 6 wants codes AND names, so an untitled code is a gap — but a gap is not a lie,
+    and `set-icf-title` is how it closes.
+    """
+    icf_code = (icf_code or "").strip()
+    if not _ICF_CODE_RE.match(icf_code):
+        raise Refusal(
+            f"{icf_code!r} is not shaped like an ICF code. Expected b/d/e/s followed by "
+            f"digits, optionally a range (e.g. 'd450', 'b1342', 'd310\u2013d329').\n"
+            f"If this is an AX- demand code: it is not an ICF code and never was (owner "
+            f"ruling 2026-09-13), and `base_icf`'s own CHECK refuses the shape too.")
+    if title and not (title_source or title_payload):
+        raise Refusal(
+            "--title requires --title-source (or --title-payload). A title with no source "
+            "is a title from memory, which is the 2026-08-19 fabrication in a smaller "
+            "field. The schema refuses the pair as well.")
+    with connect(dry_run) as conn:
+        clash = conn.execute("SELECT icf_code, title FROM base_icf WHERE icf_code=?",
+                             [icf_code]).fetchone()
+        if clash:
+            raise Refusal(
+                f"{icf_code} is already in base_icf (title {clash['title']!r}). One row per "
+                f"code — a second is the dual home rule 5 forbids. To add or correct a "
+                f"title, use `db.py set-icf-title`.")
+        if title and title_payload:
+            bodies = _payload_bodies(title_payload, "--title-payload",
+                                     "a title is verified from BYTES or it records a "
+                                     "document instead")
+            if not any(title in b for b in bodies):
+                raise Refusal(
+                    f"--title {title!r} does not appear in {title_payload}. The payload is "
+                    f"what makes this a verified title rather than a remembered one; if the "
+                    f"wording differs, use the payload's wording.")
+            title_source = f"payload:{title_payload}"
+        row = {"icf_code": icf_code, "component": icf_code[0],
+               "is_range": 1 if re.search(r"[-\u2013\u2014]", icf_code) else 0,
+               "title": title, "title_source": title_source, "notes": notes}
+        row.update(dbcore.stamp_for(conn, "base_icf", session))
+        conn.execute(f"INSERT INTO base_icf ({','.join(row)}) "
+                     f"VALUES ({','.join('?'*len(row))})", list(row.values()))
+        return {"icf_code": icf_code, "component": icf_code[0],
+                "is_range": row["is_range"], "title": title,
+                "title_source": title_source,
+                "title_verified": bool(title and title_payload), "dry_run": dry_run}
+
+
+def set_icf_title(*, icf_code: str, title: str, title_source: str = None,
+                  title_payload: str = None, session: str, dry_run: bool = False):
+    """Give a seeded ICF code the name CLAUDE.md section 6 requires it to be used with.
+
+    GAP-ICF-TITLES is the subject: 43 of the 72 codes migration 081 seeded carry no title,
+    because nothing in this repository states one and supplying it from memory is the act
+    CLAUDE.md 5(c) forbids. This is the named path for closing that — retrieve the titles,
+    persist the payload under `retrieval-log/`, and write them from the bytes.
+
+    OVERWRITING A TITLE IS REFUSED. A title is a fact about an external classification, not
+    a field to keep tidy; replacing one silently would erase whoever established it and the
+    payload they established it from. A correction is a different act and owes its own
+    reason.
+    """
+    icf_code = (icf_code or "").strip()
+    title = (title or "").strip()
+    if not title:
+        raise Refusal("--title is required and may not be blank.")
+    if not (title_source or title_payload):
+        raise Refusal(
+            "--title-source or --title-payload is required. A title with no source is a "
+            "title from memory; the schema refuses the pair too.")
+    with connect(dry_run) as conn:
+        row = conn.execute(
+            "SELECT icf_code, title, title_source FROM base_icf WHERE icf_code=?",
+            [icf_code]).fetchone()
+        if row is None:
+            raise Refusal(
+                f"{icf_code!r} is not in base_icf. Mint it first:\n"
+                f"  db.py add-icf-code --icf-code {icf_code} --session ...")
+        if row["title"]:
+            raise Refusal(
+                f"{icf_code} is already titled {row['title']!r} (source "
+                f"{row['title_source']!r}). Overwriting would erase whoever established it "
+                f"and the payload they established it from. A correction is a different "
+                f"act and owes its own reason.")
+        if title_payload:
+            bodies = _payload_bodies(title_payload, "--title-payload",
+                                     "a title is verified from BYTES or it records a "
+                                     "document instead")
+            if not any(title in b for b in bodies):
+                raise Refusal(
+                    f"--title {title!r} does not appear in {title_payload}. If the "
+                    f"classification words it differently, use its wording.")
+            title_source = f"payload:{title_payload}"
+        conn.execute("UPDATE base_icf SET title=?, title_source=? WHERE icf_code=?",
+                     [title, title_source, icf_code])
+        return {"icf_code": icf_code, "title": title, "title_source": title_source,
+                "title_verified": bool(title_payload), "dry_run": dry_run}
 
 
 def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
@@ -4214,7 +4368,13 @@ def resolve_determination_gate(*, gate_id: int, rationale: str, session: str,
 # hand-off needs a translation nobody wrote.
 _LENS_COLUMNS = {
     "identity_code": ("populations", "population_code"),
-    "icf_code": ("axes", "axis_code"),
+    # RE-POINTED 2026-09-13 by owner ruling ("keep the ICF lens, give it real ICF
+    # codes"), executed by migration 081. It read ("axes", "axis_code") until then, so
+    # the column called `icf_code` resolved to an AX- functional-demand code -- which
+    # the same day's ruling bans outright: "'AX-' for ICF should never ever exist
+    # anywhere". The demand layer keeps its rows and its maps; it is simply no longer
+    # a lens.
+    "icf_code": ("base_icf", "icf_code"),
     "needs_code": ("access_needs", "need_code"),
     "medical_code": ("base_taxonomy_medical", "medical_code"),
 }
@@ -4244,6 +4404,38 @@ _ROW_ONLY_RELATIONS = ("condition_on", "derived_from")
 def _fmt_num(x: float) -> str:
     """Render a float back to a plain value string, without a forced decimal tail."""
     return str(int(x)) if x == int(x) else repr(x)
+
+
+def _payload_bodies(pay, flag: str, why: str):
+    """Every readable text body inside a persisted payload, for a bytes-not-memory check.
+
+    FACTORED OUT 2026-09-13 so `set-icf-title` verifies an ICF title exactly the way
+    `add-medical --icd11-payload` verifies an ICD-11 anchor. Two copies of a
+    bytes-verification would be two places for the archive-member bug below to come back.
+
+    READS ARCHIVE MEMBERS, NOT JUST RAW BYTES, and that is the whole reason this is more
+    than `read_bytes()`. The first version of the ICD-11 check substring-matched the raw
+    file, and the only artefact it will ever be pointed at is WHO's release file -- a
+    DEFLATE-COMPRESSED ZIP in which no code occurs literally. Measured: b"MB56" in the raw
+    zip -> False; in the decompressed member -> True. So the check refused the very payload
+    that proved the anchor, and the ruling it enforced was unexecutable.
+    """
+    pay = Path(pay)
+    if "retrieval-log" not in pay.parts:
+        raise Refusal(f"{flag} {str(pay)!r} REFUSED: must live under retrieval-log/, which "
+                      f"is the only store a later audit can diff against.")
+    if not pay.exists():
+        raise Refusal(f"{flag} {str(pay)!r} REFUSED: file does not exist. {why}.")
+    bodies = [pay.read_bytes().decode("utf-8", errors="replace")]
+    if zipfile.is_zipfile(pay):
+        with zipfile.ZipFile(pay) as zf:
+            for member in zf.namelist():
+                # Bounded: a release file's members are text tabulations. A member larger
+                # than 64 MiB is not what this check is for, and decompressing it blindly
+                # is how a zip becomes a denial of service.
+                if zf.getinfo(member).file_size <= 64 * 1024 * 1024:
+                    bodies.append(zf.read(member).decode("utf-8", errors="replace"))
+    return bodies
 
 
 def _verbatim(text: str, ref_id: str = None):
