@@ -1134,6 +1134,23 @@ def main():
 
     # add-parameter — the writer base_parameters shipped without. See insert_parameter
     # for the four refusals and for why --status/--merged-into are deliberately absent.
+    p_spd = sub.add_parser(
+        "set-parameter-direction",
+        help="Record which way is better for a disabled person on this parameter "
+             "(the most-accommodating rule, owner directive 2026-07-21)")
+    p_spd.add_argument("--parameter-id", type=int, required=True)
+    p_spd.add_argument("--direction", required=True,
+                       choices=dbcore.schema_choices("base_parameters",
+                                                     "accessibility_direction"),
+                       help="higher_is_better (widest minimum corridor) / "
+                            "lower_is_better (lowest maximum threshold height, gentlest "
+                            "maximum ramp slope) / contested (population-contested: no "
+                            "single value is anchored, DR-2026-07-21 section 5)")
+    p_spd.add_argument("--rationale", required=True,
+                       help="WHY, for a disabled person. Required by the schema too.")
+    p_spd.add_argument("--session", required=True)
+    p_spd.add_argument("--dry-run", action="store_true")
+
     p_ap = sub.add_parser("add-parameter",
                           help="Promote an adjudicated term into base_parameters "
                                "(THE SUBJECT of a determination)")
@@ -2110,6 +2127,11 @@ def main():
             session=args.session,
             dry_run=args.dry_run,
         ))
+
+    elif args.command == "set-parameter-direction":
+        _emit(set_parameter_direction(
+            parameter_id=args.parameter_id, direction=args.direction,
+            rationale=args.rationale, session=args.session, dry_run=args.dry_run))
 
     elif args.command == "add-parameter":
         _emit(insert_parameter(
@@ -3777,6 +3799,74 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
                 "provenance": ("adjudicated" if adj else "base-vocabulary"),
                 "adjudicated_by": (adj["adjudication_id"] if adj else None),
                 "outcome": (adj["outcome"] if adj else None),
+                "dry_run": dry_run}
+
+
+def set_parameter_direction(*, parameter_id: int, direction: str, rationale: str,
+                           session: str, dry_run: bool = False):
+    """Record which way is BETTER FOR A DISABLED PERSON on this parameter.
+
+    THE JUDGMENT THE ENGINE CANNOT MAKE, and the one it has been blocked on since
+    2026-07-21. The most-accommodating rule (evidence-architecture.md, owner directive,
+    Option A) says a determination anchors on the best-for-the-user value "read per the
+    parameter's accessibility direction -- the widest minimum corridor, but the LOWEST
+    maximum threshold height and the GENTLEST maximum ramp slope". Which of those a
+    parameter is cannot be derived from its name, its unit, or its values: it is a fact
+    about what the parameter means for a person, and somebody has to state it.
+
+    So this is CLAUDE.md rule 8's other half in one verb. The vocabulary comes from the
+    schema (`dbcore.check_declared`), the answer is a judgment, and the WARRANT is required
+    beside it -- a direction with no stated reason is an assertion about disabled people's
+    needs with nothing behind it, and the schema refuses that pair too (migration 078).
+
+    `contested` IS AN ANSWER, not a refusal to answer. DR-2026-07-21 section 5: where the
+    direction is population-contested -- flush thresholds aid wheeled mobility but remove
+    the tactile cues cane users rely on, brighter light aids low vision but harms
+    photosensitive users -- most-accommodating selection is INAPPLICABLE and no single value
+    is anchored. Recording `contested` is what stops the engine silently picking a winner
+    between two populations; leaving the field NULL would let a later session mistake "not
+    yet examined" for "nothing to see".
+
+    RE-STATING A DIRECTION IS REFUSED. The direction conditions every determination already
+    computed for the parameter, so changing it silently re-points those determinations at a
+    rule they were not computed under. Retire the parameter or open a decision; do not
+    overwrite.
+    """
+    if not (rationale or "").strip():
+        raise Refusal(
+            "--rationale is required: a direction is a claim about what serves disabled "
+            "people on this parameter, and one with no stated reason cannot be reviewed, "
+            "disputed or superseded. The schema refuses the pair too (migration 078).")
+    with dbcore.connect(dry_run) as conn:
+        row = conn.execute(
+            "SELECT p.parameter_id, t.canonical_en, p.accessibility_direction, "
+            "p.direction_rationale FROM base_parameters p JOIN terms t "
+            "ON t.term_id = p.term_id WHERE p.parameter_id = ?", [parameter_id]).fetchone()
+        if row is None:
+            raise Refusal(
+                f"parameter_id {parameter_id}: no such parameter. Mint one from a term "
+                f"first: db.py add-parameter --term-id TERM-NNN --session ...")
+        if row["accessibility_direction"]:
+            raise Refusal(
+                f"parameter {parameter_id} ({row['canonical_en']!r}) already carries "
+                f"direction {row['accessibility_direction']!r}: "
+                f"{row['direction_rationale']!r}.\nA direction conditions every "
+                f"determination computed for the parameter, so overwriting it silently "
+                f"re-points those at a rule they were not computed under. If it is wrong, "
+                f"that is a decision (governance/decision-protocol.md), not an amendment.")
+        dbcore.check_declared(conn, "base_parameters", "accessibility_direction",
+                              direction, "set-parameter-direction")
+        stamp = dbcore.stamp_for(conn, "base_parameters", session)
+        sets = ["accessibility_direction = ?", "direction_rationale = ?"]
+        vals = [direction, rationale.strip()]
+        for k, v in stamp.items():
+            if k.startswith("updated"):
+                sets.append(f"{k} = ?")
+                vals.append(v)
+        conn.execute("UPDATE base_parameters SET " + ", ".join(sets)
+                     + " WHERE parameter_id = ?", vals + [parameter_id])
+        return {"parameter_id": parameter_id, "canonical_en": row["canonical_en"],
+                "accessibility_direction": direction, "direction_rationale": rationale.strip(),
                 "dry_run": dry_run}
 
 

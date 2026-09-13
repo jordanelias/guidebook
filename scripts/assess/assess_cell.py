@@ -368,6 +368,154 @@ def gather_extraction_links(conn, parameter_id, governing_refs):
     return out
 
 
+def parse_bound(claimed_value, comparator, claim_type):
+    """One governing claim -> (lo, hi) in its own unit, or None if it states no number.
+
+    The comparator IS the bound, which is why migration 075 added it: "more than thirty
+    centimetres" stored as a bare 30 turns a floor into a point, and a determination built
+    from points is a determination that has quietly dropped every inequality its sources
+    stated.
+
+      =, approx, or no comparator on a numerical claim -> a point:   (v, v)
+      >=, >                                            -> a floor:   (v, None)
+      <=, <                                            -> a ceiling: (None, v)
+      between, or a range claim written "a to b"       -> (a, b)
+
+    STRICTNESS IS NOT MODELLED, deliberately. `>` and `>=` both land as (v, None): the
+    columns are REAL and carry no open/closed flag, and inventing one here would put a
+    distinction in the determination that no render surface can show and no source states
+    precisely enough to defend. The comparator stays on the extraction, which is where a
+    reader can see it.
+
+    Returns None for anything that is not a number -- a qualitative claim, a ratio like
+    '1:12', a value with words in it. Those govern the STATE of a cell (they are still
+    `figure_role='claim'`) without contributing a numeric bound, and the caller says so
+    rather than silently treating them as zero.
+    """
+    raw = (claimed_value or "").strip()
+    if not raw:
+        return None
+    cmp_ = (comparator or "").strip()
+
+    def num(tok):
+        try:
+            return float(tok)
+        except (TypeError, ValueError):
+            return None
+
+    if cmp_ == "between" or claim_type == "range":
+        parts = re.split(r"\s+to\s+|\s*-\s*|\s*–\s*", raw)
+        if len(parts) == 2:
+            lo, hi = num(parts[0]), num(parts[1])
+            if lo is not None and hi is not None:
+                return (min(lo, hi), max(lo, hi))
+        return None
+    v = num(raw)
+    if v is None:
+        return None
+    if cmp_ in (">=", ">"):
+        return (v, None)
+    if cmp_ in ("<=", "<"):
+        return (None, v)
+    return (v, v)
+
+
+def compose_value(conn, links, direction):
+    """The determination's value, selected MOST-ACCOMMODATINGLY (owner, 2026-07-21).
+
+    Ratified rule, `governance/evidence-architecture.md`: a determination anchors on "the
+    MOST ACCOMMODATING available value, read per the parameter's accessibility direction --
+    best-for-the-user, not largest-number: the widest minimum corridor, but the LOWEST
+    maximum threshold height and the GENTLEST maximum ramp slope." That bullet has carried
+    an `[ENGINE-LAG -> DR-2026-07-21 section 5]` marker since it was written, and this
+    function is the half that removes it: every `specifications.value_min/value_max/
+    value_unit` since the 057 baseline has been NULL because the engine passed literal None
+    into those three slots, having no rule it could apply.
+
+    Returns (value_min, value_max, value_unit, note). A NULL triple always arrives with a
+    note saying WHY, because "no value" and "no rule to pick one" are different facts and a
+    determination that cannot tell them apart is the pending-versus-never-read collision
+    again, one column along.
+
+    THE FOUR WAYS IT DECLINES, each reported rather than defaulted:
+      * no governing claim states a number (every one is qualitative or a ratio);
+      * the governing claims are in DIFFERENT UNITS, so there is no common interval and
+        converting them here would invent a figure no source stated;
+      * `direction` is NULL -- nobody has recorded which way is better for a disabled
+        person on this parameter, so "most accommodating" has no meaning yet
+        (`db.py set-parameter-direction` is the remedy, and the note says so);
+      * `direction` is `contested` -- DR-2026-07-21 section 5: where the direction is
+        population-contested, most-accommodating selection is INAPPLICABLE, no single value
+        is anchored, and the spread is rendered with each population's direction stated.
+        Anchoring one number here would silently pick a winner between two groups of
+        disabled people, which is the whole thing that safeguard exists to prevent.
+
+    SCOPE, STATED BECAUSE IT IS AN EXTENSION. The owner's wording is about jurisdictions'
+    CODE FLOORS differing. This applies the same selection to any divergent governing set,
+    because it is the only composition rule this project has ruled and the alternative is
+    no value at all. Recorded here rather than assumed so it can be vetoed.
+    """
+    gov = [l for l in links if l["role"] == "governing"]
+    if not gov:
+        return None, None, None, None          # `pending` already says this
+
+    ids = [l["extraction_id"] for l in gov]
+    # Same fixture tolerance as the direction lookup: the pilot test builds a synthetic
+    # source_value_extractions with only the columns its own assertions need. A fixture
+    # that cannot state a value is a fixture with no value to compose, which is a true
+    # answer rather than a crash.
+    _cols = {r[1] for r in conn.execute("PRAGMA table_info(source_value_extractions)")}
+    if not {"claimed_value", "claimed_unit", "comparator", "claim_type"} <= _cols:
+        return None, None, None, (
+            "this database's source_value_extractions carries no value columns, so no "
+            "interval can be composed from it")
+    rows = conn.execute(
+        "SELECT extraction_id, claimed_value, claimed_unit, comparator, claim_type "
+        "FROM source_value_extractions WHERE extraction_id IN (%s)"
+        % ",".join("?" * len(ids)), ids).fetchall()
+
+    bounds, units = [], set()
+    for _eid, val, unit, cmp_, ctype in rows:
+        b = parse_bound(val, cmp_, ctype)
+        if b is None:
+            continue
+        bounds.append(b)
+        units.add((unit or "").strip())
+    if not bounds:
+        return None, None, None, (
+            "no governing claim states a numeric value (all are qualitative, or a ratio "
+            "this engine does not parse into a bound)")
+    if len(units) > 1:
+        return None, None, None, (
+            "governing claims are stated in different units (%s); composing an interval "
+            "would require a conversion no source stated"
+            % ", ".join(sorted(repr(u) for u in units)))
+    unit = next(iter(units)) or None
+
+    if direction is None:
+        return None, None, unit, (
+            "no accessibility_direction recorded for this parameter, so the "
+            "most-accommodating rule (owner 2026-07-21) has nothing to read: record it "
+            "with db.py set-parameter-direction")
+    if direction == "contested":
+        return None, None, unit, (
+            "accessibility_direction is CONTESTED -- most-accommodating selection is "
+            "inapplicable (DR-2026-07-21 section 5) and no single value is anchored; the "
+            "spread is rendered with each population's direction stated")
+
+    los = [lo for lo, _ in bounds if lo is not None]
+    his = [hi for _, hi in bounds if hi is not None]
+    if direction == "higher_is_better":
+        # The widest minimum: the most demanding floor is the one that serves most people.
+        vmin = max(los) if los else None
+        vmax = max(his) if his else None
+    else:                                        # lower_is_better
+        # The gentlest maximum, the lowest ceiling.
+        vmin = min(los) if los else None
+        vmax = min(his) if his else None
+    return vmin, vmax, unit, None
+
+
 def link_payload(links):
     """The governing set as `derivation_sha` hashes it, and as K01 recomputes it.
 
@@ -813,8 +961,32 @@ def determine(conn, parameter_id, lens, slug, note):
     # pending rather than leaving a reader to infer them from an absence.
     links = gather_extraction_links(conn, parameter_id, governing)
 
+    # THE VALUE (078). Selected most-accommodatingly per the parameter's recorded
+    # accessibility direction -- the ratified rule the engine has been unable to obey
+    # since 2026-07-21 for want of that one piece of metadata.
+    # TOLERANT OF A FIXTURE DATABASE, the same way `gather_sources` is tolerant of a
+    # pre-049 one: this engine is run against scratch and synthetic databases as well as
+    # the canonical schema, and `scripts/tests/test_assess_cell_pilot.py` builds one with
+    # no `base_parameters` at all. A missing table means no direction is recorded, which
+    # `compose_value` already handles and reports -- degrading to "cannot select" is
+    # correct; raising would make the engine untestable on a fixture.
+    _has_params = conn.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name='base_parameters'"
+    ).fetchone() is not None
+    _direction = None
+    if _has_params:
+        _cols = {r[1] for r in conn.execute("PRAGMA table_info(base_parameters)")}
+        if "accessibility_direction" in _cols:
+            _dir_row = conn.execute(
+                "SELECT accessibility_direction FROM base_parameters "
+                "WHERE parameter_id = ?", (parameter_id,)).fetchone()
+            _direction = _dir_row[0] if _dir_row else None
+    value_min, value_max, value_unit, value_note = compose_value(conn, links, _direction)
+
     return {
         "links": links,
+        "value_min": value_min, "value_max": value_max, "value_unit": value_unit,
+        "value_note": value_note, "accessibility_direction": _direction,
         "n_extractions": n_extractions,
         "parameter_id": parameter_id, "lens": dict(lens), "lens_key": lens_key(lens),
         "slug": slug, "note": note,
@@ -1207,7 +1379,11 @@ def main():
                 det["tier_basis"],
                 json.dumps(det["governing_refs"]) if det["governing_refs"] else None,
                 RULE_VERSION, det["derivation_sha"], det["code_floor_only"],
-                None, None, None,
+                # value_min, value_max, value_unit -- literal None here from the 057
+                # baseline until 078, which is why the specification stage emitted the
+                # marker and never the millimetres.
+                det["value_min"], det["value_max"], det["value_unit"],
+                det["value_note"],
                 det["falsification"],
                 det["has_unverified_sources"], det["all_sources_disqualified"],
                 det["regulatory_stratum_only"],
@@ -1218,7 +1394,7 @@ def main():
                 "confidence_dimensions_present, confidence_dimensions_absent, "
                 "confidence_synthesis_basis, gap_register_id, not_applicable_rationale, "
                 "tier_basis, governing_refs, rule_version, derivation_sha, code_floor_only, "
-                "value_min, value_max, value_unit, falsification_condition, "
+                "value_min, value_max, value_unit, value_note, falsification_condition, "
                 "has_unverified_sources, all_sources_disqualified, regulatory_stratum_only, "
                 "created_at, created_by_session, updated_at, updated_by_session")
         conn.execute(f"INSERT INTO specifications ({cols}) VALUES ("
@@ -1267,7 +1443,9 @@ def main():
                              f"VALUES (" + ", ".join(q(v) for v in _xlink) + ");")
 
         report.append({k: det[k] for k in
-                       ("parameter_id", "lens", "lens_key", "slug", "note", "state", "design_scale",
+                       ("value_min", "value_max", "value_unit", "value_note",
+                        "accessibility_direction",
+                        "parameter_id", "lens", "lens_key", "slug", "note", "state", "design_scale",
                         "tier_basis", "governing_refs", "supporting_refs", "code_floor_only",
                         "regulatory_stratum_only", "has_unverified_sources",
                         "all_sources_disqualified", "derivation_sha", "n_sources",

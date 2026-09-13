@@ -449,8 +449,17 @@ def check_values(conn, table: str, column: str) -> set:
     # the schema (CLAUDE.md §4: "Vocabularies come from the schema, not a list in
     # code"). It read the schema for 92 of 108 and guessed for the rest.
     ddl = _strip_sql_line_comments(row[0])
+    # AN OPTIONAL OPENING PAREN AFTER `IS NULL OR`, added 2026-09-13. Migration 078
+    # writes `CHECK (c IS NULL OR (c IN (...) AND sibling IS NOT NULL))` -- the only way
+    # SQLite lets an ALTER TABLE ADD COLUMN require a value and its warrant together,
+    # since a table-level CHECK cannot be added that way. Without the `\(?` this reader
+    # returned the empty set for that column, and an empty set means "no vocabulary
+    # declared", which `check_declared` treats as UNCONSTRAINED -- the guard silently off,
+    # which is the exact failure this function's own docstring records. Deliberately
+    # narrow: it still requires the CHECK to OPEN by naming this column, so a constraint
+    # belonging to a different column cannot be mistaken for this one's vocabulary.
     m = re.search(
-        r"CHECK\s*\(\s*(?:%s\s+IS\s+NULL\s+OR\s+)?%s\s+IN\s*\(([^)]*)\)"
+        r"CHECK\s*\(\s*(?:%s\s+IS\s+NULL\s+OR\s+)?\(?\s*%s\s+IN\s*\(([^)]*)\)"
         % (re.escape(column), re.escape(column)), ddl, re.I)
     if not m:
         return set()
