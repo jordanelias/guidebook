@@ -926,6 +926,15 @@ checks:
     - governance
     min_items: 1
     cmd: python3 scripts/generate/context_map.py --check
+  - id: derivation_handshake_integrity
+    level: advisory
+    battery: schema
+    kinds:
+    - schema
+    - data
+    - governance
+    min_items: null
+    cmd: python3 scripts/audit/derivation_handshake_integrity.py
   - id: gap_mining_audit
     level: advisory
     battery: research

@@ -264,7 +264,7 @@ stages:
       assertion carries a named-path rationale; advisory CONTRADICTS/UNLINKED checks force `provisional`
       (never `stated`) until resolved.
     references: DR-2026-07-13-value-genealogy-and-derivation-handshake (A6) H2/H4
-    check: null
+    check: scripts/audit/derivation_handshake_integrity.py
 - id: render
   anchor: renderers + the claim-strength register map (evidence-architecture.md §6)
   entry:

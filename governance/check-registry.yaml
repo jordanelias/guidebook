@@ -1589,6 +1589,51 @@ checks:
     wrong. The 17 "unprovable" rows are reported and never failed: a title embedding a DOI on a
     row that carries none is suspect, not proven, and failing on suspicion is how a gate starts
     lying.'
+- id: derivation_handshake_integrity
+  cmd:
+  - python3
+  - scripts/audit/derivation_handshake_integrity.py
+  battery: schema
+  kinds:
+  - schema
+  - data
+  - governance
+  level: advisory
+  basis: specification/derivation-handshake
+  cost: fast
+  no_floor: 'ZERO DETERMINATIONS IS THE CORPUS STATE, not a blocked check. `specifications`
+    cannot accept a row until a parameter is minted (CLAUDE.md §4 — `parameter_id NOT NULL`
+    into a `base_parameters` that the 2026-09-13 circulation clear left empty), so every
+    subject here is unreachable today. That is also why the check is advisory rather than
+    blocking: `run_checks.py` already prints five BLOCKING-and-vacuous gates as a defect,
+    and a sixth would make the battery worse rather than safer. Its failure paths are
+    exercised by FAULT INJECTION against a scratch copy instead — eight of them, plus two
+    controls that must stay silent (a T6 gate that must not bind a T1-anchored cell, and a
+    properly Co-1-anchored population_only cell). RATCHET TO level: blocking WITH min_items:
+    1 in the same change that writes the first determination; determinations are never
+    deleted, so the floor holds once set.'
+  note: 'WHAT REACHES THE BOOK WITHOUT IT (CLAUDE.md §8''s bar): a `stated` determination
+    sitting under an open, binding H4 gate — the book asserting a best-practice value while
+    an audit of equal or greater strength has already contested it, which is H4''s cap
+    failing silently; and a CULTURAL CLAIM ANCHOR THAT ANCHORS NOTHING, which is the subject
+    the schema structurally cannot reach. Migration 080''s CHECK lets a `population_only`
+    row skip its named-path rationale when `cultural_claim_anchor` is non-NULL, and it can
+    only test that the value is valid JSON — so a row naming a code document, a dead ref_id,
+    or an empty list satisfies the constraint and inherits the dignity exemption BY
+    ASSERTION. The ratified boundary criterion exists to stop exactly that ("the protection
+    is anchored, not self-declared … it gains no cultural exemption by assertion"), and
+    nothing but this check enforces it. Three further subjects: the single-path obligation
+    as a backstop for rows arriving by a route that bypassed the CHECK (the division of
+    labour `medical_lens_integrity` has with `add-medical`); `functional_basis` naming a
+    mapping `population_icf_links` does not hold, which justifies a determination by a
+    functional basis no reader can reach; and a gate whose stored `trigger_tier` has drifted
+    from its own source, which leaves the ladder-inversion guard deciding on a stale
+    strength — the same snapshot-versus-live shape as K02.
+
+    G3''s community-provenance predicate is IMPORTED from `schemas/directness.grain_for()`,
+    never retyped. That function is the one home of the rule, made so by the change that
+    closed a finding about two implementations of it disagreeing, and
+    `assess_cell.derivation_handshake()` decides the anchor with the same call.'
 - id: medical_lens_integrity
   cmd:
   - python3
