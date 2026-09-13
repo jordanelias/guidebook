@@ -166,6 +166,22 @@ stages:
       built speculatively here.
     references: scripts/migrations/075_extraction_relations.sql; CLAUDE.md section 5 (point, do not copy)
     check: null
+  - id: figure-role-stated
+    kind: integrity
+    criterion: Every source_value_extractions row created after migration 075 applied states
+      what kind of number it is (figure_role IS NOT NULL) once a grading writer exists; the
+      eight rows that predate the migration are reported UNGRADED, not failed, until a
+      backfill lands. A row graded figure_role='derived' carries a derived_from edge with
+      input_role='base' naming what it is computed from, and its stored value must agree with
+      what v_derived_figure_check recomputes from that row's own linked base+delta inputs — a
+      derived figure is an attestation a check recomputes, never a number trusted on faith,
+      same posture as derivation_sha/K01. A row graded figure_role='condition' is neither the
+      target of any extraction_relations edge nor the source of a condition_on edge is an
+      orphan — a qualifier attached to nothing, the exact shape 075 exists to prevent.
+    references: scripts/migrations/075_extraction_relations.sql; scripts/audit/extraction_relations_integrity.py;
+      CLAUDE.md section 5(c) (a fabricated/unstated relative figure passes green gates when
+      every field is populated and none is individually false)
+    check: scripts/audit/extraction_relations_integrity.py
 - id: synthesis
   anchor: 'best_practice_synthesis / ISW; PI rule #9 (9-step); Opus-only (rule #2)'
   entry:

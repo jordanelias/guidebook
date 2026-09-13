@@ -523,6 +523,7 @@ database:
   - evidence_population_match
   - evidence_source_authors
   - evidence_sources
+  - extraction_relations
   - gap_mining
   - gaps
   - icf_medical_map
@@ -559,7 +560,6 @@ database:
   - economics_entry_specs
   - external_root_registry
   - extraction_population_links
-  - extraction_relations
   - item_bpc_links
   - item_population_elaborations
   - probe_population_links
@@ -612,6 +612,7 @@ writers:
     - evidence_population_match
     - evidence_source_authors
     - evidence_sources
+    - extraction_relations
     - gap_mining
     - gaps
     - icf_medical_map
@@ -1215,6 +1216,15 @@ checks:
     - render
     min_items: 1
     cmd: python3 tools/evidentiary_audit.py --check
+  - id: extraction_relations_integrity
+    level: blocking
+    battery: db_integrity
+    kinds:
+    - data
+    - schema
+    - governance
+    min_items: 1
+    cmd: python3 scripts/audit/extraction_relations_integrity.py
   - id: judgment_handoff_shape
     level: blocking
     battery: schema
