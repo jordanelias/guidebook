@@ -3110,3 +3110,57 @@ as of this date and stays quarantined — its promotion clause waits on OD-E, wh
 2026-08-31 (D-0179) and whose subject holds 0 rows, so promotion is an owner call with no mechanical
 blocker left.
 DATE: 2026-09-12 — owner rulings on the B5(b) escalation, executed the same day.
+
+---
+
+## Owner ruling 2026-09-13 — a code value confirmed by research is upgraded; the empty circle is for code WITHOUT research backing
+
+> **"Sometimes code standards come from T1. If a code standard is being confirmed as genuine best
+> practice according to studies, then the code/regulatory input can be upgraded."**
+>
+> **"It is when a code/regulatory input does not have research backing that it gets the empty circle."**
+
+**What this settles.** It was put to the owner as one of three band questions raised by the
+2026-09-13 design pass: what strength a cell carries when its *finding* is T1 but its only *value*
+comes from a code. The answer is the upgrade route, and it is ruled — not the two-part rendering
+that was also on the table.
+
+**WHAT IT EXTENDS, AND THE EXTENSION IS THE POINT.** `evidence-architecture.md`'s **G1** re-grains a
+T4/T5 source out of NON-ANCHORING on exactly one trigger: *"its evidence basis is documented as
+traceable to T1/T2 evidence, with that provenance recorded on the source record."* That is a
+**genealogy** test — where the number came from. This ruling adds a second, independent route:
+**confirmation** — a study finding the code's value sound, whether or not anyone can trace how the
+committee reached it. The two are not the same test and the corpus already separates them:
+**REF-00980** concludes *"changes to the technical requirements for ramp slope and length cannot be
+recommended at this time."* It establishes nothing about ADA's provenance. Under G1 as written it
+re-grains nothing. Under this ruling it upgrades the value it confirms.
+
+**And it makes the empty circle CONDITIONAL where it was automatic.** `tier-system.md` §5 maps T6
+(code-floor) to `○` flatly, and §8's band table gives `○ Weak` to "T6 (code-floor)" with a cell whose
+entire basis is T4–T6 taking `○` regardless. After this ruling `○` marks the **unbacked** case
+specifically: a code or regulatory input with no research behind it. A code value a study has
+confirmed is no longer `○` by virtue of being a code.
+
+**WHAT THE RULING DOES NOT SAY, recorded so nobody fills it in silently.** Three things.
+(1) **Which band an upgraded value lands in** — the ruling says "upgraded", not "upgraded to ●". The
+natural reading is that it takes the band of the confirming evidence, so a T1 confirmation yields
+`●`; that is a reading, not the ruling, and it is the next thing to put to the owner.
+(2) **Whether T4/T5 and T6 behave alike here.** The ruling says "code/regulatory input" without
+distinguishing them, while existing doctrine splits them — `◐` for T4/T5 citations, `○` for T6.
+(3) **What counts as confirmation.** REF-00980's non-recommendation of change is the clear case. A
+study that merely *uses* a code value as its rig setting is not confirming it, and that distinction
+is exactly what the `confirms` / `tested_at` edges of migration 075 exist to record.
+
+**Mechanism, so this is executable rather than aspirational.** The 075 design gives the row-level
+vocabulary: a `confirms` edge from a finding row to the code figure it confirms is the upgrade
+trigger; `tested_at` is not; `insufficient` is the opposite and remains an open band question. The
+engine rule that reads those edges is not yet built, so **the upgrade is ruled and unexecuted** —
+which is the state an empty table should be read as, per the 2026-09-11 entry above.
+
+CONDITION: Any session assigning a strength band to a determination whose value comes from a code or
+regulatory source, or citing G1's traceability clause as the only re-graining route.
+ACTION: Treat confirmation-by-study as a second re-graining route alongside documented traceability.
+Read `○` as "no research backing", not as "is a code". Record the confirming relation on the row
+rather than asserting the upgrade in prose. Do not assume which band an upgraded value takes — that
+is unruled.
+DATE: 2026-09-13 — owner ruling, quoted above.
