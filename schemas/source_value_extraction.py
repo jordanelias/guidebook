@@ -64,6 +64,17 @@ Lens CODES are likewise not validated here — a code's vocabulary is its own ba
 registry, reached by a real typed FK (populations / axes / access_needs /
 base_taxonomy_medical). `at_least_one_lens` below validates the SHAPE, which the
 database also states, and nothing else.
+
+TWO COLUMNS ADDED 2026-09-13 BY MIGRATION 075: `figure_role`, `comparator`. Both
+started NULL on every row that existed before that migration and stay nullable at
+the schema level — a bare ADD COLUMN NOT NULL is refused by SQLite once a table
+holds rows, and eight already did. NULL means "not yet graded", the same posture
+this file already documents for `claim_text`: the guarantee, when there is one, is
+the WRITER's, not the schema's. Neither is graded by `db.py add-extraction` today;
+that CLI flag is owed to whichever change first needs to write a graded value, not
+invented speculatively here (CLAUDE.md section 8 — nothing is added without naming
+what reads it). `extraction_relations` (schemas/extraction_relation.py) is the
+companion junction that records what a graded figure is stated relative to.
 """
 
 from datetime import datetime
@@ -201,6 +212,17 @@ class SourceValueExtraction(BaseModel):
     created_by_session: Optional[str] = None
     updated_at: Optional[datetime] = None
     updated_by_session: Optional[str] = None
+
+    # ── Added by migration 075 (2026-09-13) ──────────────────────────────────
+    # Both start NULL on every row written before this migration and stay nullable
+    # at the schema level; see the module docstring for why. Plain str, not an enum
+    # — same rule-4 reasoning as root_type/measurement_paradigm/device_class above:
+    # dbcore.check_values() reads the live CHECK, so a Python enum here would be a
+    # second, driftable home for the vocabulary. extraction_relations
+    # (schemas/extraction_relation.py) is the companion junction `comparator`
+    # implies the existence of a row in, once one is graded.
+    figure_role: Optional[str] = None  # 'claim'/'finding'/'condition'/'derived'
+    comparator: Optional[str] = None   # '='/'<'/'<='/'>'/'>='/'between'/'approx'
 
     # --- Validators ---
 

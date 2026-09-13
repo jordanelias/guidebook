@@ -603,6 +603,16 @@ TABLES = [
     "icf_medical_map",
     "base_parameters",
     "source_value_extractions",
+    # ADDED 2026-09-13 with migration 075, in the same change that created the table --
+    # this is the SEVENTH time this list has been blind to a live table, after
+    # evidence_source_authors, source_locators, observed_terms/term_adjudications,
+    # terms, base_parameters/specifications and base_taxonomy_medical/the two medical
+    # crossing maps. The pattern is now stated seven times running: creating a table is
+    # not done until the capture path can see it, and this line is that step, done in
+    # the same change rather than owed. MUST follow source_value_extractions: both of
+    # this table's FKs (from_extraction_id, to_extraction_id) point at it, and this list
+    # is replayed in FK order.
+    "extraction_relations",
     "convergence_assessment",
     "specifications",
     "specification_source_links",

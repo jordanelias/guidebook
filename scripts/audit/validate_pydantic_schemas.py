@@ -70,6 +70,11 @@ MODEL_TABLE_MAP = {
     "conflict.Conflict": "conflicts",
     "decision.Decision": "decisions",
     "evidence_source.EvidenceSource": "evidence_sources",
+    # Migration 075 created the comparator junction in the same change that added
+    # figure_role/comparator to source_value_extraction.SourceValueExtraction below
+    # (already mapped) -- both mirrors land together, so this audit never has a
+    # window where one side of the pair is invisible to it.
+    "extraction_relation.ExtractionRelation": "extraction_relations",
     "evidence_state.ConvergenceAssessment": "convergence_assessment",
     "evidence_state.EvidenceStateRecord": "specifications",
     "gap.Gap": "gaps",
