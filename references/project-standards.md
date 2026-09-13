@@ -3245,3 +3245,48 @@ ACTION: Never let such a finding supply `value_min`/`value_max`. Never discard i
 direction at its own source's tier and is rendered. A cell whose only evidence is `insufficient`
 findings is `pending` on value and states the inadequacy.
 DATE: 2026-09-13 — owner ruling, queried and confirmed.
+
+---
+
+## Owner ruling 2026-09-13 — grey literature that states a code's value is regulatory stratum, not independent evidence
+
+> **"If T3-grey is the same value as T6, I think T3-grey is not T3 but T6"**
+
+**What it is really about, and it is not the marker.** `tier-system.md` §5 maps T3-grey and T6 to the
+SAME band — both `○`. So re-tiering such a source changes no marker. What it changes is the
+**stratum** it sits in and, decisively, **whether it counts as an independent root**. Two `○` sources
+stating the same number read as two sources converging; if one is echoing the other's code, they are
+one source counted twice. That is the laundering this project already names
+*convergence-not-evidence*, and it is the consequential half of this ruling.
+
+**Machinery that already exists, so this is not built from nothing.** `v_value_independence` counts
+`DISTINCT COALESCE(root_ref_id, root_id)` and admits only `root_type IN ('measurement_primary',
+'participatory_finding', 'derived_calculation')` — a row recorded as `committee_assertion` or
+`untraced` already corroborates nothing. `echo_of` and `root_id` carry the transmission chain, and
+`references/methodology/value-genealogy-worked-example-corridor-width.md` is the worked precedent
+(1800 mm's zero in-corpus roots against 2440/2400 mm's two independent roots).
+
+**THE GAP THIS RULING FILLS.** All of that machinery tests **recorded provenance** — what an extractor
+wrote down about where a figure came from. The ruling supplies a test for the case where provenance
+was never recorded: **value coincidence with a code**. Grey literature overwhelmingly repeats code
+values, and an unrecorded echo currently reads as independent corroboration.
+
+**THE FALSE POSITIVE, stated because the rule is stated as an identity.** Two genuinely independent
+measurements can land on the same number; a code value is often round and grey fieldwork often
+reports round numbers. A T3-grey field study that independently measured 1500 mm and a code that says
+1500 mm are convergence, not echo, and automatic re-tiering would erase a real corroboration — the
+opposite error to the one the ruling prevents, and the harder one to notice afterwards.
+**Recommended shape, for the owner to confirm or reject:** the coincidence raises a rebuttable
+presumption of echo — the source sits in the regulatory stratum and contributes no independent root
+UNLESS its own recorded provenance shows independent measurement (`root_type='measurement_primary'`
+with a root that is not the code). That keeps the ruling's force, costs nothing when provenance is
+absent, which is the common case, and does not silently delete a genuine second root.
+
+CONDITION: Any session tiering a grey source whose value matches a code, or counting independent
+roots for a parameter.
+ACTION: Do not count a grey source as an independent root on value agreement alone. Check its
+recorded provenance first; where none exists, treat it as regulatory stratum. Expect no marker change
+— both bands are `○` — and expect the change to show up in independence counts and
+`regulatory_stratum_only`, which is where it matters.
+DATE: 2026-09-13 — owner ruling, quoted above. The rebuttable-presumption shape is a proposal, not
+the ruling.
