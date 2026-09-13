@@ -646,6 +646,7 @@ writers:
     - conflicts
     - connection_targets
     - connections
+    - determination_gates
     - economics_entries
     - evidence_population_match
     - evidence_source_authors
@@ -658,6 +659,7 @@ writers:
     - item_audit_runs
     - jurisdictional_values
     - observed_terms
+    - population_icf_links
     - research_code_leads
     - search_admissions
     - search_candidates

@@ -1160,6 +1160,65 @@ def main():
     p_ap.add_argument("--session", required=True)
     p_ap.add_argument("--dry-run", action="store_true")
 
+    # add-population-icf-link / raise-determination-gate / resolve-determination-gate —
+    # the writers migration 080's two tables shipped without. See the functions for the
+    # refusals, and for the two that are DELIBERATELY ABSENT (a second link for the same
+    # population under a different mechanism, and a resolved-on-creation gate).
+    p_pil = sub.add_parser(
+        "add-population-icf-link",
+        help="Map a population to an ICF activity it has a functional deficit in (H3)")
+    p_pil.add_argument("--population", required=True,
+                       help="populations.population_code — LIVE code, not a retired one")
+    p_pil.add_argument("--icf-code", dest="icf_code", required=True,
+                       help="d### or a range d###–d###. Free text by design: there is no "
+                            "d-code registry to point at yet (080)")
+    p_pil.add_argument("--mechanism", required=True,
+                       help="HOW the deficit arises — biomechanical, sensory, autonomic, "
+                            "cognitive. The same population may reach one code by two "
+                            "mechanisms and both are real rows")
+    p_pil.add_argument("--mapping-confidence", dest="mapping_confidence", required=True,
+                       choices=dbcore.schema_choices("population_icf_links",
+                                                     "mapping_confidence"))
+    p_pil.add_argument("--provenance", required=True,
+                       help="WHERE this row came from: a ref_id, or the promotion that "
+                            "produced it. A mapping with no provenance is skill prose "
+                            "in a table")
+    p_pil.add_argument("--notes")
+    p_pil.add_argument("--session", required=True)
+    p_pil.add_argument("--dry-run", action="store_true")
+
+    p_gate = sub.add_parser(
+        "raise-determination-gate",
+        help="Raise an H4 gate: cap a cell at provisional until it is resolved")
+    p_gate.add_argument("--parameter-id", dest="parameter_id", type=int, required=True)
+    p_gate.add_argument("--identity",
+                        help="populations.population_code. OMIT to gate every lens on "
+                             "this parameter — what an audit that does not yet know "
+                             "which cells exist should do")
+    p_gate.add_argument("--verdict", required=True,
+                        choices=dbcore.schema_choices("determination_gates", "verdict"))
+    p_gate.add_argument("--trigger-ref-id", dest="trigger_ref_id",
+                        help="the source that raised it. Its tier and evidence_type are "
+                             "READ from it; passing them too is refused")
+    p_gate.add_argument("--trigger-tier", dest="trigger_tier", type=int,
+                        help="required ONLY without --trigger-ref-id: an audit-raised "
+                             "gate has no source, so the strength is asserted")
+    p_gate.add_argument("--trigger-evidence-type", dest="trigger_evidence_type",
+                        help="required ONLY without --trigger-ref-id")
+    p_gate.add_argument("--detail", required=True, help="WHAT was found")
+    p_gate.add_argument("--session", required=True)
+    p_gate.add_argument("--dry-run", action="store_true")
+
+    p_rg = sub.add_parser(
+        "resolve-determination-gate",
+        help="Close an H4 gate by the named path, with the rationale the schema requires")
+    p_rg.add_argument("--gate-id", dest="gate_id", type=int, required=True)
+    p_rg.add_argument("--rationale", required=True,
+                      help="the adjudication. A gate released with no stated reason is a "
+                           "cell let through by nobody")
+    p_rg.add_argument("--session", required=True)
+    p_rg.add_argument("--dry-run", action="store_true")
+
     # add-medical — the writer base_taxonomy_medical shipped without, and went on
     # shipping without for the two weeks between migration 065 creating the table and
     # 074 giving it something to point with. See insert_medical for the refusals.
@@ -2140,6 +2199,26 @@ def main():
             session=args.session,
             dry_run=args.dry_run,
         ))
+
+    elif args.command == "add-population-icf-link":
+        _emit(insert_population_icf_link(
+            population=args.population, icf_code=args.icf_code,
+            mechanism=args.mechanism, mapping_confidence=args.mapping_confidence,
+            provenance=args.provenance, notes=args.notes,
+            session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "raise-determination-gate":
+        _emit(raise_determination_gate(
+            parameter_id=args.parameter_id, identity=args.identity,
+            verdict=args.verdict, trigger_ref_id=args.trigger_ref_id,
+            trigger_tier=args.trigger_tier,
+            trigger_evidence_type=args.trigger_evidence_type,
+            detail=args.detail, session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "resolve-determination-gate":
+        _emit(resolve_determination_gate(
+            gate_id=args.gate_id, rationale=args.rationale,
+            session=args.session, dry_run=args.dry_run))
 
     elif args.command == "add-medical":
         out = insert_medical(
@@ -3867,6 +3946,251 @@ def set_parameter_direction(*, parameter_id: int, direction: str, rationale: str
                      + " WHERE parameter_id = ?", vals + [parameter_id])
         return {"parameter_id": parameter_id, "canonical_en": row["canonical_en"],
                 "accessibility_direction": direction, "direction_rationale": rationale.strip(),
+                "dry_run": dry_run}
+
+
+# --- H3/H4: the two tables migration 080 created ---------------------------------
+# Both shipped with no writer, which is the defect `insert_parameter` and
+# `insert_medical` were each written to close on their own table: a capturable table
+# with nothing that can write it is unreachable through the sanctioned path, and the
+# next session reaches for hand SQL (CLAUDE.md section 4 -- "if you find one it cannot,
+# that is a coverage bug to fix, not a licence to bypass").
+
+#: The shape an ICF activity code takes. NOT a vocabulary -- `population_icf_links.
+#: icf_code` is free text ON PURPOSE (080: the FDA mapping states ranges, the live
+#: `axes` table holds 17 AX- codes rather than d-codes, and fabricating an FK into
+#: `axes` would assert a crossing nobody ruled). A shape guard is the most this can
+#: honestly do: it cannot say the code EXISTS, only that the value is a d-code or a
+#: d-code range rather than a population code or an axis code pasted into the wrong
+#: column. When a d-code registry lands, this becomes an FK and the guard goes.
+_ICF_CODE_RE = re.compile(r"^d\d{3}(?:\s*[-\u2013\u2014]\s*d\d{3})?$")
+
+
+def insert_population_icf_link(*, population: str, icf_code: str, mechanism: str,
+                               mapping_confidence: str, provenance: str,
+                               notes: str = None, session: str, dry_run: bool = False):
+    """Record that a population has a functional deficit in an ICF activity (H3).
+
+    THE TABLE IS SIMULTANEOUSLY THE FORWARD MAP AND THE SUBSTRATE FOR REVERSE-MAPPING,
+    which is doctrine's argument for it: reverse-mapping "is what would have flagged
+    DEAF's absence from the corridor item's population links MECHANICALLY rather than
+    by eye". A forward map with no writer can only ever hold what one migration put
+    there, so the reverse direction would go stale the first time the taxonomy moved.
+
+    WHAT IT REFUSES:
+
+    * A population that is not live. The FK says `FOREIGN KEY constraint failed`, which
+      names neither the code nor the fix -- and the codes that fail here are usually
+      RETIRED ones (the pre-DR-2026-07-23 set the functional-deficit-auditor taught for
+      fourteen months), so the refusal points at the crosswalk rather than at the FK.
+    * An `icf_code` that is not shaped like an ICF activity code. See _ICF_CODE_RE: the
+      column is free text because there is nothing to point at, and free text is where
+      an axis code or a population code gets pasted by accident.
+    * An empty `provenance`. The column is NOT NULL, so the database catches a missing
+      one -- but not `''`, and a mapping with no provenance is the skill prose again,
+      in a table. That is the exact state migration 080 moved the mapping OUT of.
+    * A duplicate (population, code, mechanism). UNIQUE catches it; this says which row
+      already holds it, because the fix is to read that row rather than add another.
+
+    DELIBERATELY NOT REFUSED, and it must stay that way: a population that already has
+    links, and a (population, icf_code) pair that already exists under a DIFFERENT
+    mechanism. SCI reaches its codes "biomechanically + autonomically" and both are
+    real; the UNIQUE is on the triple for exactly that reason, and collapsing them
+    would lose the distinction the mechanism column exists for.
+    """
+    population = (population or "").strip()
+    icf_code = (icf_code or "").strip()
+    mechanism = (mechanism or "").strip()
+    provenance = (provenance or "").strip()
+    if not provenance:
+        raise Refusal(
+            "--provenance is required and may not be blank. A mapping with no "
+            "provenance is skill prose in a table, which is the state migration 080 "
+            "moved this mapping out of. Name the source: a ref_id for a row derived "
+            "from a study, or the promotion that produced it.")
+    if not _ICF_CODE_RE.match(icf_code):
+        raise Refusal(
+            f"{icf_code!r} is not shaped like an ICF activity code. Expected d### or a "
+            f"range d###-d### (e.g. 'd450', 'd310\u2013d329').\n"
+            f"This column is free text because there is no d-code registry to point at "
+            f"yet -- which is precisely why a shape guard sits here. If you meant an "
+            f"AX- functional demand or a population code, this is the wrong column.")
+    with connect(dry_run) as conn:
+        if not dbcore.exists(conn, "populations", "population_code", population):
+            live = sorted(r[0] for r in
+                          conn.execute("SELECT population_code FROM populations"))
+            raise Refusal(
+                f"{population!r} is not a live population code. The taxonomy was "
+                f"replaced by DR-2026-07-23; a retired code (UPL, VIS, OFS, ABI, ASD, "
+                f"PCS, NEU, DBL, ...) must be crosswalked before it can be written.\n"
+                f"Live codes: {', '.join(live)}")
+        dbcore.check_declared(conn, "population_icf_links", "mapping_confidence",
+                              mapping_confidence, "add-population-icf-link")
+        clash = conn.execute(
+            "SELECT link_id, provenance FROM population_icf_links "
+            "WHERE population_code=? AND icf_code=? AND mechanism=?",
+            [population, icf_code, mechanism]).fetchone()
+        if clash:
+            raise Refusal(
+                f"link {clash['link_id']} already maps {population} -> {icf_code} by "
+                f"this mechanism (provenance {clash['provenance']!r}). One row per "
+                f"(population, code, mechanism) -- a second is the dual home rule 5 "
+                f"forbids. A DIFFERENT mechanism is a different row and is allowed.")
+        row = {"population_code": population, "icf_code": icf_code,
+               "mechanism": mechanism, "mapping_confidence": mapping_confidence,
+               "provenance": provenance, "notes": notes}
+        row.update(dbcore.stamp_for(conn, "population_icf_links", session))
+        cur = conn.execute(f"INSERT INTO population_icf_links ({','.join(row)}) "
+                           f"VALUES ({','.join('?'*len(row))})", list(row.values()))
+        return {"link_id": cur.lastrowid, "population_code": population,
+                "icf_code": icf_code, "mechanism": mechanism,
+                "mapping_confidence": mapping_confidence, "dry_run": dry_run}
+
+
+def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
+                             identity: str = None, trigger_ref_id: str = None,
+                             trigger_tier: int = None, trigger_evidence_type: str = None,
+                             session: str, dry_run: bool = False):
+    """Raise an H4 gate: a finding that caps a cell at `provisional` until resolved.
+
+    THE GATE IS A ROW, NOT A FLAG, and that is the first of doctrine's three
+    disciplines: "the gate binds ONLY WHERE A CHECK HAS ACTUALLY RUN -- no silent
+    pretence of coverage." Zero rows means zero cells gated, which is the correct
+    reading of "no check has run" rather than a gap.
+
+    THE STRENGTH OF THE TRIGGER IS DERIVED WHEREVER IT CAN BE (CLAUDE.md rule 8), and
+    this is the second discipline: "gate rows carry the tier and type of the triggering
+    source, so a grey-tier CONTRADICTS cannot pin a T1-anchored cell indefinitely and
+    thereby INVERT THE LADDER." A tier that an operator typed is a tier that can be
+    typed wrong, and typing it wrong is precisely how the ladder gets inverted. So:
+
+    * with --trigger-ref-id, tier and evidence_type are READ from that source and
+      --trigger-tier / --trigger-evidence-type are REFUSED. The pointer supplies them;
+      passing them too would be a second home for a fact the source already states
+      (rule 5), and the same refusal `insert_economics_entry` makes for --year/--journal
+      on an entry that carries a ref_id.
+    * without one, both are REQUIRED. An audit-raised gate (an FDA UNLINKED on a
+      structural absence) has no source to read, so the operator is stating the strength
+      of their own finding -- explicitly, where a reader can see it was asserted rather
+      than derived.
+
+    RESOLUTION IS A SEPARATE VERB, deliberately. `resolve-determination-gate` exists
+    because resolution "is a NAMED PATH -- evidence-auditor adjudication recorded on the
+    cell together with its rationale -- so no cell sits at `provisional` with no owner of
+    resolution". Letting this verb create an already-resolved row would permit a gate
+    that never bound anything, which the table's own CHECK cannot catch because the shape
+    is legal -- the same reason `add-parameter` takes no --status.
+    """
+    detail = (detail or "").strip()
+    if not detail:
+        raise Refusal(
+            "--detail is required and may not be blank. A gate that cannot say what it "
+            "found is a cell pinned at provisional for no stated reason, which is the "
+            "deadlock the resolution discipline exists to prevent.")
+    if trigger_ref_id and (trigger_tier is not None or trigger_evidence_type):
+        raise Refusal(
+            "--trigger-tier / --trigger-evidence-type are refused alongside "
+            "--trigger-ref-id. The source states both, and this row POINTS at the "
+            "source (rule 5); they are read from it. A typed tier is a tier that can be "
+            "typed wrong, and a wrong one inverts the ladder the gate exists to protect.")
+    if not trigger_ref_id and (trigger_tier is None or not trigger_evidence_type):
+        raise Refusal(
+            "a gate with no --trigger-ref-id must state --trigger-tier and "
+            "--trigger-evidence-type. Doctrine requires every gate to carry the strength "
+            "of what raised it, so a grey-tier finding cannot pin a T1-anchored cell. A "
+            "gate that cannot say how strong its trigger was inverts the ladder by "
+            "omission.")
+    with connect(dry_run) as conn:
+        param = conn.execute(
+            "SELECT parameter_id, status, merged_into FROM base_parameters "
+            "WHERE parameter_id=?", [parameter_id]).fetchone()
+        if param is None:
+            raise Refusal(
+                f"parameter_id {parameter_id}: no such parameter. Mint one from a term:\n"
+                f"  db.py add-parameter --term-id TERM-NNN --session ...")
+        if param["status"] != "active":
+            raise Refusal(
+                f"parameter {parameter_id} is {param['status']}"
+                + (f" (merged into {param['merged_into']})" if param["merged_into"] else "")
+                + ". Gating a parameter that no longer stands on its own pins cells "
+                  "nobody will look at.")
+        if identity and not dbcore.exists(conn, "populations", "population_code", identity):
+            raise Refusal(
+                f"{identity!r} is not a live population code. Omit --identity to raise "
+                f"the gate against EVERY lens on this parameter, which is what an audit "
+                f"that does not yet know which cells exist should do.")
+        dbcore.check_declared(conn, "determination_gates", "verdict", verdict,
+                              "raise-determination-gate")
+        if trigger_ref_id:
+            src = conn.execute(
+                "SELECT ref_id, tier, evidence_type FROM evidence_sources WHERE ref_id=?",
+                [trigger_ref_id]).fetchone()
+            if src is None:
+                raise Refusal(f"{trigger_ref_id!r}: no such source.")
+            if src["tier"] is None or not src["evidence_type"]:
+                raise Refusal(
+                    f"{trigger_ref_id} carries tier={src['tier']!r} "
+                    f"evidence_type={src['evidence_type']!r}. A gate reads its strength "
+                    f"from the source, and this source does not state it -- so the gate "
+                    f"cannot be raised on it without asserting a strength nobody "
+                    f"established. Fix the source, or raise the gate without a ref_id and "
+                    f"state the strength as your own finding.")
+            trigger_tier, trigger_evidence_type = src["tier"], src["evidence_type"]
+        row = {"parameter_id": parameter_id, "identity_code": identity,
+               "verdict": verdict, "trigger_ref_id": trigger_ref_id,
+               "trigger_tier": trigger_tier,
+               "trigger_evidence_type": trigger_evidence_type, "detail": detail,
+               "raised_at": dbcore.now(), "raised_by_session": session}
+        cur = conn.execute(f"INSERT INTO determination_gates ({','.join(row)}) "
+                           f"VALUES ({','.join('?'*len(row))})", list(row.values()))
+        return {"gate_id": cur.lastrowid, "parameter_id": parameter_id,
+                "identity_code": identity, "verdict": verdict,
+                "trigger_tier": trigger_tier,
+                "trigger_evidence_type": trigger_evidence_type,
+                "trigger_strength_source": ("read from " + trigger_ref_id
+                                            if trigger_ref_id else "asserted by operator"),
+                "dry_run": dry_run}
+
+
+def resolve_determination_gate(*, gate_id: int, rationale: str, session: str,
+                               dry_run: bool = False):
+    """Close an H4 gate by the named path, so the cell it pins has an owner.
+
+    The third discipline, and the one that stops a gate becoming a deadlock: "resolution
+    is a NAMED PATH -- evidence-auditor adjudication recorded on the cell together with
+    its rationale -- so no cell sits at `provisional` with no owner of resolution." The
+    schema already refuses a partial resolution (resolved_at, resolved_by_session and
+    resolution_rationale arrive together or not at all); this verb is what makes the
+    complete one reachable without hand SQL.
+
+    RE-RESOLVING IS REFUSED. A resolved gate that is resolved again would overwrite the
+    rationale of whoever actually adjudicated it, and the history of a cell's release is
+    the only evidence that the release was considered. Reopening is a different act and
+    owes its own verb and its own reason.
+    """
+    rationale = (rationale or "").strip()
+    if not rationale:
+        raise Refusal(
+            "--rationale is required and may not be blank. Resolution is a NAMED PATH; a "
+            "gate released with no stated reason is a cell let through by nobody.")
+    with connect(dry_run) as conn:
+        g = conn.execute(
+            "SELECT gate_id, parameter_id, verdict, resolved_at, resolved_by_session "
+            "FROM determination_gates WHERE gate_id=?", [gate_id]).fetchone()
+        if g is None:
+            raise Refusal(f"gate_id {gate_id}: no such gate.")
+        if g["resolved_at"]:
+            raise Refusal(
+                f"gate {gate_id} was already resolved at {g['resolved_at']} by "
+                f"{g['resolved_by_session']}. Re-resolving would overwrite the rationale "
+                f"of whoever adjudicated it, and that record is the only evidence the "
+                f"release was considered. Reopening is a different act.")
+        conn.execute(
+            "UPDATE determination_gates SET resolved_at=?, resolved_by_session=?, "
+            "resolution_rationale=? WHERE gate_id=?",
+            [dbcore.now(), session, rationale, gate_id])
+        return {"gate_id": gate_id, "parameter_id": g["parameter_id"],
+                "verdict": g["verdict"], "resolved_by_session": session,
                 "dry_run": dry_run}
 
 
